@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2566E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 11:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06623E7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 11:27:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJWRd-0003hH-5s; Fri, 06 Dec 2024 06:24:28 -0500
+	id 1tJWQx-0002Z7-8r; Fri, 06 Dec 2024 06:23:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRL-0003YF-Qj
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWQr-0002QI-Gk
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:23:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRG-00026S-H5
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:06 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWQo-00023a-K9
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:23:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733484241;
+ s=mimecast20190719; t=1733484213;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UBUcJEmVN2wnI3X6O4EE02sf5OZ8eaQGZWXg5zu3cjw=;
- b=HoHUkaqh2zxzYT7i4zy+/4+4yI21mNu1WoxeVyQ2XDwbe+rcrNuG+3vWjiOaa/7DMgsOf8
- KNkJEllWCL5Va53+GwlrarvNmu1g9son50iyfx8pMe7yYldAZy4I5+3EruLVl1qDGKb1RZ
- /fNA8Iq8OKLXQomrBsgFqBYrOwG9+BE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WqPMIlRiJMLQ92DlhkeOQb4/d1ZfdDgiimFePJyXYb4=;
+ b=ErXVe14YuP3nP287O+FHaAV07BpB2qA2LpaC5GjEahePkHGEjGT7U7CZBpXD+8M5WL9tuw
+ rPQemwKc8ml5jLErYn9um+87mUppHRrTOGrUNTqnujaLwJWFkMC5Xh3iEZE2PJ8iS7E/3l
+ K/+t+XuKmW5tdzRrAWSCOP/YV3gHviE=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-79-8IUZBy9lMqaiX7_qYrJ_4A-1; Fri,
- 06 Dec 2024 06:23:59 -0500
-X-MC-Unique: 8IUZBy9lMqaiX7_qYrJ_4A-1
-X-Mimecast-MFC-AGG-ID: 8IUZBy9lMqaiX7_qYrJ_4A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-3H9mn7-mNv-HPXeS6hx6mg-1; Fri,
+ 06 Dec 2024 06:23:29 -0500
+X-MC-Unique: 3H9mn7-mNv-HPXeS6hx6mg-1
+X-Mimecast-MFC-AGG-ID: 3H9mn7-mNv-HPXeS6hx6mg
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC0DA1955EB3; Fri,  6 Dec 2024 11:23:57 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 650C01955F37; Fri,  6 Dec 2024 11:23:27 +0000 (UTC)
 Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
  [10.33.192.244])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0EB4719560A2; Fri,  6 Dec 2024 11:23:51 +0000 (UTC)
+ id 3BEEB19560AD; Fri,  6 Dec 2024 11:23:22 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -55,16 +55,16 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
 Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
  pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH RFCv2 15/20] arm/cpu: Add generated files
-Date: Fri,  6 Dec 2024 12:22:08 +0100
-Message-ID: <20241206112213.88394-16-cohuck@redhat.com>
+Subject: [PATCH RFCv2 10/20] arm/cpu: Store id_mfr0/1 into the idregs array
+Date: Fri,  6 Dec 2024 12:22:03 +0100
+Message-ID: <20241206112213.88394-11-cohuck@redhat.com>
 In-Reply-To: <20241206112213.88394-1-cohuck@redhat.com>
 References: <20241206112213.88394-1-cohuck@redhat.com>
 MIME-Version: 1.0
 Content-type: text/plain
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -73,7 +73,7 @@ X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,891 +94,581 @@ From: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- target/arm/cpu-sysreg-properties.c | 689 ++++++++++++++++++++++++++++-
- target/arm/cpu-sysregs.h           | 142 +++++-
- 2 files changed, 791 insertions(+), 40 deletions(-)
+ hw/intc/armv7m_nvic.c     |  5 ++--
+ target/arm/cpu-features.h | 10 +++----
+ target/arm/cpu.c          |  8 ++---
+ target/arm/cpu.h          |  3 --
+ target/arm/cpu64.c        |  8 ++---
+ target/arm/helper.c       |  8 ++---
+ target/arm/kvm.c          |  3 +-
+ target/arm/tcg/cpu-v7m.c  | 24 +++++++--------
+ target/arm/tcg/cpu32.c    | 61 ++++++++++++++++++++-------------------
+ target/arm/tcg/cpu64.c    | 44 ++++++++++++++--------------
+ 10 files changed, 85 insertions(+), 89 deletions(-)
 
-diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-properties.c
-index 7e6b9f526d32..4a3106cc4850 100644
---- a/target/arm/cpu-sysreg-properties.c
-+++ b/target/arm/cpu-sysreg-properties.c
-@@ -1,24 +1,3 @@
--/*
-- * QEMU ARM CPU SYSREG PROPERTIES
-- * to be generated from linux sysreg
-- *
-- * Copyright (c) Red Hat, Inc. 2024
-- *
-- * This program is free software; you can redistribute it and/or
-- * modify it under the terms of the GNU General Public License
-- * as published by the Free Software Foundation; either version 2
-- * of the License, or (at your option) any later version.
-- *
-- * This program is distributed in the hope that it will be useful,
-- * but WITHOUT ANY WARRANTY; without even the implied warranty of
-- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-- * GNU General Public License for more details.
-- *
-- * You should have received a copy of the GNU General Public License
-- * along with this program; if not, see
-- * <http://www.gnu.org/licenses/gpl-2.0.html>
-- */
--
- #include "cpu-custom.h"
- 
- ARM64SysReg arm64_id_regs[NR_ID_REGS];
-@@ -26,16 +5,678 @@ ARM64SysReg arm64_id_regs[NR_ID_REGS];
- void initialize_cpu_sysreg_properties(void)
+diff --git a/hw/intc/armv7m_nvic.c b/hw/intc/armv7m_nvic.c
+index a8e1f9a56ae7..ac2c4fe4db5c 100644
+--- a/hw/intc/armv7m_nvic.c
++++ b/hw/intc/armv7m_nvic.c
+@@ -988,6 +988,7 @@ static void nvic_nmi_trigger(void *opaque, int n, int level)
+ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
  {
-     memset(arm64_id_regs, 0, sizeof(ARM64SysReg) * NR_ID_REGS);
-+
-+    /* ID_PFR0_EL1 */
-+    ARM64SysReg *ID_PFR0_EL1 = arm64_sysreg_get(3, 0, 0, 1, 0);
-+    ID_PFR0_EL1->name = "ID_PFR0_EL1";
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "RAS", 28, 31);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "DIT", 24, 27);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "AMU", 20, 23);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "CSV2", 16, 19);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "State3", 12, 15);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "State2", 8, 11);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "State1", 4, 7);
-+    arm64_sysreg_add_field(ID_PFR0_EL1, "State0", 0, 3);
-+
-+    /* ID_PFR1_EL1 */
-+    ARM64SysReg *ID_PFR1_EL1 = arm64_sysreg_get(3, 0, 0, 1, 1);
-+    ID_PFR1_EL1->name = "ID_PFR1_EL1";
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "GIC", 28, 31);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "Virt_frac", 24, 27);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "Sec_frac", 20, 23);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "GenTimer", 16, 19);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "Virtualization", 12, 15);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "MProgMod", 8, 11);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "Security", 4, 7);
-+    arm64_sysreg_add_field(ID_PFR1_EL1, "ProgMod", 0, 3);
-+
-+    /* ID_DFR0_EL1 */
-+    ARM64SysReg *ID_DFR0_EL1 = arm64_sysreg_get(3, 0, 0, 1, 2);
-+    ID_DFR0_EL1->name = "ID_DFR0_EL1";
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "TraceFilt", 28, 31);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "PerfMon", 24, 27);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "MProfDbg", 20, 23);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "MMapTrc", 16, 19);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "CopTrc", 12, 15);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "MMapDbg", 8, 11);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "CopSDbg", 4, 7);
-+    arm64_sysreg_add_field(ID_DFR0_EL1, "CopDbg", 0, 3);
-+
-+    /* ID_AFR0_EL1 */
-+    ARM64SysReg *ID_AFR0_EL1 = arm64_sysreg_get(3, 0, 0, 1, 3);
-+    ID_AFR0_EL1->name = "ID_AFR0_EL1";
-+    arm64_sysreg_add_field(ID_AFR0_EL1, "IMPDEF3", 12, 15);
-+    arm64_sysreg_add_field(ID_AFR0_EL1, "IMPDEF2", 8, 11);
-+    arm64_sysreg_add_field(ID_AFR0_EL1, "IMPDEF1", 4, 7);
-+    arm64_sysreg_add_field(ID_AFR0_EL1, "IMPDEF0", 0, 3);
-+
-+    /* ID_MMFR0_EL1 */
-+    ARM64SysReg *ID_MMFR0_EL1 = arm64_sysreg_get(3, 0, 0, 1, 4);
-+    ID_MMFR0_EL1->name = "ID_MMFR0_EL1";
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "InnerShr", 28, 31);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "FCSE", 24, 27);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "AuxReg", 20, 23);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "TCM", 16, 19);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "ShareLvl", 12, 15);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "OuterShr", 8, 11);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "PMSA", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR0_EL1, "VMSA", 0, 3);
-+
-+    /* ID_MMFR1_EL1 */
-+    ARM64SysReg *ID_MMFR1_EL1 = arm64_sysreg_get(3, 0, 0, 1, 5);
-+    ID_MMFR1_EL1->name = "ID_MMFR1_EL1";
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "BPred", 28, 31);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1TstCln", 24, 27);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1Uni", 20, 23);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1Hvd", 16, 19);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1UniSW", 12, 15);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1HvdSW", 8, 11);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1UniVA", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR1_EL1, "L1HvdVA", 0, 3);
-+
-+    /* ID_MMFR2_EL1 */
-+    ARM64SysReg *ID_MMFR2_EL1 = arm64_sysreg_get(3, 0, 0, 1, 6);
-+    ID_MMFR2_EL1->name = "ID_MMFR2_EL1";
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "HWAccFlg", 28, 31);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "WFIStall", 24, 27);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "MemBarr", 20, 23);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "UniTLB", 16, 19);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "HvdTLB", 12, 15);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "L1HvdRng", 8, 11);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "L1HvdBG", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR2_EL1, "L1HvdFG", 0, 3);
-+
-+    /* ID_MMFR3_EL1 */
-+    ARM64SysReg *ID_MMFR3_EL1 = arm64_sysreg_get(3, 0, 0, 1, 7);
-+    ID_MMFR3_EL1->name = "ID_MMFR3_EL1";
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "Supersec", 28, 31);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "CMemSz", 24, 27);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "CohWalk", 20, 23);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "PAN", 16, 19);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "MaintBcst", 12, 15);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "BPMaint", 8, 11);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "CMaintSW", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR3_EL1, "CMaintVA", 0, 3);
-+
-+    /* ID_ISAR0_EL1 */
-+    ARM64SysReg *ID_ISAR0_EL1 = arm64_sysreg_get(3, 0, 0, 2, 0);
-+    ID_ISAR0_EL1->name = "ID_ISAR0_EL1";
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "Divide", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "Debug", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "Coproc", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "CmpBranch", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "BitField", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "BitCount", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR0_EL1, "Swap", 0, 3);
-+
-+    /* ID_ISAR1_EL1 */
-+    ARM64SysReg *ID_ISAR1_EL1 = arm64_sysreg_get(3, 0, 0, 2, 1);
-+    ID_ISAR1_EL1->name = "ID_ISAR1_EL1";
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Jazelle", 28, 31);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Interwork", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Immediate", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "IfThen", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Extend", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Except_AR", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Except", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR1_EL1, "Endian", 0, 3);
-+
-+    /* ID_ISAR2_EL1 */
-+    ARM64SysReg *ID_ISAR2_EL1 = arm64_sysreg_get(3, 0, 0, 2, 2);
-+    ID_ISAR2_EL1->name = "ID_ISAR2_EL1";
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "Reversal", 28, 31);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "PSR_AR", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "MultU", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "MultS", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "Mult", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "MultiAccessInt", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "MemHint", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR2_EL1, "LoadStore", 0, 3);
-+
-+    /* ID_ISAR3_EL1 */
-+    ARM64SysReg *ID_ISAR3_EL1 = arm64_sysreg_get(3, 0, 0, 2, 3);
-+    ID_ISAR3_EL1->name = "ID_ISAR3_EL1";
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "T32EE", 28, 31);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "TrueNOP", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "T32Copy", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "TabBranch", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "SynchPrim", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "SVC", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "SIMD", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR3_EL1, "Saturate", 0, 3);
-+
-+    /* ID_ISAR4_EL1 */
-+    ARM64SysReg *ID_ISAR4_EL1 = arm64_sysreg_get(3, 0, 0, 2, 4);
-+    ID_ISAR4_EL1->name = "ID_ISAR4_EL1";
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "SWP_frac", 28, 31);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "PSR_M", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "SynchPrim_frac", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "Barrier", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "SMC", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "Writeback", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "WithShifts", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR4_EL1, "Unpriv", 0, 3);
-+
-+    /* ID_ISAR5_EL1 */
-+    ARM64SysReg *ID_ISAR5_EL1 = arm64_sysreg_get(3, 0, 0, 2, 5);
-+    ID_ISAR5_EL1->name = "ID_ISAR5_EL1";
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "VCMA", 28, 31);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "RDM", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "CRC32", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "SHA2", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "SHA1", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "AES", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR5_EL1, "SEVL", 0, 3);
-+
-+    /* ID_ISAR6_EL1 */
-+    ARM64SysReg *ID_ISAR6_EL1 = arm64_sysreg_get(3, 0, 0, 2, 7);
-+    ID_ISAR6_EL1->name = "ID_ISAR6_EL1";
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "I8MM", 24, 27);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "BF16", 20, 23);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "SPECRES", 16, 19);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "SB", 12, 15);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "FHM", 8, 11);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "DP", 4, 7);
-+    arm64_sysreg_add_field(ID_ISAR6_EL1, "JSCVT", 0, 3);
-+
-+    /* ID_MMFR4_EL1 */
-+    ARM64SysReg *ID_MMFR4_EL1 = arm64_sysreg_get(3, 0, 0, 2, 6);
-+    ID_MMFR4_EL1->name = "ID_MMFR4_EL1";
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "EVT", 28, 31);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "CCIDX", 24, 27);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "LSM", 20, 23);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "HPDS", 16, 19);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "CnP", 12, 15);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "XNX", 8, 11);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "AC2", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR4_EL1, "SpecSEI", 0, 3);
-+
-+    /* MVFR0_EL1 */
-+    ARM64SysReg *MVFR0_EL1 = arm64_sysreg_get(3, 0, 0, 3, 0);
-+    MVFR0_EL1->name = "MVFR0_EL1";
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPRound", 28, 31);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPShVec", 24, 27);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPSqrt", 20, 23);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPDivide", 16, 19);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPTrap", 12, 15);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPDP", 8, 11);
-+    arm64_sysreg_add_field(MVFR0_EL1, "FPSP", 4, 7);
-+    arm64_sysreg_add_field(MVFR0_EL1, "SIMDReg", 0, 3);
-+
-+    /* MVFR1_EL1 */
-+    ARM64SysReg *MVFR1_EL1 = arm64_sysreg_get(3, 0, 0, 3, 1);
-+    MVFR1_EL1->name = "MVFR1_EL1";
-+    arm64_sysreg_add_field(MVFR1_EL1, "SIMDFMAC", 28, 31);
-+    arm64_sysreg_add_field(MVFR1_EL1, "FPHP", 24, 27);
-+    arm64_sysreg_add_field(MVFR1_EL1, "SIMDHP", 20, 23);
-+    arm64_sysreg_add_field(MVFR1_EL1, "SIMDSP", 16, 19);
-+    arm64_sysreg_add_field(MVFR1_EL1, "SIMDInt", 12, 15);
-+    arm64_sysreg_add_field(MVFR1_EL1, "SIMDLS", 8, 11);
-+    arm64_sysreg_add_field(MVFR1_EL1, "FPDNaN", 4, 7);
-+    arm64_sysreg_add_field(MVFR1_EL1, "FPFtZ", 0, 3);
-+
-+    /* MVFR2_EL1 */
-+    ARM64SysReg *MVFR2_EL1 = arm64_sysreg_get(3, 0, 0, 3, 2);
-+    MVFR2_EL1->name = "MVFR2_EL1";
-+    arm64_sysreg_add_field(MVFR2_EL1, "FPMisc", 4, 7);
-+    arm64_sysreg_add_field(MVFR2_EL1, "SIMDMisc", 0, 3);
-+
-+    /* ID_PFR2_EL1 */
-+    ARM64SysReg *ID_PFR2_EL1 = arm64_sysreg_get(3, 0, 0, 3, 4);
-+    ID_PFR2_EL1->name = "ID_PFR2_EL1";
-+    arm64_sysreg_add_field(ID_PFR2_EL1, "RAS_frac", 8, 11);
-+    arm64_sysreg_add_field(ID_PFR2_EL1, "SSBS", 4, 7);
-+    arm64_sysreg_add_field(ID_PFR2_EL1, "CSV3", 0, 3);
-+
-+    /* ID_DFR1_EL1 */
-+    ARM64SysReg *ID_DFR1_EL1 = arm64_sysreg_get(3, 0, 0, 3, 5);
-+    ID_DFR1_EL1->name = "ID_DFR1_EL1";
-+    arm64_sysreg_add_field(ID_DFR1_EL1, "HPMN0", 4, 7);
-+    arm64_sysreg_add_field(ID_DFR1_EL1, "MTPMU", 0, 3);
-+
-+    /* ID_MMFR5_EL1 */
-+    ARM64SysReg *ID_MMFR5_EL1 = arm64_sysreg_get(3, 0, 0, 3, 6);
-+    ID_MMFR5_EL1->name = "ID_MMFR5_EL1";
-+    arm64_sysreg_add_field(ID_MMFR5_EL1, "nTLBPA", 4, 7);
-+    arm64_sysreg_add_field(ID_MMFR5_EL1, "ETS", 0, 3);
-+
-+    /* ID_AA64PFR0_EL1 */
-+    ARM64SysReg *ID_AA64PFR0_EL1 = arm64_sysreg_get(3, 0, 0, 4, 0);
-+    ID_AA64PFR0_EL1->name = "ID_AA64PFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "CSV3", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "CSV2", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "RME", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "DIT", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "AMU", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "MPAM", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "SEL2", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "SVE", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "RAS", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "GIC", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "AdvSIMD", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "AdvSIMD", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "FP", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "FP", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "EL3", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "EL2", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "EL1", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64PFR0_EL1, "EL0", 0, 3);
-+
-+    /* ID_AA64PFR1_EL1 */
-+    ARM64SysReg *ID_AA64PFR1_EL1 = arm64_sysreg_get(3, 0, 0, 4, 1);
-+    ID_AA64PFR1_EL1->name = "ID_AA64PFR1_EL1";
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "PFAR", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "DF2", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "MTEX", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "THE", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "GCS", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "MTE_frac", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "NMI", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "CSV2_frac", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "RNDR_trap", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "SME", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "MPAM_frac", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "RAS_frac", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "MTE", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "SSBS", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64PFR1_EL1, "BT", 0, 3);
-+
-+    /* ID_AA64PFR2_EL1 */
-+    ARM64SysReg *ID_AA64PFR2_EL1 = arm64_sysreg_get(3, 0, 0, 4, 2);
-+    ID_AA64PFR2_EL1->name = "ID_AA64PFR2_EL1";
-+    arm64_sysreg_add_field(ID_AA64PFR2_EL1, "FPMR", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64PFR2_EL1, "MTEFAR", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64PFR2_EL1, "MTESTOREONLY", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64PFR2_EL1, "MTEPERM", 0, 3);
-+
-+    /* ID_AA64ZFR0_EL1 */
-+    ARM64SysReg *ID_AA64ZFR0_EL1 = arm64_sysreg_get(3, 0, 0, 4, 4);
-+    ID_AA64ZFR0_EL1->name = "ID_AA64ZFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "F64MM", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "F32MM", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "I8MM", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "SM4", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "SHA3", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "B16B16", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "BF16", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "BitPerm", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "AES", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64ZFR0_EL1, "SVEver", 0, 3);
-+
-+    /* ID_AA64SMFR0_EL1 */
-+    ARM64SysReg *ID_AA64SMFR0_EL1 = arm64_sysreg_get(3, 0, 0, 4, 5);
-+    ID_AA64SMFR0_EL1->name = "ID_AA64SMFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "FA64", 63, 63);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "LUTv2", 60, 60);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "SMEver", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "I16I64", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F64F64", 48, 48);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "I16I32", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "B16B16", 43, 43);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F16F16", 42, 42);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F8F16", 41, 41);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F8F32", 40, 40);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "I8I32", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F16F32", 35, 35);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "B16F32", 34, 34);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "BI32I32", 33, 33);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "F32F32", 32, 32);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "SF8FMA", 30, 30);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "SF8DP4", 29, 29);
-+    arm64_sysreg_add_field(ID_AA64SMFR0_EL1, "SF8DP2", 28, 28);
-+
-+    /* ID_AA64FPFR0_EL1 */
-+    ARM64SysReg *ID_AA64FPFR0_EL1 = arm64_sysreg_get(3, 0, 0, 4, 7);
-+    ID_AA64FPFR0_EL1->name = "ID_AA64FPFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8CVT", 31, 31);
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8FMA", 30, 30);
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8DP4", 29, 29);
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8DP2", 28, 28);
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8E4M3", 1, 1);
-+    arm64_sysreg_add_field(ID_AA64FPFR0_EL1, "F8E5M2", 0, 0);
-+
-+    /* ID_AA64DFR0_EL1 */
-+    ARM64SysReg *ID_AA64DFR0_EL1 = arm64_sysreg_get(3, 0, 0, 5, 0);
-+    ID_AA64DFR0_EL1->name = "ID_AA64DFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "HPMN0", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "ExtTrcBuff", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "BRBE", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "MTPMU", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "TraceBuffer", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "TraceFilt", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "DoubleLock", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "PMSVer", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "CTX_CMPs", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "WRPs", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "BRPs", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "PMUVer", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "TraceVer", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64DFR0_EL1, "DebugVer", 0, 3);
-+
-+    /* ID_AA64DFR1_EL1 */
-+    ARM64SysReg *ID_AA64DFR1_EL1 = arm64_sysreg_get(3, 0, 0, 5, 1);
-+    ID_AA64DFR1_EL1->name = "ID_AA64DFR1_EL1";
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "ABL_CMPs", 56, 63);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "DPFZS", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "EBEP", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "ITE", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "ABLE", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "PMICNTR", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "SPMU", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "CTX_CMPs", 24, 31);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "WRPs", 16, 23);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "BRPs", 8, 15);
-+    arm64_sysreg_add_field(ID_AA64DFR1_EL1, "SYSPMUID", 0, 7);
-+
-+    /* ID_AA64AFR0_EL1 */
-+    ARM64SysReg *ID_AA64AFR0_EL1 = arm64_sysreg_get(3, 0, 0, 5, 4);
-+    ID_AA64AFR0_EL1->name = "ID_AA64AFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF7", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF6", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF5", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF4", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF3", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF2", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF1", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64AFR0_EL1, "IMPDEF0", 0, 3);
-+
-+    /* ID_AA64AFR1_EL1 */
-+    ARM64SysReg *ID_AA64AFR1_EL1 = arm64_sysreg_get(3, 0, 0, 5, 5);
-+    ID_AA64AFR1_EL1->name = "ID_AA64AFR1_EL1";
-+
-+    /* ID_AA64ISAR0_EL1 */
-+    ARM64SysReg *ID_AA64ISAR0_EL1 = arm64_sysreg_get(3, 0, 0, 6, 0);
-+    ID_AA64ISAR0_EL1->name = "ID_AA64ISAR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "RNDR", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "TLB", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "TS", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "FHM", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "DP", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "SM4", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "SM3", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "SHA3", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "RDM", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "TME", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "ATOMIC", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "CRC32", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "SHA2", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "SHA1", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64ISAR0_EL1, "AES", 4, 7);
-+
-+    /* ID_AA64ISAR1_EL1 */
-+    ARM64SysReg *ID_AA64ISAR1_EL1 = arm64_sysreg_get(3, 0, 0, 6, 1);
-+    ID_AA64ISAR1_EL1->name = "ID_AA64ISAR1_EL1";
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "LS64", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "XS", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "I8MM", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "DGH", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "BF16", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "SPECRES", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "SB", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "FRINTTS", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "GPI", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "GPA", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "LRCPC", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "FCMA", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "JSCVT", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "API", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "APA", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64ISAR1_EL1, "DPB", 0, 3);
-+
-+    /* ID_AA64ISAR2_EL1 */
-+    ARM64SysReg *ID_AA64ISAR2_EL1 = arm64_sysreg_get(3, 0, 0, 6, 2);
-+    ID_AA64ISAR2_EL1->name = "ID_AA64ISAR2_EL1";
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "ATS1A", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "LUT", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "CSSC", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "RPRFM", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "PRFMSLC", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "SYSINSTR_128", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "SYSREG_128", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "CLRBHB", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "PAC_frac", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "BC", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "MOPS", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "APA3", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "GPA3", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "RPRES", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64ISAR2_EL1, "WFxT", 0, 3);
-+
-+    /* ID_AA64ISAR3_EL1 */
-+    ARM64SysReg *ID_AA64ISAR3_EL1 = arm64_sysreg_get(3, 0, 0, 6, 3);
-+    ID_AA64ISAR3_EL1->name = "ID_AA64ISAR3_EL1";
-+    arm64_sysreg_add_field(ID_AA64ISAR3_EL1, "PACM", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64ISAR3_EL1, "TLBIW", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64ISAR3_EL1, "FAMINMAX", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64ISAR3_EL1, "CPA", 0, 3);
-+
-+    /* ID_AA64MMFR0_EL1 */
-+    ARM64SysReg *ID_AA64MMFR0_EL1 = arm64_sysreg_get(3, 0, 0, 7, 0);
-+    ID_AA64MMFR0_EL1->name = "ID_AA64MMFR0_EL1";
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "ECV", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "FGT", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "EXS", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN4_2", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN64_2", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN16_2", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN4", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN4", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN64", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN64", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "TGRAN16", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "BIGENDEL0", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "SNSMEM", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "BIGEND", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "ASIDBITS", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64MMFR0_EL1, "PARANGE", 0, 3);
-+
-+    /* ID_AA64MMFR1_EL1 */
-+    ARM64SysReg *ID_AA64MMFR1_EL1 = arm64_sysreg_get(3, 0, 0, 7, 1);
-+    ID_AA64MMFR1_EL1->name = "ID_AA64MMFR1_EL1";
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "ECBHB", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "CMOW", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "TIDCP1", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "nTLBPA", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "AFP", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "HCX", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "ETS", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "TWED", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "XNX", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "SpecSEI", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "PAN", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "LO", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "HPDS", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "VH", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "VMIDBits", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64MMFR1_EL1, "HAFDBS", 0, 3);
-+
-+    /* ID_AA64MMFR2_EL1 */
-+    ARM64SysReg *ID_AA64MMFR2_EL1 = arm64_sysreg_get(3, 0, 0, 7, 2);
-+    ID_AA64MMFR2_EL1->name = "ID_AA64MMFR2_EL1";
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "E0PD", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "EVT", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "BBM", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "TTL", 48, 51);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "FWB", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "IDS", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "AT", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "ST", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "NV", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "CCIDX", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "VARange", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "IESB", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "LSM", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "UAO", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64MMFR2_EL1, "CnP", 0, 3);
-+
-+    /* ID_AA64MMFR3_EL1 */
-+    ARM64SysReg *ID_AA64MMFR3_EL1 = arm64_sysreg_get(3, 0, 0, 7, 3);
-+    ID_AA64MMFR3_EL1->name = "ID_AA64MMFR3_EL1";
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "Spec_FPACC", 60, 63);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "ADERR", 56, 59);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "SDERR", 52, 55);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "ANERR", 44, 47);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "SNERR", 40, 43);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "D128_2", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "D128", 32, 35);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "MEC", 28, 31);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "AIE", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "S2POE", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "S1POE", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "S2PIE", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "S1PIE", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "SCTLRX", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64MMFR3_EL1, "TCRX", 0, 3);
-+
-+    /* ID_AA64MMFR4_EL1 */
-+    ARM64SysReg *ID_AA64MMFR4_EL1 = arm64_sysreg_get(3, 0, 0, 7, 4);
-+    ID_AA64MMFR4_EL1->name = "ID_AA64MMFR4_EL1";
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "E3DSE", 36, 39);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "E2H0", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "E2H0", 24, 27);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "NV_frac", 20, 23);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "FGWTE3", 16, 19);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "HACDBS", 12, 15);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "ASID2", 8, 11);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "EIESB", 4, 7);
-+    arm64_sysreg_add_field(ID_AA64MMFR4_EL1, "EIESB", 4, 7);
-+
-+/* For CPACR_EL1 fields see CPACR_ELx */
-+
-+/* For ZCR_EL1 fields see ZCR_ELx */
-+
-+/* For SMCR_EL1 fields see SMCR_ELx */
-+
-+/* For GCSCR_EL1 fields see GCSCR_ELx */
-+
-+/* For GCSPR_EL1 fields see GCSPR_ELx */
-+
-+/* For CONTEXTIDR_EL1 fields see CONTEXTIDR_ELx */
-+
-+    /* CCSIDR_EL1 */
-+    ARM64SysReg *CCSIDR_EL1 = arm64_sysreg_get(3, 1, 0, 0, 0);
-+    CCSIDR_EL1->name = "CCSIDR_EL1";
-+    arm64_sysreg_add_field(CCSIDR_EL1, "NumSets", 13, 27);
-+    arm64_sysreg_add_field(CCSIDR_EL1, "Associativity", 3, 12);
-+    arm64_sysreg_add_field(CCSIDR_EL1, "LineSize", 0, 2);
-+
-+    /* CLIDR_EL1 */
-+    ARM64SysReg *CLIDR_EL1 = arm64_sysreg_get(3, 1, 0, 0, 1);
-+    CLIDR_EL1->name = "CLIDR_EL1";
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ttypen", 33, 46);
-+    arm64_sysreg_add_field(CLIDR_EL1, "ICB", 30, 32);
-+    arm64_sysreg_add_field(CLIDR_EL1, "LoUU", 27, 29);
-+    arm64_sysreg_add_field(CLIDR_EL1, "LoC", 24, 26);
-+    arm64_sysreg_add_field(CLIDR_EL1, "LoUIS", 21, 23);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype7", 18, 20);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype6", 15, 17);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype5", 12, 14);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype4", 9, 11);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype3", 6, 8);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype2", 3, 5);
-+    arm64_sysreg_add_field(CLIDR_EL1, "Ctype1", 0, 2);
-+
-+    /* CCSIDR2_EL1 */
-+    ARM64SysReg *CCSIDR2_EL1 = arm64_sysreg_get(3, 1, 0, 0, 2);
-+    CCSIDR2_EL1->name = "CCSIDR2_EL1";
-+    arm64_sysreg_add_field(CCSIDR2_EL1, "NumSets", 0, 23);
-+
-+    /* GMID_EL1 */
-+    ARM64SysReg *GMID_EL1 = arm64_sysreg_get(3, 1, 0, 0, 4);
-+    GMID_EL1->name = "GMID_EL1";
-+    arm64_sysreg_add_field(GMID_EL1, "BS", 0, 3);
-+
-+    /* SMIDR_EL1 */
-+    ARM64SysReg *SMIDR_EL1 = arm64_sysreg_get(3, 1, 0, 0, 6);
-+    SMIDR_EL1->name = "SMIDR_EL1";
-+    arm64_sysreg_add_field(SMIDR_EL1, "IMPLEMENTER", 24, 31);
-+    arm64_sysreg_add_field(SMIDR_EL1, "REVISION", 16, 23);
-+    arm64_sysreg_add_field(SMIDR_EL1, "SMPS", 15, 15);
-+    arm64_sysreg_add_field(SMIDR_EL1, "AFFINITY", 0, 11);
-+
-+    /* CSSELR_EL1 */
-+    ARM64SysReg *CSSELR_EL1 = arm64_sysreg_get(3, 2, 0, 0, 0);
-+    CSSELR_EL1->name = "CSSELR_EL1";
-+    arm64_sysreg_add_field(CSSELR_EL1, "TnD", 4, 4);
-+    arm64_sysreg_add_field(CSSELR_EL1, "Level", 1, 3);
-+    arm64_sysreg_add_field(CSSELR_EL1, "InD", 0, 0);
-+
-     /* CTR_EL0 */
-     ARM64SysReg *CTR_EL0 = arm64_sysreg_get(3, 3, 0, 0, 1);
-     CTR_EL0->name = "CTR_EL0";
--    arm64_sysreg_add_field(CTR_EL0, "TMinline", 32, 37);
-+    arm64_sysreg_add_field(CTR_EL0, "TminLine", 32, 37);
-     arm64_sysreg_add_field(CTR_EL0, "DIC", 29, 29);
-     arm64_sysreg_add_field(CTR_EL0, "IDC", 28, 28);
-     arm64_sysreg_add_field(CTR_EL0, "CWG", 24, 27);
-     arm64_sysreg_add_field(CTR_EL0, "ERG", 20, 23);
--    arm64_sysreg_add_field(CTR_EL0, "DMinLine", 16, 19);
-+    arm64_sysreg_add_field(CTR_EL0, "DminLine", 16, 19);
-     arm64_sysreg_add_field(CTR_EL0, "L1Ip", 14, 15);
-     arm64_sysreg_add_field(CTR_EL0, "IminLine", 0, 3);
--}
+     ARMCPU *cpu = s->cpu;
++    IdRegMap *idregs = &cpu->isar.idregs;
+     uint32_t val;
  
-+    /* DCZID_EL0 */
-+    ARM64SysReg *DCZID_EL0 = arm64_sysreg_get(3, 3, 0, 0, 7);
-+    DCZID_EL0->name = "DCZID_EL0";
-+    arm64_sysreg_add_field(DCZID_EL0, "DZP", 4, 4);
-+    arm64_sysreg_add_field(DCZID_EL0, "BS", 0, 3);
-+
-+/* For GCSPR_EL0 fields see GCSPR_ELx */
-+
-+/* For HFGRTR_EL2 fields see HFGxTR_EL2 */
-+
-+/* For HFGWTR_EL2 fields see HFGxTR_EL2 */
-+
-+/* For ZCR_EL2 fields see ZCR_ELx */
-+
-+/* For SMCR_EL2 fields see SMCR_ELx */
-+
-+/* For GCSCR_EL2 fields see GCSCR_ELx */
-+
-+/* For GCSPR_EL2 fields see GCSPR_ELx */
-+
-+/* For CONTEXTIDR_EL2 fields see CONTEXTIDR_ELx */
-+
-+/* For CPACR_EL12 fields see CPACR_ELx */
-+
-+/* For ZCR_EL12 fields see ZCR_ELx */
-+
-+/* For SMCR_EL12 fields see SMCR_ELx */
-+
-+/* For GCSCR_EL12 fields see GCSCR_ELx */
-+
-+/* For GCSPR_EL12 fields see GCSPR_ELx */
-+
-+/* For CONTEXTIDR_EL12 fields see CONTEXTIDR_ELx */
-+
-+/* For TTBR0_EL1 fields see TTBRx_EL1 */
-+
-+/* For TTBR1_EL1 fields see TTBRx_EL1 */
-+
-+/* For TCR2_EL1 fields see TCR2_EL1x */
-+
-+/* For TCR2_EL12 fields see TCR2_EL1x */
-+
-+/* For MAIR2_EL1 fields see MAIR2_ELx */
-+
-+/* For MAIR2_EL2 fields see MAIR2_ELx */
-+
-+/* For PIRE0_EL1 fields see PIRx_ELx */
-+
-+/* For PIRE0_EL12 fields see PIRx_ELx */
-+
-+/* For PIR_EL1 fields see PIRx_ELx */
-+
-+/* For PIR_EL12 fields see PIRx_ELx */
-+
-+/* For PIR_EL2 fields see PIRx_ELx */
-+
-+/* For POR_EL0 fields see PIRx_ELx */
-+
-+/* For POR_EL1 fields see PIRx_ELx */
-+
-+/* For POR_EL12 fields see PIRx_ELx */
-+
-+/* For S2POR_EL1 fields see PIRx_ELx */
-+
-+/* For S2PIR_EL2 fields see PIRx_ELx */
-+
-+}
-diff --git a/target/arm/cpu-sysregs.h b/target/arm/cpu-sysregs.h
-index f4b63a3af77b..8c4cd0f2b414 100644
---- a/target/arm/cpu-sysregs.h
-+++ b/target/arm/cpu-sysregs.h
-@@ -1,24 +1,18 @@
- #ifndef ARM_CPU_SYSREGS_H
- #define ARM_CPU_SYSREGS_H
+     switch (offset) {
+@@ -1263,12 +1264,12 @@ static uint32_t nvic_readl(NVICState *s, uint32_t offset, MemTxAttrs attrs)
+         if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
+             goto bad_offset;
+         }
+-        return cpu->isar.id_pfr0;
++        return GET_IDREG(idregs, ID_PFR0);
+     case 0xd44: /* PFR1.  */
+         if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
+             goto bad_offset;
+         }
+-        return cpu->isar.id_pfr1;
++        return GET_IDREG(idregs, ID_PFR1);
+     case 0xd48: /* DFR0.  */
+         if (!arm_feature(&cpu->env, ARM_FEATURE_M_MAIN)) {
+             goto bad_offset;
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index 1028d1c64c98..c49fe8547cc9 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -136,12 +136,12 @@ static inline bool isar_feature_aa32_i8mm(const ARMISARegisters *id)
  
--/* to be generated */
--
--#define SYS_ID_AA64PFR0_EL1                             sys_reg(3, 0, 0, 4, 0)
--#define SYS_ID_AA64PFR1_EL1                             sys_reg(3, 0, 0, 4, 1)
--#define SYS_ID_AA64SMFR0_EL1                            sys_reg(3, 0, 0, 4, 5)
--#define SYS_ID_AA64DFR0_EL1                             sys_reg(3, 0, 0, 5, 0)
--#define SYS_ID_AA64DFR1_EL1                             sys_reg(3, 0, 0, 5, 1)
--#define SYS_ID_AA64ISAR0_EL1                            sys_reg(3, 0, 0, 6, 0)
--#define SYS_ID_AA64ISAR1_EL1                            sys_reg(3, 0, 0, 6, 1)
--#define SYS_ID_AA64ISAR2_EL1                            sys_reg(3, 0, 0, 6, 2)
--#define SYS_ID_AA64MMFR0_EL1                            sys_reg(3, 0, 0, 7, 0)
--#define SYS_ID_AA64MMFR1_EL1                            sys_reg(3, 0, 0, 7, 1)
--#define SYS_ID_AA64MMFR2_EL1                            sys_reg(3, 0, 0, 7, 2)
--#define SYS_ID_AA64MMFR3_EL1                            sys_reg(3, 0, 0, 7, 3)
-+/* Generated file - do not edit */
+ static inline bool isar_feature_aa32_ras(const ARMISARegisters *id)
+ {
+-    return FIELD_EX32(id->id_pfr0, ID_PFR0, RAS) != 0;
++    return FIELD_EX32_IDREG(&id->idregs, ID_PFR0, RAS) != 0;
+ }
  
-+#define SYS_OSDTRRX_EL1                                 sys_reg(2, 0, 0, 0, 2)
-+#define SYS_MDCCINT_EL1                                 sys_reg(2, 0, 0, 2, 0)
-+#define SYS_MDSCR_EL1                                   sys_reg(2, 0, 0, 2, 2)
-+#define SYS_OSDTRTX_EL1                                 sys_reg(2, 0, 0, 3, 2)
-+#define SYS_OSECCR_EL1                                  sys_reg(2, 0, 0, 6, 2)
-+#define SYS_OSLAR_EL1                                   sys_reg(2, 0, 1, 0, 4)
- #define SYS_ID_PFR0_EL1                                 sys_reg(3, 0, 0, 1, 0)
- #define SYS_ID_PFR1_EL1                                 sys_reg(3, 0, 0, 1, 1)
- #define SYS_ID_DFR0_EL1                                 sys_reg(3, 0, 0, 1, 2)
-+#define SYS_ID_AFR0_EL1                                 sys_reg(3, 0, 0, 1, 3)
- #define SYS_ID_MMFR0_EL1                                sys_reg(3, 0, 0, 1, 4)
- #define SYS_ID_MMFR1_EL1                                sys_reg(3, 0, 0, 1, 5)
- #define SYS_ID_MMFR2_EL1                                sys_reg(3, 0, 0, 1, 6)
-@@ -29,14 +23,130 @@
- #define SYS_ID_ISAR3_EL1                                sys_reg(3, 0, 0, 2, 3)
- #define SYS_ID_ISAR4_EL1                                sys_reg(3, 0, 0, 2, 4)
- #define SYS_ID_ISAR5_EL1                                sys_reg(3, 0, 0, 2, 5)
--#define SYS_ID_MMFR4_EL1                                sys_reg(3, 0, 0, 2, 6)
- #define SYS_ID_ISAR6_EL1                                sys_reg(3, 0, 0, 2, 7)
-+#define SYS_ID_MMFR4_EL1                                sys_reg(3, 0, 0, 2, 6)
- #define SYS_MVFR0_EL1                                   sys_reg(3, 0, 0, 3, 0)
- #define SYS_MVFR1_EL1                                   sys_reg(3, 0, 0, 3, 1)
- #define SYS_MVFR2_EL1                                   sys_reg(3, 0, 0, 3, 2)
- #define SYS_ID_PFR2_EL1                                 sys_reg(3, 0, 0, 3, 4)
- #define SYS_ID_DFR1_EL1                                 sys_reg(3, 0, 0, 3, 5)
- #define SYS_ID_MMFR5_EL1                                sys_reg(3, 0, 0, 3, 6)
-+#define SYS_ID_AA64PFR0_EL1                             sys_reg(3, 0, 0, 4, 0)
-+#define SYS_ID_AA64PFR1_EL1                             sys_reg(3, 0, 0, 4, 1)
-+#define SYS_ID_AA64PFR2_EL1                             sys_reg(3, 0, 0, 4, 2)
- #define SYS_ID_AA64ZFR0_EL1                             sys_reg(3, 0, 0, 4, 4)
-+#define SYS_ID_AA64SMFR0_EL1                            sys_reg(3, 0, 0, 4, 5)
-+#define SYS_ID_AA64FPFR0_EL1                            sys_reg(3, 0, 0, 4, 7)
-+#define SYS_ID_AA64DFR0_EL1                             sys_reg(3, 0, 0, 5, 0)
-+#define SYS_ID_AA64DFR1_EL1                             sys_reg(3, 0, 0, 5, 1)
-+#define SYS_ID_AA64AFR0_EL1                             sys_reg(3, 0, 0, 5, 4)
-+#define SYS_ID_AA64AFR1_EL1                             sys_reg(3, 0, 0, 5, 5)
-+#define SYS_ID_AA64ISAR0_EL1                            sys_reg(3, 0, 0, 6, 0)
-+#define SYS_ID_AA64ISAR1_EL1                            sys_reg(3, 0, 0, 6, 1)
-+#define SYS_ID_AA64ISAR2_EL1                            sys_reg(3, 0, 0, 6, 2)
-+#define SYS_ID_AA64ISAR3_EL1                            sys_reg(3, 0, 0, 6, 3)
-+#define SYS_ID_AA64MMFR0_EL1                            sys_reg(3, 0, 0, 7, 0)
-+#define SYS_ID_AA64MMFR1_EL1                            sys_reg(3, 0, 0, 7, 1)
-+#define SYS_ID_AA64MMFR2_EL1                            sys_reg(3, 0, 0, 7, 2)
-+#define SYS_ID_AA64MMFR3_EL1                            sys_reg(3, 0, 0, 7, 3)
-+#define SYS_ID_AA64MMFR4_EL1                            sys_reg(3, 0, 0, 7, 4)
-+#define SYS_SCTLR_EL1                                   sys_reg(3, 0, 1, 0, 0)
-+#define SYS_CPACR_EL1                                   sys_reg(3, 0, 1, 0, 2)
-+#define SYS_SMPRI_EL1                                   sys_reg(3, 0, 1, 2, 4)
-+#define SYS_ZCR_EL1                                     sys_reg(3, 0, 1, 2, 0)
-+#define SYS_SMCR_EL1                                    sys_reg(3, 0, 1, 2, 6)
-+#define SYS_GCSCR_EL1                                   sys_reg(3, 0, 2, 5, 0)
-+#define SYS_GCSPR_EL1                                   sys_reg(3, 0, 2, 5, 1)
-+#define SYS_GCSCRE0_EL1                                 sys_reg(3, 0, 2, 5, 2)
-+#define SYS_ALLINT                                      sys_reg(3, 0, 4, 3, 0)
-+#define SYS_FAR_EL1                                     sys_reg(3, 0, 6, 0, 0)
-+#define SYS_PMICNTR_EL0                                 sys_reg(3, 3, 9, 4, 0)
-+#define SYS_PMICFILTR_EL0                               sys_reg(3, 3, 9, 6, 0)
-+#define SYS_PMSCR_EL1                                   sys_reg(3, 0, 9, 9, 0)
-+#define SYS_PMSNEVFR_EL1                                sys_reg(3, 0, 9, 9, 1)
-+#define SYS_PMSICR_EL1                                  sys_reg(3, 0, 9, 9, 2)
-+#define SYS_PMSIRR_EL1                                  sys_reg(3, 0, 9, 9, 3)
-+#define SYS_PMSFCR_EL1                                  sys_reg(3, 0, 9, 9, 4)
-+#define SYS_PMSEVFR_EL1                                 sys_reg(3, 0, 9, 9, 5)
-+#define SYS_PMSLATFR_EL1                                sys_reg(3, 0, 9, 9, 6)
-+#define SYS_PMSIDR_EL1                                  sys_reg(3, 0, 9, 9, 7)
-+#define SYS_PMBLIMITR_EL1                               sys_reg(3, 0, 9, 10, 0)
-+#define SYS_PMBPTR_EL1                                  sys_reg(3, 0, 9, 10, 1)
-+#define SYS_PMBSR_EL1                                   sys_reg(3, 0, 9, 10, 3)
-+#define SYS_PMBIDR_EL1                                  sys_reg(3, 0, 9, 10, 7)
-+#define SYS_PMSELR_EL0                                  sys_reg(3, 3, 9, 12, 5)
-+#define SYS_CONTEXTIDR_EL1                              sys_reg(3, 0, 13, 0, 1)
-+#define SYS_RCWSMASK_EL1                                sys_reg(3, 0, 13, 0, 3)
-+#define SYS_TPIDR_EL1                                   sys_reg(3, 0, 13, 0, 4)
-+#define SYS_RCWMASK_EL1                                 sys_reg(3, 0, 13, 0, 6)
-+#define SYS_SCXTNUM_EL1                                 sys_reg(3, 0, 13, 0, 7)
-+#define SYS_CCSIDR_EL1                                  sys_reg(3, 1, 0, 0, 0)
-+#define SYS_CLIDR_EL1                                   sys_reg(3, 1, 0, 0, 1)
-+#define SYS_CCSIDR2_EL1                                 sys_reg(3, 1, 0, 0, 2)
-+#define SYS_GMID_EL1                                    sys_reg(3, 1, 0, 0, 4)
-+#define SYS_SMIDR_EL1                                   sys_reg(3, 1, 0, 0, 6)
-+#define SYS_CSSELR_EL1                                  sys_reg(3, 2, 0, 0, 0)
-+#define SYS_CTR_EL0                                     sys_reg(3, 3, 0, 0, 1)
-+#define SYS_DCZID_EL0                                   sys_reg(3, 3, 0, 0, 7)
-+#define SYS_GCSPR_EL0                                   sys_reg(3, 3, 2, 5, 1)
-+#define SYS_SVCR                                        sys_reg(3, 3, 4, 2, 2)
-+#define SYS_FPMR                                        sys_reg(3, 3, 4, 4, 2)
-+#define SYS_HFGRTR_EL2                                  sys_reg(3, 4, 1, 1, 4)
-+#define SYS_HFGWTR_EL2                                  sys_reg(3, 4, 1, 1, 5)
-+#define SYS_HFGITR_EL2                                  sys_reg(3, 4, 1, 1, 6)
-+#define SYS_HDFGRTR_EL2                                 sys_reg(3, 4, 3, 1, 4)
-+#define SYS_HDFGWTR_EL2                                 sys_reg(3, 4, 3, 1, 5)
-+#define SYS_HAFGRTR_EL2                                 sys_reg(3, 4, 3, 1, 6)
-+#define SYS_ZCR_EL2                                     sys_reg(3, 4, 1, 2, 0)
-+#define SYS_HCRX_EL2                                    sys_reg(3, 4, 1, 2, 2)
-+#define SYS_SMPRIMAP_EL2                                sys_reg(3, 4, 1, 2, 5)
-+#define SYS_SMCR_EL2                                    sys_reg(3, 4, 1, 2, 6)
-+#define SYS_GCSCR_EL2                                   sys_reg(3, 4, 2, 5, 0)
-+#define SYS_GCSPR_EL2                                   sys_reg(3, 4, 2, 5, 1)
-+#define SYS_DACR32_EL2                                  sys_reg(3, 4, 3, 0, 0)
-+#define SYS_FAR_EL2                                     sys_reg(3, 4, 6, 0, 0)
-+#define SYS_PMSCR_EL2                                   sys_reg(3, 4, 9, 9, 0)
-+#define SYS_CONTEXTIDR_EL2                              sys_reg(3, 4, 13, 0, 1)
-+#define SYS_CNTPOFF_EL2                                 sys_reg(3, 4, 14, 0, 6)
-+#define SYS_CPACR_EL12                                  sys_reg(3, 5, 1, 0, 2)
-+#define SYS_ZCR_EL12                                    sys_reg(3, 5, 1, 2, 0)
-+#define SYS_SMCR_EL12                                   sys_reg(3, 5, 1, 2, 6)
-+#define SYS_GCSCR_EL12                                  sys_reg(3, 5, 2, 5, 0)
-+#define SYS_GCSPR_EL12                                  sys_reg(3, 5, 2, 5, 1)
-+#define SYS_FAR_EL12                                    sys_reg(3, 5, 6, 0, 0)
-+#define SYS_CONTEXTIDR_EL12                             sys_reg(3, 5, 13, 0, 1)
-+#define SYS_TTBR0_EL1                                   sys_reg(3, 0, 2, 0, 0)
-+#define SYS_TTBR1_EL1                                   sys_reg(3, 0, 2, 0, 1)
-+#define SYS_TCR2_EL1                                    sys_reg(3, 0, 2, 0, 3)
-+#define SYS_TCR2_EL12                                   sys_reg(3, 5, 2, 0, 3)
-+#define SYS_TCR2_EL2                                    sys_reg(3, 4, 2, 0, 3)
-+#define SYS_MAIR2_EL1                                   sys_reg(3, 0, 10, 2, 1)
-+#define SYS_MAIR2_EL2                                   sys_reg(3, 4, 10, 1, 1)
-+#define SYS_AMAIR2_EL1                                  sys_reg(3, 0, 10, 3, 1)
-+#define SYS_AMAIR2_EL2                                  sys_reg(3, 4, 10, 3, 1)
-+#define SYS_PIRE0_EL1                                   sys_reg(3, 0, 10, 2, 2)
-+#define SYS_PIRE0_EL12                                  sys_reg(3, 5, 10, 2, 2)
-+#define SYS_PIR_EL1                                     sys_reg(3, 0, 10, 2, 3)
-+#define SYS_PIR_EL12                                    sys_reg(3, 5, 10, 2, 3)
-+#define SYS_PIR_EL2                                     sys_reg(3, 4, 10, 2, 3)
-+#define SYS_POR_EL0                                     sys_reg(3, 3, 10, 2, 4)
-+#define SYS_POR_EL1                                     sys_reg(3, 0, 10, 2, 4)
-+#define SYS_POR_EL12                                    sys_reg(3, 5, 10, 2, 4)
-+#define SYS_S2POR_EL1                                   sys_reg(3, 0, 10, 2, 5)
-+#define SYS_S2PIR_EL2                                   sys_reg(3, 4, 10, 2, 5)
-+#define SYS_LORSA_EL1                                   sys_reg(3, 0, 10, 4, 0)
-+#define SYS_LOREA_EL1                                   sys_reg(3, 0, 10, 4, 1)
-+#define SYS_LORN_EL1                                    sys_reg(3, 0, 10, 4, 2)
-+#define SYS_LORC_EL1                                    sys_reg(3, 0, 10, 4, 3)
-+#define SYS_LORID_EL1                                   sys_reg(3, 0, 10, 4, 7)
-+#define SYS_ISR_EL1                                     sys_reg(3, 0, 12, 1, 0)
-+#define SYS_ICC_NMIAR1_EL1                              sys_reg(3, 0, 12, 9, 5)
-+#define SYS_TRBLIMITR_EL1                               sys_reg(3, 0, 9, 11, 0)
-+#define SYS_TRBPTR_EL1                                  sys_reg(3, 0, 9, 11, 1)
-+#define SYS_TRBBASER_EL1                                sys_reg(3, 0, 9, 11, 2)
-+#define SYS_TRBSR_EL1                                   sys_reg(3, 0, 9, 11, 3)
-+#define SYS_TRBMAR_EL1                                  sys_reg(3, 0, 9, 11, 4)
-+#define SYS_TRBTRG_EL1                                  sys_reg(3, 0, 9, 11, 6)
-+#define SYS_TRBIDR_EL1                                  sys_reg(3, 0, 9, 11, 7)
+ static inline bool isar_feature_aa32_mprofile(const ARMISARegisters *id)
+ {
+-    return FIELD_EX32(id->id_pfr1, ID_PFR1, MPROGMOD) != 0;
++    return FIELD_EX32_IDREG(&id->idregs, ID_PFR1, MPROGMOD) != 0;
+ }
  
--#endif
-+#endif /* ARM_CPU_SYSREGS_H */
+ static inline bool isar_feature_aa32_m_sec_state(const ARMISARegisters *id)
+@@ -150,7 +150,7 @@ static inline bool isar_feature_aa32_m_sec_state(const ARMISARegisters *id)
+      * Return true if M-profile state handling insns
+      * (VSCCLRM, CLRM, FPCTX access insns) are implemented
+      */
+-    return FIELD_EX32(id->id_pfr1, ID_PFR1, SECURITY) >= 3;
++    return FIELD_EX32_IDREG(&id->idregs, ID_PFR1, SECURITY) >= 3;
+ }
+ 
+ static inline bool isar_feature_aa32_fp16_arith(const ARMISARegisters *id)
+@@ -349,12 +349,12 @@ static inline bool isar_feature_aa32_evt(const ARMISARegisters *id)
+ 
+ static inline bool isar_feature_aa32_dit(const ARMISARegisters *id)
+ {
+-    return FIELD_EX32(id->id_pfr0, ID_PFR0, DIT) != 0;
++    return FIELD_EX32_IDREG(&id->idregs, ID_PFR0, DIT) != 0;
+ }
+ 
+ static inline bool isar_feature_aa32_ssbs(const ARMISARegisters *id)
+ {
+-    return FIELD_EX32(id->id_pfr2, ID_PFR2, SSBS) != 0;
++    return FIELD_EX32_IDREG(&id->idregs, ID_PFR2, SSBS) != 0;
+ }
+ 
+ static inline bool isar_feature_aa32_debugv7p1(const ARMISARegisters *id)
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 1f03aca54765..8d0a5d7c46da 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2327,7 +2327,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * Disable the security extension feature bits in the processor
+          * feature registers as well.
+          */
+-        cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1, ID_PFR1, SECURITY, 0);
++        FIELD_DP32_IDREG(idregs, ID_PFR1, SECURITY, 0);
+         cpu->isar.id_dfr0 = FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, COPSDBG, 0);
+         FIELD_DP64_IDREG(idregs, ID_AA64PFR0, EL3, 0);
+ 
+@@ -2367,8 +2367,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+          * registers if we don't have EL2.
+          */
+         FIELD_DP64_IDREG(idregs, ID_AA64PFR0, EL2, 0);
+-        cpu->isar.id_pfr1 = FIELD_DP32(cpu->isar.id_pfr1,
+-                                       ID_PFR1, VIRTUALIZATION, 0);
++        FIELD_DP32_IDREG(idregs, ID_PFR1, VIRTUALIZATION, 0);
+     }
+ 
+     if (cpu_isar_feature(aa64_mte, cpu)) {
+@@ -2431,8 +2430,7 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+             FIELD_DP32(cpu->isar.id_dfr0, ID_DFR0, MMAPTRC, 0);
+         /* FEAT_AMU (Activity Monitors Extension) */
+         FIELD_DP64_IDREG(idregs, ID_AA64PFR0, AMU, 0);
+-        cpu->isar.id_pfr0 =
+-            FIELD_DP32(cpu->isar.id_pfr0, ID_PFR0, AMU, 0);
++        FIELD_DP32_IDREG(idregs, ID_PFR0, AMU, 0);
+         /* FEAT_MPAM (Memory Partitioning and Monitoring Extension) */
+         FIELD_DP64_IDREG(idregs, ID_AA64PFR0, MPAM, 0);
+     }
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index bd12cdad415e..38b85035c366 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1086,9 +1086,6 @@ struct ArchCPU {
+         uint32_t id_mmfr3;
+         uint32_t id_mmfr4;
+         uint32_t id_mmfr5;
+-        uint32_t id_pfr0;
+-        uint32_t id_pfr1;
+-        uint32_t id_pfr2;
+         uint32_t mvfr0;
+         uint32_t mvfr1;
+         uint32_t mvfr2;
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index eaf4235b2252..a25b30157965 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -612,8 +612,8 @@ static void aarch64_a57_initfn(Object *obj)
+     cpu->isar.mvfr2 = 0x00000043;
+     cpu->ctr = 0x8444c004;
+     cpu->reset_sctlr = 0x00c50838;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x03010066;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10101105;
+@@ -674,8 +674,8 @@ static void aarch64_a53_initfn(Object *obj)
+     cpu->isar.mvfr2 = 0x00000043;
+     cpu->ctr = 0x84448004; /* L1Ip = VIPT */
+     cpu->reset_sctlr = 0x00c50838;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x03010066;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10101105;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 5891cdb1681e..ade5355c71ee 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -7695,7 +7695,7 @@ static void define_pmu_regs(ARMCPU *cpu)
+ static uint64_t id_pfr1_read(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+-    uint64_t pfr1 = cpu->isar.id_pfr1;
++    uint64_t pfr1 = GET_IDREG(&cpu->isar.idregs, ID_PFR1);
+ 
+     if (env->gicv3state) {
+         pfr1 |= 1 << 28;
+@@ -8743,7 +8743,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 1, .opc2 = 0,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa32_tid3,
+-              .resetvalue = cpu->isar.id_pfr0 },
++              .resetvalue = GET_IDREG(idregs, ID_PFR0)},
+             /*
+              * ID_PFR1 is not a plain ARM_CP_CONST because we don't know
+              * the value of the GIC field until after we define these regs.
+@@ -8754,7 +8754,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .accessfn = access_aa32_tid3,
+ #ifdef CONFIG_USER_ONLY
+               .type = ARM_CP_CONST,
+-              .resetvalue = cpu->isar.id_pfr1,
++              .resetvalue = GET_IDREG(idregs, ID_PFR0),
+ #else
+               .type = ARM_CP_NO_RAW,
+               .accessfn = access_aa32_tid3,
+@@ -9100,7 +9100,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 4,
+               .access = PL1_R, .type = ARM_CP_CONST,
+               .accessfn = access_aa64_tid3,
+-              .resetvalue = cpu->isar.id_pfr2 },
++              .resetvalue = GET_IDREG(idregs, ID_PFR2)},
+             { .name = "ID_DFR1", .state = ARM_CP_STATE_BOTH,
+               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 3, .opc2 = 5,
+               .access = PL1_R, .type = ARM_CP_CONST,
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 0a9a27c046f4..287f5ee849a4 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -403,8 +403,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+                               ARM64_SYS_REG(3, 0, 0, 3, 1));
+         err |= read_sys_reg32(fdarray[2], &ahcf->isar.mvfr2,
+                               ARM64_SYS_REG(3, 0, 0, 3, 2));
+-        err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_pfr2,
+-                              ARM64_SYS_REG(3, 0, 0, 3, 4));
++        err |= get_host_cpu_reg32(fd, ahcf, SYS_ID_PFR2_EL1);
+         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_dfr1,
+                               ARM64_SYS_REG(3, 0, 0, 3, 5));
+         err |= read_sys_reg32(fdarray[2], &ahcf->isar.id_mmfr5,
+diff --git a/target/arm/tcg/cpu-v7m.c b/target/arm/tcg/cpu-v7m.c
+index ea7d0237f442..e9a02bada8d1 100644
+--- a/target/arm/tcg/cpu-v7m.c
++++ b/target/arm/tcg/cpu-v7m.c
+@@ -60,8 +60,8 @@ static void cortex_m0_initfn(Object *obj)
+      * by looking at ID register fields. We use the same values as
+      * for the M3.
+      */
+-    cpu->isar.id_pfr0 = 0x00000030;
+-    cpu->isar.id_pfr1 = 0x00000200;
++    SET_IDREG(idregs, ID_PFR0, 0x00000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000200);
+     cpu->isar.id_dfr0 = 0x00100000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00000030;
+@@ -86,8 +86,8 @@ static void cortex_m3_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_M_MAIN);
+     cpu->midr = 0x410fc231;
+     cpu->pmsav7_dregion = 8;
+-    cpu->isar.id_pfr0 = 0x00000030;
+-    cpu->isar.id_pfr1 = 0x00000200;
++    SET_IDREG(idregs, ID_PFR0, 0x00000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000200);
+     cpu->isar.id_dfr0 = 0x00100000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00000030;
+@@ -117,8 +117,8 @@ static void cortex_m4_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x10110021;
+     cpu->isar.mvfr1 = 0x11000011;
+     cpu->isar.mvfr2 = 0x00000000;
+-    cpu->isar.id_pfr0 = 0x00000030;
+-    cpu->isar.id_pfr1 = 0x00000200;
++    SET_IDREG(idregs, ID_PFR0, 0x00000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000200);
+     cpu->isar.id_dfr0 = 0x00100000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00000030;
+@@ -148,8 +148,8 @@ static void cortex_m7_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x10110221;
+     cpu->isar.mvfr1 = 0x12000011;
+     cpu->isar.mvfr2 = 0x00000040;
+-    cpu->isar.id_pfr0 = 0x00000030;
+-    cpu->isar.id_pfr1 = 0x00000200;
++    SET_IDREG(idregs, ID_PFR0, 0x00000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000200);
+     cpu->isar.id_dfr0 = 0x00100000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00100030;
+@@ -181,8 +181,8 @@ static void cortex_m33_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x10110021;
+     cpu->isar.mvfr1 = 0x11000011;
+     cpu->isar.mvfr2 = 0x00000040;
+-    cpu->isar.id_pfr0 = 0x00000030;
+-    cpu->isar.id_pfr1 = 0x00000210;
++    SET_IDREG(idregs, ID_PFR0, 0x00000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000210);
+     cpu->isar.id_dfr0 = 0x00200000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00101F40;
+@@ -219,8 +219,8 @@ static void cortex_m55_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x10110221;
+     cpu->isar.mvfr1 = 0x12100211;
+     cpu->isar.mvfr2 = 0x00000040;
+-    cpu->isar.id_pfr0 = 0x20000030;
+-    cpu->isar.id_pfr1 = 0x00000230;
++    SET_IDREG(idregs, ID_PFR0, 0x20000030);
++    SET_IDREG(idregs, ID_PFR1, 0x00000230);
+     cpu->isar.id_dfr0 = 0x10200000;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00111040;
+diff --git a/target/arm/tcg/cpu32.c b/target/arm/tcg/cpu32.c
+index 3bb1b6276881..9ac76c61109d 100644
+--- a/target/arm/tcg/cpu32.c
++++ b/target/arm/tcg/cpu32.c
+@@ -23,18 +23,19 @@
+ void aa32_max_features(ARMCPU *cpu)
+ {
+     uint32_t t;
++    IdRegMap *idregs = &cpu->isar.idregs;
+ 
+     /* Add additional features supported by QEMU */
+-    t = GET_IDREG(&cpu->isar.idregs, ID_ISAR5);
++    t = GET_IDREG(idregs, ID_ISAR5);
+     t = FIELD_DP32(t, ID_ISAR5, AES, 2);          /* FEAT_PMULL */
+     t = FIELD_DP32(t, ID_ISAR5, SHA1, 1);         /* FEAT_SHA1 */
+     t = FIELD_DP32(t, ID_ISAR5, SHA2, 1);         /* FEAT_SHA256 */
+     t = FIELD_DP32(t, ID_ISAR5, CRC32, 1);
+     t = FIELD_DP32(t, ID_ISAR5, RDM, 1);          /* FEAT_RDM */
+     t = FIELD_DP32(t, ID_ISAR5, VCMA, 1);         /* FEAT_FCMA */
+-    SET_IDREG(&cpu->isar.idregs, ID_ISAR5, t);
++    SET_IDREG(idregs, ID_ISAR5, t);
+ 
+-    t = GET_IDREG(&cpu->isar.idregs, ID_ISAR6);
++    t = GET_IDREG(idregs, ID_ISAR6);
+     t = FIELD_DP32(t, ID_ISAR6, JSCVT, 1);        /* FEAT_JSCVT */
+     t = FIELD_DP32(t, ID_ISAR6, DP, 1);           /* Feat_DotProd */
+     t = FIELD_DP32(t, ID_ISAR6, FHM, 1);          /* FEAT_FHM */
+@@ -42,7 +43,7 @@ void aa32_max_features(ARMCPU *cpu)
+     t = FIELD_DP32(t, ID_ISAR6, SPECRES, 1);      /* FEAT_SPECRES */
+     t = FIELD_DP32(t, ID_ISAR6, BF16, 1);         /* FEAT_AA32BF16 */
+     t = FIELD_DP32(t, ID_ISAR6, I8MM, 1);         /* FEAT_AA32I8MM */
+-    SET_IDREG(&cpu->isar.idregs, ID_ISAR6, t);
++    SET_IDREG(idregs, ID_ISAR6, t);
+ 
+     t = cpu->isar.mvfr1;
+     t = FIELD_DP32(t, MVFR1, FPHP, 3);            /* FEAT_FP16 */
+@@ -70,16 +71,16 @@ void aa32_max_features(ARMCPU *cpu)
+     t = FIELD_DP32(t, ID_MMFR5, ETS, 2);          /* FEAT_ETS2 */
+     cpu->isar.id_mmfr5 = t;
+ 
+-    t = cpu->isar.id_pfr0;
++    t = GET_IDREG(idregs, ID_PFR0);
+     t = FIELD_DP32(t, ID_PFR0, CSV2, 2);          /* FEAT_CSV2 */
+     t = FIELD_DP32(t, ID_PFR0, DIT, 1);           /* FEAT_DIT */
+     t = FIELD_DP32(t, ID_PFR0, RAS, 1);           /* FEAT_RAS */
+-    cpu->isar.id_pfr0 = t;
++    SET_IDREG(idregs, ID_PFR0, t);
+ 
+-    t = cpu->isar.id_pfr2;
++    t = GET_IDREG(idregs, ID_PFR2);
+     t = FIELD_DP32(t, ID_PFR2, CSV3, 1);          /* FEAT_CSV3 */
+     t = FIELD_DP32(t, ID_PFR2, SSBS, 1);          /* FEAT_SSBS */
+-    cpu->isar.id_pfr2 = t;
++    SET_IDREG(idregs, ID_PFR2, t);
+ 
+     t = cpu->isar.id_dfr0;
+     t = FIELD_DP32(t, ID_DFR0, COPDBG, 10);       /* FEAT_Debugv8p8 */
+@@ -227,8 +228,8 @@ static void arm1136_r2_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x00000000;
+     cpu->ctr = 0x1dd20d2;
+     cpu->reset_sctlr = 0x00050078;
+-    cpu->isar.id_pfr0 = 0x111;
+-    cpu->isar.id_pfr1 = 0x1;
++    SET_IDREG(idregs, ID_PFR0, 0x111);
++    SET_IDREG(idregs, ID_PFR1, 0x1);
+     cpu->isar.id_dfr0 = 0x2;
+     cpu->id_afr0 = 0x3;
+     cpu->isar.id_mmfr0 = 0x01130003;
+@@ -259,8 +260,8 @@ static void arm1136_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x00000000;
+     cpu->ctr = 0x1dd20d2;
+     cpu->reset_sctlr = 0x00050078;
+-    cpu->isar.id_pfr0 = 0x111;
+-    cpu->isar.id_pfr1 = 0x1;
++    SET_IDREG(idregs, ID_PFR0, 0x111);
++    SET_IDREG(idregs, ID_PFR1, 0x1);
+     cpu->isar.id_dfr0 = 0x2;
+     cpu->id_afr0 = 0x3;
+     cpu->isar.id_mmfr0 = 0x01130003;
+@@ -292,8 +293,8 @@ static void arm1176_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x00000000;
+     cpu->ctr = 0x1dd20d2;
+     cpu->reset_sctlr = 0x00050078;
+-    cpu->isar.id_pfr0 = 0x111;
+-    cpu->isar.id_pfr1 = 0x11;
++    SET_IDREG(idregs, ID_PFR0, 0x111);
++    SET_IDREG(idregs, ID_PFR1, 0x11);
+     cpu->isar.id_dfr0 = 0x33;
+     cpu->id_afr0 = 0;
+     cpu->isar.id_mmfr0 = 0x01130003;
+@@ -322,8 +323,8 @@ static void arm11mpcore_initfn(Object *obj)
+     cpu->isar.mvfr0 = 0x11111111;
+     cpu->isar.mvfr1 = 0x00000000;
+     cpu->ctr = 0x1d192992; /* 32K icache 32K dcache */
+-    cpu->isar.id_pfr0 = 0x111;
+-    cpu->isar.id_pfr1 = 0x1;
++     SET_IDREG(idregs, ID_PFR0, 0x111);
++     SET_IDREG(idregs, ID_PFR1, 0x1);
+     cpu->isar.id_dfr0 = 0;
+     cpu->id_afr0 = 0x2;
+     cpu->isar.id_mmfr0 = 0x01100103;
+@@ -362,8 +363,8 @@ static void cortex_a8_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x00011111;
+     cpu->ctr = 0x82048004;
+     cpu->reset_sctlr = 0x00c50078;
+-    cpu->isar.id_pfr0 = 0x1031;
+-    cpu->isar.id_pfr1 = 0x11;
++    SET_IDREG(idregs, ID_PFR0, 0x1031);
++    SET_IDREG(idregs, ID_PFR1, 0x11);
+     cpu->isar.id_dfr0 = 0x400;
+     cpu->id_afr0 = 0;
+     cpu->isar.id_mmfr0 = 0x31100003;
+@@ -438,8 +439,8 @@ static void cortex_a9_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x01111111;
+     cpu->ctr = 0x80038003;
+     cpu->reset_sctlr = 0x00c50078;
+-    cpu->isar.id_pfr0 = 0x1031;
+-    cpu->isar.id_pfr1 = 0x11;
++    SET_IDREG(idregs, ID_PFR0, 0x1031);
++    SET_IDREG(idregs, ID_PFR1, 0x11);
+     cpu->isar.id_dfr0 = 0x000;
+     cpu->id_afr0 = 0;
+     cpu->isar.id_mmfr0 = 0x00100103;
+@@ -504,8 +505,8 @@ static void cortex_a7_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x11111111;
+     cpu->ctr = 0x84448003;
+     cpu->reset_sctlr = 0x00c50078;
+-    cpu->isar.id_pfr0 = 0x00001131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00001131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x02010555;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10101105;
+@@ -556,8 +557,8 @@ static void cortex_a15_initfn(Object *obj)
+     cpu->isar.mvfr1 = 0x11111111;
+     cpu->ctr = 0x8444c004;
+     cpu->reset_sctlr = 0x00c50078;
+-    cpu->isar.id_pfr0 = 0x00001131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00001131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x02010555;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10201105;
+@@ -600,8 +601,8 @@ static void cortex_r5_initfn(Object *obj)
+     set_feature(&cpu->env, ARM_FEATURE_PMSA);
+     set_feature(&cpu->env, ARM_FEATURE_PMU);
+     cpu->midr = 0x411fc153; /* r1p3 */
+-    cpu->isar.id_pfr0 = 0x0131;
+-    cpu->isar.id_pfr1 = 0x001;
++    SET_IDREG(idregs, ID_PFR0, 0x0131);
++    SET_IDREG(idregs, ID_PFR1, 0x001);
+     cpu->isar.id_dfr0 = 0x010400;
+     cpu->id_afr0 = 0x0;
+     cpu->isar.id_mmfr0 = 0x0210030;
+@@ -747,8 +748,8 @@ static void cortex_r52_initfn(Object *obj)
+     cpu->isar.mvfr2 = 0x00000043;
+     cpu->ctr = 0x8144c004;
+     cpu->reset_sctlr = 0x30c50838;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x10111001;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x10111001);
+     cpu->isar.id_dfr0 = 0x03010006;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x00211040;
+@@ -979,8 +980,8 @@ static void arm_max_initfn(Object *obj)
+     cpu->isar.mvfr2 = 0x00000043;
+     cpu->ctr = 0x8444c004;
+     cpu->reset_sctlr = 0x00c50838;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x03010066;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10101105;
+diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
+index 9bca36093006..42662878b2df 100644
+--- a/target/arm/tcg/cpu64.c
++++ b/target/arm/tcg/cpu64.c
+@@ -49,8 +49,8 @@ static void aarch64_a35_initfn(Object *obj)
+     cpu->midr = 0x411fd040;
+     cpu->revidr = 0;
+     cpu->ctr = 0x84448004;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x03010066;
+     cpu->id_afr0 = 0;
+     cpu->isar.id_mmfr0 = 0x10201105;
+@@ -241,9 +241,9 @@ static void aarch64_a55_initfn(Object *obj)
+     cpu->isar.id_mmfr2 = 0x01260000;
+     cpu->isar.id_mmfr3 = 0x02122211;
+     cpu->isar.id_mmfr4 = 0x00021110;
+-    cpu->isar.id_pfr0  = 0x10010131;
+-    cpu->isar.id_pfr1  = 0x00011011;
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR0, 0x10010131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     cpu->midr = 0x412FD050;          /* r2p0 */
+     cpu->revidr = 0;
+ 
+@@ -295,8 +295,8 @@ static void aarch64_a72_initfn(Object *obj)
+     cpu->isar.mvfr2 = 0x00000043;
+     cpu->ctr = 0x8444c004;
+     cpu->reset_sctlr = 0x00c50838;
+-    cpu->isar.id_pfr0 = 0x00000131;
+-    cpu->isar.id_pfr1 = 0x00011011;
++    SET_IDREG(idregs, ID_PFR0, 0x00000131);
++    SET_IDREG(idregs, ID_PFR1, 0x00011011);
+     cpu->isar.id_dfr0 = 0x03010066;
+     cpu->id_afr0 = 0x00000000;
+     cpu->isar.id_mmfr0 = 0x10201105;
+@@ -374,9 +374,9 @@ static void aarch64_a76_initfn(Object *obj)
+     cpu->isar.id_mmfr2 = 0x01260000;
+     cpu->isar.id_mmfr3 = 0x02122211;
+     cpu->isar.id_mmfr4 = 0x00021110;
+-    cpu->isar.id_pfr0  = 0x10010131;
+-    cpu->isar.id_pfr1  = 0x00010000; /* GIC filled in later */
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR0, 0x10010131);
++    SET_IDREG(idregs, ID_PFR1, 0x00010000); /* GIC filled in later */
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     cpu->midr = 0x414fd0b1;          /* r4p1 */
+     cpu->revidr = 0;
+ 
+@@ -622,9 +622,9 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
+     cpu->isar.id_mmfr2 = 0x01260000;
+     cpu->isar.id_mmfr3 = 0x02122211;
+     cpu->isar.id_mmfr4 = 0x00021110;
+-    cpu->isar.id_pfr0  = 0x10010131;
+-    cpu->isar.id_pfr1  = 0x00010000; /* GIC filled in later */
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR0, 0x10010131);
++    SET_IDREG(idregs, ID_PFR1, 0x00010000); /* GIC filled in later */
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     cpu->midr = 0x414fd0c1;          /* r4p1 */
+     cpu->revidr = 0;
+ 
+@@ -701,9 +701,9 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
+     cpu->isar.id_mmfr2 = 0x01260000;
+     cpu->isar.id_mmfr3 = 0x02122211;
+     cpu->isar.id_mmfr4 = 0x01021110;
+-    cpu->isar.id_pfr0  = 0x21110131;
+-    cpu->isar.id_pfr1  = 0x00010000; /* GIC filled in later */
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR0, 0x21110131);
++    SET_IDREG(idregs, ID_PFR1, 0x00010000); /* GIC filled in later */
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     cpu->midr = 0x411FD402;          /* r1p2 */
+     cpu->revidr = 0;
+ 
+@@ -902,8 +902,8 @@ static void aarch64_a710_initfn(Object *obj)
+     /* Ordered by Section B.4: AArch64 registers */
+     cpu->midr          = 0x412FD471; /* r2p1 */
+     cpu->revidr        = 0;
+-    cpu->isar.id_pfr0  = 0x21110131;
+-    cpu->isar.id_pfr1  = 0x00010000; /* GIC filled in later */
++    SET_IDREG(idregs, ID_PFR0, 0x21110131);
++    SET_IDREG(idregs, ID_PFR1, 0x00010000); /* GIC filled in later */
+     cpu->isar.id_dfr0  = 0x16011099;
+     cpu->id_afr0       = 0;
+     cpu->isar.id_mmfr0 = 0x10201105;
+@@ -921,7 +921,7 @@ static void aarch64_a710_initfn(Object *obj)
+     cpu->isar.mvfr0    = 0x10110222;
+     cpu->isar.mvfr1    = 0x13211111;
+     cpu->isar.mvfr2    = 0x00000043;
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     SET_IDREG(idregs, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+     SET_IDREG(idregs, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(idregs, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
+@@ -1005,8 +1005,8 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     /* Ordered by Section B.5: AArch64 ID registers */
+     cpu->midr          = 0x410FD493; /* r0p3 */
+     cpu->revidr        = 0;
+-    cpu->isar.id_pfr0  = 0x21110131;
+-    cpu->isar.id_pfr1  = 0x00010000; /* GIC filled in later */
++    SET_IDREG(idregs, ID_PFR0, 0x21110131);
++    SET_IDREG(idregs, ID_PFR1, 0x00010000); /* GIC filled in later */
+     cpu->isar.id_dfr0  = 0x16011099;
+     cpu->id_afr0       = 0;
+     cpu->isar.id_mmfr0 = 0x10201105;
+@@ -1024,7 +1024,7 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
+     cpu->isar.mvfr0    = 0x10110222;
+     cpu->isar.mvfr1    = 0x13211111;
+     cpu->isar.mvfr2    = 0x00000043;
+-    cpu->isar.id_pfr2  = 0x00000011;
++    SET_IDREG(idregs, ID_PFR2, 0x00000011);
+     SET_IDREG(idregs, ID_AA64PFR0, 0x1201111120111112ull); /* GIC filled in later */
+     SET_IDREG(idregs, ID_AA64PFR1, 0x0000000000000221ull);
+     SET_IDREG(idregs, ID_AA64ZFR0, 0x0000110100110021ull); /* with Crypto */
 -- 
 2.47.0
 
