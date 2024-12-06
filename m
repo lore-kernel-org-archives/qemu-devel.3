@@ -4,90 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E201E77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA5BDE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJZ6r-0005nW-0e; Fri, 06 Dec 2024 09:15:10 -0500
+	id 1tJZBL-0007Dm-R0; Fri, 06 Dec 2024 09:19:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJZ6f-0005hc-6K
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:14:58 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZBK-0007Ce-Gx
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:19:46 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJZ6d-0006d2-KK
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:14:56 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3e63e5c0c50so1133076b6e.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:14:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733494494; x=1734099294; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9DO3MfHseDPhC40PHjPiKrOrG7RrBBPn6LvQQR8Im1s=;
- b=huYBFxMD2S7naUVTqkjC6dnGdbpgAy5Hg0a0B7A2uYkupN4JiTA9pioL7KHS19eR6V
- oPEh5Cl7277FHPDwN4jL6IlFopnRmZiONxM6zWr6pesot7W+o7TVs99OMMQhi6w1Otuu
- SzOORMKC1lfZ2jG1l7k3T8gHU66JxboN8wE0n2u6aewyzgYJ/HA7iLxEPs0lCNvtjaTk
- zm+j8rZKolxRLQqMQxJVzj6hjjK+7anRggSJSgyQiBV6LFGisln6Koiv3sc8+RAzjqtm
- efEBDOhWFk+CscwVU3vioUddh/a4xSmDxjo34h2LNbGRfm5wk/P+TGbkdG0szQJRcbz7
- GSdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733494494; x=1734099294;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9DO3MfHseDPhC40PHjPiKrOrG7RrBBPn6LvQQR8Im1s=;
- b=AWWZjs7diBAwg4ce9tG4oDVIclwFjG6WfePl/2DALvn1a70uOU1+6f4lD4FcjAgXMO
- 6wEXqqCAUkoQe+7Gz+P/eAP+7HBsRWWfwSwkmT9ejF/3EgPcdn+8suSSVPs5+2wwijDZ
- vkEOTfpq7PHPgW3Z0t6orb7SRzd+naUxK86o+XjOpDjTdAs5pYlLKwN7cEPfeUEhXWTQ
- DkJAqFW8vfPKM6FrYVDvsHJiJfMRIyahJxdHSrLFUzayGxkgZe4iEhkbwa4s0UeoDg2g
- W7+AyGmwA4JfOitQLlHZWg7bhYEPKUvllMznwQoLgJ6d6egKc54+H1ASlTgoSKBrSzd0
- qcTg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWN07yK+kBbjrwS0UrVQDEzFjmN8X3pR2f5N805Oi2PZwm+DuQSuOYeOQwR0SkgSazPfcmt5N+DqgWB@nongnu.org
-X-Gm-Message-State: AOJu0YzJeWQB6cT1ALJri06QsJzSrVktuxHjFZ8JNrExrSs3edtAD/p5
- WMCSdsrEthaZ5F/s7FLmFpkoFKeXYnSn0D7rxZjiBThaGMpJgUW5/w2tZ/tOKE4=
-X-Gm-Gg: ASbGncvl41WzpRsznU25kKIuIW5DfTDqSA4aPuRA0agCu8NjQXbzQIAqNaqFQjV30f6
- pJ3kOlC0VhVa6QUfuVMIVd91g0uIFkJOS4cqAhdIXNp15pV0DVxBIub4ABmdoxXO7XAbDWN22zE
- FaVZIFTHnznCOnZYWkLL7hvs2CrfHuapXKGaCsE1xqHb2YZ+vp8BLSTwPOYfu9C0Kr1KRGyQZLv
- 29sNJ9E6OwG2NipLbvyewDvNZxVxVqxW99E0XggyGuKv+oxxNGfjwMR56uiKVI5Y/9d4nh/bcl6
- jmnKltW6usJ8euTdaalZp9YzoUNM
-X-Google-Smtp-Source: AGHT+IFYLHc/QJAzfJOsw9G9EygckyFDzQBrq5rkYrRqmcNOwkWeZZvZhe2yTn7S6W+av1/2HOAanw==
-X-Received: by 2002:a05:6808:120d:b0:3ea:3672:e638 with SMTP id
- 5614622812f47-3eb18324f55mr1963656b6e.3.1733494494089; 
- Fri, 06 Dec 2024 06:14:54 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eb07674e24sm753922b6e.9.2024.12.06.06.14.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 06:14:53 -0800 (PST)
-Message-ID: <df9cbf33-2e74-4ce7-a5d4-1cb952fabd83@linaro.org>
-Date: Fri, 6 Dec 2024 08:14:51 -0600
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZBJ-0007Kk-4T
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:19:46 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 6D36C2115D;
+ Fri,  6 Dec 2024 14:19:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733494783; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TPsCAjMJxN4MLxSM8E2wL6dpCwsP2ZJKlSWlZriEW0E=;
+ b=YZc/hOQggcR1CoyrWJpdD4j8gxrOgE0l9l0iiEHR3S+INOwXBXkrUQIj1ZgTqDWMHib1Pp
+ rsG20p/12MHTBm88dXOTZ5BKLVL81kotJ5CF79MC2xcSzGCbgMP5J6acXzJGCFwvTqSlCx
+ jyYHAXGUqvLOUXqp13Wne+Ckiet1aV4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733494783;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TPsCAjMJxN4MLxSM8E2wL6dpCwsP2ZJKlSWlZriEW0E=;
+ b=MkCc8uqpSo/l2tmH3D+TlKMaEM3uXLDQuz7Tzjn49ug1J3tJdp6gIkW4I9VjFmj2QN5kzJ
+ rBelQ2eQSJp1TGCw==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733494783; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TPsCAjMJxN4MLxSM8E2wL6dpCwsP2ZJKlSWlZriEW0E=;
+ b=YZc/hOQggcR1CoyrWJpdD4j8gxrOgE0l9l0iiEHR3S+INOwXBXkrUQIj1ZgTqDWMHib1Pp
+ rsG20p/12MHTBm88dXOTZ5BKLVL81kotJ5CF79MC2xcSzGCbgMP5J6acXzJGCFwvTqSlCx
+ jyYHAXGUqvLOUXqp13Wne+Ckiet1aV4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733494783;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TPsCAjMJxN4MLxSM8E2wL6dpCwsP2ZJKlSWlZriEW0E=;
+ b=MkCc8uqpSo/l2tmH3D+TlKMaEM3uXLDQuz7Tzjn49ug1J3tJdp6gIkW4I9VjFmj2QN5kzJ
+ rBelQ2eQSJp1TGCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id E5AB5138A7;
+ Fri,  6 Dec 2024 14:19:42 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id tqKlKf4HU2c4ZwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 06 Dec 2024 14:19:42 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, peterx@redhat.com,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, Avihai Horon
+ <avihaih@nvidia.com>, Alex
+ Williamson <alex.williamson@redhat.com>, Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2 5/7] migration/multifd: Remove sync processing on
+ postcopy
+In-Reply-To: <20241206005834.1050905-6-peterx@redhat.com>
+References: <20241206005834.1050905-1-peterx@redhat.com>
+ <20241206005834.1050905-6-peterx@redhat.com>
+Date: Fri, 06 Dec 2024 11:19:40 -0300
+Message-ID: <87ttbgc2rn.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 00/15] KVM: s390: CPU model for gen17
-To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
- borntraeger@linux.ibm.com
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.98%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,20 +120,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 06:27, Hendrik Brueckner wrote:
-> Introducing the gen17 CPU model with feature indications
-> comprising of:
-> 
-> * Concurrent-function facility with subcodes
-> * More vector extensions
-> * Ineffective-nonconstrained-transaction facility
-> * Even more msa crypto extensions
-> * Additional PLO subfunctions
+Peter Xu <peterx@redhat.com> writes:
 
-Is the revised Principals of Operation public yet?
-I can only find SA22-7832-13 from 2022.
+> Multifd never worked with postcopy, at least yet so far.
+>
+> Remove the sync processing there, because it's confusing, and they should
+> never appear.  Now if RAM_SAVE_FLAG_MULTIFD_FLUSH is observed, we fail hard
+> instead of trying to invoke multifd code.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-
-r~
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
