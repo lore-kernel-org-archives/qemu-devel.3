@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F8BFE7717B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:00:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9722E77179
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJYrn-0000tP-BK; Fri, 06 Dec 2024 08:59:35 -0500
+	id 1tJYtz-0001qA-Kq; Fri, 06 Dec 2024 09:01:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYrg-0000ss-1j
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:59:28 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYtx-0001pp-Pk
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:01:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYrd-0002D9-1h
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:59:27 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJYtw-0003cr-GB
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:01:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733493561;
+ s=mimecast20190719; t=1733493707;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Heu+DjuRugi1CyfCTP7ZfewxpxCCssuvWbEqWWDC82U=;
- b=R4+FqWMYGCUH43Rlsuc367x36vGQPPe1VwEDW7zDkIdUYFKmcRUso18aiftja2W/grvam5
- MYz5p16fCPhYFstHYWiK4mOIOPUyQlNPMWC5FcVk0KC58LPIvBaTfPSBbeay0vfeI7TRH1
- w2JqIpKOVMMtCtiG+kWdpHPa8YKwbYA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=vyyCFkF4QFl3r1AxMMtZuuTYpigqjqRD39rurg7KHaI=;
+ b=TcoNQX8RW9dvJbhqZtMyoBRySBCuZT82YflFFh64G+nxpn2wSvzV2Lq/dtopTrEx5Vonyc
+ 2vU6bV+vuDrmMnH6geGOie36kNUAasB+2FBY1Hpjtlu3x2TWumHiDtJFW1PYUf+peeeRJc
+ eghuvnZAVY8Y3xAZohBq1+WKVUUAMh0=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-ohJcM0GEM3SagPLM15jrkA-1; Fri, 06 Dec 2024 08:59:20 -0500
-X-MC-Unique: ohJcM0GEM3SagPLM15jrkA-1
-X-Mimecast-MFC-AGG-ID: ohJcM0GEM3SagPLM15jrkA
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3862a49fbdaso443301f8f.1
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 05:59:20 -0800 (PST)
+ us-mta-534-Ed8rTQLEMhSxu6xW6XSfBg-1; Fri, 06 Dec 2024 09:01:44 -0500
+X-MC-Unique: Ed8rTQLEMhSxu6xW6XSfBg-1
+X-Mimecast-MFC-AGG-ID: Ed8rTQLEMhSxu6xW6XSfBg
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3cff6aedbso634281a12.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:01:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733493559; x=1734098359;
+ d=1e100.net; s=20230601; t=1733493703; x=1734098503;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Heu+DjuRugi1CyfCTP7ZfewxpxCCssuvWbEqWWDC82U=;
- b=YCSdrMZ5eq2uMWGGd/5ymCwWwmMjKXaCgK5kiDrJWOnfzy6NT0CcLoFzupA4UszP7O
- Wnzo/gam+ZrLnl3zhqni3/CdszFbZw5DcF2RxtjVXiEwRId7UJxSSG1dwcBILdxGoxz0
- Ou/vIMMcixjD3rJ8VmC5DckZoVC+u9P7tp/21QIb1u/hxvYbAhAjBGUO05e/hzmuJ0tz
- Ic3GD48Phz7jY//hdorXAkUugqYlEEhLoa5b0M3Y3s1GVj7vQfjr2Xq1FWMWp0k6HUY6
- thraMin3FJmwVMTsb5aYP7XPb7KYHjtAAoF/KpKm524QT4imGVictrXqqmZ3QKNvchs3
- boYQ==
+ bh=vyyCFkF4QFl3r1AxMMtZuuTYpigqjqRD39rurg7KHaI=;
+ b=PaZ5Igkd/CSJtxPGCGY12/bWbEc9K5Tybu/CywLJ9Enz/I+4zS2EUOnqLMOmNMbxSV
+ 8rx0qzA0oANF7GyMlbYeeftX8oHv8RvAuMHMPxMzINKem+WgtV1lVBHDtLnnkpo1Pmyn
+ 2VNP+P6Jn+1DnV8rEAl9Pg6pkSZP5izYxnGrNeuu/kHLkyJjQJbuK2j74ADsaHYdkAOB
+ 7xxhRdewi/B8zGv1K/Qp2GgQ9UFtrOCmkTkRT+P6HSFAw7iFZeRP8eyt2a4gOsXXlfM+
+ aPBQpyLPASwUW+aX4y4Lf/og6QPWzXfxyNt0xmORHXrGr4RfTT8QaCpb3CHWwFsUfa0C
+ ptAA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbw7YQlMKjjrZbpsh/v3iXRCcicWVMxD3PsYg+tYN+abAncJsNcgYx+rlFjZA9Xq+jOQdkFD2PAAD8@nongnu.org
-X-Gm-Message-State: AOJu0YxfaXX6t2ygkIwxnbxoipk6npopvCNP0aDQe/QJxJ38KHoduibZ
- Uno2UiCuZsXNb/JcXZHHJz5+IIcJYNRO76DX8SAq5l9yYraNgp7jPvYVRYtcICSiehEIZbjYawr
- Jo3xL2FC4BSKy2+Em7QyrhLEdAm48iYWi5cS5fiFXnBTxyQCu19i0G3q7z/ij
-X-Gm-Gg: ASbGncvr/zmGQAQEeNimajakq8VvGs7/S7zXxOgzS4JpfBQdbGF225vZ5h+9LTzVomF
- dm+YhXTKDiiGdmqzttYBIus5leV4CQ/VB/mpd7Scdk61JKs57YTKQSOS3QcrYfdkbKl6lwKSnYX
- TRD42lYuPwpbRGxkqO2mAP4PkNK1RxH9vQBqr6Vj6XU39LSE+qcf73dxzS7yJ75PHG3f19+UB3B
- d2m4UkjRedsNICZ5B3y6SGoPtvc3kZhuTAxV/sfyIkN/xT5UQBvs9cclzm7VfQI3BzM25GpqGSd
- /vpCsQ==
-X-Received: by 2002:a05:6000:1fa9:b0:385:f092:e1a with SMTP id
- ffacd0b85a97d-3862b334f24mr2495219f8f.11.1733493559003; 
- Fri, 06 Dec 2024 05:59:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH8b0z34khOSr5bo8Dz37jFUhHkaa4mSCyiW6QFsKoluw8XJhF65x3wWWIfX9o1xTMQ3LTzJQ==
-X-Received: by 2002:a05:6000:1fa9:b0:385:f092:e1a with SMTP id
- ffacd0b85a97d-3862b334f24mr2495201f8f.11.1733493558685; 
- Fri, 06 Dec 2024 05:59:18 -0800 (PST)
+ AJvYcCXqi50rnAxD/sqrcJTGZjbo4rpFS+KB6sXeJVRBCbJYDJmf6BgqwRizlakdIW8d80cw1aw8fsvAYyBr@nongnu.org
+X-Gm-Message-State: AOJu0Yxvn3cV10mCVVZqnmsFIuGWVmvQ0yxHFIwOt3V4S/fdLJbylKbb
+ 8c3Qd+2mNjqQMubSQMr+oYpeY1zhlgfre4WP+B2HZcCajkdwUK3367Cu3Hon+sskB6hurI5LyP4
+ MxdCKl3wjFDrc2J3Ojyqx7tZpRuJ+y7+m/uW5YTwUW+cr6BH+TeK8
+X-Gm-Gg: ASbGnctjcqCYL9xj8I7vfT2AYqO6O4/UOpoBL/3KYGH2jKQRN0sHK45M6uLi0ReVkvf
+ L1vuXiIRWQHODZNw4n36kuxlGmXPt8D2VoujQezrmnHomDq56Aqz4g+XULXHoPtrlplErkhya4N
+ IXhLXtk0xCkSe9taj5WVlmn+CDXQhaWhcCshWYKNGX+LxpFe31zwEC9w2cU+N+ZSNAb5es/vnpz
+ IW0yj+OnVKToWGmfndqqurZjokZmmvvSKVPc3wOP+l9ZPxCUad46U3eOayzLT44POyXmJut6yRl
+ xMd4Zg==
+X-Received: by 2002:a05:6402:2116:b0:5d0:d2b1:6831 with SMTP id
+ 4fb4d7f45d1cf-5d3bdcae047mr2723457a12.14.1733493702796; 
+ Fri, 06 Dec 2024 06:01:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF/4sK6dc7q9tlYqG/uB9uErVArog6dRULFOxZDZ8ID/liuxerH1o0eLJ9e+brr3rKPv4Gx1g==
+X-Received: by 2002:a05:6402:2116:b0:5d0:d2b1:6831 with SMTP id
+ 4fb4d7f45d1cf-5d3bdcae047mr2723311a12.14.1733493700928; 
+ Fri, 06 Dec 2024 06:01:40 -0800 (PST)
 Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
  [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3862c1d346dsm1826061f8f.96.2024.12.06.05.59.17
+ 4fb4d7f45d1cf-5d149a25924sm2221539a12.17.2024.12.06.06.01.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 05:59:18 -0800 (PST)
-Message-ID: <fad4750d-6b4d-4258-a351-a8a79b376992@redhat.com>
-Date: Fri, 6 Dec 2024 14:59:15 +0100
+ Fri, 06 Dec 2024 06:01:40 -0800 (PST)
+Message-ID: <f061b3f8-3e68-4a25-90ce-6994d91e65ce@redhat.com>
+Date: Fri, 6 Dec 2024 15:01:38 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/7] tests/functional: Introduce a specific test for
- romulus-bmc machine
+Subject: Re: [PATCH 4/7] tests/functional: Introduce a specific test for
+ ast2500 SoC
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -86,7 +86,7 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20241206131132.520911-1-clg@redhat.com>
- <20241206131132.520911-4-clg@redhat.com>
+ <20241206131132.520911-5-clg@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -131,7 +131,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241206131132.520911-4-clg@redhat.com>
+In-Reply-To: <20241206131132.520911-5-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -143,7 +143,7 @@ X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,17 +160,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 06/12/2024 14.11, Cédric Le Goater wrote:
-> This simply moves the romulus-bmc test to a new test file. No changes
-> in the test. The do_test_arm_aspeed routine is removed from the
-> test_arm_aspeed.py file because it is now unused.
+> This moves the ast2500-evb tests to a new test file and extends the
+> aspeed module with routines used to run the buildroot and sdk
+> tests. No changes in the test.
 > 
 > Signed-off-by: Cédric Le Goater <clg@redhat.com>
 > ---
->   tests/functional/meson.build                |  2 ++
->   tests/functional/test_arm_aspeed.py         | 26 ---------------------
->   tests/functional/test_arm_aspeed_romulus.py | 24 +++++++++++++++++++
->   3 files changed, 26 insertions(+), 26 deletions(-)
->   create mode 100644 tests/functional/test_arm_aspeed_romulus.py
+>   tests/functional/aspeed.py                  | 33 ++++++++++++
+>   tests/functional/meson.build                |  2 +
+>   tests/functional/test_arm_aspeed.py         | 44 ---------------
+>   tests/functional/test_arm_aspeed_ast2500.py | 59 +++++++++++++++++++++
+>   4 files changed, 94 insertions(+), 44 deletions(-)
+>   create mode 100644 tests/functional/test_arm_aspeed_ast2500.py
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
