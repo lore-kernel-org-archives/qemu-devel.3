@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D2AE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E35E8E77179
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:13:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJfd5-0001Vs-7S; Fri, 06 Dec 2024 16:12:51 -0500
+	id 1tJfd6-0001cZ-C6; Fri, 06 Dec 2024 16:12:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcy-0001Fh-6b
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:46 -0500
+ id 1tJfcz-0001Hh-Cr
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:47 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcq-0000WX-Mp
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:39 -0500
+ id 1tJfcx-0000Wt-W2
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:12:45 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tJfcn-00000003Mwd-0DYE; Fri, 06 Dec 2024 22:12:33 +0100
-Message-ID: <454ab654-634c-4286-87f8-6379aa6fa27c@maciej.szmigiero.name>
-Date: Fri, 6 Dec 2024 22:12:27 +0100
+ id 1tJfcr-00000003Mwd-1Dbg; Fri, 06 Dec 2024 22:12:37 +0100
+Message-ID: <a2b3b2b6-4b7e-4339-8483-72de7338b544@maciej.szmigiero.name>
+Date: Fri, 6 Dec 2024 22:12:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 10/24] migration/multifd: Device state transfer support
- - receive side
+Subject: Re: [PATCH v3 11/24] migration/multifd: Make multifd_send() thread
+ safe
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -39,8 +39,8 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <8679a04fda669b0e8f0e3b8c598aa4a58a67de40.1731773021.git.maciej.szmigiero@oracle.com>
- <Z1HPf850jFdBD9IS@x1n>
+ <20fadbcc46cc7cc698ce24e83a3e0fc0c35cd2d8.1731773021.git.maciej.szmigiero@oracle.com>
+ <Z1HSEor05q3XYH2m@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -84,7 +84,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z1HPf850jFdBD9IS@x1n>
+In-Reply-To: <Z1HSEor05q3XYH2m@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: none client-ip=145.239.82.108;
@@ -111,219 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5.12.2024 17:06, Peter Xu wrote:
-> On Sun, Nov 17, 2024 at 08:20:05PM +0100, Maciej S. Szmigiero wrote:
+On 5.12.2024 17:17, Peter Xu wrote:
+> On Sun, Nov 17, 2024 at 08:20:06PM +0100, Maciej S. Szmigiero wrote:
 >> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>
->> Add a basic support for receiving device state via multifd channels -
->> channels that are shared with RAM transfers.
+>> multifd_send() function is currently not thread safe, make it thread safe
+>> by holding a lock during its execution.
 >>
->> Depending whether MULTIFD_FLAG_DEVICE_STATE flag is present or not in the
->> packet header either device state (MultiFDPacketDeviceState_t) or RAM
->> data (existing MultiFDPacket_t) is read.
->>
->> The received device state data is provided to
->> qemu_loadvm_load_state_buffer() function for processing in the
->> device's load_state_buffer handler.
+>> This way it will be possible to safely call it concurrently from multiple
+>> threads.
 >>
 >> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > 
 > Reviewed-by: Peter Xu <peterx@redhat.com>
 > 
-> Only a few nitpicks:
+> One nitpick:
 > 
 >> ---
->>   migration/multifd.c | 87 +++++++++++++++++++++++++++++++++++++++++----
->>   migration/multifd.h | 26 +++++++++++++-
->>   2 files changed, 105 insertions(+), 8 deletions(-)
+>>   migration/multifd.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
 >>
 >> diff --git a/migration/multifd.c b/migration/multifd.c
->> index 999b88b7ebcb..9578a985449b 100644
+>> index 9578a985449b..4575495c8816 100644
 >> --- a/migration/multifd.c
 >> +++ b/migration/multifd.c
->> @@ -21,6 +21,7 @@
->>   #include "file.h"
->>   #include "migration.h"
->>   #include "migration-stats.h"
->> +#include "savevm.h"
->>   #include "socket.h"
->>   #include "tls.h"
->>   #include "qemu-file.h"
->> @@ -252,14 +253,24 @@ static int multifd_recv_unfill_packet_header(MultiFDRecvParams *p,
->>       return 0;
->>   }
+>> @@ -50,6 +50,10 @@ typedef struct {
 >>   
->> -static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->> +static int multifd_recv_unfill_packet_device_state(MultiFDRecvParams *p,
->> +                                                   Error **errp)
->> +{
->> +    MultiFDPacketDeviceState_t *packet = p->packet_dev_state;
+>>   struct {
+>>       MultiFDSendParams *params;
 >> +
->> +    packet->instance_id = be32_to_cpu(packet->instance_id);
->> +    p->next_packet_size = be32_to_cpu(packet->next_packet_size);
+>> +    /* multifd_send() body is not thread safe, needs serialization */
+>> +    QemuMutex multifd_send_mutex;
 >> +
->> +    return 0;
->> +}
->> +
->> +static int multifd_recv_unfill_packet_ram(MultiFDRecvParams *p, Error **errp)
+>>       /*
+>>        * Global number of generated multifd packets.
+>>        *
+>> @@ -331,6 +335,7 @@ static void multifd_send_kick_main(MultiFDSendParams *p)
+>>    */
+>>   bool multifd_send(MultiFDSendData **send_data)
 >>   {
->>       const MultiFDPacket_t *packet = p->packet;
->>       int ret = 0;
->>   
->>       p->next_packet_size = be32_to_cpu(packet->next_packet_size);
->>       p->packet_num = be64_to_cpu(packet->packet_num);
->> -    p->packets_recved++;
->>   
->>       if (!(p->flags & MULTIFD_FLAG_SYNC)) {
->>           ret = multifd_ram_unfill_packet(p, errp);
->> @@ -271,6 +282,17 @@ static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->>       return ret;
->>   }
->>   
->> +static int multifd_recv_unfill_packet(MultiFDRecvParams *p, Error **errp)
->> +{
->> +    p->packets_recved++;
->> +
->> +    if (p->flags & MULTIFD_FLAG_DEVICE_STATE) {
->> +        return multifd_recv_unfill_packet_device_state(p, errp);
->> +    }
->> +
->> +    return multifd_recv_unfill_packet_ram(p, errp);
->> +}
->> +
->>   static bool multifd_send_should_exit(void)
->>   {
->>       return qatomic_read(&multifd_send_state->exiting);
->> @@ -1023,6 +1045,7 @@ static void multifd_recv_cleanup_channel(MultiFDRecvParams *p)
->>       p->packet_len = 0;
->>       g_free(p->packet);
->>       p->packet = NULL;
->> +    g_clear_pointer(&p->packet_dev_state, g_free);
->>       g_free(p->normal);
->>       p->normal = NULL;
->>       g_free(p->zero);
->> @@ -1124,6 +1147,28 @@ void multifd_recv_sync_main(void)
->>       trace_multifd_recv_sync_main(multifd_recv_state->packet_num);
->>   }
->>   
->> +static int multifd_device_state_recv(MultiFDRecvParams *p, Error **errp)
->> +{
->> +    g_autofree char *idstr = NULL;
->> +    g_autofree char *dev_state_buf = NULL;
->> +    int ret;
->> +
->> +    dev_state_buf = g_malloc(p->next_packet_size);
->> +
->> +    ret = qio_channel_read_all(p->c, dev_state_buf, p->next_packet_size, errp);
->> +    if (ret != 0) {
->> +        return ret;
->> +    }
->> +
->> +    idstr = g_strndup(p->packet_dev_state->idstr,
->> +                      sizeof(p->packet_dev_state->idstr));
->> +
->> +    return qemu_loadvm_load_state_buffer(idstr,
->> +                                         p->packet_dev_state->instance_id,
->> +                                         dev_state_buf, p->next_packet_size,
->> +                                         errp);
->> +}
->> +
->>   static void *multifd_recv_thread(void *opaque)
->>   {
->>       MultiFDRecvParams *p = opaque;
->> @@ -1137,6 +1182,7 @@ static void *multifd_recv_thread(void *opaque)
->>       while (true) {
->>           MultiFDPacketHdr_t hdr;
->>           uint32_t flags = 0;
->> +        bool is_device_state = false;
->>           bool has_data = false;
->>           uint8_t *pkt_buf;
->>           size_t pkt_len;
->> @@ -1159,8 +1205,14 @@ static void *multifd_recv_thread(void *opaque)
->>                   break;
->>               }
->>   
->> -            pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
->> -            pkt_len = p->packet_len - sizeof(hdr);
->> +            is_device_state = p->flags & MULTIFD_FLAG_DEVICE_STATE;
->> +            if (is_device_state) {
->> +                pkt_buf = (uint8_t *)p->packet_dev_state + sizeof(hdr);
->> +                pkt_len = sizeof(*p->packet_dev_state) - sizeof(hdr);
->> +            } else {
->> +                pkt_buf = (uint8_t *)p->packet + sizeof(hdr);
->> +                pkt_len = p->packet_len - sizeof(hdr);
->> +            }
->>   
->>               ret = qio_channel_read_all_eof(p->c, (char *)pkt_buf, pkt_len,
->>                                              &local_err);
->> @@ -1178,9 +1230,14 @@ static void *multifd_recv_thread(void *opaque)
->>               flags = p->flags;
->>               /* recv methods don't know how to handle the SYNC flag */
->>               p->flags &= ~MULTIFD_FLAG_SYNC;
->> -            if (!(flags & MULTIFD_FLAG_SYNC)) {
->> -                has_data = p->normal_num || p->zero_num;
->> +
->> +            if (is_device_state) {
->> +                has_data = p->next_packet_size > 0;
->> +            } else {
->> +                has_data = !(flags & MULTIFD_FLAG_SYNC) &&
->> +                    (p->normal_num || p->zero_num);
->>               }
->> +
->>               qemu_mutex_unlock(&p->mutex);
->>           } else {
->>               /*
->> @@ -1209,14 +1266,29 @@ static void *multifd_recv_thread(void *opaque)
->>           }
->>   
->>           if (has_data) {
->> -            ret = multifd_recv_state->ops->recv(p, &local_err);
->> +            if (is_device_state) {
->> +                assert(use_packets);
->> +                ret = multifd_device_state_recv(p, &local_err);
->> +            } else {
->> +                ret = multifd_recv_state->ops->recv(p, &local_err);
->> +            }
->>               if (ret != 0) {
->>                   break;
->>               }
->> +        } else if (is_device_state) {
->> +            error_setg(&local_err,
->> +                       "multifd: received empty device state packet");
->> +            break;
+>> +    QEMU_LOCK_GUARD(&multifd_send_state->multifd_send_mutex);
 > 
-> You used assert anyway elsewhere, and this also smells like programming
-> error.  We could stick with assert above and reduce "if / elif ...":
+> Better move this after the varaible declarations to be clear..
 > 
->      if (is_device_state) {
->          assert(p->next_packet_size > 0);
->          has_data = true;
->      }
-> 
-> Then drop else if.
-
-It's not necessarily a programming error, but rather a problem with the
-received bit stream or its incompatibility with the receiving QEMU version.
-
-So I think returning an error is more appropriate than triggering
-an assert() failure for that.
-
->>           }
->>   
->>           if (use_packets) {
->>               if (flags & MULTIFD_FLAG_SYNC) {
->> +                if (is_device_state) {
->> +                    error_setg(&local_err,
->> +                               "multifd: received SYNC device state packet");
->> +                    break;
->> +                }
-> 
-> Same here. I'd use assert().
+> Perhaps even after multifd_send_should_exit() because reading that doesn't
+> need a lock, just in case something wanna quit but keep stuck with the
+> mutex.
 > 
 
-Same here :) - the sender sent us possibly wrong packet or packet of
-incompatible version, we should handle this gracefully rather than
-assert()/abort() QEMU.
+Will do.
 
 Thanks,
 Maciej
