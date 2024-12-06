@@ -4,88 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BD22E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:09:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082B2E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:10:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJasL-0004Zn-31; Fri, 06 Dec 2024 11:08:17 -0500
+	id 1tJauh-0005kp-NK; Fri, 06 Dec 2024 11:10:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tJasG-0004Sm-Ng
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:08:13 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJauf-0005kN-7y
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:10:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1tJasD-00080z-Dj
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:08:12 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJaub-0001UV-Pi
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:10:40 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733501284;
+ s=mimecast20190719; t=1733501436;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VAx9XHZ8lL9jBGampJQkp2O3S0lS12uEwutLaGi6ckg=;
- b=QrhtlZNW4QBBSg53ERuNcQAMTFFDSj0DnK1nGk1lDeU6YH42T59jBGLFDkwZfXqfBnXUfZ
- bF1K47qgEb3iVENPHMR4UyY4tfQHwGdlIOcTPsJgYmkWHsNU06exEM16sgR9Cwd66QT1kc
- m8oj35WWBUI6QqRK6rOGyCFUYUo/DXQ=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=H/kPRRodLycyRKIyNLFAoXTASubjN8WcrZGrDVzsxvk=;
+ b=bTHxtfPW3EGQNtQ8DdyybD4bjEO4bMUtZMAUF0nZSq5DPcgTNCCToGS3eRFOVpRSZ1lxKF
+ b84ZkFeZREfLfbBjd35zUIKN3nBi+LaUD1CYSgQFiUYNRNcGTCzPT0Ajat3C7sp0TxjoiU
+ xSJDoVu1yqsbslBIg9/Zx5D5HLI+mnk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-621-097H9KNlNG-ov7d97PzOLA-1; Fri, 06 Dec 2024 11:08:03 -0500
-X-MC-Unique: 097H9KNlNG-ov7d97PzOLA-1
-X-Mimecast-MFC-AGG-ID: 097H9KNlNG-ov7d97PzOLA
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-843e2e46265so34090739f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:08:03 -0800 (PST)
+ us-mta-620-WDR-e-KcOqS7b_RtrNuM8A-1; Fri, 06 Dec 2024 11:10:34 -0500
+X-MC-Unique: WDR-e-KcOqS7b_RtrNuM8A-1
+X-Mimecast-MFC-AGG-ID: WDR-e-KcOqS7b_RtrNuM8A
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-434996c1aa7so18675925e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:10:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733501283; x=1734106083;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VAx9XHZ8lL9jBGampJQkp2O3S0lS12uEwutLaGi6ckg=;
- b=BiqOExyrfyZ1v1By1D9Rza3MsZAMcTinWkyZ+PNvD7zsoR7zJ/So/sQlNVDBcx0bq3
- KR+TNdkrZsIB6YbtXBQJAtZjvS2dIY2awMQrJ2UtAT6nZ/V6n+mGBVwjYjvDCVr3FzpE
- dOKsOpbnGRxPG1wlKCGLmd6kQQXfryVe1PFxOCvhsBz6z9qdMr5ifQApYcb3Ht4q40K/
- LmVNPMSL88Dqrn5zWqdHIVD7vv/LztZ38mHKCfAb0AblU3hjaCoOAZSeDRoxfSXRJqGP
- IIO8cynPoXEVj7kjiJvkgx/XOneNT8/B9V0iqi45OG8evMUA2W8c/EtQVfdtqxS6czZI
- TYdw==
+ d=1e100.net; s=20230601; t=1733501433; x=1734106233;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=H/kPRRodLycyRKIyNLFAoXTASubjN8WcrZGrDVzsxvk=;
+ b=KY142+/rFsZG6T7pb4GiuytOWtLPzRmr/zuEy2xsWppoBeHo+De2OjVMav+4HJCE9V
+ yKGrX6t9Pf25/8NFccBmKFdq94iAbJttVb0n72ltM8Qyew5D1eQcIroJ6bt/PNzv3lzF
+ SUZ/TSO9JHV9Dl5u08Hx7CQv1pqMXVqRzk9HBMvK6UCQHa4Js4atKovnPrZCixbTTM5m
+ OQ/GSJ+rr9tAJ1kR16f4YFPMbX4Xa4wOd2LfgiZnVNCEkFRK3tPdV8Tt9JHRM3wcWS8V
+ KxTmdIBRzAyRgT+NIxdB6zOfkC7993qgC86SGMv2SknYxD2eSFafJ7HHnGTzWzpd8U5/
+ 92QA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDQuBRp5p+acheoH9B+uB3M/EAh7g8s/ZCSEXv/wYfPTKKcAnqFEY+cstKMyTu3OgoXt5h9zlkEt3q@nongnu.org
-X-Gm-Message-State: AOJu0YylosvOPFlIm9JAqvbjAvlWAAn/gH/qVoosAVLs+AOx7FmShyR/
- 6mWBoXBDq6Wq3hKcU5VQ/7MW1lm8uM1L9Lcpue7UbI42lOuOXf+YDj2PlVSoXaiKl3aBc1j0ji0
- vUB8aTHMk4gRXD5pKJaaU7uV7uwOBIXi0VpYbOdBfO11q3syn1Rqi
-X-Gm-Gg: ASbGncvldQG7oNNTJyFA9aI+uqw2XaPVv2CO036gC+ZJHt7UI8JhVmzT2AomPqnpA3b
- NKxdkJv7NeZfnj6TGTqGr+eRYVPX4zIX+rxJ7tSEQZFs+hkAEKOX2O7jz6jL0AiGI2w/iTTBDPY
- JkfGnGUpmFXZoJCwWEIoslDNaBlaWxbNzLhJfBVVH79mn7OgWyEq6LSoBbGaIw/6KgF+MOOyWPh
- /C0HXLFd9EGD1OZmFhXwTIGsb1D/5yjZGMxoxUoxNvcF8imQbfjvQ==
-X-Received: by 2002:a05:6e02:1544:b0:3a7:e23c:d86c with SMTP id
- e9e14a558f8ab-3a811e4b82dmr10441155ab.6.1733501282859; 
- Fri, 06 Dec 2024 08:08:02 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGkf3QHhoWy/ERdP/UljwO9AsSonS7aK6j3Oq68fD58PIv8XIIyr7AmqTF2OgBCYr0piEvzoQ==
-X-Received: by 2002:a05:6e02:1544:b0:3a7:e23c:d86c with SMTP id
- e9e14a558f8ab-3a811e4b82dmr10441065ab.6.1733501282519; 
- Fri, 06 Dec 2024 08:08:02 -0800 (PST)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- e9e14a558f8ab-3a808db1f49sm11632175ab.34.2024.12.06.08.08.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 08:08:01 -0800 (PST)
-Date: Fri, 6 Dec 2024 09:07:59 -0700
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Tomita Moeko <tomitamoeko@gmail.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>,
- qemu-devel@nongnu.org, Corvin =?UTF-8?B?S8O2aG5l?= <c.koehne@beckhoff.com>
-Subject: Re: [PATCH v4 00/10] vfio/igd: Enable legacy mode on more devices
-Message-ID: <20241206090759.7e2ea1cc.alex.williamson@redhat.com>
-In-Reply-To: <20241206122749.9893-1-tomitamoeko@gmail.com>
-References: <20241206122749.9893-1-tomitamoeko@gmail.com>
-Organization: Red Hat
+ AJvYcCWk+adzoY/k/wAy4zbbrNvxxOc1mTNzGvz/6iwW7U40/8g7Rbh6EHOAB08ivvLYdRtBiPG7sEGYhBz+@nongnu.org
+X-Gm-Message-State: AOJu0Yyov0LYW5ddFiQ8Nmysk/10OAMU7CViCxktacOtLtH3VlTb2qGt
+ Tw0A7y6e3sgjkUrlnddNjeDhs6byeVxWnluwavjapz/+my3mM+33PiFHY6fqawbVkfnypmnaKvS
+ F4I2lzJFyvFe6AnngfyFCfEfwoq86NwofkdP4EOcEw2P03AgSVZjB
+X-Gm-Gg: ASbGncsNoFIq19Hrij2EFDrXon/AnD7hArnjNkmq0d5Bptm5ff6vQo9fpHP767hbwfN
+ BwjE8+MzaJ8m+Gbnf2cWeuYS2eCTvxpNnf9NphyxYiKGX1DZA/HZNuspanp7DlJmsidMkfhGaIv
+ zdPzH/DWxrB+402Oh9hml7dKwJuoOc7pz2j11VJy/krtvvqIm/8yu/qaOmd35RuNUl2TvCWdUJG
+ yYq70aIORMCFOVKrEjJwRXkIX9vOcBStuYcenH4/xgdgCA93yB1URtFIbmn7ByLdSlpXKchm3Jc
+ MhDfLw==
+X-Received: by 2002:a05:600c:4f02:b0:431:5f1c:8359 with SMTP id
+ 5b1f17b1804b1-434ddeb7f8emr36118355e9.15.1733501432802; 
+ Fri, 06 Dec 2024 08:10:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHA9wuMnHLD0VQvWucRTbQ3ehmOi+X9/youpSin22OI19JYFGUWPBj/61N12xt5CMz9fowCfA==
+X-Received: by 2002:a05:600c:4f02:b0:431:5f1c:8359 with SMTP id
+ 5b1f17b1804b1-434ddeb7f8emr36117835e9.15.1733501432383; 
+ Fri, 06 Dec 2024 08:10:32 -0800 (PST)
+Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
+ [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434da0dac17sm59473725e9.23.2024.12.06.08.10.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Dec 2024 08:10:32 -0800 (PST)
+Message-ID: <3d48414f-903b-4b15-b85d-c2edc5ffb9b3@redhat.com>
+Date: Fri, 6 Dec 2024 17:10:30 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=alex.williamson@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/usb/hcd-xhci-nec: Remove unused XHCINecState::flags
+ field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, QEMU Trivial <qemu-trivial@nongnu.org>
+References: <20241127122812.89487-1-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241127122812.89487-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
@@ -110,47 +154,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri,  6 Dec 2024 20:27:38 +0800
-Tomita Moeko <tomitamoeko@gmail.com> wrote:
+On 27/11/2024 13.28, Philippe Mathieu-Daudé wrote:
+> Commit b9599519a01 ("hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST
+> flag") remove the last use of XHCINecState::flags but neglected
+> to remove it; do that now.
+> 
+> Reported-by: Nicholas Piggin <npiggin@gmail.com>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/usb/hcd-xhci-nec.c | 5 +----
+>   1 file changed, 1 insertion(+), 4 deletions(-)
+> 
+> diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+> index 0c063b3697d..1a191fc7372 100644
+> --- a/hw/usb/hcd-xhci-nec.c
+> +++ b/hw/usb/hcd-xhci-nec.c
+> @@ -30,10 +30,8 @@
+>   OBJECT_DECLARE_SIMPLE_TYPE(XHCINecState, NEC_XHCI)
+>   
+>   struct XHCINecState {
+> -    /*< private >*/
+>       XHCIPciState parent_obj;
+> -    /*< public >*/
+> -    uint32_t flags;
+> +
+>       uint32_t intrs;
+>       uint32_t slots;
+>   };
+> @@ -51,7 +49,6 @@ static void nec_xhci_instance_init(Object *obj)
+>       XHCIPciState *pci = XHCI_PCI(obj);
+>       XHCINecState *nec = NEC_XHCI(obj);
+>   
+> -    pci->xhci.flags    = nec->flags;
+>       pci->xhci.numintrs = nec->intrs;
+>       pci->xhci.numslots = nec->slots;
+>   }
 
-> This patchset extends the support of legacy mode igd passthrough to
-> all Intel Gen 11 and 12 devices (including Ice Lake, Jasper Lake,
-> Rocket Lake, Alder Lake and Raptor Lake), and emulates GGC register
-> in MMIO BAR0 for better compatibiltiy (It is tested Windows and GOP
-> driver will read this MMIO register).
-> 
-> It also replaces magic numbers with macros to improve readability,
-> and aligns behavior (BDSM registor mirroring and GGMS calculation for
-> gen7) with i915 driver to avoid possible issues.
-> 
-> The x-igd-gms option removed in 971ca22f041b ("vfio/igd: don't set
-> stolen memory size to zero") is also added back so that data stolen
-> memory size can be specified for guest. It is tested that GMS may
-> related to framebuffer size, a small GMS value may cause display issues
-> like blackscreen. It can be changed by DVMT Pre-allocated option in
-> host BIOS, but not all BIOS comes with this option. Having it in QEMU
-> helps resolves such issues.
-> 
-> This patchset was verified on Intel i9-12900K CPU(UHD 770, 8086:4680)
-> with custom OVMF firmware [1] and IntelGopDriver extracted from host
-> bios. IGD device works well in both Windows and Linux guests, and
-> scored 726 in 3DMark Time Spy Graphics on Windows guest.
-> 
-> [1] https://github.com/tomitamoeko/edk2/commits/igd-pt-adl/
-> 
-> Btw, IO BAR4 seems never be used by guest, and it the IO BAR itself
-> is not working on Gen11+ devices in my experiments. There is no hints
-> about that in old commit message and mailing list. It would be greatly
-> appreciated if someone shares the background.
-> 
-> Changelog:
-> v4:
-> * Move "vfio/igd: fix GTT stolen memory size calculation for gen 8+" to
->   the first.
-> Link: https://lore.kernel.org/qemu-devel/20241205105535.30498-1-tomitamoeko@gmail.com/
-
-Series:
-
-Reviewed-by: Alex Williamson <alex.williamson@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
