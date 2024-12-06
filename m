@@ -4,72 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CBBDE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 18:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4965E77179
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 18:26:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJctw-0006sM-Ul; Fri, 06 Dec 2024 13:18:05 -0500
+	id 1tJd0x-000408-Vu; Fri, 06 Dec 2024 13:25:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJcto-0006iJ-1A
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 13:17:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tJd0s-0003zi-5T
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 13:25:14 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJctf-0005xV-GF
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 13:17:54 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733509061;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=c4uFeZSoR59ahaJfkFIGos/Z3D4DZaECEsQT1YrRS3g=;
- b=VwIOYqEKKOBRF0U9uIReWyGoBz2ZpIpW7NgzRMozCkqndyOb2eHqwB0i35zSBlosHvMhmT
- bHsD3V8kIl4SKfTyVEsn8bmNlCf3RlJsPCJa3j0bQsDXOODZcYV8GApghaUW5CCoFk9mYI
- tCNS3DnA2ie2AYf9C2gc2Ky+sVFOphY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-1zGNmUFMPhGq8C6IAdeyhw-1; Fri,
- 06 Dec 2024 13:17:38 -0500
-X-MC-Unique: 1zGNmUFMPhGq8C6IAdeyhw-1
-X-Mimecast-MFC-AGG-ID: 1zGNmUFMPhGq8C6IAdeyhw
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60F6E1955DE3; Fri,  6 Dec 2024 18:17:36 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.39.192.66])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C9704300019E; Fri,  6 Dec 2024 18:17:30 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org,
-	"Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>
-Subject: [PATCH for-10.0] tests/functional: Convert the intel_iommu avocado
- test
-Date: Fri,  6 Dec 2024 19:17:28 +0100
-Message-ID: <20241206181728.1241169-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tJd0o-0008D1-Im
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 13:25:13 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tJd0i-00000003MeV-01oP; Fri, 06 Dec 2024 19:25:04 +0100
+Message-ID: <3c40ff15-0b7d-40bc-a11e-c1cb2efd7785@maciej.szmigiero.name>
+Date: Fri, 6 Dec 2024 19:24:58 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/24] migration: Add MIG_CMD_SWITCHOVER_START and its
+ load handler
+To: Zhang Chen <zhangckid@gmail.com>, Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <624309a8e37f7779336bd5c0573d24f155b2ed41.1731773021.git.maciej.szmigiero@oracle.com>
+ <Z1DJroYiKUwK-kMY@x1n>
+ <CAK3tnvLsfe2FJ-zVkJRCk1xKDJ0ULP8DFaDMOFgDFCF4d+0j2g@mail.gmail.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <CAK3tnvLsfe2FJ-zVkJRCk1xKDJ0ULP8DFaDMOFgDFCF4d+0j2g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: none client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,226 +112,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert the intel_iommu test to the new functional framework.
-This test needs some changes since we neither support the old 'LinuxTest'
-class in the functional framework yet, nor a way to use SSH for running
-commands in the guest. So we now directly download a Fedora kernel and
-initrd and set up the serial console for executing the commands and for
-looking for the results.
+On 5.12.2024 20:46, Zhang Chen wrote:
+> On Thu, Dec 5, 2024 at 5:30 AM Peter Xu <peterx@redhat.com> wrote:
+>>
+>> On Sun, Nov 17, 2024 at 08:20:00PM +0100, Maciej S. Szmigiero wrote:
+>>> diff --git a/migration/colo.c b/migration/colo.c
+>>> index 9590f281d0f1..a75c2c41b464 100644
+>>> --- a/migration/colo.c
+>>> +++ b/migration/colo.c
+>>> @@ -452,6 +452,9 @@ static int colo_do_checkpoint_transaction(MigrationState *s,
+>>>           bql_unlock();
+>>>           goto out;
+>>>       }
+>>> +
+>>> +    qemu_savevm_maybe_send_switchover_start(s->to_dst_file);
+>>> +
+>>>       /* Note: device state is saved into buffer */
+>>>       ret = qemu_save_device_state(fb);
+>>
+>> Looks all good, except I'm not sure whether we should touch colo.  IIUC it
+>> should be safer to remove it.
+>>
+> 
+> Agree with Peter's comments.
+> If I understand correctly, the current COLO doesn't support multifd migration.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                                   |   1 +
- tests/functional/meson.build                  |   1 +
- .../test_intel_iommu.py}                      | 119 ++++++++----------
- 3 files changed, 51 insertions(+), 70 deletions(-)
- rename tests/{avocado/intel_iommu.py => functional/test_intel_iommu.py} (41%)
- mode change 100644 => 100755
+This patch adds a generic migration bit stream command, which could be used
+for other purposes than multifd device state migration too.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index a62659b330..2ca452dbf9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3679,6 +3679,7 @@ S: Supported
- F: hw/i386/intel_iommu.c
- F: hw/i386/intel_iommu_internal.h
- F: include/hw/i386/intel_iommu.h
-+F: tests/functional/test_intel_iommu.py
- 
- AMD-Vi Emulation
- S: Orphan
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 30c3eda7e4..dfc95fd904 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -238,6 +238,7 @@ tests_x86_64_system_quick = [
- 
- tests_x86_64_system_thorough = [
-   'acpi_bits',
-+  'intel_iommu',
-   'x86_64_tuxrun',
-   'linux_initrd',
-   'multiprocess',
-diff --git a/tests/avocado/intel_iommu.py b/tests/functional/test_intel_iommu.py
-old mode 100644
-new mode 100755
-similarity index 41%
-rename from tests/avocado/intel_iommu.py
-rename to tests/functional/test_intel_iommu.py
-index 992583fa7d..6e47b1e9de
---- a/tests/avocado/intel_iommu.py
-+++ b/tests/functional/test_intel_iommu.py
-@@ -1,3 +1,5 @@
-+#!/usr/bin/env python3
-+#
- # INTEL_IOMMU Functional tests
- #
- # Copyright (c) 2021 Red Hat, Inc.
-@@ -7,116 +9,93 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
--import os
- 
--from avocado import skipUnless
--from avocado_qemu.linuxtest import LinuxTest
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+
-+class IntelIOMMU(LinuxKernelTest):
- 
--@skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
--class IntelIOMMU(LinuxTest):
--    """
--    :avocado: tags=arch:x86_64
--    :avocado: tags=distro:fedora
--    :avocado: tags=distro_version:31
--    :avocado: tags=machine:q35
--    :avocado: tags=accel:kvm
--    :avocado: tags=intel_iommu
--    :avocado: tags=flaky
--    """
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/39/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        '5f2ef0de47f8d79d5ee9bf8b0ee6d5ba4d987c2f9a16b8b511a7c69e53931fe3')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/'
-+         'releases/39/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '5bc29e2d872ceeb39a9698d42da3fb0afd7583dc7180de05a6b78bcc726674bb')
- 
-     IOMMU_ADDON = ',iommu_platform=on,disable-modern=off,disable-legacy=on'
-+    default_kernel_params = 'console=ttyS0 rd.rescue quiet '
-     kernel_path = None
-     initrd_path = None
-     kernel_params = None
- 
--    def set_up_boot(self):
--        path = self.download_boot()
--        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
--                         'drive=drv0,id=virtio-disk0,bootindex=1,'
--                         'werror=stop,rerror=stop' + self.IOMMU_ADDON)
--        self.vm.add_args('-device', 'virtio-gpu-pci' + self.IOMMU_ADDON)
--        self.vm.add_args('-drive',
--                         'file=%s,if=none,cache=writethrough,id=drv0' % path)
--
--    def setUp(self):
--        super(IntelIOMMU, self).setUp(None, 'virtio-net-pci' + self.IOMMU_ADDON)
--
-     def add_common_args(self):
-         self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
-         self.vm.add_args('-object',
-                          'rng-random,id=rng0,filename=/dev/urandom')
-+        self.vm.add_args('-device', 'virtio-net-pci' + self.IOMMU_ADDON)
-+        self.vm.add_args('-device', 'virtio-gpu-pci' + self.IOMMU_ADDON)
-+        self.vm.add_args("-m", "1G")
- 
--    def common_vm_setup(self, custom_kernel=None):
-+    def common_vm_setup(self):
-+        self.set_machine('q35')
-         self.require_accelerator("kvm")
-         self.add_common_args()
-         self.vm.add_args("-accel", "kvm")
- 
--        if custom_kernel is None:
--            return
--
--        kernel_url = self.distro.pxeboot_url + 'vmlinuz'
--        kernel_hash = '5b6f6876e1b5bda314f93893271da0d5777b1f3c'
--        initrd_url = self.distro.pxeboot_url + 'initrd.img'
--        initrd_hash = 'dd0340a1b39bd28f88532babd4581c67649ec5b1'
--        self.kernel_path = self.fetch_asset(kernel_url, asset_hash=kernel_hash)
--        self.initrd_path = self.fetch_asset(initrd_url, asset_hash=initrd_hash)
-+        self.kernel_path = self.ASSET_KERNEL.fetch()
-+        self.initrd_path = self.ASSET_INITRD.fetch()
-+        self.kernel_params = self.default_kernel_params
- 
-     def run_and_check(self):
-         if self.kernel_path:
-             self.vm.add_args('-kernel', self.kernel_path,
-                              '-append', self.kernel_params,
-                              '-initrd', self.initrd_path)
--        self.launch_and_wait()
--        self.ssh_command('cat /proc/cmdline')
--        self.ssh_command('dmesg | grep -e DMAR -e IOMMU')
--        self.ssh_command('find /sys/kernel/iommu_groups/ -type l')
--        self.ssh_command('dnf -y install numactl-devel')
-+        self.vm.set_console()
-+        self.vm.launch()
-+        self.wait_for_console_pattern('(or press Control-D to continue):')
-+        prompt = ':/root#'
-+        exec_command_and_wait_for_pattern(self, '', prompt)
-+        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline',
-+                                          'intel_iommu=on')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self, 'dmesg | grep DMAR:',
-+                                          'IOMMU enabled')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                                    'find /sys/kernel/iommu_groups/ -type l',
-+                                    'devices/0000:00:')
-+        self.wait_for_console_pattern(prompt)
- 
-     def test_intel_iommu(self):
--        """
--        :avocado: tags=intel_iommu_intremap
--        """
--
--        self.common_vm_setup(True)
-+        self.common_vm_setup()
-         self.vm.add_args('-device', 'intel-iommu,intremap=on')
-         self.vm.add_args('-machine', 'kernel_irqchip=split')
--
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' quiet intel_iommu=on')
-+        self.kernel_params += 'intel_iommu=on'
-         self.run_and_check()
- 
-     def test_intel_iommu_strict(self):
--        """
--        :avocado: tags=intel_iommu_strict
--        """
--
--        self.common_vm_setup(True)
-+        self.common_vm_setup()
-         self.vm.add_args('-device', 'intel-iommu,intremap=on')
-         self.vm.add_args('-machine', 'kernel_irqchip=split')
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' quiet intel_iommu=on,strict')
-+        self.kernel_params += 'intel_iommu=on,strict'
-         self.run_and_check()
- 
-     def test_intel_iommu_strict_cm(self):
--        """
--        :avocado: tags=intel_iommu_strict_cm
--        """
--
--        self.common_vm_setup(True)
-+        self.common_vm_setup()
-         self.vm.add_args('-device', 'intel-iommu,intremap=on,caching-mode=on')
-         self.vm.add_args('-machine', 'kernel_irqchip=split')
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' quiet intel_iommu=on,strict')
-+        self.kernel_params += 'intel_iommu=on,strict'
-         self.run_and_check()
- 
-     def test_intel_iommu_pt(self):
--        """
--        :avocado: tags=intel_iommu_pt
--        """
--
--        self.common_vm_setup(True)
-+        self.common_vm_setup()
-         self.vm.add_args('-device', 'intel-iommu,intremap=on')
-         self.vm.add_args('-machine', 'kernel_irqchip=split')
--        self.kernel_params = (self.distro.default_kernel_params +
--                              ' quiet intel_iommu=on iommu=pt')
-+        self.kernel_params += 'intel_iommu=on iommu=pt'
-         self.run_and_check()
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
--- 
-2.47.1
+It just so happens we make use of it for VFIO driver multifd device state
+migration currently since we need a way to achieve the same functionality
+as save_live_complete_precopy_{begin,end} handlers did in the previous
+versions of this patch set.
+
+Since adding this bit stream command to COLO does not cost anything
+(it's already behind a compatibility migration property) and it may be
+useful in the future I would advise to keep it there.
+
+On the other hand, if we don't add it to COLO now but it turns out it
+will be needed there to implement some functionality in the future then
+we'll need to add yet another compatibility migration property for that.
+
+> Thanks
+> Chen
+> 
+
+Thanks,
+Maciej
 
 
