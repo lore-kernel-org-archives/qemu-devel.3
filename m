@@ -4,86 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22686E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:01:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E81C9E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:24:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJTG4-0007cz-2x; Fri, 06 Dec 2024 03:00:16 -0500
+	id 1tJTcZ-0002tP-63; Fri, 06 Dec 2024 03:23:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJTG0-0007Zd-Ln
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:00:13 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJTFx-0005mO-81
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:00:10 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-21619108a6bso1979705ad.3
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 00:00:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733472006; x=1734076806; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=SqlPZW822Rhjs88FPMPj43/ynkf0cnOKLf+wTsO/7N0=;
- b=Z9SzZJhRWCzL4pLXm1lY8haK7SX77tLGSUil6doNkA0Q6mtB17FLlGaFoaKKk7qTaX
- oVj//XsGdB5PNpGQctQApG6GeEeUKr0P7xLiZicN0A1QxDP8/a3t8e4tScoVn/yIco8b
- beLLaexpPhIsmMsNyKeIrrPm03+zzp2CQDForo7ZmD92g29SkjqGTeb/K+foI7L6RwOk
- WDbKL4P+XuxvyUSsqqWE/a4H8cDvg/FQtFDVKF6YKksfPghd0qYntwxpaq7OkM1q7gu1
- ZFD3z667za3f0HKJYhuiAmpp7qEE+yRm+N7VCk/AZJeDVwBKNldARep3g2jMK2ijcEDe
- aprQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733472006; x=1734076806;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SqlPZW822Rhjs88FPMPj43/ynkf0cnOKLf+wTsO/7N0=;
- b=D6ufY/FBI9983ani+cTnMStLm0AvxNH+nf7sR9VVmYRvi8MescMhXLS7OyW9sit/ox
- FB8VSdUiniHR5jZPpK8REUn98fuxfGLR3GSwZDIAL/GoZtJVxRWHbEFZvRSqhkuGA7OS
- 5ZjM0z5n8cnJGv4m6wuvi6NWG4x6vikFjRD/3GYOChUCo+bZ6OOsyxerXtrCJ4FfYQ/i
- /wX/Dwwglqp/nYw0TO8vEGDbME6AIIc9ambn3wZ5wXvLAQqiwWRUFi6Le7LVWpG0rSwf
- 52fVIPS3ZCtQFQBQG+yD00Et7gLQbasCVglbXr1KZADa7au2xJAzaYqiyI4NuBF0qWGt
- 05RQ==
-X-Gm-Message-State: AOJu0YwndzWxZgUXo04yuSyyI7bwRcky0l8jTYSZjhB7+O6RlZpVdVzp
- 5PrKGHNC6jqTuiaFyUfa1juL+tm8gAkUcobw8dtqsf0TBDpFIirQIU4mcuSzEyM=
-X-Gm-Gg: ASbGnctqWk7X2piy3f3CC7L9snXvyqPcTSfhI2CoqxTptVO2+VWEdDyN9+Djdat+0XZ
- U9IdtScQdWP0htQbsaLGLvV8TlB3sV/9Q/ROrLyne4durAeLCcZnqsqaZl2R5kNM05NEIzjfG7e
- Cn2+FTg0Dq1QcoxEZHKKCjH7Lfg851+Gx01yPumnQlgoZCPcva0ulw4HeSAtMRfWS5I45rVCVJC
- XEu1Z5L9ez10cP17NKzv/sELjaPKrxE+ihsv2sPlTi2kEE=
-X-Google-Smtp-Source: AGHT+IGIyv3d9UhN7sOtBDdzBqRIiFWN6iqDVFKs0iPlYn/05HEbVsx2IVNTgXljuS7d4qsupX0ozQ==
-X-Received: by 2002:a17:902:c40d:b0:215:9ea1:e95c with SMTP id
- d9443c01a7336-21614d32c3emr34635175ad.13.1733472006458; 
- Fri, 06 Dec 2024 00:00:06 -0800 (PST)
-Received: from chaos.lan ([50.39.253.148]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215f8e5f601sm23527525ad.73.2024.12.06.00.00.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 00:00:05 -0800 (PST)
-From: Rowan Hart <rowanbhart@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH 0/2] Add additional plugin API functions to read and write
- memory and registers
-Date: Fri,  6 Dec 2024 00:00:02 -0800
-Message-ID: <20241206080005.775275-1-rowanbhart@gmail.com>
-X-Mailer: git-send-email 2.46.1
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJTcV-0002t7-4S; Fri, 06 Dec 2024 03:23:27 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJTcS-0005R8-Ju; Fri, 06 Dec 2024 03:23:26 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733473404; x=1765009404;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=d0bBf2aJq8qJrZoVZcY56IO4lvha0pWpGB3hXm0gvmA=;
+ b=j5tO/07TmJWVc2rWRMkNuK+hyqrxTdGR+pu9MQRiXEn6J9WCZozY8rvy
+ HRVh3cWao9xch2BOdftXOD8eoYo2gZhEOwLZjEnSCae7jkGB5eUlMufG3
+ ktoN4V17XceaFpDPetNLn25r/IY9Y+iydBAKF3G/UdrQGcJXNektuHONc
+ DJjkVgER/nwTJWJwjrgM1ina0M7WKs+WD3Ps4827BPjqMHVR+yNbUDhqY
+ sBV997mtAOVoK+CuvLtLnY9oev4s+nUk61eDaNUqFKdqM7DAWI76LSkav
+ cxCrn87wuGpVYPlt6MDTQbNBAPIi++dYFmDTCWjQWv67hTnsvoqD4oO9y w==;
+X-CSE-ConnectionGUID: GlDiDHhzTKKrnJKZsW8VeA==
+X-CSE-MsgGUID: 4SklLraBStaMg4r4YrjdWw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11277"; a="33941573"
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="33941573"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Dec 2024 00:23:19 -0800
+X-CSE-ConnectionGUID: ligpvUqCQP+Ei2gTyr+14g==
+X-CSE-MsgGUID: kL1r/oqaToOgHmxHrad7RA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="125188180"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 06 Dec 2024 00:23:16 -0800
+Date: Fri, 6 Dec 2024 16:41:29 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [RFC 06/13] rust: add bindings for memattrs
+Message-ID: <Z1K4uc+XJIypkNaw@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-7-zhao1.liu@intel.com>
+ <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
+ <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
+ <edfa85a7-2963-46d8-8b02-4d22ec1aeee6@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <edfa85a7-2963-46d8-8b02-4d22ec1aeee6@linaro.org>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,40 +92,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch set follows a previous patch which added the
-qemu_plugin_read_memory_vaddr function and adds a set of similar
-functions to read and write registers, virtual memory, and
-physical memory.
+On Thu, Dec 05, 2024 at 05:51:42PM -0600, Richard Henderson wrote:
+> Date: Thu, 5 Dec 2024 17:51:42 -0600
+> From: Richard Henderson <richard.henderson@linaro.org>
+> Subject: Re: [RFC 06/13] rust: add bindings for memattrs
+> 
+> On 12/5/24 12:30, Paolo Bonzini wrote:
+> > On 12/5/24 19:15, Richard Henderson wrote:
+> > > On 12/5/24 00:07, Zhao Liu wrote:
+> > > > The MemTxAttrs structure is composed of bitfield members, and bindgen is
+> > > > unable to generate an equivalent macro definition for
+> > > > MEMTXATTRS_UNSPECIFIED.
+> > > 
+> > > I'm happy to move away from bit fields to uint32_t or suchlike to
+> > > enable MEMTXATTRS_UNSPECIFIED be a compile-time constant.
+> > 
+> > Yeah, if we go from
+> > 
+> > typedef struct MemTxAttrs {
+> >      unsigned int unspecified:1;
+> >      unsigned int secure:1;
+> >      unsigned int space:2;
+> >      unsigned int user:1;
+> >      unsigned int memory:1;
+> >      unsigned int requester_id:16;
+> >      unsigned int pid:8;
+> > } MemTxAttrs;
+> > 
+> > to
+> > 
+> > typedef struct MemTxAttrs {
+> >      uint8_t unspecified;
+> >      uint8_t secure;
+> >      uint8_t space;
+> >      uint8_t user;
+> >      uint8_t memory;
+> >      uint8_t pid;
+> >      uint16_t requester_id;
+> > } MemTxAttrs;
+> > 
+> > is still decently packed and simplifies things a lot.  Zhao, can you
+> > submit that as an independent patch?
+> Hmm.  I'd been thinking of uint32_t and hw/registerfields.h, but I have not
+> scoped the size of that conversion.
+> 
+> But short of that, please use 'bool' not 'uint8_t' for those single-bit flags.
+> 
 
-The use case I have in mind is for use of QEMU for program analysis and
-testing. For example, a fuzzer which uses QEMU for emulation might wish to
-inject test data into a program at runtime using qemu_plugin_write_memory_vaddr
-(and likewise if testing an operating system or bare metal application using
-qemu_plugin_write_memory_hwaddr). It may also wish to read the initial contents
-of memory using qemu_plugin_read_memory_vaddr/hwaddr.
+Sure! Thank u both!
 
-Similarly, a testing framework may wish to fake register values, perhaps to
-simulate a device failure, perhaps by using qemu_plugin_write_register to set a
-register value to an error code.
+BTW, may I ask why you favor bool over uint8_t, and is it because they
+are indeed just 0/1 as well? :)
 
-I think all this functionality works together to make QEMU
-plugins more powerful and versatile, hopefully removing barriers
-to using upstream QEMU for these tasks which have historically
-required maintaining a QEMU fork downstream (like QEMUAFL
-https://github.com/AFLplusplus/qemuafl), which is tedious, error
-prone, and results in users missing out on enhancements to QEMU.
+Thanks,
+Zhao
 
-novafacing (2):
-  Expose gdb_write_register function to consumers of gdbstub
-  Add plugin API functions for register R/W, hwaddr R/W, vaddr W
-
- gdbstub/gdbstub.c          |   2 +-
- include/exec/gdbstub.h     |  14 +++++
- include/qemu/qemu-plugin.h | 116 +++++++++++++++++++++++++++++++++----
- plugins/api.c              |  66 ++++++++++++++++++++-
- 4 files changed, 183 insertions(+), 15 deletions(-)
-
--- 
-2.46.1
 
 
