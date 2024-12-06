@@ -4,107 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D3A6E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 15:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A4CCE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 15:13:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJZyr-0005mc-Ba; Fri, 06 Dec 2024 10:10:57 -0500
+	id 1tJa13-000850-Ut; Fri, 06 Dec 2024 10:13:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZyn-0005li-7i
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:10:53 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tJZyl-0003EW-Ay
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:10:52 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 89F6C2115A;
- Fri,  6 Dec 2024 15:10:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733497849; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJa12-00084n-0m
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:13:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJa0x-0003bB-Ma
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 10:13:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733497985;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=S/7IWdXPnTQDnx6bXZ/SGklpW+U4txaiqzpTWQhIM9w=;
- b=igxC04KpgzFyjJgLWnAJrTxFvQk8k2XQUQA53/rcojoo7u8La0Cq3lsAsQdcoB8glBOZmi
- yHB8lRnMcTT1X72dr2lv8nKjSrnAXxqClLhApegZlXqkchM6FC3hVgCOiJnHo9jtrcVYI8
- iLz086AK5xvieZ5CnXlvyLRwHEYYAs0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733497849;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S/7IWdXPnTQDnx6bXZ/SGklpW+U4txaiqzpTWQhIM9w=;
- b=DGkIX/2Z1Cgnug0P7TqxTfxmSu0Fm/kB3w5Z919Ccq8qw7Qm0FgYR4r7ra3hDWkAWTdCOl
- sviqYjFM8vfAU4Cg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733497849; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S/7IWdXPnTQDnx6bXZ/SGklpW+U4txaiqzpTWQhIM9w=;
- b=igxC04KpgzFyjJgLWnAJrTxFvQk8k2XQUQA53/rcojoo7u8La0Cq3lsAsQdcoB8glBOZmi
- yHB8lRnMcTT1X72dr2lv8nKjSrnAXxqClLhApegZlXqkchM6FC3hVgCOiJnHo9jtrcVYI8
- iLz086AK5xvieZ5CnXlvyLRwHEYYAs0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733497849;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=S/7IWdXPnTQDnx6bXZ/SGklpW+U4txaiqzpTWQhIM9w=;
- b=DGkIX/2Z1Cgnug0P7TqxTfxmSu0Fm/kB3w5Z919Ccq8qw7Qm0FgYR4r7ra3hDWkAWTdCOl
- sviqYjFM8vfAU4Cg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1051E13647;
- Fri,  6 Dec 2024 15:10:48 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IPO4MfgTU2cHdgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Dec 2024 15:10:48 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero"
- <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>, Avihai
- Horon <avihaih@nvidia.com>, Alex Williamson <alex.williamson@redhat.com>,
+ bh=Onh1i4bHEJAhwnBbDaaGwcniNZRbrVmFD5XcMEUPuF4=;
+ b=Oq8CruIOnyqayQ//36ezbsEQD0lgcFHreBMXdiObN30xlHUPbs4DkxfrP8Pd3zFORydvdi
+ la6BCbNarulbV071I+RnOUe9fH61aLxvf0zeMCwSw3z7bs1Cf6keBkbnYn08FUhvFHIuWg
+ Ld+/maA98AitMmZ6JqdAK76qxokgyNM=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-583-L4il0AASNQ-UrCaE89tEUw-1; Fri, 06 Dec 2024 10:13:04 -0500
+X-MC-Unique: L4il0AASNQ-UrCaE89tEUw-1
+X-Mimecast-MFC-AGG-ID: L4il0AASNQ-UrCaE89tEUw
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b677762665so292673285a.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 07:13:04 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733497984; x=1734102784;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Onh1i4bHEJAhwnBbDaaGwcniNZRbrVmFD5XcMEUPuF4=;
+ b=TXE7sazo2MlxDvM+K6Chbaf9/CQaF7Iyqmb0kNT4zbKNXAlcXQxkVxGxBs9cPybnf6
+ 2DF7CT3nxl2aEaDcg3rH3D1m40+QXPZ1qADFoQLCO7WOZLInPNTNyeZx53i6BoV3MAwO
+ 2uz14Jf9hgJ/c3OzD7wozOsTRfse7055WIeHvVc8vPFzeOcDsXOnxw3dEVO96FQlsHne
+ 9geR+CssCxaukKIbber5Gzpj7PY4kVwnXRBfwd50ZmsSMnBFIFk3AdZCBdgw+N70aWoF
+ wCRNyGEvhH+HxkoOol8p/8HRktNW33+fMbaO8Uqra9w4jD+kwhbRHps2fsULUjo4hvLn
+ xOiQ==
+X-Gm-Message-State: AOJu0YzgRmQgZE2ciXFoqpvHvuNeS3+MoIuy7gbX9LZ9uhxvecLFckRW
+ z5pZt0BG6bPK22mf7Jy5U06xpGCzr3e91RqbBp6X4G8/EoWgAVupuHet+XKJjUwYgFtr+y+u9k4
+ yKA+CYyUIG4tKxs59ppMeO3Up7MQ4zxw2RBHQRfqQoddv+nyTSMFw
+X-Gm-Gg: ASbGncvC+d2HNmBAHtIcL+vtKWEfh3S/LVav6L5S7XsXhapLUJm8/gWIx6jSVKw+1QL
+ z7Xu+LsxkHB96tU2Lr3sbxP6Bme/7o6IOpii4GYQU/vktepXQCPntSqDe9bkZLz5P1YbVnWTPMj
+ UNkJUF06FBf8UzoeXPChLFolVFTOrjul+l/hIhKp0xZ5GEmz5RiWJsJwXu2fPSMi43y8jlwbgEL
+ eQx7XTykOxmeCz8z+Le5mIbVjKbcHakd3VoENLR2RS0nZdpv1mPFdXO4jNhK0V+MJYOpUUlCtCj
+ JC7YNj35lyk=
+X-Received: by 2002:a05:620a:bcd:b0:7b6:6e7c:8efc with SMTP id
+ af79cd13be357-7b6bcb46a7emr602092285a.44.1733497983926; 
+ Fri, 06 Dec 2024 07:13:03 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEirn6Y24lKwC7rhX393XlM5mpwylRi++LYFSO7rFDOWcPXB2ExpLEbFgy9wLB1peaMCshWyw==
+X-Received: by 2002:a05:620a:bcd:b0:7b6:6e7c:8efc with SMTP id
+ af79cd13be357-7b6bcb46a7emr602087385a.44.1733497983535; 
+ Fri, 06 Dec 2024 07:13:03 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b6b5a9ffacsm179852785a.114.2024.12.06.07.13.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 07:13:03 -0800 (PST)
+Date: Fri, 6 Dec 2024 10:13:01 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
  Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 3/7] migration/ram: Move RAM_SAVE_FLAG* into ram.h
-In-Reply-To: <Z1MSKpiMiPsidzJO@x1n>
+Subject: Re: [PATCH v2 6/7] migration/multifd: Cleanup src flushes on
+ condition check
+Message-ID: <Z1MUfWrq0_BfVRSj@x1n>
 References: <20241206005834.1050905-1-peterx@redhat.com>
- <20241206005834.1050905-4-peterx@redhat.com> <874j3hc4fw.fsf@suse.de>
- <Z1MSKpiMiPsidzJO@x1n>
-Date: Fri, 06 Dec 2024 12:10:46 -0300
-Message-ID: <87ldwsc0eh.fsf@suse.de>
+ <20241206005834.1050905-7-peterx@redhat.com>
+ <87wmgcc2ss.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
- suse.de:email]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87wmgcc2ss.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,173 +111,261 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, Dec 06, 2024 at 11:18:59AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > The src flush condition check is over complicated, and it's getting more
+> > out of control if postcopy will be involved.
+> >
+> > In general, we have two modes to do the sync: legacy or modern ways.
+> > Legacy uses per-section flush, modern uses per-round flush.
+> >
+> > Mapped-ram always uses the modern, which is per-round.
+> >
+> > Introduce two helpers, which can greatly simplify the code, and hopefully
+> > make it readable again.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/multifd.h        |  2 ++
+> >  migration/multifd-nocomp.c | 42 ++++++++++++++++++++++++++++++++++++++
+> >  migration/ram.c            | 10 +++------
+> >  3 files changed, 47 insertions(+), 7 deletions(-)
+> >
+> > diff --git a/migration/multifd.h b/migration/multifd.h
+> > index c9ae57ea02..582040922f 100644
+> > --- a/migration/multifd.h
+> > +++ b/migration/multifd.h
+> > @@ -351,6 +351,8 @@ static inline uint32_t multifd_ram_page_count(void)
+> >  void multifd_ram_save_setup(void);
+> >  void multifd_ram_save_cleanup(void);
+> >  int multifd_ram_flush_and_sync(QEMUFile *f);
+> > +bool multifd_ram_sync_per_round(void);
+> > +bool multifd_ram_sync_per_section(void);
+> >  size_t multifd_ram_payload_size(void);
+> >  void multifd_ram_fill_packet(MultiFDSendParams *p);
+> >  int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+> > diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> > index 58372db0f4..c1f686c0ce 100644
+> > --- a/migration/multifd-nocomp.c
+> > +++ b/migration/multifd-nocomp.c
+> > @@ -344,6 +344,48 @@ retry:
+> >      return true;
+> >  }
+> >  
+> > +/*
+> > + * We have two modes for multifd flushes:
+> > + *
+> > + * - Per-section mode: this is the legacy way to flush, it requires one
+> > + *   MULTIFD_FLAG_SYNC message for each RAM_SAVE_FLAG_EOS.
+> > + *
+> > + * - Per-round mode: this is the modern way to flush, it requires one
+> > + *   MULTIFD_FLAG_SYNC message only for each round of RAM scan.  Normally
+> > + *   it's paired with a new RAM_SAVE_FLAG_MULTIFD_FLUSH message in network
+> > + *   based migrations.
+> > + *
+> > + * One thing to mention is mapped-ram always use the modern way to sync.
+> > + */
+> > +
+> > +/* Do we need a per-section multifd flush (legacy way)? */
+> > +bool multifd_ram_sync_per_section(void)
+> > +{
+> > +    if (!migrate_multifd()) {
+> > +        return false;
+> > +    }
+> > +
+> > +    if (migrate_mapped_ram()) {
+> > +        return false;
+> > +    }
+> > +
+> > +    return migrate_multifd_flush_after_each_section();
+> > +}
+> > +
+> > +/* Do we need a per-round multifd flush (modern way)? */
+> > +bool multifd_ram_sync_per_round(void)
+> > +{
+> > +    if (!migrate_multifd()) {
+> > +        return false;
+> > +    }
+> > +
+> > +    if (migrate_mapped_ram()) {
+> > +        return true;
+> > +    }
+> > +
+> > +    return !migrate_multifd_flush_after_each_section();
+> > +}
+> > +
+> >  int multifd_ram_flush_and_sync(QEMUFile *f)
+> >  {
+> >      MultiFDSyncReq req;
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 154ff5abd4..5d4bdefe69 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -1302,9 +1302,7 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+> >          pss->page = 0;
+> >          pss->block = QLIST_NEXT_RCU(pss->block, next);
+> >          if (!pss->block) {
+> > -            if (migrate_multifd() &&
+> > -                (!migrate_multifd_flush_after_each_section() ||
+> > -                 migrate_mapped_ram())) {
+> > +            if (multifd_ram_sync_per_round()) {
+> 
+> If we're already implicitly declaring which parts of the code mean
+> "round" or "section", we could fold the flush into the function and call
+> it unconditionally.
 
-> On Fri, Dec 06, 2024 at 10:43:31AM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > Firstly, we're going to use the multifd flag soon in multifd code, so ram.c
->> > isn't gonna work.
->> >
->> > Secondly, we have a separate RDMA flag dangling around, which is definitely
->> > not obvious.  There's one comment that helps, but not too much.
->> >
->> > We should just put it altogether, so nothing will get overlooked.
->> >
->> > Signed-off-by: Peter Xu <peterx@redhat.com>
->> 
->> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->> 
->> just some comments about preexisting stuff:
->> 
->> > ---
->> >  migration/ram.h  | 25 +++++++++++++++++++++++++
->> >  migration/rdma.h |  7 -------
->> >  migration/ram.c  | 21 ---------------------
->> >  3 files changed, 25 insertions(+), 28 deletions(-)
->> >
->> > diff --git a/migration/ram.h b/migration/ram.h
->> > index 0d1981f888..cfdcccd266 100644
->> > --- a/migration/ram.h
->> > +++ b/migration/ram.h
->> > @@ -33,6 +33,31 @@
->> >  #include "exec/cpu-common.h"
->> >  #include "io/channel.h"
->> >  
->> > +/*
->> > + * RAM_SAVE_FLAG_ZERO used to be named RAM_SAVE_FLAG_COMPRESS, it
->> > + * worked for pages that were filled with the same char.  We switched
->> > + * it to only search for the zero value.  And to avoid confusion with
->> > + * RAM_SAVE_FLAG_COMPRESS_PAGE just rename it.
->> > + *
->> > + * RAM_SAVE_FLAG_FULL was obsoleted in 2009.
->> > + *
->> > + * RAM_SAVE_FLAG_COMPRESS_PAGE (0x100) was removed in QEMU 9.1.
->> 
->> Aren't these already covered by git log? The comment makes it seem like
->> some special situation, but I think we're just documenting history here,
->> no?
->
-> I guess so.
->
-> Maybe still useful when we hit a bug that some ancient QEMU manually
-> migrates to a new one and hit a weird 0x100 message.
->
->> 
->> > + */
->> > +#define RAM_SAVE_FLAG_FULL     0x01
->> > +#define RAM_SAVE_FLAG_ZERO     0x02
->> > +#define RAM_SAVE_FLAG_MEM_SIZE 0x04
->> > +#define RAM_SAVE_FLAG_PAGE     0x08
->> > +#define RAM_SAVE_FLAG_EOS      0x10
->> > +#define RAM_SAVE_FLAG_CONTINUE 0x20
->> > +#define RAM_SAVE_FLAG_XBZRLE   0x40
->> > +/*
->> > + * ONLY USED IN RDMA: Whenever this is found in the data stream, the flags
->> > + * will be passed to rdma functions in the incoming-migration side.
->> > + */
->> > +#define RAM_SAVE_FLAG_HOOK     0x80
->> 
->> No 0x100?
->
-> You just asked about it one min ago! ^^^^
+That will add mistery when reading the callers, not be able to identify
+whether the flush was sent or not.
 
-Ah, so RAM_SAVE_FLAG_FULL was left behind but
-RAM_SAVE_FLAG_COMPRESS_PAGE was removed, I missed that.
+If you have a strong preference on it, you can reply with a formal patch
+and I can include it when I repost.  However one comment below:
 
->
->> 
->> > +#define RAM_SAVE_FLAG_MULTIFD_FLUSH    0x200
->> > +/* We can't use any flag that is bigger than 0x200 */
->> 
->> Where does that limitation come from again? I know that
->> RAM_SAVE_FLAG_MEM_SIZE shares a u64 with something else:
->> 
->>   qemu_put_be64(f, ram_bytes_total_with_ignored() |
->>   RAM_SAVE_FLAG_MEM_SIZE);
->> 
->> For RAM_SAVE_FLAG_ZERO and RAM_SAVE_FLAG_PAGE, it might be a u32 (offset
->> is ram_addr_t):
->> 
->>   save_page_header(pss, file, pss->block, offset | RAM_SAVE_FLAG_ZERO);
->> 
->> But others just go by themselves:
->> 
->> qemu_put_be64(f, RAM_SAVE_FLAG_MULTIFD_FLUSH);
->
-> No matter if it goes by itself, I am guessing migration was initially
-> developed by assuming each initial 8 bytes is an address, see:
->
-> ram_load_precopy():
->         addr = qemu_get_be64(f);
->         ...
->         flags = addr & ~TARGET_PAGE_MASK;
->         addr &= TARGET_PAGE_MASK;
->
-> So it must be no more than 0x200, probably because it wants to work with
-> whatever architectures that have PAGE_SIZE>=1K (which is 0x400).  Then the
-> offset will never use the last 10 bits.
->
-> Wanna me to add a comment for that in this patch?
+> 
+> We don't need ram.c code to be deciding about multifd. This could be all
+> hidden away in the multifd-nocomp code:
 
-Yes, please.
+Side note: maybe I should have a pre-requisite patch moving flush things
+out of multifd-nocomp.c but into multifd.c, because compressors will also
+need it.  Then I could add multifd_ram_sync_per_* into multifd.c too.
 
->
->> 
->> 
->> > +
->> >  extern XBZRLECacheStats xbzrle_counters;
->> >  
->> >  /* Should be holding either ram_list.mutex, or the RCU lock. */
->> > diff --git a/migration/rdma.h b/migration/rdma.h
->> > index a8d27f33b8..f55f28bbed 100644
->> > --- a/migration/rdma.h
->> > +++ b/migration/rdma.h
->> > @@ -33,13 +33,6 @@ void rdma_start_incoming_migration(InetSocketAddress *host_port, Error **errp);
->> >  #define RAM_CONTROL_ROUND     1
->> >  #define RAM_CONTROL_FINISH    3
->> >  
->> > -/*
->> > - * Whenever this is found in the data stream, the flags
->> > - * will be passed to rdma functions in the incoming-migration
->> > - * side.
->> > - */
->> > -#define RAM_SAVE_FLAG_HOOK     0x80
->> > -
->> >  #define RAM_SAVE_CONTROL_NOT_SUPP -1000
->> >  #define RAM_SAVE_CONTROL_DELAYED  -2000
->> >  
->> > diff --git a/migration/ram.c b/migration/ram.c
->> > index 7284c34bd8..44010ff325 100644
->> > --- a/migration/ram.c
->> > +++ b/migration/ram.c
->> > @@ -71,27 +71,6 @@
->> >  /***********************************************************/
->> >  /* ram save/restore */
->> >  
->> > -/*
->> > - * RAM_SAVE_FLAG_ZERO used to be named RAM_SAVE_FLAG_COMPRESS, it
->> > - * worked for pages that were filled with the same char.  We switched
->> > - * it to only search for the zero value.  And to avoid confusion with
->> > - * RAM_SAVE_FLAG_COMPRESS_PAGE just rename it.
->> > - *
->> > - * RAM_SAVE_FLAG_FULL was obsoleted in 2009.
->> > - *
->> > - * RAM_SAVE_FLAG_COMPRESS_PAGE (0x100) was removed in QEMU 9.1.
->> > - */
->> > -#define RAM_SAVE_FLAG_FULL     0x01
->> > -#define RAM_SAVE_FLAG_ZERO     0x02
->> > -#define RAM_SAVE_FLAG_MEM_SIZE 0x04
->> > -#define RAM_SAVE_FLAG_PAGE     0x08
->> > -#define RAM_SAVE_FLAG_EOS      0x10
->> > -#define RAM_SAVE_FLAG_CONTINUE 0x20
->> > -#define RAM_SAVE_FLAG_XBZRLE   0x40
->> > -/* 0x80 is reserved in rdma.h for RAM_SAVE_FLAG_HOOK */
->> > -#define RAM_SAVE_FLAG_MULTIFD_FLUSH    0x200
->> > -/* We can't use any flag that is bigger than 0x200 */
->> > -
->> >  /*
->> >   * mapped-ram migration supports O_DIRECT, so we need to make sure the
->> >   * userspace buffer, the IO operation size and the file offset are
->> 
+> 
+> -- >8 --
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index c1f686c0ce..6a7eee4c25 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -358,32 +358,26 @@ retry:
+>   * One thing to mention is mapped-ram always use the modern way to sync.
+>   */
+>  
+> -/* Do we need a per-section multifd flush (legacy way)? */
+> -bool multifd_ram_sync_per_section(void)
+> +int multifd_ram_sync_per_section(QEMUFile *f)
+>  {
+> -    if (!migrate_multifd()) {
+> -        return false;
+> +    if (!migrate_multifd() || !migrate_multifd_flush_after_each_section()) {
+> +        return 0;
+
+If you're going to reply with the patch, please consider not queuing up the
+if condition check again.  That's one of the reason why I introduced the
+helper anyway, so that it'll be clear to see each check, and we can easily
+add comment to each check whenever it's necessary (though I unified the
+comment part all over to above, because the two modes share it).
+
+>      }
+>  
+>      if (migrate_mapped_ram()) {
+> -        return false;
+> +        return 0;
+>      }
+>  
+> -    return migrate_multifd_flush_after_each_section();
+> +    return multifd_ram_flush_and_sync(f);
+>  }
+>  
+> -/* Do we need a per-round multifd flush (modern way)? */
+> -bool multifd_ram_sync_per_round(void)
+> +int multifd_ram_sync_per_round(QEMUFile *f)
+>  {
+> -    if (!migrate_multifd()) {
+> -        return false;
+> +    if (!migrate_multifd() || migrate_multifd_flush_after_each_section()) {
+
+Same here.
+
+> +        return 0;
+>      }
+>  
+> -    if (migrate_mapped_ram()) {
+> -        return true;
+> -    }
+> -
+> -    return !migrate_multifd_flush_after_each_section();
+> +    return multifd_ram_flush_and_sync(f);
+>  }
+>  
+>  int multifd_ram_flush_and_sync(QEMUFile *f)
+> diff --git a/migration/multifd.h b/migration/multifd.h
+> index 582040922f..3b42128167 100644
+> --- a/migration/multifd.h
+> +++ b/migration/multifd.h
+> @@ -351,8 +351,8 @@ static inline uint32_t multifd_ram_page_count(void)
+>  void multifd_ram_save_setup(void);
+>  void multifd_ram_save_cleanup(void);
+>  int multifd_ram_flush_and_sync(QEMUFile *f);
+> -bool multifd_ram_sync_per_round(void);
+> -bool multifd_ram_sync_per_section(void);
+> +int multifd_ram_sync_per_round(QEMUFile *f);
+> +int multifd_ram_sync_per_section(QEMUFile *f);
+>  size_t multifd_ram_payload_size(void);
+>  void multifd_ram_fill_packet(MultiFDSendParams *p);
+>  int multifd_ram_unfill_packet(MultiFDRecvParams *p, Error **errp);
+> diff --git a/migration/ram.c b/migration/ram.c
+> index ddee703585..fe33c8e0e8 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -1302,12 +1302,10 @@ static int find_dirty_block(RAMState *rs, PageSearchStatus *pss)
+>          pss->page = 0;
+>          pss->block = QLIST_NEXT_RCU(pss->block, next);
+>          if (!pss->block) {
+> -            if (multifd_ram_sync_per_round()) {
+> -                QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+> -                int ret = multifd_ram_flush_and_sync(f);
+> -                if (ret < 0) {
+> -                    return ret;
+> -                }
+> +            QEMUFile *f = rs->pss[RAM_CHANNEL_PRECOPY].pss_channel;
+> +            int ret = multifd_ram_sync_per_round(f);
+> +            if (ret < 0) {
+> +                return ret;
+>              }
+>  
+>              /* Hit the end of the list */
+> @@ -3203,11 +3201,9 @@ static int ram_save_iterate(QEMUFile *f, void *opaque)
+>  
+>  out:
+>      if (ret >= 0 && migration_is_running()) {
+> -        if (multifd_ram_sync_per_section()) {
+> -            ret = multifd_ram_flush_and_sync(f);
+> -            if (ret < 0) {
+> -                return ret;
+> -            }
+> +        ret = multifd_ram_sync_per_section(f);
+> +        if (ret < 0) {
+> +            return ret;
+>          }
+>  
+>          qemu_put_be64(f, RAM_SAVE_FLAG_EOS);
+> @@ -3276,15 +3272,13 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+>          }
+>      }
+>  
+> -    if (multifd_ram_sync_per_section()) {
+> -        /*
+> -         * Only the old dest QEMU will need this sync, because each EOS
+> -         * will require one SYNC message on each channel.
+> -         */
+> -        ret = multifd_ram_flush_and_sync(f);
+> -        if (ret < 0) {
+> -            return ret;
+> -        }
+> +    /*
+> +     * Only the old dest QEMU will need this sync, because each EOS
+> +     * will require one SYNC message on each channel.
+> +     */
+> +    ret = multifd_ram_sync_per_section(f);
+> +    if (ret < 0) {
+> +        return ret;
+>      }
+>  
+>      if (migrate_mapped_ram()) {
+> -- 
+> 2.35.3
+> 
+
+-- 
+Peter Xu
+
 
