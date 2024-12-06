@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51EC7E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 11:26:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10AB6E7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 11:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJWT3-0005Pm-O4; Fri, 06 Dec 2024 06:25:54 -0500
+	id 1tJWSM-0004bp-8k; Fri, 06 Dec 2024 06:25:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRn-0003ym-8Q
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:42 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRU-0003gH-ED
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRk-00029h-KW
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:35 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tJWRS-00027a-Rx
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 06:24:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733484272;
+ s=mimecast20190719; t=1733484254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yDPI0FNvuxRIcqe79Cz2m4+AUlQ+TVRDgePd4RU/FL4=;
- b=IcIqYy5I5ad+dl3qTRnjx+xiNIRc6tk5BTM+iJzgvkkvFnB4HLSbSEq9Ie3xChx2Jn5Cg2
- 5FzxeQSEYg+gCdz/ySGjZrM3Tm6Qvm9M1WMjz2Adlo6JVPaaYpe7zYMmDqfXOacJTqZkhu
- qCKUxXYOz1jnOH6nL1QtM/Mjq+MySAc=
+ bh=lFWn0G2Z/v7JVK2itFan8SiYF0Cp3PsLypgq8Fk6Lqk=;
+ b=igpFT2JUg6csrUxAfD/dH4VQqC3WzF8fiHh0DGg3gn9p+bsY4ggUARlGbCsdzoGbZTKzON
+ EfOdKu79YrQwGNzukB+Kbcrq/EX99UAourCve+YaQ42Y2AIgD92Qfg0cL/LssurD7qdW0O
+ uGRPczyTcSJ9yqTdtohK6Lb+I0szunA=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-673-puU1VYBdM1WMhEgf2abGGw-1; Fri,
- 06 Dec 2024 06:24:28 -0500
-X-MC-Unique: puU1VYBdM1WMhEgf2abGGw-1
-X-Mimecast-MFC-AGG-ID: puU1VYBdM1WMhEgf2abGGw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-145-GdQTn2BbMV65ulZhsKL94A-1; Fri,
+ 06 Dec 2024 06:24:10 -0500
+X-MC-Unique: GdQTn2BbMV65ulZhsKL94A-1
+X-Mimecast-MFC-AGG-ID: GdQTn2BbMV65ulZhsKL94A
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 30E2A1955D42; Fri,  6 Dec 2024 11:24:27 +0000 (UTC)
+ id 3686E1955F40; Fri,  6 Dec 2024 11:24:09 +0000 (UTC)
 Received: from gondolin.str.redhat.com (dhcp-192-244.str.redhat.com
  [10.33.192.244])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A407119560A2; Fri,  6 Dec 2024 11:24:21 +0000 (UTC)
+ id BC7FC19560A2; Fri,  6 Dec 2024 11:24:03 +0000 (UTC)
 From: Cornelia Huck <cohuck@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
@@ -55,9 +55,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
 Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
  pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH RFCv2 20/20] arm/cpu-features: document ID reg properties
-Date: Fri,  6 Dec 2024 12:22:13 +0100
-Message-ID: <20241206112213.88394-21-cohuck@redhat.com>
+Subject: [PATCH RFCv2 17/20] arm/kvm: write back modified ID regs to KVM
+Date: Fri,  6 Dec 2024 12:22:10 +0100
+Message-ID: <20241206112213.88394-18-cohuck@redhat.com>
 In-Reply-To: <20241206112213.88394-1-cohuck@redhat.com>
 References: <20241206112213.88394-1-cohuck@redhat.com>
 MIME-Version: 1.0
@@ -73,7 +73,7 @@ X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,102 +89,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add some documentation for how individual ID registers can be
-configured with the host cpu model.
+From: Eric Auger <eric.auger@redhat.com>
 
-[CH: adapt to removal of the 'custom' model]
+We want to give a chance to override the value of host ID regs.
+In a previous patch we made sure all their values could be fetched
+through kvm_get_one_reg() calls before their modification. After
+their potential modification we need to make sure we write back
+the values through kvm_set_one_reg() calls.
+
+Make sure the cpreg_list is modified with updated values and
+transfer those values back to kvm.
+
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Cornelia Huck <cohuck@redhat.com>
 ---
- docs/system/arm/cpu-features.rst | 47 ++++++++++++++++++++++++++------
- 1 file changed, 39 insertions(+), 8 deletions(-)
+ target/arm/kvm.c        | 36 +++++++++++++++++++++++++++++++++++-
+ target/arm/trace-events |  1 +
+ 2 files changed, 36 insertions(+), 1 deletion(-)
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index a5fb929243c5..abee557d7b6e 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -2,7 +2,10 @@ Arm CPU Features
- ================
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 4bb8094e846f..3b2f98041484 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1061,6 +1061,31 @@ void kvm_arm_cpu_post_load(ARMCPU *cpu)
+     }
+ }
  
- CPU features are optional features that a CPU of supporting type may
--choose to implement or not.  In QEMU, optional CPU features have
-+choose to implement or not.  QEMU provides two different mechanisms
-+to configure those features:
++static void kvm_arm_writable_idregs_to_cpreg_list(ARMCPU *cpu)
++{
++    for (int i = 0; i < NR_ID_REGS; i++) {
++        uint64_t writable_mask = cpu->writable_map->regs[i];
++        uint64_t *cpreg;
 +
-+1. For most CPU models, optional CPU features may have
- corresponding boolean CPU proprieties that, when enabled, indicate
- that the feature is implemented, and, conversely, when disabled,
- indicate that it is not implemented. An example of an Arm CPU feature
-@@ -29,6 +32,16 @@ supports the feature.  While ``aarch64`` currently only works with KVM,
- it could work with TCG.  CPU features that are specific to KVM are
- prefixed with "kvm-" and are described in "KVM VCPU Features".
- 
-+2. Additionally, the ``host`` CPU model on KVM allows to configure optional
-+CPU features via the corresponding ID registers. The host kernel allows
-+to write a subset of ID register fields. The host model exposes
-+properties for each write ID register fields. Those options are named
-+SYSREG_<IDREG>_<FIELD>. IDREG and FIELD names are those used in the
-+ARM ARM Reference Manual. They can also be found in the linux
-+arch/arm64/tool/sysreg file which is used to automatically generate the
-+description for those registers and fields. This currently only has been
-+implemented for KVM.
++        if (writable_mask) {
++            uint64_t regidx;
++            uint64_t previous, new;
++            ARM64SysReg *sysregdesc = &arm64_id_regs[i];
++            ARMSysReg *sr = sysregdesc->sysreg;
 +
- CPU Feature Probing
- ===================
- 
-@@ -106,6 +119,10 @@ As expected they are now all ``false``.
- 
- Only the ``pmu`` CPU feature is available.
- 
-+Probing for the ``custom`` CPU model is working differently. CPU model
-+expansion will return the list of available SYSREG properties (matching
-+writable ID register fields)
++            regidx = ARM64_SYS_REG(sr->op0, sr->op1, sr->crn, sr->crm, sr->op2);
++            cpreg = kvm_arm_get_cpreg_ptr(cpu, regidx);
++            previous = *cpreg;
++            new = cpu->isar.idregs.regs[i];
++            if (previous != new) {
++                *cpreg = new;
++                trace_kvm_arm_writable_idregs_to_cpreg_list(sysregdesc->name,
++                                                            previous, new);
++            }
++        }
++    }
++}
 +
- A note about CPU feature dependencies
- -------------------------------------
+ void kvm_arm_reset_vcpu(ARMCPU *cpu)
+ {
+     int ret;
+@@ -2028,7 +2053,16 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     }
+     cpu->mp_affinity = mpidr & ARM64_AFFINITY_MASK;
  
-@@ -124,13 +141,20 @@ A note about CPU models and KVM
+-    return kvm_arm_init_cpreg_list(cpu);
++    ret = kvm_arm_init_cpreg_list(cpu);
++    if (ret) {
++        return ret;
++    }
++    /* overwrite writable ID regs with their updated property values */
++    kvm_arm_writable_idregs_to_cpreg_list(cpu);
++
++    write_list_to_kvmstate(cpu, 3);
++
++    return 0;
+ }
  
- Named CPU models generally do not work with KVM.  There are a few cases
- that do work, e.g. using the named CPU model ``cortex-a57`` with KVM on a
--seattle host, but mostly if KVM is enabled the ``host`` CPU type must be
--used.  This means the guest is provided all the same CPU features as the
--host CPU type has.  And, for this reason, the ``host`` CPU type should
--enable all CPU features that the host has by default.  Indeed it's even
--a bit strange to allow disabling CPU features that the host has when using
--the ``host`` CPU type, but in the absence of CPU models it's the best we can
--do if we want to launch guests without all the host's CPU features enabled.
-+seattle host, but mostly if KVM is enabled, the ``host`` CPU model must be
-+used.
-+
-+Using the ``host`` type means the guest is provided all the same CPU
-+features as the host CPU type has.  And, for this reason, the ``host``
-+CPU type should enable all CPU features that the host has by default.
-+
-+In case some features need to be hidden to the guest, and the host kernel
-+supports it, the ``host`` model can be instructed to disable individual
-+ID register values. This is especially useful for migration purposes.
-+However, this interface will not allow configuring an arbitrary set of
-+features; the ID registers must describe a subset of the host's features,
-+and all differences to the host's configuration must actually be supported
-+by the kernel to be deconfigured.
- 
- Enabling KVM also affects the ``query-cpu-model-expansion`` QMP command.  The
- affect is not only limited to specific features, as pointed out in example
-@@ -167,6 +191,13 @@ disabling many SVE vector lengths would be quite verbose, the ``sve<N>`` CPU
- properties have special semantics (see "SVE CPU Property Parsing
- Semantics").
- 
-+Additionally, if supported by KVM on the host kernel, the ``host`` CPU model
-+may be configured via individual ID register field properties, for example::
-+
-+  $ qemu-system-aarch64 -M virt -cpu host,SYSREG_ID_AA64ISAR0_EL1_DP=0x0
-+
-+This forces ID_AA64ISAR0_EL1 DP field to 0.
-+
- KVM VCPU Features
- =================
- 
+ int kvm_arch_destroy_vcpu(CPUState *cs)
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 0df3bfafffcc..668acf94ab60 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -14,3 +14,4 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ # kvm.c
+ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
+ get_host_cpu_idregs(const char *name, uint64_t value) "scratch vcpu gost value for %s is 0x%"PRIx64
++kvm_arm_writable_idregs_to_cpreg_list(const char *name, uint64_t previous, uint64_t new) "%s overwrite default 0x%"PRIx64" with 0x%"PRIx64
 -- 
 2.47.0
 
