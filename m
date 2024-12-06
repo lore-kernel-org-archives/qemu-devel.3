@@ -4,90 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81F30E77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC346E7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXRT-00061j-Oz; Fri, 06 Dec 2024 07:28:19 -0500
+	id 1tJXSS-0007oR-87; Fri, 06 Dec 2024 07:29:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRL-0005xA-Ha; Fri, 06 Dec 2024 07:28:12 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRI-00041X-CO; Fri, 06 Dec 2024 07:28:10 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B67UdIh000889;
- Fri, 6 Dec 2024 12:28:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=H1XSzfzQ35MJNhtuvUSSmG+6rA5kKQH2J2mPrsp90
- uw=; b=M7c46/Polbz2oQFL07ZHlFeV/zjiaxR1dByBXYOLCwun+Ct/Dvrm4EsvU
- XMCdAnod42iEejxAuX0k/F+IPUlRHrNtV6bn6n6tZZmeu9n2nvRnUmxi4Mk1j0ND
- uMxjaOSfJVCYWrnPSHNolfokPSJdmQuewGJHvt7zZ8ZCn4lx7VSjb+r06pUwT+a0
- tet8hS2M6tu7uWZQtl5f/thxjciLzpHFTA6Zf0LPhCVR6yRaExfQPLUkAoNcvE/e
- hRQwThdczzYDrbQ/sFkEAQmm7L7qyTgI3fT/SFuww65S/BIal9IxAD+gLXRl7swz
- 3ELXFwo7BeUvd27ZjuRWGI/gkWp2g==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43bvxks5qs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:02 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BFOr7020058;
- Fri, 6 Dec 2024 12:28:01 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 438fr1xmpq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:01 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B6CRwJe26936038
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2024 12:27:58 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 086A42004B;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8D51A20043;
- Fri,  6 Dec 2024 12:27:57 +0000 (GMT)
-Received: from vela.ibmuc.com (unknown [9.171.26.200])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2024 12:27:57 +0000 (GMT)
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
- borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [RFC PATCH v2 00/15] KVM: s390: CPU model for gen17
-Date: Fri,  6 Dec 2024 13:27:36 +0100
-Message-ID: <20241206122751.189721-1-brueckner@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJXRX-00062n-MJ
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:25 -0500
+Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
+ id 1tJXRW-00047J-54
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:23 -0500
+Received: by mail-pg1-x544.google.com with SMTP id
+ 41be03b00d2f7-7f43259d220so1366380a12.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 04:28:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733488100; x=1734092900; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=DMVtNuBqtIXXm2C24hwxrJtPRQT47P73SaeeHd2lWK4=;
+ b=NQctH7kvEmWVFI7CeCVq1+j/WvAumC9T7WQerc2CEU2SCFZuEFSOfSp/67kc84nHsu
+ k9Y9CzY7t56QSTbbmeowAnutOZv225IA2HmF5Ly+ELEQbx+HJdAXtq6FYS1oeZsdsI1+
+ 4/Vfp1DY2/stPIcMtD5+4V1AnzuYXfXI+UfP/NCcvT3IBZQ9dGsshkVzeGfuXu+ft3+y
+ qrPBpyK10x2TMHT0RwG+5MuXEvZjIQZzzx40TNNl+/DiFf6WvSh8GpRVrE4koC/CKOGf
+ nhCgHzLjwNhYXOUcwMf/6wdR0YC//f7tqQitlkXIFVKcgFJcBWBVO3QtQiAIWULMTWiq
+ 63IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733488100; x=1734092900;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=DMVtNuBqtIXXm2C24hwxrJtPRQT47P73SaeeHd2lWK4=;
+ b=IfB/PVVzYbTz8GRld+W92YqhjGgWsTGnItCV4j/k0DUVBCvdnNXphMQnImJUbmjJRn
+ pb0m1DM/4T/Aqa9PZHkBtPuRmaIMXBylDblggXdcyNkrbCqBeXJH5IKiOOzXMu/Cw0zV
+ tfHlKQrKkoebcdqBfyPWNRJeguVhEmNT5McbIH/UCA9UuD5TxSDfZgMrnjf3UX+HnXX5
+ 65YXAh2Txb3PSutqgd0fihMHyZehrpx2KeJBDnJheRyqFpe+rKuPap90yrOKt2X0PXhn
+ OPwQkpqNYu2inK7EBERtYTN6KynnHILGxtsYud0/WiMT+S36eF5AWTMIGNqKAcZQNIzd
+ SYug==
+X-Gm-Message-State: AOJu0YzGDJOMXMKGRn7LjPKWS+B5x6WEdMk8mB+El2PtaIh/JAcV0rBP
+ ummvX6cPd8L7lM1k2BX0Ra98ViRRij0phhi4/6gw+VbPgzdiREM=
+X-Gm-Gg: ASbGncusGFVxO75zCRKuve0QUF8O6SCVjLqFaAf0EhGylnFJkbAjfXhT6IjT2Xxgy+Y
+ X7BCzCR/wNuj4NfYe5bcvHHQIxKD6wvp5cZwgF+HEdew5cFI9pgIaqP8K0mShmIISPUTLZuUi7q
+ E+L5nKXSZC6V4OQ3xfTEdaxoZuXv83F1FqEVr2A0BhZGoHhaa8X9JGtc6UCvRqr4+C12j9QpZ4O
+ i6WCM96rSgPOjfzcdjjle+/wxop1eiJSwEHPPCF4W0/voMPhOCOgHdKtQ==
+X-Google-Smtp-Source: AGHT+IFdzu6UBx6uy8wj9XCQFmYeHr/v0kMEdPLe1RtkivWLvxnhflrseuRRC/x5+4679b0O8esaog==
+X-Received: by 2002:a05:6a20:4324:b0:1e0:dbc6:8647 with SMTP id
+ adf61e73a8af0-1e1870ad665mr3957896637.1.1733488100421; 
+ Fri, 06 Dec 2024 04:28:20 -0800 (PST)
+Received: from kotori-desktop.lan ([58.38.120.33])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fd15710123sm2579866a12.49.2024.12.06.04.28.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 04:28:20 -0800 (PST)
+From: Tomita Moeko <tomitamoeko@gmail.com>
+To: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
+ Tomita Moeko <tomitamoeko@gmail.com>
+Subject: [PATCH v4 10/10] vfio/igd: add x-igd-gms option back to set DSM
+ region size for guest
+Date: Fri,  6 Dec 2024 20:27:48 +0800
+Message-ID: <20241206122749.9893-11-tomitamoeko@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241206122749.9893-1-tomitamoeko@gmail.com>
+References: <20241206122749.9893-1-tomitamoeko@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: nnYr2wzTeivzXbIGiDN7eZDvD1JZR_AF
-X-Proofpoint-ORIG-GUID: nnYr2wzTeivzXbIGiDN7eZDvD1JZR_AF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- malwarescore=0 lowpriorityscore=0 mlxscore=0 priorityscore=1501
- suspectscore=0 spamscore=0 adultscore=0 mlxlogscore=999 bulkscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412060089
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
+ envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x544.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,90 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introducing the gen17 CPU model with feature indications
-comprising of:
+DSM region is likely to store framebuffer in Windows, a small DSM
+region may cause display issues (e.g. half of the screen is black).
+Since 971ca22f041b ("vfio/igd: don't set stolen memory size to zero"),
+the x-igd-gms option was functionally removed, QEMU uses host's
+original value, which is determined by DVMT Pre-Allocated option in
+Intel FSP of host bios.
 
-* Concurrent-function facility with subcodes
-* More vector extensions
-* Ineffective-nonconstrained-transaction facility
-* Even more msa crypto extensions
-* Additional PLO subfunctions
+However, some vendors do not expose this config item to users. In
+such cases, x-igd-gms option can be used to manually set the data
+stolen memory size for guest. So this commit brings this option back,
+keeping its old behavior. When it is not specified, QEMU uses host's
+value.
 
-For reference, see also the kernel part:
-https://lore.kernel.org/kvm/20241107152319.77816-1-brueckner@linux.ibm.com/T/#me506dc2ca538aee3cfc13620a48bdb686c459ab0
+When DVMT Pre-Allocated option is available in host BIOS, user should
+set DSM region size there instead of using x-igd-gms option.
 
-Changelog v1->v2:
-- Linux headers update to Linux 6.13-rc1 as pre-req
-  for the Concurrent-function facility
-- Added missing CPU feature (group) initialization
-  for the msa12 and PLO extensions
+Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+---
+ hw/vfio/igd.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-
-Feedback and review is always welcome.  Thanks a lot!
-
-Kind regards,
-Hendrik
-
-
-Hendrik Brueckner (15):
-  s390x/cpumodel: add msa10 subfunctions
-  s390x/cpumodel: add msa11 subfunctions
-  s390x/cpumodel: add msa12 changes
-  s390x/cpumodel: add msa13 subfunctions
-  s390x/cpumodel: Add ptff Query Time-Stamp Event (QTSE) support
-  linux-headers: Update to Linux 6.13-rc1
-  s390x/cpumodel: add Concurrent-functions facility support
-  s390x/cpumodel: add Vector Enhancements facility 3
-  s390x/cpumodel: add Miscellaneous-Instruction-Extensions Facility 4
-  s390x/cpumodel: add Vector-Packed-Decimal-Enhancement facility 3
-  s390x/cpumodel: add Ineffective-nonconstrained-transaction facility
-  s390x/cpumodel: Add Sequential-Instruction-Fetching facility
-  s390x/cpumodel: correct PLO feature wording
-  s390x/cpumodel: Add PLO-extension facility
-  s390x/cpumodel: gen17 model
-
- include/standard-headers/drm/drm_fourcc.h     |   1 +
- include/standard-headers/linux/ethtool.h      |   5 +
- include/standard-headers/linux/pci_regs.h     |  38 ++-
- .../standard-headers/linux/virtio_crypto.h    |   1 +
- include/standard-headers/linux/virtio_pci.h   | 131 ++++++++++
- linux-headers/asm-arm64/kvm.h                 |   6 +
- linux-headers/asm-arm64/unistd_64.h           |   4 +
- linux-headers/asm-generic/mman-common.h       |   3 +
- linux-headers/asm-generic/mman.h              |   4 +
- linux-headers/asm-generic/unistd.h            |  11 +-
- linux-headers/asm-loongarch/kvm.h             |  20 ++
- linux-headers/asm-loongarch/unistd_64.h       |   4 +
- linux-headers/asm-mips/mman.h                 |   3 +
- linux-headers/asm-mips/unistd_n32.h           |   4 +
- linux-headers/asm-mips/unistd_n64.h           |   4 +
- linux-headers/asm-mips/unistd_o32.h           |   4 +
- linux-headers/asm-powerpc/unistd_32.h         |   4 +
- linux-headers/asm-powerpc/unistd_64.h         |   4 +
- linux-headers/asm-riscv/kvm.h                 |   4 +
- linux-headers/asm-riscv/unistd_32.h           |   4 +
- linux-headers/asm-riscv/unistd_64.h           |   4 +
- linux-headers/asm-s390/kvm.h                  |   3 +-
- linux-headers/asm-s390/unistd_32.h            |   4 +
- linux-headers/asm-s390/unistd_64.h            |   4 +
- linux-headers/asm-x86/kvm.h                   |   1 +
- linux-headers/asm-x86/mman.h                  |   3 -
- linux-headers/asm-x86/unistd_32.h             |   4 +
- linux-headers/asm-x86/unistd_64.h             |   4 +
- linux-headers/asm-x86/unistd_x32.h            |   4 +
- linux-headers/linux/iommufd.h                 | 224 +++++++++++++++++-
- linux-headers/linux/kvm.h                     |   8 +
- linux-headers/linux/psci.h                    |   5 +
- linux-headers/linux/vfio.h                    |   2 +-
- target/s390x/cpu_features.c                   |  11 +
- target/s390x/cpu_features.h                   |   1 +
- target/s390x/cpu_features_def.h.inc           |  94 +++++++-
- target/s390x/cpu_models.c                     |  61 +++++
- target/s390x/gen-features.c                   | 178 ++++++++++++++
- target/s390x/kvm/kvm.c                        |   6 +
- 39 files changed, 851 insertions(+), 29 deletions(-)
-
+diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
+index 73c06bbf64..b0fef90240 100644
+--- a/hw/vfio/igd.c
++++ b/hw/vfio/igd.c
+@@ -14,6 +14,7 @@
+ #include "qemu/units.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
++#include "qapi/qmp/qerror.h"
+ #include "hw/hw.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "pci.h"
+@@ -722,6 +723,31 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
+ 
+     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
+ 
++    /*
++     * Allow user to override dsm size using x-igd-gms option, in multiples of
++     * 32MiB. This option should only be used when the desired size cannot be
++     * set from DVMT Pre-Allocated option in host BIOS.
++     */
++    if (vdev->igd_gms) {
++        if (gen < 8) {
++            if (vdev->igd_gms <= 0x10) {
++                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
++                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
++            } else {
++                error_report(QERR_INVALID_PARAMETER_VALUE,
++                             "x-igd-gms", "0~0x10");
++            }
++        } else {
++            if (vdev->igd_gms <= 0x40) {
++                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
++                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
++            } else {
++                error_report(QERR_INVALID_PARAMETER_VALUE,
++                             "x-igd-gms", "0~0x40");
++            }
++        }
++    }
++
+     ggms_size = igd_gtt_memory_size(gen, gmch);
+     gms_size = igd_stolen_memory_size(gen, gmch);
+ 
 -- 
-2.43.5
+2.45.2
 
 
