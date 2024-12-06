@@ -4,141 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 082B2E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:10:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E2AE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:12:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJauh-0005kp-NK; Fri, 06 Dec 2024 11:10:43 -0500
+	id 1tJavp-0006PT-MB; Fri, 06 Dec 2024 11:11:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJauf-0005kN-7y
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:10:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tJaub-0001UV-Pi
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:10:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733501436;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=H/kPRRodLycyRKIyNLFAoXTASubjN8WcrZGrDVzsxvk=;
- b=bTHxtfPW3EGQNtQ8DdyybD4bjEO4bMUtZMAUF0nZSq5DPcgTNCCToGS3eRFOVpRSZ1lxKF
- b84ZkFeZREfLfbBjd35zUIKN3nBi+LaUD1CYSgQFiUYNRNcGTCzPT0Ajat3C7sp0TxjoiU
- xSJDoVu1yqsbslBIg9/Zx5D5HLI+mnk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-WDR-e-KcOqS7b_RtrNuM8A-1; Fri, 06 Dec 2024 11:10:34 -0500
-X-MC-Unique: WDR-e-KcOqS7b_RtrNuM8A-1
-X-Mimecast-MFC-AGG-ID: WDR-e-KcOqS7b_RtrNuM8A
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-434996c1aa7so18675925e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:10:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJavo-0006P7-1R
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:11:52 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tJavm-0001dA-OB
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:11:51 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3bbb0f09dso1301049a12.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:11:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733501509; x=1734106309; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PuDCDux8HEAHY9Pzx394TWfXAEO/U1wpbtbglAlV7LM=;
+ b=kKGlWGsDiD6sSBpTZBTunV8coipzA6cOpDBXDRsP2GnHzYXSJVLhI2wn8ltUYh34hK
+ mFLNcAvP4lNFLV5rZ5bzbCOCj5R+RcSCAHQwbPBmeCNANTwFzg4/alMChiML+HbMu8Km
+ cAwifs6vlVyR6reJ0FHab5zkYte/IlyGhOdX4kOxCzdaqREIxZn+kwegmUyHoMD26Bnt
+ 4zv7HNI3jXeVQRsTMWriIcWCLgiGAj3SqfFYa30EeTXf7MOvebZLWBpQcqqjHrn/+t+X
+ floJlEqeZyGZy3WD0JO+Ufs8MFcAw17U7oHIEce7DcA8Ica+MNfaIUqwnqZSA0bCDF1k
+ tUyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733501433; x=1734106233;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1733501509; x=1734106309;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=H/kPRRodLycyRKIyNLFAoXTASubjN8WcrZGrDVzsxvk=;
- b=KY142+/rFsZG6T7pb4GiuytOWtLPzRmr/zuEy2xsWppoBeHo+De2OjVMav+4HJCE9V
- yKGrX6t9Pf25/8NFccBmKFdq94iAbJttVb0n72ltM8Qyew5D1eQcIroJ6bt/PNzv3lzF
- SUZ/TSO9JHV9Dl5u08Hx7CQv1pqMXVqRzk9HBMvK6UCQHa4Js4atKovnPrZCixbTTM5m
- OQ/GSJ+rr9tAJ1kR16f4YFPMbX4Xa4wOd2LfgiZnVNCEkFRK3tPdV8Tt9JHRM3wcWS8V
- KxTmdIBRzAyRgT+NIxdB6zOfkC7993qgC86SGMv2SknYxD2eSFafJ7HHnGTzWzpd8U5/
- 92QA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWk+adzoY/k/wAy4zbbrNvxxOc1mTNzGvz/6iwW7U40/8g7Rbh6EHOAB08ivvLYdRtBiPG7sEGYhBz+@nongnu.org
-X-Gm-Message-State: AOJu0Yyov0LYW5ddFiQ8Nmysk/10OAMU7CViCxktacOtLtH3VlTb2qGt
- Tw0A7y6e3sgjkUrlnddNjeDhs6byeVxWnluwavjapz/+my3mM+33PiFHY6fqawbVkfnypmnaKvS
- F4I2lzJFyvFe6AnngfyFCfEfwoq86NwofkdP4EOcEw2P03AgSVZjB
-X-Gm-Gg: ASbGncsNoFIq19Hrij2EFDrXon/AnD7hArnjNkmq0d5Bptm5ff6vQo9fpHP767hbwfN
- BwjE8+MzaJ8m+Gbnf2cWeuYS2eCTvxpNnf9NphyxYiKGX1DZA/HZNuspanp7DlJmsidMkfhGaIv
- zdPzH/DWxrB+402Oh9hml7dKwJuoOc7pz2j11VJy/krtvvqIm/8yu/qaOmd35RuNUl2TvCWdUJG
- yYq70aIORMCFOVKrEjJwRXkIX9vOcBStuYcenH4/xgdgCA93yB1URtFIbmn7ByLdSlpXKchm3Jc
- MhDfLw==
-X-Received: by 2002:a05:600c:4f02:b0:431:5f1c:8359 with SMTP id
- 5b1f17b1804b1-434ddeb7f8emr36118355e9.15.1733501432802; 
- Fri, 06 Dec 2024 08:10:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHA9wuMnHLD0VQvWucRTbQ3ehmOi+X9/youpSin22OI19JYFGUWPBj/61N12xt5CMz9fowCfA==
-X-Received: by 2002:a05:600c:4f02:b0:431:5f1c:8359 with SMTP id
- 5b1f17b1804b1-434ddeb7f8emr36117835e9.15.1733501432383; 
- Fri, 06 Dec 2024 08:10:32 -0800 (PST)
-Received: from [192.168.0.7] (ip-109-42-48-244.web.vodafone.de.
- [109.42.48.244]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434da0dac17sm59473725e9.23.2024.12.06.08.10.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 08:10:32 -0800 (PST)
-Message-ID: <3d48414f-903b-4b15-b85d-c2edc5ffb9b3@redhat.com>
-Date: Fri, 6 Dec 2024 17:10:30 +0100
+ bh=PuDCDux8HEAHY9Pzx394TWfXAEO/U1wpbtbglAlV7LM=;
+ b=jokAs2ehXXCGHGXz9NUUMN0TL+AOEk+PKFE4QK6E2s0jjgUL8mSxM3cIHOdjHOr+0R
+ d7qYwkhD2uLoAYRdysLvA298SRG6hKwmGFi8TLDdcoogq1xFvA3AHvdSxpi277OtGgFn
+ TzjyzH5KUyc50wjksz90wpaCCP4uChI4lvNHIcZileJxMUJ9ozkHjsyLzAUYVLbPn4BJ
+ GQTF6URv72PHXVAqW/rofYqwvu6bNG6jSP7rbE4MDiXxBI88BGZeDhmmVbAZNC9LxyAS
+ ewYch/au7OnpqUJj4dbZ0d4YSHg1Eru+xtZahp7wi6guYfjw88dVE+6abrVdfEVTNA9k
+ 7Ndg==
+X-Gm-Message-State: AOJu0YwS3T4RlmJCV792ud+lczZ6KP3dKuFeEnE1u/wv067AuSH+ocS5
+ gr+ONceomSxxGKpziVIBHXEdPtnZdFDfvS3hB2FMwavW5sxF5/kVbRcTPg8FPAsnUZl0og24bad
+ VG+ML43Q38z6iSMpKGHha/minpnUftsbKOuTp9vTqDenDmoDp
+X-Gm-Gg: ASbGnctYlVttUApkpZNuWgTNY3hA5ml2bWBWkRL+dSsUHTohEM3XGsHI7870A13zZpS
+ WWhL+zj7r1oe7n/jP4os+Ap1wOBYwEPuz
+X-Google-Smtp-Source: AGHT+IH/HaxdV2ubsdqOwSNfPi3E+lDdb/RCh3PG2s0L6lpNkBjuClxzII1DcXLGwQWGZaT1qA/mK7FH0Zzq4dvtRgU=
+X-Received: by 2002:a05:6402:5386:b0:5d0:e73c:b7f2 with SMTP id
+ 4fb4d7f45d1cf-5d3be660913mr2744595a12.7.1733501508797; Fri, 06 Dec 2024
+ 08:11:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/hcd-xhci-nec: Remove unused XHCINecState::flags
- field
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, QEMU Trivial <qemu-trivial@nongnu.org>
-References: <20241127122812.89487-1-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
- yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
- 4CflIyFqjCpfDM4MuTmzTjXq4Uov1giGE9X6viNo1pxyEpd7PanlKNnf4PqEQp06X4IgUacW
- tSGj6Gcns1bCuHV8OPWLkf4hkRnu8hdL6i60Yxz4E6TqlrpxsfYwLXgEeswPHOA6Mn4Cso9O
- 0lewVYfFfsmokfAVMKWzOl1Sr0KGI5T9CpmRfAiSHpthhHWnECcJFwl72NTi6kUcUzG4se81
- O6n9d/kTj7pzTmBdfwuOZ0YUSqcqs0W+l1NcASSYZQaDoD3/SLk+nqVeCBB4OnYOGhgmIHNW
- 0CwMRO/GK+20alxzk//V9GmIM2ACElbfF8+Uug3pqiHkVnKqM7W9/S1NH2qmxB6zMiJUHlTH
- gnVeZX0dgH27mzstcF786uPcdEqS0KJuxh2kk5IvUSL3Qn3ZgmgdxBMyCPciD/1cb7/Ahazr
- 3ThHQXSHXkH/aDXdfLsKVuwDzHLVSkdSnZdt5HHh75/NFHxwaTlydgfHmFFwodK8y/TjyiGZ
- zg2Kje38xnz8zKn9iesFBCcONXS7txENTzX0z80WKBhK+XSFJwARAQABzR5UaG9tYXMgSHV0
- aCA8dGh1dGhAcmVkaGF0LmNvbT7CwXgEEwECACIFAlVgX6oCGwMGCwkIBwMCBhUIAgkKCwQW
- AgMBAh4BAheAAAoJEC7Z13T+cC21EbIP/ii9cvT2HHGbFRl8HqGT6+7Wkb+XLMqJBMAIGiQK
- QIP3xk1HPTsLfVG0ao4hy/oYkGNOP8+ubLnZen6Yq3zAFiMhQ44lvgigDYJo3Ve59gfe99KX
- EbtB+X95ODARkq0McR6OAsPNJ7gpEUzfkQUUJTXRDQXfG/FX303Gvk+YU0spm2tsIKPl6AmV
- 1CegDljzjycyfJbk418MQmMu2T82kjrkEofUO2a24ed3VGC0/Uz//XCR2ZTo+vBoBUQl41BD
- eFFtoCSrzo3yPFS+w5fkH9NT8ChdpSlbNS32NhYQhJtr9zjWyFRf0Zk+T/1P7ECn6gTEkp5k
- ofFIA4MFBc/fXbaDRtBmPB0N9pqTFApIUI4vuFPPO0JDrII9dLwZ6lO9EKiwuVlvr1wwzsgq
- zJTPBU3qHaUO4d/8G+gD7AL/6T4zi8Jo/GmjBsnYaTzbm94lf0CjXjsOX3seMhaE6WAZOQQG
- tZHAO1kAPWpaxne+wtgMKthyPLNwelLf+xzGvrIKvLX6QuLoWMnWldu22z2ICVnLQChlR9d6
- WW8QFEpo/FK7omuS8KvvopFcOOdlbFMM8Y/8vBgVMSsK6fsYUhruny/PahprPbYGiNIhKqz7
- UvgyZVl4pBFjTaz/SbimTk210vIlkDyy1WuS8Zsn0htv4+jQPgo9rqFE4mipJjy/iboDzsFN
- BFH7eUwBEAC2nzfUeeI8dv0C4qrfCPze6NkryUflEut9WwHhfXCLjtvCjnoGqFelH/PE9NF4
- 4VPSCdvD1SSmFVzu6T9qWdcwMSaC+e7G/z0/AhBfqTeosAF5XvKQlAb9ZPkdDr7YN0a1XDfa
- +NgA+JZB4ROyBZFFAwNHT+HCnyzy0v9Sh3BgJJwfpXHH2l3LfncvV8rgFv0bvdr70U+On2XH
- 5bApOyW1WpIG5KPJlDdzcQTyptOJ1dnEHfwnABEfzI3dNf63rlxsGouX/NFRRRNqkdClQR3K
- gCwciaXfZ7ir7fF0u1N2UuLsWA8Ei1JrNypk+MRxhbvdQC4tyZCZ8mVDk+QOK6pyK2f4rMf/
- WmqxNTtAVmNuZIwnJdjRMMSs4W4w6N/bRvpqtykSqx7VXcgqtv6eqoDZrNuhGbekQA0sAnCJ
- VPArerAZGArm63o39me/bRUQeQVSxEBmg66yshF9HkcUPGVeC4B0TPwz+HFcVhheo6hoJjLq
- knFOPLRj+0h+ZL+D0GenyqD3CyuyeTT5dGcNU9qT74bdSr20k/CklvI7S9yoQje8BeQAHtdV
- cvO8XCLrpGuw9SgOS7OP5oI26a0548M4KldAY+kqX6XVphEw3/6U1KTf7WxW5zYLTtadjISB
- X9xsRWSU+Yqs3C7oN5TIPSoj9tXMoxZkCIHWvnqGwZ7JhwARAQABwsFfBBgBAgAJBQJR+3lM
- AhsMAAoJEC7Z13T+cC21hPAQAIsBL9MdGpdEpvXs9CYrBkd6tS9mbaSWj6XBDfA1AEdQkBOn
- ZH1Qt7HJesk+qNSnLv6+jP4VwqK5AFMrKJ6IjE7jqgzGxtcZnvSjeDGPF1h2CKZQPpTw890k
- fy18AvgFHkVk2Oylyexw3aOBsXg6ukN44vIFqPoc+YSU0+0QIdYJp/XFsgWxnFIMYwDpxSHS
- 5fdDxUjsk3UBHZx+IhFjs2siVZi5wnHIqM7eK9abr2cK2weInTBwXwqVWjsXZ4tq5+jQrwDK
- cvxIcwXdUTLGxc4/Z/VRH1PZSvfQxdxMGmNTGaXVNfdFZjm4fz0mz+OUi6AHC4CZpwnsliGV
- ODqwX8Y1zic9viSTbKS01ZNp175POyWViUk9qisPZB7ypfSIVSEULrL347qY/hm9ahhqmn17
- Ng255syASv3ehvX7iwWDfzXbA0/TVaqwa1YIkec+/8miicV0zMP9siRcYQkyTqSzaTFBBmqD
- oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
- IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
- yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241127122812.89487-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241201150607.12812-1-richard.henderson@linaro.org>
+ <20241201150607.12812-54-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-54-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 6 Dec 2024 16:11:37 +0000
+Message-ID: <CAFEAcA8CS8CbDS60Ru+ta2VJm2nK4L3aqzTZACkqPMFe7JHifA@mail.gmail.com>
+Subject: Re: [PATCH 53/67] target/arm: Convert FSQRT (vector) to decodetree
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,42 +90,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/2024 13.28, Philippe Mathieu-Daudé wrote:
-> Commit b9599519a01 ("hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST
-> flag") remove the last use of XHCINecState::flags but neglected
-> to remove it; do that now.
-> 
-> Reported-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/usb/hcd-xhci-nec.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
-> 
-> diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
-> index 0c063b3697d..1a191fc7372 100644
-> --- a/hw/usb/hcd-xhci-nec.c
-> +++ b/hw/usb/hcd-xhci-nec.c
-> @@ -30,10 +30,8 @@
->   OBJECT_DECLARE_SIMPLE_TYPE(XHCINecState, NEC_XHCI)
->   
->   struct XHCINecState {
-> -    /*< private >*/
->       XHCIPciState parent_obj;
-> -    /*< public >*/
-> -    uint32_t flags;
-> +
->       uint32_t intrs;
->       uint32_t slots;
->   };
-> @@ -51,7 +49,6 @@ static void nec_xhci_instance_init(Object *obj)
->       XHCIPciState *pci = XHCI_PCI(obj);
->       XHCINecState *nec = NEC_XHCI(obj);
->   
-> -    pci->xhci.flags    = nec->flags;
->       pci->xhci.numintrs = nec->intrs;
->       pci->xhci.numslots = nec->slots;
->   }
+On Sun, 1 Dec 2024 at 15:15, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
+-- PMM
 
