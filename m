@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFC91E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:30:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697E2E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJe0s-0002rE-HB; Fri, 06 Dec 2024 14:29:19 -0500
+	id 1tJe1S-0002yp-OS; Fri, 06 Dec 2024 14:29:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJe0o-0002qC-Ga
+ id 1tJe0o-0002qB-B4
  for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:29:15 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJe0l-0005Er-4C
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:29:14 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-215936688aeso23083905ad.1
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:29:10 -0800 (PST)
+ id 1tJe0j-0005Eg-U5
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:29:12 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2153e642114so25058995ad.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:29:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733513349; x=1734118149; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FbPMtxcOc3D4j1V0HPSTBCu31VLQo3b2yamOLZCop3s=;
- b=kk9dqz92d10YhMsOAwNKxNBem65lLBXIqXL17qAZohuEOKzdU89MvCUaVsZd/1uvVG
- xRveCFpaurl99Q+rpTW6I1cI24xLGZ7tYcnl6NeAA5+fBQZkHhXpzTBZgnALshaCx1+C
- 8qL7gJ0/6I7x5Lpvih592jqZiZFfw3+p7Ej0AZAS05f1q4wxTAvRRUdd6ck8KednccPT
- Sdfd3cBL5vEdqgwX2+U1v5Kq34kxSAbrb6kTgGp8T4TMObpGBUvCH/H2NmPq+TNIdye4
- llIDKNgAj+JhXT1h9+kgO1m10gI3iBl+Jbyl7DKmNIC1qb080d5m1eaxRlAlGasbmU52
- OAJg==
+ d=linaro.org; s=google; t=1733513348; x=1734118148; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=msFX+jDD+Hv+ETojsNCSut7+r2zf++AknG8UI2zRaGg=;
+ b=CsExJpdHHJO9Tlv10S/m+2+AlqPUSpoxtnaB3t9Wm6D+Lxtmb4Xx2L5KoJsnhlCZXD
+ L5sKDqcNCF+KY24YKak5X70BY8Bgkw1nolnBbJZOaEjsItwUPIAjZBISTpSV8SuRk6PX
+ /9ZUoW2ANJ+TPUXuv/mtGgld9V8sXs8UEwSi6/pPzMzrxxcAUFg3v9U6GhojJ3idGKBv
+ 229VNSabYZFaHCzfwVXkwNYLZFkLG8ulB4MoX0NNlapf9CH8HIRvgbX9Dg53/q+DO7z4
+ avkItzYrSBh0Krh6Eua36RQt6EQYfCxpR2WnK5KwEgPDkVkpMphmSNJPY0gD2uL1xtN7
+ 0ISA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733513349; x=1734118149;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=FbPMtxcOc3D4j1V0HPSTBCu31VLQo3b2yamOLZCop3s=;
- b=UUz7F++tJQEm8cWBTeWiAMO50Rfb4OaRHlPVVMRAl/mD7Fl9yL6jY8QMkXgOTwfG3+
- Zy10wVyaP3+KF0DMOLdtM12sNgTqyZr7ndjkrVWXpHMiI1qWmRlWV8V9khmYg9zIXxta
- HlbmWVRaKUUV15p560+LXMGuauYyVzXbotYoe6LUpDbAhi2zM1ctWgulSqK+/PshqLrP
- bA229Qa8OxsuJunhDePZLlh1t6OzwqdZ/UqXpF1OOICMLY1fEXXul07N6/FVMhKtI6aR
- TtaUPFYsO/s7DC9qW8jowa6GEuYkckfzlxNvSHqTLqpFyVC9ueda6oAowgsM+GLGdO72
- 5WrA==
-X-Gm-Message-State: AOJu0Yz4o+MODd8+ZX6ZpLHDZKXbYikANeJ4vBjsdx/lOyPiI3mDfKXP
- Fk8MbfziQezJerWozHsS6zqaid059iI1x/1NxmSpuL4alIXEuXizatEsL9cuSR7/NymikRzPGwc
- fLzE=
-X-Gm-Gg: ASbGnctaJVJ48d8n4bjYFJsdDRbwB2c8QahAj0vUU686F0RNySpX7HIC9Q4WbFnJVHP
- ROKQgee9M73UuuvPwCB6iqr7hQhXexWKerYyot5Nm937OuWBpjZkTldlQgQym0Gw/Rn+mC3aHVq
- OYTt1Q5DUXqhMLVCBgHAvsstfpooIx+yKLaaJ5xJtLPUVciIK4OivHt4GasUu+/vK5Os7ei/UxX
- JGVNmPebt1GzzPAr++J5tcLLMH1eTXL8xwVSWaBfiS2Lk2WMi5ZYL9BlWuLSe/ilv8bftqbgLsc
- Id6WSpIh
-X-Google-Smtp-Source: AGHT+IFMrlZJVSch9+XLcwCmnYK958N0MU6X3npy9db4D7XTYUqGyFCj6Ns4sOuLUYXsJ3CdST3c6g==
-X-Received: by 2002:a17:903:2348:b0:212:996:3559 with SMTP id
- d9443c01a7336-21614d2e567mr62280495ad.5.1733513349592; 
- Fri, 06 Dec 2024 11:29:09 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733513348; x=1734118148;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=msFX+jDD+Hv+ETojsNCSut7+r2zf++AknG8UI2zRaGg=;
+ b=QTcnQbSLz0CNzUTzlNNCeJt92dIWCqnVWo8vpRX3+Z3sKa/LWmdBis8jG3mU7LcY8H
+ M7BOGg5Srjyh3l3iH3TjDBXQXPdCpogOZhmkrR5Caw+mZfojlpIpMBaUrXoetEvl/SE4
+ gGp2gIYPgpNvZFpGeyLumo9NBe8C9UN1YACjtZ72ZwiCP+taRw1qZfl7udgx9EYHJS7l
+ zLIgbCq5ToPTASUdh+/YM2z7wlaC6fxGee3FDUz4s60tcoBrHarvICSIsb+NXAZ+LkmI
+ 7iCNaGiBd1c/tsoWYTlSyobgpI8chFLHRELc2ce/auHvrVWaxhnZDhYWAUv5GtEMozJR
+ NUhQ==
+X-Gm-Message-State: AOJu0YyT3P5qxhPpkCJ2QTLZhnlTjOF4fnrBpZMtaml0NSIxAdLH9Aoe
+ AO5XvxIpsgFy+tfiVoXjLqSDPNnTfQXc1m2Hn7WfACz8nUIgxU9TsM4Kunb4gw0SVttBSOCOPQq
+ NJj8=
+X-Gm-Gg: ASbGncuJChNtjkLqbeenWJQYCMLiKcE81VEyBlTxUUGJFkA3FX+ooHdaE75oCOph9+G
+ 2XSu9AQDfozxWqvP44l8QO1Ph3F+56XjrWC5v62lqtN5TEZM68PhmKcKZoNG4qohlwso4ivmnKG
+ s6MBSNSCIYKO1sT13zhYp0NTpm7aKszV7XLPFuSSYTznT7QKMbT+KO3bLB/WH99I59LEMKpBFZX
+ Wg/q6Y06NfKYAh8JGbAH8tIEugnQ/55WK4lPCUEmhsDgIN5B/hk2nYaV2HbzahIRlE9MOpfArn2
+ 3UsYOywd
+X-Google-Smtp-Source: AGHT+IG3jZ79VmkhVqrz0FbM7lqJC+BmrEHXrnvAcqMBqroNAulqDdXVSVv/55meQ1lfDfnPoB6SXw==
+X-Received: by 2002:a17:903:24d:b0:216:1367:7e3d with SMTP id
+ d9443c01a7336-21614d67fc3mr62226725ad.31.1733513348428; 
+ Fri, 06 Dec 2024 11:29:08 -0800 (PST)
 Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215f8ef9fcdsm32110205ad.146.2024.12.06.11.29.08
+ d9443c01a7336-215f8ef9fcdsm32110205ad.146.2024.12.06.11.29.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 11:29:09 -0800 (PST)
+ Fri, 06 Dec 2024 11:29:08 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
@@ -81,24 +80,22 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
  manos.pitsidianakis@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 1/6] docs/devel: remove dead video link for sourcehut
- submit process
-Date: Fri,  6 Dec 2024 11:28:55 -0800
-Message-Id: <20241206192900.3893118-2-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 0/6] Enhance documentation for new developers
+Date: Fri,  6 Dec 2024 11:28:54 -0800
+Message-Id: <20241206192900.3893118-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241206192900.3893118-1-pierrick.bouvier@linaro.org>
-References: <20241206192900.3893118-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,28 +111,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/devel/submitting-a-patch.rst | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+This series extends our documentation with new pages to help developers
+onboarding on QEMU. It focuses on providing a big picture of QEMU (to a
+modest extend).
 
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index 10b062eec26..03b2ac298aa 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -252,10 +252,7 @@ patches to the QEMU mailing list by following these steps:
- #. Send your patches to the QEMU mailing list using the web-based
-    ``git-send-email`` UI at https://git.sr.ht/~USERNAME/qemu/send-email
- 
--`This video
--<https://spacepub.space/videos/watch/ad258d23-0ac6-488c-83fc-2bacf578de3a>`__
--shows the web-based ``git-send-email`` workflow. Documentation is
--available `here
-+Documentation for sourcehut is available `here
- <https://man.sr.ht/git.sr.ht/#sending-patches-upstream>`__.
- 
- .. _cc_the_relevant_maintainer:
+As such, it was written to be simple, short, easy to understand, and pointing to
+more details. It provides another way to dive into details instead of simply
+hitting the "search" box.
+
+The first patches enhance the existing developer section. They provide
+information about b4 and git-publish, two important tools that I learnt from my
+coworkers, and were not presented anywhere, and were really missing IMHO.
+
+Then, we introduce a new Codebase page, presenting (succintly) the various parts
+of QEMU, and what every folder of the codebase contains.
+We then add a glossary with the most recurrent acronyms we hear in our daily
+conversations on the mailing list.
+Finally, we add an "How-to" page which present how to build and test qemu, and
+how to contribute a patch. It's definitely a repetition of existing information,
+but the goal was to have a self contained page with all the commands I run
+daily personally, and that someone would be interested to have.
+
+When reviewing, please keep in mind this is targeting someone who discovers
+QEMU, and not someone who contributed to the project for several years. What is
+obvious for you will not be obvious for a random young developer.
+
+That said, please free to point if something is "false", or "really incomplete".
+It can be hard to summarize in one or two sentences complex parts, but that's
+the intent here.
+
+Your feedback on content or organization is very welcome!
+
+Thanks,
+Pierrick
+
+v2:
+- removed how-to section
+- integrated all suggestions from Daniel and Peter (thanks for all your comments)
+- Note: build environment keeps mentioning windows-arm64 because we solved the
+  issue with gcc_struct attribute. The related series will be merged before this
+  documentation.
+
+v3:
+- added a comment about git-publish asked by Daniel.
+
+Pierrick Bouvier (6):
+  docs/devel: remove dead video link for sourcehut submit process
+  docs/devel: add git-publish for patch submitting
+  docs/devel: add b4 for patch retrieval
+  docs/devel: add information on how to setup build environments
+  docs: add a codebase section
+  docs: add a glossary
+
+ docs/about/build-platforms.rst         |   4 +-
+ docs/about/emulation.rst               |   2 +
+ docs/devel/build-environment.rst       | 118 +++++++++++
+ docs/devel/codebase.rst                | 218 +++++++++++++++++++
+ docs/devel/control-flow-integrity.rst  |   2 +
+ docs/devel/decodetree.rst              |   2 +
+ docs/devel/ebpf_rss.rst                |   2 +
+ docs/devel/index-build.rst             |   1 +
+ docs/devel/index-internals.rst         |   2 +
+ docs/devel/index.rst                   |   1 +
+ docs/devel/migration/main.rst          |   2 +
+ docs/devel/multi-thread-tcg.rst        |   2 +
+ docs/devel/qapi-code-gen.rst           |   1 +
+ docs/devel/submitting-a-patch.rst      |  40 +++-
+ docs/devel/testing/main.rst            |   9 +-
+ docs/devel/testing/qtest.rst           |   2 +
+ docs/glossary.rst                      | 280 +++++++++++++++++++++++++
+ docs/index.rst                         |   3 +
+ docs/interop/qemu-ga.rst               |   2 +
+ docs/system/arm/virt.rst               |   2 +
+ docs/system/images.rst                 |   2 +
+ docs/system/qemu-block-drivers.rst.inc |   2 +
+ docs/tools/qemu-nbd.rst                |   2 +
+ docs/tools/qemu-storage-daemon.rst     |   2 +
+ docs/user/main.rst                     |   6 +
+ 25 files changed, 703 insertions(+), 6 deletions(-)
+ create mode 100644 docs/devel/build-environment.rst
+ create mode 100644 docs/devel/codebase.rst
+ create mode 100644 docs/glossary.rst
+
 -- 
 2.39.5
 
