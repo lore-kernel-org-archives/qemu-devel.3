@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C80DE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B6DDE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJc25-0005Hc-8h; Fri, 06 Dec 2024 12:22:25 -0500
+	id 1tJc1y-0004l2-No; Fri, 06 Dec 2024 12:22:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1Q-0004Bv-Rd; Fri, 06 Dec 2024 12:21:44 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ id 1tJc1P-0004AK-LJ; Fri, 06 Dec 2024 12:21:43 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1N-0000z4-1N; Fri, 06 Dec 2024 12:21:44 -0500
+ id 1tJc1M-0000yS-KH; Fri, 06 Dec 2024 12:21:43 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id AA0E4A443D9;
+ by nyc.source.kernel.org (Postfix) with ESMTP id 84C53A443D1;
  Fri,  6 Dec 2024 17:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5C4C19422;
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC818C4CEF8;
  Fri,  6 Dec 2024 17:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733505688;
- bh=eNJ0L18CqakPOsgyzdzaKDzBHHjkiPmCHmVgcT+mZFs=;
+ s=k20201202; t=1733505687;
+ bh=C/8hgca52svymn9HbMA33VI55Heq4Dc2n1fspFeEgMY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=jmMNnMdlvruwYpyvgGKjmcJpccfhK2n1ouuVaFQqxzazOJAhsVo3uZkUFCOMx2AiW
- Qw9Q8rlDhbdqlp3ThXZmDrc6r57SAVbdpXWo7P/js6gy1KL6/i2bnH+l7ddiH0/eV0
- XHKZspY+10ujwXrNEuXnJNwlwjOWptUfeUWpnRrz28fcaJcT282xcitsVx/8T+fEl1
- m8Hb6V6j7aagwoFF9LuKn6Xx3LtnBlb/VDmCKetydB9T5oMv+VN75DQDL8W/sJ/D/p
- VMJlN5B6xpDfEH7dRWLjXwQGHt9tFlyi9m8flAXuyYHtPrMyKQM2AjhOsHZBCWc+AB
- /b32giTFAswgQ==
+ b=s+8e1OJ+2X2yIHtacbjdM/rCZ6ABocUT26hJ71rYI7mhDCGGx8drxhTWVjo28BQc0
+ 9v9HJPuYvrwkEu5S5z8GSZb4L8fYHGxBcfL0TlzSRNNpoR/LcL6I1dx2ZGW9Sxk96N
+ Jfx3BljSOcCbTnlvClELeHs3ig3UHK58k24iHrlNCyFCsJM4jfUO80fSc//o/p3U9Y
+ gr7ZDtpTihiK6A8h/GI565JczuqZmCEPfbf15VZpafW++AL1vdXzgmIjaOOdFqfRnq
+ 4GxhmqnGJaH0WExZIqiszgdEvmVKGcVLKaOIUtj5CzT7NsM6b41ZYqSAvEjnmHqquO
+ GFSPRFve7pOMQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc18-00000005RL4-0ZHL; Fri, 06 Dec 2024 18:21:26 +0100
+ id 1tJc17-00000005RKk-4BfA; Fri, 06 Dec 2024 18:21:26 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Peter Maydell <peter.maydell@linaro.org>, linux-kernel@vger.kernel.org,
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 24/31] target/arm: add an experimental mpidr arm cpu property
- object
-Date: Fri,  6 Dec 2024 18:12:46 +0100
-Message-ID: <5ad2755ea045bdc6700ff063b717136da0941f39.1733504943.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 19/31] acpi/ghes: add a notifier to notify when error data is
+ ready
+Date: Fri,  6 Dec 2024 18:12:41 +0100
+Message-ID: <b24819c65b91fd2fed027946d3b2e2ba56cafc57.1733504943.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733504943.git.mchehab+huawei@kernel.org>
 References: <cover.1733504943.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+Received-SPF: pass client-ip=147.75.193.91;
  envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
 X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,89 +78,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Accurately injecting an ARM Processor error ACPI/APEI GHES
-error record requires the value of the ARM Multiprocessor
-Affinity Register (mpidr).
-
-While ARM implements it, this is currently not visible.
-
-Add a field at CPU storing it, and place it at arm_cpu_properties
-as experimental, thus allowing it to be queried via QMP using
-qom-get function.
+Some error injection notify methods are async, like GPIO
+notify. Add a notifier to be used when the error record is
+ready to be sent to the guest OS.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- target/arm/cpu.c    |  1 +
- target/arm/cpu.h    |  1 +
- target/arm/helper.c | 10 ++++++++--
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ hw/acpi/ghes.c         | 5 ++++-
+ include/hw/acpi/ghes.h | 3 +++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 6938161b9541..aec9ea5000a0 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2636,6 +2636,7 @@ static ObjectClass *arm_cpu_class_by_name(const char *cpu_model)
- 
- static Property arm_cpu_properties[] = {
-     DEFINE_PROP_UINT64("midr", ARMCPU, midr, 0),
-+    DEFINE_PROP_UINT64("x-mpidr", ARMCPU, mpidr, 0),
-     DEFINE_PROP_UINT64("mp-affinity", ARMCPU,
-                         mp_affinity, ARM64_AFFINITY_INVALID),
-     DEFINE_PROP_INT32("node-id", ARMCPU, node_id, CPU_UNSET_NUMA_NODE_ID),
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d86e641280d4..1ccd2d6b0c3c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1035,6 +1035,7 @@ struct ArchCPU {
-         uint64_t reset_pmcr_el0;
-     } isar;
-     uint64_t midr;
-+    uint64_t mpidr;
-     uint32_t revidr;
-     uint32_t reset_fpsid;
-     uint64_t ctr;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index f38eb054c06b..5b0ea8ba5fb8 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4700,7 +4700,7 @@ static uint64_t mpidr_read_val(CPUARMState *env)
-     return mpidr;
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index c9295a3b0db7..7035b76fd222 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -510,6 +510,9 @@ static void get_ghes_source_offsets(uint16_t source_id, uint64_t hest_addr,
+     *read_ack_start_addr = le64_to_cpu(*read_ack_start_addr);
  }
  
--static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-+static uint64_t mpidr_read(CPUARMState *env)
- {
-     unsigned int cur_el = arm_current_el(env);
- 
-@@ -4710,6 +4710,11 @@ static uint64_t mpidr_read(CPUARMState *env, const ARMCPRegInfo *ri)
-     return mpidr_read_val(env);
- }
- 
-+static uint64_t mpidr_read_ri(CPUARMState *env, const ARMCPRegInfo *ri)
-+{
-+    return mpidr_read(env);
-+}
++NotifierList acpi_generic_error_notifiers =
++    NOTIFIER_LIST_INITIALIZER(error_device_notifiers);
 +
- static const ARMCPRegInfo lpae_cp_reginfo[] = {
-     /* NOP AMAIR0/1 */
-     { .name = "AMAIR0", .state = ARM_CP_STATE_BOTH,
-@@ -9741,7 +9746,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-             { .name = "MPIDR_EL1", .state = ARM_CP_STATE_BOTH,
-               .opc0 = 3, .crn = 0, .crm = 0, .opc1 = 0, .opc2 = 5,
-               .fgt = FGT_MPIDR_EL1,
--              .access = PL1_R, .readfn = mpidr_read, .type = ARM_CP_NO_RAW },
-+              .access = PL1_R, .readfn = mpidr_read_ri, .type = ARM_CP_NO_RAW },
-         };
- #ifdef CONFIG_USER_ONLY
-         static const ARMCPRegUserSpaceInfo mpidr_user_cp_reginfo[] = {
-@@ -9751,6 +9756,7 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-         modify_arm_cp_regs(mpidr_cp_reginfo, mpidr_user_cp_reginfo);
- #endif
-         define_arm_cp_regs(cpu, mpidr_cp_reginfo);
-+        cpu->mpidr = mpidr_read(env);
-     }
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+@@ -565,7 +568,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     /* Write the generic error data entry into guest memory */
+     cpu_physical_memory_write(cper_addr, cper, len);
  
-     if (arm_feature(env, ARM_FEATURE_AUXCR)) {
+-    return;
++    notifier_list_notify(&acpi_generic_error_notifiers, NULL);
+ }
+ 
+ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
+index 164ed8b0f9a3..2e8405edfe27 100644
+--- a/include/hw/acpi/ghes.h
++++ b/include/hw/acpi/ghes.h
+@@ -24,6 +24,9 @@
+ 
+ #include "hw/acpi/bios-linker-loader.h"
+ #include "qapi/error.h"
++#include "qemu/notify.h"
++
++extern NotifierList acpi_generic_error_notifiers;
+ 
+ /*
+  * Values for Hardware Error Notification Type field
 -- 
 2.47.1
 
