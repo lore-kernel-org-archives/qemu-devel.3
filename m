@@ -4,77 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDC34E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69BEE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJZVQ-0001u9-J4; Fri, 06 Dec 2024 09:40:32 -0500
+	id 1tJZW1-0001xn-Cx; Fri, 06 Dec 2024 09:41:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJZVN-0001ta-DU
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:30 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJZVK-0005TD-It
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:29 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5cece886771so3955129a12.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733496024; x=1734100824; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dKWsYe3dnMt1bAU3N0u0ZdoPsnUZIkj/ikSFbpwzhys=;
- b=EdTkpuAGIjd7G5H5+mcKZdkl5ZIKFTHFDSAFs3e3dY9yv93tujlNW3GFd73OPWnTGB
- Tj9dH/bBEEl3kjlf9r7OOX/h/xWJydqbVkPbtMMS+ZLoJhEZn1FZmOWqiywAS8OtpUhY
- RXBGnrCTc7ae2tT9GprGqbUXtW2DUHgn0Hnc8zm+1EuAopkTokOiljsgFN8mpLpDEZMP
- sL46WzhV0Ix8gac7JHATdrP7+dkL/If7GAmmICoDM8D3NP0BsXC7F6E43WFniIJfL6Of
- xnwzi0576utX3WeXFOcR+bZGb4+JLfZmQy5CTnhnY7iKl+05wVKMi2pc8MSVdUJqKozr
- Lirw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJZVz-0001xW-RT
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:41:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJZVv-0005hz-Lr
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:41:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733496062;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HlXUFZf53M46oTe6eWhmeU3xp5WvTMHxPU5SgkfQY4U=;
+ b=QU2j74ZpN1PtzLn7ladO2HGT3f86dYibMlSUJ8KxG0BKLBhyR9Esdy5dlt/tGDzTokjqW+
+ ttDMPEldF1nekw0mF3EqNHtegfZK6GLssil9lhKLwjOQY1LLDkJ0BhVOOG92C11cEG+5rB
+ AVO83oxp1YEShI0EpB+x2/q+oAi3Rzw=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-519-iZ0XEbebMzScAvSZ1Evg2g-1; Fri, 06 Dec 2024 09:41:00 -0500
+X-MC-Unique: iZ0XEbebMzScAvSZ1Evg2g-1
+X-Mimecast-MFC-AGG-ID: iZ0XEbebMzScAvSZ1Evg2g
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-466afab5886so47352491cf.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:41:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733496024; x=1734100824;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dKWsYe3dnMt1bAU3N0u0ZdoPsnUZIkj/ikSFbpwzhys=;
- b=gzh9RKHpZpdZBVWT+bul1sGz25WGMyp1tET9CaE8IK7My2tImF0pKZ+A8YH7XduIO/
- 3tpkBGx/QatVWG81HD0XF2LBUV/lDP9R3DNWrqxlRhdEyRHTKrhaSIC9itTqgoiFmPtR
- 92QoTCS09GmBdxNTR52RF4KNWfCiI6/3dZ7GOqqqs2Cscz5GGFvqfUWJ3d4gndnTaZ43
- onxEOHccJoHb73e5Fb40+do/Hp8/bRV2gLvYyVAKstXIzJPR/FZX3x3epQhpu5UdOxOy
- fCq8CP0Fe97BMC/dE2oeko55oi3ZKsDGwcN4kd3bz8vIxNAQGQmuuNUSKutYXjtWRM14
- Hf5w==
-X-Gm-Message-State: AOJu0YyBNlXzPXDouQS61X0d8XB9D9CHd1sDbv+GvIaawQTfJY43kKw9
- ueLSxh0sL2FPYBSl1MKf4ZzDAfwWqCT930TGHYtGNrcWZIJ8G3hc+mn0YFW4c5oGEyCG5sTwvbP
- S6q0bFudh24LrBEz2XFLdHibHQBTKxSYIHG1vaw==
-X-Gm-Gg: ASbGncsoR6druBG+b9IAh2y7HmFdHPptgKHDoagbMBhNuX7hGCxaUhjjWXdrTcEPNQ7
- N0EKtlVXLgJfcfj+/ww5JQnqggeGk4JN6
-X-Google-Smtp-Source: AGHT+IEVKfY88tdKA1b6dB4TV2zpAC699jPRUl5HZ8uedBj/bJO1IHnFvfLEnS8176yqmy7FjqqcTU81xNJ3qGX19cs=
-X-Received: by 2002:a05:6402:27ce:b0:5d0:d06b:cdc4 with SMTP id
- 4fb4d7f45d1cf-5d3bdccdb54mr3046377a12.15.1733496024517; Fri, 06 Dec 2024
- 06:40:24 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733496060; x=1734100860;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HlXUFZf53M46oTe6eWhmeU3xp5WvTMHxPU5SgkfQY4U=;
+ b=Ts5XhFbkGXGXIvLd94FvlqNGuMDCyqJTIMYAzmzyBT+aTEwlOxGjGuSoFOSiXu6hZR
+ XrxvYkt5dPqj7RhcseBEjJ+rDBTFVaB4ev1ezu9BqWGsybGvGpww7FNr2s+jgviKoEqp
+ AqJrCkt/PbV6LHxleHMYDstd/L9nzO2pltwJnieWZgqCR8eI/wpuhRUtLAckH286m+wE
+ gT4RlVjYYDaB+qRbjPCcD92g/OsvYgaGx909atu2BiPmDppWyAPBBcqH99eKbAmNMo6v
+ 2kEwbgiWQ8FJ1s5IOJqKddpAalCDco8luXP2LsYlFOWEfu8x9VzsK8S0GySafl/lKgK9
+ +46Q==
+X-Gm-Message-State: AOJu0YyoKH7U6e1BveZunHZZZGiqPKsDdJzJ0PDSdEz+rMI7SUGJ/Bpr
+ 0R8gWEN3sSDqxwtCcvZvOcYgotENFktlL/73AxBtAxZj2PnxHZYA0ZoDSDbGoBG6Yka8/idUyCn
+ 1PD6DGTSUTna1M8nfM8iEuix0liYz0c75C2Aji0+GRPR5kdeeV84/
+X-Gm-Gg: ASbGnctoP/bKsYa8NuMCaTTF1w20nYt5KNwzMVV8a0hyEV50e4asD5nycW6ammhMXD/
+ F5R7Jw7IddD19TbIbEighUDFHiKQ2Tgi2iX1dozR4H/5mE7sFDEABp3Ir0X2Q+TJX50zmgwhe5b
+ XWcH3avX82m8xj8gOjAe87A48O94II12mXQrLigADbXh7ZT6kp8y2shc2YX3+chIJ9syyMiMG44
+ yHhA4Thj6lqImIvINBEMENIH6oKWReP+6TiQxRWuvCONMxK5E6+5iZxxtJsil2mBiuAZ2JVb1mJ
+ rXCqzOmHlqA=
+X-Received: by 2002:a05:622a:610e:b0:466:8cc1:6221 with SMTP id
+ d75a77b69052e-46734fa992bmr69099561cf.50.1733496060222; 
+ Fri, 06 Dec 2024 06:41:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGdMpKccL+XMujrCPgZHGV/8SqAeJ3EXrHJcR2zWnF17hms4am6AglPzFnte2h0z5mpFoTaUA==
+X-Received: by 2002:a05:622a:610e:b0:466:8cc1:6221 with SMTP id
+ d75a77b69052e-46734fa992bmr69098951cf.50.1733496059770; 
+ Fri, 06 Dec 2024 06:40:59 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46729793741sm21420811cf.61.2024.12.06.06.40.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 06:40:58 -0800 (PST)
+Date: Fri, 6 Dec 2024 09:40:56 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Prasad Pandit <ppandit@redhat.com>
+Subject: Re: [PATCH v2 1/7] migration/multifd: Further remove the SYNC on
+ complete
+Message-ID: <Z1MM-LqLTYWv7ztO@x1n>
+References: <20241206005834.1050905-1-peterx@redhat.com>
+ <20241206005834.1050905-2-peterx@redhat.com>
+ <87a5d9c5nh.fsf@suse.de>
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-38-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-38-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Dec 2024 14:40:13 +0000
-Message-ID: <CAFEAcA8-GkpSxLc98y8ZopV9PMej7U4+Ruk8D+zUoEDPZYJ8aA@mail.gmail.com>
-Subject: Re: [PATCH 37/67] target/arm: Convert CLS, CLZ (vector) to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87a5d9c5nh.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,68 +111,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:10, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 37 ++++++++++++++++------------------
->  target/arm/tcg/a64.decode      |  2 ++
->  2 files changed, 19 insertions(+), 20 deletions(-)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 4abc786cf6..312bf48020 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -8920,6 +8920,20 @@ static bool do_gvec_fn2(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
->  TRANS(ABS_v, do_gvec_fn2, a, tcg_gen_gvec_abs)
->  TRANS(NEG_v, do_gvec_fn2, a, tcg_gen_gvec_neg)
->
-> +static bool do_gvec_fn2_bhs(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
-> +{
-> +    if (a->esz == MO_64) {
-> +        return false;
-> +    }
-> +    if (fp_access_check(s)) {
-> +        gen_gvec_fn2(s, a->q, a->rd, a->rn, fn, a->esz);
-> +    }
-> +    return true;
-> +}
-> +
-> +TRANS(CLS_v, do_gvec_fn2_bhs, a, gen_gvec_cls)
-> +TRANS(CLZ_v, do_gvec_fn2_bhs, a, gen_gvec_clz)
-> +
->  /* Common vector code for handling integer to FP conversion */
->  static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
->                                     int elements, int is_signed,
-> @@ -9219,13 +9233,6 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
->      TCGCond cond;
->
->      switch (opcode) {
-> -    case 0x4: /* CLS, CLZ */
-> -        if (u) {
-> -            tcg_gen_clzi_i64(tcg_rd, tcg_rn, 64);
-> -        } else {
-> -            tcg_gen_clrsb_i64(tcg_rd, tcg_rn);
-> -        }
-> -        break;
->      case 0x5: /* NOT */
+On Fri, Dec 06, 2024 at 10:17:22AM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
+> > complete()") removed the FLUSH operation on complete() which should avoid
+> > one global sync on destination side, because it's not needed.
+> >
+> > However that commit overlooked multifd_ram_flush_and_sync() part of things,
+> > as that's always used together with the FLUSH message on the main channel.
+> >
+> > For very old binaries (multifd_flush_after_each_section==true), that's
+> > still needed because each EOS received on destination will enforce
+> > all-channel sync once.
+> >
+> > For new binaries (multifd_flush_after_each_section==false), the flush and
+> > sync shouldn't be needed just like the FLUSH, with the same reasoning.
+> >
+> > Currently, on new binaries we'll still send SYNC messages on multifd
+> > channels, even if FLUSH is omitted at the end.  It'll make all recv threads
+> > hang at SYNC message.
+> >
+> > Multifd is still all working fine because luckily recv side cleanup
+> > code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
+> > recv threads are stuck at SYNC it'll get kicked out.  And since this is the
+> > completion phase of migration, nothing else will be sent after the SYNCs.
+> >
+> > This may be needed for VFIO in the future because VFIO can have data to
+> > push after ram_save_complete(), hence we don't want the recv thread to be
+> > stuck in SYNC message. Remove this limitation will make src even slightly
+> > faster too to avoid some more code.
+> >
+> > Stable branches do not need this patch, as no real bug I can think of that
+> > will go wrong there.. so not attaching Fixes to be clear on the backport
+> > not needed.
+> 
+> You forgot my comments on the commit message, so here's a brand-new one
 
-This was dead code, right? We only call handle_2misc_64()
-for size == 3, but size == 3 is an unallocated encoding for
-"CLS/CLZ (vector)", which only deals with elements sizes up
-to 32 bits. Worth mentioning in the commit message, I think.
+Yes I did.. :(
 
-(I was wondering why the new code doesn't have any cases for
-operating on 64-bit elements whereas this old code did seem
-to handle it.)
+> with some things spelt out more explicitly:
+> 
+> --
+> Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
+> complete()") stopped sending the RAM_SAVE_FLAG_MULTIFD_FLUSH flag at
+> ram_save_complete(), because the sync on the destination side is not
+> needed due to the last iteration of find_dirty_block() having already
+> done it.
+> 
+> However, that commit overlooked that multifd_ram_flush_and_sync() on the
+> source side is also not needed at ram_save_complete(), for the same
+> reason.
+> 
+> Moreover, removing the RAM_SAVE_FLAG_MULTIFD_FLUSH but keeping the
+> multifd_ram_flush_and_sync() means that currently the recv threads will
+> hang when receiving the MULTIFD_FLAG_SYNC message, waiting for the
+> destination sync which only happens when RAM_SAVE_FLAG_MULTIFD_FLUSH is
+> received.
+> 
+> Luckily, multifd is still all working fine because recv side cleanup
+> code (mostly multifd_recv_sync_main()) is smart enough to make sure even
+> if recv threads are stuck at SYNC it'll get kicked out. And since this
+> is the completion phase of migration, nothing else will be sent after
+> the SYNCs.
+> 
+> This needs to be fixed because in the future VFIO will have data to push
+> after ram_save_complete() and we don't want the recv thread to be stuck
+> in the MULTIFD_FLAG_SYNC message.
+> 
+> Remove the unnecessary (and buggy) invocation of
+> multifd_ram_flush_and_sync().
+> 
+> For very old binaries (multifd_flush_after_each_section==true), the
+> flush_and_sync is still needed because each EOS received on destination
+> will enforce all-channel sync once.
+> 
+> Stable branches do not need this patch, as no real bug I can think of
+> that will go wrong there.. so not attaching Fixes to be clear on the
+> backport not needed.
+> 
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
->          /* This opcode is shared with CNT and RBIT but we have earlier
->           * enforced that size == 3 if and only if this is the NOT insn.
+Sure, I used it, thanks.
 
-Otherwise
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> 
+> > ---
+> >  migration/ram.c | 13 ++++++++++---
+> >  1 file changed, 10 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/migration/ram.c b/migration/ram.c
+> > index 05ff9eb328..7284c34bd8 100644
+> > --- a/migration/ram.c
+> > +++ b/migration/ram.c
+> > @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
+> >          }
+> >      }
+> >  
+> > -    ret = multifd_ram_flush_and_sync();
+> > -    if (ret < 0) {
+> > -        return ret;
+> > +    if (migrate_multifd() &&
+> > +        migrate_multifd_flush_after_each_section()) {
+> > +        /*
+> > +         * Only the old dest QEMU will need this sync, because each EOS
+> > +         * will require one SYNC message on each channel.
+> > +         */
+> > +        ret = multifd_ram_flush_and_sync();
+> > +        if (ret < 0) {
+> > +            return ret;
+> > +        }
+> >      }
+> >  
+> >      if (migrate_mapped_ram()) {
+> 
 
-thanks
--- PMM
+-- 
+Peter Xu
+
 
