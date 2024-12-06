@@ -4,98 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69BEE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:41:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76D3DE77179
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 14:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJZW1-0001xn-Cx; Fri, 06 Dec 2024 09:41:09 -0500
+	id 1tJZVR-0001uf-Bv; Fri, 06 Dec 2024 09:40:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJZVz-0001xW-RT
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:41:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJZVv-0005hz-Lr
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:41:07 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733496062;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HlXUFZf53M46oTe6eWhmeU3xp5WvTMHxPU5SgkfQY4U=;
- b=QU2j74ZpN1PtzLn7ladO2HGT3f86dYibMlSUJ8KxG0BKLBhyR9Esdy5dlt/tGDzTokjqW+
- ttDMPEldF1nekw0mF3EqNHtegfZK6GLssil9lhKLwjOQY1LLDkJ0BhVOOG92C11cEG+5rB
- AVO83oxp1YEShI0EpB+x2/q+oAi3Rzw=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-519-iZ0XEbebMzScAvSZ1Evg2g-1; Fri, 06 Dec 2024 09:41:00 -0500
-X-MC-Unique: iZ0XEbebMzScAvSZ1Evg2g-1
-X-Mimecast-MFC-AGG-ID: iZ0XEbebMzScAvSZ1Evg2g
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-466afab5886so47352491cf.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:41:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJZVO-0001te-9E
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:31 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJZVM-0005Yy-MK
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 09:40:30 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-434ab114753so14656855e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 06:40:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733496015; x=1734100815; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TLurNv+vebMmCeGP2GoUIEDPPuGDwPAy5lg2WnTOBXo=;
+ b=bAkGhrOAd/Wrz621et5CqRrlEkIhYVuOzI72MMbW5fHn35jNGoXu7bhR7F7b21bByu
+ KxJzhl3p6PR8StllmpjicEtLs4n6w8kpmGVtZhPg4FNn4dE8wlhxSOym5VPwnb5TNR4e
+ 1PgV3CH+0QxDMCjJG8vQQm7S1yxSFULcJjZuAaTynis2bc/MYvnC/YjJwh1Tm+aQials
+ OVnvr/028GOBH2DYaD1vYZxmXDaeneeg91ikyi0ZPrY6q5TbgKs/br0H+sNDIGDeXLdd
+ rnyy7FtW5xNeK8SM6HWX6RWjwqA+e8JZiT5jAzoX0vWMPtGZ3NipFaj0cpg+gli8obvz
+ ZP+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733496060; x=1734100860;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HlXUFZf53M46oTe6eWhmeU3xp5WvTMHxPU5SgkfQY4U=;
- b=Ts5XhFbkGXGXIvLd94FvlqNGuMDCyqJTIMYAzmzyBT+aTEwlOxGjGuSoFOSiXu6hZR
- XrxvYkt5dPqj7RhcseBEjJ+rDBTFVaB4ev1ezu9BqWGsybGvGpww7FNr2s+jgviKoEqp
- AqJrCkt/PbV6LHxleHMYDstd/L9nzO2pltwJnieWZgqCR8eI/wpuhRUtLAckH286m+wE
- gT4RlVjYYDaB+qRbjPCcD92g/OsvYgaGx909atu2BiPmDppWyAPBBcqH99eKbAmNMo6v
- 2kEwbgiWQ8FJ1s5IOJqKddpAalCDco8luXP2LsYlFOWEfu8x9VzsK8S0GySafl/lKgK9
- +46Q==
-X-Gm-Message-State: AOJu0YyoKH7U6e1BveZunHZZZGiqPKsDdJzJ0PDSdEz+rMI7SUGJ/Bpr
- 0R8gWEN3sSDqxwtCcvZvOcYgotENFktlL/73AxBtAxZj2PnxHZYA0ZoDSDbGoBG6Yka8/idUyCn
- 1PD6DGTSUTna1M8nfM8iEuix0liYz0c75C2Aji0+GRPR5kdeeV84/
-X-Gm-Gg: ASbGnctoP/bKsYa8NuMCaTTF1w20nYt5KNwzMVV8a0hyEV50e4asD5nycW6ammhMXD/
- F5R7Jw7IddD19TbIbEighUDFHiKQ2Tgi2iX1dozR4H/5mE7sFDEABp3Ir0X2Q+TJX50zmgwhe5b
- XWcH3avX82m8xj8gOjAe87A48O94II12mXQrLigADbXh7ZT6kp8y2shc2YX3+chIJ9syyMiMG44
- yHhA4Thj6lqImIvINBEMENIH6oKWReP+6TiQxRWuvCONMxK5E6+5iZxxtJsil2mBiuAZ2JVb1mJ
- rXCqzOmHlqA=
-X-Received: by 2002:a05:622a:610e:b0:466:8cc1:6221 with SMTP id
- d75a77b69052e-46734fa992bmr69099561cf.50.1733496060222; 
- Fri, 06 Dec 2024 06:41:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdMpKccL+XMujrCPgZHGV/8SqAeJ3EXrHJcR2zWnF17hms4am6AglPzFnte2h0z5mpFoTaUA==
-X-Received: by 2002:a05:622a:610e:b0:466:8cc1:6221 with SMTP id
- d75a77b69052e-46734fa992bmr69098951cf.50.1733496059770; 
- Fri, 06 Dec 2024 06:40:59 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46729793741sm21420811cf.61.2024.12.06.06.40.57
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 06:40:58 -0800 (PST)
-Date: Fri, 6 Dec 2024 09:40:56 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Prasad Pandit <ppandit@redhat.com>
-Subject: Re: [PATCH v2 1/7] migration/multifd: Further remove the SYNC on
- complete
-Message-ID: <Z1MM-LqLTYWv7ztO@x1n>
-References: <20241206005834.1050905-1-peterx@redhat.com>
- <20241206005834.1050905-2-peterx@redhat.com>
- <87a5d9c5nh.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1733496015; x=1734100815;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TLurNv+vebMmCeGP2GoUIEDPPuGDwPAy5lg2WnTOBXo=;
+ b=OiTloibpuyVszNEbIvudPLftnPyk00HTewjIFTzpb0j3FMsMQaxKPfZJzlR4MvMd1K
+ wbt8pjzbjhc/ZmO9R/8AYTpvQFdG/0uCnImpkScntDPWg6RYkKKLPZ2Mw7a44jlF+UBe
+ nvD2VdV0lqWVCPwrFEEmDVulRK+qjzZ0Wr/fc9QhFZ0Ncnd5zSoquSnOUi5gshc0F3R8
+ zkQwJW3eGzwhSHGCfwsdDpfQt6KSnbAOhtuxrLMOj/6YhzZXL0fUKcO0U2X/tHH8U5p3
+ Zn1x5y0MQ/OCH6KMEIiE2VyalzMnVQS8+MZwyyOxYrjw5PS4otWUn+ErF5OXYoBPNITd
+ +ccg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWteCf4gMiD/TuW02Ka3ATNTom7itC4KBP3UwR0igBR7pKJ21LlbfPhZ8ewwA6Btd+0AT5fFn8XM5OG@nongnu.org
+X-Gm-Message-State: AOJu0YxpSR9uci2trNW70k9Q1UUHqPTgILwRb1zveEkwg86GdHSo3SR6
+ f57jm2IqOCtrBQzPaZQxwkq3YTz1iQWDLRAU09YGPBImbId7nNWFGMeiFY6tLcs=
+X-Gm-Gg: ASbGncvfIb0cdWUhfpwXJw65TWeNbmwYKWJ4wq2iHEUy6encbeidMwT4PzlV5VaX4NL
+ qwIEFVdoz8dcSnGnFTo+FVqfjxpgDqad/+zjUTwiE+PxnLVcJbEBqMcbySjEFW43YN8BXY5gXfr
+ gZ+EfHucCRu7UMVurFc7xqmw9kUWUzkyNe7tl44zigCF7jC56jfn/qAwZalLhYWtpDPVxtH8dJm
+ mD5NLFxNNxX4ACGfjPZ+Zp+8XXQHG3r2W22PEm+ReoBZSBiyzEwhc1+SdBJMA==
+X-Google-Smtp-Source: AGHT+IE4OKsUD+ye0UtIPo8s2bx4eSdbdfS2ZCpek/UnzazoGUch0EJd2gGWE4b/n1KG4vRQA3Ph2w==
+X-Received: by 2002:a05:600c:3c9c:b0:434:a968:89a3 with SMTP id
+ 5b1f17b1804b1-434ddeabbe3mr29676405e9.9.1733496015123; 
+ Fri, 06 Dec 2024 06:40:15 -0800 (PST)
+Received: from [192.168.224.213] ([95.127.41.180])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3861ecf4395sm4667168f8f.10.2024.12.06.06.40.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Dec 2024 06:40:14 -0800 (PST)
+Message-ID: <bdbbdbf5-939f-4f58-8d9c-9e7d38ea0469@linaro.org>
+Date: Fri, 6 Dec 2024 15:40:12 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87a5d9c5nh.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] scripts: improve error from qemu-trace-stap on missing
+ 'stap'
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
+References: <20241206114524.1666664-1-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241206114524.1666664-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,122 +101,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 06, 2024 at 10:17:22AM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 6/12/24 12:45, Daniel P. Berrangé wrote:
+> If the 'stap' binary is missing in $PATH, a huge trace is thrown
 > 
-> > Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
-> > complete()") removed the FLUSH operation on complete() which should avoid
-> > one global sync on destination side, because it's not needed.
-> >
-> > However that commit overlooked multifd_ram_flush_and_sync() part of things,
-> > as that's always used together with the FLUSH message on the main channel.
-> >
-> > For very old binaries (multifd_flush_after_each_section==true), that's
-> > still needed because each EOS received on destination will enforce
-> > all-channel sync once.
-> >
-> > For new binaries (multifd_flush_after_each_section==false), the flush and
-> > sync shouldn't be needed just like the FLUSH, with the same reasoning.
-> >
-> > Currently, on new binaries we'll still send SYNC messages on multifd
-> > channels, even if FLUSH is omitted at the end.  It'll make all recv threads
-> > hang at SYNC message.
-> >
-> > Multifd is still all working fine because luckily recv side cleanup
-> > code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
-> > recv threads are stuck at SYNC it'll get kicked out.  And since this is the
-> > completion phase of migration, nothing else will be sent after the SYNCs.
-> >
-> > This may be needed for VFIO in the future because VFIO can have data to
-> > push after ram_save_complete(), hence we don't want the recv thread to be
-> > stuck in SYNC message. Remove this limitation will make src even slightly
-> > faster too to avoid some more code.
-> >
-> > Stable branches do not need this patch, as no real bug I can think of that
-> > will go wrong there.. so not attaching Fixes to be clear on the backport
-> > not needed.
+>    $ qemu-trace-stap list /usr/bin/qemu-system-x86_64
+>    Traceback (most recent call last):
+>    File "/usr/bin/qemu-trace-stap", line 169, in <module>
+>    main()
+>    File "/usr/bin/qemu-trace-stap", line 165, in main
+>    args.func(args)
+>    File "/usr/bin/qemu-trace-stap", line 83, in cmd_run
+>    subprocess.call(stapargs)
+>    File "/usr/lib64/python3.12/subprocess.py", line 389, in call
+>    with Popen(*popenargs, **kwargs) as p:
+>    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+>    File "/usr/lib64/python3.12/subprocess.py", line 1026, in {}init{}
+>    self._execute_child(args, executable, preexec_fn, close_fds,
+>    File "/usr/lib64/python3.12/subprocess.py", line 1955, in _execute_child
+>    raise child_exception_type(errno_num, err_msg, err_filename)
+>    FileNotFoundError: [Errno 2] No such file or directory: 'stap'
 > 
-> You forgot my comments on the commit message, so here's a brand-new one
+> With this change the user now gets
+> 
+>    $ qemu-trace-stap list /usr/bin/qemu-system-x86_64
+>    Unable to find 'stap' in $PATH
+> 
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   scripts/qemu-trace-stap | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
 
-Yes I did.. :(
-
-> with some things spelt out more explicitly:
-> 
-> --
-> Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
-> complete()") stopped sending the RAM_SAVE_FLAG_MULTIFD_FLUSH flag at
-> ram_save_complete(), because the sync on the destination side is not
-> needed due to the last iteration of find_dirty_block() having already
-> done it.
-> 
-> However, that commit overlooked that multifd_ram_flush_and_sync() on the
-> source side is also not needed at ram_save_complete(), for the same
-> reason.
-> 
-> Moreover, removing the RAM_SAVE_FLAG_MULTIFD_FLUSH but keeping the
-> multifd_ram_flush_and_sync() means that currently the recv threads will
-> hang when receiving the MULTIFD_FLAG_SYNC message, waiting for the
-> destination sync which only happens when RAM_SAVE_FLAG_MULTIFD_FLUSH is
-> received.
-> 
-> Luckily, multifd is still all working fine because recv side cleanup
-> code (mostly multifd_recv_sync_main()) is smart enough to make sure even
-> if recv threads are stuck at SYNC it'll get kicked out. And since this
-> is the completion phase of migration, nothing else will be sent after
-> the SYNCs.
-> 
-> This needs to be fixed because in the future VFIO will have data to push
-> after ram_save_complete() and we don't want the recv thread to be stuck
-> in the MULTIFD_FLAG_SYNC message.
-> 
-> Remove the unnecessary (and buggy) invocation of
-> multifd_ram_flush_and_sync().
-> 
-> For very old binaries (multifd_flush_after_each_section==true), the
-> flush_and_sync is still needed because each EOS received on destination
-> will enforce all-channel sync once.
-> 
-> Stable branches do not need this patch, as no real bug I can think of
-> that will go wrong there.. so not attaching Fixes to be clear on the
-> backport not needed.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
-
-Sure, I used it, thanks.
-
-> 
-> > ---
-> >  migration/ram.c | 13 ++++++++++---
-> >  1 file changed, 10 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/migration/ram.c b/migration/ram.c
-> > index 05ff9eb328..7284c34bd8 100644
-> > --- a/migration/ram.c
-> > +++ b/migration/ram.c
-> > @@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-> >          }
-> >      }
-> >  
-> > -    ret = multifd_ram_flush_and_sync();
-> > -    if (ret < 0) {
-> > -        return ret;
-> > +    if (migrate_multifd() &&
-> > +        migrate_multifd_flush_after_each_section()) {
-> > +        /*
-> > +         * Only the old dest QEMU will need this sync, because each EOS
-> > +         * will require one SYNC message on each channel.
-> > +         */
-> > +        ret = multifd_ram_flush_and_sync();
-> > +        if (ret < 0) {
-> > +            return ret;
-> > +        }
-> >      }
-> >  
-> >      if (migrate_mapped_ram()) {
-> 
-
--- 
-Peter Xu
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
