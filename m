@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83203E77170
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 01:01:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CC0E77171
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 01:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJMgE-0003a5-K9; Thu, 05 Dec 2024 19:58:50 -0500
+	id 1tJMgE-0003Zl-0u; Thu, 05 Dec 2024 19:58:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMgD-0003ZD-6A
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMgD-0003Z9-4O
  for qemu-devel@nongnu.org; Thu, 05 Dec 2024 19:58:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMg9-0005iM-1i
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 19:58:48 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMg7-0005dB-EW
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 19:58:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733446722;
+ s=mimecast20190719; t=1733446720;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=es3XBObQHiGtgZBVTVbSw3WDegXk2q8ebNuAwrDJ0N0=;
- b=Dn711r+rrs9wHwbEzkNVDvYWJIybIpGIETjizzb9Sb1znKomRCaxlheHQ710RDE793W3Ye
- B+4DAW1HBqvA35h0/Iz6FAKGWMaowLabYfYcrWIBubzqE6ejAWa+XhFTlhQqYiKObpor3+
- KflVG+01NyOhdolNu4OUcDNJZqGf0/Q=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=g71KzLQSwtxNTL0YJi3tcazNTXO1d6801jgz+4WkHrA=;
+ b=DUjBDdFJAy1XKah1EM9h76flX719PEdwKvjGF5BWIIRjaH9s8NaukZ+rtD/AG3NdJHq/Ae
+ 14B6zgFDhr1zrooRgXGhgUzlFKX8Z0iTE66z9QAmUS2tH7sjJQMohy8KuQ4R/bNboNKYLK
+ r6TVaCD5zF21Un9kCtyWo0301Nupwdg=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-Uv6HYEu0NyCVRxUGyinsqw-1; Thu, 05 Dec 2024 19:58:41 -0500
-X-MC-Unique: Uv6HYEu0NyCVRxUGyinsqw-1
-X-Mimecast-MFC-AGG-ID: Uv6HYEu0NyCVRxUGyinsqw
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d893f0027fso42036656d6.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 16:58:40 -0800 (PST)
+ us-mta-231--J82g-1_POWgB_qcfzek0A-1; Thu, 05 Dec 2024 19:58:38 -0500
+X-MC-Unique: -J82g-1_POWgB_qcfzek0A-1
+X-Mimecast-MFC-AGG-ID: -J82g-1_POWgB_qcfzek0A
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d895f91a7dso28675316d6.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 16:58:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733446720; x=1734051520;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=es3XBObQHiGtgZBVTVbSw3WDegXk2q8ebNuAwrDJ0N0=;
- b=ixnn3rs78YZxjKPeN0ZQW7OS+mfqMdatmQxYe9ASwS8gW4g5K7DVh+lqtd9JnjlHJQ
- qijqaC8/cxbKvMuvlK68cTtEcZsVCFn2isR4qPZxGecGwntLMPgw9JyTfoISEqE0h+dp
- XUgbgoC5CNYP2WGFHPw+kWXluLBv7vT4qXt7roqvfRzmbn29ogHPAHfu5KlCp2weucaJ
- aAbldfFdIsWPrpaDW6Tu04pvCC+EE+5XxioI3Oq1USBLkFh2lH8I0ddwBaBLxXH/LKce
- 0jcoch0ya7q+A4hayv685NSi27NcMrYSEWgwE8mLz64ms+OeJ9faJxj8/80WI+PMQL0g
- mBdQ==
-X-Gm-Message-State: AOJu0YyXLJ0W/tRMv5csmqtmgjD9K8wfEkWeWspisgpe9iFHuAcbbln5
- 0yfbSMQVTkHwfPaTeX0P7g6tBaebJja3qzj5IyDk2cTrnLWkMhPcwAd4gIui96OxMcgYDIlCbwF
- 1o/7MSECR5RVeCGHMmMRf31TmMpKnyr3yQGPaZjWECTAb2+X6oNGY/jzwPy5Z22f0D+9mnZ2Bx4
- VnCJ2E+zodtGaRPvWVimiFw3qW4d8Z8rRjTA==
-X-Gm-Gg: ASbGnctdT4w+unLpAU7p1Pu3LaeJigmT+JiLXbhOg8yPQX9z9xBwEnaXzu+Qd6GU9oa
- qi+KDE+eRgPzmxlT2ffRMUNkluwKke/+AWsShZlPUU/92Ta3gSqJuFRAGpTEQByDO2Wu4mHwY8r
- fzoYKhsKKx+K67Mz42zSWQCKNBtFrTl+/knYCE+of+7yfE+M3zEVxgMiqKW1r75uthdJNg7V0sT
- y1Ayc4W0GaX8y/pekMW0vQgCdfH09fB7LHS5n/s01SSeE4JuMcSPJXZ3jmkoHB4Qqxqc2EMmBU7
- QHCKEdY1fDxB5hxo0WGSF7Lpdg==
-X-Received: by 2002:ad4:5c46:0:b0:6d8:7ed4:336c with SMTP id
- 6a1803df08f44-6d8e70a2743mr24885956d6.9.1733446720024; 
- Thu, 05 Dec 2024 16:58:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUWRkX/DMHW6ZCiAHXl9KlYYZWdaC3iIDx0eVNrUEzC4vIQRmJBnzXGJUDRyid7bDrenVBIQ==
-X-Received: by 2002:ad4:5c46:0:b0:6d8:7ed4:336c with SMTP id
- 6a1803df08f44-6d8e70a2743mr24885556d6.9.1733446719594; 
- Thu, 05 Dec 2024 16:58:39 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733446718; x=1734051518;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=g71KzLQSwtxNTL0YJi3tcazNTXO1d6801jgz+4WkHrA=;
+ b=l/Rirb9VL6GWclvjBY3cTYONC65SEgikX9o6zkL1HsQx7hdNT6VMa1m70C45EdZtKA
+ br8NlHxpQfENwDv6xwIagi4wKQQQUh7gF+NfRzWb7KRO30O7UB3bL4m+LJsKEUVpw+ca
+ ljLnWoOnf+IGSnjdjlmg+tMqclzzEAWQ+N7upu5SAvrt33NDQdu0FpbyfmggDiCG/+Za
+ Cpa/xad4X0EfzPhUQ0BfwEFlu0pnL2vTWAwBPbi0Af2NvBcWZvoBtp3HLkBBYLBWHPPZ
+ QygSGbwO0F11sr75NPZARcos8rRwkrcgWqN/xXPu1ikORQOF26/tSaXK1CplJg3VtTON
+ 30Ew==
+X-Gm-Message-State: AOJu0YzFjIN2eoIr4rZ9518CnCAa3CirjUhCOZydAXErPC1rfoRSEQeB
+ Ztdp1phbiW5qYTYmYAKSpWSSiFuHNla/rBlQ9H6+jblT0Xdoo5rFqhq9IgDXZhaQuXA8pltompg
+ WjIsrp9EQWyc4HTjNSFOGM1GVFeYgSjpnPLBDPbQFlwQFdjSLO6/T5u93zaJAYH9p+PqE64etOR
+ alMbaATZ/OF9VyOYZk0txyLDF7MQsUuZwEvA==
+X-Gm-Gg: ASbGncvWJEGG9lMXOsuGZcHUJwrthsGvSn337h2YVR3lcwrjKUvLcLGOovk1b7C/quz
+ 3NE+O7TGyfL7U86KbhreL4Wqeqd6pz/oAZf7T9ZGomTOCSC0P6nxGfCDUjOigevZqpd4otYITcW
+ f29clsxTYD/FVpbaiel/pxtmdyTixZYM0Rir/68xcRnCxmQ90sNMVJO1Mu+CGUVQk98HSbma9DI
+ afjz7Rug4QV4w7l2fDUWIr2MhwqAUpiqFPYhJmUZFCGx6Oqd8DlqVjSuX1Y6UXAevFEYjRhUG3p
+ OnLlgo2sRHQcAa2enA8pw5qXxw==
+X-Received: by 2002:a05:6214:b6a:b0:6d8:aa52:74a3 with SMTP id
+ 6a1803df08f44-6d8e71ad674mr15929826d6.28.1733446717903; 
+ Thu, 05 Dec 2024 16:58:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGvJsN36AyXu1adTHI0NtEyJKXo1FvAQyhSb/Cz5OYkaCibC712AeFb/v0xtqyP6x2mSflYGw==
+X-Received: by 2002:a05:6214:b6a:b0:6d8:aa52:74a3 with SMTP id
+ 6a1803df08f44-6d8e71ad674mr15929526d6.28.1733446717536; 
+ Thu, 05 Dec 2024 16:58:37 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8dac016cbsm12635226d6.117.2024.12.05.16.58.37
+ 6a1803df08f44-6d8dac016cbsm12635226d6.117.2024.12.05.16.58.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 16:58:38 -0800 (PST)
+ Thu, 05 Dec 2024 16:58:36 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, peterx@redhat.com,
@@ -77,12 +76,12 @@ Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, peterx@redhat.com,
  Avihai Horon <avihaih@nvidia.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>
-Subject: [PATCH v2 1/7] migration/multifd: Further remove the SYNC on complete
-Date: Thu,  5 Dec 2024 19:58:28 -0500
-Message-ID: <20241206005834.1050905-2-peterx@redhat.com>
+Subject: [PATCH v2 0/7] migration/multifd: Some VFIO / postcopy preparations
+ on flush
+Date: Thu,  5 Dec 2024 19:58:27 -0500
+Message-ID: <20241206005834.1050905-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241206005834.1050905-1-peterx@redhat.com>
-References: <20241206005834.1050905-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
@@ -110,67 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 637280aeb2 ("migration/multifd: Avoid the final FLUSH in
-complete()") removed the FLUSH operation on complete() which should avoid
-one global sync on destination side, because it's not needed.
+CI: https://gitlab.com/peterx/qemu/-/pipelines/1575970314
 
-However that commit overlooked multifd_ram_flush_and_sync() part of things,
-as that's always used together with the FLUSH message on the main channel.
+Comparing to v1, this series v2 now contains some patches that may be
+helpful for either VFIO or postcopy integration on top of multifd.
 
-For very old binaries (multifd_flush_after_each_section==true), that's
-still needed because each EOS received on destination will enforce
-all-channel sync once.
+For VFIO, only patch 1 & 2 are relevant.  This is the only part that can be
+compared to v1, where I renamed the sync flag to LOCAL and ALL according to
+Fabiano's comment.
 
-For new binaries (multifd_flush_after_each_section==false), the flush and
-sync shouldn't be needed just like the FLUSH, with the same reasoning.
+For postcopy, it's about patches 3-7, but it needs to be based on 1+2.
 
-Currently, on new binaries we'll still send SYNC messages on multifd
-channels, even if FLUSH is omitted at the end.  It'll make all recv threads
-hang at SYNC message.
+I put them together because the two changes are relevant on the multifd
+sync operation, one must depend on another in some form. So I decided to
+send them together here.  All these patches can be seen as cleanups /
+slight optimizations on top of master branch.
 
-Multifd is still all working fine because luckily recv side cleanup
-code (mostly multifd_recv_sync_main()) is smart enough to make sure even if
-recv threads are stuck at SYNC it'll get kicked out.  And since this is the
-completion phase of migration, nothing else will be sent after the SYNCs.
+This time I did more test.  Besides CI, qtests, and some real-world multifd
+tests just to monitor the sync events happen all correct, I made sure to
+cover 7.2 machine type (which uses the legacy sync) so it still works as
+before - basically sync will be more frequent, but all thing keeps working
+smoothly so far.
 
-This may be needed for VFIO in the future because VFIO can have data to
-push after ram_save_complete(), hence we don't want the recv thread to be
-stuck in SYNC message. Remove this limitation will make src even slightly
-faster too to avoid some more code.
+Fabiano, let me know what do you think comparing to the other patch [1] on
+simplifying the flush checks.  I'm open to any comments.
 
-Stable branches do not need this patch, as no real bug I can think of that
-will go wrong there.. so not attaching Fixes to be clear on the backport
-not needed.
+Thanks,
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/ram.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+[1] https://lore.kernel.org/r/875xo8n4ue.fsf@suse.de
 
-diff --git a/migration/ram.c b/migration/ram.c
-index 05ff9eb328..7284c34bd8 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -3283,9 +3283,16 @@ static int ram_save_complete(QEMUFile *f, void *opaque)
-         }
-     }
- 
--    ret = multifd_ram_flush_and_sync();
--    if (ret < 0) {
--        return ret;
-+    if (migrate_multifd() &&
-+        migrate_multifd_flush_after_each_section()) {
-+        /*
-+         * Only the old dest QEMU will need this sync, because each EOS
-+         * will require one SYNC message on each channel.
-+         */
-+        ret = multifd_ram_flush_and_sync();
-+        if (ret < 0) {
-+            return ret;
-+        }
-     }
- 
-     if (migrate_mapped_ram()) {
+Thanks,
+
+Peter Xu (7):
+  migration/multifd: Further remove the SYNC on complete
+  migration/multifd: Allow to sync with sender threads only
+  migration/ram: Move RAM_SAVE_FLAG* into ram.h
+  migration/multifd: Unify RAM_SAVE_FLAG_MULTIFD_FLUSH messages
+  migration/multifd: Remove sync processing on postcopy
+  migration/multifd: Cleanup src flushes on condition check
+  migration/multifd: Document the reason to sync for save_setup()
+
+ migration/multifd.h        | 23 ++++++++--
+ migration/ram.h            | 25 +++++++++++
+ migration/rdma.h           |  7 ---
+ migration/multifd-nocomp.c | 74 ++++++++++++++++++++++++++++++-
+ migration/multifd.c        | 15 ++++---
+ migration/ram.c            | 91 +++++++++++++++++---------------------
+ 6 files changed, 166 insertions(+), 69 deletions(-)
+
 -- 
 2.47.0
 
