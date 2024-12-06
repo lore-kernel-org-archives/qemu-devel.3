@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B69E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:27:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2DAE7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJc23-000564-40; Fri, 06 Dec 2024 12:22:23 -0500
+	id 1tJc2K-0005pS-LJ; Fri, 06 Dec 2024 12:22:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1O-00047O-9S; Fri, 06 Dec 2024 12:21:42 -0500
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1tJc1S-0004Fz-Hm; Fri, 06 Dec 2024 12:21:46 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1L-0000xu-Kb; Fri, 06 Dec 2024 12:21:41 -0500
+ id 1tJc1P-00011B-Vb; Fri, 06 Dec 2024 12:21:46 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id F32C95C6AEA;
- Fri,  6 Dec 2024 17:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F973C4CEE0;
+ by nyc.source.kernel.org (Postfix) with ESMTP id E9EC0A443F3;
+ Fri,  6 Dec 2024 17:19:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 198DAC2BC86;
  Fri,  6 Dec 2024 17:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1733505688;
- bh=W9YAnoSIBP0h6QQnoV6iGZCBdgmPfaExfAOZs9Xc2y8=;
+ bh=0CyS+5uMH4bliw7AWJd+kEIWAWXpqKGP1aXYbGP2T70=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=qo6Qvl/AlnhWF5v8CxOyjJ2xt+dHAFRzTKQJRKmuAk6A6DbJU455anBXw/yEL6Zi8
- LSwEGEPWthIrWYIlKBsD626h2EnuywXyAuRDpBaV+8184vS7t4kdFoFDQrUm3aTyMN
- bm69gPmBuaaIKG67LcbNgzOv9nskajkrTv7dPBVqUnM8jkKezDIk6IDScruoA3SFsu
- /DcAuxRjVeyUIPNHb4UmT5+G+2n8ztihJlV+iqYUmVhIkuqYCcHvCeZdh70QXleEZD
- OndxeMhW4xy5b+0iOxybYu/dB33lAlZuVvSON3qBoYhhwiHWpb6KaupDzPAnjU7NQv
- dhgFLewey1ykg==
+ b=tNLjMhV25h/XaHHCCxu1uBpv6vnxVFDBVsaazCdVnHBCAsQOFklBt1ro/ehr7Y2Ep
+ ekiOeW3nQGxVEj9wjFhS706bV79oVPugDEX8livXjyxDob10KT5Uki2YY2++Gf78FR
+ FIyZONMMlKroqMIwWklKGutgqLH/n8Fv7MXETSK/a6koXa0ViiuGdu0cVgnsvCfMVI
+ MRcoO7LYmI2MlAO21IEKemJTu+8IuFXAWc0MDZtCMDStk9KlkEeRwZm2Rxq6U56MCE
+ pe/XIc5nS0e5x8XIW1DX4clmC52WxWc/DkYH0hu1URsB2lbjj5EoQA6o4zOwhwJxFK
+ kIDlEIrulh9iA==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc18-00000005RLX-1MdH; Fri, 06 Dec 2024 18:21:26 +0100
+ id 1tJc18-00000005RLK-11kL; Fri, 06 Dec 2024 18:21:26 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -44,16 +44,17 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 31/31] FIXME: acpi/ghes: properly set data record size
-Date: Fri,  6 Dec 2024 18:12:53 +0100
-Message-ID: <104add143d349685cea1b47298b8f5d367a3a15e.1733504943.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 28/31] acpi/ghes: Change ghes fill logic to work with only one
+ source
+Date: Fri,  6 Dec 2024 18:12:50 +0100
+Message-ID: <ac26f611d58b467643ded09b64bf5149fb48800c.1733504943.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733504943.git.mchehab+huawei@kernel.org>
 References: <cover.1733504943.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
@@ -76,51 +77,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Extending to multiple sources require a BIOS pointer to the
+beginning of the HEST table, which in turn requires a backward-compatible
+code.
+
+So, the current code supports only one source. Ensure that and simplify
+the code.
+
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c | 17 +++++++----------
- 1 file changed, 7 insertions(+), 10 deletions(-)
+ hw/acpi/ghes.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 1fe4c536611a..856551df2103 100644
+index a4453ee357bc..5efa50413af3 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -211,6 +211,12 @@ ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
+@@ -387,15 +387,13 @@ static void get_hw_error_offsets(uint64_t ghes_addr,
+      * As the current version supports only one source, the ack offset is
+      * just sizeof(uint64_t).
       */
-     QemuUUID fru_id = {};
+-    *read_ack_register_addr = ghes_addr +
+-			      ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
++    *read_ack_register_addr = ghes_addr + sizeof(uint64_t);
+ }
  
-+    /*
-+     * Calculate the size with this block. No need to check for
-+     * too big CPER, as CPER size is checked at ghes_record_cper_errors()
-+     */
-+    data_length += ACPI_GHES_GESB_SIZE;
-+
-     /* Build the new generic error status block header */
-     acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
-         0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
-@@ -580,21 +586,12 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
-           UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
-                   0xED, 0x7C, 0x83, 0xB1);
-     Error *errp = NULL;
--    int data_length;
-     GArray *block;
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+     uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
+-    uint64_t start_addr;
+     AcpiGedState *acpi_ged_state;
+     AcpiGhesState *ags;
  
-     block = g_array_new(false, true /* clear */, 1);
+@@ -412,11 +410,9 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     }
+     ags = &acpi_ged_state->ghes_state;
  
--    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
--    /*
--     * It should not run out of the preallocated memory if adding a new generic
--     * error data entry
--     */
--    assert((data_length + ACPI_GHES_GESB_SIZE) <=
--            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+-    start_addr = le64_to_cpu(ags->hw_error_le);
 -
-     ghes_gen_err_data_uncorrectable_recoverable(block, guid,
--                                                data_length);
-+                                                ACPI_GHES_MAX_RAW_DATA_LENGTH);
+-    start_addr += source_id * sizeof(uint64_t);
+-
+-    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
++    assert(ACPI_GHES_ERROR_SOURCE_COUNT == 1);
++    get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
++                         &cper_addr, &read_ack_register_addr);
  
-     /* Build the memory section CPER for above new generic error data entry */
-     acpi_ghes_build_append_mem_cper(block, physical_address);
+     if (!cper_addr) {
+         error_setg(errp, "can not find Generic Error Status Block");
 -- 
 2.47.1
 
