@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB0AE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 20:41:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA72E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 21:08:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJf89-0004Pl-0V; Fri, 06 Dec 2024 15:40:53 -0500
+	id 1tJfYX-00080Y-3b; Fri, 06 Dec 2024 16:08:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJf86-0004Pd-O2
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 15:40:50 -0500
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tJfYV-000805-J4
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:08:07 -0500
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tJf85-00035G-2M
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 15:40:50 -0500
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-7fd21e4aa2eso1175363a12.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 12:40:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tJfYT-0008BT-S8
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 16:08:07 -0500
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-72590a998b4so2910056b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 13:08:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733517647; x=1734122447; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1733519284; x=1734124084; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=s14vva1wF8cmigYTWbjEqRFV/MQBehFISGn2aiOGDJM=;
- b=aC0i4+LC29p4PzstU0Hq4kpgk/Z+dWnOeqBauks0wUkc7jHV/JzpNg7eIAnXlStnfr
- cf1PxOIndMnAOqqHbpQHtI0EHHQYiYyb+0kZWj23EbP9YGYwA0CX7PL11NbRzpQ0FlyX
- 9rYDiwvNDr3Q74P50ZPrWewzHO7CsmOuvoSoWRm/l9oVPEsrlncWqA9AIMRFLiWMD4GE
- T+zJrPOiteNKV1AJqEQQGtT8k7QNEhdV+akF4a6Z57i3N9/6US9+9IHE0zXF58W6VXRB
- m8FdoB4hIX3gYPDX9+TkyHV8qske7X6cZhN+bZ1tz9G4aK/WLQyL9yrjusW4y+jEdKYB
- uLnA==
+ bh=Yx+UghVBfC0qS4Zvk62bDBjDv9ksqhxMyUgZnBB8r64=;
+ b=gkoo2G+vx/SXoYy8XJbHgdF9uHMJID53IcuV8/voTGuUgud32DgNfroJ/aK6Gwnm8j
+ XNQCOlSH80cepnQZ3jZF15+/2+asSBEkGBzhLhso2KKFGQ9QH2f60oCB2EZq8/yqOpQ4
+ i6q/M6/Gcp3phCFRAf5Lo4SFMqy2+Q20scynebbgV5cgLkhD2240uUsR1c5JGq5HOCVK
+ WCmSkchwJAqg99oC69zcD7ICnvRH+3lHZvecn2PLlyM/lXMhxTt6n2a2YsiOcm6lM8FS
+ u0FHo0Rm2nj25DBGf+wF7WkERwj7CmaCFkTy63zUoe2bTkZXNgeAZ4jUQrlwNuChJKtL
+ hgwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733517647; x=1734122447;
+ d=1e100.net; s=20230601; t=1733519284; x=1734124084;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s14vva1wF8cmigYTWbjEqRFV/MQBehFISGn2aiOGDJM=;
- b=YsXMm13jTjrf7jLwoc26zfTw5YrQJfOGVukcs1R+7RLqX08T6j4qFDHtuo1Hp/MEGW
- 6tCCklFdKs1qKDODZDNfZClmhVG31Nq/eoYsZvYtUrQWkPezlBZvZKAVNtPTMkNWQ7Ks
- ItBxXfvZRJGkB53Sc2ZSHrMehfiK+NJkD42eIapZxZ8ngagZ+R+RxIjmPDUOB9HsjoXz
- meAJbOOOGjnKsUY6Z39yNI9dHbXp54KXn4d1lAjZpTW3qn8BbdCHqfFS0D+KPMTTolpM
- hIErfED61pO5aCfbOgoJfAlhpNWIBdnwQil4sin2JYng6KmHxlEO8tarQzabFvC7vtsK
- fSYQ==
+ bh=Yx+UghVBfC0qS4Zvk62bDBjDv9ksqhxMyUgZnBB8r64=;
+ b=oc/FEv16uC+BSE3IrvQXKVTtvfW5cQ4ae5xXv/y+5C2e3vQvsMdtFxhNz00wW3o/LH
+ gIDUDjgfd8FliwKKMJVATAdGSjTAwu7TvfpNtugDzMrw9Vts3FbJ5n9M0BEwLX00v/bV
+ f3/cWl084sKr1UKSq32aXJFuc7CIRYBbcWE47hi3r0my2zeiVxTHIe4W9SL7rK7hxWFE
+ DcAp2mVimpyIcVGmRUYoeE86IRfED1HchgJqSj7N1tm7C2UcJfnH/ok3teM03IfNAty3
+ jMHh2KCq+zT6uljpM788uRFohIASN2XEK1pcbx3IQ/fIrps+IxwUHt4PtornJzIvHjr+
+ a4/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgImsMnVRnmRQswQwfAIJA1E4sk0YP1YTdFX4VWkxUvJIcDD/JxlFZFjKqtWsUlLcYi9bCFT99JWnB@nongnu.org
-X-Gm-Message-State: AOJu0Yw7DaEYqVztc/U5KdjisvdfkqU2fgY/p9HuhW1iQ0e2N3CKdK/x
- CtKsTZl9G8ePWMf09d0TnHtcje+Ch2na4Du/qO7v1N/e9bCEUPJBLcO7L8zLuU0=
-X-Gm-Gg: ASbGncuyEhdNhcfxF90EkpnRwm6SoLJzfm2XjIN+CrksVMDqa1aE4Sg1Mz7xQ/LyYIT
- T9l6jM5wVTqtYuxDtcIJBFs9DMgOubLJD+tAJlrXGWGCfCJjvzbSyDAdRGB7w4OOOy/GPmHrs1E
- EWOoE0N7/h9LbeKtPyu6OKo05wl63QeC2q/lzso2/PiVyNZetGvfivSQ14d7TO96cO8yC5IJYfW
- Aj1sYrJ9JT29xHnHh5M/mivhWbU+e1V6G7gwwXBv7rvaiN6/35Mm0E3cWuoBmbygJ0xALIfCsrV
- If7LKuOcIXR/g/oeR2JvLw==
-X-Google-Smtp-Source: AGHT+IFxrevtBViW6mDCEUjxoWbXSjjlHdwH2FCgw9ILoCrXkRyvAv1llKX3RauoSzsMkWc7lN+HZA==
-X-Received: by 2002:a05:6a20:c78d:b0:1e0:df27:10d6 with SMTP id
- adf61e73a8af0-1e1870c9084mr6722289637.23.1733517647020; 
- Fri, 06 Dec 2024 12:40:47 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fd157ad3aesm3044728a12.53.2024.12.06.12.40.46
+ AJvYcCV3etXm38/HHuh/vL9Q7AZFwXboD42H/JvrstU8FUHg5Mdsd2onAVj+IkunwJPAQYhzN7R8wSnqOYo9@nongnu.org
+X-Gm-Message-State: AOJu0YzIy9MRY3YWWiueONvXpzB8BvFhBt3w4omgS8Jac51r4VBspS2S
+ C7XRMLkVcV+s6lweisLxq0gMye9mBUAaJfXTvga19ObqC4aGrS7u10PzgwRMLYHwJxB0LC65tIY
+ Q
+X-Gm-Gg: ASbGncv0FtOHNqhR8HwVBe0WvsA17IxDsAdqFbUYrCkph4663nAwRIUJrTWoaXBFNxg
+ Y9JGtEDGnMuvNoTLUP9XIOsBo/A8ZrDe8MkOKyLsfapuvqBFyGGNR+LUf58QfJmPCSZdnQzEX5o
+ xUw79NjecL+uFSt9vITpwU6vzyMWVXEsG7bkjV5M9smupKx6J23OnK/Cl/u/S2zc3UjDHhEl7Bk
+ rJ2WY1fflHgwyBCkhCpk7T08iVqk6O3E1D9+w1Q5EOwvPW+Fl9lqWobT90SAsC3/nOEYFwIC3jz
+ SxZjz1hhpxQw3d16xZlqnEs=
+X-Google-Smtp-Source: AGHT+IGdTHZQT9j0f6dWLesK8zOwxAPuJEdpt2b+gGDOH0dqMuG/QvRm/60q/0xbHBdREimvPtRN0A==
+X-Received: by 2002:a17:903:18b:b0:215:b18d:ca with SMTP id
+ d9443c01a7336-215f3ce4f1cmr142930475ad.18.1733519283924; 
+ Fri, 06 Dec 2024 13:08:03 -0800 (PST)
+Received: from ?IPV6:2804:7f0:bcc0:b984:11b:9da2:696:f7f6?
+ ([2804:7f0:bcc0:b984:11b:9da2:696:f7f6])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215f8f0922fsm32054545ad.205.2024.12.06.13.08.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 12:40:46 -0800 (PST)
-Message-ID: <70666b89-1f04-4615-ae16-e1eefac2a446@linaro.org>
-Date: Fri, 6 Dec 2024 12:40:45 -0800
+ Fri, 06 Dec 2024 13:08:03 -0800 (PST)
+Message-ID: <9f616eaf-11fd-4772-9e7f-2404059419bb@ventanamicro.com>
+Date: Fri, 6 Dec 2024 18:07:59 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: Richard Henderson <richard.henderson@linaro.org>,
- Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
- <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
- <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
- <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
- <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
- <867d8a3a-ddf4-4655-9bfc-51c1a2ad8203@linaro.org>
- <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
+Subject: Re: [PATCH v12 3/7] target/riscv: Add helper functions to calculate
+ current number of masked bits for pointer masking
+To: baturo.alexey@gmail.com
+Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com,
+ liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20241205112304.593204-1-baturo.alexey@gmail.com>
+ <20241205112304.593204-4-baturo.alexey@gmail.com>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241205112304.593204-4-baturo.alexey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x534.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,50 +109,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvNi8yNCAxMTo0MiwgUmljaGFyZCBIZW5kZXJzb24gd3JvdGU6DQo+IE9uIDEyLzYv
-MjQgMTM6MDIsIFBpZXJyaWNrIEJvdXZpZXIgd3JvdGU6DQo+PiBPbiAxMi82LzI0IDAwOjQy
-LCBKdWxpYW4gR2FueiB3cm90ZToNCj4+PiBIaSBQaWVycmljaywNCj4+Pg0KPj4+IERlY2Vt
-YmVyIDUsIDIwMjQgYXQgMTE6MjggUE0sICJQaWVycmljayBCb3V2aWVyIiB3cm90ZToNCj4+
-Pj4gT24gMTIvNS8yNCAxMzoyMiwgSnVsaWFuIEdhbnogd3JvdGU6DQo+Pj4+PiAgwqAgRGVj
-ZW1iZXIgNSwgMjAyNCBhdCA2OjMwIFBNLCAiUGllcnJpY2sgQm91dmllciIgd3JvdGU6DQo+
-Pj4+Pj4gV2UgY2FuIHN0b3JlIHRoZSBuZXh0X2V4cGVjdGVkIHBjIGZvciBlYWNoIGluc3Ry
-dWN0aW9uIChmcm9tIGN1cnJlbnRfaW5zdHJ1Y3Rpb24gKw0KPj4+Pj4+IGluc25fbGVuZ3Ro
-KSwgYW5kIHdlIHNob3VsZCBiZSBhYmxlIHRvIGNvbXBhcmUgdGhhdCB3aXRoIHRoZSBleHBl
-Y3RlZCBmcm9tX3BjLg0KPj4+Pj4+ICDCoCBUaGlzIGlzIG1vc3RseSB3aGF0IGNvbnRyaWIv
-cGx1Z2lucy9jZmxvdy5jIGRvZXMuDQo+Pj4+Pj4NCj4+Pj4+PiAgwqAgV2l0aCB0aGF0LCB3
-ZSBjYW4gdGVzdCBmcm9tX3BjLg0KPj4+Pj4+DQo+Pj4+PiAgwqAgSSdtIG5vdCBjb25maWRl
-bnQgdGhhdCB0aGlzIHdpbGwgd29yayByZWxpYWJseSBmb3IgYnJhbmNoLCBqdW1wIGFuZA0K
-Pj4+Pj4gIMKgIG90aGVyICJpbnRlcmVzdGluZyIgaW5zdHJ1Y3Rpb25zLiBCdXQgSSBjYW4g
-aGF2ZSBhIGNsb3NlciBsb29rIGF0IHRoZQ0KPj4+Pj4gIMKgIGNmbG93IHBsdWdpbiBhbmQg
-dHJ5IHRvIGZpZ3VyZSBvdXQgaG93IHRoYXQgcGx1Z2luIGhhbmRsZXMgdGhvc2UgY2FzZXMu
-DQo+Pj4+Pg0KPj4+PiBJdCB3b24ndCB3b3JrIGZvciBsYXRlc3QgaW5zdHJ1Y3Rpb25zIGlu
-IGEgdGIgKGJlY2F1c2Ugd2UgZG9uJ3Qga25vdyB3aGF0IHdpbGwgYmUgdGhlDQo+Pj4+IG5l
-eHQgb25lKSwgYnV0IHNob3VsZCBiZSBnb29kIGZvciBhbGwgdGhlIG90aGVycyBjYXNlcy4N
-Cj4+Pg0KPj4+IElJVUMgcWVtdSB3aWxsIHNjaGVkdWxlIGludGVycnVwdHMgIm9wcG9ydHVu
-aXN0aWNhbGx5IiBiZXR3ZWVuIHRiDQo+Pj4gZXhlY3V0aW9ucy4gSWYgdGhhdCdzIHRoZSBj
-YXNlIHdlJ2xsIG9ic2VydmUgaW50ZXJydXB0cyBleGNsdXNpdmVseQ0KPj4+IGFmdGVyIHRo
-ZSBsYXN0IGluc3RydWN0aW9uIGluIGEgdGIuIFRoYXQgc3RyaWtlcyBtZSBhcyBhIHNlcmlv
-dXMNCj4+PiBsaW1pdGF0aW9uLg0KPj4+DQo+Pg0KPj4gVG8gcmV1c2UgZmFuY3kgdm9jYWJ1
-bGFyeSwgbWF5YmUgd2Ugc2hvdWxkIGhhdmUgYSBkaXN0aW5jdGlvbiBiZXR3ZWVuIGluZmVy
-YWJsZQ0KPj4gaW50ZXJydXB0aW9ucyAoaW50ZXJydXB0IGluc3RydWN0aW9uKSBhbmQgdW5p
-bmZlcmFibGUgaW50ZXJydXB0cywgdHJpZ2dlcmVkIGJ5IGFuIGV4dGVybmFsDQo+PiBldmVu
-dC4NCj4+DQo+PiBJbiB0aGUgbGF0dGVyLCBpdCAqbWlnaHQqIGJlIGFjY2VwdGFibGUgdG8g
-bm90IHByb3ZpZGUgYSBmcm9tX3BjIChsZXQncyBzYXkgYSB2YWx1ZSAwKSwNCj4+IGJlY2F1
-c2UgdGhlcmUgaXMgbm8gdXNlZnVsIGluZm9ybWF0aW9uIGluIGl0c2VsZiwgZXhjZXB0IGNy
-ZWF0aW5nIHJhbmRvbSBlZGdlcyBpbiB0aGUNCj4+IGNvbnRyb2wgZmxvdyBncmFwaCwgd2hp
-Y2ggd2UgZG9uJ3Qgd2FudCB0byBkby4NCj4+DQo+PiBXaGF0IGRvIHlvdSB0aGluayBvZiBp
-dD8NCj4gDQo+IEkgdGhpbmsgeW91IGJvdGggYXJlIG92ZXItY29tcGxpY2F0aW5nIHRoaW5n
-cy4NCj4gDQo+IEFsd2F5cywgZW52LT5wYyAob3Igd2hhdGV2ZXIpIHdpdGhpbiBjYy0+Y3B1
-X2V4ZWNfaW50ZXJydXB0ICppcyogd2hlcmUgdGhlIGludGVycnVwdCBpcw0KPiByZWNvZ25p
-emVkLCBhbmQgKmlzKiB3aGVyZSB0aGUgZGlzY29udGludWl0eSBvY2N1cnMuICBSZXBvcnQg
-dGhhdC4NCj4gDQoNCkRvIHdlIGhhdmUgYW4gYXJjaGl0ZWN0dXJlIGFnbm9zdGljIHBjIHJl
-cHJlc2VudGF0aW9uLCBvciBkbyB3ZSBoYXZlIHRvIA0KYWRkIHRoaXMgZm9yIGV2ZXJ5IHRh
-cmdldCBpbiB7YXJjaH1fY3B1X2V4ZWNfaW50ZXJydXB0Pw0KDQpCZXlvbmQgdGhlIHNjb3Bl
-IG9mIGludGVycnVwdGlvbnMsIGFyZSB3ZSBndWFyYW50ZWVkIHRoaXMgaW5zdHJ1Y3Rpb24g
-DQpwb2ludGVyIChwZXIgYXJjaCkgaXMgYWx3YXlzIHVwZGF0ZWQgYmV0d2VlbiBpbnN0cnVj
-dGlvbnM/IEFueSBjb3JuZXIgY2FzZXM/DQoNCj4gSnVzdCBiZWNhdXNlIHNvbWUgZGV2aWNl
-IGludGVycnVwdHMgYXJlIGRlZmVycmVkIHRvIHRoZSBlbmQgb2YgdGhlIFRCLCB0aGF0IG1h
-a2VzIG5vDQo+IGRpZmZlcmVuY2UuICBUaGVyZSBpcyBubyAicmlnaHQiIGFuc3dlciBmb3Ig
-dGltaW5nIGJldHdlZW4gZXhlY3V0aW9uIGFuZCBhc3luY2hyb25vdXMNCj4gaW50ZXJydXB0
-cy4NCj4gDQo+IA0KPiByfg0KDQo=
+
+
+On 12/5/24 8:23 AM, baturo.alexey@gmail.com wrote:
+> From: Alexey Baturo <baturo.alexey@gmail.com>
+> 
+> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> ---
+>   target/riscv/cpu.h        |  5 +++
+>   target/riscv/cpu_helper.c | 74 +++++++++++++++++++++++++++++++++++++++
+>   2 files changed, 79 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 417ff45544..74d7076f5a 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -768,8 +768,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>   
+>   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
+>   
+> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
+> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
+> +int riscv_pm_get_pmlen(RISCVPmPmm pmm);
+> +
+>   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
+>                             target_ulong *ret_value);
+> +
+>   RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
+>                              target_ulong *ret_value,
+>                              target_ulong new_value, target_ulong write_mask);
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index dba04851d5..2558f869f2 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -214,6 +214,80 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vaddr *pc,
+>       *pflags = flags;
+>   }
+>   
+> +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
+> +{
+> +    RISCVPmPmm pmm = PMM_FIELD_DISABLED;
+> +#ifndef CONFIG_USER_ONLY
+> +    if (get_field(env->mstatus, MSTATUS_MPRV) &&
+> +        get_field(env->mstatus, MSTATUS_MXR)) {
+> +        return pmm;
+> +    }
+> +    int priv_mode = cpu_address_mode(env);
+> +    /* Get current PMM field */
+> +    switch (priv_mode) {
+> +    case PRV_M:
+> +        if (riscv_cpu_cfg(env)->ext_smmpm) {
+> +            pmm = get_field(env->mseccfg, MSECCFG_PMM);
+> +        }
+> +        break;
+> +    case PRV_S:
+> +        if (riscv_cpu_cfg(env)->ext_smnpm) {
+> +            if (get_field(env->mstatus, MSTATUS_MPV)) {
+> +                pmm = get_field(env->henvcfg, HENVCFG_PMM);
+> +            } else {
+> +                pmm = get_field(env->menvcfg, MENVCFG_PMM);
+> +            }
+> +        }
+> +        break;
+> +    case PRV_U:
+> +        if (riscv_has_ext(env, RVS)) {
+> +            if (riscv_cpu_cfg(env)->ext_ssnpm) {
+> +                pmm = get_field(env->senvcfg, SENVCFG_PMM);
+> +            }
+> +        } else {
+> +            if (riscv_cpu_cfg(env)->ext_smnpm) {
+> +                pmm = get_field(env->menvcfg, MENVCFG_PMM);
+> +            }
+> +        }
+> +        break;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +#endif
+> +    return pmm;
+> +}
+> +
+> +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
+> +{
+> +    bool virt_mem_en = false;
+> +#ifndef CONFIG_USER_ONLY
+> +    int satp_mode = 0;
+> +    int priv_mode = cpu_address_mode(env);
+> +    if (riscv_cpu_mxl(env) == MXL_RV32) {
+> +        satp_mode = get_field(env->satp, SATP32_MODE);
+> +    } else {
+> +        satp_mode = get_field(env->satp, SATP64_MODE);
+> +    }
+> +    virt_mem_en = ((satp_mode != VM_1_10_MBARE) && (priv_mode != PRV_M));
+> +#endif
+> +    return virt_mem_en;
+> +}
+> +
+> +int riscv_pm_get_pmlen(RISCVPmPmm pmm)
+> +{
+> +    switch (pmm) {
+> +    case PMM_FIELD_DISABLED:
+> +        return 0;
+> +    case PMM_FIELD_PMLEN7:
+> +        return 7;
+> +    case PMM_FIELD_PMLEN16:
+> +        return 16;
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +    return -1;
+
+You don't need a 'return -1' here since all possible return values are already
+covered in the 'switch' and the default label is using g_assert_not_reached(),
+i.e. you'll never return -1. The compiler will be fine with it - we use this
+kind of pattern all the time (cpu_get_fcfien() does this in this same file).
+
+You can remove the -1 return and even turn the helper to uint32_t. That way
+the caller knows that there's no need to handle negative values.
+
+
+Thanks,
+
+Daniel
+
+
+> +}
+> +
+>   #ifndef CONFIG_USER_ONLY
+>   
+>   /*
+
 
