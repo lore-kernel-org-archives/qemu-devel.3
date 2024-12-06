@@ -4,71 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF47CE7717D
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:04:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50E57E77179
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:04:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJanh-00081M-58; Fri, 06 Dec 2024 11:03:29 -0500
+	id 1tJan8-0007iM-BZ; Fri, 06 Dec 2024 11:02:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJand-00080v-QP
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:03:26 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tJan2-0007fu-9R
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:02:49 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJanb-0006ek-J9
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:03:24 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5cecbddb574so2570804a12.1
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:03:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tJamx-0006Uj-V1
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:02:47 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-434a0fd9778so22086345e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:02:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733501002; x=1734105802; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VYpU7huxerH/xbD8v7ChQtnPggNL6qf14qnBxnoC1oI=;
- b=WRwhkS61AoxTnnz0rKZntBeA6O3V6Kj4UebYOkxnMGLv44vcg7Bc74/vBQIiOkQqBC
- oOrLz+niCw8j37xK1roiJXA0FPN7W9odSItdVOD9++F/ytlcqcI4Rqa0n/E9jy8z7rKF
- dIDgPaoETysp9uSntJGP8zGUGiuRm6C35UPQqvuLYUqMt+VR4QX0UjVJVzH1Pb1ejHBN
- d+BX19rvGeJKYF4K1NIfTiQJguPyBGoY/AKbv0kmHbo0GAJ2fTyZx5ccuiZNPVuOMVQV
- /bJ9EcjhEOabfbEyEq/8yGjSgtzQPX4UYvPCfDiARN6sUlVM44sCTA4wBCeKK8BDtuC0
- /b6Q==
+ d=linaro.org; s=google; t=1733500961; x=1734105761; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lSUUCyFArbxy+0GSSuSuEHiOsnV3phawKrAnzeeaAVQ=;
+ b=SYIjXB8OZa//AgRVRBubs0gtK6U9W73UEFwJm0SCbEdou080SJ6c4HqO0a8B9mssql
+ brz/Jg8PbJio6DlN0bDkyfOZH6gSxdfpk9yIecaSfwUGf4Ad1lZpzoiMIjAk7vJGQ5cE
+ Ypc+Kwn9p1WhnVUkJRwIUMWQlGys7v0uGjt+HEddEDQL5Q2ppOxQ+OtCIK85ZY1rIxAc
+ a0MAJJZQsFdbKWF2rCoy5wr1xWTRTvJYdoKswXMBSVSPElZJ0Pu/J3dTqWr2JLkggmrI
+ cQZw+66GgVb2C6ulKpoOD79qMWrGFE1R01zYHnWssqh/h44LtEFg9OEBcpOwaRDwMsxK
+ 6Ijw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733501002; x=1734105802;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=VYpU7huxerH/xbD8v7ChQtnPggNL6qf14qnBxnoC1oI=;
- b=i9457XFeesBmyoB5bgZdEWxtkk2aaLxltZYfOrBLKlGoH5gZZkSy+J6cRys8o3bkXm
- UkNHd8Fny/kREBjtdKgn5GIFZKQ935Ot8LK5wOqgTrrARXxrCfU8fvcazjDd23XCTx8y
- ONiobSusvmZJzGNNsySMEgyZd4mousDlRsuyNoeTByqoVGKTc8MPtO15kWuiSmu3O/QO
- MnoquMcGV8INDXJ0JrcCkkDn4iGaPJ5B1q1ezdNZ5hHRYGB+qzbk6EibbsstRte7VdQQ
- QbNbx94yXlIjhxZE8vGPolYnyxQNb4d+gUn7nTkGFh9bRMs1pzxfSoEn4oS7wjl1KqKn
- 8TpA==
-X-Gm-Message-State: AOJu0YxyZO3cKRxYZBILTP8XSbwfArozwC7+zaZH4yxPqvt0rlSF2WLr
- Vl2+eXy2Q5aKfNFZnZK3blUeGFZ+NuH/bDzFV8RwJRmDcslUDNG3V2m2zyD0YTdCZMxuOo69kUW
- ZU7FdbuI7QUzsY5xqPaPvqsOZt2kiuVo+6+apkFjCfbL0l9uw
-X-Gm-Gg: ASbGncs5TOIsFySZnZu6VCS3A6MOH/W+XRfdRamjP07GYj8JfLSGPhCu9hMGDG6F5R4
- K8CCsOGfHTEKl5Avu7qce3zU3SpRRJKkH
-X-Google-Smtp-Source: AGHT+IEreAFspqL0AOwuuu47nU2GXVOINmLqdg+fePx1E/ZW/CpI/UOrWQu6vgJhW9Vusl4IEdbM7uOb9ewLi0Qv7Dw=
-X-Received: by 2002:a05:6402:3881:b0:5cf:c97c:821d with SMTP id
- 4fb4d7f45d1cf-5d3be462da9mr2885114a12.0.1733501001674; Fri, 06 Dec 2024
- 08:03:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733500961; x=1734105761;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lSUUCyFArbxy+0GSSuSuEHiOsnV3phawKrAnzeeaAVQ=;
+ b=AtPNEXgNaTRr+KBnIoQEOn7NlYDcTcGvpSlgCXSUeI1EpLJ4ESgsKUZBvUWsvc4ZCr
+ AfzX6y1WVwpS8F9FagKvYyZFmex4LNfMlMYAwhgMZQeHdKy8kMt9zAEaoV3luPCe9mRw
+ e3GfxrBohCPPdKfJrN3CZjO50FLS+0SFCKypF0gx/eNBu6OMGsIwJpnCkyJjOQ5e/lSH
+ 2SC4OUkbedfKcFH5AxRJvAvqaxhz3U2/UnMus2timo7RMVBvFKH2tblEKX/DQzZkANDA
+ TaFhj4oT3Hi2Z+gG66946WlwIaQVrykUbeNAfNo+IyKrbVnyGzjZPoESeo3r7iotoHOJ
+ hE0Q==
+X-Gm-Message-State: AOJu0YxZpPtX02S+TH1PqnXQuBlpDaRK8jypm5orO+yN2ELcdqqUFKA/
+ WlbGzURC4rusO8NfO2Rrjv0PdnHmaeKYypE/e1iIB/vQPTOmYRVaDACUXpUKX/I=
+X-Gm-Gg: ASbGncuahLepbtyhyN6sWnUCkVJ/V2fPpv/1DbxWWbEESis2tLvQYVpD473OqCgkfi7
+ iN7KKpHL8q5QV6BhrCm4FCrjc9be4g9IZ92ln1QBj6T/hyocY4Vvk1jPmIBepnFGp7TxTgdphvn
+ oxNgndDtSeeMtDm0SU3jUdN1ndNlZtQt7v10duWAZk2rPxAHdOzJb9Cb0olNMYqaeASaUiKujjN
+ LUjM89SMMTCYMobEa4Zu13AusHWEH4WPog3zO0hbf40UZTe
+X-Google-Smtp-Source: AGHT+IFu1+0XA3JOMBRbQIpJxWtdJcJ0NwKyjD6Vh9Obf0jdsV7qG9uCVlXzXqKgjkjrDsTb79MgAQ==
+X-Received: by 2002:a05:600c:1c8a:b0:434:a4a9:5d57 with SMTP id
+ 5b1f17b1804b1-434ddeb8cf6mr29723485e9.19.1733500961331; 
+ Fri, 06 Dec 2024 08:02:41 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434d526b14csm99454085e9.2.2024.12.06.08.02.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 08:02:40 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id A7D845F9FB;
+ Fri,  6 Dec 2024 16:02:39 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-stable@nongnu.org, Andrei Homescu <ahomescu@google.com>,
+ =?UTF-8?q?Arve=20Hj=C3=B8nnev=C3=A5g?= <arve@google.com>,
+ =?UTF-8?q?R=C3=A9mi=20Denis-Courmont?= <remi.denis.courmont@huawei.com>
+Subject: [PATCH 3/3] target/arm: implement SEL2 physical and virtual timers
+Date: Fri,  6 Dec 2024 16:02:39 +0000
+Message-Id: <20241206160239.3229094-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241206160239.3229094-1-alex.bennee@linaro.org>
+References: <20241206160239.3229094-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-53-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-53-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Dec 2024 16:03:10 +0000
-Message-ID: <CAFEAcA84cd_q8WJ8ZVg05qbxb=FfsKgN2fBndoyT8VGOBsZixA@mail.gmail.com>
-Subject: Re: [PATCH 52/67] target/arm: Convert FABS,
- FNEG (vector) to decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,50 +107,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:19, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  target/arm/tcg/translate-a64.c | 61 ++++++++++++++++++----------------
->  target/arm/tcg/a64.decode      |  7 ++++
->  2 files changed, 39 insertions(+), 29 deletions(-)
->
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 613dcdb9a2..31272c1878 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -9153,6 +9153,28 @@ static bool trans_SHLL_v(DisasContext *s, arg_qrr_e *a)
->      return true;
->  }
->
-> +static bool do_fabs_fneg_v(DisasContext *s, arg_qrr_e *a, bool neg)
-> +{
-> +    int check = fp_access_check_vector_hsd(s, a->q, a->esz);
-> +    uint64_t sign;
-> +
-> +    if (check <= 0) {
-> +        return check == 0;
-> +    }
-> +
-> +    sign = 1ull << ((8 << a->esz) - 1);
-> +    if (neg) {
-> +        gen_gvec_fn2i(s, a->q, a->rd, a->rn, sign,
-> +                      tcg_gen_gvec_xori, a->esz);
-> +    } else {
-> +        gen_gvec_fn2i(s, a->q, a->rd, a->rn, sign - 1,
-> +                      tcg_gen_gvec_andi, a->esz);
-> +    }
-> +    return true;
-> +}
+When FEAT_SEL2 was implemented the SEL2 timers where missed. This
+shows up when building the latest Hafnium with SPMC_AT_EL=2. The
+actual implementation utilises the same logic as the rest of the
+timers so all we need to do is:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+  - define the timers and their access functions
+  - conditionally add the correct system registers
+  - create a new accessfn as the rules are subtly different to the
+    existing secure timer
 
-Annoying FEAT_AFP wrinkle: for FPCR.AH=1 we will need to make
-fabs and fneg not flip the sign bit for NaNs. I guess that means
-AH will need to be a tbflags bit so we can generate the nice
-vector code for AH=0 and fall back to something else for AH=1.
+Fixes: e9152ee91c (target/arm: add ARMv8.4-SEL2 system registers)
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+Cc: Andrei Homescu <ahomescu@google.com>
+Cc: Arve Hjønnevåg <arve@google.com>
+Cc: Rémi Denis-Courmont <remi.denis.courmont@huawei.com>
 
-thanks
--- PMM
+---
+v1
+  - add better comments to GTIMER descriptions
+  - also define new timers for sbsa-ref
+  - don't conditionally gate qemu_timer creation on the feature
+  - take cntvoff_el2 int account for SEC_VEL2 in gt_recalc/g_tval_[read|write]
+---
+ include/hw/arm/bsa.h |   2 +
+ target/arm/cpu.h     |   2 +
+ target/arm/gtimer.h  |   4 +-
+ hw/arm/sbsa-ref.c    |   2 +
+ hw/arm/virt.c        |   2 +
+ target/arm/cpu.c     |   4 ++
+ target/arm/helper.c  | 158 +++++++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 173 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/arm/bsa.h b/include/hw/arm/bsa.h
+index 8eaab603c0..b4ecca1b1c 100644
+--- a/include/hw/arm/bsa.h
++++ b/include/hw/arm/bsa.h
+@@ -22,6 +22,8 @@
+ #define QEMU_ARM_BSA_H
+ 
+ /* These are architectural INTID values */
++#define ARCH_TIMER_S_VIRT_EL2_IRQ  19
++#define ARCH_TIMER_S_EL2_IRQ       20
+ #define VIRTUAL_PMU_IRQ            23
+ #define ARCH_GIC_MAINT_IRQ         25
+ #define ARCH_TIMER_NS_EL2_IRQ      26
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index d86e641280..10b5354d6f 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -1139,6 +1139,8 @@ void arm_gt_vtimer_cb(void *opaque);
+ void arm_gt_htimer_cb(void *opaque);
+ void arm_gt_stimer_cb(void *opaque);
+ void arm_gt_hvtimer_cb(void *opaque);
++void arm_gt_sel2timer_cb(void *opaque);
++void arm_gt_sel2vtimer_cb(void *opaque);
+ 
+ unsigned int gt_cntfrq_period_ns(ARMCPU *cpu);
+ void gt_rme_post_el_change(ARMCPU *cpu, void *opaque);
+diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
+index de016e6da3..f8f7425a5f 100644
+--- a/target/arm/gtimer.h
++++ b/target/arm/gtimer.h
+@@ -15,7 +15,9 @@ enum {
+     GTIMER_HYP      = 2, /* EL2 physical timer */
+     GTIMER_SEC      = 3, /* EL3 physical timer */
+     GTIMER_HYPVIRT  = 4, /* EL2 virtual timer */
+-#define NUM_GTIMERS   5
++    GTIMER_SEC_PEL2 = 5, /* Secure EL2 physical timer */
++    GTIMER_SEC_VEL2 = 6, /* Secure EL2 virtual timer */
++#define NUM_GTIMERS   7
+ };
+ 
+ #endif
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index e3195d5449..5dc36b3cee 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -484,6 +484,8 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
+             [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+             [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+             [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
++            [GTIMER_SEC_PEL2] = ARCH_TIMER_S_EL2_IRQ,
++            [GTIMER_SEC_VEL2] = ARCH_TIMER_S_VIRT_EL2_IRQ,
+         };
+ 
+         for (irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 1a381e9a2b..451d154459 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -873,6 +873,8 @@ static void create_gic(VirtMachineState *vms, MemoryRegion *mem)
+             [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+             [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+             [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
++            [GTIMER_SEC_PEL2] = ARCH_TIMER_S_EL2_IRQ,
++            [GTIMER_SEC_VEL2] = ARCH_TIMER_S_VIRT_EL2_IRQ,
+         };
+ 
+         for (unsigned irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 6938161b95..d15916c436 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -2078,6 +2078,10 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+                                               arm_gt_stimer_cb, cpu);
+         cpu->gt_timer[GTIMER_HYPVIRT] = timer_new(QEMU_CLOCK_VIRTUAL, scale,
+                                                   arm_gt_hvtimer_cb, cpu);
++        cpu->gt_timer[GTIMER_SEC_PEL2] = timer_new(QEMU_CLOCK_VIRTUAL, scale,
++                                                   arm_gt_sel2timer_cb, cpu);
++        cpu->gt_timer[GTIMER_SEC_VEL2] = timer_new(QEMU_CLOCK_VIRTUAL, scale,
++                                                   arm_gt_sel2vtimer_cb, cpu);
+     }
+ #endif
+ 
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index cd147b717a..f82503304e 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2668,6 +2668,41 @@ static CPAccessResult gt_stimer_access(CPUARMState *env,
+     }
+ }
+ 
++static CPAccessResult gt_sel2timer_access(CPUARMState *env,
++                                          const ARMCPRegInfo *ri,
++                                          bool isread)
++{
++    /*
++     * The AArch64 register view of the secure EL2 timers are mostly
++     * accessible from EL3 and EL2 although can also be trapped to EL2
++     * from EL1 depending on nested virt config.
++     */
++    switch (arm_current_el(env)) {
++    case 0:
++        return CP_ACCESS_TRAP;
++    case 1:
++        if (!arm_is_secure(env)) {
++            return CP_ACCESS_TRAP;
++        } else if (arm_hcr_el2_eff(env) & HCR_NV) {
++            return CP_ACCESS_TRAP_EL2;
++        }
++        return CP_ACCESS_TRAP;
++    case 2:
++        if (!arm_is_secure(env)) {
++            return CP_ACCESS_TRAP;
++        }
++        return CP_ACCESS_OK;
++    case 3:
++        if (env->cp15.scr_el3 & SCR_EEL2) {
++            return CP_ACCESS_OK;
++        } else {
++            return CP_ACCESS_TRAP;
++        }
++    default:
++        g_assert_not_reached();
++    }
++}
++
+ uint64_t gt_get_countervalue(CPUARMState *env)
+ {
+     ARMCPU *cpu = env_archcpu(env);
+@@ -2744,6 +2779,7 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+         switch (timeridx) {
+         case GTIMER_VIRT:
+         case GTIMER_HYPVIRT:
++        case GTIMER_SEC_VEL2:
+             offset = cpu->env.cp15.cntvoff_el2;
+             break;
+         default:
+@@ -2858,6 +2894,7 @@ static uint64_t gt_tval_read(CPUARMState *env, const ARMCPRegInfo *ri,
+     switch (timeridx) {
+     case GTIMER_VIRT:
+     case GTIMER_HYPVIRT:
++    case GTIMER_SEC_VEL2:
+         offset = gt_virt_cnt_offset(env);
+         break;
+     case GTIMER_PHYS:
+@@ -2878,6 +2915,7 @@ static void gt_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     switch (timeridx) {
+     case GTIMER_VIRT:
+     case GTIMER_HYPVIRT:
++    case GTIMER_SEC_VEL2:
+         offset = gt_virt_cnt_offset(env);
+         break;
+     case GTIMER_PHYS:
+@@ -3186,6 +3224,62 @@ static void gt_sec_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     gt_ctl_write(env, ri, GTIMER_SEC, value);
+ }
+ 
++static void gt_sec_pel2_timer_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    gt_timer_reset(env, ri, GTIMER_SEC_PEL2);
++}
++
++static void gt_sec_pel2_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                   uint64_t value)
++{
++    gt_cval_write(env, ri, GTIMER_SEC_PEL2, value);
++}
++
++static uint64_t gt_sec_pel2_tval_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    return gt_tval_read(env, ri, GTIMER_SEC_PEL2);
++}
++
++static void gt_sec_pel2_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    gt_tval_write(env, ri, GTIMER_SEC_PEL2, value);
++}
++
++static void gt_sec_pel2_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    gt_ctl_write(env, ri, GTIMER_SEC_PEL2, value);
++}
++
++static void gt_sec_vel2_timer_reset(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    gt_timer_reset(env, ri, GTIMER_SEC_VEL2);
++}
++
++static void gt_sec_vel2_cval_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    gt_cval_write(env, ri, GTIMER_SEC_VEL2, value);
++}
++
++static uint64_t gt_sec_vel2_tval_read(CPUARMState *env, const ARMCPRegInfo *ri)
++{
++    return gt_tval_read(env, ri, GTIMER_SEC_VEL2);
++}
++
++static void gt_sec_vel2_tval_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                   uint64_t value)
++{
++    gt_tval_write(env, ri, GTIMER_SEC_VEL2, value);
++}
++
++static void gt_sec_vel2_ctl_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    gt_ctl_write(env, ri, GTIMER_SEC_VEL2, value);
++}
++
+ static void gt_hv_timer_reset(CPUARMState *env, const ARMCPRegInfo *ri)
+ {
+     gt_timer_reset(env, ri, GTIMER_HYPVIRT);
+@@ -3242,6 +3336,20 @@ void arm_gt_stimer_cb(void *opaque)
+     gt_recalc_timer(cpu, GTIMER_SEC);
+ }
+ 
++void arm_gt_sel2timer_cb(void *opaque)
++{
++    ARMCPU *cpu = opaque;
++
++    gt_recalc_timer(cpu, GTIMER_SEC_PEL2);
++}
++
++void arm_gt_sel2vtimer_cb(void *opaque)
++{
++    ARMCPU *cpu = opaque;
++
++    gt_recalc_timer(cpu, GTIMER_SEC_VEL2);
++}
++
+ void arm_gt_hvtimer_cb(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+@@ -6624,6 +6732,56 @@ static const ARMCPRegInfo el2_sec_cp_reginfo[] = {
+       .access = PL2_RW, .accessfn = sel2_access,
+       .nv2_redirect_offset = 0x48,
+       .fieldoffset = offsetof(CPUARMState, cp15.vstcr_el2) },
++#ifndef CONFIG_USER_ONLY
++    /* Secure EL2 Physical Timer */
++    { .name = "CNTHPS_TVAL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 5, .opc2 = 0,
++      .type = ARM_CP_NO_RAW | ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .readfn = gt_sec_pel2_tval_read,
++      .writefn = gt_sec_pel2_tval_write,
++      .resetfn = gt_sec_pel2_timer_reset,
++    },
++    { .name = "CNTHPS_CTL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 5, .opc2 = 1,
++      .type = ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_SEC_PEL2].ctl),
++      .resetvalue = 0,
++      .writefn = gt_sec_pel2_ctl_write, .raw_writefn = raw_write,
++    },
++    { .name = "CNTHPS_CVAL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 5, .opc2 = 2,
++      .type = ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_SEC_PEL2].cval),
++      .writefn = gt_sec_pel2_cval_write, .raw_writefn = raw_write,
++    },
++    /* Secure EL2 Virtual Timer */
++    { .name = "CNTHVS_TVAL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 4, .opc2 = 0,
++      .type = ARM_CP_NO_RAW | ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .readfn = gt_sec_vel2_tval_read,
++      .writefn = gt_sec_vel2_tval_write,
++      .resetfn = gt_sec_vel2_timer_reset,
++    },
++    { .name = "CNTHVS_CTL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 4, .opc2 = 1,
++      .type = ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_SEC_VEL2].ctl),
++      .resetvalue = 0,
++      .writefn = gt_sec_vel2_ctl_write, .raw_writefn = raw_write,
++    },
++    { .name = "CNTHVS_CVAL_EL2", .state = ARM_CP_STATE_AA64,
++      .opc0 = 3, .opc1 = 4, .crn = 14, .crm = 4, .opc2 = 2,
++      .type = ARM_CP_IO, .access = PL2_RW,
++      .accessfn = gt_sel2timer_access,
++      .fieldoffset = offsetof(CPUARMState, cp15.c14_timer[GTIMER_SEC_VEL2].cval),
++      .writefn = gt_sec_vel2_cval_write, .raw_writefn = raw_write,
++    },
++#endif
+ };
+ 
+ static CPAccessResult nsacr_access(CPUARMState *env, const ARMCPRegInfo *ri,
+-- 
+2.39.5
+
 
