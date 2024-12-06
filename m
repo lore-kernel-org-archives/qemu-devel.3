@@ -4,79 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 315D1E77171
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 02:43:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B709FE7716E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 03:13:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJOIh-00032X-71; Thu, 05 Dec 2024 21:42:39 -0500
+	id 1tJOlc-0006lC-1n; Thu, 05 Dec 2024 22:12:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tJOIW-00031z-Ul
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 21:42:29 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tJOIT-00031e-O3
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 21:42:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733452946; x=1764988946;
- h=message-id:date:mime-version:to:cc:from:subject:
- content-transfer-encoding;
- bh=BPAbfXQQYNvBKr+0fe03hKAUFPt0n+OzNTK11uRxPac=;
- b=k2VaqdSseRlsczURhL55zs7wDMVdFQO6zv6ACaUJnhNsqOpwrcT8Pi0h
- 4bJRL9E6nQrCzBM5KABJzlTaf0vBu3ilH/u2hIBfbMksH9eoDySMlddBH
- ZC/Wg9NHBPtp3DWvdWGtiBLEqVquMifc5H3ZKcz2rh/uOonHN2Nw+wuV9
- TazjJP6hLJKFAXIjqdhrh8eZerBaXpSulEbqA6zWjHy5jK2Jmx68t4xZ7
- OZM8V/NWiGOtnQfQRTb8ybXAtoJ2JiXh37hoNfgwdzvWauSyog+VW0Eyv
- fVZoKkdk/U582NyJ22bTQWGVkhr8TMprjqocCx0ndRl4LxCtPz5qMIyrd g==;
-X-CSE-ConnectionGUID: xWUhw9ywRNWsWZiDnMmKyg==
-X-CSE-MsgGUID: I1af45qhQO+xajfvjGcTYQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11277"; a="36630569"
-X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="36630569"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2024 18:42:22 -0800
-X-CSE-ConnectionGUID: sEnyYx90RsOGSQcQ3/QttA==
-X-CSE-MsgGUID: KAie4NgqS9ObFneeGnR/sg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="99347225"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Dec 2024 18:42:18 -0800
-Message-ID: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
-Date: Fri, 6 Dec 2024 10:42:15 +0800
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tJOlb-0006kt-4d
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:12:31 -0500
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tJOlZ-0004QA-Nc
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 22:12:30 -0500
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-5f205c4625dso455319eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 19:12:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733454748; x=1734059548; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=P+kwPXUXhBd7tlX6IIB4yH2oiMxaqbT5fblYS9xF7QM=;
+ b=uhnDGe9QuiQ2Ru6gG+EiHR9R9VW5El11VoJHGY5h8QcoWculspITmnJavwJ5Pkxj33
+ XlRWUuRB4sKfdN+aKdxQbjwOvqPnFWdzjtTQtnvCGqY/Ip5CEpjnu8W8qlnjEAqqoJLA
+ uXWKkYBG3V1FnnYIiyqDCRyJvhqHHkvqLFrxwbRS/nVVkl/C74I79anaU7fuglFywXP2
+ dn6VhIHHZcCKAvDchvc2GglShE9OFifnEgB+upwulTb2pjC4kx7JN3aYggPL9AYSLezz
+ On4uE3dAhXHX5NtvizBwlm3AKR2gultJBgtHXaM12YEpm83+7dacZCyZGXM8Jjb2tPxm
+ bOpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733454748; x=1734059548;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=P+kwPXUXhBd7tlX6IIB4yH2oiMxaqbT5fblYS9xF7QM=;
+ b=Cu+Yu23vXOf3rutU6nr0O1yjZC2VTh5m4jFBY41IFfc+86GKoQUKweROgpncqB9T4+
+ 2u0DrnHf8My6Z47c/4CBwxyMnjM+XlywrLV9hArEFOTmlPZONvlPo5gxIgF5Uwre2g/z
+ ITUtC46A9BhOs1QhdLx4gpLCYUqrBssf2vXUqk8futiXXR10VNs7ewOVxkNj9ETzBi6p
+ rkp8jqbT8CeurNpArlr7j+8m9PgBN/2IWt08lj+ZPgPaQfZQF8QDderMjDo3TaO+Cmt3
+ It5rGr7FFnMWygPxX7yYAZ1KATSun1no10BZpZAJD7f8/Cd8K13nJLg5Sy2+LJ4NL+qC
+ 4LFw==
+X-Gm-Message-State: AOJu0YxMnAjA1qRtSOcSpKDxpxDRghrAT3oNRT0PNt+lZUzJA7u9j/8n
+ scKmmY8CS8p4NHZhvTWR1Afdkyp19gB1HguqhNX9sSjtroWaUO40J3GCuRSXv+MA8M/nhkZdO7B
+ G3qIQBJPc
+X-Gm-Gg: ASbGncv2DuGQl+Fp0cfKcjlrMHIkI/ycDyCOijeujLLxF7UTTeF8+LkmLDPk+RFVtt2
+ Uj83NmJHy8FtHQnFGMZIXTF9ATk9wI7ZA4O/ag9jVhjlPdsZrHPFejRQbx8goW/ZxBtAp7QTJ05
+ 98TdJlsNv0oX//wDL8z40zOYZbl5sss5AjFrOWe41HurEOPw0CG+r1uXO3CQjHXUFMzEtHt8dYB
+ fIGKGlEEbMmu+sA4aKyXJKQ5Lm6DK3IB9ecCNkLfDXQ27K9KMVkGcKUPdyUO+Tnf9FQOgI6ezw2
+ 3yC8CNVXBao1qeK3kKoaT91bb7T2cX652J+5
+X-Google-Smtp-Source: AGHT+IGscDvObt/mFjke0FeJtBWXRtYWi+u45hPiRe7/2wHHKnqdXfXA3MWHrD0S6P8YhOXC1QxLcQ==
+X-Received: by 2002:a05:6830:6e98:b0:710:fef4:3c92 with SMTP id
+ 46e09a7af769-71dcf5c2d9fmr853089a34.21.1733454748065; 
+ Thu, 05 Dec 2024 19:12:28 -0800 (PST)
+Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71dc493b2dfsm596442a34.9.2024.12.05.19.12.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 19:12:27 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org
+Subject: [PATCH 0/9] target/arm: Helper type cleanups
+Date: Thu,  5 Dec 2024 21:12:15 -0600
+Message-ID: <20241206031224.78525-1-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Sean Christopherson <seanjc@google.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: kvm <kvm@vger.kernel.org>, "Huang, Kai" <kai.huang@intel.com>,
- Tony Lindgren <tony.lindgren@linux.intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, "Zhao, Yan Y" <yan.y.zhao@intel.com>,
- "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
- Adrian Hunter <adrian.hunter@intel.com>,
- Reinette Chatre <reinette.chatre@intel.com>,
- Binbin Wu <binbin.wu@linux.intel.com>,
- "Yamahata, Isaku" <isaku.yamahata@intel.com>, QEMU <qemu-devel@nongnu.org>
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1 CPUID
- Bits
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -65
-X-Spam_score: -6.6
-X-Spam_bar: ------
-X-Spam_report: (-6.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.822, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,170 +96,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a proposal for a potential future TDX Module feature to assist 
-QEMU/KVM in configuring CPUID leafs for TD guests. It is only in the 
-idea stage and not currently being implemented. We are looking for 
-comments on the suitability for QEMU/KVM.
+Add macros such that "fpst" can be used with DEF_HELPER to
+indicate float_status* instead of "ptr" for void*.
+In addition, fix a few uses of "ptr" that should be "env".
 
-# Background
+r~
 
-To correctly virtualize CPUID for TD, the VMM needs to understand the 
-behavior of CPUID configuration for each CPUID bit, including whether 
-the bit can be configured by the VMM and what the allowed value is.
+Richard Henderson (9):
+  target/arm: Introduce fpst alias for helper.h
+  target/arm: Convert vfp_helper.c to fpst alias
+  target/arm: Convert helper-a64.c to fpst alias
+  target/arm: Convert vec_helper.c to fpst alias
+  target/arm: Convert neon_helper.c to fpst alias
+  target/arm: Convert sve_helper.c to fpst alias
+  target/arm: Convert sme_helper.c to fpst alias
+  target/arm: Convert vec_helper.c to use env alias
+  target/arm: Convert neon_helper.c to use env alias
 
-There is an interface to query the CPUID bit information after the TD 
-has been configured. However, this interface does not work before the TD 
-is configured. The TDX module, along with its release, provides a 
-separate JSON format file, cpuid_virtualization.json, for CPUID 
-virtualization information. This file can be used by the VMM even before 
-the TD is configured. The TDX module also provides an interface to query 
-some limited CPUID information, including:
+ target/arm/helper.h          | 638 ++++++++++++++++++-----------------
+ target/arm/tcg/helper-a64.h  | 114 +++----
+ target/arm/tcg/helper-sme.h  |   4 +-
+ target/arm/tcg/helper-sve.h  | 426 +++++++++++------------
+ target/arm/tcg/helper-a64.c  |  98 ++----
+ target/arm/tcg/neon_helper.c |  27 +-
+ target/arm/tcg/sme_helper.c  |   8 +-
+ target/arm/tcg/sve_helper.c  |  96 +++---
+ target/arm/tcg/vec_helper.c  |  81 ++---
+ target/arm/vfp_helper.c      | 120 +++----
+ 10 files changed, 775 insertions(+), 837 deletions(-)
 
-  - The configurability of a subset of CPUIDs via global metadata 
-CPUID_CONFIG_VALUES.
-
-  - The 'fixed0' and 'fixed1' bits of ATTRIBUTES and XFAM via global 
-metadata. The VMM can infer the 'configurable' bits related to 
-ATTRIBUTES/XFAM indirectly (the bits that are neither 'fixed0' nor 
-'fixed1' are 'configurable').
-
-For the remaining CPUID bits not covered by the above two categories, no 
-TDX module query interface exists.
-
-# Problem
-
-While the VMM can use the JSON format CPUID information and may embed or 
-translate that information into the code, it may face several challenges:
-
-  - The JSON file varies with each TDX module release, which can 
-complicate the VMM code. Additionally, depending on its own needs, the 
-VMM may require more information than what is provided in the JSON file.
-
-  - The JSON format cannot be easily parsed with low-level programming 
-languages like C, which is typically used to write VMMs.
-
-There was objection from KVM community for parsing the JSON and requests 
-for a more friendly interface to query CPUID information for each 
-specific TDX module.[0][1]
-
-# Analysis
-
-There are many virtualization types defined for single bit or bitfields 
-in JSON file, e.g., 12 types in TDX 1.5.06:
-
-   - fixed
-   - configured
-   - configured & native
-   - XFAM & native
-   - XFAM & configured & native
-   - attributes & native
-   - attributes & configured & native
-   - CPUID_enabled & native
-   - attributes & CPUID_enabled & native
-   - attributes & CPUID_enabled & configured & native
-   - calculated
-   - special
-
-And more types are getting added as TDX evolves.
-
-Though so many types defined, for a single bit, it can only be one of three:
-   - fixed0
-   - fixed1
-   - configurable
-
-For example:
-1. For type "configured & native", the bit is “fixed0” bit if the native 
-value is 0, and the “configurable” bit if native value is 1.
-
-2. For type "XFAM & native",
-    a) the CPUID is “fixed0” if the corresponding XFAM bit is reported 
-in XFAM_FIXED0, or the native value is 0;
-
-    b) the CPUID bit is ‘fixed1’ if the corresponding XFAM bit is set in 
-XFAM_FIXED1;
-
-    c) otherwise, the CPUID is ‘configurable’ (indirectly by TD_PRRAMS.XFAM)
-
-# Proposal
-
-Current TDX module provides interface to report the “configurable” bits 
-via global metadata CPUID_CONFIG_VALUES directly or via global metadata 
-ATTRIBUTES/XFAM_fixed0/1 indirectly. But it lacks the interface to 
-report the “fixed0” and “fixed1” bits generally (it only reports the 
-fixed bits for ATTRIBUTES and XFAM).
-
-We propose to add two new global metadata fields, CPUID_FIXED0_BITS and 
-CPUID_FIXED1_BITS, for “fixed0” and “fixed1” bits information respectively.
-
-The encoding of the two fields uses the same format as TDCS field 
-CPUID_VALUES:
-
-   Field code is composed as follows:
-     - Bits 31:17  Reserved, must be 0
-     - Bit  16     Leaf number bit 31
-     - Bits 15:9   Leaf number bit 6:0
-     - Bit 8       Sub-leaf not applicable flag
-     - Bits 7:1    Sub-leaf number bits 6:0
-     - Bit 0       Element index within field
-
-   The same for returned result:
-     - Element 0[31:0]:   EAX
-     - Element 0[63:32]:  EBX
-     - Element 1[31:0]:   ECX
-     - Element 1[63:32]:  EDX
-
-For CPUID_FIXED0_BITS, any bit in E[A,B,C,D]X is 0, means the bit is fixed0.
-For CPUID_FIXED1_BITS, any bit in E[A,B,C,D]X is 1, means the bit is fixed1.
-
-# Interaction with TDX_FEATURES0.VE_REDUCTION
-
-TDX introduces a new feature VE_REDUCTION[2]. From the perspective of 
-host VMM, VE_REDUCTION turns several CPUID bits from fixed1 to 
-configurable, e.g., MTRR, MCA, MCE, etc. However, from the perspective 
-of TD guest, it’s an opt-in feature. The actual value seen by TD guest 
-depends on multiple factors: 1). If TD guest enables REDUCE_VE in 
-TDCS.TD_CTLS, 2) TDCS.FEATURE_PARAVIRT_CTRL, 3) CPUID value configured 
-by host VMM via TD_PARAMS.CPUID_CONFIG[]. (Please refer to latest TDX 
-1.5 spec for more details.)
-
-Since host VMM has no idea on the setting of 1) and 2) when creating the 
-TD. We make the design to treat them as configurable bits and the global 
-metadata interface doesn’t report them as fixed1 bits for simplicity.
-
-Host VMM must be aware itself that the value of these VE_REDUCTION 
-related CPUID bits might not be what it configures. The actual value 
-seen by TD guest also depends on the guest enabling and configuration of 
-VE_REDUCTION.
-
-# POC
-
-We did a POC in QEMU to verify the fixed0/1 data by such an interface is 
-enough for userspace to validate and generate a supported vcpu model for 
-TD guest.[3]
-
-It retrieves the “fixed” type in JSON file and hardcodes them into two 
-arrays, tdx_fixed0_bits and tdx_fixed1_bits. Note, it doesn’t handle the 
-other types than “fixed” because 1) just a few of them falls into fixed0 
-or fixed1 and 2) turning them into fixed0 or fixed0 needs to check 
-various condition which complicates the POC. And in the POC it uses 
-value 1 in tdx_fixed0_bits for fixed0 bits, while the proposed metadata 
-interface uses value 0 to indicate fixed0 bits.
-
-With the hardcoded information, VMM can validate the TD configuration 
-requested from user early by checking whether a feature requested from 
-users is allowed to be enabled and is allowed to be disabled.
-
-When TDX module provides fixed0 and fixed1 via global metadata, QEMU can 
-change to requested them from KVM to replace the hardcoded one.
-
-[0] https://lore.kernel.org/all/ZhVdh4afvTPq5ssx@google.com/
-[1] https://lore.kernel.org/all/ZhVsHVqaff7AKagu@google.com/
-[2] https://cdrdv2.intel.com/v1/dl/getContent/733575
-[3] 
-https://lore.kernel.org/qemu-devel/20241105062408.3533704-49-xiaoyao.li@intel.com/ 
-
-
-
-
+-- 
+2.43.0
 
 
