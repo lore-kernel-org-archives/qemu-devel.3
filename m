@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E47E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15204E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 08:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJToe-00007v-0O; Fri, 06 Dec 2024 03:36:00 -0500
+	id 1tJTob-0008RM-HE; Fri, 06 Dec 2024 03:35:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJToX-0008RK-TR
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:35:54 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tJToW-0000Vs-IO
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:35:53 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385e0e224cbso907562f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 00:35:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733474151; x=1734078951; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=n11WyXKWvid612dQI3SmR7GwE09/moDRs0zM225VZ08=;
- b=rM2pCeNBG5ixFFhNLdJRmbsqIyUDO+oc3uzJbt+CwSSJ4F1Jjqfea/hmRkVm2d4/d+
- x9dNLBLnB0DLnX0TCoCxxZ31oPUtrWxIMJJjylLULzTKDrHprcg0xUN0WXQFZUJwMOkz
- KbrrQ7P2vCXmlq4i8d4THu+Lma3nTFFmaPvjogNQcwk2gTkisK/X7v+11W7CBsuRinmq
- Wgl2sT1shmSbhgYDmdHoZGgP8qFu0dkz3ZKFhShSc1vhSzjVlbYPTzCXeJpuAzWo2uti
- iQ0fTU5TjlVt3/sHev6SpsJoGN7Kr3OR0AH27RTlFLopH+fn++nx0IJLMowS+CKPARl0
- Sjcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733474151; x=1734078951;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=n11WyXKWvid612dQI3SmR7GwE09/moDRs0zM225VZ08=;
- b=QRbn4nifu74FM5lYPytdrl0ZQ05DQs/DcWHnd0BLKXHxm1Xz+sR02S6vXiswENxu7w
- pT9h/Nqy5Hoh0Olg8bIy9WuRE+hbMqm1b6IiiyAsT1H5obWbq6voIuMSCm8nNrTPclSe
- 2gd3JzEDwvyYNUghnnuK7Mqu8Rp5QL8K17XbwP7eloPbfPnLbAo2sXCpgiYf2WeA/JBE
- LM2yIcei/iTEEx+yh7OPijLtkhYTInZsk46FWw2+PHmIiLQHMaDeSazr1emzqXdH2Cb3
- hwD9/kg68pWuydfK5+5eUfgecMt8ylHIfJiFbWqaGp/kz7hxMAR0FkoqRd0MMf5fROL4
- Gggg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrGbSBqdAZn8cj9p4cLC/AqlfAKl7oY2ZNTyi/Y75nI7Czm12dGuw3RqRPkBz0Vy+UgKIMCBBR1dRT@nongnu.org
-X-Gm-Message-State: AOJu0Ywn5ODj7M/AYFnAL79nXMBYSFcaJuRaLb3kPbG1O/brC0HuURvm
- 6UtnjL7kMR2mXysyb+SIPML+mX1IpI8DHbJZonqXPTEMXxlGoy/U5C8rGG/6R9XQM5uqo2TqPv2
- Y
-X-Gm-Gg: ASbGncsu+nM7XteuCMK5DWOI2L9+F/kU9Yggwu57Tt8iciYwxGiRzmLgq+p+9TGnwkY
- NgXrCUgOCsIidWkNArK1UJDLSmXRu7+4PcfLfG65H1lQcsYh434flZPwQ91zKT9Q4miqO9DOfsb
- oMfYJuV02eioQDZVLwZ/vFDmbOtoy2CtojwYA1wvY0uLK/A1nA+lR0oa5r0LT4vKSGHrN8jqUbm
- gbQPclDNCT6I13atJrFLEeflrrgRPILbpVKWU2uXXyIFG+J5FuYjWKll+FhXHhs+jbiqLo9T8Lw
- W/Dup8/6bBf3Hozu5Q==
-X-Google-Smtp-Source: AGHT+IG2p1jxsF7Uu3DxjYLNvfv69Wj2lTkGPLOIqlMch/mVRkybI8O81s/THGbG/wUAQl4eTkx0gQ==
-X-Received: by 2002:a05:6000:1a86:b0:385:f1df:2502 with SMTP id
- ffacd0b85a97d-3862b3d4974mr1158644f8f.36.1733474151012; 
- Fri, 06 Dec 2024 00:35:51 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3862190989fsm4084152f8f.73.2024.12.06.00.35.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 00:35:50 -0800 (PST)
-Message-ID: <3d1caec6-8806-46aa-b41d-cea2390a2375@linaro.org>
-Date: Fri, 6 Dec 2024 09:35:49 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJToQ-0008Jh-Jr
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:35:49 -0500
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJToO-0000V8-32
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 03:35:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733474144; x=1765010144;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=LHW2bwV7KvSfxrZymFNIT7Gz/I7Rzo7bWPXOULc6x0w=;
+ b=RXqaShik1bOfR6vjcWiT5ufv/HFyf3jydabqXuYaVLZ0tTdIu9OW5tx6
+ nXL9m8uvGRp6qBYQIIbFGAcL3ErsKNyV2WHW3nDRutRFhkLvlMHMyTeZT
+ 9i6kN0HamzyCxcs7RQD48+rm6GbJtrYJOAN3xc2dv+AkF5vKdief56NmC
+ kAQNAkkK67ju6/ioEcE59s+2c+PoHykphLZe0FBIZUhOgbM6vZwdsj6Yo
+ axbFL9beDBxl3262PBGUN3dMWHgY+L8DIQn5aU/4+DybGt6zTyCbEdq9j
+ OCd363zO0vTv6L8YsCBXzZQeW3I1AsFlcadb1T80frVjY/GDidXeO9LHn w==;
+X-CSE-ConnectionGUID: fc6gpaF5ShqA88dzz95e0g==
+X-CSE-MsgGUID: G6xlKXNDQ7uXit4H7D5NZA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11277"; a="33703090"
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="33703090"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Dec 2024 00:35:41 -0800
+X-CSE-ConnectionGUID: Sn1dbOY5TvymiagqyNnR0Q==
+X-CSE-MsgGUID: z5M21bfxTo+n7iHZrPWFmA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,212,1728975600"; d="scan'208";a="94025149"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa006.fm.intel.com with ESMTP; 06 Dec 2024 00:35:40 -0800
+Date: Fri, 6 Dec 2024 16:53:52 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH] hpet: do not overwrite properties on post_load
+Message-ID: <Z1K7oMumN1Mu+1v9@intel.com>
+References: <20241205203721.347233-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] target/arm: Convert helper-a64.c to fpst alias
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20241206031224.78525-1-richard.henderson@linaro.org>
- <20241206031224.78525-4-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241206031224.78525-4-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241205203721.347233-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,13 +82,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/12/24 04:12, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+On Thu, Dec 05, 2024 at 09:37:21PM +0100, Paolo Bonzini wrote:
+> Date: Thu,  5 Dec 2024 21:37:21 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH] hpet: do not overwrite properties on post_load
+> X-Mailer: git-send-email 2.47.1
+> 
+> Migration relies on having the same device configuration on the source
+> and destination.  Therefore, there is no need to modify flags,
+> timer capabilities and the fw_cfg HPET block id on migration;
+> it was set to exactly the same values by realize.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->   target/arm/tcg/helper-a64.h | 94 +++++++++++++++++------------------
->   target/arm/tcg/helper-a64.c | 98 +++++++++++++------------------------
->   2 files changed, 80 insertions(+), 112 deletions(-)
+>  hw/timer/hpet.c | 10 ----------
+>  1 file changed, 10 deletions(-)
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Indeed, thanks!
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+> index 5399f1b2a3f..18c8ce26e0d 100644
+> --- a/hw/timer/hpet.c
+> +++ b/hw/timer/hpet.c
+> @@ -275,16 +275,6 @@ static int hpet_post_load(void *opaque, int version_id)
+>                          - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+>      }
+>  
+> -    /* Push number of timers into capability returned via HPET_ID */
+> -    s->capability &= ~HPET_ID_NUM_TIM_MASK;
+> -    s->capability |= (s->num_timers - 1) << HPET_ID_NUM_TIM_SHIFT;
+> -    hpet_cfg.hpet[s->hpet_id].event_timer_block_id = (uint32_t)s->capability;
+> -
+> -    /* Derive HPET_MSI_SUPPORT from the capability of the first timer. */
+> -    s->flags &= ~(1 << HPET_MSI_SUPPORT);
+> -    if (s->timer[0].config & HPET_TN_FSB_CAP) {
+> -        s->flags |= 1 << HPET_MSI_SUPPORT;
+
+About the MSI (FSB) support, I haven't seen it being used anywhere. Is it the
+dead code?
+
+> -    }
+>      return 0;
+>  }
+>  
+> -- 
+> 2.47.1
+> 
 
