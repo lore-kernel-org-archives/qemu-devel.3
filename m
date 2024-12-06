@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC346E7717B
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26487E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXSS-0007oR-87; Fri, 06 Dec 2024 07:29:20 -0500
+	id 1tJXRZ-00062O-Mu; Fri, 06 Dec 2024 07:28:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tJXRX-00062n-MJ
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:25 -0500
-Received: from mail-pg1-x544.google.com ([2607:f8b0:4864:20::544])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1tJXRW-00047J-54
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 07:28:23 -0500
-Received: by mail-pg1-x544.google.com with SMTP id
- 41be03b00d2f7-7f43259d220so1366380a12.3
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 04:28:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733488100; x=1734092900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DMVtNuBqtIXXm2C24hwxrJtPRQT47P73SaeeHd2lWK4=;
- b=NQctH7kvEmWVFI7CeCVq1+j/WvAumC9T7WQerc2CEU2SCFZuEFSOfSp/67kc84nHsu
- k9Y9CzY7t56QSTbbmeowAnutOZv225IA2HmF5Ly+ELEQbx+HJdAXtq6FYS1oeZsdsI1+
- 4/Vfp1DY2/stPIcMtD5+4V1AnzuYXfXI+UfP/NCcvT3IBZQ9dGsshkVzeGfuXu+ft3+y
- qrPBpyK10x2TMHT0RwG+5MuXEvZjIQZzzx40TNNl+/DiFf6WvSh8GpRVrE4koC/CKOGf
- nhCgHzLjwNhYXOUcwMf/6wdR0YC//f7tqQitlkXIFVKcgFJcBWBVO3QtQiAIWULMTWiq
- 63IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733488100; x=1734092900;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=DMVtNuBqtIXXm2C24hwxrJtPRQT47P73SaeeHd2lWK4=;
- b=IfB/PVVzYbTz8GRld+W92YqhjGgWsTGnItCV4j/k0DUVBCvdnNXphMQnImJUbmjJRn
- pb0m1DM/4T/Aqa9PZHkBtPuRmaIMXBylDblggXdcyNkrbCqBeXJH5IKiOOzXMu/Cw0zV
- tfHlKQrKkoebcdqBfyPWNRJeguVhEmNT5McbIH/UCA9UuD5TxSDfZgMrnjf3UX+HnXX5
- 65YXAh2Txb3PSutqgd0fihMHyZehrpx2KeJBDnJheRyqFpe+rKuPap90yrOKt2X0PXhn
- OPwQkpqNYu2inK7EBERtYTN6KynnHILGxtsYud0/WiMT+S36eF5AWTMIGNqKAcZQNIzd
- SYug==
-X-Gm-Message-State: AOJu0YzGDJOMXMKGRn7LjPKWS+B5x6WEdMk8mB+El2PtaIh/JAcV0rBP
- ummvX6cPd8L7lM1k2BX0Ra98ViRRij0phhi4/6gw+VbPgzdiREM=
-X-Gm-Gg: ASbGncusGFVxO75zCRKuve0QUF8O6SCVjLqFaAf0EhGylnFJkbAjfXhT6IjT2Xxgy+Y
- X7BCzCR/wNuj4NfYe5bcvHHQIxKD6wvp5cZwgF+HEdew5cFI9pgIaqP8K0mShmIISPUTLZuUi7q
- E+L5nKXSZC6V4OQ3xfTEdaxoZuXv83F1FqEVr2A0BhZGoHhaa8X9JGtc6UCvRqr4+C12j9QpZ4O
- i6WCM96rSgPOjfzcdjjle+/wxop1eiJSwEHPPCF4W0/voMPhOCOgHdKtQ==
-X-Google-Smtp-Source: AGHT+IFdzu6UBx6uy8wj9XCQFmYeHr/v0kMEdPLe1RtkivWLvxnhflrseuRRC/x5+4679b0O8esaog==
-X-Received: by 2002:a05:6a20:4324:b0:1e0:dbc6:8647 with SMTP id
- adf61e73a8af0-1e1870ad665mr3957896637.1.1733488100421; 
- Fri, 06 Dec 2024 04:28:20 -0800 (PST)
-Received: from kotori-desktop.lan ([58.38.120.33])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fd15710123sm2579866a12.49.2024.12.06.04.28.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 04:28:20 -0800 (PST)
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?q?Corvin=20K=C3=B6hne?= <c.koehne@beckhoff.com>,
- Tomita Moeko <tomitamoeko@gmail.com>
-Subject: [PATCH v4 10/10] vfio/igd: add x-igd-gms option back to set DSM
- region size for guest
-Date: Fri,  6 Dec 2024 20:27:48 +0800
-Message-ID: <20241206122749.9893-11-tomitamoeko@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241206122749.9893-1-tomitamoeko@gmail.com>
-References: <20241206122749.9893-1-tomitamoeko@gmail.com>
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1tJXRP-0005zF-OS; Fri, 06 Dec 2024 07:28:16 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1tJXRL-00043P-H6; Fri, 06 Dec 2024 07:28:15 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6AYKCK010713;
+ Fri, 6 Dec 2024 12:28:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=/b+hVFhUCicAlCOYX
+ iL+XHd7o+84UUbrpEg2pHosoFg=; b=dasDShmbJF5t5SgJWPP1bsS5WFwE0/z9Z
+ 48bM1ND9vZ9dKiX4+4wIxK9jP1z+GzJlHmxSi849gibnAPx4ckXSMikeCry4tmGQ
+ uk+qrIv8f6wXrkeAop4bo2h+kRdPKX2bHMmmGLilQQ6VWRXfyFqTxnrFOIhRPFmy
+ wV/QJaQiM5QvaURmzqpJkhCcHlivZK/wJ4ZsDzMnTS7LUNQGB3Ctm0zz0ZdvMa7m
+ scdlcuam21iGDQQOoW/UV+KylzzCCPAIIfCnQ+GFFKcnoZtR0wGQxyuq88PWtFrd
+ aKcCUNGIUI1c1UUNgxc3LqLk4bqktuAmCSOMW9YLHQiFxFioDvTuQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43b24rgxg2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Dec 2024 12:28:09 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BC9KV031769;
+ Fri, 6 Dec 2024 12:28:08 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438ehmakef-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Dec 2024 12:28:08 +0000
+Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
+ [10.20.54.104])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4B6CS4bg53739926
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Dec 2024 12:28:04 GMT
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AC7A620043;
+ Fri,  6 Dec 2024 12:28:04 +0000 (GMT)
+Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 34ECD20040;
+ Fri,  6 Dec 2024 12:28:04 +0000 (GMT)
+Received: from vela.ibmuc.com (unknown [9.171.26.200])
+ by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Dec 2024 12:28:04 +0000 (GMT)
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
+ borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: [RFC PATCH v2 12/15] s390x/cpumodel: Add
+ Sequential-Instruction-Fetching facility
+Date: Fri,  6 Dec 2024 13:27:48 +0100
+Message-ID: <20241206122751.189721-13-brueckner@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
+References: <20241206122751.189721-1-brueckner@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::544;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pg1-x544.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: Y-nbTqPs9K3pckRuRPXpscKnET8aNgco
+X-Proofpoint-ORIG-GUID: Y-nbTqPs9K3pckRuRPXpscKnET8aNgco
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 spamscore=0 malwarescore=0
+ mlxlogscore=883 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412060089
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,72 +107,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DSM region is likely to store framebuffer in Windows, a small DSM
-region may cause display issues (e.g. half of the screen is black).
-Since 971ca22f041b ("vfio/igd: don't set stolen memory size to zero"),
-the x-igd-gms option was functionally removed, QEMU uses host's
-original value, which is determined by DVMT Pre-Allocated option in
-Intel FSP of host bios.
+The sequential instruction fetching facility provides few guarantees,
+for example, to avoid stop machine calls on enabling/disabling kprobes.
 
-However, some vendors do not expose this config item to users. In
-such cases, x-igd-gms option can be used to manually set the data
-stolen memory size for guest. So this commit brings this option back,
-keeping its old behavior. When it is not specified, QEMU uses host's
-value.
-
-When DVMT Pre-Allocated option is available in host BIOS, user should
-set DSM region size there instead of using x-igd-gms option.
-
-Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
+Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 ---
- hw/vfio/igd.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ target/s390x/cpu_features_def.h.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/vfio/igd.c b/hw/vfio/igd.c
-index 73c06bbf64..b0fef90240 100644
---- a/hw/vfio/igd.c
-+++ b/hw/vfio/igd.c
-@@ -14,6 +14,7 @@
- #include "qemu/units.h"
- #include "qemu/error-report.h"
- #include "qapi/error.h"
-+#include "qapi/qmp/qerror.h"
- #include "hw/hw.h"
- #include "hw/nvram/fw_cfg.h"
- #include "pci.h"
-@@ -722,6 +723,31 @@ void vfio_probe_igd_bar4_quirk(VFIOPCIDevice *vdev, int nr)
- 
-     QLIST_INSERT_HEAD(&vdev->bars[nr].quirks, quirk, next);
- 
-+    /*
-+     * Allow user to override dsm size using x-igd-gms option, in multiples of
-+     * 32MiB. This option should only be used when the desired size cannot be
-+     * set from DVMT Pre-Allocated option in host BIOS.
-+     */
-+    if (vdev->igd_gms) {
-+        if (gen < 8) {
-+            if (vdev->igd_gms <= 0x10) {
-+                gmch &= ~(IGD_GMCH_GEN6_GMS_MASK << IGD_GMCH_GEN6_GMS_SHIFT);
-+                gmch |= vdev->igd_gms << IGD_GMCH_GEN6_GMS_SHIFT;
-+            } else {
-+                error_report(QERR_INVALID_PARAMETER_VALUE,
-+                             "x-igd-gms", "0~0x10");
-+            }
-+        } else {
-+            if (vdev->igd_gms <= 0x40) {
-+                gmch &= ~(IGD_GMCH_GEN8_GMS_MASK << IGD_GMCH_GEN8_GMS_SHIFT);
-+                gmch |= vdev->igd_gms << IGD_GMCH_GEN8_GMS_SHIFT;
-+            } else {
-+                error_report(QERR_INVALID_PARAMETER_VALUE,
-+                             "x-igd-gms", "0~0x40");
-+            }
-+        }
-+    }
-+
-     ggms_size = igd_gtt_memory_size(gen, gmch);
-     gms_size = igd_stolen_memory_size(gen, gmch);
- 
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index 2c1d1cd98a..09a80844a7 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -91,6 +91,7 @@ DEF_FEAT(DFP_PACKED_CONVERSION, "dfppc", STFL, 80, "Decimal-floating-point packe
+ DEF_FEAT(PPA15, "ppa15", STFL, 81, "PPA15 is installed")
+ DEF_FEAT(BPB, "bpb", STFL, 82, "Branch prediction blocking")
+ DEF_FEAT(MISC_INSTRUCTION_EXT4, "minste4", STFL, 84, "Miscellaneous-Instruction-Extensions Facility 4")
++DEF_FEAT(SIF, "sif", STFL, 85, "Sequential-instruction-fetching facility")
+ DEF_FEAT(MSA_EXT_12, "msa12-base", STFL, 86, "Message-security-assist-extension-12 facility (excluding subfunctions)")
+ DEF_FEAT(VECTOR, "vx", STFL, 129, "Vector facility")
+ DEF_FEAT(INSTRUCTION_EXEC_PROT, "iep", STFL, 130, "Instruction-execution-protection facility")
 -- 
-2.45.2
+2.43.5
 
 
