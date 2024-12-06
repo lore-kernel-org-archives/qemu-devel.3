@@ -4,102 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01B10E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 22:56:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FCBE77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 23:09:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJhF5-00011m-Hw; Fri, 06 Dec 2024 17:56:11 -0500
+	id 1tJhRJ-00030D-K1; Fri, 06 Dec 2024 18:08:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJhF3-00011V-Rq
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 17:56:09 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJhF0-0004E2-HL
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 17:56:09 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5f205c4625dso714521eaf.3
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 14:56:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733525765; x=1734130565; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pVG3n+XjIPPUlwnPR/IllpTHmNBM+SnUk7x6s5Gz60A=;
- b=JDAJGXPWZYq7DGguvlHXsb39X041EU2kmYUKJghlK+ntVBVQMmTBroUj9mzJkQiGQd
- STlQwF7RGuQaKo0C8jgKuZbGSjY3b6s6g3OUbLVMeHS9Jkbky/33zMhQ/latmEoBr610
- 8AhYootSnuLLlKJ7+A6ngRUKAJDdFNahiMxklEvCtSuB9H1bz0w/29us6jRINFV/swIY
- jaa9cVQ4H2EFVKyxZ6LbFrq0Zp+DH+WxSFvGP10n9q8iX7tPOd9Fkah6pz/ZsK+fjGXc
- Hb087ND9BKJhv+cYio6WqCb3BMxEnIwzpusi1Dg/WICsWKp/z4DhA8koTPqaipe8vSri
- G5pQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJhRH-0002zg-Tp
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 18:08:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJhRF-0005oR-Ku
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 18:08:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733526524;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=krqioHoTQdNwRuvR7MtcrFGHS6xQJDw54AA3n1d4vks=;
+ b=PQ23eijbVAadqBUcqq2dwwV14RQc1xbdWK3QoxoNDDeXVeKmIN2MSSZGBpWoyczO60Vi47
+ /QvelwZvElk03bXP3gon/vR94emC971xcaiEXkH/TXQ1akREXSQwza1hkX+j54AGhLmKYW
+ IxudjncEcAeIU9z0eRJrL2ERC16ALDw=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-139-zA9cu5YnM3CppgpR5cwVYQ-1; Fri, 06 Dec 2024 18:08:42 -0500
+X-MC-Unique: zA9cu5YnM3CppgpR5cwVYQ-1
+X-Mimecast-MFC-AGG-ID: zA9cu5YnM3CppgpR5cwVYQ
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3a817be161bso6690815ab.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 15:08:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733525765; x=1734130565;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pVG3n+XjIPPUlwnPR/IllpTHmNBM+SnUk7x6s5Gz60A=;
- b=njFszHD6Pe+fwAamTj2nNR6ez3bT0/zJ+jzWpgGtUsrpiqLhL2qOnuR4J+0v9+X3M7
- 0+ivyVnSdrsPD3cpw5gA7K/Qbh+Wkb1PiHVdTkN1CsCDrDA8CgD939uyQNGLcBVwmnCK
- xO3GqR0++DLkbmgyXsU1ERO6l22uSWxuWB0HFmzDXkuD1bGEm4wXU1pLoS/yMvADkL3V
- kEylyYTcY0j/6wDn1S/6anMUTLofcy1vWRQjeilvByuLbfcnyNAfzLU1a5WEEel2qrDX
- xgcbwQk1RDdGgCEbuUZUQ6cnmPLsoseOEYECWmcUyKU0eWGG732fN3g4Q+ogPGAZt08b
- 5+9w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqAFGO/nXcHso0k9lI6D6PmGmAR8uq8QWnu3W/3ET+0EjchdWpOt4Q+GVdNwmiAU2QG6J94WJpfV//@nongnu.org
-X-Gm-Message-State: AOJu0YzwS5NOGaXrXi8YNjQ/h4pjzZJHSWVS51Ahi9XsYoxiB6FHoqO/
- 0EK4dlW+clFk+Wl4o1q47VqZp0z/HM7j2ou2n/GbnpfsGCCjXRge81bNUXywO9M=
-X-Gm-Gg: ASbGnctjD+GmjXdVaQIGbwNBQG6F+P1aIasSzHPqu1C2FoxCETHRoPrF9UBvs4sPJpR
- zHWjOJK8sKOYp3AjKtu6aFbslN14H/xPETY1qwWZ3HHjV1iFgAN7xAbGA8fF+pukGTxuGwsFv1A
- ho+tDOPuvILPqSwlJqKDrqwaj+vi5GgUYrNBmMCeAkHC7F8YqNkFRH25q9fu49RJ+E8QWZEv5vg
- Ka8Q4GL/ps67+pgXM+ryub3xlBmpD96cDZYeMExAT0ao97PWoofkhhFljH1k1Z3zHeTaYgoMBII
- ZOKHRnLPqP5plQTSpUbbsdBNcht9
-X-Google-Smtp-Source: AGHT+IFiPtmx4ZmXtAaY17oZoPSM6njylgnPfE9MOH55D4zyacrxWQ3Fm1I15a3cV7Hhiu47vy7lDA==
-X-Received: by 2002:a05:6830:438a:b0:71d:4bd9:8b98 with SMTP id
- 46e09a7af769-71dcf6c8a75mr2659931a34.25.1733525764983; 
- Fri, 06 Dec 2024 14:56:04 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71dc493b033sm987449a34.8.2024.12.06.14.56.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 14:56:04 -0800 (PST)
-Message-ID: <21c28157-6d3b-4b07-9dd6-241b3198be93@linaro.org>
-Date: Fri, 6 Dec 2024 16:56:02 -0600
+ d=1e100.net; s=20230601; t=1733526521; x=1734131321;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=krqioHoTQdNwRuvR7MtcrFGHS6xQJDw54AA3n1d4vks=;
+ b=rsDShtXtitLsBnBMJFq16kn0ExMvlnHjiUb2H311m8h3cfK/Zm7yA1CNVVGcJR3PgV
+ l2pkysWvFF/3P+xKmsVNcDfJrajDBGurmC98xmtqyPIXj7+sPmgIzaU1dtqrqhQoVkv2
+ yDPfpeamrHXL2W/YeX6JtdA7rSlkRTa8EeA/Xvi6Waw6+eATHczKtLQ21rASjGkyip7o
+ YqqTLMUPFMEBDJoylyETmqbo84M8/PDqwgyYJTA35+32Xc0I6ORdFl5hjyh6xQ7FAy2e
+ bG1QQN4zrtYUdK5tYGlzuFapI3XJupzwC9rOFSmUrb1wbNlYFzpQB/1zMUIEUCuA5+g4
+ F6Aw==
+X-Gm-Message-State: AOJu0Yyl8/twD01vdYFxnEX7zDeBWJ2H41aZs/AOpdSTWLnEf5J/6MaV
+ jgZUHaVRekKY613pwp7/6jpG2xIaKEvQRP8xIcasNqsnZ4Cj2cH16TeUh7hjkuEMZX70oJU9mGt
+ nq1LgnDjL/F2cZvEWQOx5Zzq9FgVIWoqQ2rKfNNojLDCJ/oXUPZTaDrVQHFFtYxZIhkOMZfdEwf
+ 1Jhv6tNQF2UPslsFdmKzO5DzpA4pAvTkIuzQ==
+X-Gm-Gg: ASbGncvecBLkDnNX9C9mYGhlDr9UyT7Nu1TWEVnzGcfMXke2kBbLOJsvi3FuVv9jSWf
+ n8/lWe3U1xZ8VgxTD+j7HD9kclrro2cNTNysw/3kHu2v4p7/UTthrcmzJquacNf680xUCxD7Ttb
+ hwYJ7ipvTYxiDN6pzNINLpHTrripr/Kr8KHK/GhMpTCnO7Xz1GEs9Ee2lFLmBsP7Ei2klaJ3olV
+ tcwR3iK7kt3phSeJD1mwVaqHGec6qcQakC7p0lzy/XFG18FC0INZgY3lpwZfjZoLqWXk5zScTuo
+ CMv/ivuwGZELnepWf2Gqq6Bk5A==
+X-Received: by 2002:a92:c562:0:b0:3a7:deb1:169f with SMTP id
+ e9e14a558f8ab-3a80757edb8mr107138885ab.6.1733526521133; 
+ Fri, 06 Dec 2024 15:08:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHDuZh2dKNI/TVr031mOB8HwicTQrWZdC/RNjUpnJJaL4Z4X0lJIXWyAdmu8y40iBzRuWqLNg==
+X-Received: by 2002:a92:c562:0:b0:3a7:deb1:169f with SMTP id
+ e9e14a558f8ab-3a80757edb8mr107138615ab.6.1733526520681; 
+ Fri, 06 Dec 2024 15:08:40 -0800 (PST)
+Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e2861d9a8dsm1038895173.86.2024.12.06.15.08.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 15:08:39 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: peterx@redhat.com, qemu-block@nongnu.org,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
+ Eric Blake <eblake@redhat.com>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 0/6] migration/block: disk activation rewrite
+Date: Fri,  6 Dec 2024 18:08:32 -0500
+Message-ID: <20241206230838.1111496-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.47.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
- <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
- <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
- <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
- <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
- <867d8a3a-ddf4-4655-9bfc-51c1a2ad8203@linaro.org>
- <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
- <70666b89-1f04-4615-ae16-e1eefac2a446@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <70666b89-1f04-4615-ae16-e1eefac2a446@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,34 +111,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 14:40, Pierrick Bouvier wrote:
-> Do we have an architecture agnostic pc representation, or do we have to add this for every 
-> target in {arch}_cpu_exec_interrupt?
+CI: https://gitlab.com/peterx/qemu/-/pipelines/1577280033
+ (note: it's a pipeline of two patchsets, to save CI credits and time)
 
-We have CPUClass.get_pc, which is almost certainly what you want.
+v1: https://lore.kernel.org/r/20241204005138.702289-1-peterx@redhat.com
 
-The call to TCGCPUOps.cpu_exec_interrupt is only a hint that an interrupt might be ready: 
-interrupts can still be masked, etc.
+This is v2 of the series, removing RFC tag, because my goal is to have them
+(or some newer version) merged.
 
- From the current bool return value you can tell if a discontinuity actually occurred. 
-But if you want to categorize that event in any way you need to update each architecture.
+The major change is I merged last three patches, and did quite some changes
+here and there, to make sure the global disk activation status is always
+consistent.  The whole idea is still the same.  I say changelog won't help.
 
-You could simplify such updates by changing the return type from bool to an enum.  While 
-you would have to simultaneously update all targets for the change in function signature, 
-if you select enumerators such that 0 -> no-op and 1 -> uncategorized, then you can also 
-tell if a target has been updated.  Because this is still C, the current return true/false 
-statements will Just Work.  :-)
+I also temporarily dropped Fabiano's ping-pong test cases to avoid
+different versions floating on the list (as I know a new version is coming
+at some point. Fabiano: you're taking over the 10.0 pulls, so I assume
+you're aware so there's no concern on order of merges).  I'll review the
+test cases separately when they're ready, but this series is still tested
+with that pingpong test and it keeps working.
 
-On the other hand, the previous patches to add plugin calls to each cpu_exec_interrupt are 
-in the end approximately the same level of difficulty, and is more straightforward, so YMMV.
+I started looking at this problem as a whole when reviewing Fabiano's
+series, especially the patch (for a QEMU crash [1]):
 
+https://lore.kernel.org/r/20241125144612.16194-5-farosas@suse.de
 
-> Beyond the scope of interruptions, are we guaranteed this instruction pointer (per arch) 
-> is always updated between instructions? Any corner cases?
+The proposed patch could work, but it's unwanted to add such side effect to
+migration.  So I start to think about whether we can provide a cleaner
+approach, because migration doesn't need the disks to be active to work at
+all.  Hence we should try to avoid adding a migration ABI (which doesn't
+matter now, but may matter some day) into prepare phase on disk activation
+status.  Migration should happen with disks inactivated.
 
-Not "between instructions" or even "between TB".  But you are guaranteed that pc is 
-updated by the time we get to cpu_handle_interrupt, where cpu_exec_interrupt is called.
+It's also a pure wish that, if bdrv_inactivate_all() could be benign to be
+called even if all disks are already inactive.  Then the bug is also gone.
+After all, similar call on bdrv_activate_all() upon all-active disks is all
+fine.  I hope that wish could still be fair.  But I don't know well on
+block layer to say anything meaningful.
 
+And when I was looking at that, I found more things spread all over the
+place on disk activation.  I decided to clean all of them up, while
+hopefully fixing the QEMU crash [1] too.
 
-r~
+For this v2, I did some more tests, I want to make sure all the past paths
+keep working at least on failure or cancel races, also in postcopy failure
+cases.  So I did below and they all run pass (when I said "emulated" below,
+I meant I hacked something to trigger those race / rare failures, because
+they aren't easy to trigger with vanilla binary):
+
+- Tested generic migrate_cancel during precopy, disk activation won't be
+  affected.  Disk status reports correct values in tracepoints.
+
+- Test Fabiano's ping-pong migration tests on PAUSED state VM.
+
+- Emulated precopy failure before sending non-iterable, disk inactivation
+  won't happen, and also activation won't trigger after migration cleanups
+  (even if activation on top of activate disk is benign, I checked traces
+  to make sure it'll provide consistent disk status, skipping activation).
+
+- Emulated precopy failure right after sending non-iterable. Disks will be
+  inactivated, but then can be reactivated properly before VM starts.
+
+- Emulated postcopy failure when sending the packed data (which is after
+  disk invalidated), and making sure src VM will get back to live properly,
+  re-activate the disks before starting.
+
+- Emulated concurrent migrate_cancel at the end of migration_completion()
+  of precopy, after disk inactivated.  Disks can be reactivated properly.
+
+  NOTE: here if dest QEMU didn't quit before migrate_cancel,
+  bdrv_activate_all() can crash src QEMU.  This behavior should be the same
+  before/after this patch.
+
+Comments welcomed, thanks.
+
+[1] https://gitlab.com/qemu-project/qemu/-/issues/2395
+
+Peter Xu (6):
+  migration: Add helper to get target runstate
+  qmp/cont: Only activate disks if migration completed
+  migration/block: Make late-block-active the default
+  migration/block: Apply late-block-active behavior to postcopy
+  migration/block: Fix possible race with block_inactive
+  migration/block: Rewrite disk activation
+
+ include/migration/misc.h |   4 ++
+ migration/migration.h    |   6 +-
+ migration/block-active.c |  94 +++++++++++++++++++++++++++
+ migration/colo.c         |   2 +-
+ migration/migration.c    | 136 +++++++++++++++------------------------
+ migration/savevm.c       |  46 ++++++-------
+ monitor/qmp-cmds.c       |  22 +++----
+ migration/meson.build    |   1 +
+ migration/trace-events   |   3 +
+ 9 files changed, 188 insertions(+), 126 deletions(-)
+ create mode 100644 migration/block-active.c
+
+-- 
+2.47.0
+
 
