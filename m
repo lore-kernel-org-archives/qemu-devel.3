@@ -4,96 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00CC0E77171
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 01:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8A8E7716E
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 01:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJMgE-0003Zl-0u; Thu, 05 Dec 2024 19:58:50 -0500
+	id 1tJMqk-0000lc-M4; Thu, 05 Dec 2024 20:09:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMgD-0003Z9-4O
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 19:58:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMg7-0005dB-EW
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 19:58:47 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733446720;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=g71KzLQSwtxNTL0YJi3tcazNTXO1d6801jgz+4WkHrA=;
- b=DUjBDdFJAy1XKah1EM9h76flX719PEdwKvjGF5BWIIRjaH9s8NaukZ+rtD/AG3NdJHq/Ae
- 14B6zgFDhr1zrooRgXGhgUzlFKX8Z0iTE66z9QAmUS2tH7sjJQMohy8KuQ4R/bNboNKYLK
- r6TVaCD5zF21Un9kCtyWo0301Nupwdg=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-231--J82g-1_POWgB_qcfzek0A-1; Thu, 05 Dec 2024 19:58:38 -0500
-X-MC-Unique: -J82g-1_POWgB_qcfzek0A-1
-X-Mimecast-MFC-AGG-ID: -J82g-1_POWgB_qcfzek0A
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d895f91a7dso28675316d6.0
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 16:58:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tJMqj-0000lK-Ai
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:41 -0500
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tJMqh-0001hb-Mz
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:41 -0500
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3ea53011deaso449423b6e.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 17:09:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733447378; x=1734052178; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TBrT9cmtqC6Wc6NAGn+TMnvK8ES96RzIQWBhZXWJ4v0=;
+ b=ZJ9Wx+P+Nt5GbrsjEq5QEycrHRfI5OHO7q+Nk+B1zifJyNDnJvZc54IHy4izDY3LzV
+ 4Pm8dcNZVOvpkn4r9ysEv+1d5LCtZ1DHh7DoAn0CCqrj8WS/KYSjyXPb/+T/Rzlmn/NE
+ QbDoARCQJTdKyO5nY91ZvYY8omz3aEcqw/trJquMFL1rOp45ufDQtlpSD1dm5pOKD5/R
+ rZZPuaoDjKvP3OHkRgkI+o9BiOTPkD0EBqwjivnl6ATXiLu0rUucFarfV2yUxNIJMo1c
+ uWPQR23iwUcV87OuEldf+NnrKY8+JavCsTR05ZeUFEdWRhZWAZCuhffqLCD1l8usqC6Y
+ +jpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733446718; x=1734051518;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g71KzLQSwtxNTL0YJi3tcazNTXO1d6801jgz+4WkHrA=;
- b=l/Rirb9VL6GWclvjBY3cTYONC65SEgikX9o6zkL1HsQx7hdNT6VMa1m70C45EdZtKA
- br8NlHxpQfENwDv6xwIagi4wKQQQUh7gF+NfRzWb7KRO30O7UB3bL4m+LJsKEUVpw+ca
- ljLnWoOnf+IGSnjdjlmg+tMqclzzEAWQ+N7upu5SAvrt33NDQdu0FpbyfmggDiCG/+Za
- Cpa/xad4X0EfzPhUQ0BfwEFlu0pnL2vTWAwBPbi0Af2NvBcWZvoBtp3HLkBBYLBWHPPZ
- QygSGbwO0F11sr75NPZARcos8rRwkrcgWqN/xXPu1ikORQOF26/tSaXK1CplJg3VtTON
- 30Ew==
-X-Gm-Message-State: AOJu0YzFjIN2eoIr4rZ9518CnCAa3CirjUhCOZydAXErPC1rfoRSEQeB
- Ztdp1phbiW5qYTYmYAKSpWSSiFuHNla/rBlQ9H6+jblT0Xdoo5rFqhq9IgDXZhaQuXA8pltompg
- WjIsrp9EQWyc4HTjNSFOGM1GVFeYgSjpnPLBDPbQFlwQFdjSLO6/T5u93zaJAYH9p+PqE64etOR
- alMbaATZ/OF9VyOYZk0txyLDF7MQsUuZwEvA==
-X-Gm-Gg: ASbGncvWJEGG9lMXOsuGZcHUJwrthsGvSn337h2YVR3lcwrjKUvLcLGOovk1b7C/quz
- 3NE+O7TGyfL7U86KbhreL4Wqeqd6pz/oAZf7T9ZGomTOCSC0P6nxGfCDUjOigevZqpd4otYITcW
- f29clsxTYD/FVpbaiel/pxtmdyTixZYM0Rir/68xcRnCxmQ90sNMVJO1Mu+CGUVQk98HSbma9DI
- afjz7Rug4QV4w7l2fDUWIr2MhwqAUpiqFPYhJmUZFCGx6Oqd8DlqVjSuX1Y6UXAevFEYjRhUG3p
- OnLlgo2sRHQcAa2enA8pw5qXxw==
-X-Received: by 2002:a05:6214:b6a:b0:6d8:aa52:74a3 with SMTP id
- 6a1803df08f44-6d8e71ad674mr15929826d6.28.1733446717903; 
- Thu, 05 Dec 2024 16:58:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGvJsN36AyXu1adTHI0NtEyJKXo1FvAQyhSb/Cz5OYkaCibC712AeFb/v0xtqyP6x2mSflYGw==
-X-Received: by 2002:a05:6214:b6a:b0:6d8:aa52:74a3 with SMTP id
- 6a1803df08f44-6d8e71ad674mr15929526d6.28.1733446717536; 
- Thu, 05 Dec 2024 16:58:37 -0800 (PST)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8dac016cbsm12635226d6.117.2024.12.05.16.58.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Dec 2024 16:58:36 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>, peterx@redhat.com,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Prasad Pandit <ppandit@redhat.com>
-Subject: [PATCH v2 0/7] migration/multifd: Some VFIO / postcopy preparations
- on flush
-Date: Thu,  5 Dec 2024 19:58:27 -0500
-Message-ID: <20241206005834.1050905-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+ d=1e100.net; s=20230601; t=1733447378; x=1734052178;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TBrT9cmtqC6Wc6NAGn+TMnvK8ES96RzIQWBhZXWJ4v0=;
+ b=cSf74Rd1aJHGsB76GtoiKqMWvWloTzH9UklBQTCmWZ1dFFeC2mOsWsYxewGGdtIs9Z
+ 7bcZtOufCOjSlZFTmioSNiRMqObzLzhGc0D0jgBoY+ELASrqAyf6bsx4dvKH+JUvTxRY
+ cHYw7BF0n4UQ3S5g+PIXMn+CH6oqvbEB8HV2kr8Ig87RY23V8cKemNqO+6sIpLtLXKd7
+ xxNZZ8cxRnSweGkznyPRX9jdBYgUnSLlZH6A+Z/IWwOxjIJC6xKBpGpLWm4eFrOltpyE
+ GjV1IoS8buWiNJs15S2yOZnIAKGVkjeeJPxYZWDK2sfbGjB2hDM4MYh9fBNTnmPkAS29
+ xMxA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVNF/bwWk0gHsSBRQu0dB8vnRzYxKonblMbcoZ7eD3E2LJXYXqurqftdivY5AlWHHJyguR77z98c4OR@nongnu.org
+X-Gm-Message-State: AOJu0Ywccc4JcF4LmCj2BWAEr4OsylESyK4gjQZCi7fV9MRZLRnqEgld
+ gjvVb6GglrBeblicTGcLoEOPHj4iUFNBqJ9dzwbf2qObguksblTp2A2XGLUOOGg=
+X-Gm-Gg: ASbGncthuh+uZfukwU7tdCzJJjloKiMXn/FH1VOkg4eMw8XgE0AmP2juXEI2CI/BfDK
+ r5xw+jiHPP3PSggO57L5g8lnuHZvZqxUzbzNKi8NvGvQe4SNgHKAB/Tjm5mKqYTRZIYhDnPLIlX
+ yLtaYu78dQFIypR88eyZsZpZ+fzKbKSgNKK2XoOqWfGDplJKe50G44XdFcMezTUO54GNyJnUcsk
+ 0TAOQQYWccZzlPtnIi0u/dFNEAmeFJDsZjG+ACLPjZmkimnskFRb9YGA3LkpoTfjiyXEd1in+6u
+ cgOg2pbv/f89OgH+Bx+kvj3Z4rZY
+X-Google-Smtp-Source: AGHT+IEC24fbXckmrB7N6QS85meRThP3tkz9MVa8mXTHzNCkvaUNWA2l3FP7TPr4kGK80PlUBQ3nsg==
+X-Received: by 2002:a05:6830:650d:b0:71d:4757:8c8a with SMTP id
+ 46e09a7af769-71dcf56513emr687911a34.26.1733447378336; 
+ Thu, 05 Dec 2024 17:09:38 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f2793249b6sm512861eaf.38.2024.12.05.17.09.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Dec 2024 17:09:37 -0800 (PST)
+Message-ID: <03f56e2b-a095-4dae-b08d-227ce2db40b3@linaro.org>
+Date: Thu, 5 Dec 2024 19:09:34 -0600
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/mips: Remove tswap() calls in semihosting
+ uhi_fstat_cb()
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
+References: <20241205231330.82355-1-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241205231330.82355-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,55 +105,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-CI: https://gitlab.com/peterx/qemu/-/pipelines/1575970314
+On 12/5/24 17:13, Philippe Mathieu-Daudé wrote:
+> In preparation of heterogeneous emulation where cores with
+> different endianness can run concurrently, we need to remove
+> the tswap() calls -- which use a fixed per-binary endianness.
+> 
+> Get the endianness of the UHI CPU accessed using
+> mips_env_is_bigendian() and replace the tswap() calls
+> by bswap() ones when necessary.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/mips/tcg/sysemu/mips-semi.c | 43 +++++++++++++++++++++---------
+>   1 file changed, 30 insertions(+), 13 deletions(-)
 
-Comparing to v1, this series v2 now contains some patches that may be
-helpful for either VFIO or postcopy integration on top of multifd.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-For VFIO, only patch 1 & 2 are relevant.  This is the only part that can be
-compared to v1, where I renamed the sync flag to LOCAL and ALL according to
-Fabiano's comment.
+> +            bswap16s((uint16_t *)&dst->uhi_st_dev);
 
-For postcopy, it's about patches 3-7, but it needs to be based on 1+2.
+Rather than cast, maybe better to
 
-I put them together because the two changes are relevant on the multifd
-sync operation, one must depend on another in some form. So I decided to
-send them together here.  All these patches can be seen as cleanups /
-slight optimizations on top of master branch.
+     dst->uhi_st_dev = bswap16(dst->uhi_st_dev);
 
-This time I did more test.  Besides CI, qtests, and some real-world multifd
-tests just to monitor the sync events happen all correct, I made sure to
-cover 7.2 machine type (which uses the legacy sync) so it still works as
-before - basically sync will be more frequent, but all thing keeps working
-smoothly so far.
 
-Fabiano, let me know what do you think comparing to the other patch [1] on
-simplifying the flush checks.  I'm open to any comments.
-
-Thanks,
-
-[1] https://lore.kernel.org/r/875xo8n4ue.fsf@suse.de
-
-Thanks,
-
-Peter Xu (7):
-  migration/multifd: Further remove the SYNC on complete
-  migration/multifd: Allow to sync with sender threads only
-  migration/ram: Move RAM_SAVE_FLAG* into ram.h
-  migration/multifd: Unify RAM_SAVE_FLAG_MULTIFD_FLUSH messages
-  migration/multifd: Remove sync processing on postcopy
-  migration/multifd: Cleanup src flushes on condition check
-  migration/multifd: Document the reason to sync for save_setup()
-
- migration/multifd.h        | 23 ++++++++--
- migration/ram.h            | 25 +++++++++++
- migration/rdma.h           |  7 ---
- migration/multifd-nocomp.c | 74 ++++++++++++++++++++++++++++++-
- migration/multifd.c        | 15 ++++---
- migration/ram.c            | 91 +++++++++++++++++---------------------
- 6 files changed, 166 insertions(+), 69 deletions(-)
-
--- 
-2.47.0
-
+r~
 
