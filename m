@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D457E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:24:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1833E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 16:25:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJb7A-0001sy-QQ; Fri, 06 Dec 2024 11:23:37 -0500
+	id 1tJb8F-0002UV-Hl; Fri, 06 Dec 2024 11:24:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJb78-0001sd-CW
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:23:34 -0500
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1tJb8D-0002Ql-H7
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:24:41 -0500
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tJb74-0004sL-Ro
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:23:33 -0500
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-5d0e75dd846so3504292a12.3
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:23:29 -0800 (PST)
+ id 1tJb8B-0004yd-Mh
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 11:24:40 -0500
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-5cedf5fe237so3416927a12.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 08:24:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733502209; x=1734107009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733502278; x=1734107078; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=VN8H4a/ej0diCZx4UtFfJrU8VQ6J28t8MtBdVV2NU1s=;
- b=BjTuGzIJT/BBRHYcSc7l3VwPCc4eZcXB/6RgJU8kK5Fmdctku6N3NyMvteZpxQ+qCP
- tTdkodjR/laM05BipIwjH+7vzVG7Zrbat1dGpJfaG4j4l0PdTa8phTIqPUoC46ndJc+r
- UNE0o7UuNFFXdNTAM4R1RiNwAAMkeGt0th4tRCTQPi1MeBh3CFba7h/chItDfbNfWXvh
- eNYEfmx1qVXaLYcn5/6rC0K73l+5Kmli8h676EZAmlX8zZU6tu8fB1dvu5JJ0A2QzOqt
- eWj/hfC2ssV6rTKFbzg6wnnKGKYN1e5tIV5wUbfb/vL/YIz7K9En2V9L2fcAGX5aszws
- npbQ==
+ bh=jeg8gEIFGwtRxqg29I8ok6MAXCgiF7d+5z6yZXoNI7c=;
+ b=yPhDCISXFHumXqBPWXHzBDTvt/oWgKR3zxDUPv4R4mePuiZ3f7dCnZ5DNZs4hBkjV0
+ NsvO25swBs/v76c+gI6ly0ZmEN15kq6W/wsF5/3QXDu5eih94pPocAoeNTLdOKr+dI4H
+ 5Ho8DbFgpvjzRBRwFvvvXtYNukn8ToR/xEZGLQpKFgHVDB0C7ejz44y75JGZTNKCqlek
+ HSLF/uXlKkP6vyKgEtRgAeIjn2HLjMKatNgfKEHJNsOLNqZglRRlF4gQkhmIAsq+elkC
+ YiVzPGtzIKiDvT88Poj4qJRGVVOgDEYMmGUJzn6sgBhICajx38YrlGXizGTiuYg7HGKa
+ 8cWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733502209; x=1734107009;
+ d=1e100.net; s=20230601; t=1733502278; x=1734107078;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=VN8H4a/ej0diCZx4UtFfJrU8VQ6J28t8MtBdVV2NU1s=;
- b=RcgomK8FEcFnUyW8Hpo6ZiDYbxizQWPzKpmOMu26Gmc8JM+Yv+jEDXFFyomZl7hvxF
- fOqgc/4mr6gYCjB7H4Ey+L+8LYlr2nkX67/T/Ld42OjfiQMOMah0rz16tsFKZ2wFAgjO
- Q0brRd2bGzgmZ+q3HPJUgPj5J4jPJrg3Vfp9MPozjozW/fIyWTs0rUzdGm+DnkgsyOop
- ZzN1vTRyCR9ip4/+86oiS9TTFoN1Fzxm1QbXZjF/VDYxZJCt5VKn8DVsYAY6ioGLtzAV
- Rk5JEjALkUAK0o1kLOMTwj8lc6Oc0xs5o6EHIJfVyX8kjlxLKyvLTtZmG8/qEJow0LJ9
- 3E6Q==
-X-Gm-Message-State: AOJu0YwomA4lKAB6WA/80kAy+gfr3tAuOAimwTRhBJdoON49Mw5AaMqN
- gGS2vrWBP/9nQSQ+G5PuhI1XRiClil9alCRyH2sYcvL0EsDMABgfOpAtvbZmn2TA6uyKp5oUj2x
- gEGSGJegt2vl9s+RtYt0TD75s22w+onzU6WYsmA==
-X-Gm-Gg: ASbGncvVxgFHRvjSR6CNfvVGDdS73jaldJC9jsAL1xpx5khjT0Th1XJHyfgePddnnP1
- Qkm3x3DUUm6iFtUGpHV2Co5ArnLXn6h3t
-X-Google-Smtp-Source: AGHT+IGFa+nZUrcQGQDDedTrpmY5uBdujLW43tf8bjkXk4Q2uRIekgxeKYtzbIoszFO4dmm/iSQbow1WwUhv7Lxa0zg=
-X-Received: by 2002:a05:6402:3888:b0:5d0:81af:4a43 with SMTP id
- 4fb4d7f45d1cf-5d3be47b688mr4045433a12.0.1733502208677; Fri, 06 Dec 2024
- 08:23:28 -0800 (PST)
+ bh=jeg8gEIFGwtRxqg29I8ok6MAXCgiF7d+5z6yZXoNI7c=;
+ b=naiERVKw1ExyqUYKno3kABrowrtK6ix5NWTxRpP0l0iKaFw6LmCv0L4WsFPTH97KVT
+ 9fcf22W7mGOVkWc3roZR5xGQeZsWtvXP4iJfXHnpco6Uh0KxjvNPi8UbR7Js6zGIeDv0
+ ZVnBi9wjrUO767rAo+YgE04AId7LtxLgxvdF8vHpCLEQ5w39/4kNPWQk6dLWbDv8I8LB
+ l+axCcDOnQ4HKOFSvoOUDj2/LI5JwssU5BG3e7ju6iuR+GSY88rKoCc0cbigBSVS9HT1
+ JyLD265B5wBG5wxg7PxWng3tZ7bm1X48o5wwQm5tAoTxMzckCme4mu2BPBKBanJwNz0L
+ X6wg==
+X-Gm-Message-State: AOJu0YyH+xROVcCgvGySdj4EpzA2dlzG4ZxFVV2ZOgerLxtR872STcLF
+ yGIHBzqRGWrHpBmxuJTz9EWFs4iLP/PjgJct7RdPAVSb2EIoh+T3l1AQ+HnaigaNe+J8EtK5Mx1
+ f0mO27lYBOic/2T8rx8r2/t2hkR6cj4gFBzDPhw==
+X-Gm-Gg: ASbGncvMyc2VpheVDB04gE9T57+saoKfvCHgvmVuNFNITfTzaMD8ikjolRqmuBFzFxC
+ SkQS+V12cKtilcq4G0kX2Se98YnP8EksLqrY1
+X-Google-Smtp-Source: AGHT+IE8BNiikdD722CeLPV4h5XAbmLChcgeS6hvteCuuklvo6se7IBQLv+yZ2knu6P4Bu9qfC55HuzEzWMxYzyDuz0=
+X-Received: by 2002:a05:6402:2349:b0:5d0:f904:c23d with SMTP id
+ 4fb4d7f45d1cf-5d3be785c74mr4398892a12.28.1733502278008; Fri, 06 Dec 2024
+ 08:24:38 -0800 (PST)
 MIME-Version: 1.0
 References: <20241201150607.12812-1-richard.henderson@linaro.org>
- <20241201150607.12812-56-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-56-richard.henderson@linaro.org>
+ <20241201150607.12812-58-richard.henderson@linaro.org>
+In-Reply-To: <20241201150607.12812-58-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 6 Dec 2024 16:23:17 +0000
-Message-ID: <CAFEAcA8GO=NjWpoOM7mG5j-+4JXfx5qEK1_YwQHNmuFt3yH=Ag@mail.gmail.com>
-Subject: Re: [PATCH 55/67] target/arm: Convert FCVT* (vector, integer) scalar
- to decodetree
+Date: Fri, 6 Dec 2024 16:24:27 +0000
+Message-ID: <CAFEAcA8EFbW3QTz4-DeghL_f3nTU=jJ3cGbLPy7eQGazRHkrRg@mail.gmail.com>
+Subject: Re: [PATCH 57/67] target/arm: Convert [US]CVTF (vector, integer)
+ scalar to decodetree
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,48 +91,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:21, Richard Henderson
+On Sun, 1 Dec 2024 at 15:13, Richard Henderson
 <richard.henderson@linaro.org> wrote:
->
-> Arm silliness with naming, the scalar insns described
-> as part of the vector instructions, as separate from
-> the "regular" scalar insns which output to general registers.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  target/arm/tcg/translate-a64.c | 135 ++++++++++++++-------------------
->  target/arm/tcg/a64.decode      |  30 ++++++++
->  2 files changed, 87 insertions(+), 78 deletions(-)
+>  target/arm/tcg/translate-a64.c | 35 ++++++++++++++++++++++++----------
+>  target/arm/tcg/a64.decode      |  6 ++++++
+>  2 files changed, 31 insertions(+), 10 deletions(-)
 >
-> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-> index 98a42feb7d..ad245f2c26 100644
-> --- a/target/arm/tcg/translate-a64.c
-> +++ b/target/arm/tcg/translate-a64.c
-> @@ -8678,6 +8678,16 @@ static void do_fcvt_scalar(DisasContext *s, MemOp out, MemOp esz,
->                                   tcg_shift, tcg_fpstatus);
->              tcg_gen_extu_i32_i64(tcg_out, tcg_single);
->              break;
-> +        case MO_16 | MO_SIGN:
-> +            gen_helper_vfp_toshh(tcg_single, tcg_single,
-> +                                 tcg_shift, tcg_fpstatus);
-> +            tcg_gen_extu_i32_i64(tcg_out, tcg_single);
-> +            break;
-> +        case MO_16:
-> +            gen_helper_vfp_touhh(tcg_single, tcg_single,
-> +                                 tcg_shift, tcg_fpstatus);
-> +            tcg_gen_extu_i32_i64(tcg_out, tcg_single);
-> +            break;
 
-This hunk adds calls to the toshh and touhh helpers,
-but as far as I can see it doesn't remove any calls to
-those helpers that were in the old decode functions or
-any calls to the handle_simd_shift_fpint_conv() function
-which was the only one that did call them. Should this
-be in a different patch?
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-(Conversely, we remove calls to gen_helper_advsimd_f16tosinth
-and gen_helper_advsimd_f16touinth but don't have those here.)
-
-thnaks
+thanks
 -- PMM
 
