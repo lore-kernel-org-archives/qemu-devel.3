@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 111E6E77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 13:13:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C49E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 13:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJY86-0004Ze-Oj; Fri, 06 Dec 2024 08:12:22 -0500
+	id 1tJY7t-0003zo-HH; Fri, 06 Dec 2024 08:12:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tJY85-0004Uf-8i
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:12:21 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tJY7s-0003zD-6W
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:12:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tJY83-000770-FY
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:12:20 -0500
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tJY7q-00074L-IV
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 08:12:07 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733490738;
+ s=mimecast20190719; t=1733490725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8ZrjqSEqsqiCmDFS4Jy0NVtxIhdOdq1hlkgv8ya55oc=;
- b=GUBD69efKCCOXsNa4xXIRaM9U59fRi9KJdIHfTB0VQOMgFSBeFdT77Z5TMt8N7+m5r4W/b
- jbaUvVPFKv8K6FaKihs0nE4BOltPp2BQ/RgyeOGQ1qfH2yjYLzrCpFEeC4UubANvPCTYGS
- qq6DvbMCw0M/apK7s+jcFMlSVZi3KxQ=
+ bh=ltopHPl4FJwLk1EyTLSPlsFmVlnaNjiR9PzEZvBjdcY=;
+ b=XhXj1XstOC/sMoQ/FoiOANou3nmXRhDSm/M/HdWU1q9wj8Q2BBAuBw2tPu9QI5M3qnvgBJ
+ CKxqq3Yip87rJZYntysGaECVees6tvsTVH+i8B1SwsOr2uF2BWuYNirgX++jY3bszYDlKp
+ Hc0epyaw79bMSjtR2OzrO9ShlDyGz0Y=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-ga61lMDnPeaVzMiRvn7Jig-1; Fri,
- 06 Dec 2024 08:12:14 -0500
-X-MC-Unique: ga61lMDnPeaVzMiRvn7Jig-1
-X-Mimecast-MFC-AGG-ID: ga61lMDnPeaVzMiRvn7Jig
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-yxRFsP1BM3Gy4sE7k3XrQA-1; Fri,
+ 06 Dec 2024 08:12:01 -0500
+X-MC-Unique: yxRFsP1BM3Gy4sE7k3XrQA-1
+X-Mimecast-MFC-AGG-ID: yxRFsP1BM3Gy4sE7k3XrQA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66F731955F3E; Fri,  6 Dec 2024 13:12:13 +0000 (UTC)
+ id 1A7191955E70; Fri,  6 Dec 2024 13:11:59 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.39.192.16])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6E02B1955E9C; Fri,  6 Dec 2024 13:12:10 +0000 (UTC)
+ id DD7F41955F3F; Fri,  6 Dec 2024 13:11:55 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
@@ -55,9 +55,10 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Joel Stanley <joel@jms.id.au>, Thomas Huth <thuth@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH 7/7] tests/functional: Move debian boot test from avocado
-Date: Fri,  6 Dec 2024 14:11:32 +0100
-Message-ID: <20241206131132.520911-8-clg@redhat.com>
+Subject: [PATCH 3/7] tests/functional: Introduce a specific test for
+ romulus-bmc machine
+Date: Fri,  6 Dec 2024 14:11:28 +0100
+Message-ID: <20241206131132.520911-4-clg@redhat.com>
 In-Reply-To: <20241206131132.520911-1-clg@redhat.com>
 References: <20241206131132.520911-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -89,83 +90,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This simply moves the debian boot test from the avocado testsuite to
-the new functional testsuite. No changes in the test.
+This simply moves the romulus-bmc test to a new test file. No changes
+in the test. The do_test_arm_aspeed routine is removed from the
+test_arm_aspeed.py file because it is now unused.
 
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- tests/avocado/boot_linux_console.py         | 26 ---------------------
- tests/functional/test_arm_aspeed_rainier.py | 24 +++++++++++++++++++
- 2 files changed, 24 insertions(+), 26 deletions(-)
+ tests/functional/meson.build                |  2 ++
+ tests/functional/test_arm_aspeed.py         | 26 ---------------------
+ tests/functional/test_arm_aspeed_romulus.py | 24 +++++++++++++++++++
+ 3 files changed, 26 insertions(+), 26 deletions(-)
+ create mode 100644 tests/functional/test_arm_aspeed_romulus.py
 
-diff --git a/tests/avocado/boot_linux_console.py b/tests/avocado/boot_linux_console.py
-index 12e24bb05a75..738dd5a8c4bf 100644
---- a/tests/avocado/boot_linux_console.py
-+++ b/tests/avocado/boot_linux_console.py
-@@ -470,29 +470,3 @@ def test_arm_quanta_gsj_initrd(self):
-         self.wait_for_console_pattern('CPU1: thread -1, cpu 1, socket 0')
-         self.wait_for_console_pattern(
-                 'Give root password for system maintenance')
--
--    def test_arm_ast2600_debian(self):
--        """
--        :avocado: tags=arch:arm
--        :avocado: tags=machine:rainier-bmc
--        """
--        deb_url = ('http://snapshot.debian.org/archive/debian/'
--                   '20220606T211338Z/'
--                   'pool/main/l/linux/'
--                   'linux-image-5.17.0-2-armmp_5.17.6-1%2Bb1_armhf.deb')
--        deb_hash = '8acb2b4439faedc2f3ed4bdb2847ad4f6e0491f73debaeb7f660c8abe4dcdc0e'
--        deb_path = self.fetch_asset(deb_url, asset_hash=deb_hash,
--                                    algorithm='sha256')
--        kernel_path = self.extract_from_deb(deb_path, '/boot/vmlinuz-5.17.0-2-armmp')
--        dtb_path = self.extract_from_deb(deb_path,
--                '/usr/lib/linux-image-5.17.0-2-armmp/aspeed-bmc-ibm-rainier.dtb')
--
--        self.vm.set_console()
--        self.vm.add_args('-kernel', kernel_path,
--                         '-dtb', dtb_path,
--                         '-net', 'nic')
--        self.vm.launch()
--        self.wait_for_console_pattern("Booting Linux on physical CPU 0xf00")
--        self.wait_for_console_pattern("SMP: Total of 2 processors activated")
--        self.wait_for_console_pattern("No filesystem could mount root")
--
-diff --git a/tests/functional/test_arm_aspeed_rainier.py b/tests/functional/test_arm_aspeed_rainier.py
-index a60274926d6f..b856aea6dbd7 100644
---- a/tests/functional/test_arm_aspeed_rainier.py
-+++ b/tests/functional/test_arm_aspeed_rainier.py
-@@ -36,5 +36,29 @@ def test_arm_aspeed_emmc_boot(self):
-         self.wait_for_console_pattern('mmcblk0: p1 p2 p3 p4 p5 p6 p7')
-         self.wait_for_console_pattern('IBM eBMC (OpenBMC for IBM Enterprise')
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 3cd079f910a8..65eda5a394bc 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -20,6 +20,7 @@ test_timeouts = {
+   'acpi_bits' : 420,
+   'arm_aspeed_ast1030' : 10,
+   'arm_aspeed_palmetto' : 120,
++  'arm_aspeed_romulus' : 120,
+   'arm_aspeed' : 600,
+   'arm_bpim2u' : 500,
+   'arm_collie' : 180,
+@@ -70,6 +71,7 @@ tests_arm_system_thorough = [
+   'arm_aspeed',
+   'arm_aspeed_ast1030',
+   'arm_aspeed_palmetto',
++  'arm_aspeed_romulus',
+   'arm_bpim2u',
+   'arm_canona1100',
+   'arm_collie',
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+index 48a229608ef6..bdc000a00a32 100755
+--- a/tests/functional/test_arm_aspeed.py
++++ b/tests/functional/test_arm_aspeed.py
+@@ -21,32 +21,6 @@
  
-+    ASSET_DEBIAN_LINUX_ARMHF_DEB = Asset(
-+            ('http://snapshot.debian.org/archive/debian/20220606T211338Z/pool/main/l/linux/linux-image-5.17.0-2-armmp_5.17.6-1%2Bb1_armhf.deb'),
-+        '8acb2b4439faedc2f3ed4bdb2847ad4f6e0491f73debaeb7f660c8abe4dcdc0e')
+ class AST2x00Machine(LinuxKernelTest):
+ 
+-    def do_test_arm_aspeed(self, machine, image):
+-        self.set_machine(machine)
+-        self.vm.set_console()
+-        self.vm.add_args('-drive', 'file=' + image + ',if=mtd,format=raw',
+-                         '-net', 'nic', '-snapshot')
+-        self.vm.launch()
+-
+-        self.wait_for_console_pattern("U-Boot 2016.07")
+-        self.wait_for_console_pattern("## Loading kernel from FIT Image at 20080000")
+-        self.wait_for_console_pattern("Starting kernel ...")
+-        self.wait_for_console_pattern("Booting Linux on physical CPU 0x0")
+-        self.wait_for_console_pattern(
+-                "aspeed-smc 1e620000.spi: read control register: 203b0641")
+-        self.wait_for_console_pattern("ftgmac100 1e660000.ethernet eth0: irq ")
+-        self.wait_for_console_pattern("systemd[1]: Set hostname to")
+-
+-    ASSET_ROMULUS_FLASH = Asset(
+-        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
+-         'obmc-phosphor-image-romulus.static.mtd'),
+-        '820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
+-
+-    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
+-        image_path = self.ASSET_ROMULUS_FLASH.fetch()
+-
+-        self.do_test_arm_aspeed('romulus-bmc', image_path)
+-
+     def do_test_arm_aspeed_buildroot_start(self, image, cpu_id, pattern='Aspeed EVB'):
+         self.require_netdev('user')
+         self.vm.set_console()
+diff --git a/tests/functional/test_arm_aspeed_romulus.py b/tests/functional/test_arm_aspeed_romulus.py
+new file mode 100644
+index 000000000000..747b616201ce
+--- /dev/null
++++ b/tests/functional/test_arm_aspeed_romulus.py
+@@ -0,0 +1,24 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots the ASPEED machines
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
 +
-+    def test_arm_debian_kernel_boot(self):
-+        self.set_machine('rainier-bmc')
++from qemu_test import Asset
++from aspeed import AspeedTest
 +
-+        deb_path = self.ASSET_DEBIAN_LINUX_ARMHF_DEB.fetch()
++class RomulusMachine(AspeedTest):
 +
-+        kernel_path = self.extract_from_deb(deb_path, '/boot/vmlinuz-5.17.0-2-armmp')
-+        dtb_path = self.extract_from_deb(deb_path,
-+                '/usr/lib/linux-image-5.17.0-2-armmp/aspeed-bmc-ibm-rainier.dtb')
++    ASSET_ROMULUS_FLASH = Asset(
++        ('https://github.com/openbmc/openbmc/releases/download/2.9.0/'
++         'obmc-phosphor-image-romulus.static.mtd'),
++        '820341076803f1955bc31e647a512c79f9add4f5233d0697678bab4604c7bb25')
 +
-+        self.vm.set_console()
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-dtb', dtb_path,
-+                         '-net', 'nic')
-+        self.vm.launch()
++    def test_arm_ast2500_romulus_openbmc_v2_9_0(self):
++        image_path = self.ASSET_ROMULUS_FLASH.fetch()
 +
-+        self.wait_for_console_pattern("Booting Linux on physical CPU 0xf00")
-+        self.wait_for_console_pattern("SMP: Total of 2 processors activated")
-+        self.wait_for_console_pattern("No filesystem could mount root")
++        self.do_test_arm_aspeed('romulus-bmc', image_path)
 +
 +
- if __name__ == '__main__':
-     AspeedTest.main()
++if __name__ == '__main__':
++    AspeedTest.main()
 -- 
 2.47.0
 
