@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C60EE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:17:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 295DFE7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 19:23:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJdoP-0001iz-9n; Fri, 06 Dec 2024 14:16:25 -0500
+	id 1tJdux-00045L-Q0; Fri, 06 Dec 2024 14:23:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJdoM-0001h5-Gd
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:16:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tJdoK-0002H8-F6
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:16:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733512579;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3SogGEmEGV+SDki1CYddHVpdupUogoduQ367v2cvXnI=;
- b=aM6HRfxZvibCO38JEdErB3sPqL7tjuALwKYd40x1W+PkFO7cmcy/wpm4qLAwBTqnLUfJMt
- faa07qIyLGuvSd9AiQCMo/cvRMIKW3bJA5ilpaYFMQur39sGYmR3Qf8xwkX9/3atbhQz/Z
- fIF0U4qAWxEhlwl8TpYCB/8NNuU2mvU=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-192-xt2jm2WCNFq03lG0TQFAUQ-1; Fri, 06 Dec 2024 14:16:16 -0500
-X-MC-Unique: xt2jm2WCNFq03lG0TQFAUQ-1
-X-Mimecast-MFC-AGG-ID: xt2jm2WCNFq03lG0TQFAUQ
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385df115288so1078714f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:16:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tJdut-00043c-7t
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:07 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tJdur-0003Sd-Ls
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 14:23:06 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-215bebfba73so23964605ad.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 11:23:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733512984; x=1734117784; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oxns1y/BgfBe5xDZQgTR43Ph44Qsk4ANUhvirqhaS04=;
+ b=Po43CQ9y9TvKYtBXy7j06YOJ557WSsDxBAf7Dh0dmclwy7wi9KF+4uJ2wiQHZP9kRg
+ S8VnJWRuXAODc1JlTsTEcL7jtoBPADqXOFihZ4v1nTq+n+DoFj4R3u234Alyzfr+FO5i
+ c61QDubjoYYAS55F/pF/0Ybvr1+GecPU2IeVHqVe+JM1Z0TM1RzN/2ZzYWZBHFWto0hl
+ +zevZfLDOglediT19qNsd3K0wCjR7yVWe+tOeUWmJkMmZr54gVDOLmv1m2DycMa77mY6
+ OBhzAxXZJX8O3dLiPlLiVAA9I3rht18odMtSLIkQKFTn+a05xI4RujFrQLMWgW0D2auI
+ GT5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733512575; x=1734117375;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3SogGEmEGV+SDki1CYddHVpdupUogoduQ367v2cvXnI=;
- b=DRFnYy6WJfEaXzia4KisUFu4WOFdz0ndiu6rQETmQAyRR/qtLwRtA7Lty1TxnEWk6Q
- yLmHSlczAAqW9ZXoOZkwJssZ220TbNn+KpBkR8nDMmvq9FZZ3NhmEtEUgo1w34D414kH
- 7C8Ac5v6+04ykr6N0mPRfHjO/I3/glI/ayYq5TiWKBsp0UOZINSmnyM3t8ibJINbMwY/
- PiuJp9s7X4661RFl9C9JTwxefjQIQJbtVm0wQMQ/vJGKiqLifS2b7KlBedC/tkygjl+g
- sDTwDSsxDOphcm+nshzuNpqzhnIkNByRElOIjRW9yNDV3VZl6FQIpgfn4GEWy2W0gd8P
- 5PFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU18rkm9FmzyWUgaTkFHHU3JT2DemQOwCRNBTjaOdzI9y2IWc+aJhHH/aNcsj356rIvmgQ1VNNJUsBo@nongnu.org
-X-Gm-Message-State: AOJu0YzlrBNyfacJWZ5/yJDrpxPIHAr1f6KUh7SmEn7STp4p0/kLK4gv
- xdnfBoufHj+eozbsLB40lv7Ut5wYMBVp3u/31YbhpYNshglqvz/jIB9nXlD+RvyEBuIyB1J/t41
- NH5HtVq0DdWw0gNNqXxeVP8WYDm7YACwEjTqt3I3IGpEOrzLAbsrUhKfwZNhGuSrPo0KIDouFJ+
- dFrHMVQdRylPZA3rPA+04PPg0v5f0=
-X-Gm-Gg: ASbGncvY/pUAkBLQS/ZFT/+Hq8Vc861PdrVAGWfEhJEKOxzltjoNlFqT5/hz7e8L1tO
- V2nV0ZT5G3m+REWo5allOU6EYhqQDFA==
-X-Received: by 2002:a05:6000:1ac9:b0:385:f16d:48aa with SMTP id
- ffacd0b85a97d-3862b35133fmr3092917f8f.15.1733512575200; 
- Fri, 06 Dec 2024 11:16:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF6PX2iMJFmYZj1/YLDSInpjsz6MLlE/fIqOybirbKChbnAHqqMOwPIUwGk25Wnpw11qoAs6x8oe1cWk76WG0o=
-X-Received: by 2002:a05:6000:1ac9:b0:385:f16d:48aa with SMTP id
- ffacd0b85a97d-3862b35133fmr3092904f8f.15.1733512574931; Fri, 06 Dec 2024
- 11:16:14 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733512984; x=1734117784;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oxns1y/BgfBe5xDZQgTR43Ph44Qsk4ANUhvirqhaS04=;
+ b=Vw/FJ63hK4yTHM2NHi2uykg77EqdnfKe2thUV8ZPcfVD+XCk76A48Ymh/Lpo2w4Urp
+ 6NnQlIJ/IcS9gVH7/ZSwQYaYaWZvcHOU2U0F++tZIiGHTxYx+GHDxoMvGTs2X94FE1Vc
+ /Z5/y69TZRyYTWNLDO9IeLIRLTpcuHqRHPi0BWoKhIORKt5QCM2zp9eSm92MWNUFCBrI
+ xUsNz9uw1LffAxmbUGmcSk3rmzvLHK+NpnH0OLxfjW9El3iVq3bZe2H1jzJuMXzJMsRm
+ N0ym6WSNr4W3IZ7kSeNXjOwgdvo1myZ7lYQ+3nfhturR1vgUGaGYYv7rb5sFvtJbrv5k
+ /EZQ==
+X-Gm-Message-State: AOJu0Yw+y8bE+qCC5r4q0MPEdh0kU/B6saK/J5jsNkuWx3H8QgA4Zwdi
+ Iz5wwDtv3HhdsNZkww5HnCqz18VRoiDdWx8m2Jp2SHUQN1SCVcvUc6/3hMlNf7ZkweogxuK2XtA
+ nOpU=
+X-Gm-Gg: ASbGncv7V//Nmi/PMuX0hI6laT0r2CzxDwXYfDrytBGPZBnYm/TA5BtkyqN0yV+q2P2
+ ML3Sb1dtFoGuCqn2YvOJWpTNGfDMM8CM9WwGM+I4W0tpndg8Qb7jV3rHhOTY1UV0JSU7ZxvBSb7
+ rrDn3vbXjuX7IbklA1b8GVxmAHnppV9UeqFnbPv1zbt3IUrZtJsbKqZ1o5lWY3lwUfRGNmFNxpl
+ 3HJNT1Pd89U9CW4htVRya8Edm5AFJrw/AXTZZRjvXixFam0z7k8H+YZ1jsLd6lc0r84QIAPgQ/t
+ yNV0uuPc
+X-Google-Smtp-Source: AGHT+IHJJleob/BsE5gI3Z60RdIXKdHyBEatFui1XI7rrGuhPou8p8Q+uVqGP1BSTB4j3o+NzzINZA==
+X-Received: by 2002:a17:903:8cc:b0:216:2259:a4bd with SMTP id
+ d9443c01a7336-2162259a5cbmr30092825ad.52.1733512984240; 
+ Fri, 06 Dec 2024 11:23:04 -0800 (PST)
+Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2161e5a6f23sm11720395ad.266.2024.12.06.11.23.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Dec 2024 11:23:03 -0800 (PST)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Joel Stanley <joel@jms.id.au>,
+ Alistair Francis <alistair@alistair23.me>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH v3 2/4] docs/system/arm/fby35: document execute-in-place
+ property
+Date: Fri,  6 Dec 2024 11:22:52 -0800
+Message-Id: <20241206192254.3889131-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
+References: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-7-zhao1.liu@intel.com>
- <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
- <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
- <CAFEAcA9SCfMcrhpd_x0LmgwtD-5XwT4TY+QXBJMOjWbdtBPCUg@mail.gmail.com>
- <CABgObfZSR2s5AYEAcJfsdF0jKQGf_AVcDafKQq47qzLmBuX0RQ@mail.gmail.com>
- <CAFEAcA_dVnpN2Vn+VAf1XZSAdj183wJhQZ3pVNtb=NHeMOF2Jg@mail.gmail.com>
-In-Reply-To: <CAFEAcA_dVnpN2Vn+VAf1XZSAdj183wJhQZ3pVNtb=NHeMOF2Jg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 6 Dec 2024 14:13:57 -0500
-Message-ID: <CABgObfaAdDtrLF4tWL17Lmw9UKiLRNVvuiDZsQxc-9Wd8W61Dw@mail.gmail.com>
-Subject: Re: [RFC 06/13] rust: add bindings for memattrs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S . Tsirkin" <mst@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
- Junjie Mao <junjie.mao@hotmail.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000003e272b06289ed93b"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,63 +111,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003e272b06289ed93b
-Content-Type: text/plain; charset="UTF-8"
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ docs/system/arm/fby35.rst | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-Il ven 6 dic 2024, 09:42 Peter Maydell <peter.maydell@linaro.org> ha
-scritto:
-
-> On Fri, 6 Dec 2024 at 14:28, Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > Yes, hence "decently" packed. But I think in both cases it's passed in
-> registers, and for 64-bit machine that shouldn't change anything.
->
-> True. Though it does mean we go from "space to add new fields
-> without making it overflow from one register to two" to
-> "completely full and no space for expanding it".
->
-
-I guess it's enough to make unspecified the only non-bitfield. Then you can
-declare MEMTXATTRS_UNSPECIFIED as { unspecified: true, ..Zeroable::ZERO }
-("start with Zeroable::ZERO and change unspecified to true"). For the rest
-it is not important to make them available in a "const".
-
-Paolo
-
--- PMM
->
->
-
---0000000000003e272b06289ed93b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
-class=3D"gmail_attr">Il ven 6 dic 2024, 09:42 Peter Maydell &lt;<a href=3D"=
-mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; ha scritt=
-o:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Fri, 6 Dec=
- 2024 at 14:28, Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" ta=
-rget=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt; wrote:<br>&g=
-t; Yes, hence &quot;decently&quot; packed. But I think in both cases it&#39=
-;s passed in registers, and for 64-bit machine that shouldn&#39;t change an=
-ything.<br>
-<br>
-True. Though it does mean we go from &quot;space to add new fields<br>
-without making it overflow from one register to two&quot; to<br>
-&quot;completely full and no space for expanding it&quot;.<br></blockquote>=
-</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">I guess it&#39;s =
-enough to make unspecified the only non-bitfield. Then you can declare MEMT=
-XATTRS_UNSPECIFIED as { unspecified: true, ..Zeroable::ZERO } (&quot;start =
-with Zeroable::ZERO and change unspecified to true&quot;). For the rest it =
-is not important to make them available in a &quot;const&quot;.</div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br></=
-div><div dir=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail=
-_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
-,204);padding-left:1ex">
--- PMM<br>
-<br>
-</blockquote></div></div></div>
-
---0000000000003e272b06289ed93b--
+diff --git a/docs/system/arm/fby35.rst b/docs/system/arm/fby35.rst
+index bf6da6baa2a..e19274e75c8 100644
+--- a/docs/system/arm/fby35.rst
++++ b/docs/system/arm/fby35.rst
+@@ -45,3 +45,8 @@ process starts.
+     $ screen /dev/tty0 # In a separate TMUX pane, terminal window, etc.
+     $ screen /dev/tty1
+     $ (qemu) c		   # Start the boot process once screen is setup.
++
++This machine model supports emulation of the boot from the CE0 flash device by
++setting option ``execute-in-place``. When using this option, the CPU fetches
++instructions to execute by reading CE0 and not from a preloaded ROM
++initialized at machine init time. As a result, execution will be slower.
+-- 
+2.39.5
 
 
