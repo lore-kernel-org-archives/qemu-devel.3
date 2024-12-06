@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 666D6E77179
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:34:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B177CE7717B
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 12:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJXRj-00066j-4j; Fri, 06 Dec 2024 07:28:35 -0500
+	id 1tJXRf-00064Q-A1; Fri, 06 Dec 2024 07:28:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRO-0005xe-B0; Fri, 06 Dec 2024 07:28:15 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1tJXRO-0005xk-EQ; Fri, 06 Dec 2024 07:28:15 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tJXRI-00041n-HH; Fri, 06 Dec 2024 07:28:11 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B69ULCx027464;
- Fri, 6 Dec 2024 12:28:04 GMT
+ id 1tJXRJ-00042z-UA; Fri, 06 Dec 2024 07:28:13 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6B5NRR010783;
+ Fri, 6 Dec 2024 12:28:08 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=crE5l7LBr2vxcd1pC
- 7jaXPZsqVXiVf5HDbDb1CabZYg=; b=mEcqaGeijsrdgfWa2g6aADHMR7Pioos1X
- bv+IuX/E5pQOClBsy07gdZdkAzzL+eBqSICMkWEEkpvaC7dxjQifywVfLvudH1cL
- 21sUwoafhppsWEnJtd1Nj48F1G9pNderuAJZk4Pjlng7hHsaNn5oz47UXnUaB4E1
- ZQWLTszQDlHUyqCMamPuQDWVIHfhsbal/rxc2/C395arGt3ZmO1MUH/E3GFWrEYf
- pf2m5ocyejBx9FlMJpzZBkXbJwWS7LwAqb3S4asOTIasDa7V+4zhbF9fSbAgri3G
- qK1Cwpdg9d1XnqjE6xv+NOEJtdzTI3ITyIoVMfemdegU+4PcrNfUQ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43bxptgp1m-1
+ :mime-version:references:subject:to; s=pp1; bh=mrThCEedQQvZ2UbFf
+ wQqapZ5uHmFPIJ5slOmDocSbVU=; b=EJalyuIsYQ0MMdKtJmBngxcFq3E5MBjdU
+ QsdVvYAC4zblOWL0JR0YP3KpeVvfacY9Mr1L/zEu/1/PMXimcOdT0moHP7Ykl41R
+ aayPWrAqUK5zpQ6nPMn8vhEiNPXi8rNJMSFkFw+aME0/UIYgwpuETale4+z+QsrW
+ Ox3m54H16eWIlqf0dev+zFTdjAvsBGDRU9k3vVVhu+739eQclIaAwpx0JbllQDEO
+ RqOPlqA+tM4eS2gea0rcVvZy437YB0MHo16yernJ47MuMUU3kalOpcnP8CW4l8Yt
+ W/v/3z7qefCxHWN8uBXJt0H8QfJCV+wpoBy8T1kRXaVCN5DwMCDSw==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43b24rgxfv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:03 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6AhwXU023568;
- Fri, 6 Dec 2024 12:28:03 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438e1ndjdf-1
+ Fri, 06 Dec 2024 12:28:08 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B6BC9KT031769;
+ Fri, 6 Dec 2024 12:28:06 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 438ehmaked-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Dec 2024 12:28:03 +0000
+ Fri, 06 Dec 2024 12:28:06 +0000
 Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
  [10.20.54.104])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B6CRxsN61276554
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4B6CS3ld22938130
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Dec 2024 12:27:59 GMT
+ Fri, 6 Dec 2024 12:28:03 GMT
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1AB1A20040;
- Fri,  6 Dec 2024 12:27:59 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 06B2520043;
+ Fri,  6 Dec 2024 12:28:03 +0000 (GMT)
 Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A18C920043;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 8480020040;
+ Fri,  6 Dec 2024 12:28:02 +0000 (GMT)
 Received: from vela.ibmuc.com (unknown [9.171.26.200])
  by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Dec 2024 12:27:58 +0000 (GMT)
+ Fri,  6 Dec 2024 12:28:02 +0000 (GMT)
 From: Hendrik Brueckner <brueckner@linux.ibm.com>
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
  borntraeger@linux.ibm.com, Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: [RFC PATCH v2 02/15] s390x/cpumodel: add msa11 subfunctions
-Date: Fri,  6 Dec 2024 13:27:38 +0100
-Message-ID: <20241206122751.189721-3-brueckner@linux.ibm.com>
+Subject: [RFC PATCH v2 09/15] s390x/cpumodel: add
+ Miscellaneous-Instruction-Extensions Facility 4
+Date: Fri,  6 Dec 2024 13:27:45 +0100
+Message-ID: <20241206122751.189721-10-brueckner@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20241206122751.189721-1-brueckner@linux.ibm.com>
 References: <20241206122751.189721-1-brueckner@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: uliLUitSXX4gOAiHKdPBNYfuHtSL4A2L
-X-Proofpoint-ORIG-GUID: uliLUitSXX4gOAiHKdPBNYfuHtSL4A2L
+X-Proofpoint-GUID: 6yldIYJvTT1FM6BVV7bFAKfIY65jjUtF
+X-Proofpoint-ORIG-GUID: 6yldIYJvTT1FM6BVV7bFAKfIY65jjUtF
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 mlxlogscore=760
- malwarescore=0 priorityscore=1501 bulkscore=0 impostorscore=0
- clxscore=1015 lowpriorityscore=0 adultscore=0 spamscore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ phishscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 impostorscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 mlxscore=0 spamscore=0 malwarescore=0
+ mlxlogscore=931 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412060089
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -106,133 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-MSA11 introduces new HMAC subfunctions.
+This facility introduces few new instructions.
 
 Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
 ---
- target/s390x/cpu_features.c         |  2 ++
- target/s390x/cpu_features_def.h.inc | 10 ++++++++++
- target/s390x/cpu_models.c           |  8 ++++++++
- target/s390x/gen-features.c         | 24 ++++++++++++++++++++++++
- 4 files changed, 44 insertions(+)
+ target/s390x/cpu_features_def.h.inc | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
-index a3c239595a..36930feccd 100644
---- a/target/s390x/cpu_features.c
-+++ b/target/s390x/cpu_features.c
-@@ -254,6 +254,8 @@ static S390FeatGroupDef s390_feature_groups[] = {
-     FEAT_GROUP_INIT("msa9_pckmo", MSA_EXT_9_PCKMO, "Message-security-assist-extension 9 PCKMO subfunctions"),
-     FEAT_GROUP_INIT("msa10", MSA_EXT_10, "Message-security-assist-extension 10 facility"),
-     FEAT_GROUP_INIT("msa10_pckmo", MSA_EXT_10_PCKMO, "Message-security-assist-extension 10 PCKMO subfunctions"),
-+    FEAT_GROUP_INIT("msa11", MSA_EXT_11, "Message-security-assist-extension 11 facility"),
-+    FEAT_GROUP_INIT("msa11_pckmo", MSA_EXT_11_PCKMO, "Message-security-assist-extension 11 PCKMO subfunctions"),
-     FEAT_GROUP_INIT("mepochptff", MULTIPLE_EPOCH_PTFF, "PTFF enhancements introduced with Multiple-epoch facility"),
-     FEAT_GROUP_INIT("esort", ENH_SORT, "Enhanced-sort facility"),
-     FEAT_GROUP_INIT("deflate", DEFLATE_CONVERSION, "Deflate-conversion facility"),
 diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
-index 104d186c3f..15ea51fc54 100644
+index 0b7be0e6e9..8be2e0e46d 100644
 --- a/target/s390x/cpu_features_def.h.inc
 +++ b/target/s390x/cpu_features_def.h.inc
-@@ -200,6 +200,14 @@ DEF_FEAT(KMAC_AES_256, "kmac-aes-256", KMAC, 20, "KMAC AES-256")
- DEF_FEAT(KMAC_EAES_128, "kmac-eaes-128", KMAC, 26, "KMAC Encrypted-AES-128")
- DEF_FEAT(KMAC_EAES_192, "kmac-eaes-192", KMAC, 27, "KMAC Encrypted-AES-192")
- DEF_FEAT(KMAC_EAES_256, "kmac-eaes-256", KMAC, 28, "KMAC Encrypted-AES-256")
-+DEF_FEAT(KMAC_HMAC_SHA_224, "kmac-hmac-sha-224", KMAC, 112, "KMAC HMAC-SHA-224")
-+DEF_FEAT(KMAC_HMAC_SHA_256, "kmac-hmac-sha-246", KMAC, 113, "KMAC HMAC-SHA-256")
-+DEF_FEAT(KMAC_HMAC_SHA_384, "kmac-hmac-sha-384", KMAC, 114, "KMAC HMAC-SHA-384")
-+DEF_FEAT(KMAC_HMAC_SHA_512, "kmac-hmac-sha-512", KMAC, 115, "KMAC HMAC-SHA-512")
-+DEF_FEAT(KMAC_HMAC_ESHA_224, "kmac-hmac-esha-224", KMAC, 120, "KMAC HMAC-Encrypted-SHA-224")
-+DEF_FEAT(KMAC_HMAC_ESHA_256, "kmac-hmac-esha-246", KMAC, 121, "KMAC HMAC-Encrypted-SHA-256")
-+DEF_FEAT(KMAC_HMAC_ESHA_384, "kmac-hmac-esha-384", KMAC, 122, "KMAC HMAC-Encrypted-SHA-384")
-+DEF_FEAT(KMAC_HMAC_ESHA_512, "kmac-hmac-esha-512", KMAC, 123, "KMAC HMAC-Encrypted-SHA-512")
- 
- /* Features exposed via the KMC instruction. */
- DEF_FEAT(KMC_DEA, "kmc-dea", KMC, 1, "KMC DEA")
-@@ -275,6 +283,8 @@ DEF_FEAT(PCKMO_ECC_P384, "pckmo-ecc-p384", PCKMO, 33, "PCKMO Encrypt-ECC-P384-Ke
- DEF_FEAT(PCKMO_ECC_P521, "pckmo-ecc-p521", PCKMO, 34, "PCKMO Encrypt-ECC-P521-Key")
- DEF_FEAT(PCKMO_ECC_ED25519, "pckmo-ecc-ed25519", PCKMO, 40 , "PCKMO Encrypt-ECC-Ed25519-Key")
- DEF_FEAT(PCKMO_ECC_ED448, "pckmo-ecc-ed448", PCKMO, 41 , "PCKMO Encrypt-ECC-Ed448-Key")
-+DEF_FEAT(PCKMO_HMAC_512, "pckmo-hmac-512", PCKMO, 118, "PCKMO Encrypt-HMAC-512-Key")
-+DEF_FEAT(PCKMO_HMAC_1024, "pckmo-hmac-1024", PCKMO, 122, "PCKMO Encrypt-HMAC-1024-Key")
- 
- /* Features exposed via the KMCTR instruction. */
- DEF_FEAT(KMCTR_DEA, "kmctr-dea", KMCTR, 1, "KMCTR DEA")
-diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
-index 3eb8276aee..a62a3c3771 100644
---- a/target/s390x/cpu_models.c
-+++ b/target/s390x/cpu_models.c
-@@ -477,6 +477,14 @@ static void check_consistency(const S390CPUModel *model)
-         { S390_FEAT_KLMD_SHA3_512, S390_FEAT_MSA },
-         { S390_FEAT_KLMD_SHAKE_128, S390_FEAT_MSA },
-         { S390_FEAT_KLMD_SHAKE_256, S390_FEAT_MSA },
-+        { S390_FEAT_KMAC_HMAC_SHA_224, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_SHA_256, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_SHA_384, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_SHA_512, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_ESHA_224, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_ESHA_256, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_ESHA_384, S390_FEAT_MSA_EXT_3 },
-+        { S390_FEAT_KMAC_HMAC_ESHA_512, S390_FEAT_MSA_EXT_3 },
-         { S390_FEAT_KM_FULL_XTS_AES_128, S390_FEAT_MSA_EXT_4 },
-         { S390_FEAT_KM_FULL_XTS_AES_256, S390_FEAT_MSA_EXT_4 },
-         { S390_FEAT_KM_FULL_XTS_EAES_128, S390_FEAT_MSA_EXT_4 },
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index 06c3bf64f3..d6305f945a 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -256,6 +256,20 @@
-     S390_FEAT_PCKMO_AES_XTS_128_DK, \
-     S390_FEAT_PCKMO_AES_XTS_256_DK
- 
-+#define S390_FEAT_GROUP_MSA_EXT_11 \
-+    S390_FEAT_KMAC_HMAC_SHA_224, \
-+    S390_FEAT_KMAC_HMAC_SHA_256, \
-+    S390_FEAT_KMAC_HMAC_SHA_384, \
-+    S390_FEAT_KMAC_HMAC_SHA_512, \
-+    S390_FEAT_KMAC_HMAC_ESHA_224, \
-+    S390_FEAT_KMAC_HMAC_ESHA_256, \
-+    S390_FEAT_KMAC_HMAC_ESHA_384, \
-+    S390_FEAT_KMAC_HMAC_ESHA_512
-+
-+#define S390_FEAT_GROUP_MSA_EXT_11_PCKMO \
-+    S390_FEAT_PCKMO_HMAC_512, \
-+    S390_FEAT_PCKMO_HMAC_1024
-+
- #define S390_FEAT_GROUP_ENH_SORT \
-     S390_FEAT_ESORT_BASE, \
-     S390_FEAT_SORTL_SFLR, \
-@@ -321,6 +335,10 @@ static uint16_t group_MSA_EXT_10[] = {
-     S390_FEAT_GROUP_MSA_EXT_10,
- };
- 
-+static uint16_t group_MSA_EXT_11[] = {
-+    S390_FEAT_GROUP_MSA_EXT_11,
-+};
-+
- static uint16_t group_MSA_EXT_9_PCKMO[] = {
-     S390_FEAT_GROUP_MSA_EXT_9_PCKMO,
- };
-@@ -329,6 +347,10 @@ static uint16_t group_MSA_EXT_10_PCKMO[] = {
-     S390_FEAT_GROUP_MSA_EXT_10_PCKMO,
- };
- 
-+static uint16_t group_MSA_EXT_11_PCKMO[] = {
-+    S390_FEAT_GROUP_MSA_EXT_11_PCKMO,
-+};
-+
- static uint16_t group_ENH_SORT[] = {
-     S390_FEAT_GROUP_ENH_SORT,
- };
-@@ -878,6 +900,8 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-     FEAT_GROUP_INITIALIZER(MSA_EXT_9_PCKMO),
-     FEAT_GROUP_INITIALIZER(MSA_EXT_10),
-     FEAT_GROUP_INITIALIZER(MSA_EXT_10_PCKMO),
-+    FEAT_GROUP_INITIALIZER(MSA_EXT_11),
-+    FEAT_GROUP_INITIALIZER(MSA_EXT_11_PCKMO),
-     FEAT_GROUP_INITIALIZER(MULTIPLE_EPOCH_PTFF),
-     FEAT_GROUP_INITIALIZER(ENH_SORT),
-     FEAT_GROUP_INITIALIZER(DEFLATE_CONVERSION),
+@@ -90,6 +90,7 @@ DEF_FEAT(EDAT_2, "edat2", STFL, 78, "Enhanced-DAT facility 2")
+ DEF_FEAT(DFP_PACKED_CONVERSION, "dfppc", STFL, 80, "Decimal-floating-point packed-conversion facility")
+ DEF_FEAT(PPA15, "ppa15", STFL, 81, "PPA15 is installed")
+ DEF_FEAT(BPB, "bpb", STFL, 82, "Branch prediction blocking")
++DEF_FEAT(MISC_INSTRUCTION_EXT4, "minste4", STFL, 84, "Miscellaneous-Instruction-Extensions Facility 4")
+ DEF_FEAT(MSA_EXT_12, "msa12-base", STFL, 86, "Message-security-assist-extension-12 facility (excluding subfunctions)")
+ DEF_FEAT(VECTOR, "vx", STFL, 129, "Vector facility")
+ DEF_FEAT(INSTRUCTION_EXEC_PROT, "iep", STFL, 130, "Instruction-execution-protection facility")
 -- 
 2.43.5
 
