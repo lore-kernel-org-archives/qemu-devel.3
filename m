@@ -4,92 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8A8E7716E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8DDE77170
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 01:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJMqk-0000lc-M4; Thu, 05 Dec 2024 20:09:42 -0500
+	id 1tJMqD-0000it-SB; Thu, 05 Dec 2024 20:09:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJMqj-0000lK-Ai
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:41 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJMqh-0001hb-Mz
- for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:41 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3ea53011deaso449423b6e.1
- for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 17:09:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733447378; x=1734052178; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TBrT9cmtqC6Wc6NAGn+TMnvK8ES96RzIQWBhZXWJ4v0=;
- b=ZJ9Wx+P+Nt5GbrsjEq5QEycrHRfI5OHO7q+Nk+B1zifJyNDnJvZc54IHy4izDY3LzV
- 4Pm8dcNZVOvpkn4r9ysEv+1d5LCtZ1DHh7DoAn0CCqrj8WS/KYSjyXPb/+T/Rzlmn/NE
- QbDoARCQJTdKyO5nY91ZvYY8omz3aEcqw/trJquMFL1rOp45ufDQtlpSD1dm5pOKD5/R
- rZZPuaoDjKvP3OHkRgkI+o9BiOTPkD0EBqwjivnl6ATXiLu0rUucFarfV2yUxNIJMo1c
- uWPQR23iwUcV87OuEldf+NnrKY8+JavCsTR05ZeUFEdWRhZWAZCuhffqLCD1l8usqC6Y
- +jpA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMqB-0000ij-Uu
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJMqA-0001bM-5W
+ for qemu-devel@nongnu.org; Thu, 05 Dec 2024 20:09:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733447343;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=S1Mtxxgqg6jVzoxPtxm+RoTFopkEEAxe5lJjlIDGmkE=;
+ b=E/2sftWkWXXEOgeXd1t/PKjd17qXY/oHInWBFMEqfkjP5NPN/90QGe7P3zdQXbniYmjxYV
+ STlaVCQ6h2TbZFnMh6a/epeIV0NMDwYsTk6WKeeto+VdKM/EgxigtwtzbjpdFX+krDC1I4
+ G0CbKO8VV3zRxbKC/qbisMa7v/CIo34=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-156-ylH7h2MxMFK6gPzM1wSzXQ-1; Thu, 05 Dec 2024 20:08:58 -0500
+X-MC-Unique: ylH7h2MxMFK6gPzM1wSzXQ-1
+X-Mimecast-MFC-AGG-ID: ylH7h2MxMFK6gPzM1wSzXQ
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-466911d43f4so30484041cf.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Dec 2024 17:08:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733447378; x=1734052178;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TBrT9cmtqC6Wc6NAGn+TMnvK8ES96RzIQWBhZXWJ4v0=;
- b=cSf74Rd1aJHGsB76GtoiKqMWvWloTzH9UklBQTCmWZ1dFFeC2mOsWsYxewGGdtIs9Z
- 7bcZtOufCOjSlZFTmioSNiRMqObzLzhGc0D0jgBoY+ELASrqAyf6bsx4dvKH+JUvTxRY
- cHYw7BF0n4UQ3S5g+PIXMn+CH6oqvbEB8HV2kr8Ig87RY23V8cKemNqO+6sIpLtLXKd7
- xxNZZ8cxRnSweGkznyPRX9jdBYgUnSLlZH6A+Z/IWwOxjIJC6xKBpGpLWm4eFrOltpyE
- GjV1IoS8buWiNJs15S2yOZnIAKGVkjeeJPxYZWDK2sfbGjB2hDM4MYh9fBNTnmPkAS29
- xMxA==
+ d=1e100.net; s=20230601; t=1733447337; x=1734052137;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S1Mtxxgqg6jVzoxPtxm+RoTFopkEEAxe5lJjlIDGmkE=;
+ b=CRyRORa71t714f3BjtQ3+NLL/kg4zhcngIQeLXkADqqcLWOQExFMxkN/foI0vBp0xB
+ h8ZX3Mo/qhrbc2t0zbTH6g0Tcw5TNu+XP9sejkzO0p+7eIF8FycWM0k+mcNHSg6S/O4A
+ pb5F9GC0x+ia96o3k2k7558HPTVF/7F7PHzoueqVkzBRF+R2pKrbRBoI/Ge1/uKH6BL/
+ ubhQLvo9rJkJfN8M+6hL2XuI4kGqBdEbRhqPcRrhM+adzXCohOq2inIUh60TCPSPFdwh
+ feDga56fEQe5TGJd0RaO/o7wWi9zPJ3bgCoyJoclgtCtzWC/EZSxco3M9m3jJsFscLoB
+ 0C9g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNF/bwWk0gHsSBRQu0dB8vnRzYxKonblMbcoZ7eD3E2LJXYXqurqftdivY5AlWHHJyguR77z98c4OR@nongnu.org
-X-Gm-Message-State: AOJu0Ywccc4JcF4LmCj2BWAEr4OsylESyK4gjQZCi7fV9MRZLRnqEgld
- gjvVb6GglrBeblicTGcLoEOPHj4iUFNBqJ9dzwbf2qObguksblTp2A2XGLUOOGg=
-X-Gm-Gg: ASbGncthuh+uZfukwU7tdCzJJjloKiMXn/FH1VOkg4eMw8XgE0AmP2juXEI2CI/BfDK
- r5xw+jiHPP3PSggO57L5g8lnuHZvZqxUzbzNKi8NvGvQe4SNgHKAB/Tjm5mKqYTRZIYhDnPLIlX
- yLtaYu78dQFIypR88eyZsZpZ+fzKbKSgNKK2XoOqWfGDplJKe50G44XdFcMezTUO54GNyJnUcsk
- 0TAOQQYWccZzlPtnIi0u/dFNEAmeFJDsZjG+ACLPjZmkimnskFRb9YGA3LkpoTfjiyXEd1in+6u
- cgOg2pbv/f89OgH+Bx+kvj3Z4rZY
-X-Google-Smtp-Source: AGHT+IEC24fbXckmrB7N6QS85meRThP3tkz9MVa8mXTHzNCkvaUNWA2l3FP7TPr4kGK80PlUBQ3nsg==
-X-Received: by 2002:a05:6830:650d:b0:71d:4757:8c8a with SMTP id
- 46e09a7af769-71dcf56513emr687911a34.26.1733447378336; 
- Thu, 05 Dec 2024 17:09:38 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f2793249b6sm512861eaf.38.2024.12.05.17.09.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Dec 2024 17:09:37 -0800 (PST)
-Message-ID: <03f56e2b-a095-4dae-b08d-227ce2db40b3@linaro.org>
-Date: Thu, 5 Dec 2024 19:09:34 -0600
+ AJvYcCUGm5/8GOkLBxbWs4nIrPN5MY9uX0mSD96mBV5yYHk60HtF5TIv+NC1FA4a9HaSL2SILvLVJ2hV3mIH@nongnu.org
+X-Gm-Message-State: AOJu0Yxl2FbePXgE5axZ+ADK/CUmqhzYgE+3jRTRnyoxhpvjyyjBA1a7
+ v1svZjs1bBraimq+uWXfXvlKeavN+HHkuCDBaIGGi6AGde+pZjAe887fveG2aeX/P30zgepbxuD
+ 2T5/PdcAtSSTnLzoNiIzbsLp8CfYtAsrV5Oow8PpO0R3dJ9EymHeh
+X-Gm-Gg: ASbGncsuw7t7+ejla9C/w163wJD5JUvAtJ30LDXth8eH2YRB12LBUYfsEMB0DlYq7VL
+ WqU0DX5EHyxMAhVynUvx1y9EBHqvTiM1pHOSFzthdQqFtR6Nc2L7OzNgcq+gKxvW2AXaeaQxEvA
+ DzRgITPku0Ws2MAYex6fc9lSDyrvkNdzTh+s7S8L4gTvvf/SK6vYIN+y298St04xy3Ru1BLDFyF
+ LOJnY/RB6mejv3V5f4vJCESZZBkBrdTz1/cgPCD1pFs5p4V36ilLbtGK/WtpBU3U+ifJd13Ra00
+ 3PsjhKS2Aws=
+X-Received: by 2002:a05:622a:1b94:b0:461:17e6:264d with SMTP id
+ d75a77b69052e-46734ca3879mr23361831cf.8.1733447336719; 
+ Thu, 05 Dec 2024 17:08:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHajZg/1LyThU5/W6ba+NW79s7yC26qzIW59i/dGBVh6WGF+HEaa8cJwPwCe0p8D3wNwk42GA==
+X-Received: by 2002:a05:622a:1b94:b0:461:17e6:264d with SMTP id
+ d75a77b69052e-46734ca3879mr23361531cf.8.1733447336372; 
+ Thu, 05 Dec 2024 17:08:56 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-467297c23fdsm14363121cf.79.2024.12.05.17.08.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Dec 2024 17:08:55 -0800 (PST)
+Date: Thu, 5 Dec 2024 20:08:53 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] overcommit: introduce mem-lock-onfault
+Message-ID: <Z1JOpadES2iV_i0v@x1n>
+References: <20241205231909.1161950-1-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/mips: Remove tswap() calls in semihosting
- uhi_fstat_cb()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Aleksandar Rikalo <arikalo@gmail.com>
-References: <20241205231330.82355-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241205231330.82355-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241205231909.1161950-1-d-tatianin@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,28 +107,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 17:13, Philippe Mathieu-Daudé wrote:
-> In preparation of heterogeneous emulation where cores with
-> different endianness can run concurrently, we need to remove
-> the tswap() calls -- which use a fixed per-binary endianness.
+On Fri, Dec 06, 2024 at 02:19:06AM +0300, Daniil Tatianin wrote:
+> Currently, passing mem-lock=on to QEMU causes memory usage to grow by
+> huge amounts:
 > 
-> Get the endianness of the UHI CPU accessed using
-> mips_env_is_bigendian() and replace the tswap() calls
-> by bswap() ones when necessary.
+> no memlock:
+>     $ qemu-system-x86_64 -overcommit mem-lock=off
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     45652
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/mips/tcg/sysemu/mips-semi.c | 43 +++++++++++++++++++++---------
->   1 file changed, 30 insertions(+), 13 deletions(-)
+>     $ ./qemu-system-x86_64 -overcommit mem-lock=off -enable-kvm
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     39756
+> 
+> memlock:
+>     $ qemu-system-x86_64 -overcommit mem-lock=on
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     1309876
+> 
+>     $ ./qemu-system-x86_64 -overcommit mem-lock=on -enable-kvm
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     259956
+> 
+> This is caused by the fact that mlockall(2) automatically
+> write-faults every existing and future anonymous mappings in the
+> process right away.
+> 
+> One of the reasons to enable mem-lock is to protect a QEMU process'
+> pages from being compacted and migrated by kcompactd (which does so
+> by messing with a live process page tables causing thousands of TLB
+> flush IPIs per second) basically stealing all guest time while it's
+> active.
+> 
+> mem-lock=on helps against this (given compact_unevictable_allowed is 0),
+> but the memory overhead it introduces is an undesirable side effect,
+> which we can completely avoid by passing MCL_ONFAULT to mlockall, which
+> is what this series allows to do with a new command line option called
+> mem-lock-onfault.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+IMHO it'll be always helpful to dig and provide information on why such
+difference existed.  E.g. guest mem should normally be the major mem sink
+and that definitely won't be affected by either ON_FAULT or not.
 
-> +            bswap16s((uint16_t *)&dst->uhi_st_dev);
+I had a quick look explicitly on tcg (as that really surprised me a bit..).
+When you look at the mappings there's 1G constant shmem map that always got
+locked and populated.
 
-Rather than cast, maybe better to
+It turns out to be tcg's jit buffer, alloc_code_gen_buffer_splitwx_memfd:
 
-     dst->uhi_st_dev = bswap16(dst->uhi_st_dev);
+    buf_rw = qemu_memfd_alloc("tcg-jit", size, 0, &fd, errp);
+    if (buf_rw == NULL) {
+        goto fail;
+    }
 
+    buf_rx = mmap(NULL, size, host_prot_read_exec(), MAP_SHARED, fd, 0);
+    if (buf_rx == MAP_FAILED) {
+        error_setg_errno(errp, errno,
+                         "failed to map shared memory for execute");
+        goto fail;
+    }
 
-r~
+Looks like that's the major reason why tcg has mlockall bloated constantly
+with roughly 1G size - that seems to be from tcg_init_machine().  I didn't
+check kvm.
+
+Logically having a on-fault option won't ever hurt, so probably not an
+issue to have it anyway.  Still, share my finding above, as IIUC that's
+mostly why it was bloated for tcg, so maybe there're other options too.
+
+> 
+> memlock-onfault:
+>     $ qemu-system-x86_64 -overcommit mem-lock-onfault=on
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     54004
+> 
+>     $ ./qemu-system-x86_64 -overcommit mem-lock-onfault=on -enable-kvm
+>     $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+>     47772
+> 
+> You may notice the memory usage is still slightly higher, in this case
+> by a few megabytes over the mem-lock=off case. I was able to trace this
+> down to a bug in the linux kernel with MCL_ONFAULT not being honored for
+> the early process heap (with brk(2) etc.) so it is still write-faulted in
+> this case, but it's still way less than it was with just the mem-lock=on.
+> 
+> Daniil Tatianin (2):
+>   os: add an ability to lock memory on_fault
+>   overcommit: introduce mem-lock-onfault
+> 
+>  include/sysemu/os-posix.h |  2 +-
+>  include/sysemu/os-win32.h |  3 ++-
+>  include/sysemu/sysemu.h   |  1 +
+>  migration/postcopy-ram.c  |  4 ++--
+>  os-posix.c                | 10 ++++++++--
+>  qemu-options.hx           | 13 ++++++++++---
+>  system/globals.c          |  1 +
+>  system/vl.c               | 18 ++++++++++++++++--
+>  8 files changed, 41 insertions(+), 11 deletions(-)
+> 
+> -- 
+> 2.34.1
+> 
+> 
+
+-- 
+Peter Xu
+
 
