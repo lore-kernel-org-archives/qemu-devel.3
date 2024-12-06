@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45931E77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:27:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0B69E77173
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 17:27:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJc1n-0004aw-EN; Fri, 06 Dec 2024 12:22:10 -0500
+	id 1tJc23-000564-40; Fri, 06 Dec 2024 12:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1Q-0004Ak-2e; Fri, 06 Dec 2024 12:21:44 -0500
-Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ id 1tJc1O-00047O-9S; Fri, 06 Dec 2024 12:21:42 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc1M-0000yL-PW; Fri, 06 Dec 2024 12:21:43 -0500
+ id 1tJc1L-0000xu-Kb; Fri, 06 Dec 2024 12:21:41 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 5DE59A443C9;
- Fri,  6 Dec 2024 17:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DDC6C4CEEA;
- Fri,  6 Dec 2024 17:21:27 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id F32C95C6AEA;
+ Fri,  6 Dec 2024 17:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F973C4CEE0;
+ Fri,  6 Dec 2024 17:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733505687;
- bh=b69HHmbxNrBqg55Yd1AraPonts1JMQymrFJS7+Ypliw=;
+ s=k20201202; t=1733505688;
+ bh=W9YAnoSIBP0h6QQnoV6iGZCBdgmPfaExfAOZs9Xc2y8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=o7TK5J34v8vVAVYL9MvxviGP8hFpqijKi0A4AhYcTCtnsrQE8Olu/Lut98h/cC1wX
- sLW2xFhxVzdqjuTLxgZMobkV7NCY5aSyZmuPTlKvWHCEb8B10Jqt1OfLAw/RHGZ9Ej
- YVNCG5eK2npYC75wU2LSBNiPOgOEyj760YH8qnZbha53csdvTI5kKpFPsjlg5fQ4Dj
- rtLGr+iw6pwEcipUoootnjrN1eugUvdub0QJx0ikbvdZaZSo5HS1pcq2aDd+IO0hD3
- NtBXTRcXqtkhnglSRBi6t3tpAE3vt3xIcxemGEG0dsdci4VdzZ5xhv6nLMlA09lutc
- O6qddpa4kwpqw==
+ b=qo6Qvl/AlnhWF5v8CxOyjJ2xt+dHAFRzTKQJRKmuAk6A6DbJU455anBXw/yEL6Zi8
+ LSwEGEPWthIrWYIlKBsD626h2EnuywXyAuRDpBaV+8184vS7t4kdFoFDQrUm3aTyMN
+ bm69gPmBuaaIKG67LcbNgzOv9nskajkrTv7dPBVqUnM8jkKezDIk6IDScruoA3SFsu
+ /DcAuxRjVeyUIPNHb4UmT5+G+2n8ztihJlV+iqYUmVhIkuqYCcHvCeZdh70QXleEZD
+ OndxeMhW4xy5b+0iOxybYu/dB33lAlZuVvSON3qBoYhhwiHWpb6KaupDzPAnjU7NQv
+ dhgFLewey1ykg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJc17-00000005RKM-3Sj6; Fri, 06 Dec 2024 18:21:25 +0100
+ id 1tJc18-00000005RLX-1MdH; Fri, 06 Dec 2024 18:21:26 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -44,17 +44,16 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH 13/31] acpi/ghes: better name the offset of the hardware error
- firmware
-Date: Fri,  6 Dec 2024 18:12:35 +0100
-Message-ID: <a8c89525bfd8137dbf1209ef72d603c523aad82c.1733504943.git.mchehab+huawei@kernel.org>
+Subject: [PATCH 31/31] FIXME: acpi/ghes: properly set data record size
+Date: Fri,  6 Dec 2024 18:12:53 +0100
+Message-ID: <104add143d349685cea1b47298b8f5d367a3a15e.1733504943.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733504943.git.mchehab+huawei@kernel.org>
 References: <cover.1733504943.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
@@ -77,88 +76,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The etc/hardware_errors fw_cfg file is where the HEST error
-source structures store registers pointed by Generic Address
-Structures, as defined at:
-
-	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#generic-error-data-entry
-
-and
-
-	https://uefi.org/specs/ACPI/6.5/18_Platform_Error_Interfaces.html#generic-hardware-error-source-version-2-ghesv2-structure
-
-As the name of the firmware file is hardware_errors, better
-name the variable where the offset pointing to it will be stored
-from ghes_error_le to hw_error_le.
-
-No functional changes.
-
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/generic_event_device.c | 4 ++--
- hw/acpi/ghes.c                 | 4 ++--
- include/hw/acpi/ghes.h         | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ hw/acpi/ghes.c | 17 +++++++----------
+ 1 file changed, 7 insertions(+), 10 deletions(-)
 
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 663d9cb09380..17baf36132a8 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -364,7 +364,7 @@ static const VMStateDescription vmstate_ghes = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
--        VMSTATE_UINT64(ghes_addr_le, AcpiGhesState),
-+        VMSTATE_UINT64(hw_error_le, AcpiGhesState),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -372,7 +372,7 @@ static const VMStateDescription vmstate_ghes = {
- static bool ghes_needed(void *opaque)
- {
-     AcpiGedState *s = opaque;
--    return s->ghes_state.ghes_addr_le;
-+    return s->ghes_state.hw_error_le;
- }
- 
- static const VMStateDescription vmstate_ghes_state = {
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 52c2b69d3664..90d76b9c2d8c 100644
+index 1fe4c536611a..856551df2103 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -359,7 +359,7 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+@@ -211,6 +211,12 @@ ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
+      */
+     QemuUUID fru_id = {};
  
-     /* Create a read-write fw_cfg file for Address */
-     fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
--        NULL, &(ags->ghes_addr_le), sizeof(ags->ghes_addr_le), false);
-+        NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
++    /*
++     * Calculate the size with this block. No need to check for
++     * too big CPER, as CPER size is checked at ghes_record_cper_errors()
++     */
++    data_length += ACPI_GHES_GESB_SIZE;
++
+     /* Build the new generic error status block header */
+     acpi_ghes_generic_error_status(block, ACPI_GEBS_UNCORRECTABLE,
+         0, 0, data_length, ACPI_CPER_SEV_RECOVERABLE);
+@@ -580,21 +586,12 @@ int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+           UUID_LE(0xA5BC1114, 0x6F64, 0x4EDE, 0xB8, 0x63, 0x3E, 0x83, \
+                   0xED, 0x7C, 0x83, 0xB1);
+     Error *errp = NULL;
+-    int data_length;
+     GArray *block;
  
-     ags->present = true;
- }
-@@ -385,7 +385,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
-     }
-     ags = &acpi_ged_state->ghes_state;
+     block = g_array_new(false, true /* clear */, 1);
  
--    start_addr = le64_to_cpu(ags->ghes_addr_le);
-+    start_addr = le64_to_cpu(ags->hw_error_le);
+-    data_length = ACPI_GHES_DATA_LENGTH + ACPI_GHES_MEM_CPER_LENGTH;
+-    /*
+-     * It should not run out of the preallocated memory if adding a new generic
+-     * error data entry
+-     */
+-    assert((data_length + ACPI_GHES_GESB_SIZE) <=
+-            ACPI_GHES_MAX_RAW_DATA_LENGTH);
+-
+     ghes_gen_err_data_uncorrectable_recoverable(block, guid,
+-                                                data_length);
++                                                ACPI_GHES_MAX_RAW_DATA_LENGTH);
  
-     start_addr += source_id * sizeof(uint64_t);
- 
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 21666a4bcc8b..39619a2457cb 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -65,7 +65,7 @@ enum {
- };
- 
- typedef struct AcpiGhesState {
--    uint64_t ghes_addr_le;
-+    uint64_t hw_error_le;
-     bool present; /* True if GHES is present at all on this board */
- } AcpiGhesState;
- 
+     /* Build the memory section CPER for above new generic error data entry */
+     acpi_ghes_build_append_mem_cper(block, physical_address);
 -- 
 2.47.1
 
