@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BF0E77173
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 00:58:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35ACE77173
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 01:02:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJj8s-0002eK-Ru; Fri, 06 Dec 2024 19:57:54 -0500
+	id 1tJjD9-0003SM-Fs; Fri, 06 Dec 2024 20:02:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJj8q-0002e5-Pm
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 19:57:52 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tJjD7-0003Rt-1S
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 20:02:17 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJj8p-000884-0V
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 19:57:52 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-215d92702feso22814445ad.1
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 16:57:50 -0800 (PST)
+ id 1tJjD5-0000D0-B4
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 20:02:16 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-7253bc4d25eso2182705b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 17:02:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733533069; x=1734137869; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733533333; x=1734138133; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zDD4ieEHQBgq6iCHOmI86xja63Ks3TWXyk1SqpXsArU=;
- b=Ot4Fs4QvBcC0pQrz+6vzdhd0vANmFmUTXfdkCPtMMsxEoLObVOLBLqBziiFxikL7jh
- 9gstJUjBSEO3tlJ82B7B1Tj8Eh9EzlPLbYGee/dABmh28Il+8h0jVJfhF8ObyI4r2GOC
- 9WxRjN7gOr9xEqtB/D8a20qGUKH5imuXkdRmLftDpq4+cPtAd2xuAogtxEFU/kHispz9
- WEUcyw9LIIdfGRiltP3hNzYSChe9gYop2YiJSGt/zI0R8MWkvA6zB7OKh4QabmAgie3P
- q30OTgLnLkpzi4ebIHitx0MVzs1l7/xPtZA1ORPC2gsI0YO5nDH+grkKnrzj+mxwJvlU
- rSNA==
+ bh=QLjMntMNYMt6ZCvmnvQ2+4GvszUDvk5iKu3g04zv9O0=;
+ b=Fd50Z2aRWcyIKwxVsX6Lz2nnwuGUsNnaQZqt/M4ZHS2cPPVxZ1e81oYBCk4aigytNn
+ zAZxzI88buXyVRdJe+YqNZZtZcDCX9WI/KO2P1/yD4SBSDvIGMq5ysA8qflzTdLyf8ng
+ aDEgYH3zMWhfUXEONhiRCsD/hFxJD4OB6qkLWawhpIQY9gL8c6dDBiK7izGXWF+WQYw2
+ MJWJfUpuMM1X4m7zUkjJPQGbPJRTmYBFFltNXJoe1+0KazsAQb/16UZk9+G7fLfKhX1x
+ kPq5g84dzGKc/HrwYSgCKigi1THS0babwWoJnQrsHX9VJ5rBdJAtnq1zx5rDQTHsNqYv
+ p3dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733533069; x=1734137869;
+ d=1e100.net; s=20230601; t=1733533333; x=1734138133;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zDD4ieEHQBgq6iCHOmI86xja63Ks3TWXyk1SqpXsArU=;
- b=O2EAqghT5Op/yCO+49faq2lmrRFjO7BRnGaRD3fzfOUuZrhqRSwbe6iSnvvfNIcU1+
- WxuqJgvYLQ/+XYaqB5IFI/DalPEHE4OfRBK+M83/HH7Zkn/3sgahl7nx+Rx12e96NjxD
- CeU50r3/ECV1Pp8eoe/RVCLYQ1G43iO5iI3ELPqK4In1gL/mqxRYFaD6dC3E24/gJXh+
- 95jJvn+sYkvruQYLSrqBXBhsx/kV0Z3Ojqd0umYudQPzcIarFIdtCGPq9jzMMZqqqqP6
- I6z7Ajr1MjzvawQebcPsrA7eQkLFeCrftzuzJnLsYtfT8LpTz8iZ9mnP8daL6QTogmK8
- NVvw==
+ bh=QLjMntMNYMt6ZCvmnvQ2+4GvszUDvk5iKu3g04zv9O0=;
+ b=dd+3CmW6EhqQqTrEqSf6k8RjBY2erLvkevZV4o8OEwDHcfNi4nePszq8FPMK8cioeR
+ kFO0U6DutCL/XgZaOVI24ES/q9w4Z5xg0I0JVmAY/ugA72QPufuz+PNt2IwQwNY4ZOc1
+ SQMtfJI58yiVIMPGNHZd9JojKSgDN5H16sfDGpMYNQ4MtOoU8WLb7DnjLekzGTjXfcOf
+ mcv30TPRE2P3Dn6+av4aybcJCBwNuFYuwyhX+JwLuZBnWzdN+YNU5/VlilVN8iqLX1gE
+ EQSGPtyxw2ybZ0g4rTUrWEm+W6LpLxRJS5PZhTSrZgCiSN8fLI3RiH4JP59TsgZDY48J
+ Mv2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJ552y2PtVfn0wFbh9MxMouFbFHmsIGbLAW5EYSs6LraQM4LKnpzqxTGSUB3VRL96uWK4TRKHoRjv9@nongnu.org
-X-Gm-Message-State: AOJu0YxhWyCOQx6jyULEUA9GfsDVxodsb0zM+/GfJzg7y/EUN+HXFrct
- 0ANaNzVFaZWa7F5e6uLhU+VO8dYlPnke8szzbOTHgeNCM21e+Hl/
-X-Gm-Gg: ASbGnctHdsYXC7SgFutMxMysyD5pjDeQMNtQ/dyWgElWoOGOosDHY6iCwnT/sAXBPSP
- JXlYQs0TzU9KZ/5jURbUNfCxk9hPafRs7+hsFo5qMNEPbhditMn3iHmQu8fLaVplHgf3llUr8th
- kcIRWR/HzP/HxE+L3mg2iU4Yih19x22Uiz4/xoEKQWZHGG6GTKzDTcdBYjLqUabNamEyBzksT62
- uVhGQ/fSvSb0msWBHGfjNVMeXGR2J5p4tx7qziuLdFYjK1cJUvrpyw=
-X-Google-Smtp-Source: AGHT+IEqDxRpdeJVFCNaD+e8LIIjJOAhB2xt6YnjxlBAQWoQKZVsMCGofJZ83V9RDZbQ/5GZYOTycQ==
-X-Received: by 2002:a17:902:ea02:b0:216:2b14:b625 with SMTP id
- d9443c01a7336-2162b14cdfamr12993155ad.31.1733533069110; 
- Fri, 06 Dec 2024 16:57:49 -0800 (PST)
+ AJvYcCWR6lMYngq+qfEiIo6be3tU0vQLxuh2VLVcD37ldS8mDsBSZphNr+B9JHcaXcMSlvU91mKJYvKgYVU+@nongnu.org
+X-Gm-Message-State: AOJu0YxIeSTxIZMfJcZGcyPnGAmnhZ0R2knoOHw/cqWWiltFEOQm0c9C
+ SbZHR9FnSvPFzv77fEX+i0vxc+/z/BkEKwTeCwDnDssDlzRXaAOO
+X-Gm-Gg: ASbGncsq9jo72qUvN397E9Kzwcu2VCOknQxkuuE+2EVA/BfbKhYv9iAV1krWpjrFo1T
+ rddKpp2HQAXhvBeSatzzUJr3OhSMVuWW/nlwrcICCEyDGpv5VwKct+uPJxpcLR7lhkHFD/seKfu
+ C9AHMYc6ilAOzYw3x8EzqUQoYFszSc35PTFBOW9C0QKWXuNU161hgbewWKcHUY89a70wIQZwfBo
+ p0BDlOdKi4SR/b5fCr5sUuwBUafbjKGERpXN30rh+GAqT6SIfBKbYc=
+X-Google-Smtp-Source: AGHT+IEuxrnOfzy+gi1Am5/yu1irnoXN3yMRiWKha8Zr586PmcrVUrP0lM2l48zGEskyJR+JuRNV7A==
+X-Received: by 2002:a17:90a:cf97:b0:2ea:4c4d:95a1 with SMTP id
+ 98e67ed59e1d1-2ef41c98ac2mr14858541a91.17.1733533333194; 
+ Fri, 06 Dec 2024 17:02:13 -0800 (PST)
 Received: from [192.168.1.211] ([50.39.253.148])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215f8f0d18csm33551795ad.204.2024.12.06.16.57.48
+ 98e67ed59e1d1-2eeffb5fcb7sm5706256a91.0.2024.12.06.17.02.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 16:57:48 -0800 (PST)
-Message-ID: <2c0893fa-9d84-4003-861b-91a923f9439f@gmail.com>
-Date: Fri, 6 Dec 2024 16:57:47 -0800
+ Fri, 06 Dec 2024 17:02:12 -0800 (PST)
+Message-ID: <8e25cab2-6809-4a66-b3f1-f9570f408614@gmail.com>
+Date: Fri, 6 Dec 2024 17:02:11 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/3] Add additional plugin API functions to read and
- write memory and registers
+Subject: Re: [PATCH v2 3/3] Add inject plugin and x86_64 target for the inject
+ plugin
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
  <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
  <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+ <philmd@linaro.org>
 References: <20241206102605.961658-1-rowanbhart@gmail.com>
- <55c95bd1-a1bc-460c-b4fe-1f52f8af2c2e@linaro.org>
+ <20241206102605.961658-4-rowanbhart@gmail.com>
+ <5ec40cb8-8a9d-4d13-b78e-79ea30317dbf@linaro.org>
 Content-Language: en-US
 From: Rowan Hart <rowanbhart@gmail.com>
-In-Reply-To: <55c95bd1-a1bc-460c-b4fe-1f52f8af2c2e@linaro.org>
+In-Reply-To: <5ec40cb8-8a9d-4d13-b78e-79ea30317dbf@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,34 +109,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I am personally in favor to adding such features in upstream QEMU, but we should discuss it with the maintainers, because it would allow to change the state of execution, which is something qemu plugins actively didn't try to do. It's a real paradigm shift for plugins.
+>> +++ b/tests/tcg/plugins/inject.c
 > 
-> By writing to memory/registers, we can start replacing instructions and control flow, and there is a whole set of consequences to that.
+> Could we find a better name? 
+
+For sure, maybe "hypercalls.c" since that's really what it's mostly about.
+
+>> @@ -0,0 +1,206 @@
+>> +/*
+>> + * Copyright (C) 2024, Rowan Hart <rowanbhart@gmail.com>
+>> + *
+>> + * License: GNU GPL, version 2 or later.
+>> + *   See the COPYING file in the top-level directory.
+>> + */
 > 
+> We can add a comment here about what the plugin is doing. 
 
-Totally agree! As much as I really want this functionality for plugins, I think
-alignment on it is quite important. I can see very cool use cases for being
-able to replace instructions and control flow to allow hooking functions,
-hotpatching, and so forth.
+Will do!
 
-I don't really know the edge cases here so your expertise will be helpful. In
-the worst case I can imagine: what would happen if a callback overwrote the
-next insn? I'm not sure what behavior I would expect if that insn has already
-been translated as part of the same tb. That said, the plugin is aware of which
-insns have already been translated, so maybe it is not unreasonable to just
-document this as a "don't do that". Let me know what you think.
+> One challenge with picking a random value, is how to ensure this pattern has no other meaning for all architectures? I'm not sure we can find a single pattern of bytes that works for all arch, even though that would be definitely stylish :).
+> 
+> In more, it seems that we are reinventing the syscall interface, while we already have it. But as the current instrumentation only works for user-mode, having a specific hypercall interface might be worth it for plugins, so system mode could benefit from it too.
+> 
+> The work done here could serve later to define a proper interface. 
 
-> The hypercall functionality would be useful for plugins as a whole. And I think it definitely deserves to be worked on, if maintainers are open to that as well.
 
-Sure, I'd be happy to work on this some more. At least on the fuzzing side of
-things, the way hypercalls are done across hypervisors (QEMU, Bochs, etc) is
-pretty consistent so I think we could provide a useful common set of
-functionality. The reason I did the bare minimum here is I'm not familiar with
-every architecture, and a good NOP needs to be chosen for each one along with a
-reasonable way to pass some arguments -- I don't know if I'm the right person
-to make that call.
+I'll see what I can do about this. SIMICS supports many architectures and has a
+"magic instruction" interface[0] (basically hypercalls) and has these
+instructions defined per-architecture in a way that at minimum there are 12
+values available which work on every architecture the simulator supports. QEMU
+supports more architectures than SIMICS but I think we could start there and
+follow a similar approach.
 
-Glad to hear you're for this idea!
+[0]:
+https://intel.github.io/tsffs/simics/simics-user-guide/breakpoints.html#Magic-Breakpoints
 
 -Rowan
 
