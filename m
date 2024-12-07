@@ -4,80 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8B85E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 13:48:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECC96E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 15:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJvA2-0005K9-6a; Sat, 07 Dec 2024 08:47:54 -0500
+	id 1tJwRz-0000Oa-Ko; Sat, 07 Dec 2024 10:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJvA0-0005Jm-P3
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:47:52 -0500
-Received: from mailgate02.uberspace.is ([185.26.156.114])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJv9y-0005nD-Vx
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:47:52 -0500
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 39E04180C09
- for <qemu-devel@nongnu.org>; Sat,  7 Dec 2024 14:47:48 +0100 (CET)
-Received: (qmail 27804 invoked by uid 990); 7 Dec 2024 13:47:48 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 07 Dec 2024 14:47:48 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJwRx-0000O2-Lu; Sat, 07 Dec 2024 10:10:29 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJwRu-0007Zh-KU; Sat, 07 Dec 2024 10:10:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733584227; x=1765120227;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=hEOMO+s5ITh0FXxHeRtqOuIFYoHEToLGubNZISpkVQo=;
+ b=aOKShgldaZXTZQ4Nqu58FsOE6kgUYJP9HVhbyevZ+/8MBDYnuaMqewNC
+ zcejCmLH4eU+ezF//6rc7pRy7uovhkpOkDecqMBTMoYx6hhD3XuRuk+0L
+ xHlczAurBaYYMfb1ZCEHz3zAYER/f3AhbDc25T4zFnqxmxs7y/e4ZnT0k
+ 8x94UGSE0sZZkbnu9UN6JTZEIYwbMHVLkgVGEvkfgy7v0V6AJeIsRi2Xr
+ /hx4BBVpyUQuteE6Sjb6YLKrEtAdQDmo+/Nhb4MwLLEKMEbcN9fuC0gPB
+ 60pxRrWf8I+l3P09TUg0dAtYhxoF/8cLawhj2KuJ9R03GSe5JDtGz+kFk g==;
+X-CSE-ConnectionGUID: 8iaiRFYcQGKcACe9Y3eipQ==
+X-CSE-MsgGUID: uS1YRyIMTxWpfwlfiuj/SQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11279"; a="34167033"
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="34167033"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Dec 2024 07:10:22 -0800
+X-CSE-ConnectionGUID: 8Q/XD6z0RSqdCJfOSyokUw==
+X-CSE-MsgGUID: 4akUnClOTOyA99YnQ+lUwQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="125574284"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa001.fm.intel.com with ESMTP; 07 Dec 2024 07:10:19 -0800
+Date: Sat, 7 Dec 2024 23:28:32 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+Message-ID: <Z1RpoNPgL3PCXAWB@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-10-zhao1.liu@intel.com>
+ <1da970e8-1708-48ef-87c4-1099d23e8909@redhat.com>
 MIME-Version: 1.0
-Date: Sat, 07 Dec 2024 13:47:47 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <7bfbd34424d0662e6a0ac25348bd5269a93edb2e@nut.email>
-TLS-Required: No
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: "Richard Henderson" <richard.henderson@linaro.org>, "Pierrick Bouvier"
- <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
- Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
-In-Reply-To: <21c28157-6d3b-4b07-9dd6-241b3198be93@linaro.org>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
- <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
- <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
- <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
- <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
- <867d8a3a-ddf4-4655-9bfc-51c1a2ad8203@linaro.org>
- <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
- <70666b89-1f04-4615-ae16-e1eefac2a446@linaro.org>
- <21c28157-6d3b-4b07-9dd6-241b3198be93@linaro.org>
-X-Rspamd-Bar: +
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.089371) MIME_GOOD(-0.1)
-X-Rspamd-Score: 1.310628
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=EJAXzIOg13VeVv7XmzTaCBez5ObSuyLDZhZeI6z+RoI=;
- b=rGBrqbx2PYGmlGV2kF1u9yn7lxwa58HtPxXQB94M1FraqNBozA18XMxKLeMvymIWJ63JBE+S11
- 0iAsThtaoxU9irSVgjFuhjE+mb2y+PBnbQXwFIN/Eh2i053mEV8sHplI0CFP+5dXSRRuw0rH/JOJ
- vZ8Mbs9hUNZSSynCW37mZqT3u3BXYY1G5mhvC3mr4LUnjWiFsK4xIZvyVOZ+9xsxSmTqRsc+Ir2V
- OTBnyuZ9xYOWFwkdWE1aZdNre7Ja0EPIRRbHaTQncVinCtdI+6ig0uSEuR7jb7B1cqdpKhJXbmBY
- mG01aQtBoTlqQDl1+t3i6mo6JXGrM1qp9KI4k3ilZqFKDpD5A13M7bf9xwOHKDieT272l8uWML13
- 4Oj7Vk9Wv5fP/hoXIiOLY69X1bSH2TLfX2lhlKxF3kLuAjEZklTHJ72iAFNMa6t5UC0GV/1WPoSH
- Y93m2AGGJZ57MZ4rWnvGSWcyE5HuNgDaIcGcE3TGabrhm+QDocRgINaBU8TN8+Q3j1g3ISU5CQis
- HkQCNGBuaorFpdgl91rnw+SJd8X9p+nA9NrKCu5dBeitl0I7+nwlslC2gXuspn/yrp1LIG0md/ir
- wszGI13mwiODCmi8VEAzy9CiYDnLf0IHoHHD0FdTGiNij9fAl1MA9d2c1PFMs3TVYZChySbUcbkF
- Y=
-Received-SPF: pass client-ip=185.26.156.114; envelope-from=neither@nut.email;
- helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1da970e8-1708-48ef-87c4-1099d23e8909@redhat.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,43 +88,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+Hi Paolo,
 
-December 6, 2024 at 11:56 PM, "Richard Henderson" wrote:
-> On 12/6/24 14:40, Pierrick Bouvier wrote:
->=20
->=20>=20
->=20> Do we have an architecture agnostic pc representation, or do we hav=
-e to add this for every > target in {arch}_cpu_exec_interrupt?
-> >=20
->=20We have CPUClass.get_pc, which is almost certainly what you want.
+Sorry for late reply,
 
-I was wondering about this but honestly failed to do so until the
-current series was done. I'll definitely use this for to_pc in the next
-iteration. I'll still need to gather from_pc "manually", but that's ok.
+On Thu, Dec 05, 2024 at 04:30:15PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 5 Dec 2024 16:30:15 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+> 
+> On 12/5/24 07:07, Zhao Liu wrote:
+> > HPET device needs to access and update hpet_cfg variable, but now it is
+> > defined in hw/i386/fw_cfg.c and Rust code can't access it.
+> > 
+> > Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
+> > allows Rust HPET device implements its own global hpet_fw_cfg variable,
+> > and will further reduce the use of unsafe C code access and calls in the
+> > Rust HPET implementation.
+> > 
+> > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > ---
+> >   hw/i386/fw_cfg.c        |  4 +---
+> >   hw/timer/hpet.c         | 16 +++++++++-------
+> >   include/hw/timer/hpet.h |  2 +-
+> >   3 files changed, 11 insertions(+), 11 deletions(-)
+> > 
+> > diff --git a/hw/i386/fw_cfg.c b/hw/i386/fw_cfg.c
+> > index 0e4494627c21..965e6306838a 100644
+> > --- a/hw/i386/fw_cfg.c
+> > +++ b/hw/i386/fw_cfg.c
+> > @@ -26,8 +26,6 @@
+> >   #include CONFIG_DEVICES
+> >   #include "target/i386/cpu.h"
+> > -struct hpet_fw_config hpet_cfg = {.count = UINT8_MAX};
+> 
+> This breaks if you disable HPET, which is why fw_cfg.c defines it.
 
-> The call to TCGCPUOps.cpu_exec_interrupt is only a hint that an interru=
-pt might be ready: interrupts can still be masked, etc.
->=20
->=20 From the current bool return value you can tell if a discontinuity a=
-ctually occurred. But if you want to categorize that event in any way you=
- need to update each architecture.
->=20
->=20You could simplify such updates by changing the return type from bool=
- to an enum. While you would have to simultaneously update all targets fo=
-r the change in function signature, if you select enumerators such that 0=
- -> no-op and 1 -> uncategorized, then you can also tell if a target has =
-been updated. Because this is still C, the current return true/false stat=
-ements will Just Work. :-)
->=20
->=20On the other hand, the previous patches to add plugin calls to each c=
-pu_exec_interrupt are in the end approximately the same level of difficul=
-ty, and is more straightforward, so YMMV.
+Thanks! I did miss this case.
 
-Good to hear. I think I'll stick to the current setup. It likely also
-probably makes things easier or less awkward if the API is extended to
-cover things like branches and jumps in the future.
+> You can do something like
+> 
+> diff --git a/include/hw/timer/hpet-fw-cfg.h b/include/hw/timer/hpet-fw-cfg.h
+> new file mode 100644
+> index 00000000000..234a49fc92e
+> --- /dev/null
+> +++ b/include/hw/timer/hpet-fw-cfg.h
+> @@ -0,0 +1,16 @@
+> +struct hpet_fw_entry
+> +{
+> +    uint32_t event_timer_block_id;
+> +    uint64_t address;
+> +    uint16_t min_tick;
+> +    uint8_t page_prot;
+> +} QEMU_PACKED;
+> +
+> +struct hpet_fw_config
+> +{
+> +    uint8_t count;
+> +    struct hpet_fw_entry hpet[8];
+> +} QEMU_PACKED;
+> +
+> +extern struct hpet_fw_config hpet_fw_cfg;
+> +
+> diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
+> index d17a8d43199..6f7fcbc3c60 100644
+> --- a/include/hw/timer/hpet.h
+> +++ b/include/hw/timer/hpet.h
+> @@ -60,26 +60,12 @@
+>  #define HPET_TN_INT_ROUTE_CAP_SHIFT 32
+>  #define HPET_TN_CFG_BITS_READONLY_OR_RESERVED 0xffff80b1U
+> -struct hpet_fw_entry
+> -{
+> -    uint32_t event_timer_block_id;
+> -    uint64_t address;
+> -    uint16_t min_tick;
+> -    uint8_t page_prot;
+> -} QEMU_PACKED;
+> -
+> -struct hpet_fw_config
+> -{
+> -    uint8_t count;
+> -    struct hpet_fw_entry hpet[8];
+> -} QEMU_PACKED;
+> -
+> -extern struct hpet_fw_config hpet_cfg;
+> -
+>  #define TYPE_HPET "hpet"
+>  #define HPET_INTCAP "hpet-intcap"
+> +#include "hw/timer/hpet-fw-cfg.h"
+> +
+>  static inline bool hpet_find(void)
+>  {
+>      return object_resolve_path_type("", TYPE_HPET, NULL);
+> diff --git a/rust/wrapper.h b/rust/wrapper.h
+> index 285d0eb6ad0..82381e43472 100644
+> --- a/rust/wrapper.h
+> +++ b/rust/wrapper.h
+> @@ -62,3 +62,4 @@ typedef enum memory_order {
+>  #include "qapi/error.h"
+>  #include "migration/vmstate.h"
+>  #include "chardev/char-serial.h"
+> +#include "hw/timer/hpet-fw-cfg.h"
+> 
 
-Regards,
-Julian
+Thank you very much for this example!
+
+> but you will have to use unsafe to access it since it's a "static mut".
+
+I also noticed Philippe's version. And I prefer Phillippe's version,
+although his version requires more changes to the rust version, it
+provides an opportunity to add more field to the QOM class, so I feel
+it's good to check current rust qom class support.
+
+Regrads,
+Zhao
+
 
