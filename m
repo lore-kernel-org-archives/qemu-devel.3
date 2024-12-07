@@ -4,71 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDA7E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 15:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EAAE7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 15:39:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJwZK-000227-39; Sat, 07 Dec 2024 10:18:06 -0500
+	id 1tJwtE-0004UH-Qq; Sat, 07 Dec 2024 10:38:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJwZJ-00021v-06; Sat, 07 Dec 2024 10:18:05 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ id 1tJwtB-0004Tq-M6; Sat, 07 Dec 2024 10:38:37 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tJwZF-00084i-Se; Sat, 07 Dec 2024 10:18:04 -0500
+ id 1tJwt9-0001gb-9G; Sat, 07 Dec 2024 10:38:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733584681; x=1765120681;
+ t=1733585915; x=1765121915;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=WUYGX/IYYqVOWV7Uhwlgnr4ydak7ZxnHOH21+Mofdmw=;
- b=JffetjIpH00l/jILq76GhaPFkm4SFTcaEgs4HLInh4hU2jgIY0WjGxWm
- 1o6qhyEYZeq2NBxeOmWnql1J+bMrJS91cng+SVAqcmZc7peW7qQvGeCcA
- 0+iOaa9O5mHxgjb8Ym/X0Tzbv9lpC/dinPVUgPPrZ5/G35+Ct3hq8qLMM
- L+7K0JPtWEwAes4x2jndyWV23m7p6QhwnPq3JpIVH83vuvNjb3ZcygGeP
- 9UEK8rXBLGsLbswmzjXL1LG4mNmfncApfYgTFlNBrytH7SUb5ht+kz0oi
- Ist5Ne03mjAx5n005iJuWU8xNXyEeHPw25ef2GSeudE/l0ss+Cs9k5N5/ w==;
-X-CSE-ConnectionGUID: TwcpxMwtTg6ezkCZFLjLHQ==
-X-CSE-MsgGUID: Lumvvq+LRMaCEdFYRFm/+g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11279"; a="34077317"
-X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="34077317"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Dec 2024 07:17:58 -0800
-X-CSE-ConnectionGUID: gi5Tz/0nR6m1NwvRCN9aLw==
-X-CSE-MsgGUID: k8IPtAZBTkSIGXEJqapfQA==
+ bh=LVWUC2lzgj8dQpedDG4fFrO1tbS8tgOz8K6Dn0GhqPA=;
+ b=Gs97YDqZlaAU9GyomkKJzILliBBQUjAsghOT32XHuiy4CSmJzNZd7lI3
+ ah1NV5ZnBO+gDynzL5uqKtzGKC0WsckGa8ChFLtpa0LI6JVkNA997JWYP
+ hC68+QpD+IKWEpQvqfOglTuKdb5nneb0omixa9AHlZHI8eHfJSEax7lAa
+ WvRLVA0gQz658jS7kDJBhG+Ut8EttHnOSAq+eF6PqVftzfQnNY6TeplYc
+ NzNGDQ0cvcL81GRE+IrKCS3EL3bB1OPpXNCNpZPQYDzHkbJtiSjvtO4qu
+ NSCV9Pp5sm0u064a/QuBHVsZy7y8ACWUDeH+mcZ5QQNLgjFe9DUapUvbm w==;
+X-CSE-ConnectionGUID: SdZOWMCjSU27NNocda13ow==
+X-CSE-MsgGUID: AAlEKb6oS5OqAtvpXA6AQA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11279"; a="34167809"
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="34167809"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Dec 2024 07:38:30 -0800
+X-CSE-ConnectionGUID: hdIdVQCLRHe9Gb2IeH6CmA==
+X-CSE-MsgGUID: HNEN8FDvQS+bHmK1+RpAag==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="99737188"
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="125578083"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 07 Dec 2024 07:17:57 -0800
-Date: Sat, 7 Dec 2024 23:36:09 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 07 Dec 2024 07:38:28 -0800
+Date: Sat, 7 Dec 2024 23:56:41 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Junjie Mao <junjie.mao@hotmail.com>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
-Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
-Message-ID: <Z1RraaYrQFS9btEc@intel.com>
+Subject: Re: [RFC 03/13] rust/cell: add get_mut() method for BqlCell
+Message-ID: <Z1RwOR3RWQTjrnYs@intel.com>
 References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-10-zhao1.liu@intel.com>
- <ed49af53-4a10-4cee-829e-d5921b8aee3c@linaro.org>
- <Z1GgjZOCc8vkkB3A@intel.com>
- <8cb0a692-420a-4645-b1b8-bc6e47bbb116@linaro.org>
- <CABgObfa7ojzTWOdzd9MUq76ebO8oEU24ew=N80JOOEd=7XuO5g@mail.gmail.com>
- <45018b0d-d741-49a2-8680-993a2eeb285a@linaro.org>
+ <20241205060714.256270-4-zhao1.liu@intel.com>
+ <75edc6e5-e65f-40c0-90ee-6ac1fa018f5c@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=gb2312
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <45018b0d-d741-49a2-8680-993a2eeb285a@linaro.org>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <75edc6e5-e65f-40c0-90ee-6ac1fa018f5c@redhat.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -73
 X-Spam_score: -7.4
@@ -93,69 +89,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Dec 07, 2024 at 10:16:03AM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Sat, 7 Dec 2024 10:16:03 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+On Thu, Dec 05, 2024 at 04:55:47PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 5 Dec 2024 16:55:47 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [RFC 03/13] rust/cell: add get_mut() method for BqlCell
 > 
-> On 5/12/24 22:19, Paolo Bonzini wrote:
-> > On Thu, Dec 5, 2024 at 10:18 PM Philippe Mathieu-Daudé
-> > <philmd@linaro.org> wrote:
-> > > 
-> > > On 5/12/24 13:46, Zhao Liu wrote:
-> > > > Hi Philippe,
-> > > > 
-> > > > On Thu, Dec 05, 2024 at 01:04:58PM +0100, Philippe Mathieu-Daudé wrote:
-> > > > > Date: Thu, 5 Dec 2024 13:04:58 +0100
-> > > > > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> > > > > Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
-> > > > > 
-> > > > > On 5/12/24 07:07, Zhao Liu wrote:
-> > > > > > HPET device needs to access and update hpet_cfg variable, but now it is
-> > > > > > defined in hw/i386/fw_cfg.c and Rust code can't access it.
-> > > > > > 
-> > > > > > Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
-> > > > > > allows Rust HPET device implements its own global hpet_fw_cfg variable,
-> > > > > > and will further reduce the use of unsafe C code access and calls in the
-> > > > > > Rust HPET implementation.
-> > > > > > 
-> > > > > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> > > > > > ---
-> > > > > >     hw/i386/fw_cfg.c        |  4 +---
-> > > > > >     hw/timer/hpet.c         | 16 +++++++++-------
-> > > > > >     include/hw/timer/hpet.h |  2 +-
-> > > > > >     3 files changed, 11 insertions(+), 11 deletions(-)
-> > > > > 
-> > > > > 
-> > > > > > diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
-> > > > > > index d17a8d43199e..dbf709251a8f 100644
-> > > > > > --- a/include/hw/timer/hpet.h
-> > > > > > +++ b/include/hw/timer/hpet.h
-> > > > > > @@ -74,7 +74,7 @@ struct hpet_fw_config
-> > > > > >         struct hpet_fw_entry hpet[8];
-> > > > > >     } QEMU_PACKED;
-> > > > > > -extern struct hpet_fw_config hpet_cfg;
-> > > > > > +extern struct hpet_fw_config hpet_fw_cfg;
-> > > > > 
-> > > > > Could this field belong to the (yet unexisting) HPETClass?
-> > > > 
-> > > > Several instances would share the same class, so HPETClass could manage
-> > > > multiple HPETState info.
-> > > > 
-> > > > But in fw_cfg.c, do you have idea about how to get the HPETClass?
-> > > 
-> > > Have hpet_find() return an Object and call object_get_class()?
+> On 12/5/24 07:07, Zhao Liu wrote:
+> > The get_mut() is useful when doing compound assignment operations, e.g.,
+> > *c.get_mut() += 1.
+> > 
+> > Implement get_mut() for BqlCell by referring to Cell.
 > 
-> Implemented as
-> https://lore.kernel.org/qemu-devel/20241206191124.9195-1-philmd@linaro.org/,
-> hoping it simplifies the Rust model integration.
-> 
+> I think you can't do this because the BQL might be released while the owner has a &mut.  Like:
 
-Hi Philli, thank you very much!
+Thanks for pointing that out, I really didn't think of that, I
+understand how that would break the atomicity of the BQL lock, right?
 
-This approach is very helpful for more “rich” QOM class attempts, and if
-Paolo feels the same way, I'll move to your approach for the next
-version!
+>    let mtx = Mutex<BqlCell<u32>>::new();
+>    let guard = mtx.lock();
+>    let cell = &mut *guard;
+>    let inner = cell.get_mut(cell);
+>    // anything that releases bql_lock
+>    *inner += 1;
+> 
+> On the other hand I don't think you need it.  You have just two uses.
+> 
+> First, this one:
+> 
+> +        if set && self.is_int_level_triggered() {
+> +            // If Timer N Interrupt Enable bit is 0, "the timer will
+> +            // still operate and generate appropriate status bits, but
+> +            // will not cause an interrupt"
+> +            *self.get_state_mut().int_status.get_mut() |= mask;
+> +        } else {
+> +            *self.get_state_mut().int_status.get_mut() &= !mask;
+> +        }
+> 
+> Where you can just write
+> 
+>     self.get_state_ref().update_int_status(self.index,
+>         set && self.is_int_level_triggered())
+> 
+> and the HPETState can do something like
+> 
+>     fn update_int_status(&self, index: u32, level: bool) {
+>         self.int_status.set(deposit64(self.int_status.get(), bit, 1, level as u64));
+>     }
+
+Yes, it's clearer!
+
+> For hpet_fw_cfg you have unsafe in the device and it's better if you do:
+> 
+> -        self.hpet_id.set(unsafe { hpet_fw_cfg.assign_hpet_id() });
+> +        self.hpet_id.set(fw_cfg_config::assign_hpet_id());
+> 
+> with methods like this that do the unsafe access:
+> 
+> impl fw_cfg_config {
+>     pub(crate) fn assign_hpet_id() -> usize {
+>         assert!(bql_locked());
+>         // SAFETY: all accesses go through these methods, which guarantee
+>         // that the accesses are protected by the BQL.
+>         let fw_cfg = unsafe { &mut *hpet_fw_cfg };
+
+Nice idea!
+
+>         if self.count == u8::MAX {
+>             // first instance
+>             fw_cfg.count = 0;
+>         }
+
+Will something like ��anything that releases bql_lock�� happen here?
+There seems to be no atomicity guarantee here.
+
+>         if fw_cfg.count == 8 {
+>             // TODO: Add error binding: error_setg()
+>             panic!("Only 8 instances of HPET is allowed");
+>         }
+> 
+>         let id: usize = fw_cfg.count.into();
+>         fw_cfg.count += 1;
+>         id
+>     }
+> }
+> 
+> and you can assert bql_locked by hand instead of using the BqlCell.
+
+Thanks! I can also add a line of doc for bql_locked that it can be used
+directly without BqlCell if necessary.
+
+And if you also agree the Phillipe's idea, I also need to add BqlCell
+for fw_cfg field in HPETClass :-).
 
 Regards,
 Zhao
