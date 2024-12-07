@@ -4,143 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BE8E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 11:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC61E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 12:47:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJsYv-0007b5-LP; Sat, 07 Dec 2024 06:01:25 -0500
+	id 1tJuCz-00008j-Ad; Sat, 07 Dec 2024 07:46:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Julia.Zhang@amd.com>)
- id 1tJsYu-0007ai-2h
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 06:01:24 -0500
-Received: from mail-bn8nam11on2078.outbound.protection.outlook.com
- ([40.107.236.78] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Julia.Zhang@amd.com>)
- id 1tJsYs-0007i9-7O
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 06:01:23 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yHPHu6pXdfHs081Mw/7q2vDkwN8NRL4YlrTtsdH7R+sZO2tYhIDXhQ8cA3Ps5m7vVHxeJBZRIYi3Nx0OZzjS/fF5rScqtTSHo5o2/pHy1Amaych+CSvCwJhxzgk32dQSb3sPxymNrlds7DZ6qEQtOC4iT4w6LuCg+lD/vKunaxtRSB58etCz85fPEPxL/JkJo54oMhU+yVssfwqEIvaT/79bsZwbvqgS1oLf2c8Hy4S0UoVzEjOYW/BiBpwTAre/QFsK9HgWHgIzE0fbya+pOibpyD7tbDP4RYDk6zVBW6R5Mm72prr2ir5x4wsG+twpmptJJ4h2I4Tsdbqn/Lwi/w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=z4261N78RZ6zefSdf6LbgNLoktvOrHLnF03ZMxWyzmQ=;
- b=iTc0nK5/Vlmi2q1nB52p4HFlFldv+Wxp90Rzwwe21O133oN+uQ75OJ5+EavYwZLvsHqF+/TYzrt95YSarBhY2MdGVenc//xXcfQ2B7hKGegTaKFqWdU2OfvDh4N4FTrO880RMzhc4I0C00f6g4zAhn+r0tBM0o3qUyY1VYnHIIC5jvUDTBLMoNp+x8fG8/Tf42LabBFglIwHGEVs78tBDt8CzUzb7XoXxpSEC0llWHCTcjhHN/zuUrCe7DZjjNb0Bbn5wspK+3Llb+iBn55MQSeIvUVrizBSGuNWhnsJvtzXd9As3DoI0KwEf9uZX2z9NWK34QlVh0SZ1pmNPE1JjQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=z4261N78RZ6zefSdf6LbgNLoktvOrHLnF03ZMxWyzmQ=;
- b=1oKPlguMMTnxoJwHt8V38Ob4HHB+9mPSYSIdHZtR7pAa6h4U3asIPrYgWAMhxKHt5yCaHVUV/HAVxbwWKOTUzwPFODOqSotTO65HhZvAZwhEV3gGv6btRKLvNJmvGtJx4ppvNRR1BOP+siVTIGzVeZfcYGanmWOWM4/mmePAZPA=
-Received: from BN8PR12CA0009.namprd12.prod.outlook.com (2603:10b6:408:60::22)
- by LV3PR12MB9185.namprd12.prod.outlook.com (2603:10b6:408:199::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.11; Sat, 7 Dec
- 2024 10:56:14 +0000
-Received: from BN3PEPF0000B372.namprd21.prod.outlook.com
- (2603:10b6:408:60:cafe::fd) by BN8PR12CA0009.outlook.office365.com
- (2603:10b6:408:60::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8230.10 via Frontend Transport; Sat,
- 7 Dec 2024 10:56:14 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B372.mail.protection.outlook.com (10.167.243.169) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8272.0 via Frontend Transport; Sat, 7 Dec 2024 10:56:14 +0000
-Received: from jenkins-julia.amd.com (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 7 Dec
- 2024 04:56:09 -0600
-From: Julia Zhang <julia.zhang@amd.com>
-To: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, "Edgar E .
- Iglesias" <edgar.iglesias@gmail.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- <xen-devel@lists.xenproject.org>
-CC: Alex Deucher <alexander.deucher@amd.com>,
- =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>, "Xenia
- Ragiadakou" <burzalodowa@gmail.com>, Julia Zhang <julia.zhang@amd.com>, "Chen
- Jiqian" <Jiqian.Chen@amd.com>, Huang Rui <ray.huang@amd.com>, Penny Zheng
- <penny.zheng@amd.com>, Zhu Lingshan <Lingshan.Zhu@amd.com>,
- =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>, Jan Beulich
- <jbeulich@suse.com>, Juergen Gross <jgross@suse.com>, Oleksandr Tyshchenko
- <oleksandr_tyshchenko@epam.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH 0/3] Support getting p2pdma_distance
-Date: Sat, 7 Dec 2024 18:55:34 +0800
-Message-ID: <20241207105537.542441-1-julia.zhang@amd.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tJuCm-00007O-2W
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 07:46:50 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tJuCj-0004b6-FM
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 07:46:39 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-434e84b65e7so5849545e9.3
+ for <qemu-devel@nongnu.org>; Sat, 07 Dec 2024 04:46:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733575591; x=1734180391; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=KdvUB1tBDRiOx5Ver3+35U23ee89rG/OZPFdVcW6QhI=;
+ b=DYS0rsZNqWzJtOyshrRpC1GCsFlVog1i2ayp980AAmyWBwgqUpQxxWWHIaUg1il0Ji
+ iTjq8P3mnscxMjcwGg4yTkhhzfhh6HDOvq99tH9Men+Nxp6IHqE25ieOCHOYEX2za0bK
+ AKvnRKpHDoswDanpxsASQ1wmW+1kIUVe8BoEuFauX7kTEHHfWcOMPh6W3Q3qvf5yLOMP
+ MOrbp2SsWolbRsvggQzDiCpyBI7K8ip3MFBXfcQawIu1UU8zp8LEcNlSexxD8V+ocIxg
+ OfAIcpaWWS6EBWrMBDWfvoQ7UgmR4iLt4dv3QzAmAHH9O3ZfQZRBToU2La8YMbAsCTqE
+ W2qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733575591; x=1734180391;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=KdvUB1tBDRiOx5Ver3+35U23ee89rG/OZPFdVcW6QhI=;
+ b=uo08ekP27V9Ta3IFfi0ZGtSS1N3jSgRnf0PYGTaEWX2vI9vf3x1FSm0mV1Fb7oXj2s
+ U1U0yB/ajOhKn6iKpSCihKVJFVjIRVjPpRthVRzj2IVNdgJvYjXuD72EW+NlL9bLdt9s
+ /11UQtn9lb75ElubpnCYbsVRmgcIW3wJBB0WbP8PLodCMWVQPZuUzpf8slybBXDj1fUt
+ Jjd4Y2lJqWrrhiI+jZ0T5zgWY8uK8UeU1TzBs2euk+OhEG1EMKgu+9T2rh1rlYqMb+Qw
+ MhmCZ6PnApYbWlhctpCTJ24Sz1JaA+rPVD6wPprITYVD+OG/CcQkIe6BC2aD6jaLs1Fm
+ X6Pw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUqK6qgmal6fAvrQ1v4ZS7mi1mvG3pcIsgXiVrtOPg2DlWZnd7VGlRTiRcojqI+kI9ZfhCZ+Y0Qpm/f@nongnu.org
+X-Gm-Message-State: AOJu0YzBZVpCAds7XsMqwth1GtMKAbr+JfDNlPPBXwD/76a2SnlLNQOG
+ HtG6UPrHJxidrZCqcS1j3bvEcwj7/QdIjvmEQ8CpxTmrjxnJzXUCfPtzAQ==
+X-Gm-Gg: ASbGncsH7tTk95QMvWihZswlJvVQhFLlMWzYM7G0KpuvQ7MqUVLZv36hA8OClnZM7gt
+ dFDml0ezq6lt8Wzp485YNTinPYTxgsHj+SrN5EBgQatUb5Ifl0+IlmrTYHNp/aCOJtFY6DDYiJU
+ zocoWNWWNFnvUaozOCNqNXJW5YQUWSQdLh5litcdRMGXhoMZej5BuKFiiHimFA5BMyPEEcIszs5
+ jNqvefFLZbT7W5NmCNw5H/BwyFfeFxeOUxq+Lj8Ibsp2aGt7jsCSesK8j+9VEllka5olH2MIuv6
+ zLX0fjzlaC1EXawZSLwsJy64
+X-Google-Smtp-Source: AGHT+IH3GNZVqWcGtE80FpSBbDj4Q/GKjkgLP5xuGfb0LYatyfL4odxmTfqrtdR5BBg5i/ewAQH40Q==
+X-Received: by 2002:a05:600c:3b1d:b0:434:a5bc:7103 with SMTP id
+ 5b1f17b1804b1-434ddeade1cmr51706925e9.19.1733575591017; 
+ Sat, 07 Dec 2024 04:46:31 -0800 (PST)
+Received: from [127.0.0.1] (dynamic-078-055-182-161.78.55.pool.telefonica.de.
+ [78.55.182.161]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434ea1ae415sm15324325e9.33.2024.12.07.04.46.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Dec 2024 04:46:30 -0800 (PST)
+Date: Sat, 07 Dec 2024 12:46:31 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: =?ISO-8859-1?Q?Volker_R=FCmelin?= <vr_qemu@t-online.de>,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+CC: Stefan Weil <sw@weilnetz.de>, Howard Spoelstra <hsp.cat7@gmail.com>,
+ qemu-devel@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/3=5D_ui/sdl2=3A_reenable_the?=
+ =?US-ASCII?Q?_SDL2_Windows_keyboard_hook_procedure?=
+In-Reply-To: <69b15684-0d00-4a74-aeac-2d98f7e88d95@t-online.de>
+References: <ae9b2c56-dab2-4b8f-bb5e-2087e9ccaa92@t-online.de>
+ <20240909061552.6122-1-vr_qemu@t-online.de>
+ <CAMxuvay4vRm6ZYQoUx=cmD5mr-8-qR4Z4iLEJ6-f0m2eUSbdOg@mail.gmail.com>
+ <69b15684-0d00-4a74-aeac-2d98f7e88d95@t-online.de>
+Message-ID: <90F0F2BF-CD32-45D8-8BFB-2B973E95BB9B@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B372:EE_|LV3PR12MB9185:EE_
-X-MS-Office365-Filtering-Correlation-Id: aa9c35be-606c-4060-c2c3-08dd16adc4e9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|1800799024|36860700013|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?9EPrNKWyXB2jffhGJwu6FONbnhxmpPnqjMVjmAU+oEtNU+cSqk7+YZniU1oM?=
- =?us-ascii?Q?zev8Wsp/joaRMxiUYDWVRiW0c9Q9Shc7uDInq2mJc1Fx3en/vupaj8fQqh5T?=
- =?us-ascii?Q?u6ePcwQwGExdSRtxSO3jpyZxKryL4w4pvrNnr2AYhWdgUcVtuHQ6htAbo3Us?=
- =?us-ascii?Q?shmdgzpoTDs/GiW1UPkF0Ppg/KCU1NQnA02cqD8fedJbpNDzGJZ4vhOjBgU0?=
- =?us-ascii?Q?ppTtWbW7UAUIPaTMCdVQCNS3c94B2YDJeqNivn6exkQIVRMCluaup9RMpHHq?=
- =?us-ascii?Q?HGO2vh+DK7NNpL+rKpD+sftBJwB2qH8YH0nkcEG3pMBff5qnl4tG+S7mCNTc?=
- =?us-ascii?Q?44KJ3sAWmcSuD9GQlFOzPavmE2aBFuISVd6SYO3HcOuLbNuVDaLWJID2JQz3?=
- =?us-ascii?Q?+A37W8+cdAwGFJ3tGdKfgHaGQvO70WjUPrVNR+kYnsTeDdNkaTc8KHn5pf/E?=
- =?us-ascii?Q?hqElxP9Ray6KAf0nQbRhppRRu3R9jeTpbRootsevWe/TLihhmP2vae/wP/tL?=
- =?us-ascii?Q?YyoHHN0ckcXgEoTpJNeCq0dyExKLcWgVoYnBaf2WRbveeeW0J3/z4kUT7rMn?=
- =?us-ascii?Q?0qXbC4oDsPC5hYCUZxTW1RyKrWO4Btghc+ywQJSXp2glemYunu5IHmwoucH1?=
- =?us-ascii?Q?HaD/HcApTnrk0/0V0DuLZetbI42/f8S7gKX/840FdYOgE7aN9jji/y8UbAZk?=
- =?us-ascii?Q?QPpVaYGz8kgZoXo1bKUiZdSy2UyohrzccXq/pg8BAi2MVt+eZRSICVu5cBTI?=
- =?us-ascii?Q?M3KTZdcvqv9rhB7nwti5CS1U33Dk5ZPt+uYPlpjPqUQ3UClzT3gIHwi4ggF2?=
- =?us-ascii?Q?EE2sg3q2QH+YhjJP927UQlhiUrY8wBU/PET4BPp+6iVxey6Fwh6bPKlj64zR?=
- =?us-ascii?Q?QPAsq+0PBNgHNDg4s9euLbFS+EeS/isTGRT9iAkw9/DaDOTt/gstaS5mATFc?=
- =?us-ascii?Q?ICysk89vQFEVUNv+lJa8iPuKmFeORVtoDrAelNSOxEvKsFQX1FwXe73xLf1j?=
- =?us-ascii?Q?kcUs7UvBVMBj2P7huSAyWtyfHo/DKuBIxrN3bj/iZgubIoMplqTmA1oUz3v6?=
- =?us-ascii?Q?Ts39gcol9xmzbVdBQgNYBeAwbVSgve+Pi47l/3fjUDhTJOjMNXQziqKvOg/9?=
- =?us-ascii?Q?hpQ2Fx2pC/3QLxM2Cf75DtPIlF/1tbn1J1PgfreLN2kkqvpPErTyXa/PUAtN?=
- =?us-ascii?Q?MwpPSUEAUKIVmHe+YiRTWBImViE+Dmdlwmr/XLtw5HbBpw5TeQMknoVWf3oe?=
- =?us-ascii?Q?sFghtmVkF2Zw2vTLzmFfondRb7aEASgLh7o2ly6NQjjPNKndfUOY1DXyd7aK?=
- =?us-ascii?Q?cKaAW43AQMxXwXDGGq9wus2ktTb+YA+akoBVH4YDFQ66B1QdrtiklSevfCnv?=
- =?us-ascii?Q?XjsCvlaWXxDKA/6czVCQegzffPenLboDnbsJNeoLBSm3IDbP1S3NZSEXUdN8?=
- =?us-ascii?Q?sCLV8DnS0y9BCPB1mn+aaPwvWPK/omX3?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2024 10:56:14.4504 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: aa9c35be-606c-4060-c2c3-08dd16adc4e9
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B372.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9185
-Received-SPF: permerror client-ip=40.107.236.78;
- envelope-from=Julia.Zhang@amd.com;
- helo=NAM11-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -157,35 +105,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To implement dGPU prime feature, virtgpu needs to import/export buffer
-between virtio iGPU and passthrough dGPU. Before that, virtgpu has to
-checkout p2pdma_distance. But calling function pci_p2pdma_distance in guest
-VM will only get virtual p2pdma_distance instead of real physical
-p2pdma_distance.
 
-This series is to support handling the new virtgpu command from the guest
-VM to get the physical p2pdma_distance of two PCI devices of guest VM.
 
-Julia Zhang (3):
-  virtio-gpu: set hostaddr for virtio iGPU
-  pci: introduce a function to get PCIDevice
-  virtio-gpu: add a new command to calculate p2pdma_distance
+Am 9=2E September 2024 19:38:26 UTC schrieb "Volker R=C3=BCmelin" <vr_qemu=
+@t-online=2Ede>:
+>Am 09=2E09=2E24 um 09:26 schrieb Marc-Andr=C3=A9 Lureau:
+>> Hi
+>>
+>> On Mon, Sep 9, 2024 at 10:22=E2=80=AFAM Volker R=C3=BCmelin <vr_qemu@t-=
+online=2Ede> wrote:
+>>> Windows only:
+>>>
+>>> The libSDL2 Windows message loop needs the libSDL2 Windows low
+>>> level keyboard hook procedure to grab the left and right Windows
+>>> keys correctly=2E Reenable the SDL2 Windows keyboard hook procedure=2E
+>>>
+>>> Because the QEMU Windows keyboard hook procedure is still needed
+>>> to filter out the special left Control key event for every Alt Gr
+>>> key event, it's important to install the two keyboard hook
+>>> procedures in the following order=2E First the SDL2 procedure, then
+>>> the QEMU procedure=2E
+>>>
+>>> Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2139
+>>> Resolves: https://gitlab=2Ecom/qemu-project/qemu/-/issues/2323
+>>> Tested-by: Howard Spoelstra <hsp=2Ecat7@gmail=2Ecom>
+>>> Signed-off-by: Volker R=C3=BCmelin <vr_qemu@t-online=2Ede>
+>>> ---
+>>>  ui/sdl2=2Ec           | 53 ++++++++++++++++++++++++++++++------------=
+---
+>>>  ui/win32-kbd-hook=2Ec |  3 +++
+>>>  2 files changed, 38 insertions(+), 18 deletions(-)
+>>>
+>>> diff --git a/ui/sdl2=2Ec b/ui/sdl2=2Ec
+>>> index 98ed974371=2E=2Eac37c173a1 100644
+>>> --- a/ui/sdl2=2Ec
+>>> +++ b/ui/sdl2=2Ec
+>>> @@ -42,6 +42,7 @@ static SDL_Surface *guest_sprite_surface;
+>>>  static int gui_grab; /* if true, all keyboard/mouse events are grabbe=
+d */
+>>>  static bool alt_grab;
+>>>  static bool ctrl_grab;
+>>> +static bool win32_kbd_grab;
+>>>
+>>>  static int gui_saved_grab;
+>>>  static int gui_fullscreen;
+>>> @@ -202,6 +203,19 @@ static void sdl_update_caption(struct sdl2_consol=
+e *scon)
+>>>      }
+>>>  }
+>>>
+>>> +static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+>>> +{
+>>> +#ifdef CONFIG_WIN32
+>>> +    SDL_SysWMinfo info;
+>>> +
+>>> +    SDL_VERSION(&info=2Eversion);
+>>> +    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+>>> +        return info=2Einfo=2Ewin=2Ewindow;
+>>> +    }
+>>> +#endif
+>>> +    return NULL;
+>>> +}
+>>> +
+>>>  static void sdl_hide_cursor(struct sdl2_console *scon)
+>>>  {
+>>>      if (scon->opts->has_show_cursor && scon->opts->show_cursor) {
+>>> @@ -259,9 +273,16 @@ static void sdl_grab_start(struct sdl2_console *s=
+con)
+>>>      } else {
+>>>          sdl_hide_cursor(scon);
+>>>      }
+>>> +    /*
+>>> +     * Windows: To ensure that QEMU's low level keyboard hook procedu=
+re is
+>>> +     * called before SDL2's, the QEMU procedure must first be removed=
+ and
+>>> +     * then the SDL2 and QEMU procedures must be installed in this or=
+der=2E
+>>> +     */
+>>> +    win32_kbd_set_window(NULL);
+>>>      SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
+>>> +    win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+>>>      gui_grab =3D 1;
+>>> -    win32_kbd_set_grab(true);
+>>> +    win32_kbd_set_grab(win32_kbd_grab);
+>>>      sdl_update_caption(scon);
+>>>  }
+>>>
+>>> @@ -370,19 +391,6 @@ static int get_mod_state(void)
+>>>      }
+>>>  }
+>>>
+>>> -static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+>>> -{
+>>> -#ifdef CONFIG_WIN32
+>>> -    SDL_SysWMinfo info;
+>>> -
+>>> -    SDL_VERSION(&info=2Eversion);
+>>> -    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+>>> -        return info=2Einfo=2Ewin=2Ewindow;
+>>> -    }
+>>> -#endif
+>>> -    return NULL;
+>>> -}
+>>> -
+>>>  static void handle_keydown(SDL_Event *ev)
+>>>  {
+>>>      int win;
+>>> @@ -605,7 +613,7 @@ static void handle_windowevent(SDL_Event *ev)
+>>>          sdl2_redraw(scon);
+>>>          break;
+>>>      case SDL_WINDOWEVENT_FOCUS_GAINED:
+>>> -        win32_kbd_set_grab(gui_grab);
+>>> +        win32_kbd_set_grab(win32_kbd_grab && gui_grab);
+>>>          if (qemu_console_is_graphic(scon->dcl=2Econ)) {
+>>>              win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+>>>          }
+>>> @@ -849,6 +857,7 @@ static void sdl2_display_init(DisplayState *ds, Di=
+splayOptions *o)
+>>>      uint8_t data =3D 0;
+>>>      int i;
+>>>      SDL_SysWMinfo info;
+>>> +    SDL_version ver;
+>>>      SDL_Surface *icon =3D NULL;
+>>>      char *dir;
+>>>
+>>> @@ -866,10 +875,7 @@ static void sdl2_display_init(DisplayState *ds, D=
+isplayOptions *o)
+>>>  #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available =
+since SDL 2=2E0=2E8 */
+>>>      SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+>>>  #endif
+>>> -#ifndef CONFIG_WIN32
+>>> -    /* QEMU uses its own low level keyboard hook procedure on Windows=
+ */
+>>>      SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
+>>> -#endif
+>>>  #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
+>>>      SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+>>>  #endif
+>>> @@ -877,6 +883,17 @@ static void sdl2_display_init(DisplayState *ds, D=
+isplayOptions *o)
+>>>      SDL_EnableScreenSaver();
+>>>      memset(&info, 0, sizeof(info));
+>>>      SDL_VERSION(&info=2Eversion);
+>>> +    /*
+>>> +     * Since version 2=2E16=2E0 under Windows, SDL2 has its own low l=
+evel
+>>> +     * keyboard hook procedure to grab the keyboard=2E The remaining =
+task of
+>>> +     * QEMU's low level keyboard hook procedure is to filter out the =
+special
+>>> +     * left Control up/down key event for every Alt Gr key event on k=
+eyboards
+>>> +     * with an international layout=2E
+>>> +     */
+>>> +    SDL_GetVersion(&ver);
+>>> +    if (ver=2Emajor =3D=3D 2 && ver=2Eminor < 16) {
+>>> +        win32_kbd_grab =3D true;
+>>> +    }
+>>>
+>> Note: there is no 2=2E16 release=2E They jumped from 2=2E0=2E22 to 2=2E=
+24 (see
+>> https://github=2Ecom/libsdl-org/SDL/releases/tag/release-2=2E24=2E0)
+>
+>Hi Marc-Andr=C3=A9
+>
+>Oh=2E This means that the comparison I wrote is true for SDL2 versions <
+>2=2E24=2E0=2E
+>
+>>
+>> The windows hook was indeed added in 2=2E0=2E16, released on Aug 10, 20=
+21=2E
+>>
+>> Given the distribution nature of the Windows binaries, I think we
+>> could simply depend on a much recent version without worrying about
+>> compatibility with < 2=2E0=2E16=2E This would help reduce the potential
+>> combinations of versions and bugs reports=2E
+>
+>Okay, I'll send a version 2 patch series=2E
 
- hw/display/virtio-gpu-virgl.c               | 47 +++++++++++++++++++++
- hw/display/virtio-gpu.c                     |  6 +++
- hw/i386/xen/xen-hvm.c                       |  6 +++
- hw/pci/pci.c                                | 22 ++++++++++
- hw/xen/xen_pt.c                             | 10 ++---
- hw/xen/xen_pt.h                             |  1 -
- include/hw/pci/pci.h                        |  2 +
- include/hw/pci/pci_device.h                 |  1 +
- include/hw/virtio/virtio-gpu-bswap.h        | 12 ++++++
- include/hw/virtio/virtio-gpu.h              |  2 +
- include/hw/xen/xen.h                        |  3 ++
- include/standard-headers/linux/virtio_gpu.h | 19 +++++++++
- 12 files changed, 125 insertions(+), 6 deletions(-)
+Ping (for this patch, the others were merged)
 
--- 
-2.34.1
-
+>
+>With best regards
+>Volker
+>
+>>
+>>>      gui_fullscreen =3D o->has_full_screen && o->full_screen;
+>>>
+>>> diff --git a/ui/win32-kbd-hook=2Ec b/ui/win32-kbd-hook=2Ec
+>>> index 1ac237db9e=2E=2E39d42134a2 100644
+>>> --- a/ui/win32-kbd-hook=2Ec
+>>> +++ b/ui/win32-kbd-hook=2Ec
+>>> @@ -91,6 +91,9 @@ void win32_kbd_set_window(void *hwnd)
+>>>              win32_unhook_notifier=2Enotify =3D keyboard_hook_unhook;
+>>>              qemu_add_exit_notifier(&win32_unhook_notifier);
+>>>          }
+>>> +    } else if (!hwnd && win32_keyboard_hook) {
+>>> +        keyboard_hook_unhook(&win32_unhook_notifier, NULL);
+>>> +        qemu_remove_exit_notifier(&win32_unhook_notifier);
+>>>      }
+>>>
+>>>      win32_window =3D hwnd;
+>>> --
+>>> 2=2E35=2E3
+>>>
+>
 
