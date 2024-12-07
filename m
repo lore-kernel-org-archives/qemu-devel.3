@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0ED38E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 10:58:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94BE8E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 11:01:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJsVm-000626-Fx; Sat, 07 Dec 2024 05:58:10 -0500
+	id 1tJsYv-0007b5-LP; Sat, 07 Dec 2024 06:01:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Julia.Zhang@amd.com>)
- id 1tJsVY-0005yY-SN
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 05:58:02 -0500
-Received: from mail-mw2nam12on2062c.outbound.protection.outlook.com
- ([2a01:111:f403:200a::62c]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
+ id 1tJsYu-0007ai-2h
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 06:01:24 -0500
+Received: from mail-bn8nam11on2078.outbound.protection.outlook.com
+ ([40.107.236.78] helo=NAM11-BN8-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Julia.Zhang@amd.com>)
- id 1tJsVW-0007HX-P0
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 05:57:56 -0500
+ id 1tJsYs-0007i9-7O
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 06:01:23 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DdDe97pi0tc8ZHZA4Tp6eA1fulBtz6474uH156UNLqzXOXYNDdmZCfco/pJTD6U3HwBUgty6a4/nuNhBtA3bfmFobXdz3xPs542HnZKPLgJU6tX9X2huknnvP8tNVFQqbP8meCdFpkZbEdPujDVpVjuTbVq6ZIyJLOeh+zpGrxEZ54jXg5O7FJRwl7xDDibxcKNofjChG3hq9Lc1b625yEErR/jkzeRMHyqjoFEySGEeLK3BGjl57xzaKf4OVY2KHC1zERTjuuYPBgSL6/s9OgUmC5BTo2bl/Kj9yJ633+5NOz3AM/zCbU2dZ9Epr5GJVpky6hvxNxMYQEnCDRLGmA==
+ b=yHPHu6pXdfHs081Mw/7q2vDkwN8NRL4YlrTtsdH7R+sZO2tYhIDXhQ8cA3Ps5m7vVHxeJBZRIYi3Nx0OZzjS/fF5rScqtTSHo5o2/pHy1Amaych+CSvCwJhxzgk32dQSb3sPxymNrlds7DZ6qEQtOC4iT4w6LuCg+lD/vKunaxtRSB58etCz85fPEPxL/JkJo54oMhU+yVssfwqEIvaT/79bsZwbvqgS1oLf2c8Hy4S0UoVzEjOYW/BiBpwTAre/QFsK9HgWHgIzE0fbya+pOibpyD7tbDP4RYDk6zVBW6R5Mm72prr2ir5x4wsG+twpmptJJ4h2I4Tsdbqn/Lwi/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QB2v3p8xVBkoFTtj/OssK3eq3aeYBld67hSPE7XCRYE=;
- b=VrJdvEqSaFXdWuNz6YRJEcWBqb7loTgEJbBVP6387HHAqK57q16/kuoDFRxFfs/VwIQJ8Bpf1kVzh+0GO9AlZkZMUKGQvB6qupwVidBWpn+rXADBe4qHOheQrQvkaCJr+I9joePVkaCgeVczVgwd6xrbtd26dl31UAkkKxfTQyLRHNCtWPRW/4XqOPOqbJvPYZ6uBhVeKmFyn+jove30o9RRwlYF2cYaYqiVj2wRqcBw9wt8hysxgp/8uB+omWrpdo2+nVqQPnn426l/uU+nuFNbDTWXNyJZDrxV7wRiKm0iaZHQSlqM6SCOBZdtsBF7sBfKhFn/c2LDw9zjHjn5Ew==
+ bh=z4261N78RZ6zefSdf6LbgNLoktvOrHLnF03ZMxWyzmQ=;
+ b=iTc0nK5/Vlmi2q1nB52p4HFlFldv+Wxp90Rzwwe21O133oN+uQ75OJ5+EavYwZLvsHqF+/TYzrt95YSarBhY2MdGVenc//xXcfQ2B7hKGegTaKFqWdU2OfvDh4N4FTrO880RMzhc4I0C00f6g4zAhn+r0tBM0o3qUyY1VYnHIIC5jvUDTBLMoNp+x8fG8/Tf42LabBFglIwHGEVs78tBDt8CzUzb7XoXxpSEC0llWHCTcjhHN/zuUrCe7DZjjNb0Bbn5wspK+3Llb+iBn55MQSeIvUVrizBSGuNWhnsJvtzXd9As3DoI0KwEf9uZX2z9NWK34QlVh0SZ1pmNPE1JjQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=kernel.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=QB2v3p8xVBkoFTtj/OssK3eq3aeYBld67hSPE7XCRYE=;
- b=bxMe+UBrFAPVtVlkMpBC5s3RhhrgLFmT+xrtuHSRWI2cTJIPlzB5iTjeQ0LJrT9PJbjShJ7Mi24oRfojYpq1rPmSb1yy8xAukdcFegY0/fw9pS0LOtG311cGDWCOsz+6AdZnlMqv32l8FC6v5CFQXC0UwvR3KlyTcjT5H6cC+v8=
-Received: from MN2PR19CA0065.namprd19.prod.outlook.com (2603:10b6:208:19b::42)
- by DM4PR12MB7501.namprd12.prod.outlook.com (2603:10b6:8:113::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8207.20; Sat, 7 Dec
- 2024 10:57:45 +0000
-Received: from BN3PEPF0000B371.namprd21.prod.outlook.com
- (2603:10b6:208:19b:cafe::20) by MN2PR19CA0065.outlook.office365.com
- (2603:10b6:208:19b::42) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8207.16 via Frontend Transport; Sat,
- 7 Dec 2024 10:57:44 +0000
+ bh=z4261N78RZ6zefSdf6LbgNLoktvOrHLnF03ZMxWyzmQ=;
+ b=1oKPlguMMTnxoJwHt8V38Ob4HHB+9mPSYSIdHZtR7pAa6h4U3asIPrYgWAMhxKHt5yCaHVUV/HAVxbwWKOTUzwPFODOqSotTO65HhZvAZwhEV3gGv6btRKLvNJmvGtJx4ppvNRR1BOP+siVTIGzVeZfcYGanmWOWM4/mmePAZPA=
+Received: from BN8PR12CA0009.namprd12.prod.outlook.com (2603:10b6:408:60::22)
+ by LV3PR12MB9185.namprd12.prod.outlook.com (2603:10b6:408:199::13)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.11; Sat, 7 Dec
+ 2024 10:56:14 +0000
+Received: from BN3PEPF0000B372.namprd21.prod.outlook.com
+ (2603:10b6:408:60:cafe::fd) by BN8PR12CA0009.outlook.office365.com
+ (2603:10b6:408:60::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8230.10 via Frontend Transport; Sat,
+ 7 Dec 2024 10:56:14 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,13 +53,13 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BN3PEPF0000B371.mail.protection.outlook.com (10.167.243.168) with Microsoft
+ BN3PEPF0000B372.mail.protection.outlook.com (10.167.243.169) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8272.0 via Frontend Transport; Sat, 7 Dec 2024 10:57:44 +0000
+ 15.20.8272.0 via Frontend Transport; Sat, 7 Dec 2024 10:56:14 +0000
 Received: from jenkins-julia.amd.com (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 7 Dec
- 2024 04:57:40 -0600
+ 2024 04:56:09 -0600
 From: Julia Zhang <julia.zhang@amd.com>
 To: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
  <anthony.perard@citrix.com>, Paul Durrant <paul@xen.org>, "Edgar E .
@@ -75,12 +74,10 @@ CC: Alex Deucher <alexander.deucher@amd.com>,
  =?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>, Jan Beulich
  <jbeulich@suse.com>, Juergen Gross <jgross@suse.com>, Oleksandr Tyshchenko
  <oleksandr_tyshchenko@epam.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH 3/3] virtio-gpu: add a new command to get p2pdma_distance
-Date: Sat, 7 Dec 2024 18:55:40 +0800
-Message-ID: <20241207105537.542441-4-julia.zhang@amd.com>
+Subject: [PATCH 0/3] Support getting p2pdma_distance
+Date: Sat, 7 Dec 2024 18:55:34 +0800
+Message-ID: <20241207105537.542441-1-julia.zhang@amd.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241207105537.542441-1-julia.zhang@amd.com>
-References: <20241207105537.542441-1-julia.zhang@amd.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -89,60 +86,62 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN3PEPF0000B371:EE_|DM4PR12MB7501:EE_
-X-MS-Office365-Filtering-Correlation-Id: de85b411-cd99-41cf-2525-08dd16adfac7
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B372:EE_|LV3PR12MB9185:EE_
+X-MS-Office365-Filtering-Correlation-Id: aa9c35be-606c-4060-c2c3-08dd16adc4e9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|7416014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?+qa/yUL1d3QdPp0XvV+rfvpR0waCVpnNrP2Z6qcNRnuryjjeNRBJEERL51uj?=
- =?us-ascii?Q?weuuOZV0jJk4gAOVI+FF9DpMav+r8yJ+jTfT7TQw2/SuNtn9p7QYq8/yLHvm?=
- =?us-ascii?Q?gNgeUCpn/3pKsRlZZUf6AaVmaM7LR9lRITZchEKI4X64sfTT+dFwgFxymw59?=
- =?us-ascii?Q?O0rpDGUzZEVn0nDQ22n8DfAMbM8sr2dntAAImKsn7t3B6aHXjGuwRs+ikRn6?=
- =?us-ascii?Q?MOOjgV7CHgr8eF3YHZaMpsJPItEqNjcdl3vq9X7Q42/uQkVK6aSjsKO8n6bz?=
- =?us-ascii?Q?3Cei0JOIkPYNfVOzzrbk5erVR0WE5CsQUDYQqX5IQkF9fCZ84+y9sorxD5DP?=
- =?us-ascii?Q?oqLzpoGzat5dqyFcTCY+z22i41A/uNL/20g//KB1GOd2uKXb/AWpRCO+Xfh5?=
- =?us-ascii?Q?qeVE0WARvWXwtwEdpiVOwD5j6nCt0GHos5BcfJLXRj4T2BXJ1ghU8/1V5MBB?=
- =?us-ascii?Q?2nNQxjph0tE4wklH5qIilcCuXDPhOWROzxzuDK1Gdqru/Ne5kZCCO4F51RRe?=
- =?us-ascii?Q?GDvdwSHyE+Slk6XAbEPEu59PYZ5q9DwUjoDN6d7X4j6xNegfYcnWI2QGUU5c?=
- =?us-ascii?Q?ygLk8E4qXSnXQD6KBHAVDQxhVvp2BwauMBMObTOuGMifABQku11YFchgcOfx?=
- =?us-ascii?Q?zidK9Iz7MVW5yY+gA4gWTYGRlbh/JwnRF6MYZXhjEec217h3xjpMGJUlqjtJ?=
- =?us-ascii?Q?skbYAO8y4mW/8llD1hGYDQPWeUfQIA0tWELTEyZ6CN9yAEucVVwShpvcvCzU?=
- =?us-ascii?Q?M18584lDBHx9/ZOE69Uogfq8PYKUOa7zRhAQj6mgmQAhc5aLvxNNYD7a/ETN?=
- =?us-ascii?Q?tPvbT/9TdZ5OwVNVQ4tZRKb4U7vNjzVI4tsNXasbtLCSwJ6wUEdhwQmcj7BC?=
- =?us-ascii?Q?1ayHO8N3wZdXGVOqfw0HHcpYoxrDrLjGBWlLFwC9RYntowFneZ0u8U1DbZs+?=
- =?us-ascii?Q?IvMdAFS/9+QOPfybWhdVH75ctPjWXSVk6t5r1DFRhMFfu3taG+umnAalNfGm?=
- =?us-ascii?Q?OSosjeCioNmoUSqIE/L8WJJqQ03Ll8nyjoDOEmDM5jmDbokdxnxzq/lCg5oz?=
- =?us-ascii?Q?3kqrJoIBCQzqwGOwmI+LSoIL8kfWAR0B4SE//9pGnd4/Js9ImiwK9eCxPjEU?=
- =?us-ascii?Q?qtWlFHIX6Yn7vj4kXqWnjXKRWtFCZIHcJTHfHljBIPxa7HDthoa0FQQg5L6C?=
- =?us-ascii?Q?giwEzdlvr4w0lc7IRa/ugFCUwVohifqj3TeZ7ea6etVKlc+IrWC6UOOVW19z?=
- =?us-ascii?Q?AXdx6PwTle1ZvHQB9tf3Y6Bca/rOWOxcbzN7HxhamiHRS5vh+VuQOImCMN1h?=
- =?us-ascii?Q?5N1Jk7vqe2bY9IDf0yLFvo55zna62oJmfFJkVirK1lycmtBoutpgdnL8Rodh?=
- =?us-ascii?Q?fYcWSUeGnu8RH4/SlLcWQyXq7B3fYDilwWREqg555DavrEbW/CPxJfsryI44?=
- =?us-ascii?Q?RcK8IQgi9OTEh6ABpiBud4DN4+tlJ+t1?=
+ ARA:13230040|7416014|1800799024|36860700013|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?9EPrNKWyXB2jffhGJwu6FONbnhxmpPnqjMVjmAU+oEtNU+cSqk7+YZniU1oM?=
+ =?us-ascii?Q?zev8Wsp/joaRMxiUYDWVRiW0c9Q9Shc7uDInq2mJc1Fx3en/vupaj8fQqh5T?=
+ =?us-ascii?Q?u6ePcwQwGExdSRtxSO3jpyZxKryL4w4pvrNnr2AYhWdgUcVtuHQ6htAbo3Us?=
+ =?us-ascii?Q?shmdgzpoTDs/GiW1UPkF0Ppg/KCU1NQnA02cqD8fedJbpNDzGJZ4vhOjBgU0?=
+ =?us-ascii?Q?ppTtWbW7UAUIPaTMCdVQCNS3c94B2YDJeqNivn6exkQIVRMCluaup9RMpHHq?=
+ =?us-ascii?Q?HGO2vh+DK7NNpL+rKpD+sftBJwB2qH8YH0nkcEG3pMBff5qnl4tG+S7mCNTc?=
+ =?us-ascii?Q?44KJ3sAWmcSuD9GQlFOzPavmE2aBFuISVd6SYO3HcOuLbNuVDaLWJID2JQz3?=
+ =?us-ascii?Q?+A37W8+cdAwGFJ3tGdKfgHaGQvO70WjUPrVNR+kYnsTeDdNkaTc8KHn5pf/E?=
+ =?us-ascii?Q?hqElxP9Ray6KAf0nQbRhppRRu3R9jeTpbRootsevWe/TLihhmP2vae/wP/tL?=
+ =?us-ascii?Q?YyoHHN0ckcXgEoTpJNeCq0dyExKLcWgVoYnBaf2WRbveeeW0J3/z4kUT7rMn?=
+ =?us-ascii?Q?0qXbC4oDsPC5hYCUZxTW1RyKrWO4Btghc+ywQJSXp2glemYunu5IHmwoucH1?=
+ =?us-ascii?Q?HaD/HcApTnrk0/0V0DuLZetbI42/f8S7gKX/840FdYOgE7aN9jji/y8UbAZk?=
+ =?us-ascii?Q?QPpVaYGz8kgZoXo1bKUiZdSy2UyohrzccXq/pg8BAi2MVt+eZRSICVu5cBTI?=
+ =?us-ascii?Q?M3KTZdcvqv9rhB7nwti5CS1U33Dk5ZPt+uYPlpjPqUQ3UClzT3gIHwi4ggF2?=
+ =?us-ascii?Q?EE2sg3q2QH+YhjJP927UQlhiUrY8wBU/PET4BPp+6iVxey6Fwh6bPKlj64zR?=
+ =?us-ascii?Q?QPAsq+0PBNgHNDg4s9euLbFS+EeS/isTGRT9iAkw9/DaDOTt/gstaS5mATFc?=
+ =?us-ascii?Q?ICysk89vQFEVUNv+lJa8iPuKmFeORVtoDrAelNSOxEvKsFQX1FwXe73xLf1j?=
+ =?us-ascii?Q?kcUs7UvBVMBj2P7huSAyWtyfHo/DKuBIxrN3bj/iZgubIoMplqTmA1oUz3v6?=
+ =?us-ascii?Q?Ts39gcol9xmzbVdBQgNYBeAwbVSgve+Pi47l/3fjUDhTJOjMNXQziqKvOg/9?=
+ =?us-ascii?Q?hpQ2Fx2pC/3QLxM2Cf75DtPIlF/1tbn1J1PgfreLN2kkqvpPErTyXa/PUAtN?=
+ =?us-ascii?Q?MwpPSUEAUKIVmHe+YiRTWBImViE+Dmdlwmr/XLtw5HbBpw5TeQMknoVWf3oe?=
+ =?us-ascii?Q?sFghtmVkF2Zw2vTLzmFfondRb7aEASgLh7o2ly6NQjjPNKndfUOY1DXyd7aK?=
+ =?us-ascii?Q?cKaAW43AQMxXwXDGGq9wus2ktTb+YA+akoBVH4YDFQ66B1QdrtiklSevfCnv?=
+ =?us-ascii?Q?XjsCvlaWXxDKA/6czVCQegzffPenLboDnbsJNeoLBSm3IDbP1S3NZSEXUdN8?=
+ =?us-ascii?Q?sCLV8DnS0y9BCPB1mn+aaPwvWPK/omX3?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024); DIR:OUT;
+ SFS:(13230040)(7416014)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2024 10:57:44.8361 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: de85b411-cd99-41cf-2525-08dd16adfac7
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2024 10:56:14.4504 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa9c35be-606c-4060-c2c3-08dd16adc4e9
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B371.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B372.namprd21.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7501
-Received-SPF: permerror client-ip=2a01:111:f403:200a::62c;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9185
+Received-SPF: permerror client-ip=40.107.236.78;
  envelope-from=Julia.Zhang@amd.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
+ helo=NAM11-BN8-obe.outbound.protection.outlook.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -158,188 +157,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-To implement passthrough dGPU prime in guest, virtio-gpu need to check
-p2pdma_distance of two GPUs. This adds a new command for guest to pass
-virtual pci notations of two pci devices to host and send xen privcmd to
-calculate physical p2pdma_distance.
+To implement dGPU prime feature, virtgpu needs to import/export buffer
+between virtio iGPU and passthrough dGPU. Before that, virtgpu has to
+checkout p2pdma_distance. But calling function pci_p2pdma_distance in guest
+VM will only get virtual p2pdma_distance instead of real physical
+p2pdma_distance.
 
-Signed-off-by: Julia Zhang <julia.zhang@amd.com>
----
+This series is to support handling the new virtgpu command from the guest
+VM to get the physical p2pdma_distance of two PCI devices of guest VM.
+
+Julia Zhang (3):
+  virtio-gpu: set hostaddr for virtio iGPU
+  pci: introduce a function to get PCIDevice
+  virtio-gpu: add a new command to calculate p2pdma_distance
+
  hw/display/virtio-gpu-virgl.c               | 47 +++++++++++++++++++++
+ hw/display/virtio-gpu.c                     |  6 +++
  hw/i386/xen/xen-hvm.c                       |  6 +++
+ hw/pci/pci.c                                | 22 ++++++++++
+ hw/xen/xen_pt.c                             | 10 ++---
+ hw/xen/xen_pt.h                             |  1 -
+ include/hw/pci/pci.h                        |  2 +
+ include/hw/pci/pci_device.h                 |  1 +
  include/hw/virtio/virtio-gpu-bswap.h        | 12 ++++++
+ include/hw/virtio/virtio-gpu.h              |  2 +
  include/hw/xen/xen.h                        |  3 ++
  include/standard-headers/linux/virtio_gpu.h | 19 +++++++++
- 5 files changed, 87 insertions(+)
+ 12 files changed, 125 insertions(+), 6 deletions(-)
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 07faeb1834..eb9b193ade 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -16,6 +16,12 @@
- #include "qemu/iov.h"
- #include "trace.h"
- #include "hw/virtio/virtio.h"
-+#include "hw/pci/pci.h"
-+#include "hw/pci/pci_bus.h"
-+#include "hw/virtio/virtio-pci.h"
-+#include "hw/virtio/virtio-bus.h"
-+#include "hw/xen/xen.h"
-+
- #include "hw/virtio/virtio-gpu.h"
- #include "hw/virtio/virtio-gpu-bswap.h"
- #include "hw/virtio/virtio-gpu-pixman.h"
-@@ -188,6 +194,44 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
- 
-     return 0;
- }
-+
-+static void virgl_cmd_p2pdma_distance(VirtIOGPU *g,
-+				      struct virtio_gpu_ctrl_command *cmd)
-+{
-+    struct virtio_gpu_device_p2pdma_distance cmd_p;
-+    struct virtio_gpu_resp_distance resp;
-+    PCIDevice *client = NULL, *provider = NULL;
-+    int ret;
-+
-+    VIRTIO_GPU_FILL_CMD(cmd_p);
-+    virtio_gpu_p2pdma_distance_bswap(&cmd_p);
-+
-+    ret = pci_qdev_get_device(cmd_p.provider_bus, cmd_p.provider_slot, cmd_p.provider_func, &provider);
-+
-+    if (ret) {
-+	    qemu_log_mask(LOG_GUEST_ERROR, "%s: virgl get physical device error: %s\n",
-+			  __func__, strerror(-ret));
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-+    ret = pci_qdev_get_device(cmd_p.client_bus, cmd_p.client_slot, cmd_p.client_func, &client);
-+    if (ret) {
-+	    qemu_log_mask(LOG_GUEST_ERROR, "%s: virgl get physical device error: %s\n",
-+			  __func__, strerror(-ret));
-+        cmd->error = VIRTIO_GPU_RESP_ERR_INVALID_PARAMETER;
-+        return;
-+    }
-+
-+    int distance = xen_p2pdma_distance(provider->hostaddr.bus, provider->hostaddr.slot,
-+				       provider->hostaddr.function,client->hostaddr.bus,
-+				       client->hostaddr.slot, client->hostaddr.function);
-+
-+    memset(&resp, 0, sizeof(resp));
-+    resp.hdr.type = VIRTIO_GPU_RESP_OK_P2PDMA_DISTANCE;
-+    resp.distance = distance;
-+    virtio_gpu_ctrl_response(g, cmd, &resp.hdr, sizeof(resp));
-+}
- #endif
- 
- static void virgl_cmd_create_resource_2d(VirtIOGPU *g,
-@@ -913,6 +957,9 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
-     case VIRTIO_GPU_CMD_SUBMIT_3D:
-         virgl_cmd_submit_3d(g, cmd);
-         break;
-+    case VIRTIO_GPU_CMD_P2PDMA_DISTANCE:
-+	virgl_cmd_p2pdma_distance(g, cmd);
-+	break;
-     case VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D:
-         virgl_cmd_transfer_to_host_2d(g, cmd);
-         break;
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index d3df488c48..c8dd27dad7 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -604,6 +604,12 @@ static bool xen_check_stubdomain(struct xs_handle *xsh)
-     return is_stubdom;
- }
- 
-+int xen_p2pdma_distance(uint32_t bus, uint32_t slot, uint32_t func,
-+			uint32_t c_bus, uint32_t c_slot, uint32_t c_func)
-+{
-+	return xc_physdev_p2pdma_distance(xen_xc, bus, slot, func, c_bus, c_slot, c_func);
-+}
-+
- void xen_hvm_init_pc(PCMachineState *pcms, MemoryRegion **ram_memory)
- {
-     MachineState *ms = MACHINE(pcms);
-diff --git a/include/hw/virtio/virtio-gpu-bswap.h b/include/hw/virtio/virtio-gpu-bswap.h
-index dd1975e2d4..b5c0c0adcd 100644
---- a/include/hw/virtio/virtio-gpu-bswap.h
-+++ b/include/hw/virtio/virtio-gpu-bswap.h
-@@ -78,6 +78,18 @@ virtio_gpu_map_blob_bswap(struct virtio_gpu_resource_map_blob *mblob)
-     le64_to_cpus(&mblob->offset);
- }
- 
-+static inline void
-+virtio_gpu_p2pdma_distance_bswap(struct virtio_gpu_device_p2pdma_distance *p2p_dist)
-+{
-+    virtio_gpu_ctrl_hdr_bswap(&p2p_dist->hdr);
-+    le32_to_cpus(&p2p_dist->provider_bus);
-+    le32_to_cpus(&p2p_dist->provider_slot);
-+    le32_to_cpus(&p2p_dist->provider_func);
-+    le32_to_cpus(&p2p_dist->client_bus);
-+    le32_to_cpus(&p2p_dist->client_bus);
-+    le32_to_cpus(&p2p_dist->client_bus);
-+}
-+
- static inline void
- virtio_gpu_unmap_blob_bswap(struct virtio_gpu_resource_unmap_blob *ublob)
- {
-diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
-index ecb89ecfc1..fe1d628327 100644
---- a/include/hw/xen/xen.h
-+++ b/include/hw/xen/xen.h
-@@ -48,4 +48,7 @@ qemu_irq *xen_interrupt_controller_init(void);
- 
- void xen_register_framebuffer(struct MemoryRegion *mr);
- 
-+int xen_p2pdma_distance(uint32_t bus, uint32_t slot, uint32_t func,
-+			uint32_t c_bus, uint32_t c_slot, uint32_t c_func);
-+
- #endif /* QEMU_HW_XEN_H */
-diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
-index 6459fdb9fb..2e55dcc2fe 100644
---- a/include/standard-headers/linux/virtio_gpu.h
-+++ b/include/standard-headers/linux/virtio_gpu.h
-@@ -95,6 +95,7 @@ enum virtio_gpu_ctrl_type {
- 	VIRTIO_GPU_CMD_SUBMIT_3D,
- 	VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB,
- 	VIRTIO_GPU_CMD_RESOURCE_UNMAP_BLOB,
-+	VIRTIO_GPU_CMD_P2PDMA_DISTANCE,
- 
- 	/* cursor commands */
- 	VIRTIO_GPU_CMD_UPDATE_CURSOR = 0x0300,
-@@ -108,6 +109,7 @@ enum virtio_gpu_ctrl_type {
- 	VIRTIO_GPU_RESP_OK_EDID,
- 	VIRTIO_GPU_RESP_OK_RESOURCE_UUID,
- 	VIRTIO_GPU_RESP_OK_MAP_INFO,
-+	VIRTIO_GPU_RESP_OK_P2PDMA_DISTANCE,
- 
- 	/* error responses */
- 	VIRTIO_GPU_RESP_ERR_UNSPEC = 0x1200,
-@@ -429,6 +431,23 @@ struct virtio_gpu_set_scanout_blob {
- 	uint32_t offsets[4];
- };
- 
-+/* VIRTIO_GPU_CMD_P2PDMA_DISTANCE */
-+struct virtio_gpu_device_p2pdma_distance {
-+	struct virtio_gpu_ctrl_hdr hdr;
-+	__le32 provider_bus;
-+	__le32 provider_slot;
-+	__le32 provider_func;
-+	__le32 client_bus;
-+	__le32 client_slot;
-+	__le32 client_func;
-+};
-+
-+/* VIRTIO_GPU_RESP_DISTANCE */
-+struct virtio_gpu_resp_distance {
-+	struct virtio_gpu_ctrl_hdr hdr;
-+	__le32 distance;
-+};
-+
- /* VIRTIO_GPU_CMD_RESOURCE_MAP_BLOB */
- struct virtio_gpu_resource_map_blob {
- 	struct virtio_gpu_ctrl_hdr hdr;
 -- 
 2.34.1
 
