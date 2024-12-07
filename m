@@ -4,100 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E77BBE77173
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Dec 2024 23:10:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70BF0E77173
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 00:58:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJhRN-00032c-6F; Fri, 06 Dec 2024 18:08:53 -0500
+	id 1tJj8s-0002eK-Ru; Fri, 06 Dec 2024 19:57:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJhRL-00031p-1g
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 18:08:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tJhRJ-0005pD-Ia
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 18:08:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733526529;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bj8MGswrXWKOgEfQ2x9IDB2aXSksN2FVHW5jduhyU+Q=;
- b=A8r04v2/BpN4jrt1Il3eSaFeoIzXc9dg6zDOTeqaSIMX335/JdMZ9nDxVOg8CyTTC2Nn9I
- mPxTYstsBPmFGCBwDZ+A9o9oTFtcI8Gu7+Em3MkyAPlVXVbJ4SE4Hn8Dv9p5380J4Fw54U
- /zU2+lz/7RUBMZFAMFQBoG87WnPn4yg=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-hli23DxeNsWWZEWRLgWGpA-1; Fri, 06 Dec 2024 18:08:47 -0500
-X-MC-Unique: hli23DxeNsWWZEWRLgWGpA-1
-X-Mimecast-MFC-AGG-ID: hli23DxeNsWWZEWRLgWGpA
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-843eac1b9dbso231716439f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 15:08:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1tJj8q-0002e5-Pm
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 19:57:52 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1tJj8p-000884-0V
+ for qemu-devel@nongnu.org; Fri, 06 Dec 2024 19:57:52 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-215d92702feso22814445ad.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 16:57:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733533069; x=1734137869; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zDD4ieEHQBgq6iCHOmI86xja63Ks3TWXyk1SqpXsArU=;
+ b=Ot4Fs4QvBcC0pQrz+6vzdhd0vANmFmUTXfdkCPtMMsxEoLObVOLBLqBziiFxikL7jh
+ 9gstJUjBSEO3tlJ82B7B1Tj8Eh9EzlPLbYGee/dABmh28Il+8h0jVJfhF8ObyI4r2GOC
+ 9WxRjN7gOr9xEqtB/D8a20qGUKH5imuXkdRmLftDpq4+cPtAd2xuAogtxEFU/kHispz9
+ WEUcyw9LIIdfGRiltP3hNzYSChe9gYop2YiJSGt/zI0R8MWkvA6zB7OKh4QabmAgie3P
+ q30OTgLnLkpzi4ebIHitx0MVzs1l7/xPtZA1ORPC2gsI0YO5nDH+grkKnrzj+mxwJvlU
+ rSNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733526526; x=1734131326;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bj8MGswrXWKOgEfQ2x9IDB2aXSksN2FVHW5jduhyU+Q=;
- b=IZqpu3qqvPRZUJGZvYGcgGS+UStqeuJ2G6mUCMdkSWcQfKekrSUGhTaLg4XkXmi8+X
- a1VNQZKjT4qPSc7mdPVT2eT4tJ7rpSQlyPlBn0hkcLFoOqCGRK2PM/olYpLZ8WaymTzn
- dlN7QR0N3PAdlo50y12QFNDn3RgxKjjUB1RndUcAOi4aSsb4dgE+OneL8lo430kLwzvJ
- DJcWmeNcMw/Sg2ubihfAoNP1djkteLG4ERaEGUrJXKPNIzgXsr/sUagw4yOiMWBdNXVU
- xYlzPeAMdJiqbNDjNmsnsZsCDBJeX5+9dwipCSk5UphbYm4OhOVJ5eYh2wJU39McDKjE
- x5Mw==
-X-Gm-Message-State: AOJu0YyObsqsF8lEBbr/VVkF4XShSnXMZVrWg2j9vuk8sceyBOseaMVa
- P9k+xO8JiJzNl0HXs5SVdi8Xjs5vPmq+Kz+zy5KN478UvMBJI3AOv7OPlE7AsQXq2fFYlBYWLoc
- Yx54pImf7GVYaGRSgK6UfDphzjzJLnhUb6+AIaROp5f09qvtjDJvm9ynGOwQ/LUjUmNeSI7lERz
- uA551Yh22uUYDoISkAbc2lJc9b4gP1Nr9eZw==
-X-Gm-Gg: ASbGnct361u5/QFvrSUzSrSgBn9Aln12cWPLhoZdZj64ayBV/TUH3DcK1GpNhBBAY/E
- X7qljPCOXeysiIk9uD+5z0BL6WvmwTW4QLZuchnhgwMYfpSSW3YNTXzPZAce8G0eMk5fXFWXT31
- /gnBLzAlCW//5tjlKLyKy0UyQV5gzu0nIEIQpcEjKIvRIcbd3cJVH1WPyx1KbJ540HVyG1Z5T3M
- FGJUSniiebwPRcrdp8N9A4pL5F1MTn8QOC5tXXCA/KupjHDglOdN++n2rErgFOo4MiyrvtH+NCa
- k0FDd6cZt8VK6j5bzSjDnlUQuA==
-X-Received: by 2002:a05:6e02:1c43:b0:3a7:c3aa:a82b with SMTP id
- e9e14a558f8ab-3a811dae3b7mr61957695ab.1.1733526526336; 
- Fri, 06 Dec 2024 15:08:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwTFoqMI0boqnnrTCMSIJ/MaBO3VmAH2bAWjST7Ns0G37MN56nMw+NdMUHYywLIoKDyN2qlQ==
-X-Received: by 2002:a05:6e02:1c43:b0:3a7:c3aa:a82b with SMTP id
- e9e14a558f8ab-3a811dae3b7mr61957445ab.1.1733526526004; 
- Fri, 06 Dec 2024 15:08:46 -0800 (PST)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e2861d9a8dsm1038895173.86.2024.12.06.15.08.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Dec 2024 15:08:44 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, qemu-block@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>,
- Eric Blake <eblake@redhat.com>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Kevin Wolf <kwolf@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 3/6] migration/block: Make late-block-active the default
-Date: Fri,  6 Dec 2024 18:08:35 -0500
-Message-ID: <20241206230838.1111496-4-peterx@redhat.com>
-X-Mailer: git-send-email 2.47.0
-In-Reply-To: <20241206230838.1111496-1-peterx@redhat.com>
-References: <20241206230838.1111496-1-peterx@redhat.com>
+ d=1e100.net; s=20230601; t=1733533069; x=1734137869;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=zDD4ieEHQBgq6iCHOmI86xja63Ks3TWXyk1SqpXsArU=;
+ b=O2EAqghT5Op/yCO+49faq2lmrRFjO7BRnGaRD3fzfOUuZrhqRSwbe6iSnvvfNIcU1+
+ WxuqJgvYLQ/+XYaqB5IFI/DalPEHE4OfRBK+M83/HH7Zkn/3sgahl7nx+Rx12e96NjxD
+ CeU50r3/ECV1Pp8eoe/RVCLYQ1G43iO5iI3ELPqK4In1gL/mqxRYFaD6dC3E24/gJXh+
+ 95jJvn+sYkvruQYLSrqBXBhsx/kV0Z3Ojqd0umYudQPzcIarFIdtCGPq9jzMMZqqqqP6
+ I6z7Ajr1MjzvawQebcPsrA7eQkLFeCrftzuzJnLsYtfT8LpTz8iZ9mnP8daL6QTogmK8
+ NVvw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUJ552y2PtVfn0wFbh9MxMouFbFHmsIGbLAW5EYSs6LraQM4LKnpzqxTGSUB3VRL96uWK4TRKHoRjv9@nongnu.org
+X-Gm-Message-State: AOJu0YxhWyCOQx6jyULEUA9GfsDVxodsb0zM+/GfJzg7y/EUN+HXFrct
+ 0ANaNzVFaZWa7F5e6uLhU+VO8dYlPnke8szzbOTHgeNCM21e+Hl/
+X-Gm-Gg: ASbGnctHdsYXC7SgFutMxMysyD5pjDeQMNtQ/dyWgElWoOGOosDHY6iCwnT/sAXBPSP
+ JXlYQs0TzU9KZ/5jURbUNfCxk9hPafRs7+hsFo5qMNEPbhditMn3iHmQu8fLaVplHgf3llUr8th
+ kcIRWR/HzP/HxE+L3mg2iU4Yih19x22Uiz4/xoEKQWZHGG6GTKzDTcdBYjLqUabNamEyBzksT62
+ uVhGQ/fSvSb0msWBHGfjNVMeXGR2J5p4tx7qziuLdFYjK1cJUvrpyw=
+X-Google-Smtp-Source: AGHT+IEqDxRpdeJVFCNaD+e8LIIjJOAhB2xt6YnjxlBAQWoQKZVsMCGofJZ83V9RDZbQ/5GZYOTycQ==
+X-Received: by 2002:a17:902:ea02:b0:216:2b14:b625 with SMTP id
+ d9443c01a7336-2162b14cdfamr12993155ad.31.1733533069110; 
+ Fri, 06 Dec 2024 16:57:49 -0800 (PST)
+Received: from [192.168.1.211] ([50.39.253.148])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-215f8f0d18csm33551795ad.204.2024.12.06.16.57.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Dec 2024 16:57:48 -0800 (PST)
+Message-ID: <2c0893fa-9d84-4003-861b-91a923f9439f@gmail.com>
+Date: Fri, 6 Dec 2024 16:57:47 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/3] Add additional plugin API functions to read and
+ write memory and registers
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20241206102605.961658-1-rowanbhart@gmail.com>
+ <55c95bd1-a1bc-460c-b4fe-1f52f8af2c2e@linaro.org>
+Content-Language: en-US
+From: Rowan Hart <rowanbhart@gmail.com>
+In-Reply-To: <55c95bd1-a1bc-460c-b4fe-1f52f8af2c2e@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,81 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Migration capability 'late-block-active' controls when the block drives
-will be activated.  If enabled, block drives will only be activated until
-VM starts, either src runstate was "live" (RUNNING, or SUSPENDED), or it'll
-be postponed until qmp_cont().
+> I am personally in favor to adding such features in upstream QEMU, but we should discuss it with the maintainers, because it would allow to change the state of execution, which is something qemu plugins actively didn't try to do. It's a real paradigm shift for plugins.
+> 
+> By writing to memory/registers, we can start replacing instructions and control flow, and there is a whole set of consequences to that.
+> 
 
-Let's do this unconditionally.  There's no harm to delay activation of
-block drives.  Meanwhile there's no ABI breakage if dest does it, because
-src QEMU has nothing to do with it, so it's no concern on ABI breakage.
+Totally agree! As much as I really want this functionality for plugins, I think
+alignment on it is quite important. I can see very cool use cases for being
+able to replace instructions and control flow to allow hooking functions,
+hotpatching, and so forth.
 
-IIUC we could avoid introducing this cap when introducing it before, but
-now it's still not too late to just always do it.  Cap now prone to
-removal, but it'll be for later patches.
+I don't really know the edge cases here so your expertise will be helpful. In
+the worst case I can imagine: what would happen if a callback overwrote the
+next insn? I'm not sure what behavior I would expect if that insn has already
+been translated as part of the same tb. That said, the plugin is aware of which
+insns have already been translated, so maybe it is not unreasonable to just
+document this as a "don't do that". Let me know what you think.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.c | 38 +++++++++++++++++++-------------------
- 1 file changed, 19 insertions(+), 19 deletions(-)
+> The hypercall functionality would be useful for plugins as a whole. And I think it definitely deserves to be worked on, if maintainers are open to that as well.
 
-diff --git a/migration/migration.c b/migration/migration.c
-index d2a6b939cf..e6db9cfc50 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -743,24 +743,6 @@ static void process_incoming_migration_bh(void *opaque)
- 
-     trace_vmstate_downtime_checkpoint("dst-precopy-bh-enter");
- 
--    /* If capability late_block_activate is set:
--     * Only fire up the block code now if we're going to restart the
--     * VM, else 'cont' will do it.
--     * This causes file locking to happen; so we don't want it to happen
--     * unless we really are starting the VM.
--     */
--    if (!migrate_late_block_activate() ||
--        (autostart && runstate_is_live(migration_get_target_runstate()))) {
--        /* Make sure all file formats throw away their mutable metadata.
--         * If we get an error here, just don't restart the VM yet. */
--        bdrv_activate_all(&local_err);
--        if (local_err) {
--            error_report_err(local_err);
--            local_err = NULL;
--            autostart = false;
--        }
--    }
--
-     /*
-      * This must happen after all error conditions are dealt with and
-      * we're sure the VM is going to be running on this host.
-@@ -775,7 +757,25 @@ static void process_incoming_migration_bh(void *opaque)
- 
-     if (runstate_is_live(migration_get_target_runstate())) {
-         if (autostart) {
--            vm_start();
-+            /*
-+             * Block activation is always delayed until VM starts, either
-+             * here (which means we need to start the dest VM right now..),
-+             * or until qmp_cont() later.
-+             *
-+             * We used to have cap 'late-block-activate' but now we do this
-+             * unconditionally, as it has no harm but only benefit.  E.g.,
-+             * it's not part of migration ABI on the time of disk activation.
-+             *
-+             * Make sure all file formats throw away their mutable
-+             * metadata.  If error, don't restart the VM yet.
-+             */
-+            bdrv_activate_all(&local_err);
-+            if (local_err) {
-+                error_report_err(local_err);
-+                local_err = NULL;
-+            } else {
-+                vm_start();
-+            }
-         } else {
-             runstate_set(RUN_STATE_PAUSED);
-         }
--- 
-2.47.0
+Sure, I'd be happy to work on this some more. At least on the fuzzing side of
+things, the way hypercalls are done across hypervisors (QEMU, Bochs, etc) is
+pretty consistent so I think we could provide a useful common set of
+functionality. The reason I did the bare minimum here is I'm not familiar with
+every architecture, and a good NOP needs to be chosen for each one along with a
+reasonable way to pass some arguments -- I don't know if I'm the right person
+to make that call.
 
+Glad to hear you're for this idea!
+
+-Rowan
 
