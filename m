@@ -4,89 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC2FE7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 18:28:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7835AE7717D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 19:46:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJzWq-0002fF-Ct; Sat, 07 Dec 2024 13:27:44 -0500
+	id 1tK0jw-0002uu-FU; Sat, 07 Dec 2024 14:45:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJzWo-0002ew-Cb
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 13:27:42 -0500
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tJzWm-0002Ir-9y
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 13:27:41 -0500
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5f2164a68bbso1601517eaf.0
- for <qemu-devel@nongnu.org>; Sat, 07 Dec 2024 10:27:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733596058; x=1734200858; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1AE2XRTOYwfSiGEyDciwj/dqJZ2o3komGRZtdfarFnk=;
- b=b29qmeiU8+NT1wf233cyDBm90+ae/M1ZoJi+UCbNER6zcyZ1YjAuAWpCaC/9EkwiTz
- 5+D2Qk6cLh6KonruaRVOkMmu+f01Zizc9dUhs8rgRvr4vYBWDGiAa1QX7xl9NidtbiJs
- c096xtJOkY4kisFkL3RNualBRGYV2xWO9Hc9InhWcrJAKe3qPeYiDpA8mrpuQKNM1QmW
- m/yBzMSEYGIfVKFs3pqJaHDTejca6mH6YGdpLWUbQ0flDxmsRzsYP42M2BVETQ3iAbZr
- E4HjEwz/Uvx1CnL26ShdBT3vUDHv0LFffpdUkLvKInCUsrDJsGL4pVd2uuaVF1xDQa86
- 3prg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tK0jv-0002ua-Fh
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 14:45:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tK0jt-0001Fv-LH
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 14:45:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733600716;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Rfviz3+RJEQHLnq1F5+iSVV04mCXVnj5nH43drfDTXU=;
+ b=c6goDcNnDYvvcK9/gUkYIKiKr6Y6ldL/NGFV9ErGcFgwfe1kFtA0qdvLZQk/3tTEEC/UdU
+ U6AjDnarc2FFcBx+8IORdF9zAK7iaHnOew4mY7jKoVY5NYFb9aS23J619P990OR7HiFtzJ
+ yNT67IlnCC5lrTjJ8MpHTjdtaj+EkPw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-480-FbdyV0SCOAWc6rYXKvlEcw-1; Sat, 07 Dec 2024 14:45:10 -0500
+X-MC-Unique: FbdyV0SCOAWc6rYXKvlEcw-1
+X-Mimecast-MFC-AGG-ID: FbdyV0SCOAWc6rYXKvlEcw
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385e3cbf308so402601f8f.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Dec 2024 11:45:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733596058; x=1734200858;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1AE2XRTOYwfSiGEyDciwj/dqJZ2o3komGRZtdfarFnk=;
- b=GrFOkTeKAoOpEpQYmSNSIlRkKIwaV1DC7iO/tKTXxAUZDJXfWYV1lna73N3TpzctRP
- 4QDh039sFGfaBVYu/YuIT0DB6bQ5yianmzeClCI9fdlcaDZlYuB8hqNUter8C/QzDluo
- pniQT1x/EB1cLDaXXLa2Z+dfZF19QuWlSXVNaxiUHx0dHOPP7HQPoNPuKJjYPyngetbz
- NlwBRVMPVf9YgMs8RECeSGehOGS7AOL3SKKgkEVP+b5CDm0Hfr35uOtkhA0mW8mt+ln5
- wENrf+GJ7zcl59Z7K44zV6xJYbOgeFjKUIl+UcC8kobfg09CzcSXOkDMU5/zk3vccS3C
- baGQ==
+ d=1e100.net; s=20230601; t=1733600709; x=1734205509;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Rfviz3+RJEQHLnq1F5+iSVV04mCXVnj5nH43drfDTXU=;
+ b=OvDJREWeFLkIXI+XiP3uQL1sJcRqZ2IjKMP9+w6d3BlLLlNiPpqaHREhqCAq+e0HEA
+ ZX+M6j48+7elLTUqZfiZ779drI0/Eiq24yAUreqo+Y3TwUBRUnOLoZqoT+rPBpbaxpgL
+ csTVSYBwShku3fwSrhJq5rHhfkQqTyZhuvFq9iv1fQsGqt2Qen8yYBkHwLbgdggAyrfH
+ Q7QOOoZ8humZng8CDSWLRT3vmLKEZ10P2B+L1qAlRY4Uzlwwr3FanwJmauOAfkBbw4S5
+ +7bc9CIR42iYJeFHmEYjca6y9GrLaY6zPQQHPBg7Q+D+o4n2hnNJTRAjIyV3GBvkeqKA
+ 42UA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJajmVktvapKvdAtlk7VF5lsUR884HNdeN4EQqT8yik1id6S+CBc69g2PI2+zvZ5yBrTdiGfHV5NEK@nongnu.org
-X-Gm-Message-State: AOJu0Yx3QV7p2kosCTtSKuYWhjYzlF2aXaPjmZmhoiw+qFz+we2XzQH+
- jGFaFmRJcbx4kbIkrS0HlsrT0iSZBM06hejXn7y3qs0aEUgS2WPx99b9JwFPCCc=
-X-Gm-Gg: ASbGncu4NBKfjiMS/VXupPRnEqTHsD6Jv6Bu0UFRnbj4HXZgO0AOWvvjXRMHoPLgjkm
- x0TGsXSqrvtU9dS97VARvAhtCYVyJhCsmuqrbEVyusVpEg8Bp2eELy/Vm5vx57GrXygJXS6+v5R
- dt4xzmmO6biOWA+0DSCw+46ip8WvTDNQfqDUujeKfl6xESLjQU/TS2+pOghggxSaYML/dqc1IfN
- uRyJG1pnFpNcLA/kAckYGS/7/TAKMowSi2vSFvKbtmpUWEkWrkSv+C9Xgmgdvj+DkTsgbzDgSq8
- Ih7JCXtO9LB6L9wB6epQr7N22Nyn
-X-Google-Smtp-Source: AGHT+IE518WKAvEbdYkcUwQc8H3LUqM0/R4D9NdAYg8uH0ddYdwSq/v6Fza64jXpWSsIVcncPYxvIA==
-X-Received: by 2002:a05:6870:9d94:b0:29d:c5e8:e41f with SMTP id
- 586e51a60fabf-29f731a292bmr6664321fac.5.1733596057945; 
- Sat, 07 Dec 2024 10:27:37 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29f569a64a1sm1587214fac.47.2024.12.07.10.27.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Dec 2024 10:27:37 -0800 (PST)
-Message-ID: <7f8d7f1b-8c5d-42de-8d5c-137b2d281719@linaro.org>
-Date: Sat, 7 Dec 2024 12:27:34 -0600
+ AJvYcCX/+x6k8MkQ6QYyCzWIoqhNRsGGAwsZigutODAwhxXihv7Er9DppThtgn6lmv5X7FEBt9Vq2OatPxhB@nongnu.org
+X-Gm-Message-State: AOJu0YxKj+tDhj6BxAkUGU3XjMixe6pyM2jqw10+sFGPveRiNgh++wPX
+ /IZ05wam7auYDSULIlE89I4YxxY9WVulD4hQZctBE/tWfSB7L16LltVKebLaSo6hwYizaI9wUti
+ fqz9YdkFiT0HEFAi8OKFBf+tZSHy4DS/g/XC6FuvTTP2xxIkdsl6dMqeLIIQoNU/4xcMSPyMqrh
+ 61rMub0TYwldyCuZw2lsYWp1zBNzk=
+X-Gm-Gg: ASbGncuu3BMOCWhiks369k9aE/JV2lnbiDersOe5voipSXGUAdFhQai2NmA5aowOQrb
+ zVWcWYu2dkNNGQCHJ0DVTE/IBypEsBg==
+X-Received: by 2002:adf:e18a:0:b0:385:e2c4:1f8d with SMTP id
+ ffacd0b85a97d-3862b351423mr5746193f8f.19.1733600709415; 
+ Sat, 07 Dec 2024 11:45:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLSoa7HdOTdDeZ7TEqhhzoulQMze8aNsJmQnv3X/qUJNM69D+7IluIXSjemAOV0v0Fbx0JVjpt6YBcItvXb5k=
+X-Received: by 2002:adf:e18a:0:b0:385:e2c4:1f8d with SMTP id
+ ffacd0b85a97d-3862b351423mr5746182f8f.19.1733600709112; Sat, 07 Dec 2024
+ 11:45:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg/optimize: Fix constant folding of setcond
-To: wannacu <wannacu2049@gmail.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>
-References: <20241206095824.281216-1-wannacu2049@gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241206095824.281216-1-wannacu2049@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-6-zhao1.liu@intel.com>
+ <adb80a8c-ee40-4d8e-898b-a62d12746aa9@redhat.com> <Z1RxQU7sgxi2WJxQ@intel.com>
+In-Reply-To: <Z1RxQU7sgxi2WJxQ@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Sat, 7 Dec 2024 20:44:58 +0100
+Message-ID: <CABgObfZpn4R2dpEJQr2-60QXEyBfLnY6ztdWG1Bd5NW0VN3TNQ@mail.gmail.com>
+Subject: Re: [RFC 05/13] rust: add a bit operation binding for deposit64
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Junjie Mao <junjie.mao@hotmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel <qemu-devel@nongnu.org>,
+ qemu-rust@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000007314540628b35e63"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,36 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 03:58, wannacu wrote:
-> The `z_mask` field of TCGTemp argument needs to be
-> properly set for the upcoming `fold_setcond_zmask` call
-> 
-> This patch resolves issues with running some x86_64
-> applications (e.g., FontForge, Krita) on riscv64
-> 
-> Signed-off-by: wannacu <wannacu2049@gmail.com>
-> ---
->   tcg/optimize.c                   |  3 +++
->   tests/tcg/x86_64/Makefile.target |  1 +
->   tests/tcg/x86_64/setcond.c       | 28 ++++++++++++++++++++++++++++
->   3 files changed, 32 insertions(+)
->   create mode 100644 tests/tcg/x86_64/setcond.c
-> 
-> diff --git a/tcg/optimize.c b/tcg/optimize.c
-> index e9ef16b3c6..e580b8d8b1 100644
-> --- a/tcg/optimize.c
-> +++ b/tcg/optimize.c
-> @@ -834,6 +834,9 @@ static int do_constant_folding_cond1(OptContext *ctx, TCGOp *op, TCGArg dest,
->                                ? INDEX_op_and_i32 : INDEX_op_and_i64);
->           TCGOp *op2 = tcg_op_insert_before(ctx->tcg, op, and_opc, 3);
->           TCGArg tmp = arg_new_temp(ctx);
-> +        /* Set z_mask for the follwing `fold_setcond_zmask` call. */
-> +        arg_info(tmp)->z_mask = (ctx->type == TCG_TYPE_I32
-> +                                      ? UINT32_MAX : UINT64_MAX);
+--0000000000007314540628b35e63
+Content-Type: text/plain; charset="UTF-8"
 
-I was curious as to why this helped, when arg_new_temp was supposed to be doing exactly 
-this.  It turns out we were incorrectly reusing an old temp, not allocating a new one.
+Il sab 7 dic 2024, 16:43 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
+> > impl IntegerExt for u64
+> > {
+> >     fn deposit(self, start: usize, length: usize, fieldval: u64) -> u64 {
+> >         /* FIXME: Implement a more elegant check with error handling
+> support? */
+> >         assert!(length > 0 && length <= 64 - start);
+> >
+> >         let mask = (u64::MAX >> (64 - length)) << start;
+> >         (value & !mask) | ((fieldval << start) & mask)
+> >     }
+> > }
+>
+> Then C and Rust would be using completely different bitops library, is
+> it necessary to implement the C interface directly in Rust instead of
+> keeping the C implementation (when Rust is enabled)?
+>
 
-r~
+If it's domain specific (related to emulation) then it's better to avoid
+duplication but In some cases it's unavoidable: for example very very
+simple inlines (e.g. clock_get_hz for an example) or simple forwarding APIs
+like the various timer_init variants. It's simpler to redo the forwarding
+in Rust and only write the callback translation once, than to repeat many
+times the code to translate the callbacks and forward each init variant to
+the corresponding C function.
+
+Paolo
+
+> And we can add a "prelude" module so that you can do
+> >
+> > use qemu_api::prelude::*;
+> >
+> > and get all these useful traits at once.  I will send a patch after
+> > fleshing the idea out a bit more.
+>
+> Thanks! Cross fingers.
+>
+> Regards,
+> Zhao
+>
+>
+>
+
+--0000000000007314540628b35e63
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">Il sab 7 dic 2024, 16:43 Zhao Liu &lt;<a href=3D"mailt=
+o:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; ha scritto:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">&gt; impl IntegerExt for u64=
+<br>
+&gt; {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0fn deposit(self, start: usize, length: usize, field=
+val: u64) -&gt; u64 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* FIXME: Implement a more elegant ch=
+eck with error handling support? */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert!(length &gt; 0 &amp;&amp; leng=
+th &lt;=3D 64 - start);<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0let mask =3D (u64::MAX &gt;&gt; (64 -=
+ length)) &lt;&lt; start;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(value &amp; !mask) | ((fieldval &lt;=
+&lt; start) &amp; mask)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; }<br>
+<br>
+Then C and Rust would be using completely different bitops library, is<br>
+it necessary to implement the C interface directly in Rust instead of<br>
+keeping the C implementation (when Rust is enabled)?<br></blockquote></div>=
+</div><div dir=3D"auto"><br></div><div dir=3D"auto">If it&#39;s domain spec=
+ific (related to emulation) then it&#39;s better to avoid duplication but I=
+n some cases it&#39;s unavoidable: for example very very simple inlines (e.=
+g. clock_get_hz for an example) or simple forwarding APIs like the various =
+timer_init variants. It&#39;s simpler to redo the forwarding in Rust and on=
+ly write the callback translation once, than to repeat many times the code =
+to translate the callbacks and forward each init variant to the correspondi=
+ng C function.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote">=
+<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
+left:1px solid rgb(204,204,204);padding-left:1ex">
+&gt; And we can add a &quot;prelude&quot; module so that you can do<br>
+&gt; <br>
+&gt; use qemu_api::prelude::*;<br>
+&gt; <br>
+&gt; and get all these useful traits at once.=C2=A0 I will send a patch aft=
+er<br>
+&gt; fleshing the idea out a bit more.<br>
+<br>
+Thanks! Cross fingers.<br>
+<br>
+Regards,<br>
+Zhao<br>
+<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000007314540628b35e63--
+
 
