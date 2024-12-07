@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9105E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 08:57:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEBB7E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 08:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJqcN-0007Vi-CZ; Sat, 07 Dec 2024 03:56:52 -0500
+	id 1tJqcQ-0007Y7-Kb; Sat, 07 Dec 2024 03:56:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcL-0007Uw-D4; Sat, 07 Dec 2024 03:56:49 -0500
+ id 1tJqcL-0007Ux-D6; Sat, 07 Dec 2024 03:56:49 -0500
 Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcJ-0002So-Hx; Sat, 07 Dec 2024 03:56:48 -0500
+ id 1tJqcJ-0002Sq-Gy; Sat, 07 Dec 2024 03:56:48 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id C6EACA4046B;
- Sat,  7 Dec 2024 08:54:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7502C4CEDE;
- Sat,  7 Dec 2024 08:56:44 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 31F8FA4047B;
+ Sat,  7 Dec 2024 08:54:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19DE6C4AF0D;
+ Sat,  7 Dec 2024 08:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733561804;
- bh=Zdz33+JrFuLWEYr3Q523j6TOZr8k9EjWwbpOCTAVnQ8=;
+ s=k20201202; t=1733561805;
+ bh=Be8M4xyPgWUerVPdOaSTwjg+X2UoRgPgIB1JDMFCf+0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=rlksTPm+xt+UY915ajlsuMXswYsjpEHyA964YJWMikstZ4u8NxMqbPRDoFy9VkMIr
- KLoOuTXjyDFfDZqbaQ5g3/RAOPLJitC2jjEuzfa5C+CZi4AgIh+1AzY3SgzuWxA1fW
- 4SZkDwpCpS8Y7BmDu3H2Dj1u9T34aTaYc7XhD4W8M1ggGfQ7a4YtftatCGlcHwRB82
- EyrdVcNMC57+6kTUK0bTt0DQe8lJtjg2xHH5hRBhQSZqWC7LmLSB+lLJcQQglJ8IsW
- RGDPbzCweoCjG6SgTQzXuhMY5d1rJSLAt5HjFeWeIE9+8JLC6fnAIY7fL2YRIlWNAk
- jqj++gprlliXA==
+ b=gg4c0K+PZiAcOCBrHUOAPIMWjFw32hkLX7kyB0HbMxGy9DphC7HBP6mnQEvnPFhHl
+ VprYEMOO0PzIAdymysnfXiMDML09fN8IdO1t6J6i5oPfU+NB9LTtpNQTowNhT5NqyK
+ +Clk00+uK3QsizP+4lxArej/Y5BVFK/0T0zhPWDP1pd6xnpTRo7FY6unoWe4V96wHH
+ NikBeE3GX4EhomBBcz9sLkMHn0hUBLhqh9fLnUyqosRFUofdkWPloYlZmsDZxe8Qhk
+ 9aZz7iQhM+OVXZkfeMdhezB5Nh7+BNv2oT7/8PE5hOMXBn4jkpAFxToAGqhRcjced/
+ XJmXb0B/v8GBg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcF-00000005j4k-04hd; Sat, 07 Dec 2024 09:56:43 +0100
+ id 1tJqcF-00000005j5O-1C1u; Sat, 07 Dec 2024 09:56:43 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -44,9 +44,10 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
  Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v6 04/16] acpi/ghes: better handle source_id and notification
-Date: Sat,  7 Dec 2024 09:54:10 +0100
-Message-ID: <266784293ac084e27f2b13a3855bf234eb96a9ba.1733561462.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v6 14/16] acpi/ghes: move offset calculus to a separate
+ function
+Date: Sat,  7 Dec 2024 09:54:20 +0100
+Message-ID: <5a2bda4722e2d45839a75f3a193f6b8f4841c773.1733561462.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733561462.git.mchehab+huawei@kernel.org>
 References: <cover.1733561462.git.mchehab+huawei@kernel.org>
@@ -76,90 +77,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-GHES has two fields that are stored on HEST error source
-blocks associated with notifications:
+Currently, CPER address location is calculated as an offset of
+the hardware_errors table. It is also badly named, as the
+offset actually used is the address where the CPER data starts,
+and not the beginning of the error source.
 
-- notification type, which is a number defined at the ACPI spec
-  containing several arch-specific synchronous and assynchronous
-  types;
-- source id, which is a HW/FW defined number, used to distinguish
-  between different implemented sources.
+Move the logic which calculates such offset to a separate
+function, in preparation for a patch that will be changing the
+logic to calculate it from the HEST table.
 
-There could be several sources with the same notification type,
-which is dependent of the way each architecture maps notifications.
-
-Right now, build_ghes_v2() hardcodes a 1:1 mapping between such
-fields. Move it to two independent parameters, allowing the
-caller function to fill both.
+While here, properly name the variable which stores the cper
+address.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
-
-Chenges from v10:
-
-- Some changes got moved to the previous patch.
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
----
- hw/acpi/ghes.c | 23 +++++++++--------------
- 1 file changed, 9 insertions(+), 14 deletions(-)
+ hw/acpi/ghes.c | 40 +++++++++++++++++++++++++++++++---------
+ 1 file changed, 31 insertions(+), 9 deletions(-)
 
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 4a6c45bcb4be..29cd7e4d8171 100644
+index 90d76b9c2d8c..a4453ee357bc 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -284,9 +284,13 @@ static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
+@@ -364,10 +364,37 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
+     ags->present = true;
  }
  
- /* Build Generic Hardware Error Source version 2 (GHESv2) */
--static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-+static void build_ghes_v2(GArray *table_data,
-+                          BIOSLinker *linker,
-+                          enum AcpiGhesNotifyType notify,
-+                          uint16_t source_id)
- {
-     uint64_t address_offset;
++static void get_hw_error_offsets(uint64_t ghes_addr,
++                                 uint64_t *cper_addr,
++                                 uint64_t *read_ack_register_addr)
++{
++    if (!ghes_addr) {
++        return;
++    }
 +
-     /*
-      * Type:
-      * Generic Hardware Error Source version 2(GHESv2 - Type 10)
-@@ -316,18 +320,8 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
-         address_offset + GAS_ADDR_OFFSET, sizeof(uint64_t),
-         ACPI_GHES_ERRORS_FW_CFG_FILE, source_id * sizeof(uint64_t));
++    /*
++     * non-HEST version supports only one source, so no need to change
++     * the start offset based on the source ID. Also, we can't validate
++     * the source ID, as it is stored inside the HEST table.
++     */
++
++    cpu_physical_memory_read(ghes_addr, cper_addr,
++                             sizeof(*cper_addr));
++
++    *cper_addr = le64_to_cpu(*cper_addr);
++
++    /*
++     * As the current version supports only one source, the ack offset is
++     * just sizeof(uint64_t).
++     */
++    *read_ack_register_addr = ghes_addr +
++			      ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
++}
++
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp)
+ {
+-    uint64_t error_block_addr, read_ack_register_addr, read_ack_register = 0;
++    uint64_t cper_addr = 0, read_ack_register_addr = 0, read_ack_register;
+     uint64_t start_addr;
+     AcpiGedState *acpi_ged_state;
+     AcpiGhesState *ags;
+@@ -389,18 +416,13 @@ void ghes_record_cper_errors(const void *cper, size_t len,
  
--    switch (source_id) {
--    case ACPI_HEST_SRC_ID_SEA:
--        /*
--         * Notification Structure
--         * Now only enable ARMv8 SEA notification type
--         */
--        build_ghes_hw_error_notification(table_data, ACPI_GHES_NOTIFY_SEA);
--        break;
--    default:
--        error_report("Not support this error source");
--        abort();
--    }
-+    /* Notification Structure */
-+    build_ghes_hw_error_notification(table_data, notify);
+     start_addr += source_id * sizeof(uint64_t);
  
-     /* Error Status Block Length */
-     build_append_int_noprefix(table_data, ACPI_GHES_MAX_RAW_DATA_LENGTH, 4);
-@@ -369,7 +363,8 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
+-    cpu_physical_memory_read(start_addr, &error_block_addr,
+-                             sizeof(error_block_addr));
++    get_hw_error_offsets(start_addr, &cper_addr, &read_ack_register_addr);
  
-     /* Error Source Count */
-     build_append_int_noprefix(table_data, ACPI_GHES_ERROR_SOURCE_COUNT, 4);
--    build_ghes_v2(table_data, ACPI_HEST_SRC_ID_SEA, linker);
-+    build_ghes_v2(table_data, linker,
-+                  ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
+-    error_block_addr = le64_to_cpu(error_block_addr);
+-    if (!error_block_addr) {
++    if (!cper_addr) {
+         error_setg(errp, "can not find Generic Error Status Block");
+         return;
+     }
  
-     acpi_table_end(linker, &table);
+-    read_ack_register_addr = start_addr +
+-                             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
+-
+     cpu_physical_memory_read(read_ack_register_addr,
+                              &read_ack_register, sizeof(read_ack_register));
+ 
+@@ -421,7 +443,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+         &read_ack_register, sizeof(uint64_t));
+ 
+     /* Write the generic error data entry into guest memory */
+-    cpu_physical_memory_write(error_block_addr, cper, len);
++    cpu_physical_memory_write(cper_addr, cper, len);
+ 
+     return;
  }
 -- 
 2.47.1
