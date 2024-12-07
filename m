@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CE1FE7716E
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 07:21:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B599BE7716E
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 07:38:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJp7C-000804-0C; Sat, 07 Dec 2024 02:20:34 -0500
+	id 1tJpO1-0003Te-1Q; Sat, 07 Dec 2024 02:37:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tJp7A-0007zq-V6; Sat, 07 Dec 2024 02:20:32 -0500
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tJp78-0005o0-OL; Sat, 07 Dec 2024 02:20:32 -0500
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-5d3bdccba49so2399853a12.1; 
- Fri, 06 Dec 2024 23:20:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733556023; x=1734160823; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=aYQ+KnAc3H7/kkUuw8nuj1LkePNLl61hf3R7Fu5nQ6o=;
- b=jwa/dRCcvWimQ37LHwnMiMSfbi03gt6LCaCnhRtrw65hp/TBVFcg/R7egzyRf0I7Ed
- W56hyCCnxz95II/AAFcBr1EkKE320SsRsVB+rDc80+cU5GJAWfBbeSns++p8/ZMimdEF
- gaHcmln0O7dqamIbGSMs3V3jg/ebEP54elomlH/XzJXwo9khibuiT9ZtLpm4vajVWzK5
- uoFmk8s0qlrUTN1ZKVMFATpjqfsy05WTeFhlbONSgAze5Ms8YK3hAVn8ILnHFpKomfoO
- Eu/WiTO+vSIygwEQlz/A10wtVky0YQoY94p0Nklkb7VPoPY45EOerVcutpKVT+aBD1fI
- b+bQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733556023; x=1734160823;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=aYQ+KnAc3H7/kkUuw8nuj1LkePNLl61hf3R7Fu5nQ6o=;
- b=jHmy9qLOYj9EF/Kh4Rv+IB1Ylyhs+5wUwjh/SpkdSev37aVvb44UTPVTb0h77qWbv8
- bRy5O2nMfFvognU/W2v5NY4k+2laomysGCphD2L2aZvtLCE9YLe526JuKjhhFtwYl2/H
- Wev+Nlt3/vDjm9hkCyz9+q92jJW74EMbF56R28u7CuXt4EoZXvh6XylG9XQYms/EjsVo
- WJvaEbf6ziZ0apwdj7Anfu3JG+sVAl0lawhuCdnIdK9OvaprN/oQCp6pMmMjesANQpsP
- cNcjn/JE01qhd/sX/Iz5Z06h4a8hBnAtNGFK2wDwUfdZ+mFzz7wBp+dKhF0VYEJzcpdB
- j9Zg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVdMayHfbch0df1uG9rEdvo2aowrycl/ne/00uplTWHQExDcrHY8MClk5CSj97P6Udla8P7p5XkcW//8w==@nongnu.org,
- AJvYcCWp9KdE4UWbg5lt+GLywb8hrgtg0gjBR3lI4k1hMgwy1IwJsk7VVEFtZGn67VHYXGle1RgF/ENjmouP@nongnu.org
-X-Gm-Message-State: AOJu0YyyNWbl79uuoVaSKwOayfcrqwHWAtNAuL/tffHG6zSjuy3JujJR
- 3Xhi/6jLuYXV0Dnxdp+AmAPPbedrz6oyTEbocmegauWymN+F/kxOzd/v+ESl0dJnGod5xSYWK3D
- sOUGzQcrw+E6bwPlq6MeeL99MX/pJTQ==
-X-Gm-Gg: ASbGncvIP+DukoBCtCTSCiEOxrCgH9nAKAcdlunRDZKOJCvw3cPWPWOUtcPY4NyQXG8
- nNaXjE2wTDhXvLKyLcUVIQcVCwM/0rGg=
-X-Google-Smtp-Source: AGHT+IHB+wa06ni3qhay9Jot4E7KIf+lA6pQoYH+y19NzvrPyA+qBQjQtDG8rw9NBu80z6At8B1bmM0NwpBNKCb1ZrY=
-X-Received: by 2002:a05:6402:3789:b0:5d1:23c8:f4cd with SMTP id
- 4fb4d7f45d1cf-5d3be67ffa0mr5632165a12.11.1733556021867; Fri, 06 Dec 2024
- 23:20:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJpNx-0003TA-1a
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 02:37:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJpNu-00080G-6P
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 02:37:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733557068;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=JkqWGGvQMYf5SV1P336be1tdotvclbtIHy6S4ozD7Eg=;
+ b=OnjxQFje+hWKwTfAoS3Gw2FyKFHmPfzWwZ35klETSym+dT1qnSt5gKPy8/mh6g5wVdrp9v
+ bDrqe3XKmRYL49ZF/gOCNSdVGCwOAwerc5nco2e4dHt6h5Phr4jEi04jt3YteLtbY3+CQ9
+ yIBIehp7RWhfGKhYwullFfFyzbmzFaI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-7efhf08ZM-uw_DwqUzB_EQ-1; Sat,
+ 07 Dec 2024 02:37:42 -0500
+X-MC-Unique: 7efhf08ZM-uw_DwqUzB_EQ-1
+X-Mimecast-MFC-AGG-ID: 7efhf08ZM-uw_DwqUzB_EQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA30E19541BA; Sat,  7 Dec 2024 07:37:41 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 417D01955F3F; Sat,  7 Dec 2024 07:37:40 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id E113321E681F; Sat,  7 Dec 2024 08:37:37 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v3 0/9] Require error handling for dynamically created
+ objects
+In-Reply-To: <Z1LYp963Vbbd-LJC@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Fri, 6 Dec 2024 10:57:43 +0000")
+References: <20241115172521.504102-1-berrange@redhat.com>
+ <87a5dbln8x.fsf@pond.sub.org> <Z1HPF8wQG4ZqZIhF@redhat.com>
+ <87r06l6wvh.fsf@pond.sub.org> <Z1LYp963Vbbd-LJC@redhat.com>
+Date: Sat, 07 Dec 2024 08:37:37 +0100
+Message-ID: <87ldwsose6.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20241205112304.593204-1-baturo.alexey@gmail.com>
- <20241205112304.593204-4-baturo.alexey@gmail.com>
- <9f616eaf-11fd-4772-9e7f-2404059419bb@ventanamicro.com>
-In-Reply-To: <9f616eaf-11fd-4772-9e7f-2404059419bb@ventanamicro.com>
-From: Alexey Baturo <baturo.alexey@gmail.com>
-Date: Sat, 7 Dec 2024 10:20:10 +0300
-Message-ID: <CAFukJ-DaZ=OYEWDDBku2Ksi+9MGZWDLJbF8n5jPq3M665Gk3EQ@mail.gmail.com>
-Subject: Re: [PATCH v12 3/7] target/riscv: Add helper functions to calculate
- current number of masked bits for pointer masking
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000e1bcd10628a8f692"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -50
+X-Spam_score: -5.1
+X-Spam_bar: -----
+X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,337 +92,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e1bcd10628a8f692
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Cc: Phil, because we're now discusing qemu-system-any.
 
-Thanks Daniel.
-Let's wait for about a week or so for other suggestions to the patches and
-then I'll send a new updated series.
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-=D1=81=D0=B1, 7 =D0=B4=D0=B5=D0=BA. 2024=E2=80=AF=D0=B3. =D0=B2 00:08, Dani=
-el Henrique Barboza <
-dbarboza@ventanamicro.com>:
+> On Fri, Dec 06, 2024 at 09:25:54AM +0100, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Wed, Dec 04, 2024 at 12:07:58PM +0100, Markus Armbruster wrote:
+>> >> To be fair, object_new() was not designed for use with user-provided
+>> >> type names.  When it chokes on type names not provided by the user, i=
+t's
+>> >> clearly a programming error, and assert() is a perfectly fine way to
+>> >> catch programming errors.  Same for qdev_new().
+>> >>=20
+>> >> However, we do in fact use these functions with user-provided type
+>> >> names, if rarely.  When we do, we need to validate the type name befo=
+re
+>> >> we pass it to them.
+>> >>=20
+>> >> Trouble is the validation code is a bit involved, and reimplementing =
+it
+>> >> everywhere it's needed is asking for bugs.
+>> >>
+>> >> Creating and using more interfaces that are more convenient for this
+>> >> purpose would avoid that.
+>> >
+>> > Yep, I don't have confidence in an API that will assert if the caller
+>> > forgot to validate the pre-conditions that can be triggered by user
+>> > input (or potentially other unexpected scenarios like something being
+>> > switched over to a module).
+>>=20
+>> Modules broke object_new(), but I'd rather not call object_new()'s
+>> design bad for not accomodating a feature tacked on half-baked almost a
+>> decade later.  But let's discuss modules further down.
+>>=20
+>> Asserting preconditions isn't the problem; this is how preconditions
+>> *should* be checked.  The problem is error-prone preconditions.
+>
+> Yep, pre-conditions need to be something developers can be reasonably
+> expected to accurately comply with.
+>
+>> Using string type names is in theory error-prone: the compiler cannot
+>> check the type name is valid.  It could be invalid because of a typo, or
+>> because it names a type that's not linked into this binary.
+>
+>
+>> The compiler could check with an enumeration, but then the header
+>> defining needed to be included basically everywhere QOM is used, and
+>> changed all the time.
+>>=20
+>> So QOM went with strings.  I can't remember "invalid type name" bugs
+>> surviving even basic testing in more than a decade of QOM use.
+>
+> Yep, at least for static object creation using since we're using the
+> pattern "object_new(TYPE_BLAH)" - even if TYPE_BLAH contains a typo,
+> it'll be the same typo passed in the .name =3D TYPE_BLAH of  TypeInfo,
+> so all will work fine if following normal code patterns.
 
+There's no shortage of qdev_new("mumble"), and even there typos haven't
+been a problem.
+
+>> Except for *user-supplied* type names.  These need to be validated, we
+>> failed to factor out common validation code, and ended up with bugs in
+>> some of the copies.
+>
+> Yep
 >
 >
-> On 12/5/24 8:23 AM, baturo.alexey@gmail.com wrote:
-> > From: Alexey Baturo <baturo.alexey@gmail.com>
-> >
-> > Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
-> > ---
-> >   target/riscv/cpu.h        |  5 +++
-> >   target/riscv/cpu_helper.c | 74 ++++++++++++++++++++++++++++++++++++++=
-+
-> >   2 files changed, 79 insertions(+)
-> >
-> > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> > index 417ff45544..74d7076f5a 100644
-> > --- a/target/riscv/cpu.h
-> > +++ b/target/riscv/cpu.h
-> > @@ -768,8 +768,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vadd=
-r
-> *pc,
-> >
-> >   bool riscv_cpu_is_32bit(RISCVCPU *cpu);
-> >
-> > +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);
-> > +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);
-> > +int riscv_pm_get_pmlen(RISCVPmPmm pmm);
-> > +
-> >   RISCVException riscv_csrr(CPURISCVState *env, int csrno,
-> >                             target_ulong *ret_value);
-> > +
-> >   RISCVException riscv_csrrw(CPURISCVState *env, int csrno,
-> >                              target_ulong *ret_value,
-> >                              target_ulong new_value, target_ulong
-> write_mask);
-> > diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> > index dba04851d5..2558f869f2 100644
-> > --- a/target/riscv/cpu_helper.c
-> > +++ b/target/riscv/cpu_helper.c
-> > @@ -214,6 +214,80 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vadd=
-r
-> *pc,
-> >       *pflags =3D flags;
-> >   }
-> >
-> > +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)
-> > +{
-> > +    RISCVPmPmm pmm =3D PMM_FIELD_DISABLED;
-> > +#ifndef CONFIG_USER_ONLY
-> > +    if (get_field(env->mstatus, MSTATUS_MPRV) &&
-> > +        get_field(env->mstatus, MSTATUS_MXR)) {
-> > +        return pmm;
-> > +    }
-> > +    int priv_mode =3D cpu_address_mode(env);
-> > +    /* Get current PMM field */
-> > +    switch (priv_mode) {
-> > +    case PRV_M:
-> > +        if (riscv_cpu_cfg(env)->ext_smmpm) {
-> > +            pmm =3D get_field(env->mseccfg, MSECCFG_PMM);
-> > +        }
-> > +        break;
-> > +    case PRV_S:
-> > +        if (riscv_cpu_cfg(env)->ext_smnpm) {
-> > +            if (get_field(env->mstatus, MSTATUS_MPV)) {
-> > +                pmm =3D get_field(env->henvcfg, HENVCFG_PMM);
-> > +            } else {
-> > +                pmm =3D get_field(env->menvcfg, MENVCFG_PMM);
-> > +            }
-> > +        }
-> > +        break;
-> > +    case PRV_U:
-> > +        if (riscv_has_ext(env, RVS)) {
-> > +            if (riscv_cpu_cfg(env)->ext_ssnpm) {
-> > +                pmm =3D get_field(env->senvcfg, SENVCFG_PMM);
-> > +            }
-> > +        } else {
-> > +            if (riscv_cpu_cfg(env)->ext_smnpm) {
-> > +                pmm =3D get_field(env->menvcfg, MENVCFG_PMM);
-> > +            }
-> > +        }
-> > +        break;
-> > +    default:
-> > +        g_assert_not_reached();
-> > +    }
-> > +#endif
-> > +    return pmm;
-> > +}
-> > +
-> > +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)
-> > +{
-> > +    bool virt_mem_en =3D false;
-> > +#ifndef CONFIG_USER_ONLY
-> > +    int satp_mode =3D 0;
-> > +    int priv_mode =3D cpu_address_mode(env);
-> > +    if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
-> > +        satp_mode =3D get_field(env->satp, SATP32_MODE);
-> > +    } else {
-> > +        satp_mode =3D get_field(env->satp, SATP64_MODE);
-> > +    }
-> > +    virt_mem_en =3D ((satp_mode !=3D VM_1_10_MBARE) && (priv_mode !=3D
-> PRV_M));
-> > +#endif
-> > +    return virt_mem_en;
-> > +}
-> > +
-> > +int riscv_pm_get_pmlen(RISCVPmPmm pmm)
-> > +{
-> > +    switch (pmm) {
-> > +    case PMM_FIELD_DISABLED:
-> > +        return 0;
-> > +    case PMM_FIELD_PMLEN7:
-> > +        return 7;
-> > +    case PMM_FIELD_PMLEN16:
-> > +        return 16;
-> > +    default:
-> > +        g_assert_not_reached();
-> > +    }
-> > +    return -1;
+>> >> Three cases:
+>> >>=20
+>> >> 1. Type name is literal string.  No change.  This is the most common
+>> >>    case.
+>> >>=20
+>> >> 2. It's not.
+>> >>=20
+>> >> 2a. Type name is user-provided.  This is rare.  We replace
+>> >>=20
+>> >>         if (... guard ...) {
+>> >>             ... return failure ...
+>> >>         }
+>> >>         obj =3D object_new(...);
+>> >>=20
+>> >>     by
+>> >>=20
+>> >>         obj =3D object_new_dynamic(..., errp);
+>> >>         if (!obj) {
+>> >>             ... return failure ...
+>> >>         }
+>> >>=20
+>> >>     This is an improvement.
+>> >>=20
+>> >> 2b. It's not.  We should replace
+>> >>=20
+>> >>         obj =3D object_new(...);
+>> >>=20
+>> >>     by
+>> >>=20
+>> >>         obj =3D object_new_dynamic(..., &error_abort);
+>> >>=20
+>> >>     Exact same behavior, just wordier, to placate the compiler.
+>> >>     Tolerable as long as it's relatively rare.
+>> >>=20
+>> >>     But I'm not sure it's worthwhile.  All it really does is helping
+>> >>     some towards not getting case 2a wrong.  But 2a is rare.
+>> >
+>> > Yes, 2a is fairly rare, but this is amplified by the consequences
+>> > of getting it wrong, which are an assert killing your running VM.
+>> > My goal was to make it much harder to screw up and trigger an
+>> > assert, even if that makes some valid uses more verbose.
+>>=20
+>> Has this been a problem in practice?  We have thirteen years of
+>> experience...
 >
-> You don't need a 'return -1' here since all possible return values are
-> already
-> covered in the 'switch' and the default label is using
-> g_assert_not_reached(),
-> i.e. you'll never return -1. The compiler will be fine with it - we use
-> this
-> kind of pattern all the time (cpu_get_fcfien() does this in this same
-> file).
+> No, but this series came out of Peter's proposal to introduce the
+> idea of Singleton classes, which would cause object_new to assert
+> in fun new scenarios. Effectively adding a new pre-condition and
+> would thus require all places which pass a dynamic type name to
+> object_new(), to be updated with a "if singleton..." check. I
+> wasn't happy with the idea of adding that precondition without a
+> way to enforce that we've not missed checks somewhere in the code.
 >
-> You can remove the -1 return and even turn the helper to uint32_t. That w=
-ay
-> the caller knows that there's no need to handle negative values.
+> Of course this pre-condition applies to static object_new calls
+> too, but those are less risky as the developer (probably) has the
+> mental context that the static object_new call is for a singleton.
 >
+>> > I don't have a good answer for how to extend compile time validation
+>> > to cover non-user specified types that might be modules, without
+>> > changnig 'object_new' itself to add "Error **errp" and convert as
+>> > many callers as possible to propagate errors. That's a huge pile
+>> > of tedious work and in many cases would deteriorate  to &error_abort
+>> > since some key common use scenarios lack a "Error *errp" to propagate
+>> > into.
+>>=20
+>> I can offer two ideas.
+>>=20
+>> I'll start with devices for reasons that will become apparent in a
+>> minute.
+>>=20
+>> The first idea is straighforward in conception: since the problem is
+>> modules breaking existing design assumptions, unbreak them.
+>>=20
+>> Device creation cannot fail, only realize can.  Could we delay the
+>> problematic failure modes introduced by modules from creation to
+>> realize?
+>>=20
+>> When creating the real thing fails, create a dummy instead.  Of course,
+>> the dummy needs to be sufficiently functional to provide for the things
+>> we do with devices before realize, such as introspection.
+>>
+>> Note that we already link information on modules into the binary, so
+>> that the binary knows which modules provide a certain object.  To enable
+>> sufficiently functional dummies, we'd have to link more.
+>>=20
+>> The difficulty is "the things we do with devices before realize": do we
+>> even know?
 >
-> Thanks,
+> Yeah, the idea of a dummy stub until realize is called fills me with
+> worry. It feels like something where it would be really easy to make
+> a mistake and have code that crashes interacting with an unrealized
+> object that doesn't have the struct fields you expect it to have, or
+> has the struct fields, but not initialized since no 'init' method
+> was run.
 >
+> A slight refinement of your idea would be to break anything modular
+> into 2 distinct objects classes. MyDeviceFacade and MyDeviceImpl.
+> Creators of the device always call object_new(TYPE_MY_DEVICE_FACADE),
+> and the realize() method would load the module and make thje call
+> to object_new(TYPE_MY_DEVICE_IMPL).
+>
+> Making something currently built-in, into a module, would involve
+> a bunch of tedious refactoring work, so I don't much like the
+> thought of choosing this as a design approach.
+>
+>> The other difficulty is that objects don't have realize.  User-creatable
+>> objects have complete, which is kind of similar.  See also "Problem 5:
+>> QOM lacks a clear life cycle" in my memo "Dynamic & heterogeneous
+>> machines, initial configuration: problems"[*].
+>
+> It would be nice to have a unified model between object and devices
+> for the complete/realize approach, but that's a slight tangent.
+
+Yes, and yes.
+
+>> The second idea is a variation of your idea to provide two interfaces
+>> for object creation, where using the wrong one won't compile: a common
+>> one that cannot fail, i.e. object_new(), and an uncommon one that can.
+>> Let's call that one object_try_new() for now.
+>>=20
+>> Your proposed "string literal" as a useful approximation of "cannot
+>> fail".  Modules defeat that.
+>>=20
+>> What if we switch from strings to something more expressive?
+>>=20
+>> Step one: replace string type names by symbols
+>>=20
+>> Change
+>>=20
+>>     #define TYPE_FOO "foo"
+>>=20
+>>     Object *object_new(const char *typename);
+>>=20
+>> to something like
+>>=20
+>>     extern const TypeInfoSafe foo_info;
+>>     #define TYPE_FOO &foo_info
+>>=20
+>>     Object *object_new(const TypeInfoSafe *type_info);
+>>=20
+>> Step two: different symbols for safe and unsafe types
+>>=20
+>>     extern const TypeInfoUnsafe bar_info;
+>>     #define TYPE_BAR &bar_info
+>>=20=20=20=20=20
+>>     Object *object_try_new(const TypeInfoUnsafe *type_info);
+>>=20
+>> Now you cannot pass bar_info to object_new().
+>>=20
+>> For a module-enabled TYPE_BAR, we already have something like
+>>=20
+>>     module_obj(TYPE_BAR)
+>>=20
+>> Make macro module_obj() require its argument to be TypeInfoUnsafe.
+>>=20
+>> Voil=C3=A0, the compiler enforces use of object_try_new() for objects
+>> provided by loadable modules.
+>>=20
+>> There will be some fallout around computed type names such as
+>> ACCEL_OPS_NAME().  Fairly rare, I think.
+>>=20
+>> More fallout around passing TYPE_ macros to functions that accept both
+>> safe and unsafe types.  How common is that?
+>
+> Perhaps more common than we care to admit. eg most block device drivers
+> are safe, except for a few we modularized which are unsafe. Most ui
+> frontends would be safe, except for a few we modularized. This pattern
+> of "except for a few we modularized" has been repeated all over, and
+> conceptually that's not a bad thing, as we wanted to make it easy to
+> modularize things incrementally.
+
+It's only a problem if we have functions other than object_new() &
+wrappers that now take type name strings.  Since their string argument
+can't become both TypeInfoSafe and TypeInfoUnsafe, we'd have to split
+them into a safe and an unsafe variant just like object_new(), or splice
+in a suitable conversion.  Do such functions exist?  Helpers within qom/
+don't really count.
+
+> Looking at our current /usr/bin/qemu-system-XXX binaries, they range in
+> size from 6 MB to 30 MB, stripped, ignoring linked libraries. Considering
+> work on the qemu-system-any binary that is intended to unify all targets,
+> I wouldn't be surprised if it came out at over 100 MB with all devices
+> from all targets included.
+>
+> Is qemu-system-any pushing us to a place where our approach to modules
+> is in fact wrong ?
+>
+> Modularizing piecemeal let us cull the big offenders that pulled in
+> huge external libraries.
+>
+> People still complain QEMU is "too big" and binaries linked to too
+> many legacy devices.
+>
+> With my distro hat on, if we had 'qemu-system-any' would I really
+> want to have it as monolithic binary ?
+
+No, and I don't think that's Phil's plan.
+
+> I think I would want to have loadable TCG backends for each target,
+> and I would want all the devices for each target to be loadable too.
+> eg, so I could have a 'qemu-system-any' RPM with just the core, and
+> 'qemu-system-modules-arm', 'qemu-system-modules-x86_64', etc, or
+> even more fine grained than that.
+>
+> IOW, everything is a module by default. Not necccessarily
+> 1 object =3D=3D 1 module, more  "N objects =3D=3D 1 module", but certainly
+> with very few objects built-in.
+
+I doubt one module per QOM type makes sense.  That's a huuuuge amount
+modules, a thicket of dependencies, and way too much dynamic loading and
+linking.
+
+My qemu-system-x86_64 links with ~200 shared objects according to ldd.
+
+It sports ~800 QOM types according to qom-list-types.
+
+Pulling in shared objects in the low hundreds is already a dubious idea.
+Pushing their number into the thousands feels... unadvisable.
+
+Quite a few QOM types live together with relatives in the same .c.  But
+even one module per .c instead of one module per QOM type will still
+result in an excessive number of modules.  Evidence: I count >1700 .c
+under hw, and I suspect most of them would become modules.
+
+How can we do better?
+
+Clearly, each target requires a certain set of QOM types.  Same for each
+machine type.  We could simply have one module per target plus one
+module per machine type.  A homogeneous guest would need one of each.
+
+Since some types are used by more than one target / machine type, we'd
+end up with them duplicated in different target / machine type modules.
+To avoid that, we'd have to factor them out into common modules the
+target / machine type modules can statically require.
+
+Sounds like work, but it should produce a lot fewer modules.
+
+> In such a world, IMHO, it doesn't make sense to have TypeInfoSafe
+> and TypeInfoUnsafe, with different object_new/object_try_new
+> methods. I think we would have to accept that object_new must
+> get an "Error **errp", and possibly even the 'init" method too.
+> It would force us to make sure we can propagage into errp in
+> all the key places we can't do so today wrt object lifecycles.
+
+With less fine-grained modularization, such as the one I sketched above,
+many (most?) instances of object_new() remain safe, because they create
+instances of types provided by the same module, or a statically required
+module.  Remember, shared objects don't load unless their dependencies
+also load, which means a successfully loaded module will have all it
+statically requires.
+
+> Overall I've talked myself into believing my series here is not
+> worthwhile, as it doesn't solve a big enough problem, and it
+> needs somethign more ambituous.
+
+Yes, but what exactly is not yet clear to me.
+
+>> >> Maybe module_object_new() and object_new_dynamic() could be fused int=
+o a
+>> >> single function with a better name.
+>> >>=20
+>> >> > With this series, my objections to Peter Xu's singleton series[1]
+>> >> > would be largely nullified.
+>> >> >
+>> >> > [1] https://lists.nongnu.org/archive/html/qemu-devel/2024-10/msg055=
+24.html
+>>=20
+>> [*] Message-ID: <87o7d1i7ky.fsf@pond.sub.org>
+>> https://lore.kernel.org/qemu-devel/87o7d1i7ky.fsf@pond.sub.org/
+>
+> With regards,
 > Daniel
->
->
-> > +}
-> > +
-> >   #ifndef CONFIG_USER_ONLY
-> >
-> >   /*
->
->
 
---000000000000e1bcd10628a8f692
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Thanks Daniel.<div>Let&#39;s wait for about a week or so f=
-or other suggestions to the patches and then I&#39;ll send a new updated se=
-ries.</div></div><br><div class=3D"gmail_quote gmail_quote_container"><div =
-dir=3D"ltr" class=3D"gmail_attr">=D1=81=D0=B1, 7 =D0=B4=D0=B5=D0=BA. 2024=
-=E2=80=AF=D0=B3. =D0=B2 00:08, Daniel Henrique Barboza &lt;<a href=3D"mailt=
-o:dbarboza@ventanamicro.com">dbarboza@ventanamicro.com</a>&gt;:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-On 12/5/24 8:23 AM, <a href=3D"mailto:baturo.alexey@gmail.com" target=3D"_b=
-lank">baturo.alexey@gmail.com</a> wrote:<br>
-&gt; From: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail.com" tar=
-get=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Signed-off-by: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail=
-.com" target=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 5 ++=
-+<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu_helper.c | 74 +++++++++++++++++++++++++++=
-++++++++++++<br>
-&gt;=C2=A0 =C2=A02 files changed, 79 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h<br>
-&gt; index 417ff45544..74d7076f5a 100644<br>
-&gt; --- a/target/riscv/cpu.h<br>
-&gt; +++ b/target/riscv/cpu.h<br>
-&gt; @@ -768,8 +768,13 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vad=
-dr *pc,<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0bool riscv_cpu_is_32bit(RISCVCPU *cpu);<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env);<br>
-&gt; +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env);<br>
-&gt; +int riscv_pm_get_pmlen(RISCVPmPmm pmm);<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0RISCVException riscv_csrr(CPURISCVState *env, int csrno,<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0target_ulong *ret_value);<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0RISCVException riscv_csrrw(CPURISCVState *env, int csrno,<=
-br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong *ret_value,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 target_ulong new_value, target_ulong wri=
-te_mask);<br>
-&gt; diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c<br>
-&gt; index dba04851d5..2558f869f2 100644<br>
-&gt; --- a/target/riscv/cpu_helper.c<br>
-&gt; +++ b/target/riscv/cpu_helper.c<br>
-&gt; @@ -214,6 +214,80 @@ void cpu_get_tb_cpu_state(CPURISCVState *env, vad=
-dr *pc,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0*pflags =3D flags;<br>
-&gt;=C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +RISCVPmPmm riscv_pm_get_pmm(CPURISCVState *env)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 RISCVPmPmm pmm =3D PMM_FIELD_DISABLED;<br>
-&gt; +#ifndef CONFIG_USER_ONLY<br>
-&gt; +=C2=A0 =C2=A0 if (get_field(env-&gt;mstatus, MSTATUS_MPRV) &amp;&amp;=
-<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 get_field(env-&gt;mstatus, MSTATUS_MXR)) =
-{<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return pmm;<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 int priv_mode =3D cpu_address_mode(env);<br>
-&gt; +=C2=A0 =C2=A0 /* Get current PMM field */<br>
-&gt; +=C2=A0 =C2=A0 switch (priv_mode) {<br>
-&gt; +=C2=A0 =C2=A0 case PRV_M:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;ext_smmpm) {<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmm =3D get_field(env-&gt;m=
-seccfg, MSECCFG_PMM);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 case PRV_S:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;ext_smnpm) {<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (get_field(env-&gt;mstat=
-us, MSTATUS_MPV)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmm =3D get_f=
-ield(env-&gt;henvcfg, HENVCFG_PMM);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmm =3D get_f=
-ield(env-&gt;menvcfg, MENVCFG_PMM);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 case PRV_U:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_has_ext(env, RVS)) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;=
-ext_ssnpm) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmm =3D get_f=
-ield(env-&gt;senvcfg, SENVCFG_PMM);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (riscv_cpu_cfg(env)-&gt;=
-ext_smnpm) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pmm =3D get_f=
-ield(env-&gt;menvcfg, MENVCFG_PMM);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 return pmm;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +bool riscv_cpu_virt_mem_enabled(CPURISCVState *env)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 bool virt_mem_en =3D false;<br>
-&gt; +#ifndef CONFIG_USER_ONLY<br>
-&gt; +=C2=A0 =C2=A0 int satp_mode =3D 0;<br>
-&gt; +=C2=A0 =C2=A0 int priv_mode =3D cpu_address_mode(env);<br>
-&gt; +=C2=A0 =C2=A0 if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 satp_mode =3D get_field(env-&gt;satp, SAT=
-P32_MODE);<br>
-&gt; +=C2=A0 =C2=A0 } else {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 satp_mode =3D get_field(env-&gt;satp, SAT=
-P64_MODE);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 virt_mem_en =3D ((satp_mode !=3D VM_1_10_MBARE) &amp;&a=
-mp; (priv_mode !=3D PRV_M));<br>
-&gt; +#endif<br>
-&gt; +=C2=A0 =C2=A0 return virt_mem_en;<br>
-&gt; +}<br>
-&gt; +<br>
-&gt; +int riscv_pm_get_pmlen(RISCVPmPmm pmm)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 switch (pmm) {<br>
-&gt; +=C2=A0 =C2=A0 case PMM_FIELD_DISABLED:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
-&gt; +=C2=A0 =C2=A0 case PMM_FIELD_PMLEN7:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 7;<br>
-&gt; +=C2=A0 =C2=A0 case PMM_FIELD_PMLEN16:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 16;<br>
-&gt; +=C2=A0 =C2=A0 default:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 g_assert_not_reached();<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 return -1;<br>
-<br>
-You don&#39;t need a &#39;return -1&#39; here since all possible return val=
-ues are already<br>
-covered in the &#39;switch&#39; and the default label is using g_assert_not=
-_reached(),<br>
-i.e. you&#39;ll never return -1. The compiler will be fine with it - we use=
- this<br>
-kind of pattern all the time (cpu_get_fcfien() does this in this same file)=
-.<br>
-<br>
-You can remove the -1 return and even turn the helper to uint32_t. That way=
-<br>
-the caller knows that there&#39;s no need to handle negative values.<br>
-<br>
-<br>
-Thanks,<br>
-<br>
-Daniel<br>
-<br>
-<br>
-&gt; +}<br>
-&gt; +<br>
-&gt;=C2=A0 =C2=A0#ifndef CONFIG_USER_ONLY<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0/*<br>
-<br>
-</blockquote></div>
-
---000000000000e1bcd10628a8f692--
 
