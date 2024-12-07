@@ -4,66 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 791A9E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 08:59:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55635E7717D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 08:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJqcV-0007bd-Tp; Sat, 07 Dec 2024 03:56:59 -0500
+	id 1tJqcX-0007cH-L6; Sat, 07 Dec 2024 03:57:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcM-0007VS-Hn; Sat, 07 Dec 2024 03:56:50 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1tJqcO-0007Wj-I5; Sat, 07 Dec 2024 03:56:52 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcJ-0002Sn-Kx; Sat, 07 Dec 2024 03:56:50 -0500
+ id 1tJqcK-0002TL-Pf; Sat, 07 Dec 2024 03:56:51 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id C5ABDA40467;
- Sat,  7 Dec 2024 08:54:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6D25C4CECD;
- Sat,  7 Dec 2024 08:56:44 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id 4DF7A5C4B52;
+ Sat,  7 Dec 2024 08:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DF9C4AF09;
+ Sat,  7 Dec 2024 08:56:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733561804;
- bh=WpC/WWVfFKAeHGzqCpuL7CrOqSUL9tc8JrM8fpL82sA=;
+ s=k20201202; t=1733561805;
+ bh=OYpJ08rHteRT8bwU9HTyEKQSVLVCzWu7IgUkypsnOm8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=I5dHE5qWGyD9+hyuqwCxhNb9rH4AhiMVuh2y2755gagmYp6a6rm4Z4XnMYVaUIeIk
- PV/hbDLEO2wXtd61o7dEcEwT/k+9sYiCZ7zWqggYjliOEwu5zMFJnq+0yCjtV3OVvj
- p4IE1sPwX6zEYkevMWcaH9S9IPK28dkC3XO4FlVn/qIX2yfw6JbZlbF3o7nV2PhVer
- CW0jRZAZrLeR9fZkgnYSNH3JyfTkioPuDW67jvmbsZuK7W4eBLUdZa6jf/wX0VZOe9
- CKAbxsblqTJj/QmHF+epnDewTvFXlWgNPSd+wIPN0BI9PFkvSGlic+pBFKBYrt4Swh
- +y2Th2HSCB8Lw==
+ b=KKCHO6OvyvYmaANeDI0dpO9o9MfrphBEKt/Ok8X8N5q9zmEaLpvdd8Af77KX96+NO
+ ZKAmWshWaqAIVXxW+wvK3zvSqt8zreOmnp1sFlJZjLEMaNs07g1xhUqNDFUpp34G6M
+ A309W+8JeIu+7w1UMxO+k4ai0E4skR7gRN9Sa4AobOHjHZF4FnNA0opgCj/JE8cydT
+ Bf6PzDijm901858wck0siEEgC1R2f3SbmrIl2Z+zaU/eMclux3fMoUTdegwfLEj1c8
+ z7JlsH4MEbU8W5u9I1zp8lNbW5IuH4PkPBTohkcgQ5gAn3bJwTWiAw1e4F54V/tigm
+ aRhI/TfvudPpQ==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcE-00000005j4g-4A1K; Sat, 07 Dec 2024 09:56:42 +0100
+ id 1tJqcF-00000005j58-0kU8; Sat, 07 Dec 2024 09:56:43 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
  Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: [PATCH v6 03/16] acpi/ghes: simplify the per-arch caller to build
- HEST table
-Date: Sat,  7 Dec 2024 09:54:09 +0100
-Message-ID: <0617c0652412212cc34ba182a93b55fa0b12cc90.1733561462.git.mchehab+huawei@kernel.org>
+ Igor Mammedov <imammedo@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, kvm@vger.kernel.org,
+ linux-kernel@vger.kernel.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v6 10/16] acpi/ghes: better name GHES memory error function
+Date: Sat,  7 Dec 2024 09:54:16 +0100
+Message-ID: <1f16080ef9848dacb207ffdbb2716b1c928d8fad.1733561462.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733561462.git.mchehab+huawei@kernel.org>
 References: <cover.1733561462.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
 X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,98 +77,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The GHES driver requires not only a HEST table, but also a
-separate firmware file to store Error Structure records.
-It can't do one without the other.
+The current function used to generate GHES data is specific for
+memory errors. Give a better name for it, as we now have a generic
+function as well.
 
-Simplify the caller logic for it to require one function.
-
-No functional changes.
-
-Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-
----
-
-Changes from v10:
-- Removed the logic which associates notification and source
-  ID. This will be placed on a separate patch.
-
-Changes from v8:
-- Non-rename/cleanup changes merged altogether;
-- source ID is now more generic, defined per guest target.
-  That should make easier to add support for 86.
-
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 ---
- hw/acpi/ghes.c           | 7 +++++--
- hw/arm/virt-acpi-build.c | 5 ++---
- include/hw/acpi/ghes.h   | 4 ++--
- 3 files changed, 9 insertions(+), 7 deletions(-)
+ hw/acpi/ghes-stub.c    | 2 +-
+ hw/acpi/ghes.c         | 2 +-
+ include/hw/acpi/ghes.h | 4 ++--
+ target/arm/kvm.c       | 2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/hw/acpi/ghes-stub.c b/hw/acpi/ghes-stub.c
+index 2b64cbd2819a..7cec1812dad9 100644
+--- a/hw/acpi/ghes-stub.c
++++ b/hw/acpi/ghes-stub.c
+@@ -11,7 +11,7 @@
+ #include "qemu/osdep.h"
+ #include "hw/acpi/ghes.h"
+ 
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
+ {
+     return -1;
+ }
 diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index e66f3be1502b..4a6c45bcb4be 100644
+index 4b5332f8c667..414a4a1ee00e 100644
 --- a/hw/acpi/ghes.c
 +++ b/hw/acpi/ghes.c
-@@ -233,7 +233,7 @@ static int acpi_ghes_record_mem_error(uint64_t error_block_address,
-  * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
-  * See docs/specs/acpi_hest_ghes.rst for blobs format.
-  */
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
-+static void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker)
- {
-     int i, error_status_block_offset;
- 
-@@ -356,12 +356,15 @@ static void build_ghes_v2(GArray *table_data, int source_id, BIOSLinker *linker)
+@@ -415,7 +415,7 @@ void ghes_record_cper_errors(const void *cper, size_t len,
+     return;
  }
  
- /* Build Hardware Error Source Table */
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
-                      const char *oem_id, const char *oem_table_id)
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t physical_address)
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t physical_address)
  {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
- 
-+    build_ghes_error_table(hardware_errors, linker);
-+
-     acpi_table_begin(&table, table_data);
- 
-     /* Error Source Count */
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 620992c92c12..e059317b002e 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -942,10 +942,9 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     build_dbg2(tables_blob, tables->linker, vms);
- 
-     if (vms->ras) {
--        build_ghes_error_table(tables->hardware_errors, tables->linker);
-         acpi_add_table(table_offsets, tables_blob);
--        acpi_build_hest(tables_blob, tables->linker, vms->oem_id,
--                        vms->oem_table_id);
-+        acpi_build_hest(tables_blob, tables->hardware_errors, tables->linker,
-+                        vms->oem_id, vms->oem_table_id);
-     }
- 
-     if (ms->numa_state->num_nodes > 0) {
+     /* Memory Error Section Type */
+     const uint8_t guid[] =
 diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 59e3b8fb24b9..20016c226d1f 100644
+index 8859346af51a..21666a4bcc8b 100644
 --- a/include/hw/acpi/ghes.h
 +++ b/include/hw/acpi/ghes.h
-@@ -68,8 +68,8 @@ typedef struct AcpiGhesState {
-     bool present; /* True if GHES is present at all on this board */
- } AcpiGhesState;
- 
--void build_ghes_error_table(GArray *hardware_errors, BIOSLinker *linker);
--void acpi_build_hest(GArray *table_data, BIOSLinker *linker,
-+void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
-+                     BIOSLinker *linker,
+@@ -74,15 +74,15 @@ void acpi_build_hest(GArray *table_data, GArray *hardware_errors,
                       const char *oem_id, const char *oem_table_id);
  void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
                            GArray *hardware_errors);
++int acpi_ghes_memory_errors(uint16_t source_id, uint64_t error_physical_addr);
+ void ghes_record_cper_errors(const void *cper, size_t len,
+                              uint16_t source_id, Error **errp);
+-int acpi_ghes_record_errors(uint16_t source_id, uint64_t error_physical_addr);
+ 
+ /**
+  * acpi_ghes_present: Report whether ACPI GHES table is present
+  *
+  * Returns: true if the system has an ACPI GHES table and it is
+- * safe to call acpi_ghes_record_errors() to record a memory error.
++ * safe to call acpi_ghes_memory_errors() to record a memory error.
+  */
+ bool acpi_ghes_present(void);
+ #endif
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 7b6812c0de2e..b4260467f8b9 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -2387,7 +2387,7 @@ void kvm_arch_on_sigbus_vcpu(CPUState *c, int code, void *addr)
+              */
+             if (code == BUS_MCEERR_AR) {
+                 kvm_cpu_synchronize_state(c);
+-                if (!acpi_ghes_record_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
++                if (!acpi_ghes_memory_errors(ACPI_HEST_SRC_ID_SEA, paddr)) {
+                     kvm_inject_arm_sea(c);
+                 } else {
+                     error_report("failed to record the error");
 -- 
 2.47.1
 
