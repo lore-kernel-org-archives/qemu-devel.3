@@ -4,96 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F35ACE77173
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 01:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8363EE77173
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 01:28:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJjD9-0003SM-Fs; Fri, 06 Dec 2024 20:02:19 -0500
+	id 1tJjbV-0006z1-MY; Fri, 06 Dec 2024 20:27:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJjD7-0003Rt-1S
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 20:02:17 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1tJjD5-0000D0-B4
- for qemu-devel@nongnu.org; Fri, 06 Dec 2024 20:02:16 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7253bc4d25eso2182705b3a.0
- for <qemu-devel@nongnu.org>; Fri, 06 Dec 2024 17:02:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1tJjbT-0006yV-Oc; Fri, 06 Dec 2024 20:27:27 -0500
+Received: from out30-97.freemail.mail.aliyun.com ([115.124.30.97])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhiwei_liu@linux.alibaba.com>)
+ id 1tJjbO-0004DV-R9; Fri, 06 Dec 2024 20:27:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733533333; x=1734138133; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=QLjMntMNYMt6ZCvmnvQ2+4GvszUDvk5iKu3g04zv9O0=;
- b=Fd50Z2aRWcyIKwxVsX6Lz2nnwuGUsNnaQZqt/M4ZHS2cPPVxZ1e81oYBCk4aigytNn
- zAZxzI88buXyVRdJe+YqNZZtZcDCX9WI/KO2P1/yD4SBSDvIGMq5ysA8qflzTdLyf8ng
- aDEgYH3zMWhfUXEONhiRCsD/hFxJD4OB6qkLWawhpIQY9gL8c6dDBiK7izGXWF+WQYw2
- MJWJfUpuMM1X4m7zUkjJPQGbPJRTmYBFFltNXJoe1+0KazsAQb/16UZk9+G7fLfKhX1x
- kPq5g84dzGKc/HrwYSgCKigi1THS0babwWoJnQrsHX9VJ5rBdJAtnq1zx5rDQTHsNqYv
- p3dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733533333; x=1734138133;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=QLjMntMNYMt6ZCvmnvQ2+4GvszUDvk5iKu3g04zv9O0=;
- b=dd+3CmW6EhqQqTrEqSf6k8RjBY2erLvkevZV4o8OEwDHcfNi4nePszq8FPMK8cioeR
- kFO0U6DutCL/XgZaOVI24ES/q9w4Z5xg0I0JVmAY/ugA72QPufuz+PNt2IwQwNY4ZOc1
- SQMtfJI58yiVIMPGNHZd9JojKSgDN5H16sfDGpMYNQ4MtOoU8WLb7DnjLekzGTjXfcOf
- mcv30TPRE2P3Dn6+av4aybcJCBwNuFYuwyhX+JwLuZBnWzdN+YNU5/VlilVN8iqLX1gE
- EQSGPtyxw2ybZ0g4rTUrWEm+W6LpLxRJS5PZhTSrZgCiSN8fLI3RiH4JP59TsgZDY48J
- Mv2Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWR6lMYngq+qfEiIo6be3tU0vQLxuh2VLVcD37ldS8mDsBSZphNr+B9JHcaXcMSlvU91mKJYvKgYVU+@nongnu.org
-X-Gm-Message-State: AOJu0YxIeSTxIZMfJcZGcyPnGAmnhZ0R2knoOHw/cqWWiltFEOQm0c9C
- SbZHR9FnSvPFzv77fEX+i0vxc+/z/BkEKwTeCwDnDssDlzRXaAOO
-X-Gm-Gg: ASbGncsq9jo72qUvN397E9Kzwcu2VCOknQxkuuE+2EVA/BfbKhYv9iAV1krWpjrFo1T
- rddKpp2HQAXhvBeSatzzUJr3OhSMVuWW/nlwrcICCEyDGpv5VwKct+uPJxpcLR7lhkHFD/seKfu
- C9AHMYc6ilAOzYw3x8EzqUQoYFszSc35PTFBOW9C0QKWXuNU161hgbewWKcHUY89a70wIQZwfBo
- p0BDlOdKi4SR/b5fCr5sUuwBUafbjKGERpXN30rh+GAqT6SIfBKbYc=
-X-Google-Smtp-Source: AGHT+IEuxrnOfzy+gi1Am5/yu1irnoXN3yMRiWKha8Zr586PmcrVUrP0lM2l48zGEskyJR+JuRNV7A==
-X-Received: by 2002:a17:90a:cf97:b0:2ea:4c4d:95a1 with SMTP id
- 98e67ed59e1d1-2ef41c98ac2mr14858541a91.17.1733533333194; 
- Fri, 06 Dec 2024 17:02:13 -0800 (PST)
-Received: from [192.168.1.211] ([50.39.253.148])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2eeffb5fcb7sm5706256a91.0.2024.12.06.17.02.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Dec 2024 17:02:12 -0800 (PST)
-Message-ID: <8e25cab2-6809-4a66-b3f1-f9570f408614@gmail.com>
-Date: Fri, 6 Dec 2024 17:02:11 -0800
+ d=linux.alibaba.com; s=default;
+ t=1733534831; h=Message-ID:Date:MIME-Version:Subject:To:From:Content-Type;
+ bh=3suNTl7cwKYJPMFfqJY65KCwAxaQoVLTmMxchXCQzn0=;
+ b=fkGMrzrIo0o3q+JZGMtBF3p5uYKhU/MJhWgPZ6QGy3uV+buKl7sg0OUr4Xyv1yWhCt4/NdcLgGWZiEeplhNu5CaVh7nWognlZcxCBWPPVqZffamoBZG80oVeYQreHcg5u5g37M61HyuamVjt4DeBlwKzdfSeOBfMCwpgfjC39LM=
+Received: from 30.166.64.54(mailfrom:zhiwei_liu@linux.alibaba.com
+ fp:SMTPD_---0WKy1-Bs_1733534829 cluster:ay36) by smtp.aliyun-inc.com;
+ Sat, 07 Dec 2024 09:27:10 +0800
+Message-ID: <acbb7e5c-5f80-4d06-a569-53aeb8383e48@linux.alibaba.com>
+Date: Sat, 7 Dec 2024 09:27:09 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/3] Add inject plugin and x86_64 target for the inject
- plugin
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20241206102605.961658-1-rowanbhart@gmail.com>
- <20241206102605.961658-4-rowanbhart@gmail.com>
- <5ec40cb8-8a9d-4d13-b78e-79ea30317dbf@linaro.org>
+Subject: Re: [PATCH 1/1] disas/riscv: Guard dec->cfg dereference for host
+ disassemble
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com,
+ dbarboza@ventanamicro.com, liwei1518@gmail.com, bmeng.cn@gmail.com
+References: <20241206032411.52528-1-zhiwei_liu@linux.alibaba.com>
+ <79a76786-9ba7-4c04-8c11-52c92376e6df@linaro.org>
+ <5536d7c4-c3df-4cac-900b-bbb3cb2a8c4d@linux.alibaba.com>
+ <bbd8f614-f967-4f7f-82c1-eafdd9fbba68@linaro.org>
 Content-Language: en-US
-From: Rowan Hart <rowanbhart@gmail.com>
-In-Reply-To: <5ec40cb8-8a9d-4d13-b78e-79ea30317dbf@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+In-Reply-To: <bbd8f614-f967-4f7f-82c1-eafdd9fbba68@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.30.97;
+ envelope-from=zhiwei_liu@linux.alibaba.com;
+ helo=out30-97.freemail.mail.aliyun.com
+X-Spam_score_int: -174
+X-Spam_score: -17.5
+X-Spam_bar: -----------------
+X-Spam_report: (-17.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,40 +71,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->> +++ b/tests/tcg/plugins/inject.c
-> 
-> Could we find a better name? 
 
-For sure, maybe "hypercalls.c" since that's really what it's mostly about.
+On 2024/12/6 21:36, Richard Henderson wrote:
+> On 12/5/24 22:39, LIU Zhiwei wrote:
+>>
+>> Both zcmt and zcmp are not compatible with Zcd, as they reuse some 
+>> encodings from c.fsdsp.
+>
+> Ok, fair.  A comment about conflicts at that point may help.
+Ok.
+>
+>>
+>> Zimop or Zcmop also overlap with other isa extensions, as they are 
+>> maybe-ops. Other extensions
+>> such as zicfiss will reuse their encodings.
+>>
+>> I think we had better disassemble them to zicifss if it has been 
+>> implemented on the target cpu. Otherwise
+>> we disassemble them to maybe-ops.
+>
+> My point is that they are only belong to zimop until they are 
+> assigned, like zicifss.
 
->> @@ -0,0 +1,206 @@
->> +/*
->> + * Copyright (C) 2024, Rowan Hart <rowanbhart@gmail.com>
->> + *
->> + * License: GNU GPL, version 2 or later.
->> + *   See the COPYING file in the top-level directory.
->> + */
-> 
-> We can add a comment here about what the plugin is doing. 
+No, they always belong to zimop unless they are assigned to other 
+extensions. Applications built with zicfiss can also
+run on cpu with zimop. In this case, the instructions of zicfiss should 
+be disassemble as zimop maybe-ops which has it's default behavior 
+different with the behavior of zicfiss.
 
-Will do!
+  Zimop belongs to mandate extension in RVB23 profile. There may be a 
+lot of cpus implement zimop but doesn't implement overlapping zicfiss.  
+So disassemble the applications to zimop is appropriate for these cpus.
 
-> One challenge with picking a random value, is how to ensure this pattern has no other meaning for all architectures? I'm not sure we can find a single pattern of bytes that works for all arch, even though that would be definitely stylish :).
-> 
-> In more, it seems that we are reinventing the syscall interface, while we already have it. But as the current instrumentation only works for user-mode, having a specific hypercall interface might be worth it for plugins, so system mode could benefit from it too.
-> 
-> The work done here could serve later to define a proper interface. 
+> At that point they *have* a defined meaning in the standard isa.
+>
+> So, yes, disassemble as zicifss, but always, not "if it has been 
+> implemented in the target cpu".
+>
+>>>> +        if (((i == 0) || cfg) && guard_func(cfg)) {
+>>>
+>>> This should be i == 0 || (cfg && guard_func(cfg)).
+>>
+>> OK. Although I think they are both right.
+>
+>  i = 0
+>  cfg = NULL
+>
+>    (0 == 0 || NULL) && guard_func(NULL)
+> -> (true || false) && guard_func(NULL)
+> -> true && guard_func(NULL)
+> -> guard_func(NULL)
+> -> boom.
+>
+> Or are you saying it won't go boom because we happen to know the 0th 
+> guard_func only returns true
+Yes.
+> ? There's still no reason to call it...
 
+Agree. Will use this way.
 
-I'll see what I can do about this. SIMICS supports many architectures and has a
-"magic instruction" interface[0] (basically hypercalls) and has these
-instructions defined per-architecture in a way that at minimum there are 12
-values available which work on every architecture the simulator supports. QEMU
-supports more architectures than SIMICS but I think we could start there and
-follow a similar approach.
+Thanks,
+Zhiwei
 
-[0]:
-https://intel.github.io/tsffs/simics/simics-user-guide/breakpoints.html#Magic-Breakpoints
-
--Rowan
+>
+>
+> r~
 
