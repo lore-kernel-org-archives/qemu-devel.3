@@ -4,84 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2ED7E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 15:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EDA7E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 15:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJwY3-0001N1-W6; Sat, 07 Dec 2024 10:16:48 -0500
+	id 1tJwZK-000227-39; Sat, 07 Dec 2024 10:18:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJwY2-0001Mi-O2
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 10:16:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJwZJ-00021v-06; Sat, 07 Dec 2024 10:18:05 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tJwY0-00082I-Oe
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 10:16:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733584603;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=buWahY26YGerNzLHfmySJVio+/sH3JcpVBTbZ+QbVEk=;
- b=LzSpP+3tsGVQtDpk+iOQ1prilRDNQve6iGZZRg+sOWjMZRs0wtMI6qFH2F9z5PELLVY/qD
- LZc79bLL2tsK0cwbMmuKzFBYQKV6zPbL0rLB83uMMYJzhRBqxcLbWr4eFNgHVfaCpQ/6EI
- sdG5ViJFFK6uo4JiuTYpAAvIeDzyIMY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-396-ra82krBVOB2rHcR1JLV2jA-1; Sat,
- 07 Dec 2024 10:16:39 -0500
-X-MC-Unique: ra82krBVOB2rHcR1JLV2jA-1
-X-Mimecast-MFC-AGG-ID: ra82krBVOB2rHcR1JLV2jA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8843919560AA; Sat,  7 Dec 2024 15:16:35 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F31C31955F3E; Sat,  7 Dec 2024 15:16:33 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A692321E66D2; Sat,  7 Dec 2024 16:16:31 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,  Jonathan Cameron
- <Jonathan.Cameron@huawei.com>,  Shiju Jose <shiju.jose@huawei.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Ani Sinha
- <anisinha@redhat.com>,  Cleber Rosa <crosa@redhat.com>,  Dongjiu Geng
- <gengdongjiu1@gmail.com>,  Eduardo Habkost <eduardo@habkost.net>,  Eric
- Blake <eblake@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  John
- Snow <jsnow@redhat.com>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Michael Roth <michael.roth@amd.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  Shannon
- Zhao <shannon.zhaosl@gmail.com>,  Yanan Wang <wangyanan55@huawei.com>,
- Zhao Liu <zhao1.liu@intel.com>,  kvm@vger.kernel.org,
- linux-kernel@vger.kernel.org,  qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH 00/31] Prepare GHES driver to support error injection
-In-Reply-To: <20241207093922.1efa02ec@foz.lan> (Mauro Carvalho Chehab's
- message of "Sat, 7 Dec 2024 09:39:22 +0100")
-References: <cover.1733504943.git.mchehab+huawei@kernel.org>
- <87frn03tun.fsf@pond.sub.org> <87wmgc2f48.fsf@pond.sub.org>
- <20241207093922.1efa02ec@foz.lan>
-Date: Sat, 07 Dec 2024 16:16:31 +0100
-Message-ID: <87o71no75c.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tJwZF-00084i-Se; Sat, 07 Dec 2024 10:18:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733584681; x=1765120681;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=WUYGX/IYYqVOWV7Uhwlgnr4ydak7ZxnHOH21+Mofdmw=;
+ b=JffetjIpH00l/jILq76GhaPFkm4SFTcaEgs4HLInh4hU2jgIY0WjGxWm
+ 1o6qhyEYZeq2NBxeOmWnql1J+bMrJS91cng+SVAqcmZc7peW7qQvGeCcA
+ 0+iOaa9O5mHxgjb8Ym/X0Tzbv9lpC/dinPVUgPPrZ5/G35+Ct3hq8qLMM
+ L+7K0JPtWEwAes4x2jndyWV23m7p6QhwnPq3JpIVH83vuvNjb3ZcygGeP
+ 9UEK8rXBLGsLbswmzjXL1LG4mNmfncApfYgTFlNBrytH7SUb5ht+kz0oi
+ Ist5Ne03mjAx5n005iJuWU8xNXyEeHPw25ef2GSeudE/l0ss+Cs9k5N5/ w==;
+X-CSE-ConnectionGUID: TwcpxMwtTg6ezkCZFLjLHQ==
+X-CSE-MsgGUID: Lumvvq+LRMaCEdFYRFm/+g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11279"; a="34077317"
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="34077317"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Dec 2024 07:17:58 -0800
+X-CSE-ConnectionGUID: gi5Tz/0nR6m1NwvRCN9aLw==
+X-CSE-MsgGUID: k8IPtAZBTkSIGXEJqapfQA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,216,1728975600"; d="scan'208";a="99737188"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa004.jf.intel.com with ESMTP; 07 Dec 2024 07:17:57 -0800
+Date: Sat, 7 Dec 2024 23:36:09 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+Message-ID: <Z1RraaYrQFS9btEc@intel.com>
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-10-zhao1.liu@intel.com>
+ <ed49af53-4a10-4cee-829e-d5921b8aee3c@linaro.org>
+ <Z1GgjZOCc8vkkB3A@intel.com>
+ <8cb0a692-420a-4645-b1b8-bc6e47bbb116@linaro.org>
+ <CABgObfa7ojzTWOdzd9MUq76ebO8oEU24ew=N80JOOEd=7XuO5g@mail.gmail.com>
+ <45018b0d-d741-49a2-8680-993a2eeb285a@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <45018b0d-d741-49a2-8680-993a2eeb285a@linaro.org>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -73
+X-Spam_score: -7.4
+X-Spam_bar: -------
+X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,20 +93,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> writes:
+On Sat, Dec 07, 2024 at 10:16:03AM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Sat, 7 Dec 2024 10:16:03 +0100
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+> 
+> On 5/12/24 22:19, Paolo Bonzini wrote:
+> > On Thu, Dec 5, 2024 at 10:18 PM Philippe Mathieu-Daudé
+> > <philmd@linaro.org> wrote:
+> > > 
+> > > On 5/12/24 13:46, Zhao Liu wrote:
+> > > > Hi Philippe,
+> > > > 
+> > > > On Thu, Dec 05, 2024 at 01:04:58PM +0100, Philippe Mathieu-Daudé wrote:
+> > > > > Date: Thu, 5 Dec 2024 13:04:58 +0100
+> > > > > From: Philippe Mathieu-Daudé <philmd@linaro.org>
+> > > > > Subject: Re: [RFC 09/13] i386/fw_cfg: move hpet_cfg definition to hpet.c
+> > > > > 
+> > > > > On 5/12/24 07:07, Zhao Liu wrote:
+> > > > > > HPET device needs to access and update hpet_cfg variable, but now it is
+> > > > > > defined in hw/i386/fw_cfg.c and Rust code can't access it.
+> > > > > > 
+> > > > > > Move hpet_cfg definition to hpet.c (and rename it to hpet_fw_cfg). This
+> > > > > > allows Rust HPET device implements its own global hpet_fw_cfg variable,
+> > > > > > and will further reduce the use of unsafe C code access and calls in the
+> > > > > > Rust HPET implementation.
+> > > > > > 
+> > > > > > Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> > > > > > ---
+> > > > > >     hw/i386/fw_cfg.c        |  4 +---
+> > > > > >     hw/timer/hpet.c         | 16 +++++++++-------
+> > > > > >     include/hw/timer/hpet.h |  2 +-
+> > > > > >     3 files changed, 11 insertions(+), 11 deletions(-)
+> > > > > 
+> > > > > 
+> > > > > > diff --git a/include/hw/timer/hpet.h b/include/hw/timer/hpet.h
+> > > > > > index d17a8d43199e..dbf709251a8f 100644
+> > > > > > --- a/include/hw/timer/hpet.h
+> > > > > > +++ b/include/hw/timer/hpet.h
+> > > > > > @@ -74,7 +74,7 @@ struct hpet_fw_config
+> > > > > >         struct hpet_fw_entry hpet[8];
+> > > > > >     } QEMU_PACKED;
+> > > > > > -extern struct hpet_fw_config hpet_cfg;
+> > > > > > +extern struct hpet_fw_config hpet_fw_cfg;
+> > > > > 
+> > > > > Could this field belong to the (yet unexisting) HPETClass?
+> > > > 
+> > > > Several instances would share the same class, so HPETClass could manage
+> > > > multiple HPETState info.
+> > > > 
+> > > > But in fw_cfg.c, do you have idea about how to get the HPETClass?
+> > > 
+> > > Have hpet_find() return an Object and call object_get_class()?
+> 
+> Implemented as
+> https://lore.kernel.org/qemu-devel/20241206191124.9195-1-philmd@linaro.org/,
+> hoping it simplifies the Rust model integration.
+> 
 
-[...]
+Hi Philli, thank you very much!
 
->> However, it doesn't apply for me.  What's your base?
->
-> That's weird. Despite my mistake, the series is based on v9.2.0-rc3 
-> (which was identical to master last time I rebased).
+This approach is very helpful for more “rich” QOM class attempts, and if
+Paolo feels the same way, I'll move to your approach for the next
+version!
 
-Either something conflicting got committed meanwhile, or I screwed up
-somehow.
+Regards,
+Zhao
 
-> Should it be based against some other branch?
-
-No, master is fine.
 
 
