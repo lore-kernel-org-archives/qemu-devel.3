@@ -4,90 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D0FE7717D
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 22:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8844BE7717D
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 22:35:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tK3GJ-0004NS-At; Sat, 07 Dec 2024 17:26:55 -0500
+	id 1tK3Nt-0005RJ-HI; Sat, 07 Dec 2024 17:34:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tK3GI-0004NE-6L
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:26:54 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tK3GG-0000QP-5h
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:26:53 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7256dc42176so3584195b3a.3
- for <qemu-devel@nongnu.org>; Sat, 07 Dec 2024 14:26:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733610405; x=1734215205; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CZy4Pt72hnv9ZhCGvuLa0/ILvyaMog0QQzsY2pWLYGE=;
- b=u1RnP6g3TfZ2qBQH0ydr0oeCyuD5eI58VTYQKZ8DZ1oPZJA58qYzD8m+6K+E9jHdeA
- 7hxCqR4IojSv56YeYnyBdGdMOnq9Cyq/T2MTqUE1HvmldjmcIN61K5C73LbZiztFtBO8
- mHuMVboZBCWIJzQhhh9aIahZxRdmaiG4xrXWbq3ulHTyGnuW/RHuk/2Y+D2A0ReWrR+Q
- uobwY3aay0X6uxFJyoeCNKiwatF80HfzCaA+5B5w24KAD75rK49HRN8DOlynfkzdYAHU
- I55bvqnf1z2pJL2zL6SxSGEkMbe1DUj5oG4I5/F0Zma77nPvLLRC9QA01sDNU9nPxxpE
- V6pA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733610405; x=1734215205;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=CZy4Pt72hnv9ZhCGvuLa0/ILvyaMog0QQzsY2pWLYGE=;
- b=O2N94iLPgCtgrxQeAemF9i80ZwjZDOxV/EFPH2XeobereVbq1yPldIxlnQ2q7IlyA2
- BT4jtPgvDxNxMZWyih/b9ORvHAkZqk0LLzla3H6znRUAj2JUammyQq/qfUxAwBoZf5iK
- 1B7Ld0j7ZHvcmyptlOqzIp+6ZBI//+ZsjuoO612OU7uJh7E/X65ZlwESl72bkIuYR9mw
- kfx1ouOftmpQH9tLOZ5PqxTNpDtRXuauDtGT82zhEneWXgd3d1kVHs8CA96Nz6iF/29t
- Tic0tzdBUtVzzxQZGDDNRLYgM2On9pddp8qokbnyPcfKSdUUtFl/VKVuUPYRn/Za69QZ
- 1QLg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUZkrWNyuu7gcMKKhbhMzOpcIiB6/yJbDDzU0KCmLtgOQ/+XUZYx0cCk3Ra1/DqDw9/uZEhwLD9V3LB@nongnu.org
-X-Gm-Message-State: AOJu0Ywq4oTgo7VecyGgpO1KkhSB6Pv/LFzmxrrjmGzJ9htP5sEPwMee
- B1tBIcotJYJM/0yGYnybxkTv0wb1on/o6uWmF+7QKYItrTC4wZaZ5w+rtVSVBEw=
-X-Gm-Gg: ASbGncsfUTZuOWzBMbfpCnf2d2dg9tAf/nXGLeakiqI/X+V8vtaJ8ZJzqYvDowQYA9b
- 4LTSvxSOshQzM9/iEXzthukIS+uPvX1x/csl1+UXt/5l3H7aRgCIlbtdhSHIBAHuEBM14oB3OFT
- juXRIIMY6Jq4DsFoX02nZXIxQhpaWTdJnX7MtENiFUSnOg5bEL5Vx5U2gpP8JB4QV0jS+cGF9uC
- jcUxJmGl89jFEszRv5yaMk0DXQWjWVi5v3xHG3M89sV2OdLoDd+aomcEGrbgONRlvLHQmKiCKf/
- uWvq42NvJWbYwwgQJthK+Q==
-X-Google-Smtp-Source: AGHT+IFBKTRbgCS+eWkd7Ey+5tkUjVi9EmtqEfSO9gsC4eX844iz/j9bgvw5cAneGTQpJme+ufgr7g==
-X-Received: by 2002:a05:6a00:1891:b0:71e:5a1d:ecdc with SMTP id
- d2e1a72fcca58-725b816fb01mr11829798b3a.17.1733610404856; 
- Sat, 07 Dec 2024 14:26:44 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725a2a904casm5055910b3a.129.2024.12.07.14.26.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Dec 2024 14:26:44 -0800 (PST)
-Message-ID: <07b98592-92ae-4da3-bff7-31d616d195d3@linaro.org>
-Date: Sat, 7 Dec 2024 14:26:43 -0800
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1tK3Nr-0005RB-1I
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:34:43 -0500
+Received: from mailout04.t-online.de ([194.25.134.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <volker.ruemelin@t-online.de>)
+ id 1tK3Np-000184-02
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:34:42 -0500
+Received: from fwd85.aul.t-online.de (fwd85.aul.t-online.de [10.223.144.111])
+ by mailout04.t-online.de (Postfix) with SMTP id 28D3BEC1;
+ Sat,  7 Dec 2024 23:34:35 +0100 (CET)
+Received: from linpower.localnet ([84.175.226.173]) by fwd85.t-online.de
+ with (TLSv1.3:TLS_AES_256_GCM_SHA384 encrypted)
+ esmtp id 1tK3Nh-0ZBQyv0; Sat, 7 Dec 2024 23:34:33 +0100
+Received: by linpower.localnet (Postfix, from userid 1000)
+ id ED6A3200240; Sat,  7 Dec 2024 23:34:32 +0100 (CET)
+From: =?UTF-8?q?Volker=20R=C3=BCmelin?= <vr_qemu@t-online.de>
+To: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>, Stefan Weil <sw@weilnetz.de>,
+ Howard Spoelstra <hsp.cat7@gmail.com>, qemu-devel@nongnu.org
+Subject: [PATCH v2] ui/sdl2: reenable the SDL2 Windows keyboard hook procedure
+Date: Sat,  7 Dec 2024 23:34:32 +0100
+Message-ID: <20241207223432.6896-1-vr_qemu@t-online.de>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tcg: Reset free_temps before tcg_optimize
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-stable@nongnu.org,
- wannacu <wannacu2049@gmail.com>
-References: <20241207214700.211066-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241207214700.211066-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TOI-EXPURGATEID: 150726::1733610873-CFFFC9E5-E866CDFE/0/0 CLEAN NORMAL
+X-TOI-MSGID: 0bf528ff-1433-4107-a31c-9394ef7cdf17
+Received-SPF: pass client-ip=194.25.134.18;
+ envelope-from=volker.ruemelin@t-online.de; helo=mailout04.t-online.de
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,42 +65,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/7/24 13:47, Richard Henderson wrote:
-> When allocating new temps during tcg_optmize, do not re-use
-> any EBB temps that were used within the TB.  We do not have
-> any idea what span of the TB in which the temp was live.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: fb04ab7ddd8 ("tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2711
-> Reported-by: wannacu <wannacu2049@gmail.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
-> 
-> Unless there's some other reason to spin an -rc4, this can wait
-> to be the first patch for 10.0.1.
-> 
-> r~
-> 
-> ---
->   tcg/tcg.c | 3 +++
->   1 file changed, 3 insertions(+)
-> 
-> diff --git a/tcg/tcg.c b/tcg/tcg.c
-> index 0babae1b88..eece825e2e 100644
-> --- a/tcg/tcg.c
-> +++ b/tcg/tcg.c
-> @@ -6120,6 +6120,9 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
->       }
->   #endif
->   
-> +    /* Do not reuse any EBB that may be allocated within the TB. */
-> +    memset(s->free_temps, 0, sizeof(s->free_temps));
-> +
->       tcg_optimize(s);
->   
->       reachable_code_pass(s);
+Windows only:
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+The libSDL2 Windows message loop needs the libSDL2 Windows low
+level keyboard hook procedure to grab the left and right Windows
+keys correctly. Reenable the SDL2 Windows keyboard hook procedure.
+
+Since SDL2 2.30.4 the SDL2 keyboard hook procedure also filters
+out the special left Control key event for every Alt Gr key event
+on keyboards with an international layout. This means the QEMU low
+level keyboard hook procedure is no longer needed. Remove the QEMU
+Windows keyboard hook procedure.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2139
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2323
+Signed-off-by: Volker Rümelin <vr_qemu@t-online.de>
+---
+ ui/meson.build |  4 ----
+ ui/sdl2.c      | 26 --------------------------
+ 2 files changed, 30 deletions(-)
+
+diff --git a/ui/meson.build b/ui/meson.build
+index 28c7381dd1..35fb04cadf 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -120,10 +120,6 @@ if gtk.found()
+ endif
+ 
+ if sdl.found()
+-  if host_os == 'windows'
+-    system_ss.add(files('win32-kbd-hook.c'))
+-  endif
+-
+   sdl_ss = ss.source_set()
+   sdl_ss.add(sdl, sdl_image, pixman, glib, files(
+     'sdl2-2d.c',
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index bd4f5a9da1..3d70eaebfa 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -32,7 +32,6 @@
+ #include "sysemu/runstate.h"
+ #include "sysemu/runstate-action.h"
+ #include "sysemu/sysemu.h"
+-#include "ui/win32-kbd-hook.h"
+ #include "qemu/log.h"
+ 
+ static int sdl2_num_outputs;
+@@ -262,7 +261,6 @@ static void sdl_grab_start(struct sdl2_console *scon)
+     }
+     SDL_SetWindowGrab(scon->real_window, SDL_TRUE);
+     gui_grab = 1;
+-    win32_kbd_set_grab(true);
+     sdl_update_caption(scon);
+ }
+ 
+@@ -270,7 +268,6 @@ static void sdl_grab_end(struct sdl2_console *scon)
+ {
+     SDL_SetWindowGrab(scon->real_window, SDL_FALSE);
+     gui_grab = 0;
+-    win32_kbd_set_grab(false);
+     sdl_show_cursor(scon);
+     sdl_update_caption(scon);
+ }
+@@ -371,19 +368,6 @@ static int get_mod_state(void)
+     }
+ }
+ 
+-static void *sdl2_win32_get_hwnd(struct sdl2_console *scon)
+-{
+-#ifdef CONFIG_WIN32
+-    SDL_SysWMinfo info;
+-
+-    SDL_VERSION(&info.version);
+-    if (SDL_GetWindowWMInfo(scon->real_window, &info)) {
+-        return info.info.win.window;
+-    }
+-#endif
+-    return NULL;
+-}
+-
+ static void handle_keydown(SDL_Event *ev)
+ {
+     int win;
+@@ -608,10 +592,6 @@ static void handle_windowevent(SDL_Event *ev)
+         sdl2_redraw(scon);
+         break;
+     case SDL_WINDOWEVENT_FOCUS_GAINED:
+-        win32_kbd_set_grab(gui_grab);
+-        if (qemu_console_is_graphic(scon->dcl.con)) {
+-            win32_kbd_set_window(sdl2_win32_get_hwnd(scon));
+-        }
+         /* fall through */
+     case SDL_WINDOWEVENT_ENTER:
+         if (!gui_grab && (qemu_input_is_absolute(scon->dcl.con) || absolute_enabled)) {
+@@ -627,9 +607,6 @@ static void handle_windowevent(SDL_Event *ev)
+         scon->ignore_hotkeys = get_mod_state();
+         break;
+     case SDL_WINDOWEVENT_FOCUS_LOST:
+-        if (qemu_console_is_graphic(scon->dcl.con)) {
+-            win32_kbd_set_window(NULL);
+-        }
+         if (gui_grab && !gui_fullscreen) {
+             sdl_grab_end(scon);
+         }
+@@ -869,10 +846,7 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+ #ifdef SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR /* only available since SDL 2.0.8 */
+     SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
+ #endif
+-#ifndef CONFIG_WIN32
+-    /* QEMU uses its own low level keyboard hook procedure on Windows */
+     SDL_SetHint(SDL_HINT_GRAB_KEYBOARD, "1");
+-#endif
+ #ifdef SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED
+     SDL_SetHint(SDL_HINT_ALLOW_ALT_TAB_WHILE_GRABBED, "0");
+ #endif
+-- 
+2.43.0
 
 
