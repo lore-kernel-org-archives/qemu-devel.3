@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 326AEE7717D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44DE1E7717E
 	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 08:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJqcR-0007YO-3L; Sat, 07 Dec 2024 03:56:55 -0500
+	id 1tJqcY-0007dm-R2; Sat, 07 Dec 2024 03:57:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcM-0007VP-DK; Sat, 07 Dec 2024 03:56:50 -0500
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ id 1tJqcO-0007We-HJ; Sat, 07 Dec 2024 03:56:52 -0500
+Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcJ-0002Sw-J3; Sat, 07 Dec 2024 03:56:50 -0500
+ id 1tJqcK-0002TK-OI; Sat, 07 Dec 2024 03:56:51 -0500
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id 7F987A40488;
- Sat,  7 Dec 2024 08:54:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29E44C4CEEF;
- Sat,  7 Dec 2024 08:56:45 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTP id A98DB5C23D2;
+ Sat,  7 Dec 2024 08:56:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA68C4CED2;
+ Sat,  7 Dec 2024 08:56:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1733561805;
- bh=DZq3ehynlc63lZ3iGs1SNcajfqzDutIBxgWe19LJFlA=;
+ s=k20201202; t=1733561804;
+ bh=uDihMbAVHajyrPqIm6xCk4kSLNVBW/olOYucuqFWoPc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=BcshqpXGdyreUxNpcsFnw7ITSsNsVJEb/omufpr4NPWnuZ72upCcQYzw6w/5LCMdB
- tQ0UKs43aA51YheAaBKEFh53Xv3u4j66yLEfnJoUncuiyGyVjXVj1KTtO1HANO/JP6
- Ec1Q5pDODHPrXHyxLMy5J9dUfGw8WUXavz+FlL2tcAoihxvKl8jV8RPfOQ1VnjkZIE
- XTofhKemiZduxzVEFSV58GI/dMSWDZLNCZBcSpVInyKJaUNDLkBRvJRAWJarHeUtCO
- rEBt+QlCBRF2HCWwmCzvOX226J7lHSfUHM0T493vB+SuycgItAqsZyuPN5+C8vD9wA
- Q0Pzlp+3jVgzA==
+ b=ohr7NtkXGMR4K259ylJGHxGttAVBnGZb8ZpjjawDu0KLZ6i0JnSogemnF+0kbfnUP
+ XEiyYd1e59x1431uRAs/dCRsIIGCpmXR9qB/DiOYVqz7wJrQiJDnzh/7vJtRarAwNp
+ u6YL5OlYVw1Dli1RwOHkq0NNsskKC6xVLD/L0rqBwOrcPa40vuvbZGFenuO4o9XMPN
+ N0+Gy1ZO7WE2040l0d693e3DLLtrW+ZNmX/5SbiaY5z/KKPFMdiezMl8bE4nRe/QlY
+ iSJwqMwAK+fiK5S09IstIdjMMq9Zr/knt7qpMNdK8q60k5QSZ3Xxq9V66xBATOlGIK
+ s7hQVWyeUAw3g==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1tJqcF-00000005j5W-1Pqb; Sat, 07 Dec 2024 09:56:43 +0100
+ id 1tJqcE-00000005j4c-42v3; Sat, 07 Dec 2024 09:56:42 +0100
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shiju Jose <shiju.jose@huawei.com>,
  Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
- Dongjiu Geng <gengdongjiu1@gmail.com>, linux-kernel@vger.kernel.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PATCH v6 16/16] docs: acpi_hest_ghes: fix documentation for CPER size
-Date: Sat,  7 Dec 2024 09:54:22 +0100
-Message-ID: <c9a291a9b3fa22000ae100d980a0ada5d6ba9a24.1733561462.git.mchehab+huawei@kernel.org>
+ Ani Sinha <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, linux-kernel@vger.kernel.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Subject: [PATCH v6 02/16] acpi/ghes: simplify acpi_ghes_record_errors() code
+Date: Sat,  7 Dec 2024 09:54:08 +0100
+Message-ID: <766ac4c230af004689e464f6f8a731bbc31508c5.1733561462.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <cover.1733561462.git.mchehab+huawei@kernel.org>
 References: <cover.1733561462.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+Received-SPF: pass client-ip=2604:1380:4641:c500::1;
+ envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
 X-Spam_score_int: -73
 X-Spam_score: -7.4
 X-Spam_bar: -------
 X-Spam_report: (-7.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.996,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,35 +76,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the spec defines a CPER size of 4KiB for each record,
-currently it is set to 1KiB. Fix the documentation and add
-a pointer to the macro name there, as this may help to keep
-it updated.
+Reduce the ident of the function and prepares it for
+the next changes.
+
+No functional changes.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 ---
- docs/specs/acpi_hest_ghes.rst | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/acpi/ghes.c | 56 ++++++++++++++++++++++++++------------------------
+ 1 file changed, 29 insertions(+), 27 deletions(-)
 
-diff --git a/docs/specs/acpi_hest_ghes.rst b/docs/specs/acpi_hest_ghes.rst
-index 68f1fbe0a4af..c3e9f8d9a702 100644
---- a/docs/specs/acpi_hest_ghes.rst
-+++ b/docs/specs/acpi_hest_ghes.rst
-@@ -67,8 +67,10 @@ Design Details
- (3) The address registers table contains N Error Block Address entries
-     and N Read Ack Register entries. The size for each entry is 8-byte.
-     The Error Status Data Block table contains N Error Status Data Block
--    entries. The size for each entry is 4096(0x1000) bytes. The total size
--    for the "etc/hardware_errors" fw_cfg blob is (N * 8 * 2 + N * 4096) bytes.
-+    entries. The size for each entry is defined at the source code as
-+    ACPI_GHES_MAX_RAW_DATA_LENGTH (currently 1024 bytes). The total size
-+    for the "etc/hardware_errors" fw_cfg blob is
-+    (N * 8 * 2 + N * ACPI_GHES_MAX_RAW_DATA_LENGTH) bytes.
-     N is the number of the kinds of hardware error sources.
+diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
+index dc217694deb9..e66f3be1502b 100644
+--- a/hw/acpi/ghes.c
++++ b/hw/acpi/ghes.c
+@@ -402,40 +402,42 @@ int acpi_ghes_record_errors(uint8_t source_id, uint64_t physical_address)
  
- (4) QEMU generates the ACPI linker/loader script for the firmware. The
+     start_addr = le64_to_cpu(ags->ghes_addr_le);
+ 
+-    if (physical_address) {
++    if (!physical_address) {
++        return -1;
++    }
+ 
+-        if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
+-            start_addr += source_id * sizeof(uint64_t);
+-        }
++    if (source_id < ACPI_GHES_ERROR_SOURCE_COUNT) {
++        start_addr += source_id * sizeof(uint64_t);
++    }
+ 
+-        cpu_physical_memory_read(start_addr, &error_block_addr,
+-                                 sizeof(error_block_addr));
++    cpu_physical_memory_read(start_addr, &error_block_addr,
++                             sizeof(error_block_addr));
+ 
+-        error_block_addr = le64_to_cpu(error_block_addr);
++    error_block_addr = le64_to_cpu(error_block_addr);
+ 
+-        read_ack_register_addr = start_addr +
+-            ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
++    read_ack_register_addr = start_addr +
++                             ACPI_GHES_ERROR_SOURCE_COUNT * sizeof(uint64_t);
+ 
+-        cpu_physical_memory_read(read_ack_register_addr,
+-                                 &read_ack_register, sizeof(read_ack_register));
++    cpu_physical_memory_read(read_ack_register_addr,
++                             &read_ack_register, sizeof(read_ack_register));
+ 
+-        /* zero means OSPM does not acknowledge the error */
+-        if (!read_ack_register) {
+-            error_report("OSPM does not acknowledge previous error,"
+-                " so can not record CPER for current error anymore");
+-        } else if (error_block_addr) {
+-            read_ack_register = cpu_to_le64(0);
+-            /*
+-             * Clear the Read Ack Register, OSPM will write it to 1 when
+-             * it acknowledges this error.
+-             */
+-            cpu_physical_memory_write(read_ack_register_addr,
+-                &read_ack_register, sizeof(uint64_t));
++    /* zero means OSPM does not acknowledge the error */
++    if (!read_ack_register) {
++        error_report("OSPM does not acknowledge previous error,"
++                     " so can not record CPER for current error anymore");
++    } else if (error_block_addr) {
++        read_ack_register = cpu_to_le64(0);
++        /*
++         * Clear the Read Ack Register, OSPM will write it to 1 when
++         * it acknowledges this error.
++         */
++        cpu_physical_memory_write(read_ack_register_addr,
++                                  &read_ack_register, sizeof(uint64_t));
+ 
+-            ret = acpi_ghes_record_mem_error(error_block_addr,
+-                                             physical_address);
+-        } else
+-            error_report("can not find Generic Error Status Block");
++        ret = acpi_ghes_record_mem_error(error_block_addr,
++                                         physical_address);
++    } else {
++        error_report("can not find Generic Error Status Block");
+     }
+ 
+     return ret;
 -- 
 2.47.1
 
