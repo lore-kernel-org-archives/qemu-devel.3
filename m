@@ -4,66 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1CF5E7717B
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 13:38:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33CD0E7717B
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 13:41:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tJv0o-00031h-1j; Sat, 07 Dec 2024 08:38:22 -0500
+	id 1tJv3c-0003li-I6; Sat, 07 Dec 2024 08:41:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJv0h-00031R-5r
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:38:16 -0500
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJv3b-0003lT-G3
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:41:15 -0500
 Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJv0e-0004jm-6r
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:38:14 -0500
+ (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tJv3a-000581-4u
+ for qemu-devel@nongnu.org; Sat, 07 Dec 2024 08:41:15 -0500
 Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 8E8D01809DC
- for <qemu-devel@nongnu.org>; Sat,  7 Dec 2024 14:38:01 +0100 (CET)
-Received: (qmail 14767 invoked by uid 990); 7 Dec 2024 13:38:01 -0000
+ by mailgate02.uberspace.is (Postfix) with ESMTPS id B8425180C07
+ for <qemu-devel@nongnu.org>; Sat,  7 Dec 2024 14:41:12 +0100 (CET)
+Received: (qmail 19083 invoked by uid 990); 7 Dec 2024 13:41:12 -0000
 Authentication-Results: skiff.uberspace.de;
 	auth=pass (plain)
 Received: from unknown (HELO unkown) (::1)
  by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Sat, 07 Dec 2024 14:38:01 +0100
+ Sat, 07 Dec 2024 14:41:12 +0100
 MIME-Version: 1.0
-Date: Sat, 07 Dec 2024 13:38:00 +0000
+Date: Sat, 07 Dec 2024 13:41:12 +0000
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 From: "Julian Ganz" <neither@nut.email>
-Message-ID: <2f8052fd509a1e7eba334c1881a6b46030f3d4dd@nut.email>
+Message-ID: <4193e06c04c188b9e212e347e710b92db68740d2@nut.email>
 TLS-Required: No
-Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
- certain discontinuities
-To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-In-Reply-To: <85423c12-3d2f-4d17-a7fa-ba3de32e7d44@linaro.org>
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
+To: "Richard Henderson" <richard.henderson@linaro.org>, "Pierrick Bouvier"
+ <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
+ Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
+In-Reply-To: <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
 References: <cover.1733063076.git.neither@nut.email>
- <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
- <181b9b53a258257df1b24e7bfb8b0e6fc590c25f@nut.email>
- <35529516-cc96-41de-8e0d-a7807ccc09cb@linaro.org>
- <ca20c295f464ae7e3365e012ad9a550f70b34b51@nut.email>
- <64e40e6f-bc90-4760-bb70-fb67d80ff4d7@linaro.org>
- <51ac04eea17a6c5b59a240d3c57ce54a851e4989@nut.email>
- <e45c0eed-fb2d-465d-b21e-ab3d395bcf71@linaro.org>
- <0b8c1c08b7780b62dd2af81e437f2e690a07d70a@nut.email>
- <85423c12-3d2f-4d17-a7fa-ba3de32e7d44@linaro.org>
-X-Rspamd-Bar: /
-X-Rspamd-Report: BAYES_HAM(-0.350792) MIME_GOOD(-0.1)
-X-Rspamd-Score: -0.450792
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <0e4171ca0baa8727c0bbec7a25fd72d8b8e1e4b8@nut.email>
+ <997e809f-832c-4bbd-b27e-a722ac835b34@linaro.org>
+ <450f3beedf979437fa3de8bfab1ee72f66c67ada@nut.email>
+ <cda016be-c82e-4b54-a506-22afe6ec2eb2@linaro.org>
+ <c850ee89e15d2775e7c0137a218286e7060874dd@nut.email>
+ <867d8a3a-ddf4-4655-9bfc-51c1a2ad8203@linaro.org>
+ <b02abe90-d57b-4010-aace-1b47d92e5c26@linaro.org>
+X-Rspamd-Bar: +
+X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.011686) MIME_GOOD(-0.1)
+X-Rspamd-Score: 1.388313
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:subject:date;
- bh=y/vwuyuoSoUTTjesu58k67Kfu6CP1ZLCXcRUqOs8rWE=;
- b=qCl9X1+7IsZIwmqcxwLuQE1xKB1xsiwGjS4mi6uF9520r/ZsHxPalsLBOgWCBoRvH+RJwGqlN/
- iesgOec/CID0VDBFnwe7d2G+ljwzv68dKlfYFaGb0YjUnaKebgez0+zo6pTasDu3xJxPfAEnNbYr
- EfA9+C5BjxAtVuZH50W08XjMxS6RlUHwgvNKrz+HzbaqHY/tcFQy2575OU/o1x1TQPIbcB5giTi9
- eeeZs5hzrAOHntYWWU/uUuu9A3h9eo7y5k3kjlzMvQ1hbwUXeS2t9becVM2eLEqnYwoGpvEmVMfT
- hhwKnPu570fVdrrccPotRukiB0BWFEF/b6I/QrA56Nx9WpzopnR+2QVZte7m/8Ems1ITsNzt+RGY
- I3ZCZxcLERzqCLmr9ndu/ywBgXbWNPd3WrXpqRcExeOwjyXXztKlxAMw0JxMqzO23BHrI1S0/hpX
- 9Mxigg3dBDxhAQHCz78+/rqA+rVSqbVPe+MaQ+xMcZ64X/d27V2FFco4oyJVeon3xY1nYTLiXfLk
- m1RyYKjDqMOkmGqzUItL85BHDsddUvDKmRAngZiNdqsLfPoRX+gc8dEwHXEJLHkGELAbzJzg6EM2
- qg/6ZBXFRExsqUT1glkvaCSg6e059pJb3+q/aP62fmiTTnrAq0yut+iFBABqy28W94YvRGj6DWpn
- A=
+ h=from:to:cc:subject:date;
+ bh=2J9HLLfO8SXniPB3yEN755Jz1nNdaVvdRfw9VNt56GQ=;
+ b=s3gPrU/2AeIa+wVV4Co9VtbNh1+4h9jtSzMWrq4+VlIUxmzqOPi7A1vFxBupC0bGYWfS9evkMK
+ HWbvrxVFZ8qMf2Htd9G5pBLPaww/j1w71WClS8cMU5j1D1/zRWQ/f3cEUIxUu2DKqH4U/KCyc6cm
+ 2C1cABIFPoWPqkuNp9/mxI9EfYS4LaSgIMhdFCz7WzrF4ORoX81CY57dpJcV0lBNQeUdvUIh2CxC
+ jIygGlr0PqXaLyS3g2Et1+YYCSvU2Ez2yAHHNgjo17AZQOAKvDzYZhj5dznOcpVgiiKMFukTYJOT
+ mzANSEpw+g3B5++6rveYRbxxJC/dvYUVT5qoUcecDyGzR4pkghlgPsnwpnEtLl/9Q+2HPQRePRhn
+ oHJX47uqa2alEfWAkinMvmFC/MzkYEPfDQj+u6wusf2YRAbrhK5Of0akZzYl8uFmoWGOeh+A7Kwl
+ YIlRw6pBMyfl6/2L5Ekoxelrf6FloSaZYUH5Vp6tyKFPX7roEU70nEwaogXr6PQxp/BgkHzGZn58
+ bvTfGiFMbGRJG9b10ARhbv+X/rQzECXUY8GmdwsVSaL84ovZ4/24bh4sCzx1fuatxPf3UKzKWZcJ
+ tAq0kBVu63nBwwZXzIotYiHIi62lOB0qPozu2Dg4SxtGBZpoACu71SXaH/drTtMjBQOPvCnVgXNz
+ s=
 Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
  envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
 X-Spam_score_int: -20
@@ -87,79 +90,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+Hi Richard,
 
-December 6, 2024 at 7:59 PM, "Pierrick Bouvier" wrote:
-> On 12/6/24 00:58, Julian Ganz wrote:
-> >  December 6, 2024 at 12:03 AM, "Pierrick Bouvier" wrote:
-> > > It's an interesting conversation. For the scope of this series, I a=
-gree you should use the jump target, which triggered the trap.
+December 6, 2024 at 8:42 PM, "Richard Henderson" wrote:
+> On 12/6/24 13:02, Pierrick Bouvier wrote:
+> > On 12/6/24 00:42, Julian Ganz wrote:
+> > > IIUC qemu will schedule interrupts "opportunistically" between tb
+> > >  executions. If that's the case we'll observe interrupts exclusivel=
+y
+> > >  after the last instruction in a tb. That strikes me as a serious
+> > >  limitation.
 > > >=20
->=20> >  In fine, transitions should simply follow what the cpu does.
-> > >=20
->=20> >  - orig_insn: jump to A
-> > >  - jump_target: execute A traps
-> > >  - page_fault: load page
-> > >  - jump_target: come back to A
-> > >=20
->=20> >  event(JUMP, orig_insn, jump_target) // not covered by this serie=
-s
-> > >  event(EXCEPTION, jump_target, page_fault)
-> > >  ... execute page_fault (with potential other transitions)
-> > >  event(JUMP, end_page_fault, jump_target)
-> > >=20
->=20> >  In the case of a double trap, we could follow the same logic, an=
-d represent the original transition that lead to the trap, and the two co=
-nsecutive traps.
-> > >=20
->=20> >  Does it make sense?
-> > >=20
->=20>  Yes, those transitions are correct imo. And if a jump event should=
- be
-> >  introduced at some point, the call sequence would look like that. My
-> >  issue is that testing this (in a plugin) will not be straight forwar=
-d
-> >  or even impossible. And overly complex tests don't exactly provoke
-> >  confidence.
+>=20>  To reuse fancy vocabulary, maybe we should have a distinction betw=
+een inferable > interruptions (interrupt instruction) and uninferable int=
+errupts, triggered by an external > event.
+> >  In the latter, it *might* be acceptable to not provide a from_pc (le=
+t's say a value 0), > because there is no useful information in itself, e=
+xcept creating random edges in the > control flow graph, which we don't w=
+ant to do.
+> >  What do you think of it?
 > >=20
->=20Instruction instrumentation is done before executing the instruction =
-itself, as you can see by running:
-> ./build/qemu-x86_64 -plugin build/tests/tcg/plugins/libinsn.so -d in_as=
-m,op /usr/bin/true
+>=20I think you both are over-complicating things.
 >=20
->=20I'm not entirely sure about the sequence when there is an exception w=
-hile fetching the instruction though. You can give it a try, track the PC=
- using insn instrumentation, and we can identify which cases are not work=
-ing.
->=20
->=20The test plugin itself is not complicated.
-> You'll need:
-> - one callback per instruction to set the expected pc (possibly optimiz=
-ed with inline operation), used to compare to from_pc, and we check if (o=
-ptional) to_pc matches the current instruction.
+>=20Always, env->pc (or whatever) within cc->cpu_exec_interrupt *is* wher=
+e the interrupt is recognized, and *is* where the discontinuity occurs. R=
+eport that.
 
-What I'm saying ist that this exactly is not feasible for quite a few
-relevant instructions. As someone who isn't all too intimate with TCG
-itself, it's not even clear if we can rely on jump and branch
-instructions only occuring at the end of a tb. At least a superficial
-glance at the documentation tells me we can, but if this should in fact
-not be the case, or if someone introduces something like zero overhead
-loops inside a tb, all bets are off.
-
-> - when the callback for discontinuity is called, we check if from_pc is=
- matching, and register the next expected with to_pc.
->=20
->=20We can then add tests targeting supported architectures using the plu=
-gin, and ensuring it never fails.
-> It's hard to know we don't miss events though. Except if we write manua=
-l assembly system mode tests, that trigger the expected behaviour. But it=
- would be tedious, and I'm really not sure there is a real value with red=
-uced examples like this.
-
-So currently my thinking goes in the direction of having the plugin
-print a warning every time we don't have an expected from_pc to check
-against. Probably also have this be a feature you can deactivate.
+Glad to hear. This means what I na=C3=AFvely did for most targets should =
+be
+correct at least in this regard.
 
 Regards,
-Julian Ganz
+Julian
 
