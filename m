@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C98FE77173
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 15:33:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A41B4E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 16:10:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKJHJ-0002MC-UT; Sun, 08 Dec 2024 10:33:01 -0500
+	id 1tKJqq-0008U0-Fg; Sun, 08 Dec 2024 11:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKJHG-0002Lh-5t; Sun, 08 Dec 2024 10:32:58 -0500
-Received: from mgamail.intel.com ([198.175.65.11])
+ id 1tKJqp-0008Tf-AF; Sun, 08 Dec 2024 11:09:43 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKJHC-00037G-EF; Sun, 08 Dec 2024 10:32:57 -0500
+ id 1tKJqn-0007De-CZ; Sun, 08 Dec 2024 11:09:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733671975; x=1765207975;
+ t=1733674181; x=1765210181;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=dYWmi23TQoVyAfM+oeJ4DI3Wu614MnS7MQcn3XO2veA=;
- b=EHNhn6D1U64eIxkhgG8eUb+Du0yojPBVxrijLsGfq0ryHXDAx4C9Rx/l
- QIdV6/eIzbkFH43KYj+8p48wX7tPObABP+qO3bCBerRUaATfjj7jHkRUs
- La7bdT3GnxGC9W7a9zQXJz/8/GWeg+yMxU3/XwcBrbcrDDh6p/CXgtHRP
- I4jUwe0wbXrTi/dCGO1eqOSSN06nr0S69jQQlioz/twJJQCOqoCVp3IBi
- uzQs+9DQ1W1lzYQN7PdIIEWPSXKAtoFBA6hGb8nPl5XWIkpNCEMcd/nhz
- swhR7kNiGP2Et13OG2uaGiKOxrCyF0rkdFQdy7JUAzMShwlRmlTV9lQ7R w==;
-X-CSE-ConnectionGUID: ZiG3cgkhTbKKQ1QHoRl3DA==
-X-CSE-MsgGUID: LreneVcvTqKej4QlTqxjHQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11280"; a="44440957"
-X-IronPort-AV: E=Sophos;i="6.12,217,1728975600"; d="scan'208";a="44440957"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Dec 2024 07:32:50 -0800
-X-CSE-ConnectionGUID: XaTshz/9QqOTqdlEm7QrxQ==
-X-CSE-MsgGUID: qgkmR0rHT+2YayiqvIaxxw==
+ mime-version:in-reply-to;
+ bh=dP9Ygx8gHJBEw6OspYnn8BAypKnfmjjrM+Iep0CyiiE=;
+ b=dOmvNCUjbK3J1YnLYW/+8zCiJ9WeajHV7DrqJtwqU9jL1WY6n0yga8hZ
+ jHwvtn2eBKMw5rmuIRgiDgHNRmVNX+zhQaBGiEBw+ecJXydUI/fByIZr0
+ 7IfyPcEEuahnzg550vaXK56oFoxkHuouvVtvOXbRPfamWdU+NOpOduCji
+ pIZLRxeZWWOhxCFBPp+x72r5qRmzeSxIBYG1Zy1YG5QaQWix3KrLKntjK
+ nCZdv1ugN7RL8lGj0EAyv6nlq1fGxzGhGDsq2gcZo9ztGihu4XaZK38IL
+ X0XkLWeVlDFMVFEVn7e3VN4U0RWuDMnSOALxHGRxii6qMOy8vzNSXP+/y g==;
+X-CSE-ConnectionGUID: M8hYtCXHSxe+EJaYlxVE8Q==
+X-CSE-MsgGUID: jL4KWTgkRWWv8sbUEweHSw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11280"; a="37756337"
+X-IronPort-AV: E=Sophos;i="6.12,217,1728975600"; d="scan'208";a="37756337"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Dec 2024 08:09:37 -0800
+X-CSE-ConnectionGUID: IK6Dg4cXTJ+KhF7Q5eQy9g==
+X-CSE-MsgGUID: lEG4mZq3R26qhOgmKKrBKg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,217,1728975600"; d="scan'208";a="99670656"
+X-IronPort-AV: E=Sophos;i="6.12,217,1728975600"; d="scan'208";a="125701071"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by fmviesa004.fm.intel.com with ESMTP; 08 Dec 2024 07:32:46 -0800
-Date: Sun, 8 Dec 2024 23:51:00 +0800
+ by orviesa002.jf.intel.com with ESMTP; 08 Dec 2024 08:09:36 -0800
+Date: Mon, 9 Dec 2024 00:27:48 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Junjie Mao <junjie.mao@hotmail.com>,
  Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
-Subject: Re: [RFC 06/13] rust: add bindings for memattrs
-Message-ID: <Z1XAZA9K40hfrOrl@intel.com>
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
+Message-ID: <Z1XJBJp+l92+OrY9@intel.com>
 References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-7-zhao1.liu@intel.com>
- <b34733f3-1525-4e35-8c07-f84ad56b01e0@linaro.org>
- <1f008c2a-aaf6-497d-becd-f36f5d9aea17@redhat.com>
- <CAFEAcA9SCfMcrhpd_x0LmgwtD-5XwT4TY+QXBJMOjWbdtBPCUg@mail.gmail.com>
- <06e90014-40b3-4928-b61f-6598193151f1@linaro.org>
- <CABgObfbYfR=OjsQk78TyqUwyfAr0Mxn2bgX062Ck5kuAwW3f3g@mail.gmail.com>
+ <20241205060714.256270-5-zhao1.liu@intel.com>
+ <6108dfe6-f629-431c-be91-51abff338e85@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfbYfR=OjsQk78TyqUwyfAr0Mxn2bgX062Ck5kuAwW3f3g@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.11; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <6108dfe6-f629-431c-be91-51abff338e85@redhat.com>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -48
 X-Spam_score: -4.9
@@ -94,33 +88,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Dec 08, 2024 at 10:30:34AM +0100, Paolo Bonzini wrote:
-> Date: Sun, 8 Dec 2024 10:30:34 +0100
+On Thu, Dec 05, 2024 at 07:53:42PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 5 Dec 2024 19:53:42 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [RFC 06/13] rust: add bindings for memattrs
+> Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
 > 
-> Il sab 7 dic 2024, 10:21 Philippe Mathieu-Daudé <philmd@linaro.org> ha
-> scritto:
+> On 12/5/24 07:07, Zhao Liu wrote:
+> > The qdev_init_gpio_{in|out} are qdev interfaces, so that it's natural to
+> > wrap them as DeviceState's methods in Rust API, which could eliminate
+> > unsafe cases in the device lib.
+> > 
+> > Wrap qdev_init_gpio_{in|out} as methods in a new trait DeviceGPIOImpl.
+> > 
+> > In addition, for qdev_init_gpio_in(), to convert the idiomatic Rust
+> > callback into a C-style callback qemu_irq_handler, add a handler pointer
+> > member in DeviceGPIOImpl. For any device needs to initialize GPIO in, it
+> > needs to define a handler. And for device which just wants to initialize
+> > GPIO out, it can leave the GPIO_IRQ_HANDLER as None.
 > 
-> > >> is still decently packed and simplifies things a lot.
-> > >
-> > > The old struct is 4 bytes, and the new one is 8 bytes. We do
-> > > a lot of directly passing 'struct MemTxAttrs' arguments around
-> > > as arguments to functions (i.e. not passing pointers to them),
-> > > so increasing it in size is not completely free.
-> >
-> > Should we add a check to not pass 8 bytes?
-> >
-> >    QEMU_BUILD_BUG_ON(sizeof(MemTxAttrs) != sizeof(uint64_t));
-> >
-> 
-> Yes, why not.
->
+> This has the same issue as timers, in that you could have (especially once
+> someone adds named GPIOs) multiple handlers.  So we need the same kind of
+> Fn-based thing here too.
 
-Thank you all! Will also include this in the followup clean-up patches.
+I will refer to the timer callback prototype you suggested and try that
+way. Will you rework the timer binding soon? (I'm sorry for bringing such
+burden to you).
+
+> > +/// Trait that defines the irq handler for GPIO in.
+> > +pub trait DeviceGPIOImpl {
+> > +    const GPIO_IRQ_HANDLER: Option<fn(&mut Self, lines_num: u32, level: u32)> = None;
+> 
+> Ah, I see that you're placing the qdev_init_gpio_in here so that you
+> only make that accessible for devices that did implement DeviceGPIOImpl.
+> However you are not guaranteeing that this _is_ a DeviceState.
+
+Thank you, I really couldn't think of a good way to implement the
+DeviceState method...One reason is that DeviceImpl is a bit confusing to
+me, and please see the comment below.
+
+> If the handler can be passed as a function, the problem of getting the
+> GPIO_INT_HANDLER does not exist anymore.  So with the code in rust-next you
+> can add these to a trait like
+> 
+> /// Trait for methods of [`DeviceState`] and its subclasses.
+> pub trait DeviceMethods: ObjectDeref
+> where
+>     Self::Target: IsA<DeviceState>,
+> {
+>     fn init_gpio_in<F: ...)(&self, lines_num: u32, f: &F) {
+>     }
+> }
+> 
+> impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState>
+> {}
+> 
+
+Thank you for your idea! This is a true implementation of the DeviceState
+method. I'll try this way!
+
+Additionally, the current DeviceImpl trait is quite special. Although in
+Rust, DeviceImpl traits are implemented for device states, DeviceImpl is
+actually used for device classes.
+
+Semantically, it might be more natural for DeviceImpl to be a trait for
+device classes. However, parameters of its methods are DeviceState, so
+it makes sense as a trait for states in Rust. 
+
+This seems to be a different design before C and Rust Qdev.
+
+> > +    fn init_gpio_out(&self, pins: &InterruptSource, lines_num: u32) {
+> > +        unsafe {
+> > +            qdev_init_gpio_out(addr_of!(*self) as *mut _, pins.as_ptr(), lines_num as c_int);
+> > +        }
+> > +    }
+> > +}
+> 
+> Pass a slice &[InterruptSource], and get the "len" from the length of the
+> slice.
+
+Thanks! Will change this.
 
 Regards,
 Zhao
-
 
 
