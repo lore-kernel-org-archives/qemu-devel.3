@@ -4,159 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2CDE7717D
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Dec 2024 22:46:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDDEE77173
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 06:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tK3Yh-00070w-6X; Sat, 07 Dec 2024 17:45:55 -0500
+	id 1tKB6P-0005mo-Ki; Sun, 08 Dec 2024 01:49:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1tK3Yf-00070l-LJ
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:45:53 -0500
-Received: from mail-bn8nam12on2080.outbound.protection.outlook.com
- ([40.107.237.80] helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tKB6E-0005mT-M7
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 01:49:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <francisco.iglesias@amd.com>)
- id 1tK3Yd-0002IB-BK
- for qemu-devel@nongnu.org; Sat, 07 Dec 2024 17:45:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XuHcWr5DOR1U1f04KiaIKKDztv9wpBNU98+PQgwNI+r4uSjpUrwYyuUE6oxzrdSCLaGnU5r9+7UWfELh+GNp0ajZKO5weAOdR1pGOcyzTtnYm9PMtcGQcna178zrwBqzhEx/AWK0+qH0XnC/fHBbBnODh5noGqo+FDAtKxfWlA4tr/YQdesfGG4uOWOO0Max0DQhEXzVi7gJuF1N+WErUaS8y45W7LGUyR0TQl+XQT7R9fJ0yDlZqcYhj3v/qgb0U7EiPEzHGufP3OoOgl2j/IaWKajWMsMf6fmyUiCUuZ2ifppHoWmFxCqoVCpF2yIIAf1wbg+ExDTzmnCSq3AFDA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9C+MlzfqkwDQ1JqYYyN1eZ7k6vr5P2yI718QkMmgwU8=;
- b=rJSSG24zOXdVYuTS3QZxVKi1442GKrnLIeFORBrpLCMeVc8G2vDc8fIplJegn9SBmGOvQkaveKeEQizKkPztqxHQh4FxTILVZsmJPGMich0zXRTxtinTPIHhoS+3MnXw54f1PqhmKEpv6MAE6xFS46pP5xpJ3a4XrKYGqG9SFa1z2i3KcX/cpKPJHK9D+HSVNOWBfGbiUUGJNXT/H3pMGK6gjL+h8ySvlZteeatogi+z7YMVswI0evPxD+gMv2UYQFEGoW5oGB3hNB5+1ZuG0OdghiWrkU1eBPUI6l+lmmCzlCXFPcZl6d1LUUCiHuCk5VvXdLoxm1CXENmin14RIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9C+MlzfqkwDQ1JqYYyN1eZ7k6vr5P2yI718QkMmgwU8=;
- b=M8oghdbko+RklWjQ5IpQHjaGUCpbi+s84JP5vuDAZnFzv1qG7CNNG/Uvb8QO2YfKovPk8js3CIEmq8fwhfdT4s4whGYajIg/PZFG3ANWCKDPPfUl7RSC1GufM9yKJAzs3M2ZU9XKeq4K1jwkD+3C1Tpm+07J4Uz7jvwuJ9qcGnY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com (2603:10b6:a03:549::10)
- by DS0PR12MB6583.namprd12.prod.outlook.com (2603:10b6:8:d1::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.17; Sat, 7 Dec
- 2024 22:40:43 +0000
-Received: from SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b]) by SJ2PR12MB8739.namprd12.prod.outlook.com
- ([fe80::29bb:9aa:2a72:df1b%4]) with mapi id 15.20.8230.010; Sat, 7 Dec 2024
- 22:40:43 +0000
-Date: Sat, 7 Dec 2024 23:40:37 +0100
-From: Francisco Iglesias <francisco.iglesias@amd.com>
-To: Vikram Garhwal <vikram.garhwal@bytedance.com>
-Cc: qemu-devel@nongnu.org, peter.maydell@linaro.org
-Subject: Re: [PATCH] MAINTAINERS: Add correct email address for Vikram Garhwal
-Message-ID: <Z1TO5a5QbMyrqhRt@xse-figlesia-l2.amd.com>
-References: <20241204184205.12952-1-vikram.garhwal@bytedance.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241204184205.12952-1-vikram.garhwal@bytedance.com>
-X-ClientProxiedBy: FR4P281CA0279.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e6::11) To SJ2PR12MB8739.namprd12.prod.outlook.com
- (2603:10b6:a03:549::10)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tKB6C-00051b-2z
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 01:49:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733640536;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=kb/CTr5SQjye6GYSLsMFaX9dOkr+qc1/b35VWUFiQIY=;
+ b=jMTPDGdvYr10YeXG5FMirUzysr0gQ1+hpQXcLkVLoI7O7HBA1Z72J0EpSQ+JHPZJ8KeTYk
+ dzcN/4yS2doCsDNjng3HY/D5moVX+nnj+hA1QZoIa4SA1mC1jVliDoj7P9+GYomK1pUd6K
+ Cb/kChduXkrLMBXPhR1qsy6IfEDgqbQ=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-135-QBIDOiEIPoiX_8NrIJ0Ogg-1; Sun, 08 Dec 2024 01:48:55 -0500
+X-MC-Unique: QBIDOiEIPoiX_8NrIJ0Ogg-1
+X-Mimecast-MFC-AGG-ID: QBIDOiEIPoiX_8NrIJ0Ogg
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-21638389f63so3876195ad.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Dec 2024 22:48:54 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733640534; x=1734245334;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kb/CTr5SQjye6GYSLsMFaX9dOkr+qc1/b35VWUFiQIY=;
+ b=uWgM3YRdk38tO70QTsr1WNCYo1irCWFnkALprxX5UGmPZnfnoUd+I52TIR3cRQUM6N
+ gyUVVhLEUKvdddO87rpSbOKpxsFRc5HEsUdFoXPSdCMnrGJ+0Tn8ssQMF8nTJKTeAgIh
+ nIRIfCmcbGaIv1mhSJQkwVBhYpknJu/2g6oftfkCzzOjEt/CD7j3GsgMxzPRCvp2uNwZ
+ hZ7QPY9K/nW4/aH3uTnK3N/jDXvYVZ0z9NR3O5syQmjcE7QN/H0VbC534mH+H5k7piqo
+ pCKg8A0lz7S7kWappeIsEGXoQ0M3EjH0QCQFhicPtcuZzXerPlEtL1FRm/ApQBYg12rP
+ LPNg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV7ANzB2zKLdiUtaifTy5UUVn88QS5XkWhz3kml7SgamAsa101/QUzXGQlGbr2anHFjIXSUQvXJrcoz@nongnu.org
+X-Gm-Message-State: AOJu0Ywri607l+fRiSZ2XMXUbjKPNBPLS0fR9zlwDF9+rZgHcy8/ar3x
+ ci9b+IYBJ+5UBNEqpiFoci8J1ct3WZ74hhzbVzqhRNkKpX93PLrmhCbvIJC8rkASnBFHsIppy3i
+ Kubf1wOmKQurz/azCjVQeXwoSvRfyNVY5S/81NgyjQDy8I7PAfuYE
+X-Gm-Gg: ASbGncudN3Xth99bLfsuktKABBZqdQsA5Qz5L1qWkb4U5UYW/g4YRKyMkEpIE2LZEVr
+ nn5G6vX82y0/8hKlJAJ6H5TTUcguhoyf4AkWTcEbttpZAzNNtMPxsWmpJVnZefB9rPQfugBFUFI
+ mPS4rv/E8iJwZkGdqDhmkJNzlkqk3FhrnTrrrlcEHUUtOA9knuwiIdn24nJX/VkafBf6ZURg59N
+ MMGjBI8FKRD9Czm9vOnqO0iS73dkcsco8ktX3IF13r4v5lhB6PrST365MIAP636/oapT3aZkVI=
+X-Received: by 2002:a17:903:2348:b0:215:9ed9:9320 with SMTP id
+ d9443c01a7336-21614d1d488mr110500735ad.11.1733640533740; 
+ Sat, 07 Dec 2024 22:48:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IERwDbxJSZj936y09+k0cm/gxq+23jFFRFM4p26M3s5aQqWdnsEMNrymNUU7dh3ZCIVrPyzBA==
+X-Received: by 2002:a17:903:2348:b0:215:9ed9:9320 with SMTP id
+ d9443c01a7336-21614d1d488mr110500415ad.11.1733640533253; 
+ Sat, 07 Dec 2024 22:48:53 -0800 (PST)
+Received: from localhost.localdomain ([203.163.237.227])
+ by smtp.googlemail.com with ESMTPSA id
+ d9443c01a7336-2162b13d486sm20014435ad.191.2024.12.07.22.48.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 07 Dec 2024 22:48:52 -0800 (PST)
+From: Ani Sinha <anisinha@redhat.com>
+To: Sergio Lopez <slp@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Cc: Ani Sinha <anisinha@redhat.com>, imammedo@redhat.com, qemu-devel@nongnu.org
+Subject: [PATCH] hw/i386/cpu: remove default_cpu_version and simplify
+Date: Sun,  8 Dec 2024 12:18:10 +0530
+Message-ID: <20241208064810.893451-1-anisinha@redhat.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ2PR12MB8739:EE_|DS0PR12MB6583:EE_
-X-MS-Office365-Filtering-Correlation-Id: a36fd916-f736-4399-c376-08dd17102f1e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NnEzaDZOUFEzWlArbHJmY3FCcitmSXFmbzhjMUwvZGcyeGpIV3FrYWZ5dlFU?=
- =?utf-8?B?NmNReThEQ3hSRTFiM0M4QXNDV0NsTTFGcERPU21jQXlmTVVkejN5VzF3cG92?=
- =?utf-8?B?bW9RdmZqKzlaL0hOTlNhMnVJUmNtTnB1Uk43UXpCZ3MwRjEvalJ2N0tBSlRm?=
- =?utf-8?B?TjVJVzZ5eCtaKzdhUE9SSTMwVGJqSVFTS3RzWXpCTDU5WEZvNUpUUk55dytr?=
- =?utf-8?B?SEVyZDNZVjdVVTdBZXBibElpdmszOUFYL05DdWhLYkErWUg5T3pKWTBMRmJk?=
- =?utf-8?B?S2Z2cHdiaUYzL0RrT0RpWHQyYnpIbGIvc2FHa1pjQ09SVE5ZeEpvZEkycUhN?=
- =?utf-8?B?YkhIQWRERWFIblh1bEpKYTlFQXh3dlRQTUc5bEMzSStPWkI5dVNNS3FmaHo5?=
- =?utf-8?B?Nmx1Q3FGWVY2NGd2aUVIZ3NHWWlxRk1PaVlKa2sycVg3UUx6Sk5rTDA3VG1v?=
- =?utf-8?B?ekIvWHpqMGk5dXpwRzRHbmRrQzJMS1RCY0pReDg1cGowQ0RJdkxxWEhUVFQv?=
- =?utf-8?B?TlY1V2N0SmRnOGJaUGU5dHhJQVhUZG51bllqTitOSFZxUTZSRXd1K3pVc1pu?=
- =?utf-8?B?SVpJOGZLRmYzeGJhdm1ySU9hOCtxOWovS2ZvR1ppYjhNRGZVMTJsejJOdi9l?=
- =?utf-8?B?b0k3TEY3L1FxMDIrbkVBNmRJOHNnTGZFekJWZElsR1RMNTBJVDZEYjN2YlNN?=
- =?utf-8?B?LzZ5UnRIZlV5SEJsQlFFakJGK3FhemRud3ZhTzNUQ1hhSm96TUZWK0xtRjN2?=
- =?utf-8?B?R3VkMGhqMHU3T2xDdkFUQUNvMFc5MlAwOXY4Q0x4eHd6clBYSk1qaDNNQXB5?=
- =?utf-8?B?UHNyT0FlZ2x4dTR0Y2FnaEIvTXZDbVBUcmxVTHhWOFhHNU03TytvaHN6SHp4?=
- =?utf-8?B?aTJlNHhqSWRzQjZuR0J2V0ZtTGQ5WnZGY3h0Q1RNUjNIU01YclJnQmhrc1Bn?=
- =?utf-8?B?MGgrRkFnMVZkNHQzZEtvVGw3NW90cG5GQ243MmtKaTBtWG1jRUJMYmpKV0lx?=
- =?utf-8?B?VElvUVEzdURiWXo0QU9PSFpNYzVFWXg2Mi9XaFNSUTUzdnRNclkxMExzU0I3?=
- =?utf-8?B?TUhTbzlyakxVTjlGVjVmbVhWUFBCUFp5Wm5udzEwc2pQL1JJRU9NTFRHY3dU?=
- =?utf-8?B?UU0veUZQY1U2dHd0SXVYK1drOW9xVTlrTmJ3YVV4cXBqdWRTNDM5bjZKbCtx?=
- =?utf-8?B?YS92SlBHY0xGQWs5dTZEU1lSY1RqNXJWbUxCaGRmYlowQ2VCZ2lGUGpXbkRJ?=
- =?utf-8?B?S05JbUdsaDBNZGx0QkZwNHVoNjJKQzNYUUp1UDVMaktoL3JYc3N4TjZHOElJ?=
- =?utf-8?B?MTROb1FhWlNVZ1hQRmE1RzdpQzludFlyVkJLMjBlaUNQS0hGNDNKT09HUFFq?=
- =?utf-8?B?R2psY0p4OTMyWVpMazFLVzM3WTFEM3NXdi9Kd0NOSDRrdy9Pcjg4M0s5S2NN?=
- =?utf-8?B?aFh0S2xDY1ZhL2tFemJXcFl5ajBlSW43RGxWSU56OWRwUXYvSU4xUGZrY3lv?=
- =?utf-8?B?dHo5SGNNOWVpeDErK3ZSRndycTkreTA3SnVTQ2dIb3p0dzR0S1JQY1ErWjZU?=
- =?utf-8?B?NFpHQ3ZCdm9sTitIc2tkN3krUjVMSk1zUE5LMTdwajRwN0lRT1gvbmxKa1cv?=
- =?utf-8?B?cjVhZXR3UmtkdUdzWlgyUTExa29HT2IrbkpDOVFWK2t2UFZtZ0JCVEhyUnBM?=
- =?utf-8?B?RWRLWWw4NndJS0ovZVJWcENsVmF3OXZuSzUwSU85elVucDVOT050Qk9HSVhi?=
- =?utf-8?Q?Blnp21oZuxf2i7KL/Y=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ2PR12MB8739.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SjF2UGtRVmhxaUVLSEd5QktxbzZiZFZodmUxcGtPRDZjQXBRU09KVTlRUlJh?=
- =?utf-8?B?dXluMjk5NXZCSFR2R28vamltc1VrMDV3ays2OXZTNVdXc2UvWENMZnpubnFI?=
- =?utf-8?B?SnB3Ry8xQnVBYkRQTkdJNTd1K1ozRi84eVJmVkdlQzdZR0Jpc25LKzJYbU8w?=
- =?utf-8?B?RnJWUUZ0blNSM2lyMEVYRHJLU09BeHVJVHFtY3BTNW02QklsVWhyM2o2cHo5?=
- =?utf-8?B?RE5neVNFZ2hCQWJhaTZMOXZ6RFFFSEQzMzJEUmNkUW41UVkzMUlCU2t1RXB3?=
- =?utf-8?B?d29ncGlHMjhDZW9TOExvMmMyaXpzbXYxamh0bFhVNFNhc1p0NlU0ZFhtWUky?=
- =?utf-8?B?R3NLMFhXR21DckpTU1hwR1laYjEvSldESTZnZWxuMitDU1ZmcUFUdmthbWRL?=
- =?utf-8?B?TXJEZ2ZoaWtRcjFnaTdGZXkzVFo2c2g2dmRmaElGRzFURE9JRi9XNXdJNDBU?=
- =?utf-8?B?ZUlZVDR3TTJqN01VelE0TXA0UHZrTDBDaFhtQ2ZvRW9iWGk3OUM3R1daQWFy?=
- =?utf-8?B?MGZsUkRRdkpDNkl6bW1CVGdzb2VUN1N6TGNwa29UdFZVQ2pjUDJKRE9wbkt6?=
- =?utf-8?B?MXhBSFJEOHdlbGIzZ0dRT2N6Z1c3aEhBbkI3TW5vNHJjeFkrZ2xkR0lGWlFR?=
- =?utf-8?B?VVYyUElQNUpPc05nS2hMcFNGT2ZkL21GRlJER0VxSVYwZEZMMHZmNk1uUno5?=
- =?utf-8?B?c2ZpRWZSbzNRZ2R6azVMaStJekl1QmlMd2RLMXVpOERmb1FVRHA2SkdGTjZa?=
- =?utf-8?B?aVBGNDQ3TWV4cTRLaUppVC8yaFgxaGl0U2xKdnBtMmhMazZWSEFMdXR0L2k1?=
- =?utf-8?B?VDFaaHA4Z1dYSGpoNzg0ZkZjQVZWUHNhbzVESS9TYmhWbkxRa01qbXNFTU9y?=
- =?utf-8?B?b3pGbkxFVSs5KytVbUlySlF5NDRWNWNqWmQxV1ZNa0VuMUhsQUNRQ1JXYU1L?=
- =?utf-8?B?T1I0aW5XeTdIaytuM2p4cEJ6UXlEaHgzVmNmUHRVU2RET1UwWTBjRnFNUTdu?=
- =?utf-8?B?anhtSDdGNlMyd0pDZndWS3BYdFhLNXRka3VSNFI1eXpoQ3M4eHRCc002ak9D?=
- =?utf-8?B?V0x3U1hsVEVmZURMM0kzV2ZkeFpUckRaU1A3T0dJUStuUk5MU1M1N3VOanpj?=
- =?utf-8?B?dSsrRVlKUEc5dWhLVUJISGxRSVM0YVY3c2tKUGhFMWtZbDBnUmpReTN5NS9B?=
- =?utf-8?B?MnVSUC9sblYweWZlY1RROW5reTRyUkJYZzBJM2FONkl5a1ZRQnl5MlAyc3lI?=
- =?utf-8?B?SUREL05qRXgwalRpZE5rVTFZNEpnYkVrMW9pQzc2a1JkS0dVMDJKVEtQZzFT?=
- =?utf-8?B?K1pQaVdnOGova1Vqb1ZGTTRCTk5Belo2NE1uQnBGRXVadWkzaUhUSGNVbVJG?=
- =?utf-8?B?V1JPa0N5ODFSb2QwaE1TTDFVRXNEWU81YmZlYU9tUDIyMTlsd1I0bFgzNm1V?=
- =?utf-8?B?d1lzYlBPTS9GOUxpajZYQlhZa0k5QWdJcXJmc1pRTWUvd1JGc0tRWHkwejM1?=
- =?utf-8?B?MXAxQ3k1Wkl5Qnh1ZnI4ZlhTT3lSc1BPbks1OGE4aVduZnR1REVaTk9idjBw?=
- =?utf-8?B?b3hvejAzN3dFUmJnMm1ZRHhLdksydE03enFGcHhrcCtTaStDd052TTNPcHk3?=
- =?utf-8?B?YWZJK0Z5Q0J1dXdHZ0s5akNMSUQyV0kvWHpxcTRVZnBpSlBWOXB4TmgxMmZl?=
- =?utf-8?B?NndFTnJGdjQwd0ludEZhWlg2aWc3cGcyYkRQRE8ySS9BMkh1R0tDSVZNVXpj?=
- =?utf-8?B?cEZ0SzBiRWxWc29WK01MbHJkYmRBbmZjSUk1Zk5hRFlQZjJhQjBLd3dxODFG?=
- =?utf-8?B?bDBRaG5DbjZUVmdUVEcweENrRDJ2MWtreW4xMHd0OEdpZWZLakU2Y1A4c3Zu?=
- =?utf-8?B?M0V5Q0pZSEtUdk5HNDgrdWJPUU9vY3EvNlAxQTRRVDhaYXJlWXJvNDN0SG5P?=
- =?utf-8?B?Zzd0eVRtcWlreit4RTNaRHVsYXAyZmQvZWhTTDZwWGxGN0R4NXphejdMallS?=
- =?utf-8?B?MDRGaHRNeGJOdjJyS2JNMVU0djBVWENrYUU4djlMU1hsSFAwU2V5QnRvMGVV?=
- =?utf-8?B?bnJTSjhtWW15cGN4dUdIU1dSOXVyeTRPK1FQekY0S1JpNUJOd203Um9ZQ0kz?=
- =?utf-8?Q?hxAAkaxvl1wiEV972UFAAeW4W?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a36fd916-f736-4399-c376-08dd17102f1e
-X-MS-Exchange-CrossTenant-AuthSource: SJ2PR12MB8739.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Dec 2024 22:40:43.5083 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0fjDVlw5OOvbgJiCv9yusrrYxb+igMWh7g5j95f+/67IC2Cng3LKdH0Np4CGo04pppaTcXfoExXixDL71fv4JA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB6583
-Received-SPF: permerror client-ip=40.107.237.80;
- envelope-from=francisco.iglesias@amd.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -50
 X-Spam_score: -5.1
 X-Spam_bar: -----
 X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.999,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -172,39 +110,377 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 04, 2024 at 10:42:05AM -0800, Vikram Garhwal wrote:
-> Previously, maintainer role was paused due to inactive email id. Commit id:
-> c009d715721861984c4987bcc78b7ee183e86d75.
-> 
-> Signed-off-by: Vikram Garhwal <vikram.garhwal@bytedance.com>
+commit 0788a56bd1ae3 ("i386: Make unversioned CPU models be aliases")
+introduced 'default_cpu_version' for PCMachineClass. This created three
+categories of CPU models:
+ - Most unversioned CPU models would use version 1 by default.
+ - For machines 4.0.1 and older that do not support cpu model aliases, a
+   special default_cpu_version value of CPU_VERSION_LEGACY is used.
+ - It was thought that future machines would use the latest value of cpu
+   versions corresponding to default_cpu_version value of
+   CPU_VERSION_LATEST [1].
 
-Reviewed-by: Francisco Iglesias <francisco.iglesias@amd.com>
+Unfortunately, all pc machines still use the default cpu version of 1 for
+unversioned cpu models. Only microvms use CPU_VERSION_LATEST.
 
-> ---
->  MAINTAINERS | 2 ++
->  1 file changed, 2 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index aaf0505a21..b4723eecde 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1914,6 +1914,7 @@ F: tests/qtest/fuzz-sb16-test.c
->  
->  Xilinx CAN
->  M: Francisco Iglesias <francisco.iglesias@amd.com>
-> +M: Vikram Garhwal <vikram.garhwal@bytedance.com>
->  S: Maintained
->  F: hw/net/can/xlnx-*
->  F: include/hw/net/xlnx-*
-> @@ -2673,6 +2674,7 @@ F: include/hw/rx/
->  CAN bus subsystem and hardware
->  M: Pavel Pisa <pisa@cmp.felk.cvut.cz>
->  M: Francisco Iglesias <francisco.iglesias@amd.com>
-> +M: Vikram Garhwal <vikram.garhwal@bytedance.com>
->  S: Maintained
->  W: https://canbus.pages.fel.cvut.cz/
->  F: net/can/*
-> -- 
-> 2.39.3 (Apple Git-145)
-> 
+This change cleans up the complicated logic around default_cpu_version
+including getting rid of default_cpu_version property itself. A couple of new
+flags are introduced, one for the legacy model for machines 4.0.1 and older
+and other for microvms. For older machines, a new pc machine property is
+introduced that separates pc machine versions 4.0.1 and older from the newer
+machines. 4.0.1 and older machines are scheduled to be deleted towards
+end of 2025 since they would be 6 years old by then. At that time, we can
+remove all logic around legacy cpus. Microvms are the only machines that
+continue to use the latest cpu version. If this changes later, we can
+remove all logic around x86_cpu_model_last_version(). Default cpu version
+for unversioned cpu models is hardcoded to the value 1 and applies
+unconditionally for all pc machine types of version 4.1 and above.
+
+This change also removes all complications around CPU_VERSION_AUTO
+including removal of the value itself.
+
+1) See commit dcafd1ef0af227 ("i386: Register versioned CPU models")
+
+CC: imammedo@redhat.com
+Signed-off-by: Ani Sinha <anisinha@redhat.com>
+---
+ hw/i386/microvm.c     |  2 +-
+ hw/i386/pc_piix.c     |  6 +++---
+ hw/i386/pc_q35.c      |  6 +++---
+ hw/i386/x86-common.c  | 15 ++++++++++---
+ include/hw/i386/pc.h  | 21 +++++++++++++++---
+ include/hw/i386/x86.h |  5 ++++-
+ target/i386/cpu.c     | 50 +++++++++++++++++++++----------------------
+ target/i386/cpu.h     | 21 ++++--------------
+ 8 files changed, 69 insertions(+), 57 deletions(-)
+
+diff --git a/hw/i386/microvm.c b/hw/i386/microvm.c
+index 86637afa0f..2cbe08caea 100644
+--- a/hw/i386/microvm.c
++++ b/hw/i386/microvm.c
+@@ -458,7 +458,7 @@ static void microvm_machine_state_init(MachineState *machine)
+ 
+     microvm_memory_init(mms);
+ 
+-    x86_cpus_init(x86ms, CPU_VERSION_LATEST);
++    x86_cpus_init_with_latest_cpu_version(x86ms);
+ 
+     microvm_devices_init(mms);
+ }
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 2bf6865d40..8e0ab0387f 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -181,7 +181,8 @@ static void pc_init1(MachineState *machine, const char *pci_type)
+     }
+ 
+     pc_machine_init_sgx_epc(pcms);
+-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
++
++    pc_init_cpus(machine);
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -454,7 +455,6 @@ static void pc_i440fx_machine_options(MachineClass *m)
+     ObjectClass *oc = OBJECT_CLASS(m);
+     pcmc->default_south_bridge = TYPE_PIIX3_DEVICE;
+     pcmc->pci_root_uid = 0;
+-    pcmc->default_cpu_version = 1;
+ 
+     m->family = "pc_piix";
+     m->desc = "Standard PC (i440FX + PIIX, 1996)";
+@@ -661,7 +661,7 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_i440fx_machine_4_1_options(m);
+-    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
++    pcmc->no_versioned_cpu_model = true;
+     compat_props_add(m->compat_props, hw_compat_4_0, hw_compat_4_0_len);
+     compat_props_add(m->compat_props, pc_compat_4_0, pc_compat_4_0_len);
+ }
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index 8319b6d45e..9a4f14b336 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -187,7 +187,8 @@ static void pc_q35_init(MachineState *machine)
+     }
+ 
+     pc_machine_init_sgx_epc(pcms);
+-    x86_cpus_init(x86ms, pcmc->default_cpu_version);
++
++    pc_init_cpus(machine);
+ 
+     if (kvm_enabled()) {
+         kvmclock_create(pcmc->kvmclock_create_always);
+@@ -336,7 +337,6 @@ static void pc_q35_machine_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pcmc->pci_root_uid = 0;
+-    pcmc->default_cpu_version = 1;
+ 
+     m->family = "pc_q35";
+     m->desc = "Standard PC (Q35 + ICH9, 2009)";
+@@ -537,7 +537,7 @@ static void pc_q35_machine_4_0_1_options(MachineClass *m)
+ {
+     PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+     pc_q35_machine_4_1_options(m);
+-    pcmc->default_cpu_version = CPU_VERSION_LEGACY;
++    pcmc->no_versioned_cpu_model = true;
+     /*
+      * This is the default machine for the 4.0-stable branch. It is basically
+      * a 4.0 that doesn't use split irqchip by default. It MUST hence apply the
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index dc031af662..37dfdb7300 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -66,15 +66,24 @@ out:
+     object_unref(cpu);
+ }
+ 
+-void x86_cpus_init(X86MachineState *x86ms, int default_cpu_version)
++void x86_legacy_cpus_init(X86MachineState *x86ms)
++{
++    machine_uses_legacy_cpu();
++    x86_cpus_init(x86ms);
++}
++
++void x86_cpus_init_with_latest_cpu_version(X86MachineState *x86ms)
++{
++    x86_cpu_uses_lastest_version();
++    x86_cpus_init(x86ms);
++}
++void x86_cpus_init(X86MachineState *x86ms)
+ {
+     int i;
+     const CPUArchIdList *possible_cpus;
+     MachineState *ms = MACHINE(x86ms);
+     MachineClass *mc = MACHINE_GET_CLASS(x86ms);
+ 
+-    x86_cpu_set_default_version(default_cpu_version);
+-
+     /*
+      * Calculates the limit to CPU APIC ID values
+      *
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 14ee06287d..b514b957d9 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -92,9 +92,6 @@ struct PCMachineClass {
+ 
+     /* Compat options: */
+ 
+-    /* Default CPU model version.  See x86_cpu_set_default_version(). */
+-    int default_cpu_version;
+-
+     /* ACPI compat: */
+     bool has_acpi_build;
+     int pci_root_uid;
+@@ -125,11 +122,29 @@ struct PCMachineClass {
+      * check for memory.
+      */
+     bool broken_32bit_mem_addr_check;
++
++    /* whether the machine supports versioned cpu models */
++    bool no_versioned_cpu_model;
+ };
+ 
+ #define TYPE_PC_MACHINE "generic-pc-machine"
+ OBJECT_DECLARE_TYPE(PCMachineState, PCMachineClass, PC_MACHINE)
+ 
++static inline void pc_init_cpus(MachineState *ms)
++{
++    X86MachineState *x86ms = X86_MACHINE(ms);
++    PCMachineState *pcms = PC_MACHINE(ms);
++    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
++
++    if (pcmc->no_versioned_cpu_model) {
++        /* use legacy cpu as it does not support versions */
++        x86_legacy_cpus_init(x86ms);
++    } else {
++        /* use non-legacy cpus */
++        x86_cpus_init(x86ms);
++    }
++}
++
+ /* ioapic.c */
+ 
+ GSIState *pc_gsi_create(qemu_irq **irqs, bool pci_enabled);
+diff --git a/include/hw/i386/x86.h b/include/hw/i386/x86.h
+index d43cb3908e..a90464f74b 100644
+--- a/include/hw/i386/x86.h
++++ b/include/hw/i386/x86.h
+@@ -114,7 +114,10 @@ void init_topo_info(X86CPUTopoInfo *topo_info, const X86MachineState *x86ms);
+ uint32_t x86_cpu_apic_id_from_index(X86MachineState *x86ms,
+                                     unsigned int cpu_index);
+ 
+-void x86_cpus_init(X86MachineState *pcms, int default_cpu_version);
++void x86_cpus_init(X86MachineState *pcms);
++void x86_legacy_cpus_init(X86MachineState *x86ms);
++void x86_cpus_init_with_latest_cpu_version(X86MachineState *x86ms);
++
+ void x86_rtc_set_cpus_count(ISADevice *rtc, uint16_t cpus_count);
+ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
+                       DeviceState *dev, Error **errp);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3725dbbc4b..14f5aa359b 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -191,6 +191,9 @@ struct CPUID2CacheDescriptorInfo cpuid2_cache_descriptors[] = {
+  */
+ #define CACHE_DESCRIPTOR_UNAVAILABLE 0xFF
+ 
++/* default cpu version to use */
++#define DEFAULT_CPU_VERSION 1
++
+ /*
+  * Return a CPUID 2 cache descriptor for a given cache.
+  * If no known descriptor is found, return CACHE_DESCRIPTOR_UNAVAILABLE
+@@ -5343,20 +5346,16 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+     },
+ };
+ 
+-/*
+- * We resolve CPU model aliases using -v1 when using "-machine
+- * none", but this is just for compatibility while libvirt isn't
+- * adapted to resolve CPU model versions before creating VMs.
+- * See "Runnability guarantee of CPU models" at
+- * docs/about/deprecated.rst.
+- */
+-X86CPUVersion default_cpu_version = 1;
++static bool use_legacy_cpu;
++void machine_uses_legacy_cpu(void)
++{
++    use_legacy_cpu = true;
++}
+ 
+-void x86_cpu_set_default_version(X86CPUVersion version)
++static bool use_last_cpu_version;
++void x86_cpu_uses_lastest_version(void)
+ {
+-    /* Translating CPU_VERSION_AUTO to CPU_VERSION_AUTO doesn't make sense */
+-    assert(version != CPU_VERSION_AUTO);
+-    default_cpu_version = version;
++    use_last_cpu_version = true;
+ }
+ 
+ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+@@ -5374,14 +5373,11 @@ static X86CPUVersion x86_cpu_model_last_version(const X86CPUModel *model)
+ /* Return the actual version being used for a specific CPU model */
+ static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
+ {
+-    X86CPUVersion v = model->version;
+-    if (v == CPU_VERSION_AUTO) {
+-        v = default_cpu_version;
+-    }
+-    if (v == CPU_VERSION_LATEST) {
++    if (use_last_cpu_version) {
+         return x86_cpu_model_last_version(model);
+     }
+-    return v;
++
++    return model->version;
+ }
+ 
+ static Property max_x86_cpu_properties[] = {
+@@ -5986,6 +5982,12 @@ static char *x86_cpu_class_get_alias_of(X86CPUClass *cc)
+     if (!cc->model || !cc->model->is_alias) {
+         return NULL;
+     }
++
++    if (use_legacy_cpu) {
++        /* legacy cpu models do not support cpu aliases */
++        return NULL;
++    }
++
+     version = x86_cpu_model_resolve_version(cc->model);
+     if (version <= 0) {
+         return NULL;
+@@ -6003,11 +6005,7 @@ static void x86_cpu_list_entry(gpointer data, gpointer user_data)
+     g_autofree char *model_id = x86_cpu_class_get_model_id(cc);
+ 
+     if (!desc && alias_of) {
+-        if (cc->model && cc->model->version == CPU_VERSION_AUTO) {
+-            desc = g_strdup("(alias configured by machine type)");
+-        } else {
+             desc = g_strdup_printf("(alias of %s)", alias_of);
+-        }
+     }
+     if (!desc && cc->model && cc->model->note) {
+         desc = g_strdup_printf("%s [%s]", model_id, cc->model->note);
+@@ -6114,7 +6112,7 @@ static void x86_cpu_definition_entry(gpointer data, gpointer user_data)
+      * Old machine types won't report aliases, so that alias translation
+      * doesn't break compatibility with previous QEMU versions.
+      */
+-    if (default_cpu_version != CPU_VERSION_LEGACY) {
++    if (!use_legacy_cpu) {
+         info->alias_of = x86_cpu_class_get_alias_of(cc);
+     }
+ 
+@@ -6288,7 +6286,7 @@ static void x86_cpu_apply_version_props(X86CPU *cpu, X86CPUModel *model)
+     const X86CPUVersionDefinition *vdef;
+     X86CPUVersion version = x86_cpu_model_resolve_version(model);
+ 
+-    if (version == CPU_VERSION_LEGACY) {
++    if (use_legacy_cpu) {
+         return;
+     }
+ 
+@@ -6318,7 +6316,7 @@ static const CPUCaches *x86_cpu_get_versioned_cache_info(X86CPU *cpu,
+     X86CPUVersion version = x86_cpu_model_resolve_version(model);
+     const CPUCaches *cache_info = model->cpudef->cache_info;
+ 
+-    if (version == CPU_VERSION_LEGACY) {
++    if (use_legacy_cpu) {
+         return cache_info;
+     }
+ 
+@@ -6453,7 +6451,7 @@ static void x86_register_cpudef_types(const X86CPUDefinition *def)
+     /* Unversioned model: */
+     m = g_new0(X86CPUModel, 1);
+     m->cpudef = def;
+-    m->version = CPU_VERSION_AUTO;
++    m->version = DEFAULT_CPU_VERSION;
+     m->is_alias = true;
+     x86_register_cpu_model_type(def->name, m);
+ 
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 4c239a6970..5ad80c8a97 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2658,28 +2658,15 @@ void cpu_report_tpr_access(CPUX86State *env, TPRAccess access);
+ void apic_handle_tpr_access_report(DeviceState *d, target_ulong ip,
+                                    TPRAccess access);
+ 
+-/* Special values for X86CPUVersion: */
+-
+-/* Resolve to latest CPU version */
+-#define CPU_VERSION_LATEST -1
+-
+-/*
+- * Resolve to version defined by current machine type.
+- * See x86_cpu_set_default_version()
+- */
+-#define CPU_VERSION_AUTO   -2
+-
+-/* Don't resolve to any versioned CPU models, like old QEMU versions */
+-#define CPU_VERSION_LEGACY  0
+-
+ typedef int X86CPUVersion;
+ 
+ /*
+- * Set default CPU model version for CPU models having
+- * version == CPU_VERSION_AUTO.
++ * Set CPU model version to the lastest version.
++ * Currently, this is only used by microvm.
+  */
+-void x86_cpu_set_default_version(X86CPUVersion version);
++void x86_cpu_uses_lastest_version(void);
+ 
++void machine_uses_legacy_cpu(void);
+ #ifndef CONFIG_USER_ONLY
+ 
+ void do_cpu_sipi(X86CPU *cpu);
+-- 
+2.45.2
+
 
