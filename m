@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48FEEE77173
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39F68E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKQ5i-0007Pl-DY; Sun, 08 Dec 2024 17:49:30 -0500
+	id 1tKQ5G-0007AZ-3n; Sun, 08 Dec 2024 17:49:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5N-0007DN-Mi
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:11 -0500
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1tKQ5C-00079F-VP
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:48:59 -0500
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5M-0006Gv-CA
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:09 -0500
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-71d40003870so1003046a34.0
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:49:07 -0800 (PST)
+ id 1tKQ5B-0006EF-KM
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:48:58 -0500
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-71d5862c1d1so1667203a34.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:48:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733698147; x=1734302947; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733698136; x=1734302936; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bZcHraMwog49FpjWBRy/5OvBtZMMG8nX2q4nrJkRJ4E=;
- b=KUXTFPUnJ3mYpFD8rolXON8FSOrsl4yt1cys4cWnspxaU8+ki1cwxmsYa+LZl3+yVX
- OzdNz3n71QZScLOX0YguMu+K4qTWW/A/qFl16ynLzcSp61XrMWWWkFAae9D5hIwSUlgH
- QWThEp0Qs1HP3CkEp2zrq29lGKOMcg6duzl2bin4yTEahlA6a82WnCGwdUDtjdjlpZ+Z
- 73FNkYh0+r5zJMiujkDh6OdAEJJtMOvNxRwCj03wGI7RuANtok5KWRfbKVJvbYg2BrnD
- wQ2G3PAew0pbIgOBx5oawNBHue63dlxII1y8RgLUAAPmL8DWnMplMUvH7E4ckBx9+hZR
- /bWA==
+ bh=8mYJt475jbhCjJ0U4k+fwEo51fziCsqJ4VlkijB6Ad0=;
+ b=l3p8eaBqNqCkPWH7gq6OQl62jNqf0SFfz692Dj9Bv3r4qUrMeNKbx3TIJotPRc+4z8
+ kfxZXtQyfS7/pu3dId2w2ocdfOk2DPDTQvIqbvx72SyAyxVSSQWDEyS3dIR2kfpNLgE0
+ cX8CWql0YqOA/DWYxH0RWF2jGuL+H3TcbpvbIonIrDqWg3xGV8gppV+EY4krb7FUpVeY
+ jSCIra603/n5yIce0bPux+5gAfH0UicGueByA415rAl9oLEXBE58KpAZ/vn+URyW/8VR
+ 5VgmdyFXGhPY+lZ0fsRkNUCYFzKKwujNsoETGRt3my6EXYHHcy+TyrJSuGpoVPvZo/RW
+ S7cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733698147; x=1734302947;
+ d=1e100.net; s=20230601; t=1733698136; x=1734302936;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bZcHraMwog49FpjWBRy/5OvBtZMMG8nX2q4nrJkRJ4E=;
- b=h1+RRircYvKxXl/ylH+PYTb/C+P57pdfxnUTVvzxfdYzGh/ZNR8OVSZwtkP3oTVpzV
- MusYQs9+F5jFQLena+VtZ1Nf+fst9HICv0o731NvTuxRmLhozt5GMlRBrNLQ8Jv1iT4+
- YFkNFb7YQySBwwtos/AkS7OtGcBKT1LD9aQx+LkyMgGFEO3iao/5jSVA80Zj/9x/QAi9
- 21vo/o1wrXdebIhb4jkQHYNzS1HHHsu3q9QI2npWIHqLiE3h/h3c9d5ZPT2EKzliSEcw
- 6UDQXaNAykqgfw0jZh50a4pdDvEpPfo0HcbzZdt4OYYhKqEkosAgQteFNkCg0Wl9UOc9
- Vu9Q==
-X-Gm-Message-State: AOJu0YwidJJIXCeAxsK6YcXVySbOsfXl3UHQVOH/8FfX9LaVM8Z182H3
- B0sewuHMXaMN40R4yZtucPSQUMn8og5qksMiOYbG+CgTCP6hHJblXsN95Wrl2GV8fCkW5Nl9qEh
- 543Le2Q==
-X-Gm-Gg: ASbGnctFE1iA6CZXUHyW+XP9VPkHUIjV5raL2k8bJvOBUM/Ec3HZCRSdxrVDo68yCuF
- HMttMuQ6M/AYiG418k/kljKZSF2CX4M0krqZItfjVH+5Df+dwfzsqA+EarEco7cQaKYfQOG9uJD
- nVeAo7WtvQKsVMR6A8RaEkgpfLoBX123wFEIpVIpX1YcZnD+OKhf6u9YMF7uh4Gk/v1MIKdpw5G
- tyh3eU0KhZPD7JnvcYfhJQDPIuUWDR7QbRkWzlPs/ZLtVGwhdD2lBm9NWkCnU38/bw0hD9vrvir
- uH72iWSbgG4Dqt2Dorm2DeBXbHkicsn9r+bb
-X-Google-Smtp-Source: AGHT+IGV3cEQGm049RUkepu7/hyLkoDYYAtJ6gCc16+xCmhLVyuEMh1KaKSKFF/pinfcVsFByotWVA==
-X-Received: by 2002:a05:6830:25c4:b0:71d:4488:19f2 with SMTP id
- 46e09a7af769-71dcf55937emr5427991a34.26.1733698147214; 
- Sun, 08 Dec 2024 14:49:07 -0800 (PST)
+ bh=8mYJt475jbhCjJ0U4k+fwEo51fziCsqJ4VlkijB6Ad0=;
+ b=ZyNCyXsbL+tYfOSNxdwdT4y7MM7xeMUtT61uSa4JEBUVvoPyArfjKDHHzjr/u3ZRb7
+ JTXyxrIwGX9IczFHNl/mdfAQOzt+aNCmIwasx5ne7xXXlbfk4ph+DeXZNL1K1GU8pE8L
+ JrwdZcECv05+XXqPXIpJPOkOJ+lElBbwQX2c63G1oLogy8cqxqBxbAa5LoaBVurxou1M
+ Wdtf4IFE0GGJO9AMMjR9CNQXmjEvGwem3jDefJdkmiQjvWMrMKd46ngdnHZEvuEGFlpi
+ t4/bUbi1bIjx9xVYusVgu+qifjHr1nTPVILpagb8sQZEtX2mZv5Uk33w2OdvLfbejC2q
+ 49Jw==
+X-Gm-Message-State: AOJu0YwPckRK43oOGNfhIk7rzLI5Csc/LZHn/Z/DJkEmNLfHXEVZzfZq
+ LsuLpl/euoSKVA5rzJqSIku9g+1VOrcnH0OaIJnRjbOJe5pKJg6f8/PT7FMgeOgDN+YivIkIbqP
+ NWjPBkw==
+X-Gm-Gg: ASbGncvtzvEv7dvUUQvYC/vna3T1ba5Chl7QffyrrH9E+mFUmRqqNyX2WdzhzM8w9H7
+ 8PGn7bmWvzXuagVuu8V/aT4xjE7w9koFguBQ+WXwT0AJspuoxJvB7HD3z188GI2Pbdf0yulOq6D
+ g7aXEzdGQdYGDSsUdOpTe7SSppkFWWEgkKCtWCDtzTzOoU+UR66nUIeBtkCZ+leEztnqrAF6iUv
+ bUZ2yeIa94oJR79VQf4WUj64fXiHUaanin8zTv66yKy31BMoMI3EyilN/XoHB0ckDn+wpUcGIPb
+ QDna1bmx8YbmJzlwsgQZV9x4ISwVsXmec5/q
+X-Google-Smtp-Source: AGHT+IEUu3pwNI4Vf9YU5E5UMVxB/SLwDS/b+G71mrM1HHoLji+rMZyDX0cmhQnWGv5eZtqRGvm6KA==
+X-Received: by 2002:a05:6830:6208:b0:71d:4d3b:bdba with SMTP id
+ 46e09a7af769-71dcf54911dmr5967010a34.20.1733698136592; 
+ Sun, 08 Dec 2024 14:48:56 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.49.06
+ 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.48.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Dec 2024 14:49:06 -0800 (PST)
+ Sun, 08 Dec 2024 14:48:56 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: bcain@oss.qualcomm.com, peter.maydell@linaro.org,
  mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 17/17] target/hexagon: Simplify internal_mpyhh setup
-Date: Sun,  8 Dec 2024 16:48:44 -0600
-Message-ID: <20241208224844.570491-18-richard.henderson@linaro.org>
+Subject: [PATCH 08/17] target/hexagon: Use float32_muladd for helper_sffma
+Date: Sun,  8 Dec 2024 16:48:35 -0600
+Message-ID: <20241208224844.570491-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241208224844.570491-1-richard.henderson@linaro.org>
 References: <20241208224844.570491-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,27 +100,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize x with accumulated via direct assignment,
-rather than multiplying by 1.
+There are no special cases for this instruction.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/fma_emu.c | 2 +-
+ target/hexagon/op_helper.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/hexagon/fma_emu.c b/target/hexagon/fma_emu.c
-index 6749538c09..bc6e742639 100644
---- a/target/hexagon/fma_emu.c
-+++ b/target/hexagon/fma_emu.c
-@@ -453,7 +453,7 @@ float64 internal_mpyhh(float64 a, float64 b,
-         float64_is_infinity(b)) {
-         return float64_mul(a, b, fp_status);
-     }
--    x.mant = int128_mul_6464(accumulated, 1);
-+    x.mant = int128_make64(accumulated);
-     x.sticky = sticky;
-     prod = fGETUWORD(1, float64_getmant(a)) * fGETUWORD(1, float64_getmant(b));
-     x.mant = int128_add(x.mant, int128_mul_6464(prod, 0x100000000ULL));
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index b8b556f4c6..7d459cc6f3 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -1166,7 +1166,7 @@ float32 HELPER(sffma)(CPUHexagonState *env, float32 RxV,
+                       float32 RsV, float32 RtV)
+ {
+     arch_fpop_start(env);
+-    RxV = internal_fmafx(RsV, RtV, RxV, 0, &env->fp_status);
++    RxV = float32_muladd(RsV, RtV, RxV, 0, &env->fp_status);
+     arch_fpop_end(env);
+     return RxV;
+ }
 -- 
 2.43.0
 
