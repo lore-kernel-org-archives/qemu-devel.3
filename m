@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C042E77173
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 17:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D7D4E77173
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 18:03:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKLR8-0004Rf-F3; Sun, 08 Dec 2024 12:51:18 -0500
+	id 1tKLax-0006jf-G3; Sun, 08 Dec 2024 13:01:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKLR6-0004RH-Bv
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 12:51:16 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKLat-0006jD-1S
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 13:01:25 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKLR4-000136-N1
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 12:51:15 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385e0e224cbso1834379f8f.2
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 09:51:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKLar-00027P-69
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 13:01:22 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4349f160d62so23989785e9.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 10:01:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733680272; x=1734285072; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733680879; x=1734285679; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=71d1mY10sg/LRTcH6FrFAgM2tie7gD68/ik9cYyA/8g=;
- b=F4iIvBNd3GnHPiYYbaoN4jc/hJRdlb6cCN7i03VhWc9YWStcKBHtWCOsfx/miXmumT
- YYp1/pOakdLYO8XAziV5oPo4I/zAFQO9OB9wJTXcpFsE+1QhtasCIlsN9dckuLcGF37K
- ezdUAjkuInbm4z4FPUckBY1nMKkWuzvNSA46AAzBKsbMMwqyrn1c0AQyfGMnRIlV92yp
- OPt7NKkoaO3fIxZEzB0LcdEIbQ2UDtESWGJX8jsxo7azOIW4OA/0UNX+cVloBltA0rbl
- nlCCCUNhuir9k5vP9M+EByP5K5qKwXCnr3ptTiRgGn67P196KIf/xEvk5ixrb7/HsTf8
- 3nYQ==
+ bh=8Mx4RyYxAJDnRnqET8fH32LPN9niMLi8X04oM/Vrlyo=;
+ b=oR++gYoUkY0sQJRW7PNN/pcClj68dyOjUd2tM56hctzcVtQkiaGs3Mo2urPT0dUw8q
+ XZ05BrieJ19RA5SZTK+FWXZFD9KzkIwiSFF0OQhj1+p5o630ckS9LSHV3wt3g/QN0SLx
+ lQBsVSg9hTVNOR08nlfi2a66lXnzQNJBA7r4KSC39yGINIc4DEfpqGsOKihCrTzaHNdO
+ tqMIPaKv2hFGZMiqPi6Uh3kuBAU8oQQfyueFGN6BXjdTvQyFj9trdC7NS0LtPHgz+cT1
+ uBBTCXiKmb09m/ImQN4p+/pgK+I1xu8foV/9IymSNXABklFbrSZAfz03ZdttcH2YimPh
+ qj8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733680272; x=1734285072;
+ d=1e100.net; s=20230601; t=1733680879; x=1734285679;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=71d1mY10sg/LRTcH6FrFAgM2tie7gD68/ik9cYyA/8g=;
- b=EHBkvBGLldG8lT6rWoEYjRxG/C+wQOZA4MaJ17ubPvqWRipF8n1xxSWVu8epdBqt2d
- vTdK5bWmackf4N2MJ51dSuBX6uSMKCKM+y961PS6f76Ll59wMkpn9A2YXGatoTf7hpqS
- ymreOoAs0Z8SQ7k4qE+XS1zxmdA2Hm7ZZeKse0KFDcqU0ZH1UfHC7j1B9PJYvufbXZEY
- 7J0smajODT88t8AglttlhYDshh2dQCTdlR90BRJ05PUzuZMsuOoMzAcl9R91L5m08D8T
- aPHQdZDH2Mw1m4Y1V48urSSGo6VysoIUOW5k++zE4pEtgeCtWlAzgam6PrupA2Rf1ZsO
- u2MQ==
+ bh=8Mx4RyYxAJDnRnqET8fH32LPN9niMLi8X04oM/Vrlyo=;
+ b=B8Q2vX81wr4SIv2FO+0Cx4jTZ68LMn/Hg3ksvaeygdnb+MgTFxQA0VJl4oEBRnW5v5
+ blmUkkFdWpvSPr8BkoPymm8VDnKwvIi/USCF8IQLFclroegqtbwWN+RspmqbvGSK0/CB
+ C4o4HkIMioW6mJ7HjIumH2kUTGWWmuqN9/00PsXt/G/ulQoEVsEng8/FvePDARNffzn7
+ 72XNvbUzxrKeIHrv7zz6JOueaq5BuRSkOpIrjCmIjTPT+7ht1wVbdV9hs4PBhMKVPHht
+ qq4dj9jFteJ0bhc54MlLJsqp5tj6Hk3uQZgW6BTh2v7F8Pgd1jhn+b+pFGiYtw4BT55v
+ FUug==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVRliBcW0JyvvMejXfaySwAo8j55NvYuiVG+4jQzTkbZ5qfqR5wh9BykY7JIHTfBKg/Ol2cHZgExzcx@nongnu.org
-X-Gm-Message-State: AOJu0YxpcO1PRW/K2M8I5WTbdj51BMeJ3VCAKZ54KtttIinMDClVr2qh
- KTiXf9QRVk8WwkjF0hoFXlZbm824uYgWbiWaJ/FgVWgJ1j0LFkh89jqFzJ44Fb8=
-X-Gm-Gg: ASbGncu5U36inlucFi7B4AAkE6A7CwHlcxctzRBgwbP79qzjtpuh6knzgDrPBnQ6XMx
- K5K2XbbRd3sp/l8N7QXMGVcTE4I2VI3FDosIoW4bURELkGZv93F1s1Gtd+Ot7Uz6VE+afvxsclN
- RNQPjvQRLCoySKGdgDXC+cz0wB4TlJ1288I86rFRSApfbejqNfGtyN26FBaP2dgfadunNaQOjP2
- AOBhAE91WRdLtWpXO6PDZgK5GXWZluGBcH5y4o2d0/jmGINWt1K0pMfRWtugD4Od0N2axjHRbSk
- U5tMOBC6FGCtk5FVhlSHr2+DDf4KjdID
-X-Google-Smtp-Source: AGHT+IE7T0xgRofUmq2PNTXu28mU9daxrqRsK3NjneeoAHasbzLkOVcmAaPxYUziD4+kaoIFfIBthQ==
-X-Received: by 2002:a5d:64ec:0:b0:386:1ab1:ee34 with SMTP id
- ffacd0b85a97d-3862b3351b4mr7488642f8f.9.1733680272310; 
- Sun, 08 Dec 2024 09:51:12 -0800 (PST)
+ AJvYcCXm6tGhZkexGj/pqJI+WY2MfHGsVWbkqe6cR243jfgtbzL0sm5ssDv44uSECxKmtFz7yQRwG04EZQsl@nongnu.org
+X-Gm-Message-State: AOJu0Ywbdhbodf8bpXa4Ouur4p7PKpnz9H4agIA7/K6T2fyf5e2qw88S
+ q1XWJgoam3yrg50x6me1gaABAkdvOedGRybsEmTt7HgZHfDthJQSeJ4oyoMTBEY=
+X-Gm-Gg: ASbGncsnIYQCh/dVyTZ48ncmzQYl7VvHvMCloki2awwRqPP87+YLZg7e7YB8OT3BsBc
+ LGjgJSDKkpw2zq1/ps4UYP+7v5c2hcYTIbQghm9fNZNZitSvei/T82BFBqc3RbPjF5PWdILMHg3
+ YVeB1QALTkJvgCgyDFJuDpUVM/kNBAazyqHEAK3Tt3EPc+EFy1VgvNEYOAPszbdkRbkhtswzZNq
+ qIqjf5DkmLcFUMyVfVPz1QrrS6y+eCuvfB/aSs9liSYR56ApilKqAsbz7GgqMjYh8MOiRYgXm9J
+ hPJw7vu97Po8G6prObkbAnkYrbru0SQL
+X-Google-Smtp-Source: AGHT+IGwuUdUb2bAngBsm5fOtvePD4seVG+J8p+bi8xZOLYALL6tlytZmOIoEY42HmDjVCdfPRJmnw==
+X-Received: by 2002:a05:6000:793:b0:385:ef39:6ce9 with SMTP id
+ ffacd0b85a97d-3862b351418mr6969317f8f.21.1733680879336; 
+ Sun, 08 Dec 2024 10:01:19 -0800 (PST)
 Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-386219095d3sm10764636f8f.71.2024.12.08.09.51.11
+ ffacd0b85a97d-386336328e6sm5651533f8f.67.2024.12.08.10.01.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Dec 2024 09:51:11 -0800 (PST)
-Message-ID: <9dfada41-b04b-40e5-9c9b-0e35b860e507@linaro.org>
-Date: Sun, 8 Dec 2024 18:51:10 +0100
+ Sun, 08 Dec 2024 10:01:18 -0800 (PST)
+Message-ID: <73f7357a-fe49-4cbd-8492-cb4ac7ed312a@linaro.org>
+Date: Sun, 8 Dec 2024 19:01:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/9] target/arm: Introduce fpst alias for helper.h
+Subject: Re: [PATCH] tcg: Reset free_temps before tcg_optimize
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-References: <20241206031224.78525-1-richard.henderson@linaro.org>
- <20241206031224.78525-2-richard.henderson@linaro.org>
- <79b8fdc6-bbae-4068-ab29-08e32cfcc058@linaro.org>
+Cc: peter.maydell@linaro.org, qemu-stable@nongnu.org,
+ wannacu <wannacu2049@gmail.com>
+References: <20241207214700.211066-1-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <79b8fdc6-bbae-4068-ab29-08e32cfcc058@linaro.org>
+In-Reply-To: <20241207214700.211066-1-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,29 +101,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/12/24 22:56, Richard Henderson wrote:
-> On 12/5/24 21:12, Richard Henderson wrote:
->> This allows us to declare that the helper requires
->> a float_status pointer and not a generic void pointer.
->>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/helper.h | 4 ++++
->>   1 file changed, 4 insertions(+)
->>
->> diff --git a/target/arm/helper.h b/target/arm/helper.h
->> index 9919b1367b..cb722c491b 100644
->> --- a/target/arm/helper.h
->> +++ b/target/arm/helper.h
->> @@ -1,3 +1,7 @@
->> +#define dh_alias_fpst ptr
->> +#define dh_ctype_fpst float_status *
->> +#define dh_typecode_fpst dh_typecode_ptr
->> +
->>   DEF_HELPER_FLAGS_1(sxtb16, TCG_CALL_NO_RWG_SE, i32, i32)
->>   DEF_HELPER_FLAGS_1(uxtb16, TCG_CALL_NO_RWG_SE, i32, i32)
+On 7/12/24 22:47, Richard Henderson wrote:
+> When allocating new temps during tcg_optmize, do not re-use
+> any EBB temps that were used within the TB.  We do not have
+> any idea what span of the TB in which the temp was live.
 > 
-> This should go into include/exec/helper-head.h for use by all targets.
+> Cc: qemu-stable@nongnu.org
+> Fixes: fb04ab7ddd8 ("tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported")
 
-Oh, indeed. R-b stands.
+Hmm, the problem is due to arg_new_temp()?
+
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2711
+> Reported-by: wannacu <wannacu2049@gmail.com>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+> 
+> Unless there's some other reason to spin an -rc4, this can wait
+> to be the first patch for 10.0.1.
+> 
+> r~
+> 
+> ---
+>   tcg/tcg.c | 3 +++
+>   1 file changed, 3 insertions(+)
+> 
+> diff --git a/tcg/tcg.c b/tcg/tcg.c
+> index 0babae1b88..eece825e2e 100644
+> --- a/tcg/tcg.c
+> +++ b/tcg/tcg.c
+> @@ -6120,6 +6120,9 @@ int tcg_gen_code(TCGContext *s, TranslationBlock *tb, uint64_t pc_start)
+>       }
+>   #endif
+>   
+> +    /* Do not reuse any EBB that may be allocated within the TB. */
+> +    memset(s->free_temps, 0, sizeof(s->free_temps));
+
+Maybe add as tcg_temp_[ebb]_[reset|flush]() helper so we can reuse,
+like in tcg_func_start() and plugin_gen_inject()?
+
+>       tcg_optimize(s);
+>   
+>       reachable_code_pass(s);
+
 
