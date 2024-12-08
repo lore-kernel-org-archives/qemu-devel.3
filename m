@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AC98E7717F
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:51:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09191E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKQ5L-0007Ch-LS; Sun, 08 Dec 2024 17:49:07 -0500
+	id 1tKQ5I-0007BZ-0G; Sun, 08 Dec 2024 17:49:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5J-0007C4-Kl
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:05 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1tKQ5G-0007Aq-In
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:02 -0500
+Received: from mail-oo1-xc30.google.com ([2607:f8b0:4864:20::c30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5H-0006Ff-KV
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:05 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-71de7b9d4f4so246415a34.2
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:49:03 -0800 (PST)
+ id 1tKQ5F-0006F8-08
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:02 -0500
+Received: by mail-oo1-xc30.google.com with SMTP id
+ 006d021491bc7-5f2b7a0387fso92037eaf.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:49:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733698142; x=1734302942; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733698140; x=1734302940; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9Y0A1gv0BAn4m7bTh6rSrOLuj4Co5Ym2ALez6VlQLvI=;
- b=i+R0P7fwZfPHtkIn/zDQGhjrks9GVMg5sABNAQ5U3e2Ac2XkGzwNv4ncpIiMNuX7RY
- 5RtLlNflTHyINMdDBEM1zjUp9tjWYBBmLNUE5KJFz8DdTczHIdIDd0J0Xhh4qp+89K7U
- XoOwWPLgMDRH32ThwdHMBPtrDbFY8N0nqwbNB1N+dBL67U+Fo3d3bO9PWdjuFSMVWmqR
- 7iFoU3nw7/A8g3u9rUYYMYp5uOOMk/M4SsAjckNirKSuRult4MNmppfff9osUKKjJ6TU
- 5Yc6SfwgCYmLE5MTiDfJumSsKLN9DsLhfR5A+mUGibJuk2Xgm7s9XLQUQ3aDpHRB9buK
- U8Nw==
+ bh=CGZ76CCO0E3ZRsJCJ0kN8XjjsbJn0MKiDssAdNgeYtw=;
+ b=QUem7bu1jQqlCFBWjU8pKNvLhKcMfqyny0qKtf5pJMmWyyLga3b10iwEoFjFYUgkiS
+ eAoupC8dssd/KR/KikxpFuPobc9gwWi7O2cXstd3BmvgVNtOtiPLi/OM09063tzg1WAo
+ su+BLhqrvxA3qwhM5knxmz9AaNvdUPCj/d6SvQhNsbhzdcuLidzcRtQd3+Eg4T5ocj2L
+ H7byHFey2sC3ONSiW5XRfLHDzdwQf6H8scSl68PdnizG4hMREINGWP5l2uy5deCc+we6
+ JCrsANLLFvb6aZGCWLdDX7QxUolB/RA1Lkx+HQn3mV9kkf1xGZ8reFQqzNjjtugqwKVI
+ hsOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733698142; x=1734302942;
+ d=1e100.net; s=20230601; t=1733698140; x=1734302940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9Y0A1gv0BAn4m7bTh6rSrOLuj4Co5Ym2ALez6VlQLvI=;
- b=xH8dRsy+ve7oxCM/p6OqnVtKSruByONjyBEZ47T1uX7nl+vxZkYtlR+qqypatxRtlK
- q9DWsyNTZA6+D4VOvBubLwaZu3qhAnu0aQY9jVTW2lCughjYP66aWKE1yApO/8tngpZL
- c5kLWoSvQc4Z6cYw1mc/Isl7F90PK5hFTH8isCf9rSl/k5aBMr/3E/Hk3HCINpCXGv57
- axk4YefC+a8IFQNeBWTmDC6VLAatByo/tJXZOs2cn6H5v5r9z235xurXgt1zTxiG11lN
- +c4vfP9YudixO3xOOqy6LKtUeuvO378IsLzAAMo+vjmdrQrQuSWTjbDo8oh7R1XoFF8T
- AmWA==
-X-Gm-Message-State: AOJu0Yzo/ZMCClz1D6wH1t9jVpQLp/eCedsSRvV7D33RNJXKIf7nIjM7
- CNypVoric82BhnT1kEMG+eTMqOhrcScCHiasgOnY3j7LG5g5DX5nYM9+kOJyGNtTO45fIbHwZ1o
- E6kBbYg==
-X-Gm-Gg: ASbGncvhK/sk0qvz6tNYPPlu6fbA/TgPtv/XQao8phdbL7wRV8zxKe9Vj9ZLMl/tNQI
- 88dpmRUxOrtEZ3c8nsCIUYIM+pstiRiNELbJsA6YFYFmT1Vf/OdZY9Iyh1rl6hFVbnGo4bp+s5x
- 0A5080uf0k4uoKfjoAzSYV+kQ7SpilpCOJvbqxstXOsCTeqJ+QWxTRbI3pUSe4hrhyj/o7asPEh
- +X7LUtiuJDymC0OZbX71gfw36Y1qGm/X20EElTouF2EfXLZijGum3FcDV17AsHHAEdc062ucSNH
- vxzWWtnvFkcLHFFyY71sxzMQC4MHJYPN0qDx
-X-Google-Smtp-Source: AGHT+IGUVzw1oRp4ehl01bFZPiekHomE6JS6GZP7zB44IpYnOhITU6Zj/CCvFws497tk4xMukUpOUw==
-X-Received: by 2002:a05:6808:3012:b0:3e8:1ed7:e6cf with SMTP id
- 5614622812f47-3eb19c004aamr5545414b6e.7.1733698142464; 
- Sun, 08 Dec 2024 14:49:02 -0800 (PST)
+ bh=CGZ76CCO0E3ZRsJCJ0kN8XjjsbJn0MKiDssAdNgeYtw=;
+ b=Vk6ARzqA1cUbfKUqTqmFqdM9D2pJ3+UCkzZz8xU/LhLuahEaXAUw/o75mGa0opuV+a
+ QttLGuUimyiQ04rBqgOtzPHCaowAlkB2gSNGJTKcazuKi4XqOqscX8P6Y7jjUQ6YLjYb
+ JJ5pXetv8iJwflb/xGo0Sg1s+eTDUazipmMB4ZgpGWJklOc2/SRax+BPzNzSlo6Ksil2
+ NduEL2zKFozoLvDPkFB8C1f2yOqE0ieMSTMI4O8GjFNk8xgpitPHtevqHJ6gxG7kZKsf
+ aViUCGu7GPoY8RY1qGPsN6qnfMoqg35/L+nrX6gt+j9L6Kq5nRP5eSKH7MHLe270zgRi
+ ctgQ==
+X-Gm-Message-State: AOJu0Ywf/DCi6+D0KoDxmoHzaPLMsv5zCSLsxd6YN67yZx9G6nLBFIR8
+ PyABCgzgeaub85cM0E9sNXPHFP3QyBFaxphdBLlO5YLo9J9rYkgKUDlUa9EzHBSnLwZrBw0o7qr
+ Z9lz+oA==
+X-Gm-Gg: ASbGnct/0reVt1um4U/7AWcG0PX10BMHBrqOkytqpSFF1Djoq0+sivfE20U5sniG2rj
+ kJrSFOY3aIDEdAfStY6jquYLk5as1rZDfpV7JQy+1YzazXqs6iw7KNNMzdGhUsKgqGyTEAPrlo1
+ oaGQohCoJIN968+z7syD+EFTcqIrvf2JB1xgyba9fC2eZwPa9od3rwZG/vKb7x4JZXMTuXFye6O
+ NGRrpW3sCDHZW3W1Oj/nyxpr8dKtn/bvzaPfizKLbXBGWmqJN90kYhfX3dcxqXJdfdbi/ALYHKn
+ RMqNJmbuY7lUuk1GjlYQfAXFCg/msarrp2om
+X-Google-Smtp-Source: AGHT+IEb4H/Gj1x4FaPpM2hNfpifo9gCeabr3/DeMgcBpLma2CCOjQSlnEfSS4XB6j6Jkhng6mL1YQ==
+X-Received: by 2002:a05:6820:552:b0:5f2:a054:9e65 with SMTP id
+ 006d021491bc7-5f2a0549e8amr2743782eaf.8.1733698139917; 
+ Sun, 08 Dec 2024 14:48:59 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.49.01
+ 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.48.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Dec 2024 14:49:02 -0800 (PST)
+ Sun, 08 Dec 2024 14:48:59 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: bcain@oss.qualcomm.com, peter.maydell@linaro.org,
  mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 13/17] target/hexagon: Expand GEN_XF_ROUND
-Date: Sun,  8 Dec 2024 16:48:40 -0600
-Message-ID: <20241208224844.570491-14-richard.henderson@linaro.org>
+Subject: [PATCH 11/17] target/hexagon: Use float32_muladd for
+ helper_sffm[as]_lib
+Date: Sun,  8 Dec 2024 16:48:38 -0600
+Message-ID: <20241208224844.570491-12-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241208224844.570491-1-richard.henderson@linaro.org>
 References: <20241208224844.570491-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,280 +101,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This massive macro is now only used once.
-Expand it for use only by float64.
+There are multiple special cases for this instruction.
+(1) The saturate to normal maximum instead of overflow to infinity is
+    handled by the new float_round_nearest_even_max rounding mode.
+(2) The 0 * n + c special case is handled by the new
+    float_muladd_suppress_add_product_zero flag.
+(3) The Inf - Inf -> 0 special case can be detected after the fact
+    by examining float_flag_invalid_isi.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/fma_emu.c | 253 +++++++++++++++++++--------------------
- 1 file changed, 125 insertions(+), 128 deletions(-)
+ target/hexagon/op_helper.c | 105 +++++++++----------------------------
+ 1 file changed, 26 insertions(+), 79 deletions(-)
 
-diff --git a/target/hexagon/fma_emu.c b/target/hexagon/fma_emu.c
-index 0c7c7f636c..bce3bd4dfb 100644
---- a/target/hexagon/fma_emu.c
-+++ b/target/hexagon/fma_emu.c
-@@ -354,136 +354,133 @@ float32 infinite_float32(uint8_t sign)
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index eb010422bf..26e329f7b9 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -1171,24 +1171,6 @@ float32 HELPER(sffma)(CPUHexagonState *env, float32 RxV,
+     return RxV;
  }
  
- /* Return a maximum finite value with the requested sign */
--#define GEN_XF_ROUND(SUFFIX, MANTBITS, INF_EXP, INTERNAL_TYPE) \
--static SUFFIX accum_round_##SUFFIX(Accum a, float_status * fp_status) \
--{ \
--    if ((int128_gethi(a.mant) == 0) && (int128_getlo(a.mant) == 0) \
--        && ((a.guard | a.round | a.sticky) == 0)) { \
--        /* result zero */ \
--        switch (fp_status->float_rounding_mode) { \
--        case float_round_down: \
--            return zero_##SUFFIX(1); \
--        default: \
--            return zero_##SUFFIX(0); \
--        } \
--    } \
--    /* Normalize right */ \
--    /* We want MANTBITS bits of mantissa plus the leading one. */ \
--    /* That means that we want MANTBITS+1 bits, or 0x000000000000FF_FFFF */ \
--    /* So we need to normalize right while the high word is non-zero and \
--    * while the low word is nonzero when masked with 0xffe0_0000_0000_0000 */ \
--    while ((int128_gethi(a.mant) != 0) || \
--           ((int128_getlo(a.mant) >> (MANTBITS + 1)) != 0)) { \
--        a = accum_norm_right(a, 1); \
--    } \
--    /* \
--     * OK, now normalize left \
--     * We want to normalize left until we have a leading one in bit 24 \
--     * Theoretically, we only need to shift a maximum of one to the left if we \
--     * shifted out lots of bits from B, or if we had no shift / 1 shift sticky \
--     * should be 0  \
--     */ \
--    while ((int128_getlo(a.mant) & (1ULL << MANTBITS)) == 0) { \
--        a = accum_norm_left(a); \
--    } \
--    /* \
--     * OK, now we might need to denormalize because of potential underflow. \
--     * We need to do this before rounding, and rounding might make us normal \
--     * again \
--     */ \
--    while (a.exp <= 0) { \
--        a = accum_norm_right(a, 1 - a.exp); \
--        /* \
--         * Do we have underflow? \
--         * That's when we get an inexact answer because we ran out of bits \
--         * in a denormal. \
--         */ \
--        if (a.guard || a.round || a.sticky) { \
--            float_raise(float_flag_underflow, fp_status); \
--        } \
--    } \
--    /* OK, we're relatively canonical... now we need to round */ \
--    if (a.guard || a.round || a.sticky) { \
--        float_raise(float_flag_inexact, fp_status); \
--        switch (fp_status->float_rounding_mode) { \
--        case float_round_to_zero: \
--            /* Chop and we're done */ \
--            break; \
--        case float_round_up: \
--            if (a.sign == 0) { \
--                a.mant = int128_add(a.mant, int128_one()); \
--            } \
--            break; \
--        case float_round_down: \
--            if (a.sign != 0) { \
--                a.mant = int128_add(a.mant, int128_one()); \
--            } \
--            break; \
--        default: \
--            if (a.round || a.sticky) { \
--                /* round up if guard is 1, down if guard is zero */ \
--                a.mant = int128_add(a.mant, int128_make64(a.guard)); \
--            } else if (a.guard) { \
--                /* exactly .5, round up if odd */ \
--                a.mant = int128_add(a.mant, int128_and(a.mant, int128_one())); \
--            } \
--            break; \
--        } \
--    } \
--    /* \
--     * OK, now we might have carried all the way up. \
--     * So we might need to shr once \
--     * at least we know that the lsb should be zero if we rounded and \
--     * got a carry out... \
--     */ \
--    if ((int128_getlo(a.mant) >> (MANTBITS + 1)) != 0) { \
--        a = accum_norm_right(a, 1); \
--    } \
--    /* Overflow? */ \
--    if (a.exp >= INF_EXP) { \
--        /* Yep, inf result */ \
--        float_raise(float_flag_overflow, fp_status); \
--        float_raise(float_flag_inexact, fp_status); \
--        switch (fp_status->float_rounding_mode) { \
--        case float_round_to_zero: \
--            return maxfinite_##SUFFIX(a.sign); \
--        case float_round_up: \
--            if (a.sign == 0) { \
--                return infinite_##SUFFIX(a.sign); \
--            } else { \
--                return maxfinite_##SUFFIX(a.sign); \
--            } \
--        case float_round_down: \
--            if (a.sign != 0) { \
--                return infinite_##SUFFIX(a.sign); \
--            } else { \
--                return maxfinite_##SUFFIX(a.sign); \
--            } \
--        default: \
--            return infinite_##SUFFIX(a.sign); \
--        } \
--    } \
--    /* Underflow? */ \
--    if (int128_getlo(a.mant) & (1ULL << MANTBITS)) { \
--        /* Leading one means: No, we're normal. So, we should be done... */ \
--        INTERNAL_TYPE ret; \
--        ret.i = 0; \
--        ret.sign = a.sign; \
--        ret.exp = a.exp; \
--        ret.mant = int128_getlo(a.mant); \
--        return ret.i; \
--    } \
--    assert(a.exp == 1); \
--    INTERNAL_TYPE ret; \
--    ret.i = 0; \
--    ret.sign = a.sign; \
--    ret.exp = 0; \
--    ret.mant = int128_getlo(a.mant); \
--    return ret.i; \
-+static float64 accum_round_float64(Accum a, float_status * fp_status)
-+{
-+    if ((int128_gethi(a.mant) == 0) && (int128_getlo(a.mant) == 0)
-+        && ((a.guard | a.round | a.sticky) == 0)) {
-+        /* result zero */
-+        switch (fp_status->float_rounding_mode) {
-+        case float_round_down:
-+            return zero_float64(1);
-+        default:
-+            return zero_float64(0);
-+        }
-+    }
-+    /* Normalize right */
-+    /* We want DF_MANTBITS bits of mantissa plus the leading one. */
-+    /* That means that we want DF_MANTBITS+1 bits, or 0x000000000000FF_FFFF */
-+    /* So we need to normalize right while the high word is non-zero and
-+    * while the low word is nonzero when masked with 0xffe0_0000_0000_0000 */
-+    while ((int128_gethi(a.mant) != 0) ||
-+           ((int128_getlo(a.mant) >> (DF_MANTBITS + 1)) != 0)) {
-+        a = accum_norm_right(a, 1);
-+    }
-+    /*
-+     * OK, now normalize left
-+     * We want to normalize left until we have a leading one in bit 24
-+     * Theoretically, we only need to shift a maximum of one to the left if we
-+     * shifted out lots of bits from B, or if we had no shift / 1 shift sticky
-+     * should be 0
-+     */
-+    while ((int128_getlo(a.mant) & (1ULL << DF_MANTBITS)) == 0) {
-+        a = accum_norm_left(a);
-+    }
-+    /*
-+     * OK, now we might need to denormalize because of potential underflow.
-+     * We need to do this before rounding, and rounding might make us normal
-+     * again
-+     */
-+    while (a.exp <= 0) {
-+        a = accum_norm_right(a, 1 - a.exp);
-+        /*
-+         * Do we have underflow?
-+         * That's when we get an inexact answer because we ran out of bits
-+         * in a denormal.
-+         */
-+        if (a.guard || a.round || a.sticky) {
-+            float_raise(float_flag_underflow, fp_status);
-+        }
-+    }
-+    /* OK, we're relatively canonical... now we need to round */
-+    if (a.guard || a.round || a.sticky) {
-+        float_raise(float_flag_inexact, fp_status);
-+        switch (fp_status->float_rounding_mode) {
-+        case float_round_to_zero:
-+            /* Chop and we're done */
-+            break;
-+        case float_round_up:
-+            if (a.sign == 0) {
-+                a.mant = int128_add(a.mant, int128_one());
-+            }
-+            break;
-+        case float_round_down:
-+            if (a.sign != 0) {
-+                a.mant = int128_add(a.mant, int128_one());
-+            }
-+            break;
-+        default:
-+            if (a.round || a.sticky) {
-+                /* round up if guard is 1, down if guard is zero */
-+                a.mant = int128_add(a.mant, int128_make64(a.guard));
-+            } else if (a.guard) {
-+                /* exactly .5, round up if odd */
-+                a.mant = int128_add(a.mant, int128_and(a.mant, int128_one()));
-+            }
-+            break;
-+        }
-+    }
-+    /*
-+     * OK, now we might have carried all the way up.
-+     * So we might need to shr once
-+     * at least we know that the lsb should be zero if we rounded and
-+     * got a carry out...
-+     */
-+    if ((int128_getlo(a.mant) >> (DF_MANTBITS + 1)) != 0) {
-+        a = accum_norm_right(a, 1);
-+    }
-+    /* Overflow? */
-+    if (a.exp >= DF_INF_EXP) {
-+        /* Yep, inf result */
-+        float_raise(float_flag_overflow, fp_status);
-+        float_raise(float_flag_inexact, fp_status);
-+        switch (fp_status->float_rounding_mode) {
-+        case float_round_to_zero:
-+            return maxfinite_float64(a.sign);
-+        case float_round_up:
-+            if (a.sign == 0) {
-+                return infinite_float64(a.sign);
-+            } else {
-+                return maxfinite_float64(a.sign);
-+            }
-+        case float_round_down:
-+            if (a.sign != 0) {
-+                return infinite_float64(a.sign);
-+            } else {
-+                return maxfinite_float64(a.sign);
-+            }
-+        default:
-+            return infinite_float64(a.sign);
-+        }
-+    }
-+    /* Underflow? */
-+    if (int128_getlo(a.mant) & (1ULL << DF_MANTBITS)) {
-+        /* Leading one means: No, we're normal. So, we should be done... */
-+        Double ret;
-+        ret.i = 0;
-+        ret.sign = a.sign;
-+        ret.exp = a.exp;
-+        ret.mant = int128_getlo(a.mant);
-+        return ret.i;
-+    }
-+    assert(a.exp == 1);
-+    Double ret;
-+    ret.i = 0;
-+    ret.sign = a.sign;
-+    ret.exp = 0;
-+    ret.mant = int128_getlo(a.mant);
-+    return ret.i;
- }
- 
--GEN_XF_ROUND(float64, DF_MANTBITS, DF_INF_EXP, Double)
+-static bool is_zero_prod(float32 a, float32 b)
+-{
+-    return ((float32_is_zero(a) && is_finite(b)) ||
+-            (float32_is_zero(b) && is_finite(a)));
+-}
 -
- float64 internal_mpyhh(float64 a, float64 b,
-                       unsigned long long int accumulated,
-                       float_status *fp_status)
+-static float32 check_nan(float32 dst, float32 x, float_status *fp_status)
+-{
+-    float32 ret = dst;
+-    if (float32_is_any_nan(x)) {
+-        if (extract32(x, 22, 1) == 0) {
+-            float_raise(float_flag_invalid, fp_status);
+-        }
+-        ret = make_float32(0xffffffff);    /* nan */
+-    }
+-    return ret;
+-}
+-
+ float32 HELPER(sffma_sc)(CPUHexagonState *env, float32 RxV,
+                          float32 RsV, float32 RtV, float32 PuV)
+ {
+@@ -1210,78 +1192,43 @@ float32 HELPER(sffms)(CPUHexagonState *env, float32 RxV,
+     return RxV;
+ }
+ 
+-static bool is_inf_prod(int32_t a, int32_t b)
++static float32 do_sffma_lib(CPUHexagonState *env, float32 RxV,
++                            float32 RsV, float32 RtV, int negate)
+ {
+-    return (float32_is_infinity(a) && float32_is_infinity(b)) ||
+-           (float32_is_infinity(a) && is_finite(b) && !float32_is_zero(b)) ||
+-           (float32_is_infinity(b) && is_finite(a) && !float32_is_zero(a));
++    int flags;
++
++    arch_fpop_start(env);
++
++    set_float_rounding_mode(float_round_nearest_even_max, &env->fp_status);
++    RxV = float32_muladd(RsV, RtV, RxV,
++                         negate | float_muladd_suppress_add_product_zero,
++                         &env->fp_status);
++
++    flags = get_float_exception_flags(&env->fp_status);
++    if (flags) {
++        /* Flags are suppressed by this instruction. */
++        set_float_exception_flags(0, &env->fp_status);
++
++        /* Return 0 for Inf - Inf. */
++        if (flags & float_flag_invalid_isi) {
++            RxV = 0;
++        }
++    }
++
++    arch_fpop_end(env);
++    return RxV;
+ }
+ 
+ float32 HELPER(sffma_lib)(CPUHexagonState *env, float32 RxV,
+                           float32 RsV, float32 RtV)
+ {
+-    bool infinp;
+-    bool infminusinf;
+-    float32 tmp;
+-
+-    arch_fpop_start(env);
+-    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
+-    infminusinf = float32_is_infinity(RxV) &&
+-                  is_inf_prod(RsV, RtV) &&
+-                  (fGETBIT(31, RsV ^ RxV ^ RtV) != 0);
+-    infinp = float32_is_infinity(RxV) ||
+-             float32_is_infinity(RtV) ||
+-             float32_is_infinity(RsV);
+-    RxV = check_nan(RxV, RxV, &env->fp_status);
+-    RxV = check_nan(RxV, RsV, &env->fp_status);
+-    RxV = check_nan(RxV, RtV, &env->fp_status);
+-    tmp = internal_fmafx(RsV, RtV, RxV, 0, &env->fp_status);
+-    if (!(float32_is_zero(RxV) && is_zero_prod(RsV, RtV))) {
+-        RxV = tmp;
+-    }
+-    set_float_exception_flags(0, &env->fp_status);
+-    if (float32_is_infinity(RxV) && !infinp) {
+-        RxV = RxV - 1;
+-    }
+-    if (infminusinf) {
+-        RxV = 0;
+-    }
+-    arch_fpop_end(env);
+-    return RxV;
++    return do_sffma_lib(env, RxV, RsV, RtV, 0);
+ }
+ 
+ float32 HELPER(sffms_lib)(CPUHexagonState *env, float32 RxV,
+                           float32 RsV, float32 RtV)
+ {
+-    bool infinp;
+-    bool infminusinf;
+-    float32 tmp;
+-
+-    arch_fpop_start(env);
+-    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
+-    infminusinf = float32_is_infinity(RxV) &&
+-                  is_inf_prod(RsV, RtV) &&
+-                  (fGETBIT(31, RsV ^ RxV ^ RtV) == 0);
+-    infinp = float32_is_infinity(RxV) ||
+-             float32_is_infinity(RtV) ||
+-             float32_is_infinity(RsV);
+-    RxV = check_nan(RxV, RxV, &env->fp_status);
+-    RxV = check_nan(RxV, RsV, &env->fp_status);
+-    RxV = check_nan(RxV, RtV, &env->fp_status);
+-    float32 minus_RsV = float32_sub(float32_zero, RsV, &env->fp_status);
+-    tmp = internal_fmafx(minus_RsV, RtV, RxV, 0, &env->fp_status);
+-    if (!(float32_is_zero(RxV) && is_zero_prod(RsV, RtV))) {
+-        RxV = tmp;
+-    }
+-    set_float_exception_flags(0, &env->fp_status);
+-    if (float32_is_infinity(RxV) && !infinp) {
+-        RxV = RxV - 1;
+-    }
+-    if (infminusinf) {
+-        RxV = 0;
+-    }
+-    arch_fpop_end(env);
+-    return RxV;
++    return do_sffma_lib(env, RxV, RsV, RtV, float_muladd_negate_product);
+ }
+ 
+ float64 HELPER(dfmpyfix)(CPUHexagonState *env, float64 RssV, float64 RttV)
 -- 
 2.43.0
 
