@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D885AE7717F
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:50:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADB8E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Dec 2024 22:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKQ5G-0007Ao-GH; Sun, 08 Dec 2024 17:49:02 -0500
+	id 1tKQ56-000773-7P; Sun, 08 Dec 2024 17:48:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5E-00079k-9H
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:49:00 -0500
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1tKQ54-00076k-Rz
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:48:50 -0500
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tKQ5C-0006EW-Md
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:48:59 -0500
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3ea49150430so2052430b6e.1
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:48:58 -0800 (PST)
+ id 1tKQ52-0006C6-LT
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 17:48:50 -0500
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5f1ed6ee4d6so1860412eaf.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 14:48:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733698137; x=1734302937; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9z7LwVl4Onw4FA8ZAnPozMScnx/mfNwPcZbWnSZkFg8=;
- b=SBrPCG5HeCesc+hNKFz74NLZm2XuvZe067b+EyXcIHs1JJJVsKxrIdJs/tdlzc+t0E
- tWGx84VcZsbgBpuMewDTB9zwiS1dvZ3fDIZxlnFWrsSbNXxCdtQhx5ePSlT3K6EETjey
- oGB1DWuHmdIcQR+Ljm/EPA/0VUdmbdgxQo+0HGNGofiGg//6h4rIBwbQ+so+7eFfH7KX
- RE8nmxglpdU/W31rEuRUvNpjcYTU+2j8j0gt7B1Nqtt19XNTQwL0yJFTqwMzo0oj54/i
- yd0HMIvLR7b+fwZlLFli3ez8rlFlNTIUiCp2g5Edzm1558s3GlFSGEmnHtMMUZVSnG72
- GSHw==
+ d=linaro.org; s=google; t=1733698127; x=1734302927; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=dry87Jh5nw9awikYWLGeiW+IAYg+Rmtsj19DEsR1oJ0=;
+ b=Jx//+Y5S/cLpGUM2TaXuqnjt+pO9MGBfu4W7OXS2XxsTK8SadKVyTgKog3MjsLU2XS
+ Y7c4WpvkVUBaqHetsN6W8WjoYNu0NKPhEp6AJ9g3Yd5MZtdWMhBvJHs+wH4t8UYJCJl5
+ /QoZRwxit1eEfQhY6QcFL9DaoOn0cVm+doQioNlRHCfHoSdj+2Rc6qsrRXRshBCW1fuN
+ xO5uyeFD0m85R7h4JhCFgayKoDLKVJkpbyYQpIceaclQV/tST2umrHBI4zUuVWWKF7I0
+ dEh/RlLWm0svfBsfWr+5MTIFrlhDJbGD52LOI5Z/W3n2nuofNt9Mv+Jk4UrjQ/J73xVU
+ /vOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733698137; x=1734302937;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9z7LwVl4Onw4FA8ZAnPozMScnx/mfNwPcZbWnSZkFg8=;
- b=i3u+fOqIyvhRHw+M27b4JAPT//9KMNToGbNDzESMhcD6E81BcS5A7UWo0ehngeD54Z
- ocMMxgMTk3A2GY33KTIeXuG85g+/zflDOOUE5VXMZ6SCGQmRlBH+aNSY7hZfN6Kv4HCa
- TfmfsRoOUE2ZuSFayA6lKeADtRK6LnpWF3xx6WvPxBpXqW0GpsHAuNVgV6OTQFPCi3Pa
- UJT0SoXQv3IEMDAh+Ar8UbqKcOV1VxSBBsZ5VEx+BA5sbmXunsaICkSUCq7LutJT+ljU
- UHWC5XSiW6k/pVwF7QGq5G1Bvyf6IWSeiDC6HkcPccGvQnnF/vXoemBflzLYw9kqpafb
- 4gSQ==
-X-Gm-Message-State: AOJu0YyVhQDIQP4Uqha8Yh3KZPvolrSg0XSwrAjXhUdQ3qCFgrnETpvR
- o5lyA3RCP5h1Vf3h9F+u4GKSexSs4eE1ZIYKEiup63RfikPXq70RSM42syRmKUFlFdBNfQBaC3S
- czyOCNA==
-X-Gm-Gg: ASbGncsAvUu7vcQHr9i2jQqPWVWttRL3O72Cji1Zv1L37aZ+XxT2NdFQS6cvkK8CVCH
- AqoYTZ2cplz8DaVxyZ5Fc3A6ClKjWfnOzlDEGJTQjcVAMw3ZMi2q5Z6Cfg4wBV56Jn2tKTr1FqQ
- VhdkHery6hDDIQkk+Fjx3FnAuIG1ZQhuq+KHh8VrH0Em/jv0uw1WBOtwU30F6FymMOHPXHDWOC9
- QHJwu4sYQdQMqaYzeZSmgvs54lIWLKTNrI6tvAJ2y9Soe2CCxuBdSnwPk9zcu/WY2U6+CH/Wdze
- nJ8Kq4DboZr+bfCxvZElP0DvRDViGRA5SpeV
-X-Google-Smtp-Source: AGHT+IE2cTGNOpPGPhRoDi57fxWCGdjwwuyWqBIVAYRUxqrCyrMjRQXFY42m+YSWKOphxAFfXx8/9A==
-X-Received: by 2002:a05:6808:251a:b0:3ea:4aad:a889 with SMTP id
- 5614622812f47-3eb19dd0645mr9668297b6e.26.1733698137650; 
- Sun, 08 Dec 2024 14:48:57 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733698127; x=1734302927;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dry87Jh5nw9awikYWLGeiW+IAYg+Rmtsj19DEsR1oJ0=;
+ b=T2f2dhFkwa3490S3GsnhwrvhDmgIooK/or+rz1Zek0OSuONUb7GU+kSw4bt0TeH4v5
+ 7Uw7r+xdQsoRt+b0ibkynEDtzeAbEd6DXVchT/l3mRlIaOwcJ30AMgM4oWQI/aIOt3lJ
+ KlFBy+liVEE2WwKPNWY7XY8+CzFzDrIgJqf84AIoRdqdoIPXOKZX/YmqKFWY5vSxGTT4
+ 13A6FZrf3C7akNv+JUUwn50bP/GZ5V9QnmImq7fq1mJrE8zF+NbjavAg+ucL9pGtbetB
+ TGDK6GCqs9Q3yn87ESwWq5Iq+79YWubVEdsRspfusgC7Up3tDztOYNCSKjkniDRo3bMh
+ Js6w==
+X-Gm-Message-State: AOJu0YzZv5g/AmoAn1+PCgikoA2xRW/kp3Qho6x4ltNJZW+CXL7Ee2mC
+ zkLsdhA3EsMRpZPI/hVKBU3ylP/Zsh5uabL5USDFxL8PNHqOkHa3hKhiP4wu4c4warlBo4PjXFK
+ 1zoiEfw==
+X-Gm-Gg: ASbGncuO1QZ/JTs/l0UCR51zs9xwbx3HIZdzrOtQ5/NHROOPLJiEgk975fwCvYcOuD2
+ 1Sgqi54IrnlOGuhMIkB4gOd2gU3HqFX9owkY+rFkIrevvtcDnD8Gd7PADxrB24sRzzsYWOFbtoe
+ iQ97c9BjptsIdUYQ2kyT1cYoyz2lL6zXExCIENGq9guqSB0hI63Iohvbxl9iL9NcP6BHSREhMe6
+ fbNth4OZLhFN3647GMy73HDYAmSMN4b531BZy5ZoOhyjcMZhrc+lcyrZs5REHY4Bbd0tiYUkbA+
+ IFzdhQLiGZ7FJFJPr1OPY3Gh3U+EQMpc0sO/
+X-Google-Smtp-Source: AGHT+IGMIHxN1RJ6XU3bzNGRSzUHu5kyqrRdr4VD9+oCx5x7KF7DhJlXyOFsb86Lpfso2tV4pnXxLw==
+X-Received: by 2002:a05:6820:16a9:b0:5f2:5dfd:ecba with SMTP id
+ 006d021491bc7-5f286e777dbmr7123170eaf.1.1733698126869; 
+ Sun, 08 Dec 2024 14:48:46 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.48.56
+ 46e09a7af769-71dc497ee8fsm1925198a34.39.2024.12.08.14.48.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Dec 2024 14:48:57 -0800 (PST)
+ Sun, 08 Dec 2024 14:48:46 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: bcain@oss.qualcomm.com, peter.maydell@linaro.org,
  mark.cave-ayland@ilande.co.uk
-Subject: [PATCH 09/17] target/hexagon: Use float32_muladd for helper_sffms
-Date: Sun,  8 Dec 2024 16:48:36 -0600
-Message-ID: <20241208224844.570491-10-richard.henderson@linaro.org>
+Subject: [RFC PATCH 00/17] softfloat, hexagon: Cleanup fmaf
+Date: Sun,  8 Dec 2024 16:48:27 -0600
+Message-ID: <20241208224844.570491-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241208224844.570491-1-richard.henderson@linaro.org>
-References: <20241208224844.570491-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are no special cases for this instruction.  Since hexagon
-always uses default-nan mode, explicitly negating the first
-input is unnecessary.  Use float_muladd_negate_product instead.
+While looking at some float_status usage, I got distracted by some
+odd looking hexagon code.  With some minor additions to softfloat,
+we can handle all of the special cases.
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/hexagon/op_helper.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+I have a feeling that dfmpyhh can also be simplified, but I don't
+quite grok the accumulator in this case.  It appears to be integral
+value, added into the middle of the floating-point partial product?
 
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-index 7d459cc6f3..aa5ab4a31f 100644
---- a/target/hexagon/op_helper.c
-+++ b/target/hexagon/op_helper.c
-@@ -1208,10 +1208,9 @@ float32 HELPER(sffma_sc)(CPUHexagonState *env, float32 RxV,
- float32 HELPER(sffms)(CPUHexagonState *env, float32 RxV,
-                       float32 RsV, float32 RtV)
- {
--    float32 neg_RsV;
-     arch_fpop_start(env);
--    neg_RsV = float32_set_sign(RsV, float32_is_neg(RsV) ? 0 : 1);
--    RxV = internal_fmafx(neg_RsV, RtV, RxV, 0, &env->fp_status);
-+    RxV = float32_muladd(RsV, RtV, RxV, float_muladd_negate_product,
-+                         &env->fp_status);
-     arch_fpop_end(env);
-     return RxV;
- }
+
+r~
+
+
+Richard Henderson (17):
+  softfloat: Add float{16,32,64}_muladd_scalbn
+  target/arm: Use float*_muladd_scalbn
+  target/sparc: Use float*_muladd_scalbn
+  softfloat: Remove float_muladd_halve_result
+  softfloat: Add float_round_nearest_even_max
+  softfloat: Add float_muladd_suppress_add_product_zero
+  target/hexagon: Use float32_mul in helper_sfmpy
+  target/hexagon: Use float32_muladd for helper_sffma
+  target/hexagon: Use float32_muladd for helper_sffms
+  target/hexagon: Use float32_muladd_scalbn for helper_sffma_sc
+  target/hexagon: Use float32_muladd for helper_sffm[as]_lib
+  target/hexagon: Remove internal_fmafx
+  target/hexagon: Expand GEN_XF_ROUND
+  target/hexagon: Remove Float
+  target/hexagon: Remove Double
+  target/hexagon: Use mulu64 for int128_mul_6464
+  target/hexagon: Simplify internal_mpyhh setup
+
+ include/fpu/softfloat-types.h |   2 +
+ include/fpu/softfloat.h       |  14 +-
+ target/hexagon/fma_emu.h      |   3 -
+ target/sparc/helper.h         |   4 +-
+ fpu/softfloat.c               |  64 ++---
+ target/arm/tcg/helper-a64.c   |   6 +-
+ target/hexagon/fma_emu.c      | 494 +++++++++-------------------------
+ target/hexagon/op_helper.c    | 125 +++------
+ target/sparc/fop_helper.c     |   8 +-
+ target/sparc/translate.c      |  80 +++---
+ fpu/softfloat-parts.c.inc     |  16 +-
+ 11 files changed, 277 insertions(+), 539 deletions(-)
+
 -- 
 2.43.0
 
