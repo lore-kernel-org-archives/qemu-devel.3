@@ -4,92 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14738E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 11:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34322E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKcEN-0000j6-VX; Mon, 09 Dec 2024 06:47:15 -0500
+	id 1tKcQN-0003M2-9z; Mon, 09 Dec 2024 06:59:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tKcEL-0000if-BY
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:47:13 -0500
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tKcEJ-0008RD-BD
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:47:13 -0500
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-7258cf2975fso3585025b3a.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 03:47:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1733744829; x=1734349629;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=b1TB7xzwBnR1DZEmlX36NtTrUmNOLFWGGHwzZStXy00=;
- b=n55qLksv0Y2B3sedkBp2jrKzqD+zUPPsbJ/x9ZMkejZ7i8Gp74Ca3Tsa8TxXJJmNhQ
- kkPeIyIWo8ZFzOlOexswqn6c6DVHrshNWMMzn9NK9WzSQ18k7IjGKcC+nPWiwyFG+SPv
- fwiwIO6UERvWMNB7W6HY/iIRk626ydyD4EeqrncUP8e+LpjimKQf0oL3yd3xm3dXodBn
- ec7eGL+JMDyiooLgCF9fAeZjNfHeUiz+/l8a0By7S8f+PmrjmoNvqjV+HBXOi+/+Ql0B
- wISXFTI85+apG4zSlcnAgZjhqQil6KV8623PeMxZczSiq0kXLBsQsTseG3pIhL3pGAHF
- 9kvA==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKcQL-0003Li-M2
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:59:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKcQK-0001HF-6w
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:59:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733745574;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=4vojw8frOjl9kNfFVzXH0Y0rZmY0Gljxd0QJGKiqQAY=;
+ b=JU+ljYdxweXWonAoAOufbSnfX0oQ72fP0/TtqkWPqTX9CPhWf+3q1fYsIBLGDfHyuINYAR
+ 29SVq6MMow4iagfRpbYMmiYazKYiXej8HY1XM085aF60GCv2tfchCbyekWUa3Vdv8AXXYy
+ 989aU22rhEuG6vFre4xPjOvh4mDk6Y0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-263-GVv7cb9CMCWwocHC9sLoUg-1; Mon, 09 Dec 2024 06:59:33 -0500
+X-MC-Unique: GVv7cb9CMCWwocHC9sLoUg-1
+X-Mimecast-MFC-AGG-ID: GVv7cb9CMCWwocHC9sLoUg
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-434f0206a83so9292375e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 03:59:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733744829; x=1734349629;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=b1TB7xzwBnR1DZEmlX36NtTrUmNOLFWGGHwzZStXy00=;
- b=MNJAz9P5HvVHrC0uwOItdFCyp+Uw/O8uTns2dIYc+JtskBqgliFANX+FoZ5ZRRvhPf
- 65ByBBBUNFqr8ZkyfSN3olR4vcjaji7SUo4DYh+56hElKjVyjbxNbjGGX/snGoL9Kvn5
- YBVzPA05lXG4yLRX8SyUtvxTiY5KnJXoXjOWPuMetqiQh9um5Y0bmyh/W4HJiFu/d2br
- TVdh2RurjMtsZnO8JFzy9HBZM02/c9NGOK/zpnejQ46loeRSNVZKumqiZGZ6FXp3OH6Z
- eSlkFywSiTqiWRmCneR+FcGys9krxq1FbTuDA9MH9nYxWEfI26ULQ8fabKODQfODT4U0
- fdgw==
-X-Gm-Message-State: AOJu0YxJc7wU/NCKbHNj642Kj6lLmo4v0gxNcPC9KvNL4exyIFnRQl2m
- 314RXnL5EQ/ZrBcAvN3RL/fJRIOnY6fXHAx1LPp0eIcFE3D3WTP+Yfeuh0O02I4DCqE649Kcvit
- K
-X-Gm-Gg: ASbGnctc2iTkQoIyAEgHQ5jn/fjYG3+l55t0qxzqXjF3ow/QTR4/VFXE3z90SdeRg51
- 6CWHQ9MjYUJXvUVObQzBHkYKs10li7ohu790i/vjYniEikwBrXLw6F0auzTei8ALpKudfIq7i0v
- 6fZxKkaXHVHUjEZxyfKN7az72uje1qWUpYte+S8X96wi56naGHMiBa0LMjE4VtvFrmNC+VVhdC+
- nPUKcNvuqbgyH5flzkPR/Q1i7WV62w1ASooKli3z9WdfuN7Pnj8pv9HEvu7
-X-Google-Smtp-Source: AGHT+IELGLjg5FPXqNNlc8yfDCXQMw4ARGkYnsRapoJPi8GKUAM8K2ihxiYVA2F+dk8pDMGCHxkO1Q==
-X-Received: by 2002:a05:6a00:4601:b0:726:8366:40c5 with SMTP id
- d2e1a72fcca58-7273c913efemr154435b3a.6.1733744828400; 
- Mon, 09 Dec 2024 03:47:08 -0800 (PST)
-Received: from [157.82.203.37] ([157.82.203.37])
+ d=1e100.net; s=20230601; t=1733745572; x=1734350372;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4vojw8frOjl9kNfFVzXH0Y0rZmY0Gljxd0QJGKiqQAY=;
+ b=TdqhWsA0fzZBRN8M9B9ELeQT52DEMzalm38EEcGZWopxAG6+Z63HzKGQR0VS2vEgeI
+ jqybO9GtiCijj0BQ2KXKf7+Ily6MM7y9pJ5NI+iPY/9tdt3/S+pDM1sv9cWVFfItUMlD
+ bIdQntPa1RKNY12rkS76gI4xJHRoH3Lsd/GrtQbVscrR2cmkyoqY291cO9Sl7+g/shK4
+ JkZ/s/0e1y0ukgdLL+LiN4RIXNBQnzcm1Hy99UXzGexGTuLKIEQE+J6P07nvlA2FAgBu
+ FlSjZxnslPpmLV4QOjcaXLtT9DKcllbb5kaXQNOveggdi14+6MXMdqqWXkYkQG5/sLSn
+ QVyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX53KpJ01gSRZijAKLQsCvaXC25mWEgZce+0qn4U+u4CqLGjdMTafByurgaFl9k7s/hTLfBbbOnQYDX@nongnu.org
+X-Gm-Message-State: AOJu0Yyr3R4dWk5tqK7643GnUpCWVLt9z9TVVnMULFDbS2ujBG909P8j
+ e/uXJ5HIF5FONbRaLdrxbUjV80023nbZK3bCUCAghNs97fnH6F3CAgIf5J99MhXj8KiJqY4FzHk
+ /XJoR3dmpoUvpyuGE6dmcrvBcN8BKD7JhH09/TuEmvNxGofxn6Epe
+X-Gm-Gg: ASbGncsQIbmAEK4QYtPs00J27aOVt6Edw3lQkcMY8DfnAd+AiNlpjIufBuGSjSp3MX6
+ ikG/KZVnS+YIYnAE78iCmCAsDK9EtdrdhPiNRtKCL6U8/GbXUCRWVOKfruPHco51AjLeIObLTut
+ JWJ7StjF+X0xFzNqZam954SZJc4EdAx/y10FbdWSwxZIwRtSQZzHxMEBcA0rs+0q308NbTq2IaH
+ E8GYoRy7rOONJHPv4I80/1A/s79kBn+6JfGYlWejxQdXi2r/Cfr3HesO11htpKf9IzKTS9odKjC
+ 9aQ=
+X-Received: by 2002:a05:600c:4f0d:b0:434:f03c:7843 with SMTP id
+ 5b1f17b1804b1-434fff55ccbmr1416035e9.19.1733745572318; 
+ Mon, 09 Dec 2024 03:59:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHgBtdeRHK/8neoCI/bJitevClz05+trtgTgN2PG6LQC+YEyyjpRc+VRq3p3ao/Spa+pTVMig==
+X-Received: by 2002:a05:600c:4f0d:b0:434:f03c:7843 with SMTP id
+ 5b1f17b1804b1-434fff55ccbmr1415825e9.19.1733745571997; 
+ Mon, 09 Dec 2024 03:59:31 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-49-52.web.vodafone.de. [109.42.49.52])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725cf238777sm4000485b3a.47.2024.12.09.03.47.06
+ 5b1f17b1804b1-434d43809fdsm101349045e9.1.2024.12.09.03.59.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 03:47:07 -0800 (PST)
-Message-ID: <77c34e50-6e71-46b3-b13e-d1711b51fadb@daynix.com>
-Date: Mon, 9 Dec 2024 20:47:05 +0900
+ Mon, 09 Dec 2024 03:59:31 -0800 (PST)
+Message-ID: <7c614e7b-900a-4a0d-a727-eba6986f9398@redhat.com>
+Date: Mon, 9 Dec 2024 12:59:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] hw/vmapple: XHCI controller's interrupt mapping
- workaround for macOS
-To: Phil Dennis-Jordan <phil@philjordan.eu>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org,
- thuth@redhat.com, zhao1.liu@intel.com, imammedo@redhat.com
-References: <20241208191646.64857-1-phil@philjordan.eu>
- <20241208191646.64857-7-phil@philjordan.eu>
- <df6847f5-11d0-4c69-bfac-ec2281279841@daynix.com>
- <CAAibmn1sRa409YCPr6WQ1XmVBntkjh3EokKU1S6ywTwHMcV8xQ@mail.gmail.com>
+Subject: Re: [PATCH 6/7] tests/functional: Introduce a specific test for
+ rainier-bmc machine
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20241206131132.520911-1-clg@redhat.com>
+ <20241206131132.520911-7-clg@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAAibmn1sRa409YCPr6WQ1XmVBntkjh3EokKU1S6ywTwHMcV8xQ@mail.gmail.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241206131132.520911-7-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x436.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,30 +159,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/12/09 20:14, Phil Dennis-Jordan wrote:
+On 06/12/2024 14.11, Cédric Le Goater wrote:
+> This simply moves the rainier-bmc test to a new test file. No changes
+> in the test. The test_arm_aspeed.py is deleted.
 > 
-> 
-> On Mon, 9 Dec 2024 at 07:26, Akihiko Odaki <akihiko.odaki@daynix.com 
-> <mailto:akihiko.odaki@daynix.com>> wrote:
-> 
->     On 2024/12/09 4:16, Phil Dennis-Jordan wrote:
->      > This change enables the new conditional interrupt mapping support
->      > property on the vmapple machine type's integrated XHCI controller.
->      > The macOS guest driver attempts to use event rings 1 and 2 on the
->     XHCI
->      > controller, despite there being only one (PCI pin) interrupt channel
->      > available. With conditional interrupt mapping enabled, the XHCI
->      > controller will only schedule events on interrupter 0 in PCI pin mode
->      > or when only a single MSI vector is active.
-> 
->     I think docs/system/arm/vmapple.rst also needs to be updated.
-> 
-> 
-> Can you be more specific about what you think I should include? That 
-> file currently does not mention USB in any way, and if we set the new 
-> property in the machine type, there shouldn't be any need for manual 
-> configuration on the command line, should there?
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   tests/functional/meson.build                  |  4 ++--
+>   ...m_aspeed.py => test_arm_aspeed_rainier.py} | 22 +++++--------------
+>   2 files changed, 7 insertions(+), 19 deletions(-)
+>   rename tests/functional/{test_arm_aspeed.py => test_arm_aspeed_rainier.py} (71%)
+>   mode change 100755 => 100644
 
-I mistook the patch message for the documentation. The documentation 
-file is fine so there is no need for change here.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
 
