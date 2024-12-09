@@ -4,100 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9AD9E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 15:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79190E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:07:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKg6H-0001Oe-CC; Mon, 09 Dec 2024 10:55:09 -0500
+	id 1tKgHC-0003RR-CE; Mon, 09 Dec 2024 11:06:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tKg6F-0001Md-KB; Mon, 09 Dec 2024 10:55:07 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
- id 1tKg6C-00087Z-AB; Mon, 09 Dec 2024 10:55:07 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B96gvAo015339;
- Mon, 9 Dec 2024 15:55:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=iwSnt0R5prh8U2duUw6JRrnRRm2iqI
- kkLwJQlFvBd8A=; b=hluC1RKO16lEniyCp0NRkSwqSpNWanGWw6Mr6fVNpqVYMj
- 7J6ea7AHMJXPSd6I1z6lge3M40q7bYufpjxIN7A/gazt5VEKfv8Kk8sKQZ9qdx6K
- ib8rpXti66Ek6Et8oe1rSCaoWxWts/LEP5bRLlzng4cNOAe3PTIeaqGj6xeZQWze
- ow7Hx5pNl2VNLAnGvTYaBcVt0PAOJBaqmXHJisMQu/W1HhEnrgccf8jYlG3KWslV
- pO7aPEIQD3svNIQoUkJyj2ao4EVwNECO5i2YSFYYSzDltrlMAPqNjB/c1T9rWb9V
- mezCNljxCIsezyH+WrPTYwyRjk1/cQwMtGNvnSCA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce38j7km-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 15:55:01 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9ExY2F018602;
- Mon, 9 Dec 2024 15:55:00 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d26k7885-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 15:55:00 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B9Fsup757344450
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Dec 2024 15:54:56 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B81BD2004D;
- Mon,  9 Dec 2024 15:54:56 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9FBD52004B;
- Mon,  9 Dec 2024 15:54:56 +0000 (GMT)
-Received: from vela (unknown [9.171.25.246])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Mon,  9 Dec 2024 15:54:56 +0000 (GMT)
-Received: from brueckner by vela with local (Exim 4.98)
- (envelope-from <brueckner@linux.ibm.com>) id 1tKg63-000000007IA-1mDN;
- Mon, 09 Dec 2024 16:54:55 +0100
-Date: Mon, 9 Dec 2024 16:54:55 +0100
-From: Hendrik Brueckner <brueckner@linux.ibm.com>
-To: Janosch Frank <frankja@linux.ibm.com>
-Cc: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, thuth@redhat.com, nsg@linux.ibm.com,
- mimu@linux.ibm.com, borntraeger@linux.ibm.com
-Subject: Re: [RFC PATCH v2 03/15] s390x/cpumodel: add msa12 changes
-Message-ID: <Z1cSz8uBCZ6SDOrX@linux.ibm.com>
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-4-brueckner@linux.ibm.com>
- <93eff988-d6b9-4789-bf11-721c92401d6a@linux.ibm.com>
- <Z1cLpjc9r5oKSqFE@linux.ibm.com>
- <3601af1b-1324-4635-b64b-00f965551550@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgH9-0003R1-AZ
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:06:23 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgH7-000144-Nf
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:06:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434f0432089so16980955e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:06:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733760380; x=1734365180; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xTid1ezXvclufks7HA6Zw64cJtMCdpx5xBWXMFHjhhI=;
+ b=DP8znSlLHWplBHrtrs201WX5zTD8YfMNf2n9ZABeau+2fxxjLmHHAMYqQj16rSCDme
+ tfkkUQxZwLXMt3mqpmiqkTMNRe+E+L+oLdnl5gdnAD4R9zJ19l4+nKKO+J9nuXME536u
+ iX6JRvfp9PbWoK/NXgKTjRmcP/UGLEiNokPWhUQEuVj/sXjCfj3ORhKZrzGtYUFUYqMU
+ dmigQzxV1BrKKRiHwGiatFhjleocveq1PWJc/BhuQerltt5ZK+CujIitEnfTmSCJLYwS
+ IAZGLfb6YA7vdAWhRwMWi5vcok3nSjQwAmWeQIUGMKBGAxekVkG9P1U2RRvjKWhOqoEs
+ UnqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733760380; x=1734365180;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xTid1ezXvclufks7HA6Zw64cJtMCdpx5xBWXMFHjhhI=;
+ b=LLkQFGMNidoPJF33yGatVPUbdWvuRLr84ABWzTNGIns3mzPYBsZIBo/SBxOXW+KMky
+ 8Eoz9PHjYMh4eDxlBClefh0T38Kzw9eh6olbShCbbCix5OBa5y5UABDxPy+P1OXzBw5d
+ HmbSVZdXgPIeg4OvSZ5ZgPpIaeXYyDOWQaXFE0reSdaL7JaoWRtRL3GRwpBAoQ/IkAFi
+ OpUEZROKR98NgN75zKt5Z0wB0i2k3sHO37J6dhd5cVcVUGnYgUwqSCHNzlyjU2KdXSep
+ RkplAs3VcFObKp+EZTgJD2i2FmLlBNxI3P/fXehh7V4E2C9lCiRLKj6HryKndO3SdhMV
+ paDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWd3dOBPlz0DLo73oMCI1KJ+DlbmosipumerP6/o8A8Y3TZp1HXvar60d6elqlv1HlC2BVWbjjbY4pY@nongnu.org
+X-Gm-Message-State: AOJu0YyIoU8SorrND6aCajQkoFJeL1KwkWmp1QPzCqF56dC9IrQzX7dz
+ xqVb7xnKUaLrDtGNb3oMU3KutkC8CTfecF6kBy0JGNjbP6C9pAgin/TQwxrjtMY=
+X-Gm-Gg: ASbGncv9zMNFKRpCUEtDjpSc0Ei/pfch/Gw3CKYXYv0mQd1hN438jlcW/1rNYUt1DIg
+ vu+6sxIS2J1EWM9KplmaKUw3Ij7j+1kZBULBEBlOfPWtOHlnPfYCXuSB10H6kIDDwz/kIyD/0Fd
+ p12FCWcBwq7LJiVllg5fJe55DcYuMQ+n39QTSjIzX6UkcsITmil8DcPyZUq/q63EQb9UaBtlePm
+ nQPn9bCLfIPGypFvbEoemHyU5Jc5aqmxUr6x7r8K31GtnYowiYdIMJJu/Z/FR1Pp6WvOMqFZwlM
+ I2adN5MqPwYk0LGmqghXAsBQvILyTnOT
+X-Google-Smtp-Source: AGHT+IHW6ZMgGrpxCJ/91BMx0xE5EESCNs9DtBAAxd3uaXG4tBt2vK6ROtUgX8lK3IxwfNscQgcZeg==
+X-Received: by 2002:a05:600c:3491:b0:434:f3d8:62d0 with SMTP id
+ 5b1f17b1804b1-434f3d866b3mr51209355e9.3.1733760379728; 
+ Mon, 09 Dec 2024 08:06:19 -0800 (PST)
+Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434f5800218sm34681225e9.1.2024.12.09.08.06.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 08:06:18 -0800 (PST)
+Message-ID: <64f7b7b5-5dc6-4e66-9c30-dc26ef851baf@linaro.org>
+Date: Mon, 9 Dec 2024 17:06:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3601af1b-1324-4635-b64b-00f965551550@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: fZ2qdN3K6GJ-jOv8DHuv1hRNPhk5drNo
-X-Proofpoint-ORIG-GUID: fZ2qdN3K6GJ-jOv8DHuv1hRNPhk5drNo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=383
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090121
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=brueckner@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/17] softfloat: Add float{16,32,64}_muladd_scalbn
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: bcain@oss.qualcomm.com, peter.maydell@linaro.org,
+ mark.cave-ayland@ilande.co.uk
+References: <20241208224844.570491-1-richard.henderson@linaro.org>
+ <20241208224844.570491-2-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241208224844.570491-2-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -114,34 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 04:45:25PM +0100, Janosch Frank wrote:
-> On 12/9/24 4:24 PM, Hendrik Brueckner wrote:
-> > On Mon, Dec 09, 2024 at 03:48:11PM +0100, Janosch Frank wrote:
-> > > On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
-> > > > MSA12 changes the KIMD/KLMD instruction format for SHA3/SHAKE.
-> > > > 
-> > > > Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-> > > > Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-> > > 
-> > > MSA6 is a prereq, no?
-> > 
-> > MSA6 is the prereq. However, there is no explicit feature definition
-> > for the MSA_EXT_6 due to no STFLE and subfunctions only.  The only
-> > way would be to pick one or more / all MSA6 subfunctions for which
-> > there is a feature defined...
+On 8/12/24 23:48, Richard Henderson wrote:
+> We currently have a flag, float_muladd_halve_result, to scale
+> the result by 2**-1.  Extend this to handle arbitrary scaling.
 > 
-> Which you did for MSA11, no?
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   include/fpu/softfloat.h   |  6 ++++
+>   fpu/softfloat.c           | 58 ++++++++++++++++++++++-----------------
+>   fpu/softfloat-parts.c.inc |  7 +++--
+>   3 files changed, 44 insertions(+), 27 deletions(-)
 
-The other way around.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Here: MSA_EXT_12 would check/have a dependency on all(?) subfuncs
-introduced with MSA_EXT_6.
-
-> 
-> I'm not saying that subfunc handling is great :)
-
-Let me have a look which functions come with MSA_6 related to KIMD/KLMD.
-
-Would it be OK to have those checks as a separate patch so that cpu
-model in general is not blocked?
 
