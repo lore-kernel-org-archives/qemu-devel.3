@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA5C1E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 19:46:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD86E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 19:56:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKjhl-0002dq-Et; Mon, 09 Dec 2024 14:46:05 -0500
+	id 1tKjqe-0004AP-Id; Mon, 09 Dec 2024 14:55:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKjhf-0002dS-QC
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:46:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKjqc-0004AD-Aw
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:55:14 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKjhb-0006AV-95
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:45:56 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKjqS-0006ul-BA
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:55:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733773553;
+ s=mimecast20190719; t=1733774101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Rw8j8ZMTC76rmERXtaE3bnzwIzkYEIqwDpeVMfWNtzc=;
- b=ZH11x/f5L/Ag+RbqgZgnI2FDCSRlA72KMdfxm4BZigJAloK6gTEGpysnrxygptvQ2K8uJJ
- srb72A6WybdhIMXgMbDBcYpq9ET/QWsTowWZiB0owZjVOVBU9EHd0c3Nsb2xfRI9cVQri5
- RKE2owo0oVR38kyoffLhjv9Vrsa3j1k=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/FQdyOP/9wOB7kZzoK1aXKChYaS1ZobY7zYsdxsMdZk=;
+ b=ETi56BvECAblx+UEp70PaQY5pb2gWfvK0nX42tNXsbgRX7Je8oME4d+gX7ZVDNnb7Ylppr
+ GS+15MjMrjyUIOcUDBHwaQpakUag91xLputJQc1XwsKfxTcVY9NlMT2E/sx6HAPEy9BKtd
+ Wlr+3yxvhZBWvm/epZ3/vxfp9AFhNok=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-S6G1f-ERO4SPLn1pnPkQ1Q-1; Mon, 09 Dec 2024 14:45:52 -0500
-X-MC-Unique: S6G1f-ERO4SPLn1pnPkQ1Q-1
-X-Mimecast-MFC-AGG-ID: S6G1f-ERO4SPLn1pnPkQ1Q
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-466cc5287ffso99417991cf.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 11:45:52 -0800 (PST)
+ us-mta-220-uW9eWivsM6mhEaVWhRevZw-1; Mon, 09 Dec 2024 14:55:00 -0500
+X-MC-Unique: uW9eWivsM6mhEaVWhRevZw-1
+X-Mimecast-MFC-AGG-ID: uW9eWivsM6mhEaVWhRevZw
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6d23e553cso225651585a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 11:55:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733773551; x=1734378351;
+ d=1e100.net; s=20230601; t=1733774100; x=1734378900;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rw8j8ZMTC76rmERXtaE3bnzwIzkYEIqwDpeVMfWNtzc=;
- b=h7hQOZMuKv6i8iRyIy51/5bvGAiUSVpZeDNZgC4IszGvO+oGYc2zkbPJu0sbz+BBrI
- AA2eBK7+N7qET1scenBDwLDbCyznNZPy0EU5T3fw8Uj3wzaYUM6E6K2NM16O9wKqG9FB
- NNPN4IUxo0nxZyl3o/Bl4p8yxrVZakLsuOUasIsSWCnWA0rVv4VgFgU3LMIrfs7IVndh
- QjiWXSBzv0kB78SrkSblXmmeE/fCaPvIYArWATZgE2mawq9a82M9zMrTpCPnQbCwxQJR
- Vuss+qxGTBpqyOx3pfpWdwOrM5fqOHVO6+MzcyFkYEd77njQ9LLkYmi7/VuwuWPFWmwv
- inQw==
-X-Gm-Message-State: AOJu0YxE4O07K3phXwGHJHxAkX7vF0RpTTfDMYFXo2RjoycbZoQxZ1e0
- AY981JW7WxbK6d/dMX//lYnVcnIWHN+bzAaxNG0VZ7Wgmn71lF0CDxz+Gmkkbd54OrJbaCCo74d
- kZkQ9hS+ffrPmejz7u79T0bN3jJF5QsiwUy83MzFN4Htj5OUwF7TS
-X-Gm-Gg: ASbGncvIkIqnsJsh9p9lAsaK1NVfE74om0evZt6Z2Q/wlSHwQyrVIOUd9AUbD7iTL1a
- ZxXpjUkibRD/IBIMqVCRSbaeYZ9rk5IpoGlA3+8H+Ec6SoVJ3oLItCDE6fTJtdu8cxD8QoLG2aA
- b5uHtPLKvHgZwTl+bFsEeORHj4NQRmZWSWS81FI+vb6zpltpsExgH2G2eOiT5vqoFn9kntNBAFK
- mPUHQc2q+481wqBnZEaX18KDLT8hKyDDOZWapCMi0286KvBXdfb2p0LWV0X5OhpbgeNL+ab4rk3
- WyfVDCYoFV5IP6c=
-X-Received: by 2002:a05:622a:4008:b0:467:5eb6:5153 with SMTP id
- d75a77b69052e-46771f31ecdmr35571651cf.19.1733773551602; 
- Mon, 09 Dec 2024 11:45:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGdWraorpkD5iZMLYnbIDpiV2vg479clVaqqN9ZC903NHngEKhQTlhTsSZKkPhLb3k4EI0f5A==
-X-Received: by 2002:a05:622a:4008:b0:467:5eb6:5153 with SMTP id
- d75a77b69052e-46771f31ecdmr35571151cf.19.1733773551284; 
- Mon, 09 Dec 2024 11:45:51 -0800 (PST)
+ bh=/FQdyOP/9wOB7kZzoK1aXKChYaS1ZobY7zYsdxsMdZk=;
+ b=eX73lYezqpY2tDYbqp302AR1AyqeTWrla5E8Cvi8kUAej4sFxBYB3mzJWCbpebhd1H
+ YF2Zxp6Z4CKgQLNhs6e8fJh76Be9vmaqgbJ5KHVI0nR0TT0Bbmz1U8EnO5Ro0/21GN0L
+ 3L/uk6wZuqHQrJ0Rxt0sOl+IHCSRAAEvISHqvZA66hlozvaqH1EULDDINClyTAwrL8iW
+ puAOSemzt10z3URmIlpWePIY8HSgnWIjD38BStfSGBKy8dO3x7zFdHcde4zM6fngLHVU
+ 5LlxZ8dVBN4rybC1ec5Uivay382UMrnlFblSvWG1cGPIEHXiItFTt8YyF18HWmAGXp1O
+ xckg==
+X-Gm-Message-State: AOJu0Yyx/hRM3XDO6buJO5AJUgBtT2+kub786KZ5kZlJ6GUQ0N/WD7GI
+ i5o7KVV23xd0LXVA2QItKhVIIEf0aaP5NsBUNxHv8Vr8WpuzNqBKv9F1hTAm0556BJr57S0niN+
+ fRP9B+bIcJlAcUyj9WqwuLkhW+DiCgs5F9DcuJzESYmOo32LGKrBb
+X-Gm-Gg: ASbGnctLC35iEzVJfNE040k5WuzYN1oeOXNwLBk5zTY3eLJjEFv3grrCjxQiFRjr5ls
+ DbHPbElf/2YbMklBK66rf2/8ZoZbgufxAkrQqcaS6GPvU+e7mpcMNFv2Evw7DtKp8xBFgtJoNOR
+ z1cjpTUu2YMoPf8cdi0LqctOKbAeaeBYjJ0lpTe2q+9HpzYt5NSQYhRX8kUW4elGQAEGpEK7VUd
+ C+8HJHjzbStAEst3yvL2JWTJbhiz3eZSBYkacL5lPtjkW0hj6lKqxU47Cddt4fyiSR/jWBEcKmy
+ jYkyrIS2gwjXF2I=
+X-Received: by 2002:a05:620a:8089:b0:7b6:73f5:2868 with SMTP id
+ af79cd13be357-7b6dce80c07mr266397785a.42.1733774099808; 
+ Mon, 09 Dec 2024 11:54:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGXPK0UoiGhcApJeeXkIi3BEYhpZEp9fg/sl3WidJnbQv1iAOFtQbC3drg9rvcZu6eBA1baNg==
+X-Received: by 2002:a05:620a:8089:b0:7b6:73f5:2868 with SMTP id
+ af79cd13be357-7b6dce80c07mr266394485a.42.1733774099555; 
+ Mon, 09 Dec 2024 11:54:59 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-467550b2a37sm24381481cf.38.2024.12.09.11.45.49
+ af79cd13be357-7b6dd1b6cd6sm33719585a.64.2024.12.09.11.54.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 11:45:50 -0800 (PST)
-Date: Mon, 9 Dec 2024 14:45:48 -0500
+ Mon, 09 Dec 2024 11:54:58 -0800 (PST)
+Date: Mon, 9 Dec 2024 14:54:56 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Steve Sistare <steven.sistare@oracle.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
@@ -79,15 +79,15 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Daniel P. Berrange" <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 03/19] memory: add RAM_PRIVATE
-Message-ID: <Z1dI7DJvX6Wn_jz4@x1n>
+Subject: Re: [PATCH V4 04/19] machine: aux-ram-share option
+Message-ID: <Z1dLECXaEv4Q0BO6@x1n>
 References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-4-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-5-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1733145611-62315-4-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <1733145611-62315-5-git-send-email-steven.sistare@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -112,20 +112,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 05:19:55AM -0800, Steve Sistare wrote:
-> Define the RAM_PRIVATE flag.
-> 
-> In RAMBlock creation functions, if MAP_SHARED is 0 in the flags parameter,
-> in a subsequent patch the implementation may still create a shared mapping
-> if other conditions require it.  Callers who specifically want a private
-> mapping, eg for objects specified by the user, must pass RAM_PRIVATE.
-> 
-> After RAMBlock creation, MAP_SHARED in the block's flags indicates whether
-> the block is shared or private, and MAP_PRIVATE is omitted.
-> 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+On Mon, Dec 02, 2024 at 05:19:56AM -0800, Steve Sistare wrote:
+> diff --git a/system/physmem.c b/system/physmem.c
+> index 36f0811..0bcb2cc 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2164,6 +2164,9 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+>      new_block->flags = ram_flags;
+>  
+>      if (!host && !xen_enabled()) {
+> +        if (!share_flags && current_machine->aux_ram_share) {
+> +            new_block->flags |= RAM_SHARED;
+> +        }
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Just to mention that if you agree with what I said in patch 2, here it will
+need some trivial rebase change.  IOW, IMO we shouldn't special case xen
+either here, so it should also apply to xen if one chose to, changing aux
+alloc to RAM_SHARED.
+
+Frankly I don't know whether xen respects RAM_SHARED at all for anonymous,
+but it's a separate question to ask..
+
+Basically what will happen later is in cpr-transfer migrate cmd, it'll fail
+for xen properly seeing fd==-1.  That'll be fine, IMHO.
+
+>          if ((new_block->flags & RAM_SHARED) &&
+>              !qemu_ram_alloc_shared(new_block, &local_err)) {
+>              goto err;
+
+
 
 -- 
 Peter Xu
