@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 665C3E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 13:00:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4870E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 13:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKdMc-0005P2-L7; Mon, 09 Dec 2024 07:59:50 -0500
+	id 1tKdWU-0008K3-4o; Mon, 09 Dec 2024 08:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=7enf=TC=kaod.org=clg@ozlabs.org>)
- id 1tKdMa-0005OX-Qq; Mon, 09 Dec 2024 07:59:48 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tKdWK-0008FW-F6; Mon, 09 Dec 2024 08:09:52 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=7enf=TC=kaod.org=clg@ozlabs.org>)
- id 1tKdMU-0001bp-4C; Mon, 09 Dec 2024 07:59:48 -0500
+ id 1tKdWI-0003Hf-Ch; Mon, 09 Dec 2024 08:09:52 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y6MQD4tfFz4x4v;
- Mon,  9 Dec 2024 23:59:32 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y6Mdz5sWsz4wcr;
+ Tue, 10 Dec 2024 00:09:43 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y6MQ91cBxz4wbx;
- Mon,  9 Dec 2024 23:59:26 +1100 (AEDT)
-Message-ID: <70f1ac2f-c9b5-46d0-bf0c-65ff7524ff3b@kaod.org>
-Date: Mon, 9 Dec 2024 13:59:26 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y6Mdv2x1Rz4wbx;
+ Tue, 10 Dec 2024 00:09:39 +1100 (AEDT)
+Message-ID: <71f9503e-080f-4d4b-a4af-4d7649c7e39c@kaod.org>
+Date: Mon, 9 Dec 2024 14:09:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/6] hw:sdhci: Introduce a new "capareg" class member
- to set the different Capability Registers
+Subject: Re: [PATCH v3 10/10] test/qtest/ast2700-smc-test: Support to test
+ AST2700
 To: Jamin Lin <jamin_lin@aspeedtech.com>,
  Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241204084453.610660-1-jamin_lin@aspeedtech.com>
- <20241204084453.610660-4-jamin_lin@aspeedtech.com>
+References: <20241127091543.1243114-1-jamin_lin@aspeedtech.com>
+ <20241127091543.1243114-11-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,18 +88,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241204084453.610660-4-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241127091543.1243114-11-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=7enf=TC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,19 +114,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 09:44, Jamin Lin wrote:
-> Currently, it set the hardcode value of capability registers to all ASPEED SOCs
-> However, the value of capability registers should be different for all ASPEED
-> SOCs. For example: the bit 28 of the Capability Register 1 should be 1 for
-> 64-bits System Bus support for AST2700.
-> 
-> Introduce a new "capareg" class member whose data type is uint_64 to set the
-> different Capability Registers to all ASPEED SOCs.
-> 
-> The value of Capability Register is "0x0000000001e80080" for AST2400 and
-> AST2500. The value of Capability Register is "0x0000000701f80080" for AST2600.
+On 11/27/24 10:15, Jamin Lin wrote:
+> Add test_ast2700_evb function and reused testcases which are from
+> aspeed_smc-test.c for AST2700 testing. The base address, flash base address
+> and ce index of fmc_cs0 are 0x14000000, 0x100000000 and 0, respectively.
+> The default flash model of fmc_cs0 is "w25q01jvq" whose size is 128MB,
+> so set jedec_id 0xef4021.
 > 
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -135,157 +132,109 @@ C.
 
 
 > ---
->   hw/arm/aspeed_ast2400.c      |  3 ++-
->   hw/arm/aspeed_ast2600.c      |  7 +++---
->   hw/sd/aspeed_sdhci.c         | 47 +++++++++++++++++++++++++++++++++++-
->   include/hw/sd/aspeed_sdhci.h | 12 +++++++--
->   4 files changed, 61 insertions(+), 8 deletions(-)
+>   tests/qtest/ast2700-smc-test.c | 71 ++++++++++++++++++++++++++++++++++
+>   tests/qtest/meson.build        |  4 +-
+>   2 files changed, 74 insertions(+), 1 deletion(-)
+>   create mode 100644 tests/qtest/ast2700-smc-test.c
 > 
-> diff --git a/hw/arm/aspeed_ast2400.c b/hw/arm/aspeed_ast2400.c
-> index ecc81ecc79..3c1b419945 100644
-> --- a/hw/arm/aspeed_ast2400.c
-> +++ b/hw/arm/aspeed_ast2400.c
-> @@ -224,7 +224,8 @@ static void aspeed_ast2400_soc_init(Object *obj)
->       snprintf(typename, sizeof(typename), "aspeed.gpio-%s", socname);
->       object_initialize_child(obj, "gpio", &s->gpio, typename);
+> diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
+> new file mode 100644
+> index 0000000000..d1c4856307
+> --- /dev/null
+> +++ b/tests/qtest/ast2700-smc-test.c
+> @@ -0,0 +1,71 @@
+> +/*
+> + * QTest testcase for the M25P80 Flash using the ASPEED SPI Controller since
+> + * AST2700.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + * Copyright (C) 2024 ASPEED Technology Inc.
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qemu/bswap.h"
+> +#include "libqtest-single.h"
+> +#include "qemu/bitops.h"
+> +#include "aspeed-smc-utils.h"
+> +
+> +static void test_ast2700_evb(AspeedSMCTestData *data)
+> +{
+> +    int ret;
+> +    int fd;
+> +
+> +    fd = g_file_open_tmp("qtest.m25p80.w25q01jvq.XXXXXX",
+> +                         &data->tmp_path, NULL);
+> +    g_assert(fd >= 0);
+> +    ret = ftruncate(fd, 128 * 1024 * 1024);
+> +    g_assert(ret == 0);
+> +    close(fd);
+> +
+> +    data->s = qtest_initf("-machine ast2700-evb "
+> +                          "-drive file=%s,format=raw,if=mtd",
+> +                          data->tmp_path);
+> +
+> +    /* fmc cs0 with w25q01jvq flash */
+> +    data->flash_base = 0x100000000;
+> +    data->spi_base = 0x14000000;
+> +    data->jedec_id = 0xef4021;
+> +    data->cs = 0;
+> +    data->node = "/machine/soc/fmc/ssi.0/child[0]";
+> +    /* beyond 64MB */
+> +    data->page_addr = 0x40000 * FLASH_PAGE_SIZE;
+> +
+> +    qtest_add_data_func("/ast2700/smc/read_jedec",
+> +                        data, aspeed_smc_test_read_jedec);
+> +    qtest_add_data_func("/ast2700/smc/erase_sector",
+> +                        data, aspeed_smc_test_erase_sector);
+> +    qtest_add_data_func("/ast2700/smc/erase_all",
+> +                        data, aspeed_smc_test_erase_all);
+> +    qtest_add_data_func("/ast2700/smc/write_page",
+> +                        data, aspeed_smc_test_write_page);
+> +    qtest_add_data_func("/ast2700/smc/read_page_mem",
+> +                        data, aspeed_smc_test_read_page_mem);
+> +    qtest_add_data_func("/ast2700/smc/write_page_mem",
+> +                        data, aspeed_smc_test_write_page_mem);
+> +    qtest_add_data_func("/ast2700/smc/read_status_reg",
+> +                        data, aspeed_smc_test_read_status_reg);
+> +    qtest_add_data_func("/ast2700/smc/write_page_qpi",
+> +                        data, aspeed_smc_test_write_page_qpi);
+> +}
+> +
+> +int main(int argc, char **argv)
+> +{
+> +    AspeedSMCTestData ast2700_evb_data;
+> +    int ret;
+> +
+> +    g_test_init(&argc, &argv, NULL);
+> +
+> +    test_ast2700_evb(&ast2700_evb_data);
+> +    ret = g_test_run();
+> +
+> +    qtest_quit(ast2700_evb_data.s);
+> +    unlink(ast2700_evb_data.tmp_path);
+> +    return ret;
+> +}
+> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> index ea68ec1441..21e9320a95 100644
+> --- a/tests/qtest/meson.build
+> +++ b/tests/qtest/meson.build
+> @@ -214,7 +214,8 @@ qtests_aspeed = \
+>      'aspeed_smc-test',
+>      'aspeed_gpio-test']
+>   qtests_aspeed64 = \
+> -  ['ast2700-gpio-test']
+> +  ['ast2700-gpio-test',
+> +   'ast2700-smc-test']
 >   
-> -    object_initialize_child(obj, "sdc", &s->sdhci, TYPE_ASPEED_SDHCI);
-> +    snprintf(typename, sizeof(typename), "aspeed.sdhci-%s", socname);
-> +    object_initialize_child(obj, "sdc", &s->sdhci, typename);
->   
->       object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_abort);
->   
-> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-> index c40d3d8443..b5703bd064 100644
-> --- a/hw/arm/aspeed_ast2600.c
-> +++ b/hw/arm/aspeed_ast2600.c
-> @@ -236,8 +236,8 @@ static void aspeed_soc_ast2600_init(Object *obj)
->       snprintf(typename, sizeof(typename), "aspeed.gpio-%s-1_8v", socname);
->       object_initialize_child(obj, "gpio_1_8v", &s->gpio_1_8v, typename);
->   
-> -    object_initialize_child(obj, "sd-controller", &s->sdhci,
-> -                            TYPE_ASPEED_SDHCI);
-> +    snprintf(typename, sizeof(typename), "aspeed.sdhci-%s", socname);
-> +    object_initialize_child(obj, "sd-controller", &s->sdhci, typename);
->   
->       object_property_set_int(OBJECT(&s->sdhci), "num-slots", 2, &error_abort);
->   
-> @@ -247,8 +247,7 @@ static void aspeed_soc_ast2600_init(Object *obj)
->                                   &s->sdhci.slots[i], TYPE_SYSBUS_SDHCI);
->       }
->   
-> -    object_initialize_child(obj, "emmc-controller", &s->emmc,
-> -                            TYPE_ASPEED_SDHCI);
-> +    object_initialize_child(obj, "emmc-controller", &s->emmc, typename);
->   
->       object_property_set_int(OBJECT(&s->emmc), "num-slots", 1, &error_abort);
->   
-> diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
-> index acd6538261..ae2ec4a916 100644
-> --- a/hw/sd/aspeed_sdhci.c
-> +++ b/hw/sd/aspeed_sdhci.c
-> @@ -148,6 +148,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Error **errp)
->   {
->       SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
->       AspeedSDHCIState *sdhci = ASPEED_SDHCI(dev);
-> +    AspeedSDHCIClass *asc = ASPEED_SDHCI_GET_CLASS(sdhci);
->   
->       /* Create input irqs for the slots */
->       qdev_init_gpio_in_named_with_opaque(DEVICE(sbd), aspeed_sdhci_set_irq,
-> @@ -167,7 +168,7 @@ static void aspeed_sdhci_realize(DeviceState *dev, Error **errp)
->           }
->   
->           if (!object_property_set_uint(sdhci_slot, "capareg",
-> -                                      ASPEED_SDHCI_CAPABILITIES, errp)) {
-> +                                      asc->capareg, errp)) {
->               return;
->           }
->   
-> @@ -218,12 +219,56 @@ static void aspeed_sdhci_class_init(ObjectClass *classp, void *data)
->       device_class_set_props(dc, aspeed_sdhci_properties);
+>   qtests_stm32l4x5 = \
+>     ['stm32l4x5_exti-test',
+> @@ -361,6 +362,7 @@ qtests = {
+>     'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
+>     'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
+>     'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
+> +  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
 >   }
 >   
-> +static void aspeed_2400_sdhci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSDHCIClass *asc = ASPEED_SDHCI_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED 2400 SDHCI Controller";
-> +    asc->capareg = 0x0000000001e80080;
-> +}
-> +
-> +static void aspeed_2500_sdhci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSDHCIClass *asc = ASPEED_SDHCI_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED 2500 SDHCI Controller";
-> +    asc->capareg = 0x0000000001e80080;
-> +}
-> +
-> +static void aspeed_2600_sdhci_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +    AspeedSDHCIClass *asc = ASPEED_SDHCI_CLASS(klass);
-> +
-> +    dc->desc = "ASPEED 2600 SDHCI Controller";
-> +    asc->capareg = 0x0000000701f80080;
-> +}
-> +
->   static const TypeInfo aspeed_sdhci_types[] = {
->       {
->           .name           = TYPE_ASPEED_SDHCI,
->           .parent         = TYPE_SYS_BUS_DEVICE,
->           .instance_size  = sizeof(AspeedSDHCIState),
->           .class_init     = aspeed_sdhci_class_init,
-> +        .class_size = sizeof(AspeedSDHCIClass),
-> +        .abstract = true,
-> +    },
-> +    {
-> +        .name = TYPE_ASPEED_2400_SDHCI,
-> +        .parent = TYPE_ASPEED_SDHCI,
-> +        .class_init = aspeed_2400_sdhci_class_init,
-> +    },
-> +    {
-> +        .name = TYPE_ASPEED_2500_SDHCI,
-> +        .parent = TYPE_ASPEED_SDHCI,
-> +        .class_init = aspeed_2500_sdhci_class_init,
-> +    },
-> +    {
-> +        .name = TYPE_ASPEED_2600_SDHCI,
-> +        .parent = TYPE_ASPEED_SDHCI,
-> +        .class_init = aspeed_2600_sdhci_class_init,
->       },
->   };
->   
-> diff --git a/include/hw/sd/aspeed_sdhci.h b/include/hw/sd/aspeed_sdhci.h
-> index 057bc5f3d1..8083797e25 100644
-> --- a/include/hw/sd/aspeed_sdhci.h
-> +++ b/include/hw/sd/aspeed_sdhci.h
-> @@ -13,9 +13,11 @@
->   #include "qom/object.h"
->   
->   #define TYPE_ASPEED_SDHCI "aspeed.sdhci"
-> -OBJECT_DECLARE_SIMPLE_TYPE(AspeedSDHCIState, ASPEED_SDHCI)
-> +#define TYPE_ASPEED_2400_SDHCI TYPE_ASPEED_SDHCI "-ast2400"
-> +#define TYPE_ASPEED_2500_SDHCI TYPE_ASPEED_SDHCI "-ast2500"
-> +#define TYPE_ASPEED_2600_SDHCI TYPE_ASPEED_SDHCI "-ast2600"
-> +OBJECT_DECLARE_TYPE(AspeedSDHCIState, AspeedSDHCIClass, ASPEED_SDHCI)
->   
-> -#define ASPEED_SDHCI_CAPABILITIES 0x01E80080
->   #define ASPEED_SDHCI_NUM_SLOTS    2
->   #define ASPEED_SDHCI_NUM_REGS     (ASPEED_SDHCI_REG_SIZE / sizeof(uint32_t))
->   #define ASPEED_SDHCI_REG_SIZE     0x100
-> @@ -32,4 +34,10 @@ struct AspeedSDHCIState {
->       uint32_t regs[ASPEED_SDHCI_NUM_REGS];
->   };
->   
-> +struct AspeedSDHCIClass {
-> +    SysBusDeviceClass parent_class;
-> +
-> +    uint64_t capareg;
-> +};
-> +
->   #endif /* ASPEED_SDHCI_H */
+>   if vnc.found()
 
 
