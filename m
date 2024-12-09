@@ -4,82 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CA62E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:26:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4917E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:32:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKgZ8-0007vT-AD; Mon, 09 Dec 2024 11:24:58 -0500
+	id 1tKgfg-0002Kx-Hd; Mon, 09 Dec 2024 11:31:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgZ6-0007vB-0P
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:24:56 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgff-0002Kc-4f
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:31:43 -0500
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgZ3-0002ze-Mn
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:24:54 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2eb1433958dso3263112a91.2
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:24:53 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgfd-0004Ik-2Q
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:31:42 -0500
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-434ab938e37so29579215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:31:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733761492; x=1734366292; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733761899; x=1734366699; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=rQ6HhFBEUg7Y5nMS526uaJ8jSTS3tu04kQ6F32MdhAw=;
- b=EjLrjFQhYU5OL6tBQxmVRQd9iQD0i2/Fcb4C4BJ9T013JR7wIN1h7Kmeqq9mwOwTyD
- bFs0saIxy/sEQzmPIZ0XqQLbLNj5Rxd63yG5Q4wsZMbkzX2uUAIWp/gd3A6Q90jq4Rjx
- EFjfixH0DxYRWij+pV9ZPs+XS9LiFaCmkw8696xzT9jli2m2JaO/XGYr2jRkWhVNq3Xr
- fODbiAQ1DiUsr8Ve88qKZM1UnFkAo/iryWpqHr99Xa48jU7q0XI/nwacs3aQctr/Jkn2
- ujD4P/e/K5c+PdJ8ARd3J6wB40RKKJpmwYwSMj6Vc9rcA51thEwG2msPdM6agP9XoA+T
- YCag==
+ bh=Wpqw5miIkSlBpDTPPmTX4uj6FCZB2X5O4MYbV3YtbHo=;
+ b=a05gJ3XZ9EWNzFcXET8Nbz2n7S758u4SaIFNmqJstbTXyEv3uAH3QxAGHrwW539aHL
+ MXU1Vuq2iTBEDIDv8swUy7wFA+AVlZa1E1pINcoDAvCUPJ2m8AAK4SxiMz8iGDrwGtvX
+ QFJ1qZpPUEMjOudPUTTN/VpZFdpTjtTaw/C1IbQVXehiG3ILP0XRZrsd3XJJKsQnDxBw
+ 71OUcJ7z+u9NKeKW2OHwSSXCoRhto/r5GfIx7SeUEJMdQuCLo3PmdXQhITO3hSoZeccV
+ 4Y5r0t3kmXj2Z5Oi3QdHAGgTA9r/psCHxJbe/ZwoPiCWvwSbPlJaew5RBDxQt6CIebtJ
+ yUFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733761492; x=1734366292;
+ d=1e100.net; s=20230601; t=1733761899; x=1734366699;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rQ6HhFBEUg7Y5nMS526uaJ8jSTS3tu04kQ6F32MdhAw=;
- b=SuhSs/zCfvzSlNZXo64kpVjTxuntopULbyIj6BW3N7HTmbN4LRvEe4+Cc/v0LKVwIV
- ThB0i4CY1zXuEAMhR+uAchQp6sYzejBMxfhCoPctsa1eprx8M+IdjkAVmlRM+vWpTYRC
- 2prd4I09V0SJTegzicdsSLnJ0+Fs2/COfiWt+DAcKxM9Eb7u3XINmDx1bGuJWBIbFJM6
- t9xCgYcAFSM0A5nOOw4Raf6/hPJV5EXuBVawae/5kBvPpVOfmv6sV/6dxY7XBZvdgru9
- Uxgu3TRSRSEU3X1GUZIHFV1Uf1DWbbEikgP4IggkIIxaUaF/pOCalF/3c7huDUKZXJbQ
- 67Vw==
+ bh=Wpqw5miIkSlBpDTPPmTX4uj6FCZB2X5O4MYbV3YtbHo=;
+ b=K5GA2Wa9chfbKVNR8xt7f2KpxoSwU5r3r1hgdNcnQgcuhadGPBQ3/7Ea9sH2tolswf
+ RiceWTXKIko3n2522S3ez2a9Z/jm8gI3XgGrq6RUDc7skhKCAHjogs3SD/zEoJO8usaJ
+ KzgI9FkpUKZN//96t3WdUHxfI8G5rDFuD8l5qsaFFn8w9v42z6Dswzhfr2oWOtXUD7Mx
+ z5OHlYlRzI0oKFCFOeMxrLLJYhf7JMmsYZjL6rIkL9EDXo42pRT9QR3/1zyxqPraZtYP
+ 0qZCuHSgM91kAASkF4ulaQ1BhDcuyBMLQo1lcmGFbbpnwiZFORF45s5dd+VrPdT0woaB
+ LQEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUnz9Co+i+l7p91MtDkQeTEtdnyIrwV3rRp984LBGngiSB27pcOiiEuZ3tpKpnHcn8Md9hzjOlcmsUK@nongnu.org
-X-Gm-Message-State: AOJu0YxslY2jkn/vQlOfK2RQltN+//d/jb9P0exoyfyhUbpWcPFLuBwd
- yfpCARjqjtBriNxZl9m1Z19Dn0GYfBXGqxFj/XIh2TFQMKia83puwiQw9IQpOh0=
-X-Gm-Gg: ASbGncskzimCeb3BPiy31XRyAPqm8GkWBaNPSmDGdwS1t1S/MYFsN1jC89uoIQga+3f
- CtrxT22oMI86A88FQB2tkcEDXL0pMTwoggTkYBUQlskszkJVRt3MQinqCZqO58HuAFp2IBUV4wL
- ffigP3cd0E+P/fnrOmn3bx6EFurLzpqz5jHnoASRjDM/v90b1kVl4E9BiRY1J73KcROV5nyXzva
- 28tN4MQdOxPNW1Nkxs0PyBEqz9zkwlbsaQg7gg9uBgnGqw75tSWmC3LL/VTmvG4Qd27oFRKFDeI
- mDTYYRXybac1dlA7k1JrDBRKyZQEeSYJ
-X-Google-Smtp-Source: AGHT+IERvUW3VpS1dSDrXTrDdG18SQ+azPUEfNK/FP9Z2UUpB4dCg4KTRRiDgC87/h3fIHA+BrbXxg==
-X-Received: by 2002:a17:90b:2246:b0:2ee:f653:9f8e with SMTP id
- 98e67ed59e1d1-2ef6ab29349mr20898628a91.35.1733761492276; 
- Mon, 09 Dec 2024 08:24:52 -0800 (PST)
+ AJvYcCW+ckhT9Jc0z1i6NxKWJmHz7xTbr1ZT6YAwBBk85toj4B2UnseLTLiBclrdIlSSYBTjjryADmosn33W@nongnu.org
+X-Gm-Message-State: AOJu0YxzA48Hx/kbXH8Gioh4gSqidYykO086RjU4/N8JW7EKrurHJpuU
+ hTVpGqnf8UEt8aTXfulWHyMBLDhvXQCWmtXHHM9uAqtL4Up3IfB0Rlj87NX83tQ=
+X-Gm-Gg: ASbGncsBWKVcpep1JjrtXUCuSuXLawmJKYk/eQxhtksacczQcrtwbpy1ay1LcfVHp3Q
+ 66VV8HN8phXisWN2t9qTy/fW8lAOGE0d6NPlgVYU3MaFGny88Ym37d7E4iV1/mLLH+GGELT8CQX
+ c1T23DLRpMIe5XYG+Lq0FbGV2oQ8TP/yxJFoS+ZQBK0ORh1uYhMxkw3bx5gFZp9STyhpmgkd2r5
+ JmqWBrpZEKvZO5HGQN2wAC5mKtsThcbBYcxxQAeBUdy7EQvqmkSNm5ipCdTXKAWbpPeIlIm93RE
+ saVgBSmQ0p3J7/hR3tf15/hCZrRyeYe8
+X-Google-Smtp-Source: AGHT+IE+gFqeJX9+oPlISs0ojDR1mvzsgRTjDOooMV/Sddv2tSyl+UrHBHuEK6T16VlVdiOyvgXjKQ==
+X-Received: by 2002:a05:600c:4fcd:b0:434:a711:ace4 with SMTP id
+ 5b1f17b1804b1-434ddeba502mr115850435e9.17.1733761899200; 
+ Mon, 09 Dec 2024 08:31:39 -0800 (PST)
 Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ef6bf32bcasm6395805a91.23.2024.12.09.08.24.49
+ 5b1f17b1804b1-434f8836dbbsm32074815e9.0.2024.12.09.08.31.38
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 08:24:51 -0800 (PST)
-Message-ID: <f85a2be4-f2ad-4c00-aecf-c045b7cd2e1f@linaro.org>
-Date: Mon, 9 Dec 2024 17:24:45 +0100
+ Mon, 09 Dec 2024 08:31:38 -0800 (PST)
+Message-ID: <4fa944df-ddf2-48be-bbb0-7b24f63263e6@linaro.org>
+Date: Mon, 9 Dec 2024 17:31:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/26] rust: bundle of prerequisites for HPET
- implementation
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Junjie Mao <junjie.mao@hotmail.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
+Subject: Re: [PATCH for-10.0] tests/functional: Convert the intel_iommu
+ avocado test
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>
+Cc: eric.auger@redhat.com, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?=
+ <clement.mathieu--drif@eviden.com>, Yi Liu <yi.l.liu@intel.com>
+References: <20241206181728.1241169-1-thuth@redhat.com>
+ <d07f4ade-716c-4d58-b6d9-a95b4ffe58ab@redhat.com>
+ <7e81c4a2-cc76-4d8c-b14a-fd008eff0c09@redhat.com>
+ <Z1az26HxcIHVlB-d@redhat.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241209123717.99077-1-pbonzini@redhat.com>
+In-Reply-To: <Z1az26HxcIHVlB-d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=philmd@linaro.org; helo=mail-pj1-x1036.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,37 +108,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/24 13:36, Paolo Bonzini wrote:
+On 9/12/24 10:09, Daniel P. Berrangé wrote:
+> On Mon, Dec 09, 2024 at 09:26:21AM +0100, Thomas Huth wrote:
+>> On 09/12/2024 09.12, Eric Auger wrote:
+>>> Hi Thomas,
+>>>
+>>> On 12/6/24 19:17, Thomas Huth wrote:
+>>>> Convert the intel_iommu test to the new functional framework.
+>>>> This test needs some changes since we neither support the old 'LinuxTest'
+>>>> class in the functional framework yet, nor a way to use SSH for running
+>>>> commands in the guest. So we now directly download a Fedora kernel and
+>>>> initrd and set up the serial console for executing the commands and for
+>>>> looking for the results.
+>>>>
+>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>> ---
+>>>>    MAINTAINERS                                   |   1 +
+>>>>    tests/functional/meson.build                  |   1 +
+>>>>    .../test_intel_iommu.py}                      | 119 ++++++++----------
+>>>>    3 files changed, 51 insertions(+), 70 deletions(-)
+>>>>    rename tests/{avocado/intel_iommu.py => functional/test_intel_iommu.py} (41%)
+>>>>    mode change 100644 => 100755
 
-> Paolo Bonzini (26):
->    bql: check that the BQL is not dropped within marked sections
->    rust: cell: add BQL-enforcing Cell variant
->    rust: cell: add BQL-enforcing RefCell variant
->    rust: define prelude
->    rust: add bindings for interrupt sources
->    rust: add a bit operation module
->    rust: qom: add default definitions for ObjectImpl
->    rust: qom: rename Class trait to ClassInitImpl
->    rust: qom: convert type_info! macro to an associated const
->    rust: qom: move ClassInitImpl to the instance side
->    rust: qdev: move device_class_init! body to generic function,
->      ClassInitImpl implementation to macro
->    rust: qdev: move bridge for realize and reset functions out of pl011
->    rust: qom: automatically use Drop trait to implement instance_finalize
->    rust: qom: move bridge for TypeInfo functions out of pl011
->    rust: qom: split ObjectType from ObjectImpl trait
->    rust: qom: change the parent type to an associated type
->    rust: qom: put class_init together from multiple ClassInitImpl<>
->    rust: qom: add possibility of overriding unparent
->    rust: rename qemu-api modules to follow C code a bit more
->    rust: re-export C types from qemu-api submodules
->    rust: tests: allow writing more than one test
->    rust: qom: add casting functionality
->    rust: qom: add initial subset of methods on Object
->    rust: qom: move device_id to PL011 class side
->    rust: qemu-api: add a module to wrap functions and zero-sized closures
->    rust: callbacks: allow passing optional callbacks as ()
 
-Am I correct some patches are from Zhao Liu and got the
-authorship inadvertently removed?
+>>>> -        self.launch_and_wait()
+>>>> -        self.ssh_command('cat /proc/cmdline')
+>>>> -        self.ssh_command('dmesg | grep -e DMAR -e IOMMU')
+>>>> -        self.ssh_command('find /sys/kernel/iommu_groups/ -type l')
+>>>> -        self.ssh_command('dnf -y install numactl-devel')
+>>> I understand you cannot use ssh yet but the bulk of the test was the
+>>> execution of the dnf install meaning we lose the main substance of it
+>>> through the conversion.
+>>
+>> Ah, I see, so this was exercising the virtio-net device with the IOMMU ...
+>> and I already wondered why there was this "dnf install" at the end without
+>> doing anything with  the numactl-devel package ... (a comment would have
+>> been helpful here)
+> 
+> FYI, I find 'dnf instal' to be a *highly* undesirable thing todo in
+> our test functional. Its performance is highly non-deterministic
+> depending on what mirror you happen to get sent to, such that it could
+> easily push us over the timeouts. It is also susceptible to periodic
+> broken mirrors, and instability around time of Fefdora EOL. I can't
+> remember if it was this test case, or a different one, but I've seen
+> problems before in avocado with 'dnf install'.
+> 
+> If we want to test working networking, then can we arrange for something
+> more simple & targetted to run, with better worst case performance.
+
+Could we use 2 virtio-net interfaces inter-connected and stress with
+https://linux.die.net/man/1/ab ?
 
