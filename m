@@ -4,125 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76E60E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC1A9E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKkGW-0002rk-9a; Mon, 09 Dec 2024 15:22:00 -0500
+	id 1tKkHa-0003b9-FG; Mon, 09 Dec 2024 15:23:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tKkGS-0002qf-EV
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:21:56 -0500
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1tKkHX-0003au-Dv; Mon, 09 Dec 2024 15:23:03 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tKkGN-0001UT-Ju
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:21:54 -0500
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9HeQrs002578
- for <qemu-devel@nongnu.org>; Mon, 9 Dec 2024 20:21:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- DzU/888Y3udSultLPyrm+yf2mrvpaOySiovY0AzyR7U=; b=FIPz2Pgy09zaU9mt
- MQdrQHGDsUjm/xEUVMt2jpkO5EAPCXhbsTxc8tttkrAKzXCm4k+xl31u+wzss8Px
- zQdG0J4r9k46xFThnph06w3hfWLdnDERSKIdhWTPgDcehYj/JR/xxQKYdOqssYf/
- 7dUCS4h/bHnN+iBB1wv4UqNBknR/bByTFJBPzEZthTnoZzWs+7Cjyv9sXRPjh40q
- YwHIHUP7O6yz8UajYmCJO3jYKbjJU+d15xSE4miZoalTpEE1mXSlqAX0PI9w+Kae
- O/9zInB/BztN3QwkxKVf8144iAscFcyjtDWgzhpNmUYyvSeha1ufdSq43g9XKZ/v
- cCwS7g==
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dxw41vg2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 20:21:49 +0000 (GMT)
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4674f8cc639so57521811cf.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 12:21:49 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733775709; x=1734380509;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DzU/888Y3udSultLPyrm+yf2mrvpaOySiovY0AzyR7U=;
- b=TQpFU+MMgfSiytB2TLA9hmGKphQjVrbLBTB27dLT4uaUhoXYfnfpBn9yMJJUGhus7K
- 7KyeiPC23QbEuSN4Z9OT88AJFiztkgmZ4ljg8DAnJBELDPKuWWDJlDUpJ0z6wkE2XUDO
- N8H6rfAJTBFnEnxTbqjD9XtdRbzqJXNKC5l9EQqm20cWKRpgzcv/HHhIEkFVK8gtq592
- 2R6a89EQ7a0eaP9Avsp/WYGw7/07p2L0rj5FPNHE3HRfEEYu24E+cwW612pY8j3sF+6D
- 2LleEuN8CxmGE/6NDs2s6+6z7Ao+RIfcGdRUNImAIB9p6Cs3XRAM1XgzLs4xvT3c1/Eo
- A3Ng==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3tqOgFGVcwkUDgtBeo0CCmQj6U/HzAh3sQ6wJVDOHpllgdYjAUtrfG9z7Ksm82SVfZ4AdLJYDu3HK@nongnu.org
-X-Gm-Message-State: AOJu0YxvCNLnfV2GId9HDtfHjX+nwWykkp8wi5azpj5bTQYJCBkjYsYj
- RbByiZZpwjrDTXLUSuEnIHsXn6YDSRTxmtiIsiw6K+7CQmB8YUKlX/3SPSQKZT5oil3m5Ue3u5P
- Qqy+8XuKWomRJeZXRr0Qk/+GoDvqmxBWap/Y1NCYu2csH5eKkoqDBNw==
-X-Gm-Gg: ASbGncvmbJxGzM1+PI1bR3ElIBdTuZ0aYkg+HpUgNZ4PiP556S7QbC2Q8lURSPVlcby
- Y6urOsXTS4C2xHArwq+FsgRYZt9aUpCIcIxM6McYqMlBPHVVG8quVJv3wRkxBhUQ4xTz3cNzLK+
- kwRJnQJO5T0ZFsguKN8lUA3pGX5bQp00JrWw14LPv+TffTlcGDV16seBGKeWpTSR9MUPnRUPFaN
- CvvhEtzF7KKR1PSbzneYAGYmQ0q57qHbXoVSewXxSWo0DaSjJ3e1lyCRS82A52lmcecbp+Ec3/9
- GPa0ukH24FR6TmbQ5xIb8cdr2thsjQkipiO0
-X-Received: by 2002:a05:622a:60e:b0:466:a51b:6281 with SMTP id
- d75a77b69052e-46771efb88amr26917821cf.26.1733775709095; 
- Mon, 09 Dec 2024 12:21:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFySbay1kQ0chmDDUysJLDryRhcXxoFZeJBWPYj5IXssLYqn/0Z6VW+NtlLZd0vmlvOjx2hGw==
-X-Received: by 2002:a05:622a:60e:b0:466:a51b:6281 with SMTP id
- d75a77b69052e-46771efb88amr26917381cf.26.1733775708684; 
- Mon, 09 Dec 2024 12:21:48 -0800 (PST)
-Received: from [10.222.168.90] (Global_NAT1_IAD_FW.qualcomm.com.
- [129.46.232.65]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46768b530f0sm11175221cf.64.2024.12.09.12.21.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 12:21:48 -0800 (PST)
-Message-ID: <3fb7853c-a04e-46ba-9b69-f36012f25e26@oss.qualcomm.com>
-Date: Mon, 9 Dec 2024 14:21:45 -0600
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1tKkHV-0001a0-AI; Mon, 09 Dec 2024 15:23:03 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9JLUmo020932;
+ Mon, 9 Dec 2024 20:22:56 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=E4reyB
+ 7EhPMhkHL3N/FQihFhqvY1JY1m59R5yFJC75c=; b=TVo6+F8qEmF4+JNjnSC9uF
+ rgqDc7gt4wuA/HZRj76N/22tFwWFrPprBOdNhomJPg0Hjh+8x1ZPT2oYGuPWWpcE
+ usjRU6zq74rhjtnN082D7/9a8vT6bY8cWN3gJkbn1kVSmrsmzuOWrFw7RYcA2oLC
+ V7rxZM7j5IEHvc8HoystPpqXmLt5S/EQaOKKJNipteiCkVuhX0Uj3nu9OIILWVhg
+ Dsm3pfXq1i065lmQOyoDSOnF9S0pZO/RURIgMGdXyjFqMeaQWJR9Q4rC7m6rygEH
+ cFjO/h07tl1n2ECn2O9j4OqDH1neIbbidV6HffzDbpnnGlMMsbj/xxhhLpBJdKWQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce38kcv2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Dec 2024 20:22:56 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9HkQEL016911;
+ Mon, 9 Dec 2024 20:22:55 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d12y0ef8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Dec 2024 20:22:55 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4B9KMsoe25690700
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Dec 2024 20:22:54 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47B4158058;
+ Mon,  9 Dec 2024 20:22:54 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8BD1E5805D;
+ Mon,  9 Dec 2024 20:22:53 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Dec 2024 20:22:53 +0000 (GMT)
+Message-ID: <371a3e10-dfad-4289-aad0-d35e3d6f11a5@linux.ibm.com>
+Date: Mon, 9 Dec 2024 15:22:53 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/20] target: Implement CPUClass::datapath_is_big_endian
- (big-endian)
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anton Johansson <anjo@rev.ng>, Zhao Liu <zhao1.liu@intel.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org,
- Max Filippov <jcmvbkbc@gmail.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, qemu-riscv@nongnu.org,
- Alistair Francis <alistair@alistair23.me>, qemu-ppc@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20241204202602.58083-1-philmd@linaro.org>
- <20241204202602.58083-16-philmd@linaro.org>
+Subject: Re: [RFC PATCH v3 25/26] target/arm/kvm-rme: Add measurement log
+To: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ alex.bennee@linaro.org, Stefan Berger <stefanb@linux.vnet.ibm.com>
+References: <20241125195626.856992-2-jean-philippe@linaro.org>
+ <20241125195626.856992-27-jean-philippe@linaro.org>
+ <02b90518-2996-4231-bee9-43ce313669b0@linux.ibm.com>
+ <Z0XREyMovNyB4s6t@redhat.com> <20241126162149.GC956991@myrica>
+ <d3d73795-3f59-490c-9e54-c6c358af62d0@linux.ibm.com>
+ <20241205123316.GA567753@myrica>
 Content-Language: en-US
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-In-Reply-To: <20241204202602.58083-16-philmd@linaro.org>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20241205123316.GA567753@myrica>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: 92JW9vFJfht1dLe10VN6bExHV38Cet6t
-X-Proofpoint-GUID: 92JW9vFJfht1dLe10VN6bExHV38Cet6t
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: v1EZjmhlz7Pbo3zKMS6c1WgMDmzH9DOA
+X-Proofpoint-ORIG-GUID: v1EZjmhlz7Pbo3zKMS6c1WgMDmzH9DOA
 X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 adultscore=0 mlxlogscore=999
- clxscore=1015 spamscore=0 mlxscore=0 lowpriorityscore=0 phishscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090158
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+ adultscore=0 suspectscore=0
+ spamscore=0 clxscore=1011 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=999
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412090155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
 X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,145 +117,83 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-On 12/4/2024 2:25 PM, Philippe Mathieu-Daudé wrote:
-> For all targets which have endianness architecturally
-> predefined as big endian (built using TARGET_BIG_ENDIAN=y),
-> their datapath_is_big_endian() handler simply returns %true.
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/hexagon/cpu.c  | 6 ++++++
->   target/hppa/cpu.c     | 6 ++++++
->   target/m68k/cpu.c     | 6 ++++++
->   target/openrisc/cpu.c | 6 ++++++
->   target/s390x/cpu.c    | 6 ++++++
->   5 files changed, 30 insertions(+)
->
-> diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-> index 020038fc490..6407ed80c59 100644
-> --- a/target/hexagon/cpu.c
-> +++ b/target/hexagon/cpu.c
-> @@ -245,6 +245,11 @@ void hexagon_debug(CPUHexagonState *env)
->       hexagon_dump(env, stdout, CPU_DUMP_FPU);
->   }
->   
-> +static bool hexagon_cpu_datapath_is_big_endian(CPUState *cs)
-> +{
-> +    return true;
-> +}
-> +
->   static void hexagon_cpu_set_pc(CPUState *cs, vaddr value)
->   {
->       cpu_env(cs)->gpr[HEX_REG_PC] = value;
-> @@ -342,6 +347,7 @@ static void hexagon_cpu_class_init(ObjectClass *c, void *data)
->                                          &mcc->parent_phases);
->   
->       cc->class_by_name = hexagon_cpu_class_by_name;
-> +    cc->datapath_is_big_endian = hexagon_cpu_datapath_is_big_endian;
->       cc->has_work = hexagon_cpu_has_work;
->       cc->dump_state = hexagon_dump_state;
->       cc->set_pc = hexagon_cpu_set_pc;
 
+On 12/5/24 7:33 AM, Jean-Philippe Brucker wrote:
+> On Mon, Dec 02, 2024 at 10:58:01AM -0500, Stefan Berger wrote:
+>>
+>>
+>> On 11/26/24 11:21 AM, Jean-Philippe Brucker wrote:
+>>> On Tue, Nov 26, 2024 at 01:45:55PM +0000, Daniel P. Berrangé wrote:
+>>>> On Mon, Nov 25, 2024 at 05:23:44PM -0500, Stefan Berger wrote:
+>>>>>
+>>>>>
+>>>>> On 11/25/24 2:56 PM, Jean-Philippe Brucker wrote:
+>>>>>> Create an event log, in the format defined by Trusted Computing Group
+>>>>>> for TPM2. It contains information about the VMM, the Realm parameters,
+>>>>>> any data loaded into guest memory before boot and the initial vCPU
+>>>>>> state.
+>>>>>>
+>>>>>> The guest can access this log from RAM and send it to a verifier, to
+>>>>>> help the verifier independently compute the Realm Initial Measurement,
+>>>>>> and check that the data we load into guest RAM is known-good images.
+>>>>>> Without this log, the verifier has to guess where everything is loaded>
+>>>>> and in what order.
+>>>>>
+>>>>> Typically these logs are backed by extensions of TPM PCRs and when you send
+>>>>> a log to a verifier you send a TPM quote along with it for the verifer to
+>>>>> replay the log and check the TPM quote. Also, early code in the firmware is
+>>>>> typically serving as a root of trust that starts the chain of measurements
+>>>>> of code and data, first measuring itself and then other parts of the
+>>>>> firmware before it jumps into the other parts. Now here you seem to just
+>>>>> have a log and no PCR extensions and therefore no quote over PCRs can be
+>>>>> used.
+>>>
+>>> Indeed, in our case it's the trusted hypervisor (RMM) that provides the
+>>> equivalent to TPM quote and PCRs. In more details:
+>>>
+>>> 1. QEMU loads images into guest RAM by calling KVM, which calls RMM.
+>>> 2. RMM calculates a hash of the image content, adds it to a rolling hash
+>>>      the "Realm Initial Measurement" (RIM), which I believe is equivalent to
+>>>      a PCR.
+>>
+>> I am not familiar with RIM. A link to read more about it would be helpful.
+> 
+> The "Learn the architecture" documentation might be a good introduction
+> https://developer.arm.com/documentation/den0127/0200/Overview
+> In particular the part about Realm creation:
+> https://developer.arm.com/documentation/den0127/0200/Realm-management/Realm-creation-and-attestation
+> 
+> The RMM specification describes exactly how the RIM is calculated, but
+> is less palatable:
+> https://developer.arm.com/documentation/den0137/1-0rel0/?lang=en
+> A7.1.1 Realm Initial Measurement
+> 
+> More specialized resource are the attestation token documentation:
+> [1] https://datatracker.ietf.org/doc/html/draft-ffm-rats-cca-token-00
+> and CCA Security Model:
+> https://developer.arm.com/documentation/DEN0096/latest/
 
-For hexagon:
+Thanks for the links. I will have a look at them when I have time.
 
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> 
+>>
+>>> 3. During remote attestation, the guest sends evidence containing this RIM
+>>>      signed by the root of trust, along with a signed token identifying the
+>>>      platform (hardware, firmware, RMM).
+>>
+>> Is this a well known manufacturer key that one would expect for signature
+>> verification or is it locally created?
+> 
+> It comes from a well known manufacturer key, although the signing can be
+> delegated in some models (like in the current demos):
+> 
+> The hardware RoT creates a key pair for the RMM, which the RMM uses to
+> sign the RIM. The RoT then signs the RMM pubkey, using the well-known key
+> (see [1] 4.10 Token Binding).
 
+You should mention in the commit message that the log will be signed and 
+user space can get the signature over the log from some filesystem or so.
 
-> diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-> index c38439c1800..8ccd224f2a4 100644
-> --- a/target/hppa/cpu.c
-> +++ b/target/hppa/cpu.c
-> @@ -203,6 +203,11 @@ static void hppa_cpu_initfn(Object *obj)
->       cpu_hppa_put_psw(env, PSW_W);
->   }
->   
-> +static bool hppa_cpu_datapath_is_big_endian(CPUState *cs)
-> +{
-> +    return true;
-> +}
-> +
->   static ObjectClass *hppa_cpu_class_by_name(const char *cpu_model)
->   {
->       g_autofree char *typename = g_strconcat(cpu_model, "-cpu", NULL);
-> @@ -245,6 +250,7 @@ static void hppa_cpu_class_init(ObjectClass *oc, void *data)
->                                       &acc->parent_realize);
->   
->       cc->class_by_name = hppa_cpu_class_by_name;
-> +    cc->datapath_is_big_endian = hppa_cpu_datapath_is_big_endian;
->       cc->has_work = hppa_cpu_has_work;
->       cc->mmu_index = hppa_cpu_mmu_index;
->       cc->dump_state = hppa_cpu_dump_state;
-> diff --git a/target/m68k/cpu.c b/target/m68k/cpu.c
-> index 5fe335558aa..52f8db41d5a 100644
-> --- a/target/m68k/cpu.c
-> +++ b/target/m68k/cpu.c
-> @@ -24,6 +24,11 @@
->   #include "migration/vmstate.h"
->   #include "fpu/softfloat.h"
->   
-> +static bool m68k_cpu_datapath_is_big_endian(CPUState *cs)
-> +{
-> +    return true;
-> +}
-> +
->   static void m68k_cpu_set_pc(CPUState *cs, vaddr value)
->   {
->       M68kCPU *cpu = M68K_CPU(cs);
-> @@ -571,6 +576,7 @@ static void m68k_cpu_class_init(ObjectClass *c, void *data)
->                                          &mcc->parent_phases);
->   
->       cc->class_by_name = m68k_cpu_class_by_name;
-> +    cc->datapath_is_big_endian = m68k_cpu_datapath_is_big_endian;
->       cc->has_work = m68k_cpu_has_work;
->       cc->mmu_index = m68k_cpu_mmu_index;
->       cc->dump_state = m68k_cpu_dump_state;
-> diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
-> index b96561d1f26..16e39b43ec4 100644
-> --- a/target/openrisc/cpu.c
-> +++ b/target/openrisc/cpu.c
-> @@ -25,6 +25,11 @@
->   #include "fpu/softfloat-helpers.h"
->   #include "tcg/tcg.h"
->   
-> +static bool openrisc_cpu_datapath_is_big_endian(CPUState *cs)
-> +{
-> +    return true;
-> +}
-> +
->   static void openrisc_cpu_set_pc(CPUState *cs, vaddr value)
->   {
->       OpenRISCCPU *cpu = OPENRISC_CPU(cs);
-> @@ -257,6 +262,7 @@ static void openrisc_cpu_class_init(ObjectClass *oc, void *data)
->                                          &occ->parent_phases);
->   
->       cc->class_by_name = openrisc_cpu_class_by_name;
-> +    cc->datapath_is_big_endian = openrisc_cpu_datapath_is_big_endian;
->       cc->has_work = openrisc_cpu_has_work;
->       cc->mmu_index = openrisc_cpu_mmu_index;
->       cc->dump_state = openrisc_cpu_dump_state;
-> diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
-> index 514c70f3010..eda1e3b286f 100644
-> --- a/target/s390x/cpu.c
-> +++ b/target/s390x/cpu.c
-> @@ -44,6 +44,11 @@
->   #define CR0_RESET       0xE0UL
->   #define CR14_RESET      0xC2000000UL;
->   
-> +static bool s390_cpu_datapath_is_big_endian(CPUState *cs)
-> +{
-> +    return true;
-> +}
-> +
->   #ifndef CONFIG_USER_ONLY
->   static bool is_early_exception_psw(uint64_t mask, uint64_t addr)
->   {
-> @@ -390,6 +395,7 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
->                                          &scc->parent_phases);
->   
->       cc->class_by_name = s390_cpu_class_by_name,
-> +    cc->datapath_is_big_endian = s390_cpu_datapath_is_big_endian;
->       cc->has_work = s390_cpu_has_work;
->       cc->mmu_index = s390x_cpu_mmu_index;
->       cc->dump_state = s390_cpu_dump_state;
+    Stefan
+
 
