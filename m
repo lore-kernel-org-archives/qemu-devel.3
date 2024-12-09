@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60ABFE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 13:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F2BBE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 13:45:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKdx5-0006Gf-9C; Mon, 09 Dec 2024 08:37:31 -0500
+	id 1tKe3f-0000yt-Ug; Mon, 09 Dec 2024 08:44:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=7enf=TC=kaod.org=clg@ozlabs.org>)
- id 1tKdx2-0006G9-PO; Mon, 09 Dec 2024 08:37:28 -0500
+ id 1tKe3a-0000yQ-G4; Mon, 09 Dec 2024 08:44:14 -0500
 Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=7enf=TC=kaod.org=clg@ozlabs.org>)
- id 1tKdx0-0007GP-TS; Mon, 09 Dec 2024 08:37:28 -0500
+ id 1tKe3S-0007sM-Kf; Mon, 09 Dec 2024 08:44:09 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y6NFr2cKmz4x61;
- Tue, 10 Dec 2024 00:37:20 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y6NPR6pVnz4x61;
+ Tue, 10 Dec 2024 00:43:55 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y6NFm6vvMz4wby;
- Tue, 10 Dec 2024 00:37:16 +1100 (AEDT)
-Message-ID: <9724756c-8e25-4d70-8793-4f6f9922211d@kaod.org>
-Date: Mon, 9 Dec 2024 14:37:19 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y6NPN1xyfz4wb0;
+ Tue, 10 Dec 2024 00:43:51 +1100 (AEDT)
+Message-ID: <f4671219-cf7e-448e-be13-006d2b2be062@kaod.org>
+Date: Mon, 9 Dec 2024 14:43:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/6] Support SDHCI and eMMC for ast2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
+Subject: Re: [PATCH 0/7] tests/functional: Split aspeed tests
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com, yunlin.tang@aspeedtech.com
-References: <20241204084453.610660-1-jamin_lin@aspeedtech.com>
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20241206131132.520911-1-clg@redhat.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -84,9 +85,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241204084453.610660-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20241206131132.520911-1-clg@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=7enf=TC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -39
@@ -110,37 +111,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 09:44, Jamin Lin wrote:
-> change from v1:
-> This patch series do not support boot from an eMMC.
-> Only support eMMC and SD Slot 0 as storages.
+On 12/6/24 14:11, Cédric Le Goater wrote:
+> Hello,
 > 
-> change from v2:
-> - Add hw/sd/aspeed_sdhci: Fix coding style patch
+> All functional tests of aspeed machine are run from a single test
+> file. Splitting the tests will improve parallelism and allow us to
+> set different timeouts.
 > 
-> change from v3:
-> - Directly set capareg and sd_spec_version instead of property
-> - Keep DEFINE_TYPES
+> The timeout values were chosen from a (single cpu) run on a raspberry
+> pi4 :
 > 
-> change from v4:
-> - Keep to set capareg and sd_spec_version by property
+>    func-arm-arm_aspeed_ast1030       2.52s
+>    func-arm-arm_aspeed_palmetto     50.54s
+>    func-arm-arm_aspeed_romulus      61.81s
+>    func-arm-arm_aspeed_rainier     127.23s
+>    func-arm-arm_aspeed_ast2500     378.60s
+>    func-arm-arm_aspeed_ast2600     559.13s
 > 
-> Jamin Lin (6):
->    hw/sd/aspeed_sdhci: Fix coding style
->    hw/arm/aspeed: Fix coding style
->    hw:sdhci: Introduce a new "capareg" class member to set the different
->      Capability Registers
->    hw/sd/aspeed_sdhci: Add AST2700 Support
->    aspeed/soc: Support SDHCI for AST2700
->    aspeed/soc: Support eMMC for AST2700
+> Thanks,
 > 
->   hw/arm/aspeed_ast2400.c      |  3 +-
->   hw/arm/aspeed_ast2600.c      | 10 +++---
->   hw/arm/aspeed_ast27x0.c      | 35 +++++++++++++++++++
->   hw/sd/aspeed_sdhci.c         | 67 ++++++++++++++++++++++++++++++++++--
->   include/hw/sd/aspeed_sdhci.h | 13 +++++--
->   5 files changed, 117 insertions(+), 11 deletions(-)
+> C.
 > 
+> Cédric Le Goater (7):
+>    tests/functional: Introduce a specific test for ast1030 SoC
+>    tests/functional: Introduce a specific test for palmetto-bmc machine
+>    tests/functional: Introduce a specific test for romulus-bmc machine
+>    tests/functional: Introduce a specific test for ast2500 SoC
+>    tests/functional: Introduce a specific test for ast2600 SoC
+>    tests/functional: Introduce a specific test for rainier-bmc machine
+>    tests/functional: Move debian boot test from avocado
+> >   tests/avocado/boot_linux_console.py          |  26 --
+>   tests/functional/aspeed.py                   |  56 +++
+>   tests/functional/meson.build                 |  14 +-
+>   tests/functional/test_arm_aspeed.py          | 351 -------------------
+>   tests/functional/test_arm_aspeed_ast1030.py  |  81 +++++
+>   tests/functional/test_arm_aspeed_ast2500.py  |  59 ++++
+>   tests/functional/test_arm_aspeed_ast2600.py  | 143 ++++++++
+>   tests/functional/test_arm_aspeed_palmetto.py |  24 ++
+>   tests/functional/test_arm_aspeed_rainier.py  |  64 ++++
+>   tests/functional/test_arm_aspeed_romulus.py  |  24 ++
+>   10 files changed, 463 insertions(+), 379 deletions(-)
+>   create mode 100644 tests/functional/aspeed.py
+>   delete mode 100755 tests/functional/test_arm_aspeed.py
+>   create mode 100644 tests/functional/test_arm_aspeed_ast1030.py
+>   create mode 100644 tests/functional/test_arm_aspeed_ast2500.py
+>   create mode 100644 tests/functional/test_arm_aspeed_ast2600.py
+>   create mode 100644 tests/functional/test_arm_aspeed_palmetto.py
+>   create mode 100644 tests/functional/test_arm_aspeed_rainier.py
+>   create mode 100644 tests/functional/test_arm_aspeed_romulus.py
+
 
 
 Applied to aspeed-next.
