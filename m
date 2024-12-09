@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC6E2E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:08:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF04E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:21:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKk2t-0007UR-Kd; Mon, 09 Dec 2024 15:07:55 -0500
+	id 1tKkFF-00026m-DX; Mon, 09 Dec 2024 15:20:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKk2k-0007Ty-Hh
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:07:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKk2i-0008Ms-4O
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:07:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733774861;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=mwSlCBp6FduhCp76jIhl8oDXE40puLzF0cV9wQrpqRI=;
- b=FUc2nJlqTx2zKeCnDaM7FtWp2GSeBPr89TESbYWB44yXEDwQYXNJBQDBMXgbqUeGqcEagD
- AsmgIu8A2AYSiM8Zmk5OgFOFGUeaxvtveNKN7ownhLGBoOnRnZfnOM8VyrFApjuS0zsWhY
- oRaE8zkTwOApDecuaH/dfaB6bokr2iY=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-652-uvKwq06RNp683UxJJmvNcA-1; Mon, 09 Dec 2024 15:07:38 -0500
-X-MC-Unique: uvKwq06RNp683UxJJmvNcA-1
-X-Mimecast-MFC-AGG-ID: uvKwq06RNp683UxJJmvNcA
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6d895f91a7dso84679316d6.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 12:07:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tKkFD-00026M-OJ
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:20:39 -0500
+Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tKkF8-0001Qw-GK
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:20:39 -0500
+Received: by mail-pf1-x42c.google.com with SMTP id
+ d2e1a72fcca58-725ec1fa493so1114767b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 12:20:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1733775633; x=1734380433; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=rAQeQybcjmL2LhmKY9LXFhXODI3/drzMo4MDl5jvGjk=;
+ b=bzMQODJbjd9v8e89NTnPwew7BLXpjQwYY5JvXxWoFQt6bv6KUte5IRYqwmXx3ZwwP+
+ Lao8lwEIZNcjjUcnj0vpon65N7X5vylUZC7rrrHpLTI3bnpCrC9SXd+kJp9ye97Sqgzc
+ i8hXJtPzKWbrs1ktM7NUKWbIiPdrQ6zt6MuYrYG9j32TAh9P8NUFrkh/VNt50LfKQvul
+ poc5lTp2bGXlKMS/j7yz8rz53eSOdzl5Gixg0rUJXIhjh9LRQk3SEw0xmIrBIoMfPGHo
+ rY4Bpxusyb7JQu7zHgxFwXJzlOwfu1rGRqHWwxN40vjCJdMGVkRI+yLDQxmphKXJorMc
+ iMjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733774858; x=1734379658;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mwSlCBp6FduhCp76jIhl8oDXE40puLzF0cV9wQrpqRI=;
- b=d74lTVSKcdplUT94DPt11CjT5y/rcPr6alqdnk8sW4Gx66gpSlq3sR+49YQ2kHaUBK
- KRTXtLDqXloRQS9tO8TR0MU0DLWLdBwlopqC82TXZjmOqAvSuz0OupA/cg347x53jTWY
- Fz5k+5b7AErxqDR9YaQ8xoiysH+I9LoRxJOzLdUNNHljtJ9qgKeFDsg5Q/kJSyhP36Qa
- RR7ENuIZsYiGtv73mwH0rqXXGRGQHeQGDceWUVwpNI301VroiZb6CYr3xbspDLWaMWoU
- z4/PsjXL76v2Q35UzhDELLcUbAjlAVANi3VJwNhXWJX+P4p49lD3uEyZAqWk5nCXEsQn
- ibSg==
-X-Gm-Message-State: AOJu0YzUFjCjfS0JKjYra3WiBcXeiqS+fOYv8dzY6qIqkZuyYJjOW0Kr
- d/uKHEx+PUJIgXBheHvqOKVa2PJE4jZFopziBXu4ZXDqMdqpDaiJIFAA8Zu8vvv51DY0KHI+0DK
- xBvKdEiZp/DSQVYItZG4yw7KeXmeq6qAOUG7qCNHsJ5x0VS7ooq4lrWpXzUA+
-X-Gm-Gg: ASbGncuWcHq/dfWB/wuqI77hmxFDasB8RxLetCmfQpqs4+gTqRtfSdjrjcn2kF2XkSN
- 7zZbpKfInWTorxmiyssVLPPrI83DLRoV8QTPsNYbknSRtMBCHRnMMi4rrHsErWL5pOIh//woPmJ
- JL9+9zrtrs0VTm14aCoaC4i6CjGK1rpGqU8NEZuEh2o84ROce6KjmDqn+efmadH9OqWaa3IFguz
- KStRLo3ag9xh+F0PBrsSXV/X71hsecvRIOJ7hIaUezgrGAOhWXwWBMk8QBCxJt4xydGMIRMkYru
- olaSJ8zUGmnUF+Q=
-X-Received: by 2002:ad4:5f87:0:b0:6d8:9abb:3c28 with SMTP id
- 6a1803df08f44-6d91e3d6cd8mr32942676d6.29.1733774857811; 
- Mon, 09 Dec 2024 12:07:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHb4ruQlHIZt3On5VzUg+o6HUDrI0tiKuhpAvALly5NZ/j0GvoBItELekgQwLSKxCsK0I52RA==
-X-Received: by 2002:ad4:5f87:0:b0:6d8:9abb:3c28 with SMTP id
- 6a1803df08f44-6d91e3d6cd8mr32942316d6.29.1733774857516; 
- Mon, 09 Dec 2024 12:07:37 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d9004a6264sm25865676d6.87.2024.12.09.12.07.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 12:07:36 -0800 (PST)
-Date: Mon, 9 Dec 2024 15:07:34 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 06/19] physmem: preserve ram blocks for cpr
-Message-ID: <Z1dOBioqzQmEwW16@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1733775633; x=1734380433;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rAQeQybcjmL2LhmKY9LXFhXODI3/drzMo4MDl5jvGjk=;
+ b=niA3uJXTu+T0FwD6fNiGZAN9Ivu5Kx7diKQejs9fJT/RUgX/j/pkvwAYFk4hSAWYIv
+ vv9cpdgrXP0qIgszB0u8U4rSyv141BuQ6U3MztDPoH4rUkLqXCxCv/EqYaRS9DFBhoqk
+ zfVgzfA/6m9sjtubWiPono8HXh8R7fK/zOWr/V+TboSA2HkaJQ0Jcu85n+h91s2l9cKq
+ LWKGBW9e0icuBMQ5LfQAnf5mjcMshG5Cfq5IaWuf6XhHOAsLwRMmWAyST1dSEzMFFQI4
+ WdtvcXP2hmbbxpB70RVVVlTcTca4jp/V4y5UhGIq54Obt3Hk2QN6yOtWQsLDd06+80nS
+ nw2w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXa/94Rlr+YcPohDCNHCnQaxa9ZTlvAE6L9sNTBcQClmLQylhoP2V8Ns9jom/ton6c40OJTq0NBBnQV@nongnu.org
+X-Gm-Message-State: AOJu0YzytJ5Qamr+xBZOWfEEG3txaoljoeDRKWMkD+tJCxqLNKfudpI9
+ hs0ySP/NaNHQP1YHr7Kx6+UmRqnEe8rlIwYSJcmpvth75cZKRGnAEqYO4O1iUQE=
+X-Gm-Gg: ASbGnctf79a/P+mwo46oNTRn3PwzJS8YRyOWmU23aBT7j8pWj7ih/DdUrcpd8Ku6Co0
+ FYHBZtqOfWeWvhdn/LnsiPAqqB4rHFj7tBD3wsPeQQeCntqZoxXSX2n/HmFt3JDn5PFSMSMCM8K
+ /tdTi3QHfvTeSkk0pXXMoXtbGh1OyyuORt/rVsosfq13JVAhHh5KC/JH69TdGDbNCUpuJ68kY0L
+ J1WWYagwt1TArC1PLndTq5Vv1y0PXtGhIh+Fz3AflYkAbgUyKf2FqV4NpY9MkSHHs0snLIc4QRx
+ LHmhikLrWpPzZhm28zokoHe6sxM=
+X-Google-Smtp-Source: AGHT+IGWUVS/GyHOG91N6Tbm/Fn1MyJb3bpBNhRzuqgbKtyxFqwzQbKc7rUoX65fDUQFAmcASWN6Dg==
+X-Received: by 2002:a05:6a21:32a8:b0:1e1:9893:9a1a with SMTP id
+ adf61e73a8af0-1e1b1baeb1fmr3547851637.46.1733775632934; 
+ Mon, 09 Dec 2024 12:20:32 -0800 (PST)
+Received: from ?IPV6:2804:7f0:bcc0:b984:11b:9da2:696:f7f6?
+ ([2804:7f0:bcc0:b984:11b:9da2:696:f7f6])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fd157d2bf4sm6779715a12.74.2024.12.09.12.20.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 12:20:32 -0800 (PST)
+Message-ID: <193da3eb-0941-490d-aa87-a12385eaca1f@ventanamicro.com>
+Date: Mon, 9 Dec 2024 17:20:25 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC v2 0/2] Add RISC-V Server Platform Reference Board
+To: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
+ bin.meng@windriver.com, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org, andrei.warkentin@intel.com,
+ shaolin.xie@alibaba-inc.com, ved@rivosinc.com, sunilvl@ventanamicro.com,
+ haibo1.xu@intel.com, evan.chai@intel.com, yin.wang@intel.com,
+ tech-server-platform@lists.riscv.org, tech-server-soc@lists.riscv.org,
+ atishp@rivosinc.com, ajones@ventanamicro.com, conor@kernel.org,
+ heinrich.schuchardt@canonical.com, marcin.juszkiewicz@linaro.org,
+ wu.fei9@sanechips.com.cn
+References: <20240312135222.3187945-1-fei2.wu@intel.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20240312135222.3187945-1-fei2.wu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,134 +110,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 05:19:58AM -0800, Steve Sistare wrote:
-> Save the memfd for ramblocks in CPR state, along with a name that
-> uniquely identifies it.  The block's idstr is not yet set, so it
-> cannot be used for this purpose.  Find the saved memfd in new QEMU when
-> creating a block.  If the block size is larger in new QEMU, extend the
-> block using fallocate, and the extra space will be useable after a guest
-> reset.
+Hi,
+
+As some of you already noticed the Intel email from Fei Wu is no longer active. With
+Andrei's help we were able to contact Fei Wu in an alternate email,
+wu.fei9@sanechips.com.cn.
+
+I talked with Fei and offered my help to keep this work going forward. We decided
+that I will be sending new versions of this work, keeping Fei's authorship using
+the fore-mentioned email, while keeping the original Intel signed-off-by tag.
+
+As for the series per se, in patch 1 a dependency on RVA23 was detected. I have
+RVA23 patches that are dependent on the upstreaming of the Zjpm pointer masking
+series, together with the "Sha" support that is already queued. As soon as RVA23
+is sent I'll post a v3 of this series. With luck we might have something later
+this month, but most probably we're talking about January 2025.
+
+
+Thanks,
+
+Daniel
+
+On 3/12/24 10:52 AM, Fei Wu wrote:
+> The RISC-V Server Platform specification[1] defines a standardized set
+> of hardware and software capabilities, that portable system software,
+> such as OS and hypervisors can rely on being present in a RISC-V server
+> platform. This patchset provides a RISC-V Server Platform (RVSP)
+> reference implementation on qemu which is in compliance with the spec
+> as faithful as possible.
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> ---
->  system/physmem.c | 36 ++++++++++++++++++++++++++++++++++--
->  1 file changed, 34 insertions(+), 2 deletions(-)
+> The reference board can be running with tag edk2-stable202308 in
+> upstream edk2 repo[2].
 > 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 0bcb2cc..aa095a3 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -70,6 +70,7 @@
->  
->  #include "qemu/pmem.h"
->  
-> +#include "migration/cpr.h"
->  #include "migration/vmstate.h"
->  
->  #include "qemu/range.h"
-> @@ -1661,6 +1662,19 @@ void qemu_ram_unset_idstr(RAMBlock *block)
->      }
->  }
->  
-> +static char *cpr_name(RAMBlock *block)
-> +{
-> +    MemoryRegion *mr = block->mr;
-> +    const char *mr_name = memory_region_name(mr);
-> +    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
-> +
-> +    if (id) {
-> +        return g_strdup_printf("%s/%s", id, mr_name);
-> +    } else {
-> +        return g_strdup(mr_name);
-> +    }
-> +}
-> +
->  size_t qemu_ram_pagesize(RAMBlock *rb)
->  {
->      return rb->page_size;
-> @@ -2080,8 +2094,18 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
->  {
->      size_t max_length = new_block->max_length;
->      MemoryRegion *mr = new_block->mr;
-> -    const char *name = memory_region_name(mr);
-> -    int fd;
-> +    g_autofree char *name = cpr_name(new_block);
-> +    int fd = cpr_find_fd(name, 0);
-
-If to use the proposed patch in the reply of patch 2, here this should be
-able to be moved to qemu_ram_alloc_anonymous_fd(), IIUC.
-
-> +
-> +    if (fd >= 0) {
-> +        if (lseek(fd, 0, SEEK_END) < max_length && ftruncate(fd, max_length)) {
-> +            error_setg_errno(errp, errno,
-> +                             "cannot grow ram block %s fd %d to %ld bytes",
-> +                             name, fd, max_length);
-> +            goto err;
-> +        }
-
-I remember we discussed something similar to this, do we need ftruncate()
-at all?  I think not.
-
-This happens when booting QEMU, so I don't think it's relevant yet to what
-size used in src, as this is dest.
-
-It starts to get relevant only when cpr migration starts on src, it sents
-ramblocks at the beginning, then parse_ramblock() will properly resize any
-ramblock to whatever size it should use.
-
-If the resize didn't happen it can only mean that used_length is correctly
-matched on both sides.
-
-So I don't see why a special truncate() call is needed yet..
-
-> +        goto have_fd;
-> +    }
->  
->      if (qemu_memfd_available()) {
->          fd = qemu_memfd_create(name, max_length + mr->align, 0, 0, 0, errp);
-> @@ -2111,7 +2135,9 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
->              return true;
->          }
->      }
-> +    cpr_save_fd(name, 0, fd);
->  
-> +have_fd:
->      new_block->mr->align = QEMU_VMALLOC_ALIGN;
->      new_block->host = file_ram_alloc(new_block, max_length, fd, false, 0, errp);
->  
-> @@ -2122,6 +2148,8 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
->          return true;
->      }
->  
-> +err:
-> +    cpr_delete_fd(name, 0);
->      close(fd);
->      return false;
->  }
-> @@ -2234,6 +2262,8 @@ static void reclaim_ramblock(RAMBlock *block)
->  
->  void qemu_ram_free(RAMBlock *block)
->  {
-> +    g_autofree char *name = NULL;
-> +
->      if (!block) {
->          return;
->      }
-> @@ -2244,6 +2274,8 @@ void qemu_ram_free(RAMBlock *block)
->      }
->  
->      qemu_mutex_lock_ramlist();
-> +    name = cpr_name(block);
-> +    cpr_delete_fd(name, 0);
->      QLIST_REMOVE_RCU(block, next);
->      ram_list.mru_block = NULL;
->      /* Write list before version */
-> -- 
-> 1.8.3.1
+> The qemu command line used:
 > 
-
--- 
-Peter Xu
+> $QEMU -nographic -m 4G -smp 2 \
+>      -machine rvsp-ref,pflash0=pflash0,pflash1=pflash1 \
+>      -blockdev node-name=pflash0,driver=file,read-only=on,filename=RISCV_VIRT_CODE.fd \
+>      -blockdev node-name=pflash1,driver=file,filename=RISCV_VIRT_VARS.fd \
+>      -bios fw_dynamic.bin \
+>      -drive file=$BRS_IMG,if=ide,format=raw
+> 
+> Since there is no ACPI table generated in this new machine type, a
+> corresponding EDK-II platform (WIP) is needed to provide related ACPI
+> tables.
+> 
+> For testing purposes only, we used a workaround to generate the ACPI
+> tables in Qemu with a dedicated downstream patch.
+> 
+> [1] https://github.com/riscv-non-isa/riscv-server-platform
+> [2] https://github.com/tianocore/edk2.git
+> 
+> 
+> v2:
+> - move cpu definition the 1st patch
+> - replace sifive_test with power reset syscon
+> - add versioning scheme to fdt
+> - integrate recent changes in virt.c
+>    - use g_autofree
+>    - create_fdt/finalize_fdt
+>    - riscv_isa_write_fdt
+> - some cleanups
+> 
+> 
+> Fei Wu (2):
+>    target/riscv: Add server platform reference cpu
+>    hw/riscv: Add server platform reference machine
+> 
+>   configs/devices/riscv64-softmmu/default.mak |    1 +
+>   hw/riscv/Kconfig                            |   12 +
+>   hw/riscv/meson.build                        |    1 +
+>   hw/riscv/server_platform_ref.c              | 1276 +++++++++++++++++++
+>   target/riscv/cpu-qom.h                      |    1 +
+>   target/riscv/cpu.c                          |   61 +
+>   6 files changed, 1352 insertions(+)
+>   create mode 100644 hw/riscv/server_platform_ref.c
+> 
 
 
