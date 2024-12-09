@@ -4,113 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD65E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 17:45:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7B4E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 17:49:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKhoG-0007xZ-Tf; Mon, 09 Dec 2024 12:44:40 -0500
+	id 1tKhry-0001DO-MF; Mon, 09 Dec 2024 12:48:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKhoF-0007x8-8X
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:44:39 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tKhrm-0001Cn-17
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:48:28 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKhoD-0000Bw-73
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:44:39 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 28787210F8;
- Mon,  9 Dec 2024 17:44:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733766275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
- b=jQt9N33b8uW4yL3La+qDECUwzZBfODAefOKNKi/GiqCy2Mqtdm5f98HMujtnm4VtzBj7VD
- +vbgWDT9CfEd2aKf0EMIUiqbqSHPoPFaZkbguSohF6//Fam4QTLWGTEUBGDRTYUkaOK+gD
- rqwtjFHvWdUCKiXmbKX5wu/Gql6btJM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733766275;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
- b=9oLvozVZBmzemRMDjCGaawaiAiqeOWuXPPUcUCp+Jdn799Ss0/hcQJ9uhQ9K5w0p/Pl1zo
- PoDzGbFmCC26DbCA==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733766275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
- b=jQt9N33b8uW4yL3La+qDECUwzZBfODAefOKNKi/GiqCy2Mqtdm5f98HMujtnm4VtzBj7VD
- +vbgWDT9CfEd2aKf0EMIUiqbqSHPoPFaZkbguSohF6//Fam4QTLWGTEUBGDRTYUkaOK+gD
- rqwtjFHvWdUCKiXmbKX5wu/Gql6btJM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733766275;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
- b=9oLvozVZBmzemRMDjCGaawaiAiqeOWuXPPUcUCp+Jdn799Ss0/hcQJ9uhQ9K5w0p/Pl1zo
- PoDzGbFmCC26DbCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 902D3138D2;
- Mon,  9 Dec 2024 17:44:34 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id RZZZFYIsV2f5PgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Dec 2024 17:44:34 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Pierrick
- Bouvier
- <pierrick.bouvier@linaro.org>, =?utf-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0Ls=?=
- =?utf-8?B?0L7Qsg==?= <frolov@swemel.ru>, =?utf-8?Q?Daniel_P=2E_Berrang?=
- =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
-Cc: lvivier@redhat.com, sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] tests/qtest: add TIMEOUT_MULTIPLIER
-In-Reply-To: <cfa1c780-012b-4c4d-975a-e08068706607@linaro.org>
-References: <20241113094342.282676-2-frolov@swemel.ru>
- <Z0YUMoPr0oyQhqqK@redhat.com>
- <04edda40-32d2-43e0-8ade-a4b2a3e06eab@swemel.ru>
- <49cc1e5e-dd62-475e-b483-c2897c829529@linaro.org>
- <cfa1c780-012b-4c4d-975a-e08068706607@linaro.org>
-Date: Mon, 09 Dec 2024 14:42:22 -0300
-Message-ID: <8734iwbvnl.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tKhrj-0000xW-Hx
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:48:17 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3ea065b79so2864582a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 09:48:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733766493; x=1734371293; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Uss8sDJX3h8g6sdprnfLLda8N9W/Y9nwwZw5IGJfD/c=;
+ b=yv+xURZPDGkqADy6/92thhDDbkM+xT9bHrS/k1tEH7cN2djC2GCYGeYBL/6Ea/Aiun
+ fFb2MuFlKvqBS3/y6ZBllTKZnZLfKSROuqUFXKiyR3EWEueE3pHq+I9FQpKPklh8Kktr
+ YJcPFwW/dcaoUX1RDpQyrZUYFnk749QEEt04ICJOaPSovYD5Y3y92IHRBU+dimydVCI6
+ 1V8FSLIrB7rikfIqtEpnqtvDOMp3R3jc4Hy2Ydg3zPlshGYL+05WlpbByJwjs8hXwF9y
+ POOzTuzCLVxO3TzZ6tbXkyiw03usYuZdkuK9mLYEPVPUvelnaSc8xMjRFQDcGUZ08Yqw
+ cyuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733766493; x=1734371293;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Uss8sDJX3h8g6sdprnfLLda8N9W/Y9nwwZw5IGJfD/c=;
+ b=JC/N5Y6HCwEsJDjNyfGPIfKb65CopOruhcxdy9eHR1BlMoBwIBs0mUPH8SPomhVV0M
+ Jss4Aylp5a8I6SuOF0QGoL4LxtFk96AMZ0CINBeX3F67Qfu0Gstr1H6LFRrVrydSSL1E
+ mgC941Qb+amX3OPy9LB0hih6fWlNaOSwuiE8UrTOtRgJTgFgq3Kf2VzgXoyqulr0bOok
+ L/wrp5ACpCWgIPDnQhjzI3uvHIXWwnTAM/PSCliMnM8LnLDYHfQe0fSjQ9Fk1CY9LFlD
+ /g8UpeD6a2VHxSLu9JKUtJKwXsThfEBxqSDrVYncwezTJzNlQqW2luLYQs7yu3KvDpVu
+ i4Aw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX29bgcTxz6raQDzB+JvpuRnxIW8vSa/ao2HGTeYfHdZIKjogpC8yf0t/0q+cwBJaa6l8yVRKLXMmfF@nongnu.org
+X-Gm-Message-State: AOJu0YzXn2rjcG3PUNE5vWjboscQ7+Rw4r8s16ApJ/DgS1/d3OWX5RS5
+ ttMrdyqy8TYltjRPLNU37NNAb9S5toCmbaTt486Bm9NHYal9Czp6F11rttf2GT0oWTw4zG4kzEc
+ Blhnaz3T2gQuUm5gFqS7kl28mBSliXKXRZOhepA==
+X-Gm-Gg: ASbGncucTPnsN+HHy0GkOoGAjSVat/x2wSZ63xUxMeWmNYkz4j6RcZV7c42t0ZlK3WO
+ Da6bo71MhxfSfc7vmE1U7eC+I+AnrndNr
+X-Google-Smtp-Source: AGHT+IGZN2oQEiqPy+UCuY+X3FXGV93mAE7F0rsNdAsBPNXWfCl4Bs7iD6coOhQ4HW6gl7tK+tEednKFBM7sLm99Evo=
+X-Received: by 2002:a05:6402:3484:b0:5d3:ba42:e9d6 with SMTP id
+ 4fb4d7f45d1cf-5d4185694b1mr2102468a12.17.1733766493146; Mon, 09 Dec 2024
+ 09:48:13 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.986]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <AS8P192MB200003EB31EB6CD8EF3FE6C2B1332@AS8P192MB2000.EURP192.PROD.OUTLOOK.COM>
+ <50d9751c-5399-4caf-85ed-912aa8227aea@redhat.com>
+ <CAJSP0QW+ybkxDO6G0Eja4gaHvXBq5-3GmhjPJTHyngNMC=m45Q@mail.gmail.com>
+In-Reply-To: <CAJSP0QW+ybkxDO6G0Eja4gaHvXBq5-3GmhjPJTHyngNMC=m45Q@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Dec 2024 17:48:02 +0000
+Message-ID: <CAFEAcA-bURNUSEvCU2yMDnYB2kRZtekbh3vZRLDNPeGr2DFeSQ@mail.gmail.com>
+Subject: Re: Please Read: Error in website redirection
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Myles Wilson <Mellurboo@outlook.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,87 +95,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+On Mon, 9 Dec 2024 at 14:28, Stefan Hajnoczi <stefanha@gmail.com> wrote:
+>
+> On Mon, 9 Dec 2024 at 01:42, Thomas Huth <thuth@redhat.com> wrote:
+> >
+> > On 08/12/2024 01.17, Myles Wilson wrote:
+> > > Hello,
+> > > I was recently trying to download QEMU and noticed, on the landing page of
+> > > https://www.qemu.org/ <https://www.qemu.org/>,//the button titled "Full list
+> > > of releases"
+> > > redirects to https://download.qemu.org/ <https://download.qemu.org/> which
+> > > results in a *403 forbidden* error.
+> > > the same issue is present throughout the whole site with any button or
+> > > hyperlink to see full releases (even the one found in https://www.qemu.org/
+> > > download/ <https://www.qemu.org/download/> )
+> >
+> > It seems to be broken for "https://download.qemu.org" but if you manually
+> > add a slash at the end ("https://download.qemu.org/") it works at least for me.
+> >
+> > Paolo, Stefan, looks like a server misconfiguration to me, is this something
+> > that could be fixed in the configs? Otherwise, I think we should update the
+> > links on the website to include a slash at the end...
+>
+> This issue seems to be related to how the CDN server handles the HTTP
+> Referer header.
+>
+> Paolo: Is there a GNOME GitLab project where we can raise an issue to
+> ask the CDN admins to help?
+>
+> The 403 response occurs when I include the referrer:
 
-> On 27/11/24 19:44, Pierrick Bouvier wrote:
->> On 11/26/24 23:40, =D0=94=D0=BC=D0=B8=D1=82=D1=80=D0=B8=D0=B9 =D0=A4=D1=
-=80=D0=BE=D0=BB=D0=BE=D0=B2 wrote:
->>> Hello, Daniel
->>>
->>> On 26.11.2024 21:32, Daniel P. Berrang=C3=A9 wrote:
->>>> On Wed, Nov 13, 2024 at 12:43:40PM +0300, Dmitry Frolov wrote:
->>>>> Some tests need more time when qemu is built with
->>>>> "--enable-asan --enable-ubsan"
->>>>>
->>>>> As was discussed here:
->>>>> https://patchew.org/QEMU/20241112120100.176492-2-frolov@swemel.r/u
->>>>>
->>>>> TIMEOUT_MULTIPLIER enviroment variable will be
->>>>> a useful option, allowing non-invasive timeouts
->>>>> increasing for a specific build.
->>>>>
->>>>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
->>>>> ---
->>>>> =C2=A0=C2=A0 scripts/mtest2make.py | 2 ++
->>>>> =C2=A0=C2=A0 1 file changed, 2 insertions(+)
->>>>>
->>>>> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
->>>>> index eb01a05ddb..ff60b62724 100644
->>>>> --- a/scripts/mtest2make.py
->>>>> +++ b/scripts/mtest2make.py
->>>>> @@ -27,7 +27,9 @@ def names(self, base):
->>>>> =C2=A0=C2=A0 .speed.slow =3D $(foreach s,$(sort $(filter-out %-thorou=
-gh, $1)),=20
->>>>> --suite $s)
->>>>> =C2=A0=C2=A0 .speed.thorough =3D $(foreach s,$(sort $1), --suite $s)
->>>>> +ifndef TIMEOUT_MULTIPLIER
->>>>> =C2=A0=C2=A0 TIMEOUT_MULTIPLIER =3D 1
->>>>> +endif
->>>> Can you explain what scenario this is needed for, as unless I'm
->>>> missing something this change has no purpose. This assignment is
->>>> merely defining the defalt value, which can already be overridden
->>>> at runtime without this 'ifndef'
->>>>
->>>> eg
->>>>
->>>> $ make check-unit TIMEOUT_MULTIPLIER=3D7
->>>>
->>>> In another shell:
->>>>
->>>> $ ps -axuwwf | grep 'meson test'
->>>> berrange 1931657=C2=A0 3.9=C2=A0 0.1 330904 99344 pts/1=C2=A0=C2=A0=C2=
-=A0 S+=C2=A0=C2=A0 18:29=20=20=20
->>>> 0:00=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \_=20
->>>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/python3=20
->>>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/meson test=20
->>>> --no-rebuild -t 7 --num-processes 1 --print-errorlogs --suite unit
->>>>
->>>> shows TIMEOUT_MULTIPLIER being honoured
->>> Yeah... You are right!
->>> It is possible to set TIMEOUT_MULTIPLIER only to run tests.
->>> It is not necessary to set it for the whole build.
->>>
->>> Sorry, and thanks a lot!
->>>>
->>>>
->>>> With regards,
->>>> Daniel
->>> regards,
->>> Dmitry
->>>
->>=20
->> This patch is still useful if we want to set TIMEOUT_MULTIPLIER as=20
->> global env variable, and not explicitely on each make invocation.
->
-> If so, I'd rather use conditional assignment [*]:
->
-> - TIMEOUT_MULTIPLIER =3D 1
-> + TIMEOUT_MULTIPLIER ?=3D 1
->
-> [*]=20
-> https://www.gnu.org/software/make/manual/html_node/Conditional-Assignment=
-.html
+The GNOME CDN sysadmins have now kindly fixed this for us.
 
-I can fix that up in qtest-next, thanks.
+thanks
+-- PMM
 
