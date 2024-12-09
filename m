@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F714E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:05:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD305E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:07:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKkw6-0001uf-E3; Mon, 09 Dec 2024 16:04:58 -0500
+	id 1tKkxM-0002bf-5Q; Mon, 09 Dec 2024 16:06:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkvx-0001uL-87
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:04:51 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkxJ-0002b1-NT
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:06:14 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkvt-0005pI-1m
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:04:46 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-435004228c0so6883165e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:04:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkxE-00067f-Qv
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:06:12 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-434f09d18e2so23980705e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:06:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733778283; x=1734383083; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733778367; x=1734383167; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=yBkW7M45SlBrvwwYNxP0+vEKPB0yLG/gG9W8MkJ/p/g=;
- b=Jy32PSYi3Mw0/ltx8yqs+lqhRQSFp+hQKJ2Ch5XxtmC1nOjvpmHF4w67JS2anaDLao
- 70JAGHO66h4gT0eZTL7Pc0QwaJFVOHvdCWWZB+x+pKLuKdPhPXUYn3msZ/GGz2+jW3lj
- WKmDjx+aGZov9MhxY+xidheIH7QJQGNQzdf8p+1L+SwY+/gKkTlHfSaaYkms60bITEr0
- /DIbJNX2Vkfwz7NJqcunFT7imegzHxc6L8irsV66WokJxR0fciOlDmP0Z5XBQcgJ/65q
- PC3hHs0h3ltqMNrHAeozNVXjmLnYH/SE0stTmhTZgYRg5IjFXZ1wY8ErcWqIFs8e7swB
- tETA==
+ bh=SHpsg/5OjerCEGTsMfPsuGvDD8VlqxErsH3nBqaj/KA=;
+ b=x6j+zsigNh72S9dofxQh3zinEEzlQ55piVvmF/hEO0HN2zgHs1Ie/qnG3Bk186yDi7
+ 1uWs8kogm9QU1C6fvbTEIKhNDB2ziSvXXC6s14hUWPzE0hyzQhbt8/sSxvwem0GG7d8Q
+ 2058pfWf8egR0b7YwLOYUH51Do+PQdb+m0Ib9fwcjRVMV5K66O7Gy4VPxt+QGtnGrxyH
+ DOuCd8W0Gh6fhdBjUOuq7aB+UsoA8YIz86ZkWouQeBNA6EuPNMnen39CuwoVpMVbI7Nb
+ UVnvJhrBXtKkT0U5FFjpcWvRniU2uRSWdsg3KKZ9+6Tn6StKhkFGTlYljXkJjaoIhvWJ
+ Jb9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733778283; x=1734383083;
+ d=1e100.net; s=20230601; t=1733778367; x=1734383167;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=yBkW7M45SlBrvwwYNxP0+vEKPB0yLG/gG9W8MkJ/p/g=;
- b=cAjDhdM6XPOj9LbMMoi9GqE/rsgOBVM/gPNBfNX5W/5/ixRBlzq7iRmxnJwZdKIAkh
- OIlNNzDCc7wYFtGSG158MSlHivB8twLTyQsjtKvKbsTs6xm/+4X2h4LosdrQ/1y6OK3o
- M3jNQgeTwhhFVqjRirWHHJdDJndqedA3Hmn4L3WRVRJv1zHXTug6gEca9gi/2D13wp7x
- nzlFKsH3ktfdAj0O030tnVbHrjI5lsTMHGaUKXiOWysI7psTedUJmMr0HRuK/MM0NDWk
- t3m582aekC1xJCGEulAXvgk0WfEB5SkA3H5DGU6ULN2zTfG338Od4oCPmgkmsImWDsvY
- dBvw==
+ bh=SHpsg/5OjerCEGTsMfPsuGvDD8VlqxErsH3nBqaj/KA=;
+ b=EUNhBkdipESF9tTaBKnCyZNDaeWYMKeguaZlW9RRrElBcwrq964kMMYbJOHOo8iPHj
+ ZbE4l5oaluFMjTBIPqK8ZKfmLZ5RfAPkK+YWXnKj3LTunUYwE79VAHgfY7tIfmUwA5iz
+ j/w7XWn31W75lrZXGEbZVNqIwB5YN5Zs9XVUM9At0OE0ARjsxmw/ttB7p4oNh6g+G6tv
+ 8NsB7SNQB1EPvp2gxFThUbuktMx6feSmJpMKrkNmPqfjkC2Y5p5ndjeNVbEUBxTpBn8o
+ mV9HD0f44ubfPDyBUTWiQbpa3KvRzE1UMLG73HgaxqtLH2PDKLvhEraDcs5nofhhw2fM
+ f8Mw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVbJuEufoOQth4f8xuy6VejWBqhmuCE7oMHyPpMvrVmFsKU4qNCXd3gbboAOCxO3xIJGFrF31IUFboz@nongnu.org
-X-Gm-Message-State: AOJu0Yz4n7PrSjdrl+xhPdR4ALjCUSjM5CryMDXSdTNRxivJ8d/3718N
- l31IeTkgY3URbyJTNEkB0qvBGN5Fa1zfdYsl9HGtAqIaUxvxRoQa8tysFJF5rZE=
-X-Gm-Gg: ASbGncudpIC+77f5CcOpOnQXhy4FCWIrDAqKcnXCE1M+4nbF74bJ/1ujCd04E0vXgmN
- 1ScceWnA4M+xrdzxNmA1XkSvOSc7dsEqgsZjv2HyhdDrT4E1UuYTB5dukRHq2EHYT1/leIaKwKK
- hWUwI/hTSaQBQUKalRzR6LXAKYw3fcnqh5d0Cw/RL1HCjGJgNl2A+Dh6EK98k9cqfokM2Igcbor
- 1WEPOWdjjR0WGOgoJ/hr2pHPebTOumXU7QNw8UBrys4Efqrw9SZWFnNEIvlWJQPHSpm/9+M+hK2
- EY4mqbjqLu2ox2pF7SIVGkzAmjHN78VAE9Sj
-X-Google-Smtp-Source: AGHT+IFihtqSBMKE2PcQXoRdKaqy3H7QWfwrOs+5vPgSYMXsRq40S/FKb72JJGEUS524gZhgGwFFqQ==
-X-Received: by 2002:a05:600c:5101:b0:434:f131:1e71 with SMTP id
- 5b1f17b1804b1-434fff3d84cmr22283055e9.8.1733778283128; 
- Mon, 09 Dec 2024 13:04:43 -0800 (PST)
+ AJvYcCVO9rA1QkEiwaNnZ2oBWAAjQ2qhrcUMQaU8FopzBiWVQB2Jd9ViI7CXaoLekEqD7/4qwTDx3uLlf6Sn@nongnu.org
+X-Gm-Message-State: AOJu0YzzOz0LQy8cOqZcL35m6dO23VA88s5pWCAUjyJCWCBQmCmxzXHo
+ xF/J5pdkx0CewFZTRwlVm50UPYc480CaF+Vbolm6b7Lf7EJAw9FOmLClOm/vkhk=
+X-Gm-Gg: ASbGncsk5Uvy+Itq6megmTASN8I2E0hVv4CEyE3+IHGv0ABEh2GTRb2NQJJhA73RxLz
+ bL/d2PlfILQUf9ZzI/xEzGeYHVQ6C6+yH9blH/3vCG200DOqpNk6GUU++VAE5XLHhHcci/+1l4/
+ LolBb/Xh+BEp0EN87T/iD4o1RFSIn927ZRDNWjSfhcpcgMReFPOFTBOF/2oAUVVIzwWM+/giawg
+ 8izMustPFai/vP15/u5NRyBjibdrquBG7AJlZN5cK8U+uPoZOwHhM9W2ncBVgFJQs4WhG/pf+Gk
+ /rgCYpVEnhxocQ8UX4IDfTdg05r/tBCZ
+X-Google-Smtp-Source: AGHT+IEIu19wAxNWgAu7fwODPNn+aLAqajxmDaGqIOu3At5fgSe6ITGwBTPjKMQqhX6cgHN9xLI2rw==
+X-Received: by 2002:a5d:5f48:0:b0:386:459f:67e0 with SMTP id
+ ffacd0b85a97d-386459f687dmr1085729f8f.21.1733778367277; 
+ Mon, 09 Dec 2024 13:06:07 -0800 (PST)
 Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f0d6a825sm85363615e9.20.2024.12.09.13.04.42
+ 5b1f17b1804b1-434f1125e69sm87500835e9.32.2024.12.09.13.06.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 13:04:42 -0800 (PST)
-Message-ID: <c6d03941-6100-46a4-9258-a465ca0557a2@linaro.org>
-Date: Mon, 9 Dec 2024 22:04:42 +0100
+ Mon, 09 Dec 2024 13:06:06 -0800 (PST)
+Message-ID: <b8a4ed66-22b5-488e-bc63-e8d960943685@linaro.org>
+Date: Mon, 9 Dec 2024 22:06:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] tests/qtest/bios-tables-test: Free tables at
- dump_aml_files
+Subject: Re: [PATCH 4/6] tests/qtest/virtio-iommu-test: Don't pass
+ uninitialized data into qtest_memwrite
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
- <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
 References: <20241209204427.17763-1-farosas@suse.de>
- <20241209204427.17763-4-farosas@suse.de>
+ <20241209204427.17763-5-farosas@suse.de>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241209204427.17763-4-farosas@suse.de>
+In-Reply-To: <20241209204427.17763-5-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,30 +103,33 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 9/12/24 21:44, Fabiano Rosas wrote:
-> The dump_aml_files() function calls load_expected_aml() to allocate
-> the tables but never frees it. Add the missing call to
-> free_test_data().
+> Valgrind complains about:
 > 
-
-This is also Coverity CID 1549449 (RESOURCE_LEAK)
-
+> Use of uninitialised value of size 8
+> &
+> Conditional jump or move depends on uninitialised value(s)
+> 
+> both at:
+>     at 0x5265931: _itoa_word (_itoa.c:180)
+>     by 0x527EEC7: __vfprintf_internal (vfprintf-internal.c:1687)
+>     by 0x528C8B0: __vsprintf_internal (iovsprintf.c:96)
+>     by 0x526B920: sprintf (sprintf.c:30)
+>     by 0x1296C7: qtest_memwrite (libqtest.c:1273)
+>     by 0x193C04: send_map (virtio-iommu-test.c:125)
+>     by 0x194392: test_attach_detach (virtio-iommu-test.c:214)
+>     by 0x17BDE7: run_one_test (qos-test.c:181)
+>     by 0x4B0699D: test_case_run (gtestutils.c:2900)
+>     by 0x4B0699D: g_test_run_suite_internal (gtestutils.c:2988)
+>     by 0x4B068B2: g_test_run_suite_internal (gtestutils.c:3005)
+>     by 0x4B068B2: g_test_run_suite_internal (gtestutils.c:3005)
+>     by 0x4B068B2: g_test_run_suite_internal (gtestutils.c:3005)
+>   Uninitialised value was created by a stack allocation
+>     at 0x193AFD: send_map (virtio-iommu-test.c:103)
+> 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   tests/qtest/bios-tables-test.c | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 16d0ffbdf6..1cf4e3f7ef 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -292,6 +292,7 @@ static void dump_aml_files(test_data *data, bool rebuild)
->   
->           g_free(aml_file);
->       }
-> +    free_test_data(&exp_data);
->   }
->   
->   static bool create_tmp_asl(AcpiSdtTable *sdt)
+>   tests/qtest/virtio-iommu-test.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
