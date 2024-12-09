@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2673AE77173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 06:27:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AAFE77173
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 06:28:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKXEL-0006MS-AB; Mon, 09 Dec 2024 01:26:53 -0500
+	id 1tKXFM-0006xs-Im; Mon, 09 Dec 2024 01:27:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tKXEJ-0006MI-Cj
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 01:26:51 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tKXFK-0006xh-KH
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 01:27:54 -0500
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tKXEH-0002VD-Me
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 01:26:51 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21654fdd5daso3790165ad.1
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 22:26:49 -0800 (PST)
+ id 1tKXFC-0002Zq-QF
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 01:27:53 -0500
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-725c86bbae7so1808463b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 22:27:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1733725608; x=1734330408;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1733725665; x=1734330465;
  darn=nongnu.org; 
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=eLmpaBBARj329c7M5Xk/S6pYF7fz3IsMV7SNdg4PeHA=;
- b=RUKBrDhYHUyjT4yKq/VmmrqBHyUqsIwmsXw+70NGkh7cSf1djfOI3VmvxBc0vI1DSU
- /ZRmd8izdV5rkp114FKUBJGQDOHE4tFzBq8nOFUitK3JGriDXa684oTCOJx/oNytZUtF
- PfWk3WbjWmnJ9NKpMpY/zVFU7EqRDwNSP9W/FxDjpDBqJ7mgc77BTHHn0rW4oGo7unOr
- QvWDjabJ5S4/aLcUsCqi/+txiNu1HyGHhYFFbNHVRzJSlDs8TeQi18fOMN6KJ3//9qMu
- f8/a9o1AA9ZfnFI4R4zDjCpJsDLP+eOFTkRYlNM9b7fzGNmOT5sxbh0vgjK+g/APQCdK
- A11w==
+ bh=Y/5Br297somceWuy6VuF5PtVQLTbUm2Rmwh1uzvv5SQ=;
+ b=DnthsHIs0yZkABPeyp9a0nxeAakjJoEVVrmKJt2wSN3p32xm+Av2tdVv72mxnaKfEX
+ PV1uJXd2LJdfMpU7SObtj2YeRQpu/4GMR8K1PeQU3dQ+W05WZYfeuvn7rAiX2sDnxR9E
+ RFznHnvsgYIGxWEyXIJwEf16NEgcD6MHYQFu7jBNfKRa/Y5I4I96/U2y6SCpPzs/tQOk
+ 0cG7Ig76ZYnVN5KjBS1fiGGekXcpTP15+VwvghyVY24umJmYQTpM6/kOFuoosl6J7RyA
+ wNEni0OvMdzGMQ0T/OHUHDYkC5yxE8LtAOr/rJCMXDvG28AVdShSUSETHK7dwkgDAqaq
+ 6RRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733725608; x=1734330408;
+ d=1e100.net; s=20230601; t=1733725665; x=1734330465;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=eLmpaBBARj329c7M5Xk/S6pYF7fz3IsMV7SNdg4PeHA=;
- b=FM/bT4CBv90J7o+WsZ11zxsxXUO5lTe0XtA8zFS3UFvFzsDAkqZVxF5bQ3xmfrcGdE
- 1avVk6ZX9bFL6mMnsoOw6EIpZ7wJyn1FjuK/Js3dDMZDOxI5Qe2f7tgEi/jawoOL7j4M
- n9ptWrffDmgarFyG35Wl2i+X+YaBFpu0/RuBxuLp2BzpxUiIUlI3VRTXp5qUM9c54O9h
- cAGAtxPaw8CMotYbNhk03B0tQrSQ4t+jUfYZk5Mesus+JdAEkugnnPAsSD9blscGyN/a
- UP3fbnJytG67tKroItyPV3hK7a6P49jixUAT6T+s1VVD2hGU/rbMMR7AMPenEdM8YS1u
- ZlXw==
+ bh=Y/5Br297somceWuy6VuF5PtVQLTbUm2Rmwh1uzvv5SQ=;
+ b=rPabR5DY8CXh8edfc8Pg8Uf7WDb4uSi8IMHWnwIjKLUdxUGOgPmiVxjY/Vtg2nxa35
+ 9w/hGdarOziMENQnwjsNeC6lEbKzjeP2lvH7qA6hGiGnr0IjJ8X19WPFIM758HOxpZcl
+ nlLQqpyuJ2gS3CstHk+tRhKmyBPwsd3JsTqS1qRinFfgxknldj2wSAdRisHKfEimCxBK
+ exQSQUrMnFA/DIbp+O+6yNAhdimfRLr/UsATmLToG69XETGOc9Yt+jaqMY5HXpT75VFw
+ IGdCANPjfXk4aHOmpynQySbAwUzBW+qzsQhdRrdBFbGPAo9F+7jFH3yUljGq+mZTeJ2W
+ cHOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWyhjdtQ9wDxBt4vwfu7RRq0gn+QePNDvSC7XOILjtohX7zraKBK/S5RJBQFlegO8tcdgP+tyWlj8ye@nongnu.org
-X-Gm-Message-State: AOJu0YyylKhDY9/qmeuWTmXD7n9u4xCCVhz5Ydj9DwPPdznhz0DnYhfw
- oNzgY46sXc3vAtWLhP0ViBg938SNyz2qVxWj7Ouf2Ow2dIpyVYM9kTgAl5xyQtM=
-X-Gm-Gg: ASbGncvWsIDAi3xrvqVSUmISuVyIJc442KY1i2YB5cEgAlkoPTT+nIvot5AAwQBtcX2
- 7JYAX7iP1wxGDQtrNvezgzojLijbdiduOECYYFS6iio+llvrbGqXUWjiIP75fU18dRLXIkjZDQ8
- ApTO11Wf/CAKknmmvgwO2lpWM3NaWKmZ9BvzihymaqfX49dTLjqRhoc+xIKFvcjlzyzhq0SUun6
- UVdEcMfm7vlyuvqKEiMrHi9W8D+qOSvsqcMXYr12yFgMN8CJ3IWeCjTYw==
-X-Google-Smtp-Source: AGHT+IF4D12F2yZay8lSmJbMc9hdsR5Dfs8rvW+QNycv351EfYxMhs0G3IsqJfhE7nyiYL2D5x1TCw==
-X-Received: by 2002:a17:903:240a:b0:215:b33b:e26d with SMTP id
- d9443c01a7336-21614d5057bmr161560225ad.21.1733725608035; 
- Sun, 08 Dec 2024 22:26:48 -0800 (PST)
+ AJvYcCU92fvFVANO7+LuqkXEoPH4fkSWMrx85kwSeREx7tulzOivKPjhoLaECwYXGBlStGc7trsMh5KdPLAK@nongnu.org
+X-Gm-Message-State: AOJu0YyOpvTJhqsHcYQmXiHCj0aDY8dqV7txPfd6dD3VCm52ueyyt6eN
+ qKZJcVvKoMBn5noKRUUHkumKudnK4ehZB3oG8e87UiUxnWZ/AaxE6EbMOY4vnpEslX1t8szXUco
+ sSXE=
+X-Gm-Gg: ASbGncvDug8eB+d0DnP87zfzSuc5UjesYRhiF8YkgP9UQ6UvBrpBOEWHdvFKnSOsD28
+ MOMLMl1t+pC7gbTspovYZvloiSMpDUmPNAPoZwdIeCx0J0EHhE0A1E6Qw+EHkFgu43Hh3xiGZXV
+ dPGn4dVKQgg7eycwUb0pxbvJlYSdXNim7Q2JF8JjcZQkSaaKLmKSCMZd/yX4NPoqi5AuxLbNWdT
+ W6UF8g5eMSPWhF0eMteMDq7++sGo/X/eLqNRSoZPtTsQ/l+Sd2er5OOAw==
+X-Google-Smtp-Source: AGHT+IHwHf1FIF5uQZlh1F3m3XrjWA/Cj/R9Q/WDhVgtO8w+zCyulC41XKuwCaEO7RCKSrYpmjP5AQ==
+X-Received: by 2002:a05:6a21:33a1:b0:1e0:d6d5:39a7 with SMTP id
+ adf61e73a8af0-1e18712300amr17068236637.33.1733725664923; 
+ Sun, 08 Dec 2024 22:27:44 -0800 (PST)
 Received: from [133.11.54.81] ([133.11.54.81])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2161ad52f58sm46939095ad.55.2024.12.08.22.26.46
+ 41be03b00d2f7-7fd4ec342b2sm961875a12.70.2024.12.08.22.27.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 08 Dec 2024 22:26:47 -0800 (PST)
-Message-ID: <df6847f5-11d0-4c69-bfac-ec2281279841@daynix.com>
-Date: Mon, 9 Dec 2024 15:26:44 +0900
+ Sun, 08 Dec 2024 22:27:44 -0800 (PST)
+Message-ID: <beafac8b-761b-439b-87ec-b77f4f794647@daynix.com>
+Date: Mon, 9 Dec 2024 15:27:41 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] hw/vmapple: XHCI controller's interrupt mapping
- workaround for macOS
+Subject: Re: [PATCH 2/6] hw/usb/hcd-xhci-pci: Moves msi/msix properties from
+ NEC to superclass
 To: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
  zhao1.liu@intel.com, imammedo@redhat.com
 References: <20241208191646.64857-1-phil@philjordan.eu>
- <20241208191646.64857-7-phil@philjordan.eu>
+ <20241208191646.64857-3-phil@philjordan.eu>
 Content-Language: en-US
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241208191646.64857-7-phil@philjordan.eu>
+In-Reply-To: <20241208191646.64857-3-phil@philjordan.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -104,50 +105,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Let's drop -s from the "Moves" in the subject:
+hw/usb/hcd-xhci-pci: Move msi/msix properties from NEC to superclass
+
+It is a more popular patch style and makes consistent with other patches.
+
 On 2024/12/09 4:16, Phil Dennis-Jordan wrote:
-> This change enables the new conditional interrupt mapping support
-> property on the vmapple machine type's integrated XHCI controller.
-> The macOS guest driver attempts to use event rings 1 and 2 on the XHCI
-> controller, despite there being only one (PCI pin) interrupt channel
-> available. With conditional interrupt mapping enabled, the XHCI
-> controller will only schedule events on interrupter 0 in PCI pin mode
-> or when only a single MSI vector is active.
-
-I think docs/system/arm/vmapple.rst also needs to be updated.
-
+> The NEC XHCI controller exposes the underlying PCI device's msi and
+> msix properties, but the superclass and thus the qemu-xhci device do
+> not. There does not seem to be any obvious reason for this limitation.
+> This change moves these properties to the superclass so they are
+> exposed by both PCI XHCI device variants.
 > 
 > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 > ---
->   hw/vmapple/vmapple.c | 7 +++++++
->   1 file changed, 7 insertions(+)
+>   hw/usb/hcd-xhci-nec.c | 2 --
+>   hw/usb/hcd-xhci-pci.c | 7 +++++++
+>   2 files changed, 7 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-> index f607981bc40..156ea33ae79 100644
-> --- a/hw/vmapple/vmapple.c
-> +++ b/hw/vmapple/vmapple.c
-> @@ -453,6 +453,13 @@ static void create_pcie(VMAppleMachineState *vms)
->       }
+> diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+> index 0c063b3697d..408bf065e5a 100644
+> --- a/hw/usb/hcd-xhci-nec.c
+> +++ b/hw/usb/hcd-xhci-nec.c
+> @@ -39,8 +39,6 @@ struct XHCINecState {
+>   };
 >   
->       usb_controller = qdev_new(TYPE_QEMU_XHCI);
-> +    /*
-> +     * macOS XHCI driver attempts to schedule events onto even rings 1 & 2
-> +     * even when (as here) there is no MSI-X support on this PCIe bus. Disabling
-> +     * interrupter mapping in the XHCI controller works around the problem.
-> +     */
-> +    object_property_set_bool(OBJECT(usb_controller),
-> +                             "conditional-intr-mapping", true, &error_fatal);
-
-Use compat_props to change the global default for this machine.
-
-By the way, this unconditionally adds xHCI and USB devices, but that 
-should be avoided so that users can customize the configuration. Use 
-defaults_enabled() as a condition.
-
-Regards,
-Akihiko Odaki
-
->       qdev_realize_and_unref(usb_controller, BUS(pci->bus), &error_fatal);
+>   static Property nec_xhci_properties[] = {
+> -    DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
+> -    DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
+>       DEFINE_PROP_UINT32("intrs", XHCINecState, intrs, XHCI_MAXINTRS),
+>       DEFINE_PROP_UINT32("slots", XHCINecState, slots, XHCI_MAXSLOTS),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+> index 376635e889b..0278b0fbce2 100644
+> --- a/hw/usb/hcd-xhci-pci.c
+> +++ b/hw/usb/hcd-xhci-pci.c
+> @@ -197,6 +197,12 @@ static void xhci_instance_init(Object *obj)
+>       qdev_alias_all_properties(DEVICE(&s->xhci), obj);
+>   }
 >   
->       usb_bus = USB_BUS(object_resolve_type_unambiguous(TYPE_USB_BUS,
+> +static Property xhci_pci_properties[] = {
+> +    DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+>   static void xhci_class_init(ObjectClass *klass, void *data)
+>   {
+>       PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
+> @@ -208,6 +214,7 @@ static void xhci_class_init(ObjectClass *klass, void *data)
+>       k->realize      = usb_xhci_pci_realize;
+>       k->exit         = usb_xhci_pci_exit;
+>       k->class_id     = PCI_CLASS_SERIAL_USB;
+> +    device_class_set_props(dc, xhci_pci_properties);
+>   }
+>   
+>   static const TypeInfo xhci_pci_info = {
 
 
