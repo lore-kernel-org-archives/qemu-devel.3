@@ -4,107 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA092E77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:13:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D86FE77180
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:26:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKiFZ-00073Y-7m; Mon, 09 Dec 2024 13:12:53 -0500
+	id 1tKiSF-0001Nf-0C; Mon, 09 Dec 2024 13:25:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tKiFX-00073F-Lx
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:12:51 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1tKiFV-0004HD-V4
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:12:51 -0500
-Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9AQU7w014251
- for <qemu-devel@nongnu.org>; Mon, 9 Dec 2024 18:12:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
- cc:content-transfer-encoding:content-type:date:from:message-id
- :mime-version:subject:to; s=qcppdkim1; bh=uFBhy6khVP1TdRABQ209KW
- 4Z2whhkQEQn+8bMqJc9Qo=; b=Efwewkgwor5d/HNePg+WaBoMdqgVuPmmWoRqHf
- KeWVGH9hrb0SZTo8l2vYvy2tvZ9jJOq8LwSrMGPNtx0s6EnE/rGiE5V68xZaO14W
- QhzSM5axLNEA0s4g+wdIacOqnmy4ktyR6TQI4q2+Q5D/jtZsV7byXsDbXZicOuLZ
- VxeMH8bKdRm8VxArd90pHufFRJfXBsEOY8I74E44w4kIBETw/fkAQivJdScbHpm7
- t+F5rGuCIrRYC/8/lo0xyRIcFO2TBftVprBb8SfqJZSkVagsazjQkYGUBxuaFbxC
- 8B3nnhOCmAqv7TP63uO+0Vuikcu3tSiFIvp2oId9ahe5WVfg==
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cfhkdmhw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 18:12:46 +0000 (GMT)
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-725dd39ebe7so1418274b3a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:12:46 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tKiSD-0001Mb-8e
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:25:57 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tKiSA-0006F9-Ik
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:25:57 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-724ffe64923so5380091b3a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:25:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733768752; x=1734373552; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5sc/zlzqr4yLfdRPh4w1mTJtVEwOYGR3gVEEm/MVuu0=;
+ b=kZt5wHY+aCjUdWQxvCslTPAbe03wq6p7Dj6GiEgjF/cWULIuO4L/UHBpWjqVhsGkeM
+ rwYNfLIpY+AoO/3aaRJ1+DjdoDazVpJfA29bJtFSP0wMfpKAemu19KsKyEzU5mFb1RDw
+ 20sgbofl/DdpJzp/3x6RC5rVZu+zBM/FuTyb40cIU+A/w8R7K45vLUacDpEcpTd2kBId
+ 8X4aMqfX7QAOSrmQ1OoH+514l+T2REJZB25cSxtH8UJN3Lx9K2eEAOJM0WIXpJCjCM+6
+ V+qBOc7W6MqyCsbPZJ950e0uceT4OOx80CmL+iv3YoiDUnSZqdGC/xRQ/BFlbNrQHEef
+ E8IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733767966; x=1734372766;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uFBhy6khVP1TdRABQ209KW4Z2whhkQEQn+8bMqJc9Qo=;
- b=gVK210rdRsjmsbOCucx0JFElSFnWWzR9sWkif7vo5NSojujYY9qKxMSJscy3FbUAQ1
- XGeSpWVEFdd2alilom79fE9xH9XWGwRet7ETmGpfRmFaRGJR2BEdfARFZmczwvN/p2nW
- sOA9M+OZuyUKdkNnJOfAxtVPs4jTsUqYKFAJdXCOri+f6afVTzj7YWpQh1wS83/Ilemj
- Ve0np0l67Xs83lehl6jMe9eTXu1iFQLLPByeiVdCTTPWdVAMzub6YeQULtWnvSNdPQ5o
- dFrXqOpPYTvTAKgu04iqin0o3ZFwGMrZ+6Dn8ZWoCVwVG+jOtXvj/GfHqG1UVeDY6Xpw
- OWmg==
-X-Gm-Message-State: AOJu0YyROKQsLOpyUHNupR36Wqg4k6AXgj2spO6du37caClBLWACX4Jy
- eEdRz2PwWc5HoTZ9+n4YnbJWvFUmYwSlLaMY2DORAzfhe/CY/opUCirpPkLUMCQCAMQOD7qdYQL
- o264ZCDKTb0Dardd2Fdbi9tDDgfBm0R65/d6mvHP7NOPeLU1hznCGu6hhkuvRgQ==
-X-Gm-Gg: ASbGncs3Ksi8pkkZVBau+VKAQyzviaWWiNwxHxw5t8bisDKECch4Ne4vJiwt7wvjrDP
- r03rOBHlnTmY73IJDKfv9GehZPHoVsjgsSpIRwNTcx+YYn0OBr/yVFkOGnUCuTZqQjIPg7XkOPA
- VkqzEj6iXhbQXfaS2fR2H50o6EnlRDyt/ZC8N6/oyrzmBFJbTX14rqdUuISrPo8sbuR238VIuuG
- TPSW5ddNhesCHpSZYSOrB5rus/Qn4Pw9P+XcnVpfbWSVjTFTdH4TmLzX9XsoQd5T0S9JGdfNgGO
- UYQwrxE9EOW1fID8OSzoVsc=
-X-Received: by 2002:a05:6a00:1399:b0:71e:2a0:b0b8 with SMTP id
- d2e1a72fcca58-7273c8f5070mr1749956b3a.1.1733767965666; 
- Mon, 09 Dec 2024 10:12:45 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFrKslEf6i7lzvoHAjaMtTkLrJq92Z1JQKfoSQpipV6Lv3Xi6REMAArTRzEVjHAWv4eoiNr4w==
-X-Received: by 2002:a05:6a00:1399:b0:71e:2a0:b0b8 with SMTP id
- d2e1a72fcca58-7273c8f5070mr1749936b3a.1.1733767965310; 
- Mon, 09 Dec 2024 10:12:45 -0800 (PST)
-Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
- [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725d899efe4sm4230493b3a.161.2024.12.09.10.12.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 10:12:44 -0800 (PST)
-From: Brian Cain <brian.cain@oss.qualcomm.com>
-To: qemu-devel@nongnu.org
-Cc: brian.cain@oss.qualcomm.com, richard.henderson@linaro.org,
- philmd@linaro.org, peter.maydell@linaro.org, quic_mathbern@quicinc.com,
- stefanha@redhat.com, ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com,
- ltaylorsimpson@gmail.com, alex.bennee@linaro.org, quic_mburton@quicinc.com
-Subject: [PATCH] MAINTAINERS: correct my email address
-Date: Mon,  9 Dec 2024 10:12:42 -0800
-Message-Id: <20241209181242.1434231-1-brian.cain@oss.qualcomm.com>
-X-Mailer: git-send-email 2.34.1
+ d=1e100.net; s=20230601; t=1733768752; x=1734373552;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5sc/zlzqr4yLfdRPh4w1mTJtVEwOYGR3gVEEm/MVuu0=;
+ b=wwLD/nRSDHwNcdh+F1geRdttlo5NrRO5u3Fdrs5AaqS2HSy4dkvdKF2lnB52XzCqcn
+ 7uF8FhLby9SAIVntbImcsV164v+s8iGqX/RJK/FNvWDlhvcA8dkuujeUtsq1LCveZSqF
+ wr0utjMUyXGYiDCj6NE71e3YHKSdyEF4tGfz214DmHetXFxh6Q5yS2Z8I653XV6/O1z1
+ dcfm207VNCIjBD0qQ8D2Knz67yCQO3U6DTBiE20wF8cehb0yESPYNCdo8hIo1ZfcDx0o
+ w2Axmko49TvJDVELqi7iJwAXwlc00NrbacKAqR8t1Xp2iehaKqJVg3FV1LI0CCulOyUZ
+ vKXA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhr1CNnJrWLJHEWXQjho+Tf4pERzkA8aJWTS2CVsuN6OHK8UQrSdheuUcRMESx7G8V5ADCO/Y5gEL4@nongnu.org
+X-Gm-Message-State: AOJu0YykVNaWSK83TXTcuPuMZVlXRso8YYT6WsKUKQ/JtCUtEnXF92MX
+ m6l+MRhqwSDfGuyk4xlOItPyYFy8RjTsxBC4lOVdSPmtBQH6oD+DHfxiX+GSSdg=
+X-Gm-Gg: ASbGncuGViDODh7aD5eRq2RZAGU1LyI/vaiSQ5YUBurgHeSm4aAC6QKl2UJ63a9YsfG
+ uvdRiE/0X+2fICQiTIChasD+GBEaPUIHo7jH+Cof3SIJvRPQZv6vgme7O5sDnIP0DBMrJzWsnrt
+ qSoK6ur6ja/PdVMt2GnbwPjBSJnx4RbJIHLOzmzhPGOgHPIsXS6GmPuoFovRVu0CZbyyrBGc9qk
+ WqBMFmI0PoJhnq/+MMONUzQ4BVsmUh+i/C2TcdNlnO6KKkaUqyNdTTaM0KPbc8Z8sTlMdQ5AvK+
+ 4+9kgWzW5QjSTCudQ58zARBm7g==
+X-Google-Smtp-Source: AGHT+IGtzqsCPU6jEkieD7TImWgDFXGHxos/m9EMy/BwHyTvUj+KviItTSKuNWYAQSTT/PPY59iRRQ==
+X-Received: by 2002:a05:6a00:22d0:b0:727:3c37:d5fb with SMTP id
+ d2e1a72fcca58-7273cb92441mr1839672b3a.16.1733768752020; 
+ Mon, 09 Dec 2024 10:25:52 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-7fd578b457csm742249a12.27.2024.12.09.10.25.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 10:25:51 -0800 (PST)
+Message-ID: <ea22699b-28bb-4bb0-8d5e-a0608b6e4beb@linaro.org>
+Date: Mon, 9 Dec 2024 10:25:50 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: MxjgKClOp6jVJxNmA43S9WoD2yIyMvkk
-X-Proofpoint-GUID: MxjgKClOp6jVJxNmA43S9WoD2yIyMvkk
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
- definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- impostorscore=0 mlxlogscore=849 mlxscore=0 adultscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1011 priorityscore=1501 spamscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090141
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 3/6] docs/devel: add b4 for patch retrieval
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
+ philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, qemu-arm@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Peter Xu <peterx@redhat.com>,
+ gustavo.romero@linaro.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
+ Eric Blake <eblake@redhat.com>, Andrew Melnychenko <andrew@daynix.com>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Jason Wang <jasowang@redhat.com>, manos.pitsidianakis@linaro.org
+References: <20241206192900.3893118-1-pierrick.bouvier@linaro.org>
+ <20241206192900.3893118-4-pierrick.bouvier@linaro.org>
+ <2f99cd24-768a-4e28-b5b4-d2697ca244af@redhat.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <2f99cd24-768a-4e28-b5b4-d2697ca244af@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,29 +116,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mea culpa, I don't know how I got this wrong in 2dfe93699c.  Still
-getting used to the new address, I suppose.  Somehow I got it right in the
-mailmap, though.
+On 12/8/24 22:47, Thomas Huth wrote:
+> On 06/12/2024 20.28, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    docs/devel/submitting-a-patch.rst | 10 ++++++++++
+>>    1 file changed, 10 insertions(+)
+>>
+>> diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+>> index 69df7682c5e..1ef7d137320 100644
+>> --- a/docs/devel/submitting-a-patch.rst
+>> +++ b/docs/devel/submitting-a-patch.rst
+>> @@ -433,6 +433,16 @@ For more details on how QEMU's stable process works, refer to the
+>>    
+>>    .. _participating_in_code_review:
+>>    
+>> +Retrieve an existing series
+>> +---------------------------
+>> +
+>> +If you want to apply an existing series on top of your tree, you can simply use
+>> +`b4 <https://github.com/mricon/b4>`__.
+>> +
+>> +::
+>> +
+>> +    b4 shazam $msg-id
+> 
+> Should we elaborate on $msg-id here? (saying that this is about patch series
+> that have been sent to the mailing list and you have the retrieve the
+> "Message-Id:" header from one of the patches?)
+>
 
-Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Ok, doing this is next version.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aaf0505a21..a338a8bbcc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -226,7 +226,7 @@ F: target/avr/
- F: tests/functional/test_avr_mega2560.py
- 
- Hexagon TCG CPUs
--M: Brian Cain <bcain@oss.qualcomm.com>
-+M: Brian Cain <brian.cain@oss.qualcomm.com>
- S: Supported
- F: target/hexagon/
- X: target/hexagon/idef-parser/
--- 
-2.34.1
+> Apart from that the patch looks fine to me, thanks for tackling this!
+> 
+>    Thomas
+> 
 
 
