@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E75E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258DFE77181
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:15:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKl37-0006C0-93; Mon, 09 Dec 2024 16:12:14 -0500
+	id 1tKl5d-0000LS-OB; Mon, 09 Dec 2024 16:14:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl30-0006BB-T6
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:12:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl5c-0000LH-U6
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:14:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl2y-0006kx-UP
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:12:05 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl5a-0006td-U9
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:14:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733778724;
+ s=mimecast20190719; t=1733778885;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=4pTxJydxQGoF45G+N05avvdN/Ex5zOA5EB6ojhpaG38=;
- b=Nr1sHuIYnhkuNmkAhpLKGYosr5d+hbQ9d/JSRbioKPd7ZoLiuFbz0BXHMIZ2ZDDemB0Szt
- 4Y9HOdNf4gTGdDYgUbbU/h4ZUE3FNjZxg1yqUIaEppJaJcRMCqjyND2Rc9mcynyvVuHuP4
- ggZSKUM9eK1M37iA7ZxK2vZb5e+mqnE=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0H0jdsDyFxRohFZ2TOMJG8iCuTWPejxGMmpPLeQpiiw=;
+ b=TwjBBIvohcclFn+Bgsi6fJREP6CCgBK0sBdlP9+eTGW9DwShayZoWimRBQEItPV2/VFo6E
+ zvlGBmoZVRuIvEgdAZeSQXVhjTKcr4fwLlrCq7IG0sGouJb9iaaB9iiP0YyUv5J4TofrcR
+ 1D4mN76UBo2MGuaxs3riZAWugoG2d0k=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-397-N-Hw6pPgP0qKQCLbM4BRmQ-1; Mon, 09 Dec 2024 16:12:02 -0500
-X-MC-Unique: N-Hw6pPgP0qKQCLbM4BRmQ-1
-X-Mimecast-MFC-AGG-ID: N-Hw6pPgP0qKQCLbM4BRmQ
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-467663573daso28387431cf.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:12:02 -0800 (PST)
+ us-mta-98-UsvPSFk0McGrS4OClE0Elg-1; Mon, 09 Dec 2024 16:14:41 -0500
+X-MC-Unique: UsvPSFk0McGrS4OClE0Elg-1
+X-Mimecast-MFC-AGG-ID: UsvPSFk0McGrS4OClE0Elg
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6cf68526eso284185185a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:14:41 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733778722; x=1734383522;
+ d=1e100.net; s=20230601; t=1733778880; x=1734383680;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4pTxJydxQGoF45G+N05avvdN/Ex5zOA5EB6ojhpaG38=;
- b=EKxOAGtCGmixyeSdrX02DvlfakebM2K+Rm2rCNMklLa4ETilSjWEE5LHQ+UNRtBtEb
- VJbM1mzzvEyvozFT8+Pprz3O6ALIkjqJvuDJ75FqZkTvnjVbtiC6EcZ1i/YJMXaFhHbA
- CIgOmzUhYUJoxTPUMK/6i77dcf1eyI/rlEGU+7vOpBsoo9fAXH9+K70FqwmrdfmsHpu/
- OnnwHB8zALEle3VIawSsmHEYMDILqk27M8XLxh7eTPk51KrZnOPmcAwcoqKpNOpR5Tn5
- ztoZoMUTD3QBUQMTQ1KLa6fDXIikNuBpKQPvBlbuVwYqY/a03GUSi29DIDpgIcd6daVI
- K06w==
-X-Gm-Message-State: AOJu0YyYuWGLLp/jQDfxef3fXTdZr6Epq9MhlYIVEo/pQfHqeaQ283hP
- DDl3wGZyYASokjcPX9HudtbHV8pP8iTWnVLV1inH8w+gmkpVPnqgjvLdw7dJWvttx/dYsBwOL5m
- TjptUveFj18KE/5Or38eDidpzor2GOP92S5nHQdaQCB4F0jVsUsjc
-X-Gm-Gg: ASbGnctr3LZGXIj/kLHxsLcsKybvenO2nyk2D3sipfNvhwClG2JZnpwRfDfr0UtV/+q
- ocbStsQSkvCEo7i/MsWjKxcGuXWB10J/p1kdOBoOvVv33Rl5z7DmcAAlV0QnvAMmA2C9Pe4IzzM
- 6VXxIiEyVepdmal25Mi1oMe/o8JLKoS7ATvAz1b5W9jKwYsj4Nhoji4Hk60FKHikvqmgTyo+zM6
- 0zMrAsreZw9ATsy5Z5xgpMpX1XIjs3OOOTOAvZFjyFO5EytKug4RhFkFp3r/Jz+l5epxDOfnw48
- 5r4c9o24AdIEoa4=
-X-Received: by 2002:a05:622a:4a0a:b0:467:6dd9:c967 with SMTP id
- d75a77b69052e-46772013f70mr28068421cf.49.1733778721934; 
- Mon, 09 Dec 2024 13:12:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsMwZVNXS+BKBb/fvwCCbTWFw1EqQ+yl9koBd39hguGp7BfDV+D62oZo5Za0kV4M8vw5abzA==
-X-Received: by 2002:a05:622a:4a0a:b0:467:6dd9:c967 with SMTP id
- d75a77b69052e-46772013f70mr28068111cf.49.1733778721635; 
- Mon, 09 Dec 2024 13:12:01 -0800 (PST)
+ bh=0H0jdsDyFxRohFZ2TOMJG8iCuTWPejxGMmpPLeQpiiw=;
+ b=mpSY0JesHpqCSvR+h36iWmTqoUkqS0zwCEV4hIKo6xHioG2xRhayy7Zxe8e+GZmB3j
+ fL6YTYRmTsn0/AA/woT+7Q6qs3fau9KnxXdfujGDnSZEH/2yRyXwSHRxZ6ONkbz9vxPv
+ Yiv4/2EX+h9PLWIJviSqkyGqWFNExSz7gDjQySk4wdZiuJQ9IFalTs1UYSixXERUZ++A
+ EktWQ+FefE43xlmB+1VVnFJU5xwVtuv07p+fiAnYzDomSAKESjpfGYifO8PcMgHegDn5
+ 1UL8vL46/bEs4xfj2NGowKR77L4zIJ4AZIrAJbb+l4hc06SckDzgxEDkPnpmHgjzb47D
+ GQ9Q==
+X-Gm-Message-State: AOJu0YzsiHNEmyL6fRaiGn7JSkO2nulkDdJNEQbQTnBivakkyWB4e/Uw
+ xW1wNwgKc4fkxH7urNPjatfefkORsGwXq9QPRtZ0IQ4TJkXjTbqZJIfcS7FTKZSoCCFSg4RnpnF
+ 5vfxLPI1ZVMn3LvqlLQ3rcnUKS7hMEUMMUfQjMJ61H2xaoDcvCqIHsKiXBTZC
+X-Gm-Gg: ASbGncsMYu0mSFwR0MRGh/r96J7dnbi/piWkqpljt9nolryDZkHHQSjFRw76auea4UK
+ sJfv6Ounec4+Wfej9CCIJ0Ly5ZVoiLAcU5VP85yeH07VjvZczK3ovig7uM/oRhFNuQNwEcE06Ts
+ ZImQSFoIZ82jbVkd/f5vyuhv+LOoeF9pIxlQcNf363wxDTPQ0W01aZuDnMTMmcVK/OW8A9Ew6YN
+ yo9mJHvhqS5CRZVxLZ2xW31+BAQOMJuJQh3nYp3t1oxhHDujCUqdpxzyteZcFuJ217kOVjWsWZg
+ ogiiLbEBJZPYsEg=
+X-Received: by 2002:a05:620a:1aa4:b0:7b6:7970:6506 with SMTP id
+ af79cd13be357-7b6dce7f2b1mr279724485a.38.1733778880751; 
+ Mon, 09 Dec 2024 13:14:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF5klpYt9bqP5r4WGj2+o42G/crKV1W01ol9pcF6nVUMD/CX4CCzEUsilHQg71SqNnUHDbkKQ==
+X-Received: by 2002:a05:620a:1aa4:b0:7b6:7970:6506 with SMTP id
+ af79cd13be357-7b6dce7f2b1mr279721885a.38.1733778880474; 
+ Mon, 09 Dec 2024 13:14:40 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-467296fe9bcsm55095531cf.51.2024.12.09.13.12.00
+ af79cd13be357-7b6da08306bsm81102985a.66.2024.12.09.13.14.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 13:12:01 -0800 (PST)
-Date: Mon, 9 Dec 2024 16:11:59 -0500
+ Mon, 09 Dec 2024 13:14:39 -0800 (PST)
+Date: Mon, 9 Dec 2024 16:14:38 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 1/6] tests/qtest/migration: Do proper cleanup in the
- dirty_limit test
-Message-ID: <Z1ddH8YCZnr23CGa@x1n>
+Subject: Re: [PATCH 2/6] tests/qtest/migration: Initialize buffer in
+ probe_o_direct_support
+Message-ID: <Z1ddvtuy8-3LgMKv@x1n>
 References: <20241209204427.17763-1-farosas@suse.de>
- <20241209204427.17763-2-farosas@suse.de>
+ <20241209204427.17763-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241209204427.17763-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <20241209204427.17763-3-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -106,9 +106,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 05:44:22PM -0300, Fabiano Rosas wrote:
-> The dirty_limit test does two migrations in a row and is leaking the
-> first 'to' instance. Do proper cleanup.
+On Mon, Dec 09, 2024 at 05:44:23PM -0300, Fabiano Rosas wrote:
+> Valgrind complains about the probe_o_direct_support() function reading
+> from an uninitialized buffer. For probing O_DIRECT support we don't
+> actually need to write to the file, just make sure the pwrite call
+> doesn't reject the write. Still, write zeroes to the buffer to
+> suppress the warning.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
