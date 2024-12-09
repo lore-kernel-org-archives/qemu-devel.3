@@ -4,92 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE48BE77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 19:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1543BE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 19:34:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKjRs-0004eO-Lw; Mon, 09 Dec 2024 14:29:40 -0500
+	id 1tKjW8-0007Gv-5n; Mon, 09 Dec 2024 14:34:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tKjRq-0004bj-6I; Mon, 09 Dec 2024 14:29:38 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tKjRo-0004Dd-4V; Mon, 09 Dec 2024 14:29:37 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9HMaWR015339;
- Mon, 9 Dec 2024 19:29:31 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=a0f2yl+M33fCGC+mGaDEssw/u55tbXBtfvJx/KNvg
- gY=; b=tJNaRSzseuH1KI4rdA0olNHaHiMPJd2BKuAAwTk6X+OT9JXvFT04WbEq4
- w0pR29Te+8dB1QcJOzNrQEB6qsuuKdppK2ZW3UjSIA/mHGTMJ84J9doT8DnzMjoB
- wvF1ik71kPKKiCKNegnyQXKXFv1OVY134FQS6ypIU6TK4sU5HRaRflmeip17tz6o
- KQXnfkLLWTwcfmPK0HtNb3w9+8JTbgnSBicOb8zcNEZVvWnchYM3HHGcqtMOIvni
- nS6aNTNdC/Out5hPq8eYcwvltBLIBKFxGoKSz75am4N8mrv6tb8/EtbU2GCwoBHg
- JdoTJ8tciLTUNv0uHfI4WQdJHZ8tQ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce38k6an-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 19:29:30 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9HUnTP032734;
- Mon, 9 Dec 2024 19:29:30 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0ps8a9u-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 19:29:30 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B9JTTTl32375450
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Dec 2024 19:29:29 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4EFA258056;
- Mon,  9 Dec 2024 19:29:29 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5A1CF58052;
- Mon,  9 Dec 2024 19:29:28 +0000 (GMT)
-Received: from li-2311da4c-2e09-11b2-a85c-c003041e9174.ibm.com.com (unknown
- [9.61.107.222]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Dec 2024 19:29:28 +0000 (GMT)
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-To: qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- clegoate@redhat.com, qemu-devel@nongnu.org
-Subject: [PATCH 0/2] s390x/pci: relax I/O address translation requirement
-Date: Mon,  9 Dec 2024 14:29:25 -0500
-Message-ID: <20241209192927.107503-1-mjrosato@linux.ibm.com>
-X-Mailer: git-send-email 2.47.1
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tKjW6-0007FU-DR
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:34:02 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tKjW3-0004qj-I5
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 14:34:02 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-725ee6f56b4so1200947b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 11:33:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1733772837; x=1734377637; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9k9Pg+8y3c3UnD4hkh++q33Ep4J6N5eaCzFv/CJ1XXQ=;
+ b=SOfXiJasxp1ZZcTfmD6Ac6p4A9dVm3RvE9zFyt78Qi6amhhHhPo1uBMtFzRcQK/0MH
+ tLV9HchwNRjsFm/75qg8gfSmxSbjUcYCqlBU+H9wvWRXtpnR5FkLfxfRWZdIxavpoyv/
+ CDjEp3TCvFNkoizxlNYs8wlS7YcYazaY2CbGRWxQzOLOftPirYlNvnxqnY/fTNJkVbPq
+ FKT7oYh0SovBzTB2SRfym3LjRsSco87QaxTK4hNhF4Jh/05QFUZPjkIxMulOfT350jsL
+ JO0Dmdkb8Cs4pRsakjU1KXyW9DBnVKicJZzpTNQScv1m7760Oc56lNgVwAuu3elYDaEi
+ 1qrg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733772837; x=1734377637;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9k9Pg+8y3c3UnD4hkh++q33Ep4J6N5eaCzFv/CJ1XXQ=;
+ b=mbVtnELVYTwUgvhOpbGLRTc+4Vhl6eQhKSFAUK6fuDp55cxhDhKwBUxNZxkfbl7rP0
+ BtnSDNXHQShYS0vTDD4DXwhyAqnozablm5VQqXWbLSYhNVqN+bTC5QmNWnYT7Wu0P8ws
+ HiPRGO+21x/9ee3/NYGovBJLEgXJxWkw801oedSMkJMl5f3kpT6eVB6quDy/g4E1jF8O
+ SSraDnn5rxB9ot8dFOhtrpQUhwXXCHr84iWp0yMxtYXGP7N3TXRIN0XCH3qEcA0OrTR/
+ bDxmdXLWcZLik4ItJDOAs14Zqg77ovbdSy+YU4210xTZ3mUKXGN1F+kvHgVpSBbxrNYM
+ OZvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYNwdk3X8Uw0mRY8/raJ3hkZJQMmmyCbaf/J7/c/SFjjC3jZxqRQ/DIZq1Ho69jgZ4+fyJKo19RDbP@nongnu.org
+X-Gm-Message-State: AOJu0YxgElSiPBBfs23g576fG8jiq9yrVAU2BN+nOTMdPhoYv3I9WIIz
+ vPNJyrOSWIOx89Aum4LiQrTHiEs6vAzE6yGR/O7HxiTcLxy2sk4uiENcrPIwVoBvBaI/ygMS1mO
+ Q
+X-Gm-Gg: ASbGncusRlCSIAo0z1P3kuOS+dsxATU8VEBlCkiDVVQ+qknWoSuePavSV6ozblfo3YM
+ jmqJst8v6MSLwsuZD82XGnWSNSlFl6uhO7Eue1HqIr61zhWS1GOqauY/VZFjkZMRDhAygfySMXC
+ cUJ+pZl23fy5wSHK/oi8taA5zMMkTkak7vlwUBgaxTKKur9M5y4HbKK1a20c5wheQ+axO0Ry/5a
+ SYGWK/8oScbgjHFXU/7kF0unyKrnryul8t6dR76XQPBZdaEFIWa4A0i9sJDL4Cwhaifuefvfcky
+ Q8MbCT/cIMy4A4EGX8SaUNiNBzac
+X-Google-Smtp-Source: AGHT+IGfL1Uh2J5eG5iR8/oZnE4ckhqCcaCENSziSfsgAYw3MN8tLn350cgtMsJ0gl+lbbXQoGQZrQ==
+X-Received: by 2002:a05:6a00:b42:b0:727:3c37:d5f9 with SMTP id
+ d2e1a72fcca58-7273c37d849mr2452909b3a.26.1733772837543; 
+ Mon, 09 Dec 2024 11:33:57 -0800 (PST)
+Received: from ?IPV6:2804:7f0:bcc0:5756:767e:ee4e:f9a8:ee18?
+ ([2804:7f0:bcc0:5756:767e:ee4e:f9a8:ee18])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-725e2f2d5f0sm3360965b3a.40.2024.12.09.11.33.54
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 11:33:57 -0800 (PST)
+Message-ID: <9261868b-40a4-4ed5-a887-0b56fe0c8fed@ventanamicro.com>
+Date: Mon, 9 Dec 2024 16:33:53 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/9] target/riscv: fix henvcfg potentially containing
+ stale bits
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>,
+ qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Bin Meng <bin.meng@windriver.com>
+Cc: Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei
+ <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>,
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org,
+ Frank Chang <frank.chang@sifive.com>
+References: <20241128141230.284320-1-cleger@rivosinc.com>
+ <20241128141230.284320-2-cleger@rivosinc.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241128141230.284320-2-cleger@rivosinc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ksSbGe9IfUStOrdgt1br_x1ze_9MYoBo
-X-Proofpoint-ORIG-GUID: ksSbGe9IfUStOrdgt1br_x1ze_9MYoBo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- spamscore=0 clxscore=1011 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=612
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090151
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,36 +112,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces the concept of the relaxed translation requirement
-for s390x guests in order to allow bypass of the guest IOMMU for more
-efficient PCI passthrough.
 
-With this series, QEMU can indicate to the guest that an IOMMU is not
-strictly required for a zPCI device.  This would subsequently allow a
-guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
-PCI devices.
 
-When this occurs, QEMU will note the behavior via an intercepted MPCIFC
-instruction and will fill the host iommu with mappings of the entire
-guest address space in response.
+On 11/28/24 11:12 AM, Clément Léger wrote:
+> With the current implementation, if we had the following scenario:
+> - Set bit x in menvcfg
+> - Set bit x in henvcfg
+> - Clear bit x in menvcfg
+> then, the internal variable env->henvcfg would still contain bit x due
+> to both a wrong menvcfg mask used in write_henvcfg() as well as a
+> missing update of henvcfg upon menvcfg update.
+> This can lead to some wrong interpretation of the context. In order to
+> update henvcfg upon menvcfg writing, call write_henvcfg() after writing
+> menvcfg. Clearing henvcfg upon writing the new value is also needed in
+> write_henvcfg() as well as clearing henvcfg upper part when writing it
+> with write_henvcfgh().
+> 
+> Signed-off-by: Clément Léger <cleger@rivosinc.com>
+> ---
 
-There is a kernel series [1] that adds the relevant behavior needed to
-exploit this new feature from within a s390x linux guest.
 
-[1]: https://lore.kernel.org/linux-s390/20241209192403.107090-1-mjrosato@linux.ibm.com/
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Matthew Rosato (2):
-  s390x/pci: add support for guests that request direct mapping
-  s390x/pci: indicate QEMU supports relaxed translation for passthrough
 
- hw/s390x/s390-pci-bus.c         | 23 ++++++++++++++++++
- hw/s390x/s390-pci-inst.c        | 42 +++++++++++++++++++++++++++++++--
- hw/s390x/s390-pci-vfio.c        |  4 +++-
- include/hw/s390x/s390-pci-bus.h |  2 ++
- include/hw/s390x/s390-pci-clp.h |  1 +
- 5 files changed, 69 insertions(+), 3 deletions(-)
-
--- 
-2.47.0
+>   target/riscv/csr.c | 10 ++++++++--
+>   1 file changed, 8 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index 5d8d0d7514..98c683df60 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -2383,6 +2383,8 @@ static RISCVException read_menvcfg(CPURISCVState *env, int csrno,
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> +static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+> +                                    target_ulong val);
+>   static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+>                                       target_ulong val)
+>   {
+> @@ -2403,6 +2405,7 @@ static RISCVException write_menvcfg(CPURISCVState *env, int csrno,
+>           }
+>       }
+>       env->menvcfg = (env->menvcfg & ~mask) | (val & mask);
+> +    write_henvcfg(env, CSR_HENVCFG, env->henvcfg);
+>   
+>       return RISCV_EXCP_NONE;
+>   }
+> @@ -2414,6 +2417,8 @@ static RISCVException read_menvcfgh(CPURISCVState *env, int csrno,
+>       return RISCV_EXCP_NONE;
+>   }
+>   
+> +static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+> +                                    target_ulong val);
+>   static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+>                                        target_ulong val)
+>   {
+> @@ -2424,6 +2429,7 @@ static RISCVException write_menvcfgh(CPURISCVState *env, int csrno,
+>       uint64_t valh = (uint64_t)val << 32;
+>   
+>       env->menvcfg = (env->menvcfg & ~mask) | (valh & mask);
+> +    write_henvcfgh(env, CSR_HENVCFGH, env->henvcfg >> 32);
+>   
+>       return RISCV_EXCP_NONE;
+>   }
+> @@ -2513,7 +2519,7 @@ static RISCVException write_henvcfg(CPURISCVState *env, int csrno,
+>           }
+>       }
+>   
+> -    env->henvcfg = (env->henvcfg & ~mask) | (val & mask);
+> +    env->henvcfg = val & mask;
+>   
+>       return RISCV_EXCP_NONE;
+>   }
+> @@ -2546,7 +2552,7 @@ static RISCVException write_henvcfgh(CPURISCVState *env, int csrno,
+>           return ret;
+>       }
+>   
+> -    env->henvcfg = (env->henvcfg & ~mask) | (valh & mask);
+> +    env->henvcfg = (env->henvcfg & 0xFFFFFFFF) | (valh & mask);
+>       return RISCV_EXCP_NONE;
+>   }
+>   
 
 
