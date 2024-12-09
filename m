@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33BD1E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F9CDE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:33:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKiXK-0002Sp-S2; Mon, 09 Dec 2024 13:31:14 -0500
+	id 1tKiXR-0002XJ-PO; Mon, 09 Dec 2024 13:31:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tKiXJ-0002Rv-Vb
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:31:14 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1tKiXL-0002T9-Fl
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:31:15 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tKiXH-0006tT-7s
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:31:13 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-7258bce5289so3670455b3a.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:31:10 -0800 (PST)
+ id 1tKiXI-0006th-Cr
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:31:15 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-7259d6ae0c8so3963269b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:31:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733769070; x=1734373870; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733769071; x=1734373871; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=oUKq6vEd08BNHFL5xy+IGBW1qUyoIpn1SmzghDG21Ks=;
- b=suP7GaWbcb/NqWo9BY4r1ChUGurpmSk6CApq7rSSGn5GRz26K4H41FAD9c2jiGSszD
- JBpqzYI+K0yOlyKtg89Q9kQiQxU+qmc5iGK/RU7wb42YHXP3KgIPuMmEU9G+bwEJdoub
- to+oktZTVi/vysktOEcSfmIEKAi49jwZl6yU7C3f6LlUkqJLdfiEziI1Ygn2LPDHijIY
- +odI9T7w/lI7/1B+17F79ed1wSaqWQcYR+SNndx1lrxBkmXkbQSBTaCY3Uk3iRIqLHRZ
- ymHiLbOSxrMQ+9dXQK2sYNT1293poZ9FmRNAWzG2ctG/VdL0YZSvfh6226VmN1rtjokY
- MOgQ==
+ bh=G1VOR+XcM8CwYRfbqrbxazmYwC9oKrYhK/MN/rkEn/Q=;
+ b=zmtqe8GW5ta8RlCwnEZA3M7ZKbPyR17VUuvFkfGEavVzk71//1g+zxyPVTjPaJIWOY
+ 9ql0Knhb1ZjQTGTW9BAEKAYr7et5dhnw+IkxnnNCWNRINJPtPfvUKjxbN1oxueC8P4F3
+ lTKXRo38UIj8ma8iOZ96JJXoAcE1edSk/jR3GCHg9vm+Lo+VWSD95/oiEM9XE8StLKFm
+ oHj6+jkYXpJ/rgqMYPbDxGBxzXNsRwt73spUqdnxjr9ff+RdqXjf1NxvfNzbEDooQopn
+ kZKdWy60Ef/Y8RwlOBBO1gjuo26+QEjx0y7FozNRbIO1Whb4YYXNMJzkR/EhLE11QUzy
+ GRyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733769070; x=1734373870;
+ d=1e100.net; s=20230601; t=1733769071; x=1734373871;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=oUKq6vEd08BNHFL5xy+IGBW1qUyoIpn1SmzghDG21Ks=;
- b=Mm6OcgbHrMWrl4SvBYoth53G72MnP24t3mrt3tFeGxDn5cQ53Ie/BO6t//15Kpbjge
- 0pjI5h7SePkCyt0B48EaOMsSW0VJzX7cdFpEIoBEUjL5kWerDwVQn4z8OqZz4xvH4XeF
- mjA3A4xfdBRhFfFk42V9kgQUUv3IG0VRWvVn33oSJco+DWydjgv5M2/13QEE+RdVpMs+
- pozpm3eXHBvTGnpuu5q+Ypl3MzP0HdPU6z9oE3RzjEmhksPOZUnkG10bOAhSZgjmyH63
- mlYkgrfCrTm1nRSWAUOHzBDuoUbImZrA206ZJXTBy+Q6gtLzBvmA0SgwJacWF4RYrZ3i
- zsgQ==
-X-Gm-Message-State: AOJu0YwcfTN/3pjTHi6DL1y5tNSE8AGxE5iuchdp9aaxXF7bq6bIesLM
- CLcQr8cHDhkl9f3PmIJ7abYvCfmkgE7WmnmIoJVVyOkseMv01J3sQ9i4dPaV2pir8NNO9LbiQcF
- Xseg=
-X-Gm-Gg: ASbGncs20i6WCc3a+zpSXwt61XEz72GatYjVI+kDhY/4un8uMFeR65LH/oJJnmUmZg8
- tNVjN1/ZsgPOOtVWAQTFzaD7lD1FE2AHz6A+uu1awvLUe8MQ4kc9FsQAl5xOJNyG3UQcWW2dPh1
- 9xrUDL8tk5KvLwEOhqYRNYjP0iRsX0Nkfg6ZpyJdP6vvBE/d9D9JFyWilsZLuxUBgtWaGB4pTIJ
- SvO41WBAt3/lGTn9z4g6hCGfiKq2GYDvVvxznJPytTjMelkYSrut+YSxB3wBe45X0bjsxz9f+bC
- ueu+uogs/l1B
-X-Google-Smtp-Source: AGHT+IGHgMJ38Jmr7nbffgCDllf16U7JHr53zhYSJkDuJ8Dm6v3gmzXLAgJmZrZFftLzkhyV7DOVuA==
-X-Received: by 2002:a05:6a00:174b:b0:727:3c8f:3707 with SMTP id
- d2e1a72fcca58-7273c8f3efemr2557724b3a.23.1733769069981; 
- Mon, 09 Dec 2024 10:31:09 -0800 (PST)
+ bh=G1VOR+XcM8CwYRfbqrbxazmYwC9oKrYhK/MN/rkEn/Q=;
+ b=fvSQJ4g7T4SaO53V/zxwTHbdsvCxCiIyeMDICnbKZWnxUta2fzFww+g42fNnC5MNI5
+ nATM9eyxzg1nOWOWOw7JOpe+tv3ZWtrV+uwNPT2Jc55l4rBgwICPVt7okzUhApEBZ4bJ
+ TGVCXosMOfIuGt0f2ET2N+rlped0kTesPzjlOP3/w9WF/o8RY28vB+UrOfyKlyFMp6G+
+ 6NgsTIq9mz6BNnUdF7cpiyUOKUwMgMTnB404wOlPTo8Zqkl0EjFKN9Ej/BbTXUr0NZ9v
+ g+TlNmOG+Izly2iosb3hF/bEiK6JOXgz2rEvB4xr/CalOagTu0MDscHLBFs1BNFRpCmF
+ bFUg==
+X-Gm-Message-State: AOJu0YyJIFINZ4JclQ4BTTK+XevUALDS1m1kWCrTwFRDZlmCDq/lZePr
+ stFl1J+XxirYoDaA79hwSHlwXHP/UAJoW8vDTR3b0nbsOPBxlr6Lvu2JqXY/mo3pEIuCtZ6kFgw
+ tm0g=
+X-Gm-Gg: ASbGncsuMEJQjh2UB6WlF0GWARh3NT0lzYh31wGndUmC9xSyI6gF67i1rwActIWWrL2
+ 4yXd8oabtjlUiHivpzxs6IXMhNTLE/DTqd6bMUc7RyPOSwBWBshQFabKJCbs0DrRUbSV/O/H7Yt
+ v6dovB8A8wkUfXFfndkGVH4Qe8ceSOiBz5yonHl7sgL0tGiOe/2wG6WKpCT/I+OqW66NngkepXW
+ DrW7XOl2VZwRVyncuAceV0qQ62lortJNvzT6hGatM6udmmDR4yEq4mwrKzLsaj9nBevoG8rU1OG
+ //MtJDs7nLeH
+X-Google-Smtp-Source: AGHT+IEXRHQmFLOcJlksi4NjoGEt2qTEb+UNr9ZNna4mBykL2R6hP0+kn6KJCVsSIaIz7h2XZ+rUlg==
+X-Received: by 2002:a05:6a20:3d87:b0:1d9:c615:d1e6 with SMTP id
+ adf61e73a8af0-1e18700f9d8mr20290552637.0.1733769071164; 
+ Mon, 09 Dec 2024 10:31:11 -0800 (PST)
 Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725e2388d37sm3322821b3a.73.2024.12.09.10.31.09
+ d2e1a72fcca58-725e2388d37sm3322821b3a.73.2024.12.09.10.31.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 10:31:09 -0800 (PST)
+ Mon, 09 Dec 2024 10:31:10 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: manos.pitsidianakis@linaro.org, Andrew Melnychenko <andrew@daynix.com>,
@@ -81,16 +81,16 @@ Cc: manos.pitsidianakis@linaro.org, Andrew Melnychenko <andrew@daynix.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v4 2/6] docs/devel: add git-publish for patch submitting
-Date: Mon,  9 Dec 2024 10:31:00 -0800
-Message-Id: <20241209183104.365796-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v4 3/6] docs/devel: add b4 for patch retrieval
+Date: Mon,  9 Dec 2024 10:31:01 -0800
+Message-Id: <20241209183104.365796-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241209183104.365796-1-pierrick.bouvier@linaro.org>
 References: <20241209183104.365796-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,45 +116,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- docs/devel/submitting-a-patch.rst | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ docs/devel/submitting-a-patch.rst | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
 diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index 03b2ac298aa..69df7682c5e 100644
+index 69df7682c5e..65c64078cb3 100644
 --- a/docs/devel/submitting-a-patch.rst
 +++ b/docs/devel/submitting-a-patch.rst
-@@ -235,6 +235,31 @@ to another list.) ``git send-email`` (`step-by-step setup guide
- works best for delivering the patch without mangling it, but
- attachments can be used as a last resort on a first-time submission.
+@@ -433,6 +433,20 @@ For more details on how QEMU's stable process works, refer to the
  
-+.. _use_git_publish:
+ .. _participating_in_code_review:
+ 
++Retrieve an existing series
++---------------------------
 +
-+Use git-publish
-+~~~~~~~~~~~~~~~
-+
-+If you already configured git send-email, you can simply use `git-publish
-+<https://github.com/stefanha/git-publish>`__ to send series.
++If you want to apply an existing series on top of your tree, you can simply use
++`b4 <https://github.com/mricon/b4>`__.
 +
 +::
 +
-+    $ git checkout master -b my-feature
-+    $ # work on new commits, add your 'Signed-off-by' lines to each
-+    $ git publish
-+    $ ... more work, rebase on master, ...
-+    $ git publish # will send a v2
++    b4 shazam $msg-id
 +
-+Each time you post a series, git-publish will create a local tag with the format
-+``<branchname>-v<version>`` to record the patch series.
++The message id is related to the patch series that has been sent to the mailing
++list. You need to retrieve the "Message-Id:" header from one of the patches. Any
++of them can be used and b4 will apply the whole series.
 +
-+When sending patch emails, 'git publish' will consult the output of
-+'scripts/get_maintainers.pl' and automatically CC anyone listed as maintainers
-+of the affected code. Generally you should accept the suggested CC list, but
-+there may sometimes be scenarios where it is appropriate to cut it down (eg on
-+certain large tree-wide cleanups), or augment it with other interested people.
-+
- .. _if_you_cannot_send_patch_emails:
+ Participating in Code Review
+ ----------------------------
  
- If you cannot send patch emails
 -- 
 2.39.5
 
