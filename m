@@ -4,94 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A0EE77182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A26E7717D
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:37:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKgkw-0004TJ-JS; Mon, 09 Dec 2024 11:37:10 -0500
+	id 1tKgl4-0004Wm-6J; Mon, 09 Dec 2024 11:37:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKgku-0004RY-Up
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tKgl3-0004We-3W
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKgkt-0004v6-6y
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:08 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tKgl1-0004vh-8e
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733762224;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1733762233;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UsyPNn7HCEQGIw7zBl/R1eGSoI1IEujvA9dGrTug/y0=;
- b=bQkXEleromA2KUp6KOX+9Vn6rHJ+bLZFNRT7GZvClwVGVeLr5mryAqtA6nSgJTkQeR8AVV
- SUjQGlSzhwpWtSotKiDnSuDOYqimCZBg5HmRE3JI121i+vZJNNph2uAFG/epawx1Dc0DHx
- DLVVuTWjJxi5qacNL01PiXzsIdiG7cM=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-301-iKzLlwBtNwSQ6PxMQJ5qwQ-1; Mon, 09 Dec 2024 11:37:03 -0500
-X-MC-Unique: iKzLlwBtNwSQ6PxMQJ5qwQ-1
-X-Mimecast-MFC-AGG-ID: iKzLlwBtNwSQ6PxMQJ5qwQ
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d8897ea603so85043786d6.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:37:02 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733762221; x=1734367021;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UsyPNn7HCEQGIw7zBl/R1eGSoI1IEujvA9dGrTug/y0=;
- b=tlFR7lwWhyZ9ppQggJ0h5wlN1WhFHppDvZ8RTfNi3oQdr7KhZhIeTxHkTgfhmmaIJf
- 3A9eGj+Cimy/lSjZRHEG70V7f4oiil4ivDMesaEQ0GOouliTb2NZvefK1r9jOzrrls/q
- g9wwivDsHDjhgSdBlpW2UjuvmYjC+PzWSNlhKen5w73RNQCopAgLHsZMDJUKeqg4i/Lw
- Wd1zVf3OY1cQuBl2I+nYcWKVh/Fj8qfH29GCxxlEBy7bAnsk1aEJKQNCD10jMclBjTuj
- HQkZDRUhLzJkgVySTPcvIUB9rDUtrfWzqPkVtjmhvd3V0NLRPVTOGzxe1RGLi/mCeBpU
- fUfQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCOF60xh6b4aeT5hwtJzuSxIoTzlCrfudEokgQTOkRPzoMRFXfV8okj8iuzadu9lquV0f613ejHgnW@nongnu.org
-X-Gm-Message-State: AOJu0Yz82AwFDqMnV7//0jMagfDMISmbAi70ea1jrqD4UcQDLh+OAOce
- A5z6SaotMWFdul/Wge0aqeXjzoV3OGA89UkNBqIBsBO6u3FBjKvX2D9djUXesTozuqoTklbR5d1
- B3IvWxVDRZblRsICZ+eEuoH3bb7W4lCMoClmjCqwkQj60Rptg8cL1
-X-Gm-Gg: ASbGnctbOyKYrS/N0N6MkzVLBgz2tIQ6T3lEoVH/hs3vA9ZCTwZTnev75oMYYkfkXHR
- ZB637YxEUwYhCCdlm4IpdAR50C80DZ17xRnObNO1UsNhpVcJwjlKSXC7PczsudtGzzg9J9wR0Tv
- X9+StInB0B5Ev4zN3u6jLv3Coum3OWhcnGhSydL7vn4Pxm3T+ksQ8uzX3KwBTnonoLhA5d1Viug
- flKDt0vWgDgygguJf+iTSqksnzOmfpDHnnRQonxHDOkgoZq37n82dRKKvUrG+XF1sxCYOQgL/4m
- FFc0LrHeV/8=
-X-Received: by 2002:a05:6214:c45:b0:6d8:98a0:23b6 with SMTP id
- 6a1803df08f44-6d92128f88dmr38126d6.4.1733762221627; 
- Mon, 09 Dec 2024 08:37:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH8LoHFAwcYjxbcqSqUukPYZwFcfXVlcty1bpi3Xh8IyBBuvYb1N49MmiinSlJfmfObdHhHbw==
-X-Received: by 2002:a05:6214:c45:b0:6d8:98a0:23b6 with SMTP id
- 6a1803df08f44-6d92128f88dmr37836d6.4.1733762221354; 
- Mon, 09 Dec 2024 08:37:01 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da6739a9sm50404216d6.3.2024.12.09.08.37.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 08:37:00 -0800 (PST)
-Date: Mon, 9 Dec 2024 11:36:58 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>
-Subject: Re: [PATCH V4 09/19] migration: incoming channel
-Message-ID: <Z1ccql5bRaEGt7DZ@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
- <87ser2cfw6.fsf@pond.sub.org>
- <a7eaff5d-0030-445c-a31c-ce645666ecf3@oracle.com>
- <87seqxf42e.fsf@pond.sub.org>
+ bh=bZJ1+9yXD0/RiOd+oBVnjbeo66kC3HjqcBMm5RLmhDM=;
+ b=NMVizQ9UIQ/HlqhwGQwVNNXsUfMptbjOMnsdWfphEr8Cd9ZuzwqxyDZiCTYTJ9CSAkz2hg
+ oTa6A/4NF+eK0i9ML/nIbSvkwuTkKMlHkJ/TgQQfzLHLReB3XoeJ5p0+WzkEzgJ4ra1NpI
+ Az8qhCJ4jBwZ6cZ0C7OaNgRfZBjOhhk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-3ybJw9seP8m8cQRASh4a-Q-1; Mon,
+ 09 Dec 2024 11:37:12 -0500
+X-MC-Unique: 3ybJw9seP8m8cQRASh4a-Q-1
+X-Mimecast-MFC-AGG-ID: 3ybJw9seP8m8cQRASh4a-Q
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 08BAD195D032; Mon,  9 Dec 2024 16:37:10 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.115])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 32161195605A; Mon,  9 Dec 2024 16:37:04 +0000 (UTC)
+Date: Mon, 9 Dec 2024 16:37:01 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ eric.auger@redhat.com, qemu-devel@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
+ Yi Liu <yi.l.liu@intel.com>
+Subject: Re: [PATCH for-10.0] tests/functional: Convert the intel_iommu
+ avocado test
+Message-ID: <Z1ccrYDMVLo9vZF6@redhat.com>
+References: <20241206181728.1241169-1-thuth@redhat.com>
+ <d07f4ade-716c-4d58-b6d9-a95b4ffe58ab@redhat.com>
+ <7e81c4a2-cc76-4d8c-b14a-fd008eff0c09@redhat.com>
+ <Z1az26HxcIHVlB-d@redhat.com>
+ <4fa944df-ddf2-48be-bbb0-7b24f63263e6@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <87seqxf42e.fsf@pond.sub.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4fa944df-ddf2-48be-bbb0-7b24f63263e6@linaro.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -113,59 +94,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 01:12:25PM +0100, Markus Armbruster wrote:
-> >>> @@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
-> >>>       if (incoming) {
-> >>>           Error *local_err = NULL;
-> >>>           if (strcmp(incoming, "defer") != 0) {
-> >>> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
-> >>> +            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
-> >>>                                    &local_err);
-> >>
-> >> You move the parsing of legacy URI from within qmp_migrate_incoming()
-> >> into incoming_option_parse().
-> >>
-> >> The alternative is not to parse it in incoming_option_parse(), but pass
-> >> it to qmp_migrate_incoming() like this:
-> >>
-> >>                 qmp_migrate_incoming(incoming, !incoming, incoming_channels,
-> >>                                      true, true, &local_err);
-> >
-> > Sure, I can tweak that, but I need to define an additional incoming_uri variable:
-> >     qmp_migrate_incoming(incoming_uri, !!incoming_channels, incoming_channels, ...
-> >
-> > Only one of incoming_uri and incoming_channels can be non-NULL (checked in
-> > qemu_start_incoming_migration).
-> >
-> > Would you prefer I continue down this path, or revert to the previous -cpr-uri
-> > option?  I made this change to make the incoming interface look more like the
-> > V4 outgoing interface, in which the user adds a cpr channel to the migrate command
-> > channels.
+On Mon, Dec 09, 2024 at 05:31:37PM +0100, Philippe Mathieu-Daudé wrote:
+> On 9/12/24 10:09, Daniel P. Berrangé wrote:
+> > On Mon, Dec 09, 2024 at 09:26:21AM +0100, Thomas Huth wrote:
+> > > On 09/12/2024 09.12, Eric Auger wrote:
+> > > > Hi Thomas,
+> > > > 
+> > > > On 12/6/24 19:17, Thomas Huth wrote:
+> > > > > Convert the intel_iommu test to the new functional framework.
+> > > > > This test needs some changes since we neither support the old 'LinuxTest'
+> > > > > class in the functional framework yet, nor a way to use SSH for running
+> > > > > commands in the guest. So we now directly download a Fedora kernel and
+> > > > > initrd and set up the serial console for executing the commands and for
+> > > > > looking for the results.
+> > > > > 
+> > > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> > > > > ---
+> > > > >    MAINTAINERS                                   |   1 +
+> > > > >    tests/functional/meson.build                  |   1 +
+> > > > >    .../test_intel_iommu.py}                      | 119 ++++++++----------
+> > > > >    3 files changed, 51 insertions(+), 70 deletions(-)
+> > > > >    rename tests/{avocado/intel_iommu.py => functional/test_intel_iommu.py} (41%)
+> > > > >    mode change 100644 => 100755
 > 
-> I'm not sure.  Peter, what do you think?
+> 
+> > > > > -        self.launch_and_wait()
+> > > > > -        self.ssh_command('cat /proc/cmdline')
+> > > > > -        self.ssh_command('dmesg | grep -e DMAR -e IOMMU')
+> > > > > -        self.ssh_command('find /sys/kernel/iommu_groups/ -type l')
+> > > > > -        self.ssh_command('dnf -y install numactl-devel')
+> > > > I understand you cannot use ssh yet but the bulk of the test was the
+> > > > execution of the dnf install meaning we lose the main substance of it
+> > > > through the conversion.
+> > > 
+> > > Ah, I see, so this was exercising the virtio-net device with the IOMMU ...
+> > > and I already wondered why there was this "dnf install" at the end without
+> > > doing anything with  the numactl-devel package ... (a comment would have
+> > > been helpful here)
+> > 
+> > FYI, I find 'dnf instal' to be a *highly* undesirable thing todo in
+> > our test functional. Its performance is highly non-deterministic
+> > depending on what mirror you happen to get sent to, such that it could
+> > easily push us over the timeouts. It is also susceptible to periodic
+> > broken mirrors, and instability around time of Fefdora EOL. I can't
+> > remember if it was this test case, or a different one, but I've seen
+> > problems before in avocado with 'dnf install'.
+> > 
+> > If we want to test working networking, then can we arrange for something
+> > more simple & targetted to run, with better worst case performance.
+> 
+> Could we use 2 virtio-net interfaces inter-connected and stress with
+> https://linux.die.net/man/1/ab ?
 
-For this specific question, I prefer reusing -incoming rather than going
-back to -cpr-uri.
+Do we actually need to stress this ? IMHO for a functional tests we just
+need to prove that the device is working at a fairly basic level.
+"wget example.com"
 
-We should have discussed about this in the previous spin of a follow up
-discussion, using -incoming for cpr channels seems to always be preferred.
-
-https://lore.kernel.org/qemu-devel/Zz4NqcTDK73MKOaa@redhat.com/
-
-At that time, the concern from Dan was not reusing the JSON format or
-design the CLI's own format.  That was always based on reusing -incoming.
-
-In this patch it's already reusing the JSON for the CPR port, which looks
-all good from that POV.  OTOH, I don't yet have any preference on the impl
-of how QEMU should do the internal parsing of such JSON string / legacy
-URIs.
-
-Thanks,
-
+With regards,
+Daniel
 -- 
-Peter Xu
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
