@@ -4,95 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F02E2E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:34:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F51E77180
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKkRe-00058u-Aq; Mon, 09 Dec 2024 15:33:30 -0500
+	id 1tKkV2-0006By-2Y; Mon, 09 Dec 2024 15:37:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkRX-00058S-7w
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:33:23 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKkUy-0006Bf-IC
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:36:56 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKkRV-0002jb-Bt
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:33:22 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-385d7b4da2bso4045057f8f.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 12:33:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733776395; x=1734381195; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1B+Q01vnqUNG/lFizEfCBkoXRASoo575C36wvCtcJvk=;
- b=dZFm/hxuOQnBZhsX+lavt7YOMptSdUMlZvgquaPtSvxEuvlA+tawTPozeW5mImuBsE
- zmpV09kbdTbb+j68Bb0U2KIAPSkTZHrJ3UVgveWKIOb+b6d11ogjFN5MkVPoDtsldUpb
- rdPu0fWP/4I49TbD3nLsAGpZOQY49tbb9UzN6IoTXPyoyBsAU/Xfgc2duozUwPVyedHN
- LiJ/mrkbqe2L6sSsSkYdL2Zlfh7uLhq0/myYv4FM0i90/ZksVt5eqXtFgC5wM3QLYekf
- YxrERTjoawOomKgWvuYaqvquvr79DgqaWR41gUHJyk8rvfN0s63H59ojDzMzGXOI7KOk
- 9cGA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733776395; x=1734381195;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1B+Q01vnqUNG/lFizEfCBkoXRASoo575C36wvCtcJvk=;
- b=giwHZWTgdVNNFwzfEfD2kG4FBk4w3dChL9cny7P9ze4dRD0qXgk3CCAwmc6iRr5mUb
- Sg401IvqFuEp2z4A2ytM5il8ZH1CYnKrWniNyMpgX1baxNUa7n6sRJs3dtG4L5ISYSb6
- IeAH0xKhZRoqYRCBm+BvgfpK58WPxz9MCwAU/Q0871dAriGyvG6tEv6s8b/7rI0FJgem
- baJwDDPzXDDsWdgJo3IU7E//Y5ltV4U/3b/cTxY0ag03rvurNTWuYpHjqcEc3inCE5X5
- qr+WQkPEKgaBwobGK+teiamudO2CSgtoUiJjQYA9DnMjhwGZuR7RyNMbrgPI4KGSE6US
- eJLA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVqvmnJulD1Qz9EQlBpOlyz2FAXDHJuL9kn2fh1/QvsBoO++AO/X44QkvJMl0RLTp+oZON60I6fog8m@nongnu.org
-X-Gm-Message-State: AOJu0YyqP7n5D5VhSK4LMgYbNiyMBN3d2yCEjhGAJKjv6ugCstcF62fA
- gmjUx/NEevhxY5/jnwxgU73a5WiJkog+g+lyo+iUDMK1K7ejBJwmR4JSYQtYFvU=
-X-Gm-Gg: ASbGncthSM5yWOIZYdVQu/s/Ap3xZE2QoB12VHMYdX56Xj+3Yy/muvNaKwRM8OrmgLu
- td9gQVFcUkYzyTCjxb040JaFsGLBvbhbWMbMt5hN+yezYH7VOZDIz91kSPf80XFdDol+IUoOvhu
- ySGEREeNtvyXZxqemfKPsMYmdNos8372NEwwQHkzxC1/VHtOtIS5gubGpbJA6UyGzig9scEr6s7
- xTSnpaCEA3rdV903g4TDcT6jJf1U/B+YylEV22hSz6JFbNf661lmzvw15CBrwbSWUA7RvsJM4kH
- 3z3fAb5wIs1g9eTRcM084NLG+50XqfG3
-X-Google-Smtp-Source: AGHT+IEGOceIo9r7UF2jg8q056dksDFbSv5uazkKhJXcUs3Hk2d4aNGF8tvzNzXu/tVK8yO4ndD7/g==
-X-Received: by 2002:a5d:64c7:0:b0:385:e4a7:df09 with SMTP id
- ffacd0b85a97d-386453f96e6mr1925504f8f.44.1733776395234; 
- Mon, 09 Dec 2024 12:33:15 -0800 (PST)
-Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
- [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3861ecf416fsm13864439f8f.16.2024.12.09.12.33.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 12:33:14 -0800 (PST)
-Message-ID: <73cdfb51-aef9-4731-914a-7687f988997e@linaro.org>
-Date: Mon, 9 Dec 2024 21:33:13 +0100
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKkUx-0003CF-1q
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:36:56 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 7B5DA1F45B;
+ Mon,  9 Dec 2024 20:36:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733776613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
+ b=SDgRuQ+5ec/vT3P5ckMt14mM0uarqMAoviN/EKzO8R6dQhrK0qfDkuf72s6O3WLivyAiKA
+ WhXHhJznxtguFntIqxXFRUIA8Cm7wilYwMm53mIOCJU1U8BqgDTm9VyKMWjT32KQkIQSYm
+ gNeuOcAb/vF7ygObOqu/AC4vQpL73ek=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733776613;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
+ b=7NLhOO/+4IKEYSt+Ze00UkmeIz68osyl/tqKDaL2+LYjVDnbedESCJpGBydQ+lMeRfRI7a
+ wUYwf0iMvGRZRjAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733776613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
+ b=SDgRuQ+5ec/vT3P5ckMt14mM0uarqMAoviN/EKzO8R6dQhrK0qfDkuf72s6O3WLivyAiKA
+ WhXHhJznxtguFntIqxXFRUIA8Cm7wilYwMm53mIOCJU1U8BqgDTm9VyKMWjT32KQkIQSYm
+ gNeuOcAb/vF7ygObOqu/AC4vQpL73ek=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733776613;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
+ b=7NLhOO/+4IKEYSt+Ze00UkmeIz68osyl/tqKDaL2+LYjVDnbedESCJpGBydQ+lMeRfRI7a
+ wUYwf0iMvGRZRjAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DA69C138D2;
+ Mon,  9 Dec 2024 20:36:52 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id C9V9J+RUV2fYbQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Dec 2024 20:36:52 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>, Richard
+ Henderson <richard.henderson@linaro.org>, Laurent Vivier
+ <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH-for-10.0] system/qtest: Access memory using
+ cpu_physical_memory_rw() API
+In-Reply-To: <878qsobx78.fsf@suse.de>
+References: <20241127191914.34146-1-philmd@linaro.org> <878qsobx78.fsf@suse.de>
+Date: Mon, 09 Dec 2024 17:34:37 -0300
+Message-ID: <87zfl4a942.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] docs/devel/style: add a section about bitfield,
- and disallow them for packed structures
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Alexandre Iooss
- <erdnaxe@crans.org>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
- <20241128201510.869974-3-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241128201510.869974-3-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo, linaro.org:email]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -109,54 +125,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28/11/24 21:15, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   docs/devel/style.rst | 20 ++++++++++++++++++++
->   1 file changed, 20 insertions(+)
-> 
-> diff --git a/docs/devel/style.rst b/docs/devel/style.rst
-> index 2f68b500798..2d73e6a8f7a 100644
-> --- a/docs/devel/style.rst
-> +++ b/docs/devel/style.rst
-> @@ -416,6 +416,26 @@ definitions instead of typedefs in headers and function prototypes; this
->   avoids problems with duplicated typedefs and reduces the need to include
->   headers from other headers.
->   
-> +Bitfields
-> +---------
-> +
-> +C bitfields can be a cause of non-portability issues, especially under windows
-> +where `MSVC has a different way to lay them out than gcc
+Fabiano Rosas <farosas@suse.de> writes:
 
-"GCC" (as MSVC).
+> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>
+>> There is no vCPU within the QTest accelerator (well, they
+>> are stubs doing nothing, see dummy_cpu_thread_fn).
+>> Directly use the cpu_physical_memory_rw() API -- which
+>> amusingly prefixed 'cpu_' does not use vCPU -- to access
+>> memory. This reduces accesses to the global 'first_cpu'.
+>>
+>> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>
+> Queued, thanks!
 
-> +<https://gcc.gnu.org/onlinedocs/gcc/x86-Type-Attributes.html>`_, and on big and
+Scratch that, I see some tests failing:
 
-"and on" sounds odd to me. Maybe ", or where endianness matters."?
+QTEST_QEMU_BINARY=3D../build/qemu-system-arm ./tests/qtest/sse-timer-test
+# random seed: R02S7b4a25dac8a32a86ee016342d60e78ec
+# starting QEMU: exec ../build/qemu-system-arm -qtest unix:/tmp/qtest-7386.=
+sock -qtest-log /dev/fd/2 -chardev socket,path=3D/tmp/qtest-7386.qmp,id=3Dc=
+har0 -mon chardev=3Dchar0,mode=3Dcontrol -display
+ none -audio none -machine mps3-an547 -accel qtest
+[I 0.000000] OPENED
+[R +0.033524] endianness
+[S +0.033533] OK little
+{"QMP": {"version": {"qemu": {"micro": 93, "minor": 1, "major": 9}, "packag=
+e": "v9.2.0-rc3-23-g3fe88295e8"}, "capabilities": ["oob"]}}
+{"execute": "qmp_capabilities"}
 
-> +little endian hosts.
-> +
-> +For this reason, we disallow usage of bitfields in packed structures and in any
-> +structures which are supposed to exactly match a specific layout in guest
-> +memory. Some existing code may use it, and we carefully ensured the layout was
-> +the one expected.
-> +
-> +We also suggest avoiding bitfields even in structures where the exact
-> +layout does not matter, unless you can show that they provide a significant
-> +memory usage or usability benefit.
-
-I don't think we should mention "significant memory usage benefit".
-
-Anyhow,
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +
-> +We encourage the usage of ``include/hw/registerfields.h`` as a safe replacement
-> +for bitfields.
-> +
->   Reserved namespaces in C and POSIX
->   ----------------------------------
->   
-
+{"return": {}}
+1..3
+# Start of arm tests
+# Start of sse-timer tests
+[R +0.035240] writel 0x58100000 0x0
+[S +0.035250] OK
+[R +0.035263] writel 0x4800002c 0x0
+[S +0.035265] OK
+[R +0.035275] writel 0x4800004c 0x0
+[S +0.035278] OK
+[R +0.035287] writel 0x58100008 0x0
+[S +0.035289] OK
+[R +0.035296] writel 0x5810000c 0x0
+[S +0.035299] OK
+[R +0.035308] clock_step 3125
+[S +0.035312] OK 3125
+[R +0.035323] readl 0x58100008
+[S +0.035326] OK 0x0000000000000000
+[R +0.035334] readl 0x5810000c
+[S +0.035337] OK 0x0000000000000000
+[R +0.035344] writel 0x58100000 0x1
+[S +0.035346] OK
+[R +0.035354] clock_step 3125
+[S +0.035357] OK 6250
+[R +0.035364] readl 0x58100008
+[S +0.035367] OK 0x0000000000000000
+**
+ERROR:../tests/qtest/sse-timer-test.c:91:test_counter: assertion failed (re=
+adl(COUNTER_BASE + CNTCV_LO) =3D=3D 100): (0 =3D=3D 100)
+Bail out! ERROR:../tests/qtest/sse-timer-test.c:91:test_counter:
+assertion failed (readl(COUNTER_BASE + CNTCV_LO) =3D=3D 100): (0 =3D=3D 100)
 
