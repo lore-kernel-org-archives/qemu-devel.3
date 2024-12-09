@@ -4,137 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34322E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FBAE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:13:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKcQN-0003M2-9z; Mon, 09 Dec 2024 06:59:39 -0500
+	id 1tKcd2-0006WP-V2; Mon, 09 Dec 2024 07:12:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKcQL-0003Li-M2
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:59:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKcd0-0006Ui-6l
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:12:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKcQK-0001HF-6w
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:59:37 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKccx-0003FV-Sh
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:12:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733745574;
+ s=mimecast20190719; t=1733746356;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=4vojw8frOjl9kNfFVzXH0Y0rZmY0Gljxd0QJGKiqQAY=;
- b=JU+ljYdxweXWonAoAOufbSnfX0oQ72fP0/TtqkWPqTX9CPhWf+3q1fYsIBLGDfHyuINYAR
- 29SVq6MMow4iagfRpbYMmiYazKYiXej8HY1XM085aF60GCv2tfchCbyekWUa3Vdv8AXXYy
- 989aU22rhEuG6vFre4xPjOvh4mDk6Y0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-263-GVv7cb9CMCWwocHC9sLoUg-1; Mon, 09 Dec 2024 06:59:33 -0500
-X-MC-Unique: GVv7cb9CMCWwocHC9sLoUg-1
-X-Mimecast-MFC-AGG-ID: GVv7cb9CMCWwocHC9sLoUg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-434f0206a83so9292375e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 03:59:33 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733745572; x=1734350372;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=4vojw8frOjl9kNfFVzXH0Y0rZmY0Gljxd0QJGKiqQAY=;
- b=TdqhWsA0fzZBRN8M9B9ELeQT52DEMzalm38EEcGZWopxAG6+Z63HzKGQR0VS2vEgeI
- jqybO9GtiCijj0BQ2KXKf7+Ily6MM7y9pJ5NI+iPY/9tdt3/S+pDM1sv9cWVFfItUMlD
- bIdQntPa1RKNY12rkS76gI4xJHRoH3Lsd/GrtQbVscrR2cmkyoqY291cO9Sl7+g/shK4
- JkZ/s/0e1y0ukgdLL+LiN4RIXNBQnzcm1Hy99UXzGexGTuLKIEQE+J6P07nvlA2FAgBu
- FlSjZxnslPpmLV4QOjcaXLtT9DKcllbb5kaXQNOveggdi14+6MXMdqqWXkYkQG5/sLSn
- QVyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX53KpJ01gSRZijAKLQsCvaXC25mWEgZce+0qn4U+u4CqLGjdMTafByurgaFl9k7s/hTLfBbbOnQYDX@nongnu.org
-X-Gm-Message-State: AOJu0Yyr3R4dWk5tqK7643GnUpCWVLt9z9TVVnMULFDbS2ujBG909P8j
- e/uXJ5HIF5FONbRaLdrxbUjV80023nbZK3bCUCAghNs97fnH6F3CAgIf5J99MhXj8KiJqY4FzHk
- /XJoR3dmpoUvpyuGE6dmcrvBcN8BKD7JhH09/TuEmvNxGofxn6Epe
-X-Gm-Gg: ASbGncsQIbmAEK4QYtPs00J27aOVt6Edw3lQkcMY8DfnAd+AiNlpjIufBuGSjSp3MX6
- ikG/KZVnS+YIYnAE78iCmCAsDK9EtdrdhPiNRtKCL6U8/GbXUCRWVOKfruPHco51AjLeIObLTut
- JWJ7StjF+X0xFzNqZam954SZJc4EdAx/y10FbdWSwxZIwRtSQZzHxMEBcA0rs+0q308NbTq2IaH
- E8GYoRy7rOONJHPv4I80/1A/s79kBn+6JfGYlWejxQdXi2r/Cfr3HesO11htpKf9IzKTS9odKjC
- 9aQ=
-X-Received: by 2002:a05:600c:4f0d:b0:434:f03c:7843 with SMTP id
- 5b1f17b1804b1-434fff55ccbmr1416035e9.19.1733745572318; 
- Mon, 09 Dec 2024 03:59:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHgBtdeRHK/8neoCI/bJitevClz05+trtgTgN2PG6LQC+YEyyjpRc+VRq3p3ao/Spa+pTVMig==
-X-Received: by 2002:a05:600c:4f0d:b0:434:f03c:7843 with SMTP id
- 5b1f17b1804b1-434fff55ccbmr1415825e9.19.1733745571997; 
- Mon, 09 Dec 2024 03:59:31 -0800 (PST)
-Received: from [192.168.0.6] (ip-109-42-49-52.web.vodafone.de. [109.42.49.52])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d43809fdsm101349045e9.1.2024.12.09.03.59.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 03:59:31 -0800 (PST)
-Message-ID: <7c614e7b-900a-4a0d-a727-eba6986f9398@redhat.com>
-Date: Mon, 9 Dec 2024 12:59:30 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=lJEEsaURfVoDvb8dB2uQwjfnC42uQGL+gF42sMAsGow=;
+ b=MvCo8AbWU9uDCp49REQUfhhcpXODzFLx3wnCCWHmmQLvGfLHNa5ZgD/JO8RRbl8uu5tGWx
+ C5JYLeNjaMemYG955onFEh7EizX8DH8iEuWTWlRjWBK0lUKD7j/JXhrzRwf0jDy65U3Pcm
+ yAFCBoHqKD0n3Spf40veK/4iJdCYB1M=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-662-qevOGh03OxOnwmHFCdvy8g-1; Mon,
+ 09 Dec 2024 07:12:30 -0500
+X-MC-Unique: qevOGh03OxOnwmHFCdvy8g-1
+X-Mimecast-MFC-AGG-ID: qevOGh03OxOnwmHFCdvy8g
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B78B19560A2; Mon,  9 Dec 2024 12:12:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 55348195608A; Mon,  9 Dec 2024 12:12:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 01F5C21EC35A; Mon,  9 Dec 2024 13:12:26 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: [PATCH V4 09/19] migration: incoming channel
+In-Reply-To: <a7eaff5d-0030-445c-a31c-ce645666ecf3@oracle.com> (Steven
+ Sistare's message of "Thu, 5 Dec 2024 15:45:17 -0500")
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
+ <87ser2cfw6.fsf@pond.sub.org>
+ <a7eaff5d-0030-445c-a31c-ce645666ecf3@oracle.com>
+Date: Mon, 09 Dec 2024 13:12:25 +0100
+Message-ID: <87seqxf42e.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] tests/functional: Introduce a specific test for
- rainier-bmc machine
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241206131132.520911-1-clg@redhat.com>
- <20241206131132.520911-7-clg@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241206131132.520911-7-clg@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -159,18 +91,271 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 06/12/2024 14.11, Cédric Le Goater wrote:
-> This simply moves the rainier-bmc test to a new test file. No changes
-> in the test. The test_arm_aspeed.py is deleted.
-> 
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
-> ---
->   tests/functional/meson.build                  |  4 ++--
->   ...m_aspeed.py => test_arm_aspeed_rainier.py} | 22 +++++--------------
->   2 files changed, 7 insertions(+), 19 deletions(-)
->   rename tests/functional/{test_arm_aspeed.py => test_arm_aspeed_rainier.py} (71%)
->   mode change 100755 => 100644
+Steven Sistare <steven.sistare@oracle.com> writes:
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+> On 12/5/2024 10:23 AM, Markus Armbruster wrote:
+>> Steve Sistare <steven.sistare@oracle.com> writes:
+>> 
+>>> Extend the -incoming option to allow an @MigrationChannel to be specified.
+>>> This allows channels other than 'main' to be described on the command
+>>> line, which will be needed for CPR.
+>>>
+>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> [...]
+>> 
+>>> diff --git a/qemu-options.hx b/qemu-options.hx
+>>> index 02b9118..fab50ce 100644
+>>> --- a/qemu-options.hx
+>>> +++ b/qemu-options.hx
+>>> @@ -4937,10 +4937,17 @@ DEF("incoming", HAS_ARG, QEMU_OPTION_incoming, \
+>>>      "-incoming exec:cmdline\n" \
+>>>      "                accept incoming migration on given file descriptor\n" \
+>>>      "                or from given external command\n" \
+>>> +    "-incoming @MigrationChannel\n" \
+>>> +    "                accept incoming migration on the channel\n" \
+>>>      "-incoming defer\n" \
+>>>      "                wait for the URI to be specified via migrate_incoming\n",
+>>>      QEMU_ARCH_ALL)
+>>>  SRST
+>>> +The -incoming option specifies the migration channel for an incoming
+>>> +migration.  It may be used multiple times to specify multiple
+>>> +migration channel types.
+>>
+>> Really?  If I understand the code below correctly, the last -incoming
+>> wins, and any previous ones are silently ignored.
+>
+> See patch "cpr-channel", where the cpr channel is saved separately.
+> Last wins, per channel type.
+> I did this to preserve the current behavior of -incoming in which last wins.
+
+Documentation needs to be clarified then.
+
+> qemu_start_incoming_migration will need modification if more types are added.
+>
+>>>                             The channel type is specified in @MigrationChannel,
+>>> +and is 'main' for all other forms of -incoming.
+>>> +
+>>>  ``-incoming tcp:[host]:port[,to=maxport][,ipv4=on|off][,ipv6=on|off]``
+>>>    \
+>>>  ``-incoming rdma:host:port[,ipv4=on|off][,ipv6=on|off]``
+>>> @@ -4960,6 +4967,16 @@ SRST
+>>>     Accept incoming migration as an output from specified external
+>>>     command.
+>>> +``-incoming @MigrationChannel``
+>>> +    Accept incoming migration on the channel.  See the QAPI documentation
+>>> +    for the syntax of the @MigrationChannel data element.  For example:
+>>> +    ::
+>>
+>> I get what you're trying to express, but there's no precedence for
+>> referring to QAPI types like @TypeName in option documentation.  But
+>> let's ignore this until after we nailed down the actual interface, on
+>> which I have questions below.
+>
+> Ack.
+>
+>>> +
+>>> +        -incoming '{"channel-type": "main",
+>>> +                    "addr": { "transport": "socket",
+>>> +                              "type": "unix",
+>>> +                              "path": "my.sock" }}'
+>>> +
+>>>  ``-incoming defer``
+>>>      Wait for the URI to be specified via migrate\_incoming. The monitor
+>>>      can be used to change settings (such as migration parameters) prior
+>>> diff --git a/system/vl.c b/system/vl.c
+>>> index 4151a79..2c24c60 100644
+>>> --- a/system/vl.c
+>>> +++ b/system/vl.c
+>>> @@ -123,6 +123,7 @@
+>>>  #include "qapi/qapi-visit-block-core.h"
+>>>  #include "qapi/qapi-visit-compat.h"
+>>>  #include "qapi/qapi-visit-machine.h"
+>>> +#include "qapi/qapi-visit-migration.h"
+>>>  #include "qapi/qapi-visit-ui.h"
+>>>  #include "qapi/qapi-commands-block-core.h"
+>>>  #include "qapi/qapi-commands-migration.h"
+>>> @@ -159,6 +160,7 @@ typedef struct DeviceOption {
+>>>  static const char *cpu_option;
+>>>  static const char *mem_path;
+>>>  static const char *incoming;
+>>> +static MigrationChannelList *incoming_channels;
+>>>  static const char *loadvm;
+>>>  static const char *accelerators;
+>>>  static bool have_custom_ram_size;
+>>> @@ -1821,6 +1823,35 @@ static void object_option_add_visitor(Visitor *v)
+>>>     QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+>>> }
+>>> +static void incoming_option_parse(const char *str)
+>>> +{
+>>> +    MigrationChannel *channel;
+>>> +
+>>> +    if (str[0] == '{') {
+>>> +        QObject *obj = qobject_from_json(str, &error_fatal);
+>>> +        Visitor *v = qobject_input_visitor_new(obj);
+>>> +
+>>> +        qobject_unref(obj);
+>>> +        visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
+>>> +        visit_free(v);
+>>> +    } else if (!strcmp(str, "defer")) {
+>>> +        channel = NULL;
+>>> +    } else {
+>>> +        migrate_uri_parse(str, &channel, &error_fatal);
+>>> +    }
+>>> +
+>>> +    /* New incoming spec replaces the previous */
+>>> +
+>>> +    if (incoming_channels) {
+>>> +        qapi_free_MigrationChannelList(incoming_channels);
+>>> +    }
+>>> +    if (channel) {
+>>> +        incoming_channels = g_new0(MigrationChannelList, 1);
+>>> +        incoming_channels->value = channel;
+>>> +    }
+>>> +    incoming = str;
+>>> +}
+>>
+>> @incoming is set to @optarg.
+>>
+>> @incoming_channels is set to a MigrationChannelList of exactly one
+>> element, parsed from @incoming.  Except when @incoming is "defer", then
+>> @incoming_channels is set to null.
+>>
+>> @incoming is only ever used as a flag.  Turn it into a bool?
+>
+> The remembered incoming specifier is also used in an error message in
+> qmp_x_exit_preconfig:
+>     error_reportf_err(local_err, "-incoming %s: ", incoming);
+>
+>> Oh, wait...  see my comment on the next hunk.
+>>
+>> Option -incoming resembles QMP command migrate-incoming.  Differences:
+>>
+>> * migrate-incoming keeps legacy URI and modern argument separate: there
+>>   are two named arguments, and exactly one of them must be passed.
+>>   -incoming overloads them: if @optarg starts with '{', it's modern,
+>>   else legacy URI.
+>>
+>>   Because of that, -incoming *only* supports JSON syntax for modern, not
+>>   dotted keys.  Other JSON-capable arguments support both.
+>
+> Not sure I follow.
+> Could you give me a dotted key example for a JSON-capable argument?
+> Do we care about dotted key for incoming, given the user can specify
+> a simple legacy URI?
+
+A quick grep for the usual parser qobject_input_visitor_new() finds
+-audiodev, -blockdev, -compat, -display, and -netdev.  Beware, the
+latter two come with backward compatibility gunk.  There's also -device
+and -object, also with backward compatibility gunk.
+
+Simple example:
+
+    JSON        -compat '{"deprecated-input": "reject", "deprecated-output": "hide"}
+    dotted keys -compat deprecated-input=reject,deprecated-output=hide
+
+Slightly more interesting:
+
+    JSON        -audiodev '{"id": "audiodev0", "driver": "wav", "in": {"voices": 4}}'
+    dotted keys -audiodev id=audiodev0,driver=wav,in.voices=4
+
+>>   How can a management application detect that -incoming supports
+>>   modern?
+>
+> How does mgmt detect when other arguments support JSON?
+
+Easy when an option supports it from the start: -audiodev, -blockdev,
+-compat.  Awkward when we extend an existing option to support it:
+-display, -netdev, -device, -object.
+
+As far as I can tell at a glance, libvirt
+
+* Remains unaware of -display JSON arguments
+
+* Assumes -netdev accepts JSON when QMP netdev-add supports backend type
+  "dgram", see commit 697e26fac66 (qemu: capabilities: Detect support
+  for JSON args for -netdev) v8.10.0
+
+* Assumes -device accepts JSON when QMP device_add has feature
+  json-cli-hotplug, see commit 1a691fe1c84 (qemu: capabilities:
+  Re-enable JSON syntax for -device) v8.1.0
+
+* Assumes -object accepts JSON when object-add supports object type
+  "secret", see commit f763b6e4390 (qemu: capabilities: Enable detection
+  of QEMU_CAPS_OBJECT_QAPIFIED) v7.2.0
+
+In theory, such indirect probing can fall apart when somebody backports
+JSON syntax *without* the thing libvirt probes for.  They then get to
+adjust libvirt's detection logic, too.  Hasn't been an issue in practice
+as far as I know.
+
+> The presence of cpr-transfer mode implies -incoming JSON support, though
+> that is indirect.
+
+Might be good enough.
+
+> We could add a feature to the migrate-incoming command, like json-cli
+> for device_add.  Seems like overkill though.  'feature' is little used,
+> except for unstable and deprecated.
+
+'feature' is best used sparingly.  But when it's needed, using it is
+*fine*.
+
+>>   Sure overloading -incoming this way is a good idea?
+>>
+>> * migrate-incoming takes a list of channels, currently restricted to a
+>>   single channel.  -incoming takes a channel.  If we lift the
+>>   restriction, -incoming syntax will become even messier: we'll have to
+>>   additionally overload list of channel.
+>>
+>>   Should -incoming take a list from the start, like migrate-incoming
+>>   does?
+>
+> That was my first try.  However, to support the equivalent of '-incoming deferred',
+> we need to add an 'defer' key to the channel, and when defer is true, the other
+> keys that are currently mandatory must be omitted.  The tweaks to the implementation
+> and specification seemed not worth worth it.
+>
+> If we want -incoming to also support a channel list in the future, we can simply
+> check for an initial '[' token.
+
+Yes, but it'll then have to support single channels both as list of one
+channel object, and channel object, unlike migrate-incoming.
+
+Syntactical differences between CLI and QMP for things that are
+semantically identical add unnecessary complexity, don't you think?
+
+>>> +
+>>>   static void object_option_parse(const char *str)
+>>>   {
+>>>       QemuOpts *opts;
+>>> @@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
+>>>       if (incoming) {
+>>>           Error *local_err = NULL;
+>>>           if (strcmp(incoming, "defer") != 0) {
+>>> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
+>>> +            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
+>>>                                    &local_err);
+>>
+>> You move the parsing of legacy URI from within qmp_migrate_incoming()
+>> into incoming_option_parse().
+>>
+>> The alternative is not to parse it in incoming_option_parse(), but pass
+>> it to qmp_migrate_incoming() like this:
+>>
+>>                 qmp_migrate_incoming(incoming, !incoming, incoming_channels,
+>>                                      true, true, &local_err);
+>
+> Sure, I can tweak that, but I need to define an additional incoming_uri variable:
+>     qmp_migrate_incoming(incoming_uri, !!incoming_channels, incoming_channels, ...
+>
+> Only one of incoming_uri and incoming_channels can be non-NULL (checked in
+> qemu_start_incoming_migration).
+>
+> Would you prefer I continue down this path, or revert to the previous -cpr-uri
+> option?  I made this change to make the incoming interface look more like the
+> V4 outgoing interface, in which the user adds a cpr channel to the migrate command
+> channels.
+
+I'm not sure.  Peter, what do you think?
 
 
