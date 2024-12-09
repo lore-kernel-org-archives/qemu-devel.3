@@ -4,100 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B8EBE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 17:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFD65E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 17:45:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKhgI-0006gf-Dn; Mon, 09 Dec 2024 12:36:26 -0500
+	id 1tKhoG-0007xZ-Tf; Mon, 09 Dec 2024 12:44:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKhgG-0006gN-HB
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:36:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKhgE-0007eD-38
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:36:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733765780;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKhoF-0007x8-8X
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:44:39 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKhoD-0000Bw-73
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 12:44:39 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 28787210F8;
+ Mon,  9 Dec 2024 17:44:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733766275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iD8PhBZGbEdZwr668dz4bV4OKhzgCm3xvZGrB2naa9g=;
- b=JrH24GD9mgW3yVjjmF8AJnXjI3am5a6qwv0G83qSHELXG3N4m6gECcJb717MERevUCNPzM
- f7KuU6dG7gyx1OYfuLDUs1rgeEyMYu+nMIkQ5LzAP4p5rPFJRZtyJv22HxhIOWEN50NBkw
- dIbTa/8/wdhMz9taTsQWSExq90sTwao=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-OASvjy1QPk2FZZ991PG6JA-1; Mon, 09 Dec 2024 12:36:17 -0500
-X-MC-Unique: OASvjy1QPk2FZZ991PG6JA-1
-X-Mimecast-MFC-AGG-ID: OASvjy1QPk2FZZ991PG6JA
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7b6cfc8fc17so279877285a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 09:36:17 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733765777; x=1734370577;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iD8PhBZGbEdZwr668dz4bV4OKhzgCm3xvZGrB2naa9g=;
- b=npNR8jMxUnj09SuELM5/cntGIUGOkFrjeVzzlyws8QgBduxQzvK5o9ZZr2mf2atthu
- lyEfmz1LRzvt20uD2Co1eKTwebKNmL8guowyZEDt9gSX4zHfX2SW0v0PACqpmx6fHjC9
- gzYzYAF+xIB1FNBle0bJrtU0AfkBgQyvry3puC3Pw7R9JoJKOCJyl3exapNBNe3Vd1w1
- Gw2Iq6DLdWLJbPgvEFjFDtPjJhqtN/csZTsZf0TrQBVMEipi1Ek22PKqt695/ihBy1/M
- 97QnLwzGNZLgJ7YfITIinVrVC2S7GYgvz0Gq7iAhggr2KiqnKZQPXDfPMM3grfu+gBkD
- InPw==
-X-Gm-Message-State: AOJu0YycCwHoSMorQkyiwiYPaGFPEAMqqefZUcs6GI+wS1d5Dp3pMaUN
- LCRchqTD+SSQN7LO9qV/+YzGzP3iXXb5pmhwGe019HbF5DdFk5pA5EDxqkxu7TIGfTQn3x3yrdk
- dUCmefNVCr9NagqK6RERTr2h2HVJRh9IwO9R0kcZnU0jzOOFH9zO8
-X-Gm-Gg: ASbGncs2zln6jSWCVJU82tY5tct1GP9PBe+vHl1gFw+ZfTuABcWIHEaP9ThWiIZcwVX
- vE9MeOpJwgqa0PAt+raIAjT3kbuwMwjCl5DICmKqVph5H1aJWoqsQOPA7pg9sWxrBQJdF67GJsZ
- hAFSj9Pt0+BpxEDhQ3vbQ9FAvRx1fhjClWcaclrQ9sSaka81XDO0JN0rpTlKc9n5XKxythJUOZW
- rToW+JOXE64busNORO6ZCVau2CH7fQ655f248VjcnsNRnsa+HAyCPfF0GTimAI/i2UAGh7pU92F
- XovR3xoJm7w=
-X-Received: by 2002:a05:620a:2405:b0:7b6:d754:2085 with SMTP id
- af79cd13be357-7b6d754226cmr503612785a.28.1733765777295; 
- Mon, 09 Dec 2024 09:36:17 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGls3vpSfHSc/jZlLdayM9Ja1lw3Rble9PeEeWW2JOmFcCHHt78P28lEcZFtrSQdANnPICZ8g==
-X-Received: by 2002:a05:620a:2405:b0:7b6:d754:2085 with SMTP id
- af79cd13be357-7b6d754226cmr503610085a.28.1733765777017; 
- Mon, 09 Dec 2024 09:36:17 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6d2bdad75sm150647385a.83.2024.12.09.09.36.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 09:36:16 -0800 (PST)
-Date: Mon, 9 Dec 2024 12:36:14 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 01/19] backends/hostmem-shm: factor out allocation of
- "anonymous shared memory with an fd"
-Message-ID: <Z1cqjgcvKuUf-zfj@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-2-git-send-email-steven.sistare@oracle.com>
+ bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
+ b=jQt9N33b8uW4yL3La+qDECUwzZBfODAefOKNKi/GiqCy2Mqtdm5f98HMujtnm4VtzBj7VD
+ +vbgWDT9CfEd2aKf0EMIUiqbqSHPoPFaZkbguSohF6//Fam4QTLWGTEUBGDRTYUkaOK+gD
+ rqwtjFHvWdUCKiXmbKX5wu/Gql6btJM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733766275;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
+ b=9oLvozVZBmzemRMDjCGaawaiAiqeOWuXPPUcUCp+Jdn799Ss0/hcQJ9uhQ9K5w0p/Pl1zo
+ PoDzGbFmCC26DbCA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733766275; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
+ b=jQt9N33b8uW4yL3La+qDECUwzZBfODAefOKNKi/GiqCy2Mqtdm5f98HMujtnm4VtzBj7VD
+ +vbgWDT9CfEd2aKf0EMIUiqbqSHPoPFaZkbguSohF6//Fam4QTLWGTEUBGDRTYUkaOK+gD
+ rqwtjFHvWdUCKiXmbKX5wu/Gql6btJM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733766275;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=H5KGeNeaI0KVS1Xyfh99a8GZiQ4zHX1t1AA7DqG6LbM=;
+ b=9oLvozVZBmzemRMDjCGaawaiAiqeOWuXPPUcUCp+Jdn799Ss0/hcQJ9uhQ9K5w0p/Pl1zo
+ PoDzGbFmCC26DbCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 902D3138D2;
+ Mon,  9 Dec 2024 17:44:34 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id RZZZFYIsV2f5PgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Dec 2024 17:44:34 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Pierrick
+ Bouvier
+ <pierrick.bouvier@linaro.org>, =?utf-8?B?0JTQvNC40YLRgNC40Lkg0KTRgNC+0Ls=?=
+ =?utf-8?B?0L7Qsg==?= <frolov@swemel.ru>, =?utf-8?Q?Daniel_P=2E_Berrang?=
+ =?utf-8?Q?=C3=A9?= <berrange@redhat.com>
+Cc: lvivier@redhat.com, sdl.qemu@linuxtesting.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH] tests/qtest: add TIMEOUT_MULTIPLIER
+In-Reply-To: <cfa1c780-012b-4c4d-975a-e08068706607@linaro.org>
+References: <20241113094342.282676-2-frolov@swemel.ru>
+ <Z0YUMoPr0oyQhqqK@redhat.com>
+ <04edda40-32d2-43e0-8ade-a4b2a3e06eab@swemel.ru>
+ <49cc1e5e-dd62-475e-b483-c2897c829529@linaro.org>
+ <cfa1c780-012b-4c4d-975a-e08068706607@linaro.org>
+Date: Mon, 09 Dec 2024 14:42:22 -0300
+Message-ID: <8734iwbvnl.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1733145611-62315-2-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.986]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, linaro.org:email]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,31 +127,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 05:19:53AM -0800, Steve Sistare wrote:
-> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
-> index b623830..aef5779 100644
-> --- a/util/oslib-win32.c
-> +++ b/util/oslib-win32.c
-> @@ -877,3 +877,14 @@ void qemu_win32_map_free(void *ptr, HANDLE h, Error **errp)
->      }
->      CloseHandle(h);
->  }
-> +
-> +bool qemu_shm_available(void)
-> +{
-> +    return false;
-> +}
-> +
-> +int qemu_shm_alloc(size_t size, Error **errp)
-> +{
-> +    error_setg("Shared memory is not supported.");
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-May need a fixup here to make build pass.
+> On 27/11/24 19:44, Pierrick Bouvier wrote:
+>> On 11/26/24 23:40, =D0=94=D0=BC=D0=B8=D1=82=D1=80=D0=B8=D0=B9 =D0=A4=D1=
+=80=D0=BE=D0=BB=D0=BE=D0=B2 wrote:
+>>> Hello, Daniel
+>>>
+>>> On 26.11.2024 21:32, Daniel P. Berrang=C3=A9 wrote:
+>>>> On Wed, Nov 13, 2024 at 12:43:40PM +0300, Dmitry Frolov wrote:
+>>>>> Some tests need more time when qemu is built with
+>>>>> "--enable-asan --enable-ubsan"
+>>>>>
+>>>>> As was discussed here:
+>>>>> https://patchew.org/QEMU/20241112120100.176492-2-frolov@swemel.r/u
+>>>>>
+>>>>> TIMEOUT_MULTIPLIER enviroment variable will be
+>>>>> a useful option, allowing non-invasive timeouts
+>>>>> increasing for a specific build.
+>>>>>
+>>>>> Signed-off-by: Dmitry Frolov <frolov@swemel.ru>
+>>>>> ---
+>>>>> =C2=A0=C2=A0 scripts/mtest2make.py | 2 ++
+>>>>> =C2=A0=C2=A0 1 file changed, 2 insertions(+)
+>>>>>
+>>>>> diff --git a/scripts/mtest2make.py b/scripts/mtest2make.py
+>>>>> index eb01a05ddb..ff60b62724 100644
+>>>>> --- a/scripts/mtest2make.py
+>>>>> +++ b/scripts/mtest2make.py
+>>>>> @@ -27,7 +27,9 @@ def names(self, base):
+>>>>> =C2=A0=C2=A0 .speed.slow =3D $(foreach s,$(sort $(filter-out %-thorou=
+gh, $1)),=20
+>>>>> --suite $s)
+>>>>> =C2=A0=C2=A0 .speed.thorough =3D $(foreach s,$(sort $1), --suite $s)
+>>>>> +ifndef TIMEOUT_MULTIPLIER
+>>>>> =C2=A0=C2=A0 TIMEOUT_MULTIPLIER =3D 1
+>>>>> +endif
+>>>> Can you explain what scenario this is needed for, as unless I'm
+>>>> missing something this change has no purpose. This assignment is
+>>>> merely defining the defalt value, which can already be overridden
+>>>> at runtime without this 'ifndef'
+>>>>
+>>>> eg
+>>>>
+>>>> $ make check-unit TIMEOUT_MULTIPLIER=3D7
+>>>>
+>>>> In another shell:
+>>>>
+>>>> $ ps -axuwwf | grep 'meson test'
+>>>> berrange 1931657=C2=A0 3.9=C2=A0 0.1 330904 99344 pts/1=C2=A0=C2=A0=C2=
+=A0 S+=C2=A0=C2=A0 18:29=20=20=20
+>>>> 0:00=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 \_=20
+>>>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/python3=20
+>>>> /var/home/berrange/src/virt/qemu/build/pyvenv/bin/meson test=20
+>>>> --no-rebuild -t 7 --num-processes 1 --print-errorlogs --suite unit
+>>>>
+>>>> shows TIMEOUT_MULTIPLIER being honoured
+>>> Yeah... You are right!
+>>> It is possible to set TIMEOUT_MULTIPLIER only to run tests.
+>>> It is not necessary to set it for the whole build.
+>>>
+>>> Sorry, and thanks a lot!
+>>>>
+>>>>
+>>>> With regards,
+>>>> Daniel
+>>> regards,
+>>> Dmitry
+>>>
+>>=20
+>> This patch is still useful if we want to set TIMEOUT_MULTIPLIER as=20
+>> global env variable, and not explicitely on each make invocation.
+>
+> If so, I'd rather use conditional assignment [*]:
+>
+> - TIMEOUT_MULTIPLIER =3D 1
+> + TIMEOUT_MULTIPLIER ?=3D 1
+>
+> [*]=20
+> https://www.gnu.org/software/make/manual/html_node/Conditional-Assignment=
+.html
 
-> +    return -1;
-> +}
-
--- 
-Peter Xu
-
+I can fix that up in qtest-next, thanks.
 
