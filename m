@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB274E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 07:29:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F26E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 07:40:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKYBv-00051L-No; Mon, 09 Dec 2024 02:28:27 -0500
+	id 1tKYMe-0007VW-Jn; Mon, 09 Dec 2024 02:39:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKYBu-000513-8V; Mon, 09 Dec 2024 02:28:26 -0500
-Received: from mgamail.intel.com ([198.175.65.15])
+ id 1tKYMd-0007VD-4U; Mon, 09 Dec 2024 02:39:31 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKYBr-00087F-Aq; Mon, 09 Dec 2024 02:28:26 -0500
+ id 1tKYMa-0000bx-Ea; Mon, 09 Dec 2024 02:39:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733729303; x=1765265303;
+ t=1733729969; x=1765265969;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=F5pBLLFvUtiHKYH0oeEWoJGCsUU3wTP7lL98qNGVMC8=;
- b=ACGQO74AV46ygpyO5eNgPheiBmHPNJcdj3tGzhow3+jQaA0Ec24qw1Nf
- RJljLWhr9xbXnsgwpvvn/xGxO88ih1546N2vqNdK5NznQFvpgMQyy/c85
- 4SDtKirfYUZozp85uXoycCchDHeb9DGAKHwlWqsM4wlP9IB/ymM+rGTpS
- Cw/4muYn637kXcIGrHPAyNEDgr8NYSYxusN4B+y5rNnsA0k1xiiIFSlXW
- OY2c/a2xAy7wv7WxAYypvAzN1BSN6aIZ4SkDDdWJ4DXQxM4QTs3TwOGvb
- mtOglDvI9fHqARbO78igELvLNIMvouoEWzNlqd2CXT2bb7777eel2O4wb Q==;
-X-CSE-ConnectionGUID: zXP6zXiOQ+iFsKeOCeNRgQ==
-X-CSE-MsgGUID: tTK1UKiNQOmaBNuWOqmg+Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11280"; a="37691787"
-X-IronPort-AV: E=Sophos;i="6.12,218,1728975600"; d="scan'208";a="37691787"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Dec 2024 23:28:19 -0800
-X-CSE-ConnectionGUID: 7SsGGPXlSACUBE3wmVDf0Q==
-X-CSE-MsgGUID: RX5YxjrbT/aQRxMNJMHlhQ==
+ mime-version:in-reply-to;
+ bh=Xcl5bTr6izAci+yS4xpUaTgLFdqlVs6cTGr26Yt35ps=;
+ b=gw63iGFpD/rjlyAdaHMmaD2MWRKrQ3xxeZEg7LrfNL5eeAQLUe1XWIeb
+ F+WGNfnuoswjudlErtS9qmMfWwdVoGNElx7lqcRIZ8LDYRQQlTXtRUHXP
+ PoxuX0LBImAvJqFsUaDZQOlcRCKdYvXzcsQ7QsSjeMJBHNd2keR7Q3ze7
+ RcwueuFXs6vc3+gJJb2S7ZDNUbN0X2u3LrNpA1vctQHgcsWr6Fe13BVif
+ q9mt9sklkFExr7o1aSQgrv0scTC3dQZWIWYQ/Q+9NbW5SA2nJP9XikFAC
+ 7KY3tEQrFICrbsO8or/kJxNqghu6WM8Rw8nTRieAPfQKwogaDwqQsoh97 w==;
+X-CSE-ConnectionGUID: QOtivaKGRlajFO9L0bHSyw==
+X-CSE-MsgGUID: 6yLOCMGJRM+kw9BaWHweHQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11280"; a="34071889"
+X-IronPort-AV: E=Sophos;i="6.12,218,1728975600"; d="scan'208";a="34071889"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Dec 2024 23:39:22 -0800
+X-CSE-ConnectionGUID: yttqO0KxQIKHo82pNE1bjQ==
+X-CSE-MsgGUID: VBgxGpwnSS6Zd4HoFTxm9Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="100021619"
+X-IronPort-AV: E=Sophos;i="6.12,218,1728975600"; d="scan'208";a="99812754"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.36])
- by orviesa003.jf.intel.com with ESMTP; 08 Dec 2024 23:28:13 -0800
-Date: Mon, 9 Dec 2024 15:46:27 +0800
+ by fmviesa004.fm.intel.com with ESMTP; 08 Dec 2024 23:39:19 -0800
+Date: Mon, 9 Dec 2024 15:57:32 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: "Michael S . Tsirkin" <mst@redhat.com>,
@@ -54,18 +54,15 @@ Cc: "Michael S . Tsirkin" <mst@redhat.com>,
  Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
-Subject: Re: [RFC 11/13] rust/timer/hpet: add basic HPET timer & state
-Message-ID: <Z1agU6385snA9Xc4@intel.com>
+Subject: Re: [RFC 00/13] rust: Reinvent the wheel for HPET timer in Rust
+Message-ID: <Z1ai7PbmpDff8zxp@intel.com>
 References: <20241205060714.256270-1-zhao1.liu@intel.com>
- <20241205060714.256270-12-zhao1.liu@intel.com>
- <b107c5c3-9ee4-4939-a4e3-eff0cd92bad6@redhat.com>
- <CABgObfbojr4fkXq8tuuXCAGUdr3Vefddx=ERtMUx9w6Bqy0a3g@mail.gmail.com>
+ <2f42c553-5673-4826-bc2f-14ec1306e8c0@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfbojr4fkXq8tuuXCAGUdr3Vefddx=ERtMUx9w6Bqy0a3g@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <2f42c553-5673-4826-bc2f-14ec1306e8c0@redhat.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -48
 X-Spam_score: -4.9
@@ -90,27 +87,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 10:20:47PM +0100, Paolo Bonzini wrote:
-> Date: Thu, 5 Dec 2024 22:20:47 +0100
+On Thu, Dec 05, 2024 at 05:28:45PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 5 Dec 2024 17:28:45 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [RFC 11/13] rust/timer/hpet: add basic HPET timer & state
+> Subject: Re: [RFC 00/13] rust: Reinvent the wheel for HPET timer in Rust
 > 
-> On Thu, Dec 5, 2024 at 9:23 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > > +    /// Instance id (HPET timer block ID).
-> > > +    hpet_id: BqlCell<usize>,
-> > > +}
-> > > +
-> > Like flags this does not need to be a cell.
+> On 12/5/24 07:07, Zhao Liu wrote:
+> > * Proper bindings for MemoryRegionOps, which needs to wrap the ram
+> >    read/write callbacks.
+> >    - I think it shouldn't be complicated because qom/qdev already
+> >      provides good examples.
 > 
-> Well, this *should not* need to be a cell (ideally fw_cfg would call a
-> C function to generate FW_CFG_HPET) but it can't be done yet, so you
-> can keep it. flags need not be a BqlCell though.
+> Sounds good, I have some initial work on PL011.
 
-Thank you! I'll look at how to implement C function's workflow.
+Great! Sorry for the slow response, I just saw this comment. I'm looking
+forward to your work on this!
 
-At least, I'll leave a TODO to remind me to cleanup this BqlCell.
-(Now I did overuse the BqlCell a bit! :-) This is also an opportunity
-for me to carefully review the correct usage.)
+> > Based on this, I am also considering how the opaque parameter in certain
+> > callbacks should interact with BQL cells. In the timer binding (patch
+> > 7), I think the opaque parameter accepted by the timer callback should
+> > be placed in a BQL cell. However, considering generality, I did not make
+> > further changes and only passed BqlRefCell<HPETTimer> as the opaque
+> > parameter in the HPET code.
+> 
+> That sounds good.
+> 
+> I'll review your timer bindings and post the infrastructure that I have for
+> callbacks.
+
+Thank you!
+
+> > Furthermore, is it possible in the future to wrap the entire state
+> > within a BQL cell? This could save the effort of wrapping many state
+> > members individually when state becomes very huge and complex.
+> 
+> I think it's better if we keep a split between the mutable and immutable
+> parts.  For example properties are immutable.
+
+I like this idea. Clear splitting helps to standardize the usage of
+BqlCell, preventing both underuse and overuse.
+
+> > QDEV Property
+> > -------------
+> > 
+> > To support bit type property, I added another macro variant (in patch 8)
+> > to allow bitnr parameter. However, I think this lacks scalability.
+> > 
+> > In qdev-properties.h, it is clear that the PropertyInfo of a property is
+> > bound to its type. Previously, Junjie and I attempted to do the same in
+> > Rust by binding PropertyInfo to the type, thereby avoiding the need to
+> > specify too many parameters in the macro definitions:
+> > 
+> > https://lore.kernel.org/qemu-devel/20241017143245.1248589-1-zhao1.liu@intel.com/
+> 
+> Oops, sorry.  I have applied patch 1, but patch 2 is a bit problematic
+> because I think it's not const-friendly.  Maybe it was applied to older
+> code?
+
+Yes, it was based on old code base...and it seems outdated.
+
+> I haven't looked closely at whether it's possible to use trait { ... const
+> TYPE: &Property = ... }, maybe only in newer Rust?  But as you point out
+> there is an issue with multiple PropertyInfos that can apply to the same
+> type, therefore I think the way to go here is to use a procedural macro and
+> a #[property] attribute.  That also makes bit properties easy:
+> 
+>     #[property(bit=0, name="foo")
+>     #[property(bit=1, name="bar")
+>     features: u32,
+
+Thank you, it looks better and overcomes the drawback of the original
+proposal.
+
+> > MEMTXATTRS_UNSPECIFIED
+> > ----------------------
+> > 
+> > MEMTXATTRS_UNSPECIFIED is another global variable. Since it is
+> > immutable, BQL cell is not needed.
+> > 
+> > But MemTxAttrs is a structure with bitfields, and the bindings generated
+> > by bindgen can only be modified through methods. Therefore, it is
+> > necessary to introduce lazy to initialize MEMTXATTRS_UNSPECIFIED in a
+> > const context (patch 6).
+> 
+> Ugh, that's a pity.  Maybe instead of introducing a new dependency we can
+> use an always-inlined function?
+
+Based your and Richard's suggestion, modifying memattrs avoids
+introducing additional library. :-)
+
+> In an ideal world, bindgen would produce const functions.  A hackish but
+> easy possibility is to modify the generated bindgen code (with sed? :)) to
+> apply const to the bitfield functions.
+
+I think it could work, and this time it won't be needed, based on your
+newer suggestion. :-)
+
+> > Then, I chose NonNull to address this issue, as recommended by the
+> > author of NonNull and the standard collections [3].
+> 
+> NonNull is okay for now.  Later on we will handle it with pinned_init.
+> 
+> However, do not get a &mut HPETState, everything should go through
+> &HPETState and cells.
+
+Sure. I see.
+
+> > Therefore, I believe that in Rust devices, QOM members should also be
+> > kept private or at most `pub(crate)`. This is also why I tried to avoid
+> > using direct `pub` in HPET.
+> 
+> Yes, I agree.  I should look at unnecessarily pub things in pl011.
+
+Thank you!
 
 Regards,
 Zhao
