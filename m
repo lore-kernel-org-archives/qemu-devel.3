@@ -4,112 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6F51E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E97E7717D
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 20:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKkV2-0006By-2Y; Mon, 09 Dec 2024 15:37:00 -0500
+	id 1tKkVB-0006Gl-Md; Mon, 09 Dec 2024 15:37:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKkUy-0006Bf-IC
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:36:56 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKkV7-0006De-W5
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:37:06 -0500
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tKkUx-0003CF-1q
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:36:56 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 7B5DA1F45B;
- Mon,  9 Dec 2024 20:36:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733776613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
- b=SDgRuQ+5ec/vT3P5ckMt14mM0uarqMAoviN/EKzO8R6dQhrK0qfDkuf72s6O3WLivyAiKA
- WhXHhJznxtguFntIqxXFRUIA8Cm7wilYwMm53mIOCJU1U8BqgDTm9VyKMWjT32KQkIQSYm
- gNeuOcAb/vF7ygObOqu/AC4vQpL73ek=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733776613;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
- b=7NLhOO/+4IKEYSt+Ze00UkmeIz68osyl/tqKDaL2+LYjVDnbedESCJpGBydQ+lMeRfRI7a
- wUYwf0iMvGRZRjAQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1733776613; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
- b=SDgRuQ+5ec/vT3P5ckMt14mM0uarqMAoviN/EKzO8R6dQhrK0qfDkuf72s6O3WLivyAiKA
- WhXHhJznxtguFntIqxXFRUIA8Cm7wilYwMm53mIOCJU1U8BqgDTm9VyKMWjT32KQkIQSYm
- gNeuOcAb/vF7ygObOqu/AC4vQpL73ek=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1733776613;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=w1hM5J2rCpQDAxVBVQ5ByfARUe1Y1Jo3D9HyX797uqU=;
- b=7NLhOO/+4IKEYSt+Ze00UkmeIz68osyl/tqKDaL2+LYjVDnbedESCJpGBydQ+lMeRfRI7a
- wUYwf0iMvGRZRjAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id DA69C138D2;
- Mon,  9 Dec 2024 20:36:52 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id C9V9J+RUV2fYbQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Dec 2024 20:36:52 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Anton Johansson <anjo@rev.ng>, Richard
- Henderson <richard.henderson@linaro.org>, Laurent Vivier
- <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH-for-10.0] system/qtest: Access memory using
- cpu_physical_memory_rw() API
-In-Reply-To: <878qsobx78.fsf@suse.de>
-References: <20241127191914.34146-1-philmd@linaro.org> <878qsobx78.fsf@suse.de>
-Date: Mon, 09 Dec 2024 17:34:37 -0300
-Message-ID: <87zfl4a942.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKkV5-0003DC-IA
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 15:37:05 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aa560a65fd6so870330866b.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 12:37:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1733776622; x=1734381422;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Hi0SZTNhz11ho3vCY2FYS+EKuGIwlKWvrSV2lPVozDU=;
+ b=LytLI0b4iJMT6mfRLDoHGMDH0C/XjYWsXujFYX1U/r/nifkvCkEQrUpeSjpEynhl5w
+ Rsw8EIEnoTSjoODXWu0r7B538DG+pUEYzUib68JvFku+aO/NBQnU/iJ5jyljwwyTHsbj
+ XsBmgSilDfCx+17WxR9GPNvMpkm7Syd/MURkGTjk2Z1qhTdslzolfu9R1kmtCSI0fpTs
+ H4Oz4WyrA8YSghBAC3P2LFwzEvXlltk9dqGTLGuVEwx+OU8weo1fjLIvznbYML+vc/mn
+ sP8e98AtqT/FQlTOtiXzDvODgmWtGKfxMv7ZZPgibqvwJHxsR6INqVTx2806Qgx9vojs
+ N9MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733776622; x=1734381422;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Hi0SZTNhz11ho3vCY2FYS+EKuGIwlKWvrSV2lPVozDU=;
+ b=mklPMLx4q8YKAPKYF+9UIcee5uzOIOOpyr6cigUKsZKJI9USR8Q0VWaMLUkvkA/iY1
+ WpKhgCzwBBZ0feGcHXl8/tab6QlwndPd45v8GSa2CH8YjWPySVka4CbqkGXjM1lI4vvk
+ ilYSXDsc/BpnH2x8MZ6i/oow9D1vmr6SEriVyl23shlp61DoKZ3tf3P30+5l6o0prqfA
+ eh41uYocxnQiw4ml2yLT2DnlE5adi1DOsbNLfxWE1w2pgk02hPfLhML8TO4uCSNmSpNg
+ 5KqeddzYOoNVc8hAx6VxmzcSbeGzB1qeFY5soSxjyUnXqsz7fcYp6v2dm6RoaEFuip6l
+ 8r3A==
+X-Gm-Message-State: AOJu0YxWUTyGCbtgGtb6X7f30vZuT0TivWAVAYvhFpOvzK/anPPvvOjs
+ N1xGo5ZRq8kTPzA3uFcbL7AcFUSenGZdaK03lRrIagWld02V8DQjsoLq6+hfOb58h42CqFGk7ft
+ OZw==
+X-Gm-Gg: ASbGncsAxUhc1YAvOd1NzHjsvrDCp+mWmtCAH7oZYFzzSKSoive3+3+G9yP/5WxczmZ
+ vgtba7CRxET9ZN0kXClTkoT/BRpXzrgo6JxIE78i/UKubuTJtH98sJck1bsCkU0Se0sZXHveoBK
+ p6AjnjNM4HlzamF5p6m/rMWRypXuKgoRxAaADOUJGpcaUlWtgBld83v1/57gr0FUMlBKB1bWgUj
+ CCVUOyUjEyLH2ZxzI+Yh4vS5wT08deAtAi3/XST6gH3VhEu4shpvQAcd4ok74e4fbe5CFhWdmr+
+ s4+rHI9vLh4AVTEXFKA6QHsaAHN0+w==
+X-Google-Smtp-Source: AGHT+IF97ZP4nL6Caxhy2PrICmPoNEio8MDbDpQr48YBwj0h6+Tmb9xVPRXPbfzgKVgW2Kg/0c4fyg==
+X-Received: by 2002:a17:907:3f11:b0:aa6:42d8:afac with SMTP id
+ a640c23a62f3a-aa6a01bea0bmr85134066b.15.1733776621756; 
+ Mon, 09 Dec 2024 12:37:01 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa692e4e9d5sm141783566b.129.2024.12.09.12.37.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Dec 2024 12:37:01 -0800 (PST)
+From: phil@philjordan.eu
+To: qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH 04/11] i386/hvf: Pre-fetch emulated instructions
+Date: Mon,  9 Dec 2024 21:36:22 +0100
+Message-Id: <20241209203629.74436-5-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.3 (Apple Git-146)
+In-Reply-To: <20241209203629.74436-1-phil@philjordan.eu>
+References: <20241209203629.74436-1-phil@philjordan.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo, linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: neutral client-ip=2a00:1450:4864:20::634;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,64 +103,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 
-> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->
->> There is no vCPU within the QTest accelerator (well, they
->> are stubs doing nothing, see dummy_cpu_thread_fn).
->> Directly use the cpu_physical_memory_rw() API -- which
->> amusingly prefixed 'cpu_' does not use vCPU -- to access
->> memory. This reduces accesses to the global 'first_cpu'.
->>
->> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->
-> Queued, thanks!
+The HVF x86 instruction decoder has previously read each instruction
+component a few bytes at a time. The HVF vCPU VM exit reports the length
+of the faulted instruction, so we can just pre-fetch the memory for the
+whole thing in one go, saving extra round-trips for most instructions.
 
-Scratch that, I see some tests failing:
+The old code path is retained in case there is a race between VM exit
+and another thread overwriting the faulted instruction. In this case,
+the instruction length could be wrong, so we allow fetching additional
+instruction bytes the traditional way if the prefetched bytes are
+overrun.
 
-QTEST_QEMU_BINARY=3D../build/qemu-system-arm ./tests/qtest/sse-timer-test
-# random seed: R02S7b4a25dac8a32a86ee016342d60e78ec
-# starting QEMU: exec ../build/qemu-system-arm -qtest unix:/tmp/qtest-7386.=
-sock -qtest-log /dev/fd/2 -chardev socket,path=3D/tmp/qtest-7386.qmp,id=3Dc=
-har0 -mon chardev=3Dchar0,mode=3Dcontrol -display
- none -audio none -machine mps3-an547 -accel qtest
-[I 0.000000] OPENED
-[R +0.033524] endianness
-[S +0.033533] OK little
-{"QMP": {"version": {"qemu": {"micro": 93, "minor": 1, "major": 9}, "packag=
-e": "v9.2.0-rc3-23-g3fe88295e8"}, "capabilities": ["oob"]}}
-{"execute": "qmp_capabilities"}
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+---
+ target/i386/hvf/hvf.c        |  6 +++---
+ target/i386/hvf/x86_decode.c | 18 +++++++++++++++---
+ target/i386/hvf/x86_decode.h |  5 ++++-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
-{"return": {}}
-1..3
-# Start of arm tests
-# Start of sse-timer tests
-[R +0.035240] writel 0x58100000 0x0
-[S +0.035250] OK
-[R +0.035263] writel 0x4800002c 0x0
-[S +0.035265] OK
-[R +0.035275] writel 0x4800004c 0x0
-[S +0.035278] OK
-[R +0.035287] writel 0x58100008 0x0
-[S +0.035289] OK
-[R +0.035296] writel 0x5810000c 0x0
-[S +0.035299] OK
-[R +0.035308] clock_step 3125
-[S +0.035312] OK 3125
-[R +0.035323] readl 0x58100008
-[S +0.035326] OK 0x0000000000000000
-[R +0.035334] readl 0x5810000c
-[S +0.035337] OK 0x0000000000000000
-[R +0.035344] writel 0x58100000 0x1
-[S +0.035346] OK
-[R +0.035354] clock_step 3125
-[S +0.035357] OK 6250
-[R +0.035364] readl 0x58100008
-[S +0.035367] OK 0x0000000000000000
-**
-ERROR:../tests/qtest/sse-timer-test.c:91:test_counter: assertion failed (re=
-adl(COUNTER_BASE + CNTCV_LO) =3D=3D 100): (0 =3D=3D 100)
-Bail out! ERROR:../tests/qtest/sse-timer-test.c:91:test_counter:
-assertion failed (readl(COUNTER_BASE + CNTCV_LO) =3D=3D 100): (0 =3D=3D 100)
+diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+index 936c31dbdd..095f934923 100644
+--- a/target/i386/hvf/hvf.c
++++ b/target/i386/hvf/hvf.c
+@@ -522,7 +522,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+                 struct x86_decode decode;
+ 
+                 load_regs(cpu);
+-                decode_instruction(env, &decode);
++                decode_instruction(env, &decode, ins_len);
+                 exec_instruction(env, &decode);
+                 store_regs(cpu);
+                 break;
+@@ -562,7 +562,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+             struct x86_decode decode;
+ 
+             load_regs(cpu);
+-            decode_instruction(env, &decode);
++            decode_instruction(env, &decode, ins_len);
+             assert(ins_len == decode.len);
+             exec_instruction(env, &decode);
+             store_regs(cpu);
+@@ -667,7 +667,7 @@ int hvf_vcpu_exec(CPUState *cpu)
+             struct x86_decode decode;
+ 
+             load_regs(cpu);
+-            decode_instruction(env, &decode);
++            decode_instruction(env, &decode, ins_len);
+             exec_instruction(env, &decode);
+             store_regs(cpu);
+             break;
+diff --git a/target/i386/hvf/x86_decode.c b/target/i386/hvf/x86_decode.c
+index a4a28f113f..79dfc30408 100644
+--- a/target/i386/hvf/x86_decode.c
++++ b/target/i386/hvf/x86_decode.c
+@@ -73,8 +73,13 @@ static inline uint64_t decode_bytes(CPUX86State *env, struct x86_decode *decode,
+         VM_PANIC_EX("%s invalid size %d\n", __func__, size);
+         break;
+     }
+-    target_ulong va  = linear_rip(env_cpu(env), env->eip) + decode->len;
+-    vmx_read_mem(env_cpu(env), &val, va, size);
++
++    if (decode->len + size < decode->prefetch_len) {
++        memcpy(&val, decode->prefetch_buf + decode->len, size);
++    } else {
++        target_ulong va  = linear_rip(env_cpu(env), env->eip) + decode->len;
++        vmx_read_mem(env_cpu(env), &val, va, size);
++    }
+     decode->len += size;
+     
+     return val;
+@@ -2099,9 +2104,16 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
+     }
+ }
+ 
+-uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
++uint32_t decode_instruction(CPUX86State *env, x86_decode *decode,
++                            uint32_t ins_len)
+ {
+     memset(decode, 0, sizeof(*decode));
++
++    target_ulong va = linear_rip(env_cpu(env), env->eip);
++    uint32_t prefetch_len = MIN(ins_len, sizeof(sizeof(decode->prefetch_buf)));
++    vmx_read_mem(env_cpu(env), decode->prefetch_buf, va, prefetch_len);
++    decode->prefetch_len = prefetch_len;
++
+     decode_prefix(env, decode);
+     set_addressing_size(env, decode);
+     set_operand_size(env, decode);
+diff --git a/target/i386/hvf/x86_decode.h b/target/i386/hvf/x86_decode.h
+index a2d7a2a27b..0ff368210b 100644
+--- a/target/i386/hvf/x86_decode.h
++++ b/target/i386/hvf/x86_decode.h
+@@ -297,11 +297,14 @@ typedef struct x86_decode {
+     bool is_fpu;
+     uint32_t flags_mask;
+ 
++    uint8_t prefetch_buf[16];
++    uint16_t prefetch_len;
+ } x86_decode;
+ 
+ uint64_t sign(uint64_t val, int size);
+ 
+-uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode);
++uint32_t decode_instruction(CPUX86State *env, x86_decode *decode,
++                            uint32_t ins_len);
+ 
+ target_ulong get_reg_ref(CPUX86State *env, int reg, int rex_present,
+                          int is_extended, int size);
+-- 
+2.39.3 (Apple Git-146)
+
 
