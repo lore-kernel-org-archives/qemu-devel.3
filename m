@@ -4,169 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA9AE77173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 09:30:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81C05E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 09:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKa55-0008LE-H5; Mon, 09 Dec 2024 04:29:32 -0500
+	id 1tKaSq-00036f-JL; Mon, 09 Dec 2024 04:54:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tKa4e-0008Fc-VM
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 04:29:06 -0500
-Received: from mail-mw2nam12on2060b.outbound.protection.outlook.com
- ([2a01:111:f403:200a::60b]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tKa4Z-0002BD-6F
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 04:29:01 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Rfb6v7Vp5Edt2Esj8mK3FAq6cTjL02/0wrGrSzT8lJRf3sRCfMpOqCncaKQ5rZqp8HzrjkI/7XAwmYMjk8+1i6QPPRqg2DdsBgh5e4ZvAnYT4l7UxpCtKPiTmyf1ZGSz98cWw50ruv3ESRtRTr5j7nYDYsxxBijKKFhJCIRFfdUDyR4opkRFN68rDnLnpuDr+xM87kZVfDL6OTKxb127pRyWoXLgAeQJkwNuEQC+s3WdT9KS/Bv6MwFV261yudQ2eRnvjq2VBeTLB/FhYLo/0JkDx9jbexobU1F7XaddGdepIXHMw1Ha11h8fBxiqiyOmYD4dldC/F00nhYH2WMINA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JyDdaZAt0NlIsDo7PeyCZ1Crspad+q1/gpisnRVGNjo=;
- b=G9F/d+hJSshugrPO/dInsdZDvEvmdoRgc6J6LMLg+uxbvj6aytpPu3fM5pw25jINlNBnbgum15MeXBm/q3bcOWm5FoGvEk5BsSEx5CGhRdT0EVg7kSR1m/wB6JvSCYrf/pSxenb6p+dcUvH2F9xbmZUN2/vukMoyUJARLVwcD45TJYC87mbUpSWWx6mjDb3Dz7HnLPSvRHm0nS+ZxzQNTkC/P4Xk/iT0UeAYnRARt2ilCtZZvKKhDkGQCyIZnlTGOIDYHfNQPp5UzeE1Yk6Oe+o2S+1iusm+lUUv2rz8aGkc1WJvrOa9VIl9jg5og1IP70BZOyk/rO1ebbIHCH7exA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JyDdaZAt0NlIsDo7PeyCZ1Crspad+q1/gpisnRVGNjo=;
- b=cJG9GHIYP1oAmgVpViR2DrkLH65b2w/cDSr1n1jsqSk0Hxeq2sO+PltO1mQ5Likxxj//tak+A12JPU/GGtOmVAPbaAm2IObMVBce6kCEN7tu1EUFcfoE7HZk6UXVbeWoYIBj/XykhgOJPtIFWWOxEd2m6egbRepQ/9mSvAiPNH7+OzOSWvBOALE/HuVTtrVcyVmTdwoUStRXOmbRgFhaUqGpBxRXW/f7DtCBrBM13WNW1iIt+pDNN+S43UFHlJECFXVvQVYusrxizra3iNWT9/Wia1D/IXc3RuMdJPZxUdFzOfRUvKZ7M3hki9G8zNdTIxQJntKqQV2v6R4bdHj35A==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com (2603:10b6:5:209::13)
- by MW4PR12MB5643.namprd12.prod.outlook.com (2603:10b6:303:188::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.18; Mon, 9 Dec
- 2024 09:28:52 +0000
-Received: from DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91]) by DM6PR12MB5549.namprd12.prod.outlook.com
- ([fe80::e2a0:b00b:806b:dc91%6]) with mapi id 15.20.8230.016; Mon, 9 Dec 2024
- 09:28:52 +0000
-Message-ID: <51279885-5229-4c5f-93af-d1214dd65f90@nvidia.com>
-Date: Mon, 9 Dec 2024 11:28:46 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 24/24] vfio/migration: Multifd device state transfer
- support - send side
-To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <4f5c33b97be09fcb4e1885073e31c5e930a39ad0.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <4f5c33b97be09fcb4e1885073e31c5e930a39ad0.1731773021.git.maciej.szmigiero@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR5P281CA0013.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:f2::6) To DM6PR12MB5549.namprd12.prod.outlook.com
- (2603:10b6:5:209::13)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKaSn-00036V-GE
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 04:54:02 -0500
+Received: from mail-vk1-xa30.google.com ([2607:f8b0:4864:20::a30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKaSi-0004O5-HC
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 04:53:59 -0500
+Received: by mail-vk1-xa30.google.com with SMTP id
+ 71dfb90a1353d-5174f298e18so277337e0c.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 01:53:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1733738035; x=1734342835;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=suP2sxy9IUQnqxUxnZWbbZdqzTDaFYxPh5dsPK8l6lc=;
+ b=GISLfmY0sEFsbpwr74v2GyQtUUlKw6V7gogviIMM3479lhv85VEdAeSl24qfD/vxIo
+ MWgBTpzQRycuKNFan0lnseKt0RnihX3JXQgkYbWXKQEGwpVukkLdzf0TTrtRAXRUM++Q
+ Dfz2bFawV5kirl3UfHWZZeBYHCjGMyPmz4UV9xq6VHiRHFc1wRKlPop+kJ5pZsCe3lb/
+ th7vPUMSLmyCE3z0Oz3HgL0KQrFpltOt90k/Mf6R7UaY23MbUK3dF28S2vMDHkgHZvNE
+ omtGN3N53EH2P1tn2tAaHFthNfhzaL/hhFOpmQiZ7lUC/PQWJqbfA5y27P+v7cT1SnUH
+ bUMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733738035; x=1734342835;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=suP2sxy9IUQnqxUxnZWbbZdqzTDaFYxPh5dsPK8l6lc=;
+ b=rvhaU8xvaay5Z7PCxvG9LNB25giunaszS+hlSlDC4xMubvEHKG2VH6Lbm7+LBRFDUV
+ aNrXPed5Cxpc7sAu8WHKW5Xpk8ef+GCTqHz3WAC09QGaNywxmS8SlNKyF0Sg2oha6EAr
+ maDAh6SGzO7FHE2mWoDN9jyFaWKHxgeqRC3Cn1idzMCUJBdxRT/IKYV+toU4WNn1qQ6E
+ hij0OIZgFSoRBTFpsRmNP5+L5yK8aTLpXaGq7xKJM9KnlHMQoAjzCwyl2JqqceThD1sw
+ /TIA4sEt3PlPoE1vKCLlj/0OAztKHiiK0ev5CBBCm6d3/jS38IQGwAlIEeRkr2wccor+
+ jbXg==
+X-Gm-Message-State: AOJu0YyaWYILLIfMLf3tIl8nf3XXElaLTkQG8qsFlMhoOGKff5GZ6kXS
+ YvSIUsc3LgX0C8/aEHDhi8wadnhrrQeu1/4CgkRAVlylJNrRPKF1L4/wl6CZw9UlEOzPZ+4w36z
+ UcBehJEWn3JBLufWY5Hlzt0b0gpha9TJYlPg+
+X-Gm-Gg: ASbGncsy0IvRbBPoevkdTO5uIUnFPjo3ZlL6RlcJbmr0Lk4QAmW9m1070yet84pLjIm
+ PvaJI6VnmmLiCIZTBCHnJUKZx67YC8WI=
+X-Google-Smtp-Source: AGHT+IGV1gLFrkbwsWdc1caRW0vZ05ohBIBWwdNJzzmIJJoS9zOI2G+7NdsHgrDc8kzu7iKAry+NO493v8D4mV1R5v0=
+X-Received: by 2002:a05:6122:2517:b0:517:4fb0:74bc with SMTP id
+ 71dfb90a1353d-5174fb077c3mr1794902e0c.3.1733738034812; Mon, 09 Dec 2024
+ 01:53:54 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM6PR12MB5549:EE_|MW4PR12MB5643:EE_
-X-MS-Office365-Filtering-Correlation-Id: 48a0de17-edb0-4205-0998-08dd1833e526
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UWNCMGp6aWl1bWMvS09lZVFVRDZxQXdRQzVNeVM2YjcvMXVSQzFPaE1KdEtC?=
- =?utf-8?B?QkpKczh2L2FKaW5lYzN4UlNFTEEycXJ2NlpTRFFkSXJLdWNmaDY2UVhFR1p5?=
- =?utf-8?B?WndoMkE0VGxYNWlmZ2lNdmN1d2hJQkRpbnc3MUdVOUlwU0RBbnpyZC9JR0cr?=
- =?utf-8?B?d1Q2MnN3bGFkemhVd0IrNVljbjFFT0pwWXVJQU9qWEs1ZHZ6cm0wZ0hIbC9k?=
- =?utf-8?B?SGVsOWhtUTBJYkg2Q1BQS2oxQ2JpNTlDcVBqV2FzMGxMbGlHaVZWSHNZMDZW?=
- =?utf-8?B?Q0xGdGhQVTV0ZDUyYkN4NjRsdDhkRllONDREVVhkVFNJR21Oa01IbDU4bEMw?=
- =?utf-8?B?SlladkUzYXp6NWV4dStGb1ZSQzVVNU1NZWF5WmFSZzdwYVFZVkVGOHJTUCsv?=
- =?utf-8?B?T2Y4MGViUE9WMHl3eEFjNzJtNktUU2RpUC9MMXprSjB0YUJQbFFrbEVsTEVl?=
- =?utf-8?B?dkJXanZ2LzBncDJQS1BZcnVqNTBMRFZ5TCs5YVhla0NVU0FYQmllNWJkUmxN?=
- =?utf-8?B?SUd5MVB2N0RGcDJ1NFRhUjl2bENTVWRaeGhwS2hqS01HUVRDckVGbzB2Q1RR?=
- =?utf-8?B?bFg1dTJFSXpaRUhPYTA3Skcvb1FnUjJMSGx6MDFBOSs1bTFXRVZmQWhuSWc0?=
- =?utf-8?B?WHVpaUZsdGx4RFNjWUpQSk16U2N4eU56VitFOHhZa24weEdCVEwvSVRtRDVI?=
- =?utf-8?B?a253K2w5YkQwS2NnNzJnR0MrSFNCajVZdWlWNzlsUzJzVkFXa1IxWTErak5y?=
- =?utf-8?B?MTJ0WGtkTk9BSU12M0N6UjJBZGpHbjByeU51SjBIcWZGTmUxckNZcXErRmRD?=
- =?utf-8?B?VTk4UWp4ZXo5WnRzT3V6a2wreWordGptZ0xuUGVDUnBZdVBCZldkTFp0TEpY?=
- =?utf-8?B?TVV0OURoZThLNFROUnBpbk9IMlkzN0xiOWNWVlRGVEVXQUtueiszcEdLbWk3?=
- =?utf-8?B?akxBRWUvU2lJY1pldVBkekVWdURTVzVtckx6MEtmeU16SWZUeFZzWnVzMldF?=
- =?utf-8?B?NHlaeUI5VW13MklYMUtQRVMyaU5wS25UTzRrRTdGeFlNcjdLTHY3RE5LSWY3?=
- =?utf-8?B?cDN3d0hNeXFyKzZnR05jT0FKNkZxZlZXMU1hNHk4ZUpoa0Rsa3A1QldFbmJP?=
- =?utf-8?B?TFVIM0Q2TTl4VUZvK0FrdDBjVjlZc2diZ3lOYzAzNyswWFBqOWNnWFpxbzVm?=
- =?utf-8?B?aExKN2F0MmNKNlRWbStsNXYwckV6SGZEdjZ2WXI5bmVZZlU0L0lNN28wSytT?=
- =?utf-8?B?UVdkWkxLQ0VrUnFiTEp4WDV4WkdpOCsvNVp2NFFZOFlMeWtValBrT1JnYW1S?=
- =?utf-8?B?NkVNam43Tjk4YlowTmU0K09jL1lQMWY5NFVSM1NOVHM1YTZEMVhPc3N2UXVO?=
- =?utf-8?B?RXBYTVV2UjFIRXhlb3NJNFJoMUNlQjI3Um15U2prTkVvcUlWNUJGbWVWUkph?=
- =?utf-8?B?Nmt2WTI4dEtVc0Y1Zi9OTGx5S3RIL3VjdFRzVU5DaXlSM2tPK0hObXZPdkhz?=
- =?utf-8?B?cmJZSzEwZTBreTRhdGwyNElVRFRudHJTOUI2VVpJRXVwdS9vbGtiNmFhQTJ1?=
- =?utf-8?B?RUR2ZEwrYURVNG5iZWY1QkloQzh6ODJyNHVDZ2dMYVVvS1dla3BDM2FOcTBN?=
- =?utf-8?B?Q2RqYW81eENubW4vR1RBeFBLWDVyT3F4dkxLc2VTYXNRVjg5bEo1RlhPbnlO?=
- =?utf-8?B?R3E1V1ZTNmI4U3FBUUtpaCtXOU1STVZpQzgwUjJYbWkvYkdPZG9vY3E0UG4r?=
- =?utf-8?B?MVU2ak9zT2FxMHdDcDc5ZEZZcCtwODlqcGlWVmp4YUpkbW5CbGdjYTFrd0Y5?=
- =?utf-8?B?ZGlqYjBlMEFHMjVEbW50dz09?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM6PR12MB5549.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZnVzeXBtUkR3VlR5Q3lkaTZ5YkFYcE40SFJNOVpqNi9Ja2NxdVJaL0FaMlYz?=
- =?utf-8?B?RCtWOW9kUFNJdDAvNEszVmhrVUxBbVhsc1pQcXZHYlhWSWdPaEJVWjZmSnZl?=
- =?utf-8?B?WGtkR2w4bG1WUlYxd0d0NzlPNElwZ1c4Z0pFN2pYcUVGUG5kbUJtVGFDaGJv?=
- =?utf-8?B?LzU2cDAyeVN2U0xTNVVNVWppNEtWTmFlSWFXTG5RaWVqK3Avcklad05xODAy?=
- =?utf-8?B?SFZGR2JUdTJmSXVFYm9uYTBZTWo0T2xqdzdFU0pKSWdwN3BMS2dMS3ZpV0Na?=
- =?utf-8?B?dzNpMlUxQjFsVFIxSzEweGUwUzNraHNHUVZvT1VOeDhIbHpXZGZNblk2dmJh?=
- =?utf-8?B?dXhLSjhCVnp0RmplUEFoUzREdzhmMzhZRFFtbk9FNVN2Y2ZsQTMwZkM1Mnpa?=
- =?utf-8?B?eDNKZkRLYzhQMGlPbUtrL0JBaFE2VnV3THFNSUJYRFZKcTcrdjVKS09mTlc3?=
- =?utf-8?B?dUJxTFphU1JKeGUxcitnNE50cXV1TkNtdVhFUW16S0E0eWpOdk9EWnhQbmdS?=
- =?utf-8?B?clU5UG5EZDNUUldpTktWbkRaMzh2cHhsNEZ6dTUrNHNNbmFpN2lXdWZpNE5M?=
- =?utf-8?B?Y0ZSbTBCL3dGZjJGOElUWWRmUzBBT3JiaUdjcUJuWC9sME84cjB2VmlDSTlV?=
- =?utf-8?B?MGFLNDl6MStmeXc0WEliS0NlRTJ3MlVxNWtqVHkxTjdHRUY0dTFjamNxTHZu?=
- =?utf-8?B?WG5DWGVaNldkQWNKR05WSUxxc0syMzVYRFAreWhydEtzbCtzdmRoc1UrNE1o?=
- =?utf-8?B?SVRoZlVZS01McVRKZG1iTXN4VURJdXB0MSt2TFh2N3RKdGZkM3dnSXNaRWxl?=
- =?utf-8?B?QlVGd2Y1MmRJS09YQys5NGFoWG5yZ2RsV2xNZmRrUkdpcEVwdmZQVm5JdmdD?=
- =?utf-8?B?MFpsaktoVldoRVE4eUllTWlVTk4zdTJ6ZE5Pd2VNN3VxeW8xRlFmN3ZkM0Nj?=
- =?utf-8?B?TFRrTG9BQzAxTGcrNUFpVDl1ZjR6S2taK25TOTl3SUVJOHgvQW4wYUJXOHpZ?=
- =?utf-8?B?OUREWXdWMkY2VXBhMGM0U0hMRWY2UU9YL0w4STNCQUVSWnRxQ3V0TVFPQVRN?=
- =?utf-8?B?dEpTMFE4eHBCdTdXUkY4ZnZPcEJzc2xkYnVEN2lNY3ZmTUVPM2lzMytrUDNl?=
- =?utf-8?B?aWdQeXUxbW0xalpqWEtpUnNUM3hHM3ZTZU5hTFhOdGNPRnhVVE5lbUxYV0tM?=
- =?utf-8?B?VFBUUE5TclNXMGdqVnlqK3o2ZnlIdkJpTjVHcG9LTCszRUNLdWFwTUhob2VG?=
- =?utf-8?B?MGRERTBKOUlZcm5zVGxmdUxrdW5hc1Q3MUlWU0g1Y24zUXZ1eGhGTGViaEhm?=
- =?utf-8?B?NGlRb0ZhR2p2ZTlpUmo1WUx6bDJBN2Z3dmJoZE41cWFhenhrNGhXelQvZHd3?=
- =?utf-8?B?b2I2QlFBZldYdDdSL3A5clk3djhodUxPeEJpYjdVcklENmFCWVorakszYjZK?=
- =?utf-8?B?cC9ZK0JSR2hieDNtcnNUSzQzbEI4TkRWcjRMYVNQeUxubi9pbzZmR0ZJKzBy?=
- =?utf-8?B?L3JyL2RDbXc3TEMvQUFCdDBPTEF3cVJTNytsZHFTYnF3cmJWWWJsTlhuL1JG?=
- =?utf-8?B?SUVLYVpwVlhmdy9XOVFWTGQwZlhQZlNRa1ZiVUpSRDJqWVJEWGtNYUFqTzd0?=
- =?utf-8?B?bEpLdXhNenBSc1lBNExpbFNHZ0NySlFNWVdkbkNzT2VXWmZhZ1AvbE02MVBK?=
- =?utf-8?B?RTNXeCtVbEd5Z25PY3lZT3U4b2N6dnNrTldKV204dFNJdzJHMVRpRHNwUlho?=
- =?utf-8?B?ZVhsSnVOZWgzT0NTb1NPSmtGdGxlRUJFcDNud2YvZjBrQUlMbFdUakluak5J?=
- =?utf-8?B?ZElMQXc5Mk9kSW5tbzFFT09wMmZBenBMRlI2MllwM3NBcFdvaXVWZHpJTGYr?=
- =?utf-8?B?ckpndTdaMjNxK1M5dHNuZ0JMQTZMcVE4dE8vUlVYTEIySEVlekdaeGpiVzRs?=
- =?utf-8?B?TkRmUXN6R2FnWWZkOHB1Z0tOWnMwK3lpNmk0cFZHdERkbGZlY3JxdnQyKzRt?=
- =?utf-8?B?ampCZTJXV3Z1b3FOWFcwUzliMEl1c0Y1cEUxOWdPRjBSQ1RQM1JxOU1hVnAr?=
- =?utf-8?B?UURJUTJjNFVsK3RBMlpqbkN5d3pSbjYrWUVUNHRnNE9HTWxnVlpLTENCZndt?=
- =?utf-8?Q?5M6HzU/pe4jFLmstCYNMSjFdU?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 48a0de17-edb0-4205-0998-08dd1833e526
-X-MS-Exchange-CrossTenant-AuthSource: DM6PR12MB5549.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Dec 2024 09:28:52.5535 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OltD/XblgZHG+WYHm+4oq/VP0Nwnw9htKCy2lqL9sQa9eq8kwDMTJVDTkCrgcpSKGBPdB0hGrqdmMgC183vJxg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB5643
-Received-SPF: softfail client-ip=2a01:111:f403:200a::60b;
- envelope-from=avihaih@nvidia.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241208191646.64857-1-phil@philjordan.eu>
+ <20241208191646.64857-5-phil@philjordan.eu>
+ <a90fc398-2713-4b2b-a9e4-ab591e994ebd@daynix.com>
+In-Reply-To: <a90fc398-2713-4b2b-a9e4-ab591e994ebd@daynix.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Mon, 9 Dec 2024 10:53:44 +0100
+Message-ID: <CAAibmn25MBzpS4DAt4ENKjjgYk29y01Y4pJNH9Hj9q+dT0jCiA@mail.gmail.com>
+Subject: Re: [PATCH 4/6] hw/usb/hcd-xhci-pci: Adds property for disabling
+ mapping in IRQ mode
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org, 
+ thuth@redhat.com, zhao1.liu@intel.com, imammedo@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000b2f1ee0628d35729"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::a30;
+ envelope-from=phil@philjordan.eu; helo=mail-vk1-xa30.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -182,258 +93,417 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000b2f1ee0628d35729
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 17/11/2024 21:20, Maciej S. Szmigiero wrote:
-> External email: Use caution opening links or attachments
+On Mon, 9 Dec 2024 at 07:19, Akihiko Odaki <akihiko.odaki@daynix.com> wrote=
+:
+
+> On 2024/12/09 4:16, Phil Dennis-Jordan wrote:
+> > This change addresses an edge case that trips up macOS guest drivers
+> > for PCI based XHCI controllers. The guest driver would attempt to
+> > schedule events to XHCI event rings 1 and 2 even when only one interrup=
+t
+> > line is available; interrupts would therefore be dropped, and events
+> > only handled on timeout when using pin-based interrupts. Moreover,
+> > when MSI is available, the macOS guest drivers would only configure 1
+> > vector and leading to the same problem.
+> >
+> > So, in addition to disabling interrupter mapping if numintrs is 1, a
+> > callback is added to xhci to check whether interrupter mapping should b=
+e
+> > enabled. The PCI XHCI device type now provides an implementation of
+> > this callback if the new "conditional-intr-mapping" property is enabled=
+.
+> > (default: disabled) When enabled, interrupter mapping is only enabled
+> > when MSI-X is active, or when MSI is active with more than 1 vector.
+> >
+> > This means that when using pin-based interrupts, or only 1 MSI vector,
+> > events are only submitted to interrupter 0 regardless of selected
+> > target. This allows the macOS guest drivers to work with the device in
+> > those configurations.
+> >
+> > Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2705
+> > ---
+> >   hw/usb/hcd-xhci-pci.c | 23 +++++++++++++++++++++++
+> >   hw/usb/hcd-xhci-pci.h |  1 +
+> >   hw/usb/hcd-xhci.c     |  3 ++-
+> >   hw/usb/hcd-xhci.h     |  5 +++++
+> >   4 files changed, 31 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+> > index 0278b0fbce2..8e293cd5951 100644
+> > --- a/hw/usb/hcd-xhci-pci.c
+> > +++ b/hw/usb/hcd-xhci-pci.c
+> > @@ -81,6 +81,23 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int
+> n, bool level)
+> >       return false;
+> >   }
+> >
+> > +static bool xhci_pci_intr_mapping_conditional(XHCIState *xhci)
+> > +{
+> > +    XHCIPciState *s =3D container_of(xhci, XHCIPciState, xhci);
+> > +    PCIDevice *pci_dev =3D PCI_DEVICE(s);
+> > +
+> > +    /*
+> > +     * Implementation of the "conditional-intr-mapping" property, whic=
+h
+> only
+> > +     * enables interrupter mapping if there are actually multiple
+> interrupt
+> > +     * vectors available. Forces all events onto interrupter/event rin=
+g
+> 0
+> > +     * in pin-based IRQ mode or when only 1 MSI vector is allocated.
+> > +     * Provides compatibility with macOS guests on machine types where
+> MSI-X is
+> > +     * not available.
+> > +     */
+> > +    return msix_enabled(pci_dev) ||
+> > +        (msi_enabled(pci_dev) && msi_nr_vectors_allocated(pci_dev) > 1=
+);
 >
+> This will make it behave incosistently when
+> msi_nr_vectors_allocated(pci_dev) is not sufficient to accomodate all
+> Interrupters;  If > 1, overflowed Interrupters will be ignored, but if
+> <=3D 1, overflowed Interrupters will be redirected to Interrupter 0.
+> Remove the condition unless it is truly unnecessary.
 >
-> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+
+After applying the existing patch 1/6 to fix the failed assertion, if you
+run a VM with a macOS guest, and configure the XHCI controller so that MSI
+is on and MSI-X is off:
+-device nec-usb-xhci,msix=3Doff
+You'll find that it exhibits the same apparent problem as when using
+pin-based interrupts: the macOS driver configures only one MSI vector, and
+then schedules events to event rings 1 and 2.
+
+You have however just prompted me to re-check the specification on the
+details of MSI, and it looks like I missed something in the "Implementation
+note" in section 4.17 (Interrupters):
+
+When MSI is activated:
 >
-> Implement the multifd device state transfer via additional per-device
-> thread inside save_live_complete_precopy_thread handler.
+[=E2=80=A6]
 >
-> Switch between doing the data transfer in the new handler and doing it
-> in the old save_state handler depending on the
-> x-migration-multifd-transfer device property value.
+The Interrupt Vector associated with an Interrupter shall be defined as
+> function of the value of the MSI Message Control register Multiple Messag=
+e
+> Enable field using the following algorithm.
 >
-> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-> ---
->   hw/vfio/migration.c  | 155 +++++++++++++++++++++++++++++++++++++++++++
->   hw/vfio/trace-events |   2 +
->   2 files changed, 157 insertions(+)
->
-> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
-> index b54879fe6209..8709672ada48 100644
-> --- a/hw/vfio/migration.c
-> +++ b/hw/vfio/migration.c
-> @@ -771,6 +771,24 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->       uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
->       int ret;
->
-> +    /*
-> +     * Make a copy of this setting at the start in case it is changed
-> +     * mid-migration.
-> +     */
-> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
-> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
-> +    } else {
-> +        migration->multifd_transfer =
-> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
-> +    }
-> +
-> +    if (migration->multifd_transfer && !vfio_multifd_transfer_supported()) {
-> +        error_setg(errp,
-> +                   "%s: Multifd device transfer requested but unsupported in the current config",
-> +                   vbasedev->name);
-> +        return -EINVAL;
-> +    }
-> +
->       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
->
->       vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
-> @@ -942,13 +960,32 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
->       return !migration->precopy_init_size && !migration->precopy_dirty_size;
->   }
->
-> +static void vfio_save_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
-> +{
-> +    VFIOMigration *migration = vbasedev->migration;
-> +
-> +    assert(migration->multifd_transfer);
-> +
-> +    /*
-> +     * Emit dummy NOP data on the main migration channel since the actual
-> +     * device state transfer is done via multifd channels.
-> +     */
-> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+>      Interrupt Vector =3D (Index of Interrupter) MODULUS (MSI Message
+> Control:Multiple Message Enable)
+
+
+So it seems that patch 1/6 should actually be changed to
+
+    if (msi_enabled(pci_dev) && level) {
+        n %=3D msi_nr_vectors_allocated(pci_dev);
+        msi_notify(pci_dev, n);
+        return true;
+    }
+
+To implement this modulus algorithm. (msi_nr_vectors_allocated() reads the
+"Multiple Message Enable" field.) Then we can drop the vector count
+condition in this patch. I have verified that the macOS guest's XHCI driver
+handles this arrangement correctly.
+
 > +}
-> +
->   static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->   {
->       VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
->       ssize_t data_size;
->       int ret;
->       Error *local_err = NULL;
+> > +
+> >   static void xhci_pci_reset(DeviceState *dev)
+> >   {
+> >       XHCIPciState *s =3D XHCI_PCI(dev);
+> > @@ -118,6 +135,9 @@ static void usb_xhci_pci_realize(struct PCIDevice
+> *dev, Error **errp)
+> >       object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s),
+> NULL);
+> >       s->xhci.intr_update =3D xhci_pci_intr_update;
+> >       s->xhci.intr_raise =3D xhci_pci_intr_raise;
+> > +    if (s->conditional_intr_mapping) {
+> > +        s->xhci.intr_mapping_supported =3D
+> xhci_pci_intr_mapping_conditional;
+> > +    }
+> >       if (!qdev_realize(DEVICE(&s->xhci), NULL, errp)) {
+> >           return;
+> >       }
+> > @@ -200,6 +220,9 @@ static void xhci_instance_init(Object *obj)
+> >   static Property xhci_pci_properties[] =3D {
+> >       DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi,
+> ON_OFF_AUTO_AUTO),
+> >       DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix,
+> ON_OFF_AUTO_AUTO),
+> > +    /* When true, disable interrupter mapping for IRQ mode or only 1
+> vector */
+> > +    DEFINE_PROP_BOOL("conditional-intr-mapping", XHCIPciState,
+> > +                     conditional_intr_mapping, false),
+> >       DEFINE_PROP_END_OF_LIST(),
+> >   };
+> >
+> > diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
+> > index 08f70ce97cc..5b61ae84555 100644
+> > --- a/hw/usb/hcd-xhci-pci.h
+> > +++ b/hw/usb/hcd-xhci-pci.h
+> > @@ -40,6 +40,7 @@ typedef struct XHCIPciState {
+> >       XHCIState xhci;
+> >       OnOffAuto msi;
+> >       OnOffAuto msix;
+> > +    bool conditional_intr_mapping;
+> >   } XHCIPciState;
+> >
+> >   #endif
+> > diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
+> > index 5fb140c2382..b607ddd1a93 100644
+> > --- a/hw/usb/hcd-xhci.c
+> > +++ b/hw/usb/hcd-xhci.c
+> > @@ -644,7 +644,8 @@ static void xhci_event(XHCIState *xhci, XHCIEvent
+> *event, int v)
+> >       dma_addr_t erdp;
+> >       unsigned int dp_idx;
+> >
+> > -    if (xhci->numintrs =3D=3D 1) {
+> > +    if (xhci->numintrs =3D=3D 1 ||
+> > +        (xhci->intr_mapping_supported &&
+> !xhci->intr_mapping_supported(xhci))) {
+> >           v =3D 0;
+> >       }
+> >
+> > diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+> > index fe16d7ad055..fdaa21ba7f6 100644
+> > --- a/hw/usb/hcd-xhci.h
+> > +++ b/hw/usb/hcd-xhci.h
+> > @@ -193,6 +193,11 @@ typedef struct XHCIState {
+> >       uint32_t max_pstreams_mask;
+> >       void (*intr_update)(XHCIState *s, int n, bool enable);
+> >       bool (*intr_raise)(XHCIState *s, int n, bool level);
+> > +    /*
+> > +     * Callback for special-casing interrupter mapping support. NULL
+> for most
+> > +     * implementations, for defaulting to enabled mapping unless
+> numintrs =3D=3D 1.
+> > +     */
+> > +    bool (*intr_mapping_supported)(XHCIState *s);
+> >       DeviceState *hostOpaque;
+> >
+> >       /* Operational Registers */
 >
-> +    if (migration->multifd_transfer) {
-> +        vfio_save_multifd_emit_dummy_eos(vbasedev, f);
-> +        return 0;
-> +    }
-
-I wonder whether we should add a .save_live_use_thread SaveVMHandlers 
-through which a device can indicate if it wants to save its data with 
-the async or sync handler.
-This will allow migration layer (i.e., 
-qemu_savevm_state_complete_precopy_iterable) to know which handler to 
-call instead of calling both of them and letting each device implicitly 
-decide.
-IMHO it will make the code clearer and will allow us to drop 
-vfio_save_multifd_emit_dummy_eos().
-
-> +
->       trace_vfio_save_complete_precopy_start(vbasedev->name);
 >
->       /* We reach here with device state STOP or STOP_COPY only */
-> @@ -974,12 +1011,129 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->       return ret;
->   }
+
+--000000000000b2f1ee0628d35729
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 9 Dec 2=
+024 at 07:19, Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com"=
+>akihiko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">On 2024/12/09 4:16, Phil Dennis-Jordan wrote:<br>
+&gt; This change addresses an edge case that trips up macOS guest drivers<b=
+r>
+&gt; for PCI based XHCI controllers. The guest driver would attempt to<br>
+&gt; schedule events to XHCI event rings 1 and 2 even when only one interru=
+pt<br>
+&gt; line is available; interrupts would therefore be dropped, and events<b=
+r>
+&gt; only handled on timeout when using pin-based interrupts. Moreover,<br>
+&gt; when MSI is available, the macOS guest drivers would only configure 1<=
+br>
+&gt; vector and leading to the same problem.<br>
+&gt; <br>
+&gt; So, in addition to disabling interrupter mapping if numintrs is 1, a<b=
+r>
+&gt; callback is added to xhci to check whether interrupter mapping should =
+be<br>
+&gt; enabled. The PCI XHCI device type now provides an implementation of<br=
 >
-> +static int
-> +vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbasedev,
-> +                                                     char *idstr,
-> +                                                     uint32_t instance_id,
-> +                                                     uint32_t idx)
-> +{
-> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
-> +    g_autoptr(QEMUFile) f = NULL;
-> +    int ret;
-> +    g_autofree VFIODeviceStatePacket *packet = NULL;
-> +    size_t packet_len;
-> +
-> +    bioc = qio_channel_buffer_new(0);
-> +    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
-> +
-> +    f = qemu_file_new_output(QIO_CHANNEL(bioc));
-> +
-> +    ret = vfio_save_device_config_state(f, vbasedev, NULL);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ret = qemu_fflush(f);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    packet_len = sizeof(*packet) + bioc->usage;
-> +    packet = g_malloc0(packet_len);
-> +    packet->idx = idx;
-> +    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
-> +    memcpy(&packet->data, bioc->data, bioc->usage);
-> +
-> +    if (!multifd_queue_device_state(idstr, instance_id,
-> +                                    (char *)packet, packet_len)) {
-> +        return -1;
-> +    }
-> +
-> +    qatomic_add(&bytes_transferred, packet_len);
-> +
-> +    return 0;
-> +}
-> +
-> +static int vfio_save_complete_precopy_thread(char *idstr,
-> +                                             uint32_t instance_id,
-> +                                             bool *abort_flag,
-> +                                             void *opaque)
-> +{
-> +    VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
-> +    int ret;
-> +    g_autofree VFIODeviceStatePacket *packet = NULL;
-> +    uint32_t idx;
-> +
-> +    if (!migration->multifd_transfer) {
-> +        /* Nothing to do, vfio_save_complete_precopy() does the transfer. */
-> +        return 0;
-> +    }
-> +
-> +    trace_vfio_save_complete_precopy_thread_start(vbasedev->name,
-> +                                                  idstr, instance_id);
-> +
-> +    /* We reach here with device state STOP or STOP_COPY only */
-> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
-> +                                   VFIO_DEVICE_STATE_STOP, NULL);
-> +    if (ret) {
-> +        goto ret_finish;
-> +    }
-> +
-> +    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
-> +
-> +    for (idx = 0; ; idx++) {
-> +        ssize_t data_size;
-> +        size_t packet_size;
-> +
-> +        if (qatomic_read(abort_flag)) {
-> +            ret = -ECANCELED;
-> +            goto ret_finish;
-> +        }
-> +
-> +        data_size = read(migration->data_fd, &packet->data,
-> +                         migration->data_buffer_size);
-> +        if (data_size < 0) {
-> +            ret = -errno;
-> +            goto ret_finish;
-> +        } else if (data_size == 0) {
-> +            break;
-> +        }
-> +
-> +        packet->idx = idx;
-> +        packet_size = sizeof(*packet) + data_size;
-> +
-> +        if (!multifd_queue_device_state(idstr, instance_id,
-> +                                        (char *)packet, packet_size)) {
-> +            ret = -1;
-> +            goto ret_finish;
-> +        }
-> +
-> +        qatomic_add(&bytes_transferred, packet_size);
-> +    }
-> +
-> +    ret = vfio_save_complete_precopy_async_thread_config_state(vbasedev, idstr,
-> +                                                               instance_id,
-> +                                                               idx);
-
-I am not sure it's safe to save the config space asyncly in the thread, 
-as it might be dependent on other device's non-iterable state being 
-loaded first.
-See commit d329f5032e17 ("vfio: Move the saving of the config space to 
-the right place in VFIO migration") which moved config space saving to 
-the non-iterable state saving.
-
-Thanks.
-
-> +
-> +ret_finish:
-> +    trace_vfio_save_complete_precopy_thread_end(vbasedev->name, ret);
-> +
-> +    return ret;
-> +}
-> +
->   static void vfio_save_state(QEMUFile *f, void *opaque)
->   {
->       VFIODevice *vbasedev = opaque;
-> +    VFIOMigration *migration = vbasedev->migration;
->       Error *local_err = NULL;
->       int ret;
+&gt; this callback if the new &quot;conditional-intr-mapping&quot; property=
+ is enabled.<br>
+&gt; (default: disabled) When enabled, interrupter mapping is only enabled<=
+br>
+&gt; when MSI-X is active, or when MSI is active with more than 1 vector.<b=
+r>
+&gt; <br>
+&gt; This means that when using pin-based interrupts, or only 1 MSI vector,=
+<br>
+&gt; events are only submitted to interrupter 0 regardless of selected<br>
+&gt; target. This allows the macOS guest drivers to work with the device in=
+<br>
+&gt; those configurations.<br>
+&gt; <br>
+&gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjorda=
+n.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
+&gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/issues/270=
+5" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qemu-project/qem=
+u/-/issues/2705</a><br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0hw/usb/hcd-xhci-pci.c | 23 +++++++++++++++++++++++<br>
+&gt;=C2=A0 =C2=A0hw/usb/hcd-xhci-pci.h |=C2=A0 1 +<br>
+&gt;=C2=A0 =C2=A0hw/usb/hcd-xhci.c=C2=A0 =C2=A0 =C2=A0|=C2=A0 3 ++-<br>
+&gt;=C2=A0 =C2=A0hw/usb/hcd-xhci.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 5 +++++<br>
+&gt;=C2=A0 =C2=A04 files changed, 31 insertions(+), 1 deletion(-)<br>
+&gt; <br>
+&gt; diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c<br>
+&gt; index 0278b0fbce2..8e293cd5951 100644<br>
+&gt; --- a/hw/usb/hcd-xhci-pci.c<br>
+&gt; +++ b/hw/usb/hcd-xhci-pci.c<br>
+&gt; @@ -81,6 +81,23 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, in=
+t n, bool level)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return false;<br>
+&gt;=C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +static bool xhci_pci_intr_mapping_conditional(XHCIState *xhci)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 XHCIPciState *s =3D container_of(xhci, XHCIPciState, xh=
+ci);<br>
+&gt; +=C2=A0 =C2=A0 PCIDevice *pci_dev =3D PCI_DEVICE(s);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Implementation of the &quot;conditional-intr-ma=
+pping&quot; property, which only<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* enables interrupter mapping if there are actual=
+ly multiple interrupt<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* vectors available. Forces all events onto inter=
+rupter/event ring 0<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* in pin-based IRQ mode or when only 1 MSI vector=
+ is allocated.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Provides compatibility with macOS guests on mac=
+hine types where MSI-X is<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* not available.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 return msix_enabled(pci_dev) ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (msi_enabled(pci_dev) &amp;&amp; msi_nr_v=
+ectors_allocated(pci_dev) &gt; 1);<br>
+<br>
+This will make it behave incosistently when <br>
+msi_nr_vectors_allocated(pci_dev) is not sufficient to accomodate all <br>
+Interrupters;=C2=A0 If &gt; 1, overflowed Interrupters will be ignored, but=
+ if <br>
+&lt;=3D 1, overflowed Interrupters will be redirected to Interrupter 0. <br=
 >
-> +    if (migration->multifd_transfer) {
-> +        vfio_save_multifd_emit_dummy_eos(vbasedev, f);
-> +        return;
-> +    }
-> +
->       ret = vfio_save_device_config_state(f, opaque, &local_err);
->       if (ret) {
->           error_prepend(&local_err,
-> @@ -1210,6 +1364,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
->       .is_active_iterate = vfio_is_active_iterate,
->       .save_live_iterate = vfio_save_iterate,
->       .save_live_complete_precopy = vfio_save_complete_precopy,
-> +    .save_live_complete_precopy_thread = vfio_save_complete_precopy_thread,
->       .save_state = vfio_save_state,
->       .load_setup = vfio_load_setup,
->       .load_cleanup = vfio_load_cleanup,
-> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
-> index 418b378ebd29..039979bdd98f 100644
-> --- a/hw/vfio/trace-events
-> +++ b/hw/vfio/trace-events
-> @@ -168,6 +168,8 @@ vfio_save_block_precopy_empty_hit(const char *name) " (%s)"
->   vfio_save_cleanup(const char *name) " (%s)"
->   vfio_save_complete_precopy(const char *name, int ret) " (%s) ret %d"
->   vfio_save_complete_precopy_start(const char *name) " (%s)"
-> +vfio_save_complete_precopy_thread_start(const char *name, const char *idstr, uint32_t instance_id) " (%s) idstr %s instance %"PRIu32
-> +vfio_save_complete_precopy_thread_end(const char *name, int ret) " (%s) ret %d"
->   vfio_save_device_config_state(const char *name) " (%s)"
->   vfio_save_iterate(const char *name, uint64_t precopy_init_size, uint64_t precopy_dirty_size) " (%s) precopy initial size %"PRIu64" precopy dirty size %"PRIu64
->   vfio_save_iterate_start(const char *name) " (%s)"
+Remove the condition unless it is truly unnecessary.<br></blockquote><div><=
+br></div><div>After applying the existing patch 1/6 to fix the failed asser=
+tion, if you run a VM with a macOS guest, and configure the XHCI controller=
+ so that MSI is on and MSI-X is off:</div><div>-device nec-usb-xhci,msix=3D=
+off</div><div>You&#39;ll find that it exhibits the same apparent problem as=
+ when using pin-based interrupts: the macOS driver configures only one MSI =
+vector, and then schedules events to event rings 1 and 2.</div><div><br></d=
+iv><div>You have however just prompted me to re-check the specification on =
+the details of MSI, and it looks like I missed something in the &quot;Imple=
+mentation note&quot; in section 4.17 (Interrupters):</div><div><br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">When MSI is activated: <br>=
+</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
+0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">[=E2=80=A6] =
+<br></blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">The Inte=
+rrupt Vector associated with an Interrupter shall be defined as function of=
+ the value of the MSI Message Control register Multiple Message Enable fiel=
+d using the following algorithm.<br> <br></blockquote><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">=C2=A0=C2=A0=C2=A0=C2=A0 Interrupt Vector =3D =
+(Index of Interrupter) MODULUS (MSI Message Control:Multiple Message Enable=
+)</blockquote></div><div class=3D"gmail_quote gmail_quote_container"><br></=
+div><div class=3D"gmail_quote gmail_quote_container">So it seems that patch=
+ 1/6 should actually be changed to<br></div><div class=3D"gmail_quote gmail=
+_quote_container"><div><br></div><div><span style=3D"font-family:monospace"=
+>=C2=A0 =C2=A0 if (msi_enabled(pci_dev) &amp;&amp; level) {<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 n %=3D msi_nr_vectors_allocated(pci_dev);<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 msi_notify(pci_dev, n);<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 re=
+turn true;<br>=C2=A0 =C2=A0 }<br></span></div><div><br></div><div>To implem=
+ent this modulus algorithm. (msi_nr_vectors_allocated() reads the &quot;Mul=
+tiple Message Enable&quot; field.) Then we can drop the vector count condit=
+ion in this patch. I have verified that the macOS guest&#39;s XHCI driver h=
+andles this arrangement correctly.<br></div><div><br></div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
+&gt; +}<br>
+&gt; +<br>
+&gt;=C2=A0 =C2=A0static void xhci_pci_reset(DeviceState *dev)<br>
+&gt;=C2=A0 =C2=A0{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0XHCIPciState *s =3D XHCI_PCI(dev);<br>
+&gt; @@ -118,6 +135,9 @@ static void usb_xhci_pci_realize(struct PCIDevice =
+*dev, Error **errp)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0object_property_set_link(OBJECT(&amp;s-&gt;x=
+hci), &quot;host&quot;, OBJECT(s), NULL);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;xhci.intr_update =3D xhci_pci_intr_upd=
+ate;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;xhci.intr_raise =3D xhci_pci_intr_rais=
+e;<br>
+&gt; +=C2=A0 =C2=A0 if (s-&gt;conditional_intr_mapping) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;xhci.intr_mapping_supported =3D xhc=
+i_pci_intr_mapping_conditional;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (!qdev_realize(DEVICE(&amp;s-&gt;xhci), N=
+ULL, errp)) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt; @@ -200,6 +220,9 @@ static void xhci_instance_init(Object *obj)<br>
+&gt;=C2=A0 =C2=A0static Property xhci_pci_properties[] =3D {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_ON_OFF_AUTO(&quot;msi&quot;, XHC=
+IPciState, msi, ON_OFF_AUTO_AUTO),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_ON_OFF_AUTO(&quot;msix&quot;, XH=
+CIPciState, msix, ON_OFF_AUTO_AUTO),<br>
+&gt; +=C2=A0 =C2=A0 /* When true, disable interrupter mapping for IRQ mode =
+or only 1 vector */<br>
+&gt; +=C2=A0 =C2=A0 DEFINE_PROP_BOOL(&quot;conditional-intr-mapping&quot;, =
+XHCIPciState,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0conditional_intr_mapping, false),<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DEFINE_PROP_END_OF_LIST(),<br>
+&gt;=C2=A0 =C2=A0};<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h<br>
+&gt; index 08f70ce97cc..5b61ae84555 100644<br>
+&gt; --- a/hw/usb/hcd-xhci-pci.h<br>
+&gt; +++ b/hw/usb/hcd-xhci-pci.h<br>
+&gt; @@ -40,6 +40,7 @@ typedef struct XHCIPciState {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0XHCIState xhci;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0OnOffAuto msi;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0OnOffAuto msix;<br>
+&gt; +=C2=A0 =C2=A0 bool conditional_intr_mapping;<br>
+&gt;=C2=A0 =C2=A0} XHCIPciState;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0#endif<br>
+&gt; diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c<br>
+&gt; index 5fb140c2382..b607ddd1a93 100644<br>
+&gt; --- a/hw/usb/hcd-xhci.c<br>
+&gt; +++ b/hw/usb/hcd-xhci.c<br>
+&gt; @@ -644,7 +644,8 @@ static void xhci_event(XHCIState *xhci, XHCIEvent =
+*event, int v)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0dma_addr_t erdp;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned int dp_idx;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; -=C2=A0 =C2=A0 if (xhci-&gt;numintrs =3D=3D 1) {<br>
+&gt; +=C2=A0 =C2=A0 if (xhci-&gt;numintrs =3D=3D 1 ||<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 (xhci-&gt;intr_mapping_supported &amp;&am=
+p; !xhci-&gt;intr_mapping_supported(xhci))) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0v =3D 0;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h<br>
+&gt; index fe16d7ad055..fdaa21ba7f6 100644<br>
+&gt; --- a/hw/usb/hcd-xhci.h<br>
+&gt; +++ b/hw/usb/hcd-xhci.h<br>
+&gt; @@ -193,6 +193,11 @@ typedef struct XHCIState {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t max_pstreams_mask;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0void (*intr_update)(XHCIState *s, int n, boo=
+l enable);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0bool (*intr_raise)(XHCIState *s, int n, bool=
+ level);<br>
+&gt; +=C2=A0 =C2=A0 /*<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* Callback for special-casing interrupter mapping=
+ support. NULL for most<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0* implementations, for defaulting to enabled mapp=
+ing unless numintrs =3D=3D 1.<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0*/<br>
+&gt; +=C2=A0 =C2=A0 bool (*intr_mapping_supported)(XHCIState *s);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0DeviceState *hostOpaque;<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0/* Operational Registers */<br>
+<br>
+</blockquote></div></div>
+
+--000000000000b2f1ee0628d35729--
 
