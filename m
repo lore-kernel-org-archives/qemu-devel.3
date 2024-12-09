@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C37DBE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE4DE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKd1P-0003wU-MX; Mon, 09 Dec 2024 07:37:56 -0500
+	id 1tKd1S-0003y4-AG; Mon, 09 Dec 2024 07:37:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKd1D-0003pF-1K
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:47 -0500
+ id 1tKd1M-0003rz-KM
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:52 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKd14-0007P9-Pa
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:38 -0500
+ id 1tKd1D-0007Pp-Ck
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733747853;
+ s=mimecast20190719; t=1733747858;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OshVopfsDLXhXQaf0FN9QUClgxDd1xn/z3ig2ZaD5Nc=;
- b=Nb4sq82fOIiXHRVvS8H9y0NAeucUJlX9eXXVqH1aBKieVqW0LJ6ztvPFcZs2EQR8rbvHqg
- rclXKkQlW0xQkHpJz1KxQbWlJ8ih8ranQ5qM3gCUdpL29W20WgxfiHE0V/zi7Xt4GYpz5F
- TUjddMLNuIaAKKisOQW8lZddZGRRSV0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sBwsf4s6VXMmXVQEquo962VkkBl6Oft5lKCFdPBoVSc=;
+ b=Y+dA60GGJoaqKlm87aH4hmlEZTbty/4GCQU+pz4sguZxYlpOrmkl4HdUP2DgFmH8NfwgZG
+ nA2Ve7QAOhJO/rQxShqDsjzueFDPJVBMaj8r+3NdKZCpoislJDz1hH5vWH5THvEyXYwXW1
+ qiV1lrPHXCO+0yDXwvHDlfcu4hR7Un8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-59-RM2fGMT2OO62Mclv16jX4g-1; Mon, 09 Dec 2024 07:37:31 -0500
-X-MC-Unique: RM2fGMT2OO62Mclv16jX4g-1
-X-Mimecast-MFC-AGG-ID: RM2fGMT2OO62Mclv16jX4g
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-434f387f346so10668025e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 04:37:31 -0800 (PST)
+ us-mta-629-TO0LMUN5PJWaVwfaPIm0Ow-1; Mon, 09 Dec 2024 07:37:37 -0500
+X-MC-Unique: TO0LMUN5PJWaVwfaPIm0Ow-1
+X-Mimecast-MFC-AGG-ID: TO0LMUN5PJWaVwfaPIm0Ow
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-386321c8f4bso1237657f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 04:37:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733747849; x=1734352649;
+ d=1e100.net; s=20230601; t=1733747855; x=1734352655;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OshVopfsDLXhXQaf0FN9QUClgxDd1xn/z3ig2ZaD5Nc=;
- b=Jbhw4TbJSJQgMJe6pdx3WGabpDNGp2DwZBfFVZdAKG9raI1Qct3lMoGQmZ/a+aDpqg
- AazKlQrscNLZXcWKdL+Db+3NQ0hM/rFZqtlSLq1BigV3srIgWEOaZqVli+Rt5Y2ATkoo
- CnHKtEExmzCsAyeJQ2SjOD0BV5FmcCgm/r1uYEECT9YZIFByP29jNOcYdH7X09Y9wAAB
- P52RQmzjDvlhO9WrLc3RahIK53QnsLJZ8vJPUhjK7XSxwZhL7/3yjObg4UE+MheI/X6B
- J/D3Z98ba6wKYyUklcavbPzdjbFeXrBN+Hwr0VdEKbT1GhRVGdkfvw207QILJ6IeVRBc
- F9Ag==
-X-Gm-Message-State: AOJu0Yymr0ffC14QXKpp7T+oehTV0OVkukrTk3BHVT2V426VKkjUWcAd
- rgMOpSQZxjyL9mSvIAp5tEY63SyuHfczt48a2pvBrOB8w1aWzM+o7P260UCY76pfbLwJB+Ori96
- ma14gkomEjIL7kubE7e5zoiCw9HJ9sbWT0D1VHp7WfH/r+6QMRAOplhdxb8r7dwoGLgZeGH36Wt
- gp6zrLV157/MzfsUEg3UITFs8lgSRDe21g7IuI
-X-Gm-Gg: ASbGnctG9GZzW4hhHxlZN610pLHo+Mx4fSHPBH3/emLaZjyqAYxZWMJoFKLfw5INnG/
- cIw09lsp/Z82C9ifAYa2B1lZE2Z3VYeW4YtLAVrvPvCAGfnWS5UOYr98w2Y3oYdUaufZc5OXt7f
- SBLVJzLh4lpgntOUd40O2rv3cV8wsYcRrF6nuJtIxo9Ew09/FMtsfoReUB3Ju9x3nh4BTTzyjW4
- y2uW7GPFQk2EI4L/2aco/aTIpprYZ0lz5uhFrjO2zDb3g5+vfD6zg==
-X-Received: by 2002:a05:600c:218b:b0:434:e8cf:6390 with SMTP id
- 5b1f17b1804b1-434e8cf6549mr58800695e9.6.1733747849204; 
- Mon, 09 Dec 2024 04:37:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFHlEgkoznpcJBVMGo3GWGVCxSEwTQXhhE5t4h73rLaMp1i9fY4c8mflKhLCQexfBFrkVKgTQ==
-X-Received: by 2002:a05:600c:218b:b0:434:e8cf:6390 with SMTP id
- 5b1f17b1804b1-434e8cf6549mr58800475e9.6.1733747848846; 
- Mon, 09 Dec 2024 04:37:28 -0800 (PST)
+ bh=sBwsf4s6VXMmXVQEquo962VkkBl6Oft5lKCFdPBoVSc=;
+ b=r2IBs/jcPMBHR33gca/WJtrEbu8PyZSA0zMZX+ydZAqyb2lsoJj6lowwDeI/BBmhZq
+ BTDkdAOqfXUGlZwsXrhMrO3e8VdtnzgPzcyJolIUJNAUJ3r1SkataKXMdWZYmNpv2A4B
+ xVqWDKnJrX6Y/a6QAkDJVU2584DFJc6IPYST9E0rktUcdbjyyUk+btYARIOKEPiaP7SF
+ qJYo8eVqE+19+E70aBnxV+/r2Yo68VzG3l83aNn7Eex6SHJJfn1FrhTqaEzrrNDpInXm
+ EhfBHoPseCVGqkgguPcTPJdlVehxx2+o9cUqknohWzo/tPptvan47vnpiRqBn7QtqC86
+ BueA==
+X-Gm-Message-State: AOJu0YxeiUxfIeZnJZXuONmL15EcjcEtLEbP9VbUiHe8iSSL5ys+nNr2
+ jciy3SahrMey6qSldJ5bBapQvY9qojPdgw3WdOHw0iHSKFoduuikXPmv8mQobQ+AusQLcHmBMrP
+ fYMC3G+9QSLP8NSqOXZZte5oFXXdh54qXn0ZO0n5kX9fkGSqja8s7Q7dllJmHTA6Nr+aLQiqezt
+ VrFrJlJEqt0Sea5s6jjJzXGypBg6JqihCtdtrJ
+X-Gm-Gg: ASbGnctJHVLpC/lJisz6NwCxlS4idGDqrNuIaJ4Y95WNOf/s82fy6wGT9UsE4VPW+BU
+ Q/gIAUVQrs3K8zaWBug3RUXevRY67qNulX5NGmq8qARrEVqnxzH4sz7yaQHs87KRg/wFipRNFtr
+ Bi6EJ3R40zEp+K5hveyg6ZBqnZUyGPRlrMD9ONrnuB7MVjphiDrypeh2149VxjBI633V4q14vLn
+ zWWn70jL1XBTaZGbdCCnKZV7m9rwy3jkuSNbe8x9eWuBgfFw4196Q==
+X-Received: by 2002:a05:6000:178e:b0:386:8ff:d20b with SMTP id
+ ffacd0b85a97d-386453def96mr159959f8f.27.1733747854844; 
+ Mon, 09 Dec 2024 04:37:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjporSdgQ1wAOgDZrCeoKxDdS9DTZ2gGKSzKXGXlzKxxnAGAbEQwy9CfjSOYBE62A3bTbiDg==
+X-Received: by 2002:a05:6000:178e:b0:386:8ff:d20b with SMTP id
+ ffacd0b85a97d-386453def96mr159929f8f.27.1733747854348; 
+ Mon, 09 Dec 2024 04:37:34 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434ea285b57sm82152305e9.37.2024.12.09.04.37.28
+ ffacd0b85a97d-386221a62f2sm12984210f8f.105.2024.12.09.04.37.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 04:37:28 -0800 (PST)
+ Mon, 09 Dec 2024 04:37:33 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Junjie Mao <junjie.mao@hotmail.com>
-Subject: [PATCH 04/26] rust: define prelude
-Date: Mon,  9 Dec 2024 13:36:55 +0100
-Message-ID: <20241209123717.99077-5-pbonzini@redhat.com>
+Subject: [PATCH 06/26] rust: add a bit operation module
+Date: Mon,  9 Dec 2024 13:36:57 +0100
+Message-ID: <20241209123717.99077-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241209123717.99077-1-pbonzini@redhat.com>
 References: <20241209123717.99077-1-pbonzini@redhat.com>
@@ -108,58 +108,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a module that will contain frequently used traits and
-occasionally structs.  They can be included quickly with
-"use qemu_api::prelude::*".
+The bindgen supports `static inline` function binding since v0.64.0 as
+an experimental feature (`--wrap-static-fns`), and stabilizes it after
+v0.70.0.
 
+But the oldest version of bindgen supported by QEMU is v0.60.1, so
+there's no way to generate the binding for deposit64() which is `static
+inline` (in include/qemu/bitops.h).
+
+Instead, implement it by hand in Rust and make it available for all
+unsigned types through an IntegerExt trait. Since it only involves bit
+operations, the Rust version of the code is almost identical to the
+original C version, but it applies to more types than just u64.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/meson.build    | 1 +
- rust/qemu-api/src/lib.rs     | 5 +++++
- rust/qemu-api/src/prelude.rs | 6 ++++++
- 3 files changed, 12 insertions(+)
- create mode 100644 rust/qemu-api/src/prelude.rs
+ rust/qemu-api/meson.build    |   1 +
+ rust/qemu-api/src/bitops.rs  | 119 +++++++++++++++++++++++++++++++++++
+ rust/qemu-api/src/lib.rs     |   1 +
+ rust/qemu-api/src/prelude.rs |   2 +
+ 4 files changed, 123 insertions(+)
+ create mode 100644 rust/qemu-api/src/bitops.rs
 
 diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index cacb112c5c3..f8b4cd39a26 100644
+index b927eb58c8e..adcee661150 100644
 --- a/rust/qemu-api/meson.build
 +++ b/rust/qemu-api/meson.build
-@@ -21,6 +21,7 @@ _qemu_api_rs = static_library(
+@@ -16,6 +16,7 @@ _qemu_api_rs = static_library(
+     [
+       'src/lib.rs',
+       'src/bindings.rs',
++      'src/bitops.rs',
+       'src/cell.rs',
+       'src/c_str.rs',
        'src/definitions.rs',
-       'src/device_class.rs',
-       'src/offset_of.rs',
-+      'src/prelude.rs',
-       'src/vmstate.rs',
-       'src/zeroable.rs',
-     ],
+diff --git a/rust/qemu-api/src/bitops.rs b/rust/qemu-api/src/bitops.rs
+new file mode 100644
+index 00000000000..5acd6642d1a
+--- /dev/null
++++ b/rust/qemu-api/src/bitops.rs
+@@ -0,0 +1,119 @@
++// Copyright (C) 2024 Intel Corporation.
++// Author(s): Zhao Liu <zhai1.liu@intel.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++//! This module provides bit operation extensions to integer types.
++//! It is usually included via the `qemu_api` prelude.
++
++use std::ops::{
++    Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
++    Mul, MulAssign, Not, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign,
++};
++
++/// Trait for extensions to integer types
++pub trait IntegerExt:
++    Add<Self, Output = Self> + AddAssign<Self> +
++    BitAnd<Self, Output = Self> + BitAndAssign<Self> +
++    BitOr<Self, Output = Self> + BitOrAssign<Self> +
++    BitXor<Self, Output = Self> + BitXorAssign<Self> +
++    Copy +
++    Div<Self, Output = Self> + DivAssign<Self> +
++    Eq +
++    Mul<Self, Output = Self> + MulAssign<Self> +
++    Not<Output = Self> + Ord + PartialOrd +
++    Rem<Self, Output = Self> + RemAssign<Self> +
++    Shl<Self, Output = Self> + ShlAssign<Self> +
++    Shl<u32, Output = Self> + ShlAssign<u32> + // add more as needed
++    Shr<Self, Output = Self> + ShrAssign<Self> +
++    Shr<u32, Output = Self> + ShrAssign<u32> // add more as needed
++{
++    const BITS: u32;
++    const MAX: Self;
++    const MIN: Self;
++    const ONE: Self;
++    const ZERO: Self;
++
++    #[inline]
++    #[must_use]
++    fn bit(start: u32) -> Self
++    {
++        assert!(start <= Self::BITS);
++
++        Self::ONE << start
++    }
++
++    #[inline]
++    #[must_use]
++    fn mask(start: u32, length: u32) -> Self
++    {
++        /* FIXME: Implement a more elegant check with error handling support? */
++        assert!(length > 0 && length <= Self::BITS - start);
++
++        (Self::MAX >> (Self::BITS - length)) << start
++    }
++
++    #[inline]
++    #[must_use]
++    fn deposit<U: IntegerExt>(self, start: u32, length: u32,
++                          fieldval: U) -> Self
++        where Self: From<U>
++    {
++        debug_assert!(length <= U::BITS);
++
++        let mask = Self::mask(start, length);
++        (self & !mask) | ((Self::from(fieldval) << start) & mask)
++    }
++
++    #[inline]
++    #[must_use]
++    fn extract(self, start: u32, length: u32) -> Self
++    {
++        let mask = Self::mask(start, length);
++        (self & mask) >> start
++    }
++}
++
++macro_rules! impl_num_ext {
++    ($type:ty) => {
++        impl IntegerExt for $type {
++            const BITS: u32 = <$type>::BITS;
++            const MAX: Self = <$type>::MAX;
++            const MIN: Self = <$type>::MIN;
++            const ONE: Self = 1;
++            const ZERO: Self = 0;
++        }
++    };
++}
++
++impl_num_ext!(u8);
++impl_num_ext!(u16);
++impl_num_ext!(u32);
++impl_num_ext!(u64);
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn test_deposit() {
++        assert_eq!(15u32.deposit(8, 8, 1u32), 256 + 15);
++        assert_eq!(15u32.deposit(8, 1, 255u8), 256 + 15);
++    }
++
++    #[test]
++    fn test_extract() {
++        assert_eq!(15u32.extract(2, 4), 3);
++    }
++
++    #[test]
++    fn test_bit() {
++        assert_eq!(u8::bit(7), 128);
++        assert_eq!(u32::bit(16), 0x10000);
++    }
++
++    #[test]
++    fn test_mask() {
++        assert_eq!(u8::mask(7, 1), 128);
++        assert_eq!(u32::mask(8, 8), 0xff00);
++    }
++}
 diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index b04d110b3f5..e5956cd5eb6 100644
+index 0efbef47441..9e007e16354 100644
 --- a/rust/qemu-api/src/lib.rs
 +++ b/rust/qemu-api/src/lib.rs
-@@ -7,6 +7,11 @@
+@@ -12,6 +12,7 @@
  #[rustfmt::skip]
- pub mod bindings;
+ pub mod prelude;
  
-+// preserve one-item-per-"use" syntax, it is clearer
-+// for prelude-like modules
-+#[rustfmt::skip]
-+pub mod prelude;
-+
++pub mod bitops;
  pub mod c_str;
  pub mod cell;
  pub mod definitions;
 diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-new file mode 100644
-index 00000000000..dfaddbd062a
---- /dev/null
+index dfaddbd062a..a39e228babf 100644
+--- a/rust/qemu-api/src/prelude.rs
 +++ b/rust/qemu-api/src/prelude.rs
-@@ -0,0 +1,6 @@
-+// Copyright 2024 Red Hat, Inc.
-+// Author(s): Paolo Bonzini <pbonzini@redhat.com>
-+// SPDX-License-Identifier: GPL-2.0-or-later
+@@ -2,5 +2,7 @@
+ // Author(s): Paolo Bonzini <pbonzini@redhat.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use crate::bitops::IntegerExt;
 +
-+pub use crate::cell::BqlCell;
-+pub use crate::cell::BqlRefCell;
+ pub use crate::cell::BqlCell;
+ pub use crate::cell::BqlRefCell;
 -- 
 2.47.1
 
