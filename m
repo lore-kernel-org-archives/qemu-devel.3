@@ -4,98 +4,152 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3C7AE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 22:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D87E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 22:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKlvt-0006fv-1q; Mon, 09 Dec 2024 17:08:49 -0500
+	id 1tKlwK-0006jx-4l; Mon, 09 Dec 2024 17:09:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tKlvq-0006an-E1; Mon, 09 Dec 2024 17:08:46 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tKlwF-0006jC-TH
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 17:09:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tKlvn-0005pR-R1; Mon, 09 Dec 2024 17:08:46 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9IvL9F009918;
- Mon, 9 Dec 2024 22:08:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=dgJ/YG
- K+/2oaORSbDDG6NFaMUgkRreVHcuqHwxW4jMs=; b=QxrJqeQ3p3fhA39OVpl+H8
- 2TrE+hu2deziwOlq552emuGVtpSn01vPmS/rLbu2kOjp9hgax+GpfIjoaJE9pCWI
- 5w38pqNpJNYohidOFqxdOD56GqzCm6shso+KyLLwf7ylWUd9iyvnyJ7yLiwVNAvf
- z4HTxSdbOJOxhxukU3aaGtdi645xTj617brsV8qtwewRlz8qCpKYdbJf61NbVSTi
- Kl/nN5rSqxbrReHs7SplSeINXwfcDToGK2uVV8bm6RlEwcC8f5GKj9kWbk8S+p/O
- pMM1PMWP3rwNz9Npr60V8T3zc2ABM1apVKTd/aLXTV13+PujEkmMnd1Y8G21hoYQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cdv8ktwn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 22:08:40 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9Joak5023015;
- Mon, 9 Dec 2024 22:08:39 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d2wjrbkn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Dec 2024 22:08:39 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4B9M8c5F24511082
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Dec 2024 22:08:39 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8F025805B;
- Mon,  9 Dec 2024 22:08:38 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 02F5558058;
- Mon,  9 Dec 2024 22:08:38 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Dec 2024 22:08:37 +0000 (GMT)
-Message-ID: <bf154441-1e0a-4029-946a-727621395e25@linux.ibm.com>
-Date: Mon, 9 Dec 2024 17:08:37 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tKlwD-0005rf-Lm
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 17:09:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733782148;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+dFsfuR3dq7gqJpTaVizbuHFRB2H+DxyhWCtbVLqB1k=;
+ b=GpjGFfbGmHc/em3DJAo1KSMLYlqBcMZ9GtixAJD0mH3JV1h7QACqHtyaSLsOCWjFkEMiMv
+ AwKW0QaX8bMAQgx/7qzhcgmJ4h/LU+ACJFmTZiHp+ztJD2zwz9o1jX2IzWQK4B+Op/ts7n
+ FviPBVogzNR2AszdLCjaPFPxe2F+n2E=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-213-OJFB_1P6PSWG0uKyJxGkIg-1; Mon, 09 Dec 2024 17:09:05 -0500
+X-MC-Unique: OJFB_1P6PSWG0uKyJxGkIg-1
+X-Mimecast-MFC-AGG-ID: OJFB_1P6PSWG0uKyJxGkIg
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385e1fd40acso2595751f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 14:09:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733782144; x=1734386944;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=+dFsfuR3dq7gqJpTaVizbuHFRB2H+DxyhWCtbVLqB1k=;
+ b=hLVoIyX2iUijj7IAKt38oD6sWKwcRKF0xsWwCP58/Ff2TZ4X2ateLdzwimLZbyTWKc
+ 69mbCe7K6bUVpTVrSlwGor+cLWLKctn4pp3US4cLtgeYhjqFcj243mgxqM/ak9VHO6rP
+ OxCE7NYYJJuzxnPfP6zM08+PxaphZrHVUPHgsz34Yr9Px1eJKOolGWwqMSjzxh6KaaaI
+ UiBimLn/wzbZ3L9cHE7tZs0ROKWtoqsEDIEIFsjm09lmoFkb002vF2DQDD6HDRj2ea/B
+ 136nSSdJ8roBW9mews1dFl/j2WCWktrDvRn0jxrkXR5D4NUDZT1WTSHtTwIbd/nDnLob
+ w4+A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWW27qjb9TemYyxF7Nz++2gCE2it3z8bi3RIbCrXc3gSmDkbI9Ca/Yzr/+wOu7l/EL7u5uenmKJmlnK@nongnu.org
+X-Gm-Message-State: AOJu0YyyVUkTh0JqxVLthh3/y67Cn8+xtfBhn9nu7WJrYe/MqSit8lFE
+ GgrS5bVGZCC7R0pj/RI6XG6pBVUcutfwICBaRYdruwb7OQuDVqVBJM0BPKbxkpJQQCheByNYu6A
+ HT7Jyzljxr5vcWMYvgO43kF5Aq8VDlHIYhhaQIjTdBPffJq9JzMUY
+X-Gm-Gg: ASbGnctaLa0EtEUUY5rKrlbDSBn1uT3BedR/fVlkdMKOQ98FsgCV8nJbJpNMrYd4gVY
+ S/uJRF9R7pHCQX4M1+A+OH1PHAdzXQzpGzcVbxq42p90RdSzXYPVYMzF5LuvKCrQMxpy8/MbI27
+ ObvtsSmVfwC+EngV29nxYDb7VknIc5nmOAEQoEkl9KrqaUsGcu+wFwewivtHizlQk9vJOJEIl7U
+ 0Kc7GLWVeV0GgKjky//bunDclivwPvN+/AAIKRMdw52XmdzpM2TmPWTpDO13RsKGF2lzDrAb0Vh
+ kyqa/aF0WAeEtCxY5fjota3PnbEWerZ0wKAp2JzcjNCYhZhv5XqxPLmYc7CCsrNWHL924TVUO4I
+ bZw==
+X-Received: by 2002:a05:6000:4112:b0:382:47d0:64be with SMTP id
+ ffacd0b85a97d-386453dff87mr1402355f8f.29.1733782144637; 
+ Mon, 09 Dec 2024 14:09:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFG8Qe96IOp5UspUE6Kdu1vcTkI5HExqAL8tSgp56lcaKiAwZ1aXEvBSTUV7tAdQANTaGmcnQ==
+X-Received: by 2002:a05:6000:4112:b0:382:47d0:64be with SMTP id
+ ffacd0b85a97d-386453dff87mr1402338f8f.29.1733782144249; 
+ Mon, 09 Dec 2024 14:09:04 -0800 (PST)
+Received: from ?IPV6:2003:cb:c71b:2c00:7bfb:29fe:9e6f:2e65?
+ (p200300cbc71b2c007bfb29fe9e6f2e65.dip0.t-ipconnect.de.
+ [2003:cb:c71b:2c00:7bfb:29fe:9e6f:2e65])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3861ecf40a0sm14070569f8f.13.2024.12.09.14.09.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 14:09:03 -0800 (PST)
+Message-ID: <7bd2018a-df16-4ede-b7d7-dfdb9cbfc7c0@redhat.com>
+Date: Mon, 9 Dec 2024 23:09:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 25/26] target/arm/kvm-rme: Add measurement log
-To: Jean-Philippe Brucker <jean-philippe@linaro.org>, peter.maydell@linaro.org
-Cc: richard.henderson@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, alex.bennee@linaro.org,
- Stefan Berger <stefanb@linux.vnet.ibm.com>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-27-jean-philippe@linaro.org>
+Subject: Re: [PATCH 1/2] s390x/pci: add support for guests that request direct
+ mapping
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org
+References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
+ <20241209192927.107503-2-mjrosato@linux.ibm.com>
+ <f7451934-bf20-4c50-8780-4d5ebf932096@redhat.com>
+ <31b6b62b-4656-4ca0-a8ac-99fe4293de45@linux.ibm.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20241125195626.856992-27-jean-philippe@linaro.org>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <31b6b62b-4656-4ca0-a8ac-99fe4293de45@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: bRDVbE4EHyozJhLnfSUCvYeC7b7yVG5R
-X-Proofpoint-ORIG-GUID: bRDVbE4EHyozJhLnfSUCvYeC7b7yVG5R
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0
- malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 mlxlogscore=999
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412090167
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,688 +165,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 11/25/24 2:56 PM, Jean-Philippe Brucker wrote:
-> Create an event log, in the format defined by Trusted Computing Group
-
-s/,//
-
-> for TPM2. It contains information about the VMM, the Realm parameters,
-> any data loaded into guest memory before boot and the initial vCPU
-
-s/ and/ ,and/
-
-[move comma from above to before 'and']
-
-> state.
+On 09.12.24 22:45, Matthew Rosato wrote:
+> On 12/9/24 4:01 PM, David Hildenbrand wrote:
+>> On 09.12.24 20:29, Matthew Rosato wrote:
+>>
+>> Hi,
+>>
+>> Trying to wrap my head around that ... you mention that "pin the entirety of guest memory".
+>>
+>> Do you mean that we will actually end up longterm pinning all guest RAM in the kernel, similar to what vfio ends up doing?
 > 
-> The guest can access this log from RAM and send it to a verifier, to
-> help the verifier independently compute the Realm Initial Measurement,
-> and check that the data we load into guest RAM is known-good images.
-> Without this log, the verifier has to guess where everything is loaded
-> and in what order.
+> Yes.  Actually, the usecase here is specifically PCI passthrough via vfio-pci on s390.  Unlike other platforms, the default s390 approach only pins on-demand and doesn't longterm pin all guest RAM, which is nice from a memory footprint perspective but pays a price via all those guest-2 RPCIT instructions.  The goal here is now provide the optional alternative to longterm pin like other platforms.
 
-Mention that the verifier can pull out the signature from somewhere as 
-well...
+Okay, thanks for confirming. One more question: who will trigger this 
+longterm-pinning? Is it vfio?
+
+(the code flow from your code to the pinning code would be nice)
 
 > 
-> Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>
-> Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> ---
-> v2->v3: New
-> ---
->   qapi/qom.json        |   9 +-
->   target/arm/kvm_arm.h |  27 +++
->   target/arm/kvm-rme.c | 415 ++++++++++++++++++++++++++++++++++++++++++-
->   target/arm/Kconfig   |   1 +
->   4 files changed, 449 insertions(+), 3 deletions(-)
+>>
+>> In that case, it would be incompatible with virtio-balloon (and without modifications with upcoming virtio-mem). Is there already a mechanism in place to handle that -- a call  to ram_block_discard_disable() -- or even a way to support coordinated discarding of RAM (e.g., virtio-mem + vfio)?
 > 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 901ba67634..1de1b0d8af 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1094,11 +1094,18 @@
->   # @measurement-algorithm: Realm measurement algorithm
->   #     (default: sha512)
->   #
-> +# @measurement-log: Enable a measurement log for the Realm. All events
-> +#     that contribute to the Realm Initial Measurement (RIM) are added
-> +#     to a log in TCG TPM2 format, which is itself loaded into Realm
-> +#     memory (unmeasured) and can then be read by a verifier to
-> +#     reconstruct the RIM.
-> +#
->   # Since: 9.3
->   ##
->   { 'struct': 'RmeGuestProperties',
->     'data': { '*personalization-value': 'str',
-> -            '*measurement-algorithm': 'RmeGuestMeasurementAlgorithm' } }
-> +            '*measurement-algorithm': 'RmeGuestMeasurementAlgorithm',
-> +            '*measurement-log': 'bool'} }
->   
->   ##
->   # @ObjectType:
-> diff --git a/target/arm/kvm_arm.h b/target/arm/kvm_arm.h
-> index 77680f238a..44e95a034b 100644
-> --- a/target/arm/kvm_arm.h
-> +++ b/target/arm/kvm_arm.h
-> @@ -268,6 +268,24 @@ int kvm_arm_rme_vcpu_init(CPUState *cs);
->    */
->   void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size);
->   
-> +/**
-> + * kvm_arm_rme_get_measurement_log
-> + *
-> + * Obtain the measurement log object if enabled, in order to get its size and
-> + * set its base address.
-> + *
-> + * Returns NULL if measurement log is disabled.
-> + */
-> +Object *kvm_arm_rme_get_measurement_log(void);
-> +
-> +/**
-> + * kvm_arm_rme_set_ipa_size
-> + * @ipa_bits: number of guest physical address bits
-> + *
-> + * Set the GPA size, not counting the bit reserved for shared address range.
-> + */
-> +void kvm_arm_rme_set_ipa_size(uint8_t ipa_bits);
-> +
->   #else
->   
->   /*
-> @@ -298,6 +316,15 @@ static inline void kvm_arm_rme_init_guest_ram(hwaddr base, size_t size)
->   {
->   }
->   
-> +static inline Object *kvm_arm_rme_get_measurement_log(void)
-> +{
-> +    return NULL;
-> +}
-> +
-> +static inline void kvm_arm_rme_set_ipa_size(uint8_t ipa_size)
-> +{
-> +}
-> +
->   /*
->    * These functions should never actually be called without KVM support.
->    */
-> diff --git a/target/arm/kvm-rme.c b/target/arm/kvm-rme.c
-> index bf0bcf9a38..f92cfdb5f3 100644
-> --- a/target/arm/kvm-rme.c
-> +++ b/target/arm/kvm-rme.c
-> @@ -10,10 +10,12 @@
->   #include "hw/boards.h"
->   #include "hw/core/cpu.h"
->   #include "hw/loader.h"
-> +#include "hw/tpm/tpm_log.h"
->   #include "kvm_arm.h"
->   #include "migration/blocker.h"
->   #include "qapi/error.h"
->   #include "qemu/error-report.h"
-> +#include "qemu/units.h"
->   #include "qom/object_interfaces.h"
->   #include "sysemu/kvm.h"
->   #include "sysemu/runstate.h"
-> @@ -25,6 +27,8 @@ OBJECT_DECLARE_SIMPLE_TYPE(RmeGuest, RME_GUEST)
->   
->   #define RME_MAX_CFG         2
->   
-> +#define RME_MEASUREMENT_LOG_SIZE    (64 * KiB)
-> +
->   struct RmeGuest {
->       ConfidentialGuestSupport parent_obj;
->       Notifier rom_load_notifier;
-> @@ -32,22 +36,344 @@ struct RmeGuest {
->   
->       uint8_t *personalization_value;
->       RmeGuestMeasurementAlgorithm measurement_algo;
-> +    bool use_measurement_log;
->   
-> +    size_t num_cpus;
-> +    uint8_t ipa_bits;
->       hwaddr ram_base;
->       size_t ram_size;
-> +
-> +    TpmLog *log;
-> +    GHashTable *images;
->   };
->   
->   OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RmeGuest, rme_guest, RME_GUEST,
->                                             CONFIDENTIAL_GUEST_SUPPORT,
->                                             { TYPE_USER_CREATABLE }, { })
->   
-> +typedef struct RmeLogFiletype {
-> +    uint32_t event_type;
-> +    /* Description copied into the log event */
-> +    const char *desc;
-> +} RmeLogFiletype;
-> +
->   typedef struct {
->       hwaddr base;
->       hwaddr size;
-> +    uint8_t *data;
-> +    RmeLogFiletype *filetype;
->   } RmeRamRegion;
->   
-> +typedef struct {
-> +    char        signature[16];
-> +    char        name[32];
-> +    char        version[40];
-> +    uint64_t    ram_size;
-> +    uint32_t    num_cpus;
-> +    uint64_t    flags;
-> +} EventLogVmmVersion;
-> +
-> +typedef struct {
-> +    uint32_t    id;
-> +    uint32_t    data_size;
-> +    uint8_t     data[];
-> +} EventLogTagged;
-> +
+> Good point, should be calling add ram_block_discard_disable(true) when set register + a corresponding (false) during deregister...  Will add for v2.
+> 
+> As for supporting coordinated discard, I was hoping to subsequently look at virtio-mem for this.
+
+As long as discarding is blocked for now, we're good. To support it, the 
+RAMDiscardManager would have to be wired up, similar to vfio.
+
+I think the current way of handling it via
+
++    IOMMUTLBEvent event = {
++        .type = IOMMU_NOTIFIER_MAP,
++        .entry = {
++            .target_as = &address_space_memory,
++            .translated_addr = 0,
++            .perm = IOMMU_RW,
++        },
++    };
 
 
-> +#define EVENT_LOG_TAG_REALM_CREATE  1
-> +#define EVENT_LOG_TAG_INIT_RIPAS    2
-> +#define EVENT_LOG_TAG_REC_CREATE    3
-> +
-If these are ARM-related structures and constants from a document you 
-may want to mention the document you got them from.
+Is probably not ideal: it cannot cope with memory holes (which 
+virtio-mem would create).
 
+Likely, you'd instead want an address space notifier, and really only 
+map the memory region sections you get notified about.
 
-> +#define REALM_PARAMS_FLAG_SVE       (1 << 1)
-> +#define REALM_PARAMS_FLAG_PMU       (1 << 2)
-> +
-> +#define REC_CREATE_FLAG_RUNNABLE    (1 << 0)
-> +
->   static RmeGuest *rme_guest;
->   
-> +static int rme_init_measurement_log(MachineState *ms)
-> +{
-> +    Object *log;
-> +    gpointer filename;
-> +    TpmLogDigestAlgo algo;
-> +    RmeLogFiletype *filetype;
-> +
-> +    if (!rme_guest->use_measurement_log) {
-> +        return 0;
-> +    }
-> +
-> +    switch (rme_guest->measurement_algo) {
-> +    case RME_GUEST_MEASUREMENT_ALGORITHM_SHA256:
-> +        algo = TPM_LOG_DIGEST_ALGO_SHA256;
-> +        break;
-> +    case RME_GUEST_MEASUREMENT_ALGORITHM_SHA512:
-> +        algo = TPM_LOG_DIGEST_ALGO_SHA512;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    log = object_new_with_props(TYPE_TPM_LOG, OBJECT(rme_guest),
-> +                                "log", &error_fatal,
-> +                                "digest-algo", TpmLogDigestAlgo_str(algo),
-> +                                NULL);
-> +
-> +    tpm_log_create(TPM_LOG(log), RME_MEASUREMENT_LOG_SIZE, &error_fatal);
-> +    rme_guest->log = TPM_LOG(log);
-> +
-> +    /*
-> +     * Write down the image names we're expecting to encounter when handling the
-> +     * ROM load notifications, so we can record the type of image being loaded
-> +     * to help the verifier.
-> +     */
-> +    rme_guest->images = g_hash_table_new_full(g_str_hash, g_str_equal, g_free,
-> +                                              g_free);
-> +
-> +    filename = g_strdup(ms->kernel_filename);
-> +    if (filename) {
-> +        filetype = g_new0(RmeLogFiletype, 1);
-> +        filetype->event_type = TCG_EV_POST_CODE2;
-> +        filetype->desc = "KERNEL";
-> +        g_hash_table_insert(rme_guest->images, filename, (gpointer)filetype);
-> +    }
-> +
-> +    filename = g_strdup(ms->initrd_filename);
-> +    if (filename) {
-> +        filetype = g_new0(RmeLogFiletype, 1);
-> +        filetype->event_type = TCG_EV_POST_CODE2;
-> +        filetype->desc = "INITRD";
-> +        g_hash_table_insert(rme_guest->images, filename, (gpointer)filetype);
-> +    }
-> +
-> +    filename = g_strdup(ms->firmware);
-> +    if (filename) {
-> +        filetype = g_new0(RmeLogFiletype, 1);
-> +        filetype->event_type = TCG_EV_EFI_PLATFORM_FIRMWARE_BLOB2;
-> +        filetype->desc = "FIRMWARE";
-> +        g_hash_table_insert(rme_guest->images, filename, filetype);
-> +    }
-> +
-> +    filename = g_strdup(ms->dtb);
-> +    if (!filename) {
-> +        filename = g_strdup("dtb");
-> +    }
-> +    filetype = g_new0(RmeLogFiletype, 1);
-> +    filetype->event_type = TCG_EV_POST_CODE2;
-> +    filetype->desc = "DTB";
-> +    g_hash_table_insert(rme_guest->images, filename, filetype);
-> +
-> +    return 0;
-> +}
-> +
-> +static int rme_log_event_tag(uint32_t id, uint8_t *data, size_t size,
-> +                             Error **errp)
-> +{
-> +    int ret;
-> +    EventLogTagged event = {
-> +        .id = id,
-> +        .data_size = size,
-> +    };
-> +    GByteArray *bytes = g_byte_array_new();
-> +
-> +    if (!rme_guest->log) {
-> +        return 0;
-> +    }
-> +
-> +    g_byte_array_append(bytes, (uint8_t *)&event, sizeof(event));
-> +    g_byte_array_append(bytes, data, size);
-> +    ret = tpm_log_add_event(rme_guest->log, TCG_EV_EVENT_TAG, bytes->data,
-> +                             bytes->len, NULL, 0, errp);
-> +    g_byte_array_free(bytes, true);
-> +    return ret;
-> +}
-> +
-> +/* Log VM type and Realm Descriptor create */
-> +static int rme_log_realm_create(Error **errp)
-> +{
-> +    int ret;
-> +    ARMCPU *cpu;
-> +    EventLogVmmVersion vmm_version = {
-> +        .signature = "VM VERSION",
-> +        .name = "QEMU",
-> +        .version = "9.1", /* TODO: dynamic */
+There, you can test for RAMDiscardManager and handle it like vfio does.
 
-$ grep -r QEMU_VERSION_M build/
-build/config-host.h:#define QEMU_VERSION_MAJOR 9
-build/config-host.h:#define QEMU_VERSION_MICRO 93
-build/config-host.h:#define QEMU_VERSION_MINOR 1
+-- 
+Cheers,
 
-$ cat VERSION
-9.1.93
-
-
-> +        .ram_size = cpu_to_le64(rme_guest->ram_size),
-> +        .num_cpus = cpu_to_le32(rme_guest->num_cpus),
-> +        .flags = 0,
-> +    };
-> +    struct {
-> +        uint64_t    flags;
-> +        uint8_t     s2sz;
-> +        uint8_t     sve_vl;
-> +        uint8_t     num_bps;
-> +        uint8_t     num_wps;
-> +        uint8_t     pmu_num_ctrs;
-> +        uint8_t     hash_algo;
-> +    } params = {
-> +        .s2sz = rme_guest->ipa_bits,
-> +    };
-> +
-> +    if (!rme_guest->log) {
-> +        return 0;
-> +    }
-> +
-> +    ret = tpm_log_add_event(rme_guest->log, TCG_EV_NO_ACTION,
-> +                            (uint8_t *)&vmm_version, sizeof(vmm_version),
-> +                            NULL, 0, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    /* With KVM all CPUs have the same capability */
-> +    cpu = ARM_CPU(first_cpu);
-> +    if (cpu->has_pmu) {
-> +        params.flags |= REALM_PARAMS_FLAG_PMU;
-> +        params.pmu_num_ctrs = FIELD_EX64(cpu->isar.reset_pmcr_el0, PMCR, N);
-> +    }
-> +
-> +    if (cpu->sve_max_vq) {
-> +        params.flags |= REALM_PARAMS_FLAG_SVE;
-> +        params.sve_vl = cpu->sve_max_vq - 1;
-> +    }
-> +    params.num_bps = FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, BRPS);
-> +    params.num_wps = FIELD_EX64(cpu->isar.id_aa64dfr0, ID_AA64DFR0, WRPS);
-> +
-> +    switch (rme_guest->measurement_algo) {
-> +    case RME_GUEST_MEASUREMENT_ALGORITHM_SHA256:
-> +        params.hash_algo = KVM_CAP_ARM_RME_MEASUREMENT_ALGO_SHA256;
-> +        break;
-> +    case RME_GUEST_MEASUREMENT_ALGORITHM_SHA512:
-> +        params.hash_algo = KVM_CAP_ARM_RME_MEASUREMENT_ALGO_SHA512;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    return rme_log_event_tag(EVENT_LOG_TAG_REALM_CREATE, (uint8_t *)&params,
-> +                             sizeof(params), errp);
-> +}
-> +
-> +/* unmeasured images are logged with @data == NULL */
-> +static int rme_log_image(RmeLogFiletype *filetype, uint8_t *data, hwaddr base,
-> +                          size_t size, Error **errp)
-> +{
-> +    int ret;
-> +    size_t desc_size;
-> +    GByteArray *event = g_byte_array_new();
-> +    struct UefiPlatformFirmwareBlob2Head head = {0};
-> +    struct UefiPlatformFirmwareBlob2Tail tail = {0};
-> +
-> +    if (!rme_guest->log) {
-> +        return 0;
-> +    }
-> +
-> +    if (!filetype) {
-> +        error_setg(errp, "cannot log image without a filetype");
-> +        return -1;
-> +    }
-> +
-> +    /* EV_POST_CODE2 strings are not NUL-terminated */
-> +    desc_size = strlen(filetype->desc);
-> +    head.blob_description_size = desc_size;
-> +    tail.blob_base = cpu_to_le64(base);
-> +    tail.blob_size = cpu_to_le64(size);
-> +
-> +    g_byte_array_append(event, (guint8 *)&head, sizeof(head));
-> +    g_byte_array_append(event, (guint8 *)filetype->desc, desc_size);
-> +    g_byte_array_append(event, (guint8 *)&tail, sizeof(tail));
-> +
-> +    ret = tpm_log_add_event(rme_guest->log, filetype->event_type, event->data,
-> +                            event->len, data, size, errp);
-> +    g_byte_array_free(event, true);
-> +    return ret;
-> +}
-> +
-> +static int rme_log_ripas(hwaddr base, size_t size, Error **errp)
-> +{
-> +    struct {
-> +        uint64_t base;
-> +        uint64_t size;
-> +    } init_ripas = {
-> +        .base = cpu_to_le64(base),
-> +        .size = cpu_to_le64(size),
-> +    };
-> +
-> +    return rme_log_event_tag(EVENT_LOG_TAG_INIT_RIPAS, (uint8_t *)&init_ripas,
-> +                             sizeof(init_ripas), errp);
-> +}
-> +
-> +static int rme_log_rec(uint64_t flags, uint64_t pc, uint64_t gprs[8], Error **errp)
-> +{
-
-$ ./scripts/checkpatch.pl ./tmp/*.patch
-[...]
-Checking ./tmp/0002-target-arm-kvm-rme-Add-measurement-log.patch...
-WARNING: line over 80 characters
-#353: FILE: target/arm/kvm-rme.c:303:
-+static int rme_log_rec(uint64_t flags, uint64_t pc, uint64_t gprs[8], 
-Error **errp)
-
-May want to run this on all patches.
-
-Rest LGTM.
-
-
-> +    struct {
-> +        uint64_t flags;
-> +        uint64_t pc;
-> +        uint64_t gprs[8];
-> +    } rec_create = {
-> +        .flags = cpu_to_le64(flags),
-> +        .pc = cpu_to_le64(pc),
-> +        .gprs[0] = cpu_to_le64(gprs[0]),
-> +        .gprs[1] = cpu_to_le64(gprs[1]),
-> +        .gprs[2] = cpu_to_le64(gprs[2]),
-> +        .gprs[3] = cpu_to_le64(gprs[3]),
-> +        .gprs[4] = cpu_to_le64(gprs[4]),
-> +        .gprs[5] = cpu_to_le64(gprs[5]),
-> +        .gprs[6] = cpu_to_le64(gprs[6]),
-> +        .gprs[7] = cpu_to_le64(gprs[7]),
-> +    };
-> +
-> +    return rme_log_event_tag(EVENT_LOG_TAG_REC_CREATE, (uint8_t *)&rec_create,
-> +                             sizeof(rec_create), errp);
-> +}
-> +
-> +static int rme_populate_range(hwaddr base, size_t size, bool measure,
-> +                              Error **errp);
-> +
-> +static int rme_close_measurement_log(Error **errp)
-> +{
-> +    int ret;
-> +    hwaddr base;
-> +    size_t size;
-> +    RmeLogFiletype filetype = {
-> +        .event_type = TCG_EV_POST_CODE2,
-> +        .desc = "LOG",
-> +    };
-> +
-> +    if (!rme_guest->log) {
-> +        return 0;
-> +    }
-> +
-> +    base = object_property_get_uint(OBJECT(rme_guest->log), "load-addr", errp);
-> +    if (*errp) {
-> +        return -1;
-> +    }
-> +
-> +    size = object_property_get_uint(OBJECT(rme_guest->log), "max-size", errp);
-> +    if (*errp) {
-> +        return -1;
-> +    }
-> +
-> +    /* Log the log itself */
-> +    ret = rme_log_image(&filetype, NULL, base, size, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ret = tpm_log_write_and_close(rme_guest->log, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    ret = rme_populate_range(base, size, /* measure */ false, errp);
-> +    if (ret) {
-> +        return ret;
-> +    }
-> +
-> +    g_hash_table_destroy(rme_guest->images);
-> +
-> +    /* The log is now in the guest. Free this object */
-> +    object_unparent(OBJECT(rme_guest->log));
-> +    rme_guest->log = NULL;
-> +    return 0;
-> +}
-> +
->   static int rme_configure_one(RmeGuest *guest, uint32_t cfg, Error **errp)
->   {
->       int ret;
-> @@ -120,9 +446,10 @@ static int rme_init_ram(hwaddr base, size_t size, Error **errp)
->           error_setg_errno(errp, -ret,
->                            "failed to init RAM [0x%"HWADDR_PRIx", 0x%"HWADDR_PRIx")",
->                            start, end);
-> +        return ret;
->       }
->   
-> -    return ret;
-> +    return rme_log_ripas(base, size, errp);
->   }
->   
->   static int rme_populate_range(hwaddr base, size_t size, bool measure,
-> @@ -158,23 +485,42 @@ static void rme_populate_ram_region(gpointer data, gpointer err)
->       }
->   
->       rme_populate_range(region->base, region->size, /* measure */ true, errp);
-> +    if (*errp) {
-> +        return;
-> +    }
-> +
-> +    rme_log_image(region->filetype, region->data, region->base, region->size,
-> +                  errp);
->   }
->   
->   static int rme_init_cpus(Error **errp)
->   {
->       int ret;
->       CPUState *cs;
-> +    bool logged_primary_cpu = false;
->   
->       /*
->        * Now that do_cpu_reset() initialized the boot PC and
->        * kvm_cpu_synchronize_post_reset() registered it, we can finalize the REC.
->        */
->       CPU_FOREACH(cs) {
-> -        ret = kvm_arm_vcpu_finalize(ARM_CPU(cs), KVM_ARM_VCPU_REC);
-> +        ARMCPU *cpu = ARM_CPU(cs);
-> +
-> +        ret = kvm_arm_vcpu_finalize(cpu, KVM_ARM_VCPU_REC);
->           if (ret) {
->               error_setg_errno(errp, -ret, "failed to finalize vCPU");
->               return ret;
->           }
-> +
-> +        if (!logged_primary_cpu) {
-> +            ret = rme_log_rec(REC_CREATE_FLAG_RUNNABLE, cpu->env.pc,
-> +                              cpu->env.xregs, errp);
-> +            if (ret) {
-> +                return ret;
-> +            }
-> +
-> +            logged_primary_cpu = true;
-> +        }
->       }
->       return 0;
->   }
-> @@ -194,6 +540,10 @@ static int rme_create_realm(Error **errp)
->           return -1;
->       }
->   
-> +    if (rme_log_realm_create(errp)) {
-> +        return -1;
-> +    }
-> +
->       if (rme_init_ram(rme_guest->ram_base, rme_guest->ram_size, errp)) {
->           return -1;
->       }
-> @@ -208,6 +558,10 @@ static int rme_create_realm(Error **errp)
->           return -1;
->       }
->   
-> +    if (rme_close_measurement_log(errp)) {
-> +        return -1;
-> +    }
-> +
->       ret = kvm_vm_enable_cap(kvm_state, KVM_CAP_ARM_RME, 0,
->                               KVM_CAP_ARM_RME_ACTIVATE_REALM);
->       if (ret) {
-> @@ -303,6 +657,20 @@ static void rme_set_measurement_algo(Object *obj, int algo, Error **errp)
->       guest->measurement_algo = algo;
->   }
->   
-> +static bool rme_get_measurement_log(Object *obj, Error **errp)
-> +{
-> +    RmeGuest *guest = RME_GUEST(obj);
-> +
-> +    return guest->use_measurement_log;
-> +}
-> +
-> +static void rme_set_measurement_log(Object *obj, bool value, Error **errp)
-> +{
-> +    RmeGuest *guest = RME_GUEST(obj);
-> +
-> +    guest->use_measurement_log = value;
-> +}
-> +
->   static void rme_guest_class_init(ObjectClass *oc, void *data)
->   {
->       object_class_property_add_str(oc, "personalization-value", rme_get_rpv,
-> @@ -317,6 +685,12 @@ static void rme_guest_class_init(ObjectClass *oc, void *data)
->                                      rme_set_measurement_algo);
->       object_class_property_set_description(oc, "measurement-algorithm",
->               "Realm measurement algorithm ('sha256', 'sha512')");
-> +
-> +    object_class_property_add_bool(oc, "measurement-log",
-> +                                   rme_get_measurement_log,
-> +                                   rme_set_measurement_log);
-> +    object_class_property_set_description(oc, "measurement-log",
-> +            "Enable/disable Realm measurement log");
->   }
->   
->   static void rme_guest_init(Object *obj)
-> @@ -359,6 +733,20 @@ static void rme_rom_load_notify(Notifier *notifier, void *data)
->       region = g_new0(RmeRamRegion, 1);
->       region->base = rom->addr;
->       region->size = rom->len;
-> +    /*
-> +     * TODO: double-check lifetime. Is data is still available when we measure
-> +     * it, while writing the log. Should be fine since data is kept for the next
-> +     * reset.
-> +     */
-> +    region->data = rom->data;
-> +
-> +    /*
-> +     * rme_guest->images is destroyed after ram_regions, so we can store
-> +     * filetype even if we don't own the struct.
-> +     */
-> +    if (rme_guest->images) {
-> +        region->filetype = g_hash_table_lookup(rme_guest->images, rom->name);
-> +    }
->   
->       /*
->        * The Realm Initial Measurement (RIM) depends on the order in which we
-> @@ -388,6 +776,13 @@ int kvm_arm_rme_init(MachineState *ms)
->           return -ENODEV;
->       }
->   
-> +    if (rme_init_measurement_log(ms)) {
-> +        return -ENODEV;
-> +    }
-> +
-> +    rme_guest->ram_size = ms->ram_size;
-> +    rme_guest->num_cpus = ms->smp.max_cpus;
-> +
->       error_setg(&rme_mig_blocker, "RME: migration is not implemented");
->       migrate_add_blocker(&rme_mig_blocker, &error_fatal);
->   
-> @@ -430,3 +825,19 @@ int kvm_arm_rme_vm_type(MachineState *ms)
->       }
->       return 0;
->   }
-> +
-> +void kvm_arm_rme_set_ipa_size(uint8_t ipa_bits)
-> +{
-> +    if (rme_guest) {
-> +        /* We request one more bit to KVM as the NS flag */
-> +        rme_guest->ipa_bits = ipa_bits + 1;
-> +    }
-> +}
-> +
-> +Object *kvm_arm_rme_get_measurement_log(void)
-> +{
-> +    if (rme_guest) {
-> +        return OBJECT(rme_guest->log);
-> +    }
-> +    return NULL;
-> +}
-> diff --git a/target/arm/Kconfig b/target/arm/Kconfig
-> index 7f8a2217ae..ee3a2184d0 100644
-> --- a/target/arm/Kconfig
-> +++ b/target/arm/Kconfig
-> @@ -13,3 +13,4 @@ config AARCH64
->       select ARM
->       # kvm_arch_fixup_msi_route() needs to access PCIDevice
->       select PCI if KVM
-> +    select TPM_LOG if KVM
+David / dhildenb
 
 
