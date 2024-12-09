@@ -4,70 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25E3EE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 11:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B2C0E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 11:19:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKbmb-0002Bo-1s; Mon, 09 Dec 2024 06:18:33 -0500
+	id 1tKbme-0002Ca-Hi; Mon, 09 Dec 2024 06:18:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tKbmZ-0002Bd-0T
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:18:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tKbmX-0004e6-L3
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:18:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733743107;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qTxyGQ9mWZonxjhxRxO9UPcNwcedf7zfsyDn8yg6/eY=;
- b=XwFbZAeIXu7n4KCbTvpzJKWOq8e8KWd9dN5fh700n091zNOilmaAmN3sQ5+NjlFlhkGhw7
- o4CMk0Mf5+/CAxxmMSKyPdJc6xJWnXWdgEuU/gmFzzcYlgZzv2h+LUQaZT0gyIwMXw87EE
- F/uyXNo9nL44szstpEMbRBpJ+iUPfNs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-519-cbp-9Q2CNB-WlbWrvXbG_w-1; Mon,
- 09 Dec 2024 06:18:24 -0500
-X-MC-Unique: cbp-9Q2CNB-WlbWrvXbG_w-1
-X-Mimecast-MFC-AGG-ID: cbp-9Q2CNB-WlbWrvXbG_w
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1CCC719560B6; Mon,  9 Dec 2024 11:18:23 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.45.225.61])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28BD019560A2; Mon,  9 Dec 2024 11:18:20 +0000 (UTC)
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] qga: Add log to guest-fsfreeze-thaw command
-Date: Mon,  9 Dec 2024 13:18:17 +0200
-Message-ID: <20241209111817.31307-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tKbmc-0002CA-GG
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:18:34 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tKbma-0004gV-Og
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:18:34 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-432d86a3085so27656825e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 03:18:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733743110; x=1734347910; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=6AHRdozqLYetGglLfiayF082i+1rp2lNfDEY365vT60=;
+ b=lVCEhN2N/fgzwHrcdQk8q/iFoce/4lJfRpHGya4x2F3B+XQLzyw4J0WXidt/Z6bsu3
+ TeCkxq5erk1vxdw7ESv69qUjWiPEjk3maY2gtq7hBWny6Sjf0lfjyggaX8dqSw63fAnT
+ ydxNJwWTxuT27a8w0vsDRNuoVqpTlLfhplFB7vXTqQRYCzXQxwqLKcu/qSci4Sn8MCXD
+ 6ASy+1reY1ATlC5KhYWEeUBLZQ64VL4z+1iZfhYSX6O2SCjUS4o/Y0qfg/8pep6ZJumA
+ NcG4DiqEkRZhpJ0mxJwiXEX/Aesmo70gndd/MCqfQ0zhCUJ6vEXB/C7krH9qt5sjOofd
+ tMYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733743110; x=1734347910;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :subject:to:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6AHRdozqLYetGglLfiayF082i+1rp2lNfDEY365vT60=;
+ b=iMuHuo3y3acPkj6xzCw5ZutClvBK3eojpWixkp9MdrC7JJsd3gT9FxZk2hjoljnD71
+ aTjDq9mLFemotawxlg9rq4DYyQeVkM2gzKmuV2LGPjvpkL1/1lCqJakjkcGSMs5TnEbF
+ 2u+hamY2xSRntFGV/MsxvvP14rpLgMilGnwLEYG7XU+oF8g/yLwP+3VV3Z3oxqS+FnaP
+ ExNbcNXPW4GPSABbnXsL5qs5Ekjsv3aforFEz/0sXoIEfcURwEqNazCEhFRmaJVJqW6e
+ uonIb1DOIKs/jWWNCzNqalX4qsYRwoML1o1ISHuydeU6Yv+6QZB56mt0xEOeYRXAgbRz
+ +knA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUd36x01ONuf/JTzQzSlm3yIobhcxM0rV3v1OBRQa4QfNvvsP0lXCeegOZJN4hdJzPHh1CPjecREO6f@nongnu.org
+X-Gm-Message-State: AOJu0YwAlOlAbWVgj0cDUHCRn4HFwUBeYD5v+6VyOPDlHWp7nVbP2Ll8
+ wWBGpHuJlBlTOZwpDTEo+Qfg01bPj7mFqSNOXnbr0zR7Bmr4T09VQUsEjgzlBks=
+X-Gm-Gg: ASbGncvwlBAHXCsoJF4UzfyZkYz9SwsfqzQ8dqpmiqoRAgu6GDB86XiVJlSH0JxNsGF
+ WPOp7fqGgbCe58xdh+syFIdDG4nFzm2Rx+D3oW6tthTxj08E4BDDzco9VWiFVglZyA3L2+xeZpA
+ 7pg4SF7c5jl1bm6LvpjJbfEjCk9uBY17ePbnitgBkU713BWxMsvhdpj5bvrclQ5HkKHNYHJaoj+
+ 5dsK5r2AhXAhtQnJWMaSFB89XeyMveI+KzxZb3vXQE0/7rk
+X-Google-Smtp-Source: AGHT+IH2x8faGStyew9BBDuS/XtUEPSA30YIcBT/dfMb/VJxMdKqN1o1WwYQGw0Poyk3UhcYN1VLqg==
+X-Received: by 2002:a05:600c:350c:b0:434:a6af:d333 with SMTP id
+ 5b1f17b1804b1-434fff5567cmr261385e9.16.1733743110604; 
+ Mon, 09 Dec 2024 03:18:30 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3862229a88asm12691119f8f.106.2024.12.09.03.18.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Dec 2024 03:18:30 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 51F765F858;
+ Mon,  9 Dec 2024 11:18:29 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Alessandro Di Federico <ale@rev.ng>, Alistair Francis
+ <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
+ Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
+ Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
+ cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ cw@f00f.org,
+ dhedde@kalrayinc.com, Eric Blake <eblake@redhat.com>, eblot@rivosinc.com,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, Eduardo Habkost
+ <eduardo@habkost.net>, Elena Ufimtseva <elena.ufimtseva@oracle.com>, Auger
+ Eric <eric.auger@redhat.com>, felipe@nutanix.com, iggy@theiggy.com, Warner
+ Losh <imp@bsdimp.com>, Jan Kiszka <jan.kiszka@web.de>, Jason Gunthorpe
+ <jgg@nvidia.com>, jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Joao Martins <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
+ <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>, Max Chou <max.chou@sifive.com>, Mark
+ Burton <mburton@qti.qualcomm.com>, mdean@redhat.com,
+ mimu@linux.vnet.ibm.com, "Ho, Nelson" <nelson.ho@windriver.com>, Paul
+ Walmsley <paul.walmsley@sifive.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Phil =?utf-8?Q?Mathieu-Daud?=
+ =?utf-8?Q?=C3=A9?=
+ <philmd@linaro.org>, QEMU Developers <qemu-devel@nongnu.org>, Richard
+ Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
+ <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
+ <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
+ <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
+ Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
+Subject: KVM/QEMU community call 10/12/2024 agenda items
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Mon, 09 Dec 2024 11:18:29 +0000
+Message-ID: <87ttbdt88q.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,40 +123,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
----
- qga/commands-posix.c | 3 +++
- qga/commands-win32.c | 2 ++
- 2 files changed, 5 insertions(+)
 
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 636307bedf..ac8d150582 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -805,6 +805,9 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
-     int ret;
- 
-     ret = qmp_guest_fsfreeze_do_thaw(errp);
-+
-+    slog("guest-fsthaw called");
-+
-     if (ret >= 0) {
-         ga_unset_frozen(ga_state);
-         execute_fsfreeze_hook(FSFREEZE_HOOK_THAW, errp);
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index 038beb8cfa..3a6f3ac7c5 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -1272,6 +1272,8 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
- 
-     qga_vss_fsfreeze(&i, false, NULL, errp);
- 
-+    slog("guest-fsthaw called");
-+
-     ga_unset_frozen(ga_state);
-     return i;
- }
--- 
-2.47.1
+Hi,
 
+The KVM/QEMU community call is at:
+
+https://meet.jit.si/kvmcallmeeting
+@
+10/12/2024 14:00 UTC
+
+Are there any agenda items for the sync-up?
+
+This will be the last community call of the year as I figured not many
+people would be around on the 24th.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
