@@ -4,88 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353B1E77173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 01:47:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940D6E77173
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 02:51:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKSrJ-0000gV-Ge; Sun, 08 Dec 2024 20:46:49 -0500
+	id 1tKTr2-0000l5-Fo; Sun, 08 Dec 2024 21:50:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wannacu2049@gmail.com>)
- id 1tKSrI-0000gE-0b
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 20:46:48 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tKTqy-0000kc-Q6
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 21:50:33 -0500
+Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wannacu2049@gmail.com>)
- id 1tKSrG-00012r-It
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 20:46:47 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-215b13e9ccbso35437105ad.0
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 17:46:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tKTqw-0008B4-Py
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 21:50:32 -0500
+Received: by mail-oa1-x2c.google.com with SMTP id
+ 586e51a60fabf-29e585968a8so2404455fac.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 18:50:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733708804; x=1734313604; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PS/SyKa5qII7S4zjcdsqTedeO7HFW43UKQe9mFIi7+4=;
- b=YnpHoVWzkdRrQRYlm+FM/qPwywLfg7xvYfQpuYS6Nya1/tjLJfRTeAHdRKnSO9hNQm
- Vf/EcxdOjK1pPrUcuxc2E+q3Eq3p2LGZg9yCqMYHdzzFNTa+2lCw0bmmZocmJWGy/ffj
- /iAK98pHAHzObTP9F35b1/EP/Tq625YlGvkB+Ccl/klJCot0A6m4k+J8Ub0n5Trwa7wL
- 2wNMX4ksxhfkcKa7Wi5GvFuHIBepAGHlVAClJlQYizGNBf2O7p3k0MSIFOSevwEQwQN9
- Z9GhLSzM+BpcdvJExMfLHEgaOgGa7k2mYxpL8cJ1PtmNg37RicGikrCd64L9OzNWSmPF
- p8RA==
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1733712628; x=1734317428;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NbOwr4T/r4RaD/5fp3RT7Qsls6yRTrWFVNGRgwBkmIU=;
+ b=i9R57LhCUYfU7rGZ8+ewMq1owJ/gjYIhYs2BHelVkwRUV9DA/XMGQ4FCD/yDEa60l1
+ rLuDtv0EApPPwaSbBjvX+KS1n2qzbpHIybIBcx4djWNSHyod2kEhOdXNA7WXaoCkXkQY
+ OUP0sFJMtSZH/Dchda5UUMFdItk4Yq1q6f00xAQUN845Ip/kjfSvPy+MJGEPEOgih3oU
+ gozyWKNj4JYvsJIkEjcx7xjupqjKBKPbJMQGC2EUA3fL2b7mMhgbVHl8ajK+qrSoxqc+
+ UnmaQZibtOrUVTvKXJBljnw2BLjPh9v5/x5mdxdNv5yfKJ1rqwt1Di7UpzEAvWJamXPG
+ WlTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733708804; x=1734313604;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=PS/SyKa5qII7S4zjcdsqTedeO7HFW43UKQe9mFIi7+4=;
- b=LTn9YB6ljkDL2RYXlo4C8S7cZnSjFmKp0GB8wbiXY6rLH5InqAh+9Yb2YKww69chO4
- UuO+qRyQaILQJ+yAln6+H2XuGAFrqdmRWDUBD77Mus/Sz+QmwobYwlsa1wVT6WfVWEPk
- 6xdGk6zc9BY4jXjKDjrh6gz3yr3/XvrP3ymJDnXiaiFk4XkSfCrSMG5M3ndE70Lp8cjp
- OKl/yHhUt+CBWSU/DiffezVt3wqkjsCVhOjmEHvPb2s+BusIG+3sl9z9nYLpZzdOWUNG
- CBvg9+eH0kkoFI6SoaxKt7vPqnqdC6DoPqC7ImHF2/cp9QCiWPtSidldownC7Fuo0+uZ
- qyUA==
+ d=1e100.net; s=20230601; t=1733712628; x=1734317428;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=NbOwr4T/r4RaD/5fp3RT7Qsls6yRTrWFVNGRgwBkmIU=;
+ b=OoTIrLuRJj+oUfhY+lKujFMRiN8X+mpnVBhpO1kY4MfP5ynuKZ4oC2WQOmRnd9cU23
+ mkGOAIkFaR3uLyEr9r3Zx8CB8Bq+IumC5rEseKRAMCLAbjgM4V3L37qRUxOO7Peck/M0
+ Qg69t3eJspO6odeyWFHrNCnzN9lka8ysbR+7Tj9P66dCK3ptrmcL9kaMmlz5LSK4WXtT
+ DQh7HWV8AX/lbI3cLRgxzI2PUmkhfoeHcgEc+UyYlh/tT3RxcgxtcpW+zWSMB590LNB1
+ AVBI2wxXbnc3PG/37U7Uf7cLaVAi9fWUx54hgHzVUoFIUKMiioMAcOsJZD83q+775zZ5
+ PGCA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVAy6iJvjqQtqSluTDN8qyJftf5r7iEzuo2+1ovPmNxXIo5KTwMyO3ccwfinKFSvfGN9T7N0PlLiYLL@nongnu.org
-X-Gm-Message-State: AOJu0YwTzTN7prTilqe7QPYLH3VxFK6vk9bWLw6hiTBFFBn6dTvqsL1p
- rpXCyl3wY0RdugaTQR4/ZlpO9aDuDGstue9YcZ+9w5rGQKwRwJIM
-X-Gm-Gg: ASbGnctTY5kGJ5olXygFx4Xtctv57zsfUQ6Z4D2UiEbpTO1DiqcVbczsnsq3h1uNYqQ
- xIjPgCYQ3s9bCGLOXsw636A0WJSBPhuCrEL8K8BGwcctW9/LjyWAq94y1ZHjEgjoNRmKAdZ948U
- 2OHdv7K7sX6757fSwJKomTIWJHRp/zW/uneJtTauggKBQChCskLlVZz7Y22jSdVRNytmHaSkgcd
- EylBf0v4kAi5gpDk6euqeDR5LI0QX5d5vfpJ8kxk4hoRJx3QPXpGJ4TTTUXJpo=
-X-Google-Smtp-Source: AGHT+IF1gODURwYzSYIKXSwknOM3nIMVLU6dGYQXK6KktGx60tJAWCKKGj6Sd7VZOkPlRqEguhlldA==
-X-Received: by 2002:a17:902:d4c3:b0:215:8c36:9ce with SMTP id
- d9443c01a7336-21614d7be2bmr137433915ad.30.1733708804134; 
- Sun, 08 Dec 2024 17:46:44 -0800 (PST)
-Received: from localhost.localdomain ([61.183.83.60])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-216325f51ecsm25876335ad.216.2024.12.08.17.46.41
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Dec 2024 17:46:43 -0800 (PST)
-From: wannacu <wannacu2049@gmail.com>
-To: richard.henderson@linaro.org
-Cc: eduardo@habkost.net, pbonzini@redhat.com, qemu-devel@nongnu.org,
- wannacu2049@gmail.com
-Subject: Re: [PATCH] tcg/optimize: Fix constant folding of setcond
-Date: Mon,  9 Dec 2024 09:46:38 +0800
-Message-ID: <20241209014638.18972-1-wannacu2049@gmail.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <7f8d7f1b-8c5d-42de-8d5c-137b2d281719@linaro.org>
-References: <7f8d7f1b-8c5d-42de-8d5c-137b2d281719@linaro.org>
+ AJvYcCXTZdBf/Bo8NJ2IHJJXZO/zqbSgTDur6aTjd88bwDKDCLhQvRAh9X90xRxtjcopuQ+kpp8cA17m4Tsb@nongnu.org
+X-Gm-Message-State: AOJu0Yw1gUn8l8ftY5FStf6MDtmO7Rudlj//SX5dMNBrtlKqWIDAaThT
+ a7fqVL3xsDoqgbl9iJi2LWTNkidYEOiJo3Dt/CgbR0fJ/IjHu1JWppOOtbN0KVdOr13oVIPV1ss
+ Ml84edv+p0KVDzoK+Auu1l4F6GQjG9k96IngoMQ==
+X-Gm-Gg: ASbGncvSqtGRSpIQMVExwJ4g2/ANWYQMVwdNxPbkvRSWfTRf50dzpyR2UuVfx+s+VjB
+ JMOeA+4pfDXW4XLSIm53ojGxel/t1FVDz
+X-Google-Smtp-Source: AGHT+IGPFnkLzFtSdTVD2A3WNMRp3FfRECqFSAkXH0XTX6aI+PZIdcs27oY7cT4yPDjGS+wpj989JOHoyPFbNoF0vaE=
+X-Received: by 2002:a05:6870:5d8e:b0:29e:67cd:1a89 with SMTP id
+ 586e51a60fabf-29f739251bbmr9215425fac.36.1733712627508; Sun, 08 Dec 2024
+ 18:50:27 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=wannacu2049@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+References: <87sesmdfl4.fsf@suse.de>
+ <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
+ <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
+ <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
+ <Z04PTe4kCVWEQbPL@x1n> <Z06866qR0z9n2BgP@redhat.com> <875xo1j6ub.fsf@suse.de>
+ <Z075-ZPW9dzzCKJn@redhat.com> <8734j4kiuq.fsf@suse.de> <Z09CdpY4C5Eq6OxI@x1n>
+In-Reply-To: <Z09CdpY4C5Eq6OxI@x1n>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Mon, 9 Dec 2024 10:50:11 +0800
+Message-ID: <CAK9dgmZzuaOsT_EQorHqaduTXSYdJ0xuNn602HcMgmFrNM=8yg@mail.gmail.com>
+Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="0000000000004e39430628cd6d66"
+Received-SPF: pass client-ip=2001:4860:4864:20::2c;
+ envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2c.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,14 +98,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I was curious as to why this helped, when arg_new_temp was supposed to be doing exactly 
-> this.  It turns out we were incorrectly reusing an old temp, not allocating a new one.
+--0000000000004e39430628cd6d66
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I appreciate your explanation of the issue. I had attempted to update the z_mask in 
-init_ts_info when the temp arg was reused, but it didn't seem to have the desired effect.
-Since I'm not deeply familiar with the codebase, I didn't dive into all the details.
-I'm glad to see that your new patch resolves the issue so effectively. Great work!
+On Wed, Dec 4, 2024 at 1:40=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
 
-Thanks,
-w
+> On Tue, Dec 03, 2024 at 10:15:57AM -0300, Fabiano Rosas wrote:
+> > We shouldn't be adding warnings to the build like that. When building
+> > static binaries, I'd assume the person at least knows there's a -static
+> > in there somewhere. If you're just building the system binaries and
+> > warnings start to show up, that's not good. Since this is just a side
+> > script that's very infrequently used, I don't think it justifies the
+> > extra warning.
+>
+> Yeah this could be a valid point.
+>
+> The main issue is I believe 99.999999% of people building qemu will not u=
+se
+> stress.c and the initrd at all.  It means we could start burning some tin=
+y
+> little more cpus all over the worlds for nothing.. the added warning is a
+> bad extra side effect of that.
+>
+> So I wonder if it would make more sense to only build stress.c manually
+>
+
+Ok, get it.
+
+
+> like before, until some of the stress test would be put into either 'make
+> check' or CI flows.  Then we decide whether to fix the warning or not.
+>
+
+Yes, I think that adding the essential guestperf test to "make check"
+(like migration via a Unix socket) may make sense, at least from the
+perspective of guestperf's usability.
+
+
+> --
+> Peter Xu
+>
+>
+
+--=20
+Best regards
+
+--0000000000004e39430628cd6d66
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Wed, Dec 4, 2024 at 1:40=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:p=
+eterx@redhat.com">peterx@redhat.com</a>&gt; wrote:<br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;=
+border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex=
+">On Tue, Dec 03, 2024 at 10:15:57AM -0300, Fabiano Rosas wrote:<br>
+&gt; We shouldn&#39;t be adding warnings to the build like that. When build=
+ing<br>
+&gt; static binaries, I&#39;d assume the person at least knows there&#39;s =
+a -static<br>
+&gt; in there somewhere. If you&#39;re just building the system binaries an=
+d<br>
+&gt; warnings start to show up, that&#39;s not good. Since this is just a s=
+ide<br>
+&gt; script that&#39;s very infrequently used, I don&#39;t think it justifi=
+es the<br>
+&gt; extra warning.<br>
+<br>
+Yeah this could be a valid point.<br>
+<br>
+The main issue is I believe 99.999999% of people building qemu will not use=
+<br>
+stress.c and the initrd at all.=C2=A0 It means we could start burning some =
+tiny<br>
+little more cpus all over the worlds for nothing.. the added warning is a<b=
+r>
+bad extra side effect of that.<br>
+<br>
+So I wonder if it would make more sense to only build stress.c manually<br>=
+</blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sans=
+ ms&quot;,sans-serif" class=3D"gmail_default">Ok, get it.</div></div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(20=
+4,204,204);padding-left:1ex">
+like before, until some of the stress test would be put into either &#39;ma=
+ke<br>
+check&#39; or CI flows.=C2=A0 Then we decide whether to fix the warning or =
+not.<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;co=
+mic sans ms&quot;,sans-serif" class=3D"gmail_default">Yes, I think that add=
+ing the essential guestperf test to &quot;make check&quot;</div><div style=
+=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
+t">(like migration via a Unix socket) may make sense, at least from the</di=
+v><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"=
+gmail_default">perspective of guestperf&#39;s usability.</div></div><div><b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,20=
+4,204);padding-left:1ex">
+<br>
+-- <br>
+Peter Xu<br>
+<br>
+</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
+=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
+ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
+gards</font></div></div></div>
+
+--0000000000004e39430628cd6d66--
 
