@@ -4,77 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9D07E77173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 10:30:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5F01E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 11:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKb1C-0002eG-3r; Mon, 09 Dec 2024 05:29:34 -0500
+	id 1tKbdY-00089e-Gt; Mon, 09 Dec 2024 06:09:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tKb1A-0002df-BX
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 05:29:32 -0500
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tKb15-0007vl-B0
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 05:29:32 -0500
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ac27b412so5240402a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 02:29:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733740163; x=1734344963; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8JIB06Is63aqP/v7CjgO+2buwxAwNok2VczuvxBnCYY=;
- b=ZebDAj4vxcrKWZ4/Matp8Zkr/+meO9bBvH56iAculHiyWzj8iXtippiecrB1Jt7Jcq
- 22K5irAGXXSpL24NPsDfZtd+cuZtpPehvXZHMPWmfBbBDdJcav20YWceWpcR6yrPukrU
- kKMli4OdOHX9Ek5Bm7ZO4aJc1f/LgRHGjJHk1qQbBLKS7vIobrFrYSVOhTUcLC+aJF0J
- N4YYYYswxV5TWgUdODLfAtZv7mJ30dk+O9/u1O/Do0Q3nQJKxMh4xRC3OC6Xiycg9713
- xm4QiBleleuiJSMmoZDujL9cENX6oloRgEIRzVm9F71oLfBrF6+WozuxBz8YHkSQ3F3N
- fyng==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tKbdW-00089N-4V
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:09:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tKbdU-0003Y0-0b
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 06:09:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733742545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fG+7cBLw3ozNAvpsTGgweEh6wdBj9c1mzql0ZcIoBuY=;
+ b=DmQLP5D5qHVZvu3guxKlWKVi1cAgX6trWQZkGmxsakU7QlhhRWH2Sx8w6wqY2R3OL8+sI5
+ mdhFridCr87PR0ENiz7q6TUgMijp50pLZ2gwwOAy96Nd3e/ZGPzUk39LQA9BEIaMH4F39h
+ /XSS0vlmxMNjHxDu7lzOSFQDhDTzE+I=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-quHNRG5bM36VfE0DybjO6w-1; Mon, 09 Dec 2024 06:09:04 -0500
+X-MC-Unique: quHNRG5bM36VfE0DybjO6w-1
+X-Mimecast-MFC-AGG-ID: quHNRG5bM36VfE0DybjO6w
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-434f3a758dbso9092015e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 03:09:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733740163; x=1734344963;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8JIB06Is63aqP/v7CjgO+2buwxAwNok2VczuvxBnCYY=;
- b=vdBwU8ZgH08biQSOjmcJNDCYfoqJm7w8I9EYvMbbINZMziFW/HEtrGi85x3vQXYcNL
- rXTBHRCSk3f3caTI1cIsTFdF/KHzZ75s41DrKR6XZbA547/OHdOY/tudi1xZX6eKQ2EH
- Bu20GV27yiRUSUhqqFwTJ75piqDPkzQWk7xOlMwoJsWa0tZH20HGULPM1RHNaF5ojGbG
- 9WOX6M4eJ2qrGQ5mwRf5qJmRQDTBjnoBROsaDr3dJ4cTkX++1UAwybTML4c/55eleSQw
- NbOmeLrePKNB5k0emnLjYvZPSjH1KtxS6+ZJmghIX7FHgGLeR91fiCOHiCrlEjF1O4MK
- Rc3A==
-X-Gm-Message-State: AOJu0YyVrcHW+QYTgJGr4Bw0F4U9HV6kK/7VsI3RfCCj/KgfK0a897NU
- 64IhcBZEZkexSr1mklOGyheFTF7rO1so2vu4a8jtEgzyg0fu31vH8w7W33rNoBpW6wG9sAnT1Fe
- 9Vy+5UiippyVcmhcGIa1Vk6zfWYb/c7tLUiR4FgPh1trMWp/R
-X-Gm-Gg: ASbGnctnSDIvBEh2Z6lfmr7ccotAfw+RDKTNQVfjfD/Swpe1Q8g0AxhiaUI7w6WKbQF
- qahLPZmBZ0LVjohBsH98rNWx56QWya9WhkheC
-X-Google-Smtp-Source: AGHT+IEfrpiZ0doBay8rbfeNE1OQW+1p13h27mJx6NNU6s4YJ0OPPrgsh4gk3sekRufanJRXcoYPmie2AazZvDg2Lrc=
-X-Received: by 2002:a05:6402:274d:b0:5d3:d4cf:fea0 with SMTP id
- 4fb4d7f45d1cf-5d418612f4dmr21699a12.21.1733740163476; Mon, 09 Dec 2024
- 02:29:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733742543; x=1734347343;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=fG+7cBLw3ozNAvpsTGgweEh6wdBj9c1mzql0ZcIoBuY=;
+ b=m/flgosrMUi3TT9FgvrrwYTh2eneIbcpiX/AZbOs6OEk7UM/iJh3Qd8DMqq3If4v47
+ TRzj4IDGFFYM7N76cwiGO889VUXIhoYaakc1AUNVOvRRidB6ZxKy0VnvNxNk/bODlB4x
+ MmfgNBdTi4ddBsTg1KJMHt8NO/n5/k6wvFY+yef46o+i/GpUG/uG3oyvR8o+ZoBn9FVB
+ wnyfCtziCFrvlZdCaOxYPHfHT857JCj9LAF5LMULfb+7KxYYh0IrRnuD7dpSvSp3nyfx
+ JLoaWRWF60+DQ7XqKFUIOnnkSGkuWvTnB5TegW6kx0sGcWVA/nmf0z0wA7qCmk9Rh7em
+ wE3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXiy03jeu5pF9jDNm/q7dneWxkdh62oYTM2pJv+enlxQBiSPBECjfoADrmL28B4NKFA3JcZI/wYSUmE@nongnu.org
+X-Gm-Message-State: AOJu0YzsQTW+Go40n9GQpXJ/5swefnBmvvsr3FKxqX3i36uoIHPa/wta
+ rBymxWfU0H3mc9UMELCjqwF3/6bIIxgQEbA/mZPaLKHRcRMQfg4vAYozHN6/cVnw4Yvr0Kr56xN
+ /XxzNl1Z7doPBKYKvw1li8omihbSRcuPVIIxzZLDRk271KDlllaRIW5cKqRVUAvaAuU2YUz3B03
+ 9+iSt4IH9LOBm7LqRA3n81B0XS8uI=
+X-Gm-Gg: ASbGncufptqVmAF6w20zXTdFGqtdIheEw/5vEDMO+TmPvpLhcIZCmzmHZD9svzA13/4
+ 1iWRdtfpFUCDwW4MftiBbEzlcSPBkip4=
+X-Received: by 2002:a05:600c:3589:b0:434:ff45:cbbe with SMTP id
+ 5b1f17b1804b1-434ff45d12amr4388165e9.18.1733742542598; 
+ Mon, 09 Dec 2024 03:09:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQBWdTud92PxotpmlTt/9cqgjEKJAog9u0BuubgyAJM7sfJ59/8ggo6ZuLFfJH/RlvbSOUl5ooCdJWPjozV0Q=
+X-Received: by 2002:a05:600c:3589:b0:434:ff45:cbbe with SMTP id
+ 5b1f17b1804b1-434ff45d12amr4387755e9.18.1733742542240; Mon, 09 Dec 2024
+ 03:09:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20241201150607.12812-1-richard.henderson@linaro.org>
-In-Reply-To: <20241201150607.12812-1-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Dec 2024 10:29:12 +0000
-Message-ID: <CAFEAcA9_L1Lk=O4-uJ7Qck0RMkUOxySw_LuX087X3TrNqNyoMw@mail.gmail.com>
-Subject: Re: [PATCH 00/67] target/arm: AArch64 decodetree conversion,
- final part
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20241205060714.256270-1-zhao1.liu@intel.com>
+ <20241205060714.256270-5-zhao1.liu@intel.com>
+ <6108dfe6-f629-431c-be91-51abff338e85@redhat.com> <Z1XJBJp+l92+OrY9@intel.com>
+In-Reply-To: <Z1XJBJp+l92+OrY9@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Mon, 9 Dec 2024 12:08:48 +0100
+Message-ID: <CABgObfaeoLociD5rzptg4Uj4anMonc0M8iP_TK3qa-17FecR2A@mail.gmail.com>
+Subject: Re: [RFC 04/13] rust: add bindings for gpio_{in|out} initialization
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: "Michael S . Tsirkin" <mst@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ Junjie Mao <junjie.mao@hotmail.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,15 +110,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 1 Dec 2024 at 15:18, Richard Henderson
-<richard.henderson@linaro.org> wrote:
+On Sun, Dec 8, 2024 at 5:09=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrote=
+:
+> > This has the same issue as timers, in that you could have (especially o=
+nce
+> > someone adds named GPIOs) multiple handlers.  So we need the same kind =
+of
+> > Fn-based thing here too.
 >
-> Finish the conversion of all aarch64 instructions to decodetree.
+> I will refer to the timer callback prototype you suggested and try that
+> way. Will you rework the timer binding soon? (I'm sorry for bringing such
+> burden to you).
+
+No, I have written a utility that can be used for all callbacks but
+I'll leave it to you to use it for timers. Both because you have
+already started the work, and because it helps if one person writes
+the code and one uses it.
+
+> Additionally, the current DeviceImpl trait is quite special. Although in
+> Rust, DeviceImpl traits are implemented for device states, DeviceImpl is
+> actually used for device classes.
 >
+> Semantically, it might be more natural for DeviceImpl to be a trait for
+> device classes. However, parameters of its methods are DeviceState, so
+> it makes sense as a trait for states in Rust.
+>
+> This seems to be a different design before C and Rust Qdev.
 
-I've reviewed most of this now; I'll review anything I
-skipped here in the v2.
+I agree that there are differences in how you write the code, due to
+the fact that Rust supports associating functions and traits to a
+struct, while C only has a global namespace. Also, functions in a
+trait can look like both "normal" and static methods, so it's easier
+to place all functions in DeviceState. The DeviceClass part is mostly
+automatic.
 
-thanks
--- PMM
+So if Xyz is a struct corresponding to a QOM type, it will:
+- include a field of type Abc corresponding to the direct superclass
+- implement virtual methods for all superclasses through traits such
+as AbcImpl or DefImpl, up to ObjectImpl
+- expose its virtual methods to C thorough a blanket implementation of
+ClassInitImpl<AbcClass> or ClassInitImpl<DefClass>
+- invoke methods through blanket implementations of AbcMethods,
+AbcClassMethods etc. for all superclasses
+
+and the structure of all the blanket implementation is always the same:
+
+pub trait DeviceClassMethods: IsA<DeviceState> {...}
+impl<T> DeviceClassMethods for T where T: IsA<DeviceState> {}
+
+pub trait DeviceMethods: ObjectDeref
+where
+    Self::Target: IsA<DeviceState>,
+{...}
+impl<R: ObjectDeref> DeviceMethods for R where R::Target: IsA<DeviceState> =
+{}
+
+impl<T> ClassInitImpl<DeviceClass> for T
+where
+    T: ClassInitImpl<ObjectClass> + DeviceImpl
+{...}
+
+In the future, developers will not need to worry much about these, but
+for some time every new device will probably need a few new functions
+or even modules in qemu_api.
+
+Paolo
+
 
