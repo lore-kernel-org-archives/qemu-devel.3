@@ -4,84 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A26E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:37:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1356DE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKgl4-0004Wm-6J; Mon, 09 Dec 2024 11:37:18 -0500
+	id 1tKgmi-0005s1-NK; Mon, 09 Dec 2024 11:39:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tKgl3-0004We-3W
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tKgl1-0004vh-8e
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:37:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733762233;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bZJ1+9yXD0/RiOd+oBVnjbeo66kC3HjqcBMm5RLmhDM=;
- b=NMVizQ9UIQ/HlqhwGQwVNNXsUfMptbjOMnsdWfphEr8Cd9ZuzwqxyDZiCTYTJ9CSAkz2hg
- oTa6A/4NF+eK0i9ML/nIbSvkwuTkKMlHkJ/TgQQfzLHLReB3XoeJ5p0+WzkEzgJ4ra1NpI
- Az8qhCJ4jBwZ6cZ0C7OaNgRfZBjOhhk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-528-3ybJw9seP8m8cQRASh4a-Q-1; Mon,
- 09 Dec 2024 11:37:12 -0500
-X-MC-Unique: 3ybJw9seP8m8cQRASh4a-Q-1
-X-Mimecast-MFC-AGG-ID: 3ybJw9seP8m8cQRASh4a-Q
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 08BAD195D032; Mon,  9 Dec 2024 16:37:10 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.115])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 32161195605A; Mon,  9 Dec 2024 16:37:04 +0000 (UTC)
-Date: Mon, 9 Dec 2024 16:37:01 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, Jason Wang <jasowang@redhat.com>,
- eric.auger@redhat.com, qemu-devel@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH for-10.0] tests/functional: Convert the intel_iommu
- avocado test
-Message-ID: <Z1ccrYDMVLo9vZF6@redhat.com>
-References: <20241206181728.1241169-1-thuth@redhat.com>
- <d07f4ade-716c-4d58-b6d9-a95b4ffe58ab@redhat.com>
- <7e81c4a2-cc76-4d8c-b14a-fd008eff0c09@redhat.com>
- <Z1az26HxcIHVlB-d@redhat.com>
- <4fa944df-ddf2-48be-bbb0-7b24f63263e6@linaro.org>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgmg-0005oN-C6
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:38:58 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgme-00051L-D6
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:38:58 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7ee51d9ae30so3028799a12.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:38:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733762335; x=1734367135; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=gFpv901v/Sjz/sGZFZZVCQpw75ube2eMnbcreya2Rvw=;
+ b=XyNhVmYQwiKNCjoSWWl/QOceG75eBv0YczOYdyJ8YAZNlrxwZHRfqW/J4PUNextJJt
+ 7bs/xpm68lg+X01+k1U39DhLWKqe/h44I96CZlZIbDa3h1PyPhX7/Cz5huacPcqdT+xO
+ NFaNobdAM4xCpe6kXjbkcwry6hSMY0JtX1vbEzMxf0AK/LJA1ZHD/Qj7ULio1FDocy9V
+ Zrl1fg9OAwiY4qyjJkyQK4n7+me6lOSB+ghRadcqCaAT7VnHMMhH5lchVtA+p+6rp3fd
+ AP+0kYyz7QzyhSTDTCLZhdtVgwRQggVO3fkMFA5TqnawyQ1aBGyv4tWilX8dbJrZeCRQ
+ 3IpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733762335; x=1734367135;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=gFpv901v/Sjz/sGZFZZVCQpw75ube2eMnbcreya2Rvw=;
+ b=ZgMm+HscK4EnOtmUnsDTAr8OWiXGt3wuVqeoQc+iDponVU+RbdHaH4KTfyD2xktouu
+ cacw/kEwujT1vGO7kueSI9nOGCfXY3OYLUg95kictZA/kNiMmaq4WHZk7ovFwMq3cMs8
+ FtBrqD3+1urpyRsPh2iOL1BslflOoz2aplAHt4fW3a6Mos2sJBEPqS0pxAHq5f7MXWp5
+ njr7yiZIYGkAaJtuq9hhgXe3zivWFh5dcEJniIshl+/vnKcVKkg/IN9sI6PSsD8W/xyy
+ Ro9m5YpoWP9aOLvrdE39L+ehgJ8BluDG+oLrA9+6LlJmvF0bLhOkH/pUQA2sj569qlPl
+ OpWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVK9mmIiq75HfNEegGeSjjg+yXefszMFrO6IOAtK/qe9M5Y7uZpjYu4khSNPWixtAjtBjsfp45DKned@nongnu.org
+X-Gm-Message-State: AOJu0Yyb2HRiGWTt1wgVc1MGHiz6wzV07gQZfTea0zmsJXcbN+ge9Ry2
+ kdlOk5UkjAYWeGMUW57eVbqwzMjyStA4scZvRC0dlzaX9YtXrvtXxGcoNm9qjWBWfd1fJViQsdx
+ H
+X-Gm-Gg: ASbGncvgpe1Nz+GzKFKrDwAC2M3ozK5jC2TjR3pH6HxWlHMHWLUHTCNa+SRd/08udHD
+ oVli2K9hEeaUCNlmZy0Tujl127mJxae0O4DZW+sp4U8oiUlUe5g3qsKO4X/OkXebehXTiSFBLuD
+ VLZNa3Se8ZnBt5Na3OBXOAkHmMDFSNXyv6Ih99Nth2PZTDVkjQQ+FTq4mqgZaSRBBK0Sb+D856o
+ uifl+So3szGVpgt6f5zY9wbMyxDjODxqjBo7Ayrs5Iuwrb0HgBuh2BYX9gm20alNZj47QV/0FJo
+ vKY4twKi6gyB90a3UkDLA/yOIyZ6JsfO
+X-Google-Smtp-Source: AGHT+IFL2PxvBMqhr9UsDSFyarQu+LAumLDc6NcYzC48j6Ij9k3zCKGP9d7et33rKT21NpkC7TFFHw==
+X-Received: by 2002:a05:6a21:6da8:b0:1e1:abd6:ca66 with SMTP id
+ adf61e73a8af0-1e1b1b27e68mr1491488637.24.1733762334709; 
+ Mon, 09 Dec 2024 08:38:54 -0800 (PST)
+Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-725eeed027csm1955982b3a.131.2024.12.09.08.38.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 08:38:54 -0800 (PST)
+Message-ID: <f56fe179-0c48-45ac-b85d-6fbbe27de991@linaro.org>
+Date: Mon, 9 Dec 2024 17:38:49 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] docs: replace 'Edit on GitLab' with 'View page source'
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20241209163506.2089961-1-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241209163506.2089961-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4fa944df-ddf2-48be-bbb0-7b24f63263e6@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=philmd@linaro.org; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,71 +99,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 05:31:37PM +0100, Philippe Mathieu-Daudé wrote:
-> On 9/12/24 10:09, Daniel P. Berrangé wrote:
-> > On Mon, Dec 09, 2024 at 09:26:21AM +0100, Thomas Huth wrote:
-> > > On 09/12/2024 09.12, Eric Auger wrote:
-> > > > Hi Thomas,
-> > > > 
-> > > > On 12/6/24 19:17, Thomas Huth wrote:
-> > > > > Convert the intel_iommu test to the new functional framework.
-> > > > > This test needs some changes since we neither support the old 'LinuxTest'
-> > > > > class in the functional framework yet, nor a way to use SSH for running
-> > > > > commands in the guest. So we now directly download a Fedora kernel and
-> > > > > initrd and set up the serial console for executing the commands and for
-> > > > > looking for the results.
-> > > > > 
-> > > > > Signed-off-by: Thomas Huth <thuth@redhat.com>
-> > > > > ---
-> > > > >    MAINTAINERS                                   |   1 +
-> > > > >    tests/functional/meson.build                  |   1 +
-> > > > >    .../test_intel_iommu.py}                      | 119 ++++++++----------
-> > > > >    3 files changed, 51 insertions(+), 70 deletions(-)
-> > > > >    rename tests/{avocado/intel_iommu.py => functional/test_intel_iommu.py} (41%)
-> > > > >    mode change 100644 => 100755
+On 9/12/24 17:35, Daniel P. Berrangé wrote:
+> QEMU takes contributions via the mailing list, so while you can edit a
+> file on gitlab and then switch to the terminal to send a patch, the
+> wording 'Edit on GitLab' strongly suggests we take merge requests.
 > 
+> Switching back to "View page source" is a more agnostic term that does
+> not imply a particular contribution approach, that we had used in QEMU
+> before:
 > 
-> > > > > -        self.launch_and_wait()
-> > > > > -        self.ssh_command('cat /proc/cmdline')
-> > > > > -        self.ssh_command('dmesg | grep -e DMAR -e IOMMU')
-> > > > > -        self.ssh_command('find /sys/kernel/iommu_groups/ -type l')
-> > > > > -        self.ssh_command('dnf -y install numactl-devel')
-> > > > I understand you cannot use ssh yet but the bulk of the test was the
-> > > > execution of the dnf install meaning we lose the main substance of it
-> > > > through the conversion.
-> > > 
-> > > Ah, I see, so this was exercising the virtio-net device with the IOMMU ...
-> > > and I already wondered why there was this "dnf install" at the end without
-> > > doing anything with  the numactl-devel package ... (a comment would have
-> > > been helpful here)
-> > 
-> > FYI, I find 'dnf instal' to be a *highly* undesirable thing todo in
-> > our test functional. Its performance is highly non-deterministic
-> > depending on what mirror you happen to get sent to, such that it could
-> > easily push us over the timeouts. It is also susceptible to periodic
-> > broken mirrors, and instability around time of Fefdora EOL. I can't
-> > remember if it was this test case, or a different one, but I've seen
-> > problems before in avocado with 'dnf install'.
-> > 
-> > If we want to test working networking, then can we arrange for something
-> > more simple & targetted to run, with better worst case performance.
+>    commit 73e6aec6522e1edd63f631c52577b49a39bc234f
+>    Author: Marc-André Lureau <marcandre.lureau@redhat.com>
+>    Date:   Tue Mar 23 15:53:28 2021 +0400
 > 
-> Could we use 2 virtio-net interfaces inter-connected and stress with
-> https://linux.die.net/man/1/ab ?
+>      sphinx: adopt kernel readthedoc theme
+> 
 
-Do we actually need to stress this ? IMHO for a functional tests we just
-need to prove that the device is working at a fairly basic level.
-"wget example.com"
+Is this:
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2709
+?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   docs/conf.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/docs/conf.py b/docs/conf.py
+> index c11a6ead8a..164a8ee8b2 100644
+> --- a/docs/conf.py
+> +++ b/docs/conf.py
+> @@ -186,7 +186,7 @@
+>   ]
+>   
+>   html_context = {
+> -    "display_gitlab": True,
+> +    "source_url_prefix": "https://gitlab.com/qemu-project/qemu/-/blob/master/docs/",
+>       "gitlab_user": "qemu-project",
+>       "gitlab_repo": "qemu",
+>       "gitlab_version": "master",
 
 
