@@ -4,84 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 940D6E77173
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 02:51:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1545EE77173
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 03:14:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKTr2-0000l5-Fo; Sun, 08 Dec 2024 21:50:36 -0500
+	id 1tKUDd-0003mq-Po; Sun, 08 Dec 2024 22:13:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tKTqy-0000kc-Q6
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 21:50:33 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tKTqw-0008B4-Py
- for qemu-devel@nongnu.org; Sun, 08 Dec 2024 21:50:32 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-29e585968a8so2404455fac.3
- for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 18:50:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1733712628; x=1734317428;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=NbOwr4T/r4RaD/5fp3RT7Qsls6yRTrWFVNGRgwBkmIU=;
- b=i9R57LhCUYfU7rGZ8+ewMq1owJ/gjYIhYs2BHelVkwRUV9DA/XMGQ4FCD/yDEa60l1
- rLuDtv0EApPPwaSbBjvX+KS1n2qzbpHIybIBcx4djWNSHyod2kEhOdXNA7WXaoCkXkQY
- OUP0sFJMtSZH/Dchda5UUMFdItk4Yq1q6f00xAQUN845Ip/kjfSvPy+MJGEPEOgih3oU
- gozyWKNj4JYvsJIkEjcx7xjupqjKBKPbJMQGC2EUA3fL2b7mMhgbVHl8ajK+qrSoxqc+
- UnmaQZibtOrUVTvKXJBljnw2BLjPh9v5/x5mdxdNv5yfKJ1rqwt1Di7UpzEAvWJamXPG
- WlTg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tKUDZ-0003mb-Rb
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 22:13:53 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tKUDW-0001r7-IR
+ for qemu-devel@nongnu.org; Sun, 08 Dec 2024 22:13:52 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733714026;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MBdySX2mAHk8gYLoA7jaB6y4S01k8Ski+efjps3+i/M=;
+ b=cGmlnsQ0VpKtXeyw/hiSkeV0Qk50eSL+9Wwwx/2LYMMntohmNeqAq4HndkNKzhx1GavEad
+ r6NhOsfh8ETL28keQrsUqvCIZXBFxhEup45LkmPlHAQe/nZRsEw4Y08cNeczjSFwUcn8f9
+ EI6i46GqVc2qf4t76+G0XQpVXxsZ1r4=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-326-qO8wTOsIMCCI8pGQi5uzKQ-1; Sun, 08 Dec 2024 22:13:42 -0500
+X-MC-Unique: qO8wTOsIMCCI8pGQi5uzKQ-1
+X-Mimecast-MFC-AGG-ID: qO8wTOsIMCCI8pGQi5uzKQ
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2163d9a730aso9120155ad.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Dec 2024 19:13:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733712628; x=1734317428;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NbOwr4T/r4RaD/5fp3RT7Qsls6yRTrWFVNGRgwBkmIU=;
- b=OoTIrLuRJj+oUfhY+lKujFMRiN8X+mpnVBhpO1kY4MfP5ynuKZ4oC2WQOmRnd9cU23
- mkGOAIkFaR3uLyEr9r3Zx8CB8Bq+IumC5rEseKRAMCLAbjgM4V3L37qRUxOO7Peck/M0
- Qg69t3eJspO6odeyWFHrNCnzN9lka8ysbR+7Tj9P66dCK3ptrmcL9kaMmlz5LSK4WXtT
- DQh7HWV8AX/lbI3cLRgxzI2PUmkhfoeHcgEc+UyYlh/tT3RxcgxtcpW+zWSMB590LNB1
- AVBI2wxXbnc3PG/37U7Uf7cLaVAi9fWUx54hgHzVUoFIUKMiioMAcOsJZD83q+775zZ5
- PGCA==
+ d=1e100.net; s=20230601; t=1733714021; x=1734318821;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MBdySX2mAHk8gYLoA7jaB6y4S01k8Ski+efjps3+i/M=;
+ b=ky42Tu8Rm2xfw9myeowoGWaUutGY/YeGGqJknC5e/sG8vrBBs94nBs2po6VXCm0iPF
+ N5XqClmMESl66X/Mvdo8yqM4lWqjzmvA9PfbYK7a1wfkbUsPMwqAcMI17PhUHYA1vBuE
+ Kv/rGJaRLO0A0phtiicjwjX3ktlmZS9qkl9WFtPqHq+f17g9huCENajgO/u87iRyfsyn
+ RPUyRK+kbqP4Rh4HyevqprZUoxXz3g7mNT/cUMp+t/96DQMJoKhsty6uCF0tQ4iKcgOB
+ uJ0uq0y3RAZqfE1SJmdGI2SEJLFbk0Q4Ub7vJRuE0iMw20/9FWeYPHTPll7wXCmHIu1R
+ c5iw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXTZdBf/Bo8NJ2IHJJXZO/zqbSgTDur6aTjd88bwDKDCLhQvRAh9X90xRxtjcopuQ+kpp8cA17m4Tsb@nongnu.org
-X-Gm-Message-State: AOJu0Yw1gUn8l8ftY5FStf6MDtmO7Rudlj//SX5dMNBrtlKqWIDAaThT
- a7fqVL3xsDoqgbl9iJi2LWTNkidYEOiJo3Dt/CgbR0fJ/IjHu1JWppOOtbN0KVdOr13oVIPV1ss
- Ml84edv+p0KVDzoK+Auu1l4F6GQjG9k96IngoMQ==
-X-Gm-Gg: ASbGncvSqtGRSpIQMVExwJ4g2/ANWYQMVwdNxPbkvRSWfTRf50dzpyR2UuVfx+s+VjB
- JMOeA+4pfDXW4XLSIm53ojGxel/t1FVDz
-X-Google-Smtp-Source: AGHT+IGPFnkLzFtSdTVD2A3WNMRp3FfRECqFSAkXH0XTX6aI+PZIdcs27oY7cT4yPDjGS+wpj989JOHoyPFbNoF0vaE=
-X-Received: by 2002:a05:6870:5d8e:b0:29e:67cd:1a89 with SMTP id
- 586e51a60fabf-29f739251bbmr9215425fac.36.1733712627508; Sun, 08 Dec 2024
- 18:50:27 -0800 (PST)
+ AJvYcCUNOSVu8SpugLajGUFNe3aXDQSTOze8KM+oKfp9jgJbB0xdDHPwmuYJUnkZfha/wou+noubSK7pRK9H@nongnu.org
+X-Gm-Message-State: AOJu0YycTAK7qm7ySpskOOJkYP5uZx+/HDMaPr7zepF/HBDqcWh7j1NU
+ juCZ8zAkKcShc5gXS8+Bxu8QXoNbXXtOgEsoHRSJj1G1XjaYx0Ivqntb8HPuG0qwMfBPgyOHu9k
+ 5zjZmk4RKLjBp1tu9SZzttG+j4top3ondk+fCPj5Lany4TBJgqbMCFsG8v4fLGzCsMDNbD7dfQp
+ 86QEEtSiNdtfmK5Xn6Qzz3Un9sXVM=
+X-Gm-Gg: ASbGncsVlN2Q2TXwZ4g5WUiSVWYr3H6/Q9ZjYyJmMkJMg3S2Q4rDIYAGgSI4JZTwUEy
+ cfsOTZgGkq0fAUy9DSuIswK3tl2E4aDzw
+X-Received: by 2002:a17:902:d4c4:b0:215:758c:52e8 with SMTP id
+ d9443c01a7336-21610b3acaamr174947015ad.12.1733714021195; 
+ Sun, 08 Dec 2024 19:13:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE0R2z797bstWWFA7QemKRr28GzVp1HvZJgHMMMggu0nLlgWLZ5dHh63Y56y5kCxlm9lRT0NIV19WSHyPNnKAE=
+X-Received: by 2002:a17:902:d4c4:b0:215:758c:52e8 with SMTP id
+ d9443c01a7336-21610b3acaamr174946725ad.12.1733714020742; Sun, 08 Dec 2024
+ 19:13:40 -0800 (PST)
 MIME-Version: 1.0
-References: <87sesmdfl4.fsf@suse.de>
- <CAK9dgmZvj4W2EBxp1_TcdYs3q2aqaRZGZCAk=FRJk-PaB9y_fw@mail.gmail.com>
- <87v7w6jkc9.fsf@suse.de> <87plmejgtb.fsf@suse.de>
- <CAK9dgmbHL+O34+E3ykDdAunap+Ruubm7ysisrMags6TN25BiNQ@mail.gmail.com>
- <Z04PTe4kCVWEQbPL@x1n> <Z06866qR0z9n2BgP@redhat.com> <875xo1j6ub.fsf@suse.de>
- <Z075-ZPW9dzzCKJn@redhat.com> <8734j4kiuq.fsf@suse.de> <Z09CdpY4C5Eq6OxI@x1n>
-In-Reply-To: <Z09CdpY4C5Eq6OxI@x1n>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Mon, 9 Dec 2024 10:50:11 +0800
-Message-ID: <CAK9dgmZzuaOsT_EQorHqaduTXSYdJ0xuNn602HcMgmFrNM=8yg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] Guestperf: miscellaneous refinement and enrichment
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="0000000000004e39430628cd6d66"
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=yong.huang@smartx.com; helo=mail-oa1-x2c.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+References: <20241111083457.2090664-1-zhenzhong.duan@intel.com>
+ <20241111083457.2090664-19-zhenzhong.duan@intel.com>
+ <CACGkMEtwV51X9ovWB3JHtyW4gpLT8zD8bieKFA2X=BVNZF8ymA@mail.gmail.com>
+ <7126398e-fc27-4d4f-894b-f71b012f98e1@eviden.com>
+In-Reply-To: <7126398e-fc27-4d4f-894b-f71b012f98e1@eviden.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Mon, 9 Dec 2024 11:13:29 +0800
+Message-ID: <CACGkMEvuX4CtADqq0O3TnD1=Jh2aBnXFdTzLS9junGyxkKq+Xw@mail.gmail.com>
+Subject: Re: [PATCH v5 18/20] intel_iommu: Introduce a property x-flts for
+ scalable modern mode
+To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, 
+ "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, 
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "kevin.tian@intel.com" <kevin.tian@intel.com>, 
+ "yi.l.liu@intel.com" <yi.l.liu@intel.com>,
+ "chao.p.peng@intel.com" <chao.p.peng@intel.com>, 
+ Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,113 +122,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004e39430628cd6d66
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Dec 4, 2024 at 1:40=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
-
-> On Tue, Dec 03, 2024 at 10:15:57AM -0300, Fabiano Rosas wrote:
-> > We shouldn't be adding warnings to the build like that. When building
-> > static binaries, I'd assume the person at least knows there's a -static
-> > in there somewhere. If you're just building the system binaries and
-> > warnings start to show up, that's not good. Since this is just a side
-> > script that's very infrequently used, I don't think it justifies the
-> > extra warning.
->
-> Yeah this could be a valid point.
->
-> The main issue is I believe 99.999999% of people building qemu will not u=
-se
-> stress.c and the initrd at all.  It means we could start burning some tin=
-y
-> little more cpus all over the worlds for nothing.. the added warning is a
-> bad extra side effect of that.
->
-> So I wonder if it would make more sense to only build stress.c manually
->
-
-Ok, get it.
-
-
-> like before, until some of the stress test would be put into either 'make
-> check' or CI flows.  Then we decide whether to fix the warning or not.
->
-
-Yes, I think that adding the essential guestperf test to "make check"
-(like migration via a Unix socket) may make sense, at least from the
-perspective of guestperf's usability.
-
-
-> --
-> Peter Xu
+On Wed, Dec 4, 2024 at 2:14=E2=80=AFPM CLEMENT MATHIEU--DRIF
+<clement.mathieu--drif@eviden.com> wrote:
 >
 >
+>
+> On 04/12/2024 04:34, Jason Wang wrote:
+> > Caution: External email. Do not open attachments or click links, unless=
+ this email comes from a known sender and you know the content is safe.
+> >
+> >
+> > On Mon, Nov 11, 2024 at 4:39=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@=
+intel.com> wrote:
+> >>
+> >> Intel VT-d 3.0 introduces scalable mode, and it has a bunch of capabil=
+ities
+> >> related to scalable mode translation, thus there are multiple combinat=
+ions.
+> >>
+> >> This vIOMMU implementation wants to simplify it with a new property "x=
+-flts".
+> >> When enabled in scalable mode, first stage translation also known as s=
+calable
+> >> modern mode is supported. When enabled in legacy mode, throw out error=
+.
+> >>
+> >> With scalable modern mode exposed to user, also accurate the pasid ent=
+ry
+> >> check in vtd_pe_type_check().
+> >>
+> >> Suggested-by: Jason Wang <jasowang@redhat.com>
+> >> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> >> Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
+> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >> ---
+> >>   hw/i386/intel_iommu_internal.h |  2 ++
+> >>   hw/i386/intel_iommu.c          | 28 +++++++++++++++++++---------
+> >>   2 files changed, 21 insertions(+), 9 deletions(-)
+> >>
+> >> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_inte=
+rnal.h
+> >> index 2c977aa7da..e8b211e8b0 100644
+> >> --- a/hw/i386/intel_iommu_internal.h
+> >> +++ b/hw/i386/intel_iommu_internal.h
+> >> @@ -195,6 +195,7 @@
+> >>   #define VTD_ECAP_PASID              (1ULL << 40)
+> >>   #define VTD_ECAP_SMTS               (1ULL << 43)
+> >>   #define VTD_ECAP_SLTS               (1ULL << 46)
+> >> +#define VTD_ECAP_FLTS               (1ULL << 47)
+> >>
+> >>   /* CAP_REG */
+> >>   /* (offset >> 4) << 24 */
+> >> @@ -211,6 +212,7 @@
+> >>   #define VTD_CAP_SLLPS               ((1ULL << 34) | (1ULL << 35))
+> >>   #define VTD_CAP_DRAIN_WRITE         (1ULL << 54)
+> >>   #define VTD_CAP_DRAIN_READ          (1ULL << 55)
+> >> +#define VTD_CAP_FS1GP               (1ULL << 56)
+> >>   #define VTD_CAP_DRAIN               (VTD_CAP_DRAIN_READ | VTD_CAP_DR=
+AIN_WRITE)
+> >>   #define VTD_CAP_CM                  (1ULL << 7)
+> >>   #define VTD_PASID_ID_SHIFT          20
+> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> index b921793c3a..a7a81aebee 100644
+> >> --- a/hw/i386/intel_iommu.c
+> >> +++ b/hw/i386/intel_iommu.c
+> >> @@ -803,16 +803,18 @@ static inline bool vtd_is_fl_level_supported(Int=
+elIOMMUState *s, uint32_t level)
+> >>   }
+> >>
+> >>   /* Return true if check passed, otherwise false */
+> >> -static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+> >> -                                     VTDPASIDEntry *pe)
+> >> +static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntr=
+y *pe)
+> >>   {
+> >>       switch (VTD_PE_GET_TYPE(pe)) {
+> >> -    case VTD_SM_PASID_ENTRY_SLT:
+> >> -        return true;
+> >> -    case VTD_SM_PASID_ENTRY_PT:
+> >> -        return x86_iommu->pt_supported;
+> >>       case VTD_SM_PASID_ENTRY_FLT:
+> >> +        return !!(s->ecap & VTD_ECAP_FLTS);
+> >> +    case VTD_SM_PASID_ENTRY_SLT:
+> >> +        return !!(s->ecap & VTD_ECAP_SLTS);
+> >>       case VTD_SM_PASID_ENTRY_NESTED:
+> >> +        /* Not support NESTED page table type yet */
+> >> +        return false;
+> >> +    case VTD_SM_PASID_ENTRY_PT:
+> >> +        return !!(s->ecap & VTD_ECAP_PT);
+> >>       default:
+> >>           /* Unknown type */
+> >>           return false;
+> >> @@ -861,7 +863,6 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOM=
+MUState *s,
+> >>       uint8_t pgtt;
+> >>       uint32_t index;
+> >>       dma_addr_t entry_size;
+> >> -    X86IOMMUState *x86_iommu =3D X86_IOMMU_DEVICE(s);
+> >>
+> >>       index =3D VTD_PASID_TABLE_INDEX(pasid);
+> >>       entry_size =3D VTD_PASID_ENTRY_SIZE;
+> >> @@ -875,7 +876,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOM=
+MUState *s,
+> >>       }
+> >>
+> >>       /* Do translation type check */
+> >> -    if (!vtd_pe_type_check(x86_iommu, pe)) {
+> >> +    if (!vtd_pe_type_check(s, pe)) {
+> >>           return -VTD_FR_PASID_TABLE_ENTRY_INV;
+> >>       }
+> >>
+> >> @@ -3827,6 +3828,7 @@ static Property vtd_properties[] =3D {
+> >>                         VTD_HOST_ADDRESS_WIDTH),
+> >>       DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, =
+FALSE),
+> >>       DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mo=
+de, FALSE),
+> >> +    DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, scalable_modern, FALS=
+E),
+> >>       DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control=
+, false),
+> >>       DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+> >>       DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+> >> @@ -4558,7 +4560,10 @@ static void vtd_cap_init(IntelIOMMUState *s)
+> >>       }
+> >>
+> >>       /* TODO: read cap/ecap from host to decide which cap to be expos=
+ed. */
+> >> -    if (s->scalable_mode) {
+> >> +    if (s->scalable_modern) {
+> >> +        s->ecap |=3D VTD_ECAP_SMTS | VTD_ECAP_FLTS;
+> >> +        s->cap |=3D VTD_CAP_FS1GP;
+> >> +    } else if (s->scalable_mode) {
+> >>           s->ecap |=3D VTD_ECAP_SMTS | VTD_ECAP_SRS | VTD_ECAP_SLTS;
+> >>       }
+> >>
+> >> @@ -4737,6 +4742,11 @@ static bool vtd_decide_config(IntelIOMMUState *=
+s, Error **errp)
+> >>           }
+> >>       }
+> >>
+> >> +    if (!s->scalable_mode && s->scalable_modern) {
+> >> +        error_setg(errp, "Legacy mode: not support x-flts=3Don");
+> >
+> > This seems to be wired, should we say "scalable mode is needed for
+> > scalable modern mode"?
+>
+> Hi Jason,
+>
+> We agreed to use the following sentence: "x-flts is only available in
+> scalable mode"
+>
+> Does it look goot to you?
 
---=20
-Best regards
+Better but if we add more features to the scalable modern, we need to
+change the error message here.
 
---0000000000004e39430628cd6d66
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Thanks
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Wed, Dec 4, 2024 at 1:40=E2=80=AFAM Peter Xu &lt;<a href=3D"mailto:p=
-eterx@redhat.com">peterx@redhat.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;=
-border-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex=
-">On Tue, Dec 03, 2024 at 10:15:57AM -0300, Fabiano Rosas wrote:<br>
-&gt; We shouldn&#39;t be adding warnings to the build like that. When build=
-ing<br>
-&gt; static binaries, I&#39;d assume the person at least knows there&#39;s =
-a -static<br>
-&gt; in there somewhere. If you&#39;re just building the system binaries an=
-d<br>
-&gt; warnings start to show up, that&#39;s not good. Since this is just a s=
-ide<br>
-&gt; script that&#39;s very infrequently used, I don&#39;t think it justifi=
-es the<br>
-&gt; extra warning.<br>
-<br>
-Yeah this could be a valid point.<br>
-<br>
-The main issue is I believe 99.999999% of people building qemu will not use=
-<br>
-stress.c and the initrd at all.=C2=A0 It means we could start burning some =
-tiny<br>
-little more cpus all over the worlds for nothing.. the added warning is a<b=
-r>
-bad extra side effect of that.<br>
-<br>
-So I wonder if it would make more sense to only build stress.c manually<br>=
-</blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sans=
- ms&quot;,sans-serif" class=3D"gmail_default">Ok, get it.</div></div><div>=
-=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
-.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb(20=
-4,204,204);padding-left:1ex">
-like before, until some of the stress test would be put into either &#39;ma=
-ke<br>
-check&#39; or CI flows.=C2=A0 Then we decide whether to fix the warning or =
-not.<br></blockquote><div><br></div><div><div style=3D"font-family:&quot;co=
-mic sans ms&quot;,sans-serif" class=3D"gmail_default">Yes, I think that add=
-ing the essential guestperf test to &quot;make check&quot;</div><div style=
-=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"gmail_defaul=
-t">(like migration via a Unix socket) may make sense, at least from the</di=
-v><div style=3D"font-family:&quot;comic sans ms&quot;,sans-serif" class=3D"=
-gmail_default">perspective of guestperf&#39;s usability.</div></div><div><b=
-r></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
-;border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,20=
-4,204);padding-left:1ex">
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
-gards</font></div></div></div>
+>
+> Thanks
+> cmd
+>
+> >
+> >> +        return false;
+> >> +    }
+> >> +
+> >>       if (!s->scalable_modern && s->aw_bits !=3D VTD_HOST_AW_39BIT &&
+> >>           s->aw_bits !=3D VTD_HOST_AW_48BIT) {
+> >>           error_setg(errp, "%s mode: supported values for aw-bits are:=
+ %d, %d",
+> >> --
+> >> 2.34.1
+> >>
+> >
+> > Thanks
+> >
 
---0000000000004e39430628cd6d66--
 
