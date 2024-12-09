@@ -4,93 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17ADFE77180
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DD0E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 12:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKd1N-0003tj-S7; Mon, 09 Dec 2024 07:37:53 -0500
+	id 1tKd1S-0003y9-Bw; Mon, 09 Dec 2024 07:37:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKd10-0003k7-FI
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tKd1P-0003wd-R5
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKd0x-0007O1-7I
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:30 -0500
+ id 1tKd1M-0007Ra-Br
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 07:37:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733747845;
+ s=mimecast20190719; t=1733747867;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=zZQyy3tQP8OD/1fdEQoI4TyeNI1Ugh3Z/zVs5dSJoV4=;
- b=XT+LuuzkxMR/IeKL6y2S/0sU4R0ZSwuVpkP8FtvxeG6mWtzU0qTRToosDJEb2ygPLxSIaI
- F7o6TKbjoJdYNROe2QaSqmre/5YNskdrjIscYGpdwaSp62FOoKMC4NCakd0spnhUGk8gFX
- yV3PwWgOLVoJU57QJwWLCtKiH/q8FVk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rnI0niveAFX2WdKfqxklK+1Zt06kPSFJCN7eFa7HF+8=;
+ b=JKKeKJDr/MFU5pmOM9Yhn5rhxjOrLv/dTkwB0fp3e8KSqtYbXgClDWxibz4q20Ak9Nksg9
+ 9pKGqY2CiTNB56i47inSReccjtPy9PumrkQPVX+feXejOaTU7aG3lm9NdeZa8wnpklTLCW
+ 6/i1KIuLpISKzbNqcX70HiGB8ZyeMb8=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-636-wvvWIQnINZm5NupN401KYw-1; Mon, 09 Dec 2024 07:37:22 -0500
-X-MC-Unique: wvvWIQnINZm5NupN401KYw-1
-X-Mimecast-MFC-AGG-ID: wvvWIQnINZm5NupN401KYw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-434fb68b7d1so5863905e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 04:37:21 -0800 (PST)
+ us-mta-353-gHA1aVjTO12IlGRPdoVo3w-1; Mon, 09 Dec 2024 07:37:46 -0500
+X-MC-Unique: gHA1aVjTO12IlGRPdoVo3w-1
+X-Mimecast-MFC-AGG-ID: gHA1aVjTO12IlGRPdoVo3w
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385d51ba2f5so1655300f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 04:37:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733747840; x=1734352640;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=zZQyy3tQP8OD/1fdEQoI4TyeNI1Ugh3Z/zVs5dSJoV4=;
- b=D9OeBQB1jmhYu6Mcc52Zq6fJX3aOqmI9FDy0cavhS2FOSCrb4E45gXruAi86QFYuXK
- mCPhyEvAIoHXtGp6NaxqKVqMUelF5hixAyKanhjGjQYMyCpKWQ0YcGWSWwyBGd8cHC4Z
- /2fKstjbdETA6bzUGO90maEgQ7hRLMBx9eiq6vKbM41QHXn9bEUbcZDJt+LLsqZLQ/N1
- bP+Hzz84i+DLTorC8WNnZa+hccuil3U7fFRlJH/h9HX/XouGyOEexriJx9RHINHPjXBX
- zeaQ9Bl3yxwL++E32CouSf+ITMoRdcKM48Rwn7h2zk2fKFXE1RA4JjmnL9vHOHuToJXv
- eH0A==
-X-Gm-Message-State: AOJu0Yz87A1mZPyK0T9x8miBUUjmaYbk7hhS83QQb/r1nvo/Wcz5rpVP
- SvLEmO1wYCU9KLtEc5wW/PsqubsQsfT/cxeHAi82spzdUObvRcHcwwgH33qtcJUKck2ddHjb7oi
- 7F2oM/TG6FWuzA4hi9CeDMegz0nuILIxV48+Swh8MRArOGbpRzFO41UsP696Mqtl9jLq8fvxzyf
- OgKo6iw7fT0cBEL6s79jTQS2D6hbG8qhLoz0X6
-X-Gm-Gg: ASbGncuTG/8kgt+rhpE54SC90N1LFxiYcW9Wv344h3qZ71DBNWEPKNpO8SE6JZUdYyY
- I1Tx3VbveukCwFKLjzfY1yP6bgT73UvpIQUPwZakeWgrAOdoWLRj+UifmI94FsVEIhxezNNe3ny
- IQ7RTIlw4z6A5RaDnUwSEygJNXwTJuv5VxAX8UJe93MfOKgnNufYcPmoSmScRZ2tYSKWYG4mHvp
- 1ia1kELyGL1g5WflyYLdSlfgeFMC41gjnuV0S2dV4XVIItILAVYmA==
-X-Received: by 2002:a05:6000:4007:b0:385:f1d6:7b6a with SMTP id
- ffacd0b85a97d-3862b3cf82fmr9949590f8f.55.1733747840357; 
- Mon, 09 Dec 2024 04:37:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGolfB89T8KXr5Cv135D5++LYQhk9wH3nb1mgiHOKNvN464Xu7YokNKKTOvxu6HnRBtGViNEA==
-X-Received: by 2002:a05:6000:4007:b0:385:f1d6:7b6a with SMTP id
- ffacd0b85a97d-3862b3cf82fmr9949565f8f.55.1733747839849; 
- Mon, 09 Dec 2024 04:37:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733747864; x=1734352664;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rnI0niveAFX2WdKfqxklK+1Zt06kPSFJCN7eFa7HF+8=;
+ b=W/OEzT58pqLF7jDFiZb3jPUgCCtw+H4n84dn3hG0aSs6D239Jjx6K/Kxj8ffHpcvrp
+ y9tPHTEMB+Z2IwYj7mzHlDtNUOFVQdedwPVOF9S4Lg7keNvRHUs9Uh3BFPWTAjgSJj2o
+ nM63/ehtpfasiPnLd7vhBX8PgquFZ9VpTALmR+uW8v9IhPRq/j/A94642k0BZTYfriR2
+ /TFlnHPICRF20F9fwXb/+z3cW0gwsJ2RGjc9snfpAgfaxOg7fAAauWkV2zWXdz710qco
+ PQDvCFQc6z1mGfeNDCE3+LHlVCbA42S9JEc0rL6Rv3vrXhrzJs0n+JqV90LNq5VcUj+s
+ LqoA==
+X-Gm-Message-State: AOJu0YxI815ZAFO8RsCiW7fJ0/z+toetuTDwDXoZwyQsP/6+ml8IJiUl
+ AMF7H1AUtnIbKokolJ+sDOPVaNW72514S9TVI0fWzD5j8aY2B5ZNedcCTvPeZe2WTe345ve6P2s
+ Ns1gZednnKHCzuOxwmjfPZXk3lTQT5bphrSoIOe2S7hBvb4GKxMb6WGt6hLpaYd4h3CNtCrHVAd
+ UEc3T47kT0pKNYqBqh6ZSbIqfCsaZtpmvydu98
+X-Gm-Gg: ASbGncsXZJRsWJm2J6tnf4T8yWQrL7Otq4ZI5u9ofe7iyE6yEPu6hLbjDFfCBZSogoN
+ L88xWe/CCiMRFdzmR+huoCCTRshHEiiQJGgTzbIbeZ2tv/tINV3XFqpSqw/nJ7rzHSJ2wnDcpQO
+ D9MJmsrZFpbG++sk7bHkJDKkRN1KLjmck1j/D5IBTDgZJdKcC/nBPG8ra5W2zxXOkiEDUK+SdO5
+ w/xuHj7qgIgyambsS7jQqPPYsN7manXBH5KT2hyNMB1r+fbVKcDyQ==
+X-Received: by 2002:a5d:6c69:0:b0:385:e013:39ec with SMTP id
+ ffacd0b85a97d-3862b33f0d1mr9303165f8f.8.1733747864322; 
+ Mon, 09 Dec 2024 04:37:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEaI5mpcGtPfQA/5tjvnqn4QZw2Pce8+RV3HgH+A6JNVqnFNEEY9kcB0+Ainpq7S21I/hgG8A==
+X-Received: by 2002:a5d:6c69:0:b0:385:e013:39ec with SMTP id
+ ffacd0b85a97d-3862b33f0d1mr9303141f8f.8.1733747863883; 
+ Mon, 09 Dec 2024 04:37:43 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3862a4ae481sm10589989f8f.25.2024.12.09.04.37.19
+ ffacd0b85a97d-3861ecf40a0sm12875064f8f.13.2024.12.09.04.37.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 04:37:19 -0800 (PST)
+ Mon, 09 Dec 2024 04:37:43 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
  Junjie Mao <junjie.mao@hotmail.com>
-Subject: [PATCH 00/26] rust: bundle of prerequisites for HPET implementation
-Date: Mon,  9 Dec 2024 13:36:51 +0100
-Message-ID: <20241209123717.99077-1-pbonzini@redhat.com>
+Subject: [PATCH 10/26] rust: qom: move ClassInitImpl to the instance side
+Date: Mon,  9 Dec 2024 13:37:01 +0100
+Message-ID: <20241209123717.99077-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241209123717.99077-1-pbonzini@redhat.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,164 +108,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are the initial set of bindings and support code that are needed
-to apply Zhao's posted HPET implementation, and for him to apply
-my review comments.  They include:
+Put all traits on the instance struct, which makes it possible to reuse
+class structs if no new virtual methods or class fields are added.
+This is almost always the case for devices (because they are leaf
+classes), which is the primary use case for Rust.
 
-- QOM cleanups (already posted)
+This is also simpler: soon we will find the implemented methods without
+macros, and this removes the need to go from the class struct to the
+instance struct to find the implementation of the *Impl traits.
 
-- interrupts sources and cells (posted and reviewed)
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/hw/char/pl011/src/device.rs | 4 ++--
+ rust/qemu-api/src/definitions.rs | 8 ++++----
+ rust/qemu-api/tests/tests.rs     | 2 +-
+ 3 files changed, 7 insertions(+), 7 deletions(-)
 
-- bit deposit and extract operations (new)
-
-- QOM generalization beyond DeviceState (new)
-
-- callbacks system (new)
-
-This is the code that I aim at integrating in QEMU 10.0, and is also
-what is needed to develop additional bindings (for e.g. timers) more
-or less independently.  I'll focus here on the changes to QOM because they
-represent the bulk of the patches.  The bit operations and callbacks are
-just one or two patches each, and better explained by the doc comments
-in the patch itself.
-
-With respect to qdev, some of this was already explained in the "Rust
-in QEMU roadmap".  The patches are split in two series, corresponding
-to patches 7-14 and 15-24.
-
-The first and previously posted part mostly removes code duplication,
-while keeping the focus very much on four elements of DeviceClass
-(realize, legacy reset, properties, vmstate).
-
-The second instead starts to establish a correspondence between the
-QOM class hierarchy and the Rust trait system.  The hierarchy of classes
-is visible as an ObjectImpl::ParentType associated type, and also present
-in the implementation of the ClassInitImpl<ClassType> trait.  The
-ClassInitImpl trait is implemented for each Rust-defined QOM class as
-before, but now its implementation is split over multiple blanket impls,
-one for each superclass.  This allows code reuse of the class_init
-wrappers, and is implemented in patches 15-18.
-
-After a brief cleanup intermission in patches 19-21, patches 22-23 provide
-the method invocation infrastructure.  Taking inspiration from glib-rs's
-GObject bindings, an IsA<> trait declares what is a subclass of what,
-which allows two things:
-
-- safe and efficient typecasts, which are compile-time checked so that
-  it is an error if the destination type is not a superclass.
-
-- automatically making methods available to all subclasses.  This is done
-  through another blanket implementation of a trait, as in glib-rs (see
-  https://gtk-rs.org/gtk4-rs/stable/latest/docs/src/gtk4/auto/widget.rs.html#5377),
-  though the details are a bit different.
-
-The differences with glib-rs are not small, but fortunately it is the QEMU
-version that is simpler.  QEMU does not use a complicated macro like glib's
-(https://gtk-rs.org/gtk-rs-core/git/docs/glib/macro.wrapper.html)  to
-wrap all subclasses of GObject with an opaque Rust type.  While macros
-in general, and procedural macros in particular, may be a useful tool(*),
-for now I prefer to ensure that the infrastructure is usable and readable
-even without any macro magic.
-
-The two pieces allow defining QOM class hierarchies entirely in Rust;
-patch 24 for example gives TYPE_PL011 its own class type PL011Class,
-and stores the device id in PL011Class instead of PL011State.
-
-I understand that this is a lot of code, and a lot of added lines in
-particular.  Fortunately about 40% of it is docs, which is definitely
-a change for QEMU's standards. :)  Also all except the last two patches
-have already been used by Zhao, who did not report any particular problem
-adopting them.
-
-Excepting the docs, the bulk of the new code is in the BqlCell and
-BqlRefCell implementations, as well as in patch 22.  Fortunately these
-patches are also relatively boring.  The more interesting patches to
-review are patch 15-18 for QOM, and 25 for the callbacks.  Patch 25 is
-also the trickiest to explain from the point of view of using advanced
-language features; (**) I tried to explain that in the doc comments
-and commit messages but please ask for more if necessary.
-
-This series is available at branch rust-next of
-https://gitlab.com/bonzini/qemu.git.
-Thanks,
-
-Paolo
-
-(*) For example they could automate the declaration of various traits,
-many of which are "unsafe" as a reminder that they interact with C code.
-This should be pretty easy, considering that the amount of code required
-to write QOM types is already smaller in Rust than in C.  qdev properties
-are also a useful target, as exemplified by Manos's previously posted
-series.
-
-(**) In particular, zero-sized types and the Fn trait.
-
-
-Paolo Bonzini (26):
-  bql: check that the BQL is not dropped within marked sections
-  rust: cell: add BQL-enforcing Cell variant
-  rust: cell: add BQL-enforcing RefCell variant
-  rust: define prelude
-  rust: add bindings for interrupt sources
-  rust: add a bit operation module
-  rust: qom: add default definitions for ObjectImpl
-  rust: qom: rename Class trait to ClassInitImpl
-  rust: qom: convert type_info! macro to an associated const
-  rust: qom: move ClassInitImpl to the instance side
-  rust: qdev: move device_class_init! body to generic function,
-    ClassInitImpl implementation to macro
-  rust: qdev: move bridge for realize and reset functions out of pl011
-  rust: qom: automatically use Drop trait to implement instance_finalize
-  rust: qom: move bridge for TypeInfo functions out of pl011
-  rust: qom: split ObjectType from ObjectImpl trait
-  rust: qom: change the parent type to an associated type
-  rust: qom: put class_init together from multiple ClassInitImpl<>
-  rust: qom: add possibility of overriding unparent
-  rust: rename qemu-api modules to follow C code a bit more
-  rust: re-export C types from qemu-api submodules
-  rust: tests: allow writing more than one test
-  rust: qom: add casting functionality
-  rust: qom: add initial subset of methods on Object
-  rust: qom: move device_id to PL011 class side
-  rust: qemu-api: add a module to wrap functions and zero-sized closures
-  rust: callbacks: allow passing optional callbacks as ()
-
- include/qemu/main-loop.h               |  15 +
- stubs/iothread-lock.c                  |  15 +
- system/cpus.c                          |  15 +
- rust/Cargo.toml                        |   1 +
- rust/hw/char/pl011/src/device.rs       | 156 ++---
- rust/hw/char/pl011/src/device_class.rs |  34 -
- rust/qemu-api-macros/src/lib.rs        |   2 +-
- rust/qemu-api/Cargo.toml               |   3 +-
- rust/qemu-api/meson.build              |  14 +-
- rust/qemu-api/src/bitops.rs            | 119 ++++
- rust/qemu-api/src/callbacks.rs         | 238 +++++++
- rust/qemu-api/src/cell.rs              | 822 +++++++++++++++++++++++++
- rust/qemu-api/src/definitions.rs       |  91 ---
- rust/qemu-api/src/device_class.rs      |  74 ---
- rust/qemu-api/src/irq.rs               |  91 +++
- rust/qemu-api/src/lib.rs               |  15 +-
- rust/qemu-api/src/module.rs            |  43 ++
- rust/qemu-api/src/prelude.rs           |  18 +
- rust/qemu-api/src/qdev.rs              | 146 +++++
- rust/qemu-api/src/qom.rs               | 556 +++++++++++++++++
- rust/qemu-api/src/sysbus.rs            |  51 ++
- rust/qemu-api/src/vmstate.rs           |   9 +-
- rust/qemu-api/tests/tests.rs           | 208 +++++--
- 23 files changed, 2374 insertions(+), 362 deletions(-)
- create mode 100644 rust/qemu-api/src/bitops.rs
- create mode 100644 rust/qemu-api/src/callbacks.rs
- create mode 100644 rust/qemu-api/src/cell.rs
- delete mode 100644 rust/qemu-api/src/definitions.rs
- delete mode 100644 rust/qemu-api/src/device_class.rs
- create mode 100644 rust/qemu-api/src/irq.rs
- create mode 100644 rust/qemu-api/src/module.rs
- create mode 100644 rust/qemu-api/src/prelude.rs
- create mode 100644 rust/qemu-api/src/qdev.rs
- create mode 100644 rust/qemu-api/src/qom.rs
- create mode 100644 rust/qemu-api/src/sysbus.rs
-
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index bcb146c24d6..2384d4bcb95 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -116,7 +116,7 @@ pub struct PL011Class {
+     _inner: [u8; 0],
+ }
+ 
+-impl qemu_api::definitions::ClassInitImpl for PL011Class {
++impl qemu_api::definitions::ClassInitImpl for PL011State {
+     const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
+         Some(crate::device_class::pl011_class_init);
+     const CLASS_BASE_INIT: Option<
+@@ -649,7 +649,7 @@ pub struct PL011LuminaryClass {
+     }
+ }
+ 
+-impl qemu_api::definitions::ClassInitImpl for PL011LuminaryClass {
++impl qemu_api::definitions::ClassInitImpl for PL011Luminary {
+     const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
+         None;
+     const CLASS_BASE_INIT: Option<
+diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
+index 6ecfaf51b09..487712611f6 100644
+--- a/rust/qemu-api/src/definitions.rs
++++ b/rust/qemu-api/src/definitions.rs
+@@ -9,8 +9,8 @@
+ use crate::bindings::{Object, ObjectClass, TypeInfo};
+ 
+ /// Trait a type must implement to be registered with QEMU.
+-pub trait ObjectImpl: Sized {
+-    type Class: ClassInitImpl;
++pub trait ObjectImpl: ClassInitImpl + Sized {
++    type Class;
+     const TYPE_NAME: &'static CStr;
+     const PARENT_TYPE_NAME: Option<&'static CStr>;
+     const ABSTRACT: bool = false;
+@@ -32,8 +32,8 @@ pub trait ObjectImpl: Sized {
+         instance_finalize: Self::INSTANCE_FINALIZE,
+         abstract_: Self::ABSTRACT,
+         class_size: core::mem::size_of::<Self::Class>(),
+-        class_init: <Self::Class as ClassInitImpl>::CLASS_INIT,
+-        class_base_init: <Self::Class as ClassInitImpl>::CLASS_BASE_INIT,
++        class_init: <Self as ClassInitImpl>::CLASS_INIT,
++        class_base_init: <Self as ClassInitImpl>::CLASS_BASE_INIT,
+         class_data: core::ptr::null_mut(),
+         interfaces: core::ptr::null_mut(),
+     };
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 7f9df348b00..fd0c979121c 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -59,7 +59,7 @@ impl ObjectImpl for DummyState {
+         const PARENT_TYPE_NAME: Option<&'static CStr> = Some(device_class::TYPE_DEVICE);
+     }
+ 
+-    impl ClassInitImpl for DummyClass {
++    impl ClassInitImpl for DummyState {
+         const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
+             Some(dummy_class_init);
+         const CLASS_BASE_INIT: Option<
 -- 
 2.47.1
 
