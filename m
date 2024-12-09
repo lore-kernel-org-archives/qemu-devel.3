@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 258DFE77181
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 861E2E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 21:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKl5d-0000LS-OB; Mon, 09 Dec 2024 16:14:49 -0500
+	id 1tKlCj-0001vC-Is; Mon, 09 Dec 2024 16:22:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl5c-0000LH-U6
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:14:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tKl5a-0006td-U9
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:14:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733778885;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=0H0jdsDyFxRohFZ2TOMJG8iCuTWPejxGMmpPLeQpiiw=;
- b=TwjBBIvohcclFn+Bgsi6fJREP6CCgBK0sBdlP9+eTGW9DwShayZoWimRBQEItPV2/VFo6E
- zvlGBmoZVRuIvEgdAZeSQXVhjTKcr4fwLlrCq7IG0sGouJb9iaaB9iiP0YyUv5J4TofrcR
- 1D4mN76UBo2MGuaxs3riZAWugoG2d0k=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-98-UsvPSFk0McGrS4OClE0Elg-1; Mon, 09 Dec 2024 16:14:41 -0500
-X-MC-Unique: UsvPSFk0McGrS4OClE0Elg-1
-X-Mimecast-MFC-AGG-ID: UsvPSFk0McGrS4OClE0Elg
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b6cf68526eso284185185a.2
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:14:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKlCf-0001uo-NT
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:22:05 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKlCe-0007ih-9C
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 16:22:05 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so2055582f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 13:22:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733779322; x=1734384122; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=cR4DdMc/TwvrY+t0EgVMm3YLHZbFJEHU46vDw3/T3S4=;
+ b=bJcA43XOxS/oTBJSM9aw4NVFCpGliWD/q1ZzptDiQfMVnhbQEsS4U85K+J90i5yyXN
+ XcgVXR3I75yx6KNbgfYqrSaIoe4rGygegQwOVedbXQIGpTHxq3XmH/qDbvTd7kH43iVn
+ nheLDoTiHWW2kuygVMZHtwczR3k7JJvi8m3w1Ogev6dsqWIcVIBHRz3BUCqdGF2SCSXJ
+ wPmoVmsxAZ0S8NA+ESjaj3q9GJ72LErzM+XT5M4MS/WgVwTyC6Hg1PVC2wi42YghkLQy
+ 4kn4/+B81L8qetHnMB8pNGXpra8w6K+CaLC2jAbGirWx2yGc4BxZ4fPqD90lIc8ZtPpI
+ Mnkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733778880; x=1734383680;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0H0jdsDyFxRohFZ2TOMJG8iCuTWPejxGMmpPLeQpiiw=;
- b=mpSY0JesHpqCSvR+h36iWmTqoUkqS0zwCEV4hIKo6xHioG2xRhayy7Zxe8e+GZmB3j
- fL6YTYRmTsn0/AA/woT+7Q6qs3fau9KnxXdfujGDnSZEH/2yRyXwSHRxZ6ONkbz9vxPv
- Yiv4/2EX+h9PLWIJviSqkyGqWFNExSz7gDjQySk4wdZiuJQ9IFalTs1UYSixXERUZ++A
- EktWQ+FefE43xlmB+1VVnFJU5xwVtuv07p+fiAnYzDomSAKESjpfGYifO8PcMgHegDn5
- 1UL8vL46/bEs4xfj2NGowKR77L4zIJ4AZIrAJbb+l4hc06SckDzgxEDkPnpmHgjzb47D
- GQ9Q==
-X-Gm-Message-State: AOJu0YzsiHNEmyL6fRaiGn7JSkO2nulkDdJNEQbQTnBivakkyWB4e/Uw
- xW1wNwgKc4fkxH7urNPjatfefkORsGwXq9QPRtZ0IQ4TJkXjTbqZJIfcS7FTKZSoCCFSg4RnpnF
- 5vfxLPI1ZVMn3LvqlLQ3rcnUKS7hMEUMMUfQjMJ61H2xaoDcvCqIHsKiXBTZC
-X-Gm-Gg: ASbGncsMYu0mSFwR0MRGh/r96J7dnbi/piWkqpljt9nolryDZkHHQSjFRw76auea4UK
- sJfv6Ounec4+Wfej9CCIJ0Ly5ZVoiLAcU5VP85yeH07VjvZczK3ovig7uM/oRhFNuQNwEcE06Ts
- ZImQSFoIZ82jbVkd/f5vyuhv+LOoeF9pIxlQcNf363wxDTPQ0W01aZuDnMTMmcVK/OW8A9Ew6YN
- yo9mJHvhqS5CRZVxLZ2xW31+BAQOMJuJQh3nYp3t1oxhHDujCUqdpxzyteZcFuJ217kOVjWsWZg
- ogiiLbEBJZPYsEg=
-X-Received: by 2002:a05:620a:1aa4:b0:7b6:7970:6506 with SMTP id
- af79cd13be357-7b6dce7f2b1mr279724485a.38.1733778880751; 
- Mon, 09 Dec 2024 13:14:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF5klpYt9bqP5r4WGj2+o42G/crKV1W01ol9pcF6nVUMD/CX4CCzEUsilHQg71SqNnUHDbkKQ==
-X-Received: by 2002:a05:620a:1aa4:b0:7b6:7970:6506 with SMTP id
- af79cd13be357-7b6dce7f2b1mr279721885a.38.1733778880474; 
- Mon, 09 Dec 2024 13:14:40 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6da08306bsm81102985a.66.2024.12.09.13.14.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 13:14:39 -0800 (PST)
-Date: Mon, 9 Dec 2024 16:14:38 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 2/6] tests/qtest/migration: Initialize buffer in
- probe_o_direct_support
-Message-ID: <Z1ddvtuy8-3LgMKv@x1n>
-References: <20241209204427.17763-1-farosas@suse.de>
- <20241209204427.17763-3-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1733779322; x=1734384122;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cR4DdMc/TwvrY+t0EgVMm3YLHZbFJEHU46vDw3/T3S4=;
+ b=ZGD1JJJL7rmsLGCzTUNPxpCPKQr/hCMM3Nbc0fbodmCbOOl8jKJYzbQSJEbTFhHFYQ
+ AifVXdxC6M7ZL90ZxATW9JqlkQngZPLtsAXXXnKE67q68wXU0QD6xsfNgJ8lPOaf9QmE
+ jisqeebirq/XVDNddgqaekSQ1hepx/9A80646U269aRjwXjCWg3Ia9uj3P7a8oX5D+l4
+ JF9OdhY/tkNv6AkgnSRbH2rLky57gVvFztPHAR3KbR0GsrajESUmBkhexvRn21ODW68P
+ 1INyy4ojzSse/Ye6ISDS/J4cmITGMaM4DQ5vJWmmYvKTe1ZVCZH8iuylhvYl2TKbrllL
+ SaIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW5+DapBzOWZVhoStmLhMoxxQExvd7a4TYJkvz1PYnLjdT5oSviwyDOXHkmKSk1RgRiihgC5sAU8lI1@nongnu.org
+X-Gm-Message-State: AOJu0Yz7SdM9PePXq3AzyomaICWdorpGcoSkaBfE0wpuhC8XSV0SW7hc
+ UbBLgw21Mg6wNquNntZw6SgeRyD/+B6RIJcRMXVEJWTwXNGhDIm8AcEzkoYZ/gQ=
+X-Gm-Gg: ASbGncvjioksqGGQ/bUpwb0jBIoLk/IA0oil8s8FrHL7859tECQ5Gc7KyOJqsAABzlw
+ ekehMy7rt0Kzj8i/Sxf0AaHYcNNtCkp4Qdkp9etuIqshOZPa0POiz4gqsoNj7OU+CXZOanM3791
+ LFRvxrMACcIQe8OVsMqiaRimLIBYBSzELbubnH03qwxgFVDhGXGESOalGk4T6XaJ7+v09oOTVSd
+ QTyKYMTmknmWW6egf2GHDJ1WpXVM+zo+7fHgZt6Gdkgc2Hn5vLOw7Fg7e5m9ehRjfas7WzZYaG3
+ vdekI7sWVr9YlYdTUVhxTcOPB1elbKTD
+X-Google-Smtp-Source: AGHT+IFtsa0Nk3ruHe47Q9CPii0y32T1QxWzOO1gplocQc5m0cr29LKR8l5RxbGE+4v9uHMxOdPUfg==
+X-Received: by 2002:a05:6000:2ad:b0:386:4034:f9a4 with SMTP id
+ ffacd0b85a97d-386453fbbbdmr1289281f8f.43.1733779322084; 
+ Mon, 09 Dec 2024 13:22:02 -0800 (PST)
+Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
+ [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-386220b071dsm13951354f8f.101.2024.12.09.13.22.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 13:22:01 -0800 (PST)
+Message-ID: <c401b320-b382-4887-82bc-0252dd9f8c98@linaro.org>
+Date: Mon, 9 Dec 2024 22:22:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241209204427.17763-3-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/11] i386/hvf: Don't send signal to thread when kicking
+To: phil@philjordan.eu, qemu-devel@nongnu.org
+Cc: Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexander Graf <agraf@csgraf.de>, Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+References: <20241209203629.74436-1-phil@philjordan.eu>
+ <20241209203629.74436-4-phil@philjordan.eu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241209203629.74436-4-phil@philjordan.eu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,18 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 05:44:23PM -0300, Fabiano Rosas wrote:
-> Valgrind complains about the probe_o_direct_support() function reading
-> from an uninitialized buffer. For probing O_DIRECT support we don't
-> actually need to write to the file, just make sure the pwrite call
-> doesn't reject the write. Still, write zeroes to the buffer to
-> suppress the warning.
+On 9/12/24 21:36, phil@philjordan.eu wrote:
+> From: Phil Dennis-Jordan <phil@philjordan.eu>
 > 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> This seems to be entirely superfluous and is costly enough to show up in
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+So the pthread_kill(cpu->thread, SIG_IPI) is entirely superfluous?
 
--- 
-Peter Xu
+> profiling. hv_vcpu_interrupt() has been demonstrated to very reliably
+> cause VM exits - even if the target vCPU isn't even running, it will
+> immediately exit on entry.
+> 
+> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> ---
+>   target/i386/hvf/hvf.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> index 3b6ee79fb2..936c31dbdd 100644
+> --- a/target/i386/hvf/hvf.c
+> +++ b/target/i386/hvf/hvf.c
+> @@ -214,7 +214,7 @@ static inline bool apic_bus_freq_is_known(CPUX86State *env)
+>   
+>   void hvf_kick_vcpu_thread(CPUState *cpu)
+>   {
+> -    cpus_kick_thread(cpu);
+> +    cpu->thread_kicked = true;
+>       hv_vcpu_interrupt(&cpu->accel->fd, 1);
+>   }
+>   
 
 
