@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1D57E7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:09:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78BBFE7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 16:23:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKgJT-0004gt-0G; Mon, 09 Dec 2024 11:08:47 -0500
+	id 1tKgWw-000745-ND; Mon, 09 Dec 2024 11:22:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgJK-0004ZP-Q7
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:08:40 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgWv-00073v-Ct
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:22:41 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgJI-0001B8-SL
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:08:38 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-385dece873cso2149128f8f.0
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:08:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tKgWs-0002jH-VF
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 11:22:40 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3862d6d5765so1712848f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 08:22:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733760515; x=1734365315; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733761356; x=1734366156; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YMzV7S005vAURmFsnCKWT18BZg/v0lBLtk9jGBTNycE=;
- b=VLfIJ7hiw2CsjHaO4kdrxZtJWLTHRlIhzCrfuJrqH+ar4X4PPJi4N+mlgCazYmc93Y
- IOh/b/v5LM92B9hDl4DnPvzPiZH0aKdpSLDvWSY/s2yY+x3yJ/w+MUEumzauArfOMIl8
- FraOWnB8A2+tzLHgyclEulu0DGExB6tT2Y98rSDJTnvSo3pBb/6XlGPO7C7ibTo6fq+r
- qxK+O+hBF5EyW/M546z9EWmDmoS+RSbDybdbe/dehtFmGY7SZ/wLR6XO76xpVCDeq8YQ
- Pa632UOu/D6DZpvoDDRBOAleICf6Rop9nlG6uVeVH57b8orqcwC+4MTL3+HHeDAG+pZx
- 3CtA==
+ bh=U8lhwXx6N4KO095OntGCcoEScVr+W/k5Q0g084Q1qyA=;
+ b=O0HQ5RcG8cRdSp5Vt7DFFAl0ac2qdrtnagtivR4WnS2QCWrt5+8WTrVsFPWmVXX1+h
+ ShKpQ4BWF6tEvJ+ewmRwUlWxGVtCh4+PnwPtGS+iMvo8rjBWAUs6s6wB3jBhr0CotYuG
+ NX170KNlVh3ZSA+Yq+mLoL1LV2YNbK7Ih40iAF95FLgweXs5UsNCUz2EzG+B8M0FTCeR
+ pFoRWKislDKnK/pZ0BxbXQOEfHGgl8/ExKJ5BjoonXqRhz6HB+rSBGfLSj1gDqwklQj9
+ Tpc/GKPiAEwqtn8mWQxvpW6NMTR7ZmPwOXE2XApTSJlRTgppRxmwN0nNhtnLwJZYXrR0
+ g1Ag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733760515; x=1734365315;
+ d=1e100.net; s=20230601; t=1733761356; x=1734366156;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=YMzV7S005vAURmFsnCKWT18BZg/v0lBLtk9jGBTNycE=;
- b=DtipRrr0+c1qmqt5FgL+8fCHr45QNFLiTsi6uw253lUCg45t1rMxKQqssU5OFYo7Rz
- 1uR6JgRPBCtO2LFxeoLbppfiGv/Ktjby3HLnQGN6yaomINmQWruXZUpSlclTCGroqy/i
- A2+jxLCEUEH+CyJNnNEm6si67ANkXFdgbh1qAADX4XlIvzzpQO5VW1CdN9w2amZiLjaO
- iTL6T+cMAzb2u4yYuAFQ/RqtJ+KDCCj1z/ERQFCP9IVWI14jTPzjs1KBJQttyDXU3WUH
- wkTbJo0Awz1NKFdOgLXRlvx2Dz9o3M/WaO3zN/3JkBvxmbLVrQz8tFQUEUZ84go1F1ca
- S0XQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUCItXVJD8a1+3JPL5UN4AfMRDaoYIoNxWZHs7FRGVDn/KTJxnU0H2aTDE3jUw2pNQP5CWyqD8hM8aj@nongnu.org
-X-Gm-Message-State: AOJu0YxXuIETZ4nidCmDzLyajSkjy2aVQQP108hzKmThtjnBK3i8MJDF
- 7nKjIONsnigsxlggetbsJ53WjccS73HMoPqKJ/72qeMbjis3MfhuKPzQRNqR3HY=
-X-Gm-Gg: ASbGncvqWXskg+rw6UQJLUGN3fEXaP/Vog4nGo2g0gvUJ+73Pc0CLGtfzMKQI6a1Wb+
- I/5I01bjxITOsGMQADZ9mXLcEejkBMi+WaDv+4HhNRmifG2fGcQoquJ4JwGy8tMOEsEXEFN2xgV
- SNrXnzv9thjU2P1VKypzhiIJvL+nzcYWV/3m6yq/hdgLtB4VgJqVvhdt//8OwjeFQLodFA5g67e
- qY47u8QoRCtskETshgaPXwULXbpyEyRWlVCQoUCCRp8ijz9/ZW/zMyxr/FzLYecWohB+FE047Tx
- qv+Q7oKMpPUneCxlWURCXRuskDtpMGkR
-X-Google-Smtp-Source: AGHT+IH1BkkxhCaZjLiyDWTfkTadq5xrywA8fnENUb+yP05sl2CbzYWuDL6mFIbNPe6O7qjnVq5aJw==
-X-Received: by 2002:a5d:6c69:0:b0:385:e0d6:fb48 with SMTP id
- ffacd0b85a97d-3862b33f30fmr8784289f8f.7.1733760513816; 
- Mon, 09 Dec 2024 08:08:33 -0800 (PST)
+ bh=U8lhwXx6N4KO095OntGCcoEScVr+W/k5Q0g084Q1qyA=;
+ b=r7GKp0klgV74+/Swl8ma9mwClbSbExK68eOnHDJlXUBvtx21sxU7GrDS6r3fgqx4du
+ RHTe59FBTykLtAsLSFSuEuteL79mcZe/Sdu47S1aqfK+zbnTfhsWrO/WV+AwJ1B9IRCI
+ GXZZ0boBzmhbRbt59iwclscbQlfDab77Cuh/I2YrAwCg/W8aHRzZqcbrfTyxEUXzvm0i
+ fN9oOyXalYt3qcyyInjiPgCTQNq95MSXRWGvyGBKl1zFdlLAbgwEY3XC9ylkSrlYksV+
+ WxjsIEdwpoU0PKUCUdaPS8patMg5EuiKtyFENHSCP5tDG2tB6ZBVA+CAX4tauhKDSMOm
+ QPjQ==
+X-Gm-Message-State: AOJu0Yyy8qB7V0IWNCA+eUiP7UwCn33AlPG6CX+TW0+Y4p4XQN/ZqJ92
+ 7Xy82JykV0GgDP6lbJ3PYN8HMM5HvVuTieRunJ5+1rUU9/hBJF569zk4iZtDELU=
+X-Gm-Gg: ASbGncs+nN4TWF8qCmD6BZuAbZT5YXXnD/4LrLH50/cBzLyGrbyd1pmqbs22qSdDb1v
+ o8jPlSGacwRpDHqixr2uh+WCJ07FuYINwaXAKoZGlWCKrC95fLOW98/EQk8lGv3wll1xy7Qu2/t
+ FWVts50vmz+ImIkS9ivXZOd4b0vwiubVCIhP02WwU1fv2fVRtiDW4kxGpzf+JQ+G3j0Fcf9nxvx
+ SRyhXVtCLJjEwnEX53kz3HiHtuPnPEA4wrgJIni4f7nc0UFb0XUMZxXgUs43WF2GTbMWSoI9mDk
+ xyEZhXMtdCBZAMCsrP7EBJC2NUXZPLX1
+X-Google-Smtp-Source: AGHT+IHgFMjbbVNnVKTURxjC9bV5ynREE1UGeU4i1sd/EHNIMxDdf4bfZxh96Gu5VjCUyjdbn8iB5Q==
+X-Received: by 2002:a5d:5f8d:0:b0:385:f984:2cbc with SMTP id
+ ffacd0b85a97d-386453e4994mr876734f8f.34.1733761356088; 
+ Mon, 09 Dec 2024 08:22:36 -0800 (PST)
 Received: from [192.168.1.17] (lfbn-bay-1-170-196.w83-193.abo.wanadoo.fr.
  [83.193.250.196]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-386367f7c71sm7804627f8f.41.2024.12.09.08.08.33
+ 5b1f17b1804b1-434f1125e69sm79428235e9.32.2024.12.09.08.22.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 08:08:33 -0800 (PST)
-Message-ID: <3f7fa22e-8101-436d-9d7e-2060f093c66c@linaro.org>
-Date: Mon, 9 Dec 2024 17:08:32 +0100
+ Mon, 09 Dec 2024 08:22:35 -0800 (PST)
+Message-ID: <2e219dd1-c9a7-4bc6-b33e-c4918e5b59c2@linaro.org>
+Date: Mon, 9 Dec 2024 17:22:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 04/17] softfloat: Remove float_muladd_halve_result
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: bcain@oss.qualcomm.com, peter.maydell@linaro.org,
- mark.cave-ayland@ilande.co.uk
-References: <20241208224844.570491-1-richard.henderson@linaro.org>
- <20241208224844.570491-5-richard.henderson@linaro.org>
+Subject: Re: [RFC PATCH] hw/net/can: clean-up unnecessary includes
+To: Pavel Pisa <pisa@fel.cvut.cz>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Gustavo Romero <gustavo.romero@linaro.org>
+Cc: qemu-devel@nongnu.org, Francisco Iglesias <francisco.iglesias@amd.com>,
+ Jason Wang <jasowang@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20241209100635.93243-1-alex.bennee@linaro.org>
+ <202412091223.02308.pisa@fel.cvut.cz>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241208224844.570491-5-richard.henderson@linaro.org>
+In-Reply-To: <202412091223.02308.pisa@fel.cvut.cz>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,16 +102,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/12/24 23:48, Richard Henderson wrote:
-> All uses have been convered to float*_muladd_scalbn.
+On 9/12/24 12:23, Pavel Pisa wrote:
+> Hello Alex,
 > 
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->   include/fpu/softfloat.h   | 3 ---
->   fpu/softfloat.c           | 6 ------
->   fpu/softfloat-parts.c.inc | 4 ----
->   3 files changed, 13 deletions(-)
+> On Monday 09 of December 2024 11:06:35 Alex Bennée wrote:
+>> The event_notifier, thread and socket includes look like copy and
+>> paste of standard headers. None of the canbus devices use chardev
+>> although some relied on chardev to bring in bitops and byte swapping
+>> headers. In this case include them directly.
+>>
+>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> 
+> Acked-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+> 
+> Tested on Debian/GNU/Linux for SJA1000 and CTU CAN FD
+> 
+> QEMU=/home/pi/repo/qemu/qemu-build/qemu-system-x86_64
+> 
+> $QEMU -enable-kvm -kernel $KERNEL \
+>        -m 512M \
+>        -initrd ramdisk.cpio \
+>        -virtfs local,path=shareddir,security_model=none,mount_tag=shareddir \
+>        -vga cirrus \
+>        -append "console=ttyS0 \
+>        -object can-bus,id=canbus0-bus \
+>        -object can-host-socketcan,if=can0,canbus=canbus0-bus,id=canbus0-socketcan \
+>        -device kvaser_pci,canbus=canbus0-bus \
+>        -device ctucan_pci,canbus0=canbus0-bus,canbus1=canbus0-bus \
+>        -nographic
+> 
+> By the way, I would like to discuse how to update CTU CAN FD a SJA1000
+> IRQ handling to allow mapping on FPGA target platform buses from command
+> line.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
++ Gustavo
+
+> 
+> I have some working prototype
+> 
+>    https://github.com/ppisa/qemu/commits/net-can-ctucanfd-platform/
+> 
+> but I have some questions how to implement interrupts processing
+> (or logic function) correct and acceptable way. I wills tart new
+> thread and hope somebody responses and teaches me what is the
+> proper solution.
+> 
+> Best wishes,
+> 
+>                  Pavel
 
 
