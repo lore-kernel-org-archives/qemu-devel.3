@@ -4,92 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93C7DE7717D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:53:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3D84E7717D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Dec 2024 18:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKirv-0004Kv-L5; Mon, 09 Dec 2024 13:52:31 -0500
+	id 1tKiwr-0005dS-Tc; Mon, 09 Dec 2024 13:57:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tKirt-0004KT-5p
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:52:29 -0500
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1tKiwk-0005dA-8b
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:57:30 -0500
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tKirr-0000Py-CQ
- for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:52:28 -0500
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-215ac560292so46951885ad.2
- for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:52:26 -0800 (PST)
+ id 1tKiwi-0000qZ-MC
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 13:57:30 -0500
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-2ee709715d9so3410509a91.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 10:57:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733770345; x=1734375145; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=linaro.org; s=google; t=1733770646; x=1734375446; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=9XO5VDOMSOplC2h45Pu78Zxy8H6Ep5ZjzoXkVLstBXk=;
- b=iBwXo78o60qGY5EDi/Oyzq3J8GQF5e7wNI4TKojpOGNVtw1bLjCDahDzTHgFALkwnf
- P4/BBxsEr3IlBZPLHZpMQyVDMlV5vI9XvYn/j1wURNp/DLmfZvt/CDNoZTYPUcSCuFZr
- 9vSK5hOs2wA5RMUe1MFliZ1g2VnVd0++mL+s0hcJ+HI/EfDWr1mihbjikVFfGFKhDQMM
- 2kQSj4WeeRPkpncqkgoIxGvcAYDkCPT8alvfqmxnc1dOkTYcJZw1s+ELWb7WVSgoEPn3
- ZgUhJj6/Yadeq19e4sv+st+U0B8qN4oEhI4/FkZxaX5Z7RPgxb458YaNvS3af8sa//zw
- lQyA==
+ bh=xHWyWIpkl+UUjWSNwAJ6Y7cRZasOcLT+JStYL/774yM=;
+ b=hqO+UBgbOnRyIWKHWOdkzmKIoSaOLF+zySRvegEk/p2p7e8C3nAXgeNqYfCXSHpKrL
+ KeDveD8RS6x52JRpFKTHBrtCBFb9fDu5ICm5hHLyqjfTudMrUBqV1FBD9hOFQ26nUrap
+ AgZiBfTN+zeQVEgardak2w8CFmCk1lqXAhHG4/2KViorbcvlOBuAr1rMGzwWaor8+VLE
+ NaVwXMzGYhjzI41KA2yEDpK6KsGDg/y3IfzUuhw2GPbF3v372MbXmiUp42H8bVo+3cAv
+ wDTjhTCKxiOjFEpLhb4s+rVoTH2ILxZcqMuC8pJZYgGybFb5mX9EXWLtcHw7Ngiue+YM
+ JB4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733770345; x=1734375145;
- h=content-transfer-encoding:in-reply-to:from:references:to
+ d=1e100.net; s=20230601; t=1733770646; x=1734375446;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9XO5VDOMSOplC2h45Pu78Zxy8H6Ep5ZjzoXkVLstBXk=;
- b=nJ043zFwfKMmf6DlJugczLA7YPisP2QK41I3mUJeF0qKgyHV2SZdny/6Ag2c27E9UP
- DPFR9404H/KjeiXYwoEN+KY3thslGXoOWEayGCCxTeDl9sEVEm4Cf0PLTXEtYYtGPID+
- KKL1m59Wcl7Z42w7ex5AJ+jBqro7Sa02042RLxH9r8ViMiR+XYMcNXftH80RA1jOBWTY
- PCv40//c5ptDaQo5dYf51rtTlBtJ4nGKL3H/SoWeBZqILkdBYs/AGlpUopL/YvPO5jLO
- LFUfCP4rmDDmxYp102ycbj+TdTiRs2Na1UulwJyz5DqIJRrs4eTiJhHsoHCzgdTbFjTM
- pSDg==
+ bh=xHWyWIpkl+UUjWSNwAJ6Y7cRZasOcLT+JStYL/774yM=;
+ b=cE/UgkAe2QD7aXIeaFUongbxsqikaISljD9VjHLDLIL7myZSDIgHd+lqLQTEWxqcXT
+ 3SM+dN1ym8twUAqPBLZRVLdjyUxfCpT1S0AgmWjnaq3tM6uzQHwpE4fTDf90iNBprDy2
+ X08db8vynvpFqpqtTxcfcYcfFnhKkORfCr+q8Egl+M+XyR+JvxM/Hox0/7dqlr/ZTB8J
+ PcLpYv76j3RT+AcugL1NzZ06UR9GANNv2jEtswbTIz8+7L38ZmJNixvgKI0YBEuFNnvM
+ qCRxPAAdtIITZHr+StgIu6VICpnLgickuBQO5MvaTZ0xAigjLWj9+R4brCoUXZqGwMDo
+ 9BmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJt8up9bIUPIYCYD14BK2Iu71RjhbzIPSE6PM4VVSyzVVrFngEPs7DMPh4OON7X1Nef9j1Oe7+WRFN@nongnu.org
-X-Gm-Message-State: AOJu0YwEvAmLyEcGi7c0YP/c7HivuifAx7Onju4kpWyPWDKAbDwvdmuZ
- hLCr+n75OwQ4pyMg1lr9iiORdvNYQXgivM8hNYrwwtQqaZlCI1prbm9j60uR/zs=
-X-Gm-Gg: ASbGncvrZ1pc6IO/MAo4Txct5iZ05Ih+qsGXJQdY1IBTmR+ksfK9XFosKIGa0AP8BSL
- 3h8gzrzXKgAkuU9gAZ9zDEo7CWBlUVuIaCE+OsWcNks4CG0dfeQ/beYJScl+aoEOXHrtFNwoc6p
- JAKqV3JRYmY+3NCg0Y1aOIaxQE5GdilhwSJaxmBbiEAlTwk2xlAAf6oYp3ibohz5nZcNtUCv554
- 5dEyy6HL5rvDyiMSvmvp8oin1KDJn0jZUCVfAKNyG9hS0pHH1xWC1oCZ1NwZN7vUo7iSZANeNZL
- PCskLJVvIvHwynsh1OeAiA==
-X-Google-Smtp-Source: AGHT+IG1wTA+0cEtmO36k380SdTcXIGF0lKorENm6B+Ec0kU1mJvY7cD1qoSoFxAerelscXT7SHWNw==
-X-Received: by 2002:a17:902:d48b:b0:212:fa3:f627 with SMTP id
- d9443c01a7336-21669fb605emr26772235ad.16.1733770345623; 
- Mon, 09 Dec 2024 10:52:25 -0800 (PST)
+ AJvYcCWOJy2oPgq/yukQkE1uT0hrm7BBYOy3TGRv+pyjvonEku/ik8rLnOfwp4R0CluuI49JHZTHw/dUIK7J@nongnu.org
+X-Gm-Message-State: AOJu0Yyk0HiWvstmY+j4p63DrcBswM0PvvTSHwZ7W1QGWz2V4bk34kOj
+ DY2h/WUp2cWGLIHNhoU1D0z2RdQK8cD9a1qj0rV1n3IShFJRV19C5BBK8WRlSjE=
+X-Gm-Gg: ASbGncsx4IPoHpInF9pbXFyOStGMzSYLgut3Z1PWC6yJqb51DeYwwmxTSddxGe0WEOZ
+ H4zjBQRkbqxFJaIzZqhdt1ub6GTi7MNLOzZElLUSKVH84AozzNkjdL0YZILgadCtbQIvLxBLC4N
+ +E7vozJzSwx7kiwC19L3ISWZKEeoev+D0scCuOAlj979QCXIQr9oV0Lk4Ks9jHI2d2JJGyHM6Nq
+ 6ZX1/pHXkhJEn7zmtPEgnCTAtjiduKIOLnqWt0aaRE/2xMcUZh7tKJ/vzTqgvvPoFZ2OT1GaUnM
+ obVVDek7/A/Qa2jAePjyXQ==
+X-Google-Smtp-Source: AGHT+IHA00bwlKyTIOb+/5jcDa5Z6xLz4dqA9ccWhjeU99ErdrKR4ZT+Bdux+kmBWsGNbEIZXfttVQ==
+X-Received: by 2002:a17:90a:e7ce:b0:2ee:f80c:6884 with SMTP id
+ 98e67ed59e1d1-2efcf26e242mr2449372a91.33.1733770645678; 
+ Mon, 09 Dec 2024 10:57:25 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-7fd4e9d822fsm2052076a12.14.2024.12.09.10.52.24
+ 41be03b00d2f7-7fd578b457csm769976a12.27.2024.12.09.10.57.24
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Dec 2024 10:52:25 -0800 (PST)
-Message-ID: <af010d29-f66b-45d3-97dc-613b5d241c09@linaro.org>
-Date: Mon, 9 Dec 2024 10:52:24 -0800
+ Mon, 09 Dec 2024 10:57:25 -0800 (PST)
+Message-ID: <c87d5221-68eb-47c7-aa42-4bfcb041d9bf@linaro.org>
+Date: Mon, 9 Dec 2024 10:57:24 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 01/11] plugins: add types for callbacks related to
- certain discontinuities
+Subject: Re: [PATCH] docs: replace 'Edit on GitLab' with 'View page source'
 Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-References: <cover.1733063076.git.neither@nut.email>
- <5e624b7244f1b0b294b28cd513aab04b6b294b1d.1733063076.git.neither@nut.email>
- <181b9b53a258257df1b24e7bfb8b0e6fc590c25f@nut.email>
- <35529516-cc96-41de-8e0d-a7807ccc09cb@linaro.org>
- <ca20c295f464ae7e3365e012ad9a550f70b34b51@nut.email>
- <64e40e6f-bc90-4760-bb70-fb67d80ff4d7@linaro.org>
- <51ac04eea17a6c5b59a240d3c57ce54a851e4989@nut.email>
- <e45c0eed-fb2d-465d-b21e-ab3d395bcf71@linaro.org>
- <0b8c1c08b7780b62dd2af81e437f2e690a07d70a@nut.email>
- <85423c12-3d2f-4d17-a7fa-ba3de32e7d44@linaro.org>
- <2f8052fd509a1e7eba334c1881a6b46030f3d4dd@nut.email>
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+References: <20241209163506.2089961-1-berrange@redhat.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <2f8052fd509a1e7eba334c1881a6b46030f3d4dd@nut.email>
+In-Reply-To: <20241209163506.2089961-1-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,76 +103,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/7/24 05:38, Julian Ganz wrote:
-> Hi Pierrick,
-> 
-> December 6, 2024 at 7:59 PM, "Pierrick Bouvier" wrote:
->> On 12/6/24 00:58, Julian Ganz wrote:
->>>   December 6, 2024 at 12:03 AM, "Pierrick Bouvier" wrote:
->>>> It's an interesting conversation. For the scope of this series, I agree you should use the jump target, which triggered the trap.
->>>>
->>>>   In fine, transitions should simply follow what the cpu does.
->>>>
->>>>   - orig_insn: jump to A
->>>>   - jump_target: execute A traps
->>>>   - page_fault: load page
->>>>   - jump_target: come back to A
->>>>
->>>>   event(JUMP, orig_insn, jump_target) // not covered by this series
->>>>   event(EXCEPTION, jump_target, page_fault)
->>>>   ... execute page_fault (with potential other transitions)
->>>>   event(JUMP, end_page_fault, jump_target)
->>>>
->>>>   In the case of a double trap, we could follow the same logic, and represent the original transition that lead to the trap, and the two consecutive traps.
->>>>
->>>>   Does it make sense?
->>>>
->>>   Yes, those transitions are correct imo. And if a jump event should be
->>>   introduced at some point, the call sequence would look like that. My
->>>   issue is that testing this (in a plugin) will not be straight forward
->>>   or even impossible. And overly complex tests don't exactly provoke
->>>   confidence.
->>>
->> Instruction instrumentation is done before executing the instruction itself, as you can see by running:
->> ./build/qemu-x86_64 -plugin build/tests/tcg/plugins/libinsn.so -d in_asm,op /usr/bin/true
->>
->> I'm not entirely sure about the sequence when there is an exception while fetching the instruction though. You can give it a try, track the PC using insn instrumentation, and we can identify which cases are not working.
->>
->> The test plugin itself is not complicated.
->> You'll need:
->> - one callback per instruction to set the expected pc (possibly optimized with inline operation), used to compare to from_pc, and we check if (optional) to_pc matches the current instruction.
-> 
-> What I'm saying ist that this exactly is not feasible for quite a few
-> relevant instructions. As someone who isn't all too intimate with TCG
-> itself, it's not even clear if we can rely on jump and branch
-> instructions only occuring at the end of a tb. At least a superficial
-> glance at the documentation tells me we can, but if this should in fact
-> not be the case, or if someone introduces something like zero overhead
-> loops inside a tb, all bets are off.
-> 
-
-TCG already has the possibility to generate jumps inside a TB 
-(conditional branches - brcond, is an example).
-
-However, for the scope of this series, it does not matter.
-We only have to check the from_pc when a discontinuity is detected (and 
-not all the time), so there is no need to anticipate the "next" instruction.
-
->> - when the callback for discontinuity is called, we check if from_pc is matching, and register the next expected with to_pc.
->>
->> We can then add tests targeting supported architectures using the plugin, and ensuring it never fails.
->> It's hard to know we don't miss events though. Except if we write manual assembly system mode tests, that trigger the expected behaviour. But it would be tedious, and I'm really not sure there is a real value with reduced examples like this.
-> 
-> So currently my thinking goes in the direction of having the plugin
-> print a warning every time we don't have an expected from_pc to check
-> against. Probably also have this be a feature you can deactivate.
-> 
-
-As it's a test plugin, I think it would be a better default to abort on 
-error, and not be able to deactivate it. Any difference we find would be 
-a bug anyway, so require fixing.
-
-> Regards,
-> Julian Ganz
-
+T24gMTIvOS8yNCAwODozNSwgRGFuaWVsIFAuIEJlcnJhbmfDqSB3cm90ZToNCj4gUUVNVSB0
+YWtlcyBjb250cmlidXRpb25zIHZpYSB0aGUgbWFpbGluZyBsaXN0LCBzbyB3aGlsZSB5b3Ug
+Y2FuIGVkaXQgYQ0KPiBmaWxlIG9uIGdpdGxhYiBhbmQgdGhlbiBzd2l0Y2ggdG8gdGhlIHRl
+cm1pbmFsIHRvIHNlbmQgYSBwYXRjaCwgdGhlDQo+IHdvcmRpbmcgJ0VkaXQgb24gR2l0TGFi
+JyBzdHJvbmdseSBzdWdnZXN0cyB3ZSB0YWtlIG1lcmdlIHJlcXVlc3RzLg0KPiANCj4gU3dp
+dGNoaW5nIGJhY2sgdG8gIlZpZXcgcGFnZSBzb3VyY2UiIGlzIGEgbW9yZSBhZ25vc3RpYyB0
+ZXJtIHRoYXQgZG9lcw0KPiBub3QgaW1wbHkgYSBwYXJ0aWN1bGFyIGNvbnRyaWJ1dGlvbiBh
+cHByb2FjaCwgdGhhdCB3ZSBoYWQgdXNlZCBpbiBRRU1VDQo+IGJlZm9yZToNCj4gDQo+ICAg
+IGNvbW1pdCA3M2U2YWVjNjUyMmUxZWRkNjNmNjMxYzUyNTc3YjQ5YTM5YmMyMzRmDQo+ICAg
+IEF1dGhvcjogTWFyYy1BbmRyw6kgTHVyZWF1IDxtYXJjYW5kcmUubHVyZWF1QHJlZGhhdC5j
+b20+DQo+ICAgIERhdGU6ICAgVHVlIE1hciAyMyAxNTo1MzoyOCAyMDIxICswNDAwDQo+IA0K
+PiAgICAgIHNwaGlueDogYWRvcHQga2VybmVsIHJlYWR0aGVkb2MgdGhlbWUNCj4gDQo+IFNp
+Z25lZC1vZmYtYnk6IERhbmllbCBQLiBCZXJyYW5nw6kgPGJlcnJhbmdlQHJlZGhhdC5jb20+
+DQo+IC0tLQ0KPiAgIGRvY3MvY29uZi5weSB8IDIgKy0NCj4gICAxIGZpbGUgY2hhbmdlZCwg
+MSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQgYS9kb2Nz
+L2NvbmYucHkgYi9kb2NzL2NvbmYucHkNCj4gaW5kZXggYzExYTZlYWQ4YS4uMTY0YThlZThi
+MiAxMDA2NDQNCj4gLS0tIGEvZG9jcy9jb25mLnB5DQo+ICsrKyBiL2RvY3MvY29uZi5weQ0K
+PiBAQCAtMTg2LDcgKzE4Niw3IEBADQo+ICAgXQ0KPiAgIA0KPiAgIGh0bWxfY29udGV4dCA9
+IHsNCj4gLSAgICAiZGlzcGxheV9naXRsYWIiOiBUcnVlLA0KPiArICAgICJzb3VyY2VfdXJs
+X3ByZWZpeCI6ICJodHRwczovL2dpdGxhYi5jb20vcWVtdS1wcm9qZWN0L3FlbXUvLS9ibG9i
+L21hc3Rlci9kb2NzLyIsDQo+ICAgICAgICJnaXRsYWJfdXNlciI6ICJxZW11LXByb2plY3Qi
+LA0KPiAgICAgICAiZ2l0bGFiX3JlcG8iOiAicWVtdSIsDQo+ICAgICAgICJnaXRsYWJfdmVy
+c2lvbiI6ICJtYXN0ZXIiLA0KDQpSZXZpZXdlZC1ieTogUGllcnJpY2sgQm91dmllciA8cGll
+cnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
 
