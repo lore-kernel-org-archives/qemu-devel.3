@@ -4,100 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FF0E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:52:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4268EE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:53:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKzid-0004hf-R9; Tue, 10 Dec 2024 07:52:08 -0500
+	id 1tKzj7-0004m1-Dr; Tue, 10 Dec 2024 07:52:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tKziJ-0004gL-5Q
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:51:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1tKziK-0004gb-Vy; Tue, 10 Dec 2024 07:51:46 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tKziH-0005du-D4
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:51:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733835099;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sPyybanmad0FLuxRatzsYWHqkMc3/rWd0IqmsyO6XOU=;
- b=VZwI6rda7rbbcmkbUdNe3XLDvGo8aePt5Ztiw8YtTKjnFh3jPkdq7D3hcU1sPNR/bDro4s
- ucO/MRhuNsOfmzs6CL5nfZrMHomd9T2gmtHNhet0D3mQSX53orrrvk11yACxLbwTWCkql3
- t2Q3XDhYjLZvJel0QFVT1NfZNRWwQxM=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-623-q18xvicqMWKeTxFWf7_Ihg-1; Tue, 10 Dec 2024 07:51:38 -0500
-X-MC-Unique: q18xvicqMWKeTxFWf7_Ihg-1
-X-Mimecast-MFC-AGG-ID: q18xvicqMWKeTxFWf7_Ihg
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-434fe2b605eso10314325e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 04:51:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733835097; x=1734439897;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sPyybanmad0FLuxRatzsYWHqkMc3/rWd0IqmsyO6XOU=;
- b=HGN1ivhgA+vZ3vMaMmlPdL5MhIiOiCBVyWqNgWPQIOWN4WyzgT/H10AH7m1whpTCzD
- Vt7rz6Bqn5f8PX0V9VMP8uwL7VZJM36FsVqtk+nE1M9qpkJQ51GQF74a6l1W7W3PZESH
- jR3nbil7vRpWrJRnkQl7cn5ltsUvasAE0wX7mYYEcWyuh+mQCiZQBQOeKi3VpgvO22+e
- a8wTNWtxKFgYlNy/r4C3lBtKaUflTNEx5hBvp6ohnyze/eUYdEmnvYhoxMRNZdlITe5c
- H5/AYWXKycFlDZs+7FBw3+7m1SyU/WtiDhVXVanBKkwt1zYjdBCFUhHgnyA/9ZzT4hkH
- m7pg==
-X-Gm-Message-State: AOJu0YzC5025z3JG3EBL2vTPbAJXjUr3IyE3g2zMt7tnYyNPcX+flcDi
- hqbJ0fFaE4aV/TvUuCssXs+qWLtwwd1cTJ2VVpDaCWf8TSG991qu2ImBCUdWyC6CnKmlO0E7/Wj
- rA0GDXJMOD1Ik+sion7cmoYh5Qle8rPg55WKzVDKzuRQfn39tH5Hi
-X-Gm-Gg: ASbGnctFJHYoyFUIgzaQ1aocAGo7xWQD+5tvVW/ce2o6uIouncFVvUlnvUCImEW+bKb
- wHhgQjmczd1ZYu1GuwrnzJuQhNV2EjjskNGI9sbiaQVyWZKF0cjR/QRA5RlIQY/46D4jtyNtWe3
- +H1C/64KfzAcKlmI4OWVrvFkm+o7F5WqM6nDcxCyfakWSRumaLJV+OO1vx5up4BHKRiNvoU2opj
- 0l+zFazgwUc3WYl3QqbLczPKICGITKVkrP/muRDcLHJd8ioT7cHUQ16wkifyELgeQ4mKmbUzgMn
- /anvyulIKoeVPiSqkBygOqDl6Q==
-X-Received: by 2002:a05:600c:3b87:b0:434:9d62:aa23 with SMTP id
- 5b1f17b1804b1-434fffa2b17mr32631795e9.20.1733835096230; 
- Tue, 10 Dec 2024 04:51:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHPHFURe9SxXSD6/iSwX7bNKwCxHV3anvx2r0ec2qVyUH7GnXYQZk9TLg794VpcGqlzt0fQQw==
-X-Received: by 2002:a05:600c:3b87:b0:434:9d62:aa23 with SMTP id
- 5b1f17b1804b1-434fffa2b17mr32631345e9.20.1733835094877; 
- Tue, 10 Dec 2024 04:51:34 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f981880csm71186785e9.44.2024.12.10.04.51.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 04:51:34 -0800 (PST)
-Date: Tue, 10 Dec 2024 13:51:33 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Mackay <eric.mackay@oracle.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Boris Ostrovsky
- <boris.ostrovsky@oracle.com>, "mst@redhat.com" <mst@redhat.com>,
- "anisinha@redhat.com" <anisinha@redhat.com>
-Subject: Re: [External] : Re: [RFC PATCH 0/1] ACPI: Fix missing CPU
- hotplug/hotunplug events with > 255 vCPUs
-Message-ID: <20241210135133.1cad008c@imammedo.users.ipa.redhat.com>
-In-Reply-To: <MN2PR10MB42694AF9F93475A6391AAC248C3D2@MN2PR10MB4269.namprd10.prod.outlook.com>
-References: <20241204005636.18705-1-eric.mackay@oracle.com>
- <20241209153606.49556593@imammedo.users.ipa.redhat.com>
- <MN2PR10MB42694AF9F93475A6391AAC248C3D2@MN2PR10MB4269.namprd10.prod.outlook.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <brueckner@linux.ibm.com>)
+ id 1tKziH-0005dr-G0; Tue, 10 Dec 2024 07:51:44 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA81hDZ002915;
+ Tue, 10 Dec 2024 12:51:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=JTMMSgfsN/pQB2OoJ
+ QGS2jo2oheEO0dCjdVjwSfr6OE=; b=eJ/bdF7Mdd/t61EHKAlTVQQPMz5tka4y6
+ UUfVJiu7TReBKxxpUFXXBcIilFmZYJ2/9oZFIDQoT+dVO1gnSyo9j8lWLxa6hTpt
+ 2TNpWwReWQZm7pA236yHfqkIo4bbrAnbKFetunjqarL2ihfk5CB+cST/Ue18o0NY
+ HcP0fa3tFZZLD8oVcvdbwCJE2xBWWIFAspmL15MRy2vqu1NY78tamM3q/YFbC+fv
+ P2Q1efwSxj5fVwT8uehI1hMlw1s78V4zzqvW3M5MVlRZ2yom7SDpTbgFi65c7Bq9
+ vIuc8VMOUJELVJCQSvaI/Dd5WBHDldlp4Cu9521lzsZxXVRK6OfDQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce0xdysh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 12:51:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA8bORX023039;
+ Tue, 10 Dec 2024 12:51:38 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d2wjubng-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 12:51:38 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BACpYrt61407554
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Dec 2024 12:51:35 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D92432004B;
+ Tue, 10 Dec 2024 12:51:34 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7504020043;
+ Tue, 10 Dec 2024 12:51:34 +0000 (GMT)
+Received: from vela.ibmuc.com (unknown [9.171.9.236])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Dec 2024 12:51:34 +0000 (GMT)
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: nsg@linux.ibm.com, frankja@linux.ibm.com, mimu@linux.ibm.com,
+ Hendrik Brueckner <brueckner@linux.ibm.com>
+Subject: [RFC PATCH] s390x/cpumodel: add MSA 12 consistency checks
+Date: Tue, 10 Dec 2024 13:51:28 +0100
+Message-ID: <20241210125128.38231-1-brueckner@linux.ibm.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <07b6501d-f342-444c-bb9e-45e314c750ed@linux.ibm.com>
+References: <07b6501d-f342-444c-bb9e-45e314c750ed@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: NW5wiqfd81l2Y0yRG7-MaUUIHHMExJlj
+X-Proofpoint-ORIG-GUID: NW5wiqfd81l2Y0yRG7-MaUUIHHMExJlj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 mlxlogscore=779
+ priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100093
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=brueckner@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,128 +106,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Dec 2024 01:22:24 +0000
-Eric Mackay <eric.mackay@oracle.com> wrote:
+The MSA 12 facility depends on MSA 6 for which only its
+subfunctions are defined as features.  Hence, require all
+MSA 6 subfunctions as pre-requisite for MSA 12.
 
-> On Mon,  9 Dec 2024 15:36:06 +0100
-> Igor Mammedov imammedo@redhat.com<mailto:imammedo@redhat.com> wrote:
-> 
-> > On Tue,  3 Dec 2024 16:56:35 -0800
-> > Eric Mackay eric.mackay@oracle.com<mailto:eric.mackay@oracle.com> wrote:
-> >  
-> >> ACPI hotplug with 255 or less vCPUs can use the legacy CPU hotplug interface, which does
-> >> not support hotunplug. If it's available, hotunplug will use the modern CPU hotplug interface.
-> >> This creates a situation where hotplug and hotunplug are using different interfaces, but
-> >> the end result is still functional. CPUs can be hotplugged and hotunplugged at will.  
-> >
-> > only one kind of interface should be in use. And for quite a while firmware shipped
-> > with QEMU is using QEMU provided ACPI tables, which in turn switch interface to
-> > modern hotplug when guest OS loads ACPI tables, see:
-> >          if (opts.has_legacy_cphp) {
-> >             method = aml_method("_INI", 0, AML_SERIALIZED);
-> > or firmware does the switch (OVMF usecase) before guest OS.
-> >
-> > if any hotplug action happened before guest switched hotplug favour,
-> > it will trigger SCI, which guest OS should process it (incl. switching
-> > to modern interface and sending necessary device check/remove events)
-> > once ACPI tables are processed.
-> >  
-> >> With > 255 vCPUs, both hotplug and hotunplug will use the modern ACPI interface.
-> >> There is no priority or rules of mutual exclusion defined in this interface,
-> >> and the behavior in the guest is implementation-defined.
-> >>
-> >> Unfortunately, it is possible to have both a hotplug and hotunplug event pending
-> >> for the same vCPU. When the guest processes its pending events, it may see the
-> >> hotplug but ignore the hotunplug.
-> >>
-> >> The most recent event is likely to reflect the desired state of the system, so
-> >> ignoring the hotunplug event in this scenario is unacceptable.  
-> >
-> > QEMU has delivered both events as it was intended (and in order plug then unplug).
-> > I'd say that ignoring events is a guest bug.
-> >
-> > With unplug, potentially if fixing guest is not an option
-> > one can try retry device_del to trigger unplug event again.
-> >
-> > PS:
-> > I vaguely recall linux kernel wiping GPE state on boot during
-> > initialization, but that is guest problem and should be fixed
-> > on guest side.
-> > (unexpectedly enough, Windows handles GPE state as expected)  
-> 
-> Consider the scenario where a hotplug is requested, the hotplug bit is then set.
-> ACPI event is sent to the guest. Before guest can act on it (either timing or
-> perhaps the guest is paused), unplug is requested for that same CPU, and the
-> unplug bit is now set. ACPI event is sent to guest again. The guest now wakes
-> up or becomes able to perform work, sees there is a pending ACPI event. The
-> guest now requests to read ACPI_CPU_FLAGS_OFFSET_RW, and sees both plug and
-> unplug are set. How does it know which to do first?
+Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+---
+ target/s390x/cpu_models.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-looking at the code some more, it looks like 2 parties are at fault
- 1. linux kernel clearing GPE status bits on boot without processing events,
-    (if it had processed pending CPU hotplug event, that would have cleared all
-     insert flags which are NOPs at this point)
- 2. a bug in CPU_SCAN_METHOD AML code, which doesn't take remove event branch
-    if there is insert event on the same CPU. So #1 effectively hides unplug
-    until user triggers the next (un)plug event.
-    Unplug request is just a request and if it didn't happen for some reason
-    the user shall repeat it.
-    However it doesn't excuse QEMU behavior which effectively doesn't process
-    pending remove event in the same scan loop.
-
-
-> >> Repro: This can be seen in practice when a q35 VM is started in qemu, with
-> >> maxcpus=260 or something above 255, and a few statically allocated CPUs.
-> >> Example smp line: "-smp 4,sockets=2,dies=1,cores=65,threads=2,maxcpus=260"
-> >> Then use libvirt to add vCPUs up to the maximum before continuing the VM. After
-> >> the guest starts up, delete one of the vCPUs. 'lscpu' in the guest should still
-> >> show 260.  
-> >
-> > above should work especially with unplug event happening after guest OS has booted.
-> > Lets simplify reproducer to QEMU only (i.e. getting rid of libvirt part) and see
-> > where it leads us.  
-> 
-> The guest has not processed the hotplug events that took place before the guest
-> OS booted. There is nothing to tell the guest OS that it needs to check ACPI
-> event flags, or to clear the hotplug bits since the CPUs are already present.
-> When the unplug comes, this is the first time the guest OS knows to check for
-> hotplug/unplug events. When it reads ACPI_CPU_FLAGS_OFFSET_RW it will see that
-> hotplug is still set for all the CPUs that came online before it booted, and it
-> will recognize they are already present. For the CPU that a unplug was
-> requested, the hotplug bit was never cleared prior, so the
-> ACPI_CPU_FLAGS_OFFSET_RW read will show both hotplug and unplug flags set. It's
-> now implementation-defined in the guest what it wants to do, or whether it
-> assigns priority to one event type or the other.
-> 
-> Agreed, the libvirt part shouldn't be important. I can come up with instructions for QEMU-only repro.
-
-one way to reproduce it would be use qmeu with uefi,
-boot till grub prompt and then do device_del and let guest to finish boot.
-The 2nd device_del works as workaround.
-
-
-> >> The proposed solution is to enforce mutual exclusion between the hotplug and hotunplug
-> >> bits in the modern ACPI interface. Setting a new pending event will clear a previously
-> >> pending event of the opposite type, thus preserving only the most recently requested
-> >> state.  
-> >
-> > Once VM is in running state, clearing flags from QEMU side is not safe.
-> > Effectively it would introduce a race with guest code.  
-> 
-> Yes, I see what you mean. Agreed this is not safe.
-> 
-> > Also I'm not sure that flags are the issue here,
-> > Capturing some CPUHP traces on QEMU side and logs from guest side
-> > might help to clarify what's going on.  
-> 
-> Will work on providing those traces and logs
-> 
-> >> Eric Mackay (1):
-> >>   ACPI: Enforce mutual exclusion betwen CPU insertion and removal events
-> >>
-> >>  hw/acpi/cpu.c         | 36 ++++++++++++++++++++++++++++++++----
-> >>  include/hw/acpi/cpu.h |  4 ++++
-> >>  2 files changed, 36 insertions(+), 4 deletions(-)
-> >>  
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index beb50b5300..a95e54fa8c 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -553,6 +553,18 @@ static void check_consistency(const S390CPUModel *model)
+         { S390_FEAT_PLO_QSTG, S390_FEAT_PLO_EXT },
+         { S390_FEAT_PLO_QSTX, S390_FEAT_PLO_EXT },
+         { S390_FEAT_PLO_QSTO, S390_FEAT_PLO_EXT },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHA3_224 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHA3_256 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHA3_384 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHA3_512 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHAKE_128 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KIMD_SHAKE_256 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHA3_224 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHA3_256 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHA3_384 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHA3_512 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHAKE_128 },
++        { S390_FEAT_MSA_EXT_12, S390_FEAT_KLMD_SHAKE_256 },
+     };
+     int i;
+ 
+-- 
+2.43.5
 
 
