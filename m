@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A847FE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 23:06:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE45E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 23:07:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL9JF-0007gQ-6Z; Tue, 10 Dec 2024 18:06:31 -0500
+	id 1tL9JQ-00089K-Ao; Tue, 10 Dec 2024 18:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9Io-0007No-F4
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:06:05 -0500
+ id 1tL9J2-0007aB-3e
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:06:18 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9If-00086r-Fa
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:06:02 -0500
+ id 1tL9J0-00088H-Fz
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:06:15 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9IX-00000003Z37-2zPt; Wed, 11 Dec 2024 00:05:45 +0100
-Message-ID: <f1bfd8df-54a6-43a8-a1fc-7687b994d7cc@maciej.szmigiero.name>
-Date: Wed, 11 Dec 2024 00:05:40 +0100
+ id 1tL9Iv-00000003Z3G-487v; Wed, 11 Dec 2024 00:06:09 +0100
+Message-ID: <5c6a0bc3-ab9a-4514-8feb-f3c17978d3af@maciej.szmigiero.name>
+Date: Wed, 11 Dec 2024 00:06:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 16/24] migration/multifd: Send final SYNC only after
- device state is complete
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v3_00/24=5D_Multifd_=F0=9F=94=80_device_st?=
+ =?UTF-8?Q?ate_transfer_support_with_VFIO_consumer?=
 To: Peter Xu <peterx@redhat.com>
 Cc: Fabiano Rosas <farosas@suse.de>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -39,10 +39,9 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
  qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <0b8131dc6107841969d254e88e9d6e14220f1ea5.1731773021.git.maciej.szmigiero@oracle.com>
- <87mshln2e8.fsf@suse.de>
- <945bab06-b6e6-449e-b810-7800b996ba83@maciej.szmigiero.name>
- <Z1H4zS_TXZtVJOhw@x1n>
+ <Z1CpIA7_o7s-NzJ_@x1n>
+ <23398782-6d92-48ae-99f3-855b405f366f@maciej.szmigiero.name>
+ <Z1N4qYOsEcfsC-H5@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -86,7 +85,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z1H4zS_TXZtVJOhw@x1n>
+In-Reply-To: <Z1N4qYOsEcfsC-H5@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -113,84 +112,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5.12.2024 20:02, Peter Xu wrote:
-> On Tue, Nov 26, 2024 at 10:22:42PM +0100, Maciej S. Szmigiero wrote:
->> On 26.11.2024 21:52, Fabiano Rosas wrote:
->>> "Maciej S. Szmigiero" <mail@maciej.szmigiero.name> writes:
+On 6.12.2024 23:20, Peter Xu wrote:
+> On Fri, Dec 06, 2024 at 07:03:36PM +0100, Maciej S. Szmigiero wrote:
+>> On 4.12.2024 20:10, Peter Xu wrote:
+>>> On Sun, Nov 17, 2024 at 08:19:55PM +0100, Maciej S. Szmigiero wrote:
+>>>> Important note:
+>>>> 4 VF benchmarks were done with commit 5504a8126115
+>>>> ("KVM: Dynamic sized kvm memslots array") and its revert-dependencies
+>>>> reverted since this seems to improve performance in this VM config if the
+>>>> multifd transfer is enabled: the downtime performance with this commit
+>>>> present is 1141 ms enabled / 1730 ms disabled.
+>>>>
+>>>> Smaller VF counts actually do seem to benefit from this commit, so it's
+>>>> likely that in the future adding some kind of a memslot pre-allocation
+>>>> bit stream message might make sense to avoid this downtime regression for
+>>>> 4 VF configs (and likely higher VF count too).
 >>>
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> Currently, ram_save_complete() sends a final SYNC multifd packet near this
->>>> function end, after sending all of the remaining RAM data.
->>>>
->>>> On the receive side, this SYNC packet will cause multifd channel threads
->>>> to block, waiting for the final sem_sync posting in
->>>> multifd_recv_terminate_threads().
->>>>
->>>> However, multifd_recv_terminate_threads() won't be called until the
->>>> migration is complete, which causes a problem if multifd channels are
->>>> still required for transferring device state data after RAM transfer is
->>>> complete but before finishing the migration process.
->>>>
->>>> Defer sending the final SYNC packet to the end of sending of
->>>> post-switchover iterable data instead if device state transfer is possible.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>> I'm confused why revert 5504a8126115 could be faster, and it affects as
+>>> much as 600ms.  Also how that effect differs can relevant to num of VFs.
 >>>
->>> Reviewed-by: Fabiano Rosas <farosas@suse.de>
->>>
->>> I wonder whether we could just defer the sync for the !device_state case
->>> as well.
+>>> Could you share more on this regression?  Because if that's problematic we
+>>> need to fix it, or upstream QEMU (after this series merged) will still not
+>>> work.
 >>>
 >>
->> AFAIK this should work, just wanted to be extra cautious with bit
->> stream timing changes in case there's for example some race in an
->> older QEMU version.
+>> The number of memslots that the VM uses seems to differ depending on its
+>> VF count, each VF using 2 memslots:
+>> 2 VFs, used slots: 13
+>> 4 VFs, used slots: 17
+>> 5 VFs, used slots: 19
 > 
-> I see the issue, but maybe we don't even need this patch..
+> It's still pretty less.
 > 
-> When I was working on commit 637280aeb2 previously, I forgot that the SYNC
-> messages are together with the FLUSH which got removed.  It means now in
-> complete() we will sent SYNCs always, but always without FLUSH.
+>>
+>> So I suspect this performance difference is due to these higher counts
+>> of memslots possibly benefiting from being preallocated on the previous
+>> QEMU code (before commit 5504a8126115).
+>>
+>> I can see that with this commit:
+>>> #define  KVM_MEMSLOTS_NR_ALLOC_DEFAULT                      16
+>>
+>> So it would explain why the difference is visible on 4 VFs only (and
+>> possibly higher VF counts, just I don't have an ability to test migrating
+>> it) since with 4 VF configs we exceed KVM_MEMSLOTS_NR_ALLOC_DEFAULT.
 > 
-> On new binaries, it means SYNCs are not collected properly on dest threads
-> so it'll hang all threads there.
-> 
-> So yeah, at least from that part it's me to blame..
-> 
-> I think maybe VFIO doesn't need to change the generic path to sync, because
-> logically speaking VFIO can also use multifd_send_sync_main() in its own
-> complete() hook to flush everything.  Here the trick is such sync doesn't
-> need to be attached to any message (either SYNC or FLUSH, that only RAM
-> uses).  The sync is about "sync against all sender threads", just like what
-> we do exactly with mapped-ram.  Mapped-ram tricked that path with a
-> use_packet check in sender thread, however for VFIO we could already expose
-> a new parameter to multifd_send_sync_main() saying "let's only sync
-> threads".
-> 
-> I sent two small patches here:
-> 
-> https://lore.kernel.org/r/20241205185303.897010-1-peterx@redhat.com
-> 
-> The 1st patch should fix the SYNC message hang for 637280aeb2 that I did.
-> The 2nd patch introduced the flag that I said.  I think after that applied
-> VFIO should be able to sync directly with:
-> 
->    multifd_send_sync_main(MULTIFD_SYNC_THREADS);
-> 
-> Then maybe we don't need this patch anymore.  Please have a look.
-> 
-> PS: the two patches could be ready to merge already even before VFIO, if
-> they're properly reviewed and acked.
+> I suppose it means kvm_slots_grow() is called once, but I don't understand
+> why it caused 500ms downtime!
 
-Thanks Peter for this alternate solution
+In this cover letter sentence:
+> "the downtime performance with this commit present is 1141 ms enabled / 1730 ms disabled"
+"enabled" and "disabled" refer to *multifd transfer* being enabled, not
+your patch being present (sorry for not being 100% clear there).
 
-I think/hope that by the time I will be preparing the next version of
-this patch multifd device state set these SYNC patches will be already
-merged and I can develop/test against them.
-  
-> Thanks,
+So the difference that the memslot patch makes is 1141 ms - 1095ms = 46 ms extra
+downtime, not 500 ms.
+
+I can guess this is because of extra contention on BQL, with unfortunate timing.
+
+> Not to mention, that patchset should at least reduce downtime OTOH due to
+> the small num of slots, because some of the dirty sync / clear path would
+> need to walk the whole slot array (our lookup is pretty slow for now, but
+> probably no good reason to rework it yet if it's mostly 10-20).
+
+With multifd transfer being disabled your memslot patch indeed improves the
+downtime by 1900 ms - 1730 ms = 170 ms.
+
+> In general, I would still expect that dynamic memslot work to speedup
+> (instead of slowing down) VFIO migrations.
 > 
+> There's something off here, or something I overlooked.  I suggest we figure
+> it out..  Even if we need to revert the kvm series on master, but I so far
+> doubt it.
+> 
+> Otherwise we should at least report the number with things on the master
+> branch, and we evaluate merging this series with that real number, because
+> fundamentally that's the numbers people will get when start using this
+> feature on master later.
+
+Sure, that's why in the cover letter I provided the numbers with your commit
+present, too.
 
 Thanks,
 Maciej
