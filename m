@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3403E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:49:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79C9EE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:50:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKyk5-0000Nt-Qu; Tue, 10 Dec 2024 06:49:29 -0500
+	id 1tKykq-00015d-Hc; Tue, 10 Dec 2024 06:50:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyjy-0000NN-CM; Tue, 10 Dec 2024 06:49:22 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1tKyko-00014u-F0; Tue, 10 Dec 2024 06:50:14 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyjw-0006T0-EH; Tue, 10 Dec 2024 06:49:21 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAB3TKr002621;
- Tue, 10 Dec 2024 11:49:19 GMT
+ id 1tKykm-0006ii-U3; Tue, 10 Dec 2024 06:50:14 -0500
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAAHkOF003062;
+ Tue, 10 Dec 2024 11:50:11 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=M7VWrb
- n8bDHmu+KnLbL9Da4RL9BrL1tlAxjyBlEFJ84=; b=qOiFB9Yru49LeF+uJRicNz
- /2QZcMwF2dOJ2+LbqMpHhNFCqDUSwHwDMlqqvFrEkDwLIhYgSYSElb/SwyPY1dGK
- oCtiiy7rdXgBUQzAIgqK4qCaj/MhmJIc1pECgLoJ24AQjbOcQYc9T9uTxqGiLArX
- G10QMvRgq6BFyEpG8JzAXpdwcizbDKkg4LSvdrzgrh5XjCmgcbklfNwNvtTvWHes
- YZAhfmOa3NBrxQL3sTeFlzTYF8gdlOn+VSqmZnoZqyE/+fg3e8o5jwTYFNN1aySv
- 4uoZ+gK49+p+8uIMdmBiBg5ugE7o8ZsJo2Q0l2niQSyHcCDPZiw8+BllHgoxrkaQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=wFGaen
+ f2eOQWr9GhkSYKZrgMvmku3yfrxSSB+aLHPq0=; b=GsKI3GCdcM2IHFzQliYMUY
+ VkkNnCnj3N7pyw8Y+o4EsUDai5K3HFq0aal4nkhOUIE8RsMRuQfozjXPUIgLjvnM
+ 1CIYRBqcJ5fq05KmuzLbkuQt1tJDNLY2s+yKSuVd8EGj0vepq4vPQEu2nINvy7FQ
+ 6ZVUkopdXr08BRWRaBGCGIsyhJNaxoRtyYfAm9wAHuiBY/uz/BEjYPRXqmt6CXYQ
+ 4Tp1r96CWg3Of67OGE+7xtBffGnWWsVvCSN2nlZHaP64Fij3KBKeT3ZtEv0Wr2cd
+ YBPPCBLaBD7T0505u3k7HuEhNMIHiTa7ymh7xPiEycRHLU1D8X2iseFLi8aDTlDg
  ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ccsjdu4w-1
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce1vpt2n-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:49:19 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAAm0oK016926;
- Tue, 10 Dec 2024 11:49:18 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d12y3kds-1
+ Tue, 10 Dec 2024 11:50:10 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAAe9kS032724;
+ Tue, 10 Dec 2024 11:50:10 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0psbmrj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:49:18 +0000
+ Tue, 10 Dec 2024 11:50:10 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BABnEQ151118516
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BABo6ql32506126
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 11:49:14 GMT
+ Tue, 10 Dec 2024 11:50:06 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9AE932004B;
- Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 778A920043;
+ Tue, 10 Dec 2024 11:50:06 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6ED5420043;
- Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4EB8220040;
+ Tue, 10 Dec 2024 11:50:06 +0000 (GMT)
 Received: from [9.155.198.95] (unknown [9.155.198.95])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
-Message-ID: <d1fbaafe-a4d4-4c7e-97ca-033108862055@linux.ibm.com>
-Date: Tue, 10 Dec 2024 12:49:14 +0100
+ Tue, 10 Dec 2024 11:50:06 +0000 (GMT)
+Message-ID: <900ab321-e5ae-464a-a02d-31c04840ed2f@linux.ibm.com>
+Date: Tue, 10 Dec 2024 12:50:06 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 11/15] s390x/cpumodel: add
- Ineffective-nonconstrained-transaction facility
+Subject: Re: [RFC PATCH v2 12/15] s390x/cpumodel: Add
+ Sequential-Instruction-Fetching facility
 To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
 References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-12-brueckner@linux.ibm.com>
+ <20241206122751.189721-13-brueckner@linux.ibm.com>
 Content-Language: en-US
 From: Janosch Frank <frankja@linux.ibm.com>
 Autocrypt: addr=frankja@linux.ibm.com; keydata=
@@ -113,23 +113,23 @@ Autocrypt: addr=frankja@linux.ibm.com; keydata=
  DchCqFm5adiSP5+OT4NjkKUeGpBe/aRyQSle/RropTgCi85pje/juYEn2P9UAgkfBJrOHvQ9
  Z+2Sva8FRd61NJLkCJ4LFumRn9wQlX2icFbi8UDV3do0hXJRRYTWCxrHscMhkrFWLhYiPF4i
  phX7UNdOWBQ90qpHyAxHmDazdo27gEjfvsgYMdveKknEOTEb5phwxWgg7BcIDoJf9UMC
-In-Reply-To: <20241206122751.189721-12-brueckner@linux.ibm.com>
+In-Reply-To: <20241206122751.189721-13-brueckner@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ocBmLgLccNf4ZFIo60uTORZxmW24ihoG
-X-Proofpoint-ORIG-GUID: ocBmLgLccNf4ZFIo60uTORZxmW24ihoG
+X-Proofpoint-GUID: hOyzJOWUyMg8t3Vy9i9-UgRI6GXIFY5C
+X-Proofpoint-ORIG-GUID: hOyzJOWUyMg8t3Vy9i9-UgRI6GXIFY5C
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=638
- mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412100085
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ lowpriorityscore=0
+ priorityscore=1501 clxscore=1015 phishscore=0 bulkscore=0 mlxlogscore=622
+ impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100085
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=frankja@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -154,8 +154,8 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
-> This facility indicates reduced support for noncontrained
-> transactional-execution.
+> The sequential instruction fetching facility provides few guarantees,
+> for example, to avoid stop machine calls on enabling/disabling kprobes.
 > 
 > Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
