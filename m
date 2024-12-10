@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78337E77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:08:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2736AE77182
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:18:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2kD-0001bN-I4; Tue, 10 Dec 2024 11:05:53 -0500
+	id 1tL2vx-0002RA-En; Tue, 10 Dec 2024 11:18:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2k1-0001KI-KB
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:05:41 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tL2vr-0002OP-HE
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:17:57 -0500
+Received: from mail-lf1-x135.google.com ([2a00:1450:4864:20::135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2jz-0004dY-LJ
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:05:41 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso5148225e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:05:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tL2vo-0006GZ-HH
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:17:54 -0500
+Received: by mail-lf1-x135.google.com with SMTP id
+ 2adb3069b0e04-5401c52000fso2375107e87.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:17:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733846738; x=1734451538; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733847470; x=1734452270; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=LT6KhyB+vUkMBosuHLU40Z3OxzVZoUi/E1K2RrfIH3E=;
- b=e6jsCV+V9lto265T1/jHwQi+Eqara2nkWKnT8P8YBAV0uqKLo+2Walb7yl7jAHES7S
- uq8+lxLeQaLskCGaLHMm+rU6Hz/4WWtNxnRV+k1KoQTq5Ng6AeXfLFueYfY5u4Xy84tq
- aroR/EVC0L+IQJuWg9baA5ldyTZfhMJ6UhulnZcFUmfa7U6GlIIRCYATzXTXodT1IseA
- 9pOn9W5phHQKjjKBGwS1CfFxWM1GuitJvwT6Mj6+tH3jv9/tsfzIBjSoVSucH3qI7Vn+
- l+rOHkYXIQcZCaO5AbDvYVFdWlKCr5YZJKSjZorRZlqhPLRK6ezAE2TLGpfAWYL6r6tZ
- ofWw==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ifcSfCHSTTtxXndi5QQbGHpzoZtEugLsXBXrGvDqkmU=;
+ b=w3yHLz2QxsG2UDyAXUuIeXMR0a6SduLCrpnImiKEUe5xCQj4hP3K27vdBaV5W+0gIy
+ Eyj1NFgrGB1BsKXPUw8dA0ElzhwxbkSIcAaJJjaCHLWcXInkqyLC5d3lqrJYtsg8b9lK
+ lNYWFKD5GmF4azcN1R86wn8dF9JV5olpN70WeF8DYfc640Ujk3J19OvbtTBSSqW/h+/q
+ 2CaGhb7KzIMO+1T83Y6v2w0iSDJCMRdouYuSfRgXXgtJRAgjV7oUAT3jmh98VQnT2z+f
+ eleYmY3YKeAUcJuTMLj+TF725db+X6JBDFWJXIWPYF6PjjYTOUIQ386XiQPa+t4mlgZg
+ rVOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733846738; x=1734451538;
+ d=1e100.net; s=20230601; t=1733847470; x=1734452270;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LT6KhyB+vUkMBosuHLU40Z3OxzVZoUi/E1K2RrfIH3E=;
- b=Rk7oLba7b8HT/rDt0NiGJEfT4aPJWdTPSjupYwgoW1zbxHr0qfZQ//sfxL5qVotIqP
- 4EA5dB6S6rB3osiq+XMC5/rDtHQnKFtUKO7n/G9Uia4HwRdydPSwJ42vMW7PBMR9h7S+
- ZxYU/QVfSLId+EpxtqGWtg3TRNa64fVzua7QFqV6Ma8hie6/2v92r9358XG9FXQMykyy
- ggCoVnZ9qHLk96/cqQUS1zeTF6JRtlscY5z6MQI98w6DB+cKphQTfK2LXzv+qa0LHxcR
- LNCUHe8YaPO4ApDNfiZltC+mIpZvKsHcXNlyA+1dRPf9g80rIZkbTtN404D6UZB38Jn+
- AfkQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUBhyAZBoIAKLZdpX3bGCVo2cMrsgMFyn3u8fkq0NhsDyoRSAfL9148XakeuIIfab+3o+c3kLMMrHaM@nongnu.org
-X-Gm-Message-State: AOJu0Yx6+17ffv9m3qkJ3fLkSnfQPnMSadDS9IKup9tiuscGZjEEOWta
- H+icWVjtogX9rM32lwlucc+Byd2P/+tNx23YAaEYR4oV/CzQ4feHX2oyuCc0cWs=
-X-Gm-Gg: ASbGncvMnmFzEzdetbL4MoY3hXMB2NByIfRc2c6NEtQn0HyKd3d4ElaAIYVM6cxwt73
- Ky4PWWGbzTAvuO12RrYQHbSuq6Nl7joFrV9uBD62lT3kjqmvJkrFqBKpgbb90ebfSw+P3PUSI0Y
- eRgYABJ2WnjKnmZkkFD551CPPqVeE+y+O1QGn0eUr+foZQHsweGpVl7NiPv5IvuwMHsT9/dhvri
- MUyrTKtTTQYaobV5x5sbr4HrH0uPHVPAD+OeoDzzNMTYT0oIh2AGmFlwC/3
-X-Google-Smtp-Source: AGHT+IFV8LtdhtZ0VZPXUS8lab5NIBW4JLTKZlYEflNIfGZ/NLZ6/IUsxNDNcumev70VJaPKoJQ6ZQ==
-X-Received: by 2002:a05:600c:5799:b0:434:a4b3:5ebe with SMTP id
- 5b1f17b1804b1-434dded7708mr131954605e9.24.1733846737326; 
- Tue, 10 Dec 2024 08:05:37 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434e8ec8072sm124671605e9.18.2024.12.10.08.05.33
+ bh=ifcSfCHSTTtxXndi5QQbGHpzoZtEugLsXBXrGvDqkmU=;
+ b=naqbG5khHce/age+syuowm6sN0ITajdqqQUUry+GBgqcYFr/Q7fXu3YARFKGmaQqzX
+ DDD9gq/l0b3Qm8VseCOr6+xxuvaL1Ft/F3sqCrDGZC7Y60fAaWVsMol0EcZnggSdSrD7
+ 1TOv/T/RdjR4ffVXr0wpRXENGDP+hHEjvShFYn/VJ6xUWAb8pbalvlxEzqxJxlqprJiI
+ D+zD7veK3zmyGXMzjYAApGn39vVxn3cXCTXJerioCcCfuevruDZ7CNgcVvVOC9gE45l5
+ EmjjoHXJjQBXIULvlkxXc1A18Vjq8GDha1QH2tw/uaKQ+ltO6cJrGE5VjiyemT7qyQfN
+ 3fHg==
+X-Gm-Message-State: AOJu0Ywi1GFuayP0J0hXTAsOEqJAyEAEo8LPXO7MeBraQppqo6RDYy3+
+ rKJ/fSQ+XUTA+Wx79LoPmIMpKJxcxFOBqbt/+fkvqxWWon/UihRJ/fK2usC1oaWUK3vt1II9LhD
+ dzRmw7RqA
+X-Gm-Gg: ASbGncuwbIf8N1CAkDYU0/+OfB5KOiw0TNme5uhhfYauoqyic1TTD5gd+BRfXud9NQP
+ rBRjZzKi8+mmjviZ42QExTSFUUV68tOVePjfVgweHbFPkNPc6AYSmXMBMDKAAA5Rr1vVN//NiAi
+ gYHkanCNTHxicLrnrv9+H95v76ycxzRQeOf9cfJXxB3J70W9sx9Iev+EzKSCoiHHrTYZBrM0qU8
+ 4q5nRekacZ8hBTEtRud5HUzvxzHv68SEwszOYovL+/tO3u0sbOQvzXQ/1M=
+X-Google-Smtp-Source: AGHT+IHZ3+W6jOnUueFZ9euvumMrj+kUX6lbnD7dFMIb7ZOpTBGwFCPBQY6BbTa3NFtUvDM2Rac4uw==
+X-Received: by 2002:a05:6512:118e:b0:53e:2789:ffd0 with SMTP id
+ 2adb3069b0e04-540241048famr2202298e87.43.1733847470303; 
+ Tue, 10 Dec 2024 08:17:50 -0800 (PST)
+Received: from stoup.. ([91.209.212.80]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-53f93377eefsm1026343e87.67.2024.12.10.08.17.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 08:05:33 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH 09/10] target/arm: Move RME TLB insns to tlb-insns.c
-Date: Tue, 10 Dec 2024 16:04:51 +0000
-Message-Id: <20241210160452.2427965-10-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241210160452.2427965-1-peter.maydell@linaro.org>
-References: <20241210160452.2427965-1-peter.maydell@linaro.org>
+ Tue, 10 Dec 2024 08:17:49 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 02/69] target/arm: Convert UDIV, SDIV to decodetree
+Date: Tue, 10 Dec 2024 10:16:26 -0600
+Message-ID: <20241210161733.1830573-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241210161733.1830573-1-richard.henderson@linaro.org>
+References: <20241210161733.1830573-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::135;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,140 +99,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the FEAT_RME specific TLB insns across to tlb-insns.c.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/helper.c        | 38 --------------------------------
- target/arm/tcg/tlb-insns.c | 45 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 38 deletions(-)
+ target/arm/tcg/translate-a64.c | 64 +++++++++++++++++-----------------
+ target/arm/tcg/a64.decode      |  7 ++++
+ 2 files changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index cd9f8650316..910ae62c476 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -6525,14 +6525,6 @@ static const ARMCPRegInfo sme_reginfo[] = {
-       .type = ARM_CP_CONST, .resetvalue = 0 },
- };
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index b2851ea503..9f687ba840 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7485,6 +7485,36 @@ TRANS(UQRSHRN_si, do_scalar_shift_imm_narrow, a, uqrshrn_fns, 0, false)
+ TRANS(SQSHRUN_si, do_scalar_shift_imm_narrow, a, sqshrun_fns, MO_SIGN, false)
+ TRANS(SQRSHRUN_si, do_scalar_shift_imm_narrow, a, sqrshrun_fns, MO_SIGN, false)
  
--static void tlbi_aa64_paall_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                  uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--
--    tlb_flush(cs);
--}
--
- static void gpccr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                         uint64_t value)
- {
-@@ -6550,14 +6542,6 @@ static void gpccr_reset(CPUARMState *env, const ARMCPRegInfo *ri)
-                                      env_archcpu(env)->reset_l0gptsz);
- }
- 
--static void tlbi_aa64_paallos_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                    uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--
--    tlb_flush_all_cpus_synced(cs);
--}
--
- static const ARMCPRegInfo rme_reginfo[] = {
-     { .name = "GPCCR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 2, .crm = 1, .opc2 = 6,
-@@ -6569,28 +6553,6 @@ static const ARMCPRegInfo rme_reginfo[] = {
-     { .name = "MFAR_EL3", .state = ARM_CP_STATE_AA64,
-       .opc0 = 3, .opc1 = 6, .crn = 6, .crm = 0, .opc2 = 5,
-       .access = PL3_RW, .fieldoffset = offsetof(CPUARMState, cp15.mfar_el3) },
--    { .name = "TLBI_PAALL", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 7, .opc2 = 4,
--      .access = PL3_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_paall_write },
--    { .name = "TLBI_PAALLOS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 1, .opc2 = 4,
--      .access = PL3_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_paallos_write },
--    /*
--     * QEMU does not have a way to invalidate by physical address, thus
--     * invalidating a range of physical addresses is accomplished by
--     * flushing all tlb entries in the outer shareable domain,
--     * just like PAALLOS.
--     */
--    { .name = "TLBI_RPALOS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 4, .opc2 = 7,
--      .access = PL3_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_paallos_write },
--    { .name = "TLBI_RPAOS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 4, .opc2 = 3,
--      .access = PL3_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_paallos_write },
-     { .name = "DC_CIPAPA", .state = ARM_CP_STATE_AA64,
-       .opc0 = 1, .opc1 = 6, .crn = 7, .crm = 14, .opc2 = 1,
-       .access = PL3_W, .type = ARM_CP_NOP },
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 51b4756e31e..d20d32624da 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -1181,6 +1181,48 @@ static const ARMCPRegInfo tlbios_reginfo[] = {
-       .access = PL3_W, .type = ARM_CP_NO_RAW,
-       .writefn = tlbi_aa64_vae3is_write },
- };
-+
-+static void tlbi_aa64_paall_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
++static bool do_div(DisasContext *s, arg_rrr_sf *a, bool is_signed)
 +{
-+    CPUState *cs = env_cpu(env);
++    TCGv_i64 tcg_n, tcg_m, tcg_rd;
++    tcg_rd = cpu_reg(s, a->rd);
 +
-+    tlb_flush(cs);
-+}
-+
-+static void tlbi_aa64_paallos_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+
-+    tlb_flush_all_cpus_synced(cs);
-+}
-+
-+static const ARMCPRegInfo tlbi_rme_reginfo[] = {
-+    { .name = "TLBI_PAALL", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 7, .opc2 = 4,
-+      .access = PL3_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_paall_write },
-+    { .name = "TLBI_PAALLOS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 1, .opc2 = 4,
-+      .access = PL3_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_paallos_write },
-+    /*
-+     * QEMU does not have a way to invalidate by physical address, thus
-+     * invalidating a range of physical addresses is accomplished by
-+     * flushing all tlb entries in the outer shareable domain,
-+     * just like PAALLOS.
-+     */
-+    { .name = "TLBI_RPALOS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 4, .opc2 = 7,
-+      .access = PL3_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_paallos_write },
-+    { .name = "TLBI_RPAOS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 6, .crn = 8, .crm = 4, .opc2 = 3,
-+      .access = PL3_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_paallos_write },
-+};
-+
- #endif
- 
- void define_tlb_insn_regs(ARMCPU *cpu)
-@@ -1219,5 +1261,8 @@ void define_tlb_insn_regs(ARMCPU *cpu)
-     if (cpu_isar_feature(aa64_tlbios, cpu)) {
-         define_arm_cp_regs(cpu, tlbios_reginfo);
-     }
-+    if (cpu_isar_feature(aa64_rme, cpu)) {
-+        define_arm_cp_regs(cpu, tlbi_rme_reginfo);
++    if (!a->sf && is_signed) {
++        tcg_n = tcg_temp_new_i64();
++        tcg_m = tcg_temp_new_i64();
++        tcg_gen_ext32s_i64(tcg_n, cpu_reg(s, a->rn));
++        tcg_gen_ext32s_i64(tcg_m, cpu_reg(s, a->rm));
++    } else {
++        tcg_n = read_cpu_reg(s, a->rn, a->sf);
++        tcg_m = read_cpu_reg(s, a->rm, a->sf);
 +    }
- #endif
++
++    if (is_signed) {
++        gen_helper_sdiv64(tcg_rd, tcg_n, tcg_m);
++    } else {
++        gen_helper_udiv64(tcg_rd, tcg_n, tcg_m);
++    }
++
++    if (!a->sf) { /* zero extend final result */
++        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
++    }
++    return true;
++}
++
++TRANS(SDIV, do_div, a, true)
++TRANS(UDIV, do_div, a, false)
++
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -8425,32 +8455,6 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+ #undef MAP
  }
+ 
+-static void handle_div(DisasContext *s, bool is_signed, unsigned int sf,
+-                       unsigned int rm, unsigned int rn, unsigned int rd)
+-{
+-    TCGv_i64 tcg_n, tcg_m, tcg_rd;
+-    tcg_rd = cpu_reg(s, rd);
+-
+-    if (!sf && is_signed) {
+-        tcg_n = tcg_temp_new_i64();
+-        tcg_m = tcg_temp_new_i64();
+-        tcg_gen_ext32s_i64(tcg_n, cpu_reg(s, rn));
+-        tcg_gen_ext32s_i64(tcg_m, cpu_reg(s, rm));
+-    } else {
+-        tcg_n = read_cpu_reg(s, rn, sf);
+-        tcg_m = read_cpu_reg(s, rm, sf);
+-    }
+-
+-    if (is_signed) {
+-        gen_helper_sdiv64(tcg_rd, tcg_n, tcg_m);
+-    } else {
+-        gen_helper_udiv64(tcg_rd, tcg_n, tcg_m);
+-    }
+-
+-    if (!sf) { /* zero extend final result */
+-        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
+-    }
+-}
+ 
+ /* LSLV, LSRV, ASRV, RORV */
+ static void handle_shift_reg(DisasContext *s,
+@@ -8552,12 +8556,6 @@ static void disas_data_proc_2src(DisasContext *s, uint32_t insn)
+             }
+         }
+         break;
+-    case 2: /* UDIV */
+-        handle_div(s, false, sf, rm, rn, rd);
+-        break;
+-    case 3: /* SDIV */
+-        handle_div(s, true, sf, rm, rn, rd);
+-        break;
+     case 4: /* IRG */
+         if (sf == 0 || !dc_isar_feature(aa64_mte_insn_reg, s)) {
+             goto do_unallocated;
+@@ -8616,6 +8614,8 @@ static void disas_data_proc_2src(DisasContext *s, uint32_t insn)
+     }
+     default:
+     do_unallocated:
++    case 2: /* UDIV */
++    case 3: /* SDIV */
+         unallocated_encoding(s);
+         break;
+     }
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index d28efb884d..c218f6afbc 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -28,6 +28,7 @@
+ &r              rn
+ &ri             rd imm
+ &rri_sf         rd rn imm sf
++&rrr_sf         rd rn rm sf
+ &i              imm
+ &rr_e           rd rn esz
+ &rri_e          rd rn imm esz
+@@ -652,6 +653,12 @@ CPYE            00 011 1 01100 ..... .... 01 ..... ..... @cpy
+ ### Data Processing (register)
+ 
+ # Data Processing (2-source)
++
++@rrr_sf         sf:1 .......... rm:5 ...... rn:5 rd:5   &rrr_sf
++
++UDIV            . 00 11010110 ..... 00001 0 ..... ..... @rrr_sf
++SDIV            . 00 11010110 ..... 00001 1 ..... ..... @rrr_sf
++
+ # Data Processing (1-source)
+ # Logical (shifted reg)
+ # Add/subtract (shifted reg)
 -- 
-2.34.1
+2.43.0
 
 
