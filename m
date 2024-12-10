@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F1C6E77183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F09AE77180
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL280-0006hy-6Y; Tue, 10 Dec 2024 10:26:24 -0500
+	id 1tL2BJ-0000sM-IO; Tue, 10 Dec 2024 10:29:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL26d-0004np-CH
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:25:00 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL26b-0008Qk-Qo
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:24:59 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3eb5a870158so894394b6e.3
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:24:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733844296; x=1734449096; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=f6P3xyzuUO6ajbsFv/D5weUMav3zZ6/9YwAqMDo4N8Q=;
- b=ybUxyOdl1hfr51PtOePA3Wo9rxHWfbs0fkg0AjnPaYvxuw3SV2X/qwT0b8k+nlGeej
- 9uO6/AT+L0rrYqHvvnsHVg44t0jixkiWL31ybrRVoBTe9fd/6MBIReYVqePrVpp1C0nr
- GKJ6pF2cnLOkE6sQlrQVpr/eLaTjeTdDfoKfQR6KofZztQS12F49zGdjEbBVKJv4hMIs
- XWltBQ/baDQDuT6/mrENYNvo5T9mfncVZPPK/j1ZNsYVg8uiHP1eolxDhgnx7U2N5yNT
- Vn16UolNqq2cfn6ZRCxIjBETBEYAxAYsFAi1Xi1t63kwQm6q9jtc9fLlztlxseBuxjPL
- mGWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733844296; x=1734449096;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f6P3xyzuUO6ajbsFv/D5weUMav3zZ6/9YwAqMDo4N8Q=;
- b=iwD9ZzkOpSMWReOINcp07Kt2aPxvOEPVpwbT9x07iSjlqgI+JPXpDJ/aII2zfP0B1N
- 4uJ61avAqoLDSflU12vGaVpfapOfb81+zn80CK7kxAhDOCHyGJn4WkJuGHvC7ab3S+ff
- SEdyiKuYa5HJ80W2QLvvy3MYoDoSeN+gGOiy1U9V59MKCEnXNhnHlvGpYPEkrqh3rI5b
- /n+xBPxrOW0Ey89XmfJ85alc8lMTle48BOFdTvrHHDW1YBY2uUtyAq/DabgvPWQI8dgt
- EGZpLoWLewuIuknbTfZv2iT00wm39+JElCAEg0raPHj1Km1hC8VJp48CJgBJKi7KdNWA
- nfRA==
-X-Gm-Message-State: AOJu0YyJfxNtURqSj59bYTDhf5qsgq/OUcTg094IA49ygZiQi/V0Oj46
- ytZRj2FCX8IkjhADiM2h5UxYWsnE0u7w8SyRL3/bmI1BsDbA7dJ6ETvfZ8VdBuarDls/4i/QQ4u
- sOGVBREzT
-X-Gm-Gg: ASbGncu1H4TucH1ecatvowfa2anzXGQLCDU83MYiHHrnGViKXJL5l0q4DzNgcDyIk9w
- UNPSqtMkfmMfpXQUy/zjaZVr7P6bf678xfPrZYKSJsfrdb45tupFDaq9E4zJXGQzMrX3lnLu62k
- rcymIH7mJJ0w8hN7QCzY+Vs8P5OZ8jQNWT29fZJnnAhRmkHyNUI12AertaihVTOAiJy1cE+nI4M
- jr/gKGhLiWZoADFE0qe70qX2rOUhtKq5OrAlPIsX1qi3GzLcSdkciGOrjK8eQ==
-X-Google-Smtp-Source: AGHT+IHgRueGUFbhkW5HCogU0sRzGYb/SOOWkxLDetsvvmIvWfgPI0F6xdYKYQr4X2H1jQCJkYpzVw==
-X-Received: by 2002:a05:6808:2110:b0:3e7:df63:15bc with SMTP id
- 5614622812f47-3eb19c7771dmr12152193b6e.12.1733844296666; 
- Tue, 10 Dec 2024 07:24:56 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eb076b9168sm2776435b6e.14.2024.12.10.07.24.55
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 07:24:56 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 39/46] tcg/optimize: Use fold_masks_zs in fold_tcg_ld
-Date: Tue, 10 Dec 2024 09:23:54 -0600
-Message-ID: <20241210152401.1823648-40-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241210152401.1823648-1-richard.henderson@linaro.org>
-References: <20241210152401.1823648-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1tL2B1-0000dt-Nt
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:29:32 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
+ id 1tL2Az-0000P3-9b
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:29:31 -0500
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BACkV3f014059;
+ Tue, 10 Dec 2024 15:29:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ 2szg2KQnE3LLCrAdDqyvAF8+w4uL4RRzd+go3VFNtWE=; b=lyHvSQoDSVfDG19A
+ 6Abg0Q/I3R+wBXFso/ZeSoQDsQrVfR7utEPKVLlAarmrLk+Tt96eMegaFQa3DeLU
+ OwEZfU10T59YM3HVYjfmE8iejMKKNm9ABQk4JKBxYxiTVct5pgHBPFHG7foGjwdH
+ sKnRcTRhfqRWGKHVzCUdhmIvjDmFCJNc19Q8QbE0TZqw8PsMVToe5L9ldltS3xc9
+ yGO4RiUHpE021CqHCXgIpqAqdD1NfbBh6WOPXBdrryddknXwS4lMXWjjoIrIddmq
+ C4ELtZF2yLEXOMNgF8DAmuTQBxBiFYLqwX8Nratmx0KbA6AFOoHJWgeb5vhMqy9c
+ qSleQA==
+Received: from nalasppmta02.qualcomm.com (Global_NAT1.qualcomm.com
+ [129.46.96.20])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43dvyan3j7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 15:29:20 +0000 (GMT)
+Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
+ [10.47.97.35])
+ by NALASPPMTA02.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BAFTJqw022651
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 15:29:19 GMT
+Received: from [10.111.162.254] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
+ 2024 07:29:18 -0800
+Message-ID: <8b52c8af-2f85-4849-989d-0e64fa64e635@quicinc.com>
+Date: Tue, 10 Dec 2024 09:29:17 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 11/17] target/hexagon: Use float32_muladd for
+ helper_sffm[as]_lib
+To: Richard Henderson <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
+CC: <peter.maydell@linaro.org>, <mark.cave-ayland@ilande.co.uk>, Brian Cain
+ <brian.cain@oss.qualcomm.com>
+References: <20241208224844.570491-1-richard.henderson@linaro.org>
+ <20241208224844.570491-12-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Brian Cain <quic_bcain@quicinc.com>
+In-Reply-To: <20241208224844.570491-12-richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
+X-QCInternal: smtphost
+X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
+ signatures=585085
+X-Proofpoint-GUID: Z3V98NDEO3W7ZGcoY3RtbCU3fA9vylQP
+X-Proofpoint-ORIG-GUID: Z3V98NDEO3W7ZGcoY3RtbCU3fA9vylQP
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0
+ mlxlogscore=593 mlxscore=0 priorityscore=1501 suspectscore=0 clxscore=1015
+ malwarescore=0 impostorscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412100115
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,62 +105,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 22 ++++++++++++----------
- 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 6412d5df37..4cccb3b0cf 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2636,33 +2636,35 @@ static bool fold_sub2(OptContext *ctx, TCGOp *op)
- 
- static bool fold_tcg_ld(OptContext *ctx, TCGOp *op)
- {
-+    uint64_t z_mask = -1, s_mask;
-+
-     /* We can't do any folding with a load, but we can record bits. */
-     switch (op->opc) {
-     CASE_OP_32_64(ld8s):
--        ctx->s_mask = MAKE_64BIT_MASK(8, 56);
-+        s_mask = MAKE_64BIT_MASK(8, 56);
-         break;
-     CASE_OP_32_64(ld8u):
--        ctx->z_mask = MAKE_64BIT_MASK(0, 8);
--        ctx->s_mask = MAKE_64BIT_MASK(9, 55);
-+        z_mask = MAKE_64BIT_MASK(0, 8);
-+        s_mask = MAKE_64BIT_MASK(9, 55);
-         break;
-     CASE_OP_32_64(ld16s):
--        ctx->s_mask = MAKE_64BIT_MASK(16, 48);
-+        s_mask = MAKE_64BIT_MASK(16, 48);
-         break;
-     CASE_OP_32_64(ld16u):
--        ctx->z_mask = MAKE_64BIT_MASK(0, 16);
--        ctx->s_mask = MAKE_64BIT_MASK(17, 47);
-+        z_mask = MAKE_64BIT_MASK(0, 16);
-+        s_mask = MAKE_64BIT_MASK(17, 47);
-         break;
-     case INDEX_op_ld32s_i64:
--        ctx->s_mask = MAKE_64BIT_MASK(32, 32);
-+        s_mask = MAKE_64BIT_MASK(32, 32);
-         break;
-     case INDEX_op_ld32u_i64:
--        ctx->z_mask = MAKE_64BIT_MASK(0, 32);
--        ctx->s_mask = MAKE_64BIT_MASK(33, 31);
-+        z_mask = MAKE_64BIT_MASK(0, 32);
-+        s_mask = MAKE_64BIT_MASK(33, 31);
-         break;
-     default:
-         g_assert_not_reached();
-     }
--    return false;
-+    return fold_masks_zs(ctx, op, z_mask, s_mask);
- }
- 
- static bool fold_tcg_ld_memcopy(OptContext *ctx, TCGOp *op)
--- 
-2.43.0
-
+On 12/8/2024 4:48 PM, Richard Henderson wrote:
+> There are multiple special cases for this instruction.
+> (1) The saturate to normal maximum instead of overflow to infinity is
+>      handled by the new float_round_nearest_even_max rounding mode.
+> (2) The 0 * n + c special case is handled by the new
+>      float_muladd_suppress_add_product_zero flag.
+> (3) The Inf - Inf -> 0 special case can be detected after the fact
+>      by examining float_flag_invalid_isi.
+>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/hexagon/op_helper.c | 105 +++++++++----------------------------
+>   1 file changed, 26 insertions(+), 79 deletions(-)
+>
+> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+> index eb010422bf..26e329f7b9 100644
+> --- a/target/hexagon/op_helper.c
+> +++ b/target/hexagon/op_helper.c
+> @@ -1171,24 +1171,6 @@ float32 HELPER(sffma)(CPUHexagonState *env, float32 RxV,
+>       return RxV;
+>   }
+>   
+> -static bool is_zero_prod(float32 a, float32 b)
+> -{
+> -    return ((float32_is_zero(a) && is_finite(b)) ||
+> -            (float32_is_zero(b) && is_finite(a)));
+> -}
+> -
+> -static float32 check_nan(float32 dst, float32 x, float_status *fp_status)
+> -{
+> -    float32 ret = dst;
+> -    if (float32_is_any_nan(x)) {
+> -        if (extract32(x, 22, 1) == 0) {
+> -            float_raise(float_flag_invalid, fp_status);
+> -        }
+> -        ret = make_float32(0xffffffff);    /* nan */
+> -    }
+> -    return ret;
+> -}
+> -
+>   float32 HELPER(sffma_sc)(CPUHexagonState *env, float32 RxV,
+>                            float32 RsV, float32 RtV, float32 PuV)
+>   {
+> @@ -1210,78 +1192,43 @@ float32 HELPER(sffms)(CPUHexagonState *env, float32 RxV,
+>       return RxV;
+>   }
+>   
+> -static bool is_inf_prod(int32_t a, int32_t b)
+> +static float32 do_sffma_lib(CPUHexagonState *env, float32 RxV,
+> +                            float32 RsV, float32 RtV, int negate)
+>   {
+> -    return (float32_is_infinity(a) && float32_is_infinity(b)) ||
+> -           (float32_is_infinity(a) && is_finite(b) && !float32_is_zero(b)) ||
+> -           (float32_is_infinity(b) && is_finite(a) && !float32_is_zero(a));
+> +    int flags;
+> +
+> +    arch_fpop_start(env);
+> +
+> +    set_float_rounding_mode(float_round_nearest_even_max, &env->fp_status);
+> +    RxV = float32_muladd(RsV, RtV, RxV,
+> +                         negate | float_muladd_suppress_add_product_zero,
+> +                         &env->fp_status);
+> +
+> +    flags = get_float_exception_flags(&env->fp_status);
+> +    if (flags) {
+> +        /* Flags are suppressed by this instruction. */
+> +        set_float_exception_flags(0, &env->fp_status);
+> +
+> +        /* Return 0 for Inf - Inf. */
+> +        if (flags & float_flag_invalid_isi) {
+> +            RxV = 0;
+> +        }
+> +    }
+> +
+> +    arch_fpop_end(env);
+> +    return RxV;
+>   }
+>   
+>   float32 HELPER(sffma_lib)(CPUHexagonState *env, float32 RxV,
+>                             float32 RsV, float32 RtV)
+>   {
+> -    bool infinp;
+> -    bool infminusinf;
+> -    float32 tmp;
+> -
+> -    arch_fpop_start(env);
+> -    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
+> -    infminusinf = float32_is_infinity(RxV) &&
+> -                  is_inf_prod(RsV, RtV) &&
+> -                  (fGETBIT(31, RsV ^ RxV ^ RtV) != 0);
+> -    infinp = float32_is_infinity(RxV) ||
+> -             float32_is_infinity(RtV) ||
+> -             float32_is_infinity(RsV);
+> -    RxV = check_nan(RxV, RxV, &env->fp_status);
+> -    RxV = check_nan(RxV, RsV, &env->fp_status);
+> -    RxV = check_nan(RxV, RtV, &env->fp_status);
+> -    tmp = internal_fmafx(RsV, RtV, RxV, 0, &env->fp_status);
+> -    if (!(float32_is_zero(RxV) && is_zero_prod(RsV, RtV))) {
+> -        RxV = tmp;
+> -    }
+> -    set_float_exception_flags(0, &env->fp_status);
+> -    if (float32_is_infinity(RxV) && !infinp) {
+> -        RxV = RxV - 1;
+> -    }
+> -    if (infminusinf) {
+> -        RxV = 0;
+> -    }
+> -    arch_fpop_end(env);
+> -    return RxV;
+> +    return do_sffma_lib(env, RxV, RsV, RtV, 0);
+>   }
+>   
+>   float32 HELPER(sffms_lib)(CPUHexagonState *env, float32 RxV,
+>                             float32 RsV, float32 RtV)
+>   {
+> -    bool infinp;
+> -    bool infminusinf;
+> -    float32 tmp;
+> -
+> -    arch_fpop_start(env);
+> -    set_float_rounding_mode(float_round_nearest_even, &env->fp_status);
+> -    infminusinf = float32_is_infinity(RxV) &&
+> -                  is_inf_prod(RsV, RtV) &&
+> -                  (fGETBIT(31, RsV ^ RxV ^ RtV) == 0);
+> -    infinp = float32_is_infinity(RxV) ||
+> -             float32_is_infinity(RtV) ||
+> -             float32_is_infinity(RsV);
+> -    RxV = check_nan(RxV, RxV, &env->fp_status);
+> -    RxV = check_nan(RxV, RsV, &env->fp_status);
+> -    RxV = check_nan(RxV, RtV, &env->fp_status);
+> -    float32 minus_RsV = float32_sub(float32_zero, RsV, &env->fp_status);
+> -    tmp = internal_fmafx(minus_RsV, RtV, RxV, 0, &env->fp_status);
+> -    if (!(float32_is_zero(RxV) && is_zero_prod(RsV, RtV))) {
+> -        RxV = tmp;
+> -    }
+> -    set_float_exception_flags(0, &env->fp_status);
+> -    if (float32_is_infinity(RxV) && !infinp) {
+> -        RxV = RxV - 1;
+> -    }
+> -    if (infminusinf) {
+> -        RxV = 0;
+> -    }
+> -    arch_fpop_end(env);
+> -    return RxV;
+> +    return do_sffma_lib(env, RxV, RsV, RtV, float_muladd_negate_product);
+>   }
+>   
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+>   float64 HELPER(dfmpyfix)(CPUHexagonState *env, float64 RssV, float64 RttV)
 
