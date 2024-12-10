@@ -4,88 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A85AE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 08:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FCB6E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 08:55:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKw0a-00040e-FG; Tue, 10 Dec 2024 03:54:20 -0500
+	id 1tKw15-00042x-16; Tue, 10 Dec 2024 03:54:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tKw0Z-00040H-G3
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:19 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tKw0X-0004Ji-13
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733820854;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DXfSS8zHEJoRmBQrQPPXmbh8ou8W5Z4vg2tUAj7+7Ew=;
- b=WI65+ojUyqD9upJXWkJAScEkgAbVHvbRwN2DV8yq6oH/xkvgdKu6DYE331boOIO9UlOQaq
- msmPPoM5/dlpj331ZyOjQ2jiTqLCsoa4VNZlJlaoUAOijiCD4N3YLCmJD1WSw+H8XWNmni
- OoE7HGx4X2tZFlPuJKlrCYNcEuZsMAo=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-su02VAHUMxOfbH-ISzQbIg-1; Tue, 10 Dec 2024 03:54:12 -0500
-X-MC-Unique: su02VAHUMxOfbH-ISzQbIg-1
-X-Mimecast-MFC-AGG-ID: su02VAHUMxOfbH-ISzQbIg
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d8b3173b5bso84199296d6.3
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 00:54:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1tKw0y-00042h-R5
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:44 -0500
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <xadimgnik@gmail.com>)
+ id 1tKw0u-0004M2-I4
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:44 -0500
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d479b1e6so4385671a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 00:54:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733820877; x=1734425677; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=eMmuDzCOtk0P3qAVSDrdvfD9qizU1PjXn3xjXpj8i7Q=;
+ b=esHz944Ip4gPfo3i74f3qubIwEBAJCS65DD+yKreh6itZOmvXvA9HuLoPr0jINbJIM
+ ywmwU3VQ4UATEnzccWn4HpXy2q4Fqhqs9ZNiqWpK9RAKgdqTVE5ifHYFUGo4jk4OydTY
+ wiuOGnA/NENED9R5ygTmMOXpIwhHCi02E9rBUOhJ0r0pQywtO5SBwO8uVfvuh8qeVc9B
+ QyC7AJfLu5kyAzTGiILVMD8qMRS3Ord0aGoe6+V7igcrW5lXBHcc2cqbKb0vUxlbBgbB
+ XlVPcSjTRGOsk2u8pU8jDEQTtMCl0S2kDcQrRlXqeTjym3gxXP/BKaufQsfhBiXmmV8I
+ Vh/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733820851; x=1734425651;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DXfSS8zHEJoRmBQrQPPXmbh8ou8W5Z4vg2tUAj7+7Ew=;
- b=hOUWwdrx3aEfgiJ1Na6iTtoj0aF1SI8UpcCu2YamffmuuQtph1VGbTBvLeiD0+Bypf
- k/RY71WGxaT0k/YNzmVpYUGKkS2CCevaQJrZakuJkubfn4287gmVXSgCJNjgjY/vDUti
- pPun3snp54CqS0NOghEA+4qU6lUCB/HaIKGsbeC3+Ga54zrusVJQYiPnAqUQ/PuKYMQI
- ZuE7OhM7kQWzPEt6Gzk12cAjaIgQbrgSIBDqzZegmVZEbppwQv6bVthmL6c0+lsAnf8j
- 6lUHz3UCyk9bfD2bMxwbTEaCD+m4S8fHax9grDIN8hsyt2j7W4DWwt+4/zMiA+ANgBKq
- VYqw==
-X-Gm-Message-State: AOJu0YzrOR52uXCaSutfeRiJcS2CkTPoAZt7pHPLDh9pyr1XJV9IeV/7
- 10YRTqyJnoXZxQWl09FQCbPhrd55yHVIXHqvK535fOlQpdITfW0zOlxil7tunPWclgve9UMIXKm
- 0CK3g97XEffo0R/gXUIAm5gA9jySnkrQrn31R04e8tmd6H1qlLI12TmiVkVAzHzCVbPSBX0NsQn
- k6cmk4BUjclMDmuJ2kTFBgCM54PHwaS8WzCuSEGA==
-X-Gm-Gg: ASbGncu2UMFoxKoGmqFEPh2QaHzyhe9bxhszxFYBPEDuCSSAbuB8o1U7Snoa0S78iPv
- C55AeRqZU1vV42nvMcQAjkyYKSwHV7A/Cy+RFOA==
-X-Received: by 2002:a05:6214:2aa7:b0:6ce:2357:8a2e with SMTP id
- 6a1803df08f44-6d91e411d20mr60194976d6.37.1733820851528; 
- Tue, 10 Dec 2024 00:54:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG8bjDgEBpHp4t/9Aedgfo64CXs0F7twh+JOUYm4PT+O4B1X65RawIbn0+I1hylWUq2vbmL6SWjNgzB89/5sXQ=
-X-Received: by 2002:a05:6214:2aa7:b0:6ce:2357:8a2e with SMTP id
- 6a1803df08f44-6d91e411d20mr60194806d6.37.1733820851272; Tue, 10 Dec 2024
- 00:54:11 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733820877; x=1734425677;
+ h=content-transfer-encoding:in-reply-to:organization:content-language
+ :references:cc:to:subject:reply-to:user-agent:mime-version:date
+ :message-id:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eMmuDzCOtk0P3qAVSDrdvfD9qizU1PjXn3xjXpj8i7Q=;
+ b=Nc2JkUe58gd5FkjJgkIPNgO6BgWSwk1u6s5m9R7UEn3EnfU3TSXGA17GiOzW8qD7aH
+ HNfwWAloyyZpTQOESq3zI6aSD3kMO+QnXvd7cd8AwyP3mvpyu8Z8lSLSlPyrzrrwatC1
+ eTh5r7hQ084+w1POGKvRiGfodJuiBDOIpLwywxWfDOU61bQOS72LnmSRD/ELUCZB0svu
+ M90LAyLCXrQhEqHZ6DZbzXiSDJHB2AWHG4Z2qfyYYnSxRzqu0VL5ChrKia67jKwRPTmp
+ Nd4WI8iKn+bq3hw/SRWiM1aaH5HBBBAZDlMEweBSnH0KmgHmr4LneYTswHdksu7CJvy9
+ gxHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVbCyZQ4NR+1ZT8Y6nFrdIEtAEiOJRzA1ud5pRxOk3RuhjGJemPd7heXWVyMKrwiSadTKBwEP0n9maN@nongnu.org
+X-Gm-Message-State: AOJu0YynSqXychT1PIVox7EoK6VdIB3mvXmh53nKmL0usmYNoOgHm0Ty
+ EwXCU9NkrpL1+BLtH8KT9ErpArMgpaG1xsbOHQSz7maOcug8gD0d
+X-Gm-Gg: ASbGncs5t/4NOpde3ACLlXdBabtjOgZLCezgjwj9h3PSejZdzSbd+BpjISIdDTZBpln
+ 23WmAWK0tZo0GlSKmPt7WEOMj8dVXUh77X2u6yb8m9rhTLafpl9R0bYacZTWhsuN3xBqSFge/r3
+ RNPKzcm0d/b/aayqL1xTjhvbFlrmUQ/ndobGaBrsP2P2/jHpcaHS/8DMY9e3p/7K92axbJVZAZg
+ aQeRwsS692Pm4JRhagE8kYgoR9LlQf5k1JVOeFgfvMjwJHrpE7tm5YzsW39RhrDsiGbNft7q98R
+ x8rm3XQ=
+X-Google-Smtp-Source: AGHT+IHqv0gN5Y6seCjNUmRACQ4qGrQhe9Oe9Xxqu5KtInfnMah2xk1/OLK5CT7rLnXQtRS+OSCzOQ==
+X-Received: by 2002:a05:6402:4490:b0:5d3:da65:ff26 with SMTP id
+ 4fb4d7f45d1cf-5d418604a7amr7866661a12.31.1733820876486; 
+ Tue, 10 Dec 2024 00:54:36 -0800 (PST)
+Received: from [192.168.9.8] (54-240-197-234.amazon.com. [54.240.197.234])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d3cedbb8fesm5738281a12.22.2024.12.10.00.54.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Dec 2024 00:54:35 -0800 (PST)
+From: Paul Durrant <xadimgnik@gmail.com>
+X-Google-Original-From: Paul Durrant <paul@xen.org>
+Message-ID: <48f0be10-718c-409f-b5ac-d0775add9824@xen.org>
+Date: Tue, 10 Dec 2024 08:54:34 +0000
 MIME-Version: 1.0
-References: <20241210054616.260386-1-demeng@redhat.com>
- <Z1f4HB1o-XmyzagE@redhat.com>
-In-Reply-To: <Z1f4HB1o-XmyzagE@redhat.com>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 10 Dec 2024 10:54:00 +0200
-Message-ID: <CAPMcbCokcPcfCn8HnsTg4GPFnyBJyRTRRdr+hq59L6TsqsqUpA@mail.gmail.com>
-Subject: Re: [PATCH] qemu-ga-win: Fix a typo error
-To: qemu-devel@nongnu.org
-Cc: Dehan Meng <demeng@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- michael.roth@amd.com
-Content-Type: multipart/alternative; boundary="000000000000f1d0fe0628e69f0a"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5] hw/acpi: Add vmclock device
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Hilber <peter.hilber@opensynergy.com>,
+ "Mohamed Abuelfotoh, Hazem" <abuehaze@amazon.com>
+References: <7bdd6feab5bb6c32c9c83ef3d184882c2499baa6.camel@infradead.org>
+Content-Language: en-US
+Organization: Xen Project
+In-Reply-To: <7bdd6feab5bb6c32c9c83ef3d184882c2499baa6.camel@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=xadimgnik@gmail.com; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,95 +109,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: paul@xen.org
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000f1d0fe0628e69f0a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 03/12/2024 17:33, David Woodhouse wrote:
+> From: David Woodhouse <dwmw@amazon.co.uk>
+> 
+> The vmclock device addresses the problem of live migration with
+> precision clocks. The tolerances of a hardware counter (e.g. TSC) are
+> typically around ±50PPM. A guest will use NTP/PTP/PPS to discipline that
+> counter against an external source of 'real' time, and track the precise
+> frequency of the counter as it changes with environmental conditions.
+> 
+> When a guest is live migrated, anything it knows about the frequency of
+> the underlying counter becomes invalid. It may move from a host where
+> the counter running at -50PPM of its nominal frequency, to a host where
+> it runs at +50PPM. There will also be a step change in the value of the
+> counter, as the correctness of its absolute value at migration is
+> limited by the accuracy of the source and destination host's time
+> synchronization.
+> 
+> The device exposes a shared memory region to guests, which can be mapped
+> all the way to userspace. In the first phase, this merely advertises a
+> 'disruption_marker', which indicates that the guest should throw away any
+> NTP synchronization it thinks it has, and start again.
+> 
+> Because the region can be exposed all the way to userspace, applications
+> can still use time from a fast vDSO 'system call', and check the
+> disruption marker to be sure that their timestamp is indeed truthful.
+> 
+> The structure also allows for the precise time, as known by the host, to
+> be exposed directly to guests so that they don't have to wait for NTP to
+> resync from scratch.
+> 
+> The values and fields are based on the nascent virtio-rtc specification,
+> and the intent is that a version (hopefully precisely this version) of
+> this structure will be included as an optional part of that spec. In the
+> meantime, a simple ACPI device along the lines of VMGENID is perfectly
+> sufficient and is compatible with what's being shipped in certain
+> commercial hypervisors.
+> 
+> Linux guest support was merged into the 6.13-rc1 kernel:
+> https://git.kernel.org/torvalds/c/205032724226
+> 
+> Signed-off-by: David Woodhouse <dwmw@amazon.co.uk>
+> ---
+> This is basically unchanged since the last time the structure was
+> changed in July, apart from fairly trivial cosmetic changes and now
+> importing the header file from Linux.
+> 
+> 
+> v5:
+>   • Trivial simplification to AML generation.
+>   • Import vmclock-abi.h from Linux now the guest support is merged.
+> 
+> v4:
+>   • Trivial checkpatch fixes and comment improvements.
+> 
+> v3:
+>   • Add comment that vmclock-abi.h will come from the Linux kernel
+>     headers once it gets merged there.
+> 
+> v2:
+>   • Change esterror/maxerror fields to nanoseconds.
+>   • Change to officially assigned AMZNC10C ACPI HID.
+>   • Fix little-endian handling of fields in update.
+> 
+>   hw/acpi/Kconfig                              |   5 +
+>   hw/acpi/meson.build                          |   1 +
+>   hw/acpi/vmclock.c                            | 184 +++++++++++++++++++
+>   hw/i386/Kconfig                              |   1 +
+>   hw/i386/acpi-build.c                         |  10 +-
+>   include/hw/acpi/vmclock.h                    |  34 ++++
+>   include/standard-headers/linux/vmclock-abi.h | 182 ++++++++++++++++++
+>   scripts/update-linux-headers.sh              |   1 +
+>   8 files changed, 417 insertions(+), 1 deletion(-)
+>   create mode 100644 hw/acpi/vmclock.c
+>   create mode 100644 include/hw/acpi/vmclock.h
+>   create mode 100644 include/standard-headers/linux/vmclock-abi.h
+> 
 
-Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
-
-Best Regards,
-Konstantin Kostiuk.
-
-
-On Tue, Dec 10, 2024 at 10:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
-redhat.com>
-wrote:
-
-> On Tue, Dec 10, 2024 at 01:46:16PM +0800, Dehan Meng wrote:
-> > There is a typo error for api 'guest-get-osinfo',
-> > the win2025's version in WIN_10_0_SERVER_VERSION_MATRIX
-> > should be adjusted.
-> >
-> > Signed-off-by: Dehan Meng <demeng@redhat.com>
-> > ---
-> >  qga/commands-win32.c | 2 +-
-> >  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---000000000000f1d0fe0628e69f0a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div>Reviewed-by: Konstantin Kostiuk &lt;=
-<a href=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.co=
-m</a>&gt;</div><div><br></div><div><div dir=3D"ltr" class=3D"gmail_signatur=
-e"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div><=
-/div></div></div><br></div><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Dec 10, 2024 at 10:13=E2=
-=80=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com"=
->berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
-te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
-);padding-left:1ex">On Tue, Dec 10, 2024 at 01:46:16PM +0800, Dehan Meng wr=
-ote:<br>
-&gt; There is a typo error for api &#39;guest-get-osinfo&#39;,<br>
-&gt; the win2025&#39;s version in WIN_10_0_SERVER_VERSION_MATRIX<br>
-&gt; should be adjusted.<br>
-&gt; <br>
-&gt; Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" tar=
-get=3D"_blank">demeng@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 qga/commands-win32.c | 2 +-<br>
-&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
-<br>
-Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.=
-com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div>
-
---000000000000f1d0fe0628e69f0a--
+Reviewed-by: Paul Durrant <paul@xen.org>
 
 
