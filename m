@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFA0E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 19:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4676AE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 19:14:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL5Zm-0002MO-Mi; Tue, 10 Dec 2024 14:07:18 -0500
+	id 1tL5fz-0004X9-KM; Tue, 10 Dec 2024 14:13:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tL5Zk-0002Lc-Ip
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:07:16 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1tL5fy-0004X0-En
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:13:42 -0500
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
- id 1tL5Zj-0000Np-0f
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:07:16 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso6377085e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 11:07:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1tL5fw-000192-HP
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:13:42 -0500
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-6d896be3992so30803496d6.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 11:13:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733857633; x=1734462433; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=5V565qyQf+kulFcpFLhJbvlPOxJD1fK7OBawhGdtI+8=;
- b=w8MqFqVIdO7pfAdqlz+5yPo8WvjrYCubUGKv5cfgy+fTgubyn1vcFRA7l6aMItW1mk
- vaUmvG6v/q/fiGrPHAyj442LvNJKeg6WHcG2Ng3kTjDKr6t0rP1eHnFRVvE5U+C9+oXW
- douhTYto+wACGahbLrBBBpFTfApGFjOLDSfPWRNCCEMIMoJD4v7Xl/XDMr5BP1Ru8on6
- dGKedTrb2nD274qeQ/TD2jqoL5jJlV2Q2piByXb+Pv0bJS8h/KOQRTmSJ8baFs+9JuJM
- Vo0vCIaf78ca2fFM+ZoWSeJzlnzmT8qyEVquuKzJPaintd/dPxkRFSVhkJPoTNF6ueZD
- BOKA==
+ d=gourry.net; s=google; t=1733858016; x=1734462816; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=97qOTYSoAyV6vd8Z2GN8GpBHNVjhg0i4wTdV+vq41wg=;
+ b=WmVacD4MUJUYvYMSklSt4jrkd2PoKlgbxuubBY0nT0C3L/3infTBdTaFyemP/pCBPk
+ xCJ64VlgtTamxh5JB9G9Ohfa61oj0oFwVPveoI+cStSUCDuXNvN0silzeT+lVkKll8/j
+ IL6vAWCq1S4oMQVIP1OxD7XY/Yig8+aRrjaHSLmrPkhjHmZY+gzaGlTY0oxWJKnDCAGY
+ kGnbiCjc4VFZwhpKPc+BniDVvadwAVpiWEQqRVvgJgItXFxD/kY5CveGxiRGYBCs/OVy
+ tMG+rRxefsp1QHUed8my2OX0O85gyDaFm8BJRhdhm1aDYLv843mff9ZEo4QncJPkUCeR
+ jWGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733857633; x=1734462433;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5V565qyQf+kulFcpFLhJbvlPOxJD1fK7OBawhGdtI+8=;
- b=KyZRzdaTl6yJV1ZlSVnEO9kYicNksCybyv/T9E8T4tGz6x8YtTg0KxTSWyBIoe9XZP
- jYO5sDiKx4bQblUrnn+aYzpEsKBD8XXwskxZb2SoWs5ZyvR2wM0eVgP9Yi0sSwdfX0vS
- u3QTw0ps+PDOJVk0MlBaMAuMeenIbPatDUd43C1CpA1EVHQlg1oS9Oq4E92aFRGgZYJ5
- AVkQytbKrmIvWUGUYgbfYUIQ7SKk3mQxPz8UgkYP9ZBHqTrNTtNr+osPJ/RFdWBlwSr/
- 7CskSBdjXn9NgsZKGWHq9kiaVVZWR0w38QIud/y4svbAFaDoJq1CT44axBEBE+magSOH
- 6JDQ==
+ d=1e100.net; s=20230601; t=1733858016; x=1734462816;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=97qOTYSoAyV6vd8Z2GN8GpBHNVjhg0i4wTdV+vq41wg=;
+ b=IwRTq2xCh2WbOu6Zrcr+lp0oUAxVrgm5MUFCJHw6JBafHJd8y/Z691HhOFHPORxwk9
+ omgIp+lRuCm2kIfRkj6AFzlurZBWooC9sQjomx59DfYBYjVttM4n14fg9jVN9a1kAO0T
+ na0e7b3Lspp+DcKKdeTXRU+y1Ukom/CF+GqDmh3F1S8dVU5SNfbCCgwn3BjDdhvtPkEz
+ YayPq0bGjCT3MgdMzNuBlZjrJO0UK44fJQh+t3nOmDz+uUFKSj6Iyl9nHSshJyFXyQr2
+ RGjWRgtZxrDbRAmRsH/Kz8KwdHeleyRiB1nhcQ8MOm4QgNtDFznfNL7s6EH5w4vopiIG
+ xdEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU0oxlS6erhW/+ollxMGNlJ9Y5VbX3TOvhPkHIWsOXIs0dwOJIJLnusOY5uNhiC8xOIcfrBlleCLClF@nongnu.org
-X-Gm-Message-State: AOJu0YwQH8IZaMSak0SpL/DG/NujRNjsksAT8p1rzCeQLfikETtC0YY0
- ZIJhBRAwifbTMjEM/JIdccEbJBMaGkV3o50TTgqFeCMVlcUc51Wgaq6XGZX9Q8s=
-X-Gm-Gg: ASbGncv8FnHRb13iriUnzPT3K9jfZxIJ4uI8QL7mwxQA8sEaau58ln9PW3nrbuSl3So
- zgtTWO+VG+ap6nxta8jZJ5wFycrz1T0MbTxwy7tEdI+B6/A/o3f+FrFPWBjw5MIff/UtfDnCgvt
- P6Fyc+U4vGAXMaq7hWn5fkGRY/u5FAFSYVyEplzSdX006YxKKUsqMwMrAHENE+BMkXBk5il31W0
- 096eo4Kf8CBTTEBaxwn/E5ip5G5nYCNQJ1jdCIlfh9PetOEXAxC
-X-Google-Smtp-Source: AGHT+IFSCT5yXT0kkOTlqm/Y97/5nqu2pDrpQjmT/FBslfCiuIz79p51FLYlFmyS/Z2eMnRbb6ReWA==
-X-Received: by 2002:a05:600c:3ca1:b0:434:9499:9e87 with SMTP id
- 5b1f17b1804b1-434dded743dmr128768915e9.25.1733857633398; 
- Tue, 10 Dec 2024 11:07:13 -0800 (PST)
-Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43502fef1eesm33604645e9.0.2024.12.10.11.07.12
+ AJvYcCVj93rvS8zZ/9czZqGsaS+B3cW5GDGFuUzYwamspFAJCmrAFNGRIMWxRyxNDwLaTTtsO5C07A8UkJLL@nongnu.org
+X-Gm-Message-State: AOJu0YyPBgCKUr46e7Q3sIMnoqvqCaBh0TfqQX9YffvhY2ODcOD7QD/0
+ 15jmtgkBMNBtpehZOWgzAVcAmL3nbVtoYHhF23sCvabCc4NxINeNOXUyzsGcNV4=
+X-Gm-Gg: ASbGncsU3PIxKSNvHuc1tVNHeEWTNUbYshoxjpaP+Kfx2119mBbSFDQxkctAYqxQaUJ
+ +YQlqgcHrXlBcI3PVwLDgjYtgHa4iJ2QjNZcmTe3/ybLGUpE3X2k4HRgOAQtRnqAhJ17m49TVYs
+ /J9wDdCFUx/+nyiQCc4HDjKHgBaziJ34pu3HSXXzLCQTn5CF/LiZxEblm3WMzg2HvvH6W6gHhPo
+ P8Hddt9Twbjh1ywmoGiO0R9csNI41FN30d4dgUsN25yQ2SkfHoR8zocdMpQe/S4xcPwgEr5GW4O
+ M0sHmTBYxDaErmvKcHYa13lKhxnLuX3/OQky2yo=
+X-Google-Smtp-Source: AGHT+IHRrfRfIZnKItsDYPM0ONQeei8VT2blcHwcAuFVhWCu+WYuv/fhCeiX5KBqdP0FaQ+PR8gyhg==
+X-Received: by 2002:a05:6214:f09:b0:6d8:9124:878e with SMTP id
+ 6a1803df08f44-6d9348c984cmr2901076d6.4.1733858015734; 
+ Tue, 10 Dec 2024 11:13:35 -0800 (PST)
+Received: from PC2K9PVX.TheFacebook.com
+ (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d8eb619443sm50877846d6.26.2024.12.10.11.13.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 11:07:13 -0800 (PST)
-Date: Tue, 10 Dec 2024 19:07:38 +0000
-From: Jean-Philippe Brucker <jean-philippe@linaro.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v3 08/26] hw/core/loader: Add ROM loader notifier
-Message-ID: <20241210190738.GD1212502@myrica>
-References: <20241125195626.856992-2-jean-philippe@linaro.org>
- <20241125195626.856992-10-jean-philippe@linaro.org>
- <564df018-6d47-4cb6-b781-5a2e58669da6@linaro.org>
+ Tue, 10 Dec 2024 11:13:35 -0800 (PST)
+Date: Tue, 10 Dec 2024 14:13:29 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Hongjian Fan <hongjian.fan@seagate.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "linux-cxl@vger.kernel.org" <linux-cxl@vger.kernel.org>,
+ "fan.ni@samsung.com" <fan.ni@samsung.com>
+Subject: Re: [PATCH] hw/mem: support zero memory size CXL device
+Message-ID: <Z1iS2SeYSOQqdLVU@PC2K9PVX.TheFacebook.com>
+References: <20241202230310.1531219-1-hongjian.fan@seagate.com>
+ <20241203172328.00001a00@huawei.com>
+ <CH0PR20MB42505D4F82D534A85EEA4C2A90362@CH0PR20MB4250.namprd20.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <564df018-6d47-4cb6-b781-5a2e58669da6@linaro.org>
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x32f.google.com
+In-Reply-To: <CH0PR20MB42505D4F82D534A85EEA4C2A90362@CH0PR20MB4250.namprd20.prod.outlook.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=gourry@gourry.net; helo=mail-qv1-xf32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,107 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 05, 2024 at 10:59:52PM +0100, Philippe Mathieu-Daudé wrote:
-> On 25/11/24 20:56, Jean-Philippe Brucker wrote:
-> > Add a function to register a notifier, that is invoked after a ROM gets
-> > loaded into guest memory.
-> > 
-> > It will be used by Arm confidential guest support, in order to register
-> > all blobs loaded into memory with KVM, so that their content is moved
-> > into Realm state and measured into the initial VM state.
-> > 
-> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
-> > ---
-> >   include/hw/loader.h | 15 +++++++++++++++
-> >   hw/core/loader.c    | 15 +++++++++++++++
-> >   2 files changed, 30 insertions(+)
-> > 
-> > diff --git a/include/hw/loader.h b/include/hw/loader.h
-> > index 7f6d06b956..0cd9905f97 100644
-> > --- a/include/hw/loader.h
-> > +++ b/include/hw/loader.h
-> > @@ -353,6 +353,21 @@ void *rom_ptr_for_as(AddressSpace *as, hwaddr addr, size_t size);
-> >   ssize_t rom_add_vga(const char *file);
-> >   ssize_t rom_add_option(const char *file, int32_t bootindex);
-> > +typedef struct RomLoaderNotify {
-> > +    /* Parameters passed to rom_add_blob() */
-> > +    hwaddr addr;
+On Tue, Dec 03, 2024 at 09:15:51PM +0000, Hongjian Fan wrote:
+> Hi Jonathan,
 > 
-> This is the buffer (blob) address in guest physical memory.
-> 
-> > +    size_t len;
-> 
-> This is the buffer length.
-> 
-> > +    size_t max_len;
-> 
-> This is the size of the MemoryRegion ROM containing the buffer.
-> 
-> Do we need to notify it? You don't use it in your next patch.
-> If so, I'd rather have this API returns a MemoryRegion (Rom->mr),
-> max_len can be retrieved using memory_region_size(mr); but I
-> don't think we need this at all (at least for now).
+> I'm trying to emulate our memory appliance which is similar to a MH-SLD. The memory device is connected to the host server while the size of the memory could be changed by the out-of-band fabric manager. If there is no memory assigned to the host, the CXL device will be booted as zero memory size.
 
-No I don't think we need it either, what matters is the size of the data
-copied into guest memory. I'll remove this
+This should not be how this is done.
 
-Thanks,
-Jean
+The ACPI tables should report the maximum possible size, and the DCD
+infrastructure should enable physical regions that have been added to the host.
 
+Changing ACPI tables to report 0 memory size will basically result
+in the host memory map not reserving physical memory regions for that
+device.
+
+See this emulation example of an MHSLD - which can be used for DCD.
+
+https://lore.kernel.org/linux-cxl/20241018161252.8896-1-gourry@gourry.net/
+
+> Recently we got some interest on trying our fabric manager software without having the real hardware. Supporting zero memory size in QEMU will be needed in this scenario.
+> Some detail about our memory appliance could be found from our OCP presentation: https://drive.google.com/file/d/1i8kBsBfRGjNqnTQqJ9upC-Xm9o56Y2Y5/view?usp=drive_link
 > 
-> > +} RomLoaderNotify;
-> > +
-> > +/**
-> > + * rom_add_load_notifier - Add a notifier for loaded images
-> > + *
-> > + * Add a notifier that will be invoked with a RomLoaderNotify structure for each
-> > + * blob loaded into guest memory, after the blob is loaded.
-> > + */
-> > +void rom_add_load_notifier(Notifier *notifier);
-> > +
-> >   /* This is the usual maximum in uboot, so if a uImage overflows this, it would
-> >    * overflow on real hardware too. */
-> >   #define UBOOT_MAX_GUNZIP_BYTES (64 << 20)
-> > diff --git a/hw/core/loader.c b/hw/core/loader.c
-> > index 31593a1171..759a62cf58 100644
-> > --- a/hw/core/loader.c
-> > +++ b/hw/core/loader.c
-> > @@ -67,6 +67,8 @@
-> >   #include <zlib.h>
-> >   static int roms_loaded;
-> > +static NotifierList rom_loader_notifier =
-> > +    NOTIFIER_LIST_INITIALIZER(rom_loader_notifier);
-> >   /* return the size or -1 if error */
-> >   int64_t get_image_size(const char *filename)
-> > @@ -1179,6 +1181,11 @@ MemoryRegion *rom_add_blob(const char *name, const void *blob, size_t len,
-> >       return mr;
-> >   }
-> > +void rom_add_load_notifier(Notifier *notifier)
-> > +{
-> > +    notifier_list_add(&rom_loader_notifier, notifier);
-> > +}
-> > +
-> >   /* This function is specific for elf program because we don't need to allocate
-> >    * all the rom. We just allocate the first part and the rest is just zeros. This
-> >    * is why romsize and datasize are different. Also, this function takes its own
-> > @@ -1220,6 +1227,7 @@ ssize_t rom_add_option(const char *file, int32_t bootindex)
-> >   static void rom_reset(void *unused)
-> >   {
-> >       Rom *rom;
-> > +    RomLoaderNotify notify;
-> >       QTAILQ_FOREACH(rom, &roms, next) {
-> >           if (rom->fw_file) {
-> > @@ -1268,6 +1276,13 @@ static void rom_reset(void *unused)
-> >           cpu_flush_icache_range(rom->addr, rom->datasize);
-> >           trace_loader_write_rom(rom->name, rom->addr, rom->datasize, rom->isrom);
-> > +
-> > +        notify = (RomLoaderNotify) {
-> > +            .addr = rom->addr,
-> > +            .len = rom->datasize,
-> > +            .max_len = rom->romsize,
-> > +        };
-> > +        notifier_list_notify(&rom_loader_notifier, &notify);
-> >       }
-> >   }
+> Thanks,
+> Hongjian Fan
 > 
+> 
+> Seagate Internal
 
