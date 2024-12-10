@@ -4,80 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBC0E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07DF9E7717F
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2P2-0002eZ-5b; Tue, 10 Dec 2024 10:44:00 -0500
+	id 1tL2PB-0002fi-TM; Tue, 10 Dec 2024 10:44:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2Ox-0002eE-Oo
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:43:56 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2Ou-000221-DL
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:43:54 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5cf6f804233so7222920a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:43:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733845430; x=1734450230; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0SevPKJw6fDVpSdhqXRg9dWhntUqTbMilks3QaPYVwg=;
- b=c5jMTvf1ncZxYWsTLspLHrRkzik0CzzXKqShOjKsz6en8Z5SOn1AU2yL6OBXqoy3NL
- WtNIdQJDI8/32/vh3BccSuUoStORA30sSZrYySu11u680RT4EBg+ROEHINQbIDm8/VxO
- j64LriXS7dx+7fSb8GwjqLNtcm76Jj+KfevBElh+ocV4BwL6Qk/Vw3wtclelqLrp9oe/
- OyXNaxzaBXpWy2rT8Gl0XieEYjD8u+Q6PiQ1iaFAGHARHQMht7Qxu98QtBEHoVP6TCVL
- lCLEAUVGnmEZcBgZ4RQgRby95ujT6Z5v1E5SUArdBy+676cA5b7GmeTu8KBOa4q1pr7t
- GR4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733845430; x=1734450230;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=0SevPKJw6fDVpSdhqXRg9dWhntUqTbMilks3QaPYVwg=;
- b=PN84oWEK0cCLCG8QwH0R055lsKy2gMSyy9U+7elVWkSBpBLAEZbSJJRR28Cbg7XVUm
- 6apfdYx1yth+bijWkhshEzc0/8w7w9R5mgZoGxSfEeI9vSwLcY/rP+s/jlVE2w4sHwhC
- 03K2PI+S/yxwAH7rBsAloxv6//AR+58EFYkCrGNQfG0mkZjIS9UFEjQ7CPeImwUsn4BU
- KN2ifCAoHqCncvTRP2WdXcOZbWs28UpNePftTmIfzBfp70nGxqBlWzaT9hiAdr32Y6LH
- olF7F43iwp7LMmitiM7vfgFVUw1OZ+Os+5lUrkLYVarRNoaW2gXODuZgqmI+PNGVJv6N
- BKew==
-X-Gm-Message-State: AOJu0YzT18e7bui3xEx+DNT4cTcRSYhPcp/k2KuS8CDCSPtt7iR27nE1
- stHDxbd5UPLtPGXII/AMCxmNbaiVz/VwpF0tKRrUHdN4CwYZVoXI7RDjmPO5wL9YETOkfMQkSwq
- M5olY0Gd8rf+qlCK2VbL+96KGZjl6CF02vPzhESsNXb2Or4oX
-X-Gm-Gg: ASbGnctICR8PryvTMh5g1bVcWvwA1CPHVtn13Iey+f3To9T92QHMeN+N29AVS8fd0kG
- fRKiZz9tvrw+tt2PbChWcI7SFsCoiqPYEj8zj
-X-Google-Smtp-Source: AGHT+IHpIS97jVXXihfEFQO/YP5WDcrWkwKC46ckaDowqkT5TajL/2oS9M37z3BF0+7HRjBoqRFBDvbmg7BiQWa+1aw=
-X-Received: by 2002:a05:6402:1ed6:b0:5d1:3da:e6c with SMTP id
- 4fb4d7f45d1cf-5d41853e70cmr5514933a12.10.1733845430450; Tue, 10 Dec 2024
- 07:43:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tL2P9-0002fT-Kn; Tue, 10 Dec 2024 10:44:07 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tL2P7-00022h-H9; Tue, 10 Dec 2024 10:44:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733845446; x=1765381446;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=pDWZ/cee+vIPlZALlx6jDXoxQc7ILwuIIDd+JeIrWI8=;
+ b=dV9ffb7zZuskz95ipv8gIVcBTPT83Cb5sC3Qc4Ju1PGXvj+uQZPMtZh7
+ Vp7Qk/s9BEguUHXX53f737wrwGctM4oIB2+yy56xmbTTRKOdkQ1GaNjtH
+ LI9/kXM4xazBkLdIKQLFgrFhPDvNIFJOCpMUPxyJbG9iSjdw14KLrkWjE
+ IaDGkFCqgnXWjh4CQJQbQQ74RPvXghJRTA5zg/nRHiLMXPOOF0WdjGDAd
+ FFdH9TMug/U5HznlspnEPuq2NA9SSaFdgMw1YpMkuaqiI5IDnYU09352Z
+ +UOM1Vdr/Fed+su/bFClBRLbz9dDe6tZH8W7vYylr2AlrtCaN931SwalW w==;
+X-CSE-ConnectionGUID: bfkyQsKoTKauUn980FC8aA==
+X-CSE-MsgGUID: R0pQgHXSSZO8Um5B/BvTdg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="34249165"
+X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; d="scan'208";a="34249165"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Dec 2024 07:44:02 -0800
+X-CSE-ConnectionGUID: /uxuTAKQSWil5IwJGzdXtw==
+X-CSE-MsgGUID: bupINUsXQHmacpMaTDpOQQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; d="scan'208";a="95645703"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by fmviesa008.fm.intel.com with ESMTP; 10 Dec 2024 07:44:01 -0800
+Date: Wed, 11 Dec 2024 00:02:15 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
+ of pl011
+Message-ID: <Z1hmB4znBSsJV6uO@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-15-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20241210140112.43313-1-philmd@linaro.org>
- <CAFEAcA_ZpeLop95ELDHn696cN-6OL3pC95Dwea934RLH3SpSAw@mail.gmail.com>
- <CAFEAcA8qNrsViuQrCeCeh=2s-2GF2yXOc9d1qFxAcc+Knw0PDQ@mail.gmail.com>
- <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
-In-Reply-To: <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Dec 2024 15:43:39 +0000
-Message-ID: <CAFEAcA9KeSVw8rmcRvqBC=bbc_WFGMB4VACROD28RKrjGcAWTg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] bulk: Remove legacy cpu_physical_memory_rw() API
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209123717.99077-15-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,48 +83,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Dec 2024 at 15:10, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 10/12/24 16:03, Peter Maydell wrote:
-> > On Tue, 10 Dec 2024 at 15:00, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
-> >>
-> >> On Tue, 10 Dec 2024 at 14:01, Philippe Mathieu-Daud=C3=A9 <philmd@lina=
-ro.org> wrote:
-> >>>
-> >>> cpu_physical_memory_rw() API is documented as legacy
-> >>> since 2017 (commit b7ecba0f6f6). Replace it by a more
-> >>> recent API. Noticed while discussing with Peter:
-> >>> https://lore.kernel.org/qemu-devel/e979b3ba-e701-4ac6-962a-19e4598ba9=
-47@linaro.org
-> >>
-> >> I'm not sure we want to do this as a bulk automated
-> >> transformation, because in each case there is likely
-> >> a better thing we can do with the call than to use
-> >> address_space_memory. For example most of the uses in
-> >> devices probably want to have the device have an
-> >> AddressSpace property that the board wires up.
-> >
-> > Also, examining each use gives us an opportunity to
-> > consider the error handling (cpu_physical_memory_*()
-> > drop errors silently) and whether there's an appropriate
-> > MemTxAttrs we want to use.
->
-> Yes I noticed that and agree, but do we really want to improve
-> these devices? They have been using the legacy API for 7 years
-> without caring much.
->
-> I can repost split in 50 patches, hoping a dozen get merged
-> directly. But then I expect discussions requiring too much
-> unimportant work to happen, and the series being abandoned,
-> giving this legacy API 10 more years...
+> +unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
+> +    // SAFETY: obj is an instance of T, since rust_instance_init<T>
+> +    // is called from QOM core as the instance_init function
+> +    // for class T
+> +    unsafe { T::INSTANCE_INIT.unwrap()(&mut *obj.cast::<T>()) }
+> +}
 
-Also, just to be clear, in the "do a mechanical transform
-in a single patch" it is not the "single patch" part that
-I'm unhappy about here -- it's the "do a mechanical transform"
-bit. Splitting it into 50 patches wouldn't address that.
+Here's the difference, why doesn't init() narrow the unsafe scope like
+post_init() does?
 
-thanks
--- PMM
+> +unsafe extern "C" fn rust_instance_post_init<T: ObjectImpl>(obj: *mut Object) {
+> +    // SAFETY: obj is an instance of T, since rust_instance_post_init<T>
+> +    // is called from QOM core as the instance_post_init function
+> +    // for class T
+> +    //
+> +    // FIXME: it's not really guaranteed that there are no backpointers to
+> +    // obj; it's quite possible that they have been created by instance_init().
+> +    // The receiver should be &self, not &mut self.
+> +    T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
+> +}
+> +
+
+
 
