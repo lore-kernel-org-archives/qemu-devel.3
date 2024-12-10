@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13FAE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EBC0E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:44:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2IX-00077c-Io; Tue, 10 Dec 2024 10:37:17 -0500
+	id 1tL2P2-0002eZ-5b; Tue, 10 Dec 2024 10:44:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2IM-0006zJ-GC
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:37:12 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ id 1tL2Ox-0002eE-Oo
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:43:56 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tL2IK-0001JZ-Ly
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:37:06 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d74363cbso5826979a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:37:04 -0800 (PST)
+ id 1tL2Ou-000221-DL
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:43:54 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5cf6f804233so7222920a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:43:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733845022; x=1734449822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733845430; x=1734450230; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6SUViHiYlm5aq4urdsn4S9EtzSdH/GA+uhrDJzlqIfY=;
- b=I1GBiAOoLY8JWuLrx50t7aGbDiraTnnj8Y/+PJY91r1cCqgMK7wileyNBsHfLsj+Q9
- 4SeaR3P2nbyP9OgU0Jd0Mk0sFDSs8aI/6yHTCDefohrADUkZf2c7gYEB2GdTPr0wnVz6
- NInj7IDdBn8wWkwUgk9FH4IMRRwQ3eytkZrhfIDErQaqdC5R5iSJdzTVLorvII71DJzX
- 2DPC02BQ2is3I+NNVK5PADp3Pel4C2vKixL23M5HAj90GRX8iOVW+wpD04SmMrALBvvr
- wPObphzGPgiYzlCb3c2xQHV4SyJRUB9OMcX15jLpF/Ackrmjuasq9/5wRFl4z6wUYNvh
- i5HQ==
+ bh=0SevPKJw6fDVpSdhqXRg9dWhntUqTbMilks3QaPYVwg=;
+ b=c5jMTvf1ncZxYWsTLspLHrRkzik0CzzXKqShOjKsz6en8Z5SOn1AU2yL6OBXqoy3NL
+ WtNIdQJDI8/32/vh3BccSuUoStORA30sSZrYySu11u680RT4EBg+ROEHINQbIDm8/VxO
+ j64LriXS7dx+7fSb8GwjqLNtcm76Jj+KfevBElh+ocV4BwL6Qk/Vw3wtclelqLrp9oe/
+ OyXNaxzaBXpWy2rT8Gl0XieEYjD8u+Q6PiQ1iaFAGHARHQMht7Qxu98QtBEHoVP6TCVL
+ lCLEAUVGnmEZcBgZ4RQgRby95ujT6Z5v1E5SUArdBy+676cA5b7GmeTu8KBOa4q1pr7t
+ GR4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733845022; x=1734449822;
+ d=1e100.net; s=20230601; t=1733845430; x=1734450230;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6SUViHiYlm5aq4urdsn4S9EtzSdH/GA+uhrDJzlqIfY=;
- b=LTOJR49jVmdl78Fn4y+m0QdjPv0YVdphYejkHRIUi6w7IU+49PKd+sYwEOPPlbZHbd
- OfBqk0vUhc3Jnxat6fKZxwxhf0e7z1QVPvxSfTMW7Ct/8GzGH1Slz3zANlxF6I556IeP
- O9mcM3qUlDYCLqan6qr8CoaYCHJoX4Bj0zr3wJKF01Dub3PWFyIfqznhCreC4AFBd4mo
- PbHmlTZruLa9shTb3SZixiDxbYqte0B/n2WcUpZKHiAirZgnJYbT6MsZDNIukCDSCm8e
- U5sEpAwrcu8QG1MdtDUdMyBEh3H0coTO9dGFiPC40xKPQGtFcij6XWexQ0q1vEZoTgeX
- 0bKA==
-X-Gm-Message-State: AOJu0Yz7QQ9MoDfJuZdOmVoWXbB61PTuKclHIWEwHEEjxWJrWjjL5YR7
- ZQKUkjH0Sc6wzndlIsnDsA5ycbT2HDMnRY+bGnDsxvlJ/2vSld/OLqEJYk5VYkyDPgfNYXBEIdv
- m9hRzhRB+0IlgHODYfLKVBftZnNLlhIBxxMg8MA==
-X-Gm-Gg: ASbGncs4S9LJqQOz3LBPBLwDSpp5jfiC4UD358A2U1/eLgmrNis5fIlin3lpgqDuF4S
- 18ZAzOnesutMlAsSLHYO2febooK9kU6dnY5nY
-X-Google-Smtp-Source: AGHT+IFDthsqFfsZxSTH1wptEkXxsJX3Pt+Gm8H8y6dEkZMj2gsG3msSHUmsHZAY4h3jN0oURgHi2AQkTE6/9VwRXCc=
-X-Received: by 2002:a05:6402:2551:b0:5cf:d078:c9dc with SMTP id
- 4fb4d7f45d1cf-5d4185fe213mr6178276a12.22.1733845022461; Tue, 10 Dec 2024
- 07:37:02 -0800 (PST)
+ bh=0SevPKJw6fDVpSdhqXRg9dWhntUqTbMilks3QaPYVwg=;
+ b=PN84oWEK0cCLCG8QwH0R055lsKy2gMSyy9U+7elVWkSBpBLAEZbSJJRR28Cbg7XVUm
+ 6apfdYx1yth+bijWkhshEzc0/8w7w9R5mgZoGxSfEeI9vSwLcY/rP+s/jlVE2w4sHwhC
+ 03K2PI+S/yxwAH7rBsAloxv6//AR+58EFYkCrGNQfG0mkZjIS9UFEjQ7CPeImwUsn4BU
+ KN2ifCAoHqCncvTRP2WdXcOZbWs28UpNePftTmIfzBfp70nGxqBlWzaT9hiAdr32Y6LH
+ olF7F43iwp7LMmitiM7vfgFVUw1OZ+Os+5lUrkLYVarRNoaW2gXODuZgqmI+PNGVJv6N
+ BKew==
+X-Gm-Message-State: AOJu0YzT18e7bui3xEx+DNT4cTcRSYhPcp/k2KuS8CDCSPtt7iR27nE1
+ stHDxbd5UPLtPGXII/AMCxmNbaiVz/VwpF0tKRrUHdN4CwYZVoXI7RDjmPO5wL9YETOkfMQkSwq
+ M5olY0Gd8rf+qlCK2VbL+96KGZjl6CF02vPzhESsNXb2Or4oX
+X-Gm-Gg: ASbGnctICR8PryvTMh5g1bVcWvwA1CPHVtn13Iey+f3To9T92QHMeN+N29AVS8fd0kG
+ fRKiZz9tvrw+tt2PbChWcI7SFsCoiqPYEj8zj
+X-Google-Smtp-Source: AGHT+IHpIS97jVXXihfEFQO/YP5WDcrWkwKC46ckaDowqkT5TajL/2oS9M37z3BF0+7HRjBoqRFBDvbmg7BiQWa+1aw=
+X-Received: by 2002:a05:6402:1ed6:b0:5d1:3da:e6c with SMTP id
+ 4fb4d7f45d1cf-5d41853e70cmr5514933a12.10.1733845430450; Tue, 10 Dec 2024
+ 07:43:50 -0800 (PST)
 MIME-Version: 1.0
 References: <20241210140112.43313-1-philmd@linaro.org>
  <CAFEAcA_ZpeLop95ELDHn696cN-6OL3pC95Dwea934RLH3SpSAw@mail.gmail.com>
@@ -63,15 +63,15 @@ References: <20241210140112.43313-1-philmd@linaro.org>
  <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
 In-Reply-To: <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Dec 2024 15:36:51 +0000
-Message-ID: <CAFEAcA9b2__Qqx4sfEcbMLYZq5ataMxtp-QzYwaG85-kv_Nk8A@mail.gmail.com>
+Date: Tue, 10 Dec 2024 15:43:39 +0000
+Message-ID: <CAFEAcA9KeSVw8rmcRvqBC=bbc_WFGMB4VACROD28RKrjGcAWTg@mail.gmail.com>
 Subject: Re: [PATCH v2 0/3] bulk: Remove legacy cpu_physical_memory_rw() API
 To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,17 +129,12 @@ ro.org> wrote:
 > I can repost split in 50 patches, hoping a dozen get merged
 > directly. But then I expect discussions requiring too much
 > unimportant work to happen, and the series being abandoned,
-> giving this legacy API 10 more years..
+> giving this legacy API 10 more years...
 
-Well, it's legacy in the sense of "don't use it for new
-stuff", but also is it doing any harm in the old code?
-If we want to improve the places that use it we can,
-but I'm not sure I would worry about moving from one
-"this isn't really the ideal" to a different "this isn't
-really the ideal"...
-
-If the existence of the function is blocking a separate
-cleanup, that's a different matter, of course.
+Also, just to be clear, in the "do a mechanical transform
+in a single patch" it is not the "single patch" part that
+I'm unhappy about here -- it's the "do a mechanical transform"
+bit. Splitting it into 50 patches wouldn't address that.
 
 thanks
 -- PMM
