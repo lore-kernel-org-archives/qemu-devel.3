@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CA9EE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 23:05:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E7EAE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 23:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL9Hv-0006UI-LQ; Tue, 10 Dec 2024 18:05:10 -0500
+	id 1tL9I6-0006Zy-Qx; Tue, 10 Dec 2024 18:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9Hs-0006Tm-Bd
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:05:04 -0500
+ id 1tL9I2-0006XZ-6i
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:05:14 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9Ho-0007sF-2F
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:05:02 -0500
+ id 1tL9I0-00084b-GL
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 18:05:13 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tL9Hk-00000003Z2W-05RU; Wed, 11 Dec 2024 00:04:56 +0100
-Message-ID: <2e0ea3b7-2f63-41ff-a316-52681d6f0eb8@maciej.szmigiero.name>
-Date: Wed, 11 Dec 2024 00:04:50 +0100
+ id 1tL9Hw-00000003Z2g-33TQ; Wed, 11 Dec 2024 00:05:08 +0100
+Message-ID: <7e6373ca-b344-409f-a9ad-bce72779c10f@maciej.szmigiero.name>
+Date: Wed, 11 Dec 2024 00:05:03 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
- setup didn't run
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Eric Blake
- <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
+ threads
+To: Peter Xu <peterx@redhat.com>
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
- <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
- <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
- <1fbd277d-c3e0-48f6-81b1-2a5ae97ed9a0@nvidia.com>
+ <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
+ <198ca4a4-01fd-42b4-9e1a-d2860277be9e@nvidia.com>
+ <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
+ <Z1DbH5fwBaxtgrvH@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,7 +85,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <1fbd277d-c3e0-48f6-81b1-2a5ae97ed9a0@nvidia.com>
+In-Reply-To: <Z1DbH5fwBaxtgrvH@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -112,71 +112,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3.12.2024 16:09, Avihai Horon wrote:
-> 
-> On 29/11/2024 19:15, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On 29.11.2024 15:08, Cédric Le Goater wrote:
->>> On 11/17/24 20:20, Maciej S. Szmigiero wrote:
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> It's possible for load_cleanup SaveVMHandler to get called without
->>>> load_setup handler being called first.
->>>>
->>>> Since we'll be soon running cleanup operations there that access objects
->>>> that need earlier initialization in load_setup let's make sure these
->>>> cleanups only run when load_setup handler had indeed been called
->>>> earlier.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+On 4.12.2024 23:43, Peter Xu wrote:
+> On Thu, Nov 28, 2024 at 01:11:53PM +0100, Maciej S. Szmigiero wrote:
+>>>> +static int qemu_loadvm_load_thread(void *thread_opaque)
+>>>> +{
+>>>> +    struct LoadThreadData *data = thread_opaque;
+>>>> +    int ret;
+>>>> +
+>>>> +    ret = data->function(&load_threads_abort, data->opaque);
+>>>> +    if (ret && !qatomic_read(&load_threads_ret)) {
+>>>> +        /*
+>>>> +         * Racy with the above read but that's okay - which thread error
+>>>> +         * return we report is purely arbitrary anyway.
+>>>> +         */
+>>>> +        qatomic_set(&load_threads_ret, ret);
+>>>> +    }
 >>>
->>> tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
->>> attributes we have in some structs, so nothing new or really wrong.
->>> But it does look like a workaound for a problem or cleanups missing
->>> that would need time to untangle.
+>>> Can we use cmpxchg instead? E.g.:
 >>>
->>> I would prefer to avoid this change and address the issue from the
->>> migration subsystem if possible.
+>>> if (ret) {
+>>>       qatomic_cmpxchg(&load_threads_ret, 0, ret);
+>>> }
 >>
->> While it would be pretty simple to only call {load,save}_cleanup
->> SaveVMHandlers when the relevant {load,save}_setup handler was
->> successfully called first this would amount to a change of these
->> handler semantics.
+>> cmpxchg always forces sequentially consistent ordering
+>> while qatomic_read() and qatomic_set() have relaxed ordering.
 >>
->> This would risk introducing regressions - for example vfio_save_setup()
->> doesn't clean up (free) newly allocated migration->data_buffer
->> if vfio_migration_set_state() were to fail later in this handler
->> and relies on an unconstitutional call to vfio_save_cleanup() in
->> order to clean it up.
->>
->> There might be similar issues in other drivers too.
+>> As the comment above describes, there's no need for sequential
+>> consistency since which thread error is returned is arbitrary
+>> anyway.
 > 
-> We can put all objects related to multifd load in their own struct (as suggested by Cedric in patch #22) and allocate the struct only if multifd device state transfer is used.
-> Then in the cleanup flow we clean the struct only if it was allocated.
+> IMHO this is not a hot path, so mem ordering isn't an issue.  If we could
+> avoid any data race we still should try to.
 > 
-> This way we don't need to add the load_setup flag and we can keep the SaveVMHandlers semantics as is.
+> I do feel uneasy on the current design where everybody shares the "whether
+> to quit" via one bool, and any thread can set it... meanwhile we can't
+> stablize the first error to report later.
 > 
-> Do you think this will be OK?
+> E.g., ideally we want to capture the first error no matter where it came
+> from, then keep it with migrate_set_error() so that "query-migrate" on dest
+> later can tell us what was wrong.  I think libvirt generally uses that.
+> 
+> So as to support a string error, at least we'll need to allow Error** in
+> the thread fn:
+> 
+> typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
+>                                      Error **errp);
+> 
+> I also changed retval to bool, as I mentioned elsewhere QEMU tries to stick
+> with "bool SOME_FUNCTION(..., Error **errp)" kind of error reporting.
+> 
+> Then any thread should only report error to qemu_loadvm_load_thread(), and
+> the report should always be a local Error**, then it further reports to the
+> global error.  Something like:
+> 
+> static int qemu_loadvm_load_thread(void *thread_opaque)
+> {
+>      MigrationIncomingState *mis = migration_incoming_get_current();
+>      struct LoadThreadData *data = thread_opaque;
+>      Error *error = NULL;
+> 
+>      if (!data->function(data->opaque, &mis->should_quit, &error)) {
+>         migrate_set_error(migrate_get_current(), error);
+>      }
+> 
+>      return 0;
+> }
+> 
+> migrate_set_error() is thread-safe, and it'll only record the 1st error.
+>
+> Then the thread should only read &should_quit, and only set &error.  If we
+> want, migrate_set_error() can set &should_quit.
+> 
+> PS: I wished we have an unified place to tell whether we should quit
+> incoming migration - we already have multifd_recv_state->exiting, we could
+> have had a global flag like that then we can already use.  But I know I'm
+> asking too much.. However would you think it make sense to still have at
+> least Error** report the error and record it?
+> 
 
-I think here the discussion is more of whether we refactor the
-{load,save}_cleanup handler semantics to "cleaner" design where
-these handlers are only called if the relevant {load,save}_setup
-handler was successfully called first (but at the same time risk
-introducing regressions).
+This could work with the following changes/caveats:
+* Needs g_autoptr(Error) otherwise these Error objects will leak.
 
-If we keep the existing semantics of these handlers (like this
-patch set did) then it is just an implementation detail whether
-we keep an explicit flag like "migration->load_setup" or have
-a struct pointer that serves as an implicit equivalent flag
-(when not NULL) - I don't have a strong opinion on this particular
-detail.
+* "1st error" here is as arbitrary as with my current code since which
+thread first acquires the mutex in migrate_set_error() is unspecified.
 
-> Thanks.
-> 
+* We still need to test this new error flag (now as migrate_has_error())
+in qemu_loadvm_state() to see whether we proceed forward with the
+migration.
+
+-------------------------------------------------------------------
+
+Also, I am not in favor of replacing load_threads_abort with something
+else since we still want to ask threads to quit for other reasons, like
+earlier (non-load threads related) failure in the migration process.
+
+That's why we set this flag unconditionally in qemu_loadvm_state() -
+see also my answer about that flag in the next message.
 
 Thanks,
 Maciej
+
 
 
