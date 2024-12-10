@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 757BAE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 21:54:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B397AE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 21:55:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL8BR-0003Ww-TG; Tue, 10 Dec 2024 16:54:21 -0500
+	id 1tL8By-00049G-O1; Tue, 10 Dec 2024 16:54:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tL8BQ-0003Wo-IF
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:54:20 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1tL8Bw-00048p-VW
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:54:52 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tL8BO-0000dR-UP
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:54:20 -0500
-Received: from pps.filterd (m0279865.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BACISg2007425;
- Tue, 10 Dec 2024 21:54:11 GMT
+ id 1tL8Bv-0000je-6o
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:54:52 -0500
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAEnAZa029986;
+ Tue, 10 Dec 2024 21:54:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- oAd/rd3sWX4T8Crv8Wj+DYtO9gsqSxf6uYj4VFd8G9o=; b=iULbI2f8OaZfRf99
- BUKlIPa4gDIPlsOphTh5065khfYt/V1kiBCeHTJKeLjBR3cFfJix08UmMApXvxty
- loyixbEeqSAlaIPcM6B/A5Opla3YjarrOfR8H3aodFOrRapyaoC2ORa3ygaqbSB2
- 09CZgClP1AfNGLeqA3SriDuDHqBXLCsnUqK5Y156ng/Y8dQ5dHrU0YrW2fio5A1d
- sEphYnXlk2zQZDdfXzUFrwOtJLUvFGUilMfRfJ+FgBb08jBovVr1Nl4y0pi8RRM3
- 3IulUzMW86HPz0uw3mGwPetCMNRgxkJ5qP5jfWkeo7K9S/ML1j0QCXjnez6j+kSw
- ReEEQw==
+ +jnhMrI/LvdR3U6cFV6IPvMbiHpa1S+ZGWgsNigef44=; b=i+CSCLK5RACmn2N3
+ nKQmKZcrq7spU0kJ/C8DuxCnbGzz5oGleVUqUtIamY/mRq+YXPjh7AAHvD+uvu1P
+ 55JACTgl68Qy25KEpQEl99wQ1c7BJGJP7yecufVhq4y5tgUzenzfr5AEGsnzXYqF
+ vMdyACRw411TpmVhQDcqKPYfqft3H5vDMrTEKFdQT5nR9445j1TXTFOkIiYO//XC
+ TuuHKqmV9QeFhxH6x2qu4ss5ojQw6sq3slazeQ3e/2ZWtt4ySbpJ2eQCaB/w7lK0
+ CC3Gor3BBt15yhFXboji0780JHh2zZdhiwcLEzmVc84IkrgUzFU55iY65NkxG9kK
+ egzUdg==
 Received: from nalasppmta03.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43e21bmvay-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eqr313uq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 21:54:10 +0000 (GMT)
+ Tue, 10 Dec 2024 21:54:43 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
  [10.47.97.35])
- by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BALsACG026819
+ by NALASPPMTA03.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BALsg2o027402
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 21:54:10 GMT
+ Tue, 10 Dec 2024 21:54:42 GMT
 Received: from [10.111.162.254] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
- 2024 13:54:09 -0800
-Message-ID: <3292a766-a9e3-4563-82b1-73703670fa17@quicinc.com>
-Date: Tue, 10 Dec 2024 15:54:06 -0600
+ 2024 13:54:41 -0800
+Message-ID: <774bccb2-f8af-4671-bce7-543db9c4e473@quicinc.com>
+Date: Tue, 10 Dec 2024 15:54:39 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/17] target/hexagon: Remove Float
+Subject: Re: [PATCH 15/17] target/hexagon: Remove Double
 To: Richard Henderson <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
 CC: <peter.maydell@linaro.org>, <mark.cave-ayland@ilande.co.uk>, Brian Cain
  <brian.cain@oss.qualcomm.com>
 References: <20241208224844.570491-1-richard.henderson@linaro.org>
- <20241208224844.570491-15-richard.henderson@linaro.org>
+ <20241208224844.570491-16-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20241208224844.570491-15-richard.henderson@linaro.org>
+In-Reply-To: <20241208224844.570491-16-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-GUID: axN_1o0MUuVGjNEfFGmOPQfYfDmJKYTW
-X-Proofpoint-ORIG-GUID: axN_1o0MUuVGjNEfFGmOPQfYfDmJKYTW
+X-Proofpoint-ORIG-GUID: t5gLDLIN89RzUJEoyAqU2ECVvMfB6YTx
+X-Proofpoint-GUID: t5gLDLIN89RzUJEoyAqU2ECVvMfB6YTx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 mlxlogscore=779 priorityscore=1501
- spamscore=0 impostorscore=0 adultscore=0 bulkscore=0 phishscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ priorityscore=1501
+ impostorscore=0 malwarescore=0 bulkscore=0 clxscore=1015 mlxlogscore=791
+ suspectscore=0 mlxscore=0 adultscore=0 spamscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412100156
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -107,49 +107,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/8/2024 4:48 PM, Richard Henderson wrote:
 > This structure, with bitfields, is incorrect for big-endian.
-> Use the existing float32_getexp_raw which uses extract32.
+> Use extract64 and deposit64 instead.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/hexagon/fma_emu.c | 16 +++-------------
->   1 file changed, 3 insertions(+), 13 deletions(-)
+>   target/hexagon/fma_emu.c | 46 ++++++++++++++--------------------------
+>   1 file changed, 16 insertions(+), 30 deletions(-)
 >
 > diff --git a/target/hexagon/fma_emu.c b/target/hexagon/fma_emu.c
-> index bce3bd4dfb..c359eecffd 100644
+> index c359eecffd..343c40a686 100644
 > --- a/target/hexagon/fma_emu.c
 > +++ b/target/hexagon/fma_emu.c
-> @@ -53,16 +53,6 @@ typedef union {
->       };
->   } Double;
+> @@ -43,39 +43,29 @@
+>   
+>   #define WAY_BIG_EXP 4096
 >   
 > -typedef union {
-> -    float f;
-> -    uint32_t i;
+> -    double f;
+> -    uint64_t i;
 > -    struct {
-> -        uint32_t mant:23;
-> -        uint32_t exp:8;
-> -        uint32_t sign:1;
+> -        uint64_t mant:52;
+> -        uint64_t exp:11;
+> -        uint64_t sign:1;
 > -    };
-> -} Float;
+> -} Double;
 > -
 >   static uint64_t float64_getmant(float64 f64)
 >   {
->       Double a = { .i = f64 };
-> @@ -92,12 +82,12 @@ int32_t float64_getexp(float64 f64)
+> -    Double a = { .i = f64 };
+> +    uint64_t mant = extract64(f64, 0, 52);
+>       if (float64_is_normal(f64)) {
+> -        return a.mant | 1ULL << 52;
+> +        return mant | 1ULL << 52;
+>       }
+>       if (float64_is_zero(f64)) {
+>           return 0;
+>       }
+>       if (float64_is_denormal(f64)) {
+> -        return a.mant;
+> +        return mant;
+>       }
+>       return ~0ULL;
+>   }
 >   
->   int32_t float32_getexp(float32 f32)
+>   int32_t float64_getexp(float64 f64)
 >   {
-> -    Float a = { .i = f32 };
-> +    int exp = float32_getexp_raw(f32);
->       if (float32_is_normal(f32)) {
+> -    Double a = { .i = f64 };
+> +    int exp = extract64(f64, 52, 11);
+>       if (float64_is_normal(f64)) {
 > -        return a.exp;
 > +        return exp;
 >       }
->       if (float32_is_denormal(f32)) {
+>       if (float64_is_denormal(f64)) {
 > -        return a.exp + 1;
 > +        return exp + 1;
 >       }
 >       return -1;
 >   }
+> @@ -346,6 +336,8 @@ float32 infinite_float32(uint8_t sign)
+>   /* Return a maximum finite value with the requested sign */
+>   static float64 accum_round_float64(Accum a, float_status * fp_status)
+>   {
+> +    uint64_t ret;
+> +
+>       if ((int128_gethi(a.mant) == 0) && (int128_getlo(a.mant) == 0)
+>           && ((a.guard | a.round | a.sticky) == 0)) {
+>           /* result zero */
+> @@ -453,22 +445,16 @@ static float64 accum_round_float64(Accum a, float_status * fp_status)
+>           }
+>       }
+>       /* Underflow? */
+> -    if (int128_getlo(a.mant) & (1ULL << DF_MANTBITS)) {
+> +    ret = int128_getlo(a.mant);
+> +    if (ret & (1ULL << DF_MANTBITS)) {
+>           /* Leading one means: No, we're normal. So, we should be done... */
+> -        Double ret;
+> -        ret.i = 0;
+> -        ret.sign = a.sign;
+> -        ret.exp = a.exp;
+> -        ret.mant = int128_getlo(a.mant);
+> -        return ret.i;
+> +        ret = deposit64(ret, 52, 11, a.exp);
+> +    } else {
+> +        assert(a.exp == 1);
+> +        ret = deposit64(ret, 52, 11, 0);
+>       }
+> -    assert(a.exp == 1);
+> -    Double ret;
+> -    ret.i = 0;
+> -    ret.sign = a.sign;
+> -    ret.exp = 0;
+> -    ret.mant = int128_getlo(a.mant);
+> -    return ret.i;
+> +    ret = deposit64(ret, 63, 1, a.sign);
+> +    return ret;
+>   }
+>   
+>   float64 internal_mpyhh(float64 a, float64 b,
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
