@@ -4,85 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32F29E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:30:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39973E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL33E-0001sn-AI; Tue, 10 Dec 2024 11:25:32 -0500
+	id 1tL39y-0006ST-TR; Tue, 10 Dec 2024 11:32:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL32f-0008Tf-A8
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:24:57 -0500
-Received: from mail-lf1-x130.google.com ([2a00:1450:4864:20::130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL32Y-0007cs-VV
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:24:57 -0500
-Received: by mail-lf1-x130.google.com with SMTP id
- 2adb3069b0e04-5401be44b58so2713067e87.0
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733847889; x=1734452689; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=liAAdjYKod9NdKwXJas+WzjDNtaLglsOGyeZ0ckUOos=;
- b=xEx0dY5cEdE9SaW5odMwohJB2vW7Oly9RwjVOiVCMPPkqeSCkqTTQMmwJhcNAXLUXe
- ylWcPDtgEhsHIkafLhptj/wdjPzvl5/YYxGfY5lBscpYVD+NyZIieZIDuAgQQ8M6ZSIO
- JILNS04KOwxNVhSK6ieN7qxtFthENMZzU9syRvk+aRdUieTApO7v/L5PtS5hy5xZu7sU
- 5sN2Z4AkWaD6gkrPyyFi/mHHPTt2zUt1s2ovg/FlbSgwsMSSFvo7+s878uSVCL6kPt5r
- DpPON9OKKyV40BToze0etzujETx7qSoRM9ASl+KCbqFh1OxR+f8LVCSdlNK0iNcSaYEI
- QUgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733847889; x=1734452689;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=liAAdjYKod9NdKwXJas+WzjDNtaLglsOGyeZ0ckUOos=;
- b=QjEkHjb0NxQ87ZAHheu3ktZdiSP33hybG6yGdS68qeV5fLBePJGkeDvjavH38ypqu/
- SvSv8Mrw4bjqvpHz/IQzI8JolmV6awDDEDpta1jcXFeEHR+bC7rvEKezEPOe22yp7yX6
- XnKtWH+ftyEqFWC6nDV5uUHlAcFJI8WBjYweBHUJHJD7G2Za46vclzNKM0ab1EWpwJ7V
- eY5SuGvH7lbv6B9Y5sQ9fEjqtZZFuGNPkM4xjQkd7+xrS4YbTQv4dL+efVyyy05+fWF4
- scbrvl1H5HNIA/egJ48rCF8kvu2XW8kXr1BIWMPA/Nc4mJH2cXB0bteUOp+fdWwnMCM8
- aHbA==
-X-Gm-Message-State: AOJu0Yy5f7CCkxnnXmZEacOU1+z2AGOFMQB7V7MDyfpdZYxuEk2hs5uE
- zjMQi0u00bB/EmmX8mtuJp40YTQEL1hYEds3UDLIkhNe+YfIBICgJWlf0VMrdwwDoVncVdsW1qD
- uhtG+rLV9
-X-Gm-Gg: ASbGncv/jYUKuZ7//eQCFXGVrcCVpRRWTrIL4NVcUT7kmnk0oXnC42KnL0v7trGjlYU
- Tq28hLy2W+ooLTmYOBc8984WIDzSIONIroLcUmJdVW3MmDU7CaNR5R3luTx/sgl4W/RoJlxAdsF
- 05HPPgujdGWYaa9spNd0Rxt2KTl4xkA5oPUZBgO0JANaSUfOXqp7nJmD+eb2myeSHmYS6690AZE
- hgvIgqPJTZBAg0cdzYUff/nDYWU+qSXGkqtcrxh3Zwx9PiGeCKwmJHBzBU=
-X-Google-Smtp-Source: AGHT+IFnNa28WLvEvnxJ1nQAKuXi+O9IarwX1VUxSU1AI0qXCwS6A6P/jGNboOjUevJc9hmnFOYBrw==
-X-Received: by 2002:a05:6512:3b29:b0:540:2339:3761 with SMTP id
- 2adb3069b0e04-5402339387fmr3130757e87.31.1733847889253; 
- Tue, 10 Dec 2024 08:24:49 -0800 (PST)
-Received: from stoup.. ([91.209.212.80]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-5402960b0absm26024e87.102.2024.12.10.08.24.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 08:24:48 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 61/69] target/arm: Rename helper_gvec_vcvt_[hf][su] with _rz
-Date: Tue, 10 Dec 2024 10:17:25 -0600
-Message-ID: <20241210161733.1830573-62-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241210161733.1830573-1-richard.henderson@linaro.org>
-References: <20241210161733.1830573-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tL39u-0006QO-B5
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:32:26 -0500
+Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
+ (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tL39r-0000kJ-J2
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:32:26 -0500
+Received: from localhost (unknown [192.168.200.27])
+ by smtpx.fel.cvut.cz (Postfix) with ESMTP id B398247D27;
+ Tue, 10 Dec 2024 17:32:17 +0100 (CET)
+X-Virus-Scanned: IMAP STYX AMAVIS
+Received: from smtpx.fel.cvut.cz ([192.168.200.2])
+ by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
+ with ESMTP id FvlgVPhNnQuD; Tue, 10 Dec 2024 17:32:15 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
+ s=felmail; t=1733848335;
+ bh=CUUf/pgxCxR/P5WTixYT03ckS20UsQ2du+3dDPRL63w=;
+ h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
+ b=sGT4woNK/XngQyRrFFq/p7hn0heM8/Kn71c1bd+6LFmlosR9dM1VLibZeBKc7kTRs
+ BTk38HQoqF1kJnKKtG0WeR/010TWsR3gWFK+PIw/IYw/9AUM99b9cY/EESCqbWql5g
+ Aptw1x2pkVj6MCVzQE3WBdDhPCj0cYLo63MaYSZXOq2smhyhj00jg71cqQhh+xu/GT
+ 7IziePdsY/SDlEbCLHI87JnKDu1XjantqhMMDZnm8OXO+3TXqumOIQ/nx2LBMZd7b2
+ 5ggz7FokBWYC9C3OGndnwi6ul4oLy6qw+6OkvBTSQhbihdUKKxjk3y67VRdkmoMdQX
+ ro3kizfEP/XJw==
+Received: from [10.0.3.185] (unknown [80.188.199.122])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pisa)
+ by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id D3287479EC;
+ Tue, 10 Dec 2024 17:32:14 +0100 (CET)
+From: Pavel Pisa <pisa@fel.cvut.cz>
+To: qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [RFC/WIP 0/3] WIP CTU CAN FD IP core mapping to the platform bus
+Date: Tue, 10 Dec 2024 17:32:54 +0100
+User-Agent: KMail/1.9.10
+Cc: Gustavo Romero <gustavo.romero@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Francisco Iglesias <francisco.iglesias@amd.com>,
+ Alex =?utf-8?q?Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <cover.1733783500.git.pisa@cmp.felk.cvut.cz>
+ <CAFEAcA9FcCr1Zz+N+QkZUC5q0o+02GRje6YqRQy5d6v55D0CgA@mail.gmail.com>
+In-Reply-To: <CAFEAcA9FcCr1Zz+N+QkZUC5q0o+02GRje6YqRQy5d6v55D0CgA@mail.gmail.com>
+X-KMail-QuotePrefix: > 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::130;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x130.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: inline
+Message-Id: <202412101732.54857.pisa@fel.cvut.cz>
+Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
+ helo=smtpx.fel.cvut.cz
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.61,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,82 +86,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Emphasize that these functions use round-to-zero mode.
+Hello Peter,
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/helper.h             | 8 ++++----
- target/arm/tcg/translate-neon.c | 8 ++++----
- target/arm/tcg/vec_helper.c     | 8 ++++----
- 3 files changed, 12 insertions(+), 12 deletions(-)
+On Tuesday 10 of December 2024 11:08:53 Peter Maydell wrote:
+> On Mon, 9 Dec 2024 at 23:33, Pavel Pisa <pisa@fel.cvut.cz> wrote:
+> > our CTU CAN FD IP core is used on many FPGA platforms
+> > and has been even tapeout on some other university
+> > and even prototypes of the massive production chips
+> > (support for that organized by our former student
+> > in his company).
+> >
+> > But actual QEMU emulation targets only PCI/PCIe mapping in
+> >
+> >   hw/net/can/ctucan_pci.c
+> >
+> > of the core in
+> >
+> >   hw/net/can/ctucan_core.c
+> >
+> > I would like to add support to map the core at fixed position for
+> > SoCs and command line controlled location for FPGA targets.
+>
+> Command line instantiation of devices at command line
+> controlled addresses and with command line connection
+> of IRQ lines is basically something we do not
+> currently support. There is some prototype/design work
+> going on about generic "create a machine from
+> the command line" handling, which would inevitably
+> involve allowing the user to specify addresses and IRQ
+> lines. But I don't really want to see ad-hoc device-specific
+> additions of small parts of similar functionality.
+>
+> If there's a SoC that QEMU models that has this CAN
+> controller, then it's the SoC model (written in C)
+> that defines where it is mapped in memory and what
+> IRQ lines it is wired up to.
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 04e422ab08..f2cfee40de 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -650,13 +650,13 @@ DEF_HELPER_FLAGS_4(gvec_touizs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_4(gvec_vcvt_sf, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(gvec_vcvt_uf, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
--DEF_HELPER_FLAGS_4(gvec_vcvt_fs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
--DEF_HELPER_FLAGS_4(gvec_vcvt_fu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_fs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_fu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_4(gvec_vcvt_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(gvec_vcvt_uh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
--DEF_HELPER_FLAGS_4(gvec_vcvt_hs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
--DEF_HELPER_FLAGS_4(gvec_vcvt_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_4(gvec_vcvt_rm_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(gvec_vcvt_rm_us, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index b9b3d1c1fb..f9ca889bec 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -1409,13 +1409,13 @@ static bool do_fp_2sh(DisasContext *s, arg_2reg_shift *a,
- 
- DO_FP_2SH(VCVT_SF, gen_helper_gvec_vcvt_sf)
- DO_FP_2SH(VCVT_UF, gen_helper_gvec_vcvt_uf)
--DO_FP_2SH(VCVT_FS, gen_helper_gvec_vcvt_fs)
--DO_FP_2SH(VCVT_FU, gen_helper_gvec_vcvt_fu)
-+DO_FP_2SH(VCVT_FS, gen_helper_gvec_vcvt_rz_fs)
-+DO_FP_2SH(VCVT_FU, gen_helper_gvec_vcvt_rz_fu)
- 
- DO_FP_2SH(VCVT_SH, gen_helper_gvec_vcvt_sh)
- DO_FP_2SH(VCVT_UH, gen_helper_gvec_vcvt_uh)
--DO_FP_2SH(VCVT_HS, gen_helper_gvec_vcvt_hs)
--DO_FP_2SH(VCVT_HU, gen_helper_gvec_vcvt_hu)
-+DO_FP_2SH(VCVT_HS, gen_helper_gvec_vcvt_rz_hs)
-+DO_FP_2SH(VCVT_HU, gen_helper_gvec_vcvt_rz_hu)
- 
- static bool do_1reg_imm(DisasContext *s, arg_1reg_imm *a,
-                         GVecGen2iFn *fn)
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 60381258cf..282dba4bfd 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -2507,12 +2507,12 @@ DO_3OP_PAIR(gvec_uminp_s, MIN, uint32_t, H4)
- 
- DO_VCVT_FIXED(gvec_vcvt_sf, helper_vfp_sltos, uint32_t)
- DO_VCVT_FIXED(gvec_vcvt_uf, helper_vfp_ultos, uint32_t)
--DO_VCVT_FIXED(gvec_vcvt_fs, helper_vfp_tosls_round_to_zero, uint32_t)
--DO_VCVT_FIXED(gvec_vcvt_fu, helper_vfp_touls_round_to_zero, uint32_t)
-+DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
-+DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
- DO_VCVT_FIXED(gvec_vcvt_sh, helper_vfp_shtoh, uint16_t)
- DO_VCVT_FIXED(gvec_vcvt_uh, helper_vfp_uhtoh, uint16_t)
--DO_VCVT_FIXED(gvec_vcvt_hs, helper_vfp_toshh_round_to_zero, uint16_t)
--DO_VCVT_FIXED(gvec_vcvt_hu, helper_vfp_touhh_round_to_zero, uint16_t)
-+DO_VCVT_FIXED(gvec_vcvt_rz_hs, helper_vfp_toshh_round_to_zero, uint16_t)
-+DO_VCVT_FIXED(gvec_vcvt_rz_hu, helper_vfp_touhh_round_to_zero, uint16_t)
- 
- #undef DO_VCVT_FIXED
- 
--- 
-2.43.0
+There should be such SoC in some time even in public.
+I understand that in such case the mapping should
+be part of its support.
 
+But main area of the CTU CAN FD IP core use
+are FPGAs for now, Xilinx Zynq and above, Intel/Altera
+SoC+FPGAs, actual next target to test is Microchip
+PolarFire on BeagleV-Fire which allows to develop
+and test driver for Linux, NuttX and RTEMS on the single
+chip. And it would be great if there is option to
+run that on CI and have (still simplified - no bitrate
+miscmatch check etc) model for SW development with QEMU.
+
+And CTU CAN FD does not belong to the core Zynq or PolarFire
+support in such cases. So even this actual solution is usable
+in such cases. But as I have expected, it is not so welcomed
+in mainline... which is why I attempt to find what can be done.
+
+Do you consider the the proposed trick (target object specified by
+"irqctrl" parameter on commad line and then resolved by
+object_resolve_path_at()) as unacceptable for mainline?
+
+Another problem is if the qemu_irq can be copied in ctucan_mm_realize.
+I have tried even another solution where chip core kept pointer
+to qemu_irq in the bus integration wrapper (PCI/PCIe and platform).
+
+But even for mainlined PCI/PCIe CTU CAN FD support I would like
+to update support to provide real "or" operation between IRQs
+outputs from individual controllers to PCI/PCIe interrupt link.
+So in this case, I would be happy to hear if I can reuse
+qemu_irq and some routing or if I should define own mechanism
+to activate callback provided by the bus integration wrapper
+from the core emulation code. But may it be some pin logic
+already implemented in QEMU can be used there.
+
+Best wishes,
+
+                Pavel
+
+PS: does somebody have some experience, information for
+use of "16c3:abcd" DWC_usb3 / PCIe bridge on i.MX6 Sabre
+Litte, I have sent plea for help two months ago without
+any respone and it would help our another CAN controller
+development project, iMX6 FlexCAN support.
+ 
+--
+                Pavel Pisa
+    phone:      +420 603531357
+    e-mail:     pisa@cmp.felk.cvut.cz
+    Department of Control Engineering FEE CVUT
+    Karlovo namesti 13, 121 35, Prague 2
+    university: http://control.fel.cvut.cz/
+    personal:   http://cmp.felk.cvut.cz/~pisa
+    social:     https://social.kernel.org/ppisa
+    projects:   https://www.openhub.net/accounts/ppisa
+    CAN related:http://canbus.pages.fel.cvut.cz/
+    RISC-V education: https://comparch.edu.cvut.cz/
+    Open Technologies Research Education and Exchange Services
+    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
