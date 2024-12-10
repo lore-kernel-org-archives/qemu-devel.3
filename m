@@ -4,68 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34672E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4FF0E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:52:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKzdx-0003gF-34; Tue, 10 Dec 2024 07:47:13 -0500
+	id 1tKzid-0004hf-R9; Tue, 10 Dec 2024 07:52:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKzdq-0003fo-NC
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:47:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tKziJ-0004gL-5Q
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:51:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKzdm-0005Aa-P1
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:47:06 -0500
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tKziH-0005du-D4
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:51:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733834819;
+ s=mimecast20190719; t=1733835099;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5XfFEJ9jZ6xPsUI9vLDesczkJLEwDFFs3vMsovVCmTk=;
- b=a7uSdrqOdpx/J58trOml9x6fnpiVIHHAz9CLOQTgC9q5+LcIEzjAtf6kk+p2dyP/uuQY8z
- axmiAfBLznYpC0nSH59fdtSZVYuHXfj6B0T0lQpeG0tnaqo0bmW+GBb0oV4QV6ruZOzVeH
- jvtuW6H3D6OVarkbiHFR0STyH2e26aY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-ITyZk9NKP7yFGI4YczOfuQ-1; Tue,
- 10 Dec 2024 07:46:53 -0500
-X-MC-Unique: ITyZk9NKP7yFGI4YczOfuQ-1
-X-Mimecast-MFC-AGG-ID: ITyZk9NKP7yFGI4YczOfuQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 294A51955BF9; Tue, 10 Dec 2024 12:46:52 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 593DC195605A; Tue, 10 Dec 2024 12:46:46 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 05BCD21EC35A; Tue, 10 Dec 2024 13:46:44 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
- <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
- <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
- Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
-Subject: Re: [PATCH V4 09/19] migration: incoming channel
-In-Reply-To: <87ser2cfw6.fsf@pond.sub.org> (Markus Armbruster's message of
- "Thu, 05 Dec 2024 16:23:53 +0100")
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
- <87ser2cfw6.fsf@pond.sub.org>
-Date: Tue, 10 Dec 2024 13:46:44 +0100
-Message-ID: <87pllz4sej.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=sPyybanmad0FLuxRatzsYWHqkMc3/rWd0IqmsyO6XOU=;
+ b=VZwI6rda7rbbcmkbUdNe3XLDvGo8aePt5Ztiw8YtTKjnFh3jPkdq7D3hcU1sPNR/bDro4s
+ ucO/MRhuNsOfmzs6CL5nfZrMHomd9T2gmtHNhet0D3mQSX53orrrvk11yACxLbwTWCkql3
+ t2Q3XDhYjLZvJel0QFVT1NfZNRWwQxM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-623-q18xvicqMWKeTxFWf7_Ihg-1; Tue, 10 Dec 2024 07:51:38 -0500
+X-MC-Unique: q18xvicqMWKeTxFWf7_Ihg-1
+X-Mimecast-MFC-AGG-ID: q18xvicqMWKeTxFWf7_Ihg
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-434fe2b605eso10314325e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 04:51:38 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733835097; x=1734439897;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sPyybanmad0FLuxRatzsYWHqkMc3/rWd0IqmsyO6XOU=;
+ b=HGN1ivhgA+vZ3vMaMmlPdL5MhIiOiCBVyWqNgWPQIOWN4WyzgT/H10AH7m1whpTCzD
+ Vt7rz6Bqn5f8PX0V9VMP8uwL7VZJM36FsVqtk+nE1M9qpkJQ51GQF74a6l1W7W3PZESH
+ jR3nbil7vRpWrJRnkQl7cn5ltsUvasAE0wX7mYYEcWyuh+mQCiZQBQOeKi3VpgvO22+e
+ a8wTNWtxKFgYlNy/r4C3lBtKaUflTNEx5hBvp6ohnyze/eUYdEmnvYhoxMRNZdlITe5c
+ H5/AYWXKycFlDZs+7FBw3+7m1SyU/WtiDhVXVanBKkwt1zYjdBCFUhHgnyA/9ZzT4hkH
+ m7pg==
+X-Gm-Message-State: AOJu0YzC5025z3JG3EBL2vTPbAJXjUr3IyE3g2zMt7tnYyNPcX+flcDi
+ hqbJ0fFaE4aV/TvUuCssXs+qWLtwwd1cTJ2VVpDaCWf8TSG991qu2ImBCUdWyC6CnKmlO0E7/Wj
+ rA0GDXJMOD1Ik+sion7cmoYh5Qle8rPg55WKzVDKzuRQfn39tH5Hi
+X-Gm-Gg: ASbGnctFJHYoyFUIgzaQ1aocAGo7xWQD+5tvVW/ce2o6uIouncFVvUlnvUCImEW+bKb
+ wHhgQjmczd1ZYu1GuwrnzJuQhNV2EjjskNGI9sbiaQVyWZKF0cjR/QRA5RlIQY/46D4jtyNtWe3
+ +H1C/64KfzAcKlmI4OWVrvFkm+o7F5WqM6nDcxCyfakWSRumaLJV+OO1vx5up4BHKRiNvoU2opj
+ 0l+zFazgwUc3WYl3QqbLczPKICGITKVkrP/muRDcLHJd8ioT7cHUQ16wkifyELgeQ4mKmbUzgMn
+ /anvyulIKoeVPiSqkBygOqDl6Q==
+X-Received: by 2002:a05:600c:3b87:b0:434:9d62:aa23 with SMTP id
+ 5b1f17b1804b1-434fffa2b17mr32631795e9.20.1733835096230; 
+ Tue, 10 Dec 2024 04:51:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHPHFURe9SxXSD6/iSwX7bNKwCxHV3anvx2r0ec2qVyUH7GnXYQZk9TLg794VpcGqlzt0fQQw==
+X-Received: by 2002:a05:600c:3b87:b0:434:9d62:aa23 with SMTP id
+ 5b1f17b1804b1-434fffa2b17mr32631345e9.20.1733835094877; 
+ Tue, 10 Dec 2024 04:51:34 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434f981880csm71186785e9.44.2024.12.10.04.51.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Dec 2024 04:51:34 -0800 (PST)
+Date: Tue, 10 Dec 2024 13:51:33 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Mackay <eric.mackay@oracle.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Boris Ostrovsky
+ <boris.ostrovsky@oracle.com>, "mst@redhat.com" <mst@redhat.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>
+Subject: Re: [External] : Re: [RFC PATCH 0/1] ACPI: Fix missing CPU
+ hotplug/hotunplug events with > 255 vCPUs
+Message-ID: <20241210135133.1cad008c@imammedo.users.ipa.redhat.com>
+In-Reply-To: <MN2PR10MB42694AF9F93475A6391AAC248C3D2@MN2PR10MB4269.namprd10.prod.outlook.com>
+References: <20241204005636.18705-1-eric.mackay@oracle.com>
+ <20241209153606.49556593@imammedo.users.ipa.redhat.com>
+ <MN2PR10MB42694AF9F93475A6391AAC248C3D2@MN2PR10MB4269.namprd10.prod.outlook.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -90,148 +113,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Markus Armbruster <armbru@redhat.com> writes:
+On Tue, 10 Dec 2024 01:22:24 +0000
+Eric Mackay <eric.mackay@oracle.com> wrote:
 
-> Steve Sistare <steven.sistare@oracle.com> writes:
->
->> Extend the -incoming option to allow an @MigrationChannel to be specified.
->> This allows channels other than 'main' to be described on the command
->> line, which will be needed for CPR.
->>
->> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> On Mon,  9 Dec 2024 15:36:06 +0100
+> Igor Mammedov imammedo@redhat.com<mailto:imammedo@redhat.com> wrote:
+> 
+> > On Tue,  3 Dec 2024 16:56:35 -0800
+> > Eric Mackay eric.mackay@oracle.com<mailto:eric.mackay@oracle.com> wrote:
+> >  
+> >> ACPI hotplug with 255 or less vCPUs can use the legacy CPU hotplug interface, which does
+> >> not support hotunplug. If it's available, hotunplug will use the modern CPU hotplug interface.
+> >> This creates a situation where hotplug and hotunplug are using different interfaces, but
+> >> the end result is still functional. CPUs can be hotplugged and hotunplugged at will.  
+> >
+> > only one kind of interface should be in use. And for quite a while firmware shipped
+> > with QEMU is using QEMU provided ACPI tables, which in turn switch interface to
+> > modern hotplug when guest OS loads ACPI tables, see:
+> >          if (opts.has_legacy_cphp) {
+> >             method = aml_method("_INI", 0, AML_SERIALIZED);
+> > or firmware does the switch (OVMF usecase) before guest OS.
+> >
+> > if any hotplug action happened before guest switched hotplug favour,
+> > it will trigger SCI, which guest OS should process it (incl. switching
+> > to modern interface and sending necessary device check/remove events)
+> > once ACPI tables are processed.
+> >  
+> >> With > 255 vCPUs, both hotplug and hotunplug will use the modern ACPI interface.
+> >> There is no priority or rules of mutual exclusion defined in this interface,
+> >> and the behavior in the guest is implementation-defined.
+> >>
+> >> Unfortunately, it is possible to have both a hotplug and hotunplug event pending
+> >> for the same vCPU. When the guest processes its pending events, it may see the
+> >> hotplug but ignore the hotunplug.
+> >>
+> >> The most recent event is likely to reflect the desired state of the system, so
+> >> ignoring the hotunplug event in this scenario is unacceptable.  
+> >
+> > QEMU has delivered both events as it was intended (and in order plug then unplug).
+> > I'd say that ignoring events is a guest bug.
+> >
+> > With unplug, potentially if fixing guest is not an option
+> > one can try retry device_del to trigger unplug event again.
+> >
+> > PS:
+> > I vaguely recall linux kernel wiping GPE state on boot during
+> > initialization, but that is guest problem and should be fixed
+> > on guest side.
+> > (unexpectedly enough, Windows handles GPE state as expected)  
+> 
+> Consider the scenario where a hotplug is requested, the hotplug bit is then set.
+> ACPI event is sent to the guest. Before guest can act on it (either timing or
+> perhaps the guest is paused), unplug is requested for that same CPU, and the
+> unplug bit is now set. ACPI event is sent to guest again. The guest now wakes
+> up or becomes able to perform work, sees there is a pending ACPI event. The
+> guest now requests to read ACPI_CPU_FLAGS_OFFSET_RW, and sees both plug and
+> unplug are set. How does it know which to do first?
 
-[...]
+looking at the code some more, it looks like 2 parties are at fault
+ 1. linux kernel clearing GPE status bits on boot without processing events,
+    (if it had processed pending CPU hotplug event, that would have cleared all
+     insert flags which are NOPs at this point)
+ 2. a bug in CPU_SCAN_METHOD AML code, which doesn't take remove event branch
+    if there is insert event on the same CPU. So #1 effectively hides unplug
+    until user triggers the next (un)plug event.
+    Unplug request is just a request and if it didn't happen for some reason
+    the user shall repeat it.
+    However it doesn't excuse QEMU behavior which effectively doesn't process
+    pending remove event in the same scan loop.
 
->> diff --git a/system/vl.c b/system/vl.c
->> index 4151a79..2c24c60 100644
->> --- a/system/vl.c
->> +++ b/system/vl.c
->> @@ -123,6 +123,7 @@
->>  #include "qapi/qapi-visit-block-core.h"
->>  #include "qapi/qapi-visit-compat.h"
->>  #include "qapi/qapi-visit-machine.h"
->> +#include "qapi/qapi-visit-migration.h"
->>  #include "qapi/qapi-visit-ui.h"
->>  #include "qapi/qapi-commands-block-core.h"
->>  #include "qapi/qapi-commands-migration.h"
->> @@ -159,6 +160,7 @@ typedef struct DeviceOption {
->>  static const char *cpu_option;
->>  static const char *mem_path;
->>  static const char *incoming;
->> +static MigrationChannelList *incoming_channels;
->>  static const char *loadvm;
->>  static const char *accelerators;
->>  static bool have_custom_ram_size;
->> @@ -1821,6 +1823,35 @@ static void object_option_add_visitor(Visitor *v)
->>      QTAILQ_INSERT_TAIL(&object_opts, opt, next);
->>  }
->>  
->> +static void incoming_option_parse(const char *str)
->> +{
->> +    MigrationChannel *channel;
->> +
->> +    if (str[0] == '{') {
->> +        QObject *obj = qobject_from_json(str, &error_fatal);
->> +        Visitor *v = qobject_input_visitor_new(obj);
->> +
->> +        qobject_unref(obj);
->> +        visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
->> +        visit_free(v);
->> +    } else if (!strcmp(str, "defer")) {
->> +        channel = NULL;
->> +    } else {
->> +        migrate_uri_parse(str, &channel, &error_fatal);
->> +    }
->> +
->> +    /* New incoming spec replaces the previous */
->> +
->> +    if (incoming_channels) {
->> +        qapi_free_MigrationChannelList(incoming_channels);
->> +    }
->> +    if (channel) {
->> +        incoming_channels = g_new0(MigrationChannelList, 1);
->> +        incoming_channels->value = channel;
->> +    }
->> +    incoming = str;
->> +}
->
-> @incoming is set to @optarg.
->
-> @incoming_channels is set to a MigrationChannelList of exactly one
-> element, parsed from @incoming.  Except when @incoming is "defer", then
-> @incoming_channels is set to null.
->
-> @incoming is only ever used as a flag.  Turn it into a bool?
->
-> Oh, wait...  see my comment on the next hunk.
->
-> Option -incoming resembles QMP command migrate-incoming.  Differences:
->
-> * migrate-incoming keeps legacy URI and modern argument separate: there
->   are two named arguments, and exactly one of them must be passed.
->   -incoming overloads them: if @optarg starts with '{', it's modern,
->   else legacy URI.
->
->   Because of that, -incoming *only* supports JSON syntax for modern, not
->   dotted keys.  Other JSON-capable arguments support both.
 
-Here's a way to avoid restricting modern to JSON.
+> >> Repro: This can be seen in practice when a q35 VM is started in qemu, with
+> >> maxcpus=260 or something above 255, and a few statically allocated CPUs.
+> >> Example smp line: "-smp 4,sockets=2,dies=1,cores=65,threads=2,maxcpus=260"
+> >> Then use libvirt to add vCPUs up to the maximum before continuing the VM. After
+> >> the guest starts up, delete one of the vCPUs. 'lscpu' in the guest should still
+> >> show 260.  
+> >
+> > above should work especially with unplug event happening after guest OS has booted.
+> > Lets simplify reproducer to QEMU only (i.e. getting rid of libvirt part) and see
+> > where it leads us.  
+> 
+> The guest has not processed the hotplug events that took place before the guest
+> OS booted. There is nothing to tell the guest OS that it needs to check ACPI
+> event flags, or to clear the hotplug bits since the CPUs are already present.
+> When the unplug comes, this is the first time the guest OS knows to check for
+> hotplug/unplug events. When it reads ACPI_CPU_FLAGS_OFFSET_RW it will see that
+> hotplug is still set for all the CPUs that came online before it booted, and it
+> will recognize they are already present. For the CPU that a unplug was
+> requested, the hotplug bit was never cleared prior, so the
+> ACPI_CPU_FLAGS_OFFSET_RW read will show both hotplug and unplug flags set. It's
+> now implementation-defined in the guest what it wants to do, or whether it
+> assigns priority to one event type or the other.
+> 
+> Agreed, the libvirt part shouldn't be important. I can come up with instructions for QEMU-only repro.
 
-Legacy URI is either "defer" or starts with "KEYWORD:", where KEYWORD is
-one of a few well-known words.
+one way to reproduce it would be use qmeu with uefi,
+boot till grub prompt and then do device_del and let guest to finish boot.
+The 2nd device_del works as workaround.
 
-As long as we don't support an implied key, a non-empty dotted keys
-argument starts with "KEY=", where KEY cannot contain ':'.
 
-This lets us distinguish legacy URI from dotted keys.  Say, if the
-argument is "defer" or starts with letters followed by ':', assume URI.
-
->   How can a management application detect that -incoming supports
->   modern?
->
->   Sure overloading -incoming this way is a good idea?
-
-It'll be a pain to document.
-
-> * migrate-incoming takes a list of channels, currently restricted to a
->   single channel.  -incoming takes a channel.  If we lift the
->   restriction, -incoming syntax will become even messier: we'll have to
->   additionally overload list of channel.
->
->   Should -incoming take a list from the start, like migrate-incoming
->   does?
->
->> +
->>  static void object_option_parse(const char *str)
->>  {
->>      QemuOpts *opts;
->> @@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
->>      if (incoming) {
->>          Error *local_err = NULL;
->>          if (strcmp(incoming, "defer") != 0) {
->> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
->> +            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
->>                                   &local_err);
->
-> You move the parsing of legacy URI from within qmp_migrate_incoming()
-> into incoming_option_parse().
->
-> The alternative is not to parse it in incoming_option_parse(), but pass
-> it to qmp_migrate_incoming() like this:
->
->                qmp_migrate_incoming(incoming, !incoming, incoming_channels,
->                                     true, true, &local_err);
->
->>              if (local_err) {
->>                  error_reportf_err(local_err, "-incoming %s: ", incoming);
->> @@ -3477,7 +3508,7 @@ void qemu_init(int argc, char **argv)
->>                  if (!incoming) {
->>                      runstate_set(RUN_STATE_INMIGRATE);
->>                  }
->> -                incoming = optarg;
->> +                incoming_option_parse(optarg);
->>                  break;
->>              case QEMU_OPTION_only_migratable:
->>                  only_migratable = 1;
+> >> The proposed solution is to enforce mutual exclusion between the hotplug and hotunplug
+> >> bits in the modern ACPI interface. Setting a new pending event will clear a previously
+> >> pending event of the opposite type, thus preserving only the most recently requested
+> >> state.  
+> >
+> > Once VM is in running state, clearing flags from QEMU side is not safe.
+> > Effectively it would introduce a race with guest code.  
+> 
+> Yes, I see what you mean. Agreed this is not safe.
+> 
+> > Also I'm not sure that flags are the issue here,
+> > Capturing some CPUHP traces on QEMU side and logs from guest side
+> > might help to clarify what's going on.  
+> 
+> Will work on providing those traces and logs
+> 
+> >> Eric Mackay (1):
+> >>   ACPI: Enforce mutual exclusion betwen CPU insertion and removal events
+> >>
+> >>  hw/acpi/cpu.c         | 36 ++++++++++++++++++++++++++++++++----
+> >>  include/hw/acpi/cpu.h |  4 ++++
+> >>  2 files changed, 36 insertions(+), 4 deletions(-)
+> >>  
 
 
