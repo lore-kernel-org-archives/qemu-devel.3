@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FA3EE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:43:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0F9E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:44:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKyeW-0006Ft-JL; Tue, 10 Dec 2024 06:43:44 -0500
+	id 1tKyfQ-0007Ej-L9; Tue, 10 Dec 2024 06:44:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyeV-0006FF-JM; Tue, 10 Dec 2024 06:43:43 -0500
+ id 1tKyfO-0007EU-TU; Tue, 10 Dec 2024 06:44:38 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyeT-0005yt-VI; Tue, 10 Dec 2024 06:43:43 -0500
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA683wC024510;
- Tue, 10 Dec 2024 11:43:40 GMT
+ id 1tKyfK-00061z-Cc; Tue, 10 Dec 2024 06:44:38 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9NdA82023036;
+ Tue, 10 Dec 2024 11:44:33 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Psggot
- 3UxZ0baWGT9KtHLF2Oojll8ZH6TVkkHe5ClZc=; b=eZAckBcyMOfWDt2CQKJO1C
- i8KmS8UKDeJD9yHhb8ySiUa/5nhTwgGNcCLSNigqMrxdQzvUJhe3EECOCEaksGED
- e1BwkVoqQaPuftcLg0Izykuq2zbnTvwJXSMEbwcBGRTvwAamG80fi322zw9tUAXQ
- fTh+tV1zCO6E3iTogsU0M1EozYIaKwLFofumCZ5NfapcqBYULi/3/YTsCcgNhVeu
- wvTIM5x8+FjOvU69jzuPUX47Ku2q4Fzmhe3go4JRnEyPM3TdYcJO9evrEHpJqGPS
- JpJZEF2SZxzRjwYqUZixZtwMC89BWUED+TK2dAAw3Y3aVER/UdzTOmL861Mv48SA
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ZpuF+s
+ kDOaFigYpF23i1nz+bq5C0x5ZNzwRsgI5LhB8=; b=k3aa6L+ReLJZyNOL4FkJCd
+ 1csh6M4AWqQeX18dqMeuml7pdi39HcJIBWRhnm2Fjv32t0o6+v9HmZ4TkvjxsA4m
+ tGuDfm3Gec+zLqYie3mOjATRvfUwlOdvaUiyhNd+UeaMGzBZ8dbXK0Du5bRWc4ED
+ a54s1iEHf8sa68uar5BwXmOAJBvhb7yCVr5BTOM/N/Z0jfhtyZ4TASfZk83krKmT
+ T0CvCko0iQiABZT59WWt9y7HhgEGNxFLwwSsyEqWKiIJ8XaX1oOd7MU3sf1hd4AP
+ 4N9SEXsBoKzW+JfJIwUjs43U6By+cZPTeFTt8eu8mJjZ+b2koAXlYh6Nyr7i/y5g
  ==
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ccsjdth1-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce0xdp3p-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:43:40 +0000 (GMT)
+ Tue, 10 Dec 2024 11:44:33 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA9G7LF017369;
- Tue, 10 Dec 2024 11:43:39 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d3d1k1sy-1
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA9UgVw017376;
+ Tue, 10 Dec 2024 11:44:32 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d3d1k1vv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:43:39 +0000
+ Tue, 10 Dec 2024 11:44:32 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BABhZp839911762
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BABiTLC61407646
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 11:43:35 GMT
+ Tue, 10 Dec 2024 11:44:29 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C8CFA2004B;
- Tue, 10 Dec 2024 11:43:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id ED2DC20043;
+ Tue, 10 Dec 2024 11:44:28 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A6B5320043;
- Tue, 10 Dec 2024 11:43:35 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AB3B32004D;
+ Tue, 10 Dec 2024 11:44:28 +0000 (GMT)
 Received: from [9.155.198.95] (unknown [9.155.198.95])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 11:43:35 +0000 (GMT)
-Message-ID: <5e341795-473e-408f-bac1-d8742d942871@linux.ibm.com>
-Date: Tue, 10 Dec 2024 12:43:35 +0100
+ Tue, 10 Dec 2024 11:44:28 +0000 (GMT)
+Message-ID: <65060b6a-d647-426a-b118-ffbc78c75ef7@linux.ibm.com>
+Date: Tue, 10 Dec 2024 12:44:28 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 10/15] s390x/cpumodel: add
- Vector-Packed-Decimal-Enhancement facility 3
+Subject: Re: [RFC PATCH v2 09/15] s390x/cpumodel: add
+ Miscellaneous-Instruction-Extensions Facility 4
 To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
 References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-11-brueckner@linux.ibm.com>
+ <20241206122751.189721-10-brueckner@linux.ibm.com>
 Content-Language: en-US
 From: Janosch Frank <frankja@linux.ibm.com>
 Autocrypt: addr=frankja@linux.ibm.com; keydata=
@@ -113,21 +113,21 @@ Autocrypt: addr=frankja@linux.ibm.com; keydata=
  DchCqFm5adiSP5+OT4NjkKUeGpBe/aRyQSle/RropTgCi85pje/juYEn2P9UAgkfBJrOHvQ9
  Z+2Sva8FRd61NJLkCJ4LFumRn9wQlX2icFbi8UDV3do0hXJRRYTWCxrHscMhkrFWLhYiPF4i
  phX7UNdOWBQ90qpHyAxHmDazdo27gEjfvsgYMdveKknEOTEb5phwxWgg7BcIDoJf9UMC
-In-Reply-To: <20241206122751.189721-11-brueckner@linux.ibm.com>
+In-Reply-To: <20241206122751.189721-10-brueckner@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Q2PCD_Wp1tAKjpb02uv4InnC22Y2JGeF
-X-Proofpoint-ORIG-GUID: Q2PCD_Wp1tAKjpb02uv4InnC22Y2JGeF
+X-Proofpoint-GUID: 6TAg4_HE0E19YEFatTt-85SgZbbLagP5
+X-Proofpoint-ORIG-GUID: 6TAg4_HE0E19YEFatTt-85SgZbbLagP5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 adultscore=0
- impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=724
- mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412100085
+ lowpriorityscore=0
+ spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 mlxlogscore=699
+ priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100085
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -154,15 +154,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
-> This facility introduces new capabilities for the signed-pack-decimal
-> format.
+> This facility introduces few new instructions.
 > 
 > Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 > ---
->   target/s390x/cpu_features_def.h.inc | 1 +
->   target/s390x/cpu_models.c           | 1 +
->   2 files changed, 2 insertions(+)
 
 Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-
 
