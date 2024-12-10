@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68263E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 18:46:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A82B2E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 19:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL5FF-0002Z1-LU; Tue, 10 Dec 2024 13:46:07 -0500
+	id 1tL5X0-0007Ny-56; Tue, 10 Dec 2024 14:04:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tL5FC-0002Yp-3R
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 13:46:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tL5F9-0006T8-04
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 13:46:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733856356;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b4ptb0ccDOWSKZk5zdYYZ1wYMNBp3LZvCUdSrBHIxDU=;
- b=MyEzKiBzzVEW+jqJAYgK19tpMErIcog8rq5jlbprrFwviyPZIIJmm6U8tdQmIbcjzXX3U/
- C1apQ/mhowFGYxcA6/a+wIKh6cDHoPxjpfdSoZEfqcvbrtOXK4xntyVfyNGIM6kMYWY3t1
- ydAmtDZOUKHPiFNQQEGlcZfWFB2a1QA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-i3GEfFlhMvC2PpmuSQgZ5w-1; Tue,
- 10 Dec 2024 13:45:53 -0500
-X-MC-Unique: i3GEfFlhMvC2PpmuSQgZ5w-1
-X-Mimecast-MFC-AGG-ID: i3GEfFlhMvC2PpmuSQgZ5w
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D07AE1955DBB; Tue, 10 Dec 2024 18:45:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.69])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9376D19560A2; Tue, 10 Dec 2024 18:45:49 +0000 (UTC)
-Date: Tue, 10 Dec 2024 18:45:46 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Tiago Pasqualini <tiago.pasqualini@canonical.com>,
-	qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] crypto: run qcrypto_pbkdf2_count_iters in a new thread
-Message-ID: <Z1iMWrKH_DBUJLfa@redhat.com>
-References: <20240904235230.199672-1-tiago.pasqualini@canonical.com>
- <ffe542bb-310c-4616-b0ca-13182f849fd1@redhat.com>
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tL5Wy-0007N2-0J
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:04:24 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jean-philippe@linaro.org>)
+ id 1tL5Wv-0008Fj-Vt
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 14:04:23 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434a736518eso66393315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 11:04:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733857460; x=1734462260; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=OGkjgJoVOIfscBofiFo3Qdxd7d5Imd8MkB+b0+Zyxa8=;
+ b=oSjXRpE9+zdCcS56MJMlYW4c1Xx5kU+HlnCiiOhKURpo6QFJq3TGERNiCYD5qp1vx9
+ cUBRrrSXUFiJlY4ivf6FfBn29gjC1JpBXC4sSlQl0lkoLlqCpuBymTDX3qAfbYzyEGv7
+ qvuG0kQOPKbKBw6YZ81PaAJxTMbsaBXix+abWiNRHHY089j0rO2aH718Z77bQ713hnoA
+ g/79EtoIMwMiSG9t9m7dFAA3fYfhrNIOIO7CCc1q8jx35DfgcDllyO8gC2jETmJHPIT5
+ EVcRik3NDtC4qFK9nPwqf0C7VVrimdc28DnEirPCZQk8RuxkLoaFxnk8AILRLzrRUHLk
+ EbkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733857460; x=1734462260;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OGkjgJoVOIfscBofiFo3Qdxd7d5Imd8MkB+b0+Zyxa8=;
+ b=wFxB0MXD3sz4llyCj3xyvj77dlCP9q1s0FKBesgWoM+kc6VS8A/pvkQavYuDo1YOnP
+ WzE2UxtNhFKd5erwq2I4CrRRi/8oT1VrYKutSy+llzVOq9zdUL/Z3uUHgIJupaK+cpVA
+ 6sXkSNDxI5btPE2i29syy9IdXrVFtEDvK4VtPVTEQfU8CqyP3buE3+DkZsOpHVz83ORV
+ j1FfG0NZ5raJmrkBu0p/REfMorUqBJ4NEWAmEtwZ5cqwV4U8vU3IrQSEzz9Rqm3+ozlU
+ b1NbZvMmAGEAqpvgBzQaR+YEYfAgUMhK9BZwSGXOKNgbs0s77/gXc7qOQVhqP7f25TM4
+ Lzdg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVgeec7qNI3TzNKClQ6xXEakpb7jFSm38O+pWoH8yL9qZ+Hqe864bPSvut+lZvwDNTX7lxk5qSnqTDx@nongnu.org
+X-Gm-Message-State: AOJu0Ywg6R+/qVu96Y8K8KvfzHIw5c5oCHDb2F6T8oz5qT90sPwYODhf
+ MqYRPvq30EiDI8oYguyrPKQZt8lpYc4Zt6fa9uim+Cwc//hEVai3bsMVuuZriz8=
+X-Gm-Gg: ASbGncswScv8qGMWVIYihQP0MlHH7Hidxr7z1HUcnw4qV5XM0C/78SrANsWbEdLnbpI
+ EL308tNqpmhLl2hg3j7n9xE86RS8nvPc9mrMxZWZUzF/Ho3qrkV70+m1ljNQ/HpJ4fnm777cbex
+ Jp+QurhGgBV5mW3WUcRJVgZBD0m6L989MGGliD/pwkICFMRbjtE/xe/5azaFCSLxuokqmLIEHvd
+ /aIpXWI8IhnHDc0N0SpMKY2EHm5AQFMxKdfkwsewXEcnIsRFGud
+X-Google-Smtp-Source: AGHT+IGvBRJU5VrvHHgELZZRyrW8eCUnsJp+fWL4M+Lzf4Iil54EchS3zFf3fpkiiJ2mrmbyb8g3kw==
+X-Received: by 2002:a05:600c:458c:b0:434:9ec0:9e4e with SMTP id
+ 5b1f17b1804b1-434fffba059mr67946935e9.30.1733857459913; 
+ Tue, 10 Dec 2024 11:04:19 -0800 (PST)
+Received: from myrica ([2.221.137.100]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434d526b158sm241081475e9.8.2024.12.10.11.04.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Dec 2024 11:04:19 -0800 (PST)
+Date: Tue, 10 Dec 2024 19:04:43 +0000
+From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: peter.maydell@linaro.org, richard.henderson@linaro.org,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, alex.bennee@linaro.org
+Subject: Re: [RFC PATCH v3 24/26] hw/core/loader: Add fields to RomLoaderNotify
+Message-ID: <20241210190443.GA1212502@myrica>
+References: <20241125195626.856992-2-jean-philippe@linaro.org>
+ <20241125195626.856992-26-jean-philippe@linaro.org>
+ <ba650cb5-488c-4127-a307-ea16c9e44b5d@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ffe542bb-310c-4616-b0ca-13182f849fd1@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+In-Reply-To: <ba650cb5-488c-4127-a307-ea16c9e44b5d@linaro.org>
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=jean-philippe@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,90 +99,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 10, 2024 at 06:29:49PM +0100, Thomas Huth wrote:
-> On 05/09/2024 01.52, Tiago Pasqualini wrote:
-> > CPU time accounting in the kernel has been demonstrated to have a
-> > sawtooth pattern[1][2]. This can cause the getrusage system call to
-> > not be as accurate as we are expecting, which can cause this calculation
-> > to stall.
+On Thu, Dec 05, 2024 at 11:21:19PM +0100, Philippe Mathieu-Daudé wrote:
+> On 25/11/24 20:56, Jean-Philippe Brucker wrote:
+> > In order to write an event log, the ROM load notification handler needs
+> > two more fields.
+> 
+> IMHO it makes more sense to squash that in the "hw/core/loader:
+> Add ROM loader notifier" patch introducing that API.
+
+Yes I'd squash it if we decide that the patch 25, which needs this, is
+useful. But it's possible that no one actually needs it so I left this
+separate for the moment.
+
+> 
 > > 
-> > The kernel discussions shows that this inaccuracy happens when CPU time
-> > gets big enough, so this patch changes qcrypto_pbkdf2_count_iters to run
-> > in a fresh thread to avoid this inaccuracy. It also adds a sanity check
-> > to fail the process if CPU time is not accounted.
-> > 
-> > [1] https://lore.kernel.org/lkml/159231011694.16989.16351419333851309713.tip-bot2@tip-bot2/
-> > [2] https://lore.kernel.org/lkml/20221226031010.4079885-1-maxing.lan@bytedance.com/t/#m1c7f2fdc0ea742776a70fd1aa2a2e414c437f534
-> > 
-> > Resolves: #2398
-> > Signed-off-by: Tiago Pasqualini <tiago.pasqualini@canonical.com>
+> > Signed-off-by: Jean-Philippe Brucker <jean-philippe@linaro.org>
 > > ---
-> >   crypto/pbkdf.c | 53 +++++++++++++++++++++++++++++++++++++++++++-------
-> >   1 file changed, 46 insertions(+), 7 deletions(-)
+> > v2->v3: New
+> > ---
+> >   include/hw/loader.h | 2 ++
+> >   hw/core/loader.c    | 2 ++
+> >   2 files changed, 4 insertions(+)
+> > 
+> > diff --git a/include/hw/loader.h b/include/hw/loader.h
+> > index 0cd9905f97..73f317966d 100644
+> > --- a/include/hw/loader.h
+> > +++ b/include/hw/loader.h
+> > @@ -355,6 +355,8 @@ ssize_t rom_add_option(const char *file, int32_t bootindex);
+> >   typedef struct RomLoaderNotify {
+> >       /* Parameters passed to rom_add_blob() */
+> > +    const char *name;
+> 
+> Description of the loaded ROM.
+> 
+> > +    uint8_t *data;
+> 
+> Or 'blob', blob_ptr. Maybe declare as 'const void *'?
+> 
+> >       hwaddr addr;
+> 
+> Now easier to document, where 'data' is addressed in guest memory.
+> 
+> >       size_t len;
+> 
+> Size of 'data'.
 
-> > +static void *threaded_qcrypto_pbkdf2_count_iters(void *data)
-> >   {
-> > +    CountItersData *iters_data = (CountItersData *) data;
-> > +    QCryptoHashAlgorithm hash = iters_data->hash;
-> > +    const uint8_t *key = iters_data->key;
-> > +    size_t nkey = iters_data->nkey;
-> > +    const uint8_t *salt = iters_data->salt;
-> > +    size_t nsalt = iters_data->nsalt;
-> > +    size_t nout = iters_data->nout;
-> > +    Error **errp = iters_data->errp;
-> > +
-> >       uint64_t ret = -1;
-> >       g_autofree uint8_t *out = g_new(uint8_t, nout);
-> >       uint64_t iterations = (1 << 15);
-> > @@ -114,7 +131,10 @@ uint64_t qcrypto_pbkdf2_count_iters(QCryptoHashAlgorithm hash,
-> >           delta_ms = end_ms - start_ms;
-> > -        if (delta_ms > 500) {
-> > +        if (delta_ms == 0) { /* sanity check */
-> > +            error_setg(errp, "Unable to get accurate CPU usage");
-> 
->  Hi!
-> 
-> While running "make check -j12 SPEED=slow" on a s390x host, I got:
-> 
->   3/657 qemu:unit / test-crypto-block          ERROR            0.27s
-> killed by signal 6 SIGABRT
-> >>> G_TEST_SLOW=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> MALLOC_PERTURB_=150 G_TEST_BUILDDIR=/home/thuth/s390x/qemu/tests/unit
-> MESON_TEST_ITERATION=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1
-> ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1
-> G_TEST_SRCDIR=/home/thuth/devel/qemu/tests/unit
-> /home/thuth/s390x/qemu/tests/unit/test-crypto-block --tap -k
-> ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> ✀ ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> stderr:
-> Unexpected error in threaded_qcrypto_pbkdf2_count_iters() at
-> ../../devel/qemu/crypto/pbkdf.c:135:
-> /home/thuth/s390x/qemu/tests/unit/test-crypto-block: Unable to get accurate
-> CPU usage
-> 
-> (test program exited with status code -6)
-> 
-> TAP parsing error: Too few tests run (expected 27, got 1)
-> ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――
-> 
-> Could we handle this more gracefully, please? I don't think that this should
-> fail the unit tests, should it?
+Thanks, I'll fix those
 
-This is a scenario that is not supposed to ever happen. It means
-we've had two calls to getrusage which returns exactly the same
-CPU time. This should be impossible, as we've definitely burnt
-lots of CPU between these two calls. Is this reliably reproducable
-only on s390x ?
+> 
+> >       size_t max_len;
+> 
+> Still unused. Drop?
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Yes
+
+Thanks,
+Jean
 
 
