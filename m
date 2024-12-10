@@ -4,72 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB8F1E7717D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 02:21:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 190A3E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKpqz-00046y-1B; Mon, 09 Dec 2024 21:20:01 -0500
+	id 1tKqYz-00007s-Md; Mon, 09 Dec 2024 22:05:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKpqx-00046g-5A; Mon, 09 Dec 2024 21:19:59 -0500
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tKpqu-00064p-E3; Mon, 09 Dec 2024 21:19:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733797196; x=1765333196;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=uysF80S1yd/OJmgxa+64hcQYxG7HISslCaMN3yYx/Uc=;
- b=eotoB0i920+9PvzBpKAL7QqyMM+M1CSBxpEnrleEG+3VWN1TUQCQVJ3S
- /9jVjw0J9pPUsp2kvwqucivlCO8H2vALkErj+8Qk4ytbizXYayNbYBFNw
- zAAkpLERl2+1vFwlYlZDKHxcs5RrwPYgC7K6PcqVoAhGn7/e2bfI+qiSW
- 5MeLHNPZFD+m/hklZvMKst4P23cjuYbd0NbYAq7i6/cqjBJdc3bzweS0p
- b0bViEQjcHcbw/N6CtER541GMbQCzwxKsCrPG1zQa8wTNPC7zq2Ni5BJB
- 2YYAtwolGWxOROy8x8UlFYTzPgg794jKpRvXExx7S6/+JjSemNgRpqQK3 Q==;
-X-CSE-ConnectionGUID: 2HIMuuw6QOuwyBh4agpZ8w==
-X-CSE-MsgGUID: d4/a+9fFQK6V34myUOy0Ig==
-X-IronPort-AV: E=McAfee;i="6700,10204,11281"; a="44800205"
-X-IronPort-AV: E=Sophos;i="6.12,221,1728975600"; d="scan'208";a="44800205"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Dec 2024 18:19:50 -0800
-X-CSE-ConnectionGUID: 6i/bHd7sS+ySDe4uleCwIA==
-X-CSE-MsgGUID: LijIjvBrQzSl2eO3Vlix8w==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,221,1728975600"; d="scan'208";a="100314131"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 09 Dec 2024 18:19:49 -0800
-Date: Tue, 10 Dec 2024 10:38:02 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 00/26] rust: bundle of prerequisites for HPET
- implementation
-Message-ID: <Z1epij0qxzewmyd4@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <f85a2be4-f2ad-4c00-aecf-c045b7cd2e1f@linaro.org>
- <CABgObfaT7cSDpuUzZ-imuhdBnsg86Qi7mt7KZ+-V-SU60+TXkg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tKqYx-00006X-8E; Mon, 09 Dec 2024 22:05:27 -0500
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tKqYv-0003GX-I6; Mon, 09 Dec 2024 22:05:26 -0500
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2165cb60719so11470935ad.0; 
+ Mon, 09 Dec 2024 19:05:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1733799923; x=1734404723; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JE6gi1e3jrRqP6eAPvMmiiVnw5XrKK0H22R6GNUrJ94=;
+ b=PYabYiu1V9GpSf/BXhMq0Ix6rtZs2ZhN3lDiC35p/0R+7oJ9V6y3w9Rllsoor2Eww8
+ OkrpPwPZZrywDjWdVkHHeaxtVIOw9t13lCf9BB4tyXx2z4qx60hYey5HK3V/y7fLa8LC
+ vyrxdJVPutANgA9+luBnqO4O5+hnotrW7cXqvFW5rg130hAIND7zHS3L6owNsrdSosSi
+ +yyxktudJBWBhKwepsjaJkieLFUjRqUDHPYdqohVCtQh0HMtWRKRWeXHfwpFONWIYWe9
+ PrYFxuo/tPftcXC0mNM4iBZNoQMbq4g8TBRbiPeDro+XpnO0AeUU/B8n9eCrLX7vhdjO
+ j65Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733799923; x=1734404723;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=JE6gi1e3jrRqP6eAPvMmiiVnw5XrKK0H22R6GNUrJ94=;
+ b=jwTMfLojMxXBT2Sbt4ktGQ6SWvO6BjOWsDa/qQfwt32UJtKEhW/fmVw0Oi534XO8G0
+ cqMOhZI2Fbc9eVFC9w0GM6jFC5SyYS+F/x+hrjvMPoddzBUZDLnHXkd0TTn8G91kqpPy
+ QJrknyZXqh4Dc2h9Rwu7Rw0+iXl5u0IywXIFGvZ42IkRIYfixWNnxvEf63AdCxP6aLnP
+ 361Gam3Etrc+EEm8EAjNYU2Ck0pLoYrvWD9lTBdHtvWs37mnQAVSPaAI6d9jHQvoHabh
+ eDqxeIqoYGKBz/33kaMKQY/5kf4+e9AKP7DYZiCQoGG2ff/74GmifPMpKY2IH8TD6Q0L
+ 2Wxw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhVTzwTiGtZTtSs4CKvbwqVpzthCJvHsWaIt5V/BY1+E8pgM4LUK1M6GB+GIcWvBfKnZrzHaUH4n50@nongnu.org
+X-Gm-Message-State: AOJu0YwXWM0v7rMv/PpeAmKxoLAq3yBpx0qQe0YuzDjoCK+k28auKOUF
+ PocDnVGA0s2/QhCPVRX3p7jm3O+L4/AzHEHRqDar1/d9zT/rzSBAh9qZFQ==
+X-Gm-Gg: ASbGnctOv54cOoeU9dka358x4pv49ozcWJ9hctu29XjcfUDQOfMm0i2pLx2XLPDnGXH
+ F0HOJRyO4hYDdgeNuFx8O5T7Bzs8b0QxFcoJb6OXlX7Q1fVEdZ3I9y09CyBk8q15CkMaLpRcJTr
+ ac5uprNwwoIXXt4pxbIA9BScIqdxK1n+KmVFeTXeqQRpCZXvsZF1OTjnB64zMVkgOcAb7OaVSdd
+ QgajzBMJ+D88gD8sMkExODA6zDRTtkHpJzU9No7rtRgdYmPY/vxV+dXPVOf
+X-Google-Smtp-Source: AGHT+IG5BaZD9fGDiC5EEHW/84z+kWAH+PdjsfIqUv4mn0YKzvhj4pgPl1tKmA1tVBA+YHaPVCtOWw==
+X-Received: by 2002:a17:902:da89:b0:215:19ae:77bf with SMTP id
+ d9443c01a7336-21669fe13e4mr37475065ad.19.1733799923527; 
+ Mon, 09 Dec 2024 19:05:23 -0800 (PST)
+Received: from wheely.local0.net ([220.253.106.119])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Dec 2024 19:05:23 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
+Subject: [PATCH 8/9] ppc/pnv/occ: Add POWER10 OCC-OPAL data format
+Date: Tue, 10 Dec 2024 13:04:48 +1000
+Message-ID: <20241210030451.1306608-9-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
+References: <20241210030451.1306608-1-npiggin@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfaT7cSDpuUzZ-imuhdBnsg86Qi7mt7KZ+-V-SU60+TXkg@mail.gmail.com>
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,63 +99,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 06:23:21PM +0100, Paolo Bonzini wrote:
-> Date: Mon, 9 Dec 2024 18:23:21 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 00/26] rust: bundle of prerequisites for HPET
->  implementation
-> 
-> On Mon, Dec 9, 2024 at 5:24 PM Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
-> >
-> > On 9/12/24 13:36, Paolo Bonzini wrote:
-> >
-> > > Paolo Bonzini (26):
-> > >    bql: check that the BQL is not dropped within marked sections
-> > >    rust: cell: add BQL-enforcing Cell variant
-> > >    rust: cell: add BQL-enforcing RefCell variant
-> > >    rust: define prelude
-> > >    rust: add bindings for interrupt sources
-> > >    rust: add a bit operation module
-> > >    rust: qom: add default definitions for ObjectImpl
-> > >    rust: qom: rename Class trait to ClassInitImpl
-> > >    rust: qom: convert type_info! macro to an associated const
-> > >    rust: qom: move ClassInitImpl to the instance side
-> > >    rust: qdev: move device_class_init! body to generic function,
-> > >      ClassInitImpl implementation to macro
-> > >    rust: qdev: move bridge for realize and reset functions out of pl011
-> > >    rust: qom: automatically use Drop trait to implement instance_finalize
-> > >    rust: qom: move bridge for TypeInfo functions out of pl011
-> > >    rust: qom: split ObjectType from ObjectImpl trait
-> > >    rust: qom: change the parent type to an associated type
-> > >    rust: qom: put class_init together from multiple ClassInitImpl<>
-> > >    rust: qom: add possibility of overriding unparent
-> > >    rust: rename qemu-api modules to follow C code a bit more
-> > >    rust: re-export C types from qemu-api submodules
-> > >    rust: tests: allow writing more than one test
-> > >    rust: qom: add casting functionality
-> > >    rust: qom: add initial subset of methods on Object
-> > >    rust: qom: move device_id to PL011 class side
-> > >    rust: qemu-api: add a module to wrap functions and zero-sized closures
-> > >    rust: callbacks: allow passing optional callbacks as ()
-> >
-> > Am I correct some patches are from Zhao Liu and got the
-> > authorship inadvertently removed?
-> 
-> Just one, which is co-authored; it has
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> Co-authored-by: Paolo Bonzini <pbonzini@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> So I should have put either Co-authored-by him or left him as the
-> primary author.
-> 
+Add POWER10 OCC-OPAL data format. POWER10 changes major version and
+adds a few fields.
 
-Thank you Paolo! You deserve to be credited as the author. It's
-completely different from my previous solution, so it's all your
-work! HPET will be a user.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/pnv_occ.c | 43 ++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 42 insertions(+), 1 deletion(-)
 
-Regards,
-Zhao
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index 5567fbf008e..aa46e118e93 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -263,14 +263,20 @@ static const TypeInfo pnv_occ_power9_type_info = {
+ 
+ static void pnv_occ_power10_class_init(ObjectClass *klass, void *data)
+ {
++    PnvOCCClass *poc = PNV_OCC_CLASS(klass);
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->desc = "PowerNV OCC Controller (POWER10)";
++    poc->opal_shared_memory_offset = P9_HOMER_OPAL_DATA_OFFSET;
++    poc->opal_shared_memory_version = 0xA0;
++    poc->xscom_size = PNV9_XSCOM_OCC_SIZE;
++    poc->xscom_ops = &pnv_occ_power9_xscom_ops;
++    assert(!dc->user_creatable);
+ }
+ 
+ static const TypeInfo pnv_occ_power10_type_info = {
+     .name          = TYPE_PNV10_OCC,
+-    .parent        = TYPE_PNV9_OCC,
++    .parent        = TYPE_PNV_OCC,
+     .class_init    = pnv_occ_power10_class_init,
+ };
+ 
+@@ -710,6 +716,37 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+             static_data.v9.core_max[i] = 1;
+         }
+         break;
++    case 0xA0:
++        if (chip->chip_id == 0) {
++            static_data.v10.occ_role = OCC_ROLE_MASTER;
++        } else {
++            static_data.v10.occ_role = OCC_ROLE_SLAVE;
++        }
++        static_data.v10.pstate_min = 4;
++        static_data.v10.pstate_fixed_freq = 3;
++        static_data.v10.pstate_base = 2;
++        static_data.v10.pstate_ultra_turbo = 1;
++        static_data.v10.pstate_fmax = 0;
++        static_data.v10.minor = 0x01;
++        static_data.v10.pstates[0].valid = 1;
++        static_data.v10.pstates[0].id = 0;
++        static_data.v10.pstates[0].freq_khz = cpu_to_be32(4200);
++        static_data.v10.pstates[1].valid = 1;
++        static_data.v10.pstates[1].id = 1;
++        static_data.v10.pstates[1].freq_khz = cpu_to_be32(4000);
++        static_data.v10.pstates[2].valid = 1;
++        static_data.v10.pstates[2].id = 2;
++        static_data.v10.pstates[2].freq_khz = cpu_to_be32(3800);
++        static_data.v10.pstates[3].valid = 1;
++        static_data.v10.pstates[3].id = 3;
++        static_data.v10.pstates[3].freq_khz = cpu_to_be32(3000);
++        static_data.v10.pstates[4].valid = 1;
++        static_data.v10.pstates[4].id = 4;
++        static_data.v10.pstates[4].freq_khz = cpu_to_be32(2000);
++        for (i = 0; i < chip->nr_cores; i++) {
++            static_data.v10.core_max[i] = 1;
++        }
++        break;
+     default:
+         g_assert_not_reached();
+     }
+@@ -725,6 +762,10 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+     dynamic_data.cur_pwr_cap = cpu_to_be16(PCAP_MAX_POWER_W);
+     dynamic_data.soft_min_pwr_cap = cpu_to_be16(PCAP_SOFT_MIN_POWER_W);
+     switch (poc->opal_shared_memory_version) {
++    case 0xA0:
++        dynamic_data.minor_version = 0x1;
++        dynamic_data.v10.wof_enabled = 0x1;
++        break;
+     case 0x90:
+         dynamic_data.minor_version = 0x1;
+         break;
+-- 
+2.45.2
 
 
