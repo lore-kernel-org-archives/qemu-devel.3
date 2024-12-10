@@ -4,73 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39973E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:32:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58B88E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL39y-0006ST-TR; Tue, 10 Dec 2024 11:32:30 -0500
+	id 1tL3EX-0002i4-Cd; Tue, 10 Dec 2024 11:37:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tL39u-0006QO-B5
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:32:26 -0500
-Received: from smtpx.feld.cvut.cz ([147.32.210.153] helo=smtpx.fel.cvut.cz)
- by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_CHACHA20_POLY1305:256)
- (Exim 4.90_1) (envelope-from <pisa@fel.cvut.cz>) id 1tL39r-0000kJ-J2
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:32:26 -0500
-Received: from localhost (unknown [192.168.200.27])
- by smtpx.fel.cvut.cz (Postfix) with ESMTP id B398247D27;
- Tue, 10 Dec 2024 17:32:17 +0100 (CET)
-X-Virus-Scanned: IMAP STYX AMAVIS
-Received: from smtpx.fel.cvut.cz ([192.168.200.2])
- by localhost (cerokez-250.feld.cvut.cz [192.168.200.27]) (amavis, port 10060)
- with ESMTP id FvlgVPhNnQuD; Tue, 10 Dec 2024 17:32:15 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fel.cvut.cz;
- s=felmail; t=1733848335;
- bh=CUUf/pgxCxR/P5WTixYT03ckS20UsQ2du+3dDPRL63w=;
- h=From:To:Subject:Date:Cc:References:In-Reply-To:From;
- b=sGT4woNK/XngQyRrFFq/p7hn0heM8/Kn71c1bd+6LFmlosR9dM1VLibZeBKc7kTRs
- BTk38HQoqF1kJnKKtG0WeR/010TWsR3gWFK+PIw/IYw/9AUM99b9cY/EESCqbWql5g
- Aptw1x2pkVj6MCVzQE3WBdDhPCj0cYLo63MaYSZXOq2smhyhj00jg71cqQhh+xu/GT
- 7IziePdsY/SDlEbCLHI87JnKDu1XjantqhMMDZnm8OXO+3TXqumOIQ/nx2LBMZd7b2
- 5ggz7FokBWYC9C3OGndnwi6ul4oLy6qw+6OkvBTSQhbihdUKKxjk3y67VRdkmoMdQX
- ro3kizfEP/XJw==
-Received: from [10.0.3.185] (unknown [80.188.199.122])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pisa)
- by smtpx.fel.cvut.cz (Postfix) with ESMTPSA id D3287479EC;
- Tue, 10 Dec 2024 17:32:14 +0100 (CET)
-From: Pavel Pisa <pisa@fel.cvut.cz>
-To: qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [RFC/WIP 0/3] WIP CTU CAN FD IP core mapping to the platform bus
-Date: Tue, 10 Dec 2024 17:32:54 +0100
-User-Agent: KMail/1.9.10
-Cc: Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Francisco Iglesias <francisco.iglesias@amd.com>,
- Alex =?utf-8?q?Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <cover.1733783500.git.pisa@cmp.felk.cvut.cz>
- <CAFEAcA9FcCr1Zz+N+QkZUC5q0o+02GRje6YqRQy5d6v55D0CgA@mail.gmail.com>
-In-Reply-To: <CAFEAcA9FcCr1Zz+N+QkZUC5q0o+02GRje6YqRQy5d6v55D0CgA@mail.gmail.com>
-X-KMail-QuotePrefix: > 
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tL3EV-0002hk-17
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:37:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tL3ES-0001lw-92
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:37:10 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733848622;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=m8r9sKIbRLBLkrX/nPh9MYeccE5FBF71QvPNgtqreAk=;
+ b=aiKJWzVwCDGp+cVcG1vf8qkpvEut2IRnxHy63Rr6EkIaI3DOfPHmVcQlcqQwfBK2tpI5As
+ 5u2FYliuF9jOnUneB3TppphlGINW0aAKwRCyicLnvuToa4xbJY1DNpDG/mRT8f3IQVLKts
+ OmxU5Ssr200P3qQ2cuETIltOiG3I9qg=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-571-D7d0UDrzNVGmLPO1emOzNQ-1; Tue, 10 Dec 2024 11:35:27 -0500
+X-MC-Unique: D7d0UDrzNVGmLPO1emOzNQ-1
+X-Mimecast-MFC-AGG-ID: D7d0UDrzNVGmLPO1emOzNQ
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-386333ea577so1366056f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:35:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733848526; x=1734453326;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=m8r9sKIbRLBLkrX/nPh9MYeccE5FBF71QvPNgtqreAk=;
+ b=KWkqTz2XgBp9DNnyOGVYW2E0Y6Ei8rEpzbvU0Bwut1RLArqOW6it2XJP7uB5zF1t4a
+ fulXiEB0dfTMv7bm0ZUAmKMowt+QGUGZEQz2glsy+CvO+NEQBKvrL4i+0AcZ+iSyeIAv
+ 8BrfrEbyJC1c8u5UCkEPid06l0j6Pa4BF/HZpdWiiLnRp3qaHM1jT+SaTAXShhj/B2f9
+ j7VMj1Ntk7LqIC3brAdUP4H/y6Kb2VIgCwQXWjQhnvrAbM3KGuB0c8YdrfePo3r/yoy3
+ 6V1dNN4u0l5S9cq4I66j5p2gtnvg5nn5MXAzPkU2CJm1PqXWt+ZeGo/gmXcelh+Tc+V8
+ mklQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXtFEVZdzrs+Wo02EEiLe12mgYMMaBJ8LNe3Q1OERi3HdlE9m8M8+oYGR8ldCHkYjlKmdn9xaa4hf/c@nongnu.org
+X-Gm-Message-State: AOJu0Yzr6XIde7E687vDef1GYmkwEP1Co+A41SzOmLzP7HTrmjSIb/6s
+ muLrWCoKjYiDyVIlm4HDE5wQDbNjIOY5/yiJAo2Izqfunup+hrBniNPZEQmdO3zzP0Js6MgLYKc
+ vmwj8qPNV9lcq7H73HXA6IV2/gAavKzdgnXOH6A4l7dpsI7ZVToOW
+X-Gm-Gg: ASbGncsoQMW4daZk+nA2/GjnHiZQNrZk5ISAynU/mhjWxhx1VyF7y7KdT3xpnRgEaVW
+ tY0Iuwdx964G0Xt7p8HxplBAxPZDxT8DlTzk9B8NaJISfvnKrft/Nkcnbid6HcAyTj0D6PbPAOq
+ eCM6DDnQmkvsMd4F6BGS4ylFi+w4QAska61OHw8N0LAaMV/FA9Rp8VLINkuuzXwxMCnoK2LuBJp
+ WSHh2I577PmTFuHEwLbGiutbfmyfB7Eh++PSpiIcs4Ul/lBEjtrJxaAkaWXZoZ561Wfaari01Qe
+ KxvG0k7TwwpGT/8ZoT8M6z2rmQ==
+X-Received: by 2002:a5d:5989:0:b0:385:de67:2269 with SMTP id
+ ffacd0b85a97d-386453f67d0mr3799800f8f.36.1733848526460; 
+ Tue, 10 Dec 2024 08:35:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHA4HSM7u5N/YztOrffT/ewTqL4Ef0CmtwH5Y6kM0a/m9Eoaw/d7QmfYye9a/kNqz5+GU544w==
+X-Received: by 2002:a5d:5989:0:b0:385:de67:2269 with SMTP id
+ ffacd0b85a97d-386453f67d0mr3799792f8f.36.1733848526151; 
+ Tue, 10 Dec 2024 08:35:26 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3862190966bsm16602668f8f.75.2024.12.10.08.35.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Dec 2024 08:35:25 -0800 (PST)
+Date: Tue, 10 Dec 2024 17:35:24 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Yanan Wang
+ <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>, "Michael S.
+ Tsirkin" <mst@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Cameron Esfahani <dirty@apple.com>, Roman
+ Bolshakov <rbolshakov@ddn.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [RFC PATCH 2/4] i386: Extract a common fucntion to setup value
+ of MSR_CORE_THREAD_COUNT
+Message-ID: <20241210173524.48e203a3@imammedo.users.ipa.redhat.com>
+In-Reply-To: <f9793791-2aaa-42b8-9830-86401a020205@linaro.org>
+References: <20241205145716.472456-1-xiaoyao.li@intel.com>
+ <20241205145716.472456-3-xiaoyao.li@intel.com>
+ <f9793791-2aaa-42b8-9830-86401a020205@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: inline
-Message-Id: <202412101732.54857.pisa@fel.cvut.cz>
-Received-SPF: pass client-ip=147.32.210.153; envelope-from=pisa@fel.cvut.cz;
- helo=smtpx.fel.cvut.cz
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, NICE_REPLY_A=-2.61,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,99 +119,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
+On Thu, 5 Dec 2024 22:38:41 +0100
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-On Tuesday 10 of December 2024 11:08:53 Peter Maydell wrote:
-> On Mon, 9 Dec 2024 at 23:33, Pavel Pisa <pisa@fel.cvut.cz> wrote:
-> > our CTU CAN FD IP core is used on many FPGA platforms
-> > and has been even tapeout on some other university
-> > and even prototypes of the massive production chips
-> > (support for that organized by our former student
-> > in his company).
-> >
-> > But actual QEMU emulation targets only PCI/PCIe mapping in
-> >
-> >   hw/net/can/ctucan_pci.c
-> >
-> > of the core in
-> >
-> >   hw/net/can/ctucan_core.c
-> >
-> > I would like to add support to map the core at fixed position for
-> > SoCs and command line controlled location for FPGA targets.
->
-> Command line instantiation of devices at command line
-> controlled addresses and with command line connection
-> of IRQ lines is basically something we do not
-> currently support. There is some prototype/design work
-> going on about generic "create a machine from
-> the command line" handling, which would inevitably
-> involve allowing the user to specify addresses and IRQ
-> lines. But I don't really want to see ad-hoc device-specific
-> additions of small parts of similar functionality.
->
-> If there's a SoC that QEMU models that has this CAN
-> controller, then it's the SoC model (written in C)
-> that defines where it is mapped in memory and what
-> IRQ lines it is wired up to.
+> Hi Xiaoyao,
+>=20
+> On 5/12/24 15:57, Xiaoyao Li wrote:
+> > There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+> > Extract a common function for it.
+> >=20
+> > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> > ---
+> >   target/i386/cpu.h                    | 11 +++++++++++
+> >   target/i386/hvf/x86_emu.c            |  3 +--
+> >   target/i386/kvm/kvm.c                |  5 +----
+> >   target/i386/tcg/sysemu/misc_helper.c |  3 +--
+> >   4 files changed, 14 insertions(+), 8 deletions(-)
+> >=20
+> > diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> > index 4c239a6970fd..5795a497e567 100644
+> > --- a/target/i386/cpu.h
+> > +++ b/target/i386/cpu.h
+> > @@ -2390,6 +2390,17 @@ static inline void cpu_x86_load_seg_cache_sipi(X=
+86CPU *cpu,
+> >       cs->halted =3D 0;
+> >   }
+> >  =20
+> > +static inline uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu) =
+=20
+>=20
+> Please do not add more inlined functions in this huge file, the
+> inlining performance isn't justified at all.
+>=20
+> target/i386/cpu-sysemu.c looks the correct place for this helper.
 
-There should be such SoC in some time even in public.
-I understand that in such case the mapping should
-be part of its support.
+ack
 
-But main area of the CTU CAN FD IP core use
-are FPGAs for now, Xilinx Zynq and above, Intel/Altera
-SoC+FPGAs, actual next target to test is Microchip
-PolarFire on BeagleV-Fire which allows to develop
-and test driver for Linux, NuttX and RTEMS on the single
-chip. And it would be great if there is option to
-run that on CI and have (still simplified - no bitrate
-miscmatch check etc) model for SW development with QEMU.
+>=20
+> > +{
+> > +    CPUState *cs =3D CPU(cpu);
+> > +    uint64_t val;
+> > +
+> > +    val =3D cs->nr_threads * cs->nr_cores;  /* thread count, bits 15..=
+0 */
+> > +    val |=3D ((uint32_t)cs->nr_cores << 16); /* core count, bits 31..1=
+6 */ =20
+>=20
+> Personally I'd change to:
+>=20
+>         return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+>                          cs->nr_cores);
+that I wouldn't do in this patch to make it easier to compare apples to app=
+les
+That however could be a separate patch on top
 
-And CTU CAN FD does not belong to the core Zynq or PolarFire
-support in such cases. So even this actual solution is usable
-in such cases. But as I have expected, it is not so welcomed
-in mainline... which is why I attempt to find what can be done.
+> > +
+> > +    return val;
+> > +} =20
+>=20
 
-Do you consider the the proposed trick (target object specified by
-"irqctrl" parameter on commad line and then resolved by
-object_resolve_path_at()) as unacceptable for mainline?
-
-Another problem is if the qemu_irq can be copied in ctucan_mm_realize.
-I have tried even another solution where chip core kept pointer
-to qemu_irq in the bus integration wrapper (PCI/PCIe and platform).
-
-But even for mainlined PCI/PCIe CTU CAN FD support I would like
-to update support to provide real "or" operation between IRQs
-outputs from individual controllers to PCI/PCIe interrupt link.
-So in this case, I would be happy to hear if I can reuse
-qemu_irq and some routing or if I should define own mechanism
-to activate callback provided by the bus integration wrapper
-from the core emulation code. But may it be some pin logic
-already implemented in QEMU can be used there.
-
-Best wishes,
-
-                Pavel
-
-PS: does somebody have some experience, information for
-use of "16c3:abcd" DWC_usb3 / PCIe bridge on i.MX6 Sabre
-Litte, I have sent plea for help two months ago without
-any respone and it would help our another CAN controller
-development project, iMX6 FlexCAN support.
- 
---
-                Pavel Pisa
-    phone:      +420 603531357
-    e-mail:     pisa@cmp.felk.cvut.cz
-    Department of Control Engineering FEE CVUT
-    Karlovo namesti 13, 121 35, Prague 2
-    university: http://control.fel.cvut.cz/
-    personal:   http://cmp.felk.cvut.cz/~pisa
-    social:     https://social.kernel.org/ppisa
-    projects:   https://www.openhub.net/accounts/ppisa
-    CAN related:http://canbus.pages.fel.cvut.cz/
-    RISC-V education: https://comparch.edu.cvut.cz/
-    Open Technologies Research Education and Exchange Services
-    https://gitlab.fel.cvut.cz/otrees/org/-/wikis/home
 
