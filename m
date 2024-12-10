@@ -4,98 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91C0CE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB7FE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:43:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKya3-0004hH-AS; Tue, 10 Dec 2024 06:39:07 -0500
+	id 1tKydt-0005uo-Oj; Tue, 10 Dec 2024 06:43:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tKya1-0004gt-9k
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 06:39:05 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tKyZz-0005M5-HL
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 06:39:05 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-435005192d1so11223805e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 03:39:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733830741; x=1734435541; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RrOQ3UVTl9AS2HWvdVW44AeevF+Mi2NsHBjwkErHjWk=;
- b=p5wPLCwa06RJNFYkJ6/BoEL2aXMOcUHuoGlghoseNaiMoKquDonPcK9MlckxHhgFQs
- x/KX53OFc39n70UHrqwUTB56Dv9ehNa87zLL8UHyNhFGDxp4fKLIRnZfZoIoeGtCkvRm
- ZnNiI6yAuPIys85nZU1HuG6ZGngf6+kvu6dxLjO+WykOalqNgsp7w+0QjFoa4LPrCSoE
- fQBQqWAdwA5gsuqihcUEQ1A355QfH9tuxXP6rimRBoyqlV8YbBgftJaL4uasUH1EPu/P
- juWYLPbEyVoryVQfdlbzehXVs50TmJPqCxSF+383wV0K/BDB7pW4vSwPmTkrP2zrE7y5
- ocDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733830741; x=1734435541;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RrOQ3UVTl9AS2HWvdVW44AeevF+Mi2NsHBjwkErHjWk=;
- b=Pdr3r6oTOOmWzE1HNnR6A4dPRSkndKSUNxwHrG32dro53f3Igc60M1tP9e/lICkMEc
- RqZTbEA2j2eGErjR6ufkglsVn+dh9hFR+PBGaY7tBlXc9wkHyBDH76LNdenmVq0Hyl3c
- hNcQhRZy27rHFvmSdzo0+Zi7kMcOh+VCTG8InGiEL2nArGxWwBKWU6sZBGq5AXX8fADw
- OVFljs2JqzUjF3ofxg3VRh7cvCd+vbhU2m/wflEGn6ID2DtZC1H9qHJkaTI4h1Z85pYI
- KhrCucVYx7s4uDbf56KzSLeKDsslQaE7N4Ns0OjHbhDLIXffLudQbfAPrLG0flS40XgF
- 450A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxW0NWcDxAclO1ywGQNxBDhG0/gPBsU7Fp+xKqa8pAYu1d1iYBaeidpZJgafAu42rvqqc+qLz53H6H@nongnu.org
-X-Gm-Message-State: AOJu0YzWuUJhYm4JU9S7DQFizPpel8TAUCAkp/dzoanPfXD18SqIt/aq
- kTKKxExdFBXFQ1/mVSGlBP/x2nYLXOyfiJsE5B2TwejcWYkCuAnPQzSFDi+nArE=
-X-Gm-Gg: ASbGnct4ys4F8i5pO0XHCxV/eGRacCu4p/K0yZOiCL8UAO4DhfFORUjel+d5Hk+JMXB
- j/grQ0VzJa3uu6cjXQhegYyFkPHOaSbEidib936KaZLVcJdOpHe7DmK6sx6i2vWRBngGEoEz14Z
- BR7k3vHV9zeL/4YoHsA0R4c1/qbyy9qNz+81Ux78OsKlT+lA8Al7ZKYxli0QNGAATK4obAB+/UQ
- yMSpG8o+3KlEHfH2psHE4b5iuOE68LSnuM24VpInmxaQr/AUTIV
-X-Google-Smtp-Source: AGHT+IGobbMz5gXfb38MGNJAVX7sHUpaUyhR8F5aWrpx8c0KbCHGMziYvTrEW1MhCySfHCGov6J1cw==
-X-Received: by 2002:a05:600c:1909:b0:434:f586:753c with SMTP id
- 5b1f17b1804b1-434f5867ecemr65444495e9.7.1733830741123; 
- Tue, 10 Dec 2024 03:39:01 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f39653c6sm92772475e9.7.2024.12.10.03.39.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 03:39:00 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 7FE025F77C;
- Tue, 10 Dec 2024 11:38:59 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Rowan Hart <rowanbhart@gmail.com>,  qemu-devel@nongnu.org,  Richard
- Henderson <richard.henderson@linaro.org>,  Eduardo Habkost
- <eduardo@habkost.net>,  Alexandre Iooss <erdnaxe@crans.org>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH v2 0/3] Add additional plugin API functions to read and
- write memory and registers
-In-Reply-To: <5b798177-c48f-4f69-8b7b-2b63c74c3505@linaro.org> (Pierrick
- Bouvier's message of "Mon, 9 Dec 2024 10:45:15 -0800")
-References: <20241206102605.961658-1-rowanbhart@gmail.com>
- <55c95bd1-a1bc-460c-b4fe-1f52f8af2c2e@linaro.org>
- <2c0893fa-9d84-4003-861b-91a923f9439f@gmail.com>
- <5b798177-c48f-4f69-8b7b-2b63c74c3505@linaro.org>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Tue, 10 Dec 2024 11:38:59 +0000
-Message-ID: <87o71ju5rg.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
+ id 1tKydr-0005tz-9i; Tue, 10 Dec 2024 06:43:03 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
+ id 1tKydn-0005wB-56; Tue, 10 Dec 2024 06:43:01 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA1wAF0000529;
+ Tue, 10 Dec 2024 11:42:53 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=2mk68w
+ BG/udr3MvmVEU3QAATmrVUGjqrUTfn76LSqOY=; b=IdfocKsFfURWtHI3aO3IDZ
+ NAKYKaT2FTmY1CG/WXMeCorBATYeGNG51FKgXN8Kdr94eKs9N/Uq9moPbpryywEN
+ M+Cr8lHOKrFX0Zu+Q99tDGDxLmjzH+AVhXQFQ8EmW+Is+npHufJgBrzNKJKZOXGi
+ SF1pinZz6AafaE3Y/VpwIn/moJevj90qs65CcJOzE7C+mnR1+AMyiOxlqZB0z0xx
+ XkuXLDx5OFiRABzKy3xP9oN3gqAwPlFdDshV8H/V0uSX62KgzXJYjNEBOvW2meXD
+ XZjVkGtkc2iA2SSSYgk63mYmOeRSIS8+hFmPGTH1fqJNWmJzihr14z08L0d4JNtw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cdv8psfr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 11:42:52 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAAe9jG032724;
+ Tue, 10 Dec 2024 11:42:52 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0psbm38-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Dec 2024 11:42:52 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BABgmKr49283516
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Dec 2024 11:42:48 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 560AA2004B;
+ Tue, 10 Dec 2024 11:42:48 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2F0E620040;
+ Tue, 10 Dec 2024 11:42:48 +0000 (GMT)
+Received: from [9.155.198.95] (unknown [9.155.198.95])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Dec 2024 11:42:48 +0000 (GMT)
+Message-ID: <93e520db-58e0-41ea-8a50-43935356800e@linux.ibm.com>
+Date: Tue, 10 Dec 2024 12:42:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v2 08/15] s390x/cpumodel: add Vector Enhancements
+ facility 3
+To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org, thuth@redhat.com
+Cc: nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
+References: <20241206122751.189721-1-brueckner@linux.ibm.com>
+ <20241206122751.189721-9-brueckner@linux.ibm.com>
+Content-Language: en-US
+From: Janosch Frank <frankja@linux.ibm.com>
+Autocrypt: addr=frankja@linux.ibm.com; keydata=
+ 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
+In-Reply-To: <20241206122751.189721-9-brueckner@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: yfV8WHu-xWCL2R-spYNpIzkWd_6wPvtS
+X-Proofpoint-ORIG-GUID: yfV8WHu-xWCL2R-spYNpIzkWd_6wPvtS
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 mlxlogscore=778
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412100085
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=frankja@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -112,101 +153,11 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
+> The Vector Enhancements facility 3 introduces new instructions and
+> extends support for doubleword/quadword elements.
+> 
+> Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
-> On 12/6/24 16:57, Rowan Hart wrote:
->>> I am personally in favor to adding such features in upstream QEMU,
->>> but we should discuss it with the maintainers, because it would
->>> allow to change the state of execution, which is something qemu
->>> plugins actively didn't try to do. It's a real paradigm shift for
->>> plugins.
->>>
->>> By writing to memory/registers, we can start replacing instructions and=
- control flow, and there is a whole set of consequences to that.
->>>
->> Totally agree! As much as I really want this functionality for
->> plugins, I think
->> alignment on it is quite important. I can see very cool use cases for be=
-ing
->> able to replace instructions and control flow to allow hooking functions,
->> hotpatching, and so forth.
-
-I think currently that makes quite a lot of demands on the translator to
-make sure things are kept consistent.
-
-We have been talking about maybe enabling hypercalls of some sort to
-allow for hooking explicit function boundaries in linux-user. A natural
-extension of that would be for host library bypass functions. I'm unsure
-of how that would apply in system emulation mode though where things are
-handled on a lot more granular level.
-
->> I don't really know the edge cases here so your expertise will be
->> helpful. In
->> the worst case I can imagine: what would happen if a callback overwrote =
-the
->> next insn? I'm not sure what behavior I would expect if that insn has al=
-ready
->> been translated as part of the same tb. That said, the plugin is aware o=
-f which
->> insns have already been translated, so maybe it is not unreasonable to j=
-ust
->> document this as a "don't do that". Let me know what you think.
->>=20
->
-> In the end, if we implement something to modify running code, we
-> should make sure it works as expected (flushing the related tb). I am
-> not sure about the current status, and all the changes that would be
-> needed, but it's something we should discuss before implementing.
-
-If the right access helpers are used we eventually end up in cputlb and
-the code modification detection code will kick in. But that detection
-mechanism relies on the guest controlled page tables marking executable
-code and honouring rw permissions. If plugins don't honour those
-permissions you'll become unstuck quite quickly.
-
-> More globally, let's wait to hear feedback from maintainers to see if
-> they are open to the idea or not. A "hard" no would end it there.
-
-It's not a hard no - but I think any such patching ability would need a
-quite a bit of thought to make sure edge cases are covered. However I do
-expect there will be downstream forks that go further than the upstream
-is currently comfortable with and if the code is structured in the right
-way we can minimise the pain of re-basing.
-
->>> The hypercall functionality would be useful for plugins as a whole. And=
- I think it definitely deserves to be worked on, if maintainers are open to=
- that as well.
->> Sure, I'd be happy to work on this some more. At least on the
->> fuzzing side of
->> things, the way hypercalls are done across hypervisors (QEMU, Bochs, etc=
-) is
->> pretty consistent so I think we could provide a useful common set of
->> functionality. The reason I did the bare minimum here is I'm not familia=
-r with
->> every architecture, and a good NOP needs to be chosen for each one along=
- with a
->> reasonable way to pass some arguments -- I don't know if I'm the right p=
-erson
->> to make that call.
->>=20
->
-> We have been discussing something like that for system mode recently,
-> so it would definitely be useful.
->
-> IMHO, it's open for anyone to contribute this, the plugins area is not
-> a private garden where only chosen ones can change things. Just be
-> prepared for change requests, and multiple versions before the final
-> one.
->
-> Same on this one, we'll see if maintainers are ok with the idea.
->
->> Glad to hear you're for this idea!
->> -Rowan
->
-> Thanks,
-> Pierrick
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
 
