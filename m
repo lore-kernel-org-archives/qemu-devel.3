@@ -4,69 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC7DE77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:33:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE326E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:33:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2EY-0001Sa-RP; Tue, 10 Dec 2024 10:33:18 -0500
+	id 1tL29m-0007YO-Hu; Tue, 10 Dec 2024 10:28:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tL2EC-0001KE-FM; Tue, 10 Dec 2024 10:32:50 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tL2EA-0000rI-C9; Tue, 10 Dec 2024 10:32:48 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733844766; x=1765380766;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=lDfSvcdtU5wg9X7Z6lt3evGywYSTE29GME0kFIPv9v8=;
- b=IJVuJ98YpjlqLs79VS/o1JWwKkibpmXO3+TfaGZsZGPZjgxdx2mSdvC6
- FB62hSjg+rqy0CfvDhQAbrrdu80MhFLKP6K8rxM8Koe7yMyZR2nr5GzvT
- gZE8eawz6sag8GfrlW/GGI0bkkyVsz8sm8tFJxovlLaPy2PKzuJ+yDM2y
- rECOTs7O7cufhTKynqiQRzIcrkkuTmG0mCIfLNv/JBAfWmxazUfZ7oXQa
- EtrcVvmK0F0gGOfGcVYyQC0hacOzFjNOQNkYArXAvpGHtFmyc+2/sCwf8
- tLAXyuJhmsI44FDnZyyliqizns8AHEPq3iRwafo+mswyEeVbcYJrmCX9e Q==;
-X-CSE-ConnectionGUID: 3isgrvsqQwWQ+9L7yAdc0g==
-X-CSE-MsgGUID: KMxF2RlRQpKJpzw+dpumaw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="34247348"
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; d="scan'208";a="34247348"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2024 07:32:42 -0800
-X-CSE-ConnectionGUID: gLeKG73aQMKYjrEL3JSG9Q==
-X-CSE-MsgGUID: 0DfeerprRKuKemSgybFTfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,222,1728975600"; d="scan'208";a="95147471"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa006.fm.intel.com with ESMTP; 10 Dec 2024 07:32:41 -0800
-Date: Tue, 10 Dec 2024 23:50:55 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
- of pl011
-Message-ID: <Z1hjX+5Yyi46N+sX@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-15-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tL29g-0006f0-7F
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:28:08 -0500
+Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tL29e-0000KI-23
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:28:07 -0500
+Received: by mail-ot1-x32b.google.com with SMTP id
+ 46e09a7af769-71e019b00e8so694329a34.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:28:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733844484; x=1734449284; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=lMlOWnE/8rGwDe2I7u+91BhniWC68DXpBuoq//8jnkI=;
+ b=s4bGPw8CiGK0VxXfIr+Im4uA4oek9U9gUdqclIbDmrW4Pqpy478fSu51jdIMoCVoXg
+ 6mYD7y+KTTqye9RyJOr7XYM1ZlBUIRcQI25XwNeREg1KrcFjDbRDGbKHQPi/uywMuamy
+ DvrfeQ9C6FxVvK8yOnydqcbtJ+OuuXyrIA+qzllR50AI7PV4Yd2mNAn/fi+cJGbLbwfD
+ 00jBA/Xi0bmEu/adoTOLH4yhV0qN7oXe/KlRPyycWgxLQPvbWaO57Be+o0rsFL1D030V
+ upijd2KvYTSRTg/uoSF2jdWDX7lACV9iBow49BUULQ3QmbfKWtFpJ22B8nqC1Q562+3R
+ W48A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733844484; x=1734449284;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lMlOWnE/8rGwDe2I7u+91BhniWC68DXpBuoq//8jnkI=;
+ b=RneyxFWLcTOgbfkhs5xRfbm1PMffuv0tRs5j/T1jCdHFvQHY5b4VKfV7rHp36JAZG+
+ PLxoH/+/HXSPgWFaY5lvXOuzfdHc2TV28KbUU3641pXeN10BAgg9MHQMFZmh1IySLQ3W
+ AiqtRZF7tsG8p2ilGMxgPZ+JE/6F4s5GMrFQtBSsHfUzuZB3DXgfZ2Vhp5XmousE3Fqj
+ /M4gLUmxfRQJ3JXvCiSnrxmbiZvRmYV7BtH27dSWx0kbCZuz4wZI1icXYnlTydQXxxR4
+ GBGoZ6/LoWwFC0ITAZplDaeGs52bFYUaO22QuSGoYL/xXUFxjz2jr/hPZ3XLTcRA5Ees
+ AYug==
+X-Gm-Message-State: AOJu0Yy5T4ZtpftexmVSc9c5sZKC2I9jE0BVBHQF3XZm6fOoDrSiNMmv
+ Oh25+eUfB1J6l5LrC5WZPtdUCgEMzP030XEhurUD1lUV4e6NQorC4LHqmsl8IXHL4Rmuu9CcaU2
+ IR1S1rZTD
+X-Gm-Gg: ASbGncsxH1YmIf2dWbU9blKpbjgmH6ndOhP6JHSK/RylbNfE98MoEhxqhZoB3dc15gL
+ qclX7HnssA2xEXdc5UzUEmka9J41mpwD0NFMRQoOYVgusUfrxoCPzyWIx/MGmEP3xzcoN3jtDc3
+ mog1IC6XpyloeBYNQma13Jcd+8+aC8ObsIJQ5FHSjDO3lblFQ8Kdk3EaUhJpJIqMY7TH/JJ2w+E
+ fNesrMmib9HW4s1kWX9s/DXMCH5T8lB3n6s2abC2yWSco54OeZeTvSM328TLA==
+X-Google-Smtp-Source: AGHT+IGgT+cwGJoEVkNg65l0tDDZm+A734FkAfLfafbaibFTL7CL526atRObOvBtEJTG++GAstl0lA==
+X-Received: by 2002:a05:6830:6112:b0:718:167f:7f1c with SMTP id
+ 46e09a7af769-71dcf4e7ae5mr11509551a34.13.1733844483928; 
+ Tue, 10 Dec 2024 07:28:03 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71dc4a0267esm2785955a34.52.2024.12.10.07.28.03
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Dec 2024 07:28:03 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 46/46] tcg/optimize: Move fold_cmp_vec,
+ fold_cmpsel_vec into alphabetic sort
+Date: Tue, 10 Dec 2024 09:24:01 -0600
+Message-ID: <20241210152401.1823648-47-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241210152401.1823648-1-richard.henderson@linaro.org>
+References: <20241210152401.1823648-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241209123717.99077-15-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,81 +97,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 09, 2024 at 01:37:05PM +0100, Paolo Bonzini wrote:
-> Date: Mon,  9 Dec 2024 13:37:05 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out of
->  pl011
-> X-Mailer: git-send-email 2.47.1
-> 
-> Allow the ObjectImpl trait to expose Rust functions that avoid raw
-> pointers (though INSTANCE_INIT for example is still unsafe).
-> ObjectImpl::TYPE_INFO adds thunks around the functions in
-> ObjectImpl.
-> 
-> While at it, document `TypeInfo`.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/device.rs | 40 +++++++--------------
->  rust/qemu-api/src/definitions.rs | 61 +++++++++++++++++++++++++++++---
->  2 files changed, 69 insertions(+), 32 deletions(-)
-> 
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-> index 56403c36609..b9f8fb134b5 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -110,7 +110,7 @@ impl ObjectImpl for PL011State {
->      type Class = PL011Class;
->      const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
->      const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_SYS_BUS_DEVICE);
-> -    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = Some(pl011_init);
-> +    const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
+The big comment just above says functions should be sorted.
 
-No need to keep `unsafe` here?
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 60 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-> +///
-> +/// - the struct must be `#[repr(C)]`
-> +///
-> +/// - `Class` and `TYPE` must match the data in the `TypeInfo` (this is
-> +///   automatic if the class is defined via `ObjectImpl`).
-> +///
-> +/// - the first field of the struct must be of the instance struct corresponding
-> +///   to the superclass declared as `PARENT_TYPE_NAME`
->  pub trait ObjectImpl: ClassInitImpl + Sized {
-> +    /// The QOM class object corresponding to this struct.  Not used yet.
->      type Class;
-> +
-> +    /// The name of the type, which can be passed to `object_new()` to
-> +    /// generate an instance of this type.
->      const TYPE_NAME: &'static CStr;
-> +
-> +    /// The parent of the type.  This should match the first field of
-> +    /// the struct that implements `ObjectImpl`:
->      const PARENT_TYPE_NAME: Option<&'static CStr>;
-> +
-> +    /// Whether the object can be instantiated
->      const ABSTRACT: bool = false;
-> -    const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
-> -    const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
-> +
-> +    /// Function that is called to initialize an object.  The parent class will
-> +    /// have already been initialized so the type is only responsible for
-> +    /// initializing its own members.
-> +    ///
-> +    /// FIXME: The argument is not really a valid reference. `&mut
-> +    /// MaybeUninit<Self>` would be a better description.
-> +    const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = None;
-
-And here.
-
-> +    /// Function that is called to finish initialization of an object, once
-> +    /// `INSTANCE_INIT` functions have been called.
-> +    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = None;
->  
-
-Otherwise,
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 54082042aa..2c5691e3c9 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1610,6 +1610,36 @@ static bool fold_call(OptContext *ctx, TCGOp *op)
+     return true;
+ }
+ 
++static bool fold_cmp_vec(OptContext *ctx, TCGOp *op)
++{
++    /* Canonicalize the comparison to put immediate second. */
++    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
++        op->args[3] = tcg_swap_cond(op->args[3]);
++    }
++    return finish_folding(ctx, op);
++}
++
++static bool fold_cmpsel_vec(OptContext *ctx, TCGOp *op)
++{
++    /* If true and false values are the same, eliminate the cmp. */
++    if (args_are_copies(op->args[3], op->args[4])) {
++        return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[3]);
++    }
++
++    /* Canonicalize the comparison to put immediate second. */
++    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
++        op->args[5] = tcg_swap_cond(op->args[5]);
++    }
++    /*
++     * Canonicalize the "false" input reg to match the destination,
++     * so that the tcg backend can implement "move if true".
++     */
++    if (swap_commutative(op->args[0], &op->args[4], &op->args[3])) {
++        op->args[5] = tcg_invert_cond(op->args[5]);
++    }
++    return finish_folding(ctx, op);
++}
++
+ static bool fold_count_zeros(OptContext *ctx, TCGOp *op)
+ {
+     uint64_t z_mask;
+@@ -2499,36 +2529,6 @@ static bool fold_setcond2(OptContext *ctx, TCGOp *op)
+     return tcg_opt_gen_movi(ctx, op, op->args[0], i);
+ }
+ 
+-static bool fold_cmp_vec(OptContext *ctx, TCGOp *op)
+-{
+-    /* Canonicalize the comparison to put immediate second. */
+-    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
+-        op->args[3] = tcg_swap_cond(op->args[3]);
+-    }
+-    return finish_folding(ctx, op);
+-}
+-
+-static bool fold_cmpsel_vec(OptContext *ctx, TCGOp *op)
+-{
+-    /* If true and false values are the same, eliminate the cmp. */
+-    if (args_are_copies(op->args[3], op->args[4])) {
+-        return tcg_opt_gen_mov(ctx, op, op->args[0], op->args[3]);
+-    }
+-
+-    /* Canonicalize the comparison to put immediate second. */
+-    if (swap_commutative(NO_DEST, &op->args[1], &op->args[2])) {
+-        op->args[5] = tcg_swap_cond(op->args[5]);
+-    }
+-    /*
+-     * Canonicalize the "false" input reg to match the destination,
+-     * so that the tcg backend can implement "move if true".
+-     */
+-    if (swap_commutative(op->args[0], &op->args[4], &op->args[3])) {
+-        op->args[5] = tcg_invert_cond(op->args[5]);
+-    }
+-    return finish_folding(ctx, op);
+-}
+-
+ static bool fold_sextract(OptContext *ctx, TCGOp *op)
+ {
+     uint64_t z_mask, s_mask, s_mask_old, a_mask = -1;
+-- 
+2.43.0
 
 
