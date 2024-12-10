@@ -4,88 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B109E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44356E7717F
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:02:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL1jv-0006PB-J9; Tue, 10 Dec 2024 10:01:31 -0500
+	id 1tL1jk-0006NT-2K; Tue, 10 Dec 2024 10:01:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL1js-0006OI-SX
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:01:28 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tL1jf-0006Mz-8x
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:01:19 -0500
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL1jr-0005fX-6z
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:01:28 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-434b3e32e9dso61193615e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:01:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tL1jd-0005eX-KQ
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:01:14 -0500
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-5d122cf8dd1so9215555a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:01:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733842885; x=1734447685; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VHqBIiAdSvqU//UY4DCQWiiXIRjCI7I6YRN2pMzbihs=;
- b=v2AVA87I3QJXm6OKoaNtwyYSZtCnAQzYK+NGxCqyKylFBFA/eqR+r+AhTR3WMKfarW
- sP+Y7aEGrf83FvMfGuvCmvQlxSy310YgVPcO0KvDYKS1HQm/cM9910+UiwUead2QUCro
- tLf8bAmPWJe/jamlw8pHBN0m2ED+YXlShuXtHSRs80zBonVzK+KZDnHbsBhhM/FyGNGb
- f99L60LpP5u+vbxS+M7+aD6TvEvML9uUCqv6faKDlQ0/SNIQ5yeVBc7zS7uJT6wlo5Ox
- fgVUz8kCqPsQ96Rnke3a7KO3oCyS0/d60+si9OHMr+RYrpueG3MC7LdPegrubeb1mI5u
- jUug==
+ d=linaro.org; s=google; t=1733842872; x=1734447672; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=j74821d9GAhO8tGU/vy1CRPDR5lIrHW3CZzQqLfOGfk=;
+ b=Dlfrm8NIse+sCkwb2k96qMRMVoxFexjH92W7m8XhTqDe6zWhZ8qJtwZxmcSBClq9jW
+ NfVevu5WVrnMnVtz8w8PLTBpZa3621oJccxnlrk3NqmWrzKdQ0lDqU7jb0ZWWXOd5g8H
+ a2YmMa9CnUC98lfKAs9HJlFKdX7CfR3H083AOdNj6/6ri0ZfCfoQTF/1XlutP0SfHYqk
+ NRY57Rw2H6xT+X4pABh3Oes6M+ycoYPn+LVOhXP6oZZKL/aV46Wz6BhLxII+M9igEya6
+ zZeaRBWoXaCg3DA74oAEf9z3RHMzXam0UiPelvu2zJJlyATKq1IUv4i5hKGyvv+kSjbC
+ /C7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733842885; x=1734447685;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VHqBIiAdSvqU//UY4DCQWiiXIRjCI7I6YRN2pMzbihs=;
- b=EwUUuUvzfnecFvJYepktJdPJxCcdx6uvot25fQSDBAKassajEI1UwG20i3RtYdItLp
- REvIpZrg+q8yXSIRXHZX1SjnxSIqYdvdpIomYJq6i1jOxbLAAmIVBwO8HH8be8Y445Oj
- KVp36in2EjQXEeQh08Ng6t1rN8vMcqK58afySSk3xWdVVp9JWv1HyAkEB2lViIyfmWxW
- 6MQyXEevsAmkjUxbMM/THwaL5a8W5nwGJHohvEbMBa3XjeXXATFMPJDuovHEnLH56UXz
- /6MqTJiAk0GScjlDbW3RE8a+xnPaDNo2sz22XNfmzEJDyUWULHag96Tr9/kZEPPuMRg8
- spXA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWY3mM9RwMYAdeIXFZR0ZQeASgNyDRlM9jDBEJ6RB+8Lsj9V+3kNRwGxk8KaRikEkKafhHI1lH4xEeB@nongnu.org
-X-Gm-Message-State: AOJu0YxQH1WjCO9EV9MpzJbbbVBUd8VoiOqzwx0+uuaJE6sQNBPQxL6J
- S2gtevbj2qTErOOaeTQ8m9NzLXqxT6YQJpWmkyPPJFT9m6V3yEGaHCQJPDueYTk=
-X-Gm-Gg: ASbGncv8MKAkFdFhVXzGfF3JHd6K5ynFZk42cl5WfAKY7kxb6wK24ECVc3GNIhKO8XE
- yULscEPLkovPiKg24/Y5eE2tdX2DVfwN4UOhO77g/He1FYmvjpAvS013NN/WRMbXD48nM3z8qR/
- dnkX+xLvcR9VC17Mv9SROUZyLEY5zozLpAWPFn+Jnbzmz9iVFeL9dtbTos8HS7+lyhE2+sWjotl
- HQY4YYGJHKdz/XR488eRAWtGLwf3vWdvZFXVi9LtEKGSFK9rwM7xCWrELSm6Fg5wYdHsMfOzFD1
- ZEm74Uy5iPq3JNjUFm7KzoLr
-X-Google-Smtp-Source: AGHT+IEyZ65a3B8Sx/MUj3jf/xgN/eOs1aSVDUWbFdaMiiZW6Dsuc+LE+K9XL/bPLuQPRiNUYgetLw==
-X-Received: by 2002:a05:600c:a09:b0:434:fff1:1ade with SMTP id
- 5b1f17b1804b1-434fff11b3emr43837145e9.13.1733842885282; 
- Tue, 10 Dec 2024 07:01:25 -0800 (PST)
-Received: from [192.168.224.213] (223.132.22.93.rev.sfr.net. [93.22.132.223])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f0dfc2a2sm109340855e9.31.2024.12.10.07.01.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Dec 2024 07:01:17 -0800 (PST)
-Message-ID: <00cf7fd5-240c-4dd4-ae83-0290a6795dd5@linaro.org>
-Date: Tue, 10 Dec 2024 16:00:56 +0100
+ d=1e100.net; s=20230601; t=1733842872; x=1734447672;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=j74821d9GAhO8tGU/vy1CRPDR5lIrHW3CZzQqLfOGfk=;
+ b=TFQmfASLHtFuHTUr9bSDeszWHFoOZDAWm5YFs7AoepPlBRvsm657St5np3ckLOqgLe
+ avn0E29JSQUaNBr72JxVaqxPnXz2zqdhvSZBQ3dFLJQTSZkmmOL9MYj59vK/4smnL/tA
+ EY7ZtNjShQFn0gkQDVMwJTDkYDvPH6qGoTtXtIihIHtSh0+M4hATns4jdAmnX8HrYm9D
+ WMw0W5OH6Pw1q3nnsEVaatVFQ/yssq2OOlUDtATOfpr4146X0b93k7OKv7/a03Q+8fKa
+ hZRivfjan6IIzUiiGKTFd4eAT8fJQ152wE1QdDtgT2kJBNsrx6xTrBefthRl5sBtJEyn
+ hyqQ==
+X-Gm-Message-State: AOJu0YydkoFworEb2yYIruk120vRALiG7pa6lGrim5CJLaDgKzJOTjha
+ mDKS8sdn9r7em0iT5gU9rLeDm24WqOaTr5od5QnaH+ZPZtUbwKnubGMeAMrKKJlJoMZvTYvIxIf
+ 56fxYreQ/ixMuCM0vCbG8t8GG3PxlrhEtHtzkjA==
+X-Gm-Gg: ASbGnctYLRzg8mkO3s5SLlybztd37MSXQFBfJ9cdGjDtrZLxf2WJlINuiS8IO8tmGqH
+ 30MTbQPqry/qL7vGyx+pqk5ArcnFkFUcGA33O
+X-Google-Smtp-Source: AGHT+IEcfM3M1kynoX43qtZCkkEoALK1VoV+PUrPzFYwhilWFYxx1TaqKjJc1ca3dLLqyLvkbWpJbEiw1lMatp7lXgY=
+X-Received: by 2002:a05:6402:1d48:b0:5cf:ab23:1f07 with SMTP id
+ 4fb4d7f45d1cf-5d3be697424mr16112549a12.15.1733842869885; Tue, 10 Dec 2024
+ 07:01:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tcg: Reset free_temps before tcg_optimize
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, wannacu <wannacu2049@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20241210145253.1822737-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241210145253.1822737-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20241210140112.43313-1-philmd@linaro.org>
+In-Reply-To: <20241210140112.43313-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Dec 2024 15:00:59 +0000
+Message-ID: <CAFEAcA_ZpeLop95ELDHn696cN-6OL3pC95Dwea934RLH3SpSAw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] bulk: Remove legacy cpu_physical_memory_rw() API
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,27 +91,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/24 15:52, Richard Henderson wrote:
-> When allocating new temps during tcg_optmize, do not re-use
-> any EBB temps that were used within the TB.  We do not have
-> any idea what span of the TB in which the temp was live.
-> 
-> Introduce tcg_temp_ebb_reset_freed and use before tcg_optimize,
-> as well as replacing the equivalent in plugin_gen_inject and
-> tcg_func_start.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: fb04ab7ddd8 ("tcg/optimize: Lower TCG_COND_TST{EQ,NE} if unsupported")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2711
-> Reported-by: wannacu <wannacu2049@gmail.com>
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   include/tcg/tcg-temp-internal.h | 6 ++++++
->   accel/tcg/plugin-gen.c          | 2 +-
->   tcg/tcg.c                       | 5 ++++-
->   3 files changed, 11 insertions(+), 2 deletions(-)
+On Tue, 10 Dec 2024 at 14:01, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> cpu_physical_memory_rw() API is documented as legacy
+> since 2017 (commit b7ecba0f6f6). Replace it by a more
+> recent API. Noticed while discussing with Peter:
+> https://lore.kernel.org/qemu-devel/e979b3ba-e701-4ac6-962a-19e4598ba947@l=
+inaro.org
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+I'm not sure we want to do this as a bulk automated
+transformation, because in each case there is likely
+a better thing we can do with the call than to use
+address_space_memory. For example most of the uses in
+devices probably want to have the device have an
+AddressSpace property that the board wires up.
 
+thanks
+-- PMM
 
