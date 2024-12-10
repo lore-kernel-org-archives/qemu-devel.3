@@ -4,58 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92072E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 09:57:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCDFE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 10:04:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKwzZ-0000W8-RX; Tue, 10 Dec 2024 04:57:21 -0500
+	id 1tKx5P-0001hZ-42; Tue, 10 Dec 2024 05:03:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tKwzY-0000Vh-Db; Tue, 10 Dec 2024 04:57:20 -0500
-Received: from kylie.crudebyte.com ([5.189.157.229])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tKwzW-0002My-1a; Tue, 10 Dec 2024 04:57:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=doR8Cf0pcimi5MPfiZ6Qrox6utDMgOtnq9PhHYl02QI=; b=L6wTyTwbKSdyQ2wyw/OVI49Osw
- GmWswiv4KZzybpNZkQowESqXXoayAupIa/E4DfOpWYZgZwnABOGSQXEcHI5Wkh3joc7BaEtXV4FRB
- t+xuktXWuwx+zYO0J1PY/bPTsB444GGb9aHcwfRcBsal4+OS8IFziDpgdaN1FRswsrGiu6M5vX8QB
- DyAs+nLcewRQOOAHd4Jqy3a7Po6VYvwMen+Ixu0Vi+2yq1jcrWBuolgYJ5uqzIbGgjzNhdxErMMQt
- zRjFy/p5a1WBXykd/AGpXukmTMFJet0iQCuDJH/sAlwp38t15fn0DIhHgTCJM/gNrlV3OOJ+HIJY5
- cVq32bBvoSMVgaAfHA9A+9t8d/zPC+ToSeeFmwbB9rlMkHqn7srZo3i2LE0vQebWbgmCQQA4hrD70
- hBF84NUT4xDKXnTlNepVhtRk31JyOf1wdOjKfUMs5izeC/HCBil2kFnIPIIzrJDvwq2fNEuVXVSt4
- J6T64qyP4olvrsd+hNhYo/CqgkVG02XO11TBzJiVyyv2SJ3cK4RPDnHyPYrRFKTDsuoWqG1elG+rz
- 2S7dOnFJdhn5DbRWDi7PkV3JUbMNIeen30CI4n1XDewHLRFHvOQSPC5xoU6osuk4ornyEJgkN768k
- mdNuOl8CLtGOKeaZrMGDl4bXQNbJnHgrFPsUvM3K4=;
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
- Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>,
- Yanwu Shen <ywsPlz@gmail.com>, Jietao Xiao <shawtao1125@gmail.com>,
- Jinku Li <jkli@xidian.edu.cn>, Wenbo Shen <shenwenbo@zju.edu.cn>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: Re: [PATCH] 9pfs: fix regression regarding CVE-2023-2861
-Date: Tue, 10 Dec 2024 10:57:07 +0100
-Message-ID: <4261493.soTQ3n66jb@silver>
-In-Reply-To: <E1tJWbk-007BH4-OB@kylie.crudebyte.com>
-References: <E1tJWbk-007BH4-OB@kylie.crudebyte.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tKx5M-0001fd-IR
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 05:03:20 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tKx5K-0002qI-54
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 05:03:19 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5cec9609303so6195118a12.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 02:03:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733824995; x=1734429795; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BHtBJ1CyMF+d9PDXK0pVFkHTD5t+GiBT31e85uHZiiw=;
+ b=O5xY1wmhG8J1RETGrXFQbbYegMBvLW2QupEK1+Rsz/zjc1pg+QD9JvV5SpL28kkwsG
+ lh6yRSesJ8JrkGdmbgmQg3GhCfQpGKO1S9ZwTNQiSxKUKjjb5dPHhc1z+kPim/Tb9JBM
+ abfLJtZmZP/wTaoglH5AI5ujiTkW006UfqXT2VF8TvASSii3dp6oKNAUEwpSqyX/zd/+
+ jmb3vxm4rxByccGOLFxDFxHJgv/oqVBq4dRN98Q+8K3jc4J9hl0Adv+kbj4Bk+v0dPHM
+ Lv8O85NALVWbdpsjq4xCvfiWABDQFQhv5rKnJ3zl3XLs//WnwFXo+TZVbDAkUC9GvCPF
+ XrLQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733824995; x=1734429795;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=BHtBJ1CyMF+d9PDXK0pVFkHTD5t+GiBT31e85uHZiiw=;
+ b=qpXvIp4w1UVTeYAqw3jVutpoikAIunzuQI9OLVDBdNaepH0DfxDDzsoHAj6xR+4ysR
+ msIoQHY200KUvJu7TE8IHHEKRFjg18qcPAz99YHdsZ9wzL6174sJjJKK4umFfdFfTraf
+ +VLl+LjEJ92eMZtDP19v+OyhqWMdQ8WSkBd1oTWtnlgjB+1bs19WYdOfDHADoIpwpP8B
+ jQ6BDyAXFiun8nQTnMKzOQMekwAruT5QymC+FGioIse6VyLxz2WbZymdPMirgBU2cQui
+ nJodNAUZ/hvNW6x3yvNMVCkzE9T8U2s+a3yAk8ax7ma/cZmL6+ADKUjsmO1wMbfYd6Q6
+ 6Fkg==
+X-Gm-Message-State: AOJu0Yw5Tb92aIsPiXmqdWTQM3bSmVcyxoP8ryuoR06igqFP31Xatv/5
+ 3GHiZwQ6KzqohYzWchjkFXy41kMQGzWhJQq8VWj/jY0xaQCBcLrBjuwevMvlb48vkjfWAIInWi4
+ wqim8z6lXvKE4XKaAETvEyi2SEPqbOoOFKQSbOA==
+X-Gm-Gg: ASbGncsLVvdkwpqT+uASr1xrtxevPMIj9I7cx2AUnRmUhvS2yAY8PZ58uRqDv9ApcAc
+ 219Y02zjLw5tJh8bQlmbVnPg7kBR8Aq7x6t+4
+X-Google-Smtp-Source: AGHT+IG6FaHDl/8b8C7W2kNvdayucCtfadlY98Tl5MJaQydmGsLfy9RMFX9reXrbaMarEdQ8reU0PKsaa7Bcm31vB0A=
+X-Received: by 2002:a05:6402:4305:b0:5d0:9974:7da2 with SMTP id
+ 4fb4d7f45d1cf-5d3be6c6220mr15900881a12.19.1733824995505; Tue, 10 Dec 2024
+ 02:03:15 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
-Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+References: <20241127191914.34146-1-philmd@linaro.org>
+In-Reply-To: <20241127191914.34146-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Dec 2024 10:03:04 +0000
+Message-ID: <CAFEAcA-H2kS0GdXpDpA3mFm1eOZnudZCn8REYNo34+PsvimfmQ@mail.gmail.com>
+Subject: Re: [PATCH-for-10.0] system/qtest: Access memory using
+ cpu_physical_memory_rw() API
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
+ Anton Johansson <anjo@rev.ng>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,62 +96,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Friday, December 6, 2024 12:20:29 PM CET Christian Schoenebeck wrote:
-> The released fix for this CVE:
-> 
->   f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
-> 
-> caused a regression with security_model=passthrough. When handling a
-> 'Tmknod' request there was a side effect that 'Tmknod' request could fail
-> as 9p server was trying to adjust permissions:
-> 
->   #6  close_if_special_file (fd=30) at ../hw/9pfs/9p-util.h:140
->   #7  openat_file (mode=<optimized out>, flags=2228224,
->       name=<optimized out>, dirfd=<optimized out>) at
->       ../hw/9pfs/9p-util.h:181
->   #8  fchmodat_nofollow (dirfd=dirfd@entry=31,
->       name=name@entry=0x5555577ea6e0 "mysocket", mode=493) at
->       ../hw/9pfs/9p-local.c:360
->   #9  local_set_cred_passthrough (credp=0x7ffbbc4ace10, name=0x5555577ea6e0
->       "mysocket", dirfd=31, fs_ctx=0x55555811f528) at
->       ../hw/9pfs/9p-local.c:457
->   #10 local_mknod (fs_ctx=0x55555811f528, dir_path=<optimized out>,
->       name=0x5555577ea6e0 "mysocket", credp=0x7ffbbc4ace10) at
->       ../hw/9pfs/9p-local.c:702
->   #11 v9fs_co_mknod (pdu=pdu@entry=0x555558121140,
->       fidp=fidp@entry=0x5555574c46c0, name=name@entry=0x7ffbbc4aced0,
->       uid=1000, gid=1000, dev=<optimized out>, mode=49645,
->       stbuf=0x7ffbbc4acef0) at ../hw/9pfs/cofs.c:205
->   #12 v9fs_mknod (opaque=0x555558121140) at ../hw/9pfs/9p.c:3711
-> 
-> That's because server was opening the special file to adjust permissions,
-> however it was using O_PATH and it would have not returned the file
-> descriptor to guest. So the call to close_if_special_file() on that branch
-> was incorrect.
-> 
-> Let's lift the restriction introduced by f6b0de53fb8 such that it would
-> allow to open special files on host if O_PATH flag is supplied, not only
-> for 9p server's own operations as described above, but also for any client
-> 'Topen' request.
-> 
-> It is safe to allow opening special files with O_PATH on host, because
-> O_PATH only allows path based operations on the resulting file descriptor
-> and prevents I/O such as read() and write() on that file descriptor.
-> 
-> Fixes: f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2337
-> Reported-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
-> Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+On Wed, 27 Nov 2024 at 19:20, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> There is no vCPU within the QTest accelerator (well, they
+> are stubs doing nothing, see dummy_cpu_thread_fn).
+> Directly use the cpu_physical_memory_rw() API -- which
+> amusingly prefixed 'cpu_' does not use vCPU -- to access
+> memory. This reduces accesses to the global 'first_cpu'.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  hw/9pfs/9p-util.h | 27 +++++++++++++++++----------
->  1 file changed, 17 insertions(+), 10 deletions(-)
+>  system/qtest.c | 42 ++++++++++++++----------------------------
+>  1 file changed, 14 insertions(+), 28 deletions(-)
+>
+> diff --git a/system/qtest.c b/system/qtest.c
+> index 12703a20455..a2de9a7d5a4 100644
+> --- a/system/qtest.c
+> +++ b/system/qtest.c
+> @@ -18,6 +18,7 @@
+>  #include "chardev/char-fe.h"
+>  #include "exec/ioport.h"
+>  #include "exec/memory.h"
+> +#include "exec/cpu-common.h"
+>  #include "exec/tswap.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/irq.h"
+> @@ -514,23 +515,19 @@ static void qtest_process_command(CharBackend *chr,=
+ gchar **words)
+>
+>          if (words[0][5] =3D=3D 'b') {
+>              uint8_t data =3D value;
+> -            address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIF=
+IED,
+> -                                &data, 1);
+> +            cpu_physical_memory_write(addr, &data, 1);
 
-Queued on 9p.next:
-https://github.com/cschoenebeck/qemu/commits/9p.next
+I'm not a huge fan of this, because cpu_physical_memory_write()
+is one of those old APIs that it would be nice to see less
+use of, not more. Ideally anything issuing memory transactions
+should know what it's issuing them to, i.e. should be using
+address_space_* functions and passing an AddressSpace.
 
-Let's see if we can still land this in 9.2.
+If you don't want to use first_cpu, then you could use
+address_space_write(address_space_memory, ...), which is
+what cpu_physical_memory_write() is doing under the hood.
+The qtest protocol assumes a single address space anyway.
 
-/Christian
-
-
+thanks
+-- PMM
 
