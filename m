@@ -4,140 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EF04E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:42:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34672E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 12:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKzYG-00029n-Sx; Tue, 10 Dec 2024 07:41:21 -0500
+	id 1tKzdx-0003gF-34; Tue, 10 Dec 2024 07:47:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKzYE-00029M-Vc; Tue, 10 Dec 2024 07:41:19 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKzdq-0003fo-NC
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:47:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKzYD-0004Vu-9B; Tue, 10 Dec 2024 07:41:18 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAC24WX002567;
- Tue, 10 Dec 2024 12:41:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=56roLX
- wrsPxDCc4hu9x3GEy9CJRz2c9e7D6LGqMUBfA=; b=L+ZAlsUUP3k1D98GTre3bY
- u6Z6AajUdmFCfzS5mzMieyv3Vqp0Ud1NP0MguwpIHQ0OI7jPpRlc5aSH+rbDig2l
- oCsFY51e0qtpgO64se/2ckHFmltsy2MzT3fPBtsuFwXlwkNIIqY63yumE0RIdQNS
- dUh/RAK6yI2wxNYaiXENx+DqMMKBU3SLBidt9lEKa6+UhrB2F7F6WAG/0i/4g6b5
- 3fBL1BGQw0sGBvtC0GPqfaDwC7doT22IoY57SW1B36yh7MqfNsH6rLKxd1eIF2MO
- ccXLuI8L3ypH28CwDo2nBfHQ1oim7JIL1u0MPepBjMhlIWpLmgFyB67xDCSpophA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce0xdxah-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 12:41:14 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA8arRS023023;
- Tue, 10 Dec 2024 12:41:14 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d2wjuas3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 12:41:14 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BACfAqv32768656
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 12:41:10 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A4BD220040;
- Tue, 10 Dec 2024 12:41:10 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BBC220043;
- Tue, 10 Dec 2024 12:41:10 +0000 (GMT)
-Received: from [9.155.198.95] (unknown [9.155.198.95])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 12:41:10 +0000 (GMT)
-Message-ID: <0233bbeb-0c9a-4cbe-9130-76858a75dbef@linux.ibm.com>
-Date: Tue, 10 Dec 2024 13:41:10 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tKzdm-0005Aa-P1
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 07:47:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733834819;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5XfFEJ9jZ6xPsUI9vLDesczkJLEwDFFs3vMsovVCmTk=;
+ b=a7uSdrqOdpx/J58trOml9x6fnpiVIHHAz9CLOQTgC9q5+LcIEzjAtf6kk+p2dyP/uuQY8z
+ axmiAfBLznYpC0nSH59fdtSZVYuHXfj6B0T0lQpeG0tnaqo0bmW+GBb0oV4QV6ruZOzVeH
+ jvtuW6H3D6OVarkbiHFR0STyH2e26aY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-606-ITyZk9NKP7yFGI4YczOfuQ-1; Tue,
+ 10 Dec 2024 07:46:53 -0500
+X-MC-Unique: ITyZk9NKP7yFGI4YczOfuQ-1
+X-Mimecast-MFC-AGG-ID: ITyZk9NKP7yFGI4YczOfuQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 294A51955BF9; Tue, 10 Dec 2024 12:46:52 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 593DC195605A; Tue, 10 Dec 2024 12:46:46 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 05BCD21EC35A; Tue, 10 Dec 2024 13:46:44 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org,  Peter Xu <peterx@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,  David Hildenbrand <david@redhat.com>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Philippe Mathieu-Daude <philmd@linaro.org>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  "Daniel P. Berrange" <berrange@redhat.com>
+Subject: Re: [PATCH V4 09/19] migration: incoming channel
+In-Reply-To: <87ser2cfw6.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Thu, 05 Dec 2024 16:23:53 +0100")
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-10-git-send-email-steven.sistare@oracle.com>
+ <87ser2cfw6.fsf@pond.sub.org>
+Date: Tue, 10 Dec 2024 13:46:44 +0100
+Message-ID: <87pllz4sej.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 05/15] s390x/cpumodel: Add ptff Query Time-Stamp
- Event (QTSE) support
-To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org, thuth@redhat.com
-Cc: nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-6-brueckner@linux.ibm.com>
-Content-Language: en-US
-From: Janosch Frank <frankja@linux.ibm.com>
-Autocrypt: addr=frankja@linux.ibm.com; keydata=
- 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
-In-Reply-To: <20241206122751.189721-6-brueckner@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 1qTyyHwgFtkNLGuzWiNgUFhvL5hcbPIP
-X-Proofpoint-ORIG-GUID: 1qTyyHwgFtkNLGuzWiNgUFhvL5hcbPIP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0
- spamscore=0 clxscore=1015 impostorscore=0 mlxscore=0 mlxlogscore=867
- priorityscore=1501 malwarescore=0 adultscore=0 bulkscore=0 phishscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412100093
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,10 +90,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
-> Introduce a new PTFF subfunction to query-stamp events.
-> 
-> Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Markus Armbruster <armbru@redhat.com> writes:
 
-Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
+> Steve Sistare <steven.sistare@oracle.com> writes:
+>
+>> Extend the -incoming option to allow an @MigrationChannel to be specified.
+>> This allows channels other than 'main' to be described on the command
+>> line, which will be needed for CPR.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+
+[...]
+
+>> diff --git a/system/vl.c b/system/vl.c
+>> index 4151a79..2c24c60 100644
+>> --- a/system/vl.c
+>> +++ b/system/vl.c
+>> @@ -123,6 +123,7 @@
+>>  #include "qapi/qapi-visit-block-core.h"
+>>  #include "qapi/qapi-visit-compat.h"
+>>  #include "qapi/qapi-visit-machine.h"
+>> +#include "qapi/qapi-visit-migration.h"
+>>  #include "qapi/qapi-visit-ui.h"
+>>  #include "qapi/qapi-commands-block-core.h"
+>>  #include "qapi/qapi-commands-migration.h"
+>> @@ -159,6 +160,7 @@ typedef struct DeviceOption {
+>>  static const char *cpu_option;
+>>  static const char *mem_path;
+>>  static const char *incoming;
+>> +static MigrationChannelList *incoming_channels;
+>>  static const char *loadvm;
+>>  static const char *accelerators;
+>>  static bool have_custom_ram_size;
+>> @@ -1821,6 +1823,35 @@ static void object_option_add_visitor(Visitor *v)
+>>      QTAILQ_INSERT_TAIL(&object_opts, opt, next);
+>>  }
+>>  
+>> +static void incoming_option_parse(const char *str)
+>> +{
+>> +    MigrationChannel *channel;
+>> +
+>> +    if (str[0] == '{') {
+>> +        QObject *obj = qobject_from_json(str, &error_fatal);
+>> +        Visitor *v = qobject_input_visitor_new(obj);
+>> +
+>> +        qobject_unref(obj);
+>> +        visit_type_MigrationChannel(v, "channel", &channel, &error_fatal);
+>> +        visit_free(v);
+>> +    } else if (!strcmp(str, "defer")) {
+>> +        channel = NULL;
+>> +    } else {
+>> +        migrate_uri_parse(str, &channel, &error_fatal);
+>> +    }
+>> +
+>> +    /* New incoming spec replaces the previous */
+>> +
+>> +    if (incoming_channels) {
+>> +        qapi_free_MigrationChannelList(incoming_channels);
+>> +    }
+>> +    if (channel) {
+>> +        incoming_channels = g_new0(MigrationChannelList, 1);
+>> +        incoming_channels->value = channel;
+>> +    }
+>> +    incoming = str;
+>> +}
+>
+> @incoming is set to @optarg.
+>
+> @incoming_channels is set to a MigrationChannelList of exactly one
+> element, parsed from @incoming.  Except when @incoming is "defer", then
+> @incoming_channels is set to null.
+>
+> @incoming is only ever used as a flag.  Turn it into a bool?
+>
+> Oh, wait...  see my comment on the next hunk.
+>
+> Option -incoming resembles QMP command migrate-incoming.  Differences:
+>
+> * migrate-incoming keeps legacy URI and modern argument separate: there
+>   are two named arguments, and exactly one of them must be passed.
+>   -incoming overloads them: if @optarg starts with '{', it's modern,
+>   else legacy URI.
+>
+>   Because of that, -incoming *only* supports JSON syntax for modern, not
+>   dotted keys.  Other JSON-capable arguments support both.
+
+Here's a way to avoid restricting modern to JSON.
+
+Legacy URI is either "defer" or starts with "KEYWORD:", where KEYWORD is
+one of a few well-known words.
+
+As long as we don't support an implied key, a non-empty dotted keys
+argument starts with "KEY=", where KEY cannot contain ':'.
+
+This lets us distinguish legacy URI from dotted keys.  Say, if the
+argument is "defer" or starts with letters followed by ':', assume URI.
+
+>   How can a management application detect that -incoming supports
+>   modern?
+>
+>   Sure overloading -incoming this way is a good idea?
+
+It'll be a pain to document.
+
+> * migrate-incoming takes a list of channels, currently restricted to a
+>   single channel.  -incoming takes a channel.  If we lift the
+>   restriction, -incoming syntax will become even messier: we'll have to
+>   additionally overload list of channel.
+>
+>   Should -incoming take a list from the start, like migrate-incoming
+>   does?
+>
+>> +
+>>  static void object_option_parse(const char *str)
+>>  {
+>>      QemuOpts *opts;
+>> @@ -2730,7 +2761,7 @@ void qmp_x_exit_preconfig(Error **errp)
+>>      if (incoming) {
+>>          Error *local_err = NULL;
+>>          if (strcmp(incoming, "defer") != 0) {
+>> -            qmp_migrate_incoming(incoming, false, NULL, true, true,
+>> +            qmp_migrate_incoming(NULL, true, incoming_channels, true, true,
+>>                                   &local_err);
+>
+> You move the parsing of legacy URI from within qmp_migrate_incoming()
+> into incoming_option_parse().
+>
+> The alternative is not to parse it in incoming_option_parse(), but pass
+> it to qmp_migrate_incoming() like this:
+>
+>                qmp_migrate_incoming(incoming, !incoming, incoming_channels,
+>                                     true, true, &local_err);
+>
+>>              if (local_err) {
+>>                  error_reportf_err(local_err, "-incoming %s: ", incoming);
+>> @@ -3477,7 +3508,7 @@ void qemu_init(int argc, char **argv)
+>>                  if (!incoming) {
+>>                      runstate_set(RUN_STATE_INMIGRATE);
+>>                  }
+>> -                incoming = optarg;
+>> +                incoming_option_parse(optarg);
+>>                  break;
+>>              case QEMU_OPTION_only_migratable:
+>>                  only_migratable = 1;
+
 
