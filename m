@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B50CFE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:24:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98E6BE77182
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:24:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2xM-0003T8-4v; Tue, 10 Dec 2024 11:19:28 -0500
+	id 1tL31m-0006iV-VQ; Tue, 10 Dec 2024 11:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL2x2-0002wB-8l
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:19:15 -0500
-Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
+ id 1tL31W-0005bb-7I
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:23:46 -0500
+Received: from mail-lf1-x132.google.com ([2a00:1450:4864:20::132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL2ww-0006Rh-66
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:19:07 -0500
-Received: by mail-lf1-x134.google.com with SMTP id
- 2adb3069b0e04-54020b0dcd2so2073087e87.1
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:18:59 -0800 (PST)
+ id 1tL31T-0007OH-V4
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:23:45 -0500
+Received: by mail-lf1-x132.google.com with SMTP id
+ 2adb3069b0e04-53e399e3310so3735621e87.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:23:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733847538; x=1734452338; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733847822; x=1734452622; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=qB2IZAS09IccrdqxBacklaTzmXPtI54chcpe7/zCzag=;
- b=JeZmM7g2zFg7MX83VqlTD89KFXV6f0R+fAMopwggJZRvbD+PdsNmylCzu5ttii3IM+
- ryzFFdI+FGhW2lJ23h5edOMSCXKen6aPpN9hlb8RR9jL8N1hV3akdFlDcSspMZhVgRwS
- /XuC6fWigxJqZLkJpi9FI79ZyTnmNvqfL4zxJVnk6Xq5kNLP6MIAxkI1VUH1qcJbBTvc
- S92L5K8hNwwG4c3hN9XjChsgBZIN3qA1KKPbWuo0TuTmMaaSsu//pnsV2TePP5A3/a/y
- p0XHI6cngQrAEALfqNbrEv9j+r/qXLTJoq9mQHZN93WQWW1LxPZN73S3E+BEucmGnheA
- tvqA==
+ bh=smbyKQCqSEurcIaPfQOlMDEox7tcetGuPWi/Xxn9Tl8=;
+ b=jYvjm+aOjg9+Z2xyBsUS+iUDFLsCE2VrbdJ95zghN8C/meSGK8KxPYGUZeTbJ0gQvu
+ s05Kc0AD0VMzg7ATXDUXZkIY/aB0+jutovVUZcNG+OH9zP85/KFyx6X+EqOOuuBf6/gE
+ JhUPZ4TNI9V2riQJZlQ91IStO0AkvmwwCI7mQUE6E3blCqCgIdK4nBw1B5ioxb8Y6Jwe
+ 7Tsih6dB4C67dMh0/5EYC1o0gxaEl02JR8kLEGxR8Al7uEs11TYlWqAb6Bn6gDzaN/ie
+ phCa0+3XhtmMD0O8h6kF8xf+sH6OTPTuXgbvaaHDeK4K2awyqj4JB+u7nS8Ry4tTUNCh
+ qGfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733847538; x=1734452338;
+ d=1e100.net; s=20230601; t=1733847822; x=1734452622;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qB2IZAS09IccrdqxBacklaTzmXPtI54chcpe7/zCzag=;
- b=O/QRC5czbbkVfTktDQScO2h9D+lxSlUWM4vLOveA1rcewrXPndf6JSseFNgWl/n4QA
- /GHd26mIuKOG2bFUCnmNQ20uMZ7EKVkoMG/HoMxSTBzBAKVyRyBAyYF1gtAoAtlrzhR3
- 8VIHbcbQy6+8OYBtSP0QPCJOdGwO5PoLP9ETlCaJNfgtDjeZdR1eQ86kFW7cgxpzTzC1
- 5JIKDboarPmT8QGYeuAITLlj7QkaMYgrYxnYZMnC/JPLn533iCq14tnmyiOUZ/c9D9Z0
- WJ7fmpLv4XdoC3bfx8ccty5ssIKIc5sth3cXKuf4QuBLjDpype5FhE0ue5/xree+yGup
- DZCg==
-X-Gm-Message-State: AOJu0YwNj4sPtJ7qC6utbtFuP9SmQMRQRUEE87KoVniyooMpzrLFCyqf
- 64mhjASylxj17cZa1459g+Pgw29tJLbzOTWz6EV0ilYFjNsVSbX2Rvnn1hsLbRs2VdBT0Vjl+ZE
- 7YySB5PZ/
-X-Gm-Gg: ASbGncuVL/42fycBe7tgznAqhqEMboqPUXa9A4kD9y5ULfA14A4Eq1Vo2kgf2ccFZQz
- 2pe9fH+/KY8EgCZ9UWgLoblr/uMGi1sAFygUdes5eNZpIwRyvOeh4QyEQY9G1IeFP/WfOSpcFKI
- bURTlrtdP12BzpzrSX/48ofFkU87WqNIhq/TpQtacT3+qBfbnoFyligrbD+nB5SqvT+2i0O+R08
- mlacsQmlc8h9AnBpdIZddbt9qiABcFZb1RXNCV8RaCmmc4WrXERvnC5NGo=
-X-Google-Smtp-Source: AGHT+IG0ATOPoGPMflZCLgM7wZrb6WCIfYUy3T8h+8CZ0qY0aLI39AuUi5xiiwjqDQWv2hYrsD6mOA==
-X-Received: by 2002:a05:6512:3d09:b0:540:1db4:3c72 with SMTP id
- 2adb3069b0e04-540251e58ebmr1343187e87.10.1733847537850; 
- Tue, 10 Dec 2024 08:18:57 -0800 (PST)
+ bh=smbyKQCqSEurcIaPfQOlMDEox7tcetGuPWi/Xxn9Tl8=;
+ b=sxNMao8vuHhEdv+4cPPWEdfSlDieDNKd8tUIpwJ5mdAAo3AC3PdWzALpaNaZh4IolQ
+ T1IMFwZehFwtfJ2M8JWpzzFVOLeYsOJYoqR0sy5EUez/pG77WJL0Rn0piCzGDLdBmhW9
+ cuczFpeNRtWUKfw63SJBFH/dBLNumJRS2kxNaVq6yIFIy1O5bH1o7wjNeARuI1/4Pipr
+ 7jSPWam1Mx3OEBXFa30K/2HawE4bZ8vIhpp+AYPU/xg5STLyW/8opI8KnKERmPj7wIIb
+ xjcFQQTG4UboKxRRwDYBBhp9RLC2EQXtTiHb85qNeefLGvl1eqlEFgn9bHkDsz9oCi5B
+ WyAg==
+X-Gm-Message-State: AOJu0YxlCrlaljkc3akGEJTImfOHueP97X3skVG7rXZnZvgWtMv99Jpy
+ /ao6UxSgZ4Fssa+Wf68dbhr/iVGyYyYTftnOz2fc7cUXqfDQFIIa6gEtOoSh1jaiCm7lb7Umz5w
+ VQgENZS+X
+X-Gm-Gg: ASbGncs3nWSM0uyZ6UIDolBBl5Hesa2FQrYXlujU0eW1UcI5LOCYnGwUdimEloSQSKD
+ RpngHAOQcp+aQcUCmTF+mEjNeCxj+7mP94Ida8BdAvTeOZhNciGXeDcL/4u6+t7dagynb85xblv
+ 2wYwmGksJ9DzdJBABSA0tsHOSX2G0N9h1PNTu9NPpotmGoG+hutfT1D0JGGBjOWBeWcd8DDnSla
+ n4m8voIybLsjcHntTFED4jD4RP036Z1Q26WI2JOP4HiamLnJo8beT8qy00=
+X-Google-Smtp-Source: AGHT+IG0tdu75XP53X8AOOgbvKDR7HSJAoYG+GGzvYzAVR5xhfdamv9Lk4cK9Z5FpwIZ+YRzOMYkPg==
+X-Received: by 2002:ac2:4e09:0:b0:540:2231:4a04 with SMTP id
+ 2adb3069b0e04-54022314b6dmr2260826e87.39.1733847822212; 
+ Tue, 10 Dec 2024 08:23:42 -0800 (PST)
 Received: from stoup.. ([91.209.212.80]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53f93377eefsm1026343e87.67.2024.12.10.08.18.55
+ 2adb3069b0e04-5402960b0absm26024e87.102.2024.12.10.08.23.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 08:18:57 -0800 (PST)
+ Tue, 10 Dec 2024 08:23:41 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 19/69] target/arm: Convert disas_cond_select to decodetree
-Date: Tue, 10 Dec 2024 10:16:43 -0600
-Message-ID: <20241210161733.1830573-20-richard.henderson@linaro.org>
+Subject: [PATCH v2 44/69] target/arm: Move helper_neon_addlp_{s8,
+ s16} to neon_helper.c
+Date: Tue, 10 Dec 2024 10:17:08 -0600
+Message-ID: <20241210161733.1830573-45-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241210161733.1830573-1-richard.henderson@linaro.org>
 References: <20241210161733.1830573-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::134;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x134.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::132;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,153 +99,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This includes CSEL, CSINC, CSINV, CSNEG.  Remove disas_data_proc_reg,
-as these were the last insns decoded by that function.
+Move from helper-a64.c to neon_helper.c so that these
+functions are available for arm32 code as well.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 84 ++++++----------------------------
- target/arm/tcg/a64.decode      |  3 ++
- 2 files changed, 17 insertions(+), 70 deletions(-)
+ target/arm/helper.h          |  2 ++
+ target/arm/tcg/helper-a64.h  |  2 --
+ target/arm/tcg/helper-a64.c  | 43 ------------------------------------
+ target/arm/tcg/neon_helper.c | 43 ++++++++++++++++++++++++++++++++++++
+ 4 files changed, 45 insertions(+), 45 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 56a445a3c2..9c6365f5ef 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8171,39 +8171,17 @@ static bool trans_CCMP(DisasContext *s, arg_CCMP *a)
-     return true;
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index 167e331a83..57e0ce387b 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -399,6 +399,8 @@ DEF_HELPER_2(neon_addl_u16, i64, i64, i64)
+ DEF_HELPER_2(neon_addl_u32, i64, i64, i64)
+ DEF_HELPER_2(neon_paddl_u16, i64, i64, i64)
+ DEF_HELPER_2(neon_paddl_u32, i64, i64, i64)
++DEF_HELPER_FLAGS_1(neon_addlp_s8, TCG_CALL_NO_RWG_SE, i64, i64)
++DEF_HELPER_FLAGS_1(neon_addlp_s16, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_2(neon_subl_u16, i64, i64, i64)
+ DEF_HELPER_2(neon_subl_u32, i64, i64, i64)
+ DEF_HELPER_3(neon_addl_saturate_s32, i64, env, i64, i64)
+diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
+index 203b7b7ac8..f811bb85dc 100644
+--- a/target/arm/tcg/helper-a64.h
++++ b/target/arm/tcg/helper-a64.h
+@@ -41,9 +41,7 @@ DEF_HELPER_FLAGS_3(recpsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, ptr)
+-DEF_HELPER_FLAGS_1(neon_addlp_s8, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_FLAGS_1(neon_addlp_u8, TCG_CALL_NO_RWG_SE, i64, i64)
+-DEF_HELPER_FLAGS_1(neon_addlp_s16, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_FLAGS_1(neon_addlp_u16, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, ptr)
+ DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, ptr)
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 3f4d7b9aba..9b3c407be3 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -306,39 +306,6 @@ float64 HELPER(rsqrtsf_f64)(float64 a, float64 b, void *fpstp)
+     return float64_muladd(a, b, float64_three, float_muladd_halve_result, fpst);
  }
  
--/* Conditional select
-- *   31   30  29  28             21 20  16 15  12 11 10 9    5 4    0
-- * +----+----+---+-----------------+------+------+-----+------+------+
-- * | sf | op | S | 1 1 0 1 0 1 0 0 |  Rm  | cond | op2 |  Rn  |  Rd  |
-- * +----+----+---+-----------------+------+------+-----+------+------+
+-/* Pairwise long add: add pairs of adjacent elements into
+- * double-width elements in the result (eg _s8 is an 8x8->16 op)
 - */
--static void disas_cond_select(DisasContext *s, uint32_t insn)
-+static bool trans_CSEL(DisasContext *s, arg_CSEL *a)
- {
--    unsigned int sf, else_inv, rm, cond, else_inc, rn, rd;
--    TCGv_i64 tcg_rd, zero;
-+    TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
-+    TCGv_i64 zero = tcg_constant_i64(0);
-     DisasCompare64 c;
- 
--    if (extract32(insn, 29, 1) || extract32(insn, 11, 1)) {
--        /* S == 1 or op2<1> == 1 */
--        unallocated_encoding(s);
--        return;
--    }
--    sf = extract32(insn, 31, 1);
--    else_inv = extract32(insn, 30, 1);
--    rm = extract32(insn, 16, 5);
--    cond = extract32(insn, 12, 4);
--    else_inc = extract32(insn, 10, 1);
--    rn = extract32(insn, 5, 5);
--    rd = extract32(insn, 0, 5);
-+    a64_test_cc(&c, a->cond);
- 
--    tcg_rd = cpu_reg(s, rd);
+-uint64_t HELPER(neon_addlp_s8)(uint64_t a)
+-{
+-    uint64_t nsignmask = 0x0080008000800080ULL;
+-    uint64_t wsignmask = 0x8000800080008000ULL;
+-    uint64_t elementmask = 0x00ff00ff00ff00ffULL;
+-    uint64_t tmp1, tmp2;
+-    uint64_t res, signres;
 -
--    a64_test_cc(&c, cond);
--    zero = tcg_constant_i64(0);
+-    /* Extract odd elements, sign extend each to a 16 bit field */
+-    tmp1 = a & elementmask;
+-    tmp1 ^= nsignmask;
+-    tmp1 |= wsignmask;
+-    tmp1 = (tmp1 - nsignmask) ^ wsignmask;
+-    /* Ditto for the even elements */
+-    tmp2 = (a >> 8) & elementmask;
+-    tmp2 ^= nsignmask;
+-    tmp2 |= wsignmask;
+-    tmp2 = (tmp2 - nsignmask) ^ wsignmask;
 -
--    if (rn == 31 && rm == 31 && (else_inc ^ else_inv)) {
-+    if (a->rn == 31 && a->rm == 31 && (a->else_inc ^ a->else_inv)) {
-         /* CSET & CSETM.  */
--        if (else_inv) {
-+        if (a->else_inv) {
-             tcg_gen_negsetcond_i64(tcg_invert_cond(c.cond),
-                                    tcg_rd, c.value, zero);
-         } else {
-@@ -8211,53 +8189,23 @@ static void disas_cond_select(DisasContext *s, uint32_t insn)
-                                 tcg_rd, c.value, zero);
-         }
-     } else {
--        TCGv_i64 t_true = cpu_reg(s, rn);
--        TCGv_i64 t_false = read_cpu_reg(s, rm, 1);
--        if (else_inv && else_inc) {
-+        TCGv_i64 t_true = cpu_reg(s, a->rn);
-+        TCGv_i64 t_false = read_cpu_reg(s, a->rm, 1);
-+
-+        if (a->else_inv && a->else_inc) {
-             tcg_gen_neg_i64(t_false, t_false);
--        } else if (else_inv) {
-+        } else if (a->else_inv) {
-             tcg_gen_not_i64(t_false, t_false);
--        } else if (else_inc) {
-+        } else if (a->else_inc) {
-             tcg_gen_addi_i64(t_false, t_false, 1);
-         }
-         tcg_gen_movcond_i64(c.cond, tcg_rd, c.value, zero, t_true, t_false);
-     }
- 
--    if (!sf) {
-+    if (!a->sf) {
-         tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
-     }
+-    /* calculate the result by summing bits 0..14, 16..22, etc,
+-     * and then adjusting the sign bits 15, 23, etc manually.
+-     * This ensures the addition can't overflow the 16 bit field.
+-     */
+-    signres = (tmp1 ^ tmp2) & wsignmask;
+-    res = (tmp1 & ~wsignmask) + (tmp2 & ~wsignmask);
+-    res ^= signres;
+-
+-    return res;
 -}
 -
--/*
-- * Data processing - register
-- *  31  30 29  28      25    21  20  16      10         0
-- * +--+---+--+---+-------+-----+-------+-------+---------+
-- * |  |op0|  |op1| 1 0 1 | op2 |       |  op3  |         |
-- * +--+---+--+---+-------+-----+-------+-------+---------+
-- */
--static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
--{
--    int op1 = extract32(insn, 28, 1);
--    int op2 = extract32(insn, 21, 4);
--
--    if (!op1) {
--        goto do_unallocated;
--    }
--
--    switch (op2) {
--    case 0x4: /* Conditional select */
--        disas_cond_select(s, insn);
--        break;
--
--    default:
--    do_unallocated:
--    case 0x0:
--    case 0x2: /* Conditional compare */
--    case 0x6: /* Data-processing */
--    case 0x8 ... 0xf: /* (3 source) */
--        unallocated_encoding(s);
--        break;
--    }
-+    return true;
+ uint64_t HELPER(neon_addlp_u8)(uint64_t a)
+ {
+     uint64_t tmp;
+@@ -348,16 +315,6 @@ uint64_t HELPER(neon_addlp_u8)(uint64_t a)
+     return tmp;
  }
  
- static void handle_fp_compare(DisasContext *s, int size,
-@@ -11212,10 +11160,6 @@ static bool btype_destination_ok(uint32_t insn, bool bt, int btype)
- static void disas_a64_legacy(DisasContext *s, uint32_t insn)
+-uint64_t HELPER(neon_addlp_s16)(uint64_t a)
+-{
+-    int32_t reslo, reshi;
+-
+-    reslo = (int32_t)(int16_t)a + (int32_t)(int16_t)(a >> 16);
+-    reshi = (int32_t)(int16_t)(a >> 32) + (int32_t)(int16_t)(a >> 48);
+-
+-    return (uint32_t)reslo | (((uint64_t)reshi) << 32);
+-}
+-
+ uint64_t HELPER(neon_addlp_u16)(uint64_t a)
  {
-     switch (extract32(insn, 25, 4)) {
--    case 0x5:
--    case 0xd:      /* Data processing - register */
--        disas_data_proc_reg(s, insn);
--        break;
-     case 0x7:
-     case 0xf:      /* Data processing - SIMD and floating point */
-         disas_data_proc_simd_fp(s, insn);
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index a9d7d57199..5670846768 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -766,6 +766,9 @@ SETF16          0 01 11010000 00000 010010 rn:5 01101
- CCMP            sf:1 op:1 1 11010010 y:5 cond:4 imm:1 0 rn:5 0 nzcv:4
+     uint64_t tmp;
+diff --git a/target/arm/tcg/neon_helper.c b/target/arm/tcg/neon_helper.c
+index 4e501925de..b92ddd4914 100644
+--- a/target/arm/tcg/neon_helper.c
++++ b/target/arm/tcg/neon_helper.c
+@@ -866,6 +866,49 @@ uint64_t HELPER(neon_paddl_u32)(uint64_t a, uint64_t b)
+     return low + ((uint64_t)high << 32);
+ }
  
- # Conditional select
++/* Pairwise long add: add pairs of adjacent elements into
++ * double-width elements in the result (eg _s8 is an 8x8->16 op)
++ */
++uint64_t HELPER(neon_addlp_s8)(uint64_t a)
++{
++    uint64_t nsignmask = 0x0080008000800080ULL;
++    uint64_t wsignmask = 0x8000800080008000ULL;
++    uint64_t elementmask = 0x00ff00ff00ff00ffULL;
++    uint64_t tmp1, tmp2;
++    uint64_t res, signres;
 +
-+CSEL            sf:1 else_inv:1 011010100 rm:5 cond:4 0 else_inc:1 rn:5 rd:5
++    /* Extract odd elements, sign extend each to a 16 bit field */
++    tmp1 = a & elementmask;
++    tmp1 ^= nsignmask;
++    tmp1 |= wsignmask;
++    tmp1 = (tmp1 - nsignmask) ^ wsignmask;
++    /* Ditto for the even elements */
++    tmp2 = (a >> 8) & elementmask;
++    tmp2 ^= nsignmask;
++    tmp2 |= wsignmask;
++    tmp2 = (tmp2 - nsignmask) ^ wsignmask;
 +
- # Data Processing (3-source)
- 
- &rrrr           rd rn rm ra
++    /* calculate the result by summing bits 0..14, 16..22, etc,
++     * and then adjusting the sign bits 15, 23, etc manually.
++     * This ensures the addition can't overflow the 16 bit field.
++     */
++    signres = (tmp1 ^ tmp2) & wsignmask;
++    res = (tmp1 & ~wsignmask) + (tmp2 & ~wsignmask);
++    res ^= signres;
++
++    return res;
++}
++
++uint64_t HELPER(neon_addlp_s16)(uint64_t a)
++{
++    int32_t reslo, reshi;
++
++    reslo = (int32_t)(int16_t)a + (int32_t)(int16_t)(a >> 16);
++    reshi = (int32_t)(int16_t)(a >> 32) + (int32_t)(int16_t)(a >> 48);
++
++    return (uint32_t)reslo | (((uint64_t)reshi) << 32);
++}
++
+ uint64_t HELPER(neon_subl_u16)(uint64_t a, uint64_t b)
+ {
+     uint64_t mask;
 -- 
 2.43.0
 
