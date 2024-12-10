@@ -4,76 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B930E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B13FAE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 15:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL29g-0006WF-0n; Tue, 10 Dec 2024 10:28:08 -0500
+	id 1tL2IX-00077c-Io; Tue, 10 Dec 2024 10:37:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL29a-0006KN-Mh
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:28:04 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tL2IM-0006zJ-GC
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:37:12 -0500
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL29X-0000It-K2
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:28:01 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eb4d2b39eeso717746b6e.1
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:27:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tL2IK-0001JZ-Ly
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 10:37:06 -0500
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d74363cbso5826979a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 07:37:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733844478; x=1734449278; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=rlF3+b8Ya/xkhDBFRDkErRMqlneQEiaGonizob7aHXQ=;
- b=aqTytw+PRSKYsYDKDhlOujTAHze2HCbUcZra74XJGCAfRChIT3F0eZLuvogkbnyu2C
- 4x5fhbd92F1/OsrglGgkgRZWDZB6W0WrsGoRUUscM88drBNDblYc8oOQVQIY5misr0Ku
- /AsmfbzLGYf/jG0a7qQENzTjFgE5qxIQP5gBlls4C7k47rEe7br6ACx2RjsGdToP3CSl
- MNhx2XKEGdad2B6Aor0k8FKieq/RjWcqgiPm330Mvqcl8RltlVWag5ISXCOtzsjUu3vY
- OpBNr6+QrjHLX6D+jDLtSegTkr04wTfkEzglKWhBm5oN5NaZ/Wn5fmOpSm1QJLjo7K06
- 5rPw==
+ d=linaro.org; s=google; t=1733845022; x=1734449822; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6SUViHiYlm5aq4urdsn4S9EtzSdH/GA+uhrDJzlqIfY=;
+ b=I1GBiAOoLY8JWuLrx50t7aGbDiraTnnj8Y/+PJY91r1cCqgMK7wileyNBsHfLsj+Q9
+ 4SeaR3P2nbyP9OgU0Jd0Mk0sFDSs8aI/6yHTCDefohrADUkZf2c7gYEB2GdTPr0wnVz6
+ NInj7IDdBn8wWkwUgk9FH4IMRRwQ3eytkZrhfIDErQaqdC5R5iSJdzTVLorvII71DJzX
+ 2DPC02BQ2is3I+NNVK5PADp3Pel4C2vKixL23M5HAj90GRX8iOVW+wpD04SmMrALBvvr
+ wPObphzGPgiYzlCb3c2xQHV4SyJRUB9OMcX15jLpF/Ackrmjuasq9/5wRFl4z6wUYNvh
+ i5HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733844478; x=1734449278;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1733845022; x=1734449822;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rlF3+b8Ya/xkhDBFRDkErRMqlneQEiaGonizob7aHXQ=;
- b=BidP5XQa2bl1YWJdHXYiyiuVWDUfJT5As1/WrTQ/SUFzWCQz/7cHYWdRwdTM3xAA9R
- JOLJ7bgCPzdSvPy5l9Q+PyjvWyNazHwjhPD4rkKwCYlwFzLXP423BpO5sV49dYhJLko+
- /8gYED2v1TCz6fOv5tya2heya1ApwzthEl+EpT8Qx+SDcUs3MkGaKSeXf3U6rT9AU3n2
- NWts7ZhMYi6qh20yaBGtq6JFW3esJEB0LNDH3FMvJK4cjNC4ejF5c43uVL8scC5lLOsW
- 2jAiB8XC7pqFFE5g8s7CCu8m+bYiJ2eO9q2CTHA8DeYDbOv2NrMAXoSXu6LLdU0mKdwO
- /LQA==
-X-Gm-Message-State: AOJu0YxPNOBFi9g9XTiMYTUD/7aaPnF5iabUKRAv+skAJQUjN0c9iU4m
- tvrjF/u/fwqu5OdjvfI5xZ+wkwnvaTt65VPoEo0UndKsuCLHOfYTrjfWBHsQQvFcvrInd9sX6XL
- rBYu9CWvn
-X-Gm-Gg: ASbGncvAkc8zupMcUn8Jp6NdtTYwYdo/9ZND8ecXSkn/UgFUsQfkVB/Ua4K+gFgYcYC
- O0dW811OVjIlKl/0Ri9KGe3erVUswc+GNoHc5REBuFoXpG3thxBUJIXUQL1etj7M3vR0ETHnBhD
- iPivsWlPbH9VwjnZtiVc8sxgwz6d/ezEi9EWSYGbQrLNTNTQK8v2KnxNih7Jvfz+0JrkTvxuAbD
- owoEGJjjG9Y9JK3ZlWr4w1e1N8l63LzWuE6NJP6Z7pm120kt6/jbaJQHb6jqg==
-X-Google-Smtp-Source: AGHT+IF/gsujM7tlBpGgI34GKQuciHKzalKFCLZW6sR1ugiZ4nH9W9VuFBUWWa9xkebFKCLL3Tl/iw==
-X-Received: by 2002:a05:6808:1408:b0:3eb:4b3a:d578 with SMTP id
- 5614622812f47-3eb66f52790mr3749172b6e.30.1733844478517; 
- Tue, 10 Dec 2024 07:27:58 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71dc4a0267esm2785955a34.52.2024.12.10.07.27.57
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 07:27:58 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 40/46] tcg/optimize: Use finish_folding in fold_tcg_ld_memcopy
-Date: Tue, 10 Dec 2024 09:23:55 -0600
-Message-ID: <20241210152401.1823648-41-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241210152401.1823648-1-richard.henderson@linaro.org>
-References: <20241210152401.1823648-1-richard.henderson@linaro.org>
+ bh=6SUViHiYlm5aq4urdsn4S9EtzSdH/GA+uhrDJzlqIfY=;
+ b=LTOJR49jVmdl78Fn4y+m0QdjPv0YVdphYejkHRIUi6w7IU+49PKd+sYwEOPPlbZHbd
+ OfBqk0vUhc3Jnxat6fKZxwxhf0e7z1QVPvxSfTMW7Ct/8GzGH1Slz3zANlxF6I556IeP
+ O9mcM3qUlDYCLqan6qr8CoaYCHJoX4Bj0zr3wJKF01Dub3PWFyIfqznhCreC4AFBd4mo
+ PbHmlTZruLa9shTb3SZixiDxbYqte0B/n2WcUpZKHiAirZgnJYbT6MsZDNIukCDSCm8e
+ U5sEpAwrcu8QG1MdtDUdMyBEh3H0coTO9dGFiPC40xKPQGtFcij6XWexQ0q1vEZoTgeX
+ 0bKA==
+X-Gm-Message-State: AOJu0Yz7QQ9MoDfJuZdOmVoWXbB61PTuKclHIWEwHEEjxWJrWjjL5YR7
+ ZQKUkjH0Sc6wzndlIsnDsA5ycbT2HDMnRY+bGnDsxvlJ/2vSld/OLqEJYk5VYkyDPgfNYXBEIdv
+ m9hRzhRB+0IlgHODYfLKVBftZnNLlhIBxxMg8MA==
+X-Gm-Gg: ASbGncs4S9LJqQOz3LBPBLwDSpp5jfiC4UD358A2U1/eLgmrNis5fIlin3lpgqDuF4S
+ 18ZAzOnesutMlAsSLHYO2febooK9kU6dnY5nY
+X-Google-Smtp-Source: AGHT+IFDthsqFfsZxSTH1wptEkXxsJX3Pt+Gm8H8y6dEkZMj2gsG3msSHUmsHZAY4h3jN0oURgHi2AQkTE6/9VwRXCc=
+X-Received: by 2002:a05:6402:2551:b0:5cf:d078:c9dc with SMTP id
+ 4fb4d7f45d1cf-5d4185fe213mr6178276a12.22.1733845022461; Tue, 10 Dec 2024
+ 07:37:02 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+References: <20241210140112.43313-1-philmd@linaro.org>
+ <CAFEAcA_ZpeLop95ELDHn696cN-6OL3pC95Dwea934RLH3SpSAw@mail.gmail.com>
+ <CAFEAcA8qNrsViuQrCeCeh=2s-2GF2yXOc9d1qFxAcc+Knw0PDQ@mail.gmail.com>
+ <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
+In-Reply-To: <0e9b0ee2-4928-4cb4-b7d5-a78c9a2f3096@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Dec 2024 15:36:51 +0000
+Message-ID: <CAFEAcA9b2__Qqx4sfEcbMLYZq5ataMxtp-QzYwaG85-kv_Nk8A@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] bulk: Remove legacy cpu_physical_memory_rw() API
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,25 +94,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- tcg/optimize.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, 10 Dec 2024 at 15:10, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 10/12/24 16:03, Peter Maydell wrote:
+> > On Tue, 10 Dec 2024 at 15:00, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+> >>
+> >> On Tue, 10 Dec 2024 at 14:01, Philippe Mathieu-Daud=C3=A9 <philmd@lina=
+ro.org> wrote:
+> >>>
+> >>> cpu_physical_memory_rw() API is documented as legacy
+> >>> since 2017 (commit b7ecba0f6f6). Replace it by a more
+> >>> recent API. Noticed while discussing with Peter:
+> >>> https://lore.kernel.org/qemu-devel/e979b3ba-e701-4ac6-962a-19e4598ba9=
+47@linaro.org
+> >>
+> >> I'm not sure we want to do this as a bulk automated
+> >> transformation, because in each case there is likely
+> >> a better thing we can do with the call than to use
+> >> address_space_memory. For example most of the uses in
+> >> devices probably want to have the device have an
+> >> AddressSpace property that the board wires up.
+> >
+> > Also, examining each use gives us an opportunity to
+> > consider the error handling (cpu_physical_memory_*()
+> > drop errors silently) and whether there's an appropriate
+> > MemTxAttrs we want to use.
+>
+> Yes I noticed that and agree, but do we really want to improve
+> these devices? They have been using the legacy API for 7 years
+> without caring much.
+>
+> I can repost split in 50 patches, hoping a dozen get merged
+> directly. But then I expect discussions requiring too much
+> unimportant work to happen, and the series being abandoned,
+> giving this legacy API 10 more years..
 
-diff --git a/tcg/optimize.c b/tcg/optimize.c
-index 4cccb3b0cf..46116970f3 100644
---- a/tcg/optimize.c
-+++ b/tcg/optimize.c
-@@ -2674,7 +2674,7 @@ static bool fold_tcg_ld_memcopy(OptContext *ctx, TCGOp *op)
-     TCGType type;
- 
-     if (op->args[1] != tcgv_ptr_arg(tcg_env)) {
--        return false;
-+        return finish_folding(ctx, op);
-     }
- 
-     type = ctx->type;
--- 
-2.43.0
+Well, it's legacy in the sense of "don't use it for new
+stuff", but also is it doing any harm in the old code?
+If we want to improve the places that use it we can,
+but I'm not sure I would worry about moving from one
+"this isn't really the ideal" to a different "this isn't
+really the ideal"...
 
+If the existence of the function is blocking a separate
+cleanup, that's a different matter, of course.
+
+thanks
+-- PMM
 
