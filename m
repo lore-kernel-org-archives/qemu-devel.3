@@ -4,143 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C33B3E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 07:46:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D094E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 07:53:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKuwf-0006Gv-Rz; Tue, 10 Dec 2024 02:46:14 -0500
+	id 1tKv2t-0007Zq-43; Tue, 10 Dec 2024 02:52:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKuwN-0006G2-VK; Tue, 10 Dec 2024 02:46:06 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKv2q-0007Ze-Rz
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 02:52:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKuwM-0005ij-76; Tue, 10 Dec 2024 02:45:55 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9JZ4OZ029227;
- Tue, 10 Dec 2024 07:45:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=F/gNpj
- Tcr7uPuh/ipYztwWZGoY5vBmIjIRp0yZmtVQU=; b=la2jpIdlnrQTiOecukulOx
- EofiT1TaPBlGts4/d0mhu+6nYRjogEbyT6Ep/pJLnSzz8kwZWd5/5B0NXCIAc0Wd
- iU5IYVV3MzD1r0qBHkZvUgIHNMskwTY+gnt/RLnBKozhbHhEzBRwnLMSj7X1JY0a
- CgYOL5ibQQY2kl7aQiCpTySv4o4nEHmmf6x9nwzBTPKo8ehWJdv0gK3MjI5A5IVt
- 7NY9sCXw5naV73utj6vEb3FQz/sOg02PFliX1QyiYwEEV2FtFmpDDJYwSyssweUE
- DBBM+N876mc3a7v5vN6HBmqIenHbegBJWkhFFyC2KpCiZb4wjLI19JLC82Lj16mA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ce38nqem-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 07:45:51 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA7SMCv032590;
- Tue, 10 Dec 2024 07:45:50 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d1pn2jan-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 07:45:50 +0000
-Received: from smtpav02.fra02v.mail.ibm.com (smtpav02.fra02v.mail.ibm.com
- [10.20.54.101])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BA7jkWR49217808
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 07:45:46 GMT
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5CA3B20043;
- Tue, 10 Dec 2024 07:45:46 +0000 (GMT)
-Received: from smtpav02.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 33A0520040;
- Tue, 10 Dec 2024 07:45:46 +0000 (GMT)
-Received: from [9.155.198.95] (unknown [9.155.198.95])
- by smtpav02.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 07:45:46 +0000 (GMT)
-Message-ID: <07b6501d-f342-444c-bb9e-45e314c750ed@linux.ibm.com>
-Date: Tue, 10 Dec 2024 08:45:46 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tKv2o-0006F1-NZ
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 02:52:36 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733817151;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=JKlXGrKeTFunvC5peaFF/0ruPSZrKGL0CWqoOxd+z3Q=;
+ b=OD+TXvHknIz7ta/cx77V6DozTrbOiaS9LlKRueO98d/QbxwFNxwb+Hi3J+/hwbwP8aBhCM
+ BfevlmLDOB2LFRItLWRj+Jnob42l/neKCaXZwAXoCQlN9NupZEfbTq48JbBXfDyoQ3r4Q9
+ k1qQ6DeSNxq9mhNUiwEuOXlE0TIsaTU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-DJnLgDZmNi-gDmvh4R9zYw-1; Tue, 10 Dec 2024 02:52:26 -0500
+X-MC-Unique: DJnLgDZmNi-gDmvh4R9zYw-1
+X-Mimecast-MFC-AGG-ID: DJnLgDZmNi-gDmvh4R9zYw
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa68fd5393cso191892566b.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Dec 2024 23:52:25 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733817145; x=1734421945;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JKlXGrKeTFunvC5peaFF/0ruPSZrKGL0CWqoOxd+z3Q=;
+ b=H/XpdSJm7Wg5xRHMaj1CkrP5+4ftcKxAuqolZvOSLL0mIN/aXTJ7uvCYFN0OJZyire
+ +ZJEHHF5qCh37IuQZu2SH9p08YDFxSL/uCy5uKWhI9ktZ021l2/3Gtfz/JDl4zcjESmW
+ NxrZELiaZIQkKefC0lyKlQTmXQHfgUrikhtHEafCRNapKvUeoi+15Dr79wm4uTB+Ht5A
+ rP/bkfTL3P+OIikTZgkTGW0GefPZCvqnLfyXF3BmgQQzUSwvqvi1KzrBr+G5PM8QtuI6
+ LBcvbb7BYESAXkzIK8GtUs3LnePBhPq3ZQ5ySjLGZQF6nG0i6ZEWrkI+wRrAy/4t0QdY
+ vQRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+Ob/Hi3VLKRRxcFWYuN8gzDfDEz/LNFqPpfUIIYfmDDO+VluPxPKL4mIDqNpdM56oExLyZ4xCKFFI@nongnu.org
+X-Gm-Message-State: AOJu0Yyx+gECnbbyWjWGkkFJBCW7t43UwEL2HmtmYJHlxj+JPdA0eQjM
+ /1kAYWBERtf2UKBok/27B1HUVq+BpnWg5up384gr64WrQMTYvQa2y45E4jnf3WY6BP77LnQ04El
+ JLDvp7Sx3XhK80cVYwAjkCh9THOIRwv7eVgaTXWDrnZc3NIm7dBOZ
+X-Gm-Gg: ASbGnct4fa05H1ByA766SjxxxLgloYJHooVVyVJhXBzJZ647713wWLe138ZTuqDbi8f
+ CZ8PLXAc3zMdDRRNxHNbAM8t3oNRUVs2LPzxe5nXdq6avizpedAtc6UFO4vrLF0RB6I0xaMb20n
+ WIck75/UBAcTSqIMeSZSQ/9K41id8BAquOoPsSxUnanMVV1ZeQWDwC746a6wLPgtLHrjh7tZiZf
+ CMUgyDLdCkv+wRA4ILX0SRPJdtomRL3d9ienlfcSUfrZjyCYTPajsXWyCA54Nvt1CvOMBuk4avM
+ iTdQXvg=
+X-Received: by 2002:a17:907:9705:b0:aa5:3fe7:4475 with SMTP id
+ a640c23a62f3a-aa6a007319amr230221966b.11.1733817144921; 
+ Mon, 09 Dec 2024 23:52:24 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFrYh7q6lADu4HrMV2O6q1CH164wg1/SJQZ544CfesXtwEFXCCNtu8F/eJjkKHhgwZME3BMNg==
+X-Received: by 2002:a17:907:9705:b0:aa5:3fe7:4475 with SMTP id
+ a640c23a62f3a-aa6a007319amr230220266b.11.1733817144636; 
+ Mon, 09 Dec 2024 23:52:24 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa67f26cff7sm329357466b.57.2024.12.09.23.52.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Dec 2024 23:52:24 -0800 (PST)
+Message-ID: <a88854b4-5004-4734-9fc4-6f34eafba5a9@redhat.com>
+Date: Tue, 10 Dec 2024 08:52:22 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 03/15] s390x/cpumodel: add msa12 changes
-To: Hendrik Brueckner <brueckner@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
- nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
-References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-4-brueckner@linux.ibm.com>
- <93eff988-d6b9-4789-bf11-721c92401d6a@linux.ibm.com>
- <Z1cLpjc9r5oKSqFE@linux.ibm.com>
- <3601af1b-1324-4635-b64b-00f965551550@linux.ibm.com>
- <Z1cSz8uBCZ6SDOrX@linux.ibm.com>
+Subject: Re: [PATCH v3 2/3] docs/devel/style: add a section about bitfield,
+ and disallow them for packed structures
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+References: <20241128201510.869974-1-pierrick.bouvier@linaro.org>
+ <20241128201510.869974-3-pierrick.bouvier@linaro.org>
+ <73cdfb51-aef9-4731-914a-7687f988997e@linaro.org>
 Content-Language: en-US
-From: Janosch Frank <frankja@linux.ibm.com>
-Autocrypt: addr=frankja@linux.ibm.com; keydata=
- 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
-In-Reply-To: <Z1cSz8uBCZ6SDOrX@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <73cdfb51-aef9-4731-914a-7687f988997e@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Mc9u4pU5Td1cjsfHV-WKkgMn6ZfXG5bH
-X-Proofpoint-ORIG-GUID: Mc9u4pU5Td1cjsfHV-WKkgMn6ZfXG5bH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 suspectscore=0
- spamscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
- impostorscore=0 bulkscore=0 mlxscore=0 malwarescore=0 mlxlogscore=355
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412100056
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=frankja@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,38 +162,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/24 4:54 PM, Hendrik Brueckner wrote:
-> On Mon, Dec 09, 2024 at 04:45:25PM +0100, Janosch Frank wrote:
->> On 12/9/24 4:24 PM, Hendrik Brueckner wrote:
->>> On Mon, Dec 09, 2024 at 03:48:11PM +0100, Janosch Frank wrote:
->>>> On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
->>>>> MSA12 changes the KIMD/KLMD instruction format for SHA3/SHAKE.
->>>>>
->>>>> Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
->>>>> Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
->>>>
->>>> MSA6 is a prereq, no?
->>>
->>> MSA6 is the prereq. However, there is no explicit feature definition
->>> for the MSA_EXT_6 due to no STFLE and subfunctions only.  The only
->>> way would be to pick one or more / all MSA6 subfunctions for which
->>> there is a feature defined...
->>
->> Which you did for MSA11, no?
+On 09/12/2024 21.33, Philippe Mathieu-Daudé wrote:
+> On 28/11/24 21:15, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+...
+>> +For this reason, we disallow usage of bitfields in packed structures and 
+>> in any
+>> +structures which are supposed to exactly match a specific layout in guest
+>> +memory. Some existing code may use it, and we carefully ensured the 
+>> layout was
+>> +the one expected.
+>> +
+>> +We also suggest avoiding bitfields even in structures where the exact
+>> +layout does not matter, unless you can show that they provide a significant
+>> +memory usage or usability benefit.
 > 
-> The other way around.
-> 
-> Here: MSA_EXT_12 would check/have a dependency on all(?) subfuncs
-> introduced with MSA_EXT_6.
-> 
->>
->> I'm not saying that subfunc handling is great :)
-> 
-> Let me have a look which functions come with MSA_6 related to KIMD/KLMD.
-> 
-> Would it be OK to have those checks as a separate patch so that cpu
-> model in general is not blocked?
+> I don't think we should mention "significant memory usage benefit".
 
-Of course, I mostly want this question being answered in general.
+Why not? That's the point of bitfields, isn't it? Or do you mean it's 
+included in "usability benefit" already?
+
+  Thomas
 
 
