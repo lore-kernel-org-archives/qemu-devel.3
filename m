@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14ACFE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:18:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5828E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:19:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL2vt-0002OL-FG; Tue, 10 Dec 2024 11:17:57 -0500
+	id 1tL2wF-0002WJ-7T; Tue, 10 Dec 2024 11:18:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL2vl-0002Ng-AF
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:17:49 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1tL2wE-0002W0-6Y
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:18:18 -0500
+Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tL2vh-0006Ev-Um
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:17:48 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-540254357c8so1117683e87.1
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:17:43 -0800 (PST)
+ id 1tL2wC-0006Ka-Ej
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:18:17 -0500
+Received: by mail-lf1-x133.google.com with SMTP id
+ 2adb3069b0e04-54020b0dcd2so2072382e87.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733847462; x=1734452262; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=PyLVQvN/SswxDvNgDRjPnWQqQm43Ri2JxpixcdvW9EI=;
- b=kf0FgzlcqCfh/hcZxNQldAlJrUDkFqZ7Q9QyXAlh6BFZ1FkFfxWrLdmPqbdzigUDbd
- 8thKVOjbbavCOxRdDfeAuKERaBFR85WnGXFVZZbMoWe/WZFyAP8BqtiJQ/QThol6QM5x
- mtyp5JrCa/PxlgnIZNB+VTN5lCsWjmfF/1MT8bG8OqNrORkAFpEZRY2MrOJJFy6DTOEw
- EFgyEq5KyKb3JMEIja7g60ec46YrdzVhXi6sK1WamYv2U0TMAd/Od9AyomyeIiSoizkS
- gTZmUy6aFtPz0CcywoLNDJO4pY0r1vT0kgzX/lVtNicxlsZNWdimbDelcqZcP/QXNoPa
- FtZA==
+ d=linaro.org; s=google; t=1733847495; x=1734452295; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jketwBKoo02OCAcU1bp5I+NgSnbqc1IWZRElDFeh+xg=;
+ b=glnCh/l0d4JLsT1FkAD23fJIkb/0IsE0J70HkT2MvN5Mpy53qr6G6GYXWes2wRHXVi
+ 6MjcMDBhP62uZaYZL/k5VnAY6CRA1QEqJ4813q+c/kEQWQn1GVAUv6rliXnPA+JbCi21
+ MMxo/3eL4/a95b799Rmv5h92tsN1vTQWIYywHNIfcHT7hGICHHIKlkGGlYZaEQzh6S9M
+ grU086p0m931eCKMm4x308Q7s1z98f/K+tvpC4PV/jCgDUVSMFOzlv2RVS3ZgXA3yqLz
+ z8NndD+PkOarYTWeeuMXIQ2QGlsIpjEZtPVNaS7rFe6j65Uo2tsO4np8a3oc3zJric5N
+ xLnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733847462; x=1734452262;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=PyLVQvN/SswxDvNgDRjPnWQqQm43Ri2JxpixcdvW9EI=;
- b=VnD+JB/PWQ8ZG/kirfqfBv48Tfh+auQIC49z53Cj2x7cCo9tBGYEZwnNztbA4Sy84j
- B9rFQBiNRypF99K/sm/lT6fX1UcigMjAC+EdOk5ydGn7E1TbvVRhMpFvQwwDS4LA9oMP
- Y3qJXR/TPQI2c2QN0BBsnc/plCm+7LmO/Tc9rSyu8FjWXnIvBUrrpmF+yyDmLRZdcLrS
- EARRax6YQbUbwc/Zey5w/4cF4l6pJiZcVoawp1mljzhTLA+j6sIdlU4mrqUapdKad+BL
- JSZFQQULCgGX75XEna9swEraJtYn6/kes5WkliCRycmkTHjPBC1J1tiKDIPTUvgsHU5j
- 7ngA==
-X-Gm-Message-State: AOJu0YwrNeIF5Ez4yozRW6Lb5qO3h9A4rcI/dUr3BIUtx/UP02rIsLeA
- TGFMF1TuFDKiNtigS5V0Bzyzpws8pMBrsNioTMEx9wEFw8+923rfQqfyaIvbSRiTACD8c/y0ie+
- ZYGEdjFqZ
-X-Gm-Gg: ASbGncu2AVs1uujlVUoyHomnUYixlPFSdv5+EorqQZSCVbs+Xv27bW7cly9B8bKobX8
- P4HVQNWN3m3F4Ca9vx1RnZ9oDyih+Ppv75dIX+/tMAMU+rpNBObgr7fzVWkgSxZp1PIZV3GoOnr
- UybFkxalWwrLkV7avfwXUhtiyAO8pTKiy46AVCcQezPQSnfEI1XrkQftGBOT5G4L55KpfYq/zLT
- vJOegHYwJirPd/ZucyjnBTXvDn8owL2yYqRukUIYRlxwrpoRsLWVSMrofk=
-X-Google-Smtp-Source: AGHT+IEWG4yMqhuIBM5a6M4fCghj26APoQ5IYxs/7JilHzo831o/Jj2T6cSr7ybsHFnekuoxMBZ8Ew==
-X-Received: by 2002:a05:6512:39ca:b0:540:228d:b8e3 with SMTP id
- 2adb3069b0e04-5402410f377mr2099162e87.44.1733847462335; 
- Tue, 10 Dec 2024 08:17:42 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733847495; x=1734452295;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jketwBKoo02OCAcU1bp5I+NgSnbqc1IWZRElDFeh+xg=;
+ b=YqSSPL2xAhBZd4PgD0jTp5C2Iyl8zfGbCzwL34+zUNuvqwbkZ0WqSt0bGLL4hPLicE
+ boUGNqhlyycmP8b+dwDUrUUNgBWj4ESggthblCV+NPfqMlnQ2wJdmkpvn4YenTwJ1YC3
+ Zc9fXOTfNlXFNjvaacR3m1PE5wTOi+gPPxGiB/Xh6ELFN6nJjbk6Zsp5H9qtBXILJz96
+ sSP66C6AUfDh9r8MFJL4OKppQV+N5dfYjourv6T6NH5Jqwn/vD41tz3NpwCydaOoyDWI
+ 296rnck3SUHpddA3Vz3gvEtdTzs18VaF/6wtk5gb3ab8qVBxCSRp1kxO1iYLWiJDFTM5
+ /FYA==
+X-Gm-Message-State: AOJu0YwjFKkS4jJmt46yQoILGhtJ7iOa69csdgPhwEaXknHh9XDluGer
+ Asc3gABu7b9EXQXz/kUL8X9vI0DZrFLPEUd3I3jGPyad/oNiY/83YWkHBfBrWYUxkCRu6viahe3
+ OATIKNduW
+X-Gm-Gg: ASbGnctsojQXk4kClk7zqWUyoys0j1EFvw2owk+GuRqliW5Ql8Mbq0tIxLyJCOnWHHi
+ CIeRnVb5p/MbryBUttm559gVGEBYDH8g6KQvrTY3f3otjmbVOfhZ/78HpcCD7VJOPH459CYdVu4
+ SNIRMQIbUmD3ps/B35X5NZ+CxS7q6SGT1z3gnpcfEEGeoILmjCZNegEeov14srmOwpGqRCXG0iv
+ uA0EWdw7mMucFv5DlHd41uEekAiju0eqlU0aP8DaF3hvlfawvn63oANziw=
+X-Google-Smtp-Source: AGHT+IGHpyA4C9ra7T2Pcj0v5l5MSeCHiwNgSCebH7saMt+4ZsHzRcHcikxJIZS1u8CCci00Ft5Wug==
+X-Received: by 2002:a05:6512:3a83:b0:53e:94f8:bb3e with SMTP id
+ 2adb3069b0e04-540251f216emr1408444e87.19.1733847494723; 
+ Tue, 10 Dec 2024 08:18:14 -0800 (PST)
 Received: from stoup.. ([91.209.212.80]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-53f93377eefsm1026343e87.67.2024.12.10.08.17.37
+ 2adb3069b0e04-53f93377eefsm1026343e87.67.2024.12.10.08.18.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 08:17:40 -0800 (PST)
+ Tue, 10 Dec 2024 08:18:13 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org
-Subject: [PATCH v2 00/69] target/arm: AArch64 decodetree conversion, final part
-Date: Tue, 10 Dec 2024 10:16:24 -0600
-Message-ID: <20241210161733.1830573-1-richard.henderson@linaro.org>
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 08/69] target/arm: Convert CLZ, CLS to decodetree
+Date: Tue, 10 Dec 2024 10:16:32 -0600
+Message-ID: <20241210161733.1830573-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241210161733.1830573-1-richard.henderson@linaro.org>
+References: <20241210161733.1830573-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::133;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,117 +99,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Finish the conversion of all aarch64 instructions to decodetree.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 72 ++++++++++++++--------------------
+ target/arm/tcg/a64.decode      |  3 ++
+ 2 files changed, 33 insertions(+), 42 deletions(-)
 
-Changes for v2:
-  - Apply review nits as appropriate.
-  - Split out gen_gvec_fabs, gen_gvec_fneg and share with a32 neon.
-
-Patches lacking review:
-  23-target-arm-Fix-decode-of-fp16-vector-fabs-fneg.patch
-  24-target-arm-Convert-FMOV-FABS-FNEG-scalar-to-decod.patch
-  29-target-arm-Convert-BFCVT-to-decodetree.patch
-  43-target-arm-Convert-handle_rev-to-decodetree.patch
-  53-target-arm-Implement-gen_gvec_fabs-gen_gvec_fneg.patch
-  57-target-arm-Convert-FCVT-vector-integer-scalar-to-.patch
-  58-target-arm-Convert-FCVT-vector-fixed-point-scalar.patch
-  60-target-arm-Convert-US-CVTF-vector-fixed-point-sca.patch
-  62-target-arm-Convert-US-CVTF-vector-to-decodetree.patch
-  63-target-arm-Convert-FCVTZ-SU-vector-fixed-point-to.patch
-  64-target-arm-Convert-FCVT-vector-integer-to-decodet.patch
-  67-target-arm-Introduce-gen_gvec_urecpe-gen_gvec_urs.patch
-  68-target-arm-Convert-URECPE-and-URSQRTE-to-decodetr.patch
-
-
-r~
-
-
-Richard Henderson (69):
-  target/arm: Add section labels for "Data Processing (register)"
-  target/arm: Convert UDIV, SDIV to decodetree
-  target/arm: Convert LSLV, LSRV, ASRV, RORV to decodetree
-  target/arm: Convert CRC32, CRC32C to decodetree
-  target/arm: Convert SUBP, IRG, GMI to decodetree
-  target/arm: Convert PACGA to decodetree
-  target/arm: Convert RBIT, REV16, REV32, REV64 to decodetree
-  target/arm: Convert CLZ, CLS to decodetree
-  target/arm: Convert PAC[ID]*, AUT[ID]* to decodetree
-  target/arm: Convert XPAC[ID] to decodetree
-  target/arm: Convert disas_logic_reg to decodetree
-  target/arm: Convert disas_add_sub_ext_reg to decodetree
-  target/arm: Convert disas_add_sub_reg to decodetree
-  target/arm: Convert disas_data_proc_3src to decodetree
-  target/arm: Convert disas_adc_sbc to decodetree
-  target/arm: Convert RMIF to decodetree
-  target/arm: Convert SETF8, SETF16 to decodetree
-  target/arm: Convert CCMP, CCMN to decodetree
-  target/arm: Convert disas_cond_select to decodetree
-  target/arm: Introduce fp_access_check_scalar_hsd
-  target/arm: Introduce fp_access_check_vector_hsd
-  target/arm: Convert FCMP, FCMPE, FCCMP, FCCMPE to decodetree
-  target/arm: Fix decode of fp16 vector fabs, fneg
-  target/arm: Convert FMOV, FABS, FNEG (scalar) to decodetree
-  target/arm: Pass fpstatus to vfp_sqrt*
-  target/arm: Remove helper_sqrt_f16
-  target/arm: Convert FSQRT (scalar) to decodetree
-  target/arm: Convert FRINT[NPMSAXI] (scalar) to decodetree
-  target/arm: Convert BFCVT to decodetree
-  target/arm: Convert FRINT{32,64}[ZX] (scalar) to decodetree
-  target/arm: Convert FCVT (scalar) to decodetree
-  target/arm: Convert handle_fpfpcvt to decodetree
-  target/arm: Convert FJCVTZS to decodetree
-  target/arm: Convert handle_fmov to decodetree
-  target/arm: Convert SQABS, SQNEG to decodetree
-  target/arm: Convert ABS, NEG to decodetree
-  target/arm: Introduce gen_gvec_cls, gen_gvec_clz
-  target/arm: Convert CLS, CLZ (vector) to decodetree
-  target/arm: Introduce gen_gvec_cnt, gen_gvec_rbit
-  target/arm: Convert CNT, NOT, RBIT (vector) to decodetree
-  target/arm: Convert CMGT, CMGE, GMLT, GMLE, CMEQ (zero) to decodetree
-  target/arm: Introduce gen_gvec_rev{16,32,64}
-  target/arm: Convert handle_rev to decodetree
-  target/arm: Move helper_neon_addlp_{s8,s16} to neon_helper.c
-  target/arm: Introduce gen_gvec_{s,u}{add,ada}lp
-  target/arm: Convert handle_2misc_pairwise to decodetree
-  target/arm: Remove helper_neon_{add,sub}l_u{16,32}
-  target/arm: Introduce clear_vec
-  target/arm: Convert XTN, SQXTUN, SQXTN, UQXTN to decodetree
-  target/arm: Convert FCVTN, BFCVTN to decodetree
-  target/arm: Convert FCVTXN to decodetree
-  target/arm: Convert SHLL to decodetree
-  target/arm: Implement gen_gvec_fabs, gen_gvec_fneg
-  target/arm: Convert FABS, FNEG (vector) to decodetree
-  target/arm: Convert FSQRT (vector) to decodetree
-  target/arm: Convert FRINT* (vector) to decodetree
-  target/arm: Convert FCVT* (vector, integer) scalar to decodetree
-  target/arm: Convert FCVT* (vector, fixed-point) scalar to decodetree
-  target/arm: Convert [US]CVTF (vector, integer) scalar to decodetree
-  target/arm: Convert [US]CVTF (vector, fixed-point) scalar to
-    decodetree
-  target/arm: Rename helper_gvec_vcvt_[hf][su] with _rz
-  target/arm: Convert [US]CVTF (vector) to decodetree
-  target/arm: Convert FCVTZ[SU] (vector, fixed-point) to decodetree
-  target/arm: Convert FCVT* (vector, integer) to decodetree
-  target/arm: Convert handle_2misc_fcmp_zero to decodetree
-  target/arm: Convert FRECPE, FRECPX, FRSQRTE to decodetree
-  target/arm: Introduce gen_gvec_urecpe, gen_gvec_ursqrte
-  target/arm: Convert URECPE and URSQRTE to decodetree
-  target/arm: Convert FCVTL to decodetree
-
- target/arm/helper.h             |   43 +-
- target/arm/tcg/helper-a64.h     |    7 -
- target/arm/tcg/translate.h      |   35 +
- target/arm/tcg/gengvec.c        |  369 ++
- target/arm/tcg/helper-a64.c     |  104 -
- target/arm/tcg/neon_helper.c    |  106 +-
- target/arm/tcg/translate-a64.c  | 5670 ++++++++++---------------------
- target/arm/tcg/translate-neon.c |  337 +-
- target/arm/tcg/translate-vfp.c  |    6 +-
- target/arm/tcg/vec_helper.c     |   65 +-
- target/arm/vfp_helper.c         |   16 +-
- target/arm/tcg/a64.decode       |  502 ++-
- 12 files changed, 2888 insertions(+), 4372 deletions(-)
-
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 1805d77f43..552b45b4e2 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7738,6 +7738,32 @@ TRANS(REV16, gen_rr, a->rd, a->rn, a->sf ? gen_rev16_64 : gen_rev16_32)
+ TRANS(REV32, gen_rr, a->rd, a->rn, a->sf ? gen_rev32 : gen_rev_32)
+ TRANS(REV64, gen_rr, a->rd, a->rn, tcg_gen_bswap64_i64)
+ 
++static void gen_clz32(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
++{
++    TCGv_i32 t32 = tcg_temp_new_i32();
++
++    tcg_gen_extrl_i64_i32(t32, tcg_rn);
++    tcg_gen_clzi_i32(t32, t32, 32);
++    tcg_gen_extu_i32_i64(tcg_rd, t32);
++}
++
++static void gen_clz64(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
++{
++    tcg_gen_clzi_i64(tcg_rd, tcg_rn, 64);
++}
++
++static void gen_cls32(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
++{
++    TCGv_i32 t32 = tcg_temp_new_i32();
++
++    tcg_gen_extrl_i64_i32(t32, tcg_rn);
++    tcg_gen_clrsb_i32(t32, t32);
++    tcg_gen_extu_i32_i64(tcg_rd, t32);
++}
++
++TRANS(CLZ, gen_rr, a->rd, a->rn, a->sf ? gen_clz64 : gen_clz32)
++TRANS(CLS, gen_rr, a->rd, a->rn, a->sf ? tcg_gen_clrsb_i64 : gen_cls32)
++
+ /* Logical (shifted register)
+  *   31  30 29 28       24 23   22 21  20  16 15    10 9    5 4    0
+  * +----+-----+-----------+-------+---+------+--------+------+------+
+@@ -8322,40 +8348,6 @@ static void disas_cond_select(DisasContext *s, uint32_t insn)
+     }
+ }
+ 
+-static void handle_clz(DisasContext *s, unsigned int sf,
+-                       unsigned int rn, unsigned int rd)
+-{
+-    TCGv_i64 tcg_rd, tcg_rn;
+-    tcg_rd = cpu_reg(s, rd);
+-    tcg_rn = cpu_reg(s, rn);
+-
+-    if (sf) {
+-        tcg_gen_clzi_i64(tcg_rd, tcg_rn, 64);
+-    } else {
+-        TCGv_i32 tcg_tmp32 = tcg_temp_new_i32();
+-        tcg_gen_extrl_i64_i32(tcg_tmp32, tcg_rn);
+-        tcg_gen_clzi_i32(tcg_tmp32, tcg_tmp32, 32);
+-        tcg_gen_extu_i32_i64(tcg_rd, tcg_tmp32);
+-    }
+-}
+-
+-static void handle_cls(DisasContext *s, unsigned int sf,
+-                       unsigned int rn, unsigned int rd)
+-{
+-    TCGv_i64 tcg_rd, tcg_rn;
+-    tcg_rd = cpu_reg(s, rd);
+-    tcg_rn = cpu_reg(s, rn);
+-
+-    if (sf) {
+-        tcg_gen_clrsb_i64(tcg_rd, tcg_rn);
+-    } else {
+-        TCGv_i32 tcg_tmp32 = tcg_temp_new_i32();
+-        tcg_gen_extrl_i64_i32(tcg_tmp32, tcg_rn);
+-        tcg_gen_clrsb_i32(tcg_tmp32, tcg_tmp32);
+-        tcg_gen_extu_i32_i64(tcg_rd, tcg_tmp32);
+-    }
+-}
+-
+ /* Data-processing (1 source)
+  *   31  30  29  28             21 20     16 15    10 9    5 4    0
+  * +----+---+---+-----------------+---------+--------+------+------+
+@@ -8381,14 +8373,6 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+ #define MAP(SF, O2, O1) ((SF) | (O1 << 1) | (O2 << 7))
+ 
+     switch (MAP(sf, opcode2, opcode)) {
+-    case MAP(0, 0x00, 0x04): /* CLZ */
+-    case MAP(1, 0x00, 0x04):
+-        handle_clz(s, sf, rn, rd);
+-        break;
+-    case MAP(0, 0x00, 0x05): /* CLS */
+-    case MAP(1, 0x00, 0x05):
+-        handle_cls(s, sf, rn, rd);
+-        break;
+     case MAP(1, 0x01, 0x00): /* PACIA */
+         if (s->pauth_active) {
+             tcg_rd = cpu_reg(s, rd);
+@@ -8542,6 +8526,10 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+     case MAP(0, 0x00, 0x02): /* REV/REV32 */
+     case MAP(1, 0x00, 0x02):
+     case MAP(1, 0x00, 0x03): /* REV64 */
++    case MAP(0, 0x00, 0x04): /* CLZ */
++    case MAP(1, 0x00, 0x04):
++    case MAP(0, 0x00, 0x05): /* CLS */
++    case MAP(1, 0x00, 0x05):
+         unallocated_encoding(s);
+         break;
+     }
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index dd44651f34..410eaa9333 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -696,6 +696,9 @@ REV16           . 10 11010110 00000 000001 ..... .....  @rr_sf
+ REV32           . 10 11010110 00000 000010 ..... .....  @rr_sf
+ REV64           1 10 11010110 00000 000011 ..... .....  @rr
+ 
++CLZ             . 10 11010110 00000 000100 ..... .....  @rr_sf
++CLS             . 10 11010110 00000 000101 ..... .....  @rr_sf
++
+ # Logical (shifted reg)
+ # Add/subtract (shifted reg)
+ # Add/subtract (extended reg)
 -- 
 2.43.0
 
