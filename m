@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C4FE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 20:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95682E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 20:51:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL75M-0006xp-1k; Tue, 10 Dec 2024 15:44:00 -0500
+	id 1tL7C5-0004ev-MQ; Tue, 10 Dec 2024 15:50:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tL75J-0006w0-S0
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:43:57 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1tL7Bp-0003o4-TH
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:50:42 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tL75F-0001yc-7S
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:43:57 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e27c75f4so4430255f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 12:43:52 -0800 (PST)
+ id 1tL7Bm-00036l-Sa
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:50:41 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-434fe0a8cceso19789305e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 12:50:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733863432; x=1734468232; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733863837; x=1734468637; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=fR4Wf653JANAA1X874Da/i25RssYad1RS+VEWpp64BW9Jh2nENwNmEJHERFuxnMYXR
- 8h/SMo0hUOlymgtG57XZbkRkknktvpOsGdy0WGt8UKBgHL0CtegMv1KHq4hkn8vrOYJm
- wPWrpmAgidScy4s0XHDaAv2KHQUU38noGEzQsh2Zzbq9xBhQT0/rRCGsE3OroAGTicHb
- jJxNBJG/VBAoGHctEuc7wS6WdaklQggPl+onRasmIMqcNL4hNC0jpfh29WTL3freoEY1
- 6BR2YEaXBnLbr7K8tHaKphy8OS5oizUTnHmUcgfhsIYsp05/pSmpyN9Gvva4c28lzS2o
- yZUQ==
+ bh=8zpB1ID89GrvPttzETXvX6+8YD37TqJ7koaKt36/QMg=;
+ b=atDuuNMGw6vq7t5gLgia0E0cUJd+hSFGhK/BKG1EroUKmOaotw6WG9uCJ5kZQTTx7N
+ a+4d0w3E5H6UyMSLJBWM+kLodNVG3uTAPdXIf+avvGpx6OFoDWsnLCrzxOu41c59joGa
+ jRZ1Tpge+Wql03Cun6r3bOMRCoKTZjGtdH2+4+14yqjmZJqnqnuTyst9kWV3iFWI7bsH
+ 0c73oSw7S+hARwd9sgMEqfJoZJ9fnrmtFtMONuIqn1ywDUNaVyN45Z3V0Gwll5NgbAlM
+ 3bcQuTfGSrCCsaa6FxNQ1Lf6Os2z6RzrDm3orZg6E31j7RdnoeF4T8XL0Szj2v6t44Zj
+ L92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733863432; x=1734468232;
+ d=1e100.net; s=20230601; t=1733863837; x=1734468637;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=CB5+TtKpyDOBYsysS7LWMxtZK1OyR3nXfr6dvPCvG14ub4ksALVOc47B2vBOrCy1rT
- x8QloTsf3sEuXY7UYessPuJvUFW/w/IvMVDG3w3lMPjdZ0oYwERXDmDY9MdIYjuOTzPV
- wwIGLyI0Zx5rBHAMiUAOcSBFzV91sQVzyIzja/fyCdrqXFqH475aePHuuPumZVADUCq8
- v+mZ+hb0IHTICQGcBC1ieWi5HHZfYEly2oh+LRlh6zZUcJ01zKwU9PCtz27NbzA5psH5
- 1XK05osTB4En0fmTtek06oXgfgiEZlXuhsdcqnCnbJKZ7O7Op/6WeRzwEBT3VFkWDNbt
- rh5g==
-X-Gm-Message-State: AOJu0YzxWbyqer0QRuYvvXFB0oLHsfOo2qFlsKY1ll9TVQnnVBWV4j/k
- dNwe/wpkPPImt1wvTS008DdFLhNh+oi3hFdqre/2qLpVuJLhkdAjFcnzuye2VhQ=
-X-Gm-Gg: ASbGncuBEqG+rLBm9sBgJP/4vPl038yRkysZj+6z6Mo6qYI2YA0NqWcifb5iyK04nHF
- i479E+YH20deNsqYtk5+ZynBnsPSgGbEVejuyWmHE2DCswyv6C81uB35dRpKaN/8K9LooW+Mn7C
- qKm+X9z8NJu56A5ir6CiSyBdH4PYG00ViyVaEg+I6QKmOZSHnZw4XEGoI2ixHBhiwMRBVpFU4gd
- nNoKt6NcpWhE3bc0NvzHQzOI1hr7Bp3t84ipOHkjYDluWPm/Vi3
-X-Google-Smtp-Source: AGHT+IHF1W9QIuzbrH4eQO3ZP0uTd3oXHQ3X6MBgBg/bfwT2ooK+QKw8HkWZSye1Ctqj156bq/S+Ug==
-X-Received: by 2002:a5d:598f:0:b0:385:e43a:4ded with SMTP id
- ffacd0b85a97d-3864ced94aemr329044f8f.57.1733863431763; 
- Tue, 10 Dec 2024 12:43:51 -0800 (PST)
+ bh=8zpB1ID89GrvPttzETXvX6+8YD37TqJ7koaKt36/QMg=;
+ b=nFkTSPYQMvzd0J1/wTZqKOjK7O5M5e65zdK7qAUWBgPw9JlcE33z9QO5RflUN6Vb0+
+ gShCpsi0So2ETeP7GGI3Z4+NaX/SwiPQjM3DYZlp1gCYTiHSBj/CH08l/clEJe7IqcSO
+ 5i9YtoLXZuopTAVN17p8lmgOpBI9q/6G81MnIf00elZaZROXj1UQvr3EXJVtAbNMGR0O
+ LqswRu5v7jOOxYc/n681TL41nAimTrM9Ze/+uwZwF118LPjgJ2+imPopah9lS1LXbevq
+ Xf2GrGoS4ECUZbalZFHtRl4/nhhZsyMO3XUY88YI/jIaTHjr/97GmS3x8r6CUmUbfft0
+ K5nQ==
+X-Gm-Message-State: AOJu0YyQvCtN45gariCILQ/BZU5MmdyiLt5besL8g29WFhs065YQ4/np
+ GxeCAs7bsHhk1KWodIT3wLcg7rvi1RfHspw69tehiV4fncmgzi6jw2ttdGi/FPQ=
+X-Gm-Gg: ASbGncuOWSQZsEevLy0qEgh2c/gjTI4jsc0PCaQpgjrjv3bum99uAXMWFnDkNlKggY1
+ wa2bOtGlKPSKht1BBohrzMXYN6c/HLrr+qpX1bvf9SKAN5iDTir+d4fo+hbSiZaQvWhfeTBxGmZ
+ +GPbXv9QvEuEL125kZQ98DHNf9H5h2/zqYKtNbeaD0AuDE4E7C6j+A97zGh0UGIi+CRXGlW8mx7
+ Z3Je5XEaytJCGS9pPo5pYpZDcYI67aveFcAjN7XVPy8sOxubsmW
+X-Google-Smtp-Source: AGHT+IEwLqWJ5FbO12N2AO5J5hliFT2FMAnni7lLNghg6dFlG3oHZgSdmMmwQaHxoewRItVbW8ROvw==
+X-Received: by 2002:a05:600c:3151:b0:435:1b:65ee with SMTP id
+ 5b1f17b1804b1-4361c42c81fmr1674215e9.24.1733863837032; 
+ Tue, 10 Dec 2024 12:50:37 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38621fbbc14sm17123273f8f.87.2024.12.10.12.43.50
+ 5b1f17b1804b1-434ef283e87sm127814445e9.39.2024.12.10.12.50.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 12:43:50 -0800 (PST)
+ Tue, 10 Dec 2024 12:50:35 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 959BE5F9FB;
- Tue, 10 Dec 2024 20:43:49 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id D2146604EC;
+ Tue, 10 Dec 2024 20:43:50 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
@@ -95,26 +95,25 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
  Nicholas Piggin <npiggin@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH 02/20] tests/functional: update the i386 tuxrun tests
-Date: Tue, 10 Dec 2024 20:43:31 +0000
-Message-Id: <20241210204349.723590-3-alex.bennee@linaro.org>
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PATCH 17/20] tests/qtest: move clock_steps to after checks
+Date: Tue, 10 Dec 2024 20:43:46 +0000
+Message-Id: <20241210204349.723590-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241210204349.723590-1-alex.bennee@linaro.org>
 References: <20241210204349.723590-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,37 +129,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+In the qtest environment time will not step forward if the system is
+paused (timers disabled) or we have no timer events to fire. As a
+result VirtIO events are responded to directly and we don't need to
+step time forward.
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
+Potentially the clock_step calls could be removed all together but as
+we may implement async behaviour later lets just move them to after
+the principle check for now.
+
+Future qtest patches will assert that time actually changes with a
+step is requested.
+
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-23-alex.bennee@linaro.org>
 ---
- tests/functional/test_i386_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/qtest/libqos/virtio.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
-index c593ffbe8c..f3ccf11ae8 100755
---- a/tests/functional/test_i386_tuxrun.py
-+++ b/tests/functional/test_i386_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunI386Test(TuxRunBaselineTest):
+diff --git a/tests/qtest/libqos/virtio.c b/tests/qtest/libqos/virtio.c
+index a21b6eee9c..64682e66b8 100644
+--- a/tests/qtest/libqos/virtio.c
++++ b/tests/qtest/libqos/virtio.c
+@@ -170,10 +170,10 @@ void qvirtio_wait_queue_isr(QTestState *qts, QVirtioDevice *d,
+     gint64 start_time = g_get_monotonic_time();
  
-     ASSET_I386_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/i386/bzImage',
--        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/bzImage',
-+        '47fb44e38e34101eb0f71a2a01742b959d40ed5fd67cefb5608a39be11d3b74e')
-     ASSET_I386_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
--        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/rootfs.ext4.zst',
-+        'a1a3b3b4c9dccd6475b58db95c107b468b736b700f6620985a8ed050a73d51c8')
+     for (;;) {
+-        qtest_clock_step(qts, 100);
+         if (d->bus->get_queue_isr_status(d, vq)) {
+             return;
+         }
++        qtest_clock_step(qts, 100);
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+     }
+ }
+@@ -192,8 +192,8 @@ uint8_t qvirtio_wait_status_byte_no_isr(QTestState *qts, QVirtioDevice *d,
+     uint8_t val;
  
-     def test_i386(self):
-         self.set_machine('q35')
+     while ((val = qtest_readb(qts, addr)) == 0xff) {
+-        qtest_clock_step(qts, 100);
+         g_assert(!d->bus->get_queue_isr_status(d, vq));
++        qtest_clock_step(qts, 100);
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+     }
+     return val;
+@@ -219,7 +219,6 @@ void qvirtio_wait_used_elem(QTestState *qts, QVirtioDevice *d,
+     for (;;) {
+         uint32_t got_desc_idx;
+ 
+-        qtest_clock_step(qts, 100);
+ 
+         if (d->bus->get_queue_isr_status(d, vq) &&
+             qvirtqueue_get_buf(qts, vq, &got_desc_idx, len)) {
+@@ -227,6 +226,7 @@ void qvirtio_wait_used_elem(QTestState *qts, QVirtioDevice *d,
+             return;
+         }
+ 
++        qtest_clock_step(qts, 100);
+         g_assert(g_get_monotonic_time() - start_time <= timeout_us);
+     }
+ }
 -- 
 2.39.5
 
