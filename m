@@ -4,133 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FEE0E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 09:31:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562F9E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 09:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKwZt-0004Bh-UI; Tue, 10 Dec 2024 04:30:50 -0500
+	id 1tKwvW-000832-GI; Tue, 10 Dec 2024 04:53:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKwZq-0004As-Em
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:30:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tKwZo-00082G-MF
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:30:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733823038;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bxvpAyoQv4maySOZlR3wvgmBty9+4wb1C2ofzAnPcYQ=;
- b=i4+SlyQJivkiGHcGeQF1PJLoFheUQWeUuo+4toEfiiXtckU2SEc+sQ1jQUqgOz/nERxFUj
- 95AFoQRVmmAKRLHz0k8FqsnjfhbRRlOZgNj01CQZakZvHBAvzQ2AJDDkOiXGzdjPfdJzar
- ZNDMIyc+SB8++P/d9KacnBFqYy51XnI=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-b7F8VkEhMW6I_YI_L9EP6w-1; Tue, 10 Dec 2024 04:30:36 -0500
-X-MC-Unique: b7F8VkEhMW6I_YI_L9EP6w-1
-X-Mimecast-MFC-AGG-ID: b7F8VkEhMW6I_YI_L9EP6w
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-434f1d39147so15219965e9.0
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 01:30:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKwvN-00082M-5Y
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:53:01 -0500
+Received: from mail-vk1-xa2a.google.com ([2607:f8b0:4864:20::a2a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tKwvC-0001uT-44
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:52:54 -0500
+Received: by mail-vk1-xa2a.google.com with SMTP id
+ 71dfb90a1353d-518911908b0so167285e0c.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 01:52:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1733824368; x=1734429168;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EW24HPJsMhBMR+V2YAuOgQK05+8WhHNOiyO+UPdl7Ro=;
+ b=eBCENuo3S+FKTPbaKMBOOQlFlllCeSu0r/JaYb+QNHI+/zPmQi3F2r7JSvEcZhW82i
+ gemnaZQ9rt/3w8YE/zIQXHJIJsEUgiJsDI2evz4afI0Nfg6NCeiJgbuGisjsA3+Ut4pZ
+ 0g9RXzzT7k/+RfvzO49a1Y2b+X7mXP0ZNqJw0O1El2ZBf8VIejp4KHTDbfGlSieUBGgf
+ hIUKTMMgbLap57kyolANFDjgMd0l5kvn+JAYB8G/3FawbWV70ypvaOzCwgCEpsGJKmOU
+ xFXW0nD5SRGBVPwsVJ2O7wTHGpEoUA1AtHuRgFhS5/m/3vu8tpc3F7GJhWysfjMbBtMA
+ vFXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733823035; x=1734427835;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1733824368; x=1734429168;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=bxvpAyoQv4maySOZlR3wvgmBty9+4wb1C2ofzAnPcYQ=;
- b=c2ek1hrqax/OOk94VXcZt6FeCJeKgsrvhRa+uwzzfgE6SlJjF93l/j0EzTAPZgjTPo
- feHr7Xo/cedBO97Rr0LGi7adjJSRcfSToeMVptqzRTJvveXxyJuNAzypuN3XW1Si5S/S
- KQhg+GIyY69lls/3n+e6SWmP9GkNHK6CddKr0XP75T7XHpZnU7UcUMQchPtQB3NMv98u
- E+h/u9OXuCabKTd0K2Gh6CaE96D+YS5UZqVTfbRNmEBJntwiu6NCgxTCb71aKIOj8dmq
- rs2D4DvVun/G8DOJ5arEyxfMsxTF3dUmnwBbXJESpxrOjNknT5n3Dzb/q+Sj2lK6lkF9
- cR6g==
-X-Gm-Message-State: AOJu0YwRy7z1lrLZ36KF85aw2MUatlI6wKjcIQehKlQ3Bu1ik2tMMwpG
- i3NXy91oa+Iu5n/rjGLMG/U+KO0tOBJ6MFmyRtXpnMuJVKVhOtW8Y1yknrhJu1iuBwfASeppwtW
- KEphLc8zlaiLnVBmm4ssEnxYftNWFPFtXwM4/Edxone9/p+kE4wrt
-X-Gm-Gg: ASbGncsImzLQ0M9UhmvtwjsBd3ws6PHxPhzDH6LwTcAvS3riAbKeAwRT14vK/T/ZLia
- 4qtPMtaZY1Uv63+KPKQZOqHXzS7CLfc/T9fVgxHN0oYZaYvdVIOzHcCEmlAlV+Cn3UWc8Ou0EZv
- EcwCQ2PHmWPFfTpaJ7pvLCtDmOGzC/rBERhPJUHlK4v0eqgIdwI4erfEeBzRzgiqTwElYgC/192
- cCHQkGq2UgnVz+ntT4+WooLDIUpl7mIp37JgT2WU+j4BO1fqLRV78ZT0w==
-X-Received: by 2002:a05:600c:1da7:b0:434:f871:1b97 with SMTP id
- 5b1f17b1804b1-434fffca42dmr26993865e9.33.1733823035271; 
- Tue, 10 Dec 2024 01:30:35 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFgJfNOP9n6oIx1oYznaiE6hYRWdFdgJdGHx54kswBcXbqdBZ6SAXqFViK7gmCESCzJ8PmQDw==
-X-Received: by 2002:a05:600c:1da7:b0:434:f871:1b97 with SMTP id
- 5b1f17b1804b1-434fffca42dmr26993665e9.33.1733823034924; 
- Tue, 10 Dec 2024 01:30:34 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3861fc514fcsm15581973f8f.48.2024.12.10.01.30.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Dec 2024 01:30:34 -0800 (PST)
-Message-ID: <4ced3c93-32de-4c81-b19c-947c27c4ec50@redhat.com>
-Date: Tue, 10 Dec 2024 10:30:32 +0100
+ bh=EW24HPJsMhBMR+V2YAuOgQK05+8WhHNOiyO+UPdl7Ro=;
+ b=gs/QB4oL6at0lL3z6DofyY9UbrWbM6Okt+giulD19D/PjSATZd0Bof/VrtabTYriS8
+ s5EsFwDJTs6y8+YDTwdry2CualyYGydRXU9XlhVfndnZRPMvLTJD4c5MkfgVic+kW1aL
+ /nIgbH6XAqX9z1Z+XyH3tbiMoju+Kp+PDGLqycH2CPrsRF9466jIMvNYU4ZEL5qzXivI
+ ZhluLCVn9BTa78HB1xtEr1DKMswvUJwFZIJ7A8fpK+6mXmYt46TIwb98liz2CRFoQOAF
+ hUOiz7o0ktoYP7dYpWRUycBG7jkWb8iIBpC6KDsetN1H0eAIN0KvTlLUmm061Uo5EPYz
+ Ue5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWwvuSpAnnjINykE/AnCDQmG0JusQj2vnkkP+haDTWNXkDQ4CikFTs6a6PhqYtFbQXvo5UBiV73VSF+@nongnu.org
+X-Gm-Message-State: AOJu0YzRDwYPwYOG9z9GHflZnlVElpSHnaofsc4MPC1aSVFX+OPWA2zZ
+ dt4cTldMbjQon2Dq/ON6re89Nfki6MGR7bmplsQ9ndVFwd56eZPCOPNbNDm02Bv/Cs7wF43X1ID
+ Ni1LM5f5Mh3bORDno+fmRu7PYKQAzJFb92Rdh
+X-Gm-Gg: ASbGncvEb5rprIHS2XhCsUZ9vobd0bSWiPaGTWf+EJTltG5wAOUyTuChYqvUH3qeqFb
+ 8a5yNH+duJaSgw7BJvXLkZoU+AdieeYauTEk=
+X-Google-Smtp-Source: AGHT+IF5bfdLVTGrTdJmiXzsHyrvrUVfUjXJM+s4xxFPuip0QGwiASWXtMGpedGHo+OVjyKyesX+r6Luq57KPXlX/7k=
+X-Received: by 2002:a05:6122:2895:b0:518:8d54:567f with SMTP id
+ 71dfb90a1353d-5188d546d3emr2047733e0c.6.1733824368142; Tue, 10 Dec 2024
+ 01:52:48 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/26] rust: add a bit operation module
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-7-pbonzini@redhat.com> <Z1f4IN3mfYB/jq8G@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <Z1f4IN3mfYB/jq8G@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241209203629.74436-1-phil@philjordan.eu>
+ <20241209203629.74436-4-phil@philjordan.eu>
+ <c401b320-b382-4887-82bc-0252dd9f8c98@linaro.org>
+ <0aa33648-5a30-4302-bf7a-f31cab0b327e@ddn.com>
+In-Reply-To: <0aa33648-5a30-4302-bf7a-f31cab0b327e@ddn.com>
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+Date: Tue, 10 Dec 2024 10:52:37 +0100
+Message-ID: <CAAibmn0zwbsniR2bLcvhqTuTdPZTRkQPDv9v9==gyMpPNELLLA@mail.gmail.com>
+Subject: Re: [PATCH 03/11] i386/hvf: Don't send signal to thread when kicking
+To: Roman Bolshakov <rbolshakov@ddn.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Cameron Esfahani <dirty@apple.com>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000009105e80628e77171"
+Received-SPF: neutral client-ip=2607:f8b0:4864:20::a2a;
+ envelope-from=phil@philjordan.eu; helo=mail-vk1-xa2a.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,115 +101,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/10/24 09:13, Zhao Liu wrote:
->> diff --git a/rust/qemu-api/src/bitops.rs b/rust/qemu-api/src/bitops.rs
->> new file mode 100644
->> index 00000000000..5acd6642d1a
->> --- /dev/null
->> +++ b/rust/qemu-api/src/bitops.rs
->> @@ -0,0 +1,119 @@
->> +// Copyright (C) 2024 Intel Corporation.
->> +// Author(s): Zhao Liu <zhai1.liu@intel.com>
-> 
-> You deserve to be the author!
+--0000000000009105e80628e77171
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I'll add both of us.  At this stage even identifying a need is an 
-important step.
+On Tue 10. Dec 2024 at 10:21, Roman Bolshakov <rbolshakov@ddn.com> wrote:
 
->> +// SPDX-License-Identifier: GPL-2.0-or-later
->> +
->> +//! This module provides bit operation extensions to integer types.
->> +//! It is usually included via the `qemu_api` prelude.
->> +
->> +use std::ops::{
->> +    Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
->> +    Mul, MulAssign, Not, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign,
->> +};
->> +
->> +/// Trait for extensions to integer types
->> +pub trait IntegerExt:
->> +    Add<Self, Output = Self> + AddAssign<Self> +
->> +    BitAnd<Self, Output = Self> + BitAndAssign<Self> +
->> +    BitOr<Self, Output = Self> + BitOrAssign<Self> +
->> +    BitXor<Self, Output = Self> + BitXorAssign<Self> +
->> +    Copy +
->> +    Div<Self, Output = Self> + DivAssign<Self> +
->> +    Eq +
->> +    Mul<Self, Output = Self> + MulAssign<Self> +
->> +    Not<Output = Self> + Ord + PartialOrd +
->> +    Rem<Self, Output = Self> + RemAssign<Self> +
->> +    Shl<Self, Output = Self> + ShlAssign<Self> +
->> +    Shl<u32, Output = Self> + ShlAssign<u32> + // add more as needed
-> 
-> Ah, I used to define shift bits as usize. I can change the bit shift
-> type back to u32 in HPET.
+> On 10.12.2024 04:22, Philippe Mathieu-Daud=C3=A9 wrote:
+> > On 9/12/24 21:36, phil@philjordan.eu wrote:
+> >> From: Phil Dennis-Jordan <phil@philjordan.eu>
+> >>
+> >> This seems to be entirely superfluous and is costly enough to show up =
+in
+> >
+> > So the pthread_kill(cpu->thread, SIG_IPI) is entirely superfluous?
+> >
+> >> profiling. hv_vcpu_interrupt() has been demonstrated to very reliably
+> >> cause VM exits - even if the target vCPU isn't even running, it will
+> >> immediately exit on entry.
+> >>
+> >> Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+> >> ---
+> >>   target/i386/hvf/hvf.c | 2 +-
+> >>   1 file changed, 1 insertion(+), 1 deletion(-)
+> >>
+> >> diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c
+> >> index 3b6ee79fb2..936c31dbdd 100644
+> >> --- a/target/i386/hvf/hvf.c
+> >> +++ b/target/i386/hvf/hvf.c
+> >> @@ -214,7 +214,7 @@ static inline bool
+> >> apic_bus_freq_is_known(CPUX86State *env)
+> >>     void hvf_kick_vcpu_thread(CPUState *cpu)
+> >>   {
+> >> -    cpus_kick_thread(cpu);
+> >> +    cpu->thread_kicked =3D true;
+> >>       hv_vcpu_interrupt(&cpu->accel->fd, 1);
+> >>   }
+> >
+> SIG_IPI is macOS crutch handled in XNU kernel that was essential until
+> Phil submitted proper kick support with hv_vcpu_interrupt().
+>
+> Ah yes, perhaps it allowed exit from hv_vcpu_run(). hv_vcpu_run_until()
+definitely does not exit early upon receiving SIG_IPI (USR1).
 
-I used u32 because BITS is u32 in the standard library, so probably 
-better to change it in HPET.
+--0000000000009105e80628e77171
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
->> +    Shr<Self, Output = Self> + ShrAssign<Self> +
->> +    Shr<u32, Output = Self> + ShrAssign<u32> // add more as needed
->> +{
->> +    const BITS: u32;
->> +    const MAX: Self;
->> +    const MIN: Self;
->> +    const ONE: Self;
->> +    const ZERO: Self;
->> +
->> +    #[inline]
->> +    #[must_use]
->> +    fn bit(start: u32) -> Self
->> +    {
->> +        assert!(start <= Self::BITS);
->> +
->> +        Self::ONE << start
->> +    }
-> 
-> I think with this helper, I can add activating_bit() and deactivating_bit()
-> bindings, as they are also commonly used operations.
-> 
-> I will rename them to activate_bit and deactivate_bit, if no one has any
-> objections.
+<div dir=3D"auto"><br></div><div><br><div class=3D"gmail_quote"><div dir=3D=
+"ltr" class=3D"gmail_attr">On Tue 10. Dec 2024 at 10:21, Roman Bolshakov &l=
+t;<a href=3D"mailto:rbolshakov@ddn.com">rbolshakov@ddn.com</a>&gt; wrote:<b=
+r></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
+-left:1px #ccc solid;padding-left:1ex">On 10.12.2024 04:22, Philippe Mathie=
+u-Daud=C3=A9 wrote:<br>
+&gt; On 9/12/24 21:36, <a href=3D"mailto:phil@philjordan.eu" target=3D"_bla=
+nk">phil@philjordan.eu</a> wrote:<br>
+&gt;&gt; From: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philjordan.eu"=
+ target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; This seems to be entirely superfluous and is costly enough to show=
+ up in<br>
+&gt;<br>
+&gt; So the pthread_kill(cpu-&gt;thread, SIG_IPI) is entirely superfluous?<=
+br>
+&gt;<br>
+&gt;&gt; profiling. hv_vcpu_interrupt() has been demonstrated to very relia=
+bly<br>
+&gt;&gt; cause VM exits - even if the target vCPU isn&#39;t even running, i=
+t will<br>
+&gt;&gt; immediately exit on entry.<br>
+&gt;&gt;<br>
+&gt;&gt; Signed-off-by: Phil Dennis-Jordan &lt;<a href=3D"mailto:phil@philj=
+ordan.eu" target=3D"_blank">phil@philjordan.eu</a>&gt;<br>
+&gt;&gt; ---<br>
+&gt;&gt; =C2=A0 target/i386/hvf/hvf.c | 2 +-<br>
+&gt;&gt; =C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+&gt;&gt;<br>
+&gt;&gt; diff --git a/target/i386/hvf/hvf.c b/target/i386/hvf/hvf.c<br>
+&gt;&gt; index 3b6ee79fb2..936c31dbdd 100644<br>
+&gt;&gt; --- a/target/i386/hvf/hvf.c<br>
+&gt;&gt; +++ b/target/i386/hvf/hvf.c<br>
+&gt;&gt; @@ -214,7 +214,7 @@ static inline bool <br>
+&gt;&gt; apic_bus_freq_is_known(CPUX86State *env)<br>
+&gt;&gt; =C2=A0 =C2=A0 void hvf_kick_vcpu_thread(CPUState *cpu)<br>
+&gt;&gt; =C2=A0 {<br>
+&gt;&gt; -=C2=A0=C2=A0=C2=A0 cpus_kick_thread(cpu);<br>
+&gt;&gt; +=C2=A0=C2=A0=C2=A0 cpu-&gt;thread_kicked =3D true;<br>
+&gt;&gt; =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 hv_vcpu_interrupt(&amp;cpu-&gt;acce=
+l-&gt;fd, 1);<br>
+&gt;&gt; =C2=A0 }<br>
+&gt;<br>
+SIG_IPI is macOS crutch handled in XNU kernel that was essential until <br>
+Phil submitted proper kick support with hv_vcpu_interrupt().<br>
+<br>
+</blockquote></div></div><div dir=3D"auto"><div dir=3D"auto"><span style=3D=
+"color:rgb(0,0,0);font-family:&#39;-apple-system&#39;,&#39;helveticaneue&#3=
+9;;font-size:15px;font-style:normal;font-weight:400;letter-spacing:normal;t=
+ext-indent:0px;text-transform:none;white-space:normal;word-spacing:0px;text=
+-decoration:none;display:inline!important;float:none">Ah yes, perhaps it al=
+lowed exit from hv_vcpu_run(). hv_vcpu_run_until() definitely does not exit=
+ early upon receiving SIG_IPI (USR1).</span></div><div dir=3D"auto"><span s=
+tyle=3D"color:rgb(0,0,0);font-family:&#39;-apple-system&#39;,&#39;helvetica=
+neue&#39;;font-size:15px;font-style:normal;font-weight:400;letter-spacing:n=
+ormal;text-indent:0px;text-transform:none;white-space:normal;word-spacing:0=
+px;text-decoration:none;display:inline!important;float:none"><br></span></d=
+iv></div><div dir=3D"auto"><br></div>
 
-I think "-ing" is correct because it looks at a change between two 
-values.  Or another possibility is putting the mask as "self":
-
-     fn bits_activated(from: Self, to: Self) -> bool {
-         (to & !from & self) != 0
-     }
-
-     fn bits_deactivated(from: Self, to: Self) -> bool {
-         (from & !to & self) != 0
-     }
-
-Anyhow feel free to pick something you like and add it to IntegerExt.
-
->> +    #[inline]
->> +    #[must_use]
->> +    fn deposit<U: IntegerExt>(self, start: u32, length: u32,
->> +                          fieldval: U) -> Self
->> +        where Self: From<U>
->> +    {
->> +        debug_assert!(length <= U::BITS);
-> 
-> assert? as you've already replaced debug_assert with assert in BqlCell.
-
-No, not this time :) Rust has checks for overflow in debug mode but not 
-in release mode, so (independent of how Meson handles debug assertions) 
-debug_assert is the right one here.
-
-Paolo
-
->> +        let mask = Self::mask(start, length);
->> +        (self & !mask) | ((Self::from(fieldval) << start) & mask)
->> +    }
->> +
-> 
-> Very useful for HPET! Thanks.
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> 
-> 
-> 
-
+--0000000000009105e80628e77171--
 
