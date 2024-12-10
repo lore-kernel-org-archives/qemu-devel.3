@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85067E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73B0CE7717D
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKqYd-0008Np-Gm; Mon, 09 Dec 2024 22:05:07 -0500
+	id 1tKqZ3-00008w-3G; Mon, 09 Dec 2024 22:05:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYb-0008NG-Pg; Mon, 09 Dec 2024 22:05:05 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tKqZ1-00008D-8G; Mon, 09 Dec 2024 22:05:31 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYa-000324-1c; Mon, 09 Dec 2024 22:05:05 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-21654fdd5daso14394095ad.1; 
- Mon, 09 Dec 2024 19:05:03 -0800 (PST)
+ id 1tKqYz-0003HE-7z; Mon, 09 Dec 2024 22:05:31 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-216401de828so17083045ad.3; 
+ Mon, 09 Dec 2024 19:05:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733799901; x=1734404701; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733799927; x=1734404727; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LruQ9KYnQvDqCmEjdJ3ocQyVzKWaqruAqXQDYmuVWDI=;
- b=KWtziRYEZYhLAm/1kd4PfpBDA9r9DUz7B3XNNxaMJNdWoBoC1r0s0WiwvJP268F/O3
- rO+bFswfYbgbMdA3SvnfCPLSRsbLwAOJKyl+IXG9Ua/ukiD3UNukVZMkG76fEc5P8gSq
- Q/PlZPxjGiOvw2HF0zPjM+FcsdNdSFwPYBnz3yBrNF6cry/gq3w7EjLMrkCPVXsn1TPx
- BUGhNGN+5sZuy2RHhzP9I39ALP3WQPHRvUReAqlPEUxhwIg3PwnriN3Bu+Thrk5vWz1Q
- UTasP8xrAktKelCiq/2fDOC4Iel6sfLtmDYRMTrfpxGLS5d1VpjYsrBPMGh/dZqHkFHh
- XpBg==
+ bh=HeWNwp+7gNfaxpbB+LR/oQe4Y23byGeRB+Qua9V3R1E=;
+ b=jCyinH5zEdfl7YEdHMT87hSsArfTLOWVNf/esakzgQmsjiA4Mpue9UrzG57IMjeQb/
+ 0Da3ToYF/+jXCAdK2fL4r2zbVkza/CQfY/0+wLKXe/rimAJF1yfR9wKZVVl2PAU9xRI/
+ BM3/VGHmq5VgUXdgzummgb6ZHaQGe2ZQ80X06AmR8mRr+o9sRBbFMqEU1hXSAaXEjWE9
+ YETMVB9JCk19bQnF8nFnkRt5qVKnnGrxmf3aHgx97MsElqmlKV6UsMO/jAnbavtPK9TG
+ RNgHZzZP2qMc/Ns+kUnwHif4eE6/GhjCu93JPcwJeDoJ1V+za/QjgjhGpM2BMREnPGLx
+ vUGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733799901; x=1734404701;
+ d=1e100.net; s=20230601; t=1733799927; x=1734404727;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LruQ9KYnQvDqCmEjdJ3ocQyVzKWaqruAqXQDYmuVWDI=;
- b=eOJHvcsG/0AZO/MMmvWDtAEkqikmwyjKm9j1hfVx06e9ea52WwBOZrLkCUZmuYnhvQ
- DFgO35QljhnI+LB7Q/wM1qmJVC1177mErkrWMHKPGhffLjDJZGnr6eB3GW0PB9AZtKXW
- MSDX/AOOODRd1IkjLTiv7Bz7ODKmXTFov30zGyT3fMe6YAiW/UnT/KU/El8KYAr4tncH
- xLgRSmQMwRIJBNiK2b6k/2G9BO2+5yZ+SKTuqdL7RpXO3QjcBX3pa/TokCRjsPa5hJ/f
- oUpp7gQxrKh9pkDXKTj4zwTXauW3t+RP3isWjZhsU6K2TgNBFh4Xfhpx+odJJdKRHYuH
- muPw==
+ bh=HeWNwp+7gNfaxpbB+LR/oQe4Y23byGeRB+Qua9V3R1E=;
+ b=cwB2xeLkD6e/3LBK1O/atSGEYfFOBc5q1Yk2VXCdY9HRgBjDvo0g8ts5jXxQNXINk8
+ +ysUiHndVe0A4eF9M7mL5m6WfbO5t8/3VlndDpfb0FU2ZjXW4+6xNZA18GCG0AQ71yEP
+ zXw5BGP51qOcRPyEPdomVWgbfeAEh2nd/PnqjBN3ZoAYFOSlh2/nOpRJ6kSckoG9xrF+
+ b6P5xDDoKfTOEt4stKMQmIDWpX+XPmAgGzJKZZ0L8FTjBUK4w14E+VD/yR531kHCYfBm
+ XImRh2yrcP9AW4e2W+sc5a0Ct/whZ6UBvwTuQfn6xUkZALbsWC9jpR8ILJxMLJNiP1JJ
+ BnDw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnFwjN5T607KW2jlS2IJhwqU0eLOa/rK/gb5+tW807kabj+3W3plGVJ5vU4AN5DGKx6qmrDNJd8mIt@nongnu.org
-X-Gm-Message-State: AOJu0YxMQuFLP+Y1SLqUaOvyEk9ma+fVrSByA6geNoEmsKxBYYs7CeO3
- ZeYMI0yd9XM52qGXexSET2eI+onVVSbYE+6M4ZAL2O6moxanVOBPQw+8vQ==
-X-Gm-Gg: ASbGncvRYQ2kthtvUg95A0+pfwxqQDdZi6wAqUxLJcoDwC2dFCGBguN+vIhD0eUVtLI
- KcjvWVc+1SYV7fi/YqMVvZragfevlM3x2M6TtM3JIVc7skPipY5lEOjpdQXN5nEeZar+QziUdxe
- VtoQjA0s6vi7S3TGfNqG7pmD0Po/ISMUSaYpo9O1CZUUuRPXoyhCIMoe+i5aO4CzyYkpXg0BnHR
- oqGxzyaTzUv7cNgXH+DyD0UJ1tkrlTDXIgFLA/5pt8sFyBW/qhZk/WLLZRt
-X-Google-Smtp-Source: AGHT+IEeZ47upPHlR1XHdhXujprX+K/RYm7BKOFrEw7Zft4zif//BXfWbvRQY4MK3LKEitsCr7ml7A==
-X-Received: by 2002:a17:902:e947:b0:216:239e:f90f with SMTP id
- d9443c01a7336-216239efc60mr226081345ad.37.1733799901431; 
- Mon, 09 Dec 2024 19:05:01 -0800 (PST)
+ AJvYcCWVFZa3PHWFm5DZRmAJxrIsuBE3c6IoeUk+3HmGkWdnqPpjzJCq2pgPvLlcY4GM+Yd9Mj6voe0JOoR9@nongnu.org
+X-Gm-Message-State: AOJu0Yw54/amyYU3CG4BAJlhaQ6pK7KgcVzl9naDG0uP7QzybotKCb8H
+ d8Sm36vX67xv7EhPRSnLp80ulbQWdn8uyO0JWAlsCfHvLMhheXHf61ZhQg==
+X-Gm-Gg: ASbGncuYRrcv5Mp0fASS2qCNeKKxGPBgXnZHQ0hRn7GTpZPzrIlKST8rhcMoNlZAkYr
+ rCcn0TZe8kqEJ0rBiW0flIkl9Q+OtUPxvcsZ8kFubRVXx98oUkd9t9BMlVA8hUz/r5v5mBK8agk
+ ZoA6hkvZgXoF/Jt5gYp47c+E5OY4Kky7b8ZOUp7fbMWmhjyRipsuvFgFCHalzeNwG3jMbpv3CR2
+ v3QVWHOUpcgVpRgawiYHgxtHsR+Obwn+ozKseQ/ZmNljoD+7rEWlPpYNqjT
+X-Google-Smtp-Source: AGHT+IEUJ9V1QYHTMpRg+GnVM7KUOHdwtSlSFdX55gLnrVIhFERaa5dmiYuGDeh4TMs5NKmHBuRkWQ==
+X-Received: by 2002:a17:902:dac8:b0:215:b087:5d62 with SMTP id
+ d9443c01a7336-2166a03f16cmr48662655ad.36.1733799927000; 
+ Mon, 09 Dec 2024 19:05:27 -0800 (PST)
 Received: from wheely.local0.net ([220.253.106.119])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.04.58
+ d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 19:05:01 -0800 (PST)
+ Mon, 09 Dec 2024 19:05:26 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH 1/9] ppc/pnv/homer: Fix OCC registers
-Date: Tue, 10 Dec 2024 13:04:41 +1000
-Message-ID: <20241210030451.1306608-2-npiggin@gmail.com>
+Subject: [PATCH 9/9] ppc/pnv/occ: Implement a basic dynamic OCC model
+Date: Tue, 10 Dec 2024 13:04:49 +1000
+Message-ID: <20241210030451.1306608-10-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
 References: <20241210030451.1306608-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,139 +99,238 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HOMER OCC registers seem to have bitrotted and fail for various
-reasons on powernv8, 9, and 10.
+The OCC is an On Chip Controller that handles various thermal and power
+management. It is a PPC405 microcontroller that runs its own firmware
+which is out of scope of the powernv machine model. Some dynamic
+behaviour and interfaces that are important for host CPU testing can be
+implemented with a much simpler state machine.
 
-The major problems are that POWER8 has the wrong version value and its
-pstate ordering is incorrect. POWER9/10 have not set the OCC state to
-active. Non-zero chips are also set to OCC slaves for POWER9/10.
+This change adds a 100ms timer that ticks through a simple state machine
+that looks for "OCC command requests" coming from host firmware, and
+responds to them.
 
-Unfortunately skiboot has also bitrotted and requires fixes that are
-not yet in the bios files to run. With a patched skiboot, before this
-change, powernv9/10 report:
+For now the powercap command is implemented because that is used by
+OPAL and exported to Linux and is easy to test.
 
-[    0.262050394,3] OCC: Chip: 0: OCC not active
-[    0.262128603,3] OCC: Initialization on all chips did not complete(timed out)
-
-powernv8 reports:
-
-[    0.173572100,3] OCC: Unknown OCC-OPAL interface version.
-[    0.173812059,3] OCC: Initialization on all chips did not complete(timed out)
-
-After this patch, all report:
-
-[    0.176815668,5] OCC: All Chip Rdy after 0 ms
+  $ F=/sys/firmware/opal/powercap/system-powercap/powercap-current
+  $ cat $F
+  100
+  $ echo 50 | sudo tee $F
+  50
+  $ cat $F
+  50
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_homer.c | 41 +++++++++++++++++++++++++++++------------
- 1 file changed, 29 insertions(+), 12 deletions(-)
+ include/hw/ppc/pnv_occ.h |   3 +
+ hw/ppc/pnv_occ.c         | 145 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 148 insertions(+)
 
-diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-index f9a203d11d0..9aedc08cc00 100644
---- a/hw/ppc/pnv_homer.c
-+++ b/hw/ppc/pnv_homer.c
-@@ -70,21 +70,24 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
-     PnvHomer *homer = PNV_HOMER(opaque);
+diff --git a/include/hw/ppc/pnv_occ.h b/include/hw/ppc/pnv_occ.h
+index f9948609808..3ec42de0ff1 100644
+--- a/include/hw/ppc/pnv_occ.h
++++ b/include/hw/ppc/pnv_occ.h
+@@ -41,6 +41,9 @@ DECLARE_INSTANCE_CHECKER(PnvOCC, PNV10_OCC, TYPE_PNV10_OCC)
+ struct PnvOCC {
+     DeviceState xd;
  
-     switch (addr) {
--    case PNV8_OCC_PSTATE_VERSION:
--    case PNV8_OCC_PSTATE_MIN:
--    case PNV8_OCC_PSTATE_ID_ZERO:
--        return 0;
-     case PNV8_OCC_PSTATE_VALID:
-+        return 1;
-     case PNV8_OCC_PSTATE_THROTTLE:
-+        return 0;
-+    case PNV8_OCC_PSTATE_VERSION:
-+        return 0x02;
-+    case PNV8_OCC_PSTATE_MIN:
-+        return -2;
-     case PNV8_OCC_PSTATE_NOM:
-     case PNV8_OCC_PSTATE_TURBO:
--    case PNV8_OCC_PSTATE_ID_ONE:
-+        return -1;
-+    case PNV8_OCC_PSTATE_ULTRA_TURBO:
-+        return 0;
-+    case PNV8_OCC_PSTATE_ID_ZERO:
-+        return 0;
-     case PNV8_OCC_VDD_VOLTAGE_IDENTIFIER:
-     case PNV8_OCC_VCS_VOLTAGE_IDENTIFIER:
-         return 1;
--    case PNV8_OCC_PSTATE_ULTRA_TURBO:
--    case PNV8_OCC_PSTATE_ID_TWO:
--        return 2;
-     case PNV8_OCC_PSTATE_DATA:
-         return 0x1000000000000000;
-     /* P8 frequency for 0, 1, and 2 pstates */
-@@ -92,6 +95,10 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
-     case PNV8_OCC_PSTATE_ONE_FREQUENCY:
-     case PNV8_OCC_PSTATE_TWO_FREQUENCY:
-         return 3000;
-+    case PNV8_OCC_PSTATE_ID_ONE:
-+        return -1;
-+    case PNV8_OCC_PSTATE_ID_TWO:
-+        return -2;
-     }
-     /* pstate table core max array */
-     if (core_max_array(homer, addr)) {
-@@ -192,11 +199,12 @@ static const TypeInfo pnv_homer_power8_type_info = {
++    /* OCC dynamic model is driven by this timer. */
++    QEMUTimer state_machine_timer;
++
+     /* OCC Misc interrupt */
+     uint64_t occmisc;
  
- /* P9 Pstate table */
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index aa46e118e93..11081ecc4b7 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -35,6 +35,7 @@
+ #define OCB_OCI_OCCMISC_AND     0x4021
+ #define OCB_OCI_OCCMISC_OR      0x4022
+ #define   OCCMISC_PSI_IRQ       PPC_BIT(0)
++#define   OCCMISC_IRQ_SHMEM     PPC_BIT(3)
  
-+#define PNV9_OCC_PSTATE_VALID            0xe2000
- #define PNV9_OCC_PSTATE_ID_ZERO          0xe2018
- #define PNV9_OCC_PSTATE_ID_ONE           0xe2020
- #define PNV9_OCC_PSTATE_ID_TWO           0xe2028
- #define PNV9_OCC_PSTATE_DATA             0xe2000
--#define PNV9_OCC_PSTATE_DATA_AREA        0xe2008
-+#define PNV9_OCC_PSTATE_MINOR_VERSION    0xe2008
- #define PNV9_OCC_PSTATE_MIN              0xe2003
- #define PNV9_OCC_PSTATE_NOM              0xe2004
- #define PNV9_OCC_PSTATE_TURBO            0xe2005
-@@ -211,7 +219,7 @@ static const TypeInfo pnv_homer_power8_type_info = {
- #define PNV9_OCC_PSTATE_TWO_FREQUENCY    0xe202c
- #define PNV9_OCC_ROLE_MASTER_OR_SLAVE    0xe2002
- #define PNV9_CORE_MAX_BASE               0xe2819
--
-+#define PNV9_DYNAMIC_DATA_STATE          0xe2b80
+ /* OCC sensors */
+ #define OCC_SENSOR_DATA_BLOCK_OFFSET          0x0000
+@@ -67,6 +68,11 @@ static void pnv_occ_set_misc(PnvOCC *occ, uint64_t val)
+     qemu_set_irq(occ->psi_irq, !!(val & OCCMISC_PSI_IRQ));
+ }
  
- static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
-                                       unsigned size)
-@@ -219,11 +227,17 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
-     PnvHomer *homer = PNV_HOMER(opaque);
++static void pnv_occ_raise_msg_irq(PnvOCC *occ)
++{
++    pnv_occ_set_misc(occ, occ->occmisc | OCCMISC_PSI_IRQ | OCCMISC_IRQ_SHMEM);
++}
++
+ static uint64_t pnv_occ_power8_xscom_read(void *opaque, hwaddr addr,
+                                           unsigned size)
+ {
+@@ -281,6 +287,20 @@ static const TypeInfo pnv_occ_power10_type_info = {
+ };
  
-     switch (addr) {
-+    case PNV9_OCC_PSTATE_VALID:
-+        return 1;
-     case PNV9_OCC_MAX_PSTATE_ULTRA_TURBO:
-     case PNV9_OCC_PSTATE_ID_ZERO:
-         return 0;
--    case PNV9_OCC_PSTATE_DATA:
-     case PNV9_OCC_ROLE_MASTER_OR_SLAVE:
-+        if (homer->chip->chip_id == 0) {
-+            return 0x1; /* master */
-+        } else {
-+            return 0x0; /* slave */
+ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp);
++static bool occ_model_tick(PnvOCC *occ);
++
++/* Relatively arbitrary */
++#define OCC_POLL_MS 100
++
++static void occ_state_machine_timer(void *opaque)
++{
++    PnvOCC *occ = opaque;
++    uint64_t next = qemu_clock_get_ms(QEMU_CLOCK_VIRTUAL) + OCC_POLL_MS;
++
++    if (occ_model_tick(occ)) {
++        timer_mod(&occ->state_machine_timer, next);
++    }
++}
+ 
+ static void pnv_occ_realize(DeviceState *dev, Error **errp)
+ {
+@@ -306,6 +326,10 @@ static void pnv_occ_realize(DeviceState *dev, Error **errp)
+                           PNV_OCC_SENSOR_DATA_BLOCK_SIZE);
+ 
+     qdev_init_gpio_out(dev, &occ->psi_irq, 1);
++
++    timer_init_ms(&occ->state_machine_timer, QEMU_CLOCK_VIRTUAL,
++                  occ_state_machine_timer, occ);
++    timer_mod(&occ->state_machine_timer, OCC_POLL_MS);
+ }
+ 
+ static Property pnv_occ_properties[] = {
+@@ -646,6 +670,27 @@ static bool occ_write_static_data(PnvOCC *occ,
+     return true;
+ }
+ 
++static bool occ_read_dynamic_data(PnvOCC *occ,
++                                  struct occ_dynamic_data *dynamic_data,
++                                  Error **errp)
++{
++    PnvOCCClass *poc = PNV_OCC_GET_CLASS(occ);
++    PnvHomer *homer = occ->homer;
++    hwaddr static_addr = homer->base + poc->opal_shared_memory_offset;
++    hwaddr dynamic_addr = static_addr + OPAL_DYNAMIC_DATA_OFFSET;
++    MemTxResult ret;
++
++    ret = address_space_read(&address_space_memory, dynamic_addr,
++                             MEMTXATTRS_UNSPECIFIED, dynamic_data,
++                             sizeof(*dynamic_data));
++    if (ret != MEMTX_OK) {
++        error_setg(errp, "OCC: cannot read OCC-OPAL dynamic data");
++        return false;
++    }
++
++    return true;
++}
++
+ static bool occ_write_dynamic_data(PnvOCC *occ,
+                                   struct occ_dynamic_data *dynamic_data,
+                                   Error **errp)
+@@ -667,6 +712,106 @@ static bool occ_write_dynamic_data(PnvOCC *occ,
+     return true;
+ }
+ 
++static bool occ_opal_send_response(PnvOCC *occ,
++                                   struct occ_dynamic_data *dynamic_data,
++                                   enum occ_response_status status,
++                                   uint8_t *data, uint16_t datalen)
++{
++    struct opal_command_buffer *cmd = &dynamic_data->cmd;
++    struct occ_response_buffer *rsp = &dynamic_data->rsp;
++
++    rsp->request_id = cmd->request_id;
++    rsp->cmd = cmd->cmd;
++    rsp->status = status;
++    rsp->data_size = cpu_to_be16(datalen);
++    if (datalen) {
++        memcpy(rsp->data, data, datalen);
++    }
++    if (!occ_write_dynamic_data(occ, dynamic_data, NULL)) {
++        return false;
++    }
++    /* Would be a memory barrier here */
++    rsp->flag = OCC_FLAG_RSP_READY;
++    cmd->flag = 0;
++    if (!occ_write_dynamic_data(occ, dynamic_data, NULL)) {
++        return false;
++    }
++
++    pnv_occ_raise_msg_irq(occ);
++
++    return true;
++}
++
++/* Returns error status */
++static bool occ_opal_process_command(PnvOCC *occ,
++                                     struct occ_dynamic_data *dynamic_data)
++{
++    struct opal_command_buffer *cmd = &dynamic_data->cmd;
++    struct occ_response_buffer *rsp = &dynamic_data->rsp;
++
++    if (rsp->flag == 0) {
++        /* Spend one "tick" in the in-progress state */
++        rsp->flag = OCC_FLAG_CMD_IN_PROGRESS;
++        return occ_write_dynamic_data(occ, dynamic_data, NULL);
++    } else if (rsp->flag != OCC_FLAG_CMD_IN_PROGRESS) {
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_INTERNAL_ERROR,
++                                      NULL, 0);
++    }
++
++    switch (cmd->cmd) {
++    case 0xD1: /* SET_POWER_CAP */
++        uint16_t data;
++        if (be16_to_cpu(cmd->data_size) != 2) {
++            return occ_opal_send_response(occ, dynamic_data,
++                                          OCC_RSP_INVALID_CMD_DATA_LENGTH,
++                                          (uint8_t *)&dynamic_data->cur_pwr_cap,
++                                          2);
 +        }
-     case PNV9_OCC_PSTATE_NOM:
-     case PNV9_OCC_PSTATE_TURBO:
-     case PNV9_OCC_PSTATE_ID_ONE:
-@@ -241,10 +255,13 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
-         return 3000;
-     case PNV9_OCC_PSTATE_MAJOR_VERSION:
-         return 0x90;
-+    case PNV9_OCC_PSTATE_MINOR_VERSION:
-+        return 0x01;
-     case PNV9_CHIP_HOMER_BASE:
--    case PNV9_OCC_PSTATE_DATA_AREA:
-     case PNV9_CHIP_HOMER_IMAGE_POINTER:
-         return 0x1000000000000000;
-+    case PNV9_DYNAMIC_DATA_STATE:
-+        return 0x03; /* active */
-     }
-     /* pstate table core max array */
-     if (core_max_array(homer, addr)) {
++        data = be16_to_cpu(*(uint16_t *)cmd->data);
++        if (data == 0) { /* clear power cap */
++            dynamic_data->pwr_cap_type = 0x00; /* none */
++            data = PCAP_MAX_POWER_W;
++        } else {
++            dynamic_data->pwr_cap_type = 0x02; /* user set in-band */
++            if (data < PCAP_HARD_MIN_POWER_W) {
++                data = PCAP_HARD_MIN_POWER_W;
++            } else if (data > PCAP_MAX_POWER_W) {
++                data = PCAP_MAX_POWER_W;
++            }
++        }
++        dynamic_data->cur_pwr_cap = cpu_to_be16(data);
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_SUCCESS,
++                                      (uint8_t *)&dynamic_data->cur_pwr_cap, 2);
++
++    default:
++        return occ_opal_send_response(occ, dynamic_data,
++                                      OCC_RSP_INVALID_COMMAND,
++                                      NULL, 0);
++    }
++    g_assert_not_reached();
++}
++
++static bool occ_model_tick(PnvOCC *occ)
++{
++    struct occ_dynamic_data dynamic_data;
++
++    if (!occ_read_dynamic_data(occ, &dynamic_data, NULL)) {
++        /* Can't move OCC state field to safe because we can't map it! */
++        qemu_log("OCC: failed to read HOMER data, shutting down OCC\n");
++        return false;
++    }
++    if (dynamic_data.cmd.flag == OPAL_FLAG_CMD_READY) {
++        if (!occ_opal_process_command(occ, &dynamic_data)) {
++            qemu_log("OCC: failed to write HOMER data, shutting down OCC\n");
++            return false;
++        }
++    }
++
++    return true;
++}
++
+ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
+ {
+     PnvOCCClass *poc = PNV_OCC_GET_CLASS(occ);
 -- 
 2.45.2
 
