@@ -4,95 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1291AE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07A87E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:49:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL3Kx-00079h-GO; Tue, 10 Dec 2024 11:43:51 -0500
+	id 1tL3Pr-0000AD-KW; Tue, 10 Dec 2024 11:48:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tL3Kv-00078k-Hd
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:43:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tL3Pq-0000A3-Gb
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:48:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tL3Ku-0002sB-1Z
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:43:49 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tL3Po-0003i5-MM
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:48:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733849026;
+ s=mimecast20190719; t=1733849330;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8pGgEEeSELoHHf+V2ymV8EZKTzzoxb3eaT6wrXLBjJM=;
- b=Xc8mj9leItLm4bZyVo1vlccut5G7CxUfThewwqs5y/0068kHgN6xvuURdgS7ka0IwRAwVO
- /aKs/xwTVNqan0n2kYX+qh1Fph6QEWHkYyagKsSjmd3IVQuXfCUSBuHRMtB0l88pTe/3c1
- N3KAPo1RT/pbzkxNiR3mgH1ik+N5ARg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=n7hGeMiFdvkLZOcARTYtjQaLf/0RvCo9yQYkZXn5gzk=;
+ b=GIg9Qd34Syv0IAGYb3wC4VfWXVBReuk4zhFhsmp2YiKRcRBOtyF8AaG5pdez6BZ+kz4Ekw
+ ZjNJUDgie5t6zKLkNRZrKGVhIEBYGjVeBpiJAVUgb/3Ef9/pL5cD84J1Wv+d8GbE4oicoU
+ 6g/UZbi4jo5I5po97iutpxQKLfMtIEQ=
+Received: from mail-io1-f69.google.com (mail-io1-f69.google.com
+ [209.85.166.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-Bg6OrrE3OHqsTt_p0WzVCg-1; Tue, 10 Dec 2024 11:43:41 -0500
-X-MC-Unique: Bg6OrrE3OHqsTt_p0WzVCg-1
-X-Mimecast-MFC-AGG-ID: Bg6OrrE3OHqsTt_p0WzVCg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-434f5b7b4a2so22343605e9.0
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:43:41 -0800 (PST)
+ us-mta-149-VVFzQAcCPZasZztQMX5hqQ-1; Tue, 10 Dec 2024 11:48:49 -0500
+X-MC-Unique: VVFzQAcCPZasZztQMX5hqQ-1
+X-Mimecast-MFC-AGG-ID: VVFzQAcCPZasZztQMX5hqQ
+Received: by mail-io1-f69.google.com with SMTP id
+ ca18e2360f4ac-844c173a6bcso105775839f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 08:48:49 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733849020; x=1734453820;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8pGgEEeSELoHHf+V2ymV8EZKTzzoxb3eaT6wrXLBjJM=;
- b=pCAZuw17cYBvPFflMJeJJnaAWzqGZrL881IEk5LwJqPLJH3+LU0Oabbn9gYwJ+tUFq
- zx7xPTaxWPeMT16ID+NdDoCBKiIrefU1J+p5ttMpUx5weqqZkJUyGsSuWJ3Tecp5a7Pr
- z2vjS8aXoF3NVTykdIbbD0ueJ52Ms4Z3vRVRxEUGGpCMGy2X0nFxVLc/E6wkLJKNnuAk
- jsa3Zk60earV5f9iC4r5wINNgL/n+i0dsiqMG0M4wNnFOHGJqxeWuEEAfcYdbTAz0bci
- w1r0ogYfKIiK2hBmVhsiPSMs3TKRLF5VPI5qUZsNNQoagqtjbrFgIJBW94dwafURQ+HG
- uD3g==
+ d=1e100.net; s=20230601; t=1733849328; x=1734454128;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=n7hGeMiFdvkLZOcARTYtjQaLf/0RvCo9yQYkZXn5gzk=;
+ b=A4M0JGJtfdHAY3v0RTo1UL0dcDKBRr5exfUuAww38N5NznWevgvtfQoof57I+H7kR2
+ pbwn+fYF5fwJ8Z4XKM4U4i6ULge4cELTabB31E5Wdkg5FrxcX6UUBVW19yNTqGxbqBnL
+ 9zzmp3PJvzoaviCvs9teXsVkswbGdD96YraL6EyKngNiSZ/kLIa6Vejashk7Tf6BiU0/
+ G+kl4+jRwGCSNUDbOO6d6imwJLNUyB+szuVgcOvcosvBZ7zVAq4L6BO+xZXDJrLWIWeV
+ HfkAp3Cx2nOrzRcKvtztWp9LLltghFlDcT16H3Mmsy7eN6Z1zcvef52SO9P4wiZnGkv4
+ 6EhQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5QpoVa1tBqQlbpTG5pMsKM5Gduqs68+jk3cM8XoAOcqJatsvKF2uYv37CrIY6dbg4E6sj7RRKGs3k@nongnu.org
-X-Gm-Message-State: AOJu0Yx3ls4YQ+M7FhWk18inU1YLR20vsgG0PmnrqswJE3xPOnxQp/O+
- Lp+iOTPfH91Du8LWZsg8d/DzOpeNlqKm/MftH9HCdPecOrh7xhb8PbE+CKBsBPBiuEP0/ZYQ/8E
- 3nmUfOqZmMviAWiL+o/0liHQ1JoCdrY/+BsZH8MFd4i52+7j3Wr3G
-X-Gm-Gg: ASbGncvqpMJC7O27LJkcIL0tgMI2bCD//LP+qRo1Y4eMZzYV4pdkqcozrfRf4ls8PF4
- f9t5+cfvPtqw7eEyel0Wvu0LOWPPLF91n2SjxwQZ5uWf4r5T039gicP9AtzLzyUqWmn0oD1SCZd
- r91Sz+r3V0ct7Ad3hesMm1LztZ/pqvnZX93g8SRfuyrzb2oZrnQb7ufFsnFyfezWHt1mach3HS8
- xwsws3J2KKMzOwSJZ6qMp38zVdfNbA/urAtOQOL1Lie9/Iec/ipAp2Y/7rNlBUfFvFEQ/ZVvEf5
- lehwCxZXHQ1SKI7UVTmHaiV0kQ==
-X-Received: by 2002:a05:600c:b94:b0:434:f753:600f with SMTP id
- 5b1f17b1804b1-434fff502fcmr48447655e9.19.1733849020346; 
- Tue, 10 Dec 2024 08:43:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFNlydob5NfGcaRZsczB6/N7pk58H++97KNUX+qD1MU7YmLOnVjXYfc/V/jOP1AGOpRSBdvgQ==
-X-Received: by 2002:a05:600c:b94:b0:434:f753:600f with SMTP id
- 5b1f17b1804b1-434fff502fcmr48447375e9.19.1733849020010; 
- Tue, 10 Dec 2024 08:43:40 -0800 (PST)
-Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
- [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d527395csm230317185e9.17.2024.12.10.08.43.39
+ AJvYcCUUUXiiC/GIZN7FwJwrCB2nH00xR4ge3sbQrQcVz7zJb8CSmcoxUpVN5uTr19AJSgvrRQbTMRkrzecf@nongnu.org
+X-Gm-Message-State: AOJu0YzSOsq0RAGpINr59MdkpHht9s8jlASWT56WYZCYm0fJaajOSE8b
+ kfxhkDiZdblpBQIHtNTiNbPQnZly8WQdKH7nlJb2IOFJHrYg6m+OKEVF+VhXgGWwy1EifGhsPo9
+ yFcp8MA3GQt7PN92pb8XTJmnpFnwjvHFKdPrcv4hqW8dw/i7ptkbZ
+X-Gm-Gg: ASbGncsaS3DdzaaDqm8gwfa4OL9o9VsNS5GpuIsaT+ooUieWYTdoKzfFFonsB6zJW2A
+ XqZTOxSpkG3WYWbk+iUxvydBUySYonOmEGPt2n59aQd1EpSJ+IZzxvBO/9ZSip6zyiylvzPjywj
+ VoSJLPCsa5zAChkFNw+Ncv6YP46kqnaFd8q2vvjCpoJcUW9IOSaoClrH1WkovmCSAjXgXHMfFNm
+ /Zw2HO36XwbiYxN7yM9xuvqdhHK+8rJ8Q5hB8uH7ZzRUAv7MhVwUrEGQ+NTYNbMns4ynfkTaGfV
+ UUuwkFBr351v+3I=
+X-Received: by 2002:a05:6e02:1c24:b0:3a7:d84c:f2b0 with SMTP id
+ e9e14a558f8ab-3a811d927a6mr197563405ab.8.1733849328572; 
+ Tue, 10 Dec 2024 08:48:48 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHSj4e0eUUw188b18Ul0KxUssAhqoo7Lj0MNKSgwqEFEcO/LMdl9W7d0ImKHB/ltm5YHJI4aA==
+X-Received: by 2002:a05:6e02:1c24:b0:3a7:d84c:f2b0 with SMTP id
+ e9e14a558f8ab-3a811d927a6mr197563215ab.8.1733849328239; 
+ Tue, 10 Dec 2024 08:48:48 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e2d2b5a1e1sm323480173.71.2024.12.10.08.48.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Dec 2024 08:43:39 -0800 (PST)
-Date: Tue, 10 Dec 2024 17:43:38 +0100
-From: Igor Mammedov <imammedo@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Philippe =?UTF-8?B?TWF0aGlldS1E?=
- =?UTF-8?B?YXVkw6k=?= <philmd@linaro.org>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, Yanan Wang <wangyanan55@huawei.com>, Zhao Liu
- <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>, Richard
- Henderson <richard.henderson@linaro.org>, Cameron Esfahani
- <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [RFC PATCH 3/4] i386: Track cores_per_module in CPUX86State
-Message-ID: <20241210174338.0fb05ecf@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20241205145716.472456-4-xiaoyao.li@intel.com>
-References: <20241205145716.472456-1-xiaoyao.li@intel.com>
- <20241205145716.472456-4-xiaoyao.li@intel.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ Tue, 10 Dec 2024 08:48:47 -0800 (PST)
+Date: Tue, 10 Dec 2024 11:48:45 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] overcommit: introduce mem-lock-onfault
+Message-ID: <Z1hw7dvTe4jMgXeq@x1n>
+References: <20241205231909.1161950-1-d-tatianin@yandex-team.ru>
+ <Z1JOpadES2iV_i0v@x1n>
+ <779a4733-888b-4591-af5e-381572c84c20@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <779a4733-888b-4591-af5e-381572c84c20@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -117,81 +109,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  5 Dec 2024 09:57:15 -0500
-Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+On Mon, Dec 09, 2024 at 10:40:51AM +0300, Daniil Tatianin wrote:
+> On 12/6/24 4:08 AM, Peter Xu wrote:
+> 
+> > On Fri, Dec 06, 2024 at 02:19:06AM +0300, Daniil Tatianin wrote:
+> > > Currently, passing mem-lock=on to QEMU causes memory usage to grow by
+> > > huge amounts:
+> > > 
+> > > no memlock:
+> > >      $ qemu-system-x86_64 -overcommit mem-lock=off
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      45652
+> > > 
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=off -enable-kvm
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      39756
+> > > 
+> > > memlock:
+> > >      $ qemu-system-x86_64 -overcommit mem-lock=on
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      1309876
+> > > 
+> > >      $ ./qemu-system-x86_64 -overcommit mem-lock=on -enable-kvm
+> > >      $ ps -p $(pidof ./qemu-system-x86_64) -o rss=
+> > >      259956
+> > > 
+> > > This is caused by the fact that mlockall(2) automatically
+> > > write-faults every existing and future anonymous mappings in the
+> > > process right away.
+> > > 
+> > > One of the reasons to enable mem-lock is to protect a QEMU process'
+> > > pages from being compacted and migrated by kcompactd (which does so
+> > > by messing with a live process page tables causing thousands of TLB
+> > > flush IPIs per second) basically stealing all guest time while it's
+> > > active.
+> > > 
+> > > mem-lock=on helps against this (given compact_unevictable_allowed is 0),
+> > > but the memory overhead it introduces is an undesirable side effect,
+> > > which we can completely avoid by passing MCL_ONFAULT to mlockall, which
+> > > is what this series allows to do with a new command line option called
+> > > mem-lock-onfault.
+> > IMHO it'll be always helpful to dig and provide information on why such
+> > difference existed.  E.g. guest mem should normally be the major mem sink
+> > and that definitely won't be affected by either ON_FAULT or not.
+> > 
+> > I had a quick look explicitly on tcg (as that really surprised me a bit..).
+> > When you look at the mappings there's 1G constant shmem map that always got
+> > locked and populated.
+> > 
+> > It turns out to be tcg's jit buffer, alloc_code_gen_buffer_splitwx_memfd:
+> 
+> Thanks for looking into this! I'd guessed it was something to do with JIT,
+> makes sense.
+> 
+> >      buf_rw = qemu_memfd_alloc("tcg-jit", size, 0, &fd, errp);
+> >      if (buf_rw == NULL) {
+> >          goto fail;
+> >      }
+> > 
+> >      buf_rx = mmap(NULL, size, host_prot_read_exec(), MAP_SHARED, fd, 0);
+> >      if (buf_rx == MAP_FAILED) {
+> >          error_setg_errno(errp, errno,
+> >                           "failed to map shared memory for execute");
+> >          goto fail;
+> >      }
+> > 
+> > Looks like that's the major reason why tcg has mlockall bloated constantly
+> > with roughly 1G size - that seems to be from tcg_init_machine().  I didn't
+> > check kvm.
+> > 
+> > Logically having a on-fault option won't ever hurt, so probably not an
+> > issue to have it anyway.  Still, share my finding above, as IIUC that's
+> > mostly why it was bloated for tcg, so maybe there're other options too.
+> 
+> Yeah, the situation with KVM is slightly better, although it's still a
+> ~200MiB overhead with default Q35 and no extra devices (I haven't measured
+> the difference with various devices).
+> 
+> I think it's definitely nice to have an on-fault option for this, as
+> optimizing every possible mmap caller for the rare mem-lock=on case might be
+> too ambitious.
 
-> x86 is the only user of CPUState::nr_cores.
-> 
-> Define cores_per_module in CPUX86State, which can serve as the
-> substitute of CPUState::nr_cores. After x86 switches to use
-> CPUX86State::cores_per_module, CPUState::nr_cores will lose the only
-> user and QEMU can drop it.
-> 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
->  hw/i386/x86-common.c | 2 ++
->  target/i386/cpu.c    | 2 +-
->  target/i386/cpu.h    | 9 +++++++--
->  3 files changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index dc031af66217..f7a20c1da30c 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -271,6 +271,8 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
->  
->      init_topo_info(&topo_info, x86ms);
->  
-> +    env->nr_cores = ms->smp.cores;
-this doesn't look like the same as in qemu_init_vcpu(),
-which uses machine_topo_get_cores_per_socket()
-Can you clarify the change?
+It really depends, IMHO, and that's why I didn't already ack the series.
 
-> +
->      if (ms->smp.modules > 1) {
->          env->nr_modules = ms->smp.modules;
->          set_bit(CPU_TOPOLOGY_LEVEL_MODULE, env->avail_cpu_topo);
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 3725dbbc4b3f..15b50c44ae79 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -6503,7 +6503,7 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
->  
->      topo_info.dies_per_pkg = env->nr_dies;
->      topo_info.modules_per_die = env->nr_modules;
-> -    topo_info.cores_per_module = cs->nr_cores / env->nr_dies / env->nr_modules;
-> +    topo_info.cores_per_module = env->nr_cores;
->      topo_info.threads_per_core = cs->nr_threads;
->  
->      cores_per_pkg = topo_info.cores_per_module * topo_info.modules_per_die *
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 5795a497e567..c37a49a1a02b 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2051,6 +2051,9 @@ typedef struct CPUArchState {
->      /* Number of modules within one die. */
->      unsigned nr_modules;
->  
-> +    /* Number of cores within one module. */
-> +    unsigned nr_cores;
-> +
->      /* Bitmap of available CPU topology levels for this CPU. */
->      DECLARE_BITMAP(avail_cpu_topo, CPU_TOPOLOGY_LEVEL__MAX);
->  } CPUX86State;
-> @@ -2393,10 +2396,12 @@ static inline void cpu_x86_load_seg_cache_sipi(X86CPU *cpu,
->  static inline uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
->  {
->      CPUState *cs = CPU(cpu);
-> +    CPUX86State *env = &cpu->env;
->      uint64_t val;
-> +    uint64_t cores_per_package = env->nr_cores * env->nr_modules * env->nr_dies;
->  
-> -    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 15..0 */
-> -    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 31..16 */
-> +    val = cs->nr_threads * cores_per_package;  /* thread count, bits 15..0 */
-> +    val |= (cores_per_package << 16); /* core count, bits 31..16 */
->  
->      return val;
->  }
+It may be relevant to the trade-off here on allowing faults to happen later
+even if mem-lock=on.  The question is why, for example in your use case,
+would like to lock the memory.
+
+Take kvm-rt as example, I believe that's needed because RT apps (running in
+the guest) would like to avoid page faults throughout the stack, so that
+guest workload, especially on the latency part of things, is predictable.
+
+Here if on-fault is enabled it could beat that purpose already.
+
+Or if the current use case is making sure after QEMU boots the memory will
+always present so that even if later the host faces memory stress it won't
+affect anything running the VM as it pre-allocated everything (so that's
+beyond memory-backend-*,prealloc=on, because it covers QEMU/KVM memory
+too).  Meanwhile locked pages won't swap out, so it's always there.
+
+But then with on-fault, it means the pages will only be locked upon access.
+Then it means the guarantee on "QEMU secures the memory on boot" is gone
+too.
+
+That's why I was thinking whether your specific use case really wants
+on-fault, or you do want e.g. to have a limit on the tcg-jit buffer instead
+(or same to whatever kvm was consuming), so you don't want that large a
+buffer, however you still want to have all things locked up upfront.  It
+can be relevant to why your use case started to use mem-lock=on before this
+on-fault flag.
+
+OTOH, I believe on-fault cannot work with kvm-rt at all already, because of
+its possible faults happening later on - even if the fault can happen in
+KVM and even if it's not about accessing guest mem, it can still be part of
+overhead later when running the rt application in the guest, hence it can
+start to break RT deterministics.
+
+Thanks,
+
+-- 
+Peter Xu
 
 
