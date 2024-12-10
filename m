@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85DCE77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62E54E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKqYk-0008S0-RW; Mon, 09 Dec 2024 22:05:14 -0500
+	id 1tKqYp-0008VY-JC; Mon, 09 Dec 2024 22:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYh-0008R0-WD; Mon, 09 Dec 2024 22:05:12 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tKqYo-0008VI-0l; Mon, 09 Dec 2024 22:05:18 -0500
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYd-0003DD-4t; Mon, 09 Dec 2024 22:05:11 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-21669fd5c7cso9006425ad.3; 
- Mon, 09 Dec 2024 19:05:06 -0800 (PST)
+ id 1tKqYm-0003FA-EZ; Mon, 09 Dec 2024 22:05:17 -0500
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-216281bc30fso30041405ad.0; 
+ Mon, 09 Dec 2024 19:05:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733799905; x=1734404705; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733799914; x=1734404714; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EgNAx/j9cKMKl1uMhP2lNjnmIgFYxQ7SDIVb2mQjXaM=;
- b=QdZc/uMuixsvnpNET5pewhopLnYw57H/dljgDJK6CJhs3O1JqScMhlm47JtbohS8Hw
- LmbJxwAylvdEhM2uh5+2kJoIVALgvUR92PeIyU9ILLQ1STgf/wg9s7Iw0K3UI7EiVL5p
- t+TWFD1/BzDZS3c0w5aSJvqsl//7vPApXXsp1P7tVGNOegq9eksbyb47lcaSkTc1rMu7
- aFuxRYgXB0SdCbkaV+bXDsg7WSi/oMfpGv7o6OnECm46AMtvR3Pj4FNX2ynxgBoxzxu5
- RRUJEGkr/34UvnDCoLQTqrASoN84P3gCQ11VjmDrDSnPoLdftdsn4uquEpHoDyyn4DlJ
- 8MEA==
+ bh=KOMqAq/XLCw5xaW3v52CxiPZORNNIgXMExZScw5gYTU=;
+ b=SmWVhbb/EtSwARilYTDdksB/03wWp4qViPuGKtbtItdRrhVNKGLqOZKjb2bSAmRjK7
+ VCtLOl9U4EgOogwwfI2L/a6gIa7wkus7wYKYoC/qXDqPH+OMNHxvcBDh3aEI6ziJNqIN
+ JlKbeshTPPQdHhgTIaGeKBq5yuGi2DzpqzioG4wiX6UmJ/fEdMS0BXCUJlaPqtgRWou/
+ 32xN4hHmkEUWHRDghW+qMP+qAztZDwhbDSveYs0xr90eQjaPYQyiSY76cnEJihHLsWvm
+ wbZKVfA6UYnypjIVoW57SACASuKYEnpv7Ec/5ohCNF35lD2IaM7Kylmr2WXwOLCfw/lc
+ EcDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733799905; x=1734404705;
+ d=1e100.net; s=20230601; t=1733799914; x=1734404714;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EgNAx/j9cKMKl1uMhP2lNjnmIgFYxQ7SDIVb2mQjXaM=;
- b=jtEWSltBB47ka4c6uMbpvCRzx3zWr62uAu0LiN+IQrmhoZhnBcByn/KkBhqiCf4ddg
- DDl0h6to335BuyjrSE7CLOoae4ZLK83LzEejH7U3DL7stoGM1lCvjUr/fUPaebxiDOCC
- 9pGS3UFfWJl5HRXcPs7A4zSLEUPl9uzjVVImWI9w5HW8j1hzPupIpbr1bfdJskgIjp8i
- C8uRxNd5euhnFv/Dd+I7Kh98PhKIj0KPaxFVUFXyYNYt4bKYl2mWBybPRiQ+Wt/wbAxJ
- PCGpWrmKfa5n5IZHmqBULhePqBq17ACXukzKQu5Zg5OJOONXEEGRCFIlTFhUdsDK7vPu
- EXCQ==
+ bh=KOMqAq/XLCw5xaW3v52CxiPZORNNIgXMExZScw5gYTU=;
+ b=QgGIN/gfBMj8LFkK5xoNEnDunFGWDE4TAW9mhiWoUMuBPW8wqZ8d2LjUCAk8I984lv
+ 4j0SQCYNbOj0RU8CPROr71Ts/Qe3ky23ehkCamIQtxfjpoMW2QuR6FcYKS+6zIYdlGuG
+ sZEPRtTamNjLH0avIg8jmLNm/C+caY7njRwt9QfRYA6K9L936HK0c5eh7S8EC3p992KY
+ tK1hlmvLcu2IBZpzpb4/rqstEqnjt8x+vUqIy9ACoNDdya+IXiGxLOqu7SPtQDNAY2gX
+ BWJAHGs22FQd/ZKaNDZRYdKsUFVIHXXNhjlzxjBh8T+BewzcV+O4tAeg09LZ/l8IvlZd
+ DQkA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUpI9lat2sk5CT9J+IA8SJC+MiV25fQgeD2xAYaGGSFbi5z8BiQgRrBmkd51afkMaathgCEk1kP0Rp+@nongnu.org
-X-Gm-Message-State: AOJu0Yyva1NbEaN3pIHlG4tym5/fZQuWx1kLtRO7FuD798emD6Eu1+jc
- ZEK+mRZe6/abZmqNG8rdn6jGXfZLB90z11dHF0lvkCz68IPwLjAtV89HEA==
-X-Gm-Gg: ASbGncueNmNqlK/UIC0NEqipF/9cElSLJslbO6trkbcLQVxSZj7r3VgWqmtcDVVQ5g3
- 8sT2xcboChmqa4XT96Z3DHY0P46ZjwQBT3GGvT8a49MotplJyvEQunKxs/5kXdpIcuVLqLfWB8k
- pistzojk40AaeFcmDUThC1kiYoO6wd+KyI3o65wBHiApJeKMEIPtq4XARimXO9JDoUAHhlLMM98
- t2kmXbkvt/mkO60NaJzpE3G+Wu0ExJBjxuq6AoFdx68YOyKOKqjdO1xVu5S
-X-Google-Smtp-Source: AGHT+IFxTvzA3QloZH6LA5GdCGtClXoZ+PpmuHpVV1K+D4DKg14b/BaebSaTKY/MAHysLR5hmQbMzQ==
-X-Received: by 2002:a17:902:d2c5:b0:216:725c:a11a with SMTP id
- d9443c01a7336-216725ca612mr21655975ad.10.1733799904748; 
- Mon, 09 Dec 2024 19:05:04 -0800 (PST)
+ AJvYcCWqpu3saFTqEQ2d/5u2LFi4uUwuMPO63Xxdi2nTKmOrrS5gfWz9PYgWw8Iq2e9WjM9iqc7+rJQuIgPm@nongnu.org
+X-Gm-Message-State: AOJu0YzQsIf7J/stv/ZBLr9iWXioLZdl1/FgAm8mz1FcOlij8jZwQQxv
+ e4wpdP5Ya7XjRh3YsYiuLGvB1EMI9Y7bF6bkSOUNQSmMQ/z8z7rW4++YpQ==
+X-Gm-Gg: ASbGncsYbey8dVrUbwWl4PczpO5iSf45bdmHGkmp4x6Y0b580Z0X7KAoNZ8f8zWPPfP
+ YjU/kAJGaL3+8ZIeWcVYpQ1lKWgu2eQrlBqXINkMBSX0lPGrt9nfs5Z2nzDzqi7CtGqTjL3UC07
+ NFKHp/3cMQLiKGTZXefpdLOStYv6dGfGlH71UkPH8rzTsXswhz9R7NFvuZjwl/Od6CWAd/VvRuv
+ EFAdlb4diukpG32amWiHvWL5Kr4iTZx38+stjNG/E1deTuS1yNxV7bSwpzz
+X-Google-Smtp-Source: AGHT+IHdO9uodK50gxJU2TUDXL4FtW5ZWEspzalHDmxL0yE/L1tcQANSWxhasN21jvqzgXbPfbXX+A==
+X-Received: by 2002:a17:903:945:b0:216:4b1f:499 with SMTP id
+ d9443c01a7336-2166a01077bmr55773625ad.31.1733799914327; 
+ Mon, 09 Dec 2024 19:05:14 -0800 (PST)
 Received: from wheely.local0.net ([220.253.106.119])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.01
+ d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 19:05:04 -0800 (PST)
+ Mon, 09 Dec 2024 19:05:13 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH 2/9] ppc/pnv/homer: Make dummy reads return 0
-Date: Tue, 10 Dec 2024 13:04:42 +1000
-Message-ID: <20241210030451.1306608-3-npiggin@gmail.com>
+Subject: [PATCH 5/9] ppc/pnv/occ: Better document OCCMISC bits
+Date: Tue, 10 Dec 2024 13:04:45 +1000
+Message-ID: <20241210030451.1306608-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
 References: <20241210030451.1306608-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,43 +99,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HOMER memory implements some dummy registers that return a nonsense
-value to satisfy skiboot accesses caused by "SLW" init and register
-save/restore programming that has never worked under QEMU:
-
-[    0.265000943,3] SLW: Failed to set HRMOR for CPU 0,RC=0x1
-[    0.265356988,3] Disabling deep stop states
-
-To simplify a later change to implement HOMER as a RAM area, make
-these return zero, which has the same result.
+Use defines for the OCCMISC register bits, and add a comment about the
+IRQ request bit, which QEMU may not model quite correctly.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/ppc/pnv_homer.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/pnv_occ.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-index 9aedc08cc00..658b0186a38 100644
---- a/hw/ppc/pnv_homer.c
-+++ b/hw/ppc/pnv_homer.c
-@@ -89,7 +89,7 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
-     case PNV8_OCC_VCS_VOLTAGE_IDENTIFIER:
-         return 1;
-     case PNV8_OCC_PSTATE_DATA:
--        return 0x1000000000000000;
-+        return 0;
-     /* P8 frequency for 0, 1, and 2 pstates */
-     case PNV8_OCC_PSTATE_ZERO_FREQUENCY:
-     case PNV8_OCC_PSTATE_ONE_FREQUENCY:
-@@ -259,7 +259,7 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
-         return 0x01;
-     case PNV9_CHIP_HOMER_BASE:
-     case PNV9_CHIP_HOMER_IMAGE_POINTER:
--        return 0x1000000000000000;
-+        return 0;
-     case PNV9_DYNAMIC_DATA_STATE:
-         return 0x03; /* active */
-     }
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index c6681a035a7..5424d87ee97 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -30,6 +30,7 @@
+ #define OCB_OCI_OCCMISC         0x4020
+ #define OCB_OCI_OCCMISC_AND     0x4021
+ #define OCB_OCI_OCCMISC_OR      0x4022
++#define   OCCMISC_PSI_IRQ       PPC_BIT(0)
+ 
+ /* OCC sensors */
+ #define OCC_SENSOR_DATA_BLOCK_OFFSET          0x0000
+@@ -50,13 +51,16 @@
+ 
+ static void pnv_occ_set_misc(PnvOCC *occ, uint64_t val)
+ {
+-    bool irq_state;
+-
+-    val &= 0xffff000000000000ull;
++    val &= PPC_BITMASK(0, 18); /* Mask out unimplemented bits */
+ 
+     occ->occmisc = val;
+-    irq_state = !!(val >> 63);
+-    qemu_set_irq(occ->psi_irq, irq_state);
++
++    /*
++     * OCCMISC IRQ bit triggers the interrupt on a 0->1 edge, but not clear
++     * how that is handled in PSI so it is level-triggered here, which is not
++     * really correct (but skiboot is okay with it).
++     */
++    qemu_set_irq(occ->psi_irq, !!(val & OCCMISC_PSI_IRQ));
+ }
+ 
+ static uint64_t pnv_occ_power8_xscom_read(void *opaque, hwaddr addr,
 -- 
 2.45.2
 
