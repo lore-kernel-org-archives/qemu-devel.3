@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D568E77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 00:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B35F6E77181
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 00:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKnoz-0001MD-7D; Mon, 09 Dec 2024 19:09:49 -0500
+	id 1tKnnA-0006ur-4q; Mon, 09 Dec 2024 19:07:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1tKnlo-0004pk-6d; Mon, 09 Dec 2024 19:06:33 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1tKnlg-0004mo-66; Mon, 09 Dec 2024 19:06:24 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kowal@linux.ibm.com>)
- id 1tKnll-0001wg-Dz; Mon, 09 Dec 2024 19:06:31 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9KcVBA019481;
- Tue, 10 Dec 2024 00:06:21 GMT
+ id 1tKnld-0001uN-Cl; Mon, 09 Dec 2024 19:06:23 -0500
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9Hc26L010147;
+ Tue, 10 Dec 2024 00:06:14 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=EXKrkWgLLK6hAXs1x
- 6jNXaDKzREox44/gd6o2p2voKA=; b=ivDAVywx0/WHU7Zo+Rf6waTsQBWcAIg1z
- QzXSZQWEMuGhQ5FSnVrfYKoTxqi/kDs46ksUU/HvsLHtPS6P/N0a5+4NOHE0dmop
- eaQGeWFGyftkuNsrqCbFJ5AHNfNNPAWw3fL/9uy46+xGyjyws7AX/hD+fR1vGfn5
- 097/f2zQNP44Towp5/gnzFm7caJCLK740Vgk4LB8bpJRE5ZbalVSdAjbR5rD03wF
- 9QZvhreuCgtoQIaQCVKIKO8Ps18Ts0Uk+HEmnYdMCXW3N2tloo17Q0gbYqdoJqBB
- FVVVFppBTfqXkKWRvrIyx0LcREQO9TGwdb0GiQazZkzOloI0naLeg==
+ :mime-version:references:subject:to; s=pp1; bh=oLC24XsH31MmZA7ze
+ /EcZ5csdjDhAdCwMsghl85g3oY=; b=l6uCJpJQQ9X68aYRiBJLAIgqqMnMkA8ha
+ 88Ez+hFcnP7/2M9sfeUXuM4kOo6gET0jEwb6X862vu1QO0sptXvmNlDRZKCIkuDp
+ Qqg++NnPeEFAXljznP96IKeb6NDk+HI/tR8qhjTI8IdS/PVktYXCP1WGxe/7fqsA
+ OsPGxxB/0ly4v9o0L68ZuPBf0FalqaYwWtmtEuZbegcYFgW2/sdc+WkvhypuD/9v
+ 6bz6RkhFw+UHTbPu9MzLquhCcIAMTbIBFzlGWhjr6H0NDX5ToUsMMQg8K86xb5DI
+ ZkBRPQkKHzucg9mv8cHo33dNEq1A517lwIIrzDWs6RSc3Hrc3zUqw==
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cdv8m6x7-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cbsq3gja-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 00:06:20 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4B9Nsb2i014444;
- Tue, 10 Dec 2024 00:06:20 GMT
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cdv8m6x2-1
+ Tue, 10 Dec 2024 00:06:14 +0000 (GMT)
+Received: from m0356516.ppops.net (m0356516.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4BA01BJu019490;
+ Tue, 10 Dec 2024 00:06:14 GMT
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cbsq3gj7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 00:06:20 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9M3Pon016910;
- Tue, 10 Dec 2024 00:06:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d12y16ws-1
+ Tue, 10 Dec 2024 00:06:13 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4B9N5hgg018611;
+ Tue, 10 Dec 2024 00:06:13 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d26k8yc0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 00:06:19 +0000
+ Tue, 10 Dec 2024 00:06:13 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BA06FRh52167134
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BA069Sp30737036
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 00:06:15 GMT
+ Tue, 10 Dec 2024 00:06:09 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7CF2520040;
- Tue, 10 Dec 2024 00:06:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 415882004B;
+ Tue, 10 Dec 2024 00:06:09 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB6672004B;
- Tue, 10 Dec 2024 00:06:13 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 7015F20040;
+ Tue, 10 Dec 2024 00:06:07 +0000 (GMT)
 Received: from gfwr518.rchland.ibm.com (unknown [9.10.239.106])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 00:06:13 +0000 (GMT)
+ Tue, 10 Dec 2024 00:06:07 +0000 (GMT)
 From: Michael Kowal <kowal@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, fbarrat@linux.ibm.com, npiggin@gmail.com,
  milesg@linux.ibm.com, danielhb413@gmail.com,
  david@gibson.dropbear.id.au, harshpb@linux.ibm.com, thuth@redhat.com,
  lvivier@redhat.com, pbonzini@redhat.com
-Subject: [PATCH v2 10/14] ppc/xive2: Support crowd-matching when looking for
- target
-Date: Mon,  9 Dec 2024 18:05:22 -0600
-Message-Id: <20241210000527.9541-20-kowal@linux.ibm.com>
+Subject: [PATCH v2 09/14] ppc/xive2: Add support for MMIO operations on the
+ NVPG/NVC BAR
+Date: Mon,  9 Dec 2024 18:05:19 -0600
+Message-Id: <20241210000527.9541-17-kowal@linux.ibm.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241210000527.9541-1-kowal@linux.ibm.com>
 References: <20241210000527.9541-1-kowal@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: icbBs5f863iR6_iBjcrUPRc7waQqBCk0
-X-Proofpoint-ORIG-GUID: tFiGsQc5ABobk7wotSfcc8VmYraqfTLK
+X-Proofpoint-ORIG-GUID: dD0hEehxObDY7eTmipEuibRyA51qiMb_
+X-Proofpoint-GUID: WFpSdoyk-ACpY8NN6vMHRcW-VRnbOrY-
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- impostorscore=0 lowpriorityscore=0 spamscore=0 clxscore=1015 mlxscore=0
- malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 mlxlogscore=999
+ mlxlogscore=999 adultscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412090187
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=kowal@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=kowal@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -118,520 +118,506 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Frederic Barrat <fbarrat@linux.ibm.com>
 
-XIVE crowd sizes are encoded into a 2-bit field as follows:
-  0: 0b00
-  2: 0b01
-  4: 0b10
- 16: 0b11
+Add support for the NVPG and NVC BARs.  Access to the BAR pages will
+cause backlog counter operations to either increment or decriment
+the counter.
 
-A crowd size of 8 is not supported.
-
-If an END is defined with the 'crowd' bit set, then a target can be
-running on different blocks. It means that some bits from the block
-VP are masked when looking for a match. It is similar to groups, but
-on the block instead of the VP index.
-
-Most of the changes are due to passing the extra argument 'crowd' all
-the way to the function checking for matches.
+Also added qtests for the same.
 
 Signed-off-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Signed-off-by: Glenn Miles <milesg@linux.vnet.ibm.com>
 Signed-off-by: Michael Kowal <kowal@linux.ibm.com>
 ---
- include/hw/ppc/xive.h  | 10 +++---
- include/hw/ppc/xive2.h |  3 +-
- hw/intc/pnv_xive.c     | 10 +++---
- hw/intc/pnv_xive2.c    | 12 +++----
- hw/intc/spapr_xive.c   |  8 ++---
- hw/intc/xive.c         | 40 ++++++++++++++++++----
- hw/intc/xive2.c        | 78 +++++++++++++++++++++++++++++++++---------
- hw/ppc/pnv.c           | 15 ++++----
- hw/ppc/spapr.c         |  7 ++--
- 9 files changed, 131 insertions(+), 52 deletions(-)
+ include/hw/ppc/xive2.h           |   9 ++
+ include/hw/ppc/xive2_regs.h      |   3 +
+ tests/qtest/pnv-xive2-common.h   |   1 +
+ hw/intc/pnv_xive2.c              |  80 +++++++++++++---
+ hw/intc/xive2.c                  |  87 +++++++++++++++++
+ tests/qtest/pnv-xive2-nvpg_bar.c | 154 +++++++++++++++++++++++++++++++
+ tests/qtest/pnv-xive2-test.c     |   3 +
+ hw/intc/trace-events             |   4 +
+ tests/qtest/meson.build          |   3 +-
+ 9 files changed, 329 insertions(+), 15 deletions(-)
+ create mode 100644 tests/qtest/pnv-xive2-nvpg_bar.c
 
-diff --git a/include/hw/ppc/xive.h b/include/hw/ppc/xive.h
-index f443a39cf1..8317fde0db 100644
---- a/include/hw/ppc/xive.h
-+++ b/include/hw/ppc/xive.h
-@@ -438,13 +438,13 @@ struct XivePresenterClass {
-     InterfaceClass parent;
-     int (*match_nvt)(XivePresenter *xptr, uint8_t format,
-                      uint8_t nvt_blk, uint32_t nvt_idx,
--                     bool cam_ignore, uint8_t priority,
-+                     bool crowd, bool cam_ignore, uint8_t priority,
-                      uint32_t logic_serv, XiveTCTXMatch *match);
-     bool (*in_kernel)(const XivePresenter *xptr);
-     uint32_t (*get_config)(XivePresenter *xptr);
-     int (*broadcast)(XivePresenter *xptr,
-                      uint8_t nvt_blk, uint32_t nvt_idx,
--                     uint8_t priority);
-+                     bool crowd, bool cam_ignore, uint8_t priority);
- };
- 
- int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-@@ -453,7 +453,7 @@ int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-                               bool cam_ignore, uint32_t logic_serv);
- bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-                            uint8_t nvt_blk, uint32_t nvt_idx,
--                           bool cam_ignore, uint8_t priority,
-+                           bool crowd, bool cam_ignore, uint8_t priority,
-                            uint32_t logic_serv, bool *precluded);
- 
- uint32_t xive_get_vpgroup_size(uint32_t nvp_index);
-@@ -473,10 +473,10 @@ struct XiveFabricClass {
-     InterfaceClass parent;
-     int (*match_nvt)(XiveFabric *xfb, uint8_t format,
-                      uint8_t nvt_blk, uint32_t nvt_idx,
--                     bool cam_ignore, uint8_t priority,
-+                     bool crowd, bool cam_ignore, uint8_t priority,
-                      uint32_t logic_serv, XiveTCTXMatch *match);
-     int (*broadcast)(XiveFabric *xfb, uint8_t nvt_blk, uint32_t nvt_idx,
--                     uint8_t priority);
-+                     bool crowd, bool cam_ignore, uint8_t priority);
- };
- 
- /*
 diff --git a/include/hw/ppc/xive2.h b/include/hw/ppc/xive2.h
-index c07e23e1d3..8cdf819174 100644
+index fc7422fea7..c07e23e1d3 100644
 --- a/include/hw/ppc/xive2.h
 +++ b/include/hw/ppc/xive2.h
-@@ -88,7 +88,8 @@ void xive2_router_notify(XiveNotifier *xn, uint32_t lisn, bool pq_checked);
- int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-                                uint8_t format,
+@@ -90,6 +90,15 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
                                 uint8_t nvt_blk, uint32_t nvt_idx,
--                               bool cam_ignore, uint32_t logic_serv);
-+                               bool crowd, bool cam_ignore,
-+                               uint32_t logic_serv);
+                                bool cam_ignore, uint32_t logic_serv);
  
- uint64_t xive2_presenter_nvp_backlog_op(XivePresenter *xptr,
-                                         uint8_t blk, uint32_t idx,
-diff --git a/hw/intc/pnv_xive.c b/hw/intc/pnv_xive.c
-index 5bacbce6a4..d4796ab5a6 100644
---- a/hw/intc/pnv_xive.c
-+++ b/hw/intc/pnv_xive.c
-@@ -1,10 +1,9 @@
++uint64_t xive2_presenter_nvp_backlog_op(XivePresenter *xptr,
++                                        uint8_t blk, uint32_t idx,
++                                        uint16_t offset);
++
++uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
++                                         bool crowd,
++                                         uint8_t blk, uint32_t idx,
++                                         uint16_t offset, uint16_t val);
++
  /*
-  * QEMU PowerPC XIVE interrupt controller model
-  *
-- * Copyright (c) 2017-2019, IBM Corporation.
-+ * Copyright (c) 2017-2024, IBM Corporation.
-  *
-- * This code is licensed under the GPL version 2 or later. See the
-- * COPYING file in the top-level directory.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
+  * XIVE2 END ESBs  (POWER10)
   */
+diff --git a/include/hw/ppc/xive2_regs.h b/include/hw/ppc/xive2_regs.h
+index e88d6eab1e..9bcf7a8a6f 100644
+--- a/include/hw/ppc/xive2_regs.h
++++ b/include/hw/ppc/xive2_regs.h
+@@ -233,4 +233,7 @@ typedef struct Xive2Nvgc {
+ void xive2_nvgc_pic_print_info(Xive2Nvgc *nvgc, uint32_t nvgc_idx,
+                                GString *buf);
  
- #include "qemu/osdep.h"
-@@ -473,7 +472,7 @@ static bool pnv_xive_is_cpu_enabled(PnvXive *xive, PowerPCCPU *cpu)
++#define NVx_BACKLOG_OP            PPC_BITMASK(52, 53)
++#define NVx_BACKLOG_PRIO          PPC_BITMASK(57, 59)
++
+ #endif /* PPC_XIVE2_REGS_H */
+diff --git a/tests/qtest/pnv-xive2-common.h b/tests/qtest/pnv-xive2-common.h
+index 9ae34771aa..2077c05ebc 100644
+--- a/tests/qtest/pnv-xive2-common.h
++++ b/tests/qtest/pnv-xive2-common.h
+@@ -107,5 +107,6 @@ extern void set_end(QTestState *qts, uint32_t index, uint32_t nvp_index,
  
- static int pnv_xive_match_nvt(XivePresenter *xptr, uint8_t format,
-                               uint8_t nvt_blk, uint32_t nvt_idx,
--                              bool cam_ignore, uint8_t priority,
-+                              bool crowd, bool cam_ignore, uint8_t priority,
-                               uint32_t logic_serv, XiveTCTXMatch *match)
- {
-     PnvXive *xive = PNV_XIVE(xptr);
-@@ -500,7 +499,8 @@ static int pnv_xive_match_nvt(XivePresenter *xptr, uint8_t format,
-              * Check the thread context CAM lines and record matches.
-              */
-             ring = xive_presenter_tctx_match(xptr, tctx, format, nvt_blk,
--                                             nvt_idx, cam_ignore, logic_serv);
-+                                             nvt_idx, cam_ignore,
-+                                             logic_serv);
-             /*
-              * Save the context and follow on to catch duplicates, that we
-              * don't support yet.
+ 
+ void test_flush_sync_inject(QTestState *qts);
++void test_nvpg_bar(QTestState *qts);
+ 
+ #endif /* TEST_PNV_XIVE2_COMMON_H */
 diff --git a/hw/intc/pnv_xive2.c b/hw/intc/pnv_xive2.c
-index 54abfe3947..91f3514f93 100644
+index 41b727d1fb..54abfe3947 100644
 --- a/hw/intc/pnv_xive2.c
 +++ b/hw/intc/pnv_xive2.c
-@@ -624,7 +624,7 @@ static bool pnv_xive2_is_cpu_enabled(PnvXive2 *xive, PowerPCCPU *cpu)
+@@ -2202,21 +2202,40 @@ static const MemoryRegionOps pnv_xive2_tm_ops = {
+     },
+ };
  
- static int pnv_xive2_match_nvt(XivePresenter *xptr, uint8_t format,
-                                uint8_t nvt_blk, uint32_t nvt_idx,
--                               bool cam_ignore, uint8_t priority,
-+                               bool crowd, bool cam_ignore, uint8_t priority,
-                                uint32_t logic_serv, XiveTCTXMatch *match)
+-static uint64_t pnv_xive2_nvc_read(void *opaque, hwaddr offset,
++static uint64_t pnv_xive2_nvc_read(void *opaque, hwaddr addr,
+                                    unsigned size)
  {
-     PnvXive2 *xive = PNV_XIVE2(xptr);
-@@ -655,8 +655,8 @@ static int pnv_xive2_match_nvt(XivePresenter *xptr, uint8_t format,
-                                                  logic_serv);
-             } else {
-                 ring = xive2_presenter_tctx_match(xptr, tctx, format, nvt_blk,
--                                                   nvt_idx, cam_ignore,
--                                                   logic_serv);
-+                                                  nvt_idx, crowd, cam_ignore,
-+                                                  logic_serv);
-             }
+     PnvXive2 *xive = PNV_XIVE2(opaque);
++    XivePresenter *xptr = XIVE_PRESENTER(xive);
++    uint32_t page = addr >> xive->nvpg_shift;
++    uint16_t op = addr & 0xFFF;
++    uint8_t blk = pnv_xive2_block_id(xive);
  
-             if (ring != -1) {
-@@ -707,7 +707,7 @@ static uint32_t pnv_xive2_presenter_get_config(XivePresenter *xptr)
- 
- static int pnv_xive2_broadcast(XivePresenter *xptr,
-                                uint8_t nvt_blk, uint32_t nvt_idx,
--                               uint8_t priority)
-+                               bool crowd, bool ignore, uint8_t priority)
- {
-     PnvXive2 *xive = PNV_XIVE2(xptr);
-     PnvChip *chip = xive->chip;
-@@ -732,10 +732,10 @@ static int pnv_xive2_broadcast(XivePresenter *xptr,
- 
-             if (gen1_tima_os) {
-                 ring = xive_presenter_tctx_match(xptr, tctx, 0, nvt_blk,
--                                                 nvt_idx, true, 0);
-+                                                 nvt_idx, ignore, 0);
-             } else {
-                 ring = xive2_presenter_tctx_match(xptr, tctx, 0, nvt_blk,
--                                                  nvt_idx, true, 0);
-+                                                  nvt_idx, crowd, ignore, 0);
-             }
- 
-             if (ring != -1) {
-diff --git a/hw/intc/spapr_xive.c b/hw/intc/spapr_xive.c
-index 283a6b8fd2..0477fdd594 100644
---- a/hw/intc/spapr_xive.c
-+++ b/hw/intc/spapr_xive.c
-@@ -1,10 +1,9 @@
- /*
-  * QEMU PowerPC sPAPR XIVE interrupt controller model
-  *
-- * Copyright (c) 2017-2018, IBM Corporation.
-+ * Copyright (c) 2017-2024, IBM Corporation.
-  *
-- * This code is licensed under the GPL version 2 or later. See the
-- * COPYING file in the top-level directory.
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  */
- 
- #include "qemu/osdep.h"
-@@ -431,7 +430,8 @@ static int spapr_xive_write_nvt(XiveRouter *xrtr, uint8_t nvt_blk,
- 
- static int spapr_xive_match_nvt(XivePresenter *xptr, uint8_t format,
-                                 uint8_t nvt_blk, uint32_t nvt_idx,
--                                bool cam_ignore, uint8_t priority,
-+                                bool crowd, bool cam_ignore,
-+                                uint8_t priority,
-                                 uint32_t logic_serv, XiveTCTXMatch *match)
- {
-     CPUState *cs;
-diff --git a/hw/intc/xive.c b/hw/intc/xive.c
-index 308de5aefc..97d1c42bb2 100644
---- a/hw/intc/xive.c
-+++ b/hw/intc/xive.c
-@@ -1667,10 +1667,37 @@ uint32_t xive_get_vpgroup_size(uint32_t nvp_index)
-     return 1 << (ctz32(~nvp_index) + 1);
+-    xive2_error(xive, "NVC: invalid read @%"HWADDR_PRIx, offset);
+-    return -1;
++    if (size != 2) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvc load size %d\n",
++                      size);
++        return -1;
++    }
++
++    return xive2_presenter_nvgc_backlog_op(xptr, true, blk, page, op, 1);
  }
  
--static uint8_t xive_get_group_level(uint32_t nvp_index)
-+static uint8_t xive_get_group_level(bool crowd, bool ignore,
-+                                    uint32_t nvp_blk, uint32_t nvp_index)
+-static void pnv_xive2_nvc_write(void *opaque, hwaddr offset,
++static void pnv_xive2_nvc_write(void *opaque, hwaddr addr,
+                                 uint64_t val, unsigned size)
  {
--    /* FIXME add crowd encoding */
--    return ctz32(~nvp_index) + 1;
-+    uint8_t level = 0;
-+
-+    if (crowd) {
-+        /* crowd level is bit position of first 0 from the right in nvp_blk */
-+        level = ctz32(~nvp_blk) + 1;
-+
-+        /*
-+         * Supported crowd sizes are 2^1, 2^2, and 2^4. 2^3 is not supported.
-+         * HW will encode level 4 as the value 3.  See xive2_pgofnext().
-+         */
-+        switch (level) {
-+        case 1:
-+        case 2:
-+            break;
-+        case 4:
-+            level = 3;
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+
-+        /* Crowd level bits reside in upper 2 bits of the 6 bit group level */
-+        level <<= 4;
-+    }
-+    if (ignore) {
-+        level |= (ctz32(~nvp_index) + 1) & 0b1111;
-+    }
-+    return level;
- }
+     PnvXive2 *xive = PNV_XIVE2(opaque);
++    XivePresenter *xptr = XIVE_PRESENTER(xive);
++    uint32_t page = addr >> xive->nvc_shift;
++    uint16_t op = addr & 0xFFF;
++    uint8_t blk = pnv_xive2_block_id(xive);
  
- /*
-@@ -1742,7 +1769,7 @@ int xive_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-  */
- bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-                            uint8_t nvt_blk, uint32_t nvt_idx,
--                           bool cam_ignore, uint8_t priority,
-+                           bool crowd, bool cam_ignore, uint8_t priority,
-                            uint32_t logic_serv, bool *precluded)
- {
-     XiveFabricClass *xfc = XIVE_FABRIC_GET_CLASS(xfb);
-@@ -1773,7 +1800,7 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
-      * a new command to the presenters (the equivalent of the "assign"
-      * power bus command in the documented full notify sequence.
-      */
--    count = xfc->match_nvt(xfb, format, nvt_blk, nvt_idx, cam_ignore,
-+    count = xfc->match_nvt(xfb, format, nvt_blk, nvt_idx, crowd, cam_ignore,
-                            priority, logic_serv, &match);
-     if (count < 0) {
-         return false;
-@@ -1781,7 +1808,7 @@ bool xive_presenter_notify(XiveFabric *xfb, uint8_t format,
- 
-     /* handle CPU exception delivery */
-     if (count) {
--        group_level = cam_ignore ? xive_get_group_level(nvt_idx) : 0;
-+        group_level = xive_get_group_level(crowd, cam_ignore, nvt_blk, nvt_idx);
-         trace_xive_presenter_notify(nvt_blk, nvt_idx, match.ring, group_level);
-         xive_tctx_pipr_update(match.tctx, match.ring, priority, group_level);
-     } else {
-@@ -1906,6 +1933,7 @@ void xive_router_end_notify(XiveRouter *xrtr, XiveEAS *eas)
-     }
- 
-     found = xive_presenter_notify(xrtr->xfb, format, nvt_blk, nvt_idx,
-+                          false /* crowd */,
-                           xive_get_field32(END_W7_F0_IGNORE, end.w7),
-                           priority,
-                           xive_get_field32(END_W7_F1_LOG_SERVER_ID, end.w7),
-diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
-index f4621bdd02..20d63e8f6e 100644
---- a/hw/intc/xive2.c
-+++ b/hw/intc/xive2.c
-@@ -1120,13 +1120,42 @@ static bool xive2_vp_match_mask(uint32_t cam1, uint32_t cam2,
-     return (cam1 & vp_mask) == (cam2 & vp_mask);
- }
- 
-+static uint8_t xive2_get_vp_block_mask(uint32_t nvt_blk, bool crowd)
-+{
-+    uint8_t size, block_mask = 0b1111;
-+
-+    /* 3 supported crowd sizes: 2, 4, 16 */
-+    if (crowd) {
-+        size = xive_get_vpgroup_size(nvt_blk);
-+        if (size == 8) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid crowd size of 8n");
-+            return block_mask;
-+        }
-+        block_mask = ~(size - 1);
-+        block_mask &= 0b1111;
-+    }
-+    return block_mask;
-+}
-+
-+static uint32_t xive2_get_vp_index_mask(uint32_t nvt_index, bool cam_ignore)
-+{
-+    uint32_t index_mask = 0xFFFFFF; /* 24 bits */
-+
-+    if (cam_ignore) {
-+        index_mask = ~(xive_get_vpgroup_size(nvt_index) - 1);
-+        index_mask &= 0xFFFFFF;
-+    }
-+    return index_mask;
-+}
-+
- /*
-  * The thread context register words are in big-endian format.
-  */
- int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-                                uint8_t format,
-                                uint8_t nvt_blk, uint32_t nvt_idx,
--                               bool cam_ignore, uint32_t logic_serv)
-+                               bool crowd, bool cam_ignore,
-+                               uint32_t logic_serv)
- {
-     uint32_t cam =   xive2_nvp_cam_line(nvt_blk, nvt_idx);
-     uint32_t qw3w2 = xive_tctx_word2(&tctx->regs[TM_QW3_HV_PHYS]);
-@@ -1134,7 +1163,8 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-     uint32_t qw1w2 = xive_tctx_word2(&tctx->regs[TM_QW1_OS]);
-     uint32_t qw0w2 = xive_tctx_word2(&tctx->regs[TM_QW0_USER]);
- 
--    uint32_t vp_mask = 0xFFFFFFFF;
-+    uint32_t index_mask, vp_mask;
-+    uint8_t block_mask;
- 
-     if (format == 0) {
-         /*
-@@ -1142,9 +1172,9 @@ int xive2_presenter_tctx_match(XivePresenter *xptr, XiveTCTX *tctx,
-          * i=1: VP-group notification (bits ignored at the end of the
-          *      NVT identifier)
-          */
--        if (cam_ignore) {
--            vp_mask = ~(xive_get_vpgroup_size(nvt_idx) - 1);
--        }
-+        block_mask = xive2_get_vp_block_mask(nvt_blk, crowd);
-+        index_mask = xive2_get_vp_index_mask(nvt_idx, cam_ignore);
-+        vp_mask = xive2_nvp_cam_line(block_mask, index_mask);
- 
-         /* For VP-group notifications, threads with LGS=0 are excluded */
- 
-@@ -1277,6 +1307,12 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-         return;
-     }
- 
-+    if (xive2_end_is_crowd(&end) & !xive2_end_is_ignore(&end)) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "XIVE: invalid END, 'crowd' bit requires 'ignore' bit\n");
+-    xive2_error(xive, "NVC: invalid write @%"HWADDR_PRIx, offset);
++    if (size != 1) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvc write size %d\n",
++                      size);
 +        return;
 +    }
 +
-     if (xive2_end_is_enqueue(&end)) {
-         xive2_end_enqueue(&end, end_data);
-         /* Enqueuing event data modifies the EQ toggle and index */
-@@ -1338,7 +1374,7 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-     }
- 
-     found = xive_presenter_notify(xrtr->xfb, format, nvp_blk, nvp_idx,
--                          xive2_end_is_ignore(&end),
-+                          xive2_end_is_crowd(&end), xive2_end_is_ignore(&end),
-                           priority,
-                           xive_get_field32(END2_W7_F1_LOG_SERVER_ID, end.w7),
-                           &precluded);
-@@ -1375,17 +1411,24 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-             nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
-             xive2_router_write_nvp(xrtr, nvp_blk, nvp_idx, &nvp, 2);
-         } else {
--            Xive2Nvgc nvg;
-+            Xive2Nvgc nvgc;
-             uint32_t backlog;
-+            bool crowd;
- 
--            /* For groups, the per-priority backlog counters are in the NVG */
--            if (xive2_router_get_nvgc(xrtr, false, nvp_blk, nvp_idx, &nvg)) {
--                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: no NVG %x/%x\n",
--                              nvp_blk, nvp_idx);
-+            crowd = xive2_end_is_crowd(&end);
-+
-+            /*
-+             * For groups and crowds, the per-priority backlog
-+             * counters are stored in the NVG/NVC structures
-+             */
-+            if (xive2_router_get_nvgc(xrtr, crowd,
-+                                      nvp_blk, nvp_idx, &nvgc)) {
-+                qemu_log_mask(LOG_GUEST_ERROR, "XIVE: no %s %x/%x\n",
-+                              crowd ? "NVC" : "NVG", nvp_blk, nvp_idx);
-                 return;
-             }
- 
--            if (!xive2_nvgc_is_valid(&nvg)) {
-+            if (!xive2_nvgc_is_valid(&nvgc)) {
-                 qemu_log_mask(LOG_GUEST_ERROR, "XIVE: NVG %x/%x is invalid\n",
-                               nvp_blk, nvp_idx);
-                 return;
-@@ -1398,13 +1441,16 @@ static void xive2_router_end_notify(Xive2Router *xrtr, uint8_t end_blk,
-              * set the LSMFB field of the TIMA of relevant threads so
-              * that they know an interrupt is pending.
-              */
--            backlog = xive2_nvgc_get_backlog(&nvg, priority) + 1;
--            xive2_nvgc_set_backlog(&nvg, priority, backlog);
--            xive2_router_write_nvgc(xrtr, false, nvp_blk, nvp_idx, &nvg);
-+            backlog = xive2_nvgc_get_backlog(&nvgc, priority) + 1;
-+            xive2_nvgc_set_backlog(&nvgc, priority, backlog);
-+            xive2_router_write_nvgc(xrtr, crowd, nvp_blk, nvp_idx, &nvgc);
- 
-             if (precluded && backlog == 1) {
-                 XiveFabricClass *xfc = XIVE_FABRIC_GET_CLASS(xrtr->xfb);
--                xfc->broadcast(xrtr->xfb, nvp_blk, nvp_idx, priority);
-+                xfc->broadcast(xrtr->xfb, nvp_blk, nvp_idx,
-+                               xive2_end_is_crowd(&end),
-+                               xive2_end_is_ignore(&end),
-+                               priority);
- 
-                 if (!xive2_end_is_precluded_escalation(&end)) {
-                     /*
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 7c11143749..6681648ed6 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2585,7 +2585,7 @@ static void pnv_pic_print_info(InterruptStatsProvider *obj, GString *buf)
- 
- static int pnv_match_nvt(XiveFabric *xfb, uint8_t format,
-                          uint8_t nvt_blk, uint32_t nvt_idx,
--                         bool cam_ignore, uint8_t priority,
-+                         bool crowd, bool cam_ignore, uint8_t priority,
-                          uint32_t logic_serv,
-                          XiveTCTXMatch *match)
- {
-@@ -2599,8 +2599,8 @@ static int pnv_match_nvt(XiveFabric *xfb, uint8_t format,
-         XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
-         int count;
- 
--        count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, cam_ignore,
--                               priority, logic_serv, match);
-+        count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, crowd,
-+                               cam_ignore, priority, logic_serv, match);
- 
-         if (count < 0) {
-             return count;
-@@ -2614,7 +2614,7 @@ static int pnv_match_nvt(XiveFabric *xfb, uint8_t format,
- 
- static int pnv10_xive_match_nvt(XiveFabric *xfb, uint8_t format,
-                                 uint8_t nvt_blk, uint32_t nvt_idx,
--                                bool cam_ignore, uint8_t priority,
-+                                bool crowd, bool cam_ignore, uint8_t priority,
-                                 uint32_t logic_serv,
-                                 XiveTCTXMatch *match)
- {
-@@ -2628,8 +2628,8 @@ static int pnv10_xive_match_nvt(XiveFabric *xfb, uint8_t format,
-         XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
-         int count;
- 
--        count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, cam_ignore,
--                               priority, logic_serv, match);
-+        count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, crowd,
-+                               cam_ignore, priority, logic_serv, match);
- 
-         if (count < 0) {
-             return count;
-@@ -2643,6 +2643,7 @@ static int pnv10_xive_match_nvt(XiveFabric *xfb, uint8_t format,
- 
- static int pnv10_xive_broadcast(XiveFabric *xfb,
-                                 uint8_t nvt_blk, uint32_t nvt_idx,
-+                                bool crowd, bool cam_ignore,
-                                 uint8_t priority)
- {
-     PnvMachineState *pnv = PNV_MACHINE(xfb);
-@@ -2653,7 +2654,7 @@ static int pnv10_xive_broadcast(XiveFabric *xfb,
-         XivePresenter *xptr = XIVE_PRESENTER(&chip10->xive);
-         XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
- 
--        xpc->broadcast(xptr, nvt_blk, nvt_idx, priority);
-+        xpc->broadcast(xptr, nvt_blk, nvt_idx, crowd, cam_ignore, priority);
-     }
-     return 0;
++    (void)xive2_presenter_nvgc_backlog_op(xptr, true, blk, page, op, val);
  }
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0d4efaa0c0..7a922ef309 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4,6 +4,9 @@
-  * Copyright (c) 2004-2007 Fabrice Bellard
-  * Copyright (c) 2007 Jocelyn Mayer
-  * Copyright (c) 2010 David Gibson, IBM Corporation.
-+ * Copyright (c) 2010-2024, IBM Corporation..
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-  *
-  * Permission is hereby granted, free of charge, to any person obtaining a copy
-  * of this software and associated documentation files (the "Software"), to deal
-@@ -4437,7 +4440,7 @@ static void spapr_pic_print_info(InterruptStatsProvider *obj, GString *buf)
-  */
- static int spapr_match_nvt(XiveFabric *xfb, uint8_t format,
-                            uint8_t nvt_blk, uint32_t nvt_idx,
--                           bool cam_ignore, uint8_t priority,
-+                           bool crowd, bool cam_ignore, uint8_t priority,
-                            uint32_t logic_serv, XiveTCTXMatch *match)
- {
-     SpaprMachineState *spapr = SPAPR_MACHINE(xfb);
-@@ -4445,7 +4448,7 @@ static int spapr_match_nvt(XiveFabric *xfb, uint8_t format,
-     XivePresenterClass *xpc = XIVE_PRESENTER_GET_CLASS(xptr);
-     int count;
  
--    count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, cam_ignore,
-+    count = xpc->match_nvt(xptr, format, nvt_blk, nvt_idx, crowd, cam_ignore,
-                            priority, logic_serv, match);
-     if (count < 0) {
-         return count;
+ static const MemoryRegionOps pnv_xive2_nvc_ops = {
+@@ -2224,30 +2243,63 @@ static const MemoryRegionOps pnv_xive2_nvc_ops = {
+     .write = pnv_xive2_nvc_write,
+     .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+-        .min_access_size = 8,
++        .min_access_size = 1,
+         .max_access_size = 8,
+     },
+     .impl = {
+-        .min_access_size = 8,
++        .min_access_size = 1,
+         .max_access_size = 8,
+     },
+ };
+ 
+-static uint64_t pnv_xive2_nvpg_read(void *opaque, hwaddr offset,
++static uint64_t pnv_xive2_nvpg_read(void *opaque, hwaddr addr,
+                                     unsigned size)
+ {
+     PnvXive2 *xive = PNV_XIVE2(opaque);
++    XivePresenter *xptr = XIVE_PRESENTER(xive);
++    uint32_t page = addr >> xive->nvpg_shift;
++    uint16_t op = addr & 0xFFF;
++    uint32_t index = page >> 1;
++    uint8_t blk = pnv_xive2_block_id(xive);
+ 
+-    xive2_error(xive, "NVPG: invalid read @%"HWADDR_PRIx, offset);
+-    return -1;
++    if (size != 2) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvpg load size %d\n",
++                      size);
++        return -1;
++    }
++
++    if (page % 2) {
++        /* odd page - NVG */
++        return xive2_presenter_nvgc_backlog_op(xptr, false, blk, index, op, 1);
++    } else {
++        /* even page - NVP */
++        return xive2_presenter_nvp_backlog_op(xptr, blk, index, op);
++    }
+ }
+ 
+-static void pnv_xive2_nvpg_write(void *opaque, hwaddr offset,
++static void pnv_xive2_nvpg_write(void *opaque, hwaddr addr,
+                                  uint64_t val, unsigned size)
+ {
+     PnvXive2 *xive = PNV_XIVE2(opaque);
++    XivePresenter *xptr = XIVE_PRESENTER(xive);
++    uint32_t page = addr >> xive->nvpg_shift;
++    uint16_t op = addr & 0xFFF;
++    uint32_t index = page >> 1;
++    uint8_t blk = pnv_xive2_block_id(xive);
+ 
+-    xive2_error(xive, "NVPG: invalid write @%"HWADDR_PRIx, offset);
++    if (size != 1) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: invalid nvpg write size %d\n",
++                      size);
++        return;
++    }
++
++    if (page % 2) {
++        /* odd page - NVG */
++        (void)xive2_presenter_nvgc_backlog_op(xptr, false, blk, index, op, val);
++    } else {
++        /* even page - NVP */
++        (void)xive2_presenter_nvp_backlog_op(xptr, blk, index, op);
++    }
+ }
+ 
+ static const MemoryRegionOps pnv_xive2_nvpg_ops = {
+@@ -2255,11 +2307,11 @@ static const MemoryRegionOps pnv_xive2_nvpg_ops = {
+     .write = pnv_xive2_nvpg_write,
+     .endianness = DEVICE_BIG_ENDIAN,
+     .valid = {
+-        .min_access_size = 8,
++        .min_access_size = 1,
+         .max_access_size = 8,
+     },
+     .impl = {
+-        .min_access_size = 8,
++        .min_access_size = 1,
+         .max_access_size = 8,
+     },
+ };
+diff --git a/hw/intc/xive2.c b/hw/intc/xive2.c
+index 47f7a099de..f4621bdd02 100644
+--- a/hw/intc/xive2.c
++++ b/hw/intc/xive2.c
+@@ -87,6 +87,93 @@ static void xive2_nvgc_set_backlog(Xive2Nvgc *nvgc, uint8_t priority,
+     }
+ }
+ 
++uint64_t xive2_presenter_nvgc_backlog_op(XivePresenter *xptr,
++                                         bool crowd,
++                                         uint8_t blk, uint32_t idx,
++                                         uint16_t offset, uint16_t val)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint8_t priority = GETFIELD(NVx_BACKLOG_PRIO, offset);
++    uint8_t op = GETFIELD(NVx_BACKLOG_OP, offset);
++    Xive2Nvgc nvgc;
++    uint32_t count, old_count;
++
++    if (xive2_router_get_nvgc(xrtr, crowd, blk, idx, &nvgc)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No %s %x/%x\n",
++                      crowd ? "NVC" : "NVG", blk, idx);
++        return -1;
++    }
++    if (!xive2_nvgc_is_valid(&nvgc)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVG %x/%x\n", blk, idx);
++        return -1;
++    }
++
++    old_count = xive2_nvgc_get_backlog(&nvgc, priority);
++    count = old_count;
++    /*
++     * op:
++     * 0b00 => increment
++     * 0b01 => decrement
++     * 0b1- => read
++     */
++    if (op == 0b00 || op == 0b01) {
++        if (op == 0b00) {
++            count += val;
++        } else {
++            if (count > val) {
++                count -= val;
++            } else {
++                count = 0;
++            }
++        }
++        xive2_nvgc_set_backlog(&nvgc, priority, count);
++        xive2_router_write_nvgc(xrtr, crowd, blk, idx, &nvgc);
++    }
++    trace_xive_nvgc_backlog_op(crowd, blk, idx, op, priority, old_count);
++    return old_count;
++}
++
++uint64_t xive2_presenter_nvp_backlog_op(XivePresenter *xptr,
++                                        uint8_t blk, uint32_t idx,
++                                        uint16_t offset)
++{
++    Xive2Router *xrtr = XIVE2_ROUTER(xptr);
++    uint8_t priority = GETFIELD(NVx_BACKLOG_PRIO, offset);
++    uint8_t op = GETFIELD(NVx_BACKLOG_OP, offset);
++    Xive2Nvp nvp;
++    uint8_t ipb, old_ipb, rc;
++
++    if (xive2_router_get_nvp(xrtr, blk, idx, &nvp)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: No NVP %x/%x\n", blk, idx);
++        return -1;
++    }
++    if (!xive2_nvp_is_valid(&nvp)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "XIVE: Invalid NVP %x/%x\n", blk, idx);
++        return -1;
++    }
++
++    old_ipb = xive_get_field32(NVP2_W2_IPB, nvp.w2);
++    ipb = old_ipb;
++    /*
++     * op:
++     * 0b00 => set priority bit
++     * 0b01 => reset priority bit
++     * 0b1- => read
++     */
++    if (op == 0b00 || op == 0b01) {
++        if (op == 0b00) {
++            ipb |= xive_priority_to_ipb(priority);
++        } else {
++            ipb &= ~xive_priority_to_ipb(priority);
++        }
++        nvp.w2 = xive_set_field32(NVP2_W2_IPB, nvp.w2, ipb);
++        xive2_router_write_nvp(xrtr, blk, idx, &nvp, 2);
++    }
++    rc = !!(old_ipb & xive_priority_to_ipb(priority));
++    trace_xive_nvp_backlog_op(blk, idx, op, priority, rc);
++    return rc;
++}
++
+ void xive2_eas_pic_print_info(Xive2Eas *eas, uint32_t lisn, GString *buf)
+ {
+     if (!xive2_eas_is_valid(eas)) {
+diff --git a/tests/qtest/pnv-xive2-nvpg_bar.c b/tests/qtest/pnv-xive2-nvpg_bar.c
+new file mode 100644
+index 0000000000..10d4962d1e
+--- /dev/null
++++ b/tests/qtest/pnv-xive2-nvpg_bar.c
+@@ -0,0 +1,154 @@
++/*
++ * QTest testcase for PowerNV 10 interrupt controller (xive2)
++ *  - Test NVPG BAR MMIO operations
++ *
++ * Copyright (c) 2024, IBM Corporation.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or
++ * later. See the COPYING file in the top-level directory.
++ */
++#include "qemu/osdep.h"
++#include "libqtest.h"
++
++#include "pnv-xive2-common.h"
++
++#define NVPG_BACKLOG_OP_SHIFT   10
++#define NVPG_BACKLOG_PRIO_SHIFT 4
++
++#define XIVE_PRIORITY_MAX       7
++
++enum NVx {
++    NVP,
++    NVG,
++    NVC
++};
++
++typedef enum {
++    INCR_STORE = 0b100,
++    INCR_LOAD  = 0b000,
++    DECR_STORE = 0b101,
++    DECR_LOAD  = 0b001,
++    READ_x     = 0b010,
++    READ_y     = 0b011,
++} backlog_op;
++
++static uint32_t nvpg_backlog_op(QTestState *qts, backlog_op op,
++                                enum NVx type, uint64_t index,
++                                uint8_t priority, uint8_t delta)
++{
++    uint64_t addr, offset;
++    uint32_t count = 0;
++
++    switch (type) {
++    case NVP:
++        addr = XIVE_NVPG_ADDR + (index << (XIVE_PAGE_SHIFT + 1));
++        break;
++    case NVG:
++        addr = XIVE_NVPG_ADDR + (index << (XIVE_PAGE_SHIFT + 1)) +
++            (1 << XIVE_PAGE_SHIFT);
++        break;
++    case NVC:
++        addr = XIVE_NVC_ADDR + (index << XIVE_PAGE_SHIFT);
++        break;
++    default:
++        g_assert_not_reached();
++    }
++
++    offset = (op & 0b11) << NVPG_BACKLOG_OP_SHIFT;
++    offset |= priority << NVPG_BACKLOG_PRIO_SHIFT;
++    if (op >> 2) {
++        qtest_writeb(qts, addr + offset, delta);
++    } else {
++        count = qtest_readw(qts, addr + offset);
++    }
++    return count;
++}
++
++void test_nvpg_bar(QTestState *qts)
++{
++    uint32_t nvp_target = 0x11;
++    uint32_t group_target = 0x17; /* size 16 */
++    uint32_t vp_irq = 33, group_irq = 47;
++    uint32_t vp_end = 3, group_end = 97;
++    uint32_t vp_irq_data = 0x33333333;
++    uint32_t group_irq_data = 0x66666666;
++    uint8_t vp_priority = 0, group_priority = 5;
++    uint32_t vp_count[XIVE_PRIORITY_MAX + 1] = { 0 };
++    uint32_t group_count[XIVE_PRIORITY_MAX + 1] = { 0 };
++    uint32_t count, delta;
++    uint8_t i;
++
++    printf("# ============================================================\n");
++    printf("# Testing NVPG BAR operations\n");
++
++    set_nvg(qts, group_target, 0);
++    set_nvp(qts, nvp_target, 0x04);
++    set_nvp(qts, group_target, 0x04);
++
++    /*
++     * Setup: trigger a VP-specific interrupt and a group interrupt
++     * so that the backlog counters are initialized to something else
++     * than 0 for at least one priority level
++     */
++    set_eas(qts, vp_irq, vp_end, vp_irq_data);
++    set_end(qts, vp_end, nvp_target, vp_priority, false /* group */);
++
++    set_eas(qts, group_irq, group_end, group_irq_data);
++    set_end(qts, group_end, group_target, group_priority, true /* group */);
++
++    get_esb(qts, vp_irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
++    set_esb(qts, vp_irq, XIVE_TRIGGER_PAGE, 0, 0);
++    vp_count[vp_priority]++;
++
++    get_esb(qts, group_irq, XIVE_EOI_PAGE, XIVE_ESB_SET_PQ_00);
++    set_esb(qts, group_irq, XIVE_TRIGGER_PAGE, 0, 0);
++    group_count[group_priority]++;
++
++    /* check the initial counters */
++    for (i = 0; i <= XIVE_PRIORITY_MAX; i++) {
++        count = nvpg_backlog_op(qts, READ_x, NVP, nvp_target, i, 0);
++        g_assert_cmpuint(count, ==, vp_count[i]);
++
++        count = nvpg_backlog_op(qts, READ_y, NVG, group_target, i, 0);
++        g_assert_cmpuint(count, ==, group_count[i]);
++    }
++
++    /* do a few ops on the VP. Counter can only be 0 and 1 */
++    vp_priority = 2;
++    delta = 7;
++    nvpg_backlog_op(qts, INCR_STORE, NVP, nvp_target, vp_priority, delta);
++    vp_count[vp_priority] = 1;
++    count = nvpg_backlog_op(qts, INCR_LOAD, NVP, nvp_target, vp_priority, 0);
++    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
++    count = nvpg_backlog_op(qts, READ_y, NVP, nvp_target, vp_priority, 0);
++    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
++
++    count = nvpg_backlog_op(qts, DECR_LOAD, NVP, nvp_target, vp_priority, 0);
++    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
++    vp_count[vp_priority] = 0;
++    nvpg_backlog_op(qts, DECR_STORE, NVP, nvp_target, vp_priority, delta);
++    count = nvpg_backlog_op(qts, READ_x, NVP, nvp_target, vp_priority, 0);
++    g_assert_cmpuint(count, ==, vp_count[vp_priority]);
++
++    /* do a few ops on the group */
++    group_priority = 2;
++    delta = 9;
++    /* can't go negative */
++    nvpg_backlog_op(qts, DECR_STORE, NVG, group_target, group_priority, delta);
++    count = nvpg_backlog_op(qts, READ_y, NVG, group_target, group_priority, 0);
++    g_assert_cmpuint(count, ==, 0);
++    nvpg_backlog_op(qts, INCR_STORE, NVG, group_target, group_priority, delta);
++    group_count[group_priority] += delta;
++    count = nvpg_backlog_op(qts, INCR_LOAD, NVG, group_target,
++                            group_priority, delta);
++    g_assert_cmpuint(count, ==, group_count[group_priority]);
++    group_count[group_priority]++;
++
++    count = nvpg_backlog_op(qts, DECR_LOAD, NVG, group_target,
++                            group_priority, delta);
++    g_assert_cmpuint(count, ==,  group_count[group_priority]);
++    group_count[group_priority]--;
++    count = nvpg_backlog_op(qts, READ_x, NVG, group_target, group_priority, 0);
++    g_assert_cmpuint(count, ==, group_count[group_priority]);
++}
++
+diff --git a/tests/qtest/pnv-xive2-test.c b/tests/qtest/pnv-xive2-test.c
+index a4d06550ee..a0e9f19313 100644
+--- a/tests/qtest/pnv-xive2-test.c
++++ b/tests/qtest/pnv-xive2-test.c
+@@ -493,6 +493,9 @@ static void test_xive(void)
+     reset_state(qts);
+     test_flush_sync_inject(qts);
+ 
++    reset_state(qts);
++    test_nvpg_bar(qts);
++
+     qtest_quit(qts);
+ }
+ 
+diff --git a/hw/intc/trace-events b/hw/intc/trace-events
+index 7435728c51..7f362c38b0 100644
+--- a/hw/intc/trace-events
++++ b/hw/intc/trace-events
+@@ -285,6 +285,10 @@ xive_tctx_tm_read(uint32_t index, uint64_t offset, unsigned int size, uint64_t v
+ xive_presenter_notify(uint8_t nvt_blk, uint32_t nvt_idx, uint8_t ring, uint8_t group_level) "found NVT 0x%x/0x%x ring=0x%x group_level=%d"
+ xive_end_source_read(uint8_t end_blk, uint32_t end_idx, uint64_t addr) "END 0x%x/0x%x @0x%"PRIx64
+ 
++# xive2.c
++xive_nvp_backlog_op(uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint8_t rc) "NVP 0x%x/0x%x operation=%d priority=%d rc=%d"
++xive_nvgc_backlog_op(bool c, uint8_t blk, uint32_t idx, uint8_t op, uint8_t priority, uint32_t rc) "NVGC crowd=%d 0x%x/0x%x operation=%d priority=%d rc=%d"
++
+ # pnv_xive.c
+ pnv_xive_ic_hw_trigger(uint64_t addr, uint64_t val) "@0x%"PRIx64" val=0x%"PRIx64
+ 
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index bd41c9da5f..f7da3df24b 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -348,7 +348,8 @@ qtests = {
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+   'migration-test': migration_files,
+   'pxe-test': files('boot-sector.c'),
+-  'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c'),
++  'pnv-xive2-test': files('pnv-xive2-common.c', 'pnv-xive2-flush-sync.c',
++                          'pnv-xive2-nvpg_bar.c'),
+   'qos-test': [chardev, io, qos_test_ss.apply({}).sources()],
+   'tpm-crb-swtpm-test': [io, tpmemu_files],
+   'tpm-crb-test': [io, tpmemu_files],
 -- 
 2.43.0
 
