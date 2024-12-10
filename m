@@ -4,85 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F61E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 13:24:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A20E1E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 14:02:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL0Cn-0005y8-JS; Tue, 10 Dec 2024 08:23:14 -0500
+	id 1tL0nz-0007BK-J1; Tue, 10 Dec 2024 09:01:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL0Cl-0005xw-Pw
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 08:23:11 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL0nn-0007AY-9v
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 09:01:28 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL0Ck-0001kC-3Z
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 08:23:11 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-434b3e32e9dso60160905e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 05:23:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tL0nl-00071u-UM
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 09:01:27 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-385e3621518so3722556f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 06:01:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733836988; x=1734441788; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rSwfECw1HRJO1kdHWBYXyzdU//dlJB0pg0gdADzsEok=;
- b=obG7y/uNreIOtrHYkxbchgd7dObMQHZR1xCB9Yx7tewLVIqC0vXLNTxjt9Xi7Sd71f
- OoiIBbvUYp3QuSuqGyva8WfZojBU6dhNeqzDGgf4bkR3Ah6lqWpyjUILidpJEWaVdrvB
- 78N14S63wNV6pniVovuIM9j2NuxmtwI9AFA+o4HaFlha2enumWmhiAcHJXnF/bkzRL0Z
- pQl713CfcQp5AZHvqpORsZaBjDDs7SR4bES0gBw3TqkhYHr9cOOEfomXmD0A4JIXcUPv
- 4JvchHVWbaUpWIiF+CeZiTWkldABynT3x1NzYLHbQa4X9WuWyITyWVjRzXUN/r/FK3iq
- 2B0g==
+ d=linaro.org; s=google; t=1733839284; x=1734444084; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TnZbIdfz/4S6ZbGmWDUcJ7Nrg8We4vqiGKMyKWE/kZs=;
+ b=dkVP6XDZjdI/p4m2hsZo6LecxgcseMj2r4SlqDiZM5U35qtRE7gTsX1GeCXy2n4fuG
+ IseWBO5JM3TmlQZKr8rlLG39uF0SUGp9gicA1XGJUBRWxCqzsJto7PstH596fQNE83eP
+ 2mU3c+w0/PlNwEGtXGu0mQXz7XCcmMwSb4E3hvvQ30LH9fdlEShugHxFnJzh+manR3E6
+ 5hToJZrKfHfHYZ+5mur2ZwIGo0TkA5FGXb+DpWKIlBBE8CYcK+2WtXkeefD1gpQi8PsN
+ emB4JBVUPc3o9gcOsLNrjV+7iTun8OKplvwX7Y5Mc1iCEDZQsbzu97mapFbLgJPMuA/r
+ okVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733836988; x=1734441788;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rSwfECw1HRJO1kdHWBYXyzdU//dlJB0pg0gdADzsEok=;
- b=BsjUCpvb9UPOGndNXlhuV/If7S9MHv/Ub0WXUhLMGTTiLUxL7ZNhVNCJo25AYnJO0C
- 5ibXVLgqGu8dD8AjfNcrdXvXq4+fVavRdjaE48jedtclEJP0fEJ20h9kYdw8VTOwcURi
- qwpjCe/vrQGPZtayFrkaz6a+7NcLziNdB2vsqWc7MD1UqWRmvmdo5VPFCK5BBYCmkze5
- KYkVtSAGKiSusCTNwUJ52gkrP1YYcmPDEynD9Bq3mkUOH8IkAqwx8A4NO1HMHpQoy2Jh
- K8s3TlJEcgQJhaoVXpnDDspS5bSG79fUrfdKA0+tqRePSmC9ROZJKkNn11hPIIW/4PF3
- fyqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXHQpHSid1vzFjwTfoWA9B9nB7JOwG4Znpb0fZG6SbBugvKEinKO6Q5kDJY+cYS6vrGtMlckB17Qs1K@nongnu.org
-X-Gm-Message-State: AOJu0YzCXJyteLSCGpTfIYQsSwrnY3MYCHGtSzgoT6yjsNS7jSW77Y0g
- ODwCgNgu77JvtOdAoUPQ8T6MLNSPOVstsdhisFcaHtN/jB/aITmPPibzalYaMIc=
-X-Gm-Gg: ASbGncsQPrPw9UQj7BKM7DIWochZwk+ITIsdPu/O3TSdEtU6KyJvH4sS0rE3lisDwAD
- tAyVOg1IWROsAF8E+knvzm8YZQgEjadYGwGEz+jK6MunJ5wHg5g/Sh3SFSvVn/Xg4z1N4dLk4zi
- 6xxCxSXU7naTsPQPDXnFUC913yyNGlu1ZRKLeY7bYyeMhHQ3qJJlwbxZn/9BoiOQJkVL94o+Fso
- nHRrECn4IXJbUsdWzk8/WyfMAtP4PEuB5hE/0mZPvStnumFXs64G02xq8YY1G2ULuKtzXDSDDsF
- Tud6No3eOfU/mEnYdhW0tk8D
-X-Google-Smtp-Source: AGHT+IEBo7npa6DIBWE6DE/b0pr9W1e7WRq/58Nln3YbFdX/FD4vhSWfSRjZ7t4K1krBYmdwhOtrGQ==
-X-Received: by 2002:a5d:6d89:0:b0:385:f72a:a3b0 with SMTP id
- ffacd0b85a97d-3862b3ea28bmr10560205f8f.55.1733836988015; 
- Tue, 10 Dec 2024 05:23:08 -0800 (PST)
-Received: from [192.168.224.213] (223.132.22.93.rev.sfr.net. [93.22.132.223])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38636c919e5sm9946241f8f.18.2024.12.10.05.23.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Dec 2024 05:23:07 -0800 (PST)
-Message-ID: <ad2e35bd-ac8f-4987-b970-f0e8de90acc3@linaro.org>
-Date: Tue, 10 Dec 2024 14:23:05 +0100
+ d=1e100.net; s=20230601; t=1733839284; x=1734444084;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TnZbIdfz/4S6ZbGmWDUcJ7Nrg8We4vqiGKMyKWE/kZs=;
+ b=ls5g1Hz1E7DeS475TlXpmcvrngfs3yaMDhhQ2mnoabyH932VsUTY9EeWxraj8CA7N2
+ DTUb9BE0/SrbtNzHgGmEjU7Q1Jee653pMAGUsPRRBvTRIOVSIncF0HWb+0cP981vK9OD
+ t5qAsH3O/H/b8s7VDUuCp9Xkz5Kr4l4/51M+d9YIoyzp2eRlZjoeB+Vql+3nwtqFNGW2
+ QElCYXlE3icoycNfUzbk20ylYTBZdGWYWJwgPgdQU/+7z5gwu3OiwgL7GuAaPYyj32vo
+ UwTa3Ol27KVSvYg9GDbRY5xoXX6ERgg60QmbeeEd+SkaJJNX318MWJv0SDcwjXTVgxxJ
+ r1hA==
+X-Gm-Message-State: AOJu0YwioFHKpYVjXPROoU2AWmKzQXK3jLQQ/1mJ4R6/whJmNE80h7Pz
+ f8h8sAcqQVa5GYt9OPb5BhUPKYwI27bKEJzXRnh50Zwv4TJPkgK5qcqNZpAMRBNmZfpf3qTW5Jc
+ spk8=
+X-Gm-Gg: ASbGncugf0HJROAHlntzGXl+jrZL9PkQFZ9f6dORpgm+GP0ix7pSy0JPrk9RyjQVxfi
+ p093yxIPgxoC7pNppCk0Bxtz27MVnmxezJWxA1bPi7e6yzZ2w4K4V/W0At2RWUMdIXJopA2yWLy
+ 0ZtTMqrcuOCxL/WwAKsgMh3nHQcWaVs+r6KQakO402oqyuzNKY2Rrl7yhY8WOAfJAnwB++tGwJk
+ g26VsZCj1p03yPukVlkibQL3MGhY8Zn19G0L/MLtWMIYUR3uRVrqlcnZ/aBAAp88cY5dsoSI7WV
+ 4j2yPMGuWqjWzJyt2Biwaz0U
+X-Google-Smtp-Source: AGHT+IFfa0u32tYqc0Lqf8SJVmEqmaQs6hS6iM+vKU/WUJqpOrWNLBnMNpoegpXfdJJsi79dAM2p6w==
+X-Received: by 2002:a5d:47ac:0:b0:386:3dad:8147 with SMTP id
+ ffacd0b85a97d-3863dad8743mr7140299f8f.32.1733839283633; 
+ Tue, 10 Dec 2024 06:01:23 -0800 (PST)
+Received: from localhost.localdomain (223.132.22.93.rev.sfr.net.
+ [93.22.132.223]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3862c611242sm12939627f8f.36.2024.12.10.06.01.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 10 Dec 2024 06:01:23 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 1/3] dump/dump: Include missing 'exec/memory.h' header
+Date: Tue, 10 Dec 2024 15:01:10 +0100
+Message-ID: <20241210140112.43313-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241210140112.43313-1-philmd@linaro.org>
+References: <20241210140112.43313-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] tests/functional: Convert the intel_iommu avocado test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>
-References: <20241210125639.101033-1-thuth@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241210125639.101033-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,63 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/12/24 13:56, Thomas Huth wrote:
-> Convert the intel_iommu test to the new functional framework.
-> This test needs some changes since we neither support the old 'LinuxTest'
-> class in the functional framework yet, nor a way to use SSH for running
-> commands in the guest. So we now directly download a Fedora kernel and
-> initrd and set up the serial console for executing the commands and for
-> looking for the results. Instead of configuring the cloud image via
-> cloud-init, we now simply mount the file system manually from an initrd
-> rescue shell.
-> 
-> While the old test was exercising the network with a "dnf install"
-> command (which is not the best option for the CI since this depends
-> on third party servers), the new code is now setting up a little
-> HTTP server in the guest and transfers a file from the guest to the
-> host instead.
-> 
-> The test should now run much faster and more reliable (since we
-> don't depend on the third party servers for "dnf install" anymore),
-> so we can also drop the @skipUnless decorator now.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   v2:
->   - Download the cloud image qcow2 and use it as file system
->     to exercise the virtio-block device
->   - Instead of removing the "dnf install", transfer a file
->     via virtio-net to the host
->   - This needs find_free_port() now:
->   Based-on: <20241204071911.664057-1-thuth@redhat.com>
-> 
->   MAINTAINERS                          |   1 +
->   tests/avocado/intel_iommu.py         | 122 -------------------
->   tests/functional/meson.build         |   2 +
->   tests/functional/test_intel_iommu.py | 176 +++++++++++++++++++++++++++
->   4 files changed, 179 insertions(+), 122 deletions(-)
->   delete mode 100644 tests/avocado/intel_iommu.py
->   create mode 100755 tests/functional/test_intel_iommu.py
+dump.c calls address_space_read() which is declared
+in "exec/memory.h". Include it explicitly to avoid
+when refactoring unrelated headers:
 
+  dump/dump.c:1892:13: error: call to undeclared function 'address_space_read'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   1892 |             address_space_read(&address_space_memory, addr,
+        |             ^
 
-> +        # Check virtio-net via HTTP:
-> +        exec_command_and_wait_for_pattern(self, 'dhclient eth0', prompt)
-> +        exec_command_and_wait_for_pattern(self,
-> +                                    'python3 -m http.server 8080 & sleep 1',
-> +                                    'Serving HTTP on 0.0.0.0 port 8080')
-> +        hl = hashlib.sha256()
-> +        url = f'http://localhost:{freeport}{filename}'
-> +        self.log.info(f'Downloading {url} ...')
-> +        with urllib.request.urlopen(url) as response:
-> +            while True:
-> +                chunk = response.read(1 << 20)
-> +                if not chunk:
-> +                    break
-> +                hl.update(chunk)
-> +
-> +        digest = hl.hexdigest()
-> +        self.log.info(f'sha256sum of download is {digest}.')
-> +        self.assertEqual(digest, hashsum)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ dump/dump.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Nice :)
+diff --git a/dump/dump.c b/dump/dump.c
+index 45e84428aea..58c57d4e4f5 100644
+--- a/dump/dump.c
++++ b/dump/dump.c
+@@ -15,6 +15,7 @@
+ #include "qemu/cutils.h"
+ #include "elf.h"
+ #include "qemu/bswap.h"
++#include "exec/memory.h"
+ #include "exec/target_page.h"
+ #include "monitor/monitor.h"
+ #include "sysemu/dump.h"
+-- 
+2.45.2
+
 
