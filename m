@@ -4,51 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0D54E77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 10:36:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72963E77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 10:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKxan-0003vk-0j; Tue, 10 Dec 2024 05:35:49 -0500
+	id 1tKxj3-0005M5-8t; Tue, 10 Dec 2024 05:44:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tKxaj-0003vD-9e; Tue, 10 Dec 2024 05:35:46 -0500
+ (Exim 4.90_1)
+ (envelope-from <d06a9d843fb65351e0e4dc42ba0c404f01ea92b3@kylie.crudebyte.com>)
+ id 1tKxj0-0005Kd-17; Tue, 10 Dec 2024 05:44:18 -0500
 Received: from kylie.crudebyte.com ([5.189.157.229])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qemu_oss@crudebyte.com>)
- id 1tKxah-0006nS-5C; Tue, 10 Dec 2024 05:35:45 -0500
+ (Exim 4.90_1)
+ (envelope-from <d06a9d843fb65351e0e4dc42ba0c404f01ea92b3@kylie.crudebyte.com>)
+ id 1tKxiy-0007Rv-HG; Tue, 10 Dec 2024 05:44:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=crudebyte.com; s=kylie; h=Content-Type:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
- Content-ID:Content-Description;
- bh=OqDQ+/PMBm2HDyZlDmLl1RBO8HJ/aE3fD3HFRZJGj34=; b=XEei+iq0n6fZ1SXM5vZesN4BIZ
- 5HZis9PHEkNRXpwhSB85xzhwBTnzWZLaWDfYPSVOJYhZICXRs5cOI4748v5iF1Meq1QQGvwpL8Xwd
- x2toBCzrMJ9K/H/LPNRaHWq2blgdD5T6UVrsZdgXxDOJSxDXKctQCvnBO5UDw1M8+eR7l3KlNB3JA
- YhmytARHVftjmze236Yka27o5fW0OOWrXTKaJtLkiLVV74BVT8iqhyyAjFnoy65vNsT3Of4o82ScO
- YksxCvPpTb9/qNKLHEqUhFVKyoe0VXwU5yl2yoqKHCOzVMh21WgqnAj8+SNQ4Gb1iEN+roFtctJBZ
- OVv9e2M5fX7yvgoOdknBWD8XBkIBhIpRHXlocYDLMwXnBhhgerxNFsu36P1UQeC0D9SULmullJPdT
- zsR4zFAzKP/N+ee84pYRjAIRj8WK7g/qzROZmVHxIlCvlcXnwISFIlJnX7b4mVt8MM3Cep2d0tYcE
- 6ZeShXM1gpCJzMT8gWDVz/oU4sje4I2u7CyPitbQb9RWJPUnGK2tVUfzjlSGjv3/Kx36VzNwS/+fM
- lWpR8XnLUgZhTShUR80apqQl7cjrHySAYmDVZnoGxOPGr92bgGI1AW4yUR3H/KOU3MmygTIBq9hvJ
- +bId3c9oLTq0pbcjRZGjn4JeAcvxiwEri6uCXdALs=;
+ d=crudebyte.com; s=kylie; h=Cc:To:Subject:Date:From:Message-Id:Content-Type:
+ Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:Content-ID:
+ Content-Description; bh=mdn+juAp1H+ifnO6QfL+yqBHc4TpJOra8ZUsGcrKC1o=; b=V6kqx
+ fgAdpH9ogd4fAp0GjueTnT+bveisJBwfSTWVEKFZrRNx8hBNuR+meGkqEhI2iIyF52FUn0oKZbiOF
+ bbpHmSZqteyRQxKeW17tKfWFrC86pwsHDfmmo9kbi0V/AeI2JuGLq+cjaLB5LmfGgg+0RkVugTDQf
+ gWxl89xJBOikIS17U1c3Wjhe+BYfEmwqz1Jbz+DPj/EPmDdOOGaum0JKuCcLz8wZAKWiPwTwdNP9S
+ UKdhU2eEOEP0Qp1Oja1QguVAwsKMWyncRHxarxqTnELQZS+74RaOWyeUzdqJEzdq6VaJv6x3eZZMh
+ lEM1ZXDLLZ8a/dCSXJN/1f++dii0PpFSJATWpgkHghEqv4cgSlPJnEjA42lEOLlNk9ei3Q4GV8fgp
+ yd853yTFIyhO7hpE66U1oK0V0PGZfuyT833zVILuw+iPta+apY9o83uQ45zgeZHGbNIdEf20Cmeow
+ INFtV5ZxmEIeewslfBKwde7H/aK6F2HLSFoOxLSBfmvYhVbXzmCKKZuZ23sVkjJpP+9ql06WEC7MW
+ 9Qb64zWyBY5oXK33WMAWlfH8GBG6NjKu7YhZ2dtJsrLF++qDTSo7spDf7bv9YuNvAxpTT3PoNaR9Z
+ rSbLPfusLMNUpnG1fPGrDczsLEVOu4HqKCoUwYt9nlhZotHDInU+0tpBECYve8=;
+Message-Id: <cover.1733825219.git.qemu_oss@crudebyte.com>
 From: Christian Schoenebeck <qemu_oss@crudebyte.com>
-To: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Cc: Greg Kurz <groug@kaod.org>, Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>,
- Yanwu Shen <ywsPlz@gmail.com>, Jietao Xiao <shawtao1125@gmail.com>,
- Jinku Li <jkli@xidian.edu.cn>, Wenbo Shen <shenwenbo@zju.edu.cn>,
- Michael Tokarev <mjt@tls.msk.ru>, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH] 9pfs: fix regression regarding CVE-2023-2861
-Date: Tue, 10 Dec 2024 11:35:36 +0100
-Message-ID: <1759927.xNkLErMGIS@silver>
-In-Reply-To: <CAFEAcA8dL=pRJf4DNjF_NPR7npfAhUJdNb0n3fyJq=b+oKnWrg@mail.gmail.com>
-References: <E1tJWbk-007BH4-OB@kylie.crudebyte.com> <4261493.soTQ3n66jb@silver>
- <CAFEAcA8dL=pRJf4DNjF_NPR7npfAhUJdNb0n3fyJq=b+oKnWrg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+Date: Tue, 10 Dec 2024 11:07:00 +0100
+Subject: [PULL for-9.2 0/1] 9p queue 2024-12-10
+To: qemu-devel@nongnu.org,
+    Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-stable@nongnu.org, Greg Kurz <groug@kaod.org>,
+ Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
 Received-SPF: pass client-ip=5.189.157.229;
- envelope-from=qemu_oss@crudebyte.com; helo=kylie.crudebyte.com
+ envelope-from=d06a9d843fb65351e0e4dc42ba0c404f01ea92b3@kylie.crudebyte.com;
+ helo=kylie.crudebyte.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -71,85 +66,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tuesday, December 10, 2024 11:11:47 AM CET Peter Maydell wrote:
-> On Tue, 10 Dec 2024 at 09:57, Christian Schoenebeck
-> <qemu_oss@crudebyte.com> wrote:
-> >
-> > On Friday, December 6, 2024 12:20:29 PM CET Christian Schoenebeck wrote:
-> > > The released fix for this CVE:
-> > >
-> > >   f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
-> > >
-> > > caused a regression with security_model=passthrough. When handling a
-> > > 'Tmknod' request there was a side effect that 'Tmknod' request could fail
-> > > as 9p server was trying to adjust permissions:
-> > >
-> > >   #6  close_if_special_file (fd=30) at ../hw/9pfs/9p-util.h:140
-> > >   #7  openat_file (mode=<optimized out>, flags=2228224,
-> > >       name=<optimized out>, dirfd=<optimized out>) at
-> > >       ../hw/9pfs/9p-util.h:181
-> > >   #8  fchmodat_nofollow (dirfd=dirfd@entry=31,
-> > >       name=name@entry=0x5555577ea6e0 "mysocket", mode=493) at
-> > >       ../hw/9pfs/9p-local.c:360
-> > >   #9  local_set_cred_passthrough (credp=0x7ffbbc4ace10, name=0x5555577ea6e0
-> > >       "mysocket", dirfd=31, fs_ctx=0x55555811f528) at
-> > >       ../hw/9pfs/9p-local.c:457
-> > >   #10 local_mknod (fs_ctx=0x55555811f528, dir_path=<optimized out>,
-> > >       name=0x5555577ea6e0 "mysocket", credp=0x7ffbbc4ace10) at
-> > >       ../hw/9pfs/9p-local.c:702
-> > >   #11 v9fs_co_mknod (pdu=pdu@entry=0x555558121140,
-> > >       fidp=fidp@entry=0x5555574c46c0, name=name@entry=0x7ffbbc4aced0,
-> > >       uid=1000, gid=1000, dev=<optimized out>, mode=49645,
-> > >       stbuf=0x7ffbbc4acef0) at ../hw/9pfs/cofs.c:205
-> > >   #12 v9fs_mknod (opaque=0x555558121140) at ../hw/9pfs/9p.c:3711
-> > >
-> > > That's because server was opening the special file to adjust permissions,
-> > > however it was using O_PATH and it would have not returned the file
-> > > descriptor to guest. So the call to close_if_special_file() on that branch
-> > > was incorrect.
-> > >
-> > > Let's lift the restriction introduced by f6b0de53fb8 such that it would
-> > > allow to open special files on host if O_PATH flag is supplied, not only
-> > > for 9p server's own operations as described above, but also for any client
-> > > 'Topen' request.
-> > >
-> > > It is safe to allow opening special files with O_PATH on host, because
-> > > O_PATH only allows path based operations on the resulting file descriptor
-> > > and prevents I/O such as read() and write() on that file descriptor.
-> > >
-> > > Fixes: f6b0de53fb8 ("9pfs: prevent opening special files (CVE-2023-2861)")
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2337
-> > > Reported-by: Dirk Herrendorfer <d.herrendoerfer@de.ibm.com>
-> > > Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-> > > ---
-> > >  hw/9pfs/9p-util.h | 27 +++++++++++++++++----------
-> > >  1 file changed, 17 insertions(+), 10 deletions(-)
-> >
-> > Queued on 9p.next:
-> > https://github.com/cschoenebeck/qemu/commits/9p.next
-> >
-> > Let's see if we can still land this in 9.2.
-> 
-> 9.2 is due to be released today, so this would need to be:
->  * a fix for a critical bug
->  * the bug must be a regression since 9.1
->  * with a clear justification attached for why it's important
->    enough to delay the release
-> 
-> Commit f6b0de53fb8 was in 9.1, which suggests that this isn't
-> a regression since 9.1 ?
+The following changes since commit 1cf9bc6eba7506ab6d9de635f224259225f63466:
 
-Hi Peter,
+  Update version for v9.2.0-rc3 release (2024-12-03 17:56:12 +0000)
 
-I just saw there was still one open milestone ticket for 9.2 and assumed the
-release to be delayed by one week anyway.
+are available in the Git repository at:
 
-I am not trying to convince you of a delay. So unless somebody objects, just
-disregard the PR for now.
+  https://github.com/cschoenebeck/qemu.git tags/pull-9p-20241210
 
-Thanks!
+for you to fetch changes up to d06a9d843fb65351e0e4dc42ba0c404f01ea92b3:
 
-/Christian
+  9pfs: fix regression regarding CVE-2023-2861 (2024-12-10 10:24:52 +0100)
 
+----------------------------------------------------------------
+* Fix a regression regarding CVE-2023-2861 with security_model=passthrough
+  which caused certain sockets on guest to fail.
 
+----------------------------------------------------------------
+Christian Schoenebeck (1):
+      9pfs: fix regression regarding CVE-2023-2861
+
+ hw/9pfs/9p-util.h | 27 +++++++++++++++++----------
+ 1 file changed, 17 insertions(+), 10 deletions(-)
 
