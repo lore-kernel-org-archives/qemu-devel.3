@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EF7BE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:47:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3403E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 11:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKyi5-00083o-EE; Tue, 10 Dec 2024 06:47:25 -0500
+	id 1tKyk5-0000Nt-Qu; Tue, 10 Dec 2024 06:49:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyi2-00083S-88; Tue, 10 Dec 2024 06:47:23 -0500
+ id 1tKyjy-0000NN-CM; Tue, 10 Dec 2024 06:49:22 -0500
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frankja@linux.ibm.com>)
- id 1tKyi0-0006Je-Qz; Tue, 10 Dec 2024 06:47:22 -0500
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BA83Bnk004503;
- Tue, 10 Dec 2024 11:47:19 GMT
+ id 1tKyjw-0006T0-EH; Tue, 10 Dec 2024 06:49:21 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAB3TKr002621;
+ Tue, 10 Dec 2024 11:49:19 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=62bk8O
- 5JCW8JTeydfBC2YuFRdC238ikHEd8lfRzM6Ps=; b=N1Brd3q2jIM5danwrwt1XF
- 4skXO9AXO8vJ/XQvdcT0PqCRzwcyBsFgimBnCsVAS7/Esv+KyF9dnRRVR4PMfHUV
- SKL4OiNUJDicMM19wkwUf1Zho3bA7OpbGWmhE/g4GV7lX28KkbEGHw1hmErTtf8/
- YTH9t2nLvW78R3uloKS++3HQRUbGTkmjqSztqH5jRMQd49TdV5vPZtmT6YEVePIA
- gYt0nJdHgb0Ac9+YuB0XZZUoQUj/jRwmZhEemug4Pt7oPf019f2LX3oaDViWRziy
- dDVaqyL+vGQgC+6INpce2bslOZ9HYhPCeuUGquocVJipP6ET+M1ufXKea5tn2VgQ
+ :message-id:mime-version:references:subject:to; s=pp1; bh=M7VWrb
+ n8bDHmu+KnLbL9Da4RL9BrL1tlAxjyBlEFJ84=; b=qOiFB9Yru49LeF+uJRicNz
+ /2QZcMwF2dOJ2+LbqMpHhNFCqDUSwHwDMlqqvFrEkDwLIhYgSYSElb/SwyPY1dGK
+ oCtiiy7rdXgBUQzAIgqK4qCaj/MhmJIc1pECgLoJ24AQjbOcQYc9T9uTxqGiLArX
+ G10QMvRgq6BFyEpG8JzAXpdwcizbDKkg4LSvdrzgrh5XjCmgcbklfNwNvtTvWHes
+ YZAhfmOa3NBrxQL3sTeFlzTYF8gdlOn+VSqmZnoZqyE/+fg3e8o5jwTYFNN1aySv
+ 4uoZ+gK49+p+8uIMdmBiBg5ugE7o8ZsJo2Q0l2niQSyHcCDPZiw8+BllHgoxrkaQ
  ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43cbsq61sr-1
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ccsjdu4w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:47:19 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAApVsO000358;
- Tue, 10 Dec 2024 11:47:18 GMT
+ Tue, 10 Dec 2024 11:49:19 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAAm0oK016926;
+ Tue, 10 Dec 2024 11:49:18 GMT
 Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0psbme7-1
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d12y3kds-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 11:47:18 +0000
+ Tue, 10 Dec 2024 11:49:18 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
  by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BABlF8G36897118
+ 4BABnEQ151118516
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Dec 2024 11:47:15 GMT
+ Tue, 10 Dec 2024 11:49:14 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 028F020040;
- Tue, 10 Dec 2024 11:47:15 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 9AE932004B;
+ Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3C4320043;
- Tue, 10 Dec 2024 11:47:14 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 6ED5420043;
+ Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
 Received: from [9.155.198.95] (unknown [9.155.198.95])
  by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Dec 2024 11:47:14 +0000 (GMT)
-Message-ID: <e66325d1-0f43-40da-a38e-905e133272fd@linux.ibm.com>
-Date: Tue, 10 Dec 2024 12:47:14 +0100
+ Tue, 10 Dec 2024 11:49:14 +0000 (GMT)
+Message-ID: <d1fbaafe-a4d4-4c7e-97ca-033108862055@linux.ibm.com>
+Date: Tue, 10 Dec 2024 12:49:14 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v2 07/15] s390x/cpumodel: add Concurrent-functions
- facility support
+Subject: Re: [RFC PATCH v2 11/15] s390x/cpumodel: add
+ Ineffective-nonconstrained-transaction facility
 To: Hendrik Brueckner <brueckner@linux.ibm.com>, qemu-devel@nongnu.org,
  qemu-s390x@nongnu.org, thuth@redhat.com
 Cc: nsg@linux.ibm.com, mimu@linux.ibm.com, borntraeger@linux.ibm.com
 References: <20241206122751.189721-1-brueckner@linux.ibm.com>
- <20241206122751.189721-8-brueckner@linux.ibm.com>
+ <20241206122751.189721-12-brueckner@linux.ibm.com>
 Content-Language: en-US
 From: Janosch Frank <frankja@linux.ibm.com>
 Autocrypt: addr=frankja@linux.ibm.com; keydata=
@@ -113,21 +113,21 @@ Autocrypt: addr=frankja@linux.ibm.com; keydata=
  DchCqFm5adiSP5+OT4NjkKUeGpBe/aRyQSle/RropTgCi85pje/juYEn2P9UAgkfBJrOHvQ9
  Z+2Sva8FRd61NJLkCJ4LFumRn9wQlX2icFbi8UDV3do0hXJRRYTWCxrHscMhkrFWLhYiPF4i
  phX7UNdOWBQ90qpHyAxHmDazdo27gEjfvsgYMdveKknEOTEb5phwxWgg7BcIDoJf9UMC
-In-Reply-To: <20241206122751.189721-8-brueckner@linux.ibm.com>
+In-Reply-To: <20241206122751.189721-12-brueckner@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: Nb7KzZHxSZup7yFGA4ewno56HzCRGoQn
-X-Proofpoint-GUID: Nb7KzZHxSZup7yFGA4ewno56HzCRGoQn
+X-Proofpoint-GUID: ocBmLgLccNf4ZFIo60uTORZxmW24ihoG
+X-Proofpoint-ORIG-GUID: ocBmLgLccNf4ZFIo60uTORZxmW24ihoG
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=629 adultscore=0
- lowpriorityscore=0 clxscore=1015 phishscore=0 impostorscore=0
- suspectscore=0 spamscore=0 mlxscore=0 priorityscore=1501 malwarescore=0
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412100085
+ clxscore=1015 adultscore=0
+ impostorscore=0 spamscore=0 lowpriorityscore=0 bulkscore=0 mlxlogscore=638
+ mlxscore=0 priorityscore=1501 suspectscore=0 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412100085
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=frankja@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
@@ -154,11 +154,10 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/6/24 1:27 PM, Hendrik Brueckner wrote:
-> The Concurrent-functions facility introduces the new instruction
-> Perform Functions with Concurrent Results (PFCR) with few subfunctions.
+> This facility indicates reduced support for noncontrained
+> transactional-execution.
 > 
 > Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
 
 Reviewed-by: Janosch Frank <frankja@linux.ibm.com>
-
 
