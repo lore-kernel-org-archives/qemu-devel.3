@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A166EE7717D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:07:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 741A8E7717D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:23:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKqYv-00005V-JU; Mon, 09 Dec 2024 22:05:25 -0500
+	id 1tKqpo-0000Gx-59; Mon, 09 Dec 2024 22:22:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYu-000056-3H; Mon, 09 Dec 2024 22:05:24 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYs-0003G9-Jw; Mon, 09 Dec 2024 22:05:23 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2167141dfa1so3548605ad.1; 
- Mon, 09 Dec 2024 19:05:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733799920; x=1734404720; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=iwlscf/yHkFwlKkBbkoVTudgjbVzWybWKSC3cCOM7sY=;
- b=UCNVUmnqi/tRQEfJjDsntQJfKJiJ1PRDD+uCgnSDi2l28RgqH3bd/8RA84ySMJKWLh
- 2BjtOV81PTeBjhYgvwrEaQRI2o54uAl3PddGZ/cr903dp9yL5IrbW6pA/3dw/FZQdaJJ
- KrcUKTo9BXZzH/BKqk2xfaXoSwt5SjzJJk7T91LDNchajoncXbw1ZJcqUTLDXIBiAT2/
- TUaDjyUHvB1ks6LH/Ddk73LGmyZXtJam8lnPg/3vVQljUqDhF/tboXar9kinf+tXkPQI
- g+2AaV6iHWYMbV1o5rrbjrojDXT6lVnGPoibdzbYYYEt9WeINAp+dykRTXsninKbPyzg
- Gs4g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733799920; x=1734404720;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iwlscf/yHkFwlKkBbkoVTudgjbVzWybWKSC3cCOM7sY=;
- b=sZFFa/6Vjd6mbyXwCjtyWgKC6n3A9AHS5hd29du0/h2Z6HQ1AlgeG3kR8mf12IqiSZ
- nDipM0vgJ2tdY5G1zG2K7wWbCmP1g+mfcuigOktSWNHjSZYG6KwcLzWG3uKd59Vw+Kh2
- 5nDRHDQsydXkvVjpYlTkLEUkYPP4mkgAA1CKRm2i8GHwR9UyCXSoGPd/HPhzz3Jq3n9i
- yTnUp+VnT3A14l0UN6UFx3gAsmzcV9kTOFE71Gd9V69Iuciz3St7R10h0/xGDubX04MQ
- yS2dMOLFy7ygT+wOmKeeFyaI1ZwoCYsNi9XxQBncncZvayI++bQLhZEV5/KnF2xXfxco
- tf7Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTHtUVD7l8/D/fcrdq95veCxUkGnxRF79H6/KkwuO06D8CLtDSblE/b/0DVulXbxVRiM/Dh6Lqbxkx@nongnu.org
-X-Gm-Message-State: AOJu0YxYMFObBWtchcKavOkmYqet+u8JIjgLKXIC77hnHc7nBv9W7qci
- Z/yoUXXihcCuBJsHI5LD1QByHIyjUS6WUs+HZsIWOeH6INJVu3uoZivq2w==
-X-Gm-Gg: ASbGncv86s3OMLjOSEjjo8LhblowmdeQRg7mvSbyO/grnHjvg3csCyFEEbwHAbsXq+r
- XevMKBK2Nv6cFomxAVAYY0wu2lSCVRFQyki4LOUXC9ngz6Ee8oAA1V5kBHZFkvOH5Zi6A4eKrAW
- DTNkVsO4gciRvw+vh4wzsW27fQ5DuGAcJkXJtTU1+E+4dVfbheNb4QamTvFXVzzV3ryQmxWv/CP
- f9jEdhejSh3FTNtUlvkrW8NjeYCt9Tsfy8HR1dwERFi7wYDzGDJ5BADnYoU
-X-Google-Smtp-Source: AGHT+IEy/NDADGuSH/dKILIqAmBCe6e29nl/xE8A5SNJGI59ClrjBWou9AM/cHwdSQdTm7XmW7XlKQ==
-X-Received: by 2002:a17:902:f706:b0:216:39fa:5c97 with SMTP id
- d9443c01a7336-21670a06bbemr28454995ad.11.1733799920522; 
- Mon, 09 Dec 2024 19:05:20 -0800 (PST)
-Received: from wheely.local0.net ([220.253.106.119])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 19:05:20 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
-To: qemu-ppc@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH 7/9] ppc/pnv/occ: Update pstate frequency tables
-Date: Tue, 10 Dec 2024 13:04:47 +1000
-Message-ID: <20241210030451.1306608-8-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
-References: <20241210030451.1306608-1-npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tKqpm-0000GG-IS
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 22:22:50 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tKqpj-0004qd-U3
+ for qemu-devel@nongnu.org; Mon, 09 Dec 2024 22:22:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733800968; x=1765336968;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=1zJ2q09lrsn1GGJjRKPAI0mV8Ctn3tNfX5jW4g2WZr4=;
+ b=PRKMicJQdX3QqjeSofkXDZ2J9HclPRBB+/kUsjIvSzFYXLN0z/vrSKCc
+ sywkryxwLhCUNFpgxsSEK3zGw4QFzhqg2hFV/vsmTbGtGR/ytICxv5YHz
+ qjyhHVy8lFztJIfjbVINpxsbR7GZi9+HbjHGKQHZDizeuhDh4bpZx0Js7
+ i6LhHkQakncgiuQoNXM2DBZ+S95ZFf2nRkxxetXfR85zPHu2hSemJlkiv
+ iqTzYmwC0zPPHbLWYeaJSOjN3xraiRSCFDBNr+42uJeeQZJv+8B+uo/Vm
+ RYGSG5r9C32KocsSW0kCzqgcYMD/txVkOj6IRgr7sYfpatS6XmMq7di3c w==;
+X-CSE-ConnectionGUID: 8Xrs8ro1SQGHWCRFE76xfQ==
+X-CSE-MsgGUID: E1DfzUqwRx2dVaWSiFi8Pg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11281"; a="34035380"
+X-IronPort-AV: E=Sophos;i="6.12,221,1728975600"; d="scan'208";a="34035380"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Dec 2024 19:22:45 -0800
+X-CSE-ConnectionGUID: filPZePvSaKrUQyK9UGIbw==
+X-CSE-MsgGUID: tqfch3mhSLaZL3j2Nfma/Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,221,1728975600"; d="scan'208";a="99333945"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Dec 2024 19:22:42 -0800
+Message-ID: <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
+Date: Tue, 10 Dec 2024 11:22:39 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
+ CPUID Bits
+To: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "seanjc@google.com" <seanjc@google.com>
+Cc: "Huang, Kai" <kai.huang@intel.com>,
+ "binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
+ "Chatre, Reinette" <reinette.chatre@intel.com>,
+ "Zhao, Yan Y" <yan.y.zhao@intel.com>,
+ "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "Hunter, Adrian" <adrian.hunter@intel.com>,
+ "Yamahata, Isaku" <isaku.yamahata@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
+ <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +97,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make each pstate have a different frequency, because that's easier
-to observe and test.
+On 12/7/2024 2:41 AM, Edgecombe, Rick P wrote:
+> On Fri, 2024-12-06 at 10:42 +0800, Xiaoyao Li wrote:
+>> # Interaction with TDX_FEATURES0.VE_REDUCTION
+>>
+>> TDX introduces a new feature VE_REDUCTION[2]. From the perspective of
+>> host VMM, VE_REDUCTION turns several CPUID bits from fixed1 to
+>> configurable, e.g., MTRR, MCA, MCE, etc. However, from the perspective
+>> of TD guest, it’s an opt-in feature. The actual value seen by TD guest
+>> depends on multiple factors: 1). If TD guest enables REDUCE_VE in
+>> TDCS.TD_CTLS, 2) TDCS.FEATURE_PARAVIRT_CTRL, 3) CPUID value configured
+>> by host VMM via TD_PARAMS.CPUID_CONFIG[]. (Please refer to latest TDX
+>> 1.5 spec for more details.)
+>>
+>> Since host VMM has no idea on the setting of 1) and 2) when creating the
+>> TD. We make the design to treat them as configurable bits and the global
+>> metadata interface doesn’t report them as fixed1 bits for simplicity.
+>>
+>> Host VMM must be aware itself that the value of these VE_REDUCTION
+>> related CPUID bits might not be what it configures. The actual value
+>> seen by TD guest also depends on the guest enabling and configuration of
+>> VE_REDUCTION.
+> 
+> As we've been working on this, I've started to wonder whether this is a halfway
+> solution that is not worth it. Today there are directly configurable bits,
+> XFAM/attribute controlled bits, other opt-ins (like #VE reduction). And this has
+> only gotten more complicated as time has gone on.
+> 
+> If we really want to fully solve the problem of userspace understanding which
+> configurations are possible, the TDX module would almost need to expose some
+> sort of CPUID logic DSL that could be used to evaluate user configuration.
+> 
+> On the other extreme we could just say, this kind of logic is just going to need
+> to be hand coded somewhere, like is currently done in the QEMU patches.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
----
- hw/ppc/pnv_occ.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+I think hand coded some specific handling for special case is acceptable 
+when it's unavoidable. However, an auto-adaptive interface for general 
+cases is always better than hand code/hard code something. E.g., current 
+QEMU implementation hardcodes the fixed0 and fixed1 information based on 
+TDX 1.5.06 spec. When different versions of TDX module have different 
+fixed0 and fixed1 information, QEMU will needs interface to get the 
+version of TDX module and maintain different information for each 
+version of TDX module. It's a disaster IMHO.
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index 918b08ba2ff..5567fbf008e 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -681,11 +681,11 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
-         static_data.v2.pstate_turbo = -1;
-         static_data.v2.pstate_ultra_turbo = 0;
-         static_data.v2.pstates[0].id = 0;
--        static_data.v2.pstates[1].freq_khz = cpu_to_be32(3000);
-+        static_data.v2.pstates[1].freq_khz = cpu_to_be32(4000);
-         static_data.v2.pstates[1].id = -1;
-         static_data.v2.pstates[1].freq_khz = cpu_to_be32(3000);
-         static_data.v2.pstates[2].id = -2;
--        static_data.v2.pstates[2].freq_khz = cpu_to_be32(3000);
-+        static_data.v2.pstates[2].freq_khz = cpu_to_be32(2000);
-         for (i = 0; i < chip->nr_cores; i++) {
-             static_data.v2.core_max[i] = 1;
-         }
-@@ -701,11 +701,11 @@ static bool occ_init_homer_memory(PnvOCC *occ, Error **errp)
-         static_data.v9.pstate_turbo = 1;
-         static_data.v9.pstate_ultra_turbo = 0;
-         static_data.v9.pstates[0].id = 0;
--        static_data.v9.pstates[0].freq_khz = cpu_to_be32(3000);
-+        static_data.v9.pstates[0].freq_khz = cpu_to_be32(4000);
-         static_data.v9.pstates[1].id = 1;
-         static_data.v9.pstates[1].freq_khz = cpu_to_be32(3000);
-         static_data.v9.pstates[2].id = 2;
--        static_data.v9.pstates[2].freq_khz = cpu_to_be32(3000);
-+        static_data.v9.pstates[2].freq_khz = cpu_to_be32(2000);
-         for (i = 0; i < chip->nr_cores; i++) {
-             static_data.v9.core_max[i] = 1;
-         }
--- 
-2.45.2
+> The solution in this proposal decreases the work the VMM has to do, but in the
+> long term won't remove hand coding completely. As long as we are designing
+> something, what kind of bar should we target?
 
+For this specific #VE reduction case, I think userspace doesn't need to 
+do any hand coding. Userspace just treats the bits related to #VE 
+reduction as configurable as reported by TDX module/KVM. And userspace 
+doesn't care if the value seen by TD guest is matched with what gets 
+configured by it because they are out of control of userspace.
 
