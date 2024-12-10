@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDA8DE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 21:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CCECE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 21:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL89y-0001yH-Vd; Tue, 10 Dec 2024 16:52:50 -0500
+	id 1tL8Ak-0002rw-Ed; Tue, 10 Dec 2024 16:53:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tL89w-0001xp-Re
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:52:48 -0500
-Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
+ id 1tL8Ai-0002rI-Fg
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:53:36 -0500
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <quic_bcain@quicinc.com>)
- id 1tL89u-0000WQ-SW
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:52:48 -0500
-Received: from pps.filterd (m0279866.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BALchgc018822;
- Tue, 10 Dec 2024 21:52:38 GMT
+ id 1tL8Ag-0000Xv-IO
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 16:53:36 -0500
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BAH53vp024799;
+ Tue, 10 Dec 2024 21:53:27 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=quicinc.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- laazpkf3Grxpi/lSmiAKpLAx7rv1EuKb8zCprSr4jmY=; b=WGDWXz1eGg3tS+2D
- qa7rnZBjKJGsSjoi9ObeSmzy3FkpTSH/1F3muHzSB+04pHDMvK44Kt+svSjVcE2V
- mLZSbl19m+Z8ipp9IajAGeOc/EpdIU5qnWCzyEmQSdT3awFX+AwYxDJPBQRF7Et4
- wbt8cE2eVn9F0fqDzMbDEEul9qFpgDsB1yIlEbKLbSGy7K1gymWR4cLYYmOg9qFm
- CLF6GdsvEbllY86VwcKml+kd/0QEr4Ad9WYtXaKKdaHSG1DkuGr6gmwp3/YdFbMl
- kgqDwU9k+6qVqoSgq9qW8kvbj36z6pnUnvZVN3rVQvJMP3am5FeKazNYlegZ1awm
- 2emAiA==
-Received: from nalasppmta05.qualcomm.com (Global_NAT1.qualcomm.com
+ Vmtn+LcxCVXVWUSqiloT7nkHZx6vEkBM1M/xRUneCpI=; b=JCkS825jya5EbWEy
+ JOL2EGRc+4XIkI2OhjVnnp0MntReyoHZpCYA39ECyAr7D2yYsCXGeOWM98s6ATQv
+ InDD3/N5gmJxx4h1YR0QCFC+zs3zrxc3MmwaIM4R4CfTNadVkhwoipj+2AEqX08u
+ xKF8M104NKP3s7hkcNV2XaG521cPz7C1L8G5IX2WacLaNQELfdnOR0cL44gY728F
+ bTmOjmTKGunA8hhD/2L2W3b8b9nA88sUlstBx1Q1ufjGppcIAEE4rcxE7+B6Q7rs
+ iDT1Soo0wbZlnTbn1QrgxgzONKYCXW/QSm9WNqNA6h4kbdKthZhpwVQFVUQKB6Rk
+ Tpcc9w==
+Received: from nalasppmta04.qualcomm.com (Global_NAT1.qualcomm.com
  [129.46.96.20])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43eak3bcbw-1
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43cdpgswc9-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 21:52:37 +0000 (GMT)
+ Tue, 10 Dec 2024 21:53:26 +0000 (GMT)
 Received: from nalasex01c.na.qualcomm.com (nalasex01c.na.qualcomm.com
  [10.47.97.35])
- by NALASPPMTA05.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BALqb3d032485
+ by NALASPPMTA04.qualcomm.com (8.18.1.2/8.18.1.2) with ESMTPS id 4BALrQ6M032071
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Dec 2024 21:52:37 GMT
+ Tue, 10 Dec 2024 21:53:26 GMT
 Received: from [10.111.162.254] (10.80.80.8) by nalasex01c.na.qualcomm.com
  (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.9; Tue, 10 Dec
- 2024 13:52:35 -0800
-Message-ID: <45efac33-d493-4aca-8d89-1f987167e1ab@quicinc.com>
-Date: Tue, 10 Dec 2024 15:52:34 -0600
+ 2024 13:53:24 -0800
+Message-ID: <874af98c-f536-453d-80f2-391b5f67efe9@quicinc.com>
+Date: Tue, 10 Dec 2024 15:53:17 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 12/17] target/hexagon: Remove internal_fmafx
+Subject: Re: [PATCH 13/17] target/hexagon: Expand GEN_XF_ROUND
 To: Richard Henderson <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
 CC: <peter.maydell@linaro.org>, <mark.cave-ayland@ilande.co.uk>, Brian Cain
  <brian.cain@oss.qualcomm.com>
 References: <20241208224844.570491-1-richard.henderson@linaro.org>
- <20241208224844.570491-13-richard.henderson@linaro.org>
+ <20241208224844.570491-14-richard.henderson@linaro.org>
 Content-Language: en-US
 From: Brian Cain <quic_bcain@quicinc.com>
-In-Reply-To: <20241208224844.570491-13-richard.henderson@linaro.org>
+In-Reply-To: <20241208224844.570491-14-richard.henderson@linaro.org>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01c.na.qualcomm.com (10.47.97.35)
 X-QCInternal: smtphost
 X-Proofpoint-Virus-Version: vendor=nai engine=6200 definitions=5800
  signatures=585085
-X-Proofpoint-ORIG-GUID: KeALJXVKaDw5ILRnRfWS5VbTvv-qknaA
-X-Proofpoint-GUID: KeALJXVKaDw5ILRnRfWS5VbTvv-qknaA
+X-Proofpoint-GUID: PLZGJLnHYzVAFEbNHsYBYYAHTr6AEA_F
+X-Proofpoint-ORIG-GUID: PLZGJLnHYzVAFEbNHsYBYYAHTr6AEA_F
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
  definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- mlxlogscore=913 clxscore=1015 spamscore=0 mlxscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0
- bulkscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ lowpriorityscore=0
+ adultscore=0 clxscore=1015 suspectscore=0 mlxscore=0 priorityscore=1501
+ phishscore=0 mlxlogscore=981 spamscore=0 malwarescore=0 bulkscore=0
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.19.0-2411120000 definitions=main-2412100156
-Received-SPF: pass client-ip=205.220.168.131;
- envelope-from=quic_bcain@quicinc.com; helo=mx0a-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=quic_bcain@quicinc.com; helo=mx0b-0031df01.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -106,225 +106,279 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 12/8/2024 4:48 PM, Richard Henderson wrote:
-> The function is now unused.
+> This massive macro is now only used once.
+> Expand it for use only by float64.
 >
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   target/hexagon/fma_emu.h |   2 -
->   target/hexagon/fma_emu.c | 171 ---------------------------------------
->   2 files changed, 173 deletions(-)
+>   target/hexagon/fma_emu.c | 253 +++++++++++++++++++--------------------
+>   1 file changed, 125 insertions(+), 128 deletions(-)
 >
-> diff --git a/target/hexagon/fma_emu.h b/target/hexagon/fma_emu.h
-> index ad5df5d038..fed054b609 100644
-> --- a/target/hexagon/fma_emu.h
-> +++ b/target/hexagon/fma_emu.h
-> @@ -30,8 +30,6 @@ static inline uint32_t float32_getexp_raw(float32 f32)
->   }
->   int32_t float32_getexp(float32 f32);
->   float32 infinite_float32(uint8_t sign);
-> -float32 internal_fmafx(float32 a, float32 b, float32 c,
-> -                       int scale, float_status *fp_status);
->   float64 internal_mpyhh(float64 a, float64 b,
->                          unsigned long long int accumulated,
->                          float_status *fp_status);
 > diff --git a/target/hexagon/fma_emu.c b/target/hexagon/fma_emu.c
-> index 35971b8b99..0c7c7f636c 100644
+> index 0c7c7f636c..bce3bd4dfb 100644
 > --- a/target/hexagon/fma_emu.c
 > +++ b/target/hexagon/fma_emu.c
-> @@ -90,21 +90,6 @@ int32_t float64_getexp(float64 f64)
->       return -1;
->   }
->   
-> -static uint64_t float32_getmant(float32 f32)
-> -{
-> -    Float a = { .i = f32 };
-> -    if (float32_is_normal(f32)) {
-> -        return a.mant | 1ULL << 23;
-> -    }
-> -    if (float32_is_zero(f32)) {
-> -        return 0;
-> -    }
-> -    if (float32_is_denormal(f32)) {
-> -        return a.mant;
-> -    }
-> -    return ~0ULL;
-> -}
-> -
->   int32_t float32_getexp(float32 f32)
->   {
->       Float a = { .i = f32 };
-> @@ -369,25 +354,6 @@ float32 infinite_float32(uint8_t sign)
+> @@ -354,136 +354,133 @@ float32 infinite_float32(uint8_t sign)
 >   }
 >   
 >   /* Return a maximum finite value with the requested sign */
-> -static float32 maxfinite_float32(uint8_t sign)
-> -{
-> -    if (sign) {
-> -        return make_float32(SF_MINUS_MAXF);
-> -    } else {
-> -        return make_float32(SF_MAXF);
-> -    }
-> -}
-> -
-> -/* Return a zero value with requested sign */
-> -static float32 zero_float32(uint8_t sign)
-> -{
-> -    if (sign) {
-> -        return make_float32(0x80000000);
-> -    } else {
-> -        return float32_zero;
-> -    }
-> -}
-> -
->   #define GEN_XF_ROUND(SUFFIX, MANTBITS, INF_EXP, INTERNAL_TYPE) \
->   static SUFFIX accum_round_##SUFFIX(Accum a, float_status * fp_status) \
->   { \
-> @@ -517,143 +483,6 @@ static SUFFIX accum_round_##SUFFIX(Accum a, float_status * fp_status) \
+> -#define GEN_XF_ROUND(SUFFIX, MANTBITS, INF_EXP, INTERNAL_TYPE) \
+> -static SUFFIX accum_round_##SUFFIX(Accum a, float_status * fp_status) \
+> -{ \
+> -    if ((int128_gethi(a.mant) == 0) && (int128_getlo(a.mant) == 0) \
+> -        && ((a.guard | a.round | a.sticky) == 0)) { \
+> -        /* result zero */ \
+> -        switch (fp_status->float_rounding_mode) { \
+> -        case float_round_down: \
+> -            return zero_##SUFFIX(1); \
+> -        default: \
+> -            return zero_##SUFFIX(0); \
+> -        } \
+> -    } \
+> -    /* Normalize right */ \
+> -    /* We want MANTBITS bits of mantissa plus the leading one. */ \
+> -    /* That means that we want MANTBITS+1 bits, or 0x000000000000FF_FFFF */ \
+> -    /* So we need to normalize right while the high word is non-zero and \
+> -    * while the low word is nonzero when masked with 0xffe0_0000_0000_0000 */ \
+> -    while ((int128_gethi(a.mant) != 0) || \
+> -           ((int128_getlo(a.mant) >> (MANTBITS + 1)) != 0)) { \
+> -        a = accum_norm_right(a, 1); \
+> -    } \
+> -    /* \
+> -     * OK, now normalize left \
+> -     * We want to normalize left until we have a leading one in bit 24 \
+> -     * Theoretically, we only need to shift a maximum of one to the left if we \
+> -     * shifted out lots of bits from B, or if we had no shift / 1 shift sticky \
+> -     * should be 0  \
+> -     */ \
+> -    while ((int128_getlo(a.mant) & (1ULL << MANTBITS)) == 0) { \
+> -        a = accum_norm_left(a); \
+> -    } \
+> -    /* \
+> -     * OK, now we might need to denormalize because of potential underflow. \
+> -     * We need to do this before rounding, and rounding might make us normal \
+> -     * again \
+> -     */ \
+> -    while (a.exp <= 0) { \
+> -        a = accum_norm_right(a, 1 - a.exp); \
+> -        /* \
+> -         * Do we have underflow? \
+> -         * That's when we get an inexact answer because we ran out of bits \
+> -         * in a denormal. \
+> -         */ \
+> -        if (a.guard || a.round || a.sticky) { \
+> -            float_raise(float_flag_underflow, fp_status); \
+> -        } \
+> -    } \
+> -    /* OK, we're relatively canonical... now we need to round */ \
+> -    if (a.guard || a.round || a.sticky) { \
+> -        float_raise(float_flag_inexact, fp_status); \
+> -        switch (fp_status->float_rounding_mode) { \
+> -        case float_round_to_zero: \
+> -            /* Chop and we're done */ \
+> -            break; \
+> -        case float_round_up: \
+> -            if (a.sign == 0) { \
+> -                a.mant = int128_add(a.mant, int128_one()); \
+> -            } \
+> -            break; \
+> -        case float_round_down: \
+> -            if (a.sign != 0) { \
+> -                a.mant = int128_add(a.mant, int128_one()); \
+> -            } \
+> -            break; \
+> -        default: \
+> -            if (a.round || a.sticky) { \
+> -                /* round up if guard is 1, down if guard is zero */ \
+> -                a.mant = int128_add(a.mant, int128_make64(a.guard)); \
+> -            } else if (a.guard) { \
+> -                /* exactly .5, round up if odd */ \
+> -                a.mant = int128_add(a.mant, int128_and(a.mant, int128_one())); \
+> -            } \
+> -            break; \
+> -        } \
+> -    } \
+> -    /* \
+> -     * OK, now we might have carried all the way up. \
+> -     * So we might need to shr once \
+> -     * at least we know that the lsb should be zero if we rounded and \
+> -     * got a carry out... \
+> -     */ \
+> -    if ((int128_getlo(a.mant) >> (MANTBITS + 1)) != 0) { \
+> -        a = accum_norm_right(a, 1); \
+> -    } \
+> -    /* Overflow? */ \
+> -    if (a.exp >= INF_EXP) { \
+> -        /* Yep, inf result */ \
+> -        float_raise(float_flag_overflow, fp_status); \
+> -        float_raise(float_flag_inexact, fp_status); \
+> -        switch (fp_status->float_rounding_mode) { \
+> -        case float_round_to_zero: \
+> -            return maxfinite_##SUFFIX(a.sign); \
+> -        case float_round_up: \
+> -            if (a.sign == 0) { \
+> -                return infinite_##SUFFIX(a.sign); \
+> -            } else { \
+> -                return maxfinite_##SUFFIX(a.sign); \
+> -            } \
+> -        case float_round_down: \
+> -            if (a.sign != 0) { \
+> -                return infinite_##SUFFIX(a.sign); \
+> -            } else { \
+> -                return maxfinite_##SUFFIX(a.sign); \
+> -            } \
+> -        default: \
+> -            return infinite_##SUFFIX(a.sign); \
+> -        } \
+> -    } \
+> -    /* Underflow? */ \
+> -    if (int128_getlo(a.mant) & (1ULL << MANTBITS)) { \
+> -        /* Leading one means: No, we're normal. So, we should be done... */ \
+> -        INTERNAL_TYPE ret; \
+> -        ret.i = 0; \
+> -        ret.sign = a.sign; \
+> -        ret.exp = a.exp; \
+> -        ret.mant = int128_getlo(a.mant); \
+> -        return ret.i; \
+> -    } \
+> -    assert(a.exp == 1); \
+> -    INTERNAL_TYPE ret; \
+> -    ret.i = 0; \
+> -    ret.sign = a.sign; \
+> -    ret.exp = 0; \
+> -    ret.mant = int128_getlo(a.mant); \
+> -    return ret.i; \
+> +static float64 accum_round_float64(Accum a, float_status * fp_status)
+> +{
+> +    if ((int128_gethi(a.mant) == 0) && (int128_getlo(a.mant) == 0)
+> +        && ((a.guard | a.round | a.sticky) == 0)) {
+> +        /* result zero */
+> +        switch (fp_status->float_rounding_mode) {
+> +        case float_round_down:
+> +            return zero_float64(1);
+> +        default:
+> +            return zero_float64(0);
+> +        }
+> +    }
+> +    /* Normalize right */
+> +    /* We want DF_MANTBITS bits of mantissa plus the leading one. */
+> +    /* That means that we want DF_MANTBITS+1 bits, or 0x000000000000FF_FFFF */
+> +    /* So we need to normalize right while the high word is non-zero and
+> +    * while the low word is nonzero when masked with 0xffe0_0000_0000_0000 */
+> +    while ((int128_gethi(a.mant) != 0) ||
+> +           ((int128_getlo(a.mant) >> (DF_MANTBITS + 1)) != 0)) {
+> +        a = accum_norm_right(a, 1);
+> +    }
+> +    /*
+> +     * OK, now normalize left
+> +     * We want to normalize left until we have a leading one in bit 24
+> +     * Theoretically, we only need to shift a maximum of one to the left if we
+> +     * shifted out lots of bits from B, or if we had no shift / 1 shift sticky
+> +     * should be 0
+> +     */
+> +    while ((int128_getlo(a.mant) & (1ULL << DF_MANTBITS)) == 0) {
+> +        a = accum_norm_left(a);
+> +    }
+> +    /*
+> +     * OK, now we might need to denormalize because of potential underflow.
+> +     * We need to do this before rounding, and rounding might make us normal
+> +     * again
+> +     */
+> +    while (a.exp <= 0) {
+> +        a = accum_norm_right(a, 1 - a.exp);
+> +        /*
+> +         * Do we have underflow?
+> +         * That's when we get an inexact answer because we ran out of bits
+> +         * in a denormal.
+> +         */
+> +        if (a.guard || a.round || a.sticky) {
+> +            float_raise(float_flag_underflow, fp_status);
+> +        }
+> +    }
+> +    /* OK, we're relatively canonical... now we need to round */
+> +    if (a.guard || a.round || a.sticky) {
+> +        float_raise(float_flag_inexact, fp_status);
+> +        switch (fp_status->float_rounding_mode) {
+> +        case float_round_to_zero:
+> +            /* Chop and we're done */
+> +            break;
+> +        case float_round_up:
+> +            if (a.sign == 0) {
+> +                a.mant = int128_add(a.mant, int128_one());
+> +            }
+> +            break;
+> +        case float_round_down:
+> +            if (a.sign != 0) {
+> +                a.mant = int128_add(a.mant, int128_one());
+> +            }
+> +            break;
+> +        default:
+> +            if (a.round || a.sticky) {
+> +                /* round up if guard is 1, down if guard is zero */
+> +                a.mant = int128_add(a.mant, int128_make64(a.guard));
+> +            } else if (a.guard) {
+> +                /* exactly .5, round up if odd */
+> +                a.mant = int128_add(a.mant, int128_and(a.mant, int128_one()));
+> +            }
+> +            break;
+> +        }
+> +    }
+> +    /*
+> +     * OK, now we might have carried all the way up.
+> +     * So we might need to shr once
+> +     * at least we know that the lsb should be zero if we rounded and
+> +     * got a carry out...
+> +     */
+> +    if ((int128_getlo(a.mant) >> (DF_MANTBITS + 1)) != 0) {
+> +        a = accum_norm_right(a, 1);
+> +    }
+> +    /* Overflow? */
+> +    if (a.exp >= DF_INF_EXP) {
+> +        /* Yep, inf result */
+> +        float_raise(float_flag_overflow, fp_status);
+> +        float_raise(float_flag_inexact, fp_status);
+> +        switch (fp_status->float_rounding_mode) {
+> +        case float_round_to_zero:
+> +            return maxfinite_float64(a.sign);
+> +        case float_round_up:
+> +            if (a.sign == 0) {
+> +                return infinite_float64(a.sign);
+> +            } else {
+> +                return maxfinite_float64(a.sign);
+> +            }
+> +        case float_round_down:
+> +            if (a.sign != 0) {
+> +                return infinite_float64(a.sign);
+> +            } else {
+> +                return maxfinite_float64(a.sign);
+> +            }
+> +        default:
+> +            return infinite_float64(a.sign);
+> +        }
+> +    }
+> +    /* Underflow? */
+> +    if (int128_getlo(a.mant) & (1ULL << DF_MANTBITS)) {
+> +        /* Leading one means: No, we're normal. So, we should be done... */
+> +        Double ret;
+> +        ret.i = 0;
+> +        ret.sign = a.sign;
+> +        ret.exp = a.exp;
+> +        ret.mant = int128_getlo(a.mant);
+> +        return ret.i;
+> +    }
+> +    assert(a.exp == 1);
+> +    Double ret;
+> +    ret.i = 0;
+> +    ret.sign = a.sign;
+> +    ret.exp = 0;
+> +    ret.mant = int128_getlo(a.mant);
+> +    return ret.i;
 >   }
 >   
->   GEN_XF_ROUND(float64, DF_MANTBITS, DF_INF_EXP, Double)
-> -GEN_XF_ROUND(float32, SF_MANTBITS, SF_INF_EXP, Float)
+> -GEN_XF_ROUND(float64, DF_MANTBITS, DF_INF_EXP, Double)
 > -
-> -static bool is_inf_prod(float64 a, float64 b)
-> -{
-> -    return ((float64_is_infinity(a) && float64_is_infinity(b)) ||
-> -            (float64_is_infinity(a) && is_finite(b) && (!float64_is_zero(b))) ||
-> -            (float64_is_infinity(b) && is_finite(a) && (!float64_is_zero(a))));
-> -}
-> -
-> -static float64 special_fma(float64 a, float64 b, float64 c,
-> -                           float_status *fp_status)
-> -{
-> -    float64 ret = make_float64(0);
-> -
-> -    /*
-> -     * If A multiplied by B is an exact infinity and C is also an infinity
-> -     * but with the opposite sign, FMA returns NaN and raises invalid.
-> -     */
-> -    uint8_t a_sign = float64_is_neg(a);
-> -    uint8_t b_sign = float64_is_neg(b);
-> -    uint8_t c_sign = float64_is_neg(c);
-> -    if (is_inf_prod(a, b) && float64_is_infinity(c)) {
-> -        if ((a_sign ^ b_sign) != c_sign) {
-> -            ret = make_float64(DF_NAN);
-> -            float_raise(float_flag_invalid, fp_status);
-> -            return ret;
-> -        }
-> -    }
-> -    if ((float64_is_infinity(a) && float64_is_zero(b)) ||
-> -        (float64_is_zero(a) && float64_is_infinity(b))) {
-> -        ret = make_float64(DF_NAN);
-> -        float_raise(float_flag_invalid, fp_status);
-> -        return ret;
-> -    }
-> -    /*
-> -     * If none of the above checks are true and C is a NaN,
-> -     * a NaN shall be returned
-> -     * If A or B are NaN, a NAN shall be returned.
-> -     */
-> -    if (float64_is_any_nan(a) ||
-> -        float64_is_any_nan(b) ||
-> -        float64_is_any_nan(c)) {
-> -        if (float64_is_any_nan(a) && (fGETBIT(51, a) == 0)) {
-> -            float_raise(float_flag_invalid, fp_status);
-> -        }
-> -        if (float64_is_any_nan(b) && (fGETBIT(51, b) == 0)) {
-> -            float_raise(float_flag_invalid, fp_status);
-> -        }
-> -        if (float64_is_any_nan(c) && (fGETBIT(51, c) == 0)) {
-> -            float_raise(float_flag_invalid, fp_status);
-> -        }
-> -        ret = make_float64(DF_NAN);
-> -        return ret;
-> -    }
-> -    /*
-> -     * We have checked for adding opposite-signed infinities.
-> -     * Other infinities return infinity with the correct sign
-> -     */
-> -    if (float64_is_infinity(c)) {
-> -        ret = infinite_float64(c_sign);
-> -        return ret;
-> -    }
-> -    if (float64_is_infinity(a) || float64_is_infinity(b)) {
-> -        ret = infinite_float64(a_sign ^ b_sign);
-> -        return ret;
-> -    }
-> -    g_assert_not_reached();
-> -}
-> -
-> -static float32 special_fmaf(float32 a, float32 b, float32 c,
-> -                            float_status *fp_status)
-> -{
-> -    float64 aa, bb, cc;
-> -    aa = float32_to_float64(a, fp_status);
-> -    bb = float32_to_float64(b, fp_status);
-> -    cc = float32_to_float64(c, fp_status);
-> -    return float64_to_float32(special_fma(aa, bb, cc, fp_status), fp_status);
-> -}
-> -
-> -float32 internal_fmafx(float32 a, float32 b, float32 c, int scale,
-> -                       float_status *fp_status)
-> -{
-> -    Accum prod;
-> -    Accum acc;
-> -    Accum result;
-> -    accum_init(&prod);
-> -    accum_init(&acc);
-> -    accum_init(&result);
-> -
-> -    uint8_t a_sign = float32_is_neg(a);
-> -    uint8_t b_sign = float32_is_neg(b);
-> -    uint8_t c_sign = float32_is_neg(c);
-> -    if (float32_is_infinity(a) ||
-> -        float32_is_infinity(b) ||
-> -        float32_is_infinity(c)) {
-> -        return special_fmaf(a, b, c, fp_status);
-> -    }
-> -    if (float32_is_any_nan(a) ||
-> -        float32_is_any_nan(b) ||
-> -        float32_is_any_nan(c)) {
-> -        return special_fmaf(a, b, c, fp_status);
-> -    }
-> -    if ((scale == 0) && (float32_is_zero(a) || float32_is_zero(b))) {
-> -        float32 tmp = float32_mul(a, b, fp_status);
-> -        tmp = float32_add(tmp, c, fp_status);
-> -        return tmp;
-> -    }
-> -
-> -    /* (a * 2**b) * (c * 2**d) == a*c * 2**(b+d) */
-> -    prod.mant = int128_mul_6464(float32_getmant(a), float32_getmant(b));
-> -
-> -    /*
-> -     * Note: extracting the mantissa into an int is multiplying by
-> -     * 2**23, so adjust here
-> -     */
-> -    prod.exp = float32_getexp(a) + float32_getexp(b) - SF_BIAS - 23;
-> -    prod.sign = a_sign ^ b_sign;
-> -    if (float32_is_zero(a) || float32_is_zero(b)) {
-> -        prod.exp = -2 * WAY_BIG_EXP;
-> -    }
-> -    if ((scale > 0) && float32_is_denormal(c)) {
-> -        acc.mant = int128_mul_6464(0, 0);
-> -        acc.exp = -WAY_BIG_EXP;
-> -        acc.sign = c_sign;
-> -        acc.sticky = 1;
-> -        result = accum_add(prod, acc);
-> -    } else if (!float32_is_zero(c)) {
-> -        acc.mant = int128_mul_6464(float32_getmant(c), 1);
-> -        acc.exp = float32_getexp(c);
-> -        acc.sign = c_sign;
-> -        result = accum_add(prod, acc);
-> -    } else {
-> -        result = prod;
-> -    }
-> -    result.exp += scale;
-> -    return accum_round_float32(result, fp_status);
-> -}
->   
 >   float64 internal_mpyhh(float64 a, float64 b,
 >                         unsigned long long int accumulated,
-
-
+>                         float_status *fp_status)
 Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-
 
