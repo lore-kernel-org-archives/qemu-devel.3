@@ -4,155 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EB64E77182
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 20:49:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907B0E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 20:50:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL7AL-0008Qn-Ar; Tue, 10 Dec 2024 15:49:09 -0500
+	id 1tL75o-0007Nu-AR; Tue, 10 Dec 2024 15:44:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tL7AC-0007rj-N0; Tue, 10 Dec 2024 15:49:04 -0500
-Received: from mail-co1nam11on2060e.outbound.protection.outlook.com
- ([2a01:111:f403:2416::60e]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1tL7A9-0002m1-Bu; Tue, 10 Dec 2024 15:49:00 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=yMmilJl2F+Gk+2PL5R500c57hZu0eMLp80T+KuVSPS0GBXxx9Lv532j13oT/BIn2mF0XH3It8b0q0pAIWZny0fJDQVkB3MiPA/O0t5xJ0nCNrT21oHqxAu8st35aJ5wAboWuFJRHpODHi/+OBOOVMJW7IrJSZ8/FKko9X3Cutu4P2h+MleS5GINgN1LpNZyeuNNOPPIpoAf9hRS7ECuaHF5Wqufl9cIWBKmLU49JtufFG1fl316pPUM+Mt5Yf2TnY/wQaSsXS9yVTkn1Z9VUalLC1dxVYWoClfD0gSxLQ99rlqhFq/zfQ6gscTQygMyBxXWvgwrrKJSSdgq8dZhpIw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=RJ6O0qV4o8GaUzk8LSE1mcozPWGYSHHBzVGxPO255m8=;
- b=BXeIHS8YKMERhLD0I2XCB8SaFPWOovFkjXvHTtW9U9rfZMq38lpDJ8CvpWVgVS6xMrO+kKXnSu/pJI0nR4q+qOwJxDV/ZXx+3JOCGs+WhfRkJlLodCNS8ujSi/1zbG0RaEQtwtvFmMCouRfw1LScGaWwh/7zeabCV+neaqKJjDvmnsTQDdC0WhdPZ+IzPZYJdg32l6IB4PSiOUbhApZlIXCDIVA2hUok1k7hjOVtQKoB14qdIX+J7lhP2gNGSiuj3RdQCVzaIOPQqUEO+7xb47UF6aJmf3JjZhwTxAsNgoitAUfuqbb8OljSkIjAzVvBi1zbbMYSVenyG23IOLvrqQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=RJ6O0qV4o8GaUzk8LSE1mcozPWGYSHHBzVGxPO255m8=;
- b=Z6+GCHgC/YHJ/V8voR1FFU5BSfCUnI7occlVoa3Pt9gxk1h7J1EWBWq/A9yUpUxZIubmOnsfw7+J7PCXQdqCuSAHpHen2yj2R179VxookcMmf0FWl7EDafs9WARfmFFu0CekJMncqN+3lA7cIMFlwxqCg3Fgkd2LCe/24ugVCHs9TWORNdpgYO26uCVxsL3O9ttjEozcfL9fpE+XR80uFDVFPmR+ySGj41uGlXXR+C7nTVnbfW7AVkaI5BqozgplyF+2+f9tMUfmNsLsvgohYnshL5hfWHD05p/noKJvVBuFouVHX2Kdsj4M+yD1RjUNFNX0TJkyZxCin1mM4ZMs5Q==
-Received: from BN9PR03CA0707.namprd03.prod.outlook.com (2603:10b6:408:ef::22)
- by IA0PR12MB8981.namprd12.prod.outlook.com (2603:10b6:208:484::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.12; Tue, 10 Dec
- 2024 20:48:43 +0000
-Received: from BN1PEPF00004688.namprd05.prod.outlook.com
- (2603:10b6:408:ef:cafe::5a) by BN9PR03CA0707.outlook.office365.com
- (2603:10b6:408:ef::22) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8230.18 via Frontend Transport; Tue,
- 10 Dec 2024 20:48:43 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- BN1PEPF00004688.mail.protection.outlook.com (10.167.243.133) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8251.15 via Frontend Transport; Tue, 10 Dec 2024 20:48:42 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Tue, 10 Dec
- 2024 12:48:30 -0800
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Tue, 10 Dec 2024 12:48:30 -0800
-Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
- Transport; Tue, 10 Dec 2024 12:48:30 -0800
-Date: Tue, 10 Dec 2024 12:48:28 -0800
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Message-ID: <Z1ipHKP4L/++143Q@Asurada-Nvidia>
-References: <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
- <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
- <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
- <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
- <0803ec1a010a46b9811543e1044c3176@huawei.com>
- <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
- <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
- <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
- <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
- <c14feb2934a0478180635bbdb27d5e53@huawei.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tL75S-00074o-Fc
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:44:06 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tL75I-00020S-O7
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 15:44:06 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so2934014f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 12:43:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733863435; x=1734468235; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uQa8lE+2zCWqeETwyUKylE9fAVCRJIjj0umvCIZJA8E=;
+ b=QvQroJ6N7oGTL9Xpv5Hg96lWMsoz0+vowWu4KdhsM4tGHXOMXHRMV+zHCC9agshUJ8
+ eyPYIw4kj6xrRBUBQwte2v9iZKM4CeU9YO2M5vnid8UTI7sACY6bvTdq0EhRA9oc0Z3D
+ JV+4uOT8R85m7TmBoHsIxAQWB0Gda6xkWEbyftHcLjL54lIl5li+TAv7rpywlUuxvhuL
+ +FfoTQR2X+jHxNkH1lSruFsMFNUq+HCevY9VQkSKnRhmc0AvCXudXiWMc3JUXTGDYEBL
+ jCgyexxSBIgnC0TK6mU7T+wcWkk/K7PDMJMaa1eYivfYMSfY3ajDRlXndEWHHZnrJtcf
+ GMrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733863435; x=1734468235;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uQa8lE+2zCWqeETwyUKylE9fAVCRJIjj0umvCIZJA8E=;
+ b=s7PoMTgBNpBm+DucRjScfiqqFUD2GwM/vQRaIeoQsB/83MfiWu/9Cf7b9Ocw0cJ/VD
+ 0K1XfuFQ80j4GdqETlXZ/UHIQMwQCsoE+V1fldajHxl5tG6qAzX9QMkQfDivbaZlmIHP
+ anV1OPi0G3AKd0O55P6pH3ViVW3pNLp3w+NkLVh57FOkQJ4Pyd5zAg/THeienOwG7AMO
+ T49o81bMhGMkJLs3nqXiHZbxd6Sc11l+y4hDJOAEwko7Tw7t20i1/yloT0PzJ8Ssp0ZZ
+ vwUoiWBkgwk8fd8j1C+wkbF2FVdYWUMu14N9dNc+3D9JVR0E7dWoCk+CGU0Yv3oIPMi2
+ hIHQ==
+X-Gm-Message-State: AOJu0YyNcS1srA9/s+aJKHYK8YDDDGfG50yk+iAbB4EITahsgMOQ4mGG
+ 1MloMX89VFE/gvnaLIjO6HpzpZElUy13dMa665xg2jRH1yok7JBomPINLQIiIvs=
+X-Gm-Gg: ASbGncu01O5jhtH1waVWWN23YNAomNKets1/6gCLTh074LU3YqPtXQ4GnwFoMvd8sVM
+ VOC7Tp47hr0CiItCtogayszm8gSp8UUj4FKJ+xSJ6bODrsNijE7FjAu8fu7ztP+S0ktG/xOirdF
+ VeAbiIo4MNy9BuXeRUMHEDJqkNBwSOV8bUr0crrBa8A8O6CSnmtvRjllctMbQ1tg86mQJ2C6UlY
+ AkUC7mjowAVWZqqyGc+nYOK4cvxhcZ72oFVIA43he3YoBkAG5k1
+X-Google-Smtp-Source: AGHT+IELup0DkqbwWAfx5Wrg+LModdBAQX/HYN40KMOjTNWi2OqrgOg1NF36ZqsCmAHuV7yeDvpyuA==
+X-Received: by 2002:a05:6000:1445:b0:386:4a24:1914 with SMTP id
+ ffacd0b85a97d-3864cea3a2bmr387389f8f.37.1733863434885; 
+ Tue, 10 Dec 2024 12:43:54 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38637072adasm11021748f8f.81.2024.12.10.12.43.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Dec 2024 12:43:53 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 44DE15FD45;
+ Tue, 10 Dec 2024 20:43:50 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-s390x@nongnu.org,
+ Halil Pasic <pasic@linux.ibm.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Cleber Rosa <crosa@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Thomas Huth <thuth@redhat.com>, Laurent Vivier <lvivier@redhat.com>,
+ qemu-arm@nongnu.org, Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH 10/20] tests/functional: update the riscv32 tuxrun tests
+Date: Tue, 10 Dec 2024 20:43:39 +0000
+Message-Id: <20241210204349.723590-11-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241210204349.723590-1-alex.bennee@linaro.org>
+References: <20241210204349.723590-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <c14feb2934a0478180635bbdb27d5e53@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00004688:EE_|IA0PR12MB8981:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50bc86cd-0bb4-4d16-b40f-08dd195c088a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sOB2KEFcldy8wCamNiqWphY5kS6hyksnkNd+OVV8N+JVMzkdPNG6J7BEZbvk?=
- =?us-ascii?Q?KUEVlsmSGZegFDIf9mDzTWlCLTVKFvbofQ/lzckVBWJkJtY/7ODNeo/nRsZY?=
- =?us-ascii?Q?7JZOFZwqq273B0Ozejbsqom/1gOX3WYv7QiPJPRs1Kzp76gPgN2kDLfQ2Boi?=
- =?us-ascii?Q?1Vtf0EjPBJtwqR61Vc/xScsHEolGMtNFYqyMn6QvDvv1Ydp2ZdPnA60DT9HB?=
- =?us-ascii?Q?xPLp1W0yVo1kH2kWS4rs0ba2/VcKKQ1UfJN3Vbe4M+bHHr8Vp0eZOuo8n4ST?=
- =?us-ascii?Q?s8TE+kpLETbxs+/UnjCbIC6NNg1GfksXzTv25R/6+uWp0LJjaP8jHUtiSV36?=
- =?us-ascii?Q?yqlDMQ6qYEk0YWFuQms2/dPmzmwrBNwReJECbIpdurzquhEHckybdeW2IYjM?=
- =?us-ascii?Q?RriO5gdy26Qmjfn6ndOTgohgqnX8YP5ieydmNcZcWQ5wjb7rLOJtmR8TEDO6?=
- =?us-ascii?Q?DSEblXEtXfYU1Hh3WE5pieJcAd1g6ghWOL+WfA6jO/1l7PEO3avLVaoQ6C9U?=
- =?us-ascii?Q?rUvJz3muLJfeIiUcmCtt9QtPNNN3wR5vyhgwflwsrK99anxYL/p77425cB3y?=
- =?us-ascii?Q?z49hdSe6mIBXENOFQmal1SADkRDbvC1Z23qDo+qHtRIfINZdRSwh4+9T+Ene?=
- =?us-ascii?Q?Qjc4nnN1qjOTuufvVLYTKySegyKC0lMsF5gEXL4bJfotGFqivU2lpEIchaAE?=
- =?us-ascii?Q?65l5Ed71aIfSHv/etu7lJmtTx75o/kvW7wsmtmbckCn68LdpjTTSvnBiblaZ?=
- =?us-ascii?Q?sAyI3qOZmF0Xr9ddIoCWJ4pNWszZ3CJBHekNUu14U9HWdLqeI4npIFSIKxOb?=
- =?us-ascii?Q?oHfKgSggFWamNPPT6d2eKvWUuC0dqMQWUxvK8LrnFr8chUa4BEJB9SB2UUqA?=
- =?us-ascii?Q?mtjIomzVO/V2LvwbHFcNg3J/NEoBV53gUhgm5luFBNIFs5Kl8UkQxNHXv9LY?=
- =?us-ascii?Q?72iuicWwn2vKTUdJXcZZ7EfL6vBbxEKFLo2XL4CaNcm3skNr/iazRUhmIAXP?=
- =?us-ascii?Q?cvXTWfFY7doQrC2zCy5FZvv/yWBDXrvWPHnc3yuIXxCt8v9iSCjjRYwXu6G1?=
- =?us-ascii?Q?t8fk19nb0pOGey31L750PMmK3MJCqzm+TCvIJtfCpXHy9d1C9x9iviYn4/eM?=
- =?us-ascii?Q?bu+rdhWCBPsagnBSzu60amWXjuGiQFspyf9N/8AaAqfGXFEFIsNiqxtqyeNr?=
- =?us-ascii?Q?fguSwOCEMZwhvryNMliw3HgWwxVViF39h8tmWzSGoGD74ZzQm+hxKkW5JDJS?=
- =?us-ascii?Q?5gfwyFABt6bsqAEfusuYEXfWO6y5fLO+C/Ffew43SiUI+oqK0aqobW9EI5VR?=
- =?us-ascii?Q?JGPtXFUMB5rEVBO1UKIo1VYhD6LgbBL13hfilCK01Aq7k6zaLaMZR7WE6Y3H?=
- =?us-ascii?Q?/An/A/UfXh/xT4PzhKO67fzRo2olJFe9dkT2wrWOuAhWqGaa56JbgRtt7X5D?=
- =?us-ascii?Q?vzV4uWCII6Dj5JhjO/vGxEioIGqZJJPM?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Dec 2024 20:48:42.5440 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50bc86cd-0bb4-4d16-b40f-08dd195c088a
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00004688.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR12MB8981
-Received-SPF: softfail client-ip=2a01:111:f403:2416::60e;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,89 +130,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 09:46:16AM +0000, Shameerali Kolothum Thodi wrote:
-> Hi Eric,
-> 
-> > -----Original Message-----
-> > From: Shameerali Kolothum Thodi
-> > Sent: Wednesday, November 20, 2024 4:26 PM
-> > To: 'eric.auger@redhat.com' <eric.auger@redhat.com>; qemu-
-> > arm@nongnu.org; qemu-devel@nongnu.org
-> > Cc: peter.maydell@linaro.org; jgg@nvidia.com; nicolinc@nvidia.com;
-> > ddutile@redhat.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
-> > <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
-> > Jonathan Cameron <jonathan.cameron@huawei.com>;
-> > zhangfei.gao@linaro.org
-> > Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with
-> > multiple SMMU nodes
-> > 
-> > > > I think I have an idea why the hot add was not working.
-> > > >
-> > > > When we have the PCIe topology as something like below,
-> > > >
-> > > > -device pxb-pcie,id=pcie.1,bus_nr=8,bus=pcie.0 \ -device
-> > > > pcie-root-port,id=pcie.port1,bus=pcie.1,chassis=1 \ -device
-> > > > pcie-root-port,id=pcie.port2,bus=pcie.1,chassis=2 \ -device
-> > > > arm-smmuv3-nested,id=smmuv1,pci-bus=pcie.1 \ ...
-> > > >
-> > > > The current IORT generation includes the pcie-root-port dev ids also
-> > > > in the SMMUv3 node idmaps.
-> > > >
-> > > > Hence, when Guest kernel loads, pcieport is also behind the SMMUv3.
-> > > >
-> > > > [    1.466670] pcieport 0000:64:00.0: Adding to iommu group 1
-> > > > ...
-> > > > [    1.448205] pcieport 0000:64:01.0: Adding to iommu group 2
-> > >
-> > > But it should be the same without multi-instantiation, no? I would
-> > > have expected this as normal. Has you tested hot-plug without the
-> > > series laterly? Do you have the same pb?
-> > 
-> > That is a good question. I will give it a try soon and update.
-> 
-> I tried hot add with the current SMMUv3(iommu=smmuv3) and hot add
-> works when I added a virtio dev to pcie-root-port connected to a pxb-pcie.
-> 
-> And now I think I know(hopefully) the reason why it is not working with
-> smmuv3-nested case. I think the root cause is this commit here,
-> 
-> (series: " cover-letter: Add HW accelerated nesting support for arm SMMUv3")
+Now there are new up to date images available we should update to them.
 
-> This changes the way address space is returned for the devices.
-> 
-> static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
-> {
->     SMMUState *s = opaque;
->     SMMUPciBus *sbus = smmu_get_sbus(s, bus);
->     SMMUDevice *sdev = smmu_get_sdev(s, sbus, bus, devfn);
-> 
->     /* Return the system as if the device uses stage-2 only */
->     if (s->nested && !sdev->s1_hwpt) {
->         return &sdev->as_sysmem;
->     } else {
->         return &sdev->as;
->     }
-> }
-> 
-> If we have entries in the SMMUv3 idmap for bus:devfn, then I think we should
-> return IOMMU address space here. But the logic above returns sysmem
-> address space for anything other than vfio/iommufd devices.
->
-> The hot add works when I hacked the logic to return IOMMU address space
-> for pcie root port devices.
+Cc: Anders Roxell <anders.roxell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-31-alex.bennee@linaro.org>
+---
+ tests/functional/test_riscv32_tuxrun.py | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-That is to bypass the "if (memory_region_is_iommu(section->mr))"
-in vfio_listener_region_add(), when the device gets initially
-attached to the default container.
+diff --git a/tests/functional/test_riscv32_tuxrun.py b/tests/functional/test_riscv32_tuxrun.py
+index 49b57cd428..3c570208d0 100755
+--- a/tests/functional/test_riscv32_tuxrun.py
++++ b/tests/functional/test_riscv32_tuxrun.py
+@@ -17,11 +17,11 @@
+ class TuxRunRiscV32Test(TuxRunBaselineTest):
+ 
+     ASSET_RISCV32_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/riscv32/Image',
+-        '89599407d7334de629a40e7ad6503c73670359eb5f5ae9d686353a3d6deccbd5')
++        'https://storage.tuxboot.com/buildroot/20241119/riscv32/Image',
++        '872bc8f8e0d4661825d5f47f7bec64988e9d0a8bd5db8917d57e16f66d83b329')
+     ASSET_RISCV32_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/riscv32/rootfs.ext4.zst',
+-        '7168d296d0283238ea73cd5a775b3dd608e55e04c7b92b76ecce31bb13108cba')
++        'https://storage.tuxboot.com/buildroot/20241119/riscv32/rootfs.ext4.zst',
++        '511ad34e63222db08d6c1da16fad224970de36517a784110956ba6a24a0ee5f6')
+ 
+     def test_riscv32(self):
+         self.set_machine('virt')
+-- 
+2.39.5
 
-Once a device reaches to the pci_device_set_iommu_device() call,
-it should be attached to an IDENTIY/bypass proxy s1_hwpt, so the
-smmu_find_add_as() will return the iommu as.
-
-So, the fact that your hack is working means the hotplug routine
-is likely missing a pci_device_set_iommu_device() call, IMHO, or
-probably it should do pci_device_iommu_address_space() after the
-device finishes pci_device_set_iommu_device() instead..
-
-Nicolin
 
