@@ -4,56 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C66E77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:41:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04355E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 16:41:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tL3HE-0003di-CO; Tue, 10 Dec 2024 11:40:00 -0500
+	id 1tL3HE-0003dl-UT; Tue, 10 Dec 2024 11:40:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tL3HD-0003dL-Dh
+ id 1tL3HD-0003dM-Df
  for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:39:59 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1tL3HA-00028h-OG
+ id 1tL3HB-00028i-01
  for qemu-devel@nongnu.org; Tue, 10 Dec 2024 11:39:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1733848795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/hOg1lz5x0NChpp/h+7K4thveOeFs3O8kIO9rrZ56fQ=;
- b=J7vfZ2HI8ZZCvoAfOSQL81Z5voZXeO1P8nHtQzbsNV2FVL7PX6yfQDldiyy1ca7VEVpcT4
- uUcmHuK3C6RpQJzJEmPxDjqik4PX9uVgM6aChDPV/KrhKeJOkQ43q4kzrbwdKAnNry68m4
- 8iJZFfj6qJC3Z59QrDXUj5QDlAq/Ces=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=gNJkPs+RHe7hahsiRyWvbmTQApHBBLIMrWltpogGef8=;
+ b=Woy7ee4bn1MURcI+cR6zMthNblKw5SpokBeNI2TCmySafgk3LSWfOxGkeWd+/F2eamW0sN
+ Y8A567ephLL9/g55F26726ehJ2VSRj/Z2V/NfzCvJaLRNm8abKz0MrWviSa9ULLr8t4u7u
+ GVhXM1ucdZ0vEotCVQ5QJpzc9/1uVdA=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-544-UVXHjrz9PHq1Uzjfx2HuSg-1; Tue,
- 10 Dec 2024 11:39:51 -0500
-X-MC-Unique: UVXHjrz9PHq1Uzjfx2HuSg-1
-X-Mimecast-MFC-AGG-ID: UVXHjrz9PHq1Uzjfx2HuSg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-684-jIZiP20hPJ6KbVPHo9-dOg-1; Tue,
+ 10 Dec 2024 11:39:54 -0500
+X-MC-Unique: jIZiP20hPJ6KbVPHo9-dOg-1
+X-Mimecast-MFC-AGG-ID: jIZiP20hPJ6KbVPHo9-dOg
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 953111956088; Tue, 10 Dec 2024 16:39:50 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9B40A1956057; Tue, 10 Dec 2024 16:39:53 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 819B030001A8; Tue, 10 Dec 2024 16:39:48 +0000 (UTC)
+ id 05B8A300018D; Tue, 10 Dec 2024 16:39:50 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: mst@redhat.com, imammedo@redhat.com, eric.mackay@oracle.com,
  anisinha@redhat.com
-Subject: [PATCH 0/3] cpuhp: ensure that cpu hotremove works the 1st time
-Date: Tue, 10 Dec 2024 17:39:42 +0100
-Message-ID: <20241210163945.3422623-1-imammedo@redhat.com>
+Subject: [PATCH 1/3] tests: acpi: whitelist expected blobs
+Date: Tue, 10 Dec 2024 17:39:43 +0100
+Message-ID: <20241210163945.3422623-2-imammedo@redhat.com>
+In-Reply-To: <20241210163945.3422623-1-imammedo@redhat.com>
+References: <20241210163945.3422623-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -83,61 +86,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 42 +++++++++++++++++++++
+ 1 file changed, 42 insertions(+)
 
-CPU hotremove event is not delivered to OSPM if the CPU
-has been hotplugged before OS has booted.
-For details see [2/3].
-
-Igor Mammedov (3):
-  tests: acpi: whitelist expected blobs
-  cpuhp: make sure that remove events are handled within the same SCI
-  tests: acpi: update expected blobs
-
- hw/acpi/cpu.c                                 |  43 ++++++++++++++----
- tests/data/acpi/x86/pc/DSDT                   | Bin 8526 -> 8593 bytes
- tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8437 -> 8504 bytes
- tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9851 -> 9918 bytes
- tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15397 -> 15464 bytes
- tests/data/acpi/x86/pc/DSDT.cphp              | Bin 8990 -> 9057 bytes
- tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10180 -> 10247 bytes
- tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8477 -> 8544 bytes
- tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5033 -> 5100 bytes
- tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8598 -> 8665 bytes
- tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9885 -> 9952 bytes
- tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8384 -> 8451 bytes
- tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8532 -> 8599 bytes
- tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12319 -> 12386 bytes
- tests/data/acpi/x86/q35/DSDT                  | Bin 8355 -> 8422 bytes
- tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8372 -> 8439 bytes
- tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9680 -> 9747 bytes
- .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12565 -> 12632 bytes
- .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8634 -> 8701 bytes
- tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8401 -> 8468 bytes
- tests/data/acpi/x86/q35/DSDT.bridge           | Bin 11968 -> 12035 bytes
- tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12913 -> 12980 bytes
- tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33770 -> 33837 bytes
- tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8819 -> 8886 bytes
- tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13146 -> 13213 bytes
- tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10009 -> 10076 bytes
- tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8430 -> 8497 bytes
- tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8443 -> 8510 bytes
- tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8372 -> 8439 bytes
- tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9714 -> 9781 bytes
- tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9485 -> 9552 bytes
- tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13208 -> 13275 bytes
- tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8235 -> 8302 bytes
- tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8213 -> 8280 bytes
- tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8361 -> 8428 bytes
- tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8456 -> 8523 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12913 -> 12980 bytes
- tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33770 -> 33837 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 8961 -> 9028 bytes
- tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 8987 -> 9054 bytes
- tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18589 -> 18656 bytes
- tests/data/acpi/x86/q35/DSDT.viot             | Bin 14612 -> 14679 bytes
- tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35718 -> 35785 bytes
- 43 files changed, 34 insertions(+), 9 deletions(-)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..a1047913af 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,43 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/x86/pc/DSDT",
++"tests/data/acpi/x86/pc/DSDT.acpierst",
++"tests/data/acpi/x86/pc/DSDT.acpihmat",
++"tests/data/acpi/x86/pc/DSDT.bridge",
++"tests/data/acpi/x86/pc/DSDT.cphp",
++"tests/data/acpi/x86/pc/DSDT.dimmpxm",
++"tests/data/acpi/x86/pc/DSDT.hpbridge",
++"tests/data/acpi/x86/pc/DSDT.hpbrroot",
++"tests/data/acpi/x86/pc/DSDT.ipmikcs",
++"tests/data/acpi/x86/pc/DSDT.memhp",
++"tests/data/acpi/x86/pc/DSDT.nohpet",
++"tests/data/acpi/x86/pc/DSDT.numamem",
++"tests/data/acpi/x86/pc/DSDT.roothp",
++"tests/data/acpi/x86/q35/DSDT",
++"tests/data/acpi/x86/q35/DSDT.acpierst",
++"tests/data/acpi/x86/q35/DSDT.acpihmat",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-generic-x",
++"tests/data/acpi/x86/q35/DSDT.acpihmat-noinitiator",
++"tests/data/acpi/x86/q35/DSDT.applesmc",
++"tests/data/acpi/x86/q35/DSDT.bridge",
++"tests/data/acpi/x86/q35/DSDT.core-count",
++"tests/data/acpi/x86/q35/DSDT.core-count2",
++"tests/data/acpi/x86/q35/DSDT.cphp",
++"tests/data/acpi/x86/q35/DSDT.cxl",
++"tests/data/acpi/x86/q35/DSDT.dimmpxm",
++"tests/data/acpi/x86/q35/DSDT.ipmibt",
++"tests/data/acpi/x86/q35/DSDT.ipmismbus",
++"tests/data/acpi/x86/q35/DSDT.ivrs",
++"tests/data/acpi/x86/q35/DSDT.memhp",
++"tests/data/acpi/x86/q35/DSDT.mmio64",
++"tests/data/acpi/x86/q35/DSDT.multi-bridge",
++"tests/data/acpi/x86/q35/DSDT.noacpihp",
++"tests/data/acpi/x86/q35/DSDT.nohpet",
++"tests/data/acpi/x86/q35/DSDT.numamem",
++"tests/data/acpi/x86/q35/DSDT.pvpanic-isa",
++"tests/data/acpi/x86/q35/DSDT.thread-count",
++"tests/data/acpi/x86/q35/DSDT.thread-count2",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm12",
++"tests/data/acpi/x86/q35/DSDT.tis.tpm2",
++"tests/data/acpi/x86/q35/DSDT.type4-count",
++"tests/data/acpi/x86/q35/DSDT.viot",
++"tests/data/acpi/x86/q35/DSDT.xapic",
 -- 
 2.43.0
 
