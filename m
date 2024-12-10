@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07B9CE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 08:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A85AE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 08:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKvoC-0001tO-Gm; Tue, 10 Dec 2024 03:41:32 -0500
+	id 1tKw0a-00040e-FG; Tue, 10 Dec 2024 03:54:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1tKvoA-0001sw-Pc
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:41:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tKw0Z-00040H-G3
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1tKvo8-0002nF-F6
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:41:30 -0500
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1tKw0X-0004Ji-13
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:54:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733820084;
+ s=mimecast20190719; t=1733820854;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2NjwMjuY+2pkiqrA57IjL2SpBxulohpGIoPPjxRZ6Ik=;
- b=V2jmPXZSX80tdZ+MUHKBM6KtXQhYs9EAuUROXm65UkC2Ud0iGfQPHQykYmYJmcS5rkomHp
- PW4vXxNkBi8JCrxKqeJEMqRRKu4yXVKAgVXNvQZY7yCQnUQThg0MoqHOWhoHKX/TMjlD2h
- ztVMNgexsflPo7++F4kuRwLQ6PtCG2A=
-Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
- [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DXfSS8zHEJoRmBQrQPPXmbh8ou8W5Z4vg2tUAj7+7Ew=;
+ b=WI65+ojUyqD9upJXWkJAScEkgAbVHvbRwN2DV8yq6oH/xkvgdKu6DYE331boOIO9UlOQaq
+ msmPPoM5/dlpj331ZyOjQ2jiTqLCsoa4VNZlJlaoUAOijiCD4N3YLCmJD1WSw+H8XWNmni
+ OoE7HGx4X2tZFlPuJKlrCYNcEuZsMAo=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-531-p2n-bM9RPXe6l7yCX4wkbg-1; Tue, 10 Dec 2024 03:41:22 -0500
-X-MC-Unique: p2n-bM9RPXe6l7yCX4wkbg-1
-X-Mimecast-MFC-AGG-ID: p2n-bM9RPXe6l7yCX4wkbg
-Received: by mail-yw1-f200.google.com with SMTP id
- 00721157ae682-6ef55459400so13789427b3.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 00:41:22 -0800 (PST)
+ us-mta-372-su02VAHUMxOfbH-ISzQbIg-1; Tue, 10 Dec 2024 03:54:12 -0500
+X-MC-Unique: su02VAHUMxOfbH-ISzQbIg-1
+X-Mimecast-MFC-AGG-ID: su02VAHUMxOfbH-ISzQbIg
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d8b3173b5bso84199296d6.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 00:54:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733820081; x=1734424881;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2NjwMjuY+2pkiqrA57IjL2SpBxulohpGIoPPjxRZ6Ik=;
- b=vpPi0kRyGaDh7KQgDWXIrmL1GDXSHoK2Hwv0xoQqJ3Yfywi2GVwWogqRRxhDnjEk3w
- poOW+Xnz0oUtVznv054FaVevwN65Gnmvay09U2C1TI3KLQv7q93NdVh+C0oJywsE8HZ9
- D7qDoAejlxOs5iAyFXPHpUOzQy6QMi94qKGvP543/7H3hunRGo9zi5/41VCsNBtX7FIK
- WGKhW6h2WTMaDP9Tf3qPyYC07v2d10TZmX8Mef+mrhNLPi8vHsRBm60q8hCRAkR8R4jE
- LmwmP87SNwRzqJE74+8xp8DsQXgA0wzcuzFKvlgNpGoJzScs1eyVjuY93Q5Y7oZ20UTt
- uJGA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUd+A9BARHmDT3v36v51lhceRTxx2Zens01p1KforYxXaIsPtohL3JOASWRfmRHaRxi4ehowYweuJnD@nongnu.org
-X-Gm-Message-State: AOJu0Yy/6i8vnQk0FwByJH+D89b6sj9V/zKGO2w966nfPKtereRbZVeY
- T861KMAz/h1e5tSKcGtbFkgIwpAW1/K+n8FP7cOwO6B1M0sM9vvsRy0sD6xROcy0gguhXoIHJV8
- nY559CLwG8aXh0qNjGTRSQQSOAzGDI/9EBVDjmiSu0cKXSBf2aDWPy9swmu48k4yZSwJBTXEiNl
- XjN14s9vnaJd7zWSQaF1inz9GF1Jg=
-X-Gm-Gg: ASbGncuwMv9grIulbQwFpziuNqHmPmVh8ZDdItRDC7XyxwmZfG0EsD8YQGR7m0/2wh5
- v//jf3XfsUlrfSD1CY28DmraEXtVaGKMX26U=
-X-Received: by 2002:a05:690c:6485:b0:6ee:bcdd:b1fb with SMTP id
- 00721157ae682-6f022eb1248mr33948597b3.19.1733820081704; 
- Tue, 10 Dec 2024 00:41:21 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGAlxLdVVp28kAU4q1X4/m32DHGMTJrCI1dzmqDzaWAArU7u2bTD7GehxAZieM/c44yGhM62oTjzlf++8NC2j8=
-X-Received: by 2002:a05:690c:6485:b0:6ee:bcdd:b1fb with SMTP id
- 00721157ae682-6f022eb1248mr33948527b3.19.1733820081430; Tue, 10 Dec 2024
- 00:41:21 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733820851; x=1734425651;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=DXfSS8zHEJoRmBQrQPPXmbh8ou8W5Z4vg2tUAj7+7Ew=;
+ b=hOUWwdrx3aEfgiJ1Na6iTtoj0aF1SI8UpcCu2YamffmuuQtph1VGbTBvLeiD0+Bypf
+ k/RY71WGxaT0k/YNzmVpYUGKkS2CCevaQJrZakuJkubfn4287gmVXSgCJNjgjY/vDUti
+ pPun3snp54CqS0NOghEA+4qU6lUCB/HaIKGsbeC3+Ga54zrusVJQYiPnAqUQ/PuKYMQI
+ ZuE7OhM7kQWzPEt6Gzk12cAjaIgQbrgSIBDqzZegmVZEbppwQv6bVthmL6c0+lsAnf8j
+ 6lUHz3UCyk9bfD2bMxwbTEaCD+m4S8fHax9grDIN8hsyt2j7W4DWwt+4/zMiA+ANgBKq
+ VYqw==
+X-Gm-Message-State: AOJu0YzrOR52uXCaSutfeRiJcS2CkTPoAZt7pHPLDh9pyr1XJV9IeV/7
+ 10YRTqyJnoXZxQWl09FQCbPhrd55yHVIXHqvK535fOlQpdITfW0zOlxil7tunPWclgve9UMIXKm
+ 0CK3g97XEffo0R/gXUIAm5gA9jySnkrQrn31R04e8tmd6H1qlLI12TmiVkVAzHzCVbPSBX0NsQn
+ k6cmk4BUjclMDmuJ2kTFBgCM54PHwaS8WzCuSEGA==
+X-Gm-Gg: ASbGncu2UMFoxKoGmqFEPh2QaHzyhe9bxhszxFYBPEDuCSSAbuB8o1U7Snoa0S78iPv
+ C55AeRqZU1vV42nvMcQAjkyYKSwHV7A/Cy+RFOA==
+X-Received: by 2002:a05:6214:2aa7:b0:6ce:2357:8a2e with SMTP id
+ 6a1803df08f44-6d91e411d20mr60194976d6.37.1733820851528; 
+ Tue, 10 Dec 2024 00:54:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8bjDgEBpHp4t/9Aedgfo64CXs0F7twh+JOUYm4PT+O4B1X65RawIbn0+I1hylWUq2vbmL6SWjNgzB89/5sXQ=
+X-Received: by 2002:a05:6214:2aa7:b0:6ce:2357:8a2e with SMTP id
+ 6a1803df08f44-6d91e411d20mr60194806d6.37.1733820851272; Tue, 10 Dec 2024
+ 00:54:11 -0800 (PST)
 MIME-Version: 1.0
-References: <20241205203430.76251-1-sahilcdq@proton.me>
- <20241205203430.76251-2-sahilcdq@proton.me>
-In-Reply-To: <20241205203430.76251-2-sahilcdq@proton.me>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Tue, 10 Dec 2024 09:40:45 +0100
-Message-ID: <CAJaqyWc5Lqe36A1cvJF767uWO2dHZZX17gX4CxzmjSLYnp8cmQ@mail.gmail.com>
-Subject: Re: [RFC v4 1/5] vhost: Refactor vhost_svq_add_split
-To: Sahil Siddiq <icegambit91@gmail.com>
-Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
- Sahil Siddiq <sahilcdq@proton.me>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+References: <20241210054616.260386-1-demeng@redhat.com>
+ <Z1f4HB1o-XmyzagE@redhat.com>
+In-Reply-To: <Z1f4HB1o-XmyzagE@redhat.com>
+From: Konstantin Kostiuk <kkostiuk@redhat.com>
+Date: Tue, 10 Dec 2024 10:54:00 +0200
+Message-ID: <CAPMcbCokcPcfCn8HnsTg4GPFnyBJyRTRRdr+hq59L6TsqsqUpA@mail.gmail.com>
+Subject: Re: [PATCH] qemu-ga-win: Fix a typo error
+To: qemu-devel@nongnu.org
+Cc: Dehan Meng <demeng@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ michael.roth@amd.com
+Content-Type: multipart/alternative; boundary="000000000000f1d0fe0628e69f0a"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,197 +101,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 5, 2024 at 9:35=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com>=
- wrote:
->
-> This commit refactors vhost_svq_add_split and
-> vhost_svq_add to simplify their implementation
-> and prepare for the addition of packed vqs in
-> following commits.
->
+--000000000000f1d0fe0628e69f0a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
 
-> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
-> ---
-> Changes v3 -> v4:
-> - Split commit #1 in v3 into 2 commits.
-> - Changes related to "vhost_svq_add_packed" are
->   now in commit #2.
+Best Regards,
+Konstantin Kostiuk.
+
+
+On Tue, Dec 10, 2024 at 10:13=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com>
+wrote:
+
+> On Tue, Dec 10, 2024 at 01:46:16PM +0800, Dehan Meng wrote:
+> > There is a typo error for api 'guest-get-osinfo',
+> > the win2025's version in WIN_10_0_SERVER_VERSION_MATRIX
+> > should be adjusted.
+> >
+> > Signed-off-by: Dehan Meng <demeng@redhat.com>
+> > ---
+> >  qga/commands-win32.c | 2 +-
+> >  1 file changed, 1 insertion(+), 1 deletion(-)
 >
->  hw/virtio/vhost-shadow-virtqueue.c | 102 ++++++++++++-----------------
->  1 file changed, 41 insertions(+), 61 deletions(-)
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >
-> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-=
-virtqueue.c
-> index 37aca8b431..bb7cf6d5db 100644
-> --- a/hw/virtio/vhost-shadow-virtqueue.c
-> +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> @@ -124,83 +124,48 @@ static bool vhost_svq_translate_addr(const VhostSha=
-dowVirtqueue *svq,
->  }
 >
->  /**
-> - * Write descriptors to SVQ vring
-> + * Write descriptors to SVQ split vring
->   *
->   * @svq: The shadow virtqueue
-> - * @sg: Cache for hwaddr
-> - * @iovec: The iovec from the guest
-> - * @num: iovec length
-> - * @more_descs: True if more descriptors come in the chain
-> - * @write: True if they are writeable descriptors
-> - *
-> - * Return true if success, false otherwise and print error.
-> + * @out_sg: The iovec to the guest
-> + * @out_num: Outgoing iovec length
-> + * @in_sg: The iovec from the guest
-> + * @in_num: Incoming iovec length
-> + * @sgs: Cache for hwaddr
-> + * @head: Saves current free_head
->   */
-> -static bool vhost_svq_vring_write_descs(VhostShadowVirtqueue *svq, hwadd=
-r *sg,
-> -                                        const struct iovec *iovec, size_=
-t num,
-> -                                        bool more_descs, bool write)
-> +static void vhost_svq_add_split(VhostShadowVirtqueue *svq,
-> +                                const struct iovec *out_sg, size_t out_n=
-um,
-> +                                const struct iovec *in_sg, size_t in_num=
-,
-> +                                hwaddr *sgs, unsigned *head)
->  {
-> +    unsigned avail_idx, n;
->      uint16_t i =3D svq->free_head, last =3D svq->free_head;
-> -    unsigned n;
-> -    uint16_t flags =3D write ? cpu_to_le16(VRING_DESC_F_WRITE) : 0;
-> +    vring_avail_t *avail =3D svq->vring.avail;
->      vring_desc_t *descs =3D svq->vring.desc;
-> -    bool ok;
-> -
-> -    if (num =3D=3D 0) {
-> -        return true;
-> -    }
-> +    size_t num =3D in_num + out_num;
->
-> -    ok =3D vhost_svq_translate_addr(svq, sg, iovec, num);
-> -    if (unlikely(!ok)) {
-> -        return false;
-> -    }
-> +    *head =3D svq->free_head;
->
->      for (n =3D 0; n < num; n++) {
-> -        if (more_descs || (n + 1 < num)) {
-> -            descs[i].flags =3D flags | cpu_to_le16(VRING_DESC_F_NEXT);
-> +        descs[i].flags =3D cpu_to_le16(n < out_num ? 0 : VRING_DESC_F_WR=
-ITE);
-> +        if (n + 1 < num) {
-> +            descs[i].flags |=3D cpu_to_le16(VRING_DESC_F_NEXT);
->              descs[i].next =3D cpu_to_le16(svq->desc_next[i]);
-> +        }
-> +
-> +        descs[i].addr =3D cpu_to_le64(sgs[n]);
-> +        if (n < out_num) {
-> +            descs[i].len =3D cpu_to_le32(out_sg[n].iov_len);
->          } else {
-> -            descs[i].flags =3D flags;
-> +            descs[i].len =3D cpu_to_le32(in_sg[n - out_num].iov_len);
->          }
-> -        descs[i].addr =3D cpu_to_le64(sg[n]);
-> -        descs[i].len =3D cpu_to_le32(iovec[n].iov_len);
->
->          last =3D i;
->          i =3D cpu_to_le16(svq->desc_next[i]);
->      }
->
->      svq->free_head =3D le16_to_cpu(svq->desc_next[last]);
-> -    return true;
-> -}
-> -
-> -static bool vhost_svq_add_split(VhostShadowVirtqueue *svq,
-> -                                const struct iovec *out_sg, size_t out_n=
-um,
-> -                                const struct iovec *in_sg, size_t in_num=
-,
-> -                                unsigned *head)
-> -{
-> -    unsigned avail_idx;
-> -    vring_avail_t *avail =3D svq->vring.avail;
-> -    bool ok;
-> -    g_autofree hwaddr *sgs =3D g_new(hwaddr, MAX(out_num, in_num));
-> -
-> -    *head =3D svq->free_head;
-> -
-> -    /* We need some descriptors here */
-> -    if (unlikely(!out_num && !in_num)) {
-> -        qemu_log_mask(LOG_GUEST_ERROR,
-> -                      "Guest provided element with no descriptors");
-> -        return false;
-> -    }
-> -
-> -    ok =3D vhost_svq_vring_write_descs(svq, sgs, out_sg, out_num, in_num=
- > 0,
-> -                                     false);
-> -    if (unlikely(!ok)) {
-> -        return false;
-> -    }
-> -
-> -    ok =3D vhost_svq_vring_write_descs(svq, sgs, in_sg, in_num, false, t=
-rue);
-> -    if (unlikely(!ok)) {
-> -        return false;
-> -    }
->
->      /*
->       * Put the entry in the available array (but don't update avail->idx=
- until
-> @@ -214,7 +179,6 @@ static bool vhost_svq_add_split(VhostShadowVirtqueue =
-*svq,
->      smp_wmb();
->      avail->idx =3D cpu_to_le16(svq->shadow_avail_idx);
->
-> -    return true;
->  }
->
->  static void vhost_svq_kick(VhostShadowVirtqueue *svq)
-> @@ -254,15 +218,31 @@ int vhost_svq_add(VhostShadowVirtqueue *svq, const =
-struct iovec *out_sg,
->      unsigned ndescs =3D in_num + out_num;
->      bool ok;
->
-> +    /* We need some descriptors here */
-> +    if (unlikely(!ndescs)) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "Guest provided element with no descriptors");
-> +        return -EINVAL;
-> +    }
-> +
->      if (unlikely(ndescs > vhost_svq_available_slots(svq))) {
->          return -ENOSPC;
->      }
->
-> -    ok =3D vhost_svq_add_split(svq, out_sg, out_num, in_sg, in_num, &qem=
-u_head);
-> +    g_autofree hwaddr *sgs =3D g_new(hwaddr, ndescs);
-> +    ok =3D vhost_svq_translate_addr(svq, sgs, out_sg, out_num);
->      if (unlikely(!ok)) {
->          return -EINVAL;
->      }
->
-> +    ok =3D vhost_svq_translate_addr(svq, sgs + out_num, in_sg, in_num);
-> +    if (unlikely(!ok)) {
-> +        return -EINVAL;
-> +    }
-> +
-> +    vhost_svq_add_split(svq, out_sg, out_num, in_sg,
-> +                        in_num, sgs, &qemu_head);
-> +
->      svq->num_free -=3D ndescs;
->      svq->desc_state[qemu_head].elem =3D elem;
->      svq->desc_state[qemu_head].ndescs =3D ndescs;
+> With regards,
+> Daniel
 > --
-> 2.47.0
+> |: https://berrange.com      -o-
+> https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-
+> https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-
+> https://www.instagram.com/dberrange :|
 >
+>
+
+--000000000000f1d0fe0628e69f0a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div>Reviewed-by: Konstantin Kostiuk &lt;=
+<a href=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.co=
+m</a>&gt;</div><div><br></div><div><div dir=3D"ltr" class=3D"gmail_signatur=
+e"><div dir=3D"ltr"><div>Best Regards,</div><div>Konstantin Kostiuk.</div><=
+/div></div></div><br></div><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Dec 10, 2024 at 10:13=E2=
+=80=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com"=
+>berrange@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">On Tue, Dec 10, 2024 at 01:46:16PM +0800, Dehan Meng wr=
+ote:<br>
+&gt; There is a typo error for api &#39;guest-get-osinfo&#39;,<br>
+&gt; the win2025&#39;s version in WIN_10_0_SERVER_VERSION_MATRIX<br>
+&gt; should be adjusted.<br>
+&gt; <br>
+&gt; Signed-off-by: Dehan Meng &lt;<a href=3D"mailto:demeng@redhat.com" tar=
+get=3D"_blank">demeng@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 qga/commands-win32.c | 2 +-<br>
+&gt;=C2=A0 1 file changed, 1 insertion(+), 1 deletion(-)<br>
+<br>
+Reviewed-by: Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.=
+com" target=3D"_blank">berrange@redhat.com</a>&gt;<br>
+<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
+s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
+ttps://www.flickr.com/photos/dberrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
+oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
+|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
+nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
+"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
+https://www.instagram.com/dberrange</a> :|<br>
+<br>
+</blockquote></div></div>
+
+--000000000000f1d0fe0628e69f0a--
 
 
