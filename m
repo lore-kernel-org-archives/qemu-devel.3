@@ -4,154 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C6AE77180
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 08:59:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21AC5E77181
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 09:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKw4s-0006q7-Ls; Tue, 10 Dec 2024 03:58:46 -0500
+	id 1tKwXY-0002ty-91; Tue, 10 Dec 2024 04:28:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tKw4q-0006pg-P3
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:58:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tKwXQ-0002tE-BM
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:28:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tKw4p-0004gZ-2B
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 03:58:44 -0500
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1tKwXN-0007jQ-U4
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 04:28:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733821121;
+ s=mimecast20190719; t=1733822892;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=t4BJRdwNQurxqauxwNSgswBL0p/1TnsgHbQY6bucoII=;
- b=YD9pJ/cw71Xvv9z+y050uyhtREgsWEoXPqe0j0mzucJ7lWejVwm3rv8Yspw0E6L6A1gVCC
- kG3VAbnltBI9olhCUC3Qh3d1qPZ4T3z9BKEsuRxMmCgbYozIRo1HxI2KD6OAXgB++Ka9Vj
- AI+v82BBu0Uri5VTk5pgO3jKiAq/XHU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=O0eI1ZEXllrpc/FY0FhBYzyH8YCe1+DojHVcjAOp5qc=;
+ b=TWuI4JcR6r+5WoKqs50gDu2NKqbBcp8UZ8tLh1fQrsJSvZ9QmSZU4RVwROKBjYn2B1ji46
+ QDNRWkzzXvcOtGxotihcOmfsQVT0jbtL+ao45rBPibvuel39EJK5XtD8mDjtXy/GJvAqWS
+ aEB+vWNxqFl0Tkw4jDNsJkbzlgR5WgY=
+Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
+ [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-692-lgHOLVSfNeeYp5FUeM4SFw-1; Tue, 10 Dec 2024 03:58:40 -0500
-X-MC-Unique: lgHOLVSfNeeYp5FUeM4SFw-1
-X-Mimecast-MFC-AGG-ID: lgHOLVSfNeeYp5FUeM4SFw
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3862be3bfc9so2193332f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 00:58:39 -0800 (PST)
+ us-mta-621-GmsgJtewPvqS8m_Bx38RGA-1; Tue, 10 Dec 2024 04:28:10 -0500
+X-MC-Unique: GmsgJtewPvqS8m_Bx38RGA-1
+X-Mimecast-MFC-AGG-ID: GmsgJtewPvqS8m_Bx38RGA
+Received: by mail-yw1-f197.google.com with SMTP id
+ 00721157ae682-6ef88388aaaso61570907b3.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 01:28:10 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733821119; x=1734425919;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=t4BJRdwNQurxqauxwNSgswBL0p/1TnsgHbQY6bucoII=;
- b=EXM9G0ympUaDLG7i094QEOOmESNV4sQ/HdC8MMHM6f8mSrZV5qbuDZ62/5Mnmm2Ogq
- Zjz5+cehO0aUM6qWqvmoiPEe4TyTOaL9FqBGgFdf17AJNsc9vPFnlTprPuenEWkDm2Fi
- fr82rP0IfmFGuXSWWX8bZFxmzMtSpsUqIRZt526WDF6ir8HaiYD+L+0A/tCXO7VIi43q
- DDH3nDXFIfb+sUVD9g457mdOXaX5nV75S18AMTDb9IaArwrpIINlroeC6aEQKx3c/Etq
- v2Yg/Xys9dCAU6nbk6oBM/mweNMWFNjSOt63aiCneI7BFlbH2C/1DD6bDCojxeeshWlu
- 7poQ==
+ d=1e100.net; s=20230601; t=1733822890; x=1734427690;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O0eI1ZEXllrpc/FY0FhBYzyH8YCe1+DojHVcjAOp5qc=;
+ b=Dcn6GTZoraucYWqRwjs2vQ+epfYgHq2ABwzZxDAqAvr3keWju2yZwkl5HT0C8xBTMc
+ QOCXCOaEB+pvK/xtqHOO3jUfzuaq6fNdP8E+Fj0wIzNSLQgAW7CLpEXHjqNjx9PULkZY
+ GE5an2Pqr8iTIz1FGfBaVXSXAfOaQvs5bF4iQLQ+4kIbdNcBrt6v7v7A9IXyaZVCHRzq
+ 2vKaEaTzQQMp4wC4pYdeMmoSyuVr5+R+WhERVaWNG0R1665BhZSGeYDIf5JsslxIUMay
+ jbLBudEwPgn3iZw+DxHiEOTTm0oSDzb+Pe8TVK3R/PDQlW4t/EeR/N35nyziMY5BhYE2
+ IwOA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX79KSdv+C+93ib+3Ag7jYPRQHEQkP6EOzrSpPhwcBdF/JbD9ZvX4dG0XpVskm9F9tVsQE1FbXGlBaW@nongnu.org
-X-Gm-Message-State: AOJu0Yx2z7hnBfD//YGNQ2AyQ5Co/gFhmPGL3wLF0N8C5+HBGRK0STAP
- sICVxNKZq8x5isRbUGBMyTKQZyQx1q6geO6w4EAYrHJsff0VwHdLR+0YGGXCHsy34HBTWoSpFPS
- dgNfZyKGcrsARvJMPiNcmydzBnOYc6kWI+Ljly0RV8tKJCe5wXnoN
-X-Gm-Gg: ASbGncv9gHQ1sbUoYiWA5k4QLNlXinXLVFLmysZE8wHnO9pS4Y1rf7VJt4glzZ/gNd9
- Kqwr/rzxxO3GnjnPun8d/Zww/pCRnbePodr1M71etzX+x5SoBYoOPgr8r+AuDmjpPAuuAIbzaiP
- AkvlxlfbJnkzWAWwGCaSc0HtAhGhbatc/4BMRqkZl/r45wNBhR5h4UQ2N2H3HlS+oJDnj/3wp4T
- Kq2V/VP+6QGwNCkG8lxlkH+rntYt1WfgB7OnO9DICUAxXk8p6whwDpKRQJ7v1er8IOZLIZ7HpW3
- mAbNs+LAGO7zFm4zmZj/iwEOOrlC7/4R/FhRtfySZndDvJz28jEXXFfcU19R2KC0+nNZt1FXn1R
- RcmVnCQ==
-X-Received: by 2002:a05:6000:1f85:b0:385:ec8d:8ca9 with SMTP id
- ffacd0b85a97d-3862b3d09eamr11580301f8f.42.1733821118883; 
- Tue, 10 Dec 2024 00:58:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCrJpezS0a49S5zuW7aALUB8ibcl8pd4D8Go7ovRnZASns7GDBOTxNTrG1uW1GtCEzNNVBpQ==
-X-Received: by 2002:a05:6000:1f85:b0:385:ec8d:8ca9 with SMTP id
- ffacd0b85a97d-3862b3d09eamr11580277f8f.42.1733821118404; 
- Tue, 10 Dec 2024 00:58:38 -0800 (PST)
-Received: from ?IPV6:2003:cb:c723:b800:9a60:4b46:49f9:87f3?
- (p200300cbc723b8009a604b4649f987f3.dip0.t-ipconnect.de.
- [2003:cb:c723:b800:9a60:4b46:49f9:87f3])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434d526b14csm224634875e9.2.2024.12.10.00.58.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Dec 2024 00:58:37 -0800 (PST)
-Message-ID: <f38ed904-d235-43b5-a351-ea64e54984b4@redhat.com>
-Date: Tue, 10 Dec 2024 09:58:36 +0100
+ AJvYcCWa3FjsYNZ63TEirjr1wJKLGCYg+V2PJwgt7iCIoIvUbb1h5oyinfKS2weSIogFxCovhgRyK6XldLvL@nongnu.org
+X-Gm-Message-State: AOJu0YzQlpv1hBaZhOh0kSYy0Kn8Kax78UYD10d/WT3O9vwRUsdgR8fT
+ LpVSJD/5B85Rs+QqptK4wAqlCYugtHpnsAWjGgKrJ8qLrpYnczOARYd2y10EbH3oXnWcotPtA8s
+ aS8XceUx8inG/zg+kVfrWtamWeZzM2k1q9c71T3cjh41f2IFE2W5TlEFSTh99LfpKHDJCxMN+t8
+ DnwT9PB0Ks9cuD9VP09o627SmaX1M=
+X-Gm-Gg: ASbGncuitM+SjxWUyZvky+c9D0ujKpxDEEKPftC+/MNhpTi1kHEp2641MH40C1eUJZd
+ c7ZbFMbHr0rw/BLBj8JPzwY4I4BltNEub0r8=
+X-Received: by 2002:a05:690c:62c2:b0:6ef:9dbe:9f82 with SMTP id
+ 00721157ae682-6f022f74f6dmr43952537b3.29.1733822890280; 
+ Tue, 10 Dec 2024 01:28:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWSCol/oT2x9olJlqNaSMIqSlUFVXMVbqHet3+Y1PECZt7VpoguM9pwBL6/1O3yLu6MsYQjna5NC2CNmouEaM=
+X-Received: by 2002:a05:690c:62c2:b0:6ef:9dbe:9f82 with SMTP id
+ 00721157ae682-6f022f74f6dmr43952437b3.29.1733822889907; Tue, 10 Dec 2024
+ 01:28:09 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] s390x/pci: add support for guests that request direct
- mapping
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
-References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
- <20241209192927.107503-2-mjrosato@linux.ibm.com>
- <f7451934-bf20-4c50-8780-4d5ebf932096@redhat.com>
- <31b6b62b-4656-4ca0-a8ac-99fe4293de45@linux.ibm.com>
- <7bd2018a-df16-4ede-b7d7-dfdb9cbfc7c0@redhat.com>
- <a6bfbf15-cbe4-4023-9a8e-d172cf8c8128@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <a6bfbf15-cbe4-4023-9a8e-d172cf8c8128@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+References: <20241205203430.76251-1-sahilcdq@proton.me>
+In-Reply-To: <20241205203430.76251-1-sahilcdq@proton.me>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 10 Dec 2024 10:27:33 +0100
+Message-ID: <CAJaqyWerdWk5S0Sxt4oMUCc8FQJTxopyvhtyOV6ocbXmJ_p7Dw@mail.gmail.com>
+Subject: Re: [RFC v4 0/5] Add packed virtqueue to shadow virtqueue
+To: Sahil Siddiq <icegambit91@gmail.com>
+Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org, 
+ Sahil Siddiq <sahilcdq@proton.me>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.489,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_DOTEDU=1.999 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -167,95 +104,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.12.24 00:22, Matthew Rosato wrote:
-> On 12/9/24 5:09 PM, David Hildenbrand wrote:
->> On 09.12.24 22:45, Matthew Rosato wrote:
->>> On 12/9/24 4:01 PM, David Hildenbrand wrote:
->>>> On 09.12.24 20:29, Matthew Rosato wrote:
->>>>
->>>> Hi,
->>>>
->>>> Trying to wrap my head around that ... you mention that "pin the entirety of guest memory".
->>>>
->>>> Do you mean that we will actually end up longterm pinning all guest RAM in the kernel, similar to what vfio ends up doing?
->>>
->>> Yes.  Actually, the usecase here is specifically PCI passthrough via vfio-pci on s390.  Unlike other platforms, the default s390 approach only pins on-demand and doesn't longterm pin all guest RAM, which is nice from a memory footprint perspective but pays a price via all those guest-2 RPCIT instructions.  The goal here is now provide the optional alternative to longterm pin like other platforms.
->>
->> Okay, thanks for confirming. One more question: who will trigger this longterm-pinning? Is it vfio?
->>
->> (the code flow from your code to the pinning code would be nice)
->>
+On Thu, Dec 5, 2024 at 9:34=E2=80=AFPM Sahil Siddiq <icegambit91@gmail.com>=
+ wrote:
+>
+> Hi,
+>
+> There are two issues that I found while trying to test
+> my changes. I thought I would send the patch series
+> as well in case that helps in troubleshooting. I haven't
+> been able to find an issue in the implementation yet.
+> Maybe I am missing something.
+>
+> I have been following the "Hands on vDPA: what do you do
+> when you ain't got the hardware v2 (Part 2)" [1] blog to
+> test my changes. To boot the L1 VM, I ran:
+>
+> sudo ./qemu/build/qemu-system-x86_64 \
+> -enable-kvm \
+> -drive file=3D//home/valdaarhun/valdaarhun/qcow2_img/L1.qcow2,media=3Ddis=
+k,if=3Dvirtio \
+> -net nic,model=3Dvirtio \
+> -net user,hostfwd=3Dtcp::2222-:22 \
+> -device intel-iommu,snoop-control=3Don \
+> -device virtio-net-pci,netdev=3Dnet0,disable-legacy=3Don,disable-modern=
+=3Doff,iommu_platform=3Don,guest_uso4=3Doff,guest_uso6=3Doff,host_uso=3Doff=
+,guest_announce=3Doff,ctrl_vq=3Don,ctrl_rx=3Don,packed=3Don,event_idx=3Doff=
+,bus=3Dpcie.0,addr=3D0x4 \
+> -netdev tap,id=3Dnet0,script=3Dno,downscript=3Dno \
+> -nographic \
+> -m 8G \
+> -smp 4 \
+> -M q35 \
+> -cpu host 2>&1 | tee vm.log
+>
+> Without "guest_uso4=3Doff,guest_uso6=3Doff,host_uso=3Doff,
+> guest_announce=3Doff" in "-device virtio-net-pci", QEMU
+> throws "vdpa svq does not work with features" [2] when
+> trying to boot L2.
+>
+> The enums added in commit #2 in this series is new and
+> wasn't in the earlier versions of the series. Without
+> this change, x-svq=3Dtrue throws "SVQ invalid device feature
+> flags" [3] and x-svq is consequently disabled.
+>
+> The first issue is related to running traffic in L2
+> with vhost-vdpa.
+>
+> In L0:
+>
+> $ ip addr add 111.1.1.1/24 dev tap0
+> $ ip link set tap0 up
+> $ ip addr show tap0
+> 4: tap0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state =
+UNKNOWN group default qlen 1000
+>     link/ether d2:6d:b9:61:e1:9a brd ff:ff:ff:ff:ff:ff
+>     inet 111.1.1.1/24 scope global tap0
+>        valid_lft forever preferred_lft forever
+>     inet6 fe80::d06d:b9ff:fe61:e19a/64 scope link proto kernel_ll
+>        valid_lft forever preferred_lft forever
+>
+> I am able to run traffic in L2 when booting without
+> x-svq.
+>
+> In L1:
+>
+> $ ./qemu/build/qemu-system-x86_64 \
+> -nographic \
+> -m 4G \
+> -enable-kvm \
+> -M q35 \
+> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0 \
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
+odern=3Doff,ctrl_vq=3Don,ctrl_rx=3Don,event_idx=3Doff,bus=3Dpcie.0,addr=3D0=
+x7 \
+> -smp 4 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> In L2:
+>
+> # ip addr add 111.1.1.2/24 dev eth0
+> # ip addr show eth0
+> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state =
+UP group default qlen 1000
+>     link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+>     altname enp0s7
+>     inet 111.1.1.2/24 scope global eth0
+>        valid_lft forever preferred_lft forever
+>     inet6 fe80::9877:de30:5f17:35f9/64 scope link noprefixroute
+>        valid_lft forever preferred_lft forever
+>
+> # ip route
+> 111.1.1.0/24 dev eth0 proto kernel scope link src 111.1.1.2
+>
+> # ping 111.1.1.1 -w3
+> PING 111.1.1.1 (111.1.1.1) 56(84) bytes of data.
+> 64 bytes from 111.1.1.1: icmp_seq=3D1 ttl=3D64 time=3D0.407 ms
+> 64 bytes from 111.1.1.1: icmp_seq=3D2 ttl=3D64 time=3D0.671 ms
+> 64 bytes from 111.1.1.1: icmp_seq=3D3 ttl=3D64 time=3D0.291 ms
+>
+> --- 111.1.1.1 ping statistics ---
+> 3 packets transmitted, 3 received, 0% packet loss, time 2034ms
+> rtt min/avg/max/mdev =3D 0.291/0.456/0.671/0.159 ms
+>
+>
+> But if I boot L2 with x-svq=3Dtrue as shown below, I am unable
+> to ping the host machine.
+>
+> $ ./qemu/build/qemu-system-x86_64 \
+> -nographic \
+> -m 4G \
+> -enable-kvm \
+> -M q35 \
+> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,x-svq=3Dtrue,id=3D=
+vhost-vdpa0 \
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
+odern=3Doff,ctrl_vq=3Don,ctrl_rx=3Don,event_idx=3Doff,bus=3Dpcie.0,addr=3D0=
+x7 \
+> -smp 4 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> In L2:
+>
+> # ip addr add 111.1.1.2/24 dev eth0
+> # ip addr show eth0
+> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state =
+UP group default qlen 1000
+>     link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
+>     altname enp0s7
+>     inet 111.1.1.2/24 scope global eth0
+>        valid_lft forever preferred_lft forever
+>     inet6 fe80::9877:de30:5f17:35f9/64 scope link noprefixroute
+>        valid_lft forever preferred_lft forever
+>
+> # ip route
+> 111.1.1.0/24 dev eth0 proto kernel scope link src 111.1.1.2
+>
+> # ping 111.1.1.1 -w10
+> PING 111.1.1.1 (111.1.1.1) 56(84) bytes of data.
+> From 111.1.1.2 icmp_seq=3D1 Destination Host Unreachable
+> ping: sendmsg: No route to host
+> From 111.1.1.2 icmp_seq=3D2 Destination Host Unreachable
+> From 111.1.1.2 icmp_seq=3D3 Destination Host Unreachable
+>
+> --- 111.1.1.1 ping statistics ---
+> 3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2076=
+ms
+> pipe 3
+>
+> The other issue is related to booting L2 with "x-svq=3Dtrue"
+> and "packed=3Don".
+>
+> In L1:
+>
+> $ ./qemu/build/qemu-system-x86_64 \
+> -nographic \
+> -m 4G \
+> -enable-kvm \
+> -M q35 \
+> -drive file=3D//root/L2.qcow2,media=3Ddisk,if=3Dvirtio \
+> -netdev type=3Dvhost-vdpa,vhostdev=3D/dev/vhost-vdpa-0,id=3Dvhost-vdpa0,x=
+-svq=3Dtrue \
+> -device virtio-net-pci,netdev=3Dvhost-vdpa0,disable-legacy=3Don,disable-m=
+odern=3Doff,guest_uso4=3Doff,guest_uso6=3Doff,host_uso=3Doff,guest_announce=
+=3Doff,ctrl_vq=3Don,ctrl_rx=3Don,event_idx=3Doff,packed=3Don,bus=3Dpcie.0,a=
+ddr=3D0x7 \
+> -smp 4 \
+> -cpu host \
+> 2>&1 | tee vm.log
+>
+> The kernel throws "virtio_net virtio1: output.0:id 0 is not
+> a head!" [4].
+>
 
-Thanks for the details.
+So this series implements the descriptor forwarding from the guest to
+the device in packed vq. We also need to forward the descriptors from
+the device to the guest. The device writes them in the SVQ ring.
 
-> 
-> Yes, the vfio IOMMU code triggers it.  My s390_pci_setup_stage2_map added by this patch calls memory_region_notify_iommu in a loop such that we trigger iommu notifications to map iova X+pba -> GPA X for all GPA, where pba = a "base address" offset that has to be applied when mapping on s390.
+The functions responsible for that in QEMU are
+hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_flush, which is called by
+the device when used descriptors are written to the SVQ, which calls
+hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_get_buf. We need to do
+modifications similar to vhost_svq_add: Make them conditional if we're
+in split or packed vq, and "copy" the code from Linux's
+drivers/virtio/virtio_ring.c:virtqueue_get_buf.
 
-Ah, now I see that you use "ms->ram_size", so indeed, this will map 
-initial RAM only.
+After these modifications you should be able to ping and forward
+traffic. As always, It is totally ok if it needs more than one
+iteration, and feel free to ask any question you have :).
 
-The more-future-proof approach would indeed be to register a memory 
-listener on &address_space_memory, to then map/unmap whenever notified 
-about map/unmap.
-
-See "struct vfio_memory_listener" with its region_add/region_del 
-callbacks that do that, and also implement the RAMDiscardManager plumbing.
-
-
-And now I wonder if there would be a way to just reuse "struct 
-vfio_memory_listener" here some way? Or at least reuse the map/unmap 
-functions, because ...
-
-The notifications are sent in the largest batches possible to minimize 
-vfio ioctls / use the least number of vfio dma mappings.
-> 
-> The iommu notifications get picked up in vfio_iommu_map_notify where we will follow the container DMA path down to vfio_legacy_dma_map; then ultimately vfio is handling the pinning via the VFIO_IOMMU_MAP_DMA ioctl.
-
-... vfio_listener_region_add() will also just call vfio_container_dma_map().
-
-Maybe there is a reason s390x needs to handle this using 
-memory_region_notify_iommu() callbacks instead of doing it similar to 
-"struct vfio_memory_listener" when registered on &address_space_memory 
-without a viommu.
-
-> 
->>>
->>>>
->>>> In that case, it would be incompatible with virtio-balloon (and without modifications with upcoming virtio-mem). Is there already a mechanism in place to handle that -- a call  to ram_block_discard_disable() -- or even a way to support coordinated discarding of RAM (e.g., virtio-mem + vfio)?
->>>
->>> Good point, should be calling add ram_block_discard_disable(true) when set register + a corresponding (false) during deregister...  Will add for v2.
->>>
->>> As for supporting coordinated discard, I was hoping to subsequently look at virtio-mem for this.
->>
->> As long as discarding is blocked for now, we're good. To support it, the RAMDiscardManager would have to be wired up, similar to vfio.
->>
->> I think the current way of handling it via
->> vf
->> +    IOMMUTLBEvent event = {
->> +        .type = IOMMU_NOTIFIER_MAP,
->> +        .entry = {
->> +            .target_as = &address_space_memory,
->> +            .translated_addr = 0,
->> +            .perm = IOMMU_RW,
->> +        },
->> +    };
->>
->>
->> Is probably not ideal: it cannot cope with memory holes (which virtio-mem would create).
->>
->> Likely, you'd instead want an address space notifier, and really only map the memory region sections you get notified about.
->>
->> There, you can test for RAMDiscardManager and handle it like vfio does.
->>
-> 
-> I'll start looking into this; for the moment I'll plan on blocking discarding in this series with a follow-on to then enable virtio-mem, but if I get something working sooner I'll add it to this series.  Either way I'll put you on CC.
-
-Thanks, exploring whether we can reuse the vfio bits to map/unmap might 
-be very valuable and simplify things.
-
--- 
-Cheers,
-
-David / dhildenb
+> Here's part of the trace:
+>
+> [...]
+> [  945.370085] watchdog: BUG: soft lockup - CPU#2 stuck for 863s! [Networ=
+kManager:795]
+> [  945.372467] Modules linked in: rfkill intel_rapl_msr intel_rapl_common=
+ intel_uncore_frequency_common intel_pmc_core intel_vsec pmt_g
+> [  945.387413] CPU: 2 PID: 795 Comm: NetworkManager Tainted: G           =
+  L     6.8.7-200.fc39.x86_64 #1
+> [  945.390685] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS r=
+el-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+> [  945.394256] RIP: 0010:virtnet_poll+0xd8/0x5c0 [virtio_net]
+> [  945.395998] Code: c0 74 5c 65 8b 05 24 37 8b 3f 41 89 86 c4 00 00 00 8=
+0 bb 40 04 00 00 00 75 32 48 8b 3b e8 00 00 28 c7 48 89 df be8
+> [  945.401465] RSP: 0018:ffffabaec0134e48 EFLAGS: 00000246
+> [  945.403362] RAX: ffff9bf904432000 RBX: ffff9bf9085b1800 RCX: 00000000f=
+fff0001
+> [  945.405447] RDX: 0000000000008080 RSI: 0000000000000001 RDI: ffff9bf90=
+85b1800
+> [  945.408361] RBP: ffff9bf9085b0808 R08: 0000000000000001 R09: ffffabaec=
+0134ba8
+> [  945.410828] R10: ffffabaec0134ba0 R11: 0000000000000003 R12: ffff9bf90=
+5a34ac0
+> [  945.413272] R13: 0000000000000040 R14: ffff9bf905a34a00 R15: ffff9bf90=
+85b0800
+> [  945.415180] FS:  00007fa81f0f1540(0000) GS:ffff9bf97bd00000(0000) knlG=
+S:0000000000000000
+> [  945.418177] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> [  945.419415] CR2: 000055614ba8dc48 CR3: 0000000102b42006 CR4: 000000000=
+0770ef0
+> [  945.423312] PKRU: 55555554
+> [  945.424238] Call Trace:
+> [  945.424238]  <IRQ>
+> [  945.426236]  ? watchdog_timer_fn+0x1e6/0x270
+> [  945.427304]  ? __pfx_watchdog_timer_fn+0x10/0x10
+> [  945.428239]  ? __hrtimer_run_queues+0x10f/0x2b0
+> [  945.431304]  ? hrtimer_interrupt+0xf8/0x230
+> [  945.432236]  ? __sysvec_apic_timer_interrupt+0x4d/0x140
+> [  945.434187]  ? sysvec_apic_timer_interrupt+0x39/0x90
+> [  945.436306]  ? asm_sysvec_apic_timer_interrupt+0x1a/0x20
+> [  945.438199]  ? virtnet_poll+0xd8/0x5c0 [virtio_net]
+> [  945.438199]  ? virtnet_poll+0xd0/0x5c0 [virtio_net]
+> [  945.440197]  ? handle_irq_event+0x50/0x80
+> [  945.442415]  ? sched_clock_cpu+0x5e/0x190
+> [  945.444563]  ? irqtime_account_irq+0x40/0xc0
+> [  945.446191]  __napi_poll+0x28/0x1c0
+> [  945.446191]  net_rx_action+0x2a4/0x380
+> [  945.448851]  ? _raw_spin_unlock_irqrestore+0xe/0x40
+> [  945.450209]  ? note_gp_changes+0x6c/0x80
+> [  945.452252]  __do_softirq+0xc9/0x2c8
+> [  945.453579]  do_softirq.part.0+0x3d/0x60
+> [  945.454188]  </IRQ>
+> [  945.454188]  <TASK>
+> [  945.456175]  __local_bh_enable_ip+0x68/0x70
+> [  945.458373]  virtnet_open+0xdc/0x310 [virtio_net]
+> [  945.460005]  __dev_open+0xfa/0x1b0
+> [  945.461310]  __dev_change_flags+0x1dc/0x250
+> [  945.462800]  dev_change_flags+0x26/0x70
+> [  945.464190]  do_setlink+0x375/0x12d0
+> [...]
+>
+> I am not sure if this issue is similar to the one
+> described in this patch (race between channels
+> setting and refill) [5]. As described in the patch,
+> I see drivers/net/virtio_net:virtnet_open invoke
+> try_fill_recv() and schedule_delayed_work() [6]. I
+> am unfamiliar with this and so I am not sure how to
+> progress.
+>
+> Maybe I can try disabling napi and checking it out
+> if that is possible. Would this be a good next step
+> to troubleshoot the kernel crash?
+>
+> Thanks,
+> Sahil
+>
+> Changes v3 -> v4:
+> - Split commit #1 of v3 into commit #1 and #2 in
+>   this series [7].
+> - Commit #3 is commit #2 of v3.
+> - Commit #4 is based on commit #3 of v3.
+> - Commit #5 was sent as an individual patch [8].
+> - vhost-shadow-virtqueue.c
+>   (vhost_svq_valid_features): Add enums.
+>   (vhost_svq_memory_packed): Remove function.
+>   (vhost_svq_driver_area_size,vhost_svq_descriptor_area_size): Decouple f=
+unctions.
+>   (vhost_svq_device_area_size): Rewrite function.
+>   (vhost_svq_start): Simplify implementation.
+>   (vhost_svq_stop): Unconditionally munmap().
+> - vhost-shadow-virtqueue.h: New function declaration.
+> - vhost-vdpa.c
+>   (vhost_vdpa_svq_unmap_rings): Call vhost_vdpa_svq_unmap_ring().
+>   (vhost_vdpa_svq_map_rings): New mappings.
+>   (vhost_vdpa_svq_setup): Add comment.
+>
+> [1] https://www.redhat.com/en/blog/hands-vdpa-what-do-you-do-when-you-ain=
+t-got-hardware-part-2
+> [2] https://gitlab.com/qemu-project/qemu/-/blob/master/net/vhost-vdpa.c#L=
+167
+> [3] https://gitlab.com/qemu-project/qemu/-/blob/master/hw/virtio/vhost-sh=
+adow-virtqueue.c#L58
+> [4] https://github.com/torvalds/linux/blob/master/drivers/virtio/virtio_r=
+ing.c#L1763
+> [5] https://lkml.iu.edu/hypermail/linux/kernel/1307.0/01455.html
+> [6] https://github.com/torvalds/linux/blob/master/drivers/net/virtio_net.=
+c#L3104
+> [7] https://lists.nongnu.org/archive/html/qemu-devel/2024-08/msg01148.htm=
+l
+> [8] https://lists.nongnu.org/archive/html/qemu-devel/2024-11/msg00598.htm=
+l
+>
+> Sahil Siddiq (5):
+>   vhost: Refactor vhost_svq_add_split
+>   vhost: Write descriptors to packed svq
+>   vhost: Data structure changes to support packed vqs
+>   vdpa: Allocate memory for svq and map them to vdpa
+>   vdpa: Support setting vring_base for packed svq
+>
+>  hw/virtio/vhost-shadow-virtqueue.c | 222 +++++++++++++++++++----------
+>  hw/virtio/vhost-shadow-virtqueue.h |  70 ++++++---
+>  hw/virtio/vhost-vdpa.c             |  47 +++++-
+>  3 files changed, 237 insertions(+), 102 deletions(-)
+>
+> --
+> 2.47.0
+>
 
 
