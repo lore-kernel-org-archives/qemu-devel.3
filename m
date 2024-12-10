@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92BA2E7717D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D85DCE77180
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Dec 2024 03:06:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tKqYZ-0008Kj-Hd; Mon, 09 Dec 2024 22:05:03 -0500
+	id 1tKqYk-0008S0-RW; Mon, 09 Dec 2024 22:05:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYY-0008K1-PL; Mon, 09 Dec 2024 22:05:02 -0500
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1tKqYh-0008R0-WD; Mon, 09 Dec 2024 22:05:12 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tKqYW-00031X-Vi; Mon, 09 Dec 2024 22:05:02 -0500
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-21628b3fe7dso26571515ad.3; 
- Mon, 09 Dec 2024 19:04:59 -0800 (PST)
+ id 1tKqYd-0003DD-4t; Mon, 09 Dec 2024 22:05:11 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21669fd5c7cso9006425ad.3; 
+ Mon, 09 Dec 2024 19:05:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733799898; x=1734404698; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=u284kCOMoPlAoA7B8bHhGWA6+enp/xzmSzILperXlyc=;
- b=BowTHvYHOERRQ/dG15RbWJcV3wcNtKjGaeOBt0Mte21BoAbirsW9LOBvLWbiRn7Fci
- UFs8nm61dHvyKWT6WW/EoF8Dla1XENigKLjuHTl9MjZ7r7vWQUn4Ru5fu3EVNO3Z62Hc
- AsNbnq695z/fyORamvxeHuGH/m8CMO/NFJDdCvUM4W8oTEZj+hwcFEFh6DY2k93ZAbC1
- K83EvmAP1LdSe2FCFp6figvb891yqd7ezM4Id3U+qsLwyu6gAL5ccSx0v3LtHyJU7JZw
- dFlArECEa6cMBx5SB4wJ+q1pQYEu2O8ApbWm9wmOsjcQUkLEHIaQ9RfFGnIMmn+JqBlj
- CINQ==
+ d=gmail.com; s=20230601; t=1733799905; x=1734404705; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EgNAx/j9cKMKl1uMhP2lNjnmIgFYxQ7SDIVb2mQjXaM=;
+ b=QdZc/uMuixsvnpNET5pewhopLnYw57H/dljgDJK6CJhs3O1JqScMhlm47JtbohS8Hw
+ LmbJxwAylvdEhM2uh5+2kJoIVALgvUR92PeIyU9ILLQ1STgf/wg9s7Iw0K3UI7EiVL5p
+ t+TWFD1/BzDZS3c0w5aSJvqsl//7vPApXXsp1P7tVGNOegq9eksbyb47lcaSkTc1rMu7
+ aFuxRYgXB0SdCbkaV+bXDsg7WSi/oMfpGv7o6OnECm46AMtvR3Pj4FNX2ynxgBoxzxu5
+ RRUJEGkr/34UvnDCoLQTqrASoN84P3gCQ11VjmDrDSnPoLdftdsn4uquEpHoDyyn4DlJ
+ 8MEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733799898; x=1734404698;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u284kCOMoPlAoA7B8bHhGWA6+enp/xzmSzILperXlyc=;
- b=Q1mMThvK2LCJS5rswhtH1hdi4r847crAtmiiEUGXPBk30qae/xxxg2gER9sH1a/J3B
- ES0eeMDzlgo0H3jdF8pNOV4JoMuS2Tzx16sB0nZA1JBDe/NXiNUgCU364Gd1dXIltUGI
- uKOyzTy9RzepRws1tJYu1jMz+iooLYvrAjxHoy6g0q3OKqpvPYTUTfJKuMvln69OUSU/
- y74CvwuCy698mKPboeaWSdzqzHKsa9TbDl3rRg0vTfNZWdwIVTqM1pfn/mFnyEj1y59T
- bOXXYr8iS3iiwv95Y4wwRTBTfrO1D1Bei3jKvQsueTzR7zrIY41dgGd9BWixJgD0vrP6
- J7OQ==
+ d=1e100.net; s=20230601; t=1733799905; x=1734404705;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EgNAx/j9cKMKl1uMhP2lNjnmIgFYxQ7SDIVb2mQjXaM=;
+ b=jtEWSltBB47ka4c6uMbpvCRzx3zWr62uAu0LiN+IQrmhoZhnBcByn/KkBhqiCf4ddg
+ DDl0h6to335BuyjrSE7CLOoae4ZLK83LzEejH7U3DL7stoGM1lCvjUr/fUPaebxiDOCC
+ 9pGS3UFfWJl5HRXcPs7A4zSLEUPl9uzjVVImWI9w5HW8j1hzPupIpbr1bfdJskgIjp8i
+ C8uRxNd5euhnFv/Dd+I7Kh98PhKIj0KPaxFVUFXyYNYt4bKYl2mWBybPRiQ+Wt/wbAxJ
+ PCGpWrmKfa5n5IZHmqBULhePqBq17ACXukzKQu5Zg5OJOONXEEGRCFIlTFhUdsDK7vPu
+ EXCQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVoLfIFbr14Z+Ve5wltJq2P4PTEq2zCwJkVvJ6lIr7a1wL2gawoaYACEazG778ofC2p9XeuFcwYWHqT@nongnu.org
-X-Gm-Message-State: AOJu0YxXQACsXgqBU838FvVwPT364nxmt4ZoaVuFBf0TyYWSGq9Mbe11
- ks6mpqDo1YIwsxEUIyBecpArBL5S6hq7l1hBJ/Tv82hwgJ2/2b1dsu2AvA==
-X-Gm-Gg: ASbGncsgpHQluA2S7orpFlHMhCg29+OK1g1WX6BhJKveWrJs+jGslubBurELhXY6DBD
- WlI+sZf7mSgJ8N0WMxpL/hejEAasjM+Kx0rfRnvmh0i74siQfO70zUyTFgLt8UZ5AXQkCbdZJiR
- hshicX27pBEwuUGENeNccS87g04vXqlVD6SQeHqIewiyPWMBQH5l726HJXMtJMYMl4qBXMYJ0wu
- Xd384AVAGyRKwzbwf4veLEFBE6Pl5IpZMozK2efR5CiRA6G9n9jF08YrhxV
-X-Google-Smtp-Source: AGHT+IEpdtqFahM63X5cbfHYtgpSHBzqz3YmpjMmzdTpA54GL7Lp9CjCXUx73SbsWBMIx4yacuZu5w==
-X-Received: by 2002:a17:903:24e:b0:215:b5c6:9ee8 with SMTP id
- d9443c01a7336-21614d1d3e3mr185030955ad.7.1733799898401; 
- Mon, 09 Dec 2024 19:04:58 -0800 (PST)
+ AJvYcCUpI9lat2sk5CT9J+IA8SJC+MiV25fQgeD2xAYaGGSFbi5z8BiQgRrBmkd51afkMaathgCEk1kP0Rp+@nongnu.org
+X-Gm-Message-State: AOJu0Yyva1NbEaN3pIHlG4tym5/fZQuWx1kLtRO7FuD798emD6Eu1+jc
+ ZEK+mRZe6/abZmqNG8rdn6jGXfZLB90z11dHF0lvkCz68IPwLjAtV89HEA==
+X-Gm-Gg: ASbGncueNmNqlK/UIC0NEqipF/9cElSLJslbO6trkbcLQVxSZj7r3VgWqmtcDVVQ5g3
+ 8sT2xcboChmqa4XT96Z3DHY0P46ZjwQBT3GGvT8a49MotplJyvEQunKxs/5kXdpIcuVLqLfWB8k
+ pistzojk40AaeFcmDUThC1kiYoO6wd+KyI3o65wBHiApJeKMEIPtq4XARimXO9JDoUAHhlLMM98
+ t2kmXbkvt/mkO60NaJzpE3G+Wu0ExJBjxuq6AoFdx68YOyKOKqjdO1xVu5S
+X-Google-Smtp-Source: AGHT+IFxTvzA3QloZH6LA5GdCGtClXoZ+PpmuHpVV1K+D4DKg14b/BaebSaTKY/MAHysLR5hmQbMzQ==
+X-Received: by 2002:a17:902:d2c5:b0:216:725c:a11a with SMTP id
+ d9443c01a7336-216725ca612mr21655975ad.10.1733799904748; 
+ Mon, 09 Dec 2024 19:05:04 -0800 (PST)
 Received: from wheely.local0.net ([220.253.106.119])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.04.55
+ d9443c01a7336-21631118cedsm44813865ad.150.2024.12.09.19.05.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Dec 2024 19:04:57 -0800 (PST)
+ Mon, 09 Dec 2024 19:05:04 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>
-Subject: [PATCH 0/9] ppc/pnv: HOMER and OCC fixes and improvements
-Date: Tue, 10 Dec 2024 13:04:40 +1000
-Message-ID: <20241210030451.1306608-1-npiggin@gmail.com>
+Subject: [PATCH 2/9] ppc/pnv/homer: Make dummy reads return 0
+Date: Tue, 10 Dec 2024 13:04:42 +1000
+Message-ID: <20241210030451.1306608-3-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241210030451.1306608-1-npiggin@gmail.com>
+References: <20241210030451.1306608-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,47 +99,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series makes a bunch of fixes and improvements to the HOMER and
-OCC unit models for powernv. It gets OPAL OCC code happier again,
-but requires this series of skiboot fixes (which I will hope to get
-upstream and then into QEMU in the same release as this series is
-merged.
+HOMER memory implements some dummy registers that return a nonsense
+value to satisfy skiboot accesses caused by "SLW" init and register
+save/restore programming that has never worked under QEMU:
 
-https://lists.ozlabs.org/pipermail/skiboot/2024-November/019013.html
+[    0.265000943,3] SLW: Failed to set HRMOR for CPU 0,RC=0x1
+[    0.265356988,3] Disabling deep stop states
 
-Big changes is moving HOMER from mmio register implementation to a
-RAM memory region which better maches hardware and is much easier to
-work with; and the addition of some dynamic OCC behaviour to the
-device model.
+To simplify a later change to implement HOMER as a RAM area, make
+these return zero, which has the same result.
 
-I wouldn't expect any review of OCC details. It's neglected and this
-series gets it in better shape than before. But anything on the
-basic structure and QEMU details is welcome. I will add some test
-cases to help ensure it doesn't regress in future, I will have to
-juggle the skiboot fixes as well though, so will do that later.
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/ppc/pnv_homer.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
-Nick
-
-Nicholas Piggin (9):
-  ppc/pnv/homer: Fix OCC registers
-  ppc/pnv/homer: Make dummy reads return 0
-  ppc/pnv/occ: Fix common area sensor offsets
-  ppc/pnv/homer: class-based base and size
-  ppc/pnv/occ: Better document OCCMISC bits
-  ppc/pnv: Make HOMER memory a RAM region
-  ppc/pnv/occ: Update pstate frequency tables
-  ppc/pnv/occ: Add POWER10 OCC-OPAL data format
-  ppc/pnv/occ: Implement a basic dynamic OCC model
-
- include/hw/ppc/pnv.h       |   6 +-
- include/hw/ppc/pnv_homer.h |  12 +-
- include/hw/ppc/pnv_occ.h   |   9 +
- hw/ppc/pnv.c               |  87 +++--
- hw/ppc/pnv_homer.c         | 230 +++----------
- hw/ppc/pnv_occ.c           | 668 +++++++++++++++++++++++++++++++++++--
- 6 files changed, 742 insertions(+), 270 deletions(-)
-
+diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
+index 9aedc08cc00..658b0186a38 100644
+--- a/hw/ppc/pnv_homer.c
++++ b/hw/ppc/pnv_homer.c
+@@ -89,7 +89,7 @@ static uint64_t pnv_power8_homer_read(void *opaque, hwaddr addr,
+     case PNV8_OCC_VCS_VOLTAGE_IDENTIFIER:
+         return 1;
+     case PNV8_OCC_PSTATE_DATA:
+-        return 0x1000000000000000;
++        return 0;
+     /* P8 frequency for 0, 1, and 2 pstates */
+     case PNV8_OCC_PSTATE_ZERO_FREQUENCY:
+     case PNV8_OCC_PSTATE_ONE_FREQUENCY:
+@@ -259,7 +259,7 @@ static uint64_t pnv_power9_homer_read(void *opaque, hwaddr addr,
+         return 0x01;
+     case PNV9_CHIP_HOMER_BASE:
+     case PNV9_CHIP_HOMER_IMAGE_POINTER:
+-        return 0x1000000000000000;
++        return 0;
+     case PNV9_DYNAMIC_DATA_STATE:
+         return 0x03; /* active */
+     }
 -- 
 2.45.2
 
