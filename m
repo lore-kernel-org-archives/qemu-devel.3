@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F1CDE77183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22580E77182
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQUW-0005Tw-KC; Wed, 11 Dec 2024 12:27:16 -0500
+	id 1tLQUz-0005uj-2J; Wed, 11 Dec 2024 12:27:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUS-0005Sf-HQ
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:13 -0500
+ id 1tLQUt-0005no-St
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUR-000173-7c
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:12 -0500
+ id 1tLQUr-00019j-RG
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938030;
+ s=mimecast20190719; t=1733938057;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=h9sJerS4yEPVJlavB03DPbVJGkb2MibXLdV/QCH/ooo=;
- b=I2gUtBHzH/0/MkoHveUv78OJ9QglXlUhKgsmlOVyLv7vo1flgzVfhPiHRId0u7mkHBAME6
- gBc5vfUJ/cDUPj+JDgHb3flZI9wiuMPJQ/YGCSLrjbeXbaUn3Pjh4q4YgOeMAdKSZSQhbN
- cIG/c+aYf2WROQFzYfTKUXs60PTT8bA=
+ bh=qb8V/aQYbLIrxdTuncepi3lH2bYt4JVi2kewINYlyDI=;
+ b=JGBnsFArHLGDwnWnlomL5sO2tMH4QjlCFm+nNkr+x1DRyx0SUML29CDLkqLuaVT/XNmn8P
+ 28nVTkKenvAAI826dkCoDmCpVRjfN4FWqDUTmiswCmufHdEyl/E4XGmDsU8oLVnLoTavaE
+ NyxngTKWuuVeemgxoOaJFT9Xj0x0n1g=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-_UpaONPPOuujFTSVrFw32g-1; Wed,
- 11 Dec 2024 12:27:07 -0500
-X-MC-Unique: _UpaONPPOuujFTSVrFw32g-1
-X-Mimecast-MFC-AGG-ID: _UpaONPPOuujFTSVrFw32g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-4ZRq53XHNPylUTFwLipGSQ-1; Wed,
+ 11 Dec 2024 12:27:35 -0500
+X-MC-Unique: 4ZRq53XHNPylUTFwLipGSQ-1
+X-Mimecast-MFC-AGG-ID: 4ZRq53XHNPylUTFwLipGSQ
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1904019560B3; Wed, 11 Dec 2024 17:27:06 +0000 (UTC)
+ id A428619560B3; Wed, 11 Dec 2024 17:27:34 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BB3FB1956048; Wed, 11 Dec 2024 17:27:03 +0000 (UTC)
+ id 7A2931956048; Wed, 11 Dec 2024 17:27:32 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 04/31] tests/functional: simplify 'which' implementation
-Date: Wed, 11 Dec 2024 17:26:20 +0000
-Message-ID: <20241211172648.2893097-5-berrange@redhat.com>
+Subject: [PATCH v2 14/31] tests/functional: switch over to using
+ self.socket_dir(...)
+Date: Wed, 11 Dec 2024 17:26:30 +0000
+Message-ID: <20241211172648.2893097-15-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -87,26 +88,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'access' check implies the file exists.
+This removes direct creation of temporary dirs
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/cmd.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/functional/test_arm_aspeed.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index 4106f1ee7c..600e0509db 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -25,7 +25,7 @@ def which(tool):
-     paths=os.getenv('PATH')
-     for p in paths.split(os.path.pathsep):
-         p = os.path.join(p, tool)
--        if os.path.exists(p) and os.access(p, os.X_OK):
-+        if os.access(p, os.X_OK):
-             return p
-     return None
+diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
+index 9561129c51..5bd31e43ee 100755
+--- a/tests/functional/test_arm_aspeed.py
++++ b/tests/functional/test_arm_aspeed.py
+@@ -9,7 +9,6 @@
+ import os
+ import time
+ import subprocess
+-import tempfile
  
+ from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import exec_command_and_wait_for_pattern
+@@ -226,7 +225,7 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
+ 
+         tpmstate_dir = self.scratch_file('swtpmstate')
+         os.mkdir(tpmstate_dir)
+-        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
++        socket_dir = self.socket_dir()
+         socket = os.path.join(socket_dir.name, 'swtpm-socket')
+ 
+         # We must put the TPM state dir in /tmp/, not the build dir,
 -- 
 2.46.0
 
