@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6FFE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:31:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA58E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:31:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPYv-0000aY-UE; Wed, 11 Dec 2024 11:27:46 -0500
+	id 1tLPZ3-0001W3-S4; Wed, 11 Dec 2024 11:27:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYo-0008TQ-Kf
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:38 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLPYx-0000lT-E7
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYm-0000Dz-Kr
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:38 -0500
+ id 1tLPYv-0000GI-PP
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934456;
+ s=mimecast20190719; t=1733934465;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Kc+3yZr1fEE4Vxs7y1Ixn7frgKT0doT0bC1xM2Vun5Y=;
- b=aj7vBrSy2Y/12++YY9pDuNBoN7gOuNCCFyOAgHrm4GpzMCJXtUmXwJRsIq/Q4kYtge0NRy
- 6LWD4PvPi9zVATBlnAIDiH87xLYVLLDjznYRo9bD9voZfMSZbOEwcpCyLbgihE5XPbp4Gl
- iJpPXaqi5FwNH+vPMOinyXEHx9tZ//Q=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lfgHZQsWMegaPfnFVxg+hSLnTIKU6Rd3BgTVCCd8fno=;
+ b=MmJhfIPDAM8+YlSXZK4jYHVnIIGrzeVp1D9BNtyTnirD/8emIhuuFqNwBAaEDmxxPoSc+H
+ nflKduzz/4Y+Qf0N6NDxAdoRW1rnFsRdSPJTV4qkq8BPmztcKoSsq6gIGx7sV6fB/VMzrf
+ khYO/Pbk6+GQVurCsrAqAixoyLastmY=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-mO4S-atpOYa4CJgOsniUDQ-1; Wed, 11 Dec 2024 11:27:34 -0500
-X-MC-Unique: mO4S-atpOYa4CJgOsniUDQ-1
-X-Mimecast-MFC-AGG-ID: mO4S-atpOYa4CJgOsniUDQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3861cd03a89so3250138f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:34 -0800 (PST)
+ us-mta-271-vp5MxJovNXOZOHCUsrJAug-1; Wed, 11 Dec 2024 11:27:43 -0500
+X-MC-Unique: vp5MxJovNXOZOHCUsrJAug-1
+X-Mimecast-MFC-AGG-ID: vp5MxJovNXOZOHCUsrJAug
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa5a0a35384so503904866b.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934452; x=1734539252;
+ d=1e100.net; s=20230601; t=1733934462; x=1734539262;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Kc+3yZr1fEE4Vxs7y1Ixn7frgKT0doT0bC1xM2Vun5Y=;
- b=Znpg+DK1CfiC/v+OfuG4D+tMf2OOZcPewq2neeJd6T4NGOnSAoELrF7QpqA7bQYdZY
- l+gPgZ9BpJqEtvTeCz6UNwwyypLmaLLqBCRjnHlTB988tx18LEyGMrbhSgQtX/PYyX3Y
- eXlE/s75Q8wBw/KD9bLiXE/sy2OuopYeA4MoRo5afW9xbYmuYibdt8pQXn2/J5piBaU+
- BhY67SVMdsv5RPETv+GOIl1EyisTLflSF1pB1TEC6RW2LqjdcSf3ehxYuHWm2JcNsryZ
- zc/FOYBxtV0cNmWFhsUIv8GZYfAJmp1SoIMnP6eFiugJEssy4ELMLRfjE6XPRDnHxjCy
- tCkQ==
-X-Gm-Message-State: AOJu0Yzr5JcvXwV9DE3pl3vEq8YlAhhnVCSaXSkL7Z0XbhH1biNZSMZr
- uLTgJ23hzoXi6ofXl03DGjaA1OwSoofGdgDgBCaUBhOIYGnhqa3dutg62u1hR1R1V3xibzOoZqU
- s4WcTDq1oh+UD0hYIu3D/WPsjfBYR+5GtgNxIVVaWlRbpIVN1R0f6wRFlQP10WLKaYZmkNHDPMB
- 1mGHXvshC3iefO2LM459ghQrBAU4O2mKAAvA33
-X-Gm-Gg: ASbGncuhylw7mEcumP6Ttom50Rlau/qWVgC7WrptRPUkrEDRWdq8ORVNAurzUsqolTG
- I1gzvM/Y8syy2IucI3bNu32JLw8z/S5vHK47sn6D8gIEBL7TnYhzUZuyrdpK9ZmErdjCEECNbtr
- eIUaS3lm0lTZNnqm7EEfzwDY9ZjQRN/sd/uHERLBA7po4FrIFNE++0SW2izFqILYi/iZtCj+/OK
- N2/+Ojhw6Q0qdd0RH4JuPUDMk3bMGdKu+VjVIzO/5WgAvyY3IU+ZBDx
-X-Received: by 2002:a05:6000:1fad:b0:385:f527:be6d with SMTP id
- ffacd0b85a97d-387876af7demr219735f8f.36.1733934452536; 
- Wed, 11 Dec 2024 08:27:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEWVPZ0dEUNvTFXm4EY7w2EG3OqTg1SYd3ymQqxQ8jtlB+dr9UMyOrLBDJ6eed81aoOuVak/Q==
-X-Received: by 2002:a05:6000:1fad:b0:385:f527:be6d with SMTP id
- ffacd0b85a97d-387876af7demr219710f8f.36.1733934452069; 
- Wed, 11 Dec 2024 08:27:32 -0800 (PST)
+ bh=lfgHZQsWMegaPfnFVxg+hSLnTIKU6Rd3BgTVCCd8fno=;
+ b=DOcJ4kEXG1Hn3ZdeGZ0QGVm1ofMo4QyYMy9EcPE1nk1dBLDWBVlt0RrE4Un3njF4LH
+ JWHRalzLJveB5itVzNZ9vcLm+LuRSj2KIrVxCOd4mpd0S7SReKgif6MyRK44wy7DCzsM
+ pnGxKjZ1j6/QP2vkNZht2EDMzetlY2AKx9pdkDrCvMpt7DEpv5PJq4vYkgLIAtevTds0
+ flu0TqfNp/lNF3zaPSTOX6mFNHTHvlqi+ovAT47zjJWzecaXayclj/k4bnkZGYI1u5ps
+ FJl4gRUcrVSeBnEJZDWKB/5xi+dH8BMez8JscQMNaWMg4KTUV82tzxzeAupl/LcGyHgD
+ CdKQ==
+X-Gm-Message-State: AOJu0YyRToju9bFvPE1uVRTRQ+1F9/pGj5eQwwV5Il+/jSuzL+pyrcXO
+ 7phrhyW4nDBawbxVnIO0qDWkf+lv19hqCnhBms8l/oKow/YJs4eXeEwM17vN+WrAvAdXIcQIOkP
+ bgL1t9QHjwSkQB3Knkzl0ZNxw4J8naOQ1jpb/euglwmQPco5XFt4FhVSPrv+XDNGWa71i5ceGX+
+ SWCHJMTW43gGJJvBNq47nlEzJmZDBPKlSWeu/q
+X-Gm-Gg: ASbGncuCYJ2Aw3qQI/28Hm0tCwoJ5kDyElHWlRk5waayWKVJNLoLd9HS0lcU49QDbWx
+ m/tYNbnsUypjMNw7ialhZuAJEcQCAbm8HduPr+wRZJjc6w6sgpeuHJHCs3RI5dVqAvO4O/71Kq8
+ lGPh27vNMf7n5wpmrfnWBwqlaeJ5GhemPca7d0U++Q2Nr6BSr6bfsg+VLw4nWXsUp9socz2F+WZ
+ ADHPF6HBP3/GxQv51Y/2sXDDkLa8nxAkQ3x8Xz5LD9z3ehGGj4qhUW4
+X-Received: by 2002:a17:906:311a:b0:aa5:2575:e75d with SMTP id
+ a640c23a62f3a-aa6b1141c72mr348935366b.2.1733934461836; 
+ Wed, 11 Dec 2024 08:27:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGqLeBPutf+x1YKZGwpLGI01fC3RgTTeOumZojvU5ZRPIXU5kWzPEkkjWFRrS1KYNPlybOtfg==
+X-Received: by 2002:a17:906:311a:b0:aa5:2575:e75d with SMTP id
+ a640c23a62f3a-aa6b1141c72mr348932566b.2.1733934461379; 
+ Wed, 11 Dec 2024 08:27:41 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436178bd62dsm48509675e9.36.2024.12.11.08.27.30
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-aa650ea7369sm715147466b.74.2024.12.11.08.27.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:30 -0800 (PST)
+ Wed, 11 Dec 2024 08:27:40 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/49] rust: build: move rustc_args.py invocation to qemu-api
- crate
-Date: Wed, 11 Dec 2024 17:26:34 +0100
-Message-ID: <20241211162720.320070-5-pbonzini@redhat.com>
+Cc: Junjie Mao <junjie.mao@hotmail.com>
+Subject: [PULL 09/49] rust: fix a couple style issues from clippy
+Date: Wed, 11 Dec 2024 17:26:39 +0100
+Message-ID: <20241211162720.320070-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -108,108 +107,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Only qemu-api needs access to the symbols in config-host.h.  Remove
-the temptation to use them elsewhere by limiting the --cfg arguments to
-the qemu-api crate.
+These are reported as clippy::semicolon_inside_block and clippy::as_ptr_cast_mut.
 
-Per-crate invocation of the script will also be needed to add --check-cfg
-options for each crate's features (when more complex, build-time
-configurable devices are added in the future).
+clippy::semicolon_inside_block can be configured not to lint single-line
+blocks; just go with the default.
 
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build               | 56 +++++++++++++++++----------------------
- rust/qemu-api/meson.build |  5 +++-
- 2 files changed, 29 insertions(+), 32 deletions(-)
+ rust/hw/char/pl011/src/device.rs     | 8 +++++---
+ rust/hw/char/pl011/src/memory_ops.rs | 4 +++-
+ rust/qemu-api/tests/tests.rs         | 2 +-
+ 3 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index ea211c2dbb4..2f1f2aece4d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -120,7 +120,30 @@ if have_rust
- endif
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 476cacc8449..317a9b3c5ad 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -2,7 +2,7 @@
+ // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+ // SPDX-License-Identifier: GPL-2.0-or-later
  
- if have_rust
-+  rustc_args = find_program('scripts/rust/rustc_args.py')
-   rustfmt = find_program('rustfmt', required: false)
-+
-+  # Prohibit code that is forbidden in Rust 2024
-+  rustc_lint_args = ['-D', 'unsafe_op_in_unsafe_fn']
-+
-+  # Occasionally, we may need to silence warnings and clippy lints that
-+  # were only introduced in newer Rust compiler versions.  Do not croak
-+  # in that case; a CI job with rust_strict_lints == true ensures that
-+  # we do not have misspelled allow() attributes.
-+  if not get_option('strict_rust_lints')
-+    rustc_lint_args += ['-A', 'unknown_lints']
-+  endif
-+
-+  # Apart from procedural macros, our Rust executables will often link
-+  # with C code, so include all the libraries that C code needs.  This
-+  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
-+  # passing -nodefaultlibs to the linker "was more ideological to
-+  # start with than anything".
-+  add_project_arguments(rustc_lint_args +
-+      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
-+      native: false, language: 'rust')
-+  add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
-+      native: true, language: 'rust')
- endif
+-use core::ptr::{addr_of, addr_of_mut, NonNull};
++use core::ptr::{addr_of_mut, NonNull};
+ use std::{
+     ffi::CStr,
+     os::raw::{c_int, c_uchar, c_uint, c_void},
+@@ -499,7 +499,9 @@ pub fn update(&self) {
+         let flags = self.int_level & self.int_enabled;
+         for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
+             // SAFETY: self.interrupts have been initialized in init().
+-            unsafe { qemu_set_irq(*irq, i32::from(flags & i != 0)) };
++            unsafe {
++                qemu_set_irq(*irq, i32::from(flags & i != 0));
++            }
+         }
+     }
  
- dtrace = not_found
-@@ -3399,37 +3422,8 @@ endif
- # Generated sources #
- #####################
+@@ -601,7 +603,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
+         let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
  
--genh += configure_file(output: 'config-host.h', configuration: config_host_data)
--
--if have_rust
--  rustc_args = run_command(
--    find_program('scripts/rust/rustc_args.py'),
--    '--config-headers', meson.project_build_root() / 'config-host.h',
--    capture : true,
--    check: true).stdout().strip().split()
--
--  # Prohibit code that is forbidden in Rust 2024
--  rustc_args += ['-D', 'unsafe_op_in_unsafe_fn']
--
--  # Occasionally, we may need to silence warnings and clippy lints that
--  # were only introduced in newer Rust compiler versions.  Do not croak
--  # in that case; a CI job with rust_strict_lints == true ensures that
--  # we do not have misspelled allow() attributes.
--  if not get_option('strict_rust_lints')
--    rustc_args += ['-A', 'unknown_lints']
--  endif
--
--  # Apart from procedural macros, our Rust executables will often link
--  # with C code, so include all the libraries that C code needs.  This
--  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
--  # passing -nodefaultlibs to the linker "was more ideological to
--  # start with than anything".
--  add_project_arguments(rustc_args +
--      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
--      native: false, language: 'rust')
--  add_project_arguments(rustc_args + ['--cfg', 'MESON'],
--      native: true, language: 'rust')
--endif
-+config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
-+genh += config_host_h
+         qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
+-        sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
++        sysbus_realize_and_unref(sysbus, addr_of_mut!(error_fatal));
+         sysbus_mmio_map(sysbus, 0, addr);
+         sysbus_connect_irq(sysbus, 0, irq);
+         dev
+diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
+index 169d485a4d2..c4e8599ba43 100644
+--- a/rust/hw/char/pl011/src/memory_ops.rs
++++ b/rust/hw/char/pl011/src/memory_ops.rs
+@@ -33,7 +33,9 @@
+             // SAFETY: self.char_backend is a valid CharBackend instance after it's been
+             // initialized in realize().
+             let cb_ptr = unsafe { core::ptr::addr_of_mut!(state.as_mut().char_backend) };
+-            unsafe { qemu_chr_fe_accept_input(cb_ptr) };
++            unsafe {
++                qemu_chr_fe_accept_input(cb_ptr);
++            }
  
- hxtool = find_program('scripts/hxtool')
- shaderinclude = find_program('scripts/shaderinclude.py')
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 3be7b7e5ced..5df6b35bf88 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -1,4 +1,7 @@
--_qemu_api_cfg = []
-+_qemu_api_cfg = run_command(rustc_args,
-+  '--config-headers', config_host_h,
-+  capture: true, check: true).stdout().strip().split()
-+
- # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
- if rustc.version().version_compare('>=1.77.0')
-   _qemu_api_cfg += ['--cfg', 'has_offset_of']
+             val
+         }
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 43a4827de12..925f5a3c77b 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -74,6 +74,6 @@ impl Class for DummyClass {
+ 
+     unsafe {
+         module_call_init(module_init_type::MODULE_INIT_QOM);
+-        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()) as *mut _);
++        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
+     }
+ }
 -- 
 2.47.1
 
