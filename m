@@ -4,71 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144F4E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:02:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67A0BE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLIa7-0005qr-Lo; Wed, 11 Dec 2024 04:00:31 -0500
+	id 1tLIar-0005uv-RI; Wed, 11 Dec 2024 04:01:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa5-0005qV-Qm
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIaN-0005sS-BK
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa4-0007pJ-2C
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:29 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIaH-0007qG-FE
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733907627;
+ s=mimecast20190719; t=1733907639;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3dxDc22YP4Eyy/4L7iCCPLQYp58xT/xQlzHGS8WYxZA=;
- b=KIv6v44PZDUylpzxM9VESU01IX8zUOTKW+8NKQoXnhCgmkwPr8qVLFlTyf29QTCfdqF8wk
- 3AEhOCAa1k/NP2YdykpzGLOPNJR9rS1GlsRPjQVk51JCaJrFvL/TcjptALMKqiUK8uj+cs
- Dl3gSiozffzI4lIGdzX//ucT/F7PLGw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=yG5RjmlwSmiqq/NisGGmIQK6kx6D8eNixP4lmq/bq/U=;
+ b=im8ktLxQGjF2zVpo4vUlsxId0rCs9Ih0XgQ1B4BFVR1MOGTedo8m03M4+Dcm5jVVy/2iPR
+ r5sZR/A7wgu/c42yxgTDXDRE9kwaKwjtqSnl6DaZudZlmUhB1NigTlJoEs8337Tmgpt7Fr
+ HPzN7gW/ehGOOd7A2+sfVktqyBWwcnM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-342-XPFejslwOP6QP9t3NlC5GA-1; Wed,
- 11 Dec 2024 04:00:24 -0500
-X-MC-Unique: XPFejslwOP6QP9t3NlC5GA-1
-X-Mimecast-MFC-AGG-ID: XPFejslwOP6QP9t3NlC5GA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-122-K5T3tAPPPGCf_VxXUFUulQ-1; Wed,
+ 11 Dec 2024 04:00:35 -0500
+X-MC-Unique: K5T3tAPPPGCf_VxXUFUulQ-1
+X-Mimecast-MFC-AGG-ID: K5T3tAPPPGCf_VxXUFUulQ
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AC45D195608B; Wed, 11 Dec 2024 09:00:22 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6A3E919560B2; Wed, 11 Dec 2024 09:00:33 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.186])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E97D1956089; Wed, 11 Dec 2024 09:00:18 +0000 (UTC)
+ id 9345C195608A; Wed, 11 Dec 2024 09:00:30 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 01/26] hw/i386: define _AS_LATEST() macros for machine types
-Date: Wed, 11 Dec 2024 09:59:45 +0100
-Message-ID: <20241211090014.619351-2-thuth@redhat.com>
+ Hendrik Brueckner <brueckner@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>
+Subject: [PULL 04/26] s390x/cpumodel: add msa10 subfunctions
+Date: Wed, 11 Dec 2024 09:59:48 +0100
+Message-ID: <20241211090014.619351-5-thuth@redhat.com>
 In-Reply-To: <20241211090014.619351-1-thuth@redhat.com>
 References: <20241211090014.619351-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -87,120 +85,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Hendrik Brueckner <brueckner@linux.ibm.com>
 
-Follow the other architecture targets by adding extra macros for
-defining a versioned machine type as the latest. This reduces the
-size of the changes when introducing new machine types at the start
-of each release cycle.
+MSA10 introduces new AES XTS subfunctions.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cornelia Huck <cohuck@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20240910163041.3764176-1-berrange@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Message-ID: <20241126103005.3794748-2-cohuck@redhat.com>
+Signed-off-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Message-ID: <20241206122751.189721-2-brueckner@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- include/hw/i386/pc.h |  4 +++-
- hw/i386/pc_piix.c    | 11 +++++------
- hw/i386/pc_q35.c     | 11 ++++++-----
- 3 files changed, 14 insertions(+), 12 deletions(-)
+ target/s390x/cpu_features_def.h.inc |  6 ++++++
+ target/s390x/cpu_features.c         |  2 ++
+ target/s390x/cpu_models.c           |  4 ++++
+ target/s390x/gen-features.c         | 20 ++++++++++++++++++++
+ 4 files changed, 32 insertions(+)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 14ee06287d..890427c56e 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -320,7 +320,7 @@ extern const size_t pc_compat_2_3_len;
-     } \
-     type_init(pc_machine_init_##suffix)
+diff --git a/target/s390x/cpu_features_def.h.inc b/target/s390x/cpu_features_def.h.inc
+index c53ac13352..104d186c3f 100644
+--- a/target/s390x/cpu_features_def.h.inc
++++ b/target/s390x/cpu_features_def.h.inc
+@@ -233,6 +233,10 @@ DEF_FEAT(KM_XTS_AES_128, "km-xts-aes-128", KM, 50, "KM XTS-AES-128")
+ DEF_FEAT(KM_XTS_AES_256, "km-xts-aes-256", KM, 52, "KM XTS-AES-256")
+ DEF_FEAT(KM_XTS_EAES_128, "km-xts-eaes-128", KM, 58, "KM XTS-Encrypted-AES-128")
+ DEF_FEAT(KM_XTS_EAES_256, "km-xts-eaes-256", KM, 60, "KM XTS-Encrypted-AES-256")
++DEF_FEAT(KM_FULL_XTS_AES_128, "km-full-xts-aes-128", KM, 82, "KM Full-XTS-AES-128")
++DEF_FEAT(KM_FULL_XTS_AES_256, "km-full-xts-aes-256", KM, 84, "KM Full-XTS-AES-256")
++DEF_FEAT(KM_FULL_XTS_EAES_128, "km-full-xts-eaes-128", KM, 90, "KM Full-XTS-Encrypted-AES-128")
++DEF_FEAT(KM_FULL_XTS_EAES_256, "km-full-xts-eaes-256", KM, 92, "KM Full-XTS-Encrypted-AES-256")
  
--#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, ...) \
-+#define DEFINE_PC_VER_MACHINE(namesym, namestr, initfn, isdefault, malias, ...) \
-     static void MACHINE_VER_SYM(init, namesym, __VA_ARGS__)( \
-         MachineState *machine) \
-     { \
-@@ -334,6 +334,8 @@ extern const size_t pc_compat_2_3_len;
-         MACHINE_VER_SYM(options, namesym, __VA_ARGS__)(mc); \
-         mc->init = MACHINE_VER_SYM(init, namesym, __VA_ARGS__); \
-         MACHINE_VER_DEPRECATION(__VA_ARGS__); \
-+        mc->is_default = isdefault; \
-+        mc->alias = malias; \
-     } \
-     static const TypeInfo MACHINE_VER_SYM(info, namesym, __VA_ARGS__) = \
-     { \
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 2bf6865d40..4953676170 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -446,7 +446,10 @@ static void pc_i440fx_init(MachineState *machine)
- }
+ /* Features exposed via the KIMD instruction. */
+ DEF_FEAT(KIMD_SHA_1, "kimd-sha-1", KIMD, 1, "KIMD SHA-1")
+@@ -264,6 +268,8 @@ DEF_FEAT(PCKMO_ETDEA_256, "pckmo-etdea-192", PCKMO, 3, "PCKMO Encrypted-TDEA-192
+ DEF_FEAT(PCKMO_AES_128, "pckmo-aes-128", PCKMO, 18, "PCKMO Encrypted-AES-128-Key")
+ DEF_FEAT(PCKMO_AES_192, "pckmo-aes-192", PCKMO, 19, "PCKMO Encrypted-AES-192-Key")
+ DEF_FEAT(PCKMO_AES_256, "pckmo-aes-256", PCKMO, 20, "PCKMO Encrypted-AES-256-Key")
++DEF_FEAT(PCKMO_AES_XTS_128_DK, "pckmo-aes-xts-128-dk", PCKMO, 21, "PCKMO Encrypt-AES-XTS-128-Double-Key")
++DEF_FEAT(PCKMO_AES_XTS_256_DK, "pckmo-aes-xts-256-dk", PCKMO, 22, "PCKMO Encrypt-AES-XTS-256-Double-Key")
+ DEF_FEAT(PCKMO_ECC_P256, "pckmo-ecc-p256", PCKMO, 32, "PCKMO Encrypt-ECC-P256-Key")
+ DEF_FEAT(PCKMO_ECC_P384, "pckmo-ecc-p384", PCKMO, 33, "PCKMO Encrypt-ECC-P384-Key")
+ DEF_FEAT(PCKMO_ECC_P521, "pckmo-ecc-p521", PCKMO, 34, "PCKMO Encrypt-ECC-P521-Key")
+diff --git a/target/s390x/cpu_features.c b/target/s390x/cpu_features.c
+index cb4e2b8920..a3c239595a 100644
+--- a/target/s390x/cpu_features.c
++++ b/target/s390x/cpu_features.c
+@@ -252,6 +252,8 @@ static S390FeatGroupDef s390_feature_groups[] = {
+     FEAT_GROUP_INIT("msa8", MSA_EXT_8, "Message-security-assist-extension 8 facility"),
+     FEAT_GROUP_INIT("msa9", MSA_EXT_9, "Message-security-assist-extension 9 facility"),
+     FEAT_GROUP_INIT("msa9_pckmo", MSA_EXT_9_PCKMO, "Message-security-assist-extension 9 PCKMO subfunctions"),
++    FEAT_GROUP_INIT("msa10", MSA_EXT_10, "Message-security-assist-extension 10 facility"),
++    FEAT_GROUP_INIT("msa10_pckmo", MSA_EXT_10_PCKMO, "Message-security-assist-extension 10 PCKMO subfunctions"),
+     FEAT_GROUP_INIT("mepochptff", MULTIPLE_EPOCH_PTFF, "PTFF enhancements introduced with Multiple-epoch facility"),
+     FEAT_GROUP_INIT("esort", ENH_SORT, "Enhanced-sort facility"),
+     FEAT_GROUP_INIT("deflate", DEFLATE_CONVERSION, "Deflate-conversion facility"),
+diff --git a/target/s390x/cpu_models.c b/target/s390x/cpu_models.c
+index a27f4b6f79..3eb8276aee 100644
+--- a/target/s390x/cpu_models.c
++++ b/target/s390x/cpu_models.c
+@@ -477,6 +477,10 @@ static void check_consistency(const S390CPUModel *model)
+         { S390_FEAT_KLMD_SHA3_512, S390_FEAT_MSA },
+         { S390_FEAT_KLMD_SHAKE_128, S390_FEAT_MSA },
+         { S390_FEAT_KLMD_SHAKE_256, S390_FEAT_MSA },
++        { S390_FEAT_KM_FULL_XTS_AES_128, S390_FEAT_MSA_EXT_4 },
++        { S390_FEAT_KM_FULL_XTS_AES_256, S390_FEAT_MSA_EXT_4 },
++        { S390_FEAT_KM_FULL_XTS_EAES_128, S390_FEAT_MSA_EXT_4 },
++        { S390_FEAT_KM_FULL_XTS_EAES_256, S390_FEAT_MSA_EXT_4 },
+         { S390_FEAT_PRNO_TRNG_QRTCR, S390_FEAT_MSA_EXT_5 },
+         { S390_FEAT_PRNO_TRNG, S390_FEAT_MSA_EXT_5 },
+         { S390_FEAT_SIE_KSS, S390_FEAT_SIE_F2 },
+diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
+index 2b2bfc3736..06c3bf64f3 100644
+--- a/target/s390x/gen-features.c
++++ b/target/s390x/gen-features.c
+@@ -246,6 +246,16 @@
+     S390_FEAT_PCKMO_ECC_ED25519, \
+     S390_FEAT_PCKMO_ECC_ED448
  
- #define DEFINE_I440FX_MACHINE(major, minor) \
--    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, major, minor);
-+    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, false, NULL, major, minor);
++#define S390_FEAT_GROUP_MSA_EXT_10 \
++    S390_FEAT_KM_FULL_XTS_AES_128, \
++    S390_FEAT_KM_FULL_XTS_AES_256, \
++    S390_FEAT_KM_FULL_XTS_EAES_128, \
++    S390_FEAT_KM_FULL_XTS_EAES_256
 +
-+#define DEFINE_I440FX_MACHINE_AS_LATEST(major, minor) \
-+    DEFINE_PC_VER_MACHINE(pc_i440fx, "pc-i440fx", pc_i440fx_init, true, "pc", major, minor);
- 
- static void pc_i440fx_machine_options(MachineClass *m)
- {
-@@ -477,17 +480,13 @@ static void pc_i440fx_machine_options(MachineClass *m)
- static void pc_i440fx_machine_9_2_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
--    m->alias = "pc";
--    m->is_default = true;
- }
- 
--DEFINE_I440FX_MACHINE(9, 2);
-+DEFINE_I440FX_MACHINE_AS_LATEST(9, 2);
- 
- static void pc_i440fx_machine_9_1_options(MachineClass *m)
- {
-     pc_i440fx_machine_9_2_options(m);
--    m->alias = NULL;
--    m->is_default = false;
-     compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
-     compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
- }
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 8319b6d45e..42bdedbaa4 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -327,10 +327,13 @@ static void pc_q35_init(MachineState *machine)
- }
- 
- #define DEFINE_Q35_MACHINE(major, minor) \
--    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor);
-+    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor);
++#define S390_FEAT_GROUP_MSA_EXT_10_PCKMO \
++    S390_FEAT_PCKMO_AES_XTS_128_DK, \
++    S390_FEAT_PCKMO_AES_XTS_256_DK
 +
-+#define DEFINE_Q35_MACHINE_AS_LATEST(major, minor) \
-+    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, "q35", major, minor);
+ #define S390_FEAT_GROUP_ENH_SORT \
+     S390_FEAT_ESORT_BASE, \
+     S390_FEAT_SORTL_SFLR, \
+@@ -307,10 +317,18 @@ static uint16_t group_MSA_EXT_9[] = {
+     S390_FEAT_GROUP_MSA_EXT_9,
+ };
  
- #define DEFINE_Q35_MACHINE_BUGFIX(major, minor, micro) \
--    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, major, minor, micro);
-+    DEFINE_PC_VER_MACHINE(pc_q35, "pc-q35", pc_q35_init, false, NULL, major, minor, micro);
++static uint16_t group_MSA_EXT_10[] = {
++    S390_FEAT_GROUP_MSA_EXT_10,
++};
++
+ static uint16_t group_MSA_EXT_9_PCKMO[] = {
+     S390_FEAT_GROUP_MSA_EXT_9_PCKMO,
+ };
  
- static void pc_q35_machine_options(MachineClass *m)
- {
-@@ -359,15 +362,13 @@ static void pc_q35_machine_options(MachineClass *m)
- static void pc_q35_machine_9_2_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
--    m->alias = "q35";
- }
- 
--DEFINE_Q35_MACHINE(9, 2);
-+DEFINE_Q35_MACHINE_AS_LATEST(9, 2);
- 
- static void pc_q35_machine_9_1_options(MachineClass *m)
- {
-     pc_q35_machine_9_2_options(m);
--    m->alias = NULL;
-     compat_props_add(m->compat_props, hw_compat_9_1, hw_compat_9_1_len);
-     compat_props_add(m->compat_props, pc_compat_9_1, pc_compat_9_1_len);
- }
++static uint16_t group_MSA_EXT_10_PCKMO[] = {
++    S390_FEAT_GROUP_MSA_EXT_10_PCKMO,
++};
++
+ static uint16_t group_ENH_SORT[] = {
+     S390_FEAT_GROUP_ENH_SORT,
+ };
+@@ -858,6 +876,8 @@ static FeatGroupDefSpec FeatGroupDef[] = {
+     FEAT_GROUP_INITIALIZER(MSA_EXT_8),
+     FEAT_GROUP_INITIALIZER(MSA_EXT_9),
+     FEAT_GROUP_INITIALIZER(MSA_EXT_9_PCKMO),
++    FEAT_GROUP_INITIALIZER(MSA_EXT_10),
++    FEAT_GROUP_INITIALIZER(MSA_EXT_10_PCKMO),
+     FEAT_GROUP_INITIALIZER(MULTIPLE_EPOCH_PTFF),
+     FEAT_GROUP_INITIALIZER(ENH_SORT),
+     FEAT_GROUP_INITIALIZER(DEFLATE_CONVERSION),
 -- 
 2.47.1
 
