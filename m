@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A9D2E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEACE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLNxL-0006tS-Rf; Wed, 11 Dec 2024 09:44:51 -0500
+	id 1tLNxN-0006uB-OB; Wed, 11 Dec 2024 09:44:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLNxJ-0006rc-LX
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:49 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1tLNxL-0006tT-KB
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:51 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLNxI-0003rx-4T
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:49 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-434e3953b65so31548365e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 06:44:47 -0800 (PST)
+ id 1tLNxK-0003sc-3h
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:51 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385e87b25f0so483708f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 06:44:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733928286; x=1734533086; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733928288; x=1734533088; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fSuUeuHUzdC2KZRVDcvXd5GipqOsmtMAsr2Y358lzSM=;
- b=lEVfV+3pWsD6nlCUwDrGawexp989/56IuYNn0tbbUuRcfOt53hzztSTSGY2rt1XtLR
- 1DnOAgU1mL0l/k73+McFcvvMvhlGNw9pUGSVhAjEfJsY3exsVuSJHzVwFk43Ow+1n9DM
- gEvky56OvTcHAh0FhlZ4Mvwb2y6Ff4Asp9fiCwp6SzjD3fA3e5rMbcsrE7ZdSBwJIL+d
- Gg4Kdc6hTJzDHxKbHXEOSf19ciW33P1OloLcaPlZXzfZyMk45r6QmaXk+yS/62+bXau4
- LBP4p5QhfJkrtjokX1KYplJGHDjCfHrbiFWRgW/afBVpMNJwsiCg+bPN3cRzlOyFJ2fi
- F+qA==
+ :reply-to; bh=OtTkwTKI52bcxg/lJzvBSIA6PD09skuET2+JQoRaIc4=;
+ b=eR+VPz2y0lKC1kb6T2eM9G8BPt0evEq/KC2FMp2WJmoFV3Ck77b3UefbYOqdidglfh
+ OGp1+1zteQ5dYhcGqZX5xJObM6VfEGc7plhqd8yYIq/zoLld060t3AgO2JKfetpCDReU
+ N4cXvwLEnM2kXaRo3JN+7WYOHs917xGeyOCZhN1akWEx4apzwU4sV4Xi1ynRvj4R8UUU
+ 56g7DzzhJ+GLPFDPy4O/vTCwjWJq3/u/XkjApdp/tY3Y/r0VmBmvaOzZSAgaaV5fYW1S
+ 9cqRD76DKyCZ/WLj2Kvi+tauNikakYGsFqSIuEZy81dAWSRNn/LxGJnh3T4iG0X71yRZ
+ 69LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733928286; x=1734533086;
+ d=1e100.net; s=20230601; t=1733928288; x=1734533088;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fSuUeuHUzdC2KZRVDcvXd5GipqOsmtMAsr2Y358lzSM=;
- b=N95+MOvM9yEpQzTDWKubTo3X/cHFCpCIL0bhtxCYO+sTV9fdpJHzxFQxqjN3FHfmjG
- okrMOm7D9/L+KDTSMwb+r+E7qhZXy1rCQK/AyLB1qBYb//5l7ZLh33+eDiYlgL42RbBP
- uS5SLckns7IKxrm7XBjAL9x8h51aKuUjQPsu0Vs6yvVUQTlsrFLmN+wzRNo4b7Nh0x8x
- 2fd1Ubgyr8l/mjD7DtOEavlDuJ3i6BEPCtkqDUVwtYkqNEKuMs+nhA4MAsPvWIiVzYBP
- ArPTwHWHVU5ymDUcMglGrbwqpLWi9H7VK7tbJCQPKRKltqgxHkeruQhpHOZ9qvn6WG5G
- 2w/g==
+ bh=OtTkwTKI52bcxg/lJzvBSIA6PD09skuET2+JQoRaIc4=;
+ b=Y8C2kS7aj99rykQ/qpRblg3Ac9kar5Txzdv1JSmUV5MzhVcZ+RKglYhesPmOZ9BQHP
+ Sbkc2ZOQ4OXPqH/47lrE3ZVrf6vVnVb9869c5t4PMHTqTvjXCTYFfzRuqFdTfIl+8YL4
+ JqKyAofYfskdmufqypdG/YXAKYgEmE4Li1UYeHkpV99nC84ywgyOelhj40jiXVBT/E11
+ yA0dZErAwGhyUhpII9A5ljcP/PjHDkU04wjndzldmVPGaKQ62etRQqgCqtIHyxnSsvOK
+ kEyPuUKJ13AcHePx+AcK+sPLfBZnZD6s6yuhs/i8duDaJeaxouAPxpauzA6MXswZsZWo
+ zwbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWbnw7igTtjSvFXoQeYaw3fvVzQHE/Ck6fKAcDvfporRI2eW9LlDaNVSKueUpx4mvqJ+Qlps8F6Qq8K@nongnu.org
-X-Gm-Message-State: AOJu0Yw0xhsFttvl4LihDsU5PdZbJ8JI28ThLmUupishHmsmyGYUpQf+
- R44OKNtLb/2J/WUN+Op49CUlJmpJ4sznLDzbAKfxdMg3PSHuBkP/mzOd6uTJfGZIBu6O7a4r5Vv
- k
-X-Gm-Gg: ASbGncut9i2gSyiLZHibjWGW5LMopU5n2FjV2WRj+Y0HPPY9fQDAm5X5F4NANM6uB9E
- 495t8EYGlHPyyhj6m+1Ot1/Ud9cVv28Bu6to0UlhDI/tJCk+KtTrHERYVwWs489WUg/U5lIPAoG
- 6Xq/DcSQs020IhM0jo2HPKCOICiqUTlDQoCTpkymzL64D1FdZis0qc4D3lOX13BtcbOZHm4f741
- gjLy4qzTjbLLbKHQIGd15qt2n0MboUfdpG4ohm7QfLMJYnhHCpLgZo0QpeA
-X-Google-Smtp-Source: AGHT+IHpq0I473Nb4T7KVbJZ2ScG1jEHVeQwT2VUr4DbNX/a3tglfQaC8upbkyr4wbFCkTWWpMR9Rg==
-X-Received: by 2002:a05:600c:468c:b0:434:9936:c823 with SMTP id
- 5b1f17b1804b1-4361c387b63mr25218865e9.18.1733928286461; 
- Wed, 11 Dec 2024 06:44:46 -0800 (PST)
+ AJvYcCVIT0S18QPNvqM5BCRlrnSm8LJ8qkLiAJEFgAKLF1TWlJJG0iBtTKzQ8Jsz+kp0oOqVjE46ZNBdo7C4@nongnu.org
+X-Gm-Message-State: AOJu0YzEQ0p5Lh+H1ak9XrQdSYzt//+gAPPDgSBG5AybcTxDAOkTLd/y
+ 6IMGIsJHIog/4UDxVqMHrA4Bm6exRppg50gwH3QLQt9CKvLuGgz8fPPkeVP5BYI=
+X-Gm-Gg: ASbGncs3/VAJ+2fBjvibPaDGLonHjiU5EglsFpe4ccVP1rZYV4ReoLlyxt4tzD+BPGF
+ zb7N+1oi4pcAbHSjWiydHgSJyqg0am4/+eoqjVcl2nA8Y644BYf6bdMpZrvbvReEpSdozmXKpof
+ 2elVBTL/RgTNf5/VnuggnX0YPmGf+6SMfUKn6GXZiMLNN3JjD7mVZYV+/XTpdMeXR1DhVZyymiG
+ OfnIHIltLt91J8HTG48ATU2kV5d9AU/EZn/qiq3qIwOI7Ldc2VU2UtDDHLa
+X-Google-Smtp-Source: AGHT+IEc3+vF597N7ere9YiGlkmyldx4o90YrOiY4AxYeJr789FIgACB1I4kzwKdrHzsrTWV0IIKOg==
+X-Received: by 2002:a05:6000:186b:b0:386:3672:73e7 with SMTP id
+ ffacd0b85a97d-3864de9e81fmr2504639f8f.9.1733928288468; 
+ Wed, 11 Dec 2024 06:44:48 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4361e54ef20sm19477685e9.5.2024.12.11.06.44.45
+ 5b1f17b1804b1-4361e54ef20sm19477685e9.5.2024.12.11.06.44.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 06:44:45 -0800 (PST)
+ Wed, 11 Dec 2024 06:44:47 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-arm@nongnu.org,
 	qemu-devel@nongnu.org
-Subject: [PATCH v2 4/6] target/arm: Add decodetree entry for DSB nXS variant
-Date: Wed, 11 Dec 2024 14:44:38 +0000
-Message-Id: <20241211144440.2700268-5-peter.maydell@linaro.org>
+Subject: [PATCH v2 6/6] tests/tcg/aarch64: add system test for FEAT_XS
+Date: Wed, 11 Dec 2024 14:44:40 +0000
+Message-Id: <20241211144440.2700268-7-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211144440.2700268-1-peter.maydell@linaro.org>
 References: <20241211144440.2700268-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,54 +100,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-The DSB nXS variant is always both a reads and writes request type.
-Ignore the domain field like we do in plain DSB and perform a full
-system barrier operation.
-
-The DSB nXS variant is part of FEAT_XS made mandatory from Armv8.7.
+Add system test to make sure FEAT_XS is enabled for max cpu emulation
+and that QEMU doesn't crash when encountering an NXS instruction
+variant.
 
 Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-[PMM: added missing "UNDEF unless feature present" check]
+[PMM: In ISAR field test, mask with 0xf, not 0xff; use < rather
+ than an equality test to follow the standard ID register field
+ check guidelines]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      | 3 +++
- target/arm/tcg/translate-a64.c | 9 +++++++++
- 2 files changed, 12 insertions(+)
+ tests/tcg/aarch64/system/feat-xs.c | 27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
+ create mode 100644 tests/tcg/aarch64/system/feat-xs.c
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 331a8e180c0..c4f516abc18 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -245,6 +245,9 @@ WFIT            1101 0101 0000 0011 0001 0000 001 rd:5
- 
- CLREX           1101 0101 0000 0011 0011 ---- 010 11111
- DSB_DMB         1101 0101 0000 0011 0011 domain:2 types:2 10- 11111
-+# For the DSB nXS variant, types always equals MBReqTypes_All and we ignore the
-+# domain bits.
-+DSB_nXS         1101 0101 0000 0011 0011 -- 10 001 11111
- ISB             1101 0101 0000 0011 0011 ---- 110 11111
- SB              1101 0101 0000 0011 0011 0000 111 11111
- 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index b2851ea5032..953386c0416 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1959,6 +1959,15 @@ static bool trans_DSB_DMB(DisasContext *s, arg_DSB_DMB *a)
-     return true;
- }
- 
-+static bool trans_DSB_nXS(DisasContext *s, arg_DSB_nXS *a)
-+{
-+    if (!dc_isar_feature(aa64_xs, s)) {
-+        return false;
-+    }
-+    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
-+    return true;
-+}
+diff --git a/tests/tcg/aarch64/system/feat-xs.c b/tests/tcg/aarch64/system/feat-xs.c
+new file mode 100644
+index 00000000000..f310fc837e0
+--- /dev/null
++++ b/tests/tcg/aarch64/system/feat-xs.c
+@@ -0,0 +1,27 @@
++/*
++ * FEAT_XS Test
++ *
++ * Copyright (c) 2024 Linaro Ltd
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- static bool trans_ISB(DisasContext *s, arg_ISB *a)
- {
-     /*
++#include <minilib.h>
++#include <stdint.h>
++
++int main(void)
++{
++    uint64_t isar1;
++
++    asm volatile ("mrs %0, id_aa64isar1_el1" : "=r"(isar1));
++    if (((isar1 >> 56) & 0xf) < 1) {
++        ml_printf("FEAT_XS not supported by CPU");
++        return 1;
++    }
++    /* VMALLE1NXS */
++    asm volatile (".inst 0xd508971f");
++    /* VMALLE1OSNXS */
++    asm volatile (".inst 0xd508911f");
++
++    return 0;
++}
 -- 
 2.34.1
 
