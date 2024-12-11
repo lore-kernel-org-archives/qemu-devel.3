@@ -4,87 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80D73C3ABA0
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07832E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:42:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLWH3-0000pg-DT; Wed, 11 Dec 2024 18:37:45 -0500
+	id 1tLWKv-0004aL-1O; Wed, 11 Dec 2024 18:41:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLWH2-0000pP-12
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:37:44 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLWH0-0007Q2-00
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:37:43 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361f664af5so50205e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:37:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733960260; x=1734565060; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U/Mn/Kq2pCLPi33bMQOIuejS0tt/kGcgJxICKl7/0zU=;
- b=KAT/CXBS+eZ7Zyux/LxfEmnH0MIt6Ts69WXdBY1F4T98vM66kdmxY6uOb+AzhHC/Ki
- HKeUAZEhrCr5BZLQqmQBi49QDOjnIidb6/MjfU6loAJB8PxI+jgiZYgnzAzlylg+Llvk
- CLwDdxoDB7rOFhW8ga5GxaUw8FWAkSmO7cdE0cmWtczQbIsY47TY8vv+er3Mg2FPksZF
- ntpj2RHe+IlmP9A589+VJo9wEiSa3/IWb4jF6GnZvMm3Br0xVbVFmZsbUYsCBTnWqcIh
- rQG0rHGergSQ9azR12rcD/fgbV0lveqyJTDTJxneMmr/XGWWhM7Yi/uedCLvbI3S/u0k
- q0/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733960260; x=1734565060;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U/Mn/Kq2pCLPi33bMQOIuejS0tt/kGcgJxICKl7/0zU=;
- b=i9ya9BFCuTUD4sKpoi2cYz1equ9qnOwn3qr59KrFiSft9o22F48WMWJ16sKqaz3dUr
- wasBZLK1Qr52DhWs+G5bFNFgxzElVmQgOaUvmfUIzhjA0R4aeCuK75Cqww5YT30MrZv5
- bLMySu4qCYo5Ue+vj5PrhgdvjoT6npd5atPvqAR0ro6Da5qsknVZ53NrDNFWVU11q91m
- 5qcVJDLhGFglK+wvXRXGYTvPjZW9iEBieCgiBhKfI8LtSxRWBrlNge6l+ZWFRTDOhlkt
- wjpoiYtzIq2uAu2TDZFImqVPT2quCJY8B9ohnAbMxd0l0k1xhrXfKrHPm6QXdsKtXfrp
- McLQ==
-X-Gm-Message-State: AOJu0YwFQiFz+9z/1TQqQ5djp1yATCMT2LpdYJvhGMJXP53NxjwxG8gl
- SklpXvYYbtJG5RtOlX6UzhlUrlIHE5HsXKtuPlZf9j/52B12K2qlWWIyQZat8iMKlCT4QiNVama
- 8
-X-Gm-Gg: ASbGnctL0vro5gkjWdMoWT1px10SxL1f76kJqT3YEUIb1F97m/33Xvo6VcI/jnr0a7I
- IUFfYlFphPnbM/vpRZzyc38eJSOWNAeahxokGz6TP5me1LNls4pqSor/8wlHNTGc/CnTFpaNHpy
- S2KSZpxrHxUez7BfwBqvnhQiqg+JyXZYP6btIWcs0nRYn0TiDNb0ydlq4TLasqDpv7LrJhC+gP2
- opWqH+1R5dlc3FbBDjd0P/XPhFeDAKXcsAdfTNHgD0ANaqDOkieB/pbsiEj2mny5XPpxOM0vBZ4
- NNvj1Yhvo5pOa8bu5ZZjY/+Zv3pzLqZI9w==
-X-Google-Smtp-Source: AGHT+IEjUy16v4ODfUXOmm/HhcPE1QIBbD3+NzBYGP5jSWtHjDj4NXd+ZY73zPE6AVqXth6Ss0RUjg==
-X-Received: by 2002:a5d:6d89:0:b0:385:fd31:ca31 with SMTP id
- ffacd0b85a97d-387877dc573mr925530f8f.53.1733960260028; 
- Wed, 11 Dec 2024 15:37:40 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878248f521sm2342749f8f.16.2024.12.11.15.37.38
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Dec 2024 15:37:38 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bandan Das <bsd@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
- Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] qtest/fuzz: Remove uses of 'first_cpu'
-Date: Thu, 12 Dec 2024 00:37:27 +0100
-Message-ID: <20241211233727.98923-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241211233727.98923-1-philmd@linaro.org>
-References: <20241211233727.98923-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1tLWKq-0004Xv-W5
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:41:41 -0500
+Received: from mail-dm3nam02on2046.outbound.protection.outlook.com
+ ([40.107.95.46] helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
+ id 1tLWKm-0007sP-Hd
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:41:39 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ua02P7KKslqVOiXj1fKiMmxW5WHe6WxLhJQje4FLOZLfk2nR2CYcT+ANTE1Ry6yJMvW/EUqFcOOTvdLxJyDXCua/z69Q/h3BY9PR9kcLax4I0LckIwaPCOgqGhJfizlOHl3rdNZMNpk1snXQJYe5PLg+Jq2ANdQ1u+g4wGq+OGVJMqcuKGZght5aTSpUYHGNPiJXJo1GO6unSYIQJD3v4V4pgDBpIoDIyIWacDyO7kTi9T1Nv4NDcm1TICfG53PxdGm4lL8xDYIKKhIWQzeqsWXGTi4D4Ue1BOti7njIeNqJyXlAaCywu+UJQ1ytcyyZKsYk9Vx0WgLUyf2io6DseA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dy7D2UX/lA0Ew5ynAsKDHR3iv/ZZ7NkfuaNY18wADMg=;
+ b=HTyAFRX5A7rkdT728JUMDoBKeJ8RX/doD2AzEcjw2hUbuLcOfy3wGXT0aT/WAVss10Fs1Q6fKLRyrtZ5HPXAMNbZUfynV+UZzb5J0y6oq5EeALGxbmSiYpUeNTS9qFgUwiERXc1QvHFDfoC8wb0jRyOrfC5J7aoBPQ0g7YYd9f7uoDFFMEk7j5+zdNHas6B2Y2Dgm3A5ghGeD7XYu3PqL4uvAxHfQJrr2wTUxkzr/j1y9vEeEfd+7uCDtdeCVfQ26EYJeeOD386+Le8yi9/0eLgPOu1O++I1vs7jl0OIDqp/AoKFQQCE0f/0iosBQm2ecpEDqSY9yByoJnYR/fr2qA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dy7D2UX/lA0Ew5ynAsKDHR3iv/ZZ7NkfuaNY18wADMg=;
+ b=BzwoxQaUrbl+k7O2A0cOHXDZP8ewK0VhuZPy4DiLUbnb/lsnQxndUE5MBpNr523Cqnamf5BZsOT8LpEbdW9nUXW3zMlNbN9wJrf/CnD5r5w1joKQdNO3KVPlP0fDXH8LfLjww34IbXEUb4KR91yZuv+C2BDZLh7AjYRtk1m/LcY=
+Received: from BL1PR13CA0353.namprd13.prod.outlook.com (2603:10b6:208:2c6::28)
+ by PH0PR12MB7930.namprd12.prod.outlook.com (2603:10b6:510:283::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.20; Wed, 11 Dec
+ 2024 23:36:18 +0000
+Received: from BL02EPF0001A101.namprd05.prod.outlook.com
+ (2603:10b6:208:2c6:cafe::8d) by BL1PR13CA0353.outlook.office365.com
+ (2603:10b6:208:2c6::28) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.10 via Frontend Transport; Wed,
+ 11 Dec 2024 23:36:17 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ BL02EPF0001A101.mail.protection.outlook.com (10.167.241.132) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8251.15 via Frontend Transport; Wed, 11 Dec 2024 23:36:17 +0000
+Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 11 Dec
+ 2024 17:36:16 -0600
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: quoted-printable
+Subject: [ANNOUNCE] QEMU 9.2.0 is now available
+From: Michael Roth <michael.roth@amd.com>
+To: <qemu-devel@nongnu.org>
+CC: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 11 Dec 2024 17:36:00 -0600
+Message-ID: <173396016084.690778.14513056087610218483@amd.com>
+User-Agent: alot/0.9
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL02EPF0001A101:EE_|PH0PR12MB7930:EE_
+X-MS-Office365-Filtering-Correlation-Id: cd83f4c0-ad8a-4873-9d8d-08dd1a3c9c04
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|36860700013|82310400026|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTVuaFlmRlJDQ3FzcjlTLzE2V3lUTmZRZkRRd2R3alpjdXdUUzE1dzJDaEYx?=
+ =?utf-8?B?cUNTWkQ5SW15LzNWTXc4cmw1aFFkMkhxL0w1blJ6NThoeTFyUU5lWW5kd2E3?=
+ =?utf-8?B?YXUvbG04SXl0L0FUcXJrWTZGSWQ0OXJTWXg0TGNKUGVIQU9KV1BEWXd5TVpI?=
+ =?utf-8?B?REFyQmVaODRoeGhGWDJyWjdrODJObHB2QWpIWWZHbjR0cmYrL3VKbUpDNHlM?=
+ =?utf-8?B?V2FVdHlQYTRUQmR0Q2pINUZzaWdTOGlheFNFRXVvNWY1WVhwdzBBY3JQc21p?=
+ =?utf-8?B?Q05yOEFiYVdHZzBhRDlCb3c2elV4cVdKQ0lpczNqaXlzdmhWY2F2ZUZJcDVG?=
+ =?utf-8?B?eWRGU3FQMGpyekhWQkdYby9GYkNsMG1tejBGTVU0SmhGS1JGOVBrcFB1aFFx?=
+ =?utf-8?B?Y0VEdGd5c2E2cW0xOGdJL1BGa0dnLzU4N1F6SlFuclZLcTNvUVpPTnRwQlJ1?=
+ =?utf-8?B?T1RNRkt3Wks3d3A5NEFUclJxdnQ5MDhtb1czTEdXMk5mblM3NCtWbEdhaUQv?=
+ =?utf-8?B?a3VOS3g5WXJILzdZQUpMbVVYQ1dxN0U2Mjg0TElONWo1a0JZbi9xNkpwVUNq?=
+ =?utf-8?B?UmNCcWExSDU1S1JxSndWSHcvMWF1N0crMDlhZVgzeXJFTHJ5QzRocVR2WjY4?=
+ =?utf-8?B?SkR6ck5rN05nZGdScE9hMC9WYnJXd2NnMm1tQ3p6RWpHR1J1R2doQjRZdys2?=
+ =?utf-8?B?QlJPRzJqMDYwL3JwR2dtSXQ2R3JaUlpjQ2N6YUNHSVpMVWYzbG9kMWhUcTZP?=
+ =?utf-8?B?Q1A3NTg5SmJseWdMQVp0bmpmTDY1TzQxdGZaQlZaVTZFejNyZGNXQTk2anBq?=
+ =?utf-8?B?WE5TVy9BRzJzMlpOTVZiR3E1YTZDU1ovbVlzRElDUWZxYlpVUDR4dmVRNGg1?=
+ =?utf-8?B?UkVVUzgyVVNSdVZaSG9RZzQvblR1SllqeXRvVDdSNkxpNVp6UVBPbFFoWjgv?=
+ =?utf-8?B?Y25sUE5BUDlHcmJ0Q1B6bHZ0ZTErUi94cW02amd0VWFWVmtHU2ZXQ25FL1Mw?=
+ =?utf-8?B?bVAvbE1VTmxzRERCVDJ5LzdMc1hXWXlsdGQ5aVlkZ2l2UGRGNERBVlllb2k3?=
+ =?utf-8?B?WGloa2E5SnFQbTB0T2hDeStpWExSTmcxSmJ5MHBodVZibjJsS0lZMWdoODZr?=
+ =?utf-8?B?NnhCcUZWZDJBajAvWlQ2WWFxYjc4TjBYcXlxRWxMV1Zkb0RuVHhZbGJ5L1hV?=
+ =?utf-8?B?UEZUdmJIWDgyY1JNYm1xZ0tKeVFka1FlOGUrcGNjQm0zNk4xSEV1Y01tTUV2?=
+ =?utf-8?B?bklsQ2pNOEJLZ001NVRSVm83U1R2M3R1VDJaajZXYTBycjNiSW40QytTclYr?=
+ =?utf-8?B?UTY3b1hsTnhMWEpWQWw1MGtPQk5DLzI4OHNDZmlCSHFBcHNqMjJLSnFQYkN1?=
+ =?utf-8?B?QlRqWGM4SlhjeG5qZnBRUUxTMUJIY2VEMmhGd3JTQUxFUXIzc0R4KzJnbWtG?=
+ =?utf-8?B?bEJmV2UvKzgwWGtmSzBBZGtnOVdpdk9zSmE1dVkrU2JsenVNaWt2VHJBOEdN?=
+ =?utf-8?B?TVpTWVZOQVIvS1FHN3RwSlY5UUZHenR0ZlEzM2JaOTBzTkdEV29vdTg0YUJ5?=
+ =?utf-8?B?WmlvSkxBNk9xd3dtWHdZWFFpNDJHd0ZDbnByeGNseGJrZFdhbmNNVnA0bkJm?=
+ =?utf-8?B?STQzcHY1M3RoY1ljNW4zVjB3VXFlcDhqbHNha1lQV0I4MUIrR0hQV3ZGL1No?=
+ =?utf-8?B?OGo2c3orRTdPU0FmTm1zN1Y0eC93ZnU3cnozR1ZDQzhPMDRSNkxLYnl3WFRJ?=
+ =?utf-8?B?ZUtDdUlqR3VDY0JBZWJGOWlZV05GY2VNN0FjQy9xV2psdkdkZ0ZNS0krSURp?=
+ =?utf-8?B?NXZ2RTFOUXdrcG5PeFdqNXNSQXlINXNNMUg5QmtFRTNONVVPRFF2VURRalEz?=
+ =?utf-8?B?QVgwMjYvcHNKK2NXeFgxcjJzSCtDNGFLMS9IN0puMEJYQ2c9PQ==?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 23:36:17.3605 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: cd83f4c0-ad8a-4873-9d8d-08dd1a3c9c04
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A101.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7930
+Received-SPF: permerror client-ip=40.107.95.46;
+ envelope-from=Michael.Roth@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,203 +153,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no vCPU within the QTest accelerator (well, they
-are stubs doing nothing, see dummy_cpu_thread_fn).
+Hello,
 
-Directly access the global &address_space_memory to reduce
-access to the 'first_cpu' global (which is meaningless in
-a heterogeneous emulation setup).
+On behalf of the QEMU Team, I'd like to announce the availability of
+the QEMU 9.2.0 release. This release contains 1700+ commits from 209
+authors.
 
-Cast the returned value to (void) to explicit we don't
-care about invalid accesses.
+You can grab the tarball from our download page here:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-We will likely remove &address_space_memory too, but one
-global at a time. first_cpu is more annoying so I'm starting
-with it.
----
- tests/qtest/fuzz/generic_fuzz.c   |  3 +-
- tests/qtest/fuzz/qtest_wrappers.c | 53 ++++++++++++++++---------------
- 2 files changed, 29 insertions(+), 27 deletions(-)
+  https://www.qemu.org/download/#source
 
-diff --git a/tests/qtest/fuzz/generic_fuzz.c b/tests/qtest/fuzz/generic_fuzz.c
-index d107a496da6..a72a3e99f7d 100644
---- a/tests/qtest/fuzz/generic_fuzz.c
-+++ b/tests/qtest/fuzz/generic_fuzz.c
-@@ -20,6 +20,7 @@
- #include "tests/qtest/libqos/pci-pc.h"
- #include "fuzz.h"
- #include "string.h"
-+#include "exec/address-spaces.h"
- #include "exec/memory.h"
- #include "exec/ramblock.h"
- #include "hw/qdev-core.h"
-@@ -239,7 +240,7 @@ void fuzz_dma_read_cb(size_t addr, size_t len, MemoryRegion *mr)
-     MemoryRegion *mr1;
-     while (len > 0) {
-         l = len;
--        mr1 = address_space_translate(first_cpu->as,
-+        mr1 = address_space_translate(&address_space_memory,
-                                       addr, &addr1, &l, true,
-                                       MEMTXATTRS_UNSPECIFIED);
- 
-diff --git a/tests/qtest/fuzz/qtest_wrappers.c b/tests/qtest/fuzz/qtest_wrappers.c
-index 0580f8df860..a2d562dc7ed 100644
---- a/tests/qtest/fuzz/qtest_wrappers.c
-+++ b/tests/qtest/fuzz/qtest_wrappers.c
-@@ -13,6 +13,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/core/cpu.h"
-+#include "exec/address-spaces.h"
- #include "exec/ioport.h"
- 
- #include "fuzz.h"
-@@ -107,8 +108,8 @@ uint8_t __wrap_qtest_readb(QTestState *s, uint64_t addr)
- {
-     uint8_t value;
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 1);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, &value, 1);
-         return value;
-     } else {
-         return __real_qtest_readb(s, addr);
-@@ -119,8 +120,8 @@ uint16_t __wrap_qtest_readw(QTestState *s, uint64_t addr)
- {
-     uint16_t value;
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 2);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, &value, 2);
-         return value;
-     } else {
-         return __real_qtest_readw(s, addr);
-@@ -131,8 +132,8 @@ uint32_t __wrap_qtest_readl(QTestState *s, uint64_t addr)
- {
-     uint32_t value;
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 4);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, &value, 4);
-         return value;
-     } else {
-         return __real_qtest_readl(s, addr);
-@@ -143,8 +144,8 @@ uint64_t __wrap_qtest_readq(QTestState *s, uint64_t addr)
- {
-     uint64_t value;
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 8);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, &value, 8);
-         return value;
-     } else {
-         return __real_qtest_readq(s, addr);
-@@ -154,8 +155,8 @@ uint64_t __wrap_qtest_readq(QTestState *s, uint64_t addr)
- void __wrap_qtest_writeb(QTestState *s, uint64_t addr, uint8_t value)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 1);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, &value, 1);
-     } else {
-         __real_qtest_writeb(s, addr, value);
-     }
-@@ -164,8 +165,8 @@ void __wrap_qtest_writeb(QTestState *s, uint64_t addr, uint8_t value)
- void __wrap_qtest_writew(QTestState *s, uint64_t addr, uint16_t value)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 2);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, &value, 2);
-     } else {
-         __real_qtest_writew(s, addr, value);
-     }
-@@ -174,8 +175,8 @@ void __wrap_qtest_writew(QTestState *s, uint64_t addr, uint16_t value)
- void __wrap_qtest_writel(QTestState *s, uint64_t addr, uint32_t value)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 4);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, &value, 4);
-     } else {
-         __real_qtest_writel(s, addr, value);
-     }
-@@ -184,8 +185,8 @@ void __wrap_qtest_writel(QTestState *s, uint64_t addr, uint32_t value)
- void __wrap_qtest_writeq(QTestState *s, uint64_t addr, uint64_t value)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            &value, 8);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, &value, 8);
-     } else {
-         __real_qtest_writeq(s, addr, value);
-     }
-@@ -194,8 +195,8 @@ void __wrap_qtest_writeq(QTestState *s, uint64_t addr, uint64_t value)
- void __wrap_qtest_memread(QTestState *s, uint64_t addr, void *data, size_t size)
- {
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
--                           size);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, data, size);
-     } else {
-         __real_qtest_memread(s, addr, data, size);
-     }
-@@ -204,8 +205,8 @@ void __wrap_qtest_memread(QTestState *s, uint64_t addr, void *data, size_t size)
- void __wrap_qtest_bufread(QTestState *s, uint64_t addr, void *data, size_t size)
- {
-     if (!serialize) {
--        address_space_read(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED, data,
--                           size);
-+        (void)address_space_read(&address_space_memory, addr,
-+                                 MEMTXATTRS_UNSPECIFIED, data, size);
-     } else {
-         __real_qtest_bufread(s, addr, data, size);
-     }
-@@ -215,8 +216,8 @@ void __wrap_qtest_memwrite(QTestState *s, uint64_t addr, const void *data,
-                            size_t size)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            data, size);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, data, size);
-     } else {
-         __real_qtest_memwrite(s, addr, data, size);
-     }
-@@ -226,8 +227,8 @@ void __wrap_qtest_bufwrite(QTestState *s, uint64_t addr,
-                     const void *data, size_t size)
- {
-     if (!serialize) {
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            data, size);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, data, size);
-     } else {
-         __real_qtest_bufwrite(s, addr, data, size);
-     }
-@@ -239,8 +240,8 @@ void __wrap_qtest_memset(QTestState *s, uint64_t addr,
-     if (!serialize) {
-         data = malloc(size);
-         memset(data, patt, size);
--        address_space_write(first_cpu->as, addr, MEMTXATTRS_UNSPECIFIED,
--                            data, size);
-+        (void)address_space_write(&address_space_memory, addr,
-+                                  MEMTXATTRS_UNSPECIFIED, data, size);
-     } else {
-         __real_qtest_memset(s, addr, patt, size);
-     }
--- 
-2.45.2
+The full list of changes are available at:
 
+  https://wiki.qemu.org/ChangeLog/9.2
+
+Highlights include:
+
+ * virtio-gpu: support for 3D acceleration of Vulkan applications via
+   Venus Vulkan driver in the guest and virglrenderer host library
+ * crypto: GLib crypto backend now supports SHA-384 hashes
+ * migration: QATzip-accelerated compression support while using
+   multiple migration streams
+ * Rust: experimental support for device models written in Rust (for
+   development use only)
+
+ * ARM: emulation support for FEAT_EBF16, FEAT_CMOW architecture
+   features
+ * ARM: support for two-stage SMMU translation for sbsa-ref and virt
+   boards
+ * ARM: support for CPU Security Extensions for xilinx-zynq-a9 board
+ * ARM: 64GB+ memory support when using HVF acceleration on newer Mac
+   systems
+ * HPPA: SeaBIOS-hppa v17 firmware with various fixes and enhancements
+ * RISC-V: IOMMU support for virt machine
+ * RISC-V: support for control flow integrity and Svvptc extensions,
+   and support for Bit-Manipulation extension on OpenTitan boards
+ * RISC-V: improved performance for vector unit-stride/whole register
+   ld/st instructions
+ * s390x: support for booting from other devices if the previous ones
+   fail
+ * x86: support for new nitro-enclave machine type that can emulate
+   AWS Nitro Enclave and can boot from Enclave Image Format files.
+ * x86: KVM support for enabling AVX10, as well as enabling specific
+   AVX10 versions via command-line
+
+ * and lots more...
+
+Thank you to everyone involved!
 
