@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF8E5E77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1BD0E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:34:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQUj-0005Yv-KO; Wed, 11 Dec 2024 12:27:30 -0500
+	id 1tLQUl-0005ZR-R0; Wed, 11 Dec 2024 12:27:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUh-0005YT-Cj
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLQUk-0005ZB-1h
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUf-00017x-Q9
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:27 -0500
+ id 1tLQUi-00018F-Cx
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:29 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938045;
+ s=mimecast20190719; t=1733938047;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=z01igLdFUBXijPmUyFdU7/BlGo4KU92GfTPKf42FCLk=;
- b=XPfEvmy6cbWp7MjFeGgq7PFO/cqkMHzrPp+PPjqXm/rZbYwaJXhgd+2QS+1jdEejczphO7
- DdenG8Jxei5mUWWJMKOhyj5z/LAIPRDhNCYLYqkdUd0G3wj0DB5cXs67hPPTt2Ro7xDsYY
- 5ZjvQmZ6NI8dJO/5FIRQjx8dMM00NCA=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=U9esgIthrudvDaRJ+rEBiuyKD4+iIMzGIxm2i96hJI8=;
+ b=QVK0WJcKKJajbq8fZASaTZyGKLiVgPLpfn4WA9V0VgxqWeucmcfCMj51gJY65VgVdge7Re
+ iFJ1e6p0b2S6oO8h/MONdedUJOoboD6RmsC0MXZGb8FPQCZ9CdLZOx0JR3/fHkshNoBbHW
+ m3byMbdEepop5YXzTedaHvqogFOFLWg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-94-lEx4QoUMNVuimppVpdyXjw-1; Wed,
- 11 Dec 2024 12:27:21 -0500
-X-MC-Unique: lEx4QoUMNVuimppVpdyXjw-1
-X-Mimecast-MFC-AGG-ID: lEx4QoUMNVuimppVpdyXjw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-spkdExBcP5W_tsLVYoYInA-1; Wed,
+ 11 Dec 2024 12:27:26 -0500
+X-MC-Unique: spkdExBcP5W_tsLVYoYInA-1
+X-Mimecast-MFC-AGG-ID: spkdExBcP5W_tsLVYoYInA
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 158D91954B3E; Wed, 11 Dec 2024 17:27:18 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7E63A195609D; Wed, 11 Dec 2024 17:27:23 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B0FD91956048; Wed, 11 Dec 2024 17:27:15 +0000 (UTC)
+ id 5D4141956048; Wed, 11 Dec 2024 17:27:21 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 08/31] tests/functional: drop 'has_cmd' and 'has_cmds'
- helpers
-Date: Wed, 11 Dec 2024 17:26:24 +0000
-Message-ID: <20241211172648.2893097-9-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2 10/31] tests/functional: switch over to using
+ self.log_file(...)
+Date: Wed, 11 Dec 2024 17:26:26 +0000
+Message-ID: <20241211172648.2893097-11-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -88,132 +89,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'which' helper is simpler and sufficient for test needs.
+This removes direct access of the 'self.logdir' variable.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py   |  2 +-
- tests/functional/qemu_test/cmd.py        | 54 ++----------------------
- tests/functional/qemu_test/tuxruntest.py | 10 ++---
- 3 files changed, 9 insertions(+), 57 deletions(-)
+ tests/functional/qemu_test/testcase.py | 9 ++++-----
+ tests/functional/test_virtio_gpu.py    | 4 +---
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 7dee3522f2..fe6cbe3a8a 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -8,7 +8,7 @@
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 89425b737c..2174fbb155 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -126,7 +126,7 @@ def scratch_file(self, *args):
+     Returns: string representing a file path
+     '''
+     def log_file(self, *args):
+-        return str(Path(self.logdir, *args))
++        return str(Path(self.outputdir, *args))
  
- from .asset import Asset
- from .config import BUILD_DIR
--from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
-+from .cmd import run_cmd, is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index 600e0509db..bebcd46dcf 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -29,52 +29,6 @@ def which(tool):
-             return p
-     return None
+     def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+@@ -138,8 +138,7 @@ def setUp(self, bin_prefix):
+         self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
  
--def has_cmd(name, args=None):
--    """
--    This function is for use in a @skipUnless decorator, e.g.:
--
--        @skipUnless(*has_cmd('sudo -n', ('sudo', '-n', 'true')))
--        def test_something_that_needs_sudo(self):
--            ...
--    """
--
--    if args is None:
--        args = ('which', name)
--
--    try:
--        _, stderr, exitcode = run_cmd(args)
--    except Exception as e:
--        exitcode = -1
--        stderr = str(e)
--
--    if exitcode != 0:
--        cmd_line = ' '.join(args)
--        err = f'{name} required, but "{cmd_line}" failed: {stderr.strip()}'
--        return (False, err)
--    else:
--        return (True, '')
--
--def has_cmds(*cmds):
--    """
--    This function is for use in a @skipUnless decorator and
--    allows checking for the availability of multiple commands, e.g.:
--
--        @skipUnless(*has_cmds(('cmd1', ('cmd1', '--some-parameter')),
--                              'cmd2', 'cmd3'))
--        def test_something_that_needs_cmd1_and_cmd2(self):
--            ...
--    """
--
--    for cmd in cmds:
--        if isinstance(cmd, str):
--            cmd = (cmd,)
--
--        ok, errstr = has_cmd(*cmd)
--        if not ok:
--            return (False, errstr)
--
--    return (True, '')
--
- def run_cmd(args):
-     subp = subprocess.Popen(args,
-                             stdout=subprocess.PIPE,
-@@ -254,7 +208,7 @@ def get_qemu_img(test):
-     qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
-     if os.path.exists(qemu_img):
-         return qemu_img
--    (has_system_qemu_img, errmsg) = has_cmd('qemu-img')
--    if has_system_qemu_img:
--        return 'qemu-img'
--    test.skipTest(errmsg)
-+    qemu_img = which('qemu-img')
-+    if qemu_img is not None:
-+        return qemu_img
-+    test.skipTest(f"qemu-img not found in {BUILD_DIR} or '$PATH'")
-diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index d375f2713b..2e5c6d110c 100644
---- a/tests/functional/qemu_test/tuxruntest.py
-+++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -15,7 +15,7 @@
- from qemu_test import QemuSystemTest
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import wait_for_console_pattern
--from qemu_test import has_cmd, run_cmd, get_qemu_img
-+from qemu_test import which, run_cmd, get_qemu_img
+-        self.logdir = self.outputdir
+-        self.log_filename = os.path.join(self.logdir, 'base.log')
++        self.log_filename = self.log_file('base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+         self._log_fh = logging.FileHandler(self.log_filename, mode='w')
+@@ -215,7 +214,7 @@ def setUp(self):
  
- class TuxRunBaselineTest(QemuSystemTest):
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.logdir, 'console.log')
++        self.console_log_name = self.log_file('console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
+@@ -269,7 +268,7 @@ def _new_vm(self, name, *args):
+         vm = QEMUMachine(self.qemu_bin,
+                          name=name,
+                          base_temp_dir=self.workdir,
+-                         log_dir=self.logdir)
++                         log_dir=self.log_file())
+         self.log.debug('QEMUMachine "%s" created', name)
+         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
  
-@@ -38,10 +38,8 @@ def setUp(self):
-         super().setUp()
+diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+index 2d298b1f02..7654421e6b 100755
+--- a/tests/functional/test_virtio_gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -100,9 +100,7 @@ def test_vhost_user_vga_virgl(self):
+         os.set_inheritable(qemu_sock.fileno(), True)
+         os.set_inheritable(vug_sock.fileno(), True)
  
-         # We need zstd for all the tuxrun tests
--        (has_zstd, msg) = has_cmd('zstd')
--        if has_zstd is False:
--            self.skipTest(msg)
--        self.zstd = 'zstd'
-+        if which('zstd') is None:
-+            self.skipTest("zstd not found in $PATH")
- 
-         # Pre-init TuxRun specific settings: Most machines work with
-         # reasonable defaults but we sometimes need to tweak the
-@@ -78,7 +76,7 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
- 
-         disk_image = self.workdir + "/rootfs.ext4"
- 
--        run_cmd([self.zstd, "-f", "-d", disk_image_zst,
-+        run_cmd(['zstd', "-f", "-d", disk_image_zst,
-                  "-o", disk_image])
-         # zstd copies source archive permissions for the output
-         # file, so must make this writable for QEMU
+-        self._vug_log_path = os.path.join(
+-            self.logdir, "vhost-user-gpu.log"
+-        )
++        self._vug_log_path = self.log_file("vhost-user-gpu.log")
+         self._vug_log_file = open(self._vug_log_path, "wb")
+         self.log.info('Complete vhost-user-gpu.log file can be '
+                       'found at %s', self._vug_log_path)
 -- 
 2.46.0
 
