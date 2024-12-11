@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACD8E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0581AE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQVK-0006uP-8l; Wed, 11 Dec 2024 12:28:06 -0500
+	id 1tLQVG-0006fX-AB; Wed, 11 Dec 2024 12:28:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQVH-0006n7-Og
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tLQV8-0006XV-4A
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQVG-0001E2-7k
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:03 -0500
+ id 1tLQV6-0001CA-F2
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938079;
+ s=mimecast20190719; t=1733938071;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ddv86qZJr20tnipF27e1O9UMnzOCqzdZZCTwkM3/Ixk=;
- b=DQjLShuoDap1MnJ+8Ytl+W9u+IthN9K1QulLRFjhJI2dGxll7U+pUMxOHG2lqS5F8fjJIw
- dcQxZ1rXvWwKuOQb3F0Ky4Hs6pOeZC5Pl9ts3qnwfwhCAvM0F2EMp/EPUrzlKgzouUXRYi
- cQ8WznjNnQ6hg8uE63wWPdsGFJ1PCOg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=19d1rFYwA8ktJMGhG/dmH3QFpC81HYZ9wSnuVDPNnXI=;
+ b=FJmTYwYi8b4sNm9koZG3hwpyKQWfklGmY+PrQJEGlwPLGO4zRSGKVggBcWZSfHU5Rf+dXr
+ sApBRkG9vJEMHI/Ee8BwjKylx81hSya/2suXnN7JQ79oAQq/90f6XIyqXn7BQ07ao055N/
+ Rxtcwtn6rYFxAnveQkwHRhqhMiffO+o=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-269-pmgumwAsOA638pPfLF3E5Q-1; Wed,
- 11 Dec 2024 12:27:57 -0500
-X-MC-Unique: pmgumwAsOA638pPfLF3E5Q-1
-X-Mimecast-MFC-AGG-ID: pmgumwAsOA638pPfLF3E5Q
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-ORXrsbb_NSyGayoP01yIHQ-1; Wed,
+ 11 Dec 2024 12:27:49 -0500
+X-MC-Unique: ORXrsbb_NSyGayoP01yIHQ-1
+X-Mimecast-MFC-AGG-ID: ORXrsbb_NSyGayoP01yIHQ
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5E2FF195420C; Wed, 11 Dec 2024 17:27:56 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79D0D1955EB1; Wed, 11 Dec 2024 17:27:48 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3300E1956048; Wed, 11 Dec 2024 17:27:53 +0000 (UTC)
+ id 68C321956048; Wed, 11 Dec 2024 17:27:46 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 22/31] tests/functional: add 'archive_extract' to
- QemuBaseTest
-Date: Wed, 11 Dec 2024 17:26:38 +0000
-Message-ID: <20241211172648.2893097-23-berrange@redhat.com>
+Subject: [PATCH v2 19/31] tests/functional: add common deb_extract helper
+Date: Wed, 11 Dec 2024 17:26:35 +0000
+Message-ID: <20241211172648.2893097-20-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -88,66 +87,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This helper wrappers archive.archive_extract, forcing the use of the
-scratch directory, to ensure any extracted files are cleaned at test
-termination. If a specific member is requested, then the path to the
-extracted file is also returned.
+This mirrors the existing archive_extract, cpio_extract and zip_extract
+helpers
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 32 ++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ tests/functional/qemu_test/archive.py     | 13 +++++++++++++
+ tests/functional/qemu_test/linuxkernel.py | 13 ++++---------
+ 2 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 493938240c..19fb1d0c07 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -25,6 +25,7 @@
- from qemu.machine import QEMUMachine
- from qemu.utils import kvm_available, tcg_available
+diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
+index 06b66701c0..a6fc97a557 100644
+--- a/tests/functional/qemu_test/archive.py
++++ b/tests/functional/qemu_test/archive.py
+@@ -12,6 +12,8 @@
+ import tarfile
+ import zipfile
  
-+from .archive import archive_extract
- from .asset import Asset
- from .cmd import run_cmd
- from .config import BUILD_DIR
-@@ -39,6 +40,37 @@ class QemuBaseTest(unittest.TestCase):
-     log = None
-     logdir = None
++from .cmd import run_cmd
++
  
-+    '''
-+    @params archive: filename, Asset, or file-like object to extract
-+    @params format: optional archive format (tar, zip, deb, cpio)
-+    @params sub_dir: optional sub-directory to extract into
-+    @params member: optional member file to limit extraction to
+ def tar_extract(archive, dest_dir, member=None):
+     with tarfile.open(archive) as tf:
+@@ -37,3 +39,14 @@ def zip_extract(archive, dest_dir, member=None):
+             zf.extract(member=member, path=dest_dir)
+         else:
+             zf.extractall(path=dest_dir)
 +
-+    Extracts @archive into the scratch directory, or a directory beneath
-+    named by @sub_dir. All files are extracted unless @member specifies
-+    a limit.
++def deb_extract(archive, dest_dir, member=None):
++    cwd = os.getcwd()
++    os.chdir(dest_dir)
++    try:
++        (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
++        file_path = stdout.split()[2]
++        run_cmd(['ar', 'x', archive, file_path])
++        tar_extract(file_path, dest_dir, member)
++    finally:
++        os.chdir(cwd)
+diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
+index 2e4f4e35fd..8f2810f3af 100644
+--- a/tests/functional/qemu_test/linuxkernel.py
++++ b/tests/functional/qemu_test/linuxkernel.py
+@@ -6,8 +6,9 @@
+ import os
+ 
+ from .testcase import QemuSystemTest
+-from .cmd import run_cmd, wait_for_console_pattern
+-from .utils import archive_extract
++from .cmd import wait_for_console_pattern
++from .archive import deb_extract
 +
-+    If @format is None, heuristics will be applied to guess the format
-+    from the filename or Asset URL. @format must be non-None if @archive
-+    is a file-like object.
-+
-+    If @member is non-None, returns the fully qualified path to @member
-+    '''
-+    def archive_extract(self, archive, format=None, sub_dir=None, member=None):
-+        self.log.debug(f"Extract {archive} format={format}" +
-+                       f"sub_dir={sub_dir} member={member}")
-+        if type(archive) == Asset:
-+            archive.fetch()
-+        if sub_dir is None:
-+            archive_extract(archive, self.scratch_file(), format, member)
-+        else:
-+            archive_extract(archive, self.scratch_file(sub_dir),
-+                            format, member)
-+
-+        if member is not None:
-+            return self.scratch_file(member)
-+        return None
-+
-     '''
-     Create a temporary directory suitable for storing UNIX
-     socket paths.
+ 
+ class LinuxKernelTest(QemuSystemTest):
+     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+@@ -37,13 +38,7 @@ def extract_from_deb(self, deb_path, path):
+         :param path: path within the deb archive of the file to be extracted
+         :returns: path of the extracted file
+         """
+-        cwd = os.getcwd()
+-        os.chdir(self.workdir)
+-        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
+-        file_path = stdout.split()[2]
+-        run_cmd(['ar', 'x', deb_path, file_path])
+-        archive_extract(file_path, self.workdir)
+-        os.chdir(cwd)
++        deb_extract(deb_path, self.workdir, member="." + path)
+         # Return complete path to extracted file.  Because callers to
+         # extract_from_deb() specify 'path' with a leading slash, it is
+         # necessary to use os.path.relpath() as otherwise scratch_file()
 -- 
 2.46.0
 
