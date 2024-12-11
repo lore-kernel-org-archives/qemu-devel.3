@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DFAE77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:44:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6089E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPa5-0001il-Cs; Wed, 11 Dec 2024 11:28:57 -0500
+	id 1tLPe1-0008Fc-8u; Wed, 11 Dec 2024 11:33:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPa3-0001X6-Ee
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:55 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPa1-0000c1-MX
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934533;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OshVopfsDLXhXQaf0FN9QUClgxDd1xn/z3ig2ZaD5Nc=;
- b=hTKXOx48nkQJ+BRjx+QacagfIU/0jl0m+NsikSz86wGMUw+Xej523O8fYgFI/50CM4eKBA
- xhiWx1Yx8d3gpxQd8QV5YPZ27GLF6uK38uAqZLupxSvwFJvmOObf54NgciVCzdcoVut1xC
- zU4uM7URAeJKOpB4PBoc0jxwZOIPImU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-556-f3cQVFXYNnKhtzCl1FwSmA-1; Wed, 11 Dec 2024 11:28:52 -0500
-X-MC-Unique: f3cQVFXYNnKhtzCl1FwSmA-1
-X-Mimecast-MFC-AGG-ID: f3cQVFXYNnKhtzCl1FwSmA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385df115288so2972562f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:51 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934530; x=1734539330;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPdW-0006Mj-D3
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:31 -0500
+Received: from mail-qt1-x831.google.com ([2607:f8b0:4864:20::831])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPdU-0001SS-AW
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:30 -0500
+Received: by mail-qt1-x831.google.com with SMTP id
+ d75a77b69052e-4674f1427deso48070671cf.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934747; x=1734539547; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=x3n7GIpbiAxM941owV9rTCZ55j+n45R7K1MmLLxzJJ8=;
+ b=gbzdC9CXZzHBShkCQZigR43MNhpN820gpbcGd9L41kXlMP01Bo/J9fCg9KwxyL4l3E
+ fE1heUImfJmGU5QAcf80Q7+V6QF5hWlblUQkB0htIZwUrhP3fTdFha4ByJcn0onGVLSx
+ 7LfwTetRIl16BLztutfXFGoRFgDkYj8XahXJ/MnDsKfw+3hV1GrK11lgB9ie8rSnUJDn
+ glwy1MdWoFXuVVaOHT09de9Ty/Z3XZaX9mdC2ecEbJZKNiy1yh72MgO/r0HHw5yrL1eX
+ QN5OLZY45MyDmwkjapdStcOJ6QLxNalB081+k0yqzQKpxldmuhxmN7mpK7hSU8TwrbnX
+ pJ6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934747; x=1734539547;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OshVopfsDLXhXQaf0FN9QUClgxDd1xn/z3ig2ZaD5Nc=;
- b=nwdf6ZV4MpvGrP+6lg1VyVNVz4eNkqbFfib/SeF3Mzrpbs5A+RsE3Nmrt/hldHHdWi
- qehxjbfC8rBsrAcGKgK4MacqEXdEjWGJYXKadGbaM7kEfbSPDuWuwsQIDjr2a3bxN/kT
- 2/s0aPwOwJ+FM8YNLMk5R9v7oPKvYGbMcEfxDXx6azyNrmnKnSt8hxy2ZRlIQY8XpQNW
- QNMSFpyRgGyfenoQZ5R2wkZ4SBa3+mDQafUdRuxYx+EjVzLzxVc6zHWxoD71Tp3m4Hav
- VgFlQADBDdj5EU7FVeGRHmxUWCmV87N2Rs3kfQOh1dIUfirL15qqtmdWepGDa0UZ4DX+
- 5YDw==
-X-Gm-Message-State: AOJu0YyTs2DNqbjNIrreDqIM5+vakwJJ67+4LCCW9mqn+j5j7NP6zQLa
- qA8pmER3T7YioIwL8eR34ARhIAvXdFPEJBCQ60GaG3y+NTZ8cs6jqw1vw4r5yOBBo6tBAlQqZQI
- 4HVL1/U74Hff4SDbfQZe05d9KqzzbOPC/jrlhWBBvVTGfs/YMMFfO4U9eY2bk7quiyNsNMfq6o9
- YFPr1WVANog5FRTvOdw5tWaUEPDhrSHEBXIdxt
-X-Gm-Gg: ASbGnctuLEtBrEPb4v6wcxWn+iALnZoAsYq35LJC/BEuRCL6cn3OxlL5ClAowO+YGr4
- 2/AYKOpL1QA9GFiIBfMc4fHBUm8xDhj+C598wsoqyyOTQNOKTMpsUbs+37rlglqpv7tPCajuuSx
- Nusa8x8uLKLuNCFTBT4XjZwFI9pM51RH9fC2bZWykqtxRAYffnJ9Plu2IY+gti7uN06DR3aYVZ5
- yMFoQrrnMlkrnyu9ewqa5mkcbiBsCk5z5AI4zHJcr/lDX4iRP/PRo83
-X-Received: by 2002:a5d:5f4f:0:b0:386:1cf9:b993 with SMTP id
- ffacd0b85a97d-3864ce5c698mr3221018f8f.26.1733934530361; 
- Wed, 11 Dec 2024 08:28:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGm5M7JM3EqpjlRcvk5Z1HQHInM2LjSBNDpmIUu89JtJkyk9MhoHQXCm7zJk47IxTPJLXLvnw==
-X-Received: by 2002:a5d:5f4f:0:b0:386:1cf9:b993 with SMTP id
- ffacd0b85a97d-3864ce5c698mr3220990f8f.26.1733934529881; 
- Wed, 11 Dec 2024 08:28:49 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514dc3sm1605176f8f.67.2024.12.11.08.28.49
- for <qemu-devel@nongnu.org>
+ bh=x3n7GIpbiAxM941owV9rTCZ55j+n45R7K1MmLLxzJJ8=;
+ b=LmpTF8FsdVXG1KEkLYG/+o1uCsA7opZ8SBKIwB5sb+lGKZqgwAn9KhrlnT4oBNAGXO
+ kFVO8M3gYXjURv5JA8GtE10yrm1/DZ2n5vPdrjYU47+cK2XYMUm/wVHlMhwCB2RbtdTB
+ 6R7piVvPE4HPS8bsS39xzRCwuBRI5IakPic4ZxojSek6bxejOBHm3xeJonewDuil7hdc
+ 2nZfEnAt0lbVY5JEFlkvfLwJD9PqD71I2kuJKodXbpXtEtsAwXE1Jrs9kO/YWxG6P4iU
+ 9U+NBjlyMnEYpw87tJPvoPgG1RezRw2e+ocgvvGQspr8+aK0R/Mn03o2P9tGMOaGOqSP
+ gSmQ==
+X-Gm-Message-State: AOJu0Ywx0vHPJE8TBUituO7JtApHTKkrWfjC7W4gEeHu/TfCGluUORee
+ NTBJyYhQ+Oo1k17+jQT43RJWZlIjnHDOgmiB8bk75ZvxjYy6zn3REaTs2XdFReeyvY9pRwQ9ho9
+ RjMKySxMA
+X-Gm-Gg: ASbGncuJ2qyLG62loApACiI2WiUxtuIccQiLyNDD8QeGpiZkcAypBSdJgNF692nYF5I
+ Ftsipc40Kf6TUzCoxo4HpndPtk3UmeIwADr3NzIo8cEOYiuLVXcv3uxBIpqm4d7w2EAnEKrQvWZ
+ zB7X/U8NJx9GRcYTSJYR6euOzf51egWWpdra6KkOIlA2zx3GOb8bHDng7ndUn5JotSVmnERANgz
+ /QL1w8qdzIYutFPbjcBrf+5kmpjG6L6HXsBkU5QSC3eQ8iBczzaBVaY/ROO9g==
+X-Google-Smtp-Source: AGHT+IFFuZoJ1C+BT3YINVKIGpHaBVZcUIh9T80jXftCjxqPS3vNy8UXS02duAvC8O3hjJCP/JQ9zw==
+X-Received: by 2002:a05:622a:1a07:b0:467:607f:eefa with SMTP id
+ d75a77b69052e-467960120cdmr567891cf.0.1733934747319; 
+ Wed, 11 Dec 2024 08:32:27 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:49 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:32:26 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 38/49] rust: define prelude
-Date: Wed, 11 Dec 2024 17:27:08 +0100
-Message-ID: <20241211162720.320070-39-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 34/69] target/arm: Convert handle_fmov to decodetree
+Date: Wed, 11 Dec 2024 10:30:01 -0600
+Message-ID: <20241211163036.2297116-35-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::831;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x831.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,59 +98,302 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a module that will contain frequently used traits and
-occasionally structs.  They can be included quickly with
-"use qemu_api::prelude::*".
+Remove disas_fp_int_conv and disas_data_proc_fp as these
+were the last insns decoded by those functions.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- rust/qemu-api/meson.build    | 1 +
- rust/qemu-api/src/lib.rs     | 5 +++++
- rust/qemu-api/src/prelude.rs | 6 ++++++
- 3 files changed, 12 insertions(+)
- create mode 100644 rust/qemu-api/src/prelude.rs
+ target/arm/tcg/translate-a64.c | 232 ++++++++++-----------------------
+ target/arm/tcg/a64.decode      |  14 ++
+ 2 files changed, 86 insertions(+), 160 deletions(-)
 
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index cacb112c5c3..f8b4cd39a26 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -21,6 +21,7 @@ _qemu_api_rs = static_library(
-       'src/definitions.rs',
-       'src/device_class.rs',
-       'src/offset_of.rs',
-+      'src/prelude.rs',
-       'src/vmstate.rs',
-       'src/zeroable.rs',
-     ],
-diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-index b04d110b3f5..e5956cd5eb6 100644
---- a/rust/qemu-api/src/lib.rs
-+++ b/rust/qemu-api/src/lib.rs
-@@ -7,6 +7,11 @@
- #[rustfmt::skip]
- pub mod bindings;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index d260b45ddb..95bb2b1ca9 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8734,175 +8734,87 @@ static bool trans_FJCVTZS(DisasContext *s, arg_FJCVTZS *a)
+     return true;
+ }
  
-+// preserve one-item-per-"use" syntax, it is clearer
-+// for prelude-like modules
-+#[rustfmt::skip]
-+pub mod prelude;
+-static void handle_fmov(DisasContext *s, int rd, int rn, int type, bool itof)
++static bool trans_FMOV_hx(DisasContext *s, arg_rr *a)
+ {
+-    /* FMOV: gpr to or from float, double, or top half of quad fp reg,
+-     * without conversion.
+-     */
+-
+-    if (itof) {
+-        TCGv_i64 tcg_rn = cpu_reg(s, rn);
+-        TCGv_i64 tmp;
+-
+-        switch (type) {
+-        case 0:
+-            /* 32 bit */
+-            tmp = tcg_temp_new_i64();
+-            tcg_gen_ext32u_i64(tmp, tcg_rn);
+-            write_fp_dreg(s, rd, tmp);
+-            break;
+-        case 1:
+-            /* 64 bit */
+-            write_fp_dreg(s, rd, tcg_rn);
+-            break;
+-        case 2:
+-            /* 64 bit to top half. */
+-            tcg_gen_st_i64(tcg_rn, tcg_env, fp_reg_hi_offset(s, rd));
+-            clear_vec_high(s, true, rd);
+-            break;
+-        case 3:
+-            /* 16 bit */
+-            tmp = tcg_temp_new_i64();
+-            tcg_gen_ext16u_i64(tmp, tcg_rn);
+-            write_fp_dreg(s, rd, tmp);
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-    } else {
+-        TCGv_i64 tcg_rd = cpu_reg(s, rd);
+-
+-        switch (type) {
+-        case 0:
+-            /* 32 bit */
+-            tcg_gen_ld32u_i64(tcg_rd, tcg_env, fp_reg_offset(s, rn, MO_32));
+-            break;
+-        case 1:
+-            /* 64 bit */
+-            tcg_gen_ld_i64(tcg_rd, tcg_env, fp_reg_offset(s, rn, MO_64));
+-            break;
+-        case 2:
+-            /* 64 bits from top half */
+-            tcg_gen_ld_i64(tcg_rd, tcg_env, fp_reg_hi_offset(s, rn));
+-            break;
+-        case 3:
+-            /* 16 bit */
+-            tcg_gen_ld16u_i64(tcg_rd, tcg_env, fp_reg_offset(s, rn, MO_16));
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
++    if (!dc_isar_feature(aa64_fp16, s)) {
++        return false;
+     }
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
++        TCGv_i64 tmp = tcg_temp_new_i64();
++        tcg_gen_ext16u_i64(tmp, tcg_rn);
++        write_fp_dreg(s, a->rd, tmp);
++    }
++    return true;
+ }
+ 
+-/* Floating point <-> integer conversions
+- *   31   30  29 28       24 23  22  21 20   19 18 16 15         10 9  5 4  0
+- * +----+---+---+-----------+------+---+-------+-----+-------------+----+----+
+- * | sf | 0 | S | 1 1 1 1 0 | type | 1 | rmode | opc | 0 0 0 0 0 0 | Rn | Rd |
+- * +----+---+---+-----------+------+---+-------+-----+-------------+----+----+
+- */
+-static void disas_fp_int_conv(DisasContext *s, uint32_t insn)
++static bool trans_FMOV_sw(DisasContext *s, arg_rr *a)
+ {
+-    int rd = extract32(insn, 0, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int opcode = extract32(insn, 16, 3);
+-    int rmode = extract32(insn, 19, 2);
+-    int type = extract32(insn, 22, 2);
+-    bool sbit = extract32(insn, 29, 1);
+-    bool sf = extract32(insn, 31, 1);
+-    bool itof = false;
+-
+-    if (sbit) {
+-        goto do_unallocated;
+-    }
+-
+-    switch (opcode) {
+-    case 2: /* SCVTF */
+-    case 3: /* UCVTF */
+-    case 4: /* FCVTAS */
+-    case 5: /* FCVTAU */
+-    case 0: /* FCVT[NPMZ]S */
+-    case 1: /* FCVT[NPMZ]U */
+-        goto do_unallocated;
+-
+-    default:
+-        switch (sf << 7 | type << 5 | rmode << 3 | opcode) {
+-        case 0b01100110: /* FMOV half <-> 32-bit int */
+-        case 0b01100111:
+-        case 0b11100110: /* FMOV half <-> 64-bit int */
+-        case 0b11100111:
+-            if (!dc_isar_feature(aa64_fp16, s)) {
+-                goto do_unallocated;
+-            }
+-            /* fallthru */
+-        case 0b00000110: /* FMOV 32-bit */
+-        case 0b00000111:
+-        case 0b10100110: /* FMOV 64-bit */
+-        case 0b10100111:
+-        case 0b11001110: /* FMOV top half of 128-bit */
+-        case 0b11001111:
+-            if (!fp_access_check(s)) {
+-                return;
+-            }
+-            itof = opcode & 1;
+-            handle_fmov(s, rd, rn, type, itof);
+-            break;
+-
+-        case 0b00111110: /* FJCVTZS */
+-        default:
+-        do_unallocated:
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        break;
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
++        TCGv_i64 tmp = tcg_temp_new_i64();
++        tcg_gen_ext32u_i64(tmp, tcg_rn);
++        write_fp_dreg(s, a->rd, tmp);
+     }
++    return true;
+ }
+ 
+-/* FP-specific subcases of table C3-6 (SIMD and FP data processing)
+- *   31  30  29 28     25 24                          0
+- * +---+---+---+---------+-----------------------------+
+- * |   | 0 |   | 1 1 1 1 |                             |
+- * +---+---+---+---------+-----------------------------+
+- */
+-static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
++static bool trans_FMOV_dx(DisasContext *s, arg_rr *a)
+ {
+-    if (extract32(insn, 24, 1)) {
+-        unallocated_encoding(s); /* in decodetree */
+-    } else if (extract32(insn, 21, 1) == 0) {
+-        /* Floating point to fixed point conversions */
+-        unallocated_encoding(s); /* in decodetree */
+-    } else {
+-        switch (extract32(insn, 10, 2)) {
+-        case 1: /* Floating point conditional compare */
+-        case 2: /* Floating point data-processing (2 source) */
+-        case 3: /* Floating point conditional select */
+-            unallocated_encoding(s); /* in decodetree */
+-            break;
+-        case 0:
+-            switch (ctz32(extract32(insn, 12, 4))) {
+-            case 0: /* [15:12] == xxx1 */
+-                /* Floating point immediate */
+-                unallocated_encoding(s); /* in decodetree */
+-                break;
+-            case 1: /* [15:12] == xx10 */
+-                /* Floating point compare */
+-                unallocated_encoding(s); /* in decodetree */
+-                break;
+-            case 2: /* [15:12] == x100 */
+-                /* Floating point data-processing (1 source) */
+-                unallocated_encoding(s); /* in decodetree */
+-                break;
+-            case 3: /* [15:12] == 1000 */
+-                unallocated_encoding(s);
+-                break;
+-            default: /* [15:12] == 0000 */
+-                /* Floating point <-> integer conversions */
+-                disas_fp_int_conv(s, insn);
+-                break;
+-            }
+-            break;
+-        }
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
++        write_fp_dreg(s, a->rd, tcg_rn);
+     }
++    return true;
++}
 +
- pub mod c_str;
- pub mod cell;
- pub mod definitions;
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-new file mode 100644
-index 00000000000..dfaddbd062a
---- /dev/null
-+++ b/rust/qemu-api/src/prelude.rs
-@@ -0,0 +1,6 @@
-+// Copyright 2024 Red Hat, Inc.
-+// Author(s): Paolo Bonzini <pbonzini@redhat.com>
-+// SPDX-License-Identifier: GPL-2.0-or-later
++static bool trans_FMOV_ux(DisasContext *s, arg_rr *a)
++{
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
++        tcg_gen_st_i64(tcg_rn, tcg_env, fp_reg_hi_offset(s, a->rd));
++        clear_vec_high(s, true, a->rd);
++    }
++    return true;
++}
 +
-+pub use crate::cell::BqlCell;
-+pub use crate::cell::BqlRefCell;
++static bool trans_FMOV_xh(DisasContext *s, arg_rr *a)
++{
++    if (!dc_isar_feature(aa64_fp16, s)) {
++        return false;
++    }
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++        tcg_gen_ld16u_i64(tcg_rd, tcg_env, fp_reg_offset(s, a->rn, MO_16));
++    }
++    return true;
++}
++
++static bool trans_FMOV_ws(DisasContext *s, arg_rr *a)
++{
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++        tcg_gen_ld32u_i64(tcg_rd, tcg_env, fp_reg_offset(s, a->rn, MO_32));
++    }
++    return true;
++}
++
++static bool trans_FMOV_xd(DisasContext *s, arg_rr *a)
++{
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++        tcg_gen_ld_i64(tcg_rd, tcg_env, fp_reg_offset(s, a->rn, MO_64));
++    }
++    return true;
++}
++
++static bool trans_FMOV_xu(DisasContext *s, arg_rr *a)
++{
++    if (fp_access_check(s)) {
++        TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++        tcg_gen_ld_i64(tcg_rd, tcg_env, fp_reg_hi_offset(s, a->rn));
++    }
++    return true;
+ }
+ 
+ /* Common vector code for handling integer to FP conversion */
+@@ -10821,7 +10733,7 @@ static void disas_data_proc_simd(DisasContext *s, uint32_t insn)
+ static void disas_data_proc_simd_fp(DisasContext *s, uint32_t insn)
+ {
+     if (extract32(insn, 28, 1) == 1 && extract32(insn, 30, 1) == 0) {
+-        disas_data_proc_fp(s, insn);
++        unallocated_encoding(s); /* in decodetree */
+     } else {
+         /* SIMD, including crypto */
+         disas_data_proc_simd(s, insn);
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index cd10961618..5b9f7caa7f 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1365,6 +1365,20 @@ FCVTAU_g        . 0011110 .. 100101 000000 ..... .....  @icvt
+ 
+ FJCVTZS         0 0011110 01 111110 000000 ..... .....  @rr
+ 
++FMOV_ws         0 0011110 00 100110 000000 ..... .....  @rr
++FMOV_sw         0 0011110 00 100111 000000 ..... .....  @rr
++
++FMOV_xd         1 0011110 01 100110 000000 ..... .....  @rr
++FMOV_dx         1 0011110 01 100111 000000 ..... .....  @rr
++
++# Move to/from upper half of 128-bit
++FMOV_xu         1 0011110 10 101110 000000 ..... .....  @rr
++FMOV_ux         1 0011110 10 101111 000000 ..... .....  @rr
++
++# Half-precision allows both sf=0 and sf=1 with identical results
++FMOV_xh         - 0011110 11 100110 000000 ..... .....  @rr
++FMOV_hx         - 0011110 11 100111 000000 ..... .....  @rr
++
+ # Floating-point data processing (1 source)
+ 
+ FMOV_s          00011110 .. 1 000000 10000 ..... .....      @rr_hsd
 -- 
-2.47.1
+2.43.0
 
 
