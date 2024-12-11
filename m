@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A294EE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:23:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EFE9E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:23:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPSJ-0000Ru-KQ; Wed, 11 Dec 2024 11:20:55 -0500
+	id 1tLPRg-0008Vk-Jz; Wed, 11 Dec 2024 11:20:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSH-0000Oh-2m
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:53 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ id 1tLPRe-0008Tu-UQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:14 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSF-0007lt-DQ
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:52 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so8313945e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:51 -0800 (PST)
+ id 1tLPRd-0007aF-3P
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:14 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-435004228c0so31036435e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934050; x=1734538850; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934012; x=1734538812; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8QtRpOUDdXPykNSh2kSGznv4CfLLLfE60kE3MXT1yOA=;
- b=M9yWJlEwukpshEj1U/ur3z3IYS1UtPiNoC6M6q8zJOTkUw7Q2y8EMK25WV9H/S/Qxd
- 5H5g5AIPWUIAKQBGKCFRGDDOvJDGmf3t+A7t8PgsqgGNurF2ZIG2ILdwoF2chcoAfy03
- EF7MqickGN3tZEVNsDsuROLnjOtAC0QuptRwWylEuWGCOXSN1C100fJmB+TJl5KKiMDi
- mweU10w17dyfanyV6WcF/jefbGl1MUlnKzzKeLdEzMF2BKZpMeO2Z814gHyYAPlp0xyr
- uxoaXMrtdTe1el/Sdv0x6jhv2L8arJNoFqkrbDLyFmZkfNawsGAuE9Xq2tS5ZW35jyih
- l/0Q==
+ :reply-to; bh=M9hY+EVOhnfdsTHDgLMsqyKxn/CXpVf3YCN0NO8bItY=;
+ b=XKkjupWOQtgswoE1WwqYi1vj1Oj6OKSvtsuo2+3g7Y8WLXibYihncmn9f191+hMDu9
+ wPU4gdS8GZGCmgbEOvT6lYTQA254hVnMROAh0L0I24PAX4wwe9D+ZV5AMq6F4GuauYRu
+ yMoBf8LFEfeBX3PxwOp5dD55OZzO4gTk+sgNEQxzRZp1IY2dVUVE/P2bcKnt6CoQhGWA
+ egolTFUBn3yZX9DE+4iWjmMR8ej4XCljbXhFfgLbll8HWcYswjb4lyC9OwQpkVA6ktw9
+ lji0sBZD4myXp6jO2Fze+WF6u9dKnI99twFFEDh00tfk8PNtBDjBpWPvdXxFwWrn06bh
+ 69AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934050; x=1734538850;
+ d=1e100.net; s=20230601; t=1733934012; x=1734538812;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8QtRpOUDdXPykNSh2kSGznv4CfLLLfE60kE3MXT1yOA=;
- b=LXhPbH7AzC4bHIPyr/bkAUWkE2L6HKqtqo3az6D3nqdyj7okfBdr8JxZx3Z9jnZvuS
- 55x4c4tXYp5dJ/xFd5BHBae0uOd2zDur1jfjw6lPJZY3z36UvsfRPR+zGTAkEGgZ3vKr
- i1vJduToaKzd9UKkCtBqo5ujTVIt7HrVzOJfDuGqyGjv9log5qr3zt03R7iGWBr1LMd2
- d5n/fxn+z5ZLukdzQMOuVeNpqCzr+T7UMAcc4+rear9oPyJXdq/UbfF4mLMXc4uKRYfB
- q1NpBS7c5gMWPDr8/bxvWwh+f7z7lGTFONjMwub2z8/5FU20r9x+Sgb1P/1h9gxGOhAQ
- 9L2Q==
-X-Gm-Message-State: AOJu0YwSfIlr+KR1XNxxO3EHXZU5g2FE+Yp374A6p0wyYCMEhqep1DGq
- +TOT2nQxGVP1KVzXJ5NRyA0Qz6Q1J3iZNI8IQvJWHL8KlldMnHIIwswc6bxBVjLSaagi1mCsp3h
- Z
-X-Gm-Gg: ASbGncsdsmtXMG6zXUEG8Iik0G1v3wI1IjDKrKtwO4/hlxm4JsKXiJNfW4Ig8r6SgvX
- vOh3QGBm9mjkUye+C8HzpT8ff96hKZMWfcCdyc4hAWqXV5wIua6kI0GMz8xg+18pkD/MBBtGVo+
- JaVsfRFtE58+4Ow7+kwOBPYLpgcf5g5gFq+BftNvTTdZt1n4DZtJEBpvi31o0BGLoQJtnItH2Od
- 62LV0BUVQGSdDF/BHv3zPO8OSg2IXVzSTBwG4UvGJZxx+gUfsUFslNKTVIf
-X-Google-Smtp-Source: AGHT+IGqe2Jk3lhh2qLkyM5RMDAP9f2H1rkBZ9KLKERjGbP9zuqck1KpOTmb+r83N39oEVs0sG1I1Q==
-X-Received: by 2002:a05:600c:4450:b0:434:f5c0:329f with SMTP id
- 5b1f17b1804b1-4361c3bd9e8mr34947935e9.14.1733934050014; 
- Wed, 11 Dec 2024 08:20:50 -0800 (PST)
+ bh=M9hY+EVOhnfdsTHDgLMsqyKxn/CXpVf3YCN0NO8bItY=;
+ b=LHH2KFdK11F6da25YJw9GO02zExiSwMlDRNPms8gmDveuhdMAK3s1MJ/agM9771I1s
+ FVfT5MtK0aEC4fLqHQ5iloSFO3mc29nXdx/93mikqfMHKiDF2aibBhUvRPVT4IjU82es
+ W2IQPpQ7HEhAOgsbU1wCnZjnCA/0DnrDz1omezP9JptjtcZlf2c4RslzIsYOcOVnKDgi
+ goybXM7B2AG1zQBHv46IOrcsUi0wB4/hf0Ki9vVwTwdQA/vab6rMFO11w+apEDcYLKJ+
+ AvPnpwt95+7OnKaM9zqSkVVg9ngKKhC1vHhh83Pv4DcUyfdDM22cKvegGXCaTFzOd85B
+ 742A==
+X-Gm-Message-State: AOJu0YzeDN63+nofcheJj2+VI1T5o8Zetdtl2vDOGukTZNwDGwZWrmS9
+ iRjfANNUDF7LT9dRpALTsLS/x07GZWQd8kqYcqn1rM5eWwM/sOlbS6cwb4zhkg7VgDFokuwSZmI
+ 2
+X-Gm-Gg: ASbGncuyvOOGf5dZeXSkUEgzBEXRdOaJLSsM5YLGpUCG28HPH+NouKhG4AiXdew2mJO
+ NfdFeT7vHv9znK1A73wpje5OkTaFeLs2aVKI+vyAbnZhv4563QtTY5CwOx8vIkB62sCs7Oeaf+p
+ dmGBmUfsTUlf5fEYKI6JxLFFMfDPx/uRQ6/yX8FYgNe6tHw2/ZmU/+qoHdcFh8EVf1HQIWqnpfF
+ /VCCC75p7uPb9HuKI7RptZ78K0kO20i7a4GxTEhm9bIODpWXGMhxYUbzMaq
+X-Google-Smtp-Source: AGHT+IGfDIBUpLDI4Aylj2Ic4B0/VRhGYrxt7yKG5hE4OmxN03HJE8IT666psExYNu/1BCJ160+p9g==
+X-Received: by 2002:a05:600c:3b09:b0:431:5c3d:1700 with SMTP id
+ 5b1f17b1804b1-4361c42e606mr29831575e9.21.1733934011658; 
+ Wed, 11 Dec 2024 08:20:11 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.49
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.10
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:49 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 37/72] target/sparc: Initialize local scratch float_status from
- env->fp_status
-Date: Wed, 11 Dec 2024 16:19:29 +0000
-Message-Id: <20241211162004.2795499-38-peter.maydell@linaro.org>
+Subject: [PULL 03/72] hw/net/lan9118_phy: Fix off-by-one error in MII_ANLPAR
+ register
+Date: Wed, 11 Dec 2024 16:18:55 +0000
+Message-Id: <20241211162004.2795499-4-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,93 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the helper functions flcmps and flcmpd we use a scratch float_status
-so that we don't change the CPU state if the comparison raises any
-floating point exception flags. Instead of zero-initializing this
-scratch float_status, initialize it as a copy of env->fp_status. This
-avoids the need to explicitly initialize settings like the NaN
-propagation rule or others we might add to softfloat in future.
+From: Bernhard Beschow <shentey@gmail.com>
 
-To do this we need to pass the CPU env pointer in to the helper.
+Turns 0x70 into 0xe0 (== 0x70 << 1) which adds the missing MII_ANLPAR_TX and
+fixes the MSB of selector field to be zero, as specified in the datasheet.
 
+Fixes: 2a424990170b "LAN9118 emulation"
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20241102125724.532843-4-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-33-peter.maydell@linaro.org
 ---
- target/sparc/helper.h     | 4 ++--
- target/sparc/fop_helper.c | 8 ++++----
- target/sparc/translate.c  | 4 ++--
- 3 files changed, 8 insertions(+), 8 deletions(-)
+ hw/net/lan9118_phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/target/sparc/helper.h b/target/sparc/helper.h
-index 134e519a377..1ae3f0c467d 100644
---- a/target/sparc/helper.h
-+++ b/target/sparc/helper.h
-@@ -51,8 +51,8 @@ DEF_HELPER_FLAGS_3(fcmpd, TCG_CALL_NO_WG, i32, env, f64, f64)
- DEF_HELPER_FLAGS_3(fcmped, TCG_CALL_NO_WG, i32, env, f64, f64)
- DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, i32, env, i128, i128)
- DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, i32, env, i128, i128)
--DEF_HELPER_FLAGS_2(flcmps, TCG_CALL_NO_RWG_SE, i32, f32, f32)
--DEF_HELPER_FLAGS_2(flcmpd, TCG_CALL_NO_RWG_SE, i32, f64, f64)
-+DEF_HELPER_FLAGS_3(flcmps, TCG_CALL_NO_RWG_SE, i32, env, f32, f32)
-+DEF_HELPER_FLAGS_3(flcmpd, TCG_CALL_NO_RWG_SE, i32, env, f64, f64)
- DEF_HELPER_2(raise_exception, noreturn, env, int)
- 
- DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
-diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
-index 6f9ccc008a0..236d27b19c1 100644
---- a/target/sparc/fop_helper.c
-+++ b/target/sparc/fop_helper.c
-@@ -490,13 +490,13 @@ uint32_t helper_fcmpeq(CPUSPARCState *env, Int128 src1, Int128 src2)
-     return finish_fcmp(env, r, GETPC());
- }
- 
--uint32_t helper_flcmps(float32 src1, float32 src2)
-+uint32_t helper_flcmps(CPUSPARCState *env, float32 src1, float32 src2)
- {
-     /*
-      * FLCMP never raises an exception nor modifies any FSR fields.
-      * Perform the comparison with a dummy fp environment.
-      */
--    float_status discard = { };
-+    float_status discard = env->fp_status;
-     FloatRelation r;
- 
-     set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
-@@ -518,9 +518,9 @@ uint32_t helper_flcmps(float32 src1, float32 src2)
-     g_assert_not_reached();
- }
- 
--uint32_t helper_flcmpd(float64 src1, float64 src2)
-+uint32_t helper_flcmpd(CPUSPARCState *env, float64 src1, float64 src2)
- {
--    float_status discard = { };
-+    float_status discard = env->fp_status;
-     FloatRelation r;
- 
-     set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
-diff --git a/target/sparc/translate.c b/target/sparc/translate.c
-index cdd0a95c03d..322319a1288 100644
---- a/target/sparc/translate.c
-+++ b/target/sparc/translate.c
-@@ -5584,7 +5584,7 @@ static bool trans_FLCMPs(DisasContext *dc, arg_FLCMPs *a)
- 
-     src1 = gen_load_fpr_F(dc, a->rs1);
-     src2 = gen_load_fpr_F(dc, a->rs2);
--    gen_helper_flcmps(cpu_fcc[a->cc], src1, src2);
-+    gen_helper_flcmps(cpu_fcc[a->cc], tcg_env, src1, src2);
-     return advance_pc(dc);
- }
- 
-@@ -5601,7 +5601,7 @@ static bool trans_FLCMPd(DisasContext *dc, arg_FLCMPd *a)
- 
-     src1 = gen_load_fpr_D(dc, a->rs1);
-     src2 = gen_load_fpr_D(dc, a->rs2);
--    gen_helper_flcmpd(cpu_fcc[a->cc], src1, src2);
-+    gen_helper_flcmpd(cpu_fcc[a->cc], tcg_env, src1, src2);
-     return advance_pc(dc);
- }
- 
+diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
+index d2dcd732ac1..d8fc9ddd3ac 100644
+--- a/hw/net/lan9118_phy.c
++++ b/hw/net/lan9118_phy.c
+@@ -54,7 +54,7 @@ uint16_t lan9118_phy_read(Lan9118PhyState *s, int reg)
+         val = s->advertise;
+         break;
+     case 5: /* Auto-neg Link Partner Ability */
+-        val = 0x0f71;
++        val = 0x0fe1;
+         break;
+     case 6: /* Auto-neg Expansion */
+         val = 1;
 -- 
 2.34.1
 
