@@ -4,77 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBECE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86E34E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:28:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLOX8-0003TO-3B; Wed, 11 Dec 2024 10:21:50 -0500
+	id 1tLOd9-0004r0-0M; Wed, 11 Dec 2024 10:28:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tLOX4-0003Ns-6Q; Wed, 11 Dec 2024 10:21:46 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1tLOX1-00086l-1y; Wed, 11 Dec 2024 10:21:45 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y7fSD00Dfz6D9Bp;
- Wed, 11 Dec 2024 23:20:43 +0800 (CST)
-Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 4ED4C1400DD;
- Wed, 11 Dec 2024 23:21:38 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 11 Dec 2024 16:21:38 +0100
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 11 Dec 2024 16:21:38 +0100
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Thread-Topic: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
- SMMU nodes
-Thread-Index: AQHbMd3CYnIzOIz3QUan4PDL8HOdprK8zVGAgAAjLhCAABtdAIAAIywQgAAmhYCAAus70IAAGD4AgAAU00CAARvsAIAei3YAgAE/FGA=
-Date: Wed, 11 Dec 2024 15:21:37 +0000
-Message-ID: <74114c0db34b420a90e9fe5bd991767e@huawei.com>
-References: <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
- <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
- <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
- <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
- <0803ec1a010a46b9811543e1044c3176@huawei.com>
- <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
- <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
- <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
- <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
- <c14feb2934a0478180635bbdb27d5e53@huawei.com>
- <Z1ipHKP4L/++143Q@Asurada-Nvidia>
-In-Reply-To: <Z1ipHKP4L/++143Q@Asurada-Nvidia>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
+ id 1tLOd7-0004qi-8B
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:28:01 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dfaggioli@suse.com>)
+ id 1tLOd5-0000DY-8x
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:28:01 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-435004228c0so30268105e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:27:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1733930876; x=1734535676; darn=nongnu.org;
+ h=mime-version:user-agent:organization:autocrypt:date:cc:to:from
+ :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=/EM9BcU/0ML5fsUhSgqDL22asp9FS9Z3TFMw7SunoOE=;
+ b=HntPUjW7AtKkfphMCSPJb7bSCwWPzkOsebnDrSAlzF1p8MZXr9I81VQ3E1fQXTectb
+ 5Zvq3OsNV6bLq6n26aJpu75KqUXI66F6KOfle+Jezvm8Mt4P94H1eynZjSCW7BsbzLQd
+ nwm0VQ8DqSZ2NUcAdPoqTm6VFCcDx12Q65gV/xG6XOWEfyI3O8+pn1eMr+/a1xqu547m
+ 3QLdmJoXyOaHwyGMMxUkehOcNKl0f8dmHi5tDgEL97OmV0GPGqOoa+AIINKoqq9BOdNv
+ aXGmO+NXRygPntQ0V/axIlpu2RS2nF5niJWr7L76uQ6QqwLzPBZVk6Lf8gazlP6t8HvS
+ 2hSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733930876; x=1734535676;
+ h=mime-version:user-agent:organization:autocrypt:date:cc:to:from
+ :subject:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/EM9BcU/0ML5fsUhSgqDL22asp9FS9Z3TFMw7SunoOE=;
+ b=fS2cin1nZhFNAndS9vGviCJZRdGnGR/MfL0Ex6tr5RoISlQBbZfpRmtuM3Z3aTX7mj
+ 2iziMcE5OWDpP7IptRsoHB9EQjSc/DOg1+fdU0NB99ajT+Lw+CIEz4P0fA2NPCFsPDH/
+ +vsFwebZ/+GfsKP/INp30HqXigLYKE9+9X9dNftPdRiMSERHHdo7atUO0QieYOIZuLep
+ V2eazSvI45PYFtTkrkIqPcj+HpQVmu9fm0+u1Ev9KBRN+qhLHhr+VDddC6HxvCXSR1X6
+ EkY/Ri8qQgnL67Bft6gpdv4UqX+SOH5lGxJYW55MMgn43jpx08Uv6wQZ+tyjWb1XWIeF
+ xWiA==
+X-Gm-Message-State: AOJu0YyIoboCQhHKnJMxuGwRnwWGkXBM3rtNBqJe6E/L1lL7TL9TOe/3
+ veMA3BQRv328LNXtiRWa21k7UH9wrEvqmKR/N+POnfSmcPwaT1sf0Lb16Jr2dgnYG2i4uruO47U
+ oiXY=
+X-Gm-Gg: ASbGncs+M1DmTJ1kKI+upKoriuugbPNbahZi2dd3FZlqyo2L/vNvUeQNE3CuEryKA54
+ Lzg1SBdeg5T9h6dhvbk+4xXBzHtw04b8hr/OD03XMJMIY4SQz4tDeuAkiGrbmvcbiSKbGywzF7d
+ x/G4AdJ9I/miG9AI9Mg01Cij91Y0jDwO+eiSEqnV8G4YwHDDhsEP8fn8XnjkAZTjvk1QPCbgLCJ
+ 3jKcqJ0j4+3G2NYYH0bUeGNOdkoxd4QbATqQkhzwf69qjDPTcSPlcyV6klRugOg6cdIxaOm8U3i
+ tOyhnFu3TvX30dqv
+X-Google-Smtp-Source: AGHT+IF+CiA6S9KoNl0n/M0rWD+fIMDVnEyX+7teMUIMbWmAKUA8t2g4Qr3qZWBUoh6CP1znUWItKA==
+X-Received: by 2002:a05:600c:3109:b0:434:a04d:1670 with SMTP id
+ 5b1f17b1804b1-4361c2b7e29mr31937095e9.0.1733930876464; 
+ Wed, 11 Dec 2024 07:27:56 -0800 (PST)
+Received: from Wayreth.fritz.box (87.78.186.89.cust.ip.kpnqwest.it.
+ [89.186.78.87]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878251dee1sm1496538f8f.102.2024.12.11.07.27.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 07:27:56 -0800 (PST)
+Message-ID: <23260a79710e2c302028afa401a969ca9cc389f9.camel@suse.com>
+Subject: No display in Xen PV guests: "This VM has no graphic display device."
+From: Dario Faggioli <dfaggioli@suse.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?=	 <philmd@linaro.org>, Paul Durrant
+ <paul@xen.org>, Anthony PERARD	 <anthony@xenproject.org>, "Edgar E .
+ Iglesias" <edgar.iglesias@gmail.com>,  Charles Arnold <CARNOLD@suse.com>
+Date: Wed, 11 Dec 2024 16:27:54 +0100
+Autocrypt: addr=dfaggioli@suse.com; prefer-encrypt=mutual;
+ keydata=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
+ fkAJ0OEQQ==
+Organization: SUSE Software Solutions Italy S.r.l.
+Content-Type: multipart/signed; micalg="pgp-sha256";
+ protocol="application/pgp-signature"; boundary="=-X3Bzke3B260cxcLEJz3c"
+User-Agent: Evolution 3.54.2 (by Flathub.org) 
 MIME-Version: 1.0
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=dfaggioli@suse.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,105 +165,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nicolin,
 
-> -----Original Message-----
-> From: Nicolin Chen <nicolinc@nvidia.com>
-> Sent: Tuesday, December 10, 2024 8:48 PM
-> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
-> devel@nongnu.org; peter.maydell@linaro.org; jgg@nvidia.com;
-> ddutile@redhat.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
-> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
-> Jonathan Cameron <jonathan.cameron@huawei.com>;
-> zhangfei.gao@linaro.org
-> Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with
-> multiple SMMU nodes
->=20
+--=-X3Bzke3B260cxcLEJz3c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hello everyone,
 
-> > And now I think I know(hopefully) the reason why it is not working with
-> > smmuv3-nested case. I think the root cause is this commit here,
-> >
-> > (series: " cover-letter: Add HW accelerated nesting support for arm
-> SMMUv3")
->=20
-> > This changes the way address space is returned for the devices.
-> >
-> > static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int
-> devfn)
-> > {
-> >     SMMUState *s =3D opaque;
-> >     SMMUPciBus *sbus =3D smmu_get_sbus(s, bus);
-> >     SMMUDevice *sdev =3D smmu_get_sdev(s, sbus, bus, devfn);
-> >
-> >     /* Return the system as if the device uses stage-2 only */
-> >     if (s->nested && !sdev->s1_hwpt) {
-> >         return &sdev->as_sysmem;
-> >     } else {
-> >         return &sdev->as;
-> >     }
-> > }
-> >
-> > If we have entries in the SMMUv3 idmap for bus:devfn, then I think we
-> should
-> > return IOMMU address space here. But the logic above returns sysmem
-> > address space for anything other than vfio/iommufd devices.
-> >
-> > The hot add works when I hacked the logic to return IOMMU address
-> space
-> > for pcie root port devices.
-> That is to bypass the "if (memory_region_is_iommu(section->mr))"
-> in vfio_listener_region_add(), when the device gets initially
-> attached to the default container.
+We've found an issue that manifests in Xen PV guests. We have
+encountered it when testing our (SUSE and openSUSE) packaged version of
+9.1.x, but I've been able to reproduce it even using the upstream
+master branch.
 
-Right.=20
-=20
-> Once a device reaches to the pci_device_set_iommu_device() call,
-> it should be attached to an IDENTIY/bypass proxy s1_hwpt, so the
-> smmu_find_add_as() will return the iommu as.
+QEMU 8.2.8 works fine, so something happened during 9.0 or 9.1
+development (and not backported to stable).
 
-Agree. The above situation you explained is perfectly fine with vfio-pci de=
-v.
+Basically, it's enough to try to create a Xen PV guest with virt-
+manager and the only output of the virt-manager window will be "This VM
+has no graphic display device" (while, e.g., `xl console <domid>` works
+fine).
 
-> So, the fact that your hack is working means the hotplug routine
-> is likely missing a pci_device_set_iommu_device() call, IMHO, or
-> probably it should do pci_device_iommu_address_space() after the
-> device finishes pci_device_set_iommu_device() instead..
+There is some additional info in this bug, but not all of that makes
+sense (we were in a hurry for a fix, and this is not my area :-/):
 
-The problem is not with the hot added vfio-pci dev but with the
-pcie-root-port device. When we hot add a vfio-pci to a root port,
-Qemu will inject an interrupt for the Guest root port device and
-that kick starts the vfio-pci device add process. This involves writing
-to the MSI address the Guest  kernel configures for the root port dev.=20
+https://bugzilla.suse.com/show_bug.cgi?id=3D1232712
 
-As per the current logic, the root port dev will have sysmem address
-space and in IORT we have root port dev id in smmu idmap. This
-will not work as Guest kernel configures a translated IOVA for MSI.
+However, what I eventually figured out though (through a couple of
+bisections), is that if I revert _both_:
 
-I think we have discussed this issue of returning different address
-spaces before here[0]. But that was in a different context though.
-The hack mentioned in [0] actually works for this case as well, where
-we add an extra check to see the dev is vfio-pci or not. But I am not
-sure that is the best way to handle this.
+- 6ece1df966 hw/xen: Register framebuffer backend via xen_backend_init()
+- e99441a379 ui/curses: Do not use console_select().
 
-Another option is to exclude all the root port devices from IORT idmap.
-But that looks not an ideal one to me as it actually sits behind an SMMUv3
-in this case.
+Things work again.
 
-Please let me know if you have any ideas.
+As I said, this is not my field, so there's not much more that I can
+say for now. Nevertheless, I'm happy to try to help as much as I can
+(e.g., testing theories, trying patches, etc)... So let me know what I
+can do. :-)
 
-Thanks,
-Shameer
+Regards,
+--=20
+Dario Faggioli, Ph.D
+http://about.me/dario.faggioli
+Virtualization Software Engineer
+SUSE Labs, SUSE https://www.suse.com/
+-------------------------------------------------------------------
+<<This happens because _I_ choose it to happen!>> (Raistlin Majere)
 
-[0] https://lore.kernel.org/linux-iommu/02f3fbc5145d4449b3313eb802ecfa2c@hu=
-awei.com/
+--=-X3Bzke3B260cxcLEJz3c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
 
-=20
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEES5ssOj3Vhr0WPnOLFkJ4iaW4c+4FAmdZr3oACgkQFkJ4iaW4
+c+6GKw/+LzDm/5h92Dv96ZVSSJlGKAtw3YOiIvVAKIszWgdOZZSECnrHyvhI93JW
+XSTGou+nHWlSuAocm81ir1PKzsco/0qEl+oQa9o0jjHtkGd5yHjA++311v9v+WvI
+zC4VgTaUn5F3DJEqgT5TnOHK59JJtf5TeNNlEK2zYVcFWzxxflRHNcAuj5f5F72N
++CRHZITaOuT0M0CxK/7DZrbumfHgRQxdAfPFnI5R/d1NIF7Y6Jsc0CRBpXcZCRMV
+Z9FQ1M8TaNolhY4AYqjSLBKRPNJvxY4w4z9e4ElJaPbzwMIblVhkX0If3KITuE+D
+KB7KxbVxnXtMYCGpTM/cLzz11CBJBeJRNuZEnihH7zq1sN6Ag+gZIsjpoEOMGjJb
+qcJb/MM6JpzJjKPwpbyZwpz8c67kzU60lcOJUsJy3AwzX4VRl9xZcnH8QwFXIS3Y
+Xaa0+qucNOJBmUbyq4rj9NCEhjGy5AKu1HZHcfle9pbFxeaWqRBNQyJsMzmEOSN1
+6/zTkBePgw+IF07s+LvSH4MY5sZd5ff/1EXXZZpNIT5A92zY1+aOMRl0VwIHZfJ9
+Tuan3zzMyx5hq280GStU8urLvEm0eTdeJb0+eK2oQ/dMpENwmAy94GPqknUFeOxi
+wPLMuKWYmdY7HnsNQwZoQxbjEhmt8V2aa9l/XigjdsO2gzu/dlA=
+=FgP4
+-----END PGP SIGNATURE-----
+
+--=-X3Bzke3B260cxcLEJz3c--
 
