@@ -4,86 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCD35E77182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8D99E77183
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPeO-0001Qc-7w; Wed, 11 Dec 2024 11:33:28 -0500
+	id 1tLPZI-0003BH-Ja; Wed, 11 Dec 2024 11:28:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPdb-0006md-Vk
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:36 -0500
-Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPda-0001U9-7b
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:35 -0500
-Received: by mail-qt1-x835.google.com with SMTP id
- d75a77b69052e-467777d7c83so20592161cf.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934753; x=1734539553; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=T9fh0NlbjmdbLKi3RiB0ekN1/PEOAZQ1NU7Dbs3dJ9Q=;
- b=l+6qoJfZc0fL6wo9e0UY/74NJ7XKD463nLUGuf7nj9BsK/+tIuVRBR9Co2UGu9FAmx
- FqRjTwiRK3ToTuV3n4Ug0EIv8dRkmDwXJK5FMOYerLnVUx1TZB7DDHal2sLSgaikDofd
- DgIsutytYqWpS7BLVDwvIrXEuYOlz43UcsGGuSxAgEUlk4n8BnZlXhguTUfm7vnHcjpv
- ySJ66qUu9Q7MIFOe62+vS8nmy/gx8jiFwNNcL21NjWdls95TMv/OFNbYTzUhpAeD69u5
- icIY4hMVmKNMhgTZVSNVBJEw0oWyfLXzTrl6MbmdmezDs9Q9Gyw2zw7S1jW2AvP38fvt
- ea7Q==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPZF-0002v8-05
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPZC-0000Mt-La
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934481;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=5/gPO2yFneY2SAFLMqoaZO1g8ZLO9OFPO/sZ1iMHfZo=;
+ b=iNEr7Bb3ZFzGvp8rWusW+EF0VScGlPLDUyYxvXHNWqRFiUByeFMYJgZ3gWbsiAKFM6XRqG
+ ltVOcJ166nUlLMumSRBpEdLPMsgwDLhwBRTk0uf2YICfqznnoA5Zg6ep36gYby3w/nf0Dw
+ qXXhw/DP34clJnuSjopebCxIPu3snuk=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-648-fMWhQFAIN-m6QewmsL3XTA-1; Wed, 11 Dec 2024 11:28:00 -0500
+X-MC-Unique: fMWhQFAIN-m6QewmsL3XTA-1
+X-Mimecast-MFC-AGG-ID: fMWhQFAIN-m6QewmsL3XTA
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6c51069f5so598028785a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934753; x=1734539553;
+ d=1e100.net; s=20230601; t=1733934479; x=1734539279;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T9fh0NlbjmdbLKi3RiB0ekN1/PEOAZQ1NU7Dbs3dJ9Q=;
- b=bi0iKXUfMibNsIFbPV5NFJkmnCTASRB5WdEX/GK93ZDTFFi94441poPJFGuCmBxF32
- ZygwcWvm5oO0sxKeBX2HEjF7Q4HbBnezigCiVyM2bCJluxQTGp7PL8NGSPDvejmElYIP
- E8QjGOPGxU+mxTE04lSE3MeT/iFYC0HmS+uhoHii9RabIxeKL8nUWve4KFFagjWvv13f
- CBzfR/xyF+Yxch5D9qyyk0eh0pgzDDrWCrilUMuzG3uL97rPcpYoj1qP8dXSNhb3PhgO
- tl86T8WB0FQeqoxE1fZPrqJSH+5cnhMERu09c3iQ1EfWS6D1ruGNiuY53fg4+yyoCvlz
- GHuQ==
-X-Gm-Message-State: AOJu0YygC3X1twwKyk1HvG9cWXbN9xuEcwQr1hu3yQQWPFG7rvYBiNa3
- iW/u9i76Beabmtt5zbXjjxqNjUIX6ZOoAwebLZ6s8dnXGu+BtWpwIm74PikTagLnQ+rNqR548aC
- UMplTQZ08
-X-Gm-Gg: ASbGncs+XPqeSJksfGo2+5PCRR5D2hfAtsWgM8ewllNm5yR+greF7WUT1MSO/cEnpD2
- QNVbDayOUYc3mH+VL2WQLV25j6SganrPVcuNpD8oL6dGl9gvj4NpgXkQNPXswSphSdfXCb9zn4Z
- gzd/ynpz3Q5eGnrZW5gNrm1Rh9SdXyfgCnqzNV+LJ37EgH76jYxo9EgEjDagrizC6yc81WuHKh3
- Jr5+MYr2oqqfG5+7a4z4OaPznpOjAr1hIlOUhhbYOl1dqXcX2bnLxLY+Buxgw==
-X-Google-Smtp-Source: AGHT+IETkBqP2kxT+aTn4STefKa1Ufww0G8F2YpfrH2p5rioOIXzTDwdXFoEWRd19aXbbhJq0YwR+A==
-X-Received: by 2002:a05:622a:9009:b0:466:ac8d:7341 with SMTP id
- d75a77b69052e-46795423747mr6206131cf.35.1733934753142; 
- Wed, 11 Dec 2024 08:32:33 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.31
+ bh=5/gPO2yFneY2SAFLMqoaZO1g8ZLO9OFPO/sZ1iMHfZo=;
+ b=DXh2fakpsyYIrvD7o5oUzeE32ZtX64n48wHs3N+7HVetPTqyVLcGmr5E9Izf6doQIR
+ 4p+emNJ1XGdIxCNfNQK3aBliuCM3ps/1ymiZ+VPkour8eNeeQe3kySuZlTLkfBNQNZaG
+ ccfBQkpfJk9GcYBzT3gHf7nCvQse/Cqzh7Ib8XQWE1gNyBy0lIrJY+v+uZRaf32nhbq6
+ lSso4EdCT+JMr+QbES1vQcxb217WoWBY1mBpUwcAXPKtGwpHqHvE18saA3SWNKaQQa1+
+ E53D2Dwi2SPjU4I4kyZRA7KrEaLOXw3n7E9iPsm9vt8l5GpiTVw55ZiH7pDFerYm+eFG
+ Fyew==
+X-Gm-Message-State: AOJu0Yzvf0hSQJYXIHy5v2B2xEwvCCGeKOAv3gBfIKpEPVUWRc5i3sAh
+ DCqvOvGoFCI85DvOQ6sYUxjTq9m3rKAgIfdv2CYGt9RgLV08XHWgOKBnSoYWobXTOC+ePCxkS6b
+ GbGosA9ogrB+36v4c9kFB8fsH21tq7kbl98O8aXvMljw0RCoFpAkbDfeaPP8hBYtTaub6wEE23I
+ DcqHL9vA0iuP7Jkb+oMSyEraKx2GHOAq13wnWd
+X-Gm-Gg: ASbGnctmQHil8k0lP9OguEOIg/5wFXL6agipadnAVv1SlC1g4KUHeFDNmoB8asWsoHW
+ SSltqyqJORlbxP7Js3c/WPod77C3d5HWvPB9cF8FIH27dJsJI+h2ndSLBpKkl4lI1VjuM/Cn+5N
+ f4JQ4C9tja8ZX/zUx9KsI90WP2P94in5baNMbBifizLMV1CboCVdpJ6MonMPBxtHJGudi2JTp/0
+ Iep+RjLbvcAQFgwsIl9723FCSGs1vHCD8PpKYFBpHU3zj4selfJifLP
+X-Received: by 2002:a05:620a:191b:b0:7b6:d273:9b52 with SMTP id
+ af79cd13be357-7b6eb4d86f2mr540882785a.24.1733934479480; 
+ Wed, 11 Dec 2024 08:27:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFpohvuDi1xtSCheyj9p63ZFmjUYzmt3Bgcpvj+6T03bsNvqZaHmQ+p1DQO6Bkt4ffC5hIbfQ==
+X-Received: by 2002:a05:620a:191b:b0:7b6:d273:9b52 with SMTP id
+ af79cd13be357-7b6eb4d86f2mr540878185a.24.1733934479079; 
+ Wed, 11 Dec 2024 08:27:59 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b6cbf228a5sm400514785a.105.2024.12.11.08.27.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:32:32 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Dec 2024 08:27:58 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 37/69] target/arm: Introduce gen_gvec_cls, gen_gvec_clz
-Date: Wed, 11 Dec 2024 10:30:04 -0600
-Message-ID: <20241211163036.2297116-38-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+Cc: Junjie Mao <junjie.mao@hotmail.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 14/49] rust/qemu-api: Fix fragment-specifiers in
+ define_property macro
+Date: Wed, 11 Dec 2024 17:26:44 +0100
+Message-ID: <20241211162720.320070-15-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x835.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,178 +109,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add gvec interfaces for CLS and CLZ operations.
+From: Junjie Mao <junjie.mao@hotmail.com>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+For the matcher of macro, "expr" is used for expressions, while "ident"
+is used for variable/function names, and "ty" matches types.
+
+In define_property macro, $field is a member name of type $state, so it
+should be defined as "ident", though offset_of! doesn't complain about
+this. $type is the type of $field, since it is not used in the macro, so
+that no type mismatch error is triggered either.
+
+Fix fragment-specifiers of $field and $type.
+
+Signed-off-by: Junjie Mao <junjie.mao@hotmail.com>
+Co-developed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20241017143245.1248589-2-zhao1.liu@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/tcg/translate.h      |  5 +++++
- target/arm/tcg/gengvec.c        | 35 +++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-a64.c  | 29 +++++++--------------------
- target/arm/tcg/translate-neon.c | 29 ++-------------------------
- 4 files changed, 49 insertions(+), 49 deletions(-)
+ rust/qemu-api/src/device_class.rs | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
-index 20cd0e851c..5c6c24f057 100644
---- a/target/arm/tcg/translate.h
-+++ b/target/arm/tcg/translate.h
-@@ -578,6 +578,11 @@ void gen_gvec_umaxp(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
- void gen_gvec_uminp(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-                     uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz);
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_class.rs
+index 0ba798d3e3c..922bbce1bb8 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -27,7 +27,7 @@ macro_rules! device_class_init {
  
-+void gen_gvec_cls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-+                  uint32_t opr_sz, uint32_t max_sz);
-+void gen_gvec_clz(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-+                  uint32_t opr_sz, uint32_t max_sz);
-+
- /*
-  * Forward to the isar_feature_* tests given a DisasContext pointer.
-  */
-diff --git a/target/arm/tcg/gengvec.c b/target/arm/tcg/gengvec.c
-index f652520b65..834b2961c0 100644
---- a/target/arm/tcg/gengvec.c
-+++ b/target/arm/tcg/gengvec.c
-@@ -2358,3 +2358,38 @@ void gen_gvec_urhadd(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-     assert(vece <= MO_32);
-     tcg_gen_gvec_3(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, &g[vece]);
- }
-+
-+void gen_gvec_cls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-+                  uint32_t opr_sz, uint32_t max_sz)
-+{
-+    static const GVecGen2 g[] = {
-+        { .fni4 = gen_helper_neon_cls_s8,
-+          .vece = MO_8 },
-+        { .fni4 = gen_helper_neon_cls_s16,
-+          .vece = MO_16 },
-+        { .fni4 = tcg_gen_clrsb_i32,
-+          .vece = MO_32 },
-+    };
-+    assert(vece <= MO_32);
-+    tcg_gen_gvec_2(rd_ofs, rn_ofs, opr_sz, max_sz, &g[vece]);
-+}
-+
-+static void gen_clz32_i32(TCGv_i32 d, TCGv_i32 n)
-+{
-+    tcg_gen_clzi_i32(d, n, 32);
-+}
-+
-+void gen_gvec_clz(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
-+                  uint32_t opr_sz, uint32_t max_sz)
-+{
-+    static const GVecGen2 g[] = {
-+        { .fni4 = gen_helper_neon_clz_u8,
-+          .vece = MO_8 },
-+        { .fni4 = gen_helper_neon_clz_u16,
-+          .vece = MO_16 },
-+        { .fni4 = gen_clz32_i32,
-+          .vece = MO_32 },
-+    };
-+    assert(vece <= MO_32);
-+    tcg_gen_gvec_2(rd_ofs, rn_ofs, opr_sz, max_sz, &g[vece]);
-+}
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index c697f0e944..387bbbf906 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -10321,6 +10321,13 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     }
- 
-     switch (opcode) {
-+    case 0x4: /* CLZ, CLS */
-+        if (u) {
-+            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_clz, size);
-+        } else {
-+            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_cls, size);
-+        }
-+        return;
-     case 0x5:
-         if (u && size == 0) { /* NOT */
-             gen_gvec_fn2(s, is_q, rd, rn, tcg_gen_gvec_not, 0);
-@@ -10379,13 +10386,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-             if (size == 2) {
-                 /* Special cases for 32 bit elements */
-                 switch (opcode) {
--                case 0x4: /* CLS */
--                    if (u) {
--                        tcg_gen_clzi_i32(tcg_res, tcg_op, 32);
--                    } else {
--                        tcg_gen_clrsb_i32(tcg_res, tcg_op);
--                    }
--                    break;
-                 case 0x2f: /* FABS */
-                     gen_vfp_abss(tcg_res, tcg_op);
-                     break;
-@@ -10450,21 +10450,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-                         gen_helper_neon_cnt_u8(tcg_res, tcg_op);
-                     }
-                     break;
--                case 0x4: /* CLS, CLZ */
--                    if (u) {
--                        if (size == 0) {
--                            gen_helper_neon_clz_u8(tcg_res, tcg_op);
--                        } else {
--                            gen_helper_neon_clz_u16(tcg_res, tcg_op);
--                        }
--                    } else {
--                        if (size == 0) {
--                            gen_helper_neon_cls_s8(tcg_res, tcg_op);
--                        } else {
--                            gen_helper_neon_cls_s16(tcg_res, tcg_op);
--                        }
--                    }
--                    break;
-                 default:
-                 case 0x7: /* SQABS, SQNEG */
-                     g_assert_not_reached();
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index 9c8829ad7d..1c89a53272 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -3120,6 +3120,8 @@ DO_2MISC_VEC(VCGT0, gen_gvec_cgt0)
- DO_2MISC_VEC(VCLE0, gen_gvec_cle0)
- DO_2MISC_VEC(VCGE0, gen_gvec_cge0)
- DO_2MISC_VEC(VCLT0, gen_gvec_clt0)
-+DO_2MISC_VEC(VCLS, gen_gvec_cls)
-+DO_2MISC_VEC(VCLZ, gen_gvec_clz)
- 
- static bool trans_VMVN(DisasContext *s, arg_2misc *a)
- {
-@@ -3227,33 +3229,6 @@ static bool trans_VREV16(DisasContext *s, arg_2misc *a)
-     return do_2misc(s, a, gen_rev16);
- }
- 
--static bool trans_VCLS(DisasContext *s, arg_2misc *a)
--{
--    static NeonGenOneOpFn * const fn[] = {
--        gen_helper_neon_cls_s8,
--        gen_helper_neon_cls_s16,
--        gen_helper_neon_cls_s32,
--        NULL,
--    };
--    return do_2misc(s, a, fn[a->size]);
--}
--
--static void do_VCLZ_32(TCGv_i32 rd, TCGv_i32 rm)
--{
--    tcg_gen_clzi_i32(rd, rm, 32);
--}
--
--static bool trans_VCLZ(DisasContext *s, arg_2misc *a)
--{
--    static NeonGenOneOpFn * const fn[] = {
--        gen_helper_neon_clz_u8,
--        gen_helper_neon_clz_u16,
--        do_VCLZ_32,
--        NULL,
--    };
--    return do_2misc(s, a, fn[a->size]);
--}
--
- static bool trans_VCNT(DisasContext *s, arg_2misc *a)
- {
-     if (a->size != 0) {
+ #[macro_export]
+ macro_rules! define_property {
+-    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:expr, default = $defval:expr$(,)*) => {
++    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty, default = $defval:expr$(,)*) => {
+         $crate::bindings::Property {
+             // use associated function syntax for type checking
+             name: ::std::ffi::CStr::as_ptr($name),
+@@ -38,7 +38,7 @@ macro_rules! define_property {
+             ..$crate::zeroable::Zeroable::ZERO
+         }
+     };
+-    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:expr$(,)*) => {
++    ($name:expr, $state:ty, $field:ident, $prop:expr, $type:ty$(,)*) => {
+         $crate::bindings::Property {
+             // use associated function syntax for type checking
+             name: ::std::ffi::CStr::as_ptr($name),
 -- 
-2.43.0
+2.47.1
 
 
