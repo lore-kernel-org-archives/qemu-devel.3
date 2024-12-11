@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E46FE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:30:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F6FFE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPaX-00045U-8Q; Wed, 11 Dec 2024 11:29:25 -0500
+	id 1tLPYv-0000aY-UE; Wed, 11 Dec 2024 11:27:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaS-0003tS-06
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:20 -0500
+ id 1tLPYo-0008TQ-Kf
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaP-0000ja-H5
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:19 -0500
+ id 1tLPYm-0000Dz-Kr
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934556;
+ s=mimecast20190719; t=1733934456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vIfu49MPuojczIFu4d92ofEWS3l26By9bJ1+rMMpb2o=;
- b=O5AVtBGgzVREWQjWxFrY45tnpc2dT+oAndxICIGDR/02ug6cV8xT7dbV1sQAwn8EaKWUnL
- FrSLk2J6NvckTkiZ4k2gb8xsGTo/AHfSA34W4EqYqYDfYtdIxC3vGuTn2i0DoZq7VHKY21
- GB8QtQdPNJXQlXioeWa499dKb2wENgU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Kc+3yZr1fEE4Vxs7y1Ixn7frgKT0doT0bC1xM2Vun5Y=;
+ b=aj7vBrSy2Y/12++YY9pDuNBoN7gOuNCCFyOAgHrm4GpzMCJXtUmXwJRsIq/Q4kYtge0NRy
+ 6LWD4PvPi9zVATBlnAIDiH87xLYVLLDjznYRo9bD9voZfMSZbOEwcpCyLbgihE5XPbp4Gl
+ iJpPXaqi5FwNH+vPMOinyXEHx9tZ//Q=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-64--x7Rf_KcPFe9dnmh9cr6ew-1; Wed, 11 Dec 2024 11:29:15 -0500
-X-MC-Unique: -x7Rf_KcPFe9dnmh9cr6ew-1
-X-Mimecast-MFC-AGG-ID: -x7Rf_KcPFe9dnmh9cr6ew
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361efc9d23so9704985e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:29:15 -0800 (PST)
+ us-mta-686-mO4S-atpOYa4CJgOsniUDQ-1; Wed, 11 Dec 2024 11:27:34 -0500
+X-MC-Unique: mO4S-atpOYa4CJgOsniUDQ-1
+X-Mimecast-MFC-AGG-ID: mO4S-atpOYa4CJgOsniUDQ
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3861cd03a89so3250138f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:34 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934554; x=1734539354;
+ d=1e100.net; s=20230601; t=1733934452; x=1734539252;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vIfu49MPuojczIFu4d92ofEWS3l26By9bJ1+rMMpb2o=;
- b=tp0Rt9weM/MnKlecp2md66n73dEdcG/jOZ0Kd14F2j6Oa6bBTH//beuHjsPeEi+DEv
- tpKmpZvf0jFos7PpGjngMJeLF9xeMhQrPA8ll+TbGeZ57kFNV5i1/IOE+ZbrOekEyzBS
- atvqISWVZbl3HcDjt8GJxuH0d7WHAaW/c+M1cR77Y1iPYV/F40dATabgJ93osX0ZSxkz
- UKN1txDNFLvksZFT0pigKEEL50NeFSzaB06Nam4yRQfMZl5fbftf/sBhmBem9SyArcad
- GAVPl19Qh1A7Pgjs4ywWRevWSufrQD7RE3nJdJkUl6XYFIiljC2gQRD7qseh4JJa5zI+
- 9s7A==
-X-Gm-Message-State: AOJu0YwjDLMQe4+MgYlvroFkb8h1o4YMeIwBEfeIvv4pVMXdGcHe5yXV
- Q5JLVNJZjqonOQ9aRxAJfuQf/jhwg9d1gLMhhINY01e5UaWe0iZbmtCsjtqrEneN1pkWRJVF8Ly
- lIB7F1FQu9fc1a0Gh7EgYTm9khjWWQgEZBoZ1G1NaiVlR7dG5CodUL3VtzmOOiyr4n5f6R6Pal+
- RU5tJqpXfFjH2JClFHrXnbXpvQLFuffv9pmZqH
-X-Gm-Gg: ASbGncvKUlB9xq3F0yBPvUPxPTJ+6zRfV4MOSe7OntQY69k7Hh7PfROlyy4d5ws0MIe
- pcslNifnkzpC8oRaz7Jl34HcmNO9MzJ8lnMx+cClHpLalYaWGY8knn4XcMYtP977fggBosK4y2p
- w+L5egpHvKs4AFivXE65YysZcUlQ6ypMYRRhRxmqH3hhlKJMK8vAl5/tqNXmUH7p+4K9hkzVjct
- jxcTe9SLBz1/o72OYwUtxqv06RVkuFw8YXI+S49FQQucMKjlIN3slIU
-X-Received: by 2002:a05:600c:2319:b0:436:2238:97f6 with SMTP id
- 5b1f17b1804b1-436223897fcmr6273345e9.1.1733934553704; 
- Wed, 11 Dec 2024 08:29:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHNbvpuYBMio39ieukd9leaknbfKPEdcMKwzMEi92XgaDVHG87b3v/ao3VetX6ok6YmdlcqgA==
-X-Received: by 2002:a05:600c:2319:b0:436:2238:97f6 with SMTP id
- 5b1f17b1804b1-436223897fcmr6273085e9.1.1733934553269; 
- Wed, 11 Dec 2024 08:29:13 -0800 (PST)
+ bh=Kc+3yZr1fEE4Vxs7y1Ixn7frgKT0doT0bC1xM2Vun5Y=;
+ b=Znpg+DK1CfiC/v+OfuG4D+tMf2OOZcPewq2neeJd6T4NGOnSAoELrF7QpqA7bQYdZY
+ l+gPgZ9BpJqEtvTeCz6UNwwyypLmaLLqBCRjnHlTB988tx18LEyGMrbhSgQtX/PYyX3Y
+ eXlE/s75Q8wBw/KD9bLiXE/sy2OuopYeA4MoRo5afW9xbYmuYibdt8pQXn2/J5piBaU+
+ BhY67SVMdsv5RPETv+GOIl1EyisTLflSF1pB1TEC6RW2LqjdcSf3ehxYuHWm2JcNsryZ
+ zc/FOYBxtV0cNmWFhsUIv8GZYfAJmp1SoIMnP6eFiugJEssy4ELMLRfjE6XPRDnHxjCy
+ tCkQ==
+X-Gm-Message-State: AOJu0Yzr5JcvXwV9DE3pl3vEq8YlAhhnVCSaXSkL7Z0XbhH1biNZSMZr
+ uLTgJ23hzoXi6ofXl03DGjaA1OwSoofGdgDgBCaUBhOIYGnhqa3dutg62u1hR1R1V3xibzOoZqU
+ s4WcTDq1oh+UD0hYIu3D/WPsjfBYR+5GtgNxIVVaWlRbpIVN1R0f6wRFlQP10WLKaYZmkNHDPMB
+ 1mGHXvshC3iefO2LM459ghQrBAU4O2mKAAvA33
+X-Gm-Gg: ASbGncuhylw7mEcumP6Ttom50Rlau/qWVgC7WrptRPUkrEDRWdq8ORVNAurzUsqolTG
+ I1gzvM/Y8syy2IucI3bNu32JLw8z/S5vHK47sn6D8gIEBL7TnYhzUZuyrdpK9ZmErdjCEECNbtr
+ eIUaS3lm0lTZNnqm7EEfzwDY9ZjQRN/sd/uHERLBA7po4FrIFNE++0SW2izFqILYi/iZtCj+/OK
+ N2/+Ojhw6Q0qdd0RH4JuPUDMk3bMGdKu+VjVIzO/5WgAvyY3IU+ZBDx
+X-Received: by 2002:a05:6000:1fad:b0:385:f527:be6d with SMTP id
+ ffacd0b85a97d-387876af7demr219735f8f.36.1733934452536; 
+ Wed, 11 Dec 2024 08:27:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEWVPZ0dEUNvTFXm4EY7w2EG3OqTg1SYd3ymQqxQ8jtlB+dr9UMyOrLBDJ6eed81aoOuVak/Q==
+X-Received: by 2002:a05:6000:1fad:b0:385:f527:be6d with SMTP id
+ ffacd0b85a97d-387876af7demr219710f8f.36.1733934452069; 
+ Wed, 11 Dec 2024 08:27:32 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436222ad969sm3767995e9.44.2024.12.11.08.29.12
+ 5b1f17b1804b1-436178bd62dsm48509675e9.36.2024.12.11.08.27.30
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:29:12 -0800 (PST)
+ Wed, 11 Dec 2024 08:27:30 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 49/49] rust: qom: change the parent type to an associated type
-Date: Wed, 11 Dec 2024 17:27:19 +0100
-Message-ID: <20241211162720.320070-50-pbonzini@redhat.com>
+Subject: [PULL 04/49] rust: build: move rustc_args.py invocation to qemu-api
+ crate
+Date: Wed, 11 Dec 2024 17:26:34 +0100
+Message-ID: <20241211162720.320070-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -107,94 +108,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid duplicated code to retrieve the QOM type strings from the
-Rust type.
+Only qemu-api needs access to the symbols in config-host.h.  Remove
+the temptation to use them elsewhere by limiting the --cfg arguments to
+the qemu-api crate.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Per-crate invocation of the script will also be needed to add --check-cfg
+options for each crate's features (when more complex, build-time
+configurable devices are added in the future).
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs |  6 ++++--
- rust/qemu-api/src/definitions.rs | 12 ++++--------
- rust/qemu-api/tests/tests.rs     |  3 +--
- 3 files changed, 9 insertions(+), 12 deletions(-)
+ meson.build               | 56 +++++++++++++++++----------------------
+ rust/qemu-api/meson.build |  5 +++-
+ 2 files changed, 29 insertions(+), 32 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 0ab825b1ca4..3e29442a625 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -113,7 +113,8 @@ unsafe impl ObjectType for PL011State {
- }
+diff --git a/meson.build b/meson.build
+index ea211c2dbb4..2f1f2aece4d 100644
+--- a/meson.build
++++ b/meson.build
+@@ -120,7 +120,30 @@ if have_rust
+ endif
  
- impl ObjectImpl for PL011State {
--    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<SysBusDevice as ObjectType>::TYPE_NAME);
-+    type ParentType = SysBusDevice;
+ if have_rust
++  rustc_args = find_program('scripts/rust/rustc_args.py')
+   rustfmt = find_program('rustfmt', required: false)
 +
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
- }
- 
-@@ -650,7 +651,8 @@ unsafe impl ObjectType for PL011Luminary {
- }
- 
- impl ObjectImpl for PL011Luminary {
--    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<PL011State as ObjectType>::TYPE_NAME);
-+    type ParentType = PL011State;
++  # Prohibit code that is forbidden in Rust 2024
++  rustc_lint_args = ['-D', 'unsafe_op_in_unsafe_fn']
 +
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
- }
++  # Occasionally, we may need to silence warnings and clippy lints that
++  # were only introduced in newer Rust compiler versions.  Do not croak
++  # in that case; a CI job with rust_strict_lints == true ensures that
++  # we do not have misspelled allow() attributes.
++  if not get_option('strict_rust_lints')
++    rustc_lint_args += ['-A', 'unknown_lints']
++  endif
++
++  # Apart from procedural macros, our Rust executables will often link
++  # with C code, so include all the libraries that C code needs.  This
++  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
++  # passing -nodefaultlibs to the linker "was more ideological to
++  # start with than anything".
++  add_project_arguments(rustc_lint_args +
++      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
++      native: false, language: 'rust')
++  add_project_arguments(rustc_lint_args + ['--cfg', 'MESON'],
++      native: true, language: 'rust')
+ endif
  
-diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
-index b98a6926785..df91a2e31a9 100644
---- a/rust/qemu-api/src/definitions.rs
-+++ b/rust/qemu-api/src/definitions.rs
-@@ -45,10 +45,10 @@
- /// - the struct must be `#[repr(C)]`;
- ///
- /// - the first field of the struct must be of the instance struct corresponding
--///   to the superclass, as declared in `ObjectImpl::PARENT_TYPE_NAME`
-+///   to the superclass, which is `ObjectImpl::ParentType`
- ///
- /// - likewise, the first field of the `Class` must be of the class struct
--///   corresponding to the superclass
-+///   corresponding to the superclass, which is `ObjectImpl::ParentType::Class`.
- pub unsafe trait ObjectType: Sized {
-     /// The QOM class object corresponding to this struct.  Not used yet.
-     type Class;
-@@ -62,7 +62,7 @@ pub unsafe trait ObjectType: Sized {
- pub trait ObjectImpl: ObjectType + ClassInitImpl {
-     /// The parent of the type.  This should match the first field of
-     /// the struct that implements `ObjectImpl`:
--    const PARENT_TYPE_NAME: Option<&'static CStr>;
-+    type ParentType: ObjectType;
+ dtrace = not_found
+@@ -3399,37 +3422,8 @@ endif
+ # Generated sources #
+ #####################
  
-     /// Whether the object can be instantiated
-     const ABSTRACT: bool = false;
-@@ -82,11 +82,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl {
+-genh += configure_file(output: 'config-host.h', configuration: config_host_data)
+-
+-if have_rust
+-  rustc_args = run_command(
+-    find_program('scripts/rust/rustc_args.py'),
+-    '--config-headers', meson.project_build_root() / 'config-host.h',
+-    capture : true,
+-    check: true).stdout().strip().split()
+-
+-  # Prohibit code that is forbidden in Rust 2024
+-  rustc_args += ['-D', 'unsafe_op_in_unsafe_fn']
+-
+-  # Occasionally, we may need to silence warnings and clippy lints that
+-  # were only introduced in newer Rust compiler versions.  Do not croak
+-  # in that case; a CI job with rust_strict_lints == true ensures that
+-  # we do not have misspelled allow() attributes.
+-  if not get_option('strict_rust_lints')
+-    rustc_args += ['-A', 'unknown_lints']
+-  endif
+-
+-  # Apart from procedural macros, our Rust executables will often link
+-  # with C code, so include all the libraries that C code needs.  This
+-  # is safe; https://github.com/rust-lang/rust/pull/54675 says that
+-  # passing -nodefaultlibs to the linker "was more ideological to
+-  # start with than anything".
+-  add_project_arguments(rustc_args +
+-      ['--cfg', 'MESON', '-C', 'default-linker-libraries'],
+-      native: false, language: 'rust')
+-  add_project_arguments(rustc_args + ['--cfg', 'MESON'],
+-      native: true, language: 'rust')
+-endif
++config_host_h = configure_file(output: 'config-host.h', configuration: config_host_data)
++genh += config_host_h
  
-     const TYPE_INFO: TypeInfo = TypeInfo {
-         name: Self::TYPE_NAME.as_ptr(),
--        parent: if let Some(pname) = Self::PARENT_TYPE_NAME {
--            pname.as_ptr()
--        } else {
--            core::ptr::null_mut()
--        },
-+        parent: Self::ParentType::TYPE_NAME.as_ptr(),
-         instance_size: core::mem::size_of::<Self>(),
-         instance_align: core::mem::align_of::<Self>(),
-         instance_init: match Self::INSTANCE_INIT {
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 1d027dd6527..278efe967fe 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -48,8 +48,7 @@ unsafe impl ObjectType for DummyState {
-     }
- 
-     impl ObjectImpl for DummyState {
--        const PARENT_TYPE_NAME: Option<&'static CStr> =
--            Some(<DeviceState as ObjectType>::TYPE_NAME);
-+        type ParentType = DeviceState;
-         const ABSTRACT: bool = false;
-     }
- 
+ hxtool = find_program('scripts/hxtool')
+ shaderinclude = find_program('scripts/shaderinclude.py')
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 3be7b7e5ced..5df6b35bf88 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -1,4 +1,7 @@
+-_qemu_api_cfg = []
++_qemu_api_cfg = run_command(rustc_args,
++  '--config-headers', config_host_h,
++  capture: true, check: true).stdout().strip().split()
++
+ # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
+ if rustc.version().version_compare('>=1.77.0')
+   _qemu_api_cfg += ['--cfg', 'has_offset_of']
 -- 
 2.47.1
 
