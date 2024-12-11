@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A943CE77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:52:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5FA5E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLJNS-0006BY-Lu; Wed, 11 Dec 2024 04:51:30 -0500
+	id 1tLJNP-0006A9-G5; Wed, 11 Dec 2024 04:51:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLJNQ-0006AZ-23; Wed, 11 Dec 2024 04:51:28 -0500
+ id 1tLJNN-00069a-9L; Wed, 11 Dec 2024 04:51:25 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLJNO-00057d-KX; Wed, 11 Dec 2024 04:51:27 -0500
+ id 1tLJNL-00057d-Oi; Wed, 11 Dec 2024 04:51:25 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 11 Dec
@@ -30,10 +30,10 @@ To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [RFC.PATCH v1 2/2] sd:sdhci: Fix data transfer did not complete if
- data size is bigger then SDMA Buffer Boundary
-Date: Wed, 11 Dec 2024 17:51:10 +0800
-Message-ID: <20241211095111.1421928-3-jamin_lin@aspeedtech.com>
+Subject: [RFC.PATCH v1 1/2] sd:sdhci: Fix boundary_count overflow in
+ sdhci_sdma_transfer_multi_blocks
+Date: Wed, 11 Dec 2024 17:51:09 +0800
+Message-ID: <20241211095111.1421928-2-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241211095111.1421928-1-jamin_lin@aspeedtech.com>
 References: <20241211095111.1421928-1-jamin_lin@aspeedtech.com>
@@ -65,75 +65,98 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the design of sdhci_sdma_transfer_multi_blocks, if the
-"s->blkcnt * 512" was bigger than the SDMA Buffer boundary, it breaked the
-while loop of data transfer and set SDHC_NISEN_DMA in the normal interreupt
-status to notify the firmware that this SDMA boundary buffer Transfer Complete
-and firmware should set the system address of the next SDMA boundary buffer
-for the remaining data transfer.
+How to reproduce it:
+1. The value of "s->blksie" was 0x7200. The bits[14:12] was "111", so the buffer
+   boundary was 0x80000.(512Kbytes). This SDMA buffer boundary the same as
+   u-boot default value.
+   The bit[11:0] is "001000000000", so the block size is 0x200.(512bytes)
+2. The SDMA address was 0x83123456 which was not page aligned and
+   "s->sdmasysad % boundary_chk" was 0x23456. The value of boundary_count was
+   0x5cbaa.("boundary_chk - (s->sdmasysad % boundary_chk)" -->
+   "(0x80000 - 0x23456)")
 
-However, after firmware set the system address of the next SDMA boundary buffer
-in the SDMA System Address Register(0x00), SDHCI modle did not start the data
-transfer, again. Finally, firmware breaked the data transfer because firmware
-did not receive the DMA Interrupt and Tansfer Complete Interrupt from SDHCI
-model.
-
-Error log from u-boot
+However, boundary_count did not aligned the block size 512 bytes and the SDMA
+address is not page aligned(0x80000), so the following if-statement never be true,
 ```
-sdhci_transfer_data: Transfer data timeout
- ** fs_devread read error - block
-```
+if (((boundary_count + begin) < block_size) && page_aligned)
+````
 
-According to the following mention from SDMA System Address Refister of SDHCI
-spec,
-'''
-This register contains the system memory address for an SDMA transfer in
-32-bit addressing mode. When the Host Controller stops an SDMA transfer,
-this register shall point to the system address of the next contiguous data
-position.
-It can be accessed only if no transaction is executing (i.e., after a transaction
-has stopped). Reading this register during SDMA transfers may return an
-invalid value.
-The Host Driver shall initialize this register before starting an SDMA
-transaction.
-After SDMA has stopped, the next system address of the next contiguous
-data position can be read from this register.
-The SDMA transfer waits at the every boundary specified by the SDMA
-Buffer Boundary in the Block Size register. The Host Controller generates
-DMA Interrupt to request the Host Driver to update this register. The Host
-Driver sets the next system address of the next data position to this register.
-When the most upper byte of this register (003h) is written, the Host Controller
-restarts the SDMA transfer.
-''',
+Finally, it caused boundary_count overflow because its data type was uint32_t.
+Ex: the last boundary_count was 0x1aa and "0x1aa - 0x200" became "0xffffffaa".
+It is the wrong behavior.
 
-restrat the data transfer if firmware set the SDMA System Address, s->blkcnt
-is bigger than 0 and SDHCI is in the data transfer state.
+To fix it, it seems we can directly check the "boundary_count < blocksize"
+instead of "boundary_count < blocksize && page_aligned"
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/sd/sdhci.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ hw/sd/sdhci.c | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
 
 diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-index 47d96b935b..53c23c5437 100644
+index 37875c02c3..47d96b935b 100644
 --- a/hw/sd/sdhci.c
 +++ b/hw/sd/sdhci.c
-@@ -1170,6 +1170,15 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
-                     sdhci_sdma_transfer_single_block(s);
+@@ -590,7 +590,6 @@ static void sdhci_write_dataport(SDHCIState *s, uint32_t value, unsigned size)
+ /* Multi block SDMA transfer */
+ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+ {
+-    bool page_aligned = false;
+     unsigned int begin;
+     const uint16_t block_size = s->blksize & BLOCK_SIZE_MASK;
+     uint32_t boundary_chk = 1 << (((s->blksize & ~BLOCK_SIZE_MASK) >> 12) + 12);
+@@ -601,15 +600,6 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+         return;
+     }
+ 
+-    /*
+-     * XXX: Some sd/mmc drivers (for example, u-boot-slp) do not account for
+-     * possible stop at page boundary if initial address is not page aligned,
+-     * allow them to work properly
+-     */
+-    if ((s->sdmasysad % boundary_chk) == 0) {
+-        page_aligned = true;
+-    }
+-
+     s->prnsts |= SDHC_DATA_INHIBIT | SDHC_DAT_LINE_ACTIVE;
+     if (s->trnmod & SDHC_TRNS_READ) {
+         s->prnsts |= SDHC_DOING_READ;
+@@ -618,7 +608,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                 sdbus_read_data(&s->sdbus, s->fifo_buffer, block_size);
+             }
+             begin = s->data_count;
+-            if (((boundary_count + begin) < block_size) && page_aligned) {
++            if (((boundary_count + begin) < block_size)) {
+                 s->data_count = boundary_count + begin;
+                 boundary_count = 0;
+              } else {
+@@ -634,7 +624,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+             if (s->data_count == block_size) {
+                 s->data_count = 0;
+             }
+-            if (page_aligned && boundary_count == 0) {
++            if (boundary_count == 0) {
+                 break;
+             }
+         }
+@@ -642,7 +632,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+         s->prnsts |= SDHC_DOING_WRITE;
+         while (s->blkcnt) {
+             begin = s->data_count;
+-            if (((boundary_count + begin) < block_size) && page_aligned) {
++            if (((boundary_count + begin) < block_size)) {
+                 s->data_count = boundary_count + begin;
+                 boundary_count = 0;
+              } else {
+@@ -659,7 +649,7 @@ static void sdhci_sdma_transfer_multi_blocks(SDHCIState *s)
+                     s->blkcnt--;
                  }
              }
-+        } else if (TRANSFERRING_DATA(s->prnsts)) {
-+            /* restarts the SDMA transfer if blkcnt is not zero  */
-+            if (s->blkcnt && SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
-+                if (s->trnmod & SDHC_TRNS_MULTI) {
-+                    sdhci_sdma_transfer_multi_blocks(s);
-+                } else {
-+                    sdhci_sdma_transfer_single_block(s);
-+                }
-+            }
+-            if (page_aligned && boundary_count == 0) {
++            if (boundary_count == 0) {
+                 break;
+             }
          }
-         break;
-     case SDHC_BLKSIZE:
 -- 
 2.34.1
 
