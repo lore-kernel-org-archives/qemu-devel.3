@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A113EE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AB3E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPa0-0000yX-AI; Wed, 11 Dec 2024 11:28:52 -0500
+	id 1tLPZN-0003gc-5F; Wed, 11 Dec 2024 11:28:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZx-0000dC-JA
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tLPZG-00032Y-BY
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZv-0000al-T4
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:49 -0500
+ id 1tLPZ9-0000L3-IQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934527;
+ s=mimecast20190719; t=1733934477;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1qS4FLutt/4Sk0zExJZjpAJYdJnqb7SMdrl1fvxcvDM=;
- b=Dalm2dAyqoPE2vuKU6XKzA9jDccXBROf2ZvX1vvFs6az9fF2TjuOW8hswwVpkfYYe9Mq8B
- GlKjpARx//eE7TKssHLyC7Pbdxvt+xRcA/RJybQsuNWvMG0fDJ8cxFd5E4bQJZ177D+y70
- 0cU0ow2e7WxG86geWPePiu/uOXpBp9k=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xmqHi0FLBrnWkZWiScIbYdimPuw1BGqG3qZicgcwQCY=;
+ b=ZszfHONu+6adHUEpr6BP5Uls/rbJZjvd5g1JRwppRxi+a8FCs/OZrk/4c5eNjYm7x24UaN
+ g3bT1aiDxVfkeq6qTZF4vEy0O5XDZv6Wz8Nz7bG8c3vlEBwEm5M1q0bgIQPbSKaCUsZN9J
+ 9hjOJIMiYefyEAGTUUzvlq/X6RruITc=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-133-iwXdbfABMma-r-59NgVI3g-1; Wed, 11 Dec 2024 11:28:44 -0500
-X-MC-Unique: iwXdbfABMma-r-59NgVI3g-1
-X-Mimecast-MFC-AGG-ID: iwXdbfABMma-r-59NgVI3g
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38634103b0dso2810435f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:44 -0800 (PST)
+ us-mta-84-7boqow8WMCaPdoCGoBm7RA-1; Wed, 11 Dec 2024 11:27:53 -0500
+X-MC-Unique: 7boqow8WMCaPdoCGoBm7RA-1
+X-Mimecast-MFC-AGG-ID: 7boqow8WMCaPdoCGoBm7RA
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6d8f0b1023bso64780306d6.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:53 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934523; x=1734539323;
+ d=1e100.net; s=20230601; t=1733934472; x=1734539272;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1qS4FLutt/4Sk0zExJZjpAJYdJnqb7SMdrl1fvxcvDM=;
- b=WMm6Lo0PYmXxq/uJaFBtDWxqsGO3obOJb4B4MGrkY/JaLngtHRyFM20Ovj89rOpKQv
- E4p2KfQR1Tvg2v4EYmyxG8byX3FJsmyOyivfXzwp8MsvVyhHVrNTMKICOZEO2IhcUq5o
- 5pwZl9Zgn22kralLANdHC6speyjdxIb8vpw6t8SDfmgdjrjirz3j6JSsB853Zv0x5E6G
- /SG2vm6eCVl/Yf4NEuCoiNEoaldjA3Hpv3znbD0Ah4M5i9jKSTAFMSIQ9rGHJfIL9gl2
- ucHu3983EYmqf5Vx9/VAIlfuuzjUbpHO/MdefkTv6qu/8EbsmcqM3LAvhnmaC53N/hiK
- b+Dg==
-X-Gm-Message-State: AOJu0Yy+bsyF6H9+Q/u4SlPD1vbBmZkD0pwk0JoIWvaOp31eKajIKmfZ
- IuHpoyxrFw3mgrKQ1N+NCG60Opt75/lKp6SiulSMPVpqKnH6O+r1ynZF8XeN6Ynwpb14nFa7ddz
- Mpf2NS6Ns3TZUl0+uHMwJGRoomXc8VKGCq5Ne311kYPmUVLR+8Tpf8Jx7Q/mlEtHNkl267ogLd/
- nJViRWoidpLg5XokICSIF+lKZ6mukxfqwVaGia
-X-Gm-Gg: ASbGnctDjBkbtqYE8a3b3MKVEQLAisbnAu52mc+JkcZ4T0pkAkzzzMcdO0Whmi5zIx7
- 5qSGI9PmIObmk7KkP1ymx42BZj9JHb2dkH0adbh4x6lhh86Y8KzXBQNL/fAplk7svCgj44EMjD7
- tk6WE2rgCDZ5sBecIVZQmiouI5bokyHJZjD/YzlcT9G6JbD38QDoNeipXjwnTclW22yrSzHIW6/
- IYazPhQHHkTaejkOHkQDqAdwpOyft2+bPyfBroEluUISew8HaEyUiBA
-X-Received: by 2002:a05:6000:1fad:b0:382:4b2a:4683 with SMTP id
- ffacd0b85a97d-3878768842fmr240687f8f.2.1733934522757; 
- Wed, 11 Dec 2024 08:28:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKkrbbkNT4OV2i5Il92UD68pQBbGj/9xVKbgcwTXTooiAB5o8AxUnKC6/SaH7JaqjDw2D37A==
-X-Received: by 2002:a05:6000:1fad:b0:382:4b2a:4683 with SMTP id
- ffacd0b85a97d-3878768842fmr240667f8f.2.1733934522309; 
- Wed, 11 Dec 2024 08:28:42 -0800 (PST)
+ bh=xmqHi0FLBrnWkZWiScIbYdimPuw1BGqG3qZicgcwQCY=;
+ b=ervbHevQNFCLTwSfXX+WXZrD5ZQDvJiIIqUkvpxhHI+tP6h2Our3fm0GQRutHkZcl4
+ LmFw4bGndQA1cn2kzf6qx27UsQK4cEvyUzKC/2qd0uez7sPvDRZveU9wVZon//9PBFHy
+ kj814+EPr2FZcU28aDCGIg7mnO+RCIDWy6BoOCO8qx8oQRPx1ioOTGREvyXT8VL2kWUc
+ G4YRE3gfoVSh5RDK/xhzWQ2laT0BVqZULyQiT5ivsPLOcz3nWFz/g73RJ+eXWZhldRn3
+ wG3hlbZZ7Tzlsf7XCCKj8p49se5F9CP2hnfYorGyJag8o1q6BvnhBdcgXOTY4EJjPm08
+ 03rw==
+X-Gm-Message-State: AOJu0Yzp0BPLXTzQI0KXxT2JnPjBpRjMwz1fbFRaEH79gGy2EqJ4vWRh
+ 90ArgLTjl8eQk8oFq5spfU3SfXdi1FZVis3OkzLr4C6EO6BPPYd0EezF/MwFcDkn6a2qJkradzI
+ d7vN+F3lqAedKBCLSjSwRFD3mOpHOUAPHr52NQkC5p1Jlx4wBJu0FZ6zOvRStYGJgxh7StqxRXW
+ VBFccwnuuD64Gqrn6Q5I9+Z2QhlYPOYdhFboT7
+X-Gm-Gg: ASbGncsVS6qxe3K9QlDnFwceZBnL8hQfNiqgvTCVvDYU1XwhJQnC9AaIe0B84/+DGrn
+ jK5aBcSQLUQgR7V9Y2V+UBGeWetOtMARocM8d4bKwPpQP36nWD+QRZW6QeRkE0rpQEEXzhIa0Md
+ EVGFBJblpHQyBrC2iuj0rfQluhDXkF1mYOdT+LsKucfTQ/TtR07N9Xz6qMxzZAMzQtn+FL7trUL
+ JjPSeyJJ6z6lncjFnxwzkN1a125AhcRnX1q7/VHAFe5JuHOYooQvegY
+X-Received: by 2002:a05:6214:d8d:b0:6d4:586:6285 with SMTP id
+ 6a1803df08f44-6dae29f2372mr5431106d6.11.1733934472547; 
+ Wed, 11 Dec 2024 08:27:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEOJ0zfWh5NEixr0fhiNt+8j5REnuFEmASotm8YgE8EViDvWCnEL1Byh6RumC06in+zq8ci2w==
+X-Received: by 2002:a05:6214:d8d:b0:6d4:586:6285 with SMTP id
+ 6a1803df08f44-6dae29f2372mr5430576d6.11.1733934471998; 
+ Wed, 11 Dec 2024 08:27:51 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824c50b7sm1608536f8f.57.2024.12.11.08.28.40
+ 6a1803df08f44-6d9004a6264sm45535776d6.87.2024.12.11.08.27.50
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:40 -0800 (PST)
+ Wed, 11 Dec 2024 08:27:51 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 34/49] qom/object: Remove type_register()
-Date: Wed, 11 Dec 2024 17:27:04 +0100
-Message-ID: <20241211162720.320070-35-pbonzini@redhat.com>
+Subject: [PULL 12/49] rust: ci: add job that runs Rust tools
+Date: Wed, 11 Dec 2024 17:26:42 +0100
+Message-ID: <20241211162720.320070-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -107,84 +107,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Code checks, as well as documentation generation, are not yet tied
+to "make check" because they need new version of the Rust toolchain
+(even nightly in the case of "rustfmt").  Run them in CI using the
+existing nightly-Rust container.
 
-At present, type_register() and type_register_static() are identical,
-although their documentation expects the *_static variant to accept
-the Typeinfo with the strings that have the static lifetime.
-
-However, the code implementation doesn't have any check or guarantee for
-static lifetime. In fact, this is unnecessary because type_new()
-duplicates all strings, thereby taking ownership of them.
-
-Therefore, type_register() and type_register_static() are redundant, so
-one of them should be removed.
-
-Since the changes required to remove type_register() were smaller,
-type_register() was replaced with type_register_static() throughout the
-code base.  Drop its definition, and delete the requirement about string
-lifetime from the documentation.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241029085934.2799066-17-zhao1.liu@intel.com
 ---
- include/qom/object.h | 14 --------------
- qom/object.c         |  7 +------
- 2 files changed, 1 insertion(+), 20 deletions(-)
+ .gitlab-ci.d/static_checks.yml                | 24 +++++++++++++++++++
+ .../dockerfiles/fedora-rust-nightly.docker    |  4 ++++
+ tests/lcitool/refresh                         |  4 ++++
+ 3 files changed, 32 insertions(+)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index 43c135984a6..a201c9712a1 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -880,24 +880,10 @@ const char *object_get_typename(const Object *obj);
-  * type_register_static:
-  * @info: The #TypeInfo of the new type.
-  *
-- * @info and all of the strings it points to should exist for the life time
-- * that the type is registered.
-- *
-  * Returns: the new #Type.
-  */
- Type type_register_static(const TypeInfo *info);
+diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
+index ad9f426a52f..c0ba4533826 100644
+--- a/.gitlab-ci.d/static_checks.yml
++++ b/.gitlab-ci.d/static_checks.yml
+@@ -46,3 +46,27 @@ check-python-tox:
+     QEMU_JOB_OPTIONAL: 1
+   needs:
+     job: python-container
++
++check-rust-tools-nightly:
++  extends: .base_job_template
++  stage: test
++  image: $CI_REGISTRY_IMAGE/qemu/fedora-rust-nightly:$QEMU_CI_CONTAINER_TAG
++  script:
++    - source scripts/ci/gitlab-ci-section
++    - section_start test "Running Rust code checks"
++    - cd build
++    - pyvenv/bin/meson devenv -w ../rust ${CARGO-cargo} fmt --check
++    - make clippy
++    - make rustdoc
++    - section_end test
++  variables:
++    GIT_DEPTH: 1
++  allow_failure: true
++  needs:
++    - job: build-system-fedora-rust-nightly
++      artifacts: true
++  artifacts:
++    when: on_success
++    expire_in: 2 days
++    paths:
++      - rust/target/doc
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 9180c8b5222..a8e4fb279a7 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -155,6 +155,7 @@ ENV PYTHON "/usr/bin/python3"
+ RUN dnf install -y wget
+ ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo
+ ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
++ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo
+ RUN set -eux && \
+   rustArch='x86_64-unknown-linux-gnu' && \
+   rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \
+@@ -165,10 +166,13 @@ RUN set -eux && \
+   ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \
+   chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
+   /usr/local/cargo/bin/rustup --version && \
++  /usr/local/cargo/bin/rustup run nightly cargo --version && \
+   /usr/local/cargo/bin/rustup run nightly rustc --version && \
++  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \
+   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
+ ENV PATH=$CARGO_HOME/bin:$PATH
+ RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
++RUN $CARGO --list
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 51012783c0f..6720516b942 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -121,6 +121,7 @@ fedora_rustup_nightly_extras = [
+     "RUN dnf install -y wget\n",
+     "ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo\n",
+     "ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc\n",
++    "ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo\n",
+     "RUN set -eux && \\\n",
+     "  rustArch='x86_64-unknown-linux-gnu' && \\\n",
+     "  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \\\n",
+@@ -131,10 +132,13 @@ fedora_rustup_nightly_extras = [
+     "  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \\\n",
+     "  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \\\n",
+     "  /usr/local/cargo/bin/rustup --version && \\\n",
++    "  /usr/local/cargo/bin/rustup run nightly cargo --version && \\\n",
+     "  /usr/local/cargo/bin/rustup run nightly rustc --version && \\\n",
++    '  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \\\n',
+     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+     'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
++    'RUN $CARGO --list\n',
+ ]
  
--/**
-- * type_register:
-- * @info: The #TypeInfo of the new type
-- *
-- * Unlike type_register_static(), this call does not require @info or its
-- * string members to continue to exist after the call returns.
-- *
-- * Returns: the new #Type.
-- */
--Type type_register(const TypeInfo *info);
--
- /**
-  * type_register_static_array:
-  * @infos: The array of the new type #TypeInfo structures.
-diff --git a/qom/object.c b/qom/object.c
-index 9edc06d391f..c7660f9a097 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -175,17 +175,12 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
-     return ti;
- }
- 
--TypeImpl *type_register(const TypeInfo *info)
-+TypeImpl *type_register_static(const TypeInfo *info)
- {
-     assert(info->parent);
-     return type_register_internal(info);
- }
- 
--TypeImpl *type_register_static(const TypeInfo *info)
--{
--    return type_register(info);
--}
--
- void type_register_static_array(const TypeInfo *infos, int nr_infos)
- {
-     int i;
+ ubuntu2204_bindgen_extras = [
 -- 
 2.47.1
 
