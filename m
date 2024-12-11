@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE36E77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 19:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BE6DE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 19:32:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLSR0-0000CE-O3; Wed, 11 Dec 2024 14:31:46 -0500
+	id 1tLSRx-0000lm-1M; Wed, 11 Dec 2024 14:32:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLSQz-0000Bg-0t
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 14:31:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLSRv-0000lH-NA
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 14:32:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLSQx-00074t-3k
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 14:31:44 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLSRu-00077x-6M
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 14:32:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733945500;
+ s=mimecast20190719; t=1733945561;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=b4jN8hIxrNCaKxtZGHehGLbpngRMb26EnWEY46/unmM=;
- b=VyzNN7uATCBq7fao+S1esn2tI62Ywo0VzuTwNYfP8vWn0lRTwINqobPwK9uQfPUnxDoBtN
- HsOPwTBXTvC5V3wNjqdeSeUyIKKpiw0spvbFCRIADeda7V+JxEYiQtv1e+aPLt1YbfmcV5
- zUXE1hUlCBrLIlR0/I9snm9hSiOkhfE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FBVYuHqb3R5UdhkamEh4p1tR90idtA2ZFTJj/zbr3FU=;
+ b=WedGOZwJeZ6ZzuisYe0D7bYAKIVY4aO404UAIWy5BzdftQ1nsr0hbRTHjlKnu27jFePcOP
+ dW2OdTUBSFoWN2gNVnctuhpvHqlNapUU43747hrBOOQmcDWg5F89xC1hjssTvP8VYPZ3iS
+ GyZJbO0Apa9W3KpyLJNhj5gl+9UIeoI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-499-ynTfxu_hOK2J1022vZy9XA-1; Wed, 11 Dec 2024 14:31:39 -0500
-X-MC-Unique: ynTfxu_hOK2J1022vZy9XA-1
-X-Mimecast-MFC-AGG-ID: ynTfxu_hOK2J1022vZy9XA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385e2579507so3942759f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 11:31:38 -0800 (PST)
+ us-mta-116-E-eTL-SpPcmj-acjwf90ag-1; Wed, 11 Dec 2024 14:32:40 -0500
+X-MC-Unique: E-eTL-SpPcmj-acjwf90ag-1
+X-Mimecast-MFC-AGG-ID: E-eTL-SpPcmj-acjwf90ag
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-434efe65e62so27829515e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 11:32:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733945498; x=1734550298;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=b4jN8hIxrNCaKxtZGHehGLbpngRMb26EnWEY46/unmM=;
- b=qHf6yXPMvjJ8QMo6xqLodXilRDJ/RNdW2+keoU77s4p93lKC+4q5CblEbqkcA+4HPb
- InyWc2O31TfZvRun/U1ghcLiBcEIKvf2YVQZ1Qc14TV9XhjlbFvn1zLT7m6a0+A/BeSE
- DE6mxmLF1LzjqR1ujV4BuRHoasyQVgh8uqKR44467OV3dGz2ToO+1SZ11KBn/U71bQkU
- oU578ZESjTJmm8A+qJOidyPyzSgvvbAIhvFbWm0oNGkQFNVoBuYg3IHn2FSWu9n/bb7O
- AlNHchZoB1M9K9ibALE/1ie9OcmqN3EbuwrwQ0PLI+58iXwjk3AMtZcsTDH0WQO+Ntqy
- zlEw==
+ d=1e100.net; s=20230601; t=1733945559; x=1734550359;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=FBVYuHqb3R5UdhkamEh4p1tR90idtA2ZFTJj/zbr3FU=;
+ b=SlLDMVMCJoc6vRPOmd28D19AkhYMp6BSSrpusOce8sGq5knbcWsMBzFieTWuiYdKr7
+ IyRUY+1hJrfLc/PFDDnHD4xiebgJULM5y5CrCyD6HWXT7qDoRYx4rhViQuBnR/ffwWrR
+ cLGG3ABvtItjGtrPHag5G1xE5oVWKa7Cs4nVG7k6b+fApx8lULO3bc3sRFWWF2GgRZrh
+ T5Epp9cV1gaWLEXTQK8R+iDd+9QxchwbJ8+QyjmS1S3INTAy8rGmYuPEzr4UfHlnJ24z
+ 94svOd3Iv7Kb8piSnBiUuUHcXseVYXcKKIkEPuhicCYtZI8I3dzMOxmb6dg6VGzjALpx
+ w8SA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUAxvxuA+4mkg5oG2PSS9gjXFsDtemqeFldWDg2z23WramX7leQ/ZqLeXuuhnrta4ENYPOi9ehafCze@nongnu.org
-X-Gm-Message-State: AOJu0Yy5rgSTib99BKHo70qcGs7aLKM6Tmi6+2eeWcSEnmTCkD9XVnmY
- QctQla3ivyDavwKvSF3PiItHREVteMdNTmUKPTAVmHgEEQYaMXwklETqdNFDAsS7y5W95l2SyoE
- J3M+64Vi8zjIkXRepoEDV1pnELn1sgEhHgyWffmwLDJrx0gogPwP6
-X-Gm-Gg: ASbGncv/MUPuBZWVRXe7MZ9HCxlEtFlkv/Q+dvmwlw5+62f7fUKTaHneARM5+oG7lez
- AHW/onLe72YigxS4gXUQD8vhKhVMjM0w8LCTyFLyaaFtsu3quBOF+OWq/vprDD4JmYZoE+lB0qh
- 9HwSix8HVH22xJ7gSctmATqHVgW5xeYT4Uf84H7Z1oIyTj58IYXbvYjwku9z8YT5OeoXoeH2aPV
- FdM2xjamwYyAyV9eJEuzQiucPF18A+iZvTEREyzqEK+qbLixxtJTvuEin/K0N0R6mFuNKismvv9
- QZ86BNY=
-X-Received: by 2002:a05:6000:70b:b0:385:e170:d5b8 with SMTP id
- ffacd0b85a97d-387876af36amr621557f8f.42.1733945497996; 
- Wed, 11 Dec 2024 11:31:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IETMzmKL3Z7OQYVOZ5Dcr893cKuA05AA1DXYaSlvWMK5LZ52gVIckWcwYNJshLIaGLn3u0jEA==
-X-Received: by 2002:a05:6000:70b:b0:385:e170:d5b8 with SMTP id
- ffacd0b85a97d-387876af36amr621539f8f.42.1733945497630; 
- Wed, 11 Dec 2024 11:31:37 -0800 (PST)
+ AJvYcCUJxUgXbu2Aq3NFggzoiRUINxVi3g+he4FfNofWzJLOLB2fexkEV1u28KFZF48B/eye8dDz7SNa3xh6@nongnu.org
+X-Gm-Message-State: AOJu0YwT9IYsIfqHlIAxKSKazB/U4HjPjxvJpSzJs/iIY6rKxRZHjjWZ
+ wBLj/Y+uRhtGY/5zoCV4WWnlTmL3ZCGR7PzXre4GNGI0CoL7FZyntuht9SaXO6jkMBpXn3L/E8B
+ PX8/2h33949NRppmN6EaDNQwUl/htiwk97WO98Yo1e6icx2ij7LJi
+X-Gm-Gg: ASbGncss8IhPkBWHVUTCV+/qFFf817wbhtS/7WK0J4T3xHwSx/Wp2dP2ReGDrtjK32q
+ s4olZgCwOtYd4LRWn4SWSmxEOi7jFDSZfFV4D7CKD2sItdqGTHKUFusnYsfwkuMz1p9LcoMxF6T
+ GzvBZ7kBPrybd0zOKmBF0e1s88v9cqj9DOUIl6qiMmex1dvvMEs8JGdt+cv5Atc+GiIt2ljJBE9
+ bOYbJiIk84oqzO627nqi/uX4CXORJuF1MvnuPZOlKF+SOxZzRds8M/KSE9urb02ocOqR1fcgoKY
+ kJMoEr4=
+X-Received: by 2002:a05:600c:468a:b0:434:f0df:a14 with SMTP id
+ 5b1f17b1804b1-4361c34623dmr35417315e9.2.1733945558778; 
+ Wed, 11 Dec 2024 11:32:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFXLQNcUzNWLFYnuOSybi7i5C6ykA/K2hb7YsiCH1Yf8af/wrKQJNYnNyQnBTWShfvps18E9Q==
+X-Received: by 2002:a05:600c:468a:b0:434:f0df:a14 with SMTP id
+ 5b1f17b1804b1-4361c34623dmr35417195e9.2.1733945558453; 
+ Wed, 11 Dec 2024 11:32:38 -0800 (PST)
 Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436199f6896sm45238395e9.14.2024.12.11.11.31.36
+ 5b1f17b1804b1-436199f6896sm45257795e9.14.2024.12.11.11.32.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 11:31:37 -0800 (PST)
-Message-ID: <58575b88-15ae-4bea-a191-8ec6dc579162@redhat.com>
-Date: Wed, 11 Dec 2024 20:31:35 +0100
+ Wed, 11 Dec 2024 11:32:38 -0800 (PST)
+Message-ID: <20576d67-2b9c-48b3-9eb0-753038b91b29@redhat.com>
+Date: Wed, 11 Dec 2024 20:32:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 01/31] tests/functional: remove many unused imports
+Subject: Re: [PATCH v2 04/31] tests/functional: simplify 'which' implementation
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>
 References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-2-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20241211172648.2893097-5-berrange@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -128,10 +128,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-2-berrange@redhat.com>
+In-Reply-To: <20241211172648.2893097-5-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -157,41 +157,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Identified using 'pylint --disable=all --enable=W0611'
+> The 'access' check implies the file exists.
 > 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/asset.py              | 1 -
->   tests/functional/qemu_test/tesseract.py          | 1 -
->   tests/functional/qemu_test/tuxruntest.py         | 3 +--
->   tests/functional/test_aarch64_aspeed.py          | 1 -
->   tests/functional/test_aarch64_sbsaref_alpine.py  | 1 -
->   tests/functional/test_aarch64_sbsaref_freebsd.py | 1 -
->   tests/functional/test_acpi_bits.py               | 2 --
->   tests/functional/test_arm_aspeed.py              | 1 -
->   tests/functional/test_arm_bpim2u.py              | 2 +-
->   tests/functional/test_arm_collie.py              | 2 +-
->   tests/functional/test_arm_cubieboard.py          | 1 -
->   tests/functional/test_arm_orangepi.py            | 2 +-
->   tests/functional/test_arm_smdkc210.py            | 3 +--
->   tests/functional/test_arm_sx1.py                 | 2 +-
->   tests/functional/test_microblaze_s3adsp1800.py   | 1 -
->   tests/functional/test_ppc_amiga.py               | 2 +-
->   tests/functional/test_virtio_gpu.py              | 1 -
->   tests/lcitool/libvirt-ci                         | 2 +-
->   18 files changed, 8 insertions(+), 21 deletions(-)
-...
-> diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-> index 9ad3f70bde..0f11966131 160000
-> --- a/tests/lcitool/libvirt-ci
-> +++ b/tests/lcitool/libvirt-ci
-> @@ -1 +1 @@
-> -Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-> +Subproject commit 0f119661317333038e91b6fb9d0381a6934dcd0c
+>   tests/functional/qemu_test/cmd.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+> index 4106f1ee7c..600e0509db 100644
+> --- a/tests/functional/qemu_test/cmd.py
+> +++ b/tests/functional/qemu_test/cmd.py
+> @@ -25,7 +25,7 @@ def which(tool):
+>       paths=os.getenv('PATH')
+>       for p in paths.split(os.path.pathsep):
+>           p = os.path.join(p, tool)
+> -        if os.path.exists(p) and os.access(p, os.X_OK):
+> +        if os.access(p, os.X_OK):
+>               return p
+>       return None
 
-That one seems unintentional?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
