@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E090E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:01:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FA0FE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:01:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLIaH-0005s7-PG; Wed, 11 Dec 2024 04:00:41 -0500
+	id 1tLIaA-0005rI-9T; Wed, 11 Dec 2024 04:00:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa9-0005rG-It
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa8-0005r7-3b
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:32 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa7-0007pN-DT
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLIa4-0007p7-2M
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 04:00:31 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733907628;
+ s=mimecast20190719; t=1733907623;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U9kzdIt2JbgsG+ooV0zwRrymUhBLnazHbdCjFy8Er1M=;
- b=R3CGeBXt3Bos6aNKFtRj4HJDIag6H53iQ9lymPOq27EQq00u7z4rdUQefRlf9T+11hmhAO
- J8Rad180SY8p6CmH3zZGzGqE85/EEJan04YwNgoI9TSvHrcuBMKdmCHuy6U/bpmFNz+xry
- DMSW9sgVc64RcT2TG/ri0tUulWPW1s4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MaKWt+sa+9MTo4wMwi1e7BQIyjX/csXwGJl8YCq44Rk=;
+ b=bMWCvraWnOEN5VQze/Phq1twsWZP18DCi3QyrycfwizvraGj7CsTWFXaDqcyFTdDWkGDPk
+ XGnOqrJg4/a78CjyC5isQi7v3/zqYSnixGs1txyO61ctxaz5EzNzNYVAXQvtddXcFAGBRr
+ eSavACFPDy84CDso7WeOVuNyxcDBSuM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-523-OpgY61oGMiuew3JZyb8PGg-1; Wed,
- 11 Dec 2024 04:00:26 -0500
-X-MC-Unique: OpgY61oGMiuew3JZyb8PGg-1
-X-Mimecast-MFC-AGG-ID: OpgY61oGMiuew3JZyb8PGg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-7DSoQknDOz6KyJCc3BhVHg-1; Wed,
+ 11 Dec 2024 04:00:20 -0500
+X-MC-Unique: 7DSoQknDOz6KyJCc3BhVHg-1
+X-Mimecast-MFC-AGG-ID: 7DSoQknDOz6KyJCc3BhVHg
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7BD71195608A; Wed, 11 Dec 2024 09:00:25 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 543EC1955F3B; Wed, 11 Dec 2024 09:00:18 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.193.186])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 47A641956089; Wed, 11 Dec 2024 09:00:22 +0000 (UTC)
+ id 47BC51956094; Wed, 11 Dec 2024 09:00:15 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Subject: [PULL 02/26] hw: add compat machines for 10.0
-Date: Wed, 11 Dec 2024 09:59:46 +0100
-Message-ID: <20241211090014.619351-3-thuth@redhat.com>
-In-Reply-To: <20241211090014.619351-1-thuth@redhat.com>
-References: <20241211090014.619351-1-thuth@redhat.com>
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 00/26] First s390x and functional testing patches for v10.0
+Date: Wed, 11 Dec 2024 09:59:44 +0100
+Message-ID: <20241211090014.619351-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -83,251 +81,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cornelia Huck <cohuck@redhat.com>
+ Hi!
 
-Add 10.0 machine types for arm/i440fx/m68k/q35/s390x/spapr.
+The following changes since commit ae35f033b874c627d81d51070187fbf55f0bf1a7:
 
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20241126103005.3794748-3-cohuck@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- include/hw/boards.h        |  3 +++
- include/hw/i386/pc.h       |  3 +++
- hw/arm/virt.c              |  9 ++++++++-
- hw/core/machine.c          |  3 +++
- hw/i386/pc.c               |  3 +++
- hw/i386/pc_piix.c          | 13 +++++++++++--
- hw/i386/pc_q35.c           | 13 +++++++++++--
- hw/m68k/virt.c             |  9 ++++++++-
- hw/ppc/spapr.c             | 15 +++++++++++++--
- hw/s390x/s390-virtio-ccw.c | 14 +++++++++++++-
- 10 files changed, 76 insertions(+), 9 deletions(-)
+  Update version for v9.2.0 release (2024-12-10 16:20:54 +0000)
 
-diff --git a/include/hw/boards.h b/include/hw/boards.h
-index 36fbb9b59d..7456889c37 100644
---- a/include/hw/boards.h
-+++ b/include/hw/boards.h
-@@ -756,6 +756,9 @@ struct MachineState {
-     } \
-     type_init(machine_initfn##_register_types)
- 
-+extern GlobalProperty hw_compat_9_2[];
-+extern const size_t hw_compat_9_2_len;
-+
- extern GlobalProperty hw_compat_9_1[];
- extern const size_t hw_compat_9_1_len;
- 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 890427c56e..1b26a417bd 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -215,6 +215,9 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, size_t flash_size);
- /* sgx.c */
- void pc_machine_init_sgx_epc(PCMachineState *pcms);
- 
-+extern GlobalProperty pc_compat_9_2[];
-+extern const size_t pc_compat_9_2_len;
-+
- extern GlobalProperty pc_compat_9_1[];
- extern const size_t pc_compat_9_1_len;
- 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 1a381e9a2b..3bd9dd0f86 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3353,10 +3353,17 @@ static void machvirt_machine_init(void)
- }
- type_init(machvirt_machine_init);
- 
-+static void virt_machine_10_0_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-+
- static void virt_machine_9_2_options(MachineClass *mc)
- {
-+    virt_machine_10_0_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
-+DEFINE_VIRT_MACHINE(9, 2)
- 
- static void virt_machine_9_1_options(MachineClass *mc)
- {
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index f29fe95964..e6900b43ef 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -36,6 +36,9 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
- 
-+GlobalProperty hw_compat_9_2[] = {};
-+const size_t hw_compat_9_2_len = G_N_ELEMENTS(hw_compat_9_2);
-+
- GlobalProperty hw_compat_9_1[] = {
-     { TYPE_PCI_DEVICE, "x-pcie-ext-tag", "false" },
- };
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 317aaca25a..99b9b105e2 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -79,6 +79,9 @@
-     { "qemu64-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },\
-     { "athlon-" TYPE_X86_CPU, "model-id", "QEMU Virtual CPU version " v, },
- 
-+GlobalProperty pc_compat_9_2[] = {};
-+const size_t pc_compat_9_2_len = G_N_ELEMENTS(pc_compat_9_2);
-+
- GlobalProperty pc_compat_9_1[] = {
-     { "ICH9-LPC", "x-smi-swsmi-timer", "off" },
-     { "ICH9-LPC", "x-smi-periodic-timer", "off" },
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 4953676170..e4365cbdb0 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -477,12 +477,21 @@ static void pc_i440fx_machine_options(MachineClass *m)
-                                      "Use a different south bridge than PIIX3");
- }
- 
--static void pc_i440fx_machine_9_2_options(MachineClass *m)
-+static void pc_i440fx_machine_10_0_options(MachineClass *m)
- {
-     pc_i440fx_machine_options(m);
- }
- 
--DEFINE_I440FX_MACHINE_AS_LATEST(9, 2);
-+DEFINE_I440FX_MACHINE_AS_LATEST(10, 0);
-+
-+static void pc_i440fx_machine_9_2_options(MachineClass *m)
-+{
-+    pc_i440fx_machine_10_0_options(m);
-+    compat_props_add(m->compat_props, hw_compat_9_2, hw_compat_9_2_len);
-+    compat_props_add(m->compat_props, pc_compat_9_2, pc_compat_9_2_len);
-+}
-+
-+DEFINE_I440FX_MACHINE(9, 2);
- 
- static void pc_i440fx_machine_9_1_options(MachineClass *m)
- {
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 42bdedbaa4..bbbdacda8e 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -359,12 +359,21 @@ static void pc_q35_machine_options(MachineClass *m)
-                      pc_q35_compat_defaults, pc_q35_compat_defaults_len);
- }
- 
--static void pc_q35_machine_9_2_options(MachineClass *m)
-+static void pc_q35_machine_10_0_options(MachineClass *m)
- {
-     pc_q35_machine_options(m);
- }
- 
--DEFINE_Q35_MACHINE_AS_LATEST(9, 2);
-+DEFINE_Q35_MACHINE_AS_LATEST(10, 0);
-+
-+static void pc_q35_machine_9_2_options(MachineClass *m)
-+{
-+    pc_q35_machine_10_0_options(m);
-+    compat_props_add(m->compat_props, hw_compat_9_2, hw_compat_9_2_len);
-+    compat_props_add(m->compat_props, pc_compat_9_2, pc_compat_9_2_len);
-+}
-+
-+DEFINE_Q35_MACHINE(9, 2);
- 
- static void pc_q35_machine_9_1_options(MachineClass *m)
- {
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index ea5c4a5a57..d0a7a6bfe2 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -366,10 +366,17 @@ type_init(virt_machine_register_types)
- #define DEFINE_VIRT_MACHINE(major, minor) \
-     DEFINE_VIRT_MACHINE_IMPL(false, major, minor)
- 
-+static void virt_machine_10_0_options(MachineClass *mc)
-+{
-+}
-+DEFINE_VIRT_MACHINE_AS_LATEST(10, 0)
-+
- static void virt_machine_9_2_options(MachineClass *mc)
- {
-+    virt_machine_10_0_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
- }
--DEFINE_VIRT_MACHINE_AS_LATEST(9, 2)
-+DEFINE_VIRT_MACHINE(9, 2)
- 
- static void virt_machine_9_1_options(MachineClass *mc)
- {
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0d4efaa0c0..7251eea521 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4732,15 +4732,26 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
- #define DEFINE_SPAPR_MACHINE(major, minor) \
-     DEFINE_SPAPR_MACHINE_IMPL(false, major, minor)
- 
-+/*
-+ * pseries-10.0
-+ */
-+static void spapr_machine_10_0_class_options(MachineClass *mc)
-+{
-+    /* Defaults for the latest behaviour inherited from the base class */
-+}
-+
-+DEFINE_SPAPR_MACHINE_AS_LATEST(10, 0);
-+
- /*
-  * pseries-9.2
-  */
- static void spapr_machine_9_2_class_options(MachineClass *mc)
- {
--    /* Defaults for the latest behaviour inherited from the base class */
-+    spapr_machine_10_0_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
- }
- 
--DEFINE_SPAPR_MACHINE_AS_LATEST(9, 2);
-+DEFINE_SPAPR_MACHINE(9, 2);
- 
- /*
-  * pseries-9.1
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index fe03f716f3..67ae34aead 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -849,14 +849,26 @@ static const TypeInfo ccw_machine_info = {
-     DEFINE_CCW_MACHINE_IMPL(false, major, minor)
- 
- 
-+static void ccw_machine_10_0_instance_options(MachineState *machine)
-+{
-+}
-+
-+static void ccw_machine_10_0_class_options(MachineClass *mc)
-+{
-+}
-+DEFINE_CCW_MACHINE_AS_LATEST(10, 0);
-+
- static void ccw_machine_9_2_instance_options(MachineState *machine)
- {
-+    ccw_machine_10_0_instance_options(machine);
- }
- 
- static void ccw_machine_9_2_class_options(MachineClass *mc)
- {
-+    ccw_machine_10_0_class_options(mc);
-+    compat_props_add(mc->compat_props, hw_compat_9_2, hw_compat_9_2_len);
- }
--DEFINE_CCW_MACHINE_AS_LATEST(9, 2);
-+DEFINE_CCW_MACHINE(9, 2);
- 
- static void ccw_machine_9_1_instance_options(MachineState *machine)
- {
--- 
-2.47.1
+are available in the Git repository at:
+
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2024-12-11
+
+for you to fetch changes up to f29c96d0f5760f72220623500ee659f1fc2d1542:
+
+  tests/functional: remove pointless with statement (2024-12-11 09:19:12 +0100)
+
+----------------------------------------------------------------
+* Add compat machines for QEMU 10.0
+* Add s390x CPU model for the gen17 mainframe
+* Convert some more avocado tests to the new functional framework
+* Some minor clean-ups for functional tests
+
+----------------------------------------------------------------
+Cornelia Huck (1):
+      hw: add compat machines for 10.0
+
+Daniel P. Berrangé (4):
+      hw/i386: define _AS_LATEST() macros for machine types
+      docs: replace 'Edit on GitLab' with 'View page source'
+      tests/functional: remove unused system imports
+      tests/functional: remove pointless with statement
+
+Hendrik Brueckner (15):
+      s390x/cpumodel: add msa10 subfunctions
+      s390x/cpumodel: add msa11 subfunctions
+      s390x/cpumodel: add msa12 changes
+      s390x/cpumodel: add msa13 subfunctions
+      s390x/cpumodel: Add ptff Query Time-Stamp Event (QTSE) support
+      linux-headers: Update to Linux 6.13-rc1
+      s390x/cpumodel: add Concurrent-functions facility support
+      s390x/cpumodel: add Vector Enhancements facility 3
+      s390x/cpumodel: add Miscellaneous-Instruction-Extensions Facility 4
+      s390x/cpumodel: add Vector-Packed-Decimal-Enhancement facility 3
+      s390x/cpumodel: add Ineffective-nonconstrained-transaction facility
+      s390x/cpumodel: Add Sequential-Instruction-Fetching facility
+      s390x/cpumodel: correct PLO feature wording
+      s390x/cpumodel: Add PLO-extension facility
+      s390x/cpumodel: gen17 model
+
+Thomas Huth (6):
+      tests/functional: Bump the timeout of the sh4_tuxrun test
+      MAINTAINERS: Cover the tests/functional/test_sh4eb_r2d.py file
+      tests/functional: Convert the xlnx_versal_virt avocado test
+      tests/functional: Convert the emcraft_sf2 avocado test
+      tests/functional: Convert the smdkc210 avocado test
+      tests/functional: Convert the cubieboard avocado tests
+
+ MAINTAINERS                                    |   6 +-
+ docs/conf.py                                   |   2 +-
+ include/hw/boards.h                            |   3 +
+ include/hw/i386/pc.h                           |   7 +-
+ include/standard-headers/drm/drm_fourcc.h      |   1 +
+ include/standard-headers/linux/ethtool.h       |   5 +
+ include/standard-headers/linux/pci_regs.h      |  38 +++-
+ include/standard-headers/linux/virtio_crypto.h |   1 +
+ include/standard-headers/linux/virtio_pci.h    | 131 ++++++++++++
+ linux-headers/asm-arm64/kvm.h                  |   6 +
+ linux-headers/asm-arm64/unistd_64.h            |   4 +
+ linux-headers/asm-generic/mman-common.h        |   3 +
+ linux-headers/asm-generic/mman.h               |   4 +
+ linux-headers/asm-generic/unistd.h             |  11 +-
+ linux-headers/asm-loongarch/kvm.h              |  20 ++
+ linux-headers/asm-loongarch/unistd_64.h        |   4 +
+ linux-headers/asm-mips/mman.h                  |   3 +
+ linux-headers/asm-mips/unistd_n32.h            |   4 +
+ linux-headers/asm-mips/unistd_n64.h            |   4 +
+ linux-headers/asm-mips/unistd_o32.h            |   4 +
+ linux-headers/asm-powerpc/unistd_32.h          |   4 +
+ linux-headers/asm-powerpc/unistd_64.h          |   4 +
+ linux-headers/asm-riscv/kvm.h                  |   4 +
+ linux-headers/asm-riscv/unistd_32.h            |   4 +
+ linux-headers/asm-riscv/unistd_64.h            |   4 +
+ linux-headers/asm-s390/kvm.h                   |   3 +-
+ linux-headers/asm-s390/unistd_32.h             |   4 +
+ linux-headers/asm-s390/unistd_64.h             |   4 +
+ linux-headers/asm-x86/kvm.h                    |   1 +
+ linux-headers/asm-x86/mman.h                   |   3 -
+ linux-headers/asm-x86/unistd_32.h              |   4 +
+ linux-headers/asm-x86/unistd_64.h              |   4 +
+ linux-headers/asm-x86/unistd_x32.h             |   4 +
+ linux-headers/linux/iommufd.h                  | 224 +++++++++++++++++++-
+ linux-headers/linux/kvm.h                      |   8 +
+ linux-headers/linux/psci.h                     |   5 +
+ linux-headers/linux/vfio.h                     |   2 +-
+ target/s390x/cpu_features.h                    |   1 +
+ target/s390x/cpu_features_def.h.inc            |  94 ++++++++-
+ hw/arm/virt.c                                  |   9 +-
+ hw/core/machine.c                              |   3 +
+ hw/i386/pc.c                                   |   3 +
+ hw/i386/pc_piix.c                              |  20 +-
+ hw/i386/pc_q35.c                               |  20 +-
+ hw/m68k/virt.c                                 |   9 +-
+ hw/ppc/spapr.c                                 |  15 +-
+ hw/s390x/s390-virtio-ccw.c                     |  14 +-
+ target/s390x/cpu_features.c                    |  11 +
+ target/s390x/cpu_models.c                      |  61 ++++++
+ target/s390x/gen-features.c                    | 178 ++++++++++++++++
+ target/s390x/kvm/kvm.c                         |   6 +
+ tests/avocado/boot_linux_console.py            | 269 -------------------------
+ tests/functional/meson.build                   |   6 +
+ tests/functional/test_aarch64_sbsaref.py       |   1 -
+ tests/functional/test_aarch64_xlnx_versal.py   |  37 ++++
+ tests/functional/test_acpi_bits.py             |   1 -
+ tests/functional/test_arm_cubieboard.py        | 150 ++++++++++++++
+ tests/functional/test_arm_emcraft_sf2.py       |  52 +++++
+ tests/functional/test_arm_smdkc210.py          |  57 ++++++
+ tests/functional/test_m68k_mcf5208evb.py       |   2 -
+ tests/functional/test_microblaze_s3adsp1800.py |   1 -
+ tests/functional/test_mips64el_loongson3v.py   |   1 -
+ tests/functional/test_or1k_sim.py              |   2 -
+ tests/functional/test_ppc64_hv.py              |   7 +-
+ tests/functional/test_s390x_topology.py        |   1 -
+ tests/functional/test_sh4_tuxrun.py            |   4 -
+ tests/functional/test_sh4eb_r2d.py             |   1 -
+ tests/functional/test_virtio_version.py        |   2 -
+ 68 files changed, 1248 insertions(+), 337 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_xlnx_versal.py
+ create mode 100755 tests/functional/test_arm_cubieboard.py
+ create mode 100755 tests/functional/test_arm_emcraft_sf2.py
+ create mode 100755 tests/functional/test_arm_smdkc210.py
 
 
