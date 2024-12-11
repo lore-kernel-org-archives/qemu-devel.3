@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 267E0E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:25:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E78F9E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:25:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPS1-0000GJ-Qx; Wed, 11 Dec 2024 11:20:38 -0500
+	id 1tLPSG-0000OK-CE; Wed, 11 Dec 2024 11:20:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRv-0000Eb-Jd
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:31 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ id 1tLPSE-0000NK-7e
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:50 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRu-0007hR-09
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:31 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3863703258fso522114f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:29 -0800 (PST)
+ id 1tLPSC-0007lR-Lw
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:50 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43618283d48so12310835e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934028; x=1734538828; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934047; x=1734538847; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=MfZN52pgrp+/nZeB9BI1gMkKMPo4Kihy7pjqat+nckw=;
- b=E2JLlQaIAuqbzeFZ3JhjoeF/ZjSGhgRg9iv/883rK2P9H7etyeWzoeB6t63HAZvSz/
- ke5kJqqPk8mYvMsOL4OzDFhcNw45L/WxvJrz1Ma9LML3TlEtBimYShTi1B9h8jTJ2p0m
- KicPlSjcSY9eA4zs3kl6Zmq6BGhUZSM+GNU8sMKpwHzDPA8c4ybuPWHaRltR2CUAAaOp
- cHIL1PxLezMlF6golkUeaFPqe+oQJOGvnXnzWMyNr/KiS905ywMU/U0gmYxd5lxOps2o
- LOanluM08I/BjeUKeA6XIYWtkGlYL1KSnC02OCV84lv0698PnkgiQ8A5tb+gy37uqm+5
- hjMA==
+ :reply-to; bh=GJ2MxfIn+bPI815lGa0YYGJVtmHJ6iQzs9ubSygVReI=;
+ b=CKD0pyToKz8Ks8RSiTY/CmPYRr/AG2YmNukOVTtp3o+bZeGGLNvYrD9rfFVUIW89MK
+ jHV7H6QBBuezFCy9xXunhE9i4NOAgW0AVcf5zVndWy8LWKxj7xgjfhQqvlKUokB+NQvs
+ vbXyaYTBoXhMdTwHm+O4dy4CKBn2SkwQFcfgkT/EMWFbm7vkun9Cn9dZPYYGHCmcYmwn
+ 78MfS93sfJ9XF3wKVb+yM2J+dOhHA8iEq1mjf+Jxd2ulJlHVe4+rn8sS2QbrEqJlpxoS
+ X+EvmdWw1NZqDG/W8mdohVtrE/gjXyEHsK4zIIiL74FxfJamwDq4hiMCI3zXXwDS4Ztz
+ RfRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934028; x=1734538828;
+ d=1e100.net; s=20230601; t=1733934047; x=1734538847;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MfZN52pgrp+/nZeB9BI1gMkKMPo4Kihy7pjqat+nckw=;
- b=PJ1ftIvQ2fVyWOLW7Ngv1LjY591iW1hOu5ik9Nv+rq/gjZD05ZsDmgImz2G/OzmVuZ
- 00Duo02hGS4rQB188RGt4nlMYg/npA6tN+2L7d9kjzhEAVSRTCxh4Eh9fAPa3IOldWrL
- rlxjEF5xv1w+dqqJnI5xlv8rY5ri/k/t+4gVIAP6rY+c6X1WpTPIwfNXXEbe7kVI06t1
- EBJQp0H8+4Iu8T2r5VUSaBILM6qHw/yvxJm45gIRAde23lMLssAap64y0bR/7aBCqjpr
- DONaXj6jhnZaCNH9XMmJ2JP2RdOqSeRqFO14Z4Gaug6cGj+kcwvjmhKleoBxMm3Nk1TH
- r6Mg==
-X-Gm-Message-State: AOJu0YxDyjNJFhdHtfRGqonswiNV3wuqQ4qFkC39CTgNhG8lB0lcXRUx
- RJOO/Tq5tyiYioc53V2w4iysCtClUdIk3mIqIhM8D9VWwXxAPOAmgwk9ix470Wnv4sF8hZjgWa/
- v
-X-Gm-Gg: ASbGncvUN7i5iA0ZnEPBV9pt2nebjHytYqZdSOzQta4Et+TFEHj+P52NJgrhFc6Tpdm
- ObF+Mc5cWJk6BMbYuuE8kmTJYJ1CfOFo/KlpW0wAxLptZskbsmbX2j7o9sR6HO/QpYZDh9Dmcx5
- 1Ozp5aHCjc495CXTIrfTfGJ/wFuaVbYeyiGnPcfjW/WnxBsKkgXmEHBkpo3okPVztJMa4oz/6qZ
- 6jcUmTv7QUwJ6tUvgRw/vzJkCcdA4FUrfl3Q3IJGHAUHcfeuW7uxf7qcL+S
-X-Google-Smtp-Source: AGHT+IGYPYT9QaEVX/rw9RpTTkQaovLiWIPuafnp3z7jNi3SJTpu3hXN+wWLOF6LW9Gvp4GxYA6oBA==
-X-Received: by 2002:a5d:584a:0:b0:386:3afc:14a7 with SMTP id
- ffacd0b85a97d-3864de9e223mr2310317f8f.7.1733934028379; 
- Wed, 11 Dec 2024 08:20:28 -0800 (PST)
+ bh=GJ2MxfIn+bPI815lGa0YYGJVtmHJ6iQzs9ubSygVReI=;
+ b=qv1Agj8Ndl0VacNwQu73U/ZTyxL5pjpWPpwp/CLQ6NvNmogEo5KazBBNDLKRH/FPgN
+ 6i494/2UA5PnZ9fRpTjDyf5lrZTsyjVfBa0Q9/lNpe+nK4l8DPBaD4HV9IU3T8f7tDxn
+ 2QYQy3oxWfiIRJOhKfRiGZeJUmMKbKELnt3eDtBvgjXzeECbxL2ObUi+aykHBn7YtaAZ
+ ffqKOVlK0lRydeznZXycbMxkzNxTj24nyKe9VosN7rZ7eUi7HLno+Aps8buwAWx1Dn6Z
+ Eitgqf6HFqEjQ4vorsXXL027rR4hxlsTHmVET36NWHNXCXqKJrwZjRIaqVBsdSVGE5U5
+ LhBw==
+X-Gm-Message-State: AOJu0YxvXoif+EAAU0ucqoxh+L+9OU+J5tJASgA/Vw51YbVx6Nyd8D89
+ ljp4VMmVQgbLZBQld9sYEfKUIdOq8tyHqLQaLMN7HJsRjb1mEK/ZryXdvFIe6NVdIzqIBjYk6Wp
+ U
+X-Gm-Gg: ASbGncsvIb7HL6FLBTNlvwTIAwK5KAn651+fT0CK9L51DzaKCFlvyUn2YE8p1yQt+Qo
+ 1Z23nqjs01UHejzdyOVV8Gs2GIervC6kxpL++Dwhv/5h2+0enHG7xaiBzB72OzDhji++KfEJkBl
+ RkFx/zD+hmLPFERQy8j1L0TJsoUV7wXAPjenPGUl1tO1zUppf3q5ejJ/TbOQcR8CQ8LIYYll8SB
+ alEcTKyz3v7gXdpJyf2DX3NYLgx4i61CDdN4glAkT3U4Qzgjl3BokmD2Rxk
+X-Google-Smtp-Source: AGHT+IHbNwGi42RPHzPeAaV49J8dicMj7ttfd4ajM7NNaERdDyTJxMh7R4KmYLPDXNvJqGuhIl91RA==
+X-Received: by 2002:a05:6000:1565:b0:385:fd24:3303 with SMTP id
+ ffacd0b85a97d-3864cdeb18bmr2513796f8f.0.1733934047296; 
+ Wed, 11 Dec 2024 08:20:47 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.27
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:27 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/72] target/loongarch: Set FloatInfZeroNaNRule explicitly
-Date: Wed, 11 Dec 2024 16:19:09 +0000
-Message-Id: <20241211162004.2795499-18-peter.maydell@linaro.org>
+Subject: [PULL 35/72] target/m68k: In frem helper,
+ initialize local float_status from env->fp_status
+Date: Wed, 11 Dec 2024 16:19:27 +0000
+Message-Id: <20241211162004.2795499-36-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,50 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the FloatInfZeroNaNRule explicitly for the loongarch target.
+In the frem helper, we have a local float_status because we want to
+execute the floatx80_div() with a custom rounding mode.  Instead of
+zero-initializing the local float_status and then having to set it up
+with the m68k standard behaviour (including the NaN propagation rule
+and copying the rounding precision from env->fp_status), initialize
+it as a complete copy of env->fp_status. This will avoid our having
+to add new code in this function for every new config knob we add
+to fp_status.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-13-peter.maydell@linaro.org
+Message-id: 20241202131347.498124-31-peter.maydell@linaro.org
 ---
- target/loongarch/tcg/fpu_helper.c | 5 +++++
- fpu/softfloat-specialize.c.inc    | 7 +------
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ target/m68k/fpu_helper.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/target/loongarch/tcg/fpu_helper.c b/target/loongarch/tcg/fpu_helper.c
-index 21bc3b04a96..6a2c4b5b1db 100644
---- a/target/loongarch/tcg/fpu_helper.c
-+++ b/target/loongarch/tcg/fpu_helper.c
-@@ -32,6 +32,11 @@ void restore_fp_status(CPULoongArchState *env)
-                             &env->fp_status);
-     set_flush_to_zero(0, &env->fp_status);
-     set_float_2nan_prop_rule(float_2nan_prop_s_ab, &env->fp_status);
-+    /*
-+     * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
-+     * case sets InvalidOp and returns the input value 'c'
-+     */
-+    set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
- }
+diff --git a/target/m68k/fpu_helper.c b/target/m68k/fpu_helper.c
+index a605162b71f..e3f4a188501 100644
+--- a/target/m68k/fpu_helper.c
++++ b/target/m68k/fpu_helper.c
+@@ -615,15 +615,13 @@ void HELPER(frem)(CPUM68KState *env, FPReg *res, FPReg *val0, FPReg *val1)
  
- int ieee_ex_to_loongarch(int xcpt)
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index ad4f7096d09..05dec2fcb4c 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -489,12 +489,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-         /*
-          * Temporarily fall back to ifdef ladder
-          */
--#if defined(TARGET_HPPA) || \
--    defined(TARGET_LOONGARCH)
--        /*
--         * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
--         * case sets InvalidOp and returns the input value 'c'
--         */
-+#if defined(TARGET_HPPA)
-         rule = float_infzeronan_dnan_never;
- #endif
-     }
+     fp_rem = floatx80_rem(val1->d, val0->d, &env->fp_status);
+     if (!floatx80_is_any_nan(fp_rem)) {
+-        float_status fp_status = { };
++        /* Use local temporary fp_status to set different rounding mode */
++        float_status fp_status = env->fp_status;
+         uint32_t quotient;
+         int sign;
+ 
+         /* Calculate quotient directly using round to nearest mode */
+-        set_float_2nan_prop_rule(float_2nan_prop_ab, &fp_status);
+         set_float_rounding_mode(float_round_nearest_even, &fp_status);
+-        set_floatx80_rounding_precision(
+-            get_floatx80_rounding_precision(&env->fp_status), &fp_status);
+         fp_quot.d = floatx80_div(val1->d, val0->d, &fp_status);
+ 
+         sign = extractFloatx80Sign(fp_quot.d);
 -- 
 2.34.1
 
