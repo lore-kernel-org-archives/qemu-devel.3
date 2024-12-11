@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA58E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:31:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B98CFE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZ3-0001W3-S4; Wed, 11 Dec 2024 11:27:54 -0500
+	id 1tLPZn-0007gu-B3; Wed, 11 Dec 2024 11:28:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYx-0000lT-E7
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:47 -0500
+ id 1tLPZk-0007Cw-8L
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYv-0000GI-PP
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:47 -0500
+ id 1tLPZi-0000Ye-En
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934465;
+ s=mimecast20190719; t=1733934513;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lfgHZQsWMegaPfnFVxg+hSLnTIKU6Rd3BgTVCCd8fno=;
- b=MmJhfIPDAM8+YlSXZK4jYHVnIIGrzeVp1D9BNtyTnirD/8emIhuuFqNwBAaEDmxxPoSc+H
- nflKduzz/4Y+Qf0N6NDxAdoRW1rnFsRdSPJTV4qkq8BPmztcKoSsq6gIGx7sV6fB/VMzrf
- khYO/Pbk6+GQVurCsrAqAixoyLastmY=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=WrsJM87R06FYnwZjzIbMSBqBQmSHO+IxGseQvEJVyVw=;
+ b=C0PBu4B6++SK30nKE1t9BEJxqaVSXgrTwJZJAEHebUYA+1cdWcE0xFpeqiqoLp05h3lfCn
+ vs8o6/6GvsOwZbQ7JGikndvhtnW97l5n9J2L4iYMidr7AyLKtYT2g8os4eUO+TJMT2yABv
+ sQWi7WVcb8KuX2+hwcS2RQmU3BdIWOM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-vp5MxJovNXOZOHCUsrJAug-1; Wed, 11 Dec 2024 11:27:43 -0500
-X-MC-Unique: vp5MxJovNXOZOHCUsrJAug-1
-X-Mimecast-MFC-AGG-ID: vp5MxJovNXOZOHCUsrJAug
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aa5a0a35384so503904866b.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:43 -0800 (PST)
+ us-mta-151-7lPIx1_GMQ6Rt5kQYvQrQg-1; Wed, 11 Dec 2024 11:28:30 -0500
+X-MC-Unique: 7lPIx1_GMQ6Rt5kQYvQrQg-1
+X-Mimecast-MFC-AGG-ID: 7lPIx1_GMQ6Rt5kQYvQrQg
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9d1fso7265465e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:30 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934462; x=1734539262;
+ d=1e100.net; s=20230601; t=1733934509; x=1734539309;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lfgHZQsWMegaPfnFVxg+hSLnTIKU6Rd3BgTVCCd8fno=;
- b=DOcJ4kEXG1Hn3ZdeGZ0QGVm1ofMo4QyYMy9EcPE1nk1dBLDWBVlt0RrE4Un3njF4LH
- JWHRalzLJveB5itVzNZ9vcLm+LuRSj2KIrVxCOd4mpd0S7SReKgif6MyRK44wy7DCzsM
- pnGxKjZ1j6/QP2vkNZht2EDMzetlY2AKx9pdkDrCvMpt7DEpv5PJq4vYkgLIAtevTds0
- flu0TqfNp/lNF3zaPSTOX6mFNHTHvlqi+ovAT47zjJWzecaXayclj/k4bnkZGYI1u5ps
- FJl4gRUcrVSeBnEJZDWKB/5xi+dH8BMez8JscQMNaWMg4KTUV82tzxzeAupl/LcGyHgD
- CdKQ==
-X-Gm-Message-State: AOJu0YyRToju9bFvPE1uVRTRQ+1F9/pGj5eQwwV5Il+/jSuzL+pyrcXO
- 7phrhyW4nDBawbxVnIO0qDWkf+lv19hqCnhBms8l/oKow/YJs4eXeEwM17vN+WrAvAdXIcQIOkP
- bgL1t9QHjwSkQB3Knkzl0ZNxw4J8naOQ1jpb/euglwmQPco5XFt4FhVSPrv+XDNGWa71i5ceGX+
- SWCHJMTW43gGJJvBNq47nlEzJmZDBPKlSWeu/q
-X-Gm-Gg: ASbGncuCYJ2Aw3qQI/28Hm0tCwoJ5kDyElHWlRk5waayWKVJNLoLd9HS0lcU49QDbWx
- m/tYNbnsUypjMNw7ialhZuAJEcQCAbm8HduPr+wRZJjc6w6sgpeuHJHCs3RI5dVqAvO4O/71Kq8
- lGPh27vNMf7n5wpmrfnWBwqlaeJ5GhemPca7d0U++Q2Nr6BSr6bfsg+VLw4nWXsUp9socz2F+WZ
- ADHPF6HBP3/GxQv51Y/2sXDDkLa8nxAkQ3x8Xz5LD9z3ehGGj4qhUW4
-X-Received: by 2002:a17:906:311a:b0:aa5:2575:e75d with SMTP id
- a640c23a62f3a-aa6b1141c72mr348935366b.2.1733934461836; 
- Wed, 11 Dec 2024 08:27:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGqLeBPutf+x1YKZGwpLGI01fC3RgTTeOumZojvU5ZRPIXU5kWzPEkkjWFRrS1KYNPlybOtfg==
-X-Received: by 2002:a17:906:311a:b0:aa5:2575:e75d with SMTP id
- a640c23a62f3a-aa6b1141c72mr348932566b.2.1733934461379; 
- Wed, 11 Dec 2024 08:27:41 -0800 (PST)
+ bh=WrsJM87R06FYnwZjzIbMSBqBQmSHO+IxGseQvEJVyVw=;
+ b=vqx1A/FQbz5/0Yw40PFO+ycOsdNnpa276qbJ5QucEKCQgUQ1gTImaVjzf17Zv6nDJ8
+ L3GJW8yl8fhqVDyrOtcEVMMcQ7+MHMOceocOuXlpq3LRz1+YyU580ec0z8FJ+QjGoczK
+ 95uLxGm0Cs9M9+lvkQInbcfMPajOv7sIGZF8+kH7iY0L9gJvbiulhXatlvl2Qb/oAkNP
+ LtjY9+rSP8Zu2/gbHXzX90/4i2B8lk1lFCF/9l+JMoMcX3tsz5vgtomXFfIT9B4CA7RA
+ L0vjp3FpBNhs986aIPaTQjEp24giNnfG6l8qNxNF6hP+ovliSvt8FhgPCr4R+xOzPczg
+ XLlw==
+X-Gm-Message-State: AOJu0Yy+yN3tq7m7cn1E9S+cSUXuqhzwSQcBV/mRgUJFcCSqS+kh06zG
+ z/a49Scwyo9o2KYlkmovEcSApOF1HAMhJ/bU8VJo78pJqZ1SqvMI0DRnVBgjHqWjIa/JoZH00zR
+ XHF/D2IC3q/JOA7CV8EzOPqatThRmAcaOl3m+a98OScLq54PXE1W014gIvDqrOT07z6zWKFuk9x
+ a+XvbcZ0H9ZePhXZ5pxnhAKgczGWLY14VJBbGc
+X-Gm-Gg: ASbGncvK9re+UdC1MxTFfJlKDbTtm6EROjTrpzfcdm6g2akrhPoHZ7XOc9i3qWFCHeG
+ nFd9UVDJbAeaMpbONPmUD7cGJFQ14xuelW6Bcu2wyG8Fe9M5MUNtBoX5IZFmlTw0XkIDU+PGvFt
+ oA0F1sW44NpZSKOFiXz6fXS/ZuI1Fe8UV/m3EwXpHYoDl7mT9sMK9f9nvJRWvk+7AUs6FPfmtLb
+ uqoR5kXB0xzbgI3wqIwIEWVu4XQYSHILR32oRyYklf3JjTt0xAog2Uq
+X-Received: by 2002:a05:600c:468b:b0:434:fd15:3ac9 with SMTP id
+ 5b1f17b1804b1-4361c3e3aacmr23834785e9.22.1733934507502; 
+ Wed, 11 Dec 2024 08:28:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFhPFTwdeba7jDc9vZLxIlDGfiUx7pVjXqtyQxGyTljL3q6+8WaUCOz3XKXnm555ya5GD8PFQ==
+X-Received: by 2002:a05:600c:468b:b0:434:fd15:3ac9 with SMTP id
+ 5b1f17b1804b1-4361c3e3aacmr23834165e9.22.1733934505598; 
+ Wed, 11 Dec 2024 08:28:25 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa650ea7369sm715147466b.74.2024.12.11.08.27.40
+ ffacd0b85a97d-3878251dc77sm1589469f8f.100.2024.12.11.08.28.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:40 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:24 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Junjie Mao <junjie.mao@hotmail.com>
-Subject: [PULL 09/49] rust: fix a couple style issues from clippy
-Date: Wed, 11 Dec 2024 17:26:39 +0100
-Message-ID: <20241211162720.320070-10-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 27/49] hw/virtio: Replace type_register() with
+ type_register_static()
+Date: Wed, 11 Dec 2024 17:26:57 +0100
+Message-ID: <20241211162720.320070-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -107,78 +108,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are reported as clippy::semicolon_inside_block and clippy::as_ptr_cast_mut.
+From: Zhao Liu <zhao1.liu@intel.com>
 
-clippy::semicolon_inside_block can be configured not to lint single-line
-blocks; just go with the default.
+Replace type_register() with type_register_static() because
+type_register() will be deprecated.
 
-Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20241029085934.2799066-10-zhao1.liu@intel.com
 ---
- rust/hw/char/pl011/src/device.rs     | 8 +++++---
- rust/hw/char/pl011/src/memory_ops.rs | 4 +++-
- rust/qemu-api/tests/tests.rs         | 2 +-
- 3 files changed, 9 insertions(+), 5 deletions(-)
+ hw/virtio/virtio-pci.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 476cacc8449..317a9b3c5ad 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -2,7 +2,7 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use core::ptr::{addr_of, addr_of_mut, NonNull};
-+use core::ptr::{addr_of_mut, NonNull};
- use std::{
-     ffi::CStr,
-     os::raw::{c_int, c_uchar, c_uint, c_void},
-@@ -499,7 +499,9 @@ pub fn update(&self) {
-         let flags = self.int_level & self.int_enabled;
-         for (irq, i) in self.interrupts.iter().zip(IRQMASK) {
-             // SAFETY: self.interrupts have been initialized in init().
--            unsafe { qemu_set_irq(*irq, i32::from(flags & i != 0)) };
-+            unsafe {
-+                qemu_set_irq(*irq, i32::from(flags & i != 0));
-+            }
-         }
+diff --git a/hw/virtio/virtio-pci.c b/hw/virtio/virtio-pci.c
+index 5a394821da9..5c6c2019cef 100644
+--- a/hw/virtio/virtio-pci.c
++++ b/hw/virtio/virtio-pci.c
+@@ -2511,9 +2511,9 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+         base_type_info.class_data = (void *)t;
      }
  
-@@ -601,7 +603,7 @@ pub fn post_load(&mut self, _version_id: u32) -> Result<(), ()> {
-         let sysbus: *mut SysBusDevice = dev.cast::<SysBusDevice>();
- 
-         qdev_prop_set_chr(dev, c_str!("chardev").as_ptr(), chr);
--        sysbus_realize_and_unref(sysbus, addr_of!(error_fatal) as *mut *mut Error);
-+        sysbus_realize_and_unref(sysbus, addr_of_mut!(error_fatal));
-         sysbus_mmio_map(sysbus, 0, addr);
-         sysbus_connect_irq(sysbus, 0, irq);
-         dev
-diff --git a/rust/hw/char/pl011/src/memory_ops.rs b/rust/hw/char/pl011/src/memory_ops.rs
-index 169d485a4d2..c4e8599ba43 100644
---- a/rust/hw/char/pl011/src/memory_ops.rs
-+++ b/rust/hw/char/pl011/src/memory_ops.rs
-@@ -33,7 +33,9 @@
-             // SAFETY: self.char_backend is a valid CharBackend instance after it's been
-             // initialized in realize().
-             let cb_ptr = unsafe { core::ptr::addr_of_mut!(state.as_mut().char_backend) };
--            unsafe { qemu_chr_fe_accept_input(cb_ptr) };
-+            unsafe {
-+                qemu_chr_fe_accept_input(cb_ptr);
-+            }
- 
-             val
-         }
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 43a4827de12..925f5a3c77b 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -74,6 +74,6 @@ impl Class for DummyClass {
- 
-     unsafe {
-         module_call_init(module_init_type::MODULE_INIT_QOM);
--        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()) as *mut _);
-+        object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
+-    type_register(&base_type_info);
++    type_register_static(&base_type_info);
+     if (generic_type_info.name) {
+-        type_register(&generic_type_info);
++        type_register_static(&generic_type_info);
      }
+ 
+     if (t->non_transitional_name) {
+@@ -2527,7 +2527,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+                 { }
+             },
+         };
+-        type_register(&non_transitional_type_info);
++        type_register_static(&non_transitional_type_info);
+     }
+ 
+     if (t->transitional_name) {
+@@ -2544,7 +2544,7 @@ void virtio_pci_types_register(const VirtioPCIDeviceTypeInfo *t)
+                 { }
+             },
+         };
+-        type_register(&transitional_type_info);
++        type_register_static(&transitional_type_info);
+     }
+     g_free(base_name);
  }
 -- 
 2.47.1
