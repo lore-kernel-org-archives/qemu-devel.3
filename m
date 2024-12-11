@@ -4,62 +4,161 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE803E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 06:41:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF182E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 06:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLGHW-0007sF-Ls; Wed, 11 Dec 2024 01:33:10 -0500
+	id 1tLGfs-0000go-96; Wed, 11 Dec 2024 01:58:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tLGGY-0005FW-KH
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:32:11 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGfm-0000fb-RS
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:58:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1tLGGS-00007X-1b
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:32:10 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGfh-0003Cz-IO
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:58:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733898718;
+ s=mimecast20190719; t=1733900287;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FuaCftXGIJpJdR2uydxBMsgZtI8BYLAUbkKcZ5YYDPc=;
- b=U106eUvYGk92vRV+sKDahCcUJ5XPy93xKe2D/uy3eihiddbpTM6Qm7qsyZoHrOnnfuOzmY
- +bdeuprfb4h10gg52FfxEQxs/31VcwCoyCdbauxItsHspkIGRALAuJkqx3aMfzoEFuMzzs
- HG4dS1txZBKjBn3ZCI06fdlYmZhP/LI=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-KdjZI7HOM6uNWhrZI9xk2Q-1; Wed,
- 11 Dec 2024 01:31:56 -0500
-X-MC-Unique: KdjZI7HOM6uNWhrZI9xk2Q-1
-X-Mimecast-MFC-AGG-ID: KdjZI7HOM6uNWhrZI9xk2Q
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ECFAE1955E70; Wed, 11 Dec 2024 06:31:55 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.39.194.144])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 87664195606C; Wed, 11 Dec 2024 06:31:54 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 24/24] test/qtest/ast2700-smc-test: Support to test AST2700
-Date: Wed, 11 Dec 2024 07:30:58 +0100
-Message-ID: <20241211063058.1222038-25-clg@redhat.com>
-In-Reply-To: <20241211063058.1222038-1-clg@redhat.com>
-References: <20241211063058.1222038-1-clg@redhat.com>
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Gy2n11iGTa9ZiqbyiHBxIp01HGftCyw+zIb9nN+g+e0=;
+ b=NsNkmKxFVrsLTDTSYwXpOhVk1s0ePU1ExrugMJdYaA4QShmdD0PzlZUf9jhK2q32Q7fhAd
+ kEzagl3T3eTiHq8E6DAgNOclxBYBBdqFewT0x7j76RtCeKvCrnAUs+lYTdMJoH//8UoRIj
+ 3w631WGqjtFthvuZkuTEdJjlhStdQMs=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-300-9xROA06LMEeYn2LM35UnUg-1; Wed, 11 Dec 2024 01:58:06 -0500
+X-MC-Unique: 9xROA06LMEeYn2LM35UnUg-1
+X-Mimecast-MFC-AGG-ID: 9xROA06LMEeYn2LM35UnUg
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa68203d288so286778066b.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 22:58:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733900285; x=1734505085;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Gy2n11iGTa9ZiqbyiHBxIp01HGftCyw+zIb9nN+g+e0=;
+ b=cnq3lUpTVb4768DyNXzVWvlR/wcZVX451n6Jy4GGTJevVLHofVWBxyT/0bdXsSyFkX
+ L9QEflbkl377nda5lMIGnM98e2gpf35cR2p0IRLcE0qcjWKdyZPFFxt7XNZZXVYKjdTC
+ 7verbR++dtfBvivppl2Qm4gG/13CZbT8rXZTntyldkX6NXMGildogKo9RgEoG2c98qpg
+ +L+T1p0/+OGDSS4AGjjrr9U8FKdOuOISXE1sdhxRTfzcp9DCAD/q4Dun8orT0jSjsq+r
+ 90J1eqLSfk4YTq4W4fBV3oSNL+27PpYWvSxbaTaDG/CqYO4HInS3wGEJKo/fR4lO9kVI
+ 1zMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbrySSEhwd4kiaWgcw+kJigKzAsYUUuZOUtmIX9dPRIfh5IPOx6m2NC9TYwa4L/fod4ju3iJ/j5uoj@nongnu.org
+X-Gm-Message-State: AOJu0YyRiq7b1KdBe7YeaTd8nSWkFt+yrGYYOEAt+kEZmig73V365+Ll
+ wGqL/QdaKmouweC4yERFzXYn7ihorsCpjmidkfTo6FCvC1hd3PDI8JxZjFPpz1RJlgBwvGsZtMQ
+ 9YcHENKEQT/SykFc3LBmoUC1dkkvbkaoOczRmVFI6AefCWJLlci/c660iY5+5
+X-Gm-Gg: ASbGnct1I/uSju+MCW/hlBpNtkCsCfQXovJiU27O3KiTZtZQSdJj2v0IWhMm1YPcGjq
+ IVz/ucILNwXpDeKvs4/qOxWY+mZjUvmkFPOoCz0FjlxfXvDNzWKuBuJ8OhXRHOmK85fA4CGs6lZ
+ n9Uw2iUjanqHK9y/lVdDPznxlqJc02LsvHep901sC90fbxus5LMrLzu3bbuyz7Wz2Y+hWXHYQel
+ 2VpZsa4bVvMnIZYwC0xALDufvQHOdrZ6thGguMfF4fNNRALPez961HGI+qcz1npVkDaxBl00iVl
+ 0oRjadA=
+X-Received: by 2002:a17:906:328e:b0:aa6:7f3d:4f9b with SMTP id
+ a640c23a62f3a-aa6b11a4696mr102432166b.24.1733900284714; 
+ Tue, 10 Dec 2024 22:58:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFJZ4QMul4Lj7dG40jtzocfHouPwWFqfZYWWa72KRde9Qyho4783jBmXKtvamxu8mX//eGr4A==
+X-Received: by 2002:a17:906:328e:b0:aa6:7f3d:4f9b with SMTP id
+ a640c23a62f3a-aa6b11a4696mr102427866b.24.1733900284238; 
+ Tue, 10 Dec 2024 22:58:04 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa667925953sm597991566b.9.2024.12.10.22.58.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Dec 2024 22:58:03 -0800 (PST)
+Message-ID: <d2a73820-58fa-41d0-8f38-68b0ad53fa7d@redhat.com>
+Date: Wed, 11 Dec 2024 07:58:00 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 20/20] tests/functional: extend test_aarch64_virt with
+ vulkan test
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Cleber Rosa <crosa@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, Eric Farman
+ <farman@linux.ibm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
+ Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>,
+ qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+ Bin Meng <bmeng.cn@gmail.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20241210204349.723590-1-alex.bennee@linaro.org>
+ <20241210204349.723590-21-alex.bennee@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241210204349.723590-21-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -84,124 +183,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+On 10/12/2024 21.43, Alex Bennée wrote:
+> Now we have virtio-gpu Vulkan support lets add a test for it.
+> Currently this is using images build by buildroot:
+> 
+>    https://lists.buildroot.org/pipermail/buildroot/2024-December/768196.html
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/functional/test_aarch64_virt.py | 83 ++++++++++++++++++++++++++-
+>   1 file changed, 80 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+> index 801300607c..25d11e2626 100755
+> --- a/tests/functional/test_aarch64_virt.py
+> +++ b/tests/functional/test_aarch64_virt.py
+> @@ -14,11 +14,12 @@
+>   import os
+>   import logging
+>   
+> +from qemu.machine.machine import VMLaunchFailure
+> +
+>   from qemu_test import BUILD_DIR
+>   from qemu_test import QemuSystemTest, Asset
+> -from qemu_test import exec_command, wait_for_console_pattern
+> -from qemu_test import get_qemu_img, run_cmd
+> -
+> +from qemu_test import exec_command, wait_for_console_pattern, exec_command_and_wait_for_pattern
+> +from qemu_test import has_cmd, get_qemu_img, run_cmd
+>   
+>   class Aarch64VirtMachine(QemuSystemTest):
+>       KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
+> @@ -125,5 +126,81 @@ def test_aarch64_virt_gicv2(self):
+>           self.common_aarch64_virt("virt,gic-version=2")
+>   
+>   
+> +    ASSET_VIRT_GPU_KERNEL = Asset(
+> +        ('https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+> +         'download?path=%2F&files='
+> +         'Image'),
+> +        '89e5099d26166204cc5ca4bb6d1a11b92c217e1f82ec67e3ba363d09157462f6')
+> +
+> +    ASSET_VIRT_GPU_ROOTFS = Asset(
+> +        ('https://fileserver.linaro.org/s/ce5jXBFinPxtEdx/'
+> +         'download?path=%2F&files='
+> +         'rootfs.ext4.zstd'),
+> +        '792da7573f5dc2913ddb7c638151d4a6b2d028a4cb2afb38add513c1924bdad4')
+> +
+> +    def test_aarch64_virt_with_gpu(self):
+> +        # This tests boots with a buildroot test image that contains
+> +        # vkmark and other GPU exercising tools. We run a headless
+> +        # weston that nevertheless still exercises the virtio-gpu
+> +        # backend.
+> +
+> +        (has_zstd, msg) = has_cmd('zstd')
+> +        if has_zstd is False:
+> +            self.skipTest(msg)
 
-Add test_ast2700_evb function and reused testcases which are from
-aspeed_smc-test.c for AST2700 testing. The base address, flash base address
-and ce index of fmc_cs0 are 0x14000000, 0x100000000 and 0, respectively.
-The default flash model of fmc_cs0 is "w25q01jvq" whose size is 128MB,
-so set jedec_id 0xef4021.
+I'd recommend to use a decorator instead:
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/r/20241127091543.1243114-11-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- tests/qtest/ast2700-smc-test.c | 71 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |  4 +-
- 2 files changed, 74 insertions(+), 1 deletion(-)
- create mode 100644 tests/qtest/ast2700-smc-test.c
+@skipUnless(*has_cmd('zstd'))
 
-diff --git a/tests/qtest/ast2700-smc-test.c b/tests/qtest/ast2700-smc-test.c
-new file mode 100644
-index 000000000000..d1c485630744
---- /dev/null
-+++ b/tests/qtest/ast2700-smc-test.c
-@@ -0,0 +1,71 @@
-+/*
-+ * QTest testcase for the M25P80 Flash using the ASPEED SPI Controller since
-+ * AST2700.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ * Copyright (C) 2024 ASPEED Technology Inc.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/bswap.h"
-+#include "libqtest-single.h"
-+#include "qemu/bitops.h"
-+#include "aspeed-smc-utils.h"
-+
-+static void test_ast2700_evb(AspeedSMCTestData *data)
-+{
-+    int ret;
-+    int fd;
-+
-+    fd = g_file_open_tmp("qtest.m25p80.w25q01jvq.XXXXXX",
-+                         &data->tmp_path, NULL);
-+    g_assert(fd >= 0);
-+    ret = ftruncate(fd, 128 * 1024 * 1024);
-+    g_assert(ret == 0);
-+    close(fd);
-+
-+    data->s = qtest_initf("-machine ast2700-evb "
-+                          "-drive file=%s,format=raw,if=mtd",
-+                          data->tmp_path);
-+
-+    /* fmc cs0 with w25q01jvq flash */
-+    data->flash_base = 0x100000000;
-+    data->spi_base = 0x14000000;
-+    data->jedec_id = 0xef4021;
-+    data->cs = 0;
-+    data->node = "/machine/soc/fmc/ssi.0/child[0]";
-+    /* beyond 64MB */
-+    data->page_addr = 0x40000 * FLASH_PAGE_SIZE;
-+
-+    qtest_add_data_func("/ast2700/smc/read_jedec",
-+                        data, aspeed_smc_test_read_jedec);
-+    qtest_add_data_func("/ast2700/smc/erase_sector",
-+                        data, aspeed_smc_test_erase_sector);
-+    qtest_add_data_func("/ast2700/smc/erase_all",
-+                        data, aspeed_smc_test_erase_all);
-+    qtest_add_data_func("/ast2700/smc/write_page",
-+                        data, aspeed_smc_test_write_page);
-+    qtest_add_data_func("/ast2700/smc/read_page_mem",
-+                        data, aspeed_smc_test_read_page_mem);
-+    qtest_add_data_func("/ast2700/smc/write_page_mem",
-+                        data, aspeed_smc_test_write_page_mem);
-+    qtest_add_data_func("/ast2700/smc/read_status_reg",
-+                        data, aspeed_smc_test_read_status_reg);
-+    qtest_add_data_func("/ast2700/smc/write_page_qpi",
-+                        data, aspeed_smc_test_write_page_qpi);
-+}
-+
-+int main(int argc, char **argv)
-+{
-+    AspeedSMCTestData ast2700_evb_data;
-+    int ret;
-+
-+    g_test_init(&argc, &argv, NULL);
-+
-+    test_ast2700_evb(&ast2700_evb_data);
-+    ret = g_test_run();
-+
-+    qtest_quit(ast2700_evb_data.s);
-+    unlink(ast2700_evb_data.tmp_path);
-+    return ret;
-+}
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index f8b3907e370d..89db3ecf2ff7 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -214,7 +214,8 @@ qtests_aspeed = \
-    'aspeed_smc-test',
-    'aspeed_gpio-test']
- qtests_aspeed64 = \
--  ['ast2700-gpio-test']
-+  ['ast2700-gpio-test',
-+   'ast2700-smc-test']
- 
- qtests_stm32l4x5 = \
-   ['stm32l4x5_exti-test',
-@@ -361,6 +362,7 @@ qtests = {
-   'vmgenid-test': files('boot-sector.c', 'acpi-utils.c'),
-   'netdev-socket': files('netdev-socket.c', '../unit/socket-helpers.c'),
-   'aspeed_smc-test': files('aspeed-smc-utils.c', 'aspeed_smc-test.c'),
-+  'ast2700-smc-test': files('aspeed-smc-utils.c', 'ast2700-smc-test.c'),
- }
- 
- if vnc.found()
--- 
-2.47.1
+or if Daniel's patch series lands first, switch to @skipIfMissingCommands:
+
+https://lore.kernel.org/qemu-devel/20241129173120.761728-7-berrange@redhat.com/
+
+> +        self.zstd = 'zstd'
+
+You only use self.zstd once, so the detour through a variable seems 
+unnecessary here?
+
+> +        image_path_zst = self.ASSET_VIRT_GPU_ROOTFS.fetch()
+> +        kernel_path = self.ASSET_VIRT_GPU_KERNEL.fetch()
+> +
+> +        image_path = self.workdir + "/rootfs.ext4"
+> +
+> +        run_cmd([self.zstd, "-f", "-d", image_path_zst,
+> +                 "-o", image_path])
+> +
+> +        self.set_machine('virt')
+
+Please move set_machine to the top of the function. Reasoning: It can cancel 
+the test if the 'virt' machine has not been compiled into the binary. In 
+that case you'd extracted the rootfs image in vain.
+
+> +        self.vm.set_console()
+> +        kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
+> +                               'console=ttyAMA0 root=/dev/vda')
+> +        self.require_accelerator("tcg")
+
+Same, please move to the beginning since it can skip the test.
+
+> +        self.vm.add_args("-accel", "tcg")
+> +        self.vm.add_args("-cpu", "neoverse-v1,pauth-impdef=on")
+> +        self.vm.add_args("-machine",
+> +                         "virt,virtualization=on,"
+> +                         "gic-version=max",
+> +                         '-kernel', kernel_path,
+> +                         '-append', kernel_command_line)
+> +        self.vm.add_args("-smp", "2", "-m", "2048")
+> +        self.vm.add_args("-device", "virtio-gpu-gl-pci,hostmem=4G,blob=on,venus=on")
+> +        self.vm.add_args("-display", "egl-headless")
+> +        self.vm.add_args("-display", "dbus,gl=on")
+> +        self.vm.add_args("-device", "virtio-blk-device,drive=hd0")
+> +        self.vm.add_args("-blockdev",
+> +                         "driver=raw,file.driver=file,node-name=hd0,read-only=on,"
+> +                         f"file.filename={image_path}")
+> +        self.vm.add_args("--snapshot")
+
+Any reason for using double dashes just here and not for the other commands?
+
+> +        try:
+> +            self.vm.launch()
+> +        except VMLaunchFailure as e:
+> +            if "old virglrenderer, blob resources unsupported" in e.output:
+> +                self.skipTest("No blob support for virtio-gpu")
+> +            elif "old virglrenderer, venus unsupported" in e.output:
+> +                self.skipTest("No venus support for virtio-gpu")
+> +            else:
+> +                self.log.info(f"un-handled launch failure: {e.output}")
+
+s/un-handled/unhandled/ ?
+
+  Thomas
 
 
