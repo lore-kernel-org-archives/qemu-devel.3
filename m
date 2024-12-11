@@ -4,93 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 853CEE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 20:51:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 645CBE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 21:21:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLTeu-0000kV-Cz; Wed, 11 Dec 2024 15:50:12 -0500
+	id 1tLU8V-0006sn-Sn; Wed, 11 Dec 2024 16:20:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLTet-0000k7-Oe
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:50:11 -0500
-Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLTes-0008RB-4h
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:50:11 -0500
-Received: by mail-oa1-x35.google.com with SMTP id
- 586e51a60fabf-29f88004a92so2816864fac.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 12:50:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733950208; x=1734555008; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=AT2ErS5F2KlqM9vcZQKioZ12NuStd5AkCEXeMUEZnTc=;
- b=m22qhkY/nTWBwvJJP0qJ47h7HMgBJF/LmacTME9oouIDUgnRaBMtqRE724kLhLQk4s
- 6/M8F0I9gwjQx3N/OYH2onlqPl+Po2i1BqoTF0k2iMpfwmHEwxUTNdTstYUHbPuKcwEx
- cBGDS0pEAnhXItnBbGABs2tSFkGC1QatfU7gsTgdlDOV4cTsivdBeSOlrOE7wT3Xi3rS
- O62GDDeiUY0uJdfNgYnIVvj0JWWnHq5Ft25GF0QtxIsmwKmuqw9XapI9kG16rzkMJbjr
- AADN9bMOmGc97MVehEU955caaz+/4PbJDBSrDhJe83+PFf/72Q/1rnfA5Rs1BWbtEh5k
- mbTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733950208; x=1734555008;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AT2ErS5F2KlqM9vcZQKioZ12NuStd5AkCEXeMUEZnTc=;
- b=pRFSo4wMngyTpdETO23+GH/vz0qahtRCcx/3MEcrROSjgDBYnU6CHFNEOdWn6KXwIt
- 4AgTyUOXXihWRK4xwH5RcU6ZkbxjoBjjPEQfg9TvPG0wpxmUOjLlVyfM9oDjSNoq8Nj7
- NBggYn/NWJZDzk3cKidn4WM0a+n9BWW0itQDulSvICEMfoz3Bftfggxf7NTdjDYhrmpD
- QGp5Hl07AYgwSF/Y9plEOXh6TaMCclerm9xYMGYgW4D6RimEykA7DuE71hrJjsrmRRLH
- 89AMM0VL65PSdjv1JVCfwkAnTHAlNVt4fcqBURJq3ie5uq0uIdxVeg/2PKuFVQTxILsD
- 3ZOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0+/O61A3BqBbwREtvUBo6tV8pLpOTuXTB3ZCxo8CMbzWkdrCZJqWvMJPmAtzEXEs1VmBTPs6Yg/6c@nongnu.org
-X-Gm-Message-State: AOJu0YxMkd8v61vAhhDo+MfQelmgwl0Jr19wQW6P1chGctHtAy++CzZs
- OST/LpkO/d4dDPy99z2+T9dYYMmNx15XflHykWigS1Mpk6YiP8BXn2W7u5A/yRE=
-X-Gm-Gg: ASbGncvlOCFtgNf30ZuaOxy3IkElILROCghiLyvyvsOLtDxznoSDwQAYwGBcDJ2c8AP
- wUsulOdHey4VPECmEpMJTKOWVUDJhNN8t94X7EP7KLd9TZDNDSKsG44NZRGaD/oWCYAMsg6b55h
- KBu/8gq2HnlND32rDb4qXzXW/FuLsLQpJMqW9s2VsqZkN6M/72aHYd2xR1i0v1nDP/5Hlz8bY3T
- wF7eEkYdQvN5X7Um7jSwHx/U9n+QKilbpKWbJRTDIxx+wrv3i+9LfeHhBu7HbJ+xl3DyuEmcmWq
- dII2jt8EYECJRnW5f+5a+Gy3iDHEEwvg
-X-Google-Smtp-Source: AGHT+IGK6gkPQz9z7CkDiz6fhQ5Jo+mzinn7xqlIKNKsCgRyzE2qtRQyimjZMJySvl6jgvNQOIuZXw==
-X-Received: by 2002:a05:6870:440c:b0:29e:4c80:422c with SMTP id
- 586e51a60fabf-2a012d1b85dmr2096540fac.34.1733950208641; 
- Wed, 11 Dec 2024 12:50:08 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29f5677528bsm4024250fac.28.2024.12.11.12.50.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 12:50:08 -0800 (PST)
-Message-ID: <0670aff1-5dfb-425e-97d6-64e8e2826f62@linaro.org>
-Date: Wed, 11 Dec 2024 14:50:03 -0600
+ (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
+ id 1tLU8O-0006rh-D5; Wed, 11 Dec 2024 16:20:41 -0500
+Received: from mail-dm3nam02on20623.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::623]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Frederic.Konrad@amd.com>)
+ id 1tLU8M-0003ov-Ip; Wed, 11 Dec 2024 16:20:40 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=b22NniYzQeuNsMsN8LogO/oJul5eaGOTEUHEC1lb3RSnbjmDsNF4j5csjDZurr9Y24qNXl4dsKCee2djTbKIs7Dj2P07QeXY21Nv7coAB25ik5ywavZ8UJwbdyOjuYlg1lmj1+LPS2Myfp4xzDNE68O5rIw+nlsdNCCD51hdOlLuUjjULcpZzU6IUfyYrxtSqX+r8Zq0/4MLHcw0FBcygLHYosb7nY58MPVVAqySIog4SHpmgTgxwqfzNjUJbGF7KpF84gmpctlvqiA8/5BrSkN04X//r2A6r7qzZ+8UVCuis5U6YXiYpJe3qVwgzD2T1oAx6WrHZN6tHP9XhOkgAw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=4jlOtH5K/+On6zKCmG2lOMZt1X/u9RImAghe+h5nwXQ=;
+ b=FgoSCiQA89z8dgVDvH6FnETsd4f7O+ElHWGHaLIaDVq5UujcGWr9vDtIZltPjhm6gRxb8BFWfv6zbG60V8SqTCdBuEdxr6h5HMOvxH/qTEWMb/j51+28O8y4vEfwJrhBXnjKSaU8uuvkOXFrdMJbIys3dsaTHy8nk6mgXmVCTNEzIWYc/115+HfbxI/cu9ivWhnOLTYIgE5HHiNXdU/gfxgB44vcPsCnB9bX8aIQM8/ZPfbfJA+HToW3oeaknGnv0f6GfNAtBsdKcaOmo+4+iA4/k0LifRLuDXUMB3U1VNKk5y9pO89SguUZMpmhKj9/68tUp/XhwPjboyRlbZgcmQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=4jlOtH5K/+On6zKCmG2lOMZt1X/u9RImAghe+h5nwXQ=;
+ b=OxwtZ8S/7fQVzafpsogyrBXZnIB2rymr0oCq7iGb2YdpzWuDJNnLXgnXf8QKqhFgSbaAf6nT8KP2DiEX/C4PwI7NuyF+lkojNnK95gbfgcLjnA3XXIE3MYfStT7YWbY0IaI2J6D/zRQtyGLHao1CAmyXpAfeqc7Mw63pW0OrNnA=
+Received: from SJ0PR13CA0096.namprd13.prod.outlook.com (2603:10b6:a03:2c5::11)
+ by DS0PR12MB8070.namprd12.prod.outlook.com (2603:10b6:8:dc::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.12; Wed, 11 Dec
+ 2024 21:20:31 +0000
+Received: from SJ1PEPF000023D9.namprd21.prod.outlook.com
+ (2603:10b6:a03:2c5:cafe::b) by SJ0PR13CA0096.outlook.office365.com
+ (2603:10b6:a03:2c5::11) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.14 via Frontend Transport; Wed,
+ 11 Dec 2024 21:20:30 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ SJ1PEPF000023D9.mail.protection.outlook.com (10.167.244.74) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8272.0 via Frontend Transport; Wed, 11 Dec 2024 21:20:30 +0000
+Received: from SATLEXMB03.amd.com (10.181.40.144) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 11 Dec
+ 2024 15:20:29 -0600
+Received: from xfr-fkonrad-l1.amd.com (10.180.168.240) by SATLEXMB03.amd.com
+ (10.181.40.144) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
+ Transport; Wed, 11 Dec 2024 15:20:27 -0600
+From: Frederic Konrad <fkonrad@amd.com>
+To: <qemu-riscv@nongnu.org>
+CC: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <bmeng.cn@gmail.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <qemu-devel@nongnu.org>,
+ <francisco.iglesias@amd.com>, <Luc.Michel@amd.com>, Frederic Konrad
+ <fkonrad@amd.com>
+Subject: [PATCH 2/3] target/riscv: generate misaligned access trap for rvi insn
+Date: Wed, 11 Dec 2024 22:19:32 +0100
+Message-ID: <20241211211933.198792-3-fkonrad@amd.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20241211211933.198792-1-fkonrad@amd.com>
+References: <20241211211933.198792-1-fkonrad@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/31] tests/functional: simplify 'which' implementation
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-5-berrange@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241211172648.2893097-5-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::35;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+Received-SPF: None (SATLEXMB04.amd.com: fkonrad@amd.com does not designate
+ permitted sender hosts)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF000023D9:EE_|DS0PR12MB8070:EE_
+X-MS-Office365-Filtering-Correlation-Id: fe6f7896-283e-4855-5ee7-08dd1a29a408
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|376014|82310400026|1800799024; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?UbUmKHDiqhfRK9qXkMiPl2UI9+lsXG17Pu6u1uiu4qXhWj89rTcrujFTwoE7?=
+ =?us-ascii?Q?OiEMIDcKGUg/NB/aE3n9Nud2P5g2cfyBoPU2CGQozS4rDez85PHZHMoYHxVc?=
+ =?us-ascii?Q?0ZP9BJpuuvY6mJORW9amBcPr+S65QkcLpKpHCeCry9emiA7e2+VAVClkmZvS?=
+ =?us-ascii?Q?Qd3QM8FXtlsYdL2DpEjd1uYyAzv6RaG4L35j1yr4rUzl1YzVPPkunG3D3WqI?=
+ =?us-ascii?Q?VDExz0A5qt0BannnrAuWtZyM4fCXtiOb/mesyvxJxYYgG4hfd5Z3EUuRcBvq?=
+ =?us-ascii?Q?vw5c6qfZfkp9Ylw+lcVp7NC30ueMyRQIvzgB1a7EgbYRw6zlql0BmFz5O9N+?=
+ =?us-ascii?Q?U3/rReNK1568Ackq3oU/fkivek3aZrWjZ69Y/W6BujNajBkq8sVeClFUAINX?=
+ =?us-ascii?Q?xezUrIUxzyduJ4o1D5YhLL5F4vUjslD0MxGi3rwjSMwRdrBtUkCmAinFduQ7?=
+ =?us-ascii?Q?z7w6IM+NA2nsTYnoXnZ3AMAoAS9Uzf1Ud0+yRmDpjf+Bv1T1TT2VXUBHtR4X?=
+ =?us-ascii?Q?NiAnWL9T3mPPjhOjYE4gElGidemGERoa6xjglUuYRg+dPtRVKNpDMqjaTBiU?=
+ =?us-ascii?Q?8IPTsIPiXBHkkywhpbb+7z0muzaoQXeC6jsMYkbFqRXUqty9zmDZMYq1wYR6?=
+ =?us-ascii?Q?iIRdjD7YYRB5cIevPOLUG811jiF+GdWP+GlP9EBjj7QgbRU1JRzY/SKprgQk?=
+ =?us-ascii?Q?lGjomwQ836e9wSPReq2xArs3dJbrn1Ojn7MdX9BAXpAsPUL2KR+Ix12GXw7y?=
+ =?us-ascii?Q?G/HBCf3/f9cXKqiMDMp20VPCUpKZmAbZepKp71PzyGet27eUQRI6xOxzOFKd?=
+ =?us-ascii?Q?ZWBq10RT6Kvys3E7WtyORzCDHoBYe2dsfb+s+c9I5VDJzx3mibUILnvNmJL4?=
+ =?us-ascii?Q?tBNX4MmIdya5FE95o37WTnJy0pBBsCasC/hDJO/I4cKHC+zXxItF7mUzsUJ4?=
+ =?us-ascii?Q?/NcfdHa7iQD4/gg2zLesV27AZ7EdXC811r3Fnhm8NOllan56Nf70qHl9AFMV?=
+ =?us-ascii?Q?9iAoxVGR9XIs/g2QDoRFExYtZLOw3JUBy7rLbuLQJKREebXuYDvvlIk2n7mn?=
+ =?us-ascii?Q?Yy3eeZ5Zn+/gea/rHBIE5MUk8udNzNkFHQiOq3UVA+SAT5MPJGx/DHHLucXK?=
+ =?us-ascii?Q?O5N+Ig4KTwOp+DSwXgRPan7fDo/HHK3CCJxVyZCtEm07TaihvBgZ9FqxDG3Z?=
+ =?us-ascii?Q?XsmutkM9QF9GcQSjmgq89qILDAONQN93jdyPziDuay//qfuyamrzO2R3RkIf?=
+ =?us-ascii?Q?Hc9h1IMlTdlLMKjYb6J+QyYZBvFqA6YLWpRgRtSzlk+7WxoWvDmok5FaxnV4?=
+ =?us-ascii?Q?Bq85llo+jQ4+dHzIOpzesDAWbsqibua0krAw3HhKyYN//7150eTbALplgunT?=
+ =?us-ascii?Q?otXAOiDXp+t3vJqqxGtN66FSgHC5sPrMblJoiR7byzw15HMRhPd3aQ761S8q?=
+ =?us-ascii?Q?xfFVQU2V0pYTCj/nyGvILWL/7qdonhSL?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 21:20:30.2909 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe6f7896-283e-4855-5ee7-08dd1a29a408
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF000023D9.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB8070
+Received-SPF: permerror client-ip=2a01:111:f403:2405::623;
+ envelope-from=Frederic.Konrad@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +151,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/24 11:26, Daniel P. Berrangé wrote:
-> The 'access' check implies the file exists.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/cmd.py | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-> index 4106f1ee7c..600e0509db 100644
-> --- a/tests/functional/qemu_test/cmd.py
-> +++ b/tests/functional/qemu_test/cmd.py
-> @@ -25,7 +25,7 @@ def which(tool):
->       paths=os.getenv('PATH')
->       for p in paths.split(os.path.pathsep):
->           p = os.path.join(p, tool)
-> -        if os.path.exists(p) and os.access(p, os.X_OK):
-> +        if os.access(p, os.X_OK):
->               return p
->       return None
->   
+Now there is an option to enable misaligned accesses traps, check the alignment
+during load and store for the RVI instructions.  Do not generate them if the
+zama16b extension is there.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Frederic Konrad <fkonrad@amd.com>
+---
+ target/riscv/insn_trans/trans_rvi.c.inc | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-r~
+diff --git a/target/riscv/insn_trans/trans_rvi.c.inc b/target/riscv/insn_trans/trans_rvi.c.inc
+index 96c218a9d7..1283207fc7 100644
+--- a/target/riscv/insn_trans/trans_rvi.c.inc
++++ b/target/riscv/insn_trans/trans_rvi.c.inc
+@@ -323,6 +323,10 @@ static bool gen_load(DisasContext *ctx, arg_lb *a, MemOp memop)
+ {
+     bool out;
+ 
++    if (ctx->cfg_ptr->trap_misaligned_access && !ctx->cfg_ptr->ext_zama16b) {
++        memop |= MO_ALIGN;
++    }
++
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+@@ -424,6 +428,9 @@ static bool gen_store_i128(DisasContext *ctx, arg_sb *a, MemOp memop)
+ 
+ static bool gen_store(DisasContext *ctx, arg_sb *a, MemOp memop)
+ {
++    if (ctx->cfg_ptr->trap_misaligned_access && !ctx->cfg_ptr->ext_zama16b) {
++        memop |= MO_ALIGN;
++    }
+     if (ctx->cfg_ptr->ext_zama16b) {
+         memop |= MO_ATOM_WITHIN16;
+     }
+-- 
+2.43.5
+
 
