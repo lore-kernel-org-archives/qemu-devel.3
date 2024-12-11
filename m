@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11527E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:58:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0AFAE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:59:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLP5q-0005nl-C9; Wed, 11 Dec 2024 10:57:42 -0500
+	id 1tLP79-0006OC-H1; Wed, 11 Dec 2024 10:59:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tLP5o-0005nb-TC
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:57:40 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1tLP75-0006Nw-Q6
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:59:00 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <icegambit91@gmail.com>)
- id 1tLP5n-0004Mb-08
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:57:40 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2ef6af22ea8so4977960a91.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:57:37 -0800 (PST)
+ id 1tLP74-0004PH-DU
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:58:59 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-725dbdf380aso3576811b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:58:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733932657; x=1734537457; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733932737; x=1734537537; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=VPNhkpkiR/2sp1sMgdrZpBZFaAENwx6+ttAeb6bfzKM=;
- b=Dx9sHTpUOyRKgAX9runwGRkbXSr+MaYhjjR2jumZosqmx+m9xcYlh2MyN3kivU2Ldv
- rV8G1P6Kc/YplT3wRwlhyoJRyvH9bpO0Hur/8+Hfeur/M5zFEOxA0kNKmtJ3UnANQoIB
- y1Z+AjCAPwChpjLL1h6nZQn/l7QBJhBfwEcnkIclpmxgsmZF1WBdqHRdc/msaImkPS6A
- by+c414LgQZtSnTG8+wTMFWbWBfurucr50Pz2fEW4BuJQ8QQoYVWYtXd43GjkNG4Ryrb
- msBeWUloYIAARXJkNyfqr5UueKOIZ7mhJ+rJWO+Y1M93bQgZl/Is2DH3WqlvX3PPJJNE
- KjXA==
+ bh=DPncGeCk5CpnPSb2PpqPFzcGEhpDMKSVRWofbaFTbpo=;
+ b=Xoy/mqRWu8Ft76lSiowrQiqPvR15QrWRdRyViOVt5EpJqFsnq08BYcyUg0AOIm1sKc
+ pkFAW1F/jl16GmEls09DSLGIaS7jXyeAsRsVI99uhSu6vG4cB1HF3G3x82ZwRTZjq+CL
+ wvmhZEqnMabMBwtg8okSTE2nNJl+XoRaixY8htlQULftX1eTUSJer7UmivdAFXHWZJED
+ fJPgGjwAqaIOgjnZNulGudsSkAmIa2P5XPURwbhFZupuL8Z8sOidrLimmWzLNUNIhdox
+ D8Kk42cF/SU7J78GBcWHC1n3hB0pE+RIAjbCuKb5zxsg2OMTWZSLAIbydBa3oTm/7hS8
+ InIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733932657; x=1734537457;
+ d=1e100.net; s=20230601; t=1733932737; x=1734537537;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VPNhkpkiR/2sp1sMgdrZpBZFaAENwx6+ttAeb6bfzKM=;
- b=m5Tn2gS6zqzXI35R9Xp7ibyltNsIZgZlObHOQrZTpGL41Bf/z+lZ3ZwzCYyhkk7Ty/
- B7AOnin9WVN3qvAxcfMV/Y+El1pM6dMgX7OmUjsUnZg/6b/4+0gfshHUG+Z48tTC8vHr
- 1jL4lquSYIbiUhH6zhRAyp0Fcl5TPQKMHENblY+YAgOi7710r1eoqKfpX10C60qKOZap
- u3X+2QSLiyiaszNrLHZjniVNszGadWnpYi15HRr6G8MIaq7PGY4AF7HXtgGlSTPC8RLu
- q3S20zifr3NZhEpLYd9z5T6ZuhB3k0ZSKiz0aBHTftb5T0jfKUj2ir4ArGnI8SFzumWL
- ioKA==
+ bh=DPncGeCk5CpnPSb2PpqPFzcGEhpDMKSVRWofbaFTbpo=;
+ b=YMECNtEAmYZW+/eFnxRXwMCUjGnSOW525lzKbT/YUa2023b5wbC8+nac0ZxKP7y1vx
+ NW8TH4z3II601ShF/7wycPayknaug2P7N0Wwl7on0Q4C1mHWLxuNNYsgF6gjSi5iU+TY
+ jc9HkKELiW+P9njO6LSvMpiIQKNYgngM+n7S37/iASuNJi5pdqqF/I6bt0/Z5Z2co5xe
+ 0fbUkv0BLCYAOX0ETNYvVepHQXd7RYnt30MBbsM12OMwdMAeuh9HPewusU8KUGc56aYH
+ gRJTE5bn3XVU6znpeS0IcfYPU6U9NnHyyfLIoW7C8NcGZ92ogQ2OL5ytKi+hP1glGegq
+ +AVQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJMyrjLI+YfS6PfwhnzgwmkOH2Wbn6zhCDhJW08CMzPwJc/Aa8RHC3fwe5xc4HCIdlSuMI9o5CS2zJ@nongnu.org
-X-Gm-Message-State: AOJu0YxwV6w+SVckPE56yEOzRiXoRQQu87gWIGWt+IxAgYbx+Qr/trnV
- SiOw53tvZfXnAxXm03bSWpj8ivYPqO2Ts2F7qlay641IuMjDomRwgqSJrA==
-X-Gm-Gg: ASbGncsPTdsvbZIm0RdnZXVmD/PenCIS8mZkfn9IRqHPaHcJtSl4+1EqFxQecFGPPYx
- sCuvylzq2P5WGDu9/DaxJhAevznAn1cczOyGjZmSXsB8wnZQB5QcMPK7085rjlktuPQuc3fmmWh
- WA/j0tf8KXkAILGRpqPZcPHAxTYWIjujV/059kKUHPoBd5tJ9q6v8zCtY+zjMEErGccvv7Cd62v
- nabKSPFxbQEXlglotNhs1bX
-X-Google-Smtp-Source: AGHT+IF0SY5e/NdpHV0jEBEVwX01yqZckwH5oV0hvLdr/wj2p5HfpyMPJPmvsFr7oZj854NAFnxlRw==
-X-Received: by 2002:a17:90a:de98:b0:2ee:b4d4:69 with SMTP id
- 98e67ed59e1d1-2f128048ef7mr5173211a91.35.1733932656651; 
- Wed, 11 Dec 2024 07:57:36 -0800 (PST)
+ AJvYcCUjzUhLJjHvX6YZPkdmkhQDKnq6krC8c/doM55ZoNTMNthEy4tlmKX5JFeX68iJuc7BdP5gRN7CJ8lP@nongnu.org
+X-Gm-Message-State: AOJu0YzpYzwjvd1BhpPSaaH8mB9VKN+/JylQ9UBib+pgrttbUdolegJR
+ Eq3fU4IyXiGH/x2Q0JrVMY7JTixQUqpJOJL0Lgy0VVV0oTnldMSYZoxTug==
+X-Gm-Gg: ASbGncsE+uSLbvLayBSag6fYF809ZJZ8PaJ+d/smztWfQ3cAt9vaU5hNnTGqDjMurYB
+ G9aU/HanWHd46OYjau1zyTdB/il3VVpzlEJHXOF1qsrY5DE4CHqK2ygC4YKvO5GyEQEtfdpVlTC
+ X/WkDzT6EyjEnYiv6KKSqM4SZymWXRq+mBfIiklHGsKdprJeIaPw/Uh0hWlFjkUndnjTiL3c0YV
+ dyVoKiMM8THlKVtiSol0XK+
+X-Google-Smtp-Source: AGHT+IG2VJS23zjhUVBo37vXxa+tkqX5j3uguUioJkTXPCYGlwoCYEWsFcBzxaG/aX+ywMQC0n7vDg==
+X-Received: by 2002:a05:6a20:d50c:b0:1e1:9fef:e96a with SMTP id
+ adf61e73a8af0-1e1c12aac6emr5323912637.6.1733932736888; 
+ Wed, 11 Dec 2024 07:58:56 -0800 (PST)
 Received: from [192.168.1.18] ([223.233.86.194])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2ef67d6ea84sm11129071a91.47.2024.12.11.07.57.34
+ d2e1a72fcca58-725d911615asm7768039b3a.147.2024.12.11.07.58.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 07:57:36 -0800 (PST)
-Message-ID: <df9a9db8-550d-4635-9e0c-f6ff19842a5b@gmail.com>
-Date: Wed, 11 Dec 2024 21:27:30 +0530
+ Wed, 11 Dec 2024 07:58:56 -0800 (PST)
+Message-ID: <511b1b12-cb5f-4636-a331-aef0575b3e88@gmail.com>
+Date: Wed, 11 Dec 2024 21:28:52 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v4 0/5] Add packed virtqueue to shadow virtqueue
+Subject: Re: [RFC v4 2/5] vhost: Write descriptors to packed svq
 To: Eugenio Perez Martin <eperezma@redhat.com>
 Cc: sgarzare@redhat.com, mst@redhat.com, qemu-devel@nongnu.org,
  Sahil Siddiq <sahilcdq@proton.me>
 References: <20241205203430.76251-1-sahilcdq@proton.me>
- <CAJaqyWerdWk5S0Sxt4oMUCc8FQJTxopyvhtyOV6ocbXmJ_p7Dw@mail.gmail.com>
+ <20241205203430.76251-3-sahilcdq@proton.me>
+ <CAJaqyWchuA__QeFVCgozSJGQdLfhGD97x6vm3zRiuM=8q+tm-w@mail.gmail.com>
 Content-Language: en-US
 From: Sahil Siddiq <icegambit91@gmail.com>
 Autocrypt: addr=icegambit91@gmail.com; keydata=
@@ -111,11 +112,11 @@ Autocrypt: addr=icegambit91@gmail.com; keydata=
  kn6WekD80DYbAfKyFAXQCO/nclZ82RNmJbDRi3AeMFrxKi6KgdGCp1Izhj9USaMOVqcuV2p0
  Rsoq+sFqWOKaHWnQHCM9RkynQVqrgUaSawEbGlCP1KIhVmjfjVsmsCaKkUb9T6VeO+ZNe+Pn
  rPgMe6IIvn24UuW2f6fIt0AaqOWq
-In-Reply-To: <CAJaqyWerdWk5S0Sxt4oMUCc8FQJTxopyvhtyOV6ocbXmJ_p7Dw@mail.gmail.com>
+In-Reply-To: <CAJaqyWchuA__QeFVCgozSJGQdLfhGD97x6vm3zRiuM=8q+tm-w@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=icegambit91@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=icegambit91@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -141,105 +142,49 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
-Thank you for your reply.
-
-On 12/10/24 2:57 PM, Eugenio Perez Martin wrote:
-> On Thu, Dec 5, 2024 at 9:34 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
+On 12/10/24 2:24 PM, Eugenio Perez Martin wrote:
+> On Thu, Dec 5, 2024 at 9:35 PM Sahil Siddiq <icegambit91@gmail.com> wrote:
 >>
->> Hi,
+>> This commit is the first in a series to add support for packed
+>> virtqueues in vhost_shadow_virtqueue.
 >>
->> There are two issues that I found while trying to test
->> my changes. I thought I would send the patch series
->> as well in case that helps in troubleshooting. I haven't
->> been able to find an issue in the implementation yet.
->> Maybe I am missing something.
+>> This patch implements the insertion of available buffers in the
+>> descriptor area. It takes into account descriptor chains, but does
+>> not consider indirect descriptors.
 >>
->> I have been following the "Hands on vDPA: what do you do
->> when you ain't got the hardware v2 (Part 2)" [1] blog to
->> test my changes. To boot the L1 VM, I ran:
+>> Also validate svq-specific features that vdpa supports.
 >>
->> [...]
+>> Signed-off-by: Sahil Siddiq <sahilcdq@proton.me>
+>> ---
+>> Changes v3 -> v4:
+>> - Split commit #1 in v3 into 2 commits.
+>> - vhost-shadow-virtqueue.c
+>>    (vhost_svq_valid_features): Add enums.
 >>
->> But if I boot L2 with x-svq=true as shown below, I am unable
->> to ping the host machine.
+>>   hw/virtio/vhost-shadow-virtqueue.c | 83 +++++++++++++++++++++++++++++-
+>>   1 file changed, 81 insertions(+), 2 deletions(-)
 >>
->> $ ./qemu/build/qemu-system-x86_64 \
->> -nographic \
->> -m 4G \
->> -enable-kvm \
->> -M q35 \
->> -drive file=//root/L2.qcow2,media=disk,if=virtio \
->> -netdev type=vhost-vdpa,vhostdev=/dev/vhost-vdpa-0,x-svq=true,id=vhost-vdpa0 \
->> -device virtio-net-pci,netdev=vhost-vdpa0,disable-legacy=on,disable-modern=off,ctrl_vq=on,ctrl_rx=on,event_idx=off,bus=pcie.0,addr=0x7 \
->> -smp 4 \
->> -cpu host \
->> 2>&1 | tee vm.log
->>
->> In L2:
->>
->> # ip addr add 111.1.1.2/24 dev eth0
->> # ip addr show eth0
->> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
->>      link/ether 52:54:00:12:34:57 brd ff:ff:ff:ff:ff:ff
->>      altname enp0s7
->>      inet 111.1.1.2/24 scope global eth0
->>         valid_lft forever preferred_lft forever
->>      inet6 fe80::9877:de30:5f17:35f9/64 scope link noprefixroute
->>         valid_lft forever preferred_lft forever
->>
->> # ip route
->> 111.1.1.0/24 dev eth0 proto kernel scope link src 111.1.1.2
->>
->> # ping 111.1.1.1 -w10
->> PING 111.1.1.1 (111.1.1.1) 56(84) bytes of data.
->>  From 111.1.1.2 icmp_seq=1 Destination Host Unreachable
->> ping: sendmsg: No route to host
->>  From 111.1.1.2 icmp_seq=2 Destination Host Unreachable
->>  From 111.1.1.2 icmp_seq=3 Destination Host Unreachable
->>
->> --- 111.1.1.1 ping statistics ---
->> 3 packets transmitted, 0 received, +3 errors, 100% packet loss, time 2076ms
->> pipe 3
->>
->> The other issue is related to booting L2 with "x-svq=true"
->> and "packed=on".
->>
->> In L1:
->>
->> $ ./qemu/build/qemu-system-x86_64 \
->> -nographic \
->> -m 4G \
->> -enable-kvm \
->> -M q35 \
->> -drive file=//root/L2.qcow2,media=disk,if=virtio \
->> -netdev type=vhost-vdpa,vhostdev=/dev/vhost-vdpa-0,id=vhost-vdpa0,x-svq=true \
->> -device virtio-net-pci,netdev=vhost-vdpa0,disable-legacy=on,disable-modern=off,guest_uso4=off,guest_uso6=off,host_uso=off,guest_announce=off,ctrl_vq=on,ctrl_rx=on,event_idx=off,packed=on,bus=pcie.0,addr=0x7 \
->> -smp 4 \
->> -cpu host \
->> 2>&1 | tee vm.log
->>
->> The kernel throws "virtio_net virtio1: output.0:id 0 is not
->> a head!" [4].
->>
+>> diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shadow-virtqueue.c
+>> index bb7cf6d5db..6eee01ab3c 100644
+>> --- a/hw/virtio/vhost-shadow-virtqueue.c
+>> +++ b/hw/virtio/vhost-shadow-virtqueue.c
+>> @@ -33,6 +33,9 @@ bool vhost_svq_valid_features(uint64_t features, Error **errp)
+>>            ++b) {
+>>           switch (b) {
+>>           case VIRTIO_F_ANY_LAYOUT:
+>> +        case VIRTIO_F_RING_PACKED:
+>> +        case VIRTIO_F_RING_RESET:
+>> +        case VIRTIO_RING_F_INDIRECT_DESC:
+>>           case VIRTIO_RING_F_EVENT_IDX:
 > 
-> So this series implements the descriptor forwarding from the guest to
-> the device in packed vq. We also need to forward the descriptors from
-> the device to the guest. The device writes them in the SVQ ring.
+> This is good, but it should be added in the last commit. Otherwise
+> we're enabling packed vq without the code to handle it.
 > 
-> The functions responsible for that in QEMU are
-> hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_flush, which is called by
-> the device when used descriptors are written to the SVQ, which calls
-> hw/virtio/vhost-shadow-virtqueue.c:vhost_svq_get_buf. We need to do
-> modifications similar to vhost_svq_add: Make them conditional if we're
-> in split or packed vq, and "copy" the code from Linux's
-> drivers/virtio/virtio_ring.c:virtqueue_get_buf.
-> 
-> After these modifications you should be able to ping and forward
-> traffic. As always, It is totally ok if it needs more than one
-> iteration, and feel free to ask any question you have :).
+> The rest looks good to me.
 > 
 
-Understood, I'll make these changes and will test it again.
+Got it. I'll make this change before sending the next patch
+series.
 
 Thanks,
 Sahil
