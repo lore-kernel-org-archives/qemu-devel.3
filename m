@@ -4,91 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AC0E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D19BBE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:34:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQZ9-0006qs-SK; Wed, 11 Dec 2024 12:32:05 -0500
+	id 1tLQUO-0005RJ-Cz; Wed, 11 Dec 2024 12:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLQYy-0006DX-FD
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:31:52 -0500
-Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLQYb-0001jG-NG
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:31:32 -0500
-Received: by mail-oi1-x236.google.com with SMTP id
- 5614622812f47-3eb40876bbfso1043799b6e.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 09:31:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733938287; x=1734543087; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LnLTVgw145mbt5EGwmR5QWovOiZGC3LgHjn40Qa46rQ=;
- b=lUGlimZPG5sf/Ja9kRvbiFbuL77KaWZZBjgSHM53LTMeUHlnZEp711IDEhCVr0gBab
- n929pYlI7bL4SAIEF0Qv41pQ0+RJnMqcszTMkElOcqQjRvM2mv0VjN5J+FkAB+4+riT6
- T71xSWe55ZjkMLVpdZgSrFjNpxhTipffLrc+NRiXvjzsoCDhtjGAe4LdkU/NGwJfWZHS
- acPkEKJiECLOEEkLktPZHxUS6CPD7B6piqDptUjblxQx6EINwpSI/oQziZrnk0RsaiYk
- DZVAgLBXH6I/E4m88aTAmbCSim7AUQ8wPqEdO+iLufFjzQjN3Uy0E6POaQpa018BvN4D
- 7VuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733938287; x=1734543087;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LnLTVgw145mbt5EGwmR5QWovOiZGC3LgHjn40Qa46rQ=;
- b=XJhm9K8+gAVnB+BXk6lfBZPJjDKhvvYByhGgLgFSQHQ+q9x73axgknjnCvp+3ElvlR
- sPlbgtOZvICeM6hCUnkiHU1Y3cxPcBfECPq3wTM4o+A18Meb0XGXRv21XTkX1aLZrwuP
- YlnRjEOE6qdwDAQRgPmJW8UvYUPaS7YydmGPWMDn1wDfnkZFY+Oh6p++az8qOgiokI9X
- FFpNGbkNb2o3jKYhpJrzBhzoJi62IAoUOJRVURt+77RvAjpnopGUG6fuzNnu+Vu+IKcZ
- fri1lebn4dpC/UpqfubyD9ZhcH7mhJ5USwbFy7ipC0eXYmVgxL+rB0anrq4vs5ZGukF9
- 1/Hg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXsJ7475ba+4U5ksChdWCcFcaYIS8m3CPGNh85EtDX4MBEvB7J7nwpllYDsmTeq1C+CxtJ/k7ciVGs4@nongnu.org
-X-Gm-Message-State: AOJu0Yw9hzxYgYVObe/dBqiE3zbMB3ejgAxOdRWPZowoAw3zdm1gkKot
- FBlTi2k93qxKZQzeDPBZsZaDct9azJBUWpFeU+/awyN/cxiS+jZTVapxMcqW+LQ=
-X-Gm-Gg: ASbGncsmxe9mNAwOEfHeeVL3Y7vuEMnvm6Sf2kH56MxYHcCoajkW8YRKe9snKhcORvi
- KSZt8xdTX1Mt1BtACLcB/bI7irzB6XQIhr+5qK7ejVSdpcGlzMOd+4q9RBibRoG+tGp3LPPmQd6
- JgXgNRsfeH2RxCG+E3T9zFA2HzKVMD+RM4jQjJc0I/inhwLZYjl7xcRc874lMJdeA/2nbREbarv
- 6Ni9RSaSd9xLBzNnv+IaXhA/D20hG7xAc53fdGB6OdyUqudW/M7lZdyRRfzjftFT8v+zr4=
-X-Google-Smtp-Source: AGHT+IHQAeLtWxyKDXhgbZP2hCzIBCDHvkTfsYztMrY5RJZwoITQxRrtGK67C6wDTLJeEPDHK+nAZg==
-X-Received: by 2002:a05:6808:3c4f:b0:3ea:6415:c44 with SMTP id
- 5614622812f47-3eb85aef8b1mr2925815b6e.8.1733938286953; 
- Wed, 11 Dec 2024 09:31:26 -0800 (PST)
-Received: from [172.20.4.119] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eb63def321sm1211436b6e.53.2024.12.11.09.31.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 09:31:26 -0800 (PST)
-Message-ID: <0ec58c58-2814-4b1f-8725-d8c57bb4b54b@linaro.org>
-Date: Wed, 11 Dec 2024 11:31:23 -0600
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLQUK-0005Qi-3A
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:05 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLQUF-000165-0l
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:03 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733938016;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=Vg7ouLRKRr5uTPGUap2HkSeDZDQ5P6j4KbeDqXlr1IU=;
+ b=IBrarZGUdC86j/gaNN8LzeLkRSMF79t8gvb8ENwnsd5X6ZvgIxVLFEPXwwEXY9w8rAh4/G
+ 1Zfh5KeGEjdIm42quXp6YACwQN9rkj3g1RAnrzNBAuvvhftgwMdpQz2xR4ZqCKHwb2q55K
+ g42LIZM3fVZiXXDdwTWOT/YaeG3bmKU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-487-lRd5GZN9MG-de_wYDnC5ag-1; Wed,
+ 11 Dec 2024 12:26:54 -0500
+X-MC-Unique: lRd5GZN9MG-de_wYDnC5ag-1
+X-Mimecast-MFC-AGG-ID: lRd5GZN9MG-de_wYDnC5ag
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8FF491955F40; Wed, 11 Dec 2024 17:26:52 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.49])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6E7501956048; Wed, 11 Dec 2024 17:26:49 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v2 00/31] tests/functional: various improvements wrt
+ assets/scratch files
+Date: Wed, 11 Dec 2024 17:26:16 +0000
+Message-ID: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 42/69] target/arm: Introduce gen_gvec_rev{16,32,64}
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
- <20241211163036.2297116-43-richard.henderson@linaro.org>
- <934e7598-8927-4d35-9784-6d33d7892952@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <934e7598-8927-4d35-9784-6d33d7892952@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,42 +85,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/24 11:19, Philippe Mathieu-Daudé wrote:
-> On 11/12/24 17:30, Richard Henderson wrote:
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   target/arm/tcg/translate.h      |  6 +++
->>   target/arm/tcg/gengvec.c        | 58 ++++++++++++++++++++++
->>   target/arm/tcg/translate-neon.c | 88 +++++++--------------------------
->>   3 files changed, 81 insertions(+), 71 deletions(-)
->>
->> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
->> index cb8e1b2586..342ebedafc 100644
->> --- a/target/arm/tcg/translate.h
->> +++ b/target/arm/tcg/translate.h
->> @@ -586,6 +586,12 @@ void gen_gvec_cnt(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
->>                     uint32_t opr_sz, uint32_t max_sz);
->>   void gen_gvec_rbit(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
->>                      uint32_t opr_sz, uint32_t max_sz);
->> +void gen_gvec_rev16(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
->> +                    uint32_t opr_sz, uint32_t max_sz);
->> +void gen_gvec_rev32(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
->> +                    uint32_t opr_sz, uint32_t max_sz);
->> +void gen_gvec_rev64(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
->> +                    uint32_t opr_sz, uint32_t max_sz);
-> 
-> Remembering https://lore.kernel.org/qemu-devel/20230822124042.54739-1-philmd@linaro.org/, 
-> these gvec helpers might be useful for other targets.
+This series is an attempt to bring a little more guaranteed order
+to asset and scratch file handling in the functional tests. The
+main highlights are:
 
-These may be factored incorrectly for other usage.  Here, for rev<N>, N is the size of the 
-container, and vece specifies the size of the element within each container.  It's reverse 
-of the usual meaning of vece, but it maps well to the Arm instruction encoding.
+ * Add custom @skipXXXXX decorators for common scenarios
+   present in QEMU tests
 
-The only other bswap I can recall with vector operands is s390x VLBR/VSTBR, and similar 
-for Power VSX, which performs the reversal at the same time as a load/store.  So in this 
-case the heavy lifting of the bswap gets pushed off to MO_BSWAP.
+ * Add helpers for creating file paths for various well
+   known types of data, or well known locations, to avoid
+   adhoc path manipulation
 
+ * Add helpers to simplify uncompressing and extracting
+   archives, from files downloaded as assets
 
-r~
+The series overall has a neutral diffstat, but if you look at
+just test files,  as opposed to the shared infra, you'll see
+a significant reduction of lines of code in the tests, and I
+believe its easier to read them with less boilerplate.
+
+This is based on:
+
+     https://gitlab.com/thuth/qemu.git tags/pull-request-2024-12-11
+
+Changes in v2:
+
+ * Put archive & uncompress helpers in their own files
+ * Have archive_extract & uncompress directly handle
+   assets and format detection
+ * Drop has_cmd/has_cmds helpers in favour of 'which'
+ * Drop obsolete tessract version check
+ * Simplify 'which' impl
+ * Replace 'run_cmd' with direct use of subprocess
+ * Remove even more unused imports
+ * Gracefully handle asset download failure by skipping tests
+ * Drop redundant hardcoded ./contrib path in virtio GPU test
+ * Various docs improvements to decorators
+ * Drop formatting change to import statements
+
+Daniel P. Berrangé (31):
+  tests/functional: remove many unused imports
+  tests/functional: resolve str(Asset) to cache file path
+  tests/functional: remove duplicated 'which' function impl
+  tests/functional: simplify 'which' implementation
+  tests/functional: drop 'tesseract_available' helper
+  tests/functional: introduce some helpful decorators
+  tests/functional: switch to new test skip decorators
+  tests/functional: drop 'has_cmd' and 'has_cmds' helpers
+  tests/functional: add helpers for building file paths
+  tests/functional: switch over to using self.log_file(...)
+  tests/functional: switch over to using self.build_file(...)
+  tests/functional: switch over to using self.data_file(...)
+  tests/functional: switch over to using self.scratch_file()
+  tests/functional: switch over to using self.socket_dir(...)
+  tests/functional: remove redundant 'rmtree' call
+  tests/functional: move archive handling into new archive.py file
+  tests/functional: move uncompress handling into new uncompress.py file
+  tests/functional: add common zip_extract helper
+  tests/functional: add common deb_extract helper
+  tests/functional: let cpio_extract accept filenames
+  tests/functional: add a generalized archive_extract
+  tests/functional: add 'archive_extract' to QemuBaseTest
+  tests/functional: convert tests to new archive_extract helper
+  tests/functional: add a generalized uncompress helper
+  tests/functional: add 'uncompress' to QemuBaseTest
+  tests/functional: convert tests to new uncompress helper
+  tests/functional: drop back compat imports from utils.py
+  tests/functional: replace 'run_cmd' with subprocess helpers
+  tests/functional: remove now unused 'run_cmd' helper
+  tests/functional: skip tests if assets are not available
+  tests/functional: ignore errors when caching assets, except for 404
+
+ tests/functional/qemu_test/__init__.py        |   9 +-
+ tests/functional/qemu_test/archive.py         | 117 ++++++++++
+ tests/functional/qemu_test/asset.py           |  26 ++-
+ tests/functional/qemu_test/cmd.py             |  76 ++-----
+ tests/functional/qemu_test/decorators.py      | 107 +++++++++
+ tests/functional/qemu_test/linuxkernel.py     |  30 +--
+ tests/functional/qemu_test/tesseract.py       |  21 +-
+ tests/functional/qemu_test/testcase.py        | 205 ++++++++++++++++--
+ tests/functional/qemu_test/tuxruntest.py      |  19 +-
+ tests/functional/qemu_test/uncompress.py      |  83 +++++++
+ tests/functional/qemu_test/utils.py           |  45 ----
+ tests/functional/test_aarch64_aspeed.py       |  23 +-
+ tests/functional/test_aarch64_raspi3.py       |   9 +-
+ tests/functional/test_aarch64_raspi4.py       |  21 +-
+ tests/functional/test_aarch64_sbsaref.py      |  12 +-
+ .../functional/test_aarch64_sbsaref_alpine.py |   1 -
+ .../test_aarch64_sbsaref_freebsd.py           |   1 -
+ tests/functional/test_aarch64_virt.py         |  14 +-
+ tests/functional/test_acpi_bits.py            | 124 ++++-------
+ tests/functional/test_alpha_clipper.py        |   6 +-
+ tests/functional/test_arm_aspeed.py           |  46 ++--
+ tests/functional/test_arm_bflt.py             |  13 +-
+ tests/functional/test_arm_bpim2u.py           |  44 ++--
+ tests/functional/test_arm_canona1100.py       |  10 +-
+ tests/functional/test_arm_collie.py           |   2 +-
+ tests/functional/test_arm_cubieboard.py       |  40 ++--
+ tests/functional/test_arm_emcraft_sf2.py      |   2 +-
+ tests/functional/test_arm_integratorcp.py     |  28 +--
+ tests/functional/test_arm_orangepi.py         |  60 +++--
+ tests/functional/test_arm_raspi2.py           |  21 +-
+ tests/functional/test_arm_smdkc210.py         |  18 +-
+ tests/functional/test_arm_sx1.py              |   2 +-
+ tests/functional/test_arm_vexpress.py         |  10 +-
+ tests/functional/test_linux_initrd.py         |   7 +-
+ tests/functional/test_m68k_mcf5208evb.py      |   8 +-
+ tests/functional/test_m68k_nextcube.py        |  24 +-
+ tests/functional/test_m68k_q800.py            |   5 +-
+ .../functional/test_microblaze_s3adsp1800.py  |   9 +-
+ .../test_microblazeel_s3adsp1800.py           |  10 +-
+ tests/functional/test_mips64el_fuloong2e.py   |  10 +-
+ tests/functional/test_mips64el_loongson3v.py  |   8 +-
+ tests/functional/test_mips64el_malta.py       |  45 ++--
+ tests/functional/test_mips_malta.py           |  19 +-
+ tests/functional/test_mipsel_malta.py         |  24 +-
+ tests/functional/test_or1k_sim.py             |   7 +-
+ tests/functional/test_ppc64_e500.py           |   7 +-
+ tests/functional/test_ppc64_hv.py             |  39 +---
+ tests/functional/test_ppc64_tuxrun.py         |   7 +-
+ tests/functional/test_ppc_40p.py              |   7 +-
+ tests/functional/test_ppc_amiga.py            |  20 +-
+ tests/functional/test_ppc_bamboo.py           |  15 +-
+ tests/functional/test_ppc_mac.py              |   8 +-
+ tests/functional/test_ppc_mpc8544ds.py        |   8 +-
+ tests/functional/test_ppc_virtex_ml507.py     |  10 +-
+ tests/functional/test_rx_gdbsim.py            |  13 +-
+ tests/functional/test_s390x_ccw_virtio.py     |   6 +-
+ tests/functional/test_s390x_topology.py       |   7 +-
+ tests/functional/test_sh4_r2d.py              |  14 +-
+ tests/functional/test_sh4eb_r2d.py            |  14 +-
+ tests/functional/test_sparc64_sun4u.py        |  11 +-
+ tests/functional/test_sparc_sun4m.py          |   7 +-
+ tests/functional/test_virtio_gpu.py           |  16 +-
+ tests/functional/test_xtensa_lx60.py          |   8 +-
+ tests/lcitool/libvirt-ci                      |   2 +-
+ 64 files changed, 885 insertions(+), 755 deletions(-)
+ create mode 100644 tests/functional/qemu_test/archive.py
+ create mode 100644 tests/functional/qemu_test/decorators.py
+ create mode 100644 tests/functional/qemu_test/uncompress.py
+
+-- 
+2.46.0
+
 
