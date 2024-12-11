@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AE65E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:50:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4FEAE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:50:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPhV-0000XU-DB; Wed, 11 Dec 2024 11:36:37 -0500
+	id 1tLPZ7-0001xE-63; Wed, 11 Dec 2024 11:27:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPhP-0008Qd-Cx
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:31 -0500
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPhN-0002C0-Ev
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:31 -0500
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6d8e8445219so39245276d6.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:36:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934988; x=1734539788; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=h9jQSwq7lR/Eg53AlnqkWC3Nk0mGhQSS5bECu5mg0fo=;
- b=zywVREdw71KSLU4TnymldYFgHnko/Z+ZMLRo0PSAyLM3ZbZ2h6bXlk239e72ZmMCQA
- 22GReijbSRjD1mnBaE0jPTxFk7DRSq6T9Lz5uzqGhQlezl8Hhye25o0trorS/uCFFTfG
- C8fgDrYW8EIpnJ1eKfmIfC9YNo6aTTZ4QM2XSxGowhsV4+UrZyRH3dOxS4dQHAx+w98/
- 6FeNjnFSAjXf4/xYb/OE40Nq++0pFAXnJPIvPPZdN3I00Uixs+wWXiGhJLaFtqk9ijgD
- Uu3Ww7UOxz9soRupdnqdwEjqazUx5Re41TMVWOAp7HhQxr2tREBdZt0xy6ofMm43DweI
- b1Lw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPZ0-00017Z-Gq
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPYy-0000HB-LD
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934467;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aCokOk3/ugPdPRCt0q5O4jE4HdSTP094Z8xqn4aCSq0=;
+ b=fxdxMkkLVIFP3NrrOyxXJN599rzGuuClurH83zKvA34e+gbMKl9XplHV2FAdmZvYhmJaxN
+ VqiKsTUUnN3QvDRP4zxI6aAP2FoZ2ZgTq73R2aV/cyR6/PaL+l3cNtZB9io4x/M+RNH94f
+ Dw5tXe6Qj5NJ+u+x3PvJRilxPyg4ARc=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-505-yGTUkCuDNyy7uhRp1DZRcA-1; Wed, 11 Dec 2024 11:27:46 -0500
+X-MC-Unique: yGTUkCuDNyy7uhRp1DZRcA-1
+X-Mimecast-MFC-AGG-ID: yGTUkCuDNyy7uhRp1DZRcA
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6d2ae6bc0so635707285a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934988; x=1734539788;
+ d=1e100.net; s=20230601; t=1733934466; x=1734539266;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h9jQSwq7lR/Eg53AlnqkWC3Nk0mGhQSS5bECu5mg0fo=;
- b=NNtK05MxN7cblkInZdwS+sgG+f6QXUXootZ+tXedHp0i/lL4YS56tVaWOUAsjTa4rT
- L1g3iiwu2xia0KHl8CjkPIDJkIS2ZJfN3lU1Q3vLcJbWjQi2UPBEo/5jCymXJy5XYnKC
- aUVYDUtgmOSYte2ApOYyMU2UWuuXz9uC9BYDPJsRJ3ELz6QLOlSUzKmBlXChGLVkWnli
- pcQEZjIy+dm75+RP2nhqP8Qul6DXvH1uAkmfdDgApaiAFjiuAA+iG6L4kNt/sd7EDYoc
- O+pfIYz17VCTWT/kEkSpTbcZxgeEZl9dNDySb3IDqkYQTftqehpMMwzt6iwz334tZpNu
- QAJw==
-X-Gm-Message-State: AOJu0Yzgx5HUokP9B5lwtReFKh9VEQLqRGXU6DYWhJaQODO5xOvLGbyo
- oJOG+MUaAgrgmw7KHzmUicCwGkXIkgZJl7VMoWKHfx+H7Hv8QzlW9PTjfGFwyovAuOdGBVZE9Rr
- Cmbj11ATQ
-X-Gm-Gg: ASbGnct7ff0ICrDOMdI3Dmw3f69YN0OuTEl9VUTT1LMP02MfR5qVxFdfw/7/1PAM3dB
- 6LqpAILw2IkFmA/PwF3whK8p2+7FuPiUWmq63VilWqk9RwSbFyf2S0+jfopErr2DwqJTo+wrBx3
- 9risQ6jGzzjIcmQXIEXjo2ukZ80zxr2ErXAAtsIU9vgp5/h9vnCpIsOcPxpsu0x6vDSUh7HSgVf
- 3oDF+PBaJEpeE2iHTECbqCyT7831+g76E/unW8XrQTIgrBrIn86LINKMIH0jg==
-X-Google-Smtp-Source: AGHT+IGWuwOhE1RkMMGdJyEtATHbq467CbCTT59LjaSv1OFEN6t+kSlJqzD8FyvIuPnqmZhkHU1xHQ==
-X-Received: by 2002:a05:6214:ca7:b0:6d8:8e0f:8c0f with SMTP id
- 6a1803df08f44-6dae29f0f37mr7670656d6.18.1733934988433; 
- Wed, 11 Dec 2024 08:36:28 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da675214sm71856276d6.11.2024.12.11.08.36.27
+ bh=aCokOk3/ugPdPRCt0q5O4jE4HdSTP094Z8xqn4aCSq0=;
+ b=Tt9HJkFCjM2nZ+6VN5NxjZDBWBz4F1CHEmDX0GdmOSyMXKqRgtJKZSUIVSqRITwLgn
+ GyGU1LxrV2ml5Zhr8mGFFfodlFaXTRlZScvqzk7y6NRxY/lrYR6XgZcdbJGmo3Cy7Yc2
+ Bci1HunFoc3cb0spr3YXuErML4/O5ajatN0Io0EYiFQTkuI4IxsIDEe2PWln5q+l12Gn
+ nMz963FOHpJ2TUuWc2v4WEO0Kewh158m02TogAlNj5+g0hcdssAuKlAcdAo4DcG82S7N
+ VMOY574qEi5vGkc4DjtHthYHMcPiKYZt3bbmjf46hWkIhwXjf6haa/5vvn+Qzk4zM7B5
+ Fgzg==
+X-Gm-Message-State: AOJu0YwmL1oVinSoKzye9Mw/Yscuks8vJBklmvjng1uCS0Ugg5jAurvP
+ wVTJY1TMusQh6xfuOdKBtXRv6AclC56rWQ7pZiu10xSw8NKTtUMEmRXLIgGjZTqRAAfBLqr2h6V
+ 551gDnDaUnk+EX6lufgOqcLhvzBSjdO8HQQQmBSnRaIIXiMbrksCEg9F77wKn/eqRbcV958X3f5
+ BIV0jTqY9y29c8eGk8EerXw5rH17dEXX7ZpbG8
+X-Gm-Gg: ASbGncsXnvt3P0NJqwtR+6gXM3GvveT6PkytfLub2R+PSBBYF2a3mAncm2szGtDTmER
+ B7Af9zQT+eYGEgHJhIFIb0NobkIWU1gLgYBHbJphvhpb94IMciOhJGZTrK9sxEdmGzh6tdXSLHD
+ IrA7X5Kv0agEWyauukFCeE8+pKCNbgSnzrFT584n5uvth3+HS5Ij3KI6ZUEfGbU9q0yVf+dTm0X
+ OuvVEHluRj+Pv/7CjN8NUplJgvMI8dednolC8leEiYXqozk+UFysp08
+X-Received: by 2002:a05:620a:1a9d:b0:7b1:5089:485b with SMTP id
+ af79cd13be357-7b6eb4202abmr624675985a.3.1733934465163; 
+ Wed, 11 Dec 2024 08:27:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFS/4SqzqsAHfG9+nQsmZ4AVU87E5NRsWfBZmoh+8vHmlaHeKAX7VWcUJy2yTzF97D7gBHkxg==
+X-Received: by 2002:a05:620a:1a9d:b0:7b1:5089:485b with SMTP id
+ af79cd13be357-7b6eb4202abmr624672285a.3.1733934464801; 
+ Wed, 11 Dec 2024 08:27:44 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b6ed704f9csm57196185a.32.2024.12.11.08.27.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:36:28 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Dec 2024 08:27:44 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 50/69] target/arm: Convert FCVTN, BFCVTN to decodetree
-Date: Wed, 11 Dec 2024 10:30:17 -0600
-Message-ID: <20241211163036.2297116-51-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+Cc: Junjie Mao <junjie.mao@hotmail.com>
+Subject: [PULL 10/49] rust: build: establish a baseline of lints across all
+ crates
+Date: Wed, 11 Dec 2024 17:26:40 +0100
+Message-ID: <20241211162720.320070-11-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,169 +108,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/tcg/translate-a64.c | 89 ++++++++++++++++++----------------
- target/arm/tcg/a64.decode      |  5 ++
- 2 files changed, 52 insertions(+), 42 deletions(-)
+Many lints that default to allow can be helpful in detecting bugs or
+keeping the code style homogeneous.  Add them liberally, though perhaps
+not as liberally as in hw/char/pl011/src/lib.rs.  In particular, enabling
+entire groups can be problematic because of bitrot when new links are
+added in the future.
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 7b76945b0a..d4d19c9caa 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9051,6 +9051,49 @@ TRANS(SQXTUN_v, do_2misc_narrow_vector, a, f_scalar_sqxtun)
- TRANS(SQXTN_v, do_2misc_narrow_vector, a, f_scalar_sqxtn)
- TRANS(UQXTN_v, do_2misc_narrow_vector, a, f_scalar_uqxtn)
+For Clippy, this is actually a feature that is only present in Cargo
+1.74.0 but, since we are not using Cargo to *build* QEMU, only developers
+will need a new-enough cargo and only to run tools such as clippy.
+The requirement does not apply to distros that are building QEMU.
+
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/Cargo.toml               | 68 +++++++++++++++++++++++++++++++++++
+ rust/hw/char/pl011/src/lib.rs | 19 ++--------
+ rust/qemu-api/src/bindings.rs |  6 ++--
+ 3 files changed, 74 insertions(+), 19 deletions(-)
+
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+index 358c517bc56..6ec19b67297 100644
+--- a/rust/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -19,3 +19,71 @@ unknown_lints = "allow"
  
-+static void gen_fcvtn_hs(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_i32 tcg_lo = tcg_temp_new_i32();
-+    TCGv_i32 tcg_hi = tcg_temp_new_i32();
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
-+    TCGv_i32 ahp = get_ahp_flag();
+ # Prohibit code that is forbidden in Rust 2024
+ unsafe_op_in_unsafe_fn = "deny"
 +
-+    tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, n);
-+    gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
-+    gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
-+    tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
-+    tcg_gen_extu_i32_i64(d, tcg_lo);
-+}
++[workspace.lints.rustdoc]
++private_intra_doc_links = "allow"
 +
-+static void gen_fcvtn_sd(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_i32 tmp = tcg_temp_new_i32();
-+    gen_helper_vfp_fcvtsd(tmp, n, tcg_env);
-+    tcg_gen_extu_i32_i64(d, tmp);
-+}
++broken_intra_doc_links = "deny"
++invalid_html_tags = "deny"
++invalid_rust_codeblocks = "deny"
++bare_urls = "deny"
++unescaped_backticks = "deny"
++redundant_explicit_links = "deny"
 +
-+static ArithOneOp * const f_vector_fcvtn[] = {
-+    NULL,
-+    gen_fcvtn_hs,
-+    gen_fcvtn_sd,
-+};
-+TRANS(FCVTN_v, do_2misc_narrow_vector, a, f_vector_fcvtn)
++[workspace.lints.clippy]
++# default-warn lints
++result_unit_err = "allow"
++should_implement_trait = "deny"
++# can be for a reason, e.g. in callbacks
++unused_self = "allow"
 +
-+static void gen_bfcvtn_hs(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
-+    TCGv_i32 tmp = tcg_temp_new_i32();
-+    gen_helper_bfcvt_pair(tmp, n, fpst);
-+    tcg_gen_extu_i32_i64(d, tmp);
-+}
++# default-allow lints
++as_underscore = "deny"
++assertions_on_result_states = "deny"
++bool_to_int_with_if = "deny"
++borrow_as_ptr = "deny"
++cast_lossless = "deny"
++dbg_macro = "deny"
++debug_assert_with_mut_call = "deny"
++derive_partial_eq_without_eq = "deny"
++doc_markdown = "deny"
++empty_structs_with_brackets = "deny"
++ignored_unit_patterns = "deny"
++implicit_clone = "deny"
++macro_use_imports = "deny"
++missing_const_for_fn = "deny"
++missing_safety_doc = "deny"
++multiple_crate_versions = "deny"
++mut_mut = "deny"
++needless_bitwise_bool = "deny"
++needless_pass_by_ref_mut = "deny"
++no_effect_underscore_binding = "deny"
++option_option = "deny"
++or_fun_call = "deny"
++ptr_as_ptr = "deny"
++pub_underscore_fields = "deny"
++redundant_clone = "deny"
++redundant_closure_for_method_calls = "deny"
++redundant_else = "deny"
++redundant_pub_crate = "deny"
++ref_binding_to_reference = "deny"
++ref_option_ref = "deny"
++return_self_not_must_use = "deny"
++same_name_method = "deny"
++semicolon_inside_block = "deny"
++shadow_unrelated = "deny"
++significant_drop_in_scrutinee = "deny"
++significant_drop_tightening = "deny"
++suspicious_operation_groupings = "deny"
++transmute_ptr_to_ptr = "deny"
++transmute_undefined_repr = "deny"
++type_repetition_in_bounds = "deny"
++used_underscore_binding = "deny"
 +
-+static ArithOneOp * const f_vector_bfcvtn[] = {
-+    NULL,
-+    gen_bfcvtn_hs,
-+    NULL,
-+};
-+TRANS_FEAT(BFCVTN_v, aa64_bf16, do_2misc_narrow_vector, a, f_vector_bfcvtn)
++# nice to have, but cannot be enabled yet
++#wildcard_imports = "deny"   # still have many bindings::* imports
++#ptr_cast_constness = "deny" # needs 1.65.0 for cast_mut()/cast_const()
 +
- /* Common vector code for handling integer to FP conversion */
- static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
-                                    int elements, int is_signed,
-@@ -9633,33 +9676,6 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
-         tcg_res[pass] = tcg_temp_new_i64();
++# these may have false positives
++#option_if_let_else = "deny"
++cognitive_complexity = "deny"
+diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
+index cd0a49acb91..4dc0e8f345f 100644
+--- a/rust/hw/char/pl011/src/lib.rs
++++ b/rust/hw/char/pl011/src/lib.rs
+@@ -14,28 +14,15 @@
+ //! the [`registers`] module for register types.
  
-         switch (opcode) {
--        case 0x16: /* FCVTN, FCVTN2 */
--            /* 32 bit to 16 bit or 64 bit to 32 bit float conversion */
--            if (size == 2) {
--                TCGv_i32 tmp = tcg_temp_new_i32();
--                gen_helper_vfp_fcvtsd(tmp, tcg_op, tcg_env);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
--            } else {
--                TCGv_i32 tcg_lo = tcg_temp_new_i32();
--                TCGv_i32 tcg_hi = tcg_temp_new_i32();
--                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
--                TCGv_i32 ahp = get_ahp_flag();
--
--                tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, tcg_op);
--                gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
--                gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
--                tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tcg_lo);
--            }
--            break;
--        case 0x36: /* BFCVTN, BFCVTN2 */
--            {
--                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
--                TCGv_i32 tmp = tcg_temp_new_i32();
--                gen_helper_bfcvt_pair(tmp, tcg_op, fpst);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
--            }
--            break;
-         case 0x56:  /* FCVTXN, FCVTXN2 */
-             {
-                 /*
-@@ -9675,6 +9691,8 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
-         default:
-         case 0x12: /* XTN, SQXTUN */
-         case 0x14: /* SQXTN, UQXTN */
-+        case 0x16: /* FCVTN, FCVTN2 */
-+        case 0x36: /* BFCVTN, BFCVTN2 */
-             g_assert_not_reached();
-         }
+ #![deny(
+-    rustdoc::broken_intra_doc_links,
+-    rustdoc::redundant_explicit_links,
+     clippy::correctness,
+     clippy::suspicious,
+     clippy::complexity,
+     clippy::perf,
+     clippy::cargo,
+     clippy::nursery,
+-    clippy::style,
+-    // restriction group
+-    clippy::dbg_macro,
+-    clippy::as_underscore,
+-    clippy::assertions_on_result_states,
+-    // pedantic group
+-    clippy::doc_markdown,
+-    clippy::borrow_as_ptr,
+-    clippy::cast_lossless,
+-    clippy::option_if_let_else,
+-    clippy::missing_const_for_fn,
+-    clippy::cognitive_complexity,
+-    clippy::missing_safety_doc,
+-    )]
++    clippy::style
++)]
++#![allow(clippy::upper_case_acronyms)]
+ #![allow(clippy::result_unit_err)]
  
-@@ -10088,21 +10106,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-                 unallocated_encoding(s);
-                 return;
-             }
--            /* fall through */
--        case 0x16: /* FCVTN, FCVTN2 */
--            /* handle_2misc_narrow does a 2*size -> size operation, but these
--             * instructions encode the source size rather than dest size.
--             */
--            if (!fp_access_check(s)) {
--                return;
--            }
--            handle_2misc_narrow(s, false, opcode, 0, is_q, size - 1, rn, rd);
--            return;
--        case 0x36: /* BFCVTN, BFCVTN2 */
--            if (!dc_isar_feature(aa64_bf16, s) || size != 2) {
--                unallocated_encoding(s);
--                return;
--            }
-             if (!fp_access_check(s)) {
-                 return;
-             }
-@@ -10155,6 +10158,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-             }
-             break;
-         default:
-+        case 0x16: /* FCVTN, FCVTN2 */
-+        case 0x36: /* BFCVTN, BFCVTN2 */
-             unallocated_encoding(s);
-             return;
-         }
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 295329448f..456912cd7c 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -21,6 +21,7 @@
- 
- %rd             0:5
- %esz_sd         22:1 !function=plus_2
-+%esz_hs         22:1 !function=plus_1
- %esz_hsd        22:2 !function=xor_2
- %hl             11:1 21:1
- %hlm            11:1 20:2
-@@ -74,6 +75,7 @@
- @qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
- @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
- @qrr_bh         . q:1 ...... . esz:1 ...... ...... rn:5 rd:5  &qrr_e
-+@qrr_hs         . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=%esz_hs
- @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
- 
- @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
-@@ -1676,3 +1678,6 @@ XTN             0.00 1110 ..1 00001 00101 0 ..... .....     @qrr_e
- SQXTUN_v        0.10 1110 ..1 00001 00101 0 ..... .....     @qrr_e
- SQXTN_v         0.00 1110 ..1 00001 01001 0 ..... .....     @qrr_e
- UQXTN_v         0.10 1110 ..1 00001 01001 0 ..... .....     @qrr_e
-+
-+FCVTN_v         0.00 1110 0.1 00001 01101 0 ..... .....     @qrr_hs
-+BFCVTN_v        0.00 1110 101 00001 01101 0 ..... .....     @qrr_h
+ extern crate bilge;
+diff --git a/rust/qemu-api/src/bindings.rs b/rust/qemu-api/src/bindings.rs
+index 0b76ec58bee..8a9b821bb91 100644
+--- a/rust/qemu-api/src/bindings.rs
++++ b/rust/qemu-api/src/bindings.rs
+@@ -7,10 +7,10 @@
+     non_snake_case,
+     non_upper_case_globals,
+     unsafe_op_in_unsafe_fn,
++    clippy::pedantic,
++    clippy::restriction,
++    clippy::style,
+     clippy::missing_const_for_fn,
+-    clippy::too_many_arguments,
+-    clippy::approx_constant,
+-    clippy::use_self,
+     clippy::useless_transmute,
+     clippy::missing_safety_doc
+ )]
 -- 
-2.43.0
+2.47.1
 
 
