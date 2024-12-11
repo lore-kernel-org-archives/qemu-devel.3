@@ -4,97 +4,151 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13548E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA45E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 13:12:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLMCL-0003LM-61; Wed, 11 Dec 2024 07:52:13 -0500
+	id 1tLMVL-0008U3-Or; Wed, 11 Dec 2024 08:11:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tLMBq-0003BL-ND
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:51:51 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tLMBp-0001ve-5a
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:51:42 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-434f80457a4so3786565e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 04:51:40 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1733921499; x=1734526299; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IXOHZmlwq/2lTmsq1K3b/qfzU9CsxVuPDqF9Ym8Ynug=;
- b=A9r8tN/gGu0VlRKp1Aejd+U3xuqdL2Qj9FktB4Wb+cEEb8JoYZ+SAYewmun1YhT2TE
- NSS5U5/+fv4eywqZRyIoSP1HGOEdZH6zB1AvK/zr7GEjRMxLPjOYLbFaHJgNlymlxAg7
- jhyV9sE3pS+gJlpjVZr4+3RRFXCg2Az9bray3/iRzlb53kSnRshdmSnapkU9g8hfM2BS
- 6TKaTFpKoGl7myeFeS9XughsmLDQuynDBYUaaMbnGF7+4vTmj/tdwdj3DpQ2qRiCN2CN
- TaBed9EYJUn+6uxNh/8QGTyIrOkvuTS28IYUGqMsNMbHJS6ED0KP1hrKjITtEzmFTo5K
- UJwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733921499; x=1734526299;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IXOHZmlwq/2lTmsq1K3b/qfzU9CsxVuPDqF9Ym8Ynug=;
- b=agu0G1iSZmoZ1qGS1ImuviTybF1cc+kl4gn9VZF+L8ikZMgDmn+h4VtowiGM0Q6XXA
- jicfgK/C3/yizaJWxHHF6JWh8kgPcWW/DK3/F/ZCIcVKi5JC88InuNJHwdiXhXzlsl8R
- G/savKvbII+UN/hg+ZbryPSvLDbxmhHcBwf74TMYmtac3MEsIBxa6oddPS5BFK6CsYVW
- 9WLpM4d49PvFheKg/GIUknOntSqclRyg9El05oiTPA6IZAiFsEPC0v/gq5XMHEw1kQlZ
- 1t8WrhmsUwc4ebO+EqYyfqAsDRK5x53wrFF+G83rHcL85H3RL99azBkYwZb1/buR8/ov
- vYRQ==
-X-Gm-Message-State: AOJu0Yw3uDu9cc5bSzx3zj2ATgRYw00H8NM95kZDMqgIYs3IM0QY4Sss
- PXvd0T/0QS/rP9CQMaVE19MxK/2sE63qfNZhXfmTS03s8ViJLqUpViEeIRGXBqEEY9O2wDRf+nt
- zuoo=
-X-Gm-Gg: ASbGncvTW4Fqg5hr9eeEPERtW3r3ePDKK3m1Zdcd/T8QC5D4O1+1Vv0LrOLSbYvJdP9
- YwkvCUamajhVAM8n9JOESyPquRTZQYCgZoCP/SQiG37qdlar0tlQ8BL1LqrS0BC/7Y/wWS+FryN
- 1ekOqKXf3UT3F0UHSH3Bj+2uSzyXHy6JhhLpShh7sHqzqUNp45y3wwtSurncgmPKTUbbBmFLMti
- dC87GGtdngbNyt6m3fiB8VxPQJBiJ6U0wEb23u9Ia5yRwpgfERyh7upadUfuRVED+8vsBUIQFJR
- 7pdlcQ0G9VigsqmeSSL9vIlAe4F+BYIzlwGsaTT9FZyA/g==
-X-Google-Smtp-Source: AGHT+IEy5Y7EqcSFlZXlzw/NJliyF1afwJMjcXf8oadlGc4rvWdzLf7BMWEQ6W8FShwKsgFqaswSiQ==
-X-Received: by 2002:a7b:c8c9:0:b0:434:e963:6ad9 with SMTP id
- 5b1f17b1804b1-4361c5a309emr18173195e9.5.1733921499164; 
- Wed, 11 Dec 2024 04:51:39 -0800 (PST)
-Received: from dorian..
- (sals-04-b2-v4wan-167965-cust660.vm36.cable.virginm.net. [80.3.10.149])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f44eaac7sm120542125e9.42.2024.12.11.04.51.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 04:51:38 -0800 (PST)
-From: Craig Blackmore <craig.blackmore@embecosm.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Craig Blackmore <craig.blackmore@embecosm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>, Paolo Savini <paolo.savini@embecosm.com>
-Subject: [PATCH v7 2/2] target/riscv: rvv: speed up small unit-stride loads
- and stores
-Date: Wed, 11 Dec 2024 12:51:13 +0000
-Message-ID: <20241211125113.583902-3-craig.blackmore@embecosm.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211125113.583902-1-craig.blackmore@embecosm.com>
-References: <20241211125113.583902-1-craig.blackmore@embecosm.com>
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1tLMUv-0008Mn-S4; Wed, 11 Dec 2024 08:11:30 -0500
+Received: from mail-co1nam11on20606.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::606]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jgg@nvidia.com>)
+ id 1tLMUs-0004ul-JD; Wed, 11 Dec 2024 08:11:25 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ECNDE2wtRUqHj28Wm92XUWVpiTwVYMvqf+Ucz5rKke+StgN9pIcqXYMKDhoBi67320c8Uo9mD9Ie8NwaOYDAF54zjphqZtxWDuzDTkKl0dLXHptagnsD6btIm0p3GdJq1Msu9+NIAgBR4j4z+e88zDm4+VM5PWs7jqdycN4lh/3Ky6ROznq31XxPi78uhGrdvkYrAy4WNXKS8VnUMidhxSBUJNo9oxpkAxCWMP/14GcePbtrbZatb7OLYcCTH6z2q3kyLlk1b3jpzQ75W/+OObadeDdP7d0/PyCvUZQMkwkRR/wuVZYVnajCQM2QCzF6u+/YBeby1arux7gALov49w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=vE/1oclTw5ayXQyltRXYh6+8t4sE6qwaypTiBEOtje8=;
+ b=qmvEwr+Eh2gYK9Vg8WYhRSlJJGER35EPoLVPxtzK4i7TIMZN+C5/HoGqnFBHZyPdW1tPp00rewwwvnFvIMGKFvamqeNWjHEY6xFWX0ttyJA7W6x56wuu2fcY5WX1TftdOWkcNJNtU0v7XsY/4YWkIriG8PZBPFfr/2+njFp1sZsVcdQq45YxFvN56tLxa42f9dY6gKQdJHIVqmsCVGxwYhpJXnfQIBe/7vtrUIU9UjtA855YLG5nnQmjeGsQgwP6/uesunwH/gaVMlqte2q2iYAVnn47GsQ7J6gFieTxWzKy7ShsqLUM2N3z7B1Aye2q7RARI92BQBmijastF6ySLw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=vE/1oclTw5ayXQyltRXYh6+8t4sE6qwaypTiBEOtje8=;
+ b=UwKPlQ+tQrO7MoAWCkcgYZtdn6h4+JnqNGYgyuMUfahJA6Yxf0K8ieCDiuH458iomBdXFOWhAyBl+pWj4MFGGQvBw75CqMlG7KZnzETdvxN7NDa4110IMXjsHv/WZvaF8BPVYRTpWFroREYMRpteT6pObI3j9AgPRXscFeKK5biiw889LIhnIPI5kzdoUtRb5ePbfMYqNrt5vGtpQymhmZC5WxnqHggHFHApwUzI0GQgRWTiT4zN7+TCMPdUTefmek7e850J5hg8SPky1eSVgqIFmk+45dBEOB8z6CB9fSC15FBH1z56YnukjTAUA/FvjXFDUh+QeV3xoVTbHCz0PQ==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
+ by SN7PR12MB8060.namprd12.prod.outlook.com (2603:10b6:806:343::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.16; Wed, 11 Dec
+ 2024 13:11:14 +0000
+Received: from CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
+ ([fe80::6eb6:7d37:7b4b:1732%5]) with mapi id 15.20.8251.008; Wed, 11 Dec 2024
+ 13:11:13 +0000
+Date: Wed, 11 Dec 2024 09:11:12 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Nicolin Chen <nicolinc@nvidia.com>
+Cc: eric.auger@redhat.com, ddutile@redhat.com,
+ Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+Subject: Re: [RFC PATCH 5/5] hw/arm/virt-acpi-build: Add IORT RMR regions to
+ handle MSI nested binding
+Message-ID: <20241211131112.GN2347147@nvidia.com>
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <20241108125242.60136-6-shameerali.kolothum.thodi@huawei.com>
+ <Z1jIXHmFcBFIUeKn@Asurada-Nvidia>
+ <20241211004821.GM2347147@nvidia.com>
+ <Z1jqsVTiMwW/Zk5z@Asurada-Nvidia>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Z1jqsVTiMwW/Zk5z@Asurada-Nvidia>
+X-ClientProxiedBy: BL1PR13CA0026.namprd13.prod.outlook.com
+ (2603:10b6:208:256::31) To CH3PR12MB8659.namprd12.prod.outlook.com
+ (2603:10b6:610:17c::13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=craig.blackmore@embecosm.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|SN7PR12MB8060:EE_
+X-MS-Office365-Filtering-Correlation-Id: 11a75e8a-3717-4ba4-86c3-08dd19e54a0f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?0kiGtOT4lmJEMZpmpVlE2yvNlUcaUtWtTkjZVpuNcSOvnIR/CcAGDQqmpXIg?=
+ =?us-ascii?Q?2u96tAFVM2GC3keTJSj2ZIfI/PXiDv0Ft14Sk0tCkQWLVPDGBCPNrlRkGW4V?=
+ =?us-ascii?Q?UBrjgbRz3Xf5U1skikQmaCP19+W7hzmx/yyrf4NLPEf09HUDFCREmoFycSip?=
+ =?us-ascii?Q?/j2yRm/ycrI34pZbUNhtmHdu0vFEKdCNzb3NAyO98kwdyu37cEFoFc8oqOV/?=
+ =?us-ascii?Q?Rez7IyvPR/hgnu9zpTrN7fHRWRbMursy2i1dfD0nSNe5Bz9EyXZ/tdzZJGmK?=
+ =?us-ascii?Q?pdt+EgjxA3QjcSD5/pfvFidEku9Vstvxwc+c62V3JYSgnp9ol1SyWSDLrOZe?=
+ =?us-ascii?Q?5Xmt5jmLbX5yGqpmJttn5Nh1bvcrPcGptRpaR6O+WUf6yqaa2+1SuXVeEMF5?=
+ =?us-ascii?Q?n8MmHJwNSxyp1VuoEkhlR/ggGygJJ9HN0jyGjcmWCiDIss7kmVcPhcISW7f0?=
+ =?us-ascii?Q?h7hjya6v0zRkUcjwVYdXIE1hdznMCUSfiZk3FnKqWHrbXOopPSy2UqvKO19J?=
+ =?us-ascii?Q?6i7cwE9gmxXNWqnjMBKwmbdrSdIzAmSwGWWALx1WK8MpS4pRyZMLzgStaQ7M?=
+ =?us-ascii?Q?OIdFWVhcdkr+oT1WDswZV1+sjN7pH67NGK8LzjulGdEzJFxAPKNtPxwhEkpa?=
+ =?us-ascii?Q?ul3FXZrYZ9BaqwAGi3b15/uE3VnUpojC0kMAYRGaOoYNHDsmrTcOkVjpYFb2?=
+ =?us-ascii?Q?aEhj9sgOWcOLsqN84entDSjRY5kfq5w/N3S9UCUv74Z3xJwCfw6n3NfWHGxP?=
+ =?us-ascii?Q?4Fb7zEKrYXOmvD1uIY8EJ+nDOALD9/8l2TG897V4PhdE2jF+zr2LelglJcvD?=
+ =?us-ascii?Q?diNN7hrALL3vG6Pvk5tm/NlNyIKdi1lgJtGFf+PsPlZG4vvi6faT9k3mOrnp?=
+ =?us-ascii?Q?h8CrY0vEtrFMqv9oJmE55y2eORONjFfklyFYbz8qNr9QKW862coY96P4OenJ?=
+ =?us-ascii?Q?9Sc1MWRUrjzkTtNcZH/BO9y+XVwYzSlwvHMc1kqjDIf9jdFzq+Z4jytmmyDH?=
+ =?us-ascii?Q?58WEixRyZy5YQzDcMZ+lHSuxi0Zg/WFAHBOQzITFXML8RKKXsuWgA+Gufchv?=
+ =?us-ascii?Q?gIUEAnAgD+JU0W+ZbtWKf44mRnEuQhRupJTzrLoaFDFzLRVD6vq9ao4sHu0u?=
+ =?us-ascii?Q?JybY5xExi/RmxU/i+1QRdk5x0b/YjpQyUGoPA1iWLB7NSipbGWJlZZbNkRfo?=
+ =?us-ascii?Q?u+9PLEnavpmmFnVa8W6naYIqNZWCL5XCIi0AShbsZdA27ImgtJbh1yRHAcDa?=
+ =?us-ascii?Q?ZMUZgOqx5TMMdM7b5Qkx8BDUhuwDPObfFpHOqy6ThMeZgb5TNZ8o66/9j/gI?=
+ =?us-ascii?Q?8Xvc++AhaROvP3nkaPFx8DxZSSRN5ND0/DjGCL7Li4wLWQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8lL31vgXvOMvjeJhsqNwMj59wr9jMOFifJnMYGohx5+a9xn7eZvmOifFIQCX?=
+ =?us-ascii?Q?6IqpZ9IszyH2Zs6chRun/AE3+di9NwMEnlM59Hb7l2bSbg6m55n24/miFVSF?=
+ =?us-ascii?Q?hKLvMhzSoTQNtJZHnQhJsJp88W4MHiyZ4sXVY1xv+XgS+RjvUByqrSvPV3ke?=
+ =?us-ascii?Q?FPcc5orcB4ZDO5g5vlflZdUyJjDm5/cOGvLpuYgYYkNA6SqsipK1BSb0RCXN?=
+ =?us-ascii?Q?BEbKxWb10uPiKhhWNZzgo9stBS+fvHeQ4D/ahprpcCuJUMz2I7HNIFIai6kQ?=
+ =?us-ascii?Q?rxBMcTy2teI3/S0ik9L3K6hOonbfZz2mw4sKpkj4nOrDZSZ4/ZxjqlWsAIkz?=
+ =?us-ascii?Q?aW6LyDS2893+2WpGZV5bUNFxvm0tLCbcVup/O+rXwpTdUaf/PKsQPvpP3OMA?=
+ =?us-ascii?Q?4XoMYPy3WVSZXS+Lp5HUlDRx04fXNwokFU8gSn8PlGfW1TXxYfdn2qxksjLF?=
+ =?us-ascii?Q?fyUUHrCgRPjxZzkI3+MjPOqKCfky5Rg0Ax7VXmy6j6z2dhg3VYD5ngMI4RKk?=
+ =?us-ascii?Q?KjbnnTdFdda49iL1nYV+HhsaijRgwCHeRc5daiAZG/a4aIviJIEswJr2w1RA?=
+ =?us-ascii?Q?ce1KDh5ZhW3wPQa2de0QOTnTtcHZshdmfhD7Vj0BPIy2PMju1H80jM+cCEVo?=
+ =?us-ascii?Q?PTErsc5lc9EoURF17aVtN8HRcu93vHYA3DQnUExlizr39DrS41y4FbvW0EJh?=
+ =?us-ascii?Q?l1QvaNHeC3qSmekUhi9NWCZpbkRe2/Pd0KZFI98pJ0eYWbWd42IdLfTh/UAO?=
+ =?us-ascii?Q?Z4972oFksSwTkZeOZbu3PKfj4yITOVIj+pUd4Jg/oQHmoH70le/+dqCPJrAA?=
+ =?us-ascii?Q?1HMqbFs5R7LNGf6azVrGuMOsZdYNm23lRSniNPJnXOTOxKtysNsQIgWCHuRU?=
+ =?us-ascii?Q?2xwmDjBAKI+LYfdsKg4uEJZYWxZwYMW/23WitIbSlJ6QuH243ULtHxK62+Ab?=
+ =?us-ascii?Q?yOXRjWpoXSAy2ZZJRA5db5ORqpDB0vb3gcYZ3E5/51OxPMgZMhtJawe9zlD1?=
+ =?us-ascii?Q?ESxVGk5bqyQZaobitcjVFtVUt23kKGVHyrlmwZAcnRYt3dh5KG/Ow/qcKAyz?=
+ =?us-ascii?Q?J/aiPaM6XvAQeQgrpEMKGUxDss/3/8Xw/E1dlZt3+scAZP8PVxykKgNoI1fZ?=
+ =?us-ascii?Q?Zobi7wt0jaVTk2kpK648BvLraAauF+2/xd97wJ80aBOKF3zC/BMTBgpKD681?=
+ =?us-ascii?Q?HdAmMa8v6XnPkUOQaalPbIYnCMftI/q0v2xh44aR5DD3ll4M1/HHjbhziCtW?=
+ =?us-ascii?Q?17vuNXbiKKHZXhlBkjyvNmP/rYbdktrIw4KdXNAQv3GVvONS33cBBFivVIJJ?=
+ =?us-ascii?Q?MrXHCMQvYMLk7UpZGxkzvI6CTjcNZtyLSh1dEiXPbmhoPW9948jDMrSbnR3h?=
+ =?us-ascii?Q?BWNXkJ5r/5BW4cEGDdlLGLKQYQ+P23YRRa6rCno2Sq3w4ze0NVY9ZUqMtKqT?=
+ =?us-ascii?Q?4KpPq2ngvhqINg9Peb3icrLO3tpoFj3GfDlzlF5ez2GqC8FBQBBslDpu9u/f?=
+ =?us-ascii?Q?vMyOLsiv1NQBe3nHvCtWZ/yoyQyg/gJ03wD/D8B13auLnn6IL0Mex9JfH66n?=
+ =?us-ascii?Q?Cvtxl/N39rmgVg/wZeqqHhX8L5I9s7WlptAwdw2S?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11a75e8a-3717-4ba4-86c3-08dd19e54a0f
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 13:11:13.9335 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3vA1VAsvCbpMJrpd8mPiYAzG0Cke+1g0VJ0qGEqrqwn8bIThoUV70bigA/G5NiyH
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8060
+Received-SPF: softfail client-ip=2a01:111:f403:2416::606;
+ envelope-from=jgg@nvidia.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,48 +164,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Calling `vext_continuous_ldst_tlb` for load/stores smaller than 12 bytes
-significantly improves performance.
+On Tue, Dec 10, 2024 at 05:28:17PM -0800, Nicolin Chen wrote:
+> > I would ideally turn it around and provide that range information to
+> > the kernel and totally ignore the SW_MSI reserved region once
+> > userspace provides it.
+> 
+> Hmm.. that sounds like a uAPI for vITS range..but yes..
 
-Co-authored-by: Helene CHELIN <helene.chelin@embecosm.com>
-Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
-Co-authored-by: Craig Blackmore <craig.blackmore@embecosm.com>
+It controls the window that the kernel uses to dynamically map the ITS
+pages.
 
-Signed-off-by: Helene CHELIN <helene.chelin@embecosm.com>
-Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
-Signed-off-by: Craig Blackmore <craig.blackmore@embecosm.com>
----
- target/riscv/vector_helper.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+> So, VMM can GET_OPTION(SW_MSI) for msi_base to extract the
+> info from kernel. Likely need a second call for its length?
+> Since IOMMU_OPTION only supports one val64 input or output.
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 0f57e48cc5..529b4b261e 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -393,6 +393,22 @@ vext_ldst_us(void *vd, target_ulong base, CPURISCVState *env, uint32_t desc,
-         return;
-     }
- 
-+#if defined(CONFIG_USER_ONLY)
-+    /*
-+     * For data sizes < 12 bits we get better performance by simply calling
-+     * vext_continuous_ldst_tlb
-+     */
-+    if (nf == 1 && (evl << log2_esz) < 12) {
-+        addr = base + (env->vstart << log2_esz);
-+        vext_continuous_ldst_tlb(env, ldst_tlb, vd, evl, addr, env->vstart, ra,
-+                                 esz, is_load);
-+
-+        env->vstart = 0;
-+        vext_set_tail_elems_1s(evl, vd, desc, nf, esz, max_elems);
-+        return;
-+    }
-+#endif
-+
-     /* Calculate the page range of first page */
-     addr = base + ((env->vstart * nf) << log2_esz);
-     page_split = -(addr | TARGET_PAGE_MASK);
--- 
-2.43.0
+No, just forget about the kernel's SW_MSI region. The VMM uses this
+API and overrides it and iommufd completely ignores SW_MSI.
 
+There is nothing special about the range hard coded into the smmu
+driver.
+
+Jason
 
