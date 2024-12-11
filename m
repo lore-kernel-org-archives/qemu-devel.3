@@ -4,84 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C36CE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:40:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81484E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:41:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPhH-0007Ub-Rd; Wed, 11 Dec 2024 11:36:23 -0500
+	id 1tLPjj-0001yK-8u; Wed, 11 Dec 2024 11:38:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPgu-0006Cy-Hz
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:00 -0500
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPgs-000255-H4
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:00 -0500
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6d87ceb58a0so55617486d6.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:35:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934957; x=1734539757; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/lj9qTaRMEepyhNy18XDaVZRLAOfWJDrTDDoQoevOKs=;
- b=ZEjR1ycxvuyOv7SkNiUJC6rDVBwdZn9oSr13uewacQIp/+e6t+bfX8PP6HjV6o9fUV
- f1xXDzMeTB4jHjZYRGD73QqYhUNx2FFNXBGYQCoF6wVTKa/ufm78hFUWNsUDknZwdJVb
- jqIyClJZEyU/oQT1Cu6kC20XJGfjgZvTDCgdmScP7sPMz0bw8jX56ZigelVEBW7/Wr1A
- x6lSw/pWO9ZC+msKHAxoPwGF/xd3ZzDkmSxRHEYsoJwHPfjKFNEDpOHgwrt3GHLh3AnW
- BllSEQ1cFkMoculCBC8V1/JS0Qja+U1zoHHHHX8N1lzwHjoViuTS2aGuE1wZ7IJVCoCM
- +DDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934957; x=1734539757;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/lj9qTaRMEepyhNy18XDaVZRLAOfWJDrTDDoQoevOKs=;
- b=Zup7YaZA+dKebfqktQ1WOKQhLCpr//TDAqKEZHMThoOd/n6To5ME/R0JFPs74w8nh6
- uG8iZNMxz3uM/0RsGmDZPF90wDeXAwkhQpb/xdE7j3UsrQu2iyLZ9iBpSidWPsQNJtFT
- j+gynB3CyzNuGIVu1swlPfR8jgZGfsoUvdi8FDC/KBQj+l+EPapHy6zQx3bAfrwR0ZUs
- cSbjMIkIdgzIgpU3CIRXBB+8d/OOX21DdbIQ69CmjArnzTBfgk2ZswEo9TdkqzVVTQZ2
- qGFyqYbFUlBObP0GiaQ+f5wqX4gfQfE+gs2Qx65FRphiK1mfDlwWXK+ol1PSDdUjLm19
- M3rA==
-X-Gm-Message-State: AOJu0YyQ2i/Go6ACB413JGijf5TpebdlzhbRcU/laCP5/msQnhAcX+3Z
- w+UsyzrINk3pxXoAdMRTPURfFKsGLgUDyeXe53ldePROkMmFFpkHEQosbT/scXE1JejXHwjz24S
- wZHjhqZx+
-X-Gm-Gg: ASbGncv51r6xG1HEjhPDPLpmsjuolK27WmbdpYOuehcP8u8QOHZivvxDq1caKRpfZ2l
- 5YoT2tQRO1/eMLTBBgLx77XYF04SH9baaeu9f9Kg74ypJmxXk1I4trmBjMn7KeYcnkU5ZeShezs
- 0ut1ZPX1xOx8iOX/U6FmFKNogdkkILJiBpwjvDPtxBsGlfGmxGunMCLq0uFckRCbhuB2CAITeqO
- 4L4mwoyVQ0EPanHYV+eyewg5BIgvtA1xD1QXhtXWJNBcovQF0ATDRpSaDQlJQ==
-X-Google-Smtp-Source: AGHT+IFqWEfneiJtWoLOR9q1NKGRE0R18AIDwIscUQu68CzinaoBWtfm6Wj1PJG7ZkpXSax736F1QA==
-X-Received: by 2002:a05:6214:246c:b0:6d8:a570:faee with SMTP id
- 6a1803df08f44-6d934ae9705mr56011706d6.16.1733934957578; 
- Wed, 11 Dec 2024 08:35:57 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da675214sm71856276d6.11.2024.12.11.08.35.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:35:57 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 47/69] target/arm: Remove helper_neon_{add,sub}l_u{16,32}
-Date: Wed, 11 Dec 2024 10:30:14 -0600
-Message-ID: <20241211163036.2297116-48-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tLPjX-0001iN-QS; Wed, 11 Dec 2024 11:38:44 -0500
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tLPjU-0002a0-LE; Wed, 11 Dec 2024 11:38:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733935121; x=1765471121;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=lGDuG1wgfD376M5q17+Nm6wS/8Utxh8Nhg6DJY2dVy4=;
+ b=BGYMsv1E4Sg44ohemjGXj8BnsdILYvqxNZVOK1Tbb4kTgJ31bK+//l0X
+ norbdW1Mh8yU5B9stfzn6eg5wy1KtC++jQMu/cayGVb931ZcZQCz7Wyzd
+ tsREQYofQnMKKaVV2d4NZf5DXyJJfkOnQYQK1oj1Pn/zLou7is7Q9Kg0Q
+ eIeySSgx1g+3JXcL1oVlfYh+yCbSkeeI6BcJwlFbBxm8y+RRCuJIMMMB8
+ Ip/4sMUTBlJjgrlrJdNXG3TABiX4RCI++R7sD8ntD3H9Jdtb/E1Ls1fzw
+ wRyOxSIyScn9YGr8xtU+1iOy5QOkKmqw5ErrJzI1NZrsyb00Q8KIhVLZy A==;
+X-CSE-ConnectionGUID: RV/taBWnS8KkeZKYS+szNQ==
+X-CSE-MsgGUID: vvDQ+nSoRyiHoyjQKgbt4g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11278"; a="45705027"
+X-IronPort-AV: E=Sophos;i="6.12,214,1728975600"; d="scan'208";a="45705027"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 08:38:38 -0800
+X-CSE-ConnectionGUID: 2Gqx/xJyRiuGDAUtKFQIfw==
+X-CSE-MsgGUID: m2OIRmbLRTK9OGji4TxRRA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,226,1728975600"; d="scan'208";a="95725577"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa009.jf.intel.com with ESMTP; 11 Dec 2024 08:38:36 -0800
+Date: Thu, 12 Dec 2024 00:56:50 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
+ of pl011
+Message-ID: <Z1nEUmzHa5dA5C0d@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-15-pbonzini@redhat.com>
+ <Z1hjX+5Yyi46N+sX@intel.com>
+ <ada60844-546a-42ca-a05f-7b6dc225ff53@redhat.com>
+ <Z1lGZdXsVR5ra4hl@intel.com>
+ <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -98,156 +87,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These have generic equivalents: tcg_gen_vec_{add,sub}{16,32}_i64.
+> Generally:
+> 
+> - embedded objects will have to be initialized in instance_init unless they
+> are Options
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/arm/helper.h             |  4 ----
- target/arm/tcg/neon_helper.c    | 36 ---------------------------------
- target/arm/tcg/translate-neon.c | 22 ++++++++++----------
- 3 files changed, 11 insertions(+), 51 deletions(-)
+I see, at least for HPETTimer array, I need to prepare all of them in
+instance_init()...
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 6369d07d05..04e422ab08 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -395,12 +395,8 @@ DEF_HELPER_1(neon_widen_s8, i64, i32)
- DEF_HELPER_1(neon_widen_u16, i64, i32)
- DEF_HELPER_1(neon_widen_s16, i64, i32)
- 
--DEF_HELPER_2(neon_addl_u16, i64, i64, i64)
--DEF_HELPER_2(neon_addl_u32, i64, i64, i64)
- DEF_HELPER_FLAGS_1(neon_addlp_s8, TCG_CALL_NO_RWG_SE, i64, i64)
- DEF_HELPER_FLAGS_1(neon_addlp_s16, TCG_CALL_NO_RWG_SE, i64, i64)
--DEF_HELPER_2(neon_subl_u16, i64, i64, i64)
--DEF_HELPER_2(neon_subl_u32, i64, i64, i64)
- DEF_HELPER_3(neon_addl_saturate_s32, i64, env, i64, i64)
- DEF_HELPER_3(neon_addl_saturate_s64, i64, env, i64, i64)
- DEF_HELPER_2(neon_abdl_u16, i64, i32, i32)
-diff --git a/target/arm/tcg/neon_helper.c b/target/arm/tcg/neon_helper.c
-index 1a22857b5e..c687e882ad 100644
---- a/target/arm/tcg/neon_helper.c
-+++ b/target/arm/tcg/neon_helper.c
-@@ -826,24 +826,6 @@ uint64_t HELPER(neon_widen_s16)(uint32_t x)
-     return ((uint32_t)(int16_t)x) | (high << 32);
- }
- 
--uint64_t HELPER(neon_addl_u16)(uint64_t a, uint64_t b)
--{
--    uint64_t mask;
--    mask = (a ^ b) & 0x8000800080008000ull;
--    a &= ~0x8000800080008000ull;
--    b &= ~0x8000800080008000ull;
--    return (a + b) ^ mask;
--}
--
--uint64_t HELPER(neon_addl_u32)(uint64_t a, uint64_t b)
--{
--    uint64_t mask;
--    mask = (a ^ b) & 0x8000000080000000ull;
--    a &= ~0x8000000080000000ull;
--    b &= ~0x8000000080000000ull;
--    return (a + b) ^ mask;
--}
--
- /* Pairwise long add: add pairs of adjacent elements into
-  * double-width elements in the result (eg _s8 is an 8x8->16 op)
-  */
-@@ -887,24 +869,6 @@ uint64_t HELPER(neon_addlp_s16)(uint64_t a)
-     return (uint32_t)reslo | (((uint64_t)reshi) << 32);
- }
- 
--uint64_t HELPER(neon_subl_u16)(uint64_t a, uint64_t b)
--{
--    uint64_t mask;
--    mask = (a ^ ~b) & 0x8000800080008000ull;
--    a |= 0x8000800080008000ull;
--    b &= ~0x8000800080008000ull;
--    return (a - b) ^ mask;
--}
--
--uint64_t HELPER(neon_subl_u32)(uint64_t a, uint64_t b)
--{
--    uint64_t mask;
--    mask = (a ^ ~b) & 0x8000000080000000ull;
--    a |= 0x8000000080000000ull;
--    b &= ~0x8000000080000000ull;
--    return (a - b) ^ mask;
--}
--
- uint64_t HELPER(neon_addl_saturate_s32)(CPUARMState *env, uint64_t a, uint64_t b)
- {
-     uint32_t x, y;
-diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
-index 19a18018f1..0821f10fad 100644
---- a/target/arm/tcg/translate-neon.c
-+++ b/target/arm/tcg/translate-neon.c
-@@ -1560,8 +1560,8 @@ static bool do_prewiden_3d(DisasContext *s, arg_3diff *a,
-             NULL, NULL,                                                 \
-         };                                                              \
-         static NeonGenTwo64OpFn * const addfn[] = {                     \
--            gen_helper_neon_##OP##l_u16,                                \
--            gen_helper_neon_##OP##l_u32,                                \
-+            tcg_gen_vec_##OP##16_i64,                                   \
-+            tcg_gen_vec_##OP##32_i64,                                   \
-             tcg_gen_##OP##_i64,                                         \
-             NULL,                                                       \
-         };                                                              \
-@@ -1639,8 +1639,8 @@ static bool do_narrow_3d(DisasContext *s, arg_3diff *a,
-     static bool trans_##INSN##_3d(DisasContext *s, arg_3diff *a)        \
-     {                                                                   \
-         static NeonGenTwo64OpFn * const addfn[] = {                     \
--            gen_helper_neon_##OP##l_u16,                                \
--            gen_helper_neon_##OP##l_u32,                                \
-+            tcg_gen_vec_##OP##16_i64,                                   \
-+            tcg_gen_vec_##OP##32_i64,                                   \
-             tcg_gen_##OP##_i64,                                         \
-             NULL,                                                       \
-         };                                                              \
-@@ -1761,8 +1761,8 @@ static bool trans_VABAL_S_3d(DisasContext *s, arg_3diff *a)
-         NULL,
-     };
-     static NeonGenTwo64OpFn * const addfn[] = {
--        gen_helper_neon_addl_u16,
--        gen_helper_neon_addl_u32,
-+        tcg_gen_vec_add16_i64,
-+        tcg_gen_vec_add32_i64,
-         tcg_gen_add_i64,
-         NULL,
-     };
-@@ -1779,8 +1779,8 @@ static bool trans_VABAL_U_3d(DisasContext *s, arg_3diff *a)
-         NULL,
-     };
-     static NeonGenTwo64OpFn * const addfn[] = {
--        gen_helper_neon_addl_u16,
--        gen_helper_neon_addl_u32,
-+        tcg_gen_vec_add16_i64,
-+        tcg_gen_vec_add32_i64,
-         tcg_gen_add_i64,
-         NULL,
-     };
-@@ -1840,8 +1840,8 @@ static bool trans_VMULL_U_3d(DisasContext *s, arg_3diff *a)
-             NULL,                                                       \
-         };                                                              \
-         static NeonGenTwo64OpFn * const accfn[] = {                     \
--            gen_helper_neon_##ACC##l_u16,                               \
--            gen_helper_neon_##ACC##l_u32,                               \
-+            tcg_gen_vec_##ACC##16_i64,                                  \
-+            tcg_gen_vec_##ACC##32_i64,                                  \
-             tcg_gen_##ACC##_i64,                                        \
-             NULL,                                                       \
-         };                                                              \
-@@ -2371,7 +2371,7 @@ static bool trans_VMULL_U_2sc(DisasContext *s, arg_2scalar *a)
-         };                                                              \
-         static NeonGenTwo64OpFn * const accfn[] = {                     \
-             NULL,                                                       \
--            gen_helper_neon_##ACC##l_u32,                               \
-+            tcg_gen_vec_##ACC##32_i64,                                  \
-             tcg_gen_##ACC##_i64,                                        \
-             NULL,                                                       \
-         };                                                              \
--- 
-2.43.0
+> - if you don't need properties you can choose between post_init and
+> realize, if you need properties you need to initialize in realize (and
+> then, unlike C, you might need to explicitly allow the pre-realize state;
+> for example using Option<&...> instead of just a reference; or Vec<>
+> instead of an array).
+
+...in realize(), also need to handle the "timers" property to enable
+the timers that property requires.
+
+> - sysbus_init_irq and sysbus_init_mmio can be called in both instance_init
+> and instance_post_init for now, but they will have to be in post_init once
+> the signature of init changes to return impl PinInit
+
+make sense, thanks!
+
+> >
+> > > The way that this will become safe is to use the pinned_init crate from
+> > > Linux: instance_init returns the initialization as an "impl
+> > PinInit<Self>",
+> >
+> > Then do we need to place OBJECT in some suitable memory location (Box or
+> > something) for Rust implementation?
+> >
+> 
+> Allocation is still done by the C code, so I am not sure I understand the
+> question. Rust code allocates QOM objects with object_new() so they are
+> malloc-ed.
+
+Sorry, I'm not familiar enough with this piece...I have the question
+because PinInit doc said "you will need a suitable memory location that
+can hold a T. This can be KBox<T>, Arc<T>, UniqueArc<T> or even the
+stack (see stack_pin_init!)."
+
+I see that the core point is ensuring that structures cannot be moved.
+Given that object_new() on the C side ensures that the allocated object
+will not be moved, Rust side does not need to worry about pinning, correct?
+
+> I discussed it with Manos some time ago and in principle you
+> could use a Box (QOM supports custom freeing functions) but it's a bit
+> complex because the freeing function would have to free the memory without
+> dropping the contents of the Box (the drop is done by QOM via
+> instance_finalize).
+> 
+> If you want to allocate the HPETTimers at realize time, I think you can
+> place them in a Vec. I think you won't need NonNull for this, but I am not
+> 100% sure. Alternatively if you want to always prepare all MAX_TIMERS of
+> them and then only use a subset, you can use an array.
+
+Vec seems to lack proper vmstate support. I understand that we need to
+modify VMSTATE_STRUCT_VARRAY_POINTER_* to introduce a variant for Vec.
+
+Since the array support is already available, I chose to use an array
+instead (although vmstate is disabled for now).
+
+> Either way, probably it makes sense for you to have an "fn
+> timers_iter(&self) -> impl Iter<Item = &BqlRefCell<HPETTimer>>" in
+> HPETState, or something like that. Then you can easily use for loops to
+> walk all timers between 0 and self.num_timers-1.
+
+Good idea, yes, will do.
+
+Thanks,
+Zhao
 
 
