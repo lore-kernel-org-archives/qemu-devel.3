@@ -4,143 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4968E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 11:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EC4E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:40:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLL5T-0004xb-Ln; Wed, 11 Dec 2024 06:41:03 -0500
+	id 1tLM06-00078g-H2; Wed, 11 Dec 2024 07:39:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLL5Q-0004xF-Hb
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 06:41:02 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1tLM00-00075l-Jx
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:39:30 -0500
+Received: from mail-tyzapc01on2115.outbound.protection.outlook.com
+ ([40.107.117.115] helo=APC01-TYZ-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLL5O-0001Ra-Sd
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 06:41:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733917255;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=g0+vRHgQKWrTIdbAyngV5f9Ylm0g+CaMM+3u5zwSIkE=;
- b=BtHRbDJ8lgyEPiO7wwjw3tndd/S1LON4jjvCsi9lIvA3a6GwCKJ7IPd3nRz+eukkaPSsY1
- WgHPnhLh6TP/4uzk+CN96f49ZSB3Cnw0u4wo36AMgNm1lyPRn0+kGEPtBXyG8Fp6pRJc/a
- cQ9/WxSuu7ce/h/X7wavc399sTS0qDM=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-633-SOIcr4prOyGDbPFEy24ytw-1; Wed, 11 Dec 2024 06:40:53 -0500
-X-MC-Unique: SOIcr4prOyGDbPFEy24ytw-1
-X-Mimecast-MFC-AGG-ID: SOIcr4prOyGDbPFEy24ytw
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6e1b0373bso176104085a.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 03:40:53 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733917253; x=1734522053;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=g0+vRHgQKWrTIdbAyngV5f9Ylm0g+CaMM+3u5zwSIkE=;
- b=hFbO5Yf0Ns9rg6IDHAkwLPKnRoP9bs1lt0BH+zUf9c31MdGWNBW+4m6uGTPuelhcq+
- RuSp//rJ2jbNKpb4Fl6NlaG+ERhbqD24jBkPjIjDPJdMFcBgcAcNwamnWUKNbpoGUIQv
- ab4xosYJEI1riToANCaueOl3hFpS10bUrq+cOWozdn44IXO+BY6VY+iZSROaZlIHgkBN
- rEUZ3tIkHb0IlGvF3HOw1lLyoB6sNS4ofTZstT+JJi9EaunH1Z4N1VmFdXcgpr142FPI
- NnclG/ADab6+2unDs3avU0vUNtt3AMsT8miic5TWEUF474OJ26pWJjDLuGN5F4s0jqWt
- tahA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUlFrpFsJ+EoSqjS47l9l1g7wiySTpjMSwc1uMma0TkJ4anlDi4o71GjeM8Fy0Q0WtVo+u0KfUiIEQU@nongnu.org
-X-Gm-Message-State: AOJu0Ywab0FtgALEY9vDHFw/EC5AGAGT7laAK3EfZzQ1O3kbXvjPxw8J
- 60TzfWlGiFEXh7b0isheCuNkdu4QgQJWS+1/dn6qoILRGbDqdKSiNwxen6qtJCm612ULxF+EPKk
- EP27wLCyet+yuO/hoa40b6dv+FlOyMAxTH/QNXIAzS8qpd3G7Uh8O
-X-Gm-Gg: ASbGnctiqmdiObhkEOtLvZ0cIy9UUzZXmLjrHnnB15SQJJtaKDfHasBLH89AzqORowz
- rWfnn+4B5tIlpP36VWIBA5edD/Eg3JyrgswsPjdyv+B4EYNNu1UbVD2/nI8tJlRU6ffFEHJwP2s
- clSH5iDwdjZsTcmSxx3UU5WKamylicXphiOO4HFBFrU/DnKtKPmaCy3hn76U3PNPpPrmGK+f1vs
- u4QumjQ9EPnMB2srQpxN3qcmrVxHklAirKmm1PBadf5KGwB1dLCathKn9+5uextxmVbjNLgeFrJ
- vIKztVg=
-X-Received: by 2002:a05:620a:4088:b0:7b6:d8da:90a3 with SMTP id
- af79cd13be357-7b6eb525549mr503030585a.44.1733917253205; 
- Wed, 11 Dec 2024 03:40:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGjB9xsy2g/+9hfSuayp4TDdfytsaN/QZlgyTdsS8fFhngegUo76Ws05Fzw2DDKcwRtg0zxXw==
-X-Received: by 2002:a05:620a:4088:b0:7b6:d8da:90a3 with SMTP id
- af79cd13be357-7b6eb525549mr503026585a.44.1733917252889; 
- Wed, 11 Dec 2024 03:40:52 -0800 (PST)
-Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6d6313ef6sm281754785a.0.2024.12.11.03.40.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 03:40:52 -0800 (PST)
-Message-ID: <7d860eb4-9e59-410c-bce3-ca6627a46533@redhat.com>
-Date: Wed, 11 Dec 2024 12:40:46 +0100
+ (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
+ id 1tLLzy-0000LH-LO
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:39:28 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mHw1OkqSc7IqFcx+A+fhZCbGcY/rFPMRUXp4HhEBAAydoUxWHS8UBbhukMzvRNF2m/w09vYdb4qRXO2vTQshnvruUZG3LftO0n4Y5VQtN2oR7k5JKahDJg5gwApQ0EpJpP5BiLL8dRUyFUfjefDdNAOkbXgK8b3nXCWnAdFaYStWoqwu7S3BAvFYm4B4AoI7m8O5HFY5vfiNpFHEEGFh6w1xBfrLjZkfWKm8kCKwgPHD5nkcwcm6Q/F5n/HPyKXq3yiKBYbQ79xCqmFDEM7Qi45XhUq14cQccpkb1vNYK9z19k12jvfSdNuz8ETrgFZ/F4OEI++7kipjNjIIPt9cBQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cF41o0xA41dkxAh6dq/fuwNqF1r3lyLKL6CMI3sPOVM=;
+ b=X6WispKGyC/lVdy4zMHxTt6QqrWaSLE2Wi9Z3/GwX4ygGN4GmXb/Nl7q6HBrDROIRix7Y8lVRu2TpFoqWYaahPYwGNERMad7PORrF7lYytg2NmUMjWaLbHehOZdBy/zlWuv5BjRlcPsSkTAv62OrKnJBhBSQJd+WcNWJE2LOnHxyCjD07IZ1jaOMwCfvTW9ZtDNnbKHYRCP0mtpS74LNqTY6hkSUeckc5oSbhW8CDlZ/d7eoWVxPGnaAq2SYDdF23NhGz970ruToC2BkczTE41QthKGqTBCdRUB1T3V0otfEaBaK2Jst41x66EQbJpXwmxxloDegpQTkKkv6Scgtmw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
+ header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cF41o0xA41dkxAh6dq/fuwNqF1r3lyLKL6CMI3sPOVM=;
+ b=bmZwT1ptaakNzeijrthMBrgbukNah7P9rNXMbT/ut1IB4pHTNb9T3O/+uPQNmGZukmCDCpjdW5tRbipf6pYtrRsX0/GMmsn4XRr4JmCnpOwt8dqnm3TCO+OmymjY498sJBJG5SNQuCKs7MftBnTZu21KYjK8bPPfEro5LLZc1SSdsJi9NCkdqXUAzpE+hM7fc4VqV/pEp4Pk1rje/7lbn/UgbUjtselcK6P6mXpTDpCj0vv7xmo1lXRiph8sOW70qdD/v7SlCEQMRpMVFc6o2TIo/SSBe+rqCrMI5pa0KMfKsR9bOuucpm4Yj0w4mTHh/VBO6+njYlKWQnPNlyKXbw==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
+ by TYSPR06MB7046.apcprd06.prod.outlook.com (2603:1096:400:46b::6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.12; Wed, 11 Dec
+ 2024 12:34:17 +0000
+Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::b6f8:321a:6742:9bde]) by PUZPR06MB4713.apcprd06.prod.outlook.com
+ ([fe80::b6f8:321a:6742:9bde%5]) with mapi id 15.20.8251.008; Wed, 11 Dec 2024
+ 12:34:17 +0000
+From: Wafer <Wafer@jaguarmicro.com>
+To: mst@redhat.com,
+	jasowang@redhat.com
+Cc: eperezma@redhat.com, qemu-devel@nongnu.org, angus.chen@jaguarmicro.com,
+ Wafer Xie <wafer@jaguarmicro.com>
+Subject: [PATCH v2] hw/virtio: Fix check available index on virtio loading
+Date: Wed, 11 Dec 2024 20:33:49 +0800
+Message-Id: <20241211123349.904-1-Wafer@jaguarmicro.com>
+X-Mailer: git-send-email 2.33.1.windows.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SG2PR04CA0183.apcprd04.prod.outlook.com
+ (2603:1096:4:14::21) To PUZPR06MB4713.apcprd06.prod.outlook.com
+ (2603:1096:301:b4::10)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] s390x/pci: indicate QEMU supports relaxed translation
- for passthrough
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com, clegoate@redhat.com, qemu-devel@nongnu.org
-References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
- <20241209192927.107503-3-mjrosato@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241209192927.107503-3-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|TYSPR06MB7046:EE_
+X-MS-Office365-Filtering-Correlation-Id: d877bd3e-476a-46a1-6fe4-08dd19e020f0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|52116014|366016|38350700014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MONx0Bdj6t5hzu8h2vDu7c9aLpNJ8+Zqg+Kd/uLH2kSjb866PRhSPsREeHKX?=
+ =?us-ascii?Q?/NqqLT6YpOBiXo0+sIrmtR3C3hHbqELZsIy9Usc4iRxlXPPHApblsxcHD5G+?=
+ =?us-ascii?Q?QCW8GYTfGfKS3xEKd7JoMPDThJI4YaHweJMsXTRWaNB2gAmklj4uh1+PwFPD?=
+ =?us-ascii?Q?x97/aLxdG9vsyXrRHLZNkwAS7UahUq4axg6mnsqfKDJ4lIgTzfs0WUf/0OsW?=
+ =?us-ascii?Q?nCHvAG3S5yDClRpsYqlInEgoePQYIhY/UhuMQHJoFbMfZ6dwpRCqq/4Tdg0M?=
+ =?us-ascii?Q?fxQXrFi8jV/QDRUHcbV2OnYcNeGo5RW0wfQWCHBU+EAo4MBfoAhWAIoAVzPT?=
+ =?us-ascii?Q?L4hmxZEIJmvTuRY7lF1O1VCxGfuNZhyWBLp4e5OeoBNb76DfTdp8gQUMPSKh?=
+ =?us-ascii?Q?pdkrc9654rQrkiYmH6DbYak4jbpzHhEfE6IQ4mCl2exBHySRmafBKtNhlEXH?=
+ =?us-ascii?Q?7GDXByAcRmiFGtH8GYjPK3gNF+aRWKAxebGZnRO7Uj8WufycRHGvJLYxwzHk?=
+ =?us-ascii?Q?hTOoo2pEDc1Lst5Pnp6kwM89I28cNFRQUgKfiV9oqgpEgBwBtrNo5jgI3X1A?=
+ =?us-ascii?Q?iwdTKss/2Vva51hsx1ZvskrnC7FBIHnAfiEx6etb0ahrYqCmAqtU7ObRe7JY?=
+ =?us-ascii?Q?BZgd+t1GYe/Tv5V0bJXJVHTMh8Z0IEW1ZaIlzD4r/K9ajaGdcGvHbDRiiIWW?=
+ =?us-ascii?Q?+ArTmElIjIR64xlOpKF0n8BleYFcHOourQIaZzAy0lisRtA/2LUMI0JChyQb?=
+ =?us-ascii?Q?ne9fwE4uQhG2Sphd++eXpFHi7ACUIy5exMx7w3Z0QLlQ9OFIr3vXm+5/7e3R?=
+ =?us-ascii?Q?GtDW0b2JmGfok9YYwvnEPmii4Y6Jgy1+0DGP2Spsj8yA4U3vPsOA337rEJ7r?=
+ =?us-ascii?Q?HvjsNJzYUbK6lfrenIDUxuhwJJ6IkKU1JqoTKWyul2bf8yC30A2utw6cIB3/?=
+ =?us-ascii?Q?Bn+PGJRWPVVtdAadzi1u8qTMcIEPUr6cn/3VsxdAYx1LchiLD/xm2oyFYeIG?=
+ =?us-ascii?Q?tgYrgZSw6Q5NU0wKCaL1gc06ai7eqjQGviT1KU+7bk1UJQTxejW7yjKyXpbZ?=
+ =?us-ascii?Q?BB3jPhA45qwMRsrRJoi+Wxsw/hjMRHCkC6KTqhcUGYQf5uAG5cmPaUuLiUiZ?=
+ =?us-ascii?Q?zEKoxkIC2RgB2STmZO/0HyeHOf8Y8w7J50bPk6ruOodEHdCtl9JfOQZtctKH?=
+ =?us-ascii?Q?0bZQKJfZa2aF/w12oINdi4MB8ROjcdQVVbUjnt5ZPmlW+F618ttGds9lP/Dw?=
+ =?us-ascii?Q?u0gkuiZzh+Tb7knSQ+BEyRmw/ElQ0bFZ/vFxjrOFoMdqQlXEptTZ08BxcxQZ?=
+ =?us-ascii?Q?YZwCZ8+adNqWwhc6oGi/t1qA2j/xCwpoV24V3bOtmIH0PsK4s1nWXW0S7pda?=
+ =?us-ascii?Q?WZeN4afw1p8f1ZzXcKN6PgarEJ339Zi+GB+LWV6d4PQnK736dQ=3D=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(52116014)(366016)(38350700014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?w+4022ClPriQsLN3LmXmIZ6/TGtEkUZGF5soVf5mjSS3Tw2QUy4cpwQMXw6k?=
+ =?us-ascii?Q?I3wnMwLg9K3/IMkkEnkkspXkU7l3dRkiQcqXJU/oujgK/F5dPo109eDQk7DU?=
+ =?us-ascii?Q?wbZGkUXyPl7lMyFC4qOQ9Qhjkh7vrGJWHAAQ59WuuxGabAnygdQafulSbLCg?=
+ =?us-ascii?Q?jPO1jKYrQFl8rVBzknCwRjJLwfW3w1/qhP7OZp4UWPFjs5auOvpx+UJTGJ9o?=
+ =?us-ascii?Q?Ailz0KYpuYtgFIadfd3ywY80dyvb+zlkLAo/ZxtaovBYex03IZSHfHJ1LpHa?=
+ =?us-ascii?Q?Qdp/5nqBcxiHp0335xtCUQa1yym5QuReCEXEBsK7L+/UK2OXJiYyrUGjoNo0?=
+ =?us-ascii?Q?AmbnpOWqAKYCGUaI6hjE1/6TH1SWY+mfWu1FaNo1fif0x9pzZgUBPjSBfe0d?=
+ =?us-ascii?Q?c0Yg3NhwBVIwEUK3AGzz3G0HfsaIfxXPlmm+bhDnt6AS3ogrPRZZ6D3Gi68x?=
+ =?us-ascii?Q?z3gNYt8VLrSETc2soNlOW7c2xAbfyLTkTTi7fh+zGRtRGBbCxBRsU0KY8/Fb?=
+ =?us-ascii?Q?TKrTipJIWE4QcyqcxpVimVNGXFlhNA4S6USBi6SFxqQ9M+fmRtNo0JbwBCJt?=
+ =?us-ascii?Q?zHmHH9GlPap2MIZXc8C64Za/JuXc6ufiAn56gFJ0frcEpVRPra1p9+J++/qW?=
+ =?us-ascii?Q?EO71uRDjVRM8RoYBoe2cy9pb966wRQevugskD+YJknjjcy/V+LesDVXLH15q?=
+ =?us-ascii?Q?5RSylcn7LjJGkXRQH51SkbxefWFzCqyp2KQNJ1kOdtJ0LeWVy0/F3eUiqjVi?=
+ =?us-ascii?Q?vs5eMYkpMNrekMHRNkOy1vKlK8zF/emU5hYwu+jZ8ftbAt4WCWGqZcjkk1iS?=
+ =?us-ascii?Q?gUrQXiM3Z+UE8tLJagmhKBiYXqJv5kuQ26+m3xqy8tlt8AH2PZd97GIvXUHT?=
+ =?us-ascii?Q?kORN84/96LZVBfySu/JLZJrzdnclcWMcV6ZtFXWVE54DafBQUMSgPZ1gQ16z?=
+ =?us-ascii?Q?ApT5/q+Mn6Ro3Mu/UbvPTNqtZD3n4ihEMrgtyk2XW4/llZ0k0EZ8Kzp4jEwi?=
+ =?us-ascii?Q?XkubwdvdxQrX6mlBwXBEH7/QfsnMCMEN94VNnn7EOMgj5jMt2eg4NyuFSbbi?=
+ =?us-ascii?Q?D4Ekh0eeA+6pg1LPDkl3kK2ARYG1k8/APN2Ic7YchBcszv9Y8BNCxjo1I1AB?=
+ =?us-ascii?Q?as5gr5jItJXBWl05hacpbyd0Yu8dVnIKhGov1RuGrr3LThrasb6LDU1VvVZx?=
+ =?us-ascii?Q?fB20+TO0D0+LZM044ZvOrrpdFMlQ6BF/Ws95JlA94YDCt/++dfQOKNpGGL7I?=
+ =?us-ascii?Q?JAWcAyvUxM89K00fa7NB5u9rXli8oJ5hlnXVavQjcZC+lwncBdILVedXBR0Q?=
+ =?us-ascii?Q?EJgxWFCcU8+m7ZR/T5u8KBRqOb4E/em7IxY1rvqr4kYeuMbxgO5o37Vfbq01?=
+ =?us-ascii?Q?nEcji3EYJxvJTcGrsykIau6d3RTfIt6rEXHs5tuhfpSdw706ysws3Zi1tD7R?=
+ =?us-ascii?Q?tcUYHP9SE6px47Kfzp8TufYn7LTkJj36pAAemcRxuBmPZkaQuoLzKSCvxRTq?=
+ =?us-ascii?Q?H75gCW9I875aF297vs32MjrGX+r7R1OgQOfBKOlwQl30Mie2mztJstpREi+S?=
+ =?us-ascii?Q?3RLjsNJU5PWwaK8WhgnWdNC9GS9AV7LQE5zkjEki?=
+X-OriginatorOrg: jaguarmicro.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d877bd3e-476a-46a1-6fe4-08dd19e020f0
+X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 12:34:17.7502 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: S4uqUT9V3KTenx+UzV3rESfQx5z3zJsO34qTyRk5B96uatozvEzNqR9OLeGEE0EdU6rhENdnqaJEJnTb5/I1IQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB7046
+Received-SPF: pass client-ip=40.107.117.115;
+ envelope-from=wafer@jaguarmicro.com;
+ helo=APC01-TYZ-obe.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,40 +161,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/12/2024 20.29, Matthew Rosato wrote:
-> Specifying this bit in the guest CLP response indicates that the guest
-> can optionally choose to skip translation and instead use
-> identity-mapped operations.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-vfio.c        | 4 +++-
->   include/hw/s390x/s390-pci-clp.h | 1 +
->   2 files changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-> index 7dbbc76823..51ac5ff3eb 100644
-> --- a/hw/s390x/s390-pci-vfio.c
-> +++ b/hw/s390x/s390-pci-vfio.c
-> @@ -224,7 +224,9 @@ static void s390_pci_read_group(S390PCIBusDevice *pbdev,
->   
->           resgrp = &pbdev->pci_group->zpci_group;
->           if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
-> -            resgrp->fr = 1;
-> +            resgrp->fr = (CLP_RSP_QPCIG_MASK_RTR | CLP_RSP_QPCIG_MASK_REFRESH);
-> +        } else {
-> +            resgrp->fr = CLP_RSP_QPCIG_MASK_RTR;
->           }
+From: Wafer Xie <wafer@jaguarmicro.com>
 
-Just a matter of taste, but maybe easier to write it like this:
+The virtio-1.2 specification writes:
 
-         resgrp->fr = CLP_RSP_QPCIG_MASK_RTR;
-         if (cap->flags & VFIO_DEVICE_INFO_ZPCI_FLAG_REFRESH) {
-             resgrp->fr |= CLP_RSP_QPCIG_MASK_REFRESH;
-         }
+2.7.6 The Virtqueue Available Ring:
+"idx field indicates where the driver would put the next descriptor entry
+in the ring (modulo the queue size). This starts at 0, and increases"
 
-?
+The idx will increase from 0 to 0xFFFF and repeat,
+So idx may be less than last_avail_idx.
 
-  Thomas
+Fixes: 258dc7c96b ("virtio: sanity-check available index")
+
+Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+
+--
+Changes in v2:
+ -Modify the commit id of the fix.
+---
+ hw/virtio/virtio.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index a26f18908e..ae7d407113 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -3362,7 +3362,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
+                 continue;
+             }
+ 
+-            nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
++            if (vring_avail_idx(&vdev->vq[i]) >= vdev->vq[i].last_avail_idx) {
++                nheads = vring_avail_idx(&vdev->vq[i]) -
++                         vdev->vq[i].last_avail_idx;
++            } else {
++                nheads = UINT16_MAX - vdev->vq[i].last_avail_idx +
++                         vring_avail_idx(&vdev->vq[i]) + 1;
++            }
+             /* Check it isn't doing strange things with descriptor numbers. */
+             if (nheads > vdev->vq[i].vring.num) {
+                 virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
+-- 
+2.27.0
 
 
