@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB2AFE77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:44:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6340E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:44:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPS7-0000JV-6N; Wed, 11 Dec 2024 11:20:43 -0500
+	id 1tLPgt-0006AX-Ut; Wed, 11 Dec 2024 11:35:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPS2-0000He-J6
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:38 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPgo-0005xs-BA
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:35:54 -0500
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPS1-0007iu-0R
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:38 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-434a742481aso59513105e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPgl-00023g-NR
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:35:53 -0500
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6dae1690c3cso2113656d6.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:35:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934035; x=1734538835; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934950; x=1734539750; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Lo7VMCHiiH9lz9IaE5gLakal324n4TYjmC+cVkhARM4=;
- b=VWuzXDw3J372qF9uhZGF5RhgaW49DhFXExiWVsPIMFmha4VdXqspBQyfCjRBdvRlB7
- 8FQ3RhLkfYOeG3Utno5MrqadmrtUnXmD6csSH7tNDJKp8df8bw/poANClRdm/l+m5VU/
- WMLzFfBFdWdfLu0NcrFve3WSxlXUGsUVD1cMpv+nGkTY4+iw0ldrnrwhGaFdRJKw1itL
- WxE9uSQr94OvbzlQwZ3CC0d28zxfENtEIADUYiY2zoRaVA0aT4NxJSMTKohc+uUktR7T
- 3pnmkSmi3+gbL5dAx4Lo21RfF60wPui3mCWV7ouWLJGYNC/zGawq67a+/vWWO27nNYPP
- M23A==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mRVN7Jp6kM6bWbbl7YqCIU2ZfmJptSK2PrHsw0aXels=;
+ b=Blp15WTKc8/8Zip3RBLmzpfzTum8NAqUZEF5HpCM+gp7FEJnV7vPXntSSjOQQT8PPX
+ 9gRl7bFb31nam0tfL/U9O5UNPnUMonL9w6AdsM5Y6gpJPAWffgv2vpV6UYCCqcUD8ehi
+ qXKF81FrXxGL41f5foTrNVb8ET1+VMyjebjzNUd9opJNn81SuBz4a+QoSjmoyJ93AIl0
+ /U6RSPladWYPFJLl7z7eugJE8kAmmynUk8dxGEro7vrVzdzk+Hed92osqgikLR1Rir4X
+ e3J/XiRMqExYqnE7vK2JpxWrtyok0fENF3RJ0GKNGCqx8oXywS5Zk/DJP2Tl9uhn1d9l
+ GhAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934035; x=1734538835;
+ d=1e100.net; s=20230601; t=1733934950; x=1734539750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Lo7VMCHiiH9lz9IaE5gLakal324n4TYjmC+cVkhARM4=;
- b=oDpdW4VGwd03qWuHnR4PQFPaYU2CI8XJIFPBLT9bny0UeXlTRzsJ0WjJXVRkqbYqX/
- d82A2kuwXxop8WGwjZDTx4R1v56WFfFjqzCOO2ouHK/i9nw4ZbvaXwrmh9/+MR5Y4Ctz
- /kFrR/6VpFUl7372Z7WOHHN4uVt2bAwWKyRZzL5zEy5B3d1vDnTPfm9AdwGrnP1fc3JM
- aAQVK1Xb206iebsGYGuBLQCccRl5VR14aJYv7Y4aVScNQye6RN1nWXK3+n/ZaQFHSOHI
- o2SPGmFPXDfwoXngyqZcho74i48VftKkZ34WX0HmLRBMqvqe4ZyLPZxcBGgGbhFxjza/
- FULQ==
-X-Gm-Message-State: AOJu0YyzBOqWjp+0E5kRoroYDXKrT/MObCDYfOK3DjyHlaFvszDmpHkY
- GG75hWAizli45emRDWlRbzM1U5lSvYGBbAsskamLkJ6l1YyqlpYBUodumfwcF/GbM88ntA5QCAt
- 2
-X-Gm-Gg: ASbGncv2a/MtN9h71jCAxDgN6dz7Lusd7LHO/+UCJ08QAILnblH7dq39XpfzeMEua3X
- Mh+ORB0DrVth3sSfCYJR5oWOwumSWw4R2aSIEjCW+yyYoz+ih2Sr9sCA03Zv9I6tQv4qtnBK7vf
- 8ldAqYsrhy8jweGcY4puKhg1IGlR4t9cqoSyJzP9aQQvRpyxDfJNdu4M7obilkgG+R0ffpvHhIt
- f22WrjPk0HD+1UyddXMqh5sJOcXeqZw/jiW6q/JiD/cuzuoq3sgAGU6/azf
-X-Google-Smtp-Source: AGHT+IHlIi7VqqJ2r6ts+BLVySRQ3BfFDjj9D2fk17VKus71AXS/NQjwXP0n96IVlMYsRoNX3JnqrQ==
-X-Received: by 2002:a05:600c:5116:b0:435:b064:7dce with SMTP id
- 5b1f17b1804b1-43622845ca2mr3219485e9.18.1733934035660; 
- Wed, 11 Dec 2024 08:20:35 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.34
- for <qemu-devel@nongnu.org>
+ bh=mRVN7Jp6kM6bWbbl7YqCIU2ZfmJptSK2PrHsw0aXels=;
+ b=JHjr788NzqWIkBtFPCFJwIpN32uN6BInHQQ2V3RtBhiGN12lyDqFAp0rFjJkKjJrLN
+ fs1ZOuKnHh+qUIibiScXzhE81AS6CH5aPisL+iddyfwfJ06Q949tyEg6UqBPPZ10m5Tv
+ NR4xRb9m7Lntjuli+vfYJlI71wwvU3s/dAcLts9xlJW6ofBB2z+KS1k0RT+0wyTc3NMf
+ UG9HNQ2Czn+1q2lfCWE2dBn9IDb+7s4qj9HwDb9QyUEErgHs/j9RMIohoBxG+l7XEolU
+ Wq//ubM7ihZjiqSYhFd96Zs6mEiv3OW50u9Ua8WxP15VWUbsfCkTOqKJwkWzDz9IlAXi
+ z+KQ==
+X-Gm-Message-State: AOJu0Yz0ay6pa+6vYqT+ETM3XNOl7/vYdI1UEBf+iEhNZV8aRafTyHel
+ Uvtbd6hTVy1VvfvtVdyYP5qkTmyGuDYjyT5EpMWplhybogslf3dszwC87NPcYohfJ2STToE1uVr
+ 55FWvjy2P
+X-Gm-Gg: ASbGncs0TkynBLmJuO7seqyJYg0u0u7pGRZm08roXjKmgI7asNw5cpEGJM4OLfJ4+He
+ SvXUE29TsqWkpdW+t37JgrUSgl34/XG8r4r88hgHlzZkS48wDWhr/nMSsfSzmooAGDmcaUsK0St
+ XFS3NIxDn+pxnFgGarHojJ7du8IvuJM5v52Tpep8LZb1x/h8D9dThzNUvQfc+7th1KSz1MMBNnB
+ bsTWj1ZKDPgpWjRSMBb46wPuhIeYfDLT65IzatlwemEyP3zwInVAqo2v7h4nQ==
+X-Google-Smtp-Source: AGHT+IF5BWod1tTGann6XSJIqJP49leDGEenztIcUJySD9wl+AUSxTvb/ihLycuoJ+xK7rEvOy3jMw==
+X-Received: by 2002:a05:6214:2aad:b0:6d8:8a8f:75b0 with SMTP id
+ 6a1803df08f44-6d934aee40emr59078736d6.14.1733934950677; 
+ Wed, 11 Dec 2024 08:35:50 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6d8da675214sm71856276d6.11.2024.12.11.08.35.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:35 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Wed, 11 Dec 2024 08:35:50 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 24/72] target/ppc: Set Float3NaNPropRule explicitly
-Date: Wed, 11 Dec 2024 16:19:16 +0000
-Message-Id: <20241211162004.2795499-25-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
-References: <20241211162004.2795499-1-peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 46/69] target/arm: Convert handle_2misc_pairwise to
+ decodetree
+Date: Wed, 11 Dec 2024 10:30:13 -0600
+Message-ID: <20241211163036.2297116-47-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf29.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,54 +99,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the Float3NaNPropRule explicitly for PPC, and remove the
-ifdef from pickNaNMulAdd().
+This includes SADDLP, UADDLP, SADALP, UADALP.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-20-peter.maydell@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/ppc/cpu_init.c          | 8 ++++++++
- fpu/softfloat-specialize.c.inc | 6 ------
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ target/arm/tcg/helper-a64.h    |  2 -
+ target/arm/tcg/helper-a64.c    | 18 --------
+ target/arm/tcg/translate-a64.c | 84 +++-------------------------------
+ target/arm/tcg/a64.decode      |  5 ++
+ 4 files changed, 11 insertions(+), 98 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index f18908a643a..eb9d7b13701 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7270,6 +7270,14 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
-      */
-     set_float_2nan_prop_rule(float_2nan_prop_ab, &env->fp_status);
-     set_float_2nan_prop_rule(float_2nan_prop_ab, &env->vec_status);
-+    /*
-+     * NaN propagation for fused multiply-add:
-+     * if fRA is a NaN return it; otherwise if fRB is a NaN return it;
-+     * otherwise return fRC. Note that muladd on PPC is (fRA * fRC) + frB
-+     * whereas QEMU labels the operands as (a * b) + c.
-+     */
-+    set_float_3nan_prop_rule(float_3nan_prop_acb, &env->fp_status);
-+    set_float_3nan_prop_rule(float_3nan_prop_acb, &env->vec_status);
-     /*
-      * For PPC, the (inf,zero,qnan) case sets InvalidOp, but we prefer
-      * to return an input NaN if we have one (ie c) rather than generating
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index d610f460026..173b9eadb57 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -511,12 +511,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-         } else {
-             rule = float_3nan_prop_s_cab;
-         }
--#elif defined(TARGET_PPC)
--        /*
--         * If fRA is a NaN return it; otherwise if fRB is a NaN return it;
--         * otherwise return fRC. Note that muladd on PPC is (fRA * fRC) + frB
--         */
--        rule = float_3nan_prop_acb;
- #elif defined(TARGET_S390X)
-         rule = float_3nan_prop_s_abc;
- #elif defined(TARGET_SPARC)
+diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
+index f811bb85dc..ac7ca190fa 100644
+--- a/target/arm/tcg/helper-a64.h
++++ b/target/arm/tcg/helper-a64.h
+@@ -41,8 +41,6 @@ DEF_HELPER_FLAGS_3(recpsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f16, TCG_CALL_NO_RWG, f16, f16, f16, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f32, TCG_CALL_NO_RWG, f32, f32, f32, ptr)
+ DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, ptr)
+-DEF_HELPER_FLAGS_1(neon_addlp_u8, TCG_CALL_NO_RWG_SE, i64, i64)
+-DEF_HELPER_FLAGS_1(neon_addlp_u16, TCG_CALL_NO_RWG_SE, i64, i64)
+ DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, ptr)
+ DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, ptr)
+ DEF_HELPER_FLAGS_2(frecpx_f16, TCG_CALL_NO_RWG, f16, f16, ptr)
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index 9b3c407be3..3de564e0fe 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -306,24 +306,6 @@ float64 HELPER(rsqrtsf_f64)(float64 a, float64 b, void *fpstp)
+     return float64_muladd(a, b, float64_three, float_muladd_halve_result, fpst);
+ }
+ 
+-uint64_t HELPER(neon_addlp_u8)(uint64_t a)
+-{
+-    uint64_t tmp;
+-
+-    tmp = a & 0x00ff00ff00ff00ffULL;
+-    tmp += (a >> 8) & 0x00ff00ff00ff00ffULL;
+-    return tmp;
+-}
+-
+-uint64_t HELPER(neon_addlp_u16)(uint64_t a)
+-{
+-    uint64_t tmp;
+-
+-    tmp = a & 0x0000ffff0000ffffULL;
+-    tmp += (a >> 16) & 0x0000ffff0000ffffULL;
+-    return tmp;
+-}
+-
+ /* Floating-point reciprocal exponent - see FPRecpX in ARM ARM */
+ uint32_t HELPER(frecpx_f16)(uint32_t a, void *fpstp)
+ {
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index f57b5e2855..717d30dd5b 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -8956,6 +8956,10 @@ static bool do_gvec_fn2_bhs(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
+ TRANS(CLS_v, do_gvec_fn2_bhs, a, gen_gvec_cls)
+ TRANS(CLZ_v, do_gvec_fn2_bhs, a, gen_gvec_clz)
+ TRANS(REV64_v, do_gvec_fn2_bhs, a, gen_gvec_rev64)
++TRANS(SADDLP_v, do_gvec_fn2_bhs, a, gen_gvec_saddlp)
++TRANS(UADDLP_v, do_gvec_fn2_bhs, a, gen_gvec_uaddlp)
++TRANS(SADALP_v, do_gvec_fn2_bhs, a, gen_gvec_sadalp)
++TRANS(UADALP_v, do_gvec_fn2_bhs, a, gen_gvec_uadalp)
+ 
+ /* Common vector code for handling integer to FP conversion */
+ static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
+@@ -9885,73 +9889,6 @@ static void handle_2misc_widening(DisasContext *s, int opcode, bool is_q,
+     }
+ }
+ 
+-static void handle_2misc_pairwise(DisasContext *s, int opcode, bool u,
+-                                  bool is_q, int size, int rn, int rd)
+-{
+-    /* Implement the pairwise operations from 2-misc:
+-     * SADDLP, UADDLP, SADALP, UADALP.
+-     * These all add pairs of elements in the input to produce a
+-     * double-width result element in the output (possibly accumulating).
+-     */
+-    bool accum = (opcode == 0x6);
+-    int maxpass = is_q ? 2 : 1;
+-    int pass;
+-    TCGv_i64 tcg_res[2];
+-
+-    if (size == 2) {
+-        /* 32 + 32 -> 64 op */
+-        MemOp memop = size + (u ? 0 : MO_SIGN);
+-
+-        for (pass = 0; pass < maxpass; pass++) {
+-            TCGv_i64 tcg_op1 = tcg_temp_new_i64();
+-            TCGv_i64 tcg_op2 = tcg_temp_new_i64();
+-
+-            tcg_res[pass] = tcg_temp_new_i64();
+-
+-            read_vec_element(s, tcg_op1, rn, pass * 2, memop);
+-            read_vec_element(s, tcg_op2, rn, pass * 2 + 1, memop);
+-            tcg_gen_add_i64(tcg_res[pass], tcg_op1, tcg_op2);
+-            if (accum) {
+-                read_vec_element(s, tcg_op1, rd, pass, MO_64);
+-                tcg_gen_add_i64(tcg_res[pass], tcg_res[pass], tcg_op1);
+-            }
+-        }
+-    } else {
+-        for (pass = 0; pass < maxpass; pass++) {
+-            TCGv_i64 tcg_op = tcg_temp_new_i64();
+-            NeonGenOne64OpFn *genfn;
+-            static NeonGenOne64OpFn * const fns[2][2] = {
+-                { gen_helper_neon_addlp_s8,  gen_helper_neon_addlp_u8 },
+-                { gen_helper_neon_addlp_s16,  gen_helper_neon_addlp_u16 },
+-            };
+-
+-            genfn = fns[size][u];
+-
+-            tcg_res[pass] = tcg_temp_new_i64();
+-
+-            read_vec_element(s, tcg_op, rn, pass, MO_64);
+-            genfn(tcg_res[pass], tcg_op);
+-
+-            if (accum) {
+-                read_vec_element(s, tcg_op, rd, pass, MO_64);
+-                if (size == 0) {
+-                    gen_helper_neon_addl_u16(tcg_res[pass],
+-                                             tcg_res[pass], tcg_op);
+-                } else {
+-                    gen_helper_neon_addl_u32(tcg_res[pass],
+-                                             tcg_res[pass], tcg_op);
+-                }
+-            }
+-        }
+-    }
+-    if (!is_q) {
+-        tcg_res[1] = tcg_constant_i64(0);
+-    }
+-    for (pass = 0; pass < 2; pass++) {
+-        write_vec_element(s, tcg_res[pass], rd, pass, MO_64);
+-    }
+-}
+-
+ static void handle_shll(DisasContext *s, bool is_q, int size, int rn, int rd)
+ {
+     /* Implement SHLL and SHLL2 */
+@@ -10011,17 +9948,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+ 
+         handle_2misc_narrow(s, false, opcode, u, is_q, size, rn, rd);
+         return;
+-    case 0x2: /* SADDLP, UADDLP */
+-    case 0x6: /* SADALP, UADALP */
+-        if (size == 3) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-        handle_2misc_pairwise(s, opcode, u, is_q, size, rn, rd);
+-        return;
+     case 0x13: /* SHLL, SHLL2 */
+         if (u == 0 || size == 3) {
+             unallocated_encoding(s);
+@@ -10203,9 +10129,11 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+     default:
+     case 0x0: /* REV64, REV32 */
+     case 0x1: /* REV16 */
++    case 0x2: /* SADDLP, UADDLP */
+     case 0x3: /* SUQADD, USQADD */
+     case 0x4: /* CLS, CLZ */
+     case 0x5: /* CNT, NOT, RBIT */
++    case 0x6: /* SADALP, UADALP */
+     case 0x7: /* SQABS, SQNEG */
+     case 0x8: /* CMGT, CMGE */
+     case 0x9: /* CMEQ, CMLE */
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 05f1bc99b5..f3488766b2 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1662,3 +1662,8 @@ CMLT0_v         0.00 1110 ..1 00000 10101 0 ..... .....     @qrr_e
+ REV16_v         0.00 1110 001 00000 00011 0 ..... .....     @qrr_b
+ REV32_v         0.10 1110 0.1 00000 00001 0 ..... .....     @qrr_bh
+ REV64_v         0.00 1110 ..1 00000 00001 0 ..... .....     @qrr_e
++
++SADDLP_v        0.00 1110 ..1 00000 00101 0 ..... .....     @qrr_e
++UADDLP_v        0.10 1110 ..1 00000 00101 0 ..... .....     @qrr_e
++SADALP_v        0.00 1110 ..1 00000 01101 0 ..... .....     @qrr_e
++UADALP_v        0.10 1110 ..1 00000 01101 0 ..... .....     @qrr_e
 -- 
-2.34.1
+2.43.0
 
 
