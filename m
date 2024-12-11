@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70AC4E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2A28E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLVkX-0002oz-Vf; Wed, 11 Dec 2024 18:04:10 -0500
+	id 1tLVku-00035A-E9; Wed, 11 Dec 2024 18:04:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVkW-0002oJ-RT
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:08 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVkr-00031V-UN
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:29 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVkV-0001rS-8T
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:08 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-385d7b4da2bso6022449f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:04:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVkp-00023S-FN
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:29 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so9679795e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:04:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733958245; x=1734563045; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733958266; x=1734563066; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=q84BF+ePAefMMrHK1zEl0KjUdaMQRdy3zhrx62Em4cY=;
- b=A7ymYIDO5fap9DrW/EBuzh7/yEydEefzdDuEfKHedx5RcI4wSuCV5V55XUhPcIkajG
- JiUJbLRJR41PR+DwSgdBi047I+zg9ZylSlnR4CtmC8gGmdQjuTKZYKVM8pSEc1qasYmm
- 5ztNXDuzPcP5k+lkHCmku3wgrOz4gLiKrSrX1PSBNvGsQBrnbjFy7qmreAyPj0qnTOYm
- yFErLFM7CXFctn9La0dFsOMtiNWKCzrinER09og6FJEoqLDKrI1ZaAMtj8De9WcehdO3
- L/M4Xx+iX8xuwNwQDvL2HP0Wt5Wzd+8lKOk31114f2cMJ//cpuwfANBFzIqDdC8zVXnB
- VL6w==
+ bh=e1gkSU7M75EFdbW95JvRzZevk5diVkYdExWvAc1of60=;
+ b=R/eBWH5z2dx6cjzsEN6u3+idu3vFuwzErwO8oX11xXUX49xg7u3+co4bLtb8Lwtojd
+ 5NHmmaixLvtSXFqWCc2Jgbd40xh+tbLlPsc251PbFJ9YmL8Q2NXnPExaZcudXcqXOu/j
+ 3HOJ5ZQeVfiblEkwyYcKRDfEEduHeHlE9GFVeQ4VeMTyHH/XoCh8GIx3eDq4QLBAcagv
+ zAxyQs58tKFEF1Zf1vJ+6Z6uU9+1pMMeT9e3DP0+KHzEiflCuXTUtTyO4dDnkAnGt8Wi
+ jTd6vixOeaHcpuPvX0SG2FSGxAGhAa4Anwj4I9VDP4et61vZCi0Emut8HYBzWO7qlTzY
+ 0syw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733958245; x=1734563045;
+ d=1e100.net; s=20230601; t=1733958266; x=1734563066;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=q84BF+ePAefMMrHK1zEl0KjUdaMQRdy3zhrx62Em4cY=;
- b=Hpmc5tLfHeiZGN1CITkLLqcKrl9oAuHZVUUTR05j5cWwBki6llDnDGak/5CHUK5h6k
- a5MtxYmQMGPD2xTWX7aR0jMUtk6bqwO5LkChNXpbzy6gY56cMyrYb/nT6cKaMdZNmAnW
- KM/qE0dgQgi7KMO2+NvkuRqf5wpsIoPwGK6T6LMd6va1OchlL+2zD6bc0q89He5H8i8e
- ahN+aU3Q1JsdbenpZanWzl3h/C5p2DzZuzWwzHDU2E2a4Olfk9bpJnfc3j5QHuoHVd8s
- sYRBkLTzOTkIgiVgDm0cUR5A0jhISY5MblNXwK5sK+sbYOv0s9R9Q2LW4UJ4cWaB/g8X
- ALoQ==
-X-Gm-Message-State: AOJu0YyHGW1O+ur0l0fCzNU6iM+MGeevpZIv8lIL4KUuZDUsBtPxDO+I
- R0NFEzcJYolCZRAWtmMjq2GeP52LZq3CRL7DRTqlcyfw7e1QOfxfGiLS32IpLJIrzphw5RdOf4n
- q
-X-Gm-Gg: ASbGncumTikcgP+3xnSMVNNpacsxDXwIQOWxVpA+hlHzJfNKPB9qSOAYMor6lj3qnQF
- 1Nq/rWQPLh0/1yyYI/gf7RSoZbdaNFrmTCLaayqIYMgDsTZygVuosVOHsH61FtQFC/rB2fPtAcZ
- 98qxtFhN9n3FKlso0NsXMb7CGoFErZmqO6h32cVpF3cWTo4dYmS2FKCqTRppez8LVjp8qpPJySt
- pFQIJxIIh4GqNmUVGDmhzP7pJP6/0Lw6v+Om08ainOreqANex4gJqIsATKNfyDzNZkL1vQqBRtG
- HuNiPP8YOi3nQ2NIPUWo51cv7i7t4u3XiQ==
-X-Google-Smtp-Source: AGHT+IFj4wDYdVTeVwuYH2TKwtEA6LG+06PYKJPO47q/hi6nNnWcScJdwe5EV5X9ap37AMBzXiD+XQ==
-X-Received: by 2002:a5d:5983:0:b0:386:3903:86eb with SMTP id
- ffacd0b85a97d-3864ce97148mr3804619f8f.23.1733958245097; 
- Wed, 11 Dec 2024 15:04:05 -0800 (PST)
+ bh=e1gkSU7M75EFdbW95JvRzZevk5diVkYdExWvAc1of60=;
+ b=AUk8Kp3o+2R71Cu7UkZoaL0MvrffSlmQi2LUSkpaksoRUwhzWdFDPnDM1lTcoUbvaZ
+ JdJ8vLcE6Ej5mxarcscZUiGGFGA7DmdUGANcVRcu3PHuULR1sYVjSo0JcHOVBoH78OLx
+ lgTDvnXw0W2gFUrM+HWvfF5LOnnN7vlImzaIg9zEgXyHiXyFyoAkDYVCIeyxjSPLVD+p
+ pwHFvUNdt1Ogceq7ZogS2fAHKuUH/waV9VAsvLjstAZ9AQGep53wjOSQVuok0d44VrR0
+ Afj35d3naaSJPGyCQovLJJjMYDvcbdn+ww01ajpJpcIlVV4hyxr4K50h6fUEBWkqV6yF
+ e+Cw==
+X-Gm-Message-State: AOJu0YzfpOGomkAkuLdgtCDh67FQKQFGRuXmvg9ESaMSgSjq9OJZZblT
+ 7GL83uJtes+fk4QSoJ2A2yNWxDOCofMvXQTR5iU11ayt/DctMz7/v/VGEG8nIq8ybBgnJeffODN
+ n
+X-Gm-Gg: ASbGnctPFhUcdsXqrpiOgk3tuuP1D5m/UkamQE/J4bs/xB15SuPvrE5aVfz81na+rOF
+ PLaTpiu4LcXZoVUexBuMxXeRmnMbljH+2Wx6TYbZQpcQOsppUFC1jF4A4hIpHrQU4ecyZsCyOtT
+ NKxZ0EQey7QaGhqSqUYtvzPttDmn7hJT+N1uIqByr0yemd3BA4X/+o8h9kQsHrueJlb0mhZ986v
+ RK5UFtGjKZLgk7IS5+0Vot7GHpOAhia49L0OZuCB4lRcTXzJLMqwTJy6/BIJq/3zG06qtPL3pMk
+ iQVqQvtRH4bNty1OjZh8V6C9cDHuRAaItA==
+X-Google-Smtp-Source: AGHT+IH13sBDrrNq1YNP2KE3qw+IE73kK1J9viuwif4RhVJDSJvBV6NWIotfSC1dDfDCvcGxhZZv6Q==
+X-Received: by 2002:a05:600c:46c6:b0:434:f9c4:a850 with SMTP id
+ 5b1f17b1804b1-43622833224mr13851425e9.10.1733958265695; 
+ Wed, 11 Dec 2024 15:04:25 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514dc3sm2279838f8f.67.2024.12.11.15.04.03
+ 5b1f17b1804b1-434f981880csm117938685e9.44.2024.12.11.15.04.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Dec 2024 15:04:04 -0800 (PST)
+ Wed, 11 Dec 2024 15:04:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
  qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v2 1/9] target/xtensa: Remove tswap() calls in semihosting
- simcall() helper
-Date: Thu, 12 Dec 2024 00:03:49 +0100
-Message-ID: <20241211230357.97036-2-philmd@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 5/9] hw/ppc: Include missing 'exec/tswap.h' header
+Date: Thu, 12 Dec 2024 00:03:53 +0100
+Message-ID: <20241211230357.97036-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241211230357.97036-1-philmd@linaro.org>
 References: <20241211230357.97036-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,64 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of heterogeneous emulation where cores with
-different endianness can run concurrently, we need to remove
-the tswap() calls -- which use a fixed per-binary endianness.
+Some files indirectly get "exec/tswap.h" declarations via
+"exec/cpu-all.h". Include it directly to be able to remove
+the former from the latter, otherwise we get:
 
-Get the endianness of the CPU accessed using the libisa
-xtensa_isa_is_big_endian() call and replace the tswap() calls
-by bswap() ones when necessary.
+  hw/ppc/virtex_ml507.c:123:19: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    123 |     env->gpr[6] = tswap32(EPAPR_MAGIC);
+        |                   ^
+  hw/ppc/sam460ex.c:238:23: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    238 |         env->gpr[6] = tswap32(EPAPR_MAGIC);
+        |                       ^
+  hw/ppc/spapr.c:1617:13: error: call to undeclared function 'tswap64'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+   1617 |             DIRTY_HPTE(HPTE(spapr->htab, i));
+        |             ^
+  hw/ppc/spapr.c:1406:55: note: expanded from macro 'DIRTY_HPTE'
+   1406 | #define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
+        |                                                       ^
 
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/xtensa-semi.c | 15 +++++----------
- 1 file changed, 5 insertions(+), 10 deletions(-)
+ hw/ppc/sam460ex.c     | 1 +
+ hw/ppc/spapr.c        | 1 +
+ hw/ppc/virtex_ml507.c | 1 +
+ 3 files changed, 3 insertions(+)
 
-diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
-index fa21b7e11fc..2ded8e5634e 100644
---- a/target/xtensa/xtensa-semi.c
-+++ b/target/xtensa/xtensa-semi.c
-@@ -30,6 +30,7 @@
- #include "chardev/char-fe.h"
- #include "exec/helper-proto.h"
- #include "semihosting/semihost.h"
-+#include "semihosting/uaccess.h"
- #include "qapi/error.h"
- #include "qemu/log.h"
+diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+index 78e2a46e753..3bbab263ae8 100644
+--- a/hw/ppc/sam460ex.c
++++ b/hw/ppc/sam460ex.c
+@@ -22,6 +22,7 @@
+ #include "sysemu/device_tree.h"
+ #include "sysemu/block-backend.h"
+ #include "exec/page-protection.h"
++#include "exec/tswap.h"
+ #include "hw/loader.h"
+ #include "elf.h"
+ #include "exec/memory.h"
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 0d4efaa0c09..02136b3295a 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -90,6 +90,7 @@
+ #include "hw/ppc/spapr_numa.h"
  
-@@ -323,15 +324,12 @@ void HELPER(simcall)(CPUXtensaState *env)
-             uint32_t fd = regs[3];
-             uint32_t rq = regs[4];
-             uint32_t target_tv = regs[5];
--            uint32_t target_tvv[2];
+ #include <libfdt.h>
++#include "exec/tswap.h"
  
-             struct timeval tv = {0};
- 
-             if (target_tv) {
--                cpu_memory_rw_debug(cs, target_tv,
--                        (uint8_t *)target_tvv, sizeof(target_tvv), 0);
--                tv.tv_sec = (int32_t)tswap32(target_tvv[0]);
--                tv.tv_usec = (int32_t)tswap32(target_tvv[1]);
-+                get_user_u32(tv.tv_sec, target_tv);
-+                get_user_u32(tv.tv_sec, target_tv + 4);
-             }
-             if (fd < 3 && sim_console) {
-                 if ((fd == 1 || fd == 2) && rq == SELECT_ONE_WRITE) {
-@@ -387,11 +385,8 @@ void HELPER(simcall)(CPUXtensaState *env)
-                 const char *str = semihosting_get_arg(i);
-                 int str_size = strlen(str) + 1;
- 
--                argptr = tswap32(regs[3] + str_offset);
--
--                cpu_memory_rw_debug(cs,
--                                    regs[3] + i * sizeof(uint32_t),
--                                    (uint8_t *)&argptr, sizeof(argptr), 1);
-+                put_user_u32(regs[3] + str_offset,
-+                             regs[3] + i * sizeof(uint32_t));
-                 cpu_memory_rw_debug(cs,
-                                     regs[3] + str_offset,
-                                     (uint8_t *)str, str_size, 1);
+ /* SLOF memory layout:
+  *
+diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+index f378e5c4a90..0e9a2469599 100644
+--- a/hw/ppc/virtex_ml507.c
++++ b/hw/ppc/virtex_ml507.c
+@@ -26,6 +26,7 @@
+ #include "qemu/datadir.h"
+ #include "qemu/units.h"
+ #include "exec/page-protection.h"
++#include "exec/tswap.h"
+ #include "cpu.h"
+ #include "hw/sysbus.h"
+ #include "hw/char/serial-mm.h"
 -- 
 2.45.2
 
