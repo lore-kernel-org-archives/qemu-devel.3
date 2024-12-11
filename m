@@ -4,113 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DA9E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7960E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:27:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPSp-0001S1-0V; Wed, 11 Dec 2024 11:21:27 -0500
+	id 1tLPRn-00009u-SD; Wed, 11 Dec 2024 11:20:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tLPSa-00016l-3z
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:12 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPRl-00009C-Nb
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:22 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tLPSY-0007qV-FS
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:11 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-725ee27e905so3832340b3a.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPRj-0007dP-Kw
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:21 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-434a7ee3d60so5197435e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934069; x=1734538869; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=R/8rIeF0TDteUXFj/RITr0ALWgOxAOP826Or7EBLfgI=;
- b=FEE+LKhXGE08VpF+W4P8Zs6wisfopXMBFmIkTWROy8c6gg/sq5rbi7EGCqMxrENH2M
- AjpXZR4xy+pQTWrJPDP4jv2n5mBcpphGimluQHUy0ppvdQBggISh+eM9r+Vq1aqXEQU/
- M04WNTTxGk+wuuS7aJQDltYHOfTXA+FUetQg6GeHqqStlGuofCJsDghmAt2SEcMoZNLK
- A/0+btIvmMLDapEi4OuOEMKai+ZQMF1PQ2V+CcS3O4W7SQyuZeeSEm3fst62le5QpXjV
- qRjplf8bQ+lGpK3hUIbHOSXTIdZcPtvgO886XHoXVUG878r51MtVo+DEPziXVcWw926x
- jZ4g==
+ d=linaro.org; s=google; t=1733934018; x=1734538818; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=+CHwXU6NrYplvrjpWt53iqb0JmQm6zXDsQafUaRrA+g=;
+ b=IV6zNZ0lhiz9awDnfIJ+2JXfIrx9AdPPWpZhBlqDNEb8nSzNURW6v5t5tGWMPSOyTk
+ m/q04l1DMdPlkCesN/8dPlxSf6yzMW6LMtnNLXFRF9KOLJa3Jl79sbtW3z4AVn1L8Jdc
+ z87uNiWzLyiYfKePm9L5ANnPeRBX6G/M6gReCu/dZWOGOnSE7yXQVRPOMlf8hHzVmz/6
+ cOQRYdumJ8o398gUACWLkZ8FIVprTfXNyNxaSG6h0zEnwC4A8Tts2uNujA7tLYrvS0yL
+ VGSQwk1ivEgGB297bh+rZnqLeqqDiYU1Hse8zuE0xgcOC2yEr6AggqN2zgbuqY3ZGWKX
+ yx+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934069; x=1734538869;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=R/8rIeF0TDteUXFj/RITr0ALWgOxAOP826Or7EBLfgI=;
- b=vBpFQdUeezNi6ZhcMXNwaeF8/K29+ZGIDY9qDnSvndrESm3tKqPfq+SzL00CaG64Dp
- udclxO9pZHJWpitU4bHATdp/ZS2NEZBGeO4XyONnIkSheRBDGyaDAXyhnfE/gL5anr3B
- iuE75Vbd5iJuR2S2SVy6RO8X1MzncRpa1oy4QglJRjhi1WmAC6heLgqhPGKixMnX7mqp
- zoSN5fbnt0INM/y1uz3ZhAN6GeNPJDFskbFRN+yy/cJKZkr4beNbkM1h9JZBuj5Urm3d
- AK8mNaVWvFCcXp9aO/qHiUFR+5DNuFnI5jrIPQPMkeFMAcIHHJrK10SwO0m4He+y04CT
- +UQw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVrWegkqK4ABTllxH7KR/Yy+iCXxZuyDC8maKFewTuscdKbh1W8T5Eq01A/un8KnsITv5/HTj46aCy@nongnu.org
-X-Gm-Message-State: AOJu0YyoNUf0CKYQ92vAVWxkTIMu0Mdt9czlV2HsB2XWxFgeK2t8JP6T
- eZL/D/REYUzOGQtA+v8oFiUkDXnX5rXThtiqLg8pn0OpqiZZjmm5rqe6yaHozEo=
-X-Gm-Gg: ASbGncvEkIQdCTdhg5ylY0anPCdVCV12B62i2xQ9vWURKaRz5ZJCZs5+wxlOOylswPK
- DqQMqJZLBF3ruzqi0l141MqSlDoINSUMLR3OkMV0s6buOGE1cmvhdyZ0l5SO0lOkaONSyxyVK4A
- KLYpkfhAQE5s7ntKbV7a6kFhQQL0564eBUT/JCzg0rEcVqT3ahqWi7MB5sPAHoAKNB04vcyO+uf
- 3Hc0QVJ08T6F5VHbfFR3wkG3n5TNiI9olgq1L7dCY46NUl5mQ+pAC93IFHAgDgaSMS5o2a6KGwy
- iOXDyQv/EQKbTgaG8JLcbIqEDg==
-X-Google-Smtp-Source: AGHT+IHVEtZAk+HzNzF2+zrLOq2c1LiYiL0X2EinosbU0WqAKvQRBhnLix7+bf2/ztLjZteojuXsRw==
-X-Received: by 2002:a05:6a21:e92:b0:1db:eff0:6ae7 with SMTP id
- adf61e73a8af0-1e1cdb2359emr637538637.33.1733934068701; 
- Wed, 11 Dec 2024 08:21:08 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725d36e66e1sm7811131b3a.178.2024.12.11.08.21.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 08:21:08 -0800 (PST)
-Message-ID: <41bb7f1a-35b7-4f38-b8cc-9b40bb3da1ed@linaro.org>
-Date: Wed, 11 Dec 2024 08:21:06 -0800
+ d=1e100.net; s=20230601; t=1733934018; x=1734538818;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+CHwXU6NrYplvrjpWt53iqb0JmQm6zXDsQafUaRrA+g=;
+ b=F9PJ39xrSsj+fAFRMbrDS0o8ld8VlyyqRGB2S6eiKI465EzQ2uu8KaerrC0vmtKfqk
+ Ac8Dwcuc9F1q2VZk3uDrVI7Bx+Gtd29HigkCP0i9sS0u9isIa098CjIE8QNhqNv64Cp0
+ 86KuNT5dWmbU7jiKHvTLWFd7T9Wk7efkl3pfH/8sLiXfhpNLurJCrZDAdNGUSRMwT/G3
+ 0i8ZPDEGiLAPCeFDQBi6VpGbzcl+QxjSMURm7CMbeeXFwcppbMX7FygB8J53HcrpMvzs
+ pseDmRgbLc4MXBc9OVA6LLI+18WpvAOaH8kW3HzMNq+8/HZxfamW9bRpzkyRHK/GKJxx
+ cy4Q==
+X-Gm-Message-State: AOJu0YyfT2mwW/05jaUw87Z+x4Gv7hDaw5C2nPWiGstP6zwz5vmNe0eo
+ dyksmZQLKPcTs929sdpS19F7FE7+8JD4skSPtEFDxAevw4Itg94KK6/9XaJCef0yJbt41eCVhtX
+ 5
+X-Gm-Gg: ASbGncvA6t+T+bLoSIxabbkRgz+01i2OiwkQ+P1iga3i7y0yry6CsHjCXyMBhBDqtzn
+ S+ZDMf1qnkl1l1I2hmwtkj/EZRVA8Amnj8ZnYbas17SkHNdqecFfylw8jd0rplakT2XY53hLgfO
+ TkDA6IWT9E15YS0QnKBG1S5cek+o0CEmcY+88b6rof31mF282LSraaZYwAf62tm3hqdC9hCxbYM
+ MISiueBCQ2+etWckOcROrlMsnfs24yzGGpWedXphSozDqGdP7Cl9Q7aplAy
+X-Google-Smtp-Source: AGHT+IHC3XcTcgtfs8M94BJQ+8EbFDz/35weS/nTYvquBq8P8LnbNV0DuPniGEsWug5OpB4+YFeLiw==
+X-Received: by 2002:a05:600c:5904:b0:436:1b77:b5aa with SMTP id
+ 5b1f17b1804b1-4361c5b184dmr25400445e9.8.1733934018016; 
+ Wed, 11 Dec 2024 08:20:18 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.17
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 08:20:17 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 08/72] softfloat: Allow runtime choice of inf * 0 + NaN result
+Date: Wed, 11 Dec 2024 16:19:00 +0000
+Message-Id: <20241211162004.2795499-9-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
+References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 15/20] tests/functional/aarch64: add tests for FEAT_RME
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, qemu-devel@nongnu.org
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- qemu-s390x@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Cleber Rosa <crosa@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>, Eric Farman
- <farman@linux.ibm.com>, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Paolo Bonzini <pbonzini@redhat.com>,
- Joel Stanley <joel@jms.id.au>, Bernhard Beschow <shentey@gmail.com>,
- qemu-ppc@nongnu.org, qemu-riscv@nongnu.org,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, qemu-arm@nongnu.org,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Bin Meng <bmeng.cn@gmail.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Beraldo Leal <bleal@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20241210204349.723590-1-alex.bennee@linaro.org>
- <20241210204349.723590-16-alex.bennee@linaro.org>
- <ba91b0da-ea60-4802-b336-f3a650d06ae4@redhat.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <ba91b0da-ea60-4802-b336-f3a650d06ae4@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,61 +97,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTEvMjQgMDA6MDQsIFRob21hcyBIdXRoIHdyb3RlOg0KPiBPbiAxMC8xMi8yMDI0
-IDIxLjQzLCBBbGV4IEJlbm7DqWUgd3JvdGU6DQo+PiBGcm9tOiBQaWVycmljayBCb3V2aWVy
-IDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+Pg0KPj4gVGhpcyBib290IGFuIE9Q
-LVRFRSBlbnZpcm9ubWVudCwgYW5kIGxhdW5jaCBhIG5lc3RlZCBndWVzdCBWTSBpbnNpZGUg
-aXQNCj4+IHVzaW5nIHRoZSBSZWFsbXMgZmVhdHVyZS4gV2UgZG8gaXQgZm9yIHZpcnQgYW5k
-IHNic2EtcmVmIHBsYXRmb3Jtcy4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBC
-b3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+Pg0KPj4gLS0tLS0NCj4+
-DQo+PiB2MjoNCj4+IC0gbW92ZSB0ZXN0IHRvIGl0cyBvd24gZmlsZQ0KPj4gLSBhZGQgc2Jz
-YSB0ZXN0DQo+PiAtIGNoZWNrIG91dHB1dCBvZiBgY2NhLXdvcmtsb2FkLWF0dGVzdGF0aW9u
-IHJlcG9ydGANCj4+DQo+PiB2MzoNCj4+IC0gYnVpbGQgYW5kIHJ1biB0ZXN0IHdpdGggY2Nh
-LXY0IGltYWdlcw0KPj4gLSBmYWN0b3JpemUgbmVzdGVkIGd1ZXN0IHRlc3QgYmV0d2VlbiBi
-b3RoIHRlc3RzDQo+PiAtIHJlbW92ZSBhY2NlbCB0Y2cgb3B0aW9uIGFzIGl0IGlzIHRoZSBk
-ZWZhdWx0IHdoZW4gcnVubmluZyB0ZXN0cw0KPj4gTm90ZTogSXQncyBhIGxvbmcgdGVzdCBh
-bmQgdGhlcmUgaXMgYSB3b3JrIGluIHByb2dyZXNzIHRvIHVuZGVyc3RhbmQgd2h5DQo+PiBk
-ZWJ1ZyBidWlsZCBpcyBzbyBzbG93ICh4MTIgdnMgb3B0aW1pemVkKS4NCj4+DQo+PiB2NDoN
-Cj4+IC0gdXNlIHBhdXRoLWltcGRlZj1vbiB0byBzcGVlZCB1cCBidWlsZCB0aW1lIGV4ZWN1
-dGlvbiAoeDIuNSBmYXN0ZXIpDQo+PiAtIGluY3JlYXNlIHRpbWVvdXQgdmFsdWUNCj4+DQo+
-PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxp
-bmFyby5vcmc+DQo+PiBNZXNzYWdlLUlkOiA8MjAyNDEyMDMyMTM2MjkuMjQ4MjgwNi0xLXBp
-ZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+IFNpZ25lZC1vZmYtYnk6IEFsZXggQmVu
-bsOpZSA8YWxleC5iZW5uZWVAbGluYXJvLm9yZz4NCj4+IC0tLQ0KPj4gICAgdGVzdHMvZnVu
-Y3Rpb25hbC9tZXNvbi5idWlsZCAgICAgICAgICAgICAgICAgfCAgIDQgKw0KPj4gICAgdGVz
-dHMvZnVuY3Rpb25hbC90ZXN0X2FhcmNoNjRfcm1lX3Nic2FyZWYucHkgfCAgNzAgKysrKysr
-KysrKysrKw0KPj4gICAgdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2FhcmNoNjRfcm1lX3ZpcnQu
-cHkgICAgfCAxMDAgKysrKysrKysrKysrKysrKysrKw0KPj4gICAgMyBmaWxlcyBjaGFuZ2Vk
-LCAxNzQgaW5zZXJ0aW9ucygrKQ0KPj4gICAgY3JlYXRlIG1vZGUgMTAwNzU1IHRlc3RzL2Z1
-bmN0aW9uYWwvdGVzdF9hYXJjaDY0X3JtZV9zYnNhcmVmLnB5DQo+PiAgICBjcmVhdGUgbW9k
-ZSAxMDA3NTUgdGVzdHMvZnVuY3Rpb25hbC90ZXN0X2FhcmNoNjRfcm1lX3ZpcnQucHkNCj4+
-DQo+PiBkaWZmIC0tZ2l0IGEvdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWlsZCBiL3Rlc3Rz
-L2Z1bmN0aW9uYWwvbWVzb24uYnVpbGQNCj4+IGluZGV4IDBhNzZiZDk5NTQuLjRlMjA3YzUz
-ZDUgMTAwNjQ0DQo+PiAtLS0gYS90ZXN0cy9mdW5jdGlvbmFsL21lc29uLmJ1aWxkDQo+PiAr
-KysgYi90ZXN0cy9mdW5jdGlvbmFsL21lc29uLmJ1aWxkDQo+PiBAQCAtMTMsNiArMTMsOCBA
-QCBlbmRpZg0KPj4gICAgdGVzdF90aW1lb3V0cyA9IHsNCj4+ICAgICAgJ2FhcmNoNjRfYXNw
-ZWVkJyA6IDYwMCwNCj4+ICAgICAgJ2FhcmNoNjRfcmFzcGk0JyA6IDQ4MCwNCj4+ICsgICdh
-YXJjaDY0X3JtZV92aXJ0JyA6IDEyMDAsDQo+PiArICAnYWFyY2g2NF9ybWVfc2JzYXJlZicg
-OiAxMjAwLA0KPiANCj4gSSB3YXMgYSBsaXR0bGUgYml0IHdvcnJpZWQgd2hlbiBJIHNhdyB0
-aGUgYmlnIHRpbWVvdXQgdmFsdWVzIGhlcmUsIGJ1dA0KPiB0aGF0J3Mgb25seSBmb3IgZGVi
-dWcgYnVpbGRzLCByaWdodD8gSSBnYXZlIGl0IGEgdHJ5IGluIGEgc3RhbmRhcmQgYnVpbGQs
-DQo+IHRoZSB0ZXN0cyBib3RoIGZpbmlzaGVkIHdpdGhpbiA1IG1pbnV0ZXMsIHNvIHRoZSBz
-dGFuZGFyZCBydW50aW1lIHN0aWxsDQo+IHNlZW1zIHRvIGJlIG9rLg0KPiANCg0KWWVzLCBp
-dCdzIGZvciBkZWJ1ZyBvbmx5Lg0KDQo+IFRlc3RlZC1ieTogVGhvbWFzIEh1dGggPHRodXRo
-QHJlZGhhdC5jb20+DQo+IA0KPiAgID4gKyAgICAjIFRoaXMgdGVzdHMgdGhlIEZFQVRfUk1F
-IGNwdSBpbXBsZW1lbnRhdGlvbiwgYnkgYm9vdGluZyBhIFZNDQo+IHN1cHBvcnRpbmcgaXQs
-DQo+ICAgPiArICAgICMgYW5kIGxhdW5jaGluZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4g
-ICA+ICsgICAgZGVmIHRlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZihzZWxmKToNCj4gICA+ICsg
-ICAgICAgIHN0YWNrX3BhdGhfdGFyX2d6ID0gc2VsZi5BU1NFVF9STUVfU1RBQ0tfU0JTQS5m
-ZXRjaCgpDQo+ICAgPiArICAgICAgICBhcmNoaXZlX2V4dHJhY3Qoc3RhY2tfcGF0aF90YXJf
-Z3osIHNlbGYud29ya2RpcikNCj4gICA+ICsNCj4gICA+ICsgICAgICAgIHNlbGYuc2V0X21h
-Y2hpbmUoJ3Nic2EtcmVmJykNCj4gICA+ICsgICAgICAgIHNlbGYudm0uc2V0X2NvbnNvbGUo
-KQ0KPiAgID4gKyAgICAgICAgc2VsZi5yZXF1aXJlX2FjY2VsZXJhdG9yKCd0Y2cnKQ0KPiAN
-Cj4gUGxlYXNlIG1vdmUgdGhlIHNldF9tYWNoaW5lIGFuZCByZXF1aXJlX2FjY2VsZXJhdG9y
-IHRvIHRoZSBiZWdpbm5pbmcgb2YgdGhlDQo+IGZ1bmN0aW9uIHNpbmNlIHRoZXkgY2FuIHNr
-aXAgdGhlIHRlc3QgaW4gY2FzZSB0aGUgcHJlcmVxdWlzaXRlIGlzIG5vdA0KPiBhdmFpbGFi
-bGUuIE90aGVyd2lzZSB5b3UndmUgZXh0cmFjdGVkIHRoZSBhc3NldCBpbiB2YWluLg0KPg0K
-DQpBbGV4LCBjb3VsZCB5b3UgcGxlYXNlIGtpbmRseSB1cGRhdGUgaXQsIGFzIGl0J3MgcGFy
-dCBvZiB5b3VyIHNlcmllcyBub3c/DQoNCj4gICAgVGhvbWFzDQo+IA0KDQpUaGFua3MsDQpQ
-aWVycmljaw0K
+IEEE 758 does not define a fixed rule for what NaN to return in
+the case of a fused multiply-add of inf * 0 + NaN. Different
+architectures thus do different things:
+ * some return the default NaN
+ * some return the input NaN
+ * Arm returns the default NaN if the input NaN is quiet,
+   and the input NaN if it is signalling
+
+We want to make this logic be runtime selected rather than
+hardcoded into the binary, because:
+ * this will let us have multiple targets in one QEMU binary
+ * the Arm FEAT_AFP architectural feature includes letting
+   the guest select a NaN propagation rule at runtime
+
+In this commit we add an enum for the propagation rule, the field in
+float_status, and the corresponding getters and setters.  We change
+pickNaNMulAdd to honour this, but because all targets still leave
+this field at its default 0 value, the fallback logic will pick the
+rule type with the old ifdef ladder.
+
+Note that four architectures both use the muladd softfloat functions
+and did not have a branch of the ifdef ladder to specify their
+behaviour (and so were ending up with the "default" case, probably
+wrongly): i386, HPPA, SH4 and Tricore.  SH4 and Tricore both set
+default_nan_mode, and so will never get into pickNaNMulAdd().  For
+HPPA and i386 we retain the same behaviour as the old default-case,
+which is to not ever return the default NaN.  This might not be
+correct but it is not a behaviour change.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241202131347.498124-4-peter.maydell@linaro.org
+---
+ include/fpu/softfloat-helpers.h | 11 ++++
+ include/fpu/softfloat-types.h   | 23 +++++++++
+ fpu/softfloat-specialize.c.inc  | 91 ++++++++++++++++++++++-----------
+ 3 files changed, 95 insertions(+), 30 deletions(-)
+
+diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
+index 453188de70b..0bf44dc6087 100644
+--- a/include/fpu/softfloat-helpers.h
++++ b/include/fpu/softfloat-helpers.h
+@@ -81,6 +81,12 @@ static inline void set_float_2nan_prop_rule(Float2NaNPropRule rule,
+     status->float_2nan_prop_rule = rule;
+ }
+ 
++static inline void set_float_infzeronan_rule(FloatInfZeroNaNRule rule,
++                                             float_status *status)
++{
++    status->float_infzeronan_rule = rule;
++}
++
+ static inline void set_flush_to_zero(bool val, float_status *status)
+ {
+     status->flush_to_zero = val;
+@@ -137,6 +143,11 @@ static inline Float2NaNPropRule get_float_2nan_prop_rule(float_status *status)
+     return status->float_2nan_prop_rule;
+ }
+ 
++static inline FloatInfZeroNaNRule get_float_infzeronan_rule(float_status *status)
++{
++    return status->float_infzeronan_rule;
++}
++
+ static inline bool get_flush_to_zero(float_status *status)
+ {
+     return status->flush_to_zero;
+diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
+index 8f39691dfd0..47bb22c4e25 100644
+--- a/include/fpu/softfloat-types.h
++++ b/include/fpu/softfloat-types.h
+@@ -207,6 +207,28 @@ typedef enum __attribute__((__packed__)) {
+     float_2nan_prop_x87,
+ } Float2NaNPropRule;
+ 
++/*
++ * Rule for result of fused multiply-add 0 * Inf + NaN.
++ * This must be a NaN, but implementations differ on whether this
++ * is the input NaN or the default NaN.
++ *
++ * You don't need to set this if default_nan_mode is enabled.
++ * When not in default-NaN mode, it is an error for the target
++ * not to set the rule in float_status if it uses muladd, and we
++ * will assert if we need to handle an input NaN and no rule was
++ * selected.
++ */
++typedef enum __attribute__((__packed__)) {
++    /* No propagation rule specified */
++    float_infzeronan_none = 0,
++    /* Result is never the default NaN (so always the input NaN) */
++    float_infzeronan_dnan_never,
++    /* Result is always the default NaN */
++    float_infzeronan_dnan_always,
++    /* Result is the default NaN if the input NaN is quiet */
++    float_infzeronan_dnan_if_qnan,
++} FloatInfZeroNaNRule;
++
+ /*
+  * Floating Point Status. Individual architectures may maintain
+  * several versions of float_status for different functions. The
+@@ -219,6 +241,7 @@ typedef struct float_status {
+     FloatRoundMode float_rounding_mode;
+     FloatX80RoundPrec floatx80_rounding_precision;
+     Float2NaNPropRule float_2nan_prop_rule;
++    FloatInfZeroNaNRule float_infzeronan_rule;
+     bool tininess_before_rounding;
+     /* should denormalised results go to zero and set the inexact flag? */
+     bool flush_to_zero;
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 81a67eb67b5..f5b422e07b5 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -475,6 +475,8 @@ static int pickNaN(FloatClass a_cls, FloatClass b_cls,
+ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+                          bool infzero, float_status *status)
+ {
++    FloatInfZeroNaNRule rule = status->float_infzeronan_rule;
++
+     /*
+      * We guarantee not to require the target to tell us how to
+      * pick a NaN if we're always returning the default NaN.
+@@ -482,14 +484,68 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+      * specify.
+      */
+     assert(!status->default_nan_mode);
++
++    if (rule == float_infzeronan_none) {
++        /*
++         * Temporarily fall back to ifdef ladder
++         */
+ #if defined(TARGET_ARM)
+-    /* For ARM, the (inf,zero,qnan) case sets InvalidOp and returns
+-     * the default NaN
+-     */
+-    if (infzero && is_qnan(c_cls)) {
+-        return 3;
++        /*
++         * For ARM, the (inf,zero,qnan) case returns the default NaN,
++         * but (inf,zero,snan) returns the input NaN.
++         */
++        rule = float_infzeronan_dnan_if_qnan;
++#elif defined(TARGET_MIPS)
++        if (snan_bit_is_one(status)) {
++            /*
++             * For MIPS systems that conform to IEEE754-1985, the (inf,zero,nan)
++             * case sets InvalidOp and returns the default NaN
++             */
++            rule = float_infzeronan_dnan_always;
++        } else {
++            /*
++             * For MIPS systems that conform to IEEE754-2008, the (inf,zero,nan)
++             * case sets InvalidOp and returns the input value 'c'
++             */
++            rule = float_infzeronan_dnan_never;
++        }
++#elif defined(TARGET_PPC) || defined(TARGET_SPARC) || \
++    defined(TARGET_XTENSA) || defined(TARGET_HPPA) || \
++    defined(TARGET_I386) || defined(TARGET_LOONGARCH)
++        /*
++         * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
++         * case sets InvalidOp and returns the input value 'c'
++         */
++        /*
++         * For PPC, the (inf,zero,qnan) case sets InvalidOp, but we prefer
++         * to return an input NaN if we have one (ie c) rather than generating
++         * a default NaN
++         */
++        rule = float_infzeronan_dnan_never;
++#elif defined(TARGET_S390X)
++        rule = float_infzeronan_dnan_always;
++#endif
+     }
+ 
++    if (infzero) {
++        /*
++         * Inf * 0 + NaN -- some implementations return the default NaN here,
++         * and some return the input NaN.
++         */
++        switch (rule) {
++        case float_infzeronan_dnan_never:
++            return 2;
++        case float_infzeronan_dnan_always:
++            return 3;
++        case float_infzeronan_dnan_if_qnan:
++            return is_qnan(c_cls) ? 3 : 2;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++#if defined(TARGET_ARM)
++
+     /* This looks different from the ARM ARM pseudocode, because the ARM ARM
+      * puts the operands to a fused mac operation (a*b)+c in the order c,a,b.
+      */
+@@ -508,13 +564,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+     }
+ #elif defined(TARGET_MIPS)
+     if (snan_bit_is_one(status)) {
+-        /*
+-         * For MIPS systems that conform to IEEE754-1985, the (inf,zero,nan)
+-         * case sets InvalidOp and returns the default NaN
+-         */
+-        if (infzero) {
+-            return 3;
+-        }
+         /* Prefer sNaN over qNaN, in the a, b, c order. */
+         if (is_snan(a_cls)) {
+             return 0;
+@@ -530,10 +579,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+             return 2;
+         }
+     } else {
+-        /*
+-         * For MIPS systems that conform to IEEE754-2008, the (inf,zero,nan)
+-         * case sets InvalidOp and returns the input value 'c'
+-         */
+         /* Prefer sNaN over qNaN, in the c, a, b order. */
+         if (is_snan(c_cls)) {
+             return 2;
+@@ -550,11 +595,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         }
+     }
+ #elif defined(TARGET_LOONGARCH64)
+-    /*
+-     * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
+-     * case sets InvalidOp and returns the input value 'c'
+-     */
+-
+     /* Prefer sNaN over qNaN, in the c, a, b order. */
+     if (is_snan(c_cls)) {
+         return 2;
+@@ -570,11 +610,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         return 1;
+     }
+ #elif defined(TARGET_PPC)
+-    /* For PPC, the (inf,zero,qnan) case sets InvalidOp, but we prefer
+-     * to return an input NaN if we have one (ie c) rather than generating
+-     * a default NaN
+-     */
+-
+     /* If fRA is a NaN return it; otherwise if fRB is a NaN return it;
+      * otherwise return fRC. Note that muladd on PPC is (fRA * fRC) + frB
+      */
+@@ -586,10 +621,6 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         return 1;
+     }
+ #elif defined(TARGET_S390X)
+-    if (infzero) {
+-        return 3;
+-    }
+-
+     if (is_snan(a_cls)) {
+         return 0;
+     } else if (is_snan(b_cls)) {
+-- 
+2.34.1
+
 
