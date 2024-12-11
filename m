@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CC13E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91F7E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:27:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPT0-0002K2-NS; Wed, 11 Dec 2024 11:21:38 -0500
+	id 1tLPS4-0000Ia-NG; Wed, 11 Dec 2024 11:20:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSq-0001bz-5E
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:28 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1tLPS0-0000GZ-SL
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:37 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSo-0007vJ-Gq
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:27 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso16754255e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:26 -0800 (PST)
+ id 1tLPRz-0007iT-9A
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:36 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-434a736518eso77686155e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934085; x=1734538885; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934034; x=1734538834; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=gSbZ33dYhUCvriB7gJIYOSjh0uJ7qwYxR0y7su+tpkc=;
- b=KRE/1KwIeFrD58JIyaLgz64RScARneDJwpxkS/FS6ViUjeELV/trhloF/8vDyzA1ci
- i3LEzNpUUHiXRPmYaNTkb2wwyOyJWi23R0SZFsxyIG86apvEVlOFcrl6fNMA9Z+IUmpT
- gnG5nJzIYJJB4b7TyUjwFTrYPX4LUgNKenjgoizJq3yW46yL7FwY6U86KXC94i0OE83h
- c/q1NPx4eDUUWXMV/jQPn4XqVdP+XM2XxHBKxgKebaUuA4RlCoSbWKG0kLJ1ObyWW8jP
- 4NfalotmV8UYdqxlflzXaxTCuUSPTSGBmv7Wbpcv4KzyONGjQM+AvyDAQt7f8U3MuZWy
- pCpw==
+ :reply-to; bh=8h/sNzFR5aix6eqqSQJk01xGJeoXIpNBM9AztS4My+s=;
+ b=TuWWeRexXXrk76kKkCxLwM4F7eOdOfigWGCsD6P4QgwRMHTG+Ve1KHFAXUP2U7eP/E
+ OlmMvLSQcpcMfgfXVUJuu+jl9M0DmUzSQM1jrmucyw5FnW6DqhwsJYR12hIjxi1sncYk
+ JZToVAKTY8z6AKH97Dv9/FvSIGYTh8gZnQL9+PdGd82hVe45c6Q2nYkPWaqlcPLEy402
+ nFWLGX6s28JAcw9vnQvM3m/hBEYBy1pQPTkmTH8TYuSq5zX58qgOdoHzup6YlCOWMS/H
+ bHJMRF05p+rLZ2pf6LrLtmOuHUK3y07dX7NQI8SQpuoyKkb+xfO3riVPlmZYXx24hq43
+ NWPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934085; x=1734538885;
+ d=1e100.net; s=20230601; t=1733934034; x=1734538834;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=gSbZ33dYhUCvriB7gJIYOSjh0uJ7qwYxR0y7su+tpkc=;
- b=s05U8bICx92m4aRPcv+z0ppH+MyzHn3Qe0dLi8T6xlyRYSKSa5SVbsJ8xQ7Ufgtumx
- m8MypPVA1xdAfrP1yU+7C6D26NwBVFOT9QK20q8FUFfxgRyaDLCkHJV/8EKc/tVhBWgv
- dtA0srs3SLNEq0yyYXJfSc0vHIECq0LkETlRbmh6cAKQVc0ATIGZBY3eLQ98RtF6wX48
- DXpAqMBzEnEAezyAWiwLfKen3hMYRwdRv7FCm+BUxosU4vf0ouka3i5jOM7pz79xkF8P
- 9OSqebMDy+d2dBiuLlZTCQoRBR1HH5ILGx7OkRWZQJoQb0NTk9SjYmh7Cwf0TAAyIjft
- 8UxQ==
-X-Gm-Message-State: AOJu0Yx7QaNRg75iDceTGZu57arMf7RsOf3JREUuVCB2b+kB3Fq2gsYI
- WLqcbfIbZNwNhe0ZtrUxmDPuctq2UQO1QHBoS46PHUVVl5ncWmI4ZUV46wd1v9+4HHArlwzIWfx
+ bh=8h/sNzFR5aix6eqqSQJk01xGJeoXIpNBM9AztS4My+s=;
+ b=tw8oFojwqb5rVoXEZnyuHnxfq5ejUZbyhw1MnMsysNo+7nlwpZaw8XdDbnjQiZhqOU
+ aijYsw46Gop4RdV0pvSLIdaJjrOuXXAyvwnjgAGW048/Ig8za/U68HPewGT4E7G1OjjL
+ 8/fqPcg7Lq/eYdfJk+YF9ovzDSdpG4B+1FZ5MUOp1YHHyU12Dgh1qFaQyMVrCCuq6cqi
+ gTEPchySBNGBlNxxw2oQ1P2b5T/SbSfAyS6Ej7L8Jk0Bzuz3FYJ9XG42fPE4WRrt5Psb
+ UIekxzOvTv4t1/8JtTnQ7WXyr4QdNkfKm6+fnbiyrbf4zc8dFfBM6UfdX+22+EkBGe+x
+ pN+Q==
+X-Gm-Message-State: AOJu0YwiREC0XaoRlG0hv6a3CZNRMFUmxv5d2yvVHCtewOVHcop9y6Pp
+ JI3Xe6bFQ9Idygj+svNBWIVYSuo40a62aaa5L84QT7kgLw5mDVUShkjJVVJcwyVOgtE3jULJmjX
  F
-X-Gm-Gg: ASbGncuDfdMTiDxKi7t8WCLlGSOPVFN63RMvdlCmE40yH5NandBY2Ze2dqcilCla61I
- s+osy8iiAZMosT9fRl/FZz3PXyQbEE2zZA1zknrkrvUhy0rOos3l/dpK8V9hizFjrc0zlFDs3rO
- +RFf9xz1uasSRGxB8/NguTtULnlwpTvqkrOWGj8vmVkWA9Fchqtab7vfe0Fx9xiHNlH4work5r7
- I4bYHb0hd6qrH6hJqj9nIL+BTymF74L9zqPvX3FN3k6HMPylyd17n1BieFA
-X-Google-Smtp-Source: AGHT+IFFUD4MdrOm47MBTREZv0Zu8sIiii5xNVD/e17gQHbodrAbO1lH2rK0zKCh3+rQDQnVfzSVRQ==
-X-Received: by 2002:a05:600c:4f48:b0:426:647b:1bfc with SMTP id
- 5b1f17b1804b1-4362286dca8mr3464295e9.30.1733934085039; 
- Wed, 11 Dec 2024 08:21:25 -0800 (PST)
+X-Gm-Gg: ASbGnctMPCUdXPRiaIKKXgFfmIMQAlkJk3uH2Qdr2WUala6Kb9zTyeSX+toUU6NIZDj
+ LqL8d4BXK75W30zMcS6h59rxbz66/MwA/TxXLYe3iKYYL0l78eEIcGJJ5sTIluZXtP5k7JBWfZX
+ 7wdPSS8HqhbQAzEiXqm1plnQrGekDXt0Gyxf+2u5PllVHJhI3tprsqDyltVnrbNmajq1fqm/YHX
+ SNEwJp+bEDfddI+1waGNOdvrxJFTNfAx0wQySh+9exlzEkmDfo2jccAYm3c
+X-Google-Smtp-Source: AGHT+IGiUgtzoA8+arzXkLvcNYtHp6a3gfZSuV8SqjzDcj1xGWPN8trlAwhznSqVYTwDpGxA4tF91g==
+X-Received: by 2002:a05:600c:4f13:b0:434:ff45:cbbe with SMTP id
+ 5b1f17b1804b1-4361c3c7df9mr32567785e9.18.1733934033839; 
+ Wed, 11 Dec 2024 08:20:33 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.24
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:21:24 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:32 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 71/72] MAINTAINERS: update email address for Leif Lindholm
-Date: Wed, 11 Dec 2024 16:20:03 +0000
-Message-Id: <20241211162004.2795499-72-peter.maydell@linaro.org>
+Subject: [PULL 22/72] target/arm: Set Float3NaNPropRule explicitly
+Date: Wed, 11 Dec 2024 16:19:14 +0000
+Message-Id: <20241211162004.2795499-23-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,52 +97,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Leif Lindholm <quic_llindhol@quicinc.com>
+Set the Float3NaNPropRule explicitly for Arm, and remove the
+ifdef from pickNaNMulAdd().
 
-I'm migrating to Qualcomm's new open source email infrastructure, so
-update my email address, and update the mailmap to match.
-
-Signed-off-by: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-Reviewed-by: Leif Lindholm <quic_llindhol@quicinc.com>
-Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241205114047.1125842-1-leif.lindholm@oss.qualcomm.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241202131347.498124-18-peter.maydell@linaro.org
 ---
- MAINTAINERS | 2 +-
- .mailmap    | 5 +++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ target/arm/cpu.c               | 5 +++++
+ fpu/softfloat-specialize.c.inc | 8 +-------
+ 2 files changed, 6 insertions(+), 7 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aaf0505a214..9ae6a78ae9c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -915,7 +915,7 @@ F: include/hw/ssi/imx_spi.h
- SBSA-REF
- M: Radoslaw Biernacki <rad@semihalf.com>
- M: Peter Maydell <peter.maydell@linaro.org>
--R: Leif Lindholm <quic_llindhol@quicinc.com>
-+R: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
- R: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
- L: qemu-arm@nongnu.org
- S: Maintained
-diff --git a/.mailmap b/.mailmap
-index 727ce204b2d..5f6df414e1f 100644
---- a/.mailmap
-+++ b/.mailmap
-@@ -87,8 +87,9 @@ Huacai Chen <chenhuacai@kernel.org> <chenhc@lemote.com>
- Huacai Chen <chenhuacai@kernel.org> <chenhuacai@loongson.cn>
- James Hogan <jhogan@kernel.org> <james.hogan@imgtec.com>
- Juan Quintela <quintela@trasno.org> <quintela@redhat.com>
--Leif Lindholm <quic_llindhol@quicinc.com> <leif.lindholm@linaro.org>
--Leif Lindholm <quic_llindhol@quicinc.com> <leif@nuviainc.com>
-+Leif Lindholm <leif.lindholm@oss.qualcomm.com> <quic_llindhol@quicinc.com>
-+Leif Lindholm <leif.lindholm@oss.qualcomm.com> <leif.lindholm@linaro.org>
-+Leif Lindholm <leif.lindholm@oss.qualcomm.com> <leif@nuviainc.com>
- Luc Michel <luc@lmichel.fr> <luc.michel@git.antfield.fr>
- Luc Michel <luc@lmichel.fr> <luc.michel@greensocs.com>
- Luc Michel <luc@lmichel.fr> <lmichel@kalray.eu>
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index ead39793985..c81f6df3fca 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -173,6 +173,10 @@ void arm_register_el_change_hook(ARMCPU *cpu, ARMELChangeHookFn *hook,
+  *  * tininess-before-rounding
+  *  * 2-input NaN propagation prefers SNaN over QNaN, and then
+  *    operand A over operand B (see FPProcessNaNs() pseudocode)
++ *  * 3-input NaN propagation prefers SNaN over QNaN, and then
++ *    operand C over A over B (see FPProcessNaNs3() pseudocode,
++ *    but note that for QEMU muladd is a * b + c, whereas for
++ *    the pseudocode function the arguments are in the order c, a, b.
+  *  * 0 * Inf + NaN returns the default NaN if the input NaN is quiet,
+  *    and the input NaN if it is signalling
+  */
+@@ -180,6 +184,7 @@ static void arm_set_default_fp_behaviours(float_status *s)
+ {
+     set_float_detect_tininess(float_tininess_before_rounding, s);
+     set_float_2nan_prop_rule(float_2nan_prop_s_ab, s);
++    set_float_3nan_prop_rule(float_3nan_prop_s_cab, s);
+     set_float_infzeronan_rule(float_infzeronan_dnan_if_qnan, s);
+ }
+ 
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index b4f3f0efa82..3a2d0444475 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -505,13 +505,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+     }
+ 
+     if (rule == float_3nan_prop_none) {
+-#if defined(TARGET_ARM)
+-        /*
+-         * This looks different from the ARM ARM pseudocode, because the ARM ARM
+-         * puts the operands to a fused mac operation (a*b)+c in the order c,a,b
+-         */
+-        rule = float_3nan_prop_s_cab;
+-#elif defined(TARGET_MIPS)
++#if defined(TARGET_MIPS)
+         if (snan_bit_is_one(status)) {
+             rule = float_3nan_prop_s_abc;
+         } else {
 -- 
 2.34.1
 
