@@ -4,90 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A702E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2947E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:52:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLM6a-00015V-6v; Wed, 11 Dec 2024 07:46:16 -0500
+	id 1tLMCE-0003Ih-MV; Wed, 11 Dec 2024 07:52:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1tLM6S-00014J-Gs
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:46:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1tLM6P-0001Ec-Rh
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:46:08 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733921162;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cnx63n8/CH8Cp6i1au7PXsC6WUwqf6kg1LoLrK6u0h0=;
- b=czUofQ1pZOjBEA5zjO3VlB00vw5W7k+nAjZXfbBBGa174iqttZFWy3H3Rapb4MGkfnejtm
- W2BntaDgEaETr/kdR65i0J8LoMO45kLCpmMcH2YBVTNiEDev3PgX4aTudQ5b3K7Lx+9GZv
- 9XsF6JTI0xw0bt6Imaps5Y++e8oz3fc=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-117-NjmaankVMK69tEbxRZctnA-1; Wed, 11 Dec 2024 07:46:00 -0500
-X-MC-Unique: NjmaankVMK69tEbxRZctnA-1
-X-Mimecast-MFC-AGG-ID: NjmaankVMK69tEbxRZctnA
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-6eeeb850458so86168997b3.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 04:46:00 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
+ id 1tLMBk-000336-1w
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:51:38 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
+ id 1tLMBh-0001rY-DO
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:51:35 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so4889026f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 04:51:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=embecosm.com; s=google; t=1733921490; x=1734526290; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7DRVhbud0qAfrBBeXAkjxxiV64CObQSqSSiJf4H0jTk=;
+ b=AgsoBpPJMcSPzacrzQuoBwk3kNoWN5w/MUgQbJ8mIH0/RcD20MKV+u9xQ+cpn839lU
+ +t/WStpur8RxuKVXw8PjP6mrMiyrttaPaZ253MHVWjUTCp4J2A0LKjjbl9KMrRVFetgR
+ 31/kc/23uaFAzYkiJgY7Uv0exhCZgIpUAj3IrIh+R45DUf50Y3e71j2xa+u9G5wxGLUF
+ abI+Z7nPzjXHvNS+2hRVumrNVEDERb2rxygujR3NGqRyEmcHI17NYASNGvy1FgjAqbkh
+ oroB4aAr9rhEK7s9bSUMIBzXfMMS+zHhTrYcm4mQaBdGg8e8JLXQysG+L/ANJj8bn94F
+ DiCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733921160; x=1734525960;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cnx63n8/CH8Cp6i1au7PXsC6WUwqf6kg1LoLrK6u0h0=;
- b=weLL7/Hu43Bkm7p/jDRVD5LehagaLhcl9oGni6k9mmgQZ7wQFqzyMiv26GLgg7NOWu
- CPZrZOP3t7L2w7fPX0AJiHfwypFzvO6l84ixHuLVvjVkRfBNVNd6aZhFJJ8FxvqxFhA+
- zt4S17ggnZArLYxxglBzEuM9L7iCpmzLVshNkfHLIQn4BmB9Kt+H16rGc1xhDRuECeN/
- tu2ccgYtK/PCsUbWy0aJm713c+TfMlSAzf7ap6jRmh7LoCVcX4VNdDldcVxfyxX2Dy7B
- X7O43i68y057mCYgmC/MRBkCvP0IIUrmQreS+rpzE4zT3a0DUwx50BCdM9dgS1+krt7f
- oMdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWsvXefycaCfBHmCGhRuGVPsyEZsZlhCyRDABnLqg7WhrA6KVriEBgxTsK8nThhgK9mgv2YTY77lXkK@nongnu.org
-X-Gm-Message-State: AOJu0Yw9YM7GYT/OdhJt0FVTHWzdOAesWCt8VVSQ9koxBlcjeZZKIRo2
- r8/Su9SCNy5AzV2lWrQizVuTMPDDN9lKtpn/GumCz72ExIJMyLiKb4nBv5l4S2b4skTfgfBf0rX
- hJDWFyjRSAV4D+6ZsCMGFyL8y1ka0HxZ2iPtcIs7yNui/kmwjYldjTpOWAOhy0UH+WOOan4qRjK
- kQqPPB1Oc3U/XEMIcU0NWaJtQG324=
-X-Gm-Gg: ASbGncuZMwxC++o1BDylDINRE11bJ03JyfWFzaignO6QuoC7qEB1M6NfrapXN7NHkxG
- EOKCCdxTr68NTjXJxNYrmKSbFVnwjrkJz2vk=
-X-Received: by 2002:a05:690c:4c09:b0:6ee:a81f:1264 with SMTP id
- 00721157ae682-6f1480450afmr27430497b3.26.1733921160269; 
- Wed, 11 Dec 2024 04:46:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHkvyKpVMaqbfwi4anBmvURDoRQdP+8CQVqysCHuAwvj1feSTLFTh06wHhqMt7O2j7/bauzQ1ZTzxuHSUpnwO8=
-X-Received: by 2002:a05:690c:4c09:b0:6ee:a81f:1264 with SMTP id
- 00721157ae682-6f1480450afmr27430367b3.26.1733921160020; Wed, 11 Dec 2024
- 04:46:00 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733921490; x=1734526290;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7DRVhbud0qAfrBBeXAkjxxiV64CObQSqSSiJf4H0jTk=;
+ b=w2vr3PdYUj+sc7L32Zqqf04GzDvv00Bts4Oa0GdxflhC7+EJmUV91Ot3SQR/9+mo0B
+ 5SBSVQCT5uDzSfDE3uWuzPTqrhzfrsWa+stReA/NuqqaeF18vXZOY7D1OujiuLEyf52S
+ B/DGW2A2CqaLqbgOtxAkJ2CrH4XzBfDINvrhmI3AAHJdNeJ3rX/XbvZBQpL3ff0IGRZg
+ 18rzTDxTb9fh3dJB43+y0ywBGDXiQv8aqzungvb0bfHLLuRcrPbv/OLNaZmgujdkV6nW
+ ChsX+XMrAnrPAnyDaGsYjixNJshUL1C9dYO2PMTFc4rKVFh3VbIOr8ByaCrc37V2vGmm
+ M+ow==
+X-Gm-Message-State: AOJu0YzGWTRVPPE3wxvkrAkfswfGNxiotevwS55xEP4FTU8DPmvpteYR
+ joFfzRq/iFSFlErEQtow3SoXAP6C9sasAv0yC5elnvKcLWxfeJS/3G+ZeiXFBOQj2eN++rQ1xAe
+ WeNI=
+X-Gm-Gg: ASbGncsKsA85NJ4WJ1RgP/RbzcT0iu2ggq9pxo7+SZim/uKqUKgwWDynaje4Lqe/DI9
+ h2qd+vetmWjSp3CIUxRQ6jgdnIkUqEyTgG4Kci0cWiS+Q6WQLmS1845stILEPWs7Wyf1Tuxrkko
+ GJG/LY2AdTOvt8xmThdAJhhIy3xGhiVBDmfMRIRgyz6MUF20aGUQB1+IfAVKuXyJ8gxI6u4cRut
+ 7UXK+AwoM6bXsF3fviI/sDn+LyAOiiD6T+Xnz8hjzCgY6dW0C72KcLzUotfGnFhO4HRBi+KuV5H
+ 9gi/gtI2FOb3Xdw16geIfz4254rbUK1zUEnmqB3G6CbXlA==
+X-Google-Smtp-Source: AGHT+IF9HOlfsbL1zSs+IEVhAyHVqNH5UbsPCVFBjzmDnzVfJqo1t9oVlPxTmruDuzy204sJaybVUw==
+X-Received: by 2002:a5d:59a7:0:b0:385:f44a:a3b with SMTP id
+ ffacd0b85a97d-3864cec390bmr2085285f8f.41.1733921490242; 
+ Wed, 11 Dec 2024 04:51:30 -0800 (PST)
+Received: from dorian..
+ (sals-04-b2-v4wan-167965-cust660.vm36.cable.virginm.net. [80.3.10.149])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434f44eaac7sm120542125e9.42.2024.12.11.04.51.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 04:51:29 -0800 (PST)
+From: Craig Blackmore <craig.blackmore@embecosm.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Craig Blackmore <craig.blackmore@embecosm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>, Paolo Savini <paolo.savini@embecosm.com>
+Subject: [PATCH v7 0/2] target/riscv: rvv: reduce the overhead for simple
+ RISC-V vector unit-stride loads and stores
+Date: Wed, 11 Dec 2024 12:51:11 +0000
+Message-ID: <20241211125113.583902-1-craig.blackmore@embecosm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20241211123349.904-1-Wafer@jaguarmicro.com>
-In-Reply-To: <20241211123349.904-1-Wafer@jaguarmicro.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Wed, 11 Dec 2024 13:45:24 +0100
-Message-ID: <CAJaqyWcU8fN1ewYyZ1qDSdxWmr7SVbw8s+VKzO4_b63F8MS=Rg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/virtio: Fix check available index on virtio loading
-To: Wafer <Wafer@jaguarmicro.com>
-Cc: mst@redhat.com, jasowang@redhat.com, qemu-devel@nongnu.org, 
- angus.chen@jaguarmicro.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=craig.blackmore@embecosm.com; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,61 +107,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 11, 2024 at 1:34=E2=80=AFPM Wafer <Wafer@jaguarmicro.com> wrote=
-:
->
-> From: Wafer Xie <wafer@jaguarmicro.com>
->
-> The virtio-1.2 specification writes:
->
-> 2.7.6 The Virtqueue Available Ring:
-> "idx field indicates where the driver would put the next descriptor entry
-> in the ring (modulo the queue size). This starts at 0, and increases"
->
-> The idx will increase from 0 to 0xFFFF and repeat,
-> So idx may be less than last_avail_idx.
->
+Changes since v6:
+- Limit access size to element size to address Max Chou's review.
+- Fix a typo in the name of a function that this patch now calls.
 
-I don't get this change. If that happens the driver went buggy or
-malicious and the next check nheads > vring.num should mark the vq as
-buggy, isn't it?
+With access size limited to element size this patch still provides a
+significant speedup.  The `memcpy` benchmark from:
+    
+  https://github.com/embecosm/rise-rvv-tcg-qemu-tooling/tree/main/strmem-benchmarks
 
-> Fixes: 258dc7c96b ("virtio: sanity-check available index")
->
-> Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
->
-> --
-> Changes in v2:
->  -Modify the commit id of the fix.
-> ---
->  hw/virtio/virtio.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index a26f18908e..ae7d407113 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -3362,7 +3362,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int v=
-ersion_id)
->                  continue;
->              }
->
-> -            nheads =3D vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_=
-avail_idx;
-> +            if (vring_avail_idx(&vdev->vq[i]) >=3D vdev->vq[i].last_avai=
-l_idx) {
-> +                nheads =3D vring_avail_idx(&vdev->vq[i]) -
-> +                         vdev->vq[i].last_avail_idx;
-> +            } else {
-> +                nheads =3D UINT16_MAX - vdev->vq[i].last_avail_idx +
-> +                         vring_avail_idx(&vdev->vq[i]) + 1;
-> +            }
->              /* Check it isn't doing strange things with descriptor numbe=
-rs. */
->              if (nheads > vdev->vq[i].vring.num) {
->                  virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
-> --
-> 2.27.0
->
+shows up to 75% speedup with this patch:
+    
+  VLEN | Size | ns/inst (ratio)
+  -----|------|-----------------
+   128 |    1 |            1.50
+   128 |    2 |            1.42
+   128 |    3 |            1.35
+   128 |    4 |            1.29
+   128 |    5 |            1.23
+   128 |    7 |            1.18
+   128 |    8 |            1.09
+   128 |    9 |            1.06
+   128 |   11 |            1.01
+    
+  VLEN | Size | ns/inst (ratio)
+  -----|------|-----------------
+  1024 |    1 |            1.75
+  1024 |    2 |            1.62
+  1024 |    3 |            1.52
+  1024 |    4 |            1.43
+  1024 |    5 |            1.35
+  1024 |    7 |            1.31
+  1024 |    8 |            1.12
+  1024 |    9 |            1.12
+  1024 |   11 |            1.01
+
+It is not clear to me exactly why the patch is now helping.  At first I
+thought it was due to avoiding `vext_continuous_ldst_host` calling out
+to `memcpy` for small sizes but trying that directly in
+`vext_continuous_ldst_host` was much less beneficial:
+
+  VLEN |  Size | ns/inst (ratio)
+  -----|-------|-----------------
+   128 |     1 |            1.06
+   128 |     2 |            1.14
+   128 |     3 |            1.03
+   128 |     4 |            1.04
+   128 |     5 |            1.02
+   128 |     7 |            1.02
+   128 |     8 |            0.91
+   128 |     9 |            0.92
+   128 |    11 |            1.03
+  
+  VLEN |  Size | ns/inst (ratio)
+  -----|-------|-----------------
+  1024 |     1 |            1.10
+  1024 |     2 |            1.14
+  1024 |     3 |            1.04
+  1024 |     4 |            1.05
+  1024 |     5 |            0.96
+  1024 |     7 |            1.07
+  1024 |     8 |            0.94
+  1024 |     9 |            0.93
+  1024 |    11 |            0.90
+
+Previous versions:
+- v1: https://lore.kernel.org/all/20240717153040.11073-1-paolo.savini@embecosm.com/
+- v2: https://lore.kernel.org/all/20241002135708.99146-1-paolo.savini@embecosm.com/
+- v3: https://lore.kernel.org/all/20241014220153.196183-1-paolo.savini@embecosm.com/
+- v4: https://lore.kernel.org/all/20241029194348.59574-1-paolo.savini@embecosm.com/
+- v5: https://lore.kernel.org/all/20241111130324.32487-1-paolo.savini@embecosm.com/
+- v6: https://lore.kernel.org/all/20241204122952.53375-1-craig.blackmore@embecosm.com/
+
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Helene Chelin <helene.chelin@embecosm.com>
+Cc: Nathan Egge <negge@google.com>
+Cc: Max Chou <max.chou@sifive.com>
+Cc: Paolo Savini <paolo.savini@embecosm.com>
+
+Craig Blackmore (2):
+  target/riscv: rvv: fix typo in vext continuous ldst function names
+  target/riscv: rvv: speed up small unit-stride loads and stores
+
+ target/riscv/vector_helper.c | 26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
+
+-- 
+2.43.0
 
 
