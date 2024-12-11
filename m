@@ -4,148 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4EC4E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D53FE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 12:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLM06-00078g-H2; Wed, 11 Dec 2024 07:39:34 -0500
+	id 1tLM3R-0000HH-Al; Wed, 11 Dec 2024 07:43:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1tLM00-00075l-Jx
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:39:30 -0500
-Received: from mail-tyzapc01on2115.outbound.protection.outlook.com
- ([40.107.117.115] helo=APC01-TYZ-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLM3M-0000Du-22
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:42:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wafer@jaguarmicro.com>)
- id 1tLLzy-0000LH-LO
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:39:28 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mHw1OkqSc7IqFcx+A+fhZCbGcY/rFPMRUXp4HhEBAAydoUxWHS8UBbhukMzvRNF2m/w09vYdb4qRXO2vTQshnvruUZG3LftO0n4Y5VQtN2oR7k5JKahDJg5gwApQ0EpJpP5BiLL8dRUyFUfjefDdNAOkbXgK8b3nXCWnAdFaYStWoqwu7S3BAvFYm4B4AoI7m8O5HFY5vfiNpFHEEGFh6w1xBfrLjZkfWKm8kCKwgPHD5nkcwcm6Q/F5n/HPyKXq3yiKBYbQ79xCqmFDEM7Qi45XhUq14cQccpkb1vNYK9z19k12jvfSdNuz8ETrgFZ/F4OEI++7kipjNjIIPt9cBQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cF41o0xA41dkxAh6dq/fuwNqF1r3lyLKL6CMI3sPOVM=;
- b=X6WispKGyC/lVdy4zMHxTt6QqrWaSLE2Wi9Z3/GwX4ygGN4GmXb/Nl7q6HBrDROIRix7Y8lVRu2TpFoqWYaahPYwGNERMad7PORrF7lYytg2NmUMjWaLbHehOZdBy/zlWuv5BjRlcPsSkTAv62OrKnJBhBSQJd+WcNWJE2LOnHxyCjD07IZ1jaOMwCfvTW9ZtDNnbKHYRCP0mtpS74LNqTY6hkSUeckc5oSbhW8CDlZ/d7eoWVxPGnaAq2SYDdF23NhGz970ruToC2BkczTE41QthKGqTBCdRUB1T3V0otfEaBaK2Jst41x66EQbJpXwmxxloDegpQTkKkv6Scgtmw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cF41o0xA41dkxAh6dq/fuwNqF1r3lyLKL6CMI3sPOVM=;
- b=bmZwT1ptaakNzeijrthMBrgbukNah7P9rNXMbT/ut1IB4pHTNb9T3O/+uPQNmGZukmCDCpjdW5tRbipf6pYtrRsX0/GMmsn4XRr4JmCnpOwt8dqnm3TCO+OmymjY498sJBJG5SNQuCKs7MftBnTZu21KYjK8bPPfEro5LLZc1SSdsJi9NCkdqXUAzpE+hM7fc4VqV/pEp4Pk1rje/7lbn/UgbUjtselcK6P6mXpTDpCj0vv7xmo1lXRiph8sOW70qdD/v7SlCEQMRpMVFc6o2TIo/SSBe+rqCrMI5pa0KMfKsR9bOuucpm4Yj0w4mTHh/VBO6+njYlKWQnPNlyKXbw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com (2603:1096:301:b4::10)
- by TYSPR06MB7046.apcprd06.prod.outlook.com (2603:1096:400:46b::6)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.12; Wed, 11 Dec
- 2024 12:34:17 +0000
-Received: from PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde]) by PUZPR06MB4713.apcprd06.prod.outlook.com
- ([fe80::b6f8:321a:6742:9bde%5]) with mapi id 15.20.8251.008; Wed, 11 Dec 2024
- 12:34:17 +0000
-From: Wafer <Wafer@jaguarmicro.com>
-To: mst@redhat.com,
-	jasowang@redhat.com
-Cc: eperezma@redhat.com, qemu-devel@nongnu.org, angus.chen@jaguarmicro.com,
- Wafer Xie <wafer@jaguarmicro.com>
-Subject: [PATCH v2] hw/virtio: Fix check available index on virtio loading
-Date: Wed, 11 Dec 2024 20:33:49 +0800
-Message-Id: <20241211123349.904-1-Wafer@jaguarmicro.com>
-X-Mailer: git-send-email 2.33.1.windows.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR04CA0183.apcprd04.prod.outlook.com
- (2603:1096:4:14::21) To PUZPR06MB4713.apcprd06.prod.outlook.com
- (2603:1096:301:b4::10)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLM3H-0000tE-Rf
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 07:42:53 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733920970;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=vq3FrMhMejZKmaw5CP5HgzQ5OYKuGQCtDjPOZpdfK1M=;
+ b=Mb70oIxrzHg4rVyYIzAs8PLDudyL+YXhGVGmtS8RdW4VBL8TrIa04NvxhIDFVLctVje5XQ
+ SfZqiWcXJJH+4MBlGAbfmfz5Fqn6w/MyoiKKSUweV4iOY5Jk56rt57o7uifHKWKga+h3tM
+ ydOeIFaFWT7WUN/s9KubNm8OVnM1ELo=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-245-4lI3YJanO-K6MfTYww2e0Q-1; Wed, 11 Dec 2024 07:42:46 -0500
+X-MC-Unique: 4lI3YJanO-K6MfTYww2e0Q-1
+X-Mimecast-MFC-AGG-ID: 4lI3YJanO-K6MfTYww2e0Q
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-434f3398326so3372435e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 04:42:46 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733920965; x=1734525765;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vq3FrMhMejZKmaw5CP5HgzQ5OYKuGQCtDjPOZpdfK1M=;
+ b=coC7jZU/W14T7CVL1TW/mW3rMjpTNzGc1rXoBBaHctkbd/1RRyNKJ+RskCnzATDzul
+ jdufxg8qxEFEUyZcRiQm351RQtjP10fPnVKH5dpkFlMftW7R8rbGO8v4eJf/v2PI3JiG
+ peR35crMOQbM7ED/x5hZUQ3iqo0cfc79+pXA4CFl+D4xNnwt7KIGRvPm9u4k19rVzD1M
+ FsY1Mtdq16f6QUwB92nncQVxI0BAEvclT3CVZ0y1uuPN+Gyx5JdCyxUlnQC++isYewxw
+ K18hwyqo31pafm6zLosD43nxwhbbiiUy2W06nMiVuRXy7cHVK5qMxQUDshf01OsUA47a
+ eLrA==
+X-Gm-Message-State: AOJu0YyXUqPNtfdRwSrFH84axisgL90H6YKuz6O5ZO8FR4P9joRg/bX7
+ tRq0S46MKR3/tgjjHVFSlUI32iinK69JpS5QlB9PJtulDa9wmaUUbOLpMMJHUW1ZZ1W3QRgLVPj
+ 9vA7X8oALYHu9sHuwtAVCSkt5g6JOPeZ4DaGGXHTK24rN5LKPO7ND/GjeuHxQvoLdqIthf8sixF
+ hBcJlLBqsPgjIlevcKcrZP56CZkso=
+X-Gm-Gg: ASbGnct1nqvFprcIIblxPsJWWhwzwQpsBEBLbqQcGXHxiy7OeHU1VXZdI4A2LhnpOsd
+ cIP19+NMGFrXwSf8pxpCjMLvdQrgyAaqofNQ=
+X-Received: by 2002:a05:600c:4fd5:b0:434:f2af:6e74 with SMTP id
+ 5b1f17b1804b1-4361cf91555mr19094955e9.15.1733920965050; 
+ Wed, 11 Dec 2024 04:42:45 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFLHRHmiBix5MBINE66d82uaNYd/BF+Fo550d7SIVpIwbpzZBw/ew9YpMiagOun/XntGkGTevs/pi553viM+h0=
+X-Received: by 2002:a05:600c:4fd5:b0:434:f2af:6e74 with SMTP id
+ 5b1f17b1804b1-4361cf91555mr19094755e9.15.1733920964733; Wed, 11 Dec 2024
+ 04:42:44 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PUZPR06MB4713:EE_|TYSPR06MB7046:EE_
-X-MS-Office365-Filtering-Correlation-Id: d877bd3e-476a-46a1-6fe4-08dd19e020f0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|52116014|366016|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MONx0Bdj6t5hzu8h2vDu7c9aLpNJ8+Zqg+Kd/uLH2kSjb866PRhSPsREeHKX?=
- =?us-ascii?Q?/NqqLT6YpOBiXo0+sIrmtR3C3hHbqELZsIy9Usc4iRxlXPPHApblsxcHD5G+?=
- =?us-ascii?Q?QCW8GYTfGfKS3xEKd7JoMPDThJI4YaHweJMsXTRWaNB2gAmklj4uh1+PwFPD?=
- =?us-ascii?Q?x97/aLxdG9vsyXrRHLZNkwAS7UahUq4axg6mnsqfKDJ4lIgTzfs0WUf/0OsW?=
- =?us-ascii?Q?nCHvAG3S5yDClRpsYqlInEgoePQYIhY/UhuMQHJoFbMfZ6dwpRCqq/4Tdg0M?=
- =?us-ascii?Q?fxQXrFi8jV/QDRUHcbV2OnYcNeGo5RW0wfQWCHBU+EAo4MBfoAhWAIoAVzPT?=
- =?us-ascii?Q?L4hmxZEIJmvTuRY7lF1O1VCxGfuNZhyWBLp4e5OeoBNb76DfTdp8gQUMPSKh?=
- =?us-ascii?Q?pdkrc9654rQrkiYmH6DbYak4jbpzHhEfE6IQ4mCl2exBHySRmafBKtNhlEXH?=
- =?us-ascii?Q?7GDXByAcRmiFGtH8GYjPK3gNF+aRWKAxebGZnRO7Uj8WufycRHGvJLYxwzHk?=
- =?us-ascii?Q?hTOoo2pEDc1Lst5Pnp6kwM89I28cNFRQUgKfiV9oqgpEgBwBtrNo5jgI3X1A?=
- =?us-ascii?Q?iwdTKss/2Vva51hsx1ZvskrnC7FBIHnAfiEx6etb0ahrYqCmAqtU7ObRe7JY?=
- =?us-ascii?Q?BZgd+t1GYe/Tv5V0bJXJVHTMh8Z0IEW1ZaIlzD4r/K9ajaGdcGvHbDRiiIWW?=
- =?us-ascii?Q?+ArTmElIjIR64xlOpKF0n8BleYFcHOourQIaZzAy0lisRtA/2LUMI0JChyQb?=
- =?us-ascii?Q?ne9fwE4uQhG2Sphd++eXpFHi7ACUIy5exMx7w3Z0QLlQ9OFIr3vXm+5/7e3R?=
- =?us-ascii?Q?GtDW0b2JmGfok9YYwvnEPmii4Y6Jgy1+0DGP2Spsj8yA4U3vPsOA337rEJ7r?=
- =?us-ascii?Q?HvjsNJzYUbK6lfrenIDUxuhwJJ6IkKU1JqoTKWyul2bf8yC30A2utw6cIB3/?=
- =?us-ascii?Q?Bn+PGJRWPVVtdAadzi1u8qTMcIEPUr6cn/3VsxdAYx1LchiLD/xm2oyFYeIG?=
- =?us-ascii?Q?tgYrgZSw6Q5NU0wKCaL1gc06ai7eqjQGviT1KU+7bk1UJQTxejW7yjKyXpbZ?=
- =?us-ascii?Q?BB3jPhA45qwMRsrRJoi+Wxsw/hjMRHCkC6KTqhcUGYQf5uAG5cmPaUuLiUiZ?=
- =?us-ascii?Q?zEKoxkIC2RgB2STmZO/0HyeHOf8Y8w7J50bPk6ruOodEHdCtl9JfOQZtctKH?=
- =?us-ascii?Q?0bZQKJfZa2aF/w12oINdi4MB8ROjcdQVVbUjnt5ZPmlW+F618ttGds9lP/Dw?=
- =?us-ascii?Q?u0gkuiZzh+Tb7knSQ+BEyRmw/ElQ0bFZ/vFxjrOFoMdqQlXEptTZ08BxcxQZ?=
- =?us-ascii?Q?YZwCZ8+adNqWwhc6oGi/t1qA2j/xCwpoV24V3bOtmIH0PsK4s1nWXW0S7pda?=
- =?us-ascii?Q?WZeN4afw1p8f1ZzXcKN6PgarEJ339Zi+GB+LWV6d4PQnK736dQ=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PUZPR06MB4713.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(52116014)(366016)(38350700014); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?w+4022ClPriQsLN3LmXmIZ6/TGtEkUZGF5soVf5mjSS3Tw2QUy4cpwQMXw6k?=
- =?us-ascii?Q?I3wnMwLg9K3/IMkkEnkkspXkU7l3dRkiQcqXJU/oujgK/F5dPo109eDQk7DU?=
- =?us-ascii?Q?wbZGkUXyPl7lMyFC4qOQ9Qhjkh7vrGJWHAAQ59WuuxGabAnygdQafulSbLCg?=
- =?us-ascii?Q?jPO1jKYrQFl8rVBzknCwRjJLwfW3w1/qhP7OZp4UWPFjs5auOvpx+UJTGJ9o?=
- =?us-ascii?Q?Ailz0KYpuYtgFIadfd3ywY80dyvb+zlkLAo/ZxtaovBYex03IZSHfHJ1LpHa?=
- =?us-ascii?Q?Qdp/5nqBcxiHp0335xtCUQa1yym5QuReCEXEBsK7L+/UK2OXJiYyrUGjoNo0?=
- =?us-ascii?Q?AmbnpOWqAKYCGUaI6hjE1/6TH1SWY+mfWu1FaNo1fif0x9pzZgUBPjSBfe0d?=
- =?us-ascii?Q?c0Yg3NhwBVIwEUK3AGzz3G0HfsaIfxXPlmm+bhDnt6AS3ogrPRZZ6D3Gi68x?=
- =?us-ascii?Q?z3gNYt8VLrSETc2soNlOW7c2xAbfyLTkTTi7fh+zGRtRGBbCxBRsU0KY8/Fb?=
- =?us-ascii?Q?TKrTipJIWE4QcyqcxpVimVNGXFlhNA4S6USBi6SFxqQ9M+fmRtNo0JbwBCJt?=
- =?us-ascii?Q?zHmHH9GlPap2MIZXc8C64Za/JuXc6ufiAn56gFJ0frcEpVRPra1p9+J++/qW?=
- =?us-ascii?Q?EO71uRDjVRM8RoYBoe2cy9pb966wRQevugskD+YJknjjcy/V+LesDVXLH15q?=
- =?us-ascii?Q?5RSylcn7LjJGkXRQH51SkbxefWFzCqyp2KQNJ1kOdtJ0LeWVy0/F3eUiqjVi?=
- =?us-ascii?Q?vs5eMYkpMNrekMHRNkOy1vKlK8zF/emU5hYwu+jZ8ftbAt4WCWGqZcjkk1iS?=
- =?us-ascii?Q?gUrQXiM3Z+UE8tLJagmhKBiYXqJv5kuQ26+m3xqy8tlt8AH2PZd97GIvXUHT?=
- =?us-ascii?Q?kORN84/96LZVBfySu/JLZJrzdnclcWMcV6ZtFXWVE54DafBQUMSgPZ1gQ16z?=
- =?us-ascii?Q?ApT5/q+Mn6Ro3Mu/UbvPTNqtZD3n4ihEMrgtyk2XW4/llZ0k0EZ8Kzp4jEwi?=
- =?us-ascii?Q?XkubwdvdxQrX6mlBwXBEH7/QfsnMCMEN94VNnn7EOMgj5jMt2eg4NyuFSbbi?=
- =?us-ascii?Q?D4Ekh0eeA+6pg1LPDkl3kK2ARYG1k8/APN2Ic7YchBcszv9Y8BNCxjo1I1AB?=
- =?us-ascii?Q?as5gr5jItJXBWl05hacpbyd0Yu8dVnIKhGov1RuGrr3LThrasb6LDU1VvVZx?=
- =?us-ascii?Q?fB20+TO0D0+LZM044ZvOrrpdFMlQ6BF/Ws95JlA94YDCt/++dfQOKNpGGL7I?=
- =?us-ascii?Q?JAWcAyvUxM89K00fa7NB5u9rXli8oJ5hlnXVavQjcZC+lwncBdILVedXBR0Q?=
- =?us-ascii?Q?EJgxWFCcU8+m7ZR/T5u8KBRqOb4E/em7IxY1rvqr4kYeuMbxgO5o37Vfbq01?=
- =?us-ascii?Q?nEcji3EYJxvJTcGrsykIau6d3RTfIt6rEXHs5tuhfpSdw706ysws3Zi1tD7R?=
- =?us-ascii?Q?tcUYHP9SE6px47Kfzp8TufYn7LTkJj36pAAemcRxuBmPZkaQuoLzKSCvxRTq?=
- =?us-ascii?Q?H75gCW9I875aF297vs32MjrGX+r7R1OgQOfBKOlwQl30Mie2mztJstpREi+S?=
- =?us-ascii?Q?3RLjsNJU5PWwaK8WhgnWdNC9GS9AV7LQE5zkjEki?=
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d877bd3e-476a-46a1-6fe4-08dd19e020f0
-X-MS-Exchange-CrossTenant-AuthSource: PUZPR06MB4713.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 12:34:17.7502 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S4uqUT9V3KTenx+UzV3rESfQx5z3zJsO34qTyRk5B96uatozvEzNqR9OLeGEE0EdU6rhENdnqaJEJnTb5/I1IQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYSPR06MB7046
-Received-SPF: pass client-ip=40.107.117.115;
- envelope-from=wafer@jaguarmicro.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-14-pbonzini@redhat.com>
+ <Z1hpT6F9jVlj2+ba@intel.com>
+In-Reply-To: <Z1hpT6F9jVlj2+ba@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 11 Dec 2024 13:42:32 +0100
+Message-ID: <CABgObfYa1HZoRs+RVSxax02jAcMb86P3VM-fJa0KHHTTiDTuYw@mail.gmail.com>
+Subject: Re: [PATCH 13/26] rust: qom: automatically use Drop trait to
+ implement instance_finalize
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, 
+ Junjie Mao <junjie.mao@hotmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,48 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Wafer Xie <wafer@jaguarmicro.com>
+On Tue, Dec 10, 2024 at 4:58=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
+e:
+> Great idea. It nicely balances the differences between Rust and C QOM
+> conventions.
 
-The virtio-1.2 specification writes:
+Except it does not work. :(  Suppose you have
 
-2.7.6 The Virtqueue Available Ring:
-"idx field indicates where the driver would put the next descriptor entry
-in the ring (modulo the queue size). This starts at 0, and increases"
+       pub struct MySuperclass {
+           parent: DeviceState,
+           field: Box<MyData>,
+           ...
+       }
 
-The idx will increase from 0 to 0xFFFF and repeat,
-So idx may be less than last_avail_idx.
+       impl Drop for MySuperclass {
+           ...
+       }
 
-Fixes: 258dc7c96b ("virtio: sanity-check available index")
+       pub struct MySubclass {
+           parent: MySuperclass,
+           ...
+       }
 
-Signed-off-by: Wafer Xie <wafer@jaguarmicro.com>
+When instance_finalize is called for MySubclass, it will walk the
+struct's list of fields and call the drop method for MySuperclass.
+Then, object_deinit recurses to the superclass and calls the same drop
+method again.  This will cause double-freeing of the Box<MyData>, or
+more in general double-dropping.
 
---
-Changes in v2:
- -Modify the commit id of the fix.
----
- hw/virtio/virtio.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+What's happening here is that QOM wants to control the drop order of
+MySuperclass and MySubclass's fields.  To do so, the parent field must
+be marked ManuallyDrop<>, which is quite ugly.  Perhaps we can add a
+wrapper type ParentField<> that is specific to QOM.  This hides the
+implementation detail of *what* is special about the ParentField, and
+it will also be easy to check for in the #[derive(Object)] macro.
+Maybe in the future it will even make sense to have special functions
+implemented on ParentField, I don't know...
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index a26f18908e..ae7d407113 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3362,7 +3362,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-                 continue;
-             }
- 
--            nheads = vring_avail_idx(&vdev->vq[i]) - vdev->vq[i].last_avail_idx;
-+            if (vring_avail_idx(&vdev->vq[i]) >= vdev->vq[i].last_avail_idx) {
-+                nheads = vring_avail_idx(&vdev->vq[i]) -
-+                         vdev->vq[i].last_avail_idx;
-+            } else {
-+                nheads = UINT16_MAX - vdev->vq[i].last_avail_idx +
-+                         vring_avail_idx(&vdev->vq[i]) + 1;
-+            }
-             /* Check it isn't doing strange things with descriptor numbers. */
-             if (nheads > vdev->vq[i].vring.num) {
-                 virtio_error(vdev, "VQ %d size 0x%x Guest index 0x%x "
--- 
-2.27.0
+Paolo
 
 
