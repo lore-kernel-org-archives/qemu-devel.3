@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0161E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C82E77185
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPT0-0002J1-1L; Wed, 11 Dec 2024 11:21:38 -0500
+	id 1tLPaE-0002zF-1y; Wed, 11 Dec 2024 11:29:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSo-0001RT-1l
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:26 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSl-0007uR-HH
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:25 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so6524955e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934081; x=1734538881; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=E0giBM/EpXvNpQdM8VbewBXwD4I1LGLbeL66q1YYWe8=;
- b=y2h58+qP546ZgI1/ki+Ul0S+bK6Wch1eRTEkmj7ZdpuHCF0OXYPJ2uETy5fuPoUFl1
- DvTP5eXbeEY9cK07sq9as62GHeWSJ9WMdXsv2rFDvXr19qOreOt+snf93y4ieRrzgZIs
- KnyXkYl1phFCmqUDU4upKGmOaX/yzxKTnqiIOIezVuf8nFhDhJNiIg1+nQDHPY3aolX9
- 61P5E+V+TdoLEIgjdecz+R9RKgGv6ImQwghGp4V82PEpiiqtP0R7gHsabk+bXS0fbG0B
- TIGmjnVRUb1TbrROaz+tjf4T4m6SuQukoD5mZsrpoB0E3mqclwDeFRY9YIOqzsb4FZFo
- WADA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPaA-0002Q9-HG
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:02 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPa7-0000cx-CF
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934538;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BexU3VOLutJEH2IVkrvKdkdz8shoIJg8kVhXm7BVM0w=;
+ b=JBs9Poueej7RBP7OBRGyJm0x9NDZF1zX92NHRa36rEw/W/8qu6K6wun+lZPe0GS2O2PFys
+ xX6+OSK06285lpXhVUIwrUkYgUbSdErpqz1M0xJNcj7qkjGY6J34x+kqIbHJgeFCLcXF6K
+ plOlGXfhQaifb0x6C/h5dPMCLHjM9ls=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-653-3ddq_VKuPBG60b5X23qJlQ-1; Wed, 11 Dec 2024 11:28:56 -0500
+X-MC-Unique: 3ddq_VKuPBG60b5X23qJlQ-1
+X-Mimecast-MFC-AGG-ID: 3ddq_VKuPBG60b5X23qJlQ
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-386321c8f4bso2692054f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:56 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934081; x=1734538881;
+ d=1e100.net; s=20230601; t=1733934534; x=1734539334;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=E0giBM/EpXvNpQdM8VbewBXwD4I1LGLbeL66q1YYWe8=;
- b=ox8BZKTeh0E8DfkpaAlR+FWXK60PlYD/wXjFoqwzM+0Nu5pMl+NNVjBvHHxHt3MGDb
- Ml5KSw+G8UhlCcqcwAsEP/B1xS+Qg9QzB5SYt21u0n/y2/tWPGMbyljrIoD9xfAcBDGI
- JBpgeje1ezC7GlmPAk9VIwspPI/yD3A6X3ISs6GowZuMupj9gKb9rSB1zZ4DknZLC0RR
- 5tUQDH2td7kHF+OKLz+Rl/Ns4zl6sPMw2oIlQBh2RhHN1YpRPCazk4f8R32GHQCOay32
- Npcz4qTA3eOE7hlYhI5CPpTVoJKybigfegFtf3y6umkqD+rw9EAKEeB+9aIjXe0zLman
- khRQ==
-X-Gm-Message-State: AOJu0YwUZvO12P84BY2URRX6Q9tNfzB1NTvRuSBTwg/xV74eKKFmv/Xw
- ihm8KkdJ31u1Zm/lafeStNyj19RbJQHimEADnQXfcab6ozq8Axb2NATJpOdihLDhNmRuh6MtNmu
- l
-X-Gm-Gg: ASbGnctoc2sswdOAmvGeHtst8Ai4K9HzRWZFbflvNH8IhDICQh6Wq5TYvF83DobUzwq
- ch6zaQuFBXScXOEj7fZPRpw3mSzbtXBlo2W2GRCJisSz0e2XyF5ATd48wqKyGM0XSFZ7ZERPnyy
- rinowlqm6D7006ulrYiWb5Pcj8VMIQp4bCHeBz6QDtQy3BUT8GVxOwGGvv5lqtB73htIP0uhj65
- UYljBrxgKOWW3PAcISUagr8JhT696HCSR29rqxgS+t3GmmSnt9g+OmhfHha
-X-Google-Smtp-Source: AGHT+IGq4/1upfXFgIlB/bxNmYSvLA3vR6ZM6nCu+I9obc5PHJo0UuRNQb9M8kEtmNHPs6DIIgt/vw==
-X-Received: by 2002:a05:600c:3b09:b0:434:f609:1af7 with SMTP id
- 5b1f17b1804b1-4361c346a89mr29631275e9.4.1733934081439; 
- Wed, 11 Dec 2024 08:21:21 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ bh=BexU3VOLutJEH2IVkrvKdkdz8shoIJg8kVhXm7BVM0w=;
+ b=iAtcdjaetdrlPks4vAdcs99v+2uGa1oirNM8aD83EjKYSHIaS/VOSYt1cBgRaSiKcN
+ qQZJ7eAWvrsUdql7skKBJwmG9YbkEEhpgommOL7faHOHgbX5fUHiBuMV4jW4dytzCegE
+ 2hbYVw0dJOCf/oauTUhz0WrdUXPljIT7dxfgqKw4K1Jn7RB4eqwRuwNmlzo4QelE+geq
+ 6+KnRwFKV6ZVLaKg6KNq3x30F1dyYfEbmYPTxCEyXRv7FEvZPgSu9uA6Ss0DJcSCV0aP
+ oJc1/vxm7op14TmjpaGl9aMmfzX1/yWQv67/qb+VQOG9nOBAO+A6dZfyjvJwns4n8COh
+ BlKA==
+X-Gm-Message-State: AOJu0Yz4TGWLb9gCbh0Wn/OeomtH+HHjsovgEIzteRyRXhCHzE1/KbCF
+ oh4cNlU3mC8+wgw27cPX28XSYSTrNg+2GXuTY34WRUevxl/b9ITph71P5fKy0XeRcJGYbgGCUTx
+ OLS/LuaeaoaExVm2ifKoukKyu/HrMV5Pqyj9AT6Zsk2zy+MfDD24x51ot+VZ0VdnLuC2I0w9CW9
+ Qkpw2fx+XRf+27cO6rCIpxyA5P8JQtQAJRjlX3
+X-Gm-Gg: ASbGncshJzjc2d+SMSe7B7u+YnjJEbnonnoaVDwem1diD0v4qWvZgDXtJSztF6qKYfV
+ 8ZSlM6gUHuMSgKE/+JfihBbGblV0KDej3ktEaA7RfR67Yo/WO8Am+Jm7Jl06WJYG7+eCjnyMZo9
+ FA6pa4bedNSYZhobR+ofgCtz24NTcVqGG1Ruq+yuYPR3e50CyGy1n6awS+x+euzdXgSGGqhCEE4
+ TIN+ukKoQ9eZ6p12XSQgn7hMXOAM1M4pYADqtouOETiHoI51N7KCbnf
+X-Received: by 2002:a5d:6d06:0:b0:386:1cd3:8a07 with SMTP id
+ ffacd0b85a97d-3864ce7fd8emr3202734f8f.7.1733934534412; 
+ Wed, 11 Dec 2024 08:28:54 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEeXZMoQ7yIBQprH5XCP9M7tt3DtHySdzn1TJsJEvGLe6aC7Oy6go5/SGj5TJzFiljaCxXM8w==
+X-Received: by 2002:a5d:6d06:0:b0:386:1cd3:8a07 with SMTP id
+ ffacd0b85a97d-3864ce7fd8emr3202714f8f.7.1733934533963; 
+ Wed, 11 Dec 2024 08:28:53 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.20
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3878251dbbfsm1608503f8f.97.2024.12.11.08.28.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:21:20 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Wed, 11 Dec 2024 08:28:53 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 67/72] softfloat: Inline pickNaN
-Date: Wed, 11 Dec 2024 16:19:59 +0000
-Message-Id: <20241211162004.2795499-68-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
-References: <20241211162004.2795499-1-peter.maydell@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 40/49] rust: add a bit operation module
+Date: Wed, 11 Dec 2024 17:27:10 +0100
+Message-ID: <20241211162720.320070-41-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,230 +107,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+The bindgen supports `static inline` function binding since v0.64.0 as
+an experimental feature (`--wrap-static-fns`), and stabilizes it after
+v0.70.0.
 
-Inline pickNaN into its only caller.  This makes one assert
-redundant with the immediately preceding IF.
+But the oldest version of bindgen supported by QEMU is v0.60.1, so
+there's no way to generate the binding for deposit64() which is `static
+inline` (in include/qemu/bitops.h).
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241203203949.483774-9-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Instead, implement it by hand in Rust and make it available for all
+unsigned types through an IntegerExt trait. Since it only involves bit
+operations, the Rust version of the code is almost identical to the
+original C version, but it applies to more types than just u64.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Co-authored-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- fpu/softfloat-parts.c.inc      | 82 +++++++++++++++++++++++++----
- fpu/softfloat-specialize.c.inc | 96 ----------------------------------
- 2 files changed, 73 insertions(+), 105 deletions(-)
+ rust/qemu-api/meson.build    |   1 +
+ rust/qemu-api/src/bitops.rs  | 119 +++++++++++++++++++++++++++++++++++
+ rust/qemu-api/src/lib.rs     |   1 +
+ rust/qemu-api/src/prelude.rs |   2 +
+ 4 files changed, 123 insertions(+)
+ create mode 100644 rust/qemu-api/src/bitops.rs
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 5fcdbc87fd7..a1b148e90b9 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -39,24 +39,88 @@ static void partsN(return_nan)(FloatPartsN *a, float_status *s)
- static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
-                                      float_status *s)
- {
-+    int cmp, which;
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index b927eb58c8e..adcee661150 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -16,6 +16,7 @@ _qemu_api_rs = static_library(
+     [
+       'src/lib.rs',
+       'src/bindings.rs',
++      'src/bitops.rs',
+       'src/cell.rs',
+       'src/c_str.rs',
+       'src/definitions.rs',
+diff --git a/rust/qemu-api/src/bitops.rs b/rust/qemu-api/src/bitops.rs
+new file mode 100644
+index 00000000000..023ec1a9983
+--- /dev/null
++++ b/rust/qemu-api/src/bitops.rs
+@@ -0,0 +1,119 @@
++// Copyright (C) 2024 Intel Corporation.
++// Author(s): Zhao Liu <zhai1.liu@intel.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
 +
-     if (is_snan(a->cls) || is_snan(b->cls)) {
-         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
-     }
- 
-     if (s->default_nan_mode) {
-         parts_default_nan(a, s);
--    } else {
--        int cmp = frac_cmp(a, b);
--        if (cmp == 0) {
--            cmp = a->sign < b->sign;
--        }
-+        return a;
-+    }
- 
--        if (pickNaN(a->cls, b->cls, cmp > 0, s)) {
--            a = b;
--        }
-+    cmp = frac_cmp(a, b);
-+    if (cmp == 0) {
-+        cmp = a->sign < b->sign;
++//! This module provides bit operation extensions to integer types.
++//! It is usually included via the `qemu_api` prelude.
++
++use std::ops::{
++    Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
++    Mul, MulAssign, Not, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign,
++};
++
++/// Trait for extensions to integer types
++pub trait IntegerExt:
++    Add<Self, Output = Self> + AddAssign<Self> +
++    BitAnd<Self, Output = Self> + BitAndAssign<Self> +
++    BitOr<Self, Output = Self> + BitOrAssign<Self> +
++    BitXor<Self, Output = Self> + BitXorAssign<Self> +
++    Copy +
++    Div<Self, Output = Self> + DivAssign<Self> +
++    Eq +
++    Mul<Self, Output = Self> + MulAssign<Self> +
++    Not<Output = Self> + Ord + PartialOrd +
++    Rem<Self, Output = Self> + RemAssign<Self> +
++    Shl<Self, Output = Self> + ShlAssign<Self> +
++    Shl<u32, Output = Self> + ShlAssign<u32> + // add more as needed
++    Shr<Self, Output = Self> + ShrAssign<Self> +
++    Shr<u32, Output = Self> + ShrAssign<u32> // add more as needed
++{
++    const BITS: u32;
++    const MAX: Self;
++    const MIN: Self;
++    const ONE: Self;
++    const ZERO: Self;
++
++    #[inline]
++    #[must_use]
++    fn bit(start: u32) -> Self
++    {
++        debug_assert!(start < Self::BITS);
++
++        Self::ONE << start
 +    }
 +
-+    switch (s->float_2nan_prop_rule) {
-+    case float_2nan_prop_s_ab:
-         if (is_snan(a->cls)) {
--            parts_silence_nan(a, s);
-+            which = 0;
-+        } else if (is_snan(b->cls)) {
-+            which = 1;
-+        } else if (is_qnan(a->cls)) {
-+            which = 0;
-+        } else {
-+            which = 1;
-         }
-+        break;
-+    case float_2nan_prop_s_ba:
-+        if (is_snan(b->cls)) {
-+            which = 1;
-+        } else if (is_snan(a->cls)) {
-+            which = 0;
-+        } else if (is_qnan(b->cls)) {
-+            which = 1;
-+        } else {
-+            which = 0;
++    #[inline]
++    #[must_use]
++    fn mask(start: u32, length: u32) -> Self
++    {
++        /* FIXME: Implement a more elegant check with error handling support? */
++        debug_assert!(start < Self::BITS && length > 0 && length <= Self::BITS - start);
++
++        (Self::MAX >> (Self::BITS - length)) << start
++    }
++
++    #[inline]
++    #[must_use]
++    fn deposit<U: IntegerExt>(self, start: u32, length: u32,
++                          fieldval: U) -> Self
++        where Self: From<U>
++    {
++        debug_assert!(length <= U::BITS);
++
++        let mask = Self::mask(start, length);
++        (self & !mask) | ((Self::from(fieldval) << start) & mask)
++    }
++
++    #[inline]
++    #[must_use]
++    fn extract(self, start: u32, length: u32) -> Self
++    {
++        let mask = Self::mask(start, length);
++        (self & mask) >> start
++    }
++}
++
++macro_rules! impl_num_ext {
++    ($type:ty) => {
++        impl IntegerExt for $type {
++            const BITS: u32 = <$type>::BITS;
++            const MAX: Self = <$type>::MAX;
++            const MIN: Self = <$type>::MIN;
++            const ONE: Self = 1;
++            const ZERO: Self = 0;
 +        }
-+        break;
-+    case float_2nan_prop_ab:
-+        which = is_nan(a->cls) ? 0 : 1;
-+        break;
-+    case float_2nan_prop_ba:
-+        which = is_nan(b->cls) ? 1 : 0;
-+        break;
-+    case float_2nan_prop_x87:
-+        /*
-+         * This implements x87 NaN propagation rules:
-+         * SNaN + QNaN => return the QNaN
-+         * two SNaNs => return the one with the larger significand, silenced
-+         * two QNaNs => return the one with the larger significand
-+         * SNaN and a non-NaN => return the SNaN, silenced
-+         * QNaN and a non-NaN => return the QNaN
-+         *
-+         * If we get down to comparing significands and they are the same,
-+         * return the NaN with the positive sign bit (if any).
-+         */
-+        if (is_snan(a->cls)) {
-+            if (is_snan(b->cls)) {
-+                which = cmp > 0 ? 0 : 1;
-+            } else {
-+                which = is_qnan(b->cls) ? 1 : 0;
-+            }
-+        } else if (is_qnan(a->cls)) {
-+            if (is_snan(b->cls) || !is_qnan(b->cls)) {
-+                which = 0;
-+            } else {
-+                which = cmp > 0 ? 0 : 1;
-+            }
-+        } else {
-+            which = 1;
-+        }
-+        break;
-+    default:
-+        g_assert_not_reached();
++    };
++}
++
++impl_num_ext!(u8);
++impl_num_ext!(u16);
++impl_num_ext!(u32);
++impl_num_ext!(u64);
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++
++    #[test]
++    fn test_deposit() {
++        assert_eq!(15u32.deposit(8, 8, 1u32), 256 + 15);
++        assert_eq!(15u32.deposit(8, 1, 255u8), 256 + 15);
 +    }
 +
-+    if (which) {
-+        a = b;
++    #[test]
++    fn test_extract() {
++        assert_eq!(15u32.extract(2, 4), 3);
 +    }
-+    if (is_snan(a->cls)) {
-+        parts_silence_nan(a, s);
-     }
-     return a;
- }
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index f7a320f6ff9..cbbbab52ba3 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -352,102 +352,6 @@ bool float32_is_signaling_nan(float32 a_, float_status *status)
-     }
- }
++
++    #[test]
++    fn test_bit() {
++        assert_eq!(u8::bit(7), 128);
++        assert_eq!(u32::bit(16), 0x10000);
++    }
++
++    #[test]
++    fn test_mask() {
++        assert_eq!(u8::mask(7, 1), 128);
++        assert_eq!(u32::mask(8, 8), 0xff00);
++    }
++}
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index 0efbef47441..9e007e16354 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -12,6 +12,7 @@
+ #[rustfmt::skip]
+ pub mod prelude;
  
--/*----------------------------------------------------------------------------
--| Select which NaN to propagate for a two-input operation.
--| IEEE754 doesn't specify all the details of this, so the
--| algorithm is target-specific.
--| The routine is passed various bits of information about the
--| two NaNs and should return 0 to select NaN a and 1 for NaN b.
--| Note that signalling NaNs are always squashed to quiet NaNs
--| by the caller, by calling floatXX_silence_nan() before
--| returning them.
--|
--| aIsLargerSignificand is only valid if both a and b are NaNs
--| of some kind, and is true if a has the larger significand,
--| or if both a and b have the same significand but a is
--| positive but b is negative. It is only needed for the x87
--| tie-break rule.
--*----------------------------------------------------------------------------*/
--
--static int pickNaN(FloatClass a_cls, FloatClass b_cls,
--                   bool aIsLargerSignificand, float_status *status)
--{
--    /*
--     * We guarantee not to require the target to tell us how to
--     * pick a NaN if we're always returning the default NaN.
--     * But if we're not in default-NaN mode then the target must
--     * specify via set_float_2nan_prop_rule().
--     */
--    assert(!status->default_nan_mode);
--
--    switch (status->float_2nan_prop_rule) {
--    case float_2nan_prop_s_ab:
--        if (is_snan(a_cls)) {
--            return 0;
--        } else if (is_snan(b_cls)) {
--            return 1;
--        } else if (is_qnan(a_cls)) {
--            return 0;
--        } else {
--            return 1;
--        }
--        break;
--    case float_2nan_prop_s_ba:
--        if (is_snan(b_cls)) {
--            return 1;
--        } else if (is_snan(a_cls)) {
--            return 0;
--        } else if (is_qnan(b_cls)) {
--            return 1;
--        } else {
--            return 0;
--        }
--        break;
--    case float_2nan_prop_ab:
--        if (is_nan(a_cls)) {
--            return 0;
--        } else {
--            return 1;
--        }
--        break;
--    case float_2nan_prop_ba:
--        if (is_nan(b_cls)) {
--            return 1;
--        } else {
--            return 0;
--        }
--        break;
--    case float_2nan_prop_x87:
--        /*
--         * This implements x87 NaN propagation rules:
--         * SNaN + QNaN => return the QNaN
--         * two SNaNs => return the one with the larger significand, silenced
--         * two QNaNs => return the one with the larger significand
--         * SNaN and a non-NaN => return the SNaN, silenced
--         * QNaN and a non-NaN => return the QNaN
--         *
--         * If we get down to comparing significands and they are the same,
--         * return the NaN with the positive sign bit (if any).
--         */
--        if (is_snan(a_cls)) {
--            if (is_snan(b_cls)) {
--                return aIsLargerSignificand ? 0 : 1;
--            }
--            return is_qnan(b_cls) ? 1 : 0;
--        } else if (is_qnan(a_cls)) {
--            if (is_snan(b_cls) || !is_qnan(b_cls)) {
--                return 0;
--            } else {
--                return aIsLargerSignificand ? 0 : 1;
--            }
--        } else {
--            return 1;
--        }
--    default:
--        g_assert_not_reached();
--    }
--}
--
- /*----------------------------------------------------------------------------
- | Returns 1 if the double-precision floating-point value `a' is a quiet
- | NaN; otherwise returns 0.
++pub mod bitops;
+ pub mod c_str;
+ pub mod cell;
+ pub mod definitions;
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index dfaddbd062a..a39e228babf 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -2,5 +2,7 @@
+ // Author(s): Paolo Bonzini <pbonzini@redhat.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
++pub use crate::bitops::IntegerExt;
++
+ pub use crate::cell::BqlCell;
+ pub use crate::cell::BqlRefCell;
 -- 
-2.34.1
+2.47.1
 
 
