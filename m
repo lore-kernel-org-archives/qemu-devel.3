@@ -4,95 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD6C3E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 21:41:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878BDE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 21:43:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLURH-000342-Nv; Wed, 11 Dec 2024 16:40:11 -0500
+	id 1tLUUA-0003lt-ED; Wed, 11 Dec 2024 16:43:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLURG-00033A-5z
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 16:40:10 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLURD-0006O8-La
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 16:40:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733953203;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=+iIpMJ7Mmlq+/TJBhxnVJ87RlxR384cnSjftygfvb/I=;
- b=aUG0wI4/3UWqg4if6BhquepJLF664OqHrud5JnfE4mvbXku9O47K15vgjvuqaxBZ1lMXMA
- IKJxqLOojSEoEY4hLA4drYODPcyxrSN67nDGOLmz/dGXsk+Bogw4Kdf3O8Nezh5um9/K9Y
- SXCBxDsixq9F1CwJ9+ASEppTTUanRNg=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-nE86j7r_NpihZ9PMrrEwTQ-1; Wed, 11 Dec 2024 16:40:01 -0500
-X-MC-Unique: nE86j7r_NpihZ9PMrrEwTQ-1
-X-Mimecast-MFC-AGG-ID: nE86j7r_NpihZ9PMrrEwTQ
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4675749a982so80331591cf.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 13:40:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLUU8-0003lO-Ud
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 16:43:08 -0500
+Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLUU7-0006rx-Bx
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 16:43:08 -0500
+Received: by mail-oa1-x2f.google.com with SMTP id
+ 586e51a60fabf-29ff039dab2so1362699fac.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 13:43:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733953386; x=1734558186; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=i7HLq+QKMLCY5XqsI2oZ1TklSnVA22KFqV6yEG10Fco=;
+ b=eaGpG6s58clX1K7M6FLAgZH38ZOs82a5OBJ3NDQ0gLm0r7KVfPqUrBd39oVLkLFOEY
+ jrDMkGgSlSDkxqcFX/UDjAYU1RgurmUSARQ74oUj4XBViUF0anxHEmzcQB119Xq7FiFb
+ WDXLUXYXjHc34VcyXeMQsQBIX5T/ep8ONZGP8cLzPnU8LXsYrTdeWE3+v8oSJFiAluGk
+ yiDp3aNHWf5XVR9X52M9LpSK5VuDSvbUuiWUGkPzfD8afDBS0aJP4djSCZqlzTo+GSaP
+ 4/eoHIbLZ1S71q7bWPqNMosdKbqTliDJpN8rbQeuCi+j8vbdLDvsYBjbHUfXNvenmwHy
+ Lgkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733953201; x=1734558001;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+iIpMJ7Mmlq+/TJBhxnVJ87RlxR384cnSjftygfvb/I=;
- b=M1/qJvUz0D43soNn4vEbXpFjzyxrTfffTt/uXfR0NeOy7Tri8X3NNkX4CFM2Xptixo
- QW2rvW/hYbXe94riXeScOVU+tLj5ZWblTghlhMeV/6J0n+bRQFkHGg6A64VlrpTnNVdl
- dTgnxPQaegjafh2uHUIfTOYVRYuQGgb7X6o4uwj1FjHp5mkUVcWQj3aQhdUeaoMnvhpx
- 4gTpfxzhheYUTljRgTgnU8MD1UvL/hRjlXZ1klSFb4A1zx62hJc+PyRuCj3hzHar24D3
- /UyRPM1kOGX0w0/3mWXFur97E4wa90LT4Tlus3xe/c1JJZAKXwEBKBHm3ff3yuWWt8uE
- C7DQ==
-X-Gm-Message-State: AOJu0YyzicHtwaUOK6BT9r9FVnPiGLcy0ZnSQvf0McQd/DHEj+ezK5TD
- oK/o17CKOjci6NqHb7WW3QRTBJRZqUtyoSREIKHOsuS3bUqdY/BONl7QIKr58crGYcpcwL0pezY
- BG9F2BXZYkkaB2P+UYxqCrtp4qYozYLLdcOJrpLU78P8A63fh8kpE
-X-Gm-Gg: ASbGncsZaqQAEAMpFT9KAZKi44Shu7cjA7y1ihDKiNbsneHL5ikc2/f9y2OM/0+8Zt+
- KgBo+xLdetaKZKGaDdrmqIrphae02zdGK/rzPHi4TlAsS9/5MGchKzKt2hWWB2MY1XFr5fFImsH
- GKPtFIlA5Mm8njcEQWw/w+0w/3QMBqnX+sxWqaR8UAQII26Kh3OQv0orDBCmGWWEjbiiMjve72r
- 9gZuFH4rn9jtvKtv7O5e+t6Mg22j6QnVnZ2PiAKCzeXofEiD1iNzwnguZC2IybUOQQWGfeWREL6
- IxFYyOrF6nPlB9c=
-X-Received: by 2002:a05:622a:353:b0:467:770f:70a0 with SMTP id
- d75a77b69052e-4679615fbc8mr19502211cf.10.1733953201214; 
- Wed, 11 Dec 2024 13:40:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFQSD/eRmJp7yOE7sWD/crMQlEmVahrjZOWr+Av/gyj5VA+Ymo3oqRzkuJeNIfk8LmFzSgZFw==
-X-Received: by 2002:a05:622a:353:b0:467:770f:70a0 with SMTP id
- d75a77b69052e-4679615fbc8mr19502001cf.10.1733953200933; 
- Wed, 11 Dec 2024 13:40:00 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46787387ed9sm14368921cf.87.2024.12.11.13.39.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 13:39:59 -0800 (PST)
-Date: Wed, 11 Dec 2024 16:39:57 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Maxim Levitsky <mlevitsk@redhat.com>
-Subject: Re: [PATCH 0/3] scripts/qemu-gdb: Make coroutine dumps to work with
- coredumps
-Message-ID: <Z1oGrWlUaB5O3n5X@x1n>
-References: <20241211201739.1380222-1-peterx@redhat.com>
- <87pllyezmh.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1733953386; x=1734558186;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=i7HLq+QKMLCY5XqsI2oZ1TklSnVA22KFqV6yEG10Fco=;
+ b=iPr39DHHgSl6V35vtbbAh/oVYN+/UHVz5yXm21soORO1PJaiPOXxCH97uLjgngV/gA
+ JCstZvTYDT9o015tLC4ZuWAg7J9RiOIs7etCrefpWp81K7MrmjfWnPQla4w13AcVQVDi
+ STtO/CqanhhyiFGbNH23mQGv3hfr1U88iXUcW4E6qUjg5hxPLmIu4LT32B3bxQahIjQP
+ ezY6Rezm+WgkfcTfH+rs0+sOt2ueEQGWyb2EQ3u84X6h8g3yj3KV+D5UJH7NF83jjt5s
+ ssIAOlkCmENM/Wzv1rVM890Mwiur3x/zdDW8fv80blyb6GCTcPn8HqCtEOC/zt1l0yko
+ zPsw==
+X-Gm-Message-State: AOJu0YwMt31MMHEhI2cpNRB85wX6lRU9x7jAVdu8rPv4ppdDMZ2elL9C
+ jiVc9XjSfB3JtqbcZMI0ttjA7RTsFmCyE9AzbVDQhOMLSs4yHoPV9+p9REE7aPPNuBaalvpROng
+ 0qMpTuV4n
+X-Gm-Gg: ASbGncvvak25Ed7auKsOT8Z1DBElMf3MzDNVRBuJqoE9/VqyRb6f1FTQhJ1ZKgk24N7
+ /4RJDFYlDYTIA1p8k62lIutY760DISYUJtF/3Ds+BqfcibDxUv9NFw4N5Bdo7D+u+VKrgzrBkQJ
+ LdE53DAvICUBOWC44QHeEV+AxSsqXYgAuNnkai3LMqvOJ7tcGeUdZa4t8EmQdO+ea4ZNEBsTocA
+ jZZB25N6LMH6Hd19BAIyCb94aWt75l7G00sQ60U81iJx6QzBoJR4/d7KdYvB/DDXd0QHCwF/m6b
+ JrHIofe5IXfLBxFYPiABV8im+CSGPvoO
+X-Google-Smtp-Source: AGHT+IFTBrB86t4H381bZ2vjLdNTI8cUuvKfw4C3YlrINzldKZgcewF9Vh9tdKPlzZ52nIzDfWyv0A==
+X-Received: by 2002:a05:6870:418e:b0:29e:2991:d953 with SMTP id
+ 586e51a60fabf-2a012c5ac54mr2590751fac.20.1733953385698; 
+ Wed, 11 Dec 2024 13:43:05 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29f569a64a1sm4088952fac.47.2024.12.11.13.43.04
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Dec 2024 13:43:05 -0800 (PST)
+Message-ID: <b16c4644-04df-41d1-bc6e-f14d706ab4b7@linaro.org>
+Date: Wed, 11 Dec 2024 15:43:02 -0600
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87pllyezmh.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] target/riscv: fix the trap generation for conditional
+ store
+To: qemu-devel@nongnu.org
+References: <20241211211933.198792-1-fkonrad@amd.com>
+ <20241211211933.198792-4-fkonrad@amd.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241211211933.198792-4-fkonrad@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,29 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 11, 2024 at 05:25:10PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > Coroutines are used in many cases in block layers. It's also used in live
-> > migration when on destination side, and it'll be handy to diagnose crashes
-> > within a coroutine when we want to also know what other coroutines are
-> > doing.
-> 
-> Not sure if you've seen this message on the list:
-> 
-> https://lore.kernel.org/r/f0ebccca-7a17-4da8-ac4a-71cf6d69abc3@mtasv.net
+On 12/11/24 15:19, Frederic Konrad wrote:
+> +    /*
+> +     * A misaligned store trap should be triggered even if the store should
+> +     * fail due to the reservation.
+> +     */
+> +    tcg_gen_andi_tl(tmp, src1, ~((uint64_t)0) << memop_alignment_bits(mop));
 
-No I didn't.  I only started looking at this because I got a bug a few days
-ago that I need to look at the main coroutine where dest crashed, then
-Stefan told me this script and also told me it only works with live session.
-Ideally I'll need coredump debug-ability, then I figured it isn't too hard.
+The constant is incorrect for testing the low bits.
 
-I saw that it didn't yet land gdb, and it's much more involved even if it
-could be more generic.  Not sure how the block developers think, personally
-I prefer this much smaller change because it works on old systems, where I
-can easily install gdb with package managers.
+> +    tcg_gen_brcond_tl(TCG_COND_EQ, tmp, src1, l3);
 
--- 
-Peter Xu
+Best to make the fallthrough path be the common case, as we will optimize across the 
+extended basic block.
 
+Use test-style comparison:
+
+     tcg_gen_brcondi_tl(TCG_COND_TSTNE, src1, memop_size(mop) - 1, l_misalign);
+
+
+
+r~
 
