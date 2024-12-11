@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B097E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:25:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 649BAE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPSs-0001jm-SS; Wed, 11 Dec 2024 11:21:30 -0500
+	id 1tLPSL-0000YZ-Et; Wed, 11 Dec 2024 11:20:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSg-0001Cs-2G
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:19 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ id 1tLPSK-0000Tm-0t
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:56 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSd-0007sh-Sd
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:17 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4361fe642ddso6103015e9.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:14 -0800 (PST)
+ id 1tLPSI-0007mR-9t
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:55 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso1762885e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934074; x=1734538874; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934053; x=1734538853; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zslQ1Gnt7shcKGxYg5Es0RVybgupAdobUOUAJLVJUTs=;
- b=m+XpC6JuQha1T21EEYcFJNdYZio1FJwhfVVMECyz/EXZSzp5Gqg75htOhVbTbt3LwY
- oZE5zGTyWQz5CkHgQBt5o3v17NKiPyPerDRlfZQ/3JExjJz2BoBLay19vJpHhQjPX8p3
- RagNSvQxw+HAjijJVCaXNq+Z13XHHO0OXV9VknIrI7R16dSi3tzRobS2j3Kn5XlexoKc
- LOwM7wjy+/3OiLvmoyxJ0pUXkhmAvwzFwXVjlYxhFkuRLYZ2vLd2EeoHrbSTHsJ1n1Oy
- ZHwUYIYM14GOfS7bqFFaF6BammIdQ/kq4JuFQRfdY2kru3uueGwyU5rma7s8Uj7Vf3+q
- m1ng==
+ :reply-to; bh=0hVwJ7PhWgaa1nanKp9sPo09AWgYuiJDE+Q3tkgukF8=;
+ b=jTM8UaFk+YYbnx302Iyyb8Ca9z0sKEc2LNLLf11EMk716N8eJYua8FQmnomQT0pA+6
+ Z5BKgz9ER3U+S9AlXJW65g+2NSls0F5D61B29n88xjJ/W2ZOJsWIdiv88joZg60daUNE
+ bIHcvTFJ2wnQgzrqzKCymUZW6a/uhK2P3Dk9eaDmrQqdjwCtPHKG1ZTFfgvpHdUjvfYQ
+ V11WzPoQ2TBYVB3w8VaBA224vlF4syMZgOXwmHG2gzQrfIuUgwquGbqL1GXtKDoYi46s
+ HpNzC3iYlqYRt+bmhCbm423EcRpREJHYgDJsy9ZI1etjZdwttATq+cDOBVQAlW2JBoYV
+ gY/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934074; x=1734538874;
+ d=1e100.net; s=20230601; t=1733934053; x=1734538853;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zslQ1Gnt7shcKGxYg5Es0RVybgupAdobUOUAJLVJUTs=;
- b=fg8OfArnvmTX0UTzVYL8p5ty0FxfvxNVuTT3PVB7/8jI5pplWYVdcWn6LqjOvKpynV
- GNZUsfSm78IlLOf/qrGBTiyPBVBesUesk9BaUFAuz2gzxojSG40sCtk5h5PjTIbFMnzd
- EmYdJ/H6aQ3KcKA8jGgnFhX8uoPs8xr6Qj8bBnWSQo3dJ/Gg3WFPDfi27e1K38jnUWFB
- AhMt8zqKLvFn6X0A/x7OYNB3s7BK2GRXkh8Jtqyl/oNJkV6cNXnaLD6LIGiFW2EnOEEq
- rnJP95AXn+pC+0b51y/AEa9wo/KCQ3s7DFp8aCLZ7eoCDRwU67kXVLYSzI53ce1tRpA6
- xg3A==
-X-Gm-Message-State: AOJu0YwgHpB8/77j1OrQoIFsLHRMzMxiUXxra0G8EhUeY7w85FlkYM0d
- rLt3UA1kQAs+nFpqe9iZdF8H/dc4i1IwdRrbHJqi/9newWJUsO/ZG/FaTrEKYn9X9ESmIekzHXk
- B
-X-Gm-Gg: ASbGncsjGIiMW53tEHAwN5XFx1MfCa+xtvnaHxzULBjg1cVKL0IV6dEExS4lZLKV79W
- eehP9I+NRnGki7BnURnuzQOnQAtcD6mySfTVaIOkup+thZ5jARrz6ueY8rEcwWSAkAeZ7j7N2wL
- z3M9/lvPckI+KHpfUjYkKOmQ+ujX9vBxNw6E9DkKb+jMozdKf35QFfm7T/Y2UgcGw6tq4rS7ldL
- 7k3APnIruNbCEiChGdB+i5MZBPyQKNK54cBwt6OfWvIYmXM1FBNYIdgV92B
-X-Google-Smtp-Source: AGHT+IG93sTCS7pfpSte1qaP5ez/rcmVcmwYaqRdTzFjp4auZSL7sdpPOtDZUS/ioLH5aUnPF1W6jw==
-X-Received: by 2002:a05:600c:468b:b0:434:fd15:3ac9 with SMTP id
- 5b1f17b1804b1-4361c3e3aacmr23674805e9.22.1733934073890; 
- Wed, 11 Dec 2024 08:21:13 -0800 (PST)
+ bh=0hVwJ7PhWgaa1nanKp9sPo09AWgYuiJDE+Q3tkgukF8=;
+ b=X0CSRJpINUYzp0vCHXajLTYzPbO0Jqen+juGU/KcfsVoZLDvvegSQUJLcj00dqsjoh
+ LQ/xFeZhekBvQ1CfdscTt85QrO+tk8c+6AylIpQt2wE+zZ1wKLS4wTpghcauWIY+OPVa
+ R1+5L4ShhN6EHpWe8xvmUBH4PnET/eY2Kv4eNU9j8q+YuzNVnyzOlaBV0UCTuhD0WwiX
+ FsZEzLtSoSMUEIRUFHCFq4T8P+n/0uBnPZgSKXjVQuxKZY911uyP6/7M+5WRY3se48a5
+ sEbsKp90PYH3EU9FsCD5Hl97EAg9C4eNu98AWPM0sGVPApj+mqZR7sf2v3LpIzbeQ+h3
+ Ds3w==
+X-Gm-Message-State: AOJu0YxZMNawmbSiyGFmBaOr4Dl2T3abyhXcaNIOO3T53pAGDp2+ZKwb
+ esy+4FSRlOhqcB9COuTiyzAAU3bNvNo7hqpawQCG5m9Gb/xIR+eckVlmtff2rZpr0ELyoSmcKKU
+ 7
+X-Gm-Gg: ASbGncue4WlUabmuvyBu9b5o9+StZCW1Lz7WmPV73HeiU5iE5oS24/u/R2gtctJuktx
+ XRe579GEWPFk6QcYZrDu2Lu9vDZ5fIoIiNYknmkWSPVLm97UsW0nojum9Lyl+x7QGhvwdVL3ipa
+ 26OR54qqWpfZXja+9SHaLT2GPH0jdIlW4vFW7QBr65Qq7eGugQYw+rizMXG++M7J91Nn8e/Tw25
+ 4KsxVoToDAneQLdry6uyZjUqB03+ybWsaTqbUnipq1M9STx9rk1dP9yjkAv
+X-Google-Smtp-Source: AGHT+IF5CcG0bjD68FvO5pJZdYKWWSFxhbSN+FQR+p1QriUsNZQYX2UJuRDOIx5TcJyjFG1UqJZiPA==
+X-Received: by 2002:a05:600c:5101:b0:434:ffb2:f9df with SMTP id
+ 5b1f17b1804b1-4361c3a6550mr30727475e9.17.1733934052743; 
+ Wed, 11 Dec 2024 08:20:52 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.13
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:21:13 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 59/72] target/tricore: Set default NaN pattern explicitly
-Date: Wed, 11 Dec 2024 16:19:51 +0000
-Message-Id: <20241211162004.2795499-60-peter.maydell@linaro.org>
+Subject: [PULL 39/72] target/arm: Copy entire float_status in is_ebf
+Date: Wed, 11 Dec 2024 16:19:31 +0000
+Message-Id: <20241211162004.2795499-40-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,28 +98,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the default NaN pattern explicitly for tricore.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Now that float_status has a bunch of fp parameters,
+it is easier to copy an existing structure than create
+one from scratch.  Begin by copying the structure that
+corresponds to the FPSR and make only the adjustments
+required for BFloat16 semantics.
+
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20241203203949.483774-2-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-54-peter.maydell@linaro.org
 ---
- target/tricore/helper.c | 2 ++
- 1 file changed, 2 insertions(+)
+ target/arm/tcg/vec_helper.c | 20 +++++++-------------
+ 1 file changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/target/tricore/helper.c b/target/tricore/helper.c
-index 7014255f77c..e8b0ec51611 100644
---- a/target/tricore/helper.c
-+++ b/target/tricore/helper.c
-@@ -117,6 +117,8 @@ void fpu_set_state(CPUTriCoreState *env)
-     set_flush_to_zero(1, &env->fp_status);
-     set_float_detect_tininess(float_tininess_before_rounding, &env->fp_status);
-     set_default_nan_mode(1, &env->fp_status);
-+    /* Default NaN pattern: sign bit clear, frac msb set */
-+    set_float_default_nan_pattern(0b01000000, &env->fp_status);
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index e825d501a22..ad6f26545ac 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2813,25 +2813,19 @@ bool is_ebf(CPUARMState *env, float_status *statusp, float_status *oddstatusp)
+      * no effect on AArch32 instructions.
+      */
+     bool ebf = is_a64(env) && env->vfp.fpcr & FPCR_EBF;
+-    *statusp = (float_status){
+-        .tininess_before_rounding = float_tininess_before_rounding,
+-        .float_rounding_mode = float_round_to_odd_inf,
+-        .flush_to_zero = true,
+-        .flush_inputs_to_zero = true,
+-        .default_nan_mode = true,
+-    };
++
++    *statusp = env->vfp.fp_status;
++    set_default_nan_mode(true, statusp);
+ 
+     if (ebf) {
+-        float_status *fpst = &env->vfp.fp_status;
+-        set_flush_to_zero(get_flush_to_zero(fpst), statusp);
+-        set_flush_inputs_to_zero(get_flush_inputs_to_zero(fpst), statusp);
+-        set_float_rounding_mode(get_float_rounding_mode(fpst), statusp);
+-
+         /* EBF=1 needs to do a step with round-to-odd semantics */
+         *oddstatusp = *statusp;
+         set_float_rounding_mode(float_round_to_odd, oddstatusp);
++    } else {
++        set_flush_to_zero(true, statusp);
++        set_flush_inputs_to_zero(true, statusp);
++        set_float_rounding_mode(float_round_to_odd_inf, statusp);
+     }
+-
+     return ebf;
  }
  
- uint32_t psw_read(CPUTriCoreState *env)
 -- 
 2.34.1
 
