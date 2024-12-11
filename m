@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AB3E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC65E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZN-0003gc-5F; Wed, 11 Dec 2024 11:28:13 -0500
+	id 1tLPZd-0006Du-1G; Wed, 11 Dec 2024 11:28:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZG-00032Y-BY
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:06 -0500
+ id 1tLPZW-0005M4-Ux
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:23 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZ9-0000L3-IQ
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:06 -0500
+ id 1tLPZV-0000Ta-7a
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934477;
+ s=mimecast20190719; t=1733934500;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xmqHi0FLBrnWkZWiScIbYdimPuw1BGqG3qZicgcwQCY=;
- b=ZszfHONu+6adHUEpr6BP5Uls/rbJZjvd5g1JRwppRxi+a8FCs/OZrk/4c5eNjYm7x24UaN
- g3bT1aiDxVfkeq6qTZF4vEy0O5XDZv6Wz8Nz7bG8c3vlEBwEm5M1q0bgIQPbSKaCUsZN9J
- 9hjOJIMiYefyEAGTUUzvlq/X6RruITc=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Xp/Cl1MXRDbDXW7R4GInQg1UHIFQJ6brbsJU+CLkAsY=;
+ b=d7mGJ+aX6liThU2+RJH8YlsbtebZQwWTVea4YBuBz5yfEDs4ALSOMCBomJcaStaejZa+Ug
+ Tq5zoF0bcqog6v1NlBbeG8iv2NtT4n/FV5VklE4miTjCak7sqhPsQ/CzEobnmeeabPpgwa
+ HVUG6SobEOIgqz1Ihy9KAV2OJVv3fbk=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-84-7boqow8WMCaPdoCGoBm7RA-1; Wed, 11 Dec 2024 11:27:53 -0500
-X-MC-Unique: 7boqow8WMCaPdoCGoBm7RA-1
-X-Mimecast-MFC-AGG-ID: 7boqow8WMCaPdoCGoBm7RA
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d8f0b1023bso64780306d6.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:53 -0800 (PST)
+ us-mta-610-fmyIeBQ2MGOsIkMk0cwe5g-1; Wed, 11 Dec 2024 11:28:17 -0500
+X-MC-Unique: fmyIeBQ2MGOsIkMk0cwe5g-1
+X-Mimecast-MFC-AGG-ID: fmyIeBQ2MGOsIkMk0cwe5g
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-434f3398326so4668665e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934472; x=1734539272;
+ d=1e100.net; s=20230601; t=1733934496; x=1734539296;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xmqHi0FLBrnWkZWiScIbYdimPuw1BGqG3qZicgcwQCY=;
- b=ervbHevQNFCLTwSfXX+WXZrD5ZQDvJiIIqUkvpxhHI+tP6h2Our3fm0GQRutHkZcl4
- LmFw4bGndQA1cn2kzf6qx27UsQK4cEvyUzKC/2qd0uez7sPvDRZveU9wVZon//9PBFHy
- kj814+EPr2FZcU28aDCGIg7mnO+RCIDWy6BoOCO8qx8oQRPx1ioOTGREvyXT8VL2kWUc
- G4YRE3gfoVSh5RDK/xhzWQ2laT0BVqZULyQiT5ivsPLOcz3nWFz/g73RJ+eXWZhldRn3
- wG3hlbZZ7Tzlsf7XCCKj8p49se5F9CP2hnfYorGyJag8o1q6BvnhBdcgXOTY4EJjPm08
- 03rw==
-X-Gm-Message-State: AOJu0Yzp0BPLXTzQI0KXxT2JnPjBpRjMwz1fbFRaEH79gGy2EqJ4vWRh
- 90ArgLTjl8eQk8oFq5spfU3SfXdi1FZVis3OkzLr4C6EO6BPPYd0EezF/MwFcDkn6a2qJkradzI
- d7vN+F3lqAedKBCLSjSwRFD3mOpHOUAPHr52NQkC5p1Jlx4wBJu0FZ6zOvRStYGJgxh7StqxRXW
- VBFccwnuuD64Gqrn6Q5I9+Z2QhlYPOYdhFboT7
-X-Gm-Gg: ASbGncsVS6qxe3K9QlDnFwceZBnL8hQfNiqgvTCVvDYU1XwhJQnC9AaIe0B84/+DGrn
- jK5aBcSQLUQgR7V9Y2V+UBGeWetOtMARocM8d4bKwPpQP36nWD+QRZW6QeRkE0rpQEEXzhIa0Md
- EVGFBJblpHQyBrC2iuj0rfQluhDXkF1mYOdT+LsKucfTQ/TtR07N9Xz6qMxzZAMzQtn+FL7trUL
- JjPSeyJJ6z6lncjFnxwzkN1a125AhcRnX1q7/VHAFe5JuHOYooQvegY
-X-Received: by 2002:a05:6214:d8d:b0:6d4:586:6285 with SMTP id
- 6a1803df08f44-6dae29f2372mr5431106d6.11.1733934472547; 
- Wed, 11 Dec 2024 08:27:52 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEOJ0zfWh5NEixr0fhiNt+8j5REnuFEmASotm8YgE8EViDvWCnEL1Byh6RumC06in+zq8ci2w==
-X-Received: by 2002:a05:6214:d8d:b0:6d4:586:6285 with SMTP id
- 6a1803df08f44-6dae29f2372mr5430576d6.11.1733934471998; 
- Wed, 11 Dec 2024 08:27:51 -0800 (PST)
+ bh=Xp/Cl1MXRDbDXW7R4GInQg1UHIFQJ6brbsJU+CLkAsY=;
+ b=MD5Ji7ts3EIgObp26MPx97vkNevSK18e0gHJQBNOfVB1zG/mW4/juPzWyBZxIm+Svt
+ O6ctui4B+PpUD6D2SxVwupHbk9EIZUAQXmczH5Bk376ITLH1ekvVeLYSIFrpuKrS1u7O
+ iAKAinU21bao1HmQexWtzpYPObl2JqMF64gb50Dp2Yl3+YQoB94br3n/WXrJECzKzel7
+ jfPb1cl/rqWzpW2xorDDAdRojxx3XdFlzJWBsLIAc8LbX3lf2eXld+AB3GmfoKU3p54P
+ Br7ecXaKlp+pNYtgZYuWIwzXNzhrPnZeF68rFHJPlKsoMV8YsogozSuzpAw4Yx9jUInB
+ 5zxw==
+X-Gm-Message-State: AOJu0YxrycRrja8pk5aOpNWB9gp44lZ9krpPO7OOGjztW+FL+0p4ok3b
+ yvTNsjDqwwlUrevcEbMnkOgp9HO/OczhcZnpaiRPeQNGGDEWM8XhIqb/7TOJ0d3E/Yn1HGxHsRe
+ F2KqEFzWlGuvuNTEc+MAWi8s8pe3DEt/j+oHGm9oeEWD5+7XEzMw6il44SxrfvhUvSoiDjpjw6D
+ 4SFgQPmfK2XGC1Bb37jBx+PTGdRJAaOgO2rQ1V
+X-Gm-Gg: ASbGncvNGHouxEl/337KmmxdMhhxCg3yxSDk2xb0e3Ezu1YYnafrGxqvy7NnD+0U2H4
+ 0aSixcbqPgzdNEaV1mSsN/QNnztdTlPpjGN1P75wE/2ekJTKSh8OFMHJbMnOI5MZrGZkyoLTIAy
+ +oO7IsgDWugA6J2usFrRB4q9tciSv6P8pglnnJxQLi4XcBp4uQFQodpTrYuUXe3D+pUXxbioXZ3
+ 6cm0/wpCLzZFRbXMxKwLE1D3sIK2s4EOjpa3LS9A3TPwf1JHfhIgpVx
+X-Received: by 2002:a05:6000:1843:b0:386:3262:ff70 with SMTP id
+ ffacd0b85a97d-3864de8ef4dmr2433910f8f.2.1733934496039; 
+ Wed, 11 Dec 2024 08:28:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHm2SYkr0RdJlt91nUaILw0MyL7ZvHqqEVLHpra4G31laP0c/1/KhHCoxd1EaygOOVG9F9bBQ==
+X-Received: by 2002:a05:6000:1843:b0:386:3262:ff70 with SMTP id
+ ffacd0b85a97d-3864de8ef4dmr2433897f8f.2.1733934495694; 
+ Wed, 11 Dec 2024 08:28:15 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d9004a6264sm45535776d6.87.2024.12.11.08.27.50
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-4362104aa9csm10176785e9.31.2024.12.11.08.28.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:51 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:14 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/49] rust: ci: add job that runs Rust tools
-Date: Wed, 11 Dec 2024 17:26:42 +0100
-Message-ID: <20241211162720.320070-13-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 22/49] ppc: Replace type_register() with type_register_static()
+Date: Wed, 11 Dec 2024 17:26:52 +0100
+Message-ID: <20241211162720.320070-23-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -107,102 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Code checks, as well as documentation generation, are not yet tied
-to "make check" because they need new version of the Rust toolchain
-(even nightly in the case of "rustfmt").  Run them in CI using the
-existing nightly-Rust container.
+From: Zhao Liu <zhao1.liu@intel.com>
 
+Replace type_register() with type_register_static() because
+type_register() will be deprecated.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20241029085934.2799066-5-zhao1.liu@intel.com
 ---
- .gitlab-ci.d/static_checks.yml                | 24 +++++++++++++++++++
- .../dockerfiles/fedora-rust-nightly.docker    |  4 ++++
- tests/lcitool/refresh                         |  4 ++++
- 3 files changed, 32 insertions(+)
+ hw/ppc/spapr.c   | 2 +-
+ target/ppc/kvm.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/.gitlab-ci.d/static_checks.yml b/.gitlab-ci.d/static_checks.yml
-index ad9f426a52f..c0ba4533826 100644
---- a/.gitlab-ci.d/static_checks.yml
-+++ b/.gitlab-ci.d/static_checks.yml
-@@ -46,3 +46,27 @@ check-python-tox:
-     QEMU_JOB_OPTIONAL: 1
-   needs:
-     job: python-container
-+
-+check-rust-tools-nightly:
-+  extends: .base_job_template
-+  stage: test
-+  image: $CI_REGISTRY_IMAGE/qemu/fedora-rust-nightly:$QEMU_CI_CONTAINER_TAG
-+  script:
-+    - source scripts/ci/gitlab-ci-section
-+    - section_start test "Running Rust code checks"
-+    - cd build
-+    - pyvenv/bin/meson devenv -w ../rust ${CARGO-cargo} fmt --check
-+    - make clippy
-+    - make rustdoc
-+    - section_end test
-+  variables:
-+    GIT_DEPTH: 1
-+  allow_failure: true
-+  needs:
-+    - job: build-system-fedora-rust-nightly
-+      artifacts: true
-+  artifacts:
-+    when: on_success
-+    expire_in: 2 days
-+    paths:
-+      - rust/target/doc
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 9180c8b5222..a8e4fb279a7 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -155,6 +155,7 @@ ENV PYTHON "/usr/bin/python3"
- RUN dnf install -y wget
- ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo
- ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc
-+ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo
- RUN set -eux && \
-   rustArch='x86_64-unknown-linux-gnu' && \
-   rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \
-@@ -165,10 +166,13 @@ RUN set -eux && \
-   ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \
-   chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \
-   /usr/local/cargo/bin/rustup --version && \
-+  /usr/local/cargo/bin/rustup run nightly cargo --version && \
-   /usr/local/cargo/bin/rustup run nightly rustc --version && \
-+  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \
-   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
- ENV PATH=$CARGO_HOME/bin:$PATH
- RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
-+RUN $CARGO --list
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 51012783c0f..6720516b942 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -121,6 +121,7 @@ fedora_rustup_nightly_extras = [
-     "RUN dnf install -y wget\n",
-     "ENV RUSTUP_HOME=/usr/local/rustup CARGO_HOME=/usr/local/cargo\n",
-     "ENV RUSTC=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/rustc\n",
-+    "ENV CARGO=/usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu/bin/cargo\n",
-     "RUN set -eux && \\\n",
-     "  rustArch='x86_64-unknown-linux-gnu' && \\\n",
-     "  rustupSha256='6aeece6993e902708983b209d04c0d1dbb14ebb405ddb87def578d41f920f56d' && \\\n",
-@@ -131,10 +132,13 @@ fedora_rustup_nightly_extras = [
-     "  ./rustup-init -y --no-modify-path --profile default --default-toolchain nightly --default-host ${rustArch} && \\\n",
-     "  chmod -R a+w $RUSTUP_HOME $CARGO_HOME && \\\n",
-     "  /usr/local/cargo/bin/rustup --version && \\\n",
-+    "  /usr/local/cargo/bin/rustup run nightly cargo --version && \\\n",
-     "  /usr/local/cargo/bin/rustup run nightly rustc --version && \\\n",
-+    '  test "$CARGO" = "$(/usr/local/cargo/bin/rustup +nightly which cargo)" && \\\n',
-     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
-     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
-     'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
-+    'RUN $CARGO --list\n',
- ]
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 0d4efaa0c09..827e7d6b140 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -4723,7 +4723,7 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
+     static void MACHINE_VER_SYM(register, spapr, __VA_ARGS__)(void)  \
+     {                                                                \
+         MACHINE_VER_DELETION(__VA_ARGS__);                           \
+-        type_register(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
++        type_register_static(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
+     }                                                                \
+     type_init(MACHINE_VER_SYM(register, spapr, __VA_ARGS__))
  
- ubuntu2204_bindgen_extras = [
+diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
+index 3efc28f18b3..0d464824dbc 100644
+--- a/target/ppc/kvm.c
++++ b/target/ppc/kvm.c
+@@ -2633,7 +2633,7 @@ static int kvm_ppc_register_host_cpu_type(void)
+         return -1;
+     }
+     type_info.parent = object_class_get_name(OBJECT_CLASS(pvr_pcc));
+-    type_register(&type_info);
++    type_register_static(&type_info);
+     /* override TCG default cpu type with 'host' cpu model */
+     object_class_foreach(pseries_machine_class_fixup, TYPE_SPAPR_MACHINE,
+                          false, NULL);
 -- 
 2.47.1
 
