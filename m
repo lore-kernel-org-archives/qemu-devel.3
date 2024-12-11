@@ -4,77 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29059E7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5059EE77182
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 02:33:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLCWS-0001QM-8a; Tue, 10 Dec 2024 21:32:20 -0500
+	id 1tLCWf-0001R1-D8; Tue, 10 Dec 2024 21:32:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLCWN-0001Q8-Px
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 21:32:15 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLCWL-0003eo-Iw
- for qemu-devel@nongnu.org; Tue, 10 Dec 2024 21:32:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733884333; x=1765420333;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=qo3WvSNNEiH5rlzR0eOyduxBtXFY8hdFTDsVEJzvgUo=;
- b=OOy2PFjWXicTLhjLeKZ0Y43fZ1JkJHxEnddN2xWRVfFU22CSvzfI1sHT
- 1ZyUTWBOhx6uL5U+jhO1h1stH2o/4mERMgRI2Z2lU+pF6iV1v+NuQ4oQK
- XdY/BlEWFKKBMstgsTSOlQbRZig5xN+hnSu4Gpp1ClJYlITg9sf2Xz7g9
- qn6+PXaCZvfg+ESJs2zsE03d1L65ZlqXmAC5roqGs3dswuV2YYm9lZW0G
- KUbO5Ld+7516S7DAe4s3CWEKbSxim41P0MePixw3zi0YydSdxBpJA6fam
- /tZ7ML0FTcCRPKvUxsqp9P+6zX3ypO7veewhmbyf5zRoHH5yBJZ9RB0P2 g==;
-X-CSE-ConnectionGUID: 6OIgTggYQwivzMDib+X9oQ==
-X-CSE-MsgGUID: jFPzX6yBTg+yWrBB9X0XKw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="56730283"
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="56730283"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Dec 2024 18:32:09 -0800
-X-CSE-ConnectionGUID: DEQ99AOTSHyVL6JflpY4GA==
-X-CSE-MsgGUID: iEQ2RCzQRPq22m8odfE4CA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="100672187"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa004.jf.intel.com with ESMTP; 10 Dec 2024 18:32:06 -0800
-Date: Wed, 11 Dec 2024 10:50:20 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Igor Mammedov <imammedo@redhat.com>, Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [RFC PATCH 3/4] i386: Track cores_per_module in CPUX86State
-Message-ID: <Z1j97K+xpgIp6sYc@intel.com>
-References: <20241205145716.472456-1-xiaoyao.li@intel.com>
- <20241205145716.472456-4-xiaoyao.li@intel.com>
- <20241210174338.0fb05ecf@imammedo.users.ipa.redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tLCWQ-0001QQ-T0
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 21:32:20 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tLCWP-0003fJ-5c
+ for qemu-devel@nongnu.org; Tue, 10 Dec 2024 21:32:18 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21680814d42so8237425ad.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 18:32:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733884335; x=1734489135; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9GxZzVP+gaZrUVSyqjD///S+dVpZXpbJsc5Bv4a1zoQ=;
+ b=ifgqTP8X4VGtUjMm5Jt6E40S8vUJyQ4MjOzJoJpv+aVE3cJl4qysxZcalouXFI3KfR
+ 90g7ChqxDQJepbQz5iyLWUKctqMd++hHonAQ2sV5YSlq3EDl6f+QmW9yCXAJATBosqV6
+ uSdqeRS7UcXhOXz38TEPICSeNlqALYHaSCHUi0/+BwOMta0mIubaRNjVRyAw1FoNVHsh
+ z1F5cmOAuMR+kurwIAXuJSGJaOJUt8h+kH/YmaPDsiB6w0BtAdiYdPPDvvk8GG+pSo2D
+ +vpurS0BwIls63/PUOQ/RMz1wooDE8GJ5YSjqakSGdSfYw0Xkyj5Ujxnt9G7BSTZHa8d
+ s6Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733884335; x=1734489135;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9GxZzVP+gaZrUVSyqjD///S+dVpZXpbJsc5Bv4a1zoQ=;
+ b=ZmKYKFjxJaef/YWtyaCbjeBO/caesUCLeeT97fjPn7fjTdBSyU6aFKDRJCi9HKybrl
+ 25J153/esbBNV594p6am42httjh/y4Jwsj2qNWDbkJuLvvidkIr37n5Iebf7q5suXNKd
+ mazSOFZSfiIHhSZiIImORdeMkidG/aVy8MBePcSArKU6RC/iQy3DTQN/3SnEbNpheuCf
+ 8c8oF98xAwsf0DGf4wC/RNESm/FBQCvg2Fix3VSeQrV4EiCc4FLo2VjXC5WUWbX2Wf1z
+ AzF6a5O1MnSgxGtlwpCgw9efxPkzpJ2zRodKV93DXMYjsJuXZpitn4Ut2LquH4IvduKp
+ gIIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpezSHhMp4C6oguU0jjgINRwL9YflEtHRerHhQX7TMxZFgUqMTKgtlBHoLYaaW1f2OzLyrxHxd+++O@nongnu.org
+X-Gm-Message-State: AOJu0YzBnYmZF/DHe1KCih15/mOo2+a6xHQpo9W62g7yTJZYGYxSfSTb
+ dT14KYRClyGVKdlZM0CaAHF+7MN7m0PhYZZUgMJiMEnEZB5qsZGfglE+TWoeAlc=
+X-Gm-Gg: ASbGncvgMsIjGTwET6kuBLBYhFz/oDwwkVKUhRDuUN5kZuTTxcz4Rr94dixLXVhOZgt
+ 4hcc9Z5CfNYcFqwM3Wa2F2uaSWCQVNU056JzTmW7D5rzT6STJp5CjOW4InSnb5E89NqZaB1fqg+
+ KEAKZY/48Dl9DdZb7YcA1+pIXhoq/NG3Z2OK52L6nl3sH6RT8FzjSuCNUa4x8rrTTcV7ilo7QIJ
+ aXycG5xSGizuVHVxh/afevFHh/loTptp//fRaTOgHoTud9FDMMPohAFJDeA+Yzf+hkl6FTLTEbe
+ pGB09U5wPkZr2zfbV4U0WiyyjQ==
+X-Google-Smtp-Source: AGHT+IEqFDIT6xfvEA+JPXYS92pAbRRKlq13sQTtP5VpGPnGLn+a6ZmmW2k1PnJRnVSduuzQBaC86A==
+X-Received: by 2002:a17:903:94e:b0:216:325f:6f2b with SMTP id
+ d9443c01a7336-217783b7c17mr22203945ad.21.1733884335323; 
+ Tue, 10 Dec 2024 18:32:15 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-216460ee31bsm47361945ad.63.2024.12.10.18.32.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Dec 2024 18:32:14 -0800 (PST)
+Message-ID: <06bad7a0-0a9b-485a-8df8-b9d7c73d792d@linaro.org>
+Date: Tue, 10 Dec 2024 18:32:14 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241210174338.0fb05ecf@imammedo.users.ipa.redhat.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/20] tests/functional/aarch64: add tests for FEAT_RME
+To: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, qemu-devel@nongnu.org
+References: <20241210204349.723590-1-alex.bennee@linaro.org>
+ <20241210204349.723590-16-alex.bennee@linaro.org>
+ <5d3c9f41-a6cd-4129-a08c-fdd1181e299d@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <5d3c9f41-a6cd-4129-a08c-fdd1181e299d@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -91,61 +104,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 10, 2024 at 05:43:38PM +0100, Igor Mammedov wrote:
-> Date: Tue, 10 Dec 2024 17:43:38 +0100
-> From: Igor Mammedov <imammedo@redhat.com>
-> Subject: Re: [RFC PATCH 3/4] i386: Track cores_per_module in CPUX86State
-> X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
-> 
-> On Thu,  5 Dec 2024 09:57:15 -0500
-> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
-> 
-> > x86 is the only user of CPUState::nr_cores.
-> > 
-> > Define cores_per_module in CPUX86State, which can serve as the
-> > substitute of CPUState::nr_cores. After x86 switches to use
-> > CPUX86State::cores_per_module, CPUState::nr_cores will lose the only
-> > user and QEMU can drop it.
-> > 
-> > Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> > ---
-> >  hw/i386/x86-common.c | 2 ++
-> >  target/i386/cpu.c    | 2 +-
-> >  target/i386/cpu.h    | 9 +++++++--
-> >  3 files changed, 10 insertions(+), 3 deletions(-)
-> > 
-> > diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> > index dc031af66217..f7a20c1da30c 100644
-> > --- a/hw/i386/x86-common.c
-> > +++ b/hw/i386/x86-common.c
-> > @@ -271,6 +271,8 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
-> >  
-> >      init_topo_info(&topo_info, x86ms);
-> >  
-> > +    env->nr_cores = ms->smp.cores;
-> this doesn't look like the same as in qemu_init_vcpu(),
-> which uses machine_topo_get_cores_per_socket()
-> Can you clarify the change?
-
-I think Xiaoyao is correct here. CPUState.nr_cores means number of cores
-in socket, and current CPUX86State.nr_cores means number of cores per
-module (or parent container) ...though they have same name. (It's better
-to mention the such difference in commit message.)
-
-However, I also think that names like nr_cores or nr_* are prone to
-errors. Names like cores_per_module are clearer, similar to the naming
-in X86CPUTopoInfo. This might be an opportunity to clean up the current
-nr_* naming convention.
-
-And further, we can directly cache two additional items in CPUX86State:
-threads_per_pkg and cores_per_pkg, as these are the most common
-calculations and can help avoid missing any topology levels.
-
-I think both of these changes can be made on top of the current series.
-
-@xiaoyao, do you agree?
-
-Regards,
-Zhao
-
+T24gMTIvMTAvMjQgMTQ6MTUsIFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPiBPbiAxMi8x
+MC8yNCAxNDo0MywgQWxleCBCZW5uw6llIHdyb3RlOg0KPj4gRnJvbTogUGllcnJpY2sgQm91
+dmllcjxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+Pg0KPj4gVGhpcyBib290IGFu
+IE9QLVRFRSBlbnZpcm9ubWVudCwgYW5kIGxhdW5jaCBhIG5lc3RlZCBndWVzdCBWTSBpbnNp
+ZGUgaXQNCj4+IHVzaW5nIHRoZSBSZWFsbXMgZmVhdHVyZS4gV2UgZG8gaXQgZm9yIHZpcnQg
+YW5kIHNic2EtcmVmIHBsYXRmb3Jtcy4NCj4+DQo+PiBTaWduZWQtb2ZmLWJ5OiBQaWVycmlj
+ayBCb3V2aWVyPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+DQo+PiAtLS0tLQ0K
+Pj4NCj4+IHYyOg0KPj4gLSBtb3ZlIHRlc3QgdG8gaXRzIG93biBmaWxlDQo+PiAtIGFkZCBz
+YnNhIHRlc3QNCj4+IC0gY2hlY2sgb3V0cHV0IG9mIGBjY2Etd29ya2xvYWQtYXR0ZXN0YXRp
+b24gcmVwb3J0YA0KPj4NCj4+IHYzOg0KPj4gLSBidWlsZCBhbmQgcnVuIHRlc3Qgd2l0aCBj
+Y2EtdjQgaW1hZ2VzDQo+PiAtIGZhY3Rvcml6ZSBuZXN0ZWQgZ3Vlc3QgdGVzdCBiZXR3ZWVu
+IGJvdGggdGVzdHMNCj4+IC0gcmVtb3ZlIGFjY2VsIHRjZyBvcHRpb24gYXMgaXQgaXMgdGhl
+IGRlZmF1bHQgd2hlbiBydW5uaW5nIHRlc3RzDQo+PiBOb3RlOiBJdCdzIGEgbG9uZyB0ZXN0
+IGFuZCB0aGVyZSBpcyBhIHdvcmsgaW4gcHJvZ3Jlc3MgdG8gdW5kZXJzdGFuZCB3aHkNCj4+
+IGRlYnVnIGJ1aWxkIGlzIHNvIHNsb3cgKHgxMiB2cyBvcHRpbWl6ZWQpLg0KPj4NCj4+IHY0
+Og0KPj4gLSB1c2UgcGF1dGgtaW1wZGVmPW9uIHRvIHNwZWVkIHVwIGJ1aWxkIHRpbWUgZXhl
+Y3V0aW9uICh4Mi41IGZhc3RlcikNCj4+IC0gaW5jcmVhc2UgdGltZW91dCB2YWx1ZQ0KPj4N
+Cj4+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXI8cGllcnJpY2suYm91dmllckBs
+aW5hcm8ub3JnPg0KPj4gTWVzc2FnZS1JZDo8MjAyNDEyMDMyMTM2MjkuMjQ4MjgwNi0xLXBp
+ZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4+IFNpZ25lZC1vZmYtYnk6IEFsZXggQmVu
+bsOpZTxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPg0KPj4gLS0tDQo+PiAgICB0ZXN0cy9mdW5j
+dGlvbmFsL21lc29uLmJ1aWxkICAgICAgICAgICAgICAgICB8ICAgNCArDQo+PiAgICB0ZXN0
+cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weSB8ICA3MCArKysrKysr
+KysrKysrDQo+PiAgICB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5w
+eSAgICB8IDEwMCArKysrKysrKysrKysrKysrKysrDQo+PiAgICAzIGZpbGVzIGNoYW5nZWQs
+IDE3NCBpbnNlcnRpb25zKCspDQo+PiAgICBjcmVhdGUgbW9kZSAxMDA3NTUgdGVzdHMvZnVu
+Y3Rpb25hbC90ZXN0X2FhcmNoNjRfcm1lX3Nic2FyZWYucHkNCj4+ICAgIGNyZWF0ZSBtb2Rl
+IDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiAN
+Cj4gUGllcnJpY2sncyBjaGFuZ2Vsb2cgZGlkbid0IGdldCBjdXQgd2hpbGUgYXBwbHlpbmcu
+DQo+IA0KPiBSZXZpZXdlZC1ieTogUmljaGFyZCBIZW5kZXJzb24gPHJpY2hhcmQuaGVuZGVy
+c29uQGxpbmFyby5vcmc+DQo+IA0KPiByfg0KPiANCg0KSXMgaXQgYmVjYXVzZSB0aGUgc3Ry
+aW5nIG1hcmtlciBzdHJpbmcgaXMgbG9uZ2VyIHRoYW4gIi0tLSI/DQpJJ2xsIHBheSBhdHRl
+bnRpb24gdG8gdGhhdCBuZXh0IHRpbWUgaWYgaXQncyB0aGUgcmVhc29uLg0K
 
