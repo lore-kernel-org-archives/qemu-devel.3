@@ -4,95 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89998E77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:20:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBECE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLOVP-00022V-Ea; Wed, 11 Dec 2024 10:20:03 -0500
+	id 1tLOX8-0003TO-3B; Wed, 11 Dec 2024 10:21:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tLOVL-00021a-Vi
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:20:00 -0500
-Received: from mail-lf1-x12a.google.com ([2a00:1450:4864:20::12a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tLOVJ-0007qK-Gk
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:19:59 -0500
-Received: by mail-lf1-x12a.google.com with SMTP id
- 2adb3069b0e04-53e3a90336eso4460968e87.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:19:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1733930393; x=1734535193; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TL4gQ2fEGCLHdGfGn5WYkqO+iCyJSpSvK12PkwjzyPY=;
- b=eO/sb7Y9xogkmAA2ox/BDRZoFV9LdUj32UQxilubRUZIzVao1Ec8SS2j/IzB65CSba
- dEP/8XVkmkuxBo327VhUvjk378nVpsH8lacHCqiuWp0KrbS7tqb8MsAIrI/VykemFQzr
- CZJWga4Bdvop9CF4v8ZsxBKaSJagcwLWt9cnFHSYQegELkcfh+0iaYFhhZafbyFU+gAY
- MX6EBpDDa7NC4gww3RX4kr6sUwpxuTbYOGfCXAm2r0SeHXtBaUdroEUrdGGV4bBOBhC9
- G9KbKw3hb6WsXMu1BcVCTm0QbvM5zdN+Vtz6cRDo+ojuusJiIV6KJcRzf/DJKjgH0Jo4
- AfNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733930393; x=1734535193;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TL4gQ2fEGCLHdGfGn5WYkqO+iCyJSpSvK12PkwjzyPY=;
- b=p+gGuomvuXmvNYbqdsQRZFMhSgRla786F7MTuEkzrqpTrRoQ15cS1zF7LoKjzd/OT9
- Kvt3f+NrqHDgzpKWUGvPT41G9yieMOArb1inrtFgpdnNfdcwFRhmLTR6MOQJmnsCiJ6l
- oqiv+uzDzvPrCesG/v8LEjs5u48c7CAY7Lc1mDZ6XpHnIAhwHLGG0ORA5fYh0nIxtegs
- i41QpOwxcTfCGhIBL3iPLU/xP8lcj6YIdltXPTsbScmn2+joUZ0M0V9QxcJoTj/YELrT
- ZuDhjUq4y2mJ4uMxowSv0lt7LxXJ/oQVnvS5LNXzle7M46YDCCj/EPeCnhbWyCT+S0k+
- QY0Q==
-X-Gm-Message-State: AOJu0YwIY4Cbm4GsYxTlYEdOWZewISSoKrNcSnSKkmsUJIrXMtJ5U89z
- v5mnJIBd8GDhbP+jYf231M2642ATQ25Y9I6oP8/DuudItcuFsFHLiIg4Vy4v5o1tS9aDYxSslwI
- B12hXyBPFQTuwbX25MAhdVy6G2wR0Im+IGJSxcUCAu/0JSWAJz52MbR0FRK/TGAAR8B4b3oke7j
- rXlqrR3SyXE9GKpZ/GKQRK+z5x0HMalliygM7C3TZcEkNvGb8=
-X-Gm-Gg: ASbGncupBR9bJXx+FvDQLVltn7PDw8fUaJAa0OKr6qLiXi9YnRp1UMeBwZTNAqZmcUM
- f1ow5kyQkCYkB9ymGJkPJc0FADRRHbSRulNjlH+SGdh7euSAAGijZsXTyPqMD63ulA9BD9/lHDg
- TIrFBimPlsIJhrZQNVHBU4t7b8p7FPuPGBJDhCOo1y1lAPXp+rxDaDcHJkU/gf/0uhHbNKDisEp
- VJiPEmBidgjaoI3vRcQ0LKz0Cm6ui11bqjdabvN7SbeLAb4F2/Ak80jiUd1gBMc6hXOsOdDEkHK
- 5SY3OKMSe8XcVJk3lvM=
-X-Google-Smtp-Source: AGHT+IF4KARwDF54ch042fB8IxyidvlCD6qWOtZGaDv/mlevbKVZSD2+1m5+Mitn+678D4orEAyikA==
-X-Received: by 2002:a05:6512:1095:b0:540:1b2d:8ef3 with SMTP id
- 2adb3069b0e04-5402a609b7cmr1092783e87.52.1733930393131; 
- Wed, 11 Dec 2024 07:19:53 -0800 (PST)
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com.
- [209.85.167.50]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54019e628a9sm1335617e87.106.2024.12.11.07.19.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 07:19:52 -0800 (PST)
-Received: by mail-lf1-f50.google.com with SMTP id
- 2adb3069b0e04-540218726d5so2963380e87.2; 
- Wed, 11 Dec 2024 07:19:52 -0800 (PST)
-X-Forwarded-Encrypted: i=1;
- AJvYcCXVwR0CWqXcA7ZVYtk+j/vMJevQ92/yuarDpvGbQObGSPNHDsjdlJJR4Sn5UoHnO+et4VyjaSqV93Vs@nongnu.org
-X-Received: by 2002:a05:6512:12c5:b0:540:1fcd:1d8d with SMTP id
- 2adb3069b0e04-5402a60a1b0mr857674e87.57.1733930392090; Wed, 11 Dec 2024
- 07:19:52 -0800 (PST)
-MIME-Version: 1.0
-References: <20241122032217.3816540-1-frank.chang@sifive.com>
-In-Reply-To: <20241122032217.3816540-1-frank.chang@sifive.com>
-From: Frank Chang <frank.chang@sifive.com>
-Date: Wed, 11 Dec 2024 23:19:40 +0800
-X-Gmail-Original-Message-ID: <CANzO1D0aoM3YH-2FFzs4N7_C7Ev-1WxAqeUgjjYV7=ztdMsBug@mail.gmail.com>
-Message-ID: <CANzO1D0aoM3YH-2FFzs4N7_C7Ev-1WxAqeUgjjYV7=ztdMsBug@mail.gmail.com>
-Subject: Re: [PATCH v9 0/6] Add Smrnmi support
-To: frank.chang@sifive.com
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tLOX4-0003Ns-6Q; Wed, 11 Dec 2024 10:21:46 -0500
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1tLOX1-00086l-1y; Wed, 11 Dec 2024 10:21:45 -0500
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y7fSD00Dfz6D9Bp;
+ Wed, 11 Dec 2024 23:20:43 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4ED4C1400DD;
+ Wed, 11 Dec 2024 23:21:38 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 11 Dec 2024 16:21:38 +0100
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 11 Dec 2024 16:21:38 +0100
+To: Nicolin Chen <nicolinc@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: RE: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Topic: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Thread-Index: AQHbMd3CYnIzOIz3QUan4PDL8HOdprK8zVGAgAAjLhCAABtdAIAAIywQgAAmhYCAAus70IAAGD4AgAAU00CAARvsAIAei3YAgAE/FGA=
+Date: Wed, 11 Dec 2024 15:21:37 +0000
+Message-ID: <74114c0db34b420a90e9fe5bd991767e@huawei.com>
+References: <20241108125242.60136-5-shameerali.kolothum.thodi@huawei.com>
+ <1dcea5ca-806f-4f51-8b13-faf5d62eb086@redhat.com>
+ <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
+ <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
+ <0803ec1a010a46b9811543e1044c3176@huawei.com>
+ <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
+ <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
+ <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
+ <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
+ <c14feb2934a0478180635bbdb27d5e53@huawei.com>
+ <Z1ipHKP4L/++143Q@Asurada-Nvidia>
+In-Reply-To: <Z1ipHKP4L/++143Q@Asurada-Nvidia>
+Accept-Language: en-GB, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12a;
- envelope-from=frank.chang@sifive.com; helo=mail-lf1-x12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+MIME-Version: 1.0
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -41
+X-Spam_score: -4.2
+X-Spam_bar: ----
+X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,158 +88,105 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Hi Nicolin,
 
-A gentle ping on this.
+> -----Original Message-----
+> From: Nicolin Chen <nicolinc@nvidia.com>
+> Sent: Tuesday, December 10, 2024 8:48 PM
+> To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
+> devel@nongnu.org; peter.maydell@linaro.org; jgg@nvidia.com;
+> ddutile@redhat.com; Linuxarm <linuxarm@huawei.com>; Wangzhou (B)
+> <wangzhou1@hisilicon.com>; jiangkunkun <jiangkunkun@huawei.com>;
+> Jonathan Cameron <jonathan.cameron@huawei.com>;
+> zhangfei.gao@linaro.org
+> Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with
+> multiple SMMU nodes
+>=20
 
-Regards,
-Frank Chang
 
-<frank.chang@sifive.com> =E6=96=BC 2024=E5=B9=B411=E6=9C=8822=E6=97=A5 =E9=
-=80=B1=E4=BA=94 =E4=B8=8A=E5=8D=8811:23=E5=AF=AB=E9=81=93=EF=BC=9A
+> > And now I think I know(hopefully) the reason why it is not working with
+> > smmuv3-nested case. I think the root cause is this commit here,
+> >
+> > (series: " cover-letter: Add HW accelerated nesting support for arm
+> SMMUv3")
+>=20
+> > This changes the way address space is returned for the devices.
+> >
+> > static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int
+> devfn)
+> > {
+> >     SMMUState *s =3D opaque;
+> >     SMMUPciBus *sbus =3D smmu_get_sbus(s, bus);
+> >     SMMUDevice *sdev =3D smmu_get_sdev(s, sbus, bus, devfn);
+> >
+> >     /* Return the system as if the device uses stage-2 only */
+> >     if (s->nested && !sdev->s1_hwpt) {
+> >         return &sdev->as_sysmem;
+> >     } else {
+> >         return &sdev->as;
+> >     }
+> > }
+> >
+> > If we have entries in the SMMUv3 idmap for bus:devfn, then I think we
+> should
+> > return IOMMU address space here. But the logic above returns sysmem
+> > address space for anything other than vfio/iommufd devices.
+> >
+> > The hot add works when I hacked the logic to return IOMMU address
+> space
+> > for pcie root port devices.
+> That is to bypass the "if (memory_region_is_iommu(section->mr))"
+> in vfio_listener_region_add(), when the device gets initially
+> attached to the default container.
 
->
-> From: Frank Chang <frank.chang@sifive.com>
->
-> This patchset added support for Smrnmi Extension in RISC-V.
->
-> There are four new CSRs and one new instruction added to allow NMI to be
-> resumable in RISC-V, which are:
->
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->   * mnscratch (0x740)
->   * mnepc     (0x741)
->   * mncause   (0x742)
->   * mnstatus  (0x744)
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->   * mnret: To return from RNMI interrupt/exception handler.
-> =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
-> RNMI also has higher priority than any other interrupts or exceptions
-> and cannot be disabled by software.
->
-> RNMI may be used to route to other devices such as Bus Error Unit or
-> Watchdog Timer in the future.
->
-> The interrupt/exception trap handler addresses of RNMI are
-> implementation defined.
->
-> If anyone wants to test the patches, we can use the customized OpenSBI[1]=
-,
-> and the customized QEMU[2].
->
-> We implemented a PoC RNMI trap handler in the customized OpenSBI.
-> In the customized QEMU, we use the Smrnmi patches and the patch from
-> Damien Hedde[3]. The patch from Damien Hedde can be used to inject
-> the RNMI signal with the qmp command.
->
-> [1] https://github.com/TommyWu-fdgkhdkgh/opensbi/tree/dev/twu/master
-> [2] https://github.com/sifive/qemu/tree/upstream-smrnmi-v8
-> [3] https://lists.gnu.org/archive/html/qemu-devel/2019-06/msg06232.html
->
-> Test commands :
-> $ ./build/qemu-system-riscv64 -M virt -cpu rv64,smrnmi=3Dtrue,
-> rnmi-interrupt-vector=3D{Offset of the RNMI handler in the customized
-> OpenSBI.} -m 4G -smp 2 -serial mon:stdio -serial null -nographic
-> -bios fw_jump.elf -kernel Image -initrd rootfs.cpio
-> -qmp unix:/tmp/qmp-sock,server,wait=3Doff
->
-> Use qmp command to inject the RNMI.
->
-> Assert RNMI:
-> $ ./scripts/qmp/qmp-shell /tmp/qmp-sock
-> (QEMU) gpio-set path=3D/machine/soc0/harts[0] gpio=3Driscv.cpu.rnmi numbe=
-r=3D0 value=3Dtrue
->
-> De-assert RNMI:
-> (QEMU) gpio-set path=3D/machine/soc0/harts[0] gpio=3Driscv.cpu.rnmi numbe=
-r=3D0 value=3Dfalse
->
-> Changelog:
->
-> v9
->   * Add Zicfilp support for Smrnmi.
->   * Change the existence checks for 'rnmi-interrupt-vector' and
->     'rnmi-exception-vector' to use 'num_rnmi_irqvec' and 'num_rnmi_excpve=
-c'.
->   * Add warn_once messages for cases where the user sets
->     'rnmi-interrupt-vector' or 'rnmi-exception-vector' property without
->     enabling Smrnmi.
->
-> v8
->   * Set virt to false when trapping to M-mode by RNMI.
->   (Thanks to Cl=C3=A9ment for the suggestions.)
->
-> v7
->   * Rename 'nmi_execp' to 'nnmi_excep' and refactor RNMI exception
->     checking codes.
->   (Thanks to Cl=C3=A9ment for the suggestions.)
->   * Add the missing REQUIRE_SMRNMI() check and remove the redundant
->     check in 'helper_mnret'.
->   * Rebase to riscv-to-apply.next.
->   (Thanks to Alistair for the suggestions.)
->
-> v6
->   * Delete the redundant code in 'riscv_cpu_do_interrupt'.
->   (Thank Alvin for the suggestion.)
->   * Split the shared code in 'helper_mret' and 'helper_mnret' into a
->     helper function 'check_ret_from_m_mode'.
->   (Thank Alistair for the suggestion.)
->
-> v5
->   * Move the patch that adds the Smrnmi extension to the last patch.
->   (Thank Alistair for the suggestion.)
->   * Implement an M-mode software PoC for this with implemented handlers.
->   (Thank Andrew Jones for the suggestion.)
->   * Add a commit message to all patches of the series.
->   (Thank Andrew Jones for the suggestion.)
->
-> v4
->   * Fix some coding style issues.
->   (Thank Daniel for the suggestions.)
->
-> v3
->   * Update to the newest version of Smrnmi extension specification.
->
-> v2
->   * split up the series into more commits for convenience of review.
->   * add missing rnmi_irqvec and rnmi_excpvec properties to riscv_harts.
->
-> Frank Chang (1):
->   target/riscv: Add Zicfilp support for Smrnmi
->
-> Tommy Wu (5):
->   target/riscv: Add 'ext_smrnmi' in the RISCVCPUConfig
->   target/riscv: Add Smrnmi CSRs
->   target/riscv: Handle Smrnmi interrupt and exception
->   target/riscv: Add Smrnmi mnret instruction
->   target/riscv: Add Smrnmi cpu extension
->
->  hw/riscv/riscv_hart.c                         | 40 ++++++++
->  include/hw/riscv/riscv_hart.h                 |  4 +
->  target/riscv/cpu.c                            | 18 ++++
->  target/riscv/cpu.h                            | 10 ++
->  target/riscv/cpu_bits.h                       | 24 +++++
->  target/riscv/cpu_cfg.h                        |  1 +
->  target/riscv/cpu_helper.c                     | 96 +++++++++++++++++--
->  target/riscv/csr.c                            | 82 ++++++++++++++++
->  target/riscv/helper.h                         |  1 +
->  target/riscv/insn32.decode                    |  3 +
->  .../riscv/insn_trans/trans_privileged.c.inc   | 20 ++++
->  target/riscv/op_helper.c                      | 54 ++++++++++-
->  12 files changed, 342 insertions(+), 11 deletions(-)
->
-> --
-> 2.34.1
->
->
+Right.=20
+=20
+> Once a device reaches to the pci_device_set_iommu_device() call,
+> it should be attached to an IDENTIY/bypass proxy s1_hwpt, so the
+> smmu_find_add_as() will return the iommu as.
+
+Agree. The above situation you explained is perfectly fine with vfio-pci de=
+v.
+
+> So, the fact that your hack is working means the hotplug routine
+> is likely missing a pci_device_set_iommu_device() call, IMHO, or
+> probably it should do pci_device_iommu_address_space() after the
+> device finishes pci_device_set_iommu_device() instead..
+
+The problem is not with the hot added vfio-pci dev but with the
+pcie-root-port device. When we hot add a vfio-pci to a root port,
+Qemu will inject an interrupt for the Guest root port device and
+that kick starts the vfio-pci device add process. This involves writing
+to the MSI address the Guest  kernel configures for the root port dev.=20
+
+As per the current logic, the root port dev will have sysmem address
+space and in IORT we have root port dev id in smmu idmap. This
+will not work as Guest kernel configures a translated IOVA for MSI.
+
+I think we have discussed this issue of returning different address
+spaces before here[0]. But that was in a different context though.
+The hack mentioned in [0] actually works for this case as well, where
+we add an extra check to see the dev is vfio-pci or not. But I am not
+sure that is the best way to handle this.
+
+Another option is to exclude all the root port devices from IORT idmap.
+But that looks not an ideal one to me as it actually sits behind an SMMUv3
+in this case.
+
+Please let me know if you have any ideas.
+
+Thanks,
+Shameer
+
+[0] https://lore.kernel.org/linux-iommu/02f3fbc5145d4449b3313eb802ecfa2c@hu=
+awei.com/
+
+=20
+
 
