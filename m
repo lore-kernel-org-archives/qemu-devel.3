@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DDDBE77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57CF2E77185
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQUW-0005TO-1o; Wed, 11 Dec 2024 12:27:16 -0500
+	id 1tLQUp-0005g1-E2; Wed, 11 Dec 2024 12:27:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUM-0005Qu-MZ
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:06 -0500
+ id 1tLQUm-0005ZW-Ox
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUK-00016P-P6
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:05 -0500
+ id 1tLQUl-00018t-3R
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938023;
+ s=mimecast20190719; t=1733938050;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7k+tEYKrr5XUuCj4cGmAGM2/Boaa8pNKMmysiZtXWvs=;
- b=T0Kv9nWqWRF0VHeNRUkfqGRRxX0Z6JBswT1guOdLm6szzUwpRPHMcVThLMklSoph134l2z
- gJWKE6UOm4u5G736HRK0vnUZyXSjbwFYYjQRoS8ah4jdyth9haNDchkrI9pDj6SaK56S8b
- Dxr1PCOPKHfdviDFT52/LlakgXEZNqw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=U8ebHiV+QzP2LdtUm3D2NUxYz3xyu6BTuJUExW4kMEA=;
+ b=djKq16lkXv86AwhqbKc4a0ZgcY++Vg+IL6cI6GphudNH/GqSc/pvIxqR5tEpQ+KPV5z4rf
+ DAXHlg9MCWMzLdI0QDkHiCYdC4qk9UCGMoCgczBuosQYMQwy0h16M62xK41/V+kFusEa/I
+ QtRvmppOhWX3zy9c56BtCiKcMX16wYA=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-0x1SKyuHO3Go-Mk4MbPj0A-1; Wed,
- 11 Dec 2024 12:27:00 -0500
-X-MC-Unique: 0x1SKyuHO3Go-Mk4MbPj0A-1
-X-Mimecast-MFC-AGG-ID: 0x1SKyuHO3Go-Mk4MbPj0A
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-ITAQpqfnMlmswL5p1gfLrg-1; Wed,
+ 11 Dec 2024 12:27:27 -0500
+X-MC-Unique: ITAQpqfnMlmswL5p1gfLrg-1
+X-Mimecast-MFC-AGG-ID: ITAQpqfnMlmswL5p1gfLrg
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 05C7819560A7; Wed, 11 Dec 2024 17:26:59 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43DA719560A2; Wed, 11 Dec 2024 17:27:26 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6F4601956052; Wed, 11 Dec 2024 17:26:56 +0000 (UTC)
+ id 198331956048; Wed, 11 Dec 2024 17:27:23 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 02/31] tests/functional: resolve str(Asset) to cache file
- path
-Date: Wed, 11 Dec 2024 17:26:18 +0000
-Message-ID: <20241211172648.2893097-3-berrange@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v2 11/31] tests/functional: switch over to using
+ self.build_file(...)
+Date: Wed, 11 Dec 2024 17:26:27 +0000
+Message-ID: <20241211172648.2893097-12-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -88,29 +89,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow an Asset object to be used in place of a filename but
-making its string representation resolve to the cache file
-path.
+This removes direct access of the 'BUILD_DIR' variable.
 
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/asset.py | 3 +++
- 1 file changed, 3 insertions(+)
+ tests/functional/qemu_test/cmd.py      |  5 ++---
+ tests/functional/qemu_test/testcase.py |  4 ++--
+ tests/functional/test_aarch64_virt.py  |  5 ++---
+ tests/functional/test_virtio_gpu.py    | 11 +++--------
+ 4 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-index 559af0351f..c5d3e73c4b 100644
---- a/tests/functional/qemu_test/asset.py
-+++ b/tests/functional/qemu_test/asset.py
-@@ -39,6 +39,9 @@ def __repr__(self):
-         return "Asset: url=%s hash=%s cache=%s" % (
-             self.url, self.hash, self.cache_file)
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index bebcd46dcf..c8971de00a 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -16,7 +16,6 @@
+ import os.path
+ import subprocess
  
-+    def __str__(self):
-+        return str(self.cache_file)
-+
-     def _check(self, cache_file):
-         if self.hash is None:
-             return True
+-from .config import BUILD_DIR
+ 
+ def which(tool):
+     """ looks up the full path for @tool, returns None if not found
+@@ -205,10 +204,10 @@ def get_qemu_img(test):
+ 
+     # If qemu-img has been built, use it, otherwise the system wide one
+     # will be used.
+-    qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
++    qemu_img = test.build_file('qemu-img')
+     if os.path.exists(qemu_img):
+         return qemu_img
+     qemu_img = which('qemu-img')
+     if qemu_img is not None:
+         return qemu_img
+-    test.skipTest(f"qemu-img not found in {BUILD_DIR} or '$PATH'")
++    test.skipTest(f"qemu-img not found in build dir or '$PATH'")
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2174fbb155..493938240c 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -133,8 +133,8 @@ def setUp(self, bin_prefix):
+         self.arch = self.qemu_bin.split('-')[-1]
+         self.socketdir = None
+ 
+-        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
+-                                      self.arch, self.id())
++        self.outputdir = self.build_file('tests', 'functional',
++                                         self.arch, self.id())
+         self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
+ 
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index c967da41b4..5bc461b482 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -14,7 +14,6 @@
+ import os
+ import logging
+ 
+-from qemu_test import BUILD_DIR
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+ from qemu_test import get_qemu_img, run_cmd
+@@ -54,8 +53,8 @@ def test_alpine_virt_tcg_gic_max(self):
+                          "mte=on,"
+                          "gic-version=max,iommu=smmuv3")
+         self.vm.add_args("-smp", "2", "-m", "1024")
+-        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
+-                                               'edk2-aarch64-code.fd'))
++        self.vm.add_args('-bios', self.build_file('pc-bios',
++                                                  'edk2-aarch64-code.fd'))
+         self.vm.add_args("-drive", f"file={iso_path},media=cdrom,format=raw")
+         self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+         self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
+diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+index 7654421e6b..630569bff8 100755
+--- a/tests/functional/test_virtio_gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -6,7 +6,6 @@
+ # later.  See the COPYING file in the top-level directory.
+ 
+ 
+-from qemu_test import BUILD_DIR
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+@@ -18,12 +17,8 @@
+ import subprocess
+ 
+ 
+-def pick_default_vug_bin():
+-    relative_path = "./contrib/vhost-user-gpu/vhost-user-gpu"
+-    if is_readable_executable_file(relative_path):
+-        return relative_path
+-
+-    bld_dir_path = os.path.join(BUILD_DIR, relative_path)
++def pick_default_vug_bin(test):
++    bld_dir_path = test.build_file(relative_path)
+     if is_readable_executable_file(bld_dir_path):
+         return bld_dir_path
+ 
+@@ -86,7 +81,7 @@ def test_vhost_user_vga_virgl(self):
+         # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+         self.require_accelerator('kvm')
+ 
+-        vug = pick_default_vug_bin()
++        vug = pick_default_vug_bin(self)
+         if not vug:
+             self.skipTest("Could not find vhost-user-gpu")
+ 
 -- 
 2.46.0
 
