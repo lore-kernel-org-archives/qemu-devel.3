@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5B9E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:22:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A294EE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPRi-000068-8H; Wed, 11 Dec 2024 11:20:18 -0500
+	id 1tLPSJ-0000Ru-KQ; Wed, 11 Dec 2024 11:20:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRg-0008Vz-Fn
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:16 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1tLPSH-0000Oh-2m
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:53 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRe-0007ad-DS
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:16 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862b364538so534419f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:14 -0800 (PST)
+ id 1tLPSF-0007lt-DQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:52 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4361f796586so8313945e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934013; x=1734538813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934050; x=1734538850; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=0WGriA4LS3QsH5lw3Ak1RT7ziiVmWhZi2ZbsQKrrgFY=;
- b=xd2sH6bJ8TAa5nj4+/CdNKN7h2wptfxPrUWmngd9i9TN061XYPu333ajdTqcyvOcf7
- GgnKMxFk7EbdXVyjz84WG6GfMsEtcQZiKAdIy1p+6PzlnhpRE/sElifSHdMBE9gqPPBE
- 1lviUcgq4aGkpZUF87T1hAKNp2SBzr78QEAHHPnDWsf0Nn++yLCkxxNPiX2CYVUP6BWX
- 2JJkshoXkK1iMwsbAYuSZWoFps4hgkJ//9mP/hnoSxOa0NWKQVJHTAqwXQ+yuBNcWyEz
- ejNfLShMtI0gvDmU5S3AvP/UYF8guGPt3pfkQ069FO26G99VYzvA4NG8qJf6YTFWKAQK
- sRSg==
+ :reply-to; bh=8QtRpOUDdXPykNSh2kSGznv4CfLLLfE60kE3MXT1yOA=;
+ b=M9yWJlEwukpshEj1U/ur3z3IYS1UtPiNoC6M6q8zJOTkUw7Q2y8EMK25WV9H/S/Qxd
+ 5H5g5AIPWUIAKQBGKCFRGDDOvJDGmf3t+A7t8PgsqgGNurF2ZIG2ILdwoF2chcoAfy03
+ EF7MqickGN3tZEVNsDsuROLnjOtAC0QuptRwWylEuWGCOXSN1C100fJmB+TJl5KKiMDi
+ mweU10w17dyfanyV6WcF/jefbGl1MUlnKzzKeLdEzMF2BKZpMeO2Z814gHyYAPlp0xyr
+ uxoaXMrtdTe1el/Sdv0x6jhv2L8arJNoFqkrbDLyFmZkfNawsGAuE9Xq2tS5ZW35jyih
+ l/0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934013; x=1734538813;
+ d=1e100.net; s=20230601; t=1733934050; x=1734538850;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0WGriA4LS3QsH5lw3Ak1RT7ziiVmWhZi2ZbsQKrrgFY=;
- b=squyPkNjGHsVN5zT+VgS0GXWJvlJeGPpDhIzqnrtJuN8VKRQcILrSTR4zNuCIEDDNv
- HAytNzP22prSbcL7OH9sPtXUfOldbLmLjVwaWLZgK8g9xnb4VlR7YSiPV69aQtZzI9gy
- t6bMNYi1PSRBVsnr87bb61Drg86AHWr5a0WQKvVslnLe0uiRqLcQXaVtMwbo83CWTx83
- 4whS43tlAlRtbOPG2l9/RgOcbglf4/0wlThyP08QjTUWNdHxT3S3P+do7AdzY1B6cPQJ
- aAo7Ydys7b7ZRjceVj2SkEpB2TlDb1YGmjy05X0vH2+N7JPSHau2Bh6U8h5HDP/4p0HX
- szeA==
-X-Gm-Message-State: AOJu0YwERl96RlhAEV2sOotHLcWlZbbvov4O8BvIULnsjztM14SaDN1Q
- G0GboK/DtT3/JLCVjk4DhBz8fcVlfOvfk1SY7cw9maoSP5K4vsIh0LHrVGIB8bZNsUuZQBZek8N
- Q
-X-Gm-Gg: ASbGncvvjiTlzJPuvYhtx+sh9VARjmwWcZVhb0wjbhXwlC+65gVGY+aAZI1DsWM4wEB
- zYw1xeXhWKzRsNF4m7Pk1Wdz2FCGrozCn4Q1QNW0aDqLyaUnjFo+bYLvKt+xmxBbuL1qQGs5D8x
- gOsshacStlgaN5YbDMZ4FO6qgHc0169Y/7Ia0KdKcBi5Goof+kzuzkqItP2D4MXqmKtPTe9VLyn
- ge0UrtIxrlO05mJAWkR/uAIpt8Eva2GY8nxWUeqAsfoUVqtEYLe9c1LHnIS
-X-Google-Smtp-Source: AGHT+IExs0Ecp2q/kTobX6qkcX2TSXmu1V2m36Myf0N+kL3eW4OxJ/lknQF8UdQqkwg2z3p7Na8+BA==
-X-Received: by 2002:a05:6000:1f85:b0:386:3672:73e4 with SMTP id
- ffacd0b85a97d-3864df05fc5mr2365077f8f.26.1733934012634; 
- Wed, 11 Dec 2024 08:20:12 -0800 (PST)
+ bh=8QtRpOUDdXPykNSh2kSGznv4CfLLLfE60kE3MXT1yOA=;
+ b=LXhPbH7AzC4bHIPyr/bkAUWkE2L6HKqtqo3az6D3nqdyj7okfBdr8JxZx3Z9jnZvuS
+ 55x4c4tXYp5dJ/xFd5BHBae0uOd2zDur1jfjw6lPJZY3z36UvsfRPR+zGTAkEGgZ3vKr
+ i1vJduToaKzd9UKkCtBqo5ujTVIt7HrVzOJfDuGqyGjv9log5qr3zt03R7iGWBr1LMd2
+ d5n/fxn+z5ZLukdzQMOuVeNpqCzr+T7UMAcc4+rear9oPyJXdq/UbfF4mLMXc4uKRYfB
+ q1NpBS7c5gMWPDr8/bxvWwh+f7z7lGTFONjMwub2z8/5FU20r9x+Sgb1P/1h9gxGOhAQ
+ 9L2Q==
+X-Gm-Message-State: AOJu0YwSfIlr+KR1XNxxO3EHXZU5g2FE+Yp374A6p0wyYCMEhqep1DGq
+ +TOT2nQxGVP1KVzXJ5NRyA0Qz6Q1J3iZNI8IQvJWHL8KlldMnHIIwswc6bxBVjLSaagi1mCsp3h
+ Z
+X-Gm-Gg: ASbGncsdsmtXMG6zXUEG8Iik0G1v3wI1IjDKrKtwO4/hlxm4JsKXiJNfW4Ig8r6SgvX
+ vOh3QGBm9mjkUye+C8HzpT8ff96hKZMWfcCdyc4hAWqXV5wIua6kI0GMz8xg+18pkD/MBBtGVo+
+ JaVsfRFtE58+4Ow7+kwOBPYLpgcf5g5gFq+BftNvTTdZt1n4DZtJEBpvi31o0BGLoQJtnItH2Od
+ 62LV0BUVQGSdDF/BHv3zPO8OSg2IXVzSTBwG4UvGJZxx+gUfsUFslNKTVIf
+X-Google-Smtp-Source: AGHT+IGqe2Jk3lhh2qLkyM5RMDAP9f2H1rkBZ9KLKERjGbP9zuqck1KpOTmb+r83N39oEVs0sG1I1Q==
+X-Received: by 2002:a05:600c:4450:b0:434:f5c0:329f with SMTP id
+ 5b1f17b1804b1-4361c3bd9e8mr34947935e9.14.1733934050014; 
+ Wed, 11 Dec 2024 08:20:50 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.11
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:11 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:49 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 04/72] hw/net/lan9118_phy: Reuse MII constants
-Date: Wed, 11 Dec 2024 16:18:56 +0000
-Message-Id: <20241211162004.2795499-5-peter.maydell@linaro.org>
+Subject: [PULL 37/72] target/sparc: Initialize local scratch float_status from
+ env->fp_status
+Date: Wed, 11 Dec 2024 16:19:29 +0000
+Message-Id: <20241211162004.2795499-38-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,171 +98,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+In the helper functions flcmps and flcmpd we use a scratch float_status
+so that we don't change the CPU state if the comparison raises any
+floating point exception flags. Instead of zero-initializing this
+scratch float_status, initialize it as a copy of env->fp_status. This
+avoids the need to explicitly initialize settings like the NaN
+propagation rule or others we might add to softfloat in future.
 
-Prefer named constants over magic values for better readability.
+To do this we need to pass the CPU env pointer in to the helper.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Message-id: 20241102125724.532843-5-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241202131347.498124-33-peter.maydell@linaro.org
 ---
- include/hw/net/mii.h |  6 +++++
- hw/net/lan9118_phy.c | 63 ++++++++++++++++++++++++++++----------------
- 2 files changed, 46 insertions(+), 23 deletions(-)
+ target/sparc/helper.h     | 4 ++--
+ target/sparc/fop_helper.c | 8 ++++----
+ target/sparc/translate.c  | 4 ++--
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/include/hw/net/mii.h b/include/hw/net/mii.h
-index f7feddac9bd..55bf7c92a1c 100644
---- a/include/hw/net/mii.h
-+++ b/include/hw/net/mii.h
-@@ -71,6 +71,7 @@
- #define MII_BMSR_JABBER     (1 << 1)  /* Jabber detected */
- #define MII_BMSR_EXTCAP     (1 << 0)  /* Ext-reg capability */
+diff --git a/target/sparc/helper.h b/target/sparc/helper.h
+index 134e519a377..1ae3f0c467d 100644
+--- a/target/sparc/helper.h
++++ b/target/sparc/helper.h
+@@ -51,8 +51,8 @@ DEF_HELPER_FLAGS_3(fcmpd, TCG_CALL_NO_WG, i32, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmped, TCG_CALL_NO_WG, i32, env, f64, f64)
+ DEF_HELPER_FLAGS_3(fcmpq, TCG_CALL_NO_WG, i32, env, i128, i128)
+ DEF_HELPER_FLAGS_3(fcmpeq, TCG_CALL_NO_WG, i32, env, i128, i128)
+-DEF_HELPER_FLAGS_2(flcmps, TCG_CALL_NO_RWG_SE, i32, f32, f32)
+-DEF_HELPER_FLAGS_2(flcmpd, TCG_CALL_NO_RWG_SE, i32, f64, f64)
++DEF_HELPER_FLAGS_3(flcmps, TCG_CALL_NO_RWG_SE, i32, env, f32, f32)
++DEF_HELPER_FLAGS_3(flcmpd, TCG_CALL_NO_RWG_SE, i32, env, f64, f64)
+ DEF_HELPER_2(raise_exception, noreturn, env, int)
  
-+#define MII_ANAR_RFAULT     (1 << 13) /* Say we can detect faults */
- #define MII_ANAR_PAUSE_ASYM (1 << 11) /* Try for asymmetric pause */
- #define MII_ANAR_PAUSE      (1 << 10) /* Try for pause */
- #define MII_ANAR_TXFD       (1 << 8)
-@@ -78,6 +79,7 @@
- #define MII_ANAR_10FD       (1 << 6)
- #define MII_ANAR_10         (1 << 5)
- #define MII_ANAR_CSMACD     (1 << 0)
-+#define MII_ANAR_SELECT     (0x001f)  /* Selector bits */
+ DEF_HELPER_FLAGS_3(faddd, TCG_CALL_NO_WG, f64, env, f64, f64)
+diff --git a/target/sparc/fop_helper.c b/target/sparc/fop_helper.c
+index 6f9ccc008a0..236d27b19c1 100644
+--- a/target/sparc/fop_helper.c
++++ b/target/sparc/fop_helper.c
+@@ -490,13 +490,13 @@ uint32_t helper_fcmpeq(CPUSPARCState *env, Int128 src1, Int128 src2)
+     return finish_fcmp(env, r, GETPC());
+ }
  
- #define MII_ANLPAR_ACK      (1 << 14)
- #define MII_ANLPAR_PAUSEASY (1 << 11) /* can pause asymmetrically */
-@@ -112,6 +114,10 @@
- #define RTL8201CP_PHYID1    0x0000
- #define RTL8201CP_PHYID2    0x8201
- 
-+/* SMSC LAN9118 */
-+#define SMSCLAN9118_PHYID1  0x0007
-+#define SMSCLAN9118_PHYID2  0xc0d1
-+
- /* RealTek 8211E */
- #define RTL8211E_PHYID1     0x001c
- #define RTL8211E_PHYID2     0xc915
-diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
-index d8fc9ddd3ac..874dae4155a 100644
---- a/hw/net/lan9118_phy.c
-+++ b/hw/net/lan9118_phy.c
-@@ -14,6 +14,7 @@
- 
- #include "qemu/osdep.h"
- #include "hw/net/lan9118_phy.h"
-+#include "hw/net/mii.h"
- #include "hw/irq.h"
- #include "hw/resettable.h"
- #include "migration/vmstate.h"
-@@ -38,26 +39,28 @@ uint16_t lan9118_phy_read(Lan9118PhyState *s, int reg)
-     uint16_t val;
- 
-     switch (reg) {
--    case 0: /* Basic Control */
-+    case MII_BMCR:
-         val = s->control;
-         break;
--    case 1: /* Basic Status */
-+    case MII_BMSR:
-         val = s->status;
-         break;
--    case 2: /* ID1 */
--        val = 0x0007;
-+    case MII_PHYID1:
-+        val = SMSCLAN9118_PHYID1;
-         break;
--    case 3: /* ID2 */
--        val = 0xc0d1;
-+    case MII_PHYID2:
-+        val = SMSCLAN9118_PHYID2;
-         break;
--    case 4: /* Auto-neg advertisement */
-+    case MII_ANAR:
-         val = s->advertise;
-         break;
--    case 5: /* Auto-neg Link Partner Ability */
--        val = 0x0fe1;
-+    case MII_ANLPAR:
-+        val = MII_ANLPAR_PAUSEASY | MII_ANLPAR_PAUSE | MII_ANLPAR_T4 |
-+              MII_ANLPAR_TXFD | MII_ANLPAR_TX | MII_ANLPAR_10FD |
-+              MII_ANLPAR_10 | MII_ANLPAR_CSMACD;
-         break;
--    case 6: /* Auto-neg Expansion */
--        val = 1;
-+    case MII_ANER:
-+        val = MII_ANER_NWAY;
-         break;
-     case 29: /* Interrupt source. */
-         val = s->ints;
-@@ -92,19 +95,24 @@ void lan9118_phy_write(Lan9118PhyState *s, int reg, uint16_t val)
-     trace_lan9118_phy_write(val, reg);
- 
-     switch (reg) {
--    case 0: /* Basic Control */
--        if (val & 0x8000) {
-+    case MII_BMCR:
-+        if (val & MII_BMCR_RESET) {
-             lan9118_phy_reset(s);
-         } else {
--            s->control = val & 0x7980;
-+            s->control = val & (MII_BMCR_LOOPBACK | MII_BMCR_SPEED100 |
-+                                MII_BMCR_AUTOEN | MII_BMCR_PDOWN | MII_BMCR_FD |
-+                                MII_BMCR_CTST);
-             /* Complete autonegotiation immediately. */
--            if (val & 0x1000) {
--                s->status |= 0x0020;
-+            if (val & MII_BMCR_AUTOEN) {
-+                s->status |= MII_BMSR_AN_COMP;
-             }
-         }
-         break;
--    case 4: /* Auto-neg advertisement */
--        s->advertise = (val & 0x2d7f) | 0x80;
-+    case MII_ANAR:
-+        s->advertise = (val & (MII_ANAR_RFAULT | MII_ANAR_PAUSE_ASYM |
-+                               MII_ANAR_PAUSE | MII_ANAR_10FD | MII_ANAR_10 |
-+                               MII_ANAR_SELECT))
-+                     | MII_ANAR_TX;
-         break;
-     case 30: /* Interrupt mask */
-         s->int_mask = val & 0xff;
-@@ -131,11 +139,11 @@ void lan9118_phy_update_link(Lan9118PhyState *s, bool link_down)
-     /* Autonegotiation status mirrors link status. */
-     if (link_down) {
-         trace_lan9118_phy_update_link("down");
--        s->status &= ~0x0024;
-+        s->status &= ~(MII_BMSR_AN_COMP | MII_BMSR_LINK_ST);
-         s->ints |= PHY_INT_DOWN;
-     } else {
-         trace_lan9118_phy_update_link("up");
--        s->status |= 0x0024;
-+        s->status |= MII_BMSR_AN_COMP | MII_BMSR_LINK_ST;
-         s->ints |= PHY_INT_ENERGYON;
-         s->ints |= PHY_INT_AUTONEG_COMPLETE;
-     }
-@@ -146,9 +154,18 @@ void lan9118_phy_reset(Lan9118PhyState *s)
+-uint32_t helper_flcmps(float32 src1, float32 src2)
++uint32_t helper_flcmps(CPUSPARCState *env, float32 src1, float32 src2)
  {
-     trace_lan9118_phy_reset();
+     /*
+      * FLCMP never raises an exception nor modifies any FSR fields.
+      * Perform the comparison with a dummy fp environment.
+      */
+-    float_status discard = { };
++    float_status discard = env->fp_status;
+     FloatRelation r;
  
--    s->control = 0x3000;
--    s->status = 0x7809;
--    s->advertise = 0x01e1;
-+    s->control = MII_BMCR_AUTOEN | MII_BMCR_SPEED100;
-+    s->status = MII_BMSR_100TX_FD
-+                | MII_BMSR_100TX_HD
-+                | MII_BMSR_10T_FD
-+                | MII_BMSR_10T_HD
-+                | MII_BMSR_AUTONEG
-+                | MII_BMSR_EXTCAP;
-+    s->advertise = MII_ANAR_TXFD
-+                   | MII_ANAR_TX
-+                   | MII_ANAR_10FD
-+                   | MII_ANAR_10
-+                   | MII_ANAR_CSMACD;
-     s->int_mask = 0;
-     s->ints = 0;
-     lan9118_phy_update_link(s, s->link_down);
+     set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
+@@ -518,9 +518,9 @@ uint32_t helper_flcmps(float32 src1, float32 src2)
+     g_assert_not_reached();
+ }
+ 
+-uint32_t helper_flcmpd(float64 src1, float64 src2)
++uint32_t helper_flcmpd(CPUSPARCState *env, float64 src1, float64 src2)
+ {
+-    float_status discard = { };
++    float_status discard = env->fp_status;
+     FloatRelation r;
+ 
+     set_float_2nan_prop_rule(float_2nan_prop_s_ba, &discard);
+diff --git a/target/sparc/translate.c b/target/sparc/translate.c
+index cdd0a95c03d..322319a1288 100644
+--- a/target/sparc/translate.c
++++ b/target/sparc/translate.c
+@@ -5584,7 +5584,7 @@ static bool trans_FLCMPs(DisasContext *dc, arg_FLCMPs *a)
+ 
+     src1 = gen_load_fpr_F(dc, a->rs1);
+     src2 = gen_load_fpr_F(dc, a->rs2);
+-    gen_helper_flcmps(cpu_fcc[a->cc], src1, src2);
++    gen_helper_flcmps(cpu_fcc[a->cc], tcg_env, src1, src2);
+     return advance_pc(dc);
+ }
+ 
+@@ -5601,7 +5601,7 @@ static bool trans_FLCMPd(DisasContext *dc, arg_FLCMPd *a)
+ 
+     src1 = gen_load_fpr_D(dc, a->rs1);
+     src2 = gen_load_fpr_D(dc, a->rs2);
+-    gen_helper_flcmpd(cpu_fcc[a->cc], src1, src2);
++    gen_helper_flcmpd(cpu_fcc[a->cc], tcg_env, src1, src2);
+     return advance_pc(dc);
+ }
+ 
 -- 
 2.34.1
 
