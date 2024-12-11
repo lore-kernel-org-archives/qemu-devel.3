@@ -4,77 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C35B9E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:51:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4458E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPS7-0000K3-MR; Wed, 11 Dec 2024 11:20:43 -0500
+	id 1tLPdd-0006c1-Aa; Wed, 11 Dec 2024 11:32:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPS5-0000J6-E5
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:41 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcX-0004Au-7R
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:29 -0500
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPS3-0007jd-Ul
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:41 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-435004228c0so31043345e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcV-0001EY-E1
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:28 -0500
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-4675118f591so8193401cf.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:31:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934038; x=1734538838; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934686; x=1734539486; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IY8zOoALtZnJGd9D02lgKKAFGzmZzVDZQ3xBBMlHM34=;
- b=zqwNghzmbrwHuZj+5gwNxIyPhJqL+IvyIk3UKTMq1+/odZOtpFk/vkvj+Tm9S7tzdA
- njDJSLX3Ey8KIYDhBmu/2Yeuh/olSfDsZP+Niz9U2Mkaz+pq2SPn8uNArxQu9/sCFptj
- rYENTxT9T0q61HoKeTVh4AZej0VwrvoHjJC2DeLzRvran51Pih0KVI+svxCN/Xd2m3ps
- V1b+reXBA3Ttk9w14Vv/wkjP/ogF9tDaui/k0PirHYTktx1Z4d0tQCB7lz8u/cp0ZHih
- R0X9talSyC2jVGxGfFJaF/jwjIR3e0VEWedA7dXKgdeg/dSLrbxCYr82uOlBSzC/R+iY
- 72wg==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dd2z3le99kkpxlOwdQvMHijmJlZPpIOT1HfWKqviurA=;
+ b=OPG2GFgTD5LI11BLFAs4DXLsYim/qawuQ4F2noE6p7rUZIwTT+7xzLZuwtUyIqjrp8
+ wmGJ+nRB12NWu+1cbjLwI5j2C5/VY7Yz7TRUyiuk1Yio4yxTQQL4AsUca9p/Aa5KjlpI
+ 7M/0pixVC0v3rEOWjcGqt1TkLd0NeoDt0y62UmqDYClBQNL1bKjvqxVcMElXihy3su8G
+ pWAZlo7hk8qleC6UK6lWCUntAqXiRGHX6aIKyZh3f4wOxJYsWc0HrHZctA1xjqfHzZCT
+ D/OkQoUHUJ1hZc4/0yBe5AbEuMNgmzYa91s1nSXM1gnkoQfPeo72b47aQ3evpebLN+ep
+ xHtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934038; x=1734538838;
+ d=1e100.net; s=20230601; t=1733934686; x=1734539486;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IY8zOoALtZnJGd9D02lgKKAFGzmZzVDZQ3xBBMlHM34=;
- b=RMr9ggzxUvNIxNdnjoqqf4GzohTMomgBsFLf/tZbmr0j4r1H55IGDLGXfeUCpT/tLx
- fxi/DYjK2pqG/LEATWsXFLMZnygEdnZyNK/VJarLFLew6Ssro9IhJHyx2pdHUs6RUZBx
- 4NdnxKsr66ilLdzWjF1hSZi0K6ImJaqH+hnWlznquueIHCD2O0FHD2stwej1lZEzJbm3
- cxcZVudpBMb2m4xWUPdtEGjKA2Ah+iAJ4cSlFh7Nw4c4Ij0dx+i6CMDkDFrQCIipG8Db
- ZOZtMd/+B176QRolNGiF/WkjEXXuTRPIulzmY17RTVIlI7C5B9Xpb2eotFOfYp6mIudw
- M2kQ==
-X-Gm-Message-State: AOJu0YzS8IHM4BnOwQPdb3x9etO1xUvNvNPcdZL4FjHLOnB+xUUK1k5n
- 3Jx/r+TUlH9mpUK+SislVKCHSuZvhYbgoXqN1fwc9nS2VLOejp0ZNDkWb3rdEKCefH4UrFwlhoY
- b
-X-Gm-Gg: ASbGncvM7wvqWxJ/q+5eCn8Zbw0qEBGYi7tESywEn/YFrELscE8dGkrpI2SHIKOTPzP
- DF6z7OSKScymu6uADsIimoB0rmX6bAXutvmySmhfd6k026Xe+r+lUou3FX2DyIRyCrMbTa3LCO8
- 8CoMw5TKo0q9I8Wq1Q5LMAbKTDICAlg4sc2x/E3OX+AC1yTgmL0I8F3OT3HxnyTanLDIaSp6Goe
- sp/lUBrqpj0U049/djxx2d4oaFut5PEoyY0bZAnFa98L+p1hd1c8uWV7oGn
-X-Google-Smtp-Source: AGHT+IGYD9kPipiYTMlbmMegKbD5JIvjAUNuGQMrGulbALQVopxxnTegzRU4enBocm0rHCsjxQr+8g==
-X-Received: by 2002:a05:600c:34cc:b0:434:fbe2:4f with SMTP id
- 5b1f17b1804b1-4361c430b5cmr30266215e9.23.1733934038605; 
- Wed, 11 Dec 2024 08:20:38 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.37
- for <qemu-devel@nongnu.org>
+ bh=dd2z3le99kkpxlOwdQvMHijmJlZPpIOT1HfWKqviurA=;
+ b=lb9Fr3rCCmlvL1qRejijGXqNLa4QmngEQkBJJr6o5PAOsuTSIoiqiCEH5Ei7jsUPfd
+ n7ezhRQaaarSWIxd2dkWSO1V6nuGNMedsQAiNNSllGgjMR8R/I1Hz/ffFitiqTztlBvz
+ 7gSxEwNIFoJaqDWLBJvC7fqwlkC9/8q6xwDIN9ey4vdvbAfEFDUQK1P6QamGKvFMaDnY
+ Q303v1VAS/R0IkyP0r8h7MmV/O5+eMcaRcCdNFfX+d0Yr/aHETigN5hAGevx/Y+Gu6Pg
+ 9nOokWKKtNt8tY93Wb/XqULCO+5lG5U8bHtx+9FlIWUg87kn9A5V3ZDonD3jeUfuIuUA
+ SIFQ==
+X-Gm-Message-State: AOJu0YySTgwh4R7ipGqHIOzYwnbyYbWMaxTfKJxAOu3iK6rEfs//vra4
+ xt3PeprZ4gDvbgTnE8Qpdnq/Jj3+m+3M3xzuyRaLiiU1VV9gjkGYn+Xb+I8xv/MW9V4/uO3j41U
+ QaShUV2zz
+X-Gm-Gg: ASbGncum7VOQhnmzfIGRD4+N4x0+yLYjekAgLeGbxBEOf9Dsr7jSJpw/s5aQstR6Osw
+ 70eYXMZOF7bSdxlqgNhq9ujds7lt9RTW+k2/Ld9KHPsOs+1ZTvoKLKHKWl0cyixwkDVKUa2Xp5d
+ 4nkwmIxPDl+BDpnE/AzaaJciX0uVSYBExVaWv1qGo3bawWySK6KS65rukiwNWyLqBwGRUP/WTsP
+ JJURXpO85UphQz1bg0MHcVIFJFxmSMD27LUpXp7xVIjXc+Bw5Eo/Z5AzDv5Lg==
+X-Google-Smtp-Source: AGHT+IGCSLwFKg8upybGawJy1F9yjSgMleDFvyoS/xto/dUOuirQVkLCKnrud872/qmv8dYCmS5fcA==
+X-Received: by 2002:ac8:5f49:0:b0:467:61c1:df38 with SMTP id
+ d75a77b69052e-4678951c534mr63591301cf.12.1733934686406; 
+ Wed, 11 Dec 2024 08:31:26 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.31.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:37 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
+ Wed, 11 Dec 2024 08:31:25 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 27/72] target/mips: Set Float3NaNPropRule explicitly
-Date: Wed, 11 Dec 2024 16:19:19 +0000
-Message-Id: <20241211162004.2795499-28-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
-References: <20241211162004.2795499-1-peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 10/69] target/arm: Convert XPAC[ID] to decodetree
+Date: Wed, 11 Dec 2024 10:29:37 -0600
+Message-ID: <20241211163036.2297116-11-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x836.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,74 +99,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the Float3NaNPropRule explicitly for Arm, and remove the
-ifdef from pickNaNMulAdd().
+Remove disas_data_proc_1src, as these were the last insns
+decoded by that function.
 
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-23-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/mips/fpu_helper.h       | 4 ++++
- target/mips/msa.c              | 3 +++
- fpu/softfloat-specialize.c.inc | 8 +-------
- 3 files changed, 8 insertions(+), 7 deletions(-)
+ target/arm/tcg/translate-a64.c | 99 +++++-----------------------------
+ target/arm/tcg/a64.decode      |  3 ++
+ 2 files changed, 16 insertions(+), 86 deletions(-)
 
-diff --git a/target/mips/fpu_helper.h b/target/mips/fpu_helper.h
-index be66f2f813a..8ca0ca7ea39 100644
---- a/target/mips/fpu_helper.h
-+++ b/target/mips/fpu_helper.h
-@@ -29,6 +29,7 @@ static inline void restore_snan_bit_mode(CPUMIPSState *env)
- {
-     bool nan2008 = env->active_fpu.fcr31 & (1 << FCR31_NAN2008);
-     FloatInfZeroNaNRule izn_rule;
-+    Float3NaNPropRule nan3_rule;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 852545dfcc..d92fe68299 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7793,6 +7793,18 @@ TRANS_FEAT(AUTIB, aa64_pauth, gen_pacaut, a, gen_helper_autib)
+ TRANS_FEAT(AUTDA, aa64_pauth, gen_pacaut, a, gen_helper_autda)
+ TRANS_FEAT(AUTDB, aa64_pauth, gen_pacaut, a, gen_helper_autdb)
  
-     /*
-      * With nan2008, SNaNs are silenced in the usual way.
-@@ -44,6 +45,9 @@ static inline void restore_snan_bit_mode(CPUMIPSState *env)
-      */
-     izn_rule = nan2008 ? float_infzeronan_dnan_never : float_infzeronan_dnan_always;
-     set_float_infzeronan_rule(izn_rule, &env->active_fpu.fp_status);
-+    nan3_rule = nan2008 ? float_3nan_prop_s_cab : float_3nan_prop_s_abc;
-+    set_float_3nan_prop_rule(nan3_rule, &env->active_fpu.fp_status);
++static bool do_xpac(DisasContext *s, int rd, NeonGenOne64OpEnvFn *fn)
++{
++    if (s->pauth_active) {
++        TCGv_i64 tcg_rd = cpu_reg(s, rd);
++        fn(tcg_rd, tcg_env, tcg_rd);
++    }
++    return true;
++}
 +
++TRANS_FEAT(XPACI, aa64_pauth, do_xpac, a->rd, gen_helper_xpaci)
++TRANS_FEAT(XPACD, aa64_pauth, do_xpac, a->rd, gen_helper_xpacd)
++
+ /* Logical (shifted register)
+  *   31  30 29 28       24 23   22 21  20  16 15    10 9    5 4    0
+  * +----+-----+-----------+-------+---+------+--------+------+------+
+@@ -8377,84 +8389,6 @@ static void disas_cond_select(DisasContext *s, uint32_t insn)
+     }
  }
  
- static inline void restore_fp_status(CPUMIPSState *env)
-diff --git a/target/mips/msa.c b/target/mips/msa.c
-index cc152db27f9..93a9a87d76d 100644
---- a/target/mips/msa.c
-+++ b/target/mips/msa.c
-@@ -66,6 +66,9 @@ void msa_reset(CPUMIPSState *env)
-     set_float_2nan_prop_rule(float_2nan_prop_s_ab,
-                              &env->active_tc.msa_fp_status);
- 
-+    set_float_3nan_prop_rule(float_3nan_prop_s_cab,
-+                             &env->active_tc.msa_fp_status);
-+
-     /* clear float_status exception flags */
-     set_float_exception_flags(0, &env->active_tc.msa_fp_status);
- 
-diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
-index c4d8d085a98..28db409d22c 100644
---- a/fpu/softfloat-specialize.c.inc
-+++ b/fpu/softfloat-specialize.c.inc
-@@ -505,13 +505,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
-     }
- 
-     if (rule == float_3nan_prop_none) {
--#if defined(TARGET_MIPS)
--        if (snan_bit_is_one(status)) {
--            rule = float_3nan_prop_s_abc;
--        } else {
--            rule = float_3nan_prop_s_cab;
+-/* Data-processing (1 source)
+- *   31  30  29  28             21 20     16 15    10 9    5 4    0
+- * +----+---+---+-----------------+---------+--------+------+------+
+- * | sf | 1 | S | 1 1 0 1 0 1 1 0 | opcode2 | opcode |  Rn  |  Rd  |
+- * +----+---+---+-----------------+---------+--------+------+------+
+- */
+-static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+-{
+-    unsigned int sf, opcode, opcode2, rn, rd;
+-    TCGv_i64 tcg_rd;
+-
+-    if (extract32(insn, 29, 1)) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    sf = extract32(insn, 31, 1);
+-    opcode = extract32(insn, 10, 6);
+-    opcode2 = extract32(insn, 16, 5);
+-    rn = extract32(insn, 5, 5);
+-    rd = extract32(insn, 0, 5);
+-
+-#define MAP(SF, O2, O1) ((SF) | (O1 << 1) | (O2 << 7))
+-
+-    switch (MAP(sf, opcode2, opcode)) {
+-    case MAP(1, 0x01, 0x10): /* XPACI */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_xpaci(tcg_rd, tcg_env, tcg_rd);
 -        }
--#elif defined(TARGET_XTENSA)
-+#if defined(TARGET_XTENSA)
-         if (status->use_first_nan) {
-             rule = float_3nan_prop_abc;
-         } else {
+-        break;
+-    case MAP(1, 0x01, 0x11): /* XPACD */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_xpacd(tcg_rd, tcg_env, tcg_rd);
+-        }
+-        break;
+-    default:
+-    do_unallocated:
+-    case MAP(0, 0x00, 0x00): /* RBIT */
+-    case MAP(1, 0x00, 0x00):
+-    case MAP(0, 0x00, 0x01): /* REV16 */
+-    case MAP(1, 0x00, 0x01):
+-    case MAP(0, 0x00, 0x02): /* REV/REV32 */
+-    case MAP(1, 0x00, 0x02):
+-    case MAP(1, 0x00, 0x03): /* REV64 */
+-    case MAP(0, 0x00, 0x04): /* CLZ */
+-    case MAP(1, 0x00, 0x04):
+-    case MAP(0, 0x00, 0x05): /* CLS */
+-    case MAP(1, 0x00, 0x05):
+-    case MAP(1, 0x01, 0x00): /* PACIA */
+-    case MAP(1, 0x01, 0x01): /* PACIB */
+-    case MAP(1, 0x01, 0x02): /* PACDA */
+-    case MAP(1, 0x01, 0x03): /* PACDB */
+-    case MAP(1, 0x01, 0x04): /* AUTIA */
+-    case MAP(1, 0x01, 0x05): /* AUTIB */
+-    case MAP(1, 0x01, 0x06): /* AUTDA */
+-    case MAP(1, 0x01, 0x07): /* AUTDB */
+-    case MAP(1, 0x01, 0x08): /* PACIZA */
+-    case MAP(1, 0x01, 0x09): /* PACIZB */
+-    case MAP(1, 0x01, 0x0a): /* PACDZA */
+-    case MAP(1, 0x01, 0x0b): /* PACDZB */
+-    case MAP(1, 0x01, 0x0c): /* AUTIZA */
+-    case MAP(1, 0x01, 0x0d): /* AUTIZB */
+-    case MAP(1, 0x01, 0x0e): /* AUTDZA */
+-    case MAP(1, 0x01, 0x0f): /* AUTDZB */
+-        unallocated_encoding(s);
+-        break;
+-    }
+-
+-#undef MAP
+-}
+-
+-
+ /*
+  * Data processing - register
+  *  31  30 29  28      25    21  20  16      10         0
+@@ -8464,7 +8398,6 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+  */
+ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+ {
+-    int op0 = extract32(insn, 30, 1);
+     int op1 = extract32(insn, 28, 1);
+     int op2 = extract32(insn, 21, 4);
+     int op3 = extract32(insn, 10, 6);
+@@ -8517,19 +8450,13 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+         disas_cond_select(s, insn);
+         break;
+ 
+-    case 0x6: /* Data-processing */
+-        if (op0) {    /* (1 source) */
+-            disas_data_proc_1src(s, insn);
+-        } else {      /* (2 source) */
+-            goto do_unallocated;
+-        }
+-        break;
+     case 0x8 ... 0xf: /* (3 source) */
+         disas_data_proc_3src(s, insn);
+         break;
+ 
+     default:
+     do_unallocated:
++    case 0x6: /* Data-processing */
+         unallocated_encoding(s);
+         break;
+     }
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 9083ac4ac3..0e04ab6ce4 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -712,6 +712,9 @@ AUTIB           1 10 11010110 00001 00.101 ..... .....  @pacaut
+ AUTDA           1 10 11010110 00001 00.110 ..... .....  @pacaut
+ AUTDB           1 10 11010110 00001 00.111 ..... .....  @pacaut
+ 
++XPACI           1 10 11010110 00001 010000 11111 rd:5
++XPACD           1 10 11010110 00001 010001 11111 rd:5
++
+ # Logical (shifted reg)
+ # Add/subtract (shifted reg)
+ # Add/subtract (extended reg)
 -- 
-2.34.1
+2.43.0
 
 
