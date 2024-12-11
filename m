@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EC65E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98853E77182
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZd-0006Du-1G; Wed, 11 Dec 2024 11:28:29 -0500
+	id 1tLPZY-0005br-VE; Wed, 11 Dec 2024 11:28:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZW-0005M4-Ux
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:23 -0500
+ id 1tLPZV-0005Ah-Fw
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:21 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZV-0000Ta-7a
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:22 -0500
+ id 1tLPZT-0000Sh-DH
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:20 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934500;
+ s=mimecast20190719; t=1733934498;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xp/Cl1MXRDbDXW7R4GInQg1UHIFQJ6brbsJU+CLkAsY=;
- b=d7mGJ+aX6liThU2+RJH8YlsbtebZQwWTVea4YBuBz5yfEDs4ALSOMCBomJcaStaejZa+Ug
- Tq5zoF0bcqog6v1NlBbeG8iv2NtT4n/FV5VklE4miTjCak7sqhPsQ/CzEobnmeeabPpgwa
- HVUG6SobEOIgqz1Ihy9KAV2OJVv3fbk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4k8q+ScOWCPKZP/2g98Fpy1OHW4u8pQDrcm/3Bs4tcQ=;
+ b=PD/QDMk0qhVa8d3WctZHkLVv21/S+iWGvCxgCafQmkZlu7zycgDAnplpaeT9Rf17K8+nBg
+ dSp/5z5wxljFgXbQobzQj4fqiqNIpsA65Rj3axCW3+5zJsLLSQoF2yP3gr8u1vGqPmk75c
+ rq+S3YUmYU9XNSOAm+WTjoxE7m0M82M=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-fmyIeBQ2MGOsIkMk0cwe5g-1; Wed, 11 Dec 2024 11:28:17 -0500
-X-MC-Unique: fmyIeBQ2MGOsIkMk0cwe5g-1
-X-Mimecast-MFC-AGG-ID: fmyIeBQ2MGOsIkMk0cwe5g
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-434f3398326so4668665e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:17 -0800 (PST)
+ us-mta-504-9JN8otzIPFeoM-tNRgF3Hg-1; Wed, 11 Dec 2024 11:28:16 -0500
+X-MC-Unique: 9JN8otzIPFeoM-tNRgF3Hg-1
+X-Mimecast-MFC-AGG-ID: 9JN8otzIPFeoM-tNRgF3Hg
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-5d09962822bso7277505a12.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934496; x=1734539296;
+ d=1e100.net; s=20230601; t=1733934494; x=1734539294;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xp/Cl1MXRDbDXW7R4GInQg1UHIFQJ6brbsJU+CLkAsY=;
- b=MD5Ji7ts3EIgObp26MPx97vkNevSK18e0gHJQBNOfVB1zG/mW4/juPzWyBZxIm+Svt
- O6ctui4B+PpUD6D2SxVwupHbk9EIZUAQXmczH5Bk376ITLH1ekvVeLYSIFrpuKrS1u7O
- iAKAinU21bao1HmQexWtzpYPObl2JqMF64gb50Dp2Yl3+YQoB94br3n/WXrJECzKzel7
- jfPb1cl/rqWzpW2xorDDAdRojxx3XdFlzJWBsLIAc8LbX3lf2eXld+AB3GmfoKU3p54P
- Br7ecXaKlp+pNYtgZYuWIwzXNzhrPnZeF68rFHJPlKsoMV8YsogozSuzpAw4Yx9jUInB
- 5zxw==
-X-Gm-Message-State: AOJu0YxrycRrja8pk5aOpNWB9gp44lZ9krpPO7OOGjztW+FL+0p4ok3b
- yvTNsjDqwwlUrevcEbMnkOgp9HO/OczhcZnpaiRPeQNGGDEWM8XhIqb/7TOJ0d3E/Yn1HGxHsRe
- F2KqEFzWlGuvuNTEc+MAWi8s8pe3DEt/j+oHGm9oeEWD5+7XEzMw6il44SxrfvhUvSoiDjpjw6D
- 4SFgQPmfK2XGC1Bb37jBx+PTGdRJAaOgO2rQ1V
-X-Gm-Gg: ASbGncvNGHouxEl/337KmmxdMhhxCg3yxSDk2xb0e3Ezu1YYnafrGxqvy7NnD+0U2H4
- 0aSixcbqPgzdNEaV1mSsN/QNnztdTlPpjGN1P75wE/2ekJTKSh8OFMHJbMnOI5MZrGZkyoLTIAy
- +oO7IsgDWugA6J2usFrRB4q9tciSv6P8pglnnJxQLi4XcBp4uQFQodpTrYuUXe3D+pUXxbioXZ3
- 6cm0/wpCLzZFRbXMxKwLE1D3sIK2s4EOjpa3LS9A3TPwf1JHfhIgpVx
-X-Received: by 2002:a05:6000:1843:b0:386:3262:ff70 with SMTP id
- ffacd0b85a97d-3864de8ef4dmr2433910f8f.2.1733934496039; 
- Wed, 11 Dec 2024 08:28:16 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHm2SYkr0RdJlt91nUaILw0MyL7ZvHqqEVLHpra4G31laP0c/1/KhHCoxd1EaygOOVG9F9bBQ==
-X-Received: by 2002:a05:6000:1843:b0:386:3262:ff70 with SMTP id
- ffacd0b85a97d-3864de8ef4dmr2433897f8f.2.1733934495694; 
- Wed, 11 Dec 2024 08:28:15 -0800 (PST)
+ bh=4k8q+ScOWCPKZP/2g98Fpy1OHW4u8pQDrcm/3Bs4tcQ=;
+ b=rOqWbPML4yvwqAN5NpMn4FfAIXT7L5YjCz99fVS6jhrmYoEgPPXNyG/J8DKjhmWeaN
+ QgW9C0XLUYHkgWHq3hJFDzfJxXtwcCRKe29FWk9/vwdKZlM4gjTFnZ48+emtYC3jT1tF
+ DSBprxyYpSC/VhY9hUng6yEKFkfP9VTjUt0L8OCCc23F8xVb896gOBEXPLwwn638i/7u
+ fjX/Mm+aODtSAUzvsDP2mpB+3jL4Hx8psYjhnANn4ZedcjZwR+hVhurQVN7Eyop4gWIS
+ r0lYiU7OjV1Jvqdb4xL/ZdrAW66KfjOS4s34OQ//sZBoii0xRurJpsKaYBgcvzDge9Oc
+ UXkg==
+X-Gm-Message-State: AOJu0YyA5f+hae0KhXOrGRyQCPaI6N3tTGE0SOoqDnhvSKCU8GoRcOY0
+ w3OihpNMVdIpGdzFoHNJjy8Zyzzizcrg7z8SQltin3b1RzQMYzRpO2/gMa3YFXJcXxI4zN8Dy0R
+ vSX10WpbPkN8Nl6Vsrfwsc5laK62VnJnteJXQjJz+JkLTe3D9XPav9qHvx00UaVmcViK0zD9NSR
+ FGIYOgHktItvvl+rZSBgLwdytzT9sZCXRLS81K
+X-Gm-Gg: ASbGncuJPXw3fxksYIbfxMlGv89wFDLNzYgIgYhY3MJu6o5fmcz5cvExEEBzzIYeSpB
+ OfBJ38q7fLrDrtspf8fJvZlWjWBYexawR55Dt9iuqGAHHiviK+i3SJbb9iwnegxW6plABCtElch
+ MnHm2z9mpT3KSXQPGzmMnTycQFiaoWlYjBZT5apOVi/DvC7dtg6fdx9GOZNOiTDEI4s81n0c4j/
+ Zjk5L3ztQPmcZgaiMoVMMovE1elQfw5BPR9NTv47Z5UeTj4vbiBnD5M
+X-Received: by 2002:a17:906:31db:b0:aa6:23ba:d8c8 with SMTP id
+ a640c23a62f3a-aa6b10f520dmr367229266b.11.1733934493840; 
+ Wed, 11 Dec 2024 08:28:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGBiKPyw3k827tMhBFojKOcGCTTXqERQaxefBcHPL6pToXBm/WafX8bkxE4KUpx8i5Tn00HNg==
+X-Received: by 2002:a17:906:31db:b0:aa6:23ba:d8c8 with SMTP id
+ a640c23a62f3a-aa6b10f520dmr367225966b.11.1733934493378; 
+ Wed, 11 Dec 2024 08:28:13 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4362104aa9csm10176785e9.31.2024.12.11.08.28.14
+ a640c23a62f3a-aa68f70cc47sm442307066b.123.2024.12.11.08.28.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:14 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:12 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 22/49] ppc: Replace type_register() with type_register_static()
-Date: Wed, 11 Dec 2024 17:26:52 +0100
-Message-ID: <20241211162720.320070-23-pbonzini@redhat.com>
+Subject: [PULL 21/49] hw/net: Replace type_register() with
+ type_register_static()
+Date: Wed, 11 Dec 2024 17:26:51 +0100
+Message-ID: <20241211162720.320070-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -114,38 +115,38 @@ type_register() will be deprecated.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241029085934.2799066-5-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20241029085934.2799066-4-zhao1.liu@intel.com
 ---
- hw/ppc/spapr.c   | 2 +-
- target/ppc/kvm.c | 2 +-
+ hw/net/e1000.c    | 2 +-
+ hw/net/eepro100.c | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0d4efaa0c09..827e7d6b140 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4723,7 +4723,7 @@ static void spapr_machine_latest_class_options(MachineClass *mc)
-     static void MACHINE_VER_SYM(register, spapr, __VA_ARGS__)(void)  \
-     {                                                                \
-         MACHINE_VER_DELETION(__VA_ARGS__);                           \
--        type_register(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
-+        type_register_static(&MACHINE_VER_SYM(info, spapr, __VA_ARGS__));   \
-     }                                                                \
-     type_init(MACHINE_VER_SYM(register, spapr, __VA_ARGS__))
+diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+index 5012b964640..ab72236d183 100644
+--- a/hw/net/e1000.c
++++ b/hw/net/e1000.c
+@@ -1774,7 +1774,7 @@ static void e1000_register_types(void)
+         type_info.class_data = (void *)info;
+         type_info.class_init = e1000_class_init;
  
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 3efc28f18b3..0d464824dbc 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -2633,7 +2633,7 @@ static int kvm_ppc_register_host_cpu_type(void)
-         return -1;
+-        type_register(&type_info);
++        type_register_static(&type_info);
      }
-     type_info.parent = object_class_get_name(OBJECT_CLASS(pvr_pcc));
--    type_register(&type_info);
-+    type_register_static(&type_info);
-     /* override TCG default cpu type with 'host' cpu model */
-     object_class_foreach(pseries_machine_class_fixup, TYPE_SPAPR_MACHINE,
-                          false, NULL);
+ }
+ 
+diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
+index c8a88b9813f..20b22d8e49c 100644
+--- a/hw/net/eepro100.c
++++ b/hw/net/eepro100.c
+@@ -2102,7 +2102,7 @@ static void eepro100_register_types(void)
+             { },
+         };
+ 
+-        type_register(&type_info);
++        type_register_static(&type_info);
+     }
+ }
+ 
 -- 
 2.47.1
 
