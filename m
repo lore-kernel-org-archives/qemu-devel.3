@@ -4,87 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8C28E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:06:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5E3E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:06:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLVlL-0003YB-GB; Wed, 11 Dec 2024 18:04:59 -0500
+	id 1tLVlO-0003bZ-Gd; Wed, 11 Dec 2024 18:05:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVl9-0003LT-Og
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:49 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVl7-0002Ff-7x
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:47 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3863703258fso705231f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:04:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733958283; x=1734563083; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+71ZOpdVAG9B9l+7/FqsTNfCtOJJsIHhAT40qDCr+hM=;
- b=p1ZWY7xkla3DXjQ2g68P2igLCFqO3MLeBEFavRFoJGRHqyWYrJyNvdjO/8aVleAlt6
- /APUezHJ9mtF+7vQLRK0Evvo22DlLjJ0wISNzi9ED7CUQDfXN96VQO28GwkZGIKKD4Zg
- f7CDEw2Ing6WhvdpFj5kEkYKXgGOOdAJnSjKbGC7evsOyMl1qY2eX9CGuFlx2JleLN6I
- P9TNAhP1o1BtbuaSfm5tIg1buvkSsys5/IQNle8L+WKkATnqtFXVI8nJ12vCjlomp8Ez
- EHKZd8Z2tDxTM1+ryjVUIXSJsAmeAfpU9KblT0XTzDPjIUtiPYe8hRhx0jFrN2DT1hGt
- MBvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733958283; x=1734563083;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=+71ZOpdVAG9B9l+7/FqsTNfCtOJJsIHhAT40qDCr+hM=;
- b=r8dfhlEMbyxen93xY+MtDL/3hiVv7QaMrT4FXUz2ICEFruMPuXAqJnxglwVq/fR4sE
- alm+yESYtFrUALTt4u94zyUrqV2hEyxj4n2MzrY4JvQZgvtH/H8oUNQiqw+G38IuRKlk
- fB0N9z6HAxWpcHcQhrfu5B3i/BbFq4LJdAFcWTYQ8boQseAUtyeHRxBWICU0ZJef4eFe
- BUXEQ/OI4oT8r0xuXMw+7sa2sy+jyrLWObQYYSkl0vezXpwk6nXbRBc3/R73Vu4Fpzye
- fKidxjEx3LnbyvtedY8RdguEEVhwnw1v3N91awBCymjhhGBMvwG6lfTo+0fkkiSfa7ZW
- KzHw==
-X-Gm-Message-State: AOJu0YztTCXOi9NRH1uOUsZijaOa7tN/BAH/4dN7lKUWXtV9x9F0GEpK
- r7XC/WGBlZ0NqQnH/t34RdCY1Oi3kTMoY0Y73dtbc7kSCkzvvNW0S/J2GW4t3bIlNCw+F/HFYB0
- D
-X-Gm-Gg: ASbGncswebuh7GcrP4DFhmFo8A4OOxQt4sEXXACR5gwcDZFMN9a08zUCF53FqBHB9Mh
- 1V6tTSSZo1VMJNUWjJJ9dEVT8bae+es+vAnLv5po+rTcg+diNBfPT5Xnt4cCTeZoiRHwFREGsmP
- 8MeH308aldsASD7t6FnHfjeRBVLu/eVxUmxnKjpPjRHIcmj0vRsNPx4LXk4wZ0c1KCb96Mzf3kZ
- Bsit6deg64orN5Z8MnpIYOQO8Tz2li91sNmwo10aS8MF7QKijJLwr9cT/PCA8W9/xDAQnl11MP9
- /9PLMEzwGZexaEl/07FhVPq5++w4BXcqDw==
-X-Google-Smtp-Source: AGHT+IEe6dwlE3rKQ3ehwUu/JJmDhcTIUXRgm4CPz2wR2Px26X3yPZt8sxZ/CCCrwsGPC7Xrs/pwyg==
-X-Received: by 2002:a05:6000:a07:b0:385:e10a:4d97 with SMTP id
- ffacd0b85a97d-38788825765mr681479f8f.21.1733958282175; 
- Wed, 11 Dec 2024 15:04:42 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824a4a25sm2330451f8f.27.2024.12.11.15.04.40
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 11 Dec 2024 15:04:41 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 8/9] hw/xtensa: Include missing 'exec/tswap.h' header
-Date: Thu, 12 Dec 2024 00:03:56 +0100
-Message-ID: <20241211230357.97036-9-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241211230357.97036-1-philmd@linaro.org>
-References: <20241211230357.97036-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1tLVlK-0003Vp-Fq
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:58 -0500
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <d-tatianin@yandex-team.ru>)
+ id 1tLVlI-0002OF-No
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:04:58 -0500
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:5829:0:640:f281:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 72C2B61447;
+ Thu, 12 Dec 2024 02:04:54 +0300 (MSK)
+Received: from d-tatianin-lin.yandex-team.ru (unknown
+ [2a02:6b8:b081:1227::1:8])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id b4xnrS4GamI0-7E3QJreo; Thu, 12 Dec 2024 02:04:54 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1733958294;
+ bh=i/w5rDBnwVLOj5y9aLzNQFkTm4o3GZ3TpsdbgF93iB8=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=Xl/vXkbamKZdI2X5/dD8+eQqQRhglOwXIQnKJiaUKoObLR7dIL8b2bMO5ctZsNCHb
+ 3MH8DoRR9+ZfdzT/hvFthWXin6DE1tbpllC03X7GZfbftWOcUUFle7VRbod/mmQgzT
+ +cRZfQDqLDCLSj5zN4etGo3vlEOE9jhZQu+6THlY=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Daniil Tatianin <d-tatianin@yandex-team.ru>, Stefan Weil <sw@weilnetz.de>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-devel@nongnu.org
+Subject: [PATCH v3 2/4] system/vl: extract overcommit option parsing into a
+ helper
+Date: Thu, 12 Dec 2024 02:04:31 +0300
+Message-Id: <20241211230433.1371327-3-d-tatianin@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211230433.1371327-1-d-tatianin@yandex-team.ru>
+References: <20241211230433.1371327-1-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=d-tatianin@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,45 +78,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some files indirectly get "exec/tswap.h" declarations via
-"exec/cpu-all.h". Include it directly to be able to remove
-the former from the latter, otherwise we get:
+This will be extended in the future commits, let's move it out of line
+right away so that it's easier to read.
 
-  hw/xtensa/bootparam.h:40:16: error: call to undeclared function 'tswap16'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     40 |         .tag = tswap16(tag),
-        |                ^
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 ---
- hw/xtensa/bootparam.h | 1 +
- hw/xtensa/xtfpga.c    | 1 +
- 2 files changed, 2 insertions(+)
+ system/vl.c | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/hw/xtensa/bootparam.h b/hw/xtensa/bootparam.h
-index f57ff850bcb..4418c78d5bb 100644
---- a/hw/xtensa/bootparam.h
-+++ b/hw/xtensa/bootparam.h
-@@ -2,6 +2,7 @@
- #define HW_XTENSA_BOOTPARAM_H
+diff --git a/system/vl.c b/system/vl.c
+index 03819a80ef..f0b3ad0df7 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -1855,6 +1855,19 @@ static void object_option_parse(const char *str)
+     visit_free(v);
+ }
  
- #include "exec/cpu-common.h"
-+#include "exec/tswap.h"
- 
- #define BP_TAG_COMMAND_LINE     0x1001  /* command line (0-terminated string)*/
- #define BP_TAG_INITRD           0x1002  /* ramdisk addr and size (bp_meminfo) */
-diff --git a/hw/xtensa/xtfpga.c b/hw/xtensa/xtfpga.c
-index 398e6256e1d..2e264c61988 100644
---- a/hw/xtensa/xtfpga.c
-+++ b/hw/xtensa/xtfpga.c
-@@ -35,6 +35,7 @@
- #include "hw/qdev-properties.h"
- #include "elf.h"
- #include "exec/memory.h"
-+#include "exec/tswap.h"
- #include "hw/char/serial-mm.h"
- #include "net/net.h"
- #include "hw/sysbus.h"
++static void overcommit_parse(const char *str)
++{
++    QemuOpts *opts;
++
++    opts = qemu_opts_parse_noisily(qemu_find_opts("overcommit"),
++                                   str, false);
++    if (!opts) {
++        exit(1);
++    }
++    enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
++    enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
++}
++
+ /*
+  * Very early object creation, before the sandbox options have been activated.
+  */
+@@ -3532,13 +3545,7 @@ void qemu_init(int argc, char **argv)
+                 object_option_parse(optarg);
+                 break;
+             case QEMU_OPTION_overcommit:
+-                opts = qemu_opts_parse_noisily(qemu_find_opts("overcommit"),
+-                                               optarg, false);
+-                if (!opts) {
+-                    exit(1);
+-                }
+-                enable_mlock = qemu_opt_get_bool(opts, "mem-lock", enable_mlock);
+-                enable_cpu_pm = qemu_opt_get_bool(opts, "cpu-pm", enable_cpu_pm);
++                overcommit_parse(optarg);
+                 break;
+             case QEMU_OPTION_compat:
+                 {
 -- 
-2.45.2
+2.34.1
 
 
