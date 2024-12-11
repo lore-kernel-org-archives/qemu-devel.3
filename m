@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0886FE77183
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:35:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77B34E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:35:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPa0-00019G-Mu; Wed, 11 Dec 2024 11:28:53 -0500
+	id 1tLPdh-00076I-6l; Wed, 11 Dec 2024 11:32:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZy-0000l4-FP
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZw-0000aq-F0
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934527;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EK+6NhPLRnfB+w3ii90rEiEDD8OWs1ZakSYY9qmOsvM=;
- b=X580G6WT+7ZRiQVuOTZIu8/wqVAl5NvpAQxMnjxNydPCB8OdPVy5HxvE0IlfQU7TxXH1Wi
- +MKNbGd3zECcCr/lLcWma5HOS1JkLpq86cqtgZJUA72D8oyvZby0o7JL8FRO3U1MTlSalM
- 7E11riZRTOJW0+g+ved9TpmEeoXmfO4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-321-IGgLTkXOMx-7vjyvGgnRZA-1; Wed, 11 Dec 2024 11:28:46 -0500
-X-MC-Unique: IGgLTkXOMx-7vjyvGgnRZA-1
-X-Mimecast-MFC-AGG-ID: IGgLTkXOMx-7vjyvGgnRZA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-436228ebc5eso545515e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:46 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934525; x=1734539325;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPca-0004Ga-36
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:32 -0500
+Received: from mail-qt1-x836.google.com ([2607:f8b0:4864:20::836])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcY-0001FL-7y
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:31 -0500
+Received: by mail-qt1-x836.google.com with SMTP id
+ d75a77b69052e-4676e708aeaso26629201cf.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:31:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934689; x=1734539489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Mv4+39/cFGoJE7L8lZWTi5JvZoPChXZESu684RPUKCc=;
+ b=ayS5X4dLrF2FDIOHD6Byo8WlivOEL9A/EAoRoTPguUKtQSrMNYp2LUJ/aWjJ9wpGVC
+ 1niap2EhE17Pixg7vB631D16w5EnMI2JYr6ZELa2kd9ucNejPog08sehn9uhTc2N+Ff0
+ pqSZYZUhsl3Br3SXYNKLUkp7GiL1VYqiCeSO9otVIPniNQuvkwJGNkb9NA7s79S/IE43
+ yab8gccHN52BqoznK/nNo8NlJ2vdx3HEtsO+MiRuiiEDbt9g5N9G9VDGlS1fpLnF1IIl
+ lktKCemR5072m7R4qiIBU/hT2GM+6+TDcaeP5tLZRkd+n7b+6lFVnFnl0a/+D4y+ysRA
+ cwRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934689; x=1734539489;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=EK+6NhPLRnfB+w3ii90rEiEDD8OWs1ZakSYY9qmOsvM=;
- b=wO5Bb93Hpkn52S/blx73fsBXC6GjavsfuHc14ORHi1ICN0fhb338pAlzQmYAN4DU5P
- /PfehYjtVqPsQm1Sjtilw1pq7QABTlp3WU3QzS0PmjF5t7P5ORPY2QW6RIdAUPw4MVUV
- wN1Nv5xyWF5VSgghekYrvneFGU09wVv62zpb3jjiGagfz5UWRT/rG2QEEjPrW5iCOX9r
- prMENmXUACMvaK4J/qOcLf3QAdfJ97JIvgzwerKz9OeRJVd+blvX9wMyUymEvijM3uc3
- 0RWwfTTdZ3tUb75biFLyHfo9NjX1+BM/t9SSP7Yebp8E9X1+CSX4wFfKAX+33kdcAuPK
- QJhA==
-X-Gm-Message-State: AOJu0YyQytHJE4wCAENt62aMvL1dLJClS50bsJa+4brPqtvqeVAi1auU
- 8jPSLfQytpe432Hd3anncU9fzVD0JEgrl9ipHxrjQaQkYC5pdbNytZ53IFxO5A47L4sU5ALDcFd
- bE900NGLLAQuaSFa1GED/dd9BAdR++Iht32tCU7gopItMOIncAbZPdFxcFyq0MilQk4Q1mc1oSJ
- LSJaABfgCwk9j/yif0Ho6Tu8XGyxZ7y9W8L2D+
-X-Gm-Gg: ASbGncsITO16PcREgrcK3yU7D1NxgxmGTD3jqZVGfLhrGbIL02gVkjJ/WzC672mpzJc
- ox2HIEYLUPaq3s1IibVdiEExcIIC9CPWef+9iT+RX7Xe1Oh6kHNKIPkPX0DP0nk5Q8BE9Go3gA0
- mAx/jA3j+qVOuWQEExqY7YcLCi0tATGWMAp4YKFzIqCgSQwJwSA2dC4topGaOPAUAQ/DrgtxOJ9
- gE+M7ibcJxssUUpa6Y39+e2IjF1V9GF5KfD5T+W7H9RSiL8YGW01fn2
-X-Received: by 2002:a05:600c:1c16:b0:434:a315:19c with SMTP id
- 5b1f17b1804b1-4361c3445a8mr31170375e9.3.1733934524960; 
- Wed, 11 Dec 2024 08:28:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF1NQSjtWwRbIgKj+KS2F0+VKRwFApGXkxJY9BRaohVm5M+WwGRd+Ack1uUA6b6Po3ix0qjOg==
-X-Received: by 2002:a05:600c:1c16:b0:434:a315:19c with SMTP id
- 5b1f17b1804b1-4361c3445a8mr31170085e9.3.1733934524448; 
- Wed, 11 Dec 2024 08:28:44 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4361ec75410sm16194305e9.1.2024.12.11.08.28.43
- for <qemu-devel@nongnu.org>
+ bh=Mv4+39/cFGoJE7L8lZWTi5JvZoPChXZESu684RPUKCc=;
+ b=lS3EivsG0BoOg/fqqlSuJQuFaoFRhD3imAV/T0Mk0lYN3FNMnZ5DgZuoUW0x1i7s6f
+ rPKWJIr8HKzWsDai351Z13z8ygoZ8ku0NczteyF/CflJURS+1S+AuWRbVvP9/n4NBj5V
+ CZn/0uFAA9aYAYauet50oCn6f+Rk2JwWjZG87wKeSb6auHJFZZ/iAasf7Kb6RtLYxjQd
+ DvYL48QdSODr7BwCmmfF6zqRKE9pXLNo1zfxNuIBDCt85ceKkN6aWJ3pJ/+lR2H6PcJV
+ 6C4bYi4Mah5sO11M10975kjEfb5QZWYEK/7nfQ/+yYcjzsVR2aVgMel1D+tUwsyBBf9Y
+ 88+Q==
+X-Gm-Message-State: AOJu0YxTTepR6YmxudqC2cOe6CEBvTnPNJ7INNggBhvGsBu0/KdmrDxo
+ wAc6KAFThwptJmSwKbwAQg/HDMVOBZMDNfkXd9cKTvws7Bl2K5VpdZxlVT1n9iHW7CIJC9aGAj2
+ R6bgK2gdi
+X-Gm-Gg: ASbGncsmGJaTJ49LNmlB2ra9kntrbqL6CCsIZRJSXIP0Mekrw70Jb7evemkMQbecMGh
+ sxAIqMN+LlMoc85+kJI01TmIuEnm0ZrcaWWuG8YbhdaHkJhmWAHHJx13VdrL7CLD7/7U13UaGih
+ bzpJVDoTR1JtzMf/hq8tG9WWIAekCao69WymV32n6dSumi7YGSKHKdZvdtHj1jxh4YhDoz34ue/
+ WCczeN8fNTijwWiKj6r0JhAZHGlEBEQM1iC66S7hsoNclCAFBYtS/4FrbpYLw==
+X-Google-Smtp-Source: AGHT+IErHSmEfGNAn/OMuGLr6UIdWt5R0d1XJkJ07FqFW5qQvFSh7jbMVtPhpaR7RWTO2nuR/cCvqg==
+X-Received: by 2002:a05:622a:590e:b0:467:681c:425f with SMTP id
+ d75a77b69052e-467892a260amr78255601cf.4.1733934689317; 
+ Wed, 11 Dec 2024 08:31:29 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.31.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:43 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:31:28 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/49] bql: check that the BQL is not dropped within marked
- sections
-Date: Wed, 11 Dec 2024 17:27:05 +0100
-Message-ID: <20241211162720.320070-36-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 11/69] target/arm: Convert disas_logic_reg to decodetree
+Date: Wed, 11 Dec 2024 10:29:38 -0600
+Message-ID: <20241211163036.2297116-12-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::836;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x836.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,112 +98,191 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Big QEMU Lock (BQL) is used to provide interior mutability to Rust
-code.  While BqlCell performs indivisible accesses, an equivalent of
-RefCell will allow the borrower to hold to the interior content for a
-long time.  If the BQL is dropped, another thread could come and mutate
-the data from C code (Rust code would panic on borrow_mut() instead).
-In order to prevent this, add a new BQL primitive that can mark
-BQL-atomic sections and aborts if the BQL is dropped within them.
+This includes AND, BIC, ORR, ORN, EOR, EON, ANDS, BICS (shifted reg).
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/qemu/main-loop.h | 15 +++++++++++++++
- stubs/iothread-lock.c    | 15 +++++++++++++++
- system/cpus.c            | 15 +++++++++++++++
- 3 files changed, 45 insertions(+)
+ target/arm/tcg/translate-a64.c | 117 ++++++++++++---------------------
+ target/arm/tcg/a64.decode      |   9 +++
+ 2 files changed, 51 insertions(+), 75 deletions(-)
 
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 5764db157c9..646306c272f 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -262,6 +262,21 @@ AioContext *iohandler_get_aio_context(void);
-  */
- bool bql_locked(void);
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index d92fe68299..ecc8899dd8 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7805,96 +7805,65 @@ static bool do_xpac(DisasContext *s, int rd, NeonGenOne64OpEnvFn *fn)
+ TRANS_FEAT(XPACI, aa64_pauth, do_xpac, a->rd, gen_helper_xpaci)
+ TRANS_FEAT(XPACD, aa64_pauth, do_xpac, a->rd, gen_helper_xpacd)
  
-+/**
-+ * bql_block: Allow/deny releasing the BQL
-+ *
-+ * The Big QEMU Lock (BQL) is used to provide interior mutability to
-+ * Rust code, but this only works if other threads cannot run while
-+ * the Rust code has an active borrow.  This is because C code in
-+ * other threads could come in and mutate data under the Rust code's
-+ * feet.
-+ *
-+ * @increase: Whether to increase or decrease the blocking counter.
-+ *            Releasing the BQL while the counter is nonzero triggers
-+ *            an assertion failure.
-+ */
-+void bql_block_unlock(bool increase);
-+
- /**
-  * qemu_in_main_thread: return whether it's possible to safely access
-  * the global state of the block layer.
-diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
-index d7890e5581c..54676598950 100644
---- a/stubs/iothread-lock.c
-+++ b/stubs/iothread-lock.c
-@@ -1,6 +1,8 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- 
-+static uint32_t bql_unlock_blocked;
-+
- bool bql_locked(void)
+-/* Logical (shifted register)
+- *   31  30 29 28       24 23   22 21  20  16 15    10 9    5 4    0
+- * +----+-----+-----------+-------+---+------+--------+------+------+
+- * | sf | opc | 0 1 0 1 0 | shift | N |  Rm  |  imm6  |  Rn  |  Rd  |
+- * +----+-----+-----------+-------+---+------+--------+------+------+
+- */
+-static void disas_logic_reg(DisasContext *s, uint32_t insn)
++static bool do_logic_reg(DisasContext *s, arg_logic_shift *a,
++                         ArithTwoOp *fn, ArithTwoOp *inv_fn, bool setflags)
  {
-     return false;
-@@ -12,4 +14,17 @@ void bql_lock_impl(const char *file, int line)
+     TCGv_i64 tcg_rd, tcg_rn, tcg_rm;
+-    unsigned int sf, opc, shift_type, invert, rm, shift_amount, rn, rd;
  
- void bql_unlock(void)
- {
-+    assert(!bql_unlock_blocked);
+-    sf = extract32(insn, 31, 1);
+-    opc = extract32(insn, 29, 2);
+-    shift_type = extract32(insn, 22, 2);
+-    invert = extract32(insn, 21, 1);
+-    rm = extract32(insn, 16, 5);
+-    shift_amount = extract32(insn, 10, 6);
+-    rn = extract32(insn, 5, 5);
+-    rd = extract32(insn, 0, 5);
+-
+-    if (!sf && (shift_amount & (1 << 5))) {
+-        unallocated_encoding(s);
+-        return;
++    if (!a->sf && (a->sa & (1 << 5))) {
++        return false;
+     }
+ 
+-    tcg_rd = cpu_reg(s, rd);
++    tcg_rd = cpu_reg(s, a->rd);
++    tcg_rn = cpu_reg(s, a->rn);
+ 
+-    if (opc == 1 && shift_amount == 0 && shift_type == 0 && rn == 31) {
+-        /* Unshifted ORR and ORN with WZR/XZR is the standard encoding for
+-         * register-register MOV and MVN, so it is worth special casing.
+-         */
+-        tcg_rm = cpu_reg(s, rm);
+-        if (invert) {
++    tcg_rm = read_cpu_reg(s, a->rm, a->sf);
++    if (a->sa) {
++        shift_reg_imm(tcg_rm, tcg_rm, a->sf, a->st, a->sa);
++    }
++
++    (a->n ? inv_fn : fn)(tcg_rd, tcg_rn, tcg_rm);
++    if (!a->sf) {
++        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
++    }
++    if (setflags) {
++        gen_logic_CC(a->sf, tcg_rd);
++    }
++    return true;
 +}
 +
-+void bql_block_unlock(bool increase)
++static bool trans_ORR_r(DisasContext *s, arg_logic_shift *a)
 +{
-+    uint32_t new_value;
++    /*
++     * Unshifted ORR and ORN with WZR/XZR is the standard encoding for
++     * register-register MOV and MVN, so it is worth special casing.
++     */
++    if (a->sa == 0 && a->st == 0 && a->rn == 31) {
++        TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
++        TCGv_i64 tcg_rm = cpu_reg(s, a->rm);
 +
-+    assert(bql_locked());
-+
-+    /* check for overflow! */
-+    new_value = bql_unlock_blocked + increase - !increase;
-+    assert((new_value > bql_unlock_blocked) == increase);
-+    bql_unlock_blocked = new_value;
- }
-diff --git a/system/cpus.c b/system/cpus.c
-index 1c818ff6828..ba633c7688b 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -514,6 +514,20 @@ bool qemu_in_vcpu_thread(void)
++        if (a->n) {
+             tcg_gen_not_i64(tcg_rd, tcg_rm);
+-            if (!sf) {
++            if (!a->sf) {
+                 tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
+             }
+         } else {
+-            if (sf) {
++            if (a->sf) {
+                 tcg_gen_mov_i64(tcg_rd, tcg_rm);
+             } else {
+                 tcg_gen_ext32u_i64(tcg_rd, tcg_rm);
+             }
+         }
+-        return;
++        return true;
+     }
  
- QEMU_DEFINE_STATIC_CO_TLS(bool, bql_locked)
- 
-+static uint32_t bql_unlock_blocked;
-+
-+void bql_block_unlock(bool increase)
-+{
-+    uint32_t new_value;
-+
-+    assert(bql_locked());
-+
-+    /* check for overflow! */
-+    new_value = bql_unlock_blocked + increase - !increase;
-+    assert((new_value > bql_unlock_blocked) == increase);
-+    bql_unlock_blocked = new_value;
-+}
-+
- bool bql_locked(void)
- {
-     return get_bql_locked();
-@@ -540,6 +554,7 @@ void bql_lock_impl(const char *file, int line)
- void bql_unlock(void)
- {
-     g_assert(bql_locked());
-+    g_assert(!bql_unlock_blocked);
-     set_bql_locked(false);
-     qemu_mutex_unlock(&bql);
+-    tcg_rm = read_cpu_reg(s, rm, sf);
+-
+-    if (shift_amount) {
+-        shift_reg_imm(tcg_rm, tcg_rm, sf, shift_type, shift_amount);
+-    }
+-
+-    tcg_rn = cpu_reg(s, rn);
+-
+-    switch (opc | (invert << 2)) {
+-    case 0: /* AND */
+-    case 3: /* ANDS */
+-        tcg_gen_and_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    case 1: /* ORR */
+-        tcg_gen_or_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    case 2: /* EOR */
+-        tcg_gen_xor_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    case 4: /* BIC */
+-    case 7: /* BICS */
+-        tcg_gen_andc_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    case 5: /* ORN */
+-        tcg_gen_orc_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    case 6: /* EON */
+-        tcg_gen_eqv_i64(tcg_rd, tcg_rn, tcg_rm);
+-        break;
+-    default:
+-        assert(FALSE);
+-        break;
+-    }
+-
+-    if (!sf) {
+-        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
+-    }
+-
+-    if (opc == 3) {
+-        gen_logic_CC(sf, tcg_rd);
+-    }
++    return do_logic_reg(s, a, tcg_gen_or_i64, tcg_gen_orc_i64, false);
  }
+ 
++TRANS(AND_r, do_logic_reg, a, tcg_gen_and_i64, tcg_gen_andc_i64, false)
++TRANS(ANDS_r, do_logic_reg, a, tcg_gen_and_i64, tcg_gen_andc_i64, true)
++TRANS(EOR_r, do_logic_reg, a, tcg_gen_xor_i64, tcg_gen_eqv_i64, false)
++
+ /*
+  * Add/subtract (extended register)
+  *
+@@ -8411,11 +8380,9 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+                 /* Add/sub (shifted register) */
+                 disas_add_sub_reg(s, insn);
+             }
+-        } else {
+-            /* Logical (shifted register) */
+-            disas_logic_reg(s, insn);
++            return;
+         }
+-        return;
++        goto do_unallocated;
+     }
+ 
+     switch (op2) {
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 0e04ab6ce4..8e2949d236 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -716,6 +716,15 @@ XPACI           1 10 11010110 00001 010000 11111 rd:5
+ XPACD           1 10 11010110 00001 010001 11111 rd:5
+ 
+ # Logical (shifted reg)
++
++&logic_shift    rd rn rm sf sa st n
++@logic_shift    sf:1 .. ..... st:2 n:1 rm:5 sa:6 rn:5 rd:5  &logic_shift
++
++AND_r           . 00 01010 .. . ..... ...... ..... .....    @logic_shift
++ORR_r           . 01 01010 .. . ..... ...... ..... .....    @logic_shift
++EOR_r           . 10 01010 .. . ..... ...... ..... .....    @logic_shift
++ANDS_r          . 11 01010 .. . ..... ...... ..... .....    @logic_shift
++
+ # Add/subtract (shifted reg)
+ # Add/subtract (extended reg)
+ # Add/subtract (carry)
 -- 
-2.47.1
+2.43.0
 
 
