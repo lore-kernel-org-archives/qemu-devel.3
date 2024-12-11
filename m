@@ -4,96 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD6BE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 20:22:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08029E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 20:25:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLTDC-0001y8-FE; Wed, 11 Dec 2024 15:21:34 -0500
+	id 1tLTGp-0003F0-NR; Wed, 11 Dec 2024 15:25:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLTD8-0001wo-SY
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:21:32 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLTD6-0004hh-Es
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:21:30 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733948485;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLTGo-0003Eb-2m
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:25:18 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLTGm-00058V-Gh
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 15:25:17 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 1DB581F38E;
+ Wed, 11 Dec 2024 20:25:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733948713; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=QXmpF2jlAjHhWOojWhJpfNRHBGh/A6k5Uj8MiH2ewV0=;
- b=FbPdIDo1LaAgZjwNAvOnpQr1PjPqbvI0PGGrpPczPT2XNJLJ7lxapyeF5EW5VTEh3MMJmD
- zsDy2f3bMUNvcxDCFy+/c0cNH9w0EI7NSE4Yvia17qCZQ3aCNU4nghNygOACxsfd7ACW/l
- Xa6nE1hNZR2rGQPn9iTWOj1BGqVB8bI=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-YRuR_-d9Oa2VYzy8yRjbfw-1; Wed, 11 Dec 2024 15:21:16 -0500
-X-MC-Unique: YRuR_-d9Oa2VYzy8yRjbfw-1
-X-Mimecast-MFC-AGG-ID: YRuR_-d9Oa2VYzy8yRjbfw
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-6d8f14fc179so81365876d6.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 12:21:16 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733948475; x=1734553275;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QXmpF2jlAjHhWOojWhJpfNRHBGh/A6k5Uj8MiH2ewV0=;
- b=MH0Lu4yKltUzvpRfpJTAXI+U21UBYb1H7HLgroFh7oXEr0yU9zKfVIM6cZRpnFQ4P9
- /bIOetDWm8vrGE0eFXmaNSSe7VO+5DiBrfr1D+jHdGS+fKl8A48blLASbNJNF4eJBacN
- aGBm0xDxtyQ5Iro9BG91hblQfgUFv3BEyLsLIiNiBVX/ezZcWET07lemnmqy2TYBS4iz
- 5vd5NXE+FYjUvXwX4sYusY2wvCR4ZJaHLdooVi9sKT0MViQUpaDX+0EUTPi1Ul5BzL9J
- 1wiv9U7HsEaBnqtfYSy/5LEW8NAK3vNHsdbqbavEkfIW86IJAi2op9ohLt07J0KEWChQ
- nxfQ==
-X-Gm-Message-State: AOJu0YySV/YjDT2JvRIwPhe66xjbxEQoni1I04giPCf0eC4sFEhtlIU6
- 4ADIQVomDeKFXGZpYnVFE0BYAp28dD0IzRjS2OLGi/SxwDKmFRj61enHH7VnBSg8vZSUPwII2NK
- oAYR+682PPyFRnHN34earsgZi/2+miEEsAk/LiqBigvn+xAQYVboF5e9+yLNCUhv8Uh/O0Mr46E
- rIUwmLrFpC/ecShyLyuPWSaNBh3AFkiPkkQQ==
-X-Gm-Gg: ASbGncuQWI/BCcniNeOrG2QLA94jS/feRrikCpZ2hHpG8LNrOnAoYIgCMOlE+l+PoyS
- JtALNxVRkhL83j1LBM0k4Wybqzf5Ee10XekLbOa2pUH1gQ8/9d+nZHAOytVdYpPJV80kHH69tCa
- 4t0E7K8soWFcSia+BFGlm+rLXgjmBz41Upm2YADBm52oLTD/FrTRfRD7tVmIe8SR1I8DFtfguu/
- MENGN9NVQAKJxGR5hCXpFDpogfDIUHRTziLyvj+hGGfnV/cKSnB/cCiwk49+An6dNFJCQyIICH0
- l+My54HmNmePxXI=
-X-Received: by 2002:a05:620a:808b:b0:7b6:cae1:a3cc with SMTP id
- af79cd13be357-7b6f2542d8bmr114567085a.19.1733948475706; 
- Wed, 11 Dec 2024 12:21:15 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFPQe7d5AZLhDUScjMCSpininXujCJzGs5ce3JxVJYaGmWakLfFrI448vO56gpo8qbuR55zDA==
-X-Received: by 2002:a05:620a:808b:b0:7b6:cae1:a3cc with SMTP id
- af79cd13be357-7b6f2542d8bmr114562985a.19.1733948475330; 
- Wed, 11 Dec 2024 12:21:15 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d91626e4bfsm31320996d6.130.2024.12.11.12.21.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 12:21:14 -0800 (PST)
-Date: Wed, 11 Dec 2024 15:21:12 -0500
-From: Peter Xu <peterx@redhat.com>
-To: qemu-devel@nongnu.org
+ bh=dg0N0E4nAhfFtioca73H+2DJZD2wGY9tMFsCxVJIc2E=;
+ b=L03dn5kY49BnEgXKbMIwEH4dofJ7Yk1f5zqKGp4mN6Ycxzd+Nq/hpJNk2N8+SFiFJtkXLQ
+ IpuFwD93Uxfs9FqalNLqfZiURVyu4jgEcy6kiNWisTI8C/2BBu14+m5Zm0W8q4mVtCFu41
+ kEPebomWLfpQm9m+j7MQWSnbg67GqsI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733948713;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dg0N0E4nAhfFtioca73H+2DJZD2wGY9tMFsCxVJIc2E=;
+ b=onxZNoro1U7hBXwVEje/X89LkQZ7TcxH5ywYA783XyYcYDVGTpXQjI6sQiM/L3k3g6xqJl
+ Bb1Pp/ghgIScOqAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1733948713; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dg0N0E4nAhfFtioca73H+2DJZD2wGY9tMFsCxVJIc2E=;
+ b=L03dn5kY49BnEgXKbMIwEH4dofJ7Yk1f5zqKGp4mN6Ycxzd+Nq/hpJNk2N8+SFiFJtkXLQ
+ IpuFwD93Uxfs9FqalNLqfZiURVyu4jgEcy6kiNWisTI8C/2BBu14+m5Zm0W8q4mVtCFu41
+ kEPebomWLfpQm9m+j7MQWSnbg67GqsI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1733948713;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dg0N0E4nAhfFtioca73H+2DJZD2wGY9tMFsCxVJIc2E=;
+ b=onxZNoro1U7hBXwVEje/X89LkQZ7TcxH5ywYA783XyYcYDVGTpXQjI6sQiM/L3k3g6xqJl
+ Bb1Pp/ghgIScOqAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 8FF4013927;
+ Wed, 11 Dec 2024 20:25:12 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id dM6JFSj1WWdPHQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 11 Dec 2024 20:25:12 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Maxim Levitsky <mlevitsk@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH 3/3] scripts/qemu-gdb: Support coroutine dumps in coredumps
-Message-ID: <Z1n0OHYbaTW34m3y@x1n>
+ Peter Maydell <peter.maydell@linaro.org>, peterx@redhat.com, Paolo Bonzini
+ <pbonzini@redhat.com>, Maxim Levitsky <mlevitsk@redhat.com>
+Subject: Re: [PATCH 0/3] scripts/qemu-gdb: Make coroutine dumps to work with
+ coredumps
+In-Reply-To: <20241211201739.1380222-1-peterx@redhat.com>
 References: <20241211201739.1380222-1-peterx@redhat.com>
- <20241211201739.1380222-4-peterx@redhat.com>
+Date: Wed, 11 Dec 2024 17:25:10 -0300
+Message-ID: <87pllyezmh.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241211201739.1380222-4-peterx@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-2.87 / 50.00]; BAYES_HAM(-1.57)[92.21%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[8]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,132 +117,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 11, 2024 at 03:17:39PM -0500, Peter Xu wrote:
-> Dumping coroutines don't yet work with coredumps.  Let's make it work.
-> 
-> We still kept most of the old code because they can be either more
-> flexible, or prettier.  Only add the fallbacks when they stop working.
-> 
-> Currently the raw unwind is pretty ugly, but it works, like this:
-> 
-> (gdb) qemu bt
-> Coroutine at 0x7fc474728748:
+Peter Xu <peterx@redhat.com> writes:
 
-It didn't get commited.. I forgot to indent.  It looks like this:
+> Coroutines are used in many cases in block layers. It's also used in live
+> migration when on destination side, and it'll be handy to diagnose crashes
+> within a coroutine when we want to also know what other coroutines are
+> doing.
 
-  (gdb) qemu bt
-  #0  process_incoming_migration_co (opaque=0x0) at ../migration/migration.c:788
-  #1  0x000055cf3894d4d9 in coroutine_trampoline (i0=1565638480, i1=21967) at ../util/coroutine-ucontext.c:175
-  #2  0x00007fc481f72f40 in ??? () at /lib64/libc.so.6
-  #3  0x00007ffc0c74a520 in ??? ()
-  #4  0x0000000000000000 in ??? ()
-  Coroutine at 0x7fc474728748:
-  #0      qemu_coroutine_switch + 120
-  #1      qemu_aio_coroutine_enter + 357
-  #2      qemu_coroutine_enter + 35
-  #3      migration_incoming_process + 44
-  #4      migration_ioc_process_incoming + 491
-  #5      migration_channel_process_incoming + 146
-  #6      socket_accept_incoming_migration + 119
-  #7      qio_net_listener_channel_func + 132
-  #8      qio_channel_fd_source_dispatch + 79
-  #9      g_main_context_dispatch_unlocked.lto_priv + 316
-  #10     g_main_context_dispatch + 37
-  #11     glib_pollfds_poll + 91
-  #12     os_host_main_loop_wait + 129
-  #13     main_loop_wait + 204
-  #14     qemu_main_loop + 42
-  #15     qemu_default_main + 20
-  #16     main + 41
-  #17     __libc_start_call_main + 120
-  #18     __libc_start_main_impl + 139
+Not sure if you've seen this message on the list:
 
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  scripts/qemugdb/coroutine.py | 50 +++++++++++++++++++++++++++++++-----
->  1 file changed, 43 insertions(+), 7 deletions(-)
-> 
-> diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
-> index 20f76ed37b..b29ee16205 100644
-> --- a/scripts/qemugdb/coroutine.py
-> +++ b/scripts/qemugdb/coroutine.py
-> @@ -46,9 +46,30 @@ def get_jmpbuf_regs(jmpbuf):
->          'r15': jmpbuf[JB_R15],
->          'rip': glibc_ptr_demangle(jmpbuf[JB_PC], pointer_guard) }
->  
-> -def bt_jmpbuf(jmpbuf):
-> -    '''Backtrace a jmpbuf'''
-> -    regs = get_jmpbuf_regs(jmpbuf)
-> +def symbol_lookup(addr):
-> +    # Example: "__clone3 + 44 in section .text of /lib64/libc.so.6"
-> +    result = gdb.execute(f"info symbol {hex(addr)}", to_string=True).strip()
-> +    return result.split(" in ")[0]
-> +
-> +def dump_backtrace(regs):
-> +    '''
-> +    Backtrace dump with raw registers, mimic GDB command 'bt'.
-> +    '''
-> +    # Here only rbp and rip that matter..
-> +    rbp = regs['rbp']
-> +    rip = regs['rip']
-> +    i = 0
-> +
-> +    while rbp:
-> +        print(f"#{i}\t{symbol_lookup(rip)}")
-> +        rip = gdb.parse_and_eval(f"*(uint64_t *)(uint64_t)({hex(rbp)} + 8)")
-> +        rbp = gdb.parse_and_eval(f"*(uint64_t *)(uint64_t)({hex(rbp)})")
-> +        i += 1
-> +
-> +def dump_backtrace_live(regs):
-> +    '''
-> +    Backtrace dump with gdb's 'bt' command, only usable in a live session.
-> +    '''
->      old = dict()
->  
->      # remember current stack frame and select the topmost
-> @@ -69,6 +90,17 @@ def bt_jmpbuf(jmpbuf):
->  
->      selected_frame.select()
->  
-> +def bt_jmpbuf(jmpbuf):
-> +    '''Backtrace a jmpbuf'''
-> +    regs = get_jmpbuf_regs(jmpbuf)
-> +    try:
-> +        # This reuses gdb's "bt" command, which can be slightly prettier
-> +        # but only works with live sessions.
-> +        dump_backtrace_live(regs)
-> +    except:
-> +        # If above doesn't work, fallback to poor man's unwind
-> +        dump_backtrace(regs)
-> +
->  def co_cast(co):
->      return co.cast(gdb.lookup_type('CoroutineUContext').pointer())
->  
-> @@ -101,10 +133,14 @@ def invoke(self, arg, from_tty):
->  
->          gdb.execute("bt")
->  
-> -        if gdb.parse_and_eval("qemu_in_coroutine()") == False:
-> -            return
-> -
-> -        co_ptr = gdb.parse_and_eval("qemu_coroutine_self()")
-> +        try:
-> +            # This only works with a live session
-> +            co_ptr = gdb.parse_and_eval("qemu_coroutine_self()")
-> +            if co_ptr == False:
-> +                return
-> +        except:
-> +            # Fallback to use hard-coded ucontext vars if it's coredump
-> +            co_ptr = gdb.parse_and_eval("co_tls_current")
->  
->          while True:
->              co = co_cast(co_ptr)
-> -- 
-> 2.47.0
-> 
-
--- 
-Peter Xu
+https://lore.kernel.org/r/f0ebccca-7a17-4da8-ac4a-71cf6d69abc3@mtasv.net
 
 
