@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFCF2E77182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A113EE7717D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZs-0008Li-9C; Wed, 11 Dec 2024 11:28:44 -0500
+	id 1tLPa0-0000yX-AI; Wed, 11 Dec 2024 11:28:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZn-0007lf-9N
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:39 -0500
+ id 1tLPZx-0000dC-JA
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZl-0000ZB-EU
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:38 -0500
+ id 1tLPZv-0000al-T4
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934516;
+ s=mimecast20190719; t=1733934527;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5OIwR35d63e1rEw4wpchzcthjW0MxeFOPrWTnC7Wi88=;
- b=L9kzaSukodJfhdKO+o7A23ikWWsWe/l4rFcU6mg7gs18IeBKntM7e1Ll2IeS4/zBpZdavx
- Ln2aP7O82P3x3IIpAgLlZsvOccy0oM97VRUhIODQjeWJzeYYX22MCuEvrVYYO7rVkba6Jd
- vowu7eE75Mvuo9glCcCGk8HI1+ekCUY=
+ bh=1qS4FLutt/4Sk0zExJZjpAJYdJnqb7SMdrl1fvxcvDM=;
+ b=Dalm2dAyqoPE2vuKU6XKzA9jDccXBROf2ZvX1vvFs6az9fF2TjuOW8hswwVpkfYYe9Mq8B
+ GlKjpARx//eE7TKssHLyC7Pbdxvt+xRcA/RJybQsuNWvMG0fDJ8cxFd5E4bQJZ177D+y70
+ 0cU0ow2e7WxG86geWPePiu/uOXpBp9k=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-47-BCfykE_XO0uqv_nP199CCA-1; Wed, 11 Dec 2024 11:28:35 -0500
-X-MC-Unique: BCfykE_XO0uqv_nP199CCA-1
-X-Mimecast-MFC-AGG-ID: BCfykE_XO0uqv_nP199CCA
+ us-mta-133-iwXdbfABMma-r-59NgVI3g-1; Wed, 11 Dec 2024 11:28:44 -0500
+X-MC-Unique: iwXdbfABMma-r-59NgVI3g-1
+X-Mimecast-MFC-AGG-ID: iwXdbfABMma-r-59NgVI3g
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-38639b4f19cso2567934f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:35 -0800 (PST)
+ ffacd0b85a97d-38634103b0dso2810435f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934514; x=1734539314;
+ d=1e100.net; s=20230601; t=1733934523; x=1734539323;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5OIwR35d63e1rEw4wpchzcthjW0MxeFOPrWTnC7Wi88=;
- b=Vqf+EgPNshzxLgbzN+s2d798erHatUIDF9vOYgyS3xykFpynZzMK6B/NcHryQfWpS3
- kx5yYQhBkSU27bK/TPRYb0OgEC+D17KHvsE+q6aBwSeiAzYRCi0hqDXI1E1zsMNWid7S
- NZqqoeEy70nIplYsaU8H23rDaBuNqm/ji1rNNMbdXNq6n6hChH4TamgvD/kPKV/1GOM6
- HnARXLR73ne7C1cwRkF+v0D1aXd5stfpLBtlVlrWXIdqewsU//xmjnF2eAql+Aw96UyI
- YHlZ7Wd7gliQVeqsmCfs5Jro+YgTd/G6Q5hru//yNxZrjvq73s/9pwU6M22i2sw7TJmj
- djcg==
-X-Gm-Message-State: AOJu0YzgP7zrnqNXM5B4KihizVcZmTEXXzCAawTLjXdgpV1fd81DTGuG
- oqvAriV64szQA4kkH1VsyTV7YMhQDcBUlkfk1x6dzogxpx6ElC2eYaDOSrCWGaxG01IERjRALd0
- fOZ/74EIJokSnaMCsOpQvdgQ0umYNPooOFO8GK2Qu+K7RnkIWvuE8si5bSlESjEIpyc8L7iiCI9
- fylL4hdLWo6gAPulzgL/HJycRjJ/zePR94rXp0
-X-Gm-Gg: ASbGncsROq3+KYBSqQddFsXwQ1EX/cfJNbXsTWHrbulegcEDNTQbuCATce3lEO0QqwC
- 0uJPGyaHFpLUCcMQaZPXsPq1b5m3fDRTliwb5/I8C7xkehbtHWeR2dq2WdrpFFGTULGbr8xuZ4l
- G9K4QVj9Bj4fmruLERa+mqbGtkVLvoExOBzUIZWWdWTsy7JMEsS2V8RKWJ7MvPYfO0KWu1Bgn/r
- emI280ykaZzlL8rHcqD1INRilWcPfK0Od1gZTDOMx3h3PQZ1BGyAYRT
-X-Received: by 2002:a5d:47c9:0:b0:385:e2d5:cdf2 with SMTP id
- ffacd0b85a97d-3864ce96d24mr2798066f8f.19.1733934513809; 
- Wed, 11 Dec 2024 08:28:33 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE7/QgjT1Pp9NCd7DV7Kt51LP7hQ4uWkoHPTs2nKS9PEidkIuOl+AQ8Hho/kCDMDXVOIP82oQ==
-X-Received: by 2002:a5d:47c9:0:b0:385:e2d5:cdf2 with SMTP id
- ffacd0b85a97d-3864ce96d24mr2798048f8f.19.1733934513406; 
- Wed, 11 Dec 2024 08:28:33 -0800 (PST)
+ bh=1qS4FLutt/4Sk0zExJZjpAJYdJnqb7SMdrl1fvxcvDM=;
+ b=WMm6Lo0PYmXxq/uJaFBtDWxqsGO3obOJb4B4MGrkY/JaLngtHRyFM20Ovj89rOpKQv
+ E4p2KfQR1Tvg2v4EYmyxG8byX3FJsmyOyivfXzwp8MsvVyhHVrNTMKICOZEO2IhcUq5o
+ 5pwZl9Zgn22kralLANdHC6speyjdxIb8vpw6t8SDfmgdjrjirz3j6JSsB853Zv0x5E6G
+ /SG2vm6eCVl/Yf4NEuCoiNEoaldjA3Hpv3znbD0Ah4M5i9jKSTAFMSIQ9rGHJfIL9gl2
+ ucHu3983EYmqf5Vx9/VAIlfuuzjUbpHO/MdefkTv6qu/8EbsmcqM3LAvhnmaC53N/hiK
+ b+Dg==
+X-Gm-Message-State: AOJu0Yy+bsyF6H9+Q/u4SlPD1vbBmZkD0pwk0JoIWvaOp31eKajIKmfZ
+ IuHpoyxrFw3mgrKQ1N+NCG60Opt75/lKp6SiulSMPVpqKnH6O+r1ynZF8XeN6Ynwpb14nFa7ddz
+ Mpf2NS6Ns3TZUl0+uHMwJGRoomXc8VKGCq5Ne311kYPmUVLR+8Tpf8Jx7Q/mlEtHNkl267ogLd/
+ nJViRWoidpLg5XokICSIF+lKZ6mukxfqwVaGia
+X-Gm-Gg: ASbGnctDjBkbtqYE8a3b3MKVEQLAisbnAu52mc+JkcZ4T0pkAkzzzMcdO0Whmi5zIx7
+ 5qSGI9PmIObmk7KkP1ymx42BZj9JHb2dkH0adbh4x6lhh86Y8KzXBQNL/fAplk7svCgj44EMjD7
+ tk6WE2rgCDZ5sBecIVZQmiouI5bokyHJZjD/YzlcT9G6JbD38QDoNeipXjwnTclW22yrSzHIW6/
+ IYazPhQHHkTaejkOHkQDqAdwpOyft2+bPyfBroEluUISew8HaEyUiBA
+X-Received: by 2002:a05:6000:1fad:b0:382:4b2a:4683 with SMTP id
+ ffacd0b85a97d-3878768842fmr240687f8f.2.1733934522757; 
+ Wed, 11 Dec 2024 08:28:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHKkrbbkNT4OV2i5Il92UD68pQBbGj/9xVKbgcwTXTooiAB5o8AxUnKC6/SaH7JaqjDw2D37A==
+X-Received: by 2002:a05:6000:1fad:b0:382:4b2a:4683 with SMTP id
+ ffacd0b85a97d-3878768842fmr240667f8f.2.1733934522309; 
+ Wed, 11 Dec 2024 08:28:42 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514dadsm1614319f8f.68.2024.12.11.08.28.32
+ ffacd0b85a97d-387824c50b7sm1608536f8f.57.2024.12.11.08.28.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:32 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:40 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 30/49] target/sparc: Replace type_register() with
- type_register_static()
-Date: Wed, 11 Dec 2024 17:27:00 +0100
-Message-ID: <20241211162720.320070-31-pbonzini@redhat.com>
+Subject: [PULL 34/49] qom/object: Remove type_register()
+Date: Wed, 11 Dec 2024 17:27:04 +0100
+Message-ID: <20241211162720.320070-35-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -110,29 +109,82 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Zhao Liu <zhao1.liu@intel.com>
 
-Replace type_register() with type_register_static() because
-type_register() will be deprecated.
+At present, type_register() and type_register_static() are identical,
+although their documentation expects the *_static variant to accept
+the Typeinfo with the strings that have the static lifetime.
+
+However, the code implementation doesn't have any check or guarantee for
+static lifetime. In fact, this is unnecessary because type_new()
+duplicates all strings, thereby taking ownership of them.
+
+Therefore, type_register() and type_register_static() are redundant, so
+one of them should be removed.
+
+Since the changes required to remove type_register() were smaller,
+type_register() was replaced with type_register_static() throughout the
+code base.  Drop its definition, and delete the requirement about string
+lifetime from the documentation.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241029085934.2799066-13-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20241029085934.2799066-17-zhao1.liu@intel.com
 ---
- target/sparc/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/qom/object.h | 14 --------------
+ qom/object.c         |  7 +------
+ 2 files changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index dd7af86de73..adba24af2c6 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -1008,7 +1008,7 @@ static void sparc_register_cpudef_type(const struct sparc_def_t *def)
-         .class_data = (void *)def,
-     };
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 43c135984a6..a201c9712a1 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -880,24 +880,10 @@ const char *object_get_typename(const Object *obj);
+  * type_register_static:
+  * @info: The #TypeInfo of the new type.
+  *
+- * @info and all of the strings it points to should exist for the life time
+- * that the type is registered.
+- *
+  * Returns: the new #Type.
+  */
+ Type type_register_static(const TypeInfo *info);
  
--    type_register(&ti);
-+    type_register_static(&ti);
-     g_free(typename);
+-/**
+- * type_register:
+- * @info: The #TypeInfo of the new type
+- *
+- * Unlike type_register_static(), this call does not require @info or its
+- * string members to continue to exist after the call returns.
+- *
+- * Returns: the new #Type.
+- */
+-Type type_register(const TypeInfo *info);
+-
+ /**
+  * type_register_static_array:
+  * @infos: The array of the new type #TypeInfo structures.
+diff --git a/qom/object.c b/qom/object.c
+index 9edc06d391f..c7660f9a097 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -175,17 +175,12 @@ static TypeImpl *type_register_internal(const TypeInfo *info)
+     return ti;
  }
  
+-TypeImpl *type_register(const TypeInfo *info)
++TypeImpl *type_register_static(const TypeInfo *info)
+ {
+     assert(info->parent);
+     return type_register_internal(info);
+ }
+ 
+-TypeImpl *type_register_static(const TypeInfo *info)
+-{
+-    return type_register(info);
+-}
+-
+ void type_register_static_array(const TypeInfo *infos, int nr_infos)
+ {
+     int i;
 -- 
 2.47.1
 
