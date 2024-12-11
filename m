@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AC60E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 06:41:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4939DE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 06:41:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLGLc-0007Fu-6h; Wed, 11 Dec 2024 01:37:24 -0500
+	id 1tLGNh-0001bh-LL; Wed, 11 Dec 2024 01:39:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGLX-0007AK-Gc
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:37:21 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGNZ-0001L2-Ke
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:39:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGLV-0000ZV-GG
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:37:19 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLGNV-0000fg-HQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 01:39:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733899036;
+ s=mimecast20190719; t=1733899160;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UqA9i3tjJMDAjaoOUbpXYGF4QW0YsxxNvnVY6xKL2c4=;
- b=DuSXQU+e7kPm3KToV7WgdigDGE6yzdM92mv7ETwlu7PXNEr0T+Nu3G7xl44ieQxhBQ+O7T
- H3meTfZArtp8Atrx14r5WQdpsWG5Fu6gC0oSVz3Q9PgiUQfDAUprmnVNIpC7Takaox1wP5
- qJyOAFcfRuB0cRK+uI6UGSITeEeJxuk=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UXnWtbx06o0UTk1/qIEPiBZDQledSmt1TCdALnCN/Cc=;
+ b=WeUYC4eBj1OjWR/IjK3u+ou5p7UQT5FRFuwlHMLIaLG3hgslN+NqMQrKIBourKIrnrx9ih
+ iHPkp0vvIWQgv3Laf5njS66Q7LBJ1DIV/3zBcRH5070JsmXDIe6SUMgYsVD/mR6xgSvoiX
+ vvwrAwzZc9mx5+iSiTvfhMVrPaiR2vw=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-643-YLEORyY5NuC8IJooEEopYw-1; Wed, 11 Dec 2024 01:37:15 -0500
-X-MC-Unique: YLEORyY5NuC8IJooEEopYw-1
-X-Mimecast-MFC-AGG-ID: YLEORyY5NuC8IJooEEopYw
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-aa698b61931so282418166b.2
- for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 22:37:15 -0800 (PST)
+ us-mta-680-S1hnopwbM2Chdl3HVnFPbg-1; Wed, 11 Dec 2024 01:39:16 -0500
+X-MC-Unique: S1hnopwbM2Chdl3HVnFPbg-1
+X-Mimecast-MFC-AGG-ID: S1hnopwbM2Chdl3HVnFPbg
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa6a1bf7a82so177987666b.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Dec 2024 22:39:15 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733899034; x=1734503834;
+ d=1e100.net; s=20230601; t=1733899155; x=1734503955;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=UqA9i3tjJMDAjaoOUbpXYGF4QW0YsxxNvnVY6xKL2c4=;
- b=BFVN16I7i/cqtyqmx0vZBN5711Cnhs96GXU82waqukU/q2ERBkMD11OHfdJT6i8tzy
- qgTgo4hDpvTaZSFB+YWiXtiV4iMQgERNroXC1lA7ThH5TPEPOBS4cjlmJz+NnJT5GD6Q
- E05W9/9fpnmTXp6kCDKAxiA68h0u8369qP6hLXWYs3fxak2SaTqijEDWRq8Ujc1tJ/gs
- 1HCeo/fy8oKWc6Y6Ie0b+BlJDtOR7qogoNhL/aRHrNeXZKsWZMtDaJbpU9WsqjRovtSD
- soimY0jEyn22tGfXqMtyQ8FtCNqD0+2gaJf0HyB1qdvJ9U69tmr4PAKDWylua6yAFToD
- Dc0g==
+ bh=UXnWtbx06o0UTk1/qIEPiBZDQledSmt1TCdALnCN/Cc=;
+ b=WKlhNVAg1wqd1XnVvMWxzmbe9YGd/Cttxn/nNMjbE7CfbWyZobtUgXXXL0CiJf7Nfx
+ Ilair7VdvX3xYRRqBqCKWXdIdWROx1JqKbYNPj84F+YodBdXcItk0yY8k6DHKAuCv7HK
+ cWu+12qBVAhSG6cXPA1VKe5VqpwdFdZHj7Aav9vtbhsG50vJiAX9k3YgtUoYioeq1yvv
+ NAUZLonPEX8bIKHdVT+aebr/kdoygZ3Y8Sl1vLYBq+idJqEUh1nhl9D9/lBqtcqQom/S
+ mmUjcUc5hsnchhQRJ735bgzOCMcYExG1PTqxH5yZhPCCzl1uflZZJxSHWraEpG3FmANW
+ Ci4A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW1K9pjzXFb133xB9tUh9GX1gW8rEzoWxUesEISHoNhwG4REuHVoR28eR0PachxIjVESFAbhhFfvw94@nongnu.org
-X-Gm-Message-State: AOJu0YyRWa3v5t3x1NSdi7eAiDz7UfQAMsSheVMONdN0wWbeecZo/7zZ
- t16UrIbhFss5JEIMiMTM5LNZMfXm2Pb1kdRsTEMB/52qWfwdFjfMV48xgx3VnIVCsnzbI1KxWwf
- sunSskVKtSbiIu6J0XmZR2zxDTUq1+uEBl+xEjuXrUnjXi843bI5Z
-X-Gm-Gg: ASbGncsrmjCjCLAUs8N7hrY74oOQQnY04kKRNLUKrRrThJMTHbpTTba3NH+YewTSO7A
- LV1OUnMcPVvPayyzejgTVqUFlToNbwv92Yt/Gy71xez0vQApqnmgmNDAMdiP3nBByXDo9SLuf+O
- nHZcoUIR3v5eeTkWPieV5o4JeEBUdRzvGGkZ4tggXQ4m1sd1G86vHLdaZCnBOMU7E7AD6lCW1sm
- Ik1gSxni6lwac71Vj0Yn0I0VDf0rF5wAayqzy8dLFvSi3GOoX+wWpb+LFWLh0KppuPnVXj/8/rJ
- pa/2aBs=
-X-Received: by 2002:a17:906:6a0e:b0:aa6:96c4:ad58 with SMTP id
- a640c23a62f3a-aa6b151887fmr153545366b.61.1733899034077; 
- Tue, 10 Dec 2024 22:37:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHKGaCobwfgqx/24UVhsxi9BCf8G3FI9rpOkyScJsGGBtZf9x4on8oJdIPPWaLN8AXMV6qR0w==
-X-Received: by 2002:a17:906:6a0e:b0:aa6:96c4:ad58 with SMTP id
- a640c23a62f3a-aa6b151887fmr153542766b.61.1733899033642; 
- Tue, 10 Dec 2024 22:37:13 -0800 (PST)
+ AJvYcCU/q/+Rsr5u0ZrSXA1QjlJ3IABVxVP2k115UDwJMZTIfWLffMQQsRxiim6i6Ft3jasi/OOc5ctGmeo9@nongnu.org
+X-Gm-Message-State: AOJu0Yy4vMdCKg/J9/tz3UUSgfhkw5BsZUNstejL/7+GD1DHTG7TTbtr
+ OYJoAZGo2lqLdpgt9Sb2/mDDc1LnCmWDWVTc+PFJREI3eYaS4gHAhqVXJjwxyOExg4DnqfTdxmu
+ +8izn5oQJv+cac74udVBxYH7MSLLJoBbNRi6nZI4zkSsI01oq6+lN
+X-Gm-Gg: ASbGnct//WsW8AAXepa69ZSG6Z9OAZscqONzvV2J2ux/hYiv2ce12iWfN8NBk46sxgT
+ zCycRbWoDDABZ9d2eMq02BKblGpY8oM+wVZZfwLnwAhvZuNjHCHB7SAkWLgY+UzPrS2a1fY9nO1
+ ryH15XkQzIInmNmvwABy2Cnl89dGsL8MfRE6NU4XvaV/zKN1/lN4QybD7yRQo1EUcth4WueU8QC
+ uEHOytVZ7lhqEXsxtS/l3RCwcSvgwPoRP32CwhxJP2J4L3PEKtCndUAK21wnP5PUDAqfOKR8xgV
+ I+hW0kc=
+X-Received: by 2002:a17:906:1ba2:b0:aa6:8bb4:503d with SMTP id
+ a640c23a62f3a-aa6b115b189mr134675166b.2.1733899154744; 
+ Tue, 10 Dec 2024 22:39:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFEYJGViWShQTCtubw+/Lz85Tk7eHLenPcj/P2MrbiEcGNxF6Uku7jDl69Tb28p3cXsV4srkQ==
+X-Received: by 2002:a17:906:1ba2:b0:aa6:8bb4:503d with SMTP id
+ a640c23a62f3a-aa6b115b189mr134670666b.2.1733899154305; 
+ Tue, 10 Dec 2024 22:39:14 -0800 (PST)
 Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa682772365sm449668166b.200.2024.12.10.22.37.11
+ a640c23a62f3a-aa6701b08c2sm556535166b.124.2024.12.10.22.39.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Dec 2024 22:37:13 -0800 (PST)
-Message-ID: <31d205c5-9261-4453-ae6d-2af0c9e62072@redhat.com>
-Date: Wed, 11 Dec 2024 07:37:10 +0100
+ Tue, 10 Dec 2024 22:39:13 -0800 (PST)
+Message-ID: <0509c96e-46d0-45ca-a768-9d443499b648@redhat.com>
+Date: Wed, 11 Dec 2024 07:39:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 17/20] tests/qtest: move clock_steps to after checks
+Subject: Re: [PATCH 19/20] tests/functional: remove hacky sleep from the tests
 To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
@@ -109,7 +109,7 @@ Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>
 References: <20241210204349.723590-1-alex.bennee@linaro.org>
- <20241210204349.723590-18-alex.bennee@linaro.org>
+ <20241210204349.723590-20-alex.bennee@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -154,10 +154,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241210204349.723590-18-alex.bennee@linaro.org>
+In-Reply-To: <20241210204349.723590-20-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -183,27 +183,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/12/2024 21.43, Alex Bennée wrote:
-> In the qtest environment time will not step forward if the system is
-> paused (timers disabled) or we have no timer events to fire. As a
-> result VirtIO events are responded to directly and we don't need to
-> step time forward.
-> 
-> Potentially the clock_step calls could be removed all together but as
-> we may implement async behaviour later lets just move them to after
-> the principle check for now.
-> 
-> Future qtest patches will assert that time actually changes with a
-
-s/with/when/ ?
-
-> step is requested.
+> We have proper detection of prompts now so we don't need to guess with
+> sleep() sprinkled through the test. The extra step of calling halt is
+> just to flush the final bits of the log (although the last line is
+> still missed).
 > 
 > Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   tests/qtest/libqos/virtio.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   tests/functional/test_aarch64_virt.py | 22 ++++++++++------------
+>   1 file changed, 10 insertions(+), 12 deletions(-)
 
-With the description fixed:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
