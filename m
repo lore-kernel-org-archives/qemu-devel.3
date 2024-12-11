@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D94E77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD848E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZ5-0001fR-Nn; Wed, 11 Dec 2024 11:27:55 -0500
+	id 1tLPSv-0001ud-3r; Wed, 11 Dec 2024 11:21:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYu-0000VH-Ce
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYq-0000F2-Qt
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934460;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=W+KSm+Bbgkjh6xkJkmH8LuJ1hbwlcHQrSiZuvza+mjs=;
- b=Zd1W/44us+q9lBFz2LDiSdQItJK3R+vNJ3znRk5s8xo2aBsm5G3O+SgiO3zObo4MUhSvQS
- X0b0asYlfR7F+rvFZgaBMbd5Rb5oMZIW1TbvWYGlPKM6iKrvmWobQFTc5dlC+634EHiS/4
- 2r57PP75G3C7C7vrr1ExM4hy0Ka8FBc=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-Ew-Mg1QTMTKX1TSoKTGDmw-1; Wed, 11 Dec 2024 11:27:37 -0500
-X-MC-Unique: Ew-Mg1QTMTKX1TSoKTGDmw-1
-X-Mimecast-MFC-AGG-ID: Ew-Mg1QTMTKX1TSoKTGDmw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385e03f54d0so374150f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPSj-0001KQ-R7
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:22 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPSh-0007tM-7w
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:20 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385de9f789cso5071952f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934077; x=1734538877; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=WxD1Jy1Rj/MBN3Hz79N9s4ZRpfmRU1nfzEotTIZVleI=;
+ b=AhFQRpGqNnV7KIPPWT7WPsjPrqv9aaX9HuPZgTWKNR7f7/Vmjgoh2VztIu29Aq+umT
+ YNjEJBGczDBNu5P+my/6g0jSLkyDPy9gQzWM789QJbgvH1GJZlMBHHdGNG8zaZf6VKmY
+ hrktZ4gxmQl8axeSYmxVj/0keXu8dDdCYsYYjxvhlk8knbsLus9yfVtTchmZRrRpHgkA
+ MDUq/mssszXezpUWAnji3jPidXQ/1oCLl/YJsyMA1AEWl/d4AshKWj05mpp9ImnnszFf
+ WZs9evoiOU8Os4oAWOgqd41DQfHuW5bNMVvEWmHUn55byVHg6LAUeAjgJjt13/sin4zd
+ mHkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934456; x=1734539256;
+ d=1e100.net; s=20230601; t=1733934077; x=1734538877;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W+KSm+Bbgkjh6xkJkmH8LuJ1hbwlcHQrSiZuvza+mjs=;
- b=gApdWBFdy+c/4goy8oTbQRjCvVMGgEmZ9uUhF98MbDDeiXjeqySp5uy3WpwaAFlwDt
- L6Y7dQOdIGGyU2X/NNdps9gcWXLf4mhrLfQUsW3zuOYytGiUvGTmC72JOUTgqp9GgWFz
- kBRlodHu5OYvO9rCDvmvOpAyDOfTHs4VtWUrWiz563V66cA8dSC3pCLzAGFY+xqMpPCo
- rtElz3siQiNdjxpISzCNh/Q6s+jRcy35yK6FilQlk7a6nIvkOghN+WutEr2+NuGOQf9T
- KmkMBu//Ls1Pumked3imHuVidJEsYI+Fxo5+8zMCaqU+IHPN/o62CBNfq3+BxifHci1g
- Wq3A==
-X-Gm-Message-State: AOJu0Ywj5DWAJIevE7FeHNXQ+8fZAR5J090kU1GZPXaru0eOYyJUkJdO
- qHizudpV7UpI4gIR3tis3I9Xvkyu7CgPxRynRgrO5dJ+DsZEFnTrb9sE/5oUveaqHrgVsD/2nQ5
- 6cRU+0/cuFabgO508pwRs1nLwmE/ev4svOczYBN41z58KsAacqCNOd0q+D8mnNlxyaH3bHjGwzm
- X06NS0UE5Qt7OItgnjxTCoEwevHvCa5UGD2PUH
-X-Gm-Gg: ASbGnct+2SF0qv+a4aTTQirg8/B8QKRo+H//4HyVBX6uXD3d4zcP4z5cDkrZ3e9n7fN
- /2okY7nkr6Q/8M9rBx2bO0Ia73IrEahTUpxMZy1cRK2vQsihPZaNFWHJYA6b2NJFmyiu5zpiBGN
- oipCyx3faNHg0qNQW8vdUtgvI3ic///yNeLSU5Fmhilwg8mX/gqEojh9bB81RHp4xkM6bRmEKfY
- 01ndIxlrJTGZ/Hy74d2WsqwCJPgGwdo3OlwrDMeZ01hGLFzoXcZhBbD
-X-Received: by 2002:a05:6000:2a7:b0:385:e17a:ce61 with SMTP id
- ffacd0b85a97d-3864ced37d6mr3463213f8f.53.1733934456099; 
- Wed, 11 Dec 2024 08:27:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE28wpQAp7PzxHpAIfTHwYeSW9kVTW2HCZP4xPiqLGxMUDODANToF2Tb6m70R59/f/ii9r0uQ==
-X-Received: by 2002:a05:6000:2a7:b0:385:e17a:ce61 with SMTP id
- ffacd0b85a97d-3864ced37d6mr3463194f8f.53.1733934455592; 
- Wed, 11 Dec 2024 08:27:35 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
+ bh=WxD1Jy1Rj/MBN3Hz79N9s4ZRpfmRU1nfzEotTIZVleI=;
+ b=jKq0ImaO/r6IKQbi+4FiQdTLi2nFilzgWMdLlS55rUW+ZTdDZDh7py8g112B2AgwSH
+ qrLtcyv9CHQBwsaeAKz9bhfqDSY4BSQcGQlsDPNWvK3HGpy99LuXx5FT4rgmWhUqH5NL
+ Hg/kJtpQbhbwovO70PQDnnDOCLR09eQKaIzrZWJFxAgozIbBmnhhH5F0kad2FgFEH+Zp
+ HFhs0VEiX1l88zc6myLiCeCsKTEgumNcI3Mi6+L6br4gpEEv2m7j0biOLBG+Rp+rQcQe
+ UxMSCE4VOYedenSgNYcjzXNk+rKclFl6hEjkmkj+5lXkFhtGu9XnN20Uk/dGYHcU1eer
+ LtSQ==
+X-Gm-Message-State: AOJu0YyHG82to6xGuMibcOi9F1L/iUqv+/07iuZo5KEprdPtIT/TsW3s
+ uXm/AhUaEoOIYsqLeDD1gzy7gO+vrngg59cvvz0eQRaXoMj6PE7LayEsCetwXb5pQ3TiLtvrbcN
+ X
+X-Gm-Gg: ASbGncvjLzSvimtoh2zN3MUoJcL2eBLHlCQkQkf6h8174C/JQHIYnrejI7OxLz32MVa
+ TEv5GX1Wxt+X4H+IzLMZIiHWAqL3Z+30PLOyFPRcvyBbEG6YZrd2j8hE287guLlNsBsNN5AI0os
+ h29at347T7KMnhwSTbs57727EqzlJ8LBoOQwXRhDhGeFD9Xe/C98VPq0OISGJv/ulZsGFfBZ7Ph
+ 3AM9ANhqhrHWrcVmW2VNrgXkkTU42UaXJ+mN6CdgKCPHd4EIQbXMlwbYcHD
+X-Google-Smtp-Source: AGHT+IFRVEvVm30fL3SZv4nPO+1EtSnuPt2UB/IKrWSxjSBSTTiCPzmfPiWoN3DUm7kK+15GtsTg1A==
+X-Received: by 2002:adf:e181:0:b0:385:edd1:2249 with SMTP id
+ ffacd0b85a97d-387876c4969mr189948f8f.50.1733934077631; 
+ Wed, 11 Dec 2024 08:21:17 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824a4ea3sm1618415f8f.28.2024.12.11.08.27.34
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.16
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:34 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:21:16 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/49] rust: build: generate lint flags from Cargo.toml
-Date: Wed, 11 Dec 2024 17:26:36 +0100
-Message-ID: <20241211162720.320070-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Subject: [PULL 63/72] softfloat: Remove which from parts_pick_nan_muladd
+Date: Wed, 11 Dec 2024 16:19:55 +0000
+Message-Id: <20241211162004.2795499-64-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
+References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,167 +98,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cargo.toml makes it possible to describe the desired lint level settings
-in a nice format.  We can extend this to Meson-built crates, by teaching
-rustc_args.py to fetch lint and --check-cfg arguments from Cargo.toml.
---check-cfg arguments come from the unexpected_cfgs lint as well as crate
-features
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Start with qemu-api, since it already has a [lints.rust] table and
-an invocation of rustc_args.py.
+Assign the pointer return value to 'a' directly,
+rather than going through an intermediary index.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241203203949.483774-5-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- meson.build                |  3 +-
- rust/qemu-api/meson.build  |  4 +-
- scripts/rust/rustc_args.py | 83 +++++++++++++++++++++++++++++++++++++-
- 3 files changed, 86 insertions(+), 4 deletions(-)
+ fpu/softfloat-parts.c.inc | 32 ++++++++++----------------------
+ 1 file changed, 10 insertions(+), 22 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 2f1f2aece4d..1e1d8f5cd61 100644
---- a/meson.build
-+++ b/meson.build
-@@ -120,7 +120,8 @@ if have_rust
- endif
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index be7e93127d4..525db617411 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -65,9 +65,9 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+                                             FloatPartsN *c, float_status *s,
+                                             int ab_mask, int abc_mask)
+ {
+-    int which;
+     bool infzero = (ab_mask == float_cmask_infzero);
+     bool have_snan = (abc_mask & float_cmask_snan);
++    FloatPartsN *ret;
  
- if have_rust
--  rustc_args = find_program('scripts/rust/rustc_args.py')
-+  rustc_args = [find_program('scripts/rust/rustc_args.py'),
-+    '--rustc-version', rustc.version()]
-   rustfmt = find_program('rustfmt', required: false)
+     if (unlikely(have_snan)) {
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
+@@ -104,42 +104,30 @@ static FloatPartsN *partsN(pick_nan_muladd)(FloatPartsN *a, FloatPartsN *b,
+         default:
+             g_assert_not_reached();
+         }
+-        which = 2;
++        ret = c;
+     } else {
+-        FloatClass cls[3] = { a->cls, b->cls, c->cls };
++        FloatPartsN *val[3] = { a, b, c };
+         Float3NaNPropRule rule = s->float_3nan_prop_rule;
  
-   # Prohibit code that is forbidden in Rust 2024
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 2ff6d2ce3d0..1ed79672cc9 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -1,6 +1,6 @@
- _qemu_api_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h, files('Cargo.toml'),
--  capture: true, check: true).stdout().strip().split()
-+  '--config-headers', config_host_h, '--features', '--lints', files('Cargo.toml'),
-+  capture: true, check: true).stdout().strip().splitlines()
+         assert(rule != float_3nan_prop_none);
+         if (have_snan && (rule & R_3NAN_SNAN_MASK)) {
+             /* We have at least one SNaN input and should prefer it */
+             do {
+-                which = rule & R_3NAN_1ST_MASK;
++                ret = val[rule & R_3NAN_1ST_MASK];
+                 rule >>= R_3NAN_1ST_LENGTH;
+-            } while (!is_snan(cls[which]));
++            } while (!is_snan(ret->cls));
+         } else {
+             do {
+-                which = rule & R_3NAN_1ST_MASK;
++                ret = val[rule & R_3NAN_1ST_MASK];
+                 rule >>= R_3NAN_1ST_LENGTH;
+-            } while (!is_nan(cls[which]));
++            } while (!is_nan(ret->cls));
+         }
+     }
  
- # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
- if rustc.version().version_compare('>=1.77.0')
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 942dd2b2bab..9b9778a1cac 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -25,9 +25,10 @@
- """
+-    switch (which) {
+-    case 0:
+-        break;
+-    case 1:
+-        a = b;
+-        break;
+-    case 2:
+-        a = c;
+-        break;
+-    default:
+-        g_assert_not_reached();
++    if (is_snan(ret->cls)) {
++        parts_silence_nan(ret, s);
+     }
+-    if (is_snan(a->cls)) {
+-        parts_silence_nan(a, s);
+-    }
+-    return a;
++    return ret;
  
- import argparse
-+from dataclasses import dataclass
- import logging
- from pathlib import Path
--from typing import Any, Iterable, Mapping, Optional, Set
-+from typing import Any, Iterable, List, Mapping, Optional, Set
- 
- try:
-     import tomllib
-@@ -61,6 +62,45 @@ def get_table(self, key: str) -> Mapping[Any, Any]:
-         return table
- 
- 
-+@dataclass
-+class LintFlag:
-+    flags: List[str]
-+    priority: int
-+
-+
-+def generate_lint_flags(cargo_toml: CargoTOML) -> Iterable[str]:
-+    """Converts Cargo.toml lints to rustc -A/-D/-F/-W flags."""
-+
-+    toml_lints = cargo_toml.lints
-+
-+    lint_list = []
-+    for k, v in toml_lints.items():
-+        prefix = "" if k == "rust" else k + "::"
-+        for lint, data in v.items():
-+            level = data if isinstance(data, str) else data["level"]
-+            priority = 0 if isinstance(data, str) else data.get("priority", 0)
-+            if level == "deny":
-+                flag = "-D"
-+            elif level == "allow":
-+                flag = "-A"
-+            elif level == "warn":
-+                flag = "-W"
-+            elif level == "forbid":
-+                flag = "-F"
-+            else:
-+                raise Exception(f"invalid level {level} for {prefix}{lint}")
-+
-+            # This may change if QEMU ever invokes clippy-driver or rustdoc by
-+            # hand.  For now, check the syntax but do not add non-rustc lints to
-+            # the command line.
-+            if k == "rust":
-+                lint_list.append(LintFlag(flags=[flag, prefix + lint], priority=priority))
-+
-+    lint_list.sort(key=lambda x: x.priority)
-+    for lint in lint_list:
-+        yield from lint.flags
-+
-+
- def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
-     """Converts defines from config[..].h headers to rustc --cfg flags."""
- 
-@@ -97,13 +137,54 @@ def main() -> None:
-         dest="cargo_toml",
-         help="path to Cargo.toml file",
-     )
-+    parser.add_argument(
-+        "--features",
-+        action="store_true",
-+        dest="features",
-+        help="generate --check-cfg arguments for features",
-+        required=False,
-+        default=None,
-+    )
-+    parser.add_argument(
-+        "--lints",
-+        action="store_true",
-+        dest="lints",
-+        help="generate arguments from [lints] table",
-+        required=False,
-+        default=None,
-+    )
-+    parser.add_argument(
-+        "--rustc-version",
-+        metavar="VERSION",
-+        dest="rustc_version",
-+        action="store",
-+        help="version of rustc",
-+        required=False,
-+        default="1.0.0",
-+    )
-     args = parser.parse_args()
-     if args.verbose:
-         logging.basicConfig(level=logging.DEBUG)
-     logging.debug("args: %s", args)
- 
-+    rustc_version = tuple((int(x) for x in args.rustc_version.split('.')[0:2]))
-     cargo_toml = CargoTOML(args.cargo_toml)
- 
-+    if args.lints:
-+        for tok in generate_lint_flags(cargo_toml):
-+            print(tok)
-+
-+    if rustc_version >= (1, 80):
-+        if args.lints:
-+            for cfg in sorted(cargo_toml.check_cfg):
-+                print("--check-cfg")
-+                print(cfg)
-+        if args.features:
-+            for feature in cargo_toml.get_table("features"):
-+                if feature != "default":
-+                    print("--check-cfg")
-+                    print(f'cfg(feature,values("{feature}"))')
-+
-     for header in args.config_headers:
-         for tok in generate_cfg_flags(header, cargo_toml):
-             print(tok)
+  default_nan:
+     parts_default_nan(a, s);
 -- 
-2.47.1
+2.34.1
 
 
