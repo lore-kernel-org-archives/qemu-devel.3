@@ -4,84 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC64E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 08:21:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87C2AE77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 08:23:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLHwh-0007qE-2t; Wed, 11 Dec 2024 03:19:47 -0500
+	id 1tLI0B-0000c9-5S; Wed, 11 Dec 2024 03:23:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tLHwf-0007py-NU
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 03:19:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tLI08-0000bw-U3; Wed, 11 Dec 2024 03:23:21 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tLHwe-0003kn-3t
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 03:19:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733905182;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1tUPMdcfyJQCNhQoIiB+vQL68aNfDnewoT+gujEg8rw=;
- b=OuCCpSPjPXF1T9hfKrOBj1eIX4JZ5AZ44qy8GktfzvFipVQR9et1aNRRWOOTISKBUV7a+5
- gQ0nBbS9krnZySnySxaU3PGe3B7ljjE+OrjSxg14kCoy2p18qD4BTFxTxfkE60RGaDC0yc
- vBKCYZUuhZcS/ozHmmGiRl+uiwqZKO0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-1faKOpuGPSeYDoRGDU7Xyg-1; Wed,
- 11 Dec 2024 03:19:38 -0500
-X-MC-Unique: 1faKOpuGPSeYDoRGDU7Xyg-1
-X-Mimecast-MFC-AGG-ID: 1faKOpuGPSeYDoRGDU7Xyg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 84D1219560B3; Wed, 11 Dec 2024 08:19:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.194.102])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DB241956048; Wed, 11 Dec 2024 08:19:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id A38EA21E66E8; Wed, 11 Dec 2024 09:19:32 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>,  Igor Mammedov <imammedo@redhat.com>,
- Juraj Marcin <jmarcin@redhat.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  "Dr . David Alan Gilbert" <dave@treblig.org>,
- =?utf-8?Q?C=C3=A9dric?=
- Le Goater <clg@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Alex
- Williamson <alex.williamson@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 0/4] QOM: Singleton interface
-In-Reply-To: <ZyEVwFaTbqtw2Vx6@x1n> (Peter Xu's message of "Tue, 29 Oct 2024
- 13:05:04 -0400")
-References: <20241024165627.1372621-1-peterx@redhat.com>
- <87h690my2w.fsf@pond.sub.org> <Zxuy5CjKNlK49TUL@x1n>
- <ZyC8MmM7k6df2Awi@redhat.com> <ZyD1BarDJUSA7Nen@x1n>
- <ZyEHoj3Mrm3OGtnX@redhat.com> <ZyEVwFaTbqtw2Vx6@x1n>
-Date: Wed, 11 Dec 2024 09:19:32 +0100
-Message-ID: <87o71iy6ln.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tLI06-00045s-Rg; Wed, 11 Dec 2024 03:23:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733905398; x=1765441398;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=QbNMElKkLe5Z28K8XQqkCoXTbVg1QiMIq+2vGW82Ikw=;
+ b=gTxe/z4CVqq0L6GGB5ogjsr1Pcp24xfVSye3APyUabJSXkVTa1BCE+MI
+ 0bAXwmgY1LSRJBYSsYiK673LpV7mbDi1uZf/RS6vBQkJfwPuxehkJ6RWu
+ E83bBplaVHxSJFgst2i8zBv0lE5FByU4dB4tSFLKGCmqfLcEwvKcW3GqC
+ R97xJx6SWZKTs+vgRvO9moe78bfreMJE841XtF3IG2UiwVZ/bPG/vVQHK
+ CgDBtvjAaNMtBRNGehaN+HlU60kPZtT1gET4FhRSoRkONjUM+YeaG5N0E
+ 8pcNm+65DKqdmg7G8gea+fNuWzJkwh+c/ieCbP9NF/dyooQnwysMTy9TU g==;
+X-CSE-ConnectionGUID: 7fhyzV59TI2l/lctqUr/Dw==
+X-CSE-MsgGUID: giGdenMZTHyJHYA3eZ0ssg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="34399165"
+X-IronPort-AV: E=Sophos;i="6.12,225,1728975600"; d="scan'208";a="34399165"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 00:23:14 -0800
+X-CSE-ConnectionGUID: XUHTmtEmQi+Y4SgexgU70Q==
+X-CSE-MsgGUID: 804ChhI5STiw9zpgqTahmQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,225,1728975600"; d="scan'208";a="126548552"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.36])
+ by orviesa002.jf.intel.com with ESMTP; 11 Dec 2024 00:23:13 -0800
+Date: Wed, 11 Dec 2024 16:41:28 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 15/26] rust: qom: split ObjectType from ObjectImpl trait
+Message-ID: <Z1lQOB6gXl4t/unY@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-16-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209123717.99077-16-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.52,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,67 +82,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Looked at this thread again to refresh my memory on the proposed
-singleton interface, and found I have something to add.
+On Mon, Dec 09, 2024 at 01:37:06PM +0100, Paolo Bonzini wrote:
+> Date: Mon,  9 Dec 2024 13:37:06 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 15/26] rust: qom: split ObjectType from ObjectImpl trait
+> X-Mailer: git-send-email 2.47.1
+> 
+> Define a separate trait for fields that also applies to classes that are
+> defined by C code.  This makes it possible to add metadata to core classes,
+> which has multiple uses:
+> 
+> - it makes it possible to access the parent struct's TYPE_* for types
+>   that are defined in Rust code, and to avoid repeating it in every subclass
+> 
+> - implementors of ObjectType will be allowed to implement the IsA<> trait and
+>   therefore to perform typesafe casts from one class to another.
+> 
+> - in the future, an ObjectType could be created with Foo::new() in a type-safe
+>   manner, without having to pass a TYPE_* constant.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs  | 17 ++++++++++++-----
+>  rust/qemu-api/src/definitions.rs  |  9 ++++++---
+>  rust/qemu-api/src/device_class.rs | 11 ++++++-----
+>  rust/qemu-api/src/prelude.rs      |  2 ++
+>  rust/qemu-api/src/sysbus.rs       | 10 ++++++++--
+>  rust/qemu-api/tests/tests.rs      | 12 +++++++++---
+>  6 files changed, 43 insertions(+), 18 deletions(-)
 
-Peter Xu <peterx@redhat.com> writes:
-
-> On Tue, Oct 29, 2024 at 04:04:50PM +0000, Daniel P. Berrang=C3=A9 wrote:
->> I tend to feel that having MigrationState exist for the whole lifetime
->> of QEMU is a bug, forced on us by the unfortunate need to call
->> migrate-set-parameters/capabilities separately from the migrate
->> command, and by the need to query migrate info an arbitrary amount of
->> time after it finishes.
->>=20
->> This puts libvirt in the awkward position of having to manually reset
->> all migration parameters, just to ensure earlier settings don't
->> accidentally affect a future migration operation :-( This is a design
->> that encourages mistakes.
->
-> I think it would still be easy to add "cap" & "params" arguments support
-> for the "migrate" QMP command without breaking the current API, iff that
-> helps in whatever form.  When present, it simply applies the caps and/or
-> param list first before invoking the migrate command, fail the command if
-> cap / param check fails.
->
-> But I'm not sure whether that's a concern at all for Libvirt, if what
-> Libvirt currently does is having separate "migrate-set-*" commands prior =
-to
-> the "migrate".  I may have overlooked the real issue behind on how that
-> could complicate Libvirt.
-
-I think Daniel's point is that the interface's reliance on global state
-makes it awkward to use.
-
-Migration configuration is global state.  It's split into "capabilities"
-and "parameters", but that's detail.  We have commands to query and
-change this state.
-
-When Libvirt connects to a QEMU process, it has no idea what the global
-migration configuration is.  To get it into a known state, it has to set
-*everything*.  It cannot rely on defaults.
-
-It even has to set things it doesn't know!  When we add a new parameter
-to QEMU, libvirt needs to be updated to reset it to its default even
-when libvirt has no need for it.  When you use a version of libvirt that
-lacks this update, it remains whatever it was.  The migration interface
-becomes accidentally stateful at the libvirt level, which is
-undesirable.
-
-Compare this to the more modern interface we have for other long-running
-tasks: jobs.
-
-There is a job-specific command that creates the job: blockdev-backup,
-block-commit, blockdev-mirror, block-stream, blockdev-create,
-snapshot-save, snapshot-load, snapshot-delete, ...  Each command takes
-the entire job configuration as arguments.  Libvirt does not need
-updating for new parameters: these simply remain at their default
-values.
-
-Bonus: there are generic commands to control and monitor jobs:
-job-pause, job-resume, job-cancel, job-complete, job-dismiss,
-job-finalize, query-jobs.
-
-[...]
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
