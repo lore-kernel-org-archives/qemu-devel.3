@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EB2DE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:50:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B8F6E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 15:50:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLOy3-0007Vt-Vu; Wed, 11 Dec 2024 10:49:41 -0500
+	id 1tLOyW-00086U-Ri; Wed, 11 Dec 2024 10:50:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLOy0-0007UL-Cg
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:49:36 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1tLOyS-0007zG-66
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:50:04 -0500
+Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLOxv-0003GX-O2
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:49:36 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-71e2766994bso119034a34.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:49:24 -0800 (PST)
+ id 1tLOyP-0003Il-5W
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 10:50:02 -0500
+Received: by mail-oi1-x235.google.com with SMTP id
+ 5614622812f47-3eb7f3b1342so620563b6e.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 07:50:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733932163; x=1734536963; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733932199; x=1734536999; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lDVuyVJyNQw2/FltZOvlwaiwB/VPuWOiRAkQTVOYEcw=;
- b=RmCwqAeA+ZVcczAA04SpV7D4Fr9upU2AuL3qgXVTY6l0yvSIk3a7ud+ljSqZ90eO7J
- mnWwxANl58jXmTw078FiKWfozx/Fide6pb4BJ9DSviCM6IfreT6Hhv5HaQVFfhIObTxr
- d2wPRv0l1bVe5gVat08gVmzOkrLmpX8vdJKMBZ3ObQa0sKekz0u5fVvPKw3SaGRc4sgR
- Isq1eyol+iSw3Q5fmd/cpoGjZ61P+qdFVjDQjTyVhTEBvckcrYITyAdrMJ9Ms8Qi9a80
- W/83XUXggg5Hij2gsay7D3lB1bB1jmT3yuMufHWFR3gO5H72nH1R0BJRzRQUVngp25ts
- yVmw==
+ bh=SyA7OvtkMMzmtzs/BVQ4bVImEXrar99JNoaOeAp3D3o=;
+ b=I/9XIs/is+spzWXSDnRDCSp5XcUJXW6teLmN/nKQxBIMyYuL+5f6CZ7i2XBVSmofZe
+ stnEOGwDMfufaK/bhedIs3JplxlOc1BPivcM2pD3xBb9AfDuPsNN8lyElRcRKFVyTYOe
+ b1Uw7ttg+E+9Kk5wRf+aBwZ7YtBpWk1krkCyDSHnh1PBJBn+2P9Hb7ad5AFBw3lWDtjr
+ ZmZZf3r7tdnx4Sxpzw5lnbg4now6MdMYPWLnRt3lPBzoFuNg/6Y37G0QWLnUerAilOe7
+ v0rTA0vXhQ1lZsLqYJT2Xf+zTR4F8GYQ9Wz3bZZu2/Lxt3wNevbD9adA3cZ2m380SiIs
+ uEkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733932163; x=1734536963;
+ d=1e100.net; s=20230601; t=1733932199; x=1734536999;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lDVuyVJyNQw2/FltZOvlwaiwB/VPuWOiRAkQTVOYEcw=;
- b=iQXiFv6fPvpXQ2cGWOOhTjNwBFB2pbrgZMkjLsi/bdK7ZWnpt9qkCDKnC1YsWGHuOP
- kNeSz4Ru0RmT8vBeTinfzgbnULaBfSIMdFXMexIHDU88pnMGu2c0oPlv03zdqRyhodLD
- ysJNr52TxKmw+VcE6F+xFgQ5XV6i/TQXdB3Qu+m6/PgFGwzv83FIlLP1YfvHNz2vb+Mt
- ME/lBdfvXyqM6s6Zf979KUNYUduiImjHc85TsUXjXgHwmxAaGYeKSlFasVPj0WS15iBC
- vINjCphH2RGYLEG7mzqk4L0GlXKTe8fwEDm6vMUkIXsL+rjn12lUMNYPWXC6qn+Owu8/
- Ee0A==
-X-Gm-Message-State: AOJu0YyM6FgSleKav5VBeK5WR100UNWn0Bz6c799vdfeTCrHYyMhe6Ty
- OkVUK0uqZyDJedauO2OCzrSlFSowJrgkMkfBefpgdHpuU2yKRaJk4rzScomeCr5VnFVnKKD5NpG
- aB8oTrcSd
-X-Gm-Gg: ASbGncvilxCc8sBOhnLbA1lxl16gBo1V6BBsM0OnU5Y8grcHrTT+EINWwKJJWsa3oDb
- KQlR/PNr8X3yKqKVki7azzVfhBTGFfuj/7CxB62w4E9MDGwWfbJSvLSA7qdJhUXkJWoFWP0N2zq
- ZKciqP8Yh1GGhFEkw6djOm0aQPw0BZ8etBiYKkzxQ9PtoarVlaVIYUzG5aDCimk8lGG6tn8JxMK
- Si60glC7tBBk6YG6pXG/FkvAk6ouqz7+evFjsmvMm9zaRuYoVpxx9zK5Q/QncQcg7sF/oU=
-X-Google-Smtp-Source: AGHT+IEe75eWu6zNh52aSIwq29zrUKV5oI3kw17nqqGyxGUbuDNFU4rUP1xdjQHFC4vRZjSvxG/JPg==
-X-Received: by 2002:a05:6830:6dca:b0:71d:f429:7f95 with SMTP id
- 46e09a7af769-71e19b6061amr2128909a34.29.1733932163006; 
- Wed, 11 Dec 2024 07:49:23 -0800 (PST)
+ bh=SyA7OvtkMMzmtzs/BVQ4bVImEXrar99JNoaOeAp3D3o=;
+ b=R/4LumyVdTk+juPS5WCxFKAH3WsiU9osP3eRJFl1LkDrOqZN9P7idA8UmAHYWISSfl
+ EWiAosdtI+ZXb5MIFbimU0jvAopF+IzvYVg/CAKa7/l14jxebS7xPup/0vxmjpH3saQC
+ /0GnRNGj+2egcAi8zd/7dxWFZ7rQpVy52MDg5eS4aZsXC87EezqDcl/A0OeUkQ8ltv68
+ Qs+F7Mt+vz3XjhEDE10EGcivRBIdli9LjE7sV5Pe67gyW69itKyJ1yjrxAQ0Rj+TQeJx
+ XbBBhXbR/Stvf2sPUB2ViA3NMZ+DpG9D2AQdu0130eIVjpTol9I/O8QIUu7gKixpBM1T
+ mLCA==
+X-Gm-Message-State: AOJu0YwnPQr1qjS/Ek2dZ6rtBC5/BWIOEECVcbKv+HvEI+zLr5TZLeSQ
+ sLzEGIAJLTK1El18ecW13WPzqKUIZ0hpWAqMFG7bqt45yu7vVIh6JVwOhqscrwCJ0s4Jkz4YqTA
+ Ban70qwVc
+X-Gm-Gg: ASbGncuajV4xVvwW52xo1rykia83XStzJGCKkcOgo52yPgF3O6Ih/5QDWXma6ldRxMv
+ HV7Nhw2UC8IR2EUmCb4SpA7L6pFgTSermUvoEykFxI5s8s9PsKdKHy11RVfSBscF/fM4ZEImJnM
+ 4YR2LPPuzifpbdBcrfuvLiyT/xFXRErKkvNIuVYQCTq/Bwf+ok0b6/+CvRY6lWWZabMaYpRTwMU
+ aMG8AxdDXeONDpEWaUlx9t0RqD2YnuNvNklh4SCrz1kA2TMFW9X1MD3IxgAE/anXKGFTnc=
+X-Google-Smtp-Source: AGHT+IEBYh7UurpU9YtY8Xc4437DJqP8zNN0tcjiQo0CMIWDdkrFj6wYKC0PhvxqwW4TvH1AL3V8Mw==
+X-Received: by 2002:a05:6808:1b0e:b0:3eb:6e47:2fe1 with SMTP id
+ 5614622812f47-3eb940d726amr36617b6e.33.1733932199686; 
+ Wed, 11 Dec 2024 07:49:59 -0800 (PST)
 Received: from [172.20.4.119] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e08622768sm791346a34.13.2024.12.11.07.49.21
+ 5614622812f47-3eb8be9ab58sm166584b6e.38.2024.12.11.07.49.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 07:49:22 -0800 (PST)
-Message-ID: <1933d447-ba4f-47ac-883d-bd0ae10da2ed@linaro.org>
-Date: Wed, 11 Dec 2024 09:49:18 -0600
+ Wed, 11 Dec 2024 07:49:59 -0800 (PST)
+Message-ID: <df903976-8245-448d-84a6-0a968d6601c1@linaro.org>
+Date: Wed, 11 Dec 2024 09:49:54 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] target/arm: Add ARM_CP_ADD_TLBI_NXS type flag to
- TLBI insns
+Subject: Re: [PATCH v2 4/6] target/arm: Add decodetree entry for DSB nXS
+ variant
 To: qemu-devel@nongnu.org
 References: <20241211144440.2700268-1-peter.maydell@linaro.org>
- <20241211144440.2700268-4-peter.maydell@linaro.org>
+ <20241211144440.2700268-5-peter.maydell@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241211144440.2700268-4-peter.maydell@linaro.org>
+In-Reply-To: <20241211144440.2700268-5-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,14 +103,56 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/11/24 08:44, Peter Maydell wrote:
-> Add the ARM_CP_ADD_TLBI_NXS to the TLBI insns with an NXS variant.
-> This is every AArch64 TLBI encoding except for the four FEAT_RME TLBI
-> insns.
+> From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 > 
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> The DSB nXS variant is always both a reads and writes request type.
+> Ignore the domain field like we do in plain DSB and perform a full
+> system barrier operation.
+> 
+> The DSB nXS variant is part of FEAT_XS made mandatory from Armv8.7.
+> 
+> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+> [PMM: added missing "UNDEF unless feature present" check]
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   target/arm/tcg/tlb-insns.c | 202 +++++++++++++++++++++++--------------
->   1 file changed, 124 insertions(+), 78 deletions(-)
+>   target/arm/tcg/a64.decode      | 3 +++
+>   target/arm/tcg/translate-a64.c | 9 +++++++++
+>   2 files changed, 12 insertions(+)
+> 
+> diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+> index 331a8e180c0..c4f516abc18 100644
+> --- a/target/arm/tcg/a64.decode
+> +++ b/target/arm/tcg/a64.decode
+> @@ -245,6 +245,9 @@ WFIT            1101 0101 0000 0011 0001 0000 001 rd:5
+>   
+>   CLREX           1101 0101 0000 0011 0011 ---- 010 11111
+>   DSB_DMB         1101 0101 0000 0011 0011 domain:2 types:2 10- 11111
+> +# For the DSB nXS variant, types always equals MBReqTypes_All and we ignore the
+> +# domain bits.
+> +DSB_nXS         1101 0101 0000 0011 0011 -- 10 001 11111
+>   ISB             1101 0101 0000 0011 0011 ---- 110 11111
+>   SB              1101 0101 0000 0011 0011 0000 111 11111
+>   
+> diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+> index b2851ea5032..953386c0416 100644
+> --- a/target/arm/tcg/translate-a64.c
+> +++ b/target/arm/tcg/translate-a64.c
+> @@ -1959,6 +1959,15 @@ static bool trans_DSB_DMB(DisasContext *s, arg_DSB_DMB *a)
+>       return true;
+>   }
+>   
+> +static bool trans_DSB_nXS(DisasContext *s, arg_DSB_nXS *a)
+> +{
+> +    if (!dc_isar_feature(aa64_xs, s)) {
+> +        return false;
+> +    }
+> +    tcg_gen_mb(TCG_BAR_SC | TCG_MO_ALL);
+> +    return true;
+> +}
+> +
+>   static bool trans_ISB(DisasContext *s, arg_ISB *a)
+>   {
+>       /*
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
