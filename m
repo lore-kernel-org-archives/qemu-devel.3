@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CFCE7717D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCD35E77182
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPi3-0002V8-4L; Wed, 11 Dec 2024 11:37:11 -0500
+	id 1tLPeO-0001Qc-7w; Wed, 11 Dec 2024 11:33:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPhY-0000ju-EF
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:40 -0500
-Received: from mail-qv1-xf2b.google.com ([2607:f8b0:4864:20::f2b])
+ id 1tLPdb-0006md-Vk
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:36 -0500
+Received: from mail-qt1-x835.google.com ([2607:f8b0:4864:20::835])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPhW-0002FZ-4I
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:36:40 -0500
-Received: by mail-qv1-xf2b.google.com with SMTP id
- 6a1803df08f44-6d933736380so14627516d6.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:36:37 -0800 (PST)
+ id 1tLPda-0001U9-7b
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:35 -0500
+Received: by mail-qt1-x835.google.com with SMTP id
+ d75a77b69052e-467777d7c83so20592161cf.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934997; x=1734539797; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934753; x=1734539553; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dn+oPG8iCaoQw0cP17ZB2UufuSUcPmfb3W6rznKLWtE=;
- b=JoB5Qm1HT75LLrUC5GstTfOmFN6hBXcTsncg3QqZS8vPH8lVaONkqojoDsJIV1x5eL
- StxBaNLTKn8HvNGGyfGTT40wHGRM1BN25XIz7ZBR3XjtD2HF5MMRCYrMrgj/24zXqnm/
- QlDHemFvbVGAyxxuFr22aDNthcsseOrfvgX6OlCjmLzv/sprDT6WVeIWe1y7BD6+997s
- Ihsve5nXcUX3sbFjLQxHmE6wwbUw17wDNtERkGORuqMYQUr/RsaP4W9U/xOBqZoRzF9g
- 5s7whzHrgnYG7wMCb0QJIhhx2yz0duADfU0yEGvnnNoPOynOqag21SEAe1W16y+U2sJJ
- MrdQ==
+ bh=T9fh0NlbjmdbLKi3RiB0ekN1/PEOAZQ1NU7Dbs3dJ9Q=;
+ b=l+6qoJfZc0fL6wo9e0UY/74NJ7XKD463nLUGuf7nj9BsK/+tIuVRBR9Co2UGu9FAmx
+ FqRjTwiRK3ToTuV3n4Ug0EIv8dRkmDwXJK5FMOYerLnVUx1TZB7DDHal2sLSgaikDofd
+ DgIsutytYqWpS7BLVDwvIrXEuYOlz43UcsGGuSxAgEUlk4n8BnZlXhguTUfm7vnHcjpv
+ ySJ66qUu9Q7MIFOe62+vS8nmy/gx8jiFwNNcL21NjWdls95TMv/OFNbYTzUhpAeD69u5
+ icIY4hMVmKNMhgTZVSNVBJEw0oWyfLXzTrl6MbmdmezDs9Q9Gyw2zw7S1jW2AvP38fvt
+ ea7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934997; x=1734539797;
+ d=1e100.net; s=20230601; t=1733934753; x=1734539553;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Dn+oPG8iCaoQw0cP17ZB2UufuSUcPmfb3W6rznKLWtE=;
- b=U4MQzSiHzjV2+nMZDJ3DRFX+Q8nhey+LngsEStOTEuejL+okBR8IY/mhXYMX0VRfFE
- x9iVF/2OK0Ap8zNcIvYRFhJE8HT2eRdWZsn5aqzsMZE75QgK/q82gdCB6JAXQKfNVpL/
- BgUMSuRUvGOTUAB5IRDY8H5ZvnbcrQN7fx6Zm3m5Z8XjabEZTiNwdu6l0Sqr4GgZ5/5P
- fxHM+x2INb1TaXMpw6sC6eMFmtrIYECKwgrrChMQKolUHbX6MczX5bPiYjCGcNbheTm4
- NFzeqXqhwzx0R+Rsuzhw4kxcfe5zuCHUrCxiql052VsrV2xMqPJ2SXoTt57u9QQf1yCQ
- bRKA==
-X-Gm-Message-State: AOJu0YyiKQxQBK0UQ5VOafwspz10tGSHraW4FiQk2cfXCAP6paC8AxsC
- 1ABJ3QUlVV0XpRv+j2qicPelK8By8q+Ij2IjRfbCKD+ixg5ZLyoP5YmTi22dO8eMhdz+VY8cIzp
- wu15AL6b4
-X-Gm-Gg: ASbGncvf8BRd8Cg+YNPdvb71t+UOOlREBL8Vj6An8AwgItGEP2jHNnkGFiqkgfvH5GE
- 3USkcE3OIubX/Qyayw4F8nJTR3kB6asl81T8M/6mO3db6xI8A9/LFTeU/sQHXdfkUsyMrA6JL/2
- BxSiT055NODmwZ0jZ40f9Fj3toQx+kEW59kyWYxPk6E/B0Ae9l9wejw2EIDVUhzCEbTEqEMXBUp
- kbtAcRgZ9L6/E4RHTZblNkBSUQrN+ATcJJQhtcKk+UuRWy6QXHDnvSOC1k4PQ==
-X-Google-Smtp-Source: AGHT+IEhodqSJRO9Q2+IS2j7QuwyVGvs7kqcA3AeSWC/7bG7JnNICjbDam+mDqyxiYs0dZ465P4Vdg==
-X-Received: by 2002:a05:6214:240a:b0:6d8:8d87:e5b4 with SMTP id
- 6a1803df08f44-6d934aec2f9mr67655706d6.19.1733934996819; 
- Wed, 11 Dec 2024 08:36:36 -0800 (PST)
+ bh=T9fh0NlbjmdbLKi3RiB0ekN1/PEOAZQ1NU7Dbs3dJ9Q=;
+ b=bi0iKXUfMibNsIFbPV5NFJkmnCTASRB5WdEX/GK93ZDTFFi94441poPJFGuCmBxF32
+ ZygwcWvm5oO0sxKeBX2HEjF7Q4HbBnezigCiVyM2bCJluxQTGp7PL8NGSPDvejmElYIP
+ E8QjGOPGxU+mxTE04lSE3MeT/iFYC0HmS+uhoHii9RabIxeKL8nUWve4KFFagjWvv13f
+ CBzfR/xyF+Yxch5D9qyyk0eh0pgzDDrWCrilUMuzG3uL97rPcpYoj1qP8dXSNhb3PhgO
+ tl86T8WB0FQeqoxE1fZPrqJSH+5cnhMERu09c3iQ1EfWS6D1ruGNiuY53fg4+yyoCvlz
+ GHuQ==
+X-Gm-Message-State: AOJu0YygC3X1twwKyk1HvG9cWXbN9xuEcwQr1hu3yQQWPFG7rvYBiNa3
+ iW/u9i76Beabmtt5zbXjjxqNjUIX6ZOoAwebLZ6s8dnXGu+BtWpwIm74PikTagLnQ+rNqR548aC
+ UMplTQZ08
+X-Gm-Gg: ASbGncs+XPqeSJksfGo2+5PCRR5D2hfAtsWgM8ewllNm5yR+greF7WUT1MSO/cEnpD2
+ QNVbDayOUYc3mH+VL2WQLV25j6SganrPVcuNpD8oL6dGl9gvj4NpgXkQNPXswSphSdfXCb9zn4Z
+ gzd/ynpz3Q5eGnrZW5gNrm1Rh9SdXyfgCnqzNV+LJ37EgH76jYxo9EgEjDagrizC6yc81WuHKh3
+ Jr5+MYr2oqqfG5+7a4z4OaPznpOjAr1hIlOUhhbYOl1dqXcX2bnLxLY+Buxgw==
+X-Google-Smtp-Source: AGHT+IETkBqP2kxT+aTn4STefKa1Ufww0G8F2YpfrH2p5rioOIXzTDwdXFoEWRd19aXbbhJq0YwR+A==
+X-Received: by 2002:a05:622a:9009:b0:466:ac8d:7341 with SMTP id
+ d75a77b69052e-46795423747mr6206131cf.35.1733934753142; 
+ Wed, 11 Dec 2024 08:32:33 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6d8da675214sm71856276d6.11.2024.12.11.08.36.35
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:36:36 -0800 (PST)
+ Wed, 11 Dec 2024 08:32:32 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 56/69] target/arm: Convert FRINT* (vector) to decodetree
-Date: Wed, 11 Dec 2024 10:30:23 -0600
-Message-ID: <20241211163036.2297116-57-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 37/69] target/arm: Introduce gen_gvec_cls, gen_gvec_clz
+Date: Wed, 11 Dec 2024 10:30:04 -0600
+Message-ID: <20241211163036.2297116-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
 References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::835;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x835.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,325 +99,177 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Add gvec interfaces for CLS and CLZ operations.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-a64.c | 176 ++++++++++++---------------------
- target/arm/tcg/a64.decode      |  26 +++++
- 2 files changed, 88 insertions(+), 114 deletions(-)
+ target/arm/tcg/translate.h      |  5 +++++
+ target/arm/tcg/gengvec.c        | 35 +++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-a64.c  | 29 +++++++--------------------
+ target/arm/tcg/translate-neon.c | 29 ++-------------------------
+ 4 files changed, 49 insertions(+), 49 deletions(-)
 
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 20cd0e851c..5c6c24f057 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -578,6 +578,11 @@ void gen_gvec_umaxp(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+ void gen_gvec_uminp(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+                     uint32_t rm_ofs, uint32_t opr_sz, uint32_t max_sz);
+ 
++void gen_gvec_cls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                  uint32_t opr_sz, uint32_t max_sz);
++void gen_gvec_clz(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                  uint32_t opr_sz, uint32_t max_sz);
++
+ /*
+  * Forward to the isar_feature_* tests given a DisasContext pointer.
+  */
+diff --git a/target/arm/tcg/gengvec.c b/target/arm/tcg/gengvec.c
+index f652520b65..834b2961c0 100644
+--- a/target/arm/tcg/gengvec.c
++++ b/target/arm/tcg/gengvec.c
+@@ -2358,3 +2358,38 @@ void gen_gvec_urhadd(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+     assert(vece <= MO_32);
+     tcg_gen_gvec_3(rd_ofs, rn_ofs, rm_ofs, opr_sz, max_sz, &g[vece]);
+ }
++
++void gen_gvec_cls(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                  uint32_t opr_sz, uint32_t max_sz)
++{
++    static const GVecGen2 g[] = {
++        { .fni4 = gen_helper_neon_cls_s8,
++          .vece = MO_8 },
++        { .fni4 = gen_helper_neon_cls_s16,
++          .vece = MO_16 },
++        { .fni4 = tcg_gen_clrsb_i32,
++          .vece = MO_32 },
++    };
++    assert(vece <= MO_32);
++    tcg_gen_gvec_2(rd_ofs, rn_ofs, opr_sz, max_sz, &g[vece]);
++}
++
++static void gen_clz32_i32(TCGv_i32 d, TCGv_i32 n)
++{
++    tcg_gen_clzi_i32(d, n, 32);
++}
++
++void gen_gvec_clz(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
++                  uint32_t opr_sz, uint32_t max_sz)
++{
++    static const GVecGen2 g[] = {
++        { .fni4 = gen_helper_neon_clz_u8,
++          .vece = MO_8 },
++        { .fni4 = gen_helper_neon_clz_u16,
++          .vece = MO_16 },
++        { .fni4 = gen_clz32_i32,
++          .vece = MO_32 },
++    };
++    assert(vece <= MO_32);
++    tcg_gen_gvec_2(rd_ofs, rn_ofs, opr_sz, max_sz, &g[vece]);
++}
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 287e9338a4..0f924b07dc 100644
+index c697f0e944..387bbbf906 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -9209,6 +9209,21 @@ static bool do_fp1_vector(DisasContext *s, arg_qrr_e *a,
- 
- TRANS(FSQRT_v, do_fp1_vector, a, &f_scalar_fsqrt, -1)
- 
-+TRANS(FRINTN_v, do_fp1_vector, a, &f_scalar_frint, FPROUNDING_TIEEVEN)
-+TRANS(FRINTP_v, do_fp1_vector, a, &f_scalar_frint, FPROUNDING_POSINF)
-+TRANS(FRINTM_v, do_fp1_vector, a, &f_scalar_frint, FPROUNDING_NEGINF)
-+TRANS(FRINTZ_v, do_fp1_vector, a, &f_scalar_frint, FPROUNDING_ZERO)
-+TRANS(FRINTA_v, do_fp1_vector, a, &f_scalar_frint, FPROUNDING_TIEAWAY)
-+TRANS(FRINTI_v, do_fp1_vector, a, &f_scalar_frint, -1)
-+TRANS(FRINTX_v, do_fp1_vector, a, &f_scalar_frintx, -1)
-+
-+TRANS_FEAT(FRINT32Z_v, aa64_frint, do_fp1_vector, a,
-+           &f_scalar_frint32, FPROUNDING_ZERO)
-+TRANS_FEAT(FRINT32X_v, aa64_frint, do_fp1_vector, a, &f_scalar_frint32, -1)
-+TRANS_FEAT(FRINT64Z_v, aa64_frint, do_fp1_vector, a,
-+           &f_scalar_frint64, FPROUNDING_ZERO)
-+TRANS_FEAT(FRINT64X_v, aa64_frint, do_fp1_vector, a, &f_scalar_frint64, -1)
-+
- /* Common vector code for handling integer to FP conversion */
- static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
-                                    int elements, int is_signed,
-@@ -9520,25 +9535,6 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-     case 0x7b: /* FCVTZU */
-         gen_helper_vfp_touqd(tcg_rd, tcg_rn, tcg_constant_i32(0), tcg_fpstatus);
-         break;
--    case 0x18: /* FRINTN */
--    case 0x19: /* FRINTM */
--    case 0x38: /* FRINTP */
--    case 0x39: /* FRINTZ */
--    case 0x58: /* FRINTA */
--    case 0x79: /* FRINTI */
--        gen_helper_rintd(tcg_rd, tcg_rn, tcg_fpstatus);
--        break;
--    case 0x59: /* FRINTX */
--        gen_helper_rintd_exact(tcg_rd, tcg_rn, tcg_fpstatus);
--        break;
--    case 0x1e: /* FRINT32Z */
--    case 0x5e: /* FRINT32X */
--        gen_helper_frint32_d(tcg_rd, tcg_rn, tcg_fpstatus);
--        break;
--    case 0x1f: /* FRINT64Z */
--    case 0x5f: /* FRINT64X */
--        gen_helper_frint64_d(tcg_rd, tcg_rn, tcg_fpstatus);
--        break;
-     default:
-     case 0x4: /* CLS, CLZ */
-     case 0x5: /* NOT */
-@@ -9550,6 +9546,17 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-     case 0x2f: /* FABS */
-     case 0x6f: /* FNEG */
-     case 0x7f: /* FSQRT */
-+    case 0x18: /* FRINTN */
-+    case 0x19: /* FRINTM */
-+    case 0x38: /* FRINTP */
-+    case 0x39: /* FRINTZ */
-+    case 0x58: /* FRINTA */
-+    case 0x79: /* FRINTI */
-+    case 0x59: /* FRINTX */
-+    case 0x1e: /* FRINT32Z */
-+    case 0x5e: /* FRINT32X */
-+    case 0x1f: /* FRINT64Z */
-+    case 0x5f: /* FRINT64X */
-         g_assert_not_reached();
+@@ -10321,6 +10321,13 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
      }
- }
-@@ -10094,46 +10101,12 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-             }
-             handle_2misc_widening(s, opcode, is_q, size, rn, rd);
-             return;
--        case 0x18: /* FRINTN */
--        case 0x19: /* FRINTM */
--        case 0x38: /* FRINTP */
--        case 0x39: /* FRINTZ */
--            rmode = extract32(opcode, 5, 1) | (extract32(opcode, 0, 1) << 1);
--            /* fall through */
--        case 0x59: /* FRINTX */
--        case 0x79: /* FRINTI */
--            need_fpstatus = true;
--            if (size == 3 && !is_q) {
--                unallocated_encoding(s);
--                return;
--            }
--            break;
--        case 0x58: /* FRINTA */
--            rmode = FPROUNDING_TIEAWAY;
--            need_fpstatus = true;
--            if (size == 3 && !is_q) {
--                unallocated_encoding(s);
--                return;
--            }
--            break;
-         case 0x7c: /* URSQRTE */
-             if (size == 3) {
-                 unallocated_encoding(s);
-                 return;
-             }
-             break;
--        case 0x1e: /* FRINT32Z */
--        case 0x1f: /* FRINT64Z */
--            rmode = FPROUNDING_ZERO;
--            /* fall through */
--        case 0x5e: /* FRINT32X */
--        case 0x5f: /* FRINT64X */
--            need_fpstatus = true;
--            if ((size == 3 && !is_q) || !dc_isar_feature(aa64_frint, s)) {
--                unallocated_encoding(s);
--                return;
--            }
--            break;
-         default:
-         case 0x16: /* FCVTN, FCVTN2 */
-         case 0x36: /* BFCVTN, BFCVTN2 */
-@@ -10141,6 +10114,17 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-         case 0x2f: /* FABS */
-         case 0x6f: /* FNEG */
-         case 0x7f: /* FSQRT */
-+        case 0x18: /* FRINTN */
-+        case 0x19: /* FRINTM */
-+        case 0x38: /* FRINTP */
-+        case 0x39: /* FRINTZ */
-+        case 0x59: /* FRINTX */
-+        case 0x79: /* FRINTI */
-+        case 0x58: /* FRINTA */
-+        case 0x1e: /* FRINT32Z */
-+        case 0x1f: /* FRINT64Z */
-+        case 0x5e: /* FRINT32X */
-+        case 0x5f: /* FRINT64X */
-             unallocated_encoding(s);
-             return;
-         }
-@@ -10229,33 +10213,25 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-                     gen_helper_vfp_touls(tcg_res, tcg_op,
-                                          tcg_constant_i32(0), tcg_fpstatus);
+ 
+     switch (opcode) {
++    case 0x4: /* CLZ, CLS */
++        if (u) {
++            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_clz, size);
++        } else {
++            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_cls, size);
++        }
++        return;
+     case 0x5:
+         if (u && size == 0) { /* NOT */
+             gen_gvec_fn2(s, is_q, rd, rn, tcg_gen_gvec_not, 0);
+@@ -10379,13 +10386,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+             if (size == 2) {
+                 /* Special cases for 32 bit elements */
+                 switch (opcode) {
+-                case 0x4: /* CLS */
+-                    if (u) {
+-                        tcg_gen_clzi_i32(tcg_res, tcg_op, 32);
+-                    } else {
+-                        tcg_gen_clrsb_i32(tcg_res, tcg_op);
+-                    }
+-                    break;
+                 case 0x2f: /* FABS */
+                     gen_vfp_abss(tcg_res, tcg_op);
                      break;
--                case 0x18: /* FRINTN */
--                case 0x19: /* FRINTM */
--                case 0x38: /* FRINTP */
--                case 0x39: /* FRINTZ */
--                case 0x58: /* FRINTA */
--                case 0x79: /* FRINTI */
--                    gen_helper_rints(tcg_res, tcg_op, tcg_fpstatus);
--                    break;
--                case 0x59: /* FRINTX */
--                    gen_helper_rints_exact(tcg_res, tcg_op, tcg_fpstatus);
--                    break;
-                 case 0x7c: /* URSQRTE */
-                     gen_helper_rsqrte_u32(tcg_res, tcg_op);
+@@ -10450,21 +10450,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+                         gen_helper_neon_cnt_u8(tcg_res, tcg_op);
+                     }
                      break;
--                case 0x1e: /* FRINT32Z */
--                case 0x5e: /* FRINT32X */
--                    gen_helper_frint32_s(tcg_res, tcg_op, tcg_fpstatus);
--                    break;
--                case 0x1f: /* FRINT64Z */
--                case 0x5f: /* FRINT64X */
--                    gen_helper_frint64_s(tcg_res, tcg_op, tcg_fpstatus);
+-                case 0x4: /* CLS, CLZ */
+-                    if (u) {
+-                        if (size == 0) {
+-                            gen_helper_neon_clz_u8(tcg_res, tcg_op);
+-                        } else {
+-                            gen_helper_neon_clz_u16(tcg_res, tcg_op);
+-                        }
+-                    } else {
+-                        if (size == 0) {
+-                            gen_helper_neon_cls_s8(tcg_res, tcg_op);
+-                        } else {
+-                            gen_helper_neon_cls_s16(tcg_res, tcg_op);
+-                        }
+-                    }
 -                    break;
                  default:
                  case 0x7: /* SQABS, SQNEG */
-                 case 0x2f: /* FABS */
-                 case 0x6f: /* FNEG */
-                 case 0x7f: /* FSQRT */
-+                case 0x18: /* FRINTN */
-+                case 0x19: /* FRINTM */
-+                case 0x38: /* FRINTP */
-+                case 0x39: /* FRINTZ */
-+                case 0x58: /* FRINTA */
-+                case 0x79: /* FRINTI */
-+                case 0x59: /* FRINTX */
-+                case 0x1e: /* FRINT32Z */
-+                case 0x5e: /* FRINT32X */
-+                case 0x1f: /* FRINT64Z */
-+                case 0x5f: /* FRINT64X */
                      g_assert_not_reached();
-                 }
-             }
-@@ -10289,7 +10265,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-     int rn, rd;
-     bool is_q;
-     bool is_scalar;
--    bool only_in_vector = false;
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index 9c8829ad7d..1c89a53272 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -3120,6 +3120,8 @@ DO_2MISC_VEC(VCGT0, gen_gvec_cgt0)
+ DO_2MISC_VEC(VCLE0, gen_gvec_cle0)
+ DO_2MISC_VEC(VCGE0, gen_gvec_cge0)
+ DO_2MISC_VEC(VCLT0, gen_gvec_clt0)
++DO_2MISC_VEC(VCLS, gen_gvec_cls)
++DO_2MISC_VEC(VCLZ, gen_gvec_clz)
  
-     int pass;
-     TCGv_i32 tcg_rmode = NULL;
-@@ -10343,31 +10318,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-     case 0x3d: /* FRECPE */
-     case 0x3f: /* FRECPX */
-         break;
--    case 0x18: /* FRINTN */
--        only_in_vector = true;
--        rmode = FPROUNDING_TIEEVEN;
--        break;
--    case 0x19: /* FRINTM */
--        only_in_vector = true;
--        rmode = FPROUNDING_NEGINF;
--        break;
--    case 0x38: /* FRINTP */
--        only_in_vector = true;
--        rmode = FPROUNDING_POSINF;
--        break;
--    case 0x39: /* FRINTZ */
--        only_in_vector = true;
--        rmode = FPROUNDING_ZERO;
--        break;
--    case 0x58: /* FRINTA */
--        only_in_vector = true;
--        rmode = FPROUNDING_TIEAWAY;
--        break;
--    case 0x59: /* FRINTX */
--    case 0x79: /* FRINTI */
--        only_in_vector = true;
--        /* current rounding mode */
--        break;
-     case 0x1a: /* FCVTNS */
-         rmode = FPROUNDING_TIEEVEN;
-         break;
-@@ -10404,6 +10354,13 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-     case 0x2f: /* FABS */
-     case 0x6f: /* FNEG */
-     case 0x7f: /* FSQRT (vector) */
-+    case 0x18: /* FRINTN */
-+    case 0x19: /* FRINTM */
-+    case 0x38: /* FRINTP */
-+    case 0x39: /* FRINTZ */
-+    case 0x58: /* FRINTA */
-+    case 0x59: /* FRINTX */
-+    case 0x79: /* FRINTI */
-         unallocated_encoding(s);
-         return;
-     }
-@@ -10415,11 +10372,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-             unallocated_encoding(s);
-             return;
-         }
--        /* FRINTxx is only in the vector form */
--        if (only_in_vector) {
--            unallocated_encoding(s);
--            return;
--        }
-     }
+ static bool trans_VMVN(DisasContext *s, arg_2misc *a)
+ {
+@@ -3227,33 +3229,6 @@ static bool trans_VREV16(DisasContext *s, arg_2misc *a)
+     return do_2misc(s, a, gen_rev16);
+ }
  
-     if (!fp_access_check(s)) {
-@@ -10494,17 +10446,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-             case 0x7b: /* FCVTZU */
-                 gen_helper_advsimd_f16touinth(tcg_res, tcg_op, tcg_fpstatus);
-                 break;
--            case 0x18: /* FRINTN */
--            case 0x19: /* FRINTM */
--            case 0x38: /* FRINTP */
--            case 0x39: /* FRINTZ */
--            case 0x58: /* FRINTA */
--            case 0x79: /* FRINTI */
--                gen_helper_advsimd_rinth(tcg_res, tcg_op, tcg_fpstatus);
--                break;
--            case 0x59: /* FRINTX */
--                gen_helper_advsimd_rinth_exact(tcg_res, tcg_op, tcg_fpstatus);
--                break;
-             case 0x7d: /* FRSQRTE */
-                 gen_helper_rsqrte_f16(tcg_res, tcg_op, tcg_fpstatus);
-                 break;
-@@ -10512,6 +10453,13 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
-             case 0x2f: /* FABS */
-             case 0x6f: /* FNEG */
-             case 0x7f: /* FSQRT */
-+            case 0x18: /* FRINTN */
-+            case 0x19: /* FRINTM */
-+            case 0x38: /* FRINTP */
-+            case 0x39: /* FRINTZ */
-+            case 0x58: /* FRINTA */
-+            case 0x79: /* FRINTI */
-+            case 0x59: /* FRINTX */
-                 g_assert_not_reached();
-             }
- 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 1e0eb4a748..5e02144f65 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1697,3 +1697,29 @@ FNEG_v          0.10 1110 1.1 00000 11111 0 ..... .....     @qrr_sd
- 
- FSQRT_v         0.10 1110 111 11001 11111 0 ..... .....     @qrr_h
- FSQRT_v         0.10 1110 1.1 00001 11111 0 ..... .....     @qrr_sd
-+
-+FRINTN_v        0.00 1110 011 11001 10001 0 ..... .....     @qrr_h
-+FRINTN_v        0.00 1110 0.1 00001 10001 0 ..... .....     @qrr_sd
-+
-+FRINTM_v        0.00 1110 011 11001 10011 0 ..... .....     @qrr_h
-+FRINTM_v        0.00 1110 0.1 00001 10011 0 ..... .....     @qrr_sd
-+
-+FRINTP_v        0.00 1110 111 11001 10001 0 ..... .....     @qrr_h
-+FRINTP_v        0.00 1110 1.1 00001 10001 0 ..... .....     @qrr_sd
-+
-+FRINTZ_v        0.00 1110 111 11001 10011 0 ..... .....     @qrr_h
-+FRINTZ_v        0.00 1110 1.1 00001 10011 0 ..... .....     @qrr_sd
-+
-+FRINTA_v        0.10 1110 011 11001 10001 0 ..... .....     @qrr_h
-+FRINTA_v        0.10 1110 0.1 00001 10001 0 ..... .....     @qrr_sd
-+
-+FRINTX_v        0.10 1110 011 11001 10011 0 ..... .....     @qrr_h
-+FRINTX_v        0.10 1110 0.1 00001 10011 0 ..... .....     @qrr_sd
-+
-+FRINTI_v        0.10 1110 111 11001 10011 0 ..... .....     @qrr_h
-+FRINTI_v        0.10 1110 1.1 00001 10011 0 ..... .....     @qrr_sd
-+
-+FRINT32Z_v      0.00 1110 0.1 00001 11101 0 ..... .....     @qrr_sd
-+FRINT32X_v      0.10 1110 0.1 00001 11101 0 ..... .....     @qrr_sd
-+FRINT64Z_v      0.00 1110 0.1 00001 11111 0 ..... .....     @qrr_sd
-+FRINT64X_v      0.10 1110 0.1 00001 11111 0 ..... .....     @qrr_sd
+-static bool trans_VCLS(DisasContext *s, arg_2misc *a)
+-{
+-    static NeonGenOneOpFn * const fn[] = {
+-        gen_helper_neon_cls_s8,
+-        gen_helper_neon_cls_s16,
+-        gen_helper_neon_cls_s32,
+-        NULL,
+-    };
+-    return do_2misc(s, a, fn[a->size]);
+-}
+-
+-static void do_VCLZ_32(TCGv_i32 rd, TCGv_i32 rm)
+-{
+-    tcg_gen_clzi_i32(rd, rm, 32);
+-}
+-
+-static bool trans_VCLZ(DisasContext *s, arg_2misc *a)
+-{
+-    static NeonGenOneOpFn * const fn[] = {
+-        gen_helper_neon_clz_u8,
+-        gen_helper_neon_clz_u16,
+-        do_VCLZ_32,
+-        NULL,
+-    };
+-    return do_2misc(s, a, fn[a->size]);
+-}
+-
+ static bool trans_VCNT(DisasContext *s, arg_2misc *a)
+ {
+     if (a->size != 0) {
 -- 
 2.43.0
 
