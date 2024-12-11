@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0931BE77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:45:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5059EE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLWO6-0006MR-Cn; Wed, 11 Dec 2024 18:45:02 -0500
+	id 1tLWQT-0007MY-J9; Wed, 11 Dec 2024 18:47:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLWO5-0006Lw-FT
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:45:01 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ id 1tLWQR-0007Lk-AW
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:47:27 -0500
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLWO3-0000JL-At
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:45:01 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3eb5a870158so11288b6e.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:44:58 -0800 (PST)
+ id 1tLWQO-0000dX-TP
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:47:27 -0500
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3eb687d96e9so17904b6e.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:47:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733960697; x=1734565497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733960842; x=1734565642; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=asBsdveSZXJzlahZnC9uRiEsUztlvSZanJRY5LQF3x0=;
- b=TiAZcglCc3HtIVuqnL0OMLDx3LH+uhYyWFxZPGK37SRRwafB+51mvTVxRC6qUqVMC7
- Hdm1SSufGGieB7MjWIffy6QcMV23x1hPrWkqJznGlOr/o4+13vgwCdr9pfHlPbo3DhC9
- mCXvpJY1MB8KoblrfytuHkpqPoUAvlE7Rh8U5aSwYvyFPV/Ou3sE7IgNqg/d0ESg1iIo
- GfiSdFyartJSDpMRRZHd6u5OTsL+wa8tMddgOpNQmdKaS7lbd+t5LpwZglqeM0jdaabb
- Z6QH5jOGdWQLvXlQwHrMpOlN8fz6L8ZTrtnPT9NC1aphn8FPu7/Y/pmWwzj3VI3MSl2q
- rv0g==
+ bh=Qkb8oD9u4TgqN+pxR7Frz6fjPra88BkSdEWP5k4hn+g=;
+ b=jvUIE2VCbD1f7SIbnNqE2qDMtUtx3M3QQ5sCEpd9+qrruUARu1S7dd1XDcII1JD6gz
+ qOGMJcq+D+TTQ+Yy8qNAco6mU2enPlaeKuEzIxP5xA+WpPsQFpU0OLHEK0yyqRAzWR6U
+ VbA1r5NddAbi1Ot/1FGpO0k4J3K1Yl79aOxSDxk5+CbxSMrJT07K/dkVWPieNJgGr0iN
+ qTNiN0bHRL8XO5mANfvGNelrA3RscT3EqqygyeB6HbzvTqlqcigQ7bSIKHmxlxuabqrr
+ wRc/5+Q0QpbqI2dwJ2hEnHvCDt3pr0t3b6t2vBR/z/iSyVSodHFLRauiayr1MsQWW+3H
+ TD2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733960697; x=1734565497;
+ d=1e100.net; s=20230601; t=1733960842; x=1734565642;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=asBsdveSZXJzlahZnC9uRiEsUztlvSZanJRY5LQF3x0=;
- b=ehD3lWDqzWtksaQzXUQyANo8dBdXJK5C/0QSgmShxwXsR/Uopnj/pzc/AscphVoUpz
- mS5cd2zLlrfSEvg68SJmHK8IQTgbrvRAeOYnD8keHD1iZys1rFm9y3mXA9ckk3j172EM
- y6sv6oUTS5SaFrBhSshw8QBafsUNN0CRIjBQev/ZCVAPhSsCn3/cfFbbnGS3iucSIW/r
- 2n+zZDvhEW332vVGuQXkmcSIgVcJXakc9zJPdtga12gLM7TgCYAim1HosPjZPb7QJQSp
- hDF60/7+dwoHVXB/jq7SjjKLI4KQYlqyaVi9It8nR6e9jCppGiDlxH+DrGHdX/wtD5fZ
- E+Eg==
+ bh=Qkb8oD9u4TgqN+pxR7Frz6fjPra88BkSdEWP5k4hn+g=;
+ b=d569R7uHgKADetfg9XmhrvtN3kgEuFuuXC/Hdi/UY9d/nIXw6uLkE4V9XtI+Hy+f8I
+ BQ/up5O/dYdMjgYGWSPS/3F37zmmcFSA05gNBXZAzaLXWZTcaoqQ6BJolm8Zm/1bfP6c
+ 5HLg3BXDG+lU5NAtBtSxY5GwCwLdSbkudP+Pi9z4odVEtcZikk1n14cWM+Vv9+4agsH6
+ xSH/CGO0qUyPgxjHtJIdN9EclyJ4jWSKuWWhumvBAPj0cKvXV/LQ9T7bb68pb9WN4HL6
+ ucbJZCh9CnKmcEP3Yrh1Kvt3oH4muz0XrBSbdDjj9YGRdMANF37oAgSYovlpmHEOTvFS
+ xUjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUDbL2E8e38jSmpgTmZdg8Os7f864uT1A0Ka9t70LQJORGTHkObFXXbMF6XUdSz5tcNIpdEM9ADWKcu@nongnu.org
-X-Gm-Message-State: AOJu0Yw0mL2QgaxQd4go0EonEn7u2Cif+mg93Ysga6sa7tqr7Pqt0npT
- eIZyGhDM/yS987u+IzN1y8aG4N/CZAJaPT8yvsoKFNwKq2nblUGYsdAxQmDkE6E=
-X-Gm-Gg: ASbGncuCmUeDuyUBJgqnoXFwhaBkWCnMFk9rX1sfGadLB3xFLZHTcjZ6ZtibuF711Dm
- ITvbazV0DHi4Sw9uGtkESmEcgnhuat6ZkUQQIcOdSAnVX6wqRH2L4/8TXKl52svtA/h+JK/YrmA
- vbd7fNxvFh4WcFJ9ys7VCg55sA/N+cHPtMZotmWEMeKwuMcx0I3ngShds0+DPuLEPrYe2laM1+Z
- cKfQWfYPzgSjUXY5ihb7x2VdxFIKW5WtCNP874HaHncXOEzDQcPZDG0+HnpzWEpWPlE9KAoBO9O
- /vI7gdK9tf8CgQ0uTRrlhUfFRL7JDmKX
-X-Google-Smtp-Source: AGHT+IFSJi2U6RRv+Fg3HiqgkNlcdrW/zbk5PrhzrFXYTVVkKilwEzzIsSFpsjLVqcxki92N0M3qZg==
-X-Received: by 2002:a05:6871:7bc2:b0:297:285e:f824 with SMTP id
- 586e51a60fabf-2a3823b5f24mr1150446fac.10.1733960697379; 
- Wed, 11 Dec 2024 15:44:57 -0800 (PST)
+ AJvYcCW9NN9Ch4VJWWcNgYYeG58paDluGx8DIfMsGmBKVeKlXONlWb+ajvsqrE3qtnVGCWQXInBiS9FWvuUd@nongnu.org
+X-Gm-Message-State: AOJu0YxDB0TgamOT5sT+akdxywx5M8JRYcOSLG9wais88ZfoUr7o8IfW
+ VxGu5ex6BZ68BE0zTo4RxcOZZ2/qMr/F1BOh5E1Ndj8cO35w6Kpk+uUOgX0iJKM=
+X-Gm-Gg: ASbGncvJtlZmDjiiJaszZRQsnQKYadjjSiIR9bZNTC2RkWPX4c81Safs6LZ1wcJP927
+ ZBW46Su/fQHx/Y544PjWaDXHeUo3yNDq1Gho4+XD76fbWfFN9sefdEiaWJh5vsaJakcbBFWkvDt
+ z3jGdoA0ezKnv19jroA9O0WtGhX3XUPawpyNdkYckzE74MEXsVzURTzoM2hI26ObYml61RovEld
+ kzBkkdU2uWJPkU1HgrnS3WRJe9Bg+pQdwfFzAJoY0FOxZwDobe8WvEdgSQTgJ3CCagkTfrSyWUv
+ 1KyWAKxjARKBFrEkKGFm5zuH6ojyg9s5
+X-Google-Smtp-Source: AGHT+IHU+cOWE86uvXrorvXrtIkRj2xEl00rtlMihVTUR2Ba5ADfWDMcN0frAXUXDSR/VNjOFrzqPA==
+X-Received: by 2002:a05:6808:448b:b0:3ea:3db5:ffd4 with SMTP id
+ 5614622812f47-3eb85d4c48amr3027896b6e.32.1733960842106; 
+ Wed, 11 Dec 2024 15:47:22 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29f715d7daasm3707234fac.35.2024.12.11.15.44.55
+ 5614622812f47-3eb076f8bbasm3517013b6e.30.2024.12.11.15.47.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 15:44:56 -0800 (PST)
-Message-ID: <5c279d58-7da2-4428-9414-488475668505@linaro.org>
-Date: Wed, 11 Dec 2024 17:44:53 -0600
+ Wed, 11 Dec 2024 15:47:21 -0800 (PST)
+Message-ID: <ff4153d8-89de-4e9f-b0d7-7ffa58ce7b11@linaro.org>
+Date: Wed, 11 Dec 2024 17:47:19 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] target/xtensa: Remove tswap() calls in semihosting
- simcall() helper
+Subject: Re: [PATCH v2 3/9] accel/tcg: Include missing 'exec/tswap.h' header
+ in translator.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org
 References: <20241211230357.97036-1-philmd@linaro.org>
- <20241211230357.97036-2-philmd@linaro.org>
- <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
+ <20241211230357.97036-4-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
+In-Reply-To: <20241211230357.97036-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,30 +105,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/24 17:08, Philippe Mathieu-Daudé wrote:
-> On 12/12/24 00:03, Philippe Mathieu-Daudé wrote:
->> In preparation of heterogeneous emulation where cores with
->> different endianness can run concurrently, we need to remove
->> the tswap() calls -- which use a fixed per-binary endianness.
->>
->> Get the endianness of the CPU accessed using the libisa
->> xtensa_isa_is_big_endian() call and replace the tswap() calls
->> by bswap() ones when necessary.
+On 12/11/24 17:03, Philippe Mathieu-Daudé wrote:
+> translator.c indirectly gets "exec/tswap.h" declarations via
+> "exec/cpu-all.h". Include it directly to be able to remove the
+> former from the latter, otherwise we get:
 > 
-> Instead read here:
+>    accel/tcg/translator.c:433:15: error: call to undeclared function 'tswap16'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>      433 |         tgt = tswap16(raw);
+>          |               ^
 > 
->    In preparation of heterogeneous emulation where cores with
->    different endianness can run concurrently, replace the pair
->    of cpu_memory_rw_debug() + tswap() calls by put/get_user_u32()
->    ones, which still do the same under the hood, but simplify the
->    code maintenance (having less sites to do endianness code
->    conversion).
-> 
->> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   accel/tcg/translator.c | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
 
 r~
 
