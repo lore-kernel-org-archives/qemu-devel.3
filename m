@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C698E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3293AE7717D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPSY-00015m-LB; Wed, 11 Dec 2024 11:21:10 -0500
+	id 1tLPSD-0000Mo-1i; Wed, 11 Dec 2024 11:20:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSW-00013T-OG
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:08 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ id 1tLPSC-0000M2-AU
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:48 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSV-0007pT-Ap
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:08 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so5589194f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:06 -0800 (PST)
+ id 1tLPSA-0007kp-Lb
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:48 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-434ab114753so46291045e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934066; x=1734538866; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934045; x=1734538845; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=upixniKzEOa/S8RuV1mPlSnfanTUMOTGZth3cr6koyg=;
- b=wweJC04kThYMzGYHF+xt221pAitEWwFwb/kxhw0Vjw8kqXg7P4qZg6KDwx81oMZyJV
- XJ4UR6G1cTgmonPslH+I44/mqJS1sT8Ez0I4BzS2AbQW05JAe4UFmw3kBq638yfrWDa+
- ag8jsYCFY9734RrPWcl4ES2ZmSMH4QP4xswUNC3iw25dJUtsvT+6Kz8RRmig0xuitLuG
- 7wnik7/DA1oqr1ZNa+G3JrPsDOexw9xBWQCMiOS458OGIyPcVhcTvrVBRMeAlnmMhrgv
- I2dzzLVfDMXK20kWRd2n8E9KorNKUP30lLPvQYUB+a9P2sTE3YR5cfiuHC2AqQuZ9dbn
- 3CTg==
+ :reply-to; bh=gHqtgcXwaXzVvVdsrCBhcuw/gjNtZbZ0W54PPbBKVlI=;
+ b=wR9HS04S8ZIam90w+foN226+sn5clRA45Z4F/yJDhk2+LXe1CCXyzuELjOS/rcl59S
+ hIiG7/PS1jetZSmJXW5ZSaeCHvgZdBv/Xe6sZKLYwWyqhuHqbmD+hqYHjviknwlu9qul
+ 6gIdYuEgsX86XBoSh7JyV8cNAt02xEdBW2EbDdtd1pM1SiKEmamwXqEjJhhRFIvOXzi3
+ FCtYkZwH2sNzdzVkSw6qv1lXAdgER+yFWP5ibNoAjGFZcWNi/obhqp+XtyyeiyCrJM2d
+ Lbx+9NqC1eu/cRehLXDvpAkOFWTXdS+cemYuQJmIXNypqZBNtLW3B6bYIRtwOIPiV9nU
+ Xr8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934066; x=1734538866;
+ d=1e100.net; s=20230601; t=1733934045; x=1734538845;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=upixniKzEOa/S8RuV1mPlSnfanTUMOTGZth3cr6koyg=;
- b=sZjbo7M4WijXahJo9HLHZlcOIe+dksKtMmIbFruC3bqCSL2I5TjB81Q/EoBgnBsKQh
- fXz6KMVFne06p7A0vP0uuG6YV59U/AvRmz20lfwUJlS+jLOZ6y5H0w6XJTgduVw1VaVd
- TOGX9rTwmFxs3Nq7o9Lto+xw53FRpBn3DU06ypI0e+01266iL+glD5p2Q7HVZEqsBuQ7
- foeQQbnYmEKVsV7iQHnemJHU2yH23KNb5q6fQEVnj5tAvScOUWNSU8CV5P0Xy03O0Qax
- 4kiNN1WUqz88EoVmP8/5Qn2i80o2fnGGJmJhu/YCxglb28iaxlIAaJgjvulJJv7XaEw7
- Aj+w==
-X-Gm-Message-State: AOJu0YysPOkb0m/6fiEvNVngdPmD4jE1EFyjLKr6hCHdq6d5zGebJA/h
- zOoc4gJ9FaZdVcCktdJVINNQDzE0SP+zhhrQnUWqXVg3zztXdWlmlQDu7EMAfjHsm3LtfdbLBZU
- z
-X-Gm-Gg: ASbGnctE1A9CFjJmVxDw1fjdhLooFpJXZJIAh32XGwVaMhXFAO2MzONSgO0RRNiE3hg
- b6hEI1XOxR87NMaABKMK3EGWebPHRhEPrI/vxWHAlkqGo+KEJzVMPXPt1vyQzOVEx7w/Hm7XO+x
- F9o5xu42cm7kTQbqIBHz4b/1CcuWFNJ/bXXdut4mS93lTtkvtrmoazDtfqKdRwWkNBZiqdyU1fU
- ns1NsUqnFUBJNYTQ8ElKTLWs7Tn9zNDQdtAa8sw5eEsHmVPZRqHuyXWq0pA
-X-Google-Smtp-Source: AGHT+IFG2SVLjAz1bdN+gruzFUiAnqPE3iQv2Lj1DysdWGswMOPVqOy4QL8Ek6WmiBalhgbTan2y6g==
-X-Received: by 2002:a5d:5f8f:0:b0:386:3e3c:efd with SMTP id
- ffacd0b85a97d-387876af743mr186911f8f.44.1733934065661; 
- Wed, 11 Dec 2024 08:21:05 -0800 (PST)
+ bh=gHqtgcXwaXzVvVdsrCBhcuw/gjNtZbZ0W54PPbBKVlI=;
+ b=VF7L864i4+ssR6IxmXtOMe93iI/Nf4ntfEgUK9kUtnfQ75IAk4PFYtAfFq+je5NCKE
+ GDqsi/ZXnFWms9SUpRrLBxdJcmAcEAs7KM7wwDC0hPKCj8qttUoAhRuwype8yp3XB1z3
+ F0Wuf6VAg1U0B2kQpmMFa/n/XQWveTSKdG5JOWkVOub1uHg1aUHH/1fmcJUU5pxHCk9V
+ dNOUU+L9CeEb5lgYPWzXov0xhC9s8COotOy6Q3tamprrpXkXyJAVshwUoOePqkUgLtot
+ hSH8QIp3YVACUmvFAlNWA2DRlksJioVjtGMKnx59ISWwY/boU8UDPWA+rX2zk4xV6/KX
+ wCIA==
+X-Gm-Message-State: AOJu0YyfwgzMJ5CuRtLKzhkVjSsPvqaqfxlNB/QPD8RmP/s1VJGisa2o
+ 5QwwnMweoMem6uTXQVDuMprT6umAKS7ZXIyIRm7vfA2Uh8sp3lFerDvOp3K/3VEWD9nnxrew1D7
+ v
+X-Gm-Gg: ASbGncvSFHY92PYujctOsiIN+2K+Rw9h7IjwjT0OVncyK1EAZhTqGP9dX7lDm6kdwdG
+ 6CF+HmSrm5v+leUC+IMvdIU8Wt3Tv+77CUiS94b25EjjWXXLxrQaHeD+S5wyFr8YyJC5qgl+JiK
+ g28pO48Rwcc827HX1cKn+ym+vL9Wl/obgDNrRD4iABGtQQY3jy2YRRogB0ZzhqJ/+EMnz1moVe4
+ Knd8a79yGb0NXmhYiUwwxBkA0CWvFLIdugOmxRSL59VmGXMiPM3+uNHHO56
+X-Google-Smtp-Source: AGHT+IHtrwz2LUY9f7DYGq8SMxTQSn7blz5yzVFyX+oxfkbj/mfPGZrx84ALjbjaEwXQFvanRezRLg==
+X-Received: by 2002:a05:600c:3b9c:b0:436:1af4:5e07 with SMTP id
+ 5b1f17b1804b1-4361c3444a2mr27137875e9.1.1733934045309; 
+ Wed, 11 Dec 2024 08:20:45 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.04
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.44
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:21:04 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:44 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 51/72] target/ppc: Set default NaN pattern explicitly
-Date: Wed, 11 Dec 2024 16:19:43 +0000
-Message-Id: <20241211162004.2795499-52-peter.maydell@linaro.org>
+Subject: [PULL 33/72] softfloat: Create floatx80 default NaN from
+ parts64_default_nan
+Date: Wed, 11 Dec 2024 16:19:25 +0000
+Message-Id: <20241211162004.2795499-34-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,29 +98,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set the default NaN pattern explicitly for ppc.
+We create our 128-bit default NaN by calling parts64_default_nan()
+and then adjusting the result.  We can do the same trick for creating
+the floatx80 default NaN, which lets us drop a target ifdef.
+
+floatx80 is used only by:
+ i386
+ m68k
+ arm nwfpe old floating-point emulation emulation support
+    (which is essentially dead, especially the parts involving floatx80)
+ PPC (only in the xsrqpxp instruction, which just rounds an input
+    value by converting to floatx80 and back, so will never generate
+    the default NaN)
+
+The floatx80 default NaN as currently implemented is:
+ m68k: sign = 0, exp = 1...1, int = 1, frac = 1....1
+ i386: sign = 1, exp = 1...1, int = 1, frac = 10...0
+
+These are the same as the parts64_default_nan for these architectures.
+
+This is technically a possible behaviour change for arm linux-user
+nwfpe emulation emulation, because the default NaN will now have the
+sign bit clear.  But we were already generating a different floatx80
+default NaN from the real kernel emulation we are supposedly
+following, which appears to use an all-bits-1 value:
+ https://elixir.bootlin.com/linux/v6.12/source/arch/arm/nwfpe/softfloat-specialize#L267
+
+This won't affect the only "real" use of the nwfpe emulation, which
+is ancient binaries that used it as part of the old floating point
+calling convention; that only uses loads and stores of 32 and 64 bit
+floats, not any of the floatx80 behaviour the original hardware had.
+We also get the nwfpe float64 default NaN value wrong:
+ https://elixir.bootlin.com/linux/v6.12/source/arch/arm/nwfpe/softfloat-specialize#L166
+so if we ever cared about this obscure corner the right fix would be
+to correct that so nwfpe used its own default-NaN setting rather
+than the Arm VFP one.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-46-peter.maydell@linaro.org
+Message-id: 20241202131347.498124-29-peter.maydell@linaro.org
 ---
- target/ppc/cpu_init.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fpu/softfloat-specialize.c.inc | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index eb9d7b13701..1253dbf622c 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -7286,6 +7286,10 @@ static void ppc_cpu_reset_hold(Object *obj, ResetType type)
-     set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
-     set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->vec_status);
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 5fbc953e71e..9f913ce20ab 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -227,17 +227,17 @@ static void parts128_silence_nan(FloatParts128 *p, float_status *status)
+ floatx80 floatx80_default_nan(float_status *status)
+ {
+     floatx80 r;
++    /*
++     * Extrapolate from the choices made by parts64_default_nan to fill
++     * in the floatx80 format. We assume that floatx80's explicit
++     * integer bit is always set (this is true for i386 and m68k,
++     * which are the only real users of this format).
++     */
++    FloatParts64 p64;
++    parts64_default_nan(&p64, status);
  
-+    /* Default NaN: sign bit clear, set frac msb */
-+    set_float_default_nan_pattern(0b01000000, &env->fp_status);
-+    set_float_default_nan_pattern(0b01000000, &env->vec_status);
-+
-     for (i = 0; i < ARRAY_SIZE(env->spr_cb); i++) {
-         ppc_spr_t *spr = &env->spr_cb[i];
+-    /* None of the targets that have snan_bit_is_one use floatx80.  */
+-    assert(!snan_bit_is_one(status));
+-#if defined(TARGET_M68K)
+-    r.low = UINT64_C(0xFFFFFFFFFFFFFFFF);
+-    r.high = 0x7FFF;
+-#else
+-    /* X86 */
+-    r.low = UINT64_C(0xC000000000000000);
+-    r.high = 0xFFFF;
+-#endif
++    r.high = 0x7FFF | (p64.sign << 15);
++    r.low = (1ULL << DECOMPOSED_BINARY_POINT) | p64.frac;
+     return r;
+ }
  
 -- 
 2.34.1
