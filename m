@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E980E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:45:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B3A5E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:45:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPgG-0004Xm-Bb; Wed, 11 Dec 2024 11:35:21 -0500
+	id 1tLPZQ-0004De-0E; Wed, 11 Dec 2024 11:28:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPde-00070L-8t
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:38 -0500
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPdc-0001UT-DH
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:37 -0500
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-467918c35easo7242131cf.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934755; x=1734539555; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CqOTQiwXcBvssNWF61NfJfcgW9KkFmSxCssu4290Mqg=;
- b=ZWfjqN/TDX/NLJ4QkoKopMOB3pPze5PKmBqZRrKMR4IsZGZKNRhoddepdG1LpSSQRl
- yzVsYpyG5cZx+0Si/Fw87BUUEWpE8CwWX358uSFD40n59sUqXeloFqILUzzYv2K0t+Yr
- EzzReTMLOmvZCzoYxG4vN2vomEv2smAYkFwvMlufsTCMYuEX8ZPJl8NF71uccIt6Zh/K
- Tn+cXm65mbOlQF6aGWhNIl7HnPU63c5lgaoDUyorxQ27kukqyBnwYWrGlUSMfairOtZq
- outSZDhVfnCCuUuqJwsB/YjwZZlKw/YUyxiLaFE6dFdJMulIeXzTc01XrgstviIL7mE7
- +0ug==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPZL-0003ca-DQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPZI-0000PK-C8
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934487;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=FCv89ZfoHZZZqkAW0Dj5w3dxVYgBc6W+jr38uHvg65c=;
+ b=h6GfCTbMMpTc5cGOWeRxI6q7ihnfkxZy87uy0iXlmcxzcFWoj+9X3EhE1zEkxWuUHG/LOE
+ ncyn2wZuSCaWoI2ZO8IDJu/OW9wZ0I76OldU0GfQcaqJDW7LDk1YXR/0Jtg2OzNzqzcnIe
+ SSy+JF4xcg4RWxfvS5oeO+KiO5BzXQE=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-38-HInfmtxIPkeHztmLDToxlA-1; Wed, 11 Dec 2024 11:28:05 -0500
+X-MC-Unique: HInfmtxIPkeHztmLDToxlA-1
+X-Mimecast-MFC-AGG-ID: HInfmtxIPkeHztmLDToxlA
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-5d40c0c728aso2481671a12.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:05 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934755; x=1734539555;
+ d=1e100.net; s=20230601; t=1733934484; x=1734539284;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CqOTQiwXcBvssNWF61NfJfcgW9KkFmSxCssu4290Mqg=;
- b=Dvan3it44EmPUS0Q0+0qXTGBooHL4udARPD7zPudmyX0c1jhbLo5MZ2eueptv3r4Gn
- 2tlsALVPGTjecgl5OXHq8wcOZLq7nx4WuR+xdBppDHpEOeMgExc25r1zjYiSHYhf4LPf
- LM8QtUsT7us30ZrgZMIK61hz4lhOATeDUP68lHbxw328wUvZRbIqyLPQAyNy6BTLQt6Y
- JqJ2EK3fMxIcgrG0WgEGQ1YpaG/NvB/XTLT8+41soV0CH8+NgkzVnBJF2qJcxIgmmpvU
- pIn2nUUq7eoqk9sjkQEBPL+FoDnSpTIE7fd5JGJjqDhFI8zQd25/rEsLBywygegTK87F
- 15LQ==
-X-Gm-Message-State: AOJu0Yzlbbtg/fbduuf91mdXPb34YnqVBP74mbdFbljQztPERXpo7Wr3
- 764kEpkPoVJYY9PEsdzQdhkSYMd5WlJOzunPUte3tDSeNr9JrS4kLFf/ptFSCJLs/s/YM90XjmO
- 4N3SNvjS2
-X-Gm-Gg: ASbGncsM1/VStfeNP+V8+CuQkD3oMAthcTgDMc+ed2xMsqZUWN0QvyQmAnRmcmtcQ2V
- qPZ6Gx7UUuI92vRKMXvJcYMVAP3yAXO2UJk0Mssh811ijG6k3v1K0GzzmeVYpwxo6W5NEFYfleg
- Y0tJ0mwypD1bqvN2zUgpEH90xKTRuUo67HloHAIW4do2k/MTxK4dGufj9U47gMiE53AtiI1OaFR
- RYZKrxhfDQReCck7wLX7ubXkfWmZs5vo+5RQ7JMl7HSmZGgVC1yLTK1sErFpg==
-X-Google-Smtp-Source: AGHT+IHWTUnc1Le3jYPPvbI7a62r3Lo9xjwWUXQ11iDtA5UoJlCIgiA36uzYUW3UE0Df+LFKQEDcPQ==
-X-Received: by 2002:a05:622a:15c2:b0:463:648d:32 with SMTP id
- d75a77b69052e-4679600f3e5mr510391cf.0.1733934755420; 
- Wed, 11 Dec 2024 08:32:35 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.33
+ bh=FCv89ZfoHZZZqkAW0Dj5w3dxVYgBc6W+jr38uHvg65c=;
+ b=wyPIh7a2e4tTj5eWB4BMhCSUUUcDDwW8HhjEckHOHiyJITu1MyFsivyBLtWLSRUjXc
+ hXifhEY10HjExFz1UDRei8XsnLDcTvIQ4PjksCgmpdbaQiTWkjEwa0O7G1ckqi4NKr8S
+ /hcaD5GTb1jQQGJxfksqin5Mzyj+afR7IrFyHrdQrQzlc0EY4sKdNSEOzVpL5sdlpLAV
+ BgX9RXcl08TAcXxfeRNVVUNm7BgymizsLq2aVbbLYYtjTyKrarbuiDw0wvGNoiLnTAGl
+ njqyvHooNnCzL890wcfVboVUxXjwGYMiG1YEdVnCbD1wl9yrmOUXlYfzJjBw+hJC5v3c
+ SWMw==
+X-Gm-Message-State: AOJu0YzAXV6gi4rYIT9Lh4WNeB/9r1j+H8oJitOUjvNgiGE8p9/l8ugi
+ eLYZeCjkh3qWd1WRlNFJqlkN4A/rPf51Yu3A87zimZSxLEV788wKvqIhAsZu3L/P9eq5FvxgooX
+ 2qD5rHWB8eFhpI8rbS2GwSpBndEtlGXV0Ea6Y+vo6KgMN6qeuQPzlXWyseSGq6xETmGBzwBM1PT
+ fXixmwMcuyy0aWCaFWEcCHCrJRT/2DxdYGbJvN
+X-Gm-Gg: ASbGnctn6X/jD1VSdW1e1mZ5C5qHUAota8XMSWAAUeBfs17LZRVVwpb9jmGFVCMljoi
+ 4DDWPDPyyURRfotDmTz+1vgBtmfmx1dva0qs9IlstjE2ANFPykMUva5FYN7u/P7GHZuY97cGOP7
+ T1VOqUiZ5OONTnmvUFy4C738ZdymtOWgTUteOwo1xLeB49J5kV6Ets+R/qr29rqpXYJ8qCcFrVY
+ lBUPUPQojTv67SeIpcyg9Hbi725h0MrDt9Ut9oppsD8n8g4xOSt7fb0
+X-Received: by 2002:a05:6402:2807:b0:5d2:7270:6128 with SMTP id
+ 4fb4d7f45d1cf-5d43314cf97mr7828196a12.25.1733934484020; 
+ Wed, 11 Dec 2024 08:28:04 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUtC2+/Wx3qfxjhswpuOMWQKWdituT50dTL3K3ZOBNrtdiGdhr+r2NZ/g/OHHz5DwxH7mFxw==
+X-Received: by 2002:a05:6402:2807:b0:5d2:7270:6128 with SMTP id
+ 4fb4d7f45d1cf-5d43314cf97mr7828086a12.25.1733934483079; 
+ Wed, 11 Dec 2024 08:28:03 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d3ebbd67c0sm5836516a12.46.2024.12.11.08.28.02
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:32:35 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Dec 2024 08:28:02 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 38/69] target/arm: Convert CLS, CLZ (vector) to decodetree
-Date: Wed, 11 Dec 2024 10:30:05 -0600
-Message-ID: <20241211163036.2297116-39-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+Subject: [PULL 16/49] clock: treat outputs and inputs the same in
+ NamedClockList
+Date: Wed, 11 Dec 2024 17:26:46 +0100
+Message-ID: <20241211162720.320070-17-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,114 +108,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/tcg/translate-a64.c | 37 ++++++++++++++++------------------
- target/arm/tcg/a64.decode      |  2 ++
- 2 files changed, 19 insertions(+), 20 deletions(-)
+ hw/core/qdev-clock.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 387bbbf906..ecb4578998 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -8916,6 +8916,20 @@ static bool do_gvec_fn2(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
- TRANS(ABS_v, do_gvec_fn2, a, tcg_gen_gvec_abs)
- TRANS(NEG_v, do_gvec_fn2, a, tcg_gen_gvec_neg)
- 
-+static bool do_gvec_fn2_bhs(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
-+{
-+    if (a->esz == MO_64) {
-+        return false;
-+    }
-+    if (fp_access_check(s)) {
-+        gen_gvec_fn2(s, a->q, a->rd, a->rn, fn, a->esz);
-+    }
-+    return true;
-+}
-+
-+TRANS(CLS_v, do_gvec_fn2_bhs, a, gen_gvec_cls)
-+TRANS(CLZ_v, do_gvec_fn2_bhs, a, gen_gvec_clz)
-+
- /* Common vector code for handling integer to FP conversion */
- static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
-                                    int elements, int is_signed,
-@@ -9215,13 +9229,6 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-     TCGCond cond;
- 
-     switch (opcode) {
--    case 0x4: /* CLS, CLZ */
--        if (u) {
--            tcg_gen_clzi_i64(tcg_rd, tcg_rn, 64);
--        } else {
--            tcg_gen_clrsb_i64(tcg_rd, tcg_rn);
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index ca65685c04e..2f9d6cb7579 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -48,14 +48,6 @@ static NamedClockList *qdev_init_clocklist(DeviceState *dev, const char *name,
+     if (clk == NULL) {
+         clk = CLOCK(object_new(TYPE_CLOCK));
+         object_property_add_child(OBJECT(dev), name, OBJECT(clk));
+-        if (output) {
+-            /*
+-             * Remove object_new()'s initial reference.
+-             * Note that for inputs, the reference created by object_new()
+-             * will be deleted in qdev_finalize_clocklist().
+-             */
+-            object_unref(OBJECT(clk));
 -        }
--        break;
-     case 0x5: /* NOT */
-         /* This opcode is shared with CNT and RBIT but we have earlier
-          * enforced that size == 3 if and only if this is the NOT insn.
-@@ -9283,6 +9290,7 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-         gen_helper_frint64_d(tcg_rd, tcg_rn, tcg_fpstatus);
-         break;
-     default:
-+    case 0x4: /* CLS, CLZ */
-     case 0x7: /* SQABS, SQNEG */
-     case 0xb: /* ABS, NEG */
-         g_assert_not_reached();
-@@ -10089,12 +10097,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+     } else {
+         object_property_add_link(OBJECT(dev), name,
+                                  object_get_typename(OBJECT(clk)),
+@@ -84,7 +76,7 @@ void qdev_finalize_clocklist(DeviceState *dev)
  
-         handle_2misc_narrow(s, false, opcode, u, is_q, size, rn, rd);
-         return;
--    case 0x4: /* CLS, CLZ */
--        if (size == 3) {
--            unallocated_encoding(s);
--            return;
--        }
--        break;
-     case 0x2: /* SADDLP, UADDLP */
-     case 0x6: /* SADALP, UADALP */
-         if (size == 3) {
-@@ -10299,6 +10301,7 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     }
-     default:
-     case 0x3: /* SUQADD, USQADD */
-+    case 0x4: /* CLS, CLZ */
-     case 0x7: /* SQABS, SQNEG */
-     case 0xb: /* ABS, NEG */
-         unallocated_encoding(s);
-@@ -10321,13 +10324,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     }
- 
-     switch (opcode) {
--    case 0x4: /* CLZ, CLS */
--        if (u) {
--            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_clz, size);
--        } else {
--            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_cls, size);
--        }
--        return;
-     case 0x5:
-         if (u && size == 0) { /* NOT */
-             gen_gvec_fn2(s, is_q, rd, rn, tcg_gen_gvec_not, 0);
-@@ -10351,6 +10347,7 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     case 0xa: /* CMLT */
-         gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_clt0, size);
-         return;
-+    case 0x4: /* CLZ, CLS */
-     case 0xb:
-         g_assert_not_reached();
-     }
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index f112951df7..32355ee633 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1641,3 +1641,5 @@ SQABS_v         0.00 1110 ..1 00000 01111 0 ..... .....     @qrr_e
- SQNEG_v         0.10 1110 ..1 00000 01111 0 ..... .....     @qrr_e
- ABS_v           0.00 1110 ..1 00000 10111 0 ..... .....     @qrr_e
- NEG_v           0.10 1110 ..1 00000 10111 0 ..... .....     @qrr_e
-+CLS_v           0.00 1110 ..1 00000 01001 0 ..... .....     @qrr_e
-+CLZ_v           0.10 1110 ..1 00000 01001 0 ..... .....     @qrr_e
+     QLIST_FOREACH_SAFE(ncl, &dev->clocks, node, ncl_next) {
+         QLIST_REMOVE(ncl, node);
+-        if (!ncl->output && !ncl->alias) {
++        if (!ncl->alias) {
+             /*
+              * We kept a reference on the input clock to ensure it lives up to
+              * this point; it is used by the monitor to show the frequency.
 -- 
-2.43.0
+2.47.1
 
 
