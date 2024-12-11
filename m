@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF622E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:28:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2021AE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:28:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQVS-0007YL-Rw; Wed, 11 Dec 2024 12:28:14 -0500
+	id 1tLQVb-0007zO-4p; Wed, 11 Dec 2024 12:28:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQVP-0007PU-TL
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLQVV-0007ot-P9
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQVK-0001FL-2H
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:11 -0500
+ id 1tLQVT-0001HK-Of
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938084;
+ s=mimecast20190719; t=1733938095;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jU1EBdft0WiNh37UzwzIwlEiR2vCWs03nT8CW0m/JvM=;
- b=i6qrsvMML33hAdl8Cr+eu+B9ZsPu5q1cQpGA0R4MSAvArGkTUhTSSxx/y/lx+EeRzgrhMl
- GxOQj8XA1WzHqnCJ21FuDavGdv8lNXqQgVCYgiRgzcLC4BkRgiNMc9QMslWfbf9p92aDS7
- yywWp781y+NKtcGJ09NCorCyzF7L1tk=
+ bh=vOzKQVZOZ/+VHfbCjlSNMjVwOIJdTjM8Ad+SBr+PYYM=;
+ b=hx6kyS0NfWIe41F+VUatgbONjt/aVS0pHlETk99firvgAcXxXOx6o6goYDMX/HJ3GVBziI
+ 4Kh5ol3qD4pN9LsGHdTnTHfH/7hdF2PtgmRElKN4nXg3q7qNkJMR2rZwrecPQX2OIpDKZF
+ narkvw+x8sYHSVccdwLHX/mSTQsLZsQ=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-636-CeIVoTCqMtayrEJ9g0W-fg-1; Wed,
- 11 Dec 2024 12:28:00 -0500
-X-MC-Unique: CeIVoTCqMtayrEJ9g0W-fg-1
-X-Mimecast-MFC-AGG-ID: CeIVoTCqMtayrEJ9g0W-fg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-537-EqKv7I7pMEC2plRUdzKD8w-1; Wed,
+ 11 Dec 2024 12:28:13 -0500
+X-MC-Unique: EqKv7I7pMEC2plRUdzKD8w-1
+X-Mimecast-MFC-AGG-ID: EqKv7I7pMEC2plRUdzKD8w
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0AE571955E8E; Wed, 11 Dec 2024 17:27:59 +0000 (UTC)
+ id BAFBD19560B6; Wed, 11 Dec 2024 17:28:12 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDC141956052; Wed, 11 Dec 2024 17:27:56 +0000 (UTC)
+ id ACA881956048; Wed, 11 Dec 2024 17:28:10 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 23/31] tests/functional: convert tests to new
- archive_extract helper
-Date: Wed, 11 Dec 2024 17:26:39 +0000
-Message-ID: <20241211172648.2893097-24-berrange@redhat.com>
+Subject: [PATCH v2 28/31] tests/functional: replace 'run_cmd' with subprocess
+ helpers
+Date: Wed, 11 Dec 2024 17:26:44 +0000
+Message-ID: <20241211172648.2893097-29-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -88,1023 +88,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace use of utils.archive_extract and extract_from_deb with the
-new archive_extract helper.
+The 'run_cmd' helper is re-implementing a convenient helper that
+already exists in the form of the 'run' and 'check_call' methods
+provided by 'subprocess'.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/linuxkernel.py     | 20 +----------
- tests/functional/test_aarch64_aspeed.py       |  5 ++-
- tests/functional/test_aarch64_raspi3.py       |  8 +----
- tests/functional/test_aarch64_raspi4.py       | 14 ++++----
- tests/functional/test_acpi_bits.py            | 15 ++------
- tests/functional/test_arm_aspeed.py           | 26 ++++----------
- tests/functional/test_arm_bflt.py             |  3 +-
- tests/functional/test_arm_bpim2u.py           | 26 +++++++-------
- tests/functional/test_arm_canona1100.py       | 11 +++---
- tests/functional/test_arm_cubieboard.py       | 20 +++++------
- tests/functional/test_arm_orangepi.py         | 35 +++++++++----------
- tests/functional/test_arm_raspi2.py           | 14 ++++----
- tests/functional/test_arm_smdkc210.py         |  9 +++--
- tests/functional/test_arm_vexpress.py         |  5 ++-
- tests/functional/test_m68k_mcf5208evb.py      |  5 ++-
- tests/functional/test_m68k_q800.py            |  5 ++-
- .../functional/test_microblaze_s3adsp1800.py  |  5 ++-
- .../test_microblazeel_s3adsp1800.py           |  5 ++-
- tests/functional/test_mips64el_fuloong2e.py   |  6 ++--
- tests/functional/test_mips64el_malta.py       |  6 ++--
- tests/functional/test_mips_malta.py           | 12 +++----
- tests/functional/test_mipsel_malta.py         |  5 +--
- tests/functional/test_or1k_sim.py             |  5 ++-
- tests/functional/test_ppc64_e500.py           |  5 ++-
- tests/functional/test_ppc_amiga.py            |  6 ++--
- tests/functional/test_ppc_bamboo.py           |  5 ++-
- tests/functional/test_ppc_mac.py              |  6 ++--
- tests/functional/test_ppc_mpc8544ds.py        |  8 ++---
- tests/functional/test_ppc_virtex_ml507.py     |  5 ++-
- tests/functional/test_sh4_r2d.py              |  5 ++-
- tests/functional/test_sh4eb_r2d.py            |  5 ++-
- tests/functional/test_sparc64_sun4u.py        |  8 ++---
- tests/functional/test_sparc_sun4m.py          |  5 ++-
- tests/functional/test_xtensa_lx60.py          |  5 ++-
- 34 files changed, 127 insertions(+), 201 deletions(-)
+ tests/functional/qemu_test/archive.py    |  9 ++++---
+ tests/functional/qemu_test/tesseract.py  | 10 ++++----
+ tests/functional/qemu_test/testcase.py   | 31 +++++++++++++-----------
+ tests/functional/qemu_test/tuxruntest.py |  8 +++---
+ tests/functional/test_aarch64_virt.py    |  6 +++--
+ tests/functional/test_ppc64_tuxrun.py    |  7 ++++--
+ 6 files changed, 41 insertions(+), 30 deletions(-)
 
-diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
-index 8f2810f3af..155855541f 100644
---- a/tests/functional/qemu_test/linuxkernel.py
-+++ b/tests/functional/qemu_test/linuxkernel.py
-@@ -3,11 +3,9 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
+diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
+index c439d9413a..c803fdaf6d 100644
+--- a/tests/functional/qemu_test/archive.py
++++ b/tests/functional/qemu_test/archive.py
+@@ -14,7 +14,6 @@
+ import zipfile
  
--import os
--
- from .testcase import QemuSystemTest
- from .cmd import wait_for_console_pattern
--from .archive import deb_extract
-+
+ from .asset import Asset
+-from .cmd import run_cmd
  
  
- class LinuxKernelTest(QemuSystemTest):
-@@ -29,19 +27,3 @@ def launch_kernel(self, kernel, initrd=None, dtb=None, console_index=0,
-         self.vm.launch()
-         if wait_for:
-                 self.wait_for_console_pattern(wait_for)
--
--    def extract_from_deb(self, deb_path, path):
--        """
--        Extracts a file from a deb package into the test workdir
--
--        :param deb_path: path to the deb archive
--        :param path: path within the deb archive of the file to be extracted
--        :returns: path of the extracted file
--        """
--        deb_extract(deb_path, self.workdir, member="." + path)
--        # Return complete path to extracted file.  Because callers to
--        # extract_from_deb() specify 'path' with a leading slash, it is
--        # necessary to use os.path.relpath() as otherwise scratch_file()
--        # interprets it as an absolute path and drops the required prefix
--        return os.path.normpath(self.scratch_file(os.path.relpath(path, '/')))
--
-diff --git a/tests/functional/test_aarch64_aspeed.py b/tests/functional/test_aarch64_aspeed.py
-index 8ba2c67248..141d863859 100644
---- a/tests/functional/test_aarch64_aspeed.py
-+++ b/tests/functional/test_aarch64_aspeed.py
-@@ -11,7 +11,7 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
+ def tar_extract(archive, dest_dir, member=None):
+@@ -52,9 +51,11 @@ def deb_extract(archive, dest_dir, member=None):
+     cwd = os.getcwd()
+     os.chdir(dest_dir)
+     try:
+-        (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
+-        file_path = stdout.split()[2]
+-        run_cmd(['ar', 'x', archive, file_path])
++        proc = run(['ar', 't', archive],
++                   check=True, capture_output=True, encoding='utf8')
++        file_path = proc.stdout.split()[2]
++        check_call(['ar', 'x', archive, file_path],
++                   stdout=DEVNULL, stderr=DEVNULL)
+         tar_extract(file_path, dest_dir, member)
+     finally:
+         os.chdir(cwd)
+diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
+index 1b7818090a..ede6c6501e 100644
+--- a/tests/functional/qemu_test/tesseract.py
++++ b/tests/functional/qemu_test/tesseract.py
+@@ -6,18 +6,18 @@
+ # later. See the COPYING file in the top-level directory.
+ 
+ import logging
++from subprocess import run
+ 
+-from . import run_cmd
+ 
+ def tesseract_ocr(image_path, tesseract_args=''):
+     console_logger = logging.getLogger('console')
+     console_logger.debug(image_path)
+-    (stdout, stderr, ret) = run_cmd(['tesseract', image_path,
+-                                     'stdout'])
+-    if ret:
++    proc = run(['tesseract', image_path, 'stdout'],
++               capture_output=True, encoding='utf8')
++    if proc.returncode:
+         return None
+     lines = []
+-    for line in stdout.split('\n'):
++    for line in proc.stdout.split('\n'):
+         sline = line.strip()
+         if len(sline):
+             console_logger.debug(sline)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 684c94d45f..7bece8738a 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -16,7 +16,7 @@
+ from pathlib import Path
+ import pycotap
+ import shutil
+-import subprocess
++from subprocess import run
+ import sys
+ import tempfile
+ import unittest
+@@ -27,7 +27,6 @@
+ 
+ from .archive import archive_extract
+ from .asset import Asset
+-from .cmd import run_cmd
+ from .config import BUILD_DIR
+ from .uncompress import uncompress
+ 
+@@ -251,11 +250,11 @@ def add_ldpath(self, ldpath):
+         self._ldpath.append(os.path.abspath(ldpath))
+ 
+     def run_cmd(self, bin_path, args=[]):
+-        return subprocess.run([self.qemu_bin]
+-                              + ["-L %s" % ldpath for ldpath in self._ldpath]
+-                              + [bin_path]
+-                              + args,
+-                              text=True, capture_output=True)
++        return run([self.qemu_bin]
++                   + ["-L %s" % ldpath for ldpath in self._ldpath]
++                   + [bin_path]
++                   + args,
++                   text=True, capture_output=True)
+ 
+ class QemuSystemTest(QemuBaseTest):
+     """Facilitates system emulation tests."""
+@@ -282,7 +281,9 @@ def setUp(self):
+     def set_machine(self, machinename):
+         # TODO: We should use QMP to get the list of available machines
+         if not self._machinehelp:
+-            self._machinehelp = run_cmd([self.qemu_bin, '-M', 'help'])[0];
++            self._machinehelp = run(
++                [self.qemu_bin, '-M', 'help'],
++                capture_output=True, check=True, encoding='utf8').stdout
+         if self._machinehelp.find(machinename) < 0:
+             self.skipTest('no support for machine ' + machinename)
+         self.machine = machinename
+@@ -310,15 +311,17 @@ def require_accelerator(self, accelerator):
+                           "available" % accelerator)
+ 
+     def require_netdev(self, netdevname):
+-        netdevhelp = run_cmd([self.qemu_bin,
+-                             '-M', 'none', '-netdev', 'help'])[0];
+-        if netdevhelp.find('\n' + netdevname + '\n') < 0:
++        help = run([self.qemu_bin,
++                    '-M', 'none', '-netdev', 'help'],
++                   capture_output=True, check=True, encoding='utf8').stdout;
++        if help.find('\n' + netdevname + '\n') < 0:
+             self.skipTest('no support for " + netdevname + " networking')
+ 
+     def require_device(self, devicename):
+-        devhelp = run_cmd([self.qemu_bin,
+-                           '-M', 'none', '-device', 'help'])[0];
+-        if devhelp.find(devicename) < 0:
++        help = run([self.qemu_bin,
++                    '-M', 'none', '-device', 'help'],
++                   capture_output=True, check=True, encoding='utf8').stdout;
++        if help.find(devicename) < 0:
+             self.skipTest('no support for device ' + devicename)
+ 
+     def _new_vm(self, name, *args):
+diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
+index 0b1bb8f0ed..7227a83757 100644
+--- a/tests/functional/qemu_test/tuxruntest.py
++++ b/tests/functional/qemu_test/tuxruntest.py
+@@ -11,11 +11,12 @@
+ 
+ import os
+ import stat
++from subprocess import check_call, DEVNULL
+ 
+ from qemu_test import QemuSystemTest
  from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test.utils import archive_extract
-+
+ from qemu_test import wait_for_console_pattern
+-from qemu_test import which, run_cmd, get_qemu_img
++from qemu_test import which, get_qemu_img
  
- class AST2x00MachineSDK(QemuSystemTest):
+ class TuxRunBaselineTest(QemuSystemTest):
  
-@@ -34,8 +34,7 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
-     def test_aarch64_ast2700_evb_sdk_v09_02(self):
-         self.set_machine('ast2700-evb')
+@@ -76,8 +77,9 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
  
--        image_path = self.ASSET_SDK_V902_AST2700.fetch()
--        archive_extract(image_path, self.workdir)
-+        self.archive_extract(self.ASSET_SDK_V902_AST2700)
+         disk_image = self.scratch_file("rootfs.ext4")
  
-         num_cpu = 4
-         uboot_size = os.path.getsize(self.scratch_file('ast2700-default',
-diff --git a/tests/functional/test_aarch64_raspi3.py b/tests/functional/test_aarch64_raspi3.py
-index 98ed6f9d56..74f6630ed2 100755
---- a/tests/functional/test_aarch64_raspi3.py
-+++ b/tests/functional/test_aarch64_raspi3.py
-@@ -7,8 +7,6 @@
+-        run_cmd(['zstd', "-f", "-d", disk_image_zst,
+-                 "-o", disk_image])
++        check_call(['zstd', "-f", "-d", disk_image_zst,
++                    "-o", disk_image],
++                   stdout=DEVNULL, stderr=DEVNULL)
+         # zstd copies source archive permissions for the output
+         # file, so must make this writable for QEMU
+         os.chmod(disk_image, stat.S_IRUSR | stat.S_IWUSR)
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index cc49f8963d..08576b0694 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -12,10 +12,11 @@
+ 
+ import time
+ import logging
++from subprocess import check_call, DEVNULL
+ 
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+-from qemu_test import get_qemu_img, run_cmd
++from qemu_test import get_qemu_img
+ 
+ 
+ class Aarch64VirtMachine(QemuSystemTest):
+@@ -96,7 +97,8 @@ def common_aarch64_virt(self, machine):
+         logger.info('creating scratch qcow2 image')
+         image_path = self.scratch_file('scratch.qcow2')
+         qemu_img = get_qemu_img(self)
+-        run_cmd([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'])
++        check_call([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'],
++                   stdout=DEVNULL, stderr=DEVNULL)
+ 
+         # Add the device
+         self.vm.add_args('-blockdev',
+diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
+index 03b47e07f2..8a98d18ab3 100755
+--- a/tests/functional/test_ppc64_tuxrun.py
++++ b/tests/functional/test_ppc64_tuxrun.py
+@@ -11,9 +11,10 @@
  #
  # SPDX-License-Identifier: GPL-2.0-or-later
  
--from zipfile import ZipFile
--
- from qemu_test import LinuxKernelTest, Asset
- 
- 
-@@ -21,11 +19,7 @@ class Aarch64Raspi3Machine(LinuxKernelTest):
- 
-     def test_aarch64_raspi3_atf(self):
-         efi_name = 'RPI_EFI.fd'
--        zip_path = self.ASSET_RPI3_UEFI.fetch()
--
--        with ZipFile(zip_path, 'r') as zf:
--                     zf.extract(efi_name, path=self.workdir)
--        efi_fd = self.scratch_file(efi_name)
-+        efi_fd = self.archive_extract(self.ASSET_RPI3_UEFI, member=efi_name)
- 
-         self.set_machine('raspi3b')
-         self.vm.set_console(console_index=1)
-diff --git a/tests/functional/test_aarch64_raspi4.py b/tests/functional/test_aarch64_raspi4.py
-index 2cda03f86f..3918e35e82 100755
---- a/tests/functional/test_aarch64_raspi4.py
-+++ b/tests/functional/test_aarch64_raspi4.py
-@@ -30,9 +30,10 @@ class Aarch64Raspi4Machine(LinuxKernelTest):
-         '7c0b16d1853772f6f4c3ca63e789b3b9ff4936efac9c8a01fb0c98c05c7a7648')
- 
-     def test_arm_raspi4(self):
--        deb_path = self.ASSET_KERNEL_20190215.fetch()
--        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel8.img')
--        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2711-rpi-4-b.dtb')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel8.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2711-rpi-4-b.dtb')
- 
-         self.set_machine('raspi4b')
-         self.vm.set_console()
-@@ -58,9 +59,10 @@ def test_arm_raspi4(self):
- 
- 
-     def test_arm_raspi4_initrd(self):
--        deb_path = self.ASSET_KERNEL_20190215.fetch()
--        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel8.img')
--        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2711-rpi-4-b.dtb')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel8.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2711-rpi-4-b.dtb')
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
-index 3b99ecf3a4..20da435687 100755
---- a/tests/functional/test_acpi_bits.py
-+++ b/tests/functional/test_acpi_bits.py
-@@ -35,8 +35,6 @@
- import re
- import shutil
- import subprocess
--import tarfile
--import zipfile
- 
- from typing import (
-     List,
-@@ -260,19 +258,12 @@ def setUp(self): # pylint: disable=arguments-differ
-                                           %(self.BITS_INTERNAL_VER,
-                                             self.BITS_COMMIT_HASH))
- 
--        bitsLocalArtLoc = self.ASSET_BITS.fetch()
--        self.logger.info("downloaded bits artifacts to %s", bitsLocalArtLoc)
--
-         # extract the bits artifact in the temp working directory
--        with zipfile.ZipFile(bitsLocalArtLoc, 'r') as zref:
--            zref.extractall(prebuiltDir)
-+        self.archive_extract(self.ASSET_BITS, sub_dir='prebuilt', format='zip')
- 
-         # extract the bits software in the temp working directory
--        with zipfile.ZipFile(bits_zip_file, 'r') as zref:
--            zref.extractall(self.workdir)
--
--        with tarfile.open(grub_tar_file, 'r', encoding='utf-8') as tarball:
--            tarball.extractall(self.workdir)
-+        self.archive_extract(bits_zip_file)
-+        self.archive_extract(grub_tar_file)
- 
-         self.copy_test_scripts()
-         self.copy_bits_config()
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-index 5bd31e43ee..dddb07fd12 100755
---- a/tests/functional/test_arm_aspeed.py
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -13,8 +13,6 @@
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import skipIfMissingCommands
--from qemu_test.utils import archive_extract
--from zipfile import ZipFile
- 
- 
- class AST1030Machine(LinuxKernelTest):
-@@ -27,12 +25,8 @@ class AST1030Machine(LinuxKernelTest):
-     def test_ast1030_zephyros_1_04(self):
-         self.set_machine('ast1030-evb')
- 
--        zip_file = self.ASSET_ZEPHYR_1_04.fetch()
--
--        kernel_name = "ast1030-evb-demo/zephyr.elf"
--        with ZipFile(zip_file, 'r') as zf:
--                     zf.extract(kernel_name, path=self.workdir)
--        kernel_file = self.scratch_file(kernel_name)
-+        kernel_file = self.archive_extract(
-+            self.ASSET_ZEPHYR_1_04, member="ast1030-evb-demo/zephyr.elf")
- 
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_file, '-nographic')
-@@ -49,12 +43,8 @@ def test_ast1030_zephyros_1_04(self):
-     def test_ast1030_zephyros_1_07(self):
-         self.set_machine('ast1030-evb')
- 
--        zip_file = self.ASSET_ZEPHYR_1_07.fetch()
--
--        kernel_name = "ast1030-evb-demo/zephyr.bin"
--        with ZipFile(zip_file, 'r') as zf:
--                     zf.extract(kernel_name, path=self.workdir)
--        kernel_file = self.scratch_file(kernel_name)
-+        kernel_file = self.archive_extract(
-+            self.ASSET_ZEPHYR_1_07, member="ast1030-evb-demo/zephyr.bin")
- 
-         self.vm.set_console()
-         self.vm.add_args('-kernel', kernel_file, '-nographic')
-@@ -268,9 +258,7 @@ def do_test_arm_aspeed_sdk_start(self, image):
-     def test_arm_ast2500_evb_sdk(self):
-         self.set_machine('ast2500-evb')
- 
--        image_path = self.ASSET_SDK_V806_AST2500.fetch()
--
--        archive_extract(image_path, self.workdir)
-+        self.archive_extract(self.ASSET_SDK_V806_AST2500)
- 
-         self.do_test_arm_aspeed_sdk_start(
-             self.scratch_file('ast2500-default', 'image-bmc'))
-@@ -284,9 +272,7 @@ def test_arm_ast2500_evb_sdk(self):
-     def test_arm_ast2600_evb_sdk(self):
-         self.set_machine('ast2600-evb')
- 
--        image_path = self.ASSET_SDK_V806_AST2600_A2.fetch()
--
--        archive_extract(image_path, self.workdir)
-+        self.archive_extract(self.ASSET_SDK_V806_AST2600_A2)
- 
-         self.vm.add_args('-device',
-             'tmp105,bus=aspeed.i2c.bus.5,address=0x4d,id=tmp-test');
-diff --git a/tests/functional/test_arm_bflt.py b/tests/functional/test_arm_bflt.py
-index 88ef7b1edc..f273fc8354 100755
---- a/tests/functional/test_arm_bflt.py
-+++ b/tests/functional/test_arm_bflt.py
-@@ -10,7 +10,6 @@
- 
- from qemu_test import QemuUserTest, Asset
- from qemu_test import skipIfMissingCommands, skipUntrustedTest
--from qemu_test.utils import cpio_extract
- 
- 
- class LoadBFLT(QemuUserTest):
-@@ -27,7 +26,7 @@ def test_stm32(self):
-         busybox_path = self.scratch_file("bin", "busybox")
- 
-         with bz2.open(rootfs_path_bz2, 'rb') as cpio_handle:
--            cpio_extract(cpio_handle, self.workdir)
-+            self.archive_extract(cpio_handle, format="cpio")
- 
-         res = self.run_cmd(busybox_path)
-         ver = 'BusyBox v1.24.0.git (2015-02-03 22:17:13 CET) multi-call binary.'
-diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-index 2af6d9a18d..91c56b0930 100755
---- a/tests/functional/test_arm_bpim2u.py
-+++ b/tests/functional/test_arm_bpim2u.py
-@@ -39,12 +39,11 @@ class BananaPiMachine(LinuxKernelTest):
- 
-     def test_arm_bpim2u(self):
-         self.set_machine('bpim2u')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -61,12 +60,11 @@ def test_arm_bpim2u(self):
- 
-     def test_arm_bpim2u_initrd(self):
-         self.set_machine('bpim2u')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-@@ -100,11 +98,11 @@ def test_arm_bpim2u_gmac(self):
-         self.require_netdev('user')
- 
-         deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = ('/usr/lib/linux-image-6.6.16-current-sunxi/'
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
-         rootfs_path_xz = self.ASSET_ROOTFS.fetch()
-         rootfs_path = self.scratch_file('rootfs.cpio')
-         lzma_uncompress(rootfs_path_xz, rootfs_path)
-diff --git a/tests/functional/test_arm_canona1100.py b/tests/functional/test_arm_canona1100.py
-index b4e3633422..21a1a596a0 100755
---- a/tests/functional/test_arm_canona1100.py
-+++ b/tests/functional/test_arm_canona1100.py
-@@ -12,7 +12,7 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import archive_extract
-+
- 
- class CanonA1100Machine(QemuSystemTest):
-     """Boots the barebox firmware and checks that the console is operational"""
-@@ -26,13 +26,10 @@ class CanonA1100Machine(QemuSystemTest):
-     def test_arm_canona1100(self):
-         self.set_machine('canon-a1100')
- 
--        file_path = self.ASSET_BIOS.fetch()
--        archive_extract(file_path, dest_dir=self.workdir,
--                        member="day18/barebox.canon-a1100.bin")
-+        bios = self.archive_extract(self.ASSET_BIOS,
-+                                    member="day18/barebox.canon-a1100.bin")
-         self.vm.set_console()
--        self.vm.add_args('-bios',
--                         self.scratch_file('day18',
--                                           'barebox.canon-a1100.bin'))
-+        self.vm.add_args('-bios', bios)
-         self.vm.launch()
-         wait_for_console_pattern(self, 'running /env/bin/init')
- 
-diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/test_arm_cubieboard.py
-index d81c333d0c..32db303253 100755
---- a/tests/functional/test_arm_cubieboard.py
-+++ b/tests/functional/test_arm_cubieboard.py
-@@ -38,11 +38,11 @@ class CubieboardMachine(LinuxKernelTest):
- 
-     def test_arm_cubieboard_initrd(self):
-         self.set_machine('cubieboard')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-+                    'sun4i-a10-cubieboard.dtb')
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-@@ -71,11 +71,11 @@ def test_arm_cubieboard_initrd(self):
- 
-     def test_arm_cubieboard_sata(self):
-         self.set_machine('cubieboard')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun4i-a10-cubieboard.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-+                    'sun4i-a10-cubieboard.dtb')
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
- 
-         rootfs_path_gz = self.ASSET_SATA_ROOTFS.fetch()
-         rootfs_path = self.scratch_file('rootfs.cpio')
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-index bea67cfb6a..aa2d9d19a4 100755
---- a/tests/functional/test_arm_orangepi.py
-+++ b/tests/functional/test_arm_orangepi.py
-@@ -50,11 +50,11 @@ class BananaPiMachine(LinuxKernelTest):
- 
-     def test_arm_orangepi(self):
-         self.set_machine('orangepi-pc')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-+                    'sun8i-h3-orangepi-pc.dtb')
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -71,11 +71,11 @@ def test_arm_orangepi(self):
- 
-     def test_arm_orangepi_initrd(self):
-         self.set_machine('orangepi-pc')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-+                    'sun8i-h3-orangepi-pc.dtb')
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-@@ -107,11 +107,11 @@ def test_arm_orangepi_initrd(self):
-     def test_arm_orangepi_sd(self):
-         self.set_machine('orangepi-pc')
-         self.require_netdev('user')
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-6.6.16-current-sunxi')
--        dtb_path = '/usr/lib/linux-image-6.6.16-current-sunxi/sun8i-h3-orangepi-pc.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(
-+            self.ASSET_DEB, member='boot/vmlinuz-6.6.16-current-sunxi')
-+        dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-+                    'sun8i-h3-orangepi-pc.dtb')
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
-         rootfs_path_xz = self.ASSET_ROOTFS.fetch()
-         rootfs_path = self.scratch_file('rootfs.cpio')
-         lzma_uncompress(rootfs_path_xz, rootfs_path)
-@@ -189,13 +189,12 @@ def test_arm_orangepi_armbian(self):
-     def test_arm_orangepi_uboot_netbsd9(self):
-         self.set_machine('orangepi-pc')
-         # This test download a 304MB compressed image and expand it to 2GB
--        deb_path = self.ASSET_UBOOT.fetch()
-         # We use the common OrangePi PC 'plus' build of U-Boot for our secondary
-         # program loader (SPL). We will then set the path to the more specific
-         # OrangePi "PC" device tree blob with 'setenv fdtfile' in U-Boot prompt,
-         # before to boot NetBSD.
--        uboot_path = '/usr/lib/u-boot/orangepi_plus/u-boot-sunxi-with-spl.bin'
--        uboot_path = self.extract_from_deb(deb_path, uboot_path)
-+        uboot_path = 'usr/lib/u-boot/orangepi_plus/u-boot-sunxi-with-spl.bin'
-+        uboot_path = self.archive_extract(self.ASSET_UBOOT, member=uboot_path)
-         image_path_gz = self.ASSET_NETBSD.fetch()
-         image_path = self.scratch_file('armv7.img')
-         gzip_uncompress(image_path_gz, image_path)
-diff --git a/tests/functional/test_arm_raspi2.py b/tests/functional/test_arm_raspi2.py
-index 075f6b3301..5e38d1a937 100755
---- a/tests/functional/test_arm_raspi2.py
-+++ b/tests/functional/test_arm_raspi2.py
-@@ -35,9 +35,10 @@ def do_test_arm_raspi2(self, uart_id):
-         serial_kernel_cmdline = {
-             0: 'earlycon=pl011,0x3f201000 console=ttyAMA0',
-         }
--        deb_path = self.ASSET_KERNEL_20190215.fetch()
--        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel7.img')
--        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2709-rpi-2-b.dtb')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel7.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2709-rpi-2-b.dtb')
- 
-         self.set_machine('raspi2b')
-         self.vm.set_console()
-@@ -59,9 +60,10 @@ def test_arm_raspi2_uart0(self):
-         self.do_test_arm_raspi2(0)
- 
-     def test_arm_raspi2_initrd(self):
--        deb_path = self.ASSET_KERNEL_20190215.fetch()
--        kernel_path = self.extract_from_deb(deb_path, '/boot/kernel7.img')
--        dtb_path = self.extract_from_deb(deb_path, '/boot/bcm2709-rpi-2-b.dtb')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                           member='boot/kernel7.img')
-+        dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-+                                        member='boot/bcm2709-rpi-2-b.dtb')
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-diff --git a/tests/functional/test_arm_smdkc210.py b/tests/functional/test_arm_smdkc210.py
-index c6c8f9a5f4..f4e86f7e2b 100755
---- a/tests/functional/test_arm_smdkc210.py
-+++ b/tests/functional/test_arm_smdkc210.py
-@@ -25,11 +25,10 @@ class Smdkc210Machine(LinuxKernelTest):
-     def test_arm_exynos4210_initrd(self):
-         self.set_machine('smdkc210')
- 
--        deb_path = self.ASSET_DEB.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinuz-4.19.0-6-armmp')
--        dtb_path = '/usr/lib/linux-image-4.19.0-6-armmp/exynos4210-smdkv310.dtb'
--        dtb_path = self.extract_from_deb(deb_path, dtb_path)
-+        kernel_path = self.archive_extract(self.ASSET_DEB,
-+                                           member='boot/vmlinuz-4.19.0-6-armmp')
-+        dtb_path = 'usr/lib/linux-image-4.19.0-6-armmp/exynos4210-smdkv310.dtb'
-+        dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
- 
-         initrd_path_gz = self.ASSET_ROOTFS.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-diff --git a/tests/functional/test_arm_vexpress.py b/tests/functional/test_arm_vexpress.py
-index b1ac63ac36..6b11552894 100755
---- a/tests/functional/test_arm_vexpress.py
-+++ b/tests/functional/test_arm_vexpress.py
-@@ -6,7 +6,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class VExpressTest(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class VExpressTest(LinuxKernelTest):
- 
-     def test_arm_vexpressa9(self):
-         self.set_machine('vexpress-a9')
--        file_path = self.ASSET_DAY16.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY16)
-         self.launch_kernel(self.scratch_file('day16', 'winter.zImage'),
-                            dtb=self.scratch_file('day16',
-                                                  'vexpress-v2p-ca9.dtb'),
-diff --git a/tests/functional/test_m68k_mcf5208evb.py b/tests/functional/test_m68k_mcf5208evb.py
-index 449248c3e8..c7d1998933 100755
---- a/tests/functional/test_m68k_mcf5208evb.py
-+++ b/tests/functional/test_m68k_mcf5208evb.py
-@@ -6,7 +6,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class Mcf5208EvbTest(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class Mcf5208EvbTest(LinuxKernelTest):
- 
-     def test_m68k_mcf5208evb(self):
-         self.set_machine('mcf5208evb')
--        file_path = self.ASSET_DAY07.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY07)
-         self.vm.set_console()
-         self.vm.add_args('-kernel',
-                          self.scratch_file('day07', 'sanity-clause.elf'))
-diff --git a/tests/functional/test_m68k_q800.py b/tests/functional/test_m68k_q800.py
-index 3b17244b98..400b7aeb5d 100755
---- a/tests/functional/test_m68k_q800.py
-+++ b/tests/functional/test_m68k_q800.py
-@@ -18,9 +18,8 @@ class Q800MachineTest(LinuxKernelTest):
-     def test_m68k_q800(self):
-         self.set_machine('q800')
- 
--        deb_path = self.ASSET_KERNEL.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-5.3.0-1-m68k')
-+        kernel_path = self.archive_extract(self.ASSET_KERNEL,
-+                                           member='boot/vmlinux-5.3.0-1-m68k')
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-diff --git a/tests/functional/test_microblaze_s3adsp1800.py b/tests/functional/test_microblaze_s3adsp1800.py
-index 61c4d6bbf8..2c4464bd05 100755
---- a/tests/functional/test_microblaze_s3adsp1800.py
-+++ b/tests/functional/test_microblaze_s3adsp1800.py
-@@ -9,7 +9,7 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import archive_extract
-+
- 
- class MicroblazeMachine(QemuSystemTest):
- 
-@@ -22,8 +22,7 @@ class MicroblazeMachine(QemuSystemTest):
- 
-     def test_microblaze_s3adsp1800(self):
-         self.set_machine('petalogix-s3adsp1800')
--        file_path = self.ASSET_IMAGE.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_IMAGE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel',
-                          self.scratch_file('day17', 'ballerina.bin'))
-diff --git a/tests/functional/test_microblazeel_s3adsp1800.py b/tests/functional/test_microblazeel_s3adsp1800.py
-index 926c885f63..c382afe6bf 100755
---- a/tests/functional/test_microblazeel_s3adsp1800.py
-+++ b/tests/functional/test_microblazeel_s3adsp1800.py
-@@ -11,7 +11,7 @@
- from qemu_test import exec_command, exec_command_and_wait_for_pattern
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import archive_extract
-+
- 
- class MicroblazeelMachine(QemuSystemTest):
- 
-@@ -24,8 +24,7 @@ class MicroblazeelMachine(QemuSystemTest):
-     def test_microblazeel_s3adsp1800(self):
-         self.require_netdev('user')
-         self.set_machine('petalogix-s3adsp1800')
--        file_path = self.ASSET_IMAGE.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_IMAGE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.scratch_file('day13', 'xmaton.bin'))
-         tftproot = self.scratch_file('day13')
-diff --git a/tests/functional/test_mips64el_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
-index 531d16d8f6..35e500b022 100755
---- a/tests/functional/test_mips64el_fuloong2e.py
-+++ b/tests/functional/test_mips64el_fuloong2e.py
-@@ -26,9 +26,9 @@ class MipsFuloong2e(LinuxKernelTest):
-         '2a70f15b397f4ced632b0c15cb22660394190644146d804d60a4796eefbe1f50')
- 
-     def test_linux_kernel_3_16(self):
--        deb_path = self.ASSET_KERNEL.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-3.16.0-6-loongson-2e')
-+        kernel_path = self.archive_extract(
-+            self.ASSET_KERNEL,
-+            member='boot/vmlinux-3.16.0-6-loongson-2e')
- 
-         self.set_machine('fuloong2e')
-         self.vm.set_console()
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
-index ea362cf335..39fafb8bf1 100755
---- a/tests/functional/test_mips64el_malta.py
-+++ b/tests/functional/test_mips64el_malta.py
-@@ -39,9 +39,9 @@ def test_mips64el_malta(self):
-         [2] https://kernel-team.pages.debian.net/kernel-handbook/
-             ch-common-tasks.html#s-common-official
-         """
--        deb_path = self.ASSET_KERNEL_2_63_2.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-2.6.32-5-5kc-malta')
-+        kernel_path = self.archive_extract(
-+            self.ASSET_KERNEL_2_63_2,
-+            member='boot/vmlinux-2.6.32-5-5kc-malta')
- 
-         self.set_machine('malta')
-         self.vm.set_console()
-diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
-index a6d80d0012..6ab6c0832a 100755
---- a/tests/functional/test_mips_malta.py
-+++ b/tests/functional/test_mips_malta.py
-@@ -20,9 +20,9 @@ class MaltaMachineConsole(LinuxKernelTest):
-         '16ca524148afb0626f483163e5edf352bc1ab0e4fc7b9f9d473252762f2c7a43')
- 
-     def test_mips_malta(self):
--        deb_path = self.ASSET_KERNEL_2_63_2.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-2.6.32-5-4kc-malta')
-+        kernel_path = self.archive_extract(
-+            self.ASSET_KERNEL_2_63_2,
-+            member='boot/vmlinux-2.6.32-5-4kc-malta')
- 
-         self.set_machine('malta')
-         self.vm.set_console()
-@@ -46,9 +46,9 @@ def test_mips_malta(self):
-         'dcfe3a7fe3200da3a00d176b95caaa086495eb158f2bff64afc67d7e1eb2cddc')
- 
-     def test_mips_malta_cpio(self):
--        deb_path = self.ASSET_KERNEL_4_5_0.fetch()
--        kernel_path = self.extract_from_deb(deb_path,
--                                            '/boot/vmlinux-4.5.0-2-4kc-malta')
-+        kernel_path = self.archive_extract(
-+            self.ASSET_KERNEL_4_5_0,
-+            member='boot/vmlinux-4.5.0-2-4kc-malta')
-         initrd_path_gz = self.ASSET_INITRD.fetch()
-         initrd_path = self.scratch_file('rootfs.cpio')
-         gzip_uncompress(initrd_path_gz, initrd_path)
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/test_mipsel_malta.py
-index 77671e0081..1f44881c78 100755
---- a/tests/functional/test_mipsel_malta.py
-+++ b/tests/functional/test_mipsel_malta.py
-@@ -13,7 +13,6 @@
- from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern
- from qemu_test.utils import lzma_uncompress
--from zipfile import ZipFile
- 
- 
- class MaltaMachineConsole(LinuxKernelTest):
-@@ -73,9 +72,7 @@ class MaltaMachineYAMON(QemuSystemTest):
- 
-     def test_mipsel_malta_yamon(self):
-         yamon_bin = 'yamon-02.22.bin'
--        zip_path = self.ASSET_YAMON_ROM.fetch()
--        with ZipFile(zip_path, 'r') as zf:
--            zf.extract(yamon_bin, path=self.workdir)
-+        self.archive_extract(self.ASSET_YAMON_ROM)
-         yamon_path = self.scratch_file(yamon_bin)
- 
-         self.set_machine('malta')
-diff --git a/tests/functional/test_or1k_sim.py b/tests/functional/test_or1k_sim.py
-index a5b2b5b1e5..f9f0b690a0 100755
---- a/tests/functional/test_or1k_sim.py
-+++ b/tests/functional/test_or1k_sim.py
-@@ -6,7 +6,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class OpenRISC1kSimTest(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class OpenRISC1kSimTest(LinuxKernelTest):
- 
-     def test_or1k_sim(self):
-         self.set_machine('or1k-sim')
--        file_path = self.ASSET_DAY20.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY20)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.scratch_file('day20', 'vmlinux'))
-         self.vm.launch()
-diff --git a/tests/functional/test_ppc64_e500.py b/tests/functional/test_ppc64_e500.py
-index bf4a6af9d4..b92fe0b0e7 100755
---- a/tests/functional/test_ppc64_e500.py
-+++ b/tests/functional/test_ppc64_e500.py
-@@ -5,7 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class E500Test(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class E500Test(LinuxKernelTest):
-     def test_ppc64_e500(self):
-         self.set_machine('ppce500')
-         self.cpu = 'e5500'
--        file_path = self.ASSET_DAY19.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY19)
-         self.launch_kernel(self.scratch_file('day19', 'uImage'),
-                            wait_for='QEMU advent calendar')
- 
-diff --git a/tests/functional/test_ppc_amiga.py b/tests/functional/test_ppc_amiga.py
-index 9ed23a1f0f..8600e2e963 100755
---- a/tests/functional/test_ppc_amiga.py
-+++ b/tests/functional/test_ppc_amiga.py
-@@ -11,7 +11,7 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
--from zipfile import ZipFile
-+
- 
- class AmigaOneMachine(QemuSystemTest):
- 
-@@ -26,9 +26,7 @@ def test_ppc_amigaone(self):
-         self.require_accelerator("tcg")
-         self.set_machine('amigaone')
-         tar_name = 'A1Firmware_Floppy_05-Mar-2005.zip'
--        zip_file = self.ASSET_IMAGE.fetch()
--        with ZipFile(zip_file, 'r') as zf:
--            zf.extractall(path=self.workdir)
-+        self.archive_extract(self.ASSET_IMAGE, format="zip")
-         bios = self.scratch_file("u-boot-amigaone.bin")
-         with open(bios, "wb") as bios_fh:
-             subprocess.run(['tail', '-c', '524288',
-diff --git a/tests/functional/test_ppc_bamboo.py b/tests/functional/test_ppc_bamboo.py
-index 1ae2f47bcc..fddcc24d0d 100755
---- a/tests/functional/test_ppc_bamboo.py
-+++ b/tests/functional/test_ppc_bamboo.py
-@@ -7,11 +7,11 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test.utils import archive_extract
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- from qemu_test import exec_command_and_wait_for_pattern
- 
-+
- class BambooMachine(QemuSystemTest):
- 
-     timeout = 90
-@@ -25,8 +25,7 @@ def test_ppc_bamboo(self):
-         self.set_machine('bamboo')
-         self.require_accelerator("tcg")
-         self.require_netdev('user')
--        file_path = self.ASSET_IMAGE.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_IMAGE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel',
-                          self.scratch_file('system-image-powerpc-440fp',
-diff --git a/tests/functional/test_ppc_mac.py b/tests/functional/test_ppc_mac.py
-index 10812824bd..9e4bc1a52c 100755
---- a/tests/functional/test_ppc_mac.py
-+++ b/tests/functional/test_ppc_mac.py
-@@ -5,7 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class MacTest(LinuxKernelTest):
- 
-@@ -19,9 +19,7 @@ def do_day15_test(self):
-         # we're running kvm_hv or kvm_pr. For now let's disable this test
-         # if we don't have TCG support.
-         self.require_accelerator("tcg")
--
--        file_path = self.ASSET_DAY15.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY15)
-         self.vm.add_args('-M', 'graphics=off')
-         self.launch_kernel(self.scratch_file('day15', 'invaders.elf'),
-                            wait_for='QEMU advent calendar')
-diff --git a/tests/functional/test_ppc_mpc8544ds.py b/tests/functional/test_ppc_mpc8544ds.py
-index 87b5d4d12b..0715410d7a 100755
---- a/tests/functional/test_ppc_mpc8544ds.py
-+++ b/tests/functional/test_ppc_mpc8544ds.py
-@@ -7,10 +7,10 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test.utils import archive_extract
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- 
-+
- class Mpc8544dsMachine(QemuSystemTest):
- 
-     timeout = 90
-@@ -25,10 +25,10 @@ class Mpc8544dsMachine(QemuSystemTest):
-     def test_ppc_mpc8544ds(self):
-         self.require_accelerator("tcg")
-         self.set_machine('mpc8544ds')
--        file_path = self.ASSET_IMAGE.fetch()
--        archive_extract(file_path, self.workdir, member='creek/creek.bin')
-+        kernel_file = self.archive_extract(self.ASSET_IMAGE,
-+                                           member='creek/creek.bin')
-         self.vm.set_console()
--        self.vm.add_args('-kernel', self.scratch_file('creek', 'creek.bin'))
-+        self.vm.add_args('-kernel', kernel_file)
-         self.vm.launch()
-         wait_for_console_pattern(self, 'QEMU advent calendar 2020',
-                                  self.panic_message)
-diff --git a/tests/functional/test_ppc_virtex_ml507.py b/tests/functional/test_ppc_virtex_ml507.py
-index f297651e64..8fe43549b7 100755
---- a/tests/functional/test_ppc_virtex_ml507.py
-+++ b/tests/functional/test_ppc_virtex_ml507.py
-@@ -7,10 +7,10 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test.utils import archive_extract
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- 
-+
- class VirtexMl507Machine(QemuSystemTest):
- 
-     timeout = 90
-@@ -25,8 +25,7 @@ class VirtexMl507Machine(QemuSystemTest):
-     def test_ppc_virtex_ml507(self):
-         self.require_accelerator("tcg")
-         self.set_machine('virtex-ml507')
--        file_path = self.ASSET_IMAGE.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_IMAGE)
-         self.vm.set_console()
-         self.vm.add_args('-kernel', self.scratch_file('hippo', 'hippo.linux'),
-                          '-dtb', self.scratch_file('hippo',
-diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
-index dca4601392..03a648374c 100755
---- a/tests/functional/test_sh4_r2d.py
-+++ b/tests/functional/test_sh4_r2d.py
-@@ -5,7 +5,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset, skipFlakyTest
--from qemu_test.utils import archive_extract
-+
- 
- class R2dTest(LinuxKernelTest):
- 
-@@ -19,8 +19,7 @@ class R2dTest(LinuxKernelTest):
-     @skipFlakyTest(bug_url=None)
-     def test_r2d(self):
-         self.set_machine('r2d')
--        file_path = self.ASSET_DAY09.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY09)
-         self.vm.add_args('-append', 'console=ttySC1')
-         self.launch_kernel(self.scratch_file('day09', 'zImage'),
-                            console_index=1,
-diff --git a/tests/functional/test_sh4eb_r2d.py b/tests/functional/test_sh4eb_r2d.py
-index c8954c93eb..473093bbe1 100755
---- a/tests/functional/test_sh4eb_r2d.py
-+++ b/tests/functional/test_sh4eb_r2d.py
-@@ -6,7 +6,7 @@
- 
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test.utils import archive_extract
-+
- 
- class R2dEBTest(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class R2dEBTest(LinuxKernelTest):
- 
-     def test_sh4eb_r2d(self):
-         self.set_machine('r2d')
--        file_path = self.ASSET_TGZ.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_TGZ)
-         self.vm.add_args('-append', 'console=ttySC1 noiotrap')
-         self.launch_kernel(self.scratch_file('sh4eb', 'linux-kernel'),
-                            initrd=self.scratch_file('sh4eb',
-diff --git a/tests/functional/test_sparc64_sun4u.py b/tests/functional/test_sparc64_sun4u.py
-index e7f6db0f24..27ac289659 100755
---- a/tests/functional/test_sparc64_sun4u.py
-+++ b/tests/functional/test_sparc64_sun4u.py
-@@ -12,7 +12,6 @@
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import archive_extract
- 
- 
- class Sun4uMachine(QemuSystemTest):
-@@ -27,11 +26,10 @@ class Sun4uMachine(QemuSystemTest):
- 
-     def test_sparc64_sun4u(self):
-         self.set_machine('sun4u')
--        file_path = self.ASSET_IMAGE.fetch()
--        kernel_name = 'day23/vmlinux'
--        archive_extract(file_path, self.workdir, kernel_name)
-+        kernel_file = self.archive_extract(self.ASSET_IMAGE,
-+                                           member='day23/vmlinux')
-         self.vm.set_console()
--        self.vm.add_args('-kernel', self.scratch_file(kernel_name),
-+        self.vm.add_args('-kernel', kernel_file,
-                          '-append', 'printk.time=0')
-         self.vm.launch()
-         wait_for_console_pattern(self, 'Starting logging: OK')
-diff --git a/tests/functional/test_sparc_sun4m.py b/tests/functional/test_sparc_sun4m.py
-index 619c03d36a..7cd28ebdd1 100755
---- a/tests/functional/test_sparc_sun4m.py
-+++ b/tests/functional/test_sparc_sun4m.py
-@@ -6,7 +6,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class Sun4mTest(LinuxKernelTest):
- 
-@@ -16,8 +16,7 @@ class Sun4mTest(LinuxKernelTest):
- 
-     def test_sparc_ss20(self):
-         self.set_machine('SS-20')
--        file_path = self.ASSET_DAY11.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY11)
-         self.launch_kernel(self.scratch_file('day11', 'zImage.elf'),
-                            wait_for='QEMU advent calendar')
- 
-diff --git a/tests/functional/test_xtensa_lx60.py b/tests/functional/test_xtensa_lx60.py
-index 5048e4c69e..147c920899 100755
---- a/tests/functional/test_xtensa_lx60.py
-+++ b/tests/functional/test_xtensa_lx60.py
-@@ -6,7 +6,7 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import archive_extract
-+
- 
- class XTensaLX60Test(LinuxKernelTest):
- 
-@@ -17,8 +17,7 @@ class XTensaLX60Test(LinuxKernelTest):
-     def test_xtensa_lx60(self):
-         self.set_machine('lx60')
-         self.cpu = 'dc233c'
--        file_path = self.ASSET_DAY02.fetch()
--        archive_extract(file_path, self.workdir)
-+        self.archive_extract(self.ASSET_DAY02)
-         self.launch_kernel(self.scratch_file('day02',
-                                              'santas-sleigh-ride.elf'),
-                            wait_for='QEMU advent calendar')
++from subprocess import check_call, DEVNULL
+ import tempfile
+ 
+-from qemu_test import run_cmd, Asset
++from qemu_test import Asset
+ from qemu_test.tuxruntest import TuxRunBaselineTest
+ 
+ class TuxRunPPC64Test(TuxRunBaselineTest):
+@@ -70,7 +71,9 @@ def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
+         # Create a temporary qcow2 and launch the test-case
+         with tempfile.NamedTemporaryFile(prefix=prefix,
+                                          suffix='.qcow2') as qcow2:
+-            run_cmd([self.qemu_img, 'create', '-f', 'qcow2', qcow2.name, ' 1G'])
++            check_call([self.qemu_img, 'create', '-f', 'qcow2',
++                        qcow2.name, ' 1G'],
++                       stdout=DEVNULL, stderr=DEVNULL)
+ 
+             self.vm.add_args('-drive', 'file=' + qcow2.name +
+                          ',format=qcow2,if=none,id='
 -- 
 2.46.0
 
