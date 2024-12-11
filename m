@@ -4,75 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E4BEE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:00:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 887D4E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:01:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLNG9-0002Iy-03; Wed, 11 Dec 2024 09:00:13 -0500
+	id 1tLNG8-0002It-L8; Wed, 11 Dec 2024 09:00:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roman.artemev@syntacore.com>)
- id 1tLHKz-0000WA-MG; Wed, 11 Dec 2024 02:40:50 -0500
-Received: from m.syntacore.com ([178.249.69.228] helo=pmg.syntacore.com)
+ (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
+ id 1tLN8g-0008AO-E9; Wed, 11 Dec 2024 08:52:30 -0500
+Received: from out28-194.mail.aliyun.com ([115.124.28.194])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roman.artemev@syntacore.com>)
- id 1tLHKw-0007pE-TI; Wed, 11 Dec 2024 02:40:49 -0500
-Received: from pmg.syntacore.com (localhost.localdomain [127.0.0.1])
- by pmg.syntacore.com (Proxmox) with ESMTP id 46C6FB41C57;
- Wed, 11 Dec 2024 10:40:34 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=syntacore.com;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:from:from:message-id:mime-version:reply-to:subject:subject
- :to:to; s=m; bh=24jjebVxl79h81yZ4ZOMnFvWOOT17NmrrmaEOORRkFo=; b=
- MCggHLCE7u4t457FTFV9vqLjTRwNMCSoA3ldabunLd4flYrgrm5YufkkhZpepTvO
- Fh0rnnaiA07uFkUwd7YN/VWFBxOet5S2Dalpg8obouiVHH3TY6rZJuU22FCqulLV
- fAGfsocRINYLonRj6OSt9UB53lZL8Ibp73LTRUj7TIw0y08xVek2Nqilm2okdIXx
- kbWUVlNthFOfAZRqLi2RAEfr2XRk7ZR9XVGb+9bV8G/avJbj0h5Lh6Xy+ihy+xon
- ePMSwxpp3G0hITJ56Q+Dx0RiOgNnfh5bFcP/0fcSy01uVb1nHJS1bDpjD3zRgr5r
- azoNqshn/zZODXgyt4JiSQ==
-Received: from S-SC-EXCH-01.corp.syntacore.com (exchange.syntacore.com
- [10.76.202.20])
- by pmg.syntacore.com (Proxmox) with ESMTPS id 25D59B41C53;
- Wed, 11 Dec 2024 10:40:34 +0300 (MSK)
-Received: from S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) by
- S-SC-EXCH-01.corp.syntacore.com (10.76.202.20) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 11 Dec 2024 10:40:04 +0300
-Received: from S-SC-EXCH-01.corp.syntacore.com ([::1]) by
- S-SC-EXCH-01.corp.syntacore.com ([::1]) with mapi id 15.02.1544.011; Wed, 11
- Dec 2024 10:40:04 +0300
-From: Roman Artemev <roman.artemev@syntacore.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "palmer@dabbelt.com" <palmer@dabbelt.com>, "Alistair.Francis@wdc.com"
- <Alistair.Francis@wdc.com>, "richard.henderson@linaro.org"
- <richard.henderson@linaro.org>, "qemu-riscv@nongnu.org"
- <qemu-riscv@nongnu.org>, Roman Artemev <roman.artemev@syntacore.com>, "Denis
- Tomashev" <denis.tomashev@syntacore.com>
-Subject: [PATCH] tcg/riscv: Fix StoreStore barrier generation
-Thread-Topic: [PATCH] tcg/riscv: Fix StoreStore barrier generation
-Thread-Index: AQHbS5+XMPWvlhEe/kmr6ENsbls0/w==
-Date: Wed, 11 Dec 2024 07:40:04 +0000
-Message-ID: <e2f2131e294a49e79959d4fa9ec02cf4@syntacore.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.76.202.1]
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <lc00631@tecorigin.com>)
+ id 1tLN8c-0001rq-To; Wed, 11 Dec 2024 08:52:30 -0500
+Received: from TC-DZ-03-0020.tc.local(mailfrom:lc00631@tecorigin.com
+ fp:SMTPD_---.abQNlRH_1733924825 cluster:ay29) by smtp.aliyun-inc.com;
+ Wed, 11 Dec 2024 21:47:06 +0800
+From: Chao Liu <lc00631@tecorigin.com>
+To: bmeng.cn@gmail.com, liwei1518@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com
+Cc: zhiwei_liu@linux.alibaba.com, dbarboza@ventanamicro.com,
+ qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ Chao Liu <lc00631@tecorigin.com>
+Subject: [PATCH v1 0/1] Add vtype.vill FIELD macro definition
+Date: Wed, 11 Dec 2024 21:47:14 +0800
+Message-ID: <cover.1733922709.git.lc00631@tecorigin.com>
+X-Mailer: git-send-email 2.47.0.windows.2
 MIME-Version: 1.0
-Received-SPF: pass client-ip=178.249.69.228;
- envelope-from=roman.artemev@syntacore.com; helo=pmg.syntacore.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=115.124.28.194;
+ envelope-from=lc00631@tecorigin.com; helo=out28-194.mail.aliyun.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 11 Dec 2024 09:00:05 -0500
+X-Mailman-Approved-At: Wed, 11 Dec 2024 09:00:09 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,29 +59,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On RISC-V to StoreStore barrier corresponds
-`fence w, w` not `fence r, r`
+Hi, all:
 
-Signed-off-by: Denis Tomashev <denis.tomashev@syntacore.com>
-Signed-off-by: Roman Artemev <roman.artemev@syntacore.com>
----
- tcg/riscv/tcg-target.c.inc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+According to the "The RISC-V Instruction Set Manual Volume I: Unprivileged
+Architecture" Version 20240411, Section 31.3.4 "Vector type register, vtype",
+and Table 40 "vtype register layout", this patch adds the definition for the
+vill field of the vtype register. The bit position for vill is [63].
 
-diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
-index f8331e4688..96f9a7e348 100644
---- a/tcg/riscv/tcg-target.c.inc
-+++ b/tcg/riscv/tcg-target.c.inc
-@@ -1624,7 +1624,7 @@ static void tcg_out_mb(TCGContext *s, TCGArg a0)
-         insn |=3D 0x02100000;
-     }
-     if (a0 & TCG_MO_ST_ST) {
--        insn |=3D 0x02200000;
-+        insn |=3D 0x01100000;
-     }
-     tcg_out32(s, insn);
- }
---=20
-2.39.2
+This change ensures that our implementation remains in line with the latest
+RISC-V specifications, thereby maintaining compatibility and correctness.
+
+Chao Liu (1):
+  target/riscv: add VILL field for vtype register macro definition
+
+ target/riscv/cpu.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+-- 
+2.47.0
 
 
