@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2457E77183
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B084E77182
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZ0-00016I-Q7; Wed, 11 Dec 2024 11:27:51 -0500
+	id 1tLPdh-0007AD-8c; Wed, 11 Dec 2024 11:32:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYu-0000VG-CU
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYr-0000FT-VT
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934461;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TD2OQfcDeDK+qzjMiwaAvgNRIwj56WMqMTyfSuDOEV4=;
- b=BooAoaGkIyM4JR+hqFLF0feOqTId6zy+0QnRVaFtvmU1OxPY1VGIuDPGd3LfmYQ4jkMKjv
- QdwnDHvd4mIxK4jLlkDnlonw2ZG1U3ppQxMLWpqWde2W+6vNVT18IFzIeKvahgKQ1LKIVE
- yfvnNJMXAvavmHYh82MV3Oq3a2eRzM4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-272-Abn0R33vO0eugTBPB2aV7A-1; Wed, 11 Dec 2024 11:27:39 -0500
-X-MC-Unique: Abn0R33vO0eugTBPB2aV7A-1
-X-Mimecast-MFC-AGG-ID: Abn0R33vO0eugTBPB2aV7A
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361efc9d1fso7260885e9.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:39 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934458; x=1734539258;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPdA-00059g-NR
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:14 -0500
+Received: from mail-qt1-x82b.google.com ([2607:f8b0:4864:20::82b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPd8-0001Ma-8Q
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:08 -0500
+Received: by mail-qt1-x82b.google.com with SMTP id
+ d75a77b69052e-467918c35easo7230051cf.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934725; x=1734539525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=17GfbZjW6epwa8YFLq0I3cD8ORZgiSit6nkfbKV++nM=;
+ b=wY9UeJIfebYQLX5yGzrBUgqe8yLDocj4ykq6NuIb8HeKWuKJ1zjOqmC6XLda4bJt/j
+ h38kFqpLB3nWL4bHLHWSi4Cyt39OcLDB1buav1rVL9p9Kcc7PzArEnX9bv3SHAqm/bLO
+ TPZujZE0a1RyEWxSp/wEn2evsQ+SUFhBo29hPK27BB6vn1pJefLEuRkm0exGwrVc3jdY
+ FkbhDdQKjwNgWqpqNHRZ2Vd8XJQZr1f9gHUaHHUM9LZ9tNoI7gGn7qRNMyXw7pryUHox
+ pfuOe49T7bEHXArFUwvkwMhLdQm+2v+aSnvqpXkkhHC7JK6hHHPOyT9+J910yn2WmK3v
+ Uq6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934725; x=1734539525;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TD2OQfcDeDK+qzjMiwaAvgNRIwj56WMqMTyfSuDOEV4=;
- b=NxVNKwonilwQ2IK52Pq/UkJ+ACH09PZv88zIraHtNvXj2qOUc/V1Dfiqz1IQGmItmQ
- PM3Sfo7cB0sIk5zWeTOMfxaXvkZ7J3tR9MMVslvhwcy/I3BZ1DRg3EF5RRI319u9bTjf
- A0Galf8V+6+Zeam24Sr7R+1YJBjBR7+zmCKZuebmYxjCvaBUmIXwZLmU/PXEfqHdvRKK
- Y0lUXyeSI7+iSM7lxNt7UeNXkBHMkzKlqVZWNYCfm1QHH4/oK0Ps+4q37OFlbJLwIwWM
- 5ikSLCGHJIeafkOIscFvrD0oke3TEqNAvzo+MsLGSC6JhFCSNqakLIqibo/7dpQQMYMm
- I3lw==
-X-Gm-Message-State: AOJu0YxAYXAW1/eyhJpnni55/dunD4eREPRslMr7h3IJ5uZkcjvq7MGy
- CvYDwIaP7u2t3ZnMvPevfLc1vnJsTlJm98o/JOqXdqKeru1irLHWdyXkivf7b6Jw0E0nKzW3dHx
- /RcIXVR513PxuIDs9ZWgzMHvCEQwrzveR3iCSdHHD7KcE2xLx+2U4w7AXr+gASspO1mnfKVvn5j
- TMNO6NqX/KoWeY1A4d6OUmQ4c5mPFb0gEO7b/o
-X-Gm-Gg: ASbGnctsDgOJBVIgrYMYB8Wt1uwDO5TlIXATyylBRtbv12sEnQcb3iMzBBHXGWLMZh6
- McMkDVKIFl1BiiU1A/5ygT3auOKpZ+sjWvPvniLc7OVvxyhoAVnb3uUiwmbxcrTnfwsmuxEopkb
- vJ2/+jgjcSOPxZYxZco2jatIbrpbExshHpoT0z4bMekxXfmKIb3FUEVUZfRavM5OE20ouOFC9Qt
- NPgO2uYBRcTR1Qssi5I+O4H8gmaflVR3/t5rDXjKsfonG6MvBOI/2fg
-X-Received: by 2002:a05:600c:b86:b0:434:a160:3647 with SMTP id
- 5b1f17b1804b1-4361c3741f3mr28531175e9.12.1733934458058; 
- Wed, 11 Dec 2024 08:27:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGGQ5WZgdElr7KLoROJjvPzc2comx82hrPu6QpRjt27+5NzyjopCNJrj0W0hA2ThjYzZcgyRg==
-X-Received: by 2002:a05:600c:b86:b0:434:a160:3647 with SMTP id
- 5b1f17b1804b1-4361c3741f3mr28530905e9.12.1733934457490; 
- Wed, 11 Dec 2024 08:27:37 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-435c1833d67sm53331045e9.5.2024.12.11.08.27.36
- for <qemu-devel@nongnu.org>
+ bh=17GfbZjW6epwa8YFLq0I3cD8ORZgiSit6nkfbKV++nM=;
+ b=BVCyMrJ1b8IZzyrNhATIL27/VkUXJhAY5nc1IBEoAFeIqomB91EaxCcTBP4/Xh16uw
+ lLFGPmdzgqQHpHEUFCZn4GHk3jvI3TgXRCZByE2NlWhg9skde8M1kbx9XkKFiRviXqmL
+ CU8iai4diNAYw6O69Etn25PAOEuEmgbyizXmJ2txcneXmdQXU76FTkqckN3NWkD5/H+I
+ vdYdLF6IlQbskHHJHNSy0SsluTehkhWvA+aahViFSA86FC3KTFtLtHide7CuEBUyJMZ6
+ smRnyNMjPN8G44ddMfB8D6qOOMIInh42KQDOvjgVaO4WX+g1K4s96z+iRYq6dN7/EMlx
+ d1UA==
+X-Gm-Message-State: AOJu0YzESatj6OLYaK5aJXvAd+UbbALqoPxq8B7Nc3QaO4d3lw1Yz3lH
+ sJ07Gk+o9BJrZaftBnPnQE924vWreGAgRQlJIaGpk0Y2lDXRbyKiGzaZ+Q2dZxjFQqmdn0RN8tA
+ qm5MnGISA
+X-Gm-Gg: ASbGncu4kIEv0CiDZXIfutQguSzib7SBcCIxAih2baGHyDTe48+SpieaD4w67h5HCOS
+ fvuOT7h+Jq5Q/KZfFliHA7i1+rjKY+q51zO3el81AitFP3ea4WmGekC98zCXzOjwmecoDXthwEN
+ t5uxq+Fw0sdD8wJ2l17cSBcLYiPaQT9i3PyKPJ+W7A1gSXdr8c86mNiAE/tmpU3gxTVYVYo+8KH
+ kvUogVhZqc7iFgwsgZffM7ydxRlUaV8nU24uK609dt0xYa9/B1VtPjX1o89CA==
+X-Google-Smtp-Source: AGHT+IFgaT55G8hCl8nrGKW4CZim7BNBMthNJeuIxPYBbO3sOpcge3kbt7RDfw1w9UmFjz0DdBG/MQ==
+X-Received: by 2002:a05:622a:1444:b0:467:6c5f:95c0 with SMTP id
+ d75a77b69052e-467892931e3mr53818441cf.7.1733934725260; 
+ Wed, 11 Dec 2024 08:32:05 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:36 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:32:04 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/49] rust: cargo: store desired warning levels in workspace
- Cargo.toml
-Date: Wed, 11 Dec 2024 17:26:37 +0100
-Message-ID: <20241211162720.320070-8-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 22/69] target/arm: Convert FCMP, FCMPE, FCCMP,
+ FCCMPE to decodetree
+Date: Wed, 11 Dec 2024 10:29:49 -0600
+Message-ID: <20241211163036.2297116-23-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,185 +99,348 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-An extra benefit of workspaces is that they allow to place lint level
-settings in a single Cargo.toml; the settings are then inherited by
-packages in the workspace.
-
-Correspondingly, teach rustc_args.py to get the unexpected_cfgs
-configuration from the workspace Cargo.toml.
-
-Note that it is still possible to allow or deny warnings per crate or
-module, via the #![] attribute syntax.  The rust/qemu-api/src/bindings.rs
-file is an example.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- meson.build                     |  7 +++---
- rust/Cargo.toml                 |  8 +++++++
- rust/hw/char/pl011/Cargo.toml   |  3 +++
- rust/qemu-api-macros/Cargo.toml |  3 +++
- rust/qemu-api/Cargo.toml        |  5 ++---
- rust/qemu-api/meson.build       |  2 +-
- scripts/rust/rustc_args.py      | 38 +++++++++++++++++++++++++++------
- 7 files changed, 53 insertions(+), 13 deletions(-)
+ target/arm/tcg/translate-a64.c | 283 ++++++++++++---------------------
+ target/arm/tcg/a64.decode      |   8 +
+ 2 files changed, 112 insertions(+), 179 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 1e1d8f5cd61..218ae441e38 100644
---- a/meson.build
-+++ b/meson.build
-@@ -121,11 +121,12 @@ endif
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 4611ae4ade..a99f3d0d13 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -6888,6 +6888,106 @@ static bool trans_FMOVI_s(DisasContext *s, arg_FMOVI_s *a)
+     return true;
+ }
  
- if have_rust
-   rustc_args = [find_program('scripts/rust/rustc_args.py'),
--    '--rustc-version', rustc.version()]
-+    '--rustc-version', rustc.version(),
-+    '--workspace', meson.project_source_root() / 'rust']
-   rustfmt = find_program('rustfmt', required: false)
- 
--  # Prohibit code that is forbidden in Rust 2024
--  rustc_lint_args = ['-D', 'unsafe_op_in_unsafe_fn']
-+  rustc_lint_args = run_command(rustc_args, '--lints',
-+     capture: true, check: true).stdout().strip().splitlines()
- 
-   # Occasionally, we may need to silence warnings and clippy lints that
-   # were only introduced in newer Rust compiler versions.  Do not croak
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 0c94d5037da..4bb52bf0bd5 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -5,3 +5,11 @@ members = [
-     "qemu-api",
-     "hw/char/pl011",
- ]
++/*
++ * Floating point compare, conditional compare
++ */
 +
-+[workspace.lints.rust]
-+unexpected_cfgs = { level = "deny", check-cfg = [
-+    'cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
-+    'cfg(has_offset_of)'] }
++static void handle_fp_compare(DisasContext *s, int size,
++                              unsigned int rn, unsigned int rm,
++                              bool cmp_with_zero, bool signal_all_nans)
++{
++    TCGv_i64 tcg_flags = tcg_temp_new_i64();
++    TCGv_ptr fpst = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
 +
-+# Prohibit code that is forbidden in Rust 2024
-+unsafe_op_in_unsafe_fn = "deny"
-diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
-index a373906b9fb..58f3e859f7e 100644
---- a/rust/hw/char/pl011/Cargo.toml
-+++ b/rust/hw/char/pl011/Cargo.toml
-@@ -21,3 +21,6 @@ bilge = { version = "0.2.0" }
- bilge-impl = { version = "0.2.0" }
- qemu_api = { path = "../../../qemu-api" }
- qemu_api_macros = { path = "../../../qemu-api-macros" }
++    if (size == MO_64) {
++        TCGv_i64 tcg_vn, tcg_vm;
 +
-+[lints]
-+workspace = true
-diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-api-macros/Cargo.toml
-index a8f7377106b..5a27b52ee6e 100644
---- a/rust/qemu-api-macros/Cargo.toml
-+++ b/rust/qemu-api-macros/Cargo.toml
-@@ -20,3 +20,6 @@ proc-macro = true
- proc-macro2 = "1"
- quote = "1"
- syn = { version = "2", features = ["extra-traits"] }
++        tcg_vn = read_fp_dreg(s, rn);
++        if (cmp_with_zero) {
++            tcg_vm = tcg_constant_i64(0);
++        } else {
++            tcg_vm = read_fp_dreg(s, rm);
++        }
++        if (signal_all_nans) {
++            gen_helper_vfp_cmped_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++        } else {
++            gen_helper_vfp_cmpd_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++        }
++    } else {
++        TCGv_i32 tcg_vn = tcg_temp_new_i32();
++        TCGv_i32 tcg_vm = tcg_temp_new_i32();
 +
-+[lints]
-+workspace = true
-diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
-index cc716d75d46..669f288d1cb 100644
---- a/rust/qemu-api/Cargo.toml
-+++ b/rust/qemu-api/Cargo.toml
-@@ -23,6 +23,5 @@ version_check = "~0.9"
- default = []
- allocator = []
- 
--[lints.rust]
--unexpected_cfgs = { level = "warn", check-cfg = ['cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
--                                                 'cfg(has_offset_of)'] }
-+[lints]
-+workspace = true
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 1ed79672cc9..d719c13f46d 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -1,5 +1,5 @@
- _qemu_api_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h, '--features', '--lints', files('Cargo.toml'),
-+  '--config-headers', config_host_h, '--features', files('Cargo.toml'),
-   capture: true, check: true).stdout().strip().splitlines()
- 
- # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 9b9778a1cac..9df131a02bd 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -38,11 +38,21 @@
- 
- class CargoTOML:
-     tomldata: Mapping[Any, Any]
-+    workspace_data: Mapping[Any, Any]
-     check_cfg: Set[str]
- 
--    def __init__(self, path: str):
--        with open(path, 'rb') as f:
--            self.tomldata = tomllib.load(f)
-+    def __init__(self, path: Optional[str], workspace: Optional[str]):
-+        if path is not None:
-+            with open(path, 'rb') as f:
-+                self.tomldata = tomllib.load(f)
-+        else:
-+            self.tomldata = {"lints": {"workspace": True}}
++        read_vec_element_i32(s, tcg_vn, rn, 0, size);
++        if (cmp_with_zero) {
++            tcg_gen_movi_i32(tcg_vm, 0);
++        } else {
++            read_vec_element_i32(s, tcg_vm, rm, 0, size);
++        }
 +
-+        if workspace is not None:
-+            with open(workspace, 'rb') as f:
-+                self.workspace_data = tomllib.load(f)
-+            if "workspace" not in self.workspace_data:
-+                self.workspace_data["workspace"] = {}
++        switch (size) {
++        case MO_32:
++            if (signal_all_nans) {
++                gen_helper_vfp_cmpes_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++            } else {
++                gen_helper_vfp_cmps_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++            }
++            break;
++        case MO_16:
++            if (signal_all_nans) {
++                gen_helper_vfp_cmpeh_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++            } else {
++                gen_helper_vfp_cmph_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
++            }
++            break;
++        default:
++            g_assert_not_reached();
++        }
++    }
++
++    gen_set_nzcv(tcg_flags);
++}
++
++/* FCMP, FCMPE */
++static bool trans_FCMP(DisasContext *s, arg_FCMP *a)
++{
++    int check = fp_access_check_scalar_hsd(s, a->esz);
++
++    if (check <= 0) {
++        return check == 0;
++    }
++
++    handle_fp_compare(s, a->esz, a->rn, a->rm, a->z, a->e);
++    return true;
++}
++
++/* FCCMP, FCCMPE */
++static bool trans_FCCMP(DisasContext *s, arg_FCCMP *a)
++{
++    TCGLabel *label_continue = NULL;
++    int check = fp_access_check_scalar_hsd(s, a->esz);
++
++    if (check <= 0) {
++        return check == 0;
++    }
++
++    if (a->cond < 0x0e) { /* not always */
++        TCGLabel *label_match = gen_new_label();
++        label_continue = gen_new_label();
++        arm_gen_test_cc(a->cond, label_match);
++        /* nomatch: */
++        gen_set_nzcv(tcg_constant_i64(a->nzcv << 28));
++        tcg_gen_br(label_continue);
++        gen_set_label(label_match);
++    }
++
++    handle_fp_compare(s, a->esz, a->rn, a->rm, false, a->e);
++
++    if (label_continue) {
++        gen_set_label(label_continue);
++    }
++    return true;
++}
++
+ /*
+  * Advanced SIMD Modified Immediate
+  */
+@@ -8183,174 +8283,6 @@ static bool trans_CSEL(DisasContext *s, arg_CSEL *a)
+     return true;
+ }
  
-         self.check_cfg = set(self.find_check_cfg())
+-static void handle_fp_compare(DisasContext *s, int size,
+-                              unsigned int rn, unsigned int rm,
+-                              bool cmp_with_zero, bool signal_all_nans)
+-{
+-    TCGv_i64 tcg_flags = tcg_temp_new_i64();
+-    TCGv_ptr fpst = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
+-
+-    if (size == MO_64) {
+-        TCGv_i64 tcg_vn, tcg_vm;
+-
+-        tcg_vn = read_fp_dreg(s, rn);
+-        if (cmp_with_zero) {
+-            tcg_vm = tcg_constant_i64(0);
+-        } else {
+-            tcg_vm = read_fp_dreg(s, rm);
+-        }
+-        if (signal_all_nans) {
+-            gen_helper_vfp_cmped_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-        } else {
+-            gen_helper_vfp_cmpd_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-        }
+-    } else {
+-        TCGv_i32 tcg_vn = tcg_temp_new_i32();
+-        TCGv_i32 tcg_vm = tcg_temp_new_i32();
+-
+-        read_vec_element_i32(s, tcg_vn, rn, 0, size);
+-        if (cmp_with_zero) {
+-            tcg_gen_movi_i32(tcg_vm, 0);
+-        } else {
+-            read_vec_element_i32(s, tcg_vm, rm, 0, size);
+-        }
+-
+-        switch (size) {
+-        case MO_32:
+-            if (signal_all_nans) {
+-                gen_helper_vfp_cmpes_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-            } else {
+-                gen_helper_vfp_cmps_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-            }
+-            break;
+-        case MO_16:
+-            if (signal_all_nans) {
+-                gen_helper_vfp_cmpeh_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-            } else {
+-                gen_helper_vfp_cmph_a64(tcg_flags, tcg_vn, tcg_vm, fpst);
+-            }
+-            break;
+-        default:
+-            g_assert_not_reached();
+-        }
+-    }
+-
+-    gen_set_nzcv(tcg_flags);
+-}
+-
+-/* Floating point compare
+- *   31  30  29 28       24 23  22  21 20  16 15 14 13  10    9    5 4     0
+- * +---+---+---+-----------+------+---+------+-----+---------+------+-------+
+- * | M | 0 | S | 1 1 1 1 0 | type | 1 |  Rm  | op  | 1 0 0 0 |  Rn  |  op2  |
+- * +---+---+---+-----------+------+---+------+-----+---------+------+-------+
+- */
+-static void disas_fp_compare(DisasContext *s, uint32_t insn)
+-{
+-    unsigned int mos, type, rm, op, rn, opc, op2r;
+-    int size;
+-
+-    mos = extract32(insn, 29, 3);
+-    type = extract32(insn, 22, 2);
+-    rm = extract32(insn, 16, 5);
+-    op = extract32(insn, 14, 2);
+-    rn = extract32(insn, 5, 5);
+-    opc = extract32(insn, 3, 2);
+-    op2r = extract32(insn, 0, 3);
+-
+-    if (mos || op || op2r) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    switch (type) {
+-    case 0:
+-        size = MO_32;
+-        break;
+-    case 1:
+-        size = MO_64;
+-        break;
+-    case 3:
+-        size = MO_16;
+-        if (dc_isar_feature(aa64_fp16, s)) {
+-            break;
+-        }
+-        /* fallthru */
+-    default:
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    handle_fp_compare(s, size, rn, rm, opc & 1, opc & 2);
+-}
+-
+-/* Floating point conditional compare
+- *   31  30  29 28       24 23  22  21 20  16 15  12 11 10 9    5  4   3    0
+- * +---+---+---+-----------+------+---+------+------+-----+------+----+------+
+- * | M | 0 | S | 1 1 1 1 0 | type | 1 |  Rm  | cond | 0 1 |  Rn  | op | nzcv |
+- * +---+---+---+-----------+------+---+------+------+-----+------+----+------+
+- */
+-static void disas_fp_ccomp(DisasContext *s, uint32_t insn)
+-{
+-    unsigned int mos, type, rm, cond, rn, op, nzcv;
+-    TCGLabel *label_continue = NULL;
+-    int size;
+-
+-    mos = extract32(insn, 29, 3);
+-    type = extract32(insn, 22, 2);
+-    rm = extract32(insn, 16, 5);
+-    cond = extract32(insn, 12, 4);
+-    rn = extract32(insn, 5, 5);
+-    op = extract32(insn, 4, 1);
+-    nzcv = extract32(insn, 0, 4);
+-
+-    if (mos) {
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    switch (type) {
+-    case 0:
+-        size = MO_32;
+-        break;
+-    case 1:
+-        size = MO_64;
+-        break;
+-    case 3:
+-        size = MO_16;
+-        if (dc_isar_feature(aa64_fp16, s)) {
+-            break;
+-        }
+-        /* fallthru */
+-    default:
+-        unallocated_encoding(s);
+-        return;
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    if (cond < 0x0e) { /* not always */
+-        TCGLabel *label_match = gen_new_label();
+-        label_continue = gen_new_label();
+-        arm_gen_test_cc(cond, label_match);
+-        /* nomatch: */
+-        gen_set_nzcv(tcg_constant_i64(nzcv << 28));
+-        tcg_gen_br(label_continue);
+-        gen_set_label(label_match);
+-    }
+-
+-    handle_fp_compare(s, size, rn, rm, false, op);
+-
+-    if (cond < 0x0e) {
+-        gen_set_label(label_continue);
+-    }
+-}
+-
+ /* Floating-point data-processing (1 source) - half precision */
+ static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
+ {
+@@ -9107,16 +9039,9 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
+         disas_fp_fixed_conv(s, insn);
+     } else {
+         switch (extract32(insn, 10, 2)) {
+-        case 1:
+-            /* Floating point conditional compare */
+-            disas_fp_ccomp(s, insn);
+-            break;
+-        case 2:
+-            /* Floating point data-processing (2 source) */
+-            unallocated_encoding(s); /* in decodetree */
+-            break;
+-        case 3:
+-            /* Floating point conditional select */
++        case 1: /* Floating point conditional compare */
++        case 2: /* Floating point data-processing (2 source) */
++        case 3: /* Floating point conditional select */
+             unallocated_encoding(s); /* in decodetree */
+             break;
+         case 0:
+@@ -9127,7 +9052,7 @@ static void disas_data_proc_fp(DisasContext *s, uint32_t insn)
+                 break;
+             case 1: /* [15:12] == xx10 */
+                 /* Floating point compare */
+-                disas_fp_compare(s, insn);
++                unallocated_encoding(s); /* in decodetree */
+                 break;
+             case 2: /* [15:12] == x100 */
+                 /* Floating point data-processing (1 source) */
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 5670846768..7868b1cb24 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1325,6 +1325,14 @@ FMINV_s         0110 1110 10 11000 01111 10 ..... .....     @rr_q1e2
  
-@@ -54,10 +64,12 @@ def find_check_cfg(self) -> Iterable[str]:
+ FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
  
-     @property
-     def lints(self) -> Mapping[Any, Any]:
--        return self.get_table("lints")
-+        return self.get_table("lints", True)
++# Floating-point Compare
++
++FCMP            00011110 .. 1 rm:5 001000 rn:5 e:1 z:1 000  esz=%esz_hsd
++
++# Floating-point Conditional Compare
++
++FCCMP           00011110 .. 1 rm:5 cond:4 01 rn:5 e:1 nzcv:4  esz=%esz_hsd
++
+ # Advanced SIMD Modified Immediate / Shift by Immediate
  
--    def get_table(self, key: str) -> Mapping[Any, Any]:
-+    def get_table(self, key: str, can_be_workspace: bool = False) -> Mapping[Any, Any]:
-         table = self.tomldata.get(key, {})
-+        if can_be_workspace and table.get("workspace", False) is True:
-+            table = self.workspace_data["workspace"].get(key, {})
- 
-         return table
- 
-@@ -136,6 +148,16 @@ def main() -> None:
-         action="store",
-         dest="cargo_toml",
-         help="path to Cargo.toml file",
-+        nargs='?',
-+    )
-+    parser.add_argument(
-+        "--workspace",
-+        metavar="DIR",
-+        action="store",
-+        dest="workspace",
-+        help="path to root of the workspace",
-+        required=False,
-+        default=None,
-     )
-     parser.add_argument(
-         "--features",
-@@ -168,7 +190,11 @@ def main() -> None:
-     logging.debug("args: %s", args)
- 
-     rustc_version = tuple((int(x) for x in args.rustc_version.split('.')[0:2]))
--    cargo_toml = CargoTOML(args.cargo_toml)
-+    if args.workspace:
-+        workspace_cargo_toml = Path(args.workspace, "Cargo.toml").resolve()
-+        cargo_toml = CargoTOML(args.cargo_toml, str(workspace_cargo_toml))
-+    else:
-+        cargo_toml = CargoTOML(args.cargo_toml, None)
- 
-     if args.lints:
-         for tok in generate_lint_flags(cargo_toml):
+ %abcdefgh       16:3 5:5
 -- 
-2.47.1
+2.43.0
 
 
