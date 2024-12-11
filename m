@@ -4,78 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7FDE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:04:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4B23E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:20:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQ66-0005YJ-Hu; Wed, 11 Dec 2024 12:02:02 -0500
+	id 1tLQN0-0003Zc-Je; Wed, 11 Dec 2024 12:19:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLQ5O-0005MQ-SW
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:01:22 -0500
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLQMz-0003ZR-RK
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:19:29 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLQ5N-0006im-8K
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:01:18 -0500
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-6ef7640e484so81611027b3.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 09:01:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLQMw-0000Pw-BN
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:19:29 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-434a852bb6eso66814825e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 09:19:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733936476; x=1734541276; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=uUa4Q3n2z6EKzMTLHCiTTArjkvUBuMkHdOT7pp3q7do=;
- b=KIZ+dm4kKfkOp060AtLeTMXRR8uJpPLieikltoh2x/GV4CNcJc7wQEF6GMo/84pbqe
- QQzPZt22VegrdDNmMlBoYRlJYdfApULiFjZIW/0N9vbJyvPtZEW7t/9ieJzqZbhIcjfU
- mhRNDCIbMkISpqQ1bHOOCv2KwhJlG3oZrEKav53ntsE/8o+z/tKJv3Ew+OccNgZkVjIR
- zSp5pG3XBd5E6Xcjw7pY5tLFSevdKuwviz3A5Fn15l+jWW3S/IZRuO3ckkKqBDo/B6zK
- lkA9V0FyxBeqLK4Q4z85IJhiwf9n/ZhluALHUrzQ31uwiS9QQzcuuYY3RuHhSZkDddaJ
- b+aQ==
+ d=linaro.org; s=google; t=1733937563; x=1734542363; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5waepcRG0rE96d3+FTAxo9ZMgSmUAmPYYL6auywoo5k=;
+ b=y2U6/kJl02LpnZd3w23Mi8mXzhoRS+MwKdVIR7cq4jh7fK4deMMNBK+nHHyNwr9jrl
+ FPVXf0YgSam8guRbzx5xdY9iuYcDjfDlKYpkaSGY1VXZPP9s8+Nc/sUP/LP9EUb3Boxw
+ 5QIlQu2bpwihpriAghMNMSA4j8MAyEcwPPsXuOcncymStHagN2EumxQ/MOrjKrtLBI7C
+ WH1Cr2MxshqNNdtFunLDUApqPar+qh4WCLGC0Vc19JIkXmV5+Xku35IZBXsPMovB8tF0
+ thtHWR+NuB+94tVEdHUo9yOiUqb9GjBb1tGTbTCWQHuLAaDhwjqkFCZcR1GPW5PuPQ5G
+ P5kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733936476; x=1734541276;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uUa4Q3n2z6EKzMTLHCiTTArjkvUBuMkHdOT7pp3q7do=;
- b=D8NTCPlD0QK+dSeX6rcRiMYlxqZx0sUni5BxUMp7TNOorbMLVMKAa00674rdtisBcj
- CiKhDyxe9vXTVX6FRzXrBORw14seZv3fA2sFLuc1Hd+AK2EKMZwoXyPfBAZDdeBpNAb8
- dTOQXDdvPWgCBxbv4P3A266F4wh9NPxocgYUvn4e481yX/3HlJzvvLI2z5q7nlC+ZVAF
- rkiOzfu4UVtbNE2YozZ/AIz+SnTkwYuvemETeR9RmQrrfy+QOX3ZHmgGwbL7eTy+5s4L
- vlLjtXNtyCvgEwzeiu3mB4t9kmzyJdkYPJRzzhvces2D/MDdHdrRv0N5dHrDG5ArwU6m
- J1Aw==
-X-Gm-Message-State: AOJu0YxO9Qw7LEXjPLasSWi+E5BUzQ6nnRC4FwhdATSry0B/ciQCavz6
- KzP/FAQMh0x2yC1y7HDFNApDECC/S7X0CVoVFrXtWt82FvIe1c4Zp8iJTYqg9lzLL+b4eQZ8CIN
- 5Oj+aI46Pwz5ioGfyxGkexLHmVourJ7qvXDONelfZqoB+HaTB
-X-Gm-Gg: ASbGnct/q0yUQKyJeWQ6ZSMGuINBbMI7lEhCYOqnyAKDBqgcXjhrsGAXYR3ruT8ssPc
- AxHd/UC7juuKqyYYG9u0X9g8aV6jrprAGQlJR
-X-Google-Smtp-Source: AGHT+IFrUbAvWUOB25pSNhCwiPtERYaPzi3QOJHXi/cx9PzcsWaPagMumMpr9LIP9J0zjgqNmRIRNDrDSJcoaEDlokg=
-X-Received: by 2002:a05:690c:6f10:b0:6ef:910d:7846 with SMTP id
- 00721157ae682-6f198a3af41mr3156767b3.1.1733936475841; Wed, 11 Dec 2024
- 09:01:15 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733937563; x=1734542363;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5waepcRG0rE96d3+FTAxo9ZMgSmUAmPYYL6auywoo5k=;
+ b=GrMQM3qoETWGT/YFLjejI9m3UaKj9t2g0Ht1ipNbiafzM9tUN6D8osfeU3/uPRKTzu
+ K+xRpMUQYs6Z/sg8p1pPUbe8TF1nNnupjTvslUEgeEwfmGD9qM6IOJEtKaaJaqEejPVB
+ nycdoL/g1WyIrGqdGDHYddN1izYtc1eVi9fS8Rv+xo8pIHT8WkH6oMqDmYTkiat5Iw1v
+ MRO5CoPtVBsF0Yf7n6a6rhKo+7jzI0rOIY/PTXkIuOb/WdIDeqxx77qZGkKhpyilaXFX
+ kZON/Y0dY4LK/XfNnNrggzktvHuV3FpEvQwifElE36wtPC96dR9YZd3y6JMZ423IfmsF
+ DfRg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUc7xxcVhOWmWPORJB7uw844+CaY3gG7Ky9E9A2SW+1y17quDXM6doruQspg+qynH51GGH4ALTVUdOR@nongnu.org
+X-Gm-Message-State: AOJu0YwESclx+IbKiMkeg2YK1RdlWWOc8vp+8hdm/NGoT1FAXkDM3DDh
+ URTWnWHGNxklnA92C4CM942vQu2jIBfuOv902tjX+jLcl/Qt8eLl4g6/fNIFABk=
+X-Gm-Gg: ASbGnctm+ANvtERn57oL72SKYT+zYnbuIdMlr+T4lIWHV/VsG1GY0vJU++4fSw3jPax
+ zof4Clv40wavTT/9FCxxjZTyV//B4mRZeKD3LJLDA+Hk9YvVywZjsiX5IAif9YRbS6qD7RCoHlI
+ FPoL9rErrDIO6WHtVRwbDFLBMgXWXcEdnlSKdC3jxKYZ5FfAjp9q+8z1srNAvd3jTqTDelvXREx
+ j7loYz99dc/cFViR8iLRmF6gc87UVi+rx7ISe+nDve8lR5EpHfVxBox69hg0SZpNbPivJWUm85W
+ 0Z2C+/49xohjRCgRz/zVMkBj
+X-Google-Smtp-Source: AGHT+IGetrizU7M/rpsotw87uLqEM6548LoXvExOVn9aWVTvoSYd4BCrh1G9DTG4BV7cW80NapV2Vg==
+X-Received: by 2002:a05:600c:4e4b:b0:434:a0bf:98ea with SMTP id
+ 5b1f17b1804b1-4361c35cc4bmr29206985e9.9.1733937562991; 
+ Wed, 11 Dec 2024 09:19:22 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4361968eed5sm44525915e9.42.2024.12.11.09.19.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Dec 2024 09:19:21 -0800 (PST)
+Message-ID: <934e7598-8927-4d35-9784-6d33d7892952@linaro.org>
+Date: Wed, 11 Dec 2024 18:19:21 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 42/69] target/arm: Introduce gen_gvec_rev{16,32,64}
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
 References: <20241211163036.2297116-1-richard.henderson@linaro.org>
- <20241211163036.2297116-24-richard.henderson@linaro.org>
-In-Reply-To: <20241211163036.2297116-24-richard.henderson@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Dec 2024 17:01:04 +0000
-Message-ID: <CAFEAcA-s0W_1syz9UO-8-tQX-5C2sEa8H0wMyAUSMQNY1pRj7w@mail.gmail.com>
-Subject: Re: [PATCH v3 23/69] target/arm: Fix decode of fp16 vector fabs,
- fneg, fsqrt
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+ <20241211163036.2297116-43-richard.henderson@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241211163036.2297116-43-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,18 +101,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Dec 2024 at 16:32, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> These opcodes are only supported as vector operations,
-> not as advsimd scalar.  Set only_in_vector, and remove
-> the unreachable implementation of scalar fneg.
->
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+On 11/12/24 17:30, Richard Henderson wrote:
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   target/arm/tcg/translate.h      |  6 +++
+>   target/arm/tcg/gengvec.c        | 58 ++++++++++++++++++++++
+>   target/arm/tcg/translate-neon.c | 88 +++++++--------------------------
+>   3 files changed, 81 insertions(+), 71 deletions(-)
+> 
+> diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+> index cb8e1b2586..342ebedafc 100644
+> --- a/target/arm/tcg/translate.h
+> +++ b/target/arm/tcg/translate.h
+> @@ -586,6 +586,12 @@ void gen_gvec_cnt(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+>                     uint32_t opr_sz, uint32_t max_sz);
+>   void gen_gvec_rbit(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+>                      uint32_t opr_sz, uint32_t max_sz);
+> +void gen_gvec_rev16(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+> +                    uint32_t opr_sz, uint32_t max_sz);
+> +void gen_gvec_rev32(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+> +                    uint32_t opr_sz, uint32_t max_sz);
+> +void gen_gvec_rev64(unsigned vece, uint32_t rd_ofs, uint32_t rn_ofs,
+> +                    uint32_t opr_sz, uint32_t max_sz);
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-thanks
--- PMM
+Remembering 
+https://lore.kernel.org/qemu-devel/20230822124042.54739-1-philmd@linaro.org/, 
+these gvec helpers might be useful for other targets.
 
