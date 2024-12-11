@@ -4,85 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9159BE77183
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:36:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1EAE77182
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPe0-0008AY-3K; Wed, 11 Dec 2024 11:33:00 -0500
+	id 1tLPaT-0003wt-3h; Wed, 11 Dec 2024 11:29:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPdA-00059Y-KM
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:14 -0500
-Received: from mail-qt1-x82a.google.com ([2607:f8b0:4864:20::82a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPd6-0001Lw-I5
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:32:06 -0500
-Received: by mail-qt1-x82a.google.com with SMTP id
- d75a77b69052e-46677ef6910so61747821cf.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:32:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934723; x=1734539523; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OlPqq3SkO/OL532CbnGb++BEeuAMvtHyeW45jNWCD1U=;
- b=heck10/n1Iry1Ls2o43bwN80LJXnH1c/+mPEvFr4jDX5acLLU9As6KOk991nLmToY2
- C9QEg19In0V3fytKEC3Df0xMLVInazsVtreVYw5/fE4z7ZiDSzbed0yfDPK9wkF/FRMx
- k1T4rrVuYmmbjIJhpASJ8UMVDkId3kSnr7XQj244AC/Q6ZZ3FIpsSDqcE6nX0P6x0I8Y
- gbtair6v2VoB7+hm4cHDUidTGuBxsZKNbxa48oB6gmwLamp9SH3Ow+CqAEy74EiDxi5P
- vBSZYNgfSigk21MhEMX5zAfbRsdabaI5jqMu/PmTaPV/lh+fM8HMJifGDXz94vzfEXtg
- PgUA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPaQ-0003lb-0g
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:18 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPaN-0000j8-Ua
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:17 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934555;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=goSFoLP9ZZzBeb1oQrmWlXZpCZrwinc7Rd5f+O1pfS8=;
+ b=EGmdUqJaNGjq0j6jmDYPMx2LQKn5BKltNKQ3Cp0Gk8Jm11qdEi+1g/vJagXsDXapFWoA7h
+ 35vLd0TtyhL6T2hLUlTSscfiFSbwmzeM5ONGIOt1AXAVQkigtS8ALNWeNY/E5v4Fi/8uvg
+ 36CEG7UUngeWtI6ruZbcJyTyUTdXnsE=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-472-VOG3BQeGM0C2xWZCKYqs1Q-1; Wed, 11 Dec 2024 11:29:13 -0500
+X-MC-Unique: VOG3BQeGM0C2xWZCKYqs1Q-1
+X-Mimecast-MFC-AGG-ID: VOG3BQeGM0C2xWZCKYqs1Q
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385df115288so2972721f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:29:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934723; x=1734539523;
+ d=1e100.net; s=20230601; t=1733934552; x=1734539352;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=OlPqq3SkO/OL532CbnGb++BEeuAMvtHyeW45jNWCD1U=;
- b=WQvxTmcUByWig4ovBpA7NpKNoXUvU7JE+Sh8cmCIYmB+lA6kRr7DvR/qSKO3yQxGNJ
- DhF56+Agd0NtuECFlaxB/NgKw6P4wNtuppJtLQLTmO7Iq8fClysDEYlB5Y4I18chZvA6
- gR8FV7FkburuNamCSW5oq/gkvL5z50/NNpQhlgoSennFX6lMXidGHKHi7shQw1cPlapM
- pFP1y9oWv6hl8sJRss5BzZdBEpCzNAM3nVIw8cw9u3TTmY/26PyaRuPyrpUsEIIM7Ap0
- i5zpIeZzTgRasb1gBWphToK7HjZ21Kp5/q2Ueliv5VgABAgIFTsfIk851uzQG9nFAJgl
- InIg==
-X-Gm-Message-State: AOJu0YwwrccN1MN8tsDGFRLl9MX0lLwm11jFo4zbnSQT5jERAEivqU21
- JKjGFR4bOl0jH/D/nJF5w2SfactmyMqQvE1i/mFk6CXJJrs8GGe8Hbl6xIub/2NhT2dJ9FdWluf
- ZEGMm7zLG
-X-Gm-Gg: ASbGncv2zc8VrkLJUy27y+E0sKQZu5MdcPfpIPiJ02MhpTPh/qwQwLnlXoUXUjDnobk
- LCCuLlf08Y/aOd/t/qMOgY1gltbQWX/qkteUvBj255oXeOKH9fwvNwiqGqFvfdtAlWhxKEblV2S
- sOPf2rlhoVJ1E7oJMdC9XTYPVkExu33gWC1LC/rjso1q9pMau5bQV5ko1clQsf04sDuEoBqPxGN
- puUAoRaP6cgqsdOfiBSX7vYT3hRlVC1Epo2u0P0ODH8IGkIQT+0o4kUviGP2g==
-X-Google-Smtp-Source: AGHT+IF5rTMtIdjW3H9s98Td43Gk6vezxDMGIyl7SmRNvdaHpNdV4JQ0vhL0/O5OdoKcClzNTIBaWA==
-X-Received: by 2002:a05:622a:1f13:b0:467:45b7:c49f with SMTP id
- d75a77b69052e-4678936e119mr70651751cf.40.1733934723555; 
- Wed, 11 Dec 2024 08:32:03 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.32.02
+ bh=goSFoLP9ZZzBeb1oQrmWlXZpCZrwinc7Rd5f+O1pfS8=;
+ b=mLp49fFJZkSk1QoDE9w/0krxMFGSGQsm2J8CqaIegrYqtWnLhIP/wC5TN2pBFquyDt
+ EQyyoefOdUGG06y2tMyqyzuufmYcoYUapQRV8cEHjNgYy/62huStEArZHH+BLpRlJRLY
+ 8QaWjy1MYsY9/eLrr3Fk+R5JdTzbADOLKe22pA1iGwMnc+fmxTbYbJ6bRdsvjzg4P482
+ JQifMPbL5eFp0HIZSEjKQk+p5ELdam/hw+kqNXmZkkJp4OXKWeMihxk3J/9pW9ve3JqV
+ b/t0M04u/MEHFG9MI5N65kszuic+LWZDfUzVuqq2gMQDIjjMUA5k9VYhoXsUuuXJiDwe
+ i2hQ==
+X-Gm-Message-State: AOJu0Yx/sbMe/32bh7oxGYODwdfgHBFtM3VmKNFTTMjPUVTcOy7ufbMo
+ G72qFnr/FDAx50Jh1Fku6stV75aLNkfFi1rhF6GvplcYbBAAPojfphVfFZpBzGTnb0pyYdZDCKO
+ DFIVWrUD53uWMb3F9uQa2ziVTjyGlpgbtvu54lvTFbd+27ZgOPezf3BbLuIBqocxghZUbkYAqXX
+ arAkWScIcVJJU46ILdvO1ehmnDamejF2vXvDr2
+X-Gm-Gg: ASbGnctV3XCDV7d5FArb1OROTzuSlsti2rfMO7dTtTyOL8aYq69aMCMFFJnoYTU5tew
+ LiXu1JiamQqKDOEeLj1IrAPTP2yzIZSZSDs09tc1YDVtFeRWm7XgHZbOL5TKdtVFX60U+llowzf
+ HJMAbJhE/d1vT/KeI4NiG4iVArvyWVjizGfq6vNUzXl3g6ylcTnxzLDTODGW4Xlqtr9Tl48qfSf
+ lPYXCRKyIcrMv3FWJ9xILbQQufIzy1olgTpqizml56GDXmk8mpG0b0A
+X-Received: by 2002:a5d:47c6:0:b0:385:f062:c2df with SMTP id
+ ffacd0b85a97d-3864ce4968emr3330992f8f.11.1733934551558; 
+ Wed, 11 Dec 2024 08:29:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFVKTEij2xde+OaauMr8jeMSHVSr8tiBVX8BoCT5vhHI9fdqWO+vH9yXfdaeYkoNJZpdRO3bg==
+X-Received: by 2002:a5d:47c6:0:b0:385:f062:c2df with SMTP id
+ ffacd0b85a97d-3864ce4968emr3330964f8f.11.1733934551061; 
+ Wed, 11 Dec 2024 08:29:11 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878251dbbfsm1609110f8f.97.2024.12.11.08.29.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:32:03 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Dec 2024 08:29:09 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 21/69] target/arm: Introduce fp_access_check_vector_hsd
-Date: Wed, 11 Dec 2024 10:29:48 -0600
-Message-ID: <20241211163036.2297116-22-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 48/49] rust: qom: split ObjectType from ObjectImpl trait
+Date: Wed, 11 Dec 2024 17:27:18 +0100
+Message-ID: <20241211162720.320070-49-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82a;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,201 +107,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a simple way to check for float64, float32, and float16
-support vs vector width, as well as the fpu enabled.
+Define a separate trait for fields that also applies to classes that are
+defined by C code.  This makes it possible to add metadata to core classes,
+which has multiple uses:
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+- it makes it possible to access the parent struct's TYPE_* for types
+  that are defined in Rust code, and to avoid repeating it in every subclass
+
+- implementors of ObjectType will be allowed to implement the IsA<> trait and
+  therefore to perform typesafe casts from one class to another.
+
+- in the future, an ObjectType could be created with Foo::new() in a type-safe
+  manner, without having to pass a TYPE_* constant.
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/tcg/translate-a64.c | 135 +++++++++++++--------------------
- 1 file changed, 54 insertions(+), 81 deletions(-)
+ rust/hw/char/pl011/src/device.rs  | 17 ++++++++++++-----
+ rust/qemu-api/src/definitions.rs  | 27 +++++++++++++++++++++------
+ rust/qemu-api/src/device_class.rs | 11 ++++++-----
+ rust/qemu-api/src/prelude.rs      |  2 ++
+ rust/qemu-api/src/sysbus.rs       | 10 ++++++++--
+ rust/qemu-api/tests/tests.rs      | 17 +++++++++--------
+ 6 files changed, 58 insertions(+), 26 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 4e47b8a804..4611ae4ade 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -1260,6 +1260,28 @@ static int fp_access_check_scalar_hsd(DisasContext *s, MemOp esz)
-     return fp_access_check(s);
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index b9f8fb134b5..0ab825b1ca4 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -12,9 +12,10 @@
+     bindings::{self, *},
+     c_str,
+     definitions::ObjectImpl,
+-    device_class::{DeviceImpl, TYPE_SYS_BUS_DEVICE},
++    device_class::DeviceImpl,
+     impl_device_class,
+     irq::InterruptSource,
++    prelude::*,
+ };
+ 
+ use crate::{
+@@ -106,10 +107,13 @@ pub struct PL011State {
+     device_id: DeviceId,
  }
  
-+/* Likewise, but vector MO_64 must have two elements. */
-+static int fp_access_check_vector_hsd(DisasContext *s, bool is_q, MemOp esz)
-+{
-+    switch (esz) {
-+    case MO_64:
-+        if (!is_q) {
-+            return -1;
-+        }
-+        break;
-+    case MO_32:
-+        break;
-+    case MO_16:
-+        if (!dc_isar_feature(aa64_fp16, s)) {
-+            return -1;
-+        }
-+        break;
-+    default:
-+        return -1;
-+    }
-+    return fp_access_check(s);
+-impl ObjectImpl for PL011State {
++unsafe impl ObjectType for PL011State {
+     type Class = PL011Class;
+     const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
+-    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_SYS_BUS_DEVICE);
 +}
 +
- /*
-  * Check that SVE access is enabled.  If it is, return true.
-  * If not, emit code to generate an appropriate exception and return false.
-@@ -5420,27 +5442,14 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
-                           gen_helper_gvec_3_ptr * const fns[3])
- {
-     MemOp esz = a->esz;
-+    int check = fp_access_check_vector_hsd(s, a->q, esz);
- 
--    switch (esz) {
--    case MO_64:
--        if (!a->q) {
--            return false;
--        }
--        break;
--    case MO_32:
--        break;
--    case MO_16:
--        if (!dc_isar_feature(aa64_fp16, s)) {
--            return false;
--        }
--        break;
--    default:
--        return false;
--    }
--    if (fp_access_check(s)) {
--        gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
--                          esz == MO_16, data, fns[esz - 1]);
-+    if (check <= 0) {
-+        return check == 0;
-     }
-+
-+    gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
-+                      esz == MO_16, data, fns[esz - 1]);
-     return true;
++impl ObjectImpl for PL011State {
++    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<SysBusDevice as ObjectType>::TYPE_NAME);
+     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
  }
  
-@@ -5768,34 +5777,24 @@ TRANS_FEAT(FCADD_270, aa64_fcma, do_fp3_vector, a, 1, f_vector_fcadd)
- 
- static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
- {
--    gen_helper_gvec_4_ptr *fn;
-+    static gen_helper_gvec_4_ptr * const fn[] = {
-+        [MO_16] = gen_helper_gvec_fcmlah,
-+        [MO_32] = gen_helper_gvec_fcmlas,
-+        [MO_64] = gen_helper_gvec_fcmlad,
-+    };
-+    int check;
- 
-     if (!dc_isar_feature(aa64_fcma, s)) {
-         return false;
+@@ -640,10 +644,13 @@ unsafe fn init(&mut self) {
      }
--    switch (a->esz) {
--    case MO_64:
--        if (!a->q) {
--            return false;
--        }
--        fn = gen_helper_gvec_fcmlad;
--        break;
--    case MO_32:
--        fn = gen_helper_gvec_fcmlas;
--        break;
--    case MO_16:
--        if (!dc_isar_feature(aa64_fp16, s)) {
--            return false;
--        }
--        fn = gen_helper_gvec_fcmlah;
--        break;
--    default:
--        return false;
--    }
--    if (fp_access_check(s)) {
--        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
--                          a->esz == MO_16, a->rot, fn);
-+
-+    check = fp_access_check_vector_hsd(s, a->q, a->esz);
-+    if (check <= 0) {
-+        return check == 0;
-     }
-+
-+    gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
-+                      a->esz == MO_16, a->rot, fn[a->esz]);
-     return true;
  }
  
-@@ -6337,27 +6336,14 @@ static bool do_fp3_vector_idx(DisasContext *s, arg_qrrx_e *a,
-                               gen_helper_gvec_3_ptr * const fns[3])
- {
-     MemOp esz = a->esz;
-+    int check = fp_access_check_vector_hsd(s, a->q, esz);
- 
--    switch (esz) {
--    case MO_64:
--        if (!a->q) {
--            return false;
--        }
--        break;
--    case MO_32:
--        break;
--    case MO_16:
--        if (!dc_isar_feature(aa64_fp16, s)) {
--            return false;
--        }
--        break;
--    default:
--        g_assert_not_reached();
--    }
--    if (fp_access_check(s)) {
--        gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
--                          esz == MO_16, a->idx, fns[esz - 1]);
-+    if (check <= 0) {
-+        return check == 0;
-     }
+-impl ObjectImpl for PL011Luminary {
++unsafe impl ObjectType for PL011Luminary {
+     type Class = PL011LuminaryClass;
+     const TYPE_NAME: &'static CStr = crate::TYPE_PL011_LUMINARY;
+-    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(crate::TYPE_PL011);
++}
 +
-+    gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
-+                      esz == MO_16, a->idx, fns[esz - 1]);
-     return true;
++impl ObjectImpl for PL011Luminary {
++    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<PL011State as ObjectType>::TYPE_NAME);
+     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
  }
  
-@@ -6383,28 +6369,15 @@ static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
-         gen_helper_gvec_fmla_idx_d,
+diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
+index f2970758986..b98a6926785 100644
+--- a/rust/qemu-api/src/definitions.rs
++++ b/rust/qemu-api/src/definitions.rs
+@@ -26,25 +26,40 @@
+     T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
+ }
+ 
+-/// Trait a type must implement to be registered with QEMU.
++/// Trait exposed by all structs corresponding to QOM objects.
+ ///
+ /// # Safety
+ ///
+-/// - the struct must be `#[repr(C)]`
++/// For classes declared in C:
+ ///
+-/// - `Class` and `TYPE` must match the data in the `TypeInfo` (this is
+-///   automatic if the class is defined via `ObjectImpl`).
++/// - `Class` and `TYPE` must match the data in the `TypeInfo`;
++///
++/// - the first field of the struct must be of the instance type corresponding
++///   to the superclass, as declared in the `TypeInfo`
++///
++/// - likewise, the first field of the `Class` struct must be of the class type
++///   corresponding to the superclass
++///
++/// For classes declared in Rust and implementing [`ObjectImpl`]:
++///
++/// - the struct must be `#[repr(C)]`;
+ ///
+ /// - the first field of the struct must be of the instance struct corresponding
+-///   to the superclass declared as `PARENT_TYPE_NAME`
+-pub trait ObjectImpl: ClassInitImpl + Sized {
++///   to the superclass, as declared in `ObjectImpl::PARENT_TYPE_NAME`
++///
++/// - likewise, the first field of the `Class` must be of the class struct
++///   corresponding to the superclass
++pub unsafe trait ObjectType: Sized {
+     /// The QOM class object corresponding to this struct.  Not used yet.
+     type Class;
+ 
+     /// The name of the type, which can be passed to `object_new()` to
+     /// generate an instance of this type.
+     const TYPE_NAME: &'static CStr;
++}
+ 
++/// Trait a type must implement to be registered with QEMU.
++pub trait ObjectImpl: ObjectType + ClassInitImpl {
+     /// The parent of the type.  This should match the first field of
+     /// the struct that implements `ObjectImpl`:
+     const PARENT_TYPE_NAME: Option<&'static CStr>;
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_class.rs
+index f25904be4f6..03d03feee83 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -6,6 +6,7 @@
+ 
+ use crate::{
+     bindings::{self, DeviceClass, DeviceState, Error, ObjectClass, Property, VMStateDescription},
++    prelude::*,
+     zeroable::Zeroable,
+ };
+ 
+@@ -146,8 +147,8 @@ macro_rules! declare_properties {
      };
-     MemOp esz = a->esz;
-+    int check = fp_access_check_vector_hsd(s, a->q, esz);
- 
--    switch (esz) {
--    case MO_64:
--        if (!a->q) {
--            return false;
--        }
--        break;
--    case MO_32:
--        break;
--    case MO_16:
--        if (!dc_isar_feature(aa64_fp16, s)) {
--            return false;
--        }
--        break;
--    default:
--        g_assert_not_reached();
--    }
--    if (fp_access_check(s)) {
--        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
--                          esz == MO_16, (a->idx << 1) | neg,
--                          fns[esz - 1]);
-+    if (check <= 0) {
-+        return check == 0;
-     }
-+
-+    gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
-+                      esz == MO_16, (a->idx << 1) | neg,
-+                      fns[esz - 1]);
-     return true;
  }
  
+-// workaround until we can use --generate-cstr in bindgen.
+-pub const TYPE_DEVICE: &CStr =
+-    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
+-pub const TYPE_SYS_BUS_DEVICE: &CStr =
+-    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DEVICE) };
++unsafe impl ObjectType for bindings::DeviceState {
++    type Class = bindings::DeviceClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
++}
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index a39e228babf..1b8677b2d9a 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -6,3 +6,5 @@
+ 
+ pub use crate::cell::BqlCell;
+ pub use crate::cell::BqlRefCell;
++
++pub use crate::definitions::ObjectType;
+diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
+index 4e192c75898..5ee068541cf 100644
+--- a/rust/qemu-api/src/sysbus.rs
++++ b/rust/qemu-api/src/sysbus.rs
+@@ -2,11 +2,17 @@
+ // Author(s): Paolo Bonzini <pbonzini@redhat.com>
+ // SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-use std::ptr::addr_of;
++use std::{ffi::CStr, ptr::addr_of};
+ 
+ pub use bindings::{SysBusDevice, SysBusDeviceClass};
+ 
+-use crate::{bindings, cell::bql_locked, irq::InterruptSource};
++use crate::{bindings, cell::bql_locked, irq::InterruptSource, prelude::*};
++
++unsafe impl ObjectType for SysBusDevice {
++    type Class = SysBusDeviceClass;
++    const TYPE_NAME: &'static CStr =
++        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DEVICE) };
++}
+ 
+ impl SysBusDevice {
+     /// Return `self` cast to a mutable pointer, for use in calls to C code.
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index b8b12a40422..1d027dd6527 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -5,12 +5,8 @@
+ use std::ffi::CStr;
+ 
+ use qemu_api::{
+-    bindings::*,
+-    c_str, declare_properties, define_property,
+-    definitions::ObjectImpl,
+-    device_class::{self, DeviceImpl},
+-    impl_device_class,
+-    zeroable::Zeroable,
++    bindings::*, c_str, declare_properties, define_property, definitions::ObjectImpl,
++    device_class::DeviceImpl, impl_device_class, prelude::*, zeroable::Zeroable,
+ };
+ 
+ #[test]
+@@ -46,10 +42,15 @@ pub struct DummyClass {
+             ),
+     }
+ 
+-    impl ObjectImpl for DummyState {
++    unsafe impl ObjectType for DummyState {
+         type Class = DummyClass;
+         const TYPE_NAME: &'static CStr = c_str!("dummy");
+-        const PARENT_TYPE_NAME: Option<&'static CStr> = Some(device_class::TYPE_DEVICE);
++    }
++
++    impl ObjectImpl for DummyState {
++        const PARENT_TYPE_NAME: Option<&'static CStr> =
++            Some(<DeviceState as ObjectType>::TYPE_NAME);
++        const ABSTRACT: bool = false;
+     }
+ 
+     impl DeviceImpl for DummyState {
 -- 
-2.43.0
+2.47.1
 
 
