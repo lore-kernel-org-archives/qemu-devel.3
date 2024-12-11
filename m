@@ -4,73 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81484E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:41:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59631E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:41:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPjj-0001yK-8u; Wed, 11 Dec 2024 11:38:55 -0500
+	id 1tLPd5-0004x8-3u; Wed, 11 Dec 2024 11:32:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLPjX-0001iN-QS; Wed, 11 Dec 2024 11:38:44 -0500
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLPjU-0002a0-LE; Wed, 11 Dec 2024 11:38:43 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733935121; x=1765471121;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=lGDuG1wgfD376M5q17+Nm6wS/8Utxh8Nhg6DJY2dVy4=;
- b=BGYMsv1E4Sg44ohemjGXj8BnsdILYvqxNZVOK1Tbb4kTgJ31bK+//l0X
- norbdW1Mh8yU5B9stfzn6eg5wy1KtC++jQMu/cayGVb931ZcZQCz7Wyzd
- tsREQYofQnMKKaVV2d4NZf5DXyJJfkOnQYQK1oj1Pn/zLou7is7Q9Kg0Q
- eIeySSgx1g+3JXcL1oVlfYh+yCbSkeeI6BcJwlFbBxm8y+RRCuJIMMMB8
- Ip/4sMUTBlJjgrlrJdNXG3TABiX4RCI++R7sD8ntD3H9Jdtb/E1Ls1fzw
- wRyOxSIyScn9YGr8xtU+1iOy5QOkKmqw5ErrJzI1NZrsyb00Q8KIhVLZy A==;
-X-CSE-ConnectionGUID: RV/taBWnS8KkeZKYS+szNQ==
-X-CSE-MsgGUID: vvDQ+nSoRyiHoyjQKgbt4g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11278"; a="45705027"
-X-IronPort-AV: E=Sophos;i="6.12,214,1728975600"; d="scan'208";a="45705027"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2024 08:38:38 -0800
-X-CSE-ConnectionGUID: 2Gqx/xJyRiuGDAUtKFQIfw==
-X-CSE-MsgGUID: m2OIRmbLRTK9OGji4TxRRA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,226,1728975600"; d="scan'208";a="95725577"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa009.jf.intel.com with ESMTP; 11 Dec 2024 08:38:36 -0800
-Date: Thu, 12 Dec 2024 00:56:50 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
- of pl011
-Message-ID: <Z1nEUmzHa5dA5C0d@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-15-pbonzini@redhat.com>
- <Z1hjX+5Yyi46N+sX@intel.com>
- <ada60844-546a-42ca-a05f-7b6dc225ff53@redhat.com>
- <Z1lGZdXsVR5ra4hl@intel.com>
- <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPce-0004Mu-L2
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:36 -0500
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcc-0001GX-Tc
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:36 -0500
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-4678cd314b6so6582441cf.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:31:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934693; x=1734539493; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NvYUTxGU0SlbdB/A8XWhhOlkaNp7pR5YZMOeGOSqwZc=;
+ b=ziw+EZGKicgIINjyeuaVFGr+60UYx811d9i8burA46jbCXbwz/9HpJcGEybY1YnRWG
+ J4DP5MZbXRltRJML/1fM+9rwWVX9wf5+scIYpktRImUrITyTl1eEfdoUHGMx8xLICfxR
+ 7KOOlfpDm0W9SU3EyR97ThzYLnpXHuWzgHDbvQHCqUKLsqL/mMH0q6W8UhUcYRMoqB7z
+ BnOfsbEbxdV/d94/sISA62dxmgfSE1et1Ab7ai7MFxW5n/n2GMiWB9DG1imsHcM4uvh3
+ CrTO/2kvWerbA8jbwDVJQm5T3yFgzY+FHY0nQQeHVRXwXoe/mgB4OpVJMTFW06mSOkbn
+ 3ipg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934693; x=1734539493;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=NvYUTxGU0SlbdB/A8XWhhOlkaNp7pR5YZMOeGOSqwZc=;
+ b=RXCt7Hi40i2Ta+U0tMNIZPVGcUaVVRhpRMNg0EiWjcf/mdhsLnZesXYpli414MUQcf
+ tKShuasRrut2fJjFDiCpyDodWGhFV+i9Wa9q+zWbEWOIp2z2IoNwWWDK6OL1n6KhKnEa
+ MJGq5/GzI2BxxbLSyuujyj7cW2wSi1Cdwmh+Nwm2ml+No1BrwCDYKbbdzna+sUDuMBgX
+ FheqvJ8NPkEjOmMkUhEE7fHe7w9LK81i23XpxeyJrXP5+JrwOIWHsYcTBKtjDiSmV6Qw
+ F38LG5hUm1UkTGDI4jULk2TXb0ikEv/Js3GTRmX7Xwj6YsiG6X4KND+X0ZYtBgt2Z8it
+ xKdQ==
+X-Gm-Message-State: AOJu0YweZ/okSdbDxLkIxql3L64oqoQXyBP6CFDK6rMP4n2rk9VnDl9s
+ J6qJlD/2x1xCKrV5Te/9RlkptnU8FrbylsrHJWF0Wj7OXpl17A95BCkHtr0HhvQkaoq+8IjC7JU
+ EfgjeX0wY
+X-Gm-Gg: ASbGncubfhu6+eNNLE/BUdgwiYD0SWPTCCg2dzZRLL2nTfKJi6n2sQvN2ENgyUyHtu6
+ v/CNbzMmG3xWunmSIfHbOvMH+HXKK4dP4DVKU9zkLbtmNxekYlJc4eYNQRyPtgHhmQlaMkSwotA
+ C1QMwvQJxgDTZ2oNh7XB05mH9f4gspsSEkGVgbp2eoOX8b7mGOvGx94C+jfVBPg9ZVL03hXknWJ
+ vmVcwNOI2zRHkoHwVHKXSSbXbARfZPU47esz0FXJc+1PnUsbdDss22dvfkRmA==
+X-Google-Smtp-Source: AGHT+IFvC+fvHqjMTTmrzqrZHV7NXuowh2P7Idq/hnVKKJZiFxMteKNxcFxzyRZg+3nhUsRNzJPg3w==
+X-Received: by 2002:ac8:7f94:0:b0:466:a3d2:ae44 with SMTP id
+ d75a77b69052e-467892e9f85mr64904811cf.2.1733934693641; 
+ Wed, 11 Dec 2024 08:31:33 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.31.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 08:31:33 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 13/69] target/arm: Convert disas_add_sub_reg to decodetree
+Date: Wed, 11 Dec 2024 10:29:40 -0600
+Message-ID: <20241211163036.2297116-14-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,76 +98,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Generally:
-> 
-> - embedded objects will have to be initialized in instance_init unless they
-> are Options
+This includes ADD, SUB, ADDS, SUBS (shifted register).
 
-I see, at least for HPETTimer array, I need to prepare all of them in
-instance_init()...
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/arm/tcg/translate-a64.c | 64 ++++++++++------------------------
+ target/arm/tcg/a64.decode      |  9 +++++
+ 2 files changed, 27 insertions(+), 46 deletions(-)
 
-> - if you don't need properties you can choose between post_init and
-> realize, if you need properties you need to initialize in realize (and
-> then, unlike C, you might need to explicitly allow the pre-realize state;
-> for example using Option<&...> instead of just a reference; or Vec<>
-> instead of an array).
-
-...in realize(), also need to handle the "timers" property to enable
-the timers that property requires.
-
-> - sysbus_init_irq and sysbus_init_mmio can be called in both instance_init
-> and instance_post_init for now, but they will have to be in post_init once
-> the signature of init changes to return impl PinInit
-
-make sense, thanks!
-
-> >
-> > > The way that this will become safe is to use the pinned_init crate from
-> > > Linux: instance_init returns the initialization as an "impl
-> > PinInit<Self>",
-> >
-> > Then do we need to place OBJECT in some suitable memory location (Box or
-> > something) for Rust implementation?
-> >
-> 
-> Allocation is still done by the C code, so I am not sure I understand the
-> question. Rust code allocates QOM objects with object_new() so they are
-> malloc-ed.
-
-Sorry, I'm not familiar enough with this piece...I have the question
-because PinInit doc said "you will need a suitable memory location that
-can hold a T. This can be KBox<T>, Arc<T>, UniqueArc<T> or even the
-stack (see stack_pin_init!)."
-
-I see that the core point is ensuring that structures cannot be moved.
-Given that object_new() on the C side ensures that the allocated object
-will not be moved, Rust side does not need to worry about pinning, correct?
-
-> I discussed it with Manos some time ago and in principle you
-> could use a Box (QOM supports custom freeing functions) but it's a bit
-> complex because the freeing function would have to free the memory without
-> dropping the contents of the Box (the drop is done by QOM via
-> instance_finalize).
-> 
-> If you want to allocate the HPETTimers at realize time, I think you can
-> place them in a Vec. I think you won't need NonNull for this, but I am not
-> 100% sure. Alternatively if you want to always prepare all MAX_TIMERS of
-> them and then only use a subset, you can use an array.
-
-Vec seems to lack proper vmstate support. I understand that we need to
-modify VMSTATE_STRUCT_VARRAY_POINTER_* to introduce a variant for Vec.
-
-Since the array support is already available, I chose to use an array
-instead (although vmstate is disabled for now).
-
-> Either way, probably it makes sense for you to have an "fn
-> timers_iter(&self) -> impl Iter<Item = &BqlRefCell<HPETTimer>>" in
-> HPETState, or something like that. Then you can easily use for loops to
-> walk all timers between 0 and self.num_timers-1.
-
-Good idea, yes, will do.
-
-Thanks,
-Zhao
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 8f777875fe..d570bbb696 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7912,47 +7912,22 @@ TRANS(SUB_ext, do_addsub_ext, a, true, false)
+ TRANS(ADDS_ext, do_addsub_ext, a, false, true)
+ TRANS(SUBS_ext, do_addsub_ext, a, true, true)
+ 
+-/*
+- * Add/subtract (shifted register)
+- *
+- *  31 30 29 28       24 23 22 21 20   16 15     10 9    5 4    0
+- * +--+--+--+-----------+-----+--+-------+---------+------+------+
+- * |sf|op| S| 0 1 0 1 1 |shift| 0|  Rm   |  imm6   |  Rn  |  Rd  |
+- * +--+--+--+-----------+-----+--+-------+---------+------+------+
+- *
+- *    sf: 0 -> 32bit, 1 -> 64bit
+- *    op: 0 -> add  , 1 -> sub
+- *     S: 1 -> set flags
+- * shift: 00 -> LSL, 01 -> LSR, 10 -> ASR, 11 -> RESERVED
+- *  imm6: Shift amount to apply to Rm before the add/sub
+- */
+-static void disas_add_sub_reg(DisasContext *s, uint32_t insn)
++static bool do_addsub_reg(DisasContext *s, arg_addsub_shift *a,
++                          bool sub_op, bool setflags)
+ {
+-    int rd = extract32(insn, 0, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int imm6 = extract32(insn, 10, 6);
+-    int rm = extract32(insn, 16, 5);
+-    int shift_type = extract32(insn, 22, 2);
+-    bool setflags = extract32(insn, 29, 1);
+-    bool sub_op = extract32(insn, 30, 1);
+-    bool sf = extract32(insn, 31, 1);
++    TCGv_i64 tcg_rd, tcg_rn, tcg_rm, tcg_result;
+ 
+-    TCGv_i64 tcg_rd = cpu_reg(s, rd);
+-    TCGv_i64 tcg_rn, tcg_rm;
+-    TCGv_i64 tcg_result;
+-
+-    if ((shift_type == 3) || (!sf && (imm6 > 31))) {
+-        unallocated_encoding(s);
+-        return;
++    if (a->st == 3 || (!a->sf && (a->sa & 32))) {
++        return false;
+     }
+ 
+-    tcg_rn = read_cpu_reg(s, rn, sf);
+-    tcg_rm = read_cpu_reg(s, rm, sf);
++    tcg_rd = cpu_reg(s, a->rd);
++    tcg_rn = read_cpu_reg(s, a->rn, a->sf);
++    tcg_rm = read_cpu_reg(s, a->rm, a->sf);
+ 
+-    shift_reg_imm(tcg_rm, tcg_rm, sf, shift_type, imm6);
++    shift_reg_imm(tcg_rm, tcg_rm, a->sf, a->st, a->sa);
+ 
+     tcg_result = tcg_temp_new_i64();
+-
+     if (!setflags) {
+         if (sub_op) {
+             tcg_gen_sub_i64(tcg_result, tcg_rn, tcg_rm);
+@@ -7961,19 +7936,25 @@ static void disas_add_sub_reg(DisasContext *s, uint32_t insn)
+         }
+     } else {
+         if (sub_op) {
+-            gen_sub_CC(sf, tcg_result, tcg_rn, tcg_rm);
++            gen_sub_CC(a->sf, tcg_result, tcg_rn, tcg_rm);
+         } else {
+-            gen_add_CC(sf, tcg_result, tcg_rn, tcg_rm);
++            gen_add_CC(a->sf, tcg_result, tcg_rn, tcg_rm);
+         }
+     }
+ 
+-    if (sf) {
++    if (a->sf) {
+         tcg_gen_mov_i64(tcg_rd, tcg_result);
+     } else {
+         tcg_gen_ext32u_i64(tcg_rd, tcg_result);
+     }
++    return true;
+ }
+ 
++TRANS(ADD_r, do_addsub_reg, a, false, false)
++TRANS(SUB_r, do_addsub_reg, a, true, false)
++TRANS(ADDS_r, do_addsub_reg, a, false, true)
++TRANS(SUBS_r, do_addsub_reg, a, true, true)
++
+ /* Data-processing (3 source)
+  *
+  *    31 30  29 28       24 23 21  20  16  15  14  10 9    5 4    0
+@@ -8348,15 +8329,6 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+     int op3 = extract32(insn, 10, 6);
+ 
+     if (!op1) {
+-        if (op2 & 8) {
+-            if (op2 & 1) {
+-                goto do_unallocated;
+-            } else {
+-                /* Add/sub (shifted register) */
+-                disas_add_sub_reg(s, insn);
+-            }
+-            return;
+-        }
+         goto do_unallocated;
+     }
+ 
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 0539694506..27a3101bc6 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -726,6 +726,15 @@ EOR_r           . 10 01010 .. . ..... ...... ..... .....    @logic_shift
+ ANDS_r          . 11 01010 .. . ..... ...... ..... .....    @logic_shift
+ 
+ # Add/subtract (shifted reg)
++
++&addsub_shift    rd rn rm sf sa st
++@addsub_shift    sf:1 .. ..... st:2 . rm:5 sa:6 rn:5 rd:5   &addsub_shift
++
++ADD_r           . 00 01011 .. 0 ..... ...... ..... .....    @addsub_shift
++SUB_r           . 10 01011 .. 0 ..... ...... ..... .....    @addsub_shift
++ADDS_r          . 01 01011 .. 0 ..... ...... ..... .....    @addsub_shift
++SUBS_r          . 11 01011 .. 0 ..... ...... ..... .....    @addsub_shift
++
+ # Add/subtract (extended reg)
+ 
+ &addsub_ext     rd rn rm sf sa st
+-- 
+2.43.0
 
 
