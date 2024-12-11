@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55511E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46BFBE7717D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:36:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPaF-00038m-QW; Wed, 11 Dec 2024 11:29:08 -0500
+	id 1tLPdY-0006PX-FX; Wed, 11 Dec 2024 11:32:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaC-0002mC-Cq
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaA-0000dN-8N
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934541;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=V2ZIv/PAvz3komJwq6oypf8CScK5YKxPKfhuCNRvYs8=;
- b=TNG+L+R5Z1E/nUFS29xUe6CMvSEaSIuLIgn3HTZFgha/2cBIm2LfGX/0kuE2dTYYiMrSKT
- QjaXfsDiOrk6OTFj19hScRA++WNPQrTN9C3ypwMvOVecCFKxZE9Ua+EaYAr6762y8/SKVd
- XVXPnL8IVdsIokgB+6q9oIXm1aMyqMI=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-695-ZpyszVJ1ONeETWBfZTCnkQ-1; Wed, 11 Dec 2024 11:29:00 -0500
-X-MC-Unique: ZpyszVJ1ONeETWBfZTCnkQ-1
-X-Mimecast-MFC-AGG-ID: ZpyszVJ1ONeETWBfZTCnkQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385fdff9db5so3047315f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:59 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934538; x=1734539338;
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcV-00047n-Kt
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:28 -0500
+Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLPcS-0001E4-Px
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:27 -0500
+Received: by mail-qt1-x82f.google.com with SMTP id
+ d75a77b69052e-46785fbb949so17690761cf.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:31:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934683; x=1734539483; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hyFQvqa4ZP5fftH7OfmG1SrHIoV27DETz0Thv1W0mFA=;
+ b=xyXmACULadeIdKHNIxjiB2Zx4oZh6G6/VTJNE4fv5Z6i4HGS3FjpDrrNmLmokiy1PE
+ Ok0DgoJoPjvKYSPPLYQ4Y60ejsExNwZRUojGYDqQw9qt+Z3Rfhh26/A7cStUrkUkecct
+ jPJBkDlcirrVBFYHpZ94sxlzhzIzoZVLKOAtzK6dEiMt+aaX1GSK/7cNoSKiAPZQfGM3
+ Ff5StQcRyhpUy2OAlknqYTSqK53az8QLyyjFJgxKmCtdp8gD+FCECHi2+zRoJzeN8oO2
+ NrtIAbXHXnOEjWXKt71E6we62mTgFZTw7nqMVsQaKgjFPAf/xWj4HpQAqeid700aKi7V
+ 4DVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934683; x=1734539483;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V2ZIv/PAvz3komJwq6oypf8CScK5YKxPKfhuCNRvYs8=;
- b=bDUMe+ZvATKcgMRGzz5n2NC9MPU4Ov6jL+LTQ00iyLdZWHa6QO7xqe2NGzx8sZNlNY
- /j+kUxTY8Fo80VhfHoNAP2+ggJTo3ImOaH6cn8fDZ4ddoLmSnpGF4cPYWJfmcQgnOW08
- sp2JdKFhYDaK4f6KHqvXHjszQE3AKW6uAhHU4SrHudOVir6czgQT9nKFQUHVTtqEmJEY
- squOuErEqqCdQ0mwW5kMnCoCbCsAasvQyHw8SLJs8ZywjOGuCU7bf/V8lan9vEHU01JM
- 7pFk4LMy5zab4WqGxAuQ9297HQ8IJFr7QjWDQKvXMs/6pLmI+6gl0pTNo6u+bgB/ahnM
- FG8g==
-X-Gm-Message-State: AOJu0YxdLkIYKk16/QDHSe7B2zsLOwZv0+PKuH4kRqS9VUc3+B/V4NdJ
- 9U8m6G1JOeFx9WEpYFiyKPg3cM+eoJE4jjdCwF9dvVAOL54Id8gJIlbXV4xjscCsFNDqYpNfQjO
- u1jAdu5vNt5ASYPakknvE67zsjHXI/BxOuotf6CZiVGZK6vV17z1V+HxKr/Bam+qW7aNZJCUY8v
- Iwcmyqnlg3eDU/6wVqkC+o52GbFvbtBKLYqhdB
-X-Gm-Gg: ASbGncuIdIpqKUBjbPzymL4+Sryof/ZYl52oP7QdxYCcNjyLZC3X/VXvzmZz9kqjsGp
- Dx9LCPy+HLEiDiaxLXccpgpZj47DNqPMw5uYIpwojuz6CMbvS3vQJN3Lt6ks+ao7B5bH2wIwf41
- 8Vu8zZKUbmK56tgIJWYW48a92CRt0cgv10XOkmj7lzl4D/1pd3/pcGdoowdngd6Txy5lTI6V3f7
- jdyDhbgMgJHGsYGVgxe/5VL7y8ddcjWhqjUutROBCtgGmqZcgTBiJSN
-X-Received: by 2002:a05:6000:2d06:b0:386:36e7:f44f with SMTP id
- ffacd0b85a97d-3864ce54e99mr1855744f8f.18.1733934538511; 
- Wed, 11 Dec 2024 08:28:58 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHzZEh0zfHQt0LE3ncM/wMXoifhf+IKYgNed+nSnYPzXI3DaqzXLzJCYZ/c7t2hWNpT95Riuw==
-X-Received: by 2002:a05:6000:2d06:b0:386:36e7:f44f with SMTP id
- ffacd0b85a97d-3864ce54e99mr1855721f8f.18.1733934537812; 
- Wed, 11 Dec 2024 08:28:57 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878251c1d7sm1606234f8f.91.2024.12.11.08.28.57
- for <qemu-devel@nongnu.org>
+ bh=hyFQvqa4ZP5fftH7OfmG1SrHIoV27DETz0Thv1W0mFA=;
+ b=QkF3BLIq2MjG4o8V0FSBfjQVbUx+Ju1lRHlrh1gkr8z03Hclnp5I7EuGq+Xri68sOt
+ wnRKrDxiG+9cJjVC9athO7HU8U95VR+vA1jpJ2fvTGG+2zOhREgp69KQHBddrb55jMeY
+ 61dcdULEg6JPRbCprvZ4XZBIGtvss4mYAfmz6I9hI8nlQhfs+3M8/VH89/1KPv5qE4Qf
+ ad0Ie+OAyxAtC1GJkSLyEoTIs2m4RWuMbc3Jl0nhsm7w+YujLJNZVI5uciBpfPIz9Br7
+ uv7eIFgCfVqsFro1Ld1/d8SLM/Pn0sRcDvtNSW5gKMigwtzXwyF+wjsc0RvSObAc5y/l
+ BOOw==
+X-Gm-Message-State: AOJu0YyDj0uccAYK3iIWnYby+MH/hn4MMcytDTzGIVudI0LJmPtJLQsO
+ iQdLVp9DKNRVkVX49sJqWgTVVxjC/SCjD1gwd4LWcIbqUPGgbPGmuFB7g/Qi3abSAtoKFj/DkZy
+ aPgHaLc50
+X-Gm-Gg: ASbGncvU8LzwRYMXOJaED2MtkqKz3E+TQf6sOcjTOpJww5dqj2zvrH54CyqH9WoNxJ5
+ mBMN0XqSVPeuMtMpEtdQNZHteqh1ed+RuRu/FnF5xM4nVXjCIvrz0N3Whe3roQSSbQNLakEygKR
+ EvEyLSvfOMEvDlbrxUQqp0mBkunZKhfwMeUHiWGRusLYrezIwDu3tHSgvYJCuep4YngCc7cUYhq
+ vAEO7KzwG41NLuqfZ2tij+itfXxT0w94mD1mn4Mx7YpCEilH9htsFaDcqG6RQ==
+X-Google-Smtp-Source: AGHT+IEphIKRacdpP9GL0UPoOORwd4uTb2MjBdA58LKP/8ejPBdlRvDayYBC42hJF+UWsb5s5Z9jUA==
+X-Received: by 2002:a05:622a:229a:b0:460:a82a:39a8 with SMTP id
+ d75a77b69052e-467952d3566mr7580861cf.13.1733934683415; 
+ Wed, 11 Dec 2024 08:31:23 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.31.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:57 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:31:23 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 42/49] rust: qom: rename Class trait to ClassInitImpl
-Date: Wed, 11 Dec 2024 17:27:12 +0100
-Message-ID: <20241211162720.320070-43-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Cc: qemu-arm@nongnu.org,
+	Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 09/69] target/arm: Convert PAC[ID]*, AUT[ID]* to decodetree
+Date: Wed, 11 Dec 2024 10:29:36 -0600
+Message-ID: <20241211163036.2297116-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,104 +98,239 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While at it, document it.
+This includes PACIA, PACIZA, PACIB, PACIZB, PACDA, PACDZA, PACDB,
+PACDZB, AUTIA, AUTIZA, AUTIB, AUTIZB, AUTDA, AUTDZA, AUTDB, AUTDZB.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- rust/hw/char/pl011/src/device.rs |  4 ++--
- rust/qemu-api/src/definitions.rs | 25 ++++++++++++++++++++++---
- rust/qemu-api/tests/tests.rs     |  4 ++--
- 3 files changed, 26 insertions(+), 7 deletions(-)
+ target/arm/tcg/translate-a64.c | 173 +++++++++------------------------
+ target/arm/tcg/a64.decode      |  13 +++
+ 2 files changed, 58 insertions(+), 128 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 3d173ae816d..bd12067aaf0 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -117,7 +117,7 @@ pub struct PL011Class {
-     _inner: [u8; 0],
- }
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 552b45b4e2..852545dfcc 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7764,6 +7764,35 @@ static void gen_cls32(TCGv_i64 tcg_rd, TCGv_i64 tcg_rn)
+ TRANS(CLZ, gen_rr, a->rd, a->rn, a->sf ? gen_clz64 : gen_clz32)
+ TRANS(CLS, gen_rr, a->rd, a->rn, a->sf ? tcg_gen_clrsb_i64 : gen_cls32)
  
--impl qemu_api::definitions::Class for PL011Class {
-+impl qemu_api::definitions::ClassInitImpl for PL011Class {
-     const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
-         Some(crate::device_class::pl011_class_init);
-     const CLASS_BASE_INIT: Option<
-@@ -650,7 +650,7 @@ pub struct PL011LuminaryClass {
-     }
- }
- 
--impl qemu_api::definitions::Class for PL011LuminaryClass {
-+impl qemu_api::definitions::ClassInitImpl for PL011LuminaryClass {
-     const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
-         None;
-     const CLASS_BASE_INIT: Option<
-diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
-index 92b3c6f9118..3291f4242ce 100644
---- a/rust/qemu-api/src/definitions.rs
-+++ b/rust/qemu-api/src/definitions.rs
-@@ -20,8 +20,27 @@ pub trait ObjectImpl {
-     const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
- }
- 
--pub trait Class {
-+/// Trait used to fill in a class struct.
-+///
-+/// Each QOM class that has virtual methods describes them in a
-+/// _class struct_.  Class structs include a parent field corresponding
-+/// to the vtable of the parent class, all the way up to [`ObjectClass`].
-+/// Each QOM type has one such class struct.
-+///
-+/// The Rust implementation of methods will usually come from a trait
-+/// like [`ObjectImpl`].
-+pub trait ClassInitImpl {
-+    /// Function that is called after all parent class initialization
-+    /// has occurred.  On entry, the virtual method pointers are set to
-+    /// the default values coming from the parent classes; the function
-+    /// can change them to override virtual methods of a parent class.
-     const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)>;
++static bool gen_pacaut(DisasContext *s, arg_pacaut *a, NeonGenTwo64OpEnvFn fn)
++{
++    TCGv_i64 tcg_rd, tcg_rn;
 +
-+    /// Called on descendent classes after all parent class initialization
-+    /// has occurred, but before the class itself is initialized.  This
-+    /// is only useful if a class is not a leaf, and can be used to undo
-+    /// the effects of copying the contents of the parent's class struct
-+    /// to the descendants.
-     const CLASS_BASE_INIT: Option<
-         unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void),
-     >;
-@@ -82,8 +101,8 @@ macro_rules! type_info {
-             instance_finalize: <$t as $crate::definitions::ObjectImpl>::INSTANCE_FINALIZE,
-             abstract_: <$t as $crate::definitions::ObjectImpl>::ABSTRACT,
-             class_size:  ::core::mem::size_of::<<$t as $crate::definitions::ObjectImpl>::Class>(),
--            class_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_INIT,
--            class_base_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::Class>::CLASS_BASE_INIT,
-+            class_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::ClassInitImpl>::CLASS_INIT,
-+            class_base_init: <<$t as $crate::definitions::ObjectImpl>::Class as $crate::definitions::ClassInitImpl>::CLASS_BASE_INIT,
-             class_data: ::core::ptr::null_mut(),
-             interfaces: ::core::ptr::null_mut(),
-         };
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index f793ff26e5d..704c63c846f 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -7,7 +7,7 @@
- use qemu_api::{
-     bindings::*,
-     c_str, declare_properties, define_property,
--    definitions::{Class, ObjectImpl},
-+    definitions::{ClassInitImpl, ObjectImpl},
-     device_class, device_class_init,
-     zeroable::Zeroable,
- };
-@@ -60,7 +60,7 @@ impl ObjectImpl for DummyState {
-         const PARENT_TYPE_NAME: Option<&'static CStr> = Some(device_class::TYPE_DEVICE);
-     }
++    if (a->z) {
++        if (a->rn != 31) {
++            return false;
++        }
++        tcg_rn = tcg_constant_i64(0);
++    } else {
++        tcg_rn = cpu_reg_sp(s, a->rn);
++    }
++    if (s->pauth_active) {
++        tcg_rd = cpu_reg(s, a->rd);
++        fn(tcg_rd, tcg_env, tcg_rd, tcg_rn);
++    }
++    return true;
++}
++
++TRANS_FEAT(PACIA, aa64_pauth, gen_pacaut, a, gen_helper_pacia)
++TRANS_FEAT(PACIB, aa64_pauth, gen_pacaut, a, gen_helper_pacib)
++TRANS_FEAT(PACDA, aa64_pauth, gen_pacaut, a, gen_helper_pacda)
++TRANS_FEAT(PACDB, aa64_pauth, gen_pacaut, a, gen_helper_pacdb)
++
++TRANS_FEAT(AUTIA, aa64_pauth, gen_pacaut, a, gen_helper_autia)
++TRANS_FEAT(AUTIB, aa64_pauth, gen_pacaut, a, gen_helper_autib)
++TRANS_FEAT(AUTDA, aa64_pauth, gen_pacaut, a, gen_helper_autda)
++TRANS_FEAT(AUTDB, aa64_pauth, gen_pacaut, a, gen_helper_autdb)
++
+ /* Logical (shifted register)
+  *   31  30 29 28       24 23   22 21  20  16 15    10 9    5 4    0
+  * +----+-----+-----------+-------+---+------+--------+------+------+
+@@ -8373,134 +8402,6 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+ #define MAP(SF, O2, O1) ((SF) | (O1 << 1) | (O2 << 7))
  
--    impl Class for DummyClass {
-+    impl ClassInitImpl for DummyClass {
-         const CLASS_INIT: Option<unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut c_void)> =
-             Some(dummy_class_init);
-         const CLASS_BASE_INIT: Option<
+     switch (MAP(sf, opcode2, opcode)) {
+-    case MAP(1, 0x01, 0x00): /* PACIA */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacia(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x01): /* PACIB */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacib(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x02): /* PACDA */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacda(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x03): /* PACDB */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacdb(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x04): /* AUTIA */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autia(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x05): /* AUTIB */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autib(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x06): /* AUTDA */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autda(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x07): /* AUTDB */
+-        if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autdb(tcg_rd, tcg_env, tcg_rd, cpu_reg_sp(s, rn));
+-        } else if (!dc_isar_feature(aa64_pauth, s)) {
+-            goto do_unallocated;
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x08): /* PACIZA */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacia(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x09): /* PACIZB */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacib(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0a): /* PACDZA */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacda(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0b): /* PACDZB */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_pacdb(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0c): /* AUTIZA */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autia(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0d): /* AUTIZB */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autib(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0e): /* AUTDZA */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autda(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+-    case MAP(1, 0x01, 0x0f): /* AUTDZB */
+-        if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+-            goto do_unallocated;
+-        } else if (s->pauth_active) {
+-            tcg_rd = cpu_reg(s, rd);
+-            gen_helper_autdb(tcg_rd, tcg_env, tcg_rd, tcg_constant_i64(0));
+-        }
+-        break;
+     case MAP(1, 0x01, 0x10): /* XPACI */
+         if (!dc_isar_feature(aa64_pauth, s) || rn != 31) {
+             goto do_unallocated;
+@@ -8530,6 +8431,22 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+     case MAP(1, 0x00, 0x04):
+     case MAP(0, 0x00, 0x05): /* CLS */
+     case MAP(1, 0x00, 0x05):
++    case MAP(1, 0x01, 0x00): /* PACIA */
++    case MAP(1, 0x01, 0x01): /* PACIB */
++    case MAP(1, 0x01, 0x02): /* PACDA */
++    case MAP(1, 0x01, 0x03): /* PACDB */
++    case MAP(1, 0x01, 0x04): /* AUTIA */
++    case MAP(1, 0x01, 0x05): /* AUTIB */
++    case MAP(1, 0x01, 0x06): /* AUTDA */
++    case MAP(1, 0x01, 0x07): /* AUTDB */
++    case MAP(1, 0x01, 0x08): /* PACIZA */
++    case MAP(1, 0x01, 0x09): /* PACIZB */
++    case MAP(1, 0x01, 0x0a): /* PACDZA */
++    case MAP(1, 0x01, 0x0b): /* PACDZB */
++    case MAP(1, 0x01, 0x0c): /* AUTIZA */
++    case MAP(1, 0x01, 0x0d): /* AUTIZB */
++    case MAP(1, 0x01, 0x0e): /* AUTDZA */
++    case MAP(1, 0x01, 0x0f): /* AUTDZB */
+         unallocated_encoding(s);
+         break;
+     }
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 410eaa9333..9083ac4ac3 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -699,6 +699,19 @@ REV64           1 10 11010110 00000 000011 ..... .....  @rr
+ CLZ             . 10 11010110 00000 000100 ..... .....  @rr_sf
+ CLS             . 10 11010110 00000 000101 ..... .....  @rr_sf
+ 
++&pacaut         rd rn z
++@pacaut         . .. ........ ..... .. z:1 ... rn:5 rd:5  &pacaut
++
++PACIA           1 10 11010110 00001 00.000 ..... .....  @pacaut
++PACIB           1 10 11010110 00001 00.001 ..... .....  @pacaut
++PACDA           1 10 11010110 00001 00.010 ..... .....  @pacaut
++PACDB           1 10 11010110 00001 00.011 ..... .....  @pacaut
++
++AUTIA           1 10 11010110 00001 00.100 ..... .....  @pacaut
++AUTIB           1 10 11010110 00001 00.101 ..... .....  @pacaut
++AUTDA           1 10 11010110 00001 00.110 ..... .....  @pacaut
++AUTDB           1 10 11010110 00001 00.111 ..... .....  @pacaut
++
+ # Logical (shifted reg)
+ # Add/subtract (shifted reg)
+ # Add/subtract (extended reg)
 -- 
-2.47.1
+2.43.0
 
 
