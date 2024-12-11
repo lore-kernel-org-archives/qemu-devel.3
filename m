@@ -4,140 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07832E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:42:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0931BE77182
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLWKv-0004aL-1O; Wed, 11 Dec 2024 18:41:45 -0500
+	id 1tLWO6-0006MR-Cn; Wed, 11 Dec 2024 18:45:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tLWKq-0004Xv-W5
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:41:41 -0500
-Received: from mail-dm3nam02on2046.outbound.protection.outlook.com
- ([40.107.95.46] helo=NAM02-DM3-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tLWKm-0007sP-Hd
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:41:39 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ua02P7KKslqVOiXj1fKiMmxW5WHe6WxLhJQje4FLOZLfk2nR2CYcT+ANTE1Ry6yJMvW/EUqFcOOTvdLxJyDXCua/z69Q/h3BY9PR9kcLax4I0LckIwaPCOgqGhJfizlOHl3rdNZMNpk1snXQJYe5PLg+Jq2ANdQ1u+g4wGq+OGVJMqcuKGZght5aTSpUYHGNPiJXJo1GO6unSYIQJD3v4V4pgDBpIoDIyIWacDyO7kTi9T1Nv4NDcm1TICfG53PxdGm4lL8xDYIKKhIWQzeqsWXGTi4D4Ue1BOti7njIeNqJyXlAaCywu+UJQ1ytcyyZKsYk9Vx0WgLUyf2io6DseA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dy7D2UX/lA0Ew5ynAsKDHR3iv/ZZ7NkfuaNY18wADMg=;
- b=HTyAFRX5A7rkdT728JUMDoBKeJ8RX/doD2AzEcjw2hUbuLcOfy3wGXT0aT/WAVss10Fs1Q6fKLRyrtZ5HPXAMNbZUfynV+UZzb5J0y6oq5EeALGxbmSiYpUeNTS9qFgUwiERXc1QvHFDfoC8wb0jRyOrfC5J7aoBPQ0g7YYd9f7uoDFFMEk7j5+zdNHas6B2Y2Dgm3A5ghGeD7XYu3PqL4uvAxHfQJrr2wTUxkzr/j1y9vEeEfd+7uCDtdeCVfQ26EYJeeOD386+Le8yi9/0eLgPOu1O++I1vs7jl0OIDqp/AoKFQQCE0f/0iosBQm2ecpEDqSY9yByoJnYR/fr2qA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dy7D2UX/lA0Ew5ynAsKDHR3iv/ZZ7NkfuaNY18wADMg=;
- b=BzwoxQaUrbl+k7O2A0cOHXDZP8ewK0VhuZPy4DiLUbnb/lsnQxndUE5MBpNr523Cqnamf5BZsOT8LpEbdW9nUXW3zMlNbN9wJrf/CnD5r5w1joKQdNO3KVPlP0fDXH8LfLjww34IbXEUb4KR91yZuv+C2BDZLh7AjYRtk1m/LcY=
-Received: from BL1PR13CA0353.namprd13.prod.outlook.com (2603:10b6:208:2c6::28)
- by PH0PR12MB7930.namprd12.prod.outlook.com (2603:10b6:510:283::7)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8230.20; Wed, 11 Dec
- 2024 23:36:18 +0000
-Received: from BL02EPF0001A101.namprd05.prod.outlook.com
- (2603:10b6:208:2c6:cafe::8d) by BL1PR13CA0353.outlook.office365.com
- (2603:10b6:208:2c6::28) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.10 via Frontend Transport; Wed,
- 11 Dec 2024 23:36:17 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- BL02EPF0001A101.mail.protection.outlook.com (10.167.241.132) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8251.15 via Frontend Transport; Wed, 11 Dec 2024 23:36:17 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 11 Dec
- 2024 17:36:16 -0600
-Content-Type: text/plain; charset="utf-8"
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLWO5-0006Lw-FT
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:45:01 -0500
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLWO3-0000JL-At
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:45:01 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3eb5a870158so11288b6e.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:44:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733960697; x=1734565497; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=asBsdveSZXJzlahZnC9uRiEsUztlvSZanJRY5LQF3x0=;
+ b=TiAZcglCc3HtIVuqnL0OMLDx3LH+uhYyWFxZPGK37SRRwafB+51mvTVxRC6qUqVMC7
+ Hdm1SSufGGieB7MjWIffy6QcMV23x1hPrWkqJznGlOr/o4+13vgwCdr9pfHlPbo3DhC9
+ mCXvpJY1MB8KoblrfytuHkpqPoUAvlE7Rh8U5aSwYvyFPV/Ou3sE7IgNqg/d0ESg1iIo
+ GfiSdFyartJSDpMRRZHd6u5OTsL+wa8tMddgOpNQmdKaS7lbd+t5LpwZglqeM0jdaabb
+ Z6QH5jOGdWQLvXlQwHrMpOlN8fz6L8ZTrtnPT9NC1aphn8FPu7/Y/pmWwzj3VI3MSl2q
+ rv0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733960697; x=1734565497;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=asBsdveSZXJzlahZnC9uRiEsUztlvSZanJRY5LQF3x0=;
+ b=ehD3lWDqzWtksaQzXUQyANo8dBdXJK5C/0QSgmShxwXsR/Uopnj/pzc/AscphVoUpz
+ mS5cd2zLlrfSEvg68SJmHK8IQTgbrvRAeOYnD8keHD1iZys1rFm9y3mXA9ckk3j172EM
+ y6sv6oUTS5SaFrBhSshw8QBafsUNN0CRIjBQev/ZCVAPhSsCn3/cfFbbnGS3iucSIW/r
+ 2n+zZDvhEW332vVGuQXkmcSIgVcJXakc9zJPdtga12gLM7TgCYAim1HosPjZPb7QJQSp
+ hDF60/7+dwoHVXB/jq7SjjKLI4KQYlqyaVi9It8nR6e9jCppGiDlxH+DrGHdX/wtD5fZ
+ E+Eg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDbL2E8e38jSmpgTmZdg8Os7f864uT1A0Ka9t70LQJORGTHkObFXXbMF6XUdSz5tcNIpdEM9ADWKcu@nongnu.org
+X-Gm-Message-State: AOJu0Yw0mL2QgaxQd4go0EonEn7u2Cif+mg93Ysga6sa7tqr7Pqt0npT
+ eIZyGhDM/yS987u+IzN1y8aG4N/CZAJaPT8yvsoKFNwKq2nblUGYsdAxQmDkE6E=
+X-Gm-Gg: ASbGncuCmUeDuyUBJgqnoXFwhaBkWCnMFk9rX1sfGadLB3xFLZHTcjZ6ZtibuF711Dm
+ ITvbazV0DHi4Sw9uGtkESmEcgnhuat6ZkUQQIcOdSAnVX6wqRH2L4/8TXKl52svtA/h+JK/YrmA
+ vbd7fNxvFh4WcFJ9ys7VCg55sA/N+cHPtMZotmWEMeKwuMcx0I3ngShds0+DPuLEPrYe2laM1+Z
+ cKfQWfYPzgSjUXY5ihb7x2VdxFIKW5WtCNP874HaHncXOEzDQcPZDG0+HnpzWEpWPlE9KAoBO9O
+ /vI7gdK9tf8CgQ0uTRrlhUfFRL7JDmKX
+X-Google-Smtp-Source: AGHT+IFSJi2U6RRv+Fg3HiqgkNlcdrW/zbk5PrhzrFXYTVVkKilwEzzIsSFpsjLVqcxki92N0M3qZg==
+X-Received: by 2002:a05:6871:7bc2:b0:297:285e:f824 with SMTP id
+ 586e51a60fabf-2a3823b5f24mr1150446fac.10.1733960697379; 
+ Wed, 11 Dec 2024 15:44:57 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29f715d7daasm3707234fac.35.2024.12.11.15.44.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Dec 2024 15:44:56 -0800 (PST)
+Message-ID: <5c279d58-7da2-4428-9414-488475668505@linaro.org>
+Date: Wed, 11 Dec 2024 17:44:53 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Subject: [ANNOUNCE] QEMU 9.2.0 is now available
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Dec 2024 17:36:00 -0600
-Message-ID: <173396016084.690778.14513056087610218483@amd.com>
-User-Agent: alot/0.9
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A101:EE_|PH0PR12MB7930:EE_
-X-MS-Office365-Filtering-Correlation-Id: cd83f4c0-ad8a-4873-9d8d-08dd1a3c9c04
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|36860700013|82310400026|376014; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTVuaFlmRlJDQ3FzcjlTLzE2V3lUTmZRZkRRd2R3alpjdXdUUzE1dzJDaEYx?=
- =?utf-8?B?cUNTWkQ5SW15LzNWTXc4cmw1aFFkMkhxL0w1blJ6NThoeTFyUU5lWW5kd2E3?=
- =?utf-8?B?YXUvbG04SXl0L0FUcXJrWTZGSWQ0OXJTWXg0TGNKUGVIQU9KV1BEWXd5TVpI?=
- =?utf-8?B?REFyQmVaODRoeGhGWDJyWjdrODJObHB2QWpIWWZHbjR0cmYrL3VKbUpDNHlM?=
- =?utf-8?B?V2FVdHlQYTRUQmR0Q2pINUZzaWdTOGlheFNFRXVvNWY1WVhwdzBBY3JQc21p?=
- =?utf-8?B?Q05yOEFiYVdHZzBhRDlCb3c2elV4cVdKQ0lpczNqaXlzdmhWY2F2ZUZJcDVG?=
- =?utf-8?B?eWRGU3FQMGpyekhWQkdYby9GYkNsMG1tejBGTVU0SmhGS1JGOVBrcFB1aFFx?=
- =?utf-8?B?Y0VEdGd5c2E2cW0xOGdJL1BGa0dnLzU4N1F6SlFuclZLcTNvUVpPTnRwQlJ1?=
- =?utf-8?B?T1RNRkt3Wks3d3A5NEFUclJxdnQ5MDhtb1czTEdXMk5mblM3NCtWbEdhaUQv?=
- =?utf-8?B?a3VOS3g5WXJILzdZQUpMbVVYQ1dxN0U2Mjg0TElONWo1a0JZbi9xNkpwVUNq?=
- =?utf-8?B?UmNCcWExSDU1S1JxSndWSHcvMWF1N0crMDlhZVgzeXJFTHJ5QzRocVR2WjY4?=
- =?utf-8?B?SkR6ck5rN05nZGdScE9hMC9WYnJXd2NnMm1tQ3p6RWpHR1J1R2doQjRZdys2?=
- =?utf-8?B?QlJPRzJqMDYwL3JwR2dtSXQ2R3JaUlpjQ2N6YUNHSVpMVWYzbG9kMWhUcTZP?=
- =?utf-8?B?Q1A3NTg5SmJseWdMQVp0bmpmTDY1TzQxdGZaQlZaVTZFejNyZGNXQTk2anBq?=
- =?utf-8?B?WE5TVy9BRzJzMlpOTVZiR3E1YTZDU1ovbVlzRElDUWZxYlpVUDR4dmVRNGg1?=
- =?utf-8?B?UkVVUzgyVVNSdVZaSG9RZzQvblR1SllqeXRvVDdSNkxpNVp6UVBPbFFoWjgv?=
- =?utf-8?B?Y25sUE5BUDlHcmJ0Q1B6bHZ0ZTErUi94cW02amd0VWFWVmtHU2ZXQ25FL1Mw?=
- =?utf-8?B?bVAvbE1VTmxzRERCVDJ5LzdMc1hXWXlsdGQ5aVlkZ2l2UGRGNERBVlllb2k3?=
- =?utf-8?B?WGloa2E5SnFQbTB0T2hDeStpWExSTmcxSmJ5MHBodVZibjJsS0lZMWdoODZr?=
- =?utf-8?B?NnhCcUZWZDJBajAvWlQ2WWFxYjc4TjBYcXlxRWxMV1Zkb0RuVHhZbGJ5L1hV?=
- =?utf-8?B?UEZUdmJIWDgyY1JNYm1xZ0tKeVFka1FlOGUrcGNjQm0zNk4xSEV1Y01tTUV2?=
- =?utf-8?B?bklsQ2pNOEJLZ001NVRSVm83U1R2M3R1VDJaajZXYTBycjNiSW40QytTclYr?=
- =?utf-8?B?UTY3b1hsTnhMWEpWQWw1MGtPQk5DLzI4OHNDZmlCSHFBcHNqMjJLSnFQYkN1?=
- =?utf-8?B?QlRqWGM4SlhjeG5qZnBRUUxTMUJIY2VEMmhGd3JTQUxFUXIzc0R4KzJnbWtG?=
- =?utf-8?B?bEJmV2UvKzgwWGtmSzBBZGtnOVdpdk9zSmE1dVkrU2JsenVNaWt2VHJBOEdN?=
- =?utf-8?B?TVpTWVZOQVIvS1FHN3RwSlY5UUZHenR0ZlEzM2JaOTBzTkdEV29vdTg0YUJ5?=
- =?utf-8?B?WmlvSkxBNk9xd3dtWHdZWFFpNDJHd0ZDbnByeGNseGJrZFdhbmNNVnA0bkJm?=
- =?utf-8?B?STQzcHY1M3RoY1ljNW4zVjB3VXFlcDhqbHNha1lQV0I4MUIrR0hQV3ZGL1No?=
- =?utf-8?B?OGo2c3orRTdPU0FmTm1zN1Y0eC93ZnU3cnozR1ZDQzhPMDRSNkxLYnl3WFRJ?=
- =?utf-8?B?ZUtDdUlqR3VDY0JBZWJGOWlZV05GY2VNN0FjQy9xV2psdkdkZ0ZNS0krSURp?=
- =?utf-8?B?NXZ2RTFOUXdrcG5PeFdqNXNSQXlINXNNMUg5QmtFRTNONVVPRFF2VURRalEz?=
- =?utf-8?B?QVgwMjYvcHNKK2NXeFgxcjJzSCtDNGFLMS9IN0puMEJYQ2c9PQ==?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(36860700013)(82310400026)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2024 23:36:17.3605 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: cd83f4c0-ad8a-4873-9d8d-08dd1a3c9c04
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A101.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB7930
-Received-SPF: permerror client-ip=40.107.95.46;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM02-DM3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/9] target/xtensa: Remove tswap() calls in semihosting
+ simcall() helper
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20241211230357.97036-1-philmd@linaro.org>
+ <20241211230357.97036-2-philmd@linaro.org>
+ <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,51 +107,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello,
+On 12/11/24 17:08, Philippe Mathieu-Daudé wrote:
+> On 12/12/24 00:03, Philippe Mathieu-Daudé wrote:
+>> In preparation of heterogeneous emulation where cores with
+>> different endianness can run concurrently, we need to remove
+>> the tswap() calls -- which use a fixed per-binary endianness.
+>>
+>> Get the endianness of the CPU accessed using the libisa
+>> xtensa_isa_is_big_endian() call and replace the tswap() calls
+>> by bswap() ones when necessary.
+> 
+> Instead read here:
+> 
+>    In preparation of heterogeneous emulation where cores with
+>    different endianness can run concurrently, replace the pair
+>    of cpu_memory_rw_debug() + tswap() calls by put/get_user_u32()
+>    ones, which still do the same under the hood, but simplify the
+>    code maintenance (having less sites to do endianness code
+>    conversion).
+> 
+>> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-On behalf of the QEMU Team, I'd like to announce the availability of
-the QEMU 9.2.0 release. This release contains 1700+ commits from 209
-authors.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-You can grab the tarball from our download page here:
 
-  https://www.qemu.org/download/#source
-
-The full list of changes are available at:
-
-  https://wiki.qemu.org/ChangeLog/9.2
-
-Highlights include:
-
- * virtio-gpu: support for 3D acceleration of Vulkan applications via
-   Venus Vulkan driver in the guest and virglrenderer host library
- * crypto: GLib crypto backend now supports SHA-384 hashes
- * migration: QATzip-accelerated compression support while using
-   multiple migration streams
- * Rust: experimental support for device models written in Rust (for
-   development use only)
-
- * ARM: emulation support for FEAT_EBF16, FEAT_CMOW architecture
-   features
- * ARM: support for two-stage SMMU translation for sbsa-ref and virt
-   boards
- * ARM: support for CPU Security Extensions for xilinx-zynq-a9 board
- * ARM: 64GB+ memory support when using HVF acceleration on newer Mac
-   systems
- * HPPA: SeaBIOS-hppa v17 firmware with various fixes and enhancements
- * RISC-V: IOMMU support for virt machine
- * RISC-V: support for control flow integrity and Svvptc extensions,
-   and support for Bit-Manipulation extension on OpenTitan boards
- * RISC-V: improved performance for vector unit-stride/whole register
-   ld/st instructions
- * s390x: support for booting from other devices if the previous ones
-   fail
- * x86: support for new nitro-enclave machine type that can emulate
-   AWS Nitro Enclave and can boot from Enclave Image Format files.
- * x86: KVM support for enabling AVX10, as well as enabling specific
-   AVX10 versions via command-line
-
- * and lots more...
-
-Thank you to everyone involved!
+r~
 
