@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F1DFE77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:22:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C5AE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPRk-00008F-Db; Wed, 11 Dec 2024 11:20:20 -0500
+	id 1tLPSc-00016t-2f; Wed, 11 Dec 2024 11:21:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRg-000057-UX
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:17 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ id 1tLPSX-00014r-Hj
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:09 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPRf-0007au-8T
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:16 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3863703258fso521947f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:14 -0800 (PST)
+ id 1tLPSW-0007pn-01
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:09 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso5563285e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934013; x=1734538813; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934067; x=1734538867; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=SaE8qkAdKJuPj5dpI7bzFzLk3IAsCJj4Y7jMaT1vwOo=;
- b=Y0UzddCNBdudMRH/6kOi9EGqsTkhn0wlzwq3YZNFS93+lDctIQnFwFTg8tMR3UlVaT
- vUNO9CObSTRojQFaB/9Qt4V4pv7iMucdl1mUgWthGKI78YHIbUskVGOJ6vBdkT0raMWr
- uV+p/rCbxzgEEMHeBZ+QsgaBbCm8oLyX29BHNRbZfQzqWppQ0fI8o/65YgKc//zy+w85
- TH9YqC2JXKBPxuxGd0W/zalsv5KQ27qtfPKHpMb9B6Hi6P5PSV89xWY44mF7HYIhjmM8
- V80/d9wZluq/vhiBPly8HHTaqDFh499KX+eJ8rFaCJduKEpRtdIJjueiTlzbVALbqdwk
- ap/g==
+ :reply-to; bh=ugtcp/+++sWtSJ1G0yYLp/YnlSvG52c5wPGIqMMfBnk=;
+ b=EI5pQMr1/4+fc9qL2TtV9PbfCHi2k1xWzOsv0CW0zdx7QbBeugroDHhLvXKAjSlsiM
+ 9AR4vtiVm1pslW15XLpjAxdKpNAU+tYGaj9sZmn142n0iHzq0qHJ4y4nhbU3DhpG6+To
+ CTXbJQp/TXQ5i9kLuxNFRNDnUCBqYo7X81T88zWKK890u07EWaUiIIP78OlODEtQCGt4
+ pdp6yVGCAkd+zCE220NhdVkTcde9tsSecx31qoOv56wPFC20vNrBaxA53H3vC+jrZ2Fa
+ zw2xNMSmpVJXardY07qkN40Ub3SBrvTRbA69HKQXsl9WumVzMd231Vr8XtMZEPVcU/B8
+ CwZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934013; x=1734538813;
+ d=1e100.net; s=20230601; t=1733934067; x=1734538867;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=SaE8qkAdKJuPj5dpI7bzFzLk3IAsCJj4Y7jMaT1vwOo=;
- b=C/ZXQOENRZagjBs7kGDWgGZ8Jo5oJzjNweQm+53Cuq4XgTYpAYEWNZPENR8fRp7gQW
- gGM5/gdo5/EjUXAEXFPP6Vo4dE4+WQccbmUt/iDx9K3hI2LWIBAUW+BelxOGchJhSCHs
- jsH45UqlgGnyXWPzuDhFUcxh9IEvi1SRh8oEKpjar1sBedULH/OBZf0jyqsNdehUcuT3
- 4HmGxm0Edbxi4OJntAOF2fwyqdvuilHYCAT44npdc3oiKK4pjoWH0ujtk7lyqnjZOA6K
- xMZJgJhhIGHaeOskvX+Z8F6Y/GWKguAEI07yayaSSO+9fDe1v3m3A7M+mVOZpmINsrra
- dmCg==
-X-Gm-Message-State: AOJu0YwxfmdRjJSVQoTa3V6nB6q5aGPtpJTlAvlovOSd3g8pJiJMOdlg
- +ElCLirt7MC7f6OjLSFTIJr51Ig9vQ2jPcZVX2Dp3sWR56Jj8ae2EtqrZz2fJ3p7/TVaOXwvmIa
- /
-X-Gm-Gg: ASbGnct3ZoelyUzqw30hbigGgBK8hFlkAZ30eidvdO0Iz6mjIQJIzYRljdO5n2j2kNY
- Z7dSD5F/67Cq9vc3DN5JGil2ChMBAXRTq5NndyytrWGHUdRC+QzS2hqX/SSs6jUdRNI5cokdokC
- mNNfDgUe1HdeNNFlur57EYdpNrUgcr/9aRXj70JgVak5090tODBCIEQDPcThTas0OGyXLnnEHvw
- kHygolKi1mPKCsONxfZXY9BJ20fHteR9i99/tcIb2AEIt71XAeX/JVrwzKW
-X-Google-Smtp-Source: AGHT+IEFB4yAM9ACMxV8c51MI+npLqCg5Ko2Af/2JNy3ErgehvHYAeB3b0Dx+fuegtbZZPlop8DiFg==
-X-Received: by 2002:a5d:5f4a:0:b0:386:37f8:451c with SMTP id
- ffacd0b85a97d-3864de8ef5dmr3022550f8f.1.1733934013649; 
- Wed, 11 Dec 2024 08:20:13 -0800 (PST)
+ bh=ugtcp/+++sWtSJ1G0yYLp/YnlSvG52c5wPGIqMMfBnk=;
+ b=r8504lJycQL/uyhpflgJWDsfS33yzQqnDVEq9olv0rziii+RwJY6VLOpueG0hgYkDm
+ UusQd2Y+U7rt3KJuSFrbWCyD13+L0egwy7iIpeQpH3mWI9TmKsGeTjHgOOsU4gED/A3Z
+ Ey4rXJ/QJlOp5pMYz2Vf4pwEFYUNyQJawAjkW3dRVWfAuh1j23U1EF9Y9I2k7H8sg23O
+ fC/wTDnlwN/KcP3FsWMolR4orHAPZWFJndELS4C/gyXd09jbphUnxlUPX/AtxkHdXllb
+ o9rbsfJlQe05K7l+5CVaNcq/EZeHJhudchsixLX23HbAQGCcusGyfSU9Fskdetvt614Y
+ gpOA==
+X-Gm-Message-State: AOJu0YwYoRmzO7e0ilPnMoeHvKkWUfO8XB7Ff52ZHJGewEIgYvVbgAYb
+ OsMqRfQwceT2a89AOTAsKVboil5KKBuvviAHwqZroU3enmcsTf0l2HDcpzEJv2g86Ngiqk2wvia
+ 6
+X-Gm-Gg: ASbGncuDfgKyC+MyZ6qO+agGEbkvHtIXwSeFsurIdzuBBeOPG6ADnrSw8iC+eb3Hup/
+ 6qSPEy2b81wF604llfFeffpfR1OFWW7NEdplh9Gn91aaBZlYEXyrx5TBgurb5oXG7g8MF9AOBxx
+ 9bRcAY9g4BtCCJFbWgecvbUnYBfsXySY+eUApMJUGHjzTbkFnLEcxvRcac0PgYXr5cyPtGNYeJS
+ Sh6+ruX4brCU3Ryq/Jlow9+J8GY5aXH7rcsBV0ojeqcryhlF1A8hjPnaqF3
+X-Google-Smtp-Source: AGHT+IHMmrNjBQKmiT5rg7Y2Wbnn06mxx+QvUxc4VYq53zXyRFnP5NZ/S/65803KHQGUC7v3KzuuLg==
+X-Received: by 2002:a05:600c:468c:b0:434:9936:c823 with SMTP id
+ 5b1f17b1804b1-4361c387b63mr28773025e9.18.1733934066682; 
+ Wed, 11 Dec 2024 08:21:06 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.12
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.05
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:12 -0800 (PST)
+ Wed, 11 Dec 2024 08:21:06 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/72] hw/net/lan9118_phy: Add missing 100 mbps full duplex
- advertisement
-Date: Wed, 11 Dec 2024 16:18:57 +0000
-Message-Id: <20241211162004.2795499-6-peter.maydell@linaro.org>
+Subject: [PULL 52/72] target/sh4: Set default NaN pattern explicitly
+Date: Wed, 11 Dec 2024 16:19:44 +0000
+Message-Id: <20241211162004.2795499-53-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,36 +97,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Set the default NaN pattern explicitly for sh4. Note that sh4
+is one of the only three targets (the others being HPPA and
+sometimes MIPS) that has snan_bit_is_one set.
 
-The real device advertises this mode and the device model already advertises
-100 mbps half duplex and 10 mbps full+half duplex. So advertise this mode to
-make the model more realistic.
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Tested-by: Guenter Roeck <linux@roeck-us.net>
-Message-id: 20241102125724.532843-6-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241202131347.498124-47-peter.maydell@linaro.org
 ---
- hw/net/lan9118_phy.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/sh4/cpu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
-index 874dae4155a..5c53a4a1e3f 100644
---- a/hw/net/lan9118_phy.c
-+++ b/hw/net/lan9118_phy.c
-@@ -110,8 +110,8 @@ void lan9118_phy_write(Lan9118PhyState *s, int reg, uint16_t val)
-         break;
-     case MII_ANAR:
-         s->advertise = (val & (MII_ANAR_RFAULT | MII_ANAR_PAUSE_ASYM |
--                               MII_ANAR_PAUSE | MII_ANAR_10FD | MII_ANAR_10 |
--                               MII_ANAR_SELECT))
-+                               MII_ANAR_PAUSE | MII_ANAR_TXFD | MII_ANAR_10FD |
-+                               MII_ANAR_10 | MII_ANAR_SELECT))
-                      | MII_ANAR_TX;
-         break;
-     case 30: /* Interrupt mask */
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index 8f07261dcfd..d5008859b8e 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -127,6 +127,8 @@ static void superh_cpu_reset_hold(Object *obj, ResetType type)
+     set_flush_to_zero(1, &env->fp_status);
+ #endif
+     set_default_nan_mode(1, &env->fp_status);
++    /* sign bit clear, set all frac bits other than msb */
++    set_float_default_nan_pattern(0b00111111, &env->fp_status);
+ }
+ 
+ static void superh_cpu_disas_set_info(CPUState *cpu, disassemble_info *info)
 -- 
 2.34.1
 
