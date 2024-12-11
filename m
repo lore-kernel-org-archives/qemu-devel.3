@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3C69E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053A9E77183
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZg-0006gu-90; Wed, 11 Dec 2024 11:28:32 -0500
+	id 1tLPZW-0005D6-Ip; Wed, 11 Dec 2024 11:28:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZb-0005vc-3c
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:27 -0500
+ id 1tLPZR-0004SF-61
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZY-0000UC-An
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:26 -0500
+ id 1tLPZP-0000RD-6W
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934502;
+ s=mimecast20190719; t=1733934494;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bMNv818zenKVONf1gqy04t1JiQM7iMZxJ0aY8hZ0cSo=;
- b=OB7yc/Eg2KlWLRuNOB58bCiQenneF/2zsiCeKgMhNAfdVP1t3l97o8J+vHUtwpnIi1g1oG
- II/AKAQNREN0+zaeRq4d/uqlZDPGbEXD3rv36MOs2Q2knl091uzuC5tjDiM2MOxXPbtgjz
- Mg3hHeJ5tpCYZtcgFgcyS0GMy8T7uKo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=iRzo14bKpEKjmhkHIMTDgnInrU+hYkam34e6roO9xNA=;
+ b=DUFTkZX4645VLOw6m7WB7B3jU5HKqUG8LgDbA7nqYQcOv+vNpq+LP0+4e323WOWXFSMPEP
+ heDpN9uS7tnTkSTmYgeJ1VqsxdC73dKSPcI5SCaaJjo7fpOdnCEwSnfmy/CWuSDFLVhlkF
+ tKtUPPpdw/oNIwi5wlqk/u/OorGJxXs=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-383-jUWiuBwvP6yEw8SjtPXzGA-1; Wed, 11 Dec 2024 11:28:21 -0500
-X-MC-Unique: jUWiuBwvP6yEw8SjtPXzGA-1
-X-Mimecast-MFC-AGG-ID: jUWiuBwvP6yEw8SjtPXzGA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38629a685fdso2281645f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:20 -0800 (PST)
+ us-mta-549-DlHRnKxoNTWm4DY7x3OG0A-1; Wed, 11 Dec 2024 11:28:13 -0500
+X-MC-Unique: DlHRnKxoNTWm4DY7x3OG0A-1
+X-Mimecast-MFC-AGG-ID: DlHRnKxoNTWm4DY7x3OG0A
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa67f18cb95so389719966b.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:13 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934498; x=1734539298;
+ d=1e100.net; s=20230601; t=1733934492; x=1734539292;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bMNv818zenKVONf1gqy04t1JiQM7iMZxJ0aY8hZ0cSo=;
- b=QbgRbID7wQwW7A/QQIZ1+WKwyDa3MI8FYDKsneWL2gFFMlHQGiGPzCgw1Cv+1ONygf
- peLgRJU4BmqBIepDqhvQTxVnwluECizL0xfbOUC/9WCmAkO2yxVIDshKWdBS8MPawDqt
- h3GIMoTjPqMAoxEf/LLMBlRuame579bb+zYNhS/94hlPi4CGk3GwARxkJ6Yv1aJk2Ixf
- UuOqDASihNFxRveGz7LS4mgX7GHeC9Kn6JXB0LrZOU/RVI/z4ohKqckhM8Mvr/ONotoW
- HSK/DWFVN8PndnHfrmUQCXEcpxbs93HzpgWUSWZPKHrtuNHugtHNzJQz+Onb/K9q5GSV
- fkYw==
-X-Gm-Message-State: AOJu0Yxfv4sulBC1K6/VpOm3XW4scQp0ESB3vvu9rHz//vZhaRJU3YmH
- o6IEdkqA1s0a8vYXFvzoyubunuWBuHodPuZPcja0GvrUGMcId/LVL852mUaB/U0cqfZTe201/Sk
- pXKevnoO63KCUXy1doh5INdPrA1mDhADpZfNxfH6v6AFZHxJz3B2S6Nkrt0P19VoGZm3sQYgsU0
- nEo/9bDU6mNBAwKclOH4aFwLCcAbodYQWHDCoC
-X-Gm-Gg: ASbGncvqan+ATFk+B/jy4GkbbJe+vlyAP/lZiPatQ6PzzCAspRKkrjB6EwO2nhh2Sms
- Q+7K5NzWJzdGdmPCtETrR0z4SIiN8khpF405+JHQM0NwjzMypjlxT7gAdc8cQ2KjjZZzKFkCbJk
- IbUD187bhdNIn1F9Fc8ZDhUfVGbES6x61QOvf5SVWvDTzRpMrmgZAU0lKVau428CVZzgBvct6GK
- XqGDoGPizUI0bYSEgUZJ4lk/xYR8zNCsxFz5qLamO4/UmHtaP2+PqaD
-X-Received: by 2002:a05:6000:1788:b0:385:f3fb:46aa with SMTP id
- ffacd0b85a97d-3864ce98548mr3374575f8f.43.1733934498435; 
- Wed, 11 Dec 2024 08:28:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEEojMbeZara4Y3arn7jlKvJ4yaL8Hv5d6W4fvlWcZX6EOBhakXlzgGIkFA3FSQlwtBftXElA==
-X-Received: by 2002:a05:6000:1788:b0:385:f3fb:46aa with SMTP id
- ffacd0b85a97d-3864ce98548mr3374549f8f.43.1733934498042; 
- Wed, 11 Dec 2024 08:28:18 -0800 (PST)
+ bh=iRzo14bKpEKjmhkHIMTDgnInrU+hYkam34e6roO9xNA=;
+ b=Qxpkh6+IHPvdgDI5nLFvhj+HB8aI3J+wURvdaDTP5WgyIgquTHgd+Ibt8DeUNI3N7D
+ OGYzexWxhQ86ZczodI2CygBHmh2rPhTZzvVhvExJrydh2+PeziWbkoINxpJBRh34DAlm
+ AMr+ic9IQQfF3V8kMYXsbNzI0b3kJ96WDyBCnTcVLIPnGctT3GW70k/tpzGPY+jkwKeF
+ kDORk3ZzRZaTDUsetcuKGhI3uBmAdJALuGfr0YJt5LcN1hFAgeTaKy6RT0oYwziQ5K0S
+ IioPI7D3odv4FN2tTVSKcn1Mxwhoafq6Ybi2Dju6dWZ1tr51bT1V1dXdTNuQvF892i1h
+ 9FYg==
+X-Gm-Message-State: AOJu0YxWr6iB4Xn9zpD/YIp7dw6ltxzDKGgTd1Qs2Ac1Ey66WFcLsQL1
+ XUF79xR4NDMXzU+e7jGD/VVvp9DnZkgUsb2XGVzm0E07tK6FeVijwM5qnDhMfiHHxLcN8KhEnaE
+ vOW2fnwU/7W4zK0yTd+V44Is8dQAyxzkC6hBQtzjtT9AodAfo3ifQst0Ho4TD89jAQds6mypvui
+ 2T8t23UeDs66t6lyg8s1VRptYKbYD9EaXM2nKU
+X-Gm-Gg: ASbGncspu0MdpwI5NCsHu4UTB9dSPpNdU5WAYJ9dWHd572SCxDDqerImaXDsOVoxh/H
+ AFFxC2UrtX4bKsrflzvdpI7HJLVEVve5HUaqiIChSw7G1QR72LYUzngikZOOlKU9VVOLmv/Xzn1
+ b5/SuGaX5ckEZBMCtHfGYlvma2ahoVDZ2fhsEGrL65R+k94A5zJbArXosx6AUqXwbX3zBRHsmr1
+ BgIufE+1mIErkE8edZRMYkDUqcZXhYL4e/vv1jJb74YxsZXQ2Ggi6kh
+X-Received: by 2002:a17:906:2932:b0:aa6:8b4a:46a0 with SMTP id
+ a640c23a62f3a-aa6b13faabdmr362863366b.57.1733934491830; 
+ Wed, 11 Dec 2024 08:28:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEPUb7kRnCbfIIenlBIwvT9AgcRApJp1EKww8eqMa/62iY9Td5ZUPZk14Tr/+no9VStT4ssXg==
+X-Received: by 2002:a17:906:2932:b0:aa6:8b4a:46a0 with SMTP id
+ a640c23a62f3a-aa6b13faabdmr362860166b.57.1733934491386; 
+ Wed, 11 Dec 2024 08:28:11 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514e54sm1641825f8f.85.2024.12.11.08.28.16
+ a640c23a62f3a-aa698e922dasm381842566b.84.2024.12.11.08.28.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:16 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:10 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 23/49] hw/rtc: Replace type_register() with
+Subject: [PULL 20/49] hw/block: Replace type_register() with
  type_register_static()
-Date: Wed, 11 Dec 2024 17:26:53 +0100
-Message-ID: <20241211162720.320070-24-pbonzini@redhat.com>
+Date: Wed, 11 Dec 2024 17:26:50 +0100
+Message-ID: <20241211162720.320070-21-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -115,35 +115,21 @@ type_register() will be deprecated.
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241029085934.2799066-6-zhao1.liu@intel.com
+Link: https://lore.kernel.org/r/20241029085934.2799066-3-zhao1.liu@intel.com
 ---
- hw/rtc/m48t59-isa.c | 2 +-
- hw/rtc/m48t59.c     | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/block/m25p80.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
-index 6e9723fdf19..b642b82680d 100644
---- a/hw/rtc/m48t59-isa.c
-+++ b/hw/rtc/m48t59-isa.c
-@@ -161,7 +161,7 @@ static void m48t59_isa_register_types(void)
-     for (i = 0; i < ARRAY_SIZE(m48txx_isa_info); i++) {
-         isa_type_info.name = m48txx_isa_info[i].bus_name;
-         isa_type_info.class_data = &m48txx_isa_info[i];
--        type_register(&isa_type_info);
-+        type_register_static(&isa_type_info);
-     }
- }
- 
-diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
-index 48846d8df40..90299ea56fe 100644
---- a/hw/rtc/m48t59.c
-+++ b/hw/rtc/m48t59.c
-@@ -679,7 +679,7 @@ static void m48t59_register_types(void)
-     for (i = 0; i < ARRAY_SIZE(m48txx_sysbus_info); i++) {
-         sysbus_type_info.name = m48txx_sysbus_info[i].bus_name;
-         sysbus_type_info.class_data = &m48txx_sysbus_info[i];
--        type_register(&sysbus_type_info);
-+        type_register_static(&sysbus_type_info);
+diff --git a/hw/block/m25p80.c b/hw/block/m25p80.c
+index e2e84f8b5f8..748594524e3 100644
+--- a/hw/block/m25p80.c
++++ b/hw/block/m25p80.c
+@@ -1894,7 +1894,7 @@ static void m25p80_register_types(void)
+             .class_init = m25p80_class_init,
+             .class_data = (void *)&known_devices[i],
+         };
+-        type_register(&ti);
++        type_register_static(&ti);
      }
  }
  
