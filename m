@@ -4,71 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A567E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:11:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36780E77182
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPIn-00065h-6e; Wed, 11 Dec 2024 11:11:05 -0500
+	id 1tLPRy-0000FL-0M; Wed, 11 Dec 2024 11:20:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPId-00060w-VH
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:10:58 -0500
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
+ id 1tLPRu-0000DL-71
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:30 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPIa-00062E-PQ
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:10:54 -0500
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e396c98af22so5480463276.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:10:52 -0800 (PST)
+ id 1tLPRs-0007gt-4L
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:29 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-434a852bb6eso66240395e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733933452; x=1734538252; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ri/rJcY2OsF3Um/lTb90olwlZF8mOOn/4u8PAnArNJo=;
- b=f2KBmxvFNHhzf1/QPew8l3Hw9nWrbIL+3iJoHNapKgAkg1QLrluluFDN0mfpoE9WLt
- bhDV//cHRpHhbQqGUtiYfgTB70hV+q8x3VHjKEBoq8Otfq7sOShyPnh4qfqLXB4dykxF
- k+ksTC4EycNTqBmhVcW5IGf/DbOo8ld2xWq0H2VMZFvmHm2uAsqkj3DPAFO33VThDNd+
- dHCrkgdRnBxcoS6tpneTtdCRG+qIN29N6uBmV8Jv6pfvCfMXD33HJdVZ3u6iHD7+3mYa
- uc9ntlMcrHaJjbq3Jdi5E4CflffosyRh6Zdn3cZbR3goDJ1LtLfiTqsD0VFJS0+JLyjv
- NgLw==
+ d=linaro.org; s=google; t=1733934026; x=1734538826; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=CQjRicSg/XdHnvLYpOYP7psZ4EG5XIl4wxja3fhCd1M=;
+ b=Bhh0bEpME3bKFrEtMe+SBaQYO6t/Epy8JMJjA/L5AJ3SPQN+dmvFzb73oyeL2VOepR
+ WkFxnnsJ/35nQfUe6RjtAohlH45ekjmxG9kQaVB1nOMVFmA57Mmtm9P1oT2sZmhuuFY6
+ v3g2V0ZkeVP4upRmtzoSgrrb6wSmRdgdrqjScRhXderCP75T6K+jCCENayLpUXnLJkus
+ GTzPIbivolsA/WGr2EADz0pye9ZDjI+BQPFcJz0XAU9hUfI5SofWLWqhmzeDjXOxcWWZ
+ 7RvtZHcggvioDLgbJnn4YmyWs6ZH1jmvkABCPw0gG1AXPAtrKjAKzjpHlYO2Z7lP6L3I
+ cFNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733933452; x=1734538252;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ri/rJcY2OsF3Um/lTb90olwlZF8mOOn/4u8PAnArNJo=;
- b=kHz+/IGlyZeBJnrYBjpU68KL09zALZ0iGlHPq90Pxs0Wi4sn24Ra305gH90NFXwvk2
- EVbeJ9v947R3wg0SrMe/2MKTVdjqkf3Xx+XCrAHZGpd2JItSCpQAwAJURcwD3jRr+IPC
- mE8+MS+voX0JPf91Suh8wUhbnSGyFw2WQyOzNKSxtw0duoirOJKd/lKskHHcahcPU2rV
- pbEIUmtV7LvqotV8qhRyec6aDDAwKrh0ZGRvV7xhW6dCRPD7m8TNkX6ua6LVMkNzqzxF
- wZ2nJ7zQpR6951ftPLQa/G9TdWCuBKz5sojQSRj8k1LSnbtmxNRPX2Od1+qmaDP/WJk8
- iQwA==
-X-Gm-Message-State: AOJu0YxfwDOjjXsazf+FcpDcYYnBRdE+szE97Qm7Xw07FR6RB0FVN8Ha
- NsZAMs2kr/KbTZLoiHPfu6UfQHGo0GM1qpSVQ0GYjjowjbp3IhMIG9zZhqHs8AqeRW0LaYhDjuf
- jE9j7HliMPY/pIPggD39jDRb3onxb5u93WxhQlQ==
-X-Gm-Gg: ASbGncuEqusNHbtwoJ8r5Tsu+ZQqlxR83Xj5GlQPrl6p8rsIIjc0C7JQEQ45qX96qiM
- d7nHI9ldS+wWHTYSXoyGX3CeVV00wvUZjjg6Q
-X-Google-Smtp-Source: AGHT+IHtspY+hLHo5Yt5oKYPtfb2YISwicz4ZF4c/vjIiE0x04GseQ3+/Pmf6OUso2DlDy0lGT4dCG8xoq9vOLBgIcE=
-X-Received: by 2002:a05:6902:20c2:b0:e38:87bf:8e65 with SMTP id
- 3f1490d57ef6-e3c8e221f33mr3782069276.0.1733933451704; Wed, 11 Dec 2024
- 08:10:51 -0800 (PST)
-MIME-Version: 1.0
-References: <20241210161733.1830573-1-richard.henderson@linaro.org>
- <20241210161733.1830573-69-richard.henderson@linaro.org>
-In-Reply-To: <20241210161733.1830573-69-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1733934026; x=1734538826;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CQjRicSg/XdHnvLYpOYP7psZ4EG5XIl4wxja3fhCd1M=;
+ b=Ozyuy7T3rY8vuBiOcWyM9+sLzdLirZcQkDaDikvk63Cin4ct2HOY+7AEUqEatKpAWF
+ 3XWSE+EeFvs+3pthZuFDxdwfAUwM7v6Jng4U0EkPF4pM7YpbD42oYvUMICNayuWry1s+
+ nAW+Js4fWT4wNVtCljRHou8iCeYVkAYvI7K9M5oJknmPxHdB0PKs4r+J1apTzTsea72I
+ 8a1eC07Ez63FYNOHYm21vOL0ELlnGlaWsnC0yF0y9ug8Pm/IQhJvIeM77D9knxAwWscT
+ 3qkRSW7yO/PNsCCsf/Z4gHAP5aoGfLHx2JhzBuAmSpXdeXDiNOtzegmKERUY2zRZlzAN
+ Ilew==
+X-Gm-Message-State: AOJu0YysuS2PyXM3vunLK8/WX8qHCoYQzS5iZPPncoi/bvNU2RZyd71g
+ Uq/gK/9i2kfct6XwW8Gd1xX1wFPs/YF9q26AWFauPqvW2hnlRLcqQlCBqkWKz3zkEXJbLn3SmMt
+ Z
+X-Gm-Gg: ASbGnctadv6rQ3zzRUURV3V/qKT+CFN2iXRWum2Nf8gxr++5ouc8JtkiOFYJaKCltit
+ kgT/8eZQxKE8Wdmy+W75TshhVq0LP2z9o0D7g8aDlC5z+3DcuzLFhg5uioYBSGsbAj0SJlYSokk
+ Oa2OUSb9vAKqks7TMt3YkSGQnNydWmFfKnFxNvZ36S+PSyDWGpoetOn4A/GvDMac0kpSLcEgEGh
+ ssZA2H0cJQ4qE1V0ssZHeCUQ7c8tuQqKGAL/9ljVuWDUFhw0ERKlnbPj35U
+X-Google-Smtp-Source: AGHT+IGKkyCTGismVk1cmEz9ugWa/XTFjU+N/gh5NKLd5yjFhRDEPhNDifYAagPiN4abwtKPyxxBaw==
+X-Received: by 2002:a05:600c:4e4b:b0:434:a0bf:98ea with SMTP id
+ 5b1f17b1804b1-4361c35cc4bmr27283155e9.9.1733934026456; 
+ Wed, 11 Dec 2024 08:20:26 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.25
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 08:20:25 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Dec 2024 16:10:40 +0000
-Message-ID: <CAFEAcA9ZvNbFXoYA8nqX2Pd-BxePaF6zxFL2z=4f=w4APsMiXQ@mail.gmail.com>
-Subject: Re: [PATCH v2 68/69] target/arm: Convert URECPE and URSQRTE to
- decodetree
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
+To: qemu-devel@nongnu.org
+Subject: [PULL 15/72] target/xtensa: Set FloatInfZeroNaNRule explicitly
+Date: Wed, 11 Dec 2024 16:19:07 +0000
+Message-Id: <20241211162004.2795499-16-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
+References: <20241211162004.2795499-1-peter.maydell@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,17 +97,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Dec 2024 at 16:25, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> Remove handle_2misc_reciprocal as these were the last
-> insns decoded by that function.
->
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
+Set the FloatInfZeroNaNRule explicitly for the xtensa target,
+so we can remove the ifdef from pickNaNMulAdd().
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241202131347.498124-11-peter.maydell@linaro.org
+---
+ target/xtensa/cpu.c            | 2 ++
+ fpu/softfloat-specialize.c.inc | 2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-thanks
--- PMM
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 6f9039abaee..3163b758235 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -133,6 +133,8 @@ static void xtensa_cpu_reset_hold(Object *obj, ResetType type)
+     reset_mmu(env);
+     cs->halted = env->runstall;
+ #endif
++    /* For inf * 0 + NaN, return the input NaN */
++    set_float_infzeronan_rule(float_infzeronan_dnan_never, &env->fp_status);
+     set_no_signaling_nans(!dfpu, &env->fp_status);
+     xtensa_use_first_nan(env, !dfpu);
+ }
+diff --git a/fpu/softfloat-specialize.c.inc b/fpu/softfloat-specialize.c.inc
+index 7e57e85348b..3062d19402d 100644
+--- a/fpu/softfloat-specialize.c.inc
++++ b/fpu/softfloat-specialize.c.inc
+@@ -489,7 +489,7 @@ static int pickNaNMulAdd(FloatClass a_cls, FloatClass b_cls, FloatClass c_cls,
+         /*
+          * Temporarily fall back to ifdef ladder
+          */
+-#if defined(TARGET_XTENSA) || defined(TARGET_HPPA) || \
++#if defined(TARGET_HPPA) || \
+     defined(TARGET_I386) || defined(TARGET_LOONGARCH)
+         /*
+          * For LoongArch systems that conform to IEEE754-2008, the (inf,zero,nan)
+-- 
+2.34.1
+
 
