@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22580E77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:30:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E997E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 17:32:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLQUz-0005uj-2J; Wed, 11 Dec 2024 12:27:45 -0500
+	id 1tLQVQ-0007PR-6x; Wed, 11 Dec 2024 12:28:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUt-0005no-St
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tLQVO-0007H9-Ad
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:10 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLQUr-00019j-RG
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:27:38 -0500
+ id 1tLQVM-0001Fy-SG
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 12:28:10 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733938057;
+ s=mimecast20190719; t=1733938088;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qb8V/aQYbLIrxdTuncepi3lH2bYt4JVi2kewINYlyDI=;
- b=JGBnsFArHLGDwnWnlomL5sO2tMH4QjlCFm+nNkr+x1DRyx0SUML29CDLkqLuaVT/XNmn8P
- 28nVTkKenvAAI826dkCoDmCpVRjfN4FWqDUTmiswCmufHdEyl/E4XGmDsU8oLVnLoTavaE
- NyxngTKWuuVeemgxoOaJFT9Xj0x0n1g=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=nioRd6M+Uzwz4yo+fCuaFy8NqnPE9AyRUsyusqHVRWA=;
+ b=OCZTXDz251QE63zzhhcnhPXB1RoGxNFxgb+lJVfryAlLh/AAPKLNKq0WOZiY8h5YDH+HR+
+ /PTecsgboikTK6FkG6ddHmNT3FoIC7N+uK0uUyiWxFuScLcS1lUpY5DxgJZ5NXHDtqVctM
+ TXW4sTFmKqrLGarefBRrCAp5KRyd+Mo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-313-4ZRq53XHNPylUTFwLipGSQ-1; Wed,
- 11 Dec 2024 12:27:35 -0500
-X-MC-Unique: 4ZRq53XHNPylUTFwLipGSQ-1
-X-Mimecast-MFC-AGG-ID: 4ZRq53XHNPylUTFwLipGSQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-5D2KRfdIPl6hMxdv4dOggA-1; Wed,
+ 11 Dec 2024 12:28:05 -0500
+X-MC-Unique: 5D2KRfdIPl6hMxdv4dOggA-1
+X-Mimecast-MFC-AGG-ID: 5D2KRfdIPl6hMxdv4dOggA
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A428619560B3; Wed, 11 Dec 2024 17:27:34 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EBEF81956061; Wed, 11 Dec 2024 17:28:03 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.49])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7A2931956048; Wed, 11 Dec 2024 17:27:32 +0000 (UTC)
+ id F3FE71956048; Wed, 11 Dec 2024 17:28:01 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v2 14/31] tests/functional: switch over to using
- self.socket_dir(...)
-Date: Wed, 11 Dec 2024 17:26:30 +0000
-Message-ID: <20241211172648.2893097-15-berrange@redhat.com>
+Subject: [PATCH v2 25/31] tests/functional: add 'uncompress' to QemuBaseTest
+Date: Wed, 11 Dec 2024 17:26:41 +0000
+Message-ID: <20241211172648.2893097-26-berrange@redhat.com>
 In-Reply-To: <20241211172648.2893097-1-berrange@redhat.com>
 References: <20241211172648.2893097-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -88,34 +87,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This removes direct creation of temporary dirs
+This helper wrappers utils.uncompress, forcing the use of the scratch
+directory, to ensure any uncompressed files are cleaned at test
+termination.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_arm_aspeed.py | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tests/functional/qemu_test/testcase.py | 25 +++++++++++++++++++++++++
+ 1 file changed, 25 insertions(+)
 
-diff --git a/tests/functional/test_arm_aspeed.py b/tests/functional/test_arm_aspeed.py
-index 9561129c51..5bd31e43ee 100755
---- a/tests/functional/test_arm_aspeed.py
-+++ b/tests/functional/test_arm_aspeed.py
-@@ -9,7 +9,6 @@
- import os
- import time
- import subprocess
--import tempfile
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 19fb1d0c07..684c94d45f 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -29,6 +29,7 @@
+ from .asset import Asset
+ from .cmd import run_cmd
+ from .config import BUILD_DIR
++from .uncompress import uncompress
  
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
-@@ -226,7 +225,7 @@ def test_arm_ast2600_evb_buildroot_tpm(self):
  
-         tpmstate_dir = self.scratch_file('swtpmstate')
-         os.mkdir(tpmstate_dir)
--        socket_dir = tempfile.TemporaryDirectory(prefix="qemu_")
-+        socket_dir = self.socket_dir()
-         socket = os.path.join(socket_dir.name, 'swtpm-socket')
+ class QemuBaseTest(unittest.TestCase):
+@@ -40,6 +41,30 @@ class QemuBaseTest(unittest.TestCase):
+     log = None
+     logdir = None
  
-         # We must put the TPM state dir in /tmp/, not the build dir,
++    '''
++    @params compressed: filename, Asset, or file-like object to uncompress
++    @params format: optional compression format (gzip, lzma)
++
++    Uncompresses @compressed into the scratch directory.
++
++    If @format is None, heuristics will be applied to guess the format
++    from the filename or Asset URL. @format must be non-None if @uncompressed
++    is a file-like object.
++
++    Returns the fully qualified path to the uncompessed file
++    '''
++    def uncompress(self, compressed, format=None):
++        self.log.debug(f"Uncompress {compressed} format={format}")
++        if type(compressed) == Asset:
++            compressed.fetch()
++
++        (name, ext) = os.path.splitext(str(compressed))
++        uncompressed = self.scratch_file(os.path.basename(name))
++
++        uncompress(compressed, uncompressed, format)
++
++        return uncompressed
++
+     '''
+     @params archive: filename, Asset, or file-like object to extract
+     @params format: optional archive format (tar, zip, deb, cpio)
 -- 
 2.46.0
 
