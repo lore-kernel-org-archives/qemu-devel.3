@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 873D8E77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED5B9E7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPSE-0000NX-PZ; Wed, 11 Dec 2024 11:20:50 -0500
+	id 1tLPRi-000068-8H; Wed, 11 Dec 2024 11:20:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPSA-0000L7-GS
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:46 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tLPRg-0008Vz-Fn
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:16 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tLPS8-0007kM-QX
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:46 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso13109345e9.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:44 -0800 (PST)
+ id 1tLPRe-0007ad-DS
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:20:16 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3862b364538so534419f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:20:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934043; x=1734538843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733934013; x=1734538813; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=lRJiit52f5redlFxi2z3tbKksS9bryLnGPt7oPWvzf4=;
- b=WpFfEk0rPbrsbyKKT5O8ghIn+v419hyksvspTIqLrw1G8tXQ6aw3jValVKRqmOdatw
- 14asKTgKUQGQlTqAd6UbvNTWMsqgtuzyebQxfOcK+/S+vlEdOykMpUhtxSvyqmk/3Auf
- +n+K9wCDf8U+3/JuegwsO+UkYtAI1aUGHeDGLmKzKt1X9Qi/NAkt3KOmBn8rTBWnPmqU
- CBJENw0ccF4eN/UwcqFkUnaqNJ9gzc4btZANdg7Qm4R32VdygSrD+e/yuR0kgnAZAPKN
- 5igqYT3pKnV54Ag0ITUI5tglJrJBrMT8dPM1tXEhcoDoXjOyGv0ufdIEx0I0AdD7Rihf
- q7BQ==
+ :reply-to; bh=0WGriA4LS3QsH5lw3Ak1RT7ziiVmWhZi2ZbsQKrrgFY=;
+ b=xd2sH6bJ8TAa5nj4+/CdNKN7h2wptfxPrUWmngd9i9TN061XYPu333ajdTqcyvOcf7
+ GgnKMxFk7EbdXVyjz84WG6GfMsEtcQZiKAdIy1p+6PzlnhpRE/sElifSHdMBE9gqPPBE
+ 1lviUcgq4aGkpZUF87T1hAKNp2SBzr78QEAHHPnDWsf0Nn++yLCkxxNPiX2CYVUP6BWX
+ 2JJkshoXkK1iMwsbAYuSZWoFps4hgkJ//9mP/hnoSxOa0NWKQVJHTAqwXQ+yuBNcWyEz
+ ejNfLShMtI0gvDmU5S3AvP/UYF8guGPt3pfkQ069FO26G99VYzvA4NG8qJf6YTFWKAQK
+ sRSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934043; x=1734538843;
+ d=1e100.net; s=20230601; t=1733934013; x=1734538813;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lRJiit52f5redlFxi2z3tbKksS9bryLnGPt7oPWvzf4=;
- b=SnuFZEq1vnhvFQP2lgN/jkGO8mCOfuCVB+SYLCIi/QUq5FY4enVUkjGTsj+Bq4kg7W
- 2HmDPIraPz4qaGXwm8TqAr6l1kjIS4yhGIzeVsSUNYSGuOdgiesVOUUFjrjjR0u+yc+4
- /1yLk9Z9/6kJmXtMgwBIFoo0vMNqQ9GkEf1i91pA7uKB5VlqXHYjjqEDAyeDdlfbkKVr
- XHMTUlpaLiJsTwjNC9/4hYfjOMy9fWihP3XYuS8crDtkbCLf2JsFvbUqk3ptxRyLfpi9
- 5tv3ZuJgs56Zr2HqOy38NuS3ZLFHbT7IDgIsilS6tP1PnsZJUqv8xF0sI4MY+uv5+L6t
- oOlQ==
-X-Gm-Message-State: AOJu0Yy6oHk9YqzKEbcj/zeBZJrR9zqlRshI5ZLUWxrBYjVosAG4BErj
- b921j145kGXJe2HbU7ZhvCEUVufZekng5CQ+OX8/3BABqca3DqVHOrXGsuXqBL37ktYKE27jS9a
- o
-X-Gm-Gg: ASbGncs2yHv+H1pDLHeR+7Pn0c6L+J+zhL8sBQAlz4facsCiTbMLKeh56+jEYEfOwS0
- JIHunRXFptW00vEKCJmCN3elPGnAZRRWrTPUxQaD+5HTphJI+n7SexhfxbkPFP1AD4/ebrejEQr
- wsW7Yh9CpXEIo54t2S75bqT1CSbyTSaViqWNJAne6Q4Uqz27Rv7I5xL6svxmg7IY6k6BG/qwvJx
- CduVtyU7mjL8oAYjz09rYZOzTBZ52OAm5xtyWePtTV975R8TnFPy71whqdm
-X-Google-Smtp-Source: AGHT+IEIqQMUMC0Nwx+cFm3rDUovTqBfmGq/iSOyqalSgzGVrTHBYb5LRHb7XRT4v/5+2fwPhLFdfw==
-X-Received: by 2002:a05:600c:1d20:b0:434:a529:3b87 with SMTP id
- 5b1f17b1804b1-4361c36f5ccmr34039695e9.10.1733934043288; 
- Wed, 11 Dec 2024 08:20:43 -0800 (PST)
+ bh=0WGriA4LS3QsH5lw3Ak1RT7ziiVmWhZi2ZbsQKrrgFY=;
+ b=squyPkNjGHsVN5zT+VgS0GXWJvlJeGPpDhIzqnrtJuN8VKRQcILrSTR4zNuCIEDDNv
+ HAytNzP22prSbcL7OH9sPtXUfOldbLmLjVwaWLZgK8g9xnb4VlR7YSiPV69aQtZzI9gy
+ t6bMNYi1PSRBVsnr87bb61Drg86AHWr5a0WQKvVslnLe0uiRqLcQXaVtMwbo83CWTx83
+ 4whS43tlAlRtbOPG2l9/RgOcbglf4/0wlThyP08QjTUWNdHxT3S3P+do7AdzY1B6cPQJ
+ aAo7Ydys7b7ZRjceVj2SkEpB2TlDb1YGmjy05X0vH2+N7JPSHau2Bh6U8h5HDP/4p0HX
+ szeA==
+X-Gm-Message-State: AOJu0YwERl96RlhAEV2sOotHLcWlZbbvov4O8BvIULnsjztM14SaDN1Q
+ G0GboK/DtT3/JLCVjk4DhBz8fcVlfOvfk1SY7cw9maoSP5K4vsIh0LHrVGIB8bZNsUuZQBZek8N
+ Q
+X-Gm-Gg: ASbGncvvjiTlzJPuvYhtx+sh9VARjmwWcZVhb0wjbhXwlC+65gVGY+aAZI1DsWM4wEB
+ zYw1xeXhWKzRsNF4m7Pk1Wdz2FCGrozCn4Q1QNW0aDqLyaUnjFo+bYLvKt+xmxBbuL1qQGs5D8x
+ gOsshacStlgaN5YbDMZ4FO6qgHc0169Y/7Ia0KdKcBi5Goof+kzuzkqItP2D4MXqmKtPTe9VLyn
+ ge0UrtIxrlO05mJAWkR/uAIpt8Eva2GY8nxWUeqAsfoUVqtEYLe9c1LHnIS
+X-Google-Smtp-Source: AGHT+IExs0Ecp2q/kTobX6qkcX2TSXmu1V2m36Myf0N+kL3eW4OxJ/lknQF8UdQqkwg2z3p7Na8+BA==
+X-Received: by 2002:a05:6000:1f85:b0:386:3672:73e4 with SMTP id
+ ffacd0b85a97d-3864df05fc5mr2365077f8f.26.1733934012634; 
+ Wed, 11 Dec 2024 08:20:12 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.42
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.20.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:20:42 -0800 (PST)
+ Wed, 11 Dec 2024 08:20:11 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 31/72] fpu: Remove use_first_nan field from float_status
-Date: Wed, 11 Dec 2024 16:19:23 +0000
-Message-Id: <20241211162004.2795499-32-peter.maydell@linaro.org>
+Subject: [PULL 04/72] hw/net/lan9118_phy: Reuse MII constants
+Date: Wed, 11 Dec 2024 16:18:56 +0000
+Message-Id: <20241211162004.2795499-5-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
 References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,61 +97,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The use_first_nan field in float_status was an xtensa-specific way to
-select at runtime from two different NaN propagation rules.  Now that
-xtensa is using the target-agnostic NaN propagation rule selection
-that we've just added, we can remove use_first_nan, because there is
-no longer any code that reads it.
+From: Bernhard Beschow <shentey@gmail.com>
 
+Prefer named constants over magic values for better readability.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
+Message-id: 20241102125724.532843-5-shentey@gmail.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241202131347.498124-27-peter.maydell@linaro.org
 ---
- include/fpu/softfloat-helpers.h | 5 -----
- include/fpu/softfloat-types.h   | 1 -
- target/xtensa/fpu_helper.c      | 1 -
- 3 files changed, 7 deletions(-)
+ include/hw/net/mii.h |  6 +++++
+ hw/net/lan9118_phy.c | 63 ++++++++++++++++++++++++++++----------------
+ 2 files changed, 46 insertions(+), 23 deletions(-)
 
-diff --git a/include/fpu/softfloat-helpers.h b/include/fpu/softfloat-helpers.h
-index cf06b4e16bf..10a6763532c 100644
---- a/include/fpu/softfloat-helpers.h
-+++ b/include/fpu/softfloat-helpers.h
-@@ -113,11 +113,6 @@ static inline void set_snan_bit_is_one(bool val, float_status *status)
-     status->snan_bit_is_one = val;
- }
+diff --git a/include/hw/net/mii.h b/include/hw/net/mii.h
+index f7feddac9bd..55bf7c92a1c 100644
+--- a/include/hw/net/mii.h
++++ b/include/hw/net/mii.h
+@@ -71,6 +71,7 @@
+ #define MII_BMSR_JABBER     (1 << 1)  /* Jabber detected */
+ #define MII_BMSR_EXTCAP     (1 << 0)  /* Ext-reg capability */
  
--static inline void set_use_first_nan(bool val, float_status *status)
--{
--    status->use_first_nan = val;
--}
--
- static inline void set_no_signaling_nans(bool val, float_status *status)
- {
-     status->no_signaling_nans = val;
-diff --git a/include/fpu/softfloat-types.h b/include/fpu/softfloat-types.h
-index d9f0797edaf..84ba4ed20e6 100644
---- a/include/fpu/softfloat-types.h
-+++ b/include/fpu/softfloat-types.h
-@@ -309,7 +309,6 @@ typedef struct float_status {
-      * softfloat-specialize.inc.c)
-      */
-     bool snan_bit_is_one;
--    bool use_first_nan;
-     bool no_signaling_nans;
-     /* should overflowed results subtract re_bias to its exponent? */
-     bool rebias_overflow;
-diff --git a/target/xtensa/fpu_helper.c b/target/xtensa/fpu_helper.c
-index 4b1b021d824..53fc7cfd2af 100644
---- a/target/xtensa/fpu_helper.c
-+++ b/target/xtensa/fpu_helper.c
-@@ -59,7 +59,6 @@ static const struct {
++#define MII_ANAR_RFAULT     (1 << 13) /* Say we can detect faults */
+ #define MII_ANAR_PAUSE_ASYM (1 << 11) /* Try for asymmetric pause */
+ #define MII_ANAR_PAUSE      (1 << 10) /* Try for pause */
+ #define MII_ANAR_TXFD       (1 << 8)
+@@ -78,6 +79,7 @@
+ #define MII_ANAR_10FD       (1 << 6)
+ #define MII_ANAR_10         (1 << 5)
+ #define MII_ANAR_CSMACD     (1 << 0)
++#define MII_ANAR_SELECT     (0x001f)  /* Selector bits */
  
- void xtensa_use_first_nan(CPUXtensaState *env, bool use_first)
+ #define MII_ANLPAR_ACK      (1 << 14)
+ #define MII_ANLPAR_PAUSEASY (1 << 11) /* can pause asymmetrically */
+@@ -112,6 +114,10 @@
+ #define RTL8201CP_PHYID1    0x0000
+ #define RTL8201CP_PHYID2    0x8201
+ 
++/* SMSC LAN9118 */
++#define SMSCLAN9118_PHYID1  0x0007
++#define SMSCLAN9118_PHYID2  0xc0d1
++
+ /* RealTek 8211E */
+ #define RTL8211E_PHYID1     0x001c
+ #define RTL8211E_PHYID2     0xc915
+diff --git a/hw/net/lan9118_phy.c b/hw/net/lan9118_phy.c
+index d8fc9ddd3ac..874dae4155a 100644
+--- a/hw/net/lan9118_phy.c
++++ b/hw/net/lan9118_phy.c
+@@ -14,6 +14,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/net/lan9118_phy.h"
++#include "hw/net/mii.h"
+ #include "hw/irq.h"
+ #include "hw/resettable.h"
+ #include "migration/vmstate.h"
+@@ -38,26 +39,28 @@ uint16_t lan9118_phy_read(Lan9118PhyState *s, int reg)
+     uint16_t val;
+ 
+     switch (reg) {
+-    case 0: /* Basic Control */
++    case MII_BMCR:
+         val = s->control;
+         break;
+-    case 1: /* Basic Status */
++    case MII_BMSR:
+         val = s->status;
+         break;
+-    case 2: /* ID1 */
+-        val = 0x0007;
++    case MII_PHYID1:
++        val = SMSCLAN9118_PHYID1;
+         break;
+-    case 3: /* ID2 */
+-        val = 0xc0d1;
++    case MII_PHYID2:
++        val = SMSCLAN9118_PHYID2;
+         break;
+-    case 4: /* Auto-neg advertisement */
++    case MII_ANAR:
+         val = s->advertise;
+         break;
+-    case 5: /* Auto-neg Link Partner Ability */
+-        val = 0x0fe1;
++    case MII_ANLPAR:
++        val = MII_ANLPAR_PAUSEASY | MII_ANLPAR_PAUSE | MII_ANLPAR_T4 |
++              MII_ANLPAR_TXFD | MII_ANLPAR_TX | MII_ANLPAR_10FD |
++              MII_ANLPAR_10 | MII_ANLPAR_CSMACD;
+         break;
+-    case 6: /* Auto-neg Expansion */
+-        val = 1;
++    case MII_ANER:
++        val = MII_ANER_NWAY;
+         break;
+     case 29: /* Interrupt source. */
+         val = s->ints;
+@@ -92,19 +95,24 @@ void lan9118_phy_write(Lan9118PhyState *s, int reg, uint16_t val)
+     trace_lan9118_phy_write(val, reg);
+ 
+     switch (reg) {
+-    case 0: /* Basic Control */
+-        if (val & 0x8000) {
++    case MII_BMCR:
++        if (val & MII_BMCR_RESET) {
+             lan9118_phy_reset(s);
+         } else {
+-            s->control = val & 0x7980;
++            s->control = val & (MII_BMCR_LOOPBACK | MII_BMCR_SPEED100 |
++                                MII_BMCR_AUTOEN | MII_BMCR_PDOWN | MII_BMCR_FD |
++                                MII_BMCR_CTST);
+             /* Complete autonegotiation immediately. */
+-            if (val & 0x1000) {
+-                s->status |= 0x0020;
++            if (val & MII_BMCR_AUTOEN) {
++                s->status |= MII_BMSR_AN_COMP;
+             }
+         }
+         break;
+-    case 4: /* Auto-neg advertisement */
+-        s->advertise = (val & 0x2d7f) | 0x80;
++    case MII_ANAR:
++        s->advertise = (val & (MII_ANAR_RFAULT | MII_ANAR_PAUSE_ASYM |
++                               MII_ANAR_PAUSE | MII_ANAR_10FD | MII_ANAR_10 |
++                               MII_ANAR_SELECT))
++                     | MII_ANAR_TX;
+         break;
+     case 30: /* Interrupt mask */
+         s->int_mask = val & 0xff;
+@@ -131,11 +139,11 @@ void lan9118_phy_update_link(Lan9118PhyState *s, bool link_down)
+     /* Autonegotiation status mirrors link status. */
+     if (link_down) {
+         trace_lan9118_phy_update_link("down");
+-        s->status &= ~0x0024;
++        s->status &= ~(MII_BMSR_AN_COMP | MII_BMSR_LINK_ST);
+         s->ints |= PHY_INT_DOWN;
+     } else {
+         trace_lan9118_phy_update_link("up");
+-        s->status |= 0x0024;
++        s->status |= MII_BMSR_AN_COMP | MII_BMSR_LINK_ST;
+         s->ints |= PHY_INT_ENERGYON;
+         s->ints |= PHY_INT_AUTONEG_COMPLETE;
+     }
+@@ -146,9 +154,18 @@ void lan9118_phy_reset(Lan9118PhyState *s)
  {
--    set_use_first_nan(use_first, &env->fp_status);
-     set_float_2nan_prop_rule(use_first ? float_2nan_prop_ab : float_2nan_prop_ba,
-                              &env->fp_status);
-     set_float_3nan_prop_rule(use_first ? float_3nan_prop_abc : float_3nan_prop_cba,
+     trace_lan9118_phy_reset();
+ 
+-    s->control = 0x3000;
+-    s->status = 0x7809;
+-    s->advertise = 0x01e1;
++    s->control = MII_BMCR_AUTOEN | MII_BMCR_SPEED100;
++    s->status = MII_BMSR_100TX_FD
++                | MII_BMSR_100TX_HD
++                | MII_BMSR_10T_FD
++                | MII_BMSR_10T_HD
++                | MII_BMSR_AUTONEG
++                | MII_BMSR_EXTCAP;
++    s->advertise = MII_ANAR_TXFD
++                   | MII_ANAR_TX
++                   | MII_ANAR_10FD
++                   | MII_ANAR_10
++                   | MII_ANAR_CSMACD;
+     s->int_mask = 0;
+     s->ints = 0;
+     lan9118_phy_update_link(s, s->link_down);
 -- 
 2.34.1
 
