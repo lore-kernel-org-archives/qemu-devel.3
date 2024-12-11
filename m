@@ -4,103 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A1ACE7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:42:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84961E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 14:45:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLNuz-0005Yc-Rp; Wed, 11 Dec 2024 09:42:29 -0500
+	id 1tLNxJ-0006rY-6I; Wed, 11 Dec 2024 09:44:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1tLNuk-0005UF-DK
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:42:12 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
- id 1tLNug-0003dh-0a
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:42:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733928124;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Fie4e9/SqiKEIJ0BgBQG34M0q5HC6FdXlnKmBKvG7qI=;
- b=FIjU97VHdUOBFfeGZWUbHul0/jAwkfu59/MnbJCtUd/ttbBC4BdjhkRQqDV6PwEGhDibdO
- gJYA/vgkGNz/gXpwpXTTpMzNQk+9iSfDsQRG/7hlg5UI7xyqoiJf+qkh2JROkl9VPw0vaR
- zBrBmyeD+vt7BT/yq1fSRnC2ZGv+RUs=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-490-UKmlBJFsOV2yvTNG1dJU5Q-1; Wed, 11 Dec 2024 09:40:55 -0500
-X-MC-Unique: UKmlBJFsOV2yvTNG1dJU5Q-1
-X-Mimecast-MFC-AGG-ID: UKmlBJFsOV2yvTNG1dJU5Q
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3862c67763dso2921714f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 06:40:55 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLNxH-0006qo-RX
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:47 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLNxF-0003qk-8b
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 09:44:47 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-435004228c0so29576845e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 06:44:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733928284; x=1734533084; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=na2mVMXjYERuCY2HfRkKGK/haMymRcX2C110KFrsYNY=;
+ b=ORHtmYyBFOZWzDHgAV9xx+P1M6MDUsbQIUB47p41H7evCN0EU2NG6iRrZjrdkWk4Hu
+ 92He0QvuUtysAfPnCRM8ilmKSe960SYNgaohHC6Z2NGXkR9AgvJjWa/PyhaiI3LID2nj
+ RRpH/hmFvk2qGOSAjqRhK9JuI+tpu3yX+XKP2G2fBU5d3ZpVfDaV7KbMB7AHhJ/iuoio
+ bAToB2b2BbC52IOUyKW1/D9ycn4o+F0+FrOl0w6tmOO536pUF4WkyBtgwE8h/apsofVX
+ LbGc+zid7ExiYEa2MS0VcR2uBdQpc1s6wN/2TQWvX4/X5AZ5Ql6WWqXGgB0WfY+Fd7ca
+ TJGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733928054; x=1734532854;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Fie4e9/SqiKEIJ0BgBQG34M0q5HC6FdXlnKmBKvG7qI=;
- b=aSXeeCoqrpLx89mSGq0gek6dtJsT8g5LJPaG6ptKPFqaEV7WiLTDY22GcuYZIajT2C
- uuykGBUsN2G73fG3Iee4rW5E0E66be0XkdE4Tv3sPSM8e412dn/xBVZQvSwsztFH/vBz
- eda/wLsreTK12beMatzoV8TMlKx7RQLlXkksl4j/Fki3dCGrdBP2EaJlTvoJtTvVV7Uy
- fpGHsi1d//8UQptSVxK7+WxntgUjcSsmrDVYz0nhRqUvZGaPrX7gRGp5h8k2Y0wWZTyQ
- QmwS/yGOs4sZN2G6ASr4V2kpbN0BipK/ZYT0OxTQplLFJlqrNnVgyw5TOuA0eEtXLh4L
- a9FA==
+ d=1e100.net; s=20230601; t=1733928284; x=1734533084;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=na2mVMXjYERuCY2HfRkKGK/haMymRcX2C110KFrsYNY=;
+ b=ZWl42uJGcpeRaDJZN30OHp4t1EGxbC+AaFDVTR5h7Y/5kyKsH/53mjSSX5vCqzqAkD
+ QKDW2yldcligTQj4vCZLmcQEZnT71SyepXYuC77KSbpHbjQioYFE4eqG1GgJQ8fzIzMm
+ 15V3oIafCEtrNVfBrwRH+a0pzpUJXKHQcd+bZ8WooxQpZy8X7fnUmiPZsB/ESLOGvn4B
+ ICKrF/OTFooiBZoZl3mmwx3sRZKa4jJ4VYRrc82CkXnWGy/9LLpLKOZTuaTe6ysnE97n
+ xOJURSZNqBd0CEZrlHBRXcpMDM7OoFRBimdhlUh3I7dDOg6MvdrfQop0B2+0z17FJEQW
+ lijw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUfKQ7OgFEOWmQ1U/SHb8u5xhXg1TfPL7VqzUDjYDZwU3EcgcuFzD61Khlnm/BWlsrUU4YQ53EahuNs@nongnu.org
-X-Gm-Message-State: AOJu0YzH/69RqnOC6jsgTbZGhAT8RScf/LYxmriQiKWKt9ClmeqnQP2u
- I8R97ZZ6Mz/f0Me8zG8+LfiU3uYToAyBxZv6n/2oGW/38RCwXQ5s0CECe+h5t6CGBE5796OMk1r
- Y9QDBrpazWoNX9Ws5yqz1NeEVb9Sqap4Elxe8WaDfUTxyvq2MsvM1
-X-Gm-Gg: ASbGnctKGWTadS8WYcFycw2QysR+Gpv/IUwuX2gWk+mIFOBtCV9gptREmCt/LeEjK+M
- Wdx/tIedEK77wKaYTmcLLkCd4RGoVnSmNVL7EPavcsfxS1Hba3iBZwtvFeYyDugl+qeC2bM3U7g
- dRGToF1ivpmlAOAGaOPo4iZJcUP2VYBgcv+iam+RBBZydzRGRd72shEjn3Fbt04NscVAn6Xe5uu
- a+nlHYMWDQ4GHIyltdjF1CyvRVp76ITn3e4OFtnvnfH8jWAiE7ej5K0JnFTx7U74GZ2Biugda5F
- 5Dvxi8zZ5sn9Cl8Pm/GsbllCHsNom59mlt8=
-X-Received: by 2002:a5d:64a1:0:b0:385:ed1e:2105 with SMTP id
- ffacd0b85a97d-3864ce5f9b2mr2876451f8f.26.1733928054107; 
- Wed, 11 Dec 2024 06:40:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGP3/NfP0tU3DLmmvvWNBrQwhme/o4KGnD1KsbQ4zv9Ts/LEgigB5av0UEZVDiodvFxA6F5ZA==
-X-Received: by 2002:a5d:64a1:0:b0:385:ed1e:2105 with SMTP id
- ffacd0b85a97d-3864ce5f9b2mr2876416f8f.26.1733928053523; 
- Wed, 11 Dec 2024 06:40:53 -0800 (PST)
-Received: from [192.168.23.161] (92-184-116-132.mobile.fr.orangecustomers.net.
- [92.184.116.132]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43618fa49b6sm42217175e9.15.2024.12.11.06.40.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 06:40:52 -0800 (PST)
-Message-ID: <cc6d2f65-1d71-4a78-9a9a-0fe7d16957d5@redhat.com>
-Date: Wed, 11 Dec 2024 15:40:50 +0100
+ AJvYcCWlWbvE75JlGk2QjhuLq+KLcbNhJU4YXW02TSKYyfbxgv/CBtYK1vwvDdxmoDaUViEIFdHa/8uKIxnL@nongnu.org
+X-Gm-Message-State: AOJu0YxrQ+Fitlskqs+U5gLJ9OAS29vUFO1F3aagkvUd2WA9hE4rmh8M
+ kV8V9+IKio8YGub90TtVj9RjGA6P7gRZfCqy6LJ5JyHbwG5IgmO7wtR9KdkyvpQ=
+X-Gm-Gg: ASbGnctJQYIxsGGLgYidMkVKkO43mXhBgQEJ2vvHzj7bOWJB/52EXXmUAytPky+2Zzo
+ bscdrvqEsdFmKuCJUHCUTsZ8u7ebYaADkwrjQl/cjFA466QoPwpo8/2MIjA+MuL3/SZzMgN8v69
+ iVImHYgeMKXhv+OLJhj1eH53JMznGsiPwFgXXgmSzhuUhgixrX2WEHmQSsHBMYohRh4k1lc2alf
+ rohpwQkjZQmePMjN6T+opTHffkamoKoLyNN5NS+vMHPkOiKBcilQG/Zv5pY
+X-Google-Smtp-Source: AGHT+IGosAjhqHyVcCafiF3oKnSrx57sKB+artIlZcAF8Z1AvmgMi45HkYD3b1MSbZZbbKxb1McgWQ==
+X-Received: by 2002:a05:600c:35c9:b0:434:a734:d279 with SMTP id
+ 5b1f17b1804b1-4361c3c6fbfmr30226985e9.16.1733928283603; 
+ Wed, 11 Dec 2024 06:44:43 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4361e54ef20sm19477685e9.5.2024.12.11.06.44.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Dec 2024 06:44:42 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Subject: [PATCH v2 1/6] target/arm: Implement fine-grained-trap handling for
+ FEAT_XS
+Date: Wed, 11 Dec 2024 14:44:35 +0000
+Message-Id: <20241211144440.2700268-2-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211144440.2700268-1-peter.maydell@linaro.org>
+References: <20241211144440.2700268-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] s390x/pci: add support for guests that request direct
- mapping
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, david@redhat.com, iii@linux.ibm.com,
- qemu-devel@nongnu.org
-References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
- <20241209192927.107503-2-mjrosato@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
-In-Reply-To: <20241209192927.107503-2-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clegoate@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,189 +99,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/24 20:29, Matthew Rosato wrote:
-> When receiving a guest mpcifc(4) or mpcifc(6) instruction without the T
-> bit set, treat this as a request to perform direct mapping instead of
-> address translation.  In order to facilitiate this, pin the entirety of
-> guest memory into the host iommu.
-> 
-> Subsequent guest DMA operations are all expected to be of the format
-> guest_phys+sdma, allowing them to be used as lookup into the host
-> iommu table.
-> 
-> Signed-off-by: Matthew Rosato <mjrosato@linux.ibm.com>
-> ---
->   hw/s390x/s390-pci-bus.c         | 23 ++++++++++++++++++
->   hw/s390x/s390-pci-inst.c        | 42 +++++++++++++++++++++++++++++++--
->   include/hw/s390x/s390-pci-bus.h |  2 ++
->   3 files changed, 65 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-> index 40b2567aa7..8d4224e032 100644
-> --- a/hw/s390x/s390-pci-bus.c
-> +++ b/hw/s390x/s390-pci-bus.c
-> @@ -18,6 +18,7 @@
->   #include "hw/s390x/s390-pci-inst.h"
->   #include "hw/s390x/s390-pci-kvm.h"
->   #include "hw/s390x/s390-pci-vfio.h"
-> +#include "hw/boards.h"
->   #include "hw/pci/pci_bus.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/pci/pci_bridge.h"
-> @@ -720,6 +721,27 @@ void s390_pci_iommu_enable(S390PCIIOMMU *iommu)
->                                TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
->                                name, iommu->pal + 1);
->       iommu->enabled = true;
-> +    iommu->direct_map = false;
-> +    memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&iommu->iommu_mr));
-> +    g_free(name);
-> +}
-> +
-> +void s390_pci_iommu_dm_enable(S390PCIIOMMU *iommu)
+FEAT_XS introduces a set of new TLBI maintenance instructions with an
+"nXS" qualifier.  These behave like the stardard ones except that
+they do not wait for memory accesses with the XS attribute to
+complete.  They have an interaction with the fine-grained-trap
+handling: the FGT bits that a hypervisor can use to trap TLBI
+maintenance instructions normally trap also the nXS variants, but the
+hypervisor can elect to not trap the nXS variants by setting
+HCRX_EL2.FGTnXS to 1.
 
-This is duplicating s390_pci_iommu_enable(). May be we could add a new
-argument to s390_pci_iommu_enable() instead ?
+Add support to our FGT mechanism for these TLBI bits. For each
+TLBI-trapping FGT bit we define, for example:
+ * FGT_TLBIVAE1 -- the same value we do at present for the
+   normal variant of the insn
+ * FGT_TLBIVAE1NXS -- for the nXS qualified insn; the value of
+   this enum has an NXS bit ORed into it
 
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +
-> +    /*
-> +     * For direct-mapping we must map the entire guest address space.  Because
-> +     * the mappings are contiguous we are not restricted to individual 4K
-> +     * mappings via vfio, so let's not worry about the DMA limit when> +     * calculating the range.
-> +     */
-> +    char *name = g_strdup_printf("iommu-s390-%04x", iommu->pbdev->uid);
-> +    memory_region_init_iommu(&iommu->iommu_mr, sizeof(iommu->iommu_mr),
-> +                             TYPE_S390_IOMMU_MEMORY_REGION, OBJECT(&iommu->mr),
-> +                             name, iommu->pba + ms->ram_size);
-> +    iommu->enabled = true;
-> +    iommu->direct_map = true;
->       memory_region_add_subregion(&iommu->mr, 0, MEMORY_REGION(&iommu->iommu_mr));
->       g_free(name);
->   }
-> @@ -727,6 +749,7 @@ void s390_pci_iommu_enable(S390PCIIOMMU *iommu)
->   void s390_pci_iommu_disable(S390PCIIOMMU *iommu)
->   {
->       iommu->enabled = false;
-> +    iommu->direct_map = false;
->       g_hash_table_remove_all(iommu->iotlb);
->       memory_region_del_subregion(&iommu->mr, MEMORY_REGION(&iommu->iommu_mr));
->       object_unparent(OBJECT(&iommu->iommu_mr));
-> diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-> index 41655082da..f4d8fe8fe8 100644
-> --- a/hw/s390x/s390-pci-inst.c
-> +++ b/hw/s390x/s390-pci-inst.c
-> @@ -16,6 +16,7 @@
->   #include "exec/memory.h"
->   #include "qemu/error-report.h"
->   #include "sysemu/hw_accel.h"
-> +#include "hw/boards.h"
->   #include "hw/pci/pci_device.h"
->   #include "hw/s390x/s390-pci-inst.h"
->   #include "hw/s390x/s390-pci-bus.h"
-> @@ -990,6 +991,33 @@ int pci_dereg_irqs(S390PCIBusDevice *pbdev)
->       return 0;
->   }
->   
-> +static void s390_pci_setup_stage2_map(S390PCIIOMMU *iommu)
+In access_check_cp_reg() we can then ignore the trap bit for an
+access where ri->fgt has the NXS bit set and HCRX_EL2.FGTnXS is 1.
 
-This is very much like s390_pci_batch_unmap(). Could we introduce a
-common helper ?
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/cpregs.h        | 72 ++++++++++++++++++++++----------------
+ target/arm/cpu-features.h  |  5 +++
+ target/arm/helper.c        |  5 ++-
+ target/arm/tcg/op_helper.c | 11 +++++-
+ 4 files changed, 61 insertions(+), 32 deletions(-)
 
-> +{
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    uint64_t remain = ms->ram_size, start = iommu->pba, mask, size, curr = 0;
-> +    uint64_t end = start + remain - 1;
-> +    IOMMUTLBEvent event = {
-> +        .type = IOMMU_NOTIFIER_MAP,
-> +        .entry = {
-> +            .target_as = &address_space_memory,
-> +            .translated_addr = 0,
-> +            .perm = IOMMU_RW,
-> +        },
-> +    };
-> +
-> +    while (remain >= TARGET_PAGE_SIZE) {
-> +        mask = dma_aligned_pow2_mask(start, end, 64);
-> +        size = mask + 1;
-> +        event.entry.iova = start;
-> +        event.entry.addr_mask = mask;
-> +        event.entry.translated_addr = curr;
-> +        memory_region_notify_iommu(&iommu->iommu_mr, 0, event);
-> +        start += size;
-> +        curr += size;
-> +        remain -= size;
-> +    }
-> +}
-> +
->   static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
->                       uintptr_t ra)
->   {
-> @@ -1008,7 +1036,7 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
->       }
->   
->       /* currently we only support designation type 1 with translation */
-> -    if (!(dt == ZPCI_IOTA_RTTO && t)) {
-> +    if (t && !(dt == ZPCI_IOTA_RTTO)) {
-
-Is this change part of the patchset ? It looks like some other issue.
-I might be wrong.
-
->           error_report("unsupported ioat dt %d t %d", dt, t);
->           s390_program_interrupt(env, PGM_OPERAND, ra);
->           return -EINVAL;
-> @@ -1018,13 +1046,23 @@ static int reg_ioat(CPUS390XState *env, S390PCIBusDevice *pbdev, ZpciFib fib,
->       iommu->pal = pal;
->       iommu->g_iota = g_iota;
->   
-> -    s390_pci_iommu_enable(iommu);
-> +    if (t) {
-> +        s390_pci_iommu_enable(iommu);
-> +    } else {
-> +        s390_pci_iommu_dm_enable(iommu);
-> +        /* If not translating, map everything now */
-> +        s390_pci_setup_stage2_map(iommu);
-> +    }
-
-
-I don't understand how we can enter "map everything" case.
-Could you explain a bit more the scenario ?
-
-Thanks,
-
-C.
-
->       return 0;
->   }
->   
->   void pci_dereg_ioat(S390PCIIOMMU *iommu)
->   {
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    if (iommu->direct_map) {
-> +        s390_pci_batch_unmap(iommu, iommu->pba, ms->ram_size);
-> +    }
->       s390_pci_iommu_disable(iommu);
->       iommu->pba = 0;
->       iommu->pal = 0;
-> diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-> index 2c43ea123f..2aa55e3fd0 100644
-> --- a/include/hw/s390x/s390-pci-bus.h
-> +++ b/include/hw/s390x/s390-pci-bus.h
-> @@ -278,6 +278,7 @@ struct S390PCIIOMMU {
->       MemoryRegion mr;
->       IOMMUMemoryRegion iommu_mr;
->       bool enabled;
-> +    bool direct_map;
->       uint64_t g_iota;
->       uint64_t pba;
->       uint64_t pal;
-> @@ -389,6 +390,7 @@ int pci_chsc_sei_nt2_have_event(void);
->   void s390_pci_sclp_configure(SCCB *sccb);
->   void s390_pci_sclp_deconfigure(SCCB *sccb);
->   void s390_pci_iommu_enable(S390PCIIOMMU *iommu);
-> +void s390_pci_iommu_dm_enable(S390PCIIOMMU *iommu);
->   void s390_pci_iommu_disable(S390PCIIOMMU *iommu);
->   void s390_pci_generate_error_event(uint16_t pec, uint32_t fh, uint32_t fid,
->                                      uint64_t faddr, uint32_t e);
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index cc7c54378f4..87704762ef9 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -621,6 +621,7 @@ FIELD(HDFGWTR_EL2, NBRBCTL, 60, 1)
+ FIELD(HDFGWTR_EL2, NBRBDATA, 61, 1)
+ FIELD(HDFGWTR_EL2, NPMSNEVFR_EL1, 62, 1)
+ 
++FIELD(FGT, NXS, 13, 1) /* Honour HCR_EL2.FGTnXS to suppress FGT */
+ /* Which fine-grained trap bit register to check, if any */
+ FIELD(FGT, TYPE, 10, 3)
+ FIELD(FGT, REV, 9, 1) /* Is bit sense reversed? */
+@@ -639,6 +640,17 @@ FIELD(FGT, BITPOS, 0, 6) /* Bit position within the uint64_t */
+ #define DO_REV_BIT(REG, BITNAME)                                        \
+     FGT_##BITNAME = FGT_##REG | FGT_REV | R_##REG##_EL2_##BITNAME##_SHIFT
+ 
++/*
++ * The FGT bits for TLBI maintenance instructions accessible at EL1 always
++ * affect the "normal" TLBI insns; they affect the corresponding TLBI insns
++ * with the nXS qualifier only if HCRX_EL2.FGTnXS is 0. We define e.g.
++ * FGT_TLBIVAE1 to use for the normal insn, and FGT_TLBIVAE1NXS to use
++ * for the nXS qualified insn.
++ */
++#define DO_TLBINXS_BIT(REG, BITNAME)                             \
++    FGT_##BITNAME = FGT_##REG | R_##REG##_EL2_##BITNAME##_SHIFT, \
++    FGT_##BITNAME##NXS = FGT_##BITNAME | R_FGT_NXS_MASK
++
+ typedef enum FGTBit {
+     /*
+      * These bits tell us which register arrays to use:
+@@ -772,36 +784,36 @@ typedef enum FGTBit {
+     DO_BIT(HFGITR, ATS1E0W),
+     DO_BIT(HFGITR, ATS1E1RP),
+     DO_BIT(HFGITR, ATS1E1WP),
+-    DO_BIT(HFGITR, TLBIVMALLE1OS),
+-    DO_BIT(HFGITR, TLBIVAE1OS),
+-    DO_BIT(HFGITR, TLBIASIDE1OS),
+-    DO_BIT(HFGITR, TLBIVAAE1OS),
+-    DO_BIT(HFGITR, TLBIVALE1OS),
+-    DO_BIT(HFGITR, TLBIVAALE1OS),
+-    DO_BIT(HFGITR, TLBIRVAE1OS),
+-    DO_BIT(HFGITR, TLBIRVAAE1OS),
+-    DO_BIT(HFGITR, TLBIRVALE1OS),
+-    DO_BIT(HFGITR, TLBIRVAALE1OS),
+-    DO_BIT(HFGITR, TLBIVMALLE1IS),
+-    DO_BIT(HFGITR, TLBIVAE1IS),
+-    DO_BIT(HFGITR, TLBIASIDE1IS),
+-    DO_BIT(HFGITR, TLBIVAAE1IS),
+-    DO_BIT(HFGITR, TLBIVALE1IS),
+-    DO_BIT(HFGITR, TLBIVAALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAE1IS),
+-    DO_BIT(HFGITR, TLBIRVAAE1IS),
+-    DO_BIT(HFGITR, TLBIRVALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAE1),
+-    DO_BIT(HFGITR, TLBIRVAAE1),
+-    DO_BIT(HFGITR, TLBIRVALE1),
+-    DO_BIT(HFGITR, TLBIRVAALE1),
+-    DO_BIT(HFGITR, TLBIVMALLE1),
+-    DO_BIT(HFGITR, TLBIVAE1),
+-    DO_BIT(HFGITR, TLBIASIDE1),
+-    DO_BIT(HFGITR, TLBIVAAE1),
+-    DO_BIT(HFGITR, TLBIVALE1),
+-    DO_BIT(HFGITR, TLBIVAALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1),
+     DO_BIT(HFGITR, CFPRCTX),
+     DO_BIT(HFGITR, DVPRCTX),
+     DO_BIT(HFGITR, CPPRCTX),
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e806f138b8f..30302d6c5b4 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -474,6 +474,11 @@ static inline bool isar_feature_aa64_fcma(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, FCMA) != 0;
+ }
+ 
++static inline bool isar_feature_aa64_xs(const ARMISARegisters *id)
++{
++    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, XS) != 0;
++}
++
+ /*
+  * These are the values from APA/API/APA3.
+  * In general these must be compared '>=', per the normal Arm ARM
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 910ae62c476..8e62769ec0d 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5346,10 +5346,13 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
+     }
+     /* FEAT_CMOW adds CMOW */
+-
+     if (cpu_isar_feature(aa64_cmow, cpu)) {
+         valid_mask |= HCRX_CMOW;
+     }
++    /* FEAT_XS adds FGTnXS, FnXS */
++    if (cpu_isar_feature(aa64_xs, cpu)) {
++        valid_mask |= HCRX_FGTNXS | HCRX_FNXS;
++    }
+ 
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 1ecb4659889..1161d301b71 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -817,6 +817,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+         unsigned int idx = FIELD_EX32(ri->fgt, FGT, IDX);
+         unsigned int bitpos = FIELD_EX32(ri->fgt, FGT, BITPOS);
+         bool rev = FIELD_EX32(ri->fgt, FGT, REV);
++        bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
+         bool trapbit;
+ 
+         if (ri->fgt & FGT_EXEC) {
+@@ -830,7 +831,15 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+             trapword = env->cp15.fgt_write[idx];
+         }
+ 
+-        trapbit = extract64(trapword, bitpos, 1);
++        if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
++            /*
++             * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
++             * TLBI maintenance insns does *not* apply to the nXS variant.
++             */
++            trapbit = 0;
++        } else {
++            trapbit = extract64(trapword, bitpos, 1);
++        }
+         if (trapbit != rev) {
+             res = CP_ACCESS_TRAP_EL2;
+             goto fail;
+-- 
+2.34.1
 
 
