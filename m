@@ -4,94 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A37EE77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA3DBE77185
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZk-0007JJ-SB; Wed, 11 Dec 2024 11:28:36 -0500
+	id 1tLPT0-0002K1-NN; Wed, 11 Dec 2024 11:21:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZh-0006nm-FU
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZf-0000Y5-Pl
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934510;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8NLLgbzYAR30822TQnyZFqYAZd1RN5I0WySMepXl6Io=;
- b=HW6LmZ8u1572hzC3+nCRPUnTnxvPzDpuPfpuMGUlLWiUWw6jbSqOrProfuSRYjtoS3yQ/k
- 57H2dF7KQRHvxpkzaJgLmVF1WTsf/v3eCROVhzGE2fCJgeV6bOab/z5LM59VD+LDQjvsE9
- ZjWYkczc+XyP5MPPYaAurRTjjB71QX4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-Yr0mUX9QMbukb2uboVP5lA-1; Wed, 11 Dec 2024 11:28:29 -0500
-X-MC-Unique: Yr0mUX9QMbukb2uboVP5lA-1
-X-Mimecast-MFC-AGG-ID: Yr0mUX9QMbukb2uboVP5lA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4361ecebc5bso5209055e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934508; x=1734539308;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPSo-0001SS-Gv
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:26 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tLPSm-0007ua-DT
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:21:26 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-434e69857d9so5486745e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:21:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733934082; x=1734538882; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=1xX8e653UqvPhJfMFTssKOZTmDKSbqOxXbCRuKU7FMk=;
+ b=tnes/nuGgLsyQMmNqwS190Plf2AhfFK+/w2coH1UEo+kkPNkpsgFvvvjOKAq88K8gY
+ Xkw9n4M59GWnD+XtiH4zbpNMYqbq39NVZuVWoiAf7rry+n6ETaVSlG+ZZUTzBdD/4PmA
+ w3pLMAducC8lF2gjHxcjM31a3QOB5zhfgDUmXM3O38MWygoZmuLkpIN/qiNe8HcaDrTb
+ tATBPVmhd/4KgwjoStbLt191a4MSrZhdMi49D3aATlqK1jsN+qAZoJOLj34/bqdS20pa
+ VvPLdy2m0QkX0ufS+nIozYxw4AyItuxtlwdzVNrSbm3ma4l6HH2uMlzH7BkeQ467XWsS
+ esoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733934082; x=1734538882;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8NLLgbzYAR30822TQnyZFqYAZd1RN5I0WySMepXl6Io=;
- b=UZ1TFwU4WWwRqryOlE6A+O/y8sS0lrBGjRgd/9QnxQG57wvPx6APpHg85G+7pY+gVy
- 3tRA5ty6v/j9OSQHJzscHhjDVJ/PPSbJ41OQ/qG5z7N8HGKdpaBULwKBeDhONobmITR3
- E6+dSmXpIpQK7UTli9nmnEQ9iuxOsBYF4/uUx5egMN7Bc2GTe3drNj3qY26B4WIdxdOo
- EVEheCtuyeWiEUCmfJyObK5vkananimfLV1CA8y09a8nNT5oKAv1CCHOWKZNUhkljb5g
- DRP1ry+4CW5kXgXTEUyOEEb7dAEwvt3FHI3k+ZGlxbjbKCAuLuXq4k1frxwAaUv5TsBM
- X3Kg==
-X-Gm-Message-State: AOJu0YzE9WnkJ3NdAAX7RqRW0Rts5oWQTVuwUsKq8Hw6kSnpaegvGcf5
- nQlvGMrarMx6DDl9f68Mp4jZcj/2z4TLkmk2ekQTSdm3Q5zUl4b4AafuKbawe+NQ8I/JcMgOFVD
- I7LMZgqTW1OMDQl/ZTidm9TDaFvN+GORZPnEU+2EyEu6VGsgBWeDLJUFXqH9ImPRBwxYbquqdon
- mGyvL17DU1Z/ndpa35wXrCzYJEae022L8s/fbP
-X-Gm-Gg: ASbGncu4fNs0uAin3z55lRXAYiO1R7Z6J68O2uaddm5+1d61slrjHXD1+Ly1b4I266a
- VbJl7knmD9rKsEED9C8JWh7H9icQHRYLRZkvhdxsR1aItMER1B8mwOlFvQHjy6u73d4Y9d4/lc9
- OVD+KCPFshzxlT3qNHv0MqmvEcByTaqq/aklWN+0+hyEARrEdeE6nI14a4xVk/rwAhVPUqssIXj
- LFQWysq6yqBosvu2Dbpi1GH2tJ2FMhq2Q0Jt9tQFpGWOAgX8RE6nWr4
-X-Received: by 2002:a05:600c:3548:b0:42a:a6d2:3270 with SMTP id
- 5b1f17b1804b1-4361c3e2345mr26020455e9.21.1733934507792; 
- Wed, 11 Dec 2024 08:28:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHrK+4EDxorH88C3+2cLIr9tm3wrM8PaKSvtEuIFBw+SIV6dLxduqPQT90z9QY87wYgtRXDUw==
-X-Received: by 2002:a05:600c:3548:b0:42a:a6d2:3270 with SMTP id
- 5b1f17b1804b1-4361c3e2345mr26020225e9.21.1733934507326; 
- Wed, 11 Dec 2024 08:28:27 -0800 (PST)
-Received: from [192.168.10.3] ([151.81.118.45])
+ bh=1xX8e653UqvPhJfMFTssKOZTmDKSbqOxXbCRuKU7FMk=;
+ b=HeXlD9Nm6krHrddbS7CAwbXBLdeFbCop6pNyxuZKdmEdhxHVjL1ryiCjX9rAqjHdsU
+ VzdGtE5Ht7jV0ZIPHgDuSafbQkcgwSBxvy1liApUH3D3ukLfOVAsiFZbA7o97AEIcmMd
+ x8gM0qf/cf3tLgPJxbhA0EXWUrc6T8Dbdm95Yc7UR9ndrd9W+qhpdiCgwq1ysCnO6jeh
+ Eqg07ZupwhViULLDHgAAE6pTDrguriodrEyoBGIqM+DYpvFyK5H4DCN397rwAfU3ruB/
+ CVwJU/o4jNoEcvzBKg23sMhXUO2L+YIuWN3HNIBlD1QWUXX+i7pZQOcm9wVjkvG0ypYL
+ /W9w==
+X-Gm-Message-State: AOJu0YxD7H8EQkqDlgwcxopVeG2yNdOrokNaEAIUmcfeM7+aRcUWYaHk
+ LjxFVxRDyFSXyS2ZWCSAUEZ4IaFpOGzup4gF+gSNgEPfe9HScQ72KXlJLTJIzXzQWtmmjPnFhcg
+ 3
+X-Gm-Gg: ASbGnculf20kfr+DHVhWgPHbTigEyJr8H/VP+hjiP5h29Y9c01Fml+rHbT757DzVDuQ
+ oSkR/7lBZZ4PgE34RUh+NWlm/OjEFQ32ASc17WxdARwJREhWBAkdLduTI+gtJGUlMe8Z4JkDR+O
+ yBJlFC2ySnoSwRDeai+VDMgmpMm7HzFRz0F8vZP3LIV460buZrrW8t62NAuIFnw6wFLWN6epCvx
+ uKP337fuDXz1gSoQqitXcrBrQRqdvu0LMjmBoCF0ei6w67xkKOZBBtzOFVo
+X-Google-Smtp-Source: AGHT+IEiTMHt2U8u3uL+OcmHkA0mZMo+NbFE6U1FJ3+6vgzw/RgXs5wsl8KsrFv+EmkSq5hFfIDH+A==
+X-Received: by 2002:a7b:ca57:0:b0:436:2155:be54 with SMTP id
+ 5b1f17b1804b1-4362155c09amr11155535e9.1.1733934082324; 
+ Wed, 11 Dec 2024 08:21:22 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878248e600sm1675795f8f.7.2024.12.11.08.28.26
+ 5b1f17b1804b1-434f4dfdcdfsm121460595e9.39.2024.12.11.08.21.21
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:26 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ Wed, 11 Dec 2024 08:21:21 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 28/49] i386: Replace type_register() with type_register_static()
-Date: Wed, 11 Dec 2024 17:26:58 +0100
-Message-ID: <20241211162720.320070-29-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
-References: <20241211162720.320070-1-pbonzini@redhat.com>
+Subject: [PULL 68/72] softfloat: Share code between parts_pick_nan cases
+Date: Wed, 11 Dec 2024 16:20:00 +0000
+Message-Id: <20241211162004.2795499-69-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241211162004.2795499-1-peter.maydell@linaro.org>
+References: <20241211162004.2795499-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,55 +97,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Replace type_register() with type_register_static() because
-type_register() will be deprecated.
+Remember if there was an SNaN, and use that to simplify
+float_2nan_prop_s_{ab,ba} to only the snan component.
+Then, fall through to the corresponding
+float_2nan_prop_{ab,ba} case to handle any remaining
+nans, which must be quiet.
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Link: https://lore.kernel.org/r/20241029085934.2799066-11-zhao1.liu@intel.com
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20241203203949.483774-10-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- include/hw/i386/pc.h | 4 ++--
- target/i386/cpu.c    | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ fpu/softfloat-parts.c.inc | 32 ++++++++++++--------------------
+ 1 file changed, 12 insertions(+), 20 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 14ee06287da..b3477ad6a29 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -316,7 +316,7 @@ extern const size_t pc_compat_2_3_len;
-     }; \
-     static void pc_machine_init_##suffix(void) \
-     { \
--        type_register(&pc_machine_type_##suffix); \
-+        type_register_static(&pc_machine_type_##suffix); \
-     } \
-     type_init(pc_machine_init_##suffix)
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index a1b148e90b9..3c77dcbb154 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -39,10 +39,12 @@ static void partsN(return_nan)(FloatPartsN *a, float_status *s)
+ static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
+                                      float_status *s)
+ {
++    bool have_snan = false;
+     int cmp, which;
  
-@@ -344,7 +344,7 @@ extern const size_t pc_compat_2_3_len;
-     static void MACHINE_VER_SYM(register, namesym, __VA_ARGS__)(void) \
-     { \
-         MACHINE_VER_DELETION(__VA_ARGS__); \
--        type_register(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
-+        type_register_static(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
-     } \
-     type_init(MACHINE_VER_SYM(register, namesym, __VA_ARGS__));
+     if (is_snan(a->cls) || is_snan(b->cls)) {
+         float_raise(float_flag_invalid | float_flag_invalid_snan, s);
++        have_snan = true;
+     }
  
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 3725dbbc4b3..305f2a41cfb 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6429,7 +6429,7 @@ static void x86_register_cpu_model_type(const char *name, X86CPUModel *model)
-         .class_data = model,
-     };
+     if (s->default_nan_mode) {
+@@ -57,30 +59,20 @@ static FloatPartsN *partsN(pick_nan)(FloatPartsN *a, FloatPartsN *b,
  
--    type_register(&ti);
-+    type_register_static(&ti);
- }
- 
- 
+     switch (s->float_2nan_prop_rule) {
+     case float_2nan_prop_s_ab:
+-        if (is_snan(a->cls)) {
+-            which = 0;
+-        } else if (is_snan(b->cls)) {
+-            which = 1;
+-        } else if (is_qnan(a->cls)) {
+-            which = 0;
+-        } else {
+-            which = 1;
++        if (have_snan) {
++            which = is_snan(a->cls) ? 0 : 1;
++            break;
+         }
+-        break;
+-    case float_2nan_prop_s_ba:
+-        if (is_snan(b->cls)) {
+-            which = 1;
+-        } else if (is_snan(a->cls)) {
+-            which = 0;
+-        } else if (is_qnan(b->cls)) {
+-            which = 1;
+-        } else {
+-            which = 0;
+-        }
+-        break;
++        /* fall through */
+     case float_2nan_prop_ab:
+         which = is_nan(a->cls) ? 0 : 1;
+         break;
++    case float_2nan_prop_s_ba:
++        if (have_snan) {
++            which = is_snan(b->cls) ? 1 : 0;
++            break;
++        }
++        /* fall through */
+     case float_2nan_prop_ba:
+         which = is_nan(b->cls) ? 1 : 0;
+         break;
 -- 
-2.47.1
+2.34.1
 
 
