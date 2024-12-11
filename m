@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA63FE77182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2E7CE77180
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPYy-0000sB-JW; Wed, 11 Dec 2024 11:27:48 -0500
+	id 1tLPZA-0002L1-Fp; Wed, 11 Dec 2024 11:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYq-0000B0-6a
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:41 -0500
+ id 1tLPZ6-0001pR-3e
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPYo-0000EO-28
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:39 -0500
+ id 1tLPZ2-0000J7-L5
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934457;
+ s=mimecast20190719; t=1733934471;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C3gKLyE/tjMRxcMCdanJmcUrY5p/mjIojvO+9H4ft54=;
- b=P44DolZAZXaTq7JAQKYdnBJMOVUZLFFloGbi7ZfEUVMjm/mwcN1mrqSOl9mIzwV5TQj8It
- eFj/Myi5letSW0YIKg1z/6g2YqZpwVz+Mx7hFVIQ/RxOAl1Pvs1RirFIlW0YT61t/nfLgM
- NNSkw2/z7l0LsZAEKcm5IxcJ006EACw=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rO+WbGRzMRexJETWrTif2Ds1kn3dKu1gBbcNzz0Vto4=;
+ b=gvksG4RB312af+yJSL6zKtgbWrp8zjXr1BN+eFAHFaOcxONUbmnz7dxyFZuEs9VfyWnYih
+ wFaskFSAm+6LnvpVdEOU42cv0RZ5TTKCtIjRiDD9S6yHy/v7DRYpizi5Kp/6HqyxKGH9yV
+ HX0zFH+Sza+IaFw+lLyWCJLfo/ZPpBo=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-677-jtX8riAZOqGy9IQH4Dgv6w-1; Wed, 11 Dec 2024 11:27:35 -0500
-X-MC-Unique: jtX8riAZOqGy9IQH4Dgv6w-1
-X-Mimecast-MFC-AGG-ID: jtX8riAZOqGy9IQH4Dgv6w
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385df115288so2971991f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:35 -0800 (PST)
+ us-mta-381-DX2w91FONjGYpf6t2Qg0LQ-1; Wed, 11 Dec 2024 11:27:50 -0500
+X-MC-Unique: DX2w91FONjGYpf6t2Qg0LQ-1
+X-Mimecast-MFC-AGG-ID: DX2w91FONjGYpf6t2Qg0LQ
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6e1b0373bso208758685a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934454; x=1734539254;
+ d=1e100.net; s=20230601; t=1733934469; x=1734539269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C3gKLyE/tjMRxcMCdanJmcUrY5p/mjIojvO+9H4ft54=;
- b=pC6oy+1OOYlohFrfG5xDFUR7aDMIaUG72yZx+jlHuooOrSBqnQDdDbund2W5jSeUIu
- t8wqEpgYqa5sLczXKEvIUz7ahoCU3DgnrCY2eevZuxFjLA+QWAxoYIm3S4cZuKxI9xk0
- NHnT8fHCqZ5xYnkXkJQ49INYieZF8Bptz4YhjLQQu+GgmCk/hqqNQWS0rxN5sCnCVBRy
- VmgX/l15aQDXwiy6rWdaK8ZM4g/3WyFM99puX4LGML/FubUPrlHDNBHlMjgOPdz97A8t
- 24CGwK7OGBe0oSZLg+IlGQEmzMNli3dpGReI2Y0WpmNax2O2lCbV1XS2yj/se5qw2cBo
- 8V1w==
-X-Gm-Message-State: AOJu0YyNvRwW6UafDR/wFsZ9m2GPdjCJXv5jNFKbAewMQ/C/lRSePa4O
- KxSxsCy1PHalb6pm4AU7tHqTPURiXTFz6ZbZM+Enl4/+MU6GH2LqRqdPaw/Kwfkhyut2wq6gGHh
- jBUiRiPH1Gbx+L/GNXbxU20A0QuaLyAjkIPxo17l44XB24lihPjbqRWjoPNgPB5frDbC/BhtGbN
- ZPMpIpXvxcQjkjNVbmprR188BbeVThP3ftQqMj
-X-Gm-Gg: ASbGnctx0jjp1O5+3YkLQmcyFKl2lDj7mAAoXQteXX3ItnWlj/jL2LaZPe3eolM4Av3
- NOKgnXy/xRO6GTVf/6IFc1Q+EFak0/+sbbTaOt0QajZUH9PKA3zyPlBf/Lw2ucH4/TAu2D7eeGF
- 6n8CslEOwHB5OoIv8ctbwDo0xmvWVPpcivdGdw3FUg6zwAPjDWm3fDkfvvAdZHDjGCor9wzp3wX
- PbYTsy2kKN7XX6V9UU1i3UbwrDK+t6sebtXcgbgP8fAj7i3mgoC6ppG
-X-Received: by 2002:a5d:6da4:0:b0:385:e0ea:d4ef with SMTP id
- ffacd0b85a97d-3864cea1edcmr2490334f8f.58.1733934454217; 
- Wed, 11 Dec 2024 08:27:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFGXbScukZBJmV0tcqFwx+LRTdB21ClwwYtGiCA0uqYHHQLS1ae7QzI3Fac+y6iFlaeThMs2A==
-X-Received: by 2002:a5d:6da4:0:b0:385:e0ea:d4ef with SMTP id
- ffacd0b85a97d-3864cea1edcmr2490309f8f.58.1733934453815; 
- Wed, 11 Dec 2024 08:27:33 -0800 (PST)
+ bh=rO+WbGRzMRexJETWrTif2Ds1kn3dKu1gBbcNzz0Vto4=;
+ b=hp5wUXkS7nL66gXh6fCe/IzcuxjYI8PlNMgdN46Jnk0ymsuOExvXZ6KEmKlJfVGBSM
+ eM9FnnMQa25Y5ywGFnL3AT6/LC0Ypt5daCijCRbnUeSBlpTEC9qrYg/nAvcR3Ww/cJxs
+ AYEGw31simVpDo8sljvLghvvdkK20cHueSybL+rbublBEA2tIBR0j73hg7RbxOHO4bzi
+ 2zDqmFE9yL6VaPS0tZjZtLVZNyYhE0gwIEMm+Gi321uaNPljDbVJp8M1TwFeqa4i0QTp
+ aQc5qCJ0C1fV3AJY40krzX8xT73f3zlT34ML63TJf8Loqw+OFKjqWSrOGtCV/pn84EoO
+ zqjg==
+X-Gm-Message-State: AOJu0YzsRcqRVuGK0s/JebQX05/BH87rpwHS0BWfHyc0c6kfGiLaa7aX
+ s1Ng+ZlQeFShU6GhbEe0BKyfe3vJXI6kIeyC42JYDBernJNld7GcBHOWP4IyD2lBaUfnxixw6uc
+ X1p4TuiDOvuQJDSqE208g+/4VXaBMVigo1GAeJBN1uI39k2cnLOHhCazV7m2H+UGbVGY7LyKH8y
+ htLlVG99WWaCumjL5bHv0Nt3VQVwnQ3NKN/doP
+X-Gm-Gg: ASbGncvo6myn6YreKfE8xpUU+JVumXTMTy/GV7VS/c1c4OSFTklFhL7pWLzmgBXKCjt
+ yr9Rfo/c56upk/eomnGPZCBaFgiSN9IWoS6UPP4dQezz6JGXswjXBAWVhaDwiuCialvyy1FSPqE
+ ogqr+hLxOl57VZhjy5io41PGcOPLlBI9IGAfN+GM5snTDXR8G+27DjctDkaZIxzaxMQNH1Y1LzD
+ oZYxdw/r2zWIAxN39PNXMMsZcgXMgxyRTPqZS360zUQpFq+IOTCfHzH
+X-Received: by 2002:a05:620a:6007:b0:7b3:5858:1286 with SMTP id
+ af79cd13be357-7b6eb52648bmr605127485a.47.1733934469046; 
+ Wed, 11 Dec 2024 08:27:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZe7EA/21zaW+fVwyv+kk0qIt9cxBgEdOKtPZm1zreJrfC6jp5uyoGkETsGzk02WFu72f27g==
+X-Received: by 2002:a05:620a:6007:b0:7b3:5858:1286 with SMTP id
+ af79cd13be357-7b6eb52648bmr605123685a.47.1733934468599; 
+ Wed, 11 Dec 2024 08:27:48 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824a3e38sm1614427f8f.23.2024.12.11.08.27.33
- for <qemu-devel@nongnu.org>
+ af79cd13be357-7b6f1b5c5dcsm8236285a.68.2024.12.11.08.27.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:33 -0800 (PST)
+ Wed, 11 Dec 2024 08:27:47 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 05/49] rust: build: restrict --cfg generation to only required
- symbols
-Date: Wed, 11 Dec 2024 17:26:35 +0100
-Message-ID: <20241211162720.320070-6-pbonzini@redhat.com>
+Cc: Junjie Mao <junjie.mao@hotmail.com>
+Subject: [PULL 11/49] rust: build: add "make clippy", "make rustfmt",
+ "make rustdoc"
+Date: Wed, 11 Dec 2024 17:26:41 +0100
+Message-ID: <20241211162720.320070-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
@@ -108,128 +108,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Parse the Cargo.toml file, looking for the unexpected_cfgs
-configuration.  When generating --cfg options from the
-config-host.h file, only use those that are included in the
-configuration.
+Abstract common invocations of "cargo", that do not require copying
+the generated bindgen file or setting up MESON_BUILD_ROOT.
 
+In the future these could also do completely without cargo and invoke
+the underlying programs directly.
+
+Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/meson.build  |  2 +-
- scripts/rust/rustc_args.py | 61 ++++++++++++++++++++++++++++----------
- 2 files changed, 46 insertions(+), 17 deletions(-)
+ rust/meson.build        | 22 ++++++++++++++++++++++
+ rust/qemu-api/README.md | 10 ++++++----
+ rust/qemu-api/build.rs  |  9 +++++++--
+ 3 files changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 5df6b35bf88..2ff6d2ce3d0 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -1,5 +1,5 @@
- _qemu_api_cfg = run_command(rustc_args,
--  '--config-headers', config_host_h,
-+  '--config-headers', config_host_h, files('Cargo.toml'),
-   capture: true, check: true).stdout().strip().split()
+diff --git a/rust/meson.build b/rust/meson.build
+index def77389cdd..91e52b8fb8e 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -2,3 +2,25 @@ subdir('qemu-api-macros')
+ subdir('qemu-api')
  
- # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index e4cc9720e16..942dd2b2bab 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -26,30 +26,51 @@
+ subdir('hw')
++
++cargo = find_program('cargo', required: false)
++
++if cargo.found()
++  run_target('clippy',
++    command: [config_host['MESON'], 'devenv',
++              '--workdir', '@CURRENT_SOURCE_DIR@',
++              cargo, 'clippy', '--tests'],
++    depends: bindings_rs)
++
++  run_target('rustfmt',
++    command: [config_host['MESON'], 'devenv',
++              '--workdir', '@CURRENT_SOURCE_DIR@',
++              cargo, 'fmt'],
++    depends: bindings_rs)
++
++  run_target('rustdoc',
++    command: [config_host['MESON'], 'devenv',
++              '--workdir', '@CURRENT_SOURCE_DIR@',
++              cargo, 'doc', '--no-deps', '--document-private-items'],
++    depends: bindings_rs)
++endif
+diff --git a/rust/qemu-api/README.md b/rust/qemu-api/README.md
+index 53810f48882..ed1b7ab263d 100644
+--- a/rust/qemu-api/README.md
++++ b/rust/qemu-api/README.md
+@@ -5,13 +5,15 @@ This library exports helper Rust types, Rust macros and C FFI bindings for inter
+ The C bindings can be generated with `bindgen`, using this build target:
  
- import argparse
- import logging
-+from pathlib import Path
-+from typing import Any, Iterable, Mapping, Optional, Set
+ ```console
+-$ ninja bindings.inc.rs
++$ make bindings.inc.rs
+ ```
  
--from typing import List
-+try:
-+    import tomllib
-+except ImportError:
-+    import tomli as tomllib
+ ## Generate Rust documentation
  
+-To generate docs for this crate, including private items:
++Common Cargo tasks can be performed from the QEMU build directory
  
--def generate_cfg_flags(header: str) -> List[str]:
-+class CargoTOML:
-+    tomldata: Mapping[Any, Any]
-+    check_cfg: Set[str]
-+
-+    def __init__(self, path: str):
-+        with open(path, 'rb') as f:
-+            self.tomldata = tomllib.load(f)
-+
-+        self.check_cfg = set(self.find_check_cfg())
-+
-+    def find_check_cfg(self) -> Iterable[str]:
-+        toml_lints = self.lints
-+        rust_lints = toml_lints.get("rust", {})
-+        cfg_lint = rust_lints.get("unexpected_cfgs", {})
-+        return cfg_lint.get("check-cfg", [])
-+
-+    @property
-+    def lints(self) -> Mapping[Any, Any]:
-+        return self.get_table("lints")
-+
-+    def get_table(self, key: str) -> Mapping[Any, Any]:
-+        table = self.tomldata.get(key, {})
-+
-+        return table
-+
-+
-+def generate_cfg_flags(header: str, cargo_toml: CargoTOML) -> Iterable[str]:
-     """Converts defines from config[..].h headers to rustc --cfg flags."""
- 
--    def cfg_name(name: str) -> str:
--        """Filter function for C #defines"""
--        if (
--            name.startswith("CONFIG_")
--            or name.startswith("TARGET_")
--            or name.startswith("HAVE_")
--        ):
--            return name
--        return ""
--
-     with open(header, encoding="utf-8") as cfg:
-         config = [l.split()[1:] for l in cfg if l.startswith("#define")]
- 
-     cfg_list = []
-     for cfg in config:
--        name = cfg_name(cfg[0])
--        if not name:
-+        name = cfg[0]
-+        if f'cfg({name})' not in cargo_toml.check_cfg:
-             continue
-         if len(cfg) >= 2 and cfg[1] != "1":
-             continue
-@@ -59,7 +80,6 @@ def cfg_name(name: str) -> str:
- 
- 
- def main() -> None:
--    # pylint: disable=missing-function-docstring
-     parser = argparse.ArgumentParser()
-     parser.add_argument("-v", "--verbose", action="store_true")
-     parser.add_argument(
-@@ -71,12 +91,21 @@ def main() -> None:
-         required=False,
-         default=[],
-     )
-+    parser.add_argument(
-+        metavar="TOML_FILE",
-+        action="store",
-+        dest="cargo_toml",
-+        help="path to Cargo.toml file",
-+    )
-     args = parser.parse_args()
-     if args.verbose:
-         logging.basicConfig(level=logging.DEBUG)
-     logging.debug("args: %s", args)
-+
-+    cargo_toml = CargoTOML(args.cargo_toml)
-+
-     for header in args.config_headers:
--        for tok in generate_cfg_flags(header):
-+        for tok in generate_cfg_flags(header, cargo_toml):
-             print(tok)
- 
+-```sh
+-pyvenv/bin/meson devenv -w ../rust cargo doc --no-deps --document-private-items
++```console
++$ make clippy
++$ make rustfmt
++$ make rustdoc
+ ```
+diff --git a/rust/qemu-api/build.rs b/rust/qemu-api/build.rs
+index 40644d5e4fe..471e6c633df 100644
+--- a/rust/qemu-api/build.rs
++++ b/rust/qemu-api/build.rs
+@@ -20,8 +20,13 @@ fn main() -> Result<()> {
+     let file = Path::new(&file);
+     if !Path::new(&file).exists() {
+         panic!(concat!(
+-            "No generated C bindings found! If you want to run `cargo`, start a subshell\n",
+-            "with `meson devenv`, or point MESON_BUILD_ROOT to the top of the build tree."
++            "\n",
++            "    No generated C bindings found! Maybe you wanted one of\n",
++            "    `make clippy`, `make rustfmt`, `make rustdoc`?\n",
++            "\n",
++            "    For other uses of `cargo`, start a subshell with\n",
++            "    `pyvenv/bin/meson devenv`, or point MESON_BUILD_ROOT to\n",
++            "    the top of the build tree."
+         ));
+     }
  
 -- 
 2.47.1
