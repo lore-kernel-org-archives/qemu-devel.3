@@ -4,86 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A7BCE77180
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:34:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2457E77183
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:34:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPdo-0007VP-25; Wed, 11 Dec 2024 11:32:48 -0500
+	id 1tLPZ0-00016I-Q7; Wed, 11 Dec 2024 11:27:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPcg-0004Px-Bk
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:40 -0500
-Received: from mail-qt1-x82f.google.com ([2607:f8b0:4864:20::82f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLPce-0001Gq-Ak
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:31:38 -0500
-Received: by mail-qt1-x82f.google.com with SMTP id
- d75a77b69052e-467918c35easo7220181cf.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:31:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733934695; x=1734539495; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KnGIQa/BmdLZVq6MuFlUl+Av3qfctnpKwsMblLrHMtk=;
- b=CcPCGZj2yYzo4nyhJQnRxLDpN7x3mq38Eu39RVsyFzRRZ/IJd4r6usMK/1VYaSm0Dr
- gzJeb7jmhdfFlw3f13DSthrVzq7aWWbx5ZBURBHDhk/CZ+eefMGWWu9dkAbG3hJJaMqo
- rcUtFeuAgYpXzRlxG4jQ1BiOATOYg8hcVZcUSuTg0HdgGLsiHFyD7Yv/5B1idQE6x6Kd
- VMQwvH8g2MnMHQgEdoPDTSTdI0LjWf+BSnmSTcuE7MkerbCmOI8ZBQP2KQ0Yc8Eg57p1
- CMQG9y6bxuiPyE94EFvkG0xjVp6WiNX0AFWa+pIZwNDATG0C6HW0JyRbEf7+3tb0Ayyz
- E32w==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPYu-0000VG-CU
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:44 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLPYr-0000FT-VT
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:43 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1733934461;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TD2OQfcDeDK+qzjMiwaAvgNRIwj56WMqMTyfSuDOEV4=;
+ b=BooAoaGkIyM4JR+hqFLF0feOqTId6zy+0QnRVaFtvmU1OxPY1VGIuDPGd3LfmYQ4jkMKjv
+ QdwnDHvd4mIxK4jLlkDnlonw2ZG1U3ppQxMLWpqWde2W+6vNVT18IFzIeKvahgKQ1LKIVE
+ yfvnNJMXAvavmHYh82MV3Oq3a2eRzM4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-272-Abn0R33vO0eugTBPB2aV7A-1; Wed, 11 Dec 2024 11:27:39 -0500
+X-MC-Unique: Abn0R33vO0eugTBPB2aV7A-1
+X-Mimecast-MFC-AGG-ID: Abn0R33vO0eugTBPB2aV7A
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9d1fso7260885e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:39 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934695; x=1734539495;
+ d=1e100.net; s=20230601; t=1733934458; x=1734539258;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KnGIQa/BmdLZVq6MuFlUl+Av3qfctnpKwsMblLrHMtk=;
- b=TtKewE2P1kLWjiVsr1tAKySehmWHpaDOsm+q96tiMql3VHhxT77Wdd5eQEEIZ+jN6O
- weqS/cC/ghlg9/M2ObcrjUR3ryyncwijsY7Os6snEb/MMgCbpoMEPmpcEWSFB3nsd5G+
- 8PmdAPKUFc5SDoweQW5s58SPT9hOo795dMBOJfOfh6pFce7pLY2OZEJzE82jAfF0xrvZ
- En1ulJQKFfTVqPjWRwh/42JpgXuGX6e7gQceP/2kxCkJ9YjKI7xiBuQx6JWoXu3o/tCj
- jv6avlMVz9RQTG/B91QofAvdeJw/H2Fztgt4Y/sbFrMJSx9KVB6FJLfrF0i48VYKMmEV
- gDOQ==
-X-Gm-Message-State: AOJu0YxxUvpCGpDnykPJ0iqSFLWT+TskcmyNyGkCtWaiBVeNP6kVkc42
- FI+wdlhrgJUup+pUJchMyhZDBwgxNk5RQlyzD6iGcKVJdV87K21ztk9X1u5RAdjZBR2W4rwaHHY
- 04FR9z5AH
-X-Gm-Gg: ASbGnct1Rs6z7ScQC3sp00qM8b308XCz3eXM3qtvOP/SrpiRdYfe00LN4oYXX0mrhT9
- f3tV6LJ2FM5jLgvSLHVlzGmZQ2IXXFI2GPWZ1hvI8n5cQqxj+veIdbR4wERQOMPN+oYlH95RC7N
- +5E7p6oybgak4bgJcW9sF51v8g+2XlT3EL4edmOhnaOeC6OecFALKf6QhJrwbVGNdszxQj4y9pe
- x0i5rTJUSObAgISzo/Gfoyrre+nqL6DOA+SrNCNhPYXXaT4c0suO60v2Nswzg==
-X-Google-Smtp-Source: AGHT+IER4LAJYo9PpGKPX+uvcvj0aq49QpHBjVrtUG2Uz/f64st9M8dpBHouf3kFYzl6tsRI3tYLqg==
-X-Received: by 2002:a05:622a:5448:b0:467:6226:bfc1 with SMTP id
- d75a77b69052e-46789309ec8mr68821881cf.29.1733934695234; 
- Wed, 11 Dec 2024 08:31:35 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46755db613csm43849381cf.70.2024.12.11.08.31.34
+ bh=TD2OQfcDeDK+qzjMiwaAvgNRIwj56WMqMTyfSuDOEV4=;
+ b=NxVNKwonilwQ2IK52Pq/UkJ+ACH09PZv88zIraHtNvXj2qOUc/V1Dfiqz1IQGmItmQ
+ PM3Sfo7cB0sIk5zWeTOMfxaXvkZ7J3tR9MMVslvhwcy/I3BZ1DRg3EF5RRI319u9bTjf
+ A0Galf8V+6+Zeam24Sr7R+1YJBjBR7+zmCKZuebmYxjCvaBUmIXwZLmU/PXEfqHdvRKK
+ Y0lUXyeSI7+iSM7lxNt7UeNXkBHMkzKlqVZWNYCfm1QHH4/oK0Ps+4q37OFlbJLwIwWM
+ 5ikSLCGHJIeafkOIscFvrD0oke3TEqNAvzo+MsLGSC6JhFCSNqakLIqibo/7dpQQMYMm
+ I3lw==
+X-Gm-Message-State: AOJu0YxAYXAW1/eyhJpnni55/dunD4eREPRslMr7h3IJ5uZkcjvq7MGy
+ CvYDwIaP7u2t3ZnMvPevfLc1vnJsTlJm98o/JOqXdqKeru1irLHWdyXkivf7b6Jw0E0nKzW3dHx
+ /RcIXVR513PxuIDs9ZWgzMHvCEQwrzveR3iCSdHHD7KcE2xLx+2U4w7AXr+gASspO1mnfKVvn5j
+ TMNO6NqX/KoWeY1A4d6OUmQ4c5mPFb0gEO7b/o
+X-Gm-Gg: ASbGnctsDgOJBVIgrYMYB8Wt1uwDO5TlIXATyylBRtbv12sEnQcb3iMzBBHXGWLMZh6
+ McMkDVKIFl1BiiU1A/5ygT3auOKpZ+sjWvPvniLc7OVvxyhoAVnb3uUiwmbxcrTnfwsmuxEopkb
+ vJ2/+jgjcSOPxZYxZco2jatIbrpbExshHpoT0z4bMekxXfmKIb3FUEVUZfRavM5OE20ouOFC9Qt
+ NPgO2uYBRcTR1Qssi5I+O4H8gmaflVR3/t5rDXjKsfonG6MvBOI/2fg
+X-Received: by 2002:a05:600c:b86:b0:434:a160:3647 with SMTP id
+ 5b1f17b1804b1-4361c3741f3mr28531175e9.12.1733934458058; 
+ Wed, 11 Dec 2024 08:27:38 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGGQ5WZgdElr7KLoROJjvPzc2comx82hrPu6QpRjt27+5NzyjopCNJrj0W0hA2ThjYzZcgyRg==
+X-Received: by 2002:a05:600c:b86:b0:434:a160:3647 with SMTP id
+ 5b1f17b1804b1-4361c3741f3mr28530905e9.12.1733934457490; 
+ Wed, 11 Dec 2024 08:27:37 -0800 (PST)
+Received: from [192.168.10.3] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-435c1833d67sm53331045e9.5.2024.12.11.08.27.36
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:31:34 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
+ Wed, 11 Dec 2024 08:27:36 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
-	Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3 14/69] target/arm: Convert disas_data_proc_3src to
- decodetree
-Date: Wed, 11 Dec 2024 10:29:41 -0600
-Message-ID: <20241211163036.2297116-15-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
-References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+Subject: [PULL 07/49] rust: cargo: store desired warning levels in workspace
+ Cargo.toml
+Date: Wed, 11 Dec 2024 17:26:37 +0100
+Message-ID: <20241211162720.320070-8-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82f;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x82f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,203 +108,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This includes MADD, MSUB, SMADDL, SMSUBL, UMADDL, UMSUBL, SMULH, UMULH.
+An extra benefit of workspaces is that they allow to place lint level
+settings in a single Cargo.toml; the settings are then inherited by
+packages in the workspace.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Correspondingly, teach rustc_args.py to get the unexpected_cfgs
+configuration from the workspace Cargo.toml.
+
+Note that it is still possible to allow or deny warnings per crate or
+module, via the #![] attribute syntax.  The rust/qemu-api/src/bindings.rs
+file is an example.
+
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/arm/tcg/translate-a64.c | 119 ++++++++++++---------------------
- target/arm/tcg/a64.decode      |  16 +++++
- 2 files changed, 59 insertions(+), 76 deletions(-)
+ meson.build                     |  7 +++---
+ rust/Cargo.toml                 |  8 +++++++
+ rust/hw/char/pl011/Cargo.toml   |  3 +++
+ rust/qemu-api-macros/Cargo.toml |  3 +++
+ rust/qemu-api/Cargo.toml        |  5 ++---
+ rust/qemu-api/meson.build       |  2 +-
+ scripts/rust/rustc_args.py      | 38 +++++++++++++++++++++++++++------
+ 7 files changed, 53 insertions(+), 13 deletions(-)
 
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index d570bbb696..99ff787c61 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -7955,98 +7955,68 @@ TRANS(SUB_r, do_addsub_reg, a, true, false)
- TRANS(ADDS_r, do_addsub_reg, a, false, true)
- TRANS(SUBS_r, do_addsub_reg, a, true, true)
+diff --git a/meson.build b/meson.build
+index 1e1d8f5cd61..218ae441e38 100644
+--- a/meson.build
++++ b/meson.build
+@@ -121,11 +121,12 @@ endif
  
--/* Data-processing (3 source)
-- *
-- *    31 30  29 28       24 23 21  20  16  15  14  10 9    5 4    0
-- *  +--+------+-----------+------+------+----+------+------+------+
-- *  |sf| op54 | 1 1 0 1 1 | op31 |  Rm  | o0 |  Ra  |  Rn  |  Rd  |
-- *  +--+------+-----------+------+------+----+------+------+------+
-- */
--static void disas_data_proc_3src(DisasContext *s, uint32_t insn)
-+static bool do_mulh(DisasContext *s, arg_rrr *a,
-+                    void (*fn)(TCGv_i64, TCGv_i64, TCGv_i64, TCGv_i64))
- {
--    int rd = extract32(insn, 0, 5);
--    int rn = extract32(insn, 5, 5);
--    int ra = extract32(insn, 10, 5);
--    int rm = extract32(insn, 16, 5);
--    int op_id = (extract32(insn, 29, 3) << 4) |
--        (extract32(insn, 21, 3) << 1) |
--        extract32(insn, 15, 1);
--    bool sf = extract32(insn, 31, 1);
--    bool is_sub = extract32(op_id, 0, 1);
--    bool is_high = extract32(op_id, 2, 1);
--    bool is_signed = false;
--    TCGv_i64 tcg_op1;
--    TCGv_i64 tcg_op2;
--    TCGv_i64 tcg_tmp;
-+    TCGv_i64 discard = tcg_temp_new_i64();
-+    TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
-+    TCGv_i64 tcg_rn = cpu_reg(s, a->rn);
-+    TCGv_i64 tcg_rm = cpu_reg(s, a->rm);
+ if have_rust
+   rustc_args = [find_program('scripts/rust/rustc_args.py'),
+-    '--rustc-version', rustc.version()]
++    '--rustc-version', rustc.version(),
++    '--workspace', meson.project_source_root() / 'rust']
+   rustfmt = find_program('rustfmt', required: false)
  
--    /* Note that op_id is sf:op54:op31:o0 so it includes the 32/64 size flag */
--    switch (op_id) {
--    case 0x42: /* SMADDL */
--    case 0x43: /* SMSUBL */
--    case 0x44: /* SMULH */
--        is_signed = true;
--        break;
--    case 0x0: /* MADD (32bit) */
--    case 0x1: /* MSUB (32bit) */
--    case 0x40: /* MADD (64bit) */
--    case 0x41: /* MSUB (64bit) */
--    case 0x4a: /* UMADDL */
--    case 0x4b: /* UMSUBL */
--    case 0x4c: /* UMULH */
--        break;
--    default:
--        unallocated_encoding(s);
--        return;
--    }
-+    fn(discard, tcg_rd, tcg_rn, tcg_rm);
-+    return true;
-+}
+-  # Prohibit code that is forbidden in Rust 2024
+-  rustc_lint_args = ['-D', 'unsafe_op_in_unsafe_fn']
++  rustc_lint_args = run_command(rustc_args, '--lints',
++     capture: true, check: true).stdout().strip().splitlines()
  
--    if (is_high) {
--        TCGv_i64 low_bits = tcg_temp_new_i64(); /* low bits discarded */
--        TCGv_i64 tcg_rd = cpu_reg(s, rd);
--        TCGv_i64 tcg_rn = cpu_reg(s, rn);
--        TCGv_i64 tcg_rm = cpu_reg(s, rm);
-+TRANS(SMULH, do_mulh, a, tcg_gen_muls2_i64)
-+TRANS(UMULH, do_mulh, a, tcg_gen_mulu2_i64)
- 
--        if (is_signed) {
--            tcg_gen_muls2_i64(low_bits, tcg_rd, tcg_rn, tcg_rm);
--        } else {
--            tcg_gen_mulu2_i64(low_bits, tcg_rd, tcg_rn, tcg_rm);
--        }
--        return;
--    }
-+static bool do_muladd(DisasContext *s, arg_rrrr *a,
-+                      bool sf, bool is_sub, MemOp mop)
-+{
-+    TCGv_i64 tcg_rd = cpu_reg(s, a->rd);
-+    TCGv_i64 tcg_op1, tcg_op2;
- 
--    tcg_op1 = tcg_temp_new_i64();
--    tcg_op2 = tcg_temp_new_i64();
--    tcg_tmp = tcg_temp_new_i64();
--
--    if (op_id < 0x42) {
--        tcg_gen_mov_i64(tcg_op1, cpu_reg(s, rn));
--        tcg_gen_mov_i64(tcg_op2, cpu_reg(s, rm));
-+    if (mop == MO_64) {
-+        tcg_op1 = cpu_reg(s, a->rn);
-+        tcg_op2 = cpu_reg(s, a->rm);
-     } else {
--        if (is_signed) {
--            tcg_gen_ext32s_i64(tcg_op1, cpu_reg(s, rn));
--            tcg_gen_ext32s_i64(tcg_op2, cpu_reg(s, rm));
--        } else {
--            tcg_gen_ext32u_i64(tcg_op1, cpu_reg(s, rn));
--            tcg_gen_ext32u_i64(tcg_op2, cpu_reg(s, rm));
--        }
-+        tcg_op1 = tcg_temp_new_i64();
-+        tcg_op2 = tcg_temp_new_i64();
-+        tcg_gen_ext_i64(tcg_op1, cpu_reg(s, a->rn), mop);
-+        tcg_gen_ext_i64(tcg_op2, cpu_reg(s, a->rm), mop);
-     }
- 
--    if (ra == 31 && !is_sub) {
-+    if (a->ra == 31 && !is_sub) {
-         /* Special-case MADD with rA == XZR; it is the standard MUL alias */
--        tcg_gen_mul_i64(cpu_reg(s, rd), tcg_op1, tcg_op2);
-+        tcg_gen_mul_i64(tcg_rd, tcg_op1, tcg_op2);
-     } else {
-+        TCGv_i64 tcg_tmp = tcg_temp_new_i64();
-+        TCGv_i64 tcg_ra = cpu_reg(s, a->ra);
+   # Occasionally, we may need to silence warnings and clippy lints that
+   # were only introduced in newer Rust compiler versions.  Do not croak
+diff --git a/rust/Cargo.toml b/rust/Cargo.toml
+index 0c94d5037da..4bb52bf0bd5 100644
+--- a/rust/Cargo.toml
++++ b/rust/Cargo.toml
+@@ -5,3 +5,11 @@ members = [
+     "qemu-api",
+     "hw/char/pl011",
+ ]
 +
-         tcg_gen_mul_i64(tcg_tmp, tcg_op1, tcg_op2);
-         if (is_sub) {
--            tcg_gen_sub_i64(cpu_reg(s, rd), cpu_reg(s, ra), tcg_tmp);
-+            tcg_gen_sub_i64(tcg_rd, tcg_ra, tcg_tmp);
-         } else {
--            tcg_gen_add_i64(cpu_reg(s, rd), cpu_reg(s, ra), tcg_tmp);
-+            tcg_gen_add_i64(tcg_rd, tcg_ra, tcg_tmp);
-         }
-     }
++[workspace.lints.rust]
++unexpected_cfgs = { level = "deny", check-cfg = [
++    'cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
++    'cfg(has_offset_of)'] }
++
++# Prohibit code that is forbidden in Rust 2024
++unsafe_op_in_unsafe_fn = "deny"
+diff --git a/rust/hw/char/pl011/Cargo.toml b/rust/hw/char/pl011/Cargo.toml
+index a373906b9fb..58f3e859f7e 100644
+--- a/rust/hw/char/pl011/Cargo.toml
++++ b/rust/hw/char/pl011/Cargo.toml
+@@ -21,3 +21,6 @@ bilge = { version = "0.2.0" }
+ bilge-impl = { version = "0.2.0" }
+ qemu_api = { path = "../../../qemu-api" }
+ qemu_api_macros = { path = "../../../qemu-api-macros" }
++
++[lints]
++workspace = true
+diff --git a/rust/qemu-api-macros/Cargo.toml b/rust/qemu-api-macros/Cargo.toml
+index a8f7377106b..5a27b52ee6e 100644
+--- a/rust/qemu-api-macros/Cargo.toml
++++ b/rust/qemu-api-macros/Cargo.toml
+@@ -20,3 +20,6 @@ proc-macro = true
+ proc-macro2 = "1"
+ quote = "1"
+ syn = { version = "2", features = ["extra-traits"] }
++
++[lints]
++workspace = true
+diff --git a/rust/qemu-api/Cargo.toml b/rust/qemu-api/Cargo.toml
+index cc716d75d46..669f288d1cb 100644
+--- a/rust/qemu-api/Cargo.toml
++++ b/rust/qemu-api/Cargo.toml
+@@ -23,6 +23,5 @@ version_check = "~0.9"
+ default = []
+ allocator = []
  
-     if (!sf) {
--        tcg_gen_ext32u_i64(cpu_reg(s, rd), cpu_reg(s, rd));
-+        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
-     }
-+    return true;
- }
+-[lints.rust]
+-unexpected_cfgs = { level = "warn", check-cfg = ['cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
+-                                                 'cfg(has_offset_of)'] }
++[lints]
++workspace = true
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 1ed79672cc9..d719c13f46d 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -1,5 +1,5 @@
+ _qemu_api_cfg = run_command(rustc_args,
+-  '--config-headers', config_host_h, '--features', '--lints', files('Cargo.toml'),
++  '--config-headers', config_host_h, '--features', files('Cargo.toml'),
+   capture: true, check: true).stdout().strip().splitlines()
  
-+TRANS(MADD_w, do_muladd, a, false, false, MO_64)
-+TRANS(MSUB_w, do_muladd, a, false, true, MO_64)
-+TRANS(MADD_x, do_muladd, a, true, false, MO_64)
-+TRANS(MSUB_x, do_muladd, a, true, true, MO_64)
-+
-+TRANS(SMADDL, do_muladd, a, true, false, MO_SL)
-+TRANS(SMSUBL, do_muladd, a, true, true, MO_SL)
-+TRANS(UMADDL, do_muladd, a, true, false, MO_UL)
-+TRANS(UMSUBL, do_muladd, a, true, true, MO_UL)
-+
- /* Add/subtract (with carry)
-  *  31 30 29 28 27 26 25 24 23 22 21  20  16  15       10  9    5 4   0
-  * +--+--+--+------------------------+------+-------------+------+-----+
-@@ -8364,13 +8334,10 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
-         disas_cond_select(s, insn);
-         break;
+ # _qemu_api_cfg += ['--cfg', 'feature="allocator"']
+diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
+index 9b9778a1cac..9df131a02bd 100644
+--- a/scripts/rust/rustc_args.py
++++ b/scripts/rust/rustc_args.py
+@@ -38,11 +38,21 @@
  
--    case 0x8 ... 0xf: /* (3 source) */
--        disas_data_proc_3src(s, insn);
--        break;
--
-     default:
-     do_unallocated:
-     case 0x6: /* Data-processing */
-+    case 0x8 ... 0xf: /* (3 source) */
-         unallocated_encoding(s);
-         break;
-     }
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 27a3101bc6..b0cc8bd476 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -753,6 +753,22 @@ SUBS_ext        . 11 01011001 ..... ... ... ..... .....     @addsub_ext
- # Conditional select
- # Data Processing (3-source)
+ class CargoTOML:
+     tomldata: Mapping[Any, Any]
++    workspace_data: Mapping[Any, Any]
+     check_cfg: Set[str]
  
-+&rrrr           rd rn rm ra
-+@rrrr           . .. ........ rm:5 . ra:5 rn:5 rd:5     &rrrr
+-    def __init__(self, path: str):
+-        with open(path, 'rb') as f:
+-            self.tomldata = tomllib.load(f)
++    def __init__(self, path: Optional[str], workspace: Optional[str]):
++        if path is not None:
++            with open(path, 'rb') as f:
++                self.tomldata = tomllib.load(f)
++        else:
++            self.tomldata = {"lints": {"workspace": True}}
 +
-+MADD_w          0 00 11011000 ..... 0 ..... ..... ..... @rrrr
-+MSUB_w          0 00 11011000 ..... 1 ..... ..... ..... @rrrr
-+MADD_x          1 00 11011000 ..... 0 ..... ..... ..... @rrrr
-+MSUB_x          1 00 11011000 ..... 1 ..... ..... ..... @rrrr
-+
-+SMADDL          1 00 11011001 ..... 0 ..... ..... ..... @rrrr
-+SMSUBL          1 00 11011001 ..... 1 ..... ..... ..... @rrrr
-+UMADDL          1 00 11011101 ..... 0 ..... ..... ..... @rrrr
-+UMSUBL          1 00 11011101 ..... 1 ..... ..... ..... @rrrr
-+
-+SMULH           1 00 11011010 ..... 0 11111 ..... ..... @rrr
-+UMULH           1 00 11011110 ..... 0 11111 ..... ..... @rrr
-+
- ### Cryptographic AES
++        if workspace is not None:
++            with open(workspace, 'rb') as f:
++                self.workspace_data = tomllib.load(f)
++            if "workspace" not in self.workspace_data:
++                self.workspace_data["workspace"] = {}
  
- AESE            01001110 00 10100 00100 10 ..... .....  @r2r_q1e0
+         self.check_cfg = set(self.find_check_cfg())
+ 
+@@ -54,10 +64,12 @@ def find_check_cfg(self) -> Iterable[str]:
+ 
+     @property
+     def lints(self) -> Mapping[Any, Any]:
+-        return self.get_table("lints")
++        return self.get_table("lints", True)
+ 
+-    def get_table(self, key: str) -> Mapping[Any, Any]:
++    def get_table(self, key: str, can_be_workspace: bool = False) -> Mapping[Any, Any]:
+         table = self.tomldata.get(key, {})
++        if can_be_workspace and table.get("workspace", False) is True:
++            table = self.workspace_data["workspace"].get(key, {})
+ 
+         return table
+ 
+@@ -136,6 +148,16 @@ def main() -> None:
+         action="store",
+         dest="cargo_toml",
+         help="path to Cargo.toml file",
++        nargs='?',
++    )
++    parser.add_argument(
++        "--workspace",
++        metavar="DIR",
++        action="store",
++        dest="workspace",
++        help="path to root of the workspace",
++        required=False,
++        default=None,
+     )
+     parser.add_argument(
+         "--features",
+@@ -168,7 +190,11 @@ def main() -> None:
+     logging.debug("args: %s", args)
+ 
+     rustc_version = tuple((int(x) for x in args.rustc_version.split('.')[0:2]))
+-    cargo_toml = CargoTOML(args.cargo_toml)
++    if args.workspace:
++        workspace_cargo_toml = Path(args.workspace, "Cargo.toml").resolve()
++        cargo_toml = CargoTOML(args.cargo_toml, str(workspace_cargo_toml))
++    else:
++        cargo_toml = CargoTOML(args.cargo_toml, None)
+ 
+     if args.lints:
+         for tok in generate_lint_flags(cargo_toml):
 -- 
-2.43.0
+2.47.1
 
 
