@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96A6EE7717D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A943CE77180
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 09:52:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLJNN-000696-83; Wed, 11 Dec 2024 04:51:26 -0500
+	id 1tLJNS-0006BY-Lu; Wed, 11 Dec 2024 04:51:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLJNK-00068p-VK; Wed, 11 Dec 2024 04:51:22 -0500
+ id 1tLJNQ-0006AZ-23; Wed, 11 Dec 2024 04:51:28 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLJNI-00057d-SX; Wed, 11 Dec 2024 04:51:22 -0500
+ id 1tLJNO-00057d-KX; Wed, 11 Dec 2024 04:51:27 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Wed, 11 Dec
@@ -30,10 +30,13 @@ To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [RFC.PATCH v1 0/2] sd:sdhci Fix data transfer did not complete
-Date: Wed, 11 Dec 2024 17:51:08 +0800
-Message-ID: <20241211095111.1421928-1-jamin_lin@aspeedtech.com>
+Subject: [RFC.PATCH v1 2/2] sd:sdhci: Fix data transfer did not complete if
+ data size is bigger then SDMA Buffer Boundary
+Date: Wed, 11 Dec 2024 17:51:10 +0800
+Message-ID: <20241211095111.1421928-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241211095111.1421928-1-jamin_lin@aspeedtech.com>
+References: <20241211095111.1421928-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -62,19 +65,75 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-1. Fix boundary_count overflow
-2. Fix data transfer did not complete if data size is bigger then SDMA Buffer Boundary
+According to the design of sdhci_sdma_transfer_multi_blocks, if the
+"s->blkcnt * 512" was bigger than the SDMA Buffer boundary, it breaked the
+while loop of data transfer and set SDHC_NISEN_DMA in the normal interreupt
+status to notify the firmware that this SDMA boundary buffer Transfer Complete
+and firmware should set the system address of the next SDMA boundary buffer
+for the remaining data transfer.
 
-Jamin Lin (2):
-  RFC:sd:sdhci: Fix boundary_count overflow in
-    sdhci_sdma_transfer_multi_blocks
-  RFC:sd:sdhci: Fix data transfer did not complete if data size is
-    bigger then SDMA Buffer Boundary
+However, after firmware set the system address of the next SDMA boundary buffer
+in the SDMA System Address Register(0x00), SDHCI modle did not start the data
+transfer, again. Finally, firmware breaked the data transfer because firmware
+did not receive the DMA Interrupt and Tansfer Complete Interrupt from SDHCI
+model.
 
- hw/sd/sdhci.c | 27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+Error log from u-boot
+```
+sdhci_transfer_data: Transfer data timeout
+ ** fs_devread read error - block
+```
 
+According to the following mention from SDMA System Address Refister of SDHCI
+spec,
+'''
+This register contains the system memory address for an SDMA transfer in
+32-bit addressing mode. When the Host Controller stops an SDMA transfer,
+this register shall point to the system address of the next contiguous data
+position.
+It can be accessed only if no transaction is executing (i.e., after a transaction
+has stopped). Reading this register during SDMA transfers may return an
+invalid value.
+The Host Driver shall initialize this register before starting an SDMA
+transaction.
+After SDMA has stopped, the next system address of the next contiguous
+data position can be read from this register.
+The SDMA transfer waits at the every boundary specified by the SDMA
+Buffer Boundary in the Block Size register. The Host Controller generates
+DMA Interrupt to request the Host Driver to update this register. The Host
+Driver sets the next system address of the next data position to this register.
+When the most upper byte of this register (003h) is written, the Host Controller
+restarts the SDMA transfer.
+''',
+
+restrat the data transfer if firmware set the SDMA System Address, s->blkcnt
+is bigger than 0 and SDHCI is in the data transfer state.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/sd/sdhci.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 47d96b935b..53c23c5437 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1170,6 +1170,15 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+                     sdhci_sdma_transfer_single_block(s);
+                 }
+             }
++        } else if (TRANSFERRING_DATA(s->prnsts)) {
++            /* restarts the SDMA transfer if blkcnt is not zero  */
++            if (s->blkcnt && SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
++                if (s->trnmod & SDHC_TRNS_MULTI) {
++                    sdhci_sdma_transfer_multi_blocks(s);
++                } else {
++                    sdhci_sdma_transfer_single_block(s);
++                }
++            }
+         }
+         break;
+     case SDHC_BLKSIZE:
 -- 
 2.34.1
 
