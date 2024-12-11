@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 272CDE77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27312C3DA4A
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:28:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZG-000344-PU; Wed, 11 Dec 2024 11:28:07 -0500
+	id 1tLPZR-0004X7-UE; Wed, 11 Dec 2024 11:28:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZ7-00023s-JW
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLPZM-0003pU-K4
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:12 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZ5-0000Ik-MA
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:27:57 -0500
+ id 1tLPZK-0000Pi-NQ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934471;
+ s=mimecast20190719; t=1733934488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yd9TqaYM4lKJdZBLeFrSdM5kPuWm4QjUX5Xc6xf+7Y8=;
- b=eS7ZyBEF8jYBsKIRWSYhpuM40+PkmJLWBzI/NC1FZD3q69YoU4jl1RPdRvPHWmUvz4zf1f
- Tlp4HKvgMcZQy0C9g3qLqN85Tn8f9MAoyPW5VFnvhRYE4hxQFcVDvKoJKY+GV7mlqztFZr
- qoka5/Ay2sL/YKY/JATGmEu37KewlhQ=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nRrSXqg/+YjeMrLl+QDiq1syQzoZBeTQdvPr71n/Pxc=;
+ b=Np9w7/Kkip51iBSrn7vOCK9qJ7qDTtik9ejdLnR/iyEKKQHwu4PWweT7VsN83UtXifIkHb
+ GMXdbN4Q5HqSj/3kM2CyIRFI9IBIExsuYN8I1gCy9+TEk97JC0m3aLjUE/J5yV28zqKbQP
+ W3qUIoWlYgZ8+eaZtyvtaU6BL4urpPk=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-424-IhZaCJlLM52sLSQWokl6eA-1; Wed, 11 Dec 2024 11:27:42 -0500
-X-MC-Unique: IhZaCJlLM52sLSQWokl6eA-1
-X-Mimecast-MFC-AGG-ID: IhZaCJlLM52sLSQWokl6eA
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-5d3cdb9d4b1so1164323a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:27:41 -0800 (PST)
+ us-mta-511-dSbmF2--NtiF1v2Km6bfxQ-1; Wed, 11 Dec 2024 11:28:07 -0500
+X-MC-Unique: dSbmF2--NtiF1v2Km6bfxQ-1
+X-Mimecast-MFC-AGG-ID: dSbmF2--NtiF1v2Km6bfxQ
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa689b88293so390193666b.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934460; x=1734539260;
+ d=1e100.net; s=20230601; t=1733934486; x=1734539286;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yd9TqaYM4lKJdZBLeFrSdM5kPuWm4QjUX5Xc6xf+7Y8=;
- b=i//sYQmPeEn7Olh2d3f+qQYYaVYbOpyZqOMzF33tW3SnVRHwXfLdbkkYFKy1bQ7nuT
- Sg8/7fpFiFmYzBVRAH+JSTZjwb+n1x4zasKJo4MdJf3JGof20PExCWZ6XcEhIrT1dvwM
- yWkYmSAqJ6LbDCAqRgrDzsrrAMewhrc7J6co5hox1pPxzFYypcPe3IfPzMXTFxSVLuFE
- LXlhfAhNmIlbdGbsJBbnr6JNJ82ZmWYB8sBQLsXd4Hyase/PWnDWcGseCy+KgMDJrSB+
- brEjSlxkm3LeuKxPMbgy4BImxT+rGHOLXfyK+nvo9gZJWFaG6bfA/5JPAJ+gm3wPI1Y+
- LWPg==
-X-Gm-Message-State: AOJu0YwG7g1DXMwCUrwxAhRfjALT7AMV31GbVskeYO2aWEYs23jpWhTn
- YoFXhrBJt+PVTqFVcWmf+4rYMKYE82wqBZtfB9X57I5Kl3W1KJ9BuTxfOsF6DUo2KHpFK8be5LP
- gnxI9LMzvyCMLFgwoWHo6pietd+9LfvBkryCyULrvfs951P5ZgWSOlHeeU13wIi2Wykh5QPJ3fo
- QfEOOMK/IkVV2jZBaa2ZUUliey8nhq9nFJb4q/
-X-Gm-Gg: ASbGncvrSkWeUl/L8ofCufLaUDw++rueuEVlTgyL5kTbw66KY/vZRDgC5pIN0UDaqx5
- 4aLIzwqZUOwsbY13X3TzNB5DoyAWWCqEG3QcMmWrjSRj65vpzeHzVU+WOJsFwJA2u49/8xrJz6J
- O0z8lRP0VQYshpGvvSGZn4Jnsvxinyr/uuwpei5bUMyUkqRDQZD56xyU4jVU01hCeHQ78fABgwe
- Cwniu2bGyAkZLP8ZXxHhyx4vGxkJA+ag67cWhfElWbVRhOpTGtGqrmS
-X-Received: by 2002:a05:6402:5215:b0:5d0:b1c4:7081 with SMTP id
- 4fb4d7f45d1cf-5d43317b4eamr3092289a12.4.1733934460027; 
- Wed, 11 Dec 2024 08:27:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFB3/zvg9TsUI5Su1pYoD7XrW/AD9beYNGnmv0FbFRt5CdREs7lBQXGhu4S1oCoJcMSbkzTdg==
-X-Received: by 2002:a05:6402:5215:b0:5d0:b1c4:7081 with SMTP id
- 4fb4d7f45d1cf-5d43317b4eamr3092247a12.4.1733934459504; 
- Wed, 11 Dec 2024 08:27:39 -0800 (PST)
+ bh=nRrSXqg/+YjeMrLl+QDiq1syQzoZBeTQdvPr71n/Pxc=;
+ b=UHdDuzuTLnIWo+4fwHYhJzFvj+sPxYs16RS8jrXUAwVSBT2wPm1RUar61Ah7+MUJnF
+ Mbg9DtY69++6ERk3AhowsaW6vEIb0CP/iyLXSJDX1zzSfJXlE+EMlc0npfG+DW7M/8Wy
+ Ja1Anb7RghL5EQbIDME9FKOJ6mnsvUW5Sf3Ol4ghw6oVe0sSbLr6JX35KxnezgsHuy77
+ FrSt4QSu+orF9ohu7q1pZ6C3BN8YVD2FyThelApkLaRbXhBOCwStaMI1Vv9DSqKNGtF2
+ z/axvu/Vm6d9j3ZCpLz/My0CD2PP3gDYcMAlvHo5PU3OD9PRO4kbqZln/51oKSsObgwt
+ QgMw==
+X-Gm-Message-State: AOJu0YwT23aUPBQtB6c42iAgcDsSeMupG5BRE6x+ah0FyPHhSy1XV11G
+ gbieevBF+YmRUPGkCTHiojZLSuGrOgrSfLMch++V2xGqlf1xKGedY16YrfaeU4YrnBqsJO06LQL
+ kbHMjCVnmqeYWYxq1v6WXlMlHGSyK2NsWCUqDtrYBcpzx0IVl0rZ40L8631rVlrBKAU2OMGhnQ+
+ 4THw2xPhZxBoRT0l7iAVOG/fSVJwAJXgyzUQeN
+X-Gm-Gg: ASbGnctrolKGmdbmT/Pz/okF3YQ9BwxUnv61wiY7+cF/tBejtoJQd+/w/8d/+c46WdD
+ mXLIBuSxKmzcfXAOWa7XuVPUnKqX+ec8LZM02O9js1QMhkN+lM4Rwulw2yAfQeZDuAGXhUeX23x
+ X+G3juNdGDFnyZrsZzZxILkQJZZZbqj2Du6RNPLS6v2r0LHmE/9xMh8uXajEHWHs+9fCCO/VrRy
+ JT2dPhXK/WMHuFNNpV20RCaVxxwwlQif7TuXBgGGEQYR2408ucMMys3
+X-Received: by 2002:a17:906:31cc:b0:aa6:2a17:b54c with SMTP id
+ a640c23a62f3a-aa6b10f5d0cmr363227266b.6.1733934485885; 
+ Wed, 11 Dec 2024 08:28:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHXGrfANIexBy1+tEtPudrnrfGo/neSKYX8wA0P+6Xq9n/uJ/cIC2Qb9XPY0rFSFaYcDkrF2w==
+X-Received: by 2002:a17:906:31cc:b0:aa6:2a17:b54c with SMTP id
+ a640c23a62f3a-aa6b10f5d0cmr363224566b.6.1733934485451; 
+ Wed, 11 Dec 2024 08:28:05 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d3eb109bc9sm5930514a12.42.2024.12.11.08.27.38
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-aa66c646e64sm652223666b.25.2024.12.11.08.28.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:27:38 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:04 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/49] rust: build: move strict lints handling to rustc_args.py
-Date: Wed, 11 Dec 2024 17:26:38 +0100
-Message-ID: <20241211162720.320070-9-pbonzini@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/49] clock: inline most of qdev_init_clocklist
+Date: Wed, 11 Dec 2024 17:26:47 +0100
+Message-ID: <20241211162720.320070-18-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -107,121 +108,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Make Cargo use unknown_lints = "allow" as well.  This is more future
-proof as we might add new lints to rust/Cargo.toml that are not supported
-by older versions of rustc or clippy.
+Move object creation out of qdev_init_clocklist.  The input/output
+cases are very simple, and the aliases are completely different.
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                | 12 ++++--------
- rust/Cargo.toml            |  6 ++++++
- scripts/rust/rustc_args.py | 19 ++++++++++++++++---
- 3 files changed, 26 insertions(+), 11 deletions(-)
+ hw/core/qdev-clock.c | 71 +++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 44 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 218ae441e38..85f74854735 100644
---- a/meson.build
-+++ b/meson.build
-@@ -123,19 +123,15 @@ if have_rust
-   rustc_args = [find_program('scripts/rust/rustc_args.py'),
-     '--rustc-version', rustc.version(),
-     '--workspace', meson.project_source_root() / 'rust']
-+  if get_option('strict_rust_lints')
-+    rustc_args += ['--strict-lints']
-+  endif
-+
-   rustfmt = find_program('rustfmt', required: false)
+diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
+index 2f9d6cb7579..dacafa4e036 100644
+--- a/hw/core/qdev-clock.c
++++ b/hw/core/qdev-clock.c
+@@ -22,7 +22,7 @@
+  * Add a new clock in a device
+  */
+ static NamedClockList *qdev_init_clocklist(DeviceState *dev, const char *name,
+-                                           bool output, Clock *clk)
++                                           bool alias, bool output, Clock *clk)
+ {
+     NamedClockList *ncl;
  
-   rustc_lint_args = run_command(rustc_args, '--lints',
-      capture: true, check: true).stdout().strip().splitlines()
- 
--  # Occasionally, we may need to silence warnings and clippy lints that
--  # were only introduced in newer Rust compiler versions.  Do not croak
--  # in that case; a CI job with rust_strict_lints == true ensures that
--  # we do not have misspelled allow() attributes.
--  if not get_option('strict_rust_lints')
--    rustc_lint_args += ['-A', 'unknown_lints']
--  endif
+@@ -38,31 +38,8 @@ static NamedClockList *qdev_init_clocklist(DeviceState *dev, const char *name,
+      */
+     ncl = g_new0(NamedClockList, 1);
+     ncl->name = g_strdup(name);
++    ncl->alias = alias;
+     ncl->output = output;
+-    ncl->alias = (clk != NULL);
 -
-   # Apart from procedural macros, our Rust executables will often link
-   # with C code, so include all the libraries that C code needs.  This
-   # is safe; https://github.com/rust-lang/rust/pull/54675 says that
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 4bb52bf0bd5..358c517bc56 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -11,5 +11,11 @@ unexpected_cfgs = { level = "deny", check-cfg = [
-     'cfg(MESON)', 'cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)',
-     'cfg(has_offset_of)'] }
+-    /*
+-     * Trying to create a clock whose name clashes with some other
+-     * clock or property is a bug in the caller and we will abort().
+-     */
+-    if (clk == NULL) {
+-        clk = CLOCK(object_new(TYPE_CLOCK));
+-        object_property_add_child(OBJECT(dev), name, OBJECT(clk));
+-    } else {
+-        object_property_add_link(OBJECT(dev), name,
+-                                 object_get_typename(OBJECT(clk)),
+-                                 (Object **) &ncl->clock,
+-                                 NULL, OBJ_PROP_LINK_STRONG);
+-        /*
+-         * Since the link property has the OBJ_PROP_LINK_STRONG flag, the clk
+-         * object reference count gets decremented on property deletion.
+-         * However object_property_add_link does not increment it since it
+-         * doesn't know the linked object. Increment it here to ensure the
+-         * aliased clock stays alive during this device life-time.
+-         */
+-        object_ref(OBJECT(clk));
+-    }
+-
+     ncl->clock = clk;
  
-+# Occasionally, we may need to silence warnings and clippy lints that
-+# were only introduced in newer Rust compiler versions.  Do not croak
-+# in that case; a CI job with rust_strict_lints == true disables this
-+# and ensures that we do not have misspelled allow() attributes.
-+unknown_lints = "allow"
-+
- # Prohibit code that is forbidden in Rust 2024
- unsafe_op_in_unsafe_fn = "deny"
-diff --git a/scripts/rust/rustc_args.py b/scripts/rust/rustc_args.py
-index 9df131a02bd..5525b3886fa 100644
---- a/scripts/rust/rustc_args.py
-+++ b/scripts/rust/rustc_args.py
-@@ -35,6 +35,8 @@
- except ImportError:
-     import tomli as tomllib
+     QLIST_INSERT_HEAD(&dev->clocks, ncl, node);
+@@ -90,29 +67,25 @@ void qdev_finalize_clocklist(DeviceState *dev)
  
-+STRICT_LINTS = {"unknown_lints", "warnings"}
-+
+ Clock *qdev_init_clock_out(DeviceState *dev, const char *name)
+ {
+-    NamedClockList *ncl;
++    Clock *clk = CLOCK(object_new(TYPE_CLOCK));
++    object_property_add_child(OBJECT(dev), name, OBJECT(clk));
  
- class CargoTOML:
-     tomldata: Mapping[Any, Any]
-@@ -80,7 +82,7 @@ class LintFlag:
-     priority: int
+-    assert(name);
+-
+-    ncl = qdev_init_clocklist(dev, name, true, NULL);
+-
+-    return ncl->clock;
++    qdev_init_clocklist(dev, name, false, true, clk);
++    return clk;
+ }
  
+ Clock *qdev_init_clock_in(DeviceState *dev, const char *name,
+                           ClockCallback *callback, void *opaque,
+                           unsigned int events)
+ {
+-    NamedClockList *ncl;
+-
+-    assert(name);
+-
+-    ncl = qdev_init_clocklist(dev, name, false, NULL);
++    Clock *clk = CLOCK(object_new(TYPE_CLOCK));
++    object_property_add_child(OBJECT(dev), name, OBJECT(clk));
  
--def generate_lint_flags(cargo_toml: CargoTOML) -> Iterable[str]:
-+def generate_lint_flags(cargo_toml: CargoTOML, strict_lints: bool) -> Iterable[str]:
-     """Converts Cargo.toml lints to rustc -A/-D/-F/-W flags."""
++    qdev_init_clocklist(dev, name, false, false, clk);
+     if (callback) {
+-        clock_set_callback(ncl->clock, callback, opaque, events);
++        clock_set_callback(clk, callback, opaque, events);
+     }
+-    return ncl->clock;
++    return clk;
+ }
  
-     toml_lints = cargo_toml.lints
-@@ -105,9 +107,13 @@ def generate_lint_flags(cargo_toml: CargoTOML) -> Iterable[str]:
-             # This may change if QEMU ever invokes clippy-driver or rustdoc by
-             # hand.  For now, check the syntax but do not add non-rustc lints to
-             # the command line.
--            if k == "rust":
-+            if k == "rust" and not (strict_lints and lint in STRICT_LINTS):
-                 lint_list.append(LintFlag(flags=[flag, prefix + lint], priority=priority))
+ void qdev_init_clocks(DeviceState *dev, const ClockPortInitArray clocks)
+@@ -183,15 +156,25 @@ Clock *qdev_get_clock_out(DeviceState *dev, const char *name)
+ Clock *qdev_alias_clock(DeviceState *dev, const char *name,
+                         DeviceState *alias_dev, const char *alias_name)
+ {
+-    NamedClockList *ncl;
++    NamedClockList *ncl = qdev_get_clocklist(dev, name);
++    Clock *clk = ncl->clock;
  
-+    if strict_lints:
-+        for lint in STRICT_LINTS:
-+            lint_list.append(LintFlag(flags=["-D", lint], priority=1000000))
-+
-     lint_list.sort(key=lambda x: x.priority)
-     for lint in lint_list:
-         yield from lint.flags
-@@ -184,6 +190,13 @@ def main() -> None:
-         required=False,
-         default="1.0.0",
-     )
-+    parser.add_argument(
-+        "--strict-lints",
-+        action="store_true",
-+        dest="strict_lints",
-+        help="apply stricter checks (for nightly Rust)",
-+        default=False,
-+    )
-     args = parser.parse_args()
-     if args.verbose:
-         logging.basicConfig(level=logging.DEBUG)
-@@ -197,7 +210,7 @@ def main() -> None:
-         cargo_toml = CargoTOML(args.cargo_toml, None)
+-    assert(name && alias_name);
++    ncl = qdev_init_clocklist(alias_dev, alias_name, true, ncl->output, clk);
  
-     if args.lints:
--        for tok in generate_lint_flags(cargo_toml):
-+        for tok in generate_lint_flags(cargo_toml, args.strict_lints):
-             print(tok)
+-    ncl = qdev_get_clocklist(dev, name);
++    object_property_add_link(OBJECT(alias_dev), alias_name,
++                             TYPE_CLOCK,
++                             (Object **) &ncl->clock,
++                             NULL, OBJ_PROP_LINK_STRONG);
++    /*
++     * Since the link property has the OBJ_PROP_LINK_STRONG flag, the clk
++     * object reference count gets decremented on property deletion.
++     * However object_property_add_link does not increment it since it
++     * doesn't know the linked object. Increment it here to ensure the
++     * aliased clock stays alive during this device life-time.
++     */
++    object_ref(OBJECT(clk));
  
-     if rustc_version >= (1, 80):
+-    qdev_init_clocklist(alias_dev, alias_name, ncl->output, ncl->clock);
+-
+-    return ncl->clock;
++    return clk;
+ }
+ 
+ void qdev_connect_clock_in(DeviceState *dev, const char *name, Clock *source)
 -- 
 2.47.1
 
