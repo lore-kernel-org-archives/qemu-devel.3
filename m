@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1EAE77182
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:36:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96106E77180
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:37:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPaT-0003wt-3h; Wed, 11 Dec 2024 11:29:21 -0500
+	id 1tLPZP-0004Cd-Pe; Wed, 11 Dec 2024 11:28:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaQ-0003lb-0g
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLPZN-0003sR-2r
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:13 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPaN-0000j8-Ua
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:29:17 -0500
+ id 1tLPZL-0000Q9-L2
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934555;
+ s=mimecast20190719; t=1733934491;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=goSFoLP9ZZzBeb1oQrmWlXZpCZrwinc7Rd5f+O1pfS8=;
- b=EGmdUqJaNGjq0j6jmDYPMx2LQKn5BKltNKQ3Cp0Gk8Jm11qdEi+1g/vJagXsDXapFWoA7h
- 35vLd0TtyhL6T2hLUlTSscfiFSbwmzeM5ONGIOt1AXAVQkigtS8ALNWeNY/E5v4Fi/8uvg
- 36CEG7UUngeWtI6ruZbcJyTyUTdXnsE=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=D5J96IsavK0+zLTS8zAT5ylnqyelCMG7OfRE3uftyvc=;
+ b=CgNoblda7PuARx717CTc6Iig9VQpXkIUx9/nuSiRu1SBYJMj9EEjC2J76C92ZwZdvlRCYL
+ BxCShxsUQXx2LgFzUdP7sYgOm4mW7hcEJ1fv0afrfY1++mGG7nIYmx+S/9kkTwv3yerTAS
+ gmBRi8u0Op7uiHy4tzoTH8FHEpSi9Wo=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-472-VOG3BQeGM0C2xWZCKYqs1Q-1; Wed, 11 Dec 2024 11:29:13 -0500
-X-MC-Unique: VOG3BQeGM0C2xWZCKYqs1Q-1
-X-Mimecast-MFC-AGG-ID: VOG3BQeGM0C2xWZCKYqs1Q
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385df115288so2972721f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:29:13 -0800 (PST)
+ us-mta-437-s2RBuASKNOGSQww_RXLZSg-1; Wed, 11 Dec 2024 11:28:09 -0500
+X-MC-Unique: s2RBuASKNOGSQww_RXLZSg-1
+X-Mimecast-MFC-AGG-ID: s2RBuASKNOGSQww_RXLZSg
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa6a1bf7a82so259386166b.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:09 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934552; x=1734539352;
+ d=1e100.net; s=20230601; t=1733934488; x=1734539288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=goSFoLP9ZZzBeb1oQrmWlXZpCZrwinc7Rd5f+O1pfS8=;
- b=mLp49fFJZkSk1QoDE9w/0krxMFGSGQsm2J8CqaIegrYqtWnLhIP/wC5TN2pBFquyDt
- EQyyoefOdUGG06y2tMyqyzuufmYcoYUapQRV8cEHjNgYy/62huStEArZHH+BLpRlJRLY
- 8QaWjy1MYsY9/eLrr3Fk+R5JdTzbADOLKe22pA1iGwMnc+fmxTbYbJ6bRdsvjzg4P482
- JQifMPbL5eFp0HIZSEjKQk+p5ELdam/hw+kqNXmZkkJp4OXKWeMihxk3J/9pW9ve3JqV
- b/t0M04u/MEHFG9MI5N65kszuic+LWZDfUzVuqq2gMQDIjjMUA5k9VYhoXsUuuXJiDwe
- i2hQ==
-X-Gm-Message-State: AOJu0Yx/sbMe/32bh7oxGYODwdfgHBFtM3VmKNFTTMjPUVTcOy7ufbMo
- G72qFnr/FDAx50Jh1Fku6stV75aLNkfFi1rhF6GvplcYbBAAPojfphVfFZpBzGTnb0pyYdZDCKO
- DFIVWrUD53uWMb3F9uQa2ziVTjyGlpgbtvu54lvTFbd+27ZgOPezf3BbLuIBqocxghZUbkYAqXX
- arAkWScIcVJJU46ILdvO1ehmnDamejF2vXvDr2
-X-Gm-Gg: ASbGnctV3XCDV7d5FArb1OROTzuSlsti2rfMO7dTtTyOL8aYq69aMCMFFJnoYTU5tew
- LiXu1JiamQqKDOEeLj1IrAPTP2yzIZSZSDs09tc1YDVtFeRWm7XgHZbOL5TKdtVFX60U+llowzf
- HJMAbJhE/d1vT/KeI4NiG4iVArvyWVjizGfq6vNUzXl3g6ylcTnxzLDTODGW4Xlqtr9Tl48qfSf
- lPYXCRKyIcrMv3FWJ9xILbQQufIzy1olgTpqizml56GDXmk8mpG0b0A
-X-Received: by 2002:a5d:47c6:0:b0:385:f062:c2df with SMTP id
- ffacd0b85a97d-3864ce4968emr3330992f8f.11.1733934551558; 
- Wed, 11 Dec 2024 08:29:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFVKTEij2xde+OaauMr8jeMSHVSr8tiBVX8BoCT5vhHI9fdqWO+vH9yXfdaeYkoNJZpdRO3bg==
-X-Received: by 2002:a5d:47c6:0:b0:385:f062:c2df with SMTP id
- ffacd0b85a97d-3864ce4968emr3330964f8f.11.1733934551061; 
- Wed, 11 Dec 2024 08:29:11 -0800 (PST)
+ bh=D5J96IsavK0+zLTS8zAT5ylnqyelCMG7OfRE3uftyvc=;
+ b=KQJR1bXjO1SG5/QpZ1zblcxtgkGqp8A9hVt9spVhFrIDkUQ5W13HZUJr8G/Ldbp9Zp
+ HKgI/iAJY9nhb6+1BBTCH5ZG1StYL13aDdwZkKHaEs+1NYh3rCs7tPMjau3a7F4fKJ+E
+ sRsCYL4j/L4JkIPHG+BDPpBzpF2nIMPcqVWM8hGWqHb1tGWAT2Ah8rngkiwhTvzRds+l
+ ftGZmh5CbaDHpHEnK2DnGI+aQ3+KckYhdnaYGwXbV0PItcNggqsZW/Cwixn2Yoq0GE+N
+ QFgXnDf0kKfT3MTMpREVyofMU6MkaUn9HpkPHqYi7A/DXOtdbK4Q9nAGIluvVPMapgAT
+ SKEA==
+X-Gm-Message-State: AOJu0YwRwWDPyXRYtpUW/oWqyE6BoDpMdbuTbJMl9XuB5Gqty6B6m2BK
+ VeJxeJ66EmhOKemsFhEDRyyMdqCiunCVTmducOlXVV/XS//rO6/JjTXgsPXz/8kwDFX6mfpeQ8v
+ yRK/r9NZg7ARD2zXCIF4UD0OuWQIcJ7A7Q+fPSFz7xZW+KmckzaAe3mM4bvy+7bQcdgHiLJxpif
+ E1z0ZrklLThSfa5WebqtwUMWhmSBWUzu7FgZ9X
+X-Gm-Gg: ASbGncu4T0KrGAvEy+4K4Gt5nwonhS56owjhv1z8r6HlhHJUo+GxCrVv1i7n6y6INh3
+ B3AzIYW+Qkmy3mJi/WqY7WoFcCqdXtrgQZcMlKudT9KPZTE6OSxqtVtwT24vfE2tT9yG19AMsnG
+ u4OACEcLCKT5Ny285Jf/GYM4lA0z/FvqxJGCPfF5BRRSimrZo35wDK85biApGTk0Sd03e5+hmcJ
+ WM0J2cVRGKpAeyMrA3BxbWCJ9jzAHhDZBP/VPlYfG4kYgrWGwrbIlQt
+X-Received: by 2002:a17:907:b1b:b0:aa6:b926:c102 with SMTP id
+ a640c23a62f3a-aa6c1cf1b14mr50108366b.43.1733934488227; 
+ Wed, 11 Dec 2024 08:28:08 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGn1Bo58DoK8n8mo0K3lhk8bd2RzSerin38VigwmRR8DfvHf8J4ZxtUTLl0sbJ7UCdBG9xcEA==
+X-Received: by 2002:a17:907:b1b:b0:aa6:b926:c102 with SMTP id
+ a640c23a62f3a-aa6c1cf1b14mr50105166b.43.1733934487777; 
+ Wed, 11 Dec 2024 08:28:07 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878251dbbfsm1609110f8f.97.2024.12.11.08.29.09
+ a640c23a62f3a-aa68880b344sm480539466b.184.2024.12.11.08.28.06
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:29:09 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:06 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 48/49] rust: qom: split ObjectType from ObjectImpl trait
-Date: Wed, 11 Dec 2024 17:27:18 +0100
-Message-ID: <20241211162720.320070-49-pbonzini@redhat.com>
+Subject: [PULL 18/49] kvm: remove unnecessary #ifdef
+Date: Wed, 11 Dec 2024 17:26:48 +0100
+Message-ID: <20241211162720.320070-19-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -107,226 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define a separate trait for fields that also applies to classes that are
-defined by C code.  This makes it possible to add metadata to core classes,
-which has multiple uses:
-
-- it makes it possible to access the parent struct's TYPE_* for types
-  that are defined in Rust code, and to avoid repeating it in every subclass
-
-- implementors of ObjectType will be allowed to implement the IsA<> trait and
-  therefore to perform typesafe casts from one class to another.
-
-- in the future, an ObjectType could be created with Foo::new() in a type-safe
-  manner, without having to pass a TYPE_* constant.
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs  | 17 ++++++++++++-----
- rust/qemu-api/src/definitions.rs  | 27 +++++++++++++++++++++------
- rust/qemu-api/src/device_class.rs | 11 ++++++-----
- rust/qemu-api/src/prelude.rs      |  2 ++
- rust/qemu-api/src/sysbus.rs       | 10 ++++++++--
- rust/qemu-api/tests/tests.rs      | 17 +++++++++--------
- 6 files changed, 58 insertions(+), 26 deletions(-)
+ target/i386/kvm/kvm_i386.h | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index b9f8fb134b5..0ab825b1ca4 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -12,9 +12,10 @@
-     bindings::{self, *},
-     c_str,
-     definitions::ObjectImpl,
--    device_class::{DeviceImpl, TYPE_SYS_BUS_DEVICE},
-+    device_class::DeviceImpl,
-     impl_device_class,
-     irq::InterruptSource,
-+    prelude::*,
- };
+diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
+index 9de9c0d3038..7edb154a16e 100644
+--- a/target/i386/kvm/kvm_i386.h
++++ b/target/i386/kvm/kvm_i386.h
+@@ -13,8 +13,7 @@
  
- use crate::{
-@@ -106,10 +107,13 @@ pub struct PL011State {
-     device_id: DeviceId,
- }
+ #include "sysemu/kvm.h"
  
--impl ObjectImpl for PL011State {
-+unsafe impl ObjectType for PL011State {
-     type Class = PL011Class;
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
--    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(TYPE_SYS_BUS_DEVICE);
-+}
-+
-+impl ObjectImpl for PL011State {
-+    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<SysBusDevice as ObjectType>::TYPE_NAME);
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
- }
+-#ifdef CONFIG_KVM
+-
++/* always false if !CONFIG_KVM */
+ #define kvm_pit_in_kernel() \
+     (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
+ #define kvm_pic_in_kernel()  \
+@@ -22,14 +21,6 @@
+ #define kvm_ioapic_in_kernel() \
+     (kvm_irqchip_in_kernel() && !kvm_irqchip_is_split())
  
-@@ -640,10 +644,13 @@ unsafe fn init(&mut self) {
-     }
- }
- 
--impl ObjectImpl for PL011Luminary {
-+unsafe impl ObjectType for PL011Luminary {
-     type Class = PL011LuminaryClass;
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011_LUMINARY;
--    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(crate::TYPE_PL011);
-+}
-+
-+impl ObjectImpl for PL011Luminary {
-+    const PARENT_TYPE_NAME: Option<&'static CStr> = Some(<PL011State as ObjectType>::TYPE_NAME);
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
- }
- 
-diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
-index f2970758986..b98a6926785 100644
---- a/rust/qemu-api/src/definitions.rs
-+++ b/rust/qemu-api/src/definitions.rs
-@@ -26,25 +26,40 @@
-     T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
- }
- 
--/// Trait a type must implement to be registered with QEMU.
-+/// Trait exposed by all structs corresponding to QOM objects.
- ///
- /// # Safety
- ///
--/// - the struct must be `#[repr(C)]`
-+/// For classes declared in C:
- ///
--/// - `Class` and `TYPE` must match the data in the `TypeInfo` (this is
--///   automatic if the class is defined via `ObjectImpl`).
-+/// - `Class` and `TYPE` must match the data in the `TypeInfo`;
-+///
-+/// - the first field of the struct must be of the instance type corresponding
-+///   to the superclass, as declared in the `TypeInfo`
-+///
-+/// - likewise, the first field of the `Class` struct must be of the class type
-+///   corresponding to the superclass
-+///
-+/// For classes declared in Rust and implementing [`ObjectImpl`]:
-+///
-+/// - the struct must be `#[repr(C)]`;
- ///
- /// - the first field of the struct must be of the instance struct corresponding
--///   to the superclass declared as `PARENT_TYPE_NAME`
--pub trait ObjectImpl: ClassInitImpl + Sized {
-+///   to the superclass, as declared in `ObjectImpl::PARENT_TYPE_NAME`
-+///
-+/// - likewise, the first field of the `Class` must be of the class struct
-+///   corresponding to the superclass
-+pub unsafe trait ObjectType: Sized {
-     /// The QOM class object corresponding to this struct.  Not used yet.
-     type Class;
- 
-     /// The name of the type, which can be passed to `object_new()` to
-     /// generate an instance of this type.
-     const TYPE_NAME: &'static CStr;
-+}
- 
-+/// Trait a type must implement to be registered with QEMU.
-+pub trait ObjectImpl: ObjectType + ClassInitImpl {
-     /// The parent of the type.  This should match the first field of
-     /// the struct that implements `ObjectImpl`:
-     const PARENT_TYPE_NAME: Option<&'static CStr>;
-diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_class.rs
-index f25904be4f6..03d03feee83 100644
---- a/rust/qemu-api/src/device_class.rs
-+++ b/rust/qemu-api/src/device_class.rs
-@@ -6,6 +6,7 @@
- 
- use crate::{
-     bindings::{self, DeviceClass, DeviceState, Error, ObjectClass, Property, VMStateDescription},
-+    prelude::*,
-     zeroable::Zeroable,
- };
- 
-@@ -146,8 +147,8 @@ macro_rules! declare_properties {
-     };
- }
- 
--// workaround until we can use --generate-cstr in bindgen.
--pub const TYPE_DEVICE: &CStr =
--    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
--pub const TYPE_SYS_BUS_DEVICE: &CStr =
--    unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DEVICE) };
-+unsafe impl ObjectType for bindings::DeviceState {
-+    type Class = bindings::DeviceClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
-+}
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-index a39e228babf..1b8677b2d9a 100644
---- a/rust/qemu-api/src/prelude.rs
-+++ b/rust/qemu-api/src/prelude.rs
-@@ -6,3 +6,5 @@
- 
- pub use crate::cell::BqlCell;
- pub use crate::cell::BqlRefCell;
-+
-+pub use crate::definitions::ObjectType;
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index 4e192c75898..5ee068541cf 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -2,11 +2,17 @@
- // Author(s): Paolo Bonzini <pbonzini@redhat.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::ptr::addr_of;
-+use std::{ffi::CStr, ptr::addr_of};
- 
- pub use bindings::{SysBusDevice, SysBusDeviceClass};
- 
--use crate::{bindings, cell::bql_locked, irq::InterruptSource};
-+use crate::{bindings, cell::bql_locked, irq::InterruptSource, prelude::*};
-+
-+unsafe impl ObjectType for SysBusDevice {
-+    type Class = SysBusDeviceClass;
-+    const TYPE_NAME: &'static CStr =
-+        unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DEVICE) };
-+}
- 
- impl SysBusDevice {
-     /// Return `self` cast to a mutable pointer, for use in calls to C code.
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index b8b12a40422..1d027dd6527 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -5,12 +5,8 @@
- use std::ffi::CStr;
- 
- use qemu_api::{
--    bindings::*,
--    c_str, declare_properties, define_property,
--    definitions::ObjectImpl,
--    device_class::{self, DeviceImpl},
--    impl_device_class,
--    zeroable::Zeroable,
-+    bindings::*, c_str, declare_properties, define_property, definitions::ObjectImpl,
-+    device_class::DeviceImpl, impl_device_class, prelude::*, zeroable::Zeroable,
- };
- 
- #[test]
-@@ -46,10 +42,15 @@ pub struct DummyClass {
-             ),
-     }
- 
--    impl ObjectImpl for DummyState {
-+    unsafe impl ObjectType for DummyState {
-         type Class = DummyClass;
-         const TYPE_NAME: &'static CStr = c_str!("dummy");
--        const PARENT_TYPE_NAME: Option<&'static CStr> = Some(device_class::TYPE_DEVICE);
-+    }
-+
-+    impl ObjectImpl for DummyState {
-+        const PARENT_TYPE_NAME: Option<&'static CStr> =
-+            Some(<DeviceState as ObjectType>::TYPE_NAME);
-+        const ABSTRACT: bool = false;
-     }
- 
-     impl DeviceImpl for DummyState {
+-#else
+-
+-#define kvm_pit_in_kernel()      0
+-#define kvm_pic_in_kernel()      0
+-#define kvm_ioapic_in_kernel()   0
+-
+-#endif  /* CONFIG_KVM */
+-
+ bool kvm_has_smm(void);
+ bool kvm_enable_x2apic(void);
+ bool kvm_hv_vpindex_settable(void);
 -- 
 2.47.1
 
