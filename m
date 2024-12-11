@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2EE3E7717D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:09:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B141BE7717D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 23:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLVpJ-0004Zv-Qd; Wed, 11 Dec 2024 18:09:05 -0500
+	id 1tLVx0-0005xF-Py; Wed, 11 Dec 2024 18:17:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVpI-0004Yq-5H
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:09:04 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVwz-0005x0-IG
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:17:01 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVpF-00031U-Ie
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:09:03 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so5879011f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:09:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLVwx-0004gt-Ne
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 18:17:01 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385e3621518so4566487f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 15:16:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733958539; x=1734563339; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=zsmSPaG3Pa+CQ9Uj41IVqOgCCcirEC0d/DLzNavG/yw=;
- b=D/XTV3e5if5NyFYt9T7gU0yIuZwhKcHu7XqlNb2ifDQuQyT4Vk3L8zY4FMS5oPHqsv
- t5unyjxi+P/ea3yUzQdfhJMCeJ/M4GCG5ctr3JgDTzgcmDTbpT2Vdh8+o4uMCtRZAlhU
- Ww/rpo/e5+OC6oUXx0OZ+K5cXHKMFOO5ldpO2c9KjG8pJwXahmr2YltCSTpAqBO0gSWQ
- d7Mce7ARLAn7BSUhJz/0XFdHyStO63lnaPkZ1rNDbW+qITnr/CmsxjJtuhDQ6RBPqPDn
- nn4/uesH/7uBLq2jkA7Irxchhf9EO9KLo+jidDamkFhn9qEnXV+mCaUc675MFJKc3pkm
- 2C5w==
+ d=linaro.org; s=google; t=1733959017; x=1734563817; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=gbSGjVPA/lUnmHLhOPQnoo2PcyTUkwD5q//e7yXLaso=;
+ b=QAHGtcgx7yfn3mehPzNZGEGf9pw0LAEVTQa3H1/2jZRRYtOPmrEGV1GkRpT6D50ERo
+ R0Z3YyrzoTE0CvZK06f202rpfywWKUCsWm0GL+jC0jNNGGzQjG6NkXa299VqmfKGSH6e
+ 8jB74hwXY/KHt4UuYgys9XByEpKp5QGXEflRR+rXPae5s+PvUdnjmIJNv6nJd3uXzgnl
+ CiJTYg8ymUKncIU4AD8EhKgjGxnk1OxQf4sq8zenSHYPmwCZpiOpx7VLwzJtGpM/TQHN
+ /CyhBnbWZY2/N6SKBYgcKCA9IxMWgXIJR/UEmSlUYJIUm17Vc8626mkMaMzFRnNJFGw4
+ KWDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733958539; x=1734563339;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=zsmSPaG3Pa+CQ9Uj41IVqOgCCcirEC0d/DLzNavG/yw=;
- b=iEPkGHlKSWf8ecl15S0t79nXIY5E103DQYlIbL5eyfGS03F1BOC2jy+HqQ62zLaTzy
- FIXxs0S1NyDYIU/eyfhpW+EspiClNL0M8E6MtJonHPdVW1euAuhS1O2hOuxUvxGvK81o
- 64cwtKyt24zZR2NnyY2iVP304UdfBLnseRSmFE0Ex7I2S1jhsrUrW17K94x9Kvb5g3eH
- AfNr8xO78dEDK721hE2sISr1xBPxBzL+YUN+wzHJGQc5stLxFckfexTmL0CwDBQy/Za5
- i0aTL3EHzL2mdaJzFiiht08sjyOgd4QMp8E41ifPA+TunjapRbElCLICAegeTzJrQGnX
- dexw==
-X-Gm-Message-State: AOJu0YxoiaKKXp6O+r3BvS9aBQPF/beT1yD3mZR2ZLk97/8+RfhIaarb
- BLJwTOBM+E9eRzKjVMibazqkdzzPnEBKyaYUy+RmnkJ9kVT1ryGnm4k0zaJZ+svtBkYNFbO1+CP
- Z
-X-Gm-Gg: ASbGncsWSxu+avKs8GgoJWm9sa2mTJRq+wDZMgl00Jq/sngEpHxwH8cAkHfOqW7KtmK
- 9ereS5jEv1vbNCwS+/EgKEn2YLbICbqPwYSPLFkPTkKpeU8HRNzM59eo/k3nUxchX0aXqJ+ehM5
- bpIDZXDncf8yEo8m4VMoowJK4sAjHUiotn68jPBf/K6fwehdaqNFYO52kTr1r94jB3H3CwnQig6
- PTaQCw6J33DYA8DQOOQxPlDIpXWxw7rc+UFFHM462SmoxAk9IIKE1jT9h76rb/LvXFTi5Nm8PmA
- c9wFkKs01TrHK6WiYrimwu3z
-X-Google-Smtp-Source: AGHT+IG6Rv9KqV5Sxr1Tcg5WIW10bMeeVfK9fLiqheiI4qEhoVfQpzLx2CVeLjGDJiVnKs2z9vrbog==
-X-Received: by 2002:adf:e18e:0:b0:386:4571:9a22 with SMTP id
- ffacd0b85a97d-38787695702mr1024951f8f.31.1733958539517; 
- Wed, 11 Dec 2024 15:08:59 -0800 (PST)
-Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878252d22csm2297033f8f.110.2024.12.11.15.08.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 15:08:58 -0800 (PST)
-Message-ID: <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
-Date: Thu, 12 Dec 2024 00:08:56 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/9] target/xtensa: Remove tswap() calls in semihosting
- simcall() helper
+ d=1e100.net; s=20230601; t=1733959017; x=1734563817;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=gbSGjVPA/lUnmHLhOPQnoo2PcyTUkwD5q//e7yXLaso=;
+ b=CV/mqzEVdaKmD+dEBVDlUFBD10MDRDMZRsCFkuT31JOww5GTt6l41o+pgXfauV5lhX
+ c6SG7zbfeK+10wuiWyd6iqKdKxHhtE09oNkj00b+Xwdqi9591o1rSTxpnuq6Hg+MHvKZ
+ EZGbnu09r2G+6+EKaRu/q9PN+OARsLg799CtznZDIWFfBS8w7lUrSaM/GNZyemioFcCa
+ jr5zQ/T2+oEeYnY40LtH4TTrZ+dqFXD74xt9RLScbOvsTEhcSMMtPDSfvmnjI6K0rtuM
+ Q7OEJQMyKaP8rhMXK05jcXRX1x8ZcDCEaS65f5Ruz63m+m5XjU92Ff4NabedNdl5mOIh
+ fc2A==
+X-Gm-Message-State: AOJu0YyH5ltgwWB3jv4T6mZYeL/krzPOv2i1ewJZhm/0XuZ8oflW3huh
+ rO5rP5RsKACBfZiENqHh5LMxdI5DcBV9iqO5PU5wFdjUWD5tgWyCYecGhJsnQWM370HILvwQrzC
+ p
+X-Gm-Gg: ASbGncuiSSektNWKsrwghcX/lVrvZWsH3Am1Tqv0ubAya1ksEyg/oHNmLSvykJJomQF
+ bIlzrVi5Iqg4w6TPI0lB+nk24JndLPYDwLfsIY57q19lu8OqGSgCxuD+IU3Hi240WqxFcAJWLat
+ J0wh/vJOxoGEpAhHmEl0iv3KGIkxawIhgPQi1O64qR0a7Zi765BynJNstbJ06tqLb++Jecgtptl
+ F8Jta5e2+jlvMLZ3laBPw4aEwqBLgCIz4RWLUnAmIxpvAhlCvJOA/CucQ2d/FyWxCRYHg5SNvTq
+ 3gkrikjKyfqbqj75ewhGb4vGSIbTA61zgA==
+X-Google-Smtp-Source: AGHT+IEWEFOix3wu54uX7iFSdKYiJQep4+oz/Md/7zVlYeKMKB7tfUMDhtanImxPXlI4broaPTLnHQ==
+X-Received: by 2002:a5d:6dac:0:b0:386:2ebe:7ae2 with SMTP id
+ ffacd0b85a97d-387876aeddemr1213478f8f.45.1733959017526; 
+ Wed, 11 Dec 2024 15:16:57 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878248f810sm2316596f8f.22.2024.12.11.15.16.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 11 Dec 2024 15:16:57 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-ppc@nongnu.org,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20241211230357.97036-1-philmd@linaro.org>
- <20241211230357.97036-2-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241211230357.97036-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH] meson: Run some compiler checks using -Wno-unused-value
+Date: Thu, 12 Dec 2024 00:16:55 +0100
+Message-ID: <20241211231655.98148-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,73 +98,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 00:03, Philippe Mathieu-Daudé wrote:
-> In preparation of heterogeneous emulation where cores with
-> different endianness can run concurrently, we need to remove
-> the tswap() calls -- which use a fixed per-binary endianness.
-> 
-> Get the endianness of the CPU accessed using the libisa
-> xtensa_isa_is_big_endian() call and replace the tswap() calls
-> by bswap() ones when necessary.
+When running Clang static analyzer on macOS I'm getting:
 
-Instead read here:
+  include/qemu/osdep.h:634:8: error: redefinition of 'iovec'
+    634 | struct iovec {
+        |        ^
+  /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_iovec_t.h:31:8: note: previous definition is here
+     31 | struct iovec {
+        |        ^
+  1 error generated.
 
-   In preparation of heterogeneous emulation where cores with
-   different endianness can run concurrently, replace the pair
-   of cpu_memory_rw_debug() + tswap() calls by put/get_user_u32()
-   ones, which still do the same under the hood, but simplify the
-   code maintenance (having less sites to do endianness code
-   conversion).
+Looking at meson-logs.txt, the analyzer enables -Wunused-value
+making meson generated code to fail:
 
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/xtensa/xtensa-semi.c | 15 +++++----------
->   1 file changed, 5 insertions(+), 10 deletions(-)
-> 
-> diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
-> index fa21b7e11fc..2ded8e5634e 100644
-> --- a/target/xtensa/xtensa-semi.c
-> +++ b/target/xtensa/xtensa-semi.c
-> @@ -30,6 +30,7 @@
->   #include "chardev/char-fe.h"
->   #include "exec/helper-proto.h"
->   #include "semihosting/semihost.h"
-> +#include "semihosting/uaccess.h"
->   #include "qapi/error.h"
->   #include "qemu/log.h"
->   
-> @@ -323,15 +324,12 @@ void HELPER(simcall)(CPUXtensaState *env)
->               uint32_t fd = regs[3];
->               uint32_t rq = regs[4];
->               uint32_t target_tv = regs[5];
-> -            uint32_t target_tvv[2];
->   
->               struct timeval tv = {0};
->   
->               if (target_tv) {
-> -                cpu_memory_rw_debug(cs, target_tv,
-> -                        (uint8_t *)target_tvv, sizeof(target_tvv), 0);
-> -                tv.tv_sec = (int32_t)tswap32(target_tvv[0]);
-> -                tv.tv_usec = (int32_t)tswap32(target_tvv[1]);
-> +                get_user_u32(tv.tv_sec, target_tv);
-> +                get_user_u32(tv.tv_sec, target_tv + 4);
->               }
->               if (fd < 3 && sim_console) {
->                   if ((fd == 1 || fd == 2) && rq == SELECT_ONE_WRITE) {
-> @@ -387,11 +385,8 @@ void HELPER(simcall)(CPUXtensaState *env)
->                   const char *str = semihosting_get_arg(i);
->                   int str_size = strlen(str) + 1;
->   
-> -                argptr = tswap32(regs[3] + str_offset);
-> -
-> -                cpu_memory_rw_debug(cs,
-> -                                    regs[3] + i * sizeof(uint32_t),
-> -                                    (uint8_t *)&argptr, sizeof(argptr), 1);
-> +                put_user_u32(regs[3] + str_offset,
-> +                             regs[3] + i * sizeof(uint32_t));
->                   cpu_memory_rw_debug(cs,
->                                       regs[3] + str_offset,
->                                       (uint8_t *)str, str_size, 1);
+    Code:
+    #include <sys/uio.h>
+            void bar(void) {
+                sizeof(struct iovec);
+            }
+    -----------
+    stderr:
+    meson-private/tmpe8_1b_00/testfile.c:3:13: error: expression result unused [-Werror,-Wunused-value]
+        3 |             sizeof(struct iovec);
+          |             ^~~~~~~~~~~~~~~~~~~~
+    1 error generated.
+    -----------
+    Checking for type "struct iovec" : NO
+
+    Code:
+    #include <utmpx.h>
+            void bar(void) {
+                sizeof(struct utmpx);
+            }
+    -----------
+    stderr:
+    meson-private/tmp3n0u490p/testfile.c:3:13: error: expression result unused [-Werror,-Wunused-value]
+        3 |             sizeof(struct utmpx);
+          |             ^~~~~~~~~~~~~~~~~~~~
+    1 error generated.
+    -----------
+    Checking for type "struct utmpx" : NO
+
+    Code:
+
+            #include <getopt.h>
+            int main(void) {
+                /* If it's not defined as a macro, try to use as a symbol */
+                #ifndef optreset
+                    optreset;
+                #endif
+                return 0;
+            }
+    -----------
+    stderr:
+    meson-private/tmp1rzob_os/testfile.c:6:17: error: expression result unused [-Werror,-Wunused-value]
+        6 |                 optreset;
+          |                 ^~~~~~~~
+    1 error generated.
+    -----------
+    Header "getopt.h" has symbol "optreset" : NO
+
+    Code:
+
+            #include <vmnet/vmnet.h>
+            int main(void) {
+                /* If it's not defined as a macro, try to use as a symbol */
+                #ifndef VMNET_BRIDGED_MODE
+                    VMNET_BRIDGED_MODE;
+                #endif
+                return 0;
+            }
+    -----------
+    stderr:
+    meson-private/tmpl9jgsxpt/testfile.c:6:17: error: expression result unused [-Werror,-Wunused-value]
+        6 |                 VMNET_BRIDGED_MODE;
+          |                 ^~~~~~~~~~~~~~~~~~
+    1 error generated.
+    -----------
+    Header "vmnet/vmnet.h" has symbol "VMNET_BRIDGED_MODE" with dependency appleframeworks: NO
+    ../meson.build:1174: WARNING: vmnet.framework API is outdated, disabling
+
+Fix by explicitly disabling -Wunused-value from these meson checks.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+RFC: Probably meson should do that in has_header_symbol() / has_type()?
+---
+ meson.build | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/meson.build b/meson.build
+index 147097c652e..a431aa982ac 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1166,7 +1166,8 @@ cocoa = dependency('appleframeworks',
+ vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'))
+ if vmnet.found() and not cc.has_header_symbol('vmnet/vmnet.h',
+                                               'VMNET_BRIDGED_MODE',
+-                                              dependencies: vmnet)
++                                              dependencies: vmnet,
++                                              args: '-Wno-unused-value')
+   vmnet = not_found
+   if get_option('vmnet').enabled()
+     error('vmnet.framework API is outdated')
+@@ -2690,7 +2691,7 @@ config_host_data.set('CONFIG_RTNETLINK',
+ config_host_data.set('CONFIG_SYSMACROS',
+                      cc.has_header_symbol('sys/sysmacros.h', 'makedev'))
+ config_host_data.set('HAVE_OPTRESET',
+-                     cc.has_header_symbol('getopt.h', 'optreset'))
++                     cc.has_header_symbol('getopt.h', 'optreset', args: '-Wno-unused-value'))
+ config_host_data.set('HAVE_IPPROTO_MPTCP',
+                      cc.has_header_symbol('netinet/in.h', 'IPPROTO_MPTCP'))
+ 
+@@ -2708,10 +2709,12 @@ config_host_data.set('HAVE_BLK_ZONE_REP_CAPACITY',
+ # has_type
+ config_host_data.set('CONFIG_IOVEC',
+                      cc.has_type('struct iovec',
+-                                 prefix: '#include <sys/uio.h>'))
++                                 prefix: '#include <sys/uio.h>',
++                                 args: '-Wno-unused-value'))
+ config_host_data.set('HAVE_UTMPX',
+                      cc.has_type('struct utmpx',
+-                                 prefix: '#include <utmpx.h>'))
++                                 prefix: '#include <utmpx.h>',
++                                 args: '-Wno-unused-value'))
+ 
+ config_host_data.set('CONFIG_EVENTFD', cc.links('''
+   #include <sys/eventfd.h>
+-- 
+2.45.2
 
 
