@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5282E7717D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A37EE77180
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Dec 2024 16:33:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLPZL-0003cn-Hj; Wed, 11 Dec 2024 11:28:11 -0500
+	id 1tLPZk-0007JJ-SB; Wed, 11 Dec 2024 11:28:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZI-0003JE-Ke
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tLPZh-0006nm-FU
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLPZG-0000P0-Qt
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:08 -0500
+ id 1tLPZf-0000Y5-Pl
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 11:28:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733934486;
+ s=mimecast20190719; t=1733934510;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LqP+CF9Cn7KtMzYzo4JT11mnT2881O+4ObbCwnw7e7k=;
- b=GWTnYjpU3KkiBrJd1vHZr1UnT/RzJHcYyY2C+gDNIhVVRuOBI3zkBzwORteMdtSP650bqN
- mV4N4+zXHj49HgT8/JZFF3bcz6J/rlm7f8Q7l+sLEtI59J5URmgVWG81Se7rCggSVP9AmW
- UFBeS+izVSN6mRgZ9zmfL/D2YT5uiVM=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8NLLgbzYAR30822TQnyZFqYAZd1RN5I0WySMepXl6Io=;
+ b=HW6LmZ8u1572hzC3+nCRPUnTnxvPzDpuPfpuMGUlLWiUWw6jbSqOrProfuSRYjtoS3yQ/k
+ 57H2dF7KQRHvxpkzaJgLmVF1WTsf/v3eCROVhzGE2fCJgeV6bOab/z5LM59VD+LDQjvsE9
+ ZjWYkczc+XyP5MPPYaAurRTjjB71QX4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-628-4Y5l2xPTNQWCndCk76ZNsQ-1; Wed, 11 Dec 2024 11:28:03 -0500
-X-MC-Unique: 4Y5l2xPTNQWCndCk76ZNsQ-1
-X-Mimecast-MFC-AGG-ID: 4Y5l2xPTNQWCndCk76ZNsQ
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-aa61e72d68dso533991866b.3
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:03 -0800 (PST)
+ us-mta-647-Yr0mUX9QMbukb2uboVP5lA-1; Wed, 11 Dec 2024 11:28:29 -0500
+X-MC-Unique: Yr0mUX9QMbukb2uboVP5lA-1
+X-Mimecast-MFC-AGG-ID: Yr0mUX9QMbukb2uboVP5lA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361ecebc5bso5209055e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 08:28:29 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733934482; x=1734539282;
+ d=1e100.net; s=20230601; t=1733934508; x=1734539308;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LqP+CF9Cn7KtMzYzo4JT11mnT2881O+4ObbCwnw7e7k=;
- b=nUBRN/vdI2kzFtC3gI+cQcoOCn5h6tv+cG4uyZbIgt5Fr/wIL4e2V0UTaR0jEdqzrt
- yjakzElEbcScU9ZduVts5mCSWb/y1Iexgj8Rtz98D1IdspdT6u0I70YE2jfSJZ8lm2Ql
- 8/rWqBgEZJ/NfxpS53XwFE11bqtoWott0GxoGdWeptJcTXYBnYStKVgtIillB6Jl3JEK
- 9+d/Uz3csnd/+uxSJNUXTk1Mb2Bfiiy/AIycRoxsVrjR6dVZZZMU0aUSfg/e6XqkIZUk
- 3tmAEPIGQMFlw1/waubVPK5ZAx2LwN2J6lmon1MDAOd9eHPf0+gYGSjkU4NxndGjKVkh
- lshA==
-X-Gm-Message-State: AOJu0YwOetpmFDuZqeQv2A5AENqVGuUYScGdQUYdKZZLNRXVGLAG67e/
- ZxYBOREiNUk3HmTcwvceA0Fwkd8Q98yIVxLpB2YoOong2cr0mJDPBK56KdRiVIW2xgqv6Rc9SLL
- N1lo/6JhzH8qiySb3cKypHdQ/4DGFhSI1zOmO4x2nrMrL2+S3HmyEww6qt1y2chYJAusuLVSln7
- HnxAOX4CN3ZKTB+s+rAIDLQp590r+xgtKUPcmX
-X-Gm-Gg: ASbGncvyhLtfjZbNzsnSgFv7n7E1JH5B1m8iSyg+BR2dK9CUikjyDMjETqn1cMLrVkW
- PbcWewlp00geCLPTmpVG7/ryukFWy7BY4FuUQKXBOk6AEms3RzeRUv+wDuapTK1ErkQ+6FvUMH7
- 2ikP2u1FwomR65Yfql/DZpPkOUvZMNE+7u4futDuFntisnco9R5Dm0XV+GJPZ5keC9jWezSW0rh
- vk/dcaKhcj7gVgFdzGCj7QC6AhTRZugSWDjyneh+3ClDHUtmobSElDu
-X-Received: by 2002:a17:907:72cd:b0:aa6:b5e0:8c59 with SMTP id
- a640c23a62f3a-aa6b5e095bbmr284803866b.35.1733934481827; 
- Wed, 11 Dec 2024 08:28:01 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFc6vl+2WSCOzXnfgV1+umZZeyGRF8tr8hut8ZDv9tjCDjucUv6J4ePnAKpf8+f+p/87DsWNw==
-X-Received: by 2002:a17:907:72cd:b0:aa6:b5e0:8c59 with SMTP id
- a640c23a62f3a-aa6b5e095bbmr284800166b.35.1733934481352; 
- Wed, 11 Dec 2024 08:28:01 -0800 (PST)
+ bh=8NLLgbzYAR30822TQnyZFqYAZd1RN5I0WySMepXl6Io=;
+ b=UZ1TFwU4WWwRqryOlE6A+O/y8sS0lrBGjRgd/9QnxQG57wvPx6APpHg85G+7pY+gVy
+ 3tRA5ty6v/j9OSQHJzscHhjDVJ/PPSbJ41OQ/qG5z7N8HGKdpaBULwKBeDhONobmITR3
+ E6+dSmXpIpQK7UTli9nmnEQ9iuxOsBYF4/uUx5egMN7Bc2GTe3drNj3qY26B4WIdxdOo
+ EVEheCtuyeWiEUCmfJyObK5vkananimfLV1CA8y09a8nNT5oKAv1CCHOWKZNUhkljb5g
+ DRP1ry+4CW5kXgXTEUyOEEb7dAEwvt3FHI3k+ZGlxbjbKCAuLuXq4k1frxwAaUv5TsBM
+ X3Kg==
+X-Gm-Message-State: AOJu0YzE9WnkJ3NdAAX7RqRW0Rts5oWQTVuwUsKq8Hw6kSnpaegvGcf5
+ nQlvGMrarMx6DDl9f68Mp4jZcj/2z4TLkmk2ekQTSdm3Q5zUl4b4AafuKbawe+NQ8I/JcMgOFVD
+ I7LMZgqTW1OMDQl/ZTidm9TDaFvN+GORZPnEU+2EyEu6VGsgBWeDLJUFXqH9ImPRBwxYbquqdon
+ mGyvL17DU1Z/ndpa35wXrCzYJEae022L8s/fbP
+X-Gm-Gg: ASbGncu4fNs0uAin3z55lRXAYiO1R7Z6J68O2uaddm5+1d61slrjHXD1+Ly1b4I266a
+ VbJl7knmD9rKsEED9C8JWh7H9icQHRYLRZkvhdxsR1aItMER1B8mwOlFvQHjy6u73d4Y9d4/lc9
+ OVD+KCPFshzxlT3qNHv0MqmvEcByTaqq/aklWN+0+hyEARrEdeE6nI14a4xVk/rwAhVPUqssIXj
+ LFQWysq6yqBosvu2Dbpi1GH2tJ2FMhq2Q0Jt9tQFpGWOAgX8RE6nWr4
+X-Received: by 2002:a05:600c:3548:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-4361c3e2345mr26020455e9.21.1733934507792; 
+ Wed, 11 Dec 2024 08:28:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHrK+4EDxorH88C3+2cLIr9tm3wrM8PaKSvtEuIFBw+SIV6dLxduqPQT90z9QY87wYgtRXDUw==
+X-Received: by 2002:a05:600c:3548:b0:42a:a6d2:3270 with SMTP id
+ 5b1f17b1804b1-4361c3e2345mr26020225e9.21.1733934507326; 
+ Wed, 11 Dec 2024 08:28:27 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa66c646defsm648486566b.181.2024.12.11.08.28.00
- for <qemu-devel@nongnu.org>
+ ffacd0b85a97d-3878248e600sm1675795f8f.7.2024.12.11.08.28.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Dec 2024 08:28:00 -0800 (PST)
+ Wed, 11 Dec 2024 08:28:26 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/49] clock: clear callback on unparent
-Date: Wed, 11 Dec 2024 17:26:45 +0100
-Message-ID: <20241211162720.320070-16-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 28/49] i386: Replace type_register() with type_register_static()
+Date: Wed, 11 Dec 2024 17:26:58 +0100
+Message-ID: <20241211162720.320070-29-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
 References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -107,106 +107,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/hw/clock.h   |  8 --------
- hw/core/clock.c      | 22 +++++++++++++++++-----
- hw/core/qdev-clock.c |  5 +----
- 3 files changed, 18 insertions(+), 17 deletions(-)
+From: Zhao Liu <zhao1.liu@intel.com>
 
-diff --git a/include/hw/clock.h b/include/hw/clock.h
-index eb58599131c..a279bd4ba5e 100644
---- a/include/hw/clock.h
-+++ b/include/hw/clock.h
-@@ -141,14 +141,6 @@ Clock *clock_new(Object *parent, const char *name);
- void clock_set_callback(Clock *clk, ClockCallback *cb,
-                         void *opaque, unsigned int events);
+Replace type_register() with type_register_static() because
+type_register() will be deprecated.
+
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20241029085934.2799066-11-zhao1.liu@intel.com
+---
+ include/hw/i386/pc.h | 4 ++--
+ target/i386/cpu.c    | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 14ee06287da..b3477ad6a29 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -316,7 +316,7 @@ extern const size_t pc_compat_2_3_len;
+     }; \
+     static void pc_machine_init_##suffix(void) \
+     { \
+-        type_register(&pc_machine_type_##suffix); \
++        type_register_static(&pc_machine_type_##suffix); \
+     } \
+     type_init(pc_machine_init_##suffix)
  
--/**
-- * clock_clear_callback:
-- * @clk: the clock to delete the callback from
-- *
-- * Unregister the callback registered with clock_set_callback.
-- */
--void clock_clear_callback(Clock *clk);
--
- /**
-  * clock_set_source:
-  * @clk: the clock.
-diff --git a/hw/core/clock.c b/hw/core/clock.c
-index cbe7b1bc469..391095eb4e5 100644
---- a/hw/core/clock.c
-+++ b/hw/core/clock.c
-@@ -44,16 +44,12 @@ Clock *clock_new(Object *parent, const char *name)
- void clock_set_callback(Clock *clk, ClockCallback *cb, void *opaque,
-                         unsigned int events)
- {
-+    assert(OBJECT(clk)->parent);
-     clk->callback = cb;
-     clk->callback_opaque = opaque;
-     clk->callback_events = events;
+@@ -344,7 +344,7 @@ extern const size_t pc_compat_2_3_len;
+     static void MACHINE_VER_SYM(register, namesym, __VA_ARGS__)(void) \
+     { \
+         MACHINE_VER_DELETION(__VA_ARGS__); \
+-        type_register(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
++        type_register_static(&MACHINE_VER_SYM(info, namesym, __VA_ARGS__)); \
+     } \
+     type_init(MACHINE_VER_SYM(register, namesym, __VA_ARGS__));
+ 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 3725dbbc4b3..305f2a41cfb 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6429,7 +6429,7 @@ static void x86_register_cpu_model_type(const char *name, X86CPUModel *model)
+         .class_data = model,
+     };
+ 
+-    type_register(&ti);
++    type_register_static(&ti);
  }
  
--void clock_clear_callback(Clock *clk)
--{
--    clock_set_callback(clk, NULL, NULL, 0);
--}
--
- bool clock_set(Clock *clk, uint64_t period)
- {
-     if (clk->period == period) {
-@@ -168,6 +164,16 @@ static void clock_period_prop_get(Object *obj, Visitor *v, const char *name,
-     visit_type_uint64(v, name, &period, errp);
- }
  
-+static void clock_unparent(Object *obj)
-+{
-+    /*
-+     * Callback are registered by the parent, which might die anytime after
-+     * it's unparented the children.  Avoid having a callback to a deleted
-+     * object in case the clock is still referenced somewhere else (eg: by
-+     * a clock output).
-+     */
-+    clock_set_callback(CLOCK(obj), NULL, NULL, 0);
-+}
- 
- static void clock_initfn(Object *obj)
- {
-@@ -200,11 +206,17 @@ static void clock_finalizefn(Object *obj)
-     g_free(clk->canonical_path);
- }
- 
-+static void clock_class_init(ObjectClass *klass, void *data)
-+{
-+    klass->unparent = clock_unparent;
-+}
-+
- static const TypeInfo clock_info = {
-     .name              = TYPE_CLOCK,
-     .parent            = TYPE_OBJECT,
-     .instance_size     = sizeof(Clock),
-     .instance_init     = clock_initfn,
-+    .class_init        = clock_class_init,
-     .instance_finalize = clock_finalizefn,
- };
- 
-diff --git a/hw/core/qdev-clock.c b/hw/core/qdev-clock.c
-index 82799577f3e..ca65685c04e 100644
---- a/hw/core/qdev-clock.c
-+++ b/hw/core/qdev-clock.c
-@@ -87,11 +87,8 @@ void qdev_finalize_clocklist(DeviceState *dev)
-         if (!ncl->output && !ncl->alias) {
-             /*
-              * We kept a reference on the input clock to ensure it lives up to
--             * this point so we can safely remove the callback.
--             * It avoids having a callback to a deleted object if ncl->clock
--             * is still referenced somewhere else (eg: by a clock output).
-+             * this point; it is used by the monitor to show the frequency.
-              */
--            clock_clear_callback(ncl->clock);
-             object_unref(OBJECT(ncl->clock));
-         }
-         g_free(ncl->name);
 -- 
 2.47.1
 
