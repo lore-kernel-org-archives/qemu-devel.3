@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CDC1E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E386AE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLhg2-0002P2-AX; Thu, 12 Dec 2024 06:48:18 -0500
+	id 1tLhgK-0003MQ-JU; Thu, 12 Dec 2024 06:48:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhfz-0002Ep-Vo
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:16 -0500
+ id 1tLhg8-0002rC-Mt
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:25 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhfx-0007Md-R8
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:15 -0500
+ id 1tLhg7-0007OI-Co
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=gOs4H+384JMlQVQn68q+WeAKmre7IyZcDaGglzAPO/k=; b=f78KqhTdAZ2dM+y3Crscs7CJ1r
- oeHC8t65hss1KI1S3xV6lC0OS3qduYtiRREujXxLYQJw7XKQUKMv2p1/T05NZF+r75giFfOo6Jc1V
- 1E4VDnSmM4EI3F2r0FsfJF6qZ6e8LcYWDm6hbFruCUp4vNQp08JkUl/13lnjNhPWYOhzU73TTmlgh
- R5Ho3ye1+PSGwGGeSV2hrBXnTPgcRZ2ZYeutEdWfcilel3terjL0+MzIiC0quBP228nFJay28Z+qW
- g7I1sw06hBu0Obr3xOF9rXZvVOYjDtK9rRFQRV0ErmGpu3bt11em3PmAG35w8uGb2ZyXTLfKy8ryj
- 8D8waKo18LGoZlwEEsp5If+vOUVZKJzTIlgflvN7fCn51UxHG5l/7FbD9NxkK5RsQd+4sKiRvTjwN
- H5aZmcwxCb1Pu9HkIV7d03J4r0PLRZ7g1YZXD1JffDzF/dOFMhh5KUPesS3wTnI8wmmwBYXXmr+nr
- qdUJg0FGfA99ugHMrGLWBz5nIMU/G1kfgr0MBALSbZ+TekJxLWC5MXZMyzXG97g5hDD/ZZFsax2Pl
- bqkrAGxgnGU0xPOXcqe+MfZfiOjyBXz6d74+L3r1moaVvoO2O0NlKMzAJAnAY+9eR58J8288rG9K6
- mPMvLRn+YOq82evBebuHOye+DJ+N8cJ40jLTaZUHg=;
+ bh=bvY1uyqfDSve5G72JqQ8LUzLGJB3lyOoOElhjWLwLuo=; b=kFbKtSP7DCd4wKOlWj9YFf86rQ
+ 4Z372LCFb/1S06QRu0VmF156ezKhsS0V5C94yto/exhPRd7anMb2CLj1o2TqI7kbdw37ZeHsjNmEo
+ 8REU19vx0ULShaBVi2205Pq95VGQd2RP243HjlkQYQZoVCHd8bedLOySEmHF5nYZhDvmrmE+KGT5I
+ pzwYkGYzVOXSfbr6sN3U7COJK9R7Oj9Sg4+75lo9ZcdBO+MyBBuDvDIM8yCBWulkge66omGDdKTcb
+ M0v1dPzEuD0IL7Bj86HevB5qmw8VIpzZ1nU4WuWQV1dmZvHjlaDc6E6hUifRJlqIyj/g4/24CDvW5
+ rYn8hh72juqspYrytHAUK/OtSfRktHMKc6lF0Uhdx7sDIDUVP/GFG6TSVgHsxGteUYobH+p+LxCZ9
+ kCQ4lJ6d6Nr+HSPDqvolTL4BjZ4JH1Up0koepvN2drfCAbTC+7PAYYR8kDZM4LY66oFaIGpEW8BYC
+ wkI8i1Q1mLCzwlj8UmSbHHAAxo5/N0S/H2/NwKKuXOvkI/vQsSmlki3+1PfGrD27kS/q5y9qun1zS
+ jFyscI1yEv1xkmeOiTAK5KqFDKeHHVUVb87nReS1g+V2SePL6k6Xmh8MinIevbu3zctvMducY/c3h
+ 0PNZCmGvZz3MIfH6ARwdrQsJ/EBmT0LlZ9eYowMwM=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhfG-00070a-Ni; Thu, 12 Dec 2024 11:47:31 +0000
+ id 1tLhfR-00070a-5m; Thu, 12 Dec 2024 11:47:41 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 11:46:14 +0000
-Message-Id: <20241212114620.549285-29-mark.cave-ayland@ilande.co.uk>
+Date: Thu, 12 Dec 2024 11:46:19 +0000
+Message-Id: <20241212114620.549285-34-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
@@ -52,7 +52,7 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 28/34] next-cube: use named gpio output for next-rtc data
+Subject: [PATCH v2 33/34] next-cube: add my copyright to the top of the file
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -78,80 +78,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a named gpio output for the next-rtc data and then update
-next_rtc_data_in_irq() to drive the IRQ directly. This enables the next-rtc to
-next-pc data to be wired up using the standard qdev gpio APIs.
-
-At the same time rename the pc-rtc-data-in gpio to rtc-data-in which is possible
-now that the previous rtc-data-in gpio has been moved to the next-rtc device.
+This series has involved rewriting and/or updating a considerable part of the
+next-cube emulation so update the copyright in next-cube.c to reflect this.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ hw/m68k/next-cube.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 35eeeb0d59..5d3ffebb93 100644
+index 7b0769c0d3..1e96bb02f8 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -56,6 +56,8 @@ struct NeXTRTC {
-     uint8_t status;
-     uint8_t control;
-     uint8_t retval;
-+
-+    qemu_irq data_out_irq;
- };
- 
- #define TYPE_NEXT_SCSI "next-scsi"
-@@ -234,13 +236,10 @@ static void next_rtc_data_in_irq(void *opaque, int n, int level)
-             rtc->value = (rtc->value << 1) | level;
-         } else {
-             /* Shift out value to read */
--            qemu_irq rtc_data_in_irq = qdev_get_gpio_in_named(
--                DEVICE(s), "pc-rtc-data-in", 0);
--
-             if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
--                qemu_irq_raise(rtc_data_in_irq);
-+                qemu_irq_raise(rtc->data_out_irq);
-             } else {
--                qemu_irq_lower(rtc_data_in_irq);
-+                qemu_irq_lower(rtc->data_out_irq);
-             }
-         }
-     }
-@@ -1028,8 +1027,12 @@ static void next_rtc_reset_hold(Object *obj, ResetType type)
- 
- static void next_rtc_init(Object *obj)
- {
-+    NeXTRTC *rtc = NEXT_RTC(obj);
-+
-     qdev_init_gpio_in_named(DEVICE(obj), next_rtc_data_in_irq,
-                             "rtc-data-in", 1);
-+    qdev_init_gpio_out_named(DEVICE(obj), &rtc->data_out_irq,
-+                             "rtc-data-out", 1);
- }
- 
- static const VMStateDescription next_rtc_vmstate = {
-@@ -1136,6 +1139,10 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     /* Data from NeXTPC to RTC */
-     qdev_connect_gpio_out_named(dev, "rtc-data-out", 0,
-                                 qdev_get_gpio_in_named(d, "rtc-data-in", 0));
-+    /* Data from RTC to NeXTPC */
-+    qdev_connect_gpio_out_named(d, "rtc-data-out", 0,
-+                                qdev_get_gpio_in_named(dev,
-+                                                       "rtc-data-in", 0));
- }
- 
- static void next_pc_init(Object *obj)
-@@ -1173,7 +1180,7 @@ static void next_pc_init(Object *obj)
- 
-     s->rtc_power_irq = qdev_get_gpio_in(DEVICE(obj), NEXT_PWR_I);
-     qdev_init_gpio_in_named(DEVICE(obj), next_pc_rtc_data_in_irq,
--                            "pc-rtc-data-in", 1);
-+                            "rtc-data-in", 1);
-     qdev_init_gpio_out_named(DEVICE(obj), &s->rtc_data_irq,
-                              "rtc-data-out", 1);
- }
+@@ -2,6 +2,7 @@
+  * NeXT Cube System Driver
+  *
+  * Copyright (c) 2011 Bryce Lanham
++ * Copyright (c) 2024 Mark Cave-Ayland
+  *
+  * This code is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published
 -- 
 2.39.5
 
