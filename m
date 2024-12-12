@@ -4,93 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94894E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8AB6E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:14:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkqk-00068B-WE; Thu, 12 Dec 2024 10:11:35 -0500
+	id 1tLkpl-0004EX-3B; Thu, 12 Dec 2024 10:10:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLkqj-00066U-OA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:11:33 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpc-00041Y-RB
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:25 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLkqg-0003Ly-2N
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:11:31 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3eb40876bbfso134076b6e.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:11:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734016286; x=1734621086; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=40Zo8V4LF1yIaYiA/NIJ/KoVW3/wpiJOBuOUU6k7hGo=;
- b=wT7h/R2UNycgfuA8BJtulu3jdZ3hvOC4z6xh5rEfApu2AVuUAMBC3yAxgD3IX7gKC1
- oErYxU0Lb+Jiz3/5O62dtgvmn1i/MnCOuHM2RDSEkdtk7tc1VmjTygvRnrsNrONxxQZ5
- OTkzDRhs6LKIm61lzNq469ze5uEWXzBi/iiqGd0SJECholEnbXh40iK0/Y8HuyrTWNRX
- loIQ3GHZVg07Yql9uXgN23byqUKI/8zniqWxvfazWxzrHIkFAop47BadIg08Q0OuEhZo
- 8JNyEKMi5U/MdJRCy8NV0yNhq7cBVoQZqrRFve487iomQM6eNwAPPB4o3iL78CWulmPS
- PK0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734016286; x=1734621086;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=40Zo8V4LF1yIaYiA/NIJ/KoVW3/wpiJOBuOUU6k7hGo=;
- b=eqeQMBsrXO2eJIv94EzJqVpiBGoumwh0e5hyDHluwIoaonN5x4BTjrLuxlFcojf7qP
- YmwjEk6oyRhcMHqpQEiYCEEGMMpI48oZjVqy7IHgfTr8eMWndJSnCbT/0xntnr1653+P
- UPxOUcPdMS5B/20Ty98ONJsvdGvWfrY069KieZg0Uno3IKafW5jc9y8peQELs6TsF/ML
- znXUoV6/RZqpkjoj7VVc0750JqsoTWKNgjL6UgRv26hRrZhRjDxpZJbuK0cm6PaHYrG6
- SaA5AcYc3h+IQ6nYlNADeLumhcVikN+89XmL9H0Pbzf/B7PSb9pFVMOMuD19PAmmzBz/
- JzdQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYNhvEEIqy/vXGvqreHeilQb1VHhoIhOpvJM48/wMYQXfCKfBPyURjvEQvK81lBTZ5TVD6LOeb1puU@nongnu.org
-X-Gm-Message-State: AOJu0YzmyFOZ9rcW2GgAURbMVqihuDUz98ewRS+i2gJ5MJ2PFquVqJss
- QKZMHleg0FdE8BKqNY8WgE1Ge7A15zjvc2jSfEQsCfH0LgBYPPJconCHZ7TwvikliLIdeuIp7d2
- dFwG5xXff
-X-Gm-Gg: ASbGnctl/p9cUHI4rViaH7zOXyK1gIaI01oVZLjIW2wbzhTdbw9XKc93/YYucuqSMxE
- ObIIZ30dOzhA00msZLBw0n/wlZiTG/tNr0rgcMCKPDPTqnhHHW4i/2tEF9uWPvrsKC3uIQjtMgu
- m6Zy+tTK1PhnucOOOeTutztRm63g+I7SbyiYXkZ4t+mtShOGQa1T5Vn7AARH9crAlvsCmXtUFu7
- f+MXFF5APjtYada5+JvkKEsvQEgB20gguxHwR1/JqkHht1vW1WrwunShZwmRRXB4AMv/AHTlTYf
- zncE/OhSwk+H5Hbzki4jOVxIQow+62I+/ik=
-X-Google-Smtp-Source: AGHT+IGA4dfoh7GYE7Db9oAloHanZTbdaBE9LcvSrfPWdPuz87hJM0bhJMOEyDoEd19YqHOp8PJokw==
-X-Received: by 2002:a05:6808:2021:b0:3eb:4829:59e with SMTP id
- 5614622812f47-3eb85aef4a3mr4515545b6e.6.1734016286601; 
- Thu, 12 Dec 2024 07:11:26 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eb8ccd18d6sm650362b6e.37.2024.12.12.07.11.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 07:11:26 -0800 (PST)
-Message-ID: <5e8c7bd6-4afa-45bd-af79-3e03b9e6075a@linaro.org>
-Date: Thu, 12 Dec 2024 09:11:24 -0600
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpa-0003EZ-UG
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:24 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id E62C51F394;
+ Thu, 12 Dec 2024 15:10:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016221; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fe2d/xHGMWROBvmx6EvMoykITOgGa7CAtRYHrAnE3mk=;
+ b=t3IZYkmL2TOTnf/2eSaYhDxsidYm97ATl1LYFX3VkO2xtCr6vux8dX/WhF89Mp44n4Bp3D
+ TyffElFdbrVSz332PpyizefioimEhmRqPhOR9HZ+5xSe0tGy/mMn4NZuavBUh50fVxN41d
+ UZCcGEDueNNa+c9cDZmhR3YZRGLQbOs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016221;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fe2d/xHGMWROBvmx6EvMoykITOgGa7CAtRYHrAnE3mk=;
+ b=Re2uF97A7smP4wEuMZgYOCJ+vJefLUE7uGviJIDmBqeK209kEvn078mx2SW/9bJoS5XSxV
+ l1R4nQ1eH/Q8Y7AQ==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=gTRD4x4G;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=+A1OmKOK
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016220; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fe2d/xHGMWROBvmx6EvMoykITOgGa7CAtRYHrAnE3mk=;
+ b=gTRD4x4GFioumlqwhz7JBp1+6GAmFk8VNWiB1M/ohOmUYKzssAJpteXC2WptgGaWLcZzzm
+ b1BQZrySA8Sxhrfo/KXIJKnwG99x0+EwwlZXwNmSJl9FrmprA/HIvEnb6RUMSIiWwRqzBA
+ V/j1H99CQfjYNV9plno0kjLjeHVdL3o=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016220;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=fe2d/xHGMWROBvmx6EvMoykITOgGa7CAtRYHrAnE3mk=;
+ b=+A1OmKOK6DTTlaClnN/VgY/rGxrBp0Qu/gRGLHb9jp91DVY5wyEzqXe8xNo+5jTOrA07ZT
+ lPkzKZZBdfZGmPCA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B8CCE13508;
+ Thu, 12 Dec 2024 15:10:19 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 8FNqH9v8WmcTfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:19 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 17/22] tests/qtest/migration: Split postcopy tests
+Date: Thu, 12 Dec 2024 12:09:44 -0300
+Message-Id: <20241212150949.16806-18-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
+References: <20241212150949.16806-1-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] qemu/atomic: Rename atomic128-cas.h headers using
- .h.inc suffix
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-References: <20241212141018.59428-1-philmd@linaro.org>
- <20241212141018.59428-2-philmd@linaro.org>
- <ee831fff-eb0a-4e56-8eee-99222e55d707@linaro.org>
- <8c52c730-cc87-466f-b36e-270d738b86f1@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <8c52c730-cc87-466f-b36e-270d738b86f1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Rspamd-Queue-Id: E62C51F394
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,34 +131,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 09:09, Philippe Mathieu-Daudé wrote:
-> On 12/12/24 16:02, Richard Henderson wrote:
->> On 12/12/24 08:10, Philippe Mathieu-Daudé wrote:
->>> Since commit 139c1837db ("meson: rename included C source files
->>> to .c.inc"), QEMU standard procedure for included C files is to
->>> use *.c.inc.
->>>
->>> Besides, since commit 6a0057aa22 ("docs/devel: make a statement
->>> about includes") this is documented in the Coding Style:
->>>
->>>    If you do use template header files they should be named with
->>>    the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
->>>    being included for expansion.
->>>
->>> Therefore rename 'atomic128-cas.h' as 'atomic128-cas.h.inc'.
->>
->> But these are not templates, nor included multiple times, so...
->> I don't get it.
-> I wanted to avoid including "qemu/atomic.h" in each of them due to:
-> 
->      host/include/generic/host/atomic128-cas.h:23:11: error: call to undeclared function 
-> 'qatomic_cmpxchg__nocheck'; ISO C99 and later do not support implicit function 
-> declarations [-Wimplicit-function-declaration]
->         23 |     r.i = qatomic_cmpxchg__nocheck(ptr_align, c.i, n.i);
->            |           ^
->      1 error generated.
+Split the next group of tests from migration-test.c, the postcopy
+tests. This is another well-defined group of tests and postcopy is a
+unique enough feature that it deserves it's own file.
 
-And why would you ever have that?
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ tests/qtest/meson.build                |   1 +
+ tests/qtest/migration-test.c           |  78 +-----------------
+ tests/qtest/migration/framework.h      |   1 +
+ tests/qtest/migration/postcopy-tests.c | 106 +++++++++++++++++++++++++
+ 4 files changed, 109 insertions(+), 77 deletions(-)
+ create mode 100644 tests/qtest/migration/postcopy-tests.c
 
-r~
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index eeb8ecf695..ff33034ca6 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -338,6 +338,7 @@ migration_files = [files(
+   'migration/migration-qmp.c',
+   'migration/migration-util.c',
+   'migration/compression-tests.c',
++  'migration/postcopy-tests.c',
+ )]
+ 
+ migration_tls_files = []
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 3528676678..fa759022d1 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -43,65 +43,6 @@
+ 
+ static char *tmpfs;
+ 
+-static void test_postcopy(void)
+-{
+-    MigrateCommon args = { };
+-
+-    test_postcopy_common(&args);
+-}
+-
+-static void test_postcopy_suspend(void)
+-{
+-    MigrateCommon args = {
+-        .start.suspend_me = true,
+-    };
+-
+-    test_postcopy_common(&args);
+-}
+-
+-static void test_postcopy_preempt(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_preempt = true,
+-    };
+-
+-    test_postcopy_common(&args);
+-}
+-
+-static void test_postcopy_recovery(void)
+-{
+-    MigrateCommon args = { };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_recovery_fail_handshake(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_recovery_fail_reconnect(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+-static void test_postcopy_preempt_recovery(void)
+-{
+-    MigrateCommon args = {
+-        .postcopy_preempt = true,
+-    };
+-
+-    test_postcopy_recovery_common(&args);
+-}
+-
+ static void test_baddest(void)
+ {
+     MigrateStart args = {
+@@ -1558,6 +1499,7 @@ int main(int argc, char **argv)
+ 
+     migration_test_add_tls(env);
+     migration_test_add_compression(env);
++    migration_test_add_postcopy(env);
+ 
+     migration_test_add("/migration/bad_dest", test_baddest);
+ #ifndef _WIN32
+@@ -1571,24 +1513,6 @@ int main(int argc, char **argv)
+                            test_precopy_unix_suspend_notlive);
+     }
+ 
+-    if (env->has_uffd) {
+-        migration_test_add("/migration/postcopy/plain", test_postcopy);
+-        migration_test_add("/migration/postcopy/recovery/plain",
+-                           test_postcopy_recovery);
+-        migration_test_add("/migration/postcopy/preempt/plain",
+-                           test_postcopy_preempt);
+-        migration_test_add("/migration/postcopy/preempt/recovery/plain",
+-                           test_postcopy_preempt_recovery);
+-        migration_test_add("/migration/postcopy/recovery/double-failures/handshake",
+-                           test_postcopy_recovery_fail_handshake);
+-        migration_test_add("/migration/postcopy/recovery/double-failures/reconnect",
+-                           test_postcopy_recovery_fail_reconnect);
+-        if (env->is_x86) {
+-            migration_test_add("/migration/postcopy/suspend",
+-                               test_postcopy_suspend);
+-        }
+-    }
+-
+     migration_test_add("/migration/precopy/unix/plain",
+                        test_precopy_unix_plain);
+     migration_test_add("/migration/precopy/file",
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index bc978d4c1c..1ac3aea4b2 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -221,5 +221,6 @@ void migration_test_add_tls(MigrationTestEnv *env);
+ static inline void migration_test_add_tls(MigrationTestEnv *env) {};
+ #endif
+ void migration_test_add_compression(MigrationTestEnv *env);
++void migration_test_add_postcopy(MigrationTestEnv *env);
+ 
+ #endif /* TEST_FRAMEWORK_H */
+diff --git a/tests/qtest/migration/postcopy-tests.c b/tests/qtest/migration/postcopy-tests.c
+new file mode 100644
+index 0000000000..daf7449f2c
+--- /dev/null
++++ b/tests/qtest/migration/postcopy-tests.c
+@@ -0,0 +1,106 @@
++/*
++ * QTest testcases for postcopy migration
++ *
++ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
++ *   based on the vhost-user-test.c that is:
++ *      Copyright (c) 2014 Virtual Open Systems Sarl.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "migration/framework.h"
++#include "migration/migration-util.h"
++#include "qapi/qmp/qlist.h"
++#include "qemu/module.h"
++#include "qemu/option.h"
++#include "qemu/range.h"
++#include "qemu/sockets.h"
++
++static void test_postcopy(void)
++{
++    MigrateCommon args = { };
++
++    test_postcopy_common(&args);
++}
++
++static void test_postcopy_suspend(void)
++{
++    MigrateCommon args = {
++        .start.suspend_me = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
++static void test_postcopy_preempt(void)
++{
++    MigrateCommon args = {
++        .postcopy_preempt = true,
++    };
++
++    test_postcopy_common(&args);
++}
++
++static void test_postcopy_recovery(void)
++{
++    MigrateCommon args = { };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_recovery_fail_handshake(void)
++{
++    MigrateCommon args = {
++        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_RECOVERY,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_recovery_fail_reconnect(void)
++{
++    MigrateCommon args = {
++        .postcopy_recovery_fail_stage = POSTCOPY_FAIL_CHANNEL_ESTABLISH,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++static void test_postcopy_preempt_recovery(void)
++{
++    MigrateCommon args = {
++        .postcopy_preempt = true,
++    };
++
++    test_postcopy_recovery_common(&args);
++}
++
++void migration_test_add_postcopy(MigrationTestEnv *env)
++{
++    if (env->has_uffd) {
++        migration_test_add("/migration/postcopy/plain", test_postcopy);
++        migration_test_add("/migration/postcopy/recovery/plain",
++                           test_postcopy_recovery);
++        migration_test_add("/migration/postcopy/preempt/plain",
++                           test_postcopy_preempt);
++        migration_test_add("/migration/postcopy/preempt/recovery/plain",
++                           test_postcopy_preempt_recovery);
++
++        migration_test_add(
++            "/migration/postcopy/recovery/double-failures/handshake",
++            test_postcopy_recovery_fail_handshake);
++
++        migration_test_add(
++            "/migration/postcopy/recovery/double-failures/reconnect",
++            test_postcopy_recovery_fail_reconnect);
++
++        if (env->is_x86) {
++            migration_test_add("/migration/postcopy/suspend",
++                               test_postcopy_suspend);
++        }
++    }
++}
+-- 
+2.35.3
+
 
