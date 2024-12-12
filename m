@@ -4,102 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87547E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A417AE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:58:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLlOp-0005IA-Sr; Thu, 12 Dec 2024 10:46:48 -0500
+	id 1tLlZH-000054-Fh; Thu, 12 Dec 2024 10:57:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLlOj-000535-O3
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:46:43 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLlZE-0008WV-Qc
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:57:33 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLlOc-0005bp-Qz
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:46:40 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLlZA-0000V6-7h
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:57:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734018392;
+ s=mimecast20190719; t=1734019046;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ENIm3cwjRddvoRy48kuv/gWMnpAeUQkrWoSvTJsxj68=;
- b=e4GRWAV9Qfga6NbnIurQVz5tNRN2n/CkCuNnJEcqztC6IkjTkiQXEa+AGRRYn+OmZpQAE6
- iulhdJUhKDncNFtX+CYCCCz6E0loQ+lvlHo4wsZvPauV539YM266KiL4jKY03jYQoIfDrP
- 1LVZINk8pxhBsZjscTR/WTR6jDIav5Q=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=9QvOqxReBwv+PTzlHlKxK05m2nmibyZqeeKJborKCys=;
+ b=RKqJtKDJrq/Ce4alpSaFdiPE+oON3LYMzYX6K/v59VbqwntA7tHDMC/+uJJ/w56RAzm5Q4
+ JHKR5zcBNYhFK/ba0mtwrzWHgnIUgAHkhOD4vesytlAYP16wQ7BKt6ZB0Hd+Hvz6K84WzQ
+ CRYk4h2Ogvc+VCJSkhWpRj7LELqTCo0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-1kHxm2SxPxexL0Cg_agEcA-1; Thu, 12 Dec 2024 10:46:31 -0500
-X-MC-Unique: 1kHxm2SxPxexL0Cg_agEcA-1
-X-Mimecast-MFC-AGG-ID: 1kHxm2SxPxexL0Cg_agEcA
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-7b6f4e5d267so129568385a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:46:31 -0800 (PST)
+ us-mta-656-kIMRxdjwP5WfARZ9LuxrAw-1; Thu, 12 Dec 2024 10:57:25 -0500
+X-MC-Unique: kIMRxdjwP5WfARZ9LuxrAw-1
+X-Mimecast-MFC-AGG-ID: kIMRxdjwP5WfARZ9LuxrAw
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4362153dcd6so4838375e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:57:23 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734018391; x=1734623191;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ENIm3cwjRddvoRy48kuv/gWMnpAeUQkrWoSvTJsxj68=;
- b=SsIWj8fs5o8tl7TvTan2J2d2A+x8xTuJrHsUTfQAHO8i4ero+TfAlkpR7d/NcNKx8N
- Ufm0jQfcdnK2r7gyL2j86jg+2Rre6SBfCpYCPRuSfBTzWQIJmMscAmUAOBguj3oLBPef
- GEb23hy18Nzf20K2HwsjGVlzDeEjPexzf0o6es08Eh0XnSZKPhQHtm0kNd+PcEl7Ut68
- xyE5yOe5F9OFW/AXzsAGnfJi6ie7K/rPTlkLixLZvgnaHLsAyC/g3CPc6IrhqfFs5jxs
- jalMCGLvHy//m4A0XxN+wSKAU+nmwZvi53XekjHJMQbqKoSbPTuZNNzVnXCrXdT+7TMV
- 7AaA==
-X-Gm-Message-State: AOJu0Ywn6t4nv6mOK3Zxz6JzdPmpBrSYMD5Tk3S+yQFND+IBa0rCDBGQ
- TYUIS0S/ws7lnDRHjppXpYbwCFcQ1w9el6fxVTktDItHLpXsjDy48Kmt+7ng7MQz2rOf+j2tG7n
- lUBZHlXSZgnB9cSIfZIMRwxHPf/Dgte3wfcsqUib0sL73i3YZtdAr
-X-Gm-Gg: ASbGncuWJceUas3yZ5v4QTPPX/dodpEOarUS3XrDl/krYIlg2BLhb2NmtY6CEZo5u3t
- RDmNAZ7a+4Ubr4YBurOqBw6regRACqQnJjRAcP3cE445XTbDYQV4HG4GZ7TBWWp//IeT5y1tI8C
- C3fc367c00+NGb6zrVIlLIGMYMnKrUghPzLR2eEjIQ1VHxXsyAU/5XSH2RSVUoFNvSHWewO/1Ey
- DhnFrBboRhCsMc9CKXiRx9eciXHiRRz0iJ/XtbB+s4uR2DVaC4UfEjnW9CCchOf1x0UzpKE799G
- pXL/kP+43d3K/A79pA==
-X-Received: by 2002:a05:620a:8015:b0:7b6:e616:4e67 with SMTP id
- af79cd13be357-7b6f8ec175cmr122453885a.2.1734018390526; 
- Thu, 12 Dec 2024 07:46:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH+AMsH7hZOdKPuzz6+z6JHJYlwPGuNujWHH76oFJr/Ta07DFm/D40TW23F+vI1GU3B6GdHcA==
-X-Received: by 2002:a05:620a:8015:b0:7b6:e616:4e67 with SMTP id
- af79cd13be357-7b6f8ec175cmr122449985a.2.1734018390060; 
- Thu, 12 Dec 2024 07:46:30 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b6ecd8f43csm166927285a.34.2024.12.12.07.46.29
+ d=1e100.net; s=20230601; t=1734019042; x=1734623842;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9QvOqxReBwv+PTzlHlKxK05m2nmibyZqeeKJborKCys=;
+ b=L4qThPCxh6y4XME+4zCWJpGR8bncR9R1eV5APh8HCvttXdPkfvwr/olWYSELxLZ2q0
+ AjVyOtK4M3BT9uYFg4IsTNb7+Rodr+WAY2FkrSLbXeBJPl/wrQma4/2MoudDhTakOaKR
+ Ze6mK/rRTWhABjTPYXNKd3ngXm/33tL/AdumCP+/Q9Awsinluxy59S6Ee3ZtaZ0dTUSK
+ JrN6t3eTheyOnKYmy2mpfxE8AGEFk62oU1drzMiKniNjWai4J8lHhLjvRyWk1AmHQ+Ux
+ aK5+EW/iLsgrykIyeDiqEDFbj7EJIpOsbCUyBiy1WikztdNlTxhkOXouDY1KaWRXIItL
+ XpdQ==
+X-Gm-Message-State: AOJu0YxGI2KdOqZB9j7grUHUGwYJ44Tc5/LLbQyWCWpSE1+UUTLwB7cq
+ KxmivLfhY4o13+8JaJWnUGcpjr8pg67+owc1va02GfBJeDF1Z56wbpKhyY6TjvUMaI81aVad0i4
+ 3K0BC254lB2kUtfxcSLIiJcoRJXvC2t/A5BvsCTv8moZiNC689uVQ+cc1y4xYYKAsNJZtAR1S6J
+ RotWv4UXKj0ht5iOI87CeOnnQVOVYxUUm3cv/C
+X-Gm-Gg: ASbGncuZ+6OFUVHLrKbiruynPcUv/CxxyJ/bQKYh5hO011VyHrfb4opW9s7GAbLm4mG
+ 3Wn2mLCCHfJzapJpi0ZU+PUEfSNZQ2YzEHBgTKw1g+jBqyajB9HGjCVSFtYXJMM3t1DhvIarnJW
+ 8/zQeo3HcNrMyf0W8f243mwOGbqyy58J21E9NgJ2yIQKEGuDua8w1OLiy73i36sQCwLx17blv4b
+ wkdqjVmi0+An1XDvNauRVQeAIrwAsUhb641wzTAQwCk6oXsOXmJmiUOhfrJ
+X-Received: by 2002:a05:6000:1f8b:b0:382:4a4e:25bb with SMTP id
+ ffacd0b85a97d-3864ce93818mr6062749f8f.46.1734019042114; 
+ Thu, 12 Dec 2024 07:57:22 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHFa7CcDNOqD8m78Hkix4p/fgEdMLSSxDHs05LT5P9Ebbsk367mQ80opnam3nAa+3sizRy8eg==
+X-Received: by 2002:a05:6000:1f8b:b0:382:4a4e:25bb with SMTP id
+ ffacd0b85a97d-3864ce93818mr6062725f8f.46.1734019041674; 
+ Thu, 12 Dec 2024 07:57:21 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878248f976sm4373543f8f.14.2024.12.12.07.57.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 07:46:29 -0800 (PST)
-Date: Thu, 12 Dec 2024 10:46:27 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Tomoyuki HIROSE <tomoyuki.hirose@igel.co.jp>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [RFC PATCH 2/5] system/memory: support unaligned access
-Message-ID: <Z1sFUxCiQp3Nziu_@x1n>
-References: <20241108032952.56692-1-tomoyuki.hirose@igel.co.jp>
- <20241108032952.56692-3-tomoyuki.hirose@igel.co.jp>
- <Z04lW_CdYBPJRah3@x1n>
- <2de74447-00f7-4bcf-81f3-c8461ec19a67@igel.co.jp>
- <Z1MpY7ZIAAoBDbZU@x1n>
- <9d1f07e5-2c08-455c-a653-e57e219666ab@igel.co.jp>
- <Z1oYIn5cMZeA4tes@x1n>
- <1ab0a747-e2c4-4545-bae9-31e19c77bd75@igel.co.jp>
+ Thu, 12 Dec 2024 07:57:21 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com,
+	binbin.wu@linux.intel.com
+Subject: [PATCH] kvm: consistently return 0/-errno from kvm_convert_memory
+Date: Thu, 12 Dec 2024 16:57:19 +0100
+Message-ID: <20241212155719.524637-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1ab0a747-e2c4-4545-bae9-31e19c77bd75@igel.co.jp>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
 X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,386 +105,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 02:39:41PM +0900, Tomoyuki HIROSE wrote:
-> On 2024/12/12 7:54, Peter Xu wrote:
-> > On Wed, Dec 11, 2024 at 06:35:57PM +0900, Tomoyuki HIROSE wrote:
-> > > Sorry for late reply.
-> > > 
-> > > On 2024/12/07 1:42, Peter Xu wrote:
-> > > > On Fri, Dec 06, 2024 at 05:31:33PM +0900, Tomoyuki HIROSE wrote:
-> > > > > In this email, I explain what this patch set will resolve and an
-> > > > > overview of this patch set. I will respond to your specific code
-> > > > > review comments in a separate email.
-> > > > Yes, that's OK.
-> > > > 
-> > > > > On 2024/12/03 6:23, Peter Xu wrote:
-> > > > > > On Fri, Nov 08, 2024 at 12:29:46PM +0900, Tomoyuki HIROSE wrote:
-> > > > > > > The previous code ignored 'impl.unaligned' and handled unaligned
-> > > > > > > accesses as is. But this implementation could not emulate specific
-> > > > > > > registers of some devices that allow unaligned access such as xHCI
-> > > > > > > Host Controller Capability Registers.
-> > > > > > I have some comment that can be naive, please bare with me..
-> > > > > > 
-> > > > > > Firstly, could you provide an example in the commit message, of what would
-> > > > > > start working after this patch?
-> > > > > Sorry, I'll describe what will start working in the next version of
-> > > > > this patch set. I'll also provide an example here.  After applying
-> > > > > this patch set, a read(addr=0x2, size=2) in the xHCI Host Controller
-> > > > > Capability Registers region will work correctly. For example, the read
-> > > > > result will return 0x0110 (version 1.1.0). Previously, a
-> > > > > read(addr=0x2, size=2) in the Capability Register region would return
-> > > > > 0, which is incorrect. According to the xHCI specification, the
-> > > > > Capability Register region does not prohibit accesses of any size or
-> > > > > unaligned accesses.
-> > > > Thanks for the context, Tomoyuki.
-> > > > 
-> > > > I assume it's about xhci_cap_ops then.  If you agree we can also mention
-> > > > xhci_cap_ops when dscribing it, so readers can easily reference the MR
-> > > > attributes from the code alongside with understanding the use case.
-> > > > 
-> > > > Does it mean that it could also work if xhci_cap_ops.impl.min_access_size
-> > > > can be changed to 2 (together with additional xhci_cap_read/write support)?
-> > > > 
-> > > > Note that I'm not saying it must do so even if it would work for xHCI, but
-> > > > if the memory API change is only for one device, then it can still be
-> > > > discussed about which option would be better on changing the device or the
-> > > > core.
-> > > > 
-> > > > Meanwhile, if there's more use cases on the impl.unaligned, it'll be nice
-> > > > to share together when describing the issue.  That will be very persuasive
-> > > > input that a generic solution is needed.
-> > > OK, I understand. I will try to describe 'xhci_cap_ops' and related topics.
-> > Thanks.
-> > 
-> > > Currently, the actual 'xhci_cap_ops' code is as follows:
-> > > 
-> > > ```
-> > > static const MemoryRegionOps xhci_cap_ops = {
-> > >      .read = xhci_cap_read,
-> > >      .write = xhci_cap_write,
-> > >      .valid.min_access_size = 1,
-> > >      .valid.max_access_size = 4,
-> > >      .impl.min_access_size = 4,
-> > >      .impl.max_access_size = 4,
-> > >      .endianness = DEVICE_LITTLE_ENDIAN,
-> > > };
-> > > ```
-> > > 
-> > > According to the above code, the guest can access this MemoryRegion
-> > > with 1-4 bytes.  'valid.unaligned' is also not explicitly defined, so
-> > > it is treated as 'false'. This means the guest can access this MR with
-> > > 1-4 bytes, as long as the access is aligned. However, the xHCI
-> > > specification does not prohibit unaligned accesses.
-> > > 
-> > > Simply adding '.valid.unaligned = true' will not resolve this problem
-> > > because 'impl.unaligned' is also 'false'. In this situation, where
-> > > 'valid.unaligned' is 'true' but 'impl.unaligned' is 'false', we need
-> > > to emulate unaligned accesses by splitting them into multiple aligned
-> > > accesses.
-> > Correct.
-> > 
-> > > An alternative solution would be to fix 'xhci_cap_{read,write}',
-> > > update '.impl.min_access_size = 1', and set '.impl.unaligned = true'
-> > > to allow the guest to perform unaligned accesses with 1-4 bytes. With
-> > > this solution, we wouldn't need to modify core memory code.
-> > > 
-> > > However, applying this approach throughout the QEMU codebase would
-> > > increase the complexity of device implementations. If a device allows
-> > > unaligned guest access to its register region, the device implementer
-> > > would needs to handle unaligned accesses explicitly. Additionally,
-> > > the distinction between 'valid' and 'impl' would become almost
-> > > meaningless, making it unclear why they are separated.
-> > I get it now, let's stick with the core memory change.
-> > 
-> > > "Ideally", we could consider one of the following changes:
-> > > 
-> > > 1. Introduce an emulation mechanism for unaligned accesses using
-> > >     multiple aligned accesses.
-> > > 2. Remove either 'valid' or 'impl' and unify these functionality.
-> > > 
-> > > Solution 2 would require extensive changes to the codebase and memory
-> > > API, making it impractical.
-> > Why it is impractical?  Let me explain my question..
-> > 
-> > Firstly, valid.unaligned makes perfect sense to me.  That describes whether
-> > the device emulation allows unaligned access at all.  So I do think we need
-> > this, and yes when xHCI controller supports unaligned access, this is the
-> > flag to be set TRUE instead of FALSE.
-> > 
-> > However, impl.unaligned is confusing to me.
-> > 
-> >  From literal POV, it says, "the MR ops implemented unaligned access".
-> > 
-> > If you check my initial reply to this patch, I had a similar question: from
-> > such definition, whenever a device emulation sets impl.unaligned=true, I
-> > think it means we should simply pass over the MR request to the ops, no
-> > matter if it's aligned or not, especially when it's not aligned memory core
-> > shouldn't need to do any trick on amplifying the MR access, simply because
-> > the device said it supports unaligned access in its implementation.  That's
-> > the only meaningful definition of impl.unaligned that I can think of so far.
-> 
-> I have the same understanding.  I found a relevant section in the
-> documentation at 'docs/devel/memory.rst':
-> 
-> ```
-> In addition various constraints can be supplied to control how these
-> callbacks are called:
-> 
-> - .valid.min_access_size, .valid.max_access_size define the access sizes
->   (in bytes) which the device accepts; accesses outside this range will
->   have device and bus specific behaviour (ignored, or machine check)
-> - .valid.unaligned specifies that the *device being modelled* supports
->   unaligned accesses; if false, unaligned accesses will invoke the
->   appropriate bus or CPU specific behaviour.
-> - .impl.min_access_size, .impl.max_access_size define the access sizes
->   (in bytes) supported by the *implementation*; other access sizes will be
->   emulated using the ones available.  For example a 4-byte write will be
->   emulated using four 1-byte writes, if .impl.max_access_size = 1.
-> - .impl.unaligned specifies that the *implementation* supports unaligned
->   accesses; if false, unaligned accesses will be emulated by two aligned
->   accesses.
-> ```
+In case of incorrect parameters, kvm_convert_memory() was returning
+-1 instead of -EINVAL.  The guest won't notice because it will move
+anyway to RUN_STATE_INTERNAL_ERROR, but fix this for consistency and
+clarity.
 
-Ah yes.
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ accel/kvm/kvm-all.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-> 
-> > However, after I try to read more of the problem, I don't think any MR ops
-> > would like to implement such complicated logic, the norm should be like
-> > xHCI MR ops where it supports only aligned access in MR ops, then the
-> > memory core is hopefully always be able to convert an unaligned access into
-> > one or multiple aligned access internally.
-> > 
-> > IOW, it makes more sense to me that we keep valid.unaligned, but drop
-> > impl.unaligned.  Would that make sense to you (and Peter)?  That kind of
-> > matches with the comment you quoted below on saying that unaligned access
-> > is broken - I'm not 100% sure whether it's talking about impl.unaligned,
-> > but it would make sense if so.
-> 
-> I agree with you.
-> 
-> > Meanwhile, I do see that we already have two impl.unaligned=true users:
-> > 
-> > hw/pci-host/raven.c:    .impl.unaligned = true,
-> > system/ioport.c:    .impl.unaligned = true,
-> > 
-> > I actually have no idea whether they're working at all if accesses can be
-> > unaligned internally, and how they work, if at least impl.unaligned seems
-> > to be totally broken.
-> 
-> I initially assumed there would be more users, so I expected that a
-> lot of changes would be needed.  MR can be categorized into the
-> following patterns:
-> 
-> 1. `impl.unaligned == true`
-
-From your description below, I suppose you meant:
-
-  1. `impl.unaligned == true` and `valid.unaligned == true`
-
-That may still be worthwhile to be spelled out, because I do see there's
-one of pattern 4, which is:
-
-  4. `impl.unaligned == true` and `valid.unaligned == false`
-
-See:
-
-static const MemoryRegionOps riscv_iommu_trap_ops = {
-    .read_with_attrs = riscv_iommu_trap_read,
-    .write_with_attrs = riscv_iommu_trap_write,
-    .endianness = DEVICE_LITTLE_ENDIAN,
-    .impl = {
-        .min_access_size = 4,
-        .max_access_size = 8,
-        .unaligned = true,
-    },
-    .valid = {
-        .min_access_size = 4,
-        .max_access_size = 8,
-    }
-};
-
-Even though I don't think it's a valid pattern..  I don't see how that
-could differ in behavior against pattern 2 you listed below, if the upper
-layer should always have rejected unaligned access.  So maybe it really
-should have reported impl.unaligned=false.
-
-> 2. `impl.unaligned == false` and `valid.unaligned == false`
-> 3. `impl.unaligned == false` and `valid.unaligned == true`
-> 
-> - Pattern 1: No special handling is required since the implementation
->   supports unaligned accesses. The MR can handle both aligned and
->   unaligned accesses seamlessly.
-> - Pattern 2: No additional handling is needed because unaligned
->   accesses are invalid in this MR. Any unaligned access is treated as
->   an illegal operation.
-> - Pattern 3: This is the only pattern that requires consideration. We
->   must emulate unaligned accesses using aligned accesses.
-> 
-> I searched by keyword "unaligned = true" and got the following result:
-
-Indeed I missed the ".impl = { .unaligned = XXX ... }" cases..
-
-> 
-> ```
-> $ rg "unaligned = true"
-> system/memory.c
-> 1398:        .unaligned = true,
-> 1403:        .unaligned = true,
-> 
-> system/ioport.c
-> 223:    .valid.unaligned = true,
-> 224:    .impl.unaligned = true,
-> 
-> hw/xtensa/mx_pic.c
-> 271:        .unaligned = true,
-> 
-> hw/pci-host/raven.c
-> 203:    .impl.unaligned = true,
-> 204:    .valid.unaligned = true,
-> 
-> hw/riscv/riscv-iommu.c
-> 2108:        .unaligned = true,
-> 
-> hw/ssi/npcm7xx_fiu.c
-> 256:        .unaligned = true,
-> 
-> hw/cxl/cxl-host.c
-> 285:        .unaligned = true,
-> 290:        .unaligned = true,
-> 
-> hw/i386/xen/xen_platform.c
-> 412:        .unaligned = true,
-> 417:        .unaligned = true,
-> 
-> hw/display/vmware_vga.c
-> 1306:        .unaligned = true,
-> 1309:        .unaligned = true,
-> ```
-> 
-> In this result, I found two pattern 3 in the codebase:
-> 
-> - hw/xtensa/mx_pic.c
-> - hw/ssi/npcm7xx_fiu.c
-> 
-> ```
-> static const MemoryRegionOps xtensa_mx_pic_ops = {
->     .read = xtensa_mx_pic_ext_reg_read,
->     .write = xtensa_mx_pic_ext_reg_write,
->     .endianness = DEVICE_NATIVE_ENDIAN,
->     .valid = {
->         .unaligned = true,
->     },
-> };
-> ```
-> 
-> ```
-> static const MemoryRegionOps npcm7xx_fiu_flash_ops = {
->     .read = npcm7xx_fiu_flash_read,
->     .write = npcm7xx_fiu_flash_write,
->     .endianness = DEVICE_LITTLE_ENDIAN,
->     .valid = {
->         .min_access_size = 1,
->         .max_access_size = 8,
->         .unaligned = true,
->     },
-> };
-> ```
-> 
-> Note that these implementations are implicitly 'impl.unaligned ==
-> false'; the 'impl.unaligned' field simply does not exist in these
-> cases. However, it is possible that these implementations inherently
-> support unaligned accesses.
-> 
-> To summarize, if we decide to remove the 'impl' field, we might need
-> to revisit and make changes to the MR implementation in these codes.
-
-IIUC what we need to change should be adding impl.unaligned=true into above
-two use cases, am I right?
-
-Said that because IIUC QEMU has processed pattern 3 (vaild.unaligned=true,
-impl.unaligned=false) exactly like what it should do with pattern 1
-(valid.unaligned=true, impl.unaligned=true).
-
-That is, if I read it right, the current access_with_adjusted_size() should
-always pass in unaligned address into MR ops (as long as addr is unaligned,
-and also if valid.unaligned=true), assuming they'll be able to tackle with
-it, even if impl.unaligned can be reported false.  That's exactly what
-needs fixing then.
-
-So.. it turns out we shouldn't drop impl.unaligned?  Because above two
-seems to be the real user of such.  What we may want to do is:
-
-  - Change above two use cases, adding impl.unaligned=true.
-
-    This step should hopefully have zero effect in reality on the two
-    devices.  One thing to mention is both of them do not look like to have
-    an upper bound of max_access_size (either 8 which is the maximum, or
-    not specified).
-
-  - Implement the real pattern 3 (which is what this patch wanted to do)
-
-  - Declare pattern 3 for whatever device that want to support it (which
-    will differ from above two examples).
-
-> 
-> > > Solution 1 seems to align with QEMU's
-> > > original intentions. Actually, there is a comment in 'memory.c' that
-> > > states:
-> > > 
-> > > `/* FIXME: support unaligned access? */`
-> > > 
-> > > This patch set implements solution 1. If there is a better way to
-> > > resolve these issues, I would greatly appreciate your suggestions.
-> > I think if my above understanding is correct, I can kind of understand your
-> > solution now.  But then I wonder whether we should already drop
-> > impl.unaligned with your solution.
-> > 
-> > Also, I don't think I am 100% sure yet on how the amplification of the
-> > accessed (as proposed in your patch) would have side effects to the device
-> > emulation.  For example, read(0x2, 0x4) with impl.access_size_min=4 now
-> > will be amplified to two continuous:
-> > 
-> >    read(0x0, 0x4)
-> >    read(0x4, 0x4)
-> > 
-> > Then there will be side effects of reading (addr=0x0, size=0x2) portion,
-> > and (addr=0x6, size=0x2) portion, that is not part of the request.  Maybe
-> > it's as simple as: when device emulation has such side effect, it should
-> > always set valid.unaligned=false already.
-> 
-> There is also a potential issue regarding side effects. Consider a
-> device where a register value changes upon a read access. Assume the
-> device has the following register map:
-> 
-> ```
-> 31                       8        0 (bit)
-> +---------------------------------+
-> |         Reg1(lo)       |  Reg0  | 0 byte
-> +---------------------------------+
-> |                        |Reg1(hi)| 4 byte
-> ```
-> 
-> In this case, let’s assume that Reg0 is a register whose value
-> changes whenever it is read.
-> Now, if the guest issues a read(addr=0x1, size=4) on this device's
-> MR(impl.unaligned=false, valid.unaligned=true), the unaligned access
-> must be split into two aligned accesses:
-> 
-> 1. read(addr=0x0, size=4)
-> 2. read(addr=0x4, size=4)
-> 
-> However, this results in Reg0 being read as part of the first aligned
-> access, potentially triggering its side effect. This unintended side
-> effect violates the semantics of the original unaligned read. If we
-> don't want to allow this, we should set 'valid.unaligned = false'.
-
-Right.  I guess we're on the same page now on the side effect part of
-things..  We may want to document this after implementation of pattern 3
-somewhere so that the device emulation developers are aware of it.
-
-Thanks,
-
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 4c5cef766ad..81821af7d7a 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -2998,17 +2998,17 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+     ram_addr_t offset;
+     MemoryRegion *mr;
+     RAMBlock *rb;
+-    int ret = -1;
++    int ret = -EINVAL;
+ 
+     trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
+ 
+     if (!QEMU_PTR_IS_ALIGNED(start, qemu_real_host_page_size()) ||
+         !QEMU_PTR_IS_ALIGNED(size, qemu_real_host_page_size())) {
+-        return -1;
++        return ret;
+     }
+ 
+     if (!size) {
+-        return -1;
++        return ret;
+     }
+ 
+     section = memory_region_find(get_system_memory(), start, size);
+@@ -3026,7 +3026,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+         if (!to_private) {
+             return 0;
+         }
+-        return -1;
++        return ret;
+     }
+ 
+     if (!memory_region_has_guest_memfd(mr)) {
 -- 
-Peter Xu
+2.47.1
 
 
