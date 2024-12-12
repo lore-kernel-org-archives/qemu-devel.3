@@ -4,57 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65F30E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:40:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFEDE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLnB4-0008NV-1J; Thu, 12 Dec 2024 12:40:42 -0500
+	id 1tLnGd-0000oo-1y; Thu, 12 Dec 2024 12:46:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tLnAt-0008N1-6M
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:40:32 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tLnGW-0000o3-AQ
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:46:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tLnAm-0002oY-FP
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:40:27 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y8KQz3vhrz6K99S;
- Fri, 13 Dec 2024 01:36:59 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 45CB2140A86;
- Fri, 13 Dec 2024 01:40:19 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 12 Dec
- 2024 18:40:18 +0100
-Date: Thu, 12 Dec 2024 17:40:16 +0000
-To: Gregory Price <gourry@gourry.net>
-CC: <linux-cxl@vger.kernel.org>, <qemu-devel@nongnu.org>,
- <svetly.todorov@memverge.com>, <nifan.cxl@gmail.com>
-Subject: Re: [PATCH RFC v3 3/3] mhsld: implement MHSLD device
-Message-ID: <20241212174016.0000002a@huawei.com>
-In-Reply-To: <20241018161252.8896-4-gourry@gourry.net>
-References: <20241018161252.8896-1-gourry@gourry.net>
- <20241018161252.8896-4-gourry@gourry.net>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tLnGT-0004LV-QX
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:46:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734025575;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yBznrJE56VRWhrBvxk3/sZkoRE2CzrKK9JIJqvtRp14=;
+ b=GLLVdX+nrfzWjWkfYrgi3h/7m0U8Y4IoxQyZPqFTE1mwdeqZ4Iinq1cP8X64rC6+jjwIER
+ fwVbkVsHZGf/yqiUtfWZDFbUqizayb8LfF0ZOWMjP/7df4Tg1Nu0IzYkrOYQFZrnLdLrFR
+ 8kPBFB0se7lXpEqwBYDWx479WpER+Jw=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-670-T8KPEP2UO4qDi2V7rQX3mA-1; Thu, 12 Dec 2024 12:46:14 -0500
+X-MC-Unique: T8KPEP2UO4qDi2V7rQX3mA-1
+X-Mimecast-MFC-AGG-ID: T8KPEP2UO4qDi2V7rQX3mA
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4675670e56dso30547061cf.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 09:46:14 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734025574; x=1734630374;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yBznrJE56VRWhrBvxk3/sZkoRE2CzrKK9JIJqvtRp14=;
+ b=lOMpwifroC5uve0h1jC3z15K2LvLtwGd5p2MR+HKGO9ugG9K3vcO4nD8KH9hp72fkW
+ DSQA/o598Bu+/O64Y1AJ2ymq/ANEWGWoxXg2vY+b0s844aleRoLPdtI2mIQKS5K1rPk7
+ pUaKdFnu9GG2Yb1+CkVZyGDPh+CIhelZ3MJZRy6CCdWyzIcGGHv+HSQBIi4YUAfNE5Wq
+ Ha8e/ubrewhrxXhxhy81wgea+H4+Xca+uwfkJ2NQ2ZGxiSOvw6NLtEI3D3+x+HB5/Bfu
+ lTKlLMOWjRg0AVRUGgmJjmFNdYVXCb1BzPc9lGujpxyjsbaGDbUDzHfulIILcp2ndbTn
+ Luww==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZMO0vbelFdgtBwcANzKQs4ftnfiW4ul5zoBtnnQ8tIkKiMTZIRUAnry1KS6R3aJZCn9ICH0bXGcB+@nongnu.org
+X-Gm-Message-State: AOJu0Yw4NvxtBQ8jcLxD13P1HOIn98QT477VG+QUJf1PhGgKGah9ptVB
+ 46wDj6lvU843tyh+Xbdz42MMuOiyIhxdYD15f6lMEM07p4MNFZl+JyqgNqcYTMHStfGJ88XwrDt
+ RXSkq/0OoLtZHRtevRsnc4CiO4K1dNKWMQut/fUSlXMZZ+hb4SnxS
+X-Gm-Gg: ASbGncsD82hYIkD966RV8739NEqByLWSVcjXJDNsTZwIe98ngUrBZky6XKkvwi8FbYW
+ CXCazag3/8SaSRo6xOfOA4wsFlfV1SarT0V18hxFUX7JzAvt80+6E/3m7v6qv1bYCfhfCxhgbn2
+ xg+4TLOvt3kxoyO0NNa+1I6IoqlEyqOH4oiKPht+OvmEwUSFoVCqBJpn7/geoRMXt5oC4urJHu6
+ /VoL5v/lyIfAo64RZ62DuGYQH4bINFo8YdDMt2jryTS3RxmgrJSyTdY+LEjJnfHp8PygIWJB8uf
+ 6HmVLRtQyhZc3gjrHmrXyjOFMuss
+X-Received: by 2002:a05:622a:1481:b0:467:6486:beea with SMTP id
+ d75a77b69052e-467a16d8d82mr17250391cf.38.1734025573773; 
+ Thu, 12 Dec 2024 09:46:13 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IESjabeM15BdQhC8Wj8b+Ah/nkx1/l8WK0j38QBKEhg2gmiHasG+E2HVEBwie5+liQCRSqa5Q==
+X-Received: by 2002:a05:622a:1481:b0:467:6486:beea with SMTP id
+ d75a77b69052e-467a16d8d82mr17250071cf.38.1734025573505; 
+ Thu, 12 Dec 2024 09:46:13 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4674feaaab4sm59534911cf.18.2024.12.12.09.46.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 09:46:12 -0800 (PST)
+Message-ID: <12a2ef7c-0ba3-49d9-9e08-733b8ca6a753@redhat.com>
+Date: Thu, 12 Dec 2024 18:46:07 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFCv2 02/20] arm/cpu: Add sysreg definitions in
+ cpu-sysregs.h
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>,
+ Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <20241206112213.88394-3-cohuck@redhat.com>
+ <2a83a49b-6863-4fb8-b5de-c3eacf3cdb77@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <2a83a49b-6863-4fb8-b5de-c3eacf3cdb77@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,187 +121,108 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 18 Oct 2024 12:12:52 -0400
-Gregory Price <gourry@gourry.net> wrote:
+Hi Richard,
+On 12/12/24 15:37, Richard Henderson wrote:
+> On 12/6/24 05:21, Cornelia Huck wrote:
+>> +#define SYS_ID_AA64PFR0_EL1                             sys_reg(3,
+>> 0, 0, 4, 0)
+> ...
+>> +typedef struct ARMSysReg {
+>> +    int op0;
+>> +    int op1;
+>> +    int crn;
+>> +    int crm;
+>> +    int op2;
+>> +} ARMSysReg;
+> ...
+>> +static inline ARMSysReg sys_reg(int op0, int op1, int crn, int crm,
+>> int op2)
+>> +{
+>> +        ARMSysReg sr = {op0, op1, crn, crm, op2};
+>> +
+>> +        return sr;
+>> +}
+>
+> Not a fan.  Why take 20 bytes to represent these?
+sure we can optimize it
+>
+> Our existing ENCODE_CP_REG and ENCODE_AA64_CP_REG macros seem much
+> better, even if the argument ordering doesn't match the column
+> ordering in Table D22-2.
+>
+>> @@ -841,6 +849,51 @@ typedef struct IdRegMap {
+>>       uint64_t regs[NR_ID_REGS];
+>>   } IdRegMap;
+>>   +#define ARM_FEATURE_ID_RANGE_IDX(op0, op1, crn, crm,
+>> op2)               \
+>> +       
+>> ({                                                              \
+>> +                __u64 __op1 = (op1) &
+>> 3;                                \
+>> +                __op1 -= (__op1 ==
+>> 3);                                  \
+>> +                (__op1 << 6 | ((crm) & 7) << 3 |
+>> (op2));                \
+>> +        })
+>
+> Ah, well, this answers my question re patch 1.
+>
+> It seems a shame to use 128 slots to represent all 9 id registers in
+> the op1={1,3} space.
+wouldn't it make sense to use a hashtable then as we don't have
+consecutive indexes?
+>
+> Do we really need anything beyond the defined registers, or even the
+> defined registers for which qemu knows how to do anything?
+what do you mean by "defined registers". The end goal is to be able to
+tune any id reg that the kernel allows to write. So I guess we shall
+encompass more regs than qemu currently handles.
 
-> From: Svetly Todorov <svetly.todorov@memverge.com>
-> 
-> Using a shared-memory bytemap, validates that DC adds, releases,
-> and reclamations happen on extents belonging to the appropriate
-> host.
-> 
-> The MHSLD device inherits from the CXL_TYPE3 class and adds the following
-> configuration options:
+Wrt op1={1,3}, tbh I initially sticked to the KVM API. Now looking at
+D22-2, effectively we have very few ID regs there. If we were to use a
+hashtable we may be more flexible in picking up the indexes that are
+relevant for us.
+>
+> I'm certainly happy to replace ARMISARegisters fields with an array,
+> but more like
+>
+> enum ARMIDRegisterIdx {
+>     ID_AA64ISAR0_IDX,
+>     etc
+>     ordering arbitrary, either machine or macro generated,
+>     but every register has a symbolic index.
+>     NUM_ID_IDX,
+> };
+>
+> enum ARMSysregs {
+>     SYS_ID_AA64PFR0_EL1 = ENCODE_AA64_CP_REG(...),
+>     etc
+> };
+>
+> const uint32_t id_register_sysreg[NUM_ID_IDX] = {
+>     [ID_AA64ISAR0_IDX] = SYS_ID_AA64PFR0_EL1,
+>     etc
+> };
+>
+> struct ARMISARegisters {
+>     uint64_t id[NUM_ID_IDX];
+> };
+>
+> This seems trivial to automate, and wastes no space.
 
-As in previous the -- syntax is somewhat confusing as that's
-not how the parameters are applied.
+Sure we will study such rework. As long as the key (ID_AA64ISAR0_IDX)
+can be matched against the index used by the KVM API we should be fine.
 
-> --mhd-head=<u32>
-> --mhd-state_file=<str>
-> --mhd-init=<bool>
-> 
-> --mhd-head specifies the head ID of the host on the given device.
-> 
-> --mhd-state_file is the name of the shared-memory-backed file used
-> to store the MHD state.
-> 
-> --mhd-init indicates whether this QEMU instance should initialize
-> the state_file; if so, the instance will create the file if it does
-> not exist, ftruncate it to the appropriate size, and initialize its
-> header. It is assumed that the --mhd-init instance is run and allowed
-> to completely finish configuration before any other guests access the
-> shared state.
-> 
-> The shared state file only needs to be intialized once. Even if a guest
-> dies without clearing the ownership bits associated with its head-ID,
-> future guests with that ID will clear those bits in cxl_mhsld_realize(),
-> regardless of whether mhd_init is true or false.
+Thanks
 
-That sounds like a race condition if not all hosts are brought
-up before the first add.
-
-> 
-> The following command line options create an MHSLD with 4GB of
-> backing memory, whose state is tracked in /dev/shm/mhd_metadata.
-> --mhd-init=true tells this instance to initialize the state as
-> described above.
-> 
-> ./qemu-system_x86-64 \
-> [... other options ...] \
-> -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 \
-> -device cxl-rp,id=rp0,bus=cxl.0,chassis=0,port=0,slot=0 \
-> -object memory-backend-ram,id=mem0,size=4G \
-> -device cxl-mhsld,bus=rp0,num-dc-regions=1,volatile-dc-memdev=mem0,id=cxl-mem0,sn=66667,mhd-head=0,mhd-state_file=mhd_metadata,mhd-init=true \
-> -M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G \
-> -qmp unix:/tmp/qmp-sock-1,server,nowait
-> 
-> Once this guest completes setup, other guests looking to access the
-> device can be booted with the same configuration options, but with
-> --mhd-head != 0,
-> --mhd-init=false,
-> and a different QMP socket.
-> 
-> Signed-off-by: Gregory Price <gourry@gourry.net>
-> Signed-off-by: Svetly Todorov <svetly.todorov@memverge.com>
-
-A few trivial things inline.
-
-In general the scheme looks workable but I'm not sure the contraints at setup time
-etc are suitable for an upstream solution.  Certainly a useful tool to have
-for kernel development though so I'll try and find time in next few days to apply
-this on my gitlab tree.
-
-Longer term I think we need a more complex external program or a main / proxy
-type arrangement so that ordering requirements can be enforce and we can have
-richer info.  Having to chat to each qmp interface independently works fine is
-also a bit more complex than I think we would eventually want.
-
-Having a solution in place though will make it much easier to move towards
-an eventual upstreamable solution. This is a great place to start from!
-
-Jonathan
-
-> +static bool cxl_mhsld_release_extent(PCIDevice *d, uint64_t dpa, uint64_t len)
-> +{
-> +    cxl_mhsld_state_clear(CXL_MHSLD(d), dpa / MHSLD_BLOCK_SZ,
-> +        len / MHSLD_BLOCK_SZ);
-
-Trivial but align after (
-
-> +    return true;
-> +}
-
-
-> diff --git a/hw/cxl/mhsld/mhsld.h b/hw/cxl/mhsld/mhsld.h
-> new file mode 100644
-> index 0000000000..e7ead1f0d2
-> --- /dev/null
-> +++ b/hw/cxl/mhsld/mhsld.h
-> @@ -0,0 +1,75 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright (c) 2024 MemVerge Inc.
-> + *
-> + */
-> +
-> +#ifndef CXL_MHSLD_H
-> +#define CXL_MHSLD_H
-> +#include <stdint.h>
-> +#include "hw/cxl/cxl.h"
-> +#include "hw/cxl/cxl_mailbox.h"
-> +#include "hw/cxl/cxl_device.h"
-> +#include "qemu/units.h"
-> +
-> +#define MHSLD_BLOCK_SZ (2 * MiB)
-> +
-> +/*
-> + * We limit the number of heads to prevent the shared state
-> + * region from becoming a major memory hog.  We need 512MB of
-> + * memory space to track 8-host ownership of 4GB of memory in
-> + * blocks of 2MB.  This can change if the block size is increased.
-
-I'm lost what makes up that size?
-
-
- 
-> + */
-> +#define MHSLD_HEADS  (8)
-> +
-> +/*
-> + * The shared state cannot have 2 variable sized regions
-> + * so we have to max out the ldmap.
-> + */
-> +typedef struct MHSLDSharedState {
-> +    uint8_t nr_heads;
-> +    uint8_t nr_lds;
-> +    uint8_t ldmap[MHSLD_HEADS];
-> +    uint64_t nr_blocks;
-> +    uint8_t blocks[];
-> +} MHSLDSharedState;
-> +
-> +struct CXLMHSLDState {
-> +    CXLType3Dev ct3d;
-> +    bool mhd_init;
-> +    char *mhd_state_file;
-> +    int mhd_state_fd;
-> +    size_t mhd_state_size;
-> +    uint32_t mhd_head;
-> +    MHSLDSharedState *mhd_state;
-> +};
-> +
-> +struct CXLMHSLDClass {
-> +    CXLType3Class parent_class;
-> +};
-> +
-> +enum {
-> +    MHSLD_MHD = 0x55,
-> +        #define GET_MHD_INFO 0x0
-> +};
-> +
-> +/*
-> + * MHD Get Info Command
-> + * Returns information the LD's associated with this head
-> + */
-> +typedef struct MHDGetInfoInput {
-> +    uint8_t start_ld;
-> +    uint8_t ldmap_len;
-> +} QEMU_PACKED MHDGetInfoInput;
-> +
-> +typedef struct MHDGetInfoOutput {
-> +    uint8_t nr_lds;
-> +    uint8_t nr_heads;
-> +    uint16_t resv1;
-> +    uint8_t start_ld;
-> +    uint8_t ldmap_len;
-> +    uint16_t resv2;
-> +    uint8_t ldmap[];
-> +} QEMU_PACKED MHDGetInfoOutput;
-> +#endif
+Eric
+>
+>
+> r~
+>
 
 
