@@ -4,105 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D62AE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBB4EE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkpr-0004Ib-9J; Thu, 12 Dec 2024 10:10:39 -0500
+	id 1tLkxj-0000Nv-AV; Thu, 12 Dec 2024 10:18:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpg-00047Q-Or
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:28 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkwq-0007g9-Qe
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:17:54 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpf-0003Fg-0q
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:28 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id CEC5D1F445;
- Thu, 12 Dec 2024 15:10:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
- b=Bv0df+xFQGflne1Cd1gcujorah3L0JdbFZE2EnTc6/aqSumVGyXR2VjhbbP2Y358PpAK//
- 9u8CTZ1BfLpPXxNAqCr6MOkNOuNfW0QkAaANFGPQAFMxDfGrGwjV1nfkozeSwSOXdCFn+H
- PyYLc5KuFe5fYS8hy+lhryHhsWM+/zs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016225;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
- b=3Ay5ySmSJtIwPCE5no4LAEzH/AU5h08EoudAU+i/m2/0nDtIhNm/DF5tYRj2QG7VzHuGsH
- vVqvMWEKiuST4QCQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
- b=Bv0df+xFQGflne1Cd1gcujorah3L0JdbFZE2EnTc6/aqSumVGyXR2VjhbbP2Y358PpAK//
- 9u8CTZ1BfLpPXxNAqCr6MOkNOuNfW0QkAaANFGPQAFMxDfGrGwjV1nfkozeSwSOXdCFn+H
- PyYLc5KuFe5fYS8hy+lhryHhsWM+/zs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016225;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
- b=3Ay5ySmSJtIwPCE5no4LAEzH/AU5h08EoudAU+i/m2/0nDtIhNm/DF5tYRj2QG7VzHuGsH
- vVqvMWEKiuST4QCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A3AE613508;
- Thu, 12 Dec 2024 15:10:24 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id CC/YGOD8WmcTfQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:24 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 20/22] tests/qtest/migration: Split CPR tests
-Date: Thu, 12 Dec 2024 12:09:47 -0300
-Message-Id: <20241212150949.16806-21-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
-References: <20241212150949.16806-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkwo-0004Lm-5z
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:17:52 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3862d16b4f5so511224f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:17:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734016668; x=1734621468; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9AYsj8wbPLwB1vnTIpQLmzJvuDr7STJmaU6AE1rjjV0=;
+ b=PWH6qi22C6ArAc8kwAz3x8kBWtIFMrZNxFK+nqNr6ACc480U0UiQ4OMuI1iJMs2u8/
+ +VleO++9AxMwleIO46n+bQ4oPEt/yWloO13DsaxCOtDcDuf97WIU5D+qQD0ejefm8gPC
+ CDEPV+zGf71l6y5C36TZryL5DFKbVMAKfAmSWv3JIJLJYS6W8cmJs7wUuYzkW7SuVjs8
+ jEn2jzUDBQVI8XNaN7si83M62xdJGALSW4qoA6VT7YETXGwesNfeXqA12BDbY/NFkgFg
+ z4y/LjZewD+lI2Nvo4UYaOHSsV0i+rtuQ/TE7raSgInB7IO+6ttMQ5tC7R2gi12vQlea
+ Y45w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734016668; x=1734621468;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9AYsj8wbPLwB1vnTIpQLmzJvuDr7STJmaU6AE1rjjV0=;
+ b=OHvUzGo0y2UcxQ0KaD1dTUrrVyqLunmPQXRpUA9tYIH5d7v6vzueMElXnDOTzwBALQ
+ CV3BElzp61tkaYV878N+3h3JPRXmYPxeBvqjUDpcI6k5wE8OefwgV4KLd3cdurs05tri
+ LdVgIoHa+W+1IlIDlx12lb0lZkfr3e8p0nLqtFjV+6tJCulhGZy099ug3FCB/TP+J7Hu
+ p9IwB22iUP8G5FFVHyilMRvS0fCFwvxUEOCqSd21+rzhQMX1JwiUPAwgMZW0iiAirtFe
+ HWgMNRGLm078+VgMSCalLaewL2auTOwwt5JF/H55VpAo+z0RUGSkigZk35wf8Z5KiqJK
+ JSCQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjv4VvLHu5zJmwp7JCfR1ooDeE0+mJwFDumygpmKMHgI6Uhn8hHqXZpT9Si5qqa5DC3b4wsy7aN8Ao@nongnu.org
+X-Gm-Message-State: AOJu0YwfaspO5n4NgD4pXutwh5K0b5ejXjsble0HpnegLZrO5SsZ9Ds5
+ ZbbX0bjzasPAELau5TN7Nn16eSgnklNcGRnJy9kySPwCOGkhr8Fegk+x8CkqP3dmeBfaJ12UZcZ
+ M
+X-Gm-Gg: ASbGnctgmRRCUTkzDyK0Ua+4ugHopshDaXioNP5DFdv5i/RG7CUk9B7xuWOau5IB/O3
+ HvAWiGUV92prU+t0t4KaypGRz3peaGp6DWyRKQY9msPTube2iwrwfpqWZ42JalUtI7xPWS/SIz6
+ X7euq4vwf9G+qPLOgL+Xe8YKJyfgeeLNZdIurxPTMst9NHqBZn8Kn7b+wPFQLOqQ/Nm1qS5id6n
+ woVNl2+ckbCPRl8ymD1czxRhnMoogGxX3BdA5z715hTs29pqP8TB42n7rGrMnStBUryE7tHSXq2
+ iK8xuZGNCiKe2UOy8j2mArzU
+X-Google-Smtp-Source: AGHT+IHZbPYPYsfRw/BzqJAocJOLXCcbIY7t32tEx3fx/pgiDGkGfxo6JxZS/PyV05pGDZq5Al/aPQ==
+X-Received: by 2002:a5d:5f85:0:b0:385:faec:d945 with SMTP id
+ ffacd0b85a97d-387887cdcbbmr2776726f8f.9.1734016668209; 
+ Thu, 12 Dec 2024 07:17:48 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38782514dc3sm4245319f8f.67.2024.12.12.07.17.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 07:17:47 -0800 (PST)
+Message-ID: <ad7c3026-e307-4ae0-a985-c447ffa68aa0@linaro.org>
+Date: Thu, 12 Dec 2024 16:17:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] qemu/atomic: Rename atomic128-cas.h headers using
+ .h.inc suffix
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241212141018.59428-1-philmd@linaro.org>
+ <20241212141018.59428-2-philmd@linaro.org>
+ <ee831fff-eb0a-4e56-8eee-99222e55d707@linaro.org>
+ <8c52c730-cc87-466f-b36e-270d738b86f1@linaro.org>
+ <5e8c7bd6-4afa-45bd-af79-3e03b9e6075a@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <5e8c7bd6-4afa-45bd-af79-3e03b9e6075a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,167 +105,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the mode/reboot test into a separate file to hold all the CPR
-tests. Currently there's just one test, but we're adding more CPR
-modes and the feature is different enough from live migration that
-it's worth it to have a separate file for it.
+On 12/12/24 16:11, Richard Henderson wrote:
+> On 12/12/24 09:09, Philippe Mathieu-Daudé wrote:
+>> On 12/12/24 16:02, Richard Henderson wrote:
+>>> On 12/12/24 08:10, Philippe Mathieu-Daudé wrote:
+>>>> Since commit 139c1837db ("meson: rename included C source files
+>>>> to .c.inc"), QEMU standard procedure for included C files is to
+>>>> use *.c.inc.
+>>>>
+>>>> Besides, since commit 6a0057aa22 ("docs/devel: make a statement
+>>>> about includes") this is documented in the Coding Style:
+>>>>
+>>>>    If you do use template header files they should be named with
+>>>>    the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
+>>>>    being included for expansion.
+>>>>
+>>>> Therefore rename 'atomic128-cas.h' as 'atomic128-cas.h.inc'.
+>>>
+>>> But these are not templates, nor included multiple times, so...
+>>> I don't get it.
+>> I wanted to avoid including "qemu/atomic.h" in each of them due to:
+>>
+>>      host/include/generic/host/atomic128-cas.h:23:11: error: call to 
+>> undeclared function 'qatomic_cmpxchg__nocheck'; ISO C99 and later do 
+>> not support implicit function declarations [-Wimplicit-function- 
+>> declaration]
+>>         23 |     r.i = qatomic_cmpxchg__nocheck(ptr_align, c.i, n.i);
+>>            |           ^
+>>      1 error generated.
+> 
+> And why would you ever have that?
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/meson.build           |  1 +
- tests/qtest/migration-test.c      | 34 +-----------------
- tests/qtest/migration/cpr-tests.c | 58 +++++++++++++++++++++++++++++++
- tests/qtest/migration/framework.h |  1 +
- 4 files changed, 61 insertions(+), 33 deletions(-)
- create mode 100644 tests/qtest/migration/cpr-tests.c
-
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index fc38c80b43..cda1a84122 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -338,6 +338,7 @@ migration_files = [files(
-   'migration/migration-qmp.c',
-   'migration/migration-util.c',
-   'migration/compression-tests.c',
-+  'migration/cpr-tests.c',
-   'migration/file-tests.c',
-   'migration/precopy-tests.c',
-   'migration/postcopy-tests.c',
-diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 76ba820fe4..0d1c8154d7 100644
---- a/tests/qtest/migration-test.c
-+++ b/tests/qtest/migration-test.c
-@@ -145,31 +145,6 @@ static void test_ignore_shared(void)
- }
- #endif
- 
--static void *migrate_hook_start_mode_reboot(QTestState *from, QTestState *to)
--{
--    migrate_set_parameter_str(from, "mode", "cpr-reboot");
--    migrate_set_parameter_str(to, "mode", "cpr-reboot");
--
--    migrate_set_capability(from, "x-ignore-shared", true);
--    migrate_set_capability(to, "x-ignore-shared", true);
--
--    return NULL;
--}
--
--static void test_mode_reboot(void)
--{
--    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
--                                           FILE_TEST_FILENAME);
--    MigrateCommon args = {
--        .start.use_shmem = true,
--        .connect_uri = uri,
--        .listen_uri = "defer",
--        .start_hook = migrate_hook_start_mode_reboot,
--    };
--
--    test_file_common(&args, true);
--}
--
- static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
- {
-     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
-@@ -308,20 +283,13 @@ int main(int argc, char **argv)
-     migration_test_add_postcopy(env);
-     migration_test_add_file(env);
-     migration_test_add_precopy(env);
-+    migration_test_add_cpr(env);
- 
-     migration_test_add("/migration/bad_dest", test_baddest);
- #ifndef _WIN32
-     migration_test_add("/migration/analyze-script", test_analyze_script);
- #endif
- 
--    /*
--     * Our CI system has problems with shared memory.
--     * Don't run this test until we find a workaround.
--     */
--    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
--        migration_test_add("/migration/mode/reboot", test_mode_reboot);
--    }
--
-     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
- 
-     migration_test_add("/migration/validate_uuid", test_validate_uuid);
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-new file mode 100644
-index 0000000000..44ce89aa5b
---- /dev/null
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -0,0 +1,58 @@
-+/*
-+ * QTest testcases for CPR
-+ *
-+ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-+ *   based on the vhost-user-test.c that is:
-+ *      Copyright (c) 2014 Virtual Open Systems Sarl.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "libqtest.h"
-+#include "migration/framework.h"
-+#include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
-+
-+
-+static char *tmpfs;
-+
-+static void *migrate_hook_start_mode_reboot(QTestState *from, QTestState *to)
-+{
-+    migrate_set_parameter_str(from, "mode", "cpr-reboot");
-+    migrate_set_parameter_str(to, "mode", "cpr-reboot");
-+
-+    migrate_set_capability(from, "x-ignore-shared", true);
-+    migrate_set_capability(to, "x-ignore-shared", true);
-+
-+    return NULL;
-+}
-+
-+static void test_mode_reboot(void)
-+{
-+    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
-+                                           FILE_TEST_FILENAME);
-+    MigrateCommon args = {
-+        .start.use_shmem = true,
-+        .connect_uri = uri,
-+        .listen_uri = "defer",
-+        .start_hook = migrate_hook_start_mode_reboot,
-+    };
-+
-+    test_file_common(&args, true);
-+}
-+
-+void migration_test_add_cpr(MigrationTestEnv *env)
-+{
-+    tmpfs = env->tmpfs;
-+
-+    /*
-+     * Our CI system has problems with shared memory.
-+     * Don't run this test until we find a workaround.
-+     */
-+    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
-+        migration_test_add("/migration/mode/reboot", test_mode_reboot);
-+    }
-+}
-diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-index 52c715781f..b264be76eb 100644
---- a/tests/qtest/migration/framework.h
-+++ b/tests/qtest/migration/framework.h
-@@ -224,5 +224,6 @@ void migration_test_add_compression(MigrationTestEnv *env);
- void migration_test_add_postcopy(MigrationTestEnv *env);
- void migration_test_add_file(MigrationTestEnv *env);
- void migration_test_add_precopy(MigrationTestEnv *env);
-+void migration_test_add_cpr(MigrationTestEnv *env);
- 
- #endif /* TEST_FRAMEWORK_H */
--- 
-2.35.3
+To have "not template" headers self-contained; but I'm fine discarding
+these 2 patches and keeping the last one of this series.
 
 
