@@ -4,98 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FC3EE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39B58E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:44:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkP1-0007AD-QN; Thu, 12 Dec 2024 09:42:55 -0500
+	id 1tLkQi-0007oT-Ef; Thu, 12 Dec 2024 09:44:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tLkOs-000798-O7; Thu, 12 Dec 2024 09:42:46 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tLkOn-00041U-Sc; Thu, 12 Dec 2024 09:42:46 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BC60V0o000724;
- Thu, 12 Dec 2024 14:42:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=JKYPUX
- zT4eeZNWweVHBUtTi4XwSojwEPHXoeXjVggVs=; b=ihRRmcZixJF35lbufc4N8P
- xNvioWjHKpaZZzf2iC0v0DMKL2sT9vAdzRV2e0BBtelLKJ392EquSTON9hY2u/SH
- uousehJXerlUxGwdJq/K01rw9mzk4qtUjJSYf0tHyyRmkWKMG7fuqGnY3QEhcKem
- tkQgEe6eVXFbKKHzeTc2DHFh+bmEwzkUJ/jf8jLpSuw5RjZsCRvbld46riK7fTOz
- boQEERpzQjrEmog5seO48EqEC9KkXqOfoaqxI2Yac3u4izaOXDpsCksvUFsY4/3T
- ySJuNfRMrJIGcove+Qvh/TjQY+a7YleTgYh2tgDKX2xsN3ak5VOmpfv94Re7H54g
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43ft6d2nmg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Dec 2024 14:42:38 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCD7H1b032724;
- Thu, 12 Dec 2024 14:42:37 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0pss6f0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Dec 2024 14:42:37 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BCEga8X17236538
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Dec 2024 14:42:37 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9884258059;
- Thu, 12 Dec 2024 14:42:36 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7BC905804B;
- Thu, 12 Dec 2024 14:42:35 +0000 (GMT)
-Received: from [9.61.107.222] (unknown [9.61.107.222])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Dec 2024 14:42:35 +0000 (GMT)
-Message-ID: <9b143fc7-9ac7-4b87-8089-5209aab186ec@linux.ibm.com>
-Date: Thu, 12 Dec 2024 09:42:34 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkQf-0007ny-9E
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:44:37 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkQc-0004Cr-Ja
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:44:36 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361dc6322fso4804345e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:44:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734014672; x=1734619472; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=m5fLks2QV5Yxjf0ma6o8/QOU7smgJCwXT7/qpuubMLM=;
+ b=aNomyoc3hqMFmtHY07qI3vKxo8J4JITGW+mznZU9pOisRjF4zE+cPwwFYi36K+pOqJ
+ ckvcfU0P4mZw12csM9TBRQ6Y6QvUxwIkKS+2//BYdtg8DB4yZGN4ups+gjAmt2hXDexJ
+ ALLqU5VgoSLHIzo5DuBd3c10KkUDNN+ojeEfotDVAybnyA+zPTZD2/o7uXqIoPQMDXGU
+ fRx8pD37d9mc2SCjr4PPAVS3A9cF59URifeTvnmA35sTDtF13fdvL2BoARhw7B3rVWKM
+ gR++Ls3tOC9gwPVlIAVNlbXWlWSBZ1Qet4/0OjcM1RZc+hGIvJIS0+KegiOGkFy0Zm33
+ Q8Cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734014672; x=1734619472;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m5fLks2QV5Yxjf0ma6o8/QOU7smgJCwXT7/qpuubMLM=;
+ b=lsohboVPcOe1JeRIP3uxnsEsmKUsv0tZXdpwJjGDim7clhQe8Bs2+iPq9mV43kjYJs
+ 3d6WcW/iCd24TPDEh7x4EbAwbnlXQtM8nZifr4AU8ku0XmwOlmcrSa9pZfuRP8TqgPO+
+ AEIMel/r8uLxPf/v/vmSNW8QMmQ6Deez9aQ70hXzbZKqx4t6amIOCRjIlZikY0rw+6MF
+ TerOoyGzJzd/NUNJG1DAzZNeEEfGSS689SGTQ87Vj9s//GTK/hKQOcTdNELze+ERGKzs
+ UhdUSHe0EG0h0HUUStIIrSGHPm2d+rReV+mzTnRcvrmdkYmFmHGjOGx5baMA/RKd706b
+ HBCw==
+X-Gm-Message-State: AOJu0YwDuvN1nL8vg2Ee1HZshzqIHmfz1/VTKe6L5PrFMTMWdD7z7wvY
+ 52ZyYpQ+sjwxxKDfKIiUGPA4/Pf0V+mt99vYex8ROQ2qlNOeDogFzFzrZgfrXmn+fn9jQGegb0L
+ 6
+X-Gm-Gg: ASbGncv1kmumlSPh7fOXdq9L+/N2ce6Yhrm2A2W5smI+Tpia1dXYU2sra8F2OD9dSog
+ YIkTqwo8hg/YK+sanNkldu+q5dN8Y82O/qu+oXtfSgiW5h2UUtrhhrcJ4jWrbdwOfcPmpJkMKHc
+ wrUPdTyJaI5a+egrrOXknGos0YuoTcgXBjK+O+4GwmXAfmS0+aJyPzFcI+/WcAPfLxKjxu5sxib
+ 2XLPPEnVDtc5FVcR3NIxR40+pGSKQeoW2R3KYJuiFay4yiusMOrzaMC8Q//IFKeaSNyNpoyifne
+ Qq/zdoeefszRF2oabrEJFJTISMCYgaQ=
+X-Google-Smtp-Source: AGHT+IEa8KUeJXD6RJBthCn8B9+MBeOtuiouNJzosdmdCdDQIhm6jWdwrH+YOqpuxQsivAGQpRN+lQ==
+X-Received: by 2002:a05:600c:5101:b0:434:a1d3:a331 with SMTP id
+ 5b1f17b1804b1-4361c3e2350mr49471705e9.22.1734014672339; 
+ Thu, 12 Dec 2024 06:44:32 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436257177c5sm18358515e9.43.2024.12.12.06.44.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Dec 2024 06:44:31 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 0/2] accel/tcg: Cleanups around 'exec/translation-block.h'
+Date: Thu, 12 Dec 2024 15:44:28 +0100
+Message-ID: <20241212144430.66224-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] s390x/pci: relax I/O address translation requirement
-To: Thomas Huth <thuth@redhat.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, richard.henderson@linaro.org,
- david@redhat.com, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
- <990f5ccd-b05f-4e25-bc68-60793d4d21ad@redhat.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <990f5ccd-b05f-4e25-bc68-60793d4d21ad@redhat.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: H1F4Y7wXeKm7haJt0I1oBQVpZ0k27znI
-X-Proofpoint-ORIG-GUID: H1F4Y7wXeKm7haJt0I1oBQVpZ0k27znI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 clxscore=1015
- priorityscore=1501 malwarescore=0 phishscore=0 lowpriorityscore=0
- bulkscore=0 spamscore=0 mlxlogscore=809 mlxscore=0 impostorscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412120104
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,37 +96,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 4:10 AM, Thomas Huth wrote:
-> On 09/12/2024 20.29, Matthew Rosato wrote:
->> This series introduces the concept of the relaxed translation requirement
->> for s390x guests in order to allow bypass of the guest IOMMU for more
->> efficient PCI passthrough.
->>
->> With this series, QEMU can indicate to the guest that an IOMMU is not
->> strictly required for a zPCI device.  This would subsequently allow a
->> guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
->> PCI devices.
->>
->> When this occurs, QEMU will note the behavior via an intercepted MPCIFC
->> instruction and will fill the host iommu with mappings of the entire
->> guest address space in response.
->>
->> There is a kernel series [1] that adds the relevant behavior needed to
->> exploit this new feature from within a s390x linux guest.
->>
->> [1]: https://lore.kernel.org/linux-s390/20241209192403.107090-1-mjrosato@linux.ibm.com/
->>
->> Matthew Rosato (2):
->>    s390x/pci: add support for guests that request direct mapping
->>    s390x/pci: indicate QEMU supports relaxed translation for passthrough
-> 
->  Hi again!
-> 
-> One more thought: This is a guest-visible feature, isn't it? So do we also need some migration handling for this? For example, what happens if you start a guest that is aware of this feature on a host that has a QEMU with this feature, and then try to live-migrate the guest to a QEMU that does not have this feature? I guess the guest will crash? It would be better to fail the migration instead. At least we should disable the feature in older machine types and only allow it for the latest one.
+Address Richard suggestion from [*], move
+tcg_cflags_has/set() and curr_cflags() to
+"exec/translation-block.h".
 
-zPCI devices are currently marked as unmigratable in s390_pci_device_vmstate so it's not a reproducible issue yet.
+[*] https://lore.kernel.org/qemu-devel/1f0c07f3-6306-4729-99b6-1b8607687711@linaro.org/
 
-Re: disabling the feature for older machines, OK -- Shall I fence similar to what we did for interpret/forwarding-assist with a new device property that is default to off on older machines ("relax-translation"? alternative suggestions welcome) 
+Philippe Mathieu-Daudé (2):
+  accel/tcg: Move tcg_cflags_has/set() to 'exec/translation-block.h'
+  accel/tcg: Include missing 'exec/translation-block.h' header
 
+ accel/tcg/internal-target.h             | 1 +
+ accel/tcg/tb-hash.h                     | 1 +
+ include/exec/cpu-common.h               | 6 ------
+ include/exec/translation-block.h        | 6 ++++++
+ target/arm/tcg/translate.h              | 1 +
+ accel/tcg/cpu-exec.c                    | 1 +
+ accel/tcg/tcg-accel-ops.c               | 1 +
+ accel/tcg/watchpoint.c                  | 1 +
+ cpu-target.c                            | 1 +
+ linux-user/elfload.c                    | 1 +
+ linux-user/mmap.c                       | 1 +
+ linux-user/syscall.c                    | 1 +
+ plugins/api.c                           | 1 +
+ system/physmem.c                        | 1 +
+ target/alpha/cpu.c                      | 1 +
+ target/alpha/translate.c                | 1 +
+ target/arm/cpu.c                        | 1 +
+ target/arm/helper.c                     | 1 +
+ target/avr/cpu.c                        | 1 +
+ target/avr/translate.c                  | 1 +
+ target/hexagon/cpu.c                    | 1 +
+ target/hppa/cpu.c                       | 1 +
+ target/hppa/translate.c                 | 1 +
+ target/i386/cpu.c                       | 1 +
+ target/i386/helper.c                    | 1 +
+ target/i386/tcg/tcg-cpu.c               | 1 +
+ target/i386/tcg/translate.c             | 1 +
+ target/loongarch/cpu.c                  | 1 +
+ target/m68k/translate.c                 | 1 +
+ target/microblaze/cpu.c                 | 1 +
+ target/microblaze/translate.c           | 1 +
+ target/mips/tcg/exception.c             | 1 +
+ target/mips/tcg/sysemu/special_helper.c | 1 +
+ target/openrisc/cpu.c                   | 1 +
+ target/openrisc/translate.c             | 1 +
+ target/ppc/translate.c                  | 1 +
+ target/riscv/tcg/tcg-cpu.c              | 1 +
+ target/riscv/translate.c                | 1 +
+ target/rx/cpu.c                         | 1 +
+ target/rx/translate.c                   | 1 +
+ target/s390x/tcg/translate.c            | 1 +
+ target/sh4/cpu.c                        | 1 +
+ target/sh4/translate.c                  | 1 +
+ target/sparc/cpu.c                      | 1 +
+ target/sparc/translate.c                | 1 +
+ target/tricore/cpu.c                    | 1 +
+ target/tricore/translate.c              | 1 +
+ target/xtensa/translate.c               | 1 +
+ 48 files changed, 52 insertions(+), 6 deletions(-)
+
+-- 
+2.45.2
 
 
