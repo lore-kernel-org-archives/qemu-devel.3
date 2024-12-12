@@ -4,82 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B6CE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 03:59:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D7B6E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 05:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLaLl-0003cb-U2; Wed, 11 Dec 2024 22:58:53 -0500
+	id 1tLbL0-0005Sg-66; Thu, 12 Dec 2024 00:02:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tLaLj-0003cP-Mb
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:58:51 -0500
-Received: from mgamail.intel.com ([198.175.65.21])
+ (Exim 4.90_1) (envelope-from <yaoyuan@linux.alibaba.com>)
+ id 1tLaAB-0001g9-LJ
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:46:55 -0500
+Received: from out30-101.freemail.mail.aliyun.com ([115.124.30.101])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tLaLg-0002qc-Rh
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:58:51 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733975929; x=1765511929;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=KuBxYiWjPrSVCA/5xZDwFUtlhAPlHGsdlEQRvLdDuJ0=;
- b=gDdC7+qw11unc7h2x88C0hjbSN+CVJ0umzEtNfax2UaNpqyAg0d7PxHn
- qrTrhSJNZcFXOdmGLN2yz252MpvQmoSE+mVoyVi2l8Oz7oQm0F8RjaiwL
- 492JUEfbiZwvspf7/n561KsmQ7M0guSa7IiAPHq6S4KNMR4z8/r40z3Y8
- k7wW1i1lJ+flrnMmB+T5EglPjJaeHd0gC4q3+TAgbZSHsYGRHkh9NkLTV
- oIK1UFti+KwCpJz99/1uPkpfQWUAx9wjxq6NIF1PbJvCKkiwMTw7wamEb
- D2QW6WmJ9/Zc54hfE76em+8QVx+LARjJmNECEM/UHs65k1a15/oulqZHN A==;
-X-CSE-ConnectionGUID: vmyd6wOVTrWrBGV3b4pmZg==
-X-CSE-MsgGUID: 503ysZxnSlmvb45aw6nyBw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34299862"
-X-IronPort-AV: E=Sophos;i="6.12,227,1728975600"; d="scan'208";a="34299862"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2024 19:58:47 -0800
-X-CSE-ConnectionGUID: fILQ16xOQIuZEXz6nX6uhg==
-X-CSE-MsgGUID: uhCcXsOdQOmLAE4xH4f9aQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="101165835"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2024 19:58:43 -0800
-Message-ID: <e34bf684-2269-4dd8-b215-c63e27d7ae1c@intel.com>
-Date: Thu, 12 Dec 2024 11:58:39 +0800
+ (Exim 4.90_1) (envelope-from <yaoyuan@linux.alibaba.com>)
+ id 1tLaA8-0000iB-U5
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:46:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linux.alibaba.com; s=default;
+ t=1733975204; h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type;
+ bh=9EcLnTR7QbNumNY8YIr1TZfrhT/nECOq4b1pLbyi7qY=;
+ b=b1ucooL0BJJM6m1Un0TKT+K9DB4Xep7UtH6n/t1Xb4emjvwPMfE3R+JyAAHS+EQ5xWszHxgTCWlxk4bwAxC4EIv6gdWKPhzuOfI/gbjLaCS936IBCy8t91rlN4QwUlggWhNBCAXfM5zTuNs2mbxcfd1vopdUQ1H/x1m2fKuru8w=
+Received: from localhost(mailfrom:yaoyuan@linux.alibaba.com
+ fp:SMTPD_---0WLKA3v0_1733974896 cluster:ay36) by smtp.aliyun-inc.com;
+ Thu, 12 Dec 2024 11:41:36 +0800
+Date: Thu, 12 Dec 2024 11:41:34 +0800
+From: Yao Yuan <yaoyuan@linux.alibaba.com>
+To: Binbin Wu <binbin.wu@linux.intel.com>
+Cc: pbonzini@redhat.com, xiaoyao.li@intel.com, qemu-devel@nongnu.org, 
+ seanjc@google.com, michael.roth@amd.com, rick.p.edgecombe@intel.com, 
+ isaku.yamahata@intel.com, farrah.chen@intel.com, kvm@vger.kernel.org
+Subject: Re: [PATCH] i386/kvm: Set return value after handling
+ KVM_EXIT_HYPERCALL
+Message-ID: <ivj52agcnualj7avwe4mbv65q6hd3fyzjihnm4sejieiewv2ae@s5d55tdzgnfq>
+References: <20241212032628.475976-1-binbin.wu@linux.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/4] i386/topology: Update the comment of
- x86_apicid_from_topo_ids()
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-References: <20241205145716.472456-1-xiaoyao.li@intel.com>
- <20241205145716.472456-2-xiaoyao.li@intel.com> <Z1j+zDk0w66tReuf@intel.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z1j+zDk0w66tReuf@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -38
-X-Spam_score: -3.9
-X-Spam_bar: ---
-X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241212032628.475976-1-binbin.wu@linux.intel.com>
+Received-SPF: pass client-ip=115.124.30.101;
+ envelope-from=yaoyuan@linux.alibaba.com;
+ helo=out30-101.freemail.mail.aliyun.com
+X-Spam_score_int: -164
+X-Spam_score: -16.5
+X-Spam_bar: ----------------
+X-Spam_report: (-16.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, ENV_AND_HDR_SPF_MATCH=-0.5,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_NONE=-0.0001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001, UNPARSEABLE_RELAY=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 12 Dec 2024 00:02:05 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,44 +71,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/2024 10:54 AM, Zhao Liu wrote:
-> On Thu, Dec 05, 2024 at 09:57:13AM -0500, Xiaoyao Li wrote:
->> Date: Thu, 5 Dec 2024 09:57:13 -0500
->> From: Xiaoyao Li <xiaoyao.li@intel.com>
->> Subject: [RFC PATCH 1/4] i386/topology: Update the comment of
->>   x86_apicid_from_topo_ids()
->> X-Mailer: git-send-email 2.34.1
->>
->> Update the comment of x86_apicid_from_topo_ids() to match the current
->> implementation,
->>
->> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->> ---
->>   include/hw/i386/topology.h | 5 +++--
->>   1 file changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/include/hw/i386/topology.h b/include/hw/i386/topology.h
->> index b2c8bf2de158..21b65219a5ca 100644
->> --- a/include/hw/i386/topology.h
->> +++ b/include/hw/i386/topology.h
->> @@ -121,9 +121,10 @@ static inline unsigned apicid_pkg_offset(X86CPUTopoInfo *topo_info)
->>   }
->>   
->>   /*
->> - * Make APIC ID for the CPU based on Pkg_ID, Core_ID, SMT_ID
->> + * Make APIC ID for the CPU based on topology and IDs of each topology level.
-> 
-> Maybe "based on sub-topology ID"?
+On Thu, Dec 12, 2024 at 11:26:28AM +0800, Binbin Wu wrote:
+> Userspace should set the ret field of hypercall after handling
+> KVM_EXIT_HYPERCALL.  Otherwise, a stale value could be returned to KVM.
+>
+> Fixes: 47e76d03b15 ("i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE")
+> Reported-by: Farrah Chen <farrah.chen@intel.com>
+> Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
+> Tested-by: Farrah Chen <farrah.chen@intel.com>
+> ---
+> To test the TDX code in kvm-coco-queue, please apply the patch to the QEMU,
+> otherwise, TDX guest boot could fail.
+> A matching QEMU tree including this patch is here:
+> https://github.com/intel-staging/qemu-tdx/releases/tag/tdx-qemu-upstream-v6.1-fix_kvm_hypercall_return_value
+>
+> Previously, the issue was not triggered because no one would modify the ret
+> value. But with the refactor patch for __kvm_emulate_hypercall() in KVM,
+> https://lore.kernel.org/kvm/20241128004344.4072099-7-seanjc@google.com/, the
+> value could be modified.
+> ---
+>  target/i386/kvm/kvm.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 8e17942c3b..4bcccb48d1 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -6005,10 +6005,14 @@ static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
+>
+>  static int kvm_handle_hypercall(struct kvm_run *run)
+>  {
+> +    int ret = -EINVAL;
+> +
+>      if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
+> -        return kvm_handle_hc_map_gpa_range(run);
+> +        ret = kvm_handle_hc_map_gpa_range(run);
 
-I interpret "sub-topology ID" the same as "IDs of each topology level". 
-But only with the information of IDs cannot produce a APIC ID, we need 
-the width of each level as well. I think the "topology" expresses the 
-width information, so I used the statement as "topology and IDs of each 
-topology level"
+LGTM to the issue it tries to fix :-)
 
-> Otherwise,
-> 
-> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-> 
-
+> +
+> +    run->hypercall.ret = ret;
+>
+> -    return -EINVAL;
+> +    return ret;
+>  }
+>
+>  #define VMX_INVALID_GUEST_STATE 0x80000021
+>
+> base-commit: ae35f033b874c627d81d51070187fbf55f0bf1a7
+> --
+> 2.46.0
+>
 
