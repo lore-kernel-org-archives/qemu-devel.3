@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 724CBE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:39:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C861FE77183
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLpxJ-0006Ye-QQ; Thu, 12 Dec 2024 15:38:41 -0500
+	id 1tLpxI-0006Xy-GW; Thu, 12 Dec 2024 15:38:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tLpxI-0006YD-JU
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:38:40 -0500
+ id 1tLpxC-0006Wy-NB
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:38:34 -0500
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tLpxA-0006e1-Bf
+ id 1tLpx9-0006dr-HH
  for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:38:34 -0500
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCJfret022014;
- Thu, 12 Dec 2024 20:38:27 GMT
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BCJftHj009130;
+ Thu, 12 Dec 2024 20:38:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=EaffaU5I7RZ23eJQ4rUfWJ7UBOFgOkkr/4PziEk82Sc=; b=
- ISzJGgsJjTBH2zu4HgYqqxCcrK5H2+tkCbkSv40i/5nKp09ifihP9l6h263xxqGQ
- e9xw83woUpepavDIvweTCaHMM46HH1JU8x2/UT+NNgCtI6niFikz3Yo2SclwDy3i
- JWLLP1nkuf+PGbTV269Wl7LyxQAA2yq2NycVz/phtx8ZWZFIMtrjfXTMpJtHpWrP
- iE8rpEigigGcx+oiGeBUPD56VojARoOoB1qI08y/fIRd2rI8haJlFo59vXAn/t7M
- Z22a5kaJ1I/uHZ3qPi6EnmN3LQVml1jkgXggfEyTwHkPSWxqyCX5MzsYeD5JIR7g
- 3ZbI4XhbbdgnXjf39v6oYw==
+ corp-2023-11-20; bh=Fneq20+uk3LuxBjCGpv+SkHXtTrmBaDBSRD0Zd77biA=; b=
+ QbSyWILzp9a+0XNPgBEgZ4IuAbDzYUSaJbDWyRC4GmKQ9xPUEUq7dNkBs7wgIQxi
+ QZefkFGB7hCG409ZDzOngYZvYp+3pWRI7LABkIGSMotnxkOhp4QCLQKq+cVZYumR
+ g4KLaYB9Tj/I1HvIu3OaZrvqHFZ+8zNiAQd7NnkGG93xK+75yVVll5SfgRxAZb/9
+ 6ZEehZUTW2uTrsmfA0AUYhdm6TxsyQ6eafdu+bRB3hR7bWqXTfWOcNEpvBQm0SmQ
+ /AmRZasRZitm5RH4Rt70jcHG5KFsebd91YKXDjcUoR4JJVoxXB9w+P+x9EKhwI/U
+ yDjyo81SGu4k1ByH0oiU1A==
 Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43ccy0c97t-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43ce89bx7m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Dec 2024 20:38:27 +0000 (GMT)
+ Thu, 12 Dec 2024 20:38:25 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BCJpTBX035674; Thu, 12 Dec 2024 20:38:26 GMT
+ with ESMTP id 4BCJpTBT035674; Thu, 12 Dec 2024 20:38:24 GMT
 Received: from nam12-dm6-obe.outbound.protection.outlook.com
  (mail-dm6nam12lp2173.outbound.protection.outlook.com [104.47.59.173])
  by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 43cctk6700-2
+ 43cctk6700-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Dec 2024 20:38:25 +0000
+ Thu, 12 Dec 2024 20:38:23 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=gVXmgFh+gbdPye/+t8xWXJbM8Dv7vrJtwEhZh8gU3zsG9umnwEZQ1y8pNHr/+Hpp3maqJk4Ygo6S/yTqeOHFVYcpAiiGnqAcJ9gUpYfWqe1HleDpdmhMikpCwlHyw68x1wN6fXFP1OcGRKymCOel0pxjSrFdl5nkpUnvCqG1jasbHv2kSTZBNIIILCg+1UaY1wPr5MKEUn2NINCmTL3+4vAYnGOWa5oCWi6jC+TsCg8bxwcg+R3A7ap2Lz1JyXSTNT1RtoWPp0nTdwiBaqX6b+fiJ3NLuvCGY0EpLwM66BrKYJmVYS/AcGYCjJmmWJDSO0AtjTrNplVVfBCcKQ7+cA==
+ b=FkEQVL6pfClBWe4Fq7aG5/sojt3GAvP8M6Qr3tKlHA55z0ug2vyp00bD/2P9Rldh3zoUfEFi4vPdQE0ctT9QhSxyuhbZQ5HbrLmybWRn527HEdzAJURv1hsuD+ICNNF9jN1XbXoHIMPaWMJ26pkZ7ykqRLhJmnSmWyifHB7oxbECxpik6qygznB7myfiFENVRzJLncNEPInS0DxNz2+DWAYgQqfq3HpOLNSjcgX5isq2pgXJ0NUd3XsL+DUsDCOs5egADmD4A85T88mFy36N++nD3n0Y+f5jmSEnwgzMHSSL6kYC5/5UD85HBSFYoD+kUBtqLzDi2TRr5ZaD2GJxwg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EaffaU5I7RZ23eJQ4rUfWJ7UBOFgOkkr/4PziEk82Sc=;
- b=ix4zlp6+imp78tuhdfvtO7+aS0/rJZz8jE7ANIM892Z//bpmRPnxRRtYfXqiJ9/s5ahiCET9J4m//gdRZ+NNSdF4n8FFtATuiBcLtej5yegMO812CSh1O5qC1PelXWzwi3dAUbTRoUXZDojZa8DH3RBOs8ifn6ml8z2MMw+TTMCTWTSSRriBfKqG/NrdE9aAWp/EYgbD5wgYPakOzUyCsec5wvlUwNktNppwGviBSDwfy7uRCaYrZ/T549zSIg0RXoJu4Z5VsN78f34zq1azHAogv7gPOqe/+Wr3y0dFZPIUI89kfar9/Xp01jNz9lQ7xySkunDorRSnsGj7m4uxoQ==
+ bh=Fneq20+uk3LuxBjCGpv+SkHXtTrmBaDBSRD0Zd77biA=;
+ b=qJU9tXVaQoS5fQC/0ydkvQmX0HaS5Vv8jy6M7ybrjRRQoE1FhnwNcS8dO62hxjF7d2JYNG9eh3qlUS/iUQQJfZzGiAkuhpMGfPU7mnH98aMbwh4/gFdAT5j2MSAQd42LpE775FQ9m7khcJ+Cuc3aafjRdEO3UupR591R3E/R1iaD1Cx7NMQk6G/dgxfCsohJdbmK0o7RctaUAkYMlri7FA/FLs5DEOKsqJKsTZpzmd0mV48Vh+AIFMhvbNGAolyy41854eRyUqBg9LZf1Ddu7UK3pigAGvec9M/6QNWbnFzCf5KD3DGtDKnKTE0ZQHcczrimMD1Ejs1/VXI/JV05jA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EaffaU5I7RZ23eJQ4rUfWJ7UBOFgOkkr/4PziEk82Sc=;
- b=I53ws1KSbyvGWETtpsf9eSszyMsHSWt65PJBKaoBTUBJSDLWORC/s1YNo+913CRmfQPbTaCo2UHvV1v/zNXW1ZT+CiJoReLt/2JD8vzQRZ4gtz69ahs5aYjgZ4i4lxf9+QiXbC5J+87Irr02H5qdTb0ZE+w7UklRqlXNWkB8WBY=
+ bh=Fneq20+uk3LuxBjCGpv+SkHXtTrmBaDBSRD0Zd77biA=;
+ b=FRlNoPjCK/p+MhETbSJyKjgHrZdmdUi8UMXAJcotqheD14JhRWMM9it2tEVTGXmwFytUaaCQeYC1MwBeDqtNfktUMC4yBCfjFhk3Cz68PblPmLQn2bVjzUcQN56oI1mZHhCTuLF0Z55vwTNMv7mD0bk2fT7CoRqeypNXyRh8Ga0=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
  by CH3PR10MB7806.namprd10.prod.outlook.com (2603:10b6:610:1ae::6)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.16; Thu, 12 Dec
- 2024 20:38:03 +0000
+ 2024 20:37:55 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8230.016; Thu, 12 Dec 2024
- 20:38:02 +0000
-Message-ID: <ecbae03f-a8b2-4a41-89bc-5a671a4c3c7e@oracle.com>
-Date: Thu, 12 Dec 2024 15:38:00 -0500
+ 20:37:55 +0000
+Message-ID: <075b39bb-87f7-488a-8d48-428110863257@oracle.com>
+Date: Thu, 12 Dec 2024 15:37:52 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 02/19] physmem: fd-based shared memory
+Subject: Re: [PATCH V4 01/19] backends/hostmem-shm: factor out allocation of
+ "anonymous shared memory with an fd"
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  David Hildenbrand <david@redhat.com>,
@@ -85,106 +86,106 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
  <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
 References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-3-git-send-email-steven.sistare@oracle.com>
- <Z1dIEUcSrI1aROSp@x1n>
+ <1733145611-62315-2-git-send-email-steven.sistare@oracle.com>
+ <Z1cqjgcvKuUf-zfj@x1n>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <Z1dIEUcSrI1aROSp@x1n>
+In-Reply-To: <Z1cqjgcvKuUf-zfj@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN9PR03CA0245.namprd03.prod.outlook.com
- (2603:10b6:408:ff::10) To IA1PR10MB7447.namprd10.prod.outlook.com
+X-ClientProxiedBy: BN9PR03CA0251.namprd03.prod.outlook.com
+ (2603:10b6:408:ff::16) To IA1PR10MB7447.namprd10.prod.outlook.com
  (2603:10b6:208:44c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CH3PR10MB7806:EE_
-X-MS-Office365-Filtering-Correlation-Id: 813bc74d-b561-4e3d-2011-08dd1aecdfe2
+X-MS-Office365-Filtering-Correlation-Id: 9d0487f9-7525-4d1e-3ada-08dd1aecdb44
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?cFRmY0lVUXNpNEpPUk8vZkVLOGRvUVdJanl6SGpHaEIvbzZQM2FRRytwQ0Rn?=
- =?utf-8?B?Ni8yRU9XWFRQVDJhM1RZMitCb1licElEbU8xc0p6VVIyQjFBeVV2MEZ2UXdP?=
- =?utf-8?B?Wk5hSng2aG53SjY4L0N1QWYxU1M3UytIKzEramZzOGQrdHhqV3ZFN1o5UXA5?=
- =?utf-8?B?c0kxWXVFd3RjdnZnNHArTVdkdHc4Z1Y1Yi9sT2dsU1N5TDlDdENpMWxQTSta?=
- =?utf-8?B?NXc1Vm9ZZlorZzYvRW15Y1ErS3hLeElHQldZcHVwc0grcm1aL2tqVUpxTmxN?=
- =?utf-8?B?OE0yRHc2dlNONDk2M0pJdTd0eXYrUUlQYkRJWnZmRndMSG1RL3hkYlU2MXJj?=
- =?utf-8?B?c2dpcFNuYWRSSGFCMkJEVm8zNy9mcXJTZHk4NUxEckpwYTd4dlhiSFZkb1V0?=
- =?utf-8?B?NTFKdmVxY0kyS2dDcStEbGVSRzd3bk9FanlQTEdBb0k4Rk9wb2FqQ3h1Qjdm?=
- =?utf-8?B?L0ZFNGdyTmdET0JQbXBoWmc4YmR5S0NWWVJxWlB3emF6bGEwQUtGT3FDNHdP?=
- =?utf-8?B?UnB6VGNabGwyTjlKUUNRQTM2Tm9Wd2pQa3d5NUF3empQbmhQQmdodzFYbWps?=
- =?utf-8?B?Nklld0xLTzYvbzJRUWVubXlMY1FXQWVnaTB6ZkkzSDZQdFFOYStNMmhUWnN5?=
- =?utf-8?B?V1RXYkJqa2tUUnlqeXBGTy9FRkRLaGozVDZkWmhHRytkOXVlOGtiV2ZUQ3Zk?=
- =?utf-8?B?UkVBSFBpeUJ5eDlBL2ttOW9xejJHZEQwRk1vcXJUeCs5bG45a3Y0VWFOQmhJ?=
- =?utf-8?B?YTVWMEhiOTVsZkxLc1ppWHpSYU5jdnlZVElZeUFwVWQxUzN1M3FqcG9lZVZn?=
- =?utf-8?B?cFoyN1Z3ZURDeDl6S0k1OHNOL3k3OGFIbGpmajlBcGdtQXZ0TUVRL2haZHpQ?=
- =?utf-8?B?MjEyT0EwdHJRWXJLNXgyUnYrZCtKSXQxdk9WTTcyMVNrbER3U3k2QlJ5QU5F?=
- =?utf-8?B?QXhsd09rRFRUN0FiVm8yWmlDZHBmMTI4UnJqS3NXOEdFMGFVMDNpZjFrT0Ix?=
- =?utf-8?B?blBRaWw4TTVzblpTditCajdaTThrSUkvUWJTaGJHSXpZc1Z3aEg1UVlqNUxX?=
- =?utf-8?B?WUR5OStXUGtvZERLdWdGOHlXYTVzb0VWUzQvZWRvWWJLeHJjaWM0V0ZFQWJI?=
- =?utf-8?B?L0hqZktrSWxwYW5xS0h4aTI0dmYzQ3JDV3dxdWtubUlUWWFhUUVURzR6QjJZ?=
- =?utf-8?B?YktwbUR5M2RXWlFpa1l4YlBXeWdMZGJNNkthMmRqTTdEdVJFcUlOUVFKdW5U?=
- =?utf-8?B?cFArNCtvVDhpTHlNSXl6TmpRaWNmQjc1b0ZRTXFpYVk5RlJaTmcwWHB5QWtk?=
- =?utf-8?B?NTFxVVVlemdIN3gyWTQ4Mnkwc2ZGcEtsa1p6NkFTdTlpMHRqc2oxZnZpdVk2?=
- =?utf-8?B?L0Z3WURaZ0tRM3hLUG9HSGNmc3RtRFZoWEVqZEp4RU5leTRzaFArRldpamFJ?=
- =?utf-8?B?MDhZcWdETEZ3NmpZM3BHem13VWxYRlRwZjV3VkUzOXBJOHpCUy94MlViN0x5?=
- =?utf-8?B?MWp2c1NNUGtWV2dBQmxQVy9YVmk4UVBxeWJWcmJHN3dhZS81ZzNxYUlQMlZT?=
- =?utf-8?B?ckhySTZJbXBPbjI2aWZZTFZFTk1RNXV4NjJYUkZhK3lneDc0RWQwUzFPb0dE?=
- =?utf-8?B?NHRyQXNaaEhaZ0ZHdkJ1MmZ3Nkg4ZEZweTJ3YnFQYkZvTGR6VjF5djlCNjJz?=
- =?utf-8?B?dTg4eHBKcEMvbjFqbzFKeUxvK2tHeVFHUTlHblE3RHpLQk5SLy81c2JZVkxR?=
- =?utf-8?B?Tyt4c2xHRFJTU3hoaW5zZnBlUUg5dE1MbHlXM3NLQXhiWldhOG1oamJ2QXRC?=
- =?utf-8?B?THZtdnlVc0RQWVZGNWgyQT09?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VWR5bkllQ0h1Ynk5aGtkc0o1SkpkejJvcFVqT1A5ODVIcEhid2xaaklkenpk?=
+ =?utf-8?B?VGJ1aSt0U2RDSElxY1JrcjlvMFJWRWtCVGxick9iYVZxVGFPbDFxd0p1QmN2?=
+ =?utf-8?B?Q2JTK0xWaURFTzJMNDFpbmRVc3R6Vkp6bTVaZDRQSCt5eVhpUE93SjNIQkpT?=
+ =?utf-8?B?cTJpd1lwSUhXUE51K3ZkQWtLL0JFalA3R1lIbmhZa0p1U1BrUWpncWpsZVZJ?=
+ =?utf-8?B?Y0N2UEVWMG8vWTljTU1VWkhjS1FWSnBDaFF5Tk5iNjlLeCs0UGFYVDViM2l5?=
+ =?utf-8?B?WnNhbXZKeThvSVFCYlpDTDJxU0VxbHJVMHRCZjBXUEhWZFZkWG9sUEZLNEpG?=
+ =?utf-8?B?eGlmcFBtVnU5cUdKZkF5clBkbFB6REFLZmcrakZlVm9IblcwazRWWVJFMzll?=
+ =?utf-8?B?MWp6SnJReXZNMExDSVd4WldKK1AwTnhNWTJNZVdHNEFwYVZEcTdxMWNvYzUr?=
+ =?utf-8?B?L29JWGMvTndnTnMvc0RZOUZZYkdBV2kySjJUY2JFVUJqR3RXWW51d3hSeWQ2?=
+ =?utf-8?B?OVFNbXZrd1JFaElHR015bVhlMytMSlJHSmg0YWM3OXJReHFEMUE2RjBNQ2hZ?=
+ =?utf-8?B?RnZuMCtIVWVrOC9TZXNnKzJnK0VuWEJHczZuNVlHL0RIK2VWelUyQTVxanBz?=
+ =?utf-8?B?YzNBVytjZUEyeC9DSmEzUkswSG11dDFTVDhhWUJmczBHcnZ6VGFEWldVcEpQ?=
+ =?utf-8?B?Yy8wY2tTSkwyZkQ3N0VCM2tYOTNFZXNoZTAwRFNQYmNlVVpibDdWNlhteVhR?=
+ =?utf-8?B?MlhoMUM2M0NqTnI2QkF0MENmVWh1ZlZ1YmhzWHJHUDZJZ0lWNFdQTnc4Z05l?=
+ =?utf-8?B?VmRjbjRIRG1KTC82enhrMTltUWFpUVBpZTYxek5RSXNLdWdGWlFJVFNGcVhP?=
+ =?utf-8?B?UVQ1akI0NkU4TUdhVWkrYk5oL1loeFJYcjlvVTM4b2FsV2ZwNzhaTUhxNml5?=
+ =?utf-8?B?Mi9vcW10b1Y0TWc2b2dQZ0IxVHFGdVJacHJSdUp2U2VvTDV2b1NCS3k2Mlp5?=
+ =?utf-8?B?QzJ3N091YkN3cFo2Q1R3QVBUU3lEMXRwOFlEODdodVVBNWFub1BXYTFoN1hi?=
+ =?utf-8?B?R05WQy9RSEdmQmtuZWpQNGN6R0xOY2xvbHVkb25zVlF4cjd4bEpnamlNMnRa?=
+ =?utf-8?B?VEhIbHVDaFNYRjgwaGVPRWJ3b1IyY3dxVmRmZWErbEFmMDI5RnpOdjFsUzF2?=
+ =?utf-8?B?SmJXbXorNXBTQ2ZvRFRuU1hOK3ZJNzJSb1BkakViTTVEMEt2a0pFYzJmdllq?=
+ =?utf-8?B?ZnRwUGUwL2wvWVZJS2hiMElpL1QyS1RKQ0hmalAzczVGNVJMbEFoeDVaTk5p?=
+ =?utf-8?B?WUh2blE1Yi8vTVlOT1M5S1pQOVR6Nk9qYkZGa0VwUkswTkVpK25BclZ6Z1d5?=
+ =?utf-8?B?MXVxdk14UFpCdnBMdEcyMTBsM21TQnlJUHhDY3lKSS9wL1RxRTRSanZtVzhX?=
+ =?utf-8?B?TGJBUzVwM0x6ZnIxR2ZKL1F2THlMeVhyYlVXSzhGcXk5cW5SRHhwQ2JSUGh4?=
+ =?utf-8?B?K0F4bzJoV0YxRis1U2ZHVDkyOWQxT1g0ZmFvZnFVSkRFVTlGY1RrTm5BSmRC?=
+ =?utf-8?B?QktxRzlRbUpyRmRVbjRDMS93Q2Z4aU9rZGJLT3ZLRlNCNHl0N25OVjltTEtJ?=
+ =?utf-8?B?SGVnNE54WVRpQ3UrSUhkNFoweTIwd3RXWDdLY0ZFSTVPcE1SL281OWtMTDlZ?=
+ =?utf-8?B?WFBzaG41dERXYnhxTDA1WjhscnpLSkF3cWx4RXVrMUtNMENHaXlUeWVkamxR?=
+ =?utf-8?B?c3ZGQmM5WEczK1FuMExXRGdlWXdINHR3YXRON3h0SXc4YUJwMjRBbSt4MnpU?=
+ =?utf-8?B?QWpYK2NGM0QzWW9SZ3dTdz09?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bTFuWkpZMys4eWk1dGpCemhwS3Iyak1lRXFVZUhnKzdubGZqN1E2WDYyTWtN?=
- =?utf-8?B?N25NSWFOcE9hUjUzWkZQYjhXTzQvT2h2b3QyZENRUWxqS3ZlMmYyYTFiZHdj?=
- =?utf-8?B?WjFKQ1RmL3pJdEZ5N1FzUk9LS2JiMHhHSUkxK3VMVWFYMWI1S3NWYW5RZEhr?=
- =?utf-8?B?T2UzTmNocGg4cW9Zb3h2SEN1R2VYVkd1cGVySDZKNXpoRzVBekdaTHhndFZn?=
- =?utf-8?B?L0pFUHIzWDZlV3FTR2xDNlp0VVJSWUJzZWdKc21XVkJOWFFBb25TSVZLbkxI?=
- =?utf-8?B?TWw4aUV6bjJFYmtTRnBiN3plKzNzNnBRcWVWYUxRYTVFODJHYXhiNlB4Z285?=
- =?utf-8?B?R2J6aVlpUEZhM2NNbVE0eG1Cak9sNkV4d2Q2Wm1GSk41Z2xhU3FtRWQ3V2tw?=
- =?utf-8?B?cXJtQTVTdG5xSnNpc0lMdkRGaDBMd0p6NVpVNmc1dHNFcHVSNGU5TDkvWkkv?=
- =?utf-8?B?TE5wWnBYRjA1bFFxM3hYUGVtVFMxZTJNZWFOOG1iVVNRYk0wR3c1Z1dmZk50?=
- =?utf-8?B?OEU5Q3p2SzFuUTgrRVRmOGt4QlcvNGpjRWhEcWFzazJhYXBkam94UWF3S2s2?=
- =?utf-8?B?UTVpaUxLcTVGQVhtTFNMY1dKRDVVclFsdGZCblo4bGV5bmFDb01OSlB0VFZU?=
- =?utf-8?B?TG5UUldZdjJHdk1COXJyalFHUHV1K1FHT1V5cjRnMmxEN0ZXK3J1MGRIU0JO?=
- =?utf-8?B?RG9ZY3VlZWNJSDlDQkZvYXRhenQxSDhFazJGdVNERlVLNkhuTk9FRnhTZDBO?=
- =?utf-8?B?Wi9WSlc1MWRIaE9yaXY4MzVuM3h1M2hxSjE1cHJhVjhoTE5naklNMUkxcHU0?=
- =?utf-8?B?eUhla0R0Y2FkUUwxakRiUUE4dWxHVy9yaWliSytzNHMxM3NYNkFTOEgvV1lx?=
- =?utf-8?B?QVRScnVTclQ2NWRVcHhQcTEydTNVVm52WXBkUjJVczE3UWQ4TE1yUlN6ZHRj?=
- =?utf-8?B?S213LzVYWFNKYWp1SnlCTUFBR1JSVHdsM0VjT2M5dUZ6Nll6ekJqYTlUZkMr?=
- =?utf-8?B?YnBSTklENHZLbDgyQTNsR0tpWGNDZ0FTYjRsbUQrUUNYL3JnMi9od1hzdUtk?=
- =?utf-8?B?bWs1WmwyalZ6eXkySlltWFBGNHkyWm9pKzNjY2c1cHdaTG9KdnhUSHdaMkN4?=
- =?utf-8?B?cFlpM1F3N3drUHh1K2FkM0pzdUpUS1BOQ0ZmbG9wclk4SEFGeW1LR0pCZnlj?=
- =?utf-8?B?YkZPa3lla2JmL1JySG81RUxDMnpYcGkyVTFwaVloRHBaTGV4cFdzNzlRbHhr?=
- =?utf-8?B?RU04UkhrRVJuTkEvUUg3YWp4d2JicXZhOHNUTWpCd3FreFh3RHJ6MXdXOWw5?=
- =?utf-8?B?UGRzbEZKaUc3R0I5eFB6dmcwbWNqdnh1V1VzN3NXd01IenVkMFprSGRCdkY2?=
- =?utf-8?B?YXNLREZncFhnMEwyeDMzSVNEcnBvaXNmdlpVa3N4VDkrMmRSc3U2d1VoTmFs?=
- =?utf-8?B?ejROY1QwVjgwQU40OGJDN2xabzJBNmRqWlgyVFBQSmF6akJhU1F0UmhNamxp?=
- =?utf-8?B?dTVqeUF0MnBJdWxRSjFYUERzcjhQRmFCQ1ROQWQ2N2pIdDIyaFNIaFRQRnFl?=
- =?utf-8?B?K0I0WlBXcE90VFFLcjZGejYrRVA0RmQrcFRlOWJYb043b3pXMWM2eTdUUE9t?=
- =?utf-8?B?QnRaRG9mVFlDWnBwVjFBQmw0ejdmQk9yYVpkV1BTVDUycnFTR3JJSVl6a1U3?=
- =?utf-8?B?SEw5UlE0dWpQQVJoSXlwYUM4dVYwdmk0UHRHYnBiMHhpd2NOV29VRWJVbjcv?=
- =?utf-8?B?OXk1NnlIT3FHWmVQUWF3NVo3SE9ZS3JOb2N1d0NvVnBTK0hBYjJNMnZDOG9Y?=
- =?utf-8?B?MmpVSGFIMGI4em4xMDYrdXRjc1ZPWllOL0FJdWNyUzJNZHRWVzJjNnREcVZX?=
- =?utf-8?B?eTVtaSsxbFI0NWV1cHdETEZrMnROTkJ0ejRLOU8vMUF4NEUydjBsdE9ubE55?=
- =?utf-8?B?NnpONVBtR0xlN1dXb3JaS0pkbEVKM3FXQm95Q1lvRkFqbE1LWWpxakpqbHJt?=
- =?utf-8?B?S3gveHVpbXNUZTdXWUlQd0QwdnM1c3NDS3RkSVcxVS9Xd3c2Ymp1R1hqbmFL?=
- =?utf-8?B?c3VSb0FyYkJhUlFhUDEzL1lERURHN0M4U01PZkMrcFdsL3Nmbm1jMVBUamQy?=
- =?utf-8?B?TkZTQm8yaUYzakZ1OXlDUHFDR3YzTHB6bUgwdzhoeVBBaGdvY3o0VytzUkFp?=
- =?utf-8?B?M1E9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eFB6K0k2NTY0eEUzcEhPMExZMzl5QmViRkFpRWtxaVlwampiRGZxTm5RUHZh?=
+ =?utf-8?B?bXBZZ01yQmhMZ1hTbVAwWkRVU21BSjdFb3pvL1dZUDE3bUxwdUI4ZXhtajAr?=
+ =?utf-8?B?Y0ZjQkJhQ0U1dHkzQVIvaFFBOXBkSmZuZUFTcW5ZK3M1cDhwRjUwQzIveDVN?=
+ =?utf-8?B?NFRUQmhjYkEyczZURVJrZSttNURqOC96Sit6UHYvMUxJOWpVMC9tRnpPck5h?=
+ =?utf-8?B?YTlrSS9mLzlSQUoweUZxVVpFQjhIMGY1RVFVWEJVcVk1eG5pUW1heDAvM0dZ?=
+ =?utf-8?B?L01PeDhRY0l3WTUvbnRsNHhEV205MFZBS2licEZuV0R4Z2JreVppUGUveTFV?=
+ =?utf-8?B?b0FvWWhWUXRDQzBuYkRoSlFtU2NMZHZtZi90M2FEUUpUZ2VhcysvdytUV1pJ?=
+ =?utf-8?B?cGNuKzl3VzJkdEVSL3NOZEpSc0NaWDhEWDhRWTlXd3QwKzFkMG1TKzBnQm81?=
+ =?utf-8?B?RlhjRS9QU0tGeVRvbEVXOGZVMWRlMkJDcWJsTkVRUWM1Q0FRVkN1TVpRT2hN?=
+ =?utf-8?B?bzRVUWVVSmptRk5tMDRLZmhsQllVTFh0ekZ6a25WRy9pQTB5d0FXTEdWR295?=
+ =?utf-8?B?TUFFL1VTams5c243N1k1NEt0eFgvSzIvOTR4aU1VTzY3aDFDYndNbitOV3dS?=
+ =?utf-8?B?T2RORXJ5dG5MTTErY0tUNU1hQ3lpTkNMTGh1TnVnRXVMSXdLQ3Y2TDBPa1dn?=
+ =?utf-8?B?WDh1c1RKL3pqSEJjc2pnRmkxSXgrRGxmRWZBZUorSG5Ja1RJSzhVQ2p1eXBk?=
+ =?utf-8?B?Z3ROMGp6OHlFYWJBTFNTaFlpWUhFRUE2YWkvVm5abjVTQUswdzN5cDRUVDQ3?=
+ =?utf-8?B?YUFoZDk3UlQ4c3VXdmI0cVRIVG0zaVRwNEhpeFVxdG1hUzQ4blRmQ3JLSHVS?=
+ =?utf-8?B?aDVDWGFqTDlOTFY5WFFmNFFKbXNXN1UwOGx2aW1CTUQybE9VRkw1dTJodFNs?=
+ =?utf-8?B?TmR0VEVjeHpuTWZpTGxFQVliVEU0bW9TSkp3MGVjNDdnZEtkb1VNSSt1QTdz?=
+ =?utf-8?B?bFpKcGcxT2NHdTRLWVpaMU1zSjJ5dXhnZm5PSlo1MklseFRIVlFyRjhRYTNw?=
+ =?utf-8?B?TlJ6VlJLQ1dQUFE2ZXNoOVdxdm5NeXVSZzd3Y0NuNnhsZzBSMCt5Q0lWbTFa?=
+ =?utf-8?B?Y242b2FNbDY4MGI1ejcyUXJVZGhkc2dKR2EvQ2JTMHJPUXBnbzVkN3R5WDJs?=
+ =?utf-8?B?OFlnNTBJU3ZGSWxJNTk1SXhnR1VZOHVjUEQvWGNjL3U1QjR0dCszWFhhNkI1?=
+ =?utf-8?B?MUY3Z1hYZ2M1N3gvT3JVSFlnM3B5QUhZSmloNm1zZC81K05xcXpKbS81SHhr?=
+ =?utf-8?B?dFI5eGg2YlRGVVZSeDQ4VHRESUpXbTFLNi9ydGEwZzZNckFjdUpvY2FVQXZo?=
+ =?utf-8?B?dk5Pcld6ZGpzeEVubXBnZXE1UiszQ3ZudjRZNFVJQ1NZV3lOVTBvVmh6YlM4?=
+ =?utf-8?B?STJrOVlpY0t3VkpnQ1BwTmcvWFUxSWF0a1E0QWkzamdIZTZKdEdWRDgvNGVy?=
+ =?utf-8?B?OVhWejBnZjdOQjB4c2FoeGFVYUlMTUZRUldJbkdIcWxVQS9UR3FZL3B3MDRp?=
+ =?utf-8?B?YmhwUi8vODJsbW9GbTEvVUxwR0FPeDIvMHBoUmMyRmFBRXltT1A3Y21ndFZX?=
+ =?utf-8?B?MkRqbWhTM2lIK1BjV3JXZW1nanJiNllSSXZ0K1VBUS9EUWZ4UnRSRXJQdTUz?=
+ =?utf-8?B?NW5CR1J4MDZMcEdkanVMMVpOUWV0R3hDZUUvWVdsd0hIa1hiWDZvN2xkZnJo?=
+ =?utf-8?B?SW90VHlsQWlKczhmZURNMy9BZ0NoNkFpUjlZRlJCR0Y2NmcxSjlGMU9uRm5m?=
+ =?utf-8?B?WmFQZVBCTFh1cGIwc0dzM0dTcEtheE9oRVdndndBREEzNWNVVm1Jb0REWkhZ?=
+ =?utf-8?B?K1ZBY0o3T0JhbjNvL1RldDd1ZG9TcTgzTGVydzZWZ21VVnpycDJjdkNaY2hp?=
+ =?utf-8?B?UUZMSzFaMEFma0lZU255MlJLVTlWakZnOGZFZTg2bEFQZlVLZzJPZ2hscEpT?=
+ =?utf-8?B?cHpRemF4bHdsM25qSDFBNlVQeTZNYkF2bGpja2RvT28xWFQyTlhpQ0V4UDcx?=
+ =?utf-8?B?bFNwNm9VbmsvRWhoSlNwSk1HUW5YUDhjWGtqWGlxVWljeStVY1ZBVFB2aTlH?=
+ =?utf-8?B?NFpIbGh2K3BVekZydC9Sck45M0swSFRCT0N5N0pPMERqNFhEV1BlZGFKRnBG?=
+ =?utf-8?B?L3c9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: h5qrn3M6MMgOh//tCtWfDhaI9R1joNZdiIrpFp1QzKwM6Z5VIPZMJ+ga08qYukAO+l+Z+g0c+sQw8Q6+eQn3D5x2R1u7xCVdPP0ApdGlATJAiD6ULQAVsxralyhC/pkzW9XxNQC/3fUQ/4lNLD10kXWJtVC9587/EmxcqtTkyPf+difn5qzY+xP59Vwj7c+uUVVmjCP7DaqSc5VRDkseS9u5CgcpXUNeMPDWQNPVaiD933Z0i8GSn16u5LCbiHtlA+rEYDsIf7aF6E9BWHN5rG9O1UEErPwmL5/x03FgktHx1irZwCr4AidEHEdelyFlaQ40HBoThZZE5JaegHu2tOjt4ISN9EfyF+5erBkiKLL2SE7ml61/v6VwN6Z94xm3UQmBL3fLO822YJJcCT2eChV4RmH861Wa5+SfHcmPI3gnqkrodLjc4ckdWX7cDsqLWl8jonNSQqcWUdBs4MwqBH77oUPvcgmiYZyY2azp6rzDG3WCIKkyPXckqOmEbuBvxy0f7JpXHbIAA1V4JyNu1PtLEcFXmZ6xBQhCFZBn+Ii5rEZs8EM7Usmtf52a11zf0+3vYwWp4viKlxNm83plii9ERA7KigUERt5x4ZZDa+g=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 70B1RMVAn1KwVRydjQbha40tFdCezA3gb04UcR7vgIdxLDXg+C18AYSyBLIiKSdVtkukUb8pF1qeAcpstnYMQPnqs5tNjL7hmVmW8X0QPDZ4b1/bbdHgcaBcAFNMU2Rgultl2QLug+X75V52M6Tqya12HHHpJqTo4ZRp8j2eSqJc0Fk8xYHcXwqSLwPo0KxxzIjlOI2oahi9LfKBzCCUnRRtX4L3qDyE0Cuwq4DVuHqJ9PgAy0K0qr9qgn8eUNWYNG4z0i35mz5zsWziyQKOYajRYJK343dot03hCIpmv5doFQsmv69WmCFa/25Wbj8WH2S5zhDhAi6akgk330fExkL2YOueCZoyz5VKCQX6WzL5HjbmFRpQIxp8aGdAN6OxsAcDLFS3qCfzaFxyCYZP8ouFuxDP5focC4ErM6/fDZ1eaDSbznn3VcNLlk1qandk6QQzbKywYmhUhFAHYcviaOzowDHvIx3Elwu8J3C6IXTHAGBiceU0fh6A7aB0F5pKBq2VI0KZXQPe5a+Wn6YCpD7EUPbZDsQRCM0sdJqw7IsgUtO6b3GHHi7LWJpTiyOwtOSsWttPgS3Z34IVsGkKec/Vkn2tUr71nsgRd+FbZoc=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 813bc74d-b561-4e3d-2011-08dd1aecdfe2
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d0487f9-7525-4d1e-3ada-08dd1aecdb44
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2024 20:38:02.8733 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Dec 2024 20:37:55.1655 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7vwirH1quymE1Hx4OSdd6osVeJeO2E5xN71z2ul1FpMxjeARyrZTaAfppjVEYp1J8iMwGEx5kZZPX1SWbIomzkfh4shl426u/MkkzXVTse0=
+X-MS-Exchange-CrossTenant-UserPrincipalName: fqP0hJtnrC7G08qG6RDzCLn2rILy/mqgfk70EESrj1mDYWbT/NGk5ZSRNxv31Fgt+mp5KwXvA9loUS6ciDqcumP7yTEL3fMYnHew//oErQ8=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB7806
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
@@ -194,8 +195,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
  phishscore=0 malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0
  bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
  engine=8.12.0-2411120000 definitions=main-2412120150
-X-Proofpoint-GUID: 1w5pn8_RARTxg8ja9vLyfrzBhTJUVytH
-X-Proofpoint-ORIG-GUID: 1w5pn8_RARTxg8ja9vLyfrzBhTJUVytH
+X-Proofpoint-GUID: ABRC3YXpPHioiXUw_xJHlpAM0E7dSzBJ
+X-Proofpoint-ORIG-GUID: ABRC3YXpPHioiXUw_xJHlpAM0E7dSzBJ
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -221,209 +222,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/9/2024 2:42 PM, Peter Xu wrote:
-> On Mon, Dec 02, 2024 at 05:19:54AM -0800, Steve Sistare wrote:
->> @@ -2089,13 +2154,23 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
->>       new_block->page_size = qemu_real_host_page_size();
->>       new_block->host = host;
->>       new_block->flags = ram_flags;
->> +
->> +    if (!host && !xen_enabled()) {
-> 
-> Adding one more xen check is unnecessary.  This patch needed it could mean
-> that the patch can be refactored.. because we have xen checks in both
-> ram_block_add() and also in the fd allocation path.
-> 
-> At the meantime, see:
-> 
-> qemu_ram_alloc_from_fd():
->      if (kvm_enabled() && !kvm_has_sync_mmu()) {
->          error_setg(errp,
->                     "host lacks kvm mmu notifiers, -mem-path unsupported");
->          return NULL;
->      }
-> 
-> I don't think any decent kernel could hit this, but that could be another
-> sign that this patch duplicated some file allocations.
-> 
->> +        if ((new_block->flags & RAM_SHARED) &&
->> +            !qemu_ram_alloc_shared(new_block, &local_err)) {
->> +            goto err;
->> +        }
->> +    }
->> +
->>       ram_block_add(new_block, &local_err);
->> -    if (local_err) {
->> -        g_free(new_block);
->> -        error_propagate(errp, local_err);
->> -        return NULL;
->> +    if (!local_err) {
->> +        return new_block;
+On 12/9/2024 12:36 PM, Peter Xu wrote:
+> On Mon, Dec 02, 2024 at 05:19:53AM -0800, Steve Sistare wrote:
+>> diff --git a/util/oslib-win32.c b/util/oslib-win32.c
+>> index b623830..aef5779 100644
+>> --- a/util/oslib-win32.c
+>> +++ b/util/oslib-win32.c
+>> @@ -877,3 +877,14 @@ void qemu_win32_map_free(void *ptr, HANDLE h, Error **errp)
 >>       }
->> -    return new_block;
->> +
->> +err:
->> +    g_free(new_block);
->> +    error_propagate(errp, local_err);
->> +    return NULL;
+>>       CloseHandle(h);
 >>   }
+>> +
+>> +bool qemu_shm_available(void)
+>> +{
+>> +    return false;
+>> +}
+>> +
+>> +int qemu_shm_alloc(size_t size, Error **errp)
+>> +{
+>> +    error_setg("Shared memory is not supported.");
 > 
-> IIUC we only need to conditionally convert an anon-allocation into an
-> fd-allocation, and then we don't need to mostly duplicate
-> qemu_ram_alloc_from_fd(), instead we reuse it.
-> 
-> I do have a few other comments elsewhere, but when I was trying to comment.
-> E.g., we either shouldn't need to bother caching qemu_memfd_check()
-> results, or do it in qemu_memfd_check() directly.. and some more.
+> May need a fixup here to make build pass.
 
-Someone thought it a good idea to cache the result of qemu_memfd_alloc_check,
-and qemu_memfd_check will be called more often.  I'll cache the result inside
-qemu_memfd_check for the special case of flags=0.
-
-> Then I think it's easier I provide a patch, and also show that it can be
-> also smaller changes to do the same thing, with everything fixed up
-> (e.g. addressing above mmu notifier missing issue).  What do you think as
-> below?
-
-The key change you make is calling qemu_ram_alloc_from_fd instead of file_ram_alloc,
-which buys the xen and kvm checks for free.  Sounds good, I will do that in the
-context of my patch.
-
-Here are some other changes in your patch, and my responses:
-
-I will drop the "Retrying using MAP_ANON|MAP_SHARED" message, as you did.
-
-However, I am keeping QEMU_VMALLOC_ALIGN, qemu_set_cloexec, and trace_qemu_ram_alloc_shared.
-
-Also, when qemu_memfd_create + qemu_ram_alloc_from_fd fails, qemu should fail and exit,
-and not fall back, because something unexpected went wrong.  David said the same.
-Thus we still need to pass errp to qemu_memfd_create().
-
-I will push the qemu_shm_alloc ERRP_GUARD back to patch
-   "factor out allocation of anonymous shared memory"
+Yup!!  Will fix.
 
 - Steve
-
-> 
-> ===8<===
->  From a90119131a972b0b4f15770fe0b431770456e447 Mon Sep 17 00:00:00 2001
-> From: Peter Xu <peterx@redhat.com>
-> Date: Mon, 9 Dec 2024 13:38:06 -0500
-> Subject: [PATCH] physmem: Try to always allocate anon and shared memory with
->   fd
-> 
-> qemu_ram_alloc_internal() is the memory API QEMU uses to allocate anonymous
-> memory.  It allows RAM_SHARED too on top of anonymous.
-> 
-> It might be always beneficial to allocate memory with fd attached whenever
-> possible because fd is normally more flexible comparing to the virtual
-> mapping alone.  For example, CPR can use it to pass over fds between
-> processes to share memory, especially useful when the memory can be pinned.
-> 
-> Since there's no harm when it's possible, do it unconditionally for all
-> such anonymous & shared memory allocations where the memory is to be
-> allocated.  Provide fallbacks when it can fail, e.g., when none of the
-> memory attached fd is available.
-> 
-> Two extra ERRP_GUARD()s are needed in the used functions, as we will not
-> care about error even if it happened, so it's easier to allow passing NULL
-> into them.
-> 
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->   system/physmem.c   | 38 ++++++++++++++++++++++++++++++++++++++
->   util/memfd.c       |  2 ++
->   util/oslib-posix.c |  2 ++
->   3 files changed, 42 insertions(+)
-> 
-> diff --git a/system/physmem.c b/system/physmem.c
-> index dc1db3a384..4e795aefa0 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -47,6 +47,7 @@
->   #include "qemu/qemu-print.h"
->   #include "qemu/log.h"
->   #include "qemu/memalign.h"
-> +#include "qemu/memfd.h"
->   #include "exec/memory.h"
->   #include "exec/ioport.h"
->   #include "sysemu/dma.h"
-> @@ -2057,6 +2058,24 @@ RAMBlock *qemu_ram_alloc_from_file(ram_addr_t size, MemoryRegion *mr,
->   }
->   #endif
->   
-> +/*
-> + * Try to allocate a zero-sized anonymous fd for shared memory allocations.
-> + * Returns >=0 if succeeded, <0 otherwise.
-> + *
-> + * Prioritize memfd, as it doesn't have the same /dev/shm size limitation
-> + * v.s. POSIX shm_open().
-> + */
-> +static int qemu_ram_alloc_anonymous_fd(void)
-> +{
-> +    if (qemu_memfd_check(0)) {
-> +        return qemu_memfd_create("anon-memfd", 0, 0, 0, 0, NULL);
-> +    } else if (qemu_shm_available()) {
-> +        return qemu_shm_alloc(0, NULL);
-> +    } else {
-> +        return -1;
-> +    }
-> +}
-> +
->   static
->   RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
->                                     void (*resized)(const char*,
-> @@ -2073,6 +2092,25 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
->                             RAM_NORESERVE | RAM_GUEST_MEMFD)) == 0);
->       assert(!host ^ (ram_flags & RAM_PREALLOC));
->   
-> +    /*
-> +     * Try to use fd-based allocation for anonymous and shared memory,
-> +     * because fd is normally more flexible (e.g. on memory sharing between
-> +     * processes).  We can still fallback to old ways if it fails.
-> +     */
-> +    if (!host && (ram_flags & RAM_SHARED)) {
-> +        int fd = qemu_ram_alloc_anonymous_fd();
-> +
-> +        if (fd >= 0) {
-> +            new_block = qemu_ram_alloc_from_fd(size, mr, ram_flags,
-> +                                               fd, 0, errp);
-> +            if (new_block) {
-> +                return new_block;
-> +            }
-> +            close(fd);
-> +        }
-> +        /* Either fd or ramblock allocation failed, fallback */
-> +    }
-> +
->       align = qemu_real_host_page_size();
->       align = MAX(align, TARGET_PAGE_SIZE);
->       size = ROUND_UP(size, align);
-> diff --git a/util/memfd.c b/util/memfd.c
-> index 8a2e906962..0dc15b2f44 100644
-> --- a/util/memfd.c
-> +++ b/util/memfd.c
-> @@ -52,6 +52,8 @@ int qemu_memfd_create(const char *name, size_t size, bool hugetlb,
->   {
->       int htsize = hugetlbsize ? ctz64(hugetlbsize) : 0;
->   
-> +    ERRP_GUARD();
-> +
->       if (htsize && 1ULL << htsize != hugetlbsize) {
->           error_setg(errp, "Hugepage size must be a power of 2");
->           return -1;
-> diff --git a/util/oslib-posix.c b/util/oslib-posix.c
-> index f8c3724e68..6ca3e994fc 100644
-> --- a/util/oslib-posix.c
-> +++ b/util/oslib-posix.c
-> @@ -944,6 +944,8 @@ int qemu_shm_alloc(size_t size, Error **errp)
->       static int sequence;
->       mode_t mode;
->   
-> +    ERRP_GUARD();
-> +
->       cur_sequence = qatomic_fetch_inc(&sequence);
->   
->       /*
-
 
