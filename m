@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB172E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 06:58:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C38CE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 07:02:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLd8u-0002lf-P6; Thu, 12 Dec 2024 01:57:49 -0500
+	id 1tLdCq-0003as-4c; Thu, 12 Dec 2024 02:01:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLd8t-0002lV-A0
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 01:57:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLdCo-0003ac-QZ
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:01:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLd8r-0001Q5-8I
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 01:57:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLdCn-0001tJ-4j
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:01:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733986663;
+ s=mimecast20190719; t=1733986906;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jYDH7uP0HNE9txQoXRyV81/hEt0LtUbjqqgFsMm9cUQ=;
- b=M3wQ9gZf0kz+Vnx5FxrVZdFVot1BwoFjzOn6u9Fn1zZe+XgYRYaxeyMjoGLETgBlzHpnc5
- czq/Xgy6Poh/2N54gSkkHti+TOlTujWvkX6CiFf0hlvLozmGXvZOT1Bh9EuTu381Fho0fg
- TS5ccysH84+yPZ3couE4zYoMFvIccwM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=DYV5TBJc9jjhyTF1kiq4Mw7nNKg830Ojb0ODZF587AI=;
+ b=S1DngT9JarhZk8AyCxrfuyUufbM1xtY0y4NxT4DShq8gvy+WfZiPHClbsAhvl+RTwEbh2J
+ dOcNt8XrKFlAsok3M/dgJdms3i2+WNy2v87Nzg0wIGnNOIFpvXVjEgcNBzcwJPBEoFdg2+
+ 7JSvSgRVTQGrTDjN0mgQIHJkdgDIEyA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-vRtnbYQLPJuatqIItZWZvQ-1; Thu, 12 Dec 2024 01:57:41 -0500
-X-MC-Unique: vRtnbYQLPJuatqIItZWZvQ-1
-X-Mimecast-MFC-AGG-ID: vRtnbYQLPJuatqIItZWZvQ
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43623bf2a83so2344955e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 22:57:41 -0800 (PST)
+ us-mta-669-4zGV6AovP8WRqANEJ0lmiw-1; Thu, 12 Dec 2024 02:01:44 -0500
+X-MC-Unique: 4zGV6AovP8WRqANEJ0lmiw-1
+X-Mimecast-MFC-AGG-ID: 4zGV6AovP8WRqANEJ0lmiw
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-385dcae001fso106414f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 23:01:44 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733986660; x=1734591460;
+ d=1e100.net; s=20230601; t=1733986903; x=1734591703;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jYDH7uP0HNE9txQoXRyV81/hEt0LtUbjqqgFsMm9cUQ=;
- b=blAHRN93K/K6VG+g9aHXvL7ymto6b9Q5KM1NwhYy1T0p5u3qo6B4ih17YBzS5Ssx+3
- nYOFdpOMO3tuygRLpY9s5Jvq8Px6J7phSSa0xKqsbAwV4SdcX5SBsdf5eZC9zt1OCwHH
- cUXZeAsLD1UnTdWGkPy7yS5wN8qeH0z6h/X0WDwPu0zqI9DPE7JlM2O52Hikl9mIVTGD
- SyI/Eb2SKrQVmGoPpmAWEXjU5GqmIZ2Iee6DhXZS4G5qRFEBEPoO14QF0el5aynVeM++
- UzN8hQj3+/BpYWptVwoTyd1CJ3ZDsdJP7qHblpCdaMD3OXuJE4WOVsvOgBzBRr7xnnyk
- hJqA==
+ bh=DYV5TBJc9jjhyTF1kiq4Mw7nNKg830Ojb0ODZF587AI=;
+ b=l6ArhXAaZhUfGSqkO/ktSrHnrzdJ1F3Pkc+jPYp8nEcBwSGFTqAMphKwUrnkMFnKB5
+ /Rcxbx8Tx+l6jHbX64gFVQPaXXqyatHYO4NdJxXQK6HLJDtyx7Jc93g7IGIDy3G73Wjr
+ 3uniHqA68WIHrbWPz39MgysxK/ESUoGiF22eXbn9zWvhLym+aBEGXr8kfyXPXyf5iA2d
+ I7aKgjSYGvrfXj6FxKqom7dZeQiHkgi/RrEUsxWiZMwUS9hOQ5/1mEK+/+8qVL0ZdrGM
+ MpG9IDU7Je2QFQyAewbmQXbrc+6S988ZlFCUHzTNdLhFLiHN7WtDoNYJlffz2rgtjj3a
+ mmpQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV9n3+o9Mc3ZkSnU0Ah7K/5BbGjAFqwfF2U5IZVAR5v28qMQAqqV7hOHf6+plYiuyhyaJ41O1d5L2F/@nongnu.org
-X-Gm-Message-State: AOJu0Yx8UnxzgCI+pjuYoCOlNDWz8hPVVBqAMWrTM5/7EG34u8VcIfpL
- e9q9KWkPtnGIM0cAOPnTF9yChNSEdo/K7avAnb1V6b2w/0dDPGtlQFgPjZMTBYwPHCc7oc79q1h
- VsJyymue0tdOInZBk2aQBHoPucpZjUBwJtrlAvz5PwSdiUjPJ2h6P
-X-Gm-Gg: ASbGnctCXhIbR5Yuk8RWyPXkXa5TzGbfWlvGLlkF9/rt4MMuEOfd5E27qfZsWa0WkL+
- JRFNQYcjbDuRIzg1LJ73d4oulGK5M1k9Cyx4e82o/wN7ucaIB+x1WaHbOZWXx09NwpqP5KOlBj0
- iAmxwfen+sLlM7QkzqaUjHH9AJdZbMNZRyU+6dZ7sp1pUtyGKvYFVXBesDGvFuelDzqh7ETSxYQ
- tOLVtccbJAoEPVqjeu17k5Ek/8m1z+e0Gsp27UkIjQePRuZAfMN0KPrPoEhr5HHMGnTojKPvBwX
- 5aNBLgIlcQ==
-X-Received: by 2002:a05:600c:1c16:b0:434:a386:6cf with SMTP id
- 5b1f17b1804b1-4361c344b7emr45970665e9.2.1733986660563; 
- Wed, 11 Dec 2024 22:57:40 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IG6/vnUTrjtgRX+THp9zPeYAue1oZsPg0nbjli4v0kXcklJGunRGOK42CJQhas1EEMplLkthQ==
-X-Received: by 2002:a05:600c:1c16:b0:434:a386:6cf with SMTP id
- 5b1f17b1804b1-4361c344b7emr45970575e9.2.1733986660269; 
- Wed, 11 Dec 2024 22:57:40 -0800 (PST)
+ AJvYcCVHaA33RsOiMi5C9vYFpFPPUnqzk0SRjexA0VDSOyYgAoZ2xprPPtzu2igTDDnrGafun4Iij4DTVM9e@nongnu.org
+X-Gm-Message-State: AOJu0YyQfFfzIfENeWFkDI1gCkjn1nvutaaNJvZEDJCGFjfA3iX9qBgp
+ m+BCT5ahqiHhXb/fA704kKpuSaxwXTR5yLsZW6GGHGMT3MXTPS5KS/CA5NKC0U0ALF9S4MBBXiX
+ ew1GDi9mG+vBg0zjDKVFJDxSpuEUWSr9z9w+F4To48EWf36YITXgV
+X-Gm-Gg: ASbGncvpCRnjnw6AfQXBnrYWRiZ08mZFekiKeRP7pb5lyicB6q/FW67dGpnCBgHYVxx
+ D9SuUZZxayJfm1DLIMqxffPRY5mwhTeWyfa2oKwJc8+XRKBx7pDgAoG1P1L+bChwKabLKuv4ykZ
+ FXHRlIewvClt2Q1Qg1YCS3LkVonln7ubHFDks76QF9NzScFW3QnrxOFE24rXNaETlEivCBdqh2z
+ SrVtJ2QR+8Zv+dESYbhutPuPe5s2LDIXtrGyyJcA4prBAPuFaSAcr3C0n7o10IOPZxmHpGEEopk
+ NYp/NQ8ieA==
+X-Received: by 2002:a5d:5886:0:b0:385:fc00:f5f3 with SMTP id
+ ffacd0b85a97d-3864ce894f7mr4152915f8f.4.1733986903533; 
+ Wed, 11 Dec 2024 23:01:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGUZl3lkJ9OxVisBTfNSe1x/WukhiPSb5AWOVQOxjP4Arrjw+dJIJxr+v+YMrNKiQg/qZkFEw==
+X-Received: by 2002:a5d:5886:0:b0:385:fc00:f5f3 with SMTP id
+ ffacd0b85a97d-3864ce894f7mr4152871f8f.4.1733986902866; 
+ Wed, 11 Dec 2024 23:01:42 -0800 (PST)
 Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436256b4556sm7035025e9.33.2024.12.11.22.57.38
+ ffacd0b85a97d-3878248e54dsm3133436f8f.19.2024.12.11.23.01.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 22:57:39 -0800 (PST)
-Message-ID: <1ad6e5e3-a54a-4361-b31f-3b08bad5180f@redhat.com>
-Date: Thu, 12 Dec 2024 07:57:37 +0100
+ Wed, 11 Dec 2024 23:01:42 -0800 (PST)
+Message-ID: <cf1bb93e-4807-45c5-ac2c-15a571fe69f6@redhat.com>
+Date: Thu, 12 Dec 2024 08:01:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/31] tests/functional: drop 'tesseract_available'
- helper
+Subject: Re: [PATCH v2 06/31] tests/functional: introduce some helpful
+ decorators
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>
 References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-6-berrange@redhat.com>
+ <20241211172648.2893097-7-berrange@redhat.com>
 Content-Language: en-US
 From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-6-berrange@redhat.com>
+In-Reply-To: <20241211172648.2893097-7-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -158,71 +158,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Platforms we target have new enough tesseract that it suffices to merely
-> check if the binary exists.
+> Reduce repeated boilerplate with some helper decorators:
+> 
+>   @skipIfNotPlatform("x86_64", "aarch64")
+> 
+>    => Skip unless the build host platform matches
+> 
+>   @skipIfMissingCommands("mkisofs", "losetup")
+> 
+>    => Skips unless all listed commands are found in $PATH
+> 
+>   @skipIfMissingImports("numpy", "cv2")
+> 
+>    => Skips unless all listed modules can be imported
+> 
+>   @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
+> 
+>    => Skips unless env var requests flaky tests with the
+>       reason documented in the referenced gitlab bug
+> 
+>   @skipBigData
+> 
+>    => Skips unless env var permits tests creating big data files
+> 
+>   @skipUntrustedTest
+> 
+>    => Skips unless env var permits tests which are potentially
+>       dangerous to the host
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
->   tests/functional/qemu_test/tesseract.py | 12 +-----------
->   tests/functional/test_m68k_nextcube.py  |  8 +++-----
->   2 files changed, 4 insertions(+), 16 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
-> index ef1833139d..1b7818090a 100644
-> --- a/tests/functional/qemu_test/tesseract.py
-> +++ b/tests/functional/qemu_test/tesseract.py
-> @@ -7,17 +7,7 @@
->   
->   import logging
->   
-> -from . import has_cmd, run_cmd
-> -
-> -def tesseract_available(expected_version):
-> -    (has_tesseract, _) = has_cmd('tesseract')
-> -    if not has_tesseract:
-> -        return False
-> -    (stdout, stderr, ret) = run_cmd([ 'tesseract', '--version'])
-> -    if ret:
-> -        return False
-> -    version = stdout.split()[1]
-> -    return int(version.split('.')[0]) >= expected_version
-> +from . import run_cmd
->   
->   def tesseract_ocr(image_path, tesseract_args=''):
->       console_logger = logging.getLogger('console')
-> diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
-> index 0124622c40..1022e8f468 100755
-> --- a/tests/functional/test_m68k_nextcube.py
-> +++ b/tests/functional/test_m68k_nextcube.py
-> @@ -13,7 +13,8 @@
->   from qemu_test import QemuSystemTest, Asset
->   from unittest import skipUnless
->   
-> -from qemu_test.tesseract import tesseract_available, tesseract_ocr
-> +from qemu_test import has_cmd
-> +from qemu_test.tesseract import tesseract_ocr
->   
->   PIL_AVAILABLE = True
->   try:
-> @@ -53,10 +54,7 @@ def test_bootrom_framebuffer_size(self):
->           self.assertEqual(width, 1120)
->           self.assertEqual(height, 832)
->   
-> -    # Tesseract 4 adds a new OCR engine based on LSTM neural networks. The
-> -    # new version is faster and more accurate than version 3. The drawback is
-> -    # that it is still alpha-level software.
-> -    @skipUnless(tesseract_available(4), 'tesseract OCR tool not available')
-> +    @skipUnless(*has_cmd('tesseract') 'tesseract OCR tool not available')
+>   tests/functional/qemu_test/__init__.py   |   3 +
+>   tests/functional/qemu_test/decorators.py | 107 +++++++++++++++++++++++
+>   2 files changed, 110 insertions(+)
+>   create mode 100644 tests/functional/qemu_test/decorators.py
 
-The *has_cmd('tesseract') already provides the error message, so you've got 
-to drop the 'tesseract OCR tool not available' part now, otherwise this ends 
-up in an SyntaxError. You likely didn't notice since it gets replaced later 
-anyway, but for bisectability, it would be good to fix it.
-
-Anyway, this is yet another good example why we should rather get rid of 
-has_cmd() ... it's too error prone, I made the same or similar mistake in 
-the past already, too.
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
