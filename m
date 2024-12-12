@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE70C3DA4A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053CBE77182
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLoKW-0004gI-AH; Thu, 12 Dec 2024 13:54:32 -0500
+	id 1tLoKM-0004eH-AT; Thu, 12 Dec 2024 13:54:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKT-0004ez-M7
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:29 -0500
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKK-0004dt-CI
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:20 -0500
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKS-0006Ys-23
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:29 -0500
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-2161eb95317so9263235ad.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:54:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKI-0006Xw-2k
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:19 -0500
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-728eccf836bso896713b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:54:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734029666; x=1734634466; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734029654; x=1734634454; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HazQIxFPlU3a2oysjMUdZiZcfaWSWluyVNuDTpHIcic=;
- b=bI3Fxu08aimMMzeMbRWNnaGvT0OYeDXGchKhbBUvHN7YoK0qzzcFcELs6XnGozIx2r
- GuPGvQ6k4K8IIzbNll7p6tVDRolM8HvXciuP5iEvcfKtZo84JwB3r3bqHvmoPrP4S8Uc
- Gz26TaEHQzda1J4uvwtxeJq3CoEUHyapfP7VHn4ep242jnP3Jf2MvbyIFHc33VHlyRyg
- 77ltblWonqTP9/7VcrTF8GEsJ1BKBhiFnfvOya6x+qoFyOaSqL79SPrMzcr2fLTOhTtE
- lKJeL3BJZrOlc+tpa89Kb8PvYQ7U7YQz64Vg4/66un/oq6wbyySHarz/oQ2qcy4PYjaf
- ypDA==
+ bh=COQa0IDmzSYvfWdSQf7pgjwEYz5PX2cSNYwHo2OnbHQ=;
+ b=RH2WLNViv5rxLLEtqjvRqVJn1hud/r/EPad5mdfhrhBEFe42heHMfFlOhtgtiliDaV
+ msCSnoH5gPior3a84eKU+PiMJCZXAaN5jAPFO94ettyd7Wt9wD0KYY0wbArkiKhiDfHK
+ JC0Z/iVj7yWyIHTlKZyuCn5tcG2XQs+Zl29Pp/WmL5bTfUrv+vIMGkdm8IHIuIeAVVwg
+ ISNEGfs9FvqhPnUD40tkwIFTXpaoRPA3wwhZmYx8mKmPBfu1blYGAkk8WimYVAgPsTea
+ 7Yy9FRvqBwaWUca5DQHfO21LBJZRoAChpo5Sze2SCEr0KR03z2x8J2/kRuDlizy0l3a/
+ 1yHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734029666; x=1734634466;
+ d=1e100.net; s=20230601; t=1734029654; x=1734634454;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HazQIxFPlU3a2oysjMUdZiZcfaWSWluyVNuDTpHIcic=;
- b=X7nkZiFkUUJN5YZLQUoSqdUHgg7KlMjg4C0nIdSWD7qRA0tM8hFPPa9LA3gOr8MQRQ
- UPUm4n8Ht8i1dQDpgrt9LGTw62H5apumURFJ7IURc/+rbXXV8EguIlcaXXywyNWTBOUN
- mAM5YjEhT9/V/cNLFy6ixx05WB2Wla/G9EHqYeA8mnrIefwPtgyNSPvT7Ze2/juKlJ0W
- NOB8xcxrV52phIXAK2wakahuc+HPfVr0OhL0hidou7Yz6vgajTbgY+Gw4AGEvYJUnM4A
- r1m+wa/xtBQIoHmJ14qrX009HUWi157PdOnKH3M02ZA6SfU/tmjQCd2SLRHlJFT/8mKa
- PkpQ==
-X-Gm-Message-State: AOJu0YzW8aek+sXbhVRLTdX5lLHdhQo7tgYwtfy8yRDTtwV5OhARb8YP
- QXeG1YBVfjFnbKaImZrUIL2zmCgs5c1d4P8aczGJ+LVD2iCvmy6JMDuXkcszX8Bub/Dafkigyi1
- y
-X-Gm-Gg: ASbGncv3r1XD+TvK35wEfDAqqCrvSYSJ1Y0j14RmmWeqLEMlA+W7c1BZs1cvyh/1TDP
- iFmmXxE+TLZ+hLGpiNAjr5Ph4jvUmY0fVjBPeE/6WLc/+vVz7hLJECqPSIRNLDWJIhfiRDKP/Nu
- sEu000P0+2FZMvKG2D+SX039qhODnJb3jK/At5zt057tjzIr3UizB27PDhcOnp7ce6s4pkM1SPg
- qGByHLOONF5Z7bpIJ2UgIh+4HcEI4DWswqXx/dN2wjR8e2gqGQKdFtpNb+QYrnM/OoJHsRwYZPo
- PpsHf95yWpcvUoqb7Gd1ou7SG2hO39g=
-X-Google-Smtp-Source: AGHT+IF9eQRkoasWzSOsCuqjBjOJchsppkPiVwxtqX7cI2BenpC8dZjjHVxSxItYhkeZG00J1A+63g==
-X-Received: by 2002:a17:903:1c2:b0:216:1ad2:1d5 with SMTP id
- d9443c01a7336-21778549cf8mr115840235ad.41.1734029665998; 
- Thu, 12 Dec 2024 10:54:25 -0800 (PST)
+ bh=COQa0IDmzSYvfWdSQf7pgjwEYz5PX2cSNYwHo2OnbHQ=;
+ b=vOjoqd1ZCdksyHqiFAiAa5iw8dlAygJt37MmuXdPByN5c7JcvZnVc9+lDSP50kI47/
+ 8BbFMvERvpNTFCOfgNmCHywCptVnggI/3eABWnvlNgRaU/7Gyc2CURMbvsMH7lnqiklR
+ QPL6licDzFIiOvRecbtd8Wz8FDMc2kREVSWIl8X6WTPROixdVTpSGbYDeCMXJEAko+AE
+ vmIOoOMjqPpPQ8kkmVk5C8RYBk6xG57BC0LI8Kq5mUsYZWBEH0URol23fAoJR1QJpNED
+ rv/lQEo5ntJWH0oDqXd7MwP7wwIrya1ty8Asn5LJhqNdemq+pEveR0akbL02HCglKl20
+ Rd5g==
+X-Gm-Message-State: AOJu0Yyi5gWyxQVsEZJO3xEy5wTQmSG7bNfzABoEWRYKRsTrxAD8w9SY
+ BFck/lM6RHhxPvoVmndek4J2SMjkqPMMjtIYLC0Irkgwxc32Z4pS3H3w188WQbN/S1r3RLSvrAD
+ f
+X-Gm-Gg: ASbGnctevQOQUUIx6cD2E4iirnaybNuRuBK/DSHCH2UaR5pel0KE0NQZgJALTzjqGR9
+ BflITkOmxHIlS3f5/UHnZdwTMpVTwwuUPcL25DG8DzeIBYiUZ82XE12A1OL7az27m/kIa2SClY4
+ bRWEzp/Y5dzprlxlx3E34vPiYTEaqD03Ze6ItXpOQdfqAwQaaZHsVE9kjljufpOBNfbpTbKq2ur
+ QctPRHvQWqMiFcWSHJlSqmlJ5h2vttosJmmT5/YWnzuPh3MJ/2XVP0Luv1npvrO4HyulRtyx/tl
+ YMw5r/6L6W+6KN8ZVc6kRFYquUHy5Lw=
+X-Google-Smtp-Source: AGHT+IFQNSDMUDu1KjluxEHUpQ8TgFW6sOQJITb19SzMs2If7YWqMPatFEzqX8gHIDM4erPMDu2NjA==
+X-Received: by 2002:a05:6a00:2885:b0:728:fab1:edbb with SMTP id
+ d2e1a72fcca58-72906ae391emr2144317b3a.20.1734029654724; 
+ Thu, 12 Dec 2024 10:54:14 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21781ced307sm29179555ad.31.2024.12.12.10.54.23
+ d2e1a72fcca58-7273beba847sm5963884b3a.174.2024.12.12.10.54.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 10:54:25 -0800 (PST)
+ Thu, 12 Dec 2024 10:54:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 03/18] include: Include missing 'qemu/clang-tsa.h' header
-Date: Thu, 12 Dec 2024 19:53:26 +0100
-Message-ID: <20241212185341.2857-4-philmd@linaro.org>
+Subject: [PATCH 02/18] linux-user/aarch64: Include missing 'user/abitypes.h'
+ header
+Date: Thu, 12 Dec 2024 19:53:25 +0100
+Message-ID: <20241212185341.2857-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
 References: <20241212185341.2857-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,88 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The next commit will remove "qemu/clang-tsa.h" of "exec/exec-all.h",
-however the following files indirectly include it:
+arm_set_mte_tcf0() uses the abi_long type which is defined
+in "user/abitypes.h". Include it in order to avoid when
+refactoring:
 
-  $ git grep -L qemu/clang-tsa.h $(git grep -wl TSA_NO_TSA)
-  block/create.c
-  include/block/block_int-common.h
-  tests/unit/test-bdrv-drain.c
-  tests/unit/test-block-iothread.c
-  util/qemu-thread-posix.c
-
-Explicitly include it so we can process with the removal in the
-next commit.
+  In file included from ../../target/arm/gdbstub64.c:28:
+  ../linux-user/aarch64/mte_user_helper.h:30:42: error: unknown type name ‘abi_long’; did you mean ‘u_long’?
+     30 | void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
+        |                                          ^~~~~~~~
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/block/block_int-common.h | 1 +
- block/create.c                   | 1 +
- tests/unit/test-bdrv-drain.c     | 1 +
- tests/unit/test-block-iothread.c | 1 +
- util/qemu-thread-posix.c         | 1 +
- 5 files changed, 5 insertions(+)
+ linux-user/aarch64/mte_user_helper.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index ebb4e56a503..bb91a0f62fa 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -28,6 +28,7 @@
- #include "block/block-common.h"
- #include "block/block-global-state.h"
- #include "block/snapshot.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/iov.h"
- #include "qemu/rcu.h"
- #include "qemu/stats64.h"
-diff --git a/block/create.c b/block/create.c
-index 6b23a216753..72abafb4c12 100644
---- a/block/create.c
-+++ b/block/create.c
-@@ -24,6 +24,7 @@
+diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
+index 8685e5175a2..0c53abda222 100644
+--- a/linux-user/aarch64/mte_user_helper.h
++++ b/linux-user/aarch64/mte_user_helper.h
+@@ -9,6 +9,8 @@
+ #ifndef AARCH64_MTE_USER_HELPER_H
+ #define AARCH64_MTE USER_HELPER_H
  
- #include "qemu/osdep.h"
- #include "block/block_int.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/job.h"
- #include "qemu/main-loop.h"
- #include "qapi/qapi-commands-block-core.h"
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 7410e6f3528..98ad89b390c 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -28,6 +28,7 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qemu/main-loop.h"
-+#include "qemu/clang-tsa.h"
- #include "iothread.h"
- 
- static QemuEvent done_event;
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 26a6c051758..1de04a8a13d 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -29,6 +29,7 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qdict.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/main-loop.h"
- #include "iothread.h"
- 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index b2e26e21205..6fff4162ac6 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -17,6 +17,7 @@
- #include "qemu-thread-common.h"
- #include "qemu/tsan.h"
- #include "qemu/bitmap.h"
-+#include "qemu/clang-tsa.h"
- 
- #ifdef CONFIG_PTHREAD_SET_NAME_NP
- #include <pthread_np.h>
++#include "user/abitypes.h"
++
+ #ifndef PR_MTE_TCF_SHIFT
+ # define PR_MTE_TCF_SHIFT       1
+ # define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
 -- 
 2.45.2
 
