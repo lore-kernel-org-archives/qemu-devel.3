@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7568E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD35FE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLs3L-0000i1-Ul; Thu, 12 Dec 2024 17:53:04 -0500
+	id 1tLs3b-00010t-9z; Thu, 12 Dec 2024 17:53:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3K-0000go-Ip
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:02 -0500
+ id 1tLs3Y-0000vs-Uf
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:16 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3I-0006z3-TB
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:02 -0500
+ id 1tLs3X-0006zl-2Y
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:16 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3E-00000003gVe-03XU; Thu, 12 Dec 2024 23:52:56 +0100
-Message-ID: <a3a77e6a-fb0b-493c-849b-d9ed29fae471@maciej.szmigiero.name>
-Date: Thu, 12 Dec 2024 23:52:50 +0100
+ id 1tLs3S-00000003gVo-3UoO; Thu, 12 Dec 2024 23:53:10 +0100
+Message-ID: <8f38a345-ad63-4168-907e-ac1cf736b2d1@maciej.szmigiero.name>
+Date: Thu, 12 Dec 2024 23:53:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 18/24] vfio/migration: Don't run load cleanup if load
- setup didn't run
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Eric Blake
- <eblake@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
+Subject: Re: [PATCH v3 24/24] vfio/migration: Multifd device state transfer
+ support - send side
+To: Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Peter Xu <peterx@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <72424ece45968b1ae6b39750917a041867c415ab.1731773021.git.maciej.szmigiero@oracle.com>
- <9f27f058-59f0-4056-b19a-f613418e0760@redhat.com>
- <fd69d0ef-67de-4ac8-b00e-a68c4e2ae62f@maciej.szmigiero.name>
- <1fbd277d-c3e0-48f6-81b1-2a5ae97ed9a0@nvidia.com>
- <2e0ea3b7-2f63-41ff-a316-52681d6f0eb8@maciej.szmigiero.name>
- <5601b5a2-1f4b-49b6-93fb-7242a2db71a6@nvidia.com>
+ <4f5c33b97be09fcb4e1885073e31c5e930a39ad0.1731773021.git.maciej.szmigiero@oracle.com>
+ <51279885-5229-4c5f-93af-d1214dd65f90@nvidia.com>
+ <06360868-95e3-46e2-8960-51348025a1b7@maciej.szmigiero.name>
+ <1ea676b5-c52a-4745-b5ce-f0376b1e6473@nvidia.com>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -87,7 +85,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <5601b5a2-1f4b-49b6-93fb-7242a2db71a6@nvidia.com>
+In-Reply-To: <1ea676b5-c52a-4745-b5ce-f0376b1e6473@nvidia.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -114,92 +112,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.12.2024 15:30, Avihai Horon wrote:
+On 12.12.2024 15:54, Avihai Horon wrote:
 > 
-> On 11/12/2024 1:04, Maciej S. Szmigiero wrote:
+> On 11/12/2024 1:06, Maciej S. Szmigiero wrote:
 >> External email: Use caution opening links or attachments
 >>
 >>
->> On 3.12.2024 16:09, Avihai Horon wrote:
+>> On 9.12.2024 10:28, Avihai Horon wrote:
 >>>
->>> On 29/11/2024 19:15, Maciej S. Szmigiero wrote:
+>>> On 17/11/2024 21:20, Maciej S. Szmigiero wrote:
 >>>> External email: Use caution opening links or attachments
 >>>>
 >>>>
->>>> On 29.11.2024 15:08, Cédric Le Goater wrote:
->>>>> On 11/17/24 20:20, Maciej S. Szmigiero wrote:
->>>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>>>
->>>>>> It's possible for load_cleanup SaveVMHandler to get called without
->>>>>> load_setup handler being called first.
->>>>>>
->>>>>> Since we'll be soon running cleanup operations there that access objects
->>>>>> that need earlier initialization in load_setup let's make sure these
->>>>>> cleanups only run when load_setup handler had indeed been called
->>>>>> earlier.
->>>>>>
->>>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>>>
->>>>> tbh, that's a bit ugly. I agree it's similar to those 'bool initialized'
->>>>> attributes we have in some structs, so nothing new or really wrong.
->>>>> But it does look like a workaound for a problem or cleanups missing
->>>>> that would need time to untangle.
->>>>>
->>>>> I would prefer to avoid this change and address the issue from the
->>>>> migration subsystem if possible.
+>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 >>>>
->>>> While it would be pretty simple to only call {load,save}_cleanup
->>>> SaveVMHandlers when the relevant {load,save}_setup handler was
->>>> successfully called first this would amount to a change of these
->>>> handler semantics.
+>>>> Implement the multifd device state transfer via additional per-device
+>>>> thread inside save_live_complete_precopy_thread handler.
 >>>>
->>>> This would risk introducing regressions - for example vfio_save_setup()
->>>> doesn't clean up (free) newly allocated migration->data_buffer
->>>> if vfio_migration_set_state() were to fail later in this handler
->>>> and relies on an unconstitutional call to vfio_save_cleanup() in
->>>> order to clean it up.
+>>>> Switch between doing the data transfer in the new handler and doing it
+>>>> in the old save_state handler depending on the
+>>>> x-migration-multifd-transfer device property value.
 >>>>
->>>> There might be similar issues in other drivers too.
+>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>> ---
+>>>>   hw/vfio/migration.c  | 155 +++++++++++++++++++++++++++++++++++++++++++
+>>>>   hw/vfio/trace-events |   2 +
+>>>>   2 files changed, 157 insertions(+)
+>>>>
+>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>>>> index b54879fe6209..8709672ada48 100644
+>>>> --- a/hw/vfio/migration.c
+>>>> +++ b/hw/vfio/migration.c
+>>>> @@ -771,6 +771,24 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
+>>>>       uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
+>>>>       int ret;
+>>>>
+>>>> +    /*
+>>>> +     * Make a copy of this setting at the start in case it is changed
+>>>> +     * mid-migration.
+>>>> +     */
+>>>> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
+>>>> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
+>>>> +    } else {
+>>>> +        migration->multifd_transfer =
+>>>> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
+>>>> +    }
+>>>> +
+>>>> +    if (migration->multifd_transfer && !vfio_multifd_transfer_supported()) {
+>>>> +        error_setg(errp,
+>>>> +                   "%s: Multifd device transfer requested but unsupported in the current config",
+>>>> +                   vbasedev->name);
+>>>> +        return -EINVAL;
+>>>> +    }
+>>>> +
+>>>>       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
+>>>>
+>>>>       vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
+>>>> @@ -942,13 +960,32 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
+>>>>       return !migration->precopy_init_size && !migration->precopy_dirty_size;
+>>>>   }
+>>>>
+>>>> +static void vfio_save_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
+>>>> +{
+>>>> +    VFIOMigration *migration = vbasedev->migration;
+>>>> +
+>>>> +    assert(migration->multifd_transfer);
+>>>> +
+>>>> +    /*
+>>>> +     * Emit dummy NOP data on the main migration channel since the actual
+>>>> +     * device state transfer is done via multifd channels.
+>>>> +     */
+>>>> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
+>>>> +}
+>>>> +
+>>>>   static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>>>>   {
+>>>>       VFIODevice *vbasedev = opaque;
+>>>> +    VFIOMigration *migration = vbasedev->migration;
+>>>>       ssize_t data_size;
+>>>>       int ret;
+>>>>       Error *local_err = NULL;
+>>>>
+>>>> +    if (migration->multifd_transfer) {
+>>>> +        vfio_save_multifd_emit_dummy_eos(vbasedev, f);
+>>>> +        return 0;
+>>>> +    }
 >>>
->>> We can put all objects related to multifd load in their own struct (as suggested by Cedric in patch #22) and allocate the struct only if multifd device state transfer is used.
->>> Then in the cleanup flow we clean the struct only if it was allocated.
->>>
->>> This way we don't need to add the load_setup flag and we can keep the SaveVMHandlers semantics as is.
->>>
->>> Do you think this will be OK?
+>>> I wonder whether we should add a .save_live_use_thread SaveVMHandlers through which a device can indicate if it wants to save its data with the async or sync handler.
+>>> This will allow migration layer (i.e., qemu_savevm_state_complete_precopy_iterable) to know which handler to call instead of calling both of them and letting each device implicitly decide.
+>>> IMHO it will make the code clearer and will allow us to drop vfio_save_multifd_emit_dummy_eos().
 >>
->> I think here the discussion is more of whether we refactor the
->> {load,save}_cleanup handler semantics to "cleaner" design where
->> these handlers are only called if the relevant {load,save}_setup
->> handler was successfully called first (but at the same time risk
->> introducing regressions).
+>> I think that it's not worth adding a new SaveVMHandler just for this specific
+>> use case, considering that it's easy to handle it inside driver by emitting that
+>> FLAG_END_OF_STATE.
+>>
+>> Especially considering that for compatibility with other drivers that do not
+>> define that hypothetical new SaveVMHandler not having it defined would need to
+>> have the same effect as it always returning "false".
 > 
-> Yes, and I agree with you that changing the semantics of SaveVMHandlers can be risky and may deserve a series of its own.
-> But Cedric didn't like the flag option, so I suggested to do what we usually do, AFAIU, which is to check if the structs are allocated and need cleanup.
+> We already have such handlers like .is_active, .has_postcopy and .is_active_iterate.
+> Since VFIO migration with multifd involves a lot of threads and convoluted code paths, I thought this could put some order (even if small) into things, especially if it allows us to avoid the vfio_save_multifd_emit_dummy_eos() which feels a bit hackish.
 > 
->>
->>
->> If we keep the existing semantics of these handlers (like this
->> patch set did) then it is just an implementation detail whether
->> we keep an explicit flag like "migration->load_setup" or have
->> a struct pointer that serves as an implicit equivalent flag
->> (when not NULL) - I don't have a strong opinion on this particular
->> detail.
->>
-> I prefer the struct pointer way, it seems less cumbersome to me.
-> But it's Cedric's call at the end.
+> But anyway, that's only my opinion, and I can understand why this could be seen as an overkill.
 
-As I wrote above "I don't have a strong opinion on this particular
-detail" - I'm okay with moving these new variables to a dedicated
-struct.
+@Cedric, @Peter:
+what's your opinion here?
 
-I guess this means we settled on *not* changing the semantics of
-{load,save}_cleanup handler SaveVMHandlers - that was the important
-decision for me.
+Is it better to add a new "flag" SaveVMHandler or keep handling
+the multifd/non-multifd transfer difference in the VFIO driver
+by emitting VFIO_MIG_FLAG_END_OF_STATE in
+vfio_save_complete_precopy() and vfio_save_state()?
+
+Note that this new "flag" SaveVMHandler would need to have
+semantics of disabling both save_live_complete_precopy and
+save_state handlers and enabling save_live_complete_precopy_thread
+instead.
 
 > Thanks.
-> 
-> 
 
 Thanks,
 Maciej
