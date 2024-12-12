@@ -4,132 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42FFE77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D245EE7717F
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfDY-0001Jn-BU; Thu, 12 Dec 2024 04:10:45 -0500
+	id 1tLfDp-0001NW-80; Thu, 12 Dec 2024 04:11:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfDN-0001Ix-MU
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLfDh-0001L6-3G
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfDL-0007gR-El
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:33 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLfDX-0007hA-UK
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733994628;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/x8X7Pm93eP7Vhx6RXSbloXA+topfP51f9yhV9IolxM=;
- b=I5Q6OstFL2NWlbu+P99Y44C8KPryZeDBRhVrxPw8Lz+85TzYdXhCFUBHX9Srz2utTOfhN8
- rxVOpREEiNXxwDYh84WyaQJQJJsKRtbvfusiwuR9JRbXq5mS8c5JlliRlEbnzeluFPjqxE
- 7InKYaXAUrqACZ9X6qLRhz3IDvxjfSA=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-Q1dU3vMtNAuko8CdP7NwDg-1; Thu, 12 Dec 2024 04:10:27 -0500
-X-MC-Unique: Q1dU3vMtNAuko8CdP7NwDg-1
-X-Mimecast-MFC-AGG-ID: Q1dU3vMtNAuko8CdP7NwDg
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4362153dcd6so2100025e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:10:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733994626; x=1734599426;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/x8X7Pm93eP7Vhx6RXSbloXA+topfP51f9yhV9IolxM=;
- b=hgW3OvXA5mSVLOJK5a11GhdlugGqaQojgTAv5Moawnx5YHpP8QjcNfFOql+zPioXQA
- agF6v4Dzu+S0utUk77dUt+kMc2Ul1/ClScU2CJqCmXmuoJW1zsTE/t+7KZltOMXW3y09
- qg0HWbJ4TFJVJZLIsz3gEf7Zq3tjt+Ay0ypn0yailWu5s+icAMIw/y15ja82s2tdNoFj
- zliAsR9DtY4oPYH73s+xWG1NRqMWMaVNfMCYOIhxGJKrnDLw5gv+WhMZm99l4XNZJmZk
- YCstMGUwXfbdLKkZKh/6Ah8KKe4PTnw8cOT4a91dZaIwvpC70UplbphrrKXHlwb4uvaV
- OqRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5KqiByQAre5i2u3zVPxovsj9VNmn0oGYZ57oxZGeBWLau395id4io2FNVtga3PdknNNUmprJozeDF@nongnu.org
-X-Gm-Message-State: AOJu0YwFEiBVeDXDEVkiI0MJ0dSRrMkmaE7yzUwFN6IYt/0YF7zk8uY5
- 3IHGEgSLJxOQPXQJex8X0neTa2tMG8SJG3WfmEqBQHi0DzyjSPSF61iIH8Zcbx2KEAq61LbUE9K
- StpLBKzwWrVLL31rPfyp9C1yPjLGf++12ciTCDoXDX+fgJcD7Kr+m
-X-Gm-Gg: ASbGncss66Nc5jk4jnjHCmv9BYaTGSdX0OsKTLIJJi6h94WoXvS/hY9IaQT8idqmx+p
- bf2fzHj/4RLPmc6t0FRnEh0n2D2We0iSgtYiVDTrm7oeKlzZZEUjZXsOwNsnEncE36mbjth2Xet
- HOtl4bLIGqWZCP3q/m9iDd5x+rKxcQONbt5leOvL69EI8t638TUHsKKcG6RqiHjfqEIeiKLEBNJ
- N19bVqPPBxozDWfjem8031ZmwKOzq8Yrq79b3ZMWu8S9eTA6L7JYhgkBnvo472QrJ4cMitqnWGw
- spYA8w==
-X-Received: by 2002:a05:600c:1d1d:b0:434:e9ee:c1e with SMTP id
- 5b1f17b1804b1-4361c419464mr54880945e9.31.1733994626365; 
- Thu, 12 Dec 2024 01:10:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHw/eAhAZlNojDb5VyuZyA/ruV+cBvl2/VZLWX5UxONoNed7ZjK/H4dLXodwRW8E5GRzSbfUA==
-X-Received: by 2002:a05:600c:1d1d:b0:434:e9ee:c1e with SMTP id
- 5b1f17b1804b1-4361c419464mr54880545e9.31.1733994625972; 
- Thu, 12 Dec 2024 01:10:25 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4362557c457sm10491965e9.15.2024.12.12.01.10.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 01:10:25 -0800 (PST)
-Message-ID: <990f5ccd-b05f-4e25-bc68-60793d4d21ad@redhat.com>
-Date: Thu, 12 Dec 2024 10:10:24 +0100
+ s=mimecast20190719; t=1733994641;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=BWZwaMWBF+qhMXgC83nMQPjAmVE6GP4sG+b/wKGZGzE=;
+ b=HkW6nKfZR7ttdyMGPp3QD/lgaW40Ky+GtQi7Dz5WfBirRxNNBAZg8Z+yN8+2EtxaustaHY
+ DEJWmAe2+PNRMTFXvvM4n6Ht735Gc3aCxYj8Kh+MBhqhzy1UsU+JSq8zsHO3CPbI14Tr8j
+ Ig6OMKNQpnQFUIgtAntyaEWIW8Dymf4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-261-iVBGIs7YPNuEYk4MjaSRCg-1; Thu,
+ 12 Dec 2024 04:10:36 -0500
+X-MC-Unique: iVBGIs7YPNuEYk4MjaSRCg-1
+X-Mimecast-MFC-AGG-ID: iVBGIs7YPNuEYk4MjaSRCg
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BCC9C195604F; Thu, 12 Dec 2024 09:10:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B36BE195394B; Thu, 12 Dec 2024 09:10:26 +0000 (UTC)
+Date: Thu, 12 Dec 2024 09:10:23 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+Message-ID: <Z1qoa8yXscTSAJ9e@redhat.com>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] s390x/pci: relax I/O address translation requirement
-To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, richard.henderson@linaro.org, david@redhat.com,
- iii@linux.ibm.com, clegoate@redhat.com, qemu-devel@nongnu.org
-References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241209192927.107503-1-mjrosato@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -151,42 +90,49 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/12/2024 20.29, Matthew Rosato wrote:
-> This series introduces the concept of the relaxed translation requirement
-> for s390x guests in order to allow bypass of the guest IOMMU for more
-> efficient PCI passthrough.
+On Thu, Dec 12, 2024 at 09:12:33AM +0100, Eric Auger wrote:
+> Connie,
 > 
-> With this series, QEMU can indicate to the guest that an IOMMU is not
-> strictly required for a zPCI device.  This would subsequently allow a
-> guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
-> PCI devices.
-> 
-> When this occurs, QEMU will note the behavior via an intercepted MPCIFC
-> instruction and will fill the host iommu with mappings of the entire
-> guest address space in response.
-> 
-> There is a kernel series [1] that adds the relevant behavior needed to
-> exploit this new feature from within a s390x linux guest.
-> 
-> [1]: https://lore.kernel.org/linux-s390/20241209192403.107090-1-mjrosato@linux.ibm.com/
-> 
-> Matthew Rosato (2):
->    s390x/pci: add support for guests that request direct mapping
->    s390x/pci: indicate QEMU supports relaxed translation for passthrough
+> On 12/6/24 12:21, Cornelia Huck wrote:
+> > A respin/update on the aarch64 KVM cpu models. Also available at
+> > gitlab.com/cohuck/qemu arm-cpu-model-rfcv2
 
-  Hi again!
+snip
 
-One more thought: This is a guest-visible feature, isn't it? So do we also 
-need some migration handling for this? For example, what happens if you 
-start a guest that is aware of this feature on a host that has a QEMU with 
-this feature, and then try to live-migrate the guest to a QEMU that does not 
-have this feature? I guess the guest will crash? It would be better to fail 
-the migration instead. At least we should disable the feature in older 
-machine types and only allow it for the latest one.
+> From a named model point of view, since I do not see much traction
+> upstream besides Red Hat use cases, targetting ARM spec revision
+> baselines may be overkill. Personally I would try to focus on above
+> models: AltraMax, AmpereOne, Grace, ... Or maybe the ARM cores they may
+> be derived from.
 
-  Thomas
+If we target modelling of vendor named CPU models, then beware that
+we're opening the door to an very large set (potentially unbounded)
+of named CPU models over time. If we target ARM spec baselines then
+the set of named CPU models is fairly modest and grows slowly.
+
+Including ARM spec baselines will probably reduce the demand for
+adding vendor specific named models, though I expect we'll still
+end up wanting some, or possibly even many.
+
+Having some common baseline models is likely useful for mgmt
+applications in other ways though.
+
+Consider you mgmt app wants to set a CPU model that's common across
+heterogeneous hardware. They don't neccessarily want/need to be
+able to live migrate between heterogeneous CPUs, but for simplicity
+of configuration desire to set a single named CPU across all guests,
+irrespective of what host hey are launched on. The ARM spec baseline
+named models would give you that config simplicity.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
