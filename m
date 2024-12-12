@@ -4,44 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD35FE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C96E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLs3b-00010t-9z; Thu, 12 Dec 2024 17:53:19 -0500
+	id 1tLs40-0001gl-Iw; Thu, 12 Dec 2024 17:53:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3Y-0000vs-Uf
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:16 -0500
+ id 1tLs3r-0001Yj-4C
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:35 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3X-0006zl-2Y
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:16 -0500
+ id 1tLs3p-000718-4J
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:34 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3S-00000003gVo-3UoO; Thu, 12 Dec 2024 23:53:10 +0100
-Message-ID: <8f38a345-ad63-4168-907e-ac1cf736b2d1@maciej.szmigiero.name>
-Date: Thu, 12 Dec 2024 23:53:05 +0100
+ id 1tLs3l-00000003gWF-1kg2; Thu, 12 Dec 2024 23:53:29 +0100
+Message-ID: <d45267a6-74a6-4eeb-b8fa-f427db03afde@maciej.szmigiero.name>
+Date: Thu, 12 Dec 2024 23:53:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 24/24] vfio/migration: Multifd device state transfer
- support - send side
-To: Avihai Horon <avihaih@nvidia.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Peter Xu <peterx@redhat.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
+ threads
+To: Peter Xu <peterx@redhat.com>
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
- <4f5c33b97be09fcb4e1885073e31c5e930a39ad0.1731773021.git.maciej.szmigiero@oracle.com>
- <51279885-5229-4c5f-93af-d1214dd65f90@nvidia.com>
- <06360868-95e3-46e2-8960-51348025a1b7@maciej.szmigiero.name>
- <1ea676b5-c52a-4745-b5ce-f0376b1e6473@nvidia.com>
+ <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
+ <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
+ <489d1769-3807-4007-888c-608c1e9407fb@maciej.szmigiero.name>
+ <Z1DcVH6j7pzboucr@x1n>
+ <366e5477-9d3f-4c11-8042-542e9b4b7f65@maciej.szmigiero.name>
+ <Z1sReL5wrlhvO3P5@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -85,7 +88,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <1ea676b5-c52a-4745-b5ce-f0376b1e6473@nvidia.com>
+In-Reply-To: <Z1sReL5wrlhvO3P5@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -112,123 +115,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.12.2024 15:54, Avihai Horon wrote:
+On 12.12.2024 17:38, Peter Xu wrote:
+> On Wed, Dec 11, 2024 at 12:05:23AM +0100, Maciej S. Szmigiero wrote:
+>>> Maybe move it over to migration_object_init()?  Then we keep
+>>> qemu_loadvm_state_setup() only invoke the load_setup()s.
+>>
+>> AFAIK migration_object_init() is called unconditionally
+>> at QEMU startup even if there won't me any migration done?
+>>
+>> Creating a load thread pool there seems wasteful if no
+>> incoming migration will ever take place (or will but only
+>> much later).
 > 
-> On 11/12/2024 1:06, Maciej S. Szmigiero wrote:
->> External email: Use caution opening links or attachments
->>
->>
->> On 9.12.2024 10:28, Avihai Horon wrote:
+> I was expecting an empty pool to not be a major resource, but if that's a
+> concern, yes we can do that until later.
+> 
+> [...]
+> 
+>>>>>> @@ -3007,6 +3071,19 @@ int qemu_loadvm_state(QEMUFile *f)
+>>>>>>             return ret;
+>>>>>>         }
+>>>>>> +    if (ret == 0) {
+>>>>>> +        bql_unlock(); /* Let load threads do work requiring BQL */
+>>>>>> +        thread_pool_wait(load_threads);
+>>>>>> +        bql_lock();
+>>>>>> +
+>>>>>> +        ret = load_threads_ret;
+>>>>>> +    }
+>>>>>> +    /*
+>>>>>> +     * Set this flag unconditionally so we'll catch further attempts to
+>>>>>> +     * start additional threads via an appropriate assert()
+>>>>>> +     */
+>>>>>> +    qatomic_set(&load_threads_abort, true);
 >>>
->>> On 17/11/2024 21:20, Maciej S. Szmigiero wrote:
->>>> External email: Use caution opening links or attachments
->>>>
->>>>
->>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
->>>>
->>>> Implement the multifd device state transfer via additional per-device
->>>> thread inside save_live_complete_precopy_thread handler.
->>>>
->>>> Switch between doing the data transfer in the new handler and doing it
->>>> in the old save_state handler depending on the
->>>> x-migration-multifd-transfer device property value.
->>>>
->>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
->>>> ---
->>>>   hw/vfio/migration.c  | 155 +++++++++++++++++++++++++++++++++++++++++++
->>>>   hw/vfio/trace-events |   2 +
->>>>   2 files changed, 157 insertions(+)
->>>>
->>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
->>>> index b54879fe6209..8709672ada48 100644
->>>> --- a/hw/vfio/migration.c
->>>> +++ b/hw/vfio/migration.c
->>>> @@ -771,6 +771,24 @@ static int vfio_save_setup(QEMUFile *f, void *opaque, Error **errp)
->>>>       uint64_t stop_copy_size = VFIO_MIG_DEFAULT_DATA_BUFFER_SIZE;
->>>>       int ret;
->>>>
->>>> +    /*
->>>> +     * Make a copy of this setting at the start in case it is changed
->>>> +     * mid-migration.
->>>> +     */
->>>> +    if (vbasedev->migration_multifd_transfer == ON_OFF_AUTO_AUTO) {
->>>> +        migration->multifd_transfer = vfio_multifd_transfer_supported();
->>>> +    } else {
->>>> +        migration->multifd_transfer =
->>>> +            vbasedev->migration_multifd_transfer == ON_OFF_AUTO_ON;
->>>> +    }
->>>> +
->>>> +    if (migration->multifd_transfer && !vfio_multifd_transfer_supported()) {
->>>> +        error_setg(errp,
->>>> +                   "%s: Multifd device transfer requested but unsupported in the current config",
->>>> +                   vbasedev->name);
->>>> +        return -EINVAL;
->>>> +    }
->>>> +
->>>>       qemu_put_be64(f, VFIO_MIG_FLAG_DEV_SETUP_STATE);
->>>>
->>>>       vfio_query_stop_copy_size(vbasedev, &stop_copy_size);
->>>> @@ -942,13 +960,32 @@ static int vfio_save_iterate(QEMUFile *f, void *opaque)
->>>>       return !migration->precopy_init_size && !migration->precopy_dirty_size;
->>>>   }
->>>>
->>>> +static void vfio_save_multifd_emit_dummy_eos(VFIODevice *vbasedev, QEMUFile *f)
->>>> +{
->>>> +    VFIOMigration *migration = vbasedev->migration;
->>>> +
->>>> +    assert(migration->multifd_transfer);
->>>> +
->>>> +    /*
->>>> +     * Emit dummy NOP data on the main migration channel since the actual
->>>> +     * device state transfer is done via multifd channels.
->>>> +     */
->>>> +    qemu_put_be64(f, VFIO_MIG_FLAG_END_OF_STATE);
->>>> +}
->>>> +
->>>>   static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
->>>>   {
->>>>       VFIODevice *vbasedev = opaque;
->>>> +    VFIOMigration *migration = vbasedev->migration;
->>>>       ssize_t data_size;
->>>>       int ret;
->>>>       Error *local_err = NULL;
->>>>
->>>> +    if (migration->multifd_transfer) {
->>>> +        vfio_save_multifd_emit_dummy_eos(vbasedev, f);
->>>> +        return 0;
->>>> +    }
+>>> I assume this is only for debugging purpose and not required.
 >>>
->>> I wonder whether we should add a .save_live_use_thread SaveVMHandlers through which a device can indicate if it wants to save its data with the async or sync handler.
->>> This will allow migration layer (i.e., qemu_savevm_state_complete_precopy_iterable) to know which handler to call instead of calling both of them and letting each device implicitly decide.
->>> IMHO it will make the code clearer and will allow us to drop vfio_save_multifd_emit_dummy_eos().
+>>> Setting "abort all threads" to make sure "nobody will add more thread
+>>> tasks" is pretty awkward, IMHO.  If we really want to protect against it
+>>> and fail hard, it might be easier after the thread_pool_wait() we free the
+>>> pool directly (destroy() will see NULL so it'll skip; still need to free
+>>> there in case migration failed before this).  Then any enqueue will access
+>>> null pointer on the pool.
 >>
->> I think that it's not worth adding a new SaveVMHandler just for this specific
->> use case, considering that it's easy to handle it inside driver by emitting that
->> FLAG_END_OF_STATE.
+>> We don't want to destroy the thread pool in the path where the downtime
+>> is still counting.
+> 
+> Yeah this makes sense.
+> 
 >>
->> Especially considering that for compatibility with other drivers that do not
->> define that hypothetical new SaveVMHandler not having it defined would need to
->> have the same effect as it always returning "false".
+>> That's why we only do cleanup after the migration is complete.
+>>
+>> The above setting of load_threads_abort flag also makes sure that we abort
+>> load threads if the migration is going to fail for other reasons (non-load
+>> threads related) - in other words, when the above block with thread_pool_wait()
+>> isn't even entered due to ret already containing an earlier error.
 > 
-> We already have such handlers like .is_active, .has_postcopy and .is_active_iterate.
-> Since VFIO migration with multifd involves a lot of threads and convoluted code paths, I thought this could put some order (even if small) into things, especially if it allows us to avoid the vfio_save_multifd_emit_dummy_eos() which feels a bit hackish.
+> In that case IIUC we should cleanup the load threads in destroy(), not
+> here?  Especially with the comment that's even more confusing.
 > 
-> But anyway, that's only my opinion, and I can understand why this could be seen as an overkill.
 
-@Cedric, @Peter:
-what's your opinion here?
+This flag only asks the threads in pool which are still running to exit ASAP
+(without waiting for them in the "fail for other reasons"
+qemu_loadvm_state() code flow).
 
-Is it better to add a new "flag" SaveVMHandler or keep handling
-the multifd/non-multifd transfer difference in the VFIO driver
-by emitting VFIO_MIG_FLAG_END_OF_STATE in
-vfio_save_complete_precopy() and vfio_save_state()?
-
-Note that this new "flag" SaveVMHandler would need to have
-semantics of disabling both save_live_complete_precopy and
-save_state handlers and enabling save_live_complete_precopy_thread
-instead.
-
-> Thanks.
+Setting this flag does *not* do the cleanup of the whole thread pool - this
+only happens in qemu_loadvm_state_cleanup().
 
 Thanks,
 Maciej
