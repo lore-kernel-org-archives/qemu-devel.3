@@ -4,110 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6284E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:17:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 439B4E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:17:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkpI-0003rz-E5; Thu, 12 Dec 2024 10:10:04 -0500
+	id 1tLkuf-0004J8-F8; Thu, 12 Dec 2024 10:15:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpB-0003oj-Nr
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:09:58 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkp9-0002yL-9t
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:09:57 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 394DC2110B;
- Thu, 12 Dec 2024 15:09:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016193; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WgId7dnHAh9JZ6YizLaCn/MmxZBtir0fdUxeEJ5tYKM=;
- b=ilxb7tTSVt7Dpf/F7NoGlEQYrPErVU8HNzaBDibrVNX3scvDcfBy1IBYrI+sdk4ZlJLeHt
- aclZ12fQF8BsL9s6dx92VRyZSTjSyf5TBy9PGcKolF6ra98Xq6Wa0Mse8wgP1mLyluVnj0
- WuVO2uHwkEvBRZwi6q//Z/8MwjZ/eOI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016193;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WgId7dnHAh9JZ6YizLaCn/MmxZBtir0fdUxeEJ5tYKM=;
- b=/+gouOxgdakVpJDJC7/34EifSu2zDP8V64fBPw5AprkzVo8xDPf8u0ZkJJTcdPLQQvCJ5M
- lJjB6dR4Syj/uCBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=ilxb7tTS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="/+gouOxg"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016193; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WgId7dnHAh9JZ6YizLaCn/MmxZBtir0fdUxeEJ5tYKM=;
- b=ilxb7tTSVt7Dpf/F7NoGlEQYrPErVU8HNzaBDibrVNX3scvDcfBy1IBYrI+sdk4ZlJLeHt
- aclZ12fQF8BsL9s6dx92VRyZSTjSyf5TBy9PGcKolF6ra98Xq6Wa0Mse8wgP1mLyluVnj0
- WuVO2uHwkEvBRZwi6q//Z/8MwjZ/eOI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016193;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=WgId7dnHAh9JZ6YizLaCn/MmxZBtir0fdUxeEJ5tYKM=;
- b=/+gouOxgdakVpJDJC7/34EifSu2zDP8V64fBPw5AprkzVo8xDPf8u0ZkJJTcdPLQQvCJ5M
- lJjB6dR4Syj/uCBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3974713508;
- Thu, 12 Dec 2024 15:09:52 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id PvcpAMD8WmcTfQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:09:52 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 00/22] QTest patches for 2024-12-12
-Date: Thu, 12 Dec 2024 12:09:27 -0300
-Message-Id: <20241212150949.16806-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tLkto-0003Xv-UE; Thu, 12 Dec 2024 10:14:45 -0500
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tLktn-0003gR-19; Thu, 12 Dec 2024 10:14:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
+ Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=F3Ht+P7WjzdroAbandXO2uGUjJDRBQRsz5euX/kuobI=; b=wP51QS0uzsvIIV+AEaFxVVieu8
+ 4ljWZXZN2la3zEXN/Vhse5GSQfRkR2jS7zvk96VZZJ5UaPz+eXdZDtd6yytRFLYWEG6rSoJoE7xLs
+ g8gJITNU92mqZ/FyqOBfZgNb80bzXzZrLykdceMvchIuCNZUc/+mklMNOHeXQJbdhL1hsOrBPVoGW
+ P908pLqwjPSq4kW3qIiqS1SRFNLqfa3NPQCaQXBPklAbtbr8U40BR2kAbv+GCuVERv7NTdKi7GtVt
+ ULqJ4I8LpwwK+Ct5W095AMEcX9UbPcnhmmerV2aSztL0Uk/uTGAfhaD/2uJFerwq0bMS13qA1sJH1
+ ri8CMickdwCypm8r14FSwePl+SchRvIJEcMPV0PJp46ciIo5PW3RipQzNXt+swKYQi4bG8HOJ4Dx3
+ hro8auFBukNsdn+cKkvWZ/j0XJM5YlUWeKIWzu4QPTrfRgtI4Go77pElI022OYSKTchb2VTzQdf2k
+ eLg4M4DaugCRSnm9/WlO9hNb1UkVikQX6A0yPwEOCD/V51hV2jg3hbim/D78GI2xLK9ufa2rW16EX
+ 8PMTxRmz5/RZIRHWMBOYPONxfE9h99Cgjnctjlc44k3r08UwglizRP7lcTiMHsIMeKv/opUlFjsFw
+ joW3gHiNrogslo+VjJb6HdiPoU+ys5UFXI8hxy4iY=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ (helo=cheesecake.fritz.box)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1tLkt4-0008Ue-GE; Thu, 12 Dec 2024 15:14:02 +0000
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: npiggin@gmail.com, danielhb413@gmail.com, qemu-ppc@nongnu.org,
+ qemu-devel@nongnu.org
+Date: Thu, 12 Dec 2024 15:14:04 +0000
+Message-Id: <20241212151412.570454-4-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
+References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 394DC2110B
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:dkim];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [RFC PATCH 03/11] target/ppc: introduce gen_st_tl() function
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -124,165 +76,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
+This function is intended to be used for all memory store operations. Convert the
+GEN_QEMU_STORE_TL() macro to use it as a starting point.
 
-  Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+---
+ target/ppc/translate.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-are available in the Git repository at:
-
-  https://gitlab.com/farosas/qemu.git tags/qtest-20241212-pull-request
-
-for you to fetch changes up to de8bc62cc4871fa97d1891ebb96e782b0c75b56a:
-
-  tests/qtest/migration: Split validation tests + misc (2024-12-12 10:25:42 -0300)
-
-----------------------------------------------------------------
-Qtest pull request
-
-- TIMEOUT_MULTIPLIER setting to allow tests to take longer when asan is enabled
-- New qtest_system_reset() wrapper to properly wait for a system reset
-- Split of migration-test.c into multiple files under qtest/migration/
-
-----------------------------------------------------------------
-
-Dmitry Frolov (1):
-  tests/qtest: add TIMEOUT_MULTIPLIER
-
-Fabiano Rosas (17):
-  tests/qtest/migration: Standardize hook names
-  tests/qtest/migration: Stop calling everything "test"
-  tests/migration: Disambiguate guestperf vs. a-b
-  tests/qtest/migration: Move bootfile code to its own file
-  tests/qtest/migration: Move qmp helpers to a separate file
-  tests/qtest/migration: Rename migration-helpers.c
-  tests/qtest/migration: Move ufd_version_check to utils
-  tests/qtest/migration: Move kvm_dirty_ring_supported to utils
-  tests/qtest/migration: Isolate test initialization
-  tests/qtest/migration: Move common test code
-  tests/qtest/migration: Split TLS tests from migration-test.c
-  tests/qtest/migration: Split compression tests from migration-test.c
-  tests/qtest/migration: Split postcopy tests
-  tests/qtest/migration: Split file tests
-  tests/qtest/migration: Split precopy tests
-  tests/qtest/migration: Split CPR tests
-  tests/qtest/migration: Split validation tests + misc
-
-Nicholas Piggin (1):
-  tests/qtest/migration-test: Fix and enable test_ignore_shared
-
-Peter Maydell (3):
-  tests/qtest: Add qtest_system_reset() utility function
-  tests/qtest: Use qtest_system_reset() instead of open-coded versions
-  tests/qtest: Use qtest_system_reset_nowait() where appropriate
-
- MAINTAINERS                                   |    5 +-
- scripts/mtest2make.py                         |    2 +-
- tests/meson.build                             |    2 +-
- .../guestperf-batch.py                        |    0
- .../guestperf-plot.py                         |    0
- .../guestperf.py                              |    0
- .../guestperf/__init__.py                     |    0
- .../guestperf/comparison.py                   |    0
- .../guestperf/engine.py                       |    0
- .../guestperf/hardware.py                     |    0
- .../guestperf/plot.py                         |    0
- .../guestperf/progress.py                     |    0
- .../guestperf/report.py                       |    0
- .../guestperf/scenario.py                     |    0
- .../guestperf/shell.py                        |    3 +-
- .../guestperf/timings.py                      |    0
- .../initrd-stress.sh                          |    0
- .../meson.build                               |    0
- .../{migration => migration-stress}/stress.c  |    0
- tests/qtest/bios-tables-test.c                |    4 +-
- tests/qtest/boot-order-test.c                 |    7 +-
- tests/qtest/device-plug-test.c                |   11 +-
- tests/qtest/drive_del-test.c                  |    7 +-
- tests/qtest/hd-geo-test.c                     |    9 +-
- tests/qtest/libqtest.c                        |   16 +
- tests/qtest/libqtest.h                        |   25 +
- tests/qtest/meson.build                       |   27 +-
- tests/qtest/migration-test.c                  | 4031 +----------------
- tests/{ => qtest}/migration/Makefile          |    0
- tests/{ => qtest}/migration/aarch64/Makefile  |    0
- .../migration/aarch64/a-b-kernel.S            |    0
- .../migration/aarch64/a-b-kernel.h            |    0
- tests/qtest/migration/bootfile.c              |   70 +
- .../migration/bootfile.h}                     |    9 +-
- tests/qtest/migration/compression-tests.c     |  239 +
- tests/qtest/migration/cpr-tests.c             |   58 +
- tests/qtest/migration/file-tests.c            |  338 ++
- tests/qtest/migration/framework.c             |  971 ++++
- tests/qtest/migration/framework.h             |  230 +
- tests/{ => qtest}/migration/i386/Makefile     |    0
- .../migration/i386/a-b-bootblock.S            |    0
- .../migration/i386/a-b-bootblock.h            |    0
- .../migration-qmp.c}                          |  567 ++-
- tests/qtest/migration/migration-qmp.h         |   46 +
- tests/qtest/migration/migration-util.c        |  362 ++
- .../migration-util.h}                         |   27 +-
- tests/qtest/migration/misc-tests.c            |  282 ++
- tests/qtest/migration/postcopy-tests.c        |  106 +
- tests/{ => qtest}/migration/ppc64/Makefile    |    0
- .../{ => qtest}/migration/ppc64/a-b-kernel.S  |    0
- .../{ => qtest}/migration/ppc64/a-b-kernel.h  |    0
- tests/qtest/migration/precopy-tests.c         | 1007 ++++
- tests/{ => qtest}/migration/s390x/Makefile    |    0
- tests/{ => qtest}/migration/s390x/a-b-bios.c  |    0
- tests/{ => qtest}/migration/s390x/a-b-bios.h  |    0
- tests/qtest/migration/tls-tests.c             |  791 ++++
- tests/qtest/q35-test.c                        |   12 +-
- tests/qtest/qos-test.c                        |    3 +-
- tests/qtest/stm32l4x5_gpio-test.c             |   10 +-
- tests/qtest/stm32l4x5_syscfg-test.c           |   12 +-
- tests/qtest/virtio-net-failover.c             |    3 +-
- 61 files changed, 4869 insertions(+), 4423 deletions(-)
- rename tests/{migration => migration-stress}/guestperf-batch.py (100%)
- rename tests/{migration => migration-stress}/guestperf-plot.py (100%)
- rename tests/{migration => migration-stress}/guestperf.py (100%)
- rename tests/{migration => migration-stress}/guestperf/__init__.py (100%)
- rename tests/{migration => migration-stress}/guestperf/comparison.py (100%)
- rename tests/{migration => migration-stress}/guestperf/engine.py (100%)
- rename tests/{migration => migration-stress}/guestperf/hardware.py (100%)
- rename tests/{migration => migration-stress}/guestperf/plot.py (100%)
- rename tests/{migration => migration-stress}/guestperf/progress.py (100%)
- rename tests/{migration => migration-stress}/guestperf/report.py (100%)
- rename tests/{migration => migration-stress}/guestperf/scenario.py (100%)
- rename tests/{migration => migration-stress}/guestperf/shell.py (98%)
- rename tests/{migration => migration-stress}/guestperf/timings.py (100%)
- rename tests/{migration => migration-stress}/initrd-stress.sh (100%)
- rename tests/{migration => migration-stress}/meson.build (100%)
- rename tests/{migration => migration-stress}/stress.c (100%)
- rename tests/{ => qtest}/migration/Makefile (100%)
- rename tests/{ => qtest}/migration/aarch64/Makefile (100%)
- rename tests/{ => qtest}/migration/aarch64/a-b-kernel.S (100%)
- rename tests/{ => qtest}/migration/aarch64/a-b-kernel.h (100%)
- create mode 100644 tests/qtest/migration/bootfile.c
- rename tests/{migration/migration-test.h => qtest/migration/bootfile.h} (85%)
- create mode 100644 tests/qtest/migration/compression-tests.c
- create mode 100644 tests/qtest/migration/cpr-tests.c
- create mode 100644 tests/qtest/migration/file-tests.c
- create mode 100644 tests/qtest/migration/framework.c
- create mode 100644 tests/qtest/migration/framework.h
- rename tests/{ => qtest}/migration/i386/Makefile (100%)
- rename tests/{ => qtest}/migration/i386/a-b-bootblock.S (100%)
- rename tests/{ => qtest}/migration/i386/a-b-bootblock.h (100%)
- rename tests/qtest/{migration-helpers.c => migration/migration-qmp.c} (51%)
- create mode 100644 tests/qtest/migration/migration-qmp.h
- create mode 100644 tests/qtest/migration/migration-util.c
- rename tests/qtest/{migration-helpers.h => migration/migration-util.h} (67%)
- create mode 100644 tests/qtest/migration/misc-tests.c
- create mode 100644 tests/qtest/migration/postcopy-tests.c
- rename tests/{ => qtest}/migration/ppc64/Makefile (100%)
- rename tests/{ => qtest}/migration/ppc64/a-b-kernel.S (100%)
- rename tests/{ => qtest}/migration/ppc64/a-b-kernel.h (100%)
- create mode 100644 tests/qtest/migration/precopy-tests.c
- rename tests/{ => qtest}/migration/s390x/Makefile (100%)
- rename tests/{ => qtest}/migration/s390x/a-b-bios.c (100%)
- rename tests/{ => qtest}/migration/s390x/a-b-bios.h (100%)
- create mode 100644 tests/qtest/migration/tls-tests.c
-
+diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+index 5fb0aa36ce..bf94f3a5de 100644
+--- a/target/ppc/translate.c
++++ b/target/ppc/translate.c
+@@ -2616,12 +2616,18 @@ GEN_QEMU_LOAD_64(ld64,  DEF_MEMOP(MO_UQ))
+ GEN_QEMU_LOAD_64(ld64ur, BSWAP_MEMOP(MO_UQ))
+ #endif
+ 
++static void gen_st_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
++                      MemOp memop)
++{
++    tcg_gen_qemu_st_tl(val, addr, idx, memop);
++}
++
+ #define GEN_QEMU_STORE_TL(stop, op)                                     \
+ static void glue(gen_qemu_, stop)(DisasContext *ctx,                    \
+                                   TCGv val,                             \
+                                   TCGv addr)                            \
+ {                                                                       \
+-    tcg_gen_qemu_st_tl(val, addr, ctx->mem_idx, op);                    \
++    gen_st_tl(ctx, val, addr, ctx->mem_idx, op);                        \
+ }
+ 
+ #if defined(TARGET_PPC64) || !defined(CONFIG_USER_ONLY)
 -- 
-2.35.3
+2.39.5
 
 
