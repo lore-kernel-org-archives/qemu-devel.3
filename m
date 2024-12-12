@@ -4,81 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05D08E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2728E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLnPM-0008J7-DH; Thu, 12 Dec 2024 12:55:28 -0500
+	id 1tLnVE-00017f-Rf; Thu, 12 Dec 2024 13:01:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1tLnPK-0008Io-JA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:55:26 -0500
-Received: from mgamail.intel.com ([192.198.163.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1tLnPE-0000DQ-42
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:55:26 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734026120; x=1765562120;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=WCauBqTZ+or2lrsOaY+8YEVqqP6EQVvDCkpfIihYUzo=;
- b=cPFo9tnpRI50nbd13bsTLZxTNjeSRX71Pg+A+Bgx7G8fiE9HfjWWN5MY
- OapFJXdCWUR/hA+RHjouuC5H6TKn8gjFJOvVUSmSknt3IGMcXSSUytI0r
- MPM+FkjQHdo9MCnNAaREF3gFUemT9ybUSv6Rm/N6GLFGSt3cdOwZyHC/f
- NQLGAwtBWIXiWRTii0eJ6wIMcPFY3BpLs+I1c6uvVjKXz9iZY9ID1B32N
- 0X1aqXs7nd3CDHE0REy5QkyZr/66aUKtH5yxAJyyGZdn1J2Mcvavrasti
- +D2J9oLAVHz7Lcuqn/UKuTnrGJvYRJ8hQCxlmkI019kx2kxj60ggH0N+d A==;
-X-CSE-ConnectionGUID: 3wTyCy/yRxqBDofJkSxLoQ==
-X-CSE-MsgGUID: awbmnci9SxeSirVpfpI1CA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34590993"
-X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="34590993"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 09:55:17 -0800
-X-CSE-ConnectionGUID: dzMcCecMSp+wxrLO8KOX5Q==
-X-CSE-MsgGUID: hneBst+YQbutJ8arz2IQ5Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="101328087"
-Received: from puneetse-mobl.amr.corp.intel.com (HELO localhost)
- ([10.125.110.112])
- by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 09:55:15 -0800
-Date: Thu, 12 Dec 2024 11:55:13 -0600
-From: Ira Weiny <ira.weiny@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 19/60] i386/tdx: Parse TDVF metadata for TDX VM
-Message-ID: <Z1sjgcTxgCpmFweY@iweiny-mobl>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-20-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLnVB-00017M-VH
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:01:30 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLnVA-0000pq-CX
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:01:29 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so9900525e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:01:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734026484; x=1734631284; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7DNCVz9q9qurO1cSKC2aWcAO2shfPJ39BVTV+dyoFkA=;
+ b=UjsKhjCMXN2MnfF1q+PVgEx0W/lkIn9vT83HVwSzTcF/1ugQfnY01Q5NE/1aYuoUnF
+ CCs1RjKRlQMkSpAXPVEC76Grh/F6XoeUMuozPWmNQH6EchxCrqQOlIXSWs+HeHdduxQw
+ 4UeC5KxVP2n8c+VjP26YHnEjFrC+5djmJt9+5FoSDVPZo4KysHM2pBqrk2BaF5r25r4e
+ 0sxaAWRbnKzPyCdNTWhM89Ebx2Df7gCPap+lLlynVXF5S1L4D7tDIZ1wFRh2NXjGdbTS
+ XraQs1C6q9NQYwpMgdWPUmJL7rNhF2HJg23C55+60COo3kiJCSNpRjY8NX/7C7LeS3tk
+ pqmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734026484; x=1734631284;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=7DNCVz9q9qurO1cSKC2aWcAO2shfPJ39BVTV+dyoFkA=;
+ b=GYWJToAl9RguuDLYwXWWnx6u5QHb2Tj8GHvtlbTSeXvVdEqQCHggdN6r0pc53FoCVu
+ USz3gCRggiIJTdqpcs1/mKe1YGeQDY7B9sZQeaA5OSzYl741Df5hTzHKI0lXxu6U318f
+ DMred9/FFWrikPstZb81IeWVQKQJisuRRbSWv+JYpW4hzLorOm8XYMTmnZV3vhOyTuec
+ Vn5JCIVnILe9xdd5dQhzW1c+t4nYZpamrJf9j46VPIhlayb1ZmM5LmvOBvrlBYJLFCNa
+ oKAiGPVCjN51740WhmNlVpQplDqUrTKbOkAdjeP7EGnqMfWDop7MtBshjfnb/9WVMpNx
+ rMyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6ihwFDQs9ho2VWxFAUvPFlO3WbEo5ThGwJq8qDF3cQcmDEDyswYQtrBhxU8YFW2O/FTyp8IBB3VGr@nongnu.org
+X-Gm-Message-State: AOJu0YzoCn+nmrTk95IPQxzvG/6cAHFH2pFBL6FzEfqw0naffzkNE23R
+ 5KAM3/7iRu5au8W0jhKjGkB9c7Az+/VEXAJIvj/noPqRZ1sWhvGK/Xm5G4Hq2Iann2ywKp9u7WX
+ j
+X-Gm-Gg: ASbGncvJ1hqB5W4UyNggGWgiIJXrLbjmYDQSuZ39mD6CxlqPK8xIRTQQCeN0B87A4/I
+ S5f5Nq/2CtTVqcrGVzANAimCFhjnQPoEnOAiGGUQe/tOlOW/ZtFBB6uxGLlGAfWaEPT54/rZ5T+
+ eQ5mcIV6nYJGiRqQE/YIlHoke4TAdQdl8t7foB2pcRJSQGMBWvD5PFKAVv+YCIyNwvRzx3ZnWWs
+ ie47M3Qrd7F0maY9HPKcn8X/S/OQxwrdEavKEKSu3VOgu81dpQba5ZAUrvS3ko/ysLaufGdYFJh
+ agSmBjtrJNNuY2cdRJn3hAm9
+X-Google-Smtp-Source: AGHT+IEVe3DJg8pquGXPT/MNga0gIsUC/ybCBQKCWZ1q9nGtBgN5DkdzhaNG1YE+HF+TAC/90sMoDw==
+X-Received: by 2002:a05:600c:3109:b0:434:a781:f5d5 with SMTP id
+ 5b1f17b1804b1-43622883cbfmr44790865e9.30.1734026483856; 
+ Thu, 12 Dec 2024 10:01:23 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4362559ec08sm23719505e9.22.2024.12.12.10.01.23
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 10:01:23 -0800 (PST)
+Message-ID: <747e6611-ca81-4d5a-af3b-fddf51e4409b@linaro.org>
+Date: Thu, 12 Dec 2024 19:01:22 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241105062408.3533704-20-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=ira.weiny@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] kvm: consistently return 0/-errno from kvm_convert_memory
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com, binbin.wu@linux.intel.com
+References: <20241212155719.524637-1-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241212155719.524637-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,105 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 01:23:27AM -0500, Xiaoyao Li wrote:
-> After TDVF is loaded to bios MemoryRegion, it needs parse TDVF metadata.
-
-This commit message is pretty thin.  I think this could be squashed back into
-patch 18 and use the better justfication for the changes there.
-
-Ira
-
+On 12/12/24 16:57, Paolo Bonzini wrote:
+> In case of incorrect parameters, kvm_convert_memory() was returning
+> -1 instead of -EINVAL.  The guest won't notice because it will move
+> anyway to RUN_STATE_INTERNAL_ERROR, but fix this for consistency and
+> clarity.
 > 
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  hw/i386/pc_sysfw.c         | 7 +++++++
->  target/i386/kvm/tdx-stub.c | 5 +++++
->  target/i386/kvm/tdx.c      | 5 +++++
->  target/i386/kvm/tdx.h      | 3 +++
->  4 files changed, 20 insertions(+)
-> 
-> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> index ef80281d28bb..5a373bf129a1 100644
-> --- a/hw/i386/pc_sysfw.c
-> +++ b/hw/i386/pc_sysfw.c
-> @@ -37,6 +37,7 @@
->  #include "hw/block/flash.h"
->  #include "sysemu/kvm.h"
->  #include "sev.h"
-> +#include "kvm/tdx.h"
->  
->  #define FLASH_SECTOR_SIZE 4096
->  
-> @@ -280,5 +281,11 @@ void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
->          }
->  
->          sev_encrypt_flash(gpa, ptr, size, &error_fatal);
-> +    } else if (is_tdx_vm()) {
-> +        ret = tdx_parse_tdvf(ptr, size);
-> +        if (ret) {
-> +            error_report("failed to parse TDVF for TDX VM");
-> +            exit(1);
-> +        }
->      }
->  }
-> diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
-> index b614b46d3f4a..a064d583d393 100644
-> --- a/target/i386/kvm/tdx-stub.c
-> +++ b/target/i386/kvm/tdx-stub.c
-> @@ -6,3 +6,8 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
->  {
->      return -EINVAL;
->  }
-> +
-> +int tdx_parse_tdvf(void *flash_ptr, int size)
-> +{
-> +    return -EINVAL;
-> +}
-> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-> index d5ebc2430fd1..334dbe95cc77 100644
-> --- a/target/i386/kvm/tdx.c
-> +++ b/target/i386/kvm/tdx.c
-> @@ -338,6 +338,11 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
->      return 0;
->  }
->  
-> +int tdx_parse_tdvf(void *flash_ptr, int size)
-> +{
-> +    return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
-> +}
-> +
->  static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
->  {
->      TdxGuest *tdx = TDX_GUEST(obj);
-> diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-> index e5d836805385..6b7926be3efe 100644
-> --- a/target/i386/kvm/tdx.h
-> +++ b/target/i386/kvm/tdx.h
-> @@ -6,6 +6,7 @@
->  #endif
->  
->  #include "confidential-guest.h"
-> +#include "hw/i386/tdvf.h"
->  
->  #define TYPE_TDX_GUEST "tdx-guest"
->  #define TDX_GUEST(obj)  OBJECT_CHECK(TdxGuest, (obj), TYPE_TDX_GUEST)
-> @@ -30,6 +31,7 @@ typedef struct TdxGuest {
->      char *mrownerconfig;    /* base64 encoded sha348 digest */
->  
->      MemoryRegion *tdvf_mr;
-> +    TdxFirmware tdvf;
->  } TdxGuest;
->  
->  #ifdef CONFIG_TDX
-> @@ -40,5 +42,6 @@ bool is_tdx_vm(void);
->  
->  int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
->  void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
-> +int tdx_parse_tdvf(void *flash_ptr, int size);
->  
->  #endif /* QEMU_I386_TDX_H */
-> -- 
-> 2.34.1
-> 
+>   accel/kvm/kvm-all.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+
+Please include a brief docstring:
+
+-- >8 --
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index c3a60b28909..923bb07d73d 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -576,6 +576,11 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t 
+flags, Error **errp);
+  int kvm_set_memory_attributes_private(hwaddr start, uint64_t size);
+  int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
+
++/**
++ * kvm_convert_memory:
++ *
++ * Returns: 0 on success, or a negative errno on failure.
++ */
+  int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
+
+  #endif
+---
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
