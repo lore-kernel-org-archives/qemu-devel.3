@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5FC5E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 13:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4158E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 13:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjB4-0005Fc-Cb; Thu, 12 Dec 2024 08:24:26 -0500
+	id 1tLjD2-0006EV-8E; Thu, 12 Dec 2024 08:26:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLjAx-0005DY-Vi
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:24:20 -0500
-Received: from mail-oo1-xc2b.google.com ([2607:f8b0:4864:20::c2b])
+ id 1tLjCy-0006DU-Na
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:26:26 -0500
+Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLjAw-0004Qr-5q
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:24:19 -0500
-Received: by mail-oo1-xc2b.google.com with SMTP id
- 006d021491bc7-5f29db2614eso290976eaf.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 05:24:17 -0800 (PST)
+ id 1tLjCv-00050c-QO
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:26:24 -0500
+Received: by mail-ot1-x32e.google.com with SMTP id
+ 46e09a7af769-71e2766994bso258244a34.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 05:26:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734009855; x=1734614655; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734009979; x=1734614779; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=29mmsRSm8TeD9q2T3ImAftq+MizEVunVXW/xSDuuHrg=;
- b=qf5AuWavMfWLC124uEe+CJi8FWGhaOykf8AmmgkYXhmLv4SF+ZeusgsBVFMIGwm2lp
- P4fMpu6tGrNlxGxocYKZvxEIvB/Yto7o0+0zHnY1uWHczl9VDLfFHFz09azQu9g7LtzW
- ql9fTKi+adY2bkX25Ufq9VLDNcuTtqowKf0wvUPAzxsklNbZaOxCm+ODoqoDXsLHxojP
- pJ6wO/T4Z0JQtMP69v1ASLGhNdoophbzcjCNSCwaOWTGNg2OFvXE+phS97nl2PKRs8BT
- +fM89LjPzjLG5dHSgS5IFxDzZW/WRKs0S+4+NTuFoLvTE4p5tlvBx2UGZX5Potn+z7yR
- Oyfg==
+ bh=1txznT3aBtWrlG9pkx1PzxbA4fvvuc3OCJhfFh7+hBM=;
+ b=g/y95xDCscIwS1gXOxMu9iLbvnB8gbiZH44osB0FMvb0PEouiSvfbZ1NT++o/lcrZO
+ Z0njzdEMvJRRj7Pq6JklNbsoL+irGmwKPw3sxa4dBKnYmRuNttPgglOcw0Bv54g+9y4A
+ ucJtwSMGU08K4eoSH+DNpobdX71iQg6gT3GnKwc+KP30XdBV6OAqq8UCu+dwwU05kRRt
+ cT6VMMHR/BEqrnnIk5ZFNvL7TNcW5UgM9OKfZlW/rJtTklSQnZs8/JNgtuDeHxnHJMhZ
+ Nlo+gvLa9sjdWxI529tTm7UR5rTPn79TKsuW4cGl9fum2I/qp+gUuix7CB4h9ZO6Ud9N
+ pnDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734009855; x=1734614655;
+ d=1e100.net; s=20230601; t=1734009979; x=1734614779;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=29mmsRSm8TeD9q2T3ImAftq+MizEVunVXW/xSDuuHrg=;
- b=qdRRvetDBEruCZPOULjKfqmU/Ft2pS1eI1t1pe4ahNieKItLlcl6OTL79lTV235ESL
- CfOFkulESo+78zd3sV0QzUyR6tIE4gWMSSNrFMKqWlAyLaQZUNJBnHxB9f2shDboCutl
- loTzNcl0PbjYPX1DoqbzFhqsLTys5iZB+O7nz533g/+caKOR7aQbQZ15pZhk9S61kK29
- XhzoxfLTGhY/6bYQA1tYBneZHL0C2JPsT/ry9mzqGzNGbJ3cf0PGT6kPP4Ld7Vv8CQAe
- zAm01iAO8HAUE+fvesVwdRPsvTvwZX8AF4hiwowfRoXxe0+PWR5pypAWJ1fePZ2Mka3C
- OkcQ==
+ bh=1txznT3aBtWrlG9pkx1PzxbA4fvvuc3OCJhfFh7+hBM=;
+ b=TfiUyCGeq08Paq2NAbDO3obVlx50kHwjyRfHYC82cVREhQnRqOKPTZJK2vvv6Lv1Ri
+ djqQagTpoYa0xERjQs6xlyddGKG6f0loJ2Zop/wtNO7o98IMWfqeEEuspQFBfZAtprPS
+ C52NDcVZIc9XO4jMIRerdKCm2VyA+/v6iv0Sk1JHa1qM02S2KxYBqEqhMoJ2jHKIzFUp
+ ZyX7n2W8yHk+hcEb5f5lGyPdsxH8V7wbWCDgGznV6t2WBuzGN5xdMK7eFoAPRPP8/0Wg
+ ha64nPNlTsFVAU6M4l+rgOhvH6YpIM7ajqRWNC8QKzKs7jeNLGCmuXh24NC+UEujYiCp
+ rf/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+d94M9aZE0SI7CdaoAw9RrprP3aNd+NW7C1cZdC0BNh8a9e2BelLN+VbaaKIthTa4j0MGgjG29j43@nongnu.org
-X-Gm-Message-State: AOJu0YwBKoA0MEB7o+uvYccRKiuWW1iz54Gn7Keho4xTTv4nzLZ3e/hF
- 2O7PBM6Kg1toFoP2+WCL+s6vpsqZV7gKQtXeXBm981W/eF76xCUYbbGVmcOff4I=
-X-Gm-Gg: ASbGncs0tGgYvx8RRQkyYQZmNKJmIHlVjjvdno3nTBgdExg5FFXdZJPXuG8/taNfi/f
- MqoMRCjYDg9ddqnZCdkDeIHp2q5i25w8mmsGvax4vHrSujUt9jgtr+sw/+CxxE4tXRRE4gn1nCJ
- 5LqixhskYOGfHacvKw9W5rFmysIIPGFVJzQv+kj2kD9FRfbLODdUumlhsX5IAiii8klWjD8o94y
- h9ERwj1/aJeu2boIikhW4u7mQ+dxrNnYP+UM8wwU77/l9Bca+MIjex5m5bk4NI9DGh6P/E4OB2l
- VFVQ9huA3D+wOoYj+ri06delimqsz4WzJ54=
-X-Google-Smtp-Source: AGHT+IFPqVbnQ3R4KX6tyMVVD3EPDfSKtODUJVHMQ0gnb+in4nwuxXJZiVARzaoeN2PpGNQx03NRTQ==
-X-Received: by 2002:a05:6820:618:b0:5f2:bb17:f070 with SMTP id
- 006d021491bc7-5f3245efa60mr80429eaf.3.1734009855471; 
- Thu, 12 Dec 2024 05:24:15 -0800 (PST)
+ AJvYcCX6Du0/yT+ktempmScmtDBJZT6ZhlyW505CLUDcUcCR+XPZDPtm9/j9QpEJYt/uTh08WSawgJKqw1Ph@nongnu.org
+X-Gm-Message-State: AOJu0YxafiSOH1OfUZ7+uc8m2c0VOBEjHs4j0HpOO3DC04mY9psYkgoi
+ TTbVuw6sI4zxl64HX5CK89VPL+9TYx4EKe+wJu9Jyr+2haL/l6nAhDAjHrZO0gg=
+X-Gm-Gg: ASbGncu3Jb8QhKX4vjaR3BJawtPDmSQ3hUg9xh0QvwP9pXtSgV7ofhTCDiwpcZI7gpX
+ foH9lmjq0NM9k7cWZCUTVlB7HYUiBLGCsBfD2EXZGEUsv/4isLaqaBpGelSw52CRYxQzZd3iBjo
+ R9sPGG85gWjV1uPdRSqf+FiFKZIFIGDm2y8rikvOiJKRQcBidgeTNe4pN9Zn4XPRqzrOkDQOCOq
+ UsiuTCBrgB8tOIJXdlbzPwlA5TzVhn3atf7CfefzEMFQ1Q0dFZaf4vcJBWFAoqgfqZ1eDeo1jq1
+ f6WTjucYnaNqZHfPtXZcwNIBWRM1RNRv6uU=
+X-Google-Smtp-Source: AGHT+IHY4V7WxYoizCwJ5z2Gs/DNl0EJadJOyvtiLsperbOH/KEhiroGp4gQl8Mu1QDPPqFRE7xp6Q==
+X-Received: by 2002:a05:6830:3689:b0:71d:4264:cce2 with SMTP id
+ 46e09a7af769-71e36e6a4d7mr133213a34.9.1734009979375; 
+ Thu, 12 Dec 2024 05:26:19 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e1adcf1a1sm751466a34.58.2024.12.12.05.24.14
+ 46e09a7af769-71df2d54bcdsm2105364a34.33.2024.12.12.05.26.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 05:24:15 -0800 (PST)
-Message-ID: <46c6aee4-7e55-4cbb-9b0f-3776f7aed85b@linaro.org>
-Date: Thu, 12 Dec 2024 07:24:12 -0600
+ Thu, 12 Dec 2024 05:26:18 -0800 (PST)
+Message-ID: <74eb2184-71a7-4175-aa55-f506b073564e@linaro.org>
+Date: Thu, 12 Dec 2024 07:26:16 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] semihosting/uaccess: Briefly document returned values
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20241212115413.42109-1-philmd@linaro.org>
+Subject: Re: [PATCH] target/arm: remove redundant code
+To: gerben@altlinux.org, peter.maydell@linaro.org, qemu-devel@nongnu.org
+Cc: sdl.qemu@linuxtesting.org
+References: <20241212120618.518369-1-gerben@altlinux.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212115413.42109-1-philmd@linaro.org>
+In-Reply-To: <20241212120618.518369-1-gerben@altlinux.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,15 +102,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 05:54, Philippe Mathieu-Daudé wrote:
-> Since it is not obvious the get/put_user*() methods
-> can return an error, add brief docstrings about it.
-> Also remind to use *unlock_user() when appropriate.
+On 12/12/24 06:06, gerben@altlinux.org wrote:
+> From: Denis Rastyogin <gerben@altlinux.org>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
+> This call is redundant as it only retrieves a value that is not used further.
+> 
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+> 
+> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
 > ---
->   include/semihosting/uaccess.h | 55 +++++++++++++++++++++++++++++++++++
->   1 file changed, 55 insertions(+)
+>   target/arm/vfp_helper.c | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
+> index 62638d2b1f..f020c3c34b 100644
+> --- a/target/arm/vfp_helper.c
+> +++ b/target/arm/vfp_helper.c
+> @@ -1095,8 +1095,6 @@ float64 HELPER(rintd)(float64 x, void *fp_status)
+>   
+>       ret = float64_round_to_int(x, fp_status);
+>   
+> -    new_flags = get_float_exception_flags(fp_status);
+> -
+>       /* Suppress any inexact exceptions the conversion produced */
+>       if (!(old_flags & float_flag_inexact)) {
+>           new_flags = get_float_exception_flags(fp_status);
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
