@@ -4,94 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E75BE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:24:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4D28E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfQy-0007LE-D9; Thu, 12 Dec 2024 04:24:36 -0500
+	id 1tLfTB-00004r-MA; Thu, 12 Dec 2024 04:26:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLfQr-0007HX-R6
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:24:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLfQl-0003wR-S5
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:24:28 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733995462;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UCPoUcz3IbO6Ol1LKAx9xk3J9o01+RkGpJmwZjt3/6Q=;
- b=edqHak7FESNYj61+Vo6AytJVKO2yqeftb/cl3XSbVHO533oFkSq2jSBg3N7LTDZuR9kjKH
- u0BnvutsGM6VbeEaXaf1NhjREFEKS4w+35eRTecx+pShH6oFSKgH8NhAbDhanrbCPBLg61
- uIOZwlKkq61vZ5+NSZ/JEQZ+wtijyWg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-328-45TpWAbVN-SzRRkpVm5L7Q-1; Thu, 12 Dec 2024 04:24:21 -0500
-X-MC-Unique: 45TpWAbVN-SzRRkpVm5L7Q-1
-X-Mimecast-MFC-AGG-ID: 45TpWAbVN-SzRRkpVm5L7Q
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-38634103b0dso204445f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:24:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLfT2-0008VZ-3s
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:26:44 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLfT0-0004JF-Kc
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:26:43 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43626213fffso1532435e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:26:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733995601; x=1734600401; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6fcVPgvimFEsFW71qxmndkzKREqPen94Au3/alZtzNY=;
+ b=JNd/6yM0b9YBNnW/8bCQpFEFPSdhJgFHK/mpWgAu+B0osxAaAGPre1v7+sAX/zm/jV
+ itelYweNPTKGPvP9cjCdm6LlS6VQ8U0b9gUDsZlMrnm36u8RQMrxp8O3KarwiBSRFDs4
+ tbR7b6P7i+y+SWFVBvhWxqI43NoV2rjDKuxSsRB9jmJjN0hHr+cEls/UFYVWkCwDArwz
+ fqoeDASLU2ifhN1lB7qArviubUccNFFzYHWTa/V73qwHRfY/wKA8XNeAD/URkwiutGX8
+ wmD+HwWumx7aPvtAkdoVwz9RCKiC1MT3sK8dsY/FdSYqPYECB8wUvLvotL78WSJrNRk8
+ tcew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733995460; x=1734600260;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1733995601; x=1734600401;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UCPoUcz3IbO6Ol1LKAx9xk3J9o01+RkGpJmwZjt3/6Q=;
- b=YfSrbzI9TowltAXc9qovxHvnMifH36xxSYFHepAPlt61FuSuaX0fhDghf3CLf70Koo
- 09bFgwVSc1Hjek5uykKFcnbuX9bZPFEseEAliWOgyVfL3SnTGvCHmiQde+AkyF6VL5Ik
- HmwHOF4R8hXKcREYttDOBXdeKAqipFVUpPoiOeCKykL6JXla6XU5DjTLUrO6pbCA9WUK
- ItseaQusVnAXiqQzquw49XBenc3h45S+vLo0wkzGhpmbjGdKaw88Jbrk2XT49UkH43rV
- 6kJJHGGsyRKCjtuhDbPI4SyH4+S5FX5mDS8w54kFk+kVHU1intj0KDK/s2GThDRb0Rlp
- rrAA==
-X-Gm-Message-State: AOJu0YyJDNTHMgTtevnVsdouj769XN+pIC5QPK6Yxc1/aZYsnA7pCP/C
- Hw9cU/zRC1rG63MIdDAiovpQFzd6jYvP3poksp9SV4yyj7vjiA//E23KWUfW/yWRfCT6XEdhL7i
- KXPWT7itEmn925nPwiXnvUc1Gd7k0WhYFJ2jOczAR5H1gdfuMsMqFEKtjYqxfTcrzh1/E8Znmw0
- vVI8VOtG/SJYuh/HDmInNRckIbUDc=
-X-Gm-Gg: ASbGncvNtLby03gjGl2jd3yRD0fJHWmT/R7c00lrfCpD9GtPo1FqSbyLcA2oHS/HAkg
- hy02RkZlaSHE5Y7cGxVpKL73Ts1bLniQq5grIcw==
-X-Received: by 2002:a05:6000:4803:b0:386:1cd3:8a00 with SMTP id
- ffacd0b85a97d-387877c9815mr2204200f8f.40.1733995459656; 
- Thu, 12 Dec 2024 01:24:19 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHwvdym2xWTLsMrHg8Ux8bfMcO+LLvwNJjs3EI5TZonsOmJjOREhXajeIW4wdcc6Dax335drSxVBgoK67k7sqQ=
-X-Received: by 2002:a05:6000:4803:b0:386:1cd3:8a00 with SMTP id
- ffacd0b85a97d-387877c9815mr2204174f8f.40.1733995459267; Thu, 12 Dec 2024
- 01:24:19 -0800 (PST)
+ bh=6fcVPgvimFEsFW71qxmndkzKREqPen94Au3/alZtzNY=;
+ b=mEakGe4D9a0FqWrPdwrLGBJVkiPJrwSsKc1NdSWOrRhF+M5mPn1+pjOivlVj20KZ3N
+ shwkSylrC9v2jfpyIa9u8iHqHTY6nfk6lFfq4x4e/041BzAbnAGfdEzY5nT2Yqidsna3
+ V36yqyBdYiipVpBciXSsod8lZZnBVqvH4nBFMOSn0Bmc8eYTd2pMc2WF8uFo7cT9YSUV
+ L6k3NVBpr+NTYzvMU0n7lv9M8ZT4FKozITmVOXcOBsfSfbvMLyOQqOEE+gXL2KRLSrXP
+ S96hBQht6VtqrdhXg9eTk46UNJ9ARCscWWYuNe2y5y5IU3RrMuSlexNf3I+yXdwS8C1v
+ VApQ==
+X-Gm-Message-State: AOJu0Yw4d0Me1QH2pk40C2m0FY6gt0mqCJhC00TFGn8aWkVr06I2YVv3
+ 00k1IYyy107nSHmeIJWBG4WRnCEww7tAXL0DmZjqtu1I5AC1wlKdXml8EpD5SSbjhxVvn+CpCi2
+ X
+X-Gm-Gg: ASbGncvmb3Ll86K/s5cmxIqVEKBJw3MmP0dIpUNwvU9nfnoky4nw9PYY8Ha8Ix+4qtN
+ TB3DyOith6ulIcaEtc1IBbtpWdpi07ki4JQ8Xd26NbTlF4wqATJhLKjfGhI39rZoKXe809yLLEA
+ yVjCRH258QKgIfC2hv6tM1Ikq0OMrijXZiQtQF73UYVe5iM70qFvPMdO6FbUszAk59RSPqsqui+
+ pTuzI3vmN26lcNI8lecysgQLYekvE45QHuxc+qF2Yp++tR3UZaNiZHrwaR0A9FhrHiACO9LzsI0
+ V5LOvMjRk4dUAUV0yApK+ZBbHp/mH1o=
+X-Google-Smtp-Source: AGHT+IH+7wT4QKwhXpLgzamPaEXG3F3Fzq66ExLhqDLRG4bF4F+LWZXAQrKRa5NU3nnyZCVPtHd6qA==
+X-Received: by 2002:a05:600c:c8c:b0:434:f9ad:7222 with SMTP id
+ 5b1f17b1804b1-436230dfe7cmr16098915e9.7.1733995600683; 
+ Thu, 12 Dec 2024 01:26:40 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878251c151sm3476412f8f.90.2024.12.12.01.26.39
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Dec 2024 01:26:39 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
+ Wei Yang <richardw.yang@linux.intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Haozhong Zhang <haozhong.zhang@intel.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/2] system: Restrict libSDL CPPFLAGS to vl.c
+Date: Thu, 12 Dec 2024 10:26:31 +0100
+Message-ID: <20241212092632.18538-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241212092632.18538-1-philmd@linaro.org>
+References: <20241212092632.18538-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-15-pbonzini@redhat.com>
- <Z1hjX+5Yyi46N+sX@intel.com> <ada60844-546a-42ca-a05f-7b6dc225ff53@redhat.com>
- <Z1lGZdXsVR5ra4hl@intel.com>
- <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
- <Z1nEUmzHa5dA5C0d@intel.com>
-In-Reply-To: <Z1nEUmzHa5dA5C0d@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 12 Dec 2024 10:24:05 +0100
-Message-ID: <CABgObfY0T1N5-6ZwMWERsptEXHYhWnZP=TABGt3iovjtM3uWBA@mail.gmail.com>
-Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
- of pl011
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Junjie Mao <junjie.mao@hotmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,135 +103,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 11, 2024 at 5:38=E2=80=AFPM Zhao Liu <zhao1.liu@intel.com> wrot=
-e:
->
-> > Generally:
-> >
-> > - embedded objects will have to be initialized in instance_init unless =
-they
-> > are Options
->
-> I see, at least for HPETTimer array, I need to prepare all of them in
-> instance_init()...
->
-> ...in realize(), also need to handle the "timers" property to enable
-> the timers that property requires.
+Only vl.c includes libSDL headers.
+No need to pass them to all system_ss[] files.
 
-I see -- though, thinking more about it, since you have
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ system/meson.build | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-    fn init_timer(&mut self) {
-        let raw_ptr: *mut HPETState =3D self;
-
-        for i in 0..HPET_MAX_TIMERS {
-            let mut timer =3D self.get_timer(i).borrow_mut();
-            timer.init(i, raw_ptr).init_timer_with_state();
-        }
-    }
-
-It seems to me that you can do everything in instance_init. Later on a
-function like the above
-will become something like
-
-impl HPETTimer {
-    fn init_timer(hpet: NonNull<HPETState>, n: usize) -> impl PinInit<Self>=
- {
-        pin_init!(&this in HPETTimer {
-            index: n,
-            qemu_timer <- Timer::init_ns(...),
-            state: hpet,
-            config: 0,
-            cmp: 0,
-            fsb: 0,
-            cmp64: 0,
-            period: 0,
-            wrap_flag: false,
-            last: 0,
-        }
-    }
-}
-
-But even now you can write something that takes a &mut self as the
-first argument. It's undefined behavior but it's okay as long as we
-have a path forward.
-
-> > > > The way that this will become safe is to use the pinned_init crate =
-from
-> > > > Linux: instance_init returns the initialization as an "impl
-> > > PinInit<Self>",
-> > >
-> > > Then do we need to place OBJECT in some suitable memory location (Box=
- or
-> > > something) for Rust implementation?
-> > >
-> >
-> > Allocation is still done by the C code, so I am not sure I understand t=
-he
-> > question. Rust code allocates QOM objects with object_new() so they are
-> > malloc-ed.
->
-> Sorry, I'm not familiar enough with this piece...I have the question
-> because PinInit doc said "you will need a suitable memory location that
-> can hold a T. This can be KBox<T>, Arc<T>, UniqueArc<T> or even the
-> stack (see stack_pin_init!)."
-
-Ah, I see. You can use __pinned_init directly on the memory that is
-passed to rust_instance_init. See for example the implementation of
-InPlaceWrite for Box
-(https://docs.rs/pinned-init/latest/src/pinned_init/lib.rs.html#1307).
-
-> I see that the core point is ensuring that structures cannot be moved.
-> Given that object_new() on the C side ensures that the allocated object
-> will not be moved, Rust side does not need to worry about pinning, correc=
-t?
-
-Sort of... You still need to worry about it for two reasons:
-
-1) if you have &mut Self you can move values out of the object using
-e.g. mem::replace or mem::swap. Those would move the value in memory
-and cause trouble (think of moving a QEMUTimer while it is pointed to
-by the QEMUTimerList). This is solved by 1) using &Self all the time +
-interior mutability 2) using pinned_init's "PinnedDrop" functionality,
-because &Self can be used in QEMU-specific APIs but (obviously) not in
-the built-in Drop trait.
-
-2) right now marking something as pinned is an indirect way to tell
-the compiler and miri that there are external references to it. For a
-longer discussion you can read
-https://crates.io/crates/pinned-aliasable or
-https://gist.github.com/Darksonn/1567538f56af1a8038ecc3c664a42462.
-
-Linux does this with a wrapper type similar to the one in pinned-aliasable:
-
-/// Stores an opaque value.
-///
-/// This is meant to be used with FFI objects that are never
-interpreted by Rust code.
-#[repr(transparent)]
-pub struct Opaque<T> {
-    value: UnsafeCell<MaybeUninit<T>>,
-    _pin: PhantomPinned,
-}
-
-It's on my todo list to introduce it in qemu_api::cell and (for
-example) change qom::Object from
-
-    pub use bindings::Object
-
-to
-
-    pub type Object =3D Opaque<bindings::Object>;
-
-Or something like that.
-
-> Vec seems to lack proper vmstate support. I understand that we need to
-> modify VMSTATE_STRUCT_VARRAY_POINTER_* to introduce a variant for Vec.
->
-> Since the array support is already available, I chose to use an array
-> instead (although vmstate is disabled for now).
-
-Yes, you're right.
-
-Palo
+diff --git a/system/meson.build b/system/meson.build
+index 4952f4b2c7d..f7e2c8b826f 100644
+--- a/system/meson.build
++++ b/system/meson.build
+@@ -23,8 +23,11 @@ system_ss.add(files(
+   'runstate-hmp-cmds.c',
+   'runstate.c',
+   'tpm-hmp-cmds.c',
++), libpmem, libdaxctl)
++
++system_ss.add(files(
+   'vl.c',
+-), sdl, libpmem, libdaxctl)
++), sdl)
+ 
+ if have_tpm
+   system_ss.add(files('tpm.c'))
+-- 
+2.45.2
 
 
