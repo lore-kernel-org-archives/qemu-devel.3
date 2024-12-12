@@ -4,69 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F217BE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:02:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B3A3E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:03:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjlS-00059W-Tq; Thu, 12 Dec 2024 09:02:02 -0500
+	id 1tLjmT-0006CU-2v; Thu, 12 Dec 2024 09:03:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjkF-0004tT-7e
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:01:00 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjm6-00069m-9s
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:02:42 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjkC-0007g6-LS
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:00:46 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862f32a33eso313051f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:00:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjm4-0007qL-GC
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:02:41 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43622267b2eso6616855e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:02:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734012042; x=1734616842; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wZx0V5VnnG/XUIXFEe2Mzfd/Ua9oCfavUlhdqUGfsg4=;
- b=m6t5qKqhrAHzpaMiE9ZKEN87h5AvanwSMHcesORbkluf6sOwMdQgblTVz2fRo2rud0
- Gu33kpSx0F0asCiM1vc5Sbodau6sapa4+CiuQJUmsmr2oPX3hc6DN5cxU2zRwAFxFWkW
- ckI0fpHlthbqpB95czSqog0C1dKKzGjLWv7fUMqypEzsRDBxsHPKqK7sTRLw9SpgbvWM
- KVv37h5E38yVCwNnp+iK8vjsl+veriVdr2yqtGymlXGy2AVW+96nm/BXkwqd+KlYfJxF
- Pm3Z531LBwP/VWNNktwWOZd+YZUgjxbbYmvvDtHDixNkzfcdX5k5NYDjH1zEkh1OsBab
- mhBQ==
+ d=linaro.org; s=google; t=1734012158; x=1734616958; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=5ll2uwrgdIB1huIsLEBMtDox+tpLOXeoimu9Vc3koss=;
+ b=HvwL1qjJuO0Vn9jF66157cvmE/uMIR2GsOWQ1ATOG6dR0Enna8cc4b9dqs0rpLrMyL
+ oLmXVGFeEY14OX0I9qUo1yi6Dv78j9SJ1KSlvMGxt6suF5kY7IJSNfuz+Zf4JVg7XUMn
+ jC7suXi/BCkt7GcupuLJMougCQmEjkRHagQ4dQqyg0PbP/UhKVTwjvHSEYMJPiFl1qRq
+ +IDiu93LsPek9+i8MANf2Ct/svY4uVEKCUl3fAaxbFF83wd4SDRt8j/q2gGtldKxzGy8
+ UWGd2hrtk/JlfCHibcjL0bhBdE7lzLtqYdiPQGFj2zJwJB7AxN/ygcwjbS2heMKeHTJu
+ NC9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734012042; x=1734616842;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734012158; x=1734616958;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wZx0V5VnnG/XUIXFEe2Mzfd/Ua9oCfavUlhdqUGfsg4=;
- b=JXeBMXE6m7OLjb+KPXKbexzotmqotRPl7eCjGnrvk9ardcwFw0FUNaalqqRM4vD+YW
- 6xlRwjG5vg6Q+L9FTbk0Hn5klMnY9DAqr5sQPrC9kRQcsdKZ2gAQb+o8Ji5l88RyZM1z
- V/ffoOnOiv3suz1455JmwEoY38HwYiXPcaDwk7uWxDKJDILoKoWroCZ/oTLWOnS3trta
- nW0c8jlwXyGSKqTnktM5fH6eEOsHYWMccFVDAPGygzgNRWkcEyreIa/PMDtZ3RZfITlz
- CUVAB7/pxSveLrZULQK7pFgppX29smIxGEQLtgPmuTfF/FuC9GrRq76SA5JVPAQYWfx6
- 68bA==
-X-Gm-Message-State: AOJu0YzCiLIoByuZNXmJF0o2FY8RrOGUW/GpFJrCL4R9/t5JyLFHeJxn
- 8CjMKFhzaSIKTQB9oC9gXxh/ZIsK86P4O+HSbeXbvcdHJEr7or/NddEjZQc9//0=
-X-Gm-Gg: ASbGncvbVkBD89yV9AwK+UM1FfQcWR3HLDCVl3AObgGAYG/5Kd6imN+b3gSDUnD57Pf
- F1Oy3HFmzh2HSU9gl3iHKUlQLLU9PGG6oEKUc1K+fAOco+9yB+Pl9ENnaNZt2xHugNeE8RYI4Qo
- rGHOFtfboV+8la0lVuukZnEEdCpE24+mCvKLA7DxxuO02Ij/KHYob6O4eFxczbCjsxgL9CSX/w+
- kx001JKJpq+eK0UxG+tRX63w0gWI9IWl6Tyy4laHtqLAYnpQadcxtDEXg2U/lw/lDgptus1SeHP
- IfsuwAJrCVAK7O0ztSZfks+5
-X-Google-Smtp-Source: AGHT+IGHxx1oT5HejcUdG9XlAloszzK5GLnsoSPC4iLd2T653/vHyT06TqJJZjQeKf5n+5X8srFCYA==
-X-Received: by 2002:a5d:6c6a:0:b0:385:ef39:6ce9 with SMTP id
- ffacd0b85a97d-3864ce97153mr5213559f8f.21.1734012038435; 
- Thu, 12 Dec 2024 06:00:38 -0800 (PST)
+ bh=5ll2uwrgdIB1huIsLEBMtDox+tpLOXeoimu9Vc3koss=;
+ b=aQJlmdI+iKbBFqE6Xfs2023ftJP4cltU6uPKCjjdxqNFeqdOoSSuacmVL6B4lpnzAp
+ 9te7awksM7OW0LEn81cvZcXJnrRQ6RpId+zguYaZhKtLqER9niCg77txT8IVbBIvBy+g
+ RAZdoY3e1eVxpehHq02sgEuCD2d6FsugR6knMpNmALM8O0qxQJZIhnpMUhzGrKPboDNE
+ KduIvLZtYhf5MGIU3Cjr3TYjm7mQk7DgJe6bJNGlhZrS26ycnIPwlL9xZFacqFU9Z9de
+ OG15L/rwwIcH4IX6xdUAMZVB6mTSQj65APN59p/OJe+Fu7lYgeiPLpaYSDNBkC6KLsOw
+ MBqw==
+X-Gm-Message-State: AOJu0Yzqty9TyySeX3eo9vP4luj3ZpM3WKkntsphnJ4mW62THQm5YdQ8
+ b+Om0qCB/g2HjIS+iOf8+DzzHiTCoPkkx5GjhcoxV6RE4esovhCmFd/bwLQqkbk=
+X-Gm-Gg: ASbGnctevE0gQhoEoCxMjRYnbWMz0EcbgoFSE/v2TI1PSYPWstJVdHN8lKyHcEQAgPR
+ 9itgcR7nNWbOzToo3nW6/H1qxM3zGGtisHUmq7y2o4S5tD0iasU0qbh2S/wMiZh+RF5M+0idV+z
+ CUkPjq9sxW0UPrSmMmWMHvJD1u6Hlx6fJQIiRlmwb4CpCzuI5cy4KqjJjSm36sFCpCsqv/WeudN
+ jPYe9e3i6qRekCHJlIZwqYz0fYXlmsnLsgc8kqvmguPgVz49zRsBWRHfPH9nH7pgElfY5qKBRId
+ rE0V+oQ11tL790MWbqeyi8Ys
+X-Google-Smtp-Source: AGHT+IFwrGbLCU7Lf3n1pmAGkbtzaWISehbcD+wLsK+FjhhShucW1xUmOnig7RnGFb0lI2uoo+MnJg==
+X-Received: by 2002:a05:600c:1e26:b0:434:f4f9:8104 with SMTP id
+ 5b1f17b1804b1-4361c4340b1mr55102575e9.33.1734012158412; 
+ Thu, 12 Dec 2024 06:02:38 -0800 (PST)
 Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878248f533sm4175939f8f.3.2024.12.12.06.00.37
+ ffacd0b85a97d-387824ca9absm4105378f8f.61.2024.12.12.06.02.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 06:00:37 -0800 (PST)
-Message-ID: <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
-Date: Thu, 12 Dec 2024 15:00:36 +0100
+ Thu, 12 Dec 2024 06:02:37 -0800 (PST)
+Message-ID: <41df69cc-18fd-4394-bfad-8442a303b561@linaro.org>
+Date: Thu, 12 Dec 2024 15:02:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 2/2] system: Restrict libpmem and libdaxctl CPPFLAGS to
  physmem.c
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: BALATON Zoltan <balaton@eik.bme.hu>
 Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
  <marcandre.lureau@redhat.com>, Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
@@ -75,13 +76,13 @@ Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
 References: <20241212092632.18538-1-philmd@linaro.org>
  <20241212092632.18538-3-philmd@linaro.org>
  <5c323271-8563-342f-35d1-6f9575265f72@eik.bme.hu>
+ <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5c323271-8563-342f-35d1-6f9575265f72@eik.bme.hu>
+In-Reply-To: <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,62 +105,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 14:11, BALATON Zoltan wrote:
-> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
->> Only physmem.c includes libpmem and libdaxctl headers.
->> No need to pass them to all system_ss[] files.
+On 12/12/24 15:00, Philippe Mathieu-Daudé wrote:
+> On 12/12/24 14:11, BALATON Zoltan wrote:
+>> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
+>>> Only physmem.c includes libpmem and libdaxctl headers.
+>>> No need to pass them to all system_ss[] files.
+>>
+>> I think doing this patch first would leave the other one unnecessary so 
 > 
-> I think doing this patch first would leave the other one unnecessary so 
-
-This one is about libpmem / libdaxctl in physmem.c,
-the previous one is about libsdl in vl.c. I'm missing
-what inverting the order would change.
-
-Besides in 2 patches it is simpler to check what CPPFLAGS are applied.
-
-Anyhow if you insist, I can squash. I don't care much as long as
-we reduce the flags applied to system_ss[].
-
-> you could do both in one patch with less churn and maybe reduce this 
-> series to a single patch.
+> This one is about libpmem / libdaxctl in physmem.c,
+> the previous one is about libsdl in vl.c. I'm missing
+> what inverting the order would change.
 > 
-> Regards,
-> BALATON Zoltan
+> Besides in 2 patches it is simpler to check what CPPFLAGS are applied.
 > 
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> system/meson.build | 7 +++++--
->> 1 file changed, 5 insertions(+), 2 deletions(-)
+> Anyhow if you insist, I can squash. I don't care much as long as
+
+s/care/mind/ ;)
+
+> we reduce the flags applied to system_ss[].
+> 
+>> you could do both in one patch with less churn and maybe reduce this 
+>> series to a single patch.
 >>
->> diff --git a/system/meson.build b/system/meson.build
->> index f7e2c8b826f..50d915bd80c 100644
->> --- a/system/meson.build
->> +++ b/system/meson.build
->> @@ -2,10 +2,13 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: 
->> [files(
->>   'arch_init.c',
->>   'ioport.c',
->>   'memory.c',
->> -  'physmem.c',
->>   'watchpoint.c',
->> )])
+>> Regards,
+>> BALATON Zoltan
 >>
->> +specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
->> +  'physmem.c',
->> +), libpmem, libdaxctl])
->> +
->> system_ss.add(files(
->>   'balloon.c',
->>   'bootdevice.c',
->> @@ -23,7 +26,7 @@ system_ss.add(files(
->>   'runstate-hmp-cmds.c',
->>   'runstate.c',
->>   'tpm-hmp-cmds.c',
->> -), libpmem, libdaxctl)
->> +))
->>
->> system_ss.add(files(
->>   'vl.c',
->>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> system/meson.build | 7 +++++--
+>>> 1 file changed, 5 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/system/meson.build b/system/meson.build
+>>> index f7e2c8b826f..50d915bd80c 100644
+>>> --- a/system/meson.build
+>>> +++ b/system/meson.build
+>>> @@ -2,10 +2,13 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', 
+>>> if_true: [files(
+>>>   'arch_init.c',
+>>>   'ioport.c',
+>>>   'memory.c',
+>>> -  'physmem.c',
+>>>   'watchpoint.c',
+>>> )])
+>>>
+>>> +specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+>>> +  'physmem.c',
+>>> +), libpmem, libdaxctl])
+>>> +
+>>> system_ss.add(files(
+>>>   'balloon.c',
+>>>   'bootdevice.c',
+>>> @@ -23,7 +26,7 @@ system_ss.add(files(
+>>>   'runstate-hmp-cmds.c',
+>>>   'runstate.c',
+>>>   'tpm-hmp-cmds.c',
+>>> -), libpmem, libdaxctl)
+>>> +))
+>>>
+>>> system_ss.add(files(
+>>>   'vl.c',
+>>>
+> 
 
 
