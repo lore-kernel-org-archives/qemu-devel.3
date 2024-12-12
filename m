@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AA5AE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:10:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CD1E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:11:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjtl-0003eN-Rm; Thu, 12 Dec 2024 09:10:37 -0500
+	id 1tLjtf-0003cD-9v; Thu, 12 Dec 2024 09:10:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjtl-0003e7-57
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:10:37 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjtc-0003bW-V6
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:10:29 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjtf-0002eq-0i
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:10:36 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-382610c7116so309267f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:10:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjtb-0002eK-1F
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:10:28 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385deda28b3so463222f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:10:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734012629; x=1734617429; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CPe6MkxOM+2LtrF6h7PO35BI0eJhz93c0BZ5FQYQd0o=;
- b=HH5VyK1sjPDF7QcPjKagdZVYTLpfZ5BpYSlCT6crllgCHQ5gGziDGcbjFXvL9/vzkA
- FY5ADDp4LbsvusRMQrNXCJ66s+3DAln5Duhh3Z0w6E5/t3e8uR7M/iY3bUOr/ttuaaMp
- 7XXMfP8eTtXyntxYUDS1v86ly+XSRqNOSBQjHztUQS+4N+aiV/w5vz9FvcgNrsgutUGu
- M6Y3t3s3cnGv2HUPz1dfsWbwPzfxZ3bgw7ty1Q4O/iSvKv4EGq0ZFqg1Irwl56jOfN9a
- zdWHvwksSsaqFtT7Fkw9fytKO69GuIbsNTY/reo9XyNPOCpugPRh8F3ILb4VLgEid483
- ekWg==
+ d=linaro.org; s=google; t=1734012624; x=1734617424; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z6lYC8dWochLcUJNegfdM4xCIAMjFl1Jo4JV99TZ6P8=;
+ b=XEFi39V11HB8hq5J9LgodN2kizRIzW4x6gYslEyECXEjlsbks+fCYnhhXxkCwKNyDn
+ nDZQIBvCa0O8GsKGpT9sQNeali0MrxwfHEuIg9mtm4EMN4ZVAbMlYxl6bniiTXdAmQiR
+ TEzSAVMm5t4G/7LnctXCf7KOtJgfHNukVkfWKVat491wihtG5kmKaMB/e/al8c0x/2gw
+ bSY/086FGw6SqyaAkLjUMjL2GpfA2NZf2hu3zXpHFaIQUjTtSiWqYISy1O65Ws+Ty/IP
+ pphWHF0zAC2PMLwNYltS22sj5pROt1WBUvpNoSDq6QwiSmtw5HtyYdW9vaKn73/4aArz
+ vV3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734012629; x=1734617429;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CPe6MkxOM+2LtrF6h7PO35BI0eJhz93c0BZ5FQYQd0o=;
- b=eJbISqJVME9/5GD+2bQA5jJ+ZVONETd+PKMT140FSdVTl6Mec87nt2hmXznplpQijK
- D/qhG4iVf1LxjGYof190BrFXYup9TnBxZbbQJrXtc4bTVdVmb0viim1iVkW7sW2+TtWv
- iM7++hr6zLpe1WGXHQ6Ab+F+fm50i9EpBf1PmH7uTQF7tYcm+ad/8KkVfG8zIqkK7O2M
- LFNrTtiuypmMwPxV5ZLV1U/Tw+yefPvQx7wPIpOqQyhryuuLZXmiGtCtiQH+f3rJXX2H
- 2sgTlwt6bCZtES0zNt4/dDtu9OiAM96sni6eFaMl8vmbmoBWGVFczz8yfPqRoAVcb+jJ
- zRLw==
-X-Gm-Message-State: AOJu0Yy8fkcSoRVJLPzBz7JpoNrLQ69QE4gB92Ff/PjJF6W1RxRWJ1V2
- k2u3oGxV0SbViIdr9BYqYu58ImPUIBXVJf/Tz2M95D6bx1YP4ZUcrx7bP9gjhIan5zWs3OKrizB
- k
-X-Gm-Gg: ASbGncu6tIyvxhSvqOr2p8Fgr9uH5/2DMDZDbXj9LqSDShsdI6MQYdMZf2o+ervpOcF
- yPx8o2a64Ok2kDoNduHPpQiAeq0lPVuytkyWD1pj1sSVT97ryvS2UX9X6tYumCLBEw6Yf0KB6Iy
- aYzuuBILwbcSPJ/5mpUXioSWfLFGGefJ/VNn09UPw6M72OLUJksav9jQH24hBtSGYootKnS8WxA
- m5AGGDUQT/CcByaOPAIlTN0F+XMbILLKd94Utr3/NFTcLdBgTXI/XEDU5pl0K+EkJGShxHuEzt7
- HNS36ez4Pkn6RSNCuC/2p3yuBtOLWAQ=
-X-Google-Smtp-Source: AGHT+IGo2cCwBLM5LVoIYgH3AiH81gTfv/M6BdHnWVX2AeNVy0QYTKXBq8/AiRaGRko0K9P836tuQg==
-X-Received: by 2002:a05:6000:471c:b0:385:e303:8dd8 with SMTP id
- ffacd0b85a97d-3864ce602abmr5527140f8f.26.1734012629124; 
- Thu, 12 Dec 2024 06:10:29 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734012624; x=1734617424;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Z6lYC8dWochLcUJNegfdM4xCIAMjFl1Jo4JV99TZ6P8=;
+ b=Ie+iPohZZySoBv6WB7a063SdufDDiKJAc+QF3rfFfhPaUYIM/7lPERy66wSJRoLoCI
+ 84HILqzPchvfkiM6/pDNyhIM/ZfMejyMtwfm31AO1V3KV/MJA+OmVVj4dWt29jOgIomf
+ 00B53MNHASg5dGYSGENFi2/TKeFyHuqqsb18CmA50iq2K9m5Nd8VeQQMwRvQIWoInjpu
+ XyMpxCUPC3KkyahBSIspAXIVuAtFq0HkusxkOXsdXsJNb+sO1fJZi5kk205XcXtihpy5
+ MI0BZ7xW3II3G963fKcZQsVVfz2xlce00im9HR+trcwXnXVtFn44oTnLdvwf/6ZBZxJj
+ hfhw==
+X-Gm-Message-State: AOJu0YywysLel6rePy9476YlXjMp8oYPiLBc7mFZ8otKiGB4X8KAjUwb
+ 1oovkSg9aViJqGh+0+qZ476hL6Rz8NCGR3zlKkZWTqlorDrtsmKXDkpNo7T2RT6DEHil2Xxd5iA
+ 1
+X-Gm-Gg: ASbGncsdha92hq2Gi6dyfA4oSTmmObLPX3uDgjuCh7gan45Bh4xnnKHEW3b0cNLHxoG
+ OCnB/96aioLkP6r5zV/KsilAA+0W9MGFXDmER5+FrFDMnk/BF2d3LzNqxE3KhjY/uH6ebnNfZ8C
+ EjLkE7wDHfJirNYxymhx1YL+EFcCb+chPrNv/wvwQST2jnrWMf3U0DDQbrAYqdzzBe1dNy9C38d
+ wpD4NXaLihthCuHWbUWyOK7Kx1hAuGwCc+5Imi24AFnQ/wWGipsL0bbN7xL6UF9HwAB2otR5VTu
+ ET3lzik8oCI4LP9UXYiYhwhYmyAyyek=
+X-Google-Smtp-Source: AGHT+IFsA0QLrNiuOIE4UpylrjvoWGygdJAiisbjeBD9qT5hEAzJICOh5vlPbJ8Qe49m74jDzAhZ6g==
+X-Received: by 2002:a5d:64cf:0:b0:386:3918:16cd with SMTP id
+ ffacd0b85a97d-387877dcaafmr2725943f8f.59.1734012620165; 
+ Thu, 12 Dec 2024 06:10:20 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4362559ed6csm17844395e9.24.2024.12.12.06.10.28
+ 5b1f17b1804b1-43625579464sm17794725e9.10.2024.12.12.06.10.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 06:10:28 -0800 (PST)
+ Thu, 12 Dec 2024 06:10:19 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 1/3] qemu/atomic: Rename atomic128-cas.h headers using .h.inc
- suffix
-Date: Thu, 12 Dec 2024 15:10:16 +0100
-Message-ID: <20241212141018.59428-2-philmd@linaro.org>
+Subject: [PATCH 0/3] qemu/atomic: Header cleanups
+Date: Thu, 12 Dec 2024 15:10:15 +0100
+Message-ID: <20241212141018.59428-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241212141018.59428-1-philmd@linaro.org>
-References: <20241212141018.59428-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,57 +96,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since commit 139c1837db ("meson: rename included C source files
-to .c.inc"), QEMU standard procedure for included C files is to
-use *.c.inc.
+- Include "qemu/atomic.h" in "qemu/atomic128.h"
+- Use .h.inc suffix
 
-Besides, since commit 6a0057aa22 ("docs/devel: make a statement
-about includes") this is documented in the Coding Style:
+Philippe Mathieu-Daudé (3):
+  qemu/atomic: Rename atomic128-cas.h headers using .h.inc suffix
+  qemu/atomic: Rename atomic128-ldst.h headers using .h.inc suffix
+  qemu/atomic128: Include missing 'qemu/atomic.h' header
 
-  If you do use template header files they should be named with
-  the ``.c.inc`` or ``.h.inc`` suffix to make it clear they are
-  being included for expansion.
-
-Therefore rename 'atomic128-cas.h' as 'atomic128-cas.h.inc'.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- host/include/aarch64/host/atomic128-cas.h                       | 2 +-
- include/qemu/atomic128.h                                        | 2 +-
- .../generic/host/{atomic128-cas.h => atomic128-cas.h.inc}       | 0
- 3 files changed, 2 insertions(+), 2 deletions(-)
+ host/include/aarch64/host/atomic128-cas.h                    | 2 +-
+ include/qemu/atomic128.h                                     | 5 +++--
+ .../aarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc}  | 0
+ .../generic/host/{atomic128-cas.h => atomic128-cas.h.inc}    | 0
+ .../generic/host/{atomic128-ldst.h => atomic128-ldst.h.inc}  | 0
+ .../host/{atomic128-ldst.h => atomic128-ldst.h.inc}          | 0
+ .../x86_64/host/{atomic128-ldst.h => atomic128-ldst.h.inc}   | 2 +-
+ host/include/x86_64/host/load-extract-al16-al8.h.inc         | 2 +-
+ 8 files changed, 6 insertions(+), 5 deletions(-)
+ rename host/include/aarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
  rename host/include/generic/host/{atomic128-cas.h => atomic128-cas.h.inc} (100%)
+ rename host/include/generic/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
+ rename host/include/loongarch64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (100%)
+ rename host/include/x86_64/host/{atomic128-ldst.h => atomic128-ldst.h.inc} (96%)
 
-diff --git a/host/include/aarch64/host/atomic128-cas.h b/host/include/aarch64/host/atomic128-cas.h
-index 58630107bcc..991da4ef543 100644
---- a/host/include/aarch64/host/atomic128-cas.h
-+++ b/host/include/aarch64/host/atomic128-cas.h
-@@ -13,7 +13,7 @@
- 
- /* Through gcc 10, aarch64 has no support for 128-bit atomics.  */
- #if defined(CONFIG_ATOMIC128) || defined(CONFIG_CMPXCHG128)
--#include "host/include/generic/host/atomic128-cas.h"
-+#include "host/include/generic/host/atomic128-cas.h.inc"
- #else
- static inline Int128 atomic16_cmpxchg(Int128 *ptr, Int128 cmp, Int128 new)
- {
-diff --git a/include/qemu/atomic128.h b/include/qemu/atomic128.h
-index 88af6d4ea3f..03c27022f0c 100644
---- a/include/qemu/atomic128.h
-+++ b/include/qemu/atomic128.h
-@@ -58,7 +58,7 @@
-  * Therefore, special case each platform.
-  */
- 
--#include "host/atomic128-cas.h"
-+#include "host/atomic128-cas.h.inc"
- #include "host/atomic128-ldst.h"
- 
- #endif /* QEMU_ATOMIC128_H */
-diff --git a/host/include/generic/host/atomic128-cas.h b/host/include/generic/host/atomic128-cas.h.inc
-similarity index 100%
-rename from host/include/generic/host/atomic128-cas.h
-rename to host/include/generic/host/atomic128-cas.h.inc
 -- 
 2.45.2
 
