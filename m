@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D00FDE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:28:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 739EBE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:31:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLl6a-0005sS-9i; Thu, 12 Dec 2024 10:27:56 -0500
+	id 1tLl9o-00083L-Sd; Thu, 12 Dec 2024 10:31:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLl6D-0005gq-Ab
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:27:34 -0500
-Received: from mail-ot1-x32b.google.com ([2607:f8b0:4864:20::32b])
+ id 1tLl9m-00082a-2m
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:31:14 -0500
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLl67-0007PQ-8O
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:27:33 -0500
-Received: by mail-ot1-x32b.google.com with SMTP id
- 46e09a7af769-71e1e051e50so200813a34.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:27:26 -0800 (PST)
+ id 1tLl9j-0001XW-M7
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:31:13 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-71e3167b90dso236096a34.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:31:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734017246; x=1734622046; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734017470; x=1734622270; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2X2amFAWN/w2XgC+by8KMgA2ttRA75qc/cZ6xZzLCT0=;
- b=ZoyFhyyrm3dply2p3ls0yGlEu9NpOeqGXOmJJcrK/8bNAoUmZ4nfOWuvatBT5aIFAy
- 1cTLL6EDCq8E1vbRJm1MgMBl5V8r1kYkSWD78RCnOZOnqMR8K3TggThR9GQ5sQnd1B0g
- f++oku1xlwR7x4lRde4wyrpwspQQXNk//sOvrkxS+wX6U3nBz41ipgX2GbeM8/D3Z4qh
- 7h8X2KovcY27t2gV8BjdISufCnn036gfjT2Wp8Kw6jJ77GSYYwn4T8Kl/BEI0ZYCBjvz
- g99FVJWCoyf9Yc9kO5as+C/KBYfeMcqcRTmvVGdZjShXNxobiowbdQ0NS9nYl8zhp+/C
- KjCQ==
+ bh=WlfERbgb4riEySlZ/Stz3jSYxbr7KJDfl/iu475vqeE=;
+ b=rvmvJ4Y2jx8zcIV9R4/uq5lmHuYQ/SvkMAMjBCehhtt/4lXlnLIZBoX9cUvh0QVKUx
+ 2jKDXvMumoJwLcjmyt7k70ayGahBW9J2kzuRj1aPiumZzCH3OUV7+w9V4Uzyda6tSpbY
+ PEPlpWIUtFHZNz9/m5slP++sAzleey1tSrYHZMTxC/wLH/f6EPWOdm9pNXm95j9v4lr0
+ ryH9rGeoJy/02a8s0LAtlM2rJnhP3cIVgVkcR0WHIJvx439dAlJzHXMtiJ/2reZxTxEp
+ S1AKVJmsqsRCpp+ZetnZmWT0V6jNqwwzaLgqGhGBcETp3qdUkr61Sp4y1LA+lGywdEe6
+ T1pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734017246; x=1734622046;
+ d=1e100.net; s=20230601; t=1734017470; x=1734622270;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2X2amFAWN/w2XgC+by8KMgA2ttRA75qc/cZ6xZzLCT0=;
- b=bGsPbRN4OuzYwcjWXXJVD3juUYMZFfGygnRjIlDt2TkoQQMEqWe/fBUdjcLNqZxNGG
- /7Ga+DEY4urIwGqVKPSu1Gp3AHF29UVBckPWkZpKeFlwhpqgZliWYtxl/rpAcD9REpI/
- 29BzMnYMd5LKE+o84LMeB+jCik877Sjwubg4KA+uMxU0fEc/3edmQkucDu8mNLE6r4oN
- L/YOpbEvdgZapo6FwNp96iZs1/7sotBbdppmSvXIgcbu3O3Bz0fauoZ4VLv7Id1Q2JmK
- ikIWeHIiWK+S7/QlxhJGqFsGmXmuSMNFWl9ImMCf7c9c7IgCqTs/akTKM9xLxvP58rEX
- MIVw==
+ bh=WlfERbgb4riEySlZ/Stz3jSYxbr7KJDfl/iu475vqeE=;
+ b=Qhkn+Q+ZAnvSEkGl5ufi6sFrQVTesw7ms9HZKSVOObfvcq9j7WiaJ5ayLJQbix8zLj
+ FEx+vhrCqf5/uc2nzwLkRjjq9a/Jh/TKzkXs+cRwWt6EV8uhmKXojIjEG3bkwVHVWqQV
+ OicJR/2dpYKCexQBTM6FvQ6OLy/t080mUfG83h/Feq996iNye5guC+jdqDj+FOkMxsaw
+ 4MqbUyTpA4iMR7YFMHXGrf+xRI9n+lCcV7Z33OqFxIiMfSGFs26gw8zc96B0dXXyMzBP
+ bwvBZMzpTn1BI7HHQMBTSmzwfSQe/Dc8RwFBnkvGgsN4SPKTdazzyjH3z7/gwQ+XDnR+
+ KWLw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU2N/56tbQOW4xo2nWhXz5jgkuU4ecRUm0U0eUxd9LiD3h76VNyYa3N+uXxnnlrDKZfaFBLxaJFH2yu@nongnu.org
-X-Gm-Message-State: AOJu0YyPPhctjD6pMqtFeFvuKXkFMYJhvME4RL31Igq6FxwVn/3h1wc/
- 58OCP3S5ar+9I7++yQO3+zRQPbg3YjA2DaXoiU/wtQNgAP5R0ByGBt8/4xXYdrE=
-X-Gm-Gg: ASbGncuVKbZ87PN+Jp9WgvajUy2wUAJR437JxgzQFR7bnd6nK1zWKqWi9/5jXDj1Bke
- MORI/LyGbTueekKqCb7roUKfFLlWUe2ulWnKGtiw3XbEdJSFFHkKgGhmIQRTfyasU3785U/UBQz
- BXCOQVgFqFh71+S4SqNacaljwHM1WX9b7rThV/JqW72lhucTdi2oZS9YNAX6yOfV2S13Wyv+bqQ
- l5gkERec8pf6x6JiIYPx6v6u9hhGW9QS/73r/okgZ2VdR3EYg+I2aDxiU3wqTjWZ5EE/z6Uu2j8
- 0mmfuCzT/kNCudnYFEYHN0bkPyaniQgv3Bk=
-X-Google-Smtp-Source: AGHT+IFXX29IcOunmSLw28v5Q8iFXcKaFEranhAcuva+OqPc1kny35glxJpNfK5RsVOmC9epyHZUdw==
-X-Received: by 2002:a05:6830:7106:b0:718:1150:a02b with SMTP id
- 46e09a7af769-71e36e36d16mr373872a34.1.1734017245952; 
- Thu, 12 Dec 2024 07:27:25 -0800 (PST)
+ AJvYcCWyxw87dZdStB3NF/ADRZ8BlmcIoDLV+lxAZN94JGjOBPHhHu5brjcX71PABL6VLVCOODxodJGLJUdC@nongnu.org
+X-Gm-Message-State: AOJu0Yw+GUilRkOs34YWvMgGho4sF80uQeJZP55P1ygxYIBlN0tzWcm8
+ QFLp2A8xnSciGnGIWj1caxjtG0of20Rtchf8UqjRXRpn8arvgNedEvght8EhY5Y=
+X-Gm-Gg: ASbGncuOGa8MSsU7OP3Hn0lpmFheFf005aUeCRiEvS7u7zKoQs5Tgmr/vVr1TaWM+xz
+ DM+mlaE3wD0Mz25xdFhG4uKxIiEi1C5oxZeexWIsWx8CRAZlBTiwQYwq+iHLtmfz1PruN/opvrw
+ 8k1uCzOjqRDXJaL73AvInSkpOwPTQHLQEg0vNse6eNjtBKgezrxHpSrDmceJfoFCks4CHq1ozN8
+ AV3hG2Gqu3TYNcpMABpcqCxkdLwRisz5s8JSbSCnFh+3bBsAQiyiCqLwk8RLOTaPF7oyfoB3vqJ
+ VOUZpd4Az3pr5c3npveZ4tWMD1+b/p2wVH4=
+X-Google-Smtp-Source: AGHT+IF+dJHYMTT1Y0d7YkvmjxkGSbo19YTta71fCj8hKRN8NPAQB+IRt+4PL7tgOSdK1gH0L3Ms9w==
+X-Received: by 2002:a05:6830:f84:b0:71d:634a:e0d6 with SMTP id
+ 46e09a7af769-71e36dddc30mr424285a34.6.1734017470084; 
+ Thu, 12 Dec 2024 07:31:10 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e1db1f524sm667659a34.40.2024.12.12.07.27.25
+ 46e09a7af769-71e2a8f7febsm421128a34.9.2024.12.12.07.31.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 07:27:25 -0800 (PST)
-Message-ID: <0b583ee4-f3b7-4d6f-bd66-35a111805aea@linaro.org>
-Date: Thu, 12 Dec 2024 09:27:23 -0600
+ Thu, 12 Dec 2024 07:31:09 -0800 (PST)
+Message-ID: <12e76b66-d81d-49d1-8440-8325c4e86dbd@linaro.org>
+Date: Thu, 12 Dec 2024 09:31:07 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 04/11] target/ppc: replace tcg_gen_qemu_st_tl() with
- gen_st_tl()
+Subject: Re: [RFC PATCH 05/11] target/ppc: introduce need_addrswizzle_le()
+ function
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, npiggin@gmail.com,
  danielhb413@gmail.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
- <20241212151412.570454-5-mark.cave-ayland@ilande.co.uk>
+ <20241212151412.570454-6-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212151412.570454-5-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20241212151412.570454-6-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32b;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,19 +105,51 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/12/24 09:14, Mark Cave-Ayland wrote:
-> To ensure that all memory stores are performed by gen_st_tl(), convert all
-> remaining users of tcg_gen_qemu_st_tl() with gen_st_tl().
+> This function determines whether the MSR_LE bit should be used to implement
+> little endian accesses using address swizzling, instead of reversing the
+> byte order.
+> 
+> (FIXME: which CPUs?)
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->   target/ppc/translate.c                     | 10 +++++-----
->   target/ppc/translate/fixedpoint-impl.c.inc |  2 +-
->   2 files changed, 6 insertions(+), 6 deletions(-)
+>   target/ppc/translate.c | 14 ++++++++++++--
+>   1 file changed, 12 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 4c47f97607..1211435039 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -208,6 +208,12 @@ struct DisasContext {
+>   #define DISAS_CHAIN        DISAS_TARGET_2  /* lookup next tb, pc updated */
+>   #define DISAS_CHAIN_UPDATE DISAS_TARGET_3  /* lookup next tb, pc stale */
+>   
+> +/* Return true iff address swizzling required */
 
-I think you could squash patches 1+2 and 3+4.
-Introduce the function and use it everywhere; the patches are not large.
+I've been scolded before for using the iff contraction.
+It confuses non-english speakers for little savings.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>   static void gen_ld_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
+>                         MemOp memop)
+>   {
+> -    tcg_gen_qemu_ld_tl(val, addr, idx, memop);
+> +    if (!need_addrswizzle_le(ctx)) {
+> +        tcg_gen_qemu_ld_tl(val, addr, idx, memop);
+> +    }
+>   }
+>   
+>   #define GEN_QEMU_LOAD_TL(ldop, op)                                      \
+> @@ -2619,7 +2627,9 @@ GEN_QEMU_LOAD_64(ld64ur, BSWAP_MEMOP(MO_UQ))
+>   static void gen_st_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
+>                         MemOp memop)
+>   {
+> -    tcg_gen_qemu_st_tl(val, addr, idx, memop);
+> +    if (!need_addrswizzle_le(ctx)) {
+> +        tcg_gen_qemu_st_tl(val, addr, idx, memop);
+> +    }
+
+These are wrong, in that the load/store are omitted entirely.
+Something is missing, like you split the patches incorrectly.
 
 
 r~
