@@ -4,96 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95D05E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:24:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0321E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:25:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLmtd-0006th-Lw; Thu, 12 Dec 2024 12:22:41 -0500
+	id 1tLmvi-0001aZ-2t; Thu, 12 Dec 2024 12:24:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLmtZ-0006rU-SV
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:22:37 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLmvH-0001El-Ib
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:24:25 -0500
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLmtV-0006pE-9p
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:22:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734024152;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=bSm79oz08FdIlTp31rLzEqSvbz1oNHscAzWwfiPVPzw=;
- b=NlXU0sidiUWDFLsBaOzmwOiyD0XsOPrcKAjRQsY+F9i3s05e4XjRFc9bvct0LVL4TlNpaS
- nMQS4WsJX6DZnYgI+E7hPaT5sgaqwWUcI77jLtr6y8gRsMhs6EhC1BLr/PsHixIRHT+2pu
- JsVJEIOcL8HW6AbL8YHYg6+1uOt4UlM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-122-3l1RppL7PUGfdPMBZ4iMeg-1; Thu, 12 Dec 2024 12:22:31 -0500
-X-MC-Unique: 3l1RppL7PUGfdPMBZ4iMeg-1
-X-Mimecast-MFC-AGG-ID: 3l1RppL7PUGfdPMBZ4iMeg
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385e3cbf308so411746f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 09:22:30 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734024149; x=1734628949;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bSm79oz08FdIlTp31rLzEqSvbz1oNHscAzWwfiPVPzw=;
- b=bUa2C3GzdMkYz0SxAS+r8hQm+vXtOsP2Eab11lw5AsuWKNImWUY0o7thFHLqi5Hv5V
- CmXY6LTu1wwbk7pog4R1GyFSKD09dKZezdCmbcVS/c9HWy7oDproliMtdC+eXOO1SY3r
- ofmL8hH6aoYMfeRTyRmjYr5HOmJG8QhSXh1JX6zXmvCYTUYb0IK8w2WcddlCdvlIGibM
- JhEoK4v8jMvoJutCHMOxR8XfS0unZRI2gv64ac96zVPLmRsTtfBkLhgfXRpxqkLZdsC0
- 5juFO8XwgVQ+qP5XT/a9CMuMZYLgOFm1kcLYoCrtMUC3mfTK2vOZ3DMvFv3XVvBg/4H9
- ywQQ==
-X-Gm-Message-State: AOJu0Ywck+qF//YWUxnSl/Ij8pueKzTN3kgPCv0Xk5ZlFITJ48t+XZer
- OOkX7Sjhtu7sgPfEzYphwXgsRe29okBtHctbKZweFlxenpt4bbcnTd4tkkREMQZhzqcsOX8BjJA
- csgYR6R26PnzMUNqnsCBoFaO3sT2sP/UHlQ8OuUXKAIgf0ka+g42hzRzhEyC1yONOadM2LhWFLB
- 9ffGpJtet1JpvJzu5ZVfVpD/sClzHbY3CEqlNT
-X-Gm-Gg: ASbGnct1Hr+yndPCTiWHdRB1GX2i3YVcQ1lGfklEtxnsI18uJ1hLaSsHmA/ogLbzxiX
- Rth1ySdlcBAh16+mAyoscjvdciTIMtocQQI0elX+8nk6rnRqU/+dASckGSCaZZwSKl+3imYa2ih
- 1WVFRhowtnq5lHzPwmGZCXwnqS0wIA5yw2LsRuo3tZx1P52IuwgBfoU9pykh66Zz7ZpKy+Xcuqc
- EPiltSetrpCCuYU4TphEv+oZbxISHPrSq70siIPwd+NRrUbDaf5z1lmRTnV
-X-Received: by 2002:a5d:588b:0:b0:385:e2c4:1f8d with SMTP id
- ffacd0b85a97d-3864ce96ed1mr6918670f8f.19.1734024149514; 
- Thu, 12 Dec 2024 09:22:29 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IERL4Pz7X8hJNKtOv0Z7DJ23nsR1ReastYOYfmmQ5wyeBe1Qf2yPsHd+ZqVQEJy/Mj+1+eu/A==
-X-Received: by 2002:a5d:588b:0:b0:385:e2c4:1f8d with SMTP id
- ffacd0b85a97d-3864ce96ed1mr6918651f8f.19.1734024149076; 
- Thu, 12 Dec 2024 09:22:29 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4361ec87bc3sm37435585e9.1.2024.12.12.09.22.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 09:22:28 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org,
-	qemu-rust@nongnu.org
-Subject: [PATCH 7/7] rust: pl011: simplify handling of the FIFO enabled bit in
- LCR
-Date: Thu, 12 Dec 2024 18:22:04 +0100
-Message-ID: <20241212172209.533779-8-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241212172209.533779-1-pbonzini@redhat.com>
-References: <20241212172209.533779-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLmvF-0006v3-3D
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:24:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734024261; x=1765560261;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=ZN9iIEDIb+qeXTusHRIG1A2JOHVdIqP6CkyHsmJ9ujM=;
+ b=CQLRgsKN6An06X3ImFLB77wTdPNa5DQ5e/KSjI+hIPauNg0cxGM/Zaeq
+ ut3kYmNaxhQNtBZpTLc374k4iVLCOHu/3TVJyfoM6Hrtvu5OnSVE4PiiS
+ N8WzwwW9N6WDY21lzznQNxyxQX/5bteEKqXz14urcm9lVZQ1fjUvI6Rx6
+ 6kKYVOAjkoNOgJ0kxR3QxqSqFpbQ/XMwvdV8S58nQ7NCJGQAqBsVE5n27
+ Xs7cMyHuoEen5gZUY1UHH9rEiAevYCBTYm7tJmCmhCsDyXOxVqSEZ6NeU
+ Y2VGqMCy+fmOU8p2Oq6cNae7LiQWhLEepyOP8NKAPzCd6q3pn+qEBFpT+ Q==;
+X-CSE-ConnectionGUID: DIRTV2HvTX6Z3DH5gyyQFQ==
+X-CSE-MsgGUID: ZLCwn8kqRW2QcxYkrRUShQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="38241597"
+X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="38241597"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 09:24:16 -0800
+X-CSE-ConnectionGUID: WAHnGzjwQpGSyx05PFjkYQ==
+X-CSE-MsgGUID: eSvjt7GoRFe113nOgoiflQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="127292779"
+Received: from puneetse-mobl.amr.corp.intel.com (HELO localhost)
+ ([10.125.110.112])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 09:24:08 -0800
+Date: Thu, 12 Dec 2024 11:24:03 -0600
+From: Ira Weiny <ira.weiny@intel.com>
+To: Tony Lindgren <tony.lindgren@linux.intel.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>,
+ "riku.voipio@iki.fi" <riku.voipio@iki.fi>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "Liu, Zhao1" <zhao1.liu@intel.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "anisinha@redhat.com" <anisinha@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "armbru@redhat.com" <armbru@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "cohuck@redhat.com" <cohuck@redhat.com>,
+ "mtosatti@redhat.com" <mtosatti@redhat.com>,
+ "eblake@redhat.com" <eblake@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "wangyanan55@huawei.com" <wangyanan55@huawei.com>,
+ "berrange@redhat.com" <berrange@redhat.com>
+Subject: Re: [PATCH v6 09/60] i386/tdx: Initialize TDX before creating TD vcpus
+Message-ID: <Z1scMzIdT2cI4F5T@iweiny-mobl>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-10-xiaoyao.li@intel.com>
+ <1235bac6ffe7be6662839adb2630c1a97d1cc4c5.camel@intel.com>
+ <c0ef6c19-756e-43f3-8342-66b032238265@intel.com>
+ <Zyr7FA10pmLhZBxL@tlindgre-MOBL1>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+In-Reply-To: <Zyr7FA10pmLhZBxL@tlindgre-MOBL1>
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=ira.weiny@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,56 +106,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use ==/!= instead of going through bool and xor.
+On Wed, Nov 06, 2024 at 07:13:56AM +0200, Tony Lindgren wrote:
+> On Wed, Nov 06, 2024 at 10:01:04AM +0800, Xiaoyao Li wrote:
+> > On 11/6/2024 4:51 AM, Edgecombe, Rick P wrote:
+> > > +Tony
+> > > 
+> > > On Tue, 2024-11-05 at 01:23 -0500, Xiaoyao Li wrote:
+> > > > +int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+> > > > +{
+> > > > +    X86CPU *x86cpu = X86_CPU(cpu);
+> > > > +    CPUX86State *env = &x86cpu->env;
+> > > > +    g_autofree struct kvm_tdx_init_vm *init_vm = NULL;
+> > > > +    int r = 0;
+> > > > +
+> > > > +    QEMU_LOCK_GUARD(&tdx_guest->lock);
+> > > > +    if (tdx_guest->initialized) {
+> > > > +        return r;
+> > > > +    }
+> > > > +
+> > > > +    init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+> > > > +                        sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+> > > > +
+> > > > +    r = setup_td_xfam(x86cpu, errp);
+> > > > +    if (r) {
+> > > > +        return r;
+> > > > +    }
+> > > > +
+> > > > +    init_vm->cpuid.nent = kvm_x86_build_cpuid(env, init_vm->cpuid.entries, 0);
+> > > > +    tdx_filter_cpuid(&init_vm->cpuid);
+> > > > +
+> > > > +    init_vm->attributes = tdx_guest->attributes;
+> > > > +    init_vm->xfam = tdx_guest->xfam;
+> > > > +
+> > > > +    do {
+> > > > +        r = tdx_vm_ioctl(KVM_TDX_INIT_VM, 0, init_vm);
+> > > > +    } while (r == -EAGAIN);
+> > > 
+> > > KVM_TDX_INIT_VM can also return EBUSY. This should check for it, or KVM should
+> > > standardize on one for both conditions. In KVM, both cases handle
+> > > TDX_RND_NO_ENTROPY, but one tries to save some of the initialization for the
+> > > next attempt. I don't know why userspace would need to differentiate between the
+> > > two cases though, which makes me think we should just change the KVM side.
+> > 
+> > I remember I tested retrying on the two cases and no surprise showed.
+> > 
+> > I agree to change KVM side to return -EAGAIN for the two cases.
+> 
+> OK yeah let's patch KVM for it.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs | 6 ++----
- rust/hw/char/pl011/src/lib.rs    | 6 ------
- 2 files changed, 2 insertions(+), 10 deletions(-)
+Will the patch to KVM converge such that it is ok for qemu to loop forever?
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index cfe2734703e..169ff3779c6 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -307,9 +307,7 @@ pub fn write(&mut self, offset: hwaddr, value: u64) {
-             Ok(LCR_H) => {
-                 let new_val: registers::LineControl = value.into();
-                 // Reset the FIFO state on FIFO enable or disable
--                if bool::from(self.line_control.fifos_enabled())
--                    ^ bool::from(new_val.fifos_enabled())
--                {
-+                if self.line_control.fifos_enabled() != new_val.fifos_enabled() {
-                     self.reset_rx_fifo();
-                     self.reset_tx_fifo();
-                 }
-@@ -502,7 +500,7 @@ pub fn event(&mut self, event: QEMUChrEvent) {
- 
-     #[inline]
-     pub fn fifo_enabled(&self) -> bool {
--        matches!(self.line_control.fifos_enabled(), registers::Mode::FIFO)
-+        self.line_control.fifos_enabled() == registers::Mode::FIFO
-     }
- 
-     #[inline]
-diff --git a/rust/hw/char/pl011/src/lib.rs b/rust/hw/char/pl011/src/lib.rs
-index 0747e130cae..69064d6929b 100644
---- a/rust/hw/char/pl011/src/lib.rs
-+++ b/rust/hw/char/pl011/src/lib.rs
-@@ -419,12 +419,6 @@ pub enum Mode {
-         FIFO = 1,
-     }
- 
--    impl From<Mode> for bool {
--        fn from(val: Mode) -> Self {
--            matches!(val, Mode::FIFO)
--        }
--    }
--
-     #[bitsize(2)]
-     #[derive(Clone, Copy, Debug, Eq, FromBits, PartialEq)]
-     /// `WLEN` Word length, field of [Line Control register](LineControl).
--- 
-2.47.1
+Ira
 
+> 
+> Regards,
+> 
+> Tony
 
