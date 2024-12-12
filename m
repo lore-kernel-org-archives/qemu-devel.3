@@ -4,47 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BF3CE77182
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:07:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8482FE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:10:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjpu-00085n-Qi; Thu, 12 Dec 2024 09:06:40 -0500
+	id 1tLjsp-0002v6-IX; Thu, 12 Dec 2024 09:09:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1tLhxY-00063w-W4
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:06:25 -0500
-Received: from air.basealt.ru ([193.43.8.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
- id 1tLhxX-0005HS-1K
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:06:24 -0500
-Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
- [217.15.195.17])
- by air.basealt.ru (Postfix) with ESMTPSA id A4833233A0;
- Thu, 12 Dec 2024 15:06:19 +0300 (MSK)
-From: gerben@altlinux.org
-To: peter.maydell@linaro.org, richard.henderson@linaro.org,
- qemu-devel@nongnu.org
-Cc: sdl.qemu@linuxtesting.org,
-	Denis Rastyogin <gerben@altlinux.org>
-Subject: [PATCH] target/arm: remove redundant code
-Date: Thu, 12 Dec 2024 15:06:14 +0300
-Message-ID: <20241212120618.518369-1-gerben@altlinux.org>
-X-Mailer: git-send-email 2.42.2
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tLjsY-0002uK-UM
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:09:28 -0500
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tLjsU-0002M3-4h
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:09:20 -0500
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d0205bd5so855069a12.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:09:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734012550; x=1734617350; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=N1DWhVe3qIDN1JPJ29LWZKhrb8imTI0TbHJHSkmU2RU=;
+ b=JmxKko9aRKb5ujxdP+MMF2MWWVUR/KW/LYMLVQVbuJTi2Mf23msblAfajevkIRc+f6
+ T6DEAi9PjSocrq5Gnj55GIxHSCfpFMRVIcInK8V7yRTezPkdKjVaK+1aBqiVRV18ABAq
+ oPIic+LFEebjRoXPNGzuLE+mW8beRC1Djpe3DHnK1gIoDe3WqcYtfbeV1XlU7HQ19yXL
+ P2sJOcnCuFZOzM+Rb8IFnOsFzt/BXq54xh+kZ6BYUoeUNtdCCsp3T0xRqfs1k3ph3EyK
+ kP7DKKPnlcMGPUjmiiYZzug5F0H1C1Q9WagnPSDh2JtgqAmGbK/aGz41mVev50t07Fsh
+ trew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734012550; x=1734617350;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=N1DWhVe3qIDN1JPJ29LWZKhrb8imTI0TbHJHSkmU2RU=;
+ b=WB6tWdYF+rxA/wtf0PGI904otx75nzEBawpYgjwV6jmHpwRgx9SbpxFxj9LH5c2LoP
+ gjQyjlWQhZ2Ml2WnRR0GWfTCqIwBqF0lOlspk6zLt+JIHg1wVkOZX/yDB8rW+kNkGrlp
+ V0lMd/ewRv+vXQR2DCNx7U7dmt6TkRY1Qoh2TVkqEjay7xTkVzsgfW5lmzhlyM3v78iY
+ BrPog27fW8UzZSDd11N5ci0ZdvvJahylC6w2iCfot0geM9SX8BFSuoWlHvlhoCM7LUk/
+ aM5z0AfPW2qUUxhpVWXxzrReXXijWlKD1JeW2SLpstu6dTeYbJai8QWJTy/7A56mfTVv
+ dWzQ==
+X-Gm-Message-State: AOJu0Yxflc/Pi4AFjA8YaSV/lqCZj/dk9Z4WSij8UcMQyfxRG1LmoNur
+ jePgviMLXgiJb6gJz0iR4a3FELHAkfOJuwATFROj/ZcSo9arTrun3ov+YYMJz70=
+X-Gm-Gg: ASbGnctkA8pgIYQiHtQGwc/xUuRZHKl9v86HqLgYjUjUcq4fFFluCNtGg8R1NhuIl4S
+ bcSsBobhtuURLkr5KVbVjvD8EueD+ObbA0+KuRQ1sLpBhIm7wXOffgU1wRUPzT8lnnyqg8YhmGq
+ uKaozePBvEvB1XPIR7NVVh7T3ESA4oOcWIolY2c07mvdsh8XRJyLcw/BDgF81DGRzZO4pUNAKDM
+ nlQdkJJl+GQ/HDOQVdmCYZPm8vCER+1ymC+8sKj8hjTGkmmtiRotFg=
+X-Google-Smtp-Source: AGHT+IEUV38q83hWjV4GY5BLJs+GXwq/C55F24Prye1jvpEk5P4NXkjKjn9yG0JqqJsAfOAZfw5RAg==
+X-Received: by 2002:a17:907:68a9:b0:aa6:59ee:1a19 with SMTP id
+ a640c23a62f3a-aa6c1d073b4mr361658866b.60.1734012549608; 
+ Thu, 12 Dec 2024 06:09:09 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa69964872asm485835466b.103.2024.12.12.06.09.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 06:09:09 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 179955F769;
+ Thu, 12 Dec 2024 14:09:08 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] semihosting/uaccess: Briefly document returned values
+In-Reply-To: <20241212115413.42109-1-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Thu, 12 Dec 2024 12:54:13
+ +0100")
+References: <20241212115413.42109-1-philmd@linaro.org>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Thu, 12 Dec 2024 14:09:08 +0000
+Message-ID: <875xnpro1n.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
- helo=air.basealt.ru
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 12 Dec 2024 09:05:36 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,31 +102,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Denis Rastyogin <gerben@altlinux.org>
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-This call is redundant as it only retrieves a value that is not used further.
+> Since it is not obvious the get/put_user*() methods
+> can return an error, add brief docstrings about it.
+> Also remind to use *unlock_user() when appropriate.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Queued to semihosting/next, thanks.
 
-Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
----
- target/arm/vfp_helper.c | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index 62638d2b1f..f020c3c34b 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -1095,8 +1095,6 @@ float64 HELPER(rintd)(float64 x, void *fp_status)
- 
-     ret = float64_round_to_int(x, fp_status);
- 
--    new_flags = get_float_exception_flags(fp_status);
--
-     /* Suppress any inexact exceptions the conversion produced */
-     if (!(old_flags & float_flag_inexact)) {
-         new_flags = get_float_exception_flags(fp_status);
--- 
-2.42.2
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
