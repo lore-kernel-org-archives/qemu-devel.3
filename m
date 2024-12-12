@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF24AE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6BBE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:27:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLl5E-000428-Cs; Thu, 12 Dec 2024 10:26:32 -0500
+	id 1tLl52-0003si-Br; Thu, 12 Dec 2024 10:26:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLl5D-0003zn-2p
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:26:31 -0500
-Received: from mail-oi1-x229.google.com ([2607:f8b0:4864:20::229])
+ id 1tLl50-0003sF-Ii
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:26:18 -0500
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLl5B-0007HW-CY
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:26:30 -0500
-Received: by mail-oi1-x229.google.com with SMTP id
- 5614622812f47-3eb8db8ae9aso283351b6e.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:26:27 -0800 (PST)
+ id 1tLl4z-0007GN-2I
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:26:18 -0500
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5f2dcfc426bso177351eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:26:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734017187; x=1734621987; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734017175; x=1734621975; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DFLg+2cWiUb5Ep9I8wbJDj2CMM9zNWwCSlXF614FY34=;
- b=LdrGjz6I/akMSGq93UUmzxI3iI8X4+JFr+F2E5C1IQmogHP2GQ2I2jI6BFrtXKBNf1
- v5BQWTwUZkeQSG8kmrX9EqM7luSACj9j+H3Okv3e/d8hGEtnOOdrHM4c6IHQsiS7TLaE
- nNz/47Mey8yory8k4iWkqLblRNUHWYrVLhifhdVJOHDN07FtmAJEmrnrhiyXkhwj6z4c
- QJPFtrKl7jCN6aDVU8UqZKClrh37vsGLXl7CpV0n/8Mw+tz+hW2sRiPfpWzjDnbtoHgd
- r/VsL/fzSPFqnhidzCS4GqApnSgmFZczpCuvg8yDxApp9SX73c1+mXlz/10fqROIuniK
- 4ciQ==
+ bh=TJPNbAD7DjmSrg0vrWlJm/LQ741Z39+F3YcawoCDfGw=;
+ b=k75IWEJkEwlZ0MZmk5jKYBUq+CEe2h9cQR3mAZpu0OHfR9GjyFr7jv92NkGes/r1lV
+ AJ3YgmZ4YeE0YD6RZRciFKWEAb49CxZ1H3Qz+WbNuREO4VgA7sgemX5vhZ1yeIgDO0Ws
+ VILXabAhUm2Ib7IKFDTooQShDQswWAaE+tbV+QsuoL9WQfteo5+R99WZ3ro6Me+ayD8c
+ nEx+Ms4vRjBU3WNuxnMMPqHX//rLyoVprDL/ApEFalEyj0l0AnQpcPDcLyAyExfOZIzg
+ 7/Y59lXoflnVVuqNPcsZ89oepKp1NomY0l+xxmOTMKm+QpDHbUzBUDe3qt01Z5NTN9W6
+ IagA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734017187; x=1734621987;
+ d=1e100.net; s=20230601; t=1734017175; x=1734621975;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=DFLg+2cWiUb5Ep9I8wbJDj2CMM9zNWwCSlXF614FY34=;
- b=nXzuCiXLV7PrifY/6wZE84P7SyxCoduAwwuAzqTB9Uaf+3fMMj8dbFTubon1xbsvz2
- QI39R1WVvrAiXRHirXJf6TcRZ19lpo6bbC3m9uagV+y1e1xxauuo64RndO4JY0EUsA6f
- u1YflqkSUA29YxX6HeUPwwlyg4+Nd4oY6pks91VzymC/nuic6GA83+qN7un0ku45+iMX
- qLgdrBscQmuz+FxBv5eo0fEdt6rk/UpyqSmw+6gs5bul/JduA0g6yFsRzpiNtiUScnLZ
- 03trd0SCybFKPzkCXmHya7ftutoifoCkSofIhGMs8CApYx+aUMvZnsK+JPSKR0/nDe3W
- +XJQ==
+ bh=TJPNbAD7DjmSrg0vrWlJm/LQ741Z39+F3YcawoCDfGw=;
+ b=ruIuv8LmX+Uk+om8WXs1ThB9/9n2d4Idk2q+uKnPPSOSdx+ks2ExkcOU8bTFUo2X9h
+ OOXZEVN/L6VWv7cRv/WkvZjwDVx81lY98AEirCnSXcANlCnrYIv0ea0rLpK99CS4G5De
+ CdG2WTOPk/0RqfRTETBWLQ7Y58AwaoXeHOe1ARKW7CEv3lsh540f+KPhAPqL2H8AufTK
+ D2jb+Bc4lPAY2w4Mbfm1CRXaVfkKjyCPQrG58ZGggEMzuK6xGyhaPDtgRjQ+QeYBQNqU
+ TMjsFy6XjiEGysfPBx3Esy8TBPPzp2xdtR0BU2Lv/ym62ooz4TKYMlQUASWNFOJ+cYYb
+ H/5w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIvEw5CMEGI6MBuYh08ns/gEqd15mt9Cp2SFyaOJIwdaTwuh3FRe1JgH0+P9XLxr0fzy8EVjyW94Db@nongnu.org
-X-Gm-Message-State: AOJu0Yz0JNr22Lkr5bNY6suYEG0rKL4O5VpN8jKn0hqCK47yDNy5Wfb7
- E9zWqNiytn+HZndJOdNNPKqdNqjT0OSBn/DZTcQuCZl69lXEm9uNXSirUSmGTDQ=
-X-Gm-Gg: ASbGnctDe9SEjiyyCxwCU8SUEXzZbs0Z4o987NqhF7lB8S2K5ZZ2/ltJ1KBfBpj12Iy
- VIJ/yv3NKOE2hWqcgT+86Srp7uEU8yRXeyoMmS74EtNZo9Q4D9FoMFtDZ1IWbxZs2sSMltegQ5D
- 4CF3HszqAQ/Xa7jS7WpGdA09AU6ku3qvmeRX62ApPIEMIfmU/hcoKQ/YZLbOB/hZZOBp7DEbu/9
- iQZ698qcByZmG5EuY6vNy0FWsukrg1Xfq8O76uRU0CCdHskTkN4ZQrzojg+mkPsrCan6jz5TSmA
- I34CXDoUpln2IxNBQ1QvqOV8NJzbeL+7V0M=
-X-Google-Smtp-Source: AGHT+IFZWNzgsaRmmgToHjQdZCco2FwNDRz05C0BWxU3iBOxMZG0NMaTWvRfFgxPSjDJjIFNUIsUcw==
-X-Received: by 2002:a05:6808:218d:b0:3eb:9064:cf25 with SMTP id
- 5614622812f47-3eb940dabbemr2396748b6e.28.1734017187057; 
- Thu, 12 Dec 2024 07:26:27 -0800 (PST)
+ AJvYcCXe6n8pA8WbXn1Bry/WXRCvqSrzHEM68NRgYmZkhGgIg2IHva8Nfi0Cj5nmM8WMgpoaJbTi/G8kkbTo@nongnu.org
+X-Gm-Message-State: AOJu0Yx+jmo+FOyFb352A0NmfaGlrV50XwMzgAZHRwW6RCyJ23kSiXP1
+ wG5BbEpN2HLOZjUmHAa/twO/PHlZFvyRVQvdswY4vcnzTPrI/iUIipfbF1eizPE=
+X-Gm-Gg: ASbGncswubygvYX6ubN6lk8Mnjy9Y1Y+ElXUcH4R7Gl/DZGSvQmU0W0jjEaUmvUQQD9
+ bSykP5MWGS0Ty12vCovk7MM2mbXgJkcW0ud9cltTigfFctUHFIbYqLLR6Gm5SpDUQttNOVNJRsm
+ 0CQtjbQ7hlF36bFf5ClvQdsgiyNUxpda2I8jOVFYqXgJyyk0pfm9AdK5+MOMJzFYzVeY8v2jMuQ
+ VraVEGANTqSHOT6ml3EQtFPx7a3joydQhH7nkDeHaaG+xXjXW4a+YoL4ZKuXL1RBBV5nUxPpzYh
+ u/k/2bWMo50kbUuncvKnYEasYboI11lVphc=
+X-Google-Smtp-Source: AGHT+IEH/hfMEH1Wp2QmcazU7ySfHlimJc2jWS4CmOmhcM9BMbjO8ObrH59kyjXxzt+Dx7NuUdRjOg==
+X-Received: by 2002:a05:6870:a413:b0:29e:80d8:31a9 with SMTP id
+ 586e51a60fabf-2a012b4f632mr3995585fac.2.1734017175621; 
+ Thu, 12 Dec 2024 07:26:15 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eb8ffcc130sm597404b6e.39.2024.12.12.07.26.25
+ 46e09a7af769-71e0677c4fesm1394985a34.43.2024.12.12.07.26.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 07:26:26 -0800 (PST)
-Message-ID: <21d47030-7998-4b0a-908d-761daa9afd64@linaro.org>
-Date: Thu, 12 Dec 2024 09:26:24 -0600
+ Thu, 12 Dec 2024 07:26:15 -0800 (PST)
+Message-ID: <4ec426ff-7f21-43df-afc0-052749ea8dd0@linaro.org>
+Date: Thu, 12 Dec 2024 09:26:13 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 03/11] target/ppc: introduce gen_st_tl() function
+Subject: Re: [RFC PATCH 02/11] target/ppc: replace tcg_gen_qemu_ld_tl() with
+ gen_ld_tl()
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, npiggin@gmail.com,
  danielhb413@gmail.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
 References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
- <20241212151412.570454-4-mark.cave-ayland@ilande.co.uk>
+ <20241212151412.570454-3-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212151412.570454-4-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20241212151412.570454-3-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::229;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x229.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,38 +105,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/12/24 09:14, Mark Cave-Ayland wrote:
-> This function is intended to be used for all memory store operations. Convert the
-> GEN_QEMU_STORE_TL() macro to use it as a starting point.
+> To ensure that all memory loads are performed by gen_ld_tl(), convert all
+> remaining users of tcg_gen_qemu_ld_tl() with gen_ld_tl().
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Mark Cave-Ayland<mark.cave-ayland@ilande.co.uk>
 > ---
->   target/ppc/translate.c | 8 +++++++-
->   1 file changed, 7 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 5fb0aa36ce..bf94f3a5de 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -2616,12 +2616,18 @@ GEN_QEMU_LOAD_64(ld64,  DEF_MEMOP(MO_UQ))
->   GEN_QEMU_LOAD_64(ld64ur, BSWAP_MEMOP(MO_UQ))
->   #endif
->   
-> +static void gen_st_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
-> +                      MemOp memop)
-> +{
-> +    tcg_gen_qemu_st_tl(val, addr, idx, memop);
-> +}
-> +
->   #define GEN_QEMU_STORE_TL(stop, op)                                     \
->   static void glue(gen_qemu_, stop)(DisasContext *ctx,                    \
->                                     TCGv val,                             \
->                                     TCGv addr)                            \
->   {                                                                       \
-> -    tcg_gen_qemu_st_tl(val, addr, ctx->mem_idx, op);                    \
-> +    gen_st_tl(ctx, val, addr, ctx->mem_idx, op);                        \
->   }
->   
->   #if defined(TARGET_PPC64) || !defined(CONFIG_USER_ONLY)
+>   target/ppc/translate.c                     | 14 +++++++-------
+>   target/ppc/translate/fixedpoint-impl.c.inc |  2 +-
+>   2 files changed, 8 insertions(+), 8 deletions(-)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
