@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DD0E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:58:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1454E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:01:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLlaA-0000fA-Sv; Thu, 12 Dec 2024 10:58:31 -0500
+	id 1tLlcP-0002Av-6b; Thu, 12 Dec 2024 11:00:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLla7-0000U7-SC
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:28 -0500
-Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLla5-0000Xz-Dl
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:27 -0500
-Received: by mail-oa1-x36.google.com with SMTP id
- 586e51a60fabf-2a3a40c69e3so26860fac.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:58:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734019104; x=1734623904; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=o0h1SWbIk0RJP/0juIBtLu1abW/u1bjkCNRchu4OQKw=;
- b=hFq7/r68tsTJxfDe/C1WzKxkrwSywxt4JenXCLmDm0uV7OSVxKqmqP8o5ZFCeLkYJs
- 2S13igX4NsB5qzxuZMKijcbAbeCfhG7AhPRTfitqAbkLBM9Al3XLLOXdJTrQmN8/x8TJ
- aMZOzNfZ3oaGJPOTQQ6sBwjD7dyYL1XqrHJcp/wrcRgUby5IninBulCqQ3lKoCW7AnUW
- tvSTuDb+z5sNatJh8TrEbEac2XRUVBpZGeK1st7icU3Weg9CydYjJpZ7QX0W48vtOpME
- 4BSB4R3SdIhswtfCWCYbXZgALEQQblFz+QwZbxWtlA4j8rn+JQ4OIqr7psSFGfz6GX9V
- 0FMQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tLlcO-0002Ai-7i
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:00:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1tLlcM-0000tv-B9
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:00:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734019244;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=L1xUt3njQqKB3GxrQmc7u8qp2nc5B6UvBhDcKxZw3dI=;
+ b=NnYGtAKVFQS+YT0HenpYG+B63JxDX3WmZc2E+XbZr9Lvf5nLgeqObrYguS1JhReLK+W5ZZ
+ bj7Lu3jA361tIZ668SZ9fNeyBtCRhZLo9cRbwofZtnvQHn1Oi2JFPq4wSqXWXVF57/6Lwe
+ k/IoWwGEBPFT8UdqvSj5zmhgZEs1Y38=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-288-Px-ABInfNiCo47gJ5DbALA-1; Thu, 12 Dec 2024 11:00:42 -0500
+X-MC-Unique: Px-ABInfNiCo47gJ5DbALA-1
+X-Mimecast-MFC-AGG-ID: Px-ABInfNiCo47gJ5DbALA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-436289a570eso2300115e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 08:00:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734019104; x=1734623904;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o0h1SWbIk0RJP/0juIBtLu1abW/u1bjkCNRchu4OQKw=;
- b=XQ5tWkpFzCKDD19nqC4zfyOAn8L98lJ8mP4KsAC3y8E4UbqwYcy8pPFZDoXE21S3fe
- uT3jEjITE35HecfppWhbDf+WVu9KQAQIjfjAJrYmlYFEQnow2c4uZKn446GEs+TFhlNN
- 3twiL/UunB5nYKzPLTld4xuEpUspwcrsGOrmuP/rw0bPhNxuPIpXvmhqsI6mIJpSReGk
- 91o5+7AGEV0t4CVZfsCyr0aAZleApUoyZ7RWxZiknsLBdqsEtbHwE248P9b87Rf1rUYl
- ++nzVbnP+BsN3DRcEwSQW8iWwtIAnTaC7i13ogUlNmdzOBNX9tW3vmjx9acj6sLFtVUz
- rUNw==
+ d=1e100.net; s=20230601; t=1734019241; x=1734624041;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=L1xUt3njQqKB3GxrQmc7u8qp2nc5B6UvBhDcKxZw3dI=;
+ b=fnXjv9HfDKZ4Lz6xJVeMzMHbChgqjRG+L0bbVxDEwymaC1o/hmWm/E1eTVY3C5rL+6
+ itdsBCjhzIgg1lMnEcOkBxNbC6qPk/pjsnhCt3Pvp29ETRtwel3QWM12LJwklYZjoD+X
+ 7BVyUM51M/A+i+/Aw1J4Yx5F2gWPXhZt+IorV6RrTisgworMiwduZgJEipPgZ1l9ernF
+ EWxzogpnQAzC6j97eLr3Zvw5TcFfQgu6iukoOrBaD+ZQv35Hh42jLfUdgDU8aXYOF+0F
+ 6X6WJRk/lIH2k3r//rjpqOPjJWocHSGm9mk9EKx3C1Hc/8W3RLTYXG5z+4Hq79CraqtL
+ VsHA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXEMVN0R0FCaZJaFWebclZphn39Z66cYK8z2sweQhlOhJ86hSTmnEneOSMf8xVnrCrkG8SF5H++LOyy@nongnu.org
-X-Gm-Message-State: AOJu0YwfizqCSbeuo5u2xTSUA55XHMQ0NDgNxfUms4PotbLB2u23nDo5
- szC/BbocZDvvt16Dha+i1tV/Zuc763VS18Bt5L/JBmU9WkalJ1RN6AdawHhyofY=
-X-Gm-Gg: ASbGncuHN9n9oS7aZb5HZPbW/QIY6VT0PaJKJqJ8x2Ba7YWpzi5axJ9QMzTXwL/rHRF
- JVyBS7Z4jhUq8Z+lWVX/3Juu2KWH1DWQ8+SC60/dRnxO3GvNQHyP/ZwV8++oGJgLz4wLhpkbVgv
- SdYL6YynNlZ9mwIhk2VwDYpgCqBg3en1U74lIldwai2nQVi6ADujQgcPjHy92fw5V6778//hjMI
- mkhkZ2GvV1JTlxoQNEA0UPp0UzZ9imz9hFNPaZeXdtPVuyagxUHZzB/xne3vfApKBrL5y9qH4c4
- cljRIGU4ZZJyEKzqSfByGT4tMmFO8SQXswM=
-X-Google-Smtp-Source: AGHT+IFu1Z6lSQnJBcD1/0Y2gLb/ZX30CSYDKN/S5PzdmyXjK9lVXqMYHMmdKtzoG99jR7p/Y9G9sQ==
-X-Received: by 2002:a05:6870:910d:b0:29e:5e7b:dc0f with SMTP id
- 586e51a60fabf-2a382755b9bmr2348048fac.38.1734019103750; 
- Thu, 12 Dec 2024 07:58:23 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-29f569a3868sm4441223fac.45.2024.12.12.07.58.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 07:58:23 -0800 (PST)
-Message-ID: <23c7d1a0-7558-47d4-8c60-8ffaa14d8c46@linaro.org>
-Date: Thu, 12 Dec 2024 09:58:20 -0600
+ AJvYcCVRW4DvMJ6gEptbmmtvQ2XoeUV0BoiTy+oNft/7j+1jc0vXOMUkQ7lkzCntxCY1oiRh4Txc22ht3mwu@nongnu.org
+X-Gm-Message-State: AOJu0YzzuuJkdtFYtDTQvZV6+QpHbuZTCobIaeWSYh48Aunzdb7IoVPx
+ Lf1fNmYmkbJ4I2x6aMMAcOoOa/67sjKviO5hpnaYALUCog1wyTtl/s5OCXUPhHJfLkMGFED/O2v
+ 0S60MzBVZp69b/cdL6J5O9G+RsK4DKAavY5+tNkDQAwT4HrNyf78Q
+X-Gm-Gg: ASbGncsKRcSxSJizCSB4hjGMlo2QiA0kpgBpjhaKO2j4S+cwuGvUGAW/KenkQAFzlLD
+ OYD2dQQJy7ohcHFh2zzkK2+17uaB3BfO7aXlD2ErJoffdoL6jOXIogx57ePHfd8H5K9KzDjqK1o
+ apUeTk2LbUBQfuf55ClypYBH6nSY56FmWPtFrThOSKx6cQFX8zv/8uAJr2Km8/RYBFkpGiwXbHe
+ 6Ho9N4cjRxqLqt3VhIpVbS4R0mnXcU2Fl8lNbM1I7LAgPCdPVWzlH89JzqtcW/P73INY0KsQPy3
+ 7mg0tZvq/Rzk46rg6Vzx3m/TLysz
+X-Received: by 2002:a05:600c:35c9:b0:434:a734:d279 with SMTP id
+ 5b1f17b1804b1-4361c3c6fbfmr77209495e9.16.1734019240470; 
+ Thu, 12 Dec 2024 08:00:40 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH7u0oYx1r7VH0iNnzyx8lXhphV11Pdrlgtw2BV0y+oru5OMlvI5mJMkYXy9VHum2h0WgePHA==
+X-Received: by 2002:a05:600c:35c9:b0:434:a734:d279 with SMTP id
+ 5b1f17b1804b1-4361c3c6fbfmr77207515e9.16.1734019239178; 
+ Thu, 12 Dec 2024 08:00:39 -0800 (PST)
+Received: from imammedo.users.ipa.redhat.com (nat-pool-brq-t.redhat.com.
+ [213.175.37.10]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4362559ec46sm20705235e9.20.2024.12.12.08.00.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 08:00:37 -0800 (PST)
+Date: Thu, 12 Dec 2024 17:00:34 +0100
+From: Igor Mammedov <imammedo@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, kvm@vger.kernel.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH] target/i386: Reset TSCs of parked vCPUs too on VM reset
+Message-ID: <20241212170034.081aa98f@imammedo.users.ipa.redhat.com>
+In-Reply-To: <5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com>
+References: <5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 06/11] target/ppc: introduce gen_addr_swizzle_le()
- function
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, npiggin@gmail.com,
- danielhb413@gmail.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
-References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
- <20241212151412.570454-7-mark.cave-ayland@ilande.co.uk>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212151412.570454-7-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2001:4860:4864:20::36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,67 +112,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 09:14, Mark Cave-Ayland wrote:
-> This function is used to swizzle the address lines to implement little endian
-> accesses as used by older CPUs. Add the address line swizzle to the gen_ld_tl()
-> and gen_st_tl() functions.
+On Thu, 12 Dec 2024 15:51:15 +0100
+"Maciej S. Szmigiero" <mail@maciej.szmigiero.name> wrote:
+
+> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Since commit 5286c3662294 ("target/i386: properly reset TSC on reset")
+> QEMU writes the special value of "1" to each online vCPU TSC on VM reset
+> to reset it.
+> 
+> However parked vCPUs don't get that handling and due to that their TSCs
+> get desynchronized when the VM gets reset.
+> This in turn causes KVM to turn off PVCLOCK_TSC_STABLE_BIT in its exported
+> PV clock.
+> Note that KVM has no understanding of vCPU being currently parked.
+> 
+> Without PVCLOCK_TSC_STABLE_BIT the sched clock is marked unstable in
+> the guest's kvm_sched_clock_init().
+> This causes a performance regressions to show in some tests.
+> 
+> Fix this issue by writing the special value of "1" also to TSCs of parked
+> vCPUs on VM reset.
+
+does TSC still ticks when vCPU is parked or it is paused at some value?
+
+> 
+> 
+> Reproducing the issue:
+> 1) Boot a VM with "-smp 2,maxcpus=3" or similar
+> 
+> 2) device_add host-x86_64-cpu,id=vcpu,node-id=0,socket-id=0,core-id=2,thread-id=0
+> 
+> 3) Wait a few seconds
+> 
+> 4) device_del vcpu
+> 
+> 5) Inside the VM run:
+> # echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
+> Observe the sched_clock_stable() value is 1.
+> 
+> 6) Reboot the VM
+> 
+> 7) Once the VM boots once again run inside it:
+> # echo "t" >/proc/sysrq-trigger; dmesg | grep sched_clock_stable
+> Observe the sched_clock_stable() value is now 0.
+> 
+> 
+> Fixes: 5286c3662294 ("target/i386: properly reset TSC on reset")
+> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
 > ---
->   target/ppc/translate.c | 26 ++++++++++++++++++++++++++
->   1 file changed, 26 insertions(+)
-
-Right.  So, this *can't* be split from patch 5.
-
-> +/*
-> + * Swizzle the address lines for little endian accesses as used by older
-> + * CPUs. The bottom 3 address lines are exlusive-ORed by a constant to
-
-typo for exclusive, though "xor'ed" is probably just as readable.
-
-> + * generate the correct address for a little endian access. For more
-> + * information see https://wiki.preterhuman.net/images/f/fc/Endian.pdf
-> + */
-> +static inline void gen_addr_swizzle_le(TCGv ret, TCGv addr, MemOp op)
-
-Drop the inline.
-
+>  accel/kvm/kvm-all.c                | 11 +++++++++++
+>  configs/targets/i386-softmmu.mak   |  1 +
+>  configs/targets/x86_64-softmmu.mak |  1 +
+>  include/sysemu/kvm.h               |  8 ++++++++
+>  target/i386/kvm/kvm.c              | 15 +++++++++++++++
+>  5 files changed, 36 insertions(+)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 801cff16a5a2..dec1d1c16a0d 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -437,6 +437,16 @@ int kvm_unpark_vcpu(KVMState *s, unsigned long vcpu_id)
+>      return kvm_fd;
+>  }
+>  
+> +static void kvm_reset_parked_vcpus(void *param)
 > +{
-> +    MemOp size = op & MO_SIZE;
-> +    TCGv aoff = tcg_temp_new();
-> +    static int c_swizzle[MO_SIZE] = { 0x7, 0x6, 0x4, 0x0 };
+> +    KVMState *s = param;
+> +    struct KVMParkedVcpu *cpu;
 > +
-> +    tcg_gen_andi_tl(aoff, addr, (1 << size) - 1);
-> +    tcg_gen_andi_tl(ret, addr, ~((1 << size) - 1));
-> +    tcg_gen_xori_tl(ret, ret, c_swizzle[size]);
-> +    tcg_gen_sub_tl(ret, ret, aoff);
+> +    QLIST_FOREACH(cpu, &s->kvm_parked_vcpus, node) {
+> +        kvm_arch_reset_parked_vcpu(cpu->vcpu_id, cpu->kvm_fd);
+> +    }
 > +}
+> +
+>  int kvm_create_vcpu(CPUState *cpu)
+>  {
+>      unsigned long vcpu_id = kvm_arch_vcpu_id(cpu);
+> @@ -2728,6 +2738,7 @@ static int kvm_init(MachineState *ms)
+>      }
+>  
+>      qemu_register_reset(kvm_unpoison_all, NULL);
+> +    qemu_register_reset(kvm_reset_parked_vcpus, s);
+>  
+>      if (s->kernel_irqchip_allowed) {
+>          kvm_irqchip_create(s);
+> diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
+> index 2ac69d5ba370..2eb0e8625005 100644
+> --- a/configs/targets/i386-softmmu.mak
+> +++ b/configs/targets/i386-softmmu.mak
+> @@ -1,4 +1,5 @@
+>  TARGET_ARCH=i386
+>  TARGET_SUPPORTS_MTTCG=y
+>  TARGET_KVM_HAVE_GUEST_DEBUG=y
+> +TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+>  TARGET_XML_FILES= gdb-xml/i386-32bit.xml
+> diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
+> index e12ac3dc59bf..920e9a42006f 100644
+> --- a/configs/targets/x86_64-softmmu.mak
+> +++ b/configs/targets/x86_64-softmmu.mak
+> @@ -2,4 +2,5 @@ TARGET_ARCH=x86_64
+>  TARGET_BASE_ARCH=i386
+>  TARGET_SUPPORTS_MTTCG=y
+>  TARGET_KVM_HAVE_GUEST_DEBUG=y
+> +TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+>  TARGET_XML_FILES= gdb-xml/i386-64bit.xml
+> diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+> index c3a60b28909a..ab17c09a551f 100644
+> --- a/include/sysemu/kvm.h
+> +++ b/include/sysemu/kvm.h
+> @@ -377,6 +377,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s);
+>  int kvm_arch_init_vcpu(CPUState *cpu);
+>  int kvm_arch_destroy_vcpu(CPUState *cpu);
+>  
+> +#ifdef TARGET_KVM_HAVE_RESET_PARKED_VCPU
+> +void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd);
+> +#else
+> +static inline void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
+> +{
+> +}
+> +#endif
+> +
+>  bool kvm_vcpu_id_is_valid(int vcpu_id);
+>  
+>  /* Returns VCPU ID to be used on KVM_CREATE_VCPU ioctl() */
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 8e17942c3ba1..2ff618fbf138 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -2415,6 +2415,21 @@ void kvm_arch_after_reset_vcpu(X86CPU *cpu)
+>      }
+>  }
+>  
+> +void kvm_arch_reset_parked_vcpu(unsigned long vcpu_id, int kvm_fd)
+> +{
+> +    g_autofree struct kvm_msrs *msrs = NULL;
+> +
+> +    msrs = g_malloc0(sizeof(*msrs) + sizeof(msrs->entries[0]));
+> +    msrs->entries[0].index = MSR_IA32_TSC;
+> +    msrs->entries[0].data = 1; /* match the value in x86_cpu_reset() */
+> +    msrs->nmsrs++;
+> +
+> +    if (ioctl(kvm_fd, KVM_SET_MSRS, msrs) != 1) {
+> +        warn_report("parked vCPU %lu TSC reset failed: %d",
+> +                    vcpu_id, errno);
+> +    }
+> +}
+> +
+>  void kvm_arch_do_init_vcpu(X86CPU *cpu)
+>  {
+>      CPUX86State *env = &cpu->env;
+> 
 
-I believe this is just
-
-     tcg_gen_xori_tl(ret, addr, 8 - memop_size(op));
-
-> @@ -2586,6 +2604,10 @@ static void gen_ld_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
->   {
->       if (!need_addrswizzle_le(ctx)) {
->           tcg_gen_qemu_ld_tl(val, addr, idx, memop);
-> +    } else {
-> +        TCGv taddr = tcg_temp_new();
-> +        gen_addr_swizzle_le(taddr, addr, memop);
-> +        tcg_gen_qemu_ld_tl(val, taddr, idx, memop);
->       }
->   }
-
-     if (need) {
-         /* BLRM is only found on old ppc32; the only MO_64 should be for the FPU. */
-         assert(size < MO_64);
-         addr = gen_addr_swizzle_le(...);
-     }
-     tcg_gen_qemu_ld_tl(...);
-
-You'll need to handle tcg_qemu_ld_i64 as well, and for that MO_64 needs 
-tcg_gen_rotli_i64(val, val, 32) after the load / before the store.
-
-
-r~
 
