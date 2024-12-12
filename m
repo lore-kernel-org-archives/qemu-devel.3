@@ -4,136 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2656E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2F44E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 10:05:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfx6-0006aQ-BX; Thu, 12 Dec 2024 04:57:48 -0500
+	id 1tLg3o-0007zV-LO; Thu, 12 Dec 2024 05:04:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfx5-0006aI-Hd
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:57:47 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tLg3l-0007yC-NP
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:04:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfx4-00069b-27
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:57:47 -0500
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1tLg3i-0000I1-L0
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:04:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733997465;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1733997877;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IcRgqwHUoQ4vRFM2gMhN1DYM+WdkMuZkJ7KF9yUrjP4=;
- b=dd9/AHjq6hTIUKUg/Xda9J3iR9rS76uulOuD8Oc7CYvWF8h5sFI3pmuSMks/UC4utWxtla
- m2FMr9+HfNpJ2K06fFIBi3emyJwroMETxoXPGyTvqFoAL0RDBVtSgTN/Jv4OMkUXETQeOA
- FgaJlZmQ1whQnoHPSUugKRRnfXLuy5g=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=Xuef9j19a6S4cy5t3jz7hMtr1tGA8HyHJRgE1u6fNo8=;
+ b=CXq1HPKvk7OtffVY7smyrWYhdthDjDJVxxk14cWX6kJoKwxBrXqy17seXnKaJfZn765k1Y
+ rSpnD0qR1zUkyTewM0rpmzeMqqLffqr24aBUH8MZqoua1ikG0OHGNR04e5zS13RdIwKcxC
+ AUgVlME45KKKdjHAESaNWmA8Fnz0/wc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-655-llwtDibANKW6Co84cLl0uQ-1; Thu, 12 Dec 2024 04:57:43 -0500
-X-MC-Unique: llwtDibANKW6Co84cLl0uQ-1
-X-Mimecast-MFC-AGG-ID: llwtDibANKW6Co84cLl0uQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4362153dcd6so2403385e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:57:43 -0800 (PST)
+ us-mta-466-rgGy8A3kNbKYwdy4p4rykQ-1; Thu, 12 Dec 2024 05:04:36 -0500
+X-MC-Unique: rgGy8A3kNbKYwdy4p4rykQ-1
+X-Mimecast-MFC-AGG-ID: rgGy8A3kNbKYwdy4p4rykQ
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6d8f51b49e5so8765436d6.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 02:04:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733997462; x=1734602262;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IcRgqwHUoQ4vRFM2gMhN1DYM+WdkMuZkJ7KF9yUrjP4=;
- b=YksU/6vf9COsSk4QhaNq1LeB0mQRBdMgrfKbXYFL76hjxAg+t96/Eal2eqXe+wHDt6
- pqZrkpbPI2VsyNsS+f0HNP9goCLd3M47G4rfu2NNDhHNG18oOr1aMaK8kMMwg/E1vjgb
- WCFTTpJMHk+Q61qOXSap+RG+yVoVIDfQV3AELxTweSgYBuabVwY1K/wcoLuBSOL7+Apl
- UDV3HDkQLjroh7uq9SaFeP0G4hxys0kCbXQWPJ7f7wgyWB5zwSbjmuArBIJh8a/RdPiL
- nkCb4PeZkFnLhB+wKxH6wWqMAM17ZyVAKfSqH/h3bDUizxs74vCNL9xhfi+wAPWXVRZh
- 71wg==
+ d=1e100.net; s=20230601; t=1733997876; x=1734602676;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Xuef9j19a6S4cy5t3jz7hMtr1tGA8HyHJRgE1u6fNo8=;
+ b=GIa7ISWwjt3hjkPVfVDtWOoXjyNS8HQCdVPrKivaaoNr7cAc0HtR338Lch8UiIKr+d
+ x12oJBhPuec8cgLrSk6Rpuzzo2FVaEkXkTzRf4DM7sPVvdi64nYzO7icryIGR5AuuLoC
+ z4DnJ2ggHzgiMIdaUetbsO7sC++YnZabgR4iaQvNjwwhdRqJonhcRxwgnD+1ilQbbmM+
+ Vfbh5vcTJhgbaUlvGT795DqxGXXipGV/G4gCYSpmqal2oGZ3/A/6nJDXEGJbfTRSXVyx
+ Ae1O8QSHdobHXmSynLCVD/AWhhR/5w3RATBN0w9Aoeclxo4rYEs5HjSMHbLkcn5swDzz
+ 0/Hg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkp+mmIlmo2wza19hhHmFIMCkK1XslnaAuM7BJEc9GpiRRjxDO7hOPmB/lst8bn2q9yJCXa/D0UA9Q@nongnu.org
-X-Gm-Message-State: AOJu0YzgOt8Q2XGFrlElC4UeqQDRoQCO7ZOnR1g1a5AoPm3BCSub8k81
- XIwX/JSz0N6gCUkepeKqeHr7oHn+/mjRqQaV7JK+FYcxaDa+Lpym+/EaxcpzOS+II1KKS8JgFAH
- UVtEXeq4lf1SV6gdZCd5JIAPTARuh/C4Pg6x5jN9jYBs2SkK7R4j8
-X-Gm-Gg: ASbGncv0WlePKe73DmpwLx01T3Rym/EPnPVwT23S+08S/Z1vyPeoq0GGyFTftmKahv0
- kuhRovrnfV1U83SgYiaZ6T7XSwA6TxTK/mE1wUTh9gz0qvBfJhYKX8O+MwFbnPySiox4Yexn+fr
- wBjP5g4s7oN1yX3zLxI4ATgut04evlr+DeiBoV3YGduYsvb4xeqShxMdlwzJxOxrpSLS6MBK+T6
- N1BtEnEWkZh1cmL3f4RYlbMk1Ic5FUoxcGyKby2pGUmvm86KGstJulsieGqWSO3bG8Xvnd3qGHQ
- 8CdBUg==
-X-Received: by 2002:a05:600c:4f86:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-4361c35cee6mr44868555e9.8.1733997462599; 
- Thu, 12 Dec 2024 01:57:42 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGRAVl7ReyHSs1tuIhNxALE4SjacCXFhYYI8IYNX5FE3N8g5kXo4AZ5YxSA27umeYxK3qd/Yg==
-X-Received: by 2002:a05:600c:4f86:b0:431:5e3c:2ff0 with SMTP id
- 5b1f17b1804b1-4361c35cee6mr44868355e9.8.1733997462291; 
- Thu, 12 Dec 2024 01:57:42 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ AJvYcCW+1ZSx7OTs/2D4Z+jI0oM3MheKE5YT9T6OvjkRMSk4sesYqB6ocXhzHfOgt+9LqL8ZIyEQ6UanMioq@nongnu.org
+X-Gm-Message-State: AOJu0YxlSU6u7AEXI5Y4O1+OC/rfLXCRuiABTAa9XtWpksYh/50E+Dez
+ R5L0D6Y80i8Iv8fnshqjJcKzOeWjNJJFtYk+OuRP+6ei8jyfvbUeet2a/nYGEun4rNIoylkIKB0
+ A/vuWZp7jPC6Y8CEFlw3OXrYii3fQHLBMKFcEcbd+af6HPc9D5Vs5
+X-Gm-Gg: ASbGncuD6lRJxILwK3+UexuGRidZ+/vrxMUs18Zp5Y9QvWTDlsnmhVwfAcN7MF6PqQX
+ UcTuf127fzXa/OdMreyVCxNkkE835ZcKLbIXS0P/otFgtExb5+qzl0GFeoRufS4pCkoHnsufzCY
+ rtPOiloeCn/+/kFLHH9aPXUta4IOIV8F1vbmIku4866DQ12YEAOiShKoD9fzSJ/p4CwIHxUbck/
+ Xu9wTGpoVwsi/6UsnLH9IooJAVyjorOjYCIV4s1PYMfcRIU7vsXyMh9lPVJj47gLX+ErYlvBwn7
+ jBL1w1dcJWmz9pzVhMTuP2LUTwiy
+X-Received: by 2002:ad4:5748:0:b0:6d8:959b:c307 with SMTP id
+ 6a1803df08f44-6dae38dd832mr47255806d6.10.1733997875843; 
+ Thu, 12 Dec 2024 02:04:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFF3KTyI2FwWZR0PYcTNWutT+SOIZjlczitRUUPCpTiP/v5+N6XDYRHA8yRBfMoXEZbgHkVOw==
+X-Received: by 2002:ad4:5748:0:b0:6d8:959b:c307 with SMTP id
+ 6a1803df08f44-6dae38dd832mr47255336d6.10.1733997875470; 
+ Thu, 12 Dec 2024 02:04:35 -0800 (PST)
+Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
+ ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436256b453bsm11520435e9.31.2024.12.12.01.57.41
+ 6a1803df08f44-6d9162133aasm39276806d6.129.2024.12.12.02.04.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 01:57:41 -0800 (PST)
-Message-ID: <0013db9f-a9f4-4611-9913-2229b090706b@redhat.com>
-Date: Thu, 12 Dec 2024 10:57:41 +0100
+ Thu, 12 Dec 2024 02:04:34 -0800 (PST)
+Message-ID: <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+Date: Thu, 12 Dec 2024 11:04:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 20/31] tests/functional: let cpio_extract accept
- filenames
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-21-berrange@redhat.com>
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-21-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <8734it1bv6.fsf@redhat.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
 X-Spam_bar: --
@@ -154,19 +121,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Currently cpio_extract differs from tar_extract/zip_extract
-> in that it only allows a file-like object as input. Adapt it
-> to also support filenames.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/archive.py | 16 +++++++++++-----
->   1 file changed, 11 insertions(+), 5 deletions(-)
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+On 12/12/24 10:36, Cornelia Huck wrote:
+> On Thu, Dec 12 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
+>
+>> On Thu, Dec 12, 2024 at 09:12:33AM +0100, Eric Auger wrote:
+>>> Connie,
+>>>
+>>> On 12/6/24 12:21, Cornelia Huck wrote:
+>>>> A respin/update on the aarch64 KVM cpu models. Also available at
+>>>> gitlab.com/cohuck/qemu arm-cpu-model-rfcv2
+>> snip
+>>
+>>> From a named model point of view, since I do not see much traction
+>>> upstream besides Red Hat use cases, targetting ARM spec revision
+>>> baselines may be overkill. Personally I would try to focus on above
+>>> models: AltraMax, AmpereOne, Grace, ... Or maybe the ARM cores they may
+>>> be derived from.
+>> If we target modelling of vendor named CPU models, then beware that
+>> we're opening the door to an very large set (potentially unbounded)
+>> of named CPU models over time. If we target ARM spec baselines then
+>> the set of named CPU models is fairly modest and grows slowly.
+>>
+>> Including ARM spec baselines will probably reduce the demand for
+>> adding vendor specific named models, though I expect we'll still
+>> end up wanting some, or possibly even many.
+>>
+>> Having some common baseline models is likely useful for mgmt
+>> applications in other ways though.
+>>
+>> Consider you mgmt app wants to set a CPU model that's common across
+>> heterogeneous hardware. They don't neccessarily want/need to be
+>> able to live migrate between heterogeneous CPUs, but for simplicity
+>> of configuration desire to set a single named CPU across all guests,
+>> irrespective of what host hey are launched on. The ARM spec baseline
+>> named models would give you that config simplicity.
+> If we use architecture extensions (i.e. Armv8.x/9.x) as baseline, I'm
+> seeing some drawbacks:
+> - a lot of work before we can address some specific use cases
+> - old models can get new optional features
+> - a specific cpu might have a huge set of optional features on top of
+>   the baseline model
+>
+> Using a reference core such as Neoverse-V2 probably makes more sense
+> (easier to get started, less feature diff?) It would still make a good
+> starting point for a simple config.
+>
+Actually from a dev point of view I am not sure it changes much to have
+either ARM spec rev baseline or CPU ref core named model.
+
+One remark is that if you look at
+https://developer.arm.com/documentation/109697/2024_09?lang=en
+you will see there are quite a lot of spec revisions and quite a few of
+them are actually meaningful in the light of currently avaiable and
+relevant HW we want to address. What I would like to avoid is to be
+obliged to look at all of them in a generic manner while we just want to
+address few cpu ref models.
+
+Also starting from the ARM spec rev baseline the end-user may need to
+add more feature opt-ins to be close to a specific cpu model. So I
+foresee extra complexity for the end-user.
+
+But again I from a dev pov it shouldn't change much and we should end up
+with a proto that illustrates the working model
+
+Eric
 
 
