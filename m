@@ -4,135 +4,124 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A6AE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:13:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0D2E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:15:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLh7t-0007w1-1W; Thu, 12 Dec 2024 06:13:01 -0500
+	id 1tLhAG-0000P0-2A; Thu, 12 Dec 2024 06:15:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLh7l-0007uA-DA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:12:54 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLhAE-0000Oc-10
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:15:26 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLh7g-0004pB-Sw
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:12:51 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLhAB-0005Av-W9
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:15:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734001967;
+ s=mimecast20190719; t=1734002123;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=dudOo0bSRj2Hz2DZGOZoTGAZ8Sj68rIZTJtzICyKa1c=;
- b=fbQ+/4AaMQmAu6c6uLB38N/b2F1Z3tgX8zPAjsWhc8/MtQgnRLGNcMnVML2/1zrzcJAhpd
- HKX9uyq9nYBCA8Ek+dP6pGXf9nAgW6rsSp469jbrgRJW18Hae87cuqMggu0plnBJSWeo6V
- dRHiSgKYgQUb0mNS8mYlf5uwbB3QSW8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9mTt6IERyXjuxa8VakgUtxDJBiPM+TiXIG4XZH2QDB8=;
+ b=TLM299x8EKeKMsuTBqzAR8T4+jQabEb+0uit9ieOFL8PeG/N501JHmh2ZEjvY/+Y9ZfLBt
+ jXfskstYbjT/9C9Jhf2xsaQ8VGE3VjH372/mPNNUOGNsKny7alYYgeVE9sOkMOqOmSd4zd
+ WpC1b8vpP1WsBBeeYj1b3NvxD9irt0E=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-VQhJ4OF8NTGBaLmlxqCb5Q-1; Thu, 12 Dec 2024 06:12:45 -0500
-X-MC-Unique: VQhJ4OF8NTGBaLmlxqCb5Q-1
-X-Mimecast-MFC-AGG-ID: VQhJ4OF8NTGBaLmlxqCb5Q
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3862b364578so864097f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 03:12:45 -0800 (PST)
+ us-mta-453-F0b_CUKtN9uXFpxJa_pERg-1; Thu, 12 Dec 2024 06:15:19 -0500
+X-MC-Unique: F0b_CUKtN9uXFpxJa_pERg-1
+X-Mimecast-MFC-AGG-ID: F0b_CUKtN9uXFpxJa_pERg
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385df115288so235623f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 03:15:19 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734001964; x=1734606764;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dudOo0bSRj2Hz2DZGOZoTGAZ8Sj68rIZTJtzICyKa1c=;
- b=R43hreAsd1qimC2/0RCsVnPkoDnW3jCecNYtqzQvk2SjX0KelP0U49XhiU8jtsc0Mc
- h2NeRh2yuehgz90VRNhc7qsDDuBfo33s30nEGZA7DG57DeLW8rVEI5cURjERzKhRDKnm
- E8BA61yEz7/485uuvVmwitEG2ATdyZY7ckI4NdQf4wmyIKA/MyKr4eyA0klik4KtP8rD
- 8r9i9Oq0ACWxsHhBEixjuhX7rJ6LqqGl7HpHqKxjuFa0cKH0gPfZpUjhE/22sJdcmq1s
- uRmbrYL69tzNQnnbfRJEU6Luw99ro8qRc0nlUA/et6nbO/AsX++lJV/brx9GX03fk0ii
- 6X+Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUHJGulNxXs8nbvAE4JrbbhNr10wQ9dLk0IM7sYy5raHskeGGwjWLBiKTbzVN5gj6faHcG6DmdSYxZE@nongnu.org
-X-Gm-Message-State: AOJu0YyUnYblMC/DB1fOJ3eegvQh3IUG0M205e24QDljgEt8mPuXfg3p
- qD6KDy4U6RbB5m0W4C2p7kUwgeKtEBtnkDK8W2zFWxym9h7SFu2KXKmurNJlhNNb/J9ePb6lbHW
- DjzwsSIvuZLwFcOZyyJ/9iuRLFcwsXJheOBvMs/SvWCskp8vkjKW+
-X-Gm-Gg: ASbGncvyxy8pbRLwJjAbhrQAkM//IssAMdYxBIOOHdElPB8qxnpzzCHDSltgwRjcyIF
- 7qjp9HgnBIj6AOpkUUSGk2YZDEnZpQ+jj54Li8i+7STxu46eprY055v0vY043VLkz8VCb8ci5QW
- cz/W2bwaLxINketnMEHxhsSpSkTFJ1SXlnvusXT0AoVe0kc0CVteNZZ+awVj+jY0oqm6enh2+m8
- F5s4c51X+5vfYucb6rvDSvdVIEhLVAO89mIwiRk3D9WraFFXMApzaPvkUyggUT1ySWEIyehapd4
- OEoZ7w==
-X-Received: by 2002:a05:6000:186e:b0:385:df17:2148 with SMTP id
- ffacd0b85a97d-3878884747emr2043275f8f.20.1734001964214; 
- Thu, 12 Dec 2024 03:12:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGzNOCztfr5W4Tddn7zZWwTjQJ3cXv6nLarXiOTF8QuHqM4lzfY3k9jRAx545XRciekwdwPaA==
-X-Received: by 2002:a05:6000:186e:b0:385:df17:2148 with SMTP id
- ffacd0b85a97d-3878884747emr2043263f8f.20.1734001963930; 
- Thu, 12 Dec 2024 03:12:43 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824bd889sm3766191f8f.44.2024.12.12.03.12.43
+ d=1e100.net; s=20230601; t=1734002119; x=1734606919;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9mTt6IERyXjuxa8VakgUtxDJBiPM+TiXIG4XZH2QDB8=;
+ b=vMtoUnMpqLTR1o/0u4iIJPq+JZVFjG89Tk9W2yrV0sl3UQnLZn+s+WPqEdlq817OGv
+ g3jGbeCgWx8A8slOMLjuBWxN0GWCUBJ8/Mt4Q7JVENv17p+msONg/1Av5aiNDLA6WSkk
+ 5psRCQmRqlWxWF0ucrSFSirkz0AxkNwKRMnoQsYSsXWvAUG6w20Jr5WGoOMAG/SjYeRe
+ NI8yC75D+2jVflo0Lf9DDV1Hpzv82kzPQOOFgtv52Jm6viJ/WhJ0Ie0DZkUwPqXidt/w
+ LXmbphBQym0acnc2J5I0YdmA5zb5phEcXq3TjeHociivsOkADhh0zAzJswEREZE2jXnf
+ t+vA==
+X-Gm-Message-State: AOJu0YxjdwVErGzSPVTuIUj8PHwZKwhso/bXuakbZunbGDWDamWr4OfR
+ 71MkzMXZbGgLIP0Jhhdpt/0RZsfePB3aQeFlbt2SbF90xFnbLr8A1rGLL9Lq/wPVp/xHmrTX5UU
+ R7xdlMmxeVz/3eHcb/c5Dlw10rUkh3kDjUWrXyXAdVPzmRftXbH1J
+X-Gm-Gg: ASbGncv2vzi+ZHoco79m2GSylMxLaG7t7UNjcf3ovJygPkYSnxIez+MLC4cP3N9iWwx
+ O006+qXqpt4rvPGSMj3NmwhDWsdYl0hPc/L7IlQl4gMRjkMT0mTYIXo9tcWMzFDUrueWNRr8UFh
+ E+GE++15Rh/M2fHFEIbqRF/faViGVC037yFue7Brh972NvQKB9x80c7+poHrRsWxLwtmgi5zNmG
+ 3074fUXBXt9IUiHq4j4xE2Xp+bx6bJliYHTFYK8O7Z8jfaBKuuZ0TotyRrd
+X-Received: by 2002:a5d:6487:0:b0:385:f5c4:b30d with SMTP id
+ ffacd0b85a97d-3864ce9382fmr5918058f8f.39.1734002118786; 
+ Thu, 12 Dec 2024 03:15:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH8djUlrM2k6LUKBxzNu8If4oeMRfW1v6NHdzIV8I7gCCNsfHCgwh1ujzHkzDebmYSiHrV/7w==
+X-Received: by 2002:a5d:6487:0:b0:385:f5c4:b30d with SMTP id
+ ffacd0b85a97d-3864ce9382fmr5918035f8f.39.1734002118474; 
+ Thu, 12 Dec 2024 03:15:18 -0800 (PST)
+Received: from [192.168.10.27] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3878251c5a0sm3689723f8f.92.2024.12.12.03.15.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 03:12:43 -0800 (PST)
-Message-ID: <8f096ace-71a3-49d4-86d0-4ef6f5b52eab@redhat.com>
-Date: Thu, 12 Dec 2024 12:12:42 +0100
+ Thu, 12 Dec 2024 03:15:17 -0800 (PST)
+Message-ID: <58766430-cfe3-41dc-9275-8fa0ad605076@redhat.com>
+Date: Thu, 12 Dec 2024 12:15:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 29/31] tests/functional: remove now unused 'run_cmd'
- helper
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-30-berrange@redhat.com>
+Subject: Re: [PATCH 18/26] rust: qom: add possibility of overriding unparent
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-19-pbonzini@redhat.com> <Z1qvdU+oukSRe8I4@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-30-berrange@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ xsEhBFRCcBIBDqDGsz4K0zZun3jh+U6Z9wNGLKQ0kSFyjN38gMqU1SfP+TUNQepFHb/Gc0E2
+ CxXPkIBTvYY+ZPkoTh5xF9oS1jqI8iRLzouzF8yXs3QjQIZ2SfuCxSVwlV65jotcjD2FTN04
+ hVopm9llFijNZpVIOGUTqzM4U55sdsCcZUluWM6x4HSOdw5F5Utxfp1wOjD/v92Lrax0hjiX
+ DResHSt48q+8FrZzY+AUbkUS+Jm34qjswdrgsC5uxeVcLkBgWLmov2kMaMROT0YmFY6A3m1S
+ P/kXmHDXxhe23gKb3dgwxUTpENDBGcfEzrzilWueOeUWiOcWuFOed/C3SyijBx3Av/lbCsHU
+ Vx6pMycNTdzU1BuAroB+Y3mNEuW56Yd44jlInzG2UOwt9XjjdKkJZ1g0P9dwptwLEgTEd3Fo
+ UdhAQyRXGYO8oROiuh+RZ1lXp6AQ4ZjoyH8WLfTLf5g1EKCTc4C1sy1vQSdzIRu3rBIjAvnC
+ tGZADei1IExLqB3uzXKzZ1BZ+Z8hnt2og9hb7H0y8diYfEk2w3R7wEr+Ehk5NQsT2MPI2QBd
+ wEv1/Aj1DgUHZAHzG1QN9S8wNWQ6K9DqHZTBnI1hUlkp22zCSHK/6FwUCuYp1zcAEQEAAc0j
+ UGFvbG8gQm9uemluaSA8cGJvbnppbmlAcmVkaGF0LmNvbT7CwU0EEwECACMFAlRCcBICGwMH
+ CwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRB+FRAMzTZpsbceDp9IIN6BIA0Ol7MoB15E
+ 11kRz/ewzryFY54tQlMnd4xxfH8MTQ/mm9I482YoSwPMdcWFAKnUX6Yo30tbLiNB8hzaHeRj
+ jx12K+ptqYbg+cevgOtbLAlL9kNgLLcsGqC2829jBCUTVeMSZDrzS97ole/YEez2qFpPnTV0
+ VrRWClWVfYh+JfzpXmgyhbkuwUxNFk421s4Ajp3d8nPPFUGgBG5HOxzkAm7xb1cjAuJ+oi/K
+ CHfkuN+fLZl/u3E/fw7vvOESApLU5o0icVXeakfSz0LsygEnekDbxPnE5af/9FEkXJD5EoYG
+ SEahaEtgNrR4qsyxyAGYgZlS70vkSSYJ+iT2rrwEiDlo31MzRo6Ba2FfHBSJ7lcYdPT7bbk9
+ AO3hlNMhNdUhoQv7M5HsnqZ6unvSHOKmReNaS9egAGdRN0/GPDWr9wroyJ65ZNQsHl9nXBqE
+ AukZNr5oJO5vxrYiAuuTSd6UI/xFkjtkzltG3mw5ao2bBpk/V/YuePrJsnPFHG7NhizrxttB
+ nTuOSCMo45pfHQ+XYd5K1+Cv/NzZFNWscm5htJ0HznY+oOsZvHTyGz3v91pn51dkRYN0otqr
+ bQ4tlFFuVjArBZcapSIe6NV8C4cEiSTOwE0EVEJx7gEIAMeHcVzuv2bp9HlWDp6+RkZe+vtl
+ KwAHplb/WH59j2wyG8V6i33+6MlSSJMOFnYUCCL77bucx9uImI5nX24PIlqT+zasVEEVGSRF
+ m8dgkcJDB7Tps0IkNrUi4yof3B3shR+vMY3i3Ip0e41zKx0CvlAhMOo6otaHmcxr35sWq1Jk
+ tLkbn3wG+fPQCVudJJECvVQ//UAthSSEklA50QtD2sBkmQ14ZryEyTHQ+E42K3j2IUmOLriF
+ dNr9NvE1QGmGyIcbw2NIVEBOK/GWxkS5+dmxM2iD4Jdaf2nSn3jlHjEXoPwpMs0KZsgdU0pP
+ JQzMUMwmB1wM8JxovFlPYrhNT9MAEQEAAcLBMwQYAQIACQUCVEJx7gIbDAAKCRB+FRAMzTZp
+ sadRDqCctLmYICZu4GSnie4lKXl+HqlLanpVMOoFNnWs9oRP47MbE2wv8OaYh5pNR9VVgyhD
+ OG0AU7oidG36OeUlrFDTfnPYYSF/mPCxHttosyt8O5kabxnIPv2URuAxDByz+iVbL+RjKaGM
+ GDph56ZTswlx75nZVtIukqzLAQ5fa8OALSGum0cFi4ptZUOhDNz1onz61klD6z3MODi0sBZN
+ Aj6guB2L/+2ZwElZEeRBERRd/uommlYuToAXfNRdUwrwl9gRMiA0WSyTb190zneRRDfpSK5d
+ usXnM/O+kr3Dm+Ui+UioPf6wgbn3T0o6I5BhVhs4h4hWmIW7iNhPjX1iybXfmb1gAFfjtHfL
+ xRUr64svXpyfJMScIQtBAm0ihWPltXkyITA92ngCmPdHa6M1hMh4RDX+Jf1fiWubzp1voAg0
+ JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
+ dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
+ b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
+In-Reply-To: <Z1qvdU+oukSRe8I4@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -141,7 +130,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,15 +146,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> All usage has been replaced by direct 'subprocess' helpers.
+On 12/12/24 10:40, Zhao Liu wrote:
+> On Mon, Dec 09, 2024 at 01:37:09PM +0100, Paolo Bonzini wrote:
+>> Date: Mon,  9 Dec 2024 13:37:09 +0100
+>> From: Paolo Bonzini <pbonzini@redhat.com>
+>> Subject: [PATCH 18/26] rust: qom: add possibility of overriding unparent
+>> X-Mailer: git-send-email 2.47.1
+>>
+>> Add a blanket definition of ClassInitImpl<ObjectClass> that thunks
+>> ObjectImpl::UNPARENT and overrides it in ObjectClass if it is not
+>> None.
+>>
+>> ClassInitImpl<DeviceClass> can now call its superclass's ClassInitImpl,
+>> so that the C and Rust hierarchies match more closely.
+>>
+>> This is mostly done as an example of implementing the metaclass
+>> hierarchy under ClassInitImpl.
+>>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>   rust/qemu-api/src/definitions.rs  | 44 ++++++++++++++++++++++++++++---
+>>   rust/qemu-api/src/device_class.rs |  6 +++--
+>>   2 files changed, 45 insertions(+), 5 deletions(-)
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/__init__.py |  2 +-
->   tests/functional/qemu_test/cmd.py      | 11 -----------
->   2 files changed, 1 insertion(+), 12 deletions(-)
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> 
+> (with an additional comment below...)
+> 
+>> diff --git a/rust/qemu-api/src/definitions.rs b/rust/qemu-api/src/definitions.rs
+>> index 2429b9f53f0..958ea34decc 100644
+>> --- a/rust/qemu-api/src/definitions.rs
+>> +++ b/rust/qemu-api/src/definitions.rs
+>> @@ -6,7 +6,7 @@
+>>   
+>>   use std::{ffi::CStr, os::raw::c_void};
+>>   
+>> -use crate::bindings::{Object, ObjectClass, TypeInfo};
+>> +use crate::bindings::{self, Object, ObjectClass, TypeInfo};
+>>   
+>>   unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
+>>       // SAFETY: obj is an instance of T, since rust_instance_init<T>
+>> @@ -115,6 +115,9 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+>>           class_data: core::ptr::null_mut(),
+>>           interfaces: core::ptr::null_mut(),
+>>       };
+>> +
+>> +    // methods on ObjectClass
+>> +    const UNPARENT: Option<fn(&mut Self)> = None;
+>>   }
+> 
+> Will we change `&mut Self` to an immutable reference in the future?
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Good point, let's do it now since anyway UNPARENT is unused.
+
+Paolo
 
 
