@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED540E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1355E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLq6b-0003ZP-Uf; Thu, 12 Dec 2024 15:48:18 -0500
+	id 1tLq6d-0003Zh-0f; Thu, 12 Dec 2024 15:48:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6a-0003Yx-2H
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:16 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6b-0003ZB-9J
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6X-0000tn-UK
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:15 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6X-0000tv-Ux
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734036488;
+ s=mimecast20190719; t=1734036490;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PXCs7VIoei9S9hqR7yNBH7oBFgZC3Ka7j9AgRTkR+AA=;
- b=gm2qbfEWUNNPsuGr/+pllY5ToKC9n8KcMuQQMMTTdHY2fcP2m2RPEGpOvMJBUzBd111KXj
- MGJKC2m6fy8grTYefqeyHiS3olZ6mVwISCWVbImDb1ZeKQy6EutEJc2h3y+Z5SHcBJhIS6
- WFpqlcjoVKA343PgXk8SYVVJnkC6n0w=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=R7ZPor/d6qfaqpGPHzGBJG+I4KBraL5l1GdaMqLuqQs=;
+ b=YPHvqR2NmO2xrwiqe0G0AUwiCBFVEEZk2f4R7UpkRBnAuXBx62tl0Mp+wrS6tb7cWK45v9
+ 6eHqFEBLSTDcqTJsEbRqhlLebuslqgcDw0u4a04qpToh888N/zwfIeZ0/H34EsRQfcE30h
+ P8IZ7hDZjMT7DaGH1olnAybo5/MPMwY=
+Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
+ [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-624-FU_8xFV7P4apafgoobrVgg-1; Thu, 12 Dec 2024 15:48:07 -0500
-X-MC-Unique: FU_8xFV7P4apafgoobrVgg-1
-X-Mimecast-MFC-AGG-ID: FU_8xFV7P4apafgoobrVgg
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-844cfac2578so152648739f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:48:07 -0800 (PST)
+ us-mta-483-TLz9ysefOq2KSPfCAM75Bg-1; Thu, 12 Dec 2024 15:48:08 -0500
+X-MC-Unique: TLz9ysefOq2KSPfCAM75Bg-1
+X-Mimecast-MFC-AGG-ID: TLz9ysefOq2KSPfCAM75Bg
+Received: by mail-io1-f70.google.com with SMTP id
+ ca18e2360f4ac-844e5cf7b42so54398239f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:48:08 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734036486; x=1734641286;
+ d=1e100.net; s=20230601; t=1734036488; x=1734641288;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PXCs7VIoei9S9hqR7yNBH7oBFgZC3Ka7j9AgRTkR+AA=;
- b=nAQXWe9jW/xH9fj8owNKvMqLPghUsq14+X5JvK9vRGfVT8Z2YPW9XXJ4WQA65tavsv
- UPxa+9TG/uM2T6QYCq7tXd6mXUjaRdNEKY6/ATseFi7FFhKui0abNNFd1PM8GID+l4ER
- LrfvG7QW4yOklGDvW8v4mAWMk1KWRNOvvIrsNDnJdhshs9CMuCmMVKVyrZBdpMOWOe99
- TtKEd8ryqoQGHiWS8e/xuyIt0BshS9o8rzsI0WR3z4SN0u1SQVKYe+jAwBZ+9ix8erYz
- ayCQzw6YjV9fHjvmWRJE6IAtSzW5ABpZnLiKeRTUmLm76stbAgXk3jozANbLzIfc4qvZ
- Yv0A==
-X-Gm-Message-State: AOJu0YxgS3AOZ+tIBxD6MGOYBcEKWcNQvJfPT7LJ5+kulmDYVsQZ8YYA
- Ua2E6F7npNXN2rJuxO6nXNDaucY7mFLv5Fkpxy8mnFC/OMOk57YgPEgmjnVZGhxSDYSY6WmwfTN
- /qp0hq6osYP35tikeKdnrOpGH+nu0gUQ9VrBE8RsMV7QztIs6XLTLri0gx10+Ph9pSKcTnVHbsH
- KwGa14JQK2do47DnidZAMqnY8X0dl/PIcY1w==
-X-Gm-Gg: ASbGncuFECE/34DF8UCEghxWJDe/wr1A/If2H5YOBwd1oOE7deYSsBx93l6fzSoYLKM
- 8KLf7cWI1x0WAuQoo3U+1sTQPdWfbRB80voVx1WyBfSKQHjANfbeQDZExjEnKp2oUYE02DdqEO+
- nqWq0lZvKBl0JpqnhiHApRtKHd/ca3lIJye3005rtHCuTsfPq95RADvBebJsd/dFZiPmRLl2sn5
- JUjpYw0SChdnmUxTyXP4AWDief+tV/ZFjh3N4YJh4FA89gp+Fh3SeC8vuSL/NCF88RlFO9t9pF3
- F2g1jkp2/t8lY1/n9tAkdbj/6QQqjyOU
-X-Received: by 2002:a05:6602:164f:b0:841:a678:de40 with SMTP id
- ca18e2360f4ac-844e866b1e4mr41838639f.0.1734036485840; 
- Thu, 12 Dec 2024 12:48:05 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFLPOXQ5HYJZ9+O4ZTZ1OL1zYi0Y3Ii13pdgx76fflIAN6aQDFGRriXhW0DsI28WiUQX9KJpQ==
-X-Received: by 2002:a05:6602:164f:b0:841:a678:de40 with SMTP id
- ca18e2360f4ac-844e866b1e4mr41836139f.0.1734036485474; 
- Thu, 12 Dec 2024 12:48:05 -0800 (PST)
+ bh=R7ZPor/d6qfaqpGPHzGBJG+I4KBraL5l1GdaMqLuqQs=;
+ b=pAlY9G2/ICeRsGwhzJqNIjYgD/nVsG8nP8G157vMlOhF8EuBqOG6O+ecp5uQRElUVQ
+ gXQ7i8HSdvtOR0e5iR3sDW4y6se/EaKsdhEYgMnBveKc0WRzxApSgG8azhW8IdKT4B1C
+ 9f1LWcqOIymJESVTpoGKqeF8Ne1Gad9L0C665Jy59/wBv9OBrQbtnUhGwwIRU3F9Bb1a
+ WabDD8Ql/+0L3vW1YKyJnmBOxn2xHKggH68vU1fbHx20XRxsEwQ0vE9sjVkFPFnYWOly
+ NISGkVChBtta9xyKx66GKSqV33SUWyULt8FmIFrjXOm/R2MpJRUztp3ZDC4sBu1phKug
+ yAWQ==
+X-Gm-Message-State: AOJu0YwOrnzV16UBJyxAs6NVth25M6ZjKVc71fRtnw/IqMR7X0c383iM
+ /H31R14FOBuTzD03HH78cMnCQh/XNZz2/RQUYD1gdA8lWFKiRdUWgvkJTcGYv21Sr71U9rbyi+D
+ etURCKdpCsb5XW2TzxVmZ08Vtq64M/hwfz5wgTIqtaDTYL2tmanT5JfmUhlAA8tNGd/JrseZW9l
+ 4cfqEMDhwRNB8eWh2/yHaIVfNuCEyMzixNsQ==
+X-Gm-Gg: ASbGnct19B2qGKbv1weaSFCnT7tzE9gD2g/F4+JZNyNyWE1jARH3XOpICADWF5IRxr5
+ BzogfxSZMS94FoV7Vw1dKTmvHExt10f3DVoSJ5QKl3XBV7rDSDG2f4R9xIq3M2aRnZd2oJrd1Bi
+ 1YYnDPMzJvXPqBPnCCBUQg8r73DEFqE1mg4Sc5XyBR6epvFty1MyNWapCQy1+xiXsplKDYbNS9f
+ 9c1JByeyCtbbvP9LlEey8RfIYTELS8EuoOxCSg052ox8oSiA1d9ruwK70hlTIzbib56o4eECU8D
+ 3Xy+SdD0Tzeoh4fIN/01HbeAwqyaaGl5
+X-Received: by 2002:a05:6602:3408:b0:83b:5306:d24d with SMTP id
+ ca18e2360f4ac-844e5cf3815mr175788739f.6.1734036487739; 
+ Thu, 12 Dec 2024 12:48:07 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFUNkLBmHa/e0+fZawLuanIQAwXuQvSLW5YjOx4fs9qb8Q5oG8jMp+4Fpgx4Dc0G00zYVB3/w==
+X-Received: by 2002:a05:6602:3408:b0:83b:5306:d24d with SMTP id
+ ca18e2360f4ac-844e5cf3815mr175786739f.6.1734036487394; 
+ Thu, 12 Dec 2024 12:48:07 -0800 (PST)
 Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-844e57b48fcsm20807839f.35.2024.12.12.12.48.03
+ ca18e2360f4ac-844e57b48fcsm20807839f.35.2024.12.12.12.48.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 12:48:04 -0800 (PST)
+ Thu, 12 Dec 2024 12:48:06 -0800 (PST)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  peterx@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
  s_sourceforge@nedprod.com, Maxim Levitsky <mlevitsk@redhat.com>
-Subject: [PATCH v2 1/3] scripts/qemu-gdb: Always do full stack dump for python
- errors
-Date: Thu, 12 Dec 2024 15:47:59 -0500
-Message-ID: <20241212204801.1420528-2-peterx@redhat.com>
+Subject: [PATCH v2 2/3] scripts/qemu-gdb: Simplify fs_base fetching for
+ coroutines
+Date: Thu, 12 Dec 2024 15:48:00 -0500
+Message-ID: <20241212204801.1420528-3-peterx@redhat.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241212204801.1420528-1-peterx@redhat.com>
 References: <20241212204801.1420528-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -110,23 +110,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's easier for either debugging plugin errors, or issue reports.
+There're a bunch of code trying to fetch fs_base in different ways.  IIUC
+the simplest way instead is "$fs_base".  It also has the benefit that it'll
+work for both live gdb session or coredumps.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- scripts/qemu-gdb.py | 2 ++
- 1 file changed, 2 insertions(+)
+ scripts/qemugdb/coroutine.py | 23 ++---------------------
+ 1 file changed, 2 insertions(+), 21 deletions(-)
 
-diff --git a/scripts/qemu-gdb.py b/scripts/qemu-gdb.py
-index 4d2a9f6c43..cfae94a2e9 100644
---- a/scripts/qemu-gdb.py
-+++ b/scripts/qemu-gdb.py
-@@ -45,3 +45,5 @@ def __init__(self):
- # Default to silently passing through SIGUSR1, because QEMU sends it
- # to itself a lot.
- gdb.execute('handle SIGUSR1 pass noprint nostop')
-+# Always print full stack for python errors, easier to debug and report issues
-+gdb.execute('set python print-stack full')
+diff --git a/scripts/qemugdb/coroutine.py b/scripts/qemugdb/coroutine.py
+index 7db46d4b68..20f76ed37b 100644
+--- a/scripts/qemugdb/coroutine.py
++++ b/scripts/qemugdb/coroutine.py
+@@ -13,28 +13,9 @@
+ 
+ VOID_PTR = gdb.lookup_type('void').pointer()
+ 
+-def get_fs_base():
+-    '''Fetch %fs base value using arch_prctl(ARCH_GET_FS).  This is
+-       pthread_self().'''
+-    # %rsp - 120 is scratch space according to the SystemV ABI
+-    old = gdb.parse_and_eval('*(uint64_t*)($rsp - 120)')
+-    gdb.execute('call (int)arch_prctl(0x1003, $rsp - 120)', False, True)
+-    fs_base = gdb.parse_and_eval('*(uint64_t*)($rsp - 120)')
+-    gdb.execute('set *(uint64_t*)($rsp - 120) = %s' % old, False, True)
+-    return fs_base
+-
+ def pthread_self():
+-    '''Fetch pthread_self() from the glibc start_thread function.'''
+-    f = gdb.newest_frame()
+-    while f.name() != 'start_thread':
+-        f = f.older()
+-        if f is None:
+-            return get_fs_base()
+-
+-    try:
+-        return f.read_var("arg")
+-    except ValueError:
+-        return get_fs_base()
++    '''Fetch the base address of TLS.'''
++    return gdb.parse_and_eval("$fs_base")
+ 
+ def get_glibc_pointer_guard():
+     '''Fetch glibc pointer guard value'''
 -- 
 2.47.0
 
