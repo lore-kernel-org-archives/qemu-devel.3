@@ -4,55 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FC01E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 12:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3ABCE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 12:04:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLhu9-0004EU-6o; Thu, 12 Dec 2024 07:02:53 -0500
+	id 1tLhva-0004kB-Pz; Thu, 12 Dec 2024 07:04:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tLhu6-0004E1-Qi
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:02:51 -0500
-Received: from frasgout.his.huawei.com ([185.176.79.56])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1tLhu4-0003PG-5C
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:02:50 -0500
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4Y89vj75nvz6K6ll;
- Thu, 12 Dec 2024 19:57:53 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 5431E140AB8;
- Thu, 12 Dec 2024 20:02:34 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 12 Dec
- 2024 13:02:34 +0100
-Date: Thu, 12 Dec 2024 12:02:32 +0000
-To: Li Zhijian via <qemu-devel@nongnu.org>
-CC: Li Zhijian <lizhijian@fujitsu.com>, Fan Ni <fan.ni@samsung.com>
-Subject: Re: [PATCH] hw/cxl: Fix msix_notify: Assertion `vector <
- dev->msix_entries_nr`
-Message-ID: <20241212120232.000056a9@huawei.com>
-In-Reply-To: <20241212085534.2669377-1-lizhijian@fujitsu.com>
-References: <20241212085534.2669377-1-lizhijian@fujitsu.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLhvU-0004cy-SW
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:04:16 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLhvS-0004Yi-PT
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:04:16 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-728f1525565so593467b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 04:04:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734005052; x=1734609852; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bLxk+wyW7auej15J4fCkvVb8H1kqD+g0eYAh679uWfI=;
+ b=aiGngk69FfaEdtVs63Utq04YvlID+JeSGpyeqk9HU2XCRs8ERKFtNb8CUz2yHNuu/R
+ fSwuyv84PmusHaDz12nllkT3HlBnvL5L0TlX33rhvtI5iL69EtmguU6lVe2j1PxjIEWQ
+ e5w95sYT22RzwpkVThFztbvLEzhAoFKwcJ8GzNsHdoVIvhrDbwpORNo1P5y3lguoPlRw
+ 7grdR+4LNrgTK01rf/x44+PJ+MltW/J92GLduY87IAS0Qz/z0bFJm/2NIDgJVTmU7w97
+ IK+d/NTX/slp34/RUSiATpgGFQBKm7rGsyn53XUPPOVgf1/RDU8Z2eoY6zQ7PhAGi9T5
+ tEZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734005052; x=1734609852;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bLxk+wyW7auej15J4fCkvVb8H1kqD+g0eYAh679uWfI=;
+ b=qGC7G/h9JlO4+3s4bQb61erzSS+8Xf4Az23DsH4/SMCRKL/hPR2aySJuoFPqTEAiTi
+ NXQt206VwURN4iigSbvTGbvhsTDyZ7qKT4VQbkK4crz3L1o4k3YqVvRj6oC08F2LOCOy
+ 98rNWOjAOip+nMxSwLAnuWBKgONqcqDwh4wRPt7Be7qoGRWcUtdTDnexTzak/kvTgNXm
+ XKXDROZ5xxNoLZLnEgXohL5GAzRjvuQaGS6cCISaGda/O1ueWxbcvCNF/NIxKDjJKAS8
+ bsTYuBKwUYTu8tuNw4ZYuy1poLfDvCK6MUknHcijpVK+Jq4RtWjdYE12ZxvjE23kXzzD
+ /yEA==
+X-Gm-Message-State: AOJu0Yxb4nqFEj/SNczmeaQkdsZZpwzSbx9KMIn0cNoQcGpghicHz3Pc
+ rFZol3Qf6I2dqfPgbfI3UqSe7dD1BY0syM9SiBL1O9tARu/FSlXj8dTdRg==
+X-Gm-Gg: ASbGnct0+vjN1XrwKlDv5gG4Y2hy93X+0zBFfAnczROv1GqXPtxcjhS0Qfq5WVktwrY
+ s3j5/Wx3e6GvwlJIxqaJnnWvK9f12mPfiR0SXEZ7H2bIQYB0CJUp0VMVo6TUoyP3dQTHm3gsNzb
+ 9ru/2cyP8CfYOCRRvJJLoJMpxFSIp/ud+mqL/38f/Lcczbkjmql7iIiRiF4fdjOE1nFUwIUS83U
+ +lvin00vUxZnky5TnKSVHYv+HYBPGh1BorearVfI3R7SQPFNV1vqFvvxnQ=
+X-Google-Smtp-Source: AGHT+IEZ69TZaFkJnEfa6lfB9bWcaMHu0iZamv5eyAzRfNCCAH9Kjl/c8oCE3LcUARjxvpANm1FyVg==
+X-Received: by 2002:a05:6a21:1190:b0:1e0:dc34:2e7d with SMTP id
+ adf61e73a8af0-1e1daaf4f38mr26145637.5.1734005052194; 
+ Thu, 12 Dec 2024 04:04:12 -0800 (PST)
+Received: from wheely.local0.net ([1.146.48.169])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-725da7e0114sm8920213b3a.2.2024.12.12.04.04.09
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 04:04:11 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH] pci/msix: Fix msix pba read vector poll end calculation
+Date: Thu, 12 Dec 2024 22:04:02 +1000
+Message-ID: <20241212120402.1475053-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=npiggin@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -66,110 +90,39 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Dec 2024 16:55:33 +0800
-Li Zhijian via <qemu-devel@nongnu.org> wrote:
+The end vector calculation has a bug that results in polling fewer
+than required vectors when reading at a non-zero offset in PBA memory.
 
-> This assertion always happens when we sanitize the CXL memory device.
-> $ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
-> 
-> It is incorrect to register an MSIX number beyond the device's capability.
-> 
-> Expand the device's MSIX to 10 and introduce the `request_msix_number()`
-> helper function to dynamically request an available MSIX number.
-> 
-> Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
-
-Hi.
-
-Thanks for testing + the fix.
-
-This looks like a  mess up by me due to reordering patches. 
-In the first instance, the fix should just be to increase msi_n (keep it minimal)
-
-The refactor to use an allocator may makes sense as a follow up, but needs
-to be used universally for allocation of each msix, not just for the later
-ones.  However, it may be simpler to just use an enum with a _MAX final
-entry to ensure we allocate the right overall number.  These are fixed
-numbers and a restricted resource, so dynamic allocator is probably unnecessary.
-
-Longer term we need to spend some time on automated tests so this sort of silly
-bug doesn't happen in future :(
+Fixes: bbef882cc193 ("msi: add API to get notified about pending bit poll")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+Taking closer look at my msix pba mmio write patch, it looks like there
+might be a bug in the calculation from the code I copied? I haven't
+looked into how to test these poll notifiers though.
 
 Thanks,
+Nick
 
-Jonathan
+ hw/pci/msix.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-
-> ---
->  hw/cxl/cxl-device-utils.c   |  3 ++-
->  hw/mem/cxl_type3.c          | 15 ++++++++++++++-
->  include/hw/cxl/cxl_device.h |  2 ++
->  3 files changed, 18 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-> index 035d034f6d..8e52af6813 100644
-> --- a/hw/cxl/cxl-device-utils.c
-> +++ b/hw/cxl/cxl-device-utils.c
-> @@ -354,8 +354,9 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
->  
->  static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
->  {
-> -    const uint8_t msi_n = 9;
-> +    uint8_t msi_n = cxl_request_msi_number();
->  
-> +    assert(msi_n > 0);
->      /* 2048 payload size */
->      ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
->                       PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 5cf754b38f..dbb1368736 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -835,6 +835,19 @@ static DOEProtocol doe_cdat_prot[] = {
->      { }
->  };
->  
-> +#define CT3_MSIX_NUM 10
-> +unsigned short cxl_request_msi_number(void)
-> +{
-> +    const unsigned short start = 6;
-> +    static unsigned short next = start;
-> +
-> +    if (next + 1 >= CT3_MSIX_NUM) {
-> +        return -1;
-> +    }
-> +
-> +    return ++next;
-> +}
-> +
->  static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->  {
->      ERRP_GUARD();
-> @@ -843,7 +856,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
->      ComponentRegisters *regs = &cxl_cstate->crb;
->      MemoryRegion *mr = &regs->component_registers;
->      uint8_t *pci_conf = pci_dev->config;
-> -    unsigned short msix_num = 6;
-> +    unsigned short msix_num = CT3_MSIX_NUM;
->      int i, rc;
->      uint16_t count;
->  
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 561b375dc8..622265f50e 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -680,4 +680,6 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->                                     uint64_t len);
->  bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
->                                    uint64_t len);
-> +unsigned short cxl_request_msi_number(void);
-> +
->  #endif
+diff --git a/hw/pci/msix.c b/hw/pci/msix.c
+index 487e49834ee..cc6e79ec678 100644
+--- a/hw/pci/msix.c
++++ b/hw/pci/msix.c
+@@ -250,7 +250,7 @@ static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
+     PCIDevice *dev = opaque;
+     if (dev->msix_vector_poll_notifier) {
+         unsigned vector_start = addr * 8;
+-        unsigned vector_end = MIN(addr + size * 8, dev->msix_entries_nr);
++        unsigned vector_end = MIN((addr + size) * 8, dev->msix_entries_nr);
+         dev->msix_vector_poll_notifier(dev, vector_start, vector_end);
+     }
+ 
+-- 
+2.45.2
 
 
