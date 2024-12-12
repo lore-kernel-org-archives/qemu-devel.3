@@ -4,92 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDBBE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 21:23:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC194E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 21:29:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLqdx-0008Q7-1f; Thu, 12 Dec 2024 16:22:46 -0500
+	id 1tLqkF-0002I1-EC; Thu, 12 Dec 2024 16:29:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLqdk-0008Pd-KE
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:22:33 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLqk8-0002Hg-Id
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:29:08 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLqdh-00038K-9u
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:22:32 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tLqk5-0004bm-Lv
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:29:08 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734038547;
+ s=mimecast20190719; t=1734038943;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QOyXxqgKIvJMiN/Eq4EPEe2Tvt5h7qfXSOVsS+Kdtqg=;
- b=dGKWIPdqCqZgRfJuq5t3MJyPuczXxS+b+uGfT6Rn6Tw+WdeL5pAwuYTowwJZlqLiBAdbEA
- m2Sp58zCjC/6+pMQ4axie5npzjm6Xi0cMtAmX/cKjGVITp6lNsa/oqNfrgX7T/5SOoNwLc
- nEK7+QeXqGPGAF7s0qsuDZdwMilsZh4=
-Received: from mail-io1-f70.google.com (mail-io1-f70.google.com
- [209.85.166.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uY+TrTBxI5R2O+5foBGFgKbI4zhzk7qXDuFF6ceEyjg=;
+ b=IfyBm+9LMo813poFLr4UcttuyEi01AkE3SFyAjrBZbmY24E5U+HG6fgt+9i+TQuseBg/AP
+ cy+tiklZtHeKD66z51l/XdTHKQpoktuHrFz697cWBRmTMt1pt5YsRAMiILxfU9NY7q7vGq
+ Bw5KHPf2CofpCz/OyGLte4qMsEwHX7M=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-590-vDGkkRegMqG-T0B0NPbM4w-1; Thu, 12 Dec 2024 16:22:25 -0500
-X-MC-Unique: vDGkkRegMqG-T0B0NPbM4w-1
-X-Mimecast-MFC-AGG-ID: vDGkkRegMqG-T0B0NPbM4w
-Received: by mail-io1-f70.google.com with SMTP id
- ca18e2360f4ac-844c34cde5eso175302639f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 13:22:25 -0800 (PST)
+ us-mta-474-O-IItg3XOMeDEqPaAdRRdQ-1; Thu, 12 Dec 2024 16:29:01 -0500
+X-MC-Unique: O-IItg3XOMeDEqPaAdRRdQ-1
+X-Mimecast-MFC-AGG-ID: O-IItg3XOMeDEqPaAdRRdQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3862b364578so1151849f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 13:29:00 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734038544; x=1734643344;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QOyXxqgKIvJMiN/Eq4EPEe2Tvt5h7qfXSOVsS+Kdtqg=;
- b=ZlaA0pTWc4LT8Fa0QXR9zXrhALgbf/DoEAw2TBUHu2LKRWpANB5el5YBc9D0DevEpR
- P2xBtD2FyHmEv/2g9eEvj57jZ/xaomufV8MlziW713OpgdaMJ4XTQu+0rBts0v+JyTdQ
- yj12FMbxMkBH4LHqPpSTgx4C3m/u/Vxk18r6wO76z3mNxMWbrX58Kyfvky8v9UTjY/sV
- 9GSDM0GIfU7CZB/T/IkllulHu1kVEPWj1iQtW++fHNppiS9esDsRqxZJesdNUh25LRZ8
- Qfxuj7XW0vb2jw8ztuQ2Ok3JTOygKfXHOa0INPt0cvzaPMrxBlHYJBF23u51WXhx6eAH
- WCdw==
-X-Gm-Message-State: AOJu0YzOhnMLeYXwLpz4YU/H1UAZkqz2KoPI9uXSvJIL5xjBKN7iVdSo
- 753jMTeej3ycHydRX1eKRSmeeEGKXyRWI8UZzXtrjMsePW3BzsfXZEjpCIwraQe3kz6U1J9Q7MS
- lL8+abe6S4mDY9RsrJuFc7JHr0HP+boIgi0kSQZ8w7pGGTZ+0ggfL
-X-Gm-Gg: ASbGncszaCJWF+Nm/1FK2nGsd5H2Id5tuWMFlzmFvEAJzFcpP5A7C+2r1MZks8Al/Ea
- ztrSySFrHEOGglQ9O7DsD5cXhdo5MmOvutBu9RSAUWgwVWcEkobbPU14MhJXvP0NNF6MaA4lL/1
- I/zrU3IjdJsSzrnbLmCcQzWVw7HxTT9XU9/c0a/whkE6WlFT9WpN3vqU6WMbYxFgjUaf0YLa1VX
- v6Ssyf3leYz5eo+CpxhAv7P5nZTDJzim8EDLnDWVO5Xr7dFPz5378dmaj8aB0Yld1agtepK9Jh2
- XDVcXeJVJYsRn0fprQ==
-X-Received: by 2002:a05:6602:2cc3:b0:844:7956:df9c with SMTP id
- ca18e2360f4ac-844e8679cfdmr52001539f.0.1734038542890; 
- Thu, 12 Dec 2024 13:22:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGIrFBPYx/IXd8QEoHaQZ3o/JQC0uwPmvbmgVMTZ/bEY77ABdjkegHzmBaefnmGBUybeit/IA==
-X-Received: by 2002:a05:6602:2cc3:b0:844:7956:df9c with SMTP id
- ca18e2360f4ac-844e8679cfdmr52000039f.0.1734038542589; 
- Thu, 12 Dec 2024 13:22:22 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e2bb66b174sm2359113173.151.2024.12.12.13.22.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 13:22:15 -0800 (PST)
-Date: Thu, 12 Dec 2024 16:22:13 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 02/19] physmem: fd-based shared memory
-Message-ID: <Z1tUBUcpf1XcVRhG@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-3-git-send-email-steven.sistare@oracle.com>
- <Z1dIEUcSrI1aROSp@x1n>
- <ecbae03f-a8b2-4a41-89bc-5a671a4c3c7e@oracle.com>
+ d=1e100.net; s=20230601; t=1734038940; x=1734643740;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uY+TrTBxI5R2O+5foBGFgKbI4zhzk7qXDuFF6ceEyjg=;
+ b=Y8ahiLBlD8ru9WE36rVrmgC11nMRL+igM4YRaqdysKi6B6leYsDjtz8dtRq053b9hX
+ l01nSXPlBxfHaLTW2pZdlhgnc3/RhwIzINGn5l0snM4ms9S5anZK67UF6LRfvGyz7jvz
+ 06+vwGIa4sMKWfP9uDXXUxaOKjfBsiK7Mhku3EQnlP+3nnsvqs+qbJ6nih/NO6jK9VZV
+ hagSW4n7P9cRy1rJYnn0gvZKSurZzFyCdlSzSBZ/tdU9bD39f+EaHEXRr555VNSxxUhr
+ 455WV3h38PMP3HtrvAz693t7UnMuvRgVl3hguDYTpz0gsebnxwl7UvFIZ0hMZoU8NXo5
+ FgoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWM2sPvZVeWEh8RjeZkYr6oabtIiJ0p+fWZtFDGXnPeKXNOHJQaGDzdYTo58CPLmNp85U2J5w1w1+AI@nongnu.org
+X-Gm-Message-State: AOJu0YybYyUKqjfd+gt+Kr0qoWX0r+yf5TsYKO11blm4A40UlomuOUTt
+ h5PxA2Sz4aK2lVP3jNzlCrfIGMXjPWthF8b13lX/pnGDPpQm8Jyc5lKUrBEYqyqWHXQaXCKKdP3
+ BeAFXCF2MwA6tVdTDN0Ms+oDJb+zmtm1anCh8xNA938HJ6Z8Wf8pc
+X-Gm-Gg: ASbGncstJz7OIuLDrG0TwkQF6BpZP0NvX3XIV79RQdNL0ksNqs/6euaQyfpqTJiPUbG
+ xBPJwRe84Bj9Nd2ZKFosybDXPZeWJyFnhWF3qRvffD+PTG84wSj5tIyU6daOv3UehOYL72kOC00
+ i+uVDvmYpuT0lXTwhYMqRM+OE8lBihmJoo7m5zhRBte/ZJNbDDKkGob3z104bXVlqOu2ZQKcDI6
+ jXWVPzJiwL7I6tOSUP539Top4sATZ3zcMDhR7xMUZx/zF8O/IN5qzl7mcos
+X-Received: by 2002:a05:6000:71d:b0:382:45db:6a1e with SMTP id
+ ffacd0b85a97d-388c366d199mr8352f8f.14.1734038939831; 
+ Thu, 12 Dec 2024 13:28:59 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFd1nbupUsOV4a1spQsi5HBxdNRlDLcHYLjUJTEpA7Y8Y5j2J2J+EAttX9xTsv44Id9sWl/ZA==
+X-Received: by 2002:a05:6000:71d:b0:382:45db:6a1e with SMTP id
+ ffacd0b85a97d-388c366d199mr8335f8f.14.1734038939449; 
+ Thu, 12 Dec 2024 13:28:59 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-387824bf19dsm4989230f8f.53.2024.12.12.13.28.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 13:28:58 -0800 (PST)
+Message-ID: <5b8f7d63-ef0a-487f-bf9d-44421691fa85@redhat.com>
+Date: Thu, 12 Dec 2024 22:28:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <ecbae03f-a8b2-4a41-89bc-5a671a4c3c7e@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/kvm: Set return value after handling
+ KVM_EXIT_HYPERCALL
+To: Sean Christopherson <seanjc@google.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>, Binbin Wu <binbin.wu@linux.intel.com>,
+ xiaoyao.li@intel.com, qemu-devel@nongnu.org, michael.roth@amd.com,
+ rick.p.edgecombe@intel.com, isaku.yamahata@intel.com, farrah.chen@intel.com,
+ kvm@vger.kernel.org
+References: <20241212032628.475976-1-binbin.wu@linux.intel.com>
+ <Z1qZygKqvjIfpOXD@intel.com>
+ <1a5e2988-9a7d-4415-86ad-8a7a98dbc5eb@redhat.com>
+ <Z1s1yeWKnvmh718N@google.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z1s1yeWKnvmh718N@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -114,127 +153,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 03:38:00PM -0500, Steven Sistare wrote:
-> On 12/9/2024 2:42 PM, Peter Xu wrote:
-> > On Mon, Dec 02, 2024 at 05:19:54AM -0800, Steve Sistare wrote:
-> > > @@ -2089,13 +2154,23 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
-> > >       new_block->page_size = qemu_real_host_page_size();
-> > >       new_block->host = host;
-> > >       new_block->flags = ram_flags;
-> > > +
-> > > +    if (!host && !xen_enabled()) {
-> > 
-> > Adding one more xen check is unnecessary.  This patch needed it could mean
-> > that the patch can be refactored.. because we have xen checks in both
-> > ram_block_add() and also in the fd allocation path.
-> > 
-> > At the meantime, see:
-> > 
-> > qemu_ram_alloc_from_fd():
-> >      if (kvm_enabled() && !kvm_has_sync_mmu()) {
-> >          error_setg(errp,
-> >                     "host lacks kvm mmu notifiers, -mem-path unsupported");
-> >          return NULL;
-> >      }
-> > 
-> > I don't think any decent kernel could hit this, but that could be another
-> > sign that this patch duplicated some file allocations.
-> > 
-> > > +        if ((new_block->flags & RAM_SHARED) &&
-> > > +            !qemu_ram_alloc_shared(new_block, &local_err)) {
-> > > +            goto err;
-> > > +        }
-> > > +    }
-> > > +
-> > >       ram_block_add(new_block, &local_err);
-> > > -    if (local_err) {
-> > > -        g_free(new_block);
-> > > -        error_propagate(errp, local_err);
-> > > -        return NULL;
-> > > +    if (!local_err) {
-> > > +        return new_block;
-> > >       }
-> > > -    return new_block;
-> > > +
-> > > +err:
-> > > +    g_free(new_block);
-> > > +    error_propagate(errp, local_err);
-> > > +    return NULL;
-> > >   }
-> > 
-> > IIUC we only need to conditionally convert an anon-allocation into an
-> > fd-allocation, and then we don't need to mostly duplicate
-> > qemu_ram_alloc_from_fd(), instead we reuse it.
-> > 
-> > I do have a few other comments elsewhere, but when I was trying to comment.
-> > E.g., we either shouldn't need to bother caching qemu_memfd_check()
-> > results, or do it in qemu_memfd_check() directly.. and some more.
+On 12/12/24 20:13, Sean Christopherson wrote:
+> On Thu, Dec 12, 2024, Paolo Bonzini wrote:
+>> On 12/12/24 09:07, Zhao Liu wrote:
+>>> On Thu, Dec 12, 2024 at 11:26:28AM +0800, Binbin Wu wrote:
+>>>> Date: Thu, 12 Dec 2024 11:26:28 +0800
+>>>> From: Binbin Wu <binbin.wu@linux.intel.com>
+>>>> Subject: [PATCH] i386/kvm: Set return value after handling
+>>>>    KVM_EXIT_HYPERCALL
+>>>> X-Mailer: git-send-email 2.46.0
+>>>>
+>>>> Userspace should set the ret field of hypercall after handling
+>>>> KVM_EXIT_HYPERCALL.  Otherwise, a stale value could be returned to KVM.
+>>>>
+>>>> Fixes: 47e76d03b15 ("i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE")
+>>>> Reported-by: Farrah Chen <farrah.chen@intel.com>
+>>>> Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
+>>>> Tested-by: Farrah Chen <farrah.chen@intel.com>
+>>>> ---
+>>>> To test the TDX code in kvm-coco-queue, please apply the patch to the QEMU,
+>>>> otherwise, TDX guest boot could fail.
+>>>> A matching QEMU tree including this patch is here:
+>>>> https://github.com/intel-staging/qemu-tdx/releases/tag/tdx-qemu-upstream-v6.1-fix_kvm_hypercall_return_value
+>>>>
+>>>> Previously, the issue was not triggered because no one would modify the ret
+>>>> value. But with the refactor patch for __kvm_emulate_hypercall() in KVM,
+>>>> https://lore.kernel.org/kvm/20241128004344.4072099-7-seanjc@google.com/, the
+>>>> value could be modified.
+>>>
+>>> Could you explain the specific reasons here in detail? It would be
+>>> helpful with debugging or reproducing the issue.
+>>>
+>>>> ---
+>>>>    target/i386/kvm/kvm.c | 8 ++++++--
+>>>>    1 file changed, 6 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>>>> index 8e17942c3b..4bcccb48d1 100644
+>>>> --- a/target/i386/kvm/kvm.c
+>>>> +++ b/target/i386/kvm/kvm.c
+>>>> @@ -6005,10 +6005,14 @@ static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
+>>>>    static int kvm_handle_hypercall(struct kvm_run *run)
+>>>>    {
+>>>> +    int ret = -EINVAL;
+>>>> +
+>>>>        if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
+>>>> -        return kvm_handle_hc_map_gpa_range(run);
+>>>> +        ret = kvm_handle_hc_map_gpa_range(run);
+>>>> +
+>>>> +    run->hypercall.ret = ret;
+>>>
+>>> ret may be negative but hypercall.ret is u64. Do we need to set it to
+>>> -ret?
+>>
+>> If ret is less than zero, will stop the VM anyway as
+>> RUN_STATE_INTERNAL_ERROR.
+>>
+>> If this has to be fixed in QEMU, I think there's no need to set anything
+>> if ret != 0; also because kvm_convert_memory() returns -1 on error and
+>> that's not how the error would be passed to the guest.
+>>
+>> However, I think the right fix should simply be this in KVM:
+>>
+>> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+>> index 83fe0a78146f..e2118ba93ef6 100644
+>> --- a/arch/x86/kvm/x86.c
+>> +++ b/arch/x86/kvm/x86.c
+>> @@ -10066,6 +10066,7 @@ unsigned long __kvm_emulate_hypercall(struct kvm_vcpu *vcpu, unsigned long nr,
+>>   		}
+>>   		vcpu->run->exit_reason        = KVM_EXIT_HYPERCALL;
+>> +		vcpu->run->ret                = 0;
 > 
-> Someone thought it a good idea to cache the result of qemu_memfd_alloc_check,
-> and qemu_memfd_check will be called more often.  I'll cache the result inside
-> qemu_memfd_check for the special case of flags=0.
-
-OK.
-
+> 		vcpu->run->hypercall.ret
 > 
-> > Then I think it's easier I provide a patch, and also show that it can be
-> > also smaller changes to do the same thing, with everything fixed up
-> > (e.g. addressing above mmu notifier missing issue).  What do you think as
-> > below?
+>>   		vcpu->run->hypercall.nr       = KVM_HC_MAP_GPA_RANGE;
+>>   		vcpu->run->hypercall.args[0]  = gpa;
+>>   		vcpu->run->hypercall.args[1]  = npages;
+>>
+>> While there is arguably a change in behavior of the kernel both with
+>> the patches in kvm-coco-queue and with the above one, _in practice_
+>> the above change is one that userspace will not notice.
 > 
-> The key change you make is calling qemu_ram_alloc_from_fd instead of file_ram_alloc,
-> which buys the xen and kvm checks for free.  Sounds good, I will do that in the
-> context of my patch.
-> 
-> Here are some other changes in your patch, and my responses:
-> 
-> I will drop the "Retrying using MAP_ANON|MAP_SHARED" message, as you did.
-> 
-> However, I am keeping QEMU_VMALLOC_ALIGN, qemu_set_cloexec, and trace_qemu_ram_alloc_shared.
+> I agree that KVM should initialize "ret", but I don't think '0' is the right
+> value.  KVM shouldn't assume userspace will successfully handle the hypercall.
+> What happens if KVM sets vcpu->run->hypercall.ret to a non-zero value, e.g. -KVM_ENOSYS?
 
-I guess no huge deal on these, however since we're talking..  Is that
-QEMU_VMALLOC_ALIGN from qemu_anon_ram_alloc()?
+Unfortunately QEMU is never writing vcpu->run->hypercall.ret, so the 
+guest sees -KVM_ENOSYS; this is basically the same bug that Binbin is 
+fixing, just with a different value passed to the guest.
 
-A quick dig tells me that it was used to be for anon THPs..
+In other words, the above one-liner is pulling the "don't break 
+userspace" card.
 
-    commit 36b586284e678da28df3af9fd0907d2b16f9311c
-    Author: Avi Kivity <avi@redhat.com>
-    Date:   Mon Sep 5 11:07:05 2011 +0300
-
-    qemu_vmalloc: align properly for transparent hugepages and KVM
-
-And I'm guessing if at that time was also majorly for guest ram.
-
-Considering that this path won't make an effect until the new aux mem
-option is on, I'd think it better to stick without anything special like
-QEMU_VMALLOC_ALIGN, until it's justified to be worthwhile.  E.g., Avi used
-to explicitly mention this in that commit message:
-
-    Adjust qemu_vmalloc() to honor that requirement.  Ignore it for small regions
-    to avoid fragmentation.
-
-And this is exactly mostly small regions when it's AUX.. probably except
-VGA, but it'll be SHARED on top of shmem not PRIVATE on anon anyway... so
-it'll be totally different things.
-
-So I won't worry on that 2M alignment, and I will try to not carry over
-that, because then trying to remove it will be harder.. even when we want.
-
-For the 2nd.. Any quick answer on why explicit qemu_set_cloexec() needed?
-
-For 3rd, tracepoint would definitely be fine whenever you feel necessary.
-
-> 
-> Also, when qemu_memfd_create + qemu_ram_alloc_from_fd fails, qemu should fail and exit,
-> and not fall back, because something unexpected went wrong.  David said the same.
-
-Why?  I was trying to rely on such fallback to make it work on e.g. Xen.
-In that case, Xen fails there and fallback to xen_ram_alloc() inside the
-later call to ram_block_add(), no?
-
-> Thus we still need to pass errp to qemu_memfd_create().
-
--- 
-Peter Xu
+Paolo
 
 
