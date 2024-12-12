@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54F81E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:03:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7B8E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:08:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLpOB-0007hm-4I; Thu, 12 Dec 2024 15:02:23 -0500
+	id 1tLpSt-0000Dy-G6; Thu, 12 Dec 2024 15:07:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLpO6-0007hM-MK
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:02:19 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1tLpSr-0000Cq-GD
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:07:13 -0500
+Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLpO3-0005z6-Lq
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:02:18 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-71decc7de4eso256058a34.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:02:13 -0800 (PST)
+ id 1tLpSl-0008IU-Q9
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:07:13 -0500
+Received: by mail-oi1-x233.google.com with SMTP id
+ 5614622812f47-3eb8bdcac2eso217834b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:07:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734033732; x=1734638532; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734034025; x=1734638825; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=XA2DLsAjgmH4v7xhk4FVYR0NtZOo+ApN20Lk6do5YwA=;
- b=RhSMDECDXtHUow1jg3mbutP7UO6Rjw6Fm7O3GfTpD1VP937cpu+OErE3UOLddo01AY
- 0zaBqIBlVbvy0yzLfkPrJOzEEJzDk8nNO8+jIIHkh4WVmEFcBWa+A+n7zhfGiAvSTKGF
- pWWIP/HZlWoDF3Zo5cZB7Lk16D4WW+cuZbq+CO7qd7zJqIkZxjEvYNanWavt+S5vKWGO
- ZakcBsMnBoZYNFaZSKdmJkHtOwEM7LJYHA9sg4WCIQMrmLvkd+8OyeqULUOj1RrL3188
- 2gf8KwQY++U+Nd6noWNkwh5be1ld477WIZC4+5AB+J1tjxbNx7wF9kK8je8s/g3W5IVL
- 2vzw==
+ bh=fuOKh4g40L+GRDW0EGeNdYn72z0r0KEBf1le9/Tf3HE=;
+ b=q4djimD8j8mzNR08RQjhVdB9G7XM3C1Eutx8JmMUVgf34RmH7LCW8SEYv6s2q7W0AW
+ btILdVxHnq2vvIkWzUjp+y+2pmBL0zsM6MGLlQ+2p0Wi4MUlLSQc2/Ssv9aCetj1CiF5
+ Zwj1LHepBbHdINGU9YRQXOgniu8iz8JFFRUetzaHlqeBbFh2qdO2oZjXuiFz+DWNuPHN
+ NUpTDtucTPmqsxYoWstFeyC45aMbwZKjZmmzhlTlfnCA5wKcv9oWujw/PEhCRgVWBP7x
+ undM8JIjXDWHABltDHyKik5SH1XiIVxdyAD0/lJlZseLi7posOWyvFXyckrVioR4EF1I
+ x+bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734033732; x=1734638532;
+ d=1e100.net; s=20230601; t=1734034025; x=1734638825;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=XA2DLsAjgmH4v7xhk4FVYR0NtZOo+ApN20Lk6do5YwA=;
- b=PU6eG6rs0go51HqVljIxPu1BTEWvI8tC72ct5lxVtzqptoJugNwVrH8+rNZTLJR/K/
- Gjy3ff/HTqtMVyC67Fge40xISFc7jPDaiimMAck4aHPdyCvFyNcY5XhyslIgvAe5LLQY
- 1wP6hkOTTYH04MUqGgJaHepyLP6jeU0F1QXk9K7mj1vyzgvR7Az2iDm8tytMorrHjOnb
- 9vMuMXQBF12EzvJBOR4/WaP8OCgwnxBdrel1vPChszJyDw/kM1o+HT961/UcxRzt++p5
- 8t9as22QqMQnqpMzlb4k13u5bxa/t8krtNFP5P+BDz02FZLbdO0YO8N6rXDSAzqJ9Zg1
- aKDg==
+ bh=fuOKh4g40L+GRDW0EGeNdYn72z0r0KEBf1le9/Tf3HE=;
+ b=Z8cCvgjdJY17njT2w11+Xrc1NSocz4K9lKTbFmTJBkr8EAzRjJsz4QNicc/3AEqI5Q
+ FvHWn48mFYm3LXW0qsb5YG2kLzmWkcE2LTH3otQdj5WNuoWOVXkzZiGeOyWMhluzbmXS
+ EnG+pd0PttirGA+AX13yhPxmJ6PAz/CWmczPt+sInJgZbJhrEvbV6cuXi70LBFO0d1bk
+ /p8mnWCUsQdTXSt+iq6csctv1S5mrS9htBVX7Z4sMvbynjwcGtlna1IM2qL8UbalwEmp
+ ZJ++X+O1uWC8VgQuH6BUtl4Y6kLZPKmQbiAvSH3vAs53yHAv59P0Yx9SQnPPDP7487dn
+ 3GYQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXODok1RfwiWFIr+/bbLyJL2rmVaSKfyM1WDvsQ9gSvBCDCboUInt4SGqP3FrM+HaG1x0VpGWBq0LgL@nongnu.org
-X-Gm-Message-State: AOJu0YwP0wKA/6f/wNXlMa55TAb32fnE4POrtIw5OWDlK8GD/2l3c2NO
- cTLtMJhL7nyv4EsTnP2TwwpHge6fFG6JPNar/xpR8Oqtedv3r1gYYJWCzQD82b0=
-X-Gm-Gg: ASbGncuvZFXJvl8fK0oB0J/iIBLDfEuO2XP2zqS8LxGaqPq2uFljIgbMK5Ff8/qtnNX
- /B5UPpAp1qze/rfuc5Shu0BnBUWKchrO5FXf/wpNOhFdpn6qaAsgQXYBGBuwkFXZptC2ALOceoc
- lEt8jzW0hw5UJQjgzuX5rRyFLhPTZlE6Mwj7SM77u12dX5zvibdb9J9pNs29l/U4L2jCW+EGV7L
- b77KXpLhBPRaNK5w7URf7nGFvYDKZDh4dS0ofMzkuoG4uqXIt0PI0vSsPpyvCQM9dyJOGe29w==
-X-Google-Smtp-Source: AGHT+IHdo+XIOGXD2SI8FHC/ZJpg9Q29fXBVoJp8ATsmf3TNumaMNVpDphXt5D/yOiKe7Te4i3PV+A==
-X-Received: by 2002:a05:6830:2107:b0:71d:415a:5d30 with SMTP id
- 46e09a7af769-71e36c191c3mr1428033a34.0.1734033732564; 
- Thu, 12 Dec 2024 12:02:12 -0800 (PST)
+ AJvYcCWp+pk/q92dQuHvpUbGbpvizdtk+tSspWPLoVr2feCJzFoJAWkBRPPp7jA7SKIrEanjYMJDDyZFhsEp@nongnu.org
+X-Gm-Message-State: AOJu0YyLCX9t/ZAL1mDyB9YZ+e1J2NsGO0nhALKM+5gg+sVdX9GHg8to
+ aK4KXrl/my7E1AlApY2nNrdWK5fbaCHBS5aZJD6pcTLNRKqTZcK1A+WKWULkE1E=
+X-Gm-Gg: ASbGnctBP6sFLwwgoeHRncwDSD8ed3fz9hazPqKs9/Y/wBPjAMNr5Tw8tNpV2VOUepl
+ PJTQxrPKQLm6S9v4oJe7HcLA7iscAAJ4FRbULThC/rQO5tUm9iKhA1fHWzStn9bli65G5Z3TRNl
+ S2ylm889+6SKDxc82VYnBeLtkr17C9NiKaNqk94H7U+gWgGFZ33pwh57pE0vd/sLsoR/tkVfhr0
+ TSWShGC9JY/e3/iskRruMDzmfkFcpgx+hedGp/1imqnoEtgPBRlDyHudHWD9b5/ldMUyNDmig==
+X-Google-Smtp-Source: AGHT+IHsHuAYTAmNID4ZaRT3EsuZrAIeV6UPoSZirkFbPA51miBHTzZ2W4vHRiuiSJRmk0KvG3RuCQ==
+X-Received: by 2002:a05:6808:140a:b0:3eb:4b4c:80c9 with SMTP id
+ 5614622812f47-3eb856f3c80mr4866646b6e.0.1734034024931; 
+ Thu, 12 Dec 2024 12:07:04 -0800 (PST)
 Received: from [172.20.4.119] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f29cce7108sm2744376eaf.32.2024.12.12.12.02.11
+ 5614622812f47-3eba3559c9esm139455b6e.49.2024.12.12.12.07.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 12:02:12 -0800 (PST)
-Message-ID: <0478e44a-c087-4665-ade3-41b0050d89bb@linaro.org>
-Date: Thu, 12 Dec 2024 14:02:09 -0600
+ Thu, 12 Dec 2024 12:07:04 -0800 (PST)
+Message-ID: <b972e394-240c-4c72-8461-620bd3192cbe@linaro.org>
+Date: Thu, 12 Dec 2024 14:07:02 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/18] accel/tcg: Extract user APIs out of
- 'exec/[cpu,exec]-all.h'
+Subject: Re: [PATCH v2] target/sparc: Use memcpy() and remove memcpy32()
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20241212185341.2857-1-philmd@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20241205205418.67613-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
+In-Reply-To: <20241205205418.67613-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,50 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 12:53, Philippe Mathieu-Daudé wrote:
-> The goal of this series is to clarify user emulation APIs,
-> and clean the mixed bag of exec/foo-all.h headers.
+On 12/5/24 14:54, Philippe Mathieu-Daudé wrote:
+> Rather than manually copying each register, use
+> the libc memcpy(), which is well optimized nowadays.
 > 
-> Move user specific declarations out of the generic
-> - "exec/cpu-all.h",
-> - "exec/cpu_ldst.h",
-> - "exec/exec-all.h" and
-> - "exec/translate-all.h"
-> to the generic:
-> - "accel/tcg/tb-internal.h" and
-> - "exec/page-protection.h"
-> and the user specific:
-> - "user/cpu_loop.h",
-> - "user/guest-host.h" and
-> - "user/page-protection.h"
-> 
-> Philippe Mathieu-Daudé (18):
->    exec: Introduce 'user/guest-host.h' header
->    linux-user/aarch64: Include missing 'user/abitypes.h' header
->    include: Include missing 'qemu/clang-tsa.h' header
->    accel/tcg: Declare mmap_[un]lock() in 'exec/page-protection.h'
->    accel/tcg: Use tb_page_addr_t type in page_unprotect()
->    accel/tcg: Move page_[un]protect() to 'user/page-protection.h'
->    system: Remove unnecessary 'exec/translate-all.h' include
->    accel/tcg: Move 'exec/translate-all.h' -> 'tb-internal.h'
->    accel/tcg: Un-inline log_pc()
->    accel/tcg: Move TranslationBlock declarations to 'tb-internal.h'
->    accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
->      (1/4)
->    accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
->      (2/4)
->    accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
->      (3/4)
->    accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
->      (4/4)
->    user: Forward declare target_cpu_copy_regs structure
->    user: Move 'linux-user/cpu_loop-common.h' -> 'user/cpu_loop.h'
->    user: Declare cpu_loop() once in 'user/cpu_loop.h'
->    user: Move various declarations out of 'exec/exec-all.h'
+> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/sparc/win_helper.c | 26 ++++++++------------------
+>   1 file changed, 8 insertions(+), 18 deletions(-)
 
-Series:
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
+Queued, thanks.
 
 r~
 
