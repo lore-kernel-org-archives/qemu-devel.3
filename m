@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C92E1E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 10:20:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA0C9E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 10:23:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLgIc-0005so-3T; Thu, 12 Dec 2024 05:20:02 -0500
+	id 1tLgLb-0007Ex-Pt; Thu, 12 Dec 2024 05:23:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgIb-0005sC-2J
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:20:01 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgLa-0007En-2n
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:23:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgIU-0004lE-I0
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:20:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgLV-0005ED-Dw
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 05:23:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733998792;
+ s=mimecast20190719; t=1733998980;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qyVmO+QYecdaL3v6orSIiWGTvN4ZrvwE6MxY3hvqQfA=;
- b=ID4EdTzgBjcPwqwnC+5hABQXLrgWh1y7Caksbg7llMqQEE14BgCuo9ZiChrhcyF/9uHED+
- UobBLEIsdq6KF+YBhy3TvzeI9eMjYFHaU1Q+1wxJesp+a+Yt+ye21zMpFT2YAQZVZVr8Qw
- aa/HgLMg/SP9SQm2ncPj0czhzZY3+M4=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=tx2JQZAO/hCsq1addjpmS698AS+1AjpNqhCD27tW6+4=;
+ b=RQieA1+Pxt6gyq9rbrm4WVrho9JWsu0W6mjiDl7qVHkJ/5BvphQjB+RQR+ZSYfuW3tmJF5
+ bBCcwqEPmfmk8BsdTRISpHFEJDQ6/H/+rXJjvOLgkJvCyDSVR1XYDMe4gZIr51z74ERVww
+ Kk9nG+D5xc6kWYdzcsVsfZ0mqylpHRA=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-638-rvzSY5MmOkGVijM-Vr4_5A-1; Thu, 12 Dec 2024 05:19:51 -0500
-X-MC-Unique: rvzSY5MmOkGVijM-Vr4_5A-1
-X-Mimecast-MFC-AGG-ID: rvzSY5MmOkGVijM-Vr4_5A
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4359eb032c9so3476595e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 02:19:51 -0800 (PST)
+ us-mta-104-kJblGYp3PROyvj2jt-8XPw-1; Thu, 12 Dec 2024 05:22:58 -0500
+X-MC-Unique: kJblGYp3PROyvj2jt-8XPw-1
+X-Mimecast-MFC-AGG-ID: kJblGYp3PROyvj2jt-8XPw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-434fe2b605eso2677855e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 02:22:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733998790; x=1734603590;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qyVmO+QYecdaL3v6orSIiWGTvN4ZrvwE6MxY3hvqQfA=;
- b=lMt25eF+jyw+gXHiKbJwZ/+w0GN3x7cmpbPv7tZrqXOTY43QutYsGUgusXBIz9EB8y
- N2ZxbYYG1udwvLP2QR0hxZvq2DRm8Bh3fpHuxcn9ic5AvRkuBNjfU4xKPz0LQH6jsKn1
- tmU1hrcHNAruPtpUmcnRRazXFzu0OSWwkDsWXZe8SGAEyTnGKDrthomyNZWJODjkzz3R
- 6dnDqKdnXDqF6gaSdahBocvBFh0bTdgk9gl/i0oOrYvkcmklrkXmyssKxE6EfonnYOGM
- jnBsFZblApLZLkdlG3JDCtD23pirMhZPlQdK2vQFIoju9GlYVYq+YmUiwWi44Oih7q/l
- 8yjA==
+ d=1e100.net; s=20230601; t=1733998977; x=1734603777;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tx2JQZAO/hCsq1addjpmS698AS+1AjpNqhCD27tW6+4=;
+ b=YLt1jGqPz4pvjwWFoV9mwVo+ZTfHYBTiYqA4Rf9+5kTzmEL6w4SAG6tiPgfqrqEC1D
+ PjZGO2GBAq7H/DQFPfEAFSYzugwHQxTujdhrIsXWDBFqKrRM+bWbkCB1bf4gTbeZ94YX
+ A/LF50ihXrNlSFyhcvzYm+X4/Q6zgcYcZtxpTlsAVPo4rl74rF8Vutp5QSy1gmF6PPp6
+ oqet1ZTfesEON0JGmG9Kfc+b1oViGneckr8EgwgK7erFbTe+yobC3BYZM9PtTeEkVN/q
+ LNoRw8y74F8QASdUHS2i31kXM9kyrv4qjHA4MNYCTSLIkrdvTCmw/4G0vBl442VWZ5k+
+ 40wQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWx09ZyY5y7bFxe+ck1IO/daBBTfZeZ0s37cHE/U2hwwwvNKw3rPyVP+WHUfbfnniVwFsUGXfeuChgJ@nongnu.org
-X-Gm-Message-State: AOJu0Yzu4XnKceSNdQUJ02shRZkYPF6atjmEwmRz9mxglbJtd13Ab6yy
- GTVpv66H9yAnczByfA/K/013I81WOHGVgdtI+X6IRiUvGbJf2G19O91PdMAVz5yLGhZa76h6wPN
- xGJCEe2qIt3ild/7hHjmir3sTWj3iXS8N/OF1B+U9kQwG+Suf5IYB
-X-Gm-Gg: ASbGncuAOdZNSmuGWdkDoEsNwSq6zBa/dBZzT97QKb9NhHOISyPq1E5etV7iVA3dgcb
- uePbMciHLK4fVXiL8r1LFGBC/BNgjglIie5zpRVKIT1hpBA+R0Ieg+BRO4o7E/LioVXrhGU46dx
- Uz/j78RWuCY9wcKV+Aaf9D8cAH07xVttXGH/m1UAZRxovKAu/gMogPH8Wi3M76txTL7Tswr4cfL
- GoDhPh66N9pxv/eShzFue9TghAWHy6z9r7B2Jy2tdzANMNV0Q5dsDm6rJTiJgHOsjgWmemJTUrj
- NBqrUA==
-X-Received: by 2002:a05:6000:1f87:b0:385:e9c0:c069 with SMTP id
- ffacd0b85a97d-387877c5c57mr2400032f8f.57.1733998790270; 
- Thu, 12 Dec 2024 02:19:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGpPTRhU/v8+7aSrgIIZ0Wea7zncx+obkTe2dOTjb4px4iCQa/ZJ5G1ANGqW13Ozjjx5Z/ZKA==
-X-Received: by 2002:a05:6000:1f87:b0:385:e9c0:c069 with SMTP id
- ffacd0b85a97d-387877c5c57mr2400010f8f.57.1733998789956; 
- Thu, 12 Dec 2024 02:19:49 -0800 (PST)
+ AJvYcCVpl1BJuwuOpsCtzbBy2NqHHD+3yPjQdsnua40KKD1/wVtd9acS1ZPgtcp7E5gwKIVsHWH1GxRd9q2U@nongnu.org
+X-Gm-Message-State: AOJu0Yxbqg1zOxQ5Y3BH9EZHWjAlxpjycU+/TIQjwS9l4sCYNP9WQcIO
+ vgGhy/+W3a9awdiMyEEElZFl33623u/kZ7jJEoHktIYzJU4YAsbPpRIUTpHmviGX6FoxEEntP1f
+ VYbjDCT8aKdFyeyRDa6HmlzVBsctOh/7ybyUTPBxezITl03mD6f3eTFN52+8z
+X-Gm-Gg: ASbGncsbxUzafOl8UdP6AeCBO6ecJ9KBM2DxD3f3kuwTiQAhSUSc39ozfckL22oQULH
+ M19tOWkZOJdBg/jl/rKR49kWf41d8YbfqYo81VGJYqp8UzkqSD1mVP2WYVKxenVDvoyDaNMYhYt
+ MkBPjmS/4Vak788+5Q+EyvOOCVldnRpuJRPTQpTEVtS/nvqjLnkB8pPivzxEJ2Z2S7g9poqEbad
+ WsHA6Nvlq6Lj37NVq23iedecgUy93tjcRk+n6clXQsP5+Xj1wZj9vSODDGaRLse1wX8mZVXlIqN
+ F9om3g==
+X-Received: by 2002:a5d:47aa:0:b0:385:fb40:e57b with SMTP id
+ ffacd0b85a97d-3864ce96d68mr4472966f8f.15.1733998977675; 
+ Thu, 12 Dec 2024 02:22:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFacEMSeay1IrqxwgCHwPfgRRR8ua6sqqdcVkWmvM+LP1xwgBs3vzv3dTOUS2IlnsD5gu6v7Q==
+X-Received: by 2002:a5d:47aa:0:b0:385:fb40:e57b with SMTP id
+ ffacd0b85a97d-3864ce96d68mr4472946f8f.15.1733998977300; 
+ Thu, 12 Dec 2024 02:22:57 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878248e57fsm3683371f8f.8.2024.12.12.02.19.49
+ ffacd0b85a97d-387824bf19dsm3548618f8f.53.2024.12.12.02.22.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 02:19:49 -0800 (PST)
-Message-ID: <18e27fcf-0c7d-4a62-a492-20305accdb9c@redhat.com>
-Date: Thu, 12 Dec 2024 11:19:48 +0100
+ Thu, 12 Dec 2024 02:22:56 -0800 (PST)
+Message-ID: <5dd03a37-5076-4040-8b5c-4c633ac132a5@redhat.com>
+Date: Thu, 12 Dec 2024 11:22:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 21/31] tests/functional: add a generalized
- archive_extract
+Subject: Re: [PATCH v2 22/31] tests/functional: add 'archive_extract' to
+ QemuBaseTest
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>
 References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-22-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20241211172648.2893097-23-berrange@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -129,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-22-berrange@redhat.com>
+In-Reply-To: <20241211172648.2893097-23-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -158,13 +158,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> There are many types of archives that the tests deal with. Provide
-> a generalized 'archive_extract' that can detect the format and
-> delegate to the appropriate helper for extraction. This ensures
-> that all archive extraction code follows the same design pattern.
+> This helper wrappers archive.archive_extract, forcing the use of the
+> scratch directory, to ensure any extracted files are cleaned at test
+> termination. If a specific member is requested, then the path to the
+> extracted file is also returned.
 > 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
+>   tests/functional/qemu_test/testcase.py | 32 ++++++++++++++++++++++++++
+>   1 file changed, 32 insertions(+)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
