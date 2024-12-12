@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8BFE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:14:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B91E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjwt-00079s-82; Thu, 12 Dec 2024 09:13:51 -0500
+	id 1tLjxL-0007II-E6; Thu, 12 Dec 2024 09:14:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjwm-000798-1t
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:13:45 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tLjxJ-0007H5-BX
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:14:17 -0500
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLjwi-00037j-R5
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:13:43 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-435004228c0so7985715e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:13:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <dorjoychy111@gmail.com>)
+ id 1tLjxC-0003BE-S1
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:14:17 -0500
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-5189a440a65so359048e0c.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:14:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734012818; x=1734617618; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=dElJPklpHD3O1sEDGTFJM+XvTU4dW558nqSlojyvJ1A=;
- b=zMEQbkSnvAfXVGOTlfzHOXB7eBv0Q541UN7A6/4WLgnOS/Bi+G+zNKpTZ8mffRCJgP
- wGH3IXWgWJsBCVPuiIjOt7Bj5zEsgn1hFbN4y/2d1flYG6bjdXzZjovGQVms0/+BbLB+
- X9DpkyvDHORLmNYH4PObSk8MqSJZfxSAHQJjZocL3B+/u27QTJV/D6ekCNj8xWGEJFwt
- pmroq53SsFjlo7lnz1YFrSOpL0d1O13L6HKIuKLJF04v10Zmm8iYHlqZ5JTm5i5AeNxN
- +JRUxCBdVsyvYJgcnuH5xwKP8VFeu2f+WsnA9LZY9/RPIRF7K3WqY4j9iy9eJXUuedzy
- 1ifQ==
+ d=gmail.com; s=20230601; t=1734012849; x=1734617649; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EshlF8TL/2E+HqV4QLS6PY7Jyk3dO/uKpFbrw41jZhY=;
+ b=ExtG519T0MrFQcuD4mdVnk9gy0XEEe+MguMO1JI6CAWE/Mm3VNDoEtKVNJR31fUOAc
+ EicQBPwU/WWStKfQEOw7N/x2DfUvY1ZOMzU4mH0f2tmZg2kALN0de2AyITqcS0xP9kYy
+ uEtzz0N7/0gdN2nmDD1X2vukt1GtmBAfgeCX7zYxWGP1BAgGFo5aWNiSlds5w3J8mY9n
+ cYynRXZNE//512DCN6/r2kDy+FE7bSfiAWTn3lIcFS/wFKnR4sojuvfw4U3uSBidF39O
+ IwvU2xT6nu+eOlX5w+fk15HgX1y2NxG8JMhzuW12FnZFyAPUYxWsTFgKvrgVafIxtb5t
+ XtwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734012818; x=1734617618;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dElJPklpHD3O1sEDGTFJM+XvTU4dW558nqSlojyvJ1A=;
- b=pzhEtQwhz7pwcnnxh1CN+P8PPOcj6RpVBTMcLvRn1DSnxtMZuETKij0ZahaDoeNZtd
- C2gbNspe7U9GPkHMoCJkNkixhm4RLxSErnRlnaLI1VYhHkI8W3V8y7YQkkQ95d6NcJOD
- +XVPC5wxMJUy3QEkP2borY5/abP9wx/d+SqFTBmGEahqBKJouwB6FYbafn6KNx1omrZj
- Ta9dJecqnhAzve3PMszFNYfFGybgbgMMARpHJQduKY1oAH4SW5x8VsIXE2W3cJWNd4+b
- 0j7szCZPWC2rrhp8ppKtAt/m2WtiktGEKKrnnTHoNLStfWUbTK5Zait3ZALIMAHdYPr8
- 9Nrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX+fYC0KPvB/Q8FpLP5kzGZ4iUpP98jxdiagr3X833KA/tn4oU571e2d0saH2lxNJsLQ2uMQVfbnCly@nongnu.org
-X-Gm-Message-State: AOJu0Yy/6V7GEjEQ64iy7ewF7QYJ2EJu6J8YdO3ZrZPtLnrYq/je1Bv2
- tK27iVlJdn72fHclhqkAvPH4im4QoKIT17r6e+ec7Gwx0yizplUFeiXvBE5rrNU=
-X-Gm-Gg: ASbGncsVWRw0zsYbjhk4YremDLbn7eJWvPlPL12dyvwP9xFcC3qFvo4UqGk1soIGlcb
- zmhhW8FsJthvmND57VVI4L3MDl2Rreo2BN9Q2W1bSNGYaG2i4740qwkhgFxm5r23pRaNEm2HQ8N
- Q3/vU/Q+ub8NacA65kApIgfeYLFJd/sahb2aUUpgDb6sQP0tnWSB7qqeuzs5dFRaUpMRpMGAItM
- t6UDGxmpttan3tOZ9qnTUreYbdZNGUbXvivXaKWEqULOPb1KCgdTB7ky/Iygll8D+ehAKldZkhn
- QQ4sO2anQGWjFlGg39EIQA7B
-X-Google-Smtp-Source: AGHT+IHW5QF8Tq4SFz3W7TAjsebslLcblEflRcTCcBsTtWRcaU2c/0kzPGDmRPcCJ42u3HuDXKKDGA==
-X-Received: by 2002:a05:600c:b86:b0:431:557e:b40c with SMTP id
- 5b1f17b1804b1-4361c43d66bmr58749765e9.27.1734012818128; 
- Thu, 12 Dec 2024 06:13:38 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436255800f6sm17675515e9.18.2024.12.12.06.13.36
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 06:13:37 -0800 (PST)
-Message-ID: <06656a39-49a6-4073-b0be-98b1a073e973@linaro.org>
-Date: Thu, 12 Dec 2024 15:13:36 +0100
+ d=1e100.net; s=20230601; t=1734012849; x=1734617649;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=EshlF8TL/2E+HqV4QLS6PY7Jyk3dO/uKpFbrw41jZhY=;
+ b=QxPhThokK7gFgmCTxg8YnTo3fr4yM/SrsYuKDueCGvjVhBbVgxJKSDzwBTq2Qtuw8X
+ +u3zFM4Qp3q79eUz3oOjPp6hUBLzbeKclhfFjOpJUvhUy33zfOY2cZ3En8QkkN2etHfj
+ 3taoJG6moggoRMWZUuJwEEcMeyFpRyvqSWDaDqxTdgck0D0ochKtkdeM9J+S+HoYzGyK
+ TnBXKokBW58uA0tQkf8lC/qlRJYZEp8iwSLxE6Opce3biF5aXHLnJkxWEF8sAVO3i5qI
+ aolK5rwW1n7SpF4nLpLsdiwhpo/ZB1nIWS2mV8Xs/ve1kTU9MwuXwUzkc9eKnM8EWrko
+ Ds3g==
+X-Gm-Message-State: AOJu0YyXT3+vcpWCfcgPcTWjXhImPg1tVEboQpb+kQxVuQ4hNmqb9/gO
+ 8+YfNEleGnR+86OXLrW6W3aOg4H57GDUNIdJqf1fWZY242qBdwY0hXwZ90+ZrIxSfnctyJKpBdJ
+ KC2wdLkcIrj8Ojybhgn0H9S6aieQ=
+X-Gm-Gg: ASbGnctyGVegOl9E5W+/TQ/qaYJxygDBA5cTG4+qvsdBaa/WBv90hGce0sIaBpH8GqZ
+ y6OoMp+e1VQK/vXXBtxsJTdSif6Mrt+g5h5ttq/q2
+X-Google-Smtp-Source: AGHT+IFdSj90bpigpHM9/SoEIuIZvJjnt68yCMRpY96UqUTfFZmbTSSOiCgQqgSlD6ycNN2TDZjwVsRHJPuHkHjwTIE=
+X-Received: by 2002:a05:6122:2018:b0:516:2d4e:448a with SMTP id
+ 71dfb90a1353d-518c57506famr869031e0c.3.1734012848927; Thu, 12 Dec 2024
+ 06:14:08 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/2] vpc: Split off vpc_ignore_current_size() helper
-To: Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org,
- Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
- qemu-block@nongnu.org
-Cc: Eric Blake <eblake@redhat.com>
-References: <20241212134504.1983757-1-vkuznets@redhat.com>
- <20241212134504.1983757-2-vkuznets@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241212134504.1983757-2-vkuznets@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241211222512.95660-1-graf@amazon.com>
+In-Reply-To: <20241211222512.95660-1-graf@amazon.com>
+From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+Date: Thu, 12 Dec 2024 20:14:20 +0600
+Message-ID: <CAFfO_h6iv=_dae_CdhB9Ggi-Q1ETREQROn22-p6vMN=g=DjrKA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] docs/nitro-enclave: Clarify Enclave and Firecracker
+ relationship
+To: Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=dorjoychy111@gmail.com; helo=mail-vk1-xa36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,18 +93,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 14:45, Vitaly Kuznetsov wrote:
-> In preparation to making changes to the logic deciding whether CHS or
-> 'current_size' need to be used in determining the image size, split off
-> vpc_ignore_current_size() helper.
-> 
-> No functional change intended.
-> 
-> Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+On Thu, Dec 12, 2024 at 4:25=E2=80=AFAM Alexander Graf <graf@amazon.com> wr=
+ote:
+>
+> The documentation says that Nitro Enclaves are based on Firecracker. AWS
+> has never made that statement.
+>
+> This patch nudges the wording to instead say it "looks like a
+> Firecracker microvm".
+>
+> Signed-off-by: Alexander Graf <graf@amazon.com>
 > ---
->   block/vpc.c | 67 +++++++++++++++++++++++++++++------------------------
->   1 file changed, 37 insertions(+), 30 deletions(-)
+>  docs/system/i386/nitro-enclave.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
 
+cc Paolo. This can be picked up for merging along with the 3 other
+nitro-enclave related patches from me.
+
+Regards,
+Dorjoy
 
