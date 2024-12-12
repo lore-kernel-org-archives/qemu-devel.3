@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E8ECE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:57:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DF6E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLoNE-0004VF-Cn; Thu, 12 Dec 2024 13:57:20 -0500
+	id 1tLoN9-0003k9-Cu; Thu, 12 Dec 2024 13:57:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoMz-0003Rt-WA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:57:08 -0500
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoMq-0003OC-F1
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:56:58 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoMy-0006vb-Fx
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:57:05 -0500
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-728f1525565so1135633b3a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:57:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoMo-0006ul-AV
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:56:56 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21669fd5c7cso8826155ad.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:56:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734029823; x=1734634623; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734029812; x=1734634612; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4Xzd/um0GVNgOnzI0D+rGp5GEvnFQawTaHdbkCJf8k4=;
- b=CyqqKBuE6zhHUoXnOPpPoPCAoDINkBX6TEDq99LOSMxb/FkTAhNwtS1/J1kZeupg67
- GoiOKGxrUwTJz0zgskNPdlTtfIxGJG/N0ewzRn2LooNja5ZIoXN9IAK+qpJVQ2jwHUFM
- BISljVohZDquaYVNNizGA73u2UIc7KEq0hdEoeU6gMDL/OlL38TU7WmUypSzQGOJjBvP
- 3BYmABErZo2EneFR2zwrtYWzkz4ad5PU6sX97oH31ncLMvythpmKjWuWeL10LQUEm3+N
- JGPEMnJKHwotCiqjHjnF21Cm5nrITOCbYeSQyGdyGU2l9ZbipNApiYXYl26t2hMhabww
- 6/BA==
+ bh=XxnAldCWCOu0O+NMnk+36JEDl4qw0oIa1uAJFBjrs8k=;
+ b=X7EHtPW/TlEHJ2uvr2tMJ/i/9u44h9wkWXEDni4aExJt53bz9IjrjRs4WXr4SON0ph
+ WtcYefDDU/Mhvm4lxEaZo89oXq1H0lF/XPgtyRahidnNmudDQkM6KXuD8OFXrCCHuKqB
+ x7vUXGdyMmV/oWwrG/J2ZtQinYRYPFCJ1VVe9SPQetdFoMr3V8SFTTKyKrySpSvcEGx6
+ 4xcFOSyUA7BBUpOOF1tpZzJ2bRkEbf4JdzNvHlmUx1ZN7z/LcwXWBZpHBdtrNV6U7x39
+ sA4Bl0n+uo5z5rZykcIndZoNbaDcPYE4iUGkZ5Wbuu7iq5j4cCv1oytsgxYoUbMLnfRW
+ DGpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734029823; x=1734634623;
+ d=1e100.net; s=20230601; t=1734029812; x=1734634612;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4Xzd/um0GVNgOnzI0D+rGp5GEvnFQawTaHdbkCJf8k4=;
- b=qY9Sn0f3466uTpZhCmjrQ2L2f0cMrUu0z152vsNyMn8RlN0Rjuj4N0uqU9bSkDw1jp
- 9c8MEqL9nllyGG2Mvil4xA03VilMkpEJft3a0SV0zgtDDM74rQdjKnABnUpn7ytTL5J1
- CxDkcaoq+rcxsm7XT8bcPcDp3tbmWAXPllLEMMmm2ev2CzP5RALE+SxubS1vR0hEFN3L
- dCmPW8alXI6wbM1AQvsDwsQEqY46UkDb4rB7oCVFkaCooEuobgCUOdbjJnmIkOALnOO6
- l4vXlGrdVeW3K86FTCFp7YCRjMMcBAC1om5TrXWnEIrrULRepVjyXk5AV4/rR4AA8Liq
- +zXw==
-X-Gm-Message-State: AOJu0YxEuEShNpXoxSJOfKngOpgXiISzaG5WpfsJTbKxlQNFtkL1qa3I
- g5Py91aDWYj1s7wXM1ri4IIMSe+ynVucUBbN6tZUWgo391peNTztZuzszzwGdrFdrzF7fp5vTIP
- +
-X-Gm-Gg: ASbGnctFXRO26imAS4YI2c19HzwIU2Ucm+tzI0P2LpPNbzOZVIa/R+M4CmAoR0KhNep
- U91qFO9G/kvl+9/UfAXEbxVERLnpYxDLG0TrZEzGb2ZtEEvQ4tBoSU/OmyF3BdSJcW5qIw9SgU1
- JOgZcmgsBy97448GQHbwV60hykGF0VD+Y1eoHd647dghjxnNIz9sVV0M+4yXkU+AzkNP0lYG3pn
- 3Gke+EZpi6F73CD/w7RPU80K4OJwd6GYebfZJBwS9a5Ftexjqe7owtlAHYfXguMZvgLS+9Ev+gz
- p3PtPPEwz5NgjDB1q0cM0EZRADIOrbU=
-X-Google-Smtp-Source: AGHT+IFdhp0xCerJaashwcj7KlfhXzfhC9ypAIxLzc7A5FRzAEz/MyIdtV3uQMK6qiPOfqlWPsjdOQ==
-X-Received: by 2002:a05:6a00:39a2:b0:725:b1df:2daa with SMTP id
- d2e1a72fcca58-72906a747afmr2322335b3a.20.1734029822680; 
- Thu, 12 Dec 2024 10:57:02 -0800 (PST)
+ bh=XxnAldCWCOu0O+NMnk+36JEDl4qw0oIa1uAJFBjrs8k=;
+ b=B+JfpCFaIccBWRi6jYH+fJTUoZ9HcWFmEcdTMZe8zcE9CrUMUwwFYhZBEsfBappWo6
+ 3aB0fPbYcOh1GFDXdMea8JTL2Bl/KOF6OVEq9eEk+C5IhnPRiA7xKAYziVXv1IAepa3K
+ TpOoux9WJ233RVCfVdHsoE10MsWwGsPUy0YdCwlXuL4M1Iuwtvu2l+GgFYTn0z6X6m0/
+ KioZVVK4xFcCqUeFO4ILTxGAfrfrU2eTuWYzp4h+eESwQHDww6CRNXacJHx8nhBTuati
+ JKNzPWIA0krSDXTmyYNkVhJTSJha/T7uNCOK8fbbQqFV0d0jgIq2z/lQGbhGyz05eRDj
+ npTg==
+X-Gm-Message-State: AOJu0Yy36p+tCG89w0ImM1RP6uEvJF7+R9pIuMhZpx+TlIYPTMl0vXhk
+ yXYQuqEJ2dDmolHb4BayFTzfIW2NcDxyybAAmPUFhCU5aWzzoFXqS2924ksccgubwcY0mOCSN9S
+ b
+X-Gm-Gg: ASbGnctEdqGVISW3rl0xFU+EiJTmwzGOSGD2Ed/2RNNf82EZ2T7CjoXAddHmc5l67IY
+ UlHDg6DVE0FGxKnTtgk7dfGWmMqclw9vk8rnmFBJ4fsBlLbSAPAS0bvjHK1Gs70Az6RHCHkHMLl
+ 2+SbLaNckc4LDJMj0s78YD96gy3OBzMO981YOgxu1BhQYt4q5+s5QV4HDFWzRQ320r7knm8VJVm
+ dBkhhziNluEANkSMxHDvFwI7BONqk+aFPw/FJDBxya6L0+Gf9d197xvY9ZPulvbiXhMkP9/kI22
+ H9qbtr1fw6WtVUJ2SGh8ARdIuEJ3S2Q=
+X-Google-Smtp-Source: AGHT+IGxlnTOMDBn5XK1yLouRwAG+eqlKRuh6NafXdeDXnh5GB4tuA3jmub1t+1x65rlau/7sDfBMA==
+X-Received: by 2002:a17:902:ccc5:b0:212:40e0:9562 with SMTP id
+ d9443c01a7336-2178ae6c37bmr79441565ad.25.1734029811774; 
+ Thu, 12 Dec 2024 10:56:51 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725ee10f928sm7501880b3a.32.2024.12.12.10.56.59
+ d9443c01a7336-21632c4fc62sm89822805ad.194.2024.12.12.10.56.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 10:57:02 -0800 (PST)
+ Thu, 12 Dec 2024 10:56:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 17/18] user: Declare cpu_loop() once in 'user/cpu_loop.h'
-Date: Thu, 12 Dec 2024 19:53:40 +0100
-Message-ID: <20241212185341.2857-18-philmd@linaro.org>
+Subject: [PATCH 16/18] user: Move 'linux-user/cpu_loop-common.h' ->
+ 'user/cpu_loop.h'
+Date: Thu, 12 Dec 2024 19:53:39 +0100
+Message-ID: <20241212185341.2857-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
 References: <20241212185341.2857-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,61 +101,304 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Declare cpu_loop() once in "user/cpu_loop.h".
-bsd-user gets the G_NORETURN attribute.
+"linux-user/cpu_loop-common.h" is generic enough to be used by
+bsd-user, so rename it as "user/cpu_loop.h".
+
+Mechanical change running:
+
+  $ sed -i -e 's,cpu_loop-common.h,user/cpu_loop.h,' \
+                $(git grep -l cpu_loop-common.h)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- bsd-user/qemu.h             | 2 +-
- include/user/cpu_loop.h     | 2 ++
- linux-user/user-internals.h | 1 -
- 3 files changed, 3 insertions(+), 2 deletions(-)
+ linux-user/cpu_loop-common.h => include/user/cpu_loop.h | 4 ++--
+ linux-user/aarch64/cpu_loop.c                           | 2 +-
+ linux-user/alpha/cpu_loop.c                             | 2 +-
+ linux-user/arm/cpu_loop.c                               | 2 +-
+ linux-user/hexagon/cpu_loop.c                           | 2 +-
+ linux-user/hppa/cpu_loop.c                              | 2 +-
+ linux-user/i386/cpu_loop.c                              | 2 +-
+ linux-user/loongarch64/cpu_loop.c                       | 2 +-
+ linux-user/m68k/cpu_loop.c                              | 2 +-
+ linux-user/main.c                                       | 2 +-
+ linux-user/microblaze/cpu_loop.c                        | 2 +-
+ linux-user/mips/cpu_loop.c                              | 2 +-
+ linux-user/openrisc/cpu_loop.c                          | 2 +-
+ linux-user/ppc/cpu_loop.c                               | 2 +-
+ linux-user/riscv/cpu_loop.c                             | 2 +-
+ linux-user/s390x/cpu_loop.c                             | 2 +-
+ linux-user/sh4/cpu_loop.c                               | 2 +-
+ linux-user/sparc/cpu_loop.c                             | 2 +-
+ linux-user/syscall.c                                    | 2 +-
+ linux-user/xtensa/cpu_loop.c                            | 2 +-
+ 20 files changed, 21 insertions(+), 21 deletions(-)
+ rename linux-user/cpu_loop-common.h => include/user/cpu_loop.h (95%)
 
-diff --git a/bsd-user/qemu.h b/bsd-user/qemu.h
-index 04faee459df..3eaa14f3f56 100644
---- a/bsd-user/qemu.h
-+++ b/bsd-user/qemu.h
-@@ -26,6 +26,7 @@
- #include "exec/exec-all.h"
- 
- #include "user/abitypes.h"
-+#include "user/cpu_loop.h"
- #include "user/page-protection.h"
- 
- extern char **environ;
-@@ -187,7 +188,6 @@ abi_long do_openbsd_syscall(void *cpu_env, int num, abi_long arg1,
-                             abi_long arg5, abi_long arg6);
- void gemu_log(const char *fmt, ...) G_GNUC_PRINTF(1, 2);
- extern __thread CPUState *thread_cpu;
--void cpu_loop(CPUArchState *env);
- char *target_strerror(int err);
- int get_osversion(void);
- void fork_start(void);
-diff --git a/include/user/cpu_loop.h b/include/user/cpu_loop.h
-index 8e2df232758..b0d4704018d 100644
---- a/include/user/cpu_loop.h
+diff --git a/linux-user/cpu_loop-common.h b/include/user/cpu_loop.h
+similarity index 95%
+rename from linux-user/cpu_loop-common.h
+rename to include/user/cpu_loop.h
+index aca51f53238..8e2df232758 100644
+--- a/linux-user/cpu_loop-common.h
 +++ b/include/user/cpu_loop.h
-@@ -23,6 +23,8 @@
+@@ -17,8 +17,8 @@
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
+ 
+-#ifndef CPU_LOOP_COMMON_H
+-#define CPU_LOOP_COMMON_H
++#ifndef USER_CPU_LOOP_H
++#define USER_CPU_LOOP_H
+ 
  #include "exec/log.h"
  #include "special-errno.h"
+diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
+index 77f857a8216..c5d8a483a3f 100644
+--- a/linux-user/aarch64/cpu_loop.c
++++ b/linux-user/aarch64/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "qemu/guest-random.h"
+ #include "semihosting/common-semi.h"
+diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
+index b5403ed0e46..80ad536c5f2 100644
+--- a/linux-user/alpha/cpu_loop.c
++++ b/linux-user/alpha/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
  
-+G_NORETURN void cpu_loop(CPUArchState *env);
-+
- void target_exception_dump(CPUArchState *env, const char *fmt, int code);
- #define EXCP_DUMP(env, fmt, code) \
-     target_exception_dump(env, fmt, code)
-diff --git a/linux-user/user-internals.h b/linux-user/user-internals.h
-index 46ffc093f40..b9b05c1d11f 100644
---- a/linux-user/user-internals.h
-+++ b/linux-user/user-internals.h
-@@ -65,7 +65,6 @@ abi_long do_syscall(CPUArchState *cpu_env, int num, abi_long arg1,
-                     abi_long arg5, abi_long arg6, abi_long arg7,
-                     abi_long arg8);
- extern __thread CPUState *thread_cpu;
--G_NORETURN void cpu_loop(CPUArchState *env);
- abi_long get_errno(abi_long ret);
- const char *target_strerror(int err);
- int get_osversion(void);
+ void cpu_loop(CPUAlphaState *env)
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index be1f11022a7..10d8561f9b9 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -21,7 +21,7 @@
+ #include "qemu.h"
+ #include "user-internals.h"
+ #include "elf.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "semihosting/common-semi.h"
+ #include "exec/page-protection.h"
+diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
+index a1794470113..de70f736367 100644
+--- a/linux-user/hexagon/cpu_loop.c
++++ b/linux-user/hexagon/cpu_loop.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "internal.h"
+ 
+diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
+index 503a204460e..890e758cd1c 100644
+--- a/linux-user/hppa/cpu_loop.c
++++ b/linux-user/hppa/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ static abi_ulong hppa_lws(CPUHPPAState *env)
+diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
+index e06aa23de4c..d96d5553faf 100644
+--- a/linux-user/i386/cpu_loop.c
++++ b/linux-user/i386/cpu_loop.c
+@@ -21,7 +21,7 @@
+ #include "qemu.h"
+ #include "qemu/timer.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "user-mmap.h"
+ 
+diff --git a/linux-user/loongarch64/cpu_loop.c b/linux-user/loongarch64/cpu_loop.c
+index 935d5bcf2c8..0614d3de224 100644
+--- a/linux-user/loongarch64/cpu_loop.c
++++ b/linux-user/loongarch64/cpu_loop.c
+@@ -8,7 +8,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ void cpu_loop(CPULoongArchState *env)
+diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
+index 69cdce95518..5da91b997ae 100644
+--- a/linux-user/m68k/cpu_loop.c
++++ b/linux-user/m68k/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ void cpu_loop(CPUM68KState *env)
+diff --git a/linux-user/main.c b/linux-user/main.c
+index 06037304cb1..b97634a32dd 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -50,7 +50,7 @@
+ #include "elf.h"
+ #include "trace/control.h"
+ #include "target_elf.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "crypto/init.h"
+ #include "fd-trans.h"
+ #include "signal-common.h"
+diff --git a/linux-user/microblaze/cpu_loop.c b/linux-user/microblaze/cpu_loop.c
+index ee4ba768691..87236c166f2 100644
+--- a/linux-user/microblaze/cpu_loop.c
++++ b/linux-user/microblaze/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ void cpu_loop(CPUMBState *env)
+diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
+index 1331a9a2b8d..6405806eb02 100644
+--- a/linux-user/mips/cpu_loop.c
++++ b/linux-user/mips/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "elf.h"
+ #include "internal.h"
+diff --git a/linux-user/openrisc/cpu_loop.c b/linux-user/openrisc/cpu_loop.c
+index 1bf9542d16a..306b4f8eb43 100644
+--- a/linux-user/openrisc/cpu_loop.c
++++ b/linux-user/openrisc/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ void cpu_loop(CPUOpenRISCState *env)
+diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
+index e168f1ce947..2a0efaffcd6 100644
+--- a/linux-user/ppc/cpu_loop.c
++++ b/linux-user/ppc/cpu_loop.c
+@@ -21,7 +21,7 @@
+ #include "qemu.h"
+ #include "qemu/timer.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ static inline uint64_t cpu_ppc_get_tb(CPUPPCState *env)
+diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
+index a72bc76da3d..3ac8bbfec1f 100644
+--- a/linux-user/riscv/cpu_loop.c
++++ b/linux-user/riscv/cpu_loop.c
+@@ -21,7 +21,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ #include "elf.h"
+ #include "semihosting/common-semi.h"
+diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
+index 42e4d24102e..c9124444ed2 100644
+--- a/linux-user/s390x/cpu_loop.c
++++ b/linux-user/s390x/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ 
+diff --git a/linux-user/sh4/cpu_loop.c b/linux-user/sh4/cpu_loop.c
+index 937d9fa265d..ee9eff3428a 100644
+--- a/linux-user/sh4/cpu_loop.c
++++ b/linux-user/sh4/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ void cpu_loop(CPUSH4State *env)
+diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
+index 58a2464da9f..68f1e8ecd43 100644
+--- a/linux-user/sparc/cpu_loop.c
++++ b/linux-user/sparc/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ #define SPARC64_STACK_BIAS 2047
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index c54b199b6d3..1b335688f12 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -143,7 +143,7 @@
+ #include "special-errno.h"
+ #include "qapi/error.h"
+ #include "fd-trans.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ 
+ #ifndef CLONE_IO
+ #define CLONE_IO                0x80000000      /* Clone io context */
+diff --git a/linux-user/xtensa/cpu_loop.c b/linux-user/xtensa/cpu_loop.c
+index 7564e25a966..c0fcf743e70 100644
+--- a/linux-user/xtensa/cpu_loop.c
++++ b/linux-user/xtensa/cpu_loop.c
+@@ -20,7 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu.h"
+ #include "user-internals.h"
+-#include "cpu_loop-common.h"
++#include "user/cpu_loop.h"
+ #include "signal-common.h"
+ 
+ static void xtensa_rfw(CPUXtensaState *env)
 -- 
 2.45.2
 
