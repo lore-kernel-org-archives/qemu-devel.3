@@ -4,101 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73037E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 12:49:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BD08E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 12:59:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLici-0001rG-Hr; Thu, 12 Dec 2024 07:48:59 -0500
+	id 1tLilv-0003br-3E; Thu, 12 Dec 2024 07:58:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLicg-0001r7-OK
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:48:54 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLils-0003bK-D4
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:58:24 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLice-0001WB-EX
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:48:54 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id D66402115C;
- Thu, 12 Dec 2024 12:48:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734007731; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JKZFmnw3RWCY3fcTQP91Zj2ZifUxqAz9rbPOpQ7tLtc=;
- b=i0Cx4YaoaWj56C5PNg3cjSVbi+RrLj/hjRLuu5smdSNT9V/GiNaZr+TXHy0axU5GDi8/FN
- WxVEZoiyc3VqvdyCOO8/QRbs7KaePXNkK38G1XVmzquYTZbSQ3ifM8RyQ1X9Ax1/GsXxPr
- xBidIteLmTzMEFO/i9uQh+kfZ+tczbE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734007731;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JKZFmnw3RWCY3fcTQP91Zj2ZifUxqAz9rbPOpQ7tLtc=;
- b=hM5ZSiB60TcrgyK+6MCOfxOFY0IVTx4VYbPIXnkyuuwfvGfTPLvhDsEZ+3X03iy5gvKeNs
- qFRevPXhVWTd2NCQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734007730; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JKZFmnw3RWCY3fcTQP91Zj2ZifUxqAz9rbPOpQ7tLtc=;
- b=kLtxRbbHut4P6zAZgD86EsDQR+SIHMbkvOO8BRbuymi4LcAtFC7GaOUGlbGRQ92pFbWgNy
- +FMmq1vU4zcZIo0iRAIpw/rVVZIYVvUOrorZ+kfeRup8eMzna5zWCqF9x4R8gla/YZkj7X
- cmqtxlsudAwvA8W3vX6atxC5galoSIw=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734007730;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JKZFmnw3RWCY3fcTQP91Zj2ZifUxqAz9rbPOpQ7tLtc=;
- b=dyNAnddmkPxstGTxa3ThNAklIsMmOub/23TSSHwf9Rn4vV2xM9YqnRj6An0lW1bvVQCywC
- +Q8XTkaf7WxfsxBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 506E313508;
- Thu, 12 Dec 2024 12:48:50 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id hZE2B7LbWmdFTwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 12:48:50 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v3 00/17] tests/qtest: migration-test refactoring
-In-Reply-To: <87seqvfugx.fsf@suse.de>
-References: <20241127182901.529-1-farosas@suse.de> <87seqvfugx.fsf@suse.de>
-Date: Thu, 12 Dec 2024 09:48:47 -0300
-Message-ID: <87h679f4nk.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLilq-0002xz-Pe
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 07:58:24 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3eb5a870158so210691b6e.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 04:58:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734008301; x=1734613101; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GvafGMHiHQHVMRGWjMWxtW9pruMjmgMfe54t/INFS/M=;
+ b=HrQIw0XDXpwSN0yPC43+rVvrBxQ/+S3ZeGLGu0AYf+4q3ySf8TICWCLekte/WnOi/w
+ ni4lcA6ttf9qHU6ETL01ws3TnkMdlzdjq9kPxsGAxYolX+RYKykepoOBSVAJJ9mQvWr8
+ ADddcpYDQ+z3ycpKg48q+XAMfZzESKkfk5uEevadps8uPqZHDzZSE2BTNYA0B+e3VMov
+ aWDvO6wV7UYdybXa7YIDIiBzJn93yBcpnebDnTE+UhbHeqU92aDuZLTIn38W42SfipZL
+ xlvdHXSVGLpJ2XiANDY/FZSD8bvKtqzCMP8u2rdael1IUdLB1iKgh1swvzOpm888H3Yv
+ gl2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734008301; x=1734613101;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GvafGMHiHQHVMRGWjMWxtW9pruMjmgMfe54t/INFS/M=;
+ b=lJ5/R1/t6P+iaDc6r3SCqBWnRbtlqlA9ZKpMG+wlwqEV1WV3p+p9EyudH1MIn/OHHm
+ FbFXW4i4nhdPHhMm9ydCNT43qb5Jz7lp1y34yclSccyg0x4h7mX0peF2UjrZ/vOtjJxR
+ CiDqx9wksJ4s2278NNZRZjMYUYAkjarMCKtt9c7MMLgl4wQFX72d4sElwTC6NeJvXKNv
+ efAjkexWU98XV0k+xNNUKbBEo6pOPoP/ElRJig2hd4RBRt4K8FV8hdGtinpXvj4jCHNZ
+ 27G2ftOkOcG7wfAL3Znn84xsVlLb7/1u8vDOdUQSSNxw5g/W6hTAx8W5E9DPqdHeWBZH
+ 6Okg==
+X-Gm-Message-State: AOJu0YzH7CjOTpSBNpG5NC4KwEK8aekgCRzWj9foZoIdIuxUSJzjLosN
+ YWllQ4859arw5v1OiJPuy4PiNrSpfrh3DJPmp3y2v/G9/CS5bRRI6fHSvTWjsT8=
+X-Gm-Gg: ASbGncvwe6gY9d2DLURecoUwC826h22B53ZKheTjp7KSDYaRBoLsEOyjlZUN9M6ZQRA
+ VxlJABcz981XzqD4UsVmcbdb8h5CqKVNg/ClHQD1Jgg7AhjnG0u/Tm4Ir2sQT+u+X9Tcb7uP3F5
+ GZrTKiE6ZM8l7B8SfMZEGNdpeeQWV63o2s4zW5Ui6dg3sv20z7evCzHLr4AXfUYSlKoUlwwDvl+
+ kChy+rwr0U2lvF1f0GtUhS8GyHgnRrkeXdJniJpmC/1GxsAhfO9ZGuGVPo/8F9eKAytZqcEvx25
+ 5wNTpIIbSoaKlpQMuL7qNdTV64OGgSY9m4E=
+X-Google-Smtp-Source: AGHT+IFtSjCRlxWNJzOlS6bg2toewPn0WJzh4Z2OH5a0P/JvCleHA5ueb37V1ZxGPq/bOYj/th7dkA==
+X-Received: by 2002:a05:6808:13d4:b0:3ea:5809:2835 with SMTP id
+ 5614622812f47-3eb9403ffa6mr1435146b6e.21.1734008301179; 
+ Thu, 12 Dec 2024 04:58:21 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3eb9533b2e1sm406816b6e.5.2024.12.12.04.58.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 04:58:20 -0800 (PST)
+Message-ID: <b149d4e7-6e75-4363-b743-6238cabfd6f2@linaro.org>
+Date: Thu, 12 Dec 2024 06:58:17 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/loongarch: Use actual operand size with vbsrl check
+To: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+References: <20241212082234.1572133-1-maobibo@loongson.cn>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241212082234.1572133-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -115,190 +100,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fabiano Rosas <farosas@suse.de> writes:
+On 12/12/24 02:22, Bibo Mao wrote:
+> Hardcoded 32 bytes is used for vbsrl emulation check, there is
+> problem when options lsx=on,lasx=off is used for vbsrl.v instruction
+> in TCG mode. It injects LASX exception rather LSX exception.
+> 
+> Here actual operand size is used.
+> 
+> Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+> ---
+>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> index 92b1d22e28..ba5ca98a33 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> @@ -5126,7 +5126,7 @@ static bool do_vbsrl_v(DisasContext *ctx, arg_vv_i *a, uint32_t oprsz)
+>   {
+>       int i, ofs;
+>   
+> -    if (!check_vec(ctx, 32)) {
+> +    if (!check_vec(ctx, oprsz)) {
+>           return true;
+>       }
+>   
+> 
+> base-commit: 1cf9bc6eba7506ab6d9de635f224259225f63466
 
-> Fabiano Rosas <farosas@suse.de> writes:
->
->> v3:
->>     - Fixed some more hook names I had missed;
->>     - Move addition of migration-qmp.c in meson to correct patch;
->>     - Moved QEMU_ENV_* variables to framework.c where they are used;
->>     - patch 7: improve commit message;
->>     - s/test-framework/framework/
->>     - meson.build style changes;
->>     - did *not* move migration-test into migration/, meson doesn't
->>       like it. We'd need a separate meson.build for that directory,
->>       which I don't think is worth it;
->>     - Drop the other build changes, this is now just the refactoring
->>       of migration-test.
->>
->> Refactor migration-test.c and migration-helpers.c into multiple
->> smaller files structured like so:
->>
->> qtest/
->>     migration-test.c
->>
->> qtest/migration/
->>     framework.h
->>     framework.c - core tests infrastructure: migrate_start|end,
->>                   *_common, wait_for_*, check_guests_ram, etc.
->>
->>     migration-util.h
->>     migration-util.c - general utilities, equivalent to
->>                        migration-helpers.c
->>
->>     migration-qmp.h
->>     migration-qmp.c - utilities for querying information via QMP
->>
->>     bootfile.h - formerly migration-test.h, the old name was confusing
->>     bootfile.c - the guest code
->>
->>     # test code, without main()
->>     compression-tests.c
->>     cpr-tests.c
->>     file-tests.c
->>     misc-tests.c
->>     postcopy-tests.c
->>     precopy-tests.c
->>     tls-tests.c
->>
->> CI run: https://gitlab.com/farosas/qemu/-/pipelines/1563199058
->>
->> v2:
->> https://lore.kernel.org/r/20241113194630.3385-1-farosas@suse.de
->> v1:
->> https://lore.kernel.org/r/20241105180837.5990-1-farosas@suse.de
->> v0:
->> https://lore.kernel.org/r/20241017143211.17771-1-farosas@suse.de
->>
->> Fabiano Rosas (17):
->>   tests/qtest/migration: Standardize hook names
->>   tests/qtest/migration: Stop calling everything "test"
->>   tests/migration: Disambiguate guestperf vs. a-b
->>   tests/qtest/migration: Move bootfile code to its own file
->>   tests/qtest/migration: Move qmp helpers to a separate file
->>   tests/qtest/migration: Rename migration-helpers.c
->>   tests/qtest/migration: Move ufd_version_check to utils
->>   tests/qtest/migration: Move kvm_dirty_ring_supported to utils
->>   tests/qtest/migration: Isolate test initialization
->>   tests/qtest/migration: Move common test code
->>   tests/qtest/migration: Split TLS tests from migration-test.c
->>   tests/qtest/migration: Split compression tests from migration-test.c
->>   tests/qtest/migration: Split postcopy tests
->>   tests/qtest/migration: Split file tests
->>   tests/qtest/migration: Split precopy tests
->>   tests/qtest/migration: Split CPR tests
->>   tests/qtest/migration: Split validation tests + misc
->>
->>  MAINTAINERS                                   |    5 +-
->>  tests/meson.build                             |    2 +-
->>  .../guestperf-batch.py                        |    0
->>  .../guestperf-plot.py                         |    0
->>  .../guestperf.py                              |    0
->>  .../guestperf/__init__.py                     |    0
->>  .../guestperf/comparison.py                   |    0
->>  .../guestperf/engine.py                       |    0
->>  .../guestperf/hardware.py                     |    0
->>  .../guestperf/plot.py                         |    0
->>  .../guestperf/progress.py                     |    0
->>  .../guestperf/report.py                       |    0
->>  .../guestperf/scenario.py                     |    0
->>  .../guestperf/shell.py                        |    0
->>  .../guestperf/timings.py                      |    0
->>  .../initrd-stress.sh                          |    0
->>  .../meson.build                               |    0
->>  .../{migration => migration-stress}/stress.c  |    0
->>  tests/qtest/meson.build                       |   27 +-
->>  tests/qtest/migration-test.c                  | 4031 +----------------
->>  tests/{ => qtest}/migration/Makefile          |    0
->>  tests/{ => qtest}/migration/aarch64/Makefile  |    0
->>  .../migration/aarch64/a-b-kernel.S            |    0
->>  .../migration/aarch64/a-b-kernel.h            |    0
->>  tests/qtest/migration/bootfile.c              |   70 +
->>  .../migration/bootfile.h}                     |    9 +-
->>  tests/qtest/migration/compression-tests.c     |  239 +
->>  tests/qtest/migration/cpr-tests.c             |   58 +
->>  tests/qtest/migration/file-tests.c            |  338 ++
->>  tests/qtest/migration/framework.c             |  971 ++++
->>  tests/qtest/migration/framework.h             |  230 +
->>  tests/{ => qtest}/migration/i386/Makefile     |    0
->>  .../migration/i386/a-b-bootblock.S            |    0
->>  .../migration/i386/a-b-bootblock.h            |    0
->>  .../migration-qmp.c}                          |  567 ++-
->>  tests/qtest/migration/migration-qmp.h         |   46 +
->>  tests/qtest/migration/migration-util.c        |  362 ++
->>  .../migration-util.h}                         |   27 +-
->>  tests/qtest/migration/misc-tests.c            |  275 ++
->>  tests/qtest/migration/postcopy-tests.c        |  106 +
->>  tests/{ => qtest}/migration/ppc64/Makefile    |    0
->>  .../{ => qtest}/migration/ppc64/a-b-kernel.S  |    0
->>  .../{ => qtest}/migration/ppc64/a-b-kernel.h  |    0
->>  tests/qtest/migration/precopy-tests.c         | 1007 ++++
->>  tests/{ => qtest}/migration/s390x/Makefile    |    0
->>  tests/{ => qtest}/migration/s390x/a-b-bios.c  |    0
->>  tests/{ => qtest}/migration/s390x/a-b-bios.h  |    0
->>  tests/qtest/migration/tls-tests.c             |  791 ++++
->>  tests/qtest/virtio-net-failover.c             |    3 +-
->>  49 files changed, 4806 insertions(+), 4358 deletions(-)
->>  rename tests/{migration => migration-stress}/guestperf-batch.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf-plot.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/__init__.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/comparison.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/engine.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/hardware.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/plot.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/progress.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/report.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/scenario.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/shell.py (100%)
->>  rename tests/{migration => migration-stress}/guestperf/timings.py (100%)
->>  rename tests/{migration => migration-stress}/initrd-stress.sh (100%)
->>  rename tests/{migration => migration-stress}/meson.build (100%)
->>  rename tests/{migration => migration-stress}/stress.c (100%)
->>  rename tests/{ => qtest}/migration/Makefile (100%)
->>  rename tests/{ => qtest}/migration/aarch64/Makefile (100%)
->>  rename tests/{ => qtest}/migration/aarch64/a-b-kernel.S (100%)
->>  rename tests/{ => qtest}/migration/aarch64/a-b-kernel.h (100%)
->>  create mode 100644 tests/qtest/migration/bootfile.c
->>  rename tests/{migration/migration-test.h => qtest/migration/bootfile.h} (85%)
->>  create mode 100644 tests/qtest/migration/compression-tests.c
->>  create mode 100644 tests/qtest/migration/cpr-tests.c
->>  create mode 100644 tests/qtest/migration/file-tests.c
->>  create mode 100644 tests/qtest/migration/framework.c
->>  create mode 100644 tests/qtest/migration/framework.h
->>  rename tests/{ => qtest}/migration/i386/Makefile (100%)
->>  rename tests/{ => qtest}/migration/i386/a-b-bootblock.S (100%)
->>  rename tests/{ => qtest}/migration/i386/a-b-bootblock.h (100%)
->>  rename tests/qtest/{migration-helpers.c => migration/migration-qmp.c} (51%)
->>  create mode 100644 tests/qtest/migration/migration-qmp.h
->>  create mode 100644 tests/qtest/migration/migration-util.c
->>  rename tests/qtest/{migration-helpers.h => migration/migration-util.h} (67%)
->>  create mode 100644 tests/qtest/migration/misc-tests.c
->>  create mode 100644 tests/qtest/migration/postcopy-tests.c
->>  rename tests/{ => qtest}/migration/ppc64/Makefile (100%)
->>  rename tests/{ => qtest}/migration/ppc64/a-b-kernel.S (100%)
->>  rename tests/{ => qtest}/migration/ppc64/a-b-kernel.h (100%)
->>  create mode 100644 tests/qtest/migration/precopy-tests.c
->>  rename tests/{ => qtest}/migration/s390x/Makefile (100%)
->>  rename tests/{ => qtest}/migration/s390x/a-b-bios.c (100%)
->>  rename tests/{ => qtest}/migration/s390x/a-b-bios.h (100%)
->>  create mode 100644 tests/qtest/migration/tls-tests.c
->>
->>
->> base-commit: 7872e5fdf38ac0d8d0083aabb98d67da1f530ef4
->
-> I'll have to dequeue this, the handling of QTestMigrationState becomes a
-> mess once we move stuff out of migration-test.c.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I looked further into this. The issue I was referring to is having
-QTestMigrationState lifecycle not tied to the QTestState. This creates a
-confusing usage pattern for code that wants to reset the
-QTestMigrationState outside of migrate_start ... which is no one apart
-from my ping-pong series. So I'll carry on with merging this series.
-
-I have a pile of changes to move the QTestState pointer into
-QTestMigrationState and use the latter all over the place instead. That
-way we can access both the state data and also pass the qts around. I'll
-post them when I respin the ping-pong and cancel series.
+r~
 
