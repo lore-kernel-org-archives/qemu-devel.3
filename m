@@ -4,47 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10C96E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32C2E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLs40-0001gl-Iw; Thu, 12 Dec 2024 17:53:45 -0500
+	id 1tLs4C-00029X-9j; Thu, 12 Dec 2024 17:53:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3r-0001Yj-4C
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:35 -0500
+ id 1tLs49-00022Q-Tp
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:54 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3p-000718-4J
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:34 -0500
+ id 1tLs48-0007DR-0f
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:53:53 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tLs3l-00000003gWF-1kg2; Thu, 12 Dec 2024 23:53:29 +0100
-Message-ID: <d45267a6-74a6-4eeb-b8fa-f427db03afde@maciej.szmigiero.name>
-Date: Thu, 12 Dec 2024 23:53:24 +0100
+ id 1tLs43-00000003gWV-2LEi; Thu, 12 Dec 2024 23:53:47 +0100
+Message-ID: <2c1d2c4c-d09f-4603-8bf6-c11a4faca0eb@maciej.szmigiero.name>
+Date: Thu, 12 Dec 2024 23:53:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
  threads
 To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Eric Blake
- <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
  <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
- <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
- <489d1769-3807-4007-888c-608c1e9407fb@maciej.szmigiero.name>
- <Z1DcVH6j7pzboucr@x1n>
- <366e5477-9d3f-4c11-8042-542e9b4b7f65@maciej.szmigiero.name>
- <Z1sReL5wrlhvO3P5@x1n>
+ <198ca4a4-01fd-42b4-9e1a-d2860277be9e@nvidia.com>
+ <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
+ <Z1DbH5fwBaxtgrvH@x1n>
+ <7e6373ca-b344-409f-a9ad-bce72779c10f@maciej.szmigiero.name>
+ <Z1sVcJRamoUFshwk@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -88,7 +87,7 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z1sReL5wrlhvO3P5@x1n>
+In-Reply-To: <Z1sVcJRamoUFshwk@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=145.239.82.108;
@@ -115,71 +114,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.12.2024 17:38, Peter Xu wrote:
-> On Wed, Dec 11, 2024 at 12:05:23AM +0100, Maciej S. Szmigiero wrote:
->>> Maybe move it over to migration_object_init()?  Then we keep
->>> qemu_loadvm_state_setup() only invoke the load_setup()s.
->>
->> AFAIK migration_object_init() is called unconditionally
->> at QEMU startup even if there won't me any migration done?
->>
->> Creating a load thread pool there seems wasteful if no
->> incoming migration will ever take place (or will but only
->> much later).
-> 
-> I was expecting an empty pool to not be a major resource, but if that's a
-> concern, yes we can do that until later.
-> 
-> [...]
-> 
->>>>>> @@ -3007,6 +3071,19 @@ int qemu_loadvm_state(QEMUFile *f)
->>>>>>             return ret;
->>>>>>         }
->>>>>> +    if (ret == 0) {
->>>>>> +        bql_unlock(); /* Let load threads do work requiring BQL */
->>>>>> +        thread_pool_wait(load_threads);
->>>>>> +        bql_lock();
+On 12.12.2024 17:55, Peter Xu wrote:
+> On Wed, Dec 11, 2024 at 12:05:03AM +0100, Maciej S. Szmigiero wrote:
+>> On 4.12.2024 23:43, Peter Xu wrote:
+>>> On Thu, Nov 28, 2024 at 01:11:53PM +0100, Maciej S. Szmigiero wrote:
+>>>>>> +static int qemu_loadvm_load_thread(void *thread_opaque)
+>>>>>> +{
+>>>>>> +    struct LoadThreadData *data = thread_opaque;
+>>>>>> +    int ret;
 >>>>>> +
->>>>>> +        ret = load_threads_ret;
+>>>>>> +    ret = data->function(&load_threads_abort, data->opaque);
+>>>>>> +    if (ret && !qatomic_read(&load_threads_ret)) {
+>>>>>> +        /*
+>>>>>> +         * Racy with the above read but that's okay - which thread error
+>>>>>> +         * return we report is purely arbitrary anyway.
+>>>>>> +         */
+>>>>>> +        qatomic_set(&load_threads_ret, ret);
 >>>>>> +    }
->>>>>> +    /*
->>>>>> +     * Set this flag unconditionally so we'll catch further attempts to
->>>>>> +     * start additional threads via an appropriate assert()
->>>>>> +     */
->>>>>> +    qatomic_set(&load_threads_abort, true);
+>>>>>
+>>>>> Can we use cmpxchg instead? E.g.:
+>>>>>
+>>>>> if (ret) {
+>>>>>        qatomic_cmpxchg(&load_threads_ret, 0, ret);
+>>>>> }
+>>>>
+>>>> cmpxchg always forces sequentially consistent ordering
+>>>> while qatomic_read() and qatomic_set() have relaxed ordering.
+>>>>
+>>>> As the comment above describes, there's no need for sequential
+>>>> consistency since which thread error is returned is arbitrary
+>>>> anyway.
 >>>
->>> I assume this is only for debugging purpose and not required.
+>>> IMHO this is not a hot path, so mem ordering isn't an issue.  If we could
+>>> avoid any data race we still should try to.
 >>>
->>> Setting "abort all threads" to make sure "nobody will add more thread
->>> tasks" is pretty awkward, IMHO.  If we really want to protect against it
->>> and fail hard, it might be easier after the thread_pool_wait() we free the
->>> pool directly (destroy() will see NULL so it'll skip; still need to free
->>> there in case migration failed before this).  Then any enqueue will access
->>> null pointer on the pool.
+>>> I do feel uneasy on the current design where everybody shares the "whether
+>>> to quit" via one bool, and any thread can set it... meanwhile we can't
+>>> stablize the first error to report later.
+>>>
+>>> E.g., ideally we want to capture the first error no matter where it came
+>>> from, then keep it with migrate_set_error() so that "query-migrate" on dest
+>>> later can tell us what was wrong.  I think libvirt generally uses that.
+>>>
+>>> So as to support a string error, at least we'll need to allow Error** in
+>>> the thread fn:
+>>>
+>>> typedef bool (*MigrationLoadThread)(void *opaque, bool *should_quit,
+>>>                                       Error **errp);
+>>>
+>>> I also changed retval to bool, as I mentioned elsewhere QEMU tries to stick
+>>> with "bool SOME_FUNCTION(..., Error **errp)" kind of error reporting.
+>>>
+>>> Then any thread should only report error to qemu_loadvm_load_thread(), and
+>>> the report should always be a local Error**, then it further reports to the
+>>> global error.  Something like:
+>>>
+>>> static int qemu_loadvm_load_thread(void *thread_opaque)
+>>> {
+>>>       MigrationIncomingState *mis = migration_incoming_get_current();
+>>>       struct LoadThreadData *data = thread_opaque;
+>>>       Error *error = NULL;
+>>>
+>>>       if (!data->function(data->opaque, &mis->should_quit, &error)) {
+>>>          migrate_set_error(migrate_get_current(), error);
+>>>       }
+>>>
+>>>       return 0;
+>>> }
+>>>
+>>> migrate_set_error() is thread-safe, and it'll only record the 1st error.
+>>>
+>>> Then the thread should only read &should_quit, and only set &error.  If we
+>>> want, migrate_set_error() can set &should_quit.
+>>>
+>>> PS: I wished we have an unified place to tell whether we should quit
+>>> incoming migration - we already have multifd_recv_state->exiting, we could
+>>> have had a global flag like that then we can already use.  But I know I'm
+>>> asking too much.. However would you think it make sense to still have at
+>>> least Error** report the error and record it?
+>>>
 >>
->> We don't want to destroy the thread pool in the path where the downtime
->> is still counting.
+>> This could work with the following changes/caveats:
+>> * Needs g_autoptr(Error) otherwise these Error objects will leak.
 > 
-> Yeah this makes sense.
+> True.. or just error_free() it after set.
 > 
 >>
->> That's why we only do cleanup after the migration is complete.
+>> * "1st error" here is as arbitrary as with my current code since which
+>> thread first acquires the mutex in migrate_set_error() is unspecified.
+> 
+> Yes that's still a step forward on being verbose of errors, which is almost
+> always more helpful than a bool..
+> 
+> Not exactly the 1st error in time sequence is ok - we don't strongly ask
+> for that, e.g. if two threads error at merely the same time it's ok we only
+> record one of them no matter which one is first.  That's unusual to start
+> with.
+> 
+> OTOH it matters on that we fail other threads only _after_ we set_error()
+> for the first error.  If so it's mostly always the case the captured error
+> will be valid and the real 1st error.
+> 
 >>
->> The above setting of load_threads_abort flag also makes sure that we abort
->> load threads if the migration is going to fail for other reasons (non-load
->> threads related) - in other words, when the above block with thread_pool_wait()
->> isn't even entered due to ret already containing an earlier error.
+>> * We still need to test this new error flag (now as migrate_has_error())
+>> in qemu_loadvm_state() to see whether we proceed forward with the
+>> migration.
 > 
-> In that case IIUC we should cleanup the load threads in destroy(), not
-> here?  Especially with the comment that's even more confusing.
-> 
+> Yes, or just to work like what this patch does: set mis->should_quit within
+> the 1st setup of migrate_set_error().  For the longer term, maybe we need
+> to do more to put together all error setup/detection for migration.. but
+> for now we can at least do that for this series to set should_quit=true
+> there only.  It should work like your series, only that the boolean won't
+> be writable to data->function() but read-only there, for the sake of
+> capturing the Error string.
 
-This flag only asks the threads in pool which are still running to exit ASAP
-(without waiting for them in the "fail for other reasons"
-qemu_loadvm_state() code flow).
+migrate_set_error() wouldn't be called until qemu_loadvm_state() exits
+into process_incoming_migration_co().
 
-Setting this flag does *not* do the cleanup of the whole thread pool - this
-only happens in qemu_loadvm_state_cleanup().
+Also this does not account other qemu_loadvm_state() callers like
+qmp_xen_load_devices_state() or load_snapshot().
+
+While these other callers might not use load threads currently, it feels
+wrong to wait for these threads in qemu_loadvm_state() but set their
+termination/abort flag as a side effect of completely different function
+(migrate_set_error()).
+
+Having a dedicated abort flag also makes the semantics easy to infer
+from code since once can simply grep for this flag name (load_threads_abort)
+to see where it is being written.
+
+Its name is also pretty descriptive making it easy to immediately tell
+what it does.
+
+>>
+>> -------------------------------------------------------------------
+>>
+>> Also, I am not in favor of replacing load_threads_abort with something
+>> else since we still want to ask threads to quit for other reasons, like
+>> earlier (non-load threads related) failure in the migration process.
+>>
+>> That's why we set this flag unconditionally in qemu_loadvm_state() -
+>> see also my answer about that flag in the next message.
+> 
+> I'm not against having a boolean to say quit, maybe we should have that for
+> !vfio use case too, and I'm ok we introduce one.  But I hope two things can
+> work out:
+> 
+>    - Capture Error* and persist it in query-migrate (aka, use
+>      migrate_set_error).
+
+Will do.
+
+>    - Avoid setting load_threads_abort explicitly in vmstate load path.  It
+>      should really be part of destroy(), IMHO, as I mentioned in the other
+>      email, to recycle load threads in a failure case.
+
+That's the same thread abort flag issue as in the first block of my reply
+above.
+
+> Thanks,
+> 
 
 Thanks,
 Maciej
