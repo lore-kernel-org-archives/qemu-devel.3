@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97086E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:49:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D347E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:49:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLhez-0006yK-W2; Thu, 12 Dec 2024 06:47:14 -0500
+	id 1tLhgI-000390-8s; Thu, 12 Dec 2024 06:48:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLheu-0006vx-9y
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:47:09 -0500
+ id 1tLhg5-0002mX-EJ
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:21 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhes-0007FD-PZ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:47:08 -0500
+ id 1tLhg3-0007Nf-3e
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:48:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
  References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
  Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
  Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Aa6wAFBQdhcrVadKBysCQkd6OcuIY0Avs9BYh3oB4y4=; b=mxhZP/0TMdXn/ml3z1QIh6wHBw
- 2dTBC4H2Zw2rsB2ZoyeK58a5F/Htix8Vwlikpi5YLFT+JqXbvFu+hzINEac+ZPmo7nkelfjqKjWcW
- Jv7NYwYzYCnkJlc2G4ROImnDfVSbEi0MjfIYGkWOiX+RZRCY1pyFgFl/LZaL6kI+dGObQQIwHMMuz
- SpJjjkPtwk6bxVnCLREomuyFsLt0wdw4kaSvUj1fUz/Vpr4iTdtJQvL/bzW4rSDTsu2Xx/4ox0ai8
- 2R3A1OF369ciiYaXTVDc5oI560B4KbpBbhU7+wBDXg41Sh96QdR5s4Mt/LTuv4BujiG74S8NsrqJS
- +ixM/OkzODiaSQdqtiNXLdukWxWfZci6LQSPJTq/MKtU+YutHaJMQ1U60eWFqY0TOm18GisqdG3BP
- TS7lEHoztxbRytsQCLRkmrlRP6G3P8Sn5EkRGyynCfrm71fTZBjhXaJ8qanvFnikzjXeWofx4iWXz
- jed2a/EST2EPirQw+oGiFuShOgl3IviB7PmHAGLEIdmO9gM0bDyFyMoJbQA2SRnhEFp2Gf/NBFZbf
- 2tppnaFy0jG1X1VU6sAoZM6NOurQxc0Xvmp143vr7W/VisGYXH93wiKpLMSlqFgIfG4TsjvfzmehY
- kArAMHTWJ06/P4wsoeximf9GoJdUAXbTuNP9/Dp6U=;
+ bh=3yA20NBt6M6g87M1rHFQUcoesnQCGl0+GNmfTJjjil0=; b=niRtKAOxmgjDC9RzRc+tglKu5j
+ OOTRh44iW0VkRYzmIgNX/Czfl5PqNbkzmhoe1JZIw/Iu/soXxo7o/kxvshrSzR0KeYEgERldcs97r
+ +sUq8MwVsTcFy2mbflgjUYVQtFgTxrz5nkF8fINtCu9AIXiTLBqebl+lfMH28ny5LfHLlydxqWxwy
+ N2ux9sCWtgBPZ3q//SQVqzceKP4IcUd5EHm9Jsp6d2n+twkjNbL0AXqCPhPk1GorOtSH5uEnJuXcK
+ axil/Ht4SxOTl1JRLLgOGHnVbEuCZ4eRjpMMwwC+Hv2gM7DoEJmuVEZXC1gOlkm8yKs6xp4+CEdH0
+ VX3IKQ9ECcu4ey34zQTCoes6uQhQIlnl1OGGh6v4rVxnSfBjwr8lcgib/eH9So4XPQL93j7VYLVda
+ 9rJrBz3rDW+qZASr2uBLuSo4hcycnNhQX2uXr+jUEz2PR8SOmh6orTmT3IZ4Zjv5gRY63/mJ40XGa
+ 8BnCtIAKL4NUlUAKPMCrkE8DuAUUpO3HdVMxRd+OMRYz+deC2uNOkTc5YNupE9r3dOFhUka04UgKq
+ yNvhANZWnUg7HY/akbCHpXfZAcLfrqa3BygUT/mmylbGRDWgXfatcHsjbC1bcjBybW4wX+nprhV+M
+ /kzIc0CHL45EYrZ4FJLorpaVarIUAt4f3S+DpoFUY=;
 Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
  (helo=cheesecake.fritz.box)
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLheL-00070a-T4; Thu, 12 Dec 2024 11:46:34 +0000
+ id 1tLhfM-00070a-Lf; Thu, 12 Dec 2024 11:47:37 +0000
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 To: huth@tuxfamily.org,
 	qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 11:45:58 +0000
-Message-Id: <20241212114620.549285-13-mark.cave-ayland@ilande.co.uk>
+Date: Thu, 12 Dec 2024 11:46:17 +0000
+Message-Id: <20241212114620.549285-32-mark.cave-ayland@ilande.co.uk>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
@@ -52,8 +52,8 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 12/34] next-cube: move timer MMIO to separate memory region
- on next-pc device
+Subject: [PATCH v2 31/34] next-cube: move next_rtc_cmd_is_write() and
+ next_rtc_data_in_irq() functions
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -79,124 +79,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the timer MMIO accesses to a separate memory region on the next-pc device
-instead of being part of the next.scr MMIO memory region.
+Move these functions in next-cube.c so that they are with the rest of the
+next-rtc functions.
 
 Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 ---
- hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
- 1 file changed, 50 insertions(+), 13 deletions(-)
+ hw/m68k/next-cube.c | 172 ++++++++++++++++++++++----------------------
+ 1 file changed, 86 insertions(+), 86 deletions(-)
 
 diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 20a0b073e1..861d90024a 100644
+index 94a9b90171..12d31dfaad 100644
 --- a/hw/m68k/next-cube.c
 +++ b/hw/m68k/next-cube.c
-@@ -109,6 +109,7 @@ struct NeXTPC {
-     M68kCPU *cpu;
+@@ -175,92 +175,6 @@ static void next_scr2_led_update(NeXTPC *s)
+     }
+ }
  
-     MemoryRegion floppy_mem;
-+    MemoryRegion timer_mem;
-     MemoryRegion mmiomem;
-     MemoryRegion scrmem;
- 
-@@ -371,17 +372,6 @@ static uint64_t next_scr_readfn(void *opaque, hwaddr addr, unsigned size)
-     uint64_t val;
- 
-     switch (addr) {
--    /*
--     * These 4 registers are the hardware timer, not sure which register
--     * is the latch instead of data, but no problems so far.
--     *
--     * Hack: We need to have the LSB change consistently to make it work
--     */
--    case 0x1a000 ... 0x1a003:
--        val = extract32(clock(), (4 - (addr - 0x1a000) - size) << 3,
--                        size << 3);
--        break;
+-static bool next_rtc_cmd_is_write(uint8_t cmd)
+-{
+-    return (cmd >= 0x80 && cmd <= 0x9f) ||
+-           (cmd == 0xb1);
+-}
 -
-     /* For now return dummy byte to allow the Ethernet test to timeout */
-     case 0x6000:
-         val = 0xff;
-@@ -400,8 +390,6 @@ static void next_scr_writefn(void *opaque, hwaddr addr, uint64_t val,
-                              unsigned size)
+-static void next_rtc_data_in_irq(void *opaque, int n, int level)
+-{
+-    NeXTRTC *rtc = NEXT_RTC(opaque);
+-
+-    if (rtc->phase < 8) {
+-        rtc->command = (rtc->command << 1) | level;
+-
+-        if (rtc->phase == 7 && !next_rtc_cmd_is_write(rtc->command)) {
+-            if (rtc->command <= 0x1f) {
+-                /* RAM registers */
+-                rtc->retval = rtc->ram[rtc->command];
+-            }
+-            if ((rtc->command >= 0x20) && (rtc->command <= 0x2f)) {
+-                /* RTC */
+-                time_t time_h = time(NULL);
+-                struct tm *info = localtime(&time_h);
+-                rtc->retval = 0;
+-
+-                switch (rtc->command) {
+-                case 0x20:
+-                    rtc->retval = SCR2_TOBCD(info->tm_sec);
+-                    break;
+-                case 0x21:
+-                    rtc->retval = SCR2_TOBCD(info->tm_min);
+-                    break;
+-                case 0x22:
+-                    rtc->retval = SCR2_TOBCD(info->tm_hour);
+-                    break;
+-                case 0x24:
+-                    rtc->retval = SCR2_TOBCD(info->tm_mday);
+-                    break;
+-                case 0x25:
+-                    rtc->retval = SCR2_TOBCD((info->tm_mon + 1));
+-                    break;
+-                case 0x26:
+-                    rtc->retval = SCR2_TOBCD((info->tm_year - 100));
+-                    break;
+-                }
+-            }
+-            if (rtc->command == 0x30) {
+-                /* read the status 0x30 */
+-                rtc->retval = rtc->status;
+-            }
+-            if (rtc->command == 0x31) {
+-                /* read the control 0x31 */
+-                rtc->retval = rtc->control;
+-            }
+-        }
+-    }
+-    if (rtc->phase >= 8 && rtc->phase < 16) {
+-        if (next_rtc_cmd_is_write(rtc->command)) {
+-            /* Shift in value to write */
+-            rtc->value = (rtc->value << 1) | level;
+-        } else {
+-            /* Shift out value to read */
+-            if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
+-                qemu_irq_raise(rtc->data_out_irq);
+-            } else {
+-                qemu_irq_lower(rtc->data_out_irq);
+-            }
+-        }
+-    }
+-
+-    rtc->phase++;
+-    if (rtc->phase == 16 && next_rtc_cmd_is_write(rtc->command)) {
+-        if (rtc->command >= 0x80 && rtc->command <= 0x9f) {
+-            /* RAM registers */
+-            rtc->ram[rtc->command - 0x80] = rtc->value;
+-        }
+-        if (rtc->command == 0xb1) {
+-            /* write to 0x30 register */
+-            if (rtc->value & 0x04) {
+-                /* clear FTU */
+-                rtc->status = rtc->status & (~0x18);
+-                qemu_irq_lower(rtc->power_irq);
+-            }
+-        }
+-    }
+-}
+-
+ static void next_scr2_rtc_update(NeXTPC *s)
  {
-     switch (addr) {
--    /* Hardware timer latch - not implemented yet */
--    case 0x1a000:
-     default:
-         DPRINTF("BMAP Write @ 0x%x with 0x%"PRIx64 " size %u\n",
-                 (unsigned int)addr, val, size);
-@@ -980,6 +968,50 @@ static const MemoryRegionOps next_floppy_ops = {
+     uint8_t old_scr2, scr2_2;
+@@ -1012,6 +926,92 @@ static const MemoryRegionOps next_dummy_en_ops = {
      .endianness = DEVICE_BIG_ENDIAN,
  };
  
-+static void next_timer_write(void *opaque, hwaddr addr, uint64_t val,
-+                              unsigned size)
++static bool next_rtc_cmd_is_write(uint8_t cmd)
 +{
-+    switch (addr) {
-+    case 0 ... 3:
-+        /* Hardware timer latch - not implemented yet */
-+        break;
++    return (cmd >= 0x80 && cmd <= 0x9f) ||
++           (cmd == 0xb1);
++}
 +
-+    default:
-+        g_assert_not_reached();
++static void next_rtc_data_in_irq(void *opaque, int n, int level)
++{
++    NeXTRTC *rtc = NEXT_RTC(opaque);
++
++    if (rtc->phase < 8) {
++        rtc->command = (rtc->command << 1) | level;
++
++        if (rtc->phase == 7 && !next_rtc_cmd_is_write(rtc->command)) {
++            if (rtc->command <= 0x1f) {
++                /* RAM registers */
++                rtc->retval = rtc->ram[rtc->command];
++            }
++            if ((rtc->command >= 0x20) && (rtc->command <= 0x2f)) {
++                /* RTC */
++                time_t time_h = time(NULL);
++                struct tm *info = localtime(&time_h);
++                rtc->retval = 0;
++
++                switch (rtc->command) {
++                case 0x20:
++                    rtc->retval = SCR2_TOBCD(info->tm_sec);
++                    break;
++                case 0x21:
++                    rtc->retval = SCR2_TOBCD(info->tm_min);
++                    break;
++                case 0x22:
++                    rtc->retval = SCR2_TOBCD(info->tm_hour);
++                    break;
++                case 0x24:
++                    rtc->retval = SCR2_TOBCD(info->tm_mday);
++                    break;
++                case 0x25:
++                    rtc->retval = SCR2_TOBCD((info->tm_mon + 1));
++                    break;
++                case 0x26:
++                    rtc->retval = SCR2_TOBCD((info->tm_year - 100));
++                    break;
++                }
++            }
++            if (rtc->command == 0x30) {
++                /* read the status 0x30 */
++                rtc->retval = rtc->status;
++            }
++            if (rtc->command == 0x31) {
++                /* read the control 0x31 */
++                rtc->retval = rtc->control;
++            }
++        }
++    }
++    if (rtc->phase >= 8 && rtc->phase < 16) {
++        if (next_rtc_cmd_is_write(rtc->command)) {
++            /* Shift in value to write */
++            rtc->value = (rtc->value << 1) | level;
++        } else {
++            /* Shift out value to read */
++            if (rtc->retval & (0x80 >> (rtc->phase - 8))) {
++                qemu_irq_raise(rtc->data_out_irq);
++            } else {
++                qemu_irq_lower(rtc->data_out_irq);
++            }
++        }
++    }
++
++    rtc->phase++;
++    if (rtc->phase == 16 && next_rtc_cmd_is_write(rtc->command)) {
++        if (rtc->command >= 0x80 && rtc->command <= 0x9f) {
++            /* RAM registers */
++            rtc->ram[rtc->command - 0x80] = rtc->value;
++        }
++        if (rtc->command == 0xb1) {
++            /* write to 0x30 register */
++            if (rtc->value & 0x04) {
++                /* clear FTU */
++                rtc->status = rtc->status & (~0x18);
++                qemu_irq_lower(rtc->power_irq);
++            }
++        }
 +    }
 +}
 +
-+static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
-+{
-+    uint64_t val;
-+
-+    switch (addr) {
-+    case 0 ... 3:
-+        /*
-+         * These 4 registers are the hardware timer, not sure which register
-+         * is the latch instead of data, but no problems so far.
-+         *
-+         * Hack: We need to have the LSB change consistently to make it work
-+         */
-+        val = extract32(clock(), (4 - addr - size) << 3,
-+                        size << 3);
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    return val;
-+}
-+
-+static const MemoryRegionOps next_timer_ops = {
-+    .read = next_timer_read,
-+    .write = next_timer_write,
-+    .valid.min_access_size = 1,
-+    .valid.max_access_size = 4,
-+    .endianness = DEVICE_BIG_ENDIAN,
-+};
-+
- static void next_pc_reset(DeviceState *dev)
+ static void next_rtc_cmd_reset_irq(void *opaque, int n, int level)
  {
-     NeXTPC *s = NEXT_PC(dev);
-@@ -1042,6 +1074,8 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
-     memory_region_add_subregion(&s->scrmem, 0x18000,
-                                 sysbus_mmio_get_region(sbd, 0));
- 
-+    /* Timer */
-+    memory_region_add_subregion(&s->scrmem, 0x1a000, &s->timer_mem);
- }
- 
- static void next_pc_init(Object *obj)
-@@ -1065,6 +1099,9 @@ static void next_pc_init(Object *obj)
-                           "next.floppy", 4);
- 
-     object_initialize_child(obj, "escc", &s->escc, TYPE_ESCC);
-+
-+    memory_region_init_io(&s->timer_mem, OBJECT(s), &next_timer_ops, s,
-+                          "next.timer", 4);
- }
- 
- /*
+     NeXTRTC *rtc = NEXT_RTC(opaque);
 -- 
 2.39.5
 
