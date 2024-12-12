@@ -4,86 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBB8E7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CBFBE77180
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:56:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLoKr-0004zO-1W; Thu, 12 Dec 2024 13:54:53 -0500
+	id 1tLoLz-0007NO-CW; Thu, 12 Dec 2024 13:56:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKp-0004yq-47
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:51 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKn-0006aA-EH
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:50 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-725e71a11f7so1704021b3a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:54:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734029688; x=1734634488; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BSVRLQ/NCbTr+znZaNjcUH8IYeWT9qLO5QVBWX7wORU=;
- b=rzVYXHRIeIC9ukl6nnTzowbGMk8EFI4pOAy4sg+rlEZYoToCXkA0eB6tH85ZzWBpdm
- G/tZFeiEpmcFIVPrCLVRy1zUrKNpINhXGfmoxwrnseXtXn/WY54D6dHZW44S62EzvB1e
- s1LljfaV066ISObWtgAROik73FYtwzK4XxtRprFJKuulgmUtFfsGcKCvANKa/3kVOI9v
- pGZb1G+gq+2s2Q1+ig/Qo551zmYGgbTyfOO2qaM9THOl1Eca3gHjIsCSKCgLVR0JyM6Z
- fN1hcYIz1ZrItmm2770VRP3yRF0khHm0VR78FQyVkeS8BxZ3UwmAIXhhovbfhRNyGeZ7
- X3dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734029688; x=1734634488;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BSVRLQ/NCbTr+znZaNjcUH8IYeWT9qLO5QVBWX7wORU=;
- b=fQ2yjSoZ1TseIZfIY5KV2fHJxQ/aECy4d0QRXfZfywZHC9+aUcR7t3zczGEkgsEPdC
- 6yui8rkYMyElKJiRG8uTqD68b/QK1gIBIyMDzdCbVMdq2P8h+rnZddnmDwZRhSvycs6a
- /YD8C5tXF7cLZ4gOY1Qm2cIYtL82Hn71GtcifafzYd8hRjwcSGcYoYpl4HK9HP9Ey0dk
- dJovugAkwSsot59yXlePmLnpIf1b/55T48IPbRl4/1YaCYb84V5GrjwG43D40Tl52dLs
- z0u7PJBKuezEfTq/PVo9/6+CclaPnZkgKosT7SUYA8jHiX0l5v24rVoehD+ONWGOB89G
- OrqA==
-X-Gm-Message-State: AOJu0YyZ9J6AqRYbrTh/piw+MfBGRKzTEGX2/aZScUnvfmAgbIPukeYV
- YudfSmUi3Hf4Howw/hgV7hE/wc2+0koM9pCR4L/7CmsKw7PXqWmVuvpwIyZ3mpbYTVYzgOXn0lB
- 4
-X-Gm-Gg: ASbGncskpYykMCTaShpixGyhJ75oeymU+MMD7IYkNwzs+fFOuD0XW/IHUr/2ZEUH8mK
- VLgZTtAhb0p5YDNLUG+i5Xm4qCj6RmaREM/Nlp+eaMu4uOw249BmkA2lpDKRmMIwmeAW73Hx628
- y0Mfuf4+j974Sm2r/9y3N9CS2TBIoabpOUloDtICxaGg95cQEI5PLgstrQuL8mqAGS6JwPo+Rl9
- 4AJdM1dRS/OJv/iQZOXen1iF8XiyeQwxWRs782dMIeXlDoW2oLWV3akUodm3vOMbh75PHY2Kfac
- Ryw9SFuT0U4mW+htIWER0d0gk3Y+GB8=
-X-Google-Smtp-Source: AGHT+IHVXn2W0r6tSoU77aUt+fJJfO9dJ9F7xpCFOmjp8kKXPWlbXNvPPa5bMX3EM6iHOqc6KPq/qg==
-X-Received: by 2002:a05:6a00:4c87:b0:725:4301:ed5a with SMTP id
- d2e1a72fcca58-72907c19ba0mr1714891b3a.2.1734029687822; 
- Thu, 12 Dec 2024 10:54:47 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725ee10f928sm7499833b3a.32.2024.12.12.10.54.44
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 10:54:47 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 05/18] accel/tcg: Use tb_page_addr_t type in page_unprotect()
-Date: Thu, 12 Dec 2024 19:53:28 +0100
-Message-ID: <20241212185341.2857-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
-References: <20241212185341.2857-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tLoLl-0006ju-0K
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:51 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tLoLf-0006po-0O
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:48 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id C120C4E60F7;
+ Thu, 12 Dec 2024 19:55:39 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id AODKhdqjZVS1; Thu, 12 Dec 2024 19:55:37 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id CC69C4E60F5; Thu, 12 Dec 2024 19:55:37 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id CA14B746F60;
+ Thu, 12 Dec 2024 19:55:37 +0100 (CET)
+Date: Thu, 12 Dec 2024 19:55:37 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Pankaj Gupta <pankaj.gupta.linux@gmail.com>, 
+ Wei Yang <richardw.yang@linux.intel.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Haozhong Zhang <haozhong.zhang@intel.com>
+Subject: Re: [PATCH 2/2] system: Restrict libpmem and libdaxctl CPPFLAGS to
+ physmem.c
+In-Reply-To: <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
+Message-ID: <1a36f9f9-3783-9d40-7e85-b0ff290e3857@eik.bme.hu>
+References: <20241212092632.18538-1-philmd@linaro.org>
+ <20241212092632.18538-3-philmd@linaro.org>
+ <5c323271-8563-342f-35d1-6f9575265f72@eik.bme.hu>
+ <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-558334730-1734029737=:55625"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,42 +74,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Match with the page_protect() prototype, use a tb_page_addr_t
-argument instead of target_ulong.
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/translate-all.h | 2 +-
- accel/tcg/user-exec.c        | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+--3866299591-558334730-1734029737=:55625
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-diff --git a/include/exec/translate-all.h b/include/exec/translate-all.h
-index 85c9460c7ca..c50661a05d5 100644
---- a/include/exec/translate-all.h
-+++ b/include/exec/translate-all.h
-@@ -27,7 +27,7 @@ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
- 
- #ifdef CONFIG_USER_ONLY
- void page_protect(tb_page_addr_t page_addr);
--int page_unprotect(target_ulong address, uintptr_t pc);
-+int page_unprotect(tb_page_addr_t address, uintptr_t pc);
- #endif
- 
- #endif /* TRANSLATE_ALL_H */
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 06016eb0301..4ed6dd19f30 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -696,7 +696,7 @@ void page_protect(tb_page_addr_t address)
-  * immediately exited. (We can only return 2 if the 'pc' argument is
-  * non-zero.)
-  */
--int page_unprotect(target_ulong address, uintptr_t pc)
-+int page_unprotect(tb_page_addr_t address, uintptr_t pc)
- {
-     PageFlagsNode *p;
-     bool current_tb_invalidated;
--- 
-2.45.2
+On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
+> On 12/12/24 14:11, BALATON Zoltan wrote:
+>> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
+>>> Only physmem.c includes libpmem and libdaxctl headers.
+>>> No need to pass them to all system_ss[] files.
+>> 
+>> I think doing this patch first would leave the other one unnecessary so 
+>
+> This one is about libpmem / libdaxctl in physmem.c,
+> the previous one is about libsdl in vl.c. I'm missing
+> what inverting the order would change.
 
+It seems odd to add the libpmem, libdaxctl libs to one set in the first 
+patch then remove it right away in the next patch. Swapping patches would 
+avoid that and move these to the final place without churn then the sdl 
+change is simpler.
+
+> Besides in 2 patches it is simpler to check what CPPFLAGS are applied.
+>
+> Anyhow if you insist, I can squash. I don't care much as long as
+> we reduce the flags applied to system_ss[].
+
+I don't insist and don't mind much either but I see others also suggested 
+squashing patches so this will be resolved by that.
+
+Regards,
+BALATON Zoltan
+
+>> you could do both in one patch with less churn and maybe reduce this series 
+>> to a single patch.
+>> 
+>> Regards,
+>> BALATON Zoltan
+>> 
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> system/meson.build | 7 +++++--
+>>> 1 file changed, 5 insertions(+), 2 deletions(-)
+>>> 
+>>> diff --git a/system/meson.build b/system/meson.build
+>>> index f7e2c8b826f..50d915bd80c 100644
+>>> --- a/system/meson.build
+>>> +++ b/system/meson.build
+>>> @@ -2,10 +2,13 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: 
+>>> [files(
+>>>   'arch_init.c',
+>>>   'ioport.c',
+>>>   'memory.c',
+>>> -  'physmem.c',
+>>>   'watchpoint.c',
+>>> )])
+>>> 
+>>> +specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+>>> +  'physmem.c',
+>>> +), libpmem, libdaxctl])
+>>> +
+>>> system_ss.add(files(
+>>>   'balloon.c',
+>>>   'bootdevice.c',
+>>> @@ -23,7 +26,7 @@ system_ss.add(files(
+>>>   'runstate-hmp-cmds.c',
+>>>   'runstate.c',
+>>>   'tpm-hmp-cmds.c',
+>>> -), libpmem, libdaxctl)
+>>> +))
+>>> 
+>>> system_ss.add(files(
+>>>   'vl.c',
+>>> 
+>
+>
+--3866299591-558334730-1734029737=:55625--
 
