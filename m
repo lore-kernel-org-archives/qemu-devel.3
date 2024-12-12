@@ -4,96 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8ECEE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:58:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DD0E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLlZi-000079-Nu; Thu, 12 Dec 2024 10:58:02 -0500
+	id 1tLlaA-0000fA-Sv; Thu, 12 Dec 2024 10:58:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLlZh-00006z-UD
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tLlZg-0000Wd-9j
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734019079;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=ChNQwghGMmOxvOhnVcBeMl7HUhKJG+JaWggEymmf3/tVwgZx+/bTIORRTo1CsUHHji4zDW
- USmR3eVKuBehvilJ1eTvm6HyK09nIMm27jDSA3Bqq091rCCfKBNoffdAPmcMn4Rd5egc8F
- 4mTTK5P65qBrhSsMMssfDQfJdf9K3ik=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-rGZyz1QINLyYVqjF6tK1YQ-1; Thu, 12 Dec 2024 10:57:58 -0500
-X-MC-Unique: rGZyz1QINLyYVqjF6tK1YQ-1
-X-Mimecast-MFC-AGG-ID: rGZyz1QINLyYVqjF6tK1YQ
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3862e986d17so371719f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:57:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLla7-0000U7-SC
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:28 -0500
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLla5-0000Xz-Dl
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:58:27 -0500
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-2a3a40c69e3so26860fac.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 07:58:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734019104; x=1734623904; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=o0h1SWbIk0RJP/0juIBtLu1abW/u1bjkCNRchu4OQKw=;
+ b=hFq7/r68tsTJxfDe/C1WzKxkrwSywxt4JenXCLmDm0uV7OSVxKqmqP8o5ZFCeLkYJs
+ 2S13igX4NsB5qzxuZMKijcbAbeCfhG7AhPRTfitqAbkLBM9Al3XLLOXdJTrQmN8/x8TJ
+ aMZOzNfZ3oaGJPOTQQ6sBwjD7dyYL1XqrHJcp/wrcRgUby5IninBulCqQ3lKoCW7AnUW
+ tvSTuDb+z5sNatJh8TrEbEac2XRUVBpZGeK1st7icU3Weg9CydYjJpZ7QX0W48vtOpME
+ 4BSB4R3SdIhswtfCWCYbXZgALEQQblFz+QwZbxWtlA4j8rn+JQ4OIqr7psSFGfz6GX9V
+ 0FMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734019077; x=1734623877;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=k8I8D1B02kaz2pLgSNXbj3McBb1xosFIBXwx5TJEacswX6lsyhqtwF1v0/oz5niNOR
- ff0bNfwqPj6PdZk13GueKlg1wUQX30bV9BnH/zgQRGloskZqdtN3AoruFDhj51M+K+es
- nNInnPeTmV8c3Xmo4JbWXxFnRo6WupEE4kTyTVMNYMdkXUSa34EamGRV8+nH2Li/wVAQ
- 8r8rTByD9rzWMWCkRPEIpU4wmovnRULS+inFwMW666KW6Bczdh5mMuahYuF3++FXwIhg
- PecRtL1RWuxWGqnQUMn59fNoPlAPNWPDei9ZusYG8pN1ebbULQQaM333Uqr3NS9svrG0
- KEmA==
+ d=1e100.net; s=20230601; t=1734019104; x=1734623904;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=o0h1SWbIk0RJP/0juIBtLu1abW/u1bjkCNRchu4OQKw=;
+ b=XQ5tWkpFzCKDD19nqC4zfyOAn8L98lJ8mP4KsAC3y8E4UbqwYcy8pPFZDoXE21S3fe
+ uT3jEjITE35HecfppWhbDf+WVu9KQAQIjfjAJrYmlYFEQnow2c4uZKn446GEs+TFhlNN
+ 3twiL/UunB5nYKzPLTld4xuEpUspwcrsGOrmuP/rw0bPhNxuPIpXvmhqsI6mIJpSReGk
+ 91o5+7AGEV0t4CVZfsCyr0aAZleApUoyZ7RWxZiknsLBdqsEtbHwE248P9b87Rf1rUYl
+ ++nzVbnP+BsN3DRcEwSQW8iWwtIAnTaC7i13ogUlNmdzOBNX9tW3vmjx9acj6sLFtVUz
+ rUNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWKae2oNObz9B98swEnpftRC2wax+Z31qWlj0WWtqoZy67DocAToqB0HJJzdCFcZYwxofjg/hhT70l6@nongnu.org
-X-Gm-Message-State: AOJu0Yw3NcBF/bDInwOSDx1uPfGBlnGgkdbVfVEhyR72NZja95KdWcLZ
- l7EkjWw3a45byMxeFG2Y5TRFBH8e1aHbsqU5OjYgiKqZ5V/cfiX+djJTKMGZgvBHQlS7ALp3GmC
- EaXnkDqUp0W8b6e9rsX2TCv9hlR2jwFpdVT5d4uV8RnwoHe5xRI9I
-X-Gm-Gg: ASbGncsjQtaKyuhhaKMRYjOpW34w6ZrtEXL076r4HrLqNvKHebpgX0TK3+pe7fweX19
- vv7IIoBAtW/DqfN0I3+fMrMmieHDd31LB/kBgWNp4F74b2DOqGGO2JDBaKNn44GTetjBLfvJhSo
- Q3VHAIC86clKSpkF45KmwtSp28XdudWDeH/lCN3E/zOUnRM1V3EEJLozHb4kT1ePHPOhr0qsvfJ
- V1vnLi3AEYL9ilEr0/SIwGIqcCThYE/cAyUQ+C1KPUOYaPk6eXbSxZiUBN8
-X-Received: by 2002:a05:6000:4013:b0:386:3e3c:ef1 with SMTP id
- ffacd0b85a97d-3864cea4553mr6574616f8f.35.1734019077117; 
- Thu, 12 Dec 2024 07:57:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFR83C5MMeDF8fnzp4KAbDZ9IwQ9YCimFBYLAP7JHpn0+TXjU2U2saynfWppJ2/nv7QP+Warw==
-X-Received: by 2002:a05:6000:4013:b0:386:3e3c:ef1 with SMTP id
- ffacd0b85a97d-3864cea4553mr6574608f8f.35.1734019076832; 
- Thu, 12 Dec 2024 07:57:56 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878251dee1sm4340989f8f.102.2024.12.12.07.57.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 07:57:56 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: "Maciej S . Szmigiero" <mail@maciej.szmigiero.name>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] target/i386: Reset TSCs of parked vCPUs too on VM reset
-Date: Thu, 12 Dec 2024 16:57:55 +0100
-Message-ID: <20241212155755.524767-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <5a605a88e9a231386dc803c60f5fed9b48108139.1734014926.git.maciej.szmigiero@oracle.com>
-References: 
+ AJvYcCXEMVN0R0FCaZJaFWebclZphn39Z66cYK8z2sweQhlOhJ86hSTmnEneOSMf8xVnrCrkG8SF5H++LOyy@nongnu.org
+X-Gm-Message-State: AOJu0YwfizqCSbeuo5u2xTSUA55XHMQ0NDgNxfUms4PotbLB2u23nDo5
+ szC/BbocZDvvt16Dha+i1tV/Zuc763VS18Bt5L/JBmU9WkalJ1RN6AdawHhyofY=
+X-Gm-Gg: ASbGncuHN9n9oS7aZb5HZPbW/QIY6VT0PaJKJqJ8x2Ba7YWpzi5axJ9QMzTXwL/rHRF
+ JVyBS7Z4jhUq8Z+lWVX/3Juu2KWH1DWQ8+SC60/dRnxO3GvNQHyP/ZwV8++oGJgLz4wLhpkbVgv
+ SdYL6YynNlZ9mwIhk2VwDYpgCqBg3en1U74lIldwai2nQVi6ADujQgcPjHy92fw5V6778//hjMI
+ mkhkZ2GvV1JTlxoQNEA0UPp0UzZ9imz9hFNPaZeXdtPVuyagxUHZzB/xne3vfApKBrL5y9qH4c4
+ cljRIGU4ZZJyEKzqSfByGT4tMmFO8SQXswM=
+X-Google-Smtp-Source: AGHT+IFu1Z6lSQnJBcD1/0Y2gLb/ZX30CSYDKN/S5PzdmyXjK9lVXqMYHMmdKtzoG99jR7p/Y9G9sQ==
+X-Received: by 2002:a05:6870:910d:b0:29e:5e7b:dc0f with SMTP id
+ 586e51a60fabf-2a382755b9bmr2348048fac.38.1734019103750; 
+ Thu, 12 Dec 2024 07:58:23 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-29f569a3868sm4441223fac.45.2024.12.12.07.58.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 07:58:23 -0800 (PST)
+Message-ID: <23c7d1a0-7558-47d4-8c60-8ffaa14d8c46@linaro.org>
+Date: Thu, 12 Dec 2024 09:58:20 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 06/11] target/ppc: introduce gen_addr_swizzle_le()
+ function
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, npiggin@gmail.com,
+ danielhb413@gmail.com, qemu-ppc@nongnu.org, qemu-devel@nongnu.org
+References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
+ <20241212151412.570454-7-mark.cave-ayland@ilande.co.uk>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241212151412.570454-7-mark.cave-ayland@ilande.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,8 +104,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+On 12/12/24 09:14, Mark Cave-Ayland wrote:
+> This function is used to swizzle the address lines to implement little endian
+> accesses as used by older CPUs. Add the address line swizzle to the gen_ld_tl()
+> and gen_st_tl() functions.
+> 
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> ---
+>   target/ppc/translate.c | 26 ++++++++++++++++++++++++++
+>   1 file changed, 26 insertions(+)
 
-Paolo
+Right.  So, this *can't* be split from patch 5.
 
+> +/*
+> + * Swizzle the address lines for little endian accesses as used by older
+> + * CPUs. The bottom 3 address lines are exlusive-ORed by a constant to
+
+typo for exclusive, though "xor'ed" is probably just as readable.
+
+> + * generate the correct address for a little endian access. For more
+> + * information see https://wiki.preterhuman.net/images/f/fc/Endian.pdf
+> + */
+> +static inline void gen_addr_swizzle_le(TCGv ret, TCGv addr, MemOp op)
+
+Drop the inline.
+
+> +{
+> +    MemOp size = op & MO_SIZE;
+> +    TCGv aoff = tcg_temp_new();
+> +    static int c_swizzle[MO_SIZE] = { 0x7, 0x6, 0x4, 0x0 };
+> +
+> +    tcg_gen_andi_tl(aoff, addr, (1 << size) - 1);
+> +    tcg_gen_andi_tl(ret, addr, ~((1 << size) - 1));
+> +    tcg_gen_xori_tl(ret, ret, c_swizzle[size]);
+> +    tcg_gen_sub_tl(ret, ret, aoff);
+> +}
+
+I believe this is just
+
+     tcg_gen_xori_tl(ret, addr, 8 - memop_size(op));
+
+> @@ -2586,6 +2604,10 @@ static void gen_ld_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
+>   {
+>       if (!need_addrswizzle_le(ctx)) {
+>           tcg_gen_qemu_ld_tl(val, addr, idx, memop);
+> +    } else {
+> +        TCGv taddr = tcg_temp_new();
+> +        gen_addr_swizzle_le(taddr, addr, memop);
+> +        tcg_gen_qemu_ld_tl(val, taddr, idx, memop);
+>       }
+>   }
+
+     if (need) {
+         /* BLRM is only found on old ppc32; the only MO_64 should be for the FPU. */
+         assert(size < MO_64);
+         addr = gen_addr_swizzle_le(...);
+     }
+     tcg_gen_qemu_ld_tl(...);
+
+You'll need to handle tcg_qemu_ld_i64 as well, and for that MO_64 needs 
+tcg_gen_rotli_i64(val, val, 32) after the load / before the store.
+
+
+r~
 
