@@ -4,153 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F99E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 21:54:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6160AE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:06:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLr7I-00065w-Rc; Thu, 12 Dec 2024 16:53:04 -0500
+	id 1tLrIu-00018h-Dg; Thu, 12 Dec 2024 17:05:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tLr7H-00065f-MB
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:53:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLrIm-000187-SR
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:04:57 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tLr7E-0001H0-FP
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 16:53:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734040377;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Kf9SnwwmnJrMvaBh3IrQ1RM/qKq9BFbAX1/w2mTz5mg=;
- b=LlivgEDLK7ulAN11TSwh1R8wLdaH68ou3Ut6vnMua6qVhL9yDRdWDx5QVPoYfRn76Zr9KH
- 6B16UmZcwV9uFF0+kcGUOsXY+ttAOw2zZzSzJV0aiNeGrfJcEyPqeIfaxVXxcHvsGVm5QG
- UlBSY1SeWgAFoG1KqHZbND/7ZymaUmI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-25-8sAtuaa1Py-xlH2Zzp3jfA-1; Thu, 12 Dec 2024 16:52:56 -0500
-X-MC-Unique: 8sAtuaa1Py-xlH2Zzp3jfA-1
-X-Mimecast-MFC-AGG-ID: 8sAtuaa1Py-xlH2Zzp3jfA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso677590f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 13:52:55 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734040375; x=1734645175;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Kf9SnwwmnJrMvaBh3IrQ1RM/qKq9BFbAX1/w2mTz5mg=;
- b=FFEafxRcymTgFcoHjdCMOHcl6jVm6PBEUrGRD/2WXJxHTH2/zQEP0/Rbndw8rDhd6h
- Lfujw/9NBH8K9c3mvgNhMjfe4TIkWGtWMNMXVkDfhcROY3kxF9kdhiXcuYRLp9RtmGh2
- AcjUAd7fklGBGwj5sK+fwl2KlFvx/BHj7iLt8R/F4bZKFvNm1r6fTl3QRDjEQZbXzMTl
- 3wQd2KnCgLUEd5GfiZ0KYJfJVsD7P6G4hA8PJYetQtPMKLgMgVlPZFe83NEFXOUBrfJU
- s6LDcZzqJXUCKDiQA+EAFz7bMe6X2uEQEoSpj5oHwJ5KdWHtu3M2dKBVvtCn1nGPCgBr
- A1Jg==
-X-Gm-Message-State: AOJu0YzLp7kKXi8Sy3qlMZtXaDAgd3Gq4PcXg0D/hW6BDnWW9GedZS8M
- TJf5Fz+jG1cpF7T8FTSLqlZW7t0BS1x7SRYr7vVSEtu5xMv5Z8i3jggOzG20Rwo/0qDVhameunE
- vLwzu6K1yoK099FsQfC47+3E1DTUPESqLq7uv3+qy8pQv0BIm/3oG+dOaTlI8JKeqF6cou0T7Ag
- wRIKqlIIQZco3mJc6sdgDpUT8Yg6f7v+vZIJk=
-X-Gm-Gg: ASbGncsRQ7f9LSCeUz3+isF2pZUklvkM4nqXt5nFDlisrcbHZqa9DBiAWMOf2kNNn7/
- zirLRjh/KLxqkgafqBjTrAU/fTofB2neJeCub14Ajt6zAB0uvMJ4qZWi8MiTw0ohwjfK/xZrYk1
- ngyYBEdy0xIhbGa80snLytpie4UclvJy0fnVvhjDykbfTpvG5JISYsKdtyCHUou98oLI17sMHP7
- q8gmPx/Nm+0+lEC6bF8myR8eWkp36HWPHjc7SfrSGZ7UIiB6Nr+K6zwrMd86R+vq0locLg1hlxu
- i3nmMk6I00CLZbkqkwWf/COq9th49L+hCuMdfoOtAfWQK+DpQI5r+4ZkAhagWJTbeGqH+CCmSf8
- bRihwV6wL
-X-Received: by 2002:a5d:64cf:0:b0:385:f220:f789 with SMTP id
- ffacd0b85a97d-3888e0c1645mr113778f8f.48.1734040374846; 
- Thu, 12 Dec 2024 13:52:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGhV520dPKf+Ng6DYqmhkaAJ6Tyg/Xml+nuYnQaVRAYl+uTcCPOFk0bAYJ7O7yR5Dcjw61sRw==
-X-Received: by 2002:a5d:64cf:0:b0:385:f220:f789 with SMTP id
- ffacd0b85a97d-3888e0c1645mr113756f8f.48.1734040374386; 
- Thu, 12 Dec 2024 13:52:54 -0800 (PST)
-Received: from ?IPV6:2003:cb:c716:2b00:720b:42a1:ba95:a3db?
- (p200300cbc7162b00720b42a1ba95a3db.dip0.t-ipconnect.de.
- [2003:cb:c716:2b00:720b:42a1:ba95:a3db])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514d35sm5214781f8f.74.2024.12.12.13.52.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 13:52:53 -0800 (PST)
-Message-ID: <7e1025b4-c246-432c-b70d-e7156afb6519@redhat.com>
-Date: Thu, 12 Dec 2024 22:52:49 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/14] s390x: virtio-mem support
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLrIj-0005xb-GY
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:04:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734041094; x=1765577094;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=fcLqNUWXZKdJqXPcRRGkSkyE41XaNnf3cqr6Sktyuwg=;
+ b=kstg2aTD75S36zxYXS6GhHKY1Iw/xxFKZk4hOCrwEZifediUDSgLxsmI
+ lwVa8dzVaMP4RJlv/TYqinXz7jITJzf5GAt3Buo5VzUDXUWNdRRulRpz1
+ 4q6AV4W3WDpewt8iGjSlm/Z7D4o/AdAWCwU3Rce27hlGPwupksr5o9Hte
+ AnfRbA4BMJ823sGTbtlvXw+M76VGVEVpJSNcoIN0+b1Zt/vTNdgLn61s4
+ nJyNZ2w1eM84bMoTyI8rcQWFCGayE7SqGeICLv2q5vZumF7Cur5eZNNGi
+ 7Aczwz3Lyt/LjXzU8mCwgXTz77S/DfxEw2NccHjB3LttqnOJb0KDGr8FC A==;
+X-CSE-ConnectionGUID: Gn7SLOJ/RFKtywrylhbx3g==
+X-CSE-MsgGUID: axdsQOojQqe/GGEZ7hF6wg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34614681"
+X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="34614681"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 14:04:49 -0800
+X-CSE-ConnectionGUID: q2EolBEBSMe+Nve+GU6ohA==
+X-CSE-MsgGUID: xqpa35YQRpCHDYTgrkEiCg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="96589080"
+Received: from puneetse-mobl.amr.corp.intel.com (HELO localhost)
+ ([10.125.110.112])
+ by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 14:04:47 -0800
+Date: Thu, 12 Dec 2024 16:04:44 -0600
+From: Ira Weiny <ira.weiny@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Riku Voipio <riku.voipio@iki.fi>,
  Richard Henderson <richard.henderson@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-References: <20241008105455.2302628-1-david@redhat.com>
- <07ca4492-1590-4cc6-94a1-0eea417da59e@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <07ca4492-1590-4cc6-94a1-0eea417da59e@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 34/60] i386/tdx: implement tdx_cpu_realizefn()
+Message-ID: <Z1td_BZPlZ5G9Zaq@iweiny-mobl>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-35-xiaoyao.li@intel.com>
+ <82b74218-f790-4300-ab3b-9c41de1f96b8@redhat.com>
+ <2bedfcda-c2e7-4e5b-87a7-9352dfe28286@intel.com>
+ <44627917-a848-4a86-bddb-20151ecfd39a@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <44627917-a848-4a86-bddb-20151ecfd39a@redhat.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=ira.weiny@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -166,64 +98,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13.11.24 15:46, David Hildenbrand wrote:
-> On 08.10.24 12:54, David Hildenbrand wrote:
->> Based on current master.
->>
->> There is really not much left to do on s390x, because virtio-mem already
->> implements most things we need today (e.g., early-migration,
->> unplugged-inaccessible). The biggest part of this series is just doing what
->> we do with virtio-pci, wiring it up in the machine hotplug handler and ...
->> well, messing with the physical memory layout where we can now exceed
->> initial RAM size and have sparsity (memory holes).
->>
->> I tested a lot of things, including:
->>    * Memory hotplug/unplug
->>    * Device hotplug/unplug
->>    * System resets / reboots
->>    * Migrate to/from file (including storage attributes under KVM)
->>    * Basic live migration
->>    * Basic postcopy live migration
->>
->> More details on how to use it on s390x -- which is pretty much how
->> we use it on other architectures, except
->> s/virtio-mem-pci/virtio-mem-ccw/ --- is in the last patch.
->>
->> This series introduces a new diag(500) "STORAGE LIMIT" subcode that will
->> be documented in the kernel and at [2] once this+kernel part go upstream.
->>
->> There are not many s390x-specific virtio-mem future work items, except:
->> * Storage attribute migration might be improved
->> * We might want to reset storage attributes of unplugged memory
->>     (might or might not be required for upcoming page table reclaim in
->>      Linux; TBD)
->>
->> The Linux driver is available at [3].
->>
->> [1] https://lkml.kernel.org/r/20240906101658.514470-1-pbonzini@redhat.com
->> [2] https://gitlab.com/davidhildenbrand/s390x-os-virt-spec
->> [3] https://lkml.kernel.org/r/20240910191541.2179655-6-david@redhat.com
+On Tue, Nov 05, 2024 at 12:53:25PM +0100, Paolo Bonzini wrote:
+> On 11/5/24 12:38, Xiaoyao Li wrote:
+> > On 11/5/2024 6:06 PM, Paolo Bonzini wrote:
+> > > On 11/5/24 07:23, Xiaoyao Li wrote:
+> > > > +static void tdx_cpu_realizefn(X86ConfidentialGuest *cg, CPUState *cs,
+> > > > +                              Error **errp)
+> > > > +{
+> > > > +    X86CPU *cpu = X86_CPU(cs);
+> > > > +    uint32_t host_phys_bits = host_cpu_phys_bits();
+> > > > +
+> > > > +    if (!cpu->phys_bits) {
+> > > > +        cpu->phys_bits = host_phys_bits;
+> > > > +    } else if (cpu->phys_bits != host_phys_bits) {
+> > > > +        error_setg(errp, "TDX only supports host physical bits (%u)",
+> > > > +                   host_phys_bits);
+> > > > +    }
+> > > > +}
+> > > 
+> > > This should be already handled by host_cpu_realizefn(), which is
+> > > reached via cpu_exec_realizefn().
+> > > 
+> > > Why is it needed earlier, but not as early as instance_init?  If
+> > > absolutely needed I would do the assignment in patch 33, but I don't
+> > > understand why it's necessary.
+> > 
+> > It's not called earlier but right after cpu_exec_realizefn().
+> > 
+> > Patch 33 adds x86_confidenetial_guest_cpu_realizefn() right after
+> > ecpu_exec_realizefn(). This patch implements the callback and gets
+> > called in x86_confidenetial_guest_cpu_realizefn() so it's called after
+> > cpu_exec_realizefn().
+> > 
+> > The reason why host_cpu_realizefn() cannot satisfy is that for normal
+> > VMs, the check in cpu_exec_realizefn() is just a warning and QEMU does
+> > allow the user to configure the physical address bit other than host's
+> > value, and the configured value will be seen inside guest. i.e., "-cpu
+> > phys-bits=xx" where xx != host_value works for normal VMs.
+> > 
+> > But for TDX, KVM doesn't allow it and the value seen in TD guest is
+> > always the host value.  i.e., "-cpu phys-bits=xx" where xx != host_value
+> > doesn't work for TDX.
+> > 
+> > > Either way, the check should be in tdx_check_features.
+> > 
+> > Good idea. I will try to implement it in tdx_check_features()
+
+Is there any reason the TDX code can't just force cpu->host_phys_bits to true?
+
 > 
-> Gentle ping (and thanks to Thomas for the review!).
-> 
-> I assume the kernel portion will go upstream in the next merge window.
-> I'd like get the QEMU parts merged soon after that.
-> 
-> 9.2 is going to get released in roughly one month, so there is still time.
+> Thanks, and I think there's no need to change cpu->phys_bits, either. So
+> x86_confidenetial_guest_cpu_realizefn() should not be necessary.
 
-In the meantime, 9.2 was released. I don't have any changes planned. 
-Series still applies to current master, I'll do a quick test tomorrow.
+I was going to comment that patch 33 should be squashed here but better to just
+drop it.
+
+Ira
 
 > 
-> @Thomas, this is mostly s390x stuff, so I guess it should go through the
-> s390x tree? But I could also take this through my "memory devices" tree.
+> Paolo
 > 
-
-@Thomas, any thoughts?
-
--- 
-Cheers,
-
-David / dhildenb
-
 
