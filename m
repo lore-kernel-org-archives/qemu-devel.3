@@ -4,117 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55E17E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 13:50:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F246CE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:00:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjZf-0002h2-7r; Thu, 12 Dec 2024 08:49:51 -0500
+	id 1tLjjG-0004Zb-Bs; Thu, 12 Dec 2024 08:59:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLjZV-0002gK-Ml
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:49:42 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLjjE-0004ZS-3L
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:59:44 -0500
+Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLjZT-00040y-Bl
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:49:40 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C8E7C1F37C;
- Thu, 12 Dec 2024 13:49:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734011377; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rW0pGTjuBreHoVvh10CVLL4puWiaZ7MeSik02t1A0tA=;
- b=B6L5AsuklidJNepi3Ds90eHqqLwZWIuZkwPN/zVt891Rvqhqo2uPaqgWsqTM5vau8pMblL
- 6fBuiflahjTTSLoH3TWwsEJenbbFVuP+l3VhjyR2gBrQ1W3MJ6ZecCIQjdbSkJfQYV+Nu6
- vT2+yEtPdY2wNU04fNuR8DMUuPfJtyQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734011377;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rW0pGTjuBreHoVvh10CVLL4puWiaZ7MeSik02t1A0tA=;
- b=AAOpk8LPKegnZsZP/zv3j8isRTaVDQIhWiVgO5+aiN5P5FcBc/eoRVL0S1i5yqElMx43Pu
- VLAKVfZPqTw4poAQ==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=qVfSX6MS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=kraiFxGQ
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734011375; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rW0pGTjuBreHoVvh10CVLL4puWiaZ7MeSik02t1A0tA=;
- b=qVfSX6MS5FBnN59k9btttyF/0Vqtzmt64Tjfkhr5dYiR1NgStORu8JjaQOH3tqdBewNKSu
- CJqwIR/ko6S0QYsk7xkyJEl2mP/wZ+7yUGqli5Bji64IQk38RL0hVgucTWHYBXA3uzUNHq
- tzFiEQpO7yIgu/54j6qDbFLhCybMUE4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734011375;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=rW0pGTjuBreHoVvh10CVLL4puWiaZ7MeSik02t1A0tA=;
- b=kraiFxGQDZ3mEXCAtUt3Oj6YDMWED2N4yE1t3pFjbUj4yJXIZkIQlMo13epd10plAyWnvt
- Awt15S3p/JWEpJCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 51C5013939;
- Thu, 12 Dec 2024 13:49:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id I5dFBu/pWmcXYwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 13:49:35 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Daoud LAMALMI <daoudlamalmi@pm.me>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin
- <npiggin@gmail.com>, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Bernhard Beschow <shentey@gmail.com>
-Subject: Re: MPC5553/MPC5554 Emulation (information request)
-In-Reply-To: <kvndhk2oZokSDFW29-5pef8r1zmug70mTlHmrKT99LrvOaAflAeBV-vD6I6BAiAkHavpsN23lKJ6mN4Bd7UYFDe2tgbSegrXYVK6p-tR5F4=@pm.me>
-References: <kvndhk2oZokSDFW29-5pef8r1zmug70mTlHmrKT99LrvOaAflAeBV-vD6I6BAiAkHavpsN23lKJ6mN4Bd7UYFDe2tgbSegrXYVK6p-tR5F4=@pm.me>
-Date: Thu, 12 Dec 2024 10:49:32 -0300
-Message-ID: <87ed2df1ub.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLjjC-0007Mj-H5
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:59:43 -0500
+Received: by mail-ot1-x336.google.com with SMTP id
+ 46e09a7af769-71e36b27b53so64705a34.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 05:59:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734011980; x=1734616780; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nz+Ev7LYG8CfqCq+2dhn+rzxKVPN0OVRSTVDNYX1Qbk=;
+ b=tIHNu08fbCDeK7jeVB5rODdpHGgfdpwjxaEyHGmxvQHemwidez9iN/vZ4r4ggBwbXf
+ wMzEnDyFRi7pAl1QrodCz+nrYzPXjUhjmEJud4tEdWflooJDkkOpfeVJtqB9n91LesCG
+ J35udAMG4dQ3c697WC74F2ob583YZ9s32bBZOobiC2BI7FAvu1/zczfHoYzTKY5BDf8j
+ syzHVaqiIbaWjdPpUDoDuBAH5q+QfNLlH0eEl918x5pezsNI5IaaI56B6iPWVUcHm+xK
+ 3K6QFveuWt6JeltPCpXJIt3O4or2Q7KP+N9K6CU9iWRWEIzqOMHzk0hmeX7G1i84FsrW
+ iKjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734011980; x=1734616780;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nz+Ev7LYG8CfqCq+2dhn+rzxKVPN0OVRSTVDNYX1Qbk=;
+ b=hoAM2uA9M5Y+4e46FeUmpVqfuOjtVepdLECoLCkATzIA0jLVfrxpiDvhKwLcs1hJM4
+ 0n/NWx2Kj09Tx5I9aXzQMLmB0TXcHTZO897uieMYtRd7FP8RdmyGGJrQEcRx/tQL+pnW
+ Xo36RHPjmzhOHPuFNRDA+l2iBKlaxhNEmQyVkiWmW4JjkCMWDAT2MjZlADlAwMZ0FIrf
+ jF8CHaOzpkND5+NQS7Ap5rBDArjWx48l29p+MSgEZRoriCcv4y7oCuci6jNBRT2xbTMt
+ SfGK36Oea2ddhOdnAmhXPeEG89PMbMK7INUbsVJu6+7p7m3WdlsMoGd3y8iheda+RQfS
+ ayJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXBBSpCXTkVQL5h5mUgVG4G4DTV2tpTzTRbhZt9xQtOoetggkRh34YJMtkMfixRzFEYu9KiF9YXcUw9@nongnu.org
+X-Gm-Message-State: AOJu0Yxo2ahnX0P3uql6sXe7PPmRMO9WPZrUp+fty5DtGp48XUm8K2yC
+ UwxUWyQJtvWmKLHGkkCJ9601icBEtnqh/rd+dqGiUYrceYLsqB5ZuUOXcH27T7o=
+X-Gm-Gg: ASbGncvWW7c18I934+zRuEPR/2oIEvaeMPgMMxHRjIcRTs/7UDHj0P4iyWXQIfpOhab
+ 363I//hTJWyg1T6REmI+Yzc3/sM6kdYMYk2SRXKRAd6Ucu2wR7+vzkmDwubzHXVptZPFBsCzM8n
+ xyUfvCbMVMv6Al+VtX9NFglxTmrjpiPs5Bsc5zsDwMZzlNw3p6/Qw3tapDlZmfofKgjx/4fJr01
+ YKAeLryJ1tlpyFwOejqwhRCq3+y0RsyffRelew7n/xCCGNB7rMJ0ZYJf/8ZRgV/48GjpsZHULRD
+ mFwh3vSSai0bVpZ/I4HD8i6CDZzNfgVXvqk=
+X-Google-Smtp-Source: AGHT+IH5eDYRi/vQn78qhwaOELL0IdjRh9Im2SLDv6UWdiI16v0PX3maXqZOmvheBWXSyL4zOa53rQ==
+X-Received: by 2002:a05:6830:3509:b0:71d:f9f1:7f3a with SMTP id
+ 46e09a7af769-71e370fd784mr187396a34.24.1734011980143; 
+ Thu, 12 Dec 2024 05:59:40 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71e08cd4525sm1200291a34.3.2024.12.12.05.59.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 05:59:39 -0800 (PST)
+Message-ID: <a1ad71d4-4148-42ee-b77a-fc4df1f5c2c0@linaro.org>
+Date: Thu, 12 Dec 2024 07:59:37 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: C8E7C1F37C
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.20 / 50.00]; BAYES_HAM(-2.69)[98.63%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- ARC_NA(0.00)[]; TO_DN_EQ_ADDR_SOME(0.00)[]; TO_DN_SOME(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FREEMAIL_CC(0.00)[eik.bme.hu,gmail.com,ilande.co.uk];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, nongnu.org:email, suse.de:mid, suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFCv2 01/20] kvm: kvm_get_writable_id_regs
+To: Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <20241206112213.88394-2-cohuck@redhat.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241206112213.88394-2-cohuck@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -131,26 +104,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daoud LAMALMI via <qemu-devel@nongnu.org> writes:
+On 12/6/24 05:21, Cornelia Huck wrote:
+> +#define NR_ID_REGS (3 * 8 * 8)
+> +
+> +typedef struct IdRegMap {
+> +    uint64_t regs[NR_ID_REGS];
+> +} IdRegMap;
+> +
 
-> Goal
-> ----
->
-> I'd like to know if it is planned for QEMU to be able to emulate the MPC5553/MPC5554 microcontrollers.
->
-> Technical details
-> -----------------
->
-> I know that the e200z6 processor can already be emulated. I don't know how much work is needed to emulate those microcontrollers fully based on the work that has already been done.
->
-> Additional information
-> ----------------------
->
-> If it is not planned, I'll most likely start educating myself on this project to try and patch it in as it's a need that is quite important for me. I'll try not to waste your time and read as much as I can about your guidelines. Would you advise me against trying to do this? I'd like to know how hard you think this will be.
->
-> DISCLAIMER : I am still very much a newbie in embedded systems, I'm only in the first year of my master's degree in embedded systems.
->
-> Sent with Proton Mail secure email.
+Where does the NR_ID_REGS come from?  In particular the * 3?
+IIRC, all of the id registers are in op0=3, op1=0, crn=0, crm={0-7}, op2={0-7}.
 
-Adding some people to CC that might be able to help.
+Whatever the actual answer, some comments would be good.
+
+
+r~
 
