@@ -4,89 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C35E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:23:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79397E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:39:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLlxi-00025w-NC; Thu, 12 Dec 2024 11:22:50 -0500
+	id 1tLmD9-0008BX-1r; Thu, 12 Dec 2024 11:38:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLlxh-00025f-Jw
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:22:49 -0500
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLlxf-0007DE-RE
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:22:49 -0500
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3eb87127854so225134b6e.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 08:22:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734020564; x=1734625364; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=qW/6PBIXIPVPDm//dS49icD/ZllJH5gVfEI9MD/+feA=;
- b=Q+UMawHiQ+q81G0xA5+Ymfgha8cXRlkvCmvHz++M6Oic70GvdWBv4sdqhix+NdQdPa
- 2WhP32k4+QJyma0Z24aK4WD7g08VgTpz/Wfvj9yG+crRij8Fny5nWw9HZ72pnBK0y+6k
- gkV9gaRUWrU8jdSGmsQFt7gfn3F4srU5FvHqLEpISrJuOXx5NvE7WVpjkjBOgCY0B+sk
- x7YJUyUayxl/en/5NOI9P0aFX0wztyZVjxj3pbjerS3utRJbiE/NoWctLZvG4rKJBV/s
- P22KnFK+jl6KbHMixm0U/MKJM/cR3GyfKBRNheBdrqkDrN2y+ld74Yj04iJ9biPZugtw
- Fp5w==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLmD7-0008BO-EF
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:38:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLmD4-0002fY-Dl
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:38:45 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734021520;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Cvt0pF2PbWOxyYTnVytzT6zo0aW0MQ8Q+QdIpbmwKTk=;
+ b=i541necjltDlxv1E+4xhIXI+gjrQ+WjqVV7KDo3AGQfX9PBoGvaZOmgLwFHZ5Z/B6BuNEw
+ JjSIqP7TV7V2gDxtVnVUwIirgfJl5gYdbh1HXzmEql+TsCZuaEwemdaKSFxdXe6HG3SIFz
+ 7QjLe3Joz+LP5hW20KlGvg7XdgSgjVQ=
+Received: from mail-il1-f200.google.com (mail-il1-f200.google.com
+ [209.85.166.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-212-puirKwVaM7GTywqcmMLBdg-1; Thu, 12 Dec 2024 11:38:20 -0500
+X-MC-Unique: puirKwVaM7GTywqcmMLBdg-1
+X-Mimecast-MFC-AGG-ID: puirKwVaM7GTywqcmMLBdg
+Received: by mail-il1-f200.google.com with SMTP id
+ e9e14a558f8ab-3ab68717b73so7504445ab.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 08:38:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734020564; x=1734625364;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734021500; x=1734626300;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=qW/6PBIXIPVPDm//dS49icD/ZllJH5gVfEI9MD/+feA=;
- b=pfG2aMxpaRtDGCwn2jAK4gDkpspHByZZdEbOMmUF+zuuRdYfyPhd7XPg21pTRgaPMS
- TXsxKUZqBXn3WyVe58F2Nw1POaEidvssaL9eNt930zsOnAlTj+fm62kCcIq3j+absIx5
- TK7GG4hlQQdjNL1kykH2demAvFYss3PV2hJYOp4y9jLepHN8D8jXNd77LRXE1kuMwzlt
- XkkfhHW0F2LFp08h/SmoUnwbaz2oUKEzIUTbkY0xdq7uY2IpM9+yuRMH/lNqjamtN7uI
- stqseuLQ/z1qK1eXEPJhKszce6jCOktVkFodLg+PWY+ZFo6GI0YBLNWHYtFS6kHhsW0U
- z6zA==
-X-Gm-Message-State: AOJu0Yzv86z8nd8737idd+fMR3BuYApPkT1nnz9wUplOelYWG1VS0QhR
- se3gabwL+aa6kOU+kpvUGWZ0tF0cBYC916ZTSXs1hcVW2o2JsbYq8CjFiRWpEaNkUnvzt6c4aC/
- ImKhWvJG7
-X-Gm-Gg: ASbGncteds3Vo7daNbXV2Z63oWBM92O83lFP/rLEZ4qsoryPe1kzYsFDe9jbAS9wJhg
- a3R3IRHKFklVn5Ir+xtyicOojVls6u7Fls2hdFpmBlt5s6DYSRluk9o14CnpRalbqhD6YbxEEh8
- iJSpFvxh6bWqRv/09tNUnYGExkzdzZrxjcXqKeKubdQN5055X8AnFfe+eO/V2G2VJ4VyxV/qY/3
- ++DATyZD6jfpS/aiPrd/wzc2yAYIsBtqHJgPLygmNj+KbiNi6d+bziNrc4eKFQsIdKQ8Y/HNw==
-X-Google-Smtp-Source: AGHT+IGvoMQxCHQkhv7iNBnCZCLoeVauLWkxfrqbIK65ZE8EQicRKcoLKB9E+8jAmWEV++2bNhUz4Q==
-X-Received: by 2002:a05:6808:bc7:b0:3eb:3894:42c8 with SMTP id
- 5614622812f47-3eb85daeea3mr4465489b6e.42.1734020564162; 
- Thu, 12 Dec 2024 08:22:44 -0800 (PST)
-Received: from [172.20.4.119] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f3183b3030sm294764eaf.43.2024.12.12.08.22.43
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 08:22:43 -0800 (PST)
-Message-ID: <88317178-eb91-4a8e-a3ac-3f82c899ea63@linaro.org>
-Date: Thu, 12 Dec 2024 10:22:41 -0600
+ bh=Cvt0pF2PbWOxyYTnVytzT6zo0aW0MQ8Q+QdIpbmwKTk=;
+ b=Aa0Bb4R0C1EmPynf6OHtxuOSO+KANSgJYp14fpmCzlMRSVHgCUY88nA34xYio/vmVP
+ oHRhlgF+MD8a6Z7D+NbwDWxvzSI8YGNaXNPuPsxFZmdS0b0kIkSpSV2RUkp0rT6fA5Nr
+ T7pAo9O9Kk4IUk4EgsLS8NQd6Yv1ybxsQaTMjTotiv6bOVybuRAfH68rdOIk/wLtdVms
+ yl0XzZGW1LNVLb4thfaZh66LID5PRxwcmHnRn1vgc961QST8Tb7JwbLSYJ/SRGefX67C
+ yEnFwwo5DREp4LkKn5bdUZ0JgS1/LpGUTPeGoHl8gUQg8nz0Fm8vu50aCcMl4VJZJvxz
+ MYhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcieAhG4ttFwvCueBnoAZTCWPNpQoRyPO2LPt4qWGk1SW4TcStjaBDvNlhnCJ80sBFNWoKr9yQdbcc@nongnu.org
+X-Gm-Message-State: AOJu0YxT95FQYJqluim6/zgbBQGW4VfpgnPZFMAIjk8QA7PAOS1ACfAE
+ D37ugBNbq2odGDVFE1M9QOmlpPBvn2Q5YTXWYjdEK34Vt6MLnR3HUfrSAJ6pASv/ZPDh+acVLUG
+ 56vYsei0U0ftGxsaGCSIVCw4q9KxbMpsPXKUOMqwmYyZorMZy2Gjj
+X-Gm-Gg: ASbGncuR5ouJUS+4kI8GoVqp9xe0W+8R6pl/Nmio3WwA0u5/dYbckmJAZn/ShTDK8ep
+ o7WZQIEdEGFh3zp2DePqc5WwNWLx+vwNnJ0jOEk8feGY5ZFfawHHkX2URUeXCyzi0JqLoouMlR4
+ LGmpsAai5/KMDK16Rrxjxo5nEgT1VrqEZNW3U1jLblXxGzGqdd6dU+3JLTIHGKpGXS/XAjr3g4m
+ yYXra+WGhYll3d5P3T0Oq88Hp6NPh6KdmQxHUTw1e7neuxBg2Cn7EGA9y+Ji1Asj8kB6Vpat/W/
+ 5738GdHpE0s/UxSAMg==
+X-Received: by 2002:a05:6e02:194c:b0:3a7:e103:3c43 with SMTP id
+ e9e14a558f8ab-3ae57ef9e24mr8122745ab.19.1734021500012; 
+ Thu, 12 Dec 2024 08:38:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoYKSSJDia12VpvdCNoJTNz1iXOZTvSBsgVTnGSGL0Hd9BqsvLCS1zB6yfFHMUl/UgNuJaFQ==
+X-Received: by 2002:a05:6e02:194c:b0:3a7:e103:3c43 with SMTP id
+ e9e14a558f8ab-3ae57ef9e24mr8122555ab.19.1734021499704; 
+ Thu, 12 Dec 2024 08:38:19 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-4e2ca9c3f89sm1694619173.0.2024.12.12.08.38.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 08:38:19 -0800 (PST)
+Date: Thu, 12 Dec 2024 11:38:16 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
+ threads
+Message-ID: <Z1sReL5wrlhvO3P5@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
+ <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
+ <489d1769-3807-4007-888c-608c1e9407fb@maciej.szmigiero.name>
+ <Z1DcVH6j7pzboucr@x1n>
+ <366e5477-9d3f-4c11-8042-542e9b4b7f65@maciej.szmigiero.name>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 10/11] target/ppc: implement address swizzle for
- gen_conditional_store()
-To: qemu-devel@nongnu.org
-References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
- <20241212151412.570454-11-mark.cave-ayland@ilande.co.uk>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241212151412.570454-11-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <366e5477-9d3f-4c11-8042-542e9b4b7f65@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 09:14, Mark Cave-Ayland wrote:
-> The gen_conditional_store() function uses tcg_gen_atomic_cmpxchg_tl() within its
-> implementation. Update gen_conditional_store() so that it implements the address
-> swizzle if required.
+On Wed, Dec 11, 2024 at 12:05:23AM +0100, Maciej S. Szmigiero wrote:
+> > Maybe move it over to migration_object_init()?  Then we keep
+> > qemu_loadvm_state_setup() only invoke the load_setup()s.
 > 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> ---
->   target/ppc/translate.c | 15 ++++++++++++---
->   1 file changed, 12 insertions(+), 3 deletions(-)
+> AFAIK migration_object_init() is called unconditionally
+> at QEMU startup even if there won't me any migration done?
 > 
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index fc44e3293a..e8ae96cd46 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -3345,9 +3345,18 @@ static void gen_conditional_store(DisasContext *ctx, MemOp memop)
->       tcg_gen_brcond_tl(TCG_COND_NE, EA, cpu_reserve, lfail);
->       tcg_gen_brcondi_tl(TCG_COND_NE, cpu_reserve_length, memop_size(memop), lfail);
->   
-> -    tcg_gen_atomic_cmpxchg_tl(t0, cpu_reserve, cpu_reserve_val,
-> -                              cpu_gpr[rs], ctx->mem_idx,
-> -                              DEF_MEMOP(memop) | MO_ALIGN);
-> +    if (!need_addrswizzle_le(ctx)) {
-> +        tcg_gen_atomic_cmpxchg_tl(t0, cpu_reserve, cpu_reserve_val,
-> +                                  cpu_gpr[rs], ctx->mem_idx,
-> +                                  DEF_MEMOP(memop) | MO_ALIGN);
-> +    } else {
-> +        TCGv ta = tcg_temp_new();
-> +
-> +        gen_addr_swizzle_le(ta, cpu_reserve, memop);
-> +        tcg_gen_atomic_cmpxchg_tl(t0, ta, cpu_reserve_val,
-> +                                  cpu_gpr[rs], ctx->mem_idx,
-> +                                  DEF_MEMOP(memop) | MO_ALIGN);
-> +    }
->       tcg_gen_setcond_tl(TCG_COND_EQ, t0, t0, cpu_reserve_val);
->       tcg_gen_shli_tl(t0, t0, CRF_EQ_BIT);
->       tcg_gen_or_tl(cr0, cr0, t0);
+> Creating a load thread pool there seems wasteful if no
+> incoming migration will ever take place (or will but only
+> much later).
 
-With
+I was expecting an empty pool to not be a major resource, but if that's a
+concern, yes we can do that until later.
 
-   if (need) {
-      addr = swizzle
-   }
-   tcg_gen_atomic...
+[...]
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> > > > > @@ -3007,6 +3071,19 @@ int qemu_loadvm_state(QEMUFile *f)
+> > > > >            return ret;
+> > > > >        }
+> > > > > +    if (ret == 0) {
+> > > > > +        bql_unlock(); /* Let load threads do work requiring BQL */
+> > > > > +        thread_pool_wait(load_threads);
+> > > > > +        bql_lock();
+> > > > > +
+> > > > > +        ret = load_threads_ret;
+> > > > > +    }
+> > > > > +    /*
+> > > > > +     * Set this flag unconditionally so we'll catch further attempts to
+> > > > > +     * start additional threads via an appropriate assert()
+> > > > > +     */
+> > > > > +    qatomic_set(&load_threads_abort, true);
+> > 
+> > I assume this is only for debugging purpose and not required.
+> > 
+> > Setting "abort all threads" to make sure "nobody will add more thread
+> > tasks" is pretty awkward, IMHO.  If we really want to protect against it
+> > and fail hard, it might be easier after the thread_pool_wait() we free the
+> > pool directly (destroy() will see NULL so it'll skip; still need to free
+> > there in case migration failed before this).  Then any enqueue will access
+> > null pointer on the pool.
+> 
+> We don't want to destroy the thread pool in the path where the downtime
+> is still counting.
 
-r~
+Yeah this makes sense.
+
+> 
+> That's why we only do cleanup after the migration is complete.
+> 
+> The above setting of load_threads_abort flag also makes sure that we abort
+> load threads if the migration is going to fail for other reasons (non-load
+> threads related) - in other words, when the above block with thread_pool_wait()
+> isn't even entered due to ret already containing an earlier error.
+
+In that case IIUC we should cleanup the load threads in destroy(), not
+here?  Especially with the comment that's even more confusing.
+
+-- 
+Peter Xu
+
 
