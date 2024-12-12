@@ -4,63 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693B6E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:20:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20817E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:21:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkxN-000865-5u; Thu, 12 Dec 2024 10:18:26 -0500
+	id 1tLkpr-0004HB-2U; Thu, 12 Dec 2024 10:10:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLku1-0003nA-A7; Thu, 12 Dec 2024 10:15:02 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktz-0003iQ-Sn; Thu, 12 Dec 2024 10:14:57 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=dzeWK8x9CRHtbW2WAWCxYiM6pwOdIgA+XvJuHqKkk48=; b=r0Rj79oow/d5UQH5aB6cZfFZBy
- PKuWLREDDWP8WqGoHMyixMHYlhuz19MNYwHroC0rGVPDn51BWbM+psnf6plJ+YP96VdKvEQAZ5mTy
- NDJHPqHR5YjBv/+WHi5qp/0P+XbBt3fMAoRWAYBffj0mCByV+j3uXXvsfgpwcBFurNYJ86AACuyg7
- BCgnUSz1NF1Gs8/uNeZvErsZ9q2Zc+VHLAf3HV4op6UIDn8jJX8NUYoCQiMPxfnYxMOq02QivAAmo
- NXwM4F2FfChbyyIjhOpTzS9pn4wnyWuZJsRURddIuMggHlbMFaPIK5LmrprKo5km/YNTRJDnyM2Xd
- 0HVwMa0EXYZ5Hbat1P20BomFdEtQYAszhYFLf+ah5Teq5mMybwaghucCpvBWroRou4FwL3vC6ic1a
- nUII6EwDMRBGd/l8JMpM93/+Xl7CcxPun2WxjqU+aCdgRsh9WYdUwP3ZCrDOo/ocbYa0UdfZxXXcR
- /ZaCD+nOYmK2XgxHF3ir7UUW4o9jTBuly82+j/XlzQWw6wetV/Tzjx2xvxadEMRfipJ+8QCQWGQqI
- Z1hO1q2inqpBXguESALMUdPPoYcAvhZdKU8EFx+udlj95UQVFRqA0vAKt7usBh/2ewS2m1JzA48Eg
- TQXKiHOTEceKvZeECECsNg8VAUhRzLibPKzyrIyBM=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktN-0008Ue-Mu; Thu, 12 Dec 2024 15:14:22 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: npiggin@gmail.com, danielhb413@gmail.com, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 15:14:08 +0000
-Message-Id: <20241212151412.570454-8-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
-References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpj-0004CH-SA
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:32 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpi-0003Fu-Aq
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:31 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 044BE1F383;
+ Thu, 12 Dec 2024 15:10:28 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016228; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ay1NMkJSkWhbb4OVQCYEEjG1RHPxv29tdt3oW7I9uSk=;
+ b=05bgw1Uwxl+GJjsXSVzT/eWKh/hLJSgg4WYhgbtssCD4DVG71ErUkf6MX8Sb/5W2rOORn5
+ kLcH/jPeAjS9iHloHBGggKLCgbxPeLvZLu7NLkt85fcnu1ku4pvhYZcPVOOoeZsNS1bTBK
+ dJ6G0Ni0JCK8tW916GQP4o/pRdYZ0rE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016228;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ay1NMkJSkWhbb4OVQCYEEjG1RHPxv29tdt3oW7I9uSk=;
+ b=NMfjatQNWsu7qAGnN8M1PB3/aMoe2Sm6CnGnvwMptMyr3hBi5gFSpMP5jOUKbBpD+9Btwp
+ sftNhPn8optyybCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016228; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ay1NMkJSkWhbb4OVQCYEEjG1RHPxv29tdt3oW7I9uSk=;
+ b=05bgw1Uwxl+GJjsXSVzT/eWKh/hLJSgg4WYhgbtssCD4DVG71ErUkf6MX8Sb/5W2rOORn5
+ kLcH/jPeAjS9iHloHBGggKLCgbxPeLvZLu7NLkt85fcnu1ku4pvhYZcPVOOoeZsNS1bTBK
+ dJ6G0Ni0JCK8tW916GQP4o/pRdYZ0rE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016228;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ay1NMkJSkWhbb4OVQCYEEjG1RHPxv29tdt3oW7I9uSk=;
+ b=NMfjatQNWsu7qAGnN8M1PB3/aMoe2Sm6CnGnvwMptMyr3hBi5gFSpMP5jOUKbBpD+9Btwp
+ sftNhPn8optyybCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4A82613508;
+ Thu, 12 Dec 2024 15:10:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 6MsaBOL8WmcTfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Yury Kotov <yury-kotov@yandex-team.ru>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: [PULL 21/22] tests/qtest/migration-test: Fix and enable
+ test_ignore_shared
+Date: Thu, 12 Dec 2024 12:09:48 -0300
+Message-Id: <20241212150949.16806-22-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
+References: <20241212150949.16806-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [RFC PATCH 07/11] target/ppc: implement address swizzle for
- instruction translation
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FREEMAIL_CC(0.00)[linaro.org,gmail.com,yandex-team.ru,treblig.org];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email,yandex-team.ru:email];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCPT_COUNT_FIVE(0.00)[5];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -77,48 +124,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure that the address swizzle is implemented when retrieving instructions from
-guest memory for translation.
+From: Nicholas Piggin <npiggin@gmail.com>
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+This test is already starting to bitrot, so first remove it from ifdef
+and fix compile issues. ppc64 transfers about 2MB, so bump the size
+threshold too.
+
+It was said to be broken on aarch64 but it may have been due to the
+limited shm size under Gitlab CI.
+
+Cc: Yury Kotov <yury-kotov@yandex-team.ru>
+Cc: Dr. David Alan Gilbert <dave@treblig.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Dr. David Alan Gilbert <dave@treblig.org>
+[put it under flaky tests, we still don't have a solution for the CI]
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/ppc/translate.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ tests/qtest/migration-test.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index ddc0f85fb7..74aa398f25 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -6600,7 +6600,11 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-               ctx->base.pc_next, ctx->mem_idx, (int)msr_ir);
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 0d1c8154d7..4b366a94a2 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -107,14 +107,15 @@ static void test_analyze_script(void)
+ }
+ #endif
  
-     ctx->cia = pc = ctx->base.pc_next;
--    insn = translator_ldl_swap(env, dcbase, pc, need_byteswap(ctx));
-+    if (!need_addrswizzle_le(ctx)) {
-+        insn = translator_ldl_swap(env, dcbase, pc, need_byteswap(ctx));
-+    } else {
-+        insn = translator_ldl(env, dcbase, pc ^ 4);
-+    }
-     ctx->base.pc_next = pc += 4;
+-#if 0
+-/* Currently upset on aarch64 TCG */
+ static void test_ignore_shared(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
++    MigrateStart args = {
++        .use_shmem = true,
++    };
  
-     if (!is_prefix_insn(ctx, insn)) {
-@@ -6616,8 +6620,13 @@ static void ppc_tr_translate_insn(DisasContextBase *dcbase, CPUState *cs)
-         gen_exception_err(ctx, POWERPC_EXCP_ALIGN, POWERPC_EXCP_ALIGN_INSN);
-         ok = true;
-     } else {
--        uint32_t insn2 = translator_ldl_swap(env, dcbase, pc,
--                                             need_byteswap(ctx));
-+        uint32_t insn2;
-+
-+        if (!need_addrswizzle_le(ctx)) {
-+            insn2 = translator_ldl_swap(env, dcbase, pc, need_byteswap(ctx));
-+        } else {
-+            insn2 = translator_ldl(env, dcbase, pc ^ 4);
-+        }
-         ctx->base.pc_next = pc += 4;
-         ok = decode_insn64(ctx, deposit64(insn2, 32, 32, insn));
+-    if (migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
++    if (migrate_start(&from, &to, uri, &args)) {
+         return;
      }
+ 
+@@ -139,11 +140,11 @@ static void test_ignore_shared(void)
+     wait_for_migration_complete(from);
+ 
+     /* Check whether shared RAM has been really skipped */
+-    g_assert_cmpint(read_ram_property_int(from, "transferred"), <, 1024 * 1024);
++    g_assert_cmpint(
++        read_ram_property_int(from, "transferred"), <, 4 * 1024 * 1024);
+ 
+     migrate_end(from, to, true);
+ }
+-#endif
+ 
+ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+ {
+@@ -290,7 +291,13 @@ int main(int argc, char **argv)
+     migration_test_add("/migration/analyze-script", test_analyze_script);
+ #endif
+ 
+-    /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
++    /*
++     * Our CI system has problems with shared memory.
++     * Don't run this test until we find a workaround.
++     */
++    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
++        migration_test_add("/migration/ignore-shared", test_ignore_shared);
++    }
+ 
+     migration_test_add("/migration/validate_uuid", test_validate_uuid);
+     migration_test_add("/migration/validate_uuid_error",
 -- 
-2.39.5
+2.35.3
 
 
