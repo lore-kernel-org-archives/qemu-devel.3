@@ -4,143 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCF0DE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:55:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3CDEE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:56:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfuI-00055d-7v; Thu, 12 Dec 2024 04:54:54 -0500
+	id 1tLfvP-0005vn-3X; Thu, 12 Dec 2024 04:56:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfuE-00055E-Kb
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:54:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfuC-0005Rc-Hg
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:54:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733997286;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/5IglZQ1NbSmNSdXijM51hCcLD3kF7xOJMf79Kl8i34=;
- b=Ypl7l9VAzwZTCRkzt79gPbIhworg4hAEe6Hf9jJTYurLGLYtScEC0ipVqn3/2DtAIMAT2C
- DRC1ERLfeq3wo2vATsTWEarPZ/16GvbNgHHhgSEtmf2bijP4Ptws3EP5HvOJMLt8ggz4oJ
- WkWBpZU030B3ud9jO718YwMjywXjVRc=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-327-7sbOyTqtMCCvQHB_1Wt_pw-1; Thu, 12 Dec 2024 04:54:45 -0500
-X-MC-Unique: 7sbOyTqtMCCvQHB_1Wt_pw-1
-X-Mimecast-MFC-AGG-ID: 7sbOyTqtMCCvQHB_1Wt_pw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4362153dcd6so2387935e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:54:45 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLfvJ-0005v1-K1
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:55:59 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLfvG-0005vr-M2
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:55:57 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-434a852bb6eso3978595e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:55:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1733997351; x=1734602151; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=x212bhFbd7tjCXnM1kJhf/PFqXLKhb2HDmMIdiUt4KA=;
+ b=p/X054NY3mlPTJ7csLLN1fDdgFuFwSHQMYBYjiqGo/GOGmNl+GybsCX2m27FSurArU
+ b/8dL9qoEgkRsDlCMpNWyjRUjvCzReMn76DzXf5yJH2hQR+/Wu9ORXMMYqC09lEjh+Ph
+ ac/0crHXHDnKQEYERIR4c5BEiKdYIZNr0VLnkOJ6eUBqefDy2+Npudwv2RbYWd/4Av2x
+ aSJlQmsAO+NpFLbgTS8aidRmmIA1KI95gMaxP6o6iYVQ3i69LSIYAcPEcxExj6vIwUw6
+ 73WeeXNu/I96jD0GIRqeXIEqYedVSg0i8+ecyYDOobGSDKxZA3xYBkpYgxKdgQn1ll4r
+ pfeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733997284; x=1734602084;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/5IglZQ1NbSmNSdXijM51hCcLD3kF7xOJMf79Kl8i34=;
- b=KotM4Vea9di/n8Kz+w6W9qK9bl3XTG0byx3DcY7fpVcAJ6MnVeFsUegqpiCHz+VkUQ
- WGjjG2Vec8Y3vMdxZRWm3BBj21giu8YI27VmkrTbWNdTxbnaZ2T+uveEGXT5oCCNUKd1
- CoKJPU5Il3j2YwNA1FS9tFgLQhcRcPu9t8kAVP++yKeP6CNGqQ/QcLSLidVc/pzi6CZL
- 5G1CP7veWKHin9LNf8LGmyEKkdWF9SiBDUjSTW1HCgZCTkkv7NtG7yPDuetoXpd0D3Sr
- gmdmxORJwNyuuREdMe8mgJ/kdHaqGtia7Nt3QBstPGAyDVF2DafiTLoIRJTXyvq5hhQp
- 2q6A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWwad05h2ryanreNm5IwDDzJYBzbhBLNPsPXDLu/bPWPkFJd+VAKVx9Rom8ENc5dlaLdFesCSg7DEE@nongnu.org
-X-Gm-Message-State: AOJu0YzNBREXhQJd4+nPjrQsh4WWUxXc9t/+FNGPeB86YW7IX2VxLhKw
- N1iE/b7ZQJ8bdg2TxDXibXPAC5o/fLYgFZCNJICxW7AOG8NAnpiq6k7cEfv7vJ1dHc1vcqprKRH
- CsKzpOrEz1Hi5ZDqCM/m02aFLn2PnNwQox/Ubz0YjJ/YvX0NbLev0
-X-Gm-Gg: ASbGncux9cSl7/ebxaSMe0FVsfqLFeCApk+2wdONuusvYBUCPYlUo6zdF/kTVuVtuOY
- rYaDhUWEBChXJjB8Mye1/lrIXPutYw7H8r1KJ7q5/HwbbAAC8OV7cJlFKjSPBPoXYdAtg0rU0Tx
- 9I7OURzIa2Mk2gC+xmdfrva8afB60R2eChvlok+YUYLwHQPShwXw0FX7MkoZTQ7Lzitxj7hGXc/
- 3bK4Tx1yCe/oeB3PPvJ+rJ72RAEEHviTpF+ckuAVBl87VjbQapmIVWxEOhkoJYlxH6ESQzUkkxe
- HL8T6A==
-X-Received: by 2002:a05:6000:4405:b0:385:f13c:570f with SMTP id
- ffacd0b85a97d-3864ce5fbcemr3837629f8f.33.1733997284191; 
- Thu, 12 Dec 2024 01:54:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGRTPcLmoxCy3ZxzypGbD1ffSh+8dn4I3CdEHbHzIWE9z25n6bd5YBIj1lVTugC0R9sEFvWGg==
-X-Received: by 2002:a05:6000:4405:b0:385:f13c:570f with SMTP id
- ffacd0b85a97d-3864ce5fbcemr3837618f8f.33.1733997283870; 
- Thu, 12 Dec 2024 01:54:43 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
+ d=1e100.net; s=20230601; t=1733997351; x=1734602151;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=x212bhFbd7tjCXnM1kJhf/PFqXLKhb2HDmMIdiUt4KA=;
+ b=IGOtJqmL3ZasuW0PKmLxPMjXByMWVmA4A25wXQDhxt9gktUwEBFayjRl790XAZSSPh
+ 2mhH3l9+0hNSNODpTMLwnoscE52G/NISrUEX7964vacT6HvNanErR0Ln80wOzJHuMnK7
+ FW9SucrtxPWiUPeaJfi5lL2djtxM4/hd3gvcU1T7mIIqiZbVjywvI60ukH3NQih3t+HY
+ gVW6SUd5st4qTElWlxUTcn9/DPe1mMY+vsE7M0zGlJswkj/oukDUuyaVjxFOvge7u7St
+ jAi9R+VR1uLwwwlFj9hy4wH/4BuhPdJTfko9FMv97FWuVB7pudgncIcZs1hzDppocCMI
+ nj/A==
+X-Gm-Message-State: AOJu0Yys+nJ0QDkqW/F9dzmfnfnW3y/zcPlctTjghOTTC7atCDnKhbP4
+ rk1doV8yYcHq9FieKo+0Bk7C0YadAie0DZXrYGF09SJknafsBWK3neRfMKsTApI=
+X-Gm-Gg: ASbGncv/S33H+mXYn/OkUDrCl9wsy7aYOe48Nwvze8GAmHj5IojOXszQ4Nj4ElFl/uu
+ DYVazdMsDPCTATNVWOPeePBeTnaat/oo7R6sMkQiBTrHnXKa+DvXNg+dETgY+FSIAuT+gU6/WZM
+ dnTq6DyKrWUhor3zMM1od6nVj24Sn8vQoTNHnJb3UJn7UEzTJS1dvWlDqMxSNGFBaUkOJROp7uk
+ DU1JQdeIu4hVVTJL5/GfdYWIVjbyWfl4o0d8zffrE38vvEsyZMnuWwwelNjrnX2i+Pg1lzUe0I0
+ NvFkzOf+TZcHtQ9Fu7wZuQ==
+X-Google-Smtp-Source: AGHT+IHHCwMJXClBV3EAQLuXdMJclSQaPRAFF12ObHw5vm/J7hUSOP0HHaWcCI+CLAQqetccJhbvsQ==
+X-Received: by 2002:a05:600c:3b18:b0:434:fd77:5436 with SMTP id
+ 5b1f17b1804b1-4361c38d24fmr52684475e9.15.1733997351472; 
+ Thu, 12 Dec 2024 01:55:51 -0800 (PST)
+Received: from [192.168.1.74] (88-187-86-199.subs.proxad.net. [88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43625716e5csm11256575e9.36.2024.12.12.01.54.43
+ 5b1f17b1804b1-436256c8baasm11390435e9.36.2024.12.12.01.55.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 01:54:43 -0800 (PST)
-Message-ID: <45a78a7f-96c0-4a2c-88dd-54970db857ba@redhat.com>
-Date: Thu, 12 Dec 2024 10:54:42 +0100
+ Thu, 12 Dec 2024 01:55:51 -0800 (PST)
+Message-ID: <48a61a76-3c91-4ab0-8ae7-0a9a34082c75@linaro.org>
+Date: Thu, 12 Dec 2024 10:55:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/31] tests/functional: add common deb_extract helper
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-20-berrange@redhat.com>
+Subject: Re: [RFC PATCH] meson: Run some compiler checks using
+ -Wno-unused-value
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20241211231655.98148-1-philmd@linaro.org>
+ <Z1qptPHK6QOh_TRH@redhat.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-20-berrange@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z1qptPHK6QOh_TRH@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,16 +101,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> This mirrors the existing archive_extract, cpio_extract and zip_extract
-> helpers
+On 12/12/24 10:15, Daniel P. Berrangé wrote:
+> On Thu, Dec 12, 2024 at 12:16:55AM +0100, Philippe Mathieu-Daudé wrote:
+>> When running Clang static analyzer on macOS I'm getting:
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/archive.py     | 13 +++++++++++++
->   tests/functional/qemu_test/linuxkernel.py | 13 ++++---------
->   2 files changed, 17 insertions(+), 9 deletions(-)
+> 
+> snip
+> 
+>> Fix by explicitly disabling -Wunused-value from these meson checks.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>> RFC: Probably meson should do that in has_header_symbol() / has_type()?
+> 
+> How are you enabling the use of static analyzers ?  There are several
+> different ways to change compiler options and I vaguely recall some
+> approaches can trip up meson.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I prefix my build with 'scan-build':
+
+$ scan-build make
+scan-build: Using '/usr/bin/clang' for static analysis
+config-host.mak is out-of-date, running configure
+C compiler for the host machine: clang (clang 16.0.0 "Apple clang 
+version 16.0.0 (clang-1600.0.26.4)")
+
+You can reproduce without using scan-build by passing
+--extra-cflags=-Wunused-value to ./configure.
+
+We have a "disable some undesirable warnings" section in
+warn_flags[] in meson.build. If we want to ignore unused
+we should add it there, but I'd rather not ignore them ;)
+
+> 
+>> ---
+>>   meson.build | 11 +++++++----
+>>   1 file changed, 7 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/meson.build b/meson.build
+>> index 147097c652e..a431aa982ac 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -1166,7 +1166,8 @@ cocoa = dependency('appleframeworks',
+>>   vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'))
+>>   if vmnet.found() and not cc.has_header_symbol('vmnet/vmnet.h',
+>>                                                 'VMNET_BRIDGED_MODE',
+>> -                                              dependencies: vmnet)
+>> +                                              dependencies: vmnet,
+>> +                                              args: '-Wno-unused-value')
+>>     vmnet = not_found
+>>     if get_option('vmnet').enabled()
+>>       error('vmnet.framework API is outdated')
+>> @@ -2690,7 +2691,7 @@ config_host_data.set('CONFIG_RTNETLINK',
+>>   config_host_data.set('CONFIG_SYSMACROS',
+>>                        cc.has_header_symbol('sys/sysmacros.h', 'makedev'))
+>>   config_host_data.set('HAVE_OPTRESET',
+>> -                     cc.has_header_symbol('getopt.h', 'optreset'))
+>> +                     cc.has_header_symbol('getopt.h', 'optreset', args: '-Wno-unused-value'))
+>>   config_host_data.set('HAVE_IPPROTO_MPTCP',
+>>                        cc.has_header_symbol('netinet/in.h', 'IPPROTO_MPTCP'))
+>>   
+>> @@ -2708,10 +2709,12 @@ config_host_data.set('HAVE_BLK_ZONE_REP_CAPACITY',
+>>   # has_type
+>>   config_host_data.set('CONFIG_IOVEC',
+>>                        cc.has_type('struct iovec',
+>> -                                 prefix: '#include <sys/uio.h>'))
+>> +                                 prefix: '#include <sys/uio.h>',
+>> +                                 args: '-Wno-unused-value'))
+>>   config_host_data.set('HAVE_UTMPX',
+>>                        cc.has_type('struct utmpx',
+>> -                                 prefix: '#include <utmpx.h>'))
+>> +                                 prefix: '#include <utmpx.h>',
+>> +                                 args: '-Wno-unused-value'))
+>>   
+>>   config_host_data.set('CONFIG_EVENTFD', cc.links('''
+>>     #include <sys/eventfd.h>
+>> -- 
+>> 2.45.2
+>>
+> 
+> With regards,
+> Daniel
 
 
