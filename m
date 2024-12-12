@@ -4,62 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14AB0E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:17:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1353FE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:18:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkvC-0005Ea-Km; Thu, 12 Dec 2024 10:16:11 -0500
+	id 1tLkpU-0003zw-RR; Thu, 12 Dec 2024 10:10:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktq-0003eZ-8L; Thu, 12 Dec 2024 10:14:48 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktn-0003h2-QS; Thu, 12 Dec 2024 10:14:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=VVnaZsJ2GflS1eyAYVQtNIu9ewyB4hBJfRYsfK5TDd4=; b=tGGcwhtoGgWqlpj2g9q+64ohtr
- D7I12jCHtlMQFA8w59YAFc8EdD49hGmrKkZ0YKx+Q3BOtkdQjJ9x9/E1unHLugqXqI73b+08Hueqd
- VSNCDyqYJlHmQxOmYIkw+45WvCKDdLUbZWfAKGteAozl7n3NKsEtW01lBvDDSib+86h4FGV1F+rG4
- f/QgJXZlbmg+kYoUK/8VAzm3W9NimXvSESM8FppLb4E3jEnDqQC6ebYIXcCUDuDaOKck2/NhzIpPZ
- QKqJrR5n5iij66Sn3z9oZw1K0LlbT9tvASbYrQLAodDnR4EoaiHV43/qW8FomZzSUCtn3oPbWjHPh
- K6WOnjWJT7JwjOvQxnaKVYr86jqX5G4G/XwqgsHID2TgVJskUHAKmInpIviQbyoqVTx3EAD+UdToj
- TzV4aXrKXcbsJ2sf4fHwIzdRltM7mKzP7gcP5xJFjrfCCiY8YSZyqNVrjebHW1LwvN7kmJ6i9kqCt
- SmJYS/7shL3U3n6AbI3UKo+44rGZj7vf0z8aTF7fnI7TsmyHDNpJ6hT8yr5KWpWfsdtuuUOF3HK7E
- RvRbS8oLN5JrT3J7Bd947jk0mkz7ruHJoS6FfhjBLYOj2SwwljFz1h8+o7QtJdK3o4mn0s/bbBIYY
- bQT6oLMjkMjiY2S42mr1AMdHxNUP37nvbdo0k86Os=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktB-0008Ue-NR; Thu, 12 Dec 2024 15:14:10 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: npiggin@gmail.com, danielhb413@gmail.com, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 15:14:06 +0000
-Message-Id: <20241212151412.570454-6-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
-References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpQ-0003y7-3o
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:12 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpO-0003Cu-As
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:11 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2324E21137;
+ Thu, 12 Dec 2024 15:10:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
+ b=lWxRkPOaNP69/KMQrFsIlTpZ1Hj3CKTp83mEJt+eQT3dRhZ6NUyls7fq1UoSP6Lf4zr72n
+ 3/XGNySNbxhZRpT9VzqcQcl0fLI5BVJCBfsQwMSveHh+Ro7MSsRbeTZ4rAraoT7bgaNBrr
+ NL3CPMLqbPAVGxnFWC5J4HvX0jGcBOc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016209;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
+ b=Xe2oxSzbaDjpSc/rYivFcWPF1wITc2daYgCqBZWHIt66lHojUMTLLonE+JSRyq7FsUexDq
+ WGYXD9IzILxONiAg==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lWxRkPOa;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xe2oxSzb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
+ b=lWxRkPOaNP69/KMQrFsIlTpZ1Hj3CKTp83mEJt+eQT3dRhZ6NUyls7fq1UoSP6Lf4zr72n
+ 3/XGNySNbxhZRpT9VzqcQcl0fLI5BVJCBfsQwMSveHh+Ro7MSsRbeTZ4rAraoT7bgaNBrr
+ NL3CPMLqbPAVGxnFWC5J4HvX0jGcBOc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016209;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
+ b=Xe2oxSzbaDjpSc/rYivFcWPF1wITc2daYgCqBZWHIt66lHojUMTLLonE+JSRyq7FsUexDq
+ WGYXD9IzILxONiAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2F44013508;
+ Thu, 12 Dec 2024 15:10:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id MP4fOc/8WmcTfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:07 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 10/22] tests/qtest/migration: Rename migration-helpers.c
+Date: Thu, 12 Dec 2024 12:09:37 -0300
+Message-Id: <20241212150949.16806-11-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
+References: <20241212150949.16806-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [RFC PATCH 05/11] target/ppc: introduce need_addrswizzle_le() function
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Rspamd-Queue-Id: 2324E21137
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_TRACE(0.00)[0:+]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ FROM_EQ_ENVFROM(0.00)[];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
+ imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim, suse.de:mid]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,57 +130,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function determines whether the MSR_LE bit should be used to implement
-little endian accesses using address swizzling, instead of reversing the
-byte order.
+Rename migration-helpers.c to migration-util.c to make its purpose
+more explicit and avoid the "helper" terminology.
 
-(FIXME: which CPUs?)
+Move the file to the qtest/migration/ directory along with the rest of
+the migration files.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/ppc/translate.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ tests/qtest/meson.build                                     | 4 ++--
+ tests/qtest/migration-test.c                                | 2 +-
+ tests/qtest/migration/migration-qmp.c                       | 2 +-
+ tests/qtest/migration/migration-qmp.h                       | 2 ++
+ .../{migration-helpers.c => migration/migration-util.c}     | 4 ++--
+ .../{migration-helpers.h => migration/migration-util.h}     | 6 +++---
+ tests/qtest/virtio-net-failover.c                           | 2 +-
+ 7 files changed, 12 insertions(+), 10 deletions(-)
+ rename tests/qtest/{migration-helpers.c => migration/migration-util.c} (99%)
+ rename tests/qtest/{migration-helpers.h => migration/migration-util.h} (94%)
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 4c47f97607..1211435039 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -208,6 +208,12 @@ struct DisasContext {
- #define DISAS_CHAIN        DISAS_TARGET_2  /* lookup next tb, pc updated */
- #define DISAS_CHAIN_UPDATE DISAS_TARGET_3  /* lookup next tb, pc stale */
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index 0b113adc5c..ec809af0c8 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -333,9 +333,9 @@ endif
+ tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
  
-+/* Return true iff address swizzling required */
-+static inline bool need_addrswizzle_le(const DisasContext *ctx)
-+{
-+    return ctx->le_mode && true;
-+}
+ migration_files = [files(
+-  'migration-helpers.c',
+   'migration/bootfile.c',
+   'migration/migration-qmp.c',
++  'migration/migration-util.c',
+ )]
+ 
+ if gnutls.found()
+@@ -350,7 +350,7 @@ qtests = {
+   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
+   'cdrom-test': files('boot-sector.c'),
+   'dbus-vmstate-test': files('migration/migration-qmp.c',
+-                             'migration-helpers.c') + dbus_vmstate1,
++                             'migration/migration-util.c') + dbus_vmstate1,
+   'erst-test': files('erst-test.c'),
+   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
+   'migration-test': migration_files,
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 489fca7071..e295bd3081 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -22,9 +22,9 @@
+ #include "crypto/tlscredspsk.h"
+ #include "ppc-util.h"
+ 
+-#include "migration-helpers.h"
+ #include "migration/bootfile.h"
+ #include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
+ #ifdef CONFIG_GNUTLS
+ # include "tests/unit/crypto-tls-psk-helpers.h"
+ # ifdef CONFIG_TASN1
+diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+index 20be46fdf6..71b14b51b2 100644
+--- a/tests/qtest/migration/migration-qmp.c
++++ b/tests/qtest/migration/migration-qmp.c
+@@ -12,8 +12,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "libqtest.h"
+-#include "migration-helpers.h"
+ #include "migration-qmp.h"
++#include "migration-util.h"
+ #include "qapi/error.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qjson.h"
+diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
+index ed927cf408..caaa78722a 100644
+--- a/tests/qtest/migration/migration-qmp.h
++++ b/tests/qtest/migration/migration-qmp.h
+@@ -2,6 +2,8 @@
+ #ifndef MIGRATION_QMP_H
+ #define MIGRATION_QMP_H
+ 
++#include "migration-util.h"
 +
- /* Return true iff byteswap is needed in a scalar memop */
- static inline bool need_byteswap(const DisasContext *ctx)
- {
-@@ -2578,7 +2584,9 @@ static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
- static void gen_ld_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
-                       MemOp memop)
- {
--    tcg_gen_qemu_ld_tl(val, addr, idx, memop);
-+    if (!need_addrswizzle_le(ctx)) {
-+        tcg_gen_qemu_ld_tl(val, addr, idx, memop);
-+    }
- }
+ G_GNUC_PRINTF(4, 5)
+ void migrate_qmp_fail(QTestState *who, const char *uri,
+                       const char *channels, const char *fmt, ...);
+diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration/migration-util.c
+similarity index 99%
+rename from tests/qtest/migration-helpers.c
+rename to tests/qtest/migration/migration-util.c
+index 218ee4e59f..8a974ded22 100644
+--- a/tests/qtest/migration-helpers.c
++++ b/tests/qtest/migration/migration-util.c
+@@ -1,5 +1,5 @@
+ /*
+- * QTest migration helpers
++ * QTest migration utilities
+  *
+  * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
+  *   based on the vhost-user-test.c that is:
+@@ -19,8 +19,8 @@
+ #include "qemu/cutils.h"
+ #include "qemu/memalign.h"
  
- #define GEN_QEMU_LOAD_TL(ldop, op)                                      \
-@@ -2619,7 +2627,9 @@ GEN_QEMU_LOAD_64(ld64ur, BSWAP_MEMOP(MO_UQ))
- static void gen_st_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
-                       MemOp memop)
- {
--    tcg_gen_qemu_st_tl(val, addr, idx, memop);
-+    if (!need_addrswizzle_le(ctx)) {
-+        tcg_gen_qemu_st_tl(val, addr, idx, memop);
-+    }
- }
+-#include "migration-helpers.h"
+ #include "migration/bootfile.h"
++#include "migration/migration-util.h"
  
- #define GEN_QEMU_STORE_TL(stop, op)                                     \
+ static char *SocketAddress_to_str(SocketAddress *addr)
+ {
+diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration/migration-util.h
+similarity index 94%
+rename from tests/qtest/migration-helpers.h
+rename to tests/qtest/migration/migration-util.h
+index 2cb1f78d9e..0fa3676235 100644
+--- a/tests/qtest/migration-helpers.h
++++ b/tests/qtest/migration/migration-util.h
+@@ -10,8 +10,8 @@
+  *
+  */
+ 
+-#ifndef MIGRATION_HELPERS_H
+-#define MIGRATION_HELPERS_H
++#ifndef MIGRATION_UTIL_H
++#define MIGRATION_UTIL_H
+ 
+ #include "libqtest.h"
+ 
+@@ -51,4 +51,4 @@ void migration_test_add(const char *path, void (*fn)(void));
+ char *migrate_get_connect_uri(QTestState *who);
+ void migrate_set_ports(QTestState *to, QList *channel_list);
+ 
+-#endif /* MIGRATION_HELPERS_H */
++#endif /* MIGRATION_UTIL_H */
+diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
+index 28a6147d9a..08365ffa11 100644
+--- a/tests/qtest/virtio-net-failover.c
++++ b/tests/qtest/virtio-net-failover.c
+@@ -11,8 +11,8 @@
+ #include "libqtest.h"
+ #include "libqos/pci.h"
+ #include "libqos/pci-pc.h"
+-#include "migration-helpers.h"
+ #include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
+ #include "qapi/qmp/qdict.h"
+ #include "qapi/qmp/qlist.h"
+ #include "qapi/qmp/qjson.h"
 -- 
-2.39.5
+2.35.3
 
 
