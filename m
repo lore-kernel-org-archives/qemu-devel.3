@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3ECCE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 03:38:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BEA6E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 03:45:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLa1F-00087n-Qd; Wed, 11 Dec 2024 22:37:41 -0500
+	id 1tLa7h-0000qH-7Z; Wed, 11 Dec 2024 22:44:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tLa1D-00087a-Mc
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:37:39 -0500
-Received: from mgamail.intel.com ([192.198.163.10])
+ id 1tLa7e-0000q1-Gl
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:44:18 -0500
+Received: from mgamail.intel.com ([192.198.163.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tLa1A-0005vX-Uj
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:37:39 -0500
+ id 1tLa7b-0000Bs-Ix
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:44:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733974657; x=1765510657;
+ t=1733975055; x=1765511055;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=5n+dpywLHpvNxd/O+0CMNIlCHWFA+tth+AVGjxU7oRU=;
- b=LVywaZkPunY6Pb/24JENekTWccg6e/rmYz/h5FCaScubsOojyidUCN9Z
- 1X+2YARoG3UH04kkI6hklCdL5Sfs5pEjBB7ZSpH4vTCqN8E8k88RC5xWz
- Ze6nTD/z7a59czI+D+HEoiNj53sFVOYP8Wh+Me2LIK/EAppC70oD30cu7
- k0bp/toylptOOlj9kjCSHZpgtRyAmfpYiM9mmEPIZh9g35UUmkR5+zzFN
- tHsWOv0EWYaszln67w9+Sw8qGe+vAsno0xFOoADMirp/jFmM8ttH/Nt/U
- kxCfPYd6j2OSNNq1AGSvsyWCrLn9bhf/szdeiMwlwxRF94bxONkaHW5T4 Q==;
-X-CSE-ConnectionGUID: ZEHNtjYjQhSuG7UpcwB+Tg==
-X-CSE-MsgGUID: E4fxOAB5T+eo2EovKvSldQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="45785458"
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="45785458"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2024 19:37:34 -0800
-X-CSE-ConnectionGUID: yJIMbqbkTfC+6culIZ26dQ==
-X-CSE-MsgGUID: /SelTPfaQnyYaaBsjJAdIw==
+ bh=+wucua3PkIdimHEQpSJ5QJWaEULv43kIlkiXzrAGwhU=;
+ b=mCV2py0lmwaQ3muEkNgBS5w1vIZASzKi9GwqhProgmZXxgc+20vt0nam
+ yELslzPDA/HdmbcFuNuQPYgPLHG1zosV37BXqEJ2vksFiSS5PgD1ZJq0V
+ q6QTGHupCVGvRqdRPbViUdeGE5+9ADAkhq9kQbcFqxJTjKtH/6097hnkf
+ u7d2KVwxftcFjzSVnHYCJTJOBKtCs2rfE4fGcump8LXHT6bSbPgEmdXxn
+ 5LakmANWFanixEyTjJD2czz7ot94OMpK3zrWsxqCE3mQpOTxtRjiM9OQD
+ YfnA7u21v5dr7jN/Jjfz+ceLQFLz30xW0imaNBKiGPBmmTlCrZjscPJpK w==;
+X-CSE-ConnectionGUID: 7WdfAwD8Rp+YsuV85UjQtg==
+X-CSE-MsgGUID: dhfhZgcVTG+PvANesQx3jQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="33707631"
+X-IronPort-AV: E=Sophos;i="6.12,227,1728975600"; d="scan'208";a="33707631"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 19:44:10 -0800
+X-CSE-ConnectionGUID: iS/EYUjbQdaGI1JbhbAplw==
+X-CSE-MsgGUID: JCZugvyySKm22cOSJglwLQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="101159944"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="101033599"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Dec 2024 19:37:26 -0800
-Message-ID: <1e093c24-0765-4aa3-951c-daaf00f551b5@intel.com>
-Date: Thu, 12 Dec 2024 11:37:23 +0800
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 19:44:08 -0800
+Message-ID: <2144c2c0-4a5d-4efd-b5e2-f2b4096c08b5@intel.com>
+Date: Thu, 12 Dec 2024 11:44:05 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 3/4] i386: Track cores_per_module in CPUX86State
-To: Zhao Liu <zhao1.liu@intel.com>, Igor Mammedov <imammedo@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
-References: <20241205145716.472456-1-xiaoyao.li@intel.com>
- <20241205145716.472456-4-xiaoyao.li@intel.com>
- <20241210174338.0fb05ecf@imammedo.users.ipa.redhat.com>
- <Z1j97K+xpgIp6sYc@intel.com>
+Subject: Re: [PATCH] i386/kvm: Set return value after handling
+ KVM_EXIT_HYPERCALL
+To: Binbin Wu <binbin.wu@linux.intel.com>, pbonzini@redhat.com,
+ qemu-devel@nongnu.org
+Cc: seanjc@google.com, michael.roth@amd.com, rick.p.edgecombe@intel.com,
+ isaku.yamahata@intel.com, farrah.chen@intel.com, kvm@vger.kernel.org
+References: <20241212032628.475976-1-binbin.wu@linux.intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <Z1j97K+xpgIp6sYc@intel.com>
+In-Reply-To: <20241212032628.475976-1-binbin.wu@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.18; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -38
 X-Spam_score: -3.9
@@ -94,67 +88,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/11/2024 10:50 AM, Zhao Liu wrote:
-> On Tue, Dec 10, 2024 at 05:43:38PM +0100, Igor Mammedov wrote:
->> Date: Tue, 10 Dec 2024 17:43:38 +0100
->> From: Igor Mammedov <imammedo@redhat.com>
->> Subject: Re: [RFC PATCH 3/4] i386: Track cores_per_module in CPUX86State
->> X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
->>
->> On Thu,  5 Dec 2024 09:57:15 -0500
->> Xiaoyao Li <xiaoyao.li@intel.com> wrote:
->>
->>> x86 is the only user of CPUState::nr_cores.
->>>
->>> Define cores_per_module in CPUX86State, which can serve as the
->>> substitute of CPUState::nr_cores. After x86 switches to use
->>> CPUX86State::cores_per_module, CPUState::nr_cores will lose the only
->>> user and QEMU can drop it.
->>>
->>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
->>> ---
->>>   hw/i386/x86-common.c | 2 ++
->>>   target/i386/cpu.c    | 2 +-
->>>   target/i386/cpu.h    | 9 +++++++--
->>>   3 files changed, 10 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
->>> index dc031af66217..f7a20c1da30c 100644
->>> --- a/hw/i386/x86-common.c
->>> +++ b/hw/i386/x86-common.c
->>> @@ -271,6 +271,8 @@ void x86_cpu_pre_plug(HotplugHandler *hotplug_dev,
->>>   
->>>       init_topo_info(&topo_info, x86ms);
->>>   
->>> +    env->nr_cores = ms->smp.cores;
->> this doesn't look like the same as in qemu_init_vcpu(),
->> which uses machine_topo_get_cores_per_socket()
->> Can you clarify the change?
+On 12/12/2024 11:26 AM, Binbin Wu wrote:
+> Userspace should set the ret field of hypercall after handling
+> KVM_EXIT_HYPERCALL.  Otherwise, a stale value could be returned to KVM.
 > 
-> I think Xiaoyao is correct here. CPUState.nr_cores means number of cores
-> in socket, and current CPUX86State.nr_cores means number of cores per
-> module (or parent container) ...though they have same name. (It's better
-> to mention the such difference in commit message.)
+> Fixes: 47e76d03b15 ("i386/kvm: Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE")
+> Reported-by: Farrah Chen <farrah.chen@intel.com>
+> Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
+> Tested-by: Farrah Chen <farrah.chen@intel.com>
+> ---
+> To test the TDX code in kvm-coco-queue, please apply the patch to the QEMU,
+> otherwise, TDX guest boot could fail.
+> A matching QEMU tree including this patch is here:
+> https://github.com/intel-staging/qemu-tdx/releases/tag/tdx-qemu-upstream-v6.1-fix_kvm_hypercall_return_value
 > 
-> However, I also think that names like nr_cores or nr_* are prone to
-> errors. Names like cores_per_module are clearer, similar to the naming
-> in X86CPUTopoInfo. This might be an opportunity to clean up the current
-> nr_* naming convention.
+> Previously, the issue was not triggered because no one would modify the ret
+> value. But with the refactor patch for __kvm_emulate_hypercall() in KVM,
+> https://lore.kernel.org/kvm/20241128004344.4072099-7-seanjc@google.com/, the
+> value could be modified.
+> ---
+>   target/i386/kvm/kvm.c | 8 ++++++--
+>   1 file changed, 6 insertions(+), 2 deletions(-)
 > 
-> And further, we can directly cache two additional items in CPUX86State:
-> threads_per_pkg and cores_per_pkg, as these are the most common
-> calculations and can help avoid missing any topology levels.
-> 
-> I think both of these changes can be made on top of the current series.
+> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+> index 8e17942c3b..4bcccb48d1 100644
+> --- a/target/i386/kvm/kvm.c
+> +++ b/target/i386/kvm/kvm.c
+> @@ -6005,10 +6005,14 @@ static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
+>   
+>   static int kvm_handle_hypercall(struct kvm_run *run)
+>   {
+> +    int ret = -EINVAL;
+> +
+>       if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
+> -        return kvm_handle_hc_map_gpa_range(run);
+> +        ret = kvm_handle_hc_map_gpa_range(run);
+> +
+> +    run->hypercall.ret = ret;
 
-yes, my plan is to just maintain a "struct X86CPUTopoInfo" in 
-CPUX86State. After we clean up the nr_threads and nr_cores in CPUState 
-usage.
+Updating run->hypercall.ret is useful only when QEMU needs to re-enter 
+the guest. For the case of ret < 0, QEMU will stop the vcpu.
 
-> @xiaoyao, do you agree?
+I think we might need re-think on the handling of KVM_EXIT_HYPERCALL. 
+E.g., in what error case should QEMU stop the vcpu, and in what case can 
+QEMU return the error back to the guest via run->hypercall.ret.
+
+> -    return -EINVAL;
+> +    return ret;
+>   }
+>   
+>   #define VMX_INVALID_GUEST_STATE 0x80000021
 > 
-> Regards,
-> Zhao
-> 
+> base-commit: ae35f033b874c627d81d51070187fbf55f0bf1a7
 
 
