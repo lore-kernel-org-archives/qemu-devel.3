@@ -4,142 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 026E9E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D827DE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjy8-00005E-Lq; Thu, 12 Dec 2024 09:15:08 -0500
+	id 1tLkA9-0002Xs-QV; Thu, 12 Dec 2024 09:27:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLjy5-0008TN-9l
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:15:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1tLkA4-0002Xi-2t
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:27:29 -0500
+Received: from air.basealt.ru ([193.43.8.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLjy2-0003FY-IS
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:15:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734012901;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fcWBhr9yKc+aFaxxoe24HCoPoGe69wzVD0gI2my8IKo=;
- b=BjniLLIJUN+Mm1gSv/nLlW2aSVRxbk2XD4q6JSid6YTy71NTbj0trUmDSSrXYAhxQm8qEX
- ESgEEn6kxz39KMDJYygKWFRO7vjZg3I2JboN0jZ2XsUHdvjnyKLIR7KQnmw/A/rHbTA9Gp
- 6gCI8uC+reCsqFIWb+Ii7W5Ahq9Qjv4=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-vSOyTvZmM9KqDy7nD8VFUA-1; Thu, 12 Dec 2024 09:15:00 -0500
-X-MC-Unique: vSOyTvZmM9KqDy7nD8VFUA-1
-X-Mimecast-MFC-AGG-ID: vSOyTvZmM9KqDy7nD8VFUA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-38634103b0dso368141f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:15:00 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734012899; x=1734617699;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fcWBhr9yKc+aFaxxoe24HCoPoGe69wzVD0gI2my8IKo=;
- b=cvXOAD10WxHuBGWEkiORVMU28wPCc15+h6ZgMw5QyGpgDgJAZl9GYNsobkvJIYRE3m
- 2ri/vQHu3YE96fRE3RQEZVSi8LPRTKjX4TJa7GPKNKU7Fg8K/2glNKu3LF2kl8YremxX
- vPG8Ia3VpBBvHDh6juVqBCSyp7EEvUKtq34a7JXhffHGLm1XO725qEy/6laNnUdyowsD
- x1JQPc6yRQS4b+cfoKfM/iytglE+b9s81QDjYm7CSjAEBVAZ3lgR2XcjPJ+BCqeid+mH
- xEX4S1ENgjEB4MyMC28OgkjYqjNImiZ3XE3Kvg7/VG9VyyswycgwuXtXA/nFceYz7vDH
- tCrg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW19IdNh7k1EahL6T/YKsgg3Nc4j8dnpqcIm1idH+cTMQNpg/XgA3jbiqnfcbUd2w8tkZNzli2f9H2o@nongnu.org
-X-Gm-Message-State: AOJu0YxOtwiaqCH1K4Xwz0Ta1B4GAJBFR3Ve/p9OnjC/ZkCFy9aJ7lel
- teLSUQqzXioRylYJ8WG1WTPUfgK5XDBLWAs9RGCZopXZuSzMlGAiu0eiYPvDh+kZ+OJIFy/wNTq
- dPRSJtJBdaueYNt68TPpuUd/rXE8or/1Ov+yPDMcOfcN+6nsye9Vb
-X-Gm-Gg: ASbGncs++svSAO5XtaGC9XKethjF+axjYPEnbuz3ke8OiZomWSJQRaH6KPrDCHau9uL
- Fr2fxz4CcFQF0zZEymzksK+/8Ksg0vGSYMSfNv0AftGMO5N0Mgj3mYWwCi5F06CgtRyBdKsuWLr
- Lw2uADUxFGH4LJsJ1cITP8b7VYVhsiP0y8g7PZZJtWF9HhRXWvFDLtB+gDe2nkdPPL3f1DkxLR9
- u4dJj8TiJJnWZEpJ9u33m8SQRqyap2zPBadweisDvcVFEZW28vs4YfJzsyLgHOvfXrZ2RMg+opZ
- lO1R8g==
-X-Received: by 2002:a05:6000:4606:b0:385:e394:37ea with SMTP id
- ffacd0b85a97d-387876913a6mr2662626f8f.22.1734012899035; 
- Thu, 12 Dec 2024 06:14:59 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9S4mUZ84fnq0EuW4VgPFNVVh334jw2vIn8nwhGDEW7tNTY1cysBUEey5l3pGPjHiBIMT+iQ==
-X-Received: by 2002:a05:6000:4606:b0:385:e394:37ea with SMTP id
- ffacd0b85a97d-387876913a6mr2662405f8f.22.1734012894556; 
- Thu, 12 Dec 2024 06:14:54 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514dc3sm4100675f8f.67.2024.12.12.06.14.53
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 06:14:54 -0800 (PST)
-Message-ID: <0185be25-32f7-436b-b8e6-2e55c1cd0e18@redhat.com>
-Date: Thu, 12 Dec 2024 15:14:53 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/31] tests/functional: skip tests if assets are not
- available
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ (Exim 4.90_1) (envelope-from <gerben@altlinux.org>)
+ id 1tLkA1-0006gJ-Hs
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:27:27 -0500
+Received: from boringlust.malta.altlinux.ru (obninsk.basealt.ru
+ [217.15.195.17])
+ by air.basealt.ru (Postfix) with ESMTPSA id DF9DC23388;
+ Thu, 12 Dec 2024 17:27:18 +0300 (MSK)
+From: gerben@altlinux.org
+To: philmd@linaro.org, andrew@openedhand.com, richard.henderson@linaro.org,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-31-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-31-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: sdl.qemu@linuxtesting.org, Denis Rastyogin <gerben@altlinux.org>,
+ Denis Sergeev <zeff@altlinux.org>
+Subject: [PATCH] target/arm/tcg: fix potential integer overflow in
+ iwmmxt_macuw()
+Date: Thu, 12 Dec 2024 17:27:09 +0300
+Message-ID: <20241212142716.523980-1-gerben@altlinux.org>
+X-Mailer: git-send-email 2.42.2
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+Received-SPF: pass client-ip=193.43.8.18; envelope-from=gerben@altlinux.org;
+ helo=air.basealt.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,76 +59,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> If downloading of assets has been disabled, then skip running a
-> test if the assets it has registered are not already downloaded.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/asset.py    |  8 +++++++-
->   tests/functional/qemu_test/testcase.py | 11 +++++++++++
->   2 files changed, 18 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> index c5d3e73c4b..39832b2587 100644
-> --- a/tests/functional/qemu_test/asset.py
-> +++ b/tests/functional/qemu_test/asset.py
-> @@ -65,6 +65,12 @@ def _check(self, cache_file):
->       def valid(self):
->           return self.cache_file.exists() and self._check(self.cache_file)
->   
-> +    def fetchable(self):
-> +        return not os.environ.get("QEMU_TEST_NO_DOWNLOAD", False)
-> +
-> +    def available(self):
-> +        return self.valid() or self.fetchable()
-> +
->       def _wait_for_other_download(self, tmp_cache_file):
->           # Another thread already seems to download the asset, so wait until
->           # it is done, while also checking the size to see whether it is stuck
-> @@ -103,7 +109,7 @@ def fetch(self):
->                              self.cache_file, self.url)
->               return str(self.cache_file)
->   
-> -        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-> +        if not self.fetchable():
->               raise Exception("Asset cache is invalid and downloads disabled")
->   
->           self.log.info("Downloading %s to %s...", self.url, self.cache_file)
-> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-> index 7bece8738a..6c67a9459c 100644
-> --- a/tests/functional/qemu_test/testcase.py
-> +++ b/tests/functional/qemu_test/testcase.py
-> @@ -184,6 +184,14 @@ def scratch_file(self, *args):
->       def log_file(self, *args):
->           return str(Path(self.outputdir, *args))
->   
-> +    def assets_available(self):
-> +        for name, asset in vars(self.__class__).items():
-> +            if name.startswith("ASSET_") and type(asset) == Asset:
-> +                if not asset.available():
-> +                    self.log.debug(f"Asset {asset.url} not available")
-> +                    return False
-> +        return True
-> +
->       def setUp(self, bin_prefix):
->           self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
->           self.arch = self.qemu_bin.split('-')[-1]
-> @@ -209,6 +217,9 @@ def setUp(self, bin_prefix):
->           self.machinelog.setLevel(logging.DEBUG)
->           self.machinelog.addHandler(self._log_fh)
->   
-> +        if not self.assets_available():
-> +            self.skipTest('One or more assets is not available')
+From: Denis Rastyogin <gerben@altlinux.org>
 
-So if a test_*.py file consists of multiple subtests, this will now skip all 
-of them if just the asset of one subtest is missing?
+The function iwmmxt_macuw() could potentially cause an integer
+overflow when summing up four 32-bit multiplications.
+This occurs because the intermediate results may exceed the 32-bit
+range before being cast to uint64_t. The fix ensures each
+multiplication is explicitly cast to uint64_t prior to summation,
+preventing potential issues and ensuring correctness.
 
-Could we maybe handle this test skipping in the new archive_extract() and 
-uncompress() functions instead, so that only the related subtests will be 
-skipped? (We still might need another wrapper function in testcase for the 
-spots that still call .fetch() on the assets directly, though)
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-  Thomas
+Signed-off-by: Denis Sergeev <zeff@altlinux.org>
+Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+---
+ target/arm/tcg/iwmmxt_helper.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/target/arm/tcg/iwmmxt_helper.c b/target/arm/tcg/iwmmxt_helper.c
+index 610b1b2103..19c709655e 100644
+--- a/target/arm/tcg/iwmmxt_helper.c
++++ b/target/arm/tcg/iwmmxt_helper.c
+@@ -140,7 +140,7 @@ uint64_t HELPER(iwmmxt_macsw)(uint64_t a, uint64_t b)
+ 
+ uint64_t HELPER(iwmmxt_macuw)(uint64_t a, uint64_t b)
+ {
+-#define MACU(SHR) ( \
++#define MACU(SHR) (uint64_t)( \
+         (uint32_t) ((a >> SHR) & 0xffff) * \
+         (uint32_t) ((b >> SHR) & 0xffff))
+     return MACU(0) + MACU(16) + MACU(32) + MACU(48);
+-- 
+2.42.2
 
 
