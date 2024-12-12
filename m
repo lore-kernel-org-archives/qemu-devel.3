@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6160AE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:06:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78619E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLrIu-00018h-Dg; Thu, 12 Dec 2024 17:05:04 -0500
+	id 1tLrP2-0002FA-Mk; Thu, 12 Dec 2024 17:11:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1tLrIm-000187-SR
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:04:57 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
- id 1tLrIj-0005xb-GY
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:04:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734041094; x=1765577094;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=fcLqNUWXZKdJqXPcRRGkSkyE41XaNnf3cqr6Sktyuwg=;
- b=kstg2aTD75S36zxYXS6GhHKY1Iw/xxFKZk4hOCrwEZifediUDSgLxsmI
- lwVa8dzVaMP4RJlv/TYqinXz7jITJzf5GAt3Buo5VzUDXUWNdRRulRpz1
- 4q6AV4W3WDpewt8iGjSlm/Z7D4o/AdAWCwU3Rce27hlGPwupksr5o9Hte
- AnfRbA4BMJ823sGTbtlvXw+M76VGVEVpJSNcoIN0+b1Zt/vTNdgLn61s4
- nJyNZ2w1eM84bMoTyI8rcQWFCGayE7SqGeICLv2q5vZumF7Cur5eZNNGi
- 7Aczwz3Lyt/LjXzU8mCwgXTz77S/DfxEw2NccHjB3LttqnOJb0KDGr8FC A==;
-X-CSE-ConnectionGUID: Gn7SLOJ/RFKtywrylhbx3g==
-X-CSE-MsgGUID: axdsQOojQqe/GGEZ7hF6wg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34614681"
-X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="34614681"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 14:04:49 -0800
-X-CSE-ConnectionGUID: q2EolBEBSMe+Nve+GU6ohA==
-X-CSE-MsgGUID: xqpa35YQRpCHDYTgrkEiCg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="96589080"
-Received: from puneetse-mobl.amr.corp.intel.com (HELO localhost)
- ([10.125.110.112])
- by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 14:04:47 -0800
-Date: Thu, 12 Dec 2024 16:04:44 -0600
-From: Ira Weiny <ira.weiny@intel.com>
+ (Exim 4.90_1) (envelope-from
+ <3hl9bZwYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com>)
+ id 1tLrP1-0002El-E3
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:11:23 -0500
+Received: from mail-pf1-x449.google.com ([2607:f8b0:4864:20::449])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3hl9bZwYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com>)
+ id 1tLrOz-0006p4-Nm
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:11:23 -0500
+Received: by mail-pf1-x449.google.com with SMTP id
+ d2e1a72fcca58-72467cd273dso1911791b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 14:11:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1734041478; x=1734646278; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=O8hFG6HST0+xz5AWr8oNcEUA/Zcqg9a67DpfzgQIv1s=;
+ b=Xo7mlPQfaOHsaF3i7NaVsxT++FCL0OJk7ApoYXTW9yP17Szg2le6Yr/16SQifB1XFz
+ V5tJoW0XQy96eq6Z/dq4s/cmxmyqfYjtv9FNnNDJmQqQR2B1UD7JGWeAtVUnOOOQVhxp
+ hJDS5wAmZcCgL3Ta+XWkMQbu1lsqQ6i9ugV6bfd20NZpTQONQEQF/fj9k6P2Oew7DExn
+ XrTVQKHWFrx90gtBAaO7QcX2fQ7N9mWOEY2Y5lL+D9j60twVQzknPRHTPpPpzk+GhMWZ
+ S941Bwqlj252t+gie08kQxKpo7EL3xeH+cYh6BiBgbaUWpSFkVkBQJjoPUsINQLd58lA
+ dIqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734041478; x=1734646278;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=O8hFG6HST0+xz5AWr8oNcEUA/Zcqg9a67DpfzgQIv1s=;
+ b=YDA+CcxPiz9SmG39UoN+Wdud5IQcCv+j+Nrh/I1L4FqfqR3IFD5TsVoj3h7JXcPD0u
+ 1DGdfcdaFqhTqI1br4R51jfZJULnxwwGA/qrq+XC+wTR7vjAA+mxCYSe/zSmmwEDbduy
+ qh+952gDh3ZPfg1cgJBHdNRQU3wcLoA3Q5lVpzH0zxZ070NgcEClF+9CpLAc7PyOKBO3
+ Q30RcHdEFVQct0msf/rLsgeKLufKg41hJC9+SULKPR6AmB/AiQRz6IgWJVn9wXN6gQ/n
+ ddyboOychCsqWcVegfTkgjD2kjDnCpmb7Kv/LOhUmkXheeeeAjhYHve4hCY/vJWwi6qM
+ 8bZg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVzqMs0aEe3MRpga+wj9nFEqTgiiMeTAstHa3M44hfeCkfebAtKnDkGF7QUjh8PIY10k859k/M/zxbE@nongnu.org
+X-Gm-Message-State: AOJu0YxbfNSOTRL6GXVUUjDGd5yuzxCdoKxs9o5C8QR3DAunktdBfGzL
+ /ajLNbWEPrsOJmKpHyfa4qBTdY/jW+CHzUwSDCmi4ZaUynV7pTn7G2s1dQGrDgSej9e7y2UTR9k
+ G6A==
+X-Google-Smtp-Source: AGHT+IEYe3oACuEmMt/hCqKoxzL+HdkacaXms03GcWAAvu/hVYwocKnminOiRi57LHIwzOhfSkY+i2gDxzI=
+X-Received: from pfde6.prod.google.com ([2002:aa7:8c46:0:b0:725:e37e:7451])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:2347:b0:725:f18a:da37
+ with SMTP id d2e1a72fcca58-7290c3aee61mr234715b3a.0.1734041478467; Thu, 12
+ Dec 2024 14:11:18 -0800 (PST)
+Date: Thu, 12 Dec 2024 14:11:16 -0800
+In-Reply-To: <5b8f7d63-ef0a-487f-bf9d-44421691fa85@redhat.com>
+Mime-Version: 1.0
+References: <20241212032628.475976-1-binbin.wu@linux.intel.com>
+ <Z1qZygKqvjIfpOXD@intel.com> <1a5e2988-9a7d-4415-86ad-8a7a98dbc5eb@redhat.com>
+ <Z1s1yeWKnvmh718N@google.com>
+ <5b8f7d63-ef0a-487f-bf9d-44421691fa85@redhat.com>
+Message-ID: <Z1tfhPaHruhS3teK@google.com>
+Subject: Re: [PATCH] i386/kvm: Set return value after handling
+ KVM_EXIT_HYPERCALL
+From: Sean Christopherson <seanjc@google.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Riku Voipio <riku.voipio@iki.fi>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
- kvm@vger.kernel.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v6 34/60] i386/tdx: implement tdx_cpu_realizefn()
-Message-ID: <Z1td_BZPlZ5G9Zaq@iweiny-mobl>
-References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
- <20241105062408.3533704-35-xiaoyao.li@intel.com>
- <82b74218-f790-4300-ab3b-9c41de1f96b8@redhat.com>
- <2bedfcda-c2e7-4e5b-87a7-9352dfe28286@intel.com>
- <44627917-a848-4a86-bddb-20151ecfd39a@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <44627917-a848-4a86-bddb-20151ecfd39a@redhat.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=ira.weiny@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+Cc: Zhao Liu <zhao1.liu@intel.com>, Binbin Wu <binbin.wu@linux.intel.com>,
+ xiaoyao.li@intel.com, 
+ qemu-devel@nongnu.org, michael.roth@amd.com, rick.p.edgecombe@intel.com, 
+ isaku.yamahata@intel.com, farrah.chen@intel.com, kvm@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::449;
+ envelope-from=3hl9bZwYKCvMnZVieXbjjbgZ.XjhlZhp-YZqZgijibip.jmb@flex--seanjc.bounces.google.com;
+ helo=mail-pf1-x449.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,64 +100,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Nov 05, 2024 at 12:53:25PM +0100, Paolo Bonzini wrote:
-> On 11/5/24 12:38, Xiaoyao Li wrote:
-> > On 11/5/2024 6:06 PM, Paolo Bonzini wrote:
-> > > On 11/5/24 07:23, Xiaoyao Li wrote:
-> > > > +static void tdx_cpu_realizefn(X86ConfidentialGuest *cg, CPUState *cs,
-> > > > +                              Error **errp)
-> > > > +{
-> > > > +    X86CPU *cpu = X86_CPU(cs);
-> > > > +    uint32_t host_phys_bits = host_cpu_phys_bits();
-> > > > +
-> > > > +    if (!cpu->phys_bits) {
-> > > > +        cpu->phys_bits = host_phys_bits;
-> > > > +    } else if (cpu->phys_bits != host_phys_bits) {
-> > > > +        error_setg(errp, "TDX only supports host physical bits (%u)",
-> > > > +                   host_phys_bits);
-> > > > +    }
-> > > > +}
+On Thu, Dec 12, 2024, Paolo Bonzini wrote:
+> On 12/12/24 20:13, Sean Christopherson wrote:
+> > On Thu, Dec 12, 2024, Paolo Bonzini wrote:
+> > > If ret is less than zero, will stop the VM anyway as
+> > > RUN_STATE_INTERNAL_ERROR.
 > > > 
-> > > This should be already handled by host_cpu_realizefn(), which is
-> > > reached via cpu_exec_realizefn().
+> > > If this has to be fixed in QEMU, I think there's no need to set anything
+> > > if ret != 0; also because kvm_convert_memory() returns -1 on error and
+> > > that's not how the error would be passed to the guest.
 > > > 
-> > > Why is it needed earlier, but not as early as instance_init?  If
-> > > absolutely needed I would do the assignment in patch 33, but I don't
-> > > understand why it's necessary.
+> > > However, I think the right fix should simply be this in KVM:
+> > > 
+> > > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> > > index 83fe0a78146f..e2118ba93ef6 100644
+> > > --- a/arch/x86/kvm/x86.c
+> > > +++ b/arch/x86/kvm/x86.c
+> > > @@ -10066,6 +10066,7 @@ unsigned long __kvm_emulate_hypercall(struct kvm_vcpu *vcpu, unsigned long nr,
+> > >   		}
+> > >   		vcpu->run->exit_reason        = KVM_EXIT_HYPERCALL;
+> > > +		vcpu->run->ret                = 0;
 > > 
-> > It's not called earlier but right after cpu_exec_realizefn().
+> > 		vcpu->run->hypercall.ret
 > > 
-> > Patch 33 adds x86_confidenetial_guest_cpu_realizefn() right after
-> > ecpu_exec_realizefn(). This patch implements the callback and gets
-> > called in x86_confidenetial_guest_cpu_realizefn() so it's called after
-> > cpu_exec_realizefn().
+> > >   		vcpu->run->hypercall.nr       = KVM_HC_MAP_GPA_RANGE;
+> > >   		vcpu->run->hypercall.args[0]  = gpa;
+> > >   		vcpu->run->hypercall.args[1]  = npages;
+> > > 
+> > > While there is arguably a change in behavior of the kernel both with
+> > > the patches in kvm-coco-queue and with the above one, _in practice_
+> > > the above change is one that userspace will not notice.
 > > 
-> > The reason why host_cpu_realizefn() cannot satisfy is that for normal
-> > VMs, the check in cpu_exec_realizefn() is just a warning and QEMU does
-> > allow the user to configure the physical address bit other than host's
-> > value, and the configured value will be seen inside guest. i.e., "-cpu
-> > phys-bits=xx" where xx != host_value works for normal VMs.
-> > 
-> > But for TDX, KVM doesn't allow it and the value seen in TD guest is
-> > always the host value.  i.e., "-cpu phys-bits=xx" where xx != host_value
-> > doesn't work for TDX.
-> > 
-> > > Either way, the check should be in tdx_check_features.
-> > 
-> > Good idea. I will try to implement it in tdx_check_features()
-
-Is there any reason the TDX code can't just force cpu->host_phys_bits to true?
-
+> > I agree that KVM should initialize "ret", but I don't think '0' is the right
+> > value.  KVM shouldn't assume userspace will successfully handle the hypercall.
+> > What happens if KVM sets vcpu->run->hypercall.ret to a non-zero value, e.g. -KVM_ENOSYS?
 > 
-> Thanks, and I think there's no need to change cpu->phys_bits, either. So
-> x86_confidenetial_guest_cpu_realizefn() should not be necessary.
-
-I was going to comment that patch 33 should be squashed here but better to just
-drop it.
-
-Ira
-
+> Unfortunately QEMU is never writing vcpu->run->hypercall.ret, so the guest
+> sees -KVM_ENOSYS; this is basically the same bug that Binbin is fixing, just
+> with a different value passed to the guest.
 > 
-> Paolo
-> 
+> In other words, the above one-liner is pulling the "don't break userspace"
+> card.
+
+But how is anything breaking userspace?  QEMU needs to opt-in to intercepting
+KVM_HC_MAP_GPA_RANGE, and this has been KVM's behavior since commit 0dbb11230437
+("KVM: X86: Introduce KVM_HC_MAP_GPA_RANGE hypercall").
+
+Ah, "ret" happens to be deep in the union and KVM zero allocates vcpu->run, so
+QEMU gets lucky and "ret" happens to be zero because no other non-fatal userspace
+exit on x86 happens to need as many bytes.  Hilarious.
+
+FWIW, if TDX marshalls hypercall state into KVM's "normal" registers, then KVM's
+shenanigans with vcpu->run->hypercall.ret might go away?  Though regardless of
+what happens on that front, I think it makes to explicitly initialize "ret" to
+*something*.
+
+I checked our VMM, and it does the right thing, so I don't have any objection
+to explicitly zeroing "ret".  Though it needs a comment explaining that it's a
+terrible hack for broken userspace ;-)
 
