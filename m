@@ -4,110 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1353FE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:18:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C454E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:18:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkpU-0003zw-RR; Thu, 12 Dec 2024 10:10:17 -0500
+	id 1tLkpL-0003us-Tk; Thu, 12 Dec 2024 10:10:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpQ-0003y7-3o
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:12 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpK-0003uA-Dx
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:06 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpO-0003Cu-As
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:11 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpI-00030r-22
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:06 -0500
 Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
  [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2324E21137;
- Thu, 12 Dec 2024 15:10:09 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C9F141F394;
+ Thu, 12 Dec 2024 15:10:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734016202; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
- b=lWxRkPOaNP69/KMQrFsIlTpZ1Hj3CKTp83mEJt+eQT3dRhZ6NUyls7fq1UoSP6Lf4zr72n
- 3/XGNySNbxhZRpT9VzqcQcl0fLI5BVJCBfsQwMSveHh+Ro7MSsRbeTZ4rAraoT7bgaNBrr
- NL3CPMLqbPAVGxnFWC5J4HvX0jGcBOc=
+ bh=tdSBox6Rf/fHjeaR5r4WxMwiZ8SYCk3cEdLNGcMepOE=;
+ b=DWKlfC2MfepYUVfOYZibE5eHNHqcTb9xbVhVlzXaEeF02TsA3KnzG+HdkduwokPN//I5bl
+ 9QNue5L0SGP5q5skcFv1kAi+a7aAT4Gjzoy5xg7u38Jo9oMRPZDDO8HoBtU1RuIrdp/d5C
+ NyndF5O84GB6PgCYDiVP5O+yVCORW9U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016209;
+ s=susede2_ed25519; t=1734016202;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
- b=Xe2oxSzbaDjpSc/rYivFcWPF1wITc2daYgCqBZWHIt66lHojUMTLLonE+JSRyq7FsUexDq
- WGYXD9IzILxONiAg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=lWxRkPOa;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=Xe2oxSzb
+ bh=tdSBox6Rf/fHjeaR5r4WxMwiZ8SYCk3cEdLNGcMepOE=;
+ b=deLCCPH9Q9GhIDCqnNVHKGUHyOkTHE/x+/O4GXYItX3usddbiOSFpD57Wmhp0O5HNYFbsp
+ hoUwltIMP5LFB/Bw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DWKlfC2M;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=deLCCPH9
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734016209; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734016202; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
- b=lWxRkPOaNP69/KMQrFsIlTpZ1Hj3CKTp83mEJt+eQT3dRhZ6NUyls7fq1UoSP6Lf4zr72n
- 3/XGNySNbxhZRpT9VzqcQcl0fLI5BVJCBfsQwMSveHh+Ro7MSsRbeTZ4rAraoT7bgaNBrr
- NL3CPMLqbPAVGxnFWC5J4HvX0jGcBOc=
+ bh=tdSBox6Rf/fHjeaR5r4WxMwiZ8SYCk3cEdLNGcMepOE=;
+ b=DWKlfC2MfepYUVfOYZibE5eHNHqcTb9xbVhVlzXaEeF02TsA3KnzG+HdkduwokPN//I5bl
+ 9QNue5L0SGP5q5skcFv1kAi+a7aAT4Gjzoy5xg7u38Jo9oMRPZDDO8HoBtU1RuIrdp/d5C
+ NyndF5O84GB6PgCYDiVP5O+yVCORW9U=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734016209;
+ s=susede2_ed25519; t=1734016202;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TQe1/UfXpSagSi+xDbzcIbXo6oH8Dh8KdoWNwhc1ZSc=;
- b=Xe2oxSzbaDjpSc/rYivFcWPF1wITc2daYgCqBZWHIt66lHojUMTLLonE+JSRyq7FsUexDq
- WGYXD9IzILxONiAg==
+ bh=tdSBox6Rf/fHjeaR5r4WxMwiZ8SYCk3cEdLNGcMepOE=;
+ b=deLCCPH9Q9GhIDCqnNVHKGUHyOkTHE/x+/O4GXYItX3usddbiOSFpD57Wmhp0O5HNYFbsp
+ hoUwltIMP5LFB/Bw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2F44013508;
- Thu, 12 Dec 2024 15:10:07 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9443513508;
+ Thu, 12 Dec 2024 15:10:01 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id MP4fOc/8WmcTfQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:07 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ACxFFsn8WmcTfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:01 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 10/22] tests/qtest/migration: Rename migration-helpers.c
-Date: Thu, 12 Dec 2024 12:09:37 -0300
-Message-Id: <20241212150949.16806-11-farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 06/22] tests/qtest/migration: Stop calling everything "test"
+Date: Thu, 12 Dec 2024 12:09:33 -0300
+Message-Id: <20241212150949.16806-7-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
 References: <20241212150949.16806-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 2324E21137
+X-Rspamd-Queue-Id: C9F141F394
 X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
  MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
  R_MISSING_CHARSET(0.50)[];
  R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- MIME_TRACE(0.00)[0:+]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[];
  RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- FROM_EQ_ENVFROM(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_TLS_ALL(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+]; RCVD_COUNT_TWO(0.00)[2];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns, suse.de:email, suse.de:dkim, suse.de:mid]
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:dkim, suse.de:mid,
+ imap1.dmz-prg2.suse.org:helo, imap1.dmz-prg2.suse.org:rdns]
 X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
 X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -130,153 +130,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rename migration-helpers.c to migration-util.c to make its purpose
-more explicit and avoid the "helper" terminology.
+Test frameworks usually prefix "test_" to the entry point of the test
+code. Having every function prefixed with test_ makes it hard to
+understand the code and to grep for the actual tests.
 
-Move the file to the qtest/migration/ directory along with the rest of
-the migration files.
+Remove the "test" prefix from everything that is not a test.
 
+In order to still keep some namespacing, stick to the "migrate_"
+prefix, which is the most used currently.
+
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/meson.build                                     | 4 ++--
- tests/qtest/migration-test.c                                | 2 +-
- tests/qtest/migration/migration-qmp.c                       | 2 +-
- tests/qtest/migration/migration-qmp.h                       | 2 ++
- .../{migration-helpers.c => migration/migration-util.c}     | 4 ++--
- .../{migration-helpers.h => migration/migration-util.h}     | 6 +++---
- tests/qtest/virtio-net-failover.c                           | 2 +-
- 7 files changed, 12 insertions(+), 10 deletions(-)
- rename tests/qtest/{migration-helpers.c => migration/migration-util.c} (99%)
- rename tests/qtest/{migration-helpers.h => migration/migration-util.h} (94%)
+ tests/qtest/migration-test.c | 72 ++++++++++++++++++------------------
+ 1 file changed, 36 insertions(+), 36 deletions(-)
 
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 0b113adc5c..ec809af0c8 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -333,9 +333,9 @@ endif
- tpmemu_files = ['tpm-emu.c', 'tpm-util.c', 'tpm-tests.c']
- 
- migration_files = [files(
--  'migration-helpers.c',
-   'migration/bootfile.c',
-   'migration/migration-qmp.c',
-+  'migration/migration-util.c',
- )]
- 
- if gnutls.found()
-@@ -350,7 +350,7 @@ qtests = {
-   'bios-tables-test': [io, 'boot-sector.c', 'acpi-utils.c', 'tpm-emu.c'],
-   'cdrom-test': files('boot-sector.c'),
-   'dbus-vmstate-test': files('migration/migration-qmp.c',
--                             'migration-helpers.c') + dbus_vmstate1,
-+                             'migration/migration-util.c') + dbus_vmstate1,
-   'erst-test': files('erst-test.c'),
-   'ivshmem-test': [rt, '../../contrib/ivshmem-server/ivshmem-server.c'],
-   'migration-test': migration_files,
 diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-index 489fca7071..e295bd3081 100644
+index f0f3145c59..30bc965b28 100644
 --- a/tests/qtest/migration-test.c
 +++ b/tests/qtest/migration-test.c
-@@ -22,9 +22,9 @@
- #include "crypto/tlscredspsk.h"
- #include "ppc-util.h"
+@@ -710,8 +710,8 @@ typedef struct {
+     PostcopyRecoveryFailStage postcopy_recovery_fail_stage;
+ } MigrateCommon;
  
--#include "migration-helpers.h"
- #include "migration/bootfile.h"
- #include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
- #ifdef CONFIG_GNUTLS
- # include "tests/unit/crypto-tls-psk-helpers.h"
- # ifdef CONFIG_TASN1
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 20be46fdf6..71b14b51b2 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -12,8 +12,8 @@
- 
- #include "qemu/osdep.h"
- #include "libqtest.h"
--#include "migration-helpers.h"
- #include "migration-qmp.h"
-+#include "migration-util.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qjson.h"
-diff --git a/tests/qtest/migration/migration-qmp.h b/tests/qtest/migration/migration-qmp.h
-index ed927cf408..caaa78722a 100644
---- a/tests/qtest/migration/migration-qmp.h
-+++ b/tests/qtest/migration/migration-qmp.h
-@@ -2,6 +2,8 @@
- #ifndef MIGRATION_QMP_H
- #define MIGRATION_QMP_H
- 
-+#include "migration-util.h"
-+
- G_GNUC_PRINTF(4, 5)
- void migrate_qmp_fail(QTestState *who, const char *uri,
-                       const char *channels, const char *fmt, ...);
-diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration/migration-util.c
-similarity index 99%
-rename from tests/qtest/migration-helpers.c
-rename to tests/qtest/migration/migration-util.c
-index 218ee4e59f..8a974ded22 100644
---- a/tests/qtest/migration-helpers.c
-+++ b/tests/qtest/migration/migration-util.c
-@@ -1,5 +1,5 @@
- /*
-- * QTest migration helpers
-+ * QTest migration utilities
-  *
-  * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
-  *   based on the vhost-user-test.c that is:
-@@ -19,8 +19,8 @@
- #include "qemu/cutils.h"
- #include "qemu/memalign.h"
- 
--#include "migration-helpers.h"
- #include "migration/bootfile.h"
-+#include "migration/migration-util.h"
- 
- static char *SocketAddress_to_str(SocketAddress *addr)
+-static int test_migrate_start(QTestState **from, QTestState **to,
+-                              const char *uri, MigrateStart *args)
++static int migrate_start(QTestState **from, QTestState **to,
++                         const char *uri, MigrateStart *args)
  {
-diff --git a/tests/qtest/migration-helpers.h b/tests/qtest/migration/migration-util.h
-similarity index 94%
-rename from tests/qtest/migration-helpers.h
-rename to tests/qtest/migration/migration-util.h
-index 2cb1f78d9e..0fa3676235 100644
---- a/tests/qtest/migration-helpers.h
-+++ b/tests/qtest/migration/migration-util.h
-@@ -10,8 +10,8 @@
-  *
+     g_autofree gchar *arch_source = NULL;
+     g_autofree gchar *arch_target = NULL;
+@@ -876,7 +876,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+     return 0;
+ }
+ 
+-static void test_migrate_end(QTestState *from, QTestState *to, bool test_dest)
++static void migrate_end(QTestState *from, QTestState *to, bool test_dest)
+ {
+     unsigned char dest_byte_a, dest_byte_b, dest_byte_c, dest_byte_d;
+ 
+@@ -1255,7 +1255,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+ {
+     QTestState *from, *to;
+ 
+-    if (test_migrate_start(&from, &to, "defer", &args->start)) {
++    if (migrate_start(&from, &to, "defer", &args->start)) {
+         return -1;
+     }
+ 
+@@ -1319,7 +1319,7 @@ static void migrate_postcopy_complete(QTestState *from, QTestState *to,
+         args->postcopy_data = NULL;
+     }
+ 
+-    test_migrate_end(from, to, true);
++    migrate_end(from, to, true);
+ }
+ 
+ static void test_postcopy_common(MigrateCommon *args)
+@@ -1635,12 +1635,12 @@ static void test_baddest(void)
+     };
+     QTestState *from, *to;
+ 
+-    if (test_migrate_start(&from, &to, "tcp:127.0.0.1:0", &args)) {
++    if (migrate_start(&from, &to, "tcp:127.0.0.1:0", &args)) {
+         return;
+     }
+     migrate_qmp(from, to, "tcp:127.0.0.1:0", NULL, "{}");
+     wait_for_migration_fail(from, false);
+-    test_migrate_end(from, to, false);
++    migrate_end(from, to, false);
+ }
+ 
+ #ifndef _WIN32
+@@ -1661,7 +1661,7 @@ static void test_analyze_script(void)
+     }
+ 
+     /* dummy url */
+-    if (test_migrate_start(&from, &to, "tcp:127.0.0.1:0", &args)) {
++    if (migrate_start(&from, &to, "tcp:127.0.0.1:0", &args)) {
+         return;
+     }
+ 
+@@ -1693,7 +1693,7 @@ static void test_analyze_script(void)
+         g_test_message("Failed to analyze the migration stream");
+         g_test_fail();
+     }
+-    test_migrate_end(from, to, false);
++    migrate_end(from, to, false);
+     cleanup("migfile");
+ }
+ #endif
+@@ -1703,7 +1703,7 @@ static void test_precopy_common(MigrateCommon *args)
+     QTestState *from, *to;
+     void *data_hook = NULL;
+ 
+-    if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
++    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+     }
+ 
+@@ -1798,7 +1798,7 @@ finish:
+         args->end_hook(from, to, data_hook);
+     }
+ 
+-    test_migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
++    migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
+ }
+ 
+ static void file_dirty_offset_region(void)
+@@ -1839,7 +1839,7 @@ static void test_file_common(MigrateCommon *args, bool stop_src)
+     void *data_hook = NULL;
+     bool check_offset = false;
+ 
+-    if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
++    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+     }
+ 
+@@ -1903,7 +1903,7 @@ finish:
+         args->end_hook(from, to, data_hook);
+     }
+ 
+-    test_migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
++    migrate_end(from, to, args->result == MIG_TEST_SUCCEED);
+ }
+ 
+ static void test_precopy_unix_plain(void)
+@@ -2024,7 +2024,7 @@ static void test_ignore_shared(void)
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+ 
+-    if (test_migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
++    if (migrate_start(&from, &to, uri, false, true, NULL, NULL)) {
+         return;
+     }
+ 
+@@ -2051,7 +2051,7 @@ static void test_ignore_shared(void)
+     /* Check whether shared RAM has been really skipped */
+     g_assert_cmpint(read_ram_property_int(from, "transferred"), <, 1024 * 1024);
+ 
+-    test_migrate_end(from, to, true);
++    migrate_end(from, to, true);
+ }
+ #endif
+ 
+@@ -2600,7 +2600,7 @@ static void migrate_hook_end_fd(QTestState *from,
+     qobject_unref(rsp);
+ }
+ 
+-static void test_migrate_precopy_fd_socket(void)
++static void test_precopy_fd_socket(void)
+ {
+     MigrateCommon args = {
+         .listen_uri = "defer",
+@@ -2639,7 +2639,7 @@ static void *migrate_hook_start_precopy_fd_file(QTestState *from, QTestState *to
+     return NULL;
+ }
+ 
+-static void test_migrate_precopy_fd_file(void)
++static void test_precopy_fd_file(void)
+ {
+     MigrateCommon args = {
+         .listen_uri = "defer",
+@@ -2656,7 +2656,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+ 
+-    if (test_migrate_start(&from, &to, uri, args)) {
++    if (migrate_start(&from, &to, uri, args)) {
+         return;
+     }
+ 
+@@ -2680,7 +2680,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+         wait_for_migration_complete(from);
+     }
+ 
+-    test_migrate_end(from, to, false);
++    migrate_end(from, to, false);
+ }
+ 
+ static void test_validate_uuid(void)
+@@ -2728,7 +2728,7 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+ {
+     QTestState *from, *to;
+ 
+-    if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
++    if (migrate_start(&from, &to, args->listen_uri, &args->start)) {
+         return;
+     }
+ 
+@@ -2740,7 +2740,7 @@ static void do_test_validate_uri_channel(MigrateCommon *args)
+      * starts.
+      */
+     migrate_qmp_fail(from, args->connect_uri, args->connect_channels, "{}");
+-    test_migrate_end(from, to, false);
++    migrate_end(from, to, false);
+ }
+ 
+ static void test_validate_uri_channels_both_set(void)
+@@ -2788,7 +2788,7 @@ static void test_validate_uri_channels_none_set(void)
+  * To make things even worse, we need to run the initial stage at
+  * 3MB/s so we enter autoconverge even when host is (over)loaded.
   */
+-static void test_migrate_auto_converge(void)
++static void test_auto_converge(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     MigrateStart args = {};
+@@ -2804,7 +2804,7 @@ static void test_migrate_auto_converge(void)
+     uint64_t prev_dirty_sync_cnt, dirty_sync_cnt;
+     int max_try_count, hit = 0;
  
--#ifndef MIGRATION_HELPERS_H
--#define MIGRATION_HELPERS_H
-+#ifndef MIGRATION_UTIL_H
-+#define MIGRATION_UTIL_H
+-    if (test_migrate_start(&from, &to, uri, &args)) {
++    if (migrate_start(&from, &to, uri, &args)) {
+         return;
+     }
  
- #include "libqtest.h"
+@@ -2888,7 +2888,7 @@ static void test_migrate_auto_converge(void)
+     wait_for_serial("dest_serial");
+     wait_for_migration_complete(from);
  
-@@ -51,4 +51,4 @@ void migration_test_add(const char *path, void (*fn)(void));
- char *migrate_get_connect_uri(QTestState *who);
- void migrate_set_ports(QTestState *to, QList *channel_list);
+-    test_migrate_end(from, to, true);
++    migrate_end(from, to, true);
+ }
  
--#endif /* MIGRATION_HELPERS_H */
-+#endif /* MIGRATION_UTIL_H */
-diff --git a/tests/qtest/virtio-net-failover.c b/tests/qtest/virtio-net-failover.c
-index 28a6147d9a..08365ffa11 100644
---- a/tests/qtest/virtio-net-failover.c
-+++ b/tests/qtest/virtio-net-failover.c
-@@ -11,8 +11,8 @@
- #include "libqtest.h"
- #include "libqos/pci.h"
- #include "libqos/pci-pc.h"
--#include "migration-helpers.h"
- #include "migration/migration-qmp.h"
-+#include "migration/migration-util.h"
- #include "qapi/qmp/qdict.h"
- #include "qapi/qmp/qlist.h"
- #include "qapi/qmp/qjson.h"
+ static void *
+@@ -3279,7 +3279,7 @@ static void test_multifd_tcp_cancel(void)
+     };
+     QTestState *from, *to, *to2;
+ 
+-    if (test_migrate_start(&from, &to, "defer", &args)) {
++    if (migrate_start(&from, &to, "defer", &args)) {
+         return;
+     }
+ 
+@@ -3311,7 +3311,7 @@ static void test_multifd_tcp_cancel(void)
+ 
+     /*
+      * Ensure the source QEMU finishes its cancellation process before we
+-     * proceed with the setup of the next migration. The test_migrate_start()
++     * proceed with the setup of the next migration. The migrate_start()
+      * function and others might want to interact with the source in a way that
+      * is not possible while the migration is not canceled properly. For
+      * example, setting migration capabilities when the migration is still
+@@ -3323,7 +3323,7 @@ static void test_multifd_tcp_cancel(void)
+         .only_target = true,
+     };
+ 
+-    if (test_migrate_start(&from, &to2, "defer", &args)) {
++    if (migrate_start(&from, &to2, "defer", &args)) {
+         return;
+     }
+ 
+@@ -3347,7 +3347,7 @@ static void test_multifd_tcp_cancel(void)
+ 
+     wait_for_serial("dest_serial");
+     wait_for_migration_complete(from);
+-    test_migrate_end(from, to2, true);
++    migrate_end(from, to2, true);
+ }
+ 
+ static void calc_dirty_rate(QTestState *who, uint64_t calc_time)
+@@ -3633,7 +3633,7 @@ static void migrate_dirty_limit_wait_showup(QTestState *from,
+  * And see if dirty limit migration works correctly.
+  * This test case involves many passes, so it runs in slow mode only.
+  */
+-static void test_migrate_dirty_limit(void)
++static void test_dirty_limit(void)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+@@ -3664,7 +3664,7 @@ static void test_migrate_dirty_limit(void)
+     };
+ 
+     /* Start src, dst vm */
+-    if (test_migrate_start(&from, &to, args.listen_uri, &args.start)) {
++    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
+         return;
+     }
+ 
+@@ -3710,7 +3710,7 @@ static void test_migrate_dirty_limit(void)
+     };
+ 
+     /* Restart dst vm, src vm already show up so we needn't wait anymore */
+-    if (test_migrate_start(&from, &to, args.listen_uri, &args.start)) {
++    if (migrate_start(&from, &to, args.listen_uri, &args.start)) {
+         return;
+     }
+ 
+@@ -3754,7 +3754,7 @@ static void test_migrate_dirty_limit(void)
+     wait_for_serial("dest_serial");
+     wait_for_migration_complete(from);
+ 
+-    test_migrate_end(from, to, true);
++    migrate_end(from, to, true);
+ }
+ 
+ static bool kvm_dirty_ring_supported(void)
+@@ -3957,9 +3957,9 @@ int main(int argc, char **argv)
+     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
+ #ifndef _WIN32
+     migration_test_add("/migration/precopy/fd/tcp",
+-                       test_migrate_precopy_fd_socket);
++                       test_precopy_fd_socket);
+     migration_test_add("/migration/precopy/fd/file",
+-                       test_migrate_precopy_fd_file);
++                       test_precopy_fd_file);
+ #endif
+     migration_test_add("/migration/validate_uuid", test_validate_uuid);
+     migration_test_add("/migration/validate_uuid_error",
+@@ -3977,11 +3977,11 @@ int main(int argc, char **argv)
+      */
+     if (g_test_slow()) {
+         migration_test_add("/migration/auto_converge",
+-                           test_migrate_auto_converge);
++                           test_auto_converge);
+         if (g_str_equal(arch, "x86_64") &&
+             has_kvm && kvm_dirty_ring_supported()) {
+             migration_test_add("/migration/dirty_limit",
+-                               test_migrate_dirty_limit);
++                               test_dirty_limit);
+         }
+     }
+     migration_test_add("/migration/multifd/tcp/uri/plain/none",
 -- 
 2.35.3
 
