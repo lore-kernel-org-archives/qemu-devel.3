@@ -4,62 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66AECE77182
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:21:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D62AE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 15:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkuy-0004n1-18; Thu, 12 Dec 2024 10:15:57 -0500
+	id 1tLkpr-0004Ib-9J; Thu, 12 Dec 2024 10:10:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktx-0003hl-9u; Thu, 12 Dec 2024 10:14:56 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktt-0003hv-LQ; Thu, 12 Dec 2024 10:14:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=yovBj1qlakfYrQHjfPcke/rhqmtrlh6vU+RcUZL1nn8=; b=wodgdZ71QOBiUS789AuGqyWVg/
- PGhrFUUUhrGuxWcGGih/WpOqAWEATHrf8t1kMm3mDR1n88CbtYw1xjX2soysoWmDM5LSvMI7E8wYY
- P5jCATVEjIkAfORn8Zn5xItALBERtA6KsnGsDdhnfx1ZekgksrzPlwQBxAg4NXx4gMAzQ5IYNILIR
- 2Z95W+bRZ5N0OH3FHKoUGkp21GImfO2318l+BZuUkNnhyXhIBVuSW1kHUWMePMEvPdBv5iJrb7KQX
- OBP5GFMhZfpHk8V+d1iqU8f53gzjiJRJTqzFo/7SfAGtW5FIMA5TtBAMLJBRFLtMOynOstQngW9zj
- pDPAuS8QLA/34e2pnEuA9zq3j+lcQXA016XAenl0OZoJ+p9XjJBongUsDrOw41bo6sfoWMcsJdbDs
- 9dqlQxCN44C1vaHZw8R0p/KyqPUNJA0P7ukMcvRO45jwK+kkimleYYKzQz8PYexKtrbkxVu1OH/6A
- 0Y4Z5M3xSj3SyfrV/jDheyjeoiiuEe/HWVCRQeg4VChLjtGugEMLMXDwr8gGNBY9cwlZukpcvQoB2
- 7/Rw1arDfXc9DVpzIvpG02GFC4Vu8yek9WuqdxcFIyujQRy3x3o3eruSbw/mBigfzaKHLwL3y/8wI
- r8oOh0Nn6AUE1NOPAR6cbIoCfCrYak4zqcuPh2J18=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLktH-0008Ue-Oq; Thu, 12 Dec 2024 15:14:16 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: npiggin@gmail.com, danielhb413@gmail.com, qemu-ppc@nongnu.org,
- qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 15:14:07 +0000
-Message-Id: <20241212151412.570454-7-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
-References: <20241212151412.570454-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpg-00047Q-Or
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:28 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tLkpf-0003Fg-0q
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 10:10:28 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id CEC5D1F445;
+ Thu, 12 Dec 2024 15:10:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
+ b=Bv0df+xFQGflne1Cd1gcujorah3L0JdbFZE2EnTc6/aqSumVGyXR2VjhbbP2Y358PpAK//
+ 9u8CTZ1BfLpPXxNAqCr6MOkNOuNfW0QkAaANFGPQAFMxDfGrGwjV1nfkozeSwSOXdCFn+H
+ PyYLc5KuFe5fYS8hy+lhryHhsWM+/zs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016225;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
+ b=3Ay5ySmSJtIwPCE5no4LAEzH/AU5h08EoudAU+i/m2/0nDtIhNm/DF5tYRj2QG7VzHuGsH
+ vVqvMWEKiuST4QCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734016225; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
+ b=Bv0df+xFQGflne1Cd1gcujorah3L0JdbFZE2EnTc6/aqSumVGyXR2VjhbbP2Y358PpAK//
+ 9u8CTZ1BfLpPXxNAqCr6MOkNOuNfW0QkAaANFGPQAFMxDfGrGwjV1nfkozeSwSOXdCFn+H
+ PyYLc5KuFe5fYS8hy+lhryHhsWM+/zs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734016225;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJE1LSy//4E6nj5PqdAocp6G5jF9xMdurUACUC8K+C4=;
+ b=3Ay5ySmSJtIwPCE5no4LAEzH/AU5h08EoudAU+i/m2/0nDtIhNm/DF5tYRj2QG7VzHuGsH
+ vVqvMWEKiuST4QCQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A3AE613508;
+ Thu, 12 Dec 2024 15:10:24 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id CC/YGOD8WmcTfQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Dec 2024 15:10:24 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PULL 20/22] tests/qtest/migration: Split CPR tests
+Date: Thu, 12 Dec 2024 12:09:47 -0300
+Message-Id: <20241212150949.16806-21-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241212150949.16806-1-farosas@suse.de>
+References: <20241212150949.16806-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [RFC PATCH 06/11] target/ppc: introduce gen_addr_swizzle_le() function
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
+ RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -76,67 +119,167 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This function is used to swizzle the address lines to implement little endian
-accesses as used by older CPUs. Add the address line swizzle to the gen_ld_tl()
-and gen_st_tl() functions.
+Move the mode/reboot test into a separate file to hold all the CPR
+tests. Currently there's just one test, but we're adding more CPR
+modes and the feature is different enough from live migration that
+it's worth it to have a separate file for it.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- target/ppc/translate.c | 26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ tests/qtest/meson.build           |  1 +
+ tests/qtest/migration-test.c      | 34 +-----------------
+ tests/qtest/migration/cpr-tests.c | 58 +++++++++++++++++++++++++++++++
+ tests/qtest/migration/framework.h |  1 +
+ 4 files changed, 61 insertions(+), 33 deletions(-)
+ create mode 100644 tests/qtest/migration/cpr-tests.c
 
-diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-index 1211435039..ddc0f85fb7 100644
---- a/target/ppc/translate.c
-+++ b/target/ppc/translate.c
-@@ -2561,6 +2561,24 @@ static TCGv do_ea_calc(DisasContext *ctx, int ra, TCGv displ)
-     return ea;
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index fc38c80b43..cda1a84122 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -338,6 +338,7 @@ migration_files = [files(
+   'migration/migration-qmp.c',
+   'migration/migration-util.c',
+   'migration/compression-tests.c',
++  'migration/cpr-tests.c',
+   'migration/file-tests.c',
+   'migration/precopy-tests.c',
+   'migration/postcopy-tests.c',
+diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
+index 76ba820fe4..0d1c8154d7 100644
+--- a/tests/qtest/migration-test.c
++++ b/tests/qtest/migration-test.c
+@@ -145,31 +145,6 @@ static void test_ignore_shared(void)
  }
+ #endif
  
+-static void *migrate_hook_start_mode_reboot(QTestState *from, QTestState *to)
+-{
+-    migrate_set_parameter_str(from, "mode", "cpr-reboot");
+-    migrate_set_parameter_str(to, "mode", "cpr-reboot");
+-
+-    migrate_set_capability(from, "x-ignore-shared", true);
+-    migrate_set_capability(to, "x-ignore-shared", true);
+-
+-    return NULL;
+-}
+-
+-static void test_mode_reboot(void)
+-{
+-    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
+-                                           FILE_TEST_FILENAME);
+-    MigrateCommon args = {
+-        .start.use_shmem = true,
+-        .connect_uri = uri,
+-        .listen_uri = "defer",
+-        .start_hook = migrate_hook_start_mode_reboot,
+-    };
+-
+-    test_file_common(&args, true);
+-}
+-
+ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+ {
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+@@ -308,20 +283,13 @@ int main(int argc, char **argv)
+     migration_test_add_postcopy(env);
+     migration_test_add_file(env);
+     migration_test_add_precopy(env);
++    migration_test_add_cpr(env);
+ 
+     migration_test_add("/migration/bad_dest", test_baddest);
+ #ifndef _WIN32
+     migration_test_add("/migration/analyze-script", test_analyze_script);
+ #endif
+ 
+-    /*
+-     * Our CI system has problems with shared memory.
+-     * Don't run this test until we find a workaround.
+-     */
+-    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
+-        migration_test_add("/migration/mode/reboot", test_mode_reboot);
+-    }
+-
+     /* migration_test_add("/migration/ignore_shared", test_ignore_shared); */
+ 
+     migration_test_add("/migration/validate_uuid", test_validate_uuid);
+diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+new file mode 100644
+index 0000000000..44ce89aa5b
+--- /dev/null
++++ b/tests/qtest/migration/cpr-tests.c
+@@ -0,0 +1,58 @@
 +/*
-+ * Swizzle the address lines for little endian accesses as used by older
-+ * CPUs. The bottom 3 address lines are exlusive-ORed by a constant to
-+ * generate the correct address for a little endian access. For more
-+ * information see https://wiki.preterhuman.net/images/f/fc/Endian.pdf
++ * QTest testcases for CPR
++ *
++ * Copyright (c) 2016-2018 Red Hat, Inc. and/or its affiliates
++ *   based on the vhost-user-test.c that is:
++ *      Copyright (c) 2014 Virtual Open Systems Sarl.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
 + */
-+static inline void gen_addr_swizzle_le(TCGv ret, TCGv addr, MemOp op)
-+{
-+    MemOp size = op & MO_SIZE;
-+    TCGv aoff = tcg_temp_new();
-+    static int c_swizzle[MO_SIZE] = { 0x7, 0x6, 0x4, 0x0 };
 +
-+    tcg_gen_andi_tl(aoff, addr, (1 << size) - 1);
-+    tcg_gen_andi_tl(ret, addr, ~((1 << size) - 1));
-+    tcg_gen_xori_tl(ret, ret, c_swizzle[size]);
-+    tcg_gen_sub_tl(ret, ret, aoff);
++#include "qemu/osdep.h"
++#include "libqtest.h"
++#include "migration/framework.h"
++#include "migration/migration-qmp.h"
++#include "migration/migration-util.h"
++
++
++static char *tmpfs;
++
++static void *migrate_hook_start_mode_reboot(QTestState *from, QTestState *to)
++{
++    migrate_set_parameter_str(from, "mode", "cpr-reboot");
++    migrate_set_parameter_str(to, "mode", "cpr-reboot");
++
++    migrate_set_capability(from, "x-ignore-shared", true);
++    migrate_set_capability(to, "x-ignore-shared", true);
++
++    return NULL;
 +}
 +
- #if defined(TARGET_PPC64)
- /* EA <- (ra == 0) ? 0 : GPR[ra] */
- static TCGv do_ea_calc_ra(DisasContext *ctx, int ra)
-@@ -2586,6 +2604,10 @@ static void gen_ld_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
- {
-     if (!need_addrswizzle_le(ctx)) {
-         tcg_gen_qemu_ld_tl(val, addr, idx, memop);
-+    } else {
-+        TCGv taddr = tcg_temp_new();
-+        gen_addr_swizzle_le(taddr, addr, memop);
-+        tcg_gen_qemu_ld_tl(val, taddr, idx, memop);
-     }
- }
++static void test_mode_reboot(void)
++{
++    g_autofree char *uri = g_strdup_printf("file:%s/%s", tmpfs,
++                                           FILE_TEST_FILENAME);
++    MigrateCommon args = {
++        .start.use_shmem = true,
++        .connect_uri = uri,
++        .listen_uri = "defer",
++        .start_hook = migrate_hook_start_mode_reboot,
++    };
++
++    test_file_common(&args, true);
++}
++
++void migration_test_add_cpr(MigrationTestEnv *env)
++{
++    tmpfs = env->tmpfs;
++
++    /*
++     * Our CI system has problems with shared memory.
++     * Don't run this test until we find a workaround.
++     */
++    if (getenv("QEMU_TEST_FLAKY_TESTS")) {
++        migration_test_add("/migration/mode/reboot", test_mode_reboot);
++    }
++}
+diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+index 52c715781f..b264be76eb 100644
+--- a/tests/qtest/migration/framework.h
++++ b/tests/qtest/migration/framework.h
+@@ -224,5 +224,6 @@ void migration_test_add_compression(MigrationTestEnv *env);
+ void migration_test_add_postcopy(MigrationTestEnv *env);
+ void migration_test_add_file(MigrationTestEnv *env);
+ void migration_test_add_precopy(MigrationTestEnv *env);
++void migration_test_add_cpr(MigrationTestEnv *env);
  
-@@ -2629,6 +2651,10 @@ static void gen_st_tl(DisasContext *ctx, TCGv val, TCGv addr, TCGArg idx,
- {
-     if (!need_addrswizzle_le(ctx)) {
-         tcg_gen_qemu_st_tl(val, addr, idx, memop);
-+    } else {
-+        TCGv taddr = tcg_temp_new();
-+        gen_addr_swizzle_le(taddr, addr, memop);
-+        tcg_gen_qemu_st_tl(val, taddr, idx, memop);
-     }
- }
- 
+ #endif /* TEST_FRAMEWORK_H */
 -- 
-2.39.5
+2.35.3
 
 
