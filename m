@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A8CBE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:57:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3618CE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLmUv-0004cW-6i; Thu, 12 Dec 2024 11:57:09 -0500
+	id 1tLmZg-0006Jo-Aj; Thu, 12 Dec 2024 12:02:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1tLmUk-0004bf-1f
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:56:59 -0500
-Received: from forwardcorp1d.mail.yandex.net
- ([2a02:6b8:c41:1300:1:45:d181:df01])
+ id 1tLmZW-0006CK-Sh
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:01:56 -0500
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1tLmUg-000076-D3
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:56:57 -0500
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:292a:0:640:622b:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id BCAB0609AC;
- Thu, 12 Dec 2024 19:56:48 +0300 (MSK)
+ id 1tLmZS-0000es-SM
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:01:53 -0500
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:a1f:0:640:ba2e:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 9A02B60907;
+ Thu, 12 Dec 2024 20:01:44 +0300 (MSK)
 Received: from [IPV6:2a02:6b8:b081:b585::1:1f] (unknown
  [2a02:6b8:b081:b585::1:1f])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id lur4l60GUeA0-A0aUeVRu; Thu, 12 Dec 2024 19:56:48 +0300
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id g1sVF60IXGk0-oWzT01F1; Thu, 12 Dec 2024 20:01:43 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1734022608;
- bh=iIR1JWFK8ZvoXqwiafYI3+MCNjIehnFcBEX5bo1tRDg=;
+ s=default; t=1734022903;
+ bh=XldXSIFo7NcQimG6dKiDjbBv5MoDHogM0DZ0/QNLzAA=;
  h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=xxZBppg2uzXGc6HZvtzR5lstiz4kzmaX72lQfapYoy4bng0IVWwtCC2LgKSdnBwht
- bKUyu5NzSt1D+vDObKn8ZQRRs/250Ai5BZinuFQLzGizYf2qqNu/ml36BSSHFM1VKM
- ey2pDZXKO+GCGzabO+Ih5rMVWGIPE/jC9TGZRSWw=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ b=LL9sMZyN5IIRFXq8HRTGxE3KER4pQxwDas/LY3DXfY7BR2HZKnazQoFei/BAPPhLm
+ oEArGnvLkH/cZDaQvZx7BX+IiA7DZ4xrxDX9+zjo5WhZ1ESSqcQlbIZe53B62zNQMf
+ dyTYO0C6vseGTbVwS9PqXHBIKP11biJmfZD2qVVo=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
-Message-ID: <3a36f041-de45-4ec2-b656-7e76aa259a98@yandex-team.ru>
-Date: Thu, 12 Dec 2024 19:56:46 +0300
+Message-ID: <6f92a5a5-e3a6-4085-9c72-5e0606d3c4e6@yandex-team.ru>
+Date: Thu, 12 Dec 2024 20:01:42 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] sysemu: introduce a new MlockState enum
+Subject: Re: [PATCH v3 4/4] overcommit: introduce mem-lock=on-fault
 To: Daniil Tatianin <d-tatianin@yandex-team.ru>,
  Paolo Bonzini <pbonzini@redhat.com>
 Cc: Stefan Weil <sw@weilnetz.de>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 References: <20241211230433.1371327-1-d-tatianin@yandex-team.ru>
- <20241211230433.1371327-4-d-tatianin@yandex-team.ru>
+ <20241211230433.1371327-5-d-tatianin@yandex-team.ru>
 Content-Language: en-US
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20241211230433.1371327-4-d-tatianin@yandex-team.ru>
+In-Reply-To: <20241211230433.1371327-5-d-tatianin@yandex-team.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:df01;
+Received-SPF: pass client-ip=178.154.239.200;
  envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -80,11 +81,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12.12.24 02:04, Daniil Tatianin wrote:
-> Replace the boolean value enable_mlock with an enum and add a helper to
-> decide whether we should be calling os_mlock.
-> 
-> This is a stepping stone towards introducing a new mlock mode, which
-> will be the third possible state of this enum.
+> Locking the memory without MCL_ONFAULT instantly prefaults any mmaped
+> anonymous memory with a write-fault, which introduces a lot of extra
+> overhead in terms of memory usage when all you want to do is to prevent
+> kcompactd from migrating and compacting QEMU pages. Add an option to
+> only lock pages lazily as they're faulted by the process by using
+> MCL_ONFAULT if asked.
 > 
 > Signed-off-by: Daniil Tatianin<d-tatianin@yandex-team.ru>
 
