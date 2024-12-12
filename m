@@ -4,89 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD593E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3ACFE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:44:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfis-0000NZ-4F; Thu, 12 Dec 2024 04:43:08 -0500
+	id 1tLfje-0000o5-4Z; Thu, 12 Dec 2024 04:43:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfii-0000N1-PB
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:42:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfjZ-0000ch-Nr
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:43:50 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfih-0002Fw-5g
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:42:56 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfjY-0002Ik-54
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:43:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733996574;
+ s=mimecast20190719; t=1733996627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=QsmpjstP1l7ElGWvQfPFhzpNBgi6McZRHE0Nl99gMoE=;
- b=cS90jDsOidVSzS3hcG7D8G9AD0q5RPMDXNuRV5RSumwuKGnPHCA29Qy0FlZJ9914zs/JFx
- NmQMV/lZAg0+QBeHsH5DBZhOFW2XOr1mYSYWa70/zh9tIzDh/0e/w6D1jey80x03sJd1eU
- Su3xnLWW046HMDfyOHkAHfDq4J/Oxm0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=lePG/YfCij2LG4F15R4WPZFnl4jJNuxyGEl5E1GeKS0=;
+ b=DYGwcnMzVyHl31R+d5PYplnkYuZE98Fka78zCqaiUKawkCUPo2h8ML5DAwoUlDaoSk9Hj2
+ F3FT681rrgPkv/gM8ojar3+GZEcSB65o3cSKt8KY8k4hj6amgzU8iHGsjP6t5ySJZhYjjw
+ zR+pVt2TKu63qxMh6s0HcRIiIS29rvs=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-549-0vKVC2y1NL2Xnbp5GhHRsw-1; Thu, 12 Dec 2024 04:42:52 -0500
-X-MC-Unique: 0vKVC2y1NL2Xnbp5GhHRsw-1
-X-Mimecast-MFC-AGG-ID: 0vKVC2y1NL2Xnbp5GhHRsw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4362153dcd6so2312565e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:42:52 -0800 (PST)
+ us-mta-372-z-WVgXxBOtyjOp4njryDlw-1; Thu, 12 Dec 2024 04:43:45 -0500
+X-MC-Unique: z-WVgXxBOtyjOp4njryDlw-1
+X-Mimecast-MFC-AGG-ID: z-WVgXxBOtyjOp4njryDlw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385d7611ad3so244307f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:43:45 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733996571; x=1734601371;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QsmpjstP1l7ElGWvQfPFhzpNBgi6McZRHE0Nl99gMoE=;
- b=eTZxW6lt0FS9Pvgpnh/+oIzOuvG4oQdTiJ+M0b2+k+8wnD14ZlW56RWRYELseGVwuL
- dKZtKypfdDSR1zGKMZGRdUDMzA3pZKYjWBB/Gjx9KNGytrqjD1DTxkyPRjEDROOYQnwQ
- 1h4/1o67dq/3NVAAACxNrqdRcGi92jW+pAv7dUBRkFUu51JDGi9IbgAmSg7t6lPr9gYY
- cClTVlWR9uWoeQILAc34u14gdmJI/fvKAmHAZqw5QndBSD4aLi03tYfK4vxBU3M7aIDM
- uNK2CJnWdlTUATrY3+dn3edyUk7xjrN4E979W3nytLihmZpjxClPvTJ72rtlFFwu2uMC
- Covg==
+ d=1e100.net; s=20230601; t=1733996624; x=1734601424;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lePG/YfCij2LG4F15R4WPZFnl4jJNuxyGEl5E1GeKS0=;
+ b=vtviOopdbdwgxHLxxeFqPt/EFk/NO5MmXH0W3fzMOu33pllFAPCdGU/+2PthnpAY53
+ B4QXNozqS8O+8CAgM2ggiKGZyz2J/q8X+5rJilWv34w7ndV5GISSztRsXHYgQDJR+4C1
+ 5frU/bwWpUb7vMblrhXB7Dya6/1bNRC+A0SVxJgaiiKZf8TSiumwOqtk0CMwQkkVC8lg
+ 1Fw86AlnvO59OTiSmlPQGhOZnJzcunLwESAR5zgo5NendkL9BXM+n5WgFR7GcKhY9JKP
+ Fae1e7azviN5GDAtthke0VO7Kxf5CHRKaVQhw2Gwjt1vzvXDl1y7vuIlyCyQOAol98Co
+ W7fQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1vzo4U/o2tleN/G5viXxMaHInlrWhP3Z3X3pPmchZyWHYP+RGnqlNze+Zw9tD1BvOAGDuIvT4M6Sh@nongnu.org
-X-Gm-Message-State: AOJu0YxSJQV90oM8+f0YufLQLYWlWWD+AEnzBT3kmmmvBzOLSHZnIKGp
- Y23X8U5TxiXSVtAMKvK1MHlPP0kvam5K0ln39briBMLu8hAtKiFuQDPe2kHhEl6Cq5mpzvHMlSE
- rEleg26W1Das8gIj2D9pxbYCoNl88jwj+80QDv6jvYCJulthi0ZrL
-X-Gm-Gg: ASbGnctF4jizRNgZojhF7pS3UiXc9IrTDy87PG0F4zMIKnVE946hG5OdyLcaGxeEB6L
- bOWntj5dyxtcn5ztp3bzoXGRnXJGNFIv/dM+8iwma5x5AefcC0bc6jCB0wBAAT8a8V3FpTwh+78
- nD6n3Ppxe6L6zAa7e58sDvyPj+vcfevnRkp8GsvzL5qGq22bgkCwNLTb9u02EPB2C95LmVfpbXy
- uM0tmoLLUJPqn2enrcQU9AXH1N0qvBSZNDqsRec/HYkwZbb9Qs+czOMiD9zaJajQVVTpFbD0GXY
- 51EDqw==
-X-Received: by 2002:a05:600c:1e21:b0:434:a468:4a57 with SMTP id
- 5b1f17b1804b1-4361c3e3b37mr42069215e9.26.1733996571315; 
- Thu, 12 Dec 2024 01:42:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF+brnPHDaQuNaIrSRqsnONv0beXcCEfERtGtkfUGqXiW7b1c46ErD4LAY6iTa+b5LIQWTc/g==
-X-Received: by 2002:a05:600c:1e21:b0:434:a468:4a57 with SMTP id
- 5b1f17b1804b1-4361c3e3b37mr42068945e9.26.1733996570822; 
- Thu, 12 Dec 2024 01:42:50 -0800 (PST)
+ AJvYcCXdBI6KL/7qYR0wIcQiZjIkcO/+e9ecAHfie5RZOXUeEpT8ocy+TUEdYnGWVEIXPr9JNx9MYne0mV3p@nongnu.org
+X-Gm-Message-State: AOJu0Yx9WhZY4Eo/ZSQQypdwJczQSJgvptNUy4gnIzXYIOjv7StMdekV
+ xl0gMO6os5I29M+G2Td1rFnzWt1xO/etSZc28mE+kmoCJ+SjBKI8n+lNh5dilYU11cg22PxEwBR
+ gNG65A/KJfRx1YboiIW5BGeHxl24mGVRG0UTleEemAOpz7+o5tw8c
+X-Gm-Gg: ASbGncvzHGZEw9upuIZbNKMsniuE2glkuGvpzOPJ12xhiKMXX0XKcHEWu5OGLpwAKzz
+ 5w88I43BLgoq2q6e0YjEIb9zPzch3BI6pGr+2h/3hBEWLfkssYSeelkQE5ZOlmeD4mEnyB1CtAT
+ +UIe4pSXoC7Gt0O2LFiuD91DZWL9ftosZnLCMNUuWWSnj2FEKN63MxJn/q7sh24Avc9feh62bVM
+ VL7HowKMB3H3K+j79DJPX4mNUTe8ucTyXoGWGBmEWdLBxBHX0VajvbEi3I94qk2BIXgsDfLUsoa
+ IAvUGg==
+X-Received: by 2002:a05:6000:490a:b0:385:f996:1bb9 with SMTP id
+ ffacd0b85a97d-3878768e743mr1965426f8f.23.1733996624488; 
+ Thu, 12 Dec 2024 01:43:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEhLvVIARtKIgCu3m/9Vypqri6Pzcqp2gmcOhQjayBNuSWlRbLURHR0EFOfEakRfVPWJnZYfw==
+X-Received: by 2002:a05:6000:490a:b0:385:f996:1bb9 with SMTP id
+ ffacd0b85a97d-3878768e743mr1965407f8f.23.1733996624159; 
+ Thu, 12 Dec 2024 01:43:44 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436256e0615sm11020125e9.41.2024.12.12.01.42.50
+ ffacd0b85a97d-3878251c3a7sm3462951f8f.94.2024.12.12.01.43.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 01:42:50 -0800 (PST)
-Message-ID: <5b8795ee-910e-4b1d-b185-8f76fcdd9502@redhat.com>
-Date: Thu, 12 Dec 2024 10:42:49 +0100
+ Thu, 12 Dec 2024 01:43:43 -0800 (PST)
+Message-ID: <a1deb3cf-89cf-4018-99e4-02b92d20c913@redhat.com>
+Date: Thu, 12 Dec 2024 10:43:43 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/31] tests/functional: switch over to using
- self.build_file(...)
+Subject: Re: [PATCH v2 17/31] tests/functional: move uncompress handling into
+ new uncompress.py file
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>
 References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-12-berrange@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
+ <20241211172648.2893097-18-berrange@redhat.com>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -129,10 +129,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-12-berrange@redhat.com>
+In-Reply-To: <20241211172648.2893097-18-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -158,50 +158,110 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> This removes direct access of the 'BUILD_DIR' variable.
+> More uncompress related code will be added shortly, so having a
+> separate file makes more sense.
 > 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> The utils.py imports the functions from archive.py, so that
+> existing callers don't need to be modified. This avoids
+> redundant code churn until later in the series when all
+> calls will be adapted for other reasons.
+> 
 > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 > ---
-...
-> diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
-> index 7654421e6b..630569bff8 100755
-> --- a/tests/functional/test_virtio_gpu.py
-> +++ b/tests/functional/test_virtio_gpu.py
-> @@ -6,7 +6,6 @@
+>   tests/functional/qemu_test/uncompress.py | 36 ++++++++++++++++++++++++
+>   tests/functional/qemu_test/utils.py      | 27 ++----------------
+>   2 files changed, 38 insertions(+), 25 deletions(-)
+>   create mode 100644 tests/functional/qemu_test/uncompress.py
+> 
+> diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+> new file mode 100644
+> index 0000000000..955170df65
+> --- /dev/null
+> +++ b/tests/functional/qemu_test/uncompress.py
+> @@ -0,0 +1,36 @@
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +#
+> +# Utilities for python-based QEMU tests
+> +#
+> +# Copyright 2024 Red Hat, Inc.
+> +#
+> +# Authors:
+> +#  Thomas Huth <thuth@redhat.com>
+> +
+> +import gzip
+> +import lzma
+> +import os
+> +import shutil
+> +
+> +
+> +def gzip_uncompress(gz_path, output_path):
+> +    if os.path.exists(output_path):
+> +        return
+> +    with gzip.open(gz_path, 'rb') as gz_in:
+> +        try:
+> +            with open(output_path, 'wb') as raw_out:
+> +                shutil.copyfileobj(gz_in, raw_out)
+> +        except:
+> +            os.remove(output_path)
+> +            raise
+> +
+> +def lzma_uncompress(xz_path, output_path):
+> +    if os.path.exists(output_path):
+> +        return
+> +    with lzma.open(xz_path, 'rb') as lzma_in:
+> +        try:
+> +            with open(output_path, 'wb') as raw_out:
+> +                shutil.copyfileobj(lzma_in, raw_out)
+> +        except:
+> +            os.remove(output_path)
+> +            raise
+> diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
+> index 5ce1c4388e..6b87af4414 100644
+> --- a/tests/functional/qemu_test/utils.py
+> +++ b/tests/functional/qemu_test/utils.py
+> @@ -8,13 +8,12 @@
+>   # This work is licensed under the terms of the GNU GPL, version 2 or
 >   # later.  See the COPYING file in the top-level directory.
 >   
+> -import gzip
+> -import lzma
+>   import os
+> -import shutil
 >   
-> -from qemu_test import BUILD_DIR
->   from qemu_test import QemuSystemTest, Asset
->   from qemu_test import wait_for_console_pattern
->   from qemu_test import exec_command_and_wait_for_pattern
-> @@ -18,12 +17,8 @@
->   import subprocess
+>   from .archive import tar_extract as archive_extract
+>   from .archive import cpio_extract
+> +from .uncompress import gzip_uncompress
+> +from .uncompress import lzma_uncompress
 >   
->   
-> -def pick_default_vug_bin():
-> -    relative_path = "./contrib/vhost-user-gpu/vhost-user-gpu"
-> -    if is_readable_executable_file(relative_path):
-> -        return relative_path
+>   """
+>   Round up to next power of 2
+> @@ -36,25 +35,3 @@ def image_pow2ceil_expand(path):
+>           if size != size_aligned:
+>               with open(path, 'ab+') as fd:
+>                   fd.truncate(size_aligned)
 > -
-> -    bld_dir_path = os.path.join(BUILD_DIR, relative_path)
-> +def pick_default_vug_bin(test):
-> +    bld_dir_path = test.build_file(relative_path)
->       if is_readable_executable_file(bld_dir_path):
->           return bld_dir_path
+> -def gzip_uncompress(gz_path, output_path):
+> -    if os.path.exists(output_path):
+> -        return
+> -    with gzip.open(gz_path, 'rb') as gz_in:
+> -        try:
+> -            with open(output_path, 'wb') as raw_out:
+> -                shutil.copyfileobj(gz_in, raw_out)
+> -        except:
+> -            os.remove(output_path)
+> -            raise
+> -
+> -def lzma_uncompress(xz_path, output_path):
+> -    if os.path.exists(output_path):
+> -        return
+> -    with lzma.open(xz_path, 'rb') as lzma_in:
+> -        try:
+> -            with open(output_path, 'wb') as raw_out:
+> -                shutil.copyfileobj(lzma_in, raw_out)
+> -        except:
+> -            os.remove(output_path)
+> -            raise
 
-FYI, while testing, I noticed that this is failing now:
-
-Traceback (most recent call last):
-   File ".../tests/functional/test_virtio_gpu.py", line 84, in test_vhost_user_vga_virgl
-     vug = pick_default_vug_bin(self)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-   File ".../tests/functional/test_virtio_gpu.py", line 21, in pick_default_vug_bin
-     bld_dir_path = test.build_file(relative_path)
-                                    ^^^^^^^^^^^^^
-NameError: name 'relative_path' is not defined
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
