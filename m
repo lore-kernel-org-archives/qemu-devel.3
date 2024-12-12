@@ -4,86 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B27CE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:45:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A886BE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 14:45:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLkQl-0007ou-Ks; Thu, 12 Dec 2024 09:44:43 -0500
+	id 1tLkRT-00006y-Eh; Thu, 12 Dec 2024 09:45:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkQk-0007od-DM
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:44:42 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLkQi-0004DW-8D
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:44:42 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4361a50e337so5041035e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:44:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734014678; x=1734619478; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Qp4hT6KANxF5mFm0n9MmO+6Us3wInf0FaD8+gtby53Q=;
- b=LqUp9Tkm2BWPVAqM4wuaekHbcpWBpCJMNOBZ3ffMXxcXPr1Kd+2aP3PImUPW6cqZTT
- NJN1eHdriQ1XXZGY3rf6wUYr8OgJizJV8p1RzK2KBudaV4UisTV2w6js0TS3eCf7bb0c
- KkrJOKi+4boX/nyQP4LLoP+V8MoXyfnkhjbMd2jEtOHbQi39uG1A0dfF/B6UIAk4WCQ/
- mlDurHE+oMtqw4BALDbaB6IzFA+bd1/THYrB114tWKPgGobj+9/YyuVptWJi2DvHW7x8
- jo3oA9bTOWqj7VZKGsNkJyJ3218X62oERdPHyvcl34EDB2uEkWXe8Bdvb4bwlb2McZKl
- GrDw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLkRR-0008UI-Rq
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:45:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLkRN-0004Sf-7W
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 09:45:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734014718;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oKaCihk9UQ4tddycHJ1zxQPzvGSomyjFd6ar/iBmvgU=;
+ b=b5mFTpGhtEQT9WgFvX5OySI+eIMkx9md/p5+Gv4wkEPPwih5ulF9a5fR7uiZBbYPMJ3k4M
+ d5CVrIFDZF4eWmg4r9QfZAYJWZgFqzwYo8vIwzz8Q6+7ynqUZMWs+XUSTksiD8A2g80izK
+ cziun0XznQlDaQma2bf+fumWiWjlecs=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-442-q2D2c6dDNV-8przlxqjSzA-1; Thu, 12 Dec 2024 09:45:17 -0500
+X-MC-Unique: q2D2c6dDNV-8przlxqjSzA-1
+X-Mimecast-MFC-AGG-ID: q2D2c6dDNV-8przlxqjSzA
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4679db55860so9951631cf.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 06:45:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734014678; x=1734619478;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Qp4hT6KANxF5mFm0n9MmO+6Us3wInf0FaD8+gtby53Q=;
- b=E0zdOhWY5/TcfY+HE56kqc4wNGYKHVCyoCbSmjCuVUEisgCRUzDAwzI4OtyvEzUzdW
- PA7nEdZ5vL3AKZ4IH7vMU9x/xoNammw0XDGklnd4jU/4hlarVLQIpNmKWljzjo6YVpFQ
- H1n5d3hpleQpgnxJ9C+G8lIp+PoLs3cIqgGFe5fmTx6movuy3Ccm9tN+yRQpr13LgumF
- wJu3AHbXnB28eHl8gxtk4Olr456m/XMi5osIr4AMhmEs8fdpijBbuJkXEad00e2fhMQO
- fzE6rrxbm8OuG+4XMV7GhBFbVHOzigwyrAs1w2gbMwL9M19RwR+5By7Z+2i4m1gY/WQB
- cFCQ==
-X-Gm-Message-State: AOJu0Yyc335a7GrseDhYtb2qESFhlMZvKDlXA0Y0xdVTl6/32+brecGM
- X//30v5aocmP0S5Rikn9lDU8ssxN+9xPhgK223CgC2z+PSG4PfOuEwYyj+yrfa8un9BAkdHGMUl
- W
-X-Gm-Gg: ASbGncubTzwXdV60JQUrnBtFatSXDcSP5TC5DWzQmqU99m0gCON8YO5Ct7bF8uxey1u
- YaLEtrUTZPVaK0Wq3HaxdsL4M4MU7I/qjPC+VtP1SSSeJMAPH10kq/x9Wl5yt/UzUDKRax2BJ+L
- tjNiVoR2RFUM4RqzQQLrYSNEY+BCJ62mZJdpI1YWuUJLRtBYGGjXacgBItbDlei1MMZNV59eyk4
- tpE1N4pmK1nHIbeo76FNPsGHzUnepKavyfSgabItRUkCb+MROXxbX1MBXf59hg/PeU8CR3skpFj
- xXHuA0hdz3X8gAiOSDsZMVs7++U5kKc=
-X-Google-Smtp-Source: AGHT+IFh/YaZ++JtIjDPk2cfA3YL/zyL8e1m63PpvjniXfw0rBm+zZcWTFGrg6yP/b3zhLIUhHgRkg==
-X-Received: by 2002:a05:600c:1c14:b0:434:ff9d:a3a1 with SMTP id
- 5b1f17b1804b1-4361c396c09mr59484235e9.2.1734014677700; 
- Thu, 12 Dec 2024 06:44:37 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514e86sm4274742f8f.72.2024.12.12.06.44.36
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 06:44:36 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] accel/tcg: Move tcg_cflags_has/set() to
- 'exec/translation-block.h'
-Date: Thu, 12 Dec 2024 15:44:29 +0100
-Message-ID: <20241212144430.66224-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241212144430.66224-1-philmd@linaro.org>
-References: <20241212144430.66224-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1734014715; x=1734619515;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oKaCihk9UQ4tddycHJ1zxQPzvGSomyjFd6ar/iBmvgU=;
+ b=glCoI0bu7K26K3g3t9qAdyo9b4SB1aqpkljp2Wd0h2pXucIB2c4zfe3Fb7mZxxcIi4
+ VwyhYaDEBDgpWYlALDGhuvGdiR4CakN9OWdFtBShTwUg4l8zlayGkKCccZo6wILSMt8g
+ 8kQuVXabNt+9zVC/SniysdJXwfHb6jg4ZN5+BtdFGrcq+RhzDks/pWDm9VSlwdbEBFNx
+ XPkrOmh1bhnMFPSuyEk/0Tx4Hw+VyZvIsAiQ0sIXbn5kIWKL2rA9DBNXfjV57ONJYAkM
+ 7o3ZYWAUXWE6sSn0NcHVqgn9i1Asmr2sU/NqlINa3wbjHI4LEDTIDW3jk9SXabi/1LCd
+ 0PSQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAj7nHQz0aFaBWdO17ehLQD3LH3hT/9AD97fkFXNYLfKLVQG5xuE8n7O9mglNoqid+IwNZJR51eptV@nongnu.org
+X-Gm-Message-State: AOJu0YwErsNEXLc4TEd4J52HuZdgnn71arLB5gjZzR5/iyPdWDamH+kY
+ PaKbQWH5Cu0pRodHO1YmKY8sPrNxjdhWesMJTTNhIjGiQM2fawLtF4iknppJkkqpZApcNGT4Kgx
+ OvyVmBZKHFXefHJeQPcUjHW16jo8+ge1e0tHnpjOCdqX71wN1cWwF
+X-Gm-Gg: ASbGncuR15/ItvxkGdsGDyhHV2kwv5cxZdzdnCOSCNYx4eJkplqBE2FFb/iAzCiTH9E
+ QiCGFGnMU09v+IRIvUt3GAxccuHwKGR++j9Zt6UV+B0eXVF1Fhapq1XCBdXfSzF9aXJ/AoTrsyx
+ XBExTWT6rucTNou7jkwI+AhU4yhH491SBLOCIhSxqHaMGN0Y0d9BO16ifcDtBMr2qeKSdvGb0QM
+ PolJ/PzIEyBJh07eiLTxhggrBluZ8ypiDZrgvtoXaHFHX3MHzfauaW7SshnluNcLRcjSNUtDATM
+ XXtmwicyX+vMS2vArg==
+X-Received: by 2002:ac8:7f0a:0:b0:467:63fb:68d7 with SMTP id
+ d75a77b69052e-467a16e8f98mr9154061cf.50.1734014715528; 
+ Thu, 12 Dec 2024 06:45:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHYKpgMJMSWzP9Tg+uGgtsOkAeiE+XmJ6XRDmI2wIMwn0HdJxms7NlLelqlZ+xF+ycXkYDQnQ==
+X-Received: by 2002:ac8:7f0a:0:b0:467:63fb:68d7 with SMTP id
+ d75a77b69052e-467a16e8f98mr9153471cf.50.1734014715113; 
+ Thu, 12 Dec 2024 06:45:15 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4677fd42b1csm27757851cf.82.2024.12.12.06.45.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 06:45:14 -0800 (PST)
+Date: Thu, 12 Dec 2024 09:45:12 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Maxim Levitsky <mlevitsk@redhat.com>, s_sourceforge@nedprod.com
+Subject: Re: [PATCH 0/3] scripts/qemu-gdb: Make coroutine dumps to work with
+ coredumps
+Message-ID: <Z1r2-MPZ5sZZ8Qpf@x1n>
+References: <20241211201739.1380222-1-peterx@redhat.com>
+ <87pllyezmh.fsf@suse.de> <Z1oGrWlUaB5O3n5X@x1n>
+ <Z1q65CpTxqRtMes_@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z1q65CpTxqRtMes_@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,323 +113,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TranslationBlock flags are defined in 'exec/translation-block.h'.
-tcg_cflags_has/set() and curr_cflags() use them, it is more logical
-to declare them in the same place. Move them there too.
+On Thu, Dec 12, 2024 at 11:28:52AM +0100, Kevin Wolf wrote:
+> Am 11.12.2024 um 22:39 hat Peter Xu geschrieben:
+> > On Wed, Dec 11, 2024 at 05:25:10PM -0300, Fabiano Rosas wrote:
+> > > Peter Xu <peterx@redhat.com> writes:
+> > > 
+> > > > Coroutines are used in many cases in block layers. It's also used in live
+> > > > migration when on destination side, and it'll be handy to diagnose crashes
+> > > > within a coroutine when we want to also know what other coroutines are
+> > > > doing.
+> > > 
+> > > Not sure if you've seen this message on the list:
+> > > 
+> > > https://lore.kernel.org/r/f0ebccca-7a17-4da8-ac4a-71cf6d69abc3@mtasv.net
+> 
+> Let me add Niall to this thread.
+> 
+> > No I didn't.  I only started looking at this because I got a bug a few days
+> > ago that I need to look at the main coroutine where dest crashed, then
+> > Stefan told me this script and also told me it only works with live session.
+> > Ideally I'll need coredump debug-ability, then I figured it isn't too hard.
+> 
+> I agree this is useful at least in the current state of things, and
+> possibly in the future for QEMUs built without support for new gdb
+> magic.
+> 
+> > I saw that it didn't yet land gdb, and it's much more involved even if it
+> > could be more generic.  Not sure how the block developers think, personally
+> > I prefer this much smaller change because it works on old systems, where I
+> > can easily install gdb with package managers.
+> 
+> I don't think this is a question of preferring one or the other! Your
+> simple change works today with existing QEMU builds and has fewer
+> requirements, but it's also more limited in functionality.
 
-Suggested-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/exec/cpu-common.h               | 6 ------
- include/exec/translation-block.h        | 6 ++++++
- accel/tcg/cpu-exec.c                    | 1 +
- accel/tcg/tcg-accel-ops.c               | 1 +
- accel/tcg/watchpoint.c                  | 1 +
- linux-user/mmap.c                       | 1 +
- linux-user/syscall.c                    | 1 +
- target/arm/cpu.c                        | 1 +
- target/avr/cpu.c                        | 1 +
- target/hexagon/cpu.c                    | 1 +
- target/hppa/cpu.c                       | 1 +
- target/i386/cpu.c                       | 1 +
- target/i386/helper.c                    | 1 +
- target/loongarch/cpu.c                  | 1 +
- target/microblaze/cpu.c                 | 1 +
- target/mips/tcg/exception.c             | 1 +
- target/mips/tcg/sysemu/special_helper.c | 1 +
- target/openrisc/cpu.c                   | 1 +
- target/riscv/tcg/tcg-cpu.c              | 1 +
- target/rx/cpu.c                         | 1 +
- target/sh4/cpu.c                        | 1 +
- target/sparc/cpu.c                      | 1 +
- target/tricore/cpu.c                    | 1 +
- 23 files changed, 27 insertions(+), 6 deletions(-)
+Ah, definitely..
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 638dc806a5f..bdeb9d68f32 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -187,12 +187,6 @@ void list_cpus(void);
- 
- #ifdef CONFIG_TCG
- 
--bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
--void tcg_cflags_set(CPUState *cpu, uint32_t flags);
--
--/* current cflags for hashing/comparison */
--uint32_t curr_cflags(CPUState *cpu);
--
- /**
-  * cpu_unwind_state_data:
-  * @cpu: the cpu context
-diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
-index b99afb00779..c1e48a48aab 100644
---- a/include/exec/translation-block.h
-+++ b/include/exec/translation-block.h
-@@ -153,4 +153,10 @@ static inline uint32_t tb_cflags(const TranslationBlock *tb)
-     return qatomic_read(&tb->cflags);
- }
- 
-+bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
-+void tcg_cflags_set(CPUState *cpu, uint32_t flags);
-+
-+/* current cflags for hashing/comparison */
-+uint32_t curr_cflags(CPUState *cpu);
-+
- #endif /* EXEC_TRANSLATION_BLOCK_H */
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index c13f4a7cbbf..91e742933fa 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -25,6 +25,7 @@
- #include "trace.h"
- #include "disas/disas.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "tcg/tcg.h"
- #include "qemu/atomic.h"
- #include "qemu/rcu.h"
-diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
-index d9a35b7667c..6e3f1fa92b2 100644
---- a/accel/tcg/tcg-accel-ops.c
-+++ b/accel/tcg/tcg-accel-ops.c
-@@ -35,6 +35,7 @@
- #include "exec/exec-all.h"
- #include "exec/hwaddr.h"
- #include "exec/tb-flush.h"
-+#include "exec/translation-block.h"
- #include "gdbstub/enums.h"
- 
- #include "hw/core/cpu.h"
-diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
-index ca641eb95cf..facff4175a8 100644
---- a/accel/tcg/watchpoint.c
-+++ b/accel/tcg/watchpoint.c
-@@ -22,6 +22,7 @@
- #include "qemu/error-report.h"
- #include "exec/exec-all.h"
- #include "exec/translate-all.h"
-+#include "exec/translation-block.h"
- #include "system/tcg.h"
- #include "system/replay.h"
- #include "hw/core/tcg-cpu-ops.h"
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index e4bf5d5f39c..a2f8766b5c6 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -21,6 +21,7 @@
- #include "trace.h"
- #include "exec/log.h"
- #include "exec/page-protection.h"
-+#include "exec/translation-block.h"
- #include "qemu.h"
- #include "user-internals.h"
- #include "user-mmap.h"
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1ce4c79784f..5830014b657 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -26,6 +26,7 @@
- #include "tcg/startup.h"
- #include "target_mman.h"
- #include "exec/page-protection.h"
-+#include "exec/translation-block.h"
- #include <elf.h>
- #include <endian.h>
- #include <grp.h>
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 237f35c861a..e5be73d420a 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -28,6 +28,7 @@
- #include "qapi/error.h"
- #include "cpu.h"
- #ifdef CONFIG_TCG
-+#include "exec/translation-block.h"
- #include "hw/core/tcg-cpu-ops.h"
- #endif /* CONFIG_TCG */
- #include "internals.h"
-diff --git a/target/avr/cpu.c b/target/avr/cpu.c
-index 3132842d565..dda63f913ca 100644
---- a/target/avr/cpu.c
-+++ b/target/avr/cpu.c
-@@ -22,6 +22,7 @@
- #include "qapi/error.h"
- #include "qemu/qemu-print.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "cpu.h"
- #include "disas/dis-asm.h"
- #include "tcg/debug-assert.h"
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index 020038fc490..489d68dc50e 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -20,6 +20,7 @@
- #include "cpu.h"
- #include "internal.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "qapi/error.h"
- #include "hw/qdev-properties.h"
- #include "fpu/softfloat-helpers.h"
-diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
-index c38439c1800..c9062e60b67 100644
---- a/target/hppa/cpu.c
-+++ b/target/hppa/cpu.c
-@@ -25,6 +25,7 @@
- #include "cpu.h"
- #include "qemu/module.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "fpu/softfloat.h"
- #include "tcg/tcg.h"
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c5edf58421d..8bbf914c579 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -24,6 +24,7 @@
- #include "qemu/hw-version.h"
- #include "cpu.h"
- #include "tcg/helper-tcg.h"
-+#include "exec/translation-block.h"
- #include "system/hvf.h"
- #include "hvf/hvf-i386.h"
- #include "kvm/kvm_i386.h"
-diff --git a/target/i386/helper.c b/target/i386/helper.c
-index a78d06c95ba..3bc15fba6ee 100644
---- a/target/i386/helper.c
-+++ b/target/i386/helper.c
-@@ -21,6 +21,7 @@
- #include "qapi/qapi-events-run-state.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "system/runstate.h"
- #ifndef CONFIG_USER_ONLY
- #include "system/hw_accel.h"
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 078766feafc..dfdd1f78602 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -15,6 +15,7 @@
- #include "system/kvm.h"
- #include "kvm/kvm_loongarch.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "cpu.h"
- #include "internals.h"
- #include "fpu/softfloat-helpers.h"
-diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
-index 710eb1146c1..a5658f1aae0 100644
---- a/target/microblaze/cpu.c
-+++ b/target/microblaze/cpu.c
-@@ -30,6 +30,7 @@
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
- #include "exec/gdbstub.h"
-+#include "exec/translation-block.h"
- #include "fpu/softfloat-helpers.h"
- #include "tcg/tcg.h"
- 
-diff --git a/target/mips/tcg/exception.c b/target/mips/tcg/exception.c
-index 4886d087b2e..1a8902ea1bc 100644
---- a/target/mips/tcg/exception.c
-+++ b/target/mips/tcg/exception.c
-@@ -24,6 +24,7 @@
- #include "internal.h"
- #include "exec/helper-proto.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- 
- target_ulong exception_resume_pc(CPUMIPSState *env)
- {
-diff --git a/target/mips/tcg/sysemu/special_helper.c b/target/mips/tcg/sysemu/special_helper.c
-index 9ce5e2ceac5..3ce3ae1e124 100644
---- a/target/mips/tcg/sysemu/special_helper.c
-+++ b/target/mips/tcg/sysemu/special_helper.c
-@@ -23,6 +23,7 @@
- #include "cpu.h"
- #include "exec/helper-proto.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "internal.h"
- 
- /* Specials */
-diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
-index b96561d1f26..c11a09cd062 100644
---- a/target/openrisc/cpu.c
-+++ b/target/openrisc/cpu.c
-@@ -22,6 +22,7 @@
- #include "qemu/qemu-print.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "fpu/softfloat-helpers.h"
- #include "tcg/tcg.h"
- 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c62c2216961..958b8c89cbf 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -19,6 +19,7 @@
- 
- #include "qemu/osdep.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "tcg-cpu.h"
- #include "cpu.h"
- #include "internals.h"
-diff --git a/target/rx/cpu.c b/target/rx/cpu.c
-index 65a74ce720f..945ae6e9e50 100644
---- a/target/rx/cpu.c
-+++ b/target/rx/cpu.c
-@@ -23,6 +23,7 @@
- #include "migration/vmstate.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
-+#include "exec/translation-block.h"
- #include "hw/loader.h"
- #include "fpu/softfloat.h"
- #include "tcg/debug-assert.h"
-diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
-index 8f07261dcfd..2a51d9e35c7 100644
---- a/target/sh4/cpu.c
-+++ b/target/sh4/cpu.c
-@@ -25,6 +25,7 @@
- #include "cpu.h"
- #include "migration/vmstate.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "fpu/softfloat-helpers.h"
- #include "tcg/tcg.h"
- 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index dd7af86de73..1480571a1bf 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -23,6 +23,7 @@
- #include "qemu/module.h"
- #include "qemu/qemu-print.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "hw/qdev-properties.h"
- #include "qapi/visitor.h"
- #include "tcg/tcg.h"
-diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
-index 1a261715907..95fb546666f 100644
---- a/target/tricore/cpu.c
-+++ b/target/tricore/cpu.c
-@@ -21,6 +21,7 @@
- #include "qapi/error.h"
- #include "cpu.h"
- #include "exec/exec-all.h"
-+#include "exec/translation-block.h"
- #include "qemu/error-report.h"
- #include "tcg/debug-assert.h"
- 
+I had no intention to mean that we should only merge one, but more of pure
+thinking what I would like to use in the near future, even if the solution
+landed at some point in both gdb and qemu.
+
+I'll still need to look at the old systems that miss the generic solution,
+so I'd still prefer using the scripts (which currently satisfies most of my
+needs..).
+
+> 
+> The gdb changes look really nice at the first sight, debugging
+> coroutines as if they were threads is exactly what you want in most
+> cases. So I'd love to see this. Of course, someone would have to first
+> understand what needs to be done in detail and then implement the QEMU
+> side of it once the gdb side is merged.
+
+Yes, I wish that could happen some day, that by default gdb on top of QEMU
+can dump coroutines.
+
+Thanks,
+
 -- 
-2.45.2
+Peter Xu
 
 
