@@ -4,68 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31754E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF93E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:49:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfm0-0001lJ-10; Thu, 12 Dec 2024 04:46:20 -0500
+	id 1tLfoP-0002RU-4B; Thu, 12 Dec 2024 04:48:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLfly-0001l1-33; Thu, 12 Dec 2024 04:46:18 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tLflv-0002dZ-7p; Thu, 12 Dec 2024 04:46:17 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733996775; x=1765532775;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=i5soMDtGLK0fsFthBO+nJaF+S7lgNsHL246rf1nyrr4=;
- b=L0COiHWpkVW5B8/dXWUTKvH8FraFdTmC9IStAgep05FLDUgCfrjY1giV
- QScrcVVYTdVjsajjC7Anzl59Eskf533ZP0BxsXQexw8jB0vslm8oAT/sb
- awJzt6eFrANEtoVId8cPUgl0m4vyL7eJclo6Q2/mChx89zMP8Sh1NFM4d
- /TYbiqSzGJQgDtgcxkisZKqaepGkyAGCXikLLxq9awnIsd7ROIxDD9SfD
- kqTfBJWYSTzjvvWU8TCVpfSNfL+ZgpVk4cn+slI3vnnMgQbSTKz41zdnd
- 23GjAoJpiRJRPS09iuvUh4t/RwlQWPGKJGQ7FPVzcYIDEwXbNjzxwwj2T A==;
-X-CSE-ConnectionGUID: BJpUNd7zQ26FRJx9dLJ5Jg==
-X-CSE-MsgGUID: y7TMGbsjTsSlPpXIo25n5A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34313369"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34313369"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 01:46:10 -0800
-X-CSE-ConnectionGUID: Y5zt/nSaSjSMQLo1sTpCsg==
-X-CSE-MsgGUID: R2F60qqFT/SNMczMDuoz+Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="96054507"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by fmviesa007.fm.intel.com with ESMTP; 12 Dec 2024 01:46:10 -0800
-Date: Thu, 12 Dec 2024 18:04:24 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 21/26] rust: tests: allow writing more than one test
-Message-ID: <Z1q1KAShyW44BJCg@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-22-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tLfoN-0002R0-9j
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:48:47 -0500
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1tLfoI-0002lB-GR
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:48:46 -0500
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-7fd45005a09so277007a12.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:48:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1733996921; x=1734601721; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rIDz21lKrXmJBL/1OJrlbrlC5z+y28lnfGL4NFm0vSU=;
+ b=UMS9Nf+tn0WEmE6aTGrEala5RpoNpCrCH8tZEQJeJl+4/9Q3OVSkfev6EbQDasnlci
+ 2lNC0OhgnM0yCWhLjr+CUXeWZ3GKpA/9Ui4G2G7uldAgs3b+da9tOGmnq6snjXT+PWEc
+ zwPUJFGlsnU5AAIa9omieIYUEntt8SoJXtzp8jM/ne/yBoYVS9fW2oh8zb2EQqepFFBZ
+ kXjVKJ+wNEj3n0ND4aumkJrkOuxbIu6mlAFAyd/xCezbbLohMhMX7qp0OBaN2cowzA2K
+ hECWgUwJ2jpncOr4b/HC2AgV2F4koXVN5IrqAQf14UUbODTSZ4dRwUvk3E2mLpNCC7Yp
+ WgZg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1733996921; x=1734601721;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=rIDz21lKrXmJBL/1OJrlbrlC5z+y28lnfGL4NFm0vSU=;
+ b=CJVxP/4L1Rk28Th6dRRVAEklsBMUH6a7FeqhSj3ciYrQdccVIicEjIbX7XZYMq0Yuj
+ gJkNj3ADpM/wbbG92BPOvU4kVL7YyQjzlMg8GLXEZoolhTxHVK6UXA5DnG6qsprPntsc
+ xMWlBH4rK+TjsVcAvJfIK3qAaX+D+1nYIaYO4Rq+NHRaLElYF3SN1HfQRX/7PoZ2xUls
+ HLD4pXXVkdcOjHb/s69Z7vyDwJyIs6ztpUb79ABx5uFjS6K/FMwmT6ip1gixF+wcdtEY
+ y+zazIzmw71UqiofNKR6brokYgBUZoocqIpjXdzItwAZBnvJcUJc1IGSAxk07VpHewdx
+ TeTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDHruEwTyg1RPsSzpDnXIdwFdp7BFI663X0DVSRZfNJGTY6gWENxODfcBO8Bixzk8MlU8+Pf97pF95@nongnu.org
+X-Gm-Message-State: AOJu0YwSHo3pwTh510cSEHREFHyuEP+ZofVtY+3BF3R+WyfKhuVwRjaJ
+ yavm21qXw/4RljdqY50qxdlrEi/l0HHSjYV3ojZdPBFDzf27HYB+YVitK/pnl7k=
+X-Gm-Gg: ASbGnctyJClNoVSW5bW233Az0RjdJMtGWNXIGMyxztBSv4tSx46Ze52dO2sIrwQwDGf
+ YoWkEvbm566920PsF7O3XYS6SjVI8l1W7AJVUWyfmrlokRGnSKgCc1WxhIMWBtF6+ONIQczG2Pf
+ QqK1g67NxjwPEt51RsTe+kwNi/zaaPtWu17WQKh/qHryMNayxKiKAx1fFGDL7UVlzZXLbIafVQ8
+ 0IM0Ye/B/Ipnu7StywjT5nm4rZFM7vFM2Vfn/HF5xKvRnFBOwB/ObMT0kvnHsti2HSl8Q==
+X-Google-Smtp-Source: AGHT+IG2BDTzyq3flsa9jNR4paMG0n5DCN5bB5H7mHWRFf2DqBtllmQp8D5Fq5aDrPFMuN91AoXTOg==
+X-Received: by 2002:a05:6a20:2d0a:b0:1e1:ab63:c5e8 with SMTP id
+ adf61e73a8af0-1e1ceb11828mr3765749637.26.1733996920705; 
+ Thu, 12 Dec 2024 01:48:40 -0800 (PST)
+Received: from [192.168.68.110] ([187.101.65.72])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-727ba09a13bsm4997043b3a.46.2024.12.12.01.48.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Dec 2024 01:48:40 -0800 (PST)
+Message-ID: <69de5c69-1583-4a0f-9db6-c61e721adbe1@ventanamicro.com>
+Date: Thu, 12 Dec 2024 06:48:36 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241209123717.99077-22-pbonzini@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 7/7] target/riscv: Enable updates for pointer masking
+ variables and thus enable pointer masking extension
+To: baturo.alexey@gmail.com
+Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com,
+ liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com,
+ palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu,
+ kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
+References: <20241205112304.593204-1-baturo.alexey@gmail.com>
+ <20241205112304.593204-8-baturo.alexey@gmail.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20241205112304.593204-8-baturo.alexey@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x531.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,22 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> +fn init_qom() {
-> +    static ONCE: Mutex<Cell<bool>> = Mutex::new(Cell::new(false));
-> +
-> +    let g = ONCE.lock().unwrap();
-> +    if !g.get() {
-> +        unsafe {
-> +            module_call_init(module_init_type::MODULE_INIT_QOM);
-> +        }
-> +        g.set(true);
-> +    }
-> +}
 
-Only one question: what is the purpose of using a Mutex here?
 
-Others LGTM,
+On 12/5/24 8:23 AM, baturo.alexey@gmail.com wrote:
+> From: Alexey Baturo <baturo.alexey@gmail.com>
+> 
+> Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
+> 
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> ---
+>   target/riscv/cpu.c | 6 ++++++
+>   1 file changed, 6 insertions(+)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 4e80dcd2e6..fd3ea9ce76 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -186,11 +186,14 @@ const RISCVIsaExtData isa_edata_arr[] = {
+>       ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+>       ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+>       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+> +    ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
+> +    ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
+>       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen),
+>       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
+>       ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
+>       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
+>       ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
+> +    ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+I just realized that we're not adding "ext_supm":
+
+"Supm Pointer masking, with the execution environment providing a means
+to select PMLEN=0 and PMLEN=7 at minimum."
+
+IIUC this is always enabled in the code so this would be a flag that would
+be always enabled, i.e. it would be a ISA_EXT_DATA_ENTRY that defaults to
+"has_priv_1_13". "sscounterenw" is an example of this kind of extension.
+
+If that's really the case I believe you can add "supm" in this patch or maybe
+a new patch right after. We need to advertise support for "supm" for RVA23
+anyway.
+
+
+Thanks,
+
+Daniel
+
+
+>       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+>       ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+>       ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -1490,9 +1493,12 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+>       MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
+>       MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
+>       MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
+> +    MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
+>   
+>       MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
+>       MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
+> +    MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
+> +    MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
+>       MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
+>       MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
+>       MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
 
 
