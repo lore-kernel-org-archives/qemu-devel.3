@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50EFE7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6602E77180
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLell-0004md-V5; Thu, 12 Dec 2024 03:42:02 -0500
+	id 1tLel8-0004Oy-2e; Thu, 12 Dec 2024 03:41:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelb-0004ft-8r
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:56 -0500
+ id 1tLel5-0004OZ-Lg
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:19 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelZ-0007zv-He
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:51 -0500
+ id 1tLel3-0007zY-Ki
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:19 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733992909; x=1765528909;
+ t=1733992878; x=1765528878;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=NRig9xicZToLVp64jS5HyMBzT+np40CCapHkrXRZR+g=;
- b=Z7Bbz3OI57rPPak/66g0s2CrYJjI2ul/OmXNWQyxVdydsnt7gOQT4okU
- CUNmsYOdMpyhF3CwrBFjxaS3zA5U2q9d2wPZDmjO0JhrzsKYoMrLkLQ1z
- 82tLTG9yUJjOWJZN31Z4dC6ISxR5pOd8ClkwjyT9aKDMSQtlx2FCPFW+P
- WeIWHr6FOXm9Lcc62Ry6hzUJYVFoCJrLspzFKxPJAyno+Hl7FVQnCgabA
- UOnJw+GPzI3R5gwfSuRo9T1nEwtxMi8dYTJcTtZYx5OB2YLvtql9lT4hg
- 4CYp3ksre47EG5YoXYkSwwW+F254Kl1RjcU2u19lwRREiQToE1L6UWE6i g==;
-X-CSE-ConnectionGUID: 9uchILEwRPygo7DOQvJ3ng==
-X-CSE-MsgGUID: GTkYoQPXSsq8T0Vgwef6FQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124894"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124894"
+ bh=rI8VyjlpmtUcLtEES/kE5VZsq610Zxy8R6IYW/q8uqg=;
+ b=CiyWu+dOr+zcXDZQXfg3GlwZKwusXhALsIs4ffPwjdSSJ8PtKdPUgUuv
+ 3Tfnim1W9GFMDkukQHVtfsQqNen7wWcRVVYOcTtuYiAMjhwQl52UbepRu
+ qzmTwnaSEeFkHKwLRARlqR468Z/MhjP1Il+buXKFoUH1qXheYTvdSvRYm
+ qOnrmI9J1tkp3hIi9EZJqRW+ij1eOw9ZzfSJELj14n4IiNa25wtGgnP+b
+ TKsoGs6LpJ86au5JY5W6nqoqy0bFAZ1SBN7SkbBnH2/vhJJVoMaPP50Ah
+ zZM/riUjJxE8NM+eiAOS9yqdXfdNdRpX3BAHnONYG+zTfjursfvGtu9D2 A==;
+X-CSE-ConnectionGUID: pqb3TEe1Q7q9t5J3RZXl+Q==
+X-CSE-MsgGUID: KLQcg2lHRMiEyJJm0tskpw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124707"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124707"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:49 -0800
-X-CSE-ConnectionGUID: MhJDpMSRR0KB1y/CjJ0gow==
-X-CSE-MsgGUID: OvDdlJWtR8GnynnTXBG3uQ==
+ 12 Dec 2024 00:41:16 -0800
+X-CSE-ConnectionGUID: sP0RBUQJS7SuYddk9z7wTA==
+X-CSE-MsgGUID: EVXdsKIySO+sS7j78frr6A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407060"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119406923"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:44 -0800
+ 12 Dec 2024 00:41:12 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ chao.p.peng@intel.com, Yu Zhang <yu.c.zhang@linux.intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v6 08/20] intel_iommu: Check stage-1 translation result with
- interrupt range
-Date: Thu, 12 Dec 2024 16:37:45 +0800
-Message-Id: <20241212083757.605022-9-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v6 01/20] intel_iommu: Use the latest fault reasons defined by
+ spec
+Date: Thu, 12 Dec 2024 16:37:38 +0800
+Message-Id: <20241212083757.605022-2-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
@@ -92,104 +93,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Per VT-d spec 4.1 section 3.15, "Untranslated requests and translation
-requests that result in an address in the interrupt range will be
-blocked with condition code LGN.4 or SGN.8."
+From: Yu Zhang <yu.c.zhang@linux.intel.com>
 
-This applies to both stage-1 and stage-2 IOMMU page table, move the
-check from vtd_iova_to_slpte() to vtd_do_iommu_translate() so stage-1
-page table could also be checked.
+Spec revision 3.0 or above defines more detailed fault reasons for
+scalable mode. So introduce them into emulation code, see spec
+section 7.1.2 for details.
 
-By this chance, update the comment with correct section number.
+Note spec revision has no relation with VERSION register, Guest
+kernel should not use that register to judge what features are
+supported. Instead cap/ecap bits should be checked.
 
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yu Zhang <yu.c.zhang@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 ---
- hw/i386/intel_iommu.c | 48 ++++++++++++++++++++++---------------------
- 1 file changed, 25 insertions(+), 23 deletions(-)
+ hw/i386/intel_iommu_internal.h |  9 ++++++++-
+ hw/i386/intel_iommu.c          | 25 ++++++++++++++++---------
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 4323fc5d6d..a987023692 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -311,7 +311,14 @@ typedef enum VTDFaultReason {
+                                   * request while disabled */
+     VTD_FR_IR_SID_ERR = 0x26,   /* Invalid Source-ID */
+ 
+-    VTD_FR_PASID_TABLE_INV = 0x58,  /*Invalid PASID table entry */
++    /* PASID directory entry access failure */
++    VTD_FR_PASID_DIR_ACCESS_ERR = 0x50,
++    /* The Present(P) field of pasid directory entry is 0 */
++    VTD_FR_PASID_DIR_ENTRY_P = 0x51,
++    VTD_FR_PASID_TABLE_ACCESS_ERR = 0x58, /* PASID table entry access failure */
++    /* The Present(P) field of pasid table entry is 0 */
++    VTD_FR_PASID_ENTRY_P = 0x59,
++    VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+ 
+     /* Output address in the interrupt address range for scalable mode */
+     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a4a2a44f92..594c8e3272 100644
+index 4c0d1d7d47..67dc99cfdf 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -1138,7 +1138,6 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
-     uint32_t offset;
-     uint64_t slpte;
-     uint64_t access_right_check;
--    uint64_t xlat, size;
- 
-     if (!vtd_iova_sl_range_check(s, iova, ce, aw_bits, pasid)) {
-         error_report_once("%s: detected IOVA overflow (iova=0x%" PRIx64 ","
-@@ -1191,28 +1190,7 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
-         level--;
+@@ -796,7 +796,7 @@ static int vtd_get_pdire_from_pdir_table(dma_addr_t pasid_dir_base,
+     addr = pasid_dir_base + index * entry_size;
+     if (dma_memory_read(&address_space_memory, addr,
+                         pdire, entry_size, MEMTXATTRS_UNSPECIFIED)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_DIR_ACCESS_ERR;
      }
  
--    xlat = vtd_get_pte_addr(*slptep, aw_bits);
--    size = ~vtd_pt_level_page_mask(level) + 1;
--
--    /*
--     * From VT-d spec 3.14: Untranslated requests and translation
--     * requests that result in an address in the interrupt range will be
--     * blocked with condition code LGN.4 or SGN.8.
--     */
--    if ((xlat > VTD_INTERRUPT_ADDR_LAST ||
--         xlat + size - 1 < VTD_INTERRUPT_ADDR_FIRST)) {
--        return 0;
--    } else {
--        error_report_once("%s: xlat address is in interrupt range "
--                          "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
--                          "slpte=0x%" PRIx64 ", write=%d, "
--                          "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
--                          "pasid=0x%" PRIx32 ")",
--                          __func__, iova, level, slpte, is_write,
--                          xlat, size, pasid);
--        return s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
--                                  -VTD_FR_INTERRUPT_ADDR;
--    }
-+    return 0;
- }
+     pdire->val = le64_to_cpu(pdire->val);
+@@ -814,6 +814,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+                                           dma_addr_t addr,
+                                           VTDPASIDEntry *pe)
+ {
++    uint8_t pgtt;
+     uint32_t index;
+     dma_addr_t entry_size;
+     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+@@ -823,7 +824,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+     addr = addr + index * entry_size;
+     if (dma_memory_read(&address_space_memory, addr,
+                         pe, entry_size, MEMTXATTRS_UNSPECIFIED)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_TABLE_ACCESS_ERR;
+     }
+     for (size_t i = 0; i < ARRAY_SIZE(pe->val); i++) {
+         pe->val[i] = le64_to_cpu(pe->val[i]);
+@@ -831,11 +832,13 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
  
- typedef int (*vtd_page_walk_hook)(const IOMMUTLBEvent *event, void *private);
-@@ -2064,6 +2042,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-     uint8_t access_flags;
-     bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
-     VTDIOTLBEntry *iotlb_entry;
-+    uint64_t xlat, size;
+     /* Do translation type check */
+     if (!vtd_pe_type_check(x86_iommu, pe)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_TABLE_ENTRY_INV;
+     }
+ 
+-    if (!vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
+-        return -VTD_FR_PASID_TABLE_INV;
++    pgtt = VTD_PE_GET_TYPE(pe);
++    if (pgtt == VTD_SM_PASID_ENTRY_SLT &&
++        !vtd_is_level_supported(s, VTD_PE_GET_LEVEL(pe))) {
++            return -VTD_FR_PASID_TABLE_ENTRY_INV;
+     }
+ 
+     return 0;
+@@ -876,7 +879,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
+     }
+ 
+     if (!vtd_pdire_present(&pdire)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_DIR_ENTRY_P;
+     }
+ 
+     ret = vtd_get_pe_from_pdire(s, pasid, &pdire, pe);
+@@ -885,7 +888,7 @@ static int vtd_get_pe_from_pasid_table(IntelIOMMUState *s,
+     }
+ 
+     if (!vtd_pe_present(pe)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_ENTRY_P;
+     }
+ 
+     return 0;
+@@ -938,7 +941,7 @@ static int vtd_ce_get_pasid_fpd(IntelIOMMUState *s,
+     }
+ 
+     if (!vtd_pdire_present(&pdire)) {
+-        return -VTD_FR_PASID_TABLE_INV;
++        return -VTD_FR_PASID_DIR_ENTRY_P;
+     }
  
      /*
-      * We have standalone memory region for interrupt addresses, we
-@@ -2173,6 +2152,29 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
-         ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
-                                    &reads, &writes, s->aw_bits, pasid);
-     }
-+    if (!ret_fr) {
-+        xlat = vtd_get_pte_addr(pte, s->aw_bits);
-+        size = ~vtd_pt_level_page_mask(level) + 1;
-+
-+        /*
-+         * Per VT-d spec 4.1 section 3.15: Untranslated requests and translation
-+         * requests that result in an address in the interrupt range will be
-+         * blocked with condition code LGN.4 or SGN.8.
-+         */
-+        if ((xlat <= VTD_INTERRUPT_ADDR_LAST &&
-+             xlat + size - 1 >= VTD_INTERRUPT_ADDR_FIRST)) {
-+            error_report_once("%s: xlat address is in interrupt range "
-+                              "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
-+                              "pte=0x%" PRIx64 ", write=%d, "
-+                              "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
-+                              "pasid=0x%" PRIx32 ")",
-+                              __func__, addr, level, pte, is_write,
-+                              xlat, size, pasid);
-+            ret_fr = s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
-+                                        -VTD_FR_INTERRUPT_ADDR;
-+        }
-+    }
-+
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-                          addr, is_write, pasid != PCI_NO_PASID, pasid);
+@@ -1795,7 +1798,11 @@ static const bool vtd_qualified_faults[] = {
+     [VTD_FR_ROOT_ENTRY_RSVD] = false,
+     [VTD_FR_PAGING_ENTRY_RSVD] = true,
+     [VTD_FR_CONTEXT_ENTRY_TT] = true,
+-    [VTD_FR_PASID_TABLE_INV] = false,
++    [VTD_FR_PASID_DIR_ACCESS_ERR] = false,
++    [VTD_FR_PASID_DIR_ENTRY_P] = true,
++    [VTD_FR_PASID_TABLE_ACCESS_ERR] = false,
++    [VTD_FR_PASID_ENTRY_P] = true,
++    [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
+     [VTD_FR_SM_INTERRUPT_ADDR] = true,
+     [VTD_FR_MAX] = false,
+ };
 -- 
 2.34.1
 
