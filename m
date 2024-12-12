@@ -4,85 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C281E7717D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 00:02:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDEAFE7717D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 00:03:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLWec-0003iU-El; Wed, 11 Dec 2024 19:02:06 -0500
+	id 1tLWeq-00042Y-Oi; Wed, 11 Dec 2024 19:02:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLWeZ-0003bd-3H
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 19:02:03 -0500
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1tLWep-00041p-8D
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 19:02:19 -0500
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLWeW-00032f-I8
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 19:02:02 -0500
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-71e1e051e50so25223a34.0
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 16:02:00 -0800 (PST)
+ id 1tLWek-00034O-J6
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 19:02:19 -0500
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-71deb2025dbso53418a34.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 16:02:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1733961719; x=1734566519; darn=nongnu.org;
+ d=linaro.org; s=google; t=1733961732; x=1734566532; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=sVRgGvy5d/JHfX1dJN26eVayscbgTqwadYHspFmQe6Q=;
- b=yFa8Sg/9SMczmF23Wxh/Icvcsmpa181xiNnqbQ4Df33WILIZR3bqMR5b79gQtvSTIB
- cRYgh9gOQJsRcrbDv+QLlBhpKQ7gOcaAL9i7lJujC+1TgI6ATOJB4HLoEFkBvSBKgAxR
- 4Uxr6hbS4bm5imRxKIXYoR3D6Q5FI3MLFSj0cgTPPbTEMOr1T1z6RjnesFJ8wJibR3Gg
- WGgq5avzg9l0nIIBemXNzC66GakX/rTPmTq1ZSouKwxCUtOyJTGFDx7VmE1MLg6Edy//
- vLQkSPmwv3iDtu1ItOJRVZDdGoxaYW2//qyEhWigYDr6+PM68x70pyS5MvM2Q27Y9HYK
- B1xg==
+ bh=oK0zIqbAdfEqP60qOwghnIWmq/AYF4LMXG9DAGlRvLY=;
+ b=BREMci6R4C6Z7sgkGh1F4GMfjm7m86t3MP+HA+xzff0FZwVrQ0GVsmzmUN1rds+GPY
+ OypSmRFvCHd9zvSiKpGHSX1t5qK9/OrgueCiWWFHvyfohCmWAP35+mMdbcSbdqdBa4xD
+ +YmhSzZp2HLWDf1MoNY72HMYsUqwkXCwDNLtQ2qFbIe3NJ2kkIzVFsfU9IzE8Jxhs2vM
+ 1Gevlge6F293ypaaaUlAdGCjlnTWxDL1WM3ItjS3sG4CGQZxl3u+UYB/7XxY0eY7uXmm
+ p8FGd551LJsXC2EGky96nn4ueAHUct4GHWgjdj7zcYLkv2+CbObsMF4IF/4OPUjt9shI
+ Mqkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733961719; x=1734566519;
+ d=1e100.net; s=20230601; t=1733961732; x=1734566532;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sVRgGvy5d/JHfX1dJN26eVayscbgTqwadYHspFmQe6Q=;
- b=MXvMpGbHHVThDBiV/0vCkq2EZd/Mn2vi01qTVD5BrFhqtw5lkP7P9L4I9N0WS1M+jT
- /u46CR4umCJ/t4KHTo88OelYXxDUiGF172IMEOkSV+Kcu8Sc3kjleTlS9Wn+WHkE5yU6
- hYdxP25zZKsr6s+YQ3Hz1OtlYNT2uxrf6oWdjR7z/kinodBpXDqaM/xLtDNJevFmPs1l
- XG8BdldRhEeA4Ic+Cc/MpEPOLRAH6vpI+TC1r1u8tTWrWWGKf5RtWPh7/oM51d4OrcMF
- TOJ6GuuLoV7XWbOxtC84K1uPtULQzFUkeLNkCgftUM/txSworwDTokKso7seKbRyEW7D
- LHwQ==
+ bh=oK0zIqbAdfEqP60qOwghnIWmq/AYF4LMXG9DAGlRvLY=;
+ b=CIpqajAq8Maan/LiC3QTZYiaGfvHRKO/2t7y9FF45QWvBO7/kqEpqkQZkviqeWFxSS
+ QpI2DgNtJCMpE5I8Id6t3aALxnDJOPwbtcg5EQv9lcp3Z7ut+JFVXAeQwzMn/lxKr9zH
+ bt88mDISNqQIGhXCqh8BDAmZV3N49IssX3R/9o6SCeLkNSJ09norcOORc6KguJat+qqq
+ Xw/MZRf/QKnjLELsmoLUlovoO30HS1oO7eexUfRAkRPKS+oat2jlpzYK/qVvFMUPtA7x
+ 8dvUVGT40oAvLPRQQP62M6R3fE7uUy9hLMdx6zsCzZ2790mkSVuCxBP/ss726urdnJEv
+ 5atw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVMbjv95SWlRkJCQbWa50GFfCdVNdeyYX4bo05A81K3NhrUQfgbvBXSlsutPaEB0Ci6L2gRfdLsJxmP@nongnu.org
-X-Gm-Message-State: AOJu0YxHqio0kYHMsuusvbR5+o/QhG7xATjikp4PSlPDZyZe44VzlXq3
- u0sE5etBEB3xppNeYnOR4H+pCEmq5w48WxumV+FEChbwF/8iEStQopo+QtQqznyV5fUksLeJyZ2
- x2ZNHqdvY
-X-Gm-Gg: ASbGnctXhsC1mgQ8jLTjeLMnWTf/b0yg2l/HPtdtBcmmilGJUMHoDom+9pR1ilcYK9N
- /j1JPPN6CigqNhx7kzvVPKMm+N/S6ntzhJqrObShLTqmOrzLe7NPrwxtxWH+hOa3Y4m4SL+Z6Jv
- EKIlKiFPVcWg0LZTxZBPh6OACnVKMxMgk7t3U+oxiyD2YyUy99O/fXVn5uiICd+JkO2XUuCNzhO
- X91IRx7HhCRrTXbsd0v3Ggrg047KOM/TT1dVxFG5BfPTvUFtD1VMexOLnNj+0X0OZyK2NCj4gM1
- LCCObeCa0uBBr05QhUFuRjclqbwajjR/
-X-Google-Smtp-Source: AGHT+IGqNuGha+cdg7x9EodoMt5gph824+wJ9yiaItAlnB222R7/EEQFRGq2LmzW6TEB3MMONhF45w==
-X-Received: by 2002:a05:6830:3695:b0:71d:e0b8:5f0f with SMTP id
- 46e09a7af769-71e29ef9945mr876345a34.29.1733961719265; 
- Wed, 11 Dec 2024 16:01:59 -0800 (PST)
+ AJvYcCX/9aFPcB4u2i0JGeFGs1zlzlmE3QQd6mIKR+W6SO3Qgz6LXno+/C7xmRqKUo0V4iGBg5EzuJeSNee3@nongnu.org
+X-Gm-Message-State: AOJu0YwFFqfIIgmOw8GjkUn5Tr/1rzt1wktkIFF8K8Kr7K2Ul/YFEJYG
+ ZEHIo67jdagVA2dwhR4QKBWGWabbPqBeoMaBp3kdKGRW/VnXb5swm39TsZVvS10=
+X-Gm-Gg: ASbGncuTjH76KeGOOpAsErQx5BwLD4ztcDk3rhtlsB1kYCHnxokCMoRjecLLfD6CJHF
+ DSLU0X+j0jedBi5IEbDw+tRk+PEmtHD/HiMzFGMjwI4yWlFv/hiKtXce7ABW5mAIrFQWU8B6wp6
+ n+GMJRJDIHbUlgYoaSfjgl79+fSV7AiKwkFlNB9Zpm+wuLsJT2JJA3NSI0EdJnyq+7Jtc+7RR1a
+ pp/5IZPzKDH0twfDXn4HKvh7BiSEo79FmtXVWDVvHWVL0ZrHIPzi6iqfMPMdOeDEZ6xWC0+VbDj
+ c7nKQT56isWKIp94HxeQF/jLyju1doMy
+X-Google-Smtp-Source: AGHT+IF/rrbiVcNCEQWWB+SRPPxCtpE6kE+DwwyUvM5d2fT+ggq5yy97C433XvczGMCaoAsAGFg5Mw==
+X-Received: by 2002:a05:6830:264b:b0:71d:f9f1:7f3a with SMTP id
+ 46e09a7af769-71e29c47dd6mr977981a34.24.1733961731873; 
+ Wed, 11 Dec 2024 16:02:11 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71de2a7767fsm2388689a34.2.2024.12.11.16.01.58
+ 46e09a7af769-71e155ec9efsm777274a34.70.2024.12.11.16.02.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 16:01:58 -0800 (PST)
-Message-ID: <a2df2f59-0cd0-4e62-ba9b-3ad2cd4db3f3@linaro.org>
-Date: Wed, 11 Dec 2024 18:01:56 -0600
+ Wed, 11 Dec 2024 16:02:11 -0800 (PST)
+Message-ID: <0b64e23e-84ac-4f2e-a91e-6366e3de0b9c@linaro.org>
+Date: Wed, 11 Dec 2024 18:02:09 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 6/9] hw/mips: Include missing 'exec/tswap.h' header
+Subject: Re: [PATCH v2 7/9] hw/sh4/r2d: Include missing 'exec/tswap.h' header
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org
 References: <20241211230357.97036-1-philmd@linaro.org>
- <20241211230357.97036-7-philmd@linaro.org>
+ <20241211230357.97036-8-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241211230357.97036-7-philmd@linaro.org>
+In-Reply-To: <20241211230357.97036-8-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,22 +105,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/11/24 17:03, Philippe Mathieu-Daudé wrote:
-> Some files indirectly get "exec/tswap.h" declarations via
-> "exec/cpu-all.h". Include it directly to be able to remove
-> the former from the latter, otherwise we get:
+> r2d.c indirectly get "exec/tswap.h" declarations via
+> "exec/cpu-all.h". Include it directly to be able to
+> remove the former from the latter, otherwise we get:
 > 
->    hw/mips/malta.c:674:22: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->      674 |                      tswap32((1 << 31) /* ConfigEn */
->          |                      ^
->    hw/mips/fuloong2e.c:89:23: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->       89 |     prom_buf[index] = tswap32(ENVP_VADDR + table_addr);
->          |                       ^
+>    hw/sh4/r2d.c:357:35: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>      357 |         boot_params.loader_type = tswap32(1);
+>          |                                   ^
 > 
 > Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
 > ---
->   hw/mips/fuloong2e.c | 1 +
->   hw/mips/malta.c     | 1 +
->   2 files changed, 2 insertions(+)
+>   hw/sh4/r2d.c | 1 +
+>   1 file changed, 1 insertion(+)
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
