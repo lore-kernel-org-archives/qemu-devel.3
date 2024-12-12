@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D9BE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:15:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E4F9E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:15:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfGX-0003Xa-MN; Thu, 12 Dec 2024 04:13:49 -0500
+	id 1tLfGX-0003Ug-9f; Thu, 12 Dec 2024 04:13:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGU-0003TF-LQ
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGU-0003TP-Sw
  for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:46 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGP-0008PC-MG
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGT-0008Pj-Bt
  for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:46 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7fcf59a41ddso220385a12.3
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:13:41 -0800 (PST)
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2ee9a780de4so230498a91.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:13:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733994820; x=1734599620; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733994823; x=1734599623; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/F55ObCsESGa2ajDHpDHF4jP1HDevLQyTNQkvDxryZY=;
- b=nXoKkm+2nOdmfFP//7wId9Yg5Uym5UVJZKBWkApECe4RyArGJXF1k5jfysigZTAAQ7
- eYcyWWIZ0UJnKOD+JAHHeJa8Xgr5TBMxqeItMYJDXMw2D2IV3g8UQXif2rGqHAYa/dSy
- vpvGqrW8fzhoxKOfPLHLlDWV/MTBy193pZ9Jx5TLeZoKd+k4/doW0izjh/v4gWXqhSCV
- q15Bs12xGBbWlrvp8TD756wiblcw4JJspFnUySMgPWY9Wdm09Hhbj3vinss6Gn9vn8Io
- 6WFmN6tIGht670U7ugXB2KS+o5AanxtceOeJrWQlBXA0U1pUQFWbHnH1UqgEnM9zm1Kj
- VROA==
+ bh=ULR1MOYYwr9yyGYfXLKVNEWBcuu6r/97Xn5RLFPLZiU=;
+ b=Z9FajGgF2An6Xz8gs8ivsuJUzjD2J8DLU8SV8VivWXaxKC5Sb6t5CFHjKeJkbBrQz8
+ av+j/Oamc+GsNLkQ3LX9987l9sQOLzu6JzAjE6mVlaOTQBfxNf318q+X4oQIY6t6VNpP
+ rZHPPjKJ4ZEcNuR7TI0eATZNoqZkjp/jDPfjgA/vmw42EHLtfE/l7ZlUJ3/q1rPD528T
+ ukv6JIm59FonXCxOo3OL8e5qwR1T36XiBbobOYSOgy3cUCCxfRUrSEAadtGBQpSTs2VF
+ rnVSE5CtFLc3kCap3a0AtBrbH6WNidWAkhcDgN14fW97ww8ho0vQQyLzjryWupD1tywh
+ dB+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733994820; x=1734599620;
+ d=1e100.net; s=20230601; t=1733994823; x=1734599623;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/F55ObCsESGa2ajDHpDHF4jP1HDevLQyTNQkvDxryZY=;
- b=bP0vbLbj0b489AiYuBH3GCB97lfO/ACTz+mpoFWll7haSSwh4JxiIn+3BkQDR1W2C7
- W1oQZkeI7Nbx0RmFBuVXSqVos1eRLCvJ54pUFsd6h+9ozfEO2muAtFp3tg35fFujvTMy
- ACa5b9RNz0ft7Q1p5ueJoIuQBN7Aa7L4i9mYsHN/iTR38alTqhujoMHgUYvVvQ1YdRQE
- dY9PWhs6nc4nWi3EpvwD8Sv6zcjtmhb0qBbdE4DCwOzs12YXnArypY/2ute6cUHWTitt
- N5R9sxn2tscbHbhD8fTNFebxm5u441Qq/b3zMwDux7W4SKjItAI8TccTNJouZ2C7Yb4Y
- 653A==
-X-Gm-Message-State: AOJu0YxsLfwrH3l8LkWT0kaW+BY2thAaJL3TIDac9cqQOHd45kbuZGLp
- +2x+0xRS/bv3eUPWTWUts+A9E9q9WF+5DjVc7zJSW5GjTzNdftdgZHq/7Q==
-X-Gm-Gg: ASbGncs8YOnCNdoWA7dIcF2zOdE+/+zbVm0pvZ5cjF8xT2SchMeGHuBcg6Yeznbh8SV
- UcWVPJDtT7kWFqUdWGdWjl3dODdMVhdRg70ASRdyNtZ6q3+gVOYnsZrVF0z4gq9bZSybNP/SWSM
- eyXQbw/qS24/c6CX4yiZtXKoAwG0Br0fZ9zhHiS2azvVeXC5emi5KicF6Laz13+g/nQh/MizqIf
- /ZVKLjvZL2gpscMjYh3EBEOkZ/A7SisVM23+sAcKRY3t+boDk1F1bODVfA=
-X-Google-Smtp-Source: AGHT+IGFDtjgOHUxo8g3ghYCgKiRSfX9nQvz+vDR5ly2F/IqbpKwvi3OGVUcH4kDcbFVdCS4nPwHwQ==
-X-Received: by 2002:a17:90b:2790:b0:2ee:f80c:688d with SMTP id
- 98e67ed59e1d1-2f12802a503mr8811041a91.25.1733994820087; 
- Thu, 12 Dec 2024 01:13:40 -0800 (PST)
+ bh=ULR1MOYYwr9yyGYfXLKVNEWBcuu6r/97Xn5RLFPLZiU=;
+ b=NIhO4biYqNL3z2oyk51vxdbZdqnOD6Sr63euY8DdHuaxwOlDNVf7l1CrGPGvuLVBwt
+ wmfPNPsg1bp2+hvZnOgG2OXqrb7ZUwcUWAyu8ApnEAAAPKzngcVLww3vxW24uqYG/FDB
+ 8oNa9Dd3owZqO+9X17r3Lvch6ZHKvxKvNMnQNAtrM0GcrTD/dMSrpjZjTj2ldygvDyBo
+ VedHVZoyc4Ryd9cEeuiHNzZ0Wo+gJbzTPQUt30rKqX7IGNdIxle68WJVL98l0+J+Hyxy
+ ZE/xCAEr/iqH9aRM84kjYcJ7VfqlVdcXgonGJo6RmemM5mvQ2iayNWcblP1q+X7X70co
+ i0eQ==
+X-Gm-Message-State: AOJu0YxznPioK31Qzzw0IK/m9WsO0isU+uQmyiawDVsmFtD8qWGiyNCy
+ beuwJWHKxw+LAVk/m7g30ZJClF1bOB5zRGzn6ZVrYZXV+UI2YRineWZkIg==
+X-Gm-Gg: ASbGnct3jQbZuShGG64eybggsnszOaWVWWCvfrrn/RwVvcWcOfI3ifCWpoYI3UP8X0t
+ v1gVNx1haWkEWDHaqN+cx8X5CBq+Szp4xyLaKBA/gdvOdtwTN1/mODeMZPNaD/1Qb5OZehjXlbk
+ khPJ96Dwh+L13ROOpLXocf+HZYdOOTI95JdSXvrATyGQWgFF3uz2zjzuX6krpJlaLX7MMNssu9P
+ dc0iZ4xSMkXFuJtrr0WuTVB//NO3crRihrCa672wyf2+5iUzsdnxo+xArw=
+X-Google-Smtp-Source: AGHT+IGvLUkOVAVtOjJpi8pvPdgsZ4JY+K6gBQ/YqsTjZ5g39Y9YLHrEQ1LrywEc/Xr7gU5yy732Kw==
+X-Received: by 2002:a17:90b:4b04:b0:2ee:d824:b594 with SMTP id
+ 98e67ed59e1d1-2f1393264c0mr4236965a91.31.1733994823468; 
+ Thu, 12 Dec 2024 01:13:43 -0800 (PST)
 Received: from wheely.local0.net ([1.146.48.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.37
+ 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 01:13:39 -0800 (PST)
+ Thu, 12 Dec 2024 01:13:43 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 02/11] usb/msd: Split in and out packet handling
-Date: Thu, 12 Dec 2024 19:13:13 +1000
-Message-ID: <20241212091323.1442995-3-npiggin@gmail.com>
+Subject: [PATCH 03/11] usb/msd: Ensure packet structure layout is correct
+Date: Thu, 12 Dec 2024 19:13:14 +1000
+Message-ID: <20241212091323.1442995-4-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212091323.1442995-1-npiggin@gmail.com>
 References: <20241212091323.1442995-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,322 +96,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Split in and out packet handling int otheir own functions, to make
-them a bit more managable.
+These structures are hardware interfaces, ensure the layout is
+correct.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/usb/dev-storage.c | 266 +++++++++++++++++++++++--------------------
- 1 file changed, 145 insertions(+), 121 deletions(-)
+ hw/usb/dev-storage.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 4f1e8b7f6cb..2d7306b0572 100644
+index 2d7306b0572..87c22476f6b 100644
 --- a/hw/usb/dev-storage.c
 +++ b/hw/usb/dev-storage.c
-@@ -395,158 +395,182 @@ static void usb_msd_cancel_io(USBDevice *dev, USBPacket *p)
-     }
+@@ -27,7 +27,7 @@
+ #define MassStorageReset  0xff
+ #define GetMaxLun         0xfe
+ 
+-struct usb_msd_cbw {
++struct QEMU_PACKED usb_msd_cbw {
+     uint32_t sig;
+     uint32_t tag;
+     uint32_t data_len;
+@@ -636,6 +636,9 @@ static const TypeInfo usb_storage_dev_type_info = {
+ 
+ static void usb_msd_register_types(void)
+ {
++    qemu_build_assert(sizeof(struct usb_msd_cbw) == 31);
++    qemu_build_assert(sizeof(struct usb_msd_csw) == 13);
++
+     type_register_static(&usb_storage_dev_type_info);
  }
  
--static void usb_msd_handle_data(USBDevice *dev, USBPacket *p)
-+static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
- {
-     MSDState *s = (MSDState *)dev;
-     uint32_t tag;
-     struct usb_msd_cbw cbw;
--    uint8_t devep = p->ep->nr;
-     SCSIDevice *scsi_dev;
-     int len;
- 
--    if (s->needs_reset) {
--        p->status = USB_RET_STALL;
--        return;
--    }
-+    switch (s->mode) {
-+    case USB_MSDM_CBW:
-+        if (p->iov.size != 31) {
-+            error_report("usb-msd: Bad CBW size");
-+            goto fail;
-+        }
-+        usb_packet_copy(p, &cbw, 31);
-+        if (le32_to_cpu(cbw.sig) != 0x43425355) {
-+            error_report("usb-msd: Bad signature %08x",
-+                         le32_to_cpu(cbw.sig));
-+            goto fail;
-+        }
-+        scsi_dev = scsi_device_find(&s->bus, 0, 0, cbw.lun);
-+        if (scsi_dev == NULL) {
-+            error_report("usb-msd: Bad LUN %d", cbw.lun);
-+            goto fail;
-+        }
-+        tag = le32_to_cpu(cbw.tag);
-+        s->data_len = le32_to_cpu(cbw.data_len);
-+        if (s->data_len == 0) {
-+            s->mode = USB_MSDM_CSW;
-+        } else if (cbw.flags & 0x80) {
-+            s->mode = USB_MSDM_DATAIN;
-+        } else {
-+            s->mode = USB_MSDM_DATAOUT;
-+        }
-+        trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
-+                                 cbw.cmd_len, s->data_len);
-+        assert(le32_to_cpu(s->csw.residue) == 0);
-+        s->scsi_len = 0;
-+        s->req = scsi_req_new(scsi_dev, tag, cbw.lun,
-+                              cbw.cmd, cbw.cmd_len, NULL);
-+        if (s->commandlog) {
-+            scsi_req_print(s->req);
-+        }
-+        len = scsi_req_enqueue(s->req);
-+        if (len) {
-+            scsi_req_continue(s->req);
-+        }
-+        break;
- 
--    switch (p->pid) {
--    case USB_TOKEN_OUT:
--        if (devep != 2)
-+    case USB_MSDM_DATAOUT:
-+        trace_usb_msd_data_out(p->iov.size, s->data_len);
-+        if (p->iov.size > s->data_len) {
-             goto fail;
-+        }
- 
--        switch (s->mode) {
--        case USB_MSDM_CBW:
--            if (p->iov.size != 31) {
--                error_report("usb-msd: Bad CBW size");
--                goto fail;
--            }
--            usb_packet_copy(p, &cbw, 31);
--            if (le32_to_cpu(cbw.sig) != 0x43425355) {
--                error_report("usb-msd: Bad signature %08x",
--                             le32_to_cpu(cbw.sig));
--                goto fail;
--            }
--            scsi_dev = scsi_device_find(&s->bus, 0, 0, cbw.lun);
--            if (scsi_dev == NULL) {
--                error_report("usb-msd: Bad LUN %d", cbw.lun);
--                goto fail;
--            }
--            tag = le32_to_cpu(cbw.tag);
--            s->data_len = le32_to_cpu(cbw.data_len);
--            if (s->data_len == 0) {
--                s->mode = USB_MSDM_CSW;
--            } else if (cbw.flags & 0x80) {
--                s->mode = USB_MSDM_DATAIN;
--            } else {
--                s->mode = USB_MSDM_DATAOUT;
--            }
--            trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
--                                     cbw.cmd_len, s->data_len);
--            assert(le32_to_cpu(s->csw.residue) == 0);
--            s->scsi_len = 0;
--            s->req = scsi_req_new(scsi_dev, tag, cbw.lun, cbw.cmd, cbw.cmd_len, NULL);
--            if (s->commandlog) {
--                scsi_req_print(s->req);
--            }
--            len = scsi_req_enqueue(s->req);
-+        if (s->scsi_len) {
-+            usb_msd_copy_data(s, p);
-+        }
-+        if (le32_to_cpu(s->csw.residue)) {
-+            len = p->iov.size - p->actual_length;
-             if (len) {
--                scsi_req_continue(s->req);
-+                usb_packet_skip(p, len);
-+                if (len > s->data_len) {
-+                    len = s->data_len;
-+                }
-+                s->data_len -= len;
-+                if (s->data_len == 0) {
-+                    s->mode = USB_MSDM_CSW;
-+                }
-             }
--            break;
-+        }
-+        if (p->actual_length < p->iov.size) {
-+            trace_usb_msd_packet_async();
-+            s->packet = p;
-+            p->status = USB_RET_ASYNC;
-+        }
-+        break;
- 
--        case USB_MSDM_DATAOUT:
--            trace_usb_msd_data_out(p->iov.size, s->data_len);
--            if (p->iov.size > s->data_len) {
--                goto fail;
--            }
-+    default:
-+        goto fail;
-+    }
-+    return;
- 
--            if (s->scsi_len) {
--                usb_msd_copy_data(s, p);
--            }
--            if (le32_to_cpu(s->csw.residue)) {
--                len = p->iov.size - p->actual_length;
--                if (len) {
--                    usb_packet_skip(p, len);
--                    if (len > s->data_len) {
--                        len = s->data_len;
--                    }
--                    s->data_len -= len;
--                    if (s->data_len == 0) {
--                        s->mode = USB_MSDM_CSW;
--                    }
--                }
--            }
--            if (p->actual_length < p->iov.size) {
--                trace_usb_msd_packet_async();
--                s->packet = p;
--                p->status = USB_RET_ASYNC;
--            }
--            break;
-+fail:
-+    p->status = USB_RET_STALL;
-+}
- 
--        default:
-+static void usb_msd_handle_data_in(USBDevice *dev, USBPacket *p)
-+{
-+    MSDState *s = (MSDState *)dev;
-+    int len;
-+
-+    switch (s->mode) {
-+    case USB_MSDM_DATAOUT:
-+        if (s->data_len != 0 || p->iov.size < 13) {
-             goto fail;
-         }
-+        /* Waiting for SCSI write to complete.  */
-+        trace_usb_msd_packet_async();
-+        s->packet = p;
-+        p->status = USB_RET_ASYNC;
-         break;
- 
--    case USB_TOKEN_IN:
--        if (devep != 1)
-+    case USB_MSDM_CSW:
-+        if (p->iov.size < 13) {
-             goto fail;
-+        }
- 
--        switch (s->mode) {
--        case USB_MSDM_DATAOUT:
--            if (s->data_len != 0 || p->iov.size < 13) {
--                goto fail;
--            }
--            /* Waiting for SCSI write to complete.  */
-+        if (s->req) {
-+            /* still in flight */
-             trace_usb_msd_packet_async();
-             s->packet = p;
-             p->status = USB_RET_ASYNC;
--            break;
-+        } else {
-+            usb_msd_send_status(s, p);
-+            s->mode = USB_MSDM_CBW;
-+        }
-+        break;
- 
--        case USB_MSDM_CSW:
--            if (p->iov.size < 13) {
--                goto fail;
-+    case USB_MSDM_DATAIN:
-+        trace_usb_msd_data_in(p->iov.size, s->data_len, s->scsi_len);
-+        if (s->scsi_len) {
-+            usb_msd_copy_data(s, p);
-+        }
-+        if (le32_to_cpu(s->csw.residue)) {
-+            len = p->iov.size - p->actual_length;
-+            if (len) {
-+                usb_packet_skip(p, len);
-+                if (len > s->data_len) {
-+                    len = s->data_len;
-+                }
-+                s->data_len -= len;
-+                if (s->data_len == 0) {
-+                    s->mode = USB_MSDM_CSW;
-+                }
-             }
-+        }
-+        if (p->actual_length < p->iov.size && s->mode == USB_MSDM_DATAIN) {
-+            trace_usb_msd_packet_async();
-+            s->packet = p;
-+            p->status = USB_RET_ASYNC;
-+        }
-+        break;
- 
--            if (s->req) {
--                /* still in flight */
--                trace_usb_msd_packet_async();
--                s->packet = p;
--                p->status = USB_RET_ASYNC;
--            } else {
--                usb_msd_send_status(s, p);
--                s->mode = USB_MSDM_CBW;
--            }
--            break;
-+    default:
-+        goto fail;
-+    }
-+    return;
- 
--        case USB_MSDM_DATAIN:
--            trace_usb_msd_data_in(p->iov.size, s->data_len, s->scsi_len);
--            if (s->scsi_len) {
--                usb_msd_copy_data(s, p);
--            }
--            if (le32_to_cpu(s->csw.residue)) {
--                len = p->iov.size - p->actual_length;
--                if (len) {
--                    usb_packet_skip(p, len);
--                    if (len > s->data_len) {
--                        len = s->data_len;
--                    }
--                    s->data_len -= len;
--                    if (s->data_len == 0) {
--                        s->mode = USB_MSDM_CSW;
--                    }
--                }
--            }
--            if (p->actual_length < p->iov.size && s->mode == USB_MSDM_DATAIN) {
--                trace_usb_msd_packet_async();
--                s->packet = p;
--                p->status = USB_RET_ASYNC;
--            }
--            break;
-+fail:
-+    p->status = USB_RET_STALL;
-+}
-+
-+static void usb_msd_handle_data(USBDevice *dev, USBPacket *p)
-+{
-+    MSDState *s = (MSDState *)dev;
-+    uint8_t devep = p->ep->nr;
- 
--        default:
-+    if (s->needs_reset) {
-+        p->status = USB_RET_STALL;
-+        return;
-+    }
-+
-+    switch (p->pid) {
-+    case USB_TOKEN_OUT:
-+        if (devep != 2) {
-+            goto fail;
-+        }
-+        usb_msd_handle_data_out(dev, p);
-+        break;
-+
-+    case USB_TOKEN_IN:
-+        if (devep != 1) {
-             goto fail;
-         }
-+        usb_msd_handle_data_in(dev, p);
-         break;
- 
-     default:
 -- 
 2.45.2
 
