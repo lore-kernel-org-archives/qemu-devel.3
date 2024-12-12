@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F4EAE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:14:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55F3AE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfGZ-0003ad-H5; Thu, 12 Dec 2024 04:13:51 -0500
+	id 1tLfGo-0004FU-Qr; Thu, 12 Dec 2024 04:14:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGX-0003Xt-QP
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:49 -0500
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGm-0004EM-Eb
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:14:04 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGW-0008QJ-9A
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:49 -0500
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-2ee50ffcf14so1312990a91.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:13:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGk-00006j-KE
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:14:03 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21145812538so3715315ad.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:14:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733994827; x=1734599627; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1733994841; x=1734599641; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ucwi6GLl0n1B3UVmS7TAz0uWRjmTT8zXFyAAzX+VsQg=;
- b=DvjWIJJih+tY9UwffiHrHRzk6/DhIoq4mGiFsKurrsNDvHuRTH93wpSFSPEjdzHplP
- EwUPAKnIDTv1SoS7E0lM2ajBRWkFgNri+K4r49X9RCdhLvvsPmdW764a3zqrVqljQZGZ
- Fo5hc7wCBVJP57B5ZFsvZafcExgCe9dLcDc2hgC9FIZxAeGCWqFDJBRGDpw3GxB+5C9W
- q9iPayxvXnecQ0RNjhsQ7u93wah48ezNqmNhPX/xo/CZ76ij+zvGu+lrvYJT/cECnR/s
- 9L2U41IgsxjPYRHvlKJU8NlBhQtuzIozIkpxaiP3YxFz4kRPszcGPSaTUnApjgCUjgKv
- l42A==
+ bh=md9GySIJ3TCHpzC0bgJMV4Q1M309e6Yb0FYtaFc/bk4=;
+ b=TgqO2/fxEyqhmeEONUEchntgH78wA4jutKZyyZQI17GEOP79vLgRI1YFmuenygqSo5
+ ACVBxkeryyfpj2btMZdXGaMfEMovHoLt9NEwaf2l2pSamhwXWFcsyrb7Q/2+BHGLn+GV
+ V/NiniaSy/bMwG/Ty5nVT4W/op853zgsR0xxu2Yy+u4z/BKoYPEDs+hgVekOWwCm+vU0
+ cwcB7rLQnqpenn3B1NxbZuz/9ht9M66Y1t/CY4QgGpnxi24F6rGOIWvCM3LmerQmMJI1
+ c7GLzAUjojgsOlqW1BQ/IGEz9RFOIJ6cyJhdnm+EqzCHo6LKRsXZYGiMP7SCvlJ9F5Su
+ xECw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733994827; x=1734599627;
+ d=1e100.net; s=20230601; t=1733994841; x=1734599641;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ucwi6GLl0n1B3UVmS7TAz0uWRjmTT8zXFyAAzX+VsQg=;
- b=uGJkIMXObQooFqDQnLH6q73V4Tx+mRhUkm5O3qJD+9LP/ehyI7jHy4A+Nnyj7kkGLU
- olQ61GcwnGPkqJDw9StMFkRsb/eCVFt280Kf7BC0kYLYGKy6Gd9aVmaEriHoswN0vVlZ
- wiKzsXLN7KyRXff9FQxXK/nrmhzJGnLK+gNSGJGyWXvz9xrfxrzRrG3MXCMUhQUp26ux
- SIKmNLhzLRvNbBFDkFwRftFl5TtuNWeoX13dm7vpA/CbRxeZbDZx8P7MGVJ0FuTf9lbr
- b6jr/lRAmm8lrHE4PqSkQbzlXbL13Bm9QIrWrYPMbK18IVM6debpLpkMhiCD5yrsRepK
- hb5A==
-X-Gm-Message-State: AOJu0YwaERJ46xC+0bflN2fFG9gLu54fE59lyI7rTzz/G2GyRpZ8jI0j
- t9Jx5ngigp5a8D1Gy+jChyFtyKRw/2qE+b+k89DNzZXUvbLFWKtMmrTpYQ==
-X-Gm-Gg: ASbGncvuLX30YuqH0mvR4qVmb/CkANy7IRzR9KgPFWf4Gnt3hPzvfoB2TcGFzRazDEW
- UZ5KVWnR6SgKzJih76XcQq1ZA8iI9QVrDDjseB3CLffjflXPlCeD6jig95c+0NdkDaV8DplFLai
- Etd2Drt5FAeZdJkM7R6ygiyL/gT/ST0DURSnwtyBnN0FW7X//Rl2+7KMImEWdbpvlRU2majYnBb
- 43fon/B+FkcB8jl+8IrqBYEu0f+8pVW6ZPv2EpcZTiABd6zv1UHOj0TqaI=
-X-Google-Smtp-Source: AGHT+IEx6rq8Abxx5Wz1SytB24rBtT1pu0kxc+lCl/qHXCieTOHz/HwmOcAweE21/r3EOJu6O72xwA==
-X-Received: by 2002:a17:90b:1f81:b0:2e2:c2b0:d03e with SMTP id
- 98e67ed59e1d1-2f13abc6e43mr3677301a91.5.1733994826672; 
- Thu, 12 Dec 2024 01:13:46 -0800 (PST)
+ bh=md9GySIJ3TCHpzC0bgJMV4Q1M309e6Yb0FYtaFc/bk4=;
+ b=lrf5kD4mTqZ3Cg4SbFqbevjk6WrkKFgX0KsJRLplkyrKtpKhEr9PfUw7097xpwDcYb
+ TWOkf/9GVIK8E7aaoIM0Pgn2Y2PeiqwkeGLuCyNJOlLoitn0IDxKigyLapenpLzqoERr
+ +Ez2KMATDjCyfaju07m/ALcx5RbrXvemAZT/L0mS2W3iusl6SIaYSOPQ3vxwdvXXtTX4
+ Wd1n68E7x5FdhHLaKipuXv1nV2Ulo3m9/ZI2EFT+7uSmyizMs04ZbHFimQBvvWb6cH6G
+ T5+RSA0nvXsoBvrBisPGVUrAYbqEZrgKBpNPaqpdxSUDPzpW7M7yONxb/zsLf93/B93I
+ x6BQ==
+X-Gm-Message-State: AOJu0YyODfzY610wffTTau2pWeDAso1Bz1lJFrypAq2Xn4gaVPocrxfV
+ 0mp/iFqIL1Yx38YgHm+j/5yu+0G0HJBli0KThLww00ytuCcN1E61P5L+NQ==
+X-Gm-Gg: ASbGncs3V1bKfHyZUSWIZzmej95mu2WfPmN2AFOH0UR0BdzCTt7eLl8xG4sMSeFdxfj
+ 6vcdmoAaiaiNWq4Lv+pQJCO5iJi874AjFwtMuRz3y2zcyFGmBRG6UpkvB9pwwtcKSUzJYD5YMeU
+ oyvRyEdWB909gxYpMds5IrV1W2zQeARMUtnyGzEcGUSN02u0E2QXWJ/gNBDzFoJsTAg004lcPOU
+ VfTnGmGKS0qbI36Cx3pIDFXkxN+1VKk97Z2LFYW4QKjewqUKumUjPu9LTY=
+X-Google-Smtp-Source: AGHT+IF+Oro7OkMLzh8csvIDMa/cw+yX5StFgD3DXFfEqsD7ncFzNCvbPmAT4HatWKaB3OO32nXjsw==
+X-Received: by 2002:a17:90b:1b0f:b0:2ee:d433:7c54 with SMTP id
+ 98e67ed59e1d1-2f1392b94e8mr4675722a91.19.1733994840654; 
+ Thu, 12 Dec 2024 01:14:00 -0800 (PST)
 Received: from wheely.local0.net ([1.146.48.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.43
+ 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 01:13:46 -0800 (PST)
+ Thu, 12 Dec 2024 01:14:00 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 04/11] usb/msd: Improved handling of mass storage reset
-Date: Thu, 12 Dec 2024 19:13:15 +1000
-Message-ID: <20241212091323.1442995-5-npiggin@gmail.com>
+Subject: [PATCH 08/11] usb/msd: Add some additional assertions
+Date: Thu, 12 Dec 2024 19:13:19 +1000
+Message-ID: <20241212091323.1442995-9-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212091323.1442995-1-npiggin@gmail.com>
 References: <20241212091323.1442995-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,28 +96,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The mass storage reset request handling does not reset in-flight
-SCSI requests or USB MSD packets. Implement this by calling the
-device reset handler which should take care of everything.
+Add more assertions to help verify internal logic.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- hw/usb/dev-storage.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/usb/dev-storage.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
 diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 87c22476f6b..c7c36ac80fa 100644
+index 4e23537cd75..c04cee0041b 100644
 --- a/hw/usb/dev-storage.c
 +++ b/hw/usb/dev-storage.c
-@@ -359,7 +359,7 @@ static void usb_msd_handle_control(USBDevice *dev, USBPacket *p,
-         /* Class specific requests.  */
-     case ClassInterfaceOutRequest | MassStorageReset:
-         /* Reset state ready for the next CBW.  */
--        s->mode = USB_MSDM_CBW;
-+        usb_msd_handle_reset(dev);
-         break;
-     case ClassInterfaceRequest | GetMaxLun:
-         maxlun = 0;
+@@ -264,13 +264,24 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
+     MSDState *s = DO_UPCAST(MSDState, dev.qdev, req->bus->qbus.parent);
+     USBPacket *p = s->data_packet;
+ 
+-    if ((s->mode == USB_MSDM_DATAOUT) != (req->cmd.mode == SCSI_XFER_TO_DEV)) {
+-        usb_msd_fatal_error(s);
+-        return;
++    if (s->mode == USB_MSDM_DATAIN) {
++        if (req->cmd.mode == SCSI_XFER_TO_DEV) {
++            usb_msd_fatal_error(s);
++            return;
++        }
++    } else if (s->mode == USB_MSDM_DATAOUT) {
++        if (req->cmd.mode != SCSI_XFER_TO_DEV) {
++            usb_msd_fatal_error(s);
++            return;
++        }
++    } else {
++        g_assert_not_reached();
+     }
+ 
++    assert(s->scsi_len == 0);
+     s->scsi_len = len;
+     s->scsi_off = 0;
++
+     if (p) {
+         usb_msd_copy_data(s, p);
+         p = s->data_packet;
+@@ -288,6 +299,10 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
+ 
+     trace_usb_msd_cmd_complete(req->status, req->tag);
+ 
++    g_assert(s->req);
++    /* The CBW is what starts the SCSI request */
++    g_assert(s->mode != USB_MSDM_CBW);
++
+     s->csw.sig = cpu_to_le32(0x53425355);
+     s->csw.tag = cpu_to_le32(req->tag);
+     s->csw.residue = cpu_to_le32(s->data_len);
+@@ -486,7 +501,7 @@ static void usb_msd_handle_data_out(USBDevice *dev, USBPacket *p)
+         trace_usb_msd_cmd_submit(cbw.lun, tag, cbw.flags,
+                                  cbw.cmd_len, s->data_len);
+         assert(le32_to_cpu(s->csw.residue) == 0);
+-        s->scsi_len = 0;
++        assert(s->scsi_len == 0);
+         s->req = scsi_req_new(scsi_dev, tag, cbw.lun,
+                               cbw.cmd, cbw.cmd_len, NULL);
+         if (s->commandlog) {
 -- 
 2.45.2
 
