@@ -4,85 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC88E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 19:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 778ABE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 19:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLor8-0007pR-Br; Thu, 12 Dec 2024 14:28:14 -0500
+	id 1tLpEO-0005G9-H9; Thu, 12 Dec 2024 14:52:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tLor5-0007XR-Aj
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 14:28:11 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1tLpEM-0005Fl-PS
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 14:52:14 -0500
+Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tLor2-0005w5-Fn
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 14:28:11 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-2161eb95317so9562375ad.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 11:28:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <gourry@gourry.net>) id 1tLpEK-0003wg-SG
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 14:52:14 -0500
+Received: by mail-qk1-x732.google.com with SMTP id
+ af79cd13be357-7b6eb531e13so50187685a.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 11:52:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734031687; x=1734636487; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mzGerBcfcsrYI8fEpiRFEGkIMfRmE6+6rhk2pX6Q85Y=;
- b=nSoug8QLtzjnH4Id0X+9ZnTiqPFwwSsEQ4a90tbxLOblcKkHDSBPYMP7QrIfLWBsMb
- EVYfKdaQOPl4ysmPZv26+FUJRrCUfqd1GcfRTb9gk/9KL50DG8/SOE9mx+iMltv4PrRc
- 2KOiqH9BH5mzUQ89bOnHmYFJMZM7R+J4QMw7oQVrBivLjDllHdxeF43lovkf7zLEvmEZ
- /VOZq24iudlhfnmZa516mycNPIjE8d8v9ufhlLgc8qcsE4VAuTwWPn0OKs6UVuS3tubS
- +2cI6UUfoKRUFJoOkTW3yb3ZzlcCiRiIEan81twDlBboGhhSNjcAKuZh8/Mn5GXxM+bo
- nGAg==
+ d=gourry.net; s=google; t=1734033131; x=1734637931; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=eJV3UCNwEAe2Dr+yRJd54EBGWomKGB6Lx2nk3vQKPSg=;
+ b=RrYy9oQ0t8Kmy6mBC2WZFRjT9vI37oWU9DIsv9GvCfXiLWH8hMPiE7iJ9HDVEOT81q
+ TK/OgQbOvNXy/T6KBRLw1v1FpyO09HpGB/6lXp1UZwTO28JnXdfEjVhkUrBMtuicNnqn
+ hXr2tSBTtBMu01BEvZgSO6WsUwuVcuW12k8BQkf7AfeLfbWAq3HgYcsMk3Ty8TS99WpF
+ 3B5fLcMI7ZlPKUAyx68U6O04BBWWesuKheJKS5WqBFZzA+irB7Wf+lYjtkywgImH9GYE
+ qlIRpQHgwAYx+2fczc4RkHFq1QIf58+u6knTTUcx9DA4BN6lja9nRgEsAzdZ5fgUKETD
+ wwIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734031687; x=1734636487;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mzGerBcfcsrYI8fEpiRFEGkIMfRmE6+6rhk2pX6Q85Y=;
- b=LAHGQDrJsp8CIfBpt4anoxexyxHMiz9UhlP3PUUM2Pps0vDehgHZBA5z+PSrjZhZH3
- 3GWtQGQUid0zxD/e9oEuUmPMUY67jNhkmGvOblKLmHEN3Y4eF4H8nIc0G5YM/78eEtie
- GvYfDFfsuRnk1UFN5VGoqJZicLAzFUCxcOyJ8/y5auYR7y/i1I9rIEjdi8m3xVUNhoTY
- usdTXNW9RMCbrht8oWSXzGfliVriTyKtsESPo43X0zruHV905VXb0cVUV8hF1KWupnbi
- Kk1KemeeJh2zO0AaBxW7R2uR/Ab+cDiDX4tuc3zu6ZuLK408qfTCZHobR1mSNXtSRGG0
- ICUA==
+ d=1e100.net; s=20230601; t=1734033131; x=1734637931;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eJV3UCNwEAe2Dr+yRJd54EBGWomKGB6Lx2nk3vQKPSg=;
+ b=FLHiM2HyoS72dhowf6PCP86zVHE3Yf4XmGITvrtlSrVwuLKrkK9FuD8JlsUqjYEJhH
+ NUBqjkD7ZcRjY+pUYdD3vUmD4wzyXFJ1Cuy3KyF6NWSGq1ynwZImSeMTRF1RB32ZljZP
+ 1+78nCZaR/ztuRI57QrlR58zg9Y1ZQtLh6XrGdtfgET6YHjmUnAH6deB46Pt22gzTA3q
+ r+O+OUMLZ7VLTEbZbjonoGohuQ/NHLhaOzVm5uZOMGqekG6WWhc53jADhlr1eB5MdmEP
+ TU9sN3zrJsR3Vcz5VtBEMTKra8pPvsAmpPHAL7q4MdeLf3QH1RdXf0EVVW7e4zj8hB4S
+ 31bA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUjKdyIKWTXvwQayCfRwpAXfJjvVcjKCGsRWZz4nr+D0m40i7PqmCHQRTG+VRSTdxt1a8+fqqJbRrKn@nongnu.org
-X-Gm-Message-State: AOJu0YwqJ5AAky2cRHXFMVXlcZO/LP+r3WHk72JiFrxyaaQLqFPgvtH6
- pFp7bL046gSxr0sMW2uFnwSrf1Z/hnWdT80DkLArb5KIN2tilLNjwhLxESy/vvg=
-X-Gm-Gg: ASbGncuc4UCqV2urJRX2SwD2KqAzPCFBZUKgtfP5m57kky89fuxtYNQk5kPq1mKh0b0
- byFA0t9CiC7IiV2B+5L84UoRWaVxW6YqnsiHJPYqZadcxQybVPv/JWd6v9rIBmCk+Q/ruzVR7gr
- z5hmS6DujLlNmgGXBjIR/Y5uggWnrgsrtPVNyLwLmuu1uflaBvN2KMwEjP1m5uA7+PH9dZu8muh
- SEKz2oMTfYfgaifUSjiZw+rxOviMO5IskKF9PYLtJ+n5nEaeIIQuSN5RM55RmarF4uGP4xruvk+
- 0U8o67IrJjYe1t+8IvQRpn7iHVh3
-X-Google-Smtp-Source: AGHT+IGWRgfNl4WziVxrL67XdEHc+lzDdj5TVYOHRVNdJRdvvXX5ZqyGjRVpyKF+kPRnjSE6DhaaJA==
-X-Received: by 2002:a17:902:e752:b0:216:5b8b:232c with SMTP id
- d9443c01a7336-217785632ebmr129526775ad.54.1734031686787; 
- Thu, 12 Dec 2024 11:28:06 -0800 (PST)
-Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
- [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2167925216bsm47389095ad.235.2024.12.12.11.28.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 11:28:06 -0800 (PST)
-Message-ID: <95c2ca5e-ea79-4d73-93ca-8ac9c6b615b8@linaro.org>
-Date: Thu, 12 Dec 2024 11:28:05 -0800
+ AJvYcCXHaJ2xgil6VycdZBsmlBhye/bcOcqD/1nEtKzlP00yWz9gzIPPN69ZpUrg4eVRgbHdZ/8jy1cG2nM2@nongnu.org
+X-Gm-Message-State: AOJu0YwZLYL9uKSW3IgGkcfMM57RTi1iNKBPSaY45lRCkWF6sMFegLpD
+ C+dQDe23bztra7w3pw1pvW2rrEXym9YJAKbMNwk8XCAcd+wYNWaz255rEgnXLFc=
+X-Gm-Gg: ASbGncuH3whGblTltGDJflo4If113N337GxtApSULO1/r24dx7QHSXTRTkyFYC9ug+Q
+ fabw+0an5MCb4NW0D6vDCOwKoNUAVV4HiAyMViQWjXfMU/NAtxdoQ2SQTM372e/NNZO913cn909
+ hWVnihNdltC61had4U6TVHwAoedVkbI51PNSu1qJ3Y/te7UO7jA/aOcCMXoPsS4xEIPOuZq/NQ4
+ g3omM3aCBUwrxcY0sZ+cEBJhYDcPJion4FeqlvPO92GiqcpVMPKh1fXADRaiebSR0u6jd3NCE1k
+ /qSh7DAczqoe0uSS5Gpq7hs8Sk4rMUPFHPkCL1RoAQ==
+X-Google-Smtp-Source: AGHT+IFyiPL6K5AGYOLsd4p9hQzVnmuIR8XXj1rvfykXI+mzn70MxmL/wiXnotUopZJ8xPiRXmnpjA==
+X-Received: by 2002:a05:620a:46a6:b0:7b6:7618:d7ce with SMTP id
+ af79cd13be357-7b6f88d08a6mr356836385a.10.1734033130823; 
+ Thu, 12 Dec 2024 11:52:10 -0800 (PST)
+Received: from PC2K9PVX.TheFacebook.com
+ (pool-173-79-56-208.washdc.fios.verizon.net. [173.79.56.208])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b6f25b2155sm116397185a.91.2024.12.12.11.52.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 11:52:10 -0800 (PST)
+Date: Thu, 12 Dec 2024 14:52:02 -0500
+From: Gregory Price <gourry@gourry.net>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: linux-cxl@vger.kernel.org, qemu-devel@nongnu.org,
+ svetly.todorov@memverge.com, nifan.cxl@gmail.com
+Subject: Re: [PATCH RFC v3 3/3] mhsld: implement MHSLD device
+Message-ID: <Z1s-4oPjHPFpnnnK@PC2K9PVX.TheFacebook.com>
+References: <20241018161252.8896-1-gourry@gourry.net>
+ <20241018161252.8896-4-gourry@gourry.net>
+ <20241212174016.0000002a@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 18/18] user: Move various declarations out of
- 'exec/exec-all.h'
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20241212185341.2857-1-philmd@linaro.org>
- <20241212185341.2857-19-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241212185341.2857-19-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x634.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241212174016.0000002a@huawei.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
+ envelope-from=gourry@gourry.net; helo=mail-qk1-x732.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,150 +101,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTIvMjQgMTA6NTMsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBN
-b3ZlIHZhcmlvdXMgZGVjbGFyYXRpb25zIHJlbGF0ZWQgdG8gdXNlciBlbXVsYXRpb24NCj4g
-ZnJvbSAiZXhlYy9leGVjLWFsbC5oIiB0byAidXNlci9jcHVfbG9vcC5oIi4NCj4gDQo+IFNp
-Z25lZC1vZmYtYnk6IFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9y
-Zz4NCj4gLS0tDQo+ICAgaW5jbHVkZS9leGVjL2V4ZWMtYWxsLmggICAgIHwgNTUgKy0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQ0KPiAgIGluY2x1ZGUvdXNlci9jcHVf
-bG9vcC5oICAgICB8IDU0ICsrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKw0K
-PiAgIGFjY2VsL3RjZy91c2VyLWV4ZWMuYyAgICAgICB8ICAxICsNCj4gICBic2QtdXNlci9z
-aWduYWwuYyAgICAgICAgICAgfCAgMSArDQo+ICAgbGludXgtdXNlci9zaWduYWwuYyAgICAg
-ICAgIHwgIDEgKw0KPiAgIHRhcmdldC9hcm0vdGNnL210ZV9oZWxwZXIuYyB8ICAxICsNCj4g
-ICA2IGZpbGVzIGNoYW5nZWQsIDU5IGluc2VydGlvbnMoKyksIDU0IGRlbGV0aW9ucygtKQ0K
-PiANCj4gZGlmZiAtLWdpdCBhL2luY2x1ZGUvZXhlYy9leGVjLWFsbC5oIGIvaW5jbHVkZS9l
-eGVjL2V4ZWMtYWxsLmgNCj4gaW5kZXggYjVlYTYwN2NmNDUuLmM0YTZhZDNhZjJkIDEwMDY0
-NA0KPiAtLS0gYS9pbmNsdWRlL2V4ZWMvZXhlYy1hbGwuaA0KPiArKysgYi9pbmNsdWRlL2V4
-ZWMvZXhlYy1hbGwuaA0KPiBAQCAtMjIsNyArMjIsNiBAQA0KPiAgIA0KPiAgICNpbmNsdWRl
-ICJjcHUuaCINCj4gICAjaWYgZGVmaW5lZChDT05GSUdfVVNFUl9PTkxZKQ0KPiAtI2luY2x1
-ZGUgImV4ZWMvYWJpX3B0ci5oIg0KPiAgICNpbmNsdWRlICJleGVjL2NwdV9sZHN0LmgiDQo+
-ICAgI2VuZGlmDQo+ICAgI2luY2x1ZGUgImV4ZWMvbW11LWFjY2Vzcy10eXBlLmgiDQo+IEBA
-IC01MTgsNjAgKzUxNyw4IEBAIHN0YXRpYyBpbmxpbmUgdGJfcGFnZV9hZGRyX3QgZ2V0X3Bh
-Z2VfYWRkcl9jb2RlKENQVUFyY2hTdGF0ZSAqZW52LA0KPiAgICAgICByZXR1cm4gZ2V0X3Bh
-Z2VfYWRkcl9jb2RlX2hvc3RwKGVudiwgYWRkciwgTlVMTCk7DQo+ICAgfQ0KPiAgIA0KPiAt
-I2lmIGRlZmluZWQoQ09ORklHX1VTRVJfT05MWSkNCj4gKyNpZiAhZGVmaW5lZChDT05GSUdf
-VVNFUl9PTkxZKQ0KPiAgIA0KPiAtLyoqDQo+IC0gKiBhZGp1c3Rfc2lnbmFsX3BjOg0KPiAt
-ICogQHBjOiByYXcgcGMgZnJvbSB0aGUgaG9zdCBzaWduYWwgdWNvbnRleHRfdC4NCj4gLSAq
-IEBpc193cml0ZTogaG9zdCBtZW1vcnkgb3BlcmF0aW9uIHdhcyB3cml0ZSwgb3IgcmVhZC1t
-b2RpZnktd3JpdGUuDQo+IC0gKg0KPiAtICogQWx0ZXIgQHBjIGFzIHJlcXVpcmVkIGZvciB1
-bndpbmRpbmcuICBSZXR1cm4gdGhlIHR5cGUgb2YgdGhlDQo+IC0gKiBndWVzdCBtZW1vcnkg
-YWNjZXNzIC0tIGhvc3QgcmVhZHMgbWF5IGJlIGZvciBndWVzdCBleGVjdXRpb24uDQo+IC0g
-Ki8NCj4gLU1NVUFjY2Vzc1R5cGUgYWRqdXN0X3NpZ25hbF9wYyh1aW50cHRyX3QgKnBjLCBi
-b29sIGlzX3dyaXRlKTsNCj4gLQ0KPiAtLyoqDQo+IC0gKiBoYW5kbGVfc2lnc2Vndl9hY2Nl
-cnJfd3JpdGU6DQo+IC0gKiBAY3B1OiB0aGUgY3B1IGNvbnRleHQNCj4gLSAqIEBvbGRfc2V0
-OiB0aGUgc2lnc2V0X3QgZnJvbSB0aGUgc2lnbmFsIHVjb250ZXh0X3QNCj4gLSAqIEBob3N0
-X3BjOiB0aGUgaG9zdCBwYywgYWRqdXN0ZWQgZm9yIHRoZSBzaWduYWwNCj4gLSAqIEBob3N0
-X2FkZHI6IHRoZSBob3N0IGFkZHJlc3Mgb2YgdGhlIGZhdWx0DQo+IC0gKg0KPiAtICogUmV0
-dXJuIHRydWUgaWYgdGhlIHdyaXRlIGZhdWx0IGhhcyBiZWVuIGhhbmRsZWQsIGFuZCBzaG91
-bGQgYmUgcmUtdHJpZWQuDQo+IC0gKi8NCj4gLWJvb2wgaGFuZGxlX3NpZ3NlZ3ZfYWNjZXJy
-X3dyaXRlKENQVVN0YXRlICpjcHUsIHNpZ3NldF90ICpvbGRfc2V0LA0KPiAtICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgdWludHB0cl90IGhvc3RfcGMsIGFiaV9wdHIgZ3Vl
-c3RfYWRkcik7DQo+IC0NCj4gLS8qKg0KPiAtICogY3B1X2xvb3BfZXhpdF9zaWdzZWd2Og0K
-PiAtICogQGNwdTogdGhlIGNwdSBjb250ZXh0DQo+IC0gKiBAYWRkcjogdGhlIGd1ZXN0IGFk
-ZHJlc3Mgb2YgdGhlIGZhdWx0DQo+IC0gKiBAYWNjZXNzX3R5cGU6IGFjY2VzcyB3YXMgcmVh
-ZC93cml0ZS9leGVjdXRlDQo+IC0gKiBAbWFwZXJyOiB0cnVlIGZvciBpbnZhbGlkIHBhZ2Us
-IGZhbHNlIGZvciBwZXJtaXNzaW9uIGZhdWx0DQo+IC0gKiBAcmE6IGhvc3QgcGMgZm9yIHVu
-d2luZGluZw0KPiAtICoNCj4gLSAqIFVzZSB0aGUgVENHQ1BVT3BzIGhvb2sgdG8gcmVjb3Jk
-IGNwdSBzdGF0ZSwgZG8gZ3Vlc3Qgb3BlcmF0aW5nIHN5c3RlbQ0KPiAtICogc3BlY2lmaWMg
-dGhpbmdzIHRvIHJhaXNlIFNJR1NFR1YsIGFuZCBqdW1wIHRvIHRoZSBtYWluIGNwdSBsb29w
-Lg0KPiAtICovDQo+IC1HX05PUkVUVVJOIHZvaWQgY3B1X2xvb3BfZXhpdF9zaWdzZWd2KENQ
-VVN0YXRlICpjcHUsIHRhcmdldF91bG9uZyBhZGRyLA0KPiAtICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBNTVVBY2Nlc3NUeXBlIGFjY2Vzc190eXBlLA0KPiAtICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBib29sIG1hcGVyciwgdWludHB0
-cl90IHJhKTsNCj4gLQ0KPiAtLyoqDQo+IC0gKiBjcHVfbG9vcF9leGl0X3NpZ2J1czoNCj4g
-LSAqIEBjcHU6IHRoZSBjcHUgY29udGV4dA0KPiAtICogQGFkZHI6IHRoZSBndWVzdCBhZGRy
-ZXNzIG9mIHRoZSBhbGlnbm1lbnQgZmF1bHQNCj4gLSAqIEBhY2Nlc3NfdHlwZTogYWNjZXNz
-IHdhcyByZWFkL3dyaXRlL2V4ZWN1dGUNCj4gLSAqIEByYTogaG9zdCBwYyBmb3IgdW53aW5k
-aW5nDQo+IC0gKg0KPiAtICogVXNlIHRoZSBUQ0dDUFVPcHMgaG9vayB0byByZWNvcmQgY3B1
-IHN0YXRlLCBkbyBndWVzdCBvcGVyYXRpbmcgc3lzdGVtDQo+IC0gKiBzcGVjaWZpYyB0aGlu
-Z3MgdG8gcmFpc2UgU0lHQlVTLCBhbmQganVtcCB0byB0aGUgbWFpbiBjcHUgbG9vcC4NCj4g
-LSAqLw0KPiAtR19OT1JFVFVSTiB2b2lkIGNwdV9sb29wX2V4aXRfc2lnYnVzKENQVVN0YXRl
-ICpjcHUsIHRhcmdldF91bG9uZyBhZGRyLA0KPiAtICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIE1NVUFjY2Vzc1R5cGUgYWNjZXNzX3R5cGUsDQo+IC0gICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgdWludHB0cl90IHJhKTsNCj4gLQ0KPiAtI2Vs
-c2UNCj4gICB2b2lkIHRsYl9yZXNldF9kaXJ0eShDUFVTdGF0ZSAqY3B1LCByYW1fYWRkcl90
-IHN0YXJ0MSwgcmFtX2FkZHJfdCBsZW5ndGgpOw0KPiAgIHZvaWQgdGxiX3Jlc2V0X2RpcnR5
-X3JhbmdlX2FsbChyYW1fYWRkcl90IHN0YXJ0LCByYW1fYWRkcl90IGxlbmd0aCk7DQo+ICAg
-DQo+IGRpZmYgLS1naXQgYS9pbmNsdWRlL3VzZXIvY3B1X2xvb3AuaCBiL2luY2x1ZGUvdXNl
-ci9jcHVfbG9vcC5oDQo+IGluZGV4IGIwZDQ3MDQwMThkLi4yZjkzNTc1ZTJmNCAxMDA2NDQN
-Cj4gLS0tIGEvaW5jbHVkZS91c2VyL2NwdV9sb29wLmgNCj4gKysrIGIvaW5jbHVkZS91c2Vy
-L2NwdV9sb29wLmgNCj4gQEAgLTIwLDcgKzIwLDEwIEBADQo+ICAgI2lmbmRlZiBVU0VSX0NQ
-VV9MT09QX0gNCj4gICAjZGVmaW5lIFVTRVJfQ1BVX0xPT1BfSA0KPiAgIA0KPiArI2luY2x1
-ZGUgImV4ZWMvYWJpX3B0ci5oIg0KPiArI2luY2x1ZGUgImV4ZWMvbW11LWFjY2Vzcy10eXBl
-LmgiDQo+ICAgI2luY2x1ZGUgImV4ZWMvbG9nLmgiDQo+ICsjaW5jbHVkZSAiZXhlYy90YXJn
-ZXRfbG9uZy5oIg0KPiAgICNpbmNsdWRlICJzcGVjaWFsLWVycm5vLmgiDQo+ICAgDQo+ICAg
-R19OT1JFVFVSTiB2b2lkIGNwdV9sb29wKENQVUFyY2hTdGF0ZSAqZW52KTsNCj4gQEAgLTMz
-LDQgKzM2LDU1IEBAIHR5cGVkZWYgc3RydWN0IHRhcmdldF9wdF9yZWdzIHRhcmdldF9wdF9y
-ZWdzOw0KPiAgIA0KPiAgIHZvaWQgdGFyZ2V0X2NwdV9jb3B5X3JlZ3MoQ1BVQXJjaFN0YXRl
-ICplbnYsIHRhcmdldF9wdF9yZWdzICpyZWdzKTsNCj4gICANCj4gKy8qKg0KPiArICogYWRq
-dXN0X3NpZ25hbF9wYzoNCj4gKyAqIEBwYzogcmF3IHBjIGZyb20gdGhlIGhvc3Qgc2lnbmFs
-IHVjb250ZXh0X3QuDQo+ICsgKiBAaXNfd3JpdGU6IGhvc3QgbWVtb3J5IG9wZXJhdGlvbiB3
-YXMgd3JpdGUsIG9yIHJlYWQtbW9kaWZ5LXdyaXRlLg0KPiArICoNCj4gKyAqIEFsdGVyIEBw
-YyBhcyByZXF1aXJlZCBmb3IgdW53aW5kaW5nLiAgUmV0dXJuIHRoZSB0eXBlIG9mIHRoZQ0K
-PiArICogZ3Vlc3QgbWVtb3J5IGFjY2VzcyAtLSBob3N0IHJlYWRzIG1heSBiZSBmb3IgZ3Vl
-c3QgZXhlY3V0aW9uLg0KPiArICovDQo+ICtNTVVBY2Nlc3NUeXBlIGFkanVzdF9zaWduYWxf
-cGModWludHB0cl90ICpwYywgYm9vbCBpc193cml0ZSk7DQo+ICsNCj4gKy8qKg0KPiArICog
-aGFuZGxlX3NpZ3NlZ3ZfYWNjZXJyX3dyaXRlOg0KPiArICogQGNwdTogdGhlIGNwdSBjb250
-ZXh0DQo+ICsgKiBAb2xkX3NldDogdGhlIHNpZ3NldF90IGZyb20gdGhlIHNpZ25hbCB1Y29u
-dGV4dF90DQo+ICsgKiBAaG9zdF9wYzogdGhlIGhvc3QgcGMsIGFkanVzdGVkIGZvciB0aGUg
-c2lnbmFsDQo+ICsgKiBAaG9zdF9hZGRyOiB0aGUgaG9zdCBhZGRyZXNzIG9mIHRoZSBmYXVs
-dA0KPiArICoNCj4gKyAqIFJldHVybiB0cnVlIGlmIHRoZSB3cml0ZSBmYXVsdCBoYXMgYmVl
-biBoYW5kbGVkLCBhbmQgc2hvdWxkIGJlIHJlLXRyaWVkLg0KPiArICovDQo+ICtib29sIGhh
-bmRsZV9zaWdzZWd2X2FjY2Vycl93cml0ZShDUFVTdGF0ZSAqY3B1LCBzaWdzZXRfdCAqb2xk
-X3NldCwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnRwdHJfdCBo
-b3N0X3BjLCBhYmlfcHRyIGd1ZXN0X2FkZHIpOw0KPiArDQo+ICsvKioNCj4gKyAqIGNwdV9s
-b29wX2V4aXRfc2lnc2VndjoNCj4gKyAqIEBjcHU6IHRoZSBjcHUgY29udGV4dA0KPiArICog
-QGFkZHI6IHRoZSBndWVzdCBhZGRyZXNzIG9mIHRoZSBmYXVsdA0KPiArICogQGFjY2Vzc190
-eXBlOiBhY2Nlc3Mgd2FzIHJlYWQvd3JpdGUvZXhlY3V0ZQ0KPiArICogQG1hcGVycjogdHJ1
-ZSBmb3IgaW52YWxpZCBwYWdlLCBmYWxzZSBmb3IgcGVybWlzc2lvbiBmYXVsdA0KPiArICog
-QHJhOiBob3N0IHBjIGZvciB1bndpbmRpbmcNCj4gKyAqDQo+ICsgKiBVc2UgdGhlIFRDR0NQ
-VU9wcyBob29rIHRvIHJlY29yZCBjcHUgc3RhdGUsIGRvIGd1ZXN0IG9wZXJhdGluZyBzeXN0
-ZW0NCj4gKyAqIHNwZWNpZmljIHRoaW5ncyB0byByYWlzZSBTSUdTRUdWLCBhbmQganVtcCB0
-byB0aGUgbWFpbiBjcHUgbG9vcC4NCj4gKyAqLw0KPiArR19OT1JFVFVSTiB2b2lkIGNwdV9s
-b29wX2V4aXRfc2lnc2VndihDUFVTdGF0ZSAqY3B1LCB0YXJnZXRfdWxvbmcgYWRkciwNCj4g
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTU1VQWNjZXNzVHlwZSBh
-Y2Nlc3NfdHlwZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-Ym9vbCBtYXBlcnIsIHVpbnRwdHJfdCByYSk7DQo+ICsNCj4gKy8qKg0KPiArICogY3B1X2xv
-b3BfZXhpdF9zaWdidXM6DQo+ICsgKiBAY3B1OiB0aGUgY3B1IGNvbnRleHQNCj4gKyAqIEBh
-ZGRyOiB0aGUgZ3Vlc3QgYWRkcmVzcyBvZiB0aGUgYWxpZ25tZW50IGZhdWx0DQo+ICsgKiBA
-YWNjZXNzX3R5cGU6IGFjY2VzcyB3YXMgcmVhZC93cml0ZS9leGVjdXRlDQo+ICsgKiBAcmE6
-IGhvc3QgcGMgZm9yIHVud2luZGluZw0KPiArICoNCj4gKyAqIFVzZSB0aGUgVENHQ1BVT3Bz
-IGhvb2sgdG8gcmVjb3JkIGNwdSBzdGF0ZSwgZG8gZ3Vlc3Qgb3BlcmF0aW5nIHN5c3RlbQ0K
-PiArICogc3BlY2lmaWMgdGhpbmdzIHRvIHJhaXNlIFNJR0JVUywgYW5kIGp1bXAgdG8gdGhl
-IG1haW4gY3B1IGxvb3AuDQo+ICsgKi8NCj4gK0dfTk9SRVRVUk4gdm9pZCBjcHVfbG9vcF9l
-eGl0X3NpZ2J1cyhDUFVTdGF0ZSAqY3B1LCB0YXJnZXRfdWxvbmcgYWRkciwNCj4gKyAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBNTVVBY2Nlc3NUeXBlIGFjY2Vzc190
-eXBlLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHVpbnRwdHJf
-dCByYSk7DQo+ICsNCj4gICAjZW5kaWYNCj4gZGlmZiAtLWdpdCBhL2FjY2VsL3RjZy91c2Vy
-LWV4ZWMuYyBiL2FjY2VsL3RjZy91c2VyLWV4ZWMuYw0KPiBpbmRleCA4MTVhMzk1MDNmMy4u
-MDU2MWM0ZjZkYzcgMTAwNjQ0DQo+IC0tLSBhL2FjY2VsL3RjZy91c2VyLWV4ZWMuYw0KPiAr
-KysgYi9hY2NlbC90Y2cvdXNlci1leGVjLmMNCj4gQEAgLTI0LDYgKzI0LDcgQEANCj4gICAj
-aW5jbHVkZSAicWVtdS9iaXRvcHMuaCINCj4gICAjaW5jbHVkZSAicWVtdS9yY3UuaCINCj4g
-ICAjaW5jbHVkZSAiZXhlYy9jcHVfbGRzdC5oIg0KPiArI2luY2x1ZGUgInVzZXIvY3B1X2xv
-b3AuaCINCj4gICAjaW5jbHVkZSAicWVtdS9tYWluLWxvb3AuaCINCj4gICAjaW5jbHVkZSAi
-dXNlci9wYWdlLXByb3RlY3Rpb24uaCINCj4gICAjaW5jbHVkZSAiZXhlYy9wYWdlLXByb3Rl
-Y3Rpb24uaCINCj4gZGlmZiAtLWdpdCBhL2JzZC11c2VyL3NpZ25hbC5jIGIvYnNkLXVzZXIv
-c2lnbmFsLmMNCj4gaW5kZXggZWRiY2Q0NjFiZmEuLmI0ZTE0NTgyMzdhIDEwMDY0NA0KPiAt
-LS0gYS9ic2QtdXNlci9zaWduYWwuYw0KPiArKysgYi9ic2QtdXNlci9zaWduYWwuYw0KPiBA
-QCAtMjEsNiArMjEsNyBAQA0KPiAgICNpbmNsdWRlICJxZW11L29zZGVwLmgiDQo+ICAgI2lu
-Y2x1ZGUgInFlbXUvbG9nLmgiDQo+ICAgI2luY2x1ZGUgInFlbXUuaCINCj4gKyNpbmNsdWRl
-ICJ1c2VyL2NwdV9sb29wLmgiDQo+ICAgI2luY2x1ZGUgImV4ZWMvcGFnZS1wcm90ZWN0aW9u
-LmgiDQo+ICAgI2luY2x1ZGUgInVzZXIvcGFnZS1wcm90ZWN0aW9uLmgiDQo+ICAgI2luY2x1
-ZGUgInVzZXIvdHN3YXAtdGFyZ2V0LmgiDQo+IGRpZmYgLS1naXQgYS9saW51eC11c2VyL3Np
-Z25hbC5jIGIvbGludXgtdXNlci9zaWduYWwuYw0KPiBpbmRleCBhMTkxZTliMjZmMi4uMDg3
-YzRkMjcwZTQgMTAwNjQ0DQo+IC0tLSBhL2xpbnV4LXVzZXIvc2lnbmFsLmMNCj4gKysrIGIv
-bGludXgtdXNlci9zaWduYWwuYw0KPiBAQCAtMzMsNiArMzMsNyBAQA0KPiAgICNpbmNsdWRl
-ICJ0cmFjZS5oIg0KPiAgICNpbmNsdWRlICJzaWduYWwtY29tbW9uLmgiDQo+ICAgI2luY2x1
-ZGUgImhvc3Qtc2lnbmFsLmgiDQo+ICsjaW5jbHVkZSAidXNlci9jcHVfbG9vcC5oIg0KPiAg
-ICNpbmNsdWRlICJ1c2VyL3BhZ2UtcHJvdGVjdGlvbi5oIg0KPiAgICNpbmNsdWRlICJ1c2Vy
-L3NhZmUtc3lzY2FsbC5oIg0KPiAgICNpbmNsdWRlICJ0Y2cvdGNnLmgiDQo+IGRpZmYgLS1n
-aXQgYS90YXJnZXQvYXJtL3RjZy9tdGVfaGVscGVyLmMgYi90YXJnZXQvYXJtL3RjZy9tdGVf
-aGVscGVyLmMNCj4gaW5kZXggYWUwMzdkYzkxNDMuLjg0NmQ2NTlmZjc3IDEwMDY0NA0KPiAt
-LS0gYS90YXJnZXQvYXJtL3RjZy9tdGVfaGVscGVyLmMNCj4gKysrIGIvdGFyZ2V0L2FybS90
-Y2cvbXRlX2hlbHBlci5jDQo+IEBAIC0yNSw2ICsyNSw3IEBADQo+ICAgI2luY2x1ZGUgImV4
-ZWMvcGFnZS1wcm90ZWN0aW9uLmgiDQo+ICAgI2lmZGVmIENPTkZJR19VU0VSX09OTFkNCj4g
-ICAjaW5jbHVkZSAidXNlci9wYWdlLXByb3RlY3Rpb24uaCINCj4gKyNpbmNsdWRlICJ1c2Vy
-L2NwdV9sb29wLmgiDQo+ICAgI2VuZGlmDQo+ICAgI2luY2x1ZGUgImV4ZWMvcmFtX2FkZHIu
-aCINCj4gICAjaW5jbHVkZSAiZXhlYy9jcHVfbGRzdC5oIg0KDQpSZXZpZXdlZC1ieTogUGll
-cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KDQo=
+On Thu, Dec 12, 2024 at 05:40:16PM +0000, Jonathan Cameron via wrote:
+> On Fri, 18 Oct 2024 12:12:52 -0400
+> Gregory Price <gourry@gourry.net> wrote:
+> 
+> > From: Svetly Todorov <svetly.todorov@memverge.com>
+> > 
+> > The shared state file only needs to be intialized once. Even if a guest
+> > dies without clearing the ownership bits associated with its head-ID,
+> > future guests with that ID will clear those bits in cxl_mhsld_realize(),
+> > regardless of whether mhd_init is true or false.
+> 
+> That sounds like a race condition if not all hosts are brought
+> up before the first add.
+>
+
+We weighed this against having to do an external setup like
+
+# SHMID = ./create_sharedmem.sh
+# ./launch_qemu --shmid=$SHMID
+
+Which is what the original non-generalized prototype did.
+
+So yeah, there's a race condition AND a footgun (setting init AFTER
+qemu instances are already using the memory will blow the state away).
+
+This was intended.
+
+As you allude to in the next chunk - the only real way to get around
+this is to have an entirely external process serialize access.
+ 
+> > 
+> > The following command line options create an MHSLD with 4GB of
+> > backing memory, whose state is tracked in /dev/shm/mhd_metadata.
+> > --mhd-init=true tells this instance to initialize the state as
+> > described above.
+> > 
+> > ./qemu-system_x86-64 \
+> > [... other options ...] \
+> > -device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 \
+> > -device cxl-rp,id=rp0,bus=cxl.0,chassis=0,port=0,slot=0 \
+> > -object memory-backend-ram,id=mem0,size=4G \
+> > -device cxl-mhsld,bus=rp0,num-dc-regions=1,volatile-dc-memdev=mem0,id=cxl-mem0,sn=66667,mhd-head=0,mhd-state_file=mhd_metadata,mhd-init=true \
+> > -M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.size=4G \
+> > -qmp unix:/tmp/qmp-sock-1,server,nowait
+> > 
+> > Once this guest completes setup, other guests looking to access the
+> > device can be booted with the same configuration options, but with
+> > --mhd-head != 0,
+> > --mhd-init=false,
+> > and a different QMP socket.
+> > 
+> > Signed-off-by: Gregory Price <gourry@gourry.net>
+> > Signed-off-by: Svetly Todorov <svetly.todorov@memverge.com>
+> 
+> A few trivial things inline.
+> 
+> In general the scheme looks workable but I'm not sure the contraints at setup time
+> etc are suitable for an upstream solution.  Certainly a useful tool to have
+> for kernel development though so I'll try and find time in next few days to apply
+> this on my gitlab tree.
+> 
+> Longer term I think we need a more complex external program or a main / proxy
+> type arrangement so that ordering requirements can be enforce
+
+I marginally disagree.  We have to check ownership during memory use.
+
+We should try not to have an external process dependency for deferencing a
+pointer backed by an emulated DCD device. The current overhead is bad enough.
+
+The shared memory use here mostly limits that overhead to cache invalidation,
+and keeps the entire system fairly simple.
+
+All this is to say - we err'd on the side of keeping it simple, even if it
+has a few stupid footguns.  Obviously open to ideas, though.
+
+>  and we can have
+> richer info.  Having to chat to each qmp interface independently works fine is
+> also a bit more complex than I think we would eventually want.
+> 
+
+This is a small component in someone's fabric manager that translates their
+requests into QMP commands.  Whatever we ultimately decide on, the complexity
+here is about the same.
+
+> Having a solution in place though will make it much easier to move towards
+> an eventual upstreamable solution. This is a great place to start from!
+> 
+> Jonathan
+> 
+> > +/*
+> > + * We limit the number of heads to prevent the shared state
+> > + * region from becoming a major memory hog.  We need 512MB of
+> > + * memory space to track 8-host ownership of 4GB of memory in
+> > + * blocks of 2MB.  This can change if the block size is increased.
+> 
+> I'm lost what makes up that size?
+> 
+
+I think the math is wrong here, we may have calculated based on
+a larger capacity.  I need to go back and look at how we came to 512MB.
+
+~Gregory
 
