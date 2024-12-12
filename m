@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4D62E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 13:46:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08C7DE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 13:46:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLjVn-0007U0-Dq; Thu, 12 Dec 2024 08:45:58 -0500
+	id 1tLjVy-0007Wk-JF; Thu, 12 Dec 2024 08:46:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1tLjVH-0007SM-40
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:45:20 -0500
+ id 1tLjVN-0007TB-MG
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:45:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vkuznets@redhat.com>)
- id 1tLjVF-0003bB-2o
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:45:18 -0500
+ id 1tLjVK-0003cC-F0
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 08:45:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734011114;
+ s=mimecast20190719; t=1734011121;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=bpdclzJsaIZALyPWoE54F2+ZJeOc/CWpGM1Z/p8NEJc=;
- b=i9prf64cC1UxfkiLxHA9Y/eY6EDxxqljiCI2Gs6Vt8VKH0G1EZv6+B+uHhHMjq/SP1Lr7g
- JRAZMhCXSBmI3+V5M7ZM43FVAQ9kbELvNcXXidjF6eJRdX1orK11gvkqdlGN8OEZzWeU5N
- UUzWi5MIsZ9tZ2zHgihIv6MZXKlpW3s=
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=81cVUqQuOeY7z2nPcKsGnCBnf66r+iuJcrd9VyY4oB4=;
+ b=EtmDYhW0Y7oUSMJFVrm2cB6lYW1ci7cJadgxJjh7k+OyzQhIjRHUNbsWLGFes9PUNzwyA0
+ cb+TY6DgxFE7f0Ws/7VfC7+THaV3xyCLL6yYeHawhEPDQPF9AUEX1ye62lbWvKi4HZOScc
+ iaoURoqPEmHQ+eOoozhARE2btpSKXPM=
 Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-YwlWieE3MgiE1-BSyjl98w-1; Thu,
- 12 Dec 2024 08:45:10 -0500
-X-MC-Unique: YwlWieE3MgiE1-BSyjl98w-1
-X-Mimecast-MFC-AGG-ID: YwlWieE3MgiE1-BSyjl98w
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-bKXjqWweP0W4JssFiaa84A-1; Thu,
+ 12 Dec 2024 08:45:15 -0500
+X-MC-Unique: bKXjqWweP0W4JssFiaa84A-1
+X-Mimecast-MFC-AGG-ID: bKXjqWweP0W4JssFiaa84A
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 173921955F65; Thu, 12 Dec 2024 13:45:09 +0000 (UTC)
+ id 57EBD1955E7A; Thu, 12 Dec 2024 13:45:14 +0000 (UTC)
 Received: from fedora.redhat.com (unknown [10.45.225.198])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 03CDA1956052; Thu, 12 Dec 2024 13:45:05 +0000 (UTC)
+ id 4B43A1955F41; Thu, 12 Dec 2024 13:45:12 +0000 (UTC)
 From: Vitaly Kuznetsov <vkuznets@redhat.com>
 To: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
 Cc: Eric Blake <eblake@redhat.com>, Philippe Mathieu-Daude <philmd@linaro.org>
-Subject: [PATCH v4 0/2] vpc: Read images exported from Azure correctly
-Date: Thu, 12 Dec 2024 14:45:02 +0100
-Message-ID: <20241212134504.1983757-1-vkuznets@redhat.com>
+Subject: [PATCH v4 2/2] vpc: Read images exported from Azure correctly
+Date: Thu, 12 Dec 2024 14:45:04 +0100
+Message-ID: <20241212134504.1983757-3-vkuznets@redhat.com>
+In-Reply-To: <20241212134504.1983757-1-vkuznets@redhat.com>
+References: <20241212134504.1983757-1-vkuznets@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 8bit
@@ -82,24 +85,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes since v3:
-- Split the change into two patches [Philippe Mathieu-Daude].
-
 It was found that 'qemu-nbd' is not able to work with some disk images
-exported from Azure as it uses a currently unknown 'wa\0\0' 'creator app'
-signature. QEMU currently supports two methods for determining the image
-size: CHS and 'current_size' and the list of known 'creator app's is used
-to decide between the two. Invert the logic in QEMU and make 'current_size'
-the default as it seems that VPC and old QEMU are the only two legacy apps
-where preferring CHS makes sense.
+exported from Azure. Looking at the 512b footer (which contains VPC
+metadata):
 
-Vitaly Kuznetsov (2):
-  vpc: Split off vpc_ignore_current_size() helper
-  vpc: Read images exported from Azure correctly
+00000000  63 6f 6e 65 63 74 69 78  00 00 00 02 00 01 00 00  |conectix........|
+00000010  ff ff ff ff ff ff ff ff  2e c7 9b 96 77 61 00 00  |............wa..|
+00000020  00 07 00 00 57 69 32 6b  00 00 00 01 40 00 00 00  |....Wi2k....@...|
+00000030  00 00 00 01 40 00 00 00  28 a2 10 3f 00 00 00 02  |....@...(..?....|
+00000040  ff ff e7 47 8c 54 df 94  bd 35 71 4c 94 5f e5 44  |...G.T...5qL._.D|
+00000050  44 53 92 1a 00 00 00 00  00 00 00 00 00 00 00 00  |DS..............|
+00000060  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
 
- block/vpc.c | 65 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 30 deletions(-)
+we can see that Azure uses a different 'Creator application' --
+'wa\0\0' (offset 0x1c, likely reads as 'Windows Azure') and QEMU uses this
+field to determine how it can get image size. Apparently, Azure uses 'new'
+method, just like Hyper-V.
 
+Overall, it seems that only VPC and old QEMUs need to be ignored as all new
+creator apps seem to have reliable current_size. Invert the logic and make
+'current_size' method the default to avoid adding every new creator app to
+the list.
+
+Signed-off-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+---
+ block/vpc.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/block/vpc.c b/block/vpc.c
+index fb0ded1c4344..a5f626baf04a 100644
+--- a/block/vpc.c
++++ b/block/vpc.c
+@@ -237,6 +237,7 @@ static void vpc_parse_options(BlockDriverState *bs, QemuOpts *opts,
+  *      'd2v '  :  current_size     Disk2vhd
+  *      'tap\0' :  current_size     XenServer
+  *      'CTXS'  :  current_size     XenConverter
++ *      'wa\0\0':  current_size     Azure
+  *
+  *  The user can override the table values via drive options, however
+  *  even with an override we will still use current_size for images
+@@ -244,11 +245,8 @@ static void vpc_parse_options(BlockDriverState *bs, QemuOpts *opts,
+  */
+ static bool vpc_ignore_current_size(VHDFooter *footer)
+ {
+-    return !!strncmp(footer->creator_app, "win ", 4) &&
+-           !!strncmp(footer->creator_app, "qem2", 4) &&
+-           !!strncmp(footer->creator_app, "d2v ", 4) &&
+-           !!strncmp(footer->creator_app, "CTXS", 4) &&
+-           !!memcmp(footer->creator_app, "tap", 4));
++    return !strncmp(footer->creator_app, "vpc ", 4) ||
++           !strncmp(footer->creator_app, "qemu", 4);
+ }
+ 
+ static int vpc_open(BlockDriverState *bs, QDict *options, int flags,
 -- 
 2.47.0
 
