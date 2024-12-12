@@ -4,65 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38808E77182
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9A7E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLem9-0005Mm-IK; Thu, 12 Dec 2024 03:42:27 -0500
+	id 1tLel6-0004Oh-86; Thu, 12 Dec 2024 03:41:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelr-0004qO-MJ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:08 -0500
+ id 1tLel4-0004OK-S7
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:19 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelm-0007zv-Lf
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:06 -0500
+ id 1tLel1-0007zO-Uk
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733992923; x=1765528923;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=NFh2MjJUlI6vx5bg/ehE0ebUiAxynWQZ1Qb4Z+RTneI=;
- b=Rr3eNzBTIhmKMHIayZx45eVbOhgIiUIQNP1W+dFSUychCDnqnEaSMihV
- r3AmSWl/04hGTUQXbVRreSJwkOnC5/08JDJc+VAkzINuKRsNu7rMI2OpF
- KxK/2Lp3oC4FbpErMr3TL0aDRo5a8x6HE1ayiuzB3zgfgfAye/0CfnF8m
- kqiEi7oQhmgdMerM+wMpnkBMR9djXY1wW7Bov6BwTwxjbOvwJpc1PaNO0
- 4iFrWNPH9zqGCQTqSPUpmSYwjDfjFS60IqhrKAqNJE+DVT5g0Q4C2Rhp9
- xD8kfVoxBK+JogtN2owjEpe+nQC0+2MzdveejSDSpS2yykQK5yvWt0J6v g==;
-X-CSE-ConnectionGUID: 7KZSG3c9Quu6Mw4kkxsyDw==
-X-CSE-MsgGUID: 8OEAlM/FQvOYZBoc+CJrsQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124954"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124954"
+ t=1733992876; x=1765528876;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=r49JnXnEeu+UashthEgPaZnm39B8LIbPQuYUUMQ+vWw=;
+ b=K9SlOh8XglDQlqAfWKY1kbCkMrCUMvjj9c8T1WSeJGV96xKbUNS5wAGF
+ CtfgmKXAbnMRoeL94S6jxbtlmu7bP3hn52URYkIicGqX1hg2v0JTBwyE1
+ beeFFSYB5F0CY/D9OEnvQzq+y6Tzz+SMZ5RYRox5BsA7s12JxY52/LObQ
+ Rp+4ZbpWgMbfbeaUCrt1r6GluNlNa/2MBU9BuSxpUH0dW0enb8LfUjZ0i
+ SUvJKo772Kvv2QIxOTzUILC/gbfVRhMgSf5mlOg8AOIhXS1Kev5D2uwF1
+ Arplz9/sEbRKhKm50B2c1a3eU7yY1Ebn0uuqWKkIfmNS5vI2t13czI5tm A==;
+X-CSE-ConnectionGUID: vRl9oE34SY2Ti6ak/5TkUw==
+X-CSE-MsgGUID: /fEvfJMBR3CEruUQBJRL6g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124691"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124691"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:42:02 -0800
-X-CSE-ConnectionGUID: eR3QW9kVSNekEMnPvQUwqw==
-X-CSE-MsgGUID: Wg7mvr77Soa1+25txS0MQg==
+ 12 Dec 2024 00:41:11 -0800
+X-CSE-ConnectionGUID: SH3tnL6xTOush1C8VR1Hrw==
+X-CSE-MsgGUID: IHAbTSRWQEGIOA72y//gEw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407108"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119406914"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:58 -0800
+ 12 Dec 2024 00:41:08 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v6 11/20] intel_iommu: Process PASID-based iotlb invalidation
-Date: Thu, 12 Dec 2024 16:37:48 +0800
-Message-Id: <20241212083757.605022-12-zhenzhong.duan@intel.com>
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v6 00/20] intel_iommu: Enable stage-1 translation for emulated
+ device
+Date: Thu, 12 Dec 2024 16:37:37 +0800
+Message-Id: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241212083757.605022-1-zhenzhong.duan@intel.com>
-References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -91,109 +86,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PASID-based iotlb (piotlb) is used during walking Intel
-VT-d stage-1 page table.
+Hi,
 
-This emulates the stage-1 page table iotlb invalidation requested
-by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
+Per Jason Wang's suggestion, iommufd nesting series[1] is split into
+"Enable stage-1 translation for emulated device" series and
+"Enable stage-1 translation for passthrough device" series.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
----
- hw/i386/intel_iommu_internal.h |  3 +++
- hw/i386/intel_iommu.c          | 43 ++++++++++++++++++++++++++++++++++
- 2 files changed, 46 insertions(+)
+PATCH1-5:  Some preparing work before support stage-1 translation
+PATCH6-9:  Implement stage-1 translation for emulated device
+PATCH10-14:Emulate iotlb invalidation of stage-1 mapping
+PATCH15-17:Set default aw_bits to 48 in all modes, update DMAR table
+PATCH18-19:Expose scalable mode "x-flts" and "fs1gp" to cmdline
+PATCH20:   Add qtest
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 22dd3faf0c..5e4e563e62 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -471,6 +471,9 @@ typedef union VTDInvDesc VTDInvDesc;
- #define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
- #define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) & VTD_DOMAIN_ID_MASK)
- #define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
-+#define VTD_INV_DESC_PIOTLB_AM(val)       ((val) & 0x3fULL)
-+#define VTD_INV_DESC_PIOTLB_IH(val)       (((val) >> 6) & 0x1)
-+#define VTD_INV_DESC_PIOTLB_ADDR(val)     ((val) & ~0xfffULL)
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
- #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
- 
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 0ba94d1d03..2ba5ffbf5b 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -322,6 +322,28 @@ static gboolean vtd_hash_remove_by_page(gpointer key, gpointer value,
-     return (entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb;
- }
- 
-+static gboolean vtd_hash_remove_by_page_piotlb(gpointer key, gpointer value,
-+                                               gpointer user_data)
-+{
-+    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
-+    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
-+    uint64_t gfn = (info->addr >> VTD_PAGE_SHIFT_4K) & info->mask;
-+    uint64_t gfn_tlb = (info->addr & entry->mask) >> VTD_PAGE_SHIFT_4K;
-+
-+    /*
-+     * According to spec, PASID-based-IOTLB Invalidation in page granularity
-+     * doesn't invalidate IOTLB entries caching second-stage (PGTT=010b)
-+     * or pass-through (PGTT=100b) mappings. Nested isn't supported yet,
-+     * so only need to check first-stage (PGTT=001b) mappings.
-+     */
-+    if (entry->pgtt != VTD_SM_PASID_ENTRY_FLT) {
-+        return false;
-+    }
-+
-+    return entry->domain_id == info->domain_id && entry->pasid == info->pasid &&
-+           ((entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb);
-+}
-+
- /* Reset all the gen of VTDAddressSpace to zero and set the gen of
-  * IntelIOMMUState to 1.  Must be called with IOMMU lock held.
-  */
-@@ -2937,11 +2959,29 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
-     }
- }
- 
-+static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
-+                                       uint32_t pasid, hwaddr addr, uint8_t am)
-+{
-+    VTDIOTLBPageInvInfo info;
-+
-+    info.domain_id = domain_id;
-+    info.pasid = pasid;
-+    info.addr = addr;
-+    info.mask = ~((1 << am) - 1);
-+
-+    vtd_iommu_lock(s);
-+    g_hash_table_foreach_remove(s->iotlb,
-+                                vtd_hash_remove_by_page_piotlb, &info);
-+    vtd_iommu_unlock(s);
-+}
-+
- static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-                                     VTDInvDesc *inv_desc)
- {
-     uint16_t domain_id;
-     uint32_t pasid;
-+    hwaddr addr;
-+    uint8_t am;
-     uint64_t mask[4] = {VTD_INV_DESC_PIOTLB_RSVD_VAL0,
-                         VTD_INV_DESC_PIOTLB_RSVD_VAL1,
-                         VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
-@@ -2959,6 +2999,9 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
-         break;
- 
-     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
-+        am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
-+        addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
-+        vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am);
-         break;
- 
-     default:
+Note in spec revision 3.4, it renames "First-level" to "First-stage",
+"Second-level" to "Second-stage". But the scalable mode was added
+before that change. So we keep old favor using First-level/fl/Second-level/sl
+in code but change to use stage-1/stage-2 in commit log.
+But keep in mind First-level/fl/stage-1 all have same meaning,
+same for Second-level/sl/stage-2.
+
+Test done:
+- two VFIO devices hotplug/unplug in legacy and scalable mode with x-flts=on/off
+- vhost with caching-mode=off
+- windows 2019 VM bootup
+
+Qemu code can be found at [2]
+The whole nesting series can be found at [3]
+
+[1] https://lists.gnu.org/archive/html/qemu-devel/2024-01/msg02740.html
+[2] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_stage1_emu_v6
+[3] https://github.com/yiliu1765/qemu/tree/zhenzhong/iommufd_nesting_rfcv2
+
+Thanks
+Zhenzhong
+
+Changelog:
+v6:
+- s/"Legacy mode: not support x-flts=on"/"x-flts is only available in scalable mode" (Clement)
+- drop scalable modern mode concept totally (Jason, Clement)
+
+v5:
+- add new patch8 to check if translation result fall in ir range (Liuyi)
+- remove unused parameter ih from vtd_piotlb_page_invalidate() (Liuyi)
+- define target as pointer in vtd_find_as_by_sid_and_pasid() (Liuyi)
+- s/x-fls/x-flts (Liuyi)
+- set default aw_bits to 48 for all modes (jason)
+- fix return value of vtd_iova_to_flpte()
+- merge piotlb inv notify to vtd_iotlb_page_invalidate_notify(),
+  no functional change
+
+v4:
+- s/Scalable legacy/Scalable in logging (Clement)
+- test the mode first to make the intention clearer (Clement)
+- s/x-cap-fs1gp/fs1gp and s/VTD_FL_RW_MASK/VTD_FL_RW (Jason)
+- introduce x-fls instead of updating x-scalable-mode (Jason)
+- Refine comment log in patch4 (jason)
+- s/tansltion/translation/ and s/VTD_SPTE_RSVD_LEN/VTD_FPTE_RSVD_LEN/ (Liuyi)
+- update the order and naming of VTD_FPTE_PAGE_* (Liuyi)
+
+v3:
+- drop unnecessary !(s->ecap & VTD_ECAP_SMTS) (Clement)
+- simplify calculation of return value for vtd_iova_fl_check_canonical() (Liuyi)
+- make A/D bit setting atomic (Liuyi)
+- refine error msg (Clement, Liuyi)
+
+v2:
+- check ecap/cap bits instead of s->scalable_modern in vtd_pe_type_check() (Clement)
+- declare VTD_ECAP_FLTS/FS1GP after the feature is implemented (Clement)
+- define VTD_INV_DESC_PIOTLB_G (Clement)
+- make error msg consistent in vtd_process_piotlb_desc() (Clement)
+- refine commit log in patch16 (Clement)
+- add VTD_ECAP_IR to ECAP_MODERN_FIXED1 (Clement)
+- add a knob x-cap-fs1gp to control stage-1 1G paging capability
+- collect Clement's R-B
+
+v1:
+- define VTD_HOST_AW_AUTO (Clement)
+- passing pgtt as a parameter to vtd_update_iotlb (Clement)
+- prefix sl_/fl_ to second/first level specific functions (Clement)
+- pick reserved bit check from Clement, add his Co-developed-by
+- Update test without using libqtest-single.h (Thomas)
+
+rfcv2:
+- split from nesting series (Jason)
+- merged some commits from Clement
+- add qtest (jason)
+
+
+Clément Mathieu--Drif (4):
+  intel_iommu: Check if the input address is canonical
+  intel_iommu: Set accessed and dirty bits during stage-1 translation
+  intel_iommu: Add an internal API to find an address space with PASID
+  intel_iommu: Add support for PASID-based device IOTLB invalidation
+
+Yi Liu (2):
+  intel_iommu: Rename slpte to pte
+  intel_iommu: Implement stage-1 translation
+
+Yu Zhang (1):
+  intel_iommu: Use the latest fault reasons defined by spec
+
+Zhenzhong Duan (13):
+  intel_iommu: Make pasid entry type check accurate
+  intel_iommu: Add a placeholder variable for scalable mode stage-1
+    translation
+  intel_iommu: Flush stage-2 cache in PASID-selective PASID-based iotlb
+    invalidation
+  intel_iommu: Check stage-1 translation result with interrupt range
+  intel_iommu: Flush stage-1 cache in iotlb invalidation
+  intel_iommu: Process PASID-based iotlb invalidation
+  intel_iommu: piotlb invalidation should notify unmap
+  tests/acpi: q35: allow DMAR acpi table changes
+  intel_iommu: Set default aw_bits to 48 starting from QEMU 9.2
+  tests/acpi: q35: Update host address width in DMAR
+  intel_iommu: Introduce a property x-flts for stage-1 translation
+  intel_iommu: Introduce a property to control FS1GP cap bit setting
+  tests/qtest: Add intel-iommu test
+
+ MAINTAINERS                       |   1 +
+ hw/i386/intel_iommu_internal.h    | 101 ++++-
+ include/hw/i386/intel_iommu.h     |   8 +-
+ hw/i386/intel_iommu.c             | 732 ++++++++++++++++++++++++------
+ hw/i386/pc.c                      |   1 +
+ tests/qtest/intel-iommu-test.c    |  64 +++
+ tests/data/acpi/x86/q35/DMAR.dmar | Bin 120 -> 120 bytes
+ tests/qtest/meson.build           |   1 +
+ 8 files changed, 748 insertions(+), 160 deletions(-)
+ create mode 100644 tests/qtest/intel-iommu-test.c
+
 -- 
 2.34.1
 
