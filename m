@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05D9E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEFCE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:44:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLelU-0004br-CF; Thu, 12 Dec 2024 03:41:44 -0500
+	id 1tLemW-0006Q4-99; Thu, 12 Dec 2024 03:42:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelS-0004Vn-Mb
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:42 -0500
+ id 1tLemU-00067g-Ee
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:46 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelQ-0007zv-Dx
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:42 -0500
+ id 1tLemS-00085U-G8
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733992900; x=1765528900;
+ t=1733992964; x=1765528964;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=OzAwnHnB7T+weBmUtGAXh7/K6XuyAKA5urrB93trCBc=;
- b=fZCXnJaZE4kvzAvNt8a3tKdkZIonhP00ZEKIb89JkukqJNvMu9l03ibV
- Poaz/Wwh6z19v392V0ImGkRi+W6BAIC2ZogqORP6Owt8ixqdnTKRKDP/C
- WOKBY6cG/XE6WmnNnsP9xmLHde+1IzZXGC8o7gbTB4FFfQtw/H1IRytq4
- DDQCKRGZpDc5LvPl5LnxT35Of3GkOPhkvFxA/x94BnkVYhmDj1IPiQQHZ
- DkCv96hQ6DYWZqCNUxZrxF/LfI985xY7Qd7S7+GvMPdR15HBfnxJoBtYw
- ymx8cxMJb1egIg6KrqISD2NzGJ6KHh/4astLvMsZkbcBhow+ieG83mfb/ g==;
-X-CSE-ConnectionGUID: cvTJX3xWQsOwg6atDO/BfQ==
-X-CSE-MsgGUID: MeR9ncK/SIW9D84ncmJ6uA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124844"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124844"
+ bh=ixftiGwSzaeDghJ08bSPwi4Fs0PqhxQEW4qQOhIb5hM=;
+ b=nXav8NKlcqXrrlaXAl1R5sLUVFc9zv4Z51g7J7+NQqqcIeZ0/sVFWPq9
+ m0E1pPOssWksPvxG18qc09Yh3gEAHhVNVKvXIY8UG/lLLr90V0XW5hrT8
+ 9rHhFitzcjP8tE6q5D6njnhQ2/FGU6XAddvngtfQd3c/Z0GLxYLcjCUF7
+ KChxa+/h/a1oALbncxqQKwIEc7nsYvgCtQHnwoOQZkE6KKPX3WYxpRqxf
+ 8UZB/cqdVbeIG+ABNu64Ne3Br9vINwI9EuR4iKqS3D9exrOGoqPnflPLw
+ V/iVM12aCH/pWoVUuaVXSMWlmzoGOphb12xGtMoj9HXeHRxZ/afIgVj7d A==;
+X-CSE-ConnectionGUID: nu7jPdl3ThyqfUSEUvKobw==
+X-CSE-MsgGUID: Th0JQfP3Rw2dHaZDVqTWYw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34125032"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34125032"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:40 -0800
-X-CSE-ConnectionGUID: D2QKmrpqQQi8wQg6FkD7Zg==
-X-CSE-MsgGUID: JVSMw3QqRNqUzLpP602G5w==
+ 12 Dec 2024 00:42:33 -0800
+X-CSE-ConnectionGUID: HSo1/TyyQ4mmjx4byI/IRg==
+X-CSE-MsgGUID: 6QrVaSpHQiGkTwazR0IoqA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407016"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407226"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:35 -0800
+ 12 Dec 2024 00:42:28 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  mst@redhat.com, peterx@redhat.com, jasowang@redhat.com, jgg@nvidia.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
- chao.p.peng@intel.com, Yi Sun <yi.y.sun@linux.intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Yi Sun <yi.y.sun@linux.intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v6 06/20] intel_iommu: Implement stage-1 translation
-Date: Thu, 12 Dec 2024 16:37:43 +0800
-Message-Id: <20241212083757.605022-7-zhenzhong.duan@intel.com>
+Subject: [PATCH v6 18/20] intel_iommu: Introduce a property x-flts for stage-1
+ translation
+Date: Thu, 12 Dec 2024 16:37:55 +0800
+Message-Id: <20241212083757.605022-19-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
@@ -92,306 +93,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+Intel VT-d 3.0 introduces scalable mode, and it has a bunch of capabilities
+related to scalable mode translation, thus there are multiple combinations.
 
-This adds stage-1 page table walking to support stage-1 only
-translation in scalable mode.
+This vIOMMU implementation wants to simplify it with a new property "x-flts".
+When turned on in scalable mode, stage-1 translation is supported. When turned
+on in legacy mode, throw out error.
 
+With stage-1 translation support exposed to user, also accurate the pasid entry
+check in vtd_pe_type_check().
+
+Suggested-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Co-developed-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
 Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 ---
- hw/i386/intel_iommu_internal.h |  34 +++++++
- hw/i386/intel_iommu.c          | 158 ++++++++++++++++++++++++++++++++-
- 2 files changed, 188 insertions(+), 4 deletions(-)
+ hw/i386/intel_iommu_internal.h |  2 ++
+ hw/i386/intel_iommu.c          | 28 +++++++++++++++++++---------
+ 2 files changed, 21 insertions(+), 9 deletions(-)
 
 diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index e810b0071f..86d3354198 100644
+index 2c977aa7da..e8b211e8b0 100644
 --- a/hw/i386/intel_iommu_internal.h
 +++ b/hw/i386/intel_iommu_internal.h
-@@ -320,6 +320,15 @@ typedef enum VTDFaultReason {
-     VTD_FR_PASID_ENTRY_P = 0x59,
-     VTD_FR_PASID_TABLE_ENTRY_INV = 0x5b,  /*Invalid PASID table entry */
+@@ -195,6 +195,7 @@
+ #define VTD_ECAP_PASID              (1ULL << 40)
+ #define VTD_ECAP_SMTS               (1ULL << 43)
+ #define VTD_ECAP_SLTS               (1ULL << 46)
++#define VTD_ECAP_FLTS               (1ULL << 47)
  
-+    /* Fail to access a first-level paging entry (not FS_PML4E) */
-+    VTD_FR_FS_PAGING_ENTRY_INV = 0x70,
-+    VTD_FR_FS_PAGING_ENTRY_P = 0x71,
-+    /* Non-zero reserved field in present first-stage paging entry */
-+    VTD_FR_FS_PAGING_ENTRY_RSVD = 0x72,
-+    VTD_FR_PASID_ENTRY_FSPTPTR_INV = 0x73, /* Invalid FSPTPTR in PASID entry */
-+    VTD_FR_FS_PAGING_ENTRY_US = 0x81,      /* Privilege violation */
-+    VTD_FR_SM_WRITE = 0x85,                /* No write permission */
-+
-     /* Output address in the interrupt address range for scalable mode */
-     VTD_FR_SM_INTERRUPT_ADDR = 0x87,
-     VTD_FR_MAX,                 /* Guard */
-@@ -438,6 +447,22 @@ typedef union VTDInvDesc VTDInvDesc;
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM | VTD_SL_TM)) : \
-         (0x3ffff800ULL | ~(VTD_HAW_MASK(aw) | VTD_SL_IGN_COM))
- 
-+/* Rsvd field masks for fpte */
-+#define VTD_FS_UPPER_IGNORED 0xfff0000000000000ULL
-+#define VTD_FPTE_PAGE_L1_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L2_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L3_RSVD_MASK(aw) \
-+        (~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_PAGE_L4_RSVD_MASK(aw) \
-+        (0x80ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+
-+#define VTD_FPTE_LPAGE_L2_RSVD_MASK(aw) \
-+        (0x1fe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+#define VTD_FPTE_LPAGE_L3_RSVD_MASK(aw) \
-+        (0x3fffe000ULL | ~(VTD_HAW_MASK(aw) | VTD_FS_UPPER_IGNORED))
-+
- /* Masks for PIOTLB Invalidate Descriptor */
- #define VTD_INV_DESC_PIOTLB_G             (3ULL << 4)
- #define VTD_INV_DESC_PIOTLB_ALL_IN_PASID  (2ULL << 4)
-@@ -530,6 +555,15 @@ typedef struct VTDRootEntry VTDRootEntry;
- #define VTD_SM_PASID_ENTRY_AW          7ULL /* Adjusted guest-address-width */
- #define VTD_SM_PASID_ENTRY_DID(val)    ((val) & VTD_DOMAIN_ID_MASK)
- 
-+#define VTD_SM_PASID_ENTRY_FLPM          3ULL
-+#define VTD_SM_PASID_ENTRY_FLPTPTR       (~0xfffULL)
-+
-+/* First Level Paging Structure */
-+/* Masks for First Level Paging Entry */
-+#define VTD_FL_P                    1ULL
-+#define VTD_FL_RW                   (1ULL << 1)
-+#define VTD_FL_US                   (1ULL << 2)
-+
- /* Second Level Page Translation Pointer*/
- #define VTD_SM_PASID_ENTRY_SLPTPTR     (~0xfffULL)
- 
+ /* CAP_REG */
+ /* (offset >> 4) << 24 */
+@@ -211,6 +212,7 @@
+ #define VTD_CAP_SLLPS               ((1ULL << 34) | (1ULL << 35))
+ #define VTD_CAP_DRAIN_WRITE         (1ULL << 54)
+ #define VTD_CAP_DRAIN_READ          (1ULL << 55)
++#define VTD_CAP_FS1GP               (1ULL << 56)
+ #define VTD_CAP_DRAIN               (VTD_CAP_DRAIN_READ | VTD_CAP_DRAIN_WRITE)
+ #define VTD_CAP_CM                  (1ULL << 7)
+ #define VTD_PASID_ID_SHIFT          20
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index e32c61c7dc..dbfd48fb65 100644
+index 2552d3ce14..e234b5c234 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -48,6 +48,8 @@
- 
- /* pe operations */
- #define VTD_PE_GET_TYPE(pe) ((pe)->val[0] & VTD_SM_PASID_ENTRY_PGTT)
-+#define VTD_PE_GET_FL_LEVEL(pe) \
-+    (4 + (((pe)->val[2] >> 2) & VTD_SM_PASID_ENTRY_FLPM))
- #define VTD_PE_GET_SL_LEVEL(pe) \
-     (2 + (((pe)->val[0] >> 2) & VTD_SM_PASID_ENTRY_AW))
- 
-@@ -755,6 +757,11 @@ static inline bool vtd_is_sl_level_supported(IntelIOMMUState *s, uint32_t level)
-            (1ULL << (level - 2 + VTD_CAP_SAGAW_SHIFT));
+@@ -803,16 +803,18 @@ static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t level)
  }
  
-+static inline bool vtd_is_fl_level_supported(IntelIOMMUState *s, uint32_t level)
-+{
-+    return level == VTD_PML4_LEVEL;
-+}
-+
  /* Return true if check passed, otherwise false */
- static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
-                                      VTDPASIDEntry *pe)
-@@ -838,6 +845,11 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
-             return -VTD_FR_PASID_TABLE_ENTRY_INV;
+-static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
+-                                     VTDPASIDEntry *pe)
++static inline bool vtd_pe_type_check(IntelIOMMUState *s, VTDPASIDEntry *pe)
+ {
+     switch (VTD_PE_GET_TYPE(pe)) {
+-    case VTD_SM_PASID_ENTRY_SLT:
+-        return true;
+-    case VTD_SM_PASID_ENTRY_PT:
+-        return x86_iommu->pt_supported;
+     case VTD_SM_PASID_ENTRY_FLT:
++        return !!(s->ecap & VTD_ECAP_FLTS);
++    case VTD_SM_PASID_ENTRY_SLT:
++        return !!(s->ecap & VTD_ECAP_SLTS);
+     case VTD_SM_PASID_ENTRY_NESTED:
++        /* Not support NESTED page table type yet */
++        return false;
++    case VTD_SM_PASID_ENTRY_PT:
++        return !!(s->ecap & VTD_ECAP_PT);
+     default:
+         /* Unknown type */
+         return false;
+@@ -861,7 +863,6 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
+     uint8_t pgtt;
+     uint32_t index;
+     dma_addr_t entry_size;
+-    X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
+ 
+     index = VTD_PASID_TABLE_INDEX(pasid);
+     entry_size = VTD_PASID_ENTRY_SIZE;
+@@ -875,7 +876,7 @@ static int vtd_get_pe_in_pasid_leaf_table(IntelIOMMUState *s,
      }
  
-+    if (pgtt == VTD_SM_PASID_ENTRY_FLT &&
-+        !vtd_is_fl_level_supported(s, VTD_PE_GET_FL_LEVEL(pe))) {
-+            return -VTD_FR_PASID_TABLE_ENTRY_INV;
-+    }
-+
-     return 0;
- }
- 
-@@ -973,7 +985,11 @@ static uint32_t vtd_get_iova_level(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return VTD_PE_GET_SL_LEVEL(&pe);
-+        if (s->flts) {
-+            return VTD_PE_GET_FL_LEVEL(&pe);
-+        } else {
-+            return VTD_PE_GET_SL_LEVEL(&pe);
-+        }
+     /* Do translation type check */
+-    if (!vtd_pe_type_check(x86_iommu, pe)) {
++    if (!vtd_pe_type_check(s, pe)) {
+         return -VTD_FR_PASID_TABLE_ENTRY_INV;
      }
  
-     return vtd_ce_get_level(ce);
-@@ -1060,7 +1076,11 @@ static dma_addr_t vtd_get_iova_pgtbl_base(IntelIOMMUState *s,
- 
-     if (s->root_scalable) {
-         vtd_ce_get_rid2pasid_entry(s, ce, &pe, pasid);
--        return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        if (s->flts) {
-+            return pe.val[2] & VTD_SM_PASID_ENTRY_FLPTPTR;
-+        } else {
-+            return pe.val[0] & VTD_SM_PASID_ENTRY_SLPTPTR;
-+        }
+@@ -3827,6 +3828,7 @@ static Property vtd_properties[] = {
+                       VTD_HOST_ADDRESS_WIDTH),
+     DEFINE_PROP_BOOL("caching-mode", IntelIOMMUState, caching_mode, FALSE),
+     DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
++    DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, flts, FALSE),
+     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+     DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+@@ -4558,7 +4560,10 @@ static void vtd_cap_init(IntelIOMMUState *s)
      }
  
-     return vtd_ce_get_slpt_base(ce);
-@@ -1800,6 +1820,12 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_PASID_TABLE_ACCESS_ERR] = false,
-     [VTD_FR_PASID_ENTRY_P] = true,
-     [VTD_FR_PASID_TABLE_ENTRY_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_P] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_RSVD] = true,
-+    [VTD_FR_PASID_ENTRY_FSPTPTR_INV] = true,
-+    [VTD_FR_FS_PAGING_ENTRY_US] = true,
-+    [VTD_FR_SM_WRITE] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-     [VTD_FR_MAX] = false,
- };
-@@ -1862,6 +1888,113 @@ out:
-     trace_vtd_pt_enable_fast_path(source_id, success);
- }
+     /* TODO: read cap/ecap from host to decide which cap to be exposed. */
+-    if (s->scalable_mode) {
++    if (s->flts) {
++        s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_FLTS;
++        s->cap |= VTD_CAP_FS1GP;
++    } else if (s->scalable_mode) {
+         s->ecap |= VTD_ECAP_SMTS | VTD_ECAP_SRS | VTD_ECAP_SLTS;
+     }
  
-+/*
-+ * Rsvd field masks for fpte:
-+ *     vtd_fpte_rsvd 4k pages
-+ *     vtd_fpte_rsvd_large large pages
-+ *
-+ * We support only 4-level page tables.
-+ */
-+#define VTD_FPTE_RSVD_LEN 5
-+static uint64_t vtd_fpte_rsvd[VTD_FPTE_RSVD_LEN];
-+static uint64_t vtd_fpte_rsvd_large[VTD_FPTE_RSVD_LEN];
-+
-+static bool vtd_flpte_nonzero_rsvd(uint64_t flpte, uint32_t level)
-+{
-+    uint64_t rsvd_mask;
-+
-+    /*
-+     * We should have caught a guest-mis-programmed level earlier,
-+     * via vtd_is_fl_level_supported.
-+     */
-+    assert(level < VTD_FPTE_RSVD_LEN);
-+    /*
-+     * Zero level doesn't exist. The smallest level is VTD_PT_LEVEL=1 and
-+     * checked by vtd_is_last_pte().
-+     */
-+    assert(level);
-+
-+    if ((level == VTD_PD_LEVEL || level == VTD_PDP_LEVEL) &&
-+        (flpte & VTD_PT_PAGE_SIZE_MASK)) {
-+        /* large page */
-+        rsvd_mask = vtd_fpte_rsvd_large[level];
-+    } else {
-+        rsvd_mask = vtd_fpte_rsvd[level];
-+    }
-+
-+    return flpte & rsvd_mask;
-+}
-+
-+static inline bool vtd_flpte_present(uint64_t flpte)
-+{
-+    return !!(flpte & VTD_FL_P);
-+}
-+
-+/*
-+ * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-+ * of the translation, can be used for deciding the size of large page.
-+ */
-+static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-+                             uint64_t iova, bool is_write,
-+                             uint64_t *flptep, uint32_t *flpte_level,
-+                             bool *reads, bool *writes, uint8_t aw_bits,
-+                             uint32_t pasid)
-+{
-+    dma_addr_t addr = vtd_get_iova_pgtbl_base(s, ce, pasid);
-+    uint32_t level = vtd_get_iova_level(s, ce, pasid);
-+    uint32_t offset;
-+    uint64_t flpte;
-+
-+    while (true) {
-+        offset = vtd_iova_level_offset(iova, level);
-+        flpte = vtd_get_pte(addr, offset);
-+
-+        if (flpte == (uint64_t)-1) {
-+            if (level == vtd_get_iova_level(s, ce, pasid)) {
-+                /* Invalid programming of pasid-entry */
-+                return -VTD_FR_PASID_ENTRY_FSPTPTR_INV;
-+            } else {
-+                return -VTD_FR_FS_PAGING_ENTRY_INV;
-+            }
-+        }
-+
-+        if (!vtd_flpte_present(flpte)) {
-+            *reads = false;
-+            *writes = false;
-+            return -VTD_FR_FS_PAGING_ENTRY_P;
-+        }
-+
-+        /* No emulated device supports supervisor privilege request yet */
-+        if (!(flpte & VTD_FL_US)) {
-+            *reads = false;
-+            *writes = false;
-+            return -VTD_FR_FS_PAGING_ENTRY_US;
-+        }
-+
-+        *reads = true;
-+        *writes = (*writes) && (flpte & VTD_FL_RW);
-+        if (is_write && !(flpte & VTD_FL_RW)) {
-+            return -VTD_FR_SM_WRITE;
-+        }
-+        if (vtd_flpte_nonzero_rsvd(flpte, level)) {
-+            error_report_once("%s: detected flpte reserved non-zero "
-+                              "iova=0x%" PRIx64 ", level=0x%" PRIx32
-+                              "flpte=0x%" PRIx64 ", pasid=0x%" PRIX32 ")",
-+                              __func__, iova, level, flpte, pasid);
-+            return -VTD_FR_FS_PAGING_ENTRY_RSVD;
-+        }
-+
-+        if (vtd_is_last_pte(flpte, level)) {
-+            *flptep = flpte;
-+            *flpte_level = level;
-+            return 0;
-+        }
-+
-+        addr = vtd_get_pte_addr(flpte, aw_bits);
-+        level--;
-+    }
-+}
-+
- static void vtd_report_fault(IntelIOMMUState *s,
-                              int err, bool is_fpd_set,
-                              uint16_t source_id,
-@@ -2010,8 +2143,13 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+@@ -4737,6 +4742,11 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
          }
      }
  
--    ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
--                               &reads, &writes, s->aw_bits, pasid);
-+    if (s->flts && s->root_scalable) {
-+        ret_fr = vtd_iova_to_flpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
-+    } else {
-+        ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
-+                                   &reads, &writes, s->aw_bits, pasid);
++    if (!s->scalable_mode && s->flts) {
++        error_setg(errp, "x-flts is only available in scalable mode");
++        return false;
 +    }
-     if (ret_fr) {
-         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
-                          addr, is_write, pasid != PCI_NO_PASID, pasid);
-@@ -4287,6 +4425,18 @@ static void vtd_init(IntelIOMMUState *s)
-     vtd_spte_rsvd_large[3] = VTD_SPTE_LPAGE_L3_RSVD_MASK(s->aw_bits,
-                                         x86_iommu->dt_supported && s->stale_tm);
- 
-+    /*
-+     * Rsvd field masks for fpte
-+     */
-+    vtd_fpte_rsvd[0] = ~0ULL;
-+    vtd_fpte_rsvd[1] = VTD_FPTE_PAGE_L1_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[2] = VTD_FPTE_PAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[3] = VTD_FPTE_PAGE_L3_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd[4] = VTD_FPTE_PAGE_L4_RSVD_MASK(s->aw_bits);
 +
-+    vtd_fpte_rsvd_large[2] = VTD_FPTE_LPAGE_L2_RSVD_MASK(s->aw_bits);
-+    vtd_fpte_rsvd_large[3] = VTD_FPTE_LPAGE_L3_RSVD_MASK(s->aw_bits);
-+
-     if (s->scalable_mode || s->snoop_control) {
-         vtd_spte_rsvd[1] &= ~VTD_SPTE_SNP;
-         vtd_spte_rsvd_large[2] &= ~VTD_SPTE_SNP;
+     if (!s->flts && s->aw_bits != VTD_HOST_AW_39BIT &&
+         s->aw_bits != VTD_HOST_AW_48BIT) {
+         error_setg(errp, "%s: supported values for aw-bits are: %d, %d",
 -- 
 2.34.1
 
