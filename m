@@ -4,49 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92C8FE7717D
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 02:45:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C98E7717D
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 03:23:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLZBy-00008e-HW; Wed, 11 Dec 2024 21:44:42 -0500
+	id 1tLZmq-0005Il-0P; Wed, 11 Dec 2024 22:22:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tLZBx-00008G-2l
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 21:44:41 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tLZBu-0000op-8S
- for qemu-devel@nongnu.org; Wed, 11 Dec 2024 21:44:40 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Axjq8OTlpn6O9VAA--.12533S3;
- Thu, 12 Dec 2024 10:44:30 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxtsAKTlpnjS+AAA--.8781S4;
- Thu, 12 Dec 2024 10:44:29 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH 2/2] target/loongarch: Use auto method with LASX feature
-Date: Thu, 12 Dec 2024 10:44:26 +0800
-Message-Id: <20241212024426.1391363-3-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241212024426.1391363-1-maobibo@loongson.cn>
-References: <20241212024426.1391363-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLZmm-0005IY-UN
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:22:44 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLZmk-0001k0-Nn
+ for qemu-devel@nongnu.org; Wed, 11 Dec 2024 22:22:44 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733973763; x=1765509763;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=TLc20mLzHfeeGrYmmia2bm0rHI5V4UBcIouvk7viHHg=;
+ b=ECALrVMbD5yIxNvTyr3NNICy4BTa8F2d3i37O4B3yWuAApXaFTlR48ge
+ EcCrnDcpS3KOQiabGnO2zGXJ9RGmpuhh7B9ervIz2CvR0W9WpTm/06n2D
+ dzz5sd5Nfsbpwx26pAp2nkb1+DZUjd2WAfHMUN4QiZlPIYyuav7ujoSTx
+ tiUb+UTTijO8q3rfG9XAP1jN4qkWGzLd8VR8akB65kHOKwn26N/4/nQDk
+ t26NxRQOScTYvclDZ0jrYHIkOR6aSlofQSoUWCeSLjD+dx0a9knHIueek
+ jxj+QDG5x7xTuPDuaVFELsUXout7jnNAEkVTCwev3OsGqOCIV8zvIma0/ Q==;
+X-CSE-ConnectionGUID: Lbw+JovkRf6hDQTLKac1Mw==
+X-CSE-MsgGUID: PnND6X6fSPS9KBEbOXqUPg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34281517"
+X-IronPort-AV: E=Sophos;i="6.12,227,1728975600"; d="scan'208";a="34281517"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 19:22:36 -0800
+X-CSE-ConnectionGUID: n7SnEHGYTYiM+/WlFgKSNg==
+X-CSE-MsgGUID: IgSKQBh3QAyqxrxsFyjKjA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="127046600"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 19:22:31 -0800
+Message-ID: <709634f3-226e-44c8-be7c-60d3f8f53f43@intel.com>
+Date: Thu, 12 Dec 2024 11:22:28 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/4] i386: Extract a common fucntion to setup value of
+ MSR_CORE_THREAD_COUNT
+To: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Roman Bolshakov <rbolshakov@ddn.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-devel@nongnu.org
+References: <20241205145716.472456-1-xiaoyao.li@intel.com>
+ <20241205145716.472456-3-xiaoyao.li@intel.com>
+ <f9793791-2aaa-42b8-9830-86401a020205@linaro.org>
+ <20241210173524.48e203a3@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20241210173524.48e203a3@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxtsAKTlpnjS+AAA--.8781S4
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -64,190 +96,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Like LSX feature, add type OnOffAuto for LASX feature setting.
+On 12/11/2024 12:35 AM, Igor Mammedov wrote:
+> On Thu, 5 Dec 2024 22:38:41 +0100
+> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+> 
+>> Hi Xiaoyao,
+>>
+>> On 5/12/24 15:57, Xiaoyao Li wrote:
+>>> There are duplicated code to setup the value of MSR_CORE_THREAD_COUNT.
+>>> Extract a common function for it.
+>>>
+>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>> ---
+>>>    target/i386/cpu.h                    | 11 +++++++++++
+>>>    target/i386/hvf/x86_emu.c            |  3 +--
+>>>    target/i386/kvm/kvm.c                |  5 +----
+>>>    target/i386/tcg/sysemu/misc_helper.c |  3 +--
+>>>    4 files changed, 14 insertions(+), 8 deletions(-)
+>>>
+>>> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+>>> index 4c239a6970fd..5795a497e567 100644
+>>> --- a/target/i386/cpu.h
+>>> +++ b/target/i386/cpu.h
+>>> @@ -2390,6 +2390,17 @@ static inline void cpu_x86_load_seg_cache_sipi(X86CPU *cpu,
+>>>        cs->halted = 0;
+>>>    }
+>>>    
+>>> +static inline uint64_t cpu_x86_get_msr_core_thread_count(X86CPU *cpu)
+>>
+>> Please do not add more inlined functions in this huge file, the
+>> inlining performance isn't justified at all.
+>>
+>> target/i386/cpu-sysemu.c looks the correct place for this helper.
+> 
+> ack
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
----
- target/loongarch/cpu.c     | 44 +++++++++++++++++++------------
- target/loongarch/cpu.h     |  2 ++
- target/loongarch/kvm/kvm.c | 53 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 83 insertions(+), 16 deletions(-)
+Will move it to target/i386/cpu-sysemu.c in next version.
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index 09dc923f45..81dc3ee74d 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -622,6 +622,11 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
-     uint32_t val;
- 
-     cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
-+        error_setg(errp, "Failed to disable LSX since LASX is enabled");
-+        return;
-+    }
-+
-     if (kvm_enabled()) {
-         /* kvm feature detection in function kvm_arch_init_vcpu */
-         return;
-@@ -641,29 +646,35 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
- 
- static bool loongarch_get_lasx(Object *obj, Error **errp)
- {
--    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
--    bool ret;
--
--    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
--        ret = true;
--    } else {
--        ret = false;
--    }
--    return ret;
-+    return LOONGARCH_CPU(obj)->lasx != ON_OFF_AUTO_OFF;
- }
- 
- static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
- {
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
-+    uint32_t val;
- 
--    if (value) {
--	if (!FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
--            cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LSX, 1);
--	}
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 1);
--    } else {
--        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 0);
-+    cpu->lasx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-+    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
-+        error_setg(errp, "Failed to enable LASX since lSX is disabled");
-+        return;
-     }
-+
-+    if (kvm_enabled()) {
-+        /* kvm feature detection in function kvm_arch_init_vcpu */
-+        return;
-+    }
-+
-+    /* LASX feature detection in TCG mode */
-+    val = cpu->env.cpucfg[2];
-+    if (cpu->lasx == ON_OFF_AUTO_ON) {
-+        if (FIELD_EX32(val, CPUCFG2, LASX) == 0) {
-+            error_setg(errp, "Failed to enable LASX in TCG mode");
-+            return;
-+        }
-+    }
-+
-+    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
- }
- 
- static bool loongarch_get_lbt(Object *obj, Error **errp)
-@@ -695,6 +706,7 @@ void loongarch_cpu_post_init(Object *obj)
-     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
- 
-     cpu->lsx = ON_OFF_AUTO_AUTO;
-+    cpu->lasx = ON_OFF_AUTO_AUTO;
-     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
-                              loongarch_set_lsx);
-     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 5bddf72c22..8eee49a984 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -284,6 +284,7 @@ typedef struct LoongArchTLB LoongArchTLB;
- 
- enum loongarch_features {
-     LOONGARCH_FEATURE_LSX,
-+    LOONGARCH_FEATURE_LASX,
-     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
-     LOONGARCH_FEATURE_PMU,
- };
-@@ -406,6 +407,7 @@ struct ArchCPU {
-     OnOffAuto lbt;
-     OnOffAuto pmu;
-     OnOffAuto lsx;
-+    OnOffAuto lasx;
- 
-     /* 'compatible' string for this CPU for Linux device trees */
-     const char *dtb_compatible;
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 390828ef78..5033b4070a 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -827,6 +827,32 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         }
-         return false;
- 
-+    case LOONGARCH_FEATURE_LASX:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_LASX;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        if (ret == 0) {
-+            return true;
-+        }
-+
-+        /* Fallback to old kernel detect interface */
-+        val = 0;
-+        attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
-+        /* Cpucfg2 */
-+        attr.attr  = 2;
-+        attr.addr = (uint64_t)&val;
-+        ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
-+        if (!ret) {
-+            ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
-+            if (ret) {
-+                return false;
-+            }
-+
-+            ret = FIELD_EX32((uint32_t)val, CPUCFG2, LASX);
-+            return (ret != 0);
-+        }
-+        return false;
-+
-     case LOONGARCH_FEATURE_LBT:
-         /*
-          * Return all if all the LBT features are supported such as:
-@@ -878,6 +904,28 @@ static int kvm_cpu_check_lsx(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+static int kvm_cpu_check_lasx(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LASX);
-+    env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 0);
-+    if (cpu->lasx == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
-+        } else {
-+            error_setg(errp, "'lasx' feature not supported by KVM on host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->lasx == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
-+    }
-+
-+    return 0;
-+}
-+
- static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -943,6 +991,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         error_report_err(local_err);
-     }
- 
-+    ret = kvm_cpu_check_lasx(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+    }
-+
-     ret = kvm_cpu_check_lbt(cs, &local_err);
-     if (ret < 0) {
-         error_report_err(local_err);
--- 
-2.39.3
+>>
+>>> +{
+>>> +    CPUState *cs = CPU(cpu);
+>>> +    uint64_t val;
+>>> +
+>>> +    val = cs->nr_threads * cs->nr_cores;  /* thread count, bits 15..0 */
+>>> +    val |= ((uint32_t)cs->nr_cores << 16); /* core count, bits 31..16 */
+>>
+>> Personally I'd change to:
+>>
+>>          return deposit64(cs->nr_threads * cs->nr_cores, 16, 16,
+>>                           cs->nr_cores);
+> that I wouldn't do in this patch to make it easier to compare apples to apples
+> That however could be a separate patch on top
+
+OK. I will keep it as-is in this patch.
+
+>>> +
+>>> +    return val;
+>>> +}
+>>
+> 
 
 
