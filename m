@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E83E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47017E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:19:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLpaD-0001WS-Ee; Thu, 12 Dec 2024 15:14:52 -0500
+	id 1tLpe5-0002Ta-Fd; Thu, 12 Dec 2024 15:18:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpa5-0001W0-HA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:14:41 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpe0-0002Sx-KF
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:18:45 -0500
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpa2-0000XH-Pv
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:14:41 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so10958765e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:14:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpdv-0002gy-Pl
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:18:41 -0500
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-385f06d0c8eso531899f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:18:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734034476; x=1734639276; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734034718; x=1734639518; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=AcMdh8cqoXMcKf5bh19K8M/QQOI3MjTsc7kIr//a3cY=;
- b=pYjk4zvAP7P8HuEUSlA1KKCSyka7iJmduWVGqUcuyMk7BFik2wZI+iSlrp9fFnafBo
- PWoubw71iqymRlWLzRqWVgwnjoOabyS2t5/5HZTbPyZD4jXioTu0kkbVY/a2hQCTLIDt
- 5lblSOHs72g/oCyi+hIx7P3pZhzOCvOi6+vDt3mmJuFpqfNlDLW1S1dYp8uLRBbfxkdd
- TvjcEMrsefhfdv/EDbsHxkPqTNwuCjvHWNco95etkFL+Ts3CoapFaTzhsP+VowlOu7lY
- kxZeAB6vYFHvrWDeLmL2Oz+5LsrxKRH0symIuV868Ev2bf7tKrusUVHiegnPApk7vzFk
- zMKQ==
+ bh=wXx8LehMtPhGQIHS10qgTj1vmwGyf+Bl3o4hJFliSP4=;
+ b=dGs+AntrqNMQe2GyL5Ve0CiC3zNIVw/VqBxqrk3psHMjMaV4sIq5yFPhEvjQSZkDn9
+ B2dz2gMGl4j5aCR+G/eL/1HnDY4PgbuUK43qzZBVc81JNY9ocuCqDP9Xr+0P23sqMDJ/
+ t3mRSGe6hLD0YudLEn5VL2Vf4vLnzwYl9l09gQhl8EvjDqg0MQbUqBDhYfOKszMp+7fE
+ NpE+07f9BoqsVt6Ah7CG+Pq1eLDOaMU8SZpc3cvtaCfvDtgEuV8kxY3wlR2g1HcfBhH3
+ v5GIIdq656DEV9HXYyZ+/OBnRxPP2t0ZQ8SVGulRJu1sRnnF0K96CN4701zZsNFRj0aY
+ Po3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734034476; x=1734639276;
+ d=1e100.net; s=20230601; t=1734034718; x=1734639518;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=AcMdh8cqoXMcKf5bh19K8M/QQOI3MjTsc7kIr//a3cY=;
- b=CGa8Zlntt53Er++sUyW+ZVYL8vvVcs/t2un11pYD5VrPpDcJ7zOdFLZDO5w/RWdwbg
- YYCmKNek77G1jw2EE316Nd0fncFFEUbSLe3SjGLsojTMFTCd1FhZWYsawZP7j0355KL+
- aJSJM36bJZshtpYSmSUNFnQ9OqKBH4JwEkviasGDqtfsDE6xPrQzMT+ukm4mMiENSmlr
- fUDk21E7u2LUdN7duHtlTvQvLnv8ok9EtBxYJjk42jY/Kcb1I1xtYyv1AeLzTviCbLPL
- J1o6Qs+K2bRp/sWO3L082foAzc2XHkFnxHkoomCZFIOEjMLZQZlY8Wr2CMtXA0bAELjs
- u/kg==
-X-Gm-Message-State: AOJu0YwNLVTUsgvE8Go4NYChiiWc1Q75plWGAsEEiHajSLK6ksWtxsJz
- KfL0iYGX2RXSZcuqGJiyMUgmlQ7raEIzIo0PVTXTVnrBt63wwqX2O7UO0PFetuI=
-X-Gm-Gg: ASbGncvgcr6HsarXisep+V16s/NHXyf98zvQyY7NRQMYyCwkYumlnBapZS9ZK5gkn75
- de9mS69AT/rlQpWPDCumJe3p3qdWc0esVPgmkW/kp7rvhakr8dfBtLdPl0HDnmeo28qEQ2G9jWP
- QKVs6w0V5ZjZnv9bO1vB7pvni9L+NuSmgmrk9Gj7bciQ2ogbstUvNJhxk6Dl1sd/+Ibt4b7MGu2
- 9u1GQddl4TAX+0fhIP213g4d3h0H+tQXxf/EyoIzE3LsXRvHNZhIxGAzc7Y6a6/CCBTzY7NYr4z
- IQhg4CZAZHszULi8rTYFlR6u
-X-Google-Smtp-Source: AGHT+IEbgLtp5g9RUoJIVnVj4as6vKCQbYtjLo+ANvj+fENp2ffSM9yetapvhiSBNUcN/uwYf4qk/w==
-X-Received: by 2002:a05:6000:4705:b0:386:4312:53ec with SMTP id
- ffacd0b85a97d-3878769113emr3893051f8f.17.1734034474715; 
- Thu, 12 Dec 2024 12:14:34 -0800 (PST)
+ bh=wXx8LehMtPhGQIHS10qgTj1vmwGyf+Bl3o4hJFliSP4=;
+ b=SCdK4qp/hiB2zQvprXTEtuFV6Q4OOaPzn1kUBKX///l393HiNJoGfm07X1MiomohCb
+ +c9wwIuXFw069YhEmm8RalGYSvhL43yVnDQMyfjGzzC89uuwp7YAU2Vd/uKdYqBiGQQ0
+ HJhadIC3qscLed4mifTNxBz4A4tQ49ntWAdOpEgFTOPHuKBTEWX2qbWpavZz/qAJBhVt
+ KFNtftwS6ik88R5IPhbV4tUm2iNpHBtpojW/xQ2oWfrdIYBQyUZjxiVLGxAn9oQOpMOP
+ LlZy1350+DH7MwOWc9ZHkv/EkKuqOaCEfUa5MbgQ3anyizKYB8jPvRIwByzRBEuthc1/
+ vlPQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUhyRkpx+nfWrXcfyWDGgnr3mVPCBkEl9gDIIu+HmGRbSKVrE/s9Oo4377g5TFxs9ijhPNUbRdnguy6@nongnu.org
+X-Gm-Message-State: AOJu0Ywmm78mtAi84Ad/u+COGd2ElbKGGizQSuESK3I3GfPuBo3QsDFU
+ ahROzjScqW0SGaPHWOBFG13BklI+phV9bGlcwZbaJeWw6AvCd2dhpfzzXor9Vxc5YA56gFktt+M
+ k
+X-Gm-Gg: ASbGncuI+/a73FCtrIrVaocEiIzECp0x9hOvFca2PCQafkHQUEmAWEmah6SLC56s5df
+ 7VUrav7O15agSZSXZeUgavTQUxcpkSb4cn9o2+rAlcbWDwHchJDMT32V2qs6pb+sYCFPAku8uOi
+ G82//Iu15QzrpnE48CgBtGVQGTFnDLNrYy29s2n79w/LFAP59ftoeKvj2xJm2Ng0L4HeFdOiUp2
+ 95KsC2/yBPvt/DvLqg5bVn3WstIcqvvMxO1PftgBD5gUoCsgP5wuQ6Q0AlHJizW5v5NjNerNZgw
+ alFjJNbizUkVLN2e2YUb05m3
+X-Google-Smtp-Source: AGHT+IELOOJASaztCfe6u8QEQUWCprAWxZSDWPvfvsB+4GWVnpG7hK+UNez6rEt+3SJZcHU/etmcHg==
+X-Received: by 2002:a05:6000:1868:b0:385:f1df:24ea with SMTP id
+ ffacd0b85a97d-3864ce937camr7277161f8f.40.1734034717848; 
+ Thu, 12 Dec 2024 12:18:37 -0800 (PST)
 Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878251db4asm4812766f8f.96.2024.12.12.12.14.33
+ ffacd0b85a97d-3878248f675sm4878986f8f.20.2024.12.12.12.18.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 12:14:33 -0800 (PST)
-Message-ID: <f410fcaa-ea8c-4168-b119-5a73f9ecbc0f@linaro.org>
-Date: Thu, 12 Dec 2024 21:14:32 +0100
+ Thu, 12 Dec 2024 12:18:37 -0800 (PST)
+Message-ID: <cffc3e39-bbd6-4acb-9033-7740ed479533@linaro.org>
+Date: Thu, 12 Dec 2024 21:18:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] system: Restrict libpmem and libdaxctl CPPFLAGS to
- physmem.c
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
- Wei Yang <richardw.yang@linux.intel.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Haozhong Zhang <haozhong.zhang@intel.com>
-References: <20241212092632.18538-1-philmd@linaro.org>
- <20241212092632.18538-3-philmd@linaro.org>
- <5c323271-8563-342f-35d1-6f9575265f72@eik.bme.hu>
- <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
- <1a36f9f9-3783-9d40-7e85-b0ff290e3857@eik.bme.hu>
+Subject: Re: [PATCH 03/18] include: Include missing 'qemu/clang-tsa.h' header
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+References: <20241212185341.2857-1-philmd@linaro.org>
+ <20241212185341.2857-4-philmd@linaro.org>
+ <f2e5348e-8773-460a-a586-8e5be7a87f3b@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1a36f9f9-3783-9d40-7e85-b0ff290e3857@eik.bme.hu>
+In-Reply-To: <f2e5348e-8773-460a-a586-8e5be7a87f3b@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,81 +103,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 19:55, BALATON Zoltan wrote:
-> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
->> On 12/12/24 14:11, BALATON Zoltan wrote:
->>> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
->>>> Only physmem.c includes libpmem and libdaxctl headers.
->>>> No need to pass them to all system_ss[] files.
->>>
->>> I think doing this patch first would leave the other one unnecessary so 
+On 12/12/24 20:22, Pierrick Bouvier wrote:
+> On 12/12/24 10:53, Philippe Mathieu-Daudé wrote:
+>> The next commit will remove "qemu/clang-tsa.h" of "exec/exec-all.h",
+>> however the following files indirectly include it:
 >>
->> This one is about libpmem / libdaxctl in physmem.c,
->> the previous one is about libsdl in vl.c. I'm missing
->> what inverting the order would change.
-> 
-> It seems odd to add the libpmem, libdaxctl libs to one set in the first 
-> patch then remove it right away in the next patch. Swapping patches 
-> would avoid that and move these to the final place without churn then 
-> the sdl change is simpler.
-> 
->> Besides in 2 patches it is simpler to check what CPPFLAGS are applied.
+>>    $ git grep -L qemu/clang-tsa.h $(git grep -wl TSA_NO_TSA)
+>>    block/create.c
+>>    include/block/block_int-common.h
+>>    tests/unit/test-bdrv-drain.c
+>>    tests/unit/test-block-iothread.c
+>>    util/qemu-thread-posix.c
 >>
->> Anyhow if you insist, I can squash. I don't care much as long as
->> we reduce the flags applied to system_ss[].
+>> Explicitly include it so we can process with the removal in the
+>> next commit.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/block/block_int-common.h | 1 +
+>>   block/create.c                   | 1 +
+>>   tests/unit/test-bdrv-drain.c     | 1 +
+>>   tests/unit/test-block-iothread.c | 1 +
+>>   util/qemu-thread-posix.c         | 1 +
+>>   5 files changed, 5 insertions(+)
+>>
+>> diff --git a/include/block/block_int-common.h b/include/block/ 
+>> block_int-common.h
+>> index ebb4e56a503..bb91a0f62fa 100644
+>> --- a/include/block/block_int-common.h
+>> +++ b/include/block/block_int-common.h
+>> @@ -28,6 +28,7 @@
+>>   #include "block/block-common.h"
+>>   #include "block/block-global-state.h"
+>>   #include "block/snapshot.h"
+>> +#include "qemu/clang-tsa.h"
+>>   #include "qemu/iov.h"
+>>   #include "qemu/rcu.h"
+>>   #include "qemu/stats64.h"
+>> diff --git a/block/create.c b/block/create.c
+>> index 6b23a216753..72abafb4c12 100644
+>> --- a/block/create.c
+>> +++ b/block/create.c
+>> @@ -24,6 +24,7 @@
+>>   #include "qemu/osdep.h"
+>>   #include "block/block_int.h"
+>> +#include "qemu/clang-tsa.h"
+>>   #include "qemu/job.h"
+>>   #include "qemu/main-loop.h"
+>>   #include "qapi/qapi-commands-block-core.h"
+>> diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+>> index 7410e6f3528..98ad89b390c 100644
+>> --- a/tests/unit/test-bdrv-drain.c
+>> +++ b/tests/unit/test-bdrv-drain.c
+>> @@ -28,6 +28,7 @@
+>>   #include "system/block-backend.h"
+>>   #include "qapi/error.h"
+>>   #include "qemu/main-loop.h"
+>> +#include "qemu/clang-tsa.h"
+>>   #include "iothread.h"
+>>   static QemuEvent done_event;
+>> diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block- 
+>> iothread.c
+>> index 26a6c051758..1de04a8a13d 100644
+>> --- a/tests/unit/test-block-iothread.c
+>> +++ b/tests/unit/test-block-iothread.c
+>> @@ -29,6 +29,7 @@
+>>   #include "system/block-backend.h"
+>>   #include "qapi/error.h"
+>>   #include "qapi/qmp/qdict.h"
+>> +#include "qemu/clang-tsa.h"
+>>   #include "qemu/main-loop.h"
+>>   #include "iothread.h"
+>> diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
+>> index b2e26e21205..6fff4162ac6 100644
+>> --- a/util/qemu-thread-posix.c
+>> +++ b/util/qemu-thread-posix.c
+>> @@ -17,6 +17,7 @@
+>>   #include "qemu-thread-common.h"
+>>   #include "qemu/tsan.h"
+>>   #include "qemu/bitmap.h"
+>> +#include "qemu/clang-tsa.h"
+>>   #ifdef CONFIG_PTHREAD_SET_NAME_NP
+>>   #include <pthread_np.h>
 > 
-> I don't insist and don't mind much either but I see others also 
-> suggested squashing patches so this will be resolved by that.
+> Seems like a better place for all this would be in:
+> include/qemu/compiler.h, instead of a separate clang-tsa header.
 
-Nah, you are right, I didn't notice. Besides, Paolo and Richard
-showed me I don't understand clearly meson dependencies. My bad.
+Yeah I was thinking the same, but since there is already another
+header, I didn't want to delay this cleanup further by modifying
+unrelated files.
 
-> 
-> Regards,
-> BALATON Zoltan
-> 
->>> you could do both in one patch with less churn and maybe reduce this 
->>> series to a single patch.
->>>
->>> Regards,
->>> BALATON Zoltan
->>>
->>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> ---
->>>> system/meson.build | 7 +++++--
->>>> 1 file changed, 5 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/system/meson.build b/system/meson.build
->>>> index f7e2c8b826f..50d915bd80c 100644
->>>> --- a/system/meson.build
->>>> +++ b/system/meson.build
->>>> @@ -2,10 +2,13 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', 
->>>> if_true: [files(
->>>>   'arch_init.c',
->>>>   'ioport.c',
->>>>   'memory.c',
->>>> -  'physmem.c',
->>>>   'watchpoint.c',
->>>> )])
->>>>
->>>> +specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
->>>> +  'physmem.c',
->>>> +), libpmem, libdaxctl])
->>>> +
->>>> system_ss.add(files(
->>>>   'balloon.c',
->>>>   'bootdevice.c',
->>>> @@ -23,7 +26,7 @@ system_ss.add(files(
->>>>   'runstate-hmp-cmds.c',
->>>>   'runstate.c',
->>>>   'tpm-hmp-cmds.c',
->>>> -), libpmem, libdaxctl)
->>>> +))
->>>>
->>>> system_ss.add(files(
->>>>   'vl.c',
->>>>
->>
->>
+> But for the current version,
+> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
+Thanks!
 
