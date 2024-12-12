@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0990E77183
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E6AE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:56:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLew3-0002Om-Vg; Thu, 12 Dec 2024 03:52:40 -0500
+	id 1tLezH-0004Kr-DC; Thu, 12 Dec 2024 03:55:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLevt-0002Nt-Bk
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:52:30 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLevr-0002xP-4K
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:52:29 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21628b3fe7dso2857365ad.3
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 00:52:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733993545; x=1734598345; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jnVG7KQCzrcIK1m42/aEsBiaqhK1sFzEc206MK4Psm0=;
- b=DAhUntAd070s0D1DYI12c2IohV4/KGdszH8IvBPwU9tydTTuIHz8SBISKn0gwlxvv+
- ay31cmu4gP3POMyBz34vi9cnUf0Ou+fXa28R6nsV5gE7+Rtw4e2/aPat065ylRHnIRoH
- DYuOqnNuc5PRbk8f/M8ujLDYo5SRuO+yESAZZhQJcQaalJk5sx9kM6zTTdMZQMmIKcg5
- eIfYCdaySJMME+Qs0CHFRH7ZAE7OkTzqQ3xymAP9pxZiujWEUf0zVenyO25sr/TaVr3r
- eSFsdbhNf6hcJj+s/A5ZL7I8WAqVf/q+nNbLZTDUvWe8SR1GlWY7ZsH2Vb3OAxiKHBQJ
- p+Qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733993545; x=1734598345;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jnVG7KQCzrcIK1m42/aEsBiaqhK1sFzEc206MK4Psm0=;
- b=jld124i6HpHQ8MiBy3MlbjT/K+pVrFU1rSPjRDygSAxYae8UZq97K8cnlnPmOnW7Ax
- b6tloZ7ZJS85pYHuZnbbd+W+JtZmYK+aP28E0BJ/TvJ974Qre/wQHYn0z9FRxX0ivBdo
- OIeB/csjthYIHXVuighIYYQfwIBa6vPfID99ium8NuuuMEq55iQkpbhyC3dP+mRUiCy2
- YXmQ/Uxr6zBpEWC4GJaRcoDHf0Z89B45PLrT6DVBbIa9fJTUx4gRxAFpBWILRuuKr+fI
- NY5ImtZHM5ZboI8T19+XLkfGVqhqYxBx/ngkxtuKBNhxscVaHDVy0x4Nz21M8X1wtaAu
- K7dQ==
-X-Gm-Message-State: AOJu0YzH1JMZMhSmlG+c1WI6oZy7dWMombQoDqWkaSKMzQhTP701oaiZ
- DCfcWSsWWfnJbhum3Ozkh6S/eAjqwxaWk6JZtOM8sRB9zSfljfNZJvXW+Q==
-X-Gm-Gg: ASbGncvZAWmMFMYKctjNEv5G6dg99J/CGiBCkQesWSBjnhL78j1dpERkgv76rpxkt1U
- NkIBg+1finoGEg/ZQ70xyYct0dRD8xTtH+wKmT/eyHG70XgxoEDBhX8pAehp6SFhazKQFvfBgyj
- GUkHqxQtU/4b9X/UrxzlGQCflZ0BuCHsr22og6ZaPqWw1xbDpqURFCglOZutYD1PnbUHCJhhnv6
- Yv9PMTra4EcZ/BBIT9yHQQXI4Mw3NNAb4xEvXdfSeeKFWIU12ino82prlI=
-X-Google-Smtp-Source: AGHT+IFBwZx8S+rzZzA8z13gzweUicjF3fY26sVGWE06NLNwdDLwHFs62Fn/Agdl2585KGetE2kNUg==
-X-Received: by 2002:a17:902:ea05:b0:216:2a36:5b2a with SMTP id
- d9443c01a7336-2178af005femr45156495ad.47.1733993545170; 
- Thu, 12 Dec 2024 00:52:25 -0800 (PST)
-Received: from wheely.local0.net ([1.146.48.169])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-215f8f0a736sm118402375ad.217.2024.12.12.00.52.21
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 00:52:24 -0800 (PST)
-From: Nicholas Piggin <npiggin@gmail.com>
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tLezF-0004Ke-5w
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:55:57 -0500
+Received: from esa9.hc1455-7.c3s2.iphmx.com ([139.138.36.223])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
+ id 1tLezC-0003YG-Oh
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:55:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+ d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
+ t=1733993754; x=1765529754;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=4evv+U15xH0JVrWpF1XQPkmVwCETnRKT4wl7je67gg4=;
+ b=jgDovG6uv9iEbgUxP88TNAQIJmsu9ETYC0YzK/wahOSlkkhyVejdvz30
+ tD+0gmaNxWyJtTkLXZd3y6VQvi3vB8k2z7AOPvF0HJl/xchBKE5g/MPBe
+ tKNdZVGX2bgoV8aDSAfGYL+/2IP+FQAabaMfw9+UTcOAG58M3eJkL8K+f
+ BmMlDScEo9MDJqAH8rKbsnZ9QjlLQyazL6LOI0OcTT9sxzxfe+wf58io8
+ rZqOPYnZL5JBMcHztVOMBba4bheYlEDGxmow4DORV3DzVbUVH+GRZbm7R
+ VLqYq4OS5uIO2ry710jr9M1p7XjMUq6rFcAuGLl5XongmepZgTi9fQ016 A==;
+X-CSE-ConnectionGUID: vOLqvmLRSA23VNnZHprcDg==
+X-CSE-MsgGUID: A0eGHIvjTIqB+2OzsnzZgg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="171834621"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728918000"; d="scan'208";a="171834621"
+Received: from unknown (HELO yto-r2.gw.nic.fujitsu.com) ([218.44.52.218])
+ by esa9.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 17:55:47 +0900
+Received: from yto-m2.gw.nic.fujitsu.com (yto-nat-yto-m2.gw.nic.fujitsu.com
+ [192.168.83.65])
+ by yto-r2.gw.nic.fujitsu.com (Postfix) with ESMTP id 2BC86D8E1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 17:55:45 +0900 (JST)
+Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
+ [192.51.206.22])
+ by yto-m2.gw.nic.fujitsu.com (Postfix) with ESMTP id EE751D5075
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 17:55:44 +0900 (JST)
+Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
+ by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 738C96BD63
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 17:55:44 +0900 (JST)
+Received: from FNSTPC.g08.fujitsu.local (unknown [10.167.135.44])
+ by edo.cn.fujitsu.com (Postfix) with ESMTP id A68121A0003;
+ Thu, 12 Dec 2024 16:55:43 +0800 (CST)
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] hw/usb/hcd-xhci-pci: Add TI TUSB73X0 XHCI controller
- model
-Date: Thu, 12 Dec 2024 18:52:07 +1000
-Message-ID: <20241212085207.1439501-3-npiggin@gmail.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241212085207.1439501-1-npiggin@gmail.com>
-References: <20241212085207.1439501-1-npiggin@gmail.com>
+Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
+ Fan Ni <fan.ni@samsung.com>, Li Zhijian <lizhijian@fujitsu.com>
+Subject: [PATCH] hw/cxl: Fix msix_notify: Assertion `vector <
+ dev->msix_entries_nr`
+Date: Thu, 12 Dec 2024 16:55:33 +0800
+Message-ID: <20241212085534.2669377-1-lizhijian@fujitsu.com>
+X-Mailer: git-send-email 2.41.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-TM-AS-GCONF: 00
+X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28854.006
+X-TM-AS-User-Approved-Sender: Yes
+X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28854.006
+X-TMASE-Result: 10--1.719600-10.000000
+X-TMASE-MatchedRID: pfKaEBrCt3LCVJdexVBqdn1zro62qhdCLL6mJOIs/vZGQgIVrmBL5G7l
+ BX/37R4p+xFlvZshf1aUrbS7Rz/s6duWQuISDK/k9k5nZzZVBSAE9jhJ6ArePCsrtFRYD/6QPlA
+ WwfVA2w7wx1fpYFo1NLXYdqC9vAOOL/tBTZzO5Q0D2WXLXdz+AaGD6ovXqA23Cb7y9s8XSuQTgt
+ 4grpaSCs2ghO0gXEiIq55sJBkGMyKkD6PdvhyWwrrbxxduc6FPPRMmeAtBYdvMtotGtpF5VoVrk
+ 544tkDY4vM1YF6AJbbCCfuIMF6xLSdET58jp62SqBM7+ZLn8druAudpF/ll2JfxsyEKVT7IXNTs
+ qTX2Gk8mezWG7OSchvnR0BHEa2IassaVc7c9CmpIvIKWGhYem93JoLj0uAhKwGC8e6520fKw0PJ
+ t06oJaHpaQl5xviY7wxgWdRvK9Un9g+oMf9KM6Q==
+X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
+Received-SPF: pass client-ip=139.138.36.223;
+ envelope-from=lizhijian@fujitsu.com; helo=esa9.hc1455-7.c3s2.iphmx.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,244 +98,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
+From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The TI TUSB73X0 controller has some interesting differences from NEC,
-notably a separate BAR for MSIX, and PM capabilities. The spec is freely
-available without sign-up.
+This assertion always happens when we sanitize the CXL memory device.
+$ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
 
-This controller is accepted by IBM Power proprietary firmware and
-software (when the subsystem IDs are set to Power servers, which is not
-done here). IBM code is picky about device support, so the NEC device
-can not be used.
+It is incorrect to register an MSIX number beyond the device's capability.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Expand the device's MSIX to 10 and introduce the `request_msix_number()`
+helper function to dynamically request an available MSIX number.
+
+Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
 ---
- include/hw/pci/pci_ids.h        |  1 +
- include/hw/usb/xhci.h           |  1 +
- hw/usb/hcd-xhci-ti.c            | 92 +++++++++++++++++++++++++++++++++
- tests/qtest/usb-hcd-xhci-test.c | 21 +++++---
- hw/usb/Kconfig                  |  5 ++
- hw/usb/meson.build              |  1 +
- 6 files changed, 115 insertions(+), 6 deletions(-)
- create mode 100644 hw/usb/hcd-xhci-ti.c
+ hw/cxl/cxl-device-utils.c   |  3 ++-
+ hw/mem/cxl_type3.c          | 15 ++++++++++++++-
+ include/hw/cxl/cxl_device.h |  2 ++
+ 3 files changed, 18 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
-index f1a53fea8d6..fdb692db513 100644
---- a/include/hw/pci/pci_ids.h
-+++ b/include/hw/pci/pci_ids.h
-@@ -182,6 +182,7 @@
- #define PCI_VENDOR_ID_HP                 0x103c
+diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
+index 035d034f6d..8e52af6813 100644
+--- a/hw/cxl/cxl-device-utils.c
++++ b/hw/cxl/cxl-device-utils.c
+@@ -354,8 +354,9 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
  
- #define PCI_VENDOR_ID_TI                 0x104c
-+#define PCI_DEVICE_ID_TI_TUSB73X0        0x8241
+ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
+ {
+-    const uint8_t msi_n = 9;
++    uint8_t msi_n = cxl_request_msi_number();
  
- #define PCI_VENDOR_ID_MOTOROLA           0x1057
- #define PCI_DEVICE_ID_MOTOROLA_MPC106    0x0002
-diff --git a/include/hw/usb/xhci.h b/include/hw/usb/xhci.h
-index 5c90e1373e5..203ec1fca32 100644
---- a/include/hw/usb/xhci.h
-+++ b/include/hw/usb/xhci.h
-@@ -3,6 +3,7 @@
++    assert(msi_n > 0);
+     /* 2048 payload size */
+     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
+                      PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
+diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+index 5cf754b38f..dbb1368736 100644
+--- a/hw/mem/cxl_type3.c
++++ b/hw/mem/cxl_type3.c
+@@ -835,6 +835,19 @@ static DOEProtocol doe_cdat_prot[] = {
+     { }
+ };
  
- #define TYPE_XHCI "base-xhci"
- #define TYPE_NEC_XHCI "nec-usb-xhci"
-+#define TYPE_TI_XHCI "ti-usb-xhci"
- #define TYPE_QEMU_XHCI "qemu-xhci"
- #define TYPE_XHCI_SYSBUS "sysbus-xhci"
- 
-diff --git a/hw/usb/hcd-xhci-ti.c b/hw/usb/hcd-xhci-ti.c
-new file mode 100644
-index 00000000000..6d4b44f6aaf
---- /dev/null
-+++ b/hw/usb/hcd-xhci-ti.c
-@@ -0,0 +1,92 @@
-+/*
-+ * USB xHCI controller emulation
-+ * Datasheet https://www.ti.com/product/TUSB7340
-+ *
-+ * Copyright (c) 2011 Securiforest
-+ * Date: 2011-05-11 ;  Author: Hector Martin <hector@marcansoft.com>
-+ * Based on usb-xhci-nec.c, emulates TI TUSB73X0
-+ *
-+ * This library is free software; you can redistribute it and/or
-+ * modify it under the terms of the GNU Lesser General Public
-+ * License as published by the Free Software Foundation; either
-+ * version 2.1 of the License, or (at your option) any later version.
-+ *
-+ * This library is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+ * Lesser General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU Lesser General Public
-+ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/usb.h"
-+#include "qemu/module.h"
-+#include "hw/pci/pci.h"
-+#include "hw/qdev-properties.h"
-+
-+#include "hcd-xhci-pci.h"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(XHCITiState, TI_XHCI)
-+
-+struct XHCITiState {
-+    /*< private >*/
-+    XHCIPciState parent_obj;
-+    /*< public >*/
-+    uint32_t intrs;
-+    uint32_t slots;
-+};
-+
-+static Property ti_xhci_properties[] = {
-+    DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
-+    DEFINE_PROP_UINT32("intrs", XHCITiState, intrs, 8),
-+    DEFINE_PROP_UINT32("slots", XHCITiState, slots, XHCI_MAXSLOTS),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void ti_xhci_instance_init(Object *obj)
++#define CT3_MSIX_NUM 10
++unsigned short cxl_request_msi_number(void)
 +{
-+    XHCIPciState *pci = XHCI_PCI(obj);
-+    XHCITiState *ti = TI_XHCI(obj);
++    const unsigned short start = 6;
++    static unsigned short next = start;
 +
-+    pci->xhci.numintrs = ti->intrs;
-+    pci->xhci.numslots = ti->slots;
++    if (next + 1 >= CT3_MSIX_NUM) {
++        return -1;
++    }
 +
-+    pci->cache_line_size = 0x0;
-+    pci->pm_cap_off = 0x40;
-+    pci->pcie_cap_off = 0x70;
-+    pci->msi_cap_off = 0x48;
-+    pci->msix_cap_off = 0xc0;
-+    pci->msix_bar_nr = 0x2;
-+    pci->msix_bar_size = 0x800000;
-+    pci->msix_table_off = 0x0;
-+    pci->msix_pba_off = 0x1000;
++    return ++next;
 +}
 +
-+static void ti_xhci_class_init(ObjectClass *klass, void *data)
-+{
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+    DeviceClass *dc = DEVICE_CLASS(klass);
+ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+ {
+     ERRP_GUARD();
+@@ -843,7 +856,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
+     ComponentRegisters *regs = &cxl_cstate->crb;
+     MemoryRegion *mr = &regs->component_registers;
+     uint8_t *pci_conf = pci_dev->config;
+-    unsigned short msix_num = 6;
++    unsigned short msix_num = CT3_MSIX_NUM;
+     int i, rc;
+     uint16_t count;
+ 
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index 561b375dc8..622265f50e 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -680,4 +680,6 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                    uint64_t len);
+ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+                                   uint64_t len);
++unsigned short cxl_request_msi_number(void);
 +
-+    device_class_set_props(dc, ti_xhci_properties);
-+    k->vendor_id    = PCI_VENDOR_ID_TI;
-+    k->device_id    = PCI_DEVICE_ID_TI_TUSB73X0;
-+    k->revision     = 0x02;
-+}
-+
-+static const TypeInfo ti_xhci_info = {
-+    .name          = TYPE_TI_XHCI,
-+    .parent        = TYPE_XHCI_PCI,
-+    .instance_size = sizeof(XHCITiState),
-+    .instance_init = ti_xhci_instance_init,
-+    .class_init    = ti_xhci_class_init,
-+};
-+
-+static void ti_xhci_register_types(void)
-+{
-+    type_register_static(&ti_xhci_info);
-+}
-+
-+type_init(ti_xhci_register_types)
-diff --git a/tests/qtest/usb-hcd-xhci-test.c b/tests/qtest/usb-hcd-xhci-test.c
-index 93614e55461..d4a0d8cc217 100644
---- a/tests/qtest/usb-hcd-xhci-test.c
-+++ b/tests/qtest/usb-hcd-xhci-test.c
-@@ -59,6 +59,9 @@ typedef struct XHCIQState {
- #define XHCI_NEC_ID (PCI_DEVICE_ID_NEC_UPD720200 << 16 | \
-                      PCI_VENDOR_ID_NEC)
- 
-+#define XHCI_TI_ID  (PCI_DEVICE_ID_TI_TUSB73X0 << 16 | \
-+                     PCI_VENDOR_ID_TI)
-+
- /**
-  * Locate, verify, and return a handle to the XHCI device.
-  */
-@@ -78,6 +81,8 @@ static QPCIDevice *get_xhci_device(QTestState *qts, uint32_t *fingerprint)
-     switch (xhci_fingerprint) {
-     case XHCI_NEC_ID:
-         break;
-+    case XHCI_TI_ID:
-+        break;
-     default:
-         /* Unknown device. */
-         g_assert_not_reached();
-@@ -134,11 +139,12 @@ static XHCIQState *xhci_boot(const char *cli, ...)
-         va_end(ap);
-     } else {
-         s = xhci_boot("-M q35 "
--                      "-device nec-usb-xhci,id=xhci,bus=pcie.0,addr=1d.0 "
-+                      "-device %s,id=xhci,bus=pcie.0,addr=1d.0 "
-                       "-drive id=drive0,if=none,file=null-co://,"
--                          "file.read-zeroes=on,format=raw");
-+                          "file.read-zeroes=on,format=raw",
-+                      qtest_has_device("ti-usb-xhci") ?
-+                          "ti-usb-xhci" : "nec-usb-xhci");
-     }
--
-     return s;
- }
- 
-@@ -392,10 +398,12 @@ static void pci_xhci_stress_rings(void)
-     int i;
- 
-     s = xhci_boot("-M q35 "
--            "-device nec-usb-xhci,id=xhci,bus=pcie.0,addr=1d.0 "
-+            "-device %s,id=xhci,bus=pcie.0,addr=1d.0 "
-             "-device usb-storage,bus=xhci.0,drive=drive0 "
-             "-drive id=drive0,if=none,file=null-co://,"
--                "file.read-zeroes=on,format=raw "
-+                "file.read-zeroes=on,format=raw ",
-+            qtest_has_device("ti-usb-xhci") ?
-+                "ti-usb-xhci" : "nec-usb-xhci"
-             );
- 
-     hcsparams1 = xhci_cap_readl(s, 0x4); /* HCSPARAMS1 */
-@@ -567,7 +575,8 @@ int main(int argc, char **argv)
-         return 0;
-     }
- 
--    if (!qtest_has_device("nec-usb-xhci")) {
-+    if (!qtest_has_device("nec-usb-xhci") &&
-+        !qtest_has_device("ti-usb-xhci")) {
-         return 0;
-     }
- 
-diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
-index 5fbecd2f43b..8e5c4747af9 100644
---- a/hw/usb/Kconfig
-+++ b/hw/usb/Kconfig
-@@ -49,6 +49,11 @@ config USB_XHCI_NEC
-     default y if PCI_DEVICES
-     select USB_XHCI_PCI
- 
-+config USB_XHCI_TI
-+    bool
-+    default y if PCI_DEVICES
-+    select USB_XHCI_PCI
-+
- config USB_XHCI_SYSBUS
-     bool
-     select USB_XHCI
-diff --git a/hw/usb/meson.build b/hw/usb/meson.build
-index 1b4d1507e41..b874a93f16e 100644
---- a/hw/usb/meson.build
-+++ b/hw/usb/meson.build
-@@ -23,6 +23,7 @@ system_ss.add(when: 'CONFIG_USB_XHCI', if_true: files('hcd-xhci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_PCI', if_true: files('hcd-xhci-pci.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_SYSBUS', if_true: files('hcd-xhci-sysbus.c'))
- system_ss.add(when: 'CONFIG_USB_XHCI_NEC', if_true: files('hcd-xhci-nec.c'))
-+system_ss.add(when: 'CONFIG_USB_XHCI_TI', if_true: files('hcd-xhci-ti.c'))
- system_ss.add(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2.c'))
- system_ss.add(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3.c'))
- 
+ #endif
 -- 
-2.45.2
+2.41.0
 
 
