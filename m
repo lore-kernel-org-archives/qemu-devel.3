@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 053CBE77182
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FD41C3ABA0
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:55:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLoKM-0004eH-AT; Thu, 12 Dec 2024 13:54:22 -0500
+	id 1tLoK1-0004bg-8y; Thu, 12 Dec 2024 13:54:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKK-0004dt-CI
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:20 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoK0-0004bX-7k
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:00 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoKI-0006Xw-2k
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:54:19 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-728eccf836bso896713b3a.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:54:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoJx-0006WO-SS
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:53:59 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ef89dbd8eeso631507a91.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:53:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734029654; x=1734634454; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=COQa0IDmzSYvfWdSQf7pgjwEYz5PX2cSNYwHo2OnbHQ=;
- b=RH2WLNViv5rxLLEtqjvRqVJn1hud/r/EPad5mdfhrhBEFe42heHMfFlOhtgtiliDaV
- msCSnoH5gPior3a84eKU+PiMJCZXAaN5jAPFO94ettyd7Wt9wD0KYY0wbArkiKhiDfHK
- JC0Z/iVj7yWyIHTlKZyuCn5tcG2XQs+Zl29Pp/WmL5bTfUrv+vIMGkdm8IHIuIeAVVwg
- ISNEGfs9FvqhPnUD40tkwIFTXpaoRPA3wwhZmYx8mKmPBfu1blYGAkk8WimYVAgPsTea
- 7Yy9FRvqBwaWUca5DQHfO21LBJZRoAChpo5Sze2SCEr0KR03z2x8J2/kRuDlizy0l3a/
- 1yHg==
+ d=linaro.org; s=google; t=1734029632; x=1734634432; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YmhSLELNDZOYP7FpGoXWoYAisIFfjK8kEBl0i/Kwy8w=;
+ b=bK4jOhMyIrbGiUPdl6XnalzSqObDXXS4DhFS0nLcZqUXpXOuWnoR/ILkwqR5shmLeT
+ gEogR9u0Pw6s4iNLuJC9VliCWmFZgQ+SqhJuccXNGj+SrBViWu9R+jpmJBQwlyyLvk5o
+ X1HjGXBOZ0xTzxvB+o78LZgKPK6ywZJgCBbJ2IMm5ImIrZb8c1x07VLWDlF2e2vlw9jA
+ S/TDtB8vwrGnHvAVRB4IlzG0mGTeOalFm0gf/sU/DY4g0EHvyYn3PAdL9G86B8TcVoLs
+ OYCud1if4hcd+1+vedKzsg44YlqGlnEagdJoANyQNTlq2aiAlQcNy3UmiC7VrWeKKxav
+ UVEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734029654; x=1734634454;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=COQa0IDmzSYvfWdSQf7pgjwEYz5PX2cSNYwHo2OnbHQ=;
- b=vOjoqd1ZCdksyHqiFAiAa5iw8dlAygJt37MmuXdPByN5c7JcvZnVc9+lDSP50kI47/
- 8BbFMvERvpNTFCOfgNmCHywCptVnggI/3eABWnvlNgRaU/7Gyc2CURMbvsMH7lnqiklR
- QPL6licDzFIiOvRecbtd8Wz8FDMc2kREVSWIl8X6WTPROixdVTpSGbYDeCMXJEAko+AE
- vmIOoOMjqPpPQ8kkmVk5C8RYBk6xG57BC0LI8Kq5mUsYZWBEH0URol23fAoJR1QJpNED
- rv/lQEo5ntJWH0oDqXd7MwP7wwIrya1ty8Asn5LJhqNdemq+pEveR0akbL02HCglKl20
- Rd5g==
-X-Gm-Message-State: AOJu0Yyi5gWyxQVsEZJO3xEy5wTQmSG7bNfzABoEWRYKRsTrxAD8w9SY
- BFck/lM6RHhxPvoVmndek4J2SMjkqPMMjtIYLC0Irkgwxc32Z4pS3H3w188WQbN/S1r3RLSvrAD
- f
-X-Gm-Gg: ASbGnctevQOQUUIx6cD2E4iirnaybNuRuBK/DSHCH2UaR5pel0KE0NQZgJALTzjqGR9
- BflITkOmxHIlS3f5/UHnZdwTMpVTwwuUPcL25DG8DzeIBYiUZ82XE12A1OL7az27m/kIa2SClY4
- bRWEzp/Y5dzprlxlx3E34vPiYTEaqD03Ze6ItXpOQdfqAwQaaZHsVE9kjljufpOBNfbpTbKq2ur
- QctPRHvQWqMiFcWSHJlSqmlJ5h2vttosJmmT5/YWnzuPh3MJ/2XVP0Luv1npvrO4HyulRtyx/tl
- YMw5r/6L6W+6KN8ZVc6kRFYquUHy5Lw=
-X-Google-Smtp-Source: AGHT+IFQNSDMUDu1KjluxEHUpQ8TgFW6sOQJITb19SzMs2If7YWqMPatFEzqX8gHIDM4erPMDu2NjA==
-X-Received: by 2002:a05:6a00:2885:b0:728:fab1:edbb with SMTP id
- d2e1a72fcca58-72906ae391emr2144317b3a.20.1734029654724; 
- Thu, 12 Dec 2024 10:54:14 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7273beba847sm5963884b3a.174.2024.12.12.10.54.11
+ d=1e100.net; s=20230601; t=1734029632; x=1734634432;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YmhSLELNDZOYP7FpGoXWoYAisIFfjK8kEBl0i/Kwy8w=;
+ b=i7OePxpnNuIQOTmUm0/Qezb14QJiBhBECc+SwA5+QWNhN1APVYbdqodljFhDHbnYGM
+ ucF9ZK/8bFBuIszAX8ac5RMtpnHJp+tnmGUbdrA473I4rFBaahQB56fj8QLKi19q9Td8
+ VutzA/XOtSk4+gljsXpBLb7YWb84rcnPvmTCE3C40XrCa8vseAnZYULAq8glB29k4++w
+ /CMAeHLphYQVVjvqItcwS1aFa6AtAoszcxkZD3ncUwUtAr55msLb7wdBIc/OnPdKW8+X
+ I571rFI1a0ndnwlHF46NjrDbcc68Cqaxvd6BzravMJ2K2rKha+KKjXviWCUtxB3Tv1ME
+ do5Q==
+X-Gm-Message-State: AOJu0YxBhTX3sslI/wpY3NIJ6uLL4YpqpfI8BGq4BVVSTFSfaPPmf3Tk
+ tGeIftyydcMeqqIFBNzEGdkAKg73tvqrSvX0Dmn4Ur3QKLrvtbHUy4XkirtP8HC5mZyL1+BqRhM
+ 2
+X-Gm-Gg: ASbGnctkp6fVe90BiZyXPW+j0nZZhJphelUhSBRhMovvsvD8ykLaq8mNGe9+pI47kjv
+ wiW0NFgLRxaAx7vLXHLstjprGHRnPPcn5WRqqZL/22ZwLMe8clSrlngUpZnqIaIWg8biJKXg/Rn
+ LgpPv7OgQ8PJWwJWP+0TPSdb4lZCDByUCt4+NU3OmVUOZhmXKBWCIt1E0H8kHP/Eds8CKRQhHsO
+ wveV+MijilNSrYpCFLtjqH9ne/8isL9qJWYBWGjGVqhwhWrQmabJW104eOnuQGePAVuBiXRd33l
+X-Google-Smtp-Source: AGHT+IHl/VmTyPjN4MTnb5/S6OpW1glD56ur8Xc4dFlz9+QS/scalZEIf/UhCX3DMOat0rxh4BmOPQ==
+X-Received: by 2002:a17:90b:4b88:b0:2ee:5691:774e with SMTP id
+ 98e67ed59e1d1-2f13925ac9dmr7120215a91.2.1734029631915; 
+ Thu, 12 Dec 2024 10:53:51 -0800 (PST)
+Received: from localhost.localdomain ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f142de3473sm1604990a91.24.2024.12.12.10.53.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 10:54:14 -0800 (PST)
+ Thu, 12 Dec 2024 10:53:51 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 02/18] linux-user/aarch64: Include missing 'user/abitypes.h'
- header
-Date: Thu, 12 Dec 2024 19:53:25 +0100
-Message-ID: <20241212185341.2857-3-philmd@linaro.org>
+Subject: [PATCH 00/18] accel/tcg: Extract user APIs out of 'exec/[cpu,
+ exec]-all.h'
+Date: Thu, 12 Dec 2024 19:53:23 +0100
+Message-ID: <20241212185341.2857-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
-References: <20241212185341.2857-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x434.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,33 +97,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-arm_set_mte_tcf0() uses the abi_long type which is defined
-in "user/abitypes.h". Include it in order to avoid when
-refactoring:
+The goal of this series is to clarify user emulation APIs,
+and clean the mixed bag of exec/foo-all.h headers.
 
-  In file included from ../../target/arm/gdbstub64.c:28:
-  ../linux-user/aarch64/mte_user_helper.h:30:42: error: unknown type name ‘abi_long’; did you mean ‘u_long’?
-     30 | void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
-        |                                          ^~~~~~~~
+Move user specific declarations out of the generic
+- "exec/cpu-all.h",
+- "exec/cpu_ldst.h",
+- "exec/exec-all.h" and
+- "exec/translate-all.h"
+to the generic:
+- "accel/tcg/tb-internal.h" and
+- "exec/page-protection.h"
+and the user specific:
+- "user/cpu_loop.h",
+- "user/guest-host.h" and
+- "user/page-protection.h"
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- linux-user/aarch64/mte_user_helper.h | 2 ++
- 1 file changed, 2 insertions(+)
+Philippe Mathieu-Daudé (18):
+  exec: Introduce 'user/guest-host.h' header
+  linux-user/aarch64: Include missing 'user/abitypes.h' header
+  include: Include missing 'qemu/clang-tsa.h' header
+  accel/tcg: Declare mmap_[un]lock() in 'exec/page-protection.h'
+  accel/tcg: Use tb_page_addr_t type in page_unprotect()
+  accel/tcg: Move page_[un]protect() to 'user/page-protection.h'
+  system: Remove unnecessary 'exec/translate-all.h' include
+  accel/tcg: Move 'exec/translate-all.h' -> 'tb-internal.h'
+  accel/tcg: Un-inline log_pc()
+  accel/tcg: Move TranslationBlock declarations to 'tb-internal.h'
+  accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
+    (1/4)
+  accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
+    (2/4)
+  accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
+    (3/4)
+  accel/tcg: Move user-related declarations out of 'exec/cpu-all.h'
+    (4/4)
+  user: Forward declare target_cpu_copy_regs structure
+  user: Move 'linux-user/cpu_loop-common.h' -> 'user/cpu_loop.h'
+  user: Declare cpu_loop() once in 'user/cpu_loop.h'
+  user: Move various declarations out of 'exec/exec-all.h'
 
-diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-index 8685e5175a2..0c53abda222 100644
---- a/linux-user/aarch64/mte_user_helper.h
-+++ b/linux-user/aarch64/mte_user_helper.h
-@@ -9,6 +9,8 @@
- #ifndef AARCH64_MTE_USER_HELPER_H
- #define AARCH64_MTE USER_HELPER_H
- 
-+#include "user/abitypes.h"
-+
- #ifndef PR_MTE_TCF_SHIFT
- # define PR_MTE_TCF_SHIFT       1
- # define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
+ accel/tcg/internal-target.h          |  43 +---------
+ accel/tcg/tb-internal.h              |  53 +++++++++++++
+ bsd-user/bsd-mem.h                   |   1 +
+ bsd-user/qemu.h                      |   3 +-
+ include/block/block_int-common.h     |   1 +
+ include/exec/cpu-all.h               | 112 +--------------------------
+ include/exec/cpu_ldst.h              |  47 +----------
+ include/exec/exec-all.h              |  72 +----------------
+ include/exec/page-protection.h       |  24 ++++++
+ include/exec/translate-all.h         |  33 --------
+ include/user/cpu_loop.h              |  90 +++++++++++++++++++++
+ include/user/guest-host.h            |  87 +++++++++++++++++++++
+ include/user/page-protection.h       |  99 +++++++++++++++++++++++
+ linux-user/aarch64/mte_user_helper.h |   2 +
+ linux-user/cpu_loop-common.h         |  31 --------
+ linux-user/qemu.h                    |   1 +
+ linux-user/user-internals.h          |   1 -
+ accel/tcg/cpu-exec.c                 |  13 ++++
+ accel/tcg/cputlb.c                   |   3 +-
+ accel/tcg/tb-maint.c                 |   6 +-
+ accel/tcg/translate-all.c            |   4 +-
+ accel/tcg/translator.c               |   1 +
+ accel/tcg/user-exec.c                |   6 +-
+ accel/tcg/watchpoint.c               |   3 +-
+ block/create.c                       |   1 +
+ bsd-user/main.c                      |   1 +
+ bsd-user/mmap.c                      |   1 +
+ bsd-user/signal.c                    |   2 +
+ cpu-target.c                         |   2 +-
+ linux-user/aarch64/cpu_loop.c        |   4 +-
+ linux-user/alpha/cpu_loop.c          |   4 +-
+ linux-user/arm/cpu_loop.c            |   5 +-
+ linux-user/elfload.c                 |   2 +-
+ linux-user/flatload.c                |   1 +
+ linux-user/hexagon/cpu_loop.c        |   4 +-
+ linux-user/hppa/cpu_loop.c           |   4 +-
+ linux-user/i386/cpu_loop.c           |   4 +-
+ linux-user/loongarch64/cpu_loop.c    |   4 +-
+ linux-user/m68k/cpu_loop.c           |   4 +-
+ linux-user/main.c                    |   3 +-
+ linux-user/microblaze/cpu_loop.c     |   4 +-
+ linux-user/mips/cpu_loop.c           |   4 +-
+ linux-user/mmap.c                    |   1 +
+ linux-user/openrisc/cpu_loop.c       |   4 +-
+ linux-user/ppc/cpu_loop.c            |   4 +-
+ linux-user/riscv/cpu_loop.c          |   4 +-
+ linux-user/s390x/cpu_loop.c          |   4 +-
+ linux-user/sh4/cpu_loop.c            |   4 +-
+ linux-user/signal.c                  |   2 +
+ linux-user/sparc/cpu_loop.c          |   4 +-
+ linux-user/syscall.c                 |   3 +-
+ linux-user/xtensa/cpu_loop.c         |   4 +-
+ system/physmem.c                     |   1 -
+ target/arm/helper.c                  |   1 +
+ target/arm/tcg/helper-a64.c          |   3 +
+ target/arm/tcg/mte_helper.c          |   4 +
+ target/arm/tcg/sve_helper.c          |   3 +
+ target/hppa/op_helper.c              |   3 +
+ target/s390x/tcg/mem_helper.c        |   4 +-
+ target/sparc/ldst_helper.c           |   3 +
+ tests/unit/test-bdrv-drain.c         |   1 +
+ tests/unit/test-block-iothread.c     |   1 +
+ util/qemu-thread-posix.c             |   1 +
+ 63 files changed, 467 insertions(+), 382 deletions(-)
+ create mode 100644 accel/tcg/tb-internal.h
+ delete mode 100644 include/exec/translate-all.h
+ create mode 100644 include/user/cpu_loop.h
+ create mode 100644 include/user/guest-host.h
+ create mode 100644 include/user/page-protection.h
+ delete mode 100644 linux-user/cpu_loop-common.h
+
 -- 
 2.45.2
 
