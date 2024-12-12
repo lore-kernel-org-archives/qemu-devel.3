@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2866E77183
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:19:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18887E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 16:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLlt6-0006gh-Fj; Thu, 12 Dec 2024 11:18:04 -0500
+	id 1tLlut-0007rH-DX; Thu, 12 Dec 2024 11:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLlsz-0006eh-QJ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:17:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLluo-0007q9-QV
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:19:50 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLlsx-0006eB-I4
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:17:57 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLluj-0006m7-Uq
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 11:19:50 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734020273;
+ s=mimecast20190719; t=1734020383;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=HCFlWWJpb6Eqwm/ohZNhVceFaUlNcCtKJacg7HQwSU0=;
- b=Irozi+cbJG+9Jk8IshdpOXgiYqauZ+MPDYSxzZs1K3C/+bqegPJ+LRe4sf7xPcsZ9JPcaq
- A3j/RElkJQ2hmRtAdNKr+B5VUeIpWNF/5jz4F7exUf+vh4Gp1KXpzgkwOHlYbzozmI16RX
- UDAOqZXFnlCGuG8Qro8rVedQBhJxVaU=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qjLjmf2xqc+J9/1KQmmjLod5nkYXfAqv9KztQKPtyBY=;
+ b=X53b39u9Fo54XoVxbBBOU17HkTrc0UdGxRbuccXuDWNiCxuv5ef4vXkoE96SANqyG6/bed
+ ydVj0jILKUykKPyn2BqAAOIBcXSW8F0eW7WX67dNLi5FrptLSy80RbtsQVUyEfT+54HbxB
+ PM76CeImMx/f4Ne00m+pCBMVzQH6uSU=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-492-VWfHT2d1NniY5eo_F8NrhQ-1; Thu, 12 Dec 2024 11:17:52 -0500
-X-MC-Unique: VWfHT2d1NniY5eo_F8NrhQ-1
-X-Mimecast-MFC-AGG-ID: VWfHT2d1NniY5eo_F8NrhQ
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-46791423fc9so16651311cf.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 08:17:52 -0800 (PST)
+ us-mta-68-p7rOdWX6OSyba4PwklPrZg-1; Thu, 12 Dec 2024 11:19:42 -0500
+X-MC-Unique: p7rOdWX6OSyba4PwklPrZg-1
+X-Mimecast-MFC-AGG-ID: p7rOdWX6OSyba4PwklPrZg
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6e4bea711so114501885a.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 08:19:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734020271; x=1734625071;
+ d=1e100.net; s=20230601; t=1734020382; x=1734625182;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HCFlWWJpb6Eqwm/ohZNhVceFaUlNcCtKJacg7HQwSU0=;
- b=aMFTt+jjHuTOKVPUBzuaK9ii7XJAk2iNLdthoWbuxdJR7oBOG7H/7dwLwGgM+ob2lE
- YEXgnsTRnjh6nMRkHNw04UB5UzszfpCEJ/AXWhTH928Gf8RMk1UB+q4dDdLKup2/UlI9
- WgbsOGs0bMRjZuVNW18mPdwUXVVTHJ0cP8C9jr7601mdVHEd6S1O5JW2VWjUZtONad92
- gND5xb0BUZ28D5F6IVO+gtIEoM8+YjAQmEZZDIYC7LEagfmI0xD4bkIz6EqyfY1Aqbht
- mR8NzzbchNOBmsAp+4ySNkj7SMR9z2QZd0647FRgcVCyLRo9kb/EVwvSyikHUzbiXC9f
- +wmQ==
+ bh=qjLjmf2xqc+J9/1KQmmjLod5nkYXfAqv9KztQKPtyBY=;
+ b=Cnarx17xjKjvrcJJ6XhWcGKX+Zdu4EDBGvIS6uOKIjtMDCotXgYR11s3HwUBRnuR0f
+ 4XNgH+WtsjImqw0AxKvMdUcWT/1F4pLvunX8rcFc5op8vmGAcdp+Wc/cj9wSuGII2XQC
+ iCe+gEybNR5UlCJvQKB+e8A+nXumFyUjcVjp6t6+gQfGa+KKgfxAP2L28RHhzyHgKN9x
+ HfkR12QFQBaegoPkU0R4voPmkFD+Tg1Q0t9BMYl9UU+hRXD7RP5946TNAq3rPPP25hMj
+ YceBFMZpf1/yL7tMVUNmOo6j+H7c0jJRDHGQDaoTsdbKjOn+QgkFUT//bPfZIpYsTZwB
+ YAEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6nzvphDF0ohOJMFUZwmAEIjlKxP6z12/Fr36eakJ29RlQYLrKIdkqriOi7mcf5wp+4/10FBad3/+J@nongnu.org
-X-Gm-Message-State: AOJu0YzQFmGqjPaI6sjrtdGKNG43QwW67/Tkem0jZCHHWzdxFTBguPII
- fdILi6S5sKiObFLG9KbTfgYjGb1uI7NB/5DkTXJMhocQ+VW2awDoYmXd0MGzNS2NbvNmcW6TgR5
- v4EOOPj9ktwF7bOBC4S36GyB8gI9E2wbg15fkLI+baDBFW2v34Ggn
-X-Gm-Gg: ASbGncuwwOb7urPKr4ScilR7sQz6qZawzDXTJkuLU/k9PAynC7plPRJR/69xGmPjwrw
- RNE5XwFDxsFgQgoiA7ibmaTcoo++41gHLSwF5KoU5qNPkYHK5carGQqlD6KL/qBuhvh+OphfvgS
- 39y+IqIhFCxPSPBVeBTvTR+8+HRAWK73bj7J9rOP1CkCcbn8gsvtw29jzKmlWsjckL2lUOhvztD
- YXTCEVcXUy8I/e9VD0RLfSPKyj5RzieCVmw2FmPO1RxKmJBLOsYqrv4XGfHEo6UC6AvEQk+LLdx
- K3srQCaX+mFsSbZlHg==
-X-Received: by 2002:a05:622a:120e:b0:467:67d3:7c8f with SMTP id
- d75a77b69052e-467a1524380mr15284661cf.21.1734020271570; 
- Thu, 12 Dec 2024 08:17:51 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGmQDuV3LMe7JmvWfW9GiwwrRDQnhMwpWW3hG20WYTuwNGoa00CdLHCsHsNmqfEMXh0IiGgsg==
-X-Received: by 2002:a05:622a:120e:b0:467:67d3:7c8f with SMTP id
- d75a77b69052e-467a1524380mr15284341cf.21.1734020271313; 
- Thu, 12 Dec 2024 08:17:51 -0800 (PST)
+ AJvYcCX57bPajnMCkVntf9gzLusj3x9y5A1cjBuxaINGIDai1flDUJyLnRmY+w0Ts0iDKRRhL1jZX9j4ng+M@nongnu.org
+X-Gm-Message-State: AOJu0YyJVLWQ9IU0UXN2c/JtjfrlWEI+TIChhB5X7sY7dYQMx7ykSde4
+ jgAQJ8NUu4Vv9qa6+iQcTVH8MVxK69BKVk5iRxE8lRtDUwamL//tODLJbanqjLK+MkRhiFI7jKF
+ jSqM9FiDR1MGWkGxwpoK3hV5DhX8Vqs08MingjQQ9uB5tHokFtLWL
+X-Gm-Gg: ASbGncsdZOcosVnmdfGjE1aWrPmvNiRvBYUIllaFPTKssxRzo+Z7ce1IBmgJ0C4Sa5D
+ RR2YIx1+5jfywy97C1UAf3KC+eXPaIOISL8E+eVimC2YXoekb1PRCo0J7e6fpIi0U/QIEtT4cy0
+ CCLFyPxr0Ovst9rKYUbxnSqpRx1b7cA6Pmt6j1fDSfpO/W/uuksogAQptycbqDD9q4bVEXWzZOi
+ wSYPa5LgifnByFrRy9Ho84mQbw4AWQVHpk3BWEbQ+DjMHwM0pmxz5CNz/X9v34IzKone7Xi4KKy
+ 9YdtprxJm7o1dX/OyA==
+X-Received: by 2002:a05:620a:268e:b0:7b6:d736:55c1 with SMTP id
+ af79cd13be357-7b6f89bc371mr167007885a.48.1734020381722; 
+ Thu, 12 Dec 2024 08:19:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHW/ghKyVVLXxUIrTfZWj1TN2WDAitKEjNpX+KtrhlGOtMuniQ7kTtkYbXIeLrYEXUmC2AEiA==
+X-Received: by 2002:a05:620a:268e:b0:7b6:d736:55c1 with SMTP id
+ af79cd13be357-7b6f89bc371mr167004685a.48.1734020381440; 
+ Thu, 12 Dec 2024 08:19:41 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-46761bd6547sm47537061cf.77.2024.12.12.08.17.50
+ af79cd13be357-7b6f711fac7sm34898685a.116.2024.12.12.08.19.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 08:17:50 -0800 (PST)
-Date: Thu, 12 Dec 2024 11:17:49 -0500
+ Thu, 12 Dec 2024 08:19:40 -0800 (PST)
+Date: Thu, 12 Dec 2024 11:19:39 -0500
 From: Peter Xu <peterx@redhat.com>
 To: Daniil Tatianin <d-tatianin@yandex-team.ru>
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>,
  Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 2/4] system/vl: extract overcommit option parsing into
- a helper
-Message-ID: <Z1sMrUbvdHOd6Pok@x1n>
+Subject: Re: [PATCH v3 3/4] sysemu: introduce a new MlockState enum
+Message-ID: <Z1sNG4gZDwx8WzXi@x1n>
 References: <20241211230433.1371327-1-d-tatianin@yandex-team.ru>
- <20241211230433.1371327-3-d-tatianin@yandex-team.ru>
+ <20241211230433.1371327-4-d-tatianin@yandex-team.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20241211230433.1371327-3-d-tatianin@yandex-team.ru>
+In-Reply-To: <20241211230433.1371327-4-d-tatianin@yandex-team.ru>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
@@ -109,9 +108,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 02:04:31AM +0300, Daniil Tatianin wrote:
-> This will be extended in the future commits, let's move it out of line
-> right away so that it's easier to read.
+On Thu, Dec 12, 2024 at 02:04:32AM +0300, Daniil Tatianin wrote:
+> Replace the boolean value enable_mlock with an enum and add a helper to
+> decide whether we should be calling os_mlock.
+> 
+> This is a stepping stone towards introducing a new mlock mode, which
+> will be the third possible state of this enum.
 > 
 > Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
