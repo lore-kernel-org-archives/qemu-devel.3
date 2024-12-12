@@ -4,75 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DC16E77182
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:07:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BCAFE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:10:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLh1p-0008QI-2v; Thu, 12 Dec 2024 06:06:45 -0500
+	id 1tLh4o-0003Fh-EW; Thu, 12 Dec 2024 06:09:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLh1n-0008QA-Hn
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:06:43 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tLh1j-0003J7-0F
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:06:42 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734001597;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8F92JgEBIa5WkCMINFi2IuVNr3BkJGKnLmC0cQwdEjM=;
- b=Hf0hEEN3IWShfWA9WwLDf4yNHiuyvv377jiSRM826f+G0io3gBW3BFOPPPPfP0rWaFbvmh
- yq7cgo5V5mTHXq6nSiB6988yR2Aqu9dDdcFkwytYCFuVP2e6kL5xeCmNCFEDPpANdWq/SP
- +tOQZZAWMQi5hr2sEOAhMncsw9+OLNw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-reaYG8rDNmqEkcp_oweWNg-1; Thu,
- 12 Dec 2024 06:06:34 -0500
-X-MC-Unique: reaYG8rDNmqEkcp_oweWNg-1
-X-Mimecast-MFC-AGG-ID: reaYG8rDNmqEkcp_oweWNg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A3289195608C; Thu, 12 Dec 2024 11:06:32 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.114])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 696EB195608A; Thu, 12 Dec 2024 11:06:30 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tLh4j-0003AZ-CK; Thu, 12 Dec 2024 06:09:46 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tLh4h-0004Lh-7W; Thu, 12 Dec 2024 06:09:45 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso4317795e9.3; 
+ Thu, 12 Dec 2024 03:09:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734001780; x=1734606580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RZSWKFnfIAMN5iE7wug+uPaKwVBjU2AVQdzRPCzB0xc=;
+ b=Es5vIgUa3PMYC+9ouBUP/BlAy2d+fMDkvC+vvPO9UGHL4i+Tm1zNa5iYUlvab4MpGE
+ NG7hhsXrQWZwMnYu5vLO74f9RFjyAb6xeiC8ceJvS6TaE23ZDS3gR8A+1nilhbLuf3gd
+ GoSrP4tZU9gsZtnGCuBzd4ZNM7ay0fa5g7gSIyLDOG2SuAWCYNGNb3IT405WgIbR7Yru
+ NUSW4MHV28ZAa8wCyq/quGOeRYNQxdA8DkZVq7Eh9hSoh11WBN74tdpNYp7fEzSAN8ku
+ +OB0XHNAVHRYLjSX1Xh9dw/Rjw5MH0XisqBg7bEDvp2CleaVoSAHwt4fhps9/x2SXx0P
+ mRjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734001780; x=1734606580;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=RZSWKFnfIAMN5iE7wug+uPaKwVBjU2AVQdzRPCzB0xc=;
+ b=bD9vyRFrjoHDQSID/nytnaF5/7at8NxasV6mw9hCWetB0eKo+jNScO/OEFWYRFjLFT
+ yUovuqyIoGCwY2rg3XtT9/NToT4IOxmZssIwWsyFJFI+E/Km9rKM0KJOtZ2f+AsDTCVl
+ KyeU64NP0HrQLnj8sgpw2yFun5FSAtnLFUO5uH0l782NuMzszm9Ex5Uwewyssc55+Vdd
+ wTA8FINAOgJ1r3KXOIlPe83cfV5oFttOl0opzx7hnlxruG3zlnThlJt6WgNCmfjA4330
+ YLkuuZZqsmfGWI7q5qWjYFvwmiyzZajLqY5zgzuC6S9Al58tc15eIotbpOYmRDRW2hlU
+ SrTQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3gPsNeCKJBYNrpF0qedhxI6kSQ6aousZWz7rRjyov+esituhNpj9vXhXNlMfw3TtgYwNQsriYq6m7qw==@nongnu.org,
+ AJvYcCXDteWzCUtDwZtpThupLx7XdXUTwTxA1Z2CJIiZRN7WQkrHugQsxGhAkWDDGez1+B11xhO65N+gHg==@nongnu.org
+X-Gm-Message-State: AOJu0YyUY4HcuLqdxvKlQUZv7cP/uZDx5VWzgVfFZldkGuL7f4JPxAcF
+ WxAkFwo+yK8ZvQOMCNCJYxcg8tS02F7T9BC5M1c2N3EpjTqKr7BIbViAPA==
+X-Gm-Gg: ASbGncvwGGdidyNS6gcU863sgWk+fPnS89llbCeNSJjoZlPh/eNotdSYSnlyC6PrSe1
+ isssU9YS7IjkyhPHLmTNIXbGB7TeGW66edeCw+vpY9WAz8ABI136LAvhD6bjPQhCoauLLDMCXmS
+ 8M0V8xPSUdbExc6HlUZ4q6c1rDUjy1SQ/YFLEGHEZAP7ltvBUtljzW9Dx7yLsNqF9H8v5mC6iUL
+ xkuyMIzASQ008w05GZFxWq9JKg1ftz03pGeWuSzLk3k+doqEGMY6+TU/+VITIE0JMOSbBg6qulT
+ HAR6llajMYrsAzQ9tNfxe9eOWv+WuxMy7cl3EXlJ+d0=
+X-Google-Smtp-Source: AGHT+IGm7OtnhT3biPP7dRk7Wl1TJ00c7Ekb4C9zRTMXsVUae5CRr6NLq1VWEQmoyMrwYFb2n6/bAQ==
+X-Received: by 2002:a05:600c:4450:b0:434:fdbc:5cd1 with SMTP id
+ 5b1f17b1804b1-4362287f2c2mr24310405e9.33.1734001780120; 
+ Thu, 12 Dec 2024 03:09:40 -0800 (PST)
+Received: from Provence.localdomain
+ (dynamic-077-011-242-029.77.11.pool.telefonica.de. [77.11.242.29])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4362559ebe1sm13200725e9.19.2024.12.12.03.09.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Dec 2024 03:09:39 -0800 (PST)
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v3 3/4] qapi: rename 'special_features' to 'features'
-Date: Thu, 12 Dec 2024 11:06:15 +0000
-Message-ID: <20241212110616.3147676-4-berrange@redhat.com>
-In-Reply-To: <20241212110616.3147676-1-berrange@redhat.com>
-References: <20241212110616.3147676-1-berrange@redhat.com>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Peter Xu <peterx@redhat.com>, qemu-arm@nongnu.org,
+ John Snow <jsnow@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v4 1/2] hw/ide/ahci: Decouple from PCI
+Date: Thu, 12 Dec 2024 12:09:25 +0100
+Message-ID: <20241212110926.23548-2-shentey@gmail.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241212110926.23548-1-shentey@gmail.com>
+References: <20241212110926.23548-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,132 +105,211 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This updates the QAPI code generation to refer to 'features' instead
-of 'special_features', in preparation for generalizing their exposure.
+In some adhoc profiling booting Linux VMs, it's observed that ahci_irq_lower()
+can be a hot path (10000+ triggers until login prompt appears). Even though the
+parent device never changes, this method re-determines whether the parent device
+is a PCI device or not using the rather expensive object_dynamic_cast()
+function. Avoid this overhead by pushing the interrupt handling to the parent
+device, essentially turning AHCIState into an "IP block".
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Note that this change also frees AHCIState from the PCI dependency which wasn't
+reflected in Kconfig.
+
+Reported-by: Peter Xu <peterx@redhat.com>
+Inspired-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 ---
- scripts/qapi/commands.py |  4 ++--
- scripts/qapi/gen.py      |  8 ++++----
- scripts/qapi/types.py    | 10 +++++-----
- scripts/qapi/visit.py    | 14 +++++++-------
- 4 files changed, 18 insertions(+), 18 deletions(-)
+ hw/ide/ahci-internal.h    |  1 -
+ include/hw/ide/ahci-pci.h |  2 ++
+ include/hw/ide/ahci.h     |  2 --
+ hw/ide/ahci.c             | 39 ++++-----------------------------------
+ hw/ide/ich.c              | 19 +++++++++++++++----
+ 5 files changed, 21 insertions(+), 42 deletions(-)
 
-diff --git a/scripts/qapi/commands.py b/scripts/qapi/commands.py
-index 79951a841f..d629d2d97e 100644
---- a/scripts/qapi/commands.py
-+++ b/scripts/qapi/commands.py
-@@ -25,7 +25,7 @@
-     QAPIGenC,
-     QAPISchemaModularCVisitor,
-     build_params,
--    gen_special_features,
-+    gen_features,
-     ifcontext,
- )
- from .schema import (
-@@ -298,7 +298,7 @@ def gen_register_command(name: str,
- ''',
-                 name=name, c_name=c_name(name),
-                 opts=' | '.join(options) or 0,
--                feats=gen_special_features(features))
-+                feats=gen_features(features))
-     return ret
+diff --git a/hw/ide/ahci-internal.h b/hw/ide/ahci-internal.h
+index 7e63ea2310..a318f36811 100644
+--- a/hw/ide/ahci-internal.h
++++ b/hw/ide/ahci-internal.h
+@@ -25,7 +25,6 @@
+ #define HW_IDE_AHCI_INTERNAL_H
  
+ #include "hw/ide/ahci.h"
+-#include "hw/pci/pci_device.h"
+ #include "ide-internal.h"
  
-diff --git a/scripts/qapi/gen.py b/scripts/qapi/gen.py
-index c53ca72950..b51f8d955e 100644
---- a/scripts/qapi/gen.py
-+++ b/scripts/qapi/gen.py
-@@ -41,10 +41,10 @@
- from .source import QAPISourceInfo
+ #define AHCI_MEM_BAR_SIZE         0x1000
+diff --git a/include/hw/ide/ahci-pci.h b/include/hw/ide/ahci-pci.h
+index c2ee616962..face1a9a4a 100644
+--- a/include/hw/ide/ahci-pci.h
++++ b/include/hw/ide/ahci-pci.h
+@@ -9,6 +9,7 @@
+ #include "qom/object.h"
+ #include "hw/ide/ahci.h"
+ #include "hw/pci/pci_device.h"
++#include "hw/irq.h"
  
+ #define TYPE_ICH9_AHCI "ich9-ahci"
+ OBJECT_DECLARE_SIMPLE_TYPE(AHCIPCIState, ICH9_AHCI)
+@@ -17,6 +18,7 @@ struct AHCIPCIState {
+     PCIDevice parent_obj;
  
--def gen_special_features(features: Sequence[QAPISchemaFeature]) -> str:
--    special_features = [f"1u << {c_enum_const('qapi', feat.name)}"
--                        for feat in features if feat.is_special()]
--    return ' | '.join(special_features) or '0'
-+def gen_features(features: Sequence[QAPISchemaFeature]) -> str:
-+    featenum = [f"1u << {c_enum_const('qapi', feat.name)}"
-+                for feat in features if feat.is_special()]
-+    return ' | '.join(featenum) or '0'
+     AHCIState ahci;
++    IRQState irq;
+ };
  
+ #endif
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index ba31e75ff9..ac0292c634 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -37,8 +37,6 @@ typedef struct AHCIControlRegs {
+ } AHCIControlRegs;
  
- class QAPIGen:
-diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
-index 7bc3f8241f..ade6b7a3d7 100644
---- a/scripts/qapi/types.py
-+++ b/scripts/qapi/types.py
-@@ -18,7 +18,7 @@
- from .common import c_enum_const, c_name, mcgen
- from .gen import (
-     QAPISchemaModularCVisitor,
--    gen_special_features,
-+    gen_features,
-     ifcontext,
- )
- from .schema import (
-@@ -61,12 +61,12 @@ def gen_enum_lookup(name: str,
-                      index=index, name=memb.name)
-         ret += memb.ifcond.gen_endif()
+ typedef struct AHCIState {
+-    DeviceState *container;
+-
+     AHCIDevice *dev;
+     AHCIControlRegs control_regs;
+     MemoryRegion mem;
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 0eb24304ee..5836aa924b 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -23,8 +23,6 @@
  
--        special_features = gen_special_features(memb.features)
--        if special_features != '0':
-+        features = gen_features(memb.features)
-+        if features != '0':
-             feats += mcgen('''
--        [%(index)s] = %(special_features)s,
-+        [%(index)s] = %(features)s,
- ''',
--                           index=index, special_features=special_features)
-+                           index=index, features=features)
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+-#include "hw/pci/msi.h"
+-#include "hw/pci/pci.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
  
-     if feats:
-         ret += mcgen('''
-diff --git a/scripts/qapi/visit.py b/scripts/qapi/visit.py
-index 12f92e429f..8dbf4ef1c3 100644
---- a/scripts/qapi/visit.py
-+++ b/scripts/qapi/visit.py
-@@ -23,7 +23,7 @@
- )
- from .gen import (
-     QAPISchemaModularCVisitor,
--    gen_special_features,
-+    gen_features,
-     ifcontext,
- )
- from .schema import (
-@@ -103,15 +103,15 @@ def gen_visit_object_members(name: str,
- ''',
-                          name=memb.name, has=has)
-             indent.increase()
--        special_features = gen_special_features(memb.features)
--        if special_features != '0':
-+        features = gen_features(memb.features)
-+        if features != '0':
-             ret += mcgen('''
--    if (visit_policy_reject(v, "%(name)s", %(special_features)s, errp)) {
-+    if (visit_policy_reject(v, "%(name)s", %(features)s, errp)) {
-         return false;
+@@ -34,8 +32,6 @@
+ #include "qemu/module.h"
+ #include "sysemu/block-backend.h"
+ #include "sysemu/dma.h"
+-#include "hw/ide/pci.h"
+-#include "hw/ide/ahci-pci.h"
+ #include "hw/ide/ahci-sysbus.h"
+ #include "ahci-internal.h"
+ #include "ide-internal.h"
+@@ -179,34 +175,6 @@ static uint32_t ahci_port_read(AHCIState *s, int port, int offset)
+     return val;
+ }
+ 
+-static void ahci_irq_raise(AHCIState *s)
+-{
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+-    trace_ahci_irq_raise(s);
+-
+-    if (pci_dev && msi_enabled(pci_dev)) {
+-        msi_notify(pci_dev, 0);
+-    } else {
+-        qemu_irq_raise(s->irq);
+-    }
+-}
+-
+-static void ahci_irq_lower(AHCIState *s)
+-{
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+-    trace_ahci_irq_lower(s);
+-
+-    if (!pci_dev || !msi_enabled(pci_dev)) {
+-        qemu_irq_lower(s->irq);
+-    }
+-}
+-
+ static void ahci_check_irq(AHCIState *s)
+ {
+     int i;
+@@ -222,9 +190,11 @@ static void ahci_check_irq(AHCIState *s)
+     trace_ahci_check_irq(s, old_irq, s->control_regs.irqstatus);
+     if (s->control_regs.irqstatus &&
+         (s->control_regs.ghc & HOST_CTL_IRQ_EN)) {
+-            ahci_irq_raise(s);
++        trace_ahci_irq_raise(s);
++        qemu_irq_raise(s->irq);
+     } else {
+-        ahci_irq_lower(s);
++        trace_ahci_irq_lower(s);
++        qemu_irq_lower(s->irq);
      }
--    if (!visit_policy_skip(v, "%(name)s", %(special_features)s)) {
-+    if (!visit_policy_skip(v, "%(name)s", %(features)s)) {
- ''',
--                         name=memb.name, special_features=special_features)
-+                         name=memb.name, features=features)
-             indent.increase()
-         ret += mcgen('''
-     if (!visit_type_%(c_type)s(v, "%(name)s", &obj->%(c_name)s, errp)) {
-@@ -120,7 +120,7 @@ def gen_visit_object_members(name: str,
- ''',
-                      c_type=memb.type.c_name(), name=memb.name,
-                      c_name=c_name(memb.name))
--        if special_features != '0':
-+        if features != '0':
-             indent.decrease()
-             ret += mcgen('''
-     }
+ }
+ 
+@@ -1608,7 +1578,6 @@ static const IDEDMAOps ahci_dma_ops = {
+ 
+ void ahci_init(AHCIState *s, DeviceState *qdev)
+ {
+-    s->container = qdev;
+     /* XXX BAR size should be 1k, but that breaks, so bump it to 4k for now */
+     memory_region_init_io(&s->mem, OBJECT(qdev), &ahci_mem_ops, s,
+                           "ahci", AHCI_MEM_BAR_SIZE);
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index b311450c12..c99a44df8e 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -61,7 +61,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "hw/irq.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/pci.h"
+ #include "migration/vmstate.h"
+@@ -91,6 +90,19 @@ static const VMStateDescription vmstate_ich9_ahci = {
+     },
+ };
+ 
++static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int level)
++{
++    PCIDevice *pci_dev = opaque;
++
++    if (msi_enabled(pci_dev)) {
++        if (level) {
++            msi_notify(pci_dev, 0);
++        }
++    } else {
++        pci_set_irq(pci_dev, level);
++    }
++}
++
+ static void pci_ich9_reset(DeviceState *dev)
+ {
+     AHCIPCIState *d = ICH9_AHCI(dev);
+@@ -102,7 +114,9 @@ static void pci_ich9_ahci_init(Object *obj)
+ {
+     AHCIPCIState *d = ICH9_AHCI(obj);
+ 
++    qemu_init_irq(&d->irq, pci_ich9_ahci_update_irq, d, 0);
+     ahci_init(&d->ahci, DEVICE(obj));
++    d->ahci.irq = &d->irq;
+ }
+ 
+ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+@@ -125,8 +139,6 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+     /* XXX Software should program this register */
+     dev->config[0x90]   = 1 << 6; /* Address Map Register - AHCI mode */
+ 
+-    d->ahci.irq = pci_allocate_irq(dev);
+-
+     pci_register_bar(dev, ICH9_IDP_BAR, PCI_BASE_ADDRESS_SPACE_IO,
+                      &d->ahci.idp);
+     pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
+@@ -161,7 +173,6 @@ static void pci_ich9_uninit(PCIDevice *dev)
+ 
+     msi_uninit(dev);
+     ahci_uninit(&d->ahci);
+-    qemu_free_irq(d->ahci.irq);
+ }
+ 
+ static void ich_ahci_class_init(ObjectClass *klass, void *data)
 -- 
-2.46.0
+2.47.1
 
 
