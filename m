@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1886EE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C50EFE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLelY-0004fL-3b; Thu, 12 Dec 2024 03:41:49 -0500
+	id 1tLell-0004md-V5; Thu, 12 Dec 2024 03:42:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelW-0004ek-Qf
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:46 -0500
+ id 1tLelb-0004ft-8r
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:56 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelV-0007zv-5o
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:46 -0500
+ id 1tLelZ-0007zv-He
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:51 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733992905; x=1765528905;
+ t=1733992909; x=1765528909;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=S0ozBEtnTpcJwUPb54LDCz6SzveFLNfygCcZwvi7lwA=;
- b=AqE8bfDUedhNrairbGSrKkt7FJa9CL3FPjgszHJbI47h135lvgeK2e1a
- 0VZFo4/aiz6CL0gl/FQtFQtgvE1JztA6psT9lKvx5zKJgIHwZ8RTWG2a8
- FM5W0/i8opNVOJFFV5J3FjTcQgxVYzzNgUzucCbrIIUmm+9BoIpfbup3c
- xIrsLokaWc9GYsd1wBeGz7ACXOsJ4EyGSyxMf9PPPapQxzSj0AtidDJQV
- /3GU4KN8E4JQQDfgpDdJH1ygMa/QTwL1AXvy+hYj0bw0enJqPNWyvJCuP
- JMSZJbVSCu4d2W4ZsmUkaOA3ZZIcbCBgaobjFzTmxzCQbbTSPVdGBxAbN w==;
-X-CSE-ConnectionGUID: aBblPtAcRROLpAYlA3r47w==
-X-CSE-MsgGUID: GPL2MGm8SWanqkpU/yClCA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124867"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124867"
+ bh=NRig9xicZToLVp64jS5HyMBzT+np40CCapHkrXRZR+g=;
+ b=Z7Bbz3OI57rPPak/66g0s2CrYJjI2ul/OmXNWQyxVdydsnt7gOQT4okU
+ CUNmsYOdMpyhF3CwrBFjxaS3zA5U2q9d2wPZDmjO0JhrzsKYoMrLkLQ1z
+ 82tLTG9yUJjOWJZN31Z4dC6ISxR5pOd8ClkwjyT9aKDMSQtlx2FCPFW+P
+ WeIWHr6FOXm9Lcc62Ry6hzUJYVFoCJrLspzFKxPJAyno+Hl7FVQnCgabA
+ UOnJw+GPzI3R5gwfSuRo9T1nEwtxMi8dYTJcTtZYx5OB2YLvtql9lT4hg
+ 4CYp3ksre47EG5YoXYkSwwW+F254Kl1RjcU2u19lwRREiQToE1L6UWE6i g==;
+X-CSE-ConnectionGUID: 9uchILEwRPygo7DOQvJ3ng==
+X-CSE-MsgGUID: GTkYoQPXSsq8T0Vgwef6FQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124894"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124894"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:44 -0800
-X-CSE-ConnectionGUID: njL9OKgNQg6kNUGXrYG+6g==
-X-CSE-MsgGUID: R+8oYY5dSF6yUfKNbpQz5Q==
+ 12 Dec 2024 00:41:49 -0800
+X-CSE-ConnectionGUID: MhJDpMSRR0KB1y/CjJ0gow==
+X-CSE-MsgGUID: OvDdlJWtR8GnynnTXBG3uQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407043"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407060"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:40 -0800
+ 12 Dec 2024 00:41:44 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,13 +53,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  nicolinc@nvidia.com, joao.m.martins@oracle.com,
  clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com,
  chao.p.peng@intel.com, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v6 07/20] intel_iommu: Check if the input address is canonical
-Date: Thu, 12 Dec 2024 16:37:44 +0800
-Message-Id: <20241212083757.605022-8-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v6 08/20] intel_iommu: Check stage-1 translation result with
+ interrupt range
+Date: Thu, 12 Dec 2024 16:37:45 +0800
+Message-Id: <20241212083757.605022-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
@@ -91,80 +92,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Per VT-d spec 4.1 section 3.15, "Untranslated requests and translation
+requests that result in an address in the interrupt range will be
+blocked with condition code LGN.4 or SGN.8."
 
-Stage-1 translation must fail if the address to translate is
-not canonical.
+This applies to both stage-1 and stage-2 IOMMU page table, move the
+check from vtd_iova_to_slpte() to vtd_do_iommu_translate() so stage-1
+page table could also be checked.
 
-Signed-off-by: Clément Mathieu--Drif <clement.mathieu--drif@eviden.com>
+By this chance, update the comment with correct section number.
+
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  1 +
- hw/i386/intel_iommu.c          | 23 +++++++++++++++++++++++
- 2 files changed, 24 insertions(+)
+ hw/i386/intel_iommu.c | 48 ++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 23 deletions(-)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 86d3354198..3e7365dfff 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -326,6 +326,7 @@ typedef enum VTDFaultReason {
-     /* Non-zero reserved field in present first-stage paging entry */
-     VTD_FR_FS_PAGING_ENTRY_RSVD = 0x72,
-     VTD_FR_PASID_ENTRY_FSPTPTR_INV = 0x73, /* Invalid FSPTPTR in PASID entry */
-+    VTD_FR_FS_NON_CANONICAL = 0x80, /* SNG.1 : Address for FS not canonical.*/
-     VTD_FR_FS_PAGING_ENTRY_US = 0x81,      /* Privilege violation */
-     VTD_FR_SM_WRITE = 0x85,                /* No write permission */
- 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index dbfd48fb65..a4a2a44f92 100644
+index a4a2a44f92..594c8e3272 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -1824,6 +1824,7 @@ static const bool vtd_qualified_faults[] = {
-     [VTD_FR_FS_PAGING_ENTRY_P] = true,
-     [VTD_FR_FS_PAGING_ENTRY_RSVD] = true,
-     [VTD_FR_PASID_ENTRY_FSPTPTR_INV] = true,
-+    [VTD_FR_FS_NON_CANONICAL] = true,
-     [VTD_FR_FS_PAGING_ENTRY_US] = true,
-     [VTD_FR_SM_WRITE] = true,
-     [VTD_FR_SM_INTERRUPT_ADDR] = true,
-@@ -1930,6 +1931,22 @@ static inline bool vtd_flpte_present(uint64_t flpte)
-     return !!(flpte & VTD_FL_P);
+@@ -1138,7 +1138,6 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
+     uint32_t offset;
+     uint64_t slpte;
+     uint64_t access_right_check;
+-    uint64_t xlat, size;
+ 
+     if (!vtd_iova_sl_range_check(s, iova, ce, aw_bits, pasid)) {
+         error_report_once("%s: detected IOVA overflow (iova=0x%" PRIx64 ","
+@@ -1191,28 +1190,7 @@ static int vtd_iova_to_slpte(IntelIOMMUState *s, VTDContextEntry *ce,
+         level--;
+     }
+ 
+-    xlat = vtd_get_pte_addr(*slptep, aw_bits);
+-    size = ~vtd_pt_level_page_mask(level) + 1;
+-
+-    /*
+-     * From VT-d spec 3.14: Untranslated requests and translation
+-     * requests that result in an address in the interrupt range will be
+-     * blocked with condition code LGN.4 or SGN.8.
+-     */
+-    if ((xlat > VTD_INTERRUPT_ADDR_LAST ||
+-         xlat + size - 1 < VTD_INTERRUPT_ADDR_FIRST)) {
+-        return 0;
+-    } else {
+-        error_report_once("%s: xlat address is in interrupt range "
+-                          "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
+-                          "slpte=0x%" PRIx64 ", write=%d, "
+-                          "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
+-                          "pasid=0x%" PRIx32 ")",
+-                          __func__, iova, level, slpte, is_write,
+-                          xlat, size, pasid);
+-        return s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
+-                                  -VTD_FR_INTERRUPT_ADDR;
+-    }
++    return 0;
  }
  
-+/* Return true if IOVA is canonical, otherwise false. */
-+static bool vtd_iova_fl_check_canonical(IntelIOMMUState *s, uint64_t iova,
-+                                        VTDContextEntry *ce, uint32_t pasid)
-+{
-+    uint64_t iova_limit = vtd_iova_limit(s, ce, s->aw_bits, pasid);
-+    uint64_t upper_bits_mask = ~(iova_limit - 1);
-+    uint64_t upper_bits = iova & upper_bits_mask;
-+    bool msb = ((iova & (iova_limit >> 1)) != 0);
-+
-+    if (msb) {
-+        return upper_bits == upper_bits_mask;
-+    } else {
-+        return !upper_bits;
-+    }
-+}
-+
- /*
-  * Given the @iova, get relevant @flptep. @flpte_level will be the last level
-  * of the translation, can be used for deciding the size of large page.
-@@ -1945,6 +1962,12 @@ static int vtd_iova_to_flpte(IntelIOMMUState *s, VTDContextEntry *ce,
-     uint32_t offset;
-     uint64_t flpte;
+ typedef int (*vtd_page_walk_hook)(const IOMMUTLBEvent *event, void *private);
+@@ -2064,6 +2042,7 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+     uint8_t access_flags;
+     bool rid2pasid = (pasid == PCI_NO_PASID) && s->root_scalable;
+     VTDIOTLBEntry *iotlb_entry;
++    uint64_t xlat, size;
  
-+    if (!vtd_iova_fl_check_canonical(s, iova, ce, pasid)) {
-+        error_report_once("%s: detected non canonical IOVA (iova=0x%" PRIx64 ","
-+                          "pasid=0x%" PRIx32 ")", __func__, iova, pasid);
-+        return -VTD_FR_FS_NON_CANONICAL;
+     /*
+      * We have standalone memory region for interrupt addresses, we
+@@ -2173,6 +2152,29 @@ static bool vtd_do_iommu_translate(VTDAddressSpace *vtd_as, PCIBus *bus,
+         ret_fr = vtd_iova_to_slpte(s, &ce, addr, is_write, &pte, &level,
+                                    &reads, &writes, s->aw_bits, pasid);
+     }
++    if (!ret_fr) {
++        xlat = vtd_get_pte_addr(pte, s->aw_bits);
++        size = ~vtd_pt_level_page_mask(level) + 1;
++
++        /*
++         * Per VT-d spec 4.1 section 3.15: Untranslated requests and translation
++         * requests that result in an address in the interrupt range will be
++         * blocked with condition code LGN.4 or SGN.8.
++         */
++        if ((xlat <= VTD_INTERRUPT_ADDR_LAST &&
++             xlat + size - 1 >= VTD_INTERRUPT_ADDR_FIRST)) {
++            error_report_once("%s: xlat address is in interrupt range "
++                              "(iova=0x%" PRIx64 ", level=0x%" PRIx32 ", "
++                              "pte=0x%" PRIx64 ", write=%d, "
++                              "xlat=0x%" PRIx64 ", size=0x%" PRIx64 ", "
++                              "pasid=0x%" PRIx32 ")",
++                              __func__, addr, level, pte, is_write,
++                              xlat, size, pasid);
++            ret_fr = s->scalable_mode ? -VTD_FR_SM_INTERRUPT_ADDR :
++                                        -VTD_FR_INTERRUPT_ADDR;
++        }
 +    }
 +
-     while (true) {
-         offset = vtd_iova_level_offset(iova, level);
-         flpte = vtd_get_pte(addr, offset);
+     if (ret_fr) {
+         vtd_report_fault(s, -ret_fr, is_fpd_set, source_id,
+                          addr, is_write, pasid != PCI_NO_PASID, pasid);
 -- 
 2.34.1
 
