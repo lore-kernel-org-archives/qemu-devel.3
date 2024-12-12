@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59536E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:14:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BC08E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:14:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLfGM-0003SE-FL; Thu, 12 Dec 2024 04:13:38 -0500
+	id 1tLfGP-0003T0-If; Thu, 12 Dec 2024 04:13:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGK-0003Rn-F3
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:36 -0500
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGN-0003SQ-R7
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:39 -0500
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGI-0008Ob-I5
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:36 -0500
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-2ee8e8e29f6so287099a91.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:13:34 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tLfGM-0008Op-Dd
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:13:39 -0500
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-7fd10cd5b1aso311669a12.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:13:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1733994812; x=1734599612; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=u/hPrZs5s6SXWeepqaSLJSvldcFYbnq9Bjj5jPFjVEQ=;
- b=ZwNmW06l7tNjXF2moKadEMfP4QnpkUtgnfIxP3JARIpQF3XaaRAxNOEIdCL7RQy/vp
- XiafyqCXdAqirtIpFHswX1unVt2PrKw9p3QH13KQQRnsF2/M1Aj0m6K+Fsk/xaNsrO6W
- 0z5IZT4w9E0B8GKuS59tnEy58e/Bg3C7YBDRXBVbBEHCTVyXpW3sIp5UZnavQ0mVe/cz
- g1kfEno2nDJDM35ONwEW8ncq47wvIGo8QW0GGm/seTloUiW3KMPfL5w4h5CT/LHXqVXY
- we2Vzs7arC6C55It6A3Q8QMxugbf6YFYSC8oRmkSPSMVP8hloYQxSvNylNFsKoF3XxPQ
- tzVA==
+ d=gmail.com; s=20230601; t=1733994817; x=1734599617; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vzr7yor2vNyxx++nCVtwqty4yb5+mRXEz0v+KHBkCPQ=;
+ b=WfNT+0VpLqu4D3lFcpj1MZRDKzbP6TzX6N3t50nDw5VmqGxAttsdLtx7FSDGgJXXuy
+ Ki/d2+f1sO0SlG2Dh5gkADwA1HfUYpOXWWpclrW78I82ipEGIWWUiUOGCtJVmwFc0NY1
+ 07ggXpV13xrVC7xtO4ukf0aPQyZxmoXp8JZk0nn3vuw7S9H0fWpsVX6mV0PXUxtzwqU0
+ Qf+5WVnjhDAxthKQeljlV0rbxiccITM9Qpj0ZE7hCvgqTT6vwuz3AC+90MOV50xlcjOC
+ s5g8CVQJ49pzdmvTA46USq+SjfyjKLPbePkKyO1fFc8Ve+lH6ZyBm68P3YFMJCMJLOjA
+ z0Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733994812; x=1734599612;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=u/hPrZs5s6SXWeepqaSLJSvldcFYbnq9Bjj5jPFjVEQ=;
- b=vgoTWq4UfmYGlzFGJrSXNWV0jkuJHPo7rdgduZCZnDosNz5UHkb9fe+yJRMRzTz4l3
- kbfORhjELgm45K8wtkX8iAALtwahniE+/sECUvERRUw9VYxLVYC0WWH5T2CMWEBxNDUD
- dUgDv2porESxfeqq/xPXhzgIeUjiPZH9/DvMaOpVm06b+UHupqbR/h3mFyVVwtpuvNns
- 0on7eIJmhe1RNDN/RP6Hki8rxhZE752YbHWJjzQIuPYpgZQstURb08XGo+x5/AL1vvKi
- 2I13h+jRABUDpe61kMFzSf7LK0DtuY7uSZChkd0BdmHklvS/wyH5ndFpO4V5z9Cdrz5k
- atUw==
-X-Gm-Message-State: AOJu0Yxfl0gCUcwykjoyRjRuP1EdWFI1FEMRZ4iMB4JkNhDlgiVtCyjx
- 0FVWi8y+60zFTosj1TSAwubUqhUbhkZWEBb/nsMHK3zAWgtcGEWK+X+atQ==
-X-Gm-Gg: ASbGnctphRy6buXjicr7RCBYRiZNQ6JE90dq507GiBcOGjCfLzDBraihJ+c7HGlxQeU
- knJ+bZdcmh/9rwufmPtPFME6bQ5zvSDE/WpIcM/3jeuCxzq4d2pdtBZqA+vasTD8DV4GSUSElCv
- FAx1QAmNAVuXp63g1IR5FNndPwOmP1gHSiWo0ieb/fNAe9cMbZdOhKembky0CyT0AeM15fQPt3r
- DC7pt1nxOag+vZPV7Q2QpNVqugHsgoXbGLhSFJQFyPBBuu1+IPB+7IP32g=
-X-Google-Smtp-Source: AGHT+IHKl6LMxQJFs+zoHw/AamqYUL7NdbTSjQhhGjDjmyZBmPu2r49Kd0853d3yPMlL1TIDuaKGZQ==
-X-Received: by 2002:a17:90b:4d06:b0:2ee:693e:ed7c with SMTP id
- 98e67ed59e1d1-2f128044b11mr9574695a91.33.1733994812369; 
- Thu, 12 Dec 2024 01:13:32 -0800 (PST)
+ d=1e100.net; s=20230601; t=1733994817; x=1734599617;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vzr7yor2vNyxx++nCVtwqty4yb5+mRXEz0v+KHBkCPQ=;
+ b=eQSszw187lrnGFYnfzhgQvnBGXU8DDsaifHE3/5uHPbBmzEdy2JBwDTtPwb0MIW3+C
+ MxAAIZ1cyE9kgzkC7m5djhMpDdQ42hZFaOJhUUiRZReiiFDr/F7Qhd9Q7etKSlIk0Wxt
+ 1Elspy9l1Iqz3NHEr27s4GqXBAerTmOHn3o4fnClr1fG9sZGFE9QfaxzGmTNHYEfynfQ
+ OjlqHB7TtDso0HPhAeqxoVj4UQp5ugDRIXXjaRHGOXUiYSuXY2ANF+w5JotZA+hzi2f7
+ dzs8Ns8S2oGnCXf+7btHUR/QCtWNIUnHhzHVS/YSs/26Et4z9LCFBN1T5b3qsfZH6CoT
+ Pnjg==
+X-Gm-Message-State: AOJu0YzF5m4odseLi14ZfjPAPgk0a/kelUvTeQ0GH5uHBFPSq/lDlCi5
+ HhCYW8fQmPLGUqG3fr656oGhXT9yYhJ8qyucfs0ICS+9wlN5oNFdEt4o2g==
+X-Gm-Gg: ASbGncvhYDnGp8Xy4O9jiuKtCxWS9vCVR02zmsiJFVogFHF6IKSn1uc4ZpOnnxWEA4A
+ aLJXMF2vZ0bYBhyEaBupMtlMjCjIVinZ8dTOyUmCOx+qKEPHGri0ZHxgx79WMkZGkrQwaUafFWD
+ uk6i7W+ZT1a5y6lIanIUJa45Qiaa2K2TcTIyD2OP38KV2kE4yRdJi1LLgnWu73vxFTMoomEqMF8
+ sDtThB7lb8R2d+Q3EKnF4zvJAv/iFhaBuXX4PnAA/NxQzeKO25BsTkWoL0=
+X-Google-Smtp-Source: AGHT+IGOE7+zznvv+T+DL0vZwIUGVw7NvRbC/bwX6UN4UOexGyqlD0osUToIk7ADMuHB6E1fWAeCVw==
+X-Received: by 2002:a17:90b:1f92:b0:2ee:bbd8:2b9d with SMTP id
+ 98e67ed59e1d1-2f12804fc56mr8534542a91.34.1733994816767; 
+ Thu, 12 Dec 2024 01:13:36 -0800 (PST)
 Received: from wheely.local0.net ([1.146.48.169])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.29
+ 98e67ed59e1d1-2f142d92e2csm787021a91.9.2024.12.12.01.13.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 01:13:31 -0800 (PST)
+ Thu, 12 Dec 2024 01:13:36 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>
-Subject: [PATCH 00/11] usb/msd: Permit relaxed ordering of IN packets
-Date: Thu, 12 Dec 2024 19:13:11 +1000
-Message-ID: <20241212091323.1442995-1-npiggin@gmail.com>
+ Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 01/11] usb/msd: Add status to usb_msd_packet_complete()
+ function
+Date: Thu, 12 Dec 2024 19:13:12 +1000
+Message-ID: <20241212091323.1442995-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241212091323.1442995-1-npiggin@gmail.com>
+References: <20241212091323.1442995-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -94,39 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series ultimately permits relaxed ordering of USB mass-storage
-packets from the host, as allowed by the usbmassbulk 1.0 spec, but
-not usually seen in drivers. AIX drivers do require this ordering.
+This is a convenience change that accepts a status when completing a
+packet.
 
-The RFC unsurprisingly had no comments, it wasn't polished well so
-don't bother to look at it. This one I tried to split it up nicely,
-add some improvements that help readability and robustness first.
-Importantly I kept vmstate compatibility here and didn't do a big
-rip up of the whole model but managed to find a nice way to fit it
-in the existing design, and I think the end result is just as good
-or better.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+---
+ hw/usb/dev-storage.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-Thanks,
-Nick
-
-Nicholas Piggin (11):
-  usb/msd: Add status to usb_msd_packet_complete() function
-  usb/msd: Split in and out packet handling
-  usb/msd: Ensure packet structure layout is correct
-  usb/msd: Improved handling of mass storage reset
-  usb/msd: Improve packet validation error logging
-  usb/msd: Allow CBW packet size greater than 31
-  usb/msd: Split async packet tracking into data and csw
-  usb/msd: Add some additional assertions
-  usb/msd: Rename mode to cbw_state, and tweak names
-  usb/msd: Permit a DATA-IN or CSW packet before CBW packet
-  usb/msd: Add more tracing
-
- include/hw/usb/msd.h |  18 +-
- hw/usb/dev-storage.c | 517 ++++++++++++++++++++++++++++---------------
- hw/usb/trace-events  |   9 +-
- 3 files changed, 360 insertions(+), 184 deletions(-)
-
+diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
+index 341e505bd0a..4f1e8b7f6cb 100644
+--- a/hw/usb/dev-storage.c
++++ b/hw/usb/dev-storage.c
+@@ -177,7 +177,7 @@ static const USBDesc desc = {
+     .str   = desc_strings,
+ };
+ 
+-static void usb_msd_packet_complete(MSDState *s)
++static void usb_msd_packet_complete(MSDState *s, int status)
+ {
+     USBPacket *p = s->packet;
+ 
+@@ -187,6 +187,7 @@ static void usb_msd_packet_complete(MSDState *s)
+      * usb_packet_complete returns.
+      */
+     trace_usb_msd_packet_complete();
++    p->status = status;
+     s->packet = NULL;
+     usb_packet_complete(&s->dev, p);
+ }
+@@ -196,8 +197,7 @@ static void usb_msd_fatal_error(MSDState *s)
+     trace_usb_msd_fatal_error();
+ 
+     if (s->packet) {
+-        s->packet->status = USB_RET_STALL;
+-        usb_msd_packet_complete(s);
++        usb_msd_packet_complete(s, USB_RET_STALL);
+     }
+ 
+     /*
+@@ -255,8 +255,8 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
+         usb_msd_copy_data(s, p);
+         p = s->packet;
+         if (p && p->actual_length == p->iov.size) {
+-            p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
+-            usb_msd_packet_complete(s);
++            /* USB_RET_SUCCESS status clears previous ASYNC status */
++            usb_msd_packet_complete(s, USB_RET_SUCCESS);
+         }
+     }
+ }
+@@ -295,8 +295,8 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
+                 s->mode = USB_MSDM_CSW;
+             }
+         }
+-        p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
+-        usb_msd_packet_complete(s);
++        /* USB_RET_SUCCESS status clears previous ASYNC status */
++        usb_msd_packet_complete(s, USB_RET_SUCCESS);
+     } else if (s->data_len == 0) {
+         s->mode = USB_MSDM_CSW;
+     }
+@@ -332,8 +332,7 @@ void usb_msd_handle_reset(USBDevice *dev)
+     assert(s->req == NULL);
+ 
+     if (s->packet) {
+-        s->packet->status = USB_RET_STALL;
+-        usb_msd_packet_complete(s);
++        usb_msd_packet_complete(s, USB_RET_STALL);
+     }
+ 
+     memset(&s->csw, 0, sizeof(s->csw));
 -- 
 2.45.2
 
