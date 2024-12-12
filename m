@@ -4,135 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA2DEE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:04:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD33FE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLgzL-0006rI-2G; Thu, 12 Dec 2024 06:04:11 -0500
+	id 1tLh1j-0008P4-5s; Thu, 12 Dec 2024 06:06:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgzJ-0006qk-6E
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:04:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLh1h-0008Ot-77
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:06:37 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLgzH-0002D4-17
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:04:08 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tLh1f-0003Dz-26
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:06:36 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734001446;
+ s=mimecast20190719; t=1734001594;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+huJ2rRnMvzg10tR+5I8BCXsMF5zVi+hXEuCB+vHFKw=;
- b=Z29FGGGwKk4eKvhOTKH9mHCGZpwaXqI/w9PpurbDxqzfodKSfpfwLWwoGX1m1HyV9oX60X
- ERDmcfq0QZl9cby56zVrexlf2n4fq512pI5fLTT/xnFRkXC/8wzLY6Mhs70IE0B9coD710
- DPNEmYr471fd7eIJkosiOnlDev+f0cw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-vrK0ebz-MaucLOkLwBkDVg-1; Thu, 12 Dec 2024 06:04:04 -0500
-X-MC-Unique: vrK0ebz-MaucLOkLwBkDVg-1
-X-Mimecast-MFC-AGG-ID: vrK0ebz-MaucLOkLwBkDVg
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-385dc37cb3eso279984f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 03:04:04 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734001443; x=1734606243;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=+huJ2rRnMvzg10tR+5I8BCXsMF5zVi+hXEuCB+vHFKw=;
- b=GelPES7ktxKneByL1BBNXoy0csE4hj8tzGOGPZTEIzsUXAFM+ZGDWdCCXUBHlZO3NY
- PrdQ0cMcjot6dILq7SgC6B/zXOuZbPNTcBc3V82tAnMPubVKe+3o7vcbNupqmD3mTNgM
- cMQpyEcTATIIfGowAGGoEVomGC6tN/7k0qCFpiWMoxcpPyK1oMdB9k7IekfLUjOJ9Mxz
- UmHX8FZScxg+cKwRriV2ACkVb9wV7L8g+m3+RHqJ1GF1ePgvfc3V/ywJRWXP0rCMrCro
- VyAWB4AybydgVvflCBsk4qlOUMKhCRyGT8xKRrPuzPNbx5bfdnVD1rrWhsyOeMTudbua
- Haag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXCVHJ/tktZiiVkPk86OyqKPodxIrqXqaNxRqT8Xya9ZofYkJrnNd9wrDHLWAZL19qT6u06w4QhA6lO@nongnu.org
-X-Gm-Message-State: AOJu0YzKlaUp1QsAhsisDLzaz/IQPM01UWMtDwlgLKp1iuUpX/gB2rUo
- i3HanJ9cCj3Yu3AlAAQLX0E8EIRhM0DTw6fnArQMM++jTR86J0Ak3DOpXwiVSZlyBd1Xw8zO5cR
- Gc1wVRdPMuI3DHcDwEq4S7CA062+VTLHQ0tIJkmjL6FnmS4GtqCSu
-X-Gm-Gg: ASbGncuGSdSrhqKwIDo8K/LJoY2AiA5qBrPhJA5+6EYZ7GkoNXf6W1hHPpCug4/cBD5
- gHHF4jaSGYBpRDiYf/mQCwMs4fi5/YNThjcHdcsLmmi2cvIXNyxRMmb8vcAgXrrt6ddhB1DLArl
- x58YfYqc4Kj8ZD/vCeigQU+RJMZd5OpZzAHGXrEl6xXl90GRh8nB41DggABpybf7Rl8HDXVbgrc
- iaFhE57eU+TVKoNCDW47QnYnaePr8svKlnpZvJH9e+FD05SBjAIc9KXZ9Ortf9vhppZrTWxILGB
- Qud4TA==
-X-Received: by 2002:a05:6000:2a1:b0:385:e3cc:267c with SMTP id
- ffacd0b85a97d-387877dc758mr2085980f8f.56.1734001443468; 
- Thu, 12 Dec 2024 03:04:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEGmGhMnN7FvPsgzZO7VlA8IoNlQ5Gc3zztB1vczRyipqycivoghNr70FZowHQGYa55DKmioQ==
-X-Received: by 2002:a05:6000:2a1:b0:385:e3cc:267c with SMTP id
- ffacd0b85a97d-387877dc758mr2085959f8f.56.1734001443157; 
- Thu, 12 Dec 2024 03:04:03 -0800 (PST)
-Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782514dadsm3681284f8f.68.2024.12.12.03.04.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 03:04:02 -0800 (PST)
-Message-ID: <45824f48-fee3-4220-927a-e72d0759392e@redhat.com>
-Date: Thu, 12 Dec 2024 12:04:02 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=/23KkrWdcUPvaqcKF/aTMDxAi9azol/22cu8/eqV75Y=;
+ b=A/gQpeOoyqbuSOibWQKKkxc4npGls9JzaI8dffdfL7ewZ+cCv5KsTayJ3Kl3otuR1Gwtmn
+ lqp0wPZD9F3mTkMusvBMMvMOcDa6F0GjDF+cyvrKSWNEA2WhquhtBH4mUyrv4SWqU4kmi9
+ 7MZD5afs1GWaYHzO+5rAsS8U5aMQVx4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-TNMK_wmRPPOPpLDhz9LWKA-1; Thu,
+ 12 Dec 2024 06:06:30 -0500
+X-MC-Unique: TNMK_wmRPPOPpLDhz9LWKA-1
+X-Mimecast-MFC-AGG-ID: TNMK_wmRPPOPpLDhz9LWKA
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C1FD51955F45; Thu, 12 Dec 2024 11:06:29 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.114])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9A2E81956089; Thu, 12 Dec 2024 11:06:25 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH v3 2/4] qapi: change 'unsigned special_features' to 'uint64_t
+ features'
+Date: Thu, 12 Dec 2024 11:06:14 +0000
+Message-ID: <20241212110616.3147676-3-berrange@redhat.com>
+In-Reply-To: <20241212110616.3147676-1-berrange@redhat.com>
+References: <20241212110616.3147676-1-berrange@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 27/31] tests/functional: drop back compat imports from
- utils.py
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-28-berrange@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-28-berrange@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -157,32 +89,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Now that all tests are converted over to the higher level wrapper
-> functions, the back compat imports from utils.py are redundant.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/utils.py | 5 -----
->   1 file changed, 5 deletions(-)
-> 
-> diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-> index 6b87af4414..43853b4366 100644
-> --- a/tests/functional/qemu_test/utils.py
-> +++ b/tests/functional/qemu_test/utils.py
-> @@ -10,11 +10,6 @@
->   
->   import os
->   
-> -from .archive import tar_extract as archive_extract
-> -from .archive import cpio_extract
-> -from .uncompress import gzip_uncompress
-> -from .uncompress import lzma_uncompress
-> -
->   """
->   Round up to next power of 2
->   """
+The "special_features" field / parameter holds the subset of schema
+features that are for internal code use. Specifically 'DEPRECATED'
+and 'UNSTABLE'.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+This special casing of internal features is going to be removed, so
+prepare for that by renaming to 'features'. Using a fixed size type
+is also best practice for bit fields.
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ include/qapi/compat-policy.h  |  2 +-
+ include/qapi/qmp/dispatch.h   |  4 ++--
+ include/qapi/util.h           |  2 +-
+ include/qapi/visitor-impl.h   |  4 ++--
+ include/qapi/visitor.h        | 12 ++++++------
+ qapi/qapi-forward-visitor.c   |  8 ++++----
+ qapi/qapi-util.c              |  6 +++---
+ qapi/qapi-visit-core.c        | 12 ++++++------
+ qapi/qmp-dispatch.c           |  2 +-
+ qapi/qmp-registry.c           |  4 ++--
+ qapi/qobject-input-visitor.c  |  4 ++--
+ qapi/qobject-output-visitor.c |  6 +++---
+ scripts/qapi/types.py         |  2 +-
+ 13 files changed, 34 insertions(+), 34 deletions(-)
+
+diff --git a/include/qapi/compat-policy.h b/include/qapi/compat-policy.h
+index 8b7b25c0b5..ea65e10744 100644
+--- a/include/qapi/compat-policy.h
++++ b/include/qapi/compat-policy.h
+@@ -18,7 +18,7 @@
+ 
+ extern CompatPolicy compat_policy;
+ 
+-bool compat_policy_input_ok(unsigned special_features,
++bool compat_policy_input_ok(uint64_t features,
+                             const CompatPolicy *policy,
+                             ErrorClass error_class,
+                             const char *kind, const char *name,
+diff --git a/include/qapi/qmp/dispatch.h b/include/qapi/qmp/dispatch.h
+index f2e956813a..e0ee1ad3ac 100644
+--- a/include/qapi/qmp/dispatch.h
++++ b/include/qapi/qmp/dispatch.h
+@@ -33,7 +33,7 @@ typedef struct QmpCommand
+     /* Runs in coroutine context if QCO_COROUTINE is set */
+     QmpCommandFunc *fn;
+     QmpCommandOptions options;
+-    unsigned special_features;
++    uint64_t features;
+     QTAILQ_ENTRY(QmpCommand) node;
+     bool enabled;
+     const char *disable_reason;
+@@ -43,7 +43,7 @@ typedef QTAILQ_HEAD(QmpCommandList, QmpCommand) QmpCommandList;
+ 
+ void qmp_register_command(QmpCommandList *cmds, const char *name,
+                           QmpCommandFunc *fn, QmpCommandOptions options,
+-                          unsigned special_features);
++                          uint64_t features);
+ const QmpCommand *qmp_find_command(const QmpCommandList *cmds,
+                                    const char *name);
+ void qmp_disable_command(QmpCommandList *cmds, const char *name,
+diff --git a/include/qapi/util.h b/include/qapi/util.h
+index b8254247b8..29bc4eb865 100644
+--- a/include/qapi/util.h
++++ b/include/qapi/util.h
+@@ -18,7 +18,7 @@ typedef enum {
+ 
+ typedef struct QEnumLookup {
+     const char *const *array;
+-    const unsigned char *const special_features;
++    const uint64_t *const features;
+     const int size;
+ } QEnumLookup;
+ 
+diff --git a/include/qapi/visitor-impl.h b/include/qapi/visitor-impl.h
+index 2badec5ba4..7beb0dbfa5 100644
+--- a/include/qapi/visitor-impl.h
++++ b/include/qapi/visitor-impl.h
+@@ -115,11 +115,11 @@ struct Visitor
+ 
+     /* Optional */
+     bool (*policy_reject)(Visitor *v, const char *name,
+-                          unsigned special_features, Error **errp);
++                          uint64_t features, Error **errp);
+ 
+     /* Optional */
+     bool (*policy_skip)(Visitor *v, const char *name,
+-                        unsigned special_features);
++                        uint64_t features);
+ 
+     /* Must be set */
+     VisitorType type;
+diff --git a/include/qapi/visitor.h b/include/qapi/visitor.h
+index 27b85d4700..f6a9b0743f 100644
+--- a/include/qapi/visitor.h
++++ b/include/qapi/visitor.h
+@@ -463,29 +463,29 @@ bool visit_optional(Visitor *v, const char *name, bool *present);
+ /*
+  * Should we reject member @name due to policy?
+  *
+- * @special_features is the member's special features encoded as a
+- * bitset of QapiSpecialFeature.
++ * @features is the member's special features encoded as a
++ * bitset of QapiFeature.
+  *
+  * @name must not be NULL.  This function is only useful between
+  * visit_start_struct() and visit_end_struct(), since only objects
+  * have deprecated members.
+  */
+ bool visit_policy_reject(Visitor *v, const char *name,
+-                         unsigned special_features, Error **errp);
++                         uint64_t features, Error **errp);
+ 
+ /*
+  *
+  * Should we skip member @name due to policy?
+  *
+- * @special_features is the member's special features encoded as a
+- * bitset of QapiSpecialFeature.
++ * @features is the member's special features encoded as a
++ * bitset of QapiFeature.
+  *
+  * @name must not be NULL.  This function is only useful between
+  * visit_start_struct() and visit_end_struct(), since only objects
+  * have deprecated members.
+  */
+ bool visit_policy_skip(Visitor *v, const char *name,
+-                       unsigned special_features);
++                       uint64_t features);
+ 
+ /*
+  * Set policy for handling deprecated management interfaces.
+diff --git a/qapi/qapi-forward-visitor.c b/qapi/qapi-forward-visitor.c
+index e36d9bc9ba..6e9a784a9f 100644
+--- a/qapi/qapi-forward-visitor.c
++++ b/qapi/qapi-forward-visitor.c
+@@ -246,7 +246,7 @@ static void forward_field_optional(Visitor *v, const char *name, bool *present)
+ }
+ 
+ static bool forward_field_policy_reject(Visitor *v, const char *name,
+-                                        unsigned special_features,
++                                        uint64_t features,
+                                         Error **errp)
+ {
+     ForwardFieldVisitor *ffv = to_ffv(v);
+@@ -254,18 +254,18 @@ static bool forward_field_policy_reject(Visitor *v, const char *name,
+     if (!forward_field_translate_name(ffv, &name, errp)) {
+         return true;
+     }
+-    return visit_policy_reject(ffv->target, name, special_features, errp);
++    return visit_policy_reject(ffv->target, name, features, errp);
+ }
+ 
+ static bool forward_field_policy_skip(Visitor *v, const char *name,
+-                                      unsigned special_features)
++                                      uint64_t features)
+ {
+     ForwardFieldVisitor *ffv = to_ffv(v);
+ 
+     if (!forward_field_translate_name(ffv, &name, NULL)) {
+         return true;
+     }
+-    return visit_policy_skip(ffv->target, name, special_features);
++    return visit_policy_skip(ffv->target, name, features);
+ }
+ 
+ static void forward_field_complete(Visitor *v, void *opaque)
+diff --git a/qapi/qapi-util.c b/qapi/qapi-util.c
+index 65a7d18437..3d849fe034 100644
+--- a/qapi/qapi-util.c
++++ b/qapi/qapi-util.c
+@@ -37,19 +37,19 @@ static bool compat_policy_input_ok1(const char *adjective,
+     }
+ }
+ 
+-bool compat_policy_input_ok(unsigned special_features,
++bool compat_policy_input_ok(uint64_t features,
+                             const CompatPolicy *policy,
+                             ErrorClass error_class,
+                             const char *kind, const char *name,
+                             Error **errp)
+ {
+-    if ((special_features & 1u << QAPI_DEPRECATED)
++    if ((features & 1u << QAPI_DEPRECATED)
+         && !compat_policy_input_ok1("Deprecated",
+                                     policy->deprecated_input,
+                                     error_class, kind, name, errp)) {
+         return false;
+     }
+-    if ((special_features & (1u << QAPI_UNSTABLE))
++    if ((features & (1u << QAPI_UNSTABLE))
+         && !compat_policy_input_ok1("Unstable",
+                                     policy->unstable_input,
+                                     error_class, kind, name, errp)) {
+diff --git a/qapi/qapi-visit-core.c b/qapi/qapi-visit-core.c
+index 6c13510a2b..706c61e026 100644
+--- a/qapi/qapi-visit-core.c
++++ b/qapi/qapi-visit-core.c
+@@ -141,21 +141,21 @@ bool visit_optional(Visitor *v, const char *name, bool *present)
+ }
+ 
+ bool visit_policy_reject(Visitor *v, const char *name,
+-                         unsigned special_features, Error **errp)
++                         uint64_t features, Error **errp)
+ {
+     trace_visit_policy_reject(v, name);
+     if (v->policy_reject) {
+-        return v->policy_reject(v, name, special_features, errp);
++        return v->policy_reject(v, name, features, errp);
+     }
+     return false;
+ }
+ 
+ bool visit_policy_skip(Visitor *v, const char *name,
+-                       unsigned special_features)
++                       uint64_t features)
+ {
+     trace_visit_policy_skip(v, name);
+     if (v->policy_skip) {
+-        return v->policy_skip(v, name, special_features);
++        return v->policy_skip(v, name, features);
+     }
+     return false;
+ }
+@@ -409,8 +409,8 @@ static bool input_type_enum(Visitor *v, const char *name, int *obj,
+         return false;
+     }
+ 
+-    if (lookup->special_features
+-        && !compat_policy_input_ok(lookup->special_features[value],
++    if (lookup->features
++        && !compat_policy_input_ok(lookup->features[value],
+                                    &v->compat_policy,
+                                    ERROR_CLASS_GENERIC_ERROR,
+                                    "value", enum_str, errp)) {
+diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
+index 176b549473..d411eebf4e 100644
+--- a/qapi/qmp-dispatch.c
++++ b/qapi/qmp-dispatch.c
+@@ -173,7 +173,7 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
+                   "The command %s has not been found", command);
+         goto out;
+     }
+-    if (!compat_policy_input_ok(cmd->special_features, &compat_policy,
++    if (!compat_policy_input_ok(cmd->features, &compat_policy,
+                                 ERROR_CLASS_COMMAND_NOT_FOUND,
+                                 "command", command, &err)) {
+         goto out;
+diff --git a/qapi/qmp-registry.c b/qapi/qmp-registry.c
+index 485bc5e6fc..bfcabec526 100644
+--- a/qapi/qmp-registry.c
++++ b/qapi/qmp-registry.c
+@@ -17,7 +17,7 @@
+ 
+ void qmp_register_command(QmpCommandList *cmds, const char *name,
+                           QmpCommandFunc *fn, QmpCommandOptions options,
+-                          unsigned special_features)
++                          uint64_t features)
+ {
+     QmpCommand *cmd = g_malloc0(sizeof(*cmd));
+ 
+@@ -28,7 +28,7 @@ void qmp_register_command(QmpCommandList *cmds, const char *name,
+     cmd->fn = fn;
+     cmd->enabled = true;
+     cmd->options = options;
+-    cmd->special_features = special_features;
++    cmd->features = features;
+     QTAILQ_INSERT_TAIL(cmds, cmd, node);
+ }
+ 
+diff --git a/qapi/qobject-input-visitor.c b/qapi/qobject-input-visitor.c
+index f110a804b2..ff9c726de3 100644
+--- a/qapi/qobject-input-visitor.c
++++ b/qapi/qobject-input-visitor.c
+@@ -664,10 +664,10 @@ static void qobject_input_optional(Visitor *v, const char *name, bool *present)
+ }
+ 
+ static bool qobject_input_policy_reject(Visitor *v, const char *name,
+-                                        unsigned special_features,
++                                        uint64_t features,
+                                         Error **errp)
+ {
+-    return !compat_policy_input_ok(special_features, &v->compat_policy,
++    return !compat_policy_input_ok(features, &v->compat_policy,
+                                    ERROR_CLASS_GENERIC_ERROR,
+                                    "parameter", name, errp);
+ }
+diff --git a/qapi/qobject-output-visitor.c b/qapi/qobject-output-visitor.c
+index 74770edd73..8902287caa 100644
+--- a/qapi/qobject-output-visitor.c
++++ b/qapi/qobject-output-visitor.c
+@@ -210,13 +210,13 @@ static bool qobject_output_type_null(Visitor *v, const char *name,
+ }
+ 
+ static bool qobject_output_policy_skip(Visitor *v, const char *name,
+-                                       unsigned special_features)
++                                       uint64_t features)
+ {
+     CompatPolicy *pol = &v->compat_policy;
+ 
+-    return ((special_features & 1u << QAPI_DEPRECATED)
++    return ((features & 1u << QAPI_DEPRECATED)
+             && pol->deprecated_output == COMPAT_POLICY_OUTPUT_HIDE)
+-        || ((special_features & 1u << QAPI_UNSTABLE)
++        || ((features & 1u << QAPI_UNSTABLE)
+             && pol->unstable_output == COMPAT_POLICY_OUTPUT_HIDE);
+ }
+ 
+diff --git a/scripts/qapi/types.py b/scripts/qapi/types.py
+index 0dd0b00ada..7bc3f8241f 100644
+--- a/scripts/qapi/types.py
++++ b/scripts/qapi/types.py
+@@ -71,7 +71,7 @@ def gen_enum_lookup(name: str,
+     if feats:
+         ret += mcgen('''
+     },
+-    .special_features = (const unsigned char[%(max_index)s]) {
++    .features = (const uint64_t[%(max_index)s]) {
+ ''',
+                      max_index=max_index)
+         ret += feats
+-- 
+2.46.0
 
 
