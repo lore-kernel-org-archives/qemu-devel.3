@@ -4,111 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CFEDE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:47:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3161DE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 17:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLnGd-0000oo-1y; Thu, 12 Dec 2024 12:46:27 -0500
+	id 1tLnMx-0006ez-Ce; Thu, 12 Dec 2024 12:52:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tLnGW-0000o3-AQ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:46:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLnMt-0006ek-QT
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:52:55 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1tLnGT-0004LV-QX
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:46:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734025575;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yBznrJE56VRWhrBvxk3/sZkoRE2CzrKK9JIJqvtRp14=;
- b=GLLVdX+nrfzWjWkfYrgi3h/7m0U8Y4IoxQyZPqFTE1mwdeqZ4Iinq1cP8X64rC6+jjwIER
- fwVbkVsHZGf/yqiUtfWZDFbUqizayb8LfF0ZOWMjP/7df4Tg1Nu0IzYkrOYQFZrnLdLrFR
- 8kPBFB0se7lXpEqwBYDWx479WpER+Jw=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-670-T8KPEP2UO4qDi2V7rQX3mA-1; Thu, 12 Dec 2024 12:46:14 -0500
-X-MC-Unique: T8KPEP2UO4qDi2V7rQX3mA-1
-X-Mimecast-MFC-AGG-ID: T8KPEP2UO4qDi2V7rQX3mA
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4675670e56dso30547061cf.3
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 09:46:14 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734025574; x=1734630374;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yBznrJE56VRWhrBvxk3/sZkoRE2CzrKK9JIJqvtRp14=;
- b=lOMpwifroC5uve0h1jC3z15K2LvLtwGd5p2MR+HKGO9ugG9K3vcO4nD8KH9hp72fkW
- DSQA/o598Bu+/O64Y1AJ2ymq/ANEWGWoxXg2vY+b0s844aleRoLPdtI2mIQKS5K1rPk7
- pUaKdFnu9GG2Yb1+CkVZyGDPh+CIhelZ3MJZRy6CCdWyzIcGGHv+HSQBIi4YUAfNE5Wq
- Ha8e/ubrewhrxXhxhy81wgea+H4+Xca+uwfkJ2NQ2ZGxiSOvw6NLtEI3D3+x+HB5/Bfu
- lTKlLMOWjRg0AVRUGgmJjmFNdYVXCb1BzPc9lGujpxyjsbaGDbUDzHfulIILcp2ndbTn
- Luww==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWZMO0vbelFdgtBwcANzKQs4ftnfiW4ul5zoBtnnQ8tIkKiMTZIRUAnry1KS6R3aJZCn9ICH0bXGcB+@nongnu.org
-X-Gm-Message-State: AOJu0Yw4NvxtBQ8jcLxD13P1HOIn98QT477VG+QUJf1PhGgKGah9ptVB
- 46wDj6lvU843tyh+Xbdz42MMuOiyIhxdYD15f6lMEM07p4MNFZl+JyqgNqcYTMHStfGJ88XwrDt
- RXSkq/0OoLtZHRtevRsnc4CiO4K1dNKWMQut/fUSlXMZZ+hb4SnxS
-X-Gm-Gg: ASbGncsD82hYIkD966RV8739NEqByLWSVcjXJDNsTZwIe98ngUrBZky6XKkvwi8FbYW
- CXCazag3/8SaSRo6xOfOA4wsFlfV1SarT0V18hxFUX7JzAvt80+6E/3m7v6qv1bYCfhfCxhgbn2
- xg+4TLOvt3kxoyO0NNa+1I6IoqlEyqOH4oiKPht+OvmEwUSFoVCqBJpn7/geoRMXt5oC4urJHu6
- /VoL5v/lyIfAo64RZ62DuGYQH4bINFo8YdDMt2jryTS3RxmgrJSyTdY+LEjJnfHp8PygIWJB8uf
- 6HmVLRtQyhZc3gjrHmrXyjOFMuss
-X-Received: by 2002:a05:622a:1481:b0:467:6486:beea with SMTP id
- d75a77b69052e-467a16d8d82mr17250391cf.38.1734025573773; 
- Thu, 12 Dec 2024 09:46:13 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IESjabeM15BdQhC8Wj8b+Ah/nkx1/l8WK0j38QBKEhg2gmiHasG+E2HVEBwie5+liQCRSqa5Q==
-X-Received: by 2002:a05:622a:1481:b0:467:6486:beea with SMTP id
- d75a77b69052e-467a16d8d82mr17250071cf.38.1734025573505; 
- Thu, 12 Dec 2024 09:46:13 -0800 (PST)
-Received: from ?IPV6:2a01:e0a:59e:9d80:527b:9dff:feef:3874?
- ([2a01:e0a:59e:9d80:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4674feaaab4sm59534911cf.18.2024.12.12.09.46.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 09:46:12 -0800 (PST)
-Message-ID: <12a2ef7c-0ba3-49d9-9e08-733b8ca6a753@redhat.com>
-Date: Thu, 12 Dec 2024 18:46:07 +0100
+ (Exim 4.90_1) (envelope-from <ira.weiny@intel.com>)
+ id 1tLnMq-00088P-Uk
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 12:52:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734025973; x=1765561973;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=/D7194Ss/b+oJBhhO0FKkDLp1gnVp/0N2VBsO0P1xVw=;
+ b=Rx3cqmyqriKztXT+3nlO0XHobUE+vreZURoTt+okBFFeBK+l+DYLdwIH
+ 2juMY8ER0BI+OHUZ2uX8J75U1nME010ZCPjpUaOOAVutJtRiB/jECuLHo
+ PH1LAQOb1vphevrwJ8nVUf0O1nwS/MYB0+8shqiaIM5a5UJrddmMCWtLW
+ ECJziH++WfLk0fL6YcHFzcjoffmwJ7MqhwPAA++UMDKJ433YiTYR6duMh
+ zXPJkq9wFnVrnwEKjy5o4oNxPgqnNdizzeu2+bZB3p5pHz0cO5OkvynJL
+ iVQ8uA7cuPgoXMiGMFohYDY8VyZtg2DAou2y5hBWAH2HlRz+x8oNeFCAO Q==;
+X-CSE-ConnectionGUID: fTUuaAjlSQ654B20Cs8fwQ==
+X-CSE-MsgGUID: jSFazlMrRoK5jVbOZFKcpw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34700260"
+X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="34700260"
+Received: from fmviesa010.fm.intel.com ([10.60.135.150])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 09:52:49 -0800
+X-CSE-ConnectionGUID: UIxZ9EhrT+2os9RG/KDzcQ==
+X-CSE-MsgGUID: jxboOayXTd2VbDYvDAM1Xw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,229,1728975600"; d="scan'208";a="96705388"
+Received: from puneetse-mobl.amr.corp.intel.com (HELO localhost)
+ ([10.125.110.112])
+ by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 09:52:47 -0800
+Date: Thu, 12 Dec 2024 11:52:43 -0600
+From: Ira Weiny <ira.weiny@intel.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH v6 55/60] i386/tdx: Fetch and validate CPUID of TD guest
+Message-ID: <Z1si66iUjsqCoUgL@iweiny-mobl>
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-56-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFCv2 02/20] arm/cpu: Add sysreg definitions in
- cpu-sysregs.h
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>,
- Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
- peter.maydell@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-References: <20241206112213.88394-1-cohuck@redhat.com>
- <20241206112213.88394-3-cohuck@redhat.com>
- <2a83a49b-6863-4fb8-b5de-c3eacf3cdb77@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <2a83a49b-6863-4fb8-b5de-c3eacf3cdb77@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241105062408.3533704-56-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=ira.weiny@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -48
+X-Spam_score: -4.9
+X-Spam_bar: ----
+X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,108 +91,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
-On 12/12/24 15:37, Richard Henderson wrote:
-> On 12/6/24 05:21, Cornelia Huck wrote:
->> +#define SYS_ID_AA64PFR0_EL1                             sys_reg(3,
->> 0, 0, 4, 0)
-> ...
->> +typedef struct ARMSysReg {
->> +    int op0;
->> +    int op1;
->> +    int crn;
->> +    int crm;
->> +    int op2;
->> +} ARMSysReg;
-> ...
->> +static inline ARMSysReg sys_reg(int op0, int op1, int crn, int crm,
->> int op2)
->> +{
->> +        ARMSysReg sr = {op0, op1, crn, crm, op2};
->> +
->> +        return sr;
->> +}
->
-> Not a fan.  Why take 20 bytes to represent these?
-sure we can optimize it
->
-> Our existing ENCODE_CP_REG and ENCODE_AA64_CP_REG macros seem much
-> better, even if the argument ordering doesn't match the column
-> ordering in Table D22-2.
->
->> @@ -841,6 +849,51 @@ typedef struct IdRegMap {
->>       uint64_t regs[NR_ID_REGS];
->>   } IdRegMap;
->>   +#define ARM_FEATURE_ID_RANGE_IDX(op0, op1, crn, crm,
->> op2)               \
->> +       
->> ({                                                              \
->> +                __u64 __op1 = (op1) &
->> 3;                                \
->> +                __op1 -= (__op1 ==
->> 3);                                  \
->> +                (__op1 << 6 | ((crm) & 7) << 3 |
->> (op2));                \
->> +        })
->
-> Ah, well, this answers my question re patch 1.
->
-> It seems a shame to use 128 slots to represent all 9 id registers in
-> the op1={1,3} space.
-wouldn't it make sense to use a hashtable then as we don't have
-consecutive indexes?
->
-> Do we really need anything beyond the defined registers, or even the
-> defined registers for which qemu knows how to do anything?
-what do you mean by "defined registers". The end goal is to be able to
-tune any id reg that the kernel allows to write. So I guess we shall
-encompass more regs than qemu currently handles.
+On Tue, Nov 05, 2024 at 01:24:03AM -0500, Xiaoyao Li wrote:
+> Use KVM_TDX_GET_CPUID to get the CPUIDs that are managed and enfored
+> by TDX module for TD guest. Check QEMU's configuration against the
+> fetched data.
+> 
+> Print wanring  message when 1. a feature is not supported but requested
+> by QEMU or 2. QEMU doesn't want to expose a feature while it is enforced
+> enabled.
+> 
+> - If cpu->enforced_cpuid is not set, prints the warning message of both
+> 1) and 2) and tweak QEMU's configuration.
+> 
+> - If cpu->enforced_cpuid is set, quit if any case of 1) or 2).
 
-Wrt op1={1,3}, tbh I initially sticked to the KVM API. Now looking at
-D22-2, effectively we have very few ID regs there. If we were to use a
-hashtable we may be more flexible in picking up the indexes that are
-relevant for us.
->
-> I'm certainly happy to replace ARMISARegisters fields with an array,
-> but more like
->
-> enum ARMIDRegisterIdx {
->     ID_AA64ISAR0_IDX,
->     etc
->     ordering arbitrary, either machine or macro generated,
->     but every register has a symbolic index.
->     NUM_ID_IDX,
-> };
->
-> enum ARMSysregs {
->     SYS_ID_AA64PFR0_EL1 = ENCODE_AA64_CP_REG(...),
->     etc
-> };
->
-> const uint32_t id_register_sysreg[NUM_ID_IDX] = {
->     [ID_AA64ISAR0_IDX] = SYS_ID_AA64PFR0_EL1,
->     etc
-> };
->
-> struct ARMISARegisters {
->     uint64_t id[NUM_ID_IDX];
-> };
->
-> This seems trivial to automate, and wastes no space.
+Patches 52, 53, 54, and this one should probably be squashed
 
-Sure we will study such rework. As long as the key (ID_AA64ISAR0_IDX)
-can be matched against the index used by the KVM API we should be fine.
+53's commit message is non-existent and really only makes sense because the
+function is used here.  52's commit message is pretty thin.  Both 52 and 53 are
+used here, the size of this patch is not adversely affected, and the reason for
+the changes are more clearly shown in this patch.
 
-Thanks
+54 somewhat stands on its own.  But really it is just calling the functionality
+of this patch.  So I don't see a big reason for it to be on its own but up to
+you.
 
-Eric
->
->
-> r~
->
+> 
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> ---
+>  target/i386/kvm/tdx.c | 81 +++++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 81 insertions(+)
+> 
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index e7e0f073dfc9..9cb099e160e4 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -673,6 +673,86 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+>      return value;
+>  }
+>  
+> +
+> +static void tdx_fetch_cpuid(CPUState *cpu, struct kvm_cpuid2 *fetch_cpuid)
+> +{
+> +    int r;
+> +
+> +    r = tdx_vcpu_ioctl(cpu, KVM_TDX_GET_CPUID, 0, fetch_cpuid);
+> +    if (r) {
+> +        error_report("KVM_TDX_GET_CPUID failed %s", strerror(-r));
+> +        exit(1);
+> +    }
+> +}
+> +
+> +static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+> +{
+> +    uint64_t actual, requested, unavailable, forced_on;
+> +    g_autofree struct kvm_cpuid2 *fetch_cpuid;
+> +    const char *forced_on_prefix = NULL;
+> +    const char *unav_prefix = NULL;
+> +    struct kvm_cpuid_entry2 *entry;
+> +    X86CPU *cpu = X86_CPU(cs);
+> +    CPUX86State *env = &cpu->env;
+> +    FeatureWordInfo *wi;
+> +    FeatureWord w;
+> +    bool mismatch = false;
+> +
+> +    fetch_cpuid = g_malloc0(sizeof(*fetch_cpuid) +
+> +                    sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
 
+Is this a memory leak?  I don't see fetch_cpuid returned or free'ed.  If so, it
+might be better to use g_autofree() for this allocation.
+
+Alternatively, this allocation size is constant, could this be on the heap and
+not allocated at all?  (I assume it is big enough that a stack allocation is
+unwanted.)
+
+Ira
+
+> +    tdx_fetch_cpuid(cs, fetch_cpuid);
+> +
+> +    if (cpu->check_cpuid || cpu->enforce_cpuid) {
+> +        unav_prefix = "TDX doesn't support requested feature";
+> +        forced_on_prefix = "TDX forcibly sets the feature";
+> +    }
+> +
+> +    for (w = 0; w < FEATURE_WORDS; w++) {
+> +        wi = &feature_word_info[w];
+> +        actual = 0;
+> +
+> +        switch (wi->type) {
+> +        case CPUID_FEATURE_WORD:
+> +            entry = cpuid_find_entry(fetch_cpuid, wi->cpuid.eax, wi->cpuid.ecx);
+> +            if (!entry) {
+> +                /*
+> +                 * If KVM doesn't report it means it's totally configurable
+> +                 * by QEMU
+> +                 */
+> +                continue;
+> +            }
+> +
+> +            actual = cpuid_entry_get_reg(entry, wi->cpuid.reg);
+> +            break;
+> +        case MSR_FEATURE_WORD:
+> +            /*
+> +             * TODO:
+> +             * validate MSR features when KVM has interface report them.
+> +             */
+> +            continue;
+> +        }
+> +
+> +        requested = env->features[w];
+> +        unavailable = requested & ~actual;
+> +        mark_unavailable_features(cpu, w, unavailable, unav_prefix);
+> +        if (unavailable) {
+> +            mismatch = true;
+> +        }
+> +
+> +        forced_on = actual & ~requested;
+> +        mark_forced_on_features(cpu, w, forced_on, forced_on_prefix);
+> +        if (forced_on) {
+> +            mismatch = true;
+> +        }
+> +    }
+> +
+> +    if (cpu->enforce_cpuid && mismatch) {
+> +        return -1;
+> +    }
+> +
+> +    return 0;
+> +}
+> +
+>  static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+>  {
+>      if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+> @@ -1019,4 +1099,5 @@ static void tdx_guest_class_init(ObjectClass *oc, void *data)
+>      x86_klass->cpu_instance_init = tdx_cpu_instance_init;
+>      x86_klass->cpu_realizefn = tdx_cpu_realizefn;
+>      x86_klass->adjust_cpuid_features = tdx_adjust_cpuid_features;
+> +    x86_klass->check_features = tdx_check_features;
+>  }
+> -- 
+> 2.34.1
+> 
 
