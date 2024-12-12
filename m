@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0FB0E77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:02:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42FFE77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 09:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLf5A-0007Q4-OI; Thu, 12 Dec 2024 04:02:04 -0500
+	id 1tLfDY-0001Jn-BU; Thu, 12 Dec 2024 04:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLf56-0007PW-Kw
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:02:01 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfDN-0001Ix-MU
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:34 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLf54-00059S-Bp
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:02:00 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLfDL-0007gR-El
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 04:10:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733994116;
+ s=mimecast20190719; t=1733994628;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NoHtOjhiBLP5zfiZvA/y9IVhth53zOn67Co5jxdr+xo=;
- b=WNalDXhZWONDUjQq88SUE6r6RhU3NUI+xQo0yj/Lyv/EhyQcAjlAJBBSEnGE177PyLoYqz
- R3bJkMS8RnAvCzGP0ibySNBcnlVdCZZiBPEa5NLKYvSV+LbsgC7udeoGOd+6ms3n813fxx
- D5dkwGNxZmfw23k0L0rdBVvey0TZrsg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=/x8X7Pm93eP7Vhx6RXSbloXA+topfP51f9yhV9IolxM=;
+ b=I5Q6OstFL2NWlbu+P99Y44C8KPryZeDBRhVrxPw8Lz+85TzYdXhCFUBHX9Srz2utTOfhN8
+ rxVOpREEiNXxwDYh84WyaQJQJJsKRtbvfusiwuR9JRbXq5mS8c5JlliRlEbnzeluFPjqxE
+ 7InKYaXAUrqACZ9X6qLRhz3IDvxjfSA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-Q46FRG6oOfGR_WK27k5p5Q-1; Thu, 12 Dec 2024 04:01:54 -0500
-X-MC-Unique: Q46FRG6oOfGR_WK27k5p5Q-1
-X-Mimecast-MFC-AGG-ID: Q46FRG6oOfGR_WK27k5p5Q
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361efc9d1fso3225815e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:01:54 -0800 (PST)
+ us-mta-650-Q1dU3vMtNAuko8CdP7NwDg-1; Thu, 12 Dec 2024 04:10:27 -0500
+X-MC-Unique: Q1dU3vMtNAuko8CdP7NwDg-1
+X-Mimecast-MFC-AGG-ID: Q1dU3vMtNAuko8CdP7NwDg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362153dcd6so2100025e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 01:10:27 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733994113; x=1734598913;
+ d=1e100.net; s=20230601; t=1733994626; x=1734599426;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NoHtOjhiBLP5zfiZvA/y9IVhth53zOn67Co5jxdr+xo=;
- b=Ob6UzRwN6/1f8RfzgpShB3xH3Mo9Qz/j40KPge28GAYX/vV6KL7k3yF75sflsFH7Yx
- IJFhDtD3or09OGKF1PUIbId69+6rhgjE9iL4YPSu26M0pBYGayXClr+mI2EBUFCT3QQC
- VJkyIY2Q9yx05/3fom5haDfBCL05RRhSySbcWMQ9AbiWVYBhA2IVCmCU0orvVLG/BHsZ
- 9Bd4R2BxPcgOWd2ah6ZbD9PRJR2czP6atBsDacY6ABActep64RjpB4oMVbR5dbJU7Mdu
- ptelKwlvs3tXarsaqulE+8Nzufc/JFIx0DUfDzdijo9GAb99vIjZLFJy/lSQt6SEXYGo
- KMJA==
+ bh=/x8X7Pm93eP7Vhx6RXSbloXA+topfP51f9yhV9IolxM=;
+ b=hgW3OvXA5mSVLOJK5a11GhdlugGqaQojgTAv5Moawnx5YHpP8QjcNfFOql+zPioXQA
+ agF6v4Dzu+S0utUk77dUt+kMc2Ul1/ClScU2CJqCmXmuoJW1zsTE/t+7KZltOMXW3y09
+ qg0HWbJ4TFJVJZLIsz3gEf7Zq3tjt+Ay0ypn0yailWu5s+icAMIw/y15ja82s2tdNoFj
+ zliAsR9DtY4oPYH73s+xWG1NRqMWMaVNfMCYOIhxGJKrnDLw5gv+WhMZm99l4XNZJmZk
+ YCstMGUwXfbdLKkZKh/6Ah8KKe4PTnw8cOT4a91dZaIwvpC70UplbphrrKXHlwb4uvaV
+ OqRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZnt9KIZLGngBRasSMC9YCmz6SsQCUsq2xZIuMkf+zivCl5/S5oxoFzeCAZcCJBtqfv7kdmetRMVpT@nongnu.org
-X-Gm-Message-State: AOJu0YydG1EqILob/YVRekCMsD/BaVmP/TBYNXGKuOADhKpPyV1Vd2ws
- 9vlu2Y+K8MctZzKaF/Sk7dcVPs02UC61mCbPYAjOjIyY8RmDYdvxPoyUiv4lmRZogg+NFnJgW3/
- qp/7RbqXNaB5J4Rk1GUjoKw/6Lre94BVOyE2G2/4G8UVZD9U9wyiw
-X-Gm-Gg: ASbGncvaqr0BQFIBqL5a0IzkKDD3h/dNUDTyQSf/MXfEs0rwnn55kAG2GYL3XW9MTSV
- bk2go3azTIyFqn5+wxAXEmZdtnp2zLInM89kBwmG9Au35kzgZhRaLTsyDlEkGsCgkJXBpSlOYc1
- BQOpyGbj97kBeO7ByQCtr2gwxye46iMFFubWB2iKpTnxXCippQNknXRoS6AR4Uvqrp4A8G134Jq
- pwdbnK1mVNm2IBhQbaNa3B6pk7m5UpnN2lALEADKGZDQb0r+3Wf9Wg2sk2GNXhGPtV8e8wNmZdL
- HLb2ng==
-X-Received: by 2002:a05:600c:83cf:b0:434:f7e3:bfa0 with SMTP id
- 5b1f17b1804b1-4361c3e351fmr42768975e9.21.1733994113115; 
- Thu, 12 Dec 2024 01:01:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGEUdyLZgnoYdFxJ7QiFJJVrmKuv88ihavjqRli0RW2pRowvx05Oubhg9Gq41D1anpRV/CZkA==
-X-Received: by 2002:a05:600c:83cf:b0:434:f7e3:bfa0 with SMTP id
- 5b1f17b1804b1-4361c3e351fmr42768825e9.21.1733994112811; 
- Thu, 12 Dec 2024 01:01:52 -0800 (PST)
+ AJvYcCV5KqiByQAre5i2u3zVPxovsj9VNmn0oGYZ57oxZGeBWLau395id4io2FNVtga3PdknNNUmprJozeDF@nongnu.org
+X-Gm-Message-State: AOJu0YwFEiBVeDXDEVkiI0MJ0dSRrMkmaE7yzUwFN6IYt/0YF7zk8uY5
+ 3IHGEgSLJxOQPXQJex8X0neTa2tMG8SJG3WfmEqBQHi0DzyjSPSF61iIH8Zcbx2KEAq61LbUE9K
+ StpLBKzwWrVLL31rPfyp9C1yPjLGf++12ciTCDoXDX+fgJcD7Kr+m
+X-Gm-Gg: ASbGncss66Nc5jk4jnjHCmv9BYaTGSdX0OsKTLIJJi6h94WoXvS/hY9IaQT8idqmx+p
+ bf2fzHj/4RLPmc6t0FRnEh0n2D2We0iSgtYiVDTrm7oeKlzZZEUjZXsOwNsnEncE36mbjth2Xet
+ HOtl4bLIGqWZCP3q/m9iDd5x+rKxcQONbt5leOvL69EI8t638TUHsKKcG6RqiHjfqEIeiKLEBNJ
+ N19bVqPPBxozDWfjem8031ZmwKOzq8Yrq79b3ZMWu8S9eTA6L7JYhgkBnvo472QrJ4cMitqnWGw
+ spYA8w==
+X-Received: by 2002:a05:600c:1d1d:b0:434:e9ee:c1e with SMTP id
+ 5b1f17b1804b1-4361c419464mr54880945e9.31.1733994626365; 
+ Thu, 12 Dec 2024 01:10:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHw/eAhAZlNojDb5VyuZyA/ruV+cBvl2/VZLWX5UxONoNed7ZjK/H4dLXodwRW8E5GRzSbfUA==
+X-Received: by 2002:a05:600c:1d1d:b0:434:e9ee:c1e with SMTP id
+ 5b1f17b1804b1-4361c419464mr54880545e9.31.1733994625972; 
+ Thu, 12 Dec 2024 01:10:25 -0800 (PST)
 Received: from [10.33.192.206] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4362557c608sm10237155e9.16.2024.12.12.01.01.52
+ 5b1f17b1804b1-4362557c457sm10491965e9.15.2024.12.12.01.10.25
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 01:01:52 -0800 (PST)
-Message-ID: <be7ff592-4870-4544-82b5-3f3ce95965a9@redhat.com>
-Date: Thu, 12 Dec 2024 10:01:51 +0100
+ Thu, 12 Dec 2024 01:10:25 -0800 (PST)
+Message-ID: <990f5ccd-b05f-4e25-bc68-60793d4d21ad@redhat.com>
+Date: Thu, 12 Dec 2024 10:10:24 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/31] tests/functional: add helpers for building file
- paths
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-10-berrange@redhat.com>
+Subject: Re: [PATCH 0/2] s390x/pci: relax I/O address translation requirement
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org, david@redhat.com,
+ iii@linux.ibm.com, clegoate@redhat.com, qemu-devel@nongnu.org
+References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,10 +126,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-10-berrange@redhat.com>
+In-Reply-To: <20241209192927.107503-1-mjrosato@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -157,24 +154,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Add helper methods that construct paths for
+On 09/12/2024 20.29, Matthew Rosato wrote:
+> This series introduces the concept of the relaxed translation requirement
+> for s390x guests in order to allow bypass of the guest IOMMU for more
+> efficient PCI passthrough.
 > 
->   * log files - to be preserved at the end of a test
->   * scratch files - to be purged at the end of a test
->   * build files - anything relative to the build root
->   * data files - anything relative to the functional test source root
->   * socket files - a short temporary dir to avoid UNIX socket limits
+> With this series, QEMU can indicate to the guest that an IOMMU is not
+> strictly required for a zPCI device.  This would subsequently allow a
+> guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
+> PCI devices.
 > 
-> These are to be used instead of direct access to the self.workdir,
-> or self.logdir variables, or any other place where paths are built
-> manually.
+> When this occurs, QEMU will note the behavior via an intercepted MPCIFC
+> instruction and will fill the host iommu with mappings of the entire
+> guest address space in response.
 > 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/testcase.py | 95 ++++++++++++++++++++++++++
->   1 file changed, 95 insertions(+)
+> There is a kernel series [1] that adds the relevant behavior needed to
+> exploit this new feature from within a s390x linux guest.
+> 
+> [1]: https://lore.kernel.org/linux-s390/20241209192403.107090-1-mjrosato@linux.ibm.com/
+> 
+> Matthew Rosato (2):
+>    s390x/pci: add support for guests that request direct mapping
+>    s390x/pci: indicate QEMU supports relaxed translation for passthrough
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+  Hi again!
+
+One more thought: This is a guest-visible feature, isn't it? So do we also 
+need some migration handling for this? For example, what happens if you 
+start a guest that is aware of this feature on a host that has a QEMU with 
+this feature, and then try to live-migrate the guest to a QEMU that does not 
+have this feature? I guess the guest will crash? It would be better to fail 
+the migration instead. At least we should disable the feature in older 
+machine types and only allow it for the latest one.
+
+  Thomas
 
 
