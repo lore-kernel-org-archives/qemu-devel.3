@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63ECE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24F94E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 18:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLoM5-0008P3-OX; Thu, 12 Dec 2024 13:56:09 -0500
+	id 1tLoLu-0006z7-2k; Thu, 12 Dec 2024 13:55:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoLv-00079e-46
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:59 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoLX-0006Tm-82
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:37 -0500
+Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoLt-0006rB-Fj
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:58 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-725ef0397aeso855298b3a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:55:56 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLoLV-0006pf-M0
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 13:55:34 -0500
+Received: by mail-pj1-x1032.google.com with SMTP id
+ 98e67ed59e1d1-2ee51c5f000so656450a91.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 10:55:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734029755; x=1734634555; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734029732; x=1734634532; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CdnrZGUpPexZaRp1gyb0f+RzXNxhb5NfrEmgTu8F7Mg=;
- b=v5C1JNiDlgdabxT/Q8X/VnkKqTRST9HJlyKDUO4l+gv3cwsDdWH38AR46P3aJFhcbj
- 4rODYm6SACHnNywqpAbwfwu9R6Ds3is3NJ9tLyd1tDXw1/r2oh/4RPY6R5gadE3TFD1q
- FqXB4Nd+wKVyvC7+GCPN2bJwyJi8862mJocTnuE7evc01GAgR8wTHvsiPP5HQsqZoOGe
- 64hnsewWzkwkbfLKXYziy4mrd/z7yNOFV6xHnxQ8TfPk2tRmURh2vssOfN90zzlwVAS4
- 6mmXXvZ7ttrXZ8V1c7rY4kIa0f+hfINdSEGFQrn/iuZxjywoZ34hojgZMKe/ITbotLqz
- 5yrw==
+ bh=ziwrhan20pghgkypPdFtUixUvLCoelaBHFetr07pBgc=;
+ b=yMu1IIsN01z52n5su6yZffIIwa8ADp1YFG7Lhe6fR2inJHeJ9HElGs031pke33avwX
+ 8zLFGZjZTy6aClwEm+EkAfkqRHRjN4wGJowPEl0iHfFC0QBdOhlvO88SR2moUojQnFf5
+ 9slG/7Ic+SiZGfTNVhMvLsF9AWbw8ABqh+jlVXdmV8AtemCdzsgWql4VtrpQy3O+0w7i
+ tELgQDzRkcmqYq7aowadqpByjHjHusy8fcN8+NmCWzlgXtMUaAxUVroh0NChYoEJkPsL
+ HSitagiOWrcnvm0VSfgGExn4tIZgx4XGdOP5XVP3otXcUzOmHOBl3q+ww4msKW7hxL6i
+ KNRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734029755; x=1734634555;
+ d=1e100.net; s=20230601; t=1734029732; x=1734634532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CdnrZGUpPexZaRp1gyb0f+RzXNxhb5NfrEmgTu8F7Mg=;
- b=GAR0b9rnWnJ0c+dqCfH6+Qm0h2WHvtvXl21Wc4KhROHDf7iIes4zYO5AEf0s7Uf5t0
- n7EYShNe5OlMd8UTSR6KhNfiM4V1eGfT1xMdxpIET7BhdAsL9SfLKhSh4zX5JCQDe2RJ
- J2HgaIg3/6sVBtoEKgk4DFRzJdyhqFkr2J1o8pE6wvVwsIqdbS8u4f/9DBtEBF0amYCl
- jgQAZnxKyfLVcP8YqfYPY+6Cqe/xJ3xabSPc7tJSFekzrrtg4iFlcZEZDGEV0BogaMjK
- gm61E+tNQI+tYIKBpijoJlkmtZk1AHsIZS5/POdqj/tLJkXbrkz4Zy4Vo+DDDA1HAZer
- 5Y9A==
-X-Gm-Message-State: AOJu0YyPktDfhA3r6yFIk5RBNVFT5CVOANm+1isn2W4+vKpL4mRmUR4x
- /OopkDx9lvk6YMHccu/4RUNM5etYFIyLs0K69QxM9TE7gLrYx+5vT5gRFSzmKJk3Zj4//Dy1WmV
- M
-X-Gm-Gg: ASbGncsQ251N8iCWcQoqyL0fjloZg82cyFQhvozVpjHAuB0jyWkUtwE+aAHHDuyex5X
- CEsRkEhmF8vUgsjklcQTQ6fLu6I3D9oayOaqCIdLswN4I7/XpGwbOWSJU+jXbrfcwxEaZ39Q7N6
- sXSBqI5Aw9Jh+NQO0QEtNLsruNZOmUTMoqGwu81Jb5tL0QjERuLq5Kte7u4ARsJvWiFbe9e5+4B
- azAhe4QqO+WJZtckhcrZSRCUcBPOxcJ6l39ZcJW3i5vf7mHYoOmOg8Qb6p+dM3lu4a0wYvqI+tG
- Vo8SlR8Z5kgVq401blDJQ1nwalM1bXA=
-X-Google-Smtp-Source: AGHT+IE5bIF9VtLylFp1j+0DZ2Ndsno1rZUC7F8vX1IC/vjDv3nvLZ2NAyLsHTzaYZ/0TM+/P6mzHw==
-X-Received: by 2002:a05:6a20:728f:b0:1e1:ab63:c5e8 with SMTP id
- adf61e73a8af0-1e1dab643edmr1888496637.26.1734029754866; 
- Thu, 12 Dec 2024 10:55:54 -0800 (PST)
+ bh=ziwrhan20pghgkypPdFtUixUvLCoelaBHFetr07pBgc=;
+ b=Zxlqb5BQsHHIdGlaiyEV/H/2MEdM48gYM2tzF9//egrJqk4h5LOOwtcNbgOiglskvS
+ M0mf4C1diZr2P9gj8UdHmJYxaiyDAhMj7USGR/LnTjLoFw2Oe9AMUbKFnbKPiZ4fnQn6
+ cpM4vIxov5MT2tysi7ftn7teAdH8HaKuBEM1sPfV/YZpjtqzlupYl4aXiQZk198OzofX
+ QpEdc10krtTOQV/jXG85X4QR87/irVlWHXRELtRu9diOgPJbeBTVry9DCFqx97LXnc9s
+ cNTSigGFGT3Owx7kBhXpzKMfm3Kccm31qS2QmJc/CfeUuiY2WKOt8RvY/OeMJl4/uaKI
+ xLXg==
+X-Gm-Message-State: AOJu0YzMEMqIzUnCWOmLfkULI8ROzuLmTf5APKrv0Kk5D9FYvBCsSYB1
+ bmv4bFd8w8d6y99YTr7TxLsGCm8DyW0XU2EcucQIuCg8UNVV2BPHwA6qIH0InK9C9g11QunaLUV
+ W
+X-Gm-Gg: ASbGncsuMny4/AH5E5clxoNkzHqNjb0gCfqzEk2NunlqFwBzr/ZenQ0UZu/pwO33jYt
+ ao21A4BeeAbWmgyTznMwhTzq24EL29/QTWmFLQByVjk7rPnPYVSEW5C8kvUmS8bMz25Bhb1zd7+
+ 3E+Cc66I09Av+F38/bpZrs7I4EfMZc/kyJCGz5tPdUvB8xNH7Sd9pccauXwsg1pLiz4KOt+GzJ6
+ Ojpluq6MxhZM5yAJHvrNtvF0J1cEDwdPqN/tfyQrGRlheQr3CmEb3mUPFRWdUWgzUASAHPAZMkN
+ 4TVMD+KGP1QC5ouv5NVHsafzixeQ7qc=
+X-Google-Smtp-Source: AGHT+IEjVYnKYHst3x982Mj+S8+Yf9LbZFi2Xvy3Us7PwtpoPXMWd780sprz5mJY06DeBw3Cpo5qdg==
+X-Received: by 2002:a17:90b:1a8b:b0:2ee:7538:be70 with SMTP id
+ 98e67ed59e1d1-2f127f5502emr12265129a91.5.1734029732064; 
+ Thu, 12 Dec 2024 10:55:32 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-725da7e0181sm9392168b3a.134.2024.12.12.10.55.52
+ 98e67ed59e1d1-2f142de347esm1620629a91.25.2024.12.12.10.55.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Dec 2024 10:55:54 -0800 (PST)
+ Thu, 12 Dec 2024 10:55:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 11/18] accel/tcg: Move user-related declarations out of
- 'exec/cpu-all.h' (1/4)
-Date: Thu, 12 Dec 2024 19:53:34 +0100
-Message-ID: <20241212185341.2857-12-philmd@linaro.org>
+Subject: [PATCH 09/18] accel/tcg: Un-inline log_pc()
+Date: Thu, 12 Dec 2024 19:53:32 +0100
+Message-ID: <20241212185341.2857-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241212185341.2857-1-philmd@linaro.org>
 References: <20241212185341.2857-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
+ envelope-from=philmd@linaro.org; helo=mail-pj1-x1032.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,118 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move declarations related to page protection under user
-emulation from "exec/cpu-all.h" to "user/page-protection.h".
+log_pc() is only used within cpu-exec.c, no need to
+expose it via "internal-target.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/exec/cpu-all.h         | 5 -----
- include/user/page-protection.h | 8 ++++++++
- bsd-user/main.c                | 1 +
- bsd-user/mmap.c                | 1 +
- linux-user/main.c              | 1 +
- linux-user/mmap.c              | 1 +
- linux-user/syscall.c           | 1 +
- 7 files changed, 13 insertions(+), 5 deletions(-)
+ accel/tcg/internal-target.h | 10 ----------
+ accel/tcg/cpu-exec.c        | 11 +++++++++++
+ 2 files changed, 11 insertions(+), 10 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 1c8e0446d06..3d97323893b 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -127,11 +127,6 @@ extern const TargetPageBits target_page;
- #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 6f4ec0bd424..0437d798295 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -72,16 +72,6 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
  
- #if defined(CONFIG_USER_ONLY)
--void page_dump(FILE *f);
+ bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
+ 
+-/* Return the current PC from CPU, which may be cached in TB. */
+-static inline vaddr log_pc(CPUState *cpu, const TranslationBlock *tb)
+-{
+-    if (tb_cflags(tb) & CF_PCREL) {
+-        return cpu->cc->get_pc(cpu);
+-    } else {
+-        return tb->pc;
+-    }
+-}
 -
--typedef int (*walk_memory_regions_fn)(void *, target_ulong,
--                                      target_ulong, unsigned long);
--int walk_memory_regions(void *, walk_memory_regions_fn);
+ /**
+  * tcg_req_mo:
+  * @type: TCGBar
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index f82870a1e2a..396fa6f4a6b 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -21,6 +21,7 @@
+ #include "qemu/qemu-print.h"
+ #include "qapi/error.h"
+ #include "qapi/type-helpers.h"
++#include "hw/core/cpu.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "trace.h"
+ #include "disas/disas.h"
+@@ -434,6 +435,16 @@ const void *HELPER(lookup_tb_ptr)(CPUArchState *env)
+     return tb->tc.ptr;
+ }
  
- int page_get_flags(target_ulong address);
- 
-diff --git a/include/user/page-protection.h b/include/user/page-protection.h
-index 448c7a03449..ea11cf9e328 100644
---- a/include/user/page-protection.h
-+++ b/include/user/page-protection.h
-@@ -12,9 +12,17 @@
- #error Cannot include this header from system emulation
- #endif
- 
-+#include "cpu-param.h"
-+#include "exec/target_long.h"
- #include "exec/translation-block.h"
- 
- void page_protect(tb_page_addr_t page_addr);
- int page_unprotect(tb_page_addr_t address, uintptr_t pc);
-+typedef int (*walk_memory_regions_fn)(void *, target_ulong,
-+                                      target_ulong, unsigned long);
++/* Return the current PC from CPU, which may be cached in TB. */
++static vaddr log_pc(CPUState *cpu, const TranslationBlock *tb)
++{
++    if (tb_cflags(tb) & CF_PCREL) {
++        return cpu->cc->get_pc(cpu);
++    } else {
++        return tb->pc;
++    }
++}
 +
-+int walk_memory_regions(void *, walk_memory_regions_fn);
-+
-+void page_dump(FILE *f);
- 
- #endif
-diff --git a/bsd-user/main.c b/bsd-user/main.c
-index 61ca73c4781..0a5bc578365 100644
---- a/bsd-user/main.c
-+++ b/bsd-user/main.c
-@@ -38,6 +38,7 @@
- #include "qemu/plugin.h"
- #include "exec/exec-all.h"
- #include "user/guest-base.h"
-+#include "user/page-protection.h"
- #include "tcg/startup.h"
- #include "qemu/timer.h"
- #include "qemu/envlist.h"
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 775e905960b..346f2cefd32 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -18,6 +18,7 @@
-  */
- #include "qemu/osdep.h"
- #include "exec/page-protection.h"
-+#include "user/page-protection.h"
- 
- #include "qemu.h"
- 
-diff --git a/linux-user/main.c b/linux-user/main.c
-index b09af8d4365..06037304cb1 100644
---- a/linux-user/main.c
-+++ b/linux-user/main.c
-@@ -39,6 +39,7 @@
- #include "qemu/module.h"
- #include "qemu/plugin.h"
- #include "user/guest-base.h"
-+#include "user/page-protection.h"
- #include "exec/exec-all.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/user.h"
-diff --git a/linux-user/mmap.c b/linux-user/mmap.c
-index e4bf5d5f39c..4e0444b4cbc 100644
---- a/linux-user/mmap.c
-+++ b/linux-user/mmap.c
-@@ -22,6 +22,7 @@
- #include "exec/log.h"
- #include "exec/page-protection.h"
- #include "qemu.h"
-+#include "user/page-protection.h"
- #include "user-internals.h"
- #include "user-mmap.h"
- #include "target_mman.h"
-diff --git a/linux-user/syscall.c b/linux-user/syscall.c
-index 1ce4c79784f..c54b199b6d3 100644
---- a/linux-user/syscall.c
-+++ b/linux-user/syscall.c
-@@ -135,6 +135,7 @@
- #include "signal-common.h"
- #include "loader.h"
- #include "user-mmap.h"
-+#include "user/page-protection.h"
- #include "user/safe-syscall.h"
- #include "qemu/guest-random.h"
- #include "qemu/selfmap.h"
+ /* Execute a TB, and fix up the CPU state afterwards if necessary */
+ /*
+  * Disable CFI checks.
 -- 
 2.45.2
 
