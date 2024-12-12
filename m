@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F43CE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38808E77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 08:42:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLelC-0004Ph-0I; Thu, 12 Dec 2024 03:41:26 -0500
+	id 1tLem9-0005Mm-IK; Thu, 12 Dec 2024 03:42:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLelA-0004PL-6I
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:24 -0500
+ id 1tLelr-0004qO-MJ
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:08 -0500
 Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1tLel8-0007zv-7X
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:41:23 -0500
+ id 1tLelm-0007zv-Lf
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 03:42:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1733992882; x=1765528882;
+ t=1733992923; x=1765528923;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=LXWOq6Bk1Bmv3i8j1h5VzIBXKoVXbthWV9TjblXPuB4=;
- b=T1o0Zos2LnLj/b8jkk3yW0L5U71oCr5bN0ECLoxPeVuLWejRjzDMPYVA
- pvTVkR7G0Wy0nGbpXEBLdZ58LSJuJqKm16UsplmJMlawE46FJCcqoAoE/
- x5tXGoRa7BjtFawoeRKPpPze6h6aAydHFJn/6GiQm/AgRR4PzwX7VFSZ/
- GQzpgIs1Iw8x5u3pWaEcTFe9Bv+BFIL8Z2RiyAhr2FKEqunZp5wEdE7+V
- uwmLeKIwpW73YLkICVHImjbIp/WCmWXRZDtvHxuWnJ3KZWN5gxHjCR+tw
- Fa1wIDiLVaR6szFVz23ylTNvNqyXIx2NShNqBnaDDzedwc8QraE5u8wYa g==;
-X-CSE-ConnectionGUID: /VEqQREJT7qRFGaGtZJ0ww==
-X-CSE-MsgGUID: dJk2drZhSqO1QxaSAR9SjQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124732"
-X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124732"
+ bh=NFh2MjJUlI6vx5bg/ehE0ebUiAxynWQZ1Qb4Z+RTneI=;
+ b=Rr3eNzBTIhmKMHIayZx45eVbOhgIiUIQNP1W+dFSUychCDnqnEaSMihV
+ r3AmSWl/04hGTUQXbVRreSJwkOnC5/08JDJc+VAkzINuKRsNu7rMI2OpF
+ KxK/2Lp3oC4FbpErMr3TL0aDRo5a8x6HE1ayiuzB3zgfgfAye/0CfnF8m
+ kqiEi7oQhmgdMerM+wMpnkBMR9djXY1wW7Bov6BwTwxjbOvwJpc1PaNO0
+ 4iFrWNPH9zqGCQTqSPUpmSYwjDfjFS60IqhrKAqNJE+DVT5g0Q4C2Rhp9
+ xD8kfVoxBK+JogtN2owjEpe+nQC0+2MzdveejSDSpS2yykQK5yvWt0J6v g==;
+X-CSE-ConnectionGUID: 7KZSG3c9Quu6Mw4kkxsyDw==
+X-CSE-MsgGUID: 8OEAlM/FQvOYZBoc+CJrsQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11283"; a="34124954"
+X-IronPort-AV: E=Sophos;i="6.12,228,1728975600"; d="scan'208";a="34124954"
 Received: from fmviesa002.fm.intel.com ([10.60.135.142])
  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:20 -0800
-X-CSE-ConnectionGUID: VM19NiJeRd6IRnVh1sxfgA==
-X-CSE-MsgGUID: AUFHoFNnTN6QX5NXQexmtQ==
+ 12 Dec 2024 00:42:02 -0800
+X-CSE-ConnectionGUID: eR3QW9kVSNekEMnPvQUwqw==
+X-CSE-MsgGUID: Wg7mvr77Soa1+25txS0MQg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119406935"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="119407108"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 00:41:16 -0800
+ 12 Dec 2024 00:41:58 -0800
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -57,9 +57,9 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v6 02/20] intel_iommu: Make pasid entry type check accurate
-Date: Thu, 12 Dec 2024 16:37:39 +0800
-Message-Id: <20241212083757.605022-3-zhenzhong.duan@intel.com>
+Subject: [PATCH v6 11/20] intel_iommu: Process PASID-based iotlb invalidation
+Date: Thu, 12 Dec 2024 16:37:48 +0800
+Message-Id: <20241212083757.605022-12-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241212083757.605022-1-zhenzhong.duan@intel.com>
 References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
@@ -91,50 +91,109 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When guest configures Nested Translation(011b) or First-stage Translation only
-(001b), type check passed unaccurately.
+PASID-based iotlb (piotlb) is used during walking Intel
+VT-d stage-1 page table.
 
-Fails the type check in those cases as their simulation isn't supported yet.
+This emulates the stage-1 page table iotlb invalidation requested
+by a PASID-based IOTLB Invalidate Descriptor (P_IOTLB).
 
-Fixes: fb43cf739e1 ("intel_iommu: scalable mode emulation")
-Suggested-by: Yi Liu <yi.l.liu@intel.com>
+Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 Reviewed-by: Clément Mathieu--Drif<clement.mathieu--drif@eviden.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
+Reviewed-by: Yi Liu <yi.l.liu@intel.com>
 ---
- hw/i386/intel_iommu.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ hw/i386/intel_iommu_internal.h |  3 +++
+ hw/i386/intel_iommu.c          | 43 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
+diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+index 22dd3faf0c..5e4e563e62 100644
+--- a/hw/i386/intel_iommu_internal.h
++++ b/hw/i386/intel_iommu_internal.h
+@@ -471,6 +471,9 @@ typedef union VTDInvDesc VTDInvDesc;
+ #define VTD_INV_DESC_PIOTLB_PSI_IN_PASID  (3ULL << 4)
+ #define VTD_INV_DESC_PIOTLB_DID(val)      (((val) >> 16) & VTD_DOMAIN_ID_MASK)
+ #define VTD_INV_DESC_PIOTLB_PASID(val)    (((val) >> 32) & 0xfffffULL)
++#define VTD_INV_DESC_PIOTLB_AM(val)       ((val) & 0x3fULL)
++#define VTD_INV_DESC_PIOTLB_IH(val)       (((val) >> 6) & 0x1)
++#define VTD_INV_DESC_PIOTLB_ADDR(val)     ((val) & ~0xfffULL)
+ #define VTD_INV_DESC_PIOTLB_RSVD_VAL0     0xfff000000000f1c0ULL
+ #define VTD_INV_DESC_PIOTLB_RSVD_VAL1     0xf80ULL
+ 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index 67dc99cfdf..10b8425a6c 100644
+index 0ba94d1d03..2ba5ffbf5b 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -759,20 +759,16 @@ static inline bool vtd_pe_type_check(X86IOMMUState *x86_iommu,
-                                      VTDPASIDEntry *pe)
- {
-     switch (VTD_PE_GET_TYPE(pe)) {
--    case VTD_SM_PASID_ENTRY_FLT:
-     case VTD_SM_PASID_ENTRY_SLT:
--    case VTD_SM_PASID_ENTRY_NESTED:
--        break;
-+        return true;
-     case VTD_SM_PASID_ENTRY_PT:
--        if (!x86_iommu->pt_supported) {
--            return false;
--        }
--        break;
-+        return x86_iommu->pt_supported;
-+    case VTD_SM_PASID_ENTRY_FLT:
-+    case VTD_SM_PASID_ENTRY_NESTED:
-     default:
-         /* Unknown type */
-         return false;
-     }
--    return true;
+@@ -322,6 +322,28 @@ static gboolean vtd_hash_remove_by_page(gpointer key, gpointer value,
+     return (entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb;
  }
  
- static inline bool vtd_pdire_present(VTDPASIDDirEntry *pdire)
++static gboolean vtd_hash_remove_by_page_piotlb(gpointer key, gpointer value,
++                                               gpointer user_data)
++{
++    VTDIOTLBEntry *entry = (VTDIOTLBEntry *)value;
++    VTDIOTLBPageInvInfo *info = (VTDIOTLBPageInvInfo *)user_data;
++    uint64_t gfn = (info->addr >> VTD_PAGE_SHIFT_4K) & info->mask;
++    uint64_t gfn_tlb = (info->addr & entry->mask) >> VTD_PAGE_SHIFT_4K;
++
++    /*
++     * According to spec, PASID-based-IOTLB Invalidation in page granularity
++     * doesn't invalidate IOTLB entries caching second-stage (PGTT=010b)
++     * or pass-through (PGTT=100b) mappings. Nested isn't supported yet,
++     * so only need to check first-stage (PGTT=001b) mappings.
++     */
++    if (entry->pgtt != VTD_SM_PASID_ENTRY_FLT) {
++        return false;
++    }
++
++    return entry->domain_id == info->domain_id && entry->pasid == info->pasid &&
++           ((entry->gfn & info->mask) == gfn || entry->gfn == gfn_tlb);
++}
++
+ /* Reset all the gen of VTDAddressSpace to zero and set the gen of
+  * IntelIOMMUState to 1.  Must be called with IOMMU lock held.
+  */
+@@ -2937,11 +2959,29 @@ static void vtd_piotlb_pasid_invalidate(IntelIOMMUState *s,
+     }
+ }
+ 
++static void vtd_piotlb_page_invalidate(IntelIOMMUState *s, uint16_t domain_id,
++                                       uint32_t pasid, hwaddr addr, uint8_t am)
++{
++    VTDIOTLBPageInvInfo info;
++
++    info.domain_id = domain_id;
++    info.pasid = pasid;
++    info.addr = addr;
++    info.mask = ~((1 << am) - 1);
++
++    vtd_iommu_lock(s);
++    g_hash_table_foreach_remove(s->iotlb,
++                                vtd_hash_remove_by_page_piotlb, &info);
++    vtd_iommu_unlock(s);
++}
++
+ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+                                     VTDInvDesc *inv_desc)
+ {
+     uint16_t domain_id;
+     uint32_t pasid;
++    hwaddr addr;
++    uint8_t am;
+     uint64_t mask[4] = {VTD_INV_DESC_PIOTLB_RSVD_VAL0,
+                         VTD_INV_DESC_PIOTLB_RSVD_VAL1,
+                         VTD_INV_DESC_ALL_ONE, VTD_INV_DESC_ALL_ONE};
+@@ -2959,6 +2999,9 @@ static bool vtd_process_piotlb_desc(IntelIOMMUState *s,
+         break;
+ 
+     case VTD_INV_DESC_PIOTLB_PSI_IN_PASID:
++        am = VTD_INV_DESC_PIOTLB_AM(inv_desc->val[1]);
++        addr = (hwaddr) VTD_INV_DESC_PIOTLB_ADDR(inv_desc->val[1]);
++        vtd_piotlb_page_invalidate(s, domain_id, pasid, addr, am);
+         break;
+ 
+     default:
 -- 
 2.34.1
 
