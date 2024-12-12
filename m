@@ -4,95 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164D1E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:49:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4A3FE77182
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:49:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLq6c-0003Zg-Of; Thu, 12 Dec 2024 15:48:18 -0500
+	id 1tLq6y-0003hW-2X; Thu, 12 Dec 2024 15:48:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6b-0003Yz-4J
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:17 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLq6X-0000tg-VZ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734036487;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=Nn85WydizSTH87FoQvlMn/9B+FNHjtBxFLnjNfiB2TY=;
- b=jGBa83GBRGqF1irlLRunqmDA+FRFFaWmuN8goMa5LBNQBJek70VDdec1YIKJ1BuIx1UrZZ
- wlB0PwXNDmnUo8BwrtubHmCmJLl19M1erGS0jB/IERgNw+04WTj5SMFGPA8JA1I8uCe+j9
- rPG2bi7ttffIrxbQSg1PFCdRqfzQjso=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-M2v_8kpYOpeTRKFi5VPLwA-1; Thu, 12 Dec 2024 15:48:05 -0500
-X-MC-Unique: M2v_8kpYOpeTRKFi5VPLwA-1
-X-Mimecast-MFC-AGG-ID: M2v_8kpYOpeTRKFi5VPLwA
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-844d2a7ef6dso173351839f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:48:04 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLq6t-0003fv-2A
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:35 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tLq6k-0000w9-NO
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:48:33 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-71e3048970eso458084a34.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:48:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734036504; x=1734641304; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r5mnyXonXiy4zaF6iAQaiGzQHiUuvaz9CiX/0uI1U14=;
+ b=K6fE21nnuqaAjKsKU0fSTDOrICSf/L4NfjpkrzhF4TuSW8EfNWJodVM0bcEe1+Gls1
+ Tm5hh60voOmILEs2D2XjpRVNwNExuxZAZ/wfXRlpLxJU1TuLKxOb3vJ7oTZDDgxvtlEK
+ zXwmEr9omcFqBP87CFcr8mOQopN8PT7M3+I52spdN0CJxauJtrWDyPMggryKtaUvoHFL
+ AuK3hCnM2SjnL49q7ki/S5zV45WVwHELOyNvFu2ykyTjwr1uIZBJt1ZNXXAGwWMd8nP8
+ LefSsPIivA8WJyCvGhNTzCP0EvJmFRF7p73J8j7fYK4G4hKjdAM3fwmCeIQSXfqsCYQl
+ nnPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734036484; x=1734641284;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Nn85WydizSTH87FoQvlMn/9B+FNHjtBxFLnjNfiB2TY=;
- b=Hqw7qczZkKQ5VLaWUa27LwRmDKXC8cUPO7QpRtx4z/YWXSIAa75OdXtAuOEQpTb0xS
- xBZ/DjpWpLVf+JT6zSEZvXXCG0RZnl/J9Z8YIYbIUH/Ymzb/nI+iWFzDPMF8jKAV5yew
- xanpMNOp/eNBez+WKnWJmaYVognX4FJMhHAeyM1+N6seY30Nq1JqQlclGuCxsN9BhBiJ
- lQPGOiIJFcRPaVzHs4fhru+9SLLLE9Y3yJcmM7RaSSvtQ7pzB/9/b8EJHkt7tImDw/+8
- 88rARs+KLTbJFTiDyuw2z58kHTujnghiv9l0mKBzm21AeWyGKR6bY9uBeJmF54mXIIal
- bSHg==
-X-Gm-Message-State: AOJu0Yw6sY19t0GGjO8V7nO/PGzq3zImaYyHfgyPIZxdDgX95T31EZUI
- NuIYh6yXVdiVtlYUkwcugA8giPqX4+NBohqQnvuHyW+pHKpWaZZkBsD6PnFSKF9u/KIpeNH3HK+
- 38k2QS4Njb/Svf4Md00tCgHL6qx0BvMMRksf/n9gJGXM9f+jZu9ld3eUa1cMw39p29R2CuHruw+
- LLvaYROk+Og7Ne0he9M5G+jQlJAH0k/6QjyQ==
-X-Gm-Gg: ASbGnctX6qMnAq8co26zIwlvAD9EgSajCasjuqomHXpuLS65IhSY4ADW8kFXPdeexem
- BLFTiMTel/cZlpGSTPfLytYK6/nJVxhUjd9JcfXRMnNi0WLA3xIL5uV4RsA+fcVYuR7qFhxjM1x
- Kk18kCytRNbY4ke9BSOygD3XUjPd3BStSDVUe4xeWGHNCs0ANfnqyQOok+nUnVamkh/vkqPOBFV
- K852YInlUgGoeC5m80emjyAdziEZ0YQGmHQFTPHGFd5XSd6Ju+hMKhHeZUm+Li2H8EWC5B69eXY
- m6lW3KMrzfPzpDI8+LWqebc/y1AbbzFM
-X-Received: by 2002:a05:6602:6d89:b0:841:81ef:70b9 with SMTP id
- ca18e2360f4ac-844e8b080e9mr32244939f.9.1734036483832; 
- Thu, 12 Dec 2024 12:48:03 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHs/1TMongD72F+Bd44I+CwZc4+LLxYE89RFASmSIbZYNzDd9j+wBoM5CrNral3zf21N4O/Jg==
-X-Received: by 2002:a05:6602:6d89:b0:841:81ef:70b9 with SMTP id
- ca18e2360f4ac-844e8b080e9mr32241739f.9.1734036483418; 
- Thu, 12 Dec 2024 12:48:03 -0800 (PST)
-Received: from x1n.redhat.com (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-844e57b48fcsm20807839f.35.2024.12.12.12.48.02
+ d=1e100.net; s=20230601; t=1734036504; x=1734641304;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=r5mnyXonXiy4zaF6iAQaiGzQHiUuvaz9CiX/0uI1U14=;
+ b=Au1CbQ/FXOchaQomP4TloUdQDSA/2vAz9PMmpnQFkqH19six0U1zYdTqL6ZbUxLgu+
+ YnTxUUZDiyt6AhZ7UCwKyB11YDG3oL+xSB8wQt3HdSEKt+pnVpz6hmM/k9qcTk9Z636K
+ 64f1rpmmYWCszXlCtP0ieEVLS01DpgxWxCweE0+tYU1LHGHrRWtdrqf5E3hp465Uk5Gt
+ x3/4f4q5GwRazEQoTOcbCLmpBSt31SmSPHayLphMfKukToDfp+vF66DN6JevS5rXNLfI
+ pyMkskMkI4iEVu9iJ6eyvFQw5PMX/Z0bu6OT5yNJxmFiv5dXMmYs5fwmZaAnl1Ia9uN0
+ brjA==
+X-Gm-Message-State: AOJu0YyY+qUDtFFB5YXIJfLCQQrUczasVRF0H4ao29NTWmiH2eL21Qrr
+ K2KJYkzvsYPOOTZzog0WP1pcmFCEQYstDyxQ85H2bsZOWN5Q8eYoOs2qMErP821nTjxkEp4nZoy
+ BWGwaTfyu
+X-Gm-Gg: ASbGnctnAwdn8a6zX1JdbYuk7ypla2WCc534XtQTf+Dxb4yc57I2kwmzONKDANsOgii
+ DCIhrVHsK8sRRbJfOoMVVSI4X2gasDd1YS5SMW+9lsU7Fl7NyXa/6Rb3P8TtYOBi8nqv9g0Hbat
+ aFiNmVjVraQhk2vUeuE/tEXX0XqyDxxQu+sMJkTk+uhdEbta6tOwg/+cm+e54Bw4O3/lUGzHYtl
+ iEqgDjyj5f6WHIn94C/ah3c+tdHsaCYe1+c0LV77v6M3/nvly6mAFZ1WSifsfbO
+X-Google-Smtp-Source: AGHT+IGU9eUMb68Kl4H1SoHFMivQ7cGbXTTvG8hrmRybcqeTT3/AS+ABrzmx4XyAzneSi3seJCfmxw==
+X-Received: by 2002:a05:6830:4490:b0:71d:5f22:afec with SMTP id
+ 46e09a7af769-71e36ea1c78mr1161819a34.12.1734036504004; 
+ Thu, 12 Dec 2024 12:48:24 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f2b8197b58sm2129758eaf.12.2024.12.12.12.48.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 12:48:02 -0800 (PST)
-From: Peter Xu <peterx@redhat.com>
+ Thu, 12 Dec 2024 12:48:23 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Kevin Wolf <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- peterx@redhat.com, Peter Maydell <peter.maydell@linaro.org>,
- s_sourceforge@nedprod.com, Maxim Levitsky <mlevitsk@redhat.com>
-Subject: [PATCH v2 0/3] scripts/qemu-gdb: Make coroutine dumps to work with
- coredumps
-Date: Thu, 12 Dec 2024 15:47:58 -0500
-Message-ID: <20241212204801.1420528-1-peterx@redhat.com>
-X-Mailer: git-send-email 2.47.0
-Content-Type: text/plain; charset="utf-8"
+Cc: Roman Artemev <roman.artemev@syntacore.com>, qemu-stable@nongnu.org,
+ Denis Tomashev <denis.tomashev@syntacore.com>
+Subject: [PULL 2/4] tcg/riscv: Fix StoreStore barrier generation
+Date: Thu, 12 Dec 2024 14:48:16 -0600
+Message-ID: <20241212204818.2468583-3-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241212204818.2468583-1-richard.henderson@linaro.org>
+References: <20241212204818.2468583-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,64 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1: https://lore.kernel.org/r/20241211201739.1380222-1-peterx@redhat.com
+From: Roman Artemev <roman.artemev@syntacore.com>
 
-Changelog: in previous v1, I got a wrong cut-off accident in commit
-message, which is now fixed (along with some small touchup elsewhere).
-When at it, I also tried to make it look even better to be as close as gdb
-bt, so it looks like this now:
+On RISC-V to StoreStore barrier corresponds
+`fence w, w` not `fence r, r`
 
-  Coroutine at 0x7f9f4c57c748:
-  #0  0x55ae6c0dc9a8 in qemu_coroutine_switch<+120> () at ../util/coroutine-ucontext.c:321
-  #1  0x55ae6c0da2f8 in qemu_aio_coroutine_enter<+356> () at ../util/qemu-coroutine.c:293
-  #2  0x55ae6c0da3f1 in qemu_coroutine_enter<+34> () at ../util/qemu-coroutine.c:316
-  #3  0x55ae6baf775e in migration_incoming_process<+43> () at ../migration/migration.c:876
-  #4  0x55ae6baf7ab4 in migration_ioc_process_incoming<+490> () at ../migration/migration.c:1008
-  #5  0x55ae6bae9ae7 in migration_channel_process_incoming<+145> () at ../migration/channel.c:45
-  #6  0x55ae6bb18e35 in socket_accept_incoming_migration<+118> () at ../migration/socket.c:132
-  #7  0x55ae6be939ef in qio_net_listener_channel_func<+131> () at ../io/net-listener.c:54
-  #8  0x55ae6be8ce1a in qio_channel_fd_source_dispatch<+78> () at ../io/channel-watch.c:84
-  #9  0x7f9f5b26728c in g_main_context_dispatch_unlocked.lto_priv<+315> ()
-  #10  0x7f9f5b267555 in g_main_context_dispatch<+36> ()
-  #11  0x55ae6c0d91a7 in glib_pollfds_poll<+90> () at ../util/main-loop.c:287
-  #12  0x55ae6c0d9235 in os_host_main_loop_wait<+128> () at ../util/main-loop.c:310
-  #13  0x55ae6c0d9364 in main_loop_wait<+203> () at ../util/main-loop.c:589
-  #14  0x55ae6bac212a in qemu_main_loop<+41> () at ../system/runstate.c:835
-  #15  0x55ae6bfdf522 in qemu_default_main<+19> () at ../system/main.c:37
-  #16  0x55ae6bfdf55f in main<+40> () at ../system/main.c:48
-  #17  0x7f9f59d42248 in __libc_start_call_main<+119> ()
-  #18  0x7f9f59d4230b in __libc_start_main_impl<+138> ()
+Cc: qemu-stable@nongnu.org
+Fixes: efbea94c76b ("tcg/riscv: Add slowpath load and store instructions")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Denis Tomashev <denis.tomashev@syntacore.com>
+Signed-off-by: Roman Artemev <roman.artemev@syntacore.com>
+Message-ID: <e2f2131e294a49e79959d4fa9ec02cf4@syntacore.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/riscv/tcg-target.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Coroutines are used in many cases in block layers. It's also used in live
-migration when on destination side, and it'll be handy to diagnose crashes
-within a coroutine when we want to also know what other coroutines are
-doing.
-
-This series adds initial support for that, not pretty but it should start
-working.  Since we can't use the trick to modify registers on the fly in
-non-live gdb sessions, we do manual unwinds.
-
-One thing to mention is there's a similar but more generic solution
-mentioned on the list from Niall:
-
-https://lore.kernel.org/r/f0ebccca-7a17-4da8-ac4a-71cf6d69abc3@mtasv.net
-
-That adds more dependency on both gdb and qemu in the future, however more
-generic.  So this series is an intermediate quick solution as for now,
-which should work for most older qemu/gdb binaries too.
-
-Thanks,
-
-Peter Xu (3):
-  scripts/qemu-gdb: Always do full stack dump for python errors
-  scripts/qemu-gdb: Simplify fs_base fetching for coroutines
-  scripts/qemu-gdb: Support coroutine dumps in coredumps
-
- scripts/qemu-gdb.py          |   2 +
- scripts/qemugdb/coroutine.py | 102 +++++++++++++++++++++++++----------
- 2 files changed, 77 insertions(+), 27 deletions(-)
-
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index f8331e4688..96f9a7e348 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -1624,7 +1624,7 @@ static void tcg_out_mb(TCGContext *s, TCGArg a0)
+         insn |= 0x02100000;
+     }
+     if (a0 & TCG_MO_ST_ST) {
+-        insn |= 0x02200000;
++        insn |= 0x01100000;
+     }
+     tcg_out32(s, insn);
+ }
 -- 
-2.47.0
+2.43.0
 
 
