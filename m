@@ -4,142 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C38CE7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 07:02:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B98BE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 07:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLdCq-0003as-4c; Thu, 12 Dec 2024 02:01:52 -0500
+	id 1tLdKo-000634-Md; Thu, 12 Dec 2024 02:10:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLdCo-0003ac-QZ
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:01:50 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLdKk-00060m-7Y
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:10:02 -0500
+Received: from mgamail.intel.com ([192.198.163.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tLdCn-0001tJ-4j
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:01:50 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1733986906;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=DYV5TBJc9jjhyTF1kiq4Mw7nNKg830Ojb0ODZF587AI=;
- b=S1DngT9JarhZk8AyCxrfuyUufbM1xtY0y4NxT4DShq8gvy+WfZiPHClbsAhvl+RTwEbh2J
- dOcNt8XrKFlAsok3M/dgJdms3i2+WNy2v87Nzg0wIGnNOIFpvXVjEgcNBzcwJPBEoFdg2+
- 7JSvSgRVTQGrTDjN0mgQIHJkdgDIEyA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-4zGV6AovP8WRqANEJ0lmiw-1; Thu, 12 Dec 2024 02:01:44 -0500
-X-MC-Unique: 4zGV6AovP8WRqANEJ0lmiw-1
-X-Mimecast-MFC-AGG-ID: 4zGV6AovP8WRqANEJ0lmiw
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385dcae001fso106414f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Dec 2024 23:01:44 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1733986903; x=1734591703;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DYV5TBJc9jjhyTF1kiq4Mw7nNKg830Ojb0ODZF587AI=;
- b=l6ArhXAaZhUfGSqkO/ktSrHnrzdJ1F3Pkc+jPYp8nEcBwSGFTqAMphKwUrnkMFnKB5
- /Rcxbx8Tx+l6jHbX64gFVQPaXXqyatHYO4NdJxXQK6HLJDtyx7Jc93g7IGIDy3G73Wjr
- 3uniHqA68WIHrbWPz39MgysxK/ESUoGiF22eXbn9zWvhLym+aBEGXr8kfyXPXyf5iA2d
- I7aKgjSYGvrfXj6FxKqom7dZeQiHkgi/RrEUsxWiZMwUS9hOQ5/1mEK+/+8qVL0ZdrGM
- MpG9IDU7Je2QFQyAewbmQXbrc+6S988ZlFCUHzTNdLhFLiHN7WtDoNYJlffz2rgtjj3a
- mmpQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHaA33RsOiMi5C9vYFpFPPUnqzk0SRjexA0VDSOyYgAoZ2xprPPtzu2igTDDnrGafun4Iij4DTVM9e@nongnu.org
-X-Gm-Message-State: AOJu0YyQfFfzIfENeWFkDI1gCkjn1nvutaaNJvZEDJCGFjfA3iX9qBgp
- m+BCT5ahqiHhXb/fA704kKpuSaxwXTR5yLsZW6GGHGMT3MXTPS5KS/CA5NKC0U0ALF9S4MBBXiX
- ew1GDi9mG+vBg0zjDKVFJDxSpuEUWSr9z9w+F4To48EWf36YITXgV
-X-Gm-Gg: ASbGncvpCRnjnw6AfQXBnrYWRiZ08mZFekiKeRP7pb5lyicB6q/FW67dGpnCBgHYVxx
- D9SuUZZxayJfm1DLIMqxffPRY5mwhTeWyfa2oKwJc8+XRKBx7pDgAoG1P1L+bChwKabLKuv4ykZ
- FXHRlIewvClt2Q1Qg1YCS3LkVonln7ubHFDks76QF9NzScFW3QnrxOFE24rXNaETlEivCBdqh2z
- SrVtJ2QR+8Zv+dESYbhutPuPe5s2LDIXtrGyyJcA4prBAPuFaSAcr3C0n7o10IOPZxmHpGEEopk
- NYp/NQ8ieA==
-X-Received: by 2002:a5d:5886:0:b0:385:fc00:f5f3 with SMTP id
- ffacd0b85a97d-3864ce894f7mr4152915f8f.4.1733986903533; 
- Wed, 11 Dec 2024 23:01:43 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGUZl3lkJ9OxVisBTfNSe1x/WukhiPSb5AWOVQOxjP4Arrjw+dJIJxr+v+YMrNKiQg/qZkFEw==
-X-Received: by 2002:a5d:5886:0:b0:385:fc00:f5f3 with SMTP id
- ffacd0b85a97d-3864ce894f7mr4152871f8f.4.1733986902866; 
- Wed, 11 Dec 2024 23:01:42 -0800 (PST)
-Received: from [192.168.0.6] (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878248e54dsm3133436f8f.19.2024.12.11.23.01.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Dec 2024 23:01:42 -0800 (PST)
-Message-ID: <cf1bb93e-4807-45c5-ac2c-15a571fe69f6@redhat.com>
-Date: Thu, 12 Dec 2024 08:01:40 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLdKh-0004kV-BY
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 02:10:01 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1733987400; x=1765523400;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=MSvkjbenIER/EkrASVrmQJf/AlKIKuUcYGtMbSesBcA=;
+ b=JF3Y7Aq2KAIBrZrcDrMq6Ax61pxSm54A/GFJAXqEzWUfyM3FbPZd1KqA
+ kiMnEgBWhS4vy37EIiEI7yCDskW1YnVPPapyUIvJBmI3teT10VJRpTieS
+ qcOQo0WuZ3iiErJKmiIuCGY6UExt1DhtTSk6asPqyrdUv6WarcrEvw5sP
+ 1T/udi1GIvNp0XiVOjdQ91DcbFivu7m1Yaft/nonvHi8Eew+9ZMQ3kF0i
+ 9dDLsGGX3FBIYhMkaL2owYWhRrpftenIXSez54yLPFyxAttHgHzfK6E2E
+ z7uiVF9EHFa8XvCFRjHm8I5LoVFaeFPWIH3vGSxPl/S8xSEVtX6OWMOos A==;
+X-CSE-ConnectionGUID: yv9eXqhiR1uIcPRL1Ysyfg==
+X-CSE-MsgGUID: rweVb0LxTh61+JzCKZw3aQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11282"; a="38325079"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="38325079"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 23:09:56 -0800
+X-CSE-ConnectionGUID: 4WFV7J6ERJeAks8Dy3h8oA==
+X-CSE-MsgGUID: 7z1TwoDFRomdzhkX6c91nA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,227,1728975600"; d="scan'208";a="96028385"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Dec 2024 23:09:52 -0800
+Message-ID: <0d480d7e-3c8f-43b9-a123-11b23062669d@intel.com>
+Date: Thu, 12 Dec 2024 15:09:46 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/31] tests/functional: introduce some helpful
- decorators
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+Subject: Re: [PATCH] i386/kvm: Set return value after handling
+ KVM_EXIT_HYPERCALL
+To: Binbin Wu <binbin.wu@linux.intel.com>, pbonzini@redhat.com,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-7-berrange@redhat.com>
+Cc: seanjc@google.com, michael.roth@amd.com, rick.p.edgecombe@intel.com,
+ isaku.yamahata@intel.com, farrah.chen@intel.com, kvm@vger.kernel.org
+References: <20241212032628.475976-1-binbin.wu@linux.intel.com>
+ <2144c2c0-4a5d-4efd-b5e2-f2b4096c08b5@intel.com>
+ <72e1da62-5fd2-4633-b304-24be3dac1e7f@linux.intel.com>
 Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241211172648.2893097-7-berrange@redhat.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <72e1da62-5fd2-4633-b304-24be3dac1e7f@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
+Received-SPF: pass client-ip=192.198.163.12; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.472,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=1, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -157,42 +90,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> Reduce repeated boilerplate with some helper decorators:
+On 12/12/2024 1:18 PM, Binbin Wu wrote:
 > 
->   @skipIfNotPlatform("x86_64", "aarch64")
 > 
->    => Skip unless the build host platform matches
 > 
->   @skipIfMissingCommands("mkisofs", "losetup")
+> On 12/12/2024 11:44 AM, Xiaoyao Li wrote:
+>> On 12/12/2024 11:26 AM, Binbin Wu wrote:
+>>> Userspace should set the ret field of hypercall after handling
+>>> KVM_EXIT_HYPERCALL.  Otherwise, a stale value could be returned to KVM.
+>>>
+>>> Fixes: 47e76d03b15 ("i386/kvm: Add KVM_EXIT_HYPERCALL handling for 
+>>> KVM_HC_MAP_GPA_RANGE")
+>>> Reported-by: Farrah Chen <farrah.chen@intel.com>
+>>> Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
+>>> Tested-by: Farrah Chen <farrah.chen@intel.com>
+>>> ---
+>>> To test the TDX code in kvm-coco-queue, please apply the patch to the 
+>>> QEMU,
+>>> otherwise, TDX guest boot could fail.
+>>> A matching QEMU tree including this patch is here:
+>>> https://github.com/intel-staging/qemu-tdx/releases/tag/tdx-qemu- 
+>>> upstream-v6.1-fix_kvm_hypercall_return_value
+>>>
+>>> Previously, the issue was not triggered because no one would modify 
+>>> the ret
+>>> value. But with the refactor patch for __kvm_emulate_hypercall() in KVM,
+>>> https://lore.kernel.org/kvm/20241128004344.4072099-7- 
+>>> seanjc@google.com/, the
+>>> value could be modified.
+>>> ---
+>>>   target/i386/kvm/kvm.c | 8 ++++++--
+>>>   1 file changed, 6 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+>>> index 8e17942c3b..4bcccb48d1 100644
+>>> --- a/target/i386/kvm/kvm.c
+>>> +++ b/target/i386/kvm/kvm.c
+>>> @@ -6005,10 +6005,14 @@ static int kvm_handle_hc_map_gpa_range(struct 
+>>> kvm_run *run)
+>>>     static int kvm_handle_hypercall(struct kvm_run *run)
+>>>   {
+>>> +    int ret = -EINVAL;
+>>> +
+>>>       if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
+>>> -        return kvm_handle_hc_map_gpa_range(run);
+>>> +        ret = kvm_handle_hc_map_gpa_range(run);
+>>> +
+>>> +    run->hypercall.ret = ret;
+>>
+>> Updating run->hypercall.ret is useful only when QEMU needs to re-enter 
+>> the guest. For the case of ret < 0, QEMU will stop the vcpu.
 > 
->    => Skips unless all listed commands are found in $PATH
+> IMHO, assign run->hypercall.ret anyway should be OK, no need to add a
+> per-condition on ret, although the value is not used when ret < 0.
 > 
->   @skipIfMissingImports("numpy", "cv2")
-> 
->    => Skips unless all listed modules can be imported
-> 
->   @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/NNN")
-> 
->    => Skips unless env var requests flaky tests with the
->       reason documented in the referenced gitlab bug
-> 
->   @skipBigData
-> 
->    => Skips unless env var permits tests creating big data files
-> 
->   @skipUntrustedTest
-> 
->    => Skips unless env var permits tests which are potentially
->       dangerous to the host
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/__init__.py   |   3 +
->   tests/functional/qemu_test/decorators.py | 107 +++++++++++++++++++++++
->   2 files changed, 110 insertions(+)
->   create mode 100644 tests/functional/qemu_test/decorators.py
+> Currently, since QEMU will stop the vcpu when ret < 0, this patch doesn't
+> convert ret to -Exxx that the ABI expects.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+I was thinking if it is better to let each specific handling function to 
+   update run->hypercall.ret with its own logic. E.g., for this case, 
+let kvm_handle_hc_map_gpa_range() to update the run->hypercall.ret.
+
+Reusing the return value of the handling function to update
+run->hypercall.ret seems not logically correct to me.
+
+>>
+>> I think we might need re-think on the handling of KVM_EXIT_HYPERCALL. 
+>> E.g., in what error case should QEMU stop the vcpu, and in what case 
+>> can QEMU return the error back to the guest via run->hypercall.ret.
+> 
+> Actually, I had the similar question before.
+> https://lore.kernel.org/kvm/ 
+> d25cc62c-0f56-4be2-968a-63c8b1d63b5a@linux.intel.com/
+> 
+> It might depends on the hypercall number?
+> Another option is QEMU always sets run->hypercall.ret appropriately and 
+> continues the vcpu thread.
+> 
+> 
+>>
+>>> -    return -EINVAL;
+>>> +    return ret;
+>>>   }
+>>>     #define VMX_INVALID_GUEST_STATE 0x80000021
+>>>
+>>> base-commit: ae35f033b874c627d81d51070187fbf55f0bf1a7
+>>
+> 
 
 
