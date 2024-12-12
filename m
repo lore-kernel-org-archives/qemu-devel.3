@@ -4,100 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E8CE77180
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:49:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 835EFE7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 22:53:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLryt-0008Gl-Pn; Thu, 12 Dec 2024 17:48:29 -0500
+	id 1tLs33-0000dQ-I2; Thu, 12 Dec 2024 17:52:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLryk-0008GX-K4
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:48:18 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tLs31-0000dB-D8
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:52:43 -0500
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tLrye-0006MB-G2
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:48:18 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734043689;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wxOZgaVnl4I2S+kFZKA4IVc9Y76giRDHboJhTWKs8k0=;
- b=jTdr6dVJJFFV+5/a1rTy1arUzxTprwdAKIaJ9i0d1xr052oWbM4xTLTYIRLi/pSU3qvwSB
- 79hXM4Vp4GThsaiVFJt9Op4WyfeICK7DC32lQwDK7xLf0GjaFBIy6QQZk4bQOpOzWdinol
- GDUMRi6JwcyI9dk5M/nKSZfxPRzvV0Y=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-302-JMcqVEOiNbiRUBmbCm31Bw-1; Thu, 12 Dec 2024 17:48:07 -0500
-X-MC-Unique: JMcqVEOiNbiRUBmbCm31Bw-1
-X-Mimecast-MFC-AGG-ID: JMcqVEOiNbiRUBmbCm31Bw
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-844e9b88efeso7149939f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 14:48:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734043687; x=1734648487;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wxOZgaVnl4I2S+kFZKA4IVc9Y76giRDHboJhTWKs8k0=;
- b=mtZDnQoCw8WY8eM9ie5HomyjAdNqOeF2oRV3wPrOIV/EAusBPZh7dIAig6hkKfTCjO
- hXZua/bmd3W9dHz3Fo/aBflzflMMJpjWcuso2E3aIStEnnZZD0rGFUhrzuqTld9yDJDJ
- EZXdr3H1g8VekyDMmWmj6qVltXrRj/UahmrxUFmC1uKYW6DbVkkCeU8j92nLUV9y04QC
- q5V70un0w2yauUhAq+atL2EixotupUR71Pcwqkay0La/tPzAfQy5cLVgiRUqVhrIe05j
- nlHw8XDfVvD6Vd4JDltLDxb4QeGJJxE4PqFkIeffL7oCvAmIua1Wm0ZsLtwgG7fz8Ymy
- ET3w==
-X-Gm-Message-State: AOJu0YwhTKt2eA628UTd1RU2ckU/6pl41I2Me+H0VMbdLPeMffXwWvQG
- /WBID/grvgJ7+IW+94j+5JZDiho9GPZMbGm1esR7441dgdBC9NtLLXpqN3ZyQDMT6e0UeijWEVG
- dbHqiMFHn2pKSq7ErMV5QY9hOKFgffs0+qyaaUQA3mM/Ek46NLwFs
-X-Gm-Gg: ASbGncvVq/7E0Inr9OFsa97+KOACNJb2/BNW4Jxi24oWPDH3bKRlG1E29NJkH/XJWmJ
- t8vUIKyB5XvqbJzXhLiYGlPFfhLYTWV+g3uUdLZ/pMS8kppcOs5Qlbt6xzfgiFX8JFkXKsEColM
- TqNjTc+LoVXaZid7Z0XSqOS6lbrYPNKESCs/f2khV1SWq2bgdtyn5fHopMMUpXCBzY5C/Gat40l
- J25XdWKTjAAoS1X43PvihJGq4W5qX4VugMUoC1oMqPMQNicKqIAffX+V7D2c10L82C5Y3q+JUF2
- X2NjQG710L6lErbeyg==
-X-Received: by 2002:a05:6602:2dc8:b0:834:f2d5:c758 with SMTP id
- ca18e2360f4ac-844e88b1ab9mr53097939f.13.1734043687016; 
- Thu, 12 Dec 2024 14:48:07 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE/6hrnEsW85klXCYsIIwJQSRqpriU7bNmwmtnxcICDwjzCSiqYPvFvR+pshrf4y872uWURxQ==
-X-Received: by 2002:a05:6602:2dc8:b0:834:f2d5:c758 with SMTP id
- ca18e2360f4ac-844e88b1ab9mr53095739f.13.1734043686623; 
- Thu, 12 Dec 2024 14:48:06 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-844737bc76dsm444189539f.5.2024.12.12.14.48.05
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Dec 2024 14:48:05 -0800 (PST)
-Date: Thu, 12 Dec 2024 17:48:03 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 06/19] physmem: preserve ram blocks for cpr
-Message-ID: <Z1toIxDzI56ODYcC@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
- <Z1dOBioqzQmEwW16@x1n>
- <bbb7b4a9-6078-4cb1-89c9-ec2d57b996f0@oracle.com>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tLs2y-0006xz-Ko
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 17:52:43 -0500
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1tLs2q-00000003gVD-1HxW; Thu, 12 Dec 2024 23:52:32 +0100
+Message-ID: <4c8c3309-b2a1-465a-9108-52eae22d67aa@maciej.szmigiero.name>
+Date: Thu, 12 Dec 2024 23:52:27 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <bbb7b4a9-6078-4cb1-89c9-ec2d57b996f0@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 24/24] vfio/migration: Multifd device state transfer
+ support - send side
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Avihai Horon <avihaih@nvidia.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <4f5c33b97be09fcb4e1885073e31c5e930a39ad0.1731773021.git.maciej.szmigiero@oracle.com>
+ <51279885-5229-4c5f-93af-d1214dd65f90@nvidia.com>
+ <06360868-95e3-46e2-8960-51348025a1b7@maciej.szmigiero.name>
+ <80c9dfc4-4105-4e48-bcae-4fa9780a43c8@redhat.com>
+Content-Language: en-US, pl-PL
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ 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
+In-Reply-To: <80c9dfc4-4105-4e48-bcae-4fa9780a43c8@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -16
 X-Spam_score: -1.7
 X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,130 +112,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 03:38:14PM -0500, Steven Sistare wrote:
-> On 12/9/2024 3:07 PM, Peter Xu wrote:
-> > On Mon, Dec 02, 2024 at 05:19:58AM -0800, Steve Sistare wrote:
-> > > Save the memfd for ramblocks in CPR state, along with a name that
-> > > uniquely identifies it.  The block's idstr is not yet set, so it
-> > > cannot be used for this purpose.  Find the saved memfd in new QEMU when
-> > > creating a block.  If the block size is larger in new QEMU, extend the
-> > > block using fallocate, and the extra space will be useable after a guest
-> > > reset.
-> > > 
-> > > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-> > > ---
-> > >   system/physmem.c | 36 ++++++++++++++++++++++++++++++++++--
-> > >   1 file changed, 34 insertions(+), 2 deletions(-)
-> > > 
-> > > diff --git a/system/physmem.c b/system/physmem.c
-> > > index 0bcb2cc..aa095a3 100644
-> > > --- a/system/physmem.c
-> > > +++ b/system/physmem.c
-> > > @@ -70,6 +70,7 @@
-> > >   #include "qemu/pmem.h"
-> > > +#include "migration/cpr.h"
-> > >   #include "migration/vmstate.h"
-> > >   #include "qemu/range.h"
-> > > @@ -1661,6 +1662,19 @@ void qemu_ram_unset_idstr(RAMBlock *block)
-> > >       }
-> > >   }
-> > > +static char *cpr_name(RAMBlock *block)
-> > > +{
-> > > +    MemoryRegion *mr = block->mr;
-> > > +    const char *mr_name = memory_region_name(mr);
-> > > +    g_autofree char *id = mr->dev ? qdev_get_dev_path(mr->dev) : NULL;
-> > > +
-> > > +    if (id) {
-> > > +        return g_strdup_printf("%s/%s", id, mr_name);
-> > > +    } else {
-> > > +        return g_strdup(mr_name);
-> > > +    }
-> > > +}
-> > > +
-> > >   size_t qemu_ram_pagesize(RAMBlock *rb)
-> > >   {
-> > >       return rb->page_size;
-> > > @@ -2080,8 +2094,18 @@ static bool qemu_ram_alloc_shared(RAMBlock *new_block, Error **errp)
-> > >   {
-> > >       size_t max_length = new_block->max_length;
-> > >       MemoryRegion *mr = new_block->mr;
-> > > -    const char *name = memory_region_name(mr);
-> > > -    int fd;
-> > > +    g_autofree char *name = cpr_name(new_block);
-> > > +    int fd = cpr_find_fd(name, 0);
-> > 
-> > If to use the proposed patch in the reply of patch 2, here this should be
-> > able to be moved to qemu_ram_alloc_anonymous_fd(), IIUC.
-> > 
-> > > +
-> > > +    if (fd >= 0) {
-> > > +        if (lseek(fd, 0, SEEK_END) < max_length && ftruncate(fd, max_length)) {
-> > > +            error_setg_errno(errp, errno,
-> > > +                             "cannot grow ram block %s fd %d to %ld bytes",
-> > > +                             name, fd, max_length);
-> > > +            goto err;
-> > > +        }
-> > 
-> > I remember we discussed something similar to this, do we need ftruncate()
-> > at all?  I think not.
-> > 
-> > This happens when booting QEMU, so I don't think it's relevant yet to what
-> > size used in src, as this is dest.
-> > 
-> > It starts to get relevant only when cpr migration starts on src, it sents
-> > ramblocks at the beginning, then parse_ramblock() will properly resize any
-> > ramblock to whatever size it should use.
-> > 
-> > If the resize didn't happen it can only mean that used_length is correctly
-> > matched on both sides.
-> > 
-> > So I don't see why a special truncate() call is needed yet..
+On 12.12.2024 12:10, Cédric Le Goater wrote:
+> On 12/11/24 00:06, Maciej S. Szmigiero wrote:
+>> On 9.12.2024 10:28, Avihai Horon wrote:
+>>>
+>>> On 17/11/2024 21:20, Maciej S. Szmigiero wrote:
+>>>> External email: Use caution opening links or attachments
+>>>>
+>>>>
+>>>> From: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
+>>>>
+>>>> Implement the multifd device state transfer via additional per-device
+>>>> thread inside save_live_complete_precopy_thread handler.
+>>>>
+>>>> Switch between doing the data transfer in the new handler and doing it
+>>>> in the old save_state handler depending on the
+>>>> x-migration-multifd-transfer device property value.
+>>>>
+>>>> Signed-off-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
+>>>> ---
+>>>>   hw/vfio/migration.c  | 155 +++++++++++++++++++++++++++++++++++++++++++
+>>>>   hw/vfio/trace-events |   2 +
+>>>>   2 files changed, 157 insertions(+)
+>>>>
+>>>> diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+>>>> index b54879fe6209..8709672ada48 100644
+>>>> --- a/hw/vfio/migration.c
+>>>> +++ b/hw/vfio/migration.c
+(...)
+>>>> +
+>>>>       trace_vfio_save_complete_precopy_start(vbasedev->name);
+>>>>
+>>>>       /* We reach here with device state STOP or STOP_COPY only */
+>>>> @@ -974,12 +1011,129 @@ static int vfio_save_complete_precopy(QEMUFile *f, void *opaque)
+>>>>       return ret;
+>>>>   }
+>>>>
+>>>> +static int
+>>>> +vfio_save_complete_precopy_async_thread_config_state(VFIODevice *vbasedev,
+>>>> +                                                     char *idstr,
+>>>> +                                                     uint32_t instance_id,
+>>>> +                                                     uint32_t idx)
+>>>> +{
+>>>> +    g_autoptr(QIOChannelBuffer) bioc = NULL;
+>>>> +    g_autoptr(QEMUFile) f = NULL;
+>>>> +    int ret;
+>>>> +    g_autofree VFIODeviceStatePacket *packet = NULL;
+>>>> +    size_t packet_len;
+>>>> +
+>>>> +    bioc = qio_channel_buffer_new(0);
+>>>> +    qio_channel_set_name(QIO_CHANNEL(bioc), "vfio-device-config-save");
+>>>> +
+>>>> +    f = qemu_file_new_output(QIO_CHANNEL(bioc));
+>>>> +
+>>>> +    ret = vfio_save_device_config_state(f, vbasedev, NULL);
+>>>> +    if (ret) {
+>>>> +        return ret;
+>>>> +    }
+>>>> +
+>>>> +    ret = qemu_fflush(f);
+>>>> +    if (ret) {
+>>>> +        return ret;
+>>>> +    }
+>>>> +
+>>>> +    packet_len = sizeof(*packet) + bioc->usage;
+>>>> +    packet = g_malloc0(packet_len);
+>>>> +    packet->idx = idx;
+>>>> +    packet->flags = VFIO_DEVICE_STATE_CONFIG_STATE;
+>>>> +    memcpy(&packet->data, bioc->data, bioc->usage);
+>>>> +
+>>>> +    if (!multifd_queue_device_state(idstr, instance_id,
+>>>> +                                    (char *)packet, packet_len)) {
+>>>> +        return -1;
+>>>> +    }
+>>>> +
+>>>> +    qatomic_add(&bytes_transferred, packet_len);
+>>>> +
+>>>> +    return 0;
+>>>> +}
+>>>> +
+>>>> +static int vfio_save_complete_precopy_thread(char *idstr,
+>>>> +                                             uint32_t instance_id,
+>>>> +                                             bool *abort_flag,
+>>>> +                                             void *opaque)
+>>>> +{
+>>>> +    VFIODevice *vbasedev = opaque;
+>>>> +    VFIOMigration *migration = vbasedev->migration;
+>>>> +    int ret;
+>>>> +    g_autofree VFIODeviceStatePacket *packet = NULL;
+>>>> +    uint32_t idx;
+>>>> +
+>>>> +    if (!migration->multifd_transfer) {
+>>>> +        /* Nothing to do, vfio_save_complete_precopy() does the transfer. */
+>>>> +        return 0;
+>>>> +    }
+>>>> +
+>>>> +    trace_vfio_save_complete_precopy_thread_start(vbasedev->name,
+>>>> +                                                  idstr, instance_id);
+>>>> +
+>>>> +    /* We reach here with device state STOP or STOP_COPY only */
+>>>> +    ret = vfio_migration_set_state(vbasedev, VFIO_DEVICE_STATE_STOP_COPY,
+>>>> +                                   VFIO_DEVICE_STATE_STOP, NULL);
+>>>> +    if (ret) {
+>>>> +        goto ret_finish;
+>>>> +    }
+>>>> +
+>>>> +    packet = g_malloc0(sizeof(*packet) + migration->data_buffer_size);
+>>>> +
+>>>> +    for (idx = 0; ; idx++) {
+>>>> +        ssize_t data_size;
+>>>> +        size_t packet_size;
+>>>> +
+>>>> +        if (qatomic_read(abort_flag)) {
+>>>> +            ret = -ECANCELED;
+>>>> +            goto ret_finish;
+>>>> +        }
+>>>> +
+>>>> +        data_size = read(migration->data_fd, &packet->data,
+>>>> +                         migration->data_buffer_size);
+>>>> +        if (data_size < 0) {
+>>>> +            ret = -errno;
+>>>> +            goto ret_finish;
+>>>> +        } else if (data_size == 0) {
+>>>> +            break;
+>>>> +        }
+>>>> +
+>>>> +        packet->idx = idx;
+>>>> +        packet_size = sizeof(*packet) + data_size;
+>>>> +
+>>>> +        if (!multifd_queue_device_state(idstr, instance_id,
+>>>> +                                        (char *)packet, packet_size)) {
+>>>> +            ret = -1;
+>>>> +            goto ret_finish;
+>>>> +        }
+>>>> +
+>>>> +        qatomic_add(&bytes_transferred, packet_size);
+>>>> +    }
+>>>> +
+>>>> +    ret = vfio_save_complete_precopy_async_thread_config_state(vbasedev, idstr,
+>>>> +                                                               instance_id,
+>>>> +                                                               idx);
+>>>
+>>> I am not sure it's safe to save the config space asyncly in the thread, as it might be dependent on other device's non-iterable state being loaded first.
+>>> See commit d329f5032e17 ("vfio: Move the saving of the config space to the right place in VFIO migration") which moved config space saving to the non-iterable state saving.
+>>
+>> That's an important information - thanks for pointing this out.
+>>
+>> Since we don't want to lose this config state saving parallelism
+>> (and the future config state saving parallelism) on unaffected platform
+>> we'll probably need to disable this functionality for ARM64.
+>>
+>> By the way, this kind of an implicit dependency in VMState between devices
+>> is really hard to manage, there should be a way to specify it in code somehow..
 > 
-> You suggested truncate:
+> vmstate has a MigrationPriority field to order loading between
+> devices. Maybe we could extend but I think it is better to handle
+> ordering at the device level when there are no external dependencies.
+> It should be well documented though in the code.
 > 
->   https://lore.kernel.org/qemu-devel/47d6d984-7002-4086-bb10-b191168f141f@oracle.com/
+
+To be clear, by "handling ordering at the device level" you mean
+just disabling this functionality for ARM64 as proposed above?
+
 > 
->   "So after such system reset, QEMU might start to see new ROM code loaded
->   here (not the one that got migrated anymore, which will only match the
->   version installed on src QEMU).  Here the problem is the new firmware can
->   be larger, so I _think_ we need to make sure max_length is not modified by
->   CPR to allow resizing happen here, while if we use truncate=true here it
->   should just work in all cases."
+> Thanks,
 > 
-> ... but you suggested passing a truncate bool to the file_ram_alloc call after
-> cpr_find_fd.  I could do that instead.  However, if qemu_ram_alloc_shared uses
-> qemu_ram_alloc_from_fd instead of file_ram_alloc, per your suggestion in patch 2,
-> then I will still call ftruncate here, because qemu_ram_alloc_from_fd  does not
-> take a truncate argument.
+> C.
+> 
+> 
+>>
+>>> Thanks.
 
-My memory was when reuse qemu_ram_alloc_from_fd() in that suggestion of
-patch 2, it will only create zero-length fd (with fsize=0) and leave all
-the rest to qemu_ram_alloc_from_fd(), then with that:
 
-qemu_ram_alloc_from_fd:
-    new_block->host = file_ram_alloc(new_block, size, fd, !file_size, offset,
-                                     errp);
+Thanks,
+Maciej
 
-So that'll always have truncate==!file_size==1. Then truncate will be done
-at file_ram_alloc() later, iiuc.
-
-    if (truncate && ftruncate(fd, offset + memory)) {
-        perror("ftruncate");
-    }
-
-Would this work?
-
-Meanwhile, this whole ram resize discussion reminded me that to reuse
-qemu_ram_alloc_from_fd(), we may also want to make sure to pass ->resized()
-hook from qemu_ram_alloc_internal() to the fd helper too..  IOW, we may
-want to keep qemu_ram_resize() invoke those hooks, even after switching to
-fd-based for aux mems.
-
-Maybe the size / max_size also need to be passed over?  As for fd ramblock
-it used to be always the same on used_length/max_length, but not anymore
-when we switch aux mem to fd based.  Please feel free to double check..
-
--- 
-Peter Xu
 
 
