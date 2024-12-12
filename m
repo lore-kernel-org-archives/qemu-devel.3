@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7B8E7717F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:08:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21E83E7717F
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 20:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLpSt-0000Dy-G6; Thu, 12 Dec 2024 15:07:15 -0500
+	id 1tLpaD-0001WS-Ee; Thu, 12 Dec 2024 15:14:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLpSr-0000Cq-GD
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:07:13 -0500
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpa5-0001W0-HA
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:14:41 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tLpSl-0008IU-Q9
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:07:13 -0500
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3eb8bdcac2eso217834b6e.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:07:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLpa2-0000XH-Pv
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 15:14:41 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-436202dd7f6so10958765e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 12:14:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734034025; x=1734638825; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734034476; x=1734639276; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=fuOKh4g40L+GRDW0EGeNdYn72z0r0KEBf1le9/Tf3HE=;
- b=q4djimD8j8mzNR08RQjhVdB9G7XM3C1Eutx8JmMUVgf34RmH7LCW8SEYv6s2q7W0AW
- btILdVxHnq2vvIkWzUjp+y+2pmBL0zsM6MGLlQ+2p0Wi4MUlLSQc2/Ssv9aCetj1CiF5
- Zwj1LHepBbHdINGU9YRQXOgniu8iz8JFFRUetzaHlqeBbFh2qdO2oZjXuiFz+DWNuPHN
- NUpTDtucTPmqsxYoWstFeyC45aMbwZKjZmmzhlTlfnCA5wKcv9oWujw/PEhCRgVWBP7x
- undM8JIjXDWHABltDHyKik5SH1XiIVxdyAD0/lJlZseLi7posOWyvFXyckrVioR4EF1I
- x+bQ==
+ bh=AcMdh8cqoXMcKf5bh19K8M/QQOI3MjTsc7kIr//a3cY=;
+ b=pYjk4zvAP7P8HuEUSlA1KKCSyka7iJmduWVGqUcuyMk7BFik2wZI+iSlrp9fFnafBo
+ PWoubw71iqymRlWLzRqWVgwnjoOabyS2t5/5HZTbPyZD4jXioTu0kkbVY/a2hQCTLIDt
+ 5lblSOHs72g/oCyi+hIx7P3pZhzOCvOi6+vDt3mmJuFpqfNlDLW1S1dYp8uLRBbfxkdd
+ TvjcEMrsefhfdv/EDbsHxkPqTNwuCjvHWNco95etkFL+Ts3CoapFaTzhsP+VowlOu7lY
+ kxZeAB6vYFHvrWDeLmL2Oz+5LsrxKRH0symIuV868Ev2bf7tKrusUVHiegnPApk7vzFk
+ zMKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734034025; x=1734638825;
+ d=1e100.net; s=20230601; t=1734034476; x=1734639276;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fuOKh4g40L+GRDW0EGeNdYn72z0r0KEBf1le9/Tf3HE=;
- b=Z8cCvgjdJY17njT2w11+Xrc1NSocz4K9lKTbFmTJBkr8EAzRjJsz4QNicc/3AEqI5Q
- FvHWn48mFYm3LXW0qsb5YG2kLzmWkcE2LTH3otQdj5WNuoWOVXkzZiGeOyWMhluzbmXS
- EnG+pd0PttirGA+AX13yhPxmJ6PAz/CWmczPt+sInJgZbJhrEvbV6cuXi70LBFO0d1bk
- /p8mnWCUsQdTXSt+iq6csctv1S5mrS9htBVX7Z4sMvbynjwcGtlna1IM2qL8UbalwEmp
- ZJ++X+O1uWC8VgQuH6BUtl4Y6kLZPKmQbiAvSH3vAs53yHAv59P0Yx9SQnPPDP7487dn
- 3GYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWp+pk/q92dQuHvpUbGbpvizdtk+tSspWPLoVr2feCJzFoJAWkBRPPp7jA7SKIrEanjYMJDDyZFhsEp@nongnu.org
-X-Gm-Message-State: AOJu0YyLCX9t/ZAL1mDyB9YZ+e1J2NsGO0nhALKM+5gg+sVdX9GHg8to
- aK4KXrl/my7E1AlApY2nNrdWK5fbaCHBS5aZJD6pcTLNRKqTZcK1A+WKWULkE1E=
-X-Gm-Gg: ASbGnctBP6sFLwwgoeHRncwDSD8ed3fz9hazPqKs9/Y/wBPjAMNr5Tw8tNpV2VOUepl
- PJTQxrPKQLm6S9v4oJe7HcLA7iscAAJ4FRbULThC/rQO5tUm9iKhA1fHWzStn9bli65G5Z3TRNl
- S2ylm889+6SKDxc82VYnBeLtkr17C9NiKaNqk94H7U+gWgGFZ33pwh57pE0vd/sLsoR/tkVfhr0
- TSWShGC9JY/e3/iskRruMDzmfkFcpgx+hedGp/1imqnoEtgPBRlDyHudHWD9b5/ldMUyNDmig==
-X-Google-Smtp-Source: AGHT+IHsHuAYTAmNID4ZaRT3EsuZrAIeV6UPoSZirkFbPA51miBHTzZ2W4vHRiuiSJRmk0KvG3RuCQ==
-X-Received: by 2002:a05:6808:140a:b0:3eb:4b4c:80c9 with SMTP id
- 5614622812f47-3eb856f3c80mr4866646b6e.0.1734034024931; 
- Thu, 12 Dec 2024 12:07:04 -0800 (PST)
-Received: from [172.20.4.119] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3eba3559c9esm139455b6e.49.2024.12.12.12.07.04
+ bh=AcMdh8cqoXMcKf5bh19K8M/QQOI3MjTsc7kIr//a3cY=;
+ b=CGa8Zlntt53Er++sUyW+ZVYL8vvVcs/t2un11pYD5VrPpDcJ7zOdFLZDO5w/RWdwbg
+ YYCmKNek77G1jw2EE316Nd0fncFFEUbSLe3SjGLsojTMFTCd1FhZWYsawZP7j0355KL+
+ aJSJM36bJZshtpYSmSUNFnQ9OqKBH4JwEkviasGDqtfsDE6xPrQzMT+ukm4mMiENSmlr
+ fUDk21E7u2LUdN7duHtlTvQvLnv8ok9EtBxYJjk42jY/Kcb1I1xtYyv1AeLzTviCbLPL
+ J1o6Qs+K2bRp/sWO3L082foAzc2XHkFnxHkoomCZFIOEjMLZQZlY8Wr2CMtXA0bAELjs
+ u/kg==
+X-Gm-Message-State: AOJu0YwNLVTUsgvE8Go4NYChiiWc1Q75plWGAsEEiHajSLK6ksWtxsJz
+ KfL0iYGX2RXSZcuqGJiyMUgmlQ7raEIzIo0PVTXTVnrBt63wwqX2O7UO0PFetuI=
+X-Gm-Gg: ASbGncvgcr6HsarXisep+V16s/NHXyf98zvQyY7NRQMYyCwkYumlnBapZS9ZK5gkn75
+ de9mS69AT/rlQpWPDCumJe3p3qdWc0esVPgmkW/kp7rvhakr8dfBtLdPl0HDnmeo28qEQ2G9jWP
+ QKVs6w0V5ZjZnv9bO1vB7pvni9L+NuSmgmrk9Gj7bciQ2ogbstUvNJhxk6Dl1sd/+Ibt4b7MGu2
+ 9u1GQddl4TAX+0fhIP213g4d3h0H+tQXxf/EyoIzE3LsXRvHNZhIxGAzc7Y6a6/CCBTzY7NYr4z
+ IQhg4CZAZHszULi8rTYFlR6u
+X-Google-Smtp-Source: AGHT+IEbgLtp5g9RUoJIVnVj4as6vKCQbYtjLo+ANvj+fENp2ffSM9yetapvhiSBNUcN/uwYf4qk/w==
+X-Received: by 2002:a05:6000:4705:b0:386:4312:53ec with SMTP id
+ ffacd0b85a97d-3878769113emr3893051f8f.17.1734034474715; 
+ Thu, 12 Dec 2024 12:14:34 -0800 (PST)
+Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3878251db4asm4812766f8f.96.2024.12.12.12.14.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 12:07:04 -0800 (PST)
-Message-ID: <b972e394-240c-4c72-8461-620bd3192cbe@linaro.org>
-Date: Thu, 12 Dec 2024 14:07:02 -0600
+ Thu, 12 Dec 2024 12:14:33 -0800 (PST)
+Message-ID: <f410fcaa-ea8c-4168-b119-5a73f9ecbc0f@linaro.org>
+Date: Thu, 12 Dec 2024 21:14:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/sparc: Use memcpy() and remove memcpy32()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20241205205418.67613-1-philmd@linaro.org>
+Subject: Re: [PATCH 2/2] system: Restrict libpmem and libdaxctl CPPFLAGS to
+ physmem.c
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Pankaj Gupta <pankaj.gupta.linux@gmail.com>,
+ Wei Yang <richardw.yang@linux.intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Haozhong Zhang <haozhong.zhang@intel.com>
+References: <20241212092632.18538-1-philmd@linaro.org>
+ <20241212092632.18538-3-philmd@linaro.org>
+ <5c323271-8563-342f-35d1-6f9575265f72@eik.bme.hu>
+ <684c89b4-a898-484f-aff9-92b46bc78c04@linaro.org>
+ <1a36f9f9-3783-9d40-7e85-b0ff290e3857@eik.bme.hu>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241205205418.67613-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <1a36f9f9-3783-9d40-7e85-b0ff290e3857@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,19 +106,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/5/24 14:54, Philippe Mathieu-Daudé wrote:
-> Rather than manually copying each register, use
-> the libc memcpy(), which is well optimized nowadays.
+On 12/12/24 19:55, BALATON Zoltan wrote:
+> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
+>> On 12/12/24 14:11, BALATON Zoltan wrote:
+>>> On Thu, 12 Dec 2024, Philippe Mathieu-Daudé wrote:
+>>>> Only physmem.c includes libpmem and libdaxctl headers.
+>>>> No need to pass them to all system_ss[] files.
+>>>
+>>> I think doing this patch first would leave the other one unnecessary so 
+>>
+>> This one is about libpmem / libdaxctl in physmem.c,
+>> the previous one is about libsdl in vl.c. I'm missing
+>> what inverting the order would change.
 > 
-> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/sparc/win_helper.c | 26 ++++++++------------------
->   1 file changed, 8 insertions(+), 18 deletions(-)
+> It seems odd to add the libpmem, libdaxctl libs to one set in the first 
+> patch then remove it right away in the next patch. Swapping patches 
+> would avoid that and move these to the final place without churn then 
+> the sdl change is simpler.
+> 
+>> Besides in 2 patches it is simpler to check what CPPFLAGS are applied.
+>>
+>> Anyhow if you insist, I can squash. I don't care much as long as
+>> we reduce the flags applied to system_ss[].
+> 
+> I don't insist and don't mind much either but I see others also 
+> suggested squashing patches so this will be resolved by that.
 
-Queued, thanks.
+Nah, you are right, I didn't notice. Besides, Paolo and Richard
+showed me I don't understand clearly meson dependencies. My bad.
 
-r~
+> 
+> Regards,
+> BALATON Zoltan
+> 
+>>> you could do both in one patch with less churn and maybe reduce this 
+>>> series to a single patch.
+>>>
+>>> Regards,
+>>> BALATON Zoltan
+>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> system/meson.build | 7 +++++--
+>>>> 1 file changed, 5 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/system/meson.build b/system/meson.build
+>>>> index f7e2c8b826f..50d915bd80c 100644
+>>>> --- a/system/meson.build
+>>>> +++ b/system/meson.build
+>>>> @@ -2,10 +2,13 @@ specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', 
+>>>> if_true: [files(
+>>>>   'arch_init.c',
+>>>>   'ioport.c',
+>>>>   'memory.c',
+>>>> -  'physmem.c',
+>>>>   'watchpoint.c',
+>>>> )])
+>>>>
+>>>> +specific_ss.add(when: 'CONFIG_SYSTEM_ONLY', if_true: [files(
+>>>> +  'physmem.c',
+>>>> +), libpmem, libdaxctl])
+>>>> +
+>>>> system_ss.add(files(
+>>>>   'balloon.c',
+>>>>   'bootdevice.c',
+>>>> @@ -23,7 +26,7 @@ system_ss.add(files(
+>>>>   'runstate-hmp-cmds.c',
+>>>>   'runstate.c',
+>>>>   'tpm-hmp-cmds.c',
+>>>> -), libpmem, libdaxctl)
+>>>> +))
+>>>>
+>>>> system_ss.add(files(
+>>>>   'vl.c',
+>>>>
+>>
+>>
+
 
