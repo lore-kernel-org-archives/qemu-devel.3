@@ -4,64 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8815E77183
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:52:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE13E77180
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Dec 2024 11:54:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLhfR-0007iY-0X; Thu, 12 Dec 2024 06:47:41 -0500
+	id 1tLhlt-0002V2-9i; Thu, 12 Dec 2024 06:54:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhfO-0007Zw-PY
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:47:38 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhfN-0007Ho-9u
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:47:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=shdo7YHp/+ED21TRvolahMP/Qxs7DCwuveWPKcORbzQ=; b=b7QwSsI9s37i3HsTlS3TBXqJfs
- pVQUIDiiat2UlRv0oa31KJpASlSZkGZ9hlNLFDtWKPZP8pl3gdSUFV3o3Gtprqxq9JDWG5nSZacY+
- cV72/p2Y6dj0jKsyqLcfmnF2+NvX/3EtqOCkAu3h4GVEln+Hl3XnQN67k0b5X4AmrrmzC/0pxlvv9
- BKN/DC7oVBEvgHaUFR69d4CJBXZVkF7Yg/5s1JWsecAVlIGv6ADB3U07KzfO41+7C/0C15ATWvJMa
- ZrXWp+ZcyTAZE3XeP8hFIbQHvq4IeeHHUvQCULAh8nGrj3iMO6wMW8uOB3y4sB55Ls4OxLqr2hheu
- i1dCJWXgpPdnAWs7/oWW0uI3Wh9IUj6wvfO1ibedzO2YhcL1xr+Gv7ZOI4Xxoc1liaBFdQ979JKjf
- YubF92j4VNF/AgB+OiyDEYBpWUogmsOCj7FzGQqnwFd1wKtdbX0rN+Jij/Tg0VKdd5tPRFt2SctS4
- oLgEatOC0SVKhLMke91nqsqdnixTXKmtMajcGteG0v9yo0AjhS6A0gCAmHSmBBugypvKBUFKCRqQQ
- LhIh2RTMw5MVLYc6h6Ivt0E3e+YrrhrWgF5iP6mtiSVP1q9EJuzuzJGyUWGpUrKHcGJd9v+ARcA37
- BzGw+vbWWRpdRszXx5itefvLTyzjM0M+6wPAHrKaM=;
-Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
- (helo=cheesecake.fritz.box)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tLhed-00070a-Jd; Thu, 12 Dec 2024 11:46:55 +0000
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: huth@tuxfamily.org,
-	qemu-devel@nongnu.org
-Date: Thu, 12 Dec 2024 11:46:04 +0000
-Message-Id: <20241212114620.549285-19-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLhlr-0002UV-Px
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:54:19 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tLhlp-0000Us-SE
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 06:54:19 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-385d7b4da2bso437678f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 03:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734004455; x=1734609255; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EjT6SCOybnu/XpMhC/RGVVXaIvF4ar1s31Q/izSDY0Q=;
+ b=Nu2k9MwT3ZjyUmma5iF0IUlmARqZuGx8kiIvWq4fstFCFDA2vRlLyq/DOyclg7+Vvn
+ NuTzRTayK7yN65/hB/sRfRkpaJE/hFD0fMvd27uiIRC3KyNMoafAPb5vUNvfRvVC0SIb
+ p2De7+yQZHXXOlD4m0IJbzrvPruNgnsyYyLFU33HECzc5kQVyiJb/wTSnD4n/m/gBERA
+ UHvuHMdVAJ54tKheZfnix0ZdeXsGlw01hEoe3Wt379bj7Pw2DV35q/hZbjVrgKBuFLQz
+ C3jNHTZuYtRYN4uqSS4q2aeVXIfsjlqZzAoHmj+bgUlaP1Tb8RlTcMajSORGQZ0ZDIOY
+ cosA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734004455; x=1734609255;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EjT6SCOybnu/XpMhC/RGVVXaIvF4ar1s31Q/izSDY0Q=;
+ b=mQNAZ9Am9X0TLfHOCrj8VNUWGKNAhbZMyqTig+gXrtU7kBgxkZlVNl/UgA3iE9L+lD
+ MlG6C/arw31HW9FDTCar6BDMSECyPptKsZ8D3T9fZO64ryEQ0V7zD9U19kGWTdGvmfCD
+ eAhG3ireZ3shT98KYntoqCiBZlVDDZN0XlOMSk73TSHgLjg6q5jkoXXMUTR8VZvm1ofr
+ y7mCGxckezRpTjAmd4vWEmgavPM7Pdi/J3BpbAuOnWdNfivZCgFtPmD3/gZQOZNzHHLs
+ EPiPrhGOLwB4Qd+3EF6CNQP+uNG9wxWlStHGbg/67j4sCICU15Lzch3c6DriZOZDpLN1
+ DVig==
+X-Gm-Message-State: AOJu0YwLNwXsAyW/EhzYwa3op2VlaJtJY6bVgtzSxT85Fxiyo3oUxy3E
+ XpqblQthivkC2o9g5jp3rgwgkjXHrFSTLerod08tuc+/GYFGvm4CEatBiy8bPNafNew1Pf/fDKb
+ A
+X-Gm-Gg: ASbGnctbdPz552535pkMFhPdgvp0XGBIR1/FagtOpgKB0p7zcFKJJtlN59omc+/QNuG
+ eX2okcAc17N3hWcrWtk6gZyHdc9ueHuCjrqE0stTavpabrUKTpVJQ+JaTfQRE1kDx/OY8Sh8rOm
+ nFc9WEHT0+am3iLKtcGfRu280hjSwVuWYkqSORZOwqd5rgEpgLaDZ9YZH+nmegrOi8TDLYWmBuY
+ rtS0c97YyzMBeOOzjsxzSUqYBRxknHo4GkOBrS+wPmRI4PUEz7Ysyg0x6xqHaMrpBFdp0hAHddO
+ eXcFWKLT3WxexhIrxSuBITLpEVAw43fvcNL+
+X-Google-Smtp-Source: AGHT+IEfYbSoUMLflqdpaOQ4fS0GcEDokIdLlAomTsOo2Vft0iE1A4ybCHRMOgJMsGoGComdBUH64Q==
+X-Received: by 2002:a05:6000:4026:b0:385:e9de:d521 with SMTP id
+ ffacd0b85a97d-3864ce867a0mr5659114f8f.8.1734004455319; 
+ Thu, 12 Dec 2024 03:54:15 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-387824a5085sm3817100f8f.38.2024.12.12.03.54.14
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Dec 2024 03:54:14 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] semihosting/uaccess: Briefly document returned values
+Date: Thu, 12 Dec 2024 12:54:13 +0100
+Message-ID: <20241212115413.42109-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 18/34] next-cube: rename typedef struct NextRtc to NeXTRTC
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,85 +97,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This brings the capitalisation in line with the other NeXTCube definitions.
+Since it is not obvious the get/put_user*() methods
+can return an error, add brief docstrings about it.
+Also remind to use *unlock_user() when appropriate.
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/m68k/next-cube.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ include/semihosting/uaccess.h | 55 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 4a11fe6b39..0b07cd1a75 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -42,7 +42,7 @@
- #define RAM_SIZE    0x4000000
- #define ROM_FILE    "Rev_2.5_v66.bin"
+diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
+index c2fa5a655de..6bc90b12d6f 100644
+--- a/include/semihosting/uaccess.h
++++ b/include/semihosting/uaccess.h
+@@ -19,41 +19,96 @@
+ #include "exec/tswap.h"
+ #include "exec/page-protection.h"
  
--typedef struct NextRtc {
-+typedef struct NeXTRTC {
-     int8_t phase;
-     uint8_t ram[32];
-     uint8_t command;
-@@ -50,7 +50,7 @@ typedef struct NextRtc {
-     uint8_t status;
-     uint8_t control;
-     uint8_t retval;
--} NextRtc;
-+} NeXTRTC;
++/**
++ * get_user_u64:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define get_user_u64(val, addr)                                         \
+     ({ uint64_t val_ = 0;                                               \
+        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
+                                       &val_, sizeof(val_), 0);          \
+        (val) = tswap64(val_); ret_; })
  
- #define TYPE_NEXT_SCSI "next-scsi"
- OBJECT_DECLARE_SIMPLE_TYPE(NeXTSCSI, NEXT_SCSI)
-@@ -97,7 +97,7 @@ struct NeXTPC {
++/**
++ * get_user_u32:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define get_user_u32(val, addr)                                         \
+     ({ uint32_t val_ = 0;                                               \
+        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
+                                       &val_, sizeof(val_), 0);          \
+        (val) = tswap32(val_); ret_; })
  
-     ESCCState escc;
++/**
++ * get_user_u8:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define get_user_u8(val, addr)                                          \
+     ({ uint8_t val_ = 0;                                                \
+        int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
+                                       &val_, sizeof(val_), 0);          \
+        (val) = val_; ret_; })
  
--    NextRtc rtc;
-+    NeXTRTC rtc;
- };
++/**
++ * get_user_ual:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define get_user_ual(arg, p) get_user_u32(arg, p)
  
- typedef struct next_dma {
-@@ -167,7 +167,7 @@ static void next_scr2_led_update(NeXTPC *s)
- static void next_scr2_rtc_update(NeXTPC *s)
- {
-     uint8_t old_scr2, scr2_2;
--    NextRtc *rtc = &s->rtc;
-+    NeXTRTC *rtc = &s->rtc;
++/**
++ * put_user_u64:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define put_user_u64(val, addr)                                         \
+     ({ uint64_t val_ = tswap64(val);                                    \
+        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
  
-     old_scr2 = extract32(s->old_scr2, 8, 8);
-     scr2_2 = extract32(s->scr2, 8, 8);
-@@ -1111,13 +1111,13 @@ static const VMStateDescription next_rtc_vmstate = {
-     .version_id = 2,
-     .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
--        VMSTATE_INT8(phase, NextRtc),
--        VMSTATE_UINT8_ARRAY(ram, NextRtc, 32),
--        VMSTATE_UINT8(command, NextRtc),
--        VMSTATE_UINT8(value, NextRtc),
--        VMSTATE_UINT8(status, NextRtc),
--        VMSTATE_UINT8(control, NextRtc),
--        VMSTATE_UINT8(retval, NextRtc),
-+        VMSTATE_INT8(phase, NeXTRTC),
-+        VMSTATE_UINT8_ARRAY(ram, NeXTRTC, 32),
-+        VMSTATE_UINT8(command, NeXTRTC),
-+        VMSTATE_UINT8(value, NeXTRTC),
-+        VMSTATE_UINT8(status, NeXTRTC),
-+        VMSTATE_UINT8(control, NeXTRTC),
-+        VMSTATE_UINT8(retval, NeXTRTC),
-         VMSTATE_END_OF_LIST()
-     },
- };
-@@ -1133,7 +1133,7 @@ static const VMStateDescription next_pc_vmstate = {
-         VMSTATE_UINT32(int_mask, NeXTPC),
-         VMSTATE_UINT32(int_status, NeXTPC),
-         VMSTATE_UINT32(led, NeXTPC),
--        VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NextRtc),
-+        VMSTATE_STRUCT(rtc, NeXTPC, 0, next_rtc_vmstate, NeXTRTC),
-         VMSTATE_END_OF_LIST()
-     },
- };
++/**
++ * put_user_u32:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define put_user_u32(val, addr)                                         \
+     ({ uint32_t val_ = tswap32(val);                                    \
+        cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
+ 
++/**
++ * put_user_ual:
++ *
++ * Returns: 0 on success, -1 on error.
++ */
+ #define put_user_ual(arg, p) put_user_u32(arg, p)
+ 
++/**
++ * uaccess_lock_user:
++ *
++ * The returned pointer should be freed using uaccess_unlock_user().
++ */
+ void *uaccess_lock_user(CPUArchState *env, target_ulong addr,
+                         target_ulong len, bool copy);
++/**
++ * lock_user:
++ *
++ * The returned pointer should be freed using unlock_user().
++ */
+ #define lock_user(type, p, len, copy) uaccess_lock_user(env, p, len, copy)
+ 
++/**
++ * uaccess_lock_user_string:
++ *
++ * The returned string should be freed using uaccess_unlock_user().
++ */
+ char *uaccess_lock_user_string(CPUArchState *env, target_ulong addr);
++/**
++ * uaccess_lock_user_string:
++ *
++ * The returned string should be freed using unlock_user().
++ */
+ #define lock_user_string(p) uaccess_lock_user_string(env, p)
+ 
+ void uaccess_unlock_user(CPUArchState *env, void *p,
 -- 
-2.39.5
+2.45.2
 
 
