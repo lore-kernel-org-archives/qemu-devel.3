@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B809E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:15:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D150E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:15:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB3v-0006OX-Jz; Fri, 13 Dec 2024 14:10:55 -0500
+	id 1tMB7F-00070J-TG; Fri, 13 Dec 2024 14:14:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3W-0005d2-Dg
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:31 -0500
-Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
+ id 1tMB71-0006Hi-7P
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:08 -0500
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3T-00072O-7D
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:30 -0500
-Received: by mail-ot1-x32c.google.com with SMTP id
- 46e09a7af769-71e2bc5b90fso1010400a34.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:10:26 -0800 (PST)
+ id 1tMB6y-0007WY-1g
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:06 -0500
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-2a3c075ddb6so324162fac.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117026; x=1734721826; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117241; x=1734722041; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=z+mms+h6mMl8LvMiwooLKz6H/+GF1JGIljwNgmRuw7A=;
- b=jMAnYe53Pf8ZBN4kx+VQlfqfURiLI9kjQg/+KqHYDzFZs9WNVaNp4eE2rTJLU4z+qF
- h1JWz45jgKGL1o5dx3zLKu/37soEsPcobpyDCeV9pocOnc0I6iff4NITYs00Epy8w6zW
- 0Cw2+lgMU3WgDFu5HUppK7NMoBfEi/O8t60+142xBrY0cxeEPoIkeTp5MJZLKSbm8OEC
- r03hV9hKSHV4+Qpjk3fRLv7iD1oZ6HYnOzFOUXGZhlv2PQn3SceEWBkoEtP8EQanDp3r
- EBQXc6zhK/CkwRfZX61/g34gJ3424ha7QvjSZkl5VBAFq1Vti9r88W2e+aFy8lbY/f2+
- yr7A==
+ bh=MdpsJAhLYte2lIkZLag9WCSXb1FF/foqWHpt7GOwf7s=;
+ b=bnHlpISBDSoPoBKNV7266WyYnn1Q63g1/bdLGaJmYHczIG2t6sdSpJZP3h+BzBRwZ3
+ F6qCAfheX4xeGkENvYO6V3K+hJDuyC7S49r4TCsh9OBR68eXnbeaccdYL5vCcqLw+5Wo
+ XTCk19t03acNLQYMFss5R3UOPTqYtM6qOajDFUJcv5L/GBOFtxz57D/jjeYycixTLy6x
+ AV+v4G3sCHW9wVZaxy/WdKIBZ7tM75nZRQ3c8+cWJw5xBS1ed3w/88KzRRvhAaqY3v6+
+ HuGkhfwWZ/dTb7XXqJ5XEKSovNuOjGw8XXOIc1DqsxxS2XgETcE8QIaXFX28jvo3zgnI
+ elFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117026; x=1734721826;
+ d=1e100.net; s=20230601; t=1734117241; x=1734722041;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=z+mms+h6mMl8LvMiwooLKz6H/+GF1JGIljwNgmRuw7A=;
- b=Ki6EllSW4hsGANyQUW1en1KkQmWrGg+xxmbAnsxcta2HFbhUGQnzEST794MaCwp85I
- 0QoBz5Wasll3SuGjYSKK0JJuiuiS5bQ6DJPx7uTfz98+2kYhVA7J3kq1YDGWOVXxUWag
- NaIsdF+eMtk7KDNdUsZGGGioYpb5JBf9j9E1JB08Pdnn/4hPgGJQwp9NVMrxfZg1MwnP
- 1dFPILa6rS2wx/zTV99blgTRtUaYQjpk9/PRY0X6zdj16qSBxc4uTBxH3+GujklciuE4
- rsmWoIC4LI7nyS5K9wiZKwzoEwWvxfSLDM4MG4j8+/27j4a/EWfAR2twBLBMahZizjdF
- LYzg==
-X-Gm-Message-State: AOJu0YzaBCHAvlaBteJIYQLlqRF/to7wgUPShaAhFoPRv6IVfTIUkXXG
- x4qo0S4OvYPaHagNfqOvT62+VwoBulTSylav7QGgdpWjxOGTFDz/DdSvUljDvqVvc0rtBoK5X95
- NKaey9lVk
-X-Gm-Gg: ASbGnctKazGjyqh1TMXZ5FIgIqma5YEaTOA326qyUm2FqDxladaaHEp0qj+Nbm+zkKS
- YzlOH2/mMxwgmBEMH525qdCsD3FuTeICWFCJVACoPzPUumpRL9TpIq7r89rO6VpYrQUtwGFByF+
- dTdmb+7UU/Yd2BV8+ylnUD4PonX6vbqFmdJ2IDD0/topWnUOiMMzN4Mm0teoxfeaaV13NyhQMdL
- EmGYFlQ7yQldx0T32dtEyJ2XlsMj23w7zIJJ5uNX3UOkKgApju+IqVz82RzNCzP
-X-Google-Smtp-Source: AGHT+IH8LQupniG0lBrJVEJq+PlIFhkzxizjlqiAyqdx4iisAll7tItiH7jAkcSRHp0d6760YGUkXg==
-X-Received: by 2002:a05:6830:f95:b0:71e:5a:f4e7 with SMTP id
- 46e09a7af769-71e3b922adfmr2207514a34.19.1734117026028; 
- Fri, 13 Dec 2024 11:10:26 -0800 (PST)
+ bh=MdpsJAhLYte2lIkZLag9WCSXb1FF/foqWHpt7GOwf7s=;
+ b=ftFp0weP535HJ+ZSxb9zZi0N7kNERInQoME8mRBZbT5O9w3rMIuXXfK5J9pVIZTCWv
+ GoU9rBhpdnmXASM9kJIsehVP7gJXR+JMzOXwYVi2gsJu/7GjOpFaeFKo9YulY0YHHWW9
+ d96vBiVYYocyHAb+pAMSq6hs0bAvdjUBdx4+oYABN+hKS0ci2heZAtwh1FiEAloX688q
+ 6h4pVBImFZE58VLRhFytBDdXeIP6vvY/n6ATCZuQErPlSKUODpB+Ou8VIVEO3NMbuxUg
+ qqmcYqwqEPzu0tcOSQxhyf81Yybh2ckjT0Ds1a6rzzEWarU1JIFWgqCJLi3BNF1dyFYJ
+ npRA==
+X-Gm-Message-State: AOJu0YwsyuSVEhA77sTJjs5PEM7xUR+Z3Mw6bLocEte7MoCg7rwn2f2K
+ 4xz4epJpz0uTQ7mSoC5fhpSv5lwS3YHpXhWsa2NiOcux6EYiyRaAi7KlTNNynbw3tqn1fSo9Ho9
+ n9cD3G1ye
+X-Gm-Gg: ASbGncuIetPm1Ut9/pG2ppcfVbjFuCmGLkemx07sNc5jBkXKL++ouhvtG0IqK6dJWsT
+ GbizjHutuFqU8YDcVgJ+S2HYIXyB9kDzi22DU9a/qJjOhTYkZMng+yCcc3QKs7m3HmGD4m/GFiF
+ 1nFtEFIKB4WYtHYw5s/nb3/z8B4Pfo0rR/5Yv99gfBQewu90tLK6ayn8cEbfHDJrznAKz6D5ON+
+ pKCos6+VpQM8Z5+i+JSu5LTuYas+xh+4svcZxC79Gmls9E8WBS6oizkcWj2D7zm
+X-Google-Smtp-Source: AGHT+IFsHptExUFZoIZGsWk4RbguT+pzFk1ZOSTmP02DvjFOwa0fsQPzBP1gF5rpWWL+m1cHt/goag==
+X-Received: by 2002:a05:6808:151f:b0:3eb:5f1a:d083 with SMTP id
+ 5614622812f47-3eba6896469mr2487136b6e.20.1734117241423; 
+ Fri, 13 Dec 2024 11:14:01 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.10.25
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:10:25 -0800 (PST)
+ Fri, 13 Dec 2024 11:14:00 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: John Snow <jsnow@redhat.com>,
-	qemu-block@nongnu.org (open list:IDE)
-Subject: [PATCH 30/71] hw/ide: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:04 -0600
-Message-ID: <20241213190750.2513964-35-richard.henderson@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 45/71] hw/pci-bridge: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:19 -0600
+Message-ID: <20241213190750.2513964-50-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,124 +100,143 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/ide/ahci.c    | 2 +-
- hw/ide/cf.c      | 2 +-
- hw/ide/cmd646.c  | 2 +-
- hw/ide/ide-dev.c | 6 +++---
- hw/ide/isa.c     | 2 +-
- hw/ide/macio.c   | 2 +-
- hw/ide/mmio.c    | 2 +-
- 7 files changed, 9 insertions(+), 9 deletions(-)
+ hw/pci-bridge/cxl_downstream.c      | 2 +-
+ hw/pci-bridge/cxl_root_port.c       | 2 +-
+ hw/pci-bridge/cxl_upstream.c        | 2 +-
+ hw/pci-bridge/gen_pcie_root_port.c  | 2 +-
+ hw/pci-bridge/pci_bridge_dev.c      | 2 +-
+ hw/pci-bridge/pci_expander_bridge.c | 4 ++--
+ hw/pci-bridge/pcie_pci_bridge.c     | 2 +-
+ hw/pci-bridge/pcie_root_port.c      | 2 +-
+ hw/pci-bridge/xio3130_downstream.c  | 2 +-
+ 9 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 0eb24304ee..8ee015c1a4 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -1867,7 +1867,7 @@ static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
-     ahci_realize(&s->ahci, dev, &address_space_memory);
+diff --git a/hw/pci-bridge/cxl_downstream.c b/hw/pci-bridge/cxl_downstream.c
+index c347ac06f3..cfe50e60e9 100644
+--- a/hw/pci-bridge/cxl_downstream.c
++++ b/hw/pci-bridge/cxl_downstream.c
+@@ -212,7 +212,7 @@ static void cxl_dsp_exitfn(PCIDevice *d)
+     pci_bridge_exitfn(d);
  }
  
--static Property sysbus_ahci_properties[] = {
-+static const Property sysbus_ahci_properties[] = {
-     DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
-     DEFINE_PROP_END_OF_LIST(),
+-static Property cxl_dsp_props[] = {
++static const Property cxl_dsp_props[] = {
+     DEFINE_PROP_PCIE_LINK_SPEED("x-speed", PCIESlot,
+                                 speed, PCIE_LINK_SPEED_64),
+     DEFINE_PROP_PCIE_LINK_WIDTH("x-width", PCIESlot,
+diff --git a/hw/pci-bridge/cxl_root_port.c b/hw/pci-bridge/cxl_root_port.c
+index 5e2156d7ba..5824ba3c75 100644
+--- a/hw/pci-bridge/cxl_root_port.c
++++ b/hw/pci-bridge/cxl_root_port.c
+@@ -199,7 +199,7 @@ static void cxl_rp_reset_hold(Object *obj, ResetType type)
+     latch_registers(crp);
+ }
+ 
+-static Property gen_rp_props[] = {
++static const Property gen_rp_props[] = {
+     DEFINE_PROP_UINT32("bus-reserve", CXLRootPort, res_reserve.bus, -1),
+     DEFINE_PROP_SIZE("io-reserve", CXLRootPort, res_reserve.io, -1),
+     DEFINE_PROP_SIZE("mem-reserve", CXLRootPort, res_reserve.mem_non_pref, -1),
+diff --git a/hw/pci-bridge/cxl_upstream.c b/hw/pci-bridge/cxl_upstream.c
+index 55f8b0053f..ef94aa3654 100644
+--- a/hw/pci-bridge/cxl_upstream.c
++++ b/hw/pci-bridge/cxl_upstream.c
+@@ -362,7 +362,7 @@ static void cxl_usp_exitfn(PCIDevice *d)
+     pci_bridge_exitfn(d);
+ }
+ 
+-static Property cxl_upstream_props[] = {
++static const Property cxl_upstream_props[] = {
+     DEFINE_PROP_UINT64("sn", CXLUpstreamPort, sn, UI64_NULL),
+     DEFINE_PROP_STRING("cdat", CXLUpstreamPort, cxl_cstate.cdat.filename),
+     DEFINE_PROP_PCIE_LINK_SPEED("x-speed", CXLUpstreamPort,
+diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_root_port.c
+index 784507c826..c319ca8263 100644
+--- a/hw/pci-bridge/gen_pcie_root_port.c
++++ b/hw/pci-bridge/gen_pcie_root_port.c
+@@ -128,7 +128,7 @@ static const VMStateDescription vmstate_rp_dev = {
+     }
  };
-diff --git a/hw/ide/cf.c b/hw/ide/cf.c
-index 2a425cb0f2..190914f513 100644
---- a/hw/ide/cf.c
-+++ b/hw/ide/cf.c
-@@ -24,7 +24,7 @@ static void ide_cf_realize(IDEDevice *dev, Error **errp)
-     ide_dev_initfn(dev, IDE_CFATA, errp);
- }
  
--static Property ide_cf_properties[] = {
-+static const Property ide_cf_properties[] = {
-     DEFINE_IDE_DEV_PROPERTIES(),
-     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
-     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
-diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
-index 6b02fc81ec..942f6c470c 100644
---- a/hw/ide/cmd646.c
-+++ b/hw/ide/cmd646.c
-@@ -313,7 +313,7 @@ static void pci_cmd646_ide_exitfn(PCIDevice *dev)
+-static Property gen_rp_props[] = {
++static const Property gen_rp_props[] = {
+     DEFINE_PROP_BOOL("x-migrate-msix", GenPCIERootPort,
+                      migrate_msix, true),
+     DEFINE_PROP_UINT32("bus-reserve", GenPCIERootPort,
+diff --git a/hw/pci-bridge/pci_bridge_dev.c b/hw/pci-bridge/pci_bridge_dev.c
+index 8e7f926621..35a37e056a 100644
+--- a/hw/pci-bridge/pci_bridge_dev.c
++++ b/hw/pci-bridge/pci_bridge_dev.c
+@@ -168,7 +168,7 @@ static void qdev_pci_bridge_dev_reset(DeviceState *qdev)
      }
  }
  
--static Property cmd646_ide_properties[] = {
-+static const Property cmd646_ide_properties[] = {
-     DEFINE_PROP_UINT32("secondary", PCIIDEState, secondary, 0),
+-static Property pci_bridge_dev_properties[] = {
++static const Property pci_bridge_dev_properties[] = {
+                     /* Note: 0 is not a legal chassis number. */
+     DEFINE_PROP_UINT8(PCI_BRIDGE_DEV_PROP_CHASSIS_NR, PCIBridgeDev, chassis_nr,
+                       0),
+diff --git a/hw/pci-bridge/pci_expander_bridge.c b/hw/pci-bridge/pci_expander_bridge.c
+index 07d411cff5..01997c1ab3 100644
+--- a/hw/pci-bridge/pci_expander_bridge.c
++++ b/hw/pci-bridge/pci_expander_bridge.c
+@@ -420,7 +420,7 @@ static void pxb_dev_exitfn(PCIDevice *pci_dev)
+     pxb_dev_list = g_list_remove(pxb_dev_list, pxb);
+ }
+ 
+-static Property pxb_dev_properties[] = {
++static const Property pxb_dev_properties[] = {
+     /* Note: 0 is not a legal PXB bus number. */
+     DEFINE_PROP_UINT8("bus_nr", PXBDev, bus_nr, 0),
+     DEFINE_PROP_UINT16("numa_node", PXBDev, numa_node, NUMA_NODE_UNASSIGNED),
+@@ -507,7 +507,7 @@ static void pxb_cxl_dev_realize(PCIDevice *dev, Error **errp)
+     pxb_cxl_dev_reset(DEVICE(dev));
+ }
+ 
+-static Property pxb_cxl_dev_properties[] = {
++static const Property pxb_cxl_dev_properties[] = {
+     DEFINE_PROP_BOOL("hdm_for_passthrough", PXBCXLDev, hdm_for_passthrough, false),
      DEFINE_PROP_END_OF_LIST(),
  };
-diff --git a/hw/ide/ide-dev.c b/hw/ide/ide-dev.c
-index 03f7967798..cc92531f1c 100644
---- a/hw/ide/ide-dev.c
-+++ b/hw/ide/ide-dev.c
-@@ -29,7 +29,7 @@
- #include "qapi/visitor.h"
- #include "ide-internal.h"
- 
--static Property ide_props[] = {
-+static const Property ide_props[] = {
-     DEFINE_PROP_UINT32("unit", IDEDevice, unit, -1),
-     DEFINE_PROP_BOOL("win2k-install-hack", IDEDevice, win2k_install_hack, false),
-     DEFINE_PROP_END_OF_LIST(),
-@@ -191,7 +191,7 @@ static void ide_cd_realize(IDEDevice *dev, Error **errp)
-     ide_dev_initfn(dev, IDE_CD, errp);
+diff --git a/hw/pci-bridge/pcie_pci_bridge.c b/hw/pci-bridge/pcie_pci_bridge.c
+index 6e8d7d9478..8834ff3dbf 100644
+--- a/hw/pci-bridge/pcie_pci_bridge.c
++++ b/hw/pci-bridge/pcie_pci_bridge.c
+@@ -124,7 +124,7 @@ static void pcie_pci_bridge_write_config(PCIDevice *d,
+     shpc_cap_write_config(d, address, val, len);
  }
  
--static Property ide_hd_properties[] = {
-+static const Property ide_hd_properties[] = {
-     DEFINE_IDE_DEV_PROPERTIES(),
-     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
-     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
-@@ -218,7 +218,7 @@ static const TypeInfo ide_hd_info = {
-     .class_init    = ide_hd_class_init,
+-static Property pcie_pci_bridge_dev_properties[] = {
++static const Property pcie_pci_bridge_dev_properties[] = {
+         DEFINE_PROP_ON_OFF_AUTO("msi", PCIEPCIBridge, msi, ON_OFF_AUTO_AUTO),
+         DEFINE_PROP_END_OF_LIST(),
  };
- 
--static Property ide_cd_properties[] = {
-+static const Property ide_cd_properties[] = {
-     DEFINE_IDE_DEV_PROPERTIES(),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ide/isa.c b/hw/ide/isa.c
-index 211ebc9ba7..a0a7e4837c 100644
---- a/hw/ide/isa.c
-+++ b/hw/ide/isa.c
-@@ -101,7 +101,7 @@ ISADevice *isa_ide_init(ISABus *bus, int iobase, int iobase2, int irqnum,
-     return isadev;
+diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+index 09a34786bc..a7f87a1bc4 100644
+--- a/hw/pci-bridge/pcie_root_port.c
++++ b/hw/pci-bridge/pcie_root_port.c
+@@ -148,7 +148,7 @@ static void rp_exit(PCIDevice *d)
+     pci_bridge_exitfn(d);
  }
  
--static Property isa_ide_properties[] = {
-+static const Property isa_ide_properties[] = {
-     DEFINE_PROP_UINT32("iobase",  ISAIDEState, iobase,  0x1f0),
-     DEFINE_PROP_UINT32("iobase2", ISAIDEState, iobase2, 0x3f6),
-     DEFINE_PROP_UINT32("irq",     ISAIDEState, irqnum,  14),
-diff --git a/hw/ide/macio.c b/hw/ide/macio.c
-index 99477a3d13..25f8403e80 100644
---- a/hw/ide/macio.c
-+++ b/hw/ide/macio.c
-@@ -459,7 +459,7 @@ static void macio_ide_initfn(Object *obj)
-                              qdev_prop_allow_set_link_before_realize, 0);
+-static Property rp_props[] = {
++static const Property rp_props[] = {
+     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+     DEFINE_PROP_BOOL("disable-acs", PCIESlot, disable_acs, false),
+diff --git a/hw/pci-bridge/xio3130_downstream.c b/hw/pci-bridge/xio3130_downstream.c
+index 473e2dd950..92e5fb72ec 100644
+--- a/hw/pci-bridge/xio3130_downstream.c
++++ b/hw/pci-bridge/xio3130_downstream.c
+@@ -134,7 +134,7 @@ static void xio3130_downstream_exitfn(PCIDevice *d)
+     pci_bridge_exitfn(d);
  }
  
--static Property macio_ide_properties[] = {
-+static const Property macio_ide_properties[] = {
-     DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
-     DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/ide/mmio.c b/hw/ide/mmio.c
-index 53d22fb37f..43ab66f347 100644
---- a/hw/ide/mmio.c
-+++ b/hw/ide/mmio.c
-@@ -141,7 +141,7 @@ static void mmio_ide_initfn(Object *obj)
-     sysbus_init_irq(d, &s->irq);
- }
- 
--static Property mmio_ide_properties[] = {
-+static const Property mmio_ide_properties[] = {
-     DEFINE_PROP_UINT32("shift", MMIOIDEState, shift, 0),
+-static Property xio3130_downstream_props[] = {
++static const Property xio3130_downstream_props[] = {
+     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
      DEFINE_PROP_END_OF_LIST()
- };
 -- 
 2.43.0
 
