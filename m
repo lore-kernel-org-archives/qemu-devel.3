@@ -4,83 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A92EE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 22:41:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2E30E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 22:47:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMEKk-0003ie-Dt; Fri, 13 Dec 2024 17:40:30 -0500
+	id 1tMEQq-0005ol-U5; Fri, 13 Dec 2024 17:46:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <32LdcZwwKCvsqdelkhvwhidqjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--nabihestefan.bounces.google.com>)
- id 1tMEKi-0003iC-CA
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 17:40:28 -0500
-Received: from mail-oa1-x49.google.com ([2001:4860:4864:20::49])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <32LdcZwwKCvsqdelkhvwhidqjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--nabihestefan.bounces.google.com>)
- id 1tMEKg-0006he-MI
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 17:40:28 -0500
-Received: by mail-oa1-x49.google.com with SMTP id
- 586e51a60fabf-29fb4d3c3f3so1871721fac.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 14:40:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1734129624; x=1734734424; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=Y5tnX/+CjFCQneIvFaXnx9LjKWIK0Im3pRzlQnaPJs4=;
- b=wD/QNp+SaO+QsGD3OSuqQ9rMQNEH979MNAKZdSO3gkhCmIEj6fahBkAEajVp5EJ/y8
- YjnQ3X4dLaRsmITbQDMiMXBENTrFdqqP9/KLlKf9Kz8XBhNtW6DEIxAOzctBEhmHn4do
- YFFR4VnfaRdv5pyCSV8zAQRS7GREgoyvXWP4w7XIK4PR3lOblRFueFQ7m9uQKEK0p4In
- MrBwcrjam4skkp1AMhdjuj6sdRNZbSFs3hj43vkYHv0ed3KvVcFxlow5XObnKXuvsil1
- OTpuRCvwpTm2VP6tuRvPvz5/hIvs0aswk/26uqtooH/wjC5jzRRxsftMYmkWxAUVy8xA
- CCag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734129624; x=1734734424;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Y5tnX/+CjFCQneIvFaXnx9LjKWIK0Im3pRzlQnaPJs4=;
- b=wDWTcT9ymaBg9gE/gYpQX6YYBZBx/9x34ymbBHtIEGlqx3JMNOMtQ1/+lk33+Zc7pi
- 7qnvTnU7tqL3tlwBjdR25vU84ejOlgjC3VGkFHh7+HMuvXtmRoutVYXI/g7HXBGrFdvN
- 3N19BUl1wqYOKLMs90Op/D6Hnb8liolfuCeGoe9l56Ihiah4J9dKDLo+VtJJQ+uONwT6
- PMyu5tqEa2eP0Pa9B1tw1tjywLncSA4r16O5ocTWxMbo7VORCn3J6xalVALht9omy2/6
- 09Jr4EhNw1ixt7FsINWJIIrfIIegc4n6HH/rJIabSXmIdLPNc5xjazOCIyq5UMKxzvZm
- gMsw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWuL235/nG3suEoKATwuDVwsoM/+i9RLf3Li80BzR9EESKpJZq3F6vaHOEFx5q/MhlXjOgL/lTbH8S@nongnu.org
-X-Gm-Message-State: AOJu0Ywu0KhSUBVqp3qU8qzg/j3oQiZ+XFjLA80aDQneFx9ue0NWbkiu
- VR0BxxGzECWDSbVE5KhtzjtXc89EvwiDPzoJqkEP2iTAN95lgfXerA+6/JhLAhRIpaenVbG7x4B
- yB0DWNuFhScDqtuE/r9hKUafbOA==
-X-Google-Smtp-Source: AGHT+IFBIUHKvDkW7LU0hb6ZxX00ZUD7KVYc5jLvZ6CkJHGICHByFFMTmyCalOePjhGhENec1fALYSN3Ad4VbJqweT0=
-X-Received: from oabrl15.prod.google.com
- ([2002:a05:6871:650f:b0:289:3039:6009])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6870:8450:b0:29e:18cc:276f with SMTP id
- 586e51a60fabf-2a3ac6f2c10mr1995517fac.11.1734129624146; 
- Fri, 13 Dec 2024 14:40:24 -0800 (PST)
-Date: Fri, 13 Dec 2024 22:40:20 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-Message-ID: <20241213224020.2982578-1-nabihestefan@google.com>
-Subject: [PATCH v2] tests/qtest/sse-timer-test: Add watchdog reset to
- sse-timer test
-From: Nabih Estefan <nabihestefan@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, farosas@suse.de, 
- lvivier@redhat.com, pbonzini@redhat.com, roqueh@google.com, 
- Nabih Estefan <nabihestefan@google.com>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2001:4860:4864:20::49;
- envelope-from=32LdcZwwKCvsqdelkhvwhidqjrrjoh.frpthpx-ghyhoqrqjqx.ruj@flex--nabihestefan.bounces.google.com;
- helo=mail-oa1-x49.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tMEQo-0005nz-MH; Fri, 13 Dec 2024 17:46:46 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tMEQm-0007Pu-Uh; Fri, 13 Dec 2024 17:46:46 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDGfaeM001235;
+ Fri, 13 Dec 2024 22:46:41 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=/9D0F1
+ F1Iq1MZJJX4xLv/GsrRNmsvpzzof8lSIL+Ez8=; b=YJn+xmcftaLVVJi0Dk3fLT
+ dpjC1ckl1Fs6sHl2cd29WlzfYhUKLzpZE/h0gTzdT910EjPRNTFS/bP+3SyG4Pmz
+ io7a1BBnOl5t4u1xvgXRmvlE+F//gvoUyP89HqRrq6hhvxv1kyEB6YkSYyGYD6Si
+ QG8XFXzKptJs37qoBliura1IXFr624Lfes9hvKnX+/p7BJTmInSmNbZRlxMrfOeD
+ 7TjfE7/Jjx5rNrvXRSh0Mwx7pSUvmzn3RJhAoXzyxD9GenRar8FHbXZJEDhEuUpC
+ eIeo6YqSjiIMq8Z+qj2WBmaAWqCiQqweKv4G9BQlAV8PJZrsIQRg2Jq9/bvaeqgQ
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43gpd5t7eg-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Dec 2024 22:46:41 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDJVKH9016926;
+ Fri, 13 Dec 2024 22:46:40 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43d12yr9m9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Dec 2024 22:46:40 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BDMkdbd24380026
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Dec 2024 22:46:39 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 04FD55804B;
+ Fri, 13 Dec 2024 22:46:39 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9D8E558055;
+ Fri, 13 Dec 2024 22:46:37 +0000 (GMT)
+Received: from [9.61.107.222] (unknown [9.61.107.222])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 13 Dec 2024 22:46:37 +0000 (GMT)
+Message-ID: <0e8321be-6cd1-471a-935a-eb6e0c61a113@linux.ibm.com>
+Date: Fri, 13 Dec 2024 17:46:37 -0500
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] s390x/pci: add support for guests that request direct
+ mapping
+To: David Hildenbrand <david@redhat.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>
+References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
+ <20241209192927.107503-2-mjrosato@linux.ibm.com>
+ <f7451934-bf20-4c50-8780-4d5ebf932096@redhat.com>
+ <31b6b62b-4656-4ca0-a8ac-99fe4293de45@linux.ibm.com>
+ <7bd2018a-df16-4ede-b7d7-dfdb9cbfc7c0@redhat.com>
+ <a6bfbf15-cbe4-4023-9a8e-d172cf8c8128@linux.ibm.com>
+ <f38ed904-d235-43b5-a351-ea64e54984b4@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <f38ed904-d235-43b5-a351-ea64e54984b4@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: hkt-iY1555waNUzsyDh_l1406UipzNaL
+X-Proofpoint-ORIG-GUID: hkt-iY1555waNUzsyDh_l1406UipzNaL
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 mlxlogscore=999
+ spamscore=0 impostorscore=0 phishscore=0 priorityscore=1501
+ lowpriorityscore=0 clxscore=1015 suspectscore=0 adultscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412130159
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,98 +118,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-V2: Removed scripts/meson-buildoptions.sh.tmp Extra file that slipped
-through the cracks and shouldn't be in this patch
+On 12/10/24 3:58 AM, David Hildenbrand wrote:
 
-Recent CDMSK Watchdog changes (eff9dc5660fad3a610171c56a5ec3fada245e519)
-updated the CDMSK APB Watchdog to not free run out of reset. That led to
-this test failing since it never triggers the watchdog to start running.
-No watchdog running means that the timer and counter in the test cannot
-start, leading to failures in the assert statements throughout the test.
-Adding a reset and enable of the watchdog to the reset function solves
-this problem by enabling the watchdog and thus letting the timer and
-counter run as expected
+> Maybe there is a reason s390x needs to handle this using memory_region_notify_iommu() callbacks instead of doing it similar to "struct vfio_memory_listener" when registered on &address_space_memory without a viommu.
+> 
 
-Also renaming the reset_counter_and_timer function since it now also
-affects the watchdog.
+Hi David,
 
-To reproduce the failure at HEAD:
-./configure --target-list=arm-softmmu
-make -j check-report-qtest-arm.junit.xml
+I think I sorted a way to handle this such that, when direct mapping, we use a memory region alias instead so that vfio can ultimately handle all of the pinning/unpinning in the non-iommu path of vfio_listener_region_add/del, just like it does for other platforms.  But for s390 the alias is needed to provide the SDMA offset so as to ensure that e.g. GPA X maps to iova SDMA+X.  Looks to be working nicely so far with my rework of the associated kernel series -- Going to send as part of v2, would appreciate it if you'd give that a look.
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
----
- tests/qtest/sse-timer-test.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
-
-diff --git a/tests/qtest/sse-timer-test.c b/tests/qtest/sse-timer-test.c
-index fd5635d4c9..d7a53ac23a 100644
---- a/tests/qtest/sse-timer-test.c
-+++ b/tests/qtest/sse-timer-test.c
-@@ -29,6 +29,13 @@
- /* Base of the System Counter control frame */
- #define COUNTER_BASE 0x58100000
- 
-+/* Base of the MSSDK APB Watchdog Device */
-+#define WDOG_BASE 0x4802e000
-+
-+/* CMSDK Watchdog offsets */
-+#define WDOGLOAD 0
-+#define WDOGCONTROL 8
-+
- /* SSE counter register offsets in the control frame */
- #define CNTCR 0
- #define CNTSR 0x4
-@@ -63,24 +70,26 @@ static void clock_step_ticks(uint64_t ticks)
-     clock_step(FOUR_TICKS * (ticks >> 2));
- }
- 
--static void reset_counter_and_timer(void)
-+static void reset_watchdog_counter_and_timer(void)
- {
-     /*
--     * Reset the system counter and the timer between tests. This
-+     * Reset the system watchdog, counter and the timer between tests. This
-      * isn't a full reset, but it's sufficient for what the tests check.
-      */
-+    writel(WDOG_BASE + WDOGCONTROL, 0);
-     writel(COUNTER_BASE + CNTCR, 0);
-     writel(TIMER_BASE + CNTP_CTL, 0);
-     writel(TIMER_BASE + CNTP_AIVAL_CTL, 0);
-     writel(COUNTER_BASE + CNTCV_LO, 0);
-     writel(COUNTER_BASE + CNTCV_HI, 0);
-+    writel(WDOG_BASE + WDOGCONTROL, 1);
- }
- 
- static void test_counter(void)
- {
-     /* Basic counter functionality test */
- 
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /* The counter should start disabled: check that it doesn't move */
-     clock_step_ticks(100);
-     g_assert_cmpuint(readl(COUNTER_BASE + CNTCV_LO), ==, 0);
-@@ -103,7 +112,7 @@ static void test_timer(void)
- {
-     /* Basic timer functionality test */
- 
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /*
-      * The timer is behind a Peripheral Protection Controller, and
-      * qtest accesses are always non-secure (no memory attributes),
-@@ -195,7 +204,7 @@ static void test_timer_scale_change(void)
-      * Test that the timer responds correctly to counter
-      * scaling changes while it has an active timer.
-      */
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /* Give ourselves access to the timer, and enable the counter and timer */
-     writel(PERIPHNSPPC0, 1);
-     writel(COUNTER_BASE + CNTCR, 1);
--- 
-2.47.1.613.gc27f4b7a9f-goog
-
+Thanks,
+Matt
 
