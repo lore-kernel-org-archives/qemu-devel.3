@@ -4,83 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2678E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 15:38:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B59D4E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 15:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM7jW-0001Eq-Bg; Fri, 13 Dec 2024 10:37:38 -0500
+	id 1tM7k6-0001fZ-SC; Fri, 13 Dec 2024 10:38:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM7jS-0001EP-FN
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:37:35 -0500
-Received: from mail-yw1-x1136.google.com ([2607:f8b0:4864:20::1136])
+ id 1tM7k3-0001Xo-Rc
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:38:11 -0500
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM7jB-0000o3-Kw
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:37:19 -0500
-Received: by mail-yw1-x1136.google.com with SMTP id
- 00721157ae682-6ef7640e484so20489267b3.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 07:37:17 -0800 (PST)
+ id 1tM7k2-0000sA-Cd
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:38:11 -0500
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-6f006748fd1so16049217b3.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 07:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734104236; x=1734709036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734104289; x=1734709089; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=TSSAiMXN2YjyBddSL7QadCKvy86NxvQqg4ACDVITRV4=;
- b=P9BbYUOa2dQaXMzpR5FYW8KkeSNcWairk2dNM7avAVaoaZh2lx6Kji15ATMNIv2edN
- s6bF6sWUhA8oaMrLoavhkqrsjG3d2EDrfh8COgYbsguQPKnbDCgFGCeJgXpSFt29+xzX
- j/thvff7bOHFN7ZU2e6uaNsrUg9PoXgI1yQB7VRTnr/ffZtkvD9TkjkBHWwvjCN6aUk2
- /7+mUm9XQ+uSVK5yBXtJ+jRzd+kvdyJP+j14LjMdLZKgbzNHDc3BeQ0ZTn21dgE9DG1q
- Yrsy+aDtOLeduFI1MsBpYJcKWjhLBGDCqsPhGQdodvDiOYBH5vk1/jAPBCwNAoigLSdx
- Je/w==
+ bh=mN0yqVY1KDnKK1o5pgOp0bfTzpFP36gE7pPwo0cfA2g=;
+ b=D5wzMsyxLDUjkwee/MXbp9DBqI58X/IYK4Idp+AwRicnQ78dGB4EGASNIQeGa80/tj
+ 94Coc5xoeB07d0+NpXsslCgKKmaYRP495gFVoPMIX/DKHJF7TG9el+5JfZw0ReYmxb/C
+ chlMKfwCikCAlpfUA0rVpzbhGDLUwWLy9iEcm56E1j0jOmbQSK/Ap4kUdzH4er81xJWO
+ 3Jt0pfZ5x+RF5IaAyFScNY+a2s8IHeX/bwlZw8JC5KevbpK/KL1W5nY1pIt7Gl7E/pAm
+ YFCrYUVNTM3DqDMvjWijdowlknRMn9gYzFyyi/5q19O+WeZxBizxcyv9VjhIw2jdUUWF
+ /9vA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734104236; x=1734709036;
+ d=1e100.net; s=20230601; t=1734104289; x=1734709089;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=TSSAiMXN2YjyBddSL7QadCKvy86NxvQqg4ACDVITRV4=;
- b=MtY8YPpTGVi7Q+irOiLj6AsCts/HJDATWqhcasVdtjIH+q596Eo6xNf3stNgXBSAsd
- 5Rkdn0ksxWMLNLHW5nL4K59CUEMPd6RjkzMaczL7Cbv6LNHgqe7f1+/TULFP7Jhe+Ovq
- a5JbhKWUXR4WINq0vBaY06djosl6LEcKEAAoqOZ4e0OD8OOsGhrcwUjTpUMHppsBwn21
- l0wUAWdtZ0Yao6E753rdxcwGzlykI0JHnDflQ2oh+AKEZzl9rdxz6aCGJYywWmVq4DPY
- AIzEJhrapNS9fOzvf6sHBWt10emhbd7DBs2q5nGXCMVQkFl3c6lwva97ErPSrolT+cq7
- sxXg==
-X-Gm-Message-State: AOJu0YyT9Pv5JVeWNI4Nxy8b6o3JGECl8HQ3JTGnYcv9EAO0nTVYHlUt
- Etgr24R6cXet7GO3EO7kzOoqXVov85bana1qCJZgEqn6xdB4zkvYPrv+GHXW1t95O945eKoQiVX
- X2i2BobQnVdB1ZMi0sjnigyJrDVhvN6bSGMphcWlbg7yRH/aY
-X-Gm-Gg: ASbGncu6b46kiN1llLKFhk4icmcj5tXTKwaJRCnOVJ+Rkbd0wl5HONCWrtYK6rdPyhV
- dVmN9hThoGSI0gYHwGMtMt65dfxpPUVFZK6SjcFU=
-X-Google-Smtp-Source: AGHT+IGwYw+BVOtoKvLgesairME07vmlCK2orfbln0yGma2TUjxCY5VrT5E73IZkPq7pXfV7diZJlbpdkqd8H7R78VA=
-X-Received: by 2002:a05:690c:6212:b0:6ee:7797:672 with SMTP id
- 00721157ae682-6f279ad1782mr32086977b3.7.1734104236159; Fri, 13 Dec 2024
- 07:37:16 -0800 (PST)
+ bh=mN0yqVY1KDnKK1o5pgOp0bfTzpFP36gE7pPwo0cfA2g=;
+ b=lBhWKOP4KHAtU3z+779rjhvam7kjGLlQCtVv+Lpf24FzCTfa4rJs7tRZ5u0JhFJ1pS
+ VvkiWsDi0tU5zXriIWA7xvv2qYH746aINvqXn+xrcHnK62KNxwJRoCyn/PRPIWHEz1/k
+ 9TXsoZ5E6jkAaXwNNspo8qU7KKcUpa0cewrvz+bn9ceHsC5/5hLF+D+800srU2xV3tLE
+ ZLKtyGPvb1DnOP6D7OltDPPRxmJmm82ZsJSjQXJAOMziT6szyvrfMPPJLZnc+uY/HazS
+ 063l/4znZ5gi+KulByzRZ2NtM/gFXiwEu5LqqVkNHZfRUDYPXvuVM4T1N5rj2QUPUgPE
+ XnNg==
+X-Gm-Message-State: AOJu0YyeCYamomw9WBiu4v+llTJWNs3pBuDCttReM5dg5Wn4mxhBT3vQ
+ /BCJ55zSBCke29y7VyFzlYsn2PQB00vQOmuyslm2lbrNuqAulSifGfKAeXPiv1sVn8837qHV9KR
+ CnWt7pHFKMHiNMllMdxmWvls75MBB5pbq3lQiOQ==
+X-Gm-Gg: ASbGncv4OAyeDhv1wpCPOTvFKG7NOeCFuC7mcVLLIUJrEWfLVmnhLH69dukcin1lhsV
+ pHEDmxQZO4/FmvQ7TfKnzzL41WbrYd6Vt5wwUKRM=
+X-Google-Smtp-Source: AGHT+IG1qLGkLmokYc6i7PxxBs77FOccN4Tpv064qMnC9dfoWZbiwf6yLqf0Tv3DRXbFvuv3txk0brc8IOVojV90/7M=
+X-Received: by 2002:a05:690c:b15:b0:6ee:5cf9:f898 with SMTP id
+ 00721157ae682-6f279b75052mr30419777b3.33.1734104289121; Fri, 13 Dec 2024
+ 07:38:09 -0800 (PST)
 MIME-Version: 1.0
-References: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20241206192254.3889131-1-pierrick.bouvier@linaro.org>
+References: <20241209181242.1434231-1-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20241209181242.1434231-1-brian.cain@oss.qualcomm.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Dec 2024 15:37:04 +0000
-Message-ID: <CAFEAcA8TKyEJrPcNz3NOzv_LOkh9ENKiyMtBgDmH+xdEwZBqOg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Minor fixes for Arm documentation
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Troy Lee <leetroy@gmail.com>, qemu-arm@nongnu.org, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Niek Linnenbank <nieklinnenbank@gmail.com>, 
- Joel Stanley <joel@jms.id.au>, Alistair Francis <alistair@alistair23.me>, 
- Steven Lee <steven_lee@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, alex.bennee@linaro.org
+Date: Fri, 13 Dec 2024 15:37:56 +0000
+Message-ID: <CAFEAcA_bgd05_+ga-DJ-Am-pGjUYYAEew-azH0w-Wr99viit+A@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: correct my email address
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, philmd@linaro.org, 
+ quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng, anjo@rev.ng, 
+ quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com, alex.bennee@linaro.org, 
+ quic_mburton@quicinc.com
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1136.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,21 +92,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Dec 2024 at 19:23, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Mon, 9 Dec 2024 at 18:12, Brian Cain <brian.cain@oss.qualcomm.com> wrote:
 >
-> Reviewed following things:
-> - system/arm/cpu-features (options)
-> - system/arm/virt (options)
-> - boards documented and listed with -machine help (arm and aarch64)
-> - grep object_class_property_set_description hw/arm: ensure all options are
->   documented
-> - reviewed boards description
-> - reviewed all Arm features (FEAT_) from: https://developer.arm.com/documentation/109697/2024_09/Feature-descriptions/
+> Mea culpa, I don't know how I got this wrong in 2dfe93699c.  Still
+> getting used to the new address, I suppose.  Somehow I got it right in the
+> mailmap, though.
 >
-> The Arm section of the documentation is in very good shape, and this series only
-> has minors fixes.
->
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 
 
 
