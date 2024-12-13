@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B25EFE77186
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:20:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41F95E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB3n-00066D-8j; Fri, 13 Dec 2024 14:10:47 -0500
+	id 1tMBAx-0004lE-IB; Fri, 13 Dec 2024 14:18:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3S-0005an-C1
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:29 -0500
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ id 1tMB94-00014b-Fb
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:16 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3P-00071B-GR
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:26 -0500
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-71e15d9629bso528382a34.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:10:23 -0800 (PST)
+ id 1tMB8y-00083T-Ux
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:14 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-71e1d6c7738so1121440a34.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:16:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117022; x=1734721822; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117368; x=1734722168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=YNM7GoGVjyi9pb6tl93/GE1pyMMqg1z6U/rJvq0HOPE=;
- b=Kio51QSThz88XZ7IqsIPF0CupWyYUBZT82tpVw4ixlr9pcnKvywGlVqfbQTykxdqg1
- nhuUoRgLlW1Q2Sm7HLgxJb1ppp/9DxHUQ+IXpuiDC527lQUxaL9tGhRS1iBjli9lOTw3
- xbg4WGkX0CAkQUbc6S5dZ8lFOV8uFjtU6n5RcZIxWoVBT/wfjNJLlZFm1kyO/evoP7O5
- xAtgaxBxidYpmjunbJyY5UikNmD4mcr7FuDKj38/ObzaxoXbmhgeaq3fAtxcTtmJnBC/
- EKQD6Fum5atlmXidGrrolpSQb3uNhxP9XmmtzECgq5mfSb3ljn7Vmgsj3pxTKUT/yz3V
- 2GtA==
+ bh=r5mnyXonXiy4zaF6iAQaiGzQHiUuvaz9CiX/0uI1U14=;
+ b=EwFYGakBG+P52gtY4MP4YEt/AAthic1qFKZoOD2kbasKrfPtsbX+5V/U+UAr4cT3Jh
+ /A2pjxFZoa1x18Stb9WEiZtGV5DOCLBHOOeBfF7qSCglVDk38vzna4ag0nEc5Zfn7QCj
+ ofFuhVrukMo4/l/6qwSLBpvaaVTfJX4OaiGV/IKt9AGa65oymCN88H5eOLpevplooCu1
+ cHNN8HoqA3B8DnDxUgvfVlUTrkZsC/rnISpKqdfm464nin2rdsS73aQymPDJuVoGPLRV
+ c33JtyXvv4s8bIpwUZOjU6A72AdTeEDLBqr4iZUByPKo6JocQzohIAgGO/nLjysVm+Sx
+ y2WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117022; x=1734721822;
+ d=1e100.net; s=20230601; t=1734117368; x=1734722168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YNM7GoGVjyi9pb6tl93/GE1pyMMqg1z6U/rJvq0HOPE=;
- b=ccA9puFoMqWAS73QfEtXuQJIbEsccgoRzmJ4cewGFBo4jMEK2Cw1BCb8BS/RjM7RKD
- ehML1HALX0ZzOsz84CVPalJrOpc7oEKXOUZzO9wg31ENpLMXNTgPoCZ7TIW1+BXVGi5h
- XXs7Tr3CYSCfeYw9GC9MuQ3xZX3ImJREs7DAYagSjKL1mMoAINGqFIjO1Kh8DoN36+LT
- hfuDPklgxMqKgYcMWpgh5+FZfxREtdjQBbndrEksMswZJO8Kf5MgNJ+4I0RsNGepLvI9
- aXmmM27wdbksq04SDypCcCxgqp5jRnLFsDub1nbWYS5QvDwQQN6WYXVqetGPVzjpISQb
- RJpQ==
-X-Gm-Message-State: AOJu0YwEXUlE34vD8IALybM5z8v7nmGJ7cVkS7IpNPpdxeUCBhs/X+f2
- jc9VUFLJzpQlUXRQ+V+COXwi/uLEzeXQSPAjoU1GpkSMXma70FRiTVAFSmtJ1nDzaRDx9JL9xvF
- rhUWA5sJU
-X-Gm-Gg: ASbGncuupQnRhnpwL7KzfuwRT8eFoxuqU+ILlkx+qeSa0AUohJ3RUrxToVw/2mbSNrq
- l5gorcRSPYT+qo4UpHdoqw7O1Rq/R8g2qyVEKi37xKqsGgU5hvgvOgu9c+yyQ0AGctu32+/5iii
- 3JvstvZ0WhugXdlMU1WSdoWVHacKdArzbsXpzCmsne04iFn9BLpj9LbGEVA4jV9IXC2HudM/E+4
- 1eCuGEJI210pcw1R6eu3OJX7rPS4BVnjDQ7TX+4f20Dtg1iXcGeLw2+FhtY8N0P
-X-Google-Smtp-Source: AGHT+IHr0INjwVzgtiBXE9quaOGtoLF1XTz33VkEZb2w7XZaCpxw0pkK4Ss/q5sPUZy5df58fe/wsg==
-X-Received: by 2002:a05:6830:658a:b0:71d:e0b8:5f0f with SMTP id
- 46e09a7af769-71e3ba43471mr2152421a34.29.1734117022151; 
- Fri, 13 Dec 2024 11:10:22 -0800 (PST)
+ bh=r5mnyXonXiy4zaF6iAQaiGzQHiUuvaz9CiX/0uI1U14=;
+ b=Mse2UjDjBJSFd8FPo35Jkz943+uKtKmjs+t7w/C4wccyvD5+tjNDikVg8UzeD+lYUM
+ pdOOD51cW60/fCq1WhabLBrnecn3FONH2B0uO87dK5Eta0whmBwspVgLKT4TNRfarvWt
+ NQjIjn9XvlLZB+Eko8jaAUW/n4Pm6gvAjdGYrlvuU7EvkGFZQZrUuBzT/7defXuLj+h6
+ cSB4afug8+KwWNh9Vax+cSzNUiopbWNnOgOdYZjwlFHkYRjJqifHygATIhPQ2i3iUAfd
+ MjI2Q51pH0dtHa+f6zsEjRULY/sn9mNJUn+x98jN1k3rRHWnYY3IdRikUhTMj3gKrSco
+ p58w==
+X-Gm-Message-State: AOJu0Yz/N+sUUkx8HvUfYYei8tivbvXmN6tV0R4Jahv48ooHMeN38kq8
+ VoqQcEIfk2uJyak813f1ATo2Lps1OCuIVaK33M3/Ew9DTfP2Ynz289irsUW4n6Ni/dBlGvyTQgb
+ bV3GG5oRo
+X-Gm-Gg: ASbGncskNx7kASK74driSsCsederVlTC37XrF7xOwRs2Uyk8kOMf9A52/M7ctXbTn7c
+ 6OFSSygzevZXYi9Qvqagjj72vj43gN/rU63qIrBsbcM+L9w0sf6fnkcLMxqj/GOQWEHUMy+8csa
+ CzHIzD1MOpfrfT11t8+D8x4zbCJsCAxkwbuPqyWAZOSSc0qAlW7rFJsBS0cWlw5ygF9FeUsqy3/
+ BSbQnT7+Tru/uJrQi/muHK7n/9NqvPv2jgoK5qUm6KCVRT70wPJiD0IZvWWMYW0
+X-Google-Smtp-Source: AGHT+IEJ015TDxooW1bcwkHq7R9aa7avAnhNp6/EbYwYtTQCLhkaK7I4Y49PNsTHyeblDmwhqU7/ww==
+X-Received: by 2002:a05:6870:7007:b0:29e:65ed:5c70 with SMTP id
+ 586e51a60fabf-2a3ac99010amr2092273fac.30.1734116883097; 
+ Fri, 13 Dec 2024 11:08:03 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.10.21
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:10:21 -0800 (PST)
+ Fri, 13 Dec 2024 11:08:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Subject: [PATCH 27/71] hw/hyperv: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:01 -0600
-Message-ID: <20241213190750.2513964-32-richard.henderson@linaro.org>
+Cc: Roman Artemev <roman.artemev@syntacore.com>, qemu-stable@nongnu.org,
+ Denis Tomashev <denis.tomashev@syntacore.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG target)
+Subject: [PULL 2/4] tcg/riscv: Fix StoreStore barrier generation
+Date: Fri, 13 Dec 2024 13:06:34 -0600
+Message-ID: <20241213190750.2513964-5-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,61 +101,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Roman Artemev <roman.artemev@syntacore.com>
+
+On RISC-V to StoreStore barrier corresponds
+`fence w, w` not `fence r, r`
+
+Cc: qemu-stable@nongnu.org
+Fixes: efbea94c76b ("tcg/riscv: Add slowpath load and store instructions")
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Denis Tomashev <denis.tomashev@syntacore.com>
+Signed-off-by: Roman Artemev <roman.artemev@syntacore.com>
+Message-ID: <e2f2131e294a49e79959d4fa9ec02cf4@syntacore.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/hyperv/hv-balloon.c | 2 +-
- hw/hyperv/syndbg.c     | 2 +-
- hw/hyperv/vmbus.c      | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ tcg/riscv/tcg-target.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 3a9ef07691..74897b1604 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -1733,7 +1733,7 @@ static void hv_balloon_finalize(Object *obj)
-     hv_balloon_unrealize_finalize_common(balloon);
+diff --git a/tcg/riscv/tcg-target.c.inc b/tcg/riscv/tcg-target.c.inc
+index f8331e4688..96f9a7e348 100644
+--- a/tcg/riscv/tcg-target.c.inc
++++ b/tcg/riscv/tcg-target.c.inc
+@@ -1624,7 +1624,7 @@ static void tcg_out_mb(TCGContext *s, TCGArg a0)
+         insn |= 0x02100000;
+     }
+     if (a0 & TCG_MO_ST_ST) {
+-        insn |= 0x02200000;
++        insn |= 0x01100000;
+     }
+     tcg_out32(s, insn);
  }
- 
--static Property hv_balloon_properties[] = {
-+static const Property hv_balloon_properties[] = {
-     DEFINE_PROP_BOOL("status-report", HvBalloon,
-                      status_report.enabled, false),
- 
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index 065e12fb1e..0193addd42 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -366,7 +366,7 @@ static const VMStateDescription vmstate_hv_syndbg = {
-     .unmigratable = 1,
- };
- 
--static Property hv_syndbg_properties[] = {
-+static const Property hv_syndbg_properties[] = {
-     DEFINE_PROP_STRING("host_ip", HvSynDbg, host_ip),
-     DEFINE_PROP_UINT16("host_port", HvSynDbg, host_port, 50000),
-     DEFINE_PROP_BOOL("use_hcalls", HvSynDbg, use_hcalls, false),
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index b36bd3d67d..3d1f4d14e8 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -2346,7 +2346,7 @@ static void vmbus_dev_unrealize(DeviceState *dev)
-     free_channels(vdev);
- }
- 
--static Property vmbus_dev_props[] = {
-+static const Property vmbus_dev_props[] = {
-     DEFINE_PROP_UUID("instanceid", VMBusDevice, instanceid),
-     DEFINE_PROP_END_OF_LIST()
- };
-@@ -2653,7 +2653,7 @@ static const VMStateDescription vmstate_vmbus_bridge = {
-     },
- };
- 
--static Property vmbus_bridge_props[] = {
-+static const Property vmbus_bridge_props[] = {
-     DEFINE_PROP_UINT8("irq", VMBusBridge, irq, 7),
-     DEFINE_PROP_END_OF_LIST()
- };
 -- 
 2.43.0
 
