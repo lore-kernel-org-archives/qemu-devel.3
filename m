@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62377E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:22:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA642E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:22:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB97-00017B-L6; Fri, 13 Dec 2024 14:16:17 -0500
+	id 1tMB92-0000zj-D1; Fri, 13 Dec 2024 14:16:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7O-0007SV-0c
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:30 -0500
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
+ id 1tMB7G-00075u-8W
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:22 -0500
+Received: from mail-oa1-x30.google.com ([2001:4860:4864:20::30])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7I-0007bh-WC
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:26 -0500
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-29ff039dab2so1026653fac.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:24 -0800 (PST)
+ id 1tMB7C-0007Zk-LA
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:21 -0500
+Received: by mail-oa1-x30.google.com with SMTP id
+ 586e51a60fabf-2a01bcd0143so1103940fac.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117264; x=1734722064; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117255; x=1734722055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DWJFCtfZ2w3RHGCdV+UIqP2KUY8RC4HX5Q5Yyp1FU9E=;
- b=g+eoQ4DnfqQ0kFfK+L/0/A1+hf9mr2ppp0fzdLhPlssE3yIsgDU0HN1OuM1vEerzsm
- c0pnYy1O5qkU1e4svLA8SLpCXOkqvfecrdRX6cR8rNKVT8QtaMU5cpkCRU4cd/G0WlIP
- 4ambk8SqVth0ug9lnymhELD192lAh7l0tA8eu1amx95HUvYs1TBt8lbZgovJKQYNA9u4
- M24N7vycUvO26pftCcd9vR8JdeguonCgFsbv1PsJKb/gYThpShj+WXHCQMBEiJ/KeDxC
- q7bBBzUytNoHlvS++l+Tr6A//T++Ma3ljKI5VOqNvcz7GZ9saqfiT1pqQFbr1jqj8KEw
- X7ag==
+ bh=n5D+8o6Yro+Zz5cVKT8gicnF5oLBwjRb2DvBbHQ0DT4=;
+ b=PpEGeeC9Tu1owfedzcwmhKASjwBf9BxEVafuSIxghO+02QHcu8uYMDCIM95K6BYWUM
+ y6Ns7P+9SbD1dWib5XELepF2lYMIMulfR4bttuwqo6DWlRtW3BkY3zwHrxsOuRKfyA/A
+ OBSVaMwer+XmfQyLFbB1PYS71x2+zJoyI7Zfj6iTJe16dVmvMcUAuozuLoZRtBlXCRhn
+ JBTRXUUfrxgZOliiHMW/BStEVX80NDDXRsjF4Cs0k6UNMaBZ3kDo4uZLEB6l7VYPJ8Ao
+ eTG5Zdf3pS2cqK8Vn15oO9yEY/NW3vyTqIcQ92lirMZjLDhTZew3uYvSzt77aCkLxzLr
+ kFHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117264; x=1734722064;
+ d=1e100.net; s=20230601; t=1734117255; x=1734722055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DWJFCtfZ2w3RHGCdV+UIqP2KUY8RC4HX5Q5Yyp1FU9E=;
- b=BeACEJGKBWOn0vAbiz30dcdM02OO/GoFCwCHV50uC8c8vj9sty4gUsaAmC1BoFlGk/
- gORdnviSe1cymtAu9CaVENlIqbM9jsivkkweG7zBIAPkI542fkzXR+RJCnYaFxg2PC38
- jfQnASjttihVSwqFphMawJ1oXbFU+4ip1TKa/e+XTd977b+HOOzThRXENPy0jw4Ri/EU
- usbYZzXgq0mzaIb1ewHBHTefwOEkgKQ2sMvwYrt20j3madkDWHdsMlIOQuGUShtDNYZ1
- mWfTKLgzKNWtWJjlJYiYG4QsHJQLmD9X7o7Z8Be3eZfPTbo8RLeWLup0ZY4D++te8w45
- 7QDw==
-X-Gm-Message-State: AOJu0Yy1IjumYXQEY739RHJi4u1zCHmyCV18mD0RTpSzhZbICZaHLZus
- 01hbkSNRmSUse5GgoQIq03FIhIj8dKxdj+0jE1Tnms6w6Y/uLm/bo5rHfAqRc3/o6lN0EfWktnV
- za5CJdQkv
-X-Gm-Gg: ASbGncszxsvyDRESQglFSN34m4cQsZadnsVnPYdAIG9J9BS9hejSXnmPc95s17/LZF5
- ifSWdbmzhCmZintazOxomB2C1x16D/9sqOApSo4+RIpw2oFJNrLXOJY193dXvjpz2eQ+4c/OrLQ
- bxeRzxZu/O7i06l8wIht4JDtO1BGgfH+un5xWxrVungEYhKiWX+EeSu0/BkYmGYyNRUTERkKhHt
- fDLcp8vZI4muXi3ykd0R4bE+Z3D8ioVdwzzdV4vZVGzXNyP6D1kUkmOuX4T0coP
-X-Google-Smtp-Source: AGHT+IGNXrCaGxsBPywxVZ4GCh/w4MPht+bRedsnh2I/OWNK0MSbIhWxY7wlKgBkz6ltwJdlJfdNZA==
-X-Received: by 2002:a05:6808:1596:b0:3ea:37a7:394 with SMTP id
- 5614622812f47-3eba6955bd8mr1970897b6e.34.1734117263825; 
- Fri, 13 Dec 2024 11:14:23 -0800 (PST)
+ bh=n5D+8o6Yro+Zz5cVKT8gicnF5oLBwjRb2DvBbHQ0DT4=;
+ b=e74+hGGvb6NHhIN4sxfrBMkPk3jEJxZXCQFFYO1COIUiHPEB+Xki/IQolRWRKSIEg0
+ y3Bkiwc4Xy3POAD2YY2xm5uPwXvL0VriYIHAdTQlZiJo9OgczSDDmlEkzv1Hq+1Z0yVp
+ 1wtnn2i0sKzyDRSAhUA9pwz9dFVIxgPnvaBGIuTJwNUJIHxAhVrwCqe+6CGA/Nw+1gwy
+ +2+fTaHV9I+OaFY+F/haTpqil9YQA9khkY1LWdTKsvjP0miU7X/1L3dcIiJCtpjC+Yeo
+ ZxvAUHoTnc4yUpXjdr0sqTa0S22hxEHaUQUdSWxpP7xYXkvI9NWqp1y1ifhMSzgP7kDk
+ fG2w==
+X-Gm-Message-State: AOJu0YxoPrDyY3YjqApxvBZB3Vp2VFyS2S6p3XP/41Vl3A9a9O1aXaUl
+ eMx/8cDUicpesqEH026EPTbZGnqiMzLXneJr8RW8+gcoPCpBR9i3VYJxlgR8A7aemADUaA9/YQ5
+ 4KiR/IDnZ
+X-Gm-Gg: ASbGncvRwHc9qEieWSKAKa/BpKDVq1xXMrGRqyCwVMKiTgYU6Io+I6O73Qoi43DUGuE
+ v0ej2V2xA9uIw9OXM/iqzSRiHQq8L2fgEiLtX3/QehjWU7jX4U+UPAUvXAVCGahD3bEiXBTTFfN
+ lvDiq3e0Ay7pPnoNth9Y3YPUgo6i+z2bNNmc90TfLNq23PAu+aH98sMB4zpE4o7uU9kKm7lMTTm
+ WkDm72C9opjq3JP5JMpsm84zJMGdTx971RwnGzbXPWcQkuSPyPH3ZaLIX+hkNDr
+X-Google-Smtp-Source: AGHT+IFhcJeeQrJMN361yXRsu4JxFeL9dGBVLt0J+yFd3Tz9woaBSW+oEzuDMMNoGACH9/iM7xP1dQ==
+X-Received: by 2002:a05:6808:1887:b0:3eb:556e:dde6 with SMTP id
+ 5614622812f47-3eba6867bb5mr1879165b6e.12.1734117255043; 
+ Fri, 13 Dec 2024 11:14:15 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.21
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:14:23 -0800 (PST)
+ Fri, 13 Dec 2024 11:14:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
- Hannes Reinecke <hare@suse.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Raphael Norwitz <raphael@enfabrica.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- qemu-block@nongnu.org (open list:megasas),
- qemu-ppc@nongnu.org (open list:sPAPR (pseries))
-Subject: [PATCH 55/71] hw/scsi: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:29 -0600
-Message-ID: <20241213190750.2513964-60-richard.henderson@linaro.org>
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:OpenTitan)
+Subject: [PATCH 51/71] hw/riscv: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:25 -0600
+Message-ID: <20241213190750.2513964-56-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::30;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,184 +104,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/scsi/megasas.c         | 6 +++---
- hw/scsi/mptsas.c          | 2 +-
- hw/scsi/scsi-bus.c        | 2 +-
- hw/scsi/scsi-disk.c       | 6 +++---
- hw/scsi/scsi-generic.c    | 2 +-
- hw/scsi/spapr_vscsi.c     | 2 +-
- hw/scsi/vhost-scsi.c      | 2 +-
- hw/scsi/vhost-user-scsi.c | 2 +-
- hw/scsi/virtio-scsi.c     | 2 +-
- hw/scsi/vmw_pvscsi.c      | 2 +-
- 10 files changed, 14 insertions(+), 14 deletions(-)
+ hw/riscv/opentitan.c       | 2 +-
+ hw/riscv/riscv-iommu-pci.c | 2 +-
+ hw/riscv/riscv-iommu.c     | 2 +-
+ hw/riscv/riscv_hart.c      | 2 +-
+ hw/riscv/sifive_u.c        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index df58aeb995..8323cd18e3 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -2448,7 +2448,7 @@ static void megasas_scsi_realize(PCIDevice *dev, Error **errp)
-     scsi_bus_init(&s->bus, sizeof(s->bus), DEVICE(dev), &megasas_scsi_info);
+diff --git a/hw/riscv/opentitan.c b/hw/riscv/opentitan.c
+index e2830e9dc2..8ce85ea9f7 100644
+--- a/hw/riscv/opentitan.c
++++ b/hw/riscv/opentitan.c
+@@ -306,7 +306,7 @@ static void lowrisc_ibex_soc_realize(DeviceState *dev_soc, Error **errp)
+         memmap[IBEX_DEV_IBEX_CFG].base, memmap[IBEX_DEV_IBEX_CFG].size);
  }
  
--static Property megasas_properties_gen1[] = {
-+static const Property megasas_properties_gen1[] = {
-     DEFINE_PROP_UINT32("max_sge", MegasasState, fw_sge,
-                        MEGASAS_DEFAULT_SGE),
-     DEFINE_PROP_UINT32("max_cmds", MegasasState, fw_cmds,
-@@ -2462,7 +2462,7 @@ static Property megasas_properties_gen1[] = {
-     DEFINE_PROP_END_OF_LIST(),
+-static Property lowrisc_ibex_soc_props[] = {
++static const Property lowrisc_ibex_soc_props[] = {
+     DEFINE_PROP_UINT32("resetvec", LowRISCIbexSoCState, resetvec, 0x20000400),
+     DEFINE_PROP_END_OF_LIST()
  };
- 
--static Property megasas_properties_gen2[] = {
-+static const Property megasas_properties_gen2[] = {
-     DEFINE_PROP_UINT32("max_sge", MegasasState, fw_sge,
-                        MEGASAS_DEFAULT_SGE),
-     DEFINE_PROP_UINT32("max_cmds", MegasasState, fw_cmds,
-@@ -2487,7 +2487,7 @@ typedef struct MegasasInfo {
-     int mmio_bar;
-     int osts;
-     const VMStateDescription *vmsd;
--    Property *props;
-+    const Property *props;
-     InterfaceInfo *interfaces;
- } MegasasInfo;
- 
-diff --git a/hw/scsi/mptsas.c b/hw/scsi/mptsas.c
-index c6bc3479e9..a06113d908 100644
---- a/hw/scsi/mptsas.c
-+++ b/hw/scsi/mptsas.c
-@@ -1410,7 +1410,7 @@ static const VMStateDescription vmstate_mptsas = {
-     }
- };
- 
--static Property mptsas_properties[] = {
-+static const Property mptsas_properties[] = {
-     DEFINE_PROP_UINT64("sas_address", MPTSASState, sas_addr, 0),
-     /* TODO: test MSI support under Windows */
-     DEFINE_PROP_ON_OFF_AUTO("msi", MPTSASState, msi, ON_OFF_AUTO_AUTO),
-diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
-index 53eff5dd3d..2f1678d51e 100644
---- a/hw/scsi/scsi-bus.c
-+++ b/hw/scsi/scsi-bus.c
-@@ -1943,7 +1943,7 @@ const VMStateDescription vmstate_scsi_device = {
-     }
- };
- 
--static Property scsi_props[] = {
-+static const Property scsi_props[] = {
-     DEFINE_PROP_UINT32("channel", SCSIDevice, channel, 0),
-     DEFINE_PROP_UINT32("scsi-id", SCSIDevice, id, -1),
-     DEFINE_PROP_UINT32("lun", SCSIDevice, lun, -1),
-diff --git a/hw/scsi/scsi-disk.c b/hw/scsi/scsi-disk.c
-index 7f13b0588f..a47b80907f 100644
---- a/hw/scsi/scsi-disk.c
-+++ b/hw/scsi/scsi-disk.c
-@@ -3207,7 +3207,7 @@ static const TypeInfo scsi_disk_base_info = {
-     DEFINE_PROP_BOOL("migrate-emulated-scsi-request", SCSIDiskState, migrate_emulated_scsi_request, true)
- 
- 
--static Property scsi_hd_properties[] = {
-+static const Property scsi_hd_properties[] = {
-     DEFINE_SCSI_DISK_PROPERTIES(),
-     DEFINE_PROP_BIT("removable", SCSIDiskState, features,
-                     SCSI_DISK_F_REMOVABLE, false),
-@@ -3267,7 +3267,7 @@ static const TypeInfo scsi_hd_info = {
-     .class_init    = scsi_hd_class_initfn,
- };
- 
--static Property scsi_cd_properties[] = {
-+static const Property scsi_cd_properties[] = {
-     DEFINE_SCSI_DISK_PROPERTIES(),
-     DEFINE_PROP_UINT64("wwn", SCSIDiskState, qdev.wwn, 0),
-     DEFINE_PROP_UINT64("port_wwn", SCSIDiskState, qdev.port_wwn, 0),
-@@ -3310,7 +3310,7 @@ static const TypeInfo scsi_cd_info = {
- };
- 
- #ifdef __linux__
--static Property scsi_block_properties[] = {
-+static const Property scsi_block_properties[] = {
-     DEFINE_BLOCK_ERROR_PROPERTIES(SCSIDiskState, qdev.conf),
-     DEFINE_PROP_DRIVE("drive", SCSIDiskState, qdev.conf.blk),
-     DEFINE_PROP_BOOL("share-rw", SCSIDiskState, qdev.conf.share_rw, false),
-diff --git a/hw/scsi/scsi-generic.c b/hw/scsi/scsi-generic.c
-index 76f04a5ee8..d7ae7549d0 100644
---- a/hw/scsi/scsi-generic.c
-+++ b/hw/scsi/scsi-generic.c
-@@ -772,7 +772,7 @@ static SCSIRequest *scsi_new_request(SCSIDevice *d, uint32_t tag, uint32_t lun,
-     return scsi_req_alloc(&scsi_generic_req_ops, d, tag, lun, hba_private);
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index a42242532d..a695314bbe 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -157,7 +157,7 @@ static void riscv_iommu_pci_init(Object *obj)
+     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
  }
  
--static Property scsi_generic_properties[] = {
-+static const Property scsi_generic_properties[] = {
-     DEFINE_PROP_DRIVE("drive", SCSIDevice, conf.blk),
-     DEFINE_PROP_BOOL("share-rw", SCSIDevice, conf.share_rw, false),
-     DEFINE_PROP_UINT32("io_timeout", SCSIDevice, io_timeout,
-diff --git a/hw/scsi/spapr_vscsi.c b/hw/scsi/spapr_vscsi.c
-index c75a6c8807..7c55e4d40f 100644
---- a/hw/scsi/spapr_vscsi.c
-+++ b/hw/scsi/spapr_vscsi.c
-@@ -1250,7 +1250,7 @@ static int spapr_vscsi_devnode(SpaprVioDevice *dev, void *fdt, int node_off)
-     return 0;
+-static Property riscv_iommu_pci_properties[] = {
++static const Property riscv_iommu_pci_properties[] = {
+     DEFINE_PROP_UINT16("vendor-id", RISCVIOMMUStatePci, vendor_id,
+                        PCI_VENDOR_ID_REDHAT),
+     DEFINE_PROP_UINT16("device-id", RISCVIOMMUStatePci, device_id,
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index bbc95425b3..07fed36986 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2235,7 +2235,7 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+     g_hash_table_unref(s->ctx_cache);
  }
  
--static Property spapr_vscsi_properties[] = {
-+static const Property spapr_vscsi_properties[] = {
-     DEFINE_SPAPR_PROPERTIES(VSCSIState, vdev),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/scsi/vhost-scsi.c b/hw/scsi/vhost-scsi.c
-index 22d16dc26b..effb8dab1f 100644
---- a/hw/scsi/vhost-scsi.c
-+++ b/hw/scsi/vhost-scsi.c
-@@ -343,7 +343,7 @@ static struct vhost_dev *vhost_scsi_get_vhost(VirtIODevice *vdev)
-     return &vsc->dev;
+-static Property riscv_iommu_properties[] = {
++static const Property riscv_iommu_properties[] = {
+     DEFINE_PROP_UINT32("version", RISCVIOMMUState, version,
+         RISCV_IOMMU_SPEC_DOT_VER),
+     DEFINE_PROP_UINT32("bus", RISCVIOMMUState, bus, 0x0),
+diff --git a/hw/riscv/riscv_hart.c b/hw/riscv/riscv_hart.c
+index 613ea2aaa0..0df454772f 100644
+--- a/hw/riscv/riscv_hart.c
++++ b/hw/riscv/riscv_hart.c
+@@ -27,7 +27,7 @@
+ #include "hw/qdev-properties.h"
+ #include "hw/riscv/riscv_hart.h"
+ 
+-static Property riscv_harts_props[] = {
++static const Property riscv_harts_props[] = {
+     DEFINE_PROP_UINT32("num-harts", RISCVHartArrayState, num_harts, 1),
+     DEFINE_PROP_UINT32("hartid-base", RISCVHartArrayState, hartid_base, 0),
+     DEFINE_PROP_STRING("cpu-type", RISCVHartArrayState, cpu_type),
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index c5e74126b1..124ffd4842 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -936,7 +936,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Error **errp)
+                        qdev_get_gpio_in(DEVICE(s->plic), SIFIVE_U_QSPI2_IRQ));
  }
  
--static Property vhost_scsi_properties[] = {
-+static const Property vhost_scsi_properties[] = {
-     DEFINE_PROP_STRING("vhostfd", VirtIOSCSICommon, conf.vhostfd),
-     DEFINE_PROP_STRING("wwpn", VirtIOSCSICommon, conf.wwpn),
-     DEFINE_PROP_UINT32("boot_tpgt", VirtIOSCSICommon, conf.boot_tpgt, 0),
-diff --git a/hw/scsi/vhost-user-scsi.c b/hw/scsi/vhost-user-scsi.c
-index 55e4be5b34..d5265c57bc 100644
---- a/hw/scsi/vhost-user-scsi.c
-+++ b/hw/scsi/vhost-user-scsi.c
-@@ -341,7 +341,7 @@ static void vhost_user_scsi_unrealize(DeviceState *dev)
-     virtio_scsi_common_unrealize(dev);
- }
- 
--static Property vhost_user_scsi_properties[] = {
-+static const Property vhost_user_scsi_properties[] = {
-     DEFINE_PROP_CHR("chardev", VirtIOSCSICommon, conf.chardev),
-     DEFINE_PROP_UINT32("boot_tpgt", VirtIOSCSICommon, conf.boot_tpgt, 0),
-     DEFINE_PROP_UINT32("num_queues", VirtIOSCSICommon, conf.num_queues,
-diff --git a/hw/scsi/virtio-scsi.c b/hw/scsi/virtio-scsi.c
-index 6637cfeaf5..c0a4f1a620 100644
---- a/hw/scsi/virtio-scsi.c
-+++ b/hw/scsi/virtio-scsi.c
-@@ -1285,7 +1285,7 @@ static void virtio_scsi_device_unrealize(DeviceState *dev)
-     qemu_mutex_destroy(&s->tmf_bh_lock);
- }
- 
--static Property virtio_scsi_properties[] = {
-+static const Property virtio_scsi_properties[] = {
-     DEFINE_PROP_UINT32("num_queues", VirtIOSCSI, parent_obj.conf.num_queues,
-                        VIRTIO_SCSI_AUTO_NUM_QUEUES),
-     DEFINE_PROP_UINT32("virtqueue_size", VirtIOSCSI,
-diff --git a/hw/scsi/vmw_pvscsi.c b/hw/scsi/vmw_pvscsi.c
-index 57761b5594..46cec531cc 100644
---- a/hw/scsi/vmw_pvscsi.c
-+++ b/hw/scsi/vmw_pvscsi.c
-@@ -1296,7 +1296,7 @@ static const VMStateDescription vmstate_pvscsi = {
-     }
- };
- 
--static Property pvscsi_properties[] = {
-+static const Property pvscsi_properties[] = {
-     DEFINE_PROP_UINT8("use_msg", PVSCSIState, use_msg, 1),
-     DEFINE_PROP_BIT("x-old-pci-configuration", PVSCSIState, compat_flags,
-                     PVSCSI_COMPAT_OLD_PCI_CONFIGURATION_BIT, false),
+-static Property sifive_u_soc_props[] = {
++static const Property sifive_u_soc_props[] = {
+     DEFINE_PROP_UINT32("serial", SiFiveUSoCState, serial, OTP_SERIAL),
+     DEFINE_PROP_STRING("cpu-type", SiFiveUSoCState, cpu_type),
+     DEFINE_PROP_END_OF_LIST()
 -- 
 2.43.0
 
