@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B14B4E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:39:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D161AE77183
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:39:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9Yo-0005HY-PZ; Fri, 13 Dec 2024 12:34:42 -0500
+	id 1tM9Yb-0003M5-5p; Fri, 13 Dec 2024 12:34:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9YD-0000Rh-K4
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:06 -0500
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1tM9Xw-0008Bb-HM
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:49 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Y6-0001lo-5C
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:05 -0500
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so11943825e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:56 -0800 (PST)
+ id 1tM9Xp-0001hd-Le
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:48 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4361e89b6daso14314015e9.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111235; x=1734716035; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111217; x=1734716017; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pravC1a+TcYMOWzbSQtbx3p2RApZHY6cS9IpPtAW//g=;
- b=Lgakri4QriUSQVKQesjJRzvP0NjOBfIzF8wnVC6iWnP1mo42OUqryXRFsUsFTufTtX
- Jc8qIDedlIC0snvmyCIiIPwI2FeByDw5iYvZoBNSh43dk5LtEXv8qmMMQNSBs8L+48pO
- EBivujoE6mcgU1oGb2EjugI7+j59d7kl+0DIQwGxUe69RPrjUoxdQU2qz/tSiCNYckau
- oFwuhYyd1Hm+YkfhkI32Bn5eo59kd9SwXFIcQK8D2wQR5BQaSBY+7lWt6UCKs3As+tJK
- AkUZBZEyeTZQS3AdJ8gD10eOqP9zDnJ/nldDS0x5Ga7ZxVBwVduuYrdZdHJ59HQ++K9d
- ITkg==
+ :reply-to; bh=C+lmDUrMmLnFsjhqtBw6sFu4LOTBJyJP/pfhA57qrQQ=;
+ b=wNXV3oSRFaJeVDOb1rQVlHyXYP0+jtMr6lZHjQ2Kcmto3zgrxYmAcGbqXP6GEyNN06
+ jUJoYfxLbCEhh4WWHex5L1pm21p3MTVWfu+1VxAZS/F/iBd23ByY1yPMji6WRhPlVpPR
+ qxanWJZpp3uPfEbrOtIUr+T3epoCI7yWpUXjATUKc2jGz8Fvy0RjlatzRjVjAsNxgCJe
+ 1WjhmBT8+3iRf2jnQSlpwfr5jqNYCoFfpw9lSpD/cfwxRG/jJhqdkwP4B/sDdbTZtMZF
+ Mt9+1ZEfV4BcxMnTW8uMFn3/pi+5e1B0rJK0tdeKPYc0r3PMMVktcAH73YAAY3kEMRRY
+ 6nsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111235; x=1734716035;
+ d=1e100.net; s=20230601; t=1734111217; x=1734716017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pravC1a+TcYMOWzbSQtbx3p2RApZHY6cS9IpPtAW//g=;
- b=uewWJqFYUDMvco4VjSAaGYbq6rqnHwh0bxk78jzMbznGIKsuhN9gtDnCtSUEZBobVZ
- LEmvIvBcPkp4G6WRlqlrT1YMnpi6en3Y6pzWgy/NBQQqKV4uS/lTU+C0pLq5c1DTe+GH
- a/jxSEju5bTj2eTRU6/kc/n7kOHQJAEnuuU5C8toU4fsyG0/Nssn3YY2DBhM3gEWkOMk
- AlZ8LegsMw4r54Sdx425UNNTgndcDSBCPwdMRtwZPJLjS8RqOWqd3XaO9Xu/xADbgVoF
- 3U/szmbOJwrLSsH/KJ2Ev0tZUdiRfcQoGfgosRyjpB/hpAUIlOeWfJ7z9XYbqoE90OPc
- 3c6g==
-X-Gm-Message-State: AOJu0Yw0/yF7kUu0sAgKGHk4f3uCHuLM2lAsrVkjrS109dkeb+pIiRQU
- EmUdqDABO++GlQ/PHvq6ksNI24+Bw+PWzIqdReRgFe9+sgIHIrvcBJfH1nXKh/ryhcRek6x4H1F
- 2
-X-Gm-Gg: ASbGncsEPMuvsFgW/Xj8Ir8V4g8+Bxibjm9ME/0UzSfFfjrAonFTUBRdFibKJy2eHcQ
- jGpmb6d70bxGbvVY0ag52QDBljKK14Rx4R0GW/7krnrUCgpSIz9yHmUwOttqCi5rlOxdTpMkrX7
- kjGBaBaoxc5r9RAVz8HuyW1bZEvGNunCh++gnSg4/+HLy11on5VsinsYGyrH5BsGtxPHEwy1E1X
- tqX6rlTGA57oYcRb4QaVKeyQu9a91tPasqlIGEzk0JaZJG6DJRO9CnXkLqqEA==
-X-Google-Smtp-Source: AGHT+IFt1lPGRzPsOfzKkRYC/OazglcCU91NDoPRAA8ptqlgicX/BOtfUpXmRXNVEJB0eIOm8prh5A==
-X-Received: by 2002:a05:600c:4f01:b0:434:f3a1:b210 with SMTP id
- 5b1f17b1804b1-4362aab0faamr29859315e9.32.1734111234778; 
- Fri, 13 Dec 2024 09:33:54 -0800 (PST)
+ bh=C+lmDUrMmLnFsjhqtBw6sFu4LOTBJyJP/pfhA57qrQQ=;
+ b=gk2C1y+3+H9a/Rk5jStRn+Tpgd++FXshjagwGnBXZoQSdahXNKNrEggcrWrDd9REVE
+ DIN+GdX9tuy6/rj0Lr65eSMQmPsPU5BfuT0fQCz+FzOmUoD+JPpKPteVR9GBpdd7hI6M
+ mBDMUj0roJmmkvbk9C8SH00/Rrf1T8GL4OFIW2LIZ2nNxHBH4K7nZvqvSXq2GKpooQjP
+ xjhXwtQuMATiN7eiZT3swNKL2rXpA7Wg7sWBf8fNDiisDlPSPdsCfhS3PTsEeJiNX9Y8
+ Q4zrw5p+VC4zsDgSzkuLwOhRSkjC7MwiOzfUiqcCfPUxfkJtIAwOa8RqBhLnpfDn50a8
+ v+Tg==
+X-Gm-Message-State: AOJu0YzHKFndUaGuK0PysUqLR1w6abZ03RKr56121FLYNWMi3SMJkGAZ
+ WbM1HatVrtj2mE3aclrlLxsdmOWmYRVzdvcgnMpbBaxk5hJJl53ltU+mzgus2S5q1NHlb/PrxHm
+ X
+X-Gm-Gg: ASbGnctOWWPfTNQ9c8XqAz5krr0IDc6NrbC2VpNRsaFa/4Mmcxj7kPXE0paoh0jN7Tp
+ rVw8kNEvZqYxzALelrGCkz6Mb/cqI86gv4yQEj+sAx8jyQnSWpF32lyeMsVnNnuH/W33IG7SO0k
+ GaejFZq6h+OcMTw7KoQ2tnSTzHVeGOAcCm2+TG68m4x/sbTRM/540+6wj8Rep9BLZJUTEY7JkVm
+ eLm9BdqXhj1lAGXG1xjYy1pScWUtBPsoC9XN7Au/yz16STH01dktmfPxa9DLg==
+X-Google-Smtp-Source: AGHT+IEuYDHbLmRLTnos/X4EkFczWGaD71ox0XKcnBUgUxBrOUhc4M+Zh/PxDJc1vvlVHVtW1LNlCw==
+X-Received: by 2002:a05:6000:1f82:b0:385:ed16:cac with SMTP id
+ ffacd0b85a97d-3889ad33ff4mr2292426f8f.56.1734111217564; 
+ Fri, 13 Dec 2024 09:33:37 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.53
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:54 -0800 (PST)
+ Fri, 13 Dec 2024 09:33:36 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 78/85] target/arm: Move AArch64 TLBI insns from v8_cp_reginfo[]
-Date: Fri, 13 Dec 2024 17:32:22 +0000
-Message-Id: <20241213173229.3308926-79-peter.maydell@linaro.org>
+Subject: [PULL 62/85] target/arm: Convert [US]CVTF (vector) to decodetree
+Date: Fri, 13 Dec 2024 17:32:06 +0000
+Message-Id: <20241213173229.3308926-63-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,487 +97,349 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the AArch64 TLBI insns that are declared in v8_cp_reginfo[]
-into tlb-insns.c.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Remove handle_simd_intfp_conv and handle_simd_shift_intfp_conv
+as these were the last insns decoded by those functions.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241211163036.2297116-63-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241210160452.2427965-4-peter.maydell@linaro.org
 ---
- target/arm/cpregs.h        |  11 +++
- target/arm/helper.c        | 182 +++----------------------------------
- target/arm/tcg/tlb-insns.c | 160 ++++++++++++++++++++++++++++++++
- 3 files changed, 182 insertions(+), 171 deletions(-)
+ target/arm/helper.h            |   3 +
+ target/arm/tcg/a64.decode      |  22 ++++
+ target/arm/tcg/translate-a64.c | 201 ++++++---------------------------
+ target/arm/tcg/vec_helper.c    |   7 +-
+ 4 files changed, 66 insertions(+), 167 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 851cd045b2c..a14f5bb6c98 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -1143,5 +1143,16 @@ CPAccessResult access_ttlb(CPUARMState *env, const ARMCPRegInfo *ri,
- CPAccessResult access_ttlbis(CPUARMState *env, const ARMCPRegInfo *ri,
-                              bool isread);
- bool tlb_force_broadcast(CPUARMState *env);
-+int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-+                       uint64_t addr);
-+int vae1_tlbbits(CPUARMState *env, uint64_t addr);
-+int vae1_tlbmask(CPUARMState *env);
-+int ipas2e1_tlbmask(CPUARMState *env, int64_t value);
-+void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                               uint64_t value);
-+void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                             uint64_t value);
-+void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                            uint64_t value);
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index f2cfee40de3..b227ac54d92 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -658,6 +658,9 @@ DEF_HELPER_FLAGS_4(gvec_vcvt_uh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
  
- #endif /* TARGET_ARM_CPREGS_H */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3c69225e1d9..cc7da7f1159 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4685,7 +4685,7 @@ static CPAccessResult access_tocu(CPUARMState *env, const ARMCPRegInfo *ri,
-  * Page D4-1736 (DDI0487A.b)
-  */
++DEF_HELPER_FLAGS_4(gvec_vcvt_sd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(gvec_vcvt_ud, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rm_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rm_us, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rm_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 30e1834d998..4f832e7a4c6 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -1786,3 +1786,25 @@ FRINT32Z_v      0.00 1110 0.1 00001 11101 0 ..... .....     @qrr_sd
+ FRINT32X_v      0.10 1110 0.1 00001 11101 0 ..... .....     @qrr_sd
+ FRINT64Z_v      0.00 1110 0.1 00001 11111 0 ..... .....     @qrr_sd
+ FRINT64X_v      0.10 1110 0.1 00001 11111 0 ..... .....     @qrr_sd
++
++SCVTF_vi        0.00 1110 011 11001 11011 0 ..... .....     @qrr_h
++SCVTF_vi        0.00 1110 0.1 00001 11011 0 ..... .....     @qrr_sd
++
++UCVTF_vi        0.10 1110 011 11001 11011 0 ..... .....     @qrr_h
++UCVTF_vi        0.10 1110 0.1 00001 11011 0 ..... .....     @qrr_sd
++
++&fcvt_q         rd rn esz q shift
++@fcvtq_h        . q:1 . ...... 001 .... ...... rn:5 rd:5    \
++                &fcvt_q esz=1 shift=%fcvt_f_sh_h
++@fcvtq_s        . q:1 . ...... 01 ..... ...... rn:5 rd:5    \
++                &fcvt_q esz=2 shift=%fcvt_f_sh_s
++@fcvtq_d        . q:1 . ...... 1 ...... ...... rn:5 rd:5    \
++                &fcvt_q esz=3 shift=%fcvt_f_sh_d
++
++SCVTF_vf        0.00 11110 ....... 111001 ..... .....       @fcvtq_h
++SCVTF_vf        0.00 11110 ....... 111001 ..... .....       @fcvtq_s
++SCVTF_vf        0.00 11110 ....... 111001 ..... .....       @fcvtq_d
++
++UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_h
++UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_s
++UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_d
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 08f24908a45..0f94fa4fdcb 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -9293,141 +9293,44 @@ TRANS_FEAT(FRINT64Z_v, aa64_frint, do_fp1_vector, a,
+            &f_scalar_frint64, FPROUNDING_ZERO)
+ TRANS_FEAT(FRINT64X_v, aa64_frint, do_fp1_vector, a, &f_scalar_frint64, -1)
  
--static int vae1_tlbmask(CPUARMState *env)
-+int vae1_tlbmask(CPUARMState *env)
+-/* Common vector code for handling integer to FP conversion */
+-static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
+-                                   int elements, int is_signed,
+-                                   int fracbits, int size)
++static bool do_gvec_op2_fpst(DisasContext *s, MemOp esz, bool is_q,
++                             int rd, int rn, int data,
++                             gen_helper_gvec_2_ptr * const fns[3])
  {
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     uint16_t mask;
-@@ -4721,8 +4721,8 @@ static int vae2_tlbmask(CPUARMState *env)
- }
+-    TCGv_ptr tcg_fpst = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
+-    TCGv_i32 tcg_shift = NULL;
++    int check = fp_access_check_vector_hsd(s, is_q, esz);
++    TCGv_ptr fpst;
  
- /* Return 56 if TBI is enabled, 64 otherwise. */
--static int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
--                              uint64_t addr)
-+int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-+                       uint64_t addr)
- {
-     uint64_t tcr = regime_tcr(env, mmu_idx);
-     int tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
-@@ -4731,7 +4731,7 @@ static int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-     return (tbi >> select) & 1 ? 56 : 64;
- }
- 
--static int vae1_tlbbits(CPUARMState *env, uint64_t addr)
-+int vae1_tlbbits(CPUARMState *env, uint64_t addr)
- {
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     ARMMMUIdx mmu_idx;
-@@ -4767,8 +4767,8 @@ static int vae2_tlbbits(CPUARMState *env, uint64_t addr)
-     return tlbbits_for_regime(env, mmu_idx, addr);
- }
- 
--static void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                      uint64_t value)
-+void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                               uint64_t value)
- {
-     CPUState *cs = env_cpu(env);
-     int mask = vae1_tlbmask(env);
-@@ -4776,19 +4776,6 @@ static void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
- }
- 
--static void tlbi_aa64_vmalle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                    uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = vae1_tlbmask(env);
+-    MemOp mop = size | (is_signed ? MO_SIGN : 0);
+-    int pass;
 -
--    if (tlb_force_broadcast(env)) {
--        tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
+-    if (fracbits || size == MO_64) {
+-        tcg_shift = tcg_constant_i32(fracbits);
++    if (check <= 0) {
++        return check == 0;
+     }
+ 
+-    if (size == MO_64) {
+-        TCGv_i64 tcg_int64 = tcg_temp_new_i64();
+-        TCGv_i64 tcg_double = tcg_temp_new_i64();
+-
+-        for (pass = 0; pass < elements; pass++) {
+-            read_vec_element(s, tcg_int64, rn, pass, mop);
+-
+-            if (is_signed) {
+-                gen_helper_vfp_sqtod(tcg_double, tcg_int64,
+-                                     tcg_shift, tcg_fpst);
+-            } else {
+-                gen_helper_vfp_uqtod(tcg_double, tcg_int64,
+-                                     tcg_shift, tcg_fpst);
+-            }
+-            if (elements == 1) {
+-                write_fp_dreg(s, rd, tcg_double);
+-            } else {
+-                write_vec_element(s, tcg_double, rd, pass, MO_64);
+-            }
+-        }
 -    } else {
--        tlb_flush_by_mmuidx(cs, mask);
+-        TCGv_i32 tcg_int32 = tcg_temp_new_i32();
+-        TCGv_i32 tcg_float = tcg_temp_new_i32();
+-
+-        for (pass = 0; pass < elements; pass++) {
+-            read_vec_element_i32(s, tcg_int32, rn, pass, mop);
+-
+-            switch (size) {
+-            case MO_32:
+-                if (fracbits) {
+-                    if (is_signed) {
+-                        gen_helper_vfp_sltos(tcg_float, tcg_int32,
+-                                             tcg_shift, tcg_fpst);
+-                    } else {
+-                        gen_helper_vfp_ultos(tcg_float, tcg_int32,
+-                                             tcg_shift, tcg_fpst);
+-                    }
+-                } else {
+-                    if (is_signed) {
+-                        gen_helper_vfp_sitos(tcg_float, tcg_int32, tcg_fpst);
+-                    } else {
+-                        gen_helper_vfp_uitos(tcg_float, tcg_int32, tcg_fpst);
+-                    }
+-                }
+-                break;
+-            case MO_16:
+-                if (fracbits) {
+-                    if (is_signed) {
+-                        gen_helper_vfp_sltoh(tcg_float, tcg_int32,
+-                                             tcg_shift, tcg_fpst);
+-                    } else {
+-                        gen_helper_vfp_ultoh(tcg_float, tcg_int32,
+-                                             tcg_shift, tcg_fpst);
+-                    }
+-                } else {
+-                    if (is_signed) {
+-                        gen_helper_vfp_sitoh(tcg_float, tcg_int32, tcg_fpst);
+-                    } else {
+-                        gen_helper_vfp_uitoh(tcg_float, tcg_int32, tcg_fpst);
+-                    }
+-                }
+-                break;
+-            default:
+-                g_assert_not_reached();
+-            }
+-
+-            if (elements == 1) {
+-                write_fp_sreg(s, rd, tcg_float);
+-            } else {
+-                write_vec_element_i32(s, tcg_float, rd, pass, size);
+-            }
+-        }
 -    }
--}
 -
- static int e2_tlbmask(CPUARMState *env)
- {
-     return (ARMMMUIdxBit_E20_0 |
-@@ -4797,15 +4784,6 @@ static int e2_tlbmask(CPUARMState *env)
-             ARMMMUIdxBit_E2);
+-    clear_vec_high(s, elements << size == 16, rd);
++    fpst = fpstatus_ptr(esz == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
++    tcg_gen_gvec_2_ptr(vec_full_reg_offset(s, rd),
++                       vec_full_reg_offset(s, rn), fpst,
++                       is_q ? 16 : 8, vec_full_reg_size(s),
++                       data, fns[esz - 1]);
++    return true;
  }
  
--static void tlbi_aa64_alle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                  uint64_t value)
+-/* UCVTF/SCVTF - Integer to FP conversion */
+-static void handle_simd_shift_intfp_conv(DisasContext *s, bool is_scalar,
+-                                         bool is_q, bool is_u,
+-                                         int immh, int immb, int opcode,
+-                                         int rn, int rd)
 -{
--    CPUState *cs = env_cpu(env);
--    int mask = alle1_tlbmask(env);
--
--    tlb_flush_by_mmuidx(cs, mask);
--}
--
- static void tlbi_aa64_alle2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                   uint64_t value)
- {
-@@ -4824,8 +4802,8 @@ static void tlbi_aa64_alle3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E3);
- }
+-    int size, elements, fracbits;
+-    int immhb = immh << 3 | immb;
++static gen_helper_gvec_2_ptr * const f_scvtf_v[] = {
++    gen_helper_gvec_vcvt_sh,
++    gen_helper_gvec_vcvt_sf,
++    gen_helper_gvec_vcvt_sd,
++};
++TRANS(SCVTF_vi, do_gvec_op2_fpst,
++      a->esz, a->q, a->rd, a->rn, 0, f_scvtf_v)
++TRANS(SCVTF_vf, do_gvec_op2_fpst,
++      a->esz, a->q, a->rd, a->rn, a->shift, f_scvtf_v)
  
--static void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                    uint64_t value)
-+void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                             uint64_t value)
- {
-     CPUState *cs = env_cpu(env);
-     int mask = alle1_tlbmask(env);
-@@ -4881,8 +4859,8 @@ static void tlbi_aa64_vae3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E3);
- }
- 
--static void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                   uint64_t value)
-+void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                            uint64_t value)
- {
-     CPUState *cs = env_cpu(env);
-     int mask = vae1_tlbmask(env);
-@@ -4892,27 +4870,6 @@ static void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
- }
- 
--static void tlbi_aa64_vae1_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                 uint64_t value)
--{
--    /*
--     * Invalidate by VA, EL1&0 (AArch64 version).
--     * Currently handles all of VAE1, VAAE1, VAALE1 and VALE1,
--     * since we don't support flush-for-specific-ASID-only or
--     * flush-last-level-only.
--     */
--    CPUState *cs = env_cpu(env);
--    int mask = vae1_tlbmask(env);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--    int bits = vae1_tlbbits(env, pageaddr);
--
--    if (tlb_force_broadcast(env)) {
--        tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
+-    if (immh & 8) {
+-        size = MO_64;
+-        if (!is_scalar && !is_q) {
+-            unallocated_encoding(s);
+-            return;
+-        }
+-    } else if (immh & 4) {
+-        size = MO_32;
+-    } else if (immh & 2) {
+-        size = MO_16;
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            unallocated_encoding(s);
+-            return;
+-        }
 -    } else {
--        tlb_flush_page_bits_by_mmuidx(cs, pageaddr, mask, bits);
+-        /* immh == 0 would be a failure of the decode logic */
+-        g_assert(immh == 1);
+-        unallocated_encoding(s);
+-        return;
 -    }
--}
 -
- static void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                    uint64_t value)
- {
-@@ -4935,7 +4892,7 @@ static void tlbi_aa64_vae3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                                   ARMMMUIdxBit_E3, bits);
- }
- 
--static int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
-+int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
- {
-     /*
-      * The MSB of value is the NS field, which only applies if SEL2
-@@ -4948,30 +4905,6 @@ static int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
-             : ARMMMUIdxBit_Stage2);
- }
- 
--static void tlbi_aa64_ipas2e1_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                    uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = ipas2e1_tlbmask(env, value);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--
--    if (tlb_force_broadcast(env)) {
--        tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
+-    if (is_scalar) {
+-        elements = 1;
 -    } else {
--        tlb_flush_page_by_mmuidx(cs, pageaddr, mask);
+-        elements = (8 << is_q) >> size;
 -    }
+-    fracbits = (16 << size) - immhb;
+-
+-    if (!fp_access_check(s)) {
+-        return;
+-    }
+-
+-    handle_simd_intfp_conv(s, rd, rn, elements, !is_u, fracbits, size);
 -}
--
--static void tlbi_aa64_ipas2e1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                      uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = ipas2e1_tlbmask(env, value);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--
--    tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
--}
--
- #ifdef TARGET_AARCH64
- typedef struct {
-     uint64_t base;
-@@ -5462,99 +5395,6 @@ static const ARMCPRegInfo v8_cp_reginfo[] = {
-       .opc0 = 1, .opc1 = 0, .crn = 7, .crm = 14, .opc2 = 2,
-       .fgt = FGT_DCCISW,
-       .access = PL1_W, .accessfn = access_tsw, .type = ARM_CP_NOP },
--    /* TLBI operations */
--    { .name = "TLBI_VMALLE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 0,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVMALLE1IS,
--      .writefn = tlbi_aa64_vmalle1is_write },
--    { .name = "TLBI_VAE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 1,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAE1IS,
--      .writefn = tlbi_aa64_vae1is_write },
--    { .name = "TLBI_ASIDE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 2,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIASIDE1IS,
--      .writefn = tlbi_aa64_vmalle1is_write },
--    { .name = "TLBI_VAAE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 3,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAAE1IS,
--      .writefn = tlbi_aa64_vae1is_write },
--    { .name = "TLBI_VALE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 5,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVALE1IS,
--      .writefn = tlbi_aa64_vae1is_write },
--    { .name = "TLBI_VAALE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 7,
--      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAALE1IS,
--      .writefn = tlbi_aa64_vae1is_write },
--    { .name = "TLBI_VMALLE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 0,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVMALLE1,
--      .writefn = tlbi_aa64_vmalle1_write },
--    { .name = "TLBI_VAE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 1,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAE1,
--      .writefn = tlbi_aa64_vae1_write },
--    { .name = "TLBI_ASIDE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 2,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIASIDE1,
--      .writefn = tlbi_aa64_vmalle1_write },
--    { .name = "TLBI_VAAE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 3,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAAE1,
--      .writefn = tlbi_aa64_vae1_write },
--    { .name = "TLBI_VALE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 5,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVALE1,
--      .writefn = tlbi_aa64_vae1_write },
--    { .name = "TLBI_VAALE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 7,
--      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
--      .fgt = FGT_TLBIVAALE1,
--      .writefn = tlbi_aa64_vae1_write },
--    { .name = "TLBI_IPAS2E1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 1,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_ipas2e1is_write },
--    { .name = "TLBI_IPAS2LE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 5,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_ipas2e1is_write },
--    { .name = "TLBI_ALLE1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 4,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_alle1is_write },
--    { .name = "TLBI_VMALLS12E1IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 6,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_alle1is_write },
--    { .name = "TLBI_IPAS2E1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 4, .opc2 = 1,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_ipas2e1_write },
--    { .name = "TLBI_IPAS2LE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 4, .opc2 = 5,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_ipas2e1_write },
--    { .name = "TLBI_ALLE1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 4,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_alle1_write },
--    { .name = "TLBI_VMALLS12E1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 6,
--      .access = PL2_W, .type = ARM_CP_NO_RAW,
--      .writefn = tlbi_aa64_alle1is_write },
- #ifndef CONFIG_USER_ONLY
-     /* 64 bit address translation operations */
-     { .name = "AT_S1E1R", .state = ARM_CP_STATE_AA64,
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 66096093dcc..ff7698e31b6 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -169,6 +169,73 @@ static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2);
- }
++static gen_helper_gvec_2_ptr * const f_ucvtf_v[] = {
++    gen_helper_gvec_vcvt_uh,
++    gen_helper_gvec_vcvt_uf,
++    gen_helper_gvec_vcvt_ud,
++};
++TRANS(UCVTF_vi, do_gvec_op2_fpst,
++      a->esz, a->q, a->rd, a->rn, 0, f_ucvtf_v)
++TRANS(UCVTF_vf, do_gvec_op2_fpst,
++      a->esz, a->q, a->rd, a->rn, a->shift, f_ucvtf_v)
  
-+static void tlbi_aa64_vmalle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae1_tlbmask(env);
-+
-+    if (tlb_force_broadcast(env)) {
-+        tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
-+    } else {
-+        tlb_flush_by_mmuidx(cs, mask);
-+    }
-+}
-+
-+static void tlbi_aa64_alle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = alle1_tlbmask(env);
-+
-+    tlb_flush_by_mmuidx(cs, mask);
-+}
-+
-+static void tlbi_aa64_vae1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                 uint64_t value)
-+{
-+    /*
-+     * Invalidate by VA, EL1&0 (AArch64 version).
-+     * Currently handles all of VAE1, VAAE1, VAALE1 and VALE1,
-+     * since we don't support flush-for-specific-ASID-only or
-+     * flush-last-level-only.
-+     */
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae1_tlbmask(env);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+    int bits = vae1_tlbbits(env, pageaddr);
-+
-+    if (tlb_force_broadcast(env)) {
-+        tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
-+    } else {
-+        tlb_flush_page_bits_by_mmuidx(cs, pageaddr, mask, bits);
-+    }
-+}
-+
-+static void tlbi_aa64_ipas2e1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = ipas2e1_tlbmask(env, value);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+
-+    if (tlb_force_broadcast(env)) {
-+        tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
-+    } else {
-+        tlb_flush_page_by_mmuidx(cs, pageaddr, mask);
-+    }
-+}
-+
-+static void tlbi_aa64_ipas2e1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = ipas2e1_tlbmask(env, value);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+
-+    tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, mask);
-+}
-+
- static const ARMCPRegInfo tlbi_not_v7_cp_reginfo[] = {
-     /*
-      * MMU TLB control. Note that the wildcarding means we cover not just
-@@ -277,6 +344,99 @@ static const ARMCPRegInfo tlbi_v8_cp_reginfo[] = {
-       .cp = 15, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 5,
-       .type = ARM_CP_NO_RAW, .access = PL2_W,
-       .writefn = tlbiipas2is_hyp_write },
-+    /* AArch64 TLBI operations */
-+    { .name = "TLBI_VMALLE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 0,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVMALLE1IS,
-+      .writefn = tlbi_aa64_vmalle1is_write },
-+    { .name = "TLBI_VAE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 1,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAE1IS,
-+      .writefn = tlbi_aa64_vae1is_write },
-+    { .name = "TLBI_ASIDE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 2,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIASIDE1IS,
-+      .writefn = tlbi_aa64_vmalle1is_write },
-+    { .name = "TLBI_VAAE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 3,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAAE1IS,
-+      .writefn = tlbi_aa64_vae1is_write },
-+    { .name = "TLBI_VALE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 5,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVALE1IS,
-+      .writefn = tlbi_aa64_vae1is_write },
-+    { .name = "TLBI_VAALE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 3, .opc2 = 7,
-+      .access = PL1_W, .accessfn = access_ttlbis, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAALE1IS,
-+      .writefn = tlbi_aa64_vae1is_write },
-+    { .name = "TLBI_VMALLE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 0,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVMALLE1,
-+      .writefn = tlbi_aa64_vmalle1_write },
-+    { .name = "TLBI_VAE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 1,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAE1,
-+      .writefn = tlbi_aa64_vae1_write },
-+    { .name = "TLBI_ASIDE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 2,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIASIDE1,
-+      .writefn = tlbi_aa64_vmalle1_write },
-+    { .name = "TLBI_VAAE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 3,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAAE1,
-+      .writefn = tlbi_aa64_vae1_write },
-+    { .name = "TLBI_VALE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 5,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVALE1,
-+      .writefn = tlbi_aa64_vae1_write },
-+    { .name = "TLBI_VAALE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 0, .crn = 8, .crm = 7, .opc2 = 7,
-+      .access = PL1_W, .accessfn = access_ttlb, .type = ARM_CP_NO_RAW,
-+      .fgt = FGT_TLBIVAALE1,
-+      .writefn = tlbi_aa64_vae1_write },
-+    { .name = "TLBI_IPAS2E1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 1,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_ipas2e1is_write },
-+    { .name = "TLBI_IPAS2LE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 0, .opc2 = 5,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_ipas2e1is_write },
-+    { .name = "TLBI_ALLE1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 4,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_alle1is_write },
-+    { .name = "TLBI_VMALLS12E1IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 6,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_alle1is_write },
-+    { .name = "TLBI_IPAS2E1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 4, .opc2 = 1,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_ipas2e1_write },
-+    { .name = "TLBI_IPAS2LE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 4, .opc2 = 5,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_ipas2e1_write },
-+    { .name = "TLBI_ALLE1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 4,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_alle1_write },
-+    { .name = "TLBI_VMALLS12E1", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 6,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW,
-+      .writefn = tlbi_aa64_alle1is_write },
- };
+ /* FCVTZS, FVCVTZU - FP to fixedpoint conversion */
+ static void handle_simd_shift_fpint_conv(DisasContext *s, bool is_scalar,
+@@ -9878,10 +9781,6 @@ static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
+     }
  
- static const ARMCPRegInfo tlbi_el2_cp_reginfo[] = {
+     switch (opcode) {
+-    case 0x1c: /* SCVTF / UCVTF */
+-        handle_simd_shift_intfp_conv(s, false, is_q, is_u, immh, immb,
+-                                     opcode, rn, rd);
+-        break;
+     case 0x1f: /* FCVTZS/ FCVTZU */
+         handle_simd_shift_fpint_conv(s, false, is_q, is_u, immh, immb, rn, rd);
+         return;
+@@ -9899,6 +9798,7 @@ static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
+     case 0x12: /* SQSHRN / UQSHRN */
+     case 0x13: /* SQRSHRN / UQRSHRN */
+     case 0x14: /* SSHLL / USHLL */
++    case 0x1c: /* SCVTF / UCVTF */
+         unallocated_encoding(s);
+         return;
+     }
+@@ -9978,21 +9878,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+         opcode |= (extract32(size, 1, 1) << 5) | (u << 6);
+         size = is_double ? 3 : 2;
+         switch (opcode) {
+-        case 0x1d: /* SCVTF */
+-        case 0x5d: /* UCVTF */
+-        {
+-            bool is_signed = (opcode == 0x1d) ? true : false;
+-            int elements = is_double ? 2 : is_q ? 4 : 2;
+-            if (is_double && !is_q) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+-            if (!fp_access_check(s)) {
+-                return;
+-            }
+-            handle_simd_intfp_conv(s, rd, rn, elements, is_signed, 0, size);
+-            return;
+-        }
+         case 0x2c: /* FCMGT (zero) */
+         case 0x2d: /* FCMEQ (zero) */
+         case 0x2e: /* FCMLT (zero) */
+@@ -10075,6 +9960,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+         case 0x1f: /* FRINT64Z */
+         case 0x5e: /* FRINT32X */
+         case 0x5f: /* FRINT64X */
++        case 0x1d: /* SCVTF */
++        case 0x5d: /* UCVTF */
+             unallocated_encoding(s);
+             return;
+         }
+@@ -10240,24 +10127,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
+     fpop = deposit32(fpop, 6, 1, u);
+ 
+     switch (fpop) {
+-    case 0x1d: /* SCVTF */
+-    case 0x5d: /* UCVTF */
+-    {
+-        int elements;
+-
+-        if (is_scalar) {
+-            elements = 1;
+-        } else {
+-            elements = (is_q ? 8 : 4);
+-        }
+-
+-        if (!fp_access_check(s)) {
+-            return;
+-        }
+-        handle_simd_intfp_conv(s, rd, rn, elements, !u, 0, MO_16);
+-        return;
+-    }
+-    break;
+     case 0x2c: /* FCMGT (zero) */
+     case 0x2d: /* FCMEQ (zero) */
+     case 0x2e: /* FCMLT (zero) */
+@@ -10311,6 +10180,8 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
+     case 0x58: /* FRINTA */
+     case 0x59: /* FRINTX */
+     case 0x79: /* FRINTI */
++    case 0x1d: /* SCVTF */
++    case 0x5d: /* UCVTF */
+         unallocated_encoding(s);
+         return;
+     }
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index ec6b640fdad..07f8d5f467a 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2505,12 +2505,15 @@ DO_3OP_PAIR(gvec_uminp_s, MIN, uint32_t, H4)
+         clear_tail(d, oprsz, simd_maxsz(desc));                         \
+     }
+ 
++DO_VCVT_FIXED(gvec_vcvt_sd, helper_vfp_sqtod, uint64_t)
++DO_VCVT_FIXED(gvec_vcvt_ud, helper_vfp_uqtod, uint64_t)
+ DO_VCVT_FIXED(gvec_vcvt_sf, helper_vfp_sltos, uint32_t)
+ DO_VCVT_FIXED(gvec_vcvt_uf, helper_vfp_ultos, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
+ DO_VCVT_FIXED(gvec_vcvt_sh, helper_vfp_shtoh, uint16_t)
+ DO_VCVT_FIXED(gvec_vcvt_uh, helper_vfp_uhtoh, uint16_t)
++
++DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
+ DO_VCVT_FIXED(gvec_vcvt_rz_hs, helper_vfp_toshh_round_to_zero, uint16_t)
+ DO_VCVT_FIXED(gvec_vcvt_rz_hu, helper_vfp_touhh_round_to_zero, uint16_t)
+ 
 -- 
 2.34.1
 
