@@ -4,92 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BFA1E7717D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FFA6E7717F
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 03:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLwYo-0008Cl-JZ; Thu, 12 Dec 2024 22:41:50 -0500
+	id 1tLwZG-0008E0-Jo; Thu, 12 Dec 2024 22:42:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tLwYn-0008CP-Kl
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 22:41:49 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tLwYi-0000hq-NY
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 22:41:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734061300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gWxoOK16ufMqaxrl47YwVjkidkwl6/B+Ps0Qdp3TFlw=;
- b=hhYMaVsY0/FNYfPDROepQF+AjuWdouHP0k3Afz42Pnwf/UXwDJDENSzqtQIPOztqaQa+Db
- lKzVeow3vb4BS02ENMLXTdlUVuj/fVam/htQtQ3N6Dk+vmaYVXpQ3h9a3xcgPdJO0PSX3X
- GIt/Ppxa+seS4PoUQYf+Trwkek7i/Ww=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-582-Ph6lAmX2Msq5rGki_bz1yg-1; Thu, 12 Dec 2024 22:41:37 -0500
-X-MC-Unique: Ph6lAmX2Msq5rGki_bz1yg-1
-X-Mimecast-MFC-AGG-ID: Ph6lAmX2Msq5rGki_bz1yg
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-2ef79d9c692so1778079a91.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 19:41:37 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734061297; x=1734666097;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gWxoOK16ufMqaxrl47YwVjkidkwl6/B+Ps0Qdp3TFlw=;
- b=vjjY29zVcjtsv5oFOgYqKh39CrDGZ21cOwoeoIfjVRW5E2yvzF8/0BGheq9Dhnrz85
- vNLlzZUUigKR3bdBMRvee2gEAmOdFTAIHRJS9n8uamsnrpXVanYO2TpFyVCc4RNskh3t
- CoWgeP9NMuJB2OStnZbrEYD5GMuw8xQIksCeuyBYdRJk8SKLaZJxlXVtyw6t7kqgvOlb
- 4igQ/+hV/t2/cXtz1sqhes0LRhru2apf6D7CZIHbRtuTBBVO5kR0qS8yjIOZOYVBjZjd
- 8fF/YEvtjp2mdffinGYtLO7W6Y7QdKUpcSk0ULQNTjTIhS4b7t/hauvXwLe6oFlvIsU2
- d0ow==
-X-Gm-Message-State: AOJu0Yzx/fk2q7JjT+hQ1NcXxHA6SJvsaKCRJE5yX8ieWVxDTn/eV2kl
- zIlYMH2IgizZYmeN8qZZRnj7EQxaojsnkAKVlpdYZE8kF6hUfF6px6LghM70NE8gztcqytMZzzq
- TKmMc0Frz2gSm+F1HZSYtD23j3rYyN5q1CSCunnRIaqsp22C2gZR+ioROs6B64hr5flFYeqGLcC
- H9dek1cjS7+LdBSna4GsheJBJTqRM=
-X-Gm-Gg: ASbGnctcsjWtRaMhaaR3R5EPv4CjS9/QPRf20JPKYeOEt9XgA0oyROP5H+Z22Y28hb0
- o/d7zST1LSW1VIjwybB/iMvuVBIPPG682Cjv6+o8=
-X-Received: by 2002:a17:90b:4a4f:b0:2ee:9902:18b4 with SMTP id
- 98e67ed59e1d1-2f2900a9878mr1892496a91.27.1734061296914; 
- Thu, 12 Dec 2024 19:41:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGelOfpqxUg3ir1KddWS2YfwdujWVJBhb5o6ESA7Q2WYwzbMFtrNLugxRnxDaqdsXkIQvfJoPfUAqKogBHQ+n0=
-X-Received: by 2002:a17:90b:4a4f:b0:2ee:9902:18b4 with SMTP id
- 98e67ed59e1d1-2f2900a9878mr1892462a91.27.1734061296528; Thu, 12 Dec 2024
- 19:41:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1tLwZF-0008Dr-AH
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 22:42:17 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1tLwZB-0000iq-Dp
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 22:42:16 -0500
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8BxeeAFrVtnt29WAA--.37130S3;
+ Fri, 13 Dec 2024 11:41:57 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowMBx30f+rFtne3OBAA--.11605S3;
+ Fri, 13 Dec 2024 11:41:53 +0800 (CST)
+Subject: Re: 0001-target-loongarch-fix-vldi-inst.patch
+To: =?UTF-8?B?6YOt6bi/5a6H?= <guohongyu24@mails.ucas.ac.cn>,
+ qemu-devel@nongnu.org
+Cc: gaosong@loongson.cn
+References: <3a7d9342.9e3d1.1938d2c0078.Coremail.guohongyu24@mails.ucas.ac.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <aae4dc4f-0b24-8c1d-9523-0b883c718d37@loongson.cn>
+Date: Fri, 13 Dec 2024 11:40:19 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-References: <20241212083757.605022-1-zhenzhong.duan@intel.com>
- <20241212083757.605022-18-zhenzhong.duan@intel.com>
-In-Reply-To: <20241212083757.605022-18-zhenzhong.duan@intel.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Fri, 13 Dec 2024 11:41:25 +0800
-Message-ID: <CACGkMEusBnsaaGCVY-Wo-X4PvfpfcT4GPZVZoLWsB_+N+bbEHQ@mail.gmail.com>
-Subject: Re: [PATCH v6 17/20] tests/acpi: q35: Update host address width in
- DMAR
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Cc: qemu-devel@nongnu.org, alex.williamson@redhat.com, clg@redhat.com, 
- eric.auger@redhat.com, mst@redhat.com, peterx@redhat.com, jgg@nvidia.com, 
- nicolinc@nvidia.com, joao.m.martins@oracle.com, 
- clement.mathieu--drif@eviden.com, kevin.tian@intel.com, yi.l.liu@intel.com, 
- chao.p.peng@intel.com, Igor Mammedov <imammedo@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
+In-Reply-To: <3a7d9342.9e3d1.1938d2c0078.Coremail.guohongyu24@mails.ucas.ac.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBx30f+rFtne3OBAA--.11605S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
+ BjDU0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
+ xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
+ j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxV
+ AFwI0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVWxJVW8Jr1l84ACjcxK6I8E87Iv6xkF7I0E
+ 14v26r4UJVWxJr1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44
+ I27wAqx4xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2
+ jsIE14v26r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62
+ AI1cAE67vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E
+ 5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUXV
+ WUAwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY
+ 1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI
+ 0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU
+ zsqWUUUUU
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.217,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,64 +80,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 4:42=E2=80=AFPM Zhenzhong Duan <zhenzhong.duan@inte=
-l.com> wrote:
->
-> Differences:
->
-> @@ -1,39 +1,39 @@
->  /*
->   * Intel ACPI Component Architecture
->   * AML/ASL+ Disassembler version 20200925 (64-bit version)
->   * Copyright (c) 2000 - 2020 Intel Corporation
->   *
-> - * Disassembly of tests/data/acpi/x86/q35/DMAR.dmar, Mon Nov 11 15:31:18=
- 2024
-> + * Disassembly of /tmp/aml-SPJ4W2, Mon Nov 11 15:31:18 2024
->   *
->   * ACPI Data Table [DMAR]
->   *
->   * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
->   */
->
->  [000h 0000   4]                    Signature : "DMAR"    [DMA Remapping =
-table]
->  [004h 0004   4]                 Table Length : 00000078
->  [008h 0008   1]                     Revision : 01
-> -[009h 0009   1]                     Checksum : 15
-> +[009h 0009   1]                     Checksum : 0C
->  [00Ah 0010   6]                       Oem ID : "BOCHS "
->  [010h 0016   8]                 Oem Table ID : "BXPC    "
->  [018h 0024   4]                 Oem Revision : 00000001
->  [01Ch 0028   4]              Asl Compiler ID : "BXPC"
->  [020h 0032   4]        Asl Compiler Revision : 00000001
->
-> -[024h 0036   1]           Host Address Width : 26
-> +[024h 0036   1]           Host Address Width : 2F
->  [025h 0037   1]                        Flags : 01
->  [026h 0038  10]                     Reserved : 00 00 00 00 00 00 00 00 0=
-0 00
->
->  [030h 0048   2]                Subtable Type : 0000 [Hardware Unit Defin=
-ition]
->  [032h 0050   2]                       Length : 0040
->
->  [034h 0052   1]                        Flags : 00
->  [035h 0053   1]                     Reserved : 00
->  [036h 0054   2]           PCI Segment Number : 0000
->  [038h 0056   8]        Register Base Address : 00000000FED90000
->
->  [040h 0064   1]            Device Scope Type : 03 [IOAPIC Device]
->  [041h 0065   1]                 Entry Length : 08
->  [042h 0066   2]                     Reserved : 0000
->  [044h 0068   1]               Enumeration ID : 00
->  [045h 0069   1]               PCI Bus Number : FF
->
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> Acked-by: Cl=C3=A9ment Mathieu--Drif<clement.mathieu--drif@eviden.com>
+Hi hongyu:
 
-Acked-by: Jason Wang <jasowang@redhat.com>
+Thank you very much for submitting patch for loongarch,
+but can you submit patch according to qemu code contribution specification?
+You can refer to this document:
+https://www.qemu.org/docs/master/devel/submitting-a-patch.html
 
-Thanks
+It should also be pointed out that you need to use the git send-email 
+command to send patch.
+
+Thanks,
+Xianglai
 
 
