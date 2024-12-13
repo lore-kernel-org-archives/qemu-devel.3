@@ -4,83 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE355E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FEEE7717F
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBBU-0005D6-QT; Fri, 13 Dec 2024 14:18:45 -0500
+	id 1tMB8C-0008IR-QX; Fri, 13 Dec 2024 14:15:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9M-00027I-LH
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:32 -0500
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMB71-0006HX-7J
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:08 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9K-00086Q-JO
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:32 -0500
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-436345cc17bso3817585e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:16:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMB6z-0007Ws-4N
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:06 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-29f88004a92so1252808fac.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117389; x=1734722189; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MkwtbKYN92Edw6prtIY013lMT+VdTEfLqeuDLCwuhdg=;
- b=FuD2KPfFDMvmOopMLuYpng0Tieuf5rsLqaXJ/KtyHJoGI/RkpM0RrY96/PMCPINMZH
- PUsy9gq7HTEjGH2rAXe/zDdKxw58mvPYhPNoKJzicVC7nm99WDhxdAvTsF610ip+UESo
- pE3KYkNp4vvTXgY7LIB9msKi2GBXItduo3HSlRsAkbkeDCjoyFmYQxgBhthowdE5KYGx
- SLr4OvBRvnWfXa4tL8kkO024Iq631cpAChu44oltcoTCbJXcnY3r6bbA5fA+qC/WaNzW
- t4CdKMuTom0Hyq7cH1uYdJQakQEUj4B9optJME6Fzhy4mOVrq3xVLxzeBd0PJ3exLHKf
- jg0A==
+ d=linaro.org; s=google; t=1734117242; x=1734722042; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ht4ZlthGspVYtEWG+5uRpgdlGJS5T3fuIdiO1kKsIqU=;
+ b=mONUwRD2MXRaN0nY/A0cU+d3qyXomnOqz/2q06pw+bmo/FVow1VUfB8Ej/0m84lSWo
+ xUUAcc9fnVRqPQNvekIhcbx00LHKZ3tAWkEiKhi//e9DNHShvRGh3EpFicVnGCJskTkc
+ YOOoU4W/Qkf6sKzXkSUUjvwevZaECIpealOztPaAd2dqndazI9EVXb1V3F5BCUaUbB+/
+ 0CIdEqjTGjqrLh6zSK4sSBv+gIQxPZIneaLMz7rk0swuhjNJZriFEIgI7Q9t785v3oay
+ pARksdA0e8nNzMFzYAWj7B0ujYQUfEGXCyHiVzIt9030Rcq9Rkduxh8VSkWkv7ogFjCt
+ Krxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117389; x=1734722189;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MkwtbKYN92Edw6prtIY013lMT+VdTEfLqeuDLCwuhdg=;
- b=rOWWm+Rp9ax1ETLLnom5CPqY7JR0kt0K8c0gJ2hUSUJsJjA+Lw2sKsrBCb49qYeWZK
- foLJHge+xtOhwfv3IDp6KSQV9NyhGpuzcw+K/3r/tfwmKMVLEbIbD+Bq4lmQ7lSl225T
- 0m30upuGWyEt2Cd/q+BkLF1bwLmEkjyMMYp91/pcZHJlMnXQKJ+KVfiKPMrJpvIA/NUV
- uv85rq97L2AVGR2YQCoSxoMIRfbcCI0BH9JV9Ug5hrOBQW85DV3QbYXHG6pHWfoDFKAg
- kXFfchSvMB/v5oiLIH6lXUhezm0Q/yQs9QA4sbZFQrizwV6d0EjyKUYHSFruJpedHoUj
- 1aBg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0eD1H7i1yQb7nkqB/qxo0++hDMKJKAo1Xo7YPKYBqNctjSjKrd6wUxc2l5axcrfJzNNfV5lQXDEu7@nongnu.org
-X-Gm-Message-State: AOJu0YxcKdgBJ6IwCeHK++IwfA9jq4LMdY8MIFyHtSXrgPwLd20HbSxO
- qshkoTIuq+rTvdNJ/S/hY/lvznnWcV0QBlbHyXZHJ/9V+wHNm+YdVNpKGD9WXm8=
-X-Gm-Gg: ASbGncvL0m+BpEuOqt/+cP1THpzKAdr5GNS4BMh6wAaLwubdStq4bOvUUUJSqjxlmPU
- zlsUkZ/zmYXWHu7dItEqB2vNS7FL/O9ESiKR74VtbSrqLXCBH9CUIR0h8gZdl/7KXtUtcoDSn+Q
- 39fnpW85XrHkH0tZgggiRVoYWY3CPVurWnyFlTRQkCpRQY9fegTlGRJiNoLhjwD9sf4uSIIiDUx
- jTzdAe+n0qFxu5rcoOdnVDXXIxkD3nwHq7eS69tl+nSE/3KSIyvOPafgtYKVjCsbq8p6jofbVbh
- RrLjTENM46LDyqJnhLqb
-X-Google-Smtp-Source: AGHT+IG2xhki/qLW54coKokgzLcQo94AgqnF2lAdaoHbBAJ8MonLO+12ttdlsrZlGtKmIUY0ihzdNw==
-X-Received: by 2002:a05:600c:154c:b0:434:f3a1:b214 with SMTP id
- 5b1f17b1804b1-4362aab48c4mr28461915e9.28.1734117388701; 
- Fri, 13 Dec 2024 11:16:28 -0800 (PST)
-Received: from [192.168.224.213] (127.47.205.77.rev.sfr.net. [77.205.47.127])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8046ca6sm297070f8f.83.2024.12.13.11.16.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 11:16:27 -0800 (PST)
-Message-ID: <7af8a419-745e-4348-a564-8ef078fd456b@linaro.org>
-Date: Fri, 13 Dec 2024 20:16:25 +0100
+ d=1e100.net; s=20230601; t=1734117242; x=1734722042;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ht4ZlthGspVYtEWG+5uRpgdlGJS5T3fuIdiO1kKsIqU=;
+ b=v4hm5ApXTYQyunL3yWHMsyKC1d7D7/Sqjz3St0hmI58SRmPUfxCoPVKzUg2sht/2pd
+ ZjX/lXG8Lw7TYr6us/6x/nboT8LIID3QVv4FlOc5fdPE77Ds+Jpn4mci8zIzVOVcZVoh
+ kk1xWDSCKzNCyYa20W/Jncl/gJ5RdSMAqty5wJhyaldlG+YSV9uzlkfjKe6cX90S86v9
+ pTwi83IJyPQORAHrRBhZGo0hID+IM0rtadPtqhhehUONOrSdT93rmA5octnkoxmhdV2X
+ +3WKhOk0yg5a7GKwRlUvQ9l+F7UxqZD7OFbD0f+S2uCBaRlJQUOrhpJz1uyTyN9woHsa
+ idDQ==
+X-Gm-Message-State: AOJu0Yx1xFs0dCR6LsCMR9/fye9uqLpSFAEPhVXLL5tJpMe0ZptwNdZP
+ Iz5zdK6MHw+MCPPFyHVvXaNRIVkyE3UkJKbi7HQaKKhCvDgpHqtR5HN+lpouTKtjing2liIvhxO
+ s0msJlWnb
+X-Gm-Gg: ASbGncthzfxpt7cl9YiI/Hg4IIVf3He4VLszcr2yPtJL96d/tLwCcSMuaT5zJXI6wSK
+ BkTVAYQyYHciSiTibXDb69hNP2fyktEXnEwXtDKFTQL7QEMvoGScWjKozly3R0c1At0ZWEnfai+
+ 4Or7MqU5hYaarIyzs6+8vXSk3QgALEnebduDuKK22S7n98HvOzmeEd5jTr3NWaM9yatS5iSgKFt
+ 4h+2s7jmCgW3QBzp1gniRB7SgX1ep0DfVb6bR6xWvEXS/bEYFQHZr8b7agkKX1Z
+X-Google-Smtp-Source: AGHT+IGZ/PvUMGmqi5e8Bk1rGup3iswt9ghvsT2e9lIq++g1rY7eR5j8PsVNC0mxbnECi6p4/IfHmA==
+X-Received: by 2002:a05:6808:218d:b0:3eb:3619:6a90 with SMTP id
+ 5614622812f47-3eba693ab5bmr1514702b6e.33.1734117242461; 
+ Fri, 13 Dec 2024 11:14:02 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Dec 2024 11:14:02 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>
+Subject: [PATCH 46/71] hw/pci-host/astro: Remove empty Property list
+Date: Fri, 13 Dec 2024 13:07:20 -0600
+Message-ID: <20241213190750.2513964-51-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
+References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] MAINTAINERS: correct my email address
-To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, peter.maydell@linaro.org,
- quic_mathbern@quicinc.com, stefanha@redhat.com, ale@rev.ng, anjo@rev.ng,
- quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com, alex.bennee@linaro.org,
- quic_mburton@quicinc.com
-References: <20241209181242.1434231-1-brian.cain@oss.qualcomm.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241209181242.1434231-1-brian.cain@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,15 +97,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/12/24 19:12, Brian Cain wrote:
-> Mea culpa, I don't know how I got this wrong in 2dfe93699c.  Still
-> getting used to the new address, I suppose.  Somehow I got it right in the
-> mailmap, though.
-> 
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->   MAINTAINERS | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ hw/pci-host/astro.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-Queued, thanks!
+diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
+index 379095b356..62e9c8acbf 100644
+--- a/hw/pci-host/astro.c
++++ b/hw/pci-host/astro.c
+@@ -461,10 +461,6 @@ static void elroy_pcihost_init(Object *obj)
+     qdev_init_gpio_in(DEVICE(obj), elroy_set_irq, ELROY_IRQS);
+ }
+ 
+-static Property elroy_pcihost_properties[] = {
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+ static const VMStateDescription vmstate_elroy = {
+     .name = "Elroy",
+     .version_id = 1,
+@@ -490,7 +486,6 @@ static void elroy_pcihost_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     device_class_set_legacy_reset(dc, elroy_reset);
+-    device_class_set_props(dc, elroy_pcihost_properties);
+     dc->vmsd = &vmstate_elroy;
+     dc->user_creatable = false;
+ }
+-- 
+2.43.0
+
 
