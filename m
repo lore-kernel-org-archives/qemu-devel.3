@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F29FE7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:14:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DB77E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:26:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM1ko-000519-AL; Fri, 13 Dec 2024 04:14:34 -0500
+	id 1tM1v9-0007Pi-K6; Fri, 13 Dec 2024 04:25:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1kk-00050k-8H
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:14:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1v7-0007PM-JJ
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:25:13 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1kd-0000GV-2l
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:14:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1v0-0002q8-Kz
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:25:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734081261;
+ s=mimecast20190719; t=1734081903;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7M4r6m3BDcicSV3XOR6Pqe/H4dbjo+SlJ/8qD6SV3Y8=;
- b=cwSmzUqPm+4+CSI9gg5aRHZNAfXxFFg0G8y6MMLeoLRlAGEQi8n3NqbbU9Xted8WyS7tmX
- XM0t7EAbi9aFLMK+ZnWC8diPlAhE9YKuvuHGfSC6Be8I322yC5eyF1vzCidZSolL7JJryq
- ZoctJDaZjVpM4gMo52DgkC1u+7fsJOY=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=G30+jVq7BVqeTyK0CkqzxN0y4eTRKLqiG5jzrqUMBz0=;
+ b=iNaJvsEJHs1+KolDjfF8DZEZp1eCaywGtbh8On+XUBSefC29WkL3OqpMUOXxmLYc/JejLj
+ PfLdAkl++2pBw6DU7LB+sELTPwupWBPq+m7rbULdAVfjM0yKpgBQ711lf/ifx0vOt4mplW
+ iCfbfKJULPJhQoy+yDlVtjIJA3av/ro=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-184-LuHVY7vBMb6UAz-PlK13CQ-1; Fri, 13 Dec 2024 04:13:12 -0500
-X-MC-Unique: LuHVY7vBMb6UAz-PlK13CQ-1
-X-Mimecast-MFC-AGG-ID: LuHVY7vBMb6UAz-PlK13CQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361f371908so13583445e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 01:13:12 -0800 (PST)
+ us-mta-211-MzMWbfqEMmCrYsDUEWq4pw-1; Fri, 13 Dec 2024 04:24:59 -0500
+X-MC-Unique: MzMWbfqEMmCrYsDUEWq4pw-1
+X-Mimecast-MFC-AGG-ID: MzMWbfqEMmCrYsDUEWq4pw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43623bf2a83so14302485e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 01:24:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734081191; x=1734685991;
+ d=1e100.net; s=20230601; t=1734081898; x=1734686698;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7M4r6m3BDcicSV3XOR6Pqe/H4dbjo+SlJ/8qD6SV3Y8=;
- b=hjXRFD2S2zWOoOczeFXH6V28phuQ0q2/78mcJJCBJ8v8RASX1WAi95VgWhC9pAkiMM
- 4lOpot/89gMB0UtbikWJJJG6sI+WMI6yoIDajT16D3Omd89mKGp0lKgNv7bLBnpqD5Rc
- Nny3VEftNvF2KBtWiE51FM40S7LT/MUUpEwBki5CEn/34/TtWRFpC8c22r5Zb+BwwLFT
- RBzAQlLqLflLwYNbWdqLwKIJ6dI2zOEpoZJ9QG3Ifbie2eaG9J4rqVW6iX9zqxEGxxyo
- VVauWjKaMhbIpWI4fWS4CRiCA4sBeNWwFKgjboGym7kGXoxdnnJdcflXjYMKAHKI6Dmk
- Lsig==
+ bh=G30+jVq7BVqeTyK0CkqzxN0y4eTRKLqiG5jzrqUMBz0=;
+ b=JDwT1PXRpX1eenOqZ/UQCXVFrg6E1ZzpCzs8G7N0KeZEPmhqJfVO9cLiN3w1ehoHYd
+ ylPIaWQpFpulwBYTUs+UL6DvkT3wR/SL51b7FjdoIM3VXZSjc5z3BvORoKHIJyIIM7Ae
+ vVYs3SjIAx7Z6fzLojv4U2NeqvqGs4GrRqlHR2iF7aIrcQTKmb5E25HuxxBaY0mCQ9b/
+ gdCOmOmx1xCyg0uguWROXTb+rnLV43FbV0oO25/cBIp/1nCm3iNHolJiNTvw/r3gPtDy
+ wWE/ZjBi7K28qU8fNvQJvRQHMGIEemJAeylQ1jVSHJtQ/ClJU1LAboiu1gMuVGLm2yAf
+ GCXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWP3nt+W3pu6e1hcL540ZPVQRTtJpYX1JDTM5aj2o7Nc0e80FV2esKoqH6GkRonAgsU1Xg9Y2LbOie4@nongnu.org
-X-Gm-Message-State: AOJu0YyvRk4E4yLZPU4sF3aXc6VOXSsqia8RC8GB3giQUiIomkM5Iwnh
- V8VF7RRyqbYUcTfUB07EjHZmbk5CPyFXUVMl5JQnFKB9mWA/gtawZv9vXGXtUbA+S+USskIFEf/
- GUqvmxvR8CTLLIKC+1LbeOC2m5Mj6urjMr1nAB0e7Hf2JrZJ7VUW0
-X-Gm-Gg: ASbGncuXxZ1Yd0DgqZH9+QJ7AV0jYQCwKuS2HnO3zHlh+7db6jcXVsre8QMbd5CjTZ5
- D6vp4kg+wmIBsVc7pXSbW0PYjZNlgXFMKPIUinr6+I3IzotmbeHnrBRetUupKIquncKt2d2n6vW
- EG8+4meCWHn+1rSQ5gr+0+5v2T9JpnBPFuXhRT51QZCXn56RkQYqkyYn3sOEg0ILZJ4QEl5fSq3
- 0YaLI2BmjX51/B/BOV32uL42fk/g6SZeQCSwzL1Jp/9cj7b0l4juCMe4gN2ihvc2ZcmqYLoqm9R
- tf4q9w==
-X-Received: by 2002:a05:600c:19cc:b0:434:fddf:5bfa with SMTP id
- 5b1f17b1804b1-4362aa1371dmr14788205e9.2.1734081191449; 
- Fri, 13 Dec 2024 01:13:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHgc1Shyn9ZNB/vi09PCMjM6Fp8nbgV1STaAux2r37RDuSI7W5WZPPXphNES99N8h17aZ5SJA==
-X-Received: by 2002:a05:600c:19cc:b0:434:fddf:5bfa with SMTP id
- 5b1f17b1804b1-4362aa1371dmr14787995e9.2.1734081191110; 
- Fri, 13 Dec 2024 01:13:11 -0800 (PST)
+ AJvYcCX2h1Y6buDwAQXQpneF5lQZ2PTe1866OWNOWfSz14QuU+2/cH9Vfdft5eqwp2Rqse2M2Lt/O5Hy/ww4@nongnu.org
+X-Gm-Message-State: AOJu0YzDm8rMOr4l4smT7qyUf1h0EXi/qwqG74CnZTNEM3k/DPtWl9q+
+ vdASiybZhz9DPdiXGrwpV5Py3Xn91RMc7ras21F27RiXUICOB02P3NYCz4Jcq3Sr1CIUfwg6eH6
+ GAHYTIyNI4i7sPU94EivQcHYdtCOAEopnKN+6d5dPeUJKoq4gMERI
+X-Gm-Gg: ASbGncttbIf7WHbykibLmx2K5saLlnhUWhmF+9AdyNluj31OHZnlVFWSuq26iDHj/Zn
+ UhFM1j+Zb7gfOKKdOKkVLkWHP2nk62v7DLduhbDMy3KNH56CNsSDzJ2GBzoHWYvE1xPIhHUWN8Y
+ fEb7yahphHb+bdJkk/DrSmdEBrLcGC3lZL9mSRbpmvySw2GTEqQx+lfnoFVJuvUpnKHBDYWPB+Y
+ K+2BSA9fX70+4C13sr2Brgntbqf3DxLQHM2MEhULljnEomrq0cBlG4tLK4rnrtSeZgGw1xSbhEz
+ Ag+HFQ==
+X-Received: by 2002:a5d:64e9:0:b0:385:df43:2179 with SMTP id
+ ffacd0b85a97d-38880acd813mr1012014f8f.17.1734081898323; 
+ Fri, 13 Dec 2024 01:24:58 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH6i0TSa047SafdVR9y+nFWWb8HsuwbcPIOgNFzRQa+JU0d31kj4ZGw4g2cjkK+pZo8HJTBEg==
+X-Received: by 2002:a5d:64e9:0:b0:385:df43:2179 with SMTP id
+ ffacd0b85a97d-38880acd813mr1011996f8f.17.1734081897976; 
+ Fri, 13 Dec 2024 01:24:57 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436257178e3sm43291165e9.41.2024.12.13.01.13.10
+ ffacd0b85a97d-3878251c1ccsm6639219f8f.88.2024.12.13.01.24.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 01:13:10 -0800 (PST)
-Message-ID: <33760109-0d6c-4e67-8164-e8b6ea2b2f90@redhat.com>
-Date: Fri, 13 Dec 2024 10:13:10 +0100
+ Fri, 13 Dec 2024 01:24:57 -0800 (PST)
+Message-ID: <f1aff4c3-6395-46da-a19e-f5e7e46f1a2a@redhat.com>
+Date: Fri, 13 Dec 2024 10:24:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 31/31] tests/functional: ignore errors when caching
- assets, except for 404
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <huth@tuxfamily.org>
-References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-32-berrange@redhat.com>
+Subject: Re: [PATCH 0/2] s390x/pci: relax I/O address translation requirement
+To: Matthew Rosato <mjrosato@linux.ibm.com>, qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, richard.henderson@linaro.org, david@redhat.com,
+ iii@linux.ibm.com, clegoate@redhat.com, qemu-devel@nongnu.org
+References: <20241209192927.107503-1-mjrosato@linux.ibm.com>
+ <990f5ccd-b05f-4e25-bc68-60793d4d21ad@redhat.com>
+ <9b143fc7-9ac7-4b87-8089-5209aab186ec@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -129,7 +128,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241211172648.2893097-32-berrange@redhat.com>
+In-Reply-To: <9b143fc7-9ac7-4b87-8089-5209aab186ec@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -141,7 +140,8 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,53 +157,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/12/2024 18.26, Daniel P. Berrangé wrote:
-> We see periodic errors caching assets due to a combination of transient
-> networking and server problems. With the previous patch to skip running
-> a test when it has missing assets, we can now treat most cache download
-> errors as non-fatal.
+On 12/12/2024 15.42, Matthew Rosato wrote:
+> On 12/12/24 4:10 AM, Thomas Huth wrote:
+>> On 09/12/2024 20.29, Matthew Rosato wrote:
+>>> This series introduces the concept of the relaxed translation requirement
+>>> for s390x guests in order to allow bypass of the guest IOMMU for more
+>>> efficient PCI passthrough.
+>>>
+>>> With this series, QEMU can indicate to the guest that an IOMMU is not
+>>> strictly required for a zPCI device.  This would subsequently allow a
+>>> guest linux to use iommu.passthrough=1 and bypass their guest IOMMU for
+>>> PCI devices.
+>>>
+>>> When this occurs, QEMU will note the behavior via an intercepted MPCIFC
+>>> instruction and will fill the host iommu with mappings of the entire
+>>> guest address space in response.
+>>>
+>>> There is a kernel series [1] that adds the relevant behavior needed to
+>>> exploit this new feature from within a s390x linux guest.
+>>>
+>>> [1]: https://lore.kernel.org/linux-s390/20241209192403.107090-1-mjrosato@linux.ibm.com/
+>>>
+>>> Matthew Rosato (2):
+>>>     s390x/pci: add support for guests that request direct mapping
+>>>     s390x/pci: indicate QEMU supports relaxed translation for passthrough
+>>
+>>   Hi again!
+>>
+>> One more thought: This is a guest-visible feature, isn't it? So do we also need some migration handling for this? For example, what happens if you start a guest that is aware of this feature on a host that has a QEMU with this feature, and then try to live-migrate the guest to a QEMU that does not have this feature? I guess the guest will crash? It would be better to fail the migration instead. At least we should disable the feature in older machine types and only allow it for the latest one.
 > 
-> Only HTTP 404 is retained as fatal, since it is a strong indicator of
-> a fully broken test rather than a transient error.
-> 
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/qemu_test/asset.py | 14 +++++++++++++-
->   1 file changed, 13 insertions(+), 1 deletion(-)
-> 
-> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
-> index 39832b2587..f0730695f0 100644
-> --- a/tests/functional/qemu_test/asset.py
-> +++ b/tests/functional/qemu_test/asset.py
-> @@ -15,6 +15,7 @@
->   from time import sleep
->   from pathlib import Path
->   from shutil import copyfileobj
-> +from urllib.error import HTTPError
->   
->   
->   # Instances of this class must be declared as class level variables
-> @@ -170,7 +171,18 @@ def precache_test(test):
->           for name, asset in vars(test.__class__).items():
->               if name.startswith("ASSET_") and type(asset) == Asset:
->                   log.info("Attempting to cache '%s'" % asset)
-> -                asset.fetch()
-> +                try:
-> +                    asset.fetch()
-> +                except HTTPError as e:
-> +                    # Treat 404 as fatal, since it is highly likely to
-> +                    # indicate a broken test rather than a transient
-> +                    # server or networking problem
-> +                    if e.code == 404:
-> +                        raise
-> +
-> +                    log.debug(f"HTTP error {e.code} from {asset.url} " +
-> +                              "skipping asset precache")
-> +
->           log.removeHandler(handler)
->   
->       def precache_suite(suite):
+> zPCI devices are currently marked as unmigratable in s390_pci_device_vmstate so it's not a reproducible issue yet.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Ah, right, I forgot about that migration blocker, so we should be fine, indeed!
+
+> Re: disabling the feature for older machines, OK -- Shall I fence similar to what we did for interpret/forwarding-assist with a new device property that is default to off on older machines ("relax-translation"? alternative suggestions welcome)
+
+Sounds reasonable!
+
+  Thomas
 
 
