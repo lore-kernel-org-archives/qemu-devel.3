@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D8FEE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:21:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A9E6E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBB7-00052Z-Oy; Fri, 13 Dec 2024 14:18:22 -0500
+	id 1tMBAQ-00048P-RG; Fri, 13 Dec 2024 14:17:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB8I-0008Oa-5U
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:15:28 -0500
-Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ id 1tMB7y-0008F7-IK
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:15:10 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB8E-0007ui-AS
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:15:24 -0500
-Received: by mail-qv1-xf31.google.com with SMTP id
- 6a1803df08f44-6d933736380so26020256d6.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:15:21 -0800 (PST)
+ id 1tMB7l-0007gT-4G
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:15:01 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-29f88004a92so1253117fac.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117321; x=1734722121; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117291; x=1734722091; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UCjhN6iwuQ2rffzzVRP2QP4VKFREVJfEhQs1/EOJunM=;
- b=on+JCN112Y9YAwvxcCpUlgfrk2k4pTf1q0CGRF+VnRSTEIFIbKHyevQiNRpaddORiP
- 7YiruaTYglgcOBJO0i+J7UaDNt6Q1hAzJ3VrxolmBdB1fthAIYXM8aVoUikyy+RjrJIK
- qXH3x0peiKIS9SjLLxXegQOU6kMhXBa6CyIMXo8cTwBzvTcm/zTszI4MZzG/+Wm/SicW
- hXrwF/9cGy3Yj+MtOmmGyQ6P/oqVY5jRlVIQ1ZghwojyVkLfNsy0/y15dF5nRxdb2vRg
- Blsi1aXVjAxz1tOHYORSXXulJZSzLw+3JkXs9cagGgzcfEEEm0ATJV6RGPUHQQv5UNf9
- 5NRQ==
+ bh=LUREKfOZFFX0Cik+qgjY7NL4liaNpXwK6Nn2DyaSOoI=;
+ b=eC0FM3C2rRSq6bycK5ik+uEjkDHvH05QdhjOiG0CE/sNE81DH3mxhthguW506lOi/a
+ FvWXsP3wdFB4E8vzI/KLTbrKaXUgFSqPqIKhnG8O598KNsSdyzZiT/w9TKINyPYlSwff
+ oBHV8INGxivEJKwB9H9Y7j63xmTUXJea7oWNof7xbnBF4bKc7Gw1POtC7XfhbWTy+Hx/
+ gZC9kGuQJnXs5iI+Q3kbcYRKGNFROhOvvyOvCjXMUtWsKt+fE0ohRvd+nZpYBXHSjbb2
+ y993cCI0f3fTEslcCfGpPbzxs8SdmqyRdhjVBJ/WQNHarfarIk0kiPBzh6yW0E93P9le
+ 7q2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117321; x=1734722121;
+ d=1e100.net; s=20230601; t=1734117291; x=1734722091;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UCjhN6iwuQ2rffzzVRP2QP4VKFREVJfEhQs1/EOJunM=;
- b=AGqL2re6qOTKeg7+z75hDjYSLEFBgjmOdhqODjNex5L7LchtpJFRre31uXmen1YRZm
- YcUNTOLKb4+Klgx/sJTrp2wqwEHot9Q7Jv9V9E/bxs9ePFRKJADNUzOG0JS/qEodkuOw
- zZYN8VqDspvWr+65YTx0QPzdHX8XkqvXUFxy4EcL7zAugX/HRA8Oy/72vC9FxUNeryPJ
- c7KS8ZKXlJX+/lP3GscaDP5THTvqlIexZrq0llduyjfVpXCRhGa3YWzWxHexARce8eJ9
- ZNZnXxzmuCsjFKaw0QwcScXQcS0ft3Ks5GGSTWe6FZ1A5Shnulf0BkUbAc4NHCciCAoF
- rSFg==
-X-Gm-Message-State: AOJu0Yx+a+Vh8RjfDkw7e82WmrX2S8K/W5//UqCt1IgCqRsUxnxKtq3w
- edkpez7HfEOpttxlRJZr5d4xJJUq+H8e0zIZDxOUhaqki8QwlcXMemFnOb0UGN6e7MLdrWGxCkH
- 6+TCXVOTC
-X-Gm-Gg: ASbGncvA+kJcfHozK3ZtylRQfIcP4wYlTffQEnHN0+w5y2lFeHmamNVUhnhZRLbilAd
- NWCS1XJRLAwE1FCB/fVuhqx2CusEZE+ENSE2DR9gSDju5J+2EvJlFJIK0xi4FcECRAMEtxCtX27
- gVl6k0CEfQbdD7LQmGIWRXWvAW0A6WuDFjru7rVE8SjqMfQGgGFu4dj7OaR6WotO1y5hmR/FmUe
- ABmYv7Nnm9G/eKyT2VmCf8WxdheYzR3NAubCkbinF1lm0DMDPXL3E7OjNAynqqH
-X-Google-Smtp-Source: AGHT+IGZLLdhYYhKvDrVvCvILw0plyZ5TnmAbjmLlFyKPJze97puJLgEtZCRggCd6qSIURiHCd1Ocw==
-X-Received: by 2002:a05:6871:b2c:b0:29e:3132:5897 with SMTP id
- 586e51a60fabf-2a3ac537883mr2057944fac.5.1734116887415; 
- Fri, 13 Dec 2024 11:08:07 -0800 (PST)
+ bh=LUREKfOZFFX0Cik+qgjY7NL4liaNpXwK6Nn2DyaSOoI=;
+ b=rvzUax0TI5G7taX/3yrIj9+a9IsGbPQIoZ2AJkLqS6Keu2nv8v7CokYdZgOwGGUtmr
+ L0E7lVcEwoltH5O/1Hm3kYX+FFqBtANp/5utRUY4r3aEvj5qwNK+mJ+nxOEiqyNFrmYG
+ A/z6wCaHbW9EKzUAWLC1JlpdfbxyUDPOw0UKNwLOVtro3jjrQctfoAqCvUqZduinVil5
+ kOZdbWRWxyGldOHMT/ukibw4MgepufKuV0VaQ7Lh4fX5pMMnVVCkzMdCKTJPP8eXnNBT
+ /4ZFFLyjfj+CKfZOr6FQsMN96QUZ4S0W5k91ljhGPKCKIj7YUUFbPMeFM0spwgrksknJ
+ hIgQ==
+X-Gm-Message-State: AOJu0YwVjCSSu2ZmLUcOKTgyR7+utGrA5bPnTThod3Rs/9uLXjK04Mxb
+ Ko/kB2cFxQY+OsQ/aO6IfvTdXcRaKSvH2S9UerkLATI1125lsn44jnu/HjyKdWqVNy9n76veDCf
+ 6ajtD/0OU
+X-Gm-Gg: ASbGncu5+XjzbvtBrN/Lqzdm7+KWqezi33r07aQooh5JahdPcACIIloAaACuTLmBoM7
+ H3BazT0vrOBDP4IpEl17pMxIw7Jo1am0puODtc07MVfCjrYIGOuZnvLQBeuvDCHP9+AJ+mPmIlQ
+ 6H9vqfGkVeltCZ9jD2sCfYS//oqpY2Uw4Au4zrM9W8AfmU8H2PS/j/oA5Vj/GB0wOPCfEeJK45Z
+ 1bGBpbLhCI1t1u3B6NhbGWKkfCs4c1BW/wMO6gO/BIDBjFEihMp91QjMVTZ+uZW
+X-Google-Smtp-Source: AGHT+IGwNMXVxQK/RMcx05Wwv2S9qKBEzz5sbg2HZcZw37JIyPwDDZWjAwkRQZEl4rnqZYnVu/XSSg==
+X-Received: by 2002:a05:6808:2519:b0:3e9:2090:c030 with SMTP id
+ 5614622812f47-3eba689dcb4mr1750600b6e.25.1734117291191; 
+ Fri, 13 Dec 2024 11:14:51 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.05
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:08:07 -0800 (PST)
+ Fri, 13 Dec 2024 11:14:50 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Brian Cain <bcain@oss.qualcomm.com>
-Subject: [PATCH 03/71] target/hexagon: Constify all Property
-Date: Fri, 13 Dec 2024 13:06:36 -0600
-Message-ID: <20241213190750.2513964-7-richard.henderson@linaro.org>
+Cc: Jeuk Kim <jeuk20.kim@samsung.com>
+Subject: [PATCH 63/71] hw/ufs: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:37 -0600
+Message-ID: <20241213190750.2513964-68-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,22 +99,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/hexagon/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/ufs/lu.c  | 2 +-
+ hw/ufs/ufs.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
-index c9aa9408ec..a70007245e 100644
---- a/target/hexagon/cpu.c
-+++ b/target/hexagon/cpu.c
-@@ -48,7 +48,7 @@ static ObjectClass *hexagon_cpu_class_by_name(const char *cpu_model)
-     return oc;
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 81bfff9b4e..74ff52ad09 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -274,7 +274,7 @@ static UfsReqResult ufs_process_scsi_cmd(UfsLu *lu, UfsRequest *req)
+     return UFS_REQUEST_NO_COMPLETE;
  }
  
--static Property hexagon_cpu_properties[] = {
-+static const Property hexagon_cpu_properties[] = {
-     DEFINE_PROP_BOOL("lldb-compat", HexagonCPU, lldb_compat, false),
-     DEFINE_PROP_UNSIGNED("lldb-stack-adjust", HexagonCPU, lldb_stack_adjust, 0,
-                          qdev_prop_uint32, target_ulong),
+-static Property ufs_lu_props[] = {
++static const Property ufs_lu_props[] = {
+     DEFINE_PROP_DRIVE("drive", UfsLu, conf.blk),
+     DEFINE_PROP_UINT8("lun", UfsLu, lun, 0),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/ufs/ufs.c b/hw/ufs/ufs.c
+index 79f786ed4e..fe77158439 100644
+--- a/hw/ufs/ufs.c
++++ b/hw/ufs/ufs.c
+@@ -1752,7 +1752,7 @@ static void ufs_exit(PCIDevice *pci_dev)
+     }
+ }
+ 
+-static Property ufs_props[] = {
++static const Property ufs_props[] = {
+     DEFINE_PROP_STRING("serial", UfsHc, params.serial),
+     DEFINE_PROP_UINT8("nutrs", UfsHc, params.nutrs, 32),
+     DEFINE_PROP_UINT8("nutmrs", UfsHc, params.nutmrs, 8),
 -- 
 2.43.0
 
