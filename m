@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5310E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:45:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 664DAE77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9af-0001hQ-VJ; Fri, 13 Dec 2024 12:36:38 -0500
+	id 1tM9ZM-0006Cn-Tv; Fri, 13 Dec 2024 12:35:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Y2-0008HY-Sh
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:57 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tM9Xs-00086L-0v
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:44 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Xy-0001jZ-Jc
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:54 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso13995965e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:49 -0800 (PST)
+ id 1tM9Xl-0001hF-VG
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:42 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385ef8b64b3so1689811f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111227; x=1734716027; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111216; x=1734716016; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PBFuTHZDcPncuwYvvsk4kRJzR/9xPxvQn/qSMVquJ4E=;
- b=dAFIg2uJbAKMMaGaHURNMm0O/wz5nhNk+d4DaabzZAwEj1ZA5M7492iiwxh/8rAx3F
- 2hNe989kOV0H8fp0wmwpe1mSqJgF6DuK7Aq48aw7FAEL3Vzyb3e9UiEGBNsUvY5NzMQl
- tf4OpOmMTar32VdLZBVtBIMROkFmpC47vBVFQtVjkkVvNghO3U5GPCplFdUbMjYl8W53
- m9+3cKKPUzHVuCJ7Z8bQr2TbHAwAwhoCtRUlOfrXzcFKM+zQRI/Bp0d8srDOxdmNkcNF
- l2x76JeMk9RdmQ91jSujy+aa2beRVxLM1CjdAd7r3cqlQMTCOxVCC/2XAXNwdlySLvp9
- Sasw==
+ :reply-to; bh=S5Wm3RpvNF8IYsHZpf+XJ72p8A+XwA+4f5r+Dvitclo=;
+ b=vMQeWv9RM5lzj9to/AtvHw1AycCUJ1HDhie+6crPm3lW3LrLviGN/lwCx8Ea7LylRw
+ ArY7aXM9qrOTYB9y4I2P0a+cT/jBOW5k4Qo6o9p9h/SK3b1h9ibjk3ulnkyleR/C32UA
+ /6dSnDc0552f+YkqmeAMF3zAGCNba43PtwOq+Bufilstb+yhssgieoLiCfJtPfwFuADO
+ LwvrJLdQe6o66eqVG5OZtiAj17boA+ztUi3oYuw0s5mq4Dg577z+OAqutOxYEpYlUiNG
+ f7BaSIxmjajlNRHko20R5dIC4uBiFn6tZypJ1Q8Zeu/J1nrG5NZN0djz6aqeAxjO4e0E
+ SMTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111227; x=1734716027;
+ d=1e100.net; s=20230601; t=1734111216; x=1734716016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PBFuTHZDcPncuwYvvsk4kRJzR/9xPxvQn/qSMVquJ4E=;
- b=eqAVmLJ3OoJZ95Dv0fjgCTYacFE26yOXpEugMZfzkvqYS0vPloz2DCR75dGs33L3AX
- KHE4e+anyrQ+rvoGJoRknT8WkziVjIMpZtVZ15tw754r/zmGkPpnO5mkMixeExKOi0Cp
- ZyvZjMNqHq/gk9PfXnruyP6Mw4iUcxnesKiEAsUgoybvyzWycg/f9O79QDRa9qm8HURT
- RL3X6VBBW0GCsbZCL9usXohNOwGAaxtGt845/SoMMfgEPaoWvn0+ti5RCQfeUyvqotdi
- SmqFJSjPDkfo45XZi14nGTAWxTKWw3EBwqNL53SPmyAX1OizAWkQgc3gpMIcOxMo73ek
- aT/Q==
-X-Gm-Message-State: AOJu0YyNZvNYUq+/1qePbeKg3/Ixyk7h4WsaVEV6Py+3weZDCey0uD9H
- DrM2tn4PmBGVCEIU0vj0jr7VPvJ/gjK15ceyxIfWQn0AIrmmn0vjKjKdMRbLdSHRMScJA9vp9/B
- D
-X-Gm-Gg: ASbGncszwDkFBProK5boJJ/g0evtB2vyQzKY+RYD/hBKSMOTY7QFG5UMalK55PQA+8b
- dVtyIDY2r7qendMxDSVU0OXSshCggQEqtXv2/RFGM25Spj8cLg1vPWA3gIyJpvhSOp4iNQYpiyr
- 9pcUmSkc/1SSAlC+BcV866oOncJHDxvCJfjxJGdvZ7nO4wuQiCFYSnduzgENWu8WZVufrVFBWM+
- gVMNkIWAy6thmemIUqu/3vSgq2mqNl2kDxlqiu93DNkyeFVM8Ay74QBH1wIAQ==
-X-Google-Smtp-Source: AGHT+IGxtjgfHb+q7+0GuvXQfW8FSLGYbhYFradVpp2OlsHzC55phuN709fBHh7PWf16MZT2CeNZ/Q==
-X-Received: by 2002:a05:600c:3ba1:b0:434:fddf:5bfd with SMTP id
- 5b1f17b1804b1-4362aa1473bmr25634335e9.5.1734111227103; 
- Fri, 13 Dec 2024 09:33:47 -0800 (PST)
+ bh=S5Wm3RpvNF8IYsHZpf+XJ72p8A+XwA+4f5r+Dvitclo=;
+ b=tMueYpUyHa+5Q2d6J0mwabPfdBxzdZBVG96jJcGdLVPFCabBaxu606373dAsAzs1mu
+ k3ctuR78TSJxylOz/Quw0ROmm3Ae/87kLh+hLaLBDUmHxw+IEBLSx9yuqqHlfXodtZEt
+ FadJvM8ZdVykKfItMr9l6GfIS6bBQ8oUXCzBBnHCZjsfzYwBQrdxvf0bsCX0l1gKU37n
+ LF6PDBdDwa/YWFtoOCcTGc9njG0R4JHmaJoprrXqJROzriYOfB8gc0JKE5IQjFysAjU3
+ iYx6TZZnQWgPumAb8ZNCYST0SFC4vZU+UVjG02HwGAuc1rXGNsVxBX/1Cx0liZkOAOnc
+ 9rqw==
+X-Gm-Message-State: AOJu0YwMNGjFMCRBBcI3fGMUty1fzFxZcuiMD/0evu0FtYjcXWexNVfQ
+ bfUzegRwzr7uipDl4iDNvL+j8Ut8Wkh+Xqi16SbJVsvnuBbahJZsbA8ev8yh6ir7wOVkh4pGSnC
+ i
+X-Gm-Gg: ASbGnct2BhCjY03vJNYWRKPfKGqaFtYt5KKn7TMgbIONrVVQPMvnGDhC8HqNiOYabNV
+ RAIb9aVqbESAW39NU2444aVwfbOEe9cbeAm3mi/swGPfxEFcblzXw/aTsihhBqaODjvbzHRfjee
+ yGoNgXRphVL0vdu2n82vYqfagKXnNjFPBIBslQIdGQUffOPYR9PKkzQGXrY3JTj8rZHwnnLqCgi
+ 8RMvA5ylsbJBIPgbFTcHMAKp8eCUd5PC4o1iHM4Q+Lc5iSmyjwWdVqZT8KJ8Q==
+X-Google-Smtp-Source: AGHT+IGqLqgKpOdEyiQyucW3aOXMfM1+FD1+jYXs+ha2jAB27RbEnuVHEuzT9agSjX0WXvPOLBvhog==
+X-Received: by 2002:a05:6000:1a8a:b0:385:f89a:402e with SMTP id
+ ffacd0b85a97d-3888dcd468amr2911417f8f.14.1734111216530; 
+ Fri, 13 Dec 2024 09:33:36 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.46
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:46 -0800 (PST)
+ Fri, 13 Dec 2024 09:33:35 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 71/85] docs/system/arm/orangepi: update links
-Date: Fri, 13 Dec 2024 17:32:15 +0000
-Message-Id: <20241213173229.3308926-72-peter.maydell@linaro.org>
+Subject: [PULL 61/85] target/arm: Rename helper_gvec_vcvt_[hf][su] with _rz
+Date: Fri, 13 Dec 2024 17:32:05 +0000
+Message-Id: <20241213173229.3308926-62-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,40 +97,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-www.orangepi.org does not support https, it's expected to stick to http.
+Emphasize that these functions use round-to-zero mode.
 
-Reviewed-by: Niek Linnenbank <nieklinnenbank@gmail.com>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-id: 20241206192254.3889131-2-pierrick.bouvier@linaro.org
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241211163036.2297116-62-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- docs/system/arm/orangepi.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ target/arm/helper.h             | 8 ++++----
+ target/arm/tcg/translate-neon.c | 8 ++++----
+ target/arm/tcg/vec_helper.c     | 8 ++++----
+ 3 files changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/docs/system/arm/orangepi.rst b/docs/system/arm/orangepi.rst
-index 9afa54213b0..db87e81fec4 100644
---- a/docs/system/arm/orangepi.rst
-+++ b/docs/system/arm/orangepi.rst
-@@ -119,7 +119,7 @@ Orange Pi PC images
- Note that the mainline kernel does not have a root filesystem. You may provide it
- with an official Orange Pi PC image from the official website:
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index 04e422ab081..f2cfee40de3 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -650,13 +650,13 @@ DEF_HELPER_FLAGS_4(gvec_touizs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
  
--  http://www.orangepi.org/downloadresources/
-+  http://www.orangepi.org/html/serviceAndSupport/index.html
+ DEF_HELPER_FLAGS_4(gvec_vcvt_sf, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_uf, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_4(gvec_vcvt_fs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_4(gvec_vcvt_fu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(gvec_vcvt_rz_fs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(gvec_vcvt_rz_fu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
  
- Another possibility is to run an Armbian image for Orange Pi PC which
- can be downloaded from:
-@@ -213,7 +213,7 @@ including the Orange Pi PC. NetBSD 9.0 is known to work best for the Orange Pi P
- board and provides a fully working system with serial console, networking and storage.
- For the Orange Pi PC machine, get the 'evbarm-earmv7hf' based image from:
+ DEF_HELPER_FLAGS_4(gvec_vcvt_sh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_uh, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_4(gvec_vcvt_hs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+-DEF_HELPER_FLAGS_4(gvec_vcvt_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hs, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
  
--  https://cdn.netbsd.org/pub/NetBSD/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz
-+  https://archive.netbsd.org/pub/NetBSD-archive/NetBSD-9.0/evbarm-earmv7hf/binary/gzimg/armv7.img.gz
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rm_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(gvec_vcvt_rm_us, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/tcg/translate-neon.c b/target/arm/tcg/translate-neon.c
+index b9b3d1c1fbc..f9ca889beca 100644
+--- a/target/arm/tcg/translate-neon.c
++++ b/target/arm/tcg/translate-neon.c
+@@ -1409,13 +1409,13 @@ static bool do_fp_2sh(DisasContext *s, arg_2reg_shift *a,
  
- The image requires manually installing U-Boot in the image. Build U-Boot with
- the orangepi_pc_defconfig configuration as described in the previous section.
+ DO_FP_2SH(VCVT_SF, gen_helper_gvec_vcvt_sf)
+ DO_FP_2SH(VCVT_UF, gen_helper_gvec_vcvt_uf)
+-DO_FP_2SH(VCVT_FS, gen_helper_gvec_vcvt_fs)
+-DO_FP_2SH(VCVT_FU, gen_helper_gvec_vcvt_fu)
++DO_FP_2SH(VCVT_FS, gen_helper_gvec_vcvt_rz_fs)
++DO_FP_2SH(VCVT_FU, gen_helper_gvec_vcvt_rz_fu)
+ 
+ DO_FP_2SH(VCVT_SH, gen_helper_gvec_vcvt_sh)
+ DO_FP_2SH(VCVT_UH, gen_helper_gvec_vcvt_uh)
+-DO_FP_2SH(VCVT_HS, gen_helper_gvec_vcvt_hs)
+-DO_FP_2SH(VCVT_HU, gen_helper_gvec_vcvt_hu)
++DO_FP_2SH(VCVT_HS, gen_helper_gvec_vcvt_rz_hs)
++DO_FP_2SH(VCVT_HU, gen_helper_gvec_vcvt_rz_hu)
+ 
+ static bool do_1reg_imm(DisasContext *s, arg_1reg_imm *a,
+                         GVecGen2iFn *fn)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index 91a9130641f..ec6b640fdad 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2507,12 +2507,12 @@ DO_3OP_PAIR(gvec_uminp_s, MIN, uint32_t, H4)
+ 
+ DO_VCVT_FIXED(gvec_vcvt_sf, helper_vfp_sltos, uint32_t)
+ DO_VCVT_FIXED(gvec_vcvt_uf, helper_vfp_ultos, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_fs, helper_vfp_tosls_round_to_zero, uint32_t)
+-DO_VCVT_FIXED(gvec_vcvt_fu, helper_vfp_touls_round_to_zero, uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
+ DO_VCVT_FIXED(gvec_vcvt_sh, helper_vfp_shtoh, uint16_t)
+ DO_VCVT_FIXED(gvec_vcvt_uh, helper_vfp_uhtoh, uint16_t)
+-DO_VCVT_FIXED(gvec_vcvt_hs, helper_vfp_toshh_round_to_zero, uint16_t)
+-DO_VCVT_FIXED(gvec_vcvt_hu, helper_vfp_touhh_round_to_zero, uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_hs, helper_vfp_toshh_round_to_zero, uint16_t)
++DO_VCVT_FIXED(gvec_vcvt_rz_hu, helper_vfp_touhh_round_to_zero, uint16_t)
+ 
+ #undef DO_VCVT_FIXED
+ 
 -- 
 2.34.1
 
