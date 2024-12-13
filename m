@@ -4,76 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1ADE77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 07:11:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83174E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 07:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLzns-0007YG-MF; Fri, 13 Dec 2024 02:09:36 -0500
+	id 1tLzxl-0008V4-DB; Fri, 13 Dec 2024 02:19:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tLznr-0007Y8-Fw
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 02:09:35 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <SRS0=ldnL=TG=kaod.org=clg@ozlabs.org>)
+ id 1tLzxd-0008SH-VQ; Fri, 13 Dec 2024 02:19:42 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tLzno-00071K-Du
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 02:09:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734073773; x=1765609773;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=A4w+xUWPFzrHzwWGCwJC81L1HqXdufeFhGlIL1EjnJc=;
- b=SKvXKByHb42oHeJF9t2NRFnVn2+EOuyPzWekYj6L0cpDUfX2TEd8hpqV
- qu0mpi3WkaL7Qun0hVIDM0qIt0MycTXMCd5MD9kjM71GPfG+AP5iUQ1Ct
- puTUw4/KgT/9o4SJFN7FY1Cf9RnXhO2zlptb9+sLkl/KJ2Hbh74Fn00tv
- LSjsJ4T/3Zh17z3EvRuq/OUyEhwgj0HlJHZYnxs+mcsUivlsviYCa6Scl
- vSXB3aql2KDFY3pRNNbsj/EC8sGoGB0C7+8dr8BcD81Jcz1Tb+MPO5Saz
- qMb4l3VpV+Ox/fjz57iinXgsGnwH99N1kYeufYz1MHOEbXu7jTD93yZgS g==;
-X-CSE-ConnectionGUID: uvdmKt2dTRC7B9QR/RobXg==
-X-CSE-MsgGUID: HWKgLmvJRqm3bDNQ+fh4Fg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="51937093"
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="51937093"
-Received: from orviesa009.jf.intel.com ([10.64.159.149])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 23:09:32 -0800
-X-CSE-ConnectionGUID: XvVkZrwWTDSpO5tbYZGm3Q==
-X-CSE-MsgGUID: WI9Kr5bxSjiT/r1psnF6jg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="96365574"
-Received: from emr-bkc.sh.intel.com ([10.112.230.82])
- by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 23:09:29 -0800
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
- Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 5/7] memory: Register the RamDiscardManager instance upon
- guest_memfd creation
-Date: Fri, 13 Dec 2024 15:08:47 +0800
-Message-ID: <20241213070852.106092-6-chenyi.qiang@intel.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20241213070852.106092-1-chenyi.qiang@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ (Exim 4.90_1) (envelope-from <SRS0=ldnL=TG=kaod.org=clg@ozlabs.org>)
+ id 1tLzxa-00087U-7s; Fri, 13 Dec 2024 02:19:41 -0500
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y8ggv3B9vz4wcr;
+ Fri, 13 Dec 2024 18:19:23 +1100 (AEDT)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y8ggp1bNVz4wbx;
+ Fri, 13 Dec 2024 18:19:17 +1100 (AEDT)
+Message-ID: <8af809d7-5fa2-471f-9fc9-eee482988894@kaod.org>
+Date: Fri, 13 Dec 2024 08:19:16 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/aspeed: fix connect_serial_hds_to_uarts
+To: =?UTF-8?B?S2VubmV0aCBKaWEo6LS+57qq5LicX+WNjuehleS4iua1tyk=?=
+ <kenneth_jia@asus.com>, "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>
+Cc: =?UTF-8?Q?=27C=C3=A9dric_Le_Goater=27?= <clg@redhat.com>,
+ =?UTF-8?Q?=27Philippe_Mathieu-Daud=C3=A9=27?= <philmd@linaro.org>,
+ 'Jamin Lin' <jamin_lin@aspeedtech.com>,
+ 'Andrew Jeffery' <andrew@codeconstruct.com.au>,
+ 'Gavin Shan' <gshan@redhat.com>,
+ "'open list:All patches CC here'" <qemu-devel@nongnu.org>
+References: <5f9b0c53f1644922ba85522046e92f4c@asus.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <5f9b0c53f1644922ba85522046e92f4c@asus.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=ldnL=TG=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -39
+X-Spam_score: -4.0
 X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_MED=-2.3,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,153 +111,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the realize()/unrealize() callbacks to initialize/uninitialize
-the new guest_memfd_manager object and register/unregister it in the
-target MemoryRegion.
+Hello Kenneth,
 
-Guest_memfd was initially set to shared until the commit bd3bcf6962
-("kvm/memory: Make memory type private by default if it has guest memfd
-backend"). To align with this change, the default state in
-guest_memfd_manager is set to private. (The bitmap is cleared to 0).
-Additionally, setting the default to private can also reduce the
-overhead of mapping shared pages into IOMMU by VFIO during the bootup stage.
+On 12/12/24 14:31, Kenneth Jia(贾纪东_华硕上海) wrote:
+>  From 24d3badbbb9dcc0d220609a7dd30f8da5002cba7 Mon Sep 17 00:00:00 2001
+> 
+> From: Kenneth Jia <kenneth_jia@asus.com>
+> 
+> Date: Thu, 12 Dec 2024 20:42:04 +0800
+> 
+> Subject: [PATCH]    hw/arm/aspeed: fix connect_serial_hds_to_uarts
+> 
+>     In the loop, we need ignore the index increase when uart == uart_chosen
+> 
+>     We should increase the index only after we allocate a serial.
+> 
+> Signed-off-by: Kenneth Jia <kenneth_jia@asus.com>
 
-Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
----
- include/sysemu/guest-memfd-manager.h | 27 +++++++++++++++++++++++++++
- system/guest-memfd-manager.c         | 28 +++++++++++++++++++++++++++-
- system/physmem.c                     |  7 +++++++
- 3 files changed, 61 insertions(+), 1 deletion(-)
+Could you please tell us a bit on your test environment ? I am interested
+to know how you found the issue.
 
-diff --git a/include/sysemu/guest-memfd-manager.h b/include/sysemu/guest-memfd-manager.h
-index 9dc4e0346d..d1e7f698e8 100644
---- a/include/sysemu/guest-memfd-manager.h
-+++ b/include/sysemu/guest-memfd-manager.h
-@@ -42,6 +42,8 @@ struct GuestMemfdManager {
- struct GuestMemfdManagerClass {
-     ObjectClass parent_class;
- 
-+    void (*realize)(GuestMemfdManager *gmm, MemoryRegion *mr, uint64_t region_size);
-+    void (*unrealize)(GuestMemfdManager *gmm);
-     int (*state_change)(GuestMemfdManager *gmm, uint64_t offset, uint64_t size,
-                         bool shared_to_private);
- };
-@@ -61,4 +63,29 @@ static inline int guest_memfd_manager_state_change(GuestMemfdManager *gmm, uint6
-     return 0;
- }
- 
-+static inline void guest_memfd_manager_realize(GuestMemfdManager *gmm,
-+                                              MemoryRegion *mr, uint64_t region_size)
-+{
-+    GuestMemfdManagerClass *klass;
-+
-+    g_assert(gmm);
-+    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
-+
-+    if (klass->realize) {
-+        klass->realize(gmm, mr, region_size);
-+    }
-+}
-+
-+static inline void guest_memfd_manager_unrealize(GuestMemfdManager *gmm)
-+{
-+    GuestMemfdManagerClass *klass;
-+
-+    g_assert(gmm);
-+    klass = GUEST_MEMFD_MANAGER_GET_CLASS(gmm);
-+
-+    if (klass->unrealize) {
-+        klass->unrealize(gmm);
-+    }
-+}
-+
- #endif
-diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-manager.c
-index 6601df5f3f..b6a32f0bfb 100644
---- a/system/guest-memfd-manager.c
-+++ b/system/guest-memfd-manager.c
-@@ -366,6 +366,31 @@ static int guest_memfd_state_change(GuestMemfdManager *gmm, uint64_t offset,
-     return ret;
- }
- 
-+static void guest_memfd_manager_realizefn(GuestMemfdManager *gmm, MemoryRegion *mr,
-+                                          uint64_t region_size)
-+{
-+    uint64_t bitmap_size;
-+
-+    gmm->block_size = qemu_real_host_page_size();
-+    bitmap_size = ROUND_UP(region_size, gmm->block_size) / gmm->block_size;
-+
-+    gmm->mr = mr;
-+    gmm->bitmap_size = bitmap_size;
-+    gmm->bitmap = bitmap_new(bitmap_size);
-+
-+    memory_region_set_ram_discard_manager(gmm->mr, RAM_DISCARD_MANAGER(gmm));
-+}
-+
-+static void guest_memfd_manager_unrealizefn(GuestMemfdManager *gmm)
-+{
-+    memory_region_set_ram_discard_manager(gmm->mr, NULL);
-+
-+    g_free(gmm->bitmap);
-+    gmm->bitmap = NULL;
-+    gmm->bitmap_size = 0;
-+    gmm->mr = NULL;
-+}
-+
- static void guest_memfd_manager_init(Object *obj)
- {
-     GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(obj);
-@@ -375,7 +400,6 @@ static void guest_memfd_manager_init(Object *obj)
- 
- static void guest_memfd_manager_finalize(Object *obj)
- {
--    g_free(GUEST_MEMFD_MANAGER(obj)->bitmap);
- }
- 
- static void guest_memfd_manager_class_init(ObjectClass *oc, void *data)
-@@ -384,6 +408,8 @@ static void guest_memfd_manager_class_init(ObjectClass *oc, void *data)
-     RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(oc);
- 
-     gmmc->state_change = guest_memfd_state_change;
-+    gmmc->realize = guest_memfd_manager_realizefn;
-+    gmmc->unrealize = guest_memfd_manager_unrealizefn;
- 
-     rdmc->get_min_granularity = guest_memfd_rdm_get_min_granularity;
-     rdmc->register_listener = guest_memfd_rdm_register_listener;
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a384..532182a6dd 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -53,6 +53,7 @@
- #include "sysemu/hostmem.h"
- #include "sysemu/hw_accel.h"
- #include "sysemu/xen-mapcache.h"
-+#include "sysemu/guest-memfd-manager.h"
- #include "trace.h"
- 
- #ifdef CONFIG_FALLOCATE_PUNCH_HOLE
-@@ -1885,6 +1886,9 @@ static void ram_block_add(RAMBlock *new_block, Error **errp)
-             qemu_mutex_unlock_ramlist();
-             goto out_free;
-         }
-+
-+        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(object_new(TYPE_GUEST_MEMFD_MANAGER));
-+        guest_memfd_manager_realize(gmm, new_block->mr, new_block->mr->size);
-     }
- 
-     ram_size = (new_block->offset + new_block->max_length) >> TARGET_PAGE_BITS;
-@@ -2139,6 +2143,9 @@ static void reclaim_ramblock(RAMBlock *block)
- 
-     if (block->guest_memfd >= 0) {
-         close(block->guest_memfd);
-+        GuestMemfdManager *gmm = GUEST_MEMFD_MANAGER(block->mr->rdm);
-+        guest_memfd_manager_unrealize(gmm);
-+        object_unref(OBJECT(gmm));
-         ram_block_discard_require(false);
-     }
- 
--- 
-2.43.5
+Also, please use "git send-email" to send patches.
+
+Anyhow,
+
+Fixes: d2b3eaefb4d7 ("aspeed: Refactor UART init for multi-SoC machines")
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+
+> 
+> ---
+> 
+> hw/arm/aspeed.c | 4 ++--
+> 
+> 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> 
+> index 556498f2a0..d8cb2d1429 100644
+> 
+> --- a/hw/arm/aspeed.c
+> 
+> +++ b/hw/arm/aspeed.c
+> 
+> @@ -364,11 +364,11 @@ static void connect_serial_hds_to_uarts(AspeedMachineState *bmc)
+> 
+>       int uart_chosen = bmc->uart_chosen ? bmc->uart_chosen : amc->uart_default;
+> 
+>       aspeed_soc_uart_set_chr(s, uart_chosen, serial_hd(0));
+> 
+> -    for (int i = 1, uart = sc->uarts_base; i < sc->uarts_num; i++, uart++) {
+> 
+> +    for (int i = 1, uart = sc->uarts_base; i < sc->uarts_num; uart++) {
+> 
+>           if (uart == uart_chosen) {
+> 
+>               continue;
+> 
+>           }
+> 
+> -        aspeed_soc_uart_set_chr(s, uart, serial_hd(i));
+> 
+> +        aspeed_soc_uart_set_chr(s, uart, serial_hd(i++));
+> 
+>       }
+> 
+> }
+> 
+> --
+> 
+> 2.34.1
+> 
 
 
