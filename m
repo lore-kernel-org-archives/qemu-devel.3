@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2E63E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D67AE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:17:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM8Bn-0001o3-4u; Fri, 13 Dec 2024 11:06:51 -0500
+	id 1tM8L8-0008Dp-4O; Fri, 13 Dec 2024 11:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tM8BY-0001k5-A1
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:38 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tM8L6-0008Dg-BO
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:16:28 -0500
+Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tM8BV-0006fx-G8
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:35 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aa67ac42819so318099866b.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 08:06:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tM8L4-0007zc-Jv
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:16:28 -0500
+Received: by mail-yw1-x1131.google.com with SMTP id
+ 00721157ae682-6f00b10bc1dso17803117b3.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 08:16:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734105991; x=1734710791;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TLgf/hBtKPWGX+IefC929iFjKjT8oYxXZ2UyNeVgI20=;
- b=eMnDd/fBJkNxhXDWMwQpyChErFwycheJWR0E7Dz98qXlPk8FarZjK9inBfsZtVd27q
- zd1FJJCtZ+MUXnWijrXF5JeYN4mhzrB1ZuMN33xGauwPQ5/kSKRtjs8VD7pvhxJYS4J9
- /3ek37sxWQGNEql1NTY0KLkJBT6dDXHRyFGL9QDXoXMud5cuVtL+qWUzOsn/Wqr/h1l1
- 2YLHL9S1LI7y9sQnwteBPMnfSPoG1mctqUYzRB0Hhdz4LaIYRIVOEMrdvcYtx7Dt/BlQ
- hiyov/z2bmyZGYlCqYoquSFY62DeBcqti7KdRzmUxmmC1J0wO1M5tMdw+OS+1A1WF/+X
- FgWA==
+ d=linaro.org; s=google; t=1734106585; x=1734711385; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=n5yq8m9etLbOFIeY34o894flVPY1UWwHzW9+riYgCek=;
+ b=pMkroiMI6PY4V0Hr4Rt6vsCg5hzDqgCINjXqnB8/6Nzw3h6fxUSm9ZDQo7EWxwAlxq
+ mpSiigSFRFa0PUqj0j56we1HY5QRW21zt58HIryBN+lJFUJUZ++uM5/CWLkudry4igYv
+ Yznno/b9GDv4bUdQBmpnZOAG7MGIfgK0C8BwY20VEmZC7fLIrIFkAk4B8s52VKQ2jX+Y
+ 0sCFqP4hiZhAQSDJITTxinmYTkinyXJ141BmSkk/qzzgVaZxGOVSChL+JMohjZDzJxiP
+ M24E9XMjneWLOJhd30a11rGhjkz1egiMc2Gbmmk1uwwKAGKCSOhA19LsLHwx5uZybZFc
+ xbKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734105991; x=1734710791;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TLgf/hBtKPWGX+IefC929iFjKjT8oYxXZ2UyNeVgI20=;
- b=J2jYnhVfFOlntf1Clvcppajzb2gdswQ0nMEhaH4g6Endcr8aICti5ApcDQW/VSn5yi
- ek4oIdeDf/x0C0wmwwtlXNXO2/uSjKBfnLDarS0/OSRH/YlMh40u2AwkeQlOOD2HL70z
- JFTBBTPMlbl3pr8lappZHTUXhFPiLKj21HoLkGCPlfiORCcPJGqkx3TeltAYhu4XIoks
- oU9oFzA6yMuMl97JKuEFHqEZ8VP/NvvmCxnLGbBHwH0e3hnkPktfbMkesJivku0wZznW
- I7LpoQDvLL8Fh6YLmqwxQeBIKmc95rzR7GzIX/lDHvSrMD681XT64xhHUEJcKgXn7Gt/
- XdSA==
-X-Gm-Message-State: AOJu0YxmXV6MwIXStxR/l1xxTiWQRHfMKtNNBchVtcADufRss6Q6bkzj
- 6Xib9UqepieQKRkjce6RSJvBhPb65dBer9EXO2fYm+FXQ3RtLPki5lbgrKyLA0j6LH0Zxh3ogIB
- m9Q==
-X-Gm-Gg: ASbGncv+9EIELw3OJzXmfsxR9sm7nl9kCrpu/hY8DrXHOqxscTvj2WGg7vefss4m2aX
- +lTtCk4Xrj/z21Tk45JJr92ySXjwIYTHdKJtOoDAG4EuUvlgwH2XKYRwsOPuabedb8ubdObEo+c
- sC1rYv1dGSznaptPIiORt5IW7+BC2brRlHUPB5mq4o9mEvlqHhtLQhP25hvMd1npKiVnbxmkiHc
- WaISUR8cS+t3hqBb48xKIt5qK13147cIRBv1NfVVn+5eqf5UFivA5zATW0Wa1PW4nBBqxuQvdU7
- J5fMV5vi9ubLDVhGt1VsU6vbAbMaOMYR
-X-Google-Smtp-Source: AGHT+IHaw3W3f56M3kqBelZ34InNyOfGln+ODqqA2m0ooUtMCs6A1BxKnzI5uO0CA8otU6vZGdEHiA==
-X-Received: by 2002:a17:906:a3cc:b0:aab:92bd:1a8f with SMTP id
- a640c23a62f3a-aab92bd1acamr41468066b.26.1734105989884; 
- Fri, 13 Dec 2024 08:06:29 -0800 (PST)
-Received: from localhost.localdomain (h082218084190.host.wavenet.at.
- [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aa667843413sm916683166b.24.2024.12.13.08.06.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 08:06:29 -0800 (PST)
-From: Phil Dennis-Jordan <phil@philjordan.eu>
-To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
- zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com,
- Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 6/6] hw/vmapple: XHCI controller's interrupt mapping
- workaround for macOS
-Date: Fri, 13 Dec 2024 17:06:19 +0100
-Message-Id: <20241213160619.66509-7-phil@philjordan.eu>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20241213160619.66509-1-phil@philjordan.eu>
-References: <20241213160619.66509-1-phil@philjordan.eu>
+ d=1e100.net; s=20230601; t=1734106585; x=1734711385;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n5yq8m9etLbOFIeY34o894flVPY1UWwHzW9+riYgCek=;
+ b=RnAzd+eb0hJSJgYtPelL2hclyY09zPz/HPYyC0CrNO//JVHXSjit3yJSUktX7V0KSk
+ XjhKLrQul05K0w4sOUD0IR3ua0vayFuEVHLyNV83HTHWG2ybrh+5QbSLPbmwDdqwTbkm
+ O4e+K5O0OWVjT/a4krn7Nx3/SB45esp1p29m/aruD8zjUYhWH4tfeAuKcm6weByJsWqS
+ XUhlu+oYLAwMnIQ/+RIo/doq6fi5QG7vs4hCYw+J7QmFujv1cn+vghA6smTsej1LePXW
+ eYfoA5bXcQP7NuUV4qbeEXBQXOrAsjsfGXOukCGM+273pt2lzUXUTIIQpSctVkLOtje4
+ 664A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9cvjKMD8+K7p2EKuuEnpC5wp8YVcLTcsq89pYQdshobTyMNFvHf+qBxdsG5AzV4Wd/vMO+6NkLFaY@nongnu.org
+X-Gm-Message-State: AOJu0YzYPflyKj/VT5/An+WM34pHEtPaGiYuQTrPYOmS5ODuAILwQDiK
+ z0YSOQt8Svs/r5LQqnDURJYQD3RqHAZADzvokpSgi+SqOU351VK7XBcZ4PfLLQ/5/dgKMDdMseE
+ I2HnTqM7Ehk6D5BbvMVXchS/vXneRTIVaHpSXsg==
+X-Gm-Gg: ASbGncuZPl2BVetVcsqZU6nGNivHMYA0uJAB16c+vnJc1Rg7HYgyVaMy8/wSNI/hnFn
+ v2vNeokG/g9Y5NpCDxLqHg+mXcGKScZUX12Hz4Yo=
+X-Google-Smtp-Source: AGHT+IHySbFGksmTnqumZ5Fgz5PGbUf8YtvKOqodl5Tx8h+2lAIlH71wzZQQ9QtuDUvlF65akEkLhkxQpbBcjU9c15U=
+X-Received: by 2002:a05:690c:6312:b0:6ef:7f89:d923 with SMTP id
+ 00721157ae682-6f279b8858cmr32431287b3.31.1734106585052; Fri, 13 Dec 2024
+ 08:16:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::62a;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
+References: <20241212142716.523980-1-gerben@altlinux.org>
+In-Reply-To: <20241212142716.523980-1-gerben@altlinux.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Dec 2024 16:16:13 +0000
+Message-ID: <CAFEAcA_cUPQ1n4t7RGaez3-odPWmc4PbZYD+eZVB8QQ_NSv84w@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/tcg: fix potential integer overflow in
+ iwmmxt_macuw()
+To: gerben@altlinux.org
+Cc: philmd@linaro.org, andrew@openedhand.com, richard.henderson@linaro.org, 
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org, 
+ Denis Sergeev <zeff@altlinux.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +94,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change enables the new conditional interrupt mapping support
-property on the vmapple machine type's integrated XHCI controller
-using compat_props.
+On Thu, 12 Dec 2024 at 14:28, <gerben@altlinux.org> wrote:
+>
+> From: Denis Rastyogin <gerben@altlinux.org>
+>
+> The function iwmmxt_macuw() could potentially cause an integer
+> overflow when summing up four 32-bit multiplications.
+> This occurs because the intermediate results may exceed the 32-bit
+> range before being cast to uint64_t. The fix ensures each
+> multiplication is explicitly cast to uint64_t prior to summation,
+> preventing potential issues and ensuring correctness.
+>
+> Found by Linux Verification Center (linuxtesting.org) with SVACE.
+>
+> Signed-off-by: Denis Sergeev <zeff@altlinux.org>
+> Signed-off-by: Denis Rastyogin <gerben@altlinux.org>
+> ---
+>  target/arm/tcg/iwmmxt_helper.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/arm/tcg/iwmmxt_helper.c b/target/arm/tcg/iwmmxt_helper.c
+> index 610b1b2103..19c709655e 100644
+> --- a/target/arm/tcg/iwmmxt_helper.c
+> +++ b/target/arm/tcg/iwmmxt_helper.c
+> @@ -140,7 +140,7 @@ uint64_t HELPER(iwmmxt_macsw)(uint64_t a, uint64_t b)
+>
+>  uint64_t HELPER(iwmmxt_macuw)(uint64_t a, uint64_t b)
+>  {
+> -#define MACU(SHR) ( \
+> +#define MACU(SHR) (uint64_t)( \
+>          (uint32_t) ((a >> SHR) & 0xffff) * \
+>          (uint32_t) ((b >> SHR) & 0xffff))
+>      return MACU(0) + MACU(16) + MACU(32) + MACU(48);
 
-The macOS guest driver attempts to use event rings 1 and 2 on the XHCI
-controller, despite there being only one (PCI pin) interrupt channel
-available. With conditional interrupt mapping enabled, the XHCI
-controller will only schedule events on interrupter 0 in PCI pin mode.
+This makes the unsigned version of iwMMXt WMAC behave differently
+from the signed version (which is still doing the addition at
+32 bits and then sign extending to 64 bits). The description in
+the Intel Wireless MMX Technology Developer Guide is not
+super clear (it says "The input arguments are (Ax,Bx) 16-bits,
+the intermediate values (Px) are 32-bits, and the result is
+64-bits" where the Px are the results of the multiplies;
+there's just a diagram of a sum being done on the Px and the
+64-bit wRd input into the 64-bit wRd output, so although it's
+clear that the Px should be 32-bits it's not totally clear
+that the accumulation of these different sized inputs should
+all be done at 64-bit width) -- but it seems pretty plausible
+that this is supposed to be done with 64-bit addition.
 
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
----
+But it definitely doesn't seem like the signed and unsigned
+versions of the insn should be doing this differently, so
+changing the iwmmxt_macuw helper and not iwmmxt_macsw doesn't
+look right.
 
-v2:
+More generally, I am super reluctant to apply changes to the
+iwMMXt decoder unless they come attached to descriptions of
+testing that's been done against some known-good implementation
+of iwMMXt (ideally hardware), because we have basically no
+testing capability here. This is moribund code for a dead
+subset of the architecture, and I am inclined to say
+"don't touch it unless we know for a fact that it's
+broken"...
 
- * Set the "conditional-intr-mapping" property via compat_props, not
-   directly on the created XHCI controller object.
-
- hw/vmapple/vmapple.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/hw/vmapple/vmapple.c b/hw/vmapple/vmapple.c
-index 66336942c8d..1732334c779 100644
---- a/hw/vmapple/vmapple.c
-+++ b/hw/vmapple/vmapple.c
-@@ -641,8 +641,19 @@ static void machvmapple_machine_init(void)
- }
- type_init(machvmapple_machine_init);
- 
-+static GlobalProperty vmapple_compat_defaults[] = {
-+    /*
-+     * macOS XHCI driver attempts to schedule events onto even rings 1 & 2
-+     * even when (as here) there is no MSI(-X) support. Disabling interrupter
-+     * mapping in the XHCI controller works around the problem.
-+     */
-+    { TYPE_QEMU_XHCI, "conditional-intr-mapping", "on" },
-+};
-+
- static void vmapple_machine_10_0_options(MachineClass *mc)
- {
-+    compat_props_add(mc->compat_props, vmapple_compat_defaults,
-+                     G_N_ELEMENTS(vmapple_compat_defaults));
- }
- DEFINE_VMAPPLE_MACHINE_AS_LATEST(10, 0)
- 
--- 
-2.39.5 (Apple Git-154)
-
+thanks
+-- PMM
 
