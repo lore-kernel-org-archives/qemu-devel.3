@@ -4,62 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A964E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B989E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:20:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLvHV-0007LF-F1; Thu, 12 Dec 2024 21:19:53 -0500
+	id 1tLvHi-0008TN-R4; Thu, 12 Dec 2024 21:20:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHQ-0007H9-SA
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHf-0008G8-EF
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHP-0007xU-Bl
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:48 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHb-0007zU-D6
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734056385;
+ s=mimecast20190719; t=1734056398;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Gp5mQeEOdsiA1ZBEDmZNFbst0HIqxLpcEhdeB3yCV3Y=;
- b=UMciVT0h/g3r0VrSkKexFukSl2xij5LvhB6TVnvDxZpeg7Um4pVOB30C28Cj1NwcrrryvA
- +yfU77K8ivZzUsGOHjXVc8V7ymfnA1O16aamdaYzUa79FPONzHcS9oQ8m7ZhtAqQzhCSON
- Z461paQz6Bz+pC/D78aUtV6XOkfvLWw=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=bA+JaqMj7pVNYwnnVtvfF8qpWQI1cqk+kienT43PSAM=;
+ b=ZFeD5eoc4a2BojdCwYHTbN2BwVz6KMBHDg8WHfAinu3gKoP56poSSBMmOHF1ZRZCsk1y2T
+ ebxOJ3alRrqY7sl4d4rYmY/OHdhs21sGaEx13T5cxHoE00pMrEOWVcL4SRv1muIHX+RN/0
+ lFYr186iBg4OWUAcCFx9xfSKmKGXnYk=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-7_rThSSLNTCGfRZ6V6SiJQ-1; Thu,
- 12 Dec 2024 21:19:39 -0500
-X-MC-Unique: 7_rThSSLNTCGfRZ6V6SiJQ-1
-X-Mimecast-MFC-AGG-ID: 7_rThSSLNTCGfRZ6V6SiJQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-C_od0vyCNvGww5Fd7oWghA-1; Thu,
+ 12 Dec 2024 21:19:56 -0500
+X-MC-Unique: C_od0vyCNvGww5Fd7oWghA-1
+X-Mimecast-MFC-AGG-ID: C_od0vyCNvGww5Fd7oWghA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C73D01956048; Fri, 13 Dec 2024 02:19:38 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D2FCB1956089; Fri, 13 Dec 2024 02:19:55 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1F2D41955F40; Fri, 13 Dec 2024 02:19:36 +0000 (UTC)
+ id AA574195605A; Fri, 13 Dec 2024 02:19:53 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 15/23] docs/qapidoc: add add_field() and generate_field()
- helper methods
-Date: Thu, 12 Dec 2024 21:18:18 -0500
-Message-ID: <20241213021827.2956769-16-jsnow@redhat.com>
+Subject: [PATCH 21/23] docs/qapidoc: add visit_entity()
+Date: Thu, 12 Dec 2024 21:18:24 -0500
+Message-ID: <20241213021827.2956769-22-jsnow@redhat.com>
 In-Reply-To: <20241213021827.2956769-1-jsnow@redhat.com>
 References: <20241213021827.2956769-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -84,66 +83,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These are simple rST generation methods that assist in getting the types
-and formatting correct for a field list entry. add_field() is a more
-raw, direct call while generate_field() is intended to be used for
-generating the correct field from a member object.
+Finally, the core entry method for a qapi entity.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ docs/sphinx/qapidoc.py | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 1c83d1b7aac..7efe2d656c0 100644
+index eda6aa0897b..9d3fcaa6559 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -44,6 +44,7 @@
-     QAPISchemaEntity,
-     QAPISchemaEnumMember,
-     QAPISchemaFeature,
-+    QAPISchemaMember,
-     QAPISchemaObjectTypeMember,
- )
- from qapi.source import QAPISourceInfo
-@@ -132,6 +133,20 @@ def ensure_blank_line(self) -> None:
-             # +2: correct for zero/one index, then increment by one.
-             self.add_line_raw("", fname, line + 2)
+@@ -356,6 +356,19 @@ def visit_freeform(self, doc) -> None:
+         self.add_lines(text, info)
+         self.ensure_blank_line()
  
-+    def add_field(
-+        self,
-+        kind: str,
-+        name: str,
-+        body: str,
-+        info: QAPISourceInfo,
-+        typ: Optional[str] = None,
-+    ) -> None:
-+        if typ:
-+            text = f":{kind} {typ} {name}: {body}"
-+        else:
-+            text = f":{kind} {name}: {body}"
-+        self.add_lines(text, info)
++    def visit_entity(self, ent):
++        assert ent is not None
 +
-     def format_type(self, ent) -> Optional[str]:
-         if isinstance(ent, (QAPISchemaEnumMember, QAPISchemaFeature)):
-             return None
-@@ -151,6 +166,16 @@ def format_type(self, ent) -> Optional[str]:
- 
-         return ret
- 
-+    def generate_field(
-+        self,
-+        kind: str,
-+        member: QAPISchemaMember,
-+        body: str,
-+        info: QAPISourceInfo,
-+    ) -> None:
-+        typ = self.format_type(member)
-+        self.add_field(kind, member.name, body, info, typ)
++        try:
++            self._curr_ent = ent
++            # This line gets credited to the start of the /definition/.
++            self.add_line(f".. qapi:{ent.meta}:: {ent.name}", ent.info)
++            with self.indented():
++                self.preamble(ent)
++                self.visit_sections(ent)
++        finally:
++            self._curr_ent = None
 +
-     # Transmogrification helpers
  
-     def visit_paragraph(self, section: QAPIDoc.Section) -> None:
+ # Disable black auto-formatter until re-enabled:
+ # fmt: off
 -- 
 2.47.0
 
