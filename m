@@ -4,94 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2639E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 05:15:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56784E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 05:49:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLy0p-0008Jc-3r; Fri, 13 Dec 2024 00:14:51 -0500
+	id 1tLyXZ-0004Bm-7Z; Fri, 13 Dec 2024 00:48:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tLy0n-0008JN-Ad
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 00:14:49 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tLy0l-0002HO-BT
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 00:14:49 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7feffe7cdb7so953721a12.1
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 21:14:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1734066884; x=1734671684;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=F+JxJ+W7qflQ+2La8EzXyDPNgnobCVhuQmxAQnbJQnA=;
- b=DIkez/tcGfzGMC1VibjUl/24z11yNOvUdM1P/JjIxREIqzLmczIhDgaYc1q8aXQBiY
- tkd5d3qqzVIV3zC9XF+chky41GIAY67yCuY1LyWczwBu9CcA+9hAALkAMzSCRnbY07dz
- +OUuhrJWDfXI7kx3vC//WZQ762jfPbAZgavkFcByr5qR1OnUvLpbrGQrQDBw9VWoAxqT
- +Wn+JWP84g/M1MikGX6sXb8GZUB/aYHrgf2PffyuWN+jpkgj3SfXmcYwNRM4w1SV7U12
- Qm4AVZ2b1aIVI4gvaOCstDsptcai74DKVKecDVKlePkPfsT45LieE/GYgNnNTGQaFCaT
- NYFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734066884; x=1734671684;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=F+JxJ+W7qflQ+2La8EzXyDPNgnobCVhuQmxAQnbJQnA=;
- b=v64IUYpDqWrdEmKO7h6MNZLJR7sowzrIssDrxbh+BAq0Dpi5BO0wK/sW7ko1s+Y5LY
- dUKRrHc3TGyGBHkyaT7HVUiqMU8cRKkkmnZ+Gx9eirYssa9eVqhEiIOYNQpBQek/SDno
- GQLOlkKomdViv10UVM7fPEvuYcsQtV/3UGh7FvZxa0uR+n7Uem5dOHYAHU4s2NIkK9ae
- 63X26XbvEuWaDMqmCA9+9yn8xq+rc6gCpdgCMdh+N7vdXJtFwAgCNrvHzsypZS3aa0ly
- I9feCusfoQNaSbghhDMb7QHBKE9bCzVhXoxfK6IBA/4wANSDIf0Q1OSR0sG54yOT5ssy
- cEvQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXajA5LRVgWILmQG057o24Uf0Ulz/a2ecrqVGKPfazbo1A5r0VrzzoqRvZiaJapKXnF+O+S16P+yBH2@nongnu.org
-X-Gm-Message-State: AOJu0YzlQ6usacq7AKfSQW/wexbmI9J1IV7dZ2TAQPkyNtturC/F38t2
- f+9VwZE5zNgMbwd7O5PM1Xx76fzO222BOCbYgavLX5vagl3nbFGIR7ENYYPPgK4=
-X-Gm-Gg: ASbGncssLm5SBDkwobyqJLxIUyBnhVhPHV3+AjD0xc69PjLBze4GPVAEGoLoI8UQB6Q
- PiAjgiNvETJogMbZXTEjx1gVywQiIyTX5II+T2kQAsZX3EnXM501s/ECQGqQ1VNBQgfcTf5MmUB
- 0Xjc6zdDljbbVM6yE7RiqkdD5rguADw3SknbGB/H2dvREXLcG0LRvUzl9IXn2B5dYNwQO7cihRz
- PcXcQxkgaBk5VvFgTkjxhpzqcC7Vogs9IoB6296fBGdFd4ULjg7EYzHwheO75l4cZc=
-X-Google-Smtp-Source: AGHT+IFKn9qmDW+4iAXv4BnqzbTlblWSVq+u1KIFb+1J7l9S7p5N/bheFWiE7YChq7JGt2hHeDwPwA==
-X-Received: by 2002:a17:90b:3502:b0:2ef:1134:e350 with SMTP id
- 98e67ed59e1d1-2f2901b8178mr2308022a91.35.1734066884026; 
- Thu, 12 Dec 2024 21:14:44 -0800 (PST)
-Received: from [157.82.203.37] ([157.82.203.37])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-21779e0f7besm38651835ad.115.2024.12.12.21.14.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Dec 2024 21:14:43 -0800 (PST)
-Message-ID: <5dd989ee-e9d3-4c49-9031-a4bc320bbaa9@daynix.com>
-Date: Fri, 13 Dec 2024 14:14:40 +0900
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLyXX-0004Bd-VL
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 00:48:39 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tLyXU-0000QE-T4
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 00:48:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734068917; x=1765604917;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=vaybq7wSTE9kPY+MyW36fVpw/LZp5T3mCwA7s5tNDm4=;
+ b=FiGgu0H/65Ax1tBJs97lWyWG1jUC/wlipxyZweFZO3eRFvZBrXjXcys9
+ KopadHcMV6KybYqb5Un9YfQtDvJ4tLCFO93KvkK2f265/0kAt2j0oTdkT
+ 3E92nRKZUHs+gMmGX4gmTtSLiGfso4Cxo1TQ50Ch2SZsmeBOv13kBa5QJ
+ qrc52fiAAh4hhtR2zu4jVFcZSSSjVC/qHH0Flo+b+lICEWReBnKLGvsgs
+ L5CV1fEVDNbg+eVDJamavWIrF2JCWmi7lLtKGGnVvqvXl9nCN8ufl3BCs
+ +q2KSZaS/e1+ygoVIK3CANWRYJVUuVOqAw5O1mFDraQATBqQUXhvgSgpD A==;
+X-CSE-ConnectionGUID: UUGD4tOiRSa2uKY9faNePg==
+X-CSE-MsgGUID: FTNFaJsPQIWrieCbbg6LYg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34429127"
+X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="34429127"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 21:48:32 -0800
+X-CSE-ConnectionGUID: ukQOMKiRQQy3bv4dyvWy9A==
+X-CSE-MsgGUID: IvhvFW6+SHKBcdKk19Wp2g==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="101539117"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 21:48:30 -0800
+Message-ID: <45f6dd92-4976-4c0c-8222-c15139280824@intel.com>
+Date: Fri, 13 Dec 2024 13:48:27 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] pci/msix: Implement PBA writes
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
-References: <20241212083502.1439033-1-npiggin@gmail.com>
- <20241212083502.1439033-4-npiggin@gmail.com>
+Subject: Re: [PATCH] kvm: consistently return 0/-errno from kvm_convert_memory
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com, binbin.wu@linux.intel.com
+References: <20241212155719.524637-1-pbonzini@redhat.com>
 Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241212083502.1439033-4-npiggin@gmail.com>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20241212155719.524637-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x530.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,26 +85,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/12/12 17:34, Nicholas Piggin wrote:
-> Implement MMIO PBA writes, 1 to trigger and 0 to clear.
-> 
-> This functionality is used by some qtests, which keep the msix irq
-> masked and test irq pending via the PBA bits, for simplicity. Some
-> tests expect to be able to clear the irq with a store, so a side-effect
-> of this is that qpci_msix_pending() would actually clear the pending
-> bit where it previously did not. This actually causes some [possibly
-> buggy] tests to fail. So to avoid breakage until tests are re-examined,
-> prior behavior of qpci_msix_pending() is kept by changing it to avoid
-> clearing PBA.
-> 
-> A new function qpci_msix_test_clear_pending() is added for tests that
-> do want the PBA clearing, and it will be used by XHCI and e1000e/igb
-> tests in subsequent changes.
+On 12/12/2024 11:57 PM, Paolo Bonzini wrote:
+> In case of incorrect parameters, kvm_convert_memory() was returning
+> -1 instead of -EINVAL.  The guest won't notice because it will move
+> anyway to RUN_STATE_INTERNAL_ERROR, but fix this for consistency and
+> clarity.
 
-The specification says software should never write Pending Bits and its 
-result is undefined. Tests should have an alternative method to clear 
-Pending Bits.
+I think we need add more clarification about "guest".
 
-A possible solution is to unmask the interrupt, wait until the Pending 
-Bits get cleared, and mask it again.
+kvm_convert_memory() is also used to service the request of 
+KVM_HC_MAP_GPA_RANGE from guest since commit 47e76d03b155 ("i386/kvm: 
+Add KVM_EXIT_HYPERCALL handling for KVM_HC_MAP_GPA_RANGE"). It might 
+need to return error back to guest in case of incorrect parameters, in 
+the future.
+
+For the code change,
+
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   accel/kvm/kvm-all.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+> index 4c5cef766ad..81821af7d7a 100644
+> --- a/accel/kvm/kvm-all.c
+> +++ b/accel/kvm/kvm-all.c
+> @@ -2998,17 +2998,17 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+>       ram_addr_t offset;
+>       MemoryRegion *mr;
+>       RAMBlock *rb;
+> -    int ret = -1;
+> +    int ret = -EINVAL;
+>   
+>       trace_kvm_convert_memory(start, size, to_private ? "shared_to_private" : "private_to_shared");
+>   
+>       if (!QEMU_PTR_IS_ALIGNED(start, qemu_real_host_page_size()) ||
+>           !QEMU_PTR_IS_ALIGNED(size, qemu_real_host_page_size())) {
+> -        return -1;
+> +        return ret;
+>       }
+>   
+>       if (!size) {
+> -        return -1;
+> +        return ret;
+>       }
+>   
+>       section = memory_region_find(get_system_memory(), start, size);
+> @@ -3026,7 +3026,7 @@ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private)
+>           if (!to_private) {
+>               return 0;
+>           }
+> -        return -1;
+> +        return ret;
+>       }
+>   
+>       if (!memory_region_has_guest_memfd(mr)) {
+
 
