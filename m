@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07278E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05F00E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLuGG-00060T-AQ; Thu, 12 Dec 2024 20:14:32 -0500
+	id 1tLuFR-0005Vu-5P; Thu, 12 Dec 2024 20:13:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuGB-0005tm-UR
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:28 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFP-0005Vd-Qd
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:13:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuGA-0000ed-2w
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:27 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFO-0008Td-8d
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:13:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734052462;
+ s=mimecast20190719; t=1734052416;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UzHNygLXVObLJFRUedomApYOH0eIg84xgMKEVnWctDs=;
- b=R4cjiueGa071Ph3pOjSx17iZXzlP7K+bRQZudfZytttKiHG1o2Lq9prbunXWi+sCPM5ZC2
- tGsYOzW4aZeHtdoaXZKynkmeRCM8i55prAaHLSeL0Z+sFs2S+pA2u3LsbkgcTlimGRet/G
- npxejiNNLDFAPc3dOepX+P0qIWBTyzM=
+ bh=4VdZDB30eHZhJMRoE6s8/J15E8364oZ3MVURcH7j2XU=;
+ b=QH4nSEpn9hw2jcxjGVjGZ877uF8ALtYhxai4iJU79t1xz8BWUeCSzJbn74zz9ztjQUvtvc
+ OV1pTzUzA/49+3tzcxQK33NLngKfuk+wI8mpli/hWUxptUDxKjLk+TsjrKLReA+zjPVTsJ
+ PItFskM67TIRYEO5iMe2WX8oYpdkZro=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-495-hhjiugPQN0WED5UGZNSoyw-1; Thu,
- 12 Dec 2024 20:14:20 -0500
-X-MC-Unique: hhjiugPQN0WED5UGZNSoyw-1
-X-Mimecast-MFC-AGG-ID: hhjiugPQN0WED5UGZNSoyw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-499-mWHgrHqjO4eGl0L9essZkQ-1; Thu,
+ 12 Dec 2024 20:13:32 -0500
+X-MC-Unique: mWHgrHqjO4eGl0L9essZkQ-1
+X-Mimecast-MFC-AGG-ID: mWHgrHqjO4eGl0L9essZkQ
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 808181955F43; Fri, 13 Dec 2024 01:14:19 +0000 (UTC)
+ id 6DF3619560B8; Fri, 13 Dec 2024 01:13:31 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D4030195609D; Fri, 13 Dec 2024 01:14:15 +0000 (UTC)
+ id E53741956086; Fri, 13 Dec 2024 01:13:27 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
@@ -52,9 +52,9 @@ Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 16/35] docs/qapi-domain: add "Returns:" field lists
-Date: Thu, 12 Dec 2024 20:12:45 -0500
-Message-ID: <20241213011307.2942030-17-jsnow@redhat.com>
+Subject: [RFC PATCH v2 01/35] do-not-merge
+Date: Thu, 12 Dec 2024 20:12:30 -0500
+Message-ID: <20241213011307.2942030-2-jsnow@redhat.com>
 In-Reply-To: <20241213011307.2942030-1-jsnow@redhat.com>
 References: <20241213011307.2942030-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -85,52 +85,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add "Returns:" field list syntax to QAPI Commands.
-
-Like "Arguments:" and "Errors:", the type name isn't currently processed
-for cross-referencing, but this will be addressed in a forthcoming
-commit.
-
-This patch adds "errors" as a GroupedField, which means that multiple
-return values can be annotated - this is only done because Sphinx does
-not seemingly (Maybe I missed it?) support mandatory type arguments to
-Ungrouped fields. Because we want to cross-reference this type
-information later, we want to make the type argument mandatory. As a
-result, you can technically add multiple :return: fields, though I'm not
-aware of any circumstance in which you'd need or want
-to. Recommendation: "Don't do that, then."
-
-Since this field describes an action/event instead of describing a list
-of nouns (arguments, features, errors), I added both the imperative and
-indicative forms (:return: and :returns:) to allow doc writers to use
-whichever mood "feels right" in the source document. The rendered output
-will always use the "Returns:" label, however.
-
-I'm sure you'll let me know how you feel about that. O:-)
-
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi-domain.py | 7 +++++++
- 1 file changed, 7 insertions(+)
+ scripts/qapi-lint.sh | 55 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
+ create mode 100755 scripts/qapi-lint.sh
 
-diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index 4bfc82aafdf..c8c8ffc0dce 100644
---- a/docs/sphinx/qapi-domain.py
-+++ b/docs/sphinx/qapi-domain.py
-@@ -268,6 +268,13 @@ class QAPICommand(QAPIObject):
-                 names=("error", "errors"),
-                 has_arg=False,
-             ),
-+            # :returns TypeName: descr
-+            GroupedField(
-+                "returnvalue",
-+                label=_("Returns"),
-+                names=("return", "returns"),
-+                can_collapse=True,
-+            ),
-         ]
-     )
- 
+diff --git a/scripts/qapi-lint.sh b/scripts/qapi-lint.sh
+new file mode 100755
+index 00000000000..5a8c798001e
+--- /dev/null
++++ b/scripts/qapi-lint.sh
+@@ -0,0 +1,55 @@
++#!/usr/bin/env bash
++set -e
++
++if [[ -f qapi/.flake8 ]]; then
++    echo "flake8 --config=qapi/.flake8 qapi/"
++    flake8 --config=qapi/.flake8 qapi/
++fi
++if [[ -f qapi/pylintrc ]]; then
++    echo "pylint --rcfile=qapi/pylintrc qapi/"
++    pylint --rcfile=qapi/pylintrc qapi/
++fi
++if [[ -f qapi/mypy.ini ]]; then
++    echo "mypy --config-file=qapi/mypy.ini qapi/"
++    mypy --config-file=qapi/mypy.ini qapi/
++fi
++
++if [[ -f qapi/.isort.cfg ]]; then
++    pushd qapi
++    echo "isort -c ."
++    isort -c .
++    popd
++fi
++
++if [[ -f ../docs/sphinx/qapi-domain.py ]]; then
++    files="qapi-domain.py"
++fi
++if [[ -f ../docs/sphinx/compat.py ]]; then
++    files="${files} compat.py"
++fi
++if [[ -f ../docs/sphinx/collapse.py ]]; then
++    files="${files} collapse.py"
++fi
++
++if [[ -f ../docs/sphinx/qapi-domain.py ]]; then
++    pushd ../docs/sphinx
++
++    set -x
++    mypy --strict $files
++    flake8 --max-line-length=80 $files qapidoc.py
++    isort -c $files qapidoc.py
++    black --line-length 80 --check $files qapidoc.py
++    PYTHONPATH=../scripts/ pylint \
++        --rc-file ../../scripts/qapi/pylintrc \
++        qapidoc.py
++    set +x
++
++    popd
++fi
++
++pushd ../build
++make -j13
++make check-qapi-schema
++make docs
++make sphinxdocs
++popd
 -- 
 2.47.0
 
