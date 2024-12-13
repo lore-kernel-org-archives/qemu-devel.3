@@ -4,75 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB64E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DC8E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF7j-00026Q-1F; Fri, 13 Dec 2024 18:31:07 -0500
+	id 1tMF9d-0005ZH-Mv; Fri, 13 Dec 2024 18:33:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF7h-00026A-Iy
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:05 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8x-0003nm-K8
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:23 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF7c-0002xG-2L
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:05 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862d161947so1035180f8f.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:30:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8v-00037E-P1
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:23 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4361d5dcf5bso24207425e9.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132658; x=1734737458; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=qJqzrK27HC5TEaqb+1BUrxjhcsWle6KpvNsTAkGGR64=;
- b=ypdWkQZ99cK59OwM3iBR1M6sZNZxdlvM3jPy+7Kf9Zza48ytMyAXzvRZzvlx9b2jno
- zRE8F4Qs42xMYgth4tADyniuXU6qNB6dx4/CBzlzlgBCW17cTNe48s44zA1urAyPoNYr
- OyartdzsfBO11et3zkZdpm9PTYVL300nO9xEXIdf4yd0UWspXScDvFbYD8UTdJ0Yv4Wi
- HEckzrX/8Horw0J51B3I1R6GyRm1pQIodUrpZyAaOQZQJAOiL9ay1sYHOHnlBe0sKpyn
- 9R/Ikg24GlapU0sKP4s2x+eTRj0hxslvrlC+2zqHKa4sGiP9qLFNMwBttBIZDI7Z3mQI
- rdxg==
+ d=linaro.org; s=google; t=1734132739; x=1734737539; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uFgo5/cFMtDhVHAmYBsAsdqAE3yRetip0LB681CLyVs=;
+ b=KVoMYy1kmwVrqX5U5YZ9wf7x3yd6CTzBxgeSFBkuzrTwyazuz9gKqK1zhZ/BX+zUGW
+ LX0OoWmh5+2MF+/MgHwEWcgBKKSAhnQPQKIAvo+ANBZTIBexBu8zWnh6lRlP9bbMIM3W
+ qetOnXGAbBEx8bE+TqGX84CvQz/6b79KUFOfDVkcfHAccOoorbKZqpkyTD482JxJNcfg
+ yPWNxNE6egHUl3kofADRCa9d1qPdTPzwF87KEmH8RYqV4NMRdJx+MT7BBq3tTSj/1ir2
+ YJkyCFhpUtPYOEdFauPsS7M43/+quRNvDYq3xAGipDFeEHmg9Y+N3BB7Bc4lkyrdOJ58
+ Q2Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132658; x=1734737458;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=qJqzrK27HC5TEaqb+1BUrxjhcsWle6KpvNsTAkGGR64=;
- b=xD8Iwydv0/8oBw/beBKJ6jJnHgIisjizX9MrpIS5wCLCKjuzuITEB4ZO1+8gxHkoy7
- FUzZ711/VVH/Zuxf1wz1LTHy36tlSj6rwsLrmwBJwrtc/1IdQDWzEu86DhTQYVt+FxCk
- l5HCiQTUe9+R9aKb1gKao8aSTBY18aIuXCcNPFBxX5y3WFt7rmYb3Ir/81A0f3Ytbk09
- lOGkmBifOkHDePOanVk+kS4goK0U84h37LsK4Fyv3mKvv5aQcLKu9SLneuhWWDAQJONF
- P8Tx8oqqir5c/Vp0WsPdVengXQd3oIOcOTzFZnM0VPhGhaYYylSV36V3uwfNCbgc7Spl
- dmgQ==
-X-Gm-Message-State: AOJu0YzwCrOULbySiKB/9KkKWSfTXelIzbhaD7wo0c8M2CZ5aXixJX/9
- 4c2VxWlWhRlMq7HXWaH7V10rr5RRxhw4zrJJ7RvWr/Gw2mg9ewdjSEihbB9Gm8HgjS4rUiuOVOB
- Bh3I=
-X-Gm-Gg: ASbGncvxO4FU8jtNKsI4E0+OPYfuTDJ79ut8dojmapf/yM6ZBoLm36YmrNNlsqFvPO6
- XMYqiItYdGlr7LUXN0F91VDzhisAR6Hj7e4x/SYAVmuWvWTO9I6Gihpz4gs1x9dMgvo6G7FzkRJ
- ApJ/1IQtvUgrfnRr+7rQ2ch30K9wQRgoQHRxDG9nwJOJbjlucmFNlRfHzBEaZQSq4CWUc1Oaj87
- K/BTrb3/ZYLGp1iZm1Ng9pPjuQwcEEhByKC2cow4SM0hhWKkouP0VN223jc7LVOTFwzEF4b0GvI
- 5hbmDA==
-X-Google-Smtp-Source: AGHT+IHWXq2f3c9cFhy1YIMX9o55yLFH2mja7pAEkNFzNCcEmdzXU9UuHdCXRtOWH6tRSIUHaiz+Lg==
-X-Received: by 2002:a5d:5984:0:b0:385:fc32:1ec6 with SMTP id
- ffacd0b85a97d-3888e0c081bmr3304716f8f.50.1734132658139; 
- Fri, 13 Dec 2024 15:30:58 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734132739; x=1734737539;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uFgo5/cFMtDhVHAmYBsAsdqAE3yRetip0LB681CLyVs=;
+ b=d/Pp5u/q3kSRyAfpWhyKvD16tSuJTK0jyfqy39YDEwTWnHBTzQ+vfMsVZ2Fmt4jgJa
+ BRav0xdW4E9NV1C8QncuX4tdf6VrfXwy1RC8dNs5bQBuUWKKpZcJIWgl/+RmJEFa8sPx
+ EcxIbQ/PEhcYGiCwaqqIhmfmvSbZ7a+YH6z7oUmRLqflmJJba2LAuHGSalOuhfjbU4Tc
+ qsXrnd07FyG7MDydV7yVPz4y8yI0GbNqA5lgPRmVVPCDQbYBuHPCeq1UowpLnMkmZ/VY
+ gLad+dsLOb815GK1Ugd0BDUGc5YJpoVyhTwOgRSadHJLT8CvTU+eQtpn1hy0Q1mqPAjs
+ 6t9Q==
+X-Gm-Message-State: AOJu0YxBy0Zkx3ScE+76UutJyeiv2RtBTy0Xr2FrJlHBYcW/03vRxgKm
+ OTyMi7jHnH3o3+FNK2U5KOQB6jyYwDYkk5MJEE85eQDX4F7Gvn6wn2O5pdpvfhwxVzth6mrckBl
+ fFcY=
+X-Gm-Gg: ASbGncu9wLLS7GPRhR+eUuOs4jDlt1z2rrTV13/wpuRxUhOky0kbykngOFC7Jhe7g5H
+ gOluVfBzQ+msQogKWt3i5jrni/Ndb4pDE668o87e0IvESKmhGgn27hF69O6sTU4byqNEGTYJrQq
+ liJ07SzN6LhF40em4uCbPJqv9v9/Cq2qu/S8CVI5bZP6vi9uUCdpwotxW4BHDntAxcv40vdXIks
+ CeaJSqvveA0TOZQBigBC4F6U5Jl339ZlFmHrzQhUwQtuOUrYqcgS/6QwRVkoiKArglbUvKSQ2h4
+ En+XWg==
+X-Google-Smtp-Source: AGHT+IF2K5W+YYWu/0e67Th7Crz0XrJobf95gjSCqdpQAQj4NETpewvUX+QBwSt/LxaMMI5d/ySCXg==
+X-Received: by 2002:a05:600c:1da6:b0:434:a7e3:db5c with SMTP id
+ 5b1f17b1804b1-4362aa27ef1mr36088575e9.11.1734132739181; 
+ Fri, 13 Dec 2024 15:32:19 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8046ca6sm817664f8f.83.2024.12.13.15.30.56
+ 5b1f17b1804b1-4361e322328sm81348935e9.0.2024.12.13.15.32.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:30:56 -0800 (PST)
+ Fri, 13 Dec 2024 15:32:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 00/20] Misc HW patches for 2024-12-14
-Date: Sat, 14 Dec 2024 00:30:35 +0100
-Message-ID: <20241213233055.39574-1-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 16/20] hw/ide/ahci: Decouple from PCI
+Date: Sat, 14 Dec 2024 00:30:51 +0100
+Message-ID: <20241213233055.39574-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
+References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,101 +99,215 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 83aaec1d5a49f158abaa31797a0f976b3c07e5ca:
+From: Bernhard Beschow <shentey@gmail.com>
 
-  Merge tag 'pull-tcg-20241212' of https://gitlab.com/rth7680/qemu into staging (2024-12-12 18:45:39 -0500)
+In some adhoc profiling booting Linux VMs, it's observed that ahci_irq_lower()
+can be a hot path (10000+ triggers until login prompt appears). Even though the
+parent device never changes, this method re-determines whether the parent device
+is a PCI device or not using the rather expensive object_dynamic_cast()
+function. Avoid this overhead by pushing the interrupt handling to the parent
+device, essentially turning AHCIState into an "IP block".
 
-are available in the Git repository at:
+Note that this change also frees AHCIState from the PCI dependency which wasn't
+reflected in Kconfig.
 
-  https://github.com/philmd/qemu.git tags/hw-misc-20241214
+Reported-by: Peter Xu <peterx@redhat.com>
+Inspired-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241212110926.23548-2-shentey@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ide/ahci-internal.h    |  1 -
+ include/hw/ide/ahci-pci.h |  2 ++
+ include/hw/ide/ahci.h     |  2 --
+ hw/ide/ahci.c             | 39 ++++-----------------------------------
+ hw/ide/ich.c              | 19 +++++++++++++++----
+ 5 files changed, 21 insertions(+), 42 deletions(-)
 
-for you to fetch changes up to 456b247eeab067095b680fa4b0fec48137969593:
-
-  hw/xtensa: Include missing 'exec/tswap.h' header (2024-12-14 00:16:20 +0100)
-
-----------------------------------------------------------------
-Misc HW patch queue
-
-- Support string data for extendPCR in VirtIO NSM device (Dorjoy)
-- Have PCI_BUS implement TYPE_FW_CFG_DATA_GENERATOR_INTERFACE (Phil)
-- Decouple AHCI from PCI (Bernhard)
-- Add status to usb_msd_packet_complete (Nick)
-- Header cleanups (Alex, Phil)
-
-----------------------------------------------------------------
-
-Alex Bennée (1):
-  hw/net/can: clean-up unnecessary includes
-
-Bernhard Beschow (2):
-  hw/ide/ahci: Decouple from PCI
-  hw/ide/ahci: Extract TYPE_SYSBUS_AHCI into dedicated file
-
-Dorjoy Chowdhury (3):
-  docs/nitro-enclave: Fix terminal commands formatting
-  hw/core/eif: Use stateful qcrypto apis
-  hw/virtio/virtio-nsm: Support string data for extendPCR
-
-Nicholas Piggin (1):
-  hw/usb/msd: Add status to usb_msd_packet_complete() function
-
-Phil Dennis-Jordan (1):
-  hw/usb/hcd-xhci-pci: Indentation fix
-
-Philippe Mathieu-Daudé (12):
-  hw/riscv/virt: Remove pointless GPEX_HOST() cast
-  hw/nvram/fw_cfg: Rename fw_cfg_add_[file]_from_generator()
-  hw/nvram/fw_cfg: Pass QOM parent to fw_cfg_add_file_from_generator()
-  hw/nvram/fw_cfg: Skip FW_CFG_DATA_GENERATOR when no data to generate
-  hw/pci: Have PCI_BUS implement TYPE_FW_CFG_DATA_GENERATOR_INTERFACE
-  hw/pci: Add pci_bus_add_fw_cfg_extra_pci_roots() helper
-  hw: Use pci_bus_add_fw_cfg_extra_pci_roots()
-  hw/nvram/fw_cfg: Remove fw_cfg_add_extra_pci_roots()
-  hw/usb/hcd-xhci-nec: Remove unused XHCINecState::flags field
-  hw/mips: Include missing 'exec/tswap.h' header
-  hw/sh4/r2d: Include missing 'exec/tswap.h' header
-  hw/xtensa: Include missing 'exec/tswap.h' header
-
- docs/system/i386/nitro-enclave.rst |   8 +-
- hw/ide/ahci-internal.h             |   1 -
- hw/xtensa/bootparam.h              |   1 +
- include/hw/i386/nitro_enclave.h    |  16 +--
- include/hw/ide/ahci-pci.h          |   2 +
- include/hw/ide/ahci.h              |   2 -
- include/hw/nvram/fw_cfg.h          |  32 ++---
- include/hw/pci/pci.h               |   3 +
- hw/arm/virt.c                      |   3 +-
- hw/core/eif.c                      | 202 +++++++++++------------------
- hw/hppa/machine.c                  |   2 +-
- hw/i386/nitro_enclave.c            |  12 +-
- hw/i386/pc.c                       |   3 +-
- hw/ide/ahci-sysbus.c               |  91 +++++++++++++
- hw/ide/ahci.c                      | 106 +--------------
- hw/ide/ich.c                       |  19 ++-
- hw/mips/fuloong2e.c                |   1 +
- hw/mips/malta.c                    |   1 +
- hw/net/can/can_kvaser_pci.c        |   4 -
- hw/net/can/can_mioe3680_pci.c      |   4 -
- hw/net/can/can_pcm3680_pci.c       |   4 -
- hw/net/can/can_sja1000.c           |   2 +-
- hw/net/can/ctucan_core.c           |   3 +-
- hw/net/can/ctucan_pci.c            |   4 -
- hw/nvram/fw_cfg.c                  |  37 ++----
- hw/pci/pci.c                       |  53 ++++++++
- hw/riscv/virt.c                    |  20 ++-
- hw/sh4/r2d.c                       |   1 +
- hw/usb/dev-storage.c               |  17 ++-
- hw/usb/hcd-xhci-nec.c              |   5 +-
- hw/usb/hcd-xhci-pci.c              |   2 +-
- hw/virtio/virtio-nsm.c             |  21 ++-
- hw/xtensa/xtfpga.c                 |   1 +
- system/vl.c                        |   3 +-
- hw/arm/Kconfig                     |  10 +-
- hw/ide/Kconfig                     |   4 +
- hw/ide/meson.build                 |   1 +
- 37 files changed, 343 insertions(+), 358 deletions(-)
- create mode 100644 hw/ide/ahci-sysbus.c
-
+diff --git a/hw/ide/ahci-internal.h b/hw/ide/ahci-internal.h
+index 7e63ea23102..a318f36811c 100644
+--- a/hw/ide/ahci-internal.h
++++ b/hw/ide/ahci-internal.h
+@@ -25,7 +25,6 @@
+ #define HW_IDE_AHCI_INTERNAL_H
+ 
+ #include "hw/ide/ahci.h"
+-#include "hw/pci/pci_device.h"
+ #include "ide-internal.h"
+ 
+ #define AHCI_MEM_BAR_SIZE         0x1000
+diff --git a/include/hw/ide/ahci-pci.h b/include/hw/ide/ahci-pci.h
+index c2ee6169625..face1a9a4a4 100644
+--- a/include/hw/ide/ahci-pci.h
++++ b/include/hw/ide/ahci-pci.h
+@@ -9,6 +9,7 @@
+ #include "qom/object.h"
+ #include "hw/ide/ahci.h"
+ #include "hw/pci/pci_device.h"
++#include "hw/irq.h"
+ 
+ #define TYPE_ICH9_AHCI "ich9-ahci"
+ OBJECT_DECLARE_SIMPLE_TYPE(AHCIPCIState, ICH9_AHCI)
+@@ -17,6 +18,7 @@ struct AHCIPCIState {
+     PCIDevice parent_obj;
+ 
+     AHCIState ahci;
++    IRQState irq;
+ };
+ 
+ #endif
+diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
+index ba31e75ff9b..ac0292c634f 100644
+--- a/include/hw/ide/ahci.h
++++ b/include/hw/ide/ahci.h
+@@ -37,8 +37,6 @@ typedef struct AHCIControlRegs {
+ } AHCIControlRegs;
+ 
+ typedef struct AHCIState {
+-    DeviceState *container;
+-
+     AHCIDevice *dev;
+     AHCIControlRegs control_regs;
+     MemoryRegion mem;
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 0eb24304eef..5836aa924bb 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -23,8 +23,6 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+-#include "hw/pci/msi.h"
+-#include "hw/pci/pci.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ 
+@@ -34,8 +32,6 @@
+ #include "qemu/module.h"
+ #include "sysemu/block-backend.h"
+ #include "sysemu/dma.h"
+-#include "hw/ide/pci.h"
+-#include "hw/ide/ahci-pci.h"
+ #include "hw/ide/ahci-sysbus.h"
+ #include "ahci-internal.h"
+ #include "ide-internal.h"
+@@ -179,34 +175,6 @@ static uint32_t ahci_port_read(AHCIState *s, int port, int offset)
+     return val;
+ }
+ 
+-static void ahci_irq_raise(AHCIState *s)
+-{
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+-    trace_ahci_irq_raise(s);
+-
+-    if (pci_dev && msi_enabled(pci_dev)) {
+-        msi_notify(pci_dev, 0);
+-    } else {
+-        qemu_irq_raise(s->irq);
+-    }
+-}
+-
+-static void ahci_irq_lower(AHCIState *s)
+-{
+-    DeviceState *dev_state = s->container;
+-    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
+-                                                           TYPE_PCI_DEVICE);
+-
+-    trace_ahci_irq_lower(s);
+-
+-    if (!pci_dev || !msi_enabled(pci_dev)) {
+-        qemu_irq_lower(s->irq);
+-    }
+-}
+-
+ static void ahci_check_irq(AHCIState *s)
+ {
+     int i;
+@@ -222,9 +190,11 @@ static void ahci_check_irq(AHCIState *s)
+     trace_ahci_check_irq(s, old_irq, s->control_regs.irqstatus);
+     if (s->control_regs.irqstatus &&
+         (s->control_regs.ghc & HOST_CTL_IRQ_EN)) {
+-            ahci_irq_raise(s);
++        trace_ahci_irq_raise(s);
++        qemu_irq_raise(s->irq);
+     } else {
+-        ahci_irq_lower(s);
++        trace_ahci_irq_lower(s);
++        qemu_irq_lower(s->irq);
+     }
+ }
+ 
+@@ -1608,7 +1578,6 @@ static const IDEDMAOps ahci_dma_ops = {
+ 
+ void ahci_init(AHCIState *s, DeviceState *qdev)
+ {
+-    s->container = qdev;
+     /* XXX BAR size should be 1k, but that breaks, so bump it to 4k for now */
+     memory_region_init_io(&s->mem, OBJECT(qdev), &ahci_mem_ops, s,
+                           "ahci", AHCI_MEM_BAR_SIZE);
+diff --git a/hw/ide/ich.c b/hw/ide/ich.c
+index b311450c12d..c99a44df8e1 100644
+--- a/hw/ide/ich.c
++++ b/hw/ide/ich.c
+@@ -61,7 +61,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "hw/irq.h"
+ #include "hw/pci/msi.h"
+ #include "hw/pci/pci.h"
+ #include "migration/vmstate.h"
+@@ -91,6 +90,19 @@ static const VMStateDescription vmstate_ich9_ahci = {
+     },
+ };
+ 
++static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int level)
++{
++    PCIDevice *pci_dev = opaque;
++
++    if (msi_enabled(pci_dev)) {
++        if (level) {
++            msi_notify(pci_dev, 0);
++        }
++    } else {
++        pci_set_irq(pci_dev, level);
++    }
++}
++
+ static void pci_ich9_reset(DeviceState *dev)
+ {
+     AHCIPCIState *d = ICH9_AHCI(dev);
+@@ -102,7 +114,9 @@ static void pci_ich9_ahci_init(Object *obj)
+ {
+     AHCIPCIState *d = ICH9_AHCI(obj);
+ 
++    qemu_init_irq(&d->irq, pci_ich9_ahci_update_irq, d, 0);
+     ahci_init(&d->ahci, DEVICE(obj));
++    d->ahci.irq = &d->irq;
+ }
+ 
+ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+@@ -125,8 +139,6 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
+     /* XXX Software should program this register */
+     dev->config[0x90]   = 1 << 6; /* Address Map Register - AHCI mode */
+ 
+-    d->ahci.irq = pci_allocate_irq(dev);
+-
+     pci_register_bar(dev, ICH9_IDP_BAR, PCI_BASE_ADDRESS_SPACE_IO,
+                      &d->ahci.idp);
+     pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
+@@ -161,7 +173,6 @@ static void pci_ich9_uninit(PCIDevice *dev)
+ 
+     msi_uninit(dev);
+     ahci_uninit(&d->ahci);
+-    qemu_free_irq(d->ahci.irq);
+ }
+ 
+ static void ich_ahci_class_init(ObjectClass *klass, void *data)
 -- 
 2.45.2
 
