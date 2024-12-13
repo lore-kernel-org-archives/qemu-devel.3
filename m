@@ -4,77 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEBFE77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:46:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93154E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9YX-0002rb-Gl; Fri, 13 Dec 2024 12:34:25 -0500
+	id 1tM9q1-0002Hq-QH; Fri, 13 Dec 2024 12:52:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Xf-0007eb-BB
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:31 -0500
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tM9px-0002Gw-F9
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:52:25 -0500
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Xc-0001eI-DD
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:31 -0500
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so1082593f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tM9pv-0005Jp-AB
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:52:24 -0500
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-71e35be77b5so438563a34.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:52:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111205; x=1734716005; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Q5D537/TkN0iatJV/r504lV14FuBKX7MulHaFGn4dqY=;
- b=DPJZcIWnDNpDp6AiFbK3FPYw3jW+HzIV2EmpBI4s3UqjQlD6jTvxC88eGfg0ErpiYY
- Idldnq8yFlezonNil+Wu6BgWsQ1NFWviIxPNor+/5+rrt2Ei9d8tJjmPTqyUxBGfeI2t
- sAW+FbozffHuBykl9otMtlXQ+zHeZHGkPK/OsVA4AyqsfN7zTo8VNTW3QR3wDAwAsmNH
- ezTu/5esqXosDoE0RQuQxGysW9MDHmnSjdGWMM+zQP4+kRAeX4FCgrFloFCtWlomj5FS
- v/fJqpmcP6GHb+7HsJv8h2Fymu3aeBFM/rhzUpb7nuTo/KRW6rCne56q9tydEDcNikl9
- mS8w==
+ d=linaro.org; s=google; t=1734112341; x=1734717141; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=70v0qJMzwA29O3M4+dK8r7dFa6p+GP+1xrZaRYW8aKw=;
+ b=zJbIvYDb2tYkAK2RF7h4v471FEO8rFhlRtrV68OHprVoxtSn4Rx4V1k+pymKIFyNOl
+ +luSt0sUwTXC3f6ssHSx5RgqN/WoV2o0etmjUf3z+3Vb5E+VxWTNYComHGMFWilKMCaZ
+ TnJ6MUNhIUsscIeewdG2jiB4FPyFIaLSrNAvsOIE8h0qYG92yRq2K8fohn/2eXPAD4Ie
+ eChaEhYbiqfbJwnBNhbx1CQ7GpM8XGDqJgmiKkYZftZt6e1HXsjglCxce2BEUlZFmXAA
+ 92OtNT+Jy2wNeTj3kbWChf3XBVHZPvAT4P3JWpm2w3zkeM/1ClN8mEQzvkFo5YYZ3Ev3
+ Hxag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111205; x=1734716005;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Q5D537/TkN0iatJV/r504lV14FuBKX7MulHaFGn4dqY=;
- b=py2+NxFFefRFRiBO85uRFfLmf9M/OfBrvGm7+T7E3Orhg9Wv8nnuYFVfZQLLoJdzDN
- fQ7R9oKZR/juoSln3N2rsdggB8uD65sHMaiLHSnKpfwa4PgZXeKEq1sNX/t9fbAwQpTP
- hoiridBOPPYSvfMqggp2uQFeGGJox5d8/tP9wFmZkOisCYQRxhnH8IY5QoQny/CEdprY
- IXy+TbzHcNLvKucipGBxrbfZQhpdWgIPGA+XJraqTvj0FpJqQk47zaUCTl3YOKs88qVj
- Nj71E6XNBYtLD+QPFzekNYgcDJCOQ+vKtzV04MdpnKqrCykIPq/Key2rVTBO6Rm4PFO5
- G2dA==
-X-Gm-Message-State: AOJu0YzoxvSkT/JSifFpPo/6PRt2qMat1li/CG4Imf12uwO8emFmwaWU
- Yy34aU44MihWVDjvvhWychTCg4YPnbJ38dQLbkvV4H+GMZ5EioXal98gZKP9nFxUgByNMTbACS9
- X
-X-Gm-Gg: ASbGnctPc/CORlszfzwteYr2PgU4MT4dohaFGkKkROse+rk9hpCXKq5CIzvuvDj6eoq
- Mj0bd2/lsgJarZkf0lg34++5e1UEh4DsQjuc08CEo1/DSGtm1SeYDLUB3MxAUJq1CW3S6H+6K4b
- ocrhAM0K1LgJkSsMCVNWLZaQXssIHQcJtl1ShWyGveaMVHkEAox9Lz+rAP4Xn2DbWrMAsOf6zFY
- 546AThPsmi+w1E2oxKb7C47HyezkdAB/hTfXcj5HbAZnalD1D6jfMNArvV6gQ==
-X-Google-Smtp-Source: AGHT+IEz2NrjCOtsvHl74p7sQclufAC+3lt/20rfuHI9VSxnscDuV0H79FkARtNo7Ya99H1hLvBiIg==
-X-Received: by 2002:a05:6000:4b0b:b0:386:32ca:1672 with SMTP id
- ffacd0b85a97d-38880ac218bmr3080089f8f.4.1734111205289; 
- Fri, 13 Dec 2024 09:33:25 -0800 (PST)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ d=1e100.net; s=20230601; t=1734112341; x=1734717141;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=70v0qJMzwA29O3M4+dK8r7dFa6p+GP+1xrZaRYW8aKw=;
+ b=Yp/uTWBVY+b23PCLl1EVmxCte6HIpfGx0dGfW9b2fdHH/bl8vDLkq0ygRtL4pyaeKJ
+ T+mqn4/EQCDGDczJ/kBjbvFUrRioGYsrKCsGw14BUBmj+gPMNQ1p4gPaZObtbyzfy0X9
+ T+j5QMpsWyrJGvg2gFoLZJT2+1HnGP+vGr0d5P94X+YUjiJuyOWPSvLz0zHbfbzwRQHe
+ mBMAcZUbcr7knHkRvDTN5pOUrfqNmQIiKFhFlcWDjHKLCr6Q0bjoogCpu68rX89e2wzz
+ G7nUMboqINb2j+Oce9IpSscBnzMoh/z09CD8YKa23DZu6edsRlsqDYZvsGEkxLL1AsV2
+ k8MA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXEd8G1cBYgNSOS4xG4N8rihbTdrUUhOqTck3qz6n6/T5o3rh3/Vg8tcplKmb4IcWmM8RfoF14Eef+G@nongnu.org
+X-Gm-Message-State: AOJu0YwzBEWdtUTEAAocZ093hKLQqtQ1kiyJprxgmKfbI08vl2AGOw2F
+ JH60RMpo+cSIU/nMmKyBJbDa/zfigPYrejfJhbTuGLeUy+pJWUxIqJXLp/dsqvo=
+X-Gm-Gg: ASbGncuzZn/y50B2RQhY1msahWbDobPknDHb+ipuG5aUvXWivG6I8ne+imAwpoJtoC9
+ 78UwePEwzvW5+YMeGeA7k9Qw8qdcbnYTNeUEMdHsJdyEkAuADLxYIEECRAOjH9JfX6ZThrPVzaM
+ 8US9mp6XznXw0r+UpOgNB5y0KS9N1hHhs/dLJXm1YWymKmaKFLT9ZZLl+ytNgzcqR3V8q69PiEc
+ U1dxNu58HDxEjcPqW2mjjbA4+tJI/YfDWZ07x9gwNKk9VJ3hs/Cql+XlvI18qyFbKwXa6F2Uw==
+X-Google-Smtp-Source: AGHT+IFNkY1oN+rpuCkcXz9s1Ef5Xt7oFZrdjTFCDDaf7J6eaVeA6n9SgI2oDVfF3LW8p5IZ32O4nw==
+X-Received: by 2002:a05:6830:3496:b0:71d:f068:1ff3 with SMTP id
+ 46e09a7af769-71e3b85711amr1969401a34.8.1734112340980; 
+ Fri, 13 Dec 2024 09:52:20 -0800 (PST)
+Received: from [172.20.4.119] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:24 -0800 (PST)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 50/85] target/arm: Convert FCVTN, BFCVTN to decodetree
-Date: Fri, 13 Dec 2024 17:31:54 +0000
-Message-Id: <20241213173229.3308926-51-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
-References: <20241213173229.3308926-1-peter.maydell@linaro.org>
+ 46e09a7af769-71e36eecef4sm607139a34.27.2024.12.13.09.52.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Dec 2024 09:52:20 -0800 (PST)
+Message-ID: <68a58b93-8075-46d6-8db1-b4f1282237db@linaro.org>
+Date: Fri, 13 Dec 2024 11:52:17 -0600
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/3] target/riscv: fix the trap generation for conditional
+ store
+To: "Konrad, Frederic" <Frederic.Konrad@amd.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "palmer@dabbelt.com" <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "bmeng.cn@gmail.com" <bmeng.cn@gmail.com>,
+ "liwei1518@gmail.com" <liwei1518@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "zhiwei_liu@linux.alibaba.com" <zhiwei_liu@linux.alibaba.com>,
+ "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "Michel, Luc" <Luc.Michel@amd.com>,
+ "Iglesias, Francisco" <francisco.iglesias@amd.com>
+References: <20241211211933.198792-1-fkonrad@amd.com>
+ <20241211211933.198792-4-fkonrad@amd.com>
+ <b16c4644-04df-41d1-bc6e-f14d706ab4b7@linaro.org>
+ <CY8PR12MB84111EF6057B4862D7BC1DC8E6382@CY8PR12MB8411.namprd12.prod.outlook.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CY8PR12MB84111EF6057B4862D7BC1DC8E6382@CY8PR12MB8411.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,173 +114,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+On 12/13/24 10:31, Konrad, Frederic wrote:
+> +CC maintainers
+> 
+>> -----Original Message-----
+>> From: qemu-devel-bounces+fkonrad=amd.com@nongnu.org <qemu-devel-bounces+fkonrad=amd.com@nongnu.org> On
+>> Behalf Of Richard Henderson
+>> Sent: 11 December 2024 22:43
+>> To: qemu-devel@nongnu.org
+>> Subject: Re: [PATCH 3/3] target/riscv: fix the trap generation for conditional store
+>>
+>> On 12/11/24 15:19, Frederic Konrad wrote:
+>>> +    /*
+>>> +     * A misaligned store trap should be triggered even if the store should
+>>> +     * fail due to the reservation.
+>>> +     */
+>>> +    tcg_gen_andi_tl(tmp, src1, ~((uint64_t)0) << memop_alignment_bits(mop));
+>>
+>> The constant is incorrect for testing the low bits.
+> 
+> Hmm, I don't get it, basically with that I'm trying to do:
+>    MO_8: src1 == (src1 & 0xFFFFFFFF)
+>    MO_16: src1 == (src1 & 0xFFFFFFFE)
+>    MO_32: src1 == (src1 & 0xFFFFFFFC)
+>    etc
+> 
+> what am I missing?
+> 
+>>
+>>> +    tcg_gen_brcond_tl(TCG_COND_EQ, tmp, src1, l3);
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211163036.2297116-51-richard.henderson@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- target/arm/tcg/a64.decode      |  5 ++
- target/arm/tcg/translate-a64.c | 89 ++++++++++++++++++----------------
- 2 files changed, 52 insertions(+), 42 deletions(-)
+Ah, I missed the form of the equality.  I had been expecting
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 295329448f1..456912cd7ca 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -21,6 +21,7 @@
- 
- %rd             0:5
- %esz_sd         22:1 !function=plus_2
-+%esz_hs         22:1 !function=plus_1
- %esz_hsd        22:2 !function=xor_2
- %hl             11:1 21:1
- %hlm            11:1 20:2
-@@ -74,6 +75,7 @@
- @qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
- @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
- @qrr_bh         . q:1 ...... . esz:1 ...... ...... rn:5 rd:5  &qrr_e
-+@qrr_hs         . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=%esz_hs
- @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
- 
- @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
-@@ -1676,3 +1678,6 @@ XTN             0.00 1110 ..1 00001 00101 0 ..... .....     @qrr_e
- SQXTUN_v        0.10 1110 ..1 00001 00101 0 ..... .....     @qrr_e
- SQXTN_v         0.00 1110 ..1 00001 01001 0 ..... .....     @qrr_e
- UQXTN_v         0.10 1110 ..1 00001 01001 0 ..... .....     @qrr_e
-+
-+FCVTN_v         0.00 1110 0.1 00001 01101 0 ..... .....     @qrr_hs
-+BFCVTN_v        0.00 1110 101 00001 01101 0 ..... .....     @qrr_h
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 7b76945b0ac..d4d19c9caaf 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9051,6 +9051,49 @@ TRANS(SQXTUN_v, do_2misc_narrow_vector, a, f_scalar_sqxtun)
- TRANS(SQXTN_v, do_2misc_narrow_vector, a, f_scalar_sqxtn)
- TRANS(UQXTN_v, do_2misc_narrow_vector, a, f_scalar_uqxtn)
- 
-+static void gen_fcvtn_hs(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_i32 tcg_lo = tcg_temp_new_i32();
-+    TCGv_i32 tcg_hi = tcg_temp_new_i32();
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
-+    TCGv_i32 ahp = get_ahp_flag();
-+
-+    tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, n);
-+    gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
-+    gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
-+    tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
-+    tcg_gen_extu_i32_i64(d, tcg_lo);
-+}
-+
-+static void gen_fcvtn_sd(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_i32 tmp = tcg_temp_new_i32();
-+    gen_helper_vfp_fcvtsd(tmp, n, tcg_env);
-+    tcg_gen_extu_i32_i64(d, tmp);
-+}
-+
-+static ArithOneOp * const f_vector_fcvtn[] = {
-+    NULL,
-+    gen_fcvtn_hs,
-+    gen_fcvtn_sd,
-+};
-+TRANS(FCVTN_v, do_2misc_narrow_vector, a, f_vector_fcvtn)
-+
-+static void gen_bfcvtn_hs(TCGv_i64 d, TCGv_i64 n)
-+{
-+    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
-+    TCGv_i32 tmp = tcg_temp_new_i32();
-+    gen_helper_bfcvt_pair(tmp, n, fpst);
-+    tcg_gen_extu_i32_i64(d, tmp);
-+}
-+
-+static ArithOneOp * const f_vector_bfcvtn[] = {
-+    NULL,
-+    gen_bfcvtn_hs,
-+    NULL,
-+};
-+TRANS_FEAT(BFCVTN_v, aa64_bf16, do_2misc_narrow_vector, a, f_vector_bfcvtn)
-+
- /* Common vector code for handling integer to FP conversion */
- static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
-                                    int elements, int is_signed,
-@@ -9633,33 +9676,6 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
-         tcg_res[pass] = tcg_temp_new_i64();
- 
-         switch (opcode) {
--        case 0x16: /* FCVTN, FCVTN2 */
--            /* 32 bit to 16 bit or 64 bit to 32 bit float conversion */
--            if (size == 2) {
--                TCGv_i32 tmp = tcg_temp_new_i32();
--                gen_helper_vfp_fcvtsd(tmp, tcg_op, tcg_env);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
--            } else {
--                TCGv_i32 tcg_lo = tcg_temp_new_i32();
--                TCGv_i32 tcg_hi = tcg_temp_new_i32();
--                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
--                TCGv_i32 ahp = get_ahp_flag();
--
--                tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, tcg_op);
--                gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
--                gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
--                tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tcg_lo);
--            }
--            break;
--        case 0x36: /* BFCVTN, BFCVTN2 */
--            {
--                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
--                TCGv_i32 tmp = tcg_temp_new_i32();
--                gen_helper_bfcvt_pair(tmp, tcg_op, fpst);
--                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
--            }
--            break;
-         case 0x56:  /* FCVTXN, FCVTXN2 */
-             {
-                 /*
-@@ -9675,6 +9691,8 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
-         default:
-         case 0x12: /* XTN, SQXTUN */
-         case 0x14: /* SQXTN, UQXTN */
-+        case 0x16: /* FCVTN, FCVTN2 */
-+        case 0x36: /* BFCVTN, BFCVTN2 */
-             g_assert_not_reached();
-         }
- 
-@@ -10088,21 +10106,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-                 unallocated_encoding(s);
-                 return;
-             }
--            /* fall through */
--        case 0x16: /* FCVTN, FCVTN2 */
--            /* handle_2misc_narrow does a 2*size -> size operation, but these
--             * instructions encode the source size rather than dest size.
--             */
--            if (!fp_access_check(s)) {
--                return;
--            }
--            handle_2misc_narrow(s, false, opcode, 0, is_q, size - 1, rn, rd);
--            return;
--        case 0x36: /* BFCVTN, BFCVTN2 */
--            if (!dc_isar_feature(aa64_bf16, s) || size != 2) {
--                unallocated_encoding(s);
--                return;
--            }
-             if (!fp_access_check(s)) {
-                 return;
-             }
-@@ -10155,6 +10158,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-             }
-             break;
-         default:
-+        case 0x16: /* FCVTN, FCVTN2 */
-+        case 0x36: /* BFCVTN, BFCVTN2 */
-             unallocated_encoding(s);
-             return;
-         }
--- 
-2.34.1
+     tmp = src1 & 1
+     brcond tmp != 0
 
+and so mis-read the mask.
+
+> About making the fallthrough path be the common case, If I do it I'll need to jump anyway and the
+> end of this instruction ie:
+> 
+>      if not aligned go to misaligned label:
+>      ...
+>      do the normal operation
+>      ...
+>      go to done label
+>      misaligned label
+>      ...
+>      trigger the exception
+>      ...
+>      done label
+> 
+> Is that what you had in mind?
+
+There is another code block in there.  We can sort as
+
+	if not aligned goto misaligned;
+         if reservation mismatch goto mismatch
+
+	normal operation
+	goto done
+
+	misaligned:
+	raise exception
+
+	mismatch:
+	mb, set failure
+
+	done:
+	clear reservation
+
+so that we save adding a branch on the mismatch path.
+
+
+r~
 
