@@ -4,90 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A9CE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 18:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB209E77183
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMAoF-00010l-M2; Fri, 13 Dec 2024 13:54:44 -0500
+	id 1tMB1S-0002Tj-1c; Fri, 13 Dec 2024 14:08:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMAoA-0000zt-5g
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 13:54:38 -0500
-Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
+ id 1tMB1Q-0002TI-0C
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:20 -0500
+Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMAo7-0002lj-OH
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 13:54:37 -0500
-Received: by mail-ot1-x335.google.com with SMTP id
- 46e09a7af769-71e2dccdb81so1194177a34.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 10:54:34 -0800 (PST)
+ id 1tMB1L-0006Tu-5m
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:19 -0500
+Received: by mail-ot1-x334.google.com with SMTP id
+ 46e09a7af769-71e163493efso1026973a34.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:08:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734116073; x=1734720873; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sX0Yf0gF+ESVvKAXl3LC1Mv89Ckmh0JbyX7l3UT8Amk=;
- b=Y/6RgH2g5bXio8HIAz9FJ+hzIN245aSUzipG6+oP2nbdMcHUY4z3WOQams6FHzAjMh
- 78CV8yXKFdsoJRgANg8MNcWk0kuY27RdTfZ4RjE3qMtTQRFeJBrJmFjE0mXG2DG5h6gu
- YPV1fbmXHkyTypoqYDdiw7uEd6BSUyGnuJb5rN4lDCkCrBjBvZD5dmL7ioliwZUt+j+M
- 1+WmwTlEjUn9IUHnUs2XGriHOo4yOW9+YoAcwx1uaBqH08WhXt1aSgB5sBOtZxMKKfTh
- GMaoN8fhYc0DTiCcA2EN6I/5kH92TitIlfqvZkqvz4SA3fPiDIAju0uDgXvr09isdXuZ
- hw5g==
+ d=linaro.org; s=google; t=1734116893; x=1734721693; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jImwOjJ09GIg50zurORlHyEBWxYYv3iz1UDBPMlQCZc=;
+ b=RYIVVx7wCoE1e+avu5fpJbCM00f+8SpJOSrFh/9OX/xYcpf8VXSCSDulPU2+86BUb+
+ 32wsrmciW4WQXIMUCypt5QGKvJOjap7Aof6SCnWksc2sHs+Fb9AMOyspn1GX/Oatxw9H
+ XGvrrAAdTUnCajb+6tEbmBwVYW8JWmsLWHMe8ZXJADcEWR6WnSl7R3gBG7gbsSXE9SQ8
+ gSrye1+ApBB5cPEiXJB82EVPgXFnRyAh52r7ta0NEfsRnFfikFrZrDqXL9UAIXIgEHYN
+ IAJHpzsokYwKoDJNCMK4bP7PY71G5gqTrBQ8HSBNNAIq+pwmnDoUFnacY3Et9GRKchbg
+ aDww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734116073; x=1734720873;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sX0Yf0gF+ESVvKAXl3LC1Mv89Ckmh0JbyX7l3UT8Amk=;
- b=XAenX0hzM5k3v7m3RDu/zNMSDD86kQLQ5BRYXBFinqgXAnTv0wIdSVqPXJxOJjCdmE
- 5D9HL9ac4gmjbBaiQYEs+ZVCyB7097gVOX1FMJ4E1YcU2dO0MZa+PKO/gDrYhAk+qR/0
- /O6rVuocqMLOdDoEnWQ5h3x949WNdKN3Svs4Cng6TJdzZAgZ6U3LyJnOJEfndGRPp0uj
- NVRMSBztOXV+Y7BnVyJcetJFiSXctzx0kCar+2a0u2k37lzrjcvlJOrlh0D8MIBXhl00
- bV4NogkyTaQv5DBf0LSuzeaShHUTEhCIT0cfqga6ysZk4IEv/pHCimRxKlIwdtNlPVK9
- Y4zg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfYEeYR759m6+RvJyV4/PFGn2Lck1bJv7JNoLzV5ObbHMX9khsNF6z2BtbGScOoLJbPXIVcrI6LIvR@nongnu.org
-X-Gm-Message-State: AOJu0YwFttHwzGdgw/yJ+lM3lu+2MPYLV+g7az2uxQm2HNzRY9SZ9MAl
- THZZ4xT2CTvt0feYRtX4l/WfRaovwSBk70Sx15xsLK8v2R+A1GBCHlvUJIl0u14=
-X-Gm-Gg: ASbGncs4zN1E3wSB3FNmB5ujn2P7vbMc0X2piqjSdnI3HPa0sRjvgbpSkQ9585YNr9i
- hQC0QxsVLJcOlw2sBXNX//D9LmsCE6AK936GcZq+9FH7ejDPupWH+rB3c5WAOy0muQSrxtCH3Ad
- ZsBe6U9f5ATzPPz8byIb24XpEixFka0/20ILYN2bZBDPttnWTTxmTSuD840Ta93X3N3FJfCz5V5
- oWlFw4H1NafssxkWIGyoHxId/Nt4ZnHPFy4fm7NuYTVwtR1kldbtRMMMpxtrtFPnu0YePzOKQ==
-X-Google-Smtp-Source: AGHT+IF4dKwHvXJrm3Hl84mC/nXOh17iSh0DQhyW6yx4770ZOuC5Ozq9yk9MqBPSihyQNHwkmKn4sA==
-X-Received: by 2002:a05:6830:2aa7:b0:71e:1c5:4f87 with SMTP id
- 46e09a7af769-71e3ba9bd60mr2209179a34.19.1734116073450; 
- Fri, 13 Dec 2024 10:54:33 -0800 (PST)
-Received: from [172.20.4.119] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a6e1f19sm44425eaf.13.2024.12.13.10.54.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 10:54:32 -0800 (PST)
-Message-ID: <6659428f-1ebb-4e0b-bab8-3b4e2e703f70@linaro.org>
-Date: Fri, 13 Dec 2024 12:54:29 -0600
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc
- structs
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org
-References: <20241213182337.3343068-1-peter.maydell@linaro.org>
-Content-Language: en-US
+ d=1e100.net; s=20230601; t=1734116893; x=1734721693;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jImwOjJ09GIg50zurORlHyEBWxYYv3iz1UDBPMlQCZc=;
+ b=jKoWfs1xw+vso6Z9cDlOl/qu+H7bbbQIRfuQnZkBn2f2WmAAGqWwV7oAG+H8e+2pfP
+ 6obyO9kJHSClvIwppCXLcRliLjQ0w4vzQzKf7L50H/xmq57rv+67unFG7qjuLfOzg9ul
+ 6RqwStyPvPIDJHVhfSLrjG0JbjnBnn3FJ9jUMZbr/nVOEfHpi95OHNJb0FB40zWT73kD
+ smOV/cIKwFld2Y1PjbHZMkyICypbzwUA0ZA41IFM4ibLF7mvXRic6qyRdios1P5WiIwH
+ cBYouD3mgdFaKrmVrjW6L5Iv8mprOWNyzO1Jb4GznJPrwYt2FovqUXJFwiKYQHosRJfu
+ bxBQ==
+X-Gm-Message-State: AOJu0Yw0d3Rb+VIufzVF6OCEKxNytHFIJl6K9ftX9kkwXRzv+tBOWt1S
+ wdI0c0qsfLBcym3iEy+KWCye8rmyF2HU1Q2HSpN9V3w+qs6R8534E+jEf4bHouPJgCWSgm3KVZF
+ L7h2v23jy
+X-Gm-Gg: ASbGncteutGYQu0paa7+vQ+DrjEa+uCCW4F1Qqpz+C4PiCc1Zzeq1mfCNhIK5xT+oVL
+ Ta3n1LQFvlw+W+fy7Sv37nn+3g+rwUF6pPi11sB2DC3H102TcVOPQN2+ZEyeNNz6JdQ8dLUOiCF
+ TSdzzB3sQhe5yzdq66Yn+orDavqBxQ1Bgo2dK19bH07RkywiGavMogbwvXv+X6odmeXLYpZOaSq
+ mAS1uKRZmW256oiSXNdVxvwbJbEb3UTQ830jFrA7YkMtckB+QwkO/NbY3izJ1rl
+X-Google-Smtp-Source: AGHT+IFABWsnhXiIoWGMmQAbS8lAIh6RqMdZdcNCROKnGNeRQ1ps5qgfTtWM7Ae/bjgFsPgWYJoSAg==
+X-Received: by 2002:a05:6830:388c:b0:71e:240a:47fe with SMTP id
+ 46e09a7af769-71e3ba33ad3mr2014950a34.19.1734116892755; 
+ Fri, 13 Dec 2024 11:08:12 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Dec 2024 11:08:12 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241213182337.3343068-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
+To: qemu-devel@nongnu.org
+Cc: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH 05/71] target/microblaze: Constify all Property
+Date: Fri, 13 Dec 2024 13:06:39 -0600
+Message-ID: <20241213190750.2513964-10-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
+References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,35 +97,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/13/24 12:23, Peter Maydell wrote:
-> In the GICv3 ITS model, we have a common coding pattern which has a
-> local C struct like "DTEntry dte", which is a C representation of an
-> in-guest-memory data structure, and we call a function such as
-> get_dte() to read guest memory and fill in the C struct.  These
-> functions to read in the struct sometimes have cases where they will
-> leave early and not fill in the whole struct (for instance get_dte()
-> will set "dte->valid = false" and nothing else for the case where it
-> is passed an entry_addr implying that there is no L2 table entry for
-> the DTE).  This then causes potential use of uninitialized memory
-> later, for instance when we call a trace event which prints all the
-> fields of the struct.  Sufficiently advanced compilers may produce
-> -Wmaybe-uninitialized warnings about this, especially if LTO is
-> enabled.
-> 
-> Rather than trying to carefully separate out these trace events into
-> "only the 'valid' field is initialized" and "all fields can be
-> printed", zero-init all the structs when we define them. None of
-> these structs are large (the biggest is 24 bytes) and having
-> consistent behaviour is less likely to be buggy.
-> 
-> Cc:qemu-stable@nongnu.org
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2718
-> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
-> ---
->   hw/intc/arm_gicv3_its.c | 44 ++++++++++++++++++++---------------------
->   1 file changed, 22 insertions(+), 22 deletions(-)
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/microblaze/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 0e1e22d1e8..0e41e39c0e 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -339,7 +339,7 @@ static void mb_cpu_initfn(Object *obj)
+     object_property_add_alias(obj, "little-endian", obj, "endianness");
+ }
+ 
+-static Property mb_properties[] = {
++static const Property mb_properties[] = {
+     /*
+      * Following properties are used by Xilinx DTS conversion tool
+      * do not rename them.
+-- 
+2.43.0
 
-r~
 
