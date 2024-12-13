@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 238D1E77183
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:27:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13809E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:28:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBA6-0003q6-8Z; Fri, 13 Dec 2024 14:17:27 -0500
+	id 1tMB8M-0008NY-F7; Fri, 13 Dec 2024 14:15:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7n-00080k-Io
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:59 -0500
-Received: from mail-oa1-x2f.google.com ([2001:4860:4864:20::2f])
+ id 1tMB77-0006SR-4A
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:13 -0500
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7j-0007ft-1C
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:53 -0500
-Received: by mail-oa1-x2f.google.com with SMTP id
- 586e51a60fabf-29e149aff1dso667498fac.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:49 -0800 (PST)
+ id 1tMB73-0007Xv-E1
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:11 -0500
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5f2e13cb356so1021794eaf.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117289; x=1734722089; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117247; x=1734722047; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6OnU15FeM5nm4zjB+qIgK7H2LoZzBt1ZnxMW14wBH+c=;
- b=L8HGTFSyUzRaAdW5uqGI4XDd8gckTAX+aCjlAetd7H3L+Y/KZfM7BdBaOfu15W9Tq6
- BAiJXPzZdcWG1QgGyFjquGlhKOKfqSAo4IdNblfU5vvieJ7O3D1VfrnMQWM0NPayM+vw
- rSg3lQyIVbVIaMON979BRxAQIoYGzX4HuhVofoDfHVaGgnP+VhAC6H/5fYNajcH34WJ+
- Gifeexa9Cpbsn23QBySlI8HWDnGovZVeEFHclWv3KzfA5kcfftgdVI5uqbfCGKwHMoL7
- 9u3nOIet3epH9BQ31Sa1b/mngt2lC4I8FSEMVZbZo9iO2LX41WSQS9aWNujM3+07goEL
- 0wMA==
+ bh=HMNcGFi52Uwl+0HNftyeCD60t2xD+7lCeBeevmzpoWs=;
+ b=iyWsTBuLKPHUdXwDzfi00LOYT0qzHPApxCPp99gSKCRWdMcxx1Ad0BSFv0Z5pHLvUC
+ 37deW9rCH2botfJhwpDtTQwa73HH0afxY+Ffr7AL0w0pzsUlxM7SFPXZQ2QH/QV0VgLj
+ uZF2oDei6/EAGTj6cZSSvF5jM9mO6mNFA+cAgscpNfq2U1vQ7ZuCSLJYfvoHRUqxwMlp
+ AuvBHVOvxu1YLLEqnj43sq/UZJee29ePT+XbGVqLiE4NjOUpHai2PYZpkvvjRxjro8VT
+ wD+q6cc6sciEoM5h1kKdr2OXEHDtJwAoXz3GhqEgMXTwHAQ+rueiSl9aFOSVT33RkQkb
+ C/Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117289; x=1734722089;
+ d=1e100.net; s=20230601; t=1734117247; x=1734722047;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6OnU15FeM5nm4zjB+qIgK7H2LoZzBt1ZnxMW14wBH+c=;
- b=HQBkS4TihHPPv7eRp7BoJw2oEQCzVYwlZG+TeyFWVk4dI5UHCMxVnohp7nvYHnx1Km
- +nrU94aOHK3iZKw0Wg6Ay3w2r7gCpOIlcvwD8q5/6DYa5MBfv3mpY8H21fRE6jZUdMiT
- KAHsuZRLFtnqO2aKtg4g8PuV+2ctP1a1DsqdNv5ZE29MKiU27Ijp0X7L1VhD/NNlKDIO
- pfHv4jP214TbpNv0so2AfFO6QnQ97941NzjlqqF7gwIS6CUe13TGysx+mqhzpFjlwhkY
- fvFLPtScf3rTwouHv/Ipz9QHX6Wyi8wMZDa0XjidPT6Sy1AzuybbYJHt8xl5ql9ZnIp5
- g7gQ==
-X-Gm-Message-State: AOJu0YzSrrhdESu98CTtQmSxtgY9Ylwi4dpU5caaVGRfsj3VKEudhwbb
- iI9kUReOEVlQcK93oRuhSSDMTmQoTQiZG1vPNNYQ0eopNmmxuvNoNhDLACo9bMmuJ51LLXVAvF4
- a7MfgKj0q
-X-Gm-Gg: ASbGnct3pffhM/5qb6ffA7+r1CrCVszv39p3r/9i1cCOYGqnskhpi7VfeLOqTQlfRCj
- 6aH9bmxMVvj2nir4vDmheh/9pYa3m/iCbUZBEnAKLRRtM/lFx/eAShOw+HTmZeC1zGQLcqu0pEs
- wLrXUNFwj1a6AMe9NJUuElfrR24c4M0GZTezZFPnUfHh7/rPpo4dTmaGc8blXdQlzWvTfwkZNbc
- 9/nfALmlrB3yvbGCC38EGcJ5eIC6krSjZO1QzuzYlbPCrkf693WacnoaLlW22Vs
-X-Google-Smtp-Source: AGHT+IHBaL8kU6aH1nsbh/jV9sNueSj6IVgpCh5TYFJ+elqWaL/x8lEG+im3oCTlGW5uW2PWj4PG2A==
-X-Received: by 2002:a05:6808:f08:b0:3ea:aa8a:c121 with SMTP id
- 5614622812f47-3eba68957dfmr2183697b6e.22.1734117288969; 
- Fri, 13 Dec 2024 11:14:48 -0800 (PST)
+ bh=HMNcGFi52Uwl+0HNftyeCD60t2xD+7lCeBeevmzpoWs=;
+ b=qMM2rhfxCd5/rqkd/mKwIOEIOJpnJ2LQFz1VXjoW3kqlSYItYiCxlAT6JVvxR2+WBD
+ S/q3CEIxu9zhdWD6WDIWmeqhjxCenP7rU3XgPCqnAB9t28iwO/Q1xYjtTZSgKab/9Nwf
+ +kE0CqYCiMM1K4hXs+k/aABjTtsHO4luqZEotb6DUK5h5mGnQBOyKpZ55FinSXVPl/Om
+ EdfbHPzQ2dDLk6yrS63JwYw7TPd2wxjiVWRUK5pdqzmBFQ7aHsda8ldROOhHaUQqr4n6
+ G5tzvCa5Okgmo1MDwkMdu1VkDu3zH1RhdJ3VbgBlia8GD/qEa22ECuGn0JpdAK8+vf5r
+ IMQA==
+X-Gm-Message-State: AOJu0Yzf7RDI7ZehMgSZEYI4gC4h+6lWx/bYvG0E3DernQR7SEr3Naq1
+ vRjhMjg/pMMlTPGJUPQHlXspQXOBGceUN3dzmCMCh0lp936hs3ClvGSfpASClmYcootO2e8PCfc
+ ocdMlNwQm
+X-Gm-Gg: ASbGncuLa7FYPkWC/a6ul1x4gFTCZZ/mgBnmha7Rzofn41tsKReftyw47ol1GPPHt5J
+ tdfRhOSSXAroBbwEdzIhk1g8Fnu3YF+QUrdY1g6vxnIv5zomNL1Y3s3v+aHQaVUysUHwIiv5Xy9
+ yMvJ0X2yNF0UM5LhJpXeAyFM3l4b0y77iOZV0GSkW5sOYFCsHO26H619SI8YhWXDBzCyWwRGwB4
+ C/bMHaqyXhBye+4C3VNcAMevZ7aWx2q+b0yXFgWkP+t1CJnOLSjjmGa0fKmf/le
+X-Google-Smtp-Source: AGHT+IHhSE/5W3yMzeW4V02i7KSNJxp1aEhHFhHZaus8WJZptCnJKshYPKoKfZ5NdZD8PdE59yK1sA==
+X-Received: by 2002:a05:6808:3985:b0:3eb:a0ce:f3c2 with SMTP id
+ 5614622812f47-3eba6987cadmr2320350b6e.40.1734117247616; 
+ Fri, 13 Dec 2024 11:14:07 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.48
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:14:48 -0800 (PST)
+ Fri, 13 Dec 2024 11:14:07 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>
-Subject: [PATCH 61/71] hw/tpm: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:35 -0600
-Message-ID: <20241213190750.2513964-66-richard.henderson@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH 48/71] hw/pci: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:22 -0600
+Message-ID: <20241213190750.2513964-53-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,78 +100,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/tpm/tpm_crb.c        | 2 +-
- hw/tpm/tpm_spapr.c      | 2 +-
- hw/tpm/tpm_tis_i2c.c    | 2 +-
- hw/tpm/tpm_tis_isa.c    | 2 +-
- hw/tpm/tpm_tis_sysbus.c | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ hw/pci/pci.c        | 2 +-
+ hw/pci/pci_bridge.c | 2 +-
+ hw/pci/pci_host.c   | 2 +-
+ hw/pci/pcie_port.c  | 4 ++--
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 5cd5a2533b..2bf6e7ffe9 100644
---- a/hw/tpm/tpm_crb.c
-+++ b/hw/tpm/tpm_crb.c
-@@ -226,7 +226,7 @@ static const VMStateDescription vmstate_tpm_crb = {
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 1416ae202c..c38b674211 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -80,7 +80,7 @@ static const PropertyInfo prop_pci_busnr = {
+     .get = prop_pci_busnr_get,
+ };
+ 
+-static Property pci_props[] = {
++static const Property pci_props[] = {
+     DEFINE_PROP_PCI_DEVFN("addr", PCIDevice, devfn, -1),
+     DEFINE_PROP_STRING("romfile", PCIDevice, romfile),
+     DEFINE_PROP_UINT32("romsize", PCIDevice, romsize, UINT32_MAX),
+diff --git a/hw/pci/pci_bridge.c b/hw/pci/pci_bridge.c
+index 2c7bb1a525..dd4fd3674f 100644
+--- a/hw/pci/pci_bridge.c
++++ b/hw/pci/pci_bridge.c
+@@ -477,7 +477,7 @@ int pci_bridge_qemu_reserve_cap_init(PCIDevice *dev, int cap_offset,
+     return 0;
+ }
+ 
+-static Property pci_bridge_properties[] = {
++static const Property pci_bridge_properties[] = {
+     DEFINE_PROP_BOOL("x-pci-express-writeable-slt-bug", PCIBridge,
+                      pcie_writeable_slt_bug, false),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/pci/pci_host.c b/hw/pci/pci_host.c
+index dfe6fe6184..321e7be709 100644
+--- a/hw/pci/pci_host.c
++++ b/hw/pci/pci_host.c
+@@ -240,7 +240,7 @@ const VMStateDescription vmstate_pcihost = {
      }
  };
  
--static Property tpm_crb_properties[] = {
-+static const Property tpm_crb_properties[] = {
-     DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
-     DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
-index 5f7a0dfc61..e15b67dd45 100644
---- a/hw/tpm/tpm_spapr.c
-+++ b/hw/tpm/tpm_spapr.c
-@@ -364,7 +364,7 @@ static const VMStateDescription vmstate_spapr_vtpm = {
-     }
+-static Property pci_host_properties_common[] = {
++static const Property pci_host_properties_common[] = {
+     DEFINE_PROP_BOOL("x-config-reg-migration-enabled", PCIHostState,
+                      mig_enabled, true),
+     DEFINE_PROP_BOOL(PCI_HOST_BYPASS_IOMMU, PCIHostState, bypass_iommu, false),
+diff --git a/hw/pci/pcie_port.c b/hw/pci/pcie_port.c
+index 9f978ba164..bac2822e98 100644
+--- a/hw/pci/pcie_port.c
++++ b/hw/pci/pcie_port.c
+@@ -111,7 +111,7 @@ void pcie_chassis_del_slot(PCIESlot *s)
+     QLIST_REMOVE(s, next);
+ }
+ 
+-static Property pcie_port_props[] = {
++static const Property pcie_port_props[] = {
+     DEFINE_PROP_UINT8("port", PCIEPort, port, 0),
+     DEFINE_PROP_UINT16("aer_log_max", PCIEPort,
+                        parent_obj.parent_obj.exp.aer_log.log_max,
+@@ -204,7 +204,7 @@ static const TypeInfo pcie_port_type_info = {
+     .class_init = pcie_port_class_init,
  };
  
--static Property tpm_spapr_properties[] = {
-+static const Property tpm_spapr_properties[] = {
-     DEFINE_SPAPR_PROPERTIES(SpaprTpmState, vdev),
-     DEFINE_PROP_TPMBE("tpmdev", SpaprTpmState, be_driver),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-index c5548b0a45..b27af230cd 100644
---- a/hw/tpm/tpm_tis_i2c.c
-+++ b/hw/tpm/tpm_tis_i2c.c
-@@ -491,7 +491,7 @@ static int tpm_tis_i2c_send(I2CSlave *i2c, uint8_t data)
-     return 1;
- }
- 
--static Property tpm_tis_i2c_properties[] = {
-+static const Property tpm_tis_i2c_properties[] = {
-     DEFINE_PROP_TPMBE("tpmdev", TPMStateI2C, state.be_driver),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-index 21109edcaa..9b2160972a 100644
---- a/hw/tpm/tpm_tis_isa.c
-+++ b/hw/tpm/tpm_tis_isa.c
-@@ -91,7 +91,7 @@ static void tpm_tis_isa_reset(DeviceState *dev)
-     return tpm_tis_reset(s);
- }
- 
--static Property tpm_tis_isa_properties[] = {
-+static const Property tpm_tis_isa_properties[] = {
-     DEFINE_PROP_UINT32("irq", TPMStateISA, state.irq_num, TPM_TIS_IRQ),
-     DEFINE_PROP_TPMBE("tpmdev", TPMStateISA, state.be_driver),
-     DEFINE_PROP_BOOL("ppi", TPMStateISA, state.ppi_enabled, true),
-diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-index 967f264634..88c1f1e478 100644
---- a/hw/tpm/tpm_tis_sysbus.c
-+++ b/hw/tpm/tpm_tis_sysbus.c
-@@ -90,7 +90,7 @@ static void tpm_tis_sysbus_reset(DeviceState *dev)
-     return tpm_tis_reset(s);
- }
- 
--static Property tpm_tis_sysbus_properties[] = {
-+static const Property tpm_tis_sysbus_properties[] = {
-     DEFINE_PROP_UINT32("irq", TPMStateSysBus, state.irq_num, TPM_TIS_IRQ),
-     DEFINE_PROP_TPMBE("tpmdev", TPMStateSysBus, state.be_driver),
-     DEFINE_PROP_END_OF_LIST(),
+-static Property pcie_slot_props[] = {
++static const Property pcie_slot_props[] = {
+     DEFINE_PROP_UINT8("chassis", PCIESlot, chassis, 0),
+     DEFINE_PROP_UINT16("slot", PCIESlot, slot, 0),
+     DEFINE_PROP_BOOL("hotplug", PCIESlot, hotplug, true),
 -- 
 2.43.0
 
