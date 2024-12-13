@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8FEEE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:24:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D051DE77186
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB8C-0008IR-QX; Fri, 13 Dec 2024 14:15:24 -0500
+	id 1tMB2I-0003An-IL; Fri, 13 Dec 2024 14:09:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB71-0006HX-7J
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:08 -0500
-Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
+ id 1tMB1r-0002WK-2d
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:57 -0500
+Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB6z-0007Ws-4N
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:06 -0500
-Received: by mail-oa1-x2d.google.com with SMTP id
- 586e51a60fabf-29f88004a92so1252808fac.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:03 -0800 (PST)
+ id 1tMB1o-0006Yq-CI
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:46 -0500
+Received: by mail-ot1-x32a.google.com with SMTP id
+ 46e09a7af769-71e1d6c7738so1117978a34.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:08:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117242; x=1734722042; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734116921; x=1734721721; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ht4ZlthGspVYtEWG+5uRpgdlGJS5T3fuIdiO1kKsIqU=;
- b=mONUwRD2MXRaN0nY/A0cU+d3qyXomnOqz/2q06pw+bmo/FVow1VUfB8Ej/0m84lSWo
- xUUAcc9fnVRqPQNvekIhcbx00LHKZ3tAWkEiKhi//e9DNHShvRGh3EpFicVnGCJskTkc
- YOOoU4W/Qkf6sKzXkSUUjvwevZaECIpealOztPaAd2dqndazI9EVXb1V3F5BCUaUbB+/
- 0CIdEqjTGjqrLh6zSK4sSBv+gIQxPZIneaLMz7rk0swuhjNJZriFEIgI7Q9t785v3oay
- pARksdA0e8nNzMFzYAWj7B0ujYQUfEGXCyHiVzIt9030Rcq9Rkduxh8VSkWkv7ogFjCt
- Krxg==
+ bh=JKm04qysg/gEgbm4vurn75ARW08p/MAYicuTqcRbj08=;
+ b=StpMa9rJDZms0fqTJSqcDhdfeCIJoHKZ6dKkvjJEw80fEF4v4zcS5yGJIh4oNv+BLS
+ Dy5q7iiSVIhkdLeZ/Nd49V0sMzmstXFQgAMvIbJYujiJrTkA8iPCQM1/WFXtcWazrLFt
+ 8EIN8Ajo6BKPsf/PA8u8Oe5wwrKKpY0L6lZ9p9kXETcbMinefXb4yDTWHLI1YtwZBXp1
+ 0DyN4Osdk9RKo//SeJxHyCpUkVFhNbBPEbTun8KE7W687NqdFsKBpbdNegFkVaN8rWSA
+ 89+f9mD/3LsTWD83+3pIFOJ5nYi7zvvuNU3qTnY4Q55k0eAPEbwnykeW9ARcapI4eJzm
+ tp/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117242; x=1734722042;
+ d=1e100.net; s=20230601; t=1734116921; x=1734721721;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ht4ZlthGspVYtEWG+5uRpgdlGJS5T3fuIdiO1kKsIqU=;
- b=v4hm5ApXTYQyunL3yWHMsyKC1d7D7/Sqjz3St0hmI58SRmPUfxCoPVKzUg2sht/2pd
- ZjX/lXG8Lw7TYr6us/6x/nboT8LIID3QVv4FlOc5fdPE77Ds+Jpn4mci8zIzVOVcZVoh
- kk1xWDSCKzNCyYa20W/Jncl/gJ5RdSMAqty5wJhyaldlG+YSV9uzlkfjKe6cX90S86v9
- pTwi83IJyPQORAHrRBhZGo0hID+IM0rtadPtqhhehUONOrSdT93rmA5octnkoxmhdV2X
- +3WKhOk0yg5a7GKwRlUvQ9l+F7UxqZD7OFbD0f+S2uCBaRlJQUOrhpJz1uyTyN9woHsa
- idDQ==
-X-Gm-Message-State: AOJu0Yx1xFs0dCR6LsCMR9/fye9uqLpSFAEPhVXLL5tJpMe0ZptwNdZP
- Iz5zdK6MHw+MCPPFyHVvXaNRIVkyE3UkJKbi7HQaKKhCvDgpHqtR5HN+lpouTKtjing2liIvhxO
- s0msJlWnb
-X-Gm-Gg: ASbGncthzfxpt7cl9YiI/Hg4IIVf3He4VLszcr2yPtJL96d/tLwCcSMuaT5zJXI6wSK
- BkTVAYQyYHciSiTibXDb69hNP2fyktEXnEwXtDKFTQL7QEMvoGScWjKozly3R0c1At0ZWEnfai+
- 4Or7MqU5hYaarIyzs6+8vXSk3QgALEnebduDuKK22S7n98HvOzmeEd5jTr3NWaM9yatS5iSgKFt
- 4h+2s7jmCgW3QBzp1gniRB7SgX1ep0DfVb6bR6xWvEXS/bEYFQHZr8b7agkKX1Z
-X-Google-Smtp-Source: AGHT+IGZ/PvUMGmqi5e8Bk1rGup3iswt9ghvsT2e9lIq++g1rY7eR5j8PsVNC0mxbnECi6p4/IfHmA==
-X-Received: by 2002:a05:6808:218d:b0:3eb:3619:6a90 with SMTP id
- 5614622812f47-3eba693ab5bmr1514702b6e.33.1734117242461; 
- Fri, 13 Dec 2024 11:14:02 -0800 (PST)
+ bh=JKm04qysg/gEgbm4vurn75ARW08p/MAYicuTqcRbj08=;
+ b=YKQCKH3b2fB3qDKy64NVeLyucE45X6NVxQMXurz26o5ym9sCyJMiigf0NMLTvFxhHD
+ b1MMaTA4IEIsppza2YouHLr4llCCfzwJHQJYILGwnov2hpWWtToPIbKtxXJoqF8+IOLP
+ bDu1UlGdC/CIew+XvLm7B0HpYeNaM2zq/IwiWw+ZtTLwBQuBlocxhc8zMRqIDZyaNSiZ
+ /bHzuUQADj3/IAqMqqxDvZfyXbMblgSeYJy8UITOZUXT2D7LjOEvGr8XkinT9ZBqO1Jy
+ BXsXzIbAZ8LfVevGfD3L8PiO+aId5QIyRI3ktb5u11yWTK0UzzomywpKusnxqmYbq2vB
+ vrRQ==
+X-Gm-Message-State: AOJu0YwXEMpT7PmBSgnRb3eqf9hddP1PdOIsYjhbVRR2boDg5x7EHvmf
+ SRd17hijqofgkuyTT+wdG39dthtW1zICVC7E+h3YivpuWEcx8k8VbtGA0C3F9V22fwvAE8xooGF
+ t9K6IW/P4
+X-Gm-Gg: ASbGnctrkB8HyRjQthqNLgAqBb41R8F4wa67CZ/jiw2/2bsmawmefjo2kA/5rAX6Pnn
+ PcP8l5Cbxza/KgJI26d7oK/sL/MKmxn50hOJlxkQ8bXm2MgbxdUbok90eCeySGviL9heIC20MDv
+ rPhdWzxLmM9dqWKxAvIuXHwpmyj0VXN0qZqEAPocaVRtVNDkhMbfIjA8vXa7ynsFi9OV51+G5bX
+ tJJywHaZqkEBK1cfzN9BcjYJjy0jqox38xU+gEnUqyawZpkby6v54N5CjQIcK3G
+X-Google-Smtp-Source: AGHT+IEXm24ToGc6IqeKoxLAgKPqwB0T7wRd1P5z7PkcgO1t3mvypyaI6PTRDRjo/onweT80OBoifQ==
+X-Received: by 2002:a05:6830:6e09:b0:71d:eb02:baed with SMTP id
+ 46e09a7af769-71e3b8576b6mr2256363a34.8.1734116921476; 
+ Fri, 13 Dec 2024 11:08:41 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.01
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:14:02 -0800 (PST)
+ Fri, 13 Dec 2024 11:08:41 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>
-Subject: [PATCH 46/71] hw/pci-host/astro: Remove empty Property list
-Date: Fri, 13 Dec 2024 13:07:20 -0600
-Message-ID: <20241213190750.2513964-51-richard.henderson@linaro.org>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH 10/71] target/sparc: Constify all Property and PropertyInfo
+Date: Fri, 13 Dec 2024 13:06:44 -0600
+Message-ID: <20241213190750.2513964-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,32 +100,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/pci-host/astro.c | 5 -----
- 1 file changed, 5 deletions(-)
+ target/sparc/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-index 379095b356..62e9c8acbf 100644
---- a/hw/pci-host/astro.c
-+++ b/hw/pci-host/astro.c
-@@ -461,10 +461,6 @@ static void elroy_pcihost_init(Object *obj)
-     qdev_init_gpio_in(DEVICE(obj), elroy_set_irq, ELROY_IRQS);
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index 284df950e0..8f494c286a 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -874,14 +874,14 @@ static void sparc_set_nwindows(Object *obj, Visitor *v, const char *name,
+     cpu->env.def.nwindows = value;
  }
  
--static Property elroy_pcihost_properties[] = {
--    DEFINE_PROP_END_OF_LIST(),
--};
--
- static const VMStateDescription vmstate_elroy = {
-     .name = "Elroy",
-     .version_id = 1,
-@@ -490,7 +486,6 @@ static void elroy_pcihost_class_init(ObjectClass *klass, void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
+-static PropertyInfo qdev_prop_nwindows = {
++static const PropertyInfo qdev_prop_nwindows = {
+     .name  = "int",
+     .get   = sparc_get_nwindows,
+     .set   = sparc_set_nwindows,
+ };
  
-     device_class_set_legacy_reset(dc, elroy_reset);
--    device_class_set_props(dc, elroy_pcihost_properties);
-     dc->vmsd = &vmstate_elroy;
-     dc->user_creatable = false;
- }
+ /* This must match feature_name[]. */
+-static Property sparc_cpu_properties[] = {
++static const Property sparc_cpu_properties[] = {
+     DEFINE_PROP_BIT("float128", SPARCCPU, env.def.features,
+                     CPU_FEATURE_BIT_FLOAT128, false),
+ #ifdef TARGET_SPARC64
 -- 
 2.43.0
 
