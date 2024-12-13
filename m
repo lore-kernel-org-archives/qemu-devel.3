@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8E73E77182
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:19:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89D19E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLuFs-0005Zt-F7; Thu, 12 Dec 2024 20:14:08 -0500
+	id 1tLuQt-0000vu-PW; Thu, 12 Dec 2024 20:25:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFq-0005Z3-C2
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tLuQc-0000nO-O6
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:25:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFg-0000GR-BL
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:06 -0500
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tLuQT-0003DV-S4
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:25:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734052433;
+ s=mimecast20190719; t=1734053105;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=m25QGjFSzBPPX2KwzEZ40K5SkrUI42SPbBiq87ZDlhQ=;
- b=MVYqraj2VEr1iOz/Cp0XUcuM1QKATAoE96DGyiA6MoTefuXF4pCR3t968AcbXKeMb5RcpU
- H7QB8dWziH7nXM4rwRsRdBbwFonu69B5O7QH+kal1oH943PkeCL22QSIBMkErWSGnimcbY
- ynsImty9D8VDHJ7enRYNBULt0zIJY+4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cUT2lCbV+mVWonr0FQo0GU105YX5Dsk+7EY6xFs1zOA=;
+ b=immZHkYAm9zVsrpAho0W064hsblVRWzichkHIrfh207tG1YV7/mqtAW5ke0PpGInsdc3UA
+ LiIOD4o2NCwOc0ZYkA0np9U36XE5SU0295zxxA74uGt2Em69gKaVQj1yxOy4rKTC0tCqfE
+ K1HbIMjNO5FIzrIi0kH8qwNII9jrM+c=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-84-ofDSGHfqMvO3Wqjz7bsCPQ-1; Thu,
- 12 Dec 2024 20:13:48 -0500
-X-MC-Unique: ofDSGHfqMvO3Wqjz7bsCPQ-1
-X-Mimecast-MFC-AGG-ID: ofDSGHfqMvO3Wqjz7bsCPQ
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-467-L-YOSmZINLWNBt7lIaEIKg-1; Thu,
+ 12 Dec 2024 20:25:03 -0500
+X-MC-Unique: L-YOSmZINLWNBt7lIaEIKg-1
+X-Mimecast-MFC-AGG-ID: L-YOSmZINLWNBt7lIaEIKg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DE3561956087; Fri, 13 Dec 2024 01:13:46 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B1AA51956089; Fri, 13 Dec 2024 01:13:44 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Victor Toso de Carvalho <victortoso@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 06/35] docs/qapi-domain: add QAPI domain object registry
-Date: Thu, 12 Dec 2024 20:12:35 -0500
-Message-ID: <20241213011307.2942030-7-jsnow@redhat.com>
-In-Reply-To: <20241213011307.2942030-1-jsnow@redhat.com>
-References: <20241213011307.2942030-1-jsnow@redhat.com>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB58D19560B2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 01:25:02 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.40])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 126061955F40; Fri, 13 Dec 2024 01:25:01 +0000 (UTC)
+Date: Thu, 12 Dec 2024 20:21:04 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PULL 00/49] rust, QOM, kvm changes for 2024-12-11
+Message-ID: <20241213012104.GA395433@fedora>
+References: <20241211162720.320070-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="A6YIpAhnzZmqPLRW"
+Content-Disposition: inline
+In-Reply-To: <20241211162720.320070-1-pbonzini@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -85,163 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the first step towards QAPI domain cross-references and a QAPI
-reference index.
 
-For now, just create the object registry and amend the qapi:module
-directive to use that registry. Update the merge_domaindata method now
-that we have actual data we may need to merge.
+--A6YIpAhnzZmqPLRW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- docs/sphinx/qapi-domain.py | 81 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 78 insertions(+), 3 deletions(-)
+Applied, thanks.
 
-diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index 57b35cf1f53..76f10b942d7 100644
---- a/docs/sphinx/qapi-domain.py
-+++ b/docs/sphinx/qapi-domain.py
-@@ -11,6 +11,7 @@
-     Dict,
-     Iterable,
-     List,
-+    NamedTuple,
-     Tuple,
-     cast,
- )
-@@ -21,6 +22,7 @@
- from compat import nested_parse
- from sphinx import addnodes
- from sphinx.domains import Domain, ObjType
-+from sphinx.locale import _, __
- from sphinx.util import logging
- from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id
-@@ -35,6 +37,13 @@
- logger = logging.getLogger(__name__)
- 
- 
-+class ObjectEntry(NamedTuple):
-+    docname: str
-+    node_id: str
-+    objtype: str
-+    aliased: bool
-+
-+
- class QAPIModule(SphinxDirective):
-     """
-     Directive to mark description of a new module.
-@@ -79,6 +88,7 @@ class QAPIModule(SphinxDirective):
-     }
- 
-     def run(self) -> List[Node]:
-+        domain = cast(QAPIDomain, self.env.get_domain("qapi"))
-         modname = self.arguments[0].strip()
-         no_index = "no-index" in self.options or "noindex" in self.options
- 
-@@ -91,11 +101,14 @@ def run(self) -> List[Node]:
-         inode = addnodes.index(entries=[])
- 
-         if not no_index:
-+            # note module to the domain
-             node_id = make_id(self.env, self.state.document, "module", modname)
-             target = nodes.target("", "", ids=[node_id], ismod=True)
-             self.set_source_info(target)
-             self.state.document.note_explicit_target(target)
- 
-+            domain.note_object(modname, "module", node_id, location=target)
-+
-             indextext = f"QAPI module; {modname}"
-             inode = addnodes.index(
-                 entries=[
-@@ -126,7 +139,12 @@ class QAPIDomain(Domain):
-     name = "qapi"
-     label = "QAPI"
- 
--    object_types: Dict[str, ObjType] = {}
-+    # This table associates cross-reference object types (key) with an
-+    # ObjType instance, which defines the valid cross-reference roles
-+    # for each object type.
-+    object_types: Dict[str, ObjType] = {
-+        "module": ObjType(_("module"), "mod", "obj"),
-+    }
- 
-     # Each of these provides a rST directive,
-     # e.g. .. qapi:module:: block-core
-@@ -135,13 +153,70 @@ class QAPIDomain(Domain):
-     }
- 
-     roles = {}
--    initial_data: Dict[str, Dict[str, Tuple[Any]]] = {}
-+
-+    # Moved into the data property at runtime;
-+    # this is the internal index of reference-able objects.
-+    initial_data: Dict[str, Dict[str, Tuple[Any]]] = {
-+        "objects": {},  # fullname -> ObjectEntry
-+    }
-+
-     indices = []
- 
-+    @property
-+    def objects(self) -> Dict[str, ObjectEntry]:
-+        ret = self.data.setdefault("objects", {})
-+        return ret  # type: ignore[no-any-return]
-+
-+    def note_object(
-+        self,
-+        name: str,
-+        objtype: str,
-+        node_id: str,
-+        aliased: bool = False,
-+        location: Any = None,
-+    ) -> None:
-+        """Note a QAPI object for cross reference."""
-+        if name in self.objects:
-+            other = self.objects[name]
-+            if other.aliased and aliased is False:
-+                # The original definition found. Override it!
-+                pass
-+            elif other.aliased is False and aliased:
-+                # The original definition is already registered.
-+                return
-+            else:
-+                # duplicated
-+                logger.warning(
-+                    __(
-+                        "duplicate object description of %s, "
-+                        "other instance in %s, use :no-index: for one of them"
-+                    ),
-+                    name,
-+                    other.docname,
-+                    location=location,
-+                )
-+        self.objects[name] = ObjectEntry(
-+            self.env.docname, node_id, objtype, aliased
-+        )
-+
-+    def clear_doc(self, docname: str) -> None:
-+        for fullname, obj in list(self.objects.items()):
-+            if obj.docname == docname:
-+                del self.objects[fullname]
-+
-     def merge_domaindata(
-         self, docnames: List[str], otherdata: Dict[str, Any]
-     ) -> None:
--        pass
-+        for fullname, obj in otherdata["objects"].items():
-+            if obj.docname in docnames:
-+                # Sphinx's own python domain doesn't appear to bother to
-+                # check for collisions. Assert they don't happen and
-+                # we'll fix it if/when the case arises.
-+                assert fullname not in self.objects, (
-+                    "bug - collision on merge?"
-+                    f" {fullname=} {obj=} {self.objects[fullname]=}"
-+                )
-+                self.objects[fullname] = obj
- 
- 
- def setup(app: Sphinx) -> Dict[str, Any]:
--- 
-2.47.0
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+
+--A6YIpAhnzZmqPLRW
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdbjAAACgkQnKSrs4Gr
+c8iTygf/YunEuzEGtLpK13HWWcgyXC3BR9vjHGGMIbbph4BDaiUuMurJ4SwqynRk
+VdC9kkcrc4TCUCn9YSD1gw+8kqNJDNha/LizZhI9njAiR7n4N0DCDhg9dg9kXfKd
+wV/Di/psm+93dnBanr6MEEdpKIhdYbYKQwxGoegzR03rW/Q/2u+6zn2hEFdUCnbn
+QH0oQOfB6YfdLLYdhKAku+/vAl4xzJxk+5W4xINiTiEKZwAkZlLlxcQ7kLvO8eqH
+geWPCWzEkDGKt4dPUydu511SbeaJfzhS8cu53mQPJxBue2CIgLV1pjgWujseIGs+
+Oh6JsZ2AYCmc9IAVDuQiw1zGcNLDFA==
+=C3Sw
+-----END PGP SIGNATURE-----
+
+--A6YIpAhnzZmqPLRW--
 
 
