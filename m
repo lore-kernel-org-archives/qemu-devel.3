@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0B03E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10881E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLuFv-0005ak-0q; Thu, 12 Dec 2024 20:14:11 -0500
+	id 1tLuGV-0006dN-BX; Thu, 12 Dec 2024 20:14:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFt-0005aQ-AR
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:09 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuGL-0006KT-FY
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:39 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFr-0000Sq-CX
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:08 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuGJ-0000gD-BN
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:37 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734052446;
+ s=mimecast20190719; t=1734052474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LiK5xtEugF+udTlcuqdL8tZt1K7Z4AIDbXrBiQVqcs0=;
- b=MfWdjAMShA22HNEot8B2lWSJ7lyikvSjRpG7Ym0urs/lntfbbvom3JJUVoCDj9XFKuVZ0/
- /YRumtzGhGWuxM6+UzxDm3nScPdHowpBQzu+yIl6cBp+CoP9BP1NCmKsqWxM000pk+O0QN
- ZxruU3zkmHjcI6yXctqk3dsMTn8aDq8=
+ bh=RjR6Dh3llFPbmI/ayJ4ez1ETl3X50WyFlceVILBfRUE=;
+ b=EXNfiBGnfVaHwLuhUunSYTD7tY/OiBFKmVwyLmlYILX7mKp1isR6Omlg/lHmsd5BXw77DN
+ wrMDnEB1MZ60nkMKnmMCthyVorj8YIwnjDivZ7kqgJwIKbPGL5OT1jsqSl2UAQI49BmILZ
+ 6opQT3rm6LLNPTN6AFqzqKfs4whXDKU=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-10-AP7i7sCLO0u3O4R_nraV2g-1; Thu,
- 12 Dec 2024 20:14:03 -0500
-X-MC-Unique: AP7i7sCLO0u3O4R_nraV2g-1
-X-Mimecast-MFC-AGG-ID: AP7i7sCLO0u3O4R_nraV2g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-Z2fGFwFDNaqE99usK9--Zg-1; Thu,
+ 12 Dec 2024 20:14:31 -0500
+X-MC-Unique: Z2fGFwFDNaqE99usK9--Zg-1
+X-Mimecast-MFC-AGG-ID: Z2fGFwFDNaqE99usK9--Zg
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B77319560A3; Fri, 13 Dec 2024 01:14:02 +0000 (UTC)
+ id 9336B195608C; Fri, 13 Dec 2024 01:14:30 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85AAF1956086; Fri, 13 Dec 2024 01:13:58 +0000 (UTC)
+ id 3B4741956086; Fri, 13 Dec 2024 01:14:28 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
@@ -52,9 +52,9 @@ Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 11/35] docs/qapi-domain: add qapi:command directive
-Date: Thu, 12 Dec 2024 20:12:40 -0500
-Message-ID: <20241213011307.2942030-12-jsnow@redhat.com>
+Subject: [RFC PATCH v2 20/35] docs/qapi-domain: add qapi:event directive
+Date: Thu, 12 Dec 2024 20:12:49 -0500
+Message-ID: <20241213011307.2942030-21-jsnow@redhat.com>
 In-Reply-To: <20241213011307.2942030-1-jsnow@redhat.com>
 References: <20241213011307.2942030-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -85,215 +85,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit adds a generic QAPIObject class for use in documenting
-various QAPI entities in the Sphinx ecosystem.
+Adds the .. qapi:event:: directive, object, and :qapi:event:`name`
+cross-referencing role.
 
-It also adds a stubbed version of QAPICommand that utilizes the
-QAPIObject class; along with the qapi:command directive, the
-:qapi:cmd: cross-reference role, and the "command" object type in the
-QAPI object registry.
+Adds the :memb type name: field list syntax for documenting event data
+members. As this syntax and phrasing will be shared with Structs and
+Unions as well, add the field list definition to a shared abstract
+class.
 
-They don't do anything *particularly* interesting yet, but that will
-come in forthcoming commits.
-
-Note: some versions of mypy get a little confused over the difference
-between class and instance variables; because sphinx's ObjectDescription
-does not declare option_spec as a ClassVar (even though it's obvious
-that it is), mypy may produce this error:
-
-qapi-domain.py:125: error: Cannot override instance variable (previously
-declared on base class "ObjectDescription") with class variable [misc]
-
-I can't control that; so silence the error with a pragma.
+As per usual, QAPI cross-referencing for types in the member field list
+will be added in a forthcoming commit.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapi-domain.py | 144 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 142 insertions(+), 2 deletions(-)
+ docs/sphinx/qapi-domain.py | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
 diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
-index e4f822bbcbd..dd4e218a1a0 100644
+index e0c31b2ee4d..e042421016f 100644
 --- a/docs/sphinx/qapi-domain.py
 +++ b/docs/sphinx/qapi-domain.py
-@@ -20,9 +20,10 @@
- from docutils import nodes
- from docutils.parsers.rst import directives
- 
--from compat import nested_parse
-+from compat import keyword_node, nested_parse, space_node
- from sphinx import addnodes
--from sphinx.addnodes import pending_xref
-+from sphinx.addnodes import desc_signature, pending_xref
-+from sphinx.directives import ObjectDescription
- from sphinx.domains import (
-     Domain,
-     Index,
-@@ -82,6 +83,142 @@ def process_link(
-         return title, target
+@@ -321,6 +321,29 @@ class QAPIAlternate(QAPIObject):
+     )
  
  
-+# Alias for the return of handle_signature(), which is used in several places.
-+# (In the Python domain, this is Tuple[str, str] instead.)
-+Signature = str
++class QAPIObjectWithMembers(QAPIObject):
++    """Base class for Events/Structs/Unions"""
 +
-+
-+class QAPIObject(ObjectDescription[Signature]):
-+    """
-+    Description of a generic QAPI object.
-+
-+    It's not used directly, but is instead subclassed by specific directives.
-+    """
-+
-+    # Inherit some standard options from Sphinx's ObjectDescription
-+    option_spec: OptionSpec = (  # type:ignore[misc]
-+        ObjectDescription.option_spec.copy()
-+    )
-+    option_spec.update(
-+        {
-+            # Borrowed from the Python domain:
-+            "module": directives.unchanged,  # Override contextual module name
-+        }
-+    )
-+
-+    def get_signature_prefix(self, sig: str) -> List[nodes.Node]:
-+        """Returns a prefix to put before the object name in the signature."""
-+        assert self.objtype
-+        return [
-+            keyword_node("", self.objtype.title()),
-+            space_node(" "),
++    doc_field_types = QAPIObject.doc_field_types.copy()
++    doc_field_types.extend(
++        [
++            # :member type name: descr
++            TypedField(
++                "member",
++                label=_("Members"),
++                names=("memb",),
++                can_collapse=False,
++            ),
 +        ]
-+
-+    def get_signature_suffix(self, sig: str) -> list[nodes.Node]:
-+        """Returns a suffix to put after the object name in the signature."""
-+        return []
-+
-+    def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-+        """
-+        Transform a QAPI definition name into RST nodes.
-+
-+        This method was originally intended for handling function
-+        signatures. In the QAPI domain, however, we only pass the
-+        definition name as the directive argument and handle everything
-+        else in the content body with field lists.
-+
-+        As such, the only argument here is "sig", which is just the QAPI
-+        definition name.
-+        """
-+        modname = self.options.get(
-+            "module", self.env.ref_context.get("qapi:module")
-+        )
-+
-+        signode["fullname"] = sig
-+        signode["module"] = modname
-+        sig_prefix = self.get_signature_prefix(sig)
-+        if sig_prefix:
-+            signode += addnodes.desc_annotation(
-+                str(sig_prefix), "", *sig_prefix
-+            )
-+        signode += addnodes.desc_name(sig, sig)
-+        signode += self.get_signature_suffix(sig)
-+
-+        return sig
-+
-+    def _object_hierarchy_parts(
-+        self, sig_node: desc_signature
-+    ) -> Tuple[str, ...]:
-+        if "fullname" not in sig_node:
-+            return ()
-+        modname = sig_node.get("module")
-+        fullname = sig_node["fullname"]
-+
-+        if modname:
-+            return (modname, *fullname.split("."))
-+        else:
-+            return tuple(fullname.split("."))
-+
-+    def get_index_text(self, modname: str, name: Signature) -> str:
-+        """Return the text for the index entry of the object."""
-+        # NB this is used for the global index, not the QAPI index.
-+        return f"{name} (QMP {self.objtype})"
-+
-+    def add_target_and_index(
-+        self, name: Signature, sig: str, signode: desc_signature
-+    ) -> None:
-+        # Called by ObjectDescription.run with the result of
-+        # handle_signature; name is the return value of handle_signature
-+        # where sig is the original argument to handle_signature. In our
-+        # case, they're the same for now.
-+        assert self.objtype
-+
-+        modname = self.options.get(
-+            "module", self.env.ref_context.get("qapi:module")
-+        )
-+        # Here, sphinx decides to prepend the module name. OK.
-+        fullname = (modname + "." if modname else "") + name
-+        node_id = make_id(self.env, self.state.document, "", fullname)
-+        signode["ids"].append(node_id)
-+        self.state.document.note_explicit_target(signode)
-+
-+        domain = cast(QAPIDomain, self.env.get_domain("qapi"))
-+        domain.note_object(fullname, self.objtype, node_id, location=signode)
-+
-+        if "no-index-entry" not in self.options:
-+            indextext = self.get_index_text(modname, name)
-+            assert self.indexnode is not None
-+            if indextext:
-+                self.indexnode["entries"].append(
-+                    ("single", indextext, node_id, "", None)
-+                )
-+
-+    def _toc_entry_name(self, sig_node: desc_signature) -> str:
-+        # This controls the name in the TOC and on the sidebar.
-+
-+        # This is the return type of _object_hierarchy_parts().
-+        toc_parts = cast(Tuple[str, ...], sig_node.get("_toc_parts", ()))
-+        if not toc_parts:
-+            return ""
-+
-+        config = self.env.app.config
-+        *parents, name = toc_parts
-+        if config.toc_object_entries_show_parents == "domain":
-+            return sig_node.get("fullname", name)
-+        if config.toc_object_entries_show_parents == "hide":
-+            return name
-+        if config.toc_object_entries_show_parents == "all":
-+            return ".".join(parents + [name])
-+        return ""
++    )
 +
 +
-+class QAPICommand(QAPIObject):
-+    """Description of a QAPI Command."""
++class QAPIEvent(QAPIObjectWithMembers):
++    """Description of a QAPI Event."""
 +
-+    # Nothing unique for now! Changed in later commits O:-)
 +    pass
 +
 +
  class QAPIModule(SphinxDirective):
      """
      Directive to mark description of a new module.
-@@ -237,12 +374,14 @@ class QAPIDomain(Domain):
-     # for each object type.
+@@ -481,6 +504,7 @@ class QAPIDomain(Domain):
      object_types: Dict[str, ObjType] = {
          "module": ObjType(_("module"), "mod", "obj"),
-+        "command": ObjType(_("command"), "cmd", "obj"),
+         "command": ObjType(_("command"), "cmd", "obj"),
++        "event": ObjType(_("event"), "event", "obj"),
+         "enum": ObjType(_("enum"), "enum", "obj", "type"),
+         "alternate": ObjType(_("alternate"), "alt", "obj", "type"),
      }
- 
-     # Each of these provides a rST directive,
-     # e.g. .. qapi:module:: block-core
+@@ -490,6 +514,7 @@ class QAPIDomain(Domain):
      directives = {
          "module": QAPIModule,
-+        "command": QAPICommand,
+         "command": QAPICommand,
++        "event": QAPIEvent,
+         "enum": QAPIEnum,
+         "alternate": QAPIAlternate,
      }
- 
-     # These are all cross-reference roles; e.g.
-@@ -250,6 +389,7 @@ class QAPIDomain(Domain):
-     # the object_types table values above.
+@@ -500,6 +525,7 @@ class QAPIDomain(Domain):
      roles = {
          "mod": QAPIXRefRole(),
-+        "cmd": QAPIXRefRole(),
-         "obj": QAPIXRefRole(),  # reference *any* type of QAPI object.
-     }
- 
+         "cmd": QAPIXRefRole(),
++        "event": QAPIXRefRole(),
+         "enum": QAPIXRefRole(),
+         "alt": QAPIXRefRole(),
+         # reference any data type (excludes modules, commands, events)
 -- 
 2.47.0
 
