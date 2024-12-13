@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C309BE77183
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24F5E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:34:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9Xk-0007p4-OL; Fri, 13 Dec 2024 12:33:36 -0500
+	id 1tM9XI-00077j-BA; Fri, 13 Dec 2024 12:33:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9XS-0007Dj-Qm
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:21 -0500
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1tM9X7-0006zo-93
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:58 -0500
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9XQ-0001bw-Cx
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:18 -0500
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3862b40a6e0so1128323f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:15 -0800 (PST)
+ id 1tM9X5-0001W8-Ag
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:57 -0500
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-385de9f789cso1543933f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:32:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111194; x=1734715994; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111173; x=1734715973; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=fDdtnlLPu66cn6d1r0KkSZdgC2ryDDOvIhyzfjEy2GE=;
- b=LFJzy0c1z3G7PH08aRUaCT2iREeWDngV6hI8jdRM3IbG9EaWZ3dVlIQ3BW6Amk2a8Q
- BVlAbS0qzk8jTPQn+awj7YCNcJqyWznysDlyCrB99ys1JXz2CwonNGx6QNJRVJe/mIRo
- 6rpXF9m5FChXreunvx35hTgQ01ZD0/5FUCz87yU1k4lrRPeyVSSkPNRYC0SmTM1xhx6r
- kVdz8+0WFQtQSh1vfwrYLmq9Rc/CTFbuqHmggBELCAjuxeH4eKQbtMlwlO6FTi6tLu7I
- pW5qul1XZZ9MOihi4GPBt0fOLIsO9EOEHxgfKRPrycPtGuxYwFyEJHCrYisKDkIgOnvI
- kO9w==
+ :reply-to; bh=Sp4roeRQL1fuJKdKDyKEq4BIrsgp9jAp7oXPidcX4dw=;
+ b=cKVneeFFkcdwJJSLwAgOgOMpVHotcTXpy7mK5OB8zF6ervLqbqZCKnBwVL44z4JUo1
+ bKOefGR6NqSI0U5W3CGD1pMnA4redChW1We/MNXppFRLS/0onufDzNDecoX5MsM63xmU
+ z0BwS3g4LPPovw+mb4Xf7aQRQnSoYyTZBKgLR5caNFIiqcafcA8uCD7tcPwOkKSM7kaG
+ /STvejZXbPNGQ6ll5xFvcRgNHZR0oPfp4HoGuanKa+UMN8KFkiL4z6EUCFsNk5xjxPtv
+ EED/7KBho7/CihgefRypnJSDX23DkrWYfEAJGzNyx0gClaLdttMVInU9JO0cNCHzFl/6
+ 3K1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111194; x=1734715994;
+ d=1e100.net; s=20230601; t=1734111173; x=1734715973;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fDdtnlLPu66cn6d1r0KkSZdgC2ryDDOvIhyzfjEy2GE=;
- b=s7TFxWb9f9oNLMefpSlaJiX7MA+jq5oS5668Y3tihRKmrVhdO+Jaqwri4LcOSUSBjf
- NekLxBfehMBp88l3qaFrHOXz6FslNw3QgouSOjav6UyCsQoYuQeOQ7hb5nnhObay7C0E
- NaOXrB1GpAiTPbr3e6buDM4ZHP5i9yrwORkp+4tomkGW4DQpt32f9vjxdbm2THRFbGBK
- FqO1j8/pyW8DpCz9XHz1nF1hVezmFHHexSjRVxIFjc//1P6TSuJ3GFGIL6aDt8iXwq0/
- rNTzwV2r6uKouy287SB1ZddJ138EQmoAzm5JsB7hABHAYc8WwchZvFfpGtCkfZZQEbzw
- tpYA==
-X-Gm-Message-State: AOJu0YwjQQbeUJ7kkL9VrIbd786cXwIzQd6331tJSCNhGEH8pzgkYVvu
- V1y0sTpmKymQlK1LfgRwt1h7tl1PErvCiz/Cu1mgkc36ePHmJOs+envupi5t55RiSWQdpLuQ515
- l
-X-Gm-Gg: ASbGncsR8z9bI8ObbJs0re2Z0GtRrbUDCjBv+XtLXPOhbssk6LZL78xCQNlH3JOtWwF
- KAZLfCJabrq3ITutKWHuyVGGuntk4iEYsqranRfT0gONdsGHTa+pFjinksb1JQRMcxiMi0982Vm
- uZnwFrhrsDtkMv8NVseIekqTyRIIaUS2r504ZZEuQ4P2OP4NvrZG7U6EzRJxTTkzyJZLOGBXj5M
- Q34sAAyONQxZMgNnVLxP/Qo7x4lI4IzfcvZ0LDcK5/mP53rAKopX9bkDrdXpQ==
-X-Google-Smtp-Source: AGHT+IHo/kfNw10iiAIQxO9zk27gRZVuYaVTh1aCOQtThFIZt9t5duBIkMn3EyHAZomC2WO7dk6GsQ==
-X-Received: by 2002:a05:6000:2ad:b0:385:ee59:44eb with SMTP id
- ffacd0b85a97d-3888e0bd28amr3270071f8f.33.1734111194640; 
- Fri, 13 Dec 2024 09:33:14 -0800 (PST)
+ bh=Sp4roeRQL1fuJKdKDyKEq4BIrsgp9jAp7oXPidcX4dw=;
+ b=OW/Hep9YulgOaJCuoniaZZG8jmfxqGbbVLC81x4eBh5iaLN/dfrcCVuxjyk2SM7bR8
+ xjuRVSLEYE6pMjce2sTgcwCRAUKv3XExOTdD0ka6BOA/cIwgCqfZvKMt3lfceyEPcZUu
+ WbP6wKQKdOsKavri3VobrKGzY9PfuRfcmTJXesPV7tXtasvFUwTpnQgovBwFIkORlMWa
+ uxdxIgbPAj7vGlCaP2XuubftbffxMpVpJAdMIfaQ75qASa9D71Ar8T8db7Mip1qeWb+9
+ BqlKkWAqcQ/nf2HzDlxZBGEIbM7m/QKAyO0KpMMIrvh+F1fMv5qeN4Y+G8MAadpFNzMg
+ 2dPg==
+X-Gm-Message-State: AOJu0YyxLTZDwqHriuxt6NSptIME5I6WDwFcBeJkv8DJ1OhUyh8Y9iy9
+ tTgKkB6zxIzGAPyb+aOZcaiTGOA2O79L4pYUZV+TT0kqqUA0MGEU7hjW926iFAamvDiiEEsWvxu
+ N
+X-Gm-Gg: ASbGncvbMzcHIRFLoX3qbrFGa4hOOmTC9YqugMRslT/tjrzyzkrA/5frhTtBmGV1x8L
+ TSqVeUONVH//+IZriYT/rLwrcKQjH5MrkmvDVRJbsGyvipionQqlucCDq/u2PRwCbdgYUIdyUMY
+ xRk76RBp0ZwAH5JJomnktdA7wsYVj7vdF3XH9jdEUBPJE1SqPJ0u4j54nBu2KLWSgLCQHZ0pf2x
+ Tkhm0DTjq4aoRcWCMaUV51D445CvNXr8zibK5g4ka/2UoH6kVdPynGn0h4xPQ==
+X-Google-Smtp-Source: AGHT+IGeGln2lMj7ZmuAtwrVoqCIXFmzRJHl6bJt5MX5OlpHgGZqyOLLH/aMhEz+jjj6bUTTbJXjSA==
+X-Received: by 2002:a5d:6f1d:0:b0:386:37f5:99e7 with SMTP id
+ ffacd0b85a97d-3888e0bbaeemr3200362f8f.33.1734111173067; 
+ Fri, 13 Dec 2024 09:32:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.13
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.32.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:13 -0800 (PST)
+ Fri, 13 Dec 2024 09:32:52 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 40/85] target/arm: Convert CNT, NOT, RBIT (vector) to decodetree
-Date: Fri, 13 Dec 2024 17:31:44 +0000
-Message-Id: <20241213173229.3308926-41-peter.maydell@linaro.org>
+Subject: [PULL 20/85] target/arm: Introduce fp_access_check_scalar_hsd
+Date: Fri, 13 Dec 2024 17:31:24 +0000
+Message-Id: <20241213173229.3308926-21-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,121 +99,106 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Provide a simple way to check for float64, float32,
+and float16 support, as well as the fpu enabled.
+
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211163036.2297116-41-richard.henderson@linaro.org
+Message-id: 20241211163036.2297116-21-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |  4 ++++
- target/arm/tcg/translate-a64.c | 34 ++++++----------------------------
- 2 files changed, 10 insertions(+), 28 deletions(-)
+ target/arm/tcg/translate-a64.c | 62 ++++++++++++++++++----------------
+ 1 file changed, 32 insertions(+), 30 deletions(-)
 
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 32355ee6331..bac81eec7e6 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -71,6 +71,7 @@
- @rrr_q1e3       ........ ... rm:5 ...... rn:5 rd:5      &qrrr_e q=1 esz=3
- @rrrr_q1e3      ........ ... rm:5 . ra:5 rn:5 rd:5      &qrrrr_e q=1 esz=3
- 
-+@qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
- @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
- @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
- 
-@@ -1643,3 +1644,6 @@ ABS_v           0.00 1110 ..1 00000 10111 0 ..... .....     @qrr_e
- NEG_v           0.10 1110 ..1 00000 10111 0 ..... .....     @qrr_e
- CLS_v           0.00 1110 ..1 00000 01001 0 ..... .....     @qrr_e
- CLZ_v           0.10 1110 ..1 00000 01001 0 ..... .....     @qrr_e
-+CNT_v           0.00 1110 001 00000 01011 0 ..... .....     @qrr_b
-+NOT_v           0.10 1110 001 00000 01011 0 ..... .....     @qrr_b
-+RBIT_v          0.10 1110 011 00000 01011 0 ..... .....     @qrr_b
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3e0c061b3c0..aff1984a224 100644
+index 9c6365f5efc..4e47b8a8041 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -8915,6 +8915,9 @@ static bool do_gvec_fn2(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
+@@ -1239,6 +1239,27 @@ static bool fp_access_check(DisasContext *s)
+     return true;
+ }
  
- TRANS(ABS_v, do_gvec_fn2, a, tcg_gen_gvec_abs)
- TRANS(NEG_v, do_gvec_fn2, a, tcg_gen_gvec_neg)
-+TRANS(NOT_v, do_gvec_fn2, a, tcg_gen_gvec_not)
-+TRANS(CNT_v, do_gvec_fn2, a, gen_gvec_cnt)
-+TRANS(RBIT_v, do_gvec_fn2, a, gen_gvec_rbit)
- 
- static bool do_gvec_fn2_bhs(DisasContext *s, arg_qrr_e *a, GVecGen2Fn *fn)
++/*
++ * Return <0 for non-supported element sizes, with MO_16 controlled by
++ * FEAT_FP16; return 0 for fp disabled; otherwise return >0 for success.
++ */
++static int fp_access_check_scalar_hsd(DisasContext *s, MemOp esz)
++{
++    switch (esz) {
++    case MO_64:
++    case MO_32:
++        break;
++    case MO_16:
++        if (!dc_isar_feature(aa64_fp16, s)) {
++            return -1;
++        }
++        break;
++    default:
++        return -1;
++    }
++    return fp_access_check(s);
++}
++
+ /*
+  * Check that SVE access is enabled.  If it is, return true.
+  * If not, emit code to generate an appropriate exception and return false.
+@@ -6628,22 +6649,10 @@ static bool trans_FCSEL(DisasContext *s, arg_FCSEL *a)
  {
-@@ -9229,12 +9232,6 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-     TCGCond cond;
+     TCGv_i64 t_true, t_false;
+     DisasCompare64 c;
++    int check = fp_access_check_scalar_hsd(s, a->esz);
  
-     switch (opcode) {
--    case 0x5: /* NOT */
--        /* This opcode is shared with CNT and RBIT but we have earlier
--         * enforced that size == 3 if and only if this is the NOT insn.
--         */
--        tcg_gen_not_i64(tcg_rd, tcg_rn);
+-    switch (a->esz) {
+-    case MO_32:
+-    case MO_64:
 -        break;
-     case 0xa: /* CMLT */
-         cond = TCG_COND_LT;
-     do_cmop:
-@@ -9291,6 +9288,7 @@ static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-         break;
-     default:
-     case 0x4: /* CLS, CLZ */
-+    case 0x5: /* NOT */
-     case 0x7: /* SQABS, SQNEG */
-     case 0xb: /* ABS, NEG */
-         g_assert_not_reached();
-@@ -10072,19 +10070,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     case 0x1: /* REV16 */
-         handle_rev(s, opcode, u, is_q, size, rn, rd);
-         return;
--    case 0x5: /* CNT, NOT, RBIT */
--        if (u && size == 0) {
--            /* NOT */
--            break;
--        } else if (u && size == 1) {
--            /* RBIT */
--            break;
--        } else if (!u && size == 0) {
--            /* CNT */
--            break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
 -        }
--        unallocated_encoding(s);
--        return;
-     case 0x12: /* XTN, XTN2, SQXTUN, SQXTUN2 */
-     case 0x14: /* SQXTN, SQXTN2, UQXTN, UQXTN2 */
-         if (size == 3) {
-@@ -10302,6 +10287,7 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-     default:
-     case 0x3: /* SUQADD, USQADD */
-     case 0x4: /* CLS, CLZ */
-+    case 0x5: /* CNT, NOT, RBIT */
-     case 0x7: /* SQABS, SQNEG */
-     case 0xb: /* ABS, NEG */
-         unallocated_encoding(s);
-@@ -10324,15 +10310,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+-        break;
+-    default:
+-        return false;
+-    }
+-
+-    if (!fp_access_check(s)) {
+-        return true;
++    if (check <= 0) {
++        return check == 0;
      }
  
-     switch (opcode) {
--    case 0x5: /* CNT, NOT, RBIT */
--        if (!u) {
--            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_cnt, 0);
--        } else if (size) {
--            gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_rbit, 0);
--        } else {
--            gen_gvec_fn2(s, is_q, rd, rn, tcg_gen_gvec_not, 0);
+     /* Zero extend sreg & hreg inputs to 64 bits now.  */
+@@ -6894,22 +6903,15 @@ TRANS(FMINV_s, do_fp_reduction, a, gen_helper_vfp_mins)
+ 
+ static bool trans_FMOVI_s(DisasContext *s, arg_FMOVI_s *a)
+ {
+-    switch (a->esz) {
+-    case MO_32:
+-    case MO_64:
+-        break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
 -        }
--        return;
-     case 0x8: /* CMGT, CMGE */
-         if (u) {
-             gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_cge0, size);
-@@ -10351,6 +10328,7 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
-         gen_gvec_fn2(s, is_q, rd, rn, gen_gvec_clt0, size);
-         return;
-     case 0x4: /* CLZ, CLS */
-+    case 0x5: /* CNT, NOT, RBIT */
-     case 0xb:
-         g_assert_not_reached();
+-        break;
+-    default:
+-        return false;
+-    }
+-    if (fp_access_check(s)) {
+-        uint64_t imm = vfp_expand_imm(a->esz, a->imm);
+-        write_fp_dreg(s, a->rd, tcg_constant_i64(imm));
++    int check = fp_access_check_scalar_hsd(s, a->esz);
++    uint64_t imm;
++
++    if (check <= 0) {
++        return check == 0;
      }
++
++    imm = vfp_expand_imm(a->esz, a->imm);
++    write_fp_dreg(s, a->rd, tcg_constant_i64(imm));
+     return true;
+ }
+ 
 -- 
 2.34.1
 
