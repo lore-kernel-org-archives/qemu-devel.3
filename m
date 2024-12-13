@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F236E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:29:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 754B2E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:29:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBBI-00055l-C6; Fri, 13 Dec 2024 14:18:33 -0500
+	id 1tMBKi-0002JA-1J; Fri, 13 Dec 2024 14:28:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9H-0001oD-Rk
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:28 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1tMBKN-0001vo-P9
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:28:03 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9G-00085c-2x
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:27 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so1145456f8f.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:16:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nabihestefan@google.com>)
+ id 1tMBKH-0002Yx-Dz
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:27:53 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2155c25e9a4so15755ad.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:27:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117384; x=1734722184; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=GwXJ20o47O0myZ807tC+6WLVB8CtFiG35efK/BxIlqk=;
- b=EBBeUOlgWGoDM3J+0mG5QVCofEG1Jq1Pbp+JPiLesuKjAUWHO/+z7R3GbyjyJdOIX+
- Kifa2plsh9LL8NPIO3+zBNCZxMqOhxOZvDVSTaeeZiRpn+X09JZv2Yj7fQwwtJmk5+ae
- ZsdBTavKKhnaOXm1xF830S5i5bMx0w0bVZ+q2dI2fOrLIpDx8XeO9doMWfm1I/c+YmwD
- eOyPl9quKm3wY+97WIuR2Fyo4HiZ22RjpQ3xW/F+cesYdk9XHUZLb7qXZe1eCEwixHz2
- 7nQYZoeTf+uC5YhyRWjSR1YSDOQ8vUI7Im2vr/LcQHDNwTIHmN2mP5ecykUgiMEKNId8
- yqew==
+ d=google.com; s=20230601; t=1734118066; x=1734722866; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=n8y6uFm+wmDEuGdgtXjvxyoO93l7Tq9E2jG+Cuw/+z8=;
+ b=WGeq1JSzEd0zsngc2iN2QQTa/s1/VbbY9E7coJtcSlH88ojUTxJFWFnCm8E801pK9d
+ TBQOtWion5uXxoWze0CAXV7+h+AGEa8gIBmjceZuKqemR5xwOQZVRJ6Idd7Hhcy3IPEr
+ 0ymxIOoesFxotZIkhb0NvleWwD2bpczbwcyk8bCrAJt2nSXUXi8MtyVIIoY5paFeJ/y/
+ kZqwUxk/QmYl/cfSZZtF5WBNVCemN8QJrK+3wkNHEYa7DNCYcHHXfvXLmATRASXZRSgR
+ sWBo4krup/VsDdaiVCD2xzdytl551PUYwyg41Dy4kKWdjoUZaGa/B7xDTpMBO5NML4wC
+ 7ajQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117384; x=1734722184;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GwXJ20o47O0myZ807tC+6WLVB8CtFiG35efK/BxIlqk=;
- b=lbu/ioWGhJ2D5YVum04yakvM/dma9IIivqSCUDmk8KHpY7lg9WwTldeRJBbB8/5dyD
- GHOasK8AdWwdNig+dTTOSgVOYEwnaYxWvNNw2EsSSJteLL8FWSC30HhEfoznrUfkSrjI
- dw1udD/QRhpEk2VuJ3YfQFYvPZhnwqWDmgJj8PYXDPt/+esCvMBLugTmXLLEok4bYNLl
- biKhxaU2mXhkbauiLoqnM1hCxkL5Im0eHCDrBxW1auc4xvKpctbtWozJoYeeCDmmiBun
- 8o9a+hbAaofYJbv0rwdpzfBAPxGFuibeB6PjFnHBs/4NJiohIgbJ9LECtDMTripBBKj0
- WjKQ==
+ d=1e100.net; s=20230601; t=1734118066; x=1734722866;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=n8y6uFm+wmDEuGdgtXjvxyoO93l7Tq9E2jG+Cuw/+z8=;
+ b=auOrfkp0qAKH7nhWVb4ePoVNK8QV7I5L+jCATkBbV+IshvQqiN6WWtyuTciN+PjZUf
+ ATo/irOXZWDCbT+8yKRAiMQYAWb5jWvacjXBIuf5klJn/KTAYAZBYWwMB4x/EJlQyP63
+ pF1+qxO00x8Sgj6iEKuDC/AAFeauzCFSuz0AiyJ3uIIDupKiy03ZRugHekeysfdJLOzu
+ DH4+kCNq7K/EvXFdGxKiQRuahitw4ille5xby5l+BY/gaWMKW7zXKQiEWndTtCfQ3bwc
+ gHg1nn79xFrJNu72FZZjKfRKuBDpUlOgmp062l5CoMPzEUUW/8cNo/kzeKA5QwbJX+kl
+ 5NpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVpY+3q9z9RzdI21ybgc8utulJdBd1hL42c4Q1Pd2VWQntmnQARvITz0g5or0YsEsQTKyFzwvVeZmdn@nongnu.org
-X-Gm-Message-State: AOJu0Yy565VDOrfF5JGALkJ/9vu75QgRhr/i1vGMrA1R8qkkPzvuObp3
- dxbMLr7hNvrj1RnNjVPdgfVAjduqOJodVtYOjwukLW9qIRDEr4bcXG2I4nlD1nM=
-X-Gm-Gg: ASbGncsr8AZJoNsWwhHWFam9idfGG61PJuwhg+pYzlkSJfvOWJKCVtwpyNkrgeKdaRk
- cHIKEDtoC0nk2Dn7dpQ+Rd9/oYSrKd7g6NqEYXuSj7qgwLHEt8n53rubyJZXj6r19NBVNlQ/Czg
- 7WMPVDS+dNqVNrLl+r0dWBKQvyHFTLJnEVWH/P2ekqPMm8kcYFUArJq7vrz7j5dDwLad0hWSl2k
- tv3mtbvM5yClQJv8D1zjextwoPKfD9ags+G/ZE+7A2JwsYKo/xod678k6rU7z3YIG2fFMPwYxYi
- JWxOCz0nr9sgNQEstxDK
-X-Google-Smtp-Source: AGHT+IE9EaE9q+eOTRyVS+Ej/dZUuzr5P76BaFSUIVzLalx3/4oNdOLXQxFZM43dPSy1rgme1yYiGw==
-X-Received: by 2002:a5d:47c5:0:b0:385:fb66:faee with SMTP id
- ffacd0b85a97d-38880ad0de1mr2688391f8f.18.1734117384499; 
- Fri, 13 Dec 2024 11:16:24 -0800 (PST)
-Received: from [192.168.224.213] (127.47.205.77.rev.sfr.net. [77.205.47.127])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8046ca6sm297070f8f.83.2024.12.13.11.16.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 11:16:23 -0800 (PST)
-Message-ID: <8011248c-8ed7-46ef-9d8d-78ae05dfc0b4@linaro.org>
-Date: Fri, 13 Dec 2024 20:16:21 +0100
+ AJvYcCXJk0VW9M4A+v1YCcKiIq7DSTXBZ5tbOGUTbSKfj3UGZ1EedqbrpoECjuYn1oSHMdyqMasZ6FLBxtNk@nongnu.org
+X-Gm-Message-State: AOJu0Yxr0oVrXRVTnxyrDt69HL8H+9F5ulr9EVO/XHUCah+Ngu2qexGN
+ mAvl/LieAMMLStHoTjSqTXxoeGiJA/oyoRoV5jQy496upwyInPmRpoFVn8utkapNLjBxD8kjiUB
+ wPSsj0WjRFdDeqCtZnveisFcpqNXT7ipS70LR
+X-Gm-Gg: ASbGnctQXcMcfw5n/9S2+Ed7E8wGp16zX9p4LSrk2/agwX0xF5DywUp/WoF6suntlkW
+ LRrS3356nE2Ulfm+Ghr+8lgEHG+5uT6fQlk1T41SQqS3fE6jYfKv5gE2ko5qM1eY0Ea9g
+X-Google-Smtp-Source: AGHT+IFaaf6SHCamj0lIAzIcB33qAgkUq7/qo2KRWtzeMjKPGqKuh4UR42bM+jY1YH8R4A0RiH9pVAfsBjS1pFcWILo=
+X-Received: by 2002:a05:6e02:178b:b0:3a7:a468:69df with SMTP id
+ e9e14a558f8ab-3b2792913a8mr186155ab.3.1734117650559; Fri, 13 Dec 2024
+ 11:20:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] eif: Use stateful qcrypto apis
-To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
-Cc: graf@amazon.com, pbonzini@redhat.com, berrange@redhat.com
-References: <20241109123039.24180-1-dorjoychy111@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241109123039.24180-1-dorjoychy111@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241213002602.4181289-1-nabihestefan@google.com>
+ <f03adc63-5167-4982-90e6-70b65f0c90cc@redhat.com> <87y10jctbd.fsf@suse.de>
+In-Reply-To: <87y10jctbd.fsf@suse.de>
+From: Nabih Estefan <nabihestefan@google.com>
+Date: Fri, 13 Dec 2024 11:20:39 -0800
+Message-ID: <CA+QoejUUQK5L2LOgDPdK=kBgWgQQcvSMzXJ1zAiuwmoNwroPxg@mail.gmail.com>
+Subject: Re: [PATCH] tests/qtest/sse-timer-test: Add watchdog reset to
+ sse-timer test
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Thomas Huth <thuth@redhat.com>, peter.maydell@linaro.org,
+ qemu-arm@nongnu.org, 
+ qemu-devel@nongnu.org, lvivier@redhat.com, pbonzini@redhat.com, 
+ roqueh@google.com, venture@google.com, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=nabihestefan@google.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,19 +97,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/11/24 13:30, Dorjoy Chowdhury wrote:
-> We were storing the pointers to buffers in a GList due to lack of
-> stateful crypto apis and instead doing the final hash computation at
-> the end after we had all the necessary buffers. Now that we have the
-> stateful qcrypto apis available, we can instead update the hashes
-> inline in the read_eif_* functions which makes the code much simpler.
-> 
-> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-> ---
->   hw/core/eif.c                   | 202 ++++++++++++--------------------
->   hw/i386/nitro_enclave.c         |  12 +-
->   include/hw/i386/nitro_enclave.h |  16 +--
->   3 files changed, 91 insertions(+), 139 deletions(-)
+From what I can tell this is the same issue Thomas was looking at yes.
 
-Queued, thanks!
+I saw the failure on the master branch at the v9.2.0 tag (ae35f033) and just
+re-tested it against (83aaec1d) and still see it. I haven't seen it be an
+intermittent failure, it has failed 100% of the time that I have tested it when
+targeting arm-softmmu.
+
+However, you are right that with Phillippe's series on top of my change the
+bug is somehow re-introduced. Not sure what the protocol is here since
+neither patch has landed
 
