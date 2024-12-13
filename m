@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C991AE77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E445E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB43-0006YU-Vm; Fri, 13 Dec 2024 14:11:05 -0500
+	id 1tMBNi-0008Qv-Mf; Fri, 13 Dec 2024 14:31:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3T-0005bY-UQ
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:31 -0500
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1tMBNd-0007ya-5H
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:17 -0500
+Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3Q-00071R-PY
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:27 -0500
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-71e35be77b5so458107a34.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:10:24 -0800 (PST)
+ id 1tMBNa-0004K0-TM
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:16 -0500
+Received: by mail-lf1-x12f.google.com with SMTP id
+ 2adb3069b0e04-53df19bf6a9so2911095e87.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:31:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117023; x=1734721823; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734118273; x=1734723073; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4K+Ow/kpxla1hHfSMb1r5BWBj60XilhZFUT+PuNLeCM=;
- b=rJ1zB70ld3fkZYYS0SLH3sC+Yp5bJPEKdCsDse0YW66Ci8Oa8wijrkO/QtCUvdUuKK
- BkTph2MufouxJuk1CoSXxN6ZG+GsTdGYCIqV4WSnaP9wSCyEVqrJMDR/zOlv7c6hPDGT
- HHRDKl8S8LsgAJeYUmj75S/3vXagjzZe9k/bn9XBoZn+hdiOaFejx89Y9O6voIQITUvv
- FaGTUiFC3KRuqyUQB1RypQY1FkdRti+5pkJktA9TGbYdVFqWC5/PFGX7HTcm0wqKcI4Q
- G0zRMu2A3LYBAclAmIsc9WjleMsQFfIrKfpJFsmnndU89iYyz9ZfbbYYTv0xTiOm6cW3
- c/Mw==
+ bh=+4rdkJduZkbXz6JmK4QEKv1jKAaYDuIzC71PHld//xk=;
+ b=B63d/NmfNI69OdSEksZuyj/v8mDEINqLsjO3PNjCLPaDgq6VOF/s8RPa85Itad30Id
+ xL1cnN2gzlyum0zR17UczJrciVNyckVTLJqYjqEJhC0n8HhtPLSlo1HSDgg/yl6Awl9F
+ HIMGtFBxJwVcogpAdDonUpVJQcl5AZvDeoyWBp2lzfrLan5Bp/Wg9Iy2R7ZWQaAX7smr
+ SD7UVtZ1TXyDeVa5kXRQBGyKVT/IV1t2ezsjOJtzGzhLIzaH2E2YlwfP0pKoYHZ9+JRW
+ qxTyNgpD/kVSG/sKsTMfxPNDYDTh2Lc/y1l6wI/zlkXqv1AXNuQvFmd3FXPQPwcP9l4q
+ aCkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117023; x=1734721823;
+ d=1e100.net; s=20230601; t=1734118273; x=1734723073;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4K+Ow/kpxla1hHfSMb1r5BWBj60XilhZFUT+PuNLeCM=;
- b=b9PNUvzlbi1/IjVjUSBHzxyY8Jh85zznaol8fiStpqAP0q3q9xnTNAZnsxoBQ2U8Ug
- WWlX9mD4i2sK1mNKJci0lOtnCS5k1vKwWwc0Yexu6HxhlNut6wDEeeJ3AKkZJtJe/0UP
- 2TBq4zkXAkFzC5DDOQ9ZMAzwSihTleun4ahvL49BQPf0eQCurDunQe6O0gs0hVM3faXT
- lI4yRyvCGwOWmnmyvtMJAeJ0mGWgORd5gjiVMLcs6wlDL3CM7liF35T97gCE5q5soL6c
- Ozs00Zsn3ClwT+qC+D9GZ76KzLcKCf+aPrVXnuGkVc6rGAjc8KGJSVGYefwpicc0YIWo
- pBog==
-X-Gm-Message-State: AOJu0YxCwxpvT9JUTQ52FHZHkD+QaPVmCuaum71kURKoFFoejg8PP6bH
- iV67mQboWTUtar3LQPljCYqiUGk68aYouoBPOhM8isiV7tHx3MbUffitLaHvids5RJZUw1coG0I
- 4EK0qJaiZ
-X-Gm-Gg: ASbGnct/Ntc+4k36BGxP97MR37UMqyIi3/zXojdhVSuoSsYeDwYUIcLUwiKAwVgdX52
- 5GfKw9SvRN607+X2GE9R7iQqrLxVHrEil86W2PF0LaNRYDXGsjc5vc6NagU50AMymo6IB5sHF/r
- yNq2C+vo/DcVWo/Pkd5WYH19dhrJQuSMeLaP+TVthX2MuozjaxlALysBaCmg92MkfHwyzt6NYk6
- FWpMKs7j0Uy+emyLxgThggElKGk5JsE9+hp41nvsbX5Nc0nFjWa46L+Y/oAq9AT
-X-Google-Smtp-Source: AGHT+IFZH/Qbth4WBfUBFT9Z4/ZH2zjE99ESl/+3I1fhz0CO0ozfa3EVmFNd2aZBP2ZrZzKbflvUVg==
-X-Received: by 2002:a05:6830:258c:b0:710:fef4:3c92 with SMTP id
- 46e09a7af769-71e3ba26862mr2771330a34.21.1734117023633; 
- Fri, 13 Dec 2024 11:10:23 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.10.22
+ bh=+4rdkJduZkbXz6JmK4QEKv1jKAaYDuIzC71PHld//xk=;
+ b=PwLEgCHKMRjYDw/ioRqWZQwUqdEKafc1GLsg5ieCOh6rQmsNf6eMTBu2cTWKD97eV/
+ t4D4rd41t4S6TtEkZhWRyijOg7THxqXbnY7P5QgibcEt0CKYV6pG1qVlMUN5N1Py9mLx
+ /1ackE9b8c2BQ00dPSFnlevqNi5WnP1yUhNrAq14tlM+7d4VPsrlzYSQBqBX9934Y3bJ
+ 2unQYz8zvMQJU0Ol0PSUR6HmehylAv8L93xQa9umlxd9QvPa19sQjskv7Z7FI40IMkUW
+ Y2eAmmbB1ST3VrpTlJikyYqSDL7Dw/nwHKHpmr6QuWX0zcL8thUu9Gs/KEAjBYbYDj1+
+ lfNg==
+X-Gm-Message-State: AOJu0YwjhaG0xFXWbyCJeLJ/9Ocr/mNSpUFTc3r3NcMJQ4iP+ik19IRX
+ FtrsvyJBsu0TRvct5VfuRo+AaEZ4rkKgpAfTzftb1TMkj0SBHd6e38jjbWC22Rx5nt+Uf0mRkym
+ nuxHSWqiy
+X-Gm-Gg: ASbGncvuXkjtft6JpERa/h8L0BddCRRvrOR7PrSky86/zrMbUhDn+hC9u1nbzAsZ61D
+ s/tE6dF03czQY0A3tYTo4AtSUYJhcUK2gpJkyynq2RckDNMncyBzgVrFCpvnSg9IpR3tZWcQRVY
+ Ak80bdGla+WAaC2nNJ/wqIwELw7+2L6PMKck8zSpyXz9gJyYtAfs8h7WwyO4jQYiCP6LIt4nKsr
+ xzIndfcndrrBkyl3WNmqge5khxOsrs1yRiR7ZtCXDU294DHLOE5e9+5NpafqQ==
+X-Google-Smtp-Source: AGHT+IGZaw7fo6ASbUtjikNIXECL567eaI66j1GW7LxGSht1RWaflHkAodf93EpmqmK03VfVVYaaWw==
+X-Received: by 2002:a05:6512:1288:b0:540:3572:bb6 with SMTP id
+ 2adb3069b0e04-54090557f0emr1423299e87.15.1734118272736; 
+ Fri, 13 Dec 2024 11:31:12 -0800 (PST)
+Received: from stoup.. ([91.209.212.67]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-54120c204ebsm6723e87.250.2024.12.13.11.31.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:10:23 -0800 (PST)
+ Fri, 13 Dec 2024 11:31:12 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, Corey Minyard <cminyard@mvista.com>,
- Patrick Leis <venture@google.com>,
- qemu-arm@nongnu.org (open list:ASPEED BMCs)
-Subject: [PATCH 28/71] hw/i2c: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:02 -0600
-Message-ID: <20241213190750.2513964-33-richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH 70/71] tests/unit: Constify all Property
+Date: Fri, 13 Dec 2024 13:31:03 -0600
+Message-ID: <20241213193104.2515757-1-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x12f.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,73 +101,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/i2c/aspeed_i2c.c      | 4 ++--
- hw/i2c/core.c            | 2 +-
- hw/i2c/i2c_mux_pca954x.c | 2 +-
- hw/i2c/omap_i2c.c        | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ tests/unit/test-qdev-global-props.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 3ae22cb052..2ea68c3090 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1258,7 +1258,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static Property aspeed_i2c_properties[] = {
-+static const Property aspeed_i2c_properties[] = {
-     DEFINE_PROP_LINK("dram", AspeedI2CState, dram_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-     DEFINE_PROP_END_OF_LIST(),
-@@ -1446,7 +1446,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr_pool);
- }
- 
--static Property aspeed_i2c_bus_properties[] = {
-+static const Property aspeed_i2c_bus_properties[] = {
-     DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
-     DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
-                      AspeedI2CState *),
-diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-index 4cf30b2c86..4118d3db50 100644
---- a/hw/i2c/core.c
-+++ b/hw/i2c/core.c
-@@ -18,7 +18,7 @@
- 
- #define I2C_BROADCAST 0x00
- 
--static Property i2c_props[] = {
-+static const Property i2c_props[] = {
-     DEFINE_PROP_UINT8("address", struct I2CSlave, address, 0),
-     DEFINE_PROP_END_OF_LIST(),
+diff --git a/tests/unit/test-qdev-global-props.c b/tests/unit/test-qdev-global-props.c
+index c8862cac5f..1eb95d2429 100644
+--- a/tests/unit/test-qdev-global-props.c
++++ b/tests/unit/test-qdev-global-props.c
+@@ -46,7 +46,7 @@ struct MyType {
+     uint32_t prop2;
  };
-diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-index db5db956a6..80c570fd10 100644
---- a/hw/i2c/i2c_mux_pca954x.c
-+++ b/hw/i2c/i2c_mux_pca954x.c
-@@ -211,7 +211,7 @@ static void pca954x_init(Object *obj)
-     }
- }
  
--static Property pca954x_props[] = {
-+static const Property pca954x_props[] = {
-     DEFINE_PROP_STRING("name", Pca954xState, name),
+-static Property static_props[] = {
++static const Property static_props[] = {
+     DEFINE_PROP_UINT32("prop1", MyType, prop1, PROP_DEFAULT),
+     DEFINE_PROP_UINT32("prop2", MyType, prop2, PROP_DEFAULT),
      DEFINE_PROP_END_OF_LIST()
- };
-diff --git a/hw/i2c/omap_i2c.c b/hw/i2c/omap_i2c.c
-index e78505ebdd..172df135f5 100644
---- a/hw/i2c/omap_i2c.c
-+++ b/hw/i2c/omap_i2c.c
-@@ -511,7 +511,7 @@ void omap_i2c_set_fclk(OMAPI2CState *i2c, omap_clk clk)
-     i2c->fclk = clk;
- }
- 
--static Property omap_i2c_properties[] = {
-+static const Property omap_i2c_properties[] = {
-     DEFINE_PROP_UINT8("revision", OMAPI2CState, revision, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
 -- 
 2.43.0
 
