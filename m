@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 590B7E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0248DE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:41:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9YQ-00028n-6u; Fri, 13 Dec 2024 12:34:18 -0500
+	id 1tM9XD-000749-5C; Fri, 13 Dec 2024 12:33:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9XH-00078k-H4
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:08 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ id 1tM9X5-0006zX-Hd
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:57 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9XC-0001Y6-Mo
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:07 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4362bae4d7dso6413825e9.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:02 -0800 (PST)
+ id 1tM9X1-0001Uz-SH
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:54 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-432d86a3085so13676895e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:32:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111181; x=1734715981; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111170; x=1734715970; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=D//O6XDkX742b9GaodjaS3JMRSMmgDBdq+AzZ965Trg=;
- b=vx9cjzc3URtWNSy24vikh6vvc1giMAVdZaao3eXUJ4WIRDYeOE4qu4TW+Pq5blZL0I
- pSXaX9fdPe8N8TnJeXA4XtsKeD7O0tW4AFg3m7Xq4V+mkG5hHopmGjpsAZ9F1oSsmNMn
- 3ZlkaCrU3Fx5IkMBEpcjmTjdTPxJIgMtXG/82PYfNgH4F91VfkTMkkKpOrU9PznVgMo1
- txw/2pabc71JnjVBCgJ3lty7WOB/12GioCuKO1Lsc1deAnZPX1gWYVX+BlEW3jN3+QQC
- jqfhZo2Wv0cT/Ej6hFn9EEMtFAsmRPTpXbVjfJLtXhp7N5YQUae/s8VgGBnEgmIUC5gd
- I2fQ==
+ :reply-to; bh=BZjeQ+Sa4YO/ce7b2afs7u8lMwFiQyyn1m0P7q0dhTc=;
+ b=o3AA/S2NxWnPWvPx0RMFuPAgiPywv72pDx1YY5iR99+33d6VYj+i5mfU0bMP8uxUcr
+ r6lcIB4yQyKedzXOnWijNF3O4+oVGn6zixxaR9U2c88JXhRPy4kH4luz9oSKkz7GQBrp
+ uUR0N+/FigqOVpeF4pY41FRQMVywY6dMwkoaSnLxSM1qIfblkrMzzgk+BpEKRaelH8sN
+ FwG++hYscls2jTiAzgp8BJfv7cerv7GFZIltDLQx3drKMXTWYH8+Z3lpPyA9ytKersRw
+ sTHtvhGxDxkSFqg7oAzNmMgHmAx5Owu7EOUmbUySGNUQLAOBV+clKF+TuaO9yWCvFhff
+ UNng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111181; x=1734715981;
+ d=1e100.net; s=20230601; t=1734111170; x=1734715970;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D//O6XDkX742b9GaodjaS3JMRSMmgDBdq+AzZ965Trg=;
- b=AympbkLWxnLNN8EASEuHv2LEIRxjKxFkclXd48ttqADNlMNgDXCb7BV/LsQvRWeHii
- WrLkvyqM/6nkUAaiZ7I8DZAFBwIQNTq/p/SZayD24TshZY1kNZbZtZ+I4rvvGanCKapm
- eOBSKeEVzXAWj8yRyD04b8G22lynpsLFQoagK9k4ePNnT1Ro+1eRmz4CcwFMm+5AgbhI
- eLeU+w4cWaOFV/638DVcI+OcuWGtnSgdZqqUzYilZ0ZF3BUppKYTinWgiWvvYAdfDBr5
- 54kN4OuTW2a/iSHI4yCGys8TDoaJ6C/SDMm+4AA3X6844L/xFY63/7wN8fb1PFKX4/Gn
- e8tg==
-X-Gm-Message-State: AOJu0YzZNhhM4nri8UgO4Luu1wy+ouVnMePQQUFAykAMdx9mI0hsNVK+
- /4SSQAuM82Z07SXMQu6G6484FNss8XjFr7GTOTLXsbrUOfhWAREuhjAWwW68ag2cSWdybWZPMIt
- A
-X-Gm-Gg: ASbGnct9j7ELbxcX6gOv5V4Hk2a6PxZS7Nqxya5eOEytu384MVN6poUmJ1bkLmPqABW
- 7dqeG3KHBjHWiic7dBqiluMjxwoIaIbciLtQtJOVDKAVLO8ftC4VEMastCDxGcIlBUUumGzMZfR
- 3TXe3Fa06Qu7tDtgroxtL70hD2WF2OpWCXvkYv3z/PinEWYsjR5/RDEqnTyur0fPz5fYzqFUnr0
- JpMQinTEB4B8gj5RlCKPJU9Hzb4Z0fTsNQgnal5Dtqs+q6kuNRUzQIOY9fCrQ==
-X-Google-Smtp-Source: AGHT+IFohOmZUQrHrp9zJjIBC6Zn35FeP6J1ejS1GmtncvIbP5QzbGPyIcWA3LQQfc4vF/8z7lAdTQ==
-X-Received: by 2002:a05:600c:1906:b0:434:eb86:aeca with SMTP id
- 5b1f17b1804b1-4362aa42b9bmr41144875e9.10.1734111181005; 
- Fri, 13 Dec 2024 09:33:01 -0800 (PST)
+ bh=BZjeQ+Sa4YO/ce7b2afs7u8lMwFiQyyn1m0P7q0dhTc=;
+ b=jOoHjEsSKHnUEIw3iqA9Rho/sdbHguNUwKgiqQjbakq8S7ckYN/yjYLPyhiu4PHRKG
+ R1Lj9QWuOT2mSHFN0rY4/LqlzItpdx5ySZ8em6bXxdys3+TKHOsOKCPdZMTy3fO+DzfB
+ NFr8x1g+Op3IgsTrqnvDk2oaZCrrze+xUvPCXvba82oaqAostKjEplaeDTP9Lqb40A6k
+ aHn857jfDYB+XzMvVZxK9KpEObfSwuFVfqNQCCl39nv8U0eYsRli6jIWkk+dvOxE2ngx
+ GcoO2oErp1gqP84huxKQfKRSxeON4X1yF+SM+jU8nYdMm76+OXs04Ejz7tG3kQo4aeB0
+ YMmw==
+X-Gm-Message-State: AOJu0YzzpN2ZzrJGrX8zEjVbJksd7uyVAQNRj3mJvXTA/xvkEf8+pSmE
+ QcbjJjcDWmCjHzeoExO7mdw3iFko0Sxv6EChIber3ZCBpUK1FrNK2wCKc9Awnd/8aC1Cg4PpuDV
+ /
+X-Gm-Gg: ASbGncsZZE1WUGrAuwv7yQHPBVOkUx4o7YHsmxj+ZNyFAfmvMCqxrgyHjEP4NiUYktv
+ bEqjfMSbsEyqM44c91b47xFT9WP4ckC5FEO72ryGduuNfcyFm5UIMGq/+tK+9N7U4JgM05owcGp
+ wy4dckDk5OT3/Qf2qds2wNCD6Pt42I4t6X8eXsvAkQL6a3ziWew5ylW+z/ubzjVpipHzbu+YxdH
+ C7jduWJup0ByklUoLpPiNwgV3JrxVr2IhbhI84jdASRkNSDnJLNpIxjjmHnsw==
+X-Google-Smtp-Source: AGHT+IEIIBegM07MgD4yjS9MzBkPv3TlgJtVXczaIhM0jas9EQUu7TmZLiqFTgHEBTUsbzTVAV549A==
+X-Received: by 2002:a5d:64a1:0:b0:385:df73:2f3a with SMTP id
+ ffacd0b85a97d-38880ac7440mr2869787f8f.14.1734111169725; 
+ Fri, 13 Dec 2024 09:32:49 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.00
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.32.48
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:00 -0800 (PST)
+ Fri, 13 Dec 2024 09:32:48 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 28/85] target/arm: Convert FRINT[NPMSAXI] (scalar) to decodetree
-Date: Fri, 13 Dec 2024 17:31:32 +0000
-Message-Id: <20241213173229.3308926-29-peter.maydell@linaro.org>
+Subject: [PULL 17/85] target/arm: Convert SETF8, SETF16 to decodetree
+Date: Fri, 13 Dec 2024 17:31:21 +0000
+Message-Id: <20241213173229.3308926-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,215 +99,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Remove handle_fp_1src_half as these were the last insns
-decoded by that function.
-
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211163036.2297116-29-richard.henderson@linaro.org
+Message-id: 20241211163036.2297116-18-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode      |   8 +++
- target/arm/tcg/translate-a64.c | 117 +++++++++++----------------------
- 2 files changed, 46 insertions(+), 79 deletions(-)
+ target/arm/tcg/a64.decode      |  4 +++
+ target/arm/tcg/translate-a64.c | 48 +++++-----------------------------
+ 2 files changed, 11 insertions(+), 41 deletions(-)
 
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 3b1e8e07760..9d2f099c9ca 100644
+index 454494742e6..ae2c6831d77 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -1329,6 +1329,14 @@ FABS_s          00011110 .. 1 000001 10000 ..... .....      @rr_hsd
- FNEG_s          00011110 .. 1 000010 10000 ..... .....      @rr_hsd
- FSQRT_s         00011110 .. 1 000011 10000 ..... .....      @rr_hsd
+@@ -757,6 +757,10 @@ SBCS            . 11 11010000 ..... 000000 ..... .....  @rrr_sf
+ RMIF            1 01 11010000 imm:6 00001 rn:5 0 mask:4
  
-+FRINTN_s        00011110 .. 1 001000 10000 ..... .....      @rr_hsd
-+FRINTP_s        00011110 .. 1 001001 10000 ..... .....      @rr_hsd
-+FRINTM_s        00011110 .. 1 001010 10000 ..... .....      @rr_hsd
-+FRINTZ_s        00011110 .. 1 001011 10000 ..... .....      @rr_hsd
-+FRINTA_s        00011110 .. 1 001100 10000 ..... .....      @rr_hsd
-+FRINTX_s        00011110 .. 1 001110 10000 ..... .....      @rr_hsd
-+FRINTI_s        00011110 .. 1 001111 10000 ..... .....      @rr_hsd
+ # Evaluate into flags
 +
- # Floating-point Immediate
- 
- FMOVI_s         0001 1110 .. 1 imm:8 100 00000 rd:5         esz=%esz_hsd
++SETF8           0 01 11010000 00000 000010 rn:5 01101
++SETF16          0 01 11010000 00000 010010 rn:5 01101
++
+ # Conditional compare (regster)
+ # Conditional compare (immediate)
+ # Conditional select
 diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index f3989246f9c..5a347bece37 100644
+index 1af41e22eb5..774689641d0 100644
 --- a/target/arm/tcg/translate-a64.c
 +++ b/target/arm/tcg/translate-a64.c
-@@ -8401,46 +8401,24 @@ static const FPScalar1 f_scalar_fsqrt = {
- };
- TRANS(FSQRT_s, do_fp1_scalar, a, &f_scalar_fsqrt, -1)
+@@ -8077,38 +8077,21 @@ static bool trans_RMIF(DisasContext *s, arg_RMIF *a)
+     return true;
+ }
  
--/* Floating-point data-processing (1 source) - half precision */
--static void handle_fp_1src_half(DisasContext *s, int opcode, int rd, int rn)
--{
--    TCGv_ptr fpst = NULL;
--    TCGv_i32 tcg_op = read_fp_hreg(s, rn);
--    TCGv_i32 tcg_res = tcg_temp_new_i32();
-+static const FPScalar1 f_scalar_frint = {
-+    gen_helper_advsimd_rinth,
-+    gen_helper_rints,
-+    gen_helper_rintd,
-+};
-+TRANS(FRINTN_s, do_fp1_scalar, a, &f_scalar_frint, FPROUNDING_TIEEVEN)
-+TRANS(FRINTP_s, do_fp1_scalar, a, &f_scalar_frint, FPROUNDING_POSINF)
-+TRANS(FRINTM_s, do_fp1_scalar, a, &f_scalar_frint, FPROUNDING_NEGINF)
-+TRANS(FRINTZ_s, do_fp1_scalar, a, &f_scalar_frint, FPROUNDING_ZERO)
-+TRANS(FRINTA_s, do_fp1_scalar, a, &f_scalar_frint, FPROUNDING_TIEAWAY)
-+TRANS(FRINTI_s, do_fp1_scalar, a, &f_scalar_frint, -1)
+-/*
+- * Evaluate into flags
+- *  31 30 29                21        15   14        10      5  4      0
+- * +--+--+--+-----------------+---------+----+---------+------+--+------+
+- * |sf|op| S| 1 1 0 1 0 0 0 0 | opcode2 | sz | 0 0 1 0 |  Rn  |o3| mask |
+- * +--+--+--+-----------------+---------+----+---------+------+--+------+
+- */
+-static void disas_evaluate_into_flags(DisasContext *s, uint32_t insn)
++static bool do_setf(DisasContext *s, int rn, int shift)
+ {
+-    int o3_mask = extract32(insn, 0, 5);
+-    int rn = extract32(insn, 5, 5);
+-    int o2 = extract32(insn, 15, 6);
+-    int sz = extract32(insn, 14, 1);
+-    int sf_op_s = extract32(insn, 29, 3);
+-    TCGv_i32 tmp;
+-    int shift;
++    TCGv_i32 tmp = tcg_temp_new_i32();
  
--    switch (opcode) {
--    case 0x8: /* FRINTN */
--    case 0x9: /* FRINTP */
--    case 0xa: /* FRINTM */
--    case 0xb: /* FRINTZ */
--    case 0xc: /* FRINTA */
--    {
--        TCGv_i32 tcg_rmode;
--
--        fpst = fpstatus_ptr(FPST_FPCR_F16);
--        tcg_rmode = gen_set_rmode(opcode & 7, fpst);
--        gen_helper_advsimd_rinth(tcg_res, tcg_op, fpst);
--        gen_restore_rmode(tcg_rmode, fpst);
--        break;
+-    if (sf_op_s != 1 || o2 != 0 || o3_mask != 0xd ||
+-        !dc_isar_feature(aa64_condm_4, s)) {
+-        unallocated_encoding(s);
+-        return;
 -    }
--    case 0xe: /* FRINTX */
--        fpst = fpstatus_ptr(FPST_FPCR_F16);
--        gen_helper_advsimd_rinth_exact(tcg_res, tcg_op, fpst);
--        break;
--    case 0xf: /* FRINTI */
--        fpst = fpstatus_ptr(FPST_FPCR_F16);
--        gen_helper_advsimd_rinth(tcg_res, tcg_op, fpst);
--        break;
--    default:
--    case 0x0: /* FMOV */
--    case 0x1: /* FABS */
--    case 0x2: /* FNEG */
--    case 0x3: /* FSQRT */
--        g_assert_not_reached();
--    }
+-    shift = sz ? 16 : 24;  /* SETF16 or SETF8 */
 -
--    write_fp_sreg(s, rd, tcg_res);
--}
-+static const FPScalar1 f_scalar_frintx = {
-+    gen_helper_advsimd_rinth_exact,
-+    gen_helper_rints_exact,
-+    gen_helper_rintd_exact,
-+};
-+TRANS(FRINTX_s, do_fp1_scalar, a, &f_scalar_frintx, -1)
+-    tmp = tcg_temp_new_i32();
+     tcg_gen_extrl_i64_i32(tmp, cpu_reg(s, rn));
+     tcg_gen_shli_i32(cpu_NF, tmp, shift);
+     tcg_gen_shli_i32(cpu_VF, tmp, shift - 1);
+     tcg_gen_mov_i32(cpu_ZF, cpu_NF);
+     tcg_gen_xor_i32(cpu_VF, cpu_VF, cpu_NF);
++    return true;
+ }
  
- /* Floating-point data-processing (1 source) - single precision */
- static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-@@ -8457,20 +8435,6 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-     case 0x6: /* BFCVT */
-         gen_fpst = gen_helper_bfcvt;
-         break;
--    case 0x8: /* FRINTN */
--    case 0x9: /* FRINTP */
--    case 0xa: /* FRINTM */
--    case 0xb: /* FRINTZ */
--    case 0xc: /* FRINTA */
--        rmode = opcode & 7;
--        gen_fpst = gen_helper_rints;
--        break;
--    case 0xe: /* FRINTX */
--        gen_fpst = gen_helper_rints_exact;
--        break;
--    case 0xf: /* FRINTI */
--        gen_fpst = gen_helper_rints;
--        break;
-     case 0x10: /* FRINT32Z */
-         rmode = FPROUNDING_ZERO;
-         gen_fpst = gen_helper_frint32_s;
-@@ -8490,6 +8454,13 @@ static void handle_fp_1src_single(DisasContext *s, int opcode, int rd, int rn)
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-     case 0x3: /* FSQRT */
-+    case 0x8: /* FRINTN */
-+    case 0x9: /* FRINTP */
-+    case 0xa: /* FRINTM */
-+    case 0xb: /* FRINTZ */
-+    case 0xc: /* FRINTA */
-+    case 0xe: /* FRINTX */
-+    case 0xf: /* FRINTI */
-         g_assert_not_reached();
++TRANS_FEAT(SETF8, aa64_condm_4, do_setf, a->rn, 24)
++TRANS_FEAT(SETF16, aa64_condm_4, do_setf, a->rn, 16)
++
+ /* Conditional compare (immediate / register)
+  *  31 30 29 28 27 26 25 24 23 22 21  20    16 15  12  11  10  9   5  4 3   0
+  * +--+--+--+------------------------+--------+------+----+--+------+--+-----+
+@@ -8277,30 +8260,12 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+ {
+     int op1 = extract32(insn, 28, 1);
+     int op2 = extract32(insn, 21, 4);
+-    int op3 = extract32(insn, 10, 6);
+ 
+     if (!op1) {
+         goto do_unallocated;
      }
  
-@@ -8517,20 +8488,6 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
-     tcg_res = tcg_temp_new_i64();
- 
-     switch (opcode) {
--    case 0x8: /* FRINTN */
--    case 0x9: /* FRINTP */
--    case 0xa: /* FRINTM */
--    case 0xb: /* FRINTZ */
--    case 0xc: /* FRINTA */
--        rmode = opcode & 7;
--        gen_fpst = gen_helper_rintd;
--        break;
--    case 0xe: /* FRINTX */
--        gen_fpst = gen_helper_rintd_exact;
--        break;
--    case 0xf: /* FRINTI */
--        gen_fpst = gen_helper_rintd;
--        break;
-     case 0x10: /* FRINT32Z */
-         rmode = FPROUNDING_ZERO;
-         gen_fpst = gen_helper_frint32_d;
-@@ -8550,6 +8507,13 @@ static void handle_fp_1src_double(DisasContext *s, int opcode, int rd, int rn)
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-     case 0x3: /* FSQRT */
-+    case 0x8: /* FRINTN */
-+    case 0x9: /* FRINTP */
-+    case 0xa: /* FRINTM */
-+    case 0xb: /* FRINTZ */
-+    case 0xc: /* FRINTA */
-+    case 0xe: /* FRINTX */
-+    case 0xf: /* FRINTI */
-         g_assert_not_reached();
-     }
- 
-@@ -8668,9 +8632,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
-         if (type > 1 || !dc_isar_feature(aa64_frint, s)) {
-             goto do_unallocated;
-         }
--        /* fall through */
--    case 0x8 ... 0xc:
--    case 0xe ... 0xf:
-         /* 32-to-32 and 64-to-64 ops */
-         switch (type) {
-         case 0:
-@@ -8686,15 +8647,6 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
-             handle_fp_1src_double(s, opcode, rd, rn);
-             break;
-         case 3:
--            if (!dc_isar_feature(aa64_fp16, s)) {
--                goto do_unallocated;
--            }
--
--            if (!fp_access_check(s)) {
--                return;
--            }
--            handle_fp_1src_half(s, opcode, rd, rn);
+     switch (op2) {
+-    case 0x0:
+-        switch (op3) {
+-        case 0x02: /* Evaluate into flags */
+-        case 0x12:
+-        case 0x22:
+-        case 0x32:
+-            disas_evaluate_into_flags(s, insn);
 -            break;
-         default:
-             goto do_unallocated;
-         }
-@@ -8722,6 +8674,13 @@ static void disas_fp_1src(DisasContext *s, uint32_t insn)
-     case 0x1: /* FABS */
-     case 0x2: /* FNEG */
-     case 0x3: /* FSQRT */
-+    case 0x8: /* FRINTN */
-+    case 0x9: /* FRINTP */
-+    case 0xa: /* FRINTM */
-+    case 0xb: /* FRINTZ */
-+    case 0xc: /* FRINTA */
-+    case 0xe: /* FRINTX */
-+    case 0xf: /* FRINTI */
-         unallocated_encoding(s);
+-
+-        default:
+-        case 0x00: /* Add/subtract (with carry) */
+-        case 0x01: /* Rotate right into flags */
+-        case 0x21:
+-            goto do_unallocated;
+-        }
+-        break;
+-
+     case 0x2: /* Conditional compare */
+         disas_cc(s, insn); /* both imm and reg forms */
          break;
-     }
+@@ -8311,6 +8276,7 @@ static void disas_data_proc_reg(DisasContext *s, uint32_t insn)
+ 
+     default:
+     do_unallocated:
++    case 0x0:
+     case 0x6: /* Data-processing */
+     case 0x8 ... 0xf: /* (3 source) */
+         unallocated_encoding(s);
 -- 
 2.34.1
 
