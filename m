@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21729E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 03:13:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54055E7716A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 03:13:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLw6Q-0001oO-KP; Thu, 12 Dec 2024 22:12:31 -0500
+	id 1tLw6Z-0001r7-B3; Thu, 12 Dec 2024 22:12:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLw6N-0001nM-4K; Thu, 12 Dec 2024 22:12:27 -0500
+ id 1tLw6X-0001qL-1G; Thu, 12 Dec 2024 22:12:37 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tLw6E-0002gT-UL; Thu, 12 Dec 2024 22:12:26 -0500
+ id 1tLw6V-0002gT-Ai; Thu, 12 Dec 2024 22:12:36 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Fri, 13 Dec
@@ -30,10 +30,13 @@ To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Bin Meng
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v2 0/2] sd:sdhci Fix data transfer did not complete
-Date: Fri, 13 Dec 2024 11:12:03 +0800
-Message-ID: <20241213031205.641009-1-jamin_lin@aspeedtech.com>
+Subject: [PATCH v2 2/2] hw/sd/sdhci: Fix data transfer did not complete if
+ data size is bigger than SDMA Buffer Boundary
+Date: Fri, 13 Dec 2024 11:12:05 +0800
+Message-ID: <20241213031205.641009-3-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20241213031205.641009-1-jamin_lin@aspeedtech.com>
+References: <20241213031205.641009-1-jamin_lin@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -62,25 +65,78 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v1:
-1. Fix boundary_count overflow
-2. Fix data transfer did not complete if data size is bigger then SDMA Buffer Boundary
+According to the design of sdhci_sdma_transfer_multi_blocks, if the
+"s->blkcnt * 512" was bigger than the SDMA Buffer boundary, it break the
+while loop of data transfer and set SDHC_NISEN_DMA in the normal interrupt
+status to notify the firmware that this SDMA boundary buffer Transfer Complete
+and firmware should set the system address of the next SDMA boundary buffer
+for the remained data transfer.
 
-v2:
-1. fix typo
-2. update to none RFC patch
-3. check the most upper byte of SDMA System Address Register (0x00) is written,
-   then restarts SDMA data transfer.
+However, after firmware set the system address of the next SDMA boundary buffer
+in the SDMA System Address Register(0x00), SDHCI model did not restart the data
+transfer, again. Finally, firmware break the data transfer because firmware
+did not receive the either "DMA Interrupt" or "Transfer Complete Interrupt"
+from SDHCI model.
 
-Jamin Lin (2):
-  hw/sd/sdhci: Fix boundary_count overflow in
-    sdhci_sdma_transfer_multi_blocks
-  hw/sd/sdhci: Fix data transfer did not complete if data size is bigger
-    than SDMA Buffer Boundary
+Error log from u-boot
+```
+sdhci_transfer_data: Transfer data timeout
+ ** fs_devread read error - block
+```
 
- hw/sd/sdhci.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+According to the following mention from SDMA System Address Register of SDHCI
+spec,
+'''
+This register contains the system memory address for an SDMA transfer in
+32-bit addressing mode. When the Host Controller stops an SDMA transfer,
+this register shall point to the system address of the next contiguous data
+position.
+It can be accessed only if no transaction is executing (i.e., after a transaction
+has stopped). Reading this register during SDMA transfers may return an
+invalid value.
+The Host Driver shall initialize this register before starting an SDMA
+transaction.
+After SDMA has stopped, the next system address of the next contiguous
+data position can be read from this register.
+The SDMA transfer waits at the every boundary specified by the SDMA
+Buffer Boundary in the Block Size register. The Host Controller generates
+DMA Interrupt to request the Host Driver to update this register. The Host
+Driver sets the next system address of the next data position to this register.
+When the most upper byte of this register (003h) is written, the Host Controller
+restarts the SDMA transfer.
+''',
 
+restart the data transfer if firmware writes the most upper byte of SDMA System
+Address, s->blkcnt is bigger than 0 and SDHCI is in the data transfer state.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+---
+ hw/sd/sdhci.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index f1a329fdaf..a632177735 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1180,6 +1180,18 @@ sdhci_write(void *opaque, hwaddr offset, uint64_t val, unsigned size)
+                     sdhci_sdma_transfer_single_block(s);
+                 }
+             }
++        } else if (TRANSFERRING_DATA(s->prnsts)) {
++            s->sdmasysad = (s->sdmasysad & mask) | value;
++            MASKED_WRITE(s->sdmasysad, mask, value);
++            /* restarts the SDMA transfer if the most upper byte is written */
++            if ((s->sdmasysad & 0xFF000000) && s->blkcnt &&
++                SDHC_DMA_TYPE(s->hostctl1) == SDHC_CTRL_SDMA) {
++                if (s->trnmod & SDHC_TRNS_MULTI) {
++                    sdhci_sdma_transfer_multi_blocks(s);
++                } else {
++                    sdhci_sdma_transfer_single_block(s);
++                }
++            }
+         }
+         break;
+     case SDHC_BLKSIZE:
 -- 
 2.34.1
 
