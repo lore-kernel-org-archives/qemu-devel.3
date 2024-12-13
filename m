@@ -4,105 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE55E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 18:50:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A9CE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 18:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMAiq-0005oD-Pq; Fri, 13 Dec 2024 13:49:08 -0500
+	id 1tMAoF-00010l-M2; Fri, 13 Dec 2024 13:54:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tMAio-0005n4-Oj; Fri, 13 Dec 2024 13:49:06 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMAoA-0000zt-5g
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 13:54:38 -0500
+Received: from mail-ot1-x335.google.com ([2607:f8b0:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tMAij-0001Hu-7S; Fri, 13 Dec 2024 13:49:06 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id BB1361F387;
- Fri, 13 Dec 2024 18:48:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734115738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oHoUgQ6+kCXnKXGlj6FBXb+XJKY1m7l4AWPkOyOUO+c=;
- b=g3CYPbPFF4DDf4JJKpIFJSpq3z1+/urBWBO0MsF2o87oOFDF9qDBdHi3KEZeWtAWKWjvLR
- 43ZsYwtzxpa3VuAiDMDdrcJ/odpHygsiLT8uUFq5IQE3YJP6oLH2TmCG8+d5ZfqR6LqbFt
- ymQH6I7H68F7iMwQdLO2jWIeuM8zsG0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734115738;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oHoUgQ6+kCXnKXGlj6FBXb+XJKY1m7l4AWPkOyOUO+c=;
- b=umYa4/cMYACKclBsSsbXlHZwA0AF3vr0LKPgbA7sLPZi0CcC556k/ia3Tlz4xWSqsw2oaA
- mP6kwRyUlpP4uoBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734115738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oHoUgQ6+kCXnKXGlj6FBXb+XJKY1m7l4AWPkOyOUO+c=;
- b=g3CYPbPFF4DDf4JJKpIFJSpq3z1+/urBWBO0MsF2o87oOFDF9qDBdHi3KEZeWtAWKWjvLR
- 43ZsYwtzxpa3VuAiDMDdrcJ/odpHygsiLT8uUFq5IQE3YJP6oLH2TmCG8+d5ZfqR6LqbFt
- ymQH6I7H68F7iMwQdLO2jWIeuM8zsG0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734115738;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=oHoUgQ6+kCXnKXGlj6FBXb+XJKY1m7l4AWPkOyOUO+c=;
- b=umYa4/cMYACKclBsSsbXlHZwA0AF3vr0LKPgbA7sLPZi0CcC556k/ia3Tlz4xWSqsw2oaA
- mP6kwRyUlpP4uoBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3E31313927;
- Fri, 13 Dec 2024 18:48:58 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id xK92AZqBXGcKegAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 13 Dec 2024 18:48:58 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Nabih Estefan <nabihestefan@google.com>,
- peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, lvivier@redhat.com,
- pbonzini@redhat.com, roqueh@google.com, venture@google.com, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] tests/qtest/sse-timer-test: Add watchdog reset to
- sse-timer test
-In-Reply-To: <f03adc63-5167-4982-90e6-70b65f0c90cc@redhat.com>
-References: <20241213002602.4181289-1-nabihestefan@google.com>
- <f03adc63-5167-4982-90e6-70b65f0c90cc@redhat.com>
-Date: Fri, 13 Dec 2024 15:48:54 -0300
-Message-ID: <87y10jctbd.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMAo7-0002lj-OH
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 13:54:37 -0500
+Received: by mail-ot1-x335.google.com with SMTP id
+ 46e09a7af769-71e2dccdb81so1194177a34.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 10:54:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734116073; x=1734720873; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sX0Yf0gF+ESVvKAXl3LC1Mv89Ckmh0JbyX7l3UT8Amk=;
+ b=Y/6RgH2g5bXio8HIAz9FJ+hzIN245aSUzipG6+oP2nbdMcHUY4z3WOQams6FHzAjMh
+ 78CV8yXKFdsoJRgANg8MNcWk0kuY27RdTfZ4RjE3qMtTQRFeJBrJmFjE0mXG2DG5h6gu
+ YPV1fbmXHkyTypoqYDdiw7uEd6BSUyGnuJb5rN4lDCkCrBjBvZD5dmL7ioliwZUt+j+M
+ 1+WmwTlEjUn9IUHnUs2XGriHOo4yOW9+YoAcwx1uaBqH08WhXt1aSgB5sBOtZxMKKfTh
+ GMaoN8fhYc0DTiCcA2EN6I/5kH92TitIlfqvZkqvz4SA3fPiDIAju0uDgXvr09isdXuZ
+ hw5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734116073; x=1734720873;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sX0Yf0gF+ESVvKAXl3LC1Mv89Ckmh0JbyX7l3UT8Amk=;
+ b=XAenX0hzM5k3v7m3RDu/zNMSDD86kQLQ5BRYXBFinqgXAnTv0wIdSVqPXJxOJjCdmE
+ 5D9HL9ac4gmjbBaiQYEs+ZVCyB7097gVOX1FMJ4E1YcU2dO0MZa+PKO/gDrYhAk+qR/0
+ /O6rVuocqMLOdDoEnWQ5h3x949WNdKN3Svs4Cng6TJdzZAgZ6U3LyJnOJEfndGRPp0uj
+ NVRMSBztOXV+Y7BnVyJcetJFiSXctzx0kCar+2a0u2k37lzrjcvlJOrlh0D8MIBXhl00
+ bV4NogkyTaQv5DBf0LSuzeaShHUTEhCIT0cfqga6ysZk4IEv/pHCimRxKlIwdtNlPVK9
+ Y4zg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWfYEeYR759m6+RvJyV4/PFGn2Lck1bJv7JNoLzV5ObbHMX9khsNF6z2BtbGScOoLJbPXIVcrI6LIvR@nongnu.org
+X-Gm-Message-State: AOJu0YwFttHwzGdgw/yJ+lM3lu+2MPYLV+g7az2uxQm2HNzRY9SZ9MAl
+ THZZ4xT2CTvt0feYRtX4l/WfRaovwSBk70Sx15xsLK8v2R+A1GBCHlvUJIl0u14=
+X-Gm-Gg: ASbGncs4zN1E3wSB3FNmB5ujn2P7vbMc0X2piqjSdnI3HPa0sRjvgbpSkQ9585YNr9i
+ hQC0QxsVLJcOlw2sBXNX//D9LmsCE6AK936GcZq+9FH7ejDPupWH+rB3c5WAOy0muQSrxtCH3Ad
+ ZsBe6U9f5ATzPPz8byIb24XpEixFka0/20ILYN2bZBDPttnWTTxmTSuD840Ta93X3N3FJfCz5V5
+ oWlFw4H1NafssxkWIGyoHxId/Nt4ZnHPFy4fm7NuYTVwtR1kldbtRMMMpxtrtFPnu0YePzOKQ==
+X-Google-Smtp-Source: AGHT+IF4dKwHvXJrm3Hl84mC/nXOh17iSh0DQhyW6yx4770ZOuC5Ozq9yk9MqBPSihyQNHwkmKn4sA==
+X-Received: by 2002:a05:6830:2aa7:b0:71e:1c5:4f87 with SMTP id
+ 46e09a7af769-71e3ba9bd60mr2209179a34.19.1734116073450; 
+ Fri, 13 Dec 2024 10:54:33 -0800 (PST)
+Received: from [172.20.4.119] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f33a6e1f19sm44425eaf.13.2024.12.13.10.54.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Dec 2024 10:54:32 -0800 (PST)
+Message-ID: <6659428f-1ebb-4e0b-bab8-3b4e2e703f70@linaro.org>
+Date: Fri, 13 Dec 2024 12:54:29 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[10];
- ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_EQ_ENVFROM(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- TO_DN_SOME(0.00)[]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc
+ structs
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
+References: <20241213182337.3343068-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241213182337.3343068-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::335;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,43 +103,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 12/13/24 12:23, Peter Maydell wrote:
+> In the GICv3 ITS model, we have a common coding pattern which has a
+> local C struct like "DTEntry dte", which is a C representation of an
+> in-guest-memory data structure, and we call a function such as
+> get_dte() to read guest memory and fill in the C struct.  These
+> functions to read in the struct sometimes have cases where they will
+> leave early and not fill in the whole struct (for instance get_dte()
+> will set "dte->valid = false" and nothing else for the case where it
+> is passed an entry_addr implying that there is no L2 table entry for
+> the DTE).  This then causes potential use of uninitialized memory
+> later, for instance when we call a trace event which prints all the
+> fields of the struct.  Sufficiently advanced compilers may produce
+> -Wmaybe-uninitialized warnings about this, especially if LTO is
+> enabled.
+> 
+> Rather than trying to carefully separate out these trace events into
+> "only the 'valid' field is initialized" and "all fields can be
+> printed", zero-init all the structs when we define them. None of
+> these structs are large (the biggest is 24 bytes) and having
+> consistent behaviour is less likely to be buggy.
+> 
+> Cc:qemu-stable@nongnu.org
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2718
+> Signed-off-by: Peter Maydell<peter.maydell@linaro.org>
+> ---
+>   hw/intc/arm_gicv3_its.c | 44 ++++++++++++++++++++---------------------
+>   1 file changed, 22 insertions(+), 22 deletions(-)
 
-> On 13/12/2024 01.26, Nabih Estefan wrote:
->> Recent CDMSK Watchdog changes (eff9dc5660fad3a610171c56a5ec3fada245e519)
->> updated the CDMSK APB Watchdog to not free run out of reset. That led to
->> this test failing since it never triggers the watchdog to start running.
->> No watchdog running means that the timer and counter in the test cannot
->> start, leading to failures in the assert statements throughout the test.
->> Adding a reset and enable of the watchdog to the reset function solves
->> this problem by enabling the watchdog and thus letting the timer and
->> counter run as expected
->> 
->> Also renaming the reset_counter_and_timer function since it now also
->> affects the watchdog.
->> 
->> To reproduce the failure at HEAD:
->> ./configure --target-list=arm-softmmu
->> make -j check-report-qtest-arm.junit.xml
->> 
->> Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-I don't see any failure with the sse-timer-test on master
-(83aaec1d5a). Is it supposed to be intermittent? Nabih, can you confirm
-whether this is the same issue Thomas has seen?
-
-> I think this fixes the problem that I was seeing on Travis-CI:
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2702
-
-I did see this^ issue, however, with Philippe's series [1] (and this
-patch doesn't fix it).
-
-Here's a CI job with both series applied:
-https://gitlab.com/farosas/qemu/-/jobs/8638126011
-
-1- https://lore.kernel.org/r/20241211233727.98923-2-philmd@linaro.org
-
-
-
+r~
 
