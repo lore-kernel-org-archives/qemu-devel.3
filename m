@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86546E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:57:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88438E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLuun-0008BO-6B; Thu, 12 Dec 2024 20:56:25 -0500
+	id 1tLuwX-0000Ps-In; Thu, 12 Dec 2024 20:58:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <binbin.wu@linux.intel.com>)
- id 1tLuul-0008BD-FW
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:56:23 -0500
-Received: from mgamail.intel.com ([192.198.163.8])
+ id 1tLuwW-0000PY-EW
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:58:12 -0500
+Received: from mgamail.intel.com ([192.198.163.9])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <binbin.wu@linux.intel.com>)
- id 1tLuui-0002dV-B2
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:56:23 -0500
+ id 1tLuwU-0002l3-Fk
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:58:12 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734054980; x=1765590980;
+ t=1734055090; x=1765591090;
  h=message-id:date:mime-version:subject:from:to:cc:
  references:in-reply-to:content-transfer-encoding;
- bh=NyAt7fLg31sOOP5MsQWn9EgGROvizgBib4DX+ww1UBw=;
- b=Inq3dy7Srygo0+aoZK78Fjo5PyAuPYjuaVkLGHQZ8VPc9lpPdynWn9bD
- JqpRsUQuprwO3wp4OnpKEm+Efuv0id77/MatvXkkZvTLCGJOdeIFFepGC
- px7vUyscuvOV1ZbiUANwsKtqn8jnGejQzTbqadglgrvfQPpSsNs3r7wXz
- F/IG8vx8kugRwapw4l/2ryOtwXFVc4LFs6KM/Ypg9mmkqLc88dWfkSd/3
- lhdjNBMeoGW63Mwzzeon4DrrSZTyq1ZI+hNAInfUIthFloC0RJWR91xP0
- +U2qQz07anoBqU54wLoddJ+oLmuIpW09P7Hfe6+0FGLN4Dw5Qs6vz38Eo Q==;
-X-CSE-ConnectionGUID: h/tlaA0sR6KfNvn+NExVlA==
-X-CSE-MsgGUID: VB9PQVbJQGu8PDeNVtiIkA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="52025354"
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="52025354"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 17:56:14 -0800
-X-CSE-ConnectionGUID: D8jsdFF4RlyGSwH5qcdBcA==
-X-CSE-MsgGUID: YzFOYt+DRReDruSUNIs15g==
+ bh=rEh6nEUB6b2gWFVudTedi+7SvZpJ1yXIcaAEvQ6Ls4c=;
+ b=XWsq0kS13gsZ9N54CbCjahpuJOWQoS1n2aExAdWRTb4kLKLdZ4etZZkH
+ UBkYwYZZVebvI6eRcSS/hoNEQL1udBCdxOJEMx/2+qBpcDz0VbPIUIN3F
+ cXIpdJPGiZBD8JiY6E9wEh3HS/iCXDH/npe+zNp+bkV5XEfGryW/WXN60
+ pwTFocpnmP7F0Efq/SMp23oqPScEtkswpXAnccYfj0ylKbhHcyenL9CxE
+ 0FJrxc7Z7l+OF8FfMRU/e5SjxdQ9nW7t1HqaCItX88D4ttk2a9CEFMubT
+ cl21OfFw0WCoCFLn4M8ufVvZ45BI6Rm0m/MCkH2ZCLMVLqQCT2HZrz4cf Q==;
+X-CSE-ConnectionGUID: lLx8B24tQRSl8RuvH3HmzQ==
+X-CSE-MsgGUID: Hbb6vP/gTiavGxKK9iERNQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="45188815"
+X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="45188815"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 17:58:07 -0800
+X-CSE-ConnectionGUID: 3VN4NUYtTsGLF8+vnybM8g==
+X-CSE-MsgGUID: 0ou1/nhkTMiLJu+On8Y/Ig==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="96844586"
+X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="101260708"
 Received: from unknown (HELO [10.238.9.154]) ([10.238.9.154])
- by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Dec 2024 17:56:11 -0800
-Message-ID: <4462ce8a-70dc-4f13-a1e4-2f75b38d5e25@linux.intel.com>
-Date: Fri, 13 Dec 2024 09:56:09 +0800
+ by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Dec 2024 17:52:36 -0800
+Message-ID: <2cf8bf60-b36d-47ca-9aef-d477a841cbed@linux.intel.com>
+Date: Fri, 13 Dec 2024 09:52:34 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] i386/kvm: Set return value after handling
@@ -68,15 +68,16 @@ Content-Language: en-US
 In-Reply-To: <745b2b6e-7dd0-4437-bbbf-673ddc0df014@linux.intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: none client-ip=192.198.163.8;
+Received-SPF: none client-ip=192.198.163.9;
  envelope-from=binbin.wu@linux.intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -47
 X-Spam_score: -4.8
 X-Spam_bar: ----
 X-Spam_report: (-4.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -224,9 +225,7 @@ On 12/13/2024 9:46 AM, Binbin Wu wrote:
 >
 >         tdx->vcpu.run->exit_reason       = KVM_EXIT_HYPERCALL;
 > +       tdx->vcpu->run->ret              = 0;
-Sorry, this should be  " tdx->vcpu.run->ret              = 0;"
-
-> tdx->vcpu.run->hypercall.nr      = KVM_HC_MAP_GPA_RANGE;
+>         tdx->vcpu.run->hypercall.nr      = KVM_HC_MAP_GPA_RANGE;
 >         tdx->vcpu.run->hypercall.args[0] = gpa & ~gfn_to_gpa(kvm_gfn_direct_bits(tdx->vcpu.kvm));
 >         tdx->vcpu.run->hypercall.args[1] = size / PAGE_SIZE;
 > diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
@@ -242,5 +241,6 @@ Sorry, this should be  " tdx->vcpu.run->ret              = 0;"
 >                 vcpu->run->hypercall.args[0]  = gpa;
 >                 vcpu->run->hypercall.args[1]  = npages;
 >
+Maybe we could add a helper to fill the vcpu->run?
 
 
