@@ -4,76 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683E8E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 08:36:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 337CAE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 08:36:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM18k-0003PI-JY; Fri, 13 Dec 2024 03:35:14 -0500
+	id 1tM19i-0003iF-6q; Fri, 13 Dec 2024 03:36:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tM18j-0003Oj-AT; Fri, 13 Dec 2024 03:35:13 -0500
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tM18d-0008OD-Ge; Fri, 13 Dec 2024 03:35:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734078907; x=1765614907;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=YaE4IkK5AV+coszAICjl/n893OwhkcIehAwDV4r7L5Y=;
- b=OH4Bdy9HYnuYIdzzDIZy39cuZVQXcb7V2XYtHBBVsd1IQi5BWLO5e4Aq
- 4i82TkFUy83mfnIglZvUAu54SXUtZEKQPol7SL/s3IREao/9XN/W6v8i6
- 74tdX4kO2LNZhfzcbY2AOryBMtmaXEVpeGGNXpGHoHylWFN8laRAbpMZS
- LWM7+xsK0gl730T5RDiYsEudbE+9un2lHKh81DdsnEl4LeRQOQrFzTQuq
- ptQBLE92oPJgMnF/AkoBSXYdBQFHCPJBf28v8GN/yu9+uvr4b8gIQy2ux
- PtpbOXCUC9roP4iS4YsQ809NYrFnvHzG1prap/4KgxRRkxRwi2uul++gF A==;
-X-CSE-ConnectionGUID: Ukq8+HRbTMau7yQCONDn2Q==
-X-CSE-MsgGUID: I5bc4yXnTnqyfqz6/OJYPg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="56997677"
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="56997677"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Dec 2024 00:35:03 -0800
-X-CSE-ConnectionGUID: S9E/mUSpQdirWdjDlM+/Bw==
-X-CSE-MsgGUID: n6p+iwYqRQ2LZj5jPgMrWA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="127287537"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa002.jf.intel.com with ESMTP; 13 Dec 2024 00:35:02 -0800
-Date: Fri, 13 Dec 2024 16:53:17 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 14/26] rust: qom: move bridge for TypeInfo functions out
- of pl011
-Message-ID: <Z1v1/WswJ+rNU5th@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-15-pbonzini@redhat.com>
- <Z1hjX+5Yyi46N+sX@intel.com>
- <ada60844-546a-42ca-a05f-7b6dc225ff53@redhat.com>
- <Z1lGZdXsVR5ra4hl@intel.com>
- <CABgObfbs57rVNU4jTwUbPeZEbvEKpVPAZj0Pd8OF75D8ojQEMQ@mail.gmail.com>
- <Z1nEUmzHa5dA5C0d@intel.com>
- <CABgObfY0T1N5-6ZwMWERsptEXHYhWnZP=TABGt3iovjtM3uWBA@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <tugy@chinatelecom.cn>)
+ id 1tM19f-0003hh-J9; Fri, 13 Dec 2024 03:36:11 -0500
+Received: from smtpnm6-08.21cn.com ([182.42.159.130] helo=chinatelecom.cn)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <tugy@chinatelecom.cn>)
+ id 1tM19c-0000B2-2z; Fri, 13 Dec 2024 03:36:11 -0500
+HMM_SOURCE_IP: 192.168.138.117:0.1271736696
+HMM_ATTACHE_NUM: 0000
+HMM_SOURCE_TYPE: SMTP
+Received: from clientip-10.133.8.238 (unknown [192.168.138.117])
+ by chinatelecom.cn (HERMES) with SMTP id 0D66590416F1;
+ Fri, 13 Dec 2024 16:26:43 +0800 (CST)
+X-189-SAVE-TO-SEND: +tugy@chinatelecom.cn
+Received: from  ([10.133.8.238])
+ by gateway-ssl-dep-54575cc94d-f6h42 with ESMTP id
+ 97795d0a3c8945c78ef14e0d0d684af6 for eblake@redhat.com; 
+ Fri, 13 Dec 2024 16:26:47 CST
+X-Transaction-ID: 97795d0a3c8945c78ef14e0d0d684af6
+X-Real-From: tugy@chinatelecom.cn
+X-Receive-IP: 10.133.8.238
+X-MEDUSA-Status: 0
+Message-ID: <c2c61c46-6d71-4f1b-b3dd-12e8db40e3be@chinatelecom.cn>
+Date: Fri, 13 Dec 2024 16:26:42 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfY0T1N5-6ZwMWERsptEXHYhWnZP=TABGt3iovjtM3uWBA@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Cc: tugy@chinatelecom.cn, qemu-devel@nongnu.org
+Subject: Re: [PATCH 0/2] support block encryption/decryption in parallel
+To: eblake@redhat.com, armbru@redhat.com, kwolf@redhat.com,
+ hreitz@redhat.com, qemu-block@nongnu.org
+References: <cover.1732789721.git.tugy@chinatelecom.cn>
+Content-Language: en-US
+From: Guoyi Tu <tugy@chinatelecom.cn>
+In-Reply-To: <cover.1732789721.git.tugy@chinatelecom.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=182.42.159.130; envelope-from=tugy@chinatelecom.cn;
+ helo=chinatelecom.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,129 +70,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> I see -- though, thinking more about it, since you have
-> 
->     fn init_timer(&mut self) {
->         let raw_ptr: *mut HPETState = self;
-> 
->         for i in 0..HPET_MAX_TIMERS {
->             let mut timer = self.get_timer(i).borrow_mut();
->             timer.init(i, raw_ptr).init_timer_with_state();
->         }
->     }
-> 
-> It seems to me that you can do everything in instance_init. Later on a
-> function like the above
-> will become something like
-> 
-> impl HPETTimer {
->     fn init_timer(hpet: NonNull<HPETState>, n: usize) -> impl PinInit<Self> {
+Hi Kevin and Hanna, could you share your thoughts on this patch?
 
-Thank you! I should pass NonNull type other than `*mut HPETState` for now :-)
+I’d greatly appreciate your feedback
 
->         pin_init!(&this in HPETTimer {
->             index: n,
->             qemu_timer <- Timer::init_ns(...),
->             state: hpet,
->             config: 0,
->             cmp: 0,
->             fsb: 0,
->             cmp64: 0,
->             period: 0,
->             wrap_flag: false,
->             last: 0,
->         }
->     }
-> }
+--
+Guoyi
 
-That's the right and ideal way, and I like it.
-
-> But even now you can write something that takes a &mut self as the
-> first argument. It's undefined behavior but it's okay as long as we
-> have a path forward.
-
-Yes, I agree. In the next version, I can follow your suggestion and put
-these embedded items into instance_init(), to be better prepared for the
-next step.
-
-> > > > > The way that this will become safe is to use the pinned_init crate from
-> > > > > Linux: instance_init returns the initialization as an "impl
-> > > > PinInit<Self>",
-> > > >
-> > > > Then do we need to place OBJECT in some suitable memory location (Box or
-> > > > something) for Rust implementation?
-> > > >
-> > >
-> > > Allocation is still done by the C code, so I am not sure I understand the
-> > > question. Rust code allocates QOM objects with object_new() so they are
-> > > malloc-ed.
-> >
-> > Sorry, I'm not familiar enough with this piece...I have the question
-> > because PinInit doc said "you will need a suitable memory location that
-> > can hold a T. This can be KBox<T>, Arc<T>, UniqueArc<T> or even the
-> > stack (see stack_pin_init!)."
+On 2024/11/28 18:51, tugy@chinatelecom.cn wrote:
+> From: Guoyi Tu <tugy@chinatelecom.cn>
 > 
-> Ah, I see. You can use __pinned_init directly on the memory that is
-> passed to rust_instance_init. See for example the implementation of
-> InPlaceWrite for Box
-> (https://docs.rs/pinned-init/latest/src/pinned_init/lib.rs.html#1307).
-
-Thank you! I understand your intention. A similar implementation would
-also be quite natural in rust_instance_init.
-
-> > I see that the core point is ensuring that structures cannot be moved.
-> > Given that object_new() on the C side ensures that the allocated object
-> > will not be moved, Rust side does not need to worry about pinning, correct?
+> Currently, disk I/O encryption and decryption operations are performed sequentially
+> in the main thread or IOthread. When the number of I/O requests increases,
+> this becomes a performance bottleneck.
 > 
-> Sort of... You still need to worry about it for two reasons:
+> To address this issue, this patch use thread pool to perform I/O encryption
+> and decryption in parallel, improving overall efficiency.
 > 
-> 1) if you have &mut Self you can move values out of the object using
-> e.g. mem::replace or mem::swap. Those would move the value in memory
-> and cause trouble (think of moving a QEMUTimer while it is pointed to
-> by the QEMUTimerList). This is solved by 1) using &Self all the time +
-> interior mutability
-
-With your help and through our discussions, I have gained a clearer
-understanding of this intention.
-
-> 2) using pinned_init's "PinnedDrop" functionality,
-> because &Self can be used in QEMU-specific APIs but (obviously) not in
-> the built-in Drop trait.
+> Test results show that enabling the thread pool for encryption and decryption
+> significantly improve the performance of virtual machine storage devices.
 > 
-> 2) right now marking something as pinned is an indirect way to tell
-> the compiler and miri that there are external references to it. For a
-> longer discussion you can read
-> https://crates.io/crates/pinned-aliasable or
-> https://gist.github.com/Darksonn/1567538f56af1a8038ecc3c664a42462.
-
-Thanks for sharing!
-
-> Linux does this with a wrapper type similar to the one in pinned-aliasable:
 > 
-> /// Stores an opaque value.
-> ///
-> /// This is meant to be used with FFI objects that are never
-> interpreted by Rust code.
-> #[repr(transparent)]
-> pub struct Opaque<T> {
->     value: UnsafeCell<MaybeUninit<T>>,
->     _pin: PhantomPinned,
-> }
+> Test Case1: Disk read/write performance using fio in a virtual machine
 > 
-> It's on my todo list to introduce it in qemu_api::cell and (for
-> example) change qom::Object from
+> Virtual Machine： 8c16g, with a disk backing by a LUKS storage device and
+>                    Ceph as storage backend.
+> Test Method:
+> fio -direct=1 -iodepth=32 -rw=xx -ioengine=libaio -bs=4k -size=10G -numjobs=x \
+> -runtime=1000 -group_reporting -filename=/dev/vdb -name=xxx
 > 
->     pub use bindings::Object
+> Runing the VM on the Intel Xeon 5218 server, The test results are as follows:
 > 
-> to
+> |                        |  Serial encryption  | Thread pool encryption|
+> |                        |  and decryption     | and decryption      |
+> |        fio             |-----------|---------|-----------|---------|
+> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
+> |------------------------|-----------|---------|-----------|---------|
+> | rw=read numjobs=2      | 499       | 128     | 605       | 155     |
+> | rw=read numjobs=4      | 529       | 136     | 632       | 162     |
+> | rw=write numjobs=2     | 493       | 126     | 617       | 158     |
+> | rw=write numjobs=4     | 534       | 137     | 743       | 190     |
 > 
->     pub type Object = Opaque<bindings::Object>;
 > 
-> Or something like that.
-
-Yes, I agree with this idea. It's what we need.
-
-Regards,
-Zhao
+> Runing the VM on the HiSilicon Kunpeng-920 server, The test results are as follows:
+> 
+> |                        |  Serial encryption  | Thread pool encryption|
+> |                        |  and decryption     | and decryption      |
+> |        fio             |-----------|---------|-----------|---------|
+> |                        | BW(MiB/s) | IOPS(K) | BW(MiB/s) | IOPS(K) |
+> |------------------------|-----------|---------|-----------|---------|
+> | rw=read numjobs=2      | 73.2      | 18.8    | 128       | 39.2    |
+> | rw=read numjobs=4      | 77.9      | 19.9    | 246       | 62.9    |
+> | rw=write numjobs=2     | 78        | 19      | 140       | 35.8    |
+> | rw=write numjobs=4     | 78        | 20.2    | 270       | 69.1    |
+> 
+> 
+> Test Case 2：
+> In addition, performance comparisons were also conducted on the HiSilicon Kunpeng-920
+> server, testing the conversion of a qcow2 image to a LUKS image using qemu-img convert.
+> The results show that using thread pool to encryption and decryption all significantly
+> improve the performance.
+> 
+> Test Method: Create a 40GB qcow2 image and fill it with data, then convert it to a LUKS
+>               image using qemu-img
+> 
+> * Serial encryption and decryption：
+> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
+> --object secret,id=sec,data=password -n \
+> --target-image-opts driver=luks,key-secret=sec,file.filename=/home/tgy/data.luks
+> 
+>      real    7m53.681s
+>      user    7m52.595s
+>      sys     0m11.248s
+> 
+> 
+> * Thread pool encryption and decryption：
+> time qemu-img convert -p -m 16 -W --image-opts file.filename=/home/tgy/data.qcow2 \
+> --object secret,id=sec,data=password -n --target-image-opts \
+> driver=luks,key-secret=sec,encrypt-in-parallel=on,file.filename=/home/tgy/data.luks
+> 
+>      real    1m43.101s
+>      user    10m30.239s
+>      sys     13m13.758s
+> 
+> Guoyi Tu (2):
+>    crpyto: support encryt and decrypt parallelly using thread pool
+>    qapi/crypto: support enable encryption/decryption in parallel
+> 
+>   block/crypto.c       | 111 ++++++++++++++++++++++++++++++++++++++++---
+>   block/crypto.h       |   9 ++++
+>   qapi/block-core.json |   6 ++-
+>   qapi/crypto.json     |   6 ++-
+>   4 files changed, 124 insertions(+), 8 deletions(-)
+> 
 
 
