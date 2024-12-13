@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5FF2E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:08:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94F63E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:08:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM8Bn-0001q9-QG; Fri, 13 Dec 2024 11:06:51 -0500
+	id 1tM8Bo-0001qa-1f; Fri, 13 Dec 2024 11:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tM8BV-0001hL-N6
+ id 1tM8BV-0001hO-Py
  for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:35 -0500
-Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tM8BR-0006ey-Gq
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:31 -0500
-Received: by mail-ej1-x635.google.com with SMTP id
- a640c23a62f3a-aa66e4d1d5aso305031966b.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 08:06:28 -0800 (PST)
+ id 1tM8BS-0006fC-2w
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:32 -0500
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-aa6a618981eso305146366b.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 08:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734105987; x=1734710787;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734105988; x=1734710788;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=acRq5wtuEZY6qfWLgIt8kj488PEzJr2oq6KQkbWz1tc=;
- b=Juo99WLdbB8NPlYsW98ipotd+LJLFeeEphSmCnUdikcz2DP8qBI2jBEQUClMT0510M
- kPvPpZiKjz+g1eegTcymCjfy/hA5p2IoWErd3QYo1kR9jnOlQopUlzWCQYtOOFwtCNrN
- ky7A11Sv8q108zRQtBfFFlu9o5F7hRMboYltOwat3+fqJ4UTFmdaaAxoLnF3buLm4bzk
- 1hJMAldgVTBLOLDsoNNWIiPFBT7YaSe5ZhV+z83rBLKhcKIX/PbQph6ow3LvC9jeSYr8
- 9UabU7IHr57k2ETWvR9oXTdU9SmMF2PmpKJZslsAeyRwUs7BecAC+yzTiX0UF735gMu7
- LbAA==
+ bh=fihiqrNtU1lwhsHeAONN51DAQcAharB3DZgDkSerMcA=;
+ b=O82mEmU5wgtM0/rxInRCjPUGWmP7NOJgEqYwmO+qH63jHrhjsC8Q2osWnqKB7EvINz
+ Lcsae9bmzFDrcZB2bWQ33l+YO3DpUzTiHFJt68rHGVCqnzJJ0x/bApzup1FOBfW+ILqN
+ IOnKQ57WPVvrrh4GwoeMqXn7kTzgMRYegvlz6BbjfobYpGbEeaWB5npmiQxUgzkkF2xs
+ 3qKnZ8NFVsbxjai5VhSpckoxkAq/Jz8JkmZj6kemtJ6U7m07WYSuOrypd0TBTv+8qPio
+ qGbtbbiRJoCT2d23ygJeRAU1Gu1ggDSElon835+k0NWflIE0H7lNva1oOdefVr6QBcxZ
+ Dnvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734105987; x=1734710787;
+ d=1e100.net; s=20230601; t=1734105988; x=1734710788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=acRq5wtuEZY6qfWLgIt8kj488PEzJr2oq6KQkbWz1tc=;
- b=dh73de4NDKLh/jd0rpbXtRSXR1IEeLNeXVB3jEZFRj0ZqfHwmz5uOvyYcJOI9sRDo9
- aHLwtQYgApCMaHcHy5eBmrxEwx62gGNK5UP0nHzIWWGkWyqoivvh7+POwbeN++FHZlo/
- iLnHVnERlOCi5CUBrkc5LqnYyY8rXuahZ0eEHAnpP/mpCpCTmVAVIk8tNsWOsIV7bjDt
- pjzf1uOFLukrcZSpMeUBhXDq4OHBrlkwxwz/x9juElPJG8gMCpSIoVzx14o1k1T2AlIl
- CRtSf0rQxq/ni2qkzABo7YPedR365uDJ0h/Kt/Zdp+VBR+kgWWA1lf+qmU7+TPe+Gieg
- LMIw==
-X-Gm-Message-State: AOJu0Ywg+9vAMFUGe4asq/aYm0p1n6fqBwF0Riq9/Ejn+HLqkC3jHajm
- u/LD1MWTO4JHJBqsDsZ2e0MVQGj/1SNx+tAA6EL0G2TfnK+0MQdn0Ejt2J1TwG/g0Sk6pf8vXVB
- /zg==
-X-Gm-Gg: ASbGnctCd3Bj1ePgEfLNQyXePs+zlzd997qwBH+aAAC4OR6IVJKfCOHTmoyx/ROPI3H
- qY9wZRY7XeKQX2gOz+eFT51qszyDmoXLxHsHR85W4w9E7cQ5WrB743yi8U3HH62xgRbP4Mfj1cP
- D+0JhBYb1KuPAb2R93ttpIrOYR5L6n7gP3i1GXZUq1W8NUkdijsQcQMaCxzeX5prMdC38W4I+Rm
- qcoB2rVbAwYMQ/W4GCoGHn8KUMvuDwR8OQRqdBfBHmNyFpa5vLbUmlajqqRs7JHO+FmIeSIGRRD
- jHlkIfwfA1BA/LJIuvTAgHI5QX7CYP5o
-X-Google-Smtp-Source: AGHT+IFISrcJgZSd7pbDNX+2Mk3hdeXSTSjPHDrcG41VfJMZ3t6J5GTJ5qNn7x2NoGV4TUZER6HYIg==
-X-Received: by 2002:a17:906:7314:b0:aa6:74a9:ce6e with SMTP id
- a640c23a62f3a-aab77909d56mr332290666b.16.1734105986885; 
- Fri, 13 Dec 2024 08:06:26 -0800 (PST)
+ bh=fihiqrNtU1lwhsHeAONN51DAQcAharB3DZgDkSerMcA=;
+ b=UkRx33DI+yS+T0c5+JRhskErXx0NVRCvF8bZoi6rGtkXdLajCc3aSzhKLyEFoWzQ/d
+ /m153bGWZedjzs1us0952OAIsi5hXE0kaJ6dk5urFn46Uija/mmbCVOsJNO6yhaufk6a
+ a7eFF1VWZMdSeOl507VlXzGyvrLxVJsqjn4uzBR0iNQIMxN6+Vqmvj0w2QcbWl98bHrO
+ YE4Pt9TG+LXsC/1IQ722VLHrq7Mw59eTD2aC+obyFmdDrDC8y1xIEzvjcdFr/NoUSard
+ TcqqAe3MsCx5nOZctCAqdbJpmXmAe0yPNZT6ko9XPaQwmgpZXnAVLjWhlcnj9Is0r2do
+ J/MQ==
+X-Gm-Message-State: AOJu0YxUSP0lqpc04HfoE+YmiqWF6Rx4fCylP+CumdDwXLRA2+XrJitG
+ HYkJSnPcxezczLErh26/ZxM00MHKL9CsoLs1Yj6iAxmLV0/NzP9UrzIxLjoUnOGyw+9C4zj/uh4
+ Ffg==
+X-Gm-Gg: ASbGncsLj+4yLKBEOA/b+NJRToZBOmIPBb4syJS4wf009Iqa1slpOXJU+mTJwzDmU/B
+ B9rfMJNtFD1NlM4wiioSbs2mvu8TZ7iFeVYK9TctNrgZTKl0VcbBcf320lIzL6Dh+RbuZn7eNeN
+ oczZ6h9fW/I64oN6DNMxFV2849I0gZTq+xH9796JcamCXLqesEG95Af6If6jNTpENlW2CuPlddo
+ J0YlROGYYkzlWxVpaUq9oVOtx08AeTMNABvYLfeUBp5NUIZD2jE9EK4aGnBy0FPSln+a0yGr9SG
+ DBuCLeUPXKHArEZ2gUPYKJojY1v7v5x8
+X-Google-Smtp-Source: AGHT+IGbLr4aTsymNfaH75Z2bJMqEr3EOhZyD6GFUrKB2s+aUZk/p8xc8VKloIeb2T2o2FQGihY4DQ==
+X-Received: by 2002:a17:906:c102:b0:aa6:6885:e2f6 with SMTP id
+ a640c23a62f3a-aab779b7968mr350830766b.36.1734105987948; 
+ Fri, 13 Dec 2024 08:06:27 -0800 (PST)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
  a640c23a62f3a-aa667843413sm916683166b.24.2024.12.13.08.06.26
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 08:06:26 -0800 (PST)
+ Fri, 13 Dec 2024 08:06:27 -0800 (PST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
  zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com,
  Phil Dennis-Jordan <phil@philjordan.eu>
-Subject: [PATCH v2 3/6] hw/usb/hcd-xhci-pci: Use event ring 0 if mapping
- unsupported
-Date: Fri, 13 Dec 2024 17:06:16 +0100
-Message-Id: <20241213160619.66509-4-phil@philjordan.eu>
+Subject: [PATCH v2 4/6] hw/usb/hcd-xhci-pci: Adds property for disabling
+ mapping in IRQ mode
+Date: Fri, 13 Dec 2024 17:06:17 +0100
+Message-Id: <20241213160619.66509-5-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241213160619.66509-1-phil@philjordan.eu>
 References: <20241213160619.66509-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::635;
- envelope-from=phil@philjordan.eu; helo=mail-ej1-x635.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::634;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -102,34 +102,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The XHCI specification, section 4.17.1 specifies that "If Interrupter
-Mapping is not supported, the Interrupter Target field shall be
-ignored by the xHC and all Events targeted at Interrupter 0."
+This change addresses an edge case that trips up macOS guest drivers
+for PCI based XHCI controllers. The guest driver would attempt to
+schedule events to XHCI event rings 1 and 2 even when using PCI
+pin-based interrupts. Interrupts would therefore be dropped, and events
+only handled on timeout.
 
-QEMU's XHCI device has so far not specially addressed this case,
-so we add a check to xhci_event() to redirect to event ring and
-interrupt 0 if mapping is disabled.
+So, in addition to disabling interrupter mapping if numintrs is 1, a
+callback is added to xhci to check whether interrupter mapping should be
+enabled. The PCI XHCI device type now provides an implementation of
+this callback if the new "conditional-intr-mapping" property is enabled.
+(default: disabled) When enabled, interrupter mapping is only enabled
+when MSI-X or MSI is active.
+
+This means that when using pin-based interrupts, events are only
+submitted to interrupter 0 regardless of selected target. This allows
+the macOS guest drivers to work with the device in those configurations.
 
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2705
 ---
- hw/usb/hcd-xhci.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ hw/usb/hcd-xhci-pci.c | 24 ++++++++++++++++++++++++
+ hw/usb/hcd-xhci-pci.h |  1 +
+ hw/usb/hcd-xhci.c     |  3 ++-
+ hw/usb/hcd-xhci.h     |  5 +++++
+ 4 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index 35f02132bb4..6027eed2d26 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -82,6 +82,21 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int n, bool level)
+     return false;
+ }
+ 
++static bool xhci_pci_intr_mapping_conditional(XHCIState *xhci)
++{
++    XHCIPciState *s = container_of(xhci, XHCIPciState, xhci);
++    PCIDevice *pci_dev = PCI_DEVICE(s);
++
++    /*
++     * Implementation of the "conditional-intr-mapping" property, which only
++     * enables interrupter mapping if MSI or MSI-X is available and active.
++     * Forces all events onto interrupter/event ring 0 in pin-based IRQ mode.
++     * Provides compatibility with macOS guests on machine types where MSI(-X)
++     * is not available.
++     */
++    return msix_enabled(pci_dev) || msi_enabled(pci_dev);
++}
++
+ static void xhci_pci_reset(DeviceState *dev)
+ {
+     XHCIPciState *s = XHCI_PCI(dev);
+@@ -119,6 +134,9 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+     object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL);
+     s->xhci.intr_update = xhci_pci_intr_update;
+     s->xhci.intr_raise = xhci_pci_intr_raise;
++    if (s->conditional_intr_mapping) {
++        s->xhci.intr_mapping_supported = xhci_pci_intr_mapping_conditional;
++    }
+     if (!qdev_realize(DEVICE(&s->xhci), NULL, errp)) {
+         return;
+     }
+@@ -201,6 +219,8 @@ static void xhci_instance_init(Object *obj)
+ static Property xhci_pci_properties[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_BOOL("conditional-intr-mapping", XHCIPciState,
++                     conditional_intr_mapping, false),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+@@ -216,6 +236,10 @@ static void xhci_class_init(ObjectClass *klass, void *data)
+     k->exit         = usb_xhci_pci_exit;
+     k->class_id     = PCI_CLASS_SERIAL_USB;
+     device_class_set_props(dc, xhci_pci_properties);
++    object_class_property_set_description(klass, "conditional-intr-mapping",
++        "When true, disables interrupter mapping for pin-based IRQ mode. "
++        "Intended to be used with guest drivers with questionable behaviour, "
++        "such as macOS's.");
+ }
+ 
+ static const TypeInfo xhci_pci_info = {
+diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
+index 08f70ce97cc..5b61ae84555 100644
+--- a/hw/usb/hcd-xhci-pci.h
++++ b/hw/usb/hcd-xhci-pci.h
+@@ -40,6 +40,7 @@ typedef struct XHCIPciState {
+     XHCIState xhci;
+     OnOffAuto msi;
+     OnOffAuto msix;
++    bool conditional_intr_mapping;
+ } XHCIPciState;
+ 
+ #endif
 diff --git a/hw/usb/hcd-xhci.c b/hw/usb/hcd-xhci.c
-index d85adaca0dc..5fb140c2382 100644
+index 5fb140c2382..b607ddd1a93 100644
 --- a/hw/usb/hcd-xhci.c
 +++ b/hw/usb/hcd-xhci.c
-@@ -644,6 +644,10 @@ static void xhci_event(XHCIState *xhci, XHCIEvent *event, int v)
+@@ -644,7 +644,8 @@ static void xhci_event(XHCIState *xhci, XHCIEvent *event, int v)
      dma_addr_t erdp;
      unsigned int dp_idx;
  
-+    if (xhci->numintrs == 1) {
-+        v = 0;
-+    }
-+
-     if (v >= xhci->numintrs) {
-         DPRINTF("intr nr out of range (%d >= %d)\n", v, xhci->numintrs);
-         return;
+-    if (xhci->numintrs == 1) {
++    if (xhci->numintrs == 1 ||
++        (xhci->intr_mapping_supported && !xhci->intr_mapping_supported(xhci))) {
+         v = 0;
+     }
+ 
+diff --git a/hw/usb/hcd-xhci.h b/hw/usb/hcd-xhci.h
+index fe16d7ad055..fdaa21ba7f6 100644
+--- a/hw/usb/hcd-xhci.h
++++ b/hw/usb/hcd-xhci.h
+@@ -193,6 +193,11 @@ typedef struct XHCIState {
+     uint32_t max_pstreams_mask;
+     void (*intr_update)(XHCIState *s, int n, bool enable);
+     bool (*intr_raise)(XHCIState *s, int n, bool level);
++    /*
++     * Callback for special-casing interrupter mapping support. NULL for most
++     * implementations, for defaulting to enabled mapping unless numintrs == 1.
++     */
++    bool (*intr_mapping_supported)(XHCIState *s);
+     DeviceState *hostOpaque;
+ 
+     /* Operational Registers */
 -- 
 2.39.5 (Apple Git-154)
 
