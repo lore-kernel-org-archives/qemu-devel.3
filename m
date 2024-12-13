@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C496E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:46:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 481ABE77183
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:46:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9Yj-0004TM-5A; Fri, 13 Dec 2024 12:34:37 -0500
+	id 1tM9XW-0007DY-AC; Fri, 13 Dec 2024 12:33:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9YC-0000RX-D1
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:06 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1tM9X7-0006zp-EB
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:58 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Y6-0001m4-2s
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:03 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-434f80457a4so19355775e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:57 -0800 (PST)
+ id 1tM9X5-0001WR-LF
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:57 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4361a50e337so14505035e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:32:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111236; x=1734716036; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111174; x=1734715974; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IXb1EyNQgSAc6Jv9qKhwJUtQcVIW/R0AFPQfAJk+WHA=;
- b=mJgSUrxah3PyldZzAeRCjzVEEX0UdEwRzGjj4lpWqx1YVxinOCVtLwVjlrdIkQb6GR
- pSYI0WIye6bZD+YYgzRGjuSyiW7jMDvlPvAUcP56FPBd0w0SpP1vCe3icKRvAwlo6cL1
- h+J3lL7P0gQxxzoGaM/G96/0e8LnxZ7s0AJhwCGRH8NJdGb/3oWusfw7SwKgURpAWy2y
- YF/wXQq4qSPj17rV+sXwv4Oq/mtdWY3rXFWiNXtUT4aY1cTGHv2gi+B4vX4Lcq68c6W+
- 1SWecXJ5E/tXzyAFMpoxRekdAsFoSagTxfZpeoMJUqzhZ4WbR0efoisi9PBsDO8bXAog
- JJAw==
+ :reply-to; bh=PYN5citoB0ZF3IJroQ8ZdrrceU/Nk4XKS8mCIww2hmM=;
+ b=Px7eehZs/njKPA+3nFtv7joWN7QZeBy+SAY0NVwzX9TTUyWhMIw8SuwCBsQKboLIF2
+ XWmWH0NPWo2kIxCiSN5hXmyKh9fo20pCaW9SvvssSU30G7uZD+eifn09IIO9yi1ao5Sy
+ pMciNShmskSkdeL1NShun6swb0lC42VPQKr7qVV8f23dw2HACLrLxDXnBuzq0wVcwUZW
+ DoTt7tm4LMOTTIC+/aulsHhm0dw76wjI1uxjDX69mJcEmKO4tDEr3gDgqcSkNCce6HMZ
+ KyGV/U1qkpACYbU1EeOUETkdL30OuCPk+Yl5p1VsXoIN7wMmDM9PIq0Q3zz3p5JIg3J5
+ pU7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111236; x=1734716036;
+ d=1e100.net; s=20230601; t=1734111174; x=1734715974;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IXb1EyNQgSAc6Jv9qKhwJUtQcVIW/R0AFPQfAJk+WHA=;
- b=PRb+CCE3KBAyljrkosNBJ7gJA4hfls4NDEULrTWarOVeOOnG4TKtVRvcjB36rckwdD
- xZTS4pPQT9Z2k6mj+bo3Fe+Wz0PO5wZbH7a8rMNo9vkhNpyUa64kVX3VdhyQapoai8aT
- aMF9F9TOPyc8MYfqSn18BtiY+2e+6jIuqwWMWrVQWLxRCjSDXOuTvnyvCMEn5p5nGkFg
- DUUpjiEp0FvLKCgXXd1bMFrdWVGkEiednTDFjBvPZOfr7RxUr23i3w6WEi2qIPzDl/Gd
- pQJVWc5W4JLcQ82caLdLa4R89WOAsW6RLozErM9ysjVygPBJKFy+FfB3WOxMbXtaL3NA
- Y2MA==
-X-Gm-Message-State: AOJu0Yx22j/YFRUKlA/vlnxfG447sCT9yxEVmSOS8kWMrKxXaalZ8YHA
- IFhdphS5Zsz9tnEGJCg5FbSyoPBeyau/jKJ2nz90AAZIyo/iSR1A0YLGAE7R8y0xzteDZgc9vxZ
- 2
-X-Gm-Gg: ASbGncta3grH+zbU9ID/IOCXBveLN/WyD/Vjb33Qlq+Z3ur+jTdMekpmzlY+XqtdQ8Z
- cuYML07dzSDUn6qj3R5G0esJA4SR+SNY1m18efW1Odh6qumRHpoHYE0CCIxvWlsqLeHMDXsnNWT
- 1/ijYGZrQ9k6kuvG047YWzJEOqEXF0SIW6Y63ygTpvtj2QgyQZBcX41CeXYHZXlo14eQ+MBN/Bu
- 8tVlEaB2yYCcC+/1Y02WV8TpJ9Isw2z9YgatUuFjw/M6PsTkI155UeCMHh/Bw==
-X-Google-Smtp-Source: AGHT+IGncxJurxxsGHHDefbTBbgDD9nMjfSz1VAywkL71pejKCVbBHfhMU3IRw01cPbakVvyktwFHg==
-X-Received: by 2002:a05:600c:1c09:b0:435:edb0:5d27 with SMTP id
- 5b1f17b1804b1-436230bfd93mr63250495e9.9.1734111235781; 
- Fri, 13 Dec 2024 09:33:55 -0800 (PST)
+ bh=PYN5citoB0ZF3IJroQ8ZdrrceU/Nk4XKS8mCIww2hmM=;
+ b=rqgbIYrO39G7DMJnGulVSG3q17jDfTPHI+McMLdllu2AzgUl8W9OYZJuI03cQF8ciV
+ YJ3mrM7Us41PFnYuoiWMpv332fEZv/c6KDfzA5xjx1tg/hQwWkXuvfSB1A1vRzVrkdSB
+ vdZBgs/EL/+OsefK90QNr2cKm5H7MbApoiClFkgV6K48mM8Z9JUEJ4mgGHaxw12/HgdG
+ Tsr9mkiMfnfhPaDbcVll70JaeG6VEe5yCYOJacVDM8ASnSeTVJY2Sq5vORqAnM9biKBs
+ YqCjmAcvsZaQA260ofCwggtcYhm/0yo76MeycORPh6HR0ZIFoy2q8QMiiciQE9L3WB9b
+ QA8Q==
+X-Gm-Message-State: AOJu0YzsV7pidvxuVKef4Lu3zun07ms82X90FQNuCSOm6BHQ5sddut11
+ J6mWPkqhiDTm8VnG5b6vcuW2QLCx3JsiBPGB8T9iPn98+srlZShrNNcydcd8x4RtgosoKxKNhEY
+ g
+X-Gm-Gg: ASbGncvjdQN4md3TLEfMajFXNAK+6Z9O2kEx6R0QtYtKPfRBnj5hOqaLKqEon1lu/BO
+ 12V9Acii3MFN7tJeaUE5aihzhgdmsUPnw42aHwp4UxQTsdN+SQ49u8Iq6ZXW6mfUb2jWgO3BaSp
+ VdjPh+rXFdBQ63fH0Cmb/TZB3FLkDbopEuAR1Cj63zVJeD2DxakENyeFt+LRpbMaqCE3EIQbQfc
+ nemuKNgPgp0+RDXSNqpBNvTMiqgpxW2K//9WlHNGMnzrkPG9LlaUdlitUkWSA==
+X-Google-Smtp-Source: AGHT+IGrzL7VNJEbPAbsPV75NG2duj+JG/PBHFCEuWXeNIUDOQFzWscVmZtYh1ZsEUI3bAn1VWsuqg==
+X-Received: by 2002:a05:600c:511c:b0:434:a7e3:db66 with SMTP id
+ 5b1f17b1804b1-4362aaa9683mr23756105e9.26.1734111174017; 
+ Fri, 13 Dec 2024 09:32:54 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.54
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.32.53
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:55 -0800 (PST)
+ Fri, 13 Dec 2024 09:32:53 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 79/85] target/arm: Move the AArch64 EL2 TLBI insns
-Date: Fri, 13 Dec 2024 17:32:23 +0000
-Message-Id: <20241213173229.3308926-80-peter.maydell@linaro.org>
+Subject: [PULL 21/85] target/arm: Introduce fp_access_check_vector_hsd
+Date: Fri, 13 Dec 2024 17:31:25 +0000
+Message-Id: <20241213173229.3308926-22-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,231 +97,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the AArch64 EL2 TLBI insn definitions that were
-in el2_cp_reginfo[] across to tlb-insns.c.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Provide a simple way to check for float64, float32, and float16
+support vs vector width, as well as the fpu enabled.
+
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241211163036.2297116-22-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241210160452.2427965-5-peter.maydell@linaro.org
 ---
- target/arm/cpregs.h        |  7 +++++
- target/arm/helper.c        | 61 ++++----------------------------------
- target/arm/tcg/tlb-insns.c | 49 ++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+), 55 deletions(-)
+ target/arm/tcg/translate-a64.c | 135 +++++++++++++--------------------
+ 1 file changed, 54 insertions(+), 81 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index a14f5bb6c98..57446ae1b52 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -1146,13 +1146,20 @@ bool tlb_force_broadcast(CPUARMState *env);
- int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-                        uint64_t addr);
- int vae1_tlbbits(CPUARMState *env, uint64_t addr);
-+int vae2_tlbbits(CPUARMState *env, uint64_t addr);
- int vae1_tlbmask(CPUARMState *env);
-+int vae2_tlbmask(CPUARMState *env);
- int ipas2e1_tlbmask(CPUARMState *env, int64_t value);
-+int e2_tlbmask(CPUARMState *env);
- void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                uint64_t value);
- void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                              uint64_t value);
- void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                             uint64_t value);
-+void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                             uint64_t value);
-+void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                            uint64_t value);
- 
- #endif /* TARGET_ARM_CPREGS_H */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index cc7da7f1159..6942d2f2fb3 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -4705,7 +4705,7 @@ int vae1_tlbmask(CPUARMState *env)
-     return mask;
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 4e47b8a8041..4611ae4ade9 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -1260,6 +1260,28 @@ static int fp_access_check_scalar_hsd(DisasContext *s, MemOp esz)
+     return fp_access_check(s);
  }
  
--static int vae2_tlbmask(CPUARMState *env)
-+int vae2_tlbmask(CPUARMState *env)
- {
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     uint16_t mask;
-@@ -4748,7 +4748,7 @@ int vae1_tlbbits(CPUARMState *env, uint64_t addr)
-     return tlbbits_for_regime(env, mmu_idx, addr);
- }
- 
--static int vae2_tlbbits(CPUARMState *env, uint64_t addr)
-+int vae2_tlbbits(CPUARMState *env, uint64_t addr)
- {
-     uint64_t hcr = arm_hcr_el2_eff(env);
-     ARMMMUIdx mmu_idx;
-@@ -4776,7 +4776,7 @@ void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
- }
- 
--static int e2_tlbmask(CPUARMState *env)
-+int e2_tlbmask(CPUARMState *env)
- {
-     return (ARMMMUIdxBit_E20_0 |
-             ARMMMUIdxBit_E20_2 |
-@@ -4784,15 +4784,6 @@ static int e2_tlbmask(CPUARMState *env)
-             ARMMMUIdxBit_E2);
- }
- 
--static void tlbi_aa64_alle2_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                  uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = e2_tlbmask(env);
--
--    tlb_flush_by_mmuidx(cs, mask);
--}
--
- static void tlbi_aa64_alle3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                   uint64_t value)
- {
-@@ -4811,8 +4802,8 @@ void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
- }
- 
--static void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                    uint64_t value)
-+void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                             uint64_t value)
- {
-     CPUState *cs = env_cpu(env);
-     int mask = e2_tlbmask(env);
-@@ -4828,22 +4819,6 @@ static void tlbi_aa64_alle3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E3);
- }
- 
--static void tlbi_aa64_vae2_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                 uint64_t value)
--{
--    /*
--     * Invalidate by VA, EL2
--     * Currently handles both VAE2 and VALE2, since we don't support
--     * flush-last-level-only.
--     */
--    CPUState *cs = env_cpu(env);
--    int mask = vae2_tlbmask(env);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--    int bits = vae2_tlbbits(env, pageaddr);
--
--    tlb_flush_page_bits_by_mmuidx(cs, pageaddr, mask, bits);
--}
--
- static void tlbi_aa64_vae3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                  uint64_t value)
- {
-@@ -4870,7 +4845,7 @@ void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
- }
- 
--static void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                    uint64_t value)
- {
-     CPUState *cs = env_cpu(env);
-@@ -6036,30 +6011,6 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
-     { .name = "HTTBR", .cp = 15, .opc1 = 4, .crm = 2,
-       .access = PL2_RW, .type = ARM_CP_64BIT | ARM_CP_ALIAS,
-       .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
--    { .name = "TLBI_ALLE2", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 0,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_alle2_write },
--    { .name = "TLBI_VAE2", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 1,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_vae2_write },
--    { .name = "TLBI_VALE2", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 5,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_vae2_write },
--    { .name = "TLBI_ALLE2IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 0,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_alle2is_write },
--    { .name = "TLBI_VAE2IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 1,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_vae2is_write },
--    { .name = "TLBI_VALE2IS", .state = ARM_CP_STATE_AA64,
--      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 5,
--      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
--      .writefn = tlbi_aa64_vae2is_write },
- #ifndef CONFIG_USER_ONLY
-     /*
-      * Unlike the other EL2-related AT operations, these must
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index ff7698e31b6..1eebb6055ce 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -191,6 +191,31 @@ static void tlbi_aa64_alle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx(cs, mask);
- }
- 
-+static void tlbi_aa64_alle2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  uint64_t value)
++/* Likewise, but vector MO_64 must have two elements. */
++static int fp_access_check_vector_hsd(DisasContext *s, bool is_q, MemOp esz)
 +{
-+    CPUState *cs = env_cpu(env);
-+    int mask = e2_tlbmask(env);
-+
-+    tlb_flush_by_mmuidx(cs, mask);
++    switch (esz) {
++    case MO_64:
++        if (!is_q) {
++            return -1;
++        }
++        break;
++    case MO_32:
++        break;
++    case MO_16:
++        if (!dc_isar_feature(aa64_fp16, s)) {
++            return -1;
++        }
++        break;
++    default:
++        return -1;
++    }
++    return fp_access_check(s);
 +}
 +
-+static void tlbi_aa64_vae2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                 uint64_t value)
-+{
-+    /*
-+     * Invalidate by VA, EL2
-+     * Currently handles both VAE2 and VALE2, since we don't support
-+     * flush-last-level-only.
-+     */
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae2_tlbmask(env);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+    int bits = vae2_tlbbits(env, pageaddr);
-+
-+    tlb_flush_page_bits_by_mmuidx(cs, pageaddr, mask, bits);
-+}
-+
- static void tlbi_aa64_vae1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                  uint64_t value)
+ /*
+  * Check that SVE access is enabled.  If it is, return true.
+  * If not, emit code to generate an appropriate exception and return false.
+@@ -5420,27 +5442,14 @@ static bool do_fp3_vector(DisasContext *s, arg_qrrr_e *a, int data,
+                           gen_helper_gvec_3_ptr * const fns[3])
  {
-@@ -460,6 +485,30 @@ static const ARMCPRegInfo tlbi_el2_cp_reginfo[] = {
-     { .name = "TLBIMVAHIS", .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 1,
-       .type = ARM_CP_NO_RAW, .access = PL2_W,
-       .writefn = tlbimva_hyp_is_write },
-+    { .name = "TLBI_ALLE2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 0,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_alle2_write },
-+    { .name = "TLBI_VAE2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 1,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_vae2_write },
-+    { .name = "TLBI_VALE2", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 5,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_vae2_write },
-+    { .name = "TLBI_ALLE2IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 0,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_alle2is_write },
-+    { .name = "TLBI_VAE2IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 1,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_vae2is_write },
-+    { .name = "TLBI_VALE2IS", .state = ARM_CP_STATE_AA64,
-+      .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 5,
-+      .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
-+      .writefn = tlbi_aa64_vae2is_write },
- };
+     MemOp esz = a->esz;
++    int check = fp_access_check_vector_hsd(s, a->q, esz);
  
- void define_tlb_insn_regs(ARMCPU *cpu)
+-    switch (esz) {
+-    case MO_64:
+-        if (!a->q) {
+-            return false;
+-        }
+-        break;
+-    case MO_32:
+-        break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
+-        }
+-        break;
+-    default:
+-        return false;
+-    }
+-    if (fp_access_check(s)) {
+-        gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
+-                          esz == MO_16, data, fns[esz - 1]);
++    if (check <= 0) {
++        return check == 0;
+     }
++
++    gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
++                      esz == MO_16, data, fns[esz - 1]);
+     return true;
+ }
+ 
+@@ -5768,34 +5777,24 @@ TRANS_FEAT(FCADD_270, aa64_fcma, do_fp3_vector, a, 1, f_vector_fcadd)
+ 
+ static bool trans_FCMLA_v(DisasContext *s, arg_FCMLA_v *a)
+ {
+-    gen_helper_gvec_4_ptr *fn;
++    static gen_helper_gvec_4_ptr * const fn[] = {
++        [MO_16] = gen_helper_gvec_fcmlah,
++        [MO_32] = gen_helper_gvec_fcmlas,
++        [MO_64] = gen_helper_gvec_fcmlad,
++    };
++    int check;
+ 
+     if (!dc_isar_feature(aa64_fcma, s)) {
+         return false;
+     }
+-    switch (a->esz) {
+-    case MO_64:
+-        if (!a->q) {
+-            return false;
+-        }
+-        fn = gen_helper_gvec_fcmlad;
+-        break;
+-    case MO_32:
+-        fn = gen_helper_gvec_fcmlas;
+-        break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
+-        }
+-        fn = gen_helper_gvec_fcmlah;
+-        break;
+-    default:
+-        return false;
+-    }
+-    if (fp_access_check(s)) {
+-        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
+-                          a->esz == MO_16, a->rot, fn);
++
++    check = fp_access_check_vector_hsd(s, a->q, a->esz);
++    if (check <= 0) {
++        return check == 0;
+     }
++
++    gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
++                      a->esz == MO_16, a->rot, fn[a->esz]);
+     return true;
+ }
+ 
+@@ -6337,27 +6336,14 @@ static bool do_fp3_vector_idx(DisasContext *s, arg_qrrx_e *a,
+                               gen_helper_gvec_3_ptr * const fns[3])
+ {
+     MemOp esz = a->esz;
++    int check = fp_access_check_vector_hsd(s, a->q, esz);
+ 
+-    switch (esz) {
+-    case MO_64:
+-        if (!a->q) {
+-            return false;
+-        }
+-        break;
+-    case MO_32:
+-        break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
+-        }
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-    if (fp_access_check(s)) {
+-        gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
+-                          esz == MO_16, a->idx, fns[esz - 1]);
++    if (check <= 0) {
++        return check == 0;
+     }
++
++    gen_gvec_op3_fpst(s, a->q, a->rd, a->rn, a->rm,
++                      esz == MO_16, a->idx, fns[esz - 1]);
+     return true;
+ }
+ 
+@@ -6383,28 +6369,15 @@ static bool do_fmla_vector_idx(DisasContext *s, arg_qrrx_e *a, bool neg)
+         gen_helper_gvec_fmla_idx_d,
+     };
+     MemOp esz = a->esz;
++    int check = fp_access_check_vector_hsd(s, a->q, esz);
+ 
+-    switch (esz) {
+-    case MO_64:
+-        if (!a->q) {
+-            return false;
+-        }
+-        break;
+-    case MO_32:
+-        break;
+-    case MO_16:
+-        if (!dc_isar_feature(aa64_fp16, s)) {
+-            return false;
+-        }
+-        break;
+-    default:
+-        g_assert_not_reached();
+-    }
+-    if (fp_access_check(s)) {
+-        gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
+-                          esz == MO_16, (a->idx << 1) | neg,
+-                          fns[esz - 1]);
++    if (check <= 0) {
++        return check == 0;
+     }
++
++    gen_gvec_op4_fpst(s, a->q, a->rd, a->rn, a->rm, a->rd,
++                      esz == MO_16, (a->idx << 1) | neg,
++                      fns[esz - 1]);
+     return true;
+ }
+ 
 -- 
 2.34.1
 
