@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CE3E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4015EE7717F
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:37:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBO0-0000AE-GR; Fri, 13 Dec 2024 14:31:40 -0500
+	id 1tMB6m-0005sh-QH; Fri, 13 Dec 2024 14:13:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBNj-0008WN-8b
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:26 -0500
-Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ id 1tMB6k-0005fz-2F
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:13:50 -0500
+Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBNh-0004Ke-7T
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:22 -0500
-Received: by mail-lj1-x22b.google.com with SMTP id
- 38308e7fff4ca-3003d7ca01cso19830361fa.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:31:19 -0800 (PST)
+ id 1tMB6h-0007Sy-IX
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:13:49 -0500
+Received: by mail-oi1-x22b.google.com with SMTP id
+ 5614622812f47-3eb7f3b1342so910410b6e.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:13:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734118278; x=1734723078; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117226; x=1734722026; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D9NZJMUMihYF2f/RMgHkdbty8GjEbXThSHvmpYC5Oh8=;
- b=tREhw7sqW9nyi7zhpSA1DDgbgdWxy0FYnor4UnB9kghH3+JUMN66XYDvSlrplcvsze
- PUZJTfsGS3DfaJfruj8k1m4dgVB/qxuuBZIb/EOVVxCVvs98gry09jHJ6plofKTmLHmw
- T5cJP5hpTKHyF6UDDcBwV/zB3l4C8uE1CQhV1nmqu2oqq/NxijpWaTWOxsSbgrQof/8L
- r+/jdjMqn29dqE/qfuV+OLzMTjbWcInmWoqeevy3dVSAw9swaZ29kI7bPvLf4gUiOyCa
- Izgxus521KlhugtfbIY81BwoXVEWtVzH+hEPLt/5G5xWgZhnPzPWT3i5Dkt0/fSt9+d7
- 7a6w==
+ bh=6I71WCIZYeQ5yV8uCldLsOTnUpTDKGYy0sk8GaKQTI8=;
+ b=Cp97yayDM4zb9c9kRp16YDDMfoZLMRp6QXyG0Z2dgm+1SREITx+uUauiHPi2rNoby6
+ lRSc5RncSifJ2Au8JiHt1d5zotJYrCrXFIaaCa3sWeYlmgMwOGdpXaiNjteFQUx/Zv9h
+ j4GojxcE4lPPsWVQDzVAQ2dei5OPWTE/vFPQQiQfqN6epy4btllB5+08/BePd48Dmmu2
+ xWON4gq45nEqfA3f5T0B8RwqWg6q1g5DInmnWw2WuBCfBAu45gooS79mW96t0JYJ1w7S
+ JO9EX2IHXHYGnh76ymPl44/TOi4ZmvD+WjXojl0+mQozACSwjmS+eqFEw15TZwMGFK+b
+ mxPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734118278; x=1734723078;
+ d=1e100.net; s=20230601; t=1734117226; x=1734722026;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D9NZJMUMihYF2f/RMgHkdbty8GjEbXThSHvmpYC5Oh8=;
- b=J8iYRhwnXkV/yzB5B3kLkBDNGMPD5mCemCK9LONuEEm1OxyNXZKLD4W01kH1aBo2vi
- kjmpP5yBEiB9zpmQxtJX/uWs/92CWCn5a5xTcXzVVjFwewFbJu9YuY21NPOxdwOu5k5F
- vTMDalc7LFS3AuGt1gfhzzTGD4GwuJ0fg71yAFJl3rVBwiMdzYLcluLHL7b/y7sOiTok
- azW3Uf49jUt5031hDvQzgO02nZAI31L7/kDOaw06uN09oh+AqasAtFlYy7ijZloZ5VBo
- do4I5greqQz9csp/RvLtDbBIC4tEQHwj2KLpMvE90MPigFg1a4AzzbCd/YiPPMkgMKyd
- vk7w==
-X-Gm-Message-State: AOJu0YzC56+CriHv7r6BJaX5S99XcM6baoTpAqlw0PFieME7hQBOpF3Z
- Qn+Y++sIS7HTkHDG1rwHJCGGaP3I12PWxd4GLu8e8NV7GniEkgUQc4f/IWrDr65ayE1O6offK9F
- TFITpTcSJ
-X-Gm-Gg: ASbGncuBQ5i21V5itmyj9HpaEDmefxmdIS5Mtv7rrH5kkvPujpObgpy/E/o0Ies2S3y
- +swlCCZHXwnAwKuFAY4iJxql7NOc2pcioBBCMEXdD2cfDdmyew1KJrEU2u5q5LC2KXVxD8JTcjL
- ROZgDQx2n0qCg0NauybrFSfVyDvD+IX9RTsL9Lg3TY3CuTw6Y5HN4SOQKfeY6qIG3AAa3Szm0BZ
- uPQzJRpV7CitspIfPAsv8ZkX7PAt2rkutr9CGFNmbgxI8t9dIlF8D1Rs4X0Zg==
-X-Google-Smtp-Source: AGHT+IEMNKkQnrRflo+yxGeX4qGXLN4U0wyX2tu5dVCJqJyfEoB7JGYnONT272yxGUDy9/0Yk6qcCQ==
-X-Received: by 2002:a05:6512:3a91:b0:53e:37a5:4cb5 with SMTP id
- 2adb3069b0e04-5408bcc53f3mr1536668e87.4.1734118278231; 
- Fri, 13 Dec 2024 11:31:18 -0800 (PST)
-Received: from stoup.. ([91.209.212.67]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54120c204ebsm6723e87.250.2024.12.13.11.31.13
+ bh=6I71WCIZYeQ5yV8uCldLsOTnUpTDKGYy0sk8GaKQTI8=;
+ b=H7bm7jtoU48FqrZwCKw23bm87+RZEEBNC1HLxaEYpnU2gmjt8OWoXmlpMpmpxLH9Vm
+ FunbFxK+y+1D7fl8Fia689YBihbuw2CXc5wN4LoX9LfdBe31Po50Fltw2IFVMbVkRaFW
+ PKbdaAuz1efHIRaXzzh1+3l0q2nxB9Ea4UwGYYzkBfLdQ1hXcQ4CdafsmG7LJ4Snranr
+ JlRyJg3byyhfgFJYe/3bLK6+k6lYpwJRScm/7O/fpC/U+UvumFRxv3a7k/ODG8SoXLye
+ UIwHBJU+jKgTKeznJqSakkdCBU/2eZp21s+f2SP+yh0zFQxiebNbtstJnzy4Z+pXnOwA
+ Sb2A==
+X-Gm-Message-State: AOJu0YyiaiCnT6xnIDwtG4P2XAzMgWT2uHsmhcrrJfn+7g+LjzFWBkYg
+ fUUEb+Agrc5SeChwnfD8XknCw3mD+xpXk0sjoJUxxP0CX3equ/RGwPRyhnwMUmGIO9WjXZdp3pn
+ P4oRfK8yt
+X-Gm-Gg: ASbGnctgPrXcBlHkQagXzzDqXzm+TJ2St2DKu6+dMm9u0xAXFaV8OLT+Z8SuZ0Wwl+Z
+ 62BPxHbRP3kKo92ClGVVjizZ5yAha9d2f9y7M5eEWXnSiv82O5xDiE8DlnSWBNf1qHMKFyBh1hl
+ mhHZezGks7W7c931D5JXV6CYwCuQfW5By1/+9C9lyD/9eZg2Y/H7jgFzgcwNoZDbPq4T3sKv2uf
+ sIvo/R2tw2+R71Qs5CDwlRO2Sj8vhHVZ4np1A5YbwOq6rEGYI/CifFpm+esT7XW
+X-Google-Smtp-Source: AGHT+IG00GnozzUOWoDNKsIC8Bt4iAeF/clMgZ0ktCIKKzUbT5Lx2a2RqPw+0UW9rrSl7ySGbRisww==
+X-Received: by 2002:a05:6808:2208:b0:3eb:4b4c:80d8 with SMTP id
+ 5614622812f47-3eba65ba0admr1866208b6e.0.1734117226116; 
+ Fri, 13 Dec 2024 11:13:46 -0800 (PST)
+Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.13.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:31:16 -0800 (PST)
+ Fri, 13 Dec 2024 11:13:45 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PATCH 71/71] docs: Constify all Property in examples
-Date: Fri, 13 Dec 2024 13:31:04 -0600
-Message-ID: <20241213193104.2515757-2-richard.henderson@linaro.org>
+Cc: Alistair Francis <alistair@alistair23.me>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ qemu-arm@nongnu.org (open list:Xilinx ZynqMP and...)
+Subject: [PATCH 39/71] hw/misc/xlnx-versal-trng: Constify trng_props
+Date: Fri, 13 Dec 2024 13:07:13 -0600
+Message-ID: <20241213190750.2513964-44-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241213193104.2515757-1-richard.henderson@linaro.org>
+In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213193104.2515757-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-lj1-x22b.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,47 +100,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use DEFINE_PROP_UNSIGNED instead of DEFINE_PROP_UINT64
+so that we can set the PropertyInfo during initialization,
+instead of updating within trng_class_init.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- docs/devel/migration/compatibility.rst | 4 ++--
- docs/devel/virtio-backends.rst         | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ hw/misc/xlnx-versal-trng.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/docs/devel/migration/compatibility.rst b/docs/devel/migration/compatibility.rst
-index 5a5417ef06..c787f53738 100644
---- a/docs/devel/migration/compatibility.rst
-+++ b/docs/devel/migration/compatibility.rst
-@@ -198,7 +198,7 @@ was done::
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index 86905479b8..2f6af4f680 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -660,8 +660,9 @@ static const PropertyInfo trng_prop_fault_events = {
  
- The relevant parts for migration are::
+ static PropertyInfo trng_prop_uint64; /* to extend qdev_prop_uint64 */
  
--    @@ -1281,7 +1284,8 @@ static Property virtio_blk_properties[] = {
-+    @@ -1281,7 +1284,8 @@ static const Property virtio_blk_properties[] = {
-      #endif
-          DEFINE_PROP_BIT("request-merging", VirtIOBlock, conf.request_merging, 0,
-                          true),
-@@ -395,7 +395,7 @@ the old behaviour or the new behaviour::
-     index 8a87ccc8b0..5153ad63d6 100644
-     --- a/hw/pci/pci.c
-     +++ b/hw/pci/pci.c
--    @@ -79,6 +79,8 @@ static Property pci_props[] = {
-+    @@ -79,6 +79,8 @@ static const Property pci_props[] = {
-          DEFINE_PROP_STRING("failover_pair_id", PCIDevice,
-                             failover_pair_id),
-          DEFINE_PROP_UINT32("acpi-index",  PCIDevice, acpi_index, 0),
-diff --git a/docs/devel/virtio-backends.rst b/docs/devel/virtio-backends.rst
-index 9ff092e7a0..a6f9df4845 100644
---- a/docs/devel/virtio-backends.rst
-+++ b/docs/devel/virtio-backends.rst
-@@ -101,7 +101,7 @@ manually instantiated:
-       VirtIOBlock vdev;
-   };
+-static Property trng_props[] = {
+-    DEFINE_PROP_UINT64("forced-prng", XlnxVersalTRng, forced_prng_seed, 0),
++static const Property trng_props[] = {
++    DEFINE_PROP_UNSIGNED("forced-prng", XlnxVersalTRng, forced_prng_seed,
++                         0, trng_prop_uint64, uint64_t),
+     DEFINE_PROP_UINT32("hw-version", XlnxVersalTRng, hw_version, 0x0200),
+     DEFINE_PROP("fips-fault-events", XlnxVersalTRng, forced_faults,
+                 trng_prop_fault_events, uint32_t),
+@@ -694,7 +695,6 @@ static void trng_class_init(ObjectClass *klass, void *data)
+     /* Clone uint64 property with set allowed after realized */
+     trng_prop_uint64 = qdev_prop_uint64;
+     trng_prop_uint64.realized_set_allowed = true;
+-    trng_props[0].info = &trng_prop_uint64;
  
--  static Property virtio_blk_pci_properties[] = {
-+  static const Property virtio_blk_pci_properties[] = {
-       DEFINE_PROP_UINT32("class", VirtIOPCIProxy, class_code, 0),
-       DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
-                       VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
+     device_class_set_props(dc, trng_props);
+ }
 -- 
 2.43.0
 
