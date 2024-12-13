@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43659E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:34:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879B6E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF7m-0002C3-9i; Fri, 13 Dec 2024 18:31:10 -0500
+	id 1tMF9g-0005yy-It; Fri, 13 Dec 2024 18:33:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF7j-00028G-TG
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:08 -0500
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF9D-00043m-LA
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:40 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF7i-0002y0-3U
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:07 -0500
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-385e06af753so1233385f8f.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:31:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF9B-000394-1O
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:39 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-434e3953b65so16061545e9.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132664; x=1734737464; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132755; x=1734737555; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o+pQd2baBlmY/N24Ub4eY1nVz17amZBdVdb84Jx0GrY=;
- b=xfLTB+D8NTb8rId3vns/m1d1yjpal733qY4JlFGTGLXvxldgs3oHfP/WrS09yJQzJg
- s3iGcLFwtOA7djXoZWKnMNhkT2M3tTFE/hcebiuSan/bZ5aXvlkunwOHIFxdczkWaEBd
- 9Lz5jr2kpP9UyixOzofJePu5ukIm0cW3jS7/N1m8vs3wrEqGsz8YJLxyr4pSCAxoLtSe
- C+4wLZSWXb7dCaKQj/umiz7KNPZ02bfoOfjBpcZzYA1EuUU6A2FU2TQW+AnzIYGe/usU
- b6oBA4OQLzGiHTizR5HJ+IckaOEcR4yGJdYudFwdFOexnePnqUNuaDWTx5iBxhiprE7G
- P3mA==
+ bh=CV9+f4SVBhtl9L6i7qT0yd0Q3TADzotsfEUks6qSmCU=;
+ b=wK3DvIh7YjKOXqQ40AHmVpuGiNO7yf3RKyJbfRopeW/PwMnjx9T7D1u3aJM/MDDxp8
+ hV9SU7KW+DWbCRwkLsU2KdflK0OAoXs2xi4nXrzoPuJW42AVIUivjiBdgSnAET5yv0l0
+ wGXSL294rWRg0/CZhGmVa+HzTAzNCLzmMZBwUnwCTmvIyOTw+iC6NdSyF01QDRur92Ga
+ Zpk+7EzpTGm7KfQkJklu/mHBz0JfQi01IsI3D1176zzYRjtNiAGd+R1YycyFmXY+YVw9
+ xdvZgCFXAYth6n+abKDghAHSAlEtuPHWbTB4sCEsci3PX7Eg3ShnO8ZwticQVfF5OEAu
+ qIwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132664; x=1734737464;
+ d=1e100.net; s=20230601; t=1734132755; x=1734737555;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o+pQd2baBlmY/N24Ub4eY1nVz17amZBdVdb84Jx0GrY=;
- b=mlVJ03i+rJxwdRrws+AJRDLdiCDCovSJZBwEsRrvH75eOXA3U2Za9/lu50bXTxtTD7
- QahqcL6mPexCxEZKtQXjMrrLYUmrbvSHqScbSSIhL0RQMQVGHG7iGYI0k4H7UUtczPMR
- DXLihR9hJUiWXeyUxgJomh6Y9SY4KkfjMHdq4WNYOsUiMcL2ok9xC7bw45NEeTJ982yB
- snpaP9NTVXlLejEDX3/jAHh2XoWnH8evYFGPrs3CWYbZHRg0+jFkggPbpnaGktPJo8B5
- BlfceUpCNG7RGMzCveBTqgn9dAJuBQv7pQiOj0wDeuyS/W8QjJ4AIPJTDFhz+zeP3xRy
- q1Kg==
-X-Gm-Message-State: AOJu0Yzy0e8YzclrWjotsanfn1MDb6vYzrRmuEd1QgUU3hO/uqWNo/sE
- ULPnF1z163Mi3p3SzRV8GbqoDnZ9oTITButKVwsIgLgV2vPZR0/TLCYRpUi75V+fHi3zh4lM2Qq
- 1AXs=
-X-Gm-Gg: ASbGncsq7aKP7vNrx2EElTWmI5d93vs9EXXCGGNRNSfKzk0SROTb2O/NZgV/Ieu9oz3
- /GgZrKu2/OeSmjVNhf5t9UohOTaixzadq7U68mZNtKiMVfq3J2mIDxEEL7IOyhnQr9QDnVDvXlC
- rt1yZG7IagvHDQt5WK040RKFweYWpdJe8uE0NPqb55LDnEB+oy02z4voOi9/qfxl77z7kwAuw8r
- YQ1uHHC//ukivTVk6nOZ+q/0dom4FK/8lXQ254ZOpjKKaxmu4Mdhu178affldYnzRZ1xUlhVMyN
- duiizw==
-X-Google-Smtp-Source: AGHT+IFgwEUAeUvtio+G1STrD/sSIgV+JoHjDmfPQ9W7JDVusM99HHk3BAWEhI9iLu+LDHOiGyjMvA==
-X-Received: by 2002:a5d:588c:0:b0:385:e2c4:1f8d with SMTP id
- ffacd0b85a97d-3888dcd4760mr3194762f8f.19.1734132664122; 
- Fri, 13 Dec 2024 15:31:04 -0800 (PST)
+ bh=CV9+f4SVBhtl9L6i7qT0yd0Q3TADzotsfEUks6qSmCU=;
+ b=PEyqIiJdImO48ig1p+3lnB9jDNzQ9NSKg2FLpDp+vHdG6ZteVXPwX8emmLAzuncxuN
+ YS/lpQQ0KI7gwcGUCJIvuLvi5DDXpBOSNoAed28Zj1THCCjGbJYXbwQf5DPKUlRR8xzS
+ 2JAAesRU8NvuElg4jsO8EtnLoX8k5VLgF6RqxYscgN6I8d11QRuwLINXeObiqrjNkeiG
+ x+0AM5mrJxMNrRBoWH85G6QY842SGvNATAX3xO7yMt69qVoOFAdvPqu56iBuIA6BN8uo
+ U3R2v1LmFz/JU7UG4VvhRl9aWB9IHy33/tdsueNjFgOU3bDpjdrMB180mRXtxJG6TsXb
+ xNSg==
+X-Gm-Message-State: AOJu0YwfhehaB2d+HXuNeCmWh0E7umdiMl11wbpRTSHNQXKYrulgy95l
+ TqJx03Oo0KVD9OKTT3ONDrWl3zGB1+Fjy7w4RrZmr8bcQkjKg3M4JtFYRADiuth6xHqD8FvUYVR
+ Nj0k=
+X-Gm-Gg: ASbGncuRNjXOX2qXr31pUOdAHCaziobCN3wliC6eeSVykPaQuy4+J4WAZyUn7Lv7C28
+ 1F9CKda226sgxiMTrNaK1GZsxCPhryr0N+7OKxPjYBWVXGpzePrfha9zDgCpkIsMGrLHBBUbcWM
+ 7kx4pjfjX9EFi1vTStOPAqSzNdASB5Sz36QocMSMJsKtfhEg22UYTiPe7hLYD1nPPueL1NiN0mF
+ 3/iKg5gve1GFZATkfjz5mFsb/iWg8lx5B3nCAlEOct60gcdFIZXqmStog5Y9Ayt5ozkZJxXEYNv
+ 0NzNkQ==
+X-Google-Smtp-Source: AGHT+IHcFpmrkGUsvL3jUwj3xLyYxHDCtFxKIpOXF5zJFPYdgXUFm+/jUSL/vovNuOu1loW3KAZXYg==
+X-Received: by 2002:a05:600c:214a:b0:434:f7e3:bfbd with SMTP id
+ 5b1f17b1804b1-4362aa947admr38604895e9.23.1734132755094; 
+ Fri, 13 Dec 2024 15:32:35 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c801a8b0sm821799f8f.53.2024.12.13.15.31.01
+ 5b1f17b1804b1-4362557c502sm63157165e9.11.2024.12.13.15.32.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:31:02 -0800 (PST)
+ Fri, 13 Dec 2024 15:32:34 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Dorjoy Chowdhury <dorjoychy111@gmail.com>,
- Alexander Graf <graf@amazon.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/20] docs/nitro-enclave: Fix terminal commands formatting
-Date: Sat, 14 Dec 2024 00:30:36 +0100
-Message-ID: <20241213233055.39574-2-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 19/20] hw/sh4/r2d: Include missing 'exec/tswap.h' header
+Date: Sat, 14 Dec 2024 00:30:54 +0100
+Message-ID: <20241213233055.39574-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,46 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+r2d.c indirectly get "exec/tswap.h" declarations via
+"exec/cpu-all.h". Include it directly to be able to
+remove the former from the latter, otherwise we get:
 
-Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
-Reviewed-by: Alexander Graf <graf@amazon.com>
-Message-ID: <20241109122844.24057-1-dorjoychy111@gmail.com>
+  hw/sh4/r2d.c:357:35: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    357 |         boot_params.loader_type = tswap32(1);
+        |                                   ^
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241211230357.97036-8-philmd@linaro.org>
 ---
- docs/system/i386/nitro-enclave.rst | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/sh4/r2d.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/docs/system/i386/nitro-enclave.rst b/docs/system/i386/nitro-enclave.rst
-index 73e3edefe5b..48eda5bd9ec 100644
---- a/docs/system/i386/nitro-enclave.rst
-+++ b/docs/system/i386/nitro-enclave.rst
-@@ -48,13 +48,13 @@ Running a nitro-enclave VM
- First, run `vhost-device-vsock`__ (or a similar tool that supports vhost-user-vsock).
- The forward-cid option below with value 1 forwards all connections from the enclave
- VM to the host machine and the forward-listen (port numbers separated by '+') is used
--for forwarding connections from the host machine to the enclave VM.
--
--__ https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock#using-the-vsock-backend
-+for forwarding connections from the host machine to the enclave VM::
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index 7eecd79fcc1..e6cc156c238 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -43,6 +43,7 @@
+ #include "hw/loader.h"
+ #include "hw/usb.h"
+ #include "hw/block/flash.h"
++#include "exec/tswap.h"
  
-   $ vhost-device-vsock \
-      --vm guest-cid=4,forward-cid=1,forward-listen=9001+9002,socket=/tmp/vhost4.socket
- 
-+__ https://github.com/rust-vmm/vhost-device/tree/main/vhost-device-vsock#using-the-vsock-backend
-+
- Now run the necessary applications on the host machine so that the nitro-enclave VM
- applications' vsock communication works. For example, the nitro-enclave VM's init
- process connects to CID 3 and sends a single byte hello heartbeat (0xB7) to let the
-@@ -65,7 +65,7 @@ the applications on the host machine that would typically be running in the pare
- VM for successful communication with the enclave VM.
- 
- Then run the nitro-enclave VM using the following command where ``hello.eif`` is
--an EIF file you would use to spawn a real AWS nitro enclave virtual machine:
-+an EIF file you would use to spawn a real AWS nitro enclave virtual machine::
- 
-   $ qemu-system-x86_64 -M nitro-enclave,vsock=c,id=hello-world \
-      -kernel hello-world.eif -nographic -m 4G --enable-kvm -cpu host \
+ #define FLASH_BASE 0x00000000
+ #define FLASH_SIZE (16 * MiB)
 -- 
 2.45.2
 
