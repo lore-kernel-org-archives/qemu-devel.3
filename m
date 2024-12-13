@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E4CE77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA5E9E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB4G-0006r5-10; Fri, 13 Dec 2024 14:11:16 -0500
+	id 1tMB4K-0007DZ-8l; Fri, 13 Dec 2024 14:11:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3i-0005v9-18
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:42 -0500
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1tMB3m-00065T-LA
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:47 -0500
+Received: from mail-oa1-x33.google.com ([2001:4860:4864:20::33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB3c-00074m-Mk
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:41 -0500
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5f31e8c2bfaso459675eaf.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:10:36 -0800 (PST)
+ id 1tMB3f-00075C-GX
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:10:46 -0500
+Received: by mail-oa1-x33.google.com with SMTP id
+ 586e51a60fabf-29e70c9dc72so1004749fac.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:10:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117035; x=1734721835; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117038; x=1734721838; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QrrJ4RvuuoGOGZrV9FD04T9DsliVJZ1San+rsea4fSw=;
- b=j79VYs2XZz+S9zc+GSIzSnErTkcQLxL7dPXRMPeQFCu49SVRcW49sU3J2Uwq4jR6T8
- /Llj/Tatyz7KOK/oI1oCzy+CjKH68zcNCTRnUhrXWl+s3tGNRC3U7H4WVQndRmsFLPc7
- xjgY67X/f+a9OLNifn/IIeJ5vjtaKlnJRsQXmFrnbfgiEgRuNw/PEPFJFwr1ssk2xP3p
- uPGIUsUSvNc/FUvpyYsewHOF0Oiqv3Jq0zplr3ypRM5kfSTVQ8442aI8gBcJuJT4e8Gg
- neJv8uHjww7QSmN/WoB5iloWN/sEB7Zklg4Hn1OujKeC5LFVo2+gWjNkQik71D7qZtmL
- ItjQ==
+ bh=1Z1t6swvy8upy2Om0CJmkfNPeZpdljfu+4C2dIJjYZg=;
+ b=SVvyCLQzy8LfC2/DSkjt92EKLvHQu5cSpIcsulwgGj367bUsm029tJi0ub3P5wpNiZ
+ Tji35/1NSwY4cX7d9l/5PQeE5Dnd75wE4kHdluNVDpGOnjcbXxRz4erreFlmucndRx4L
+ jb+dxOj6FibBWsDCX2bHgwgHF94VOJGIt6GJtsRbCtXYBEzd4MYBRAS0kovRD6HONjUa
+ vSlNslhGiW8tdRFbOFbS0xX9+5KLdf6B+PTWdMGPX2/Kz64iqqwvW63cK2jOk6L3hlPp
+ +SXXg7VmE3jFe8zR59EXXvWrZA4nIPcfmscVIEy6AOWtwBvBYEGcoqFjfTTRQObOEMV2
+ FBYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117035; x=1734721835;
+ d=1e100.net; s=20230601; t=1734117038; x=1734721838;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QrrJ4RvuuoGOGZrV9FD04T9DsliVJZ1San+rsea4fSw=;
- b=pOChcrGlJtzDefrpEZ26T1KbY5MXPovFiHPB82tUWcvqH3nizoUUc39a8ZYEikw7N2
- wVDI+0EUd+s2eOeSWgJVG60Q+s/3oYGUCxz5h8U5zqTG80lEqIuHXn+PArSuLihjUM7U
- VZWNhQdKGs4CK3ES+Zod3lEiPkgiuVmVkM3TRD75Nw08ZuwC8U01zpYYiwx6o8dnQ1Gm
- QREUOKto23ls39gY5c1lCnbV0/4gCI1qIBUA6xBrWv0wGGfQawSzs6pDEmeAxuihKLEu
- HuJnJ9UNcBCCmigqXgsahLX3Dl5ShBm71s2wuJ43hNbf9VdHqWKZstQArnoluH2FtUsO
- 15jA==
-X-Gm-Message-State: AOJu0YyVQBfD/2t73dZUO9k0epG64+WvvEU+ru8fDWycWeRnwyhBHOxD
- ciDnux//ZXF+lHJY739lYKiYWc+Uw63RArN9wA1NyhzhwydbkX7g4fGV5on3hngyU2Vk2SIQroY
- VaINw0kUW
-X-Gm-Gg: ASbGncuPgY5JNKDUqHfZ4YBJehAelo2uR+KLNXhfPPDrcS/M0uZ8lCVVdWPHIspl3+d
- udoVehBJhBncr8jZxU9MG5gvnhCrEjl5oGiyk56WQe/bVKWZwbMMBEIiraCXn+DPumenJOrdaa1
- HZ8C1VlmPWrQP9FWJqPKmCc5YMHmPnVsJVePLdLU04rKIF6Mtb0CztZkvA5em24KxPPdj3Ug0Fk
- XAja7RDt5PIqaSfaRQGWOIeAJnDJWXXDsGHOFkyGwhHT4Kg4D91G5GQ3wII3kyz
-X-Google-Smtp-Source: AGHT+IHJpabkeuL6yrDgrDN/ajkCZGzilCGU06O1k7F+CDZ952vsakF6CLuYiA6pmiHRNUhk0qnBWg==
-X-Received: by 2002:a05:6820:221d:b0:5f2:bb17:f072 with SMTP id
- 006d021491bc7-5f32948bd92mr2094280eaf.5.1734117035626; 
- Fri, 13 Dec 2024 11:10:35 -0800 (PST)
+ bh=1Z1t6swvy8upy2Om0CJmkfNPeZpdljfu+4C2dIJjYZg=;
+ b=pHpDYHa831hbCNf/jOZ9l0svYLWItnogMbeYs/s4+D0CxbwgjXtx8voSQc+9cKWy9+
+ ZIz1H0jhk2MKdDlWIvu4XKqPSuC8JbM3Jc2n4fTo5MMEk4f9o0K7n6G+tjMFpgurMA+6
+ omDGfVMF4K2YqQ9zjuHrzjUDtnL6xOX+aRlURTspK7UAVLHuc5EOS/6iPtXZ/PZUOjym
+ nxyuLD0intUmR9m/06Afyy6Itn/AB6hbYSf0r5ks5kf6kecLGtD2hs1TLEsBDEixYY6L
+ 7pmGPVCETPn6nH+0xksTw8sirtYKZEQarofpZZO4XrNBCz/jf4ZQqev7ylrXTFZEMlYt
+ i5nA==
+X-Gm-Message-State: AOJu0Yw4jxUS6FypZ4nEU6exTyWJ9E91JUK7RZc/b6HneSPBh+5ghciX
+ rzLIU1ZFmw3YKsj+ZOvku0hYCBOFV4Dw/bp5SAKiHZgQj4GOQiIK1f0+YcwX/wd0mLd6fZtrmaF
+ M9l/WIzUh
+X-Gm-Gg: ASbGnctZaWNwXh2sP3UoZ+nSk+HR0t6RQrfKgvwsM3jDfaUNIjgdX6VolebU42+RDXo
+ SRuupw/Kuvi93G7FAy0eiXtqQHURYfK1Xp/MXLdBm0AUY+A33OqStefkVAZz7BZrqfhx88vMXED
+ SCISd6ak7SgSmcl1whXs/ubmGKVPZUzaC1nA2OQ6RkSCGvAwFXWqW8J5p7gXBy5Z5m1Hqh2vZ0D
+ 4ennwabhM0Q9OOfANfws63qQ/xrSBYBxZL6bDkBoeFJvlS7ZYcibZuFXCyy30qZ
+X-Google-Smtp-Source: AGHT+IErEgP61IwTRTJFasMINfOwcin5JaD/wnc6zj1SxLqPM3lk1vUEGmZAClPD5bTMVFMju9FdEQ==
+X-Received: by 2002:a05:6808:189e:b0:3eb:5d3a:5b20 with SMTP id
+ 5614622812f47-3eba67f5459mr2225644b6e.4.1734117038116; 
+ Fri, 13 Dec 2024 11:10:38 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.10.35
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.10.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:10:35 -0800 (PST)
+ Fri, 13 Dec 2024 11:10:37 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alberto Garcia <berto@igalia.com>
-Subject: [PATCH 33/71] hw/ipack: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:07 -0600
-Message-ID: <20241213190750.2513964-38-richard.henderson@linaro.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Aurelien Jarno <aurelien@aurel32.net>, qemu-ppc@nongnu.org (open list:PReP)
+Subject: [PATCH 35/71] hw/isa: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:09 -0600
+Message-ID: <20241213190750.2513964-40-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::33;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x33.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,22 +103,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/ipack/ipack.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/isa/lpc_ich9.c | 2 +-
+ hw/isa/pc87312.c  | 2 +-
+ hw/isa/piix.c     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/ipack/ipack.c b/hw/ipack/ipack.c
-index c39dbb481f..7ffc4ffe6f 100644
---- a/hw/ipack/ipack.c
-+++ b/hw/ipack/ipack.c
-@@ -73,7 +73,7 @@ static void ipack_device_unrealize(DeviceState *dev)
-     qemu_free_irqs(idev->irq, 2);
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index dabd1217dd..378244aa8f 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -826,7 +826,7 @@ static const VMStateDescription vmstate_ich9_lpc = {
+     }
+ };
+ 
+-static Property ich9_lpc_properties[] = {
++static const Property ich9_lpc_properties[] = {
+     DEFINE_PROP_BOOL("noreboot", ICH9LPCState, pin_strap.spkr_hi, false),
+     DEFINE_PROP_BOOL("smm-compat", ICH9LPCState, pm.smm_compat, false),
+     DEFINE_PROP_BOOL("smm-enabled", ICH9LPCState, pm.smm_enabled, false),
+diff --git a/hw/isa/pc87312.c b/hw/isa/pc87312.c
+index f67155498d..7bb2af817d 100644
+--- a/hw/isa/pc87312.c
++++ b/hw/isa/pc87312.c
+@@ -327,7 +327,7 @@ static const VMStateDescription vmstate_pc87312 = {
+     }
+ };
+ 
+-static Property pc87312_properties[] = {
++static const Property pc87312_properties[] = {
+     DEFINE_PROP_UINT16("iobase", PC87312State, iobase, 0x398),
+     DEFINE_PROP_UINT8("config", PC87312State, config, 1),
+     DEFINE_PROP_END_OF_LIST()
+diff --git a/hw/isa/piix.c b/hw/isa/piix.c
+index b4a402f61b..8ec9c63b8a 100644
+--- a/hw/isa/piix.c
++++ b/hw/isa/piix.c
+@@ -408,7 +408,7 @@ static void pci_piix_init(Object *obj)
+     object_initialize_child(obj, "rtc", &d->rtc, TYPE_MC146818_RTC);
  }
  
--static Property ipack_device_props[] = {
-+static const Property ipack_device_props[] = {
-     DEFINE_PROP_INT32("slot", IPackDevice, slot, -1),
-     DEFINE_PROP_END_OF_LIST()
- };
+-static Property pci_piix_props[] = {
++static const Property pci_piix_props[] = {
+     DEFINE_PROP_UINT32("smb_io_base", PIIXState, smb_io_base, 0),
+     DEFINE_PROP_BOOL("has-acpi", PIIXState, has_acpi, true),
+     DEFINE_PROP_BOOL("has-pic", PIIXState, has_pic, true),
 -- 
 2.43.0
 
