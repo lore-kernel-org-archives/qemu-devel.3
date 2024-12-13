@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BDA1E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 12:37:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B67AAE7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 12:41:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM4uU-0008K2-Th; Fri, 13 Dec 2024 07:36:47 -0500
+	id 1tM4yu-0001Ut-Qs; Fri, 13 Dec 2024 07:41:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM4uF-0008Hx-CG
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 07:36:35 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM4yh-0001Tq-8R
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 07:41:10 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM4uD-0006vL-Il
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 07:36:31 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM4yW-0007co-Lb
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 07:41:01 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734093388;
+ s=mimecast20190719; t=1734093638;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uIfleIgDesZdRmuHZu/gGCafP9XtmQsxa4tjlRml8Wc=;
- b=imSmXw9+/vp5heWjEiRnUS0xgqchhUGzLVMljWrfSch/9JYF+BcGCxjO/FZuCOBtJF/Y3G
- OUF1LM1iwQJqFK308tkj74dqFEfAYrU9T8A7Tf4L4A2lSWirLgDB5UxvMYS8FXJK0PQNLg
- /e6kwIJ5+HHUSQ1XM2bS4Q0aQYqMDII=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dlcvBqzAsRciA7zwuGOZHFb0X2Ns2gVIw8fe9cGLmYM=;
+ b=GyW+O5LsWNC2/5MOKZj/WN2XSJpXQZWBH3CIILD7927qO234uq8Rlltt+dYXqzfgGU9F0/
+ fbT+jy4a7taqQlxpOjzsZcqFqPJoATHg4WnCeLyucgoOHHMlUeIMw/jOwc43XbZOQvYg8l
+ CwNJMfwq1scTFktPcp+2k8FVbIwnSIk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-336-fmL2Cn_HN12bmUQbhtqORQ-1; Fri, 13 Dec 2024 07:36:27 -0500
-X-MC-Unique: fmL2Cn_HN12bmUQbhtqORQ-1
-X-Mimecast-MFC-AGG-ID: fmL2Cn_HN12bmUQbhtqORQ
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361c040ba8so3065485e9.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 04:36:27 -0800 (PST)
+ us-mta-416-RkUVLa0SOqWbJdVz2PYFQw-1; Fri, 13 Dec 2024 07:40:33 -0500
+X-MC-Unique: RkUVLa0SOqWbJdVz2PYFQw-1
+X-Mimecast-MFC-AGG-ID: RkUVLa0SOqWbJdVz2PYFQw
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385fdff9db5so209092f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 04:40:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734093386; x=1734698186;
+ d=1e100.net; s=20230601; t=1734093632; x=1734698432;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=uIfleIgDesZdRmuHZu/gGCafP9XtmQsxa4tjlRml8Wc=;
- b=DqsbN2PJ98oRs2j5WmziZDtMAoTPWMKP6C16+7Fp7IczSYAa7WIyfll4r7uYxalBaV
- vbPYmjqEvrCeuRcabukW9+1HnwDtex8WDDKIo/TEzQ2IXeKA88vtXExD8zmNtgWyObVk
- jiAZFf9wrkpxTVALIq+NaCGJ4Sq+aopp3kI6fTz6cpma/N74/SFnoTKNMvgGQZFoPIBZ
- lPcUgjp3ox1/zVgz4WHxoyR9ar+1HSGCLUjCZtIJIrcpGUsChz+8gThrJa/65H0OShZT
- gGPekbhs+KelZHtCIlq5VlieXg0qFuWBAqkwXYGLjtecngbF6ThGJrqKR2UUSeRk7Mzo
- wo9g==
+ bh=dlcvBqzAsRciA7zwuGOZHFb0X2Ns2gVIw8fe9cGLmYM=;
+ b=jajv+KAZOGNswb3Rx4zmG8RN4SS01qH6Fy7oU6mWjksuwV82748Dyzcd1voB8rDd79
+ NiUvRJuVNGjNBv8tTS7OCHhsdd/vmgzvrDXeqxtELx8eYIMe+3r/K0jT7qnWnWNA0NvE
+ 4hGjMPHZ3Q8N31H5hsdbOjuFBMmRNG7AbzGXKgoerAH++H2jLi4oBAO+vs6zygwFk23x
+ tyW8ShFrpwCXa1s3wjJ/+LswhgJoaArbCDbtrigCLyK651n/JL6rHDa9jGX+tpwsPUtx
+ E8Z2C8rGgvwPDTHKEE8dmL/PztoL09JfXGENQq759/UHdUP5jHyfVnqTPg0L119d7vbX
+ GQ2Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVkhszcTwE/LCIXkJnVDGkbZ1TPiwIIXddAxLqbyFvQeQPZDrnKsNurHssBsfeILcSTHznOmnuR1b7K@nongnu.org
-X-Gm-Message-State: AOJu0YwDsTYtjpXKwSopvCw9nM6id13x9mXil6rQX19ZO5bzwAwe4ZX9
- aNi672X7Fja35yMcMMarAz4ejSyq/W3murnAzHFV9Tdg9MTyPQ9Lpl15JmTkWx2GZX2k4rhzWDd
- Dl1OqK4UEXsAFY77JXiuqjwJF1UZUwk/h6im8YE7sYR7HplXpa23W
-X-Gm-Gg: ASbGncvuDhP82sOVxUeM2rt3Z6B4JAnpJNkpniIs/bIzYg7NhEBspIdRtY+fJZmcDgE
- qWstY+z5gGYquowhlHUk7rD8/BN4HsW8EpT+nLT/nSeGsSLxoVeZhTGwln8nBSHUKKiUr7rcDgP
- sMVw+0VyQsM27Q7BMfev2jZbkmZglUtA2s7jhhCUstm2nFaUCe3VCjT9bSiotViYTQvSIhNUDHF
- cqb+V9ipPDY7B+qZO5ml2L2Zj+QtxWsbalNyBlMMXFEdNWwKzCRUmleRZLYWIjrFsq/ERWQhRMu
- 3iROng==
-X-Received: by 2002:a05:600c:4e8c:b0:434:f7e3:bfa8 with SMTP id
- 5b1f17b1804b1-4362aacb94bmr18171575e9.33.1734093386386; 
- Fri, 13 Dec 2024 04:36:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGVo1t2NOlIL84wjHrwpfqSYw6UD/ZmepYOB0QeRERzqpNRrz9vqCdLaFxaPMyEQ2FJk1mm6w==
-X-Received: by 2002:a05:600c:4e8c:b0:434:f7e3:bfa8 with SMTP id
- 5b1f17b1804b1-4362aacb94bmr18171385e9.33.1734093385974; 
- Fri, 13 Dec 2024 04:36:25 -0800 (PST)
+ AJvYcCU6hrs6VoHMo0IFiiwM3uke+yp3kaoVMZlQuF/k8F2sIZBhnbVuKUAqFkmo3Fw2qqOa2ff4AJt5v7w3@nongnu.org
+X-Gm-Message-State: AOJu0YyhqCdqMXkSkFcrhBhLWGrbbKBjzClw01KSoHCNLTwOY0xPK+dE
+ npnZiTqX+6rSrXm47Xz/8vIp0sxMDkKRDJ0xiDfdtki1Ko8nL9vHkdW2nTcgv4/1P0ZzseUJpBR
+ Ce8KeaKDzm50mHF9BsGHr84PXbSA1hjKel3h5O9qHT/ce7k42c6en
+X-Gm-Gg: ASbGncvD8pmMKAAsRp10tnVXTw5yhZMdCjjv3wTCgESLJV4cEJf6yRuHJUgXkxVRBE5
+ PLN6oJv88q7fA+M5SPanEKXZFNzpwUB2wnFJzCPG3ZrIANb0j3EEPPGTr1Pu/bq23JQ+TnUjwP+
+ 60s3OgCY2N2Q0VqVoJpUxmx4JxSXen8IBG8LplMFAuNaFKIAaJGYInVaZjW1aRsmAPbnJMEOs59
+ Y22O3Zg6WIw0Bpp03dct1V9ZOcP2x6tZjiNvBZZmrBoCcz97Ly/3IuR6lHhxQaYvX8zv9ddTbw0
+ t7r7Yg==
+X-Received: by 2002:a05:6000:1882:b0:385:e0d6:fb73 with SMTP id
+ ffacd0b85a97d-38880ad7765mr1886394f8f.15.1734093632399; 
+ Fri, 13 Dec 2024 04:40:32 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFgIeTvwlAyjQ7c4b7q2V4H8czwq/MkUpO1vrkYYzcQO2lOnHOtjfljLO4DUi+PQ23edFzaBA==
+X-Received: by 2002:a05:6000:1882:b0:385:e0d6:fb73 with SMTP id
+ ffacd0b85a97d-38880ad7765mr1886372f8f.15.1734093632031; 
+ Fri, 13 Dec 2024 04:40:32 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43625550563sm48090735e9.4.2024.12.13.04.36.25
+ ffacd0b85a97d-38782514beesm7117551f8f.71.2024.12.13.04.40.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 04:36:25 -0800 (PST)
-Message-ID: <4c626c8d-6e78-4998-a034-75b1d3aa0354@redhat.com>
-Date: Fri, 13 Dec 2024 13:36:24 +0100
+ Fri, 13 Dec 2024 04:40:31 -0800 (PST)
+Message-ID: <6fcccb4c-6260-401d-aab9-3d77b7cf3cf5@redhat.com>
+Date: Fri, 13 Dec 2024 13:40:30 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 09/14] s390x/s390-skeys: prepare for memory devices
+Subject: Re: [PATCH v2 10/14] s390x/s390-virtio-ccw: prepare for memory devices
 To: David Hildenbrand <david@redhat.com>, qemu-devel@nongnu.org
 Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Halil Pasic <pasic@linux.ibm.com>,
@@ -88,7 +88,7 @@ Cc: qemu-s390x@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Janosch Frank <frankja@linux.ibm.com>, "Michael S. Tsirkin"
  <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>
 References: <20241008105455.2302628-1-david@redhat.com>
- <20241008105455.2302628-10-david@redhat.com>
+ <20241008105455.2302628-11-david@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -133,7 +133,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20241008105455.2302628-10-david@redhat.com>
+In-Reply-To: <20241008105455.2302628-11-david@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -145,7 +145,7 @@ X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.495,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -162,44 +162,93 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 08/10/2024 12.54, David Hildenbrand wrote:
-> With memory devices, we will have storage keys for memory that
-> exceeds the initial ram size.
+> Let's prepare our address space for memory devices if enabled via
+> "maxmem" and if we have CONFIG_MEM_DEVICE enabled at all. Note that
+> CONFIG_MEM_DEVICE will be selected automatically once we add support
+> for devices.
 > 
-> The TODO already states that current handling is subopimal,
-> but we won't worry about improving that (TCG-only) thing for now.
+> Just like on other architectures, the region container for memory devices
+> is placed directly above our initial memory. For now, we only align the
+> start address of the region up to 1 GiB, but we won't add any additional
+> space to the region for internal alignment purposes; this can be done in
+> the future if really required.
+> 
+> The RAM size returned via SCLP is not modified, as this only
+> covers initial RAM (and standby memory we don't implement) and not memory
+> devices; clarify that in the docs of read_SCP_info(). Existing OSes without
+> support for memory devices will keep working as is, even when memory
+> devices would be attached the VM.
+> 
+> Guest OSs which support memory devices, such as virtio-mem, will
+> consult diag500(), to find out the maximum possible pfn. Guest OSes that
+> don't support memory devices, don't have to be changed and will continue
+> relying on information provided by SCLP.
+> 
+> There are no remaining maxram_size users in s390x code, and the remaining
+> ram_size users only care about initial RAM:
+> * hw/s390x/ipl.c
+> * hw/s390x/s390-hypercall.c
+> * hw/s390x/sclp.c
+> * target/s390x/kvm/pv.c
 > 
 > Acked-by: Michael S. Tsirkin <mst@redhat.com>
 > Signed-off-by: David Hildenbrand <david@redhat.com>
 > ---
->   hw/s390x/s390-skeys.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   hw/s390x/s390-virtio-ccw.c | 23 ++++++++++++++++++++++-
+>   hw/s390x/sclp.c            |  6 +++++-
+>   2 files changed, 27 insertions(+), 2 deletions(-)
 > 
-> diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-> index bf22d6863e..e4297b3b8a 100644
-> --- a/hw/s390x/s390-skeys.c
-> +++ b/hw/s390x/s390-skeys.c
-> @@ -11,7 +11,7 @@
+> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+> index 749d46e700..2031c4cf29 100644
+> --- a/hw/s390x/s390-virtio-ccw.c
+> +++ b/hw/s390x/s390-virtio-ccw.c
+> @@ -156,6 +156,7 @@ static void s390_memory_init(MachineState *machine)
+>       MemoryRegion *sysmem = get_system_memory();
+>       MemoryRegion *ram = machine->ram;
+>       uint64_t ram_size = memory_region_size(ram);
+> +    uint64_t devmem_base, devmem_size;
 >   
->   #include "qemu/osdep.h"
->   #include "qemu/units.h"
-> -#include "hw/boards.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
->   #include "hw/qdev-properties.h"
->   #include "hw/s390x/storage-keys.h"
->   #include "qapi/error.h"
-> @@ -251,9 +251,9 @@ static bool qemu_s390_enable_skeys(S390SKeysState *ss)
->        *    g_once_init_enter() is good enough.
->        */
->       if (g_once_init_enter(&initialized)) {
-> -        MachineState *machine = MACHINE(qdev_get_machine());
-> +        S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
->   
-> -        skeys->key_count = machine->ram_size / TARGET_PAGE_SIZE;
-> +        skeys->key_count = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
->           skeys->keydata = g_malloc0(skeys->key_count);
->           g_once_init_leave(&initialized, 1);
+>       if (!QEMU_IS_ALIGNED(ram_size, 1 * MiB)) {
+>           /*
+> @@ -168,11 +169,31 @@ static void s390_memory_init(MachineState *machine)
+>           exit(EXIT_FAILURE);
 >       }
+>   
+> -    s390_set_memory_limit(s390ms, ram_size);
+> +    devmem_size = 0;
+> +    devmem_base = ram_size;
+> +#ifdef CONFIG_MEM_DEVICE
+> +    if (machine->ram_size < machine->maxram_size) {
+> +
+> +        /*
+> +         * Make sure memory devices have a sane default alignment, even
+> +         * when weird initial memory sizes are specified.
+> +         */
+> +        devmem_base = QEMU_ALIGN_UP(devmem_base, 1 * GiB);
+> +        devmem_size = machine->maxram_size - machine->ram_size;
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Shouldn't that rather be:
+
+            devmem_size = machine->maxram_size - devmem_base;
+
+instead?
+
+   Thomas
+
+
+> +    }
+> +#endif
+> +    s390_set_memory_limit(s390ms, devmem_base + devmem_size);
+>   
+>       /* Map the initial memory. Must happen after setting the memory limit. */
+>       memory_region_add_subregion(sysmem, 0, ram);
+>   
+> +    /* Initialize address space for memory devices. */
+> +#ifdef CONFIG_MEM_DEVICE
+> +    if (devmem_size) {
+> +        machine_memory_devices_init(machine, devmem_base, devmem_size);
+> +    }
+> +#endif /* CONFIG_MEM_DEVICE */
+> +
 
 
