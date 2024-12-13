@@ -4,89 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A773E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:35:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF08EE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:35:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM5pG-0006Kl-8H; Fri, 13 Dec 2024 08:35:26 -0500
+	id 1tM5pE-0006BK-Kg; Fri, 13 Dec 2024 08:35:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5p8-0005r0-7o
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:35:18 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5oB-0005EZ-DE
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:21 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5p6-0001PZ-I2
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:35:17 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-435004228c0so21181625e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:35:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5o8-00016Z-VC
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:18 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361dc6322fso11740655e9.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:34:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734096915; x=1734701715; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6C/IoCpQeK++/iWStUYGcPGDiX9QdJKmpK7/wwLjKlk=;
- b=flExZpeEYFqU72aQj8JnNR6DIRiyefj3nBKzniYE+OdiA+flQB5BsQRD8iq42iG/v9
- E6b2eyqP5BhbubM5iLcpuO1BG2LXbfuesWoIJNRuQ70+ScH8awn4meRd69rsMvjZO2H8
- GTuWWEWGxD5KCNttzpOgc4C6R9LmY6lWG6lJHhvQzzA7k8sfk7fJMEeZnCeR2Wfi01dh
- glzL5r1YLqUlk4/jwqKGBhv+W19EWgOn2EQRGx/c++T7r9QY1b8hzk5YWFHxcrWkPxlZ
- 0uLjKWeSYASOLlW/1oSV/IbqnHUvdtgDVEZJtZwqml4g+kSdcDy7vTk1s+9IPPm3uyBj
- H/tQ==
+ d=linaro.org; s=google; t=1734096853; x=1734701653; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=keEAo9CNDWNBW9lBlzlrISyY+AFYXI3pGoxc0E2DIgY=;
+ b=Krziu5I0VYSwqQ6p0LCHeMRO2LNvOJyQigB56OtHvOrwIsWRD2SS0miohndyzqsaXC
+ OdBlLqXMFpBR3s+RhkPNFJVtkDwhMd1WQeX04prbgifX+69uDK0mHPuhvm5ZJ1CN0E42
+ HtHSBLmyIwExRlYcgPPFsbJst2qqXv5CU8GqoYGUywbhI4bgA7brjYNbBZC+C1Swrk+q
+ xaYmx8dk1BoSfGqvDSMfAj5IOaVQr4mTJkW8asPdvFukk6BOveDnRt+F68IfW0YYvCSm
+ y0TrXH0XIN60K6Y/PfXIAkds9qIHg7SpnLmNptMkf2jrytnjQF1yctFi+0YU85OB5WR/
+ 96Jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734096915; x=1734701715;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6C/IoCpQeK++/iWStUYGcPGDiX9QdJKmpK7/wwLjKlk=;
- b=F6d74gs3CZnJk1+vqwdvAG4nYbPH3QmxH64AZ6gvxR8cVjI7gfL9RsX926fc+DRUxq
- 42yx8Y1hjvPMGQxxAqH/icUFMYixm9YrKDqSMRc7XZ0GH2I06pz9SCwRl4YPVOD24iaq
- LaveyY9PcHWoyiDCA45Lfg0PRWBDM1teKkgVsca1w7xfATwU0w5HwdhurzfTUJqGXHa/
- UXES3LyFMpvbqN4ETtA3ALdqn4Muod2pCq7gLCVAdSyYmkOulMOn4yEEi/PgoGOhXzMO
- FJPcuCjfo8nhmhxAfVKXqJczJixzlQk/MPACGl8CBcmvYGtw3s4Pn/xLCNpP+hLlDnbU
- 1swA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHDr42TBzczMovAplkgAKW/mo4hdT2MI+9JMHS2t6AQ4ru1gL6axaHW+XMv3PruzCPVijfZ/unCEJE@nongnu.org
-X-Gm-Message-State: AOJu0YxhnjswHI5PvAbXmtkK8RCZLTxKhrqI3azCKaDMUPpowpeBbVpJ
- lCTZskDiq18Nkbo/UV9fdtJeQlWYAw76cUrBIoasmQZBPapyyAqdGTfx94Yi6jY=
-X-Gm-Gg: ASbGnctuRi4/NRdZeY6qjbos58W7g3lJK21FROY5mqb/Az1kMMm0D4ayb+33YhWXhVY
- GaP1yTEytpBvyeCauWsDy4B9FIKe/c9HxIQBJ6emr+gzQXSHLLKHkzxlq5sf04QOZ7oYhBKcxI8
- ym965IInyZtCHq2iATMcGLCE0TylEXfxokoTfps0FGCVUIpxxdfOo5YgyC8uy15GT8wGmbQ+ux2
- J3Nfw+StF7vCKGurqxnhPcABsP6YavScQkKBw/4UlgOWukLrODJflEEpKQSmWj6T7ZakauCf60V
- nKIG/TZWZmAaMeOqNLTU+CvUYzrO1A==
-X-Google-Smtp-Source: AGHT+IFtazAlc26oYB8eOV3KJLmhO69qDo14/pB9SK0aySnbQHg0h+8/8tP3cwbbHbgCmaTNDdr8PA==
-X-Received: by 2002:a05:600c:1e19:b0:434:a734:d279 with SMTP id
- 5b1f17b1804b1-4362aa5005fmr27932675e9.16.1734096913625; 
- Fri, 13 Dec 2024 05:35:13 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1734096853; x=1734701653;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=keEAo9CNDWNBW9lBlzlrISyY+AFYXI3pGoxc0E2DIgY=;
+ b=ajZ1XvXrpygQeqH/ISLKArRhV6bW5ZyZsNKgKqhiKF/uZcRHPmwI5IEoWFc2aAZK5H
+ TX+G4b74wc/ystvDVRVaW/vGWYKcAkYizjcYXo07k8yiiuc6L1aw5eLa2xASAI7PxCJz
+ MlXn2yxUNz3cjvIz9PoIzqG4CFIK6Dw4VhTJph7fhtaDbXnh5TsoNaXIufcpRfIX8Qc2
+ By4sRS9iekR2kEeSanTJodIulsfnvfPknVA29q46FyIwK6NDao0HuKuPb8ZWUPgFpejN
+ eo7+/b8VCjDC4s1L/zfZCOe/LYMwZxBFD7MQr8v6CzDKq5QrZZICs/6kWww1MRUKnbYH
+ Q9RA==
+X-Gm-Message-State: AOJu0YyDE7/f0RPdlYTFnQocYBVw82JzxjdJ0Whf2sRt/8vULl+UH6/B
+ HN+95Y3VoNdA+GTDkpYMabY4mUzvOKCTF4gAH7V+6sr1mJ6Fb4z4de5QDH1rxeNgl78rwpq9mfK
+ T
+X-Gm-Gg: ASbGncsyq3BH3fX6XSrCo5OoXycbfiUD22Ps1uhnkJTfx3sqE1YluCOQD2S2MJ8EppQ
+ jB7ig4fEIrOj1hmu+Kf14u/ktENIGnosYEr5tar0uh1ZB3wMtgAqRLuV6xf4+KUqO4OW0rd89dQ
+ /RRmsangnPXYCTdi6x7czvY0DRdeK5u0ffUiSI7YQcOVhsBmTcQ2HQWYt8Gy70nDqWD0DVwKhaG
+ AZEyYZlrygGjm+NOfi5qKEvy1Z/sPx1Nq8cclavpML3exORf4ACLGDeYZJmeFq/xwedezId9eZh
+ FUDKEodaRRdzmZQ/FXXTI+nMytgwXVMdhheO
+X-Google-Smtp-Source: AGHT+IE0ffWZw+U60PDT7QBRhyibaA5YDxPBq0XXXZqasm/RJH5hNoTjSv/ogL3zZMijlrlO6a1i4Q==
+X-Received: by 2002:a5d:584b:0:b0:386:1cd3:8a09 with SMTP id
+ ffacd0b85a97d-38880abfd60mr2192970f8f.1.1734096853442; 
+ Fri, 13 Dec 2024 05:34:13 -0800 (PST)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824a5005sm7145418f8f.41.2024.12.13.05.35.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 05:35:13 -0800 (PST)
-Message-ID: <eb62155a-39ef-4931-898a-84fcc5a86243@linaro.org>
-Date: Fri, 13 Dec 2024 14:35:12 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/6] hw/pci: Have PCI_BUS implement
+ 5b1f17b1804b1-436256b4556sm48690705e9.33.2024.12.13.05.34.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 13 Dec 2024 05:34:13 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2 4/7] hw/pci: Have PCI_BUS implement
  TYPE_FW_CFG_DATA_GENERATOR_INTERFACE
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Jiahui Cen <cenjiahui@huawei.com>, qemu-devel@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>, Bernhard Beschow <shentey@gmail.com>
-References: <20241206181352.6836-1-philmd@linaro.org>
- <20241206181352.6836-4-philmd@linaro.org> <Z1wbODM1V5E7oCU6@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z1wbODM1V5E7oCU6@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Date: Fri, 13 Dec 2024 14:33:49 +0100
+Message-ID: <20241213133352.10915-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241213133352.10915-1-philmd@linaro.org>
+References: <20241213133352.10915-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,89 +101,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/12/24 12:32, Daniel P. Berrangé wrote:
-> On Fri, Dec 06, 2024 at 07:13:49PM +0100, Philippe Mathieu-Daudé wrote:
->> The FW_CFG_DATA_GENERATOR allows any object to produce
->                             ^
->                            ^^^
->                           ^^^^^  insert word 'interface'
-> 
->> blob of data consumable by the fw_cfg device. Implement
-> 
->   ^ 'a' as in 'a blob of...'
-> 
->> that for PCI bus objects.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/pci/pci.c | 37 +++++++++++++++++++++++++++++++++++++
->>   1 file changed, 37 insertions(+)
->>
->> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
->> index 1416ae202c3..8844251eceb 100644
->> --- a/hw/pci/pci.c
->> +++ b/hw/pci/pci.c
->> @@ -46,6 +46,7 @@
->>   #include "hw/pci/msix.h"
->>   #include "hw/hotplug.h"
->>   #include "hw/boards.h"
->> +#include "hw/nvram/fw_cfg.h"
->>   #include "qapi/error.h"
->>   #include "qemu/cutils.h"
->>   #include "pci-internal.h"
->> @@ -216,11 +217,41 @@ static uint16_t pcibus_numa_node(PCIBus *bus)
->>       return NUMA_NODE_UNASSIGNED;
->>   }
->>   
->> +static GByteArray *pci_bus_fw_cfg_gen_data(Object *obj, Error **errp)
->> +{
->> +    PCIBus *bus = PCI_BUS(obj);
->> +    GByteArray *byte_array;
->> +    uint64_t extra_hosts = 0;
->> +
->> +    if (!bus) {
->> +        return NULL;
->> +    }
-> 
-> Returning NULL without setting 'errp'.
-> 
-> On the one hand I could see returning NULL, without errp, as being
-> useful semantics for "I have no data to add currently". THe callers
-> don't appear to distinguish NULL without errp, from NULL with errp.
-> They just propagate a failure return code up the stack.
-> 
-> The API docs for 'get_data' method don't say you can return NULL
-> without setting errp either.
+The FW_CFG_DATA_GENERATOR interface allows any object to
+produce a blob of data consumable by the fw_cfg device.
+Implement that for PCI bus objects.
 
-Good catch. API updated here:
-https://lore.kernel.org/qemu-devel/20241213133352.10915-4-philmd@linaro.org/
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/pci/pci.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-Thanks,
-
-Phil.
-
-> 
->> +
->> +    QLIST_FOREACH(bus, &bus->child, sibling) {
->> +        /* look for expander root buses */
->> +        if (pci_bus_is_root(bus)) {
->> +            extra_hosts++;
->> +        }
->> +    }
->> +
->> +    if (!extra_hosts) {
->> +        return NULL;
-> 
-> Same.
-> 
->> +    }
->> +    extra_hosts = cpu_to_le64(extra_hosts);
->> +
->> +    byte_array = g_byte_array_new();
->> +    g_byte_array_append(byte_array,
->> +                        (const void *)&extra_hosts, sizeof(extra_hosts));
->> +
->> +    return byte_array;
->> +}
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 1416ae202c3..8844251eceb 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -46,6 +46,7 @@
+ #include "hw/pci/msix.h"
+ #include "hw/hotplug.h"
+ #include "hw/boards.h"
++#include "hw/nvram/fw_cfg.h"
+ #include "qapi/error.h"
+ #include "qemu/cutils.h"
+ #include "pci-internal.h"
+@@ -216,11 +217,41 @@ static uint16_t pcibus_numa_node(PCIBus *bus)
+     return NUMA_NODE_UNASSIGNED;
+ }
+ 
++static GByteArray *pci_bus_fw_cfg_gen_data(Object *obj, Error **errp)
++{
++    PCIBus *bus = PCI_BUS(obj);
++    GByteArray *byte_array;
++    uint64_t extra_hosts = 0;
++
++    if (!bus) {
++        return NULL;
++    }
++
++    QLIST_FOREACH(bus, &bus->child, sibling) {
++        /* look for expander root buses */
++        if (pci_bus_is_root(bus)) {
++            extra_hosts++;
++        }
++    }
++
++    if (!extra_hosts) {
++        return NULL;
++    }
++    extra_hosts = cpu_to_le64(extra_hosts);
++
++    byte_array = g_byte_array_new();
++    g_byte_array_append(byte_array,
++                        (const void *)&extra_hosts, sizeof(extra_hosts));
++
++    return byte_array;
++}
++
+ static void pci_bus_class_init(ObjectClass *klass, void *data)
+ {
+     BusClass *k = BUS_CLASS(klass);
+     PCIBusClass *pbc = PCI_BUS_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
++    FWCfgDataGeneratorClass *fwgc = FW_CFG_DATA_GENERATOR_CLASS(klass);
+ 
+     k->print_dev = pcibus_dev_print;
+     k->get_dev_path = pcibus_get_dev_path;
+@@ -232,6 +263,8 @@ static void pci_bus_class_init(ObjectClass *klass, void *data)
+ 
+     pbc->bus_num = pcibus_num;
+     pbc->numa_node = pcibus_numa_node;
++
++    fwgc->get_data = pci_bus_fw_cfg_gen_data;
+ }
+ 
+ static const TypeInfo pci_bus_info = {
+@@ -240,6 +273,10 @@ static const TypeInfo pci_bus_info = {
+     .instance_size = sizeof(PCIBus),
+     .class_size = sizeof(PCIBusClass),
+     .class_init = pci_bus_class_init,
++    .interfaces = (InterfaceInfo[]) {
++        { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
++        { }
++    }
+ };
+ 
+ static const TypeInfo cxl_interface_info = {
+-- 
+2.45.2
 
 
