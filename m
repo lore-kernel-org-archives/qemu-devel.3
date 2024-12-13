@@ -4,88 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 696DBE7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BFEE7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM25x-0000UW-BR; Fri, 13 Dec 2024 04:36:25 -0500
+	id 1tM2AB-0001ZH-VX; Fri, 13 Dec 2024 04:40:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tM25r-0000Ty-Cf
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:36:20 -0500
-Received: from esa10.hc1455-7.c3s2.iphmx.com ([139.138.36.225])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lizhijian@fujitsu.com>)
- id 1tM25o-0005Gk-T8
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:36:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
- d=fujitsu.com; i=@fujitsu.com; q=dns/txt; s=fj2;
- t=1734082577; x=1765618577;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=6NrpNnngy2DN9FFMrEyRuXx+lmv5gqBPAayUJXmUL/M=;
- b=JH6+92H/7fEQ9Nc3nOeVwzM2VAxLz6NlXoY6zT+rhC2w46dhqY9vC0Uy
- hRg9CjC70KU4kMXvdA3N/shORrJwNNS2iy1rnbzd6o5dhTa9tPPhJOq6T
- M93aFxeNW+8ClRRnNlERxgjG2E0/M1mQF6Vhtw5J82t3eh/Z+EBfnzEJ8
- xj8NSv2Y9MehB3RzDZVV7QQafEmjJyoADiKBWSxLfy0dmHhBG7q4NGDQd
- WmnZHo7kJm5zec8V8lon6NqM3uvv5sB4QSRJ+aw9AwNWj5S3dl7AmonyR
- hfJH1AVYVixUdKI2BIWi+DmrJFBMEUyD/G6zqjiYzqCuurusQc+jWkayk g==;
-X-CSE-ConnectionGUID: 5Yl8VDdZTum7XBnavF3dCg==
-X-CSE-MsgGUID: WZdWg6XbQrSEeocPTzL8Lg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="170951169"
-X-IronPort-AV: E=Sophos;i="6.12,230,1728918000"; d="scan'208";a="170951169"
-Received: from unknown (HELO oym-r1.gw.nic.fujitsu.com) ([210.162.30.89])
- by esa10.hc1455-7.c3s2.iphmx.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Dec 2024 18:36:09 +0900
-Received: from oym-m1.gw.nic.fujitsu.com (oym-nat-oym-m1.gw.nic.fujitsu.com
- [192.168.87.58])
- by oym-r1.gw.nic.fujitsu.com (Postfix) with ESMTP id AA3F8D480A
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 18:36:07 +0900 (JST)
-Received: from kws-ab4.gw.nic.fujitsu.com (kws-ab4.gw.nic.fujitsu.com
- [192.51.206.22])
- by oym-m1.gw.nic.fujitsu.com (Postfix) with ESMTP id 7F5CBD8B30
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 18:36:07 +0900 (JST)
-Received: from edo.cn.fujitsu.com (edo.cn.fujitsu.com [10.167.33.5])
- by kws-ab4.gw.nic.fujitsu.com (Postfix) with ESMTP id 0D40E6BD4B
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 18:36:07 +0900 (JST)
-Received: from FNSTPC.g08.fujitsu.local (unknown [10.167.135.44])
- by edo.cn.fujitsu.com (Postfix) with ESMTP id 3E0031A006C;
- Fri, 13 Dec 2024 17:36:06 +0800 (CST)
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tM2A8-0001Yd-Ct
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:44 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tM2A5-0006cf-AQ
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:44 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8BxIK8SAVxnsolWAA--.13530S3;
+ Fri, 13 Dec 2024 17:40:34 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMCxDuELAVxnQ8aBAA--.54481S7;
+ Fri, 13 Dec 2024 17:40:33 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>,
- Fan Ni <fan.ni@samsung.com>, linux-cxl@vger.kernel.org,
- Li Zhijian <lizhijian@fujitsu.com>
-Subject: [PATCH v2] hw/cxl: Fix msix_notify: Assertion `vector <
- dev->msix_entries_nr`
-Date: Fri, 13 Dec 2024 17:36:02 +0800
-Message-ID: <20241213093602.3248246-1-lizhijian@fujitsu.com>
-X-Mailer: git-send-email 2.41.0
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Subject: [PULL 05/18] hw/intc/loongarch_pch: Move some functions to file
+ loongarch_pic_common
+Date: Fri, 13 Dec 2024 17:40:14 +0800
+Message-Id: <20241213094027.1732484-6-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20241213094027.1732484-1-maobibo@loongson.cn>
+References: <20241213094027.1732484-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-TM-AS-Product-Ver: IMSS-9.1.0.1417-9.0.0.1002-28856.006
-X-TM-AS-User-Approved-Sender: Yes
-X-TMASE-Version: IMSS-9.1.0.1417-9.0.1002-28856.006
-X-TMASE-Result: 10--8.981400-10.000000
-X-TMASE-MatchedRID: IVNJzyZeXh7CVJdexVBqdn1zro62qhdCLL6mJOIs/vZGQgIVrmBL5G7l
- BX/37R4p+xFlvZshf1aUrbS7Rz/s6duWQuISDK/klTsGW3DmpUsWUg/hm489yFy92pa0KjKSZ28
- gEzxS4tKPfJJz7Ia9+rXYdqC9vAOOL/tBTZzO5Q0D2WXLXdz+AaGD6ovXqA23Cb7y9s8XSuQTgt
- 4grpaSCs2ghO0gXEiI8ypyOLdjkCpAh0h+ieLkqGe0R3NAF/chGB9/bxS68hM0DNPwjqLncDzdD
- +58t9bI7foLApH+eB4kZf7JZKlNJtgW4k6aveo4uLt50vtxBA4HyFMDF+j4Apsoi2XrUn/Jn6Kd
- MrRsL14qtq5d3cxkNYLH5oQAcCkqRf3IpRODLzw/eYK5BWAtfKcn2QlF2WYhxKtXrSwh7t8=
-X-TMASE-SNAP-Result: 1.821001.0001-0-1-22:0,33:0,34:0-0
-Received-SPF: pass client-ip=139.138.36.225;
- envelope-from=lizhijian@fujitsu.com; helo=esa10.hc1455-7.c3s2.iphmx.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMCxDuELAVxnQ8aBAA--.54481S7
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,115 +64,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Li Zhijian <lizhijian@fujitsu.com>
-From:  Li Zhijian via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This assertion always happens when we sanitize the CXL memory device.
-$ echo 1 > /sys/bus/cxl/devices/mem0/security/sanitize
+Move some common functions to file loongarch_pic_common.c, the common
+functions include loongarch_pic_common_realize(), property structure
+loongarch_pic_common_properties and vmstate structure
+vmstate_loongarch_pic_common.
 
-It is incorrect to register an MSIX number beyond the device's capability.
-
-Expand the device's MSIX number and use the enum to maintain the *USED*
-and MAX MSIX number
-
-Fixes: 43efb0bfad2b ("hw/cxl/mbox: Wire up interrupts for background completion")
-Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
-V2: just increase msix number and add enum to maintainer their values #
-Jonathan
----
- hw/cxl/cxl-device-utils.c   |  6 ++----
- hw/mem/cxl_type3.c          | 10 +++++-----
- include/hw/cxl/cxl_device.h |  7 +++++++
- 3 files changed, 14 insertions(+), 9 deletions(-)
+ hw/intc/loongarch_pch_pic.c    | 37 +-----------------------------
+ hw/intc/loongarch_pic_common.c | 41 ++++++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 36 deletions(-)
+ create mode 100644 hw/intc/loongarch_pic_common.c
 
-diff --git a/hw/cxl/cxl-device-utils.c b/hw/cxl/cxl-device-utils.c
-index 035d034f6d..bc2171e3d4 100644
---- a/hw/cxl/cxl-device-utils.c
-+++ b/hw/cxl/cxl-device-utils.c
-@@ -354,8 +354,6 @@ static void device_reg_init_common(CXLDeviceState *cxl_dstate)
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 64f30d8916..25c612b366 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -379,16 +379,7 @@ static void loongarch_pch_pic_reset(DeviceState *d)
+     s->int_polarity = 0x0;
+ }
  
- static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
- {
--    const uint8_t msi_n = 9;
+-static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
+-{
+-    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
 -
-     /* 2048 payload size */
-     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-                      PAYLOAD_SIZE, CXL_MAILBOX_PAYLOAD_SHIFT);
-@@ -364,8 +362,8 @@ static void mailbox_reg_init_common(CXLDeviceState *cxl_dstate)
-     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-                      BG_INT_CAP, 1);
-     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
--                     MSI_N, msi_n);
--    cxl_dstate->mbox_msi_n = msi_n;
-+                     MSI_N, CXL_MSIX_MBOX);
-+    cxl_dstate->mbox_msi_n = CXL_MSIX_MBOX;
-     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-                      MBOX_READY_TIME, 0); /* Not reported */
-     ARRAY_FIELD_DP32(cxl_dstate->mbox_reg_state32, CXL_DEV_MAILBOX_CAP,
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 5cf754b38f..f2f060ed9e 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -843,7 +843,6 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     ComponentRegisters *regs = &cxl_cstate->crb;
-     MemoryRegion *mr = &regs->component_registers;
-     uint8_t *pci_conf = pci_dev->config;
--    unsigned short msix_num = 6;
-     int i, rc;
-     uint16_t count;
+-    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
+-        error_setg(errp, "Invalid 'pic_irq_num'");
+-        return;
+-    }
+-}
+-
++#include "loongarch_pic_common.c"
+ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
+ {
+     LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(dev);
+@@ -417,32 +408,6 @@ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
  
-@@ -884,16 +883,17 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-                      &ct3d->cxl_dstate.device_registers);
+ }
  
-     /* MSI(-X) Initialization */
--    rc = msix_init_exclusive_bar(pci_dev, msix_num, 4, NULL);
-+    rc = msix_init_exclusive_bar(pci_dev, CXL_MSIX_MAX, 4, NULL);
-     if (rc) {
-         goto err_address_space_free;
-     }
--    for (i = 0; i < msix_num; i++) {
-+    for (i = 0; i < CXL_MSIX_MAX; i++) {
-         msix_vector_use(pci_dev, i);
-     }
- 
-     /* DOE Initialization */
--    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true, 0);
-+    pcie_doe_init(pci_dev, &ct3d->doe_cdat, 0x190, doe_cdat_prot, true,
-+                  CXL_MSIX_PCIE_DOE);
- 
-     cxl_cstate->cdat.build_cdat_table = ct3_build_cdat_table;
-     cxl_cstate->cdat.free_cdat_table = ct3_free_cdat_table;
-@@ -908,7 +908,7 @@ static void ct3_realize(PCIDevice *pci_dev, Error **errp)
-     if (rc) {
-         goto err_release_cdat;
-     }
--    cxl_event_init(&ct3d->cxl_dstate, 2);
-+    cxl_event_init(&ct3d->cxl_dstate, CXL_MSIX_EVENT_START);
- 
-     /* Set default value for patrol scrub attributes */
-     ct3d->patrol_scrub_attrs.scrub_cycle_cap =
-diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-index 561b375dc8..3f89b041ce 100644
---- a/include/hw/cxl/cxl_device.h
-+++ b/include/hw/cxl/cxl_device.h
-@@ -133,6 +133,13 @@ typedef enum {
-     CXL_MBOX_MAX = 0x20
- } CXLRetCode;
- 
-+enum {
-+    CXL_MSIX_PCIE_DOE = 0,
-+    CXL_MSIX_EVENT_START = 2,
-+    CXL_MSIX_MBOX = CXL_MSIX_EVENT_START + CXL_EVENT_TYPE_MAX,
-+    CXL_MSIX_MAX
+-static Property loongarch_pic_common_properties[] = {
+-    DEFINE_PROP_UINT32("pch_pic_irq_num", LoongArchPICCommonState, irq_num, 0),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static const VMStateDescription vmstate_loongarch_pic_common = {
+-    .name = "loongarch_pch_pic",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_UINT64(int_mask, LoongArchPICCommonState),
+-        VMSTATE_UINT64(htmsi_en, LoongArchPICCommonState),
+-        VMSTATE_UINT64(intedge, LoongArchPICCommonState),
+-        VMSTATE_UINT64(intclr, LoongArchPICCommonState),
+-        VMSTATE_UINT64(auto_crtl0, LoongArchPICCommonState),
+-        VMSTATE_UINT64(auto_crtl1, LoongArchPICCommonState),
+-        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPICCommonState, 64),
+-        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPICCommonState, 64),
+-        VMSTATE_UINT64(last_intirr, LoongArchPICCommonState),
+-        VMSTATE_UINT64(intirr, LoongArchPICCommonState),
+-        VMSTATE_UINT64(intisr, LoongArchPICCommonState),
+-        VMSTATE_UINT64(int_polarity, LoongArchPICCommonState),
+-        VMSTATE_END_OF_LIST()
+-    }
+-};
+-
+ static void loongarch_pch_pic_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+diff --git a/hw/intc/loongarch_pic_common.c b/hw/intc/loongarch_pic_common.c
+new file mode 100644
+index 0000000000..c8e0490d40
+--- /dev/null
++++ b/hw/intc/loongarch_pic_common.c
+@@ -0,0 +1,41 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++/*
++ * QEMU Loongson 7A1000 I/O interrupt controller.
++ * Copyright (C) 2024 Loongson Technology Corporation Limited
++ */
++
++static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
++{
++    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
++
++    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
++        error_setg(errp, "Invalid 'pic_irq_num'");
++        return;
++    }
++}
++
++static Property loongarch_pic_common_properties[] = {
++    DEFINE_PROP_UINT32("pch_pic_irq_num", LoongArchPICCommonState, irq_num, 0),
++    DEFINE_PROP_END_OF_LIST(),
 +};
 +
- typedef struct CXLCCI CXLCCI;
- typedef struct cxl_device_state CXLDeviceState;
- struct cxl_cmd;
++static const VMStateDescription vmstate_loongarch_pic_common = {
++    .name = "loongarch_pch_pic",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (const VMStateField[]) {
++        VMSTATE_UINT64(int_mask, LoongArchPICCommonState),
++        VMSTATE_UINT64(htmsi_en, LoongArchPICCommonState),
++        VMSTATE_UINT64(intedge, LoongArchPICCommonState),
++        VMSTATE_UINT64(intclr, LoongArchPICCommonState),
++        VMSTATE_UINT64(auto_crtl0, LoongArchPICCommonState),
++        VMSTATE_UINT64(auto_crtl1, LoongArchPICCommonState),
++        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPICCommonState, 64),
++        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPICCommonState, 64),
++        VMSTATE_UINT64(last_intirr, LoongArchPICCommonState),
++        VMSTATE_UINT64(intirr, LoongArchPICCommonState),
++        VMSTATE_UINT64(intisr, LoongArchPICCommonState),
++        VMSTATE_UINT64(int_polarity, LoongArchPICCommonState),
++        VMSTATE_END_OF_LIST()
++    }
++};
 -- 
-2.41.0
+2.43.5
 
 
