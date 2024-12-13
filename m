@@ -4,88 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC06E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:36:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94E3CE7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:43:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM5p4-0005f4-VG; Fri, 13 Dec 2024 08:35:15 -0500
+	id 1tM5wl-00048u-Md; Fri, 13 Dec 2024 08:43:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5o0-0005AW-NY
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:13 -0500
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tM5wQ-00047J-MP
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:42:54 -0500
+Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5ny-00015W-NG
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:08 -0500
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3862d16b4f5so1162860f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:34:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tM5wJ-0002xV-AI
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:42:48 -0500
+Received: by mail-yw1-x1133.google.com with SMTP id
+ 00721157ae682-6ef6ffcc2dcso20797807b3.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:42:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734096844; x=1734701644; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3yF4gTyIXghUKxGkr5yLxPBvl2lN3UWs2PgcMEYcsVo=;
- b=Qz6cua3o3GmLITMHIWaoM+dqq8LkublH2Ui8KZHaNkZOFBVG/oiJ3BVoBVeexanO0g
- o9mwRgf4s+rRjFufr+1g+xq8dVk2yci8waQm/POFqLfW8tXRFuhMtzbT31nAHLmRHvfd
- pAzY7xFwuSHqBe8VgPQC1XdpnbF6p9/6bIMkWAzC4xpM8QhMRbE/0TP53pnsLSxofAXU
- Gcxb/cEWQ3hU3q+BnU2zbaaHpWdbmxa5p0xLaxfyFO2sx9/Y7r9k4cuEX41FYKfaEyEd
- ogiksFdAwCr+WgiOge+jlEJrZjGvIXmOGQs+hv80jBQHCZ83Nczo7vPnNSLDLESfFi8b
- acww==
+ d=linaro.org; s=google; t=1734097360; x=1734702160; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=E1jBTIw2Sl//NPOzTInPBD9Stv0+pQd5hXrYIhxDQr8=;
+ b=wK3YLoy5tckclS2OI4ApkO7KhyIRUx3It2EzI8vrekhl35SiHdoTuFNL2HQMHGgGFe
+ UrZIqNqRlFzjnasjAXjYlV5XLHQ82NddT9KQaYwD6rAOAMHFyUaBl2yg+JKHtFSjws04
+ x3W+n2ghdt5kVhdPLYCevGqwRFOsGj6EjayomvOlPiJ2Ev9SsBa5VI0UoF4+eRG9msgb
+ TZGzwSinI83XjI4H68PL0MBSeAgwC8PTM2fK1FIvVlvlSJAGy/UXb1SuqHRABvWluScF
+ QHUwOv1Dk94Mn6PEfjrTZ+6hdXD6ROIVraCD15aL+5HsvDIflAnyJa64EZ/TeRSDk7aj
+ X9oA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734096844; x=1734701644;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3yF4gTyIXghUKxGkr5yLxPBvl2lN3UWs2PgcMEYcsVo=;
- b=St4hgbdYdkV4D3gpPdoAbyn5lYixI5FtiqoTzdu7cU5irnm7Rk4jfTf567S51Vxmmg
- tg0WTop5xJRJONLoePecHc+yYy7wGJZSpS3+FErO/NkAP4zThiVjKd5VpqoSi+XJ++VJ
- HF4D1iBwoVZz/7dUTUspOZbEvjlq8lOWxUIkZ0efEr3mXm/otq/+EJUgSsELbgRdHYA+
- cZNBXgKr+ftSAAmix4cD6oFEKnc33oLpf2vFAU1Uf+vftRMEsGw/0HMyOIOOxb5jvibi
- yanSXirWSCCtkvws5TaQ0fmxuE9jqPnbgcgGOqStIKqBUlBxrukGIpyQ5qGNQP0yD1Sw
- CWlw==
-X-Gm-Message-State: AOJu0YwNkrLRFmQ2g9GZ6gdK5kMeh0N7C2ikkoV86GKBya/fUwsW8CS7
- 5hJT3L+T29P9ZdEK1OH9Waa5g+h8b49357v7hiFhRDUdKXLWxR4wNcFH4ziDpdIozStEDukxp98
- o
-X-Gm-Gg: ASbGnct874FpCyxIUzEQZqf58LHCYfrf4GOP79UCkhw1vduYTngb9dsGBqvKk/9DnHU
- XMK8xlGok3ujFHK8b3pWW3rqPJfAzMxFQXIkEa1Npk7IVI0v4hKUTSiXFAkhYG/5YmW4QiKl0IL
- K4dDPPwxEQEp9hrXSed39o6G5WJokOjxHbtk9dmdOY2F/EX/NzRZd00C82Mmnap/TYCbzbB288T
- wtK9y+Zvmsmq/rZ0tVk4VQi2WWeA3/4UN5ZMZ9DuWK/kv/P6G3Msva4izeFgvC+CQoYR8tQDJKU
- Gvvugn46jA/eh2lMp7qXxHmRndfeVOLcGzgk
-X-Google-Smtp-Source: AGHT+IEjTQJud7HmuB8/EGY4i4Ze6Zwa+TKzED1E3xO8dWvKlxSgYnShXY87DFpU7p00buQ80O1lxA==
-X-Received: by 2002:a05:6000:491b:b0:386:3d27:b4f0 with SMTP id
- ffacd0b85a97d-38788805406mr6166037f8f.14.1734096844432; 
- Fri, 13 Dec 2024 05:34:04 -0800 (PST)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38782521dfesm6969358f8f.107.2024.12.13.05.34.03
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 05:34:04 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/7] hw/nvram/fw_cfg: Pass QOM parent to
- fw_cfg_add_file_from_generator()
-Date: Fri, 13 Dec 2024 14:33:47 +0100
-Message-ID: <20241213133352.10915-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241213133352.10915-1-philmd@linaro.org>
-References: <20241213133352.10915-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1734097360; x=1734702160;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E1jBTIw2Sl//NPOzTInPBD9Stv0+pQd5hXrYIhxDQr8=;
+ b=peEoxVbP0UUwutJxoE5h0sO/54Rru/55xJ69EJXxgOIZrUW2T7hJlPfHy7lBt0Iwam
+ l4M/3YWjHFpYs0auBiM44bU9KlTszF+LuTlpEdXmHfja7wsdjfvErCzV56ehWT8y+62c
+ B/b01NGV4Pmo8OSZklpOcsrFSiUGFVONwpvVA2KhJ/yQfyu5sq4VuhEAL3vkDezr1NaQ
+ XsRccvHe82hdo8ug4mVDaw/SHiTB8NT1z2SR4mNszuVR0fo9SSOEWcazxa/dmu4HKzuO
+ wzNztGk3PnRa3sZu+IoK9ICkIxip2LHs0yeznIXWeVsy2zeB/oZufsuNi+p/Toak7sdt
+ pTBg==
+X-Gm-Message-State: AOJu0YzRZg80QgPLmvRIz1XWS1LiM/JgR/Jn1mD6NnrrM+4DFAtbAD/T
+ ZmhNZZRbSrsTQwubUYJJVQJKIVHluY1/7RpK/eAUdgWaseF+RzYgiK99d7Y3O0ujxmUvd5CD2wM
+ 5kX9fZCl88sR2t4cATvViy8LFBQhuVZ4OEVD0Lw==
+X-Gm-Gg: ASbGncvRnGu1OUZjUPcP6Kt7hfcuPdKZnFzSVnetQoEKK+skBwwoeFdTzkd2bIy05BE
+ 1g30nmm6WPwSl3xu8An72kCpVVbnoPp+iSxErj/Q=
+X-Google-Smtp-Source: AGHT+IGzCqGrsr3B0BDyk/NAzfQlSG6Ef+zDEuIzcu3DiWeOeZumKC/zUvulMqg+Od7mvfXXOqib3s29qiBMdIeelF8=
+X-Received: by 2002:a05:690c:6ac3:b0:6ee:4855:45de with SMTP id
+ 00721157ae682-6f275c4ed77mr38076327b3.9.1734097360723; Fri, 13 Dec 2024
+ 05:42:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
+References: <20241211163036.2297116-1-richard.henderson@linaro.org>
+In-Reply-To: <20241211163036.2297116-1-richard.henderson@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Dec 2024 13:42:29 +0000
+Message-ID: <CAFEAcA_B50u-57tv4DAEG7wdE7FRSay0VzrCwC2S1Vv4iKLwJw@mail.gmail.com>
+Subject: Re: [PATCH v3 00/69] target/arm: AArch64 decodetree conversion,
+ final part
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,98 +90,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently fw_cfg_add_file_from_generator() is restricted
-to command line created objects which reside in the
-'/objects' QOM container. In order to extend to other
-types of containers, pass the QOM parent by argument.
+On Wed, 11 Dec 2024 at 16:42, Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> Finish the conversion of all aarch64 instructions to decodetree.
+>
+> Changes for v3:
+>   - Fix decode for f16 fsqrt (vector) in patch 23, prior to conversion.
+>     This is the only patch without R-B.
+>
+>
+> r~
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
----
- include/hw/nvram/fw_cfg.h | 10 ++++++----
- hw/nvram/fw_cfg.c         | 11 ++++++-----
- system/vl.c               |  3 ++-
- 3 files changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 14e68966c59..fcb06f18cc3 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -294,11 +294,12 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
-  * fw_cfg_add_file_from_generator:
-  * @s: fw_cfg device being modified
-  * @filename: name of new fw_cfg file item
-- * @gen_id: name of object implementing FW_CFG_DATA_GENERATOR interface
-+ * @part: name of object implementing FW_CFG_DATA_GENERATOR interface
-+ * @parent: the object in which to resolve the @part
-  * @errp: pointer to a NULL initialized error object
-  *
-  * Add a new NAMED fw_cfg item with the content generated from the
-- * @gen_id object. The data generated by the @gen_id object is copied
-+ * @part object. The data generated by the @part object is copied
-  * into the data structure of the fw_cfg device.
-  * The next available (unused) selector key starting at FW_CFG_FILE_FIRST
-  * will be used; also, a new entry will be added to the file directory
-@@ -307,8 +308,9 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
-  *
-  * Returns: %true on success, %false on error.
-  */
--bool fw_cfg_add_file_from_generator(FWCfgState *s, const char *filename,
--                                    const char *gen_id, Error **errp);
-+bool fw_cfg_add_file_from_generator(FWCfgState *s,
-+                                    Object *parent, const char *part,
-+                                    const char *filename, Error **errp);
- 
- /**
-  * fw_cfg_add_extra_pci_roots:
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index fe3b86135a7..b94cd27bd85 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1027,22 +1027,23 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename,
-     return NULL;
- }
- 
--bool fw_cfg_add_file_from_generator(FWCfgState *s, const char *filename,
--                                    const char *gen_id, Error **errp)
-+bool fw_cfg_add_file_from_generator(FWCfgState *s,
-+                                    Object *parent, const char *part,
-+                                    const char *filename, Error **errp)
- {
-     FWCfgDataGeneratorClass *klass;
-     GByteArray *array;
-     Object *obj;
-     gsize size;
- 
--    obj = object_resolve_path_component(object_get_objects_root(), gen_id);
-+    obj = object_resolve_path_component(parent, part);
-     if (!obj) {
--        error_setg(errp, "Cannot find object ID '%s'", gen_id);
-+        error_setg(errp, "Cannot find object ID '%s'", part);
-         return false;
-     }
-     if (!object_dynamic_cast(obj, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE)) {
-         error_setg(errp, "Object ID '%s' is not a '%s' subclass",
--                   gen_id, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE);
-+                   part, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE);
-         return false;
-     }
-     klass = FW_CFG_DATA_GENERATOR_GET_CLASS(obj);
-diff --git a/system/vl.c b/system/vl.c
-index f103532a9a1..4a370da624a 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1184,7 +1184,8 @@ static int parse_fw_cfg(void *opaque, QemuOpts *opts, Error **errp)
-         size = strlen(str); /* NUL terminator NOT included in fw_cfg blob */
-         buf = g_memdup(str, size);
-     } else if (nonempty_str(gen_id)) {
--        if (!fw_cfg_add_file_from_generator(fw_cfg, name, gen_id, errp)) {
-+        if (!fw_cfg_add_file_from_generator(fw_cfg, object_get_objects_root(),
-+                                            gen_id, name, errp)) {
-             return -1;
-         }
-         return 0;
--- 
-2.45.2
 
+Applied to target-arm.next, thanks.
+
+-- PMM
 
