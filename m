@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4015EE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:37:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D976E77183
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB6m-0005sh-QH; Fri, 13 Dec 2024 14:13:52 -0500
+	id 1tMBTJ-0001Yj-Fx; Fri, 13 Dec 2024 14:37:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB6k-0005fz-2F
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:13:50 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ id 1tMBTG-0001OB-4M
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:37:06 -0500
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB6h-0007Sy-IX
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:13:49 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eb7f3b1342so910410b6e.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:13:47 -0800 (PST)
+ id 1tMBTD-0005D2-Se
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:37:05 -0500
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-3eb7ecc3c54so1134603b6e.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:37:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117226; x=1734722026; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734118622; x=1734723422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6I71WCIZYeQ5yV8uCldLsOTnUpTDKGYy0sk8GaKQTI8=;
- b=Cp97yayDM4zb9c9kRp16YDDMfoZLMRp6QXyG0Z2dgm+1SREITx+uUauiHPi2rNoby6
- lRSc5RncSifJ2Au8JiHt1d5zotJYrCrXFIaaCa3sWeYlmgMwOGdpXaiNjteFQUx/Zv9h
- j4GojxcE4lPPsWVQDzVAQ2dei5OPWTE/vFPQQiQfqN6epy4btllB5+08/BePd48Dmmu2
- xWON4gq45nEqfA3f5T0B8RwqWg6q1g5DInmnWw2WuBCfBAu45gooS79mW96t0JYJ1w7S
- JO9EX2IHXHYGnh76ymPl44/TOi4ZmvD+WjXojl0+mQozACSwjmS+eqFEw15TZwMGFK+b
- mxPA==
+ bh=LHgc1l1qpRSvTvA+hPA/du3JarE2ikdn84gpIsEZ7/E=;
+ b=iS+2DhVNN3hRQAmnW2XhE5lHqcctXIl+XX4NXn/nRyVqcgpBBT3Ykv7td6H95/2Gzu
+ OJ48oGovvPCwWZOO7vrpMJSh4MeXqH3MCA2DjUtfFr++sgHdgTYSrNJ4x0hsv1biCc/c
+ HGVzYmikJ9IXP/pcaiQqwxktZUhwI1nZ4fsbBS4pbDcLTUgHVgBS/Mn0RtWZjD6Bzzcp
+ 8fr9mxb0BwpdVWLvjKpOLfJ7IafmwRD12KpmilyugHxol7AFQYxRRqouK8VCKFPy5Nfm
+ tAOxUHJFIXvOoLBe6Ue9a3eeRUuSrdY7v1evxa1DiaZ1hZW/SMgM5lPsvpCI4nSXK/xe
+ EWzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117226; x=1734722026;
+ d=1e100.net; s=20230601; t=1734118622; x=1734723422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6I71WCIZYeQ5yV8uCldLsOTnUpTDKGYy0sk8GaKQTI8=;
- b=H7bm7jtoU48FqrZwCKw23bm87+RZEEBNC1HLxaEYpnU2gmjt8OWoXmlpMpmpxLH9Vm
- FunbFxK+y+1D7fl8Fia689YBihbuw2CXc5wN4LoX9LfdBe31Po50Fltw2IFVMbVkRaFW
- PKbdaAuz1efHIRaXzzh1+3l0q2nxB9Ea4UwGYYzkBfLdQ1hXcQ4CdafsmG7LJ4Snranr
- JlRyJg3byyhfgFJYe/3bLK6+k6lYpwJRScm/7O/fpC/U+UvumFRxv3a7k/ODG8SoXLye
- UIwHBJU+jKgTKeznJqSakkdCBU/2eZp21s+f2SP+yh0zFQxiebNbtstJnzy4Z+pXnOwA
- Sb2A==
-X-Gm-Message-State: AOJu0YyiaiCnT6xnIDwtG4P2XAzMgWT2uHsmhcrrJfn+7g+LjzFWBkYg
- fUUEb+Agrc5SeChwnfD8XknCw3mD+xpXk0sjoJUxxP0CX3equ/RGwPRyhnwMUmGIO9WjXZdp3pn
- P4oRfK8yt
-X-Gm-Gg: ASbGnctgPrXcBlHkQagXzzDqXzm+TJ2St2DKu6+dMm9u0xAXFaV8OLT+Z8SuZ0Wwl+Z
- 62BPxHbRP3kKo92ClGVVjizZ5yAha9d2f9y7M5eEWXnSiv82O5xDiE8DlnSWBNf1qHMKFyBh1hl
- mhHZezGks7W7c931D5JXV6CYwCuQfW5By1/+9C9lyD/9eZg2Y/H7jgFzgcwNoZDbPq4T3sKv2uf
- sIvo/R2tw2+R71Qs5CDwlRO2Sj8vhHVZ4np1A5YbwOq6rEGYI/CifFpm+esT7XW
-X-Google-Smtp-Source: AGHT+IG00GnozzUOWoDNKsIC8Bt4iAeF/clMgZ0ktCIKKzUbT5Lx2a2RqPw+0UW9rrSl7ySGbRisww==
-X-Received: by 2002:a05:6808:2208:b0:3eb:4b4c:80d8 with SMTP id
- 5614622812f47-3eba65ba0admr1866208b6e.0.1734117226116; 
- Fri, 13 Dec 2024 11:13:46 -0800 (PST)
+ bh=LHgc1l1qpRSvTvA+hPA/du3JarE2ikdn84gpIsEZ7/E=;
+ b=bN+hRlWIzypuc5hdgt3SvlgMMsscbqK0O8+IqyXf8CfQL3kmQ7k6LOpcSSkkzYqUjL
+ Deharh/myCQxKlT+qmjBtrgmwM3SUWHoBRgzFkZwbQ9atzVD9JplPiXJtGl2Bdk6sYL7
+ W1ct84l4KUviUES6Ifa6NeBAd0pbq226peQSNRl6HWdN/fQdB8hXp4/iQW3xYZpj73Sd
+ lZ7j3tQlMPVayWoAVcQM4sYGdh4qtDLb8Af7xI/SxI6gTc1/7JWKZUaoqabhJl0PcxWj
+ TRlmpJsOAcbevhtpOLSOGVP9SLNvkzLBgWHFwcv6fc0DhW6eWBaL4BacXufYZ/RNF21v
+ waaA==
+X-Gm-Message-State: AOJu0Yy7IushDePyMys1NHJZm/6s/fvXaL23SJ7E4HErmMb5xV41NR+T
+ +nJfFruLJUEZuBlmZDuqTmwxQq+PnCVw1IO+qfouDUjJAVMU279rXiKiTf4xnvxkMrBDgbWnLtD
+ 48cin4okQ
+X-Gm-Gg: ASbGncsHcQUXtC14nLoiNrCoTnZfyElu0kh9AsnLvudJkJOEWaLPYNGV1KJKiy9SaDx
+ AYFjT9T+DRzwEmJaJYdIiz19a0gmWVrAlkjMFQmqX2ZjFNGgaXK20yl5mlr9tfm9Pfvg34jinYi
+ nubtAYj1XyMJZ20vnLmNYyMiNnYtjpNqTvd7OMY/HqeSP7lEzXf4DSp97BTNY9VR+Vk4JAqahFu
+ dKAZu5pNRREGk6taGoBX8vP86dv48KgM743598wL5eTTCagaUsLzEmsQRx0GXfP
+X-Google-Smtp-Source: AGHT+IFG7GCxsgRnm6iDR7NRyLUgDqn6xqLfITFvZAApZrlBiMdjU6ZI9fQftE2p7wcu46JTRRbPxw==
+X-Received: by 2002:a05:6871:4309:b0:29f:9554:9b94 with SMTP id
+ 586e51a60fabf-2a3ac6c3984mr2175028fac.18.1734116890717; 
+ Fri, 13 Dec 2024 11:08:10 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.13.44
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:13:45 -0800 (PST)
+ Fri, 13 Dec 2024 11:08:10 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:Xilinx ZynqMP and...)
-Subject: [PATCH 39/71] hw/misc/xlnx-versal-trng: Constify trng_props
-Date: Fri, 13 Dec 2024 13:07:13 -0600
-Message-ID: <20241213190750.2513964-44-richard.henderson@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PULL 4/4] target/sparc: Use memcpy() and remove memcpy32()
+Date: Fri, 13 Dec 2024 13:06:38 -0600
+Message-ID: <20241213190750.2513964-9-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,39 +101,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use DEFINE_PROP_UNSIGNED instead of DEFINE_PROP_UINT64
-so that we can set the PropertyInfo during initialization,
-instead of updating within trng_class_init.
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+Rather than manually copying each register, use
+the libc memcpy(), which is well optimized nowadays.
+
+Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241205205418.67613-1-philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/misc/xlnx-versal-trng.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/sparc/win_helper.c | 26 ++++++++------------------
+ 1 file changed, 8 insertions(+), 18 deletions(-)
 
-diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
-index 86905479b8..2f6af4f680 100644
---- a/hw/misc/xlnx-versal-trng.c
-+++ b/hw/misc/xlnx-versal-trng.c
-@@ -660,8 +660,9 @@ static const PropertyInfo trng_prop_fault_events = {
+diff --git a/target/sparc/win_helper.c b/target/sparc/win_helper.c
+index b53fc9ce94..0c4b09f2c1 100644
+--- a/target/sparc/win_helper.c
++++ b/target/sparc/win_helper.c
+@@ -24,29 +24,19 @@
+ #include "exec/helper-proto.h"
+ #include "trace.h"
  
- static PropertyInfo trng_prop_uint64; /* to extend qdev_prop_uint64 */
+-static inline void memcpy32(target_ulong *dst, const target_ulong *src)
+-{
+-    dst[0] = src[0];
+-    dst[1] = src[1];
+-    dst[2] = src[2];
+-    dst[3] = src[3];
+-    dst[4] = src[4];
+-    dst[5] = src[5];
+-    dst[6] = src[6];
+-    dst[7] = src[7];
+-}
+-
+ void cpu_set_cwp(CPUSPARCState *env, int new_cwp)
+ {
+     /* put the modified wrap registers at their proper location */
+     if (env->cwp == env->nwindows - 1) {
+-        memcpy32(env->regbase, env->regbase + env->nwindows * 16);
++        memcpy(env->regbase, env->regbase + env->nwindows * 16,
++               sizeof(env->gregs));
+     }
+     env->cwp = new_cwp;
  
--static Property trng_props[] = {
--    DEFINE_PROP_UINT64("forced-prng", XlnxVersalTRng, forced_prng_seed, 0),
-+static const Property trng_props[] = {
-+    DEFINE_PROP_UNSIGNED("forced-prng", XlnxVersalTRng, forced_prng_seed,
-+                         0, trng_prop_uint64, uint64_t),
-     DEFINE_PROP_UINT32("hw-version", XlnxVersalTRng, hw_version, 0x0200),
-     DEFINE_PROP("fips-fault-events", XlnxVersalTRng, forced_faults,
-                 trng_prop_fault_events, uint32_t),
-@@ -694,7 +695,6 @@ static void trng_class_init(ObjectClass *klass, void *data)
-     /* Clone uint64 property with set allowed after realized */
-     trng_prop_uint64 = qdev_prop_uint64;
-     trng_prop_uint64.realized_set_allowed = true;
--    trng_props[0].info = &trng_prop_uint64;
- 
-     device_class_set_props(dc, trng_props);
+     /* put the wrap registers at their temporary location */
+     if (new_cwp == env->nwindows - 1) {
+-        memcpy32(env->regbase + env->nwindows * 16, env->regbase);
++        memcpy(env->regbase + env->nwindows * 16, env->regbase,
++               sizeof(env->gregs));
+     }
+     env->regwptr = env->regbase + (new_cwp * 16);
  }
+@@ -361,8 +351,8 @@ void cpu_gl_switch_gregs(CPUSPARCState *env, uint32_t new_gl)
+     dst = get_gl_gregset(env, env->gl);
+ 
+     if (src != dst) {
+-        memcpy32(dst, env->gregs);
+-        memcpy32(env->gregs, src);
++        memcpy(dst, env->gregs, sizeof(env->gregs));
++        memcpy(env->gregs, src, sizeof(env->gregs));
+     }
+ }
+ 
+@@ -393,8 +383,8 @@ void cpu_change_pstate(CPUSPARCState *env, uint32_t new_pstate)
+         /* Switch global register bank */
+         src = get_gregset(env, new_pstate_regs);
+         dst = get_gregset(env, pstate_regs);
+-        memcpy32(dst, env->gregs);
+-        memcpy32(env->gregs, src);
++        memcpy(dst, env->gregs, sizeof(env->gregs));
++        memcpy(env->gregs, src, sizeof(env->gregs));
+     } else {
+         trace_win_helper_no_switch_pstate(new_pstate_regs);
+     }
 -- 
 2.43.0
 
