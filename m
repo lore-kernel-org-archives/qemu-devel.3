@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B163FE77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74665E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:23:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLvHL-00075l-Ja; Thu, 12 Dec 2024 21:19:43 -0500
+	id 1tLvGu-0006UD-EG; Thu, 12 Dec 2024 21:19:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHI-0006wP-6y
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvGt-0006TY-5D
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHB-0007wF-8K
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:39 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvGr-0007tz-PS
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:19:14 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734056372;
+ s=mimecast20190719; t=1734056353;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WYzZa6H0Di6jRkZtfyzWBBIO1FyxD11SD5gjCe7oZpg=;
- b=Hyh4WaDAp+ZHLXBODVftBRiL5JhIOGckxCn/xISaQQbA4BilWmppGoPlkxJIN42SgKAP34
- hrmty8JBfDIk5Cnlh2u2+F0zYd8q3gskuxvTBNgVf6a5yndX9h3iTSuF8l+bq1tOM62GPC
- 2ULjd6uys34sBYjIYL/MPGzLGZ0CYfA=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lvznXCyynZtSUaJmmaJzgBd7MJtVF6rvRBAF1JdsmhU=;
+ b=Mw/QUC9pZDzqg7XqdxlfowvwHrAXzD3GxRgUkAc3LpwAJsFonSgjs00lHKwSb/VPnVAwRm
+ lFc1PUF32aEaklfrjjioq8QT1yM7ai74v00ztXFh6DtNUMeG8EO9YxBXZlKMODZicZPosP
+ MtXB9g0nhUPdlQLlIwT1BiTySiSmDx0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-385-sDWP4VmHNY-7v08Q2SWP3g-1; Thu,
- 12 Dec 2024 21:19:29 -0500
-X-MC-Unique: sDWP4VmHNY-7v08Q2SWP3g-1
-X-Mimecast-MFC-AGG-ID: sDWP4VmHNY-7v08Q2SWP3g
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-80-Q7D_SD60MPa4932dML9GCg-1; Thu,
+ 12 Dec 2024 21:19:09 -0500
+X-MC-Unique: Q7D_SD60MPa4932dML9GCg-1
+X-Mimecast-MFC-AGG-ID: Q7D_SD60MPa4932dML9GCg
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 36EFA19560B3; Fri, 13 Dec 2024 02:19:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 885FC1956095; Fri, 13 Dec 2024 02:19:08 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 56FE1195605A; Fri, 13 Dec 2024 02:19:26 +0000 (UTC)
+ id 25CE5195605A; Fri, 13 Dec 2024 02:19:04 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 12/23] docs/qapidoc: add visit_paragraph() method
-Date: Thu, 12 Dec 2024 21:18:15 -0500
-Message-ID: <20241213021827.2956769-13-jsnow@redhat.com>
+Subject: [PATCH 05/23] qapi/schema: add __repr__ to QAPIDoc.Section
+Date: Thu, 12 Dec 2024 21:18:08 -0500
+Message-ID: <20241213021827.2956769-6-jsnow@redhat.com>
 In-Reply-To: <20241213021827.2956769-1-jsnow@redhat.com>
 References: <20241213021827.2956769-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -83,35 +83,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This transforms "formerly known as untagged sections" into our pure
-intermediate rST format. These sections are already pure rST, so this
-method doesn't do a whole lot except ensure appropriate newlines.
+Makes debugging far more pleasant when you can just print(section) and
+get something reasonable to display.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ scripts/qapi/parser.py | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 85c7ce94564..40c02dd413f 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -127,6 +127,15 @@ def ensure_blank_line(self) -> None:
+diff --git a/scripts/qapi/parser.py b/scripts/qapi/parser.py
+index fd841725527..3c88f9c7d38 100644
+--- a/scripts/qapi/parser.py
++++ b/scripts/qapi/parser.py
+@@ -670,6 +670,9 @@ def __init__(
+             # section text without tag
+             self.text = ''
  
-     # Transmogrification helpers
++        def __repr__(self) -> str:
++            return f"<QAPIDoc.Section tag={self.tag!r} text={self.text!r}>"
++
+         def append_line(self, line: str) -> None:
+             self.text += line + '\n'
  
-+    def visit_paragraph(self, section: QAPIDoc.Section) -> None:
-+        # Squelch empty paragraphs.
-+        if not section.text:
-+            return
-+
-+        self.ensure_blank_line()
-+        self.add_lines(section.text, section.info)
-+        self.ensure_blank_line()
-+
-     def preamble(self, ent: QAPISchemaEntity) -> None:
-         """
-         Generate option lines for qapi entity directives.
 -- 
 2.47.0
 
