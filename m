@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E03FE77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:45:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82C6FE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:45:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9ZZ-0006eg-2y; Fri, 13 Dec 2024 12:35:30 -0500
+	id 1tM9aH-00008f-BE; Fri, 13 Dec 2024 12:36:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Xs-00086M-1W
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:45 -0500
+ id 1tM9YB-0000RV-LA
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:06 -0500
 Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Xo-0001hk-FY
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:43 -0500
+ id 1tM9Y5-0001lM-Br
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:03 -0500
 Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3862f32a33eso985716f8f.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:39 -0800 (PST)
+ ffacd0b85a97d-386329da1d9so1000918f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111219; x=1734716019; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111234; x=1734716034; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DrOb7G+x5wrICqjleH3Ihe/BQVYZk17MYJ5JNKUJIEk=;
- b=A5M3UJnDAEFSZgfBIoYae3NreSTkqM6sjITVgkT+VRuhCrcJjUf5HdahUy3j3IUHU3
- 1FgZkjqEgo+dGNB1uELaO8WFRQoybP1adVh9h3M4BObhSwxdGYaobNS26DyiwszpAYO5
- KtHV0nOqU8ZsX4Qc5H5I1uq4dKIFSNiAOI1M5DlkdDSj+DPEJdCE3D45XjpxipxOgKo5
- ZzHn/ATl8b+3WXgfXv2Xyd9+rSex0Szx+YC2niN0RJ79fL3WbylYR+TLVNkYAQZmNVjR
- ZU7VA0Lx15MQz65G30amm596YZkvPP9syCEe94BIMYt1Hih+lxUmQwHbJDLdCimp2YYz
- 2cGA==
+ :reply-to; bh=Qq5JezWAvvQQNLy9rclqYIOw0RJcJBgtsySv4HgTsTw=;
+ b=onjVAfx1P8QWMjeLGXx1+nU7RHPzpN8TE2p12h/p9bxkrK3FY5r/LoKjBdYhd4KBaj
+ wrt1qFGw68+/PK8beYoAHIm1bG23czw8M2pX//r8TOy5U3OcwiKvPXyTgRvBk/oSOBc8
+ RXfNb9TF+MP0TIpPuvY4wjDoRJJOd5uPB4szI41Rtb8VpPwgK6EEjpGf3S/s+9MS9gKZ
+ 2R6UMat94iNF+9nHjLzv9RdVxHdwh4exlkAy7VSVSXgZ2fzJEWI3xzQW7qSD2Xx24U7k
+ j4De8YX/SdY2+YI6SXCF4Z2lTPyo971vzJHCUmwBzNNjk2AvqFzM2SpQwFnLVk7ei1/3
+ t6UQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111219; x=1734716019;
+ d=1e100.net; s=20230601; t=1734111234; x=1734716034;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DrOb7G+x5wrICqjleH3Ihe/BQVYZk17MYJ5JNKUJIEk=;
- b=d2uKVGMco6dofdMFD6YgJLTpxtbD/Y10VqmDXQdqw6oEwh+t7uVrnPYNQF57Jb9rot
- LDlB0nqwVaMFNJ+QSo2SmDoN13ZS/o/IKelvsKF4ZkMrbx8k/ZoDQmWR48gfba2kje8k
- mL49XVFa2bnH8KZJRzjvRgOG7OrzG9/53PczJTc7LxbPHVgV5uBvM0Ms2iQmz6IRp3hI
- VF50EGjgRzCbV9lGadPBaTIjp37Qfg65uf+zbSs26/UisAjl5mmyqRkakWpokQ7/rVwa
- y0pr1uyO1xQ+R241Xax/DfREBmr73TLGYp/OHNvy4FId6eGd89cBnlfD8GrBMzu7K3BI
- OKkQ==
-X-Gm-Message-State: AOJu0Yz4eC3AnNA183lPfJbizYELQcAG4KmjcZsIfGahDvtUBUlw3NR+
- XKxa5vwKLO5M7swlHaCmTgbv8JUPMft2qbQYUKpbu4If2/JO17/ERMCJX2xeJOZ5gR+0btFpSFj
- C
-X-Gm-Gg: ASbGncsakfmctOJ6SX40p4vgXPYOV64u8C9hJZLKY2yu6htSfZuR4hC2yisxqQLor0f
- Yf4V9CaUahDM1WWmh5M5vze/wF2BrNTUgpNpcu4+0bZYqU/4kvRJSVg0E51EATuXghvomXxjScu
- 7xVlBgc7l/VkWjh1Shhky2wvjTfxB5KiBEOhrs9DDtrk1V3QqLCP09+QDSW8yulwV9dfIgkrLQj
- DMUSrGigV1n7QIL3NYnhAuw+NB7HzeuG8jSeh3g6yUK9zHnnH/eJmdgXjRT1g==
-X-Google-Smtp-Source: AGHT+IEiCeIPvvlisApK7JvtZdBJkAgLhxvd1lWlKzmcm6In4eCkcPUKz+Bpvt68QWPz5Tp17pd56w==
-X-Received: by 2002:a5d:47a7:0:b0:385:f2a2:50df with SMTP id
- ffacd0b85a97d-3888e0ae608mr2642917f8f.27.1734111218709; 
- Fri, 13 Dec 2024 09:33:38 -0800 (PST)
+ bh=Qq5JezWAvvQQNLy9rclqYIOw0RJcJBgtsySv4HgTsTw=;
+ b=dZ4HQIlXxf+7hSxAxP1f/g34/tVO3xMgD6F4hSFAj8fdpo9E0/3p9HlMXJVoI4NNv7
+ 2qQP4NMezSid7Eo2tVT2iIVdZIAgurFVsu0TqUjJMEqzbn92EdzDUXnE887UP6dJ4A+8
+ RjBAWMnPMSBeFVIIKgKHnt0CJ8grEKlm2ujqf6r4iKL7BM6ugbusVS6vBRuV6Xq/z0XV
+ wXWKxrnKnm9E+v5AKvesk3BM49wVbvEryTcAGluidVAzO06Vs4x9p/YUQqXhBBNZy+hC
+ c2Lm4VnSEkdF7eJbFfRky/lKRjnGN8QR1do1cIDvW+PFNLs2fuDgHe8v0j2TYUA7pr89
+ V8ug==
+X-Gm-Message-State: AOJu0YxwFo9o32jDhtcHI1Z/wwRKEzrtFd/ZHevxSfB3+k0uld/UFsdc
+ 5AfYVmWFdGZ3DwpF2LGw3aCxwbFVgWiG/Cx9qiLDi4Ragji1wRJcjM4noB7y9cODFvedKQmDUqH
+ m
+X-Gm-Gg: ASbGncuwsFTc9SxJjRkEiqDHNG+U0UDu4nQDQXqyBDZ8KWgqNbyRCX+ur5gki2NbUlO
+ gBTDjL0eMEguA4V8cg5ABPLbCdT0bBxAazgcLyILiZbmWw5NqjFJv0DCr8C/g96iyWD5UKGW95q
+ 4bftZbbGA7wuyX+jvIN7sntLlmMNvVUAlLPL0D/dKCn2NVC1rvgLZ3h4o7sR9nSdYZzqiQ772TT
+ RxhbsGXEebKyWg3lZs65xC7frQ9oFFNfZVjjrul7+iN4WCbVULtoyfhmumvlw==
+X-Google-Smtp-Source: AGHT+IEjEMvqYVlV3j3LJ1f4FINw/0CrKuL0+84rQFiDzGtIkRh3XHzyQBtX/CLQ83QiOUOTk+Pw6g==
+X-Received: by 2002:a05:6000:144f:b0:385:fae4:424e with SMTP id
+ ffacd0b85a97d-3888e0c07b9mr2408616f8f.52.1734111233796; 
+ Fri, 13 Dec 2024 09:33:53 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.37
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:37 -0800 (PST)
+ Fri, 13 Dec 2024 09:33:52 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 63/85] target/arm: Convert FCVTZ[SU] (vector,
- fixed-point) to decodetree
-Date: Fri, 13 Dec 2024 17:32:07 +0000
-Message-Id: <20241213173229.3308926-64-peter.maydell@linaro.org>
+Subject: [PULL 77/85] target/arm: Move TLBI insns for AArch32 EL2 to
+ tlbi_insn_helper.c
+Date: Fri, 13 Dec 2024 17:32:21 +0000
+Message-Id: <20241213173229.3308926-78-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
@@ -98,277 +98,276 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+Move the AArch32 TLBI insns for AArch32 EL2 to tlbi_insn_helper.c.
+To keep this as an obviously pure code-movement, we retain the
+same condition for registering tlbi_el2_cp_reginfo that we use for
+el2_cp_reginfo. We'll be able to simplify this condition later,
+since the need to define the reginfo for EL3-without-EL2 doesn't
+apply for the TLBI ops specifically.
 
-Remove handle_simd_shift_fpint_conv and disas_simd_shift_imm
-as these were the last insns decoded by those functions.
+This move brings all the uses of tlbimva_hyp_write() and
+tlbimva_hyp_is_write() back into a single file, so we can move those
+also, and make them file-local again.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211163036.2297116-64-richard.henderson@linaro.org
+The helper alle1_tlbmask() is an exception to the pattern that we
+only need to make these functions global temporarily, because once
+this refactoring is complete it will be called by both code in
+helper.c (vttbr_write()) and by code in tlb-insns.c.  We therefore
+put its prototype in a permanent home in internals.h.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241210160452.2427965-3-peter.maydell@linaro.org
 ---
- target/arm/helper.h            |   4 +
- target/arm/tcg/a64.decode      |   8 ++
- target/arm/tcg/translate-a64.c | 160 +++------------------------------
- target/arm/tcg/vec_helper.c    |   2 +
- target/arm/vfp_helper.c        |   4 +
- 5 files changed, 32 insertions(+), 146 deletions(-)
+ target/arm/cpregs.h        |  4 --
+ target/arm/internals.h     |  6 +++
+ target/arm/helper.c        | 74 +--------------------------------
+ target/arm/tcg/tlb-insns.c | 85 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 92 insertions(+), 77 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index b227ac54d92..0c8a56c3ae4 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -178,8 +178,10 @@ DEF_HELPER_3(vfp_touhs_round_to_zero, i32, f32, i32, ptr)
- DEF_HELPER_3(vfp_touls_round_to_zero, i32, f32, i32, ptr)
- DEF_HELPER_3(vfp_toshd_round_to_zero, i64, f64, i32, ptr)
- DEF_HELPER_3(vfp_tosld_round_to_zero, i64, f64, i32, ptr)
-+DEF_HELPER_3(vfp_tosqd_round_to_zero, i64, f64, i32, ptr)
- DEF_HELPER_3(vfp_touhd_round_to_zero, i64, f64, i32, ptr)
- DEF_HELPER_3(vfp_tould_round_to_zero, i64, f64, i32, ptr)
-+DEF_HELPER_3(vfp_touqd_round_to_zero, i64, f64, i32, ptr)
- DEF_HELPER_3(vfp_touhh, i32, f16, i32, ptr)
- DEF_HELPER_3(vfp_toshh, i32, f16, i32, ptr)
- DEF_HELPER_3(vfp_toulh, i32, f16, i32, ptr)
-@@ -660,6 +662,8 @@ DEF_HELPER_FLAGS_4(gvec_vcvt_rz_hu, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index 26c27dc5cb6..851cd045b2c 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -1143,9 +1143,5 @@ CPAccessResult access_ttlb(CPUARMState *env, const ARMCPRegInfo *ri,
+ CPAccessResult access_ttlbis(CPUARMState *env, const ARMCPRegInfo *ri,
+                              bool isread);
+ bool tlb_force_broadcast(CPUARMState *env);
+-void tlbimva_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                       uint64_t value);
+-void tlbimva_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                          uint64_t value);
  
- DEF_HELPER_FLAGS_4(gvec_vcvt_sd, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(gvec_vcvt_ud, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_ds, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(gvec_vcvt_rz_du, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_4(gvec_vcvt_rm_ss, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- DEF_HELPER_FLAGS_4(gvec_vcvt_rm_us, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 4f832e7a4c6..61d519b96a5 100644
---- a/target/arm/tcg/a64.decode
-+++ b/target/arm/tcg/a64.decode
-@@ -1808,3 +1808,11 @@ SCVTF_vf        0.00 11110 ....... 111001 ..... .....       @fcvtq_d
- UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_h
- UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_s
- UCVTF_vf        0.10 11110 ....... 111001 ..... .....       @fcvtq_d
+ #endif /* TARGET_ARM_CPREGS_H */
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 2adedb94777..c3a5b1385f1 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1820,4 +1820,10 @@ uint64_t gt_get_countervalue(CPUARMState *env);
+  * and CNTVCT_EL0 (this will be either 0 or the value of CNTVOFF_EL2).
+  */
+ uint64_t gt_virt_cnt_offset(CPUARMState *env);
 +
-+FCVTZS_vf       0.00 11110 ....... 111111 ..... .....       @fcvtq_h
-+FCVTZS_vf       0.00 11110 ....... 111111 ..... .....       @fcvtq_s
-+FCVTZS_vf       0.00 11110 ....... 111111 ..... .....       @fcvtq_d
-+
-+FCVTZU_vf       0.10 11110 ....... 111111 ..... .....       @fcvtq_h
-+FCVTZU_vf       0.10 11110 ....... 111111 ..... .....       @fcvtq_s
-+FCVTZU_vf       0.10 11110 ....... 111111 ..... .....       @fcvtq_d
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 0f94fa4fdcb..1c4e53770ba 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9332,107 +9332,21 @@ TRANS(UCVTF_vi, do_gvec_op2_fpst,
- TRANS(UCVTF_vf, do_gvec_op2_fpst,
-       a->esz, a->q, a->rd, a->rn, a->shift, f_ucvtf_v)
- 
--/* FCVTZS, FVCVTZU - FP to fixedpoint conversion */
--static void handle_simd_shift_fpint_conv(DisasContext *s, bool is_scalar,
--                                         bool is_q, bool is_u,
--                                         int immh, int immb, int rn, int rd)
--{
--    int immhb = immh << 3 | immb;
--    int pass, size, fracbits;
--    TCGv_ptr tcg_fpstatus;
--    TCGv_i32 tcg_rmode, tcg_shift;
-+static gen_helper_gvec_2_ptr * const f_fcvtzs_vf[] = {
-+    gen_helper_gvec_vcvt_rz_hs,
-+    gen_helper_gvec_vcvt_rz_fs,
-+    gen_helper_gvec_vcvt_rz_ds,
-+};
-+TRANS(FCVTZS_vf, do_gvec_op2_fpst,
-+      a->esz, a->q, a->rd, a->rn, a->shift, f_fcvtzs_vf)
- 
--    if (immh & 0x8) {
--        size = MO_64;
--        if (!is_scalar && !is_q) {
--            unallocated_encoding(s);
--            return;
--        }
--    } else if (immh & 0x4) {
--        size = MO_32;
--    } else if (immh & 0x2) {
--        size = MO_16;
--        if (!dc_isar_feature(aa64_fp16, s)) {
--            unallocated_encoding(s);
--            return;
--        }
--    } else {
--        /* Should have split out AdvSIMD modified immediate earlier.  */
--        assert(immh == 1);
--        unallocated_encoding(s);
--        return;
--    }
--
--    if (!fp_access_check(s)) {
--        return;
--    }
--
--    assert(!(is_scalar && is_q));
--
--    tcg_fpstatus = fpstatus_ptr(size == MO_16 ? FPST_FPCR_F16 : FPST_FPCR);
--    tcg_rmode = gen_set_rmode(FPROUNDING_ZERO, tcg_fpstatus);
--    fracbits = (16 << size) - immhb;
--    tcg_shift = tcg_constant_i32(fracbits);
--
--    if (size == MO_64) {
--        int maxpass = is_scalar ? 1 : 2;
--
--        for (pass = 0; pass < maxpass; pass++) {
--            TCGv_i64 tcg_op = tcg_temp_new_i64();
--
--            read_vec_element(s, tcg_op, rn, pass, MO_64);
--            if (is_u) {
--                gen_helper_vfp_touqd(tcg_op, tcg_op, tcg_shift, tcg_fpstatus);
--            } else {
--                gen_helper_vfp_tosqd(tcg_op, tcg_op, tcg_shift, tcg_fpstatus);
--            }
--            write_vec_element(s, tcg_op, rd, pass, MO_64);
--        }
--        clear_vec_high(s, is_q, rd);
--    } else {
--        void (*fn)(TCGv_i32, TCGv_i32, TCGv_i32, TCGv_ptr);
--        int maxpass = is_scalar ? 1 : ((8 << is_q) >> size);
--
--        switch (size) {
--        case MO_16:
--            if (is_u) {
--                fn = gen_helper_vfp_touhh;
--            } else {
--                fn = gen_helper_vfp_toshh;
--            }
--            break;
--        case MO_32:
--            if (is_u) {
--                fn = gen_helper_vfp_touls;
--            } else {
--                fn = gen_helper_vfp_tosls;
--            }
--            break;
--        default:
--            g_assert_not_reached();
--        }
--
--        for (pass = 0; pass < maxpass; pass++) {
--            TCGv_i32 tcg_op = tcg_temp_new_i32();
--
--            read_vec_element_i32(s, tcg_op, rn, pass, size);
--            fn(tcg_op, tcg_op, tcg_shift, tcg_fpstatus);
--            if (is_scalar) {
--                if (size == MO_16 && !is_u) {
--                    tcg_gen_ext16u_i32(tcg_op, tcg_op);
--                }
--                write_fp_sreg(s, rd, tcg_op);
--            } else {
--                write_vec_element_i32(s, tcg_op, rd, pass, size);
--            }
--        }
--        if (!is_scalar) {
--            clear_vec_high(s, is_q, rd);
--        }
--    }
--
--    gen_restore_rmode(tcg_rmode, tcg_fpstatus);
--}
-+static gen_helper_gvec_2_ptr * const f_fcvtzu_vf[] = {
-+    gen_helper_gvec_vcvt_rz_hu,
-+    gen_helper_gvec_vcvt_rz_fu,
-+    gen_helper_gvec_vcvt_rz_du,
-+};
-+TRANS(FCVTZU_vf, do_gvec_op2_fpst,
-+      a->esz, a->q, a->rd, a->rn, a->shift, f_fcvtzu_vf)
- 
- static void handle_2misc_64(DisasContext *s, int opcode, bool u,
-                             TCGv_i64 tcg_rd, TCGv_i64 tcg_rn,
-@@ -9759,51 +9673,6 @@ static void disas_simd_scalar_two_reg_misc(DisasContext *s, uint32_t insn)
-     g_assert_not_reached();
++/*
++ * Return mask of ARMMMUIdxBit values corresponding to an "invalidate
++ * all EL1" scope; this covers stage 1 and stage 2.
++ */
++int alle1_tlbmask(CPUARMState *env);
+ #endif
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 6a9bf70f185..3c69225e1d9 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -438,7 +438,7 @@ static void contextidr_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     raw_write(env, ri, value);
  }
  
--/* AdvSIMD shift by immediate
-- *  31  30   29 28         23 22  19 18  16 15    11  10 9    5 4    0
-- * +---+---+---+-------------+------+------+--------+---+------+------+
-- * | 0 | Q | U | 0 1 1 1 1 0 | immh | immb | opcode | 1 |  Rn  |  Rd  |
-- * +---+---+---+-------------+------+------+--------+---+------+------+
-- */
--static void disas_simd_shift_imm(DisasContext *s, uint32_t insn)
+-static int alle1_tlbmask(CPUARMState *env)
++int alle1_tlbmask(CPUARMState *env)
+ {
+     /*
+      * Note that the 'ALL' scope must invalidate both stage 1 and
+@@ -465,58 +465,6 @@ bool tlb_force_broadcast(CPUARMState *env)
+     return arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_FB);
+ }
+ 
+-static void tlbiall_nsnh_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                               uint64_t value)
 -{
--    int rd = extract32(insn, 0, 5);
--    int rn = extract32(insn, 5, 5);
--    int opcode = extract32(insn, 11, 5);
--    int immb = extract32(insn, 16, 3);
--    int immh = extract32(insn, 19, 4);
--    bool is_u = extract32(insn, 29, 1);
--    bool is_q = extract32(insn, 30, 1);
+-    CPUState *cs = env_cpu(env);
 -
--    if (immh == 0) {
--        unallocated_encoding(s);
--        return;
--    }
--
--    switch (opcode) {
--    case 0x1f: /* FCVTZS/ FCVTZU */
--        handle_simd_shift_fpint_conv(s, false, is_q, is_u, immh, immb, rn, rd);
--        return;
--    default:
--    case 0x00: /* SSHR / USHR */
--    case 0x02: /* SSRA / USRA (accumulate) */
--    case 0x04: /* SRSHR / URSHR (rounding) */
--    case 0x06: /* SRSRA / URSRA (accum + rounding) */
--    case 0x08: /* SRI */
--    case 0x0a: /* SHL / SLI */
--    case 0x0c: /* SQSHLU */
--    case 0x0e: /* SQSHL, UQSHL */
--    case 0x10: /* SHRN / SQSHRUN */
--    case 0x11: /* RSHRN / SQRSHRUN */
--    case 0x12: /* SQSHRN / UQSHRN */
--    case 0x13: /* SQRSHRN / UQRSHRN */
--    case 0x14: /* SSHLL / USHLL */
--    case 0x1c: /* SCVTF / UCVTF */
--        unallocated_encoding(s);
--        return;
--    }
+-    tlb_flush_by_mmuidx(cs, alle1_tlbmask(env));
 -}
 -
- static void handle_2misc_widening(DisasContext *s, int opcode, bool is_q,
-                                   int size, int rn, int rd)
+-static void tlbiall_nsnh_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                                  uint64_t value)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    tlb_flush_by_mmuidx_all_cpus_synced(cs, alle1_tlbmask(env));
+-}
+-
+-
+-static void tlbiall_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                              uint64_t value)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E2);
+-}
+-
+-static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                                 uint64_t value)
+-{
+-    CPUState *cs = env_cpu(env);
+-
+-    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2);
+-}
+-
+-void tlbimva_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                       uint64_t value)
+-{
+-    CPUState *cs = env_cpu(env);
+-    uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
+-
+-    tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E2);
+-}
+-
+-void tlbimva_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
+-                          uint64_t value)
+-{
+-    CPUState *cs = env_cpu(env);
+-    uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
+-
+-    tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr,
+-                                             ARMMMUIdxBit_E2);
+-}
+-
+ static const ARMCPRegInfo cp_reginfo[] = {
+     /*
+      * Define the secure and non-secure FCSE identifier CP registers
+@@ -6248,26 +6196,6 @@ static const ARMCPRegInfo el2_cp_reginfo[] = {
+     { .name = "HTTBR", .cp = 15, .opc1 = 4, .crm = 2,
+       .access = PL2_RW, .type = ARM_CP_64BIT | ARM_CP_ALIAS,
+       .fieldoffset = offsetof(CPUARMState, cp15.ttbr0_el[2]) },
+-    { .name = "TLBIALLNSNH",
+-      .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 4,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbiall_nsnh_write },
+-    { .name = "TLBIALLNSNHIS",
+-      .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 4,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbiall_nsnh_is_write },
+-    { .name = "TLBIALLH", .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 0,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbiall_hyp_write },
+-    { .name = "TLBIALLHIS", .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 0,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbiall_hyp_is_write },
+-    { .name = "TLBIMVAH", .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 1,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbimva_hyp_write },
+-    { .name = "TLBIMVAHIS", .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 1,
+-      .type = ARM_CP_NO_RAW, .access = PL2_W,
+-      .writefn = tlbimva_hyp_is_write },
+     { .name = "TLBI_ALLE2", .state = ARM_CP_STATE_AA64,
+       .opc0 = 1, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 0,
+       .access = PL2_W, .type = ARM_CP_NO_RAW | ARM_CP_EL3_NO_EL2_UNDEF,
+diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
+index cdf23352d7a..66096093dcc 100644
+--- a/target/arm/tcg/tlb-insns.c
++++ b/target/arm/tcg/tlb-insns.c
+@@ -99,6 +99,25 @@ static void tlbimvaa_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     }
+ }
+ 
++static void tlbimva_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++    uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
++
++    tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E2);
++}
++
++static void tlbimva_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                 uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++    uint64_t pageaddr = value & ~MAKE_64BIT_MASK(0, 12);
++
++    tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr,
++                                             ARMMMUIdxBit_E2);
++}
++
+ static void tlbiipas2_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
+                                 uint64_t value)
  {
-@@ -10299,7 +10168,6 @@ static void disas_simd_two_reg_misc_fp16(DisasContext *s, uint32_t insn)
- static const AArch64DecodeTable data_proc_simd[] = {
-     /* pattern  ,  mask     ,  fn                        */
-     { 0x0e200800, 0x9f3e0c00, disas_simd_two_reg_misc },
--    { 0x0f000400, 0x9f800400, disas_simd_shift_imm },
-     { 0x5e200800, 0xdf3e0c00, disas_simd_scalar_two_reg_misc },
-     { 0x0e780800, 0x8f7e0c00, disas_simd_two_reg_misc_fp16 },
-     { 0x00000000, 0x00000000, NULL }
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index 07f8d5f467a..b5ab8d1e15f 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -2512,6 +2512,8 @@ DO_VCVT_FIXED(gvec_vcvt_uf, helper_vfp_ultos, uint32_t)
- DO_VCVT_FIXED(gvec_vcvt_sh, helper_vfp_shtoh, uint16_t)
- DO_VCVT_FIXED(gvec_vcvt_uh, helper_vfp_uhtoh, uint16_t)
+@@ -117,6 +136,39 @@ static void tlbiipas2is_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
+     tlb_flush_page_by_mmuidx_all_cpus_synced(cs, pageaddr, ARMMMUIdxBit_Stage2);
+ }
  
-+DO_VCVT_FIXED(gvec_vcvt_rz_ds, helper_vfp_tosqd_round_to_zero, uint64_t)
-+DO_VCVT_FIXED(gvec_vcvt_rz_du, helper_vfp_touqd_round_to_zero, uint64_t)
- DO_VCVT_FIXED(gvec_vcvt_rz_fs, helper_vfp_tosls_round_to_zero, uint32_t)
- DO_VCVT_FIXED(gvec_vcvt_rz_fu, helper_vfp_touls_round_to_zero, uint32_t)
- DO_VCVT_FIXED(gvec_vcvt_rz_hs, helper_vfp_toshh_round_to_zero, uint16_t)
-diff --git a/target/arm/vfp_helper.c b/target/arm/vfp_helper.c
-index f24992c798a..5a19af509c3 100644
---- a/target/arm/vfp_helper.c
-+++ b/target/arm/vfp_helper.c
-@@ -495,6 +495,10 @@ VFP_CONV_FIX_A64(sq, h, 16, dh_ctype_f16, 64, int64)
- VFP_CONV_FIX(uh, h, 16, dh_ctype_f16, 32, uint16)
- VFP_CONV_FIX(ul, h, 16, dh_ctype_f16, 32, uint32)
- VFP_CONV_FIX_A64(uq, h, 16, dh_ctype_f16, 64, uint64)
-+VFP_CONV_FLOAT_FIX_ROUND(sq, d, 64, float64, 64, int64,
-+                         float_round_to_zero, _round_to_zero)
-+VFP_CONV_FLOAT_FIX_ROUND(uq, d, 64, float64, 64, uint64,
-+                         float_round_to_zero, _round_to_zero)
++static void tlbiall_nsnh_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                               uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++
++    tlb_flush_by_mmuidx(cs, alle1_tlbmask(env));
++}
++
++static void tlbiall_nsnh_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                  uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++
++    tlb_flush_by_mmuidx_all_cpus_synced(cs, alle1_tlbmask(env));
++}
++
++
++static void tlbiall_hyp_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                              uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++
++    tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E2);
++}
++
++static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
++                                 uint64_t value)
++{
++    CPUState *cs = env_cpu(env);
++
++    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2);
++}
++
+ static const ARMCPRegInfo tlbi_not_v7_cp_reginfo[] = {
+     /*
+      * MMU TLB control. Note that the wildcarding means we cover not just
+@@ -227,6 +279,29 @@ static const ARMCPRegInfo tlbi_v8_cp_reginfo[] = {
+       .writefn = tlbiipas2is_hyp_write },
+ };
  
- #undef VFP_CONV_FIX
- #undef VFP_CONV_FIX_FLOAT
++static const ARMCPRegInfo tlbi_el2_cp_reginfo[] = {
++    { .name = "TLBIALLNSNH",
++      .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 4,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbiall_nsnh_write },
++    { .name = "TLBIALLNSNHIS",
++      .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 4,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbiall_nsnh_is_write },
++    { .name = "TLBIALLH", .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 0,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbiall_hyp_write },
++    { .name = "TLBIALLHIS", .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 0,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbiall_hyp_is_write },
++    { .name = "TLBIMVAH", .cp = 15, .opc1 = 4, .crn = 8, .crm = 7, .opc2 = 1,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbimva_hyp_write },
++    { .name = "TLBIMVAHIS", .cp = 15, .opc1 = 4, .crn = 8, .crm = 3, .opc2 = 1,
++      .type = ARM_CP_NO_RAW, .access = PL2_W,
++      .writefn = tlbimva_hyp_is_write },
++};
++
+ void define_tlb_insn_regs(ARMCPU *cpu)
+ {
+     CPUARMState *env = &cpu->env;
+@@ -243,4 +318,14 @@ void define_tlb_insn_regs(ARMCPU *cpu)
+     if (arm_feature(env, ARM_FEATURE_V8)) {
+         define_arm_cp_regs(cpu, tlbi_v8_cp_reginfo);
+     }
++    /*
++     * We retain the existing logic for when to register these TLBI
++     * ops (i.e. matching the condition for el2_cp_reginfo[] in
++     * helper.c), but we will be able to simplify this later.
++     */
++    if (arm_feature(env, ARM_FEATURE_EL2)
++        || (arm_feature(env, ARM_FEATURE_EL3)
++            && arm_feature(env, ARM_FEATURE_V8))) {
++        define_arm_cp_regs(cpu, tlbi_el2_cp_reginfo);
++    }
+ }
 -- 
 2.34.1
 
