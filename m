@@ -4,112 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8EECE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 21:09:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021CEE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 21:10:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMCtw-0007hD-Tr; Fri, 13 Dec 2024 16:08:46 -0500
+	id 1tMCuu-0008PL-Ii; Fri, 13 Dec 2024 16:09:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tMCtn-0007eO-MQ; Fri, 13 Dec 2024 16:08:36 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMCur-0008Lh-Tl
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 16:09:41 -0500
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tMCtg-00053O-L2; Fri, 13 Dec 2024 16:08:35 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 9F9D41F445;
- Fri, 13 Dec 2024 21:08:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734124105; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SHyzxtarHkYo/Ub+P5GaBCJTpvJ9TvsN7wsgMK/v8v4=;
- b=GITEMozL5u2j3Gkr7yjiZYwU67B5ElfqrrsNjtob5PHE1ROnDnylVm4vJAt9XhyxPLq1hR
- guzPHDVXVgneDUMPrjE7uEYilLEuZioTVU9vEpa7vjLpU04vQmQqSYOFj8aRxbwuC1RP2t
- ov9syaatU8d7JTo0yfy3EYETTZJwIdY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734124105;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SHyzxtarHkYo/Ub+P5GaBCJTpvJ9TvsN7wsgMK/v8v4=;
- b=+ij6mMCthBs8ENLuV/OuirOVRUagUiVuWg2Y8JSyVCsXI6qLe9SFmuVFUkY3nHUPSWLnX5
- 608hEd4D8gn/hfBA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=cA9j7oAL;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=co41yfLP
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734124104; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SHyzxtarHkYo/Ub+P5GaBCJTpvJ9TvsN7wsgMK/v8v4=;
- b=cA9j7oALCEgMG9PtKuhk5zcGNlLx8CuCEKGGyN/L9PmI5Iw24r63S9cH9IhcGKraKbfurJ
- mIdlvU43Bpt7Ku8401mcUubuPjKFqaNFIcDLqcRWidhdE3P0eiV8k8kgHSA42l0Z4/luxs
- 3onMmTeC6aciupR21u0hQ456xoUFfTg=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734124104;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SHyzxtarHkYo/Ub+P5GaBCJTpvJ9TvsN7wsgMK/v8v4=;
- b=co41yfLPVnEUG4SSubyI/lbGhEthzbqk67PFXITecln2gbqAA22w4vk+WA9kj3FRJwlOV2
- W7AqipbK5unwTBBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 11A6213927;
- Fri, 13 Dec 2024 21:08:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id Ur3+MUeiXGchKgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 13 Dec 2024 21:08:23 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nabih Estefan <nabihestefan@google.com>
-Cc: Thomas Huth <thuth@redhat.com>, peter.maydell@linaro.org,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, lvivier@redhat.com,
- pbonzini@redhat.com, roqueh@google.com, venture@google.com, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] tests/qtest/sse-timer-test: Add watchdog reset to
- sse-timer test
-In-Reply-To: <CA+QoejUUQK5L2LOgDPdK=kBgWgQQcvSMzXJ1zAiuwmoNwroPxg@mail.gmail.com>
-References: <20241213002602.4181289-1-nabihestefan@google.com>
- <f03adc63-5167-4982-90e6-70b65f0c90cc@redhat.com> <87y10jctbd.fsf@suse.de>
- <CA+QoejUUQK5L2LOgDPdK=kBgWgQQcvSMzXJ1zAiuwmoNwroPxg@mail.gmail.com>
-Date: Fri, 13 Dec 2024 18:08:21 -0300
-Message-ID: <87frmrxpdm.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMCup-00059Y-Nh
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 16:09:41 -0500
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-7b6fc5bf609so81111885a.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 13:09:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734124178; x=1734728978; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=JxA+gOKy7yEDPSnuOaHG/wTK1r74YhgKoXxHIa95ICQ=;
+ b=kuldTCzvTrwGDDoGUPaNsFXnBoI87T3WtJs135gF+cTZ29XeoDe0mnTP7/Yb/e6PUZ
+ 10MSEWYJtJAKeclbvpJtcF2wE9eFPVq0aWj32u7/wCJlMLnA3mD8IOgW6zObqbuZDlRa
+ FU0xmewY7UqGfPHhZgY0qTShoQKHXwwbEV4fzZvUn44Ua+p9qkCV+t+R7kATkUbOUbGb
+ l6Zzk5DxK+mVZ7K+o3CXT8vWlGYEHf+JKJuUS7Cw9t3WIwyxUslN9tAczuecg/vnhqsN
+ FcIAVY4TSnKwUOfkAZL61ns47rJ0LOqaKk75CWgoeXkubY6bFiIJ3tD7D1e9z6u+VUUt
+ U/yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734124178; x=1734728978;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=JxA+gOKy7yEDPSnuOaHG/wTK1r74YhgKoXxHIa95ICQ=;
+ b=TTmLuXsgOyQS0IRidqIbpvAu398O6aCQQqviQGd59BZ9hGIjpJBsifAiSMn3/gF7eu
+ WimnTNidGPYlTwguFwDLk8KQQyieYw2gUXc8bmgQAYFoUBvFJ41gY8e7aZGB0+of7h++
+ I53RQ7S9JHimEH/LXQVmoU8r8bNgoXvJtXYc2hn+sJENGitJ1bcsJ0sQ1jc+dtdhbkzG
+ GnJtknpt3+znS4m5B0Isl3twJ4CMtOmFHG3LQ5yd9IMK3Bj873p8etFeS/AbDrET7tiZ
+ 7NIIC8UkJnfaS9puqXUwtf1ZJsSdepnnFGcX1dIY87BfRE/0TO5Zucv0UxnzORl+13Vx
+ qEAQ==
+X-Gm-Message-State: AOJu0YwDA8ca8e+Ly9zhZLbxfz/xOFLnv3KqxirpdhgAfF6xjZ9zPIop
+ HkFIo/R/ZKow1vjrXayGuxBLsAKYlU1XeqPhnFK3ahq2SGFEQTMOJjhS5vRvkxzr5r9lLB9MjVT
+ 93vg9v9gF
+X-Gm-Gg: ASbGnctVN8n1ngwIckQyMqr6pI7GoBbk4futmm3RcljsqpsyQeh0SYC644I7+DvcDD4
+ Siuo/IsJWy/Hog8NhEtmtKLEbGI8yQsVLYORbUB75t6DutQqP7zolQ0DtN4eMgDh4W7xrqhofq6
+ vg+DWvN7vk/6kW0aHwhUkghT52qQUlzxTAhrAM3Ve/mT+TJwA4X/cYz3qBwJDSJ7YVx+QPj7S5V
+ xZuajpVTg06bLzx2AfiueGE9xcndjkivjIY+/IlAFObGwp7BJixYa9pijaFAMqtnwLIlL5RImeZ
+ 4Q==
+X-Google-Smtp-Source: AGHT+IEX0D03E8h4A6NSGNPoLH9B1S6DBdXNdPg0wIkHiQieauFMw2INTSqnfjRDnSVTbjYLNjVEfw==
+X-Received: by 2002:a05:620a:a001:b0:7b6:d252:b4db with SMTP id
+ af79cd13be357-7b6fbf3a73fmr651366085a.44.1734124177801; 
+ Fri, 13 Dec 2024 13:09:37 -0800 (PST)
+Received: from [192.168.242.227] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b7047ee680sm14969585a.58.2024.12.13.13.09.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Dec 2024 13:09:37 -0800 (PST)
+Message-ID: <fad62484-3e95-4899-a887-90d6d3fa3181@linaro.org>
+Date: Fri, 13 Dec 2024 15:09:31 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 9F9D41F445
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCPT_COUNT_SEVEN(0.00)[10];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MISSING_XM_UA(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_TLS_ALL(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] include/hw/qdev-properties: Shrink struct Property by 8
+ bytes
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20241213210629.2525655-1-richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20241213210629.2525655-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qk1-x736.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,30 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nabih Estefan <nabihestefan@google.com> writes:
+On 12/13/24 15:06, Richard Henderson wrote:
+> Before, via pahole:
 
-> From what I can tell this is the same issue Thomas was looking at yes.
->
-> I saw the failure on the master branch at the v9.2.0 tag (ae35f033) and just
-> re-tested it against (83aaec1d) and still see it. I haven't seen it be an
-> intermittent failure, it has failed 100% of the time that I have tested it when
-> targeting arm-softmmu.
+Bah.  s/by 8 bytes// in subject; moved to the summary at the end.
 
-Could you please post the output of:
+> Afterward there are no holes in either structure.
+> For arm32, size 48, padding 2, saved 8 bytes.
+> For arm64, size 72, padding 6, saved 16 bytes.
 
-QTEST_LOG=1 QTEST_TRACE="sse_*" QTEST_QEMU_BINARY=./qemu-system-arm ./tests/qtest/sse-timer-test
+Also meant to say, there are 1700+ Property structures in qemu-system-aarch64, so this 
+saves about 28k.
 
-Also your compiler version.
 
->
-> However, you are right that with Phillippe's series on top of my change the
-> bug is somehow re-introduced. Not sure what the protocol is here since
-> neither patch has landed
-
-I would like to figure out why this reproduces 100% for you (and some CI
-job) and 0% for me and others. Once this is clear we can merge this
-patch.
-
-As for the other series let's leave the issues there to be discussed in
-its own thread.
+r~
 
