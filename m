@@ -4,85 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D051DE77186
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A8CE77183
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB2I-0003An-IL; Fri, 13 Dec 2024 14:09:14 -0500
+	id 1tMB91-0000wa-Lv; Fri, 13 Dec 2024 14:16:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB1r-0002WK-2d
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:57 -0500
-Received: from mail-ot1-x32a.google.com ([2607:f8b0:4864:20::32a])
+ id 1tMB7I-0007Cb-0n
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:24 -0500
+Received: from mail-oi1-x22d.google.com ([2607:f8b0:4864:20::22d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB1o-0006Yq-CI
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:46 -0500
-Received: by mail-ot1-x32a.google.com with SMTP id
- 46e09a7af769-71e1d6c7738so1117978a34.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:08:42 -0800 (PST)
+ id 1tMB7E-0007aH-IV
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:23 -0500
+Received: by mail-oi1-x22d.google.com with SMTP id
+ 5614622812f47-3eb7edfa42dso1064065b6e.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734116921; x=1734721721; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734117257; x=1734722057; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JKm04qysg/gEgbm4vurn75ARW08p/MAYicuTqcRbj08=;
- b=StpMa9rJDZms0fqTJSqcDhdfeCIJoHKZ6dKkvjJEw80fEF4v4zcS5yGJIh4oNv+BLS
- Dy5q7iiSVIhkdLeZ/Nd49V0sMzmstXFQgAMvIbJYujiJrTkA8iPCQM1/WFXtcWazrLFt
- 8EIN8Ajo6BKPsf/PA8u8Oe5wwrKKpY0L6lZ9p9kXETcbMinefXb4yDTWHLI1YtwZBXp1
- 0DyN4Osdk9RKo//SeJxHyCpUkVFhNbBPEbTun8KE7W687NqdFsKBpbdNegFkVaN8rWSA
- 89+f9mD/3LsTWD83+3pIFOJ5nYi7zvvuNU3qTnY4Q55k0eAPEbwnykeW9ARcapI4eJzm
- tp/A==
+ bh=fgBXSP9FXNsZoJNxDWIf4VlbcOnRZTVxU/IcB0k/jaw=;
+ b=XCC4Vo/LtVl6m92Q+zGZPtC4vuRueL/Uct97xqSgnUeVNtX8KMQ9JtcETaSwhtVXCb
+ Oca0UnsEFFcsZQ/x3Wphwqztxwj+F1ukAJxqG9LhdZuHt5wVcDLmejiH5FZ6ILUcKsws
+ zpIr8P+n50PsMYiVt7sD/ZKRk37Fff2xnsQEiCH17EkeeRtrqD6/EJVKuMRPMT0f6rNV
+ VxflSOv4irLjMRSmtvIBiFKGFsqqnye+Dcv6w0z9IuQNE4QpSgTOC97/yBFSYxf5GcBp
+ R5wpNzw91R2hv7B/6LsMBm0B9g59V0bODjOpGhmFGllZQObzcj8ws2VO3KmrwrXH+Dyv
+ Yt+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734116921; x=1734721721;
+ d=1e100.net; s=20230601; t=1734117257; x=1734722057;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JKm04qysg/gEgbm4vurn75ARW08p/MAYicuTqcRbj08=;
- b=YKQCKH3b2fB3qDKy64NVeLyucE45X6NVxQMXurz26o5ym9sCyJMiigf0NMLTvFxhHD
- b1MMaTA4IEIsppza2YouHLr4llCCfzwJHQJYILGwnov2hpWWtToPIbKtxXJoqF8+IOLP
- bDu1UlGdC/CIew+XvLm7B0HpYeNaM2zq/IwiWw+ZtTLwBQuBlocxhc8zMRqIDZyaNSiZ
- /bHzuUQADj3/IAqMqqxDvZfyXbMblgSeYJy8UITOZUXT2D7LjOEvGr8XkinT9ZBqO1Jy
- BXsXzIbAZ8LfVevGfD3L8PiO+aId5QIyRI3ktb5u11yWTK0UzzomywpKusnxqmYbq2vB
- vrRQ==
-X-Gm-Message-State: AOJu0YwXEMpT7PmBSgnRb3eqf9hddP1PdOIsYjhbVRR2boDg5x7EHvmf
- SRd17hijqofgkuyTT+wdG39dthtW1zICVC7E+h3YivpuWEcx8k8VbtGA0C3F9V22fwvAE8xooGF
- t9K6IW/P4
-X-Gm-Gg: ASbGnctrkB8HyRjQthqNLgAqBb41R8F4wa67CZ/jiw2/2bsmawmefjo2kA/5rAX6Pnn
- PcP8l5Cbxza/KgJI26d7oK/sL/MKmxn50hOJlxkQ8bXm2MgbxdUbok90eCeySGviL9heIC20MDv
- rPhdWzxLmM9dqWKxAvIuXHwpmyj0VXN0qZqEAPocaVRtVNDkhMbfIjA8vXa7ynsFi9OV51+G5bX
- tJJywHaZqkEBK1cfzN9BcjYJjy0jqox38xU+gEnUqyawZpkby6v54N5CjQIcK3G
-X-Google-Smtp-Source: AGHT+IEXm24ToGc6IqeKoxLAgKPqwB0T7wRd1P5z7PkcgO1t3mvypyaI6PTRDRjo/onweT80OBoifQ==
-X-Received: by 2002:a05:6830:6e09:b0:71d:eb02:baed with SMTP id
- 46e09a7af769-71e3b8576b6mr2256363a34.8.1734116921476; 
- Fri, 13 Dec 2024 11:08:41 -0800 (PST)
+ bh=fgBXSP9FXNsZoJNxDWIf4VlbcOnRZTVxU/IcB0k/jaw=;
+ b=ATKOrOOSOVC0Njo5u8p0Oo7AWx7fKk7ZHYkFSa6of0xF+4M7ksUA645RWH9CRbiVSR
+ uJlT7AjKNdIF9lCBqEsEZ1IDcnUB9nYK8TDPff8e02H+ZDJyiG98ITPHWsTlvnCyswvu
+ aoNXz0QfFAruGo7m7ncE2YPsldWhgf91CNjDCTILkVPABjE0seW/hyr6Ev9r4c0lfTYS
+ BVR6Q6gI2qT3EtCfAUaDoLkYibN+oHG3mac/5WKVGx8BnglUyzmlYYH5CU78qFa34mEJ
+ bQ6TMJDsQyx8DHOyq6gUC7z1SRzEgvkDSzrv0sibKUfdBB3Wi8x5wUDO2AlaUzDXhaBG
+ 4g/g==
+X-Gm-Message-State: AOJu0YyGR7L2R5VCPv1JRBpdzR25thjIKZ4/lZoZ3bOO1T21P0j7vwfr
+ sacvtCBDzicS+CmVG2/0ITmNPV3uLdTKz9gusjMBbfp11fvFwNMdClZ/FSlhovlCjPPgEq+07vN
+ Hv+MILb1s
+X-Gm-Gg: ASbGncsZefSbOXKoJyDwsL0mRQDKYbPhesxR1nIl3/NmZHH9Qw8dbzmXwwXWe5cfPHn
+ cqobo+dpiTI1UoJ3o5w24ZlFtSj5ynDmPaJuXCu8rh8zcgtQXBq8Af04w+bZmdhviRGpouER7eA
+ Dd9ODPIhkz0tzCjjtwETOmL4T538ooMdEa4rnwtIMhavH5XGUQ8jceWzKUTij+1dAHE41rk1KEy
+ YxtIkemdJhFsCPMUY6IcOZ4yJuBQlETGlPbFdPDNkyrEI5ne+mmPvgsYHw5nWYJ
+X-Google-Smtp-Source: AGHT+IF6xJ9YwplBiPlVyQaE0cO10s3mBQ5ANS6Yqc4LzVYvpA/0q4/VsxFKqm/Sp4TR4Xh9JxZtSw==
+X-Received: by 2002:a54:4082:0:b0:3eb:695f:5382 with SMTP id
+ 5614622812f47-3eba686467bmr2111806b6e.13.1734117257266; 
+ Fri, 13 Dec 2024 11:14:17 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.38
+ 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:08:41 -0800 (PST)
+ Fri, 13 Dec 2024 11:14:16 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH 10/71] target/sparc: Constify all Property and PropertyInfo
-Date: Fri, 13 Dec 2024 13:06:44 -0600
-Message-ID: <20241213190750.2513964-15-richard.henderson@linaro.org>
+Cc: Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
+ Anup Patel <anup.patel@wdc.com>,
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-arm@nongnu.org (open list:Allwinner-a10),
+ qemu-riscv@nongnu.org (open list:Goldfish RTC),
+ qemu-ppc@nongnu.org (open list:PReP)
+Subject: [PATCH 52/71] hw/rtc: Constify all Property
+Date: Fri, 13 Dec 2024 13:07:26 -0600
+Message-ID: <20241213190750.2513964-57-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32a;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,30 +108,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/sparc/cpu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/rtc/allwinner-rtc.c | 2 +-
+ hw/rtc/goldfish_rtc.c  | 2 +-
+ hw/rtc/m48t59-isa.c    | 2 +-
+ hw/rtc/m48t59.c        | 2 +-
+ hw/rtc/mc146818rtc.c   | 2 +-
+ hw/rtc/pl031.c         | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
-index 284df950e0..8f494c286a 100644
---- a/target/sparc/cpu.c
-+++ b/target/sparc/cpu.c
-@@ -874,14 +874,14 @@ static void sparc_set_nwindows(Object *obj, Visitor *v, const char *name,
-     cpu->env.def.nwindows = value;
- }
- 
--static PropertyInfo qdev_prop_nwindows = {
-+static const PropertyInfo qdev_prop_nwindows = {
-     .name  = "int",
-     .get   = sparc_get_nwindows,
-     .set   = sparc_set_nwindows,
+diff --git a/hw/rtc/allwinner-rtc.c b/hw/rtc/allwinner-rtc.c
+index 1057d6a57f..838db72136 100644
+--- a/hw/rtc/allwinner-rtc.c
++++ b/hw/rtc/allwinner-rtc.c
+@@ -311,7 +311,7 @@ static const VMStateDescription allwinner_rtc_vmstate = {
+     }
  };
  
- /* This must match feature_name[]. */
--static Property sparc_cpu_properties[] = {
-+static const Property sparc_cpu_properties[] = {
-     DEFINE_PROP_BIT("float128", SPARCCPU, env.def.features,
-                     CPU_FEATURE_BIT_FLOAT128, false),
- #ifdef TARGET_SPARC64
+-static Property allwinner_rtc_properties[] = {
++static const Property allwinner_rtc_properties[] = {
+     DEFINE_PROP_INT32("base-year", AwRtcState, base_year, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index a6dfbf89f3..389f192efa 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -286,7 +286,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
+ }
+ 
+-static Property goldfish_rtc_properties[] = {
++static const Property goldfish_rtc_properties[] = {
+     DEFINE_PROP_BOOL("big-endian", GoldfishRTCState, big_endian,
+                       false),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index b642b82680..51f80d27ef 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -77,7 +77,7 @@ static void m48txx_isa_toggle_lock(Nvram *obj, int lock)
+     m48t59_toggle_lock(&d->state, lock);
+ }
+ 
+-static Property m48t59_isa_properties[] = {
++static const Property m48t59_isa_properties[] = {
+     DEFINE_PROP_INT32("base-year", M48txxISAState, state.base_year, 0),
+     DEFINE_PROP_UINT32("iobase", M48txxISAState, io_base, 0x74),
+     DEFINE_PROP_UINT8("irq", M48txxISAState, isairq, 8),
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index 90299ea56f..5a2c7b4abd 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -618,7 +618,7 @@ static void m48txx_sysbus_toggle_lock(Nvram *obj, int lock)
+     m48t59_toggle_lock(&d->state, lock);
+ }
+ 
+-static Property m48t59_sysbus_properties[] = {
++static const Property m48t59_sysbus_properties[] = {
+     DEFINE_PROP_INT32("base-year", M48txxSysBusState, state.base_year, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 8ccee9a385..973ed9914d 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -960,7 +960,7 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+     return s;
+ }
+ 
+-static Property mc146818rtc_properties[] = {
++static const Property mc146818rtc_properties[] = {
+     DEFINE_PROP_INT32("base_year", MC146818RtcState, base_year, 1980),
+     DEFINE_PROP_UINT16("iobase", MC146818RtcState, io_base, RTC_ISA_BASE),
+     DEFINE_PROP_UINT8("irq", MC146818RtcState, isairq, RTC_ISA_IRQ),
+diff --git a/hw/rtc/pl031.c b/hw/rtc/pl031.c
+index 563bb4b446..1dc8e6e00f 100644
+--- a/hw/rtc/pl031.c
++++ b/hw/rtc/pl031.c
+@@ -319,7 +319,7 @@ static const VMStateDescription vmstate_pl031 = {
+     }
+ };
+ 
+-static Property pl031_properties[] = {
++static const Property pl031_properties[] = {
+     /*
+      * True to correctly migrate the tick offset of the RTC. False to
+      * obtain backward migration compatibility with older QEMU versions,
 -- 
 2.43.0
 
