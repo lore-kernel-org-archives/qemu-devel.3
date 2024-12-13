@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A82AE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F6ABE77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 01:14:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLuFM-0005VG-Fn; Thu, 12 Dec 2024 20:13:36 -0500
+	id 1tLuGF-0005zQ-Tg; Thu, 12 Dec 2024 20:14:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFL-0005V7-Km
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:13:35 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuGA-0005th-Q8
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuFJ-0008Ko-IF
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:13:35 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLuG7-0000ef-TJ
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 20:14:26 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734052409;
+ s=mimecast20190719; t=1734052463;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=k3CpRjQ1GJybm/62BEt6jxfIDBxWmGB8jmyyWQfuEuA=;
- b=fPzi9aTPGMbRJVzzMWPF27WS8q4b9wxMUfT3MsjhC+m6Ea1exDV3Ahmk8TEyb7Opcw2IUX
- woxQVZrurq+at/z7hr8A8p7+4x/gAP1qRJEmfwOk6u9HKzXCO0EGNuNM5e0PsurKsQXvCz
- FmXc9OrYP6q+5iuqGWsvVkPu4l3nZnc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QPdepso8xSmP8leeknmWo8NzlmVarvknHnZdmjkDCPM=;
+ b=d5Xzlm2ISEyg+UcKxQdSLbaDBlV4RPrPIuvD6aQa0vnadDbo8yhVc71vbvbcqayOD/kNFa
+ YuZ2EN6IoRVCmCq5n/zVI5fm1CsIH6bBiQFg0ibBiN1IWBPijvb1+F05YKuioRCDGfDcBW
+ ZPEfh6CGbZe1VQGpH4Cw2k6MvRE9Kr0=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-nj9dfImiOTa3erY7LufNIw-1; Thu,
- 12 Dec 2024 20:13:27 -0500
-X-MC-Unique: nj9dfImiOTa3erY7LufNIw-1
-X-Mimecast-MFC-AGG-ID: nj9dfImiOTa3erY7LufNIw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-329-LvusOLgfNxi7H7kPVEnUTA-1; Thu,
+ 12 Dec 2024 20:14:16 -0500
+X-MC-Unique: LvusOLgfNxi7H7kPVEnUTA-1
+X-Mimecast-MFC-AGG-ID: LvusOLgfNxi7H7kPVEnUTA
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 99D3E19560BA; Fri, 13 Dec 2024 01:13:26 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 93E5E195604F; Fri, 13 Dec 2024 01:14:15 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3E7691956089; Fri, 13 Dec 2024 01:13:20 +0000 (UTC)
+ id 58D931956086; Fri, 13 Dec 2024 01:14:11 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
@@ -51,14 +52,15 @@ Cc: Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Victor Toso de Carvalho <victortoso@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>
-Subject: [RFC PATCH v2 00/35] Add qapi-domain Sphinx extension
-Date: Thu, 12 Dec 2024 20:12:29 -0500
-Message-ID: <20241213011307.2942030-1-jsnow@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [RFC PATCH v2 15/35] docs/qapi-domain: add "Errors:" field lists
+Date: Thu, 12 Dec 2024 20:12:44 -0500
+Message-ID: <20241213011307.2942030-16-jsnow@redhat.com>
+In-Reply-To: <20241213011307.2942030-1-jsnow@redhat.com>
+References: <20241213011307.2942030-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -25
 X-Spam_score: -2.6
@@ -83,66 +85,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series is still a work in progress, but I am sending it to the list=0D
-to serve as a pre-requisite for another series that we need to review=0D
-next instead. Please just ignore this one for now!=0D
-=0D
-Thanks!=0D
-=0D
-Harmonie Snow (1):=0D
-  docs/qapi-domain: add CSS styling=0D
-=0D
-John Snow (34):=0D
-  do-not-merge=0D
-  pylint touchups=0D
-  docs/sphinx: create QAPI domain extension stub=0D
-  docs/sphinx: add compat.py module and nested_parse helper=0D
-  docs/qapi-domain: add qapi:module directive=0D
-  docs/qapi-domain: add QAPI domain object registry=0D
-  docs/qapi-domain: add QAPI index=0D
-  docs/qapi-domain: add resolve_any_xref()=0D
-  docs/qapi-domain: add QAPI xref roles=0D
-  docs/qapi-domain: add compatibility node classes=0D
-  docs/qapi-domain: add qapi:command directive=0D
-  docs/qapi-domain: add :since: directive option=0D
-  docs/qapi-domain: add "Arguments:" field lists=0D
-  docs/qapi-domain: add "Features:" field lists=0D
-  docs/qapi-domain: add "Errors:" field lists=0D
-  docs/qapi-domain: add "Returns:" field lists=0D
-  docs/qapi-domain: add returns-nodesc=0D
-  docs/qapi-domain: add qapi:enum directive=0D
-  docs/qapi-domain: add qapi:alternate directive=0D
-  docs/qapi-domain: add qapi:event directive=0D
-  docs/qapi-domain: add qapi:struct directive=0D
-  docs/qapi-domain: add qapi:union and qapi:branch directives=0D
-  docs/qapi-domain: add :deprecated: directive option=0D
-  docs/qapi-domain: add :unstable: directive option=0D
-  docs/qapi-domain: add :ifcond: directive option=0D
-  docs/qapi-domain: add warnings for malformed field lists=0D
-  docs/qapi-domain: add type cross-refs to field lists=0D
-  docs/qapi-domain: warn when QAPI domain xrefs fail to resolve=0D
-  docs/qapi-domain: implement error context reporting fix=0D
-  docs/qapi-domain: collapsible branches=0D
-  WIP: 3.x - XREF=0D
-  WIP: 3.x ParserFix=0D
-  WIP: 3.x ObjectDesc compat=0D
-  WIP: 3.x css theming for missing xref=0D
-=0D
- docs/conf.py                           |   19 +-=0D
- docs/sphinx-static/theme_overrides.css |  108 ++-=0D
- docs/sphinx/collapse.py                |  200 ++++=0D
- docs/sphinx/compat.py                  |  198 ++++=0D
- docs/sphinx/qapi-domain.py             | 1156 ++++++++++++++++++++++++=0D
- scripts/qapi-lint.sh                   |   55 ++=0D
- scripts/qapi/pylintrc                  |    1 +=0D
- 7 files changed, 1734 insertions(+), 3 deletions(-)=0D
- create mode 100644 docs/sphinx/collapse.py=0D
- create mode 100644 docs/sphinx/compat.py=0D
- create mode 100644 docs/sphinx/qapi-domain.py=0D
- create mode 100755 scripts/qapi-lint.sh=0D
-=0D
--- =0D
-2.47.0=0D
-=0D
+``:error: descr`` can now be used to document error conditions,
+naming the type of error object and a description of when the error is
+surfaced.
+
+Like the previous Arguments patch, this patch does not apply any special
+QAPI syntax highlighting or cross-referencing for the types, but this
+can be adjusted in the future if desired.
+
+(At present, I have no commits that add such highlighting. Sphinx also
+does not appear to support Grouped fields with optional (or no)
+parameters, so the ability to exclude error types is currently not
+supported. If you omit the type, Sphinx treats it as a regular field
+list and doesn't apply the special Grouping postprocessing to it.)
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+
+qapi-domain fixup - Error field
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ docs/sphinx/qapi-domain.py | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/docs/sphinx/qapi-domain.py b/docs/sphinx/qapi-domain.py
+index 9b83262a0c6..4bfc82aafdf 100644
+--- a/docs/sphinx/qapi-domain.py
++++ b/docs/sphinx/qapi-domain.py
+@@ -34,7 +34,7 @@
+ from sphinx.locale import _, __
+ from sphinx.roles import XRefRole
+ from sphinx.util import logging
+-from sphinx.util.docfields import GroupedField, TypedField
++from sphinx.util.docfields import Field, GroupedField, TypedField
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import make_id, make_refnode
+ 
+@@ -261,6 +261,13 @@ class QAPICommand(QAPIObject):
+                 names=("arg",),
+                 can_collapse=False,
+             ),
++            # :error: descr
++            Field(
++                "error",
++                label=_("Errors"),
++                names=("error", "errors"),
++                has_arg=False,
++            ),
+         ]
+     )
+ 
+-- 
+2.47.0
 
 
