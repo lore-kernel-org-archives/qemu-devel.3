@@ -4,87 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A15E77180
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 14:51:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02F71E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 15:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM700-00081k-86; Fri, 13 Dec 2024 09:50:36 -0500
+	id 1tM7SA-0004tX-Rx; Fri, 13 Dec 2024 10:19:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM6zy-00081a-JN
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 09:50:34 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tM7RW-0004Pg-Ht
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:19:03 -0500
+Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM6zx-0008Ea-35
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 09:50:34 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-385deda28b3so1368283f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 06:50:32 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tM7RM-00057Q-2l
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 10:18:58 -0500
+Received: by mail-ej1-x62f.google.com with SMTP id
+ a640c23a62f3a-aa6c0d1833eso317478666b.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 07:18:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734101431; x=1734706231; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sQ27rwZAwst3GnfeSiFl0+1qiKo6UHcWiuA7e8DHk+g=;
- b=O1EmWlGMFCHdiVSwaP7QPeooWS+EhDPJmxwqyguz8SsPsu5G5cAJNT6oYTxyDI8kyi
- 1ohGI5ObhOL/4uNtF+QikAPJhBOkfnY28EeZSaFatYlymA+ubwyLjn3V+CoDuJkSU+cO
- qgT2VZnYbZVl5wUwiww+sGNhBFQNQkwFbyjK8szo4EVSWG1HFrBMl+pc0MjDM/FBemL0
- f+nUTl9adfHiUe5+UyHckcRP8qGUbe1ZbIIKzCTtMiDP7TwPpoO7woY8RV7wWF9RoN2x
- zZB5O0b0C53tgRFjqs03sYaKExibn0f4+XV+bh4iLMyLWAmmWMCzQAVAK/7M7JB59oQe
- mYAg==
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734103129; x=1734707929;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yFaB4PcpJ8M8FmLVWUEWYODg72B+6C+aetlV/ZwIxaU=;
+ b=UunRVQg3Zo2inyoYra3kzuxw43PP82QAr9hItAlnc98CPBbGqjkwnyhb7mcGRX5D3/
+ +afHDJLg5ZU4Xex8mnhUoDYHEtNUUUKn7JpVgv7AFDwccilMskMmXQbLm04d96iRCcQY
+ FTk170Eyq6AIf+HxAt1OnIai4g37Ui/K4MisRGMGP+poVb8+sgbnf5rRzTVxN/+4p4UF
+ bQ0sYiGgTTWd71KwQQnWcPnaqfACSQ3rEZ02Vw72w8zdxEQpvLWwdoq0Rzh6nYprwzSd
+ EsQE21oXOrGZBs1KsN17RYMlxYUwKK14A5Oel75HJ7cVptJG2Rll0byrnqt1QKAtR9Ve
+ akyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734101431; x=1734706231;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sQ27rwZAwst3GnfeSiFl0+1qiKo6UHcWiuA7e8DHk+g=;
- b=PuxQulDnYzpWN6rh0GIyNHm08wl/xVLIW2K8RZukeO4I8FpDvIhd7dWXDOwtWaTR+z
- 9nJW6a97EuqgVot1EAU0Aow+dMG06Z4aB5ybJ2JpzGIWwN2mZ2SC2+WhYc1Rv8hwZm0l
- oRLZpacHpnvVgDrOCODFsL9LTN7/mDlWQapzMR2UwyIbbF7flKwuPDmpsABeU0BZqIYk
- 8Gl+axSI446j9OgmVoZGEknOpFjimVBJ5YVuD81a+aPQWmXivlDJ/Gk0fMMhLYj0qegR
- KOEtlid2qb4uVLpfusXODv0N+v2cs1gcPB10+jVV5EdUvTZLhlCXzA0yivcMxEQQu0Mq
- vfYw==
-X-Gm-Message-State: AOJu0Ywpju8Jc6rL7wWiylcyYEdCwhuzfj6N0U0oafyl8Iyz2I51KBNu
- 2CeGWuF43TJRDIV53HYnH7LSw8L4itHxmLYQdB4+oEKeCgfsnBvKPF5rkq3PV/TIEGl/L6zB1JC
- /
-X-Gm-Gg: ASbGnctBbouSavo5rsBuo0REH8B/tMt+3rp/HWis3/KrVJyY8BRbEYJzinGkn3b3sWT
- JrotKDBlfIM8s2GGahDE91uqGdknWCG02bBknOh5+m82bWYd5rejtj3eYly0zT3kHdCaOsCzkPn
- pnHkAp6yTrC/N+QcJ9Fkrj4j2Lr9ERKj7AeNmqZA+U9mjyrigDS0Zq9BVVg3wnz2zScpO7tZMSB
- lzl4wdbtFONuyMPL9rE0T7O4iGqBoh4bie9FnKwkDZTykJfIxzSBiB4bTWhQZapEzd1OxjP/Tn3
- DMMNrXRS1I252npVdksRrjvLqMkWwg==
-X-Google-Smtp-Source: AGHT+IHCIa9RkZGALVeg8w67ZU8SuPAbs25Tn9aZqdUvIoi/r7N5oZf8yJTMUIilSgmyHsrXUh9THA==
-X-Received: by 2002:a5d:584b:0:b0:385:f44a:a68 with SMTP id
- ffacd0b85a97d-38880adb122mr2316893f8f.35.1734101430910; 
- Fri, 13 Dec 2024 06:50:30 -0800 (PST)
-Received: from [192.168.69.223] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3878251c1ccsm7460861f8f.88.2024.12.13.06.50.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 06:50:30 -0800 (PST)
-Message-ID: <6fdd8261-6f7b-45d3-9360-fc7b06bb6afe@linaro.org>
-Date: Fri, 13 Dec 2024 15:50:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/usb/hcd-xhci-nec: Remove unused XHCINecState::flags
- field
+ d=1e100.net; s=20230601; t=1734103129; x=1734707929;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=yFaB4PcpJ8M8FmLVWUEWYODg72B+6C+aetlV/ZwIxaU=;
+ b=heFYqpG4blyEhFbFkvHGqiTZPpCaOA5IOweGbRPG75caBi4pLf9aQyUF5t/mZ70zYI
+ lkT+49f1EYVORkOc1dHtT8T4Dkb8aQj9GrWXxT0uxCC2EMGNFG9Kg7Kk6gx9dh0MBMF5
+ 0hzoXkXyFBvNaghnPS2/4QMygLhEX34yjK7oji6UygL81Y5s9KJsOH2fo8zSurduvcp9
+ AvBAqVk7yHEk1yfQbIE8oG3DCcezLgIPu6zEfEQJkdlTyQlASOX4d8TWDuDyysK7m7fq
+ fK+B6tKUxd1sjf93x82HvXTTN6oKQ6jLDmPMMswnHeDfZlgWCbrwhQgCz3ogU+nxfSMY
+ 1gxQ==
+X-Gm-Message-State: AOJu0YwuDzQdzer4T1LYoGChRs19hcnEwRFkHAJIeLfrZTYjZFQ6uoEK
+ rrCKxuucbTzKB0XaYbcGhi27V4vpFPeNGImxAPNO8WMqRAoWEEXKFMiPG65wio7NSr71QoE+Rr+
+ Ohw==
+X-Gm-Gg: ASbGncvJEY8doqXygU4UvuGPxYDWTx5YlxK0pqLX2OvZGX1wPPowO7ATGXTXQfj2MUe
+ VCDm/YUJOgiYlOG+dF0W+3MYEv8zm6oYmRwDubc+ZUM3B5vhtszEOB8XcX+xwj0J9cyBHtrFCD2
+ KOQoH/ezCTMVPDhDL+ZZJpgDqqDBJz3qiWcLxVtEi98+x/Ika4kx8zJNEkyO5pdtym8HJsbbQ2z
+ 9gFKOBggqpITEd8TTTiJR1e6AxSNDJ0gH0/RU2xe5UxA8XstbMqH/vTGE8Up64CTS+HgUxj54Ai
+ heysbBKnRaKml9h6mNLhgQ4zb0MopGoz
+X-Google-Smtp-Source: AGHT+IHtX383rqhbaJrINyKhm/0MiPO55YvqVor11Iihz0QxkBNJbA6Xzz8Kp0ukBOV2CFUyFqhheA==
+X-Received: by 2002:a17:907:6d0d:b0:aa6:993a:259f with SMTP id
+ a640c23a62f3a-aab77e8a866mr286048266b.40.1734103128511; 
+ Fri, 13 Dec 2024 07:18:48 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab8dd35b19sm29284166b.33.2024.12.13.07.18.46
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 13 Dec 2024 07:18:48 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, Nicholas Piggin <npiggin@gmail.com>
-References: <20241127122812.89487-1-philmd@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241127122812.89487-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
+ philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
+Subject: [PATCH v13 06/15] hw: Add vmapple subdir
+Date: Fri, 13 Dec 2024 16:17:56 +0100
+Message-Id: <20241213151821.65748-7-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20241213151821.65748-1-phil@philjordan.eu>
+References: <20241213151821.65748-1-phil@philjordan.eu>
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62f;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62f.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,16 +110,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 27/11/24 13:28, Philippe Mathieu-Daudé wrote:
-> Commit b9599519a01 ("hw/usb/hcd-xhci: Remove XHCI_FLAG_SS_FIRST
-> flag") remove the last use of XHCINecState::flags but neglected
-> to remove it; do that now.
-> 
-> Reported-by: Nicholas Piggin <npiggin@gmail.com>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/usb/hcd-xhci-nec.c | 5 +----
->   1 file changed, 1 insertion(+), 4 deletions(-)
+From: Alexander Graf <graf@amazon.com>
 
-Patch queued.
+We will introduce a number of devices that are specific to the vmapple
+target machine. To keep them all tidily together, let's put them into
+a single target directory.
+
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+ MAINTAINERS             | 7 +++++++
+ hw/Kconfig              | 1 +
+ hw/meson.build          | 1 +
+ hw/vmapple/Kconfig      | 1 +
+ hw/vmapple/meson.build  | 0
+ hw/vmapple/trace-events | 2 ++
+ hw/vmapple/trace.h      | 1 +
+ meson.build             | 1 +
+ 8 files changed, 14 insertions(+)
+ create mode 100644 hw/vmapple/Kconfig
+ create mode 100644 hw/vmapple/meson.build
+ create mode 100644 hw/vmapple/trace-events
+ create mode 100644 hw/vmapple/trace.h
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 09899f7407e..b6019220662 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2765,6 +2765,13 @@ F: hw/hyperv/hv-balloon*.h
+ F: include/hw/hyperv/dynmem-proto.h
+ F: include/hw/hyperv/hv-balloon.h
+ 
++VMapple
++M: Alexander Graf <agraf@csgraf.de>
++R: Phil Dennis-Jordan <phil@philjordan.eu>
++S: Maintained
++F: hw/vmapple/*
++F: include/hw/vmapple/*
++
+ Subsystems
+ ----------
+ Overall Audio backends
+diff --git a/hw/Kconfig b/hw/Kconfig
+index 1b4e9bb07f7..2871784cfdc 100644
+--- a/hw/Kconfig
++++ b/hw/Kconfig
+@@ -41,6 +41,7 @@ source ufs/Kconfig
+ source usb/Kconfig
+ source virtio/Kconfig
+ source vfio/Kconfig
++source vmapple/Kconfig
+ source xen/Kconfig
+ source watchdog/Kconfig
+ 
+diff --git a/hw/meson.build b/hw/meson.build
+index b827c82c5d7..9c4f6d0d636 100644
+--- a/hw/meson.build
++++ b/hw/meson.build
+@@ -39,6 +39,7 @@ subdir('ufs')
+ subdir('usb')
+ subdir('vfio')
+ subdir('virtio')
++subdir('vmapple')
+ subdir('watchdog')
+ subdir('xen')
+ subdir('xenpv')
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+new file mode 100644
+index 00000000000..8b137891791
+--- /dev/null
++++ b/hw/vmapple/Kconfig
+@@ -0,0 +1 @@
++
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+new file mode 100644
+index 00000000000..e69de29bb2d
+diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
+new file mode 100644
+index 00000000000..9ccc5790487
+--- /dev/null
++++ b/hw/vmapple/trace-events
+@@ -0,0 +1,2 @@
++# See docs/devel/tracing.rst for syntax documentation.
++
+diff --git a/hw/vmapple/trace.h b/hw/vmapple/trace.h
+new file mode 100644
+index 00000000000..572adbefe04
+--- /dev/null
++++ b/hw/vmapple/trace.h
+@@ -0,0 +1 @@
++#include "trace/trace-hw_vmapple.h"
+diff --git a/meson.build b/meson.build
+index 1303664e167..bce1d21eec1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3592,6 +3592,7 @@ if have_system
+     'hw/usb',
+     'hw/vfio',
+     'hw/virtio',
++    'hw/vmapple',
+     'hw/watchdog',
+     'hw/xen',
+     'hw/gpio',
+-- 
+2.39.5 (Apple Git-154)
+
 
