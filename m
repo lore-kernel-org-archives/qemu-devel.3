@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A229E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:11:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F29FE7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:14:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM1hX-0004Fp-CJ; Fri, 13 Dec 2024 04:11:11 -0500
+	id 1tM1ko-000519-AL; Fri, 13 Dec 2024 04:14:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1hV-0004FB-5G
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:11:09 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1kk-00050k-8H
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:14:30 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1hQ-0008HL-4F
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:11:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tM1kd-0000GV-2l
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:14:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734081062;
+ s=mimecast20190719; t=1734081261;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=CQSvgI1tFw95N9E8rwpBb+eHgfFUtdICluECprPf/y8=;
- b=E8J+0O3Y6Pqkjw3cxe4JudvFk6yfnF8/VRYUoiJeoz5DSTPWEEnZylJ3YrmZlQlqg0NNDF
- exdiD9ynVoM4uDm65t46befnpbpxh/Gcg1QahSmu3IPMnhHRRrUpNgL2bR9lJa0ADBUDU7
- CjRDplP0es4L0IOCpgi7LVn/CRnnkw8=
+ bh=7M4r6m3BDcicSV3XOR6Pqe/H4dbjo+SlJ/8qD6SV3Y8=;
+ b=cwSmzUqPm+4+CSI9gg5aRHZNAfXxFFg0G8y6MMLeoLRlAGEQi8n3NqbbU9Xted8WyS7tmX
+ XM0t7EAbi9aFLMK+ZnWC8diPlAhE9YKuvuHGfSC6Be8I322yC5eyF1vzCidZSolL7JJryq
+ ZoctJDaZjVpM4gMo52DgkC1u+7fsJOY=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-jl91BppVMHuebA_aRa1_tg-1; Fri, 13 Dec 2024 04:10:57 -0500
-X-MC-Unique: jl91BppVMHuebA_aRa1_tg-1
-X-Mimecast-MFC-AGG-ID: jl91BppVMHuebA_aRa1_tg
+ us-mta-184-LuHVY7vBMb6UAz-PlK13CQ-1; Fri, 13 Dec 2024 04:13:12 -0500
+X-MC-Unique: LuHVY7vBMb6UAz-PlK13CQ-1
+X-Mimecast-MFC-AGG-ID: LuHVY7vBMb6UAz-PlK13CQ
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361eb83f46so14111535e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 01:10:56 -0800 (PST)
+ 5b1f17b1804b1-4361f371908so13583445e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 01:13:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734081056; x=1734685856;
+ d=1e100.net; s=20230601; t=1734081191; x=1734685991;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CQSvgI1tFw95N9E8rwpBb+eHgfFUtdICluECprPf/y8=;
- b=t/Brgv9verSyWMyxEn8B1jIf1sOhFbLMz5UVeNuQ784huyJ+L/r4fB1MPcRDN5DeRC
- AzJZk1T14fwfUv1mrD94+Y+AIgC7ytdX+AVhi8hR4tZIivf3JT+oi8bHJSCOPevyTwBW
- 53ODYeywT4npmhVY+ZlOgQ4mARGueh94upF7FDbanPnqMrS26vocS+TWJFCgaFDzd8Xm
- ujVSbRJvu2qaSUUGelFk32F2RmgnWak9heJ+K1f1gcX/WuyEm8PuN75rZkHRHpfuKJae
- 6k/F7fnclrt8dSl3Lrw5tWwwtSiXxOolJ7ZS2CQvWdPKrriz7WzYaN8N/wABdBmqEQeb
- 9ANw==
-X-Gm-Message-State: AOJu0YwdcvtrW29OX6Sh+5xF4VGoKQVQxNgdnVFgKnbq3nHhm7fKe3Jg
- VZXoHdnvwbe/mM5rpN8XycsBq2gYqzLW9gPUudZMufu0BsUa6UgSHwuHRge4Loc08LLEarOzXlJ
- xMAocez8AICgSQIueRJaoJV6jLY90FugeoPsIfSST5IPk/AML4Pv3
-X-Gm-Gg: ASbGncvzwIYQkfyULxja1IjdBZvzdiX7IO2BhtkE6e4V8EyjZGakId7xzglUhou2mh5
- p6Vid5dDhsdAi0OQSIHyT9/LkQVHzV27DKLzBAu7cJ0OLKEHyuBZ7tVP+w16MBwjZXj0QbUme1K
- 0EKew65HTE669GYFCv2yft9sFD+fGPckkd1IntcBe9ursCD/8oKlszZ9r99c4o0wZ3+vp1RiaGB
- dbpsBtJ6Nlu8nzrYluX7Kb0xzD8bMqmI8mtk9DbIKRhTx0hx7FNktoQh73io+piuTc5aZtXIPju
- a3/WkA==
-X-Received: by 2002:a05:6000:2a8:b0:386:3262:28c6 with SMTP id
- ffacd0b85a97d-38880ac2d54mr1160205f8f.5.1734081055953; 
- Fri, 13 Dec 2024 01:10:55 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGbBsbDfaZbAaBgzskPiA1CftGylY1wlaiRGDc7xoJ1oxuWBkANhTBFnjaM3ozJBEJRnP2Tzg==
-X-Received: by 2002:a05:6000:2a8:b0:386:3262:28c6 with SMTP id
- ffacd0b85a97d-38880ac2d54mr1160185f8f.5.1734081055574; 
- Fri, 13 Dec 2024 01:10:55 -0800 (PST)
+ bh=7M4r6m3BDcicSV3XOR6Pqe/H4dbjo+SlJ/8qD6SV3Y8=;
+ b=hjXRFD2S2zWOoOczeFXH6V28phuQ0q2/78mcJJCBJ8v8RASX1WAi95VgWhC9pAkiMM
+ 4lOpot/89gMB0UtbikWJJJG6sI+WMI6yoIDajT16D3Omd89mKGp0lKgNv7bLBnpqD5Rc
+ Nny3VEftNvF2KBtWiE51FM40S7LT/MUUpEwBki5CEn/34/TtWRFpC8c22r5Zb+BwwLFT
+ RBzAQlLqLflLwYNbWdqLwKIJ6dI2zOEpoZJ9QG3Ifbie2eaG9J4rqVW6iX9zqxEGxxyo
+ VVauWjKaMhbIpWI4fWS4CRiCA4sBeNWwFKgjboGym7kGXoxdnnJdcflXjYMKAHKI6Dmk
+ Lsig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWP3nt+W3pu6e1hcL540ZPVQRTtJpYX1JDTM5aj2o7Nc0e80FV2esKoqH6GkRonAgsU1Xg9Y2LbOie4@nongnu.org
+X-Gm-Message-State: AOJu0YyvRk4E4yLZPU4sF3aXc6VOXSsqia8RC8GB3giQUiIomkM5Iwnh
+ V8VF7RRyqbYUcTfUB07EjHZmbk5CPyFXUVMl5JQnFKB9mWA/gtawZv9vXGXtUbA+S+USskIFEf/
+ GUqvmxvR8CTLLIKC+1LbeOC2m5Mj6urjMr1nAB0e7Hf2JrZJ7VUW0
+X-Gm-Gg: ASbGncuXxZ1Yd0DgqZH9+QJ7AV0jYQCwKuS2HnO3zHlh+7db6jcXVsre8QMbd5CjTZ5
+ D6vp4kg+wmIBsVc7pXSbW0PYjZNlgXFMKPIUinr6+I3IzotmbeHnrBRetUupKIquncKt2d2n6vW
+ EG8+4meCWHn+1rSQ5gr+0+5v2T9JpnBPFuXhRT51QZCXn56RkQYqkyYn3sOEg0ILZJ4QEl5fSq3
+ 0YaLI2BmjX51/B/BOV32uL42fk/g6SZeQCSwzL1Jp/9cj7b0l4juCMe4gN2ihvc2ZcmqYLoqm9R
+ tf4q9w==
+X-Received: by 2002:a05:600c:19cc:b0:434:fddf:5bfa with SMTP id
+ 5b1f17b1804b1-4362aa1371dmr14788205e9.2.1734081191449; 
+ Fri, 13 Dec 2024 01:13:11 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHgc1Shyn9ZNB/vi09PCMjM6Fp8nbgV1STaAux2r37RDuSI7W5WZPPXphNES99N8h17aZ5SJA==
+X-Received: by 2002:a05:600c:19cc:b0:434:fddf:5bfa with SMTP id
+ 5b1f17b1804b1-4362aa1371dmr14787995e9.2.1734081191110; 
+ Fri, 13 Dec 2024 01:13:11 -0800 (PST)
 Received: from [10.33.192.228] (nat-pool-str-t.redhat.com. [149.14.88.106])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-387824cab97sm6435643f8f.62.2024.12.13.01.10.54
+ 5b1f17b1804b1-436257178e3sm43291165e9.41.2024.12.13.01.13.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 01:10:55 -0800 (PST)
-Message-ID: <f9f8f8f0-0ab9-4856-b84a-05e1ea8f4aa6@redhat.com>
-Date: Fri, 13 Dec 2024 10:10:54 +0100
+ Fri, 13 Dec 2024 01:13:10 -0800 (PST)
+Message-ID: <33760109-0d6c-4e67-8164-e8b6ea2b2f90@redhat.com>
+Date: Fri, 13 Dec 2024 10:13:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 30/31] tests/functional: skip tests if assets are not
- available
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Subject: Re: [PATCH v2 31/31] tests/functional: ignore errors when caching
+ assets, except for 404
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Thomas Huth <huth@tuxfamily.org>
 References: <20241211172648.2893097-1-berrange@redhat.com>
- <20241211172648.2893097-31-berrange@redhat.com>
- <0185be25-32f7-436b-b8e6-2e55c1cd0e18@redhat.com>
- <Z1r7CeI7TuHQXvAI@redhat.com>
+ <20241211172648.2893097-32-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,7 +129,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <Z1r7CeI7TuHQXvAI@redhat.com>
+In-Reply-To: <20241211172648.2893097-32-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -156,93 +157,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/2024 16.02, Daniel P. Berrangé wrote:
-> On Thu, Dec 12, 2024 at 03:14:53PM +0100, Thomas Huth wrote:
->> On 11/12/2024 18.26, Daniel P. Berrangé wrote:
->>> If downloading of assets has been disabled, then skip running a
->>> test if the assets it has registered are not already downloaded.
->>>
->>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>    tests/functional/qemu_test/asset.py    |  8 +++++++-
->>>    tests/functional/qemu_test/testcase.py | 11 +++++++++++
->>>    2 files changed, 18 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
->>> index c5d3e73c4b..39832b2587 100644
->>> --- a/tests/functional/qemu_test/asset.py
->>> +++ b/tests/functional/qemu_test/asset.py
->>> @@ -65,6 +65,12 @@ def _check(self, cache_file):
->>>        def valid(self):
->>>            return self.cache_file.exists() and self._check(self.cache_file)
->>> +    def fetchable(self):
->>> +        return not os.environ.get("QEMU_TEST_NO_DOWNLOAD", False)
->>> +
->>> +    def available(self):
->>> +        return self.valid() or self.fetchable()
->>> +
->>>        def _wait_for_other_download(self, tmp_cache_file):
->>>            # Another thread already seems to download the asset, so wait until
->>>            # it is done, while also checking the size to see whether it is stuck
->>> @@ -103,7 +109,7 @@ def fetch(self):
->>>                               self.cache_file, self.url)
->>>                return str(self.cache_file)
->>> -        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
->>> +        if not self.fetchable():
->>>                raise Exception("Asset cache is invalid and downloads disabled")
->>>            self.log.info("Downloading %s to %s...", self.url, self.cache_file)
->>> diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
->>> index 7bece8738a..6c67a9459c 100644
->>> --- a/tests/functional/qemu_test/testcase.py
->>> +++ b/tests/functional/qemu_test/testcase.py
->>> @@ -184,6 +184,14 @@ def scratch_file(self, *args):
->>>        def log_file(self, *args):
->>>            return str(Path(self.outputdir, *args))
->>> +    def assets_available(self):
->>> +        for name, asset in vars(self.__class__).items():
->>> +            if name.startswith("ASSET_") and type(asset) == Asset:
->>> +                if not asset.available():
->>> +                    self.log.debug(f"Asset {asset.url} not available")
->>> +                    return False
->>> +        return True
->>> +
->>>        def setUp(self, bin_prefix):
->>>            self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
->>>            self.arch = self.qemu_bin.split('-')[-1]
->>> @@ -209,6 +217,9 @@ def setUp(self, bin_prefix):
->>>            self.machinelog.setLevel(logging.DEBUG)
->>>            self.machinelog.addHandler(self._log_fh)
->>> +        if not self.assets_available():
->>> +            self.skipTest('One or more assets is not available')
->>
->> So if a test_*.py file consists of multiple subtests, this will now skip all
->> of them if just the asset of one subtest is missing?
+On 11/12/2024 18.26, Daniel P. Berrangé wrote:
+> We see periodic errors caching assets due to a combination of transient
+> networking and server problems. With the previous patch to skip running
+> a test when it has missing assets, we can now treat most cache download
+> errors as non-fatal.
 > 
-> Yep, I kept it simple. Often multiple assets all come from the same
-> server (eg kernel + initrd), and the same assets are used across
-> multiple tests.
+> Only HTTP 404 is retained as fatal, since it is a strong indicator of
+> a fully broken test rather than a transient error.
 > 
->> Could we maybe handle this test skipping in the new archive_extract() and
->> uncompress() functions instead, so that only the related subtests will be
->> skipped? (We still might need another wrapper function in testcase for the
->> spots that still call .fetch() on the assets directly, though)
+> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> ---
+>   tests/functional/qemu_test/asset.py | 14 +++++++++++++-
+>   1 file changed, 13 insertions(+), 1 deletion(-)
 > 
-> I'm not sure its worth the effort to ensure we don't leave gaves in places
-> that need skipping.
-> 
-> We still intend that this skipping scenario is highly undesirable at all,
-> and want to try to ensure it never actually triggers. ie we want cache
-> working in GitLab CI, so that we almost never need to download anything.
-> 
-> Most likely place to see skips is for developers locally if they're
-> runing tests for the first time, or haven't done it for a long while.
+> diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+> index 39832b2587..f0730695f0 100644
+> --- a/tests/functional/qemu_test/asset.py
+> +++ b/tests/functional/qemu_test/asset.py
+> @@ -15,6 +15,7 @@
+>   from time import sleep
+>   from pathlib import Path
+>   from shutil import copyfileobj
+> +from urllib.error import HTTPError
+>   
+>   
+>   # Instances of this class must be declared as class level variables
+> @@ -170,7 +171,18 @@ def precache_test(test):
+>           for name, asset in vars(test.__class__).items():
+>               if name.startswith("ASSET_") and type(asset) == Asset:
+>                   log.info("Attempting to cache '%s'" % asset)
+> -                asset.fetch()
+> +                try:
+> +                    asset.fetch()
+> +                except HTTPError as e:
+> +                    # Treat 404 as fatal, since it is highly likely to
+> +                    # indicate a broken test rather than a transient
+> +                    # server or networking problem
+> +                    if e.code == 404:
+> +                        raise
+> +
+> +                    log.debug(f"HTTP error {e.code} from {asset.url} " +
+> +                              "skipping asset precache")
+> +
+>           log.removeHandler(handler)
+>   
+>       def precache_suite(suite):
 
-Ok, fair point. Maybe it's even better to skip the whole test so that the 
-whole test shows up as "SKIP" in the summary, otherwise we won't notice in 
-the test summary if just one single subtest is skipped. So after thinking 
-about this for a while, this is maybe even the better approach indeed.
-
-Thus:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
