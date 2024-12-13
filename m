@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 684EEE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:20:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B2BE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 02:21:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLvHj-00006U-Vr; Thu, 12 Dec 2024 21:20:08 -0500
+	id 1tLvHm-0000CQ-9O; Thu, 12 Dec 2024 21:20:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHd-00089S-TP
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:02 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHj-0008VU-5z
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHY-0007yc-CW
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:01 -0500
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1tLvHZ-0007z7-Ia
+ for qemu-devel@nongnu.org; Thu, 12 Dec 2024 21:20:06 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734056393;
+ s=mimecast20190719; t=1734056396;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/7a3itVeAeAdAFUJKNPjQ7i8GxkmADLx+rIa6mRCxdM=;
- b=bXBGA0u/RG2kVa3PBF+vQC88u76Kgioledw00Fn7KYtiIgQda/6V999wK4ZZJpXiqEXJ3Z
- hRH9xhLbvyVOle8UnT2eptWA2Yp9j/7cCkoZAAxygV+YaRIs54PCz9p6J6NaK+wLEJK5n+
- vCRYirhTjr3diJSiM2WGiCEeSY8UND4=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7aPZLMd95e7JjTn9sy+x0lQ0lPYQehAuYgXwUC7zyw4=;
+ b=VM53L/xj815z98isdyj1Z5RxvZJBc7KRknYOzoU+Jj/8geuOZ/aM55fPKayz0ViQQkp6Ln
+ rzGnEsbHUhyP6pK2/j4mjydAb30lD8ncSo0l3bwV8X3ZRFCCFnp+dwBYI9FLC1413dc7nD
+ 6SMryE1NUOJpjAlvZ0yrxMyQiDHNiTc=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-692-Xs1cO9crO06Ytz0-ufuesg-1; Thu,
- 12 Dec 2024 21:19:49 -0500
-X-MC-Unique: Xs1cO9crO06Ytz0-ufuesg-1
-X-Mimecast-MFC-AGG-ID: Xs1cO9crO06Ytz0-ufuesg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-16-j52UaJ8dP8a172057kvpaA-1; Thu,
+ 12 Dec 2024 21:19:54 -0500
+X-MC-Unique: j52UaJ8dP8a172057kvpaA-1
+X-Mimecast-MFC-AGG-ID: j52UaJ8dP8a172057kvpaA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C188D1956089; Fri, 13 Dec 2024 02:19:48 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 199D61956086; Fri, 13 Dec 2024 02:19:53 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.88.22])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3AF92195605A; Fri, 13 Dec 2024 02:19:46 +0000 (UTC)
+ id 3BA58195605A; Fri, 13 Dec 2024 02:19:50 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>, Markus Armbruster <armbru@redhat.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH 18/23] docs/qapidoc: add visit_returns() method
-Date: Thu, 12 Dec 2024 21:18:21 -0500
-Message-ID: <20241213021827.2956769-19-jsnow@redhat.com>
+Subject: [PATCH 20/23] docs/qapidoc: add visit_sections() method
+Date: Thu, 12 Dec 2024 21:18:23 -0500
+Message-ID: <20241213021827.2956769-21-jsnow@redhat.com>
 In-Reply-To: <20241213021827.2956769-1-jsnow@redhat.com>
 References: <20241213021827.2956769-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -83,47 +83,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generates :returns: fields for explicit returns statements. Note that
-this does not presently handle undocumented returns, which is handled in
-a later commit.
+Implement the actual main dispatch method that processes and handles the
+list of doc sections for a given QAPI entity.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- docs/sphinx/qapidoc.py | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ docs/sphinx/qapidoc.py | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
 diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index c731c597daf..9d298117fea 100644
+index fe01ee71c26..eda6aa0897b 100644
 --- a/docs/sphinx/qapidoc.py
 +++ b/docs/sphinx/qapidoc.py
-@@ -41,6 +41,7 @@
- from qapi.schema import (
-     QAPISchema,
-     QAPISchemaArrayType,
-+    QAPISchemaCommand,
-     QAPISchemaEntity,
-     QAPISchemaEnumMember,
-     QAPISchemaFeature,
-@@ -202,6 +203,19 @@ def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
+@@ -278,6 +278,29 @@ def preamble(self, ent: QAPISchemaEntity) -> None:
  
-         self.generate_field("feat", section.member, section.text, section.info)
+         self.ensure_blank_line()
  
-+    def visit_returns(self, section: QAPIDoc.Section) -> None:
-+        assert isinstance(self.entity, QAPISchemaCommand)
-+        rtype = self.entity.ret_type
-+        # q_empty can produce None, but we won't be documenting anything
-+        # without an explicit return statement in the doc block, and we
-+        # should not have any such explicit statements when there is no
-+        # return value.
-+        assert rtype
++    def visit_sections(self, ent: QAPISchemaEntity) -> None:
++        sections = ent.doc.all_sections if ent.doc else []
 +
-+        typ = self.format_type(rtype)
-+        assert section.text  # We don't expect empty returns sections.
-+        self.add_field("returns", typ, section.text, section.info)
++        # Add sections *in the order they are documented*:
++        for section in sections:
++            if section.tag == QAPIDoc.Tag.UNTAGGED:
++                self.visit_paragraph(section)
++            elif section.tag == QAPIDoc.Tag.MEMBER:
++                self.visit_member(section)
++            elif section.tag == QAPIDoc.Tag.FEATURE:
++                self.visit_feature(section)
++            elif section.tag in (QAPIDoc.Tag.SINCE, QAPIDoc.Tag.TODO):
++                # Since is handled in preamble, TODO is skipped intentionally.
++                pass
++            elif section.tag == QAPIDoc.Tag.RETURNS:
++                self.visit_returns(section)
++            elif section.tag == QAPIDoc.Tag.ERRORS:
++                self.visit_errors(section)
++            else:
++                assert False
 +
-     def visit_errors(self, section: QAPIDoc.Section) -> None:
-         # FIXME: the formatting for errors may be inconsistent and may
-         # or may not require different newline placement to ensure
++        self.ensure_blank_line()
++
+     # Transmogrification core methods
+ 
+     def visit_module(self, path: str) -> None:
 -- 
 2.47.0
 
