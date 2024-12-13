@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75EFFE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:33:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20C12E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF9O-0004TK-1F; Fri, 13 Dec 2024 18:32:51 -0500
+	id 1tMF9I-00049h-O6; Fri, 13 Dec 2024 18:32:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF97-00041B-M6
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:37 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8f-0003XH-2C
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:06 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF95-00038Z-TD
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:33 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso4091f8f.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8d-00034g-9U
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:04 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361a50e337so16189955e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132750; x=1734737550; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132720; x=1734737520; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yUpocUqRTSjyf3cCiIDYbPpX0/ouCKZXynrUVilzcxo=;
- b=hZjaegewo+Y9aBwm+xJEY9Zdm6dGhp17mDhIOpi7LYnDxttxHe683arYYqeXgAiZFW
- ChAyFlXHicvLNqkYRDIQ2jwlZdmxPyyULVlRU0mVV7hwoet22s8Yg+WVwi2FWYh0xEGV
- GPe6LyuGaDHT0ZTtCu60W6VY+J4O2LJU/mnfyvPf6mtSGvxb/W9WdnxfVI3L95EZEcRr
- iqkzw85EORu9oxNz5D0GhLIp4UwARZ1tPTH5WfMeVZaSS30OZRxtLDQ/2q4JY7lBLJ8A
- bSOJyyxRoZ34UARKLoWwaHBc23YE2COGTmwqd92sdbJxvVxul+f+5DdAdtiHd7ueBqko
- AT1A==
+ bh=SGu1RWDi+gwgcW3c9gaeL8ccTCliWtLZLUZIPeh5RIQ=;
+ b=McfsTDec6PH303IE+3AMfVDtFLUkq0Xg7xwKa9n+SVtfm7HLkaqanGuSD9CMQxVoDy
+ B59byVfGHySBpP6UMg5mG7paaIrOWcXIN+5WTnDT/UORdGFKaB7UNNFdR05BJ/x7dDmB
+ bpGOIArMh0qPljUjQYeP2NaWNX2+zaGXN3Y740Wwrzyzf2YxknrG0eP/VWPReFf4a13O
+ boHI+fka+eBY60a7guXzmkxIDdUtUyk6KRYsW3i/v4dN5TN3zQp/iyCFoCsxSpsaPTZx
+ 3Et8JGX576+yAylghw0yMsArhIBPhPLfqvxzpydiiyaIJHtmvLfgHp90MJxMPVGk3kK3
+ uafg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132750; x=1734737550;
+ d=1e100.net; s=20230601; t=1734132720; x=1734737520;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yUpocUqRTSjyf3cCiIDYbPpX0/ouCKZXynrUVilzcxo=;
- b=MgrA+M17rOU1aktysGl0ikQUOtVDUF++zcWx7j9sdBSKPbZoKC/kuy+lyVLjuhDuf8
- EOWJn1lOPsr0SYQipP2e1aFUev9uxg4nRK53SCzDFTNObryMGFeh0XNW2Xf69yjBufKz
- JahpXXB+cn7L8WlmXvUwJr1xu5MQDry8nQHLz7Z/SFtQjsNsV0WhlQVxpKFs6kAfM1dP
- gEuj6G79rnJpxDSDjUWeq9228p2bPNVoMR39YpjA5J3BXtiIWdZEsxKJYi6ksSkLvB79
- +Spl+h6H3/j8dN7ZlLbs+kGtFc5T4O76fJp129hgybMnx7HW7p8o8fq/QZWO23EHanyd
- 4yPw==
-X-Gm-Message-State: AOJu0YzzRgDb/HOEc5b4dHbHAsK4ttZu8XrPUmSZU9KOavcxJ6jdcKvd
- hLfW0FxMBrcfu/Zd5/qELbewntIBLJzrZCxUtI1Nxq/Df+doMz9YwPaAQH5KgIgKWv/ZEFaEFAX
- G0RI=
-X-Gm-Gg: ASbGncvaE/FQqj69FuaS04hrhpEFXx8LNvh4AJB0bl4F7/AokZuo9fAlJUxJMqNKuoX
- cREgecPzuvgV+CphytcK8ZA1ZbIjkDt4IrLzA61LjyzLAPZZg952YUD5HJjW3fzdvUWSQCQEk46
- QzTQijRMof/5jo+VZbJea9xa9B5UTpOTRczoELdc5+/NoE18k2nqSDEfFrDDuYhGuANt80VPyol
- NTcIs5Fq6P5RIVXG+Jhd7CfDumbSevVA2HH6KjXGMpI//OTvt1k6ho0zytgV5m5UAjtBpJdFHJB
- g3a7EA==
-X-Google-Smtp-Source: AGHT+IF3YSDhnfol0mDhpcIG5mDDVIMIChAlcs5Q01loJYPryolrc7yiCl+W4irgtv/3lw08sJZqFw==
-X-Received: by 2002:a05:6000:144f:b0:385:fae4:424e with SMTP id
- ffacd0b85a97d-3888e0c07b9mr2960020f8f.52.1734132749862; 
- Fri, 13 Dec 2024 15:32:29 -0800 (PST)
+ bh=SGu1RWDi+gwgcW3c9gaeL8ccTCliWtLZLUZIPeh5RIQ=;
+ b=VagkIo00tYN5+k0wDlrs6asi1SxZrrYQb8fTi3JIrx5xKvNIuoySuogI/xiBk3gfH2
+ lTdz0IslTYz34/EBJ8/OM56dOtJZ2XOAibnLzLHVl1xoAne/C1VkgzG1XRjXm19D1JPK
+ hCIQE+CGMEwH0iioyLNB8KUWnAwFJo3nKQE0cOlUicJ9H3aewXtdeVWH3roQa4uygXU0
+ DEuv0gv9HEnRd5Qz91wB09aZCQL8OmOn12DnHQQS+WuCo/OQmyEXuMUgcpyE+EgAz9pS
+ YZXAwXW+4A4o3ME//0D87yytL/BbJf862ra8foKUQ4HD+nAgCAT4RQ9AtXFBWFAh2rlv
+ 9n6g==
+X-Gm-Message-State: AOJu0YxVFSf3TKCne7sk1ktuXDuaOZ1znKC0bjI1QDqj07rJTPSBdxi0
+ tBTBhY+V0C+/8kl33q8Y2iODtpPqT6DB02J3zXVaePVWAzB16HGhPq/PCsl7fIWz0BlznFQyTcM
+ EZ24=
+X-Gm-Gg: ASbGncvcOaEbWc4JT9V4vAVqQNajWLvlJX1cIJDEPQgMVk+7MN7Uu3ggB0/w88u0rE1
+ yPQ3OLz9xHMmqQLEvh5sVCaX0pRCkBat0CT1J0jnRxQcHz8CWRip6pTNvXPQXwx6+Obdnz+WAKw
+ IFF5xzoV8j5660rsuyutQJ3VxenKcqamdTMbY43Rm48wqkRE+ZapyH32H7ZS0OX5Hmm+R8yRp0D
+ 5bK+lLqs9Hd2V4Mm0Qr2zXaoaOwy69jZxycXrj+XKHS6OpGOa7xE34dl3hwKkp4c4mZhS1zc0X8
+ SElMUw==
+X-Google-Smtp-Source: AGHT+IFc1OfMYAjS5qAqCZ4gvTaUB2C9N0qBROnRile59Kq/hUd7/b+TZzGvhx8Nuq3it+v6IjdylQ==
+X-Received: by 2002:a05:600c:3109:b0:434:fdaf:af2d with SMTP id
+ 5b1f17b1804b1-4362aab4e5amr39965535e9.30.1734132720170; 
+ Fri, 13 Dec 2024 15:32:00 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80120dcsm859443f8f.8.2024.12.13.15.32.29
+ 5b1f17b1804b1-43625553213sm62212545e9.8.2024.12.13.15.31.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:32:29 -0800 (PST)
+ Fri, 13 Dec 2024 15:31:59 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 18/20] hw/mips: Include missing 'exec/tswap.h' header
-Date: Sat, 14 Dec 2024 00:30:53 +0100
-Message-ID: <20241213233055.39574-19-philmd@linaro.org>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pavel Pisa <pisa@cmp.felk.cvut.cz>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 12/20] hw/net/can: clean-up unnecessary includes
+Date: Sat, 14 Dec 2024 00:30:47 +0100
+Message-ID: <20241213233055.39574-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,49 +101,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some files indirectly get "exec/tswap.h" declarations via
-"exec/cpu-all.h". Include it directly to be able to remove
-the former from the latter, otherwise we get:
+From: Alex Bennée <alex.bennee@linaro.org>
 
-  hw/mips/malta.c:674:22: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-    674 |                      tswap32((1 << 31) /* ConfigEn */
-        |                      ^
-  hw/mips/fuloong2e.c:89:23: error: call to undeclared function 'tswap32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     89 |     prom_buf[index] = tswap32(ENVP_VADDR + table_addr);
-        |                       ^
+The event_notifier, thread and socket includes look like copy and
+paste of standard headers. None of the canbus devices use chardev
+although some relied on chardev to bring in bitops and byte swapping
+headers. In this case include them directly.
 
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Pavel Pisa <pisa@cmp.felk.cvut.cz>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <20241209100635.93243-1-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241211230357.97036-7-philmd@linaro.org>
 ---
- hw/mips/fuloong2e.c | 1 +
- hw/mips/malta.c     | 1 +
- 2 files changed, 2 insertions(+)
+ hw/net/can/can_kvaser_pci.c   | 4 ----
+ hw/net/can/can_mioe3680_pci.c | 4 ----
+ hw/net/can/can_pcm3680_pci.c  | 4 ----
+ hw/net/can/can_sja1000.c      | 2 +-
+ hw/net/can/ctucan_core.c      | 3 ++-
+ hw/net/can/ctucan_pci.c       | 4 ----
+ 6 files changed, 3 insertions(+), 18 deletions(-)
 
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index 7fd8296ccb6..904c10b90e3 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -40,6 +40,7 @@
- #include "sysemu/reset.h"
- #include "sysemu/sysemu.h"
- #include "qemu/error-report.h"
-+#include "exec/tswap.h"
+diff --git a/hw/net/can/can_kvaser_pci.c b/hw/net/can/can_kvaser_pci.c
+index 38434d3a04b..9e363d532f5 100644
+--- a/hw/net/can/can_kvaser_pci.c
++++ b/hw/net/can/can_kvaser_pci.c
+@@ -30,12 +30,8 @@
+  */
  
- #define ENVP_PADDR              0x2000
- #define ENVP_VADDR              cpu_mips_phys_to_kseg0(NULL, ENVP_PADDR)
-diff --git a/hw/mips/malta.c b/hw/mips/malta.c
-index 198da5ba3d4..834636dae59 100644
---- a/hw/mips/malta.c
-+++ b/hw/mips/malta.c
-@@ -28,6 +28,7 @@
- #include "qemu/datadir.h"
- #include "qemu/cutils.h"
- #include "qemu/guest-random.h"
-+#include "exec/tswap.h"
- #include "hw/clock.h"
- #include "hw/southbridge/piix.h"
- #include "hw/isa/superio.h"
+ #include "qemu/osdep.h"
+-#include "qemu/event_notifier.h"
+ #include "qemu/module.h"
+-#include "qemu/thread.h"
+-#include "qemu/sockets.h"
+ #include "qapi/error.h"
+-#include "chardev/char.h"
+ #include "hw/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/net/can/can_mioe3680_pci.c b/hw/net/can/can_mioe3680_pci.c
+index 21659b7afb1..580f099e00a 100644
+--- a/hw/net/can/can_mioe3680_pci.c
++++ b/hw/net/can/can_mioe3680_pci.c
+@@ -26,12 +26,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/event_notifier.h"
+ #include "qemu/module.h"
+-#include "qemu/thread.h"
+-#include "qemu/sockets.h"
+ #include "qapi/error.h"
+-#include "chardev/char.h"
+ #include "hw/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/net/can/can_pcm3680_pci.c b/hw/net/can/can_pcm3680_pci.c
+index af21dc6855f..3195b79954a 100644
+--- a/hw/net/can/can_pcm3680_pci.c
++++ b/hw/net/can/can_pcm3680_pci.c
+@@ -26,12 +26,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/event_notifier.h"
+ #include "qemu/module.h"
+-#include "qemu/thread.h"
+-#include "qemu/sockets.h"
+ #include "qapi/error.h"
+-#include "chardev/char.h"
+ #include "hw/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
+diff --git a/hw/net/can/can_sja1000.c b/hw/net/can/can_sja1000.c
+index 6694d7bfd84..5b6ba9df6c4 100644
+--- a/hw/net/can/can_sja1000.c
++++ b/hw/net/can/can_sja1000.c
+@@ -27,7 +27,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+-#include "chardev/char.h"
++#include "qemu/bitops.h"
+ #include "hw/irq.h"
+ #include "migration/vmstate.h"
+ #include "net/can_emu.h"
+diff --git a/hw/net/can/ctucan_core.c b/hw/net/can/ctucan_core.c
+index 812b83e93e1..4402d4cb1f7 100644
+--- a/hw/net/can/ctucan_core.c
++++ b/hw/net/can/ctucan_core.c
+@@ -28,7 +28,8 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+-#include "chardev/char.h"
++#include "qemu/bswap.h"
++#include "qemu/bitops.h"
+ #include "hw/irq.h"
+ #include "migration/vmstate.h"
+ #include "net/can_emu.h"
+diff --git a/hw/net/can/ctucan_pci.c b/hw/net/can/ctucan_pci.c
+index 65f1f823030..a8c77b91943 100644
+--- a/hw/net/can/ctucan_pci.c
++++ b/hw/net/can/ctucan_pci.c
+@@ -27,12 +27,8 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include "qemu/event_notifier.h"
+ #include "qemu/module.h"
+-#include "qemu/thread.h"
+-#include "qemu/sockets.h"
+ #include "qapi/error.h"
+-#include "chardev/char.h"
+ #include "hw/irq.h"
+ #include "hw/pci/pci_device.h"
+ #include "hw/qdev-properties.h"
 -- 
 2.45.2
 
