@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AC9E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 750D6E77183
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF8N-00033f-GH; Fri, 13 Dec 2024 18:31:47 -0500
+	id 1tMF9N-0004Sw-NK; Fri, 13 Dec 2024 18:32:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8G-0002nt-TK
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:41 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF93-0003us-T8
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:33 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8F-00031Z-7L
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:40 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so27059335e9.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:31:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF91-000381-HH
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:29 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so16559415e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132697; x=1734737497; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132745; x=1734737545; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WxphwPmo3ws4n0VvyoWJoeeSK4RqOZYnTK7zd+ejDWM=;
- b=uhYL9VZJamjij+QtEgJ9KFyjDGAWo1BbThNGLg+nOY8GybQsvS8N52MU9+g2WprDA2
- Dvf2wfw4yWLX7b4WMJfU2IlFllBilEmFUxHPg6BcYMjUcVXFR2T5kRnjuikw6n4sqI6y
- nGgpvqUuqwvLS/PmrWGLCrcAIFkDqfu+YomoYnIT14y4dXz+p3zSQkByLcL5gr+wP3od
- 5CgOEt9Yq8euNrKgmQtFG3R5ucHlifC3VC3hux9OwxlE3dROpAbYDfXW0Tcjj7jjnLAq
- 3mxlMhXm6JoSunc7cQLW3fOrjZ0207YkXwvmwxwMajO/SCrMFxAZmUVgaR3ZwP8N1L5v
- uS+w==
+ bh=a3TtnTiO9UzBRUmGvf6bhUHZ7y2QwBk8czB0sZAw/do=;
+ b=KXFgtcybdfezlfy5dRt7cnXcThG2woWVuUIKnmQLprhA3nX6opoJnOg6J17PB6EUBP
+ ORaAaLumpUGqGyquhh8LktSTZLRKYmzcdXTzCkwU8Son7OS2nmazchMqi7KCufJXPNSB
+ Yt5oui2JULdIPoGHdUZ3/Ra7v2OFJr5Ift2gRPPI9zjehEKbTIwdcY4O/UDpM96iGtBC
+ 8jhDS+DzYqVoLfyBywFo/yTenSHhiRZg++lkzYbTS481dgFGEK47mnJk4A+8D3KKDpI1
+ vV11OThlNa0zxcek+n+fIl8Mq1giQzm8ow+nsGJENDw2zkMFuxpahA6S6TC+hImgCT1I
+ iqTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132697; x=1734737497;
+ d=1e100.net; s=20230601; t=1734132745; x=1734737545;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WxphwPmo3ws4n0VvyoWJoeeSK4RqOZYnTK7zd+ejDWM=;
- b=u8hEnRmM2z1m+icY4ig7gFxQxTVjHjm2DjTRxhc0YX8XoS3Ye4Fp/1+lUMhT4b+Bxh
- hVb/GSpSFNqWWSJ2u8qEoMqmM+vI+8vt5LQGKGcmwwDS2SJ8Na7pzpSL3SFt/bBfXvEs
- arRpw5SiXEWxadM5c7Pb/vJZPe/Gp47ycbwK42fmyMwX+OUlaECjgNEm8JqHKL1pCMoV
- YhGz5U7XqT+xouEP3qsitXioIvCcPyC8QrIb+XNbwDQQmPA+plrEvHVUnMBj65c/Ptpf
- X85wjTuU9ZxUTmFc8iw7WYs4rn3x9V1ljShpSLsmu5iGErd8aXsQxYICFFqHT+EimSTf
- P/+w==
-X-Gm-Message-State: AOJu0Yxrj1f9neT1QXnLDDB4RrHxREHHP2nb63HZAjdcvEDkUv2e3y4Y
- ++smE6BoSwKsWztCoWYLHx7zuc9XM3VMmZBxachfsg8Z2x1aaITOKQVedV6HbIzVjCHtgPsaSkW
- go1s=
-X-Gm-Gg: ASbGnctsOYQi0WtMt0sniHlRzI2cSS8QH10JxpwII+MEhJxatdCu4E/UWq9D45ZfJQ2
- 7wo5WCkX5OgKrVvoCUzGGa23uXbwHDxw4/UqXtxSTwlFwjJyPzGnFhzogwmTYVkFtpWiqMvy14i
- JXwSd30XuUISqoyvXqENEpZEhoLM4wOSgTpY+4anLwQ0hc2YnA/J8+/m428KFVN4F5+3akrEaMO
- uAncpxQGLQwEF1QsYBgcdVAFQxQ4/mJ+5ru7k/AyBQ7n/0YebkNsqcvnUMf7yjYEWVBg8915fO8
- nxjuPg==
-X-Google-Smtp-Source: AGHT+IGKBZ6hFs3GXw17zJ/tbB9Ur/BQhVwWJwPC1SJrRLKyMHp5+X+2+pHY83b3KtYetVMvNxKtxw==
-X-Received: by 2002:a05:6000:18c6:b0:385:fe66:9f32 with SMTP id
- ffacd0b85a97d-3888e0bfcc4mr3511109f8f.52.1734132696932; 
- Fri, 13 Dec 2024 15:31:36 -0800 (PST)
+ bh=a3TtnTiO9UzBRUmGvf6bhUHZ7y2QwBk8czB0sZAw/do=;
+ b=vYF0+3nVy4g/77fq1ow7gjzI/4wUS4V4egnjNb9pJ6rag+QSIHJHNAmpvDlvLYn0uu
+ dnDhvoOazYH7iHpT8kS/yJ4WYeFHYrFTUOhodIVcvk2h1fKARnIzF1VXHuH8kdGiwVjD
+ /YJcPwcoWvA0TMI8Gka+cVXVMJniCYuoOG7G8Tyh80QFMLu/WMqTMlZOkmWBz1PHqb6a
+ afaWCwrSog+Utszn8hhlCu4ChpR4IsJ9rPqJs0/Cbu3QkvfE7RccRmQMjK6aEn5/x9+F
+ kXRAwy2OiSGU71UOZJs6CJGYXa+waMAARlUAWMMXEJyEwr8bmjmuDBIbYGOeo9bWxmrj
+ jWLQ==
+X-Gm-Message-State: AOJu0YyGlQ/qUEgLj2nP7EAcyHcFZzfK9371gQ+PPCb5e+zmW7nHgJRa
+ 4vpCtQyHE/iAQaIb6yvMwBh4iBBnLFmK5n3RNAk0FC7kWfKwKhoHcd7c0pq9rt9EgO3LBObhPfX
+ DHDw=
+X-Gm-Gg: ASbGnctBlnCB5c7LtE6LA8sn6tv+EUbXCpGThCClFdcPz0Wgj2NchaGJZhOYK31Fbsv
+ tA8zd6cU4NC6o2iLy+yP92kI0VlWbLf4J10Y1ISWsfy2SGMfkVl2Y68zgDQDxsJEXjxg1fNbIZ/
+ KOJT1L0I9fSs2yHBUgcBuCwmKfOx7vVWdfzun6KbEJEFe7lYtbKF9zW47/BW+xRMSPirXVFUjkK
+ nsTOdVan+uQHcIylWraaUeN5O2SQgawrC21fKGTILDvqb0wYnQff2F1A67yWAv2QNhkueJUqY4C
+ elE/HA==
+X-Google-Smtp-Source: AGHT+IFLTaIoPuBlUHMXG89W9bEFd5FgiEdXf6f5G7N+vppsxPfOdbXtlxw+55kx/7hZug8KZ4FZOg==
+X-Received: by 2002:a05:600c:cc9:b0:434:fec5:4ef5 with SMTP id
+ 5b1f17b1804b1-4362aa43bcbmr43962645e9.14.1734132745363; 
+ Fri, 13 Dec 2024 15:32:25 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8012112sm849517f8f.11.2024.12.13.15.31.35
+ 5b1f17b1804b1-436255531b1sm64714755e9.2.2024.12.13.15.32.22
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:31:36 -0800 (PST)
+ Fri, 13 Dec 2024 15:32:23 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 07/20] hw/nvram/fw_cfg: Skip FW_CFG_DATA_GENERATOR when no data
- to generate
-Date: Sat, 14 Dec 2024 00:30:42 +0100
-Message-ID: <20241213233055.39574-8-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 17/20] hw/ide/ahci: Extract TYPE_SYSBUS_AHCI into dedicated file
+Date: Sat, 14 Dec 2024 00:30:52 +0100
+Message-ID: <20241213233055.39574-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,77 +99,287 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow the FW_CFG_DATA_GENERATOR interface get_data() handler to
-return NULL when there is nothing to generate. In that case
-fw_cfg_add_file_from_generator() will not add any item and
-return %true.
+From: Bernhard Beschow <shentey@gmail.com>
 
-Reported-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Implement in dedicated file, just like TYPE_ICH9_AHCI.
+
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241212110926.23548-3-shentey@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-Id: <20241213133352.10915-4-philmd@linaro.org>
 ---
- include/hw/nvram/fw_cfg.h | 13 ++++++++-----
- hw/nvram/fw_cfg.c         |  3 ++-
- 2 files changed, 10 insertions(+), 6 deletions(-)
+ hw/ide/ahci-sysbus.c | 91 ++++++++++++++++++++++++++++++++++++++++++++
+ hw/ide/ahci.c        | 67 --------------------------------
+ hw/arm/Kconfig       | 10 ++---
+ hw/ide/Kconfig       |  4 ++
+ hw/ide/meson.build   |  1 +
+ 5 files changed, 101 insertions(+), 72 deletions(-)
+ create mode 100644 hw/ide/ahci-sysbus.c
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index fcb06f18cc3..6089681f421 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -30,8 +30,9 @@ struct FWCfgDataGeneratorClass {
-      * @obj: the object implementing this interface
-      * @errp: pointer to a NULL-initialized error object
-      *
--     * Returns: reference to a byte array containing the data on success,
--     *          or NULL on error.
-+     * Returns: A byte array containing data to add, or NULL without
-+     *          @errp set if no data is required, or NULL with @errp
-+     *          set on failure.
-      *
-      * The caller should release the reference when no longer
-      * required.
-@@ -298,14 +299,16 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
-  * @parent: the object in which to resolve the @part
-  * @errp: pointer to a NULL initialized error object
-  *
-- * Add a new NAMED fw_cfg item with the content generated from the
-- * @part object. The data generated by the @part object is copied
-- * into the data structure of the fw_cfg device.
-+ * If the @part object generates content, add a new NAMED fw_cfg item with it.
-+ * The data generated by the @part object is copied into the data structure of
-+ * the fw_cfg device.
-  * The next available (unused) selector key starting at FW_CFG_FILE_FIRST
-  * will be used; also, a new entry will be added to the file directory
-  * structure residing at key value FW_CFG_FILE_DIR, containing the item name,
-  * data size, and assigned selector key value.
-  *
-+ * If the @part object does not generate content, no fw_cfg item is added.
+diff --git a/hw/ide/ahci-sysbus.c b/hw/ide/ahci-sysbus.c
+new file mode 100644
+index 00000000000..d43db0923f1
+--- /dev/null
++++ b/hw/ide/ahci-sysbus.c
+@@ -0,0 +1,91 @@
++/*
++ * QEMU AHCI Emulation (MMIO-mapped devices)
 + *
-  * Returns: %true on success, %false on error.
-  */
- bool fw_cfg_add_file_from_generator(FWCfgState *s,
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index b94cd27bd85..46c62c8f09e 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1031,6 +1031,7 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
-                                     Object *parent, const char *part,
-                                     const char *filename, Error **errp)
++ * Copyright (c) 2010 qiaochong@loongson.cn
++ * Copyright (c) 2010 Roland Elek <elek.roland@gmail.com>
++ * Copyright (c) 2010 Sebastian Herbszt <herbszt@gmx.de>
++ * Copyright (c) 2010 Alexander Graf <agraf@suse.de>
++ *
++ * This library is free software; you can redistribute it and/or
++ * modify it under the terms of the GNU Lesser General Public
++ * License as published by the Free Software Foundation; either
++ * version 2.1 of the License, or (at your option) any later version.
++ *
++ * This library is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
++ * Lesser General Public License for more details.
++ *
++ * You should have received a copy of the GNU Lesser General Public
++ * License along with this library; if not, see <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "qemu/osdep.h"
++#include "exec/address-spaces.h"
++#include "hw/qdev-properties.h"
++#include "migration/vmstate.h"
++
++#include "hw/ide/ahci-sysbus.h"
++#include "ahci-internal.h"
++
++static const VMStateDescription vmstate_sysbus_ahci = {
++    .name = "sysbus-ahci",
++    .fields = (const VMStateField[]) {
++        VMSTATE_AHCI(ahci, SysbusAHCIState),
++        VMSTATE_END_OF_LIST()
++    },
++};
++
++static void sysbus_ahci_reset(DeviceState *dev)
++{
++    SysbusAHCIState *s = SYSBUS_AHCI(dev);
++
++    ahci_reset(&s->ahci);
++}
++
++static void sysbus_ahci_init(Object *obj)
++{
++    SysbusAHCIState *s = SYSBUS_AHCI(obj);
++    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
++
++    ahci_init(&s->ahci, DEVICE(obj));
++
++    sysbus_init_mmio(sbd, &s->ahci.mem);
++    sysbus_init_irq(sbd, &s->ahci.irq);
++}
++
++static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
++{
++    SysbusAHCIState *s = SYSBUS_AHCI(dev);
++
++    ahci_realize(&s->ahci, dev, &address_space_memory);
++}
++
++static Property sysbus_ahci_properties[] = {
++    DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void sysbus_ahci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++
++    dc->realize = sysbus_ahci_realize;
++    dc->vmsd = &vmstate_sysbus_ahci;
++    device_class_set_props(dc, sysbus_ahci_properties);
++    device_class_set_legacy_reset(dc, sysbus_ahci_reset);
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++}
++
++static const TypeInfo sysbus_ahci_types[] = {
++    {
++        .name          = TYPE_SYSBUS_AHCI,
++        .parent        = TYPE_SYS_BUS_DEVICE,
++        .instance_size = sizeof(SysbusAHCIState),
++        .instance_init = sysbus_ahci_init,
++        .class_init    = sysbus_ahci_class_init,
++    },
++};
++
++DEFINE_TYPES(sysbus_ahci_types)
+diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
+index 5836aa924bb..c02357735ed 100644
+--- a/hw/ide/ahci.c
++++ b/hw/ide/ahci.c
+@@ -23,16 +23,13 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+-#include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ 
+ #include "qemu/error-report.h"
+ #include "qemu/log.h"
+ #include "qemu/main-loop.h"
+-#include "qemu/module.h"
+ #include "sysemu/block-backend.h"
+ #include "sysemu/dma.h"
+-#include "hw/ide/ahci-sysbus.h"
+ #include "ahci-internal.h"
+ #include "ide-internal.h"
+ 
+@@ -1803,70 +1800,6 @@ const VMStateDescription vmstate_ahci = {
+     },
+ };
+ 
+-static const VMStateDescription vmstate_sysbus_ahci = {
+-    .name = "sysbus-ahci",
+-    .fields = (const VMStateField[]) {
+-        VMSTATE_AHCI(ahci, SysbusAHCIState),
+-        VMSTATE_END_OF_LIST()
+-    },
+-};
+-
+-static void sysbus_ahci_reset(DeviceState *dev)
+-{
+-    SysbusAHCIState *s = SYSBUS_AHCI(dev);
+-
+-    ahci_reset(&s->ahci);
+-}
+-
+-static void sysbus_ahci_init(Object *obj)
+-{
+-    SysbusAHCIState *s = SYSBUS_AHCI(obj);
+-    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
+-
+-    ahci_init(&s->ahci, DEVICE(obj));
+-
+-    sysbus_init_mmio(sbd, &s->ahci.mem);
+-    sysbus_init_irq(sbd, &s->ahci.irq);
+-}
+-
+-static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
+-{
+-    SysbusAHCIState *s = SYSBUS_AHCI(dev);
+-
+-    ahci_realize(&s->ahci, dev, &address_space_memory);
+-}
+-
+-static Property sysbus_ahci_properties[] = {
+-    DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+-static void sysbus_ahci_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-
+-    dc->realize = sysbus_ahci_realize;
+-    dc->vmsd = &vmstate_sysbus_ahci;
+-    device_class_set_props(dc, sysbus_ahci_properties);
+-    device_class_set_legacy_reset(dc, sysbus_ahci_reset);
+-    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+-}
+-
+-static const TypeInfo sysbus_ahci_info = {
+-    .name          = TYPE_SYSBUS_AHCI,
+-    .parent        = TYPE_SYS_BUS_DEVICE,
+-    .instance_size = sizeof(SysbusAHCIState),
+-    .instance_init = sysbus_ahci_init,
+-    .class_init    = sysbus_ahci_class_init,
+-};
+-
+-static void sysbus_ahci_register_types(void)
+-{
+-    type_register_static(&sysbus_ahci_info);
+-}
+-
+-type_init(sysbus_ahci_register_types)
+-
+ void ahci_ide_create_devs(AHCIState *ahci, DriveInfo **hd)
  {
-+    ERRP_GUARD();
-     FWCfgDataGeneratorClass *klass;
-     GByteArray *array;
-     Object *obj;
-@@ -1048,7 +1049,7 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
-     }
-     klass = FW_CFG_DATA_GENERATOR_GET_CLASS(obj);
-     array = klass->get_data(obj, errp);
--    if (!array) {
-+    if (*errp || !array) {
-         return false;
-     }
-     size = array->len;
+     int i;
+diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+index 1b25e73578e..e779b5af958 100644
+--- a/hw/arm/Kconfig
++++ b/hw/arm/Kconfig
+@@ -71,7 +71,7 @@ config HIGHBANK
+     depends on TCG && ARM
+     select A9MPCORE
+     select A15MPCORE
+-    select AHCI
++    select AHCI_SYSBUS
+     select ARM_TIMER # sp804
+     select ARM_V7M
+     select PL011 if !HAVE_RUST # UART
+@@ -192,7 +192,7 @@ config SBSA_REF
+     depends on TCG && AARCH64
+     imply PCI_DEVICES
+     select DEVICE_TREE
+-    select AHCI
++    select AHCI_SYSBUS
+     select ARM_SMMUV3
+     select GPIO_KEY
+     select PCI_EXPRESS
+@@ -319,7 +319,7 @@ config ARM_V7M
+ 
+ config ALLWINNER_A10
+     bool
+-    select AHCI
++    select AHCI_SYSBUS
+     select ALLWINNER_A10_PIT
+     select ALLWINNER_A10_PIC
+     select ALLWINNER_A10_CCM
+@@ -352,7 +352,7 @@ config ALLWINNER_H3
+ config ALLWINNER_R40
+     bool
+     default y if TCG && ARM
+-    select AHCI
++    select AHCI_SYSBUS
+     select ALLWINNER_SRAMC
+     select ALLWINNER_A10_PIT
+     select ALLWINNER_WDT
+@@ -422,7 +422,7 @@ config XLNX_ZYNQMP_ARM
+     bool
+     default y if PIXMAN
+     depends on TCG && AARCH64
+-    select AHCI
++    select AHCI_SYSBUS
+     select ARM_GIC
+     select CADENCE
+     select CPU_CLUSTER
+diff --git a/hw/ide/Kconfig b/hw/ide/Kconfig
+index 2e22b677da3..b55507b836e 100644
+--- a/hw/ide/Kconfig
++++ b/hw/ide/Kconfig
+@@ -54,6 +54,10 @@ config AHCI_ICH9
+     depends on PCI
+     select AHCI
+ 
++config AHCI_SYSBUS
++    bool
++    select AHCI
++
+ config IDE_SII3112
+     bool
+     select IDE_PCI
+diff --git a/hw/ide/meson.build b/hw/ide/meson.build
+index 90ea8614233..ddd70660400 100644
+--- a/hw/ide/meson.build
++++ b/hw/ide/meson.build
+@@ -1,5 +1,6 @@
+ system_ss.add(when: 'CONFIG_AHCI', if_true: files('ahci.c'))
+ system_ss.add(when: 'CONFIG_AHCI_ICH9', if_true: files('ich.c'))
++system_ss.add(when: 'CONFIG_AHCI_SYSBUS', if_true: files('ahci-sysbus.c'))
+ system_ss.add(when: 'CONFIG_ALLWINNER_A10', if_true: files('ahci-allwinner.c'))
+ system_ss.add(when: 'CONFIG_IDE_BUS', if_true: files('ide-bus.c'))
+ system_ss.add(when: 'CONFIG_IDE_CF', if_true: files('cf.c'))
 -- 
 2.45.2
 
