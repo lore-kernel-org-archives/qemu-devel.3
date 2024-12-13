@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDBCE77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F4FE77183
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9XA-00071j-MC; Fri, 13 Dec 2024 12:33:00 -0500
+	id 1tM9X3-0006xG-5N; Fri, 13 Dec 2024 12:32:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Ws-0006sF-63
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:43 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ id 1tM9Wp-0006rQ-3I
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:40 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9Wk-0001RS-Tc
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:41 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso13669595e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:32:34 -0800 (PST)
+ id 1tM9Wl-0001Ra-OK
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:32:38 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-43618283dedso19157705e9.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111153; x=1734715953; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111154; x=1734715954; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xo0UYeexX9TkySsgN+7gPRXhELG1k0acVRq85YNwIwg=;
- b=y7AjXGxBybAEpDO+tZ/dy4p0ULbPXYihpiIWvrgtavTaUgU1+g7I3p1KuKke0SEaLk
- x95F1dwJk9YoRQuvPhbMfyW9NDGbwKyIINLi6NlvEpOgFefc61Gj//w7I9sZrLqZjLyJ
- BpYuP1Tjo0vliUgcrCbJSG+1BoRv9Dmhz356qEaHfuvAo9lZnWxuHZtWtObfp7/YV8hV
- 9BmcW8TxSlaKvd5QxxUy8ZzRo7KtJYTv1Y+1ZAHKLKJmHivfJ71WhUfp2FT25mOJxzau
- 9p7JLDLyffPnWrGt4Ot7nlQrZgzTFMgqXMdJ2ymHnQvs59WX4LlkWMa5nIiDqOb4mCm0
- 3uRg==
+ :reply-to; bh=xRqNcB49wUmV6toPbS85zu415uBU5pRnCBAfEyn015o=;
+ b=fHSNjQTT5RjdkX+TezN856A2NenJX0SvGlDPvO1hSn0JdLNq4BRXAGthWaGl8Krpgy
+ kK7aWHFiU3kVzCHQn/mrF+pIyZCfbVirLgNT/zm+PxUVoi3OaukiG4hKDNjIvxaOHLiI
+ +n1Kc+z8bBW77igg/GIUfhAPpIqaLQopZA5tmBJZRUPzYM9ttfvtI68wU/zmcnH6Ly4L
+ ARU6zDRJZtAFRNpKa0tQMb4j8zE7VTxBS9QkMBPSCYwbFc4n16Gt655Y38MT8h7Hl8DW
+ EGLAhL3PBTnZM9Z+Psgkcrn2kf1irNFj7wLF02aVsUrrQfuJ8JfB36EG7SXtBqnCzPuz
+ 0ptA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111153; x=1734715953;
+ d=1e100.net; s=20230601; t=1734111154; x=1734715954;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xo0UYeexX9TkySsgN+7gPRXhELG1k0acVRq85YNwIwg=;
- b=Zl5RFdlTqTltLE4e3JpnOYLjOCyKvr+9l0JhROTvtJ433+eQEmNnYZzMTH2JP/LE6T
- UDL0abSKqtyfR1UWLU3fwNOy1e1oTp/DyINOgq59VF4mpPpRskhANwQdm1+Rno3+0IqY
- U7FguLIfcEal2RV1CfsqfYofrWqL4XbMduR2i376vuklPnZ5nPcfppDwrSdFWOAGkFyC
- qxjCH3x/o+E0IYJjbpmlG0wqvNbyI7y0VAyDrw7uZyrfvEOtfOyMx+YpDICfIDiPH/yt
- J9Wt4k+SW1Vqnohus/o7qCHblY9/sxoaYB00LLUCtbS21EFDlkCMlvbKjLxlTqHjkf/w
- P/Tw==
-X-Gm-Message-State: AOJu0Yzb91pc6YRcYm+tW6L4Qz6Ysef8EteCqchghVLvenxc3zZ4jsgX
- JcPF3fJkY0Rub9FwGYAiM/9kfeVUsULebgTAjdJiaykbRpLWOMxsOBvxpvPS21kOyQivNmKPoq3
- c
-X-Gm-Gg: ASbGncuqD4SUeV3k33iev5fJtEzCsIy446Zyp94kfPHHVppqnw9YpxGpGrKl9RU1LdM
- zc8cFYyoQ4YkVmXg4JAraLDKEUucXfN8bgIVNdBcEXn/VebPW+zWOjp7JJARKYQ9Xv2WmqFr18T
- OprOsUKQKSo9cjBZjD1+jS1QzE/LtGL3zD1+k34s6O1ThJTCFlhjUA33bkm+rpebZNRB33KGhC3
- tJQLqdtHu2YAFE1CQt+l0CrFotvtWNcvEPuAT8hN24CxuE7QjRPU35A1WbDnA==
-X-Google-Smtp-Source: AGHT+IFsMJ0UKiQTKOjk9sR3qhvk6aj5+39sgJfv5MlML95MoeMxx6TqXZjQHfYpxgqcp0lJGhhPdg==
-X-Received: by 2002:a05:600c:500a:b0:434:ff9d:a370 with SMTP id
- 5b1f17b1804b1-4362a98248emr33539935e9.0.1734111152782; 
- Fri, 13 Dec 2024 09:32:32 -0800 (PST)
+ bh=xRqNcB49wUmV6toPbS85zu415uBU5pRnCBAfEyn015o=;
+ b=LZBEH4PHGns5sEMlfe90pWKskENdfZIIPgHom7XVOa7K2A2fgxDw7OcLbDHd3zclFT
+ XMqOyliPQs+U9ktyJescH1ZEtu78P3n7dEGg+sZTYGs6fPHJBnxaZ6Jun0OETWYj7XUS
+ BpSl+gTmSIqOMqBwt/sBQIDZo4QqGutqqS1nYunRSgr6T6Xo4JFAEA+Jg1OXJFpCE335
+ X8FoIaJzmF7AhEjyqKigc72Q0aRmnPU3xCmt6wbFWVxxIX6MtpQvcRUIGUznRMLwnS6W
+ hdbOnZD9chKTVBREDftd101V0BF0X+o5QhCaymF8CB5rW9sx3451DAyiOZJk6aLIacp8
+ qnxA==
+X-Gm-Message-State: AOJu0Yzvj0DX2NjTgyLZJT17qIb/CcEtdnom7EfUEW1BdxLCcI4zs1L9
+ mzqRDAlbe1cRNJtRLtWqlrGegEZsmhNegwslhXNvHK4PJtaLdcnCLJH9dlHxXqW5w5Tn3TWTzoF
+ R
+X-Gm-Gg: ASbGncsKzLeybm60dtSoy7+rA0sGnvJlY6tBz1VnC2vpF1bhIBlTNMUcTfqoyXLIzUN
+ CTJnyp1dux+5EcsnJFBsGdUIwGOioGiOVi8Fi/TyRL6o+uelCiPEGoo5blvMVkxnBCyd5LM4C34
+ cGz12KFhtdwCThtyzBftGwfsw0duF6tJGwSK6VpRYXVIKN7gOuDbiLFedsWY4tF9kmgOguJLLys
+ SBhdyflIa79fJ7QNod/YeEALCadfBTyzZ6w/XbHOU0XziY76VAjgSMlfiYplg==
+X-Google-Smtp-Source: AGHT+IHsfA/D/URYKXVmEiZkqZSnPyKoPiiKIKqu5l0/1YsEQr7omyclrUalUiPRT0GuM13+po0BDQ==
+X-Received: by 2002:a05:600c:1e8a:b0:434:f5d1:f10f with SMTP id
+ 5b1f17b1804b1-4362aa52fa7mr33090445e9.17.1734111153980; 
+ Fri, 13 Dec 2024 09:32:33 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.32.31
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.32.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:32:32 -0800 (PST)
+ Fri, 13 Dec 2024 09:32:33 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/85] target/arm: Add section labels for "Data Processing
- (register)"
-Date: Fri, 13 Dec 2024 17:31:05 +0000
-Message-Id: <20241213173229.3308926-2-peter.maydell@linaro.org>
+Subject: [PULL 02/85] target/arm: Convert UDIV, SDIV to decodetree
+Date: Fri, 13 Dec 2024 17:31:06 +0000
+Message-Id: <20241213173229.3308926-3-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,63 +100,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-At the same time, use ### to separate 3rd-level sections.
-We already use ### for 4.1.92 Data Processing (immediate),
-but not the two following two third-level sections:
-4.1.93 Branches, and 4.1.94 Loads and stores.
-
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211163036.2297116-2-richard.henderson@linaro.org
+Message-id: 20241211163036.2297116-3-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/a64.decode | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ target/arm/tcg/a64.decode      |  7 ++++
+ target/arm/tcg/translate-a64.c | 64 +++++++++++++++++-----------------
+ 2 files changed, 39 insertions(+), 32 deletions(-)
 
 diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
-index 331a8e180c0..d28efb884df 100644
+index d28efb884df..c218f6afbcc 100644
 --- a/target/arm/tcg/a64.decode
 +++ b/target/arm/tcg/a64.decode
-@@ -161,7 +161,7 @@ UBFM            . 10 100110 . ...... ...... ..... ..... @bitfield_32
- EXTR            1 00 100111 1 0 rm:5 imm:6 rn:5 rd:5     &extract sf=1
- EXTR            0 00 100111 0 0 rm:5 0 imm:5 rn:5 rd:5   &extract sf=0
+@@ -28,6 +28,7 @@
+ &r              rn
+ &ri             rd imm
+ &rri_sf         rd rn imm sf
++&rrr_sf         rd rn rm sf
+ &i              imm
+ &rr_e           rd rn esz
+ &rri_e          rd rn imm esz
+@@ -652,6 +653,12 @@ CPYE            00 011 1 01100 ..... .... 01 ..... ..... @cpy
+ ### Data Processing (register)
  
--# Branches
-+### Branches
- 
- %imm26   0:s26 !function=times_4
- @branch         . ..... .......................... &i imm=%imm26
-@@ -291,7 +291,7 @@ HLT             1101 0100 010 ................ 000 00 @i16
- # DCPS2         1101 0100 101 ................ 000 10 @i16
- # DCPS3         1101 0100 101 ................ 000 11 @i16
- 
--# Loads and stores
-+### Loads and stores
- 
- &stxr           rn rt rt2 rs sz lasr
- &stlr           rn rt sz lasr
-@@ -649,6 +649,21 @@ CPYP            00 011 1 01000 ..... .... 01 ..... ..... @cpy
- CPYM            00 011 1 01010 ..... .... 01 ..... ..... @cpy
- CPYE            00 011 1 01100 ..... .... 01 ..... ..... @cpy
- 
-+### Data Processing (register)
+ # Data Processing (2-source)
 +
-+# Data Processing (2-source)
-+# Data Processing (1-source)
-+# Logical (shifted reg)
-+# Add/subtract (shifted reg)
-+# Add/subtract (extended reg)
-+# Add/subtract (carry)
-+# Rotate right into flags
-+# Evaluate into flags
-+# Conditional compare (regster)
-+# Conditional compare (immediate)
-+# Conditional select
-+# Data Processing (3-source)
++@rrr_sf         sf:1 .......... rm:5 ...... rn:5 rd:5   &rrr_sf
 +
- ### Cryptographic AES
++UDIV            . 00 11010110 ..... 00001 0 ..... ..... @rrr_sf
++SDIV            . 00 11010110 ..... 00001 1 ..... ..... @rrr_sf
++
+ # Data Processing (1-source)
+ # Logical (shifted reg)
+ # Add/subtract (shifted reg)
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index b2851ea5032..9f687ba840a 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -7485,6 +7485,36 @@ TRANS(UQRSHRN_si, do_scalar_shift_imm_narrow, a, uqrshrn_fns, 0, false)
+ TRANS(SQSHRUN_si, do_scalar_shift_imm_narrow, a, sqshrun_fns, MO_SIGN, false)
+ TRANS(SQRSHRUN_si, do_scalar_shift_imm_narrow, a, sqrshrun_fns, MO_SIGN, false)
  
- AESE            01001110 00 10100 00100 10 ..... .....  @r2r_q1e0
++static bool do_div(DisasContext *s, arg_rrr_sf *a, bool is_signed)
++{
++    TCGv_i64 tcg_n, tcg_m, tcg_rd;
++    tcg_rd = cpu_reg(s, a->rd);
++
++    if (!a->sf && is_signed) {
++        tcg_n = tcg_temp_new_i64();
++        tcg_m = tcg_temp_new_i64();
++        tcg_gen_ext32s_i64(tcg_n, cpu_reg(s, a->rn));
++        tcg_gen_ext32s_i64(tcg_m, cpu_reg(s, a->rm));
++    } else {
++        tcg_n = read_cpu_reg(s, a->rn, a->sf);
++        tcg_m = read_cpu_reg(s, a->rm, a->sf);
++    }
++
++    if (is_signed) {
++        gen_helper_sdiv64(tcg_rd, tcg_n, tcg_m);
++    } else {
++        gen_helper_udiv64(tcg_rd, tcg_n, tcg_m);
++    }
++
++    if (!a->sf) { /* zero extend final result */
++        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
++    }
++    return true;
++}
++
++TRANS(SDIV, do_div, a, true)
++TRANS(UDIV, do_div, a, false)
++
+ /* Shift a TCGv src by TCGv shift_amount, put result in dst.
+  * Note that it is the caller's responsibility to ensure that the
+  * shift amount is in range (ie 0..31 or 0..63) and provide the ARM
+@@ -8425,32 +8455,6 @@ static void disas_data_proc_1src(DisasContext *s, uint32_t insn)
+ #undef MAP
+ }
+ 
+-static void handle_div(DisasContext *s, bool is_signed, unsigned int sf,
+-                       unsigned int rm, unsigned int rn, unsigned int rd)
+-{
+-    TCGv_i64 tcg_n, tcg_m, tcg_rd;
+-    tcg_rd = cpu_reg(s, rd);
+-
+-    if (!sf && is_signed) {
+-        tcg_n = tcg_temp_new_i64();
+-        tcg_m = tcg_temp_new_i64();
+-        tcg_gen_ext32s_i64(tcg_n, cpu_reg(s, rn));
+-        tcg_gen_ext32s_i64(tcg_m, cpu_reg(s, rm));
+-    } else {
+-        tcg_n = read_cpu_reg(s, rn, sf);
+-        tcg_m = read_cpu_reg(s, rm, sf);
+-    }
+-
+-    if (is_signed) {
+-        gen_helper_sdiv64(tcg_rd, tcg_n, tcg_m);
+-    } else {
+-        gen_helper_udiv64(tcg_rd, tcg_n, tcg_m);
+-    }
+-
+-    if (!sf) { /* zero extend final result */
+-        tcg_gen_ext32u_i64(tcg_rd, tcg_rd);
+-    }
+-}
+ 
+ /* LSLV, LSRV, ASRV, RORV */
+ static void handle_shift_reg(DisasContext *s,
+@@ -8552,12 +8556,6 @@ static void disas_data_proc_2src(DisasContext *s, uint32_t insn)
+             }
+         }
+         break;
+-    case 2: /* UDIV */
+-        handle_div(s, false, sf, rm, rn, rd);
+-        break;
+-    case 3: /* SDIV */
+-        handle_div(s, true, sf, rm, rn, rd);
+-        break;
+     case 4: /* IRG */
+         if (sf == 0 || !dc_isar_feature(aa64_mte_insn_reg, s)) {
+             goto do_unallocated;
+@@ -8616,6 +8614,8 @@ static void disas_data_proc_2src(DisasContext *s, uint32_t insn)
+     }
+     default:
+     do_unallocated:
++    case 2: /* UDIV */
++    case 3: /* SDIV */
+         unallocated_encoding(s);
+         break;
+     }
 -- 
 2.34.1
 
