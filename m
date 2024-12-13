@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5581BE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7F62E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF9W-0004mG-QL; Fri, 13 Dec 2024 18:32:58 -0500
+	id 1tMF8x-0003hq-TM; Fri, 13 Dec 2024 18:32:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8l-0003fI-TE
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:17 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8W-0003Ky-Au
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:59 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8g-000358-Tv
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:09 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385e27c75f4so1763665f8f.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8T-00033E-LW
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:56 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43625c4a50dso15706065e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:31:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132725; x=1734737525; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132710; x=1734737510; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MVMMyVcYu4LVL1Yzkvds/PCKbLlLdQN2hgXKn39Ce2s=;
- b=sZ8mJPsjoVPohgFMzPx0eX/ZeI68Idlja/rqpaadGMRZrAFh1wrwp2lsIsVGd24CRc
- PCZCUi+BNuJs0AcaE7tkiPNI7e9DIAsSJjk7zrV1EzSQ+fcZLVc/+jDej0d+99dZ7ipi
- yPyjm+JHJvxh2nKw4hzvrAkb+l3LmFglOql6sleiw7/ajX6e1AjxlYfXupg/mkroxp9z
- 9f3SnltaZLCjJpABK7NbTRKp/cadpPa4c/MM04Jg+lfSfg9AOOjjoaaGCgH7NK6VIk1L
- K7NU/Q4/4G5kLSd6Ja00+jf/gHhUIiW5Tc94lwS4Ze+MSvC01WqU/47N8d4krpXRakxE
- FC6w==
+ bh=98G7xGgH42NoM+rpRevb74bw82XH4wpKnmxY8jqwlAI=;
+ b=kChkK25VddsA/DX66gokTD61h9FD8XoDkX9/vEITaSZf6YcHKs6jLzeCsfcwCvRhr2
+ 2ekLU/xVmcR1upFC+MpoHoTzJSR7Q8KYlQ+mfXsaTtFDfjMviDahmn6D78Cqmocff0jD
+ EfFCtPXcmUNdOrnW+lSI6NM+6kTouDwRBZF+BcNsKwAfPIbBVcIA1aSmvifZZQ+H7zEb
+ TIOUbF7sFJ4yy3glTGP5DQotex3XFBfYu8mPcc6HAIUzVrovkEFNSDxnXwDD88k2Xn8l
+ QipqOo6cfhN3oPCA8MFm74MUuDnN5Ly9ZyS8Q+pLo6j2e0Xc4zZHCGg3R6PG7tI2tTq9
+ OzEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132725; x=1734737525;
+ d=1e100.net; s=20230601; t=1734132710; x=1734737510;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MVMMyVcYu4LVL1Yzkvds/PCKbLlLdQN2hgXKn39Ce2s=;
- b=gEroSdipNcEXloCWabEuatBZo3vnfmx31qLL+ml0kxnNODcQMBD+aQgr+iu2aIs7Sb
- Jt41YXNutvS6TxsDQZ8dDsLyy3P1rIDxmaBkHjFjLxiQSO3y5E4Pwr9DVS3ge+g36jKS
- OKIsPxr96FdTr87X4xUEn559OoQlhydIDmP4/E/TvyeHpFIpiz7LINLKtYY7VgSagosg
- axMEWauSjtTML/p/swWj4KP5DE6x5GE3D6882EB8pbFyYRB0tRShSdmePTz9D67s/7UF
- RxzYorYakfmwG6TuVkeN+6eNfUSwjTxNyiit1Zqmz5bfyW+13su2HkWK3PJf1/uxFmeT
- +LcQ==
-X-Gm-Message-State: AOJu0Yz7IZduGb2XBS9C9H7a+f40D4BXLXjc3fRIJctTZ8v8sUs7crvh
- 0I2TAZqIQQ3RV0mDfiUDkBoN3KYhF+UG8BP/ZVZ+7Jcu2mqlDNK5uvfn6zONpdopjpIH5yJEAZn
- oyHg=
-X-Gm-Gg: ASbGncuZKB/r37ijCY+PoqgYdQlPJ5I9/iEehsl47jJUyNPUngj5DeuS4LGVAopJgdM
- 7n8dveLBXPuAx/tSnK8quPNm6HOhkpJFP9pDAAl7raimcKC6jRPPKirE2BB8JHsVLE0KoHQs5yQ
- jxcOvT0EtPFQGwSORUypFusMKY1MAGJrcVEc0LGBf8vvIjiyfykjBs/KC6XjaHcwq4HFf3XUz3g
- S5CvtTIKcjoyRbtC8Yc5kzcd/rFPK2F0LEJWB6dU/goOaSJ9/ti/5IZv0RLl3afJeRFOG0EUFCc
- cOAxwg==
-X-Google-Smtp-Source: AGHT+IHqwFss8Ao8YZJ62/8iDw0BsLag2BNuJcyyb0U7qIAVtmz1jrEApjEPAtHaqnL+Rn095sR48Q==
-X-Received: by 2002:a5d:64eb:0:b0:386:1cd3:8a07 with SMTP id
- ffacd0b85a97d-38880ac3066mr3254822f8f.7.1734132725046; 
- Fri, 13 Dec 2024 15:32:05 -0800 (PST)
+ bh=98G7xGgH42NoM+rpRevb74bw82XH4wpKnmxY8jqwlAI=;
+ b=YHbLBHg+j7wH4evAMBKod7j7cZCcBk3a8ENBxrZExDBcNxqRgcwaSx/a0kkz/FuAFB
+ uRpKYqP3F04eSf+Gfc2GBRQYAkQwan6KvELPQ5fzOVgsJeiJCxagmdHYk9wIkBv7KL7S
+ m6oHJo7BYhGd0y3wQ5EqW+xw9gtYJ8PRn/4N48VApXsFgQfTEkMDS+/fsxgWrNh8XAdG
+ g13De/6K1G9/mYd/Oc34JqSPX/Tdu5+arYGy6ptXJkNzwm08xJXPl8MQ+13gAsoZmeoc
+ t1x9WFsGz8f/guexyeT/erMtkc15EMtcvQ2BWtMHiOO2MQwW9zyHQec6Rl9YDyKfNgE0
+ UWCg==
+X-Gm-Message-State: AOJu0YwmauB2chtPeyNZGe4BJNd/xQs6F0/CDkX4lFkH5rK0z1wNS0bY
+ por6fxS5575YgAG5sxJvC/G1okHoaF1crPjCxtD8qUBJtW7Cd6Kl5GK5iOdlNELgtLtSzHDHlJu
+ nKDY=
+X-Gm-Gg: ASbGncvG4Oh64AlO9grQv0msu1varu6FubfvcQioGYZpa7jrgC6Y8EIWlKr76nFJ/NT
+ q4RoyLoZLEEcy4uCwjOscMfrHOfkk+UA2iuQWVvReEF7szJhrThKXn6igmlcKWmYg2QtyIQa2Tg
+ yLhalVk9tCMuL7OwF7g/Hzs4N5aIMxi2KyKKF8dgo+iFJVQL3UgMA802Q2kDooH6+IiuALpykL3
+ cJomCu9a0NhxrHqMrnpsKtiastS/6xDDKPhXx1w2Vwz6+pfewZ1Bx+AcB4iJNLzOgwM5+b8XxIm
+ vbbPgw==
+X-Google-Smtp-Source: AGHT+IGdDfTyJFPa9nDlnyDHRBLkiHX2GHeNgF5fGiJL/xYvN7MrDfaR8PeoB0fHSzh/GhQAFY8Y/A==
+X-Received: by 2002:a05:6000:4710:b0:386:1cd3:8a0b with SMTP id
+ ffacd0b85a97d-3888dcd467fmr3133349f8f.17.1734132710462; 
+ Fri, 13 Dec 2024 15:31:50 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c806ce56sm786880f8f.111.2024.12.13.15.32.03
+ ffacd0b85a97d-388c8046c71sm796788f8f.65.2024.12.13.15.31.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:32:04 -0800 (PST)
+ Fri, 13 Dec 2024 15:31:50 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 13/20] hw/usb/msd: Add status to usb_msd_packet_complete()
- function
-Date: Sat, 14 Dec 2024 00:30:48 +0100
-Message-ID: <20241213233055.39574-14-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 10/20] hw: Use pci_bus_add_fw_cfg_extra_pci_roots()
+Date: Sat, 14 Dec 2024 00:30:45 +0100
+Message-ID: <20241213233055.39574-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,82 +99,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nicholas Piggin <npiggin@gmail.com>
+We want to remove fw_cfg_add_extra_pci_roots() which introduced
+PCI bus knowledge within the generic hw/nvram/fw_cfg.c file.
+Replace the calls by the pci_bus_add_fw_cfg_extra_pci_roots()
+which is a 1:1 equivalent, but using correct API.
 
-This is a convenience change that accepts a status when completing a
-packet.
-
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241110034000.379463-2-npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-Id: <20241206181352.6836-6-philmd@linaro.org>
 ---
- hw/usb/dev-storage.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ hw/arm/virt.c     | 3 ++-
+ hw/hppa/machine.c | 2 +-
+ hw/i386/pc.c      | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
-index 341e505bd0a..4f1e8b7f6cb 100644
---- a/hw/usb/dev-storage.c
-+++ b/hw/usb/dev-storage.c
-@@ -177,7 +177,7 @@ static const USBDesc desc = {
-     .str   = desc_strings,
- };
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3bd9dd0f863..333eaf67ea3 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1750,7 +1750,8 @@ void virt_machine_done(Notifier *notifier, void *data)
+         exit(1);
+     }
  
--static void usb_msd_packet_complete(MSDState *s)
-+static void usb_msd_packet_complete(MSDState *s, int status)
- {
-     USBPacket *p = s->packet;
+-    fw_cfg_add_extra_pci_roots(vms->bus, vms->fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
++                                       &error_abort);
  
-@@ -187,6 +187,7 @@ static void usb_msd_packet_complete(MSDState *s)
-      * usb_packet_complete returns.
-      */
-     trace_usb_msd_packet_complete();
-+    p->status = status;
-     s->packet = NULL;
-     usb_packet_complete(&s->dev, p);
+     virt_acpi_setup(vms);
+     virt_build_smbios(vms);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index a31dc32a9f7..4e673353225 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -240,7 +240,7 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+                     g_memdup2(qemu_version, sizeof(qemu_version)),
+                     sizeof(qemu_version));
+ 
+-    fw_cfg_add_extra_pci_roots(pci_bus, fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(fw_cfg, pci_bus, &error_abort);
+ 
+     return fw_cfg;
  }
-@@ -196,8 +197,7 @@ static void usb_msd_fatal_error(MSDState *s)
-     trace_usb_msd_fatal_error();
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 99b9b105e26..92047ce8c9d 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -631,7 +631,8 @@ void pc_machine_done(Notifier *notifier, void *data)
+     /* set the number of CPUs */
+     x86_rtc_set_cpus_count(x86ms->rtc, x86ms->boot_cpus);
  
-     if (s->packet) {
--        s->packet->status = USB_RET_STALL;
--        usb_msd_packet_complete(s);
-+        usb_msd_packet_complete(s, USB_RET_STALL);
-     }
+-    fw_cfg_add_extra_pci_roots(pcms->pcibus, x86ms->fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(x86ms->fw_cfg, pcms->pcibus,
++                                       &error_abort);
  
-     /*
-@@ -255,8 +255,8 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
-         usb_msd_copy_data(s, p);
-         p = s->packet;
-         if (p && p->actual_length == p->iov.size) {
--            p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
--            usb_msd_packet_complete(s);
-+            /* USB_RET_SUCCESS status clears previous ASYNC status */
-+            usb_msd_packet_complete(s, USB_RET_SUCCESS);
-         }
-     }
- }
-@@ -295,8 +295,8 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
-                 s->mode = USB_MSDM_CSW;
-             }
-         }
--        p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
--        usb_msd_packet_complete(s);
-+        /* USB_RET_SUCCESS status clears previous ASYNC status */
-+        usb_msd_packet_complete(s, USB_RET_SUCCESS);
-     } else if (s->data_len == 0) {
-         s->mode = USB_MSDM_CSW;
-     }
-@@ -332,8 +332,7 @@ void usb_msd_handle_reset(USBDevice *dev)
-     assert(s->req == NULL);
- 
-     if (s->packet) {
--        s->packet->status = USB_RET_STALL;
--        usb_msd_packet_complete(s);
-+        usb_msd_packet_complete(s, USB_RET_STALL);
-     }
- 
-     memset(&s->csw, 0, sizeof(s->csw));
+     acpi_setup();
+     if (x86ms->fw_cfg) {
 -- 
 2.45.2
 
