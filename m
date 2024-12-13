@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1754CE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:09:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 928AAE77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:09:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMB2W-0003kR-T7; Fri, 13 Dec 2024 14:09:29 -0500
+	id 1tMB1P-0002T2-O4; Fri, 13 Dec 2024 14:08:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB2J-0003Fo-1z
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:09:15 -0500
-Received: from mail-ot1-x330.google.com ([2607:f8b0:4864:20::330])
+ id 1tMB1N-0002Sf-VK
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:17 -0500
+Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB29-0006c2-4Z
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:09:14 -0500
-Received: by mail-ot1-x330.google.com with SMTP id
- 46e09a7af769-71e3005916aso392507a34.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:08:59 -0800 (PST)
+ id 1tMB1H-0006Tf-5q
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:08:17 -0500
+Received: by mail-oo1-xc31.google.com with SMTP id
+ 006d021491bc7-5f2dcfc426bso502547eaf.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:08:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734116938; x=1734721738; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734116888; x=1734721688; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yKW55J0w51PNOklb1SowP9V3cdDc2rdAjEh4kWiClk8=;
- b=fKXaCPhmkqmHJwS5CQpeLarPVoxe78RqbY99cLED4XPq2Ojf0nn/w8uoH8TYpIA/do
- P15pxGDGtJy3Y/f5UGj1TOo4yP/26CutqLuL3bzC5hqqYoc2FdcEk3L5K5YPJzUjIzgP
- HzPZ0sTk2tWggfMT8nVmltKony4N1DyQZimlTMC7RBK+QPf4pgCan4qeRRDl9171PWSX
- oJXX0X21lSbDWGEuOAXP/r30CP7sk10/oIum6SSw/u1thL5Yn0ZH9VYXFa+geMwOr9yf
- l2u8BhVWZUBwzxFWHexR1lF3S3WzjmsPsqFAKtSilMlrjrAiZrA0rNSSebNt3BPs+R1k
- eoIA==
+ bh=bDQV5UPQrrUTmFDcWju1X4JKAdBtmrkzDO3G5qiLKzA=;
+ b=LS2yUeqTeX16QzZV2wsB8bwAIoalGZGbTWO1Xb6ZG4qmlQmCnR9NzmTR3CZAK2NPil
+ t3UYaXpW7bppYIiL9vVkNgadojM0HSjkMT0eMfXHZepYsqpotFEXcl+yHUEw1N7goAqs
+ tFLspprv7o/Pq53ve/YZ7pUzfOMb96GPtfHo53rZAu6HdNp+OkkeJpCZf5tzn+y4teO+
+ TOMF8cU5GO8BOhHVDs9ANPGElLbH7tRzTj09KMkMXrTLrXs4spjent8Tb1/X/H6nWJJP
+ PGgYkzh6tJwcpa6AhXBLnEgdwZUJFqAuJG0P87VR89PwfjdjT/+vsDPg51Egfv/fa7dS
+ 3Cwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734116938; x=1734721738;
+ d=1e100.net; s=20230601; t=1734116888; x=1734721688;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yKW55J0w51PNOklb1SowP9V3cdDc2rdAjEh4kWiClk8=;
- b=XhPBnbzgUS6T2wKQkZxKqOCD4WrZ2xhIYj8BeSG+JjHkSvqnOUQxV8ggq9bDyUdlYZ
- hvKgkdN4JG1cAnq7ft8pKk7qkw9PIYkn2llbzsGZPltLYdwZn2nhpxhJkyP+P0o2wQtA
- fQNIra6LWRHppdsXuB96za1UlvK3LwTnlizC3VDW3aqOb/l3rFvDjEWpYEdT7dc7OQbF
- 22GBrZARY8fIYw15LNPh2DgrIiJVoP2zs1rQaUS9eVb9ZUvUuD9OsmCXwIplXMw/ELDM
- 2WJP9LxHKNUkzfX+eu/MkprBkjggwIQBnJVUjR/D/IZGFIyWRY/EudJPaXoegdq0UEvM
- QOig==
-X-Gm-Message-State: AOJu0Yzh5pcJrs5fL56dokMrlfnC2vL2eN5FDoLemdOdZTlf0x9mv9YT
- 2X2qRzSnKN1lSUFbjm8FsnZLZQB0ScS9rYPiBMA5c9pdTZn2xOVHx0QpOARfiVaY6OX59SEi3Jo
- 8YKUxdWpv
-X-Gm-Gg: ASbGncvICS+po8ZK4f1ve4IAqkz70p7T9LVMSVY05KgZBsWesWYVUxWSsi47jrTLJxp
- ct/LdpJeQOgnEWWGexYfvPJ/urQ+MZAQWcyQuxZG5hRxoZP+H4eEnqX/5woPlHDnJUuYFeZreaz
- A9rvruoJzmKM5Y4sM42gr1RquPBg6misO59pLkwVvAStcQWpA8bGtUb3XKSFNQ83XWuElBFWPJ4
- 4/Z5NDoBC7eU0CiKLYNOz8P9jpqH4YABcRMFgPDvkwia+V7T5FqMuDXP28EkC7o
-X-Google-Smtp-Source: AGHT+IHTabqk9XfY2F1Hg2S4q9hkUEiti58oUoecZnbZxt8jYRhcbgA1BfWl6ZfG0eVePqf9Ii0z2w==
-X-Received: by 2002:a05:6830:6e18:b0:718:9b8b:429d with SMTP id
- 46e09a7af769-71e3b816757mr2008706a34.4.1734116938397; 
- Fri, 13 Dec 2024 11:08:58 -0800 (PST)
+ bh=bDQV5UPQrrUTmFDcWju1X4JKAdBtmrkzDO3G5qiLKzA=;
+ b=k4DW2JMUJCJ+elD72tRG00axCm857FW4qiNeBif/s/kAOnUWMKdDHmMFAyMbIG+mUz
+ UEcUYQxnguyspOeuEffweu6NQBvI5AHL+3+EoHl7rHid8EZCq20scCsg+tHYrQMhN5A4
+ PS/ORGmQk/kRomryP4UIpJdETPGmarrBHmsMjg0+1VDbKvSobEVgo9UzE0MbTaQzAAGL
+ cGIPeFfVIyK1z5FwrXUtRNSxmHl/2GDjW8P9nh/uOrx06malQu7BLC9tr9oXKnVOj7fQ
+ XOa/KU0LjsAU9+Td8l7NrQaPYMkMIyYvh1yD6V5Zw910h7oXSVvBJopxN8fseDBGMPTU
+ zfJw==
+X-Gm-Message-State: AOJu0YwEyzV3WNoyjGFxhlVEj8zeDpcS45hmTgZmu5sUoMvtXG2hqzx/
+ rZ9Hf+WKt7NqnOr323Qa9HoevQcQjdAzJopW5OXPWFej3brZ27cs1XFmfmsADOKIEkZjwzY1I7g
+ CV1w+PS4Y
+X-Gm-Gg: ASbGncuJdPGEYdnBNPFn5SvKB0lsm2Fxxn1QXyGqMZSb2UNCm/I+hNovJEl8LYdphzm
+ KjRVMNy7rcRj0B1aV9Xq7VBFXvp+APGnhpQAmjFEVR8vlNny2HpPEBIC6p2cYMASNIReFZaeZyr
+ ZszNm9KvabZKK+OOtJH4F8J2horD1SKG6zhC2onR0ss9d0h6FIizmWggcdZiSGLKUwEUJkXHXa0
+ BL1JruxSUTWkgmIJwrnytkT05zSAUWxYcfjk9iR/bbStl4dZLiIhHZbUN7GkoWs
+X-Google-Smtp-Source: AGHT+IEkPLk5k0h+n05UqVoZMdKMSHDE8u8kiQgc62Pq6y9ubDgZs70scPMgC/wOsqX+pYSAiQK8Ow==
+X-Received: by 2002:a05:6820:1612:b0:5f2:b301:e918 with SMTP id
+ 006d021491bc7-5f3295eacb8mr1947943eaf.2.1734116888359; 
+ Fri, 13 Dec 2024 11:08:08 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.57
+ 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:08:58 -0800 (PST)
+ Fri, 13 Dec 2024 11:08:08 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Michael Rolnik <mrolnik@gmail.com>
-Subject: [PATCH 17/71] hw/avr: Constify all Property
-Date: Fri, 13 Dec 2024 13:06:51 -0600
-Message-ID: <20241213190750.2513964-22-richard.henderson@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 04/71] target/i386: Constify all Property
+Date: Fri, 13 Dec 2024 13:06:37 -0600
+Message-ID: <20241213190750.2513964-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,22 +100,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/avr/atmega.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/avr/atmega.c b/hw/avr/atmega.c
-index 31c8992d75..ce630ec572 100644
---- a/hw/avr/atmega.c
-+++ b/hw/avr/atmega.c
-@@ -355,7 +355,7 @@ static void atmega_realize(DeviceState *dev, Error **errp)
-     create_unimplemented_device("avr-eeprom",       OFFSET_DATA + 0x03f, 3);
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 305f2a41cf..5253399459 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5384,7 +5384,7 @@ static X86CPUVersion x86_cpu_model_resolve_version(const X86CPUModel *model)
+     return v;
  }
  
--static Property atmega_props[] = {
-+static const Property atmega_props[] = {
-     DEFINE_PROP_UINT64("xtal-frequency-hz", AtmegaMcuState,
-                        xtal_freq_hz, 0),
+-static Property max_x86_cpu_properties[] = {
++static const Property max_x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("migratable", X86CPU, migratable, true),
+     DEFINE_PROP_BOOL("host-cache-info", X86CPU, cache_info_passthrough, false),
      DEFINE_PROP_END_OF_LIST()
+@@ -8407,7 +8407,7 @@ void x86_update_hflags(CPUX86State *env)
+     env->hflags = hflags;
+ }
+ 
+-static Property x86_cpu_properties[] = {
++static const Property x86_cpu_properties[] = {
+ #ifdef CONFIG_USER_ONLY
+     /* apic_id = 0 by default for *-user, see commit 9886e834 */
+     DEFINE_PROP_UINT32("apic-id", X86CPU, apic_id, 0),
 -- 
 2.43.0
 
