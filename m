@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DC8E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AC9E77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF9d-0005ZH-Mv; Fri, 13 Dec 2024 18:33:06 -0500
+	id 1tMF8N-00033f-GH; Fri, 13 Dec 2024 18:31:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8x-0003nm-K8
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:23 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8G-0002nt-TK
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:41 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8v-00037E-P1
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:23 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4361d5dcf5bso24207425e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8F-00031Z-7L
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:40 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so27059335e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:31:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132739; x=1734737539; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132697; x=1734737497; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uFgo5/cFMtDhVHAmYBsAsdqAE3yRetip0LB681CLyVs=;
- b=KVoMYy1kmwVrqX5U5YZ9wf7x3yd6CTzBxgeSFBkuzrTwyazuz9gKqK1zhZ/BX+zUGW
- LX0OoWmh5+2MF+/MgHwEWcgBKKSAhnQPQKIAvo+ANBZTIBexBu8zWnh6lRlP9bbMIM3W
- qetOnXGAbBEx8bE+TqGX84CvQz/6b79KUFOfDVkcfHAccOoorbKZqpkyTD482JxJNcfg
- yPWNxNE6egHUl3kofADRCa9d1qPdTPzwF87KEmH8RYqV4NMRdJx+MT7BBq3tTSj/1ir2
- YJkyCFhpUtPYOEdFauPsS7M43/+quRNvDYq3xAGipDFeEHmg9Y+N3BB7Bc4lkyrdOJ58
- Q2Rw==
+ bh=WxphwPmo3ws4n0VvyoWJoeeSK4RqOZYnTK7zd+ejDWM=;
+ b=uhYL9VZJamjij+QtEgJ9KFyjDGAWo1BbThNGLg+nOY8GybQsvS8N52MU9+g2WprDA2
+ Dvf2wfw4yWLX7b4WMJfU2IlFllBilEmFUxHPg6BcYMjUcVXFR2T5kRnjuikw6n4sqI6y
+ nGgpvqUuqwvLS/PmrWGLCrcAIFkDqfu+YomoYnIT14y4dXz+p3zSQkByLcL5gr+wP3od
+ 5CgOEt9Yq8euNrKgmQtFG3R5ucHlifC3VC3hux9OwxlE3dROpAbYDfXW0Tcjj7jjnLAq
+ 3mxlMhXm6JoSunc7cQLW3fOrjZ0207YkXwvmwxwMajO/SCrMFxAZmUVgaR3ZwP8N1L5v
+ uS+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132739; x=1734737539;
+ d=1e100.net; s=20230601; t=1734132697; x=1734737497;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uFgo5/cFMtDhVHAmYBsAsdqAE3yRetip0LB681CLyVs=;
- b=d/Pp5u/q3kSRyAfpWhyKvD16tSuJTK0jyfqy39YDEwTWnHBTzQ+vfMsVZ2Fmt4jgJa
- BRav0xdW4E9NV1C8QncuX4tdf6VrfXwy1RC8dNs5bQBuUWKKpZcJIWgl/+RmJEFa8sPx
- EcxIbQ/PEhcYGiCwaqqIhmfmvSbZ7a+YH6z7oUmRLqflmJJba2LAuHGSalOuhfjbU4Tc
- qsXrnd07FyG7MDydV7yVPz4y8yI0GbNqA5lgPRmVVPCDQbYBuHPCeq1UowpLnMkmZ/VY
- gLad+dsLOb815GK1Ugd0BDUGc5YJpoVyhTwOgRSadHJLT8CvTU+eQtpn1hy0Q1mqPAjs
- 6t9Q==
-X-Gm-Message-State: AOJu0YxBy0Zkx3ScE+76UutJyeiv2RtBTy0Xr2FrJlHBYcW/03vRxgKm
- OTyMi7jHnH3o3+FNK2U5KOQB6jyYwDYkk5MJEE85eQDX4F7Gvn6wn2O5pdpvfhwxVzth6mrckBl
- fFcY=
-X-Gm-Gg: ASbGncu9wLLS7GPRhR+eUuOs4jDlt1z2rrTV13/wpuRxUhOky0kbykngOFC7Jhe7g5H
- gOluVfBzQ+msQogKWt3i5jrni/Ndb4pDE668o87e0IvESKmhGgn27hF69O6sTU4byqNEGTYJrQq
- liJ07SzN6LhF40em4uCbPJqv9v9/Cq2qu/S8CVI5bZP6vi9uUCdpwotxW4BHDntAxcv40vdXIks
- CeaJSqvveA0TOZQBigBC4F6U5Jl339ZlFmHrzQhUwQtuOUrYqcgS/6QwRVkoiKArglbUvKSQ2h4
- En+XWg==
-X-Google-Smtp-Source: AGHT+IF2K5W+YYWu/0e67Th7Crz0XrJobf95gjSCqdpQAQj4NETpewvUX+QBwSt/LxaMMI5d/ySCXg==
-X-Received: by 2002:a05:600c:1da6:b0:434:a7e3:db5c with SMTP id
- 5b1f17b1804b1-4362aa27ef1mr36088575e9.11.1734132739181; 
- Fri, 13 Dec 2024 15:32:19 -0800 (PST)
+ bh=WxphwPmo3ws4n0VvyoWJoeeSK4RqOZYnTK7zd+ejDWM=;
+ b=u8hEnRmM2z1m+icY4ig7gFxQxTVjHjm2DjTRxhc0YX8XoS3Ye4Fp/1+lUMhT4b+Bxh
+ hVb/GSpSFNqWWSJ2u8qEoMqmM+vI+8vt5LQGKGcmwwDS2SJ8Na7pzpSL3SFt/bBfXvEs
+ arRpw5SiXEWxadM5c7Pb/vJZPe/Gp47ycbwK42fmyMwX+OUlaECjgNEm8JqHKL1pCMoV
+ YhGz5U7XqT+xouEP3qsitXioIvCcPyC8QrIb+XNbwDQQmPA+plrEvHVUnMBj65c/Ptpf
+ X85wjTuU9ZxUTmFc8iw7WYs4rn3x9V1ljShpSLsmu5iGErd8aXsQxYICFFqHT+EimSTf
+ P/+w==
+X-Gm-Message-State: AOJu0Yxrj1f9neT1QXnLDDB4RrHxREHHP2nb63HZAjdcvEDkUv2e3y4Y
+ ++smE6BoSwKsWztCoWYLHx7zuc9XM3VMmZBxachfsg8Z2x1aaITOKQVedV6HbIzVjCHtgPsaSkW
+ go1s=
+X-Gm-Gg: ASbGnctsOYQi0WtMt0sniHlRzI2cSS8QH10JxpwII+MEhJxatdCu4E/UWq9D45ZfJQ2
+ 7wo5WCkX5OgKrVvoCUzGGa23uXbwHDxw4/UqXtxSTwlFwjJyPzGnFhzogwmTYVkFtpWiqMvy14i
+ JXwSd30XuUISqoyvXqENEpZEhoLM4wOSgTpY+4anLwQ0hc2YnA/J8+/m428KFVN4F5+3akrEaMO
+ uAncpxQGLQwEF1QsYBgcdVAFQxQ4/mJ+5ru7k/AyBQ7n/0YebkNsqcvnUMf7yjYEWVBg8915fO8
+ nxjuPg==
+X-Google-Smtp-Source: AGHT+IGKBZ6hFs3GXw17zJ/tbB9Ur/BQhVwWJwPC1SJrRLKyMHp5+X+2+pHY83b3KtYetVMvNxKtxw==
+X-Received: by 2002:a05:6000:18c6:b0:385:fe66:9f32 with SMTP id
+ ffacd0b85a97d-3888e0bfcc4mr3511109f8f.52.1734132696932; 
+ Fri, 13 Dec 2024 15:31:36 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4361e322328sm81348935e9.0.2024.12.13.15.32.17
+ ffacd0b85a97d-388c8012112sm849517f8f.11.2024.12.13.15.31.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:32:18 -0800 (PST)
+ Fri, 13 Dec 2024 15:31:36 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 16/20] hw/ide/ahci: Decouple from PCI
-Date: Sat, 14 Dec 2024 00:30:51 +0100
-Message-ID: <20241213233055.39574-17-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 07/20] hw/nvram/fw_cfg: Skip FW_CFG_DATA_GENERATOR when no data
+ to generate
+Date: Sat, 14 Dec 2024 00:30:42 +0100
+Message-ID: <20241213233055.39574-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,215 +100,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+Allow the FW_CFG_DATA_GENERATOR interface get_data() handler to
+return NULL when there is nothing to generate. In that case
+fw_cfg_add_file_from_generator() will not add any item and
+return %true.
 
-In some adhoc profiling booting Linux VMs, it's observed that ahci_irq_lower()
-can be a hot path (10000+ triggers until login prompt appears). Even though the
-parent device never changes, this method re-determines whether the parent device
-is a PCI device or not using the rather expensive object_dynamic_cast()
-function. Avoid this overhead by pushing the interrupt handling to the parent
-device, essentially turning AHCIState into an "IP block".
-
-Note that this change also frees AHCIState from the PCI dependency which wasn't
-reflected in Kconfig.
-
-Reported-by: Peter Xu <peterx@redhat.com>
-Inspired-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241212110926.23548-2-shentey@gmail.com>
+Reported-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20241213133352.10915-4-philmd@linaro.org>
 ---
- hw/ide/ahci-internal.h    |  1 -
- include/hw/ide/ahci-pci.h |  2 ++
- include/hw/ide/ahci.h     |  2 --
- hw/ide/ahci.c             | 39 ++++-----------------------------------
- hw/ide/ich.c              | 19 +++++++++++++++----
- 5 files changed, 21 insertions(+), 42 deletions(-)
+ include/hw/nvram/fw_cfg.h | 13 ++++++++-----
+ hw/nvram/fw_cfg.c         |  3 ++-
+ 2 files changed, 10 insertions(+), 6 deletions(-)
 
-diff --git a/hw/ide/ahci-internal.h b/hw/ide/ahci-internal.h
-index 7e63ea23102..a318f36811c 100644
---- a/hw/ide/ahci-internal.h
-+++ b/hw/ide/ahci-internal.h
-@@ -25,7 +25,6 @@
- #define HW_IDE_AHCI_INTERNAL_H
- 
- #include "hw/ide/ahci.h"
--#include "hw/pci/pci_device.h"
- #include "ide-internal.h"
- 
- #define AHCI_MEM_BAR_SIZE         0x1000
-diff --git a/include/hw/ide/ahci-pci.h b/include/hw/ide/ahci-pci.h
-index c2ee6169625..face1a9a4a4 100644
---- a/include/hw/ide/ahci-pci.h
-+++ b/include/hw/ide/ahci-pci.h
-@@ -9,6 +9,7 @@
- #include "qom/object.h"
- #include "hw/ide/ahci.h"
- #include "hw/pci/pci_device.h"
-+#include "hw/irq.h"
- 
- #define TYPE_ICH9_AHCI "ich9-ahci"
- OBJECT_DECLARE_SIMPLE_TYPE(AHCIPCIState, ICH9_AHCI)
-@@ -17,6 +18,7 @@ struct AHCIPCIState {
-     PCIDevice parent_obj;
- 
-     AHCIState ahci;
-+    IRQState irq;
- };
- 
- #endif
-diff --git a/include/hw/ide/ahci.h b/include/hw/ide/ahci.h
-index ba31e75ff9b..ac0292c634f 100644
---- a/include/hw/ide/ahci.h
-+++ b/include/hw/ide/ahci.h
-@@ -37,8 +37,6 @@ typedef struct AHCIControlRegs {
- } AHCIControlRegs;
- 
- typedef struct AHCIState {
--    DeviceState *container;
--
-     AHCIDevice *dev;
-     AHCIControlRegs control_regs;
-     MemoryRegion mem;
-diff --git a/hw/ide/ahci.c b/hw/ide/ahci.c
-index 0eb24304eef..5836aa924bb 100644
---- a/hw/ide/ahci.c
-+++ b/hw/ide/ahci.c
-@@ -23,8 +23,6 @@
- 
- #include "qemu/osdep.h"
- #include "hw/irq.h"
--#include "hw/pci/msi.h"
--#include "hw/pci/pci.h"
- #include "hw/qdev-properties.h"
- #include "migration/vmstate.h"
- 
-@@ -34,8 +32,6 @@
- #include "qemu/module.h"
- #include "sysemu/block-backend.h"
- #include "sysemu/dma.h"
--#include "hw/ide/pci.h"
--#include "hw/ide/ahci-pci.h"
- #include "hw/ide/ahci-sysbus.h"
- #include "ahci-internal.h"
- #include "ide-internal.h"
-@@ -179,34 +175,6 @@ static uint32_t ahci_port_read(AHCIState *s, int port, int offset)
-     return val;
- }
- 
--static void ahci_irq_raise(AHCIState *s)
--{
--    DeviceState *dev_state = s->container;
--    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
--                                                           TYPE_PCI_DEVICE);
--
--    trace_ahci_irq_raise(s);
--
--    if (pci_dev && msi_enabled(pci_dev)) {
--        msi_notify(pci_dev, 0);
--    } else {
--        qemu_irq_raise(s->irq);
--    }
--}
--
--static void ahci_irq_lower(AHCIState *s)
--{
--    DeviceState *dev_state = s->container;
--    PCIDevice *pci_dev = (PCIDevice *) object_dynamic_cast(OBJECT(dev_state),
--                                                           TYPE_PCI_DEVICE);
--
--    trace_ahci_irq_lower(s);
--
--    if (!pci_dev || !msi_enabled(pci_dev)) {
--        qemu_irq_lower(s->irq);
--    }
--}
--
- static void ahci_check_irq(AHCIState *s)
- {
-     int i;
-@@ -222,9 +190,11 @@ static void ahci_check_irq(AHCIState *s)
-     trace_ahci_check_irq(s, old_irq, s->control_regs.irqstatus);
-     if (s->control_regs.irqstatus &&
-         (s->control_regs.ghc & HOST_CTL_IRQ_EN)) {
--            ahci_irq_raise(s);
-+        trace_ahci_irq_raise(s);
-+        qemu_irq_raise(s->irq);
-     } else {
--        ahci_irq_lower(s);
-+        trace_ahci_irq_lower(s);
-+        qemu_irq_lower(s->irq);
-     }
- }
- 
-@@ -1608,7 +1578,6 @@ static const IDEDMAOps ahci_dma_ops = {
- 
- void ahci_init(AHCIState *s, DeviceState *qdev)
- {
--    s->container = qdev;
-     /* XXX BAR size should be 1k, but that breaks, so bump it to 4k for now */
-     memory_region_init_io(&s->mem, OBJECT(qdev), &ahci_mem_ops, s,
-                           "ahci", AHCI_MEM_BAR_SIZE);
-diff --git a/hw/ide/ich.c b/hw/ide/ich.c
-index b311450c12d..c99a44df8e1 100644
---- a/hw/ide/ich.c
-+++ b/hw/ide/ich.c
-@@ -61,7 +61,6 @@
+diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+index fcb06f18cc3..6089681f421 100644
+--- a/include/hw/nvram/fw_cfg.h
++++ b/include/hw/nvram/fw_cfg.h
+@@ -30,8 +30,9 @@ struct FWCfgDataGeneratorClass {
+      * @obj: the object implementing this interface
+      * @errp: pointer to a NULL-initialized error object
+      *
+-     * Returns: reference to a byte array containing the data on success,
+-     *          or NULL on error.
++     * Returns: A byte array containing data to add, or NULL without
++     *          @errp set if no data is required, or NULL with @errp
++     *          set on failure.
+      *
+      * The caller should release the reference when no longer
+      * required.
+@@ -298,14 +299,16 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
+  * @parent: the object in which to resolve the @part
+  * @errp: pointer to a NULL initialized error object
+  *
+- * Add a new NAMED fw_cfg item with the content generated from the
+- * @part object. The data generated by the @part object is copied
+- * into the data structure of the fw_cfg device.
++ * If the @part object generates content, add a new NAMED fw_cfg item with it.
++ * The data generated by the @part object is copied into the data structure of
++ * the fw_cfg device.
+  * The next available (unused) selector key starting at FW_CFG_FILE_FIRST
+  * will be used; also, a new entry will be added to the file directory
+  * structure residing at key value FW_CFG_FILE_DIR, containing the item name,
+  * data size, and assigned selector key value.
+  *
++ * If the @part object does not generate content, no fw_cfg item is added.
++ *
+  * Returns: %true on success, %false on error.
   */
- 
- #include "qemu/osdep.h"
--#include "hw/irq.h"
- #include "hw/pci/msi.h"
- #include "hw/pci/pci.h"
- #include "migration/vmstate.h"
-@@ -91,6 +90,19 @@ static const VMStateDescription vmstate_ich9_ahci = {
-     },
- };
- 
-+static void pci_ich9_ahci_update_irq(void *opaque, int irq_num, int level)
-+{
-+    PCIDevice *pci_dev = opaque;
-+
-+    if (msi_enabled(pci_dev)) {
-+        if (level) {
-+            msi_notify(pci_dev, 0);
-+        }
-+    } else {
-+        pci_set_irq(pci_dev, level);
-+    }
-+}
-+
- static void pci_ich9_reset(DeviceState *dev)
+ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index b94cd27bd85..46c62c8f09e 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -1031,6 +1031,7 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+                                     Object *parent, const char *part,
+                                     const char *filename, Error **errp)
  {
-     AHCIPCIState *d = ICH9_AHCI(dev);
-@@ -102,7 +114,9 @@ static void pci_ich9_ahci_init(Object *obj)
- {
-     AHCIPCIState *d = ICH9_AHCI(obj);
- 
-+    qemu_init_irq(&d->irq, pci_ich9_ahci_update_irq, d, 0);
-     ahci_init(&d->ahci, DEVICE(obj));
-+    d->ahci.irq = &d->irq;
- }
- 
- static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
-@@ -125,8 +139,6 @@ static void pci_ich9_ahci_realize(PCIDevice *dev, Error **errp)
-     /* XXX Software should program this register */
-     dev->config[0x90]   = 1 << 6; /* Address Map Register - AHCI mode */
- 
--    d->ahci.irq = pci_allocate_irq(dev);
--
-     pci_register_bar(dev, ICH9_IDP_BAR, PCI_BASE_ADDRESS_SPACE_IO,
-                      &d->ahci.idp);
-     pci_register_bar(dev, ICH9_MEM_BAR, PCI_BASE_ADDRESS_SPACE_MEMORY,
-@@ -161,7 +173,6 @@ static void pci_ich9_uninit(PCIDevice *dev)
- 
-     msi_uninit(dev);
-     ahci_uninit(&d->ahci);
--    qemu_free_irq(d->ahci.irq);
- }
- 
- static void ich_ahci_class_init(ObjectClass *klass, void *data)
++    ERRP_GUARD();
+     FWCfgDataGeneratorClass *klass;
+     GByteArray *array;
+     Object *obj;
+@@ -1048,7 +1049,7 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+     }
+     klass = FW_CFG_DATA_GENERATOR_GET_CLASS(obj);
+     array = klass->get_data(obj, errp);
+-    if (!array) {
++    if (*errp || !array) {
+         return false;
+     }
+     size = array->len;
 -- 
 2.45.2
 
