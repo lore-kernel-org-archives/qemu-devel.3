@@ -4,110 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C0F5E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:02:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E150E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 16:07:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM86m-0007AI-1H; Fri, 13 Dec 2024 11:01:40 -0500
+	id 1tM8Bc-0001hP-R8; Fri, 13 Dec 2024 11:06:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tM86h-00078a-2q; Fri, 13 Dec 2024 11:01:35 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tM8BT-0001gp-0T
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:31 -0500
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tM86e-0005AO-9z; Fri, 13 Dec 2024 11:01:34 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C590E1F78A;
- Fri, 13 Dec 2024 16:01:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734105689; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BHldVvqdFX9fprgF++VI4fIPQ4c3OBoDDQ2W8n8qbMM=;
- b=BJMwBfCQP0eUq9QwOb/2nZWQeBtcw5rFgQXygodbcVhD2TKfLCsZAVoqtboIEJpf2B3Weu
- QiUYVk2tiCPp0OSPDltR0BYialeQxJjkyG5MBidz6QvABeSeKYSIMFuxInSqjUUDrNoDuL
- 7tj100jM6/3Zu73EO1pC4iJTHwmlYL8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734105689;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BHldVvqdFX9fprgF++VI4fIPQ4c3OBoDDQ2W8n8qbMM=;
- b=2MlzMXKexacmS5oJb0c6Wg2lrAAePoPoxX89BjF+LZoffe4RvirwnU4jUZ06jj1FuHvmRm
- 3faEPnQj/dXIr1CA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734105689; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BHldVvqdFX9fprgF++VI4fIPQ4c3OBoDDQ2W8n8qbMM=;
- b=BJMwBfCQP0eUq9QwOb/2nZWQeBtcw5rFgQXygodbcVhD2TKfLCsZAVoqtboIEJpf2B3Weu
- QiUYVk2tiCPp0OSPDltR0BYialeQxJjkyG5MBidz6QvABeSeKYSIMFuxInSqjUUDrNoDuL
- 7tj100jM6/3Zu73EO1pC4iJTHwmlYL8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734105689;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=BHldVvqdFX9fprgF++VI4fIPQ4c3OBoDDQ2W8n8qbMM=;
- b=2MlzMXKexacmS5oJb0c6Wg2lrAAePoPoxX89BjF+LZoffe4RvirwnU4jUZ06jj1FuHvmRm
- 3faEPnQj/dXIr1CA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B4E1813939;
- Fri, 13 Dec 2024 16:01:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id AC9THlZaXGc9QwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 13 Dec 2024 16:01:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tM8BQ-0006ep-Dh
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 11:06:30 -0500
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-a9ec267b879so283270866b.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 08:06:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734105985; x=1734710785;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZEHyHCnolAD/eFAXqMw+MQuU1GhJUTNe2rn5XFdxHBc=;
+ b=JKGH5/9mMxlWPFmkzFL0qiqtMh453gwzeBeT6U+gglSLP3eBpJLraSs8zHBrhF1WmG
+ gs9dA0ReuCWwuTWDOiF6LpT0xTsG78AUaeuVzPQ84pZVyGcRz1TNiOiQENm5NX/CVRiy
+ BOiPpe5qxu15J8OZuYiu1GEeCrd41gKKZMB2K/Wtop16bx7Nf2xQg8GyecNa16q35PMV
+ ndN5Swv3G4QXcXdJtw+Dsj7mLkn1vCXat/c8QLeS30JBxdGwCBD4zG6TTuHW2zXpFf9E
+ Njjq19BcKIsv9KoAYfxNjPxpKwzx/+7C7UEiGSpdmoz2RB2550MPiGtihoPLjk32VWJr
+ Njkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734105985; x=1734710785;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=ZEHyHCnolAD/eFAXqMw+MQuU1GhJUTNe2rn5XFdxHBc=;
+ b=ZBVae+1VPtZG4+ITu4v9DnCyNewx+o0mI2T9rGeLzSLP37tWNdjRFL6qAsZxp+em4B
+ BHfsG2G385nRJselmUo8JKy606zlMNdQmXT21f/ujYnzP232r1MKnIFSnH87d9KERoVO
+ TzsvtVGKFyhU9dihU7YEn8CF/StuMZAs3T2vI2C7MmoxocLxJ49XNkf+YuGAEUBSGPkz
+ to5VIRZkJrhYVO1F+Xf0Uzb/VtSLAezNky2QF1tNb2zjtbdLvmwpNt9acZYVxls+nHLw
+ S3AiX8Z0q75FgIhuf+hIKM6ixmic29Tfdmg7f0WzHZ51ePWua1zUEjeEwbYSVvif4CRn
+ LI5w==
+X-Gm-Message-State: AOJu0Yy4MWyKfXHQkR1WmouLmDeoPdTXpVkb1nAQRLbvxgLrqn9Q5Yz8
+ b1KtHCbrrz3+BEC+D5SN0lKIocrJno1OJIiTJGHGz2c3SY6S4+NUgMLiuxqIfVsRxM6exlg3lQh
+ cew==
+X-Gm-Gg: ASbGncvla82T4ZYhLYb0zQ0OEA9rY1AZkNvFDDxQ2CXiyAoZgs11fF+Y0Wge5xEzoaI
+ zbM6IVnGSIp/WYHD5zGHj/aYiEIj0duFU6YOC0/x/PZMQ/denr0gWZnJjz+rGB69r+LGE2fmM6K
+ d5eJH3gfcUZc2lttRYj+CIARYNhTGS6+9IkgS71GXAiLiT6ZbDHKwcG8HHhKpZIH7Ekx5fCj4NG
+ RjryymC2zau8w5AbUxS7T0QeymzON12/+nOEwR9R1hHo8+TAXxcCOFrnIJjhzOOOs0Al5bQNiXG
+ o5S1FqwyoyF1kFmlmzx9C+bSbeIA7roB
+X-Google-Smtp-Source: AGHT+IFnhUSMC2MDBgVGiO9BUSL86lUWIFX+wCSYYiYDY8EZ21rwqxJ/h86kxYcbDr3GQqYYDxJOIw==
+X-Received: by 2002:a17:907:9557:b0:aa6:7107:db00 with SMTP id
+ a640c23a62f3a-aab77eab9d3mr248603666b.50.1734105985016; 
+ Fri, 13 Dec 2024 08:06:25 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aa667843413sm916683166b.24.2024.12.13.08.06.24
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 13 Dec 2024 08:06:24 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>
-Subject: [PATCH 2/2] s390x: Fix CSS migration
-Date: Fri, 13 Dec 2024 13:01:20 -0300
-Message-Id: <20241213160120.23880-3-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20241213160120.23880-1-farosas@suse.de>
-References: <20241213160120.23880-1-farosas@suse.de>
+Cc: richard.henderson@linaro.org, philmd@linaro.org, thuth@redhat.com,
+ zhao1.liu@intel.com, imammedo@redhat.com, akihiko.odaki@daynix.com,
+ Phil Dennis-Jordan <phil@philjordan.eu>
+Subject: [PATCH v2 1/6] hw/usb/hcd-xhci-pci: Use modulo to select MSI vector
+ as per spec
+Date: Fri, 13 Dec 2024 17:06:14 +0100
+Message-Id: <20241213160619.66509-2-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20241213160619.66509-1-phil@philjordan.eu>
+References: <20241213160619.66509-1-phil@philjordan.eu>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_SEVEN(0.00)[11];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: neutral client-ip=2a00:1450:4864:20::62c;
+ envelope-from=phil@philjordan.eu; helo=mail-ej1-x62c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,45 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit a55ae46683 ("s390: move css_migration_enabled from machine to
-css.c") disabled CSS migration globally instead of doing it
-per-instance.
+QEMU would crash with a failed assertion if the XHCI controller
+attempted to raise the interrupt on a higher vector than the
+highest configured for the device by the guest driver.
 
-CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: qemu-stable@nongnu.org #9.1
-Fixes: a55ae46683 ("s390: move css_migration_enabled from machine to css.c")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2704
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-Consider enabling migration-compat-s390x in CI, it would have caught
-this. It's too late for this development cycle because the backward
-migration is broken, but in 10.1 both sides will agree on the
-css_migration_enabled value.
----
- hw/s390x/s390-virtio-ccw.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+It turns out the XHCI spec (Implementation Note in section 4.17,
+"Interrupters") requires that the host controller signal the MSI
+vector with the number computed by taking the interrupter number
+modulo the number of enabled MSI vectors.
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index fe03f716f3..701b2d4e2e 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1189,6 +1189,7 @@ static void ccw_machine_2_9_instance_options(MachineState *machine)
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ZPCI);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_INT_SUPPRESSION);
-     s390_cpudef_featoff_greater(12, 1, S390_FEAT_ADAPTER_EVENT_NOTIFICATION);
-+    css_migration_enabled = false;
- }
+This change introduces that modulo calculation, fixing the
+failed assertion and making the device work correctly in MSI mode
+with macOS's XHCI driver.
+
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+---
+
+v2:
+
+ * Switch to modulo arithmetic for MSI vector number rather than dropping,
+   as per spec.
+
+ hw/usb/hcd-xhci-pci.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+index a039f5778a6..516e6909d20 100644
+--- a/hw/usb/hcd-xhci-pci.c
++++ b/hw/usb/hcd-xhci-pci.c
+@@ -74,6 +74,7 @@ static bool xhci_pci_intr_raise(XHCIState *xhci, int n, bool level)
+     }
  
- static void ccw_machine_2_9_class_options(MachineClass *mc)
-@@ -1201,7 +1202,6 @@ static void ccw_machine_2_9_class_options(MachineClass *mc)
-     ccw_machine_2_10_class_options(mc);
-     compat_props_add(mc->compat_props, hw_compat_2_9, hw_compat_2_9_len);
-     compat_props_add(mc->compat_props, compat, G_N_ELEMENTS(compat));
--    css_migration_enabled = false;
- }
- DEFINE_CCW_MACHINE(2, 9);
- 
+     if (msi_enabled(pci_dev) && level) {
++        n %= msi_nr_vectors_allocated(pci_dev);
+         msi_notify(pci_dev, n);
+         return true;
+     }
 -- 
-2.35.3
+2.39.5 (Apple Git-154)
 
 
