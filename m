@@ -4,72 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A12E7717D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1A0E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:06:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM1YX-0000as-Rg; Fri, 13 Dec 2024 04:01:53 -0500
+	id 1tM1c7-0002f2-Df; Fri, 13 Dec 2024 04:05:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tM1YT-0000ad-IB; Fri, 13 Dec 2024 04:01:49 -0500
-Received: from mgamail.intel.com ([192.198.163.17])
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1tM1c0-0002ek-Mc; Fri, 13 Dec 2024 04:05:28 -0500
+Received: from bm.lauterbach.com ([62.154.241.218])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tM1YQ-0005to-R5; Fri, 13 Dec 2024 04:01:49 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734080507; x=1765616507;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=b5TxyzI7IAj9wccNYON1ldI9MUnQxLxP4jydcfUFkiw=;
- b=kIplFa2E60w/IPAd3Jkbr3VNXUZ1KpQLj08XvXY7ssaytKKgBX/pbqOC
- VCEieaWImFxpl/hF76N2uR/ZWU0m9TSfynzd5OuRKE78osmqIcESDJpG6
- mMpZSJOdigki0RX2vjvqVW3yMPvyblr0G2W6cz6TkImOVjGh0bPaT8O75
- Y1/iyHtIU7UIeciasGDlfA7u9wmc6+XYmn6Ay02sNAGJVAalNfm149z/5
- iT2oDlVS5O1RbCANF4fUu55PgSBrQClIuC2d2z7Z9aMwLpOA0uzCZ96u5
- P3PiOu+tSawAz7OCoY5iERe7m3iPbwNgmMhqql/17PEArLip5/CIvdF36 g==;
-X-CSE-ConnectionGUID: umKSAjIpRtGVesOTfj1f5A==
-X-CSE-MsgGUID: Do1vMALoTx23CEstUXhIww==
-X-IronPort-AV: E=McAfee;i="6700,10204,11284"; a="34431514"
-X-IronPort-AV: E=Sophos;i="6.12,230,1728975600"; d="scan'208";a="34431514"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Dec 2024 01:01:35 -0800
-X-CSE-ConnectionGUID: Lbv2BEqnSjOBhBsYJ+93lQ==
-X-CSE-MsgGUID: +wAUjzlhQO+oQ05R1GRvtg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="96919239"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.36])
- by orviesa007.jf.intel.com with ESMTP; 13 Dec 2024 01:01:34 -0800
-Date: Fri, 13 Dec 2024 17:19:50 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 19/26] rust: rename qemu-api modules to follow C code a
- bit more
-Message-ID: <Z1v8NhJb/xBp/K2D@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-20-pbonzini@redhat.com>
- <Z1qyeThRA8yJMMoM@intel.com>
- <a0bdbf2a-8430-480e-bc56-e8a4875dd577@redhat.com>
+ (Exim 4.90_1) (envelope-from <mario.fleischmann@lauterbach.com>)
+ id 1tM1bn-0006WS-Lq; Fri, 13 Dec 2024 04:05:28 -0500
+Received: from [10.2.13.100] (unknown [10.2.13.100])
+ (Authenticated sender: mario.fleischmann@lauterbach.com)
+ by bm.lauterbach.com (Postfix) with ESMTPSA id 00AB1426D093;
+ Fri, 13 Dec 2024 10:04:55 +0100 (CET)
+Message-ID: <5d28f5aa-bb59-4198-a6ff-495a0ea9a16a@lauterbach.com>
+Date: Fri, 13 Dec 2024 10:04:54 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a0bdbf2a-8430-480e-bc56-e8a4875dd577@redhat.com>
-Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -48
-X-Spam_score: -4.9
-X-Spam_bar: ----
-X-Spam_report: (-4.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+From: Mario Fleischmann <mario.fleischmann@lauterbach.com>
+Subject: Re: [PATCH v3] riscv/gdb: add V bit to priv register
+To: Yanfeng Liu <yfliu2008@qq.com>, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, alex.bennee@linaro.org
+References: <tencent_D006B250779A0740A99BB51DA4A8F95EBF07@qq.com>
+Content-Language: en-US
+In-Reply-To: <tencent_D006B250779A0740A99BB51DA4A8F95EBF07@qq.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Bm-Milter-Handled: 166a2dfb-2e12-4590-8fa5-72e30323519f
+X-Bm-Transport-Timestamp: 1734080695009
+Received-SPF: pass client-ip=62.154.241.218;
+ envelope-from=mario.fleischmann@lauterbach.com; helo=bm.lauterbach.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,53 +60,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > In this commit, this comment is a bit ahead, but I think it's okay.
-> > 
-> > qom and qdev are both good names. In addition, we can rename the files
-> > of PL011 as well. Perhaps device_class.rs could be merged into device.rs
-> > (and eventually renamed to pl011.rs). I guess you might be planning to
-> > keep it until the cleanup of vmstate and property is done.
+Hi,
+
+apologies for the delayed review; I've just gotten to it now.
+
+On 06.12.2024 01:14, Yanfeng Liu wrote:
+> This adds virtualization mode (V bit) as bit(2) of register `priv`
+> per RiscV debug spec v1.0.0-rc3. Checked with gdb-multiarch v12.1.
 > 
-> Yeah, I don't have any specific plans but memory_ops will certainly go away.
-
-This depends on MemoryRegionOps binding. I will see how much HPET can do,
-and I'm sorry for not being able to review the remaining patches yet in
-this week, especially the last two. I will continue next week (my machine
-will be powered down until next Monday :( ).
-
-> device_class doesn't do much, but keeping it separate is a reminder for
-> things that are still there to be cleaned up.
+> Note that GDB may display `INVALID` tag for the value when V bit
+> is set, this doesn't affect accessing to the bit.
 > 
-> As to VMState, there are two parts.  One is the vmstate_description macro,
-> probably it has to be replaced with something else to incorporate the
-> trampolines for pre_save/post_load/...  I haven't looked at it but it should
-> not be a lot of work.
+> Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> ---
+>   target/riscv/gdbstub.c | 7 ++++++-
+>   1 file changed, 6 insertions(+), 1 deletion(-)
 > 
-> The second is VMStateFields, 
+> diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> index c07df972f1..8cc095cda3 100644
+> --- a/target/riscv/gdbstub.c
+> +++ b/target/riscv/gdbstub.c
+> @@ -213,7 +213,10 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
+>           RISCVCPU *cpu = RISCV_CPU(cs);
+>           CPURISCVState *env = &cpu->env;
+>   
+> -        return gdb_get_regl(buf, env->priv);
+> +        /* Per RiscV debug spec v1.0.0 rc3 */
 
-I found vmstate_array_of_pointer_to_struct missed a `info` field, and I
-could submit a patch to fix this nit next week (along with other cleanup
-you and other miantainers suggested for HPET).
+Now that rc4 is released, you might also cite "RISC-V Debug
+Specification v1.0.0 rc4".
 
-I'd also like to try apply zeroable to VMStateField to avoid missing any
-items...
+> +        target_ulong vbit = (env->virt_enabled) ? BIT(2) : 0;
+> +
+> +        return gdb_get_regl(buf, env->priv | vbit);
+>   #endif
+>       }
+>       return 0;
+> @@ -230,6 +233,8 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
+>           if (env->priv == PRV_RESERVED) {
+>               env->priv = PRV_S;
+>           }
+> +        env->virt_enabled = (env->priv == PRV_M) ? 0 :
+> +                            ((ldtul_p(mem_buf) & BIT(2)) >> 2);
 
-> for which my idea is to implement a trait on
-> types to retrieve a basic VMStateField (for example something like
-> vmstate_uint32 would become an implementation of the VMState trait on u32).
+Looking at the other places in the source code where virt_enabled is 
+set, we should also check here if the H extension is active.
+Alternatively, you might also consider using riscv_cpu_set_mode():
 
-This makes sense.
+Message-ID: <20240711-smcntrpmf_v7-v8-1-b7c38ae7b263@rivosinc.com>
+Date: Thu, 11 Jul 2024 15:31:04 -0700
+Subject: [PATCH v8 01/13] target/riscv: Combine set_mode and set_virt 
+functions.
+From: Atish Patra <atishp@rivosinc.com>
 
-> Then you'd write something like "vmstate_of!(Type,
-> field).with_version_id(2)" (i.e. vmstate_of retrieves the basic field and
-> fills in the offset, then you apply more changes on top).  But that may take
-> a while, and I think it cannot be done without the const_refs_to_static
-> feature, which is only stable in 1.83.0.
+>   #endif
+>           return sizeof(target_ulong);
+>       }
 
-I also like this idea!
+In addition, we need to swap the virtual supervisor registers from the H 
+extension, e.g. vsstatus:
 
-Thanks,
-Zhao
+"When V=1, vsstatus substitutes for the usual sstatus, so instructions 
+that normally read or modify sstatus actually access vsstatus instead." 
+(privileged spec)
 
+With the current patch, I was able to read and modify V, but the 
+registers were not changing:
+
+(gdb) info register $priv
+priv           0x4      prv:4 [INVALID]
+(gdb) info register $sstatus
+sstatus        0x200004022      8589951010
+(gdb) set $priv = 0x0
+(gdb) info register $priv
+priv           0x0      prv:0 [User/Application]
+(gdb) info register $sstatus
+sstatus        0x200004022      8589951010
+
+Take a look at riscv_cpu_swap_hypervisor_regs() which I believe does the 
+thing we need here. Note that the function is supposed be called before 
+the mode switch.
 
 
