@@ -4,87 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A14CAE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A81EE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:44:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBa3-0002mB-U9; Fri, 13 Dec 2024 14:44:12 -0500
+	id 1tMBaU-0003LN-NV; Fri, 13 Dec 2024 14:44:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMBa2-0002lx-6a
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:44:06 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMBaS-0003JH-J8
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:44:32 -0500
+Received: from mail-lf1-f48.google.com ([209.85.167.48])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMBZw-0007Vs-HS
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:44:05 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43621d27adeso15192555e9.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:43:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734119038; x=1734723838; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9gNXJcmQCHIrAo8+4s0W5awkESMTIQ5Z7OjnDJ8fjj8=;
- b=ZB4xBsdQC/uPHd0oeD+DkM7R98SvuwsdESiCyKkqsjSKP+4tm6d2E088C7LjzaxzWE
- EBUFEqgSryGTFRoP9yIKSodFEQg8Tsq+qASvEgzl98AGNfdfPTmKzCoUMwR/W6kTt4OS
- HFkQ6t3pu8K6xVJ6u+k2nSM97S5KN5leaApKiHreLjTULOjdNlsRyLRrZ7SXdFrarxi8
- j+Qn581n7WE5Ht3FiD/HDMARRESknTl5+h33tdoJRMwD2I4kSOs94w0mvu45/2aSOcHN
- uC0tsDWvTOBuUuBLxYrbXOGO5NMuhHLhzxaqfCuGvZEosDvZzSpLF0K/py4jwVDrsKJZ
- TbLQ==
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMBaN-0007Yn-Hk
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:44:32 -0500
+Received: by mail-lf1-f48.google.com with SMTP id
+ 2adb3069b0e04-54024aa9febso2051256e87.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:44:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734119038; x=1734723838;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9gNXJcmQCHIrAo8+4s0W5awkESMTIQ5Z7OjnDJ8fjj8=;
- b=i1bB3EUVPzZu7q7yqc8bgTCdwNQBBQrgrtTGhAEIMPqXKlYzPlvccV9NO1pMq4Qak0
- V9WPFgeRneIX5BauxdveARw3rh9/Y4rFx9CluyCIFLhVCDSO50NzbtfjKiH6yPsLkjrI
- wcStBx3ymWBia4B+h9ppVentS2Z4BiTaigJfWuA+0K5Jt4WFxnj3txzXtbS10yGKwwHf
- SepNEpVccfDW++HDGyfIdopPyE80GarBl/8Ri21gc6027NeBwePIpQKChSA+yGUbNhoG
- 4DVxWy/TevkR7w/rQjLqdQdu6HGrCSwXT0hj3GS8jlcCMSq+d1w2qYI78TDopQ2CFhgl
- VIHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUkw+PWiLz6qXtMdgffdqWVQmiO300TqF5F/9HjxaQ7+4gl73u7vh+jUUWafge7ZxCFJDvP6xmnv/z@nongnu.org
-X-Gm-Message-State: AOJu0YwX6QcO67ueFaA7cpjjufqf4cFOX6OQ6xCwG8FiUbAAn+MOmgYH
- 9Aa4zukzX3QnHxmZDbVqKJXTOGe85AJqcJP0UmPpPngIWxqJNFwPGx0Dxpb4rGdNaythjcjQV/t
- IKSA=
-X-Gm-Gg: ASbGncvb73I1PLOEKc9Czux0qgQZQNgYhd8nSJRttVXT+TQLFZYYfJvdx8WVqtKL+yk
- wzutxmg+NBiD0NGpOP3ggYcykJlcjx90lRlbyGrlsTPbrNTmhuty6PKuOFUI5uizYqL/HIGGPkk
- WzeD/5sTm5NZuk93BeWRDShGLkCz6slsMIcLoKJuIoTDbyjhaJDzUfv6+lQ8+fYKYCKAq6vGX6M
- TwEGMXLysof75t0w1ya0w8qXVuX8A5qUKGM8bX8VHZYP5XgXZVemxswWteG80L40bMZ3A6WKxzm
- uK13XNHd8mtp4LYL2Q2cPFh8XOpQiLjGejsMKN93/N/S2A==
-X-Google-Smtp-Source: AGHT+IFNXcrV54y5fdmnwb218hKFXph2Jnpv6RfEjNOmPptx0U0HdpU6j85KrcSv/Qnc6AbNVVAOkQ==
-X-Received: by 2002:a05:600c:3c8d:b0:431:52f5:f48d with SMTP id
- 5b1f17b1804b1-4362aab939bmr35628035e9.31.1734119037179; 
- Fri, 13 Dec 2024 11:43:57 -0800 (PST)
-Received: from [192.168.224.213] (183.red-95-127-61.dynamicip.rima-tde.net.
- [95.127.61.183]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80470afsm356393f8f.75.2024.12.13.11.43.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Dec 2024 11:43:55 -0800 (PST)
-Message-ID: <67b7a33b-2bf6-41ba-b421-058875e3c0ff@linaro.org>
-Date: Fri, 13 Dec 2024 20:43:51 +0100
+ d=1e100.net; s=20230601; t=1734119065; x=1734723865;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5Nq3ws/zMtmnvbUKGqCFjeNX1CVnceTvqSjX93z/veo=;
+ b=sImVfixYzfWibivP5H4Ke+IiBm1JYXSV1bYWg0T872wQxX6dYPsip7R/+Kuu0bGv98
+ zEaNimI+geR0hDnf9f/Bs9M3UEZL9OrIP/xeI8sTPliVHrIslEwtC/YOuPPg1wf7hWp8
+ dDZZ87pcrYSY3JHzGIZPXqN68KkoSyVcf/ZSJ7pviu2TwVIEaaPlTHr0WCfYy/SFU0IJ
+ 5sfSzXvbx6UyjPmHtSwt8Q7822qunUpjonFuFHXA34VffFIBzlcFOxmhpqZohEmZzNrc
+ 2ari6X9K68ctYkV70QI0nxTbmhIilVVcrhbk65QnCUNFRJRbdOQSocH2hxBk8YaQ5euL
+ anKA==
+X-Gm-Message-State: AOJu0Yx6mIe9GeMYKrUTcPu+IxiVhnj/UwMu34qucPSSxzT4e/rYeWPR
+ MHx4A/EuwEU27i7tZyGnv9+S6JRdUQmQ86eOnI4qxqrBbRV5y+GpS8PClw==
+X-Gm-Gg: ASbGnctI4m3C0KQz7C1ZkFATI7KnF+jpTNKH13HfRtgElJpUApYuk7byRBAJA5r8UlJ
+ 0uHRgpDz9CL4gRSTcbVQ4rceZFW9mFPcyEgCoC9cH+Nk/QqQpf/2iV4AdfAy5shHJK/6Yho6tqC
+ CtyOVEmjsZkaccE0KNx7BqLb52lUkQ4vChMvUcZOtqUy/9AHZ8uyGkSYvDxBjTHWlZ095RCQUpz
+ jg0ICrSoO9wV8r0b7tyB4sRn41NwSLuuvon+eJv//nwiQUmPpdI+GWVGXthydZitIkrR5M792bk
+X-Google-Smtp-Source: AGHT+IFKLbKUEN5NT4xfpfIarze5MwNFh4eRXkmOUdWMJsnLUxVbf+nMBhFvoisJXMBgfEcVfSIG1g==
+X-Received: by 2002:a17:906:2931:b0:aa6:85d0:1486 with SMTP id
+ a640c23a62f3a-aab77ee9688mr341687366b.54.1734118644543; 
+ Fri, 13 Dec 2024 11:37:24 -0800 (PST)
+Received: from tpx1 (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab9600e02esm7287766b.15.2024.12.13.11.37.23
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Dec 2024 11:37:24 -0800 (PST)
+Date: Fri, 13 Dec 2024 20:37:22 +0100
+From: Thomas Huth <huth@tuxfamily.org>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 02/34] next-cube: remove overlap between next.dma and
+ next.mmio memory regions
+Message-ID: <20241213203722.62490442@tpx1>
+In-Reply-To: <20241212114620.549285-3-mark.cave-ayland@ilande.co.uk>
+References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-3-mark.cave-ayland@ilande.co.uk>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/71] whole-tree: Constify Property structures
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=209.85.167.48; envelope-from=th.huth@gmail.com;
+ helo=mail-lf1-f48.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,98 +88,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/12/24 20:06, Richard Henderson wrote:
-> Since d36f165d952 (qdev: make properties array "const"), we can
-> define our Property structure const.  Do this across the entire tree.
-> 
-> There are a few other minor changes:
->    - Two instances where it was obvious that an empty property list
->      could be removed entirely.  There are other empty lists that
->      probably should be removed, but I didn't look further into usage.
->    - In hw/misc/xlnx-versal-trng.c, adjust a Property to use the
->      correct PropertyInfo in the definition, rather than setting
->      it at runtime.
->    - One instance where { } was used instead of DEFINE_PROP_END_OF_LIST.
->      Not a bug, but wrong style.
-> 
-> 
-> r~
-> 
-> 
-> Richard Henderson (71):
->    target/arm: Constify all Property
->    target/avr: Constify all Property
->    target/hexagon: Constify all Property
->    target/i386: Constify all Property
->    target/microblaze: Constify all Property
->    target/mips: Constify all Property
->    target/ppc: Remove empty property list
->    target/riscv: Constify all Property
->    target/s390x: Constify all Property
->    target/sparc: Constify all Property and PropertyInfo
->    cpu-target: Constify all Property
->    hw/9pfs: Constify all Property
->    hw/acpi: Constify all Property
->    hw/adc: Constify all Property
->    hw/arm: Constify all Property
->    hw/audio: Constify all Property
->    hw/avr: Constify all Property
->    hw/block/xen-block: Unexport PropertyInfo
->    hw/block: Constify all Property
->    hw/char: Constify all Property
->    hw/core: Constify all Property
->    hw/cpu: Constify all Property
->    hw/cxl: Constify all Property
->    hw/display: Constify all Property
->    hw/dma: Constify all Property
->    hw/gpio: Constify all Property
->    hw/hyperv: Constify all Property
->    hw/i2c: Constify all Property
->    hw/i386: Constify all Property
->    hw/ide: Constify all Property
->    hw/input: Constify all Property
->    hw/intc: Constify all Property
->    hw/ipack: Constify all Property
->    hw/ipmi: Constify all Property
->    hw/isa: Constify all Property
->    hw/m68k: Constify all Property
->    hw/mem: Constify all Property
->    hw/mips: Constify all Property
->    hw/misc/xlnx-versal-trng: Constify trng_props
->    hw/misc: Constify all Property
->    hw/net: Constify all Property
->    hw/nubus: Constify all Property
->    hw/nvme: Constify all Property
->    hw/nvram: Constify all Property
->    hw/pci-bridge: Constify all Property
->    hw/pci-host/astro: Remove empty Property list
->    hw/pci-host: Constify all Property
->    hw/pci: Constify all Property
->    hw/ppc: Constify all Property
->    hw/remote: Constify all Property
->    hw/riscv: Constify all Property
->    hw/rtc: Constify all Property
->    hw/rx: Constify all Property
->    hw/s390x: Constify all Property
->    hw/scsi: Constify all Property
->    hw/sd: Constify all Property
->    hw/sparc: Constify all Property
->    hw/sparc64: Constify all Property
->    hw/ssi: Constify all Property
->    hw/timer: Constify all Property
->    hw/tpm: Constify all Property
->    hw/tricore: Constify all Property
->    hw/ufs: Constify all Property
->    hw/usb: Constify all Property
->    hw/vfio: Constify all Property
->    hw/virtio: Constify all Property
->    hw/watchdog: Constify all Property
->    hw/xen: Constify all Property
->    hw/xen: Use DEFINE_PROP_END_OF_LIST in xen_sysdev_properties
->    tests/unit: Constify all Property
->    docs: Constify all Property in examples
 
-Series:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+ Hi Mark!
 
+Am Thu, 12 Dec 2024 11:45:48 +0000
+schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+
+> Change the start of the next.mmio memory region so that it follows on dir=
+ectly
+> after the next.dma memory region. Increase the address offsets in
+> next_mmio_read() and next_mmio_write(), and reduce the size of the next.m=
+mio
+> memory region accordingly.
+>=20
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  hw/m68k/next-cube.c | 28 ++++++++++++++--------------
+>  1 file changed, 14 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+> index 0418fbc8aa..550e7f0b0a 100644
+> --- a/hw/m68k/next-cube.c
+> +++ b/hw/m68k/next-cube.c
+> @@ -266,23 +266,23 @@ static uint64_t next_mmio_read(void *opaque, hwaddr=
+ addr, unsigned size)
+>      uint64_t val;
+> =20
+>      switch (addr) {
+> -    case 0x7000:
+> +    case 0x2000:    /* 0x2005000 */
+>          /* DPRINTF("Read INT status: %x\n", s->int_status); */
+>          val =3D s->int_status;
+>          break;
+> =20
+> -    case 0x7800:
+> +    case 0x2800:    /* 0x2007800 */
+>          DPRINTF("MMIO Read INT mask: %x\n", s->int_mask);
+>          val =3D s->int_mask;
+>          break;
+> =20
+> -    case 0xc000 ... 0xc003:
+> -        val =3D extract32(s->scr1, (4 - (addr - 0xc000) - size) << 3,
+> +    case 0x7000 ... 0x7003:    /* 0x200c000 */
+> +        val =3D extract32(s->scr1, (4 - (addr - 0x7000) - size) << 3,
+>                          size << 3);
+>          break;
+> =20
+> -    case 0xd000 ... 0xd003:
+> -        val =3D extract32(s->scr2, (4 - (addr - 0xd000) - size) << 3,
+> +    case 0x8000 ... 0x8003:    /* 0x200d000 */
+> +        val =3D extract32(s->scr2, (4 - (addr - 0x8000) - size) << 3,
+>                          size << 3);
+>          break;
+> =20
+> @@ -301,25 +301,25 @@ static void next_mmio_write(void *opaque, hwaddr ad=
+dr, uint64_t val,
+>      NeXTPC *s =3D NEXT_PC(opaque);
+> =20
+>      switch (addr) {
+> -    case 0x7000:
+> +    case 0x2000:    /* 0x2005000 */
+
+Comment should be /* 0x2007000 */ instead.
+
+With that fixed:
+
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
