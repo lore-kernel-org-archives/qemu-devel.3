@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF08EE7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:35:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CCE0E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 13:36:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM5pE-0006BK-Kg; Fri, 13 Dec 2024 08:35:24 -0500
+	id 1tM5pI-0006Sg-Hh; Fri, 13 Dec 2024 08:35:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5oB-0005EZ-DE
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:21 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5oT-0005MZ-UU
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:38 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5o8-00016Z-VC
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:18 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso11740655e9.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:34:15 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tM5oH-00018F-2W
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 08:34:27 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so21065065e9.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 05:34:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734096853; x=1734701653; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734096863; x=1734701663; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=keEAo9CNDWNBW9lBlzlrISyY+AFYXI3pGoxc0E2DIgY=;
- b=Krziu5I0VYSwqQ6p0LCHeMRO2LNvOJyQigB56OtHvOrwIsWRD2SS0miohndyzqsaXC
- OdBlLqXMFpBR3s+RhkPNFJVtkDwhMd1WQeX04prbgifX+69uDK0mHPuhvm5ZJ1CN0E42
- HtHSBLmyIwExRlYcgPPFsbJst2qqXv5CU8GqoYGUywbhI4bgA7brjYNbBZC+C1Swrk+q
- xaYmx8dk1BoSfGqvDSMfAj5IOaVQr4mTJkW8asPdvFukk6BOveDnRt+F68IfW0YYvCSm
- y0TrXH0XIN60K6Y/PfXIAkds9qIHg7SpnLmNptMkf2jrytnjQF1yctFi+0YU85OB5WR/
- 96Jw==
+ bh=hLaEA7eBzqJ7BvxdEYXe8LSu5E5jEsYMhIQgut2X7lQ=;
+ b=MHN9wF8AE42JLqa6DAC8bZOiIArK+rDphhCIigShCqRbYOUKoYVAj4CWCdY6ZnwfeE
+ MX3NMo2cDfJRDSmHI+byArIHivKOwrIsvqPz3is0dDknGQ8EGMe6pyX642KMbMakPDFg
+ KrmHTtEzbhVTux14YYw8YfiD3U9OtW1C1uVk6g296n/MLxAw9QLsfUL0KmK52aEJHJlP
+ mzIiuPE8MKKy08R1ByZiOJNts53AbgS2NUAJvu99UzNIC24Y70OITP0eCIVEK/jMXZFQ
+ +/KEhg/fMbCYXXYyuepu6/51mbqR4EdXwSySyzUSdCbVIB/Cl2xKkZJDkaozZRd5/zfU
+ 8pfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734096853; x=1734701653;
+ d=1e100.net; s=20230601; t=1734096863; x=1734701663;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=keEAo9CNDWNBW9lBlzlrISyY+AFYXI3pGoxc0E2DIgY=;
- b=ajZ1XvXrpygQeqH/ISLKArRhV6bW5ZyZsNKgKqhiKF/uZcRHPmwI5IEoWFc2aAZK5H
- TX+G4b74wc/ystvDVRVaW/vGWYKcAkYizjcYXo07k8yiiuc6L1aw5eLa2xASAI7PxCJz
- MlXn2yxUNz3cjvIz9PoIzqG4CFIK6Dw4VhTJph7fhtaDbXnh5TsoNaXIufcpRfIX8Qc2
- By4sRS9iekR2kEeSanTJodIulsfnvfPknVA29q46FyIwK6NDao0HuKuPb8ZWUPgFpejN
- eo7+/b8VCjDC4s1L/zfZCOe/LYMwZxBFD7MQr8v6CzDKq5QrZZICs/6kWww1MRUKnbYH
- Q9RA==
-X-Gm-Message-State: AOJu0YyDE7/f0RPdlYTFnQocYBVw82JzxjdJ0Whf2sRt/8vULl+UH6/B
- HN+95Y3VoNdA+GTDkpYMabY4mUzvOKCTF4gAH7V+6sr1mJ6Fb4z4de5QDH1rxeNgl78rwpq9mfK
- T
-X-Gm-Gg: ASbGncsyq3BH3fX6XSrCo5OoXycbfiUD22Ps1uhnkJTfx3sqE1YluCOQD2S2MJ8EppQ
- jB7ig4fEIrOj1hmu+Kf14u/ktENIGnosYEr5tar0uh1ZB3wMtgAqRLuV6xf4+KUqO4OW0rd89dQ
- /RRmsangnPXYCTdi6x7czvY0DRdeK5u0ffUiSI7YQcOVhsBmTcQ2HQWYt8Gy70nDqWD0DVwKhaG
- AZEyYZlrygGjm+NOfi5qKEvy1Z/sPx1Nq8cclavpML3exORf4ACLGDeYZJmeFq/xwedezId9eZh
- FUDKEodaRRdzmZQ/FXXTI+nMytgwXVMdhheO
-X-Google-Smtp-Source: AGHT+IE0ffWZw+U60PDT7QBRhyibaA5YDxPBq0XXXZqasm/RJH5hNoTjSv/ogL3zZMijlrlO6a1i4Q==
-X-Received: by 2002:a5d:584b:0:b0:386:1cd3:8a09 with SMTP id
- ffacd0b85a97d-38880abfd60mr2192970f8f.1.1734096853442; 
- Fri, 13 Dec 2024 05:34:13 -0800 (PST)
+ bh=hLaEA7eBzqJ7BvxdEYXe8LSu5E5jEsYMhIQgut2X7lQ=;
+ b=wvojwk7iWWj9K3WDSzHAGQMdIzqjJfhnAVUOyEe83Qo/h7kB4H5fd9Utj5uKm2ibjH
+ 7LWvRq6hQMHWIv/bYDhEicA4Tf/1Hm21H9pgQfsbx5TghNBweAk82SoO4qZgZhff3OCT
+ khGLjSIItc2gbOGM1TyTWGWmeUidwtZ35wmLI6kfJaMZ/75sYfpUhsDRsBgsM6qqalf9
+ 3i9/jc58ofVprjXoOWF4kq3Elf4iyX9FRt88j9rJySM48YMvY4qVCCyg4k/GflQ3VThJ
+ 2RvrqzG1umCKdvblJsfAqtG9plaa+H1hHuVLrpdr1kQS4yUefNoHZDemShicyK+A/42I
+ LuHA==
+X-Gm-Message-State: AOJu0YwwuhR24Opm5q28duQOsII65YudVW8mP9ZaM2zb7WkOuUaymsZ1
+ eP1TD134fLLSb323KewfexF0QHRP6mxkqT2/LHccjNqP3AZ/rWWF65T2v1zrhcWmdKOruKhIs8l
+ r
+X-Gm-Gg: ASbGncsfCsI5bKTJRhWlr8WzR+PhPIoGdz14iwdwRjKtKKwq5vHa+4u7EV3Q2gXUwzj
+ puwnjhoC8VuJuxZp256HAYivKLYjGlKQzU65g81NlmDRJtHA5fWprRgzVHSitO9ncYh2T3TDMxT
+ EeLRgFpZj4SxWbTGWeUvcdVyt8KrgMr76IMuxEYlG0qqELSnONWx/67W4GU9rMp2NgN+c/8VAdE
+ I1caYaZl0NGVN0vEyui+2gC69TXJDFRl3C0oRRLf6bsbcaCsVj880FUSP1WIkpfMkZYVlvcqPI2
+ GR6TPTzr9528Y0nPDtuOf8WIf0kPrvMxLVTm
+X-Google-Smtp-Source: AGHT+IHLm57BWQ7/aJ35UDzZH//jdwPivuxbY6VorgTrgAVxM9l/WZBDnKZy3u1pUY8rf8Xh1VFx/w==
+X-Received: by 2002:a05:600c:83cf:b0:436:1ac2:1acf with SMTP id
+ 5b1f17b1804b1-4362aa9901cmr21719385e9.20.1734096863269; 
+ Fri, 13 Dec 2024 05:34:23 -0800 (PST)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436256b4556sm48690705e9.33.2024.12.13.05.34.12
+ 5b1f17b1804b1-43625706caesm49386565e9.32.2024.12.13.05.34.21
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 05:34:13 -0800 (PST)
+ Fri, 13 Dec 2024 05:34:22 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 4/7] hw/pci: Have PCI_BUS implement
- TYPE_FW_CFG_DATA_GENERATOR_INTERFACE
-Date: Fri, 13 Dec 2024 14:33:49 +0100
-Message-ID: <20241213133352.10915-5-philmd@linaro.org>
+Subject: [PATCH v2 6/7] hw: Use pci_bus_add_fw_cfg_extra_pci_roots()
+Date: Fri, 13 Dec 2024 14:33:51 +0100
+Message-ID: <20241213133352.10915-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213133352.10915-1-philmd@linaro.org>
 References: <20241213133352.10915-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,89 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The FW_CFG_DATA_GENERATOR interface allows any object to
-produce a blob of data consumable by the fw_cfg device.
-Implement that for PCI bus objects.
+We want to remove fw_cfg_add_extra_pci_roots() which introduced
+PCI bus knowledge within the generic hw/nvram/fw_cfg.c file.
+Replace the calls by the pci_bus_add_fw_cfg_extra_pci_roots()
+which is a 1:1 equivalent, but using correct API.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/pci/pci.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ hw/arm/virt.c     | 3 ++-
+ hw/hppa/machine.c | 2 +-
+ hw/i386/pc.c      | 3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 1416ae202c3..8844251eceb 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -46,6 +46,7 @@
- #include "hw/pci/msix.h"
- #include "hw/hotplug.h"
- #include "hw/boards.h"
-+#include "hw/nvram/fw_cfg.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "pci-internal.h"
-@@ -216,11 +217,41 @@ static uint16_t pcibus_numa_node(PCIBus *bus)
-     return NUMA_NODE_UNASSIGNED;
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 3bd9dd0f863..333eaf67ea3 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1750,7 +1750,8 @@ void virt_machine_done(Notifier *notifier, void *data)
+         exit(1);
+     }
+ 
+-    fw_cfg_add_extra_pci_roots(vms->bus, vms->fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(vms->fw_cfg, vms->bus,
++                                       &error_abort);
+ 
+     virt_acpi_setup(vms);
+     virt_build_smbios(vms);
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index a31dc32a9f7..4e673353225 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -240,7 +240,7 @@ static FWCfgState *create_fw_cfg(MachineState *ms, PCIBus *pci_bus,
+                     g_memdup2(qemu_version, sizeof(qemu_version)),
+                     sizeof(qemu_version));
+ 
+-    fw_cfg_add_extra_pci_roots(pci_bus, fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(fw_cfg, pci_bus, &error_abort);
+ 
+     return fw_cfg;
  }
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 99b9b105e26..92047ce8c9d 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -631,7 +631,8 @@ void pc_machine_done(Notifier *notifier, void *data)
+     /* set the number of CPUs */
+     x86_rtc_set_cpus_count(x86ms->rtc, x86ms->boot_cpus);
  
-+static GByteArray *pci_bus_fw_cfg_gen_data(Object *obj, Error **errp)
-+{
-+    PCIBus *bus = PCI_BUS(obj);
-+    GByteArray *byte_array;
-+    uint64_t extra_hosts = 0;
-+
-+    if (!bus) {
-+        return NULL;
-+    }
-+
-+    QLIST_FOREACH(bus, &bus->child, sibling) {
-+        /* look for expander root buses */
-+        if (pci_bus_is_root(bus)) {
-+            extra_hosts++;
-+        }
-+    }
-+
-+    if (!extra_hosts) {
-+        return NULL;
-+    }
-+    extra_hosts = cpu_to_le64(extra_hosts);
-+
-+    byte_array = g_byte_array_new();
-+    g_byte_array_append(byte_array,
-+                        (const void *)&extra_hosts, sizeof(extra_hosts));
-+
-+    return byte_array;
-+}
-+
- static void pci_bus_class_init(ObjectClass *klass, void *data)
- {
-     BusClass *k = BUS_CLASS(klass);
-     PCIBusClass *pbc = PCI_BUS_CLASS(klass);
-     ResettableClass *rc = RESETTABLE_CLASS(klass);
-+    FWCfgDataGeneratorClass *fwgc = FW_CFG_DATA_GENERATOR_CLASS(klass);
+-    fw_cfg_add_extra_pci_roots(pcms->pcibus, x86ms->fw_cfg);
++    pci_bus_add_fw_cfg_extra_pci_roots(x86ms->fw_cfg, pcms->pcibus,
++                                       &error_abort);
  
-     k->print_dev = pcibus_dev_print;
-     k->get_dev_path = pcibus_get_dev_path;
-@@ -232,6 +263,8 @@ static void pci_bus_class_init(ObjectClass *klass, void *data)
- 
-     pbc->bus_num = pcibus_num;
-     pbc->numa_node = pcibus_numa_node;
-+
-+    fwgc->get_data = pci_bus_fw_cfg_gen_data;
- }
- 
- static const TypeInfo pci_bus_info = {
-@@ -240,6 +273,10 @@ static const TypeInfo pci_bus_info = {
-     .instance_size = sizeof(PCIBus),
-     .class_size = sizeof(PCIBusClass),
-     .class_init = pci_bus_class_init,
-+    .interfaces = (InterfaceInfo[]) {
-+        { TYPE_FW_CFG_DATA_GENERATOR_INTERFACE },
-+        { }
-+    }
- };
- 
- static const TypeInfo cxl_interface_info = {
+     acpi_setup();
+     if (x86ms->fw_cfg) {
 -- 
 2.45.2
 
