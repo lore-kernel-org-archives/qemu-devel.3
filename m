@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E445E77180
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D779E7717F
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:35:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBNi-0008Qv-Mf; Fri, 13 Dec 2024 14:31:22 -0500
+	id 1tMBNb-0007nq-9n; Fri, 13 Dec 2024 14:31:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBNd-0007ya-5H
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:17 -0500
-Received: from mail-lf1-x12f.google.com ([2a00:1450:4864:20::12f])
+ id 1tMBN9-0006nL-Ox
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:30:48 -0500
+Received: from mail-lf1-x134.google.com ([2a00:1450:4864:20::134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBNa-0004K0-TM
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:31:16 -0500
-Received: by mail-lf1-x12f.google.com with SMTP id
- 2adb3069b0e04-53df19bf6a9so2911095e87.1
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:31:14 -0800 (PST)
+ id 1tMBN7-0004Gx-Tr
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:30:47 -0500
+Received: by mail-lf1-x134.google.com with SMTP id
+ 2adb3069b0e04-5401e6efffcso2355857e87.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:30:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734118273; x=1734723073; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734118244; x=1734723044; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+4rdkJduZkbXz6JmK4QEKv1jKAaYDuIzC71PHld//xk=;
- b=B63d/NmfNI69OdSEksZuyj/v8mDEINqLsjO3PNjCLPaDgq6VOF/s8RPa85Itad30Id
- xL1cnN2gzlyum0zR17UczJrciVNyckVTLJqYjqEJhC0n8HhtPLSlo1HSDgg/yl6Awl9F
- HIMGtFBxJwVcogpAdDonUpVJQcl5AZvDeoyWBp2lzfrLan5Bp/Wg9Iy2R7ZWQaAX7smr
- SD7UVtZ1TXyDeVa5kXRQBGyKVT/IV1t2ezsjOJtzGzhLIzaH2E2YlwfP0pKoYHZ9+JRW
- qxTyNgpD/kVSG/sKsTMfxPNDYDTh2Lc/y1l6wI/zlkXqv1AXNuQvFmd3FXPQPwcP9l4q
- aCkg==
+ bh=Ks6G+A84FfZ3IMwYe7rtmCGNogRG46Y1v4JaJo0a9Is=;
+ b=coKITaza7OFlV7Wj1FaDTld/XPSQ9FenvQdK3wyYcyxTxCxDNV105hZ8xuhIXkEGB9
+ OsP9hFBL42IYCdGKs+W20D/k9+98c/fJI/BVNSZwgKXyk3mawobHOQ/W9PJtxTc7VEEi
+ v3yaZFndoaMlfBD2+DT9clAq7GutagD4bIDB6UYrYXSkBOmReNCHp33HiGGrrsSRsWnb
+ n58AjJmyYzDvc+Wq1jND5EIH/3CV1t4cEhfDu0YidyOof698VUmTDfPU4j7C5yhTrP4k
+ j8Z4KKHwF/Vqwi70rytz8ZX+lpWpJYRkg6PanGyboQBJB6tb+zAziqTamPgrrZIjWIsO
+ azxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734118273; x=1734723073;
+ d=1e100.net; s=20230601; t=1734118244; x=1734723044;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+4rdkJduZkbXz6JmK4QEKv1jKAaYDuIzC71PHld//xk=;
- b=PwLEgCHKMRjYDw/ioRqWZQwUqdEKafc1GLsg5ieCOh6rQmsNf6eMTBu2cTWKD97eV/
- t4D4rd41t4S6TtEkZhWRyijOg7THxqXbnY7P5QgibcEt0CKYV6pG1qVlMUN5N1Py9mLx
- /1ackE9b8c2BQ00dPSFnlevqNi5WnP1yUhNrAq14tlM+7d4VPsrlzYSQBqBX9934Y3bJ
- 2unQYz8zvMQJU0Ol0PSUR6HmehylAv8L93xQa9umlxd9QvPa19sQjskv7Z7FI40IMkUW
- Y2eAmmbB1ST3VrpTlJikyYqSDL7Dw/nwHKHpmr6QuWX0zcL8thUu9Gs/KEAjBYbYDj1+
- lfNg==
-X-Gm-Message-State: AOJu0YwjhaG0xFXWbyCJeLJ/9Ocr/mNSpUFTc3r3NcMJQ4iP+ik19IRX
- FtrsvyJBsu0TRvct5VfuRo+AaEZ4rkKgpAfTzftb1TMkj0SBHd6e38jjbWC22Rx5nt+Uf0mRkym
- nuxHSWqiy
-X-Gm-Gg: ASbGncvuXkjtft6JpERa/h8L0BddCRRvrOR7PrSky86/zrMbUhDn+hC9u1nbzAsZ61D
- s/tE6dF03czQY0A3tYTo4AtSUYJhcUK2gpJkyynq2RckDNMncyBzgVrFCpvnSg9IpR3tZWcQRVY
- Ak80bdGla+WAaC2nNJ/wqIwELw7+2L6PMKck8zSpyXz9gJyYtAfs8h7WwyO4jQYiCP6LIt4nKsr
- xzIndfcndrrBkyl3WNmqge5khxOsrs1yRiR7ZtCXDU294DHLOE5e9+5NpafqQ==
-X-Google-Smtp-Source: AGHT+IGZaw7fo6ASbUtjikNIXECL567eaI66j1GW7LxGSht1RWaflHkAodf93EpmqmK03VfVVYaaWw==
-X-Received: by 2002:a05:6512:1288:b0:540:3572:bb6 with SMTP id
- 2adb3069b0e04-54090557f0emr1423299e87.15.1734118272736; 
- Fri, 13 Dec 2024 11:31:12 -0800 (PST)
+ bh=Ks6G+A84FfZ3IMwYe7rtmCGNogRG46Y1v4JaJo0a9Is=;
+ b=cN18L+NCkkWXm70/Bi8pq/Gi8vB+1NCoJA+nt92u6NppvDCfpyqx86yWO24HZwSsQ+
+ OhEmzYN3OGyCYKUn6muIg41wjL/+lCj16pkTxWs5edSCo5qnVqmjPPcQEqAlZv/GcBXE
+ Lq0paAnDwEqrzfkgALMY3Gr/tiec4nfiMFZsmLruj6SueIBFO5LUBxi1bA0LPsauvxPR
+ ymXonYYzSRPoabnx1cauWzstMQ+5QRGenBhNn5iLqGE0GFzb0QUf1EVzjJJMVpzzr3Rv
+ uaKY5rzkrGCN4KARxS42HDmvG0oe7jWpkyEMHr4ncBB+DeHEnaw/9O/Gx8LCFjZw3wW/
+ T3/w==
+X-Gm-Message-State: AOJu0YyEKSBjH6+Tk6YPw1ZYOjgJrMfggnaSCAJNHtwCVa0PfLAO9lhh
+ Jmc7Ia2VMd+CFrHP4auyvPytqV/mwqqSLIeifHeNb9Yt9fPg8HH85eY23Cjr0q+d74zD28KApdX
+ 9LT0vQy2i
+X-Gm-Gg: ASbGncvJbQa0LBivbAGXTfgo9+DrVTzpGB0+T5JyZYILmj5swfQvXpaTqGjyZrQab4V
+ lTUWsq4cKj0wnzjrj3XZiR+Mxagw3fcHAXDKV9Z5YdNCYcdR/WhB7EKHoBvyi5hT1LAJkeRFKxi
+ EnuF36qQUevYg0Ozemz08kLGZ6+wbJ2QK7ycGtIxV/0GNaxHOIGNtOPPQdaRbWaC85vQGZ3zKVk
+ +8HEkNcKwsfzcuVFGTZZbbti+LGu1ajqu5ha521bRmGjlsHGUkYmIjZSM+g4g==
+X-Google-Smtp-Source: AGHT+IFGZJIZIUb5LjrLjVc0WvQwaJBK5eY0K7njVad3ONjLROwm4SnNIJX99T953BtT5rEvxmgCfA==
+X-Received: by 2002:a05:6512:3e07:b0:53e:2fdb:4de3 with SMTP id
+ 2adb3069b0e04-540905955ccmr1343488e87.44.1734118243635; 
+ Fri, 13 Dec 2024 11:30:43 -0800 (PST)
 Received: from stoup.. ([91.209.212.67]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54120c204ebsm6723e87.250.2024.12.13.11.31.08
+ 2adb3069b0e04-54120c01051sm6972e87.156.2024.12.13.11.30.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:31:12 -0800 (PST)
+ Fri, 13 Dec 2024 11:30:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 70/71] tests/unit: Constify all Property
-Date: Fri, 13 Dec 2024 13:31:03 -0600
-Message-ID: <20241213193104.2515757-1-richard.henderson@linaro.org>
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ xen-devel@lists.xenproject.org (open list:X86 Xen CPUs)
+Subject: [PATCH 68/71] hw/xen: Constify all Property
+Date: Fri, 13 Dec 2024 13:30:02 -0600
+Message-ID: <20241213193004.2515684-6-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
+In-Reply-To: <20241213193004.2515684-1-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ <20241213193004.2515684-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12f;
- envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x12f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::134;
+ envelope-from=richard.henderson@linaro.org; helo=mail-lf1-x134.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -101,22 +103,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tests/unit/test-qdev-global-props.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/xen/xen-bus.c            | 2 +-
+ hw/xen/xen-legacy-backend.c | 4 ++--
+ hw/xen/xen_pt.c             | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tests/unit/test-qdev-global-props.c b/tests/unit/test-qdev-global-props.c
-index c8862cac5f..1eb95d2429 100644
---- a/tests/unit/test-qdev-global-props.c
-+++ b/tests/unit/test-qdev-global-props.c
-@@ -46,7 +46,7 @@ struct MyType {
-     uint32_t prop2;
+diff --git a/hw/xen/xen-bus.c b/hw/xen/xen-bus.c
+index 95b207ac8b..0d7defb8cd 100644
+--- a/hw/xen/xen-bus.c
++++ b/hw/xen/xen-bus.c
+@@ -1092,7 +1092,7 @@ unrealize:
+     xen_device_unrealize(dev);
+ }
+ 
+-static Property xen_device_props[] = {
++static const Property xen_device_props[] = {
+     DEFINE_PROP_UINT16("frontend-id", XenDevice, frontend_id,
+                        DOMID_INVALID),
+     DEFINE_PROP_END_OF_LIST()
+diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
+index e8e1ee4f7d..b15393e934 100644
+--- a/hw/xen/xen-legacy-backend.c
++++ b/hw/xen/xen-legacy-backend.c
+@@ -635,7 +635,7 @@ int xen_be_bind_evtchn(struct XenLegacyDevice *xendev)
+ }
+ 
+ 
+-static Property xendev_properties[] = {
++static const Property xendev_properties[] = {
+     DEFINE_PROP_END_OF_LIST(),
  };
  
--static Property static_props[] = {
-+static const Property static_props[] = {
-     DEFINE_PROP_UINT32("prop1", MyType, prop1, PROP_DEFAULT),
-     DEFINE_PROP_UINT32("prop2", MyType, prop2, PROP_DEFAULT),
-     DEFINE_PROP_END_OF_LIST()
+@@ -674,7 +674,7 @@ static const TypeInfo xensysbus_info = {
+     }
+ };
+ 
+-static Property xen_sysdev_properties[] = {
++static const Property xen_sysdev_properties[] = {
+     {/* end of property list */},
+ };
+ 
+diff --git a/hw/xen/xen_pt.c b/hw/xen/xen_pt.c
+index 3635d1b39f..557aa98be4 100644
+--- a/hw/xen/xen_pt.c
++++ b/hw/xen/xen_pt.c
+@@ -931,7 +931,7 @@ static void xen_pt_unregister_device(PCIDevice *d)
+     xen_pt_destroy(d);
+ }
+ 
+-static Property xen_pci_passthrough_properties[] = {
++static const Property xen_pci_passthrough_properties[] = {
+     DEFINE_PROP_PCI_HOST_DEVADDR("hostaddr", XenPCIPassthroughState, hostaddr),
+     DEFINE_PROP_BOOL("permissive", XenPCIPassthroughState, permissive, false),
+     DEFINE_PROP_END_OF_LIST(),
 -- 
 2.43.0
 
