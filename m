@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D976E77183
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:37:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 509EAE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:41:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBTJ-0001Yj-Fx; Fri, 13 Dec 2024 14:37:09 -0500
+	id 1tMBXH-0008O1-Sg; Fri, 13 Dec 2024 14:41:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBTG-0001OB-4M
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:37:06 -0500
-Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tMBXB-0008KN-Ig
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:41:11 -0500
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMBTD-0005D2-Se
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:37:05 -0500
-Received: by mail-oi1-x231.google.com with SMTP id
- 5614622812f47-3eb7ecc3c54so1134603b6e.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:37:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1tMBX5-0005uk-93
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:41:08 -0500
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-2ef748105deso1529040a91.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:41:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734118622; x=1734723422; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=minyard-net.20230601.gappssmtp.com; s=20230601; t=1734118860; x=1734723660;
+ darn=nongnu.org; 
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LHgc1l1qpRSvTvA+hPA/du3JarE2ikdn84gpIsEZ7/E=;
- b=iS+2DhVNN3hRQAmnW2XhE5lHqcctXIl+XX4NXn/nRyVqcgpBBT3Ykv7td6H95/2Gzu
- OJ48oGovvPCwWZOO7vrpMJSh4MeXqH3MCA2DjUtfFr++sgHdgTYSrNJ4x0hsv1biCc/c
- HGVzYmikJ9IXP/pcaiQqwxktZUhwI1nZ4fsbBS4pbDcLTUgHVgBS/Mn0RtWZjD6Bzzcp
- 8fr9mxb0BwpdVWLvjKpOLfJ7IafmwRD12KpmilyugHxol7AFQYxRRqouK8VCKFPy5Nfm
- tAOxUHJFIXvOoLBe6Ue9a3eeRUuSrdY7v1evxa1DiaZ1hZW/SMgM5lPsvpCI4nSXK/xe
- EWzg==
+ bh=GSiWKN+kCNpnqW7BHZfE2kBExQhRyMzULnhv8eAuOGE=;
+ b=CdrraH/8pfpVp8OXxZNoOyAgtYU/q6vcGzLF0fVjGx2eAs+t3oT7i80k/N5ho53/Ov
+ nBqaaicXIemG+HbN+w6crgmoMQOXxojND1/6RGOtPYH0s5gPD//CpiIGHMzk1iI4fUnq
+ 3tLAu9LjxSF6yug9NG11e7PC8Umit4ZJM4RjoQJO7haMNzQPWeLpbEdk9aAC1Ekqp2GT
+ XZVR3BmPftmmhKqWFc0nGJjYFIb28EYfjXn3HIIisdOf/UOL2xPdIuZh9rP70IOoq0Ig
+ 5nAekOOTivsTVWXPrS1H0l2BPxlrnWn8oHjBvlhyEW8dc3/aOY9a9xW57ZlUJ1KoUmA0
+ KWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734118622; x=1734723422;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734118860; x=1734723660;
+ h=in-reply-to:content-disposition:mime-version:references:reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LHgc1l1qpRSvTvA+hPA/du3JarE2ikdn84gpIsEZ7/E=;
- b=bN+hRlWIzypuc5hdgt3SvlgMMsscbqK0O8+IqyXf8CfQL3kmQ7k6LOpcSSkkzYqUjL
- Deharh/myCQxKlT+qmjBtrgmwM3SUWHoBRgzFkZwbQ9atzVD9JplPiXJtGl2Bdk6sYL7
- W1ct84l4KUviUES6Ifa6NeBAd0pbq226peQSNRl6HWdN/fQdB8hXp4/iQW3xYZpj73Sd
- lZ7j3tQlMPVayWoAVcQM4sYGdh4qtDLb8Af7xI/SxI6gTc1/7JWKZUaoqabhJl0PcxWj
- TRlmpJsOAcbevhtpOLSOGVP9SLNvkzLBgWHFwcv6fc0DhW6eWBaL4BacXufYZ/RNF21v
- waaA==
-X-Gm-Message-State: AOJu0Yy7IushDePyMys1NHJZm/6s/fvXaL23SJ7E4HErmMb5xV41NR+T
- +nJfFruLJUEZuBlmZDuqTmwxQq+PnCVw1IO+qfouDUjJAVMU279rXiKiTf4xnvxkMrBDgbWnLtD
- 48cin4okQ
-X-Gm-Gg: ASbGncsHcQUXtC14nLoiNrCoTnZfyElu0kh9AsnLvudJkJOEWaLPYNGV1KJKiy9SaDx
- AYFjT9T+DRzwEmJaJYdIiz19a0gmWVrAlkjMFQmqX2ZjFNGgaXK20yl5mlr9tfm9Pfvg34jinYi
- nubtAYj1XyMJZ20vnLmNYyMiNnYtjpNqTvd7OMY/HqeSP7lEzXf4DSp97BTNY9VR+Vk4JAqahFu
- dKAZu5pNRREGk6taGoBX8vP86dv48KgM743598wL5eTTCagaUsLzEmsQRx0GXfP
-X-Google-Smtp-Source: AGHT+IFG7GCxsgRnm6iDR7NRyLUgDqn6xqLfITFvZAApZrlBiMdjU6ZI9fQftE2p7wcu46JTRRbPxw==
-X-Received: by 2002:a05:6871:4309:b0:29f:9554:9b94 with SMTP id
- 586e51a60fabf-2a3ac6c3984mr2175028fac.18.1734116890717; 
- Fri, 13 Dec 2024 11:08:10 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4834da91sm29697a34.18.2024.12.13.11.08.08
+ bh=GSiWKN+kCNpnqW7BHZfE2kBExQhRyMzULnhv8eAuOGE=;
+ b=R0gKviX0TtA/nI6+Ebv374Ez/8FYG6xHq6gcbmPJu7Vc8TE5s5b4OD+XHYAK3i4Egl
+ /dSbK1yKBqH2ajcsWKOvKeap3xAZx9jFtL1c4l9h5gzBNePE9agMkjYM1l/nfnuCaGx6
+ 4Uo4hLd1IIZrAoebq0CFc96BHraWEZ0vcffyUU7vgrv1tVEFhkBldvDBvBMQ+FkmDqXh
+ VT9VT7kTRmWVA4BO1KWZrA/rBtCbfvWOxEGGdamOHC/aLPGNsxlgk3XkzquWheN82TMK
+ fboJL+A9UlAxRqB8YKedwVdWtLY0gRcXhtAi8exSH/znoJM3BLVvq1MABPGj1vIfQT57
+ Gc8g==
+X-Gm-Message-State: AOJu0Yxx8Yo+jWbuqzUvGYW1PF/ENPIGele879tQFveHKHWJBVIm5qPK
+ LZJeEP/idhCVnG0qGXeiz4iXiVjhgTSUa11LvQn5fBRpRP4tQT5IfoeQCrhmY5c=
+X-Gm-Gg: ASbGncvsU2YlwjvwPw1BhqITpe+vYeKTy2wIy6dMJLMdvGZ2fgQspgSh826ZNg6SC+I
+ 6A+IajoMpFXYiy5dnkcf03kQUUUUjuUF9f4Gn3u9kdZHjZD6WYLoLg0NV5h/psSpoQNdRmqOeIP
+ PrKjStr3SwiMzb4RpVy5L9H0bcLZH6pBfnY4knj3gJLwZXUwGvFooxvHIQZBr7rOBDRQkTdfFew
+ mTAycO+mePC/slH+nsZSZw25YTpSW2fvZDfdFJn1+PHPC8Y4M7E3D7TfwIS
+X-Google-Smtp-Source: AGHT+IGdcgl5KBSwf2/wlAC2BfeJcZBBj2noupbRvIRXOp18b/m164BCtQLXBF5b/c5xcMkktzXQ2Q==
+X-Received: by 2002:a17:902:da84:b0:216:6a4a:9a39 with SMTP id
+ d9443c01a7336-21892a86816mr62937595ad.56.1734118860277; 
+ Fri, 13 Dec 2024 11:41:00 -0800 (PST)
+Received: from mail.minyard.net ([2001:470:b8f6:1b:8995:3830:b502:80f0])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-218a1db58a8sm1380675ad.24.2024.12.13.11.40.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:08:10 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PULL 4/4] target/sparc: Use memcpy() and remove memcpy32()
-Date: Fri, 13 Dec 2024 13:06:38 -0600
-Message-ID: <20241213190750.2513964-9-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ Fri, 13 Dec 2024 11:40:59 -0800 (PST)
+Date: Fri, 13 Dec 2024 13:40:54 -0600
+From: Corey Minyard <corey@minyard.net>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Corey Minyard <minyard@acm.org>
+Subject: Re: [PATCH 34/71] hw/ipmi: Constify all Property
+Message-ID: <Z1yNxiQNsb4bMNCu@mail.minyard.net>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ <20241213190750.2513964-39-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241213190750.2513964-39-richard.henderson@linaro.org>
+Received-SPF: none client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=corey@minyard.net; helo=mail-pj1-x102e.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,85 +93,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Corey Minyard <cminyard@mvista.com>
 
-Rather than manually copying each register, use
-the libc memcpy(), which is well optimized nowadays.
-
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241205205418.67613-1-philmd@linaro.org>
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- target/sparc/win_helper.c | 26 ++++++++------------------
- 1 file changed, 8 insertions(+), 18 deletions(-)
-
-diff --git a/target/sparc/win_helper.c b/target/sparc/win_helper.c
-index b53fc9ce94..0c4b09f2c1 100644
---- a/target/sparc/win_helper.c
-+++ b/target/sparc/win_helper.c
-@@ -24,29 +24,19 @@
- #include "exec/helper-proto.h"
- #include "trace.h"
- 
--static inline void memcpy32(target_ulong *dst, const target_ulong *src)
--{
--    dst[0] = src[0];
--    dst[1] = src[1];
--    dst[2] = src[2];
--    dst[3] = src[3];
--    dst[4] = src[4];
--    dst[5] = src[5];
--    dst[6] = src[6];
--    dst[7] = src[7];
--}
--
- void cpu_set_cwp(CPUSPARCState *env, int new_cwp)
- {
-     /* put the modified wrap registers at their proper location */
-     if (env->cwp == env->nwindows - 1) {
--        memcpy32(env->regbase, env->regbase + env->nwindows * 16);
-+        memcpy(env->regbase, env->regbase + env->nwindows * 16,
-+               sizeof(env->gregs));
-     }
-     env->cwp = new_cwp;
- 
-     /* put the wrap registers at their temporary location */
-     if (new_cwp == env->nwindows - 1) {
--        memcpy32(env->regbase + env->nwindows * 16, env->regbase);
-+        memcpy(env->regbase + env->nwindows * 16, env->regbase,
-+               sizeof(env->gregs));
-     }
-     env->regwptr = env->regbase + (new_cwp * 16);
- }
-@@ -361,8 +351,8 @@ void cpu_gl_switch_gregs(CPUSPARCState *env, uint32_t new_gl)
-     dst = get_gl_gregset(env, env->gl);
- 
-     if (src != dst) {
--        memcpy32(dst, env->gregs);
--        memcpy32(env->gregs, src);
-+        memcpy(dst, env->gregs, sizeof(env->gregs));
-+        memcpy(env->gregs, src, sizeof(env->gregs));
-     }
- }
- 
-@@ -393,8 +383,8 @@ void cpu_change_pstate(CPUSPARCState *env, uint32_t new_pstate)
-         /* Switch global register bank */
-         src = get_gregset(env, new_pstate_regs);
-         dst = get_gregset(env, pstate_regs);
--        memcpy32(dst, env->gregs);
--        memcpy32(env->gregs, src);
-+        memcpy(dst, env->gregs, sizeof(env->gregs));
-+        memcpy(env->gregs, src, sizeof(env->gregs));
-     } else {
-         trace_win_helper_no_switch_pstate(new_pstate_regs);
-     }
--- 
-2.43.0
-
+On Fri, Dec 13, 2024 at 01:07:08PM -0600, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>  hw/ipmi/ipmi.c            | 2 +-
+>  hw/ipmi/ipmi_bmc_extern.c | 2 +-
+>  hw/ipmi/ipmi_bmc_sim.c    | 2 +-
+>  hw/ipmi/isa_ipmi_bt.c     | 2 +-
+>  hw/ipmi/isa_ipmi_kcs.c    | 2 +-
+>  5 files changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/ipmi/ipmi.c b/hw/ipmi/ipmi.c
+> index bbb07b151e..850b3bc463 100644
+> --- a/hw/ipmi/ipmi.c
+> +++ b/hw/ipmi/ipmi.c
+> @@ -108,7 +108,7 @@ void ipmi_bmc_find_and_link(Object *obj, Object **bmc)
+>                               OBJ_PROP_LINK_STRONG);
+>  }
+>  
+> -static Property ipmi_bmc_properties[] = {
+> +static const Property ipmi_bmc_properties[] = {
+>      DEFINE_PROP_UINT8("slave_addr",  IPMIBmc, slave_addr, 0x20),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/ipmi/ipmi_bmc_extern.c b/hw/ipmi/ipmi_bmc_extern.c
+> index 29c5af3cc3..cfec1da87c 100644
+> --- a/hw/ipmi/ipmi_bmc_extern.c
+> +++ b/hw/ipmi/ipmi_bmc_extern.c
+> @@ -515,7 +515,7 @@ static void ipmi_bmc_extern_finalize(Object *obj)
+>      timer_free(ibe->extern_timer);
+>  }
+>  
+> -static Property ipmi_bmc_extern_properties[] = {
+> +static const Property ipmi_bmc_extern_properties[] = {
+>      DEFINE_PROP_CHR("chardev", IPMIBmcExtern, chr),
+>      DEFINE_PROP_END_OF_LIST(),
+>  };
+> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+> index 33c839c65a..8a55893e89 100644
+> --- a/hw/ipmi/ipmi_bmc_sim.c
+> +++ b/hw/ipmi/ipmi_bmc_sim.c
+> @@ -2191,7 +2191,7 @@ static void ipmi_sim_realize(DeviceState *dev, Error **errp)
+>      vmstate_register(NULL, 0, &vmstate_ipmi_sim, ibs);
+>  }
+>  
+> -static Property ipmi_sim_properties[] = {
+> +static const Property ipmi_sim_properties[] = {
+>      DEFINE_PROP_UINT16("fruareasize", IPMIBmcSim, fru.areasize, 1024),
+>      DEFINE_PROP_STRING("frudatafile", IPMIBmcSim, fru.filename),
+>      DEFINE_PROP_STRING("sdrfile", IPMIBmcSim, sdr_filename),
+> diff --git a/hw/ipmi/isa_ipmi_bt.c b/hw/ipmi/isa_ipmi_bt.c
+> index 7b36d51494..16062abb31 100644
+> --- a/hw/ipmi/isa_ipmi_bt.c
+> +++ b/hw/ipmi/isa_ipmi_bt.c
+> @@ -135,7 +135,7 @@ static void *isa_ipmi_bt_get_backend_data(IPMIInterface *ii)
+>      return &iib->bt;
+>  }
+>  
+> -static Property ipmi_isa_properties[] = {
+> +static const Property ipmi_isa_properties[] = {
+>      DEFINE_PROP_UINT32("ioport", ISAIPMIBTDevice, bt.io_base,  0xe4),
+>      DEFINE_PROP_INT32("irq",   ISAIPMIBTDevice, isairq,  5),
+>      DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/ipmi/isa_ipmi_kcs.c b/hw/ipmi/isa_ipmi_kcs.c
+> index f52b32e590..7e7a37659e 100644
+> --- a/hw/ipmi/isa_ipmi_kcs.c
+> +++ b/hw/ipmi/isa_ipmi_kcs.c
+> @@ -142,7 +142,7 @@ static void *isa_ipmi_kcs_get_backend_data(IPMIInterface *ii)
+>      return &iik->kcs;
+>  }
+>  
+> -static Property ipmi_isa_properties[] = {
+> +static const Property ipmi_isa_properties[] = {
+>      DEFINE_PROP_UINT32("ioport", ISAIPMIKCSDevice, kcs.io_base,  0xca2),
+>      DEFINE_PROP_INT32("irq",   ISAIPMIKCSDevice, isairq,  5),
+>      DEFINE_PROP_END_OF_LIST(),
+> -- 
+> 2.43.0
+> 
 
