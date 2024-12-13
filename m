@@ -4,41 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3200E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:42:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69072E7717D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 09:43:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM2AG-0001cC-7M; Fri, 13 Dec 2024 04:40:52 -0500
+	id 1tM2AD-0001ak-Gg; Fri, 13 Dec 2024 04:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tM2AD-0001al-DO
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:49 -0500
+ id 1tM2A9-0001Yu-RK
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:45 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tM2A6-0006gg-Qn
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:49 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tM2A6-0006e3-9s
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 04:40:45 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bx++ETAVxntolWAA--.37118S3;
- Fri, 13 Dec 2024 17:40:35 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxmeENAVxnp4lWAA--.40831S3;
+ Fri, 13 Dec 2024 17:40:29 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMCxDuELAVxnQ8aBAA--.54481S8;
- Fri, 13 Dec 2024 17:40:34 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMCxDuELAVxnQ8aBAA--.54481S2;
+ Fri, 13 Dec 2024 17:40:27 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
  Song Gao <gaosong@loongson.cn>
-Subject: [PULL 06/18] hw/intc/loongarch_pch: Inherit from loongarch_pic_common
-Date: Fri, 13 Dec 2024 17:40:15 +0800
-Message-Id: <20241213094027.1732484-7-maobibo@loongson.cn>
+Subject: [PULL 00/18] loongarch-to-apply queue
+Date: Fri, 13 Dec 2024 17:40:09 +0800
+Message-Id: <20241213094027.1732484-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241213094027.1732484-1-maobibo@loongson.cn>
-References: <20241213094027.1732484-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxDuELAVxnQ8aBAA--.54481S8
+X-CM-TRANSID: qMiowMCxDuELAVxnQ8aBAA--.54481S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,203 +64,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set TYPE_LOONGARCH_PIC inherit from TYPE_LOONGARCH_PIC_COMMON object,
-it shares vmsate and property of TYPE_LOONGARCH_PIC_COMMON, and has
-its own realize() function.
+The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_pch_pic.c            | 38 ++++++++++++--------------
- hw/intc/loongarch_pic_common.c         | 32 +++++++++++++++++++++-
- hw/intc/meson.build                    |  2 +-
- include/hw/intc/loongarch_pch_pic.h    | 21 +++++++++++---
- include/hw/intc/loongarch_pic_common.h | 10 +++++++
- 5 files changed, 77 insertions(+), 26 deletions(-)
+  Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 25c612b366..11effd4cc9 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -379,14 +379,14 @@ static void loongarch_pch_pic_reset(DeviceState *d)
-     s->int_polarity = 0x0;
- }
- 
--#include "loongarch_pic_common.c"
--static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
-+static void loongarch_pic_realize(DeviceState *dev, Error **errp)
- {
--    LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(dev);
--    SysBusDevice *sbd  = SYS_BUS_DEVICE(dev);
-+    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(dev);
-+    LoongarchPICClass *lpc = LOONGARCH_PIC_GET_CLASS(dev);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     Error *local_err = NULL;
- 
--    loongarch_pic_common_realize(dev, &local_err);
-+    lpc->parent_realize(dev, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-@@ -408,26 +408,24 @@ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
- 
- }
- 
--static void loongarch_pch_pic_class_init(ObjectClass *klass, void *data)
-+static void loongarch_pic_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongarchPICClass *lpc = LOONGARCH_PIC_CLASS(klass);
- 
--    dc->realize = loongarch_pch_pic_realize;
-     device_class_set_legacy_reset(dc, loongarch_pch_pic_reset);
--    dc->vmsd = &vmstate_loongarch_pic_common;
--    device_class_set_props(dc, loongarch_pic_common_properties);
-+    device_class_set_parent_realize(dc, loongarch_pic_realize,
-+                                    &lpc->parent_realize);
- }
- 
--static const TypeInfo loongarch_pch_pic_info = {
--    .name          = TYPE_LOONGARCH_PCH_PIC,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(LoongArchPCHPIC),
--    .class_init    = loongarch_pch_pic_class_init,
-+static const TypeInfo loongarch_pic_types[] = {
-+   {
-+        .name               = TYPE_LOONGARCH_PIC,
-+        .parent             = TYPE_LOONGARCH_PIC_COMMON,
-+        .instance_size      = sizeof(LoongarchPICState),
-+        .class_size         = sizeof(LoongarchPICClass),
-+        .class_init         = loongarch_pic_class_init,
-+    }
- };
- 
--static void loongarch_pch_pic_register_types(void)
--{
--    type_register_static(&loongarch_pch_pic_info);
--}
--
--type_init(loongarch_pch_pic_register_types)
-+DEFINE_TYPES(loongarch_pic_types)
-diff --git a/hw/intc/loongarch_pic_common.c b/hw/intc/loongarch_pic_common.c
-index c8e0490d40..28e9376557 100644
---- a/hw/intc/loongarch_pic_common.c
-+++ b/hw/intc/loongarch_pic_common.c
-@@ -4,9 +4,15 @@
-  * Copyright (C) 2024 Loongson Technology Corporation Limited
-  */
- 
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "hw/intc/loongarch_pic_common.h"
-+#include "hw/qdev-properties.h"
-+#include "migration/vmstate.h"
-+
- static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
- {
--    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
-+    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(dev);
- 
-     if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
-         error_setg(errp, "Invalid 'pic_irq_num'");
-@@ -39,3 +45,27 @@ static const VMStateDescription vmstate_loongarch_pic_common = {
-         VMSTATE_END_OF_LIST()
-     }
- };
-+
-+static void loongarch_pic_common_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongArchPICCommonClass *lpcc = LOONGARCH_PIC_COMMON_CLASS(klass);
-+
-+    device_class_set_parent_realize(dc, loongarch_pic_common_realize,
-+                                    &lpcc->parent_realize);
-+    device_class_set_props(dc, loongarch_pic_common_properties);
-+    dc->vmsd = &vmstate_loongarch_pic_common;
-+}
-+
-+static const TypeInfo loongarch_pic_common_types[] = {
-+    {
-+        .name               = TYPE_LOONGARCH_PIC_COMMON,
-+        .parent             = TYPE_SYS_BUS_DEVICE,
-+        .instance_size      = sizeof(LoongArchPICCommonState),
-+        .class_size         = sizeof(LoongArchPICCommonClass),
-+        .class_init         = loongarch_pic_common_class_init,
-+        .abstract           = true,
-+    }
-+};
-+
-+DEFINE_TYPES(loongarch_pic_common_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 6bfdc4eb33..848cb6685e 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -71,6 +71,6 @@ specific_ss.add(when: 'CONFIG_M68K_IRQC', if_true: files('m68k_irqc.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI_COMMON', if_true: files('loongson_ipi_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
--specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c', 'loongarch_pic_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
-diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
-index 381accbf2b..f84be0ac62 100644
---- a/include/hw/intc/loongarch_pch_pic.h
-+++ b/include/hw/intc/loongarch_pch_pic.h
-@@ -10,9 +10,22 @@
- 
- #include "hw/intc/loongarch_pic_common.h"
- 
--#define LoongArchPCHPIC LoongArchPICCommonState
--#define TYPE_LOONGARCH_PCH_PIC "loongarch_pch_pic"
--#define PCH_PIC_NAME(name) TYPE_LOONGARCH_PCH_PIC#name
--OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHPIC, LOONGARCH_PCH_PIC)
-+#define TYPE_LOONGARCH_PIC  "loongarch_pic"
-+#define PCH_PIC_NAME(name)  TYPE_LOONGARCH_PIC#name
-+OBJECT_DECLARE_TYPE(LoongarchPICState, LoongarchPICClass, LOONGARCH_PIC)
-+
-+struct LoongarchPICState {
-+    LoongArchPICCommonState parent_obj;
-+};
-+
-+struct LoongarchPICClass {
-+    LoongArchPICCommonClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+};
-+
-+#define TYPE_LOONGARCH_PCH_PIC TYPE_LOONGARCH_PIC
-+typedef struct LoongArchPICCommonState LoongArchPCHPIC;
-+#define LOONGARCH_PCH_PIC(obj)   ((struct LoongArchPICCommonState *)(obj))
- 
- #endif /* HW_LOONGARCH_PCH_PIC_H */
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-index 124bb7d226..0a1a28063c 100644
---- a/include/hw/intc/loongarch_pic_common.h
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -40,6 +40,10 @@
- #define POL_LO_START                    0x40
- #define POL_HI_START                    0x44
- 
-+#define TYPE_LOONGARCH_PIC_COMMON "loongarch_pic_common"
-+OBJECT_DECLARE_TYPE(LoongArchPICCommonState,
-+                    LoongArchPICCommonClass, LOONGARCH_PIC_COMMON)
-+
- struct LoongArchPICCommonState {
-     SysBusDevice parent_obj;
- 
-@@ -67,4 +71,10 @@ struct LoongArchPICCommonState {
-     MemoryRegion iomem8;
-     unsigned int irq_num;
- };
-+
-+struct LoongArchPICCommonClass {
-+    SysBusDeviceClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+};
- #endif  /* HW_LOONGARCH_PIC_COMMON_H */
--- 
-2.43.5
+are available in the Git repository at:
+
+  https://gitlab.com/bibo-mao/qemu.git pull-loongarch-20241213
+
+for you to fetch changes up to 78aa256571aa06f32001bd80635a1858187c609b:
+
+  hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic (2024-12-13 14:39:39 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20241213
+
+----------------------------------------------------------------
+Bibo Mao (8):
+      include: Add loongarch_pic_common header file
+      include: Move struct LoongArchPCHPIC to loongarch_pic_common header file
+      hw/intc/loongarch_pch: Merge instance_init() into realize()
+      hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICCommonState
+      hw/intc/loongarch_pch: Move some functions to file loongarch_pic_common
+      hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+      hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+      hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
+
+ hw/intc/loongarch_pch_pic.c            | 106 +++++++++++----------------------
+ hw/intc/loongarch_pic_common.c         |  97 ++++++++++++++++++++++++++++++
+ hw/intc/meson.build                    |   2 +-
+ hw/loongarch/virt.c                    |   2 +-
+ include/hw/intc/loongarch_pch_pic.h    |  70 +++++-----------------
+ include/hw/intc/loongarch_pic_common.h |  82 +++++++++++++++++++++++++
+ 6 files changed, 230 insertions(+), 129 deletions(-)
+ create mode 100644 hw/intc/loongarch_pic_common.c
+ create mode 100644 include/hw/intc/loongarch_pic_common.h
 
 
