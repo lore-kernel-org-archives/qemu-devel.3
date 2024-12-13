@@ -4,82 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3A42E7717F
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 00:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64A64E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 00:29:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tLtVl-0007FS-Jz; Thu, 12 Dec 2024 19:26:29 -0500
+	id 1tLtXs-0007yY-4O; Thu, 12 Dec 2024 19:28:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3LX9bZwwKCtoJ67EDAOPAB6JCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--nabihestefan.bounces.google.com>)
- id 1tLtVj-0007F4-Ii
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 19:26:27 -0500
-Received: from mail-pj1-x1049.google.com ([2607:f8b0:4864:20::1049])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3LX9bZwwKCtoJ67EDAOPAB6JCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--nabihestefan.bounces.google.com>)
- id 1tLtVh-0003ts-EH
- for qemu-devel@nongnu.org; Thu, 12 Dec 2024 19:26:27 -0500
-Received: by mail-pj1-x1049.google.com with SMTP id
- 98e67ed59e1d1-2f129f7717fso1175878a91.0
- for <qemu-devel@nongnu.org>; Thu, 12 Dec 2024 16:26:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1734049581; x=1734654381; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=OnTkKmI98HLqjCoEGGsWWLjffxSTToPbCN+awUwxOzs=;
- b=SB3hc7JogvkXnoICARTEV250nSBA7intKbisWHnGSfXbpMYUaVdcYIBjqWxSvKjfeb
- ixScYbVRxgYgetjlq0sblDh4tAPjLPr1bzaj3OHHuW8Ap1p0UnajU9iDzXFAM9Otolb0
- zQ2gy3NCba52HBWYVk2w5svQnidoDDSdtrFecSUfZCRxoIAq9pYQf8PH/cL3P1T+gQ++
- sOGnEm/aYskTsYkknYQet/U2lcIOXLuEO2Y0KFJTnMS6hMLoL4OGqB+YkpbXS3aOH3Af
- YQvPZ5X/oZKav6J8n5+od4I+H4pqgbWPgUZlGkKsMPYnAfZuJIZGe8UjhdWYwjxAAa8M
- Gobw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734049581; x=1734654381;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OnTkKmI98HLqjCoEGGsWWLjffxSTToPbCN+awUwxOzs=;
- b=gMydZt/X/0q0Sv4ooFZKwWzFVazIKCpi1AzODyYmlzYSCJnpVlVrvXor6enhuGV6sA
- L4l9bSFFPkNZx72m1QPoLN/JNXE2sMDKad4iNZe0X3Xy9p3YLS+GSXSnh6dd5SAQtZHi
- tA7raTNtnF/Jh6Ym7p4VhKTVTQVi8DeQqDuTh1aW2DPwbCK117mSkVeA5wKQ/fEUD8vG
- 54t12iL64+Eb5J/ryazPDPwNjDWVWZXxfJpU/eBPxEpVYg7jm9PHWHU4/nwVr2W+d1vV
- qnkYRFTS0K6uWYE2C4iW+qLwf3jwlqkIGN7lkW1+62DCY+7PZGe6p0d9+X/uVjW1xBjw
- vuew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXvZtfTgO1Nf/LDfISlIeyonD8xQr2wfzowPAx8QHpPE6rPqgtwMvzUrGzxy/M2qgbupxZ8lHw7ad6j@nongnu.org
-X-Gm-Message-State: AOJu0YypGQsClDL96ddfypg/Tnp5bURZ982mOdWp2wvQg7sHEKrM3QP+
- DyYEYKtJr5o7azsc/vB7Pkm8qKFEHqQp8h8AhhT8o3y/3PjzcImTrrEVQB3QTKHwvxbF4kJ9BpH
- iGdwBkdktnP2b2FFY2nGm0ZZSKw==
-X-Google-Smtp-Source: AGHT+IEH2BncTD1qRBhSrAZjGx2pwSMNI4hF5i17htlyuiIaymrr7nBuRR4jK3Nsz+vIyVUZsqHc3AdTDgtkszpOvsM=
-X-Received: from pjbsc8.prod.google.com ([2002:a17:90b:5108:b0:2ef:85ba:108f])
- (user=nabihestefan job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:3e8e:b0:2ea:2a8d:dd2a with SMTP id
- 98e67ed59e1d1-2f2900a98b4mr1055155a91.27.1734049581571; 
- Thu, 12 Dec 2024 16:26:21 -0800 (PST)
-Date: Fri, 13 Dec 2024 00:26:02 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-Message-ID: <20241213002602.4181289-1-nabihestefan@google.com>
-Subject: [PATCH] tests/qtest/sse-timer-test: Add watchdog reset to sse-timer
- test
-From: Nabih Estefan <nabihestefan@google.com>
-To: peter.maydell@linaro.org
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, farosas@suse.de, 
- lvivier@redhat.com, pbonzini@redhat.com, roqueh@google.com, 
- venture@google.com, Nabih Estefan <nabihestefan@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1049;
- envelope-from=3LX9bZwwKCtoJ67EDAOPAB6JCKKCHA.8KIMAIQ-9ARAHJKJCJQ.KNC@flex--nabihestefan.bounces.google.com;
- helo=mail-pj1-x1049.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tLtXq-0007yA-I0; Thu, 12 Dec 2024 19:28:38 -0500
+Received: from mail-dm6nam10on2060a.outbound.protection.outlook.com
+ ([2a01:111:f403:2413::60a]
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1tLtXn-0004Zt-IF; Thu, 12 Dec 2024 19:28:38 -0500
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=btBYHRF6/BAl3HSyuCw8p7iRFpeOOTVMFN5OXmgDQxkSm8zLIVSMmDGkb6vLvBOVd2sz1QjVB7gCucXgrOWimI2UxBIqbS0leI1usAZ2CH3P7JCMMYLKGhvmTgIW5ZAfpepbaR6bWTd7xO4sG2qd7FEvRzfK90lCPWJsRBgKbQF1Tsb0fLDBjr7RWTBdG0qfXUVUM1mtQmhmuvZ8k0QxmTKx5zWW4k3rDUloG2e7B0Ey/fuMBk0hlPrwxZXuWY3cZksSggVLFr0L41U7mcBX4eyvyUIxusZzDbsDPdp/XzOiaSfGV/D+LS3yJB48kAAhCq9ebis3ZYbFvoQtiiQN0Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NUmLaQ/fkcc2Rkow0z5zVm88phY+upRqx9hQtODW0Sg=;
+ b=YZ6bt2x924Rf44x4IFlA1f00T21lOR+nVaWpT4GM4cs4TcSbOZ9Uxu1R0dOmhmbrWT/eyk8l4x8CBeTZ5wJXl377v4Tbbp7/xKJP6aXDPdCuvCIr/IGqQBKynyX/zkL8V0cpeegAHFhLz0sTiRL4UMxCEQ/vfyWat9GTeZCK4s0a54BSKEW5jkEYEXi5dp/9sDq1iUkbpafC0VNb6szw/6nzFL+NaV6xEQpd4WqwigOtPtSFRgXh6dpzRjfI/DZjZ2zcoptEMEc6gFyTN8cwv2Vx02SURDeWUu68iJiVHRnTFIlFWslfUFiLjS3WocdvveNe68JXGdLuLOAq2a6Nsg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NUmLaQ/fkcc2Rkow0z5zVm88phY+upRqx9hQtODW0Sg=;
+ b=lKqXYiHBbQktgiJn0gs4tNqLGfG67YLtHfTHtqdjyLZIpxjto2wpCH9myaPYzyxWpMCyu5QlBCVS2aTzP5zh9iLYH7/aXItowjCxkdid9V+UzFo17GoW2vQT/3dQ67LskE71Tf6tPlFGHeL13F4c40nECKxYW3y95KsT21PgPpsTXgsUTAQO5GqwHzapK7wE5MN4gC3VRgglzx2lsffxhV+JNEwasCqy9dD85nLoua39jP+RSme11XHW1sRkILEH7pM09YnPz3vhvvZ1vI6B8VXtZ66xyuxKw5CbWQb7+LltRFVt+bAX7nQ0/8ov+7DDJWyK81hS2mSV9q2PU3jGqw==
+Received: from BL1PR13CA0150.namprd13.prod.outlook.com (2603:10b6:208:2bb::35)
+ by LV8PR12MB9133.namprd12.prod.outlook.com (2603:10b6:408:188::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.17; Fri, 13 Dec
+ 2024 00:28:22 +0000
+Received: from BN3PEPF0000B075.namprd04.prod.outlook.com
+ (2603:10b6:208:2bb:cafe::d) by BL1PR13CA0150.outlook.office365.com
+ (2603:10b6:208:2bb::35) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.16 via Frontend Transport; Fri,
+ 13 Dec 2024 00:28:22 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ BN3PEPF0000B075.mail.protection.outlook.com (10.167.243.120) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8251.15 via Frontend Transport; Fri, 13 Dec 2024 00:28:21 +0000
+Received: from rnnvmail201.nvidia.com (10.129.68.8) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 12 Dec
+ 2024 16:28:04 -0800
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by rnnvmail201.nvidia.com
+ (10.129.68.8) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Thu, 12 Dec
+ 2024 16:28:04 -0800
+Received: from Asurada-Nvidia (10.127.8.11) by mail.nvidia.com (10.129.68.6)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4 via Frontend
+ Transport; Thu, 12 Dec 2024 16:28:03 -0800
+Date: Thu, 12 Dec 2024 16:28:01 -0800
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "ddutile@redhat.com" <ddutile@redhat.com>, Linuxarm
+ <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
+ <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [RFC PATCH 4/5] hw/arm/virt-acpi-build: Build IORT with multiple
+ SMMU nodes
+Message-ID: <Z1t/kXRh2SrOiF3V@Asurada-Nvidia>
+References: <efb9fb7fb0f04d92b7776cdbc474585d@huawei.com>
+ <48bb0455-7c2e-4cc6-aa15-ebe4311d8430@redhat.com>
+ <0803ec1a010a46b9811543e1044c3176@huawei.com>
+ <aafc5fba-8d68-4796-a846-265362e7acac@redhat.com>
+ <30ff8ac9ee9b4012aa6962c86ac06375@huawei.com>
+ <41a67d4e-f7b8-4586-8d52-c32df400b675@redhat.com>
+ <e13f2e9c0a6341e8b25b7945bc7bf413@huawei.com>
+ <c14feb2934a0478180635bbdb27d5e53@huawei.com>
+ <Z1ipHKP4L/++143Q@Asurada-Nvidia>
+ <74114c0db34b420a90e9fe5bd991767e@huawei.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <74114c0db34b420a90e9fe5bd991767e@huawei.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BN3PEPF0000B075:EE_|LV8PR12MB9133:EE_
+X-MS-Office365-Filtering-Correlation-Id: 361e5972-4513-4c91-f643-08dd1b0d0cb8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|36860700013|1800799024|82310400026; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?l6y5R0MKFGo3c8PoMAG4Bjiht+BHg/RDMjDdZVlxKnW69VSmYUXDQgRW9g+S?=
+ =?us-ascii?Q?ZspWn1UByv0sJuA48SS3P4ZV8l7AwtV5VokBbZY8nk+jwGW2hQcmFTqEvvBd?=
+ =?us-ascii?Q?pge7sZeGDhQsf75tIgUbXU+9E9hvB6sN3ppH7kbqXM11IxmRfQFgYnYgRbA3?=
+ =?us-ascii?Q?sz+b9fO0lTxDFLFV5ttT78B/4EBl7Vl38QLMFnTUaN8rL1UwzL6ZnoLGDHcr?=
+ =?us-ascii?Q?FR+isTEaexeYdhEu1ER7dRQit9wo750DZQ4XnGPEWVh4pjFnsGG4vgVBAeqJ?=
+ =?us-ascii?Q?cpRzb9emSXRT9TVRnQI9epsIuSDllnzwKxoQgxaLzKYc/coDOpapadTpaw70?=
+ =?us-ascii?Q?DSIxFwjqhnsGKGFkAtutt1LEuJAcyqUKm5b/IZJUtizqdi0X6Mn2qDHYnM+d?=
+ =?us-ascii?Q?QBG72afleV3lalWCd0Kk1r5pDufZUO7q53Tfi6+o2T/BlbK1Ubf/j8kT+Sb4?=
+ =?us-ascii?Q?vG76Z+OqRLKAsNxrXLAhR/CSQVsMv7YJCG1T+P4XuRKWbCVZ6EG/ihA4w6IH?=
+ =?us-ascii?Q?LKbM2eXTvQS5CqYxLiVLDlDW42sYvgqaZbedg1D5o8NpTPiAPsdi6KH0hOGG?=
+ =?us-ascii?Q?IvcFSUqfFP5na7bjyf4dQtwnI9vJ6J6xkG2K06rfIf/f2ZbUeprzHtARs3/e?=
+ =?us-ascii?Q?O6mAtU9QLHsDrENXeUz3z0onNqPxoQaEISeOxTnbooWGiNgjR1BS+wiCbPTp?=
+ =?us-ascii?Q?9tGaXIfd5OR+r63O1T3dHe/1byWgnULq7UCzGOMDYhVR63iTfAF8iH9jgzp/?=
+ =?us-ascii?Q?+1ry0tMDia8pwfWEvKcHiibP3bxKsleaqudBFRGZzysojGIFoDaYLkljHgkx?=
+ =?us-ascii?Q?V0QJqfsSLCF3LewLeABc0RLE7yL562fhTWpUeDaCgeQ+yh7HMiWjwdCrUy/T?=
+ =?us-ascii?Q?dLTuwU4t32wNBCLn2JgRlsI1SCEEpRMBry8jjOthOmI1IfL81IsjTSXgvG7q?=
+ =?us-ascii?Q?C+44oByixTdrkcslIayjHr+4EkpIoRL+owiXOK864RN31OvZeba4PcCi/PQP?=
+ =?us-ascii?Q?1fwXZfZ0hb99JWAC02gYyv/PSjs9avVmCe6q3kaep+qT/V38RGyxuocL+NFc?=
+ =?us-ascii?Q?Vd0do8DQtsSrSqlXabERP8twGN64t6pz1AsCFz1iv+VZ9gEko5vm7uGuPFxv?=
+ =?us-ascii?Q?7kJv4/3LadCuS0osstwt2FNoLqWjtcb3QgBUOPsMjDuNmzFU6oAPStfVZEiX?=
+ =?us-ascii?Q?9Dkn7k8G2LCbdV/r2S/gyqaSSUPfNufz5pzZtXtnBLuJR2+r/aFnRBA7pW9B?=
+ =?us-ascii?Q?tD6sqwMLYuDkyQFwVC6NmwVrVs9NXX38+evU6pgxZUFOKPGz1g+fdwHERtA8?=
+ =?us-ascii?Q?htg9chBe6u9vuLyQiFZXeqzRb01Tj/bM1AlGooj/neUgUD/wSkMBSXY0mA0M?=
+ =?us-ascii?Q?y280WIMXJj53rM9vKDlgRJ+J2dr6y0qTzfJwVdaXBLEoXyeGBnRlgMhZ/vIm?=
+ =?us-ascii?Q?WN6kJ3j7h58jam2+8tneuGx7UO+w5XwC?=
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(36860700013)(1800799024)(82310400026); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Dec 2024 00:28:21.6576 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 361e5972-4513-4c91-f643-08dd1b0d0cb8
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: BN3PEPF0000B075.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9133
+Received-SPF: softfail client-ip=2a01:111:f403:2413::60a;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM10-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -25
+X-Spam_score: -2.6
+X-Spam_bar: --
+X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.496,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,99 +168,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Recent CDMSK Watchdog changes (eff9dc5660fad3a610171c56a5ec3fada245e519)
-updated the CDMSK APB Watchdog to not free run out of reset. That led to
-this test failing since it never triggers the watchdog to start running.
-No watchdog running means that the timer and counter in the test cannot
-start, leading to failures in the assert statements throughout the test.
-Adding a reset and enable of the watchdog to the reset function solves
-this problem by enabling the watchdog and thus letting the timer and
-counter run as expected
+On Wed, Dec 11, 2024 at 03:21:37PM +0000, Shameerali Kolothum Thodi wrote:
+> > Once a device reaches to the pci_device_set_iommu_device() call,
+> > it should be attached to an IDENTIY/bypass proxy s1_hwpt, so the
+> > smmu_find_add_as() will return the iommu as.
+> 
+> Agree. The above situation you explained is perfectly fine with vfio-pci dev.
+> 
+> > So, the fact that your hack is working means the hotplug routine
+> > is likely missing a pci_device_set_iommu_device() call, IMHO, or
+> > probably it should do pci_device_iommu_address_space() after the
+> > device finishes pci_device_set_iommu_device() instead..
+> 
+> The problem is not with the hot added vfio-pci dev but with the
+> pcie-root-port device. When we hot add a vfio-pci to a root port,
+> Qemu will inject an interrupt for the Guest root port device and
+> that kick starts the vfio-pci device add process. This involves writing
+> to the MSI address the Guest  kernel configures for the root port dev. 
+> 
+> As per the current logic, the root port dev will have sysmem address
+> space and in IORT we have root port dev id in smmu idmap. This
+> will not work as Guest kernel configures a translated IOVA for MSI.
+> 
+> I think we have discussed this issue of returning different address
+> spaces before here[0]. But that was in a different context though.
+> The hack mentioned in [0] actually works for this case as well, where
+> we add an extra check to see the dev is vfio-pci or not. But I am not
+> sure that is the best way to handle this.
+> 
+> Another option is to exclude all the root port devices from IORT idmap.
+> But that looks not an ideal one to me as it actually sits behind an SMMUv3
+> in this case.
+> 
+> Please let me know if you have any ideas.
 
-Also renaming the reset_counter_and_timer function since it now also
-affects the watchdog.
+Oh... I completely forgot that...
 
-To reproduce the failure at HEAD:
-./configure --target-list=arm-softmmu
-make -j check-report-qtest-arm.junit.xml
+So, we need to make sure the sdev/PCIDevice is a passthrough dev
+that will go through the set_iommu_device callback. Otherwise,
+just return the iommu address space.
 
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
----
- scripts/meson-buildoptions.sh.tmp |  0
- tests/qtest/sse-timer-test.c      | 19 ++++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
- create mode 100644 scripts/meson-buildoptions.sh.tmp
+Perhaps we could set a flag during vfio_realize() in PCIDevice *
+pdev, so later we could cast the sdev to pdev and recheck that.
 
-diff --git a/scripts/meson-buildoptions.sh.tmp b/scripts/meson-buildoptions.sh.tmp
-new file mode 100644
-index 0000000000..e69de29bb2
-diff --git a/tests/qtest/sse-timer-test.c b/tests/qtest/sse-timer-test.c
-index fd5635d4c9..d7a53ac23a 100644
---- a/tests/qtest/sse-timer-test.c
-+++ b/tests/qtest/sse-timer-test.c
-@@ -29,6 +29,13 @@
- /* Base of the System Counter control frame */
- #define COUNTER_BASE 0x58100000
- 
-+/* Base of the MSSDK APB Watchdog Device */
-+#define WDOG_BASE 0x4802e000
-+
-+/* CMSDK Watchdog offsets */
-+#define WDOGLOAD 0
-+#define WDOGCONTROL 8
-+
- /* SSE counter register offsets in the control frame */
- #define CNTCR 0
- #define CNTSR 0x4
-@@ -63,24 +70,26 @@ static void clock_step_ticks(uint64_t ticks)
-     clock_step(FOUR_TICKS * (ticks >> 2));
- }
- 
--static void reset_counter_and_timer(void)
-+static void reset_watchdog_counter_and_timer(void)
- {
-     /*
--     * Reset the system counter and the timer between tests. This
-+     * Reset the system watchdog, counter and the timer between tests. This
-      * isn't a full reset, but it's sufficient for what the tests check.
-      */
-+    writel(WDOG_BASE + WDOGCONTROL, 0);
-     writel(COUNTER_BASE + CNTCR, 0);
-     writel(TIMER_BASE + CNTP_CTL, 0);
-     writel(TIMER_BASE + CNTP_AIVAL_CTL, 0);
-     writel(COUNTER_BASE + CNTCV_LO, 0);
-     writel(COUNTER_BASE + CNTCV_HI, 0);
-+    writel(WDOG_BASE + WDOGCONTROL, 1);
- }
- 
- static void test_counter(void)
- {
-     /* Basic counter functionality test */
- 
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /* The counter should start disabled: check that it doesn't move */
-     clock_step_ticks(100);
-     g_assert_cmpuint(readl(COUNTER_BASE + CNTCV_LO), ==, 0);
-@@ -103,7 +112,7 @@ static void test_timer(void)
- {
-     /* Basic timer functionality test */
- 
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /*
-      * The timer is behind a Peripheral Protection Controller, and
-      * qtest accesses are always non-secure (no memory attributes),
-@@ -195,7 +204,7 @@ static void test_timer_scale_change(void)
-      * Test that the timer responds correctly to counter
-      * scaling changes while it has an active timer.
-      */
--    reset_counter_and_timer();
-+    reset_watchdog_counter_and_timer();
-     /* Give ourselves access to the timer, and enable the counter and timer */
-     writel(PERIPHNSPPC0, 1);
-     writel(COUNTER_BASE + CNTCR, 1);
--- 
-2.47.1.613.gc27f4b7a9f-goog
+Or, we could do something like your approach:
+-----------------------------------------------------------------
+@@ -896,9 +896,11 @@ static AddressSpace *smmu_find_add_as(PCIBus *bus, void *opaque, int devfn)
+     SMMUState *s = opaque;
+     SMMUPciBus *sbus = smmu_get_sbus(s, bus);
+     SMMUDevice *sdev = smmu_get_sdev(s, sbus, bus, devfn);
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
++    bool has_iommufd = !!object_property_find(OBJECT(pdev), "iommufd");
 
+     /* Return the system as if the device uses stage-2 only */
+-    if (s->nested && !sdev->s1_hwpt) {
++    if (s->nested && !sdev->s1_hwpt && has_iommufd) {
+         return &sdev->as_sysmem;
+     } else {
+         return &sdev->as;
+-----------------------------------------------------------------
+
+vfio-pci might not guarantee that it has an "iommufd" property so
+checking the property explicitly might be nicer.
+
+Thanks
+Nic
 
