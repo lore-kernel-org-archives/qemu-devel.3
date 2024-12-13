@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F7A2E77183
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:28:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F236E7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 19:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMBAV-00049I-2p; Fri, 13 Dec 2024 14:17:44 -0500
+	id 1tMBBI-00055l-C6; Fri, 13 Dec 2024 14:18:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7n-00080j-Im
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:59 -0500
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9H-0001oD-Rk
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:28 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMB7j-0007g6-9t
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:14:53 -0500
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-3eb8accbde3so1595513b6e.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:14:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMB9G-00085c-2x
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 14:16:27 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-385e1fcb0e1so1145456f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 11:16:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734117290; x=1734722090; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QHvouIEJ47Vdy/hcGDRoqTZ/qz1P8ZCCWYCVL1nEzxk=;
- b=KKMJ5qXoajupy8CVMY7nGRv0mCT3/E8iSaSzAN+kDNJEIIrLvAn7+G505GO/rTcqBK
- WP3gBkmGNQ25t7wLnas+f31RiaEn0M/7pMOjG+3tsY0+DNi30sMGQcn/ZQjw/dbseShy
- 3aCVl1+NYdeJx17nFccqkP50/iR4h0pJ3I2g8i4U0ik3A8UEdv1xViUD8eJX/a9qw+5H
- qIq+CrSCxWp6RHvBPsqDNn/arpQJ0cAgnV+C5F3K3DNaFZfU5N8mX+GMjdnprHplK+mx
- RptH7sQ0jbK32srjpWDbEO/URTZ3QZnaCIlnXIsOUgUf54wgj6ICud1Jyc1p1XWn299r
- qGsw==
+ d=linaro.org; s=google; t=1734117384; x=1734722184; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GwXJ20o47O0myZ807tC+6WLVB8CtFiG35efK/BxIlqk=;
+ b=EBBeUOlgWGoDM3J+0mG5QVCofEG1Jq1Pbp+JPiLesuKjAUWHO/+z7R3GbyjyJdOIX+
+ Kifa2plsh9LL8NPIO3+zBNCZxMqOhxOZvDVSTaeeZiRpn+X09JZv2Yj7fQwwtJmk5+ae
+ ZsdBTavKKhnaOXm1xF830S5i5bMx0w0bVZ+q2dI2fOrLIpDx8XeO9doMWfm1I/c+YmwD
+ eOyPl9quKm3wY+97WIuR2Fyo4HiZ22RjpQ3xW/F+cesYdk9XHUZLb7qXZe1eCEwixHz2
+ 7nQYZoeTf+uC5YhyRWjSR1YSDOQ8vUI7Im2vr/LcQHDNwTIHmN2mP5ecykUgiMEKNId8
+ yqew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734117290; x=1734722090;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=QHvouIEJ47Vdy/hcGDRoqTZ/qz1P8ZCCWYCVL1nEzxk=;
- b=v8VKKhuEzWVItV2QQqqaQSDpKDDM9UpGuotjvdkQvm7vB8mZl/bC0hFRmiUtnF/2gF
- 1SPuaH1Z0bVyFQWrlC46dDywfgM6ynMDsRS9C6oBY3x48N5VkocDbBfgFFgDRm9jP/WU
- AmYea1TI96+PAMqlA6tUy+C8RjGO+PTVDX9AcnkEBvsxZBDwGgUnt2Qnp6OEgocdT3Xy
- ghjFT4AwFY53ZkvQ9DCkgBL663YyWuvQ4qxYi7vGKShJ7k7uq60e224V0uVIGzyVZqaP
- Pfz4OgvLAilGjIkL0LF8BCAXbHCEbFXasbydGPOS9wEjmu9Yet/QHeDhY4HX8ehfFKCD
- j6Uw==
-X-Gm-Message-State: AOJu0YyYjNucah4UzRMAWSRNkw9IAT6gpmH2vMXv3zDBufILMGExR/cH
- 0lgtGGIioJneJCK48JEjQHqYiE9yIrumjEYS50VNSy1zYk8kPNP76Ul3tXGipVAAjMRNOZ1G/Nm
- wLpJN86Ca
-X-Gm-Gg: ASbGnctHZN09bmbT/ZtaC4upDA7lYN3RHvHZMjySsxha9X2gg40ehIYyxDpxeFErwLp
- J+7NSftRNgNZ2E7Eez9FOI++AXowclBuzrrgVN654OSIPOExqDDZejSUmyusLSrlhJk39C+pXXX
- ypIWnicanVfaNsC2Nv7tqXqXBpwPZgmN/uAkrwsbKt4M64hEesWd1uFx49PiaYJer5AdIrNUHZF
- v2eDfi7hgkNSfErM66yDRD6kDORwY4VCnTL+JY4nMyeoyWyr6LDNHuxbvwKu5/7
-X-Google-Smtp-Source: AGHT+IFjkDJt1gTcgumdap6JAylHQkV4ADKOzxNRVKRgQNfc4Dy+WvFPz8Dha7UY1S/WyMpS6eq0qA==
-X-Received: by 2002:a05:6808:250b:b0:3eb:8236:d17 with SMTP id
- 5614622812f47-3eb94ef2aa5mr4272725b6e.11.1734117290174; 
- Fri, 13 Dec 2024 11:14:50 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a497sm3545b6e.10.2024.12.13.11.14.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 11:14:49 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-Subject: [PATCH 62/71] hw/tricore: Constify all Property
-Date: Fri, 13 Dec 2024 13:07:36 -0600
-Message-ID: <20241213190750.2513964-67-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241213190750.2513964-1-richard.henderson@linaro.org>
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1734117384; x=1734722184;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GwXJ20o47O0myZ807tC+6WLVB8CtFiG35efK/BxIlqk=;
+ b=lbu/ioWGhJ2D5YVum04yakvM/dma9IIivqSCUDmk8KHpY7lg9WwTldeRJBbB8/5dyD
+ GHOasK8AdWwdNig+dTTOSgVOYEwnaYxWvNNw2EsSSJteLL8FWSC30HhEfoznrUfkSrjI
+ dw1udD/QRhpEk2VuJ3YfQFYvPZhnwqWDmgJj8PYXDPt/+esCvMBLugTmXLLEok4bYNLl
+ biKhxaU2mXhkbauiLoqnM1hCxkL5Im0eHCDrBxW1auc4xvKpctbtWozJoYeeCDmmiBun
+ 8o9a+hbAaofYJbv0rwdpzfBAPxGFuibeB6PjFnHBs/4NJiohIgbJ9LECtDMTripBBKj0
+ WjKQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVpY+3q9z9RzdI21ybgc8utulJdBd1hL42c4Q1Pd2VWQntmnQARvITz0g5or0YsEsQTKyFzwvVeZmdn@nongnu.org
+X-Gm-Message-State: AOJu0Yy565VDOrfF5JGALkJ/9vu75QgRhr/i1vGMrA1R8qkkPzvuObp3
+ dxbMLr7hNvrj1RnNjVPdgfVAjduqOJodVtYOjwukLW9qIRDEr4bcXG2I4nlD1nM=
+X-Gm-Gg: ASbGncsr8AZJoNsWwhHWFam9idfGG61PJuwhg+pYzlkSJfvOWJKCVtwpyNkrgeKdaRk
+ cHIKEDtoC0nk2Dn7dpQ+Rd9/oYSrKd7g6NqEYXuSj7qgwLHEt8n53rubyJZXj6r19NBVNlQ/Czg
+ 7WMPVDS+dNqVNrLl+r0dWBKQvyHFTLJnEVWH/P2ekqPMm8kcYFUArJq7vrz7j5dDwLad0hWSl2k
+ tv3mtbvM5yClQJv8D1zjextwoPKfD9ags+G/ZE+7A2JwsYKo/xod678k6rU7z3YIG2fFMPwYxYi
+ JWxOCz0nr9sgNQEstxDK
+X-Google-Smtp-Source: AGHT+IE9EaE9q+eOTRyVS+Ej/dZUuzr5P76BaFSUIVzLalx3/4oNdOLXQxFZM43dPSy1rgme1yYiGw==
+X-Received: by 2002:a5d:47c5:0:b0:385:fb66:faee with SMTP id
+ ffacd0b85a97d-38880ad0de1mr2688391f8f.18.1734117384499; 
+ Fri, 13 Dec 2024 11:16:24 -0800 (PST)
+Received: from [192.168.224.213] (127.47.205.77.rev.sfr.net. [77.205.47.127])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c8046ca6sm297070f8f.83.2024.12.13.11.16.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Dec 2024 11:16:23 -0800 (PST)
+Message-ID: <8011248c-8ed7-46ef-9d8d-78ae05dfc0b4@linaro.org>
+Date: Fri, 13 Dec 2024 20:16:21 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x234.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] eif: Use stateful qcrypto apis
+To: Dorjoy Chowdhury <dorjoychy111@gmail.com>, qemu-devel@nongnu.org
+Cc: graf@amazon.com, pbonzini@redhat.com, berrange@redhat.com
+References: <20241109123039.24180-1-dorjoychy111@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241109123039.24180-1-dorjoychy111@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,39 +100,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/tricore/tc27x_soc.c          | 2 +-
- hw/tricore/tricore_testdevice.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+On 9/11/24 13:30, Dorjoy Chowdhury wrote:
+> We were storing the pointers to buffers in a GList due to lack of
+> stateful crypto apis and instead doing the final hash computation at
+> the end after we had all the necessary buffers. Now that we have the
+> stateful qcrypto apis available, we can instead update the hashes
+> inline in the read_eif_* functions which makes the code much simpler.
+> 
+> Signed-off-by: Dorjoy Chowdhury <dorjoychy111@gmail.com>
+> ---
+>   hw/core/eif.c                   | 202 ++++++++++++--------------------
+>   hw/i386/nitro_enclave.c         |  12 +-
+>   include/hw/i386/nitro_enclave.h |  16 +--
+>   3 files changed, 91 insertions(+), 139 deletions(-)
 
-diff --git a/hw/tricore/tc27x_soc.c b/hw/tricore/tc27x_soc.c
-index ecd92717b5..6f50cb5116 100644
---- a/hw/tricore/tc27x_soc.c
-+++ b/hw/tricore/tc27x_soc.c
-@@ -201,7 +201,7 @@ static void tc27x_soc_init(Object *obj)
-     object_initialize_child(obj, "tc27x", &s->cpu, sc->cpu_type);
- }
- 
--static Property tc27x_soc_properties[] = {
-+static const Property tc27x_soc_properties[] = {
-     DEFINE_PROP_END_OF_LIST(),
- };
- 
-diff --git a/hw/tricore/tricore_testdevice.c b/hw/tricore/tricore_testdevice.c
-index ae95c49565..dbdcc9704e 100644
---- a/hw/tricore/tricore_testdevice.c
-+++ b/hw/tricore/tricore_testdevice.c
-@@ -58,7 +58,7 @@ static void tricore_testdevice_init(Object *obj)
-                           "tricore_testdevice", 0x4);
- }
- 
--static Property tricore_testdevice_properties[] = {
-+static const Property tricore_testdevice_properties[] = {
-     DEFINE_PROP_END_OF_LIST()
- };
- 
--- 
-2.43.0
-
+Queued, thanks!
 
