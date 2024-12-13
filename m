@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3092E77183
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:46:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DEBFE77180
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 17:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tM9aX-0001As-9v; Fri, 13 Dec 2024 12:36:29 -0500
+	id 1tM9YX-0002rb-Gl; Fri, 13 Dec 2024 12:34:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9YG-0000vi-M9
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:08 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ id 1tM9Xf-0007eb-BB
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:31 -0500
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tM9YA-0001nD-En
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:34:08 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3862d16b4f5so1352288f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:34:00 -0800 (PST)
+ id 1tM9Xc-0001eI-DD
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 12:33:31 -0500
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-385eed29d17so1082593f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 09:33:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734111240; x=1734716040; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734111205; x=1734716005; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Y+wOBXQ4nR4PSgQu/QW17WIQZdSFhMR8jDryGS5FwMg=;
- b=rT53OYUpZdYsqWrRuyJPm1qgaFncWevaxpAqi1494FH+oRTEaHhmeaJ8EUfPKqgxNQ
- /mQSgdsmRiUf0Y76/pw5dvR3WYWVJr+qU0EILTIQPoYuX5UJmgtOvABRCMAdGTVPjf4P
- ykYkvn0Q6EZPSPIiXuS04Ot4/BRh/xNCpRMMzJzQJUOmk3AUAzqUlrFeSUhPW1p78WJk
- TGaTqLpXfQaMwq5gCMNey/AjjSA1MFV22wXz6JALjN/0h/2ctO9lGGwzyx/GTsg3SZdo
- RM4LUDZjVC+XUb0sjvz/HvlyGfZ2fgriBvLF+NVjz0nKGyTJAWd5wquAvv5dqADo0JZx
- C+og==
+ :reply-to; bh=Q5D537/TkN0iatJV/r504lV14FuBKX7MulHaFGn4dqY=;
+ b=DPJZcIWnDNpDp6AiFbK3FPYw3jW+HzIV2EmpBI4s3UqjQlD6jTvxC88eGfg0ErpiYY
+ Idldnq8yFlezonNil+Wu6BgWsQ1NFWviIxPNor+/5+rrt2Ei9d8tJjmPTqyUxBGfeI2t
+ sAW+FbozffHuBykl9otMtlXQ+zHeZHGkPK/OsVA4AyqsfN7zTo8VNTW3QR3wDAwAsmNH
+ ezTu/5esqXosDoE0RQuQxGysW9MDHmnSjdGWMM+zQP4+kRAeX4FCgrFloFCtWlomj5FS
+ v/fJqpmcP6GHb+7HsJv8h2Fymu3aeBFM/rhzUpb7nuTo/KRW6rCne56q9tydEDcNikl9
+ mS8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734111240; x=1734716040;
+ d=1e100.net; s=20230601; t=1734111205; x=1734716005;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Y+wOBXQ4nR4PSgQu/QW17WIQZdSFhMR8jDryGS5FwMg=;
- b=w0lPPFzibLjSW6Xo319nYmMxqC07m5u2THxD4Xbtl8N1QB/F1cF2rfwJWj4TJ8Ya+X
- tW8q0n+2wVgHPfCjVIoXODJkTzyuuDs7PraVI5UPywTxIRDWlnrLFXoJOBHU5MP/CuqH
- 3oG3AObe2CHj8MKLFldyJg9zI53Z270RL6DQqqHv+WVaf1YZPcV2BlHxUrHGcBJMZIRr
- OLMAFC2arbm+vu5WIZPlq8IBRi1F9wgqKQy9ApHQPN0WZDVtSQKDgno5L2xhhY3wCTbb
- nEnPR1sf+pdy3HozI+GwicT9zZ6mAkCGzwVP0zEqoDsximsZk9bOF/h3el4HLKIPhmh1
- fqpg==
-X-Gm-Message-State: AOJu0YwgFFXvGD3V0d25jj+ouDM7sWhG4eTLrNuxb3VX2QFZtsDZRclF
- W1Or6+msaSMlO/RCGCrdl2+zRVk7IevltTFY1cch/v0TQTD6arxhpjBkx1ah1v8xEoa+GfaT89V
- f
-X-Gm-Gg: ASbGnctgCqzU1sUjUpo4DBPugJCNAqYp9dE5pT3i0guDAYeSJAXCZdpmZRvrOw6mxVP
- 3fvB9GjaMB4dZaI8Q3pd28RnkpwbLcyfFoBVZ2JibStizdrvsiwC94Wwem1TZHENa7uwDxvISpl
- WADkaG8yBOEjvPX8Hw2DLlmRyWLRuJMcDM1w03y4Brrf6mXbsCl3f8HrlA+fPQ1yFk7wYVBFR6H
- yAcQIw7L/o27kVaqH/1XHoWbAPr6X4iajar8dHErA239dq+wy+fObX2ELUTPQ==
-X-Google-Smtp-Source: AGHT+IH7gE5whaLd4EQJhnA/45/5fd1DiZYRHadV+nZg0EkttDoVU1iVwNkiyU9GCSK9h/4muCeJVA==
-X-Received: by 2002:a05:6000:70e:b0:385:e8e7:d09a with SMTP id
- ffacd0b85a97d-388c3645ec2mr2888973f8f.2.1734111239685; 
- Fri, 13 Dec 2024 09:33:59 -0800 (PST)
+ bh=Q5D537/TkN0iatJV/r504lV14FuBKX7MulHaFGn4dqY=;
+ b=py2+NxFFefRFRiBO85uRFfLmf9M/OfBrvGm7+T7E3Orhg9Wv8nnuYFVfZQLLoJdzDN
+ fQ7R9oKZR/juoSln3N2rsdggB8uD65sHMaiLHSnKpfwa4PgZXeKEq1sNX/t9fbAwQpTP
+ hoiridBOPPYSvfMqggp2uQFeGGJox5d8/tP9wFmZkOisCYQRxhnH8IY5QoQny/CEdprY
+ IXy+TbzHcNLvKucipGBxrbfZQhpdWgIPGA+XJraqTvj0FpJqQk47zaUCTl3YOKs88qVj
+ Nj71E6XNBYtLD+QPFzekNYgcDJCOQ+vKtzV04MdpnKqrCykIPq/Key2rVTBO6Rm4PFO5
+ G2dA==
+X-Gm-Message-State: AOJu0YzoxvSkT/JSifFpPo/6PRt2qMat1li/CG4Imf12uwO8emFmwaWU
+ Yy34aU44MihWVDjvvhWychTCg4YPnbJ38dQLbkvV4H+GMZ5EioXal98gZKP9nFxUgByNMTbACS9
+ X
+X-Gm-Gg: ASbGnctPc/CORlszfzwteYr2PgU4MT4dohaFGkKkROse+rk9hpCXKq5CIzvuvDj6eoq
+ Mj0bd2/lsgJarZkf0lg34++5e1UEh4DsQjuc08CEo1/DSGtm1SeYDLUB3MxAUJq1CW3S6H+6K4b
+ ocrhAM0K1LgJkSsMCVNWLZaQXssIHQcJtl1ShWyGveaMVHkEAox9Lz+rAP4Xn2DbWrMAsOf6zFY
+ 546AThPsmi+w1E2oxKb7C47HyezkdAB/hTfXcj5HbAZnalD1D6jfMNArvV6gQ==
+X-Google-Smtp-Source: AGHT+IEz2NrjCOtsvHl74p7sQclufAC+3lt/20rfuHI9VSxnscDuV0H79FkARtNo7Ya99H1hLvBiIg==
+X-Received: by 2002:a05:6000:4b0b:b0:386:32ca:1672 with SMTP id
+ ffacd0b85a97d-38880ac218bmr3080089f8f.4.1734111205289; 
+ Fri, 13 Dec 2024 09:33:25 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.58
+ ffacd0b85a97d-388c80162ddsm87026f8f.37.2024.12.13.09.33.24
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 09:33:59 -0800 (PST)
+ Fri, 13 Dec 2024 09:33:24 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 83/85] target/arm: Move small helper functions to tlb-insns.c
-Date: Fri, 13 Dec 2024 17:32:27 +0000
-Message-Id: <20241213173229.3308926-84-peter.maydell@linaro.org>
+Subject: [PULL 50/85] target/arm: Convert FCVTN, BFCVTN to decodetree
+Date: Fri, 13 Dec 2024 17:31:54 +0000
+Message-Id: <20241213173229.3308926-51-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241213173229.3308926-1-peter.maydell@linaro.org>
 References: <20241213173229.3308926-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,580 +97,172 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The remaining functions that we temporarily made global are now
-used only from callsits in tlb-insns.c; move them across and
-make them file-local again.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241211163036.2297116-51-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241210160452.2427965-9-peter.maydell@linaro.org
 ---
- target/arm/cpregs.h        |  34 ------
- target/arm/helper.c        | 220 -------------------------------------
- target/arm/tcg/tlb-insns.c | 220 +++++++++++++++++++++++++++++++++++++
- 3 files changed, 220 insertions(+), 254 deletions(-)
+ target/arm/tcg/a64.decode      |  5 ++
+ target/arm/tcg/translate-a64.c | 89 ++++++++++++++++++----------------
+ 2 files changed, 52 insertions(+), 42 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index fe838bcfd97..cc7c54378f4 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -1134,38 +1134,4 @@ static inline bool arm_cpreg_traps_in_nv(const ARMCPRegInfo *ri)
-     return ri->opc1 == 4 || ri->opc1 == 5;
- }
+diff --git a/target/arm/tcg/a64.decode b/target/arm/tcg/a64.decode
+index 295329448f1..456912cd7ca 100644
+--- a/target/arm/tcg/a64.decode
++++ b/target/arm/tcg/a64.decode
+@@ -21,6 +21,7 @@
  
--/*
-- * Temporary declarations of functions until the move to tlb_insn_helper.c
-- * is complete and we can make the functions static again
-- */
--CPAccessResult access_ttlb(CPUARMState *env, const ARMCPRegInfo *ri,
--                           bool isread);
--CPAccessResult access_ttlbis(CPUARMState *env, const ARMCPRegInfo *ri,
--                             bool isread);
--CPAccessResult access_ttlbos(CPUARMState *env, const ARMCPRegInfo *ri,
--                             bool isread);
--bool tlb_force_broadcast(CPUARMState *env);
--int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
--                       uint64_t addr);
--int vae1_tlbbits(CPUARMState *env, uint64_t addr);
--int vae2_tlbbits(CPUARMState *env, uint64_t addr);
--int vae1_tlbmask(CPUARMState *env);
--int vae2_tlbmask(CPUARMState *env);
--int ipas2e1_tlbmask(CPUARMState *env, int64_t value);
--int e2_tlbmask(CPUARMState *env);
--void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                               uint64_t value);
--void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value);
--void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                            uint64_t value);
--void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value);
--void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                            uint64_t value);
--void tlbi_aa64_vae3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                            uint64_t value);
--void tlbi_aa64_alle3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value);
--
- #endif /* TARGET_ARM_CPREGS_H */
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 3f7d56e809f..cd9f8650316 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -365,40 +365,6 @@ static CPAccessResult access_tacr(CPUARMState *env, const ARMCPRegInfo *ri,
-     return CP_ACCESS_OK;
- }
+ %rd             0:5
+ %esz_sd         22:1 !function=plus_2
++%esz_hs         22:1 !function=plus_1
+ %esz_hsd        22:2 !function=xor_2
+ %hl             11:1 21:1
+ %hlm            11:1 20:2
+@@ -74,6 +75,7 @@
+ @qrr_b          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=0
+ @qrr_h          . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=1
+ @qrr_bh         . q:1 ...... . esz:1 ...... ...... rn:5 rd:5  &qrr_e
++@qrr_hs         . q:1 ...... .. ...... ...... rn:5 rd:5  &qrr_e esz=%esz_hs
+ @qrr_e          . q:1 ...... esz:2 ...... ...... rn:5 rd:5  &qrr_e
  
--/* Check for traps from EL1 due to HCR_EL2.TTLB. */
--CPAccessResult access_ttlb(CPUARMState *env, const ARMCPRegInfo *ri,
--                           bool isread)
--{
--    if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TTLB)) {
--        return CP_ACCESS_TRAP_EL2;
--    }
--    return CP_ACCESS_OK;
--}
--
--/* Check for traps from EL1 due to HCR_EL2.TTLB or TTLBIS. */
--CPAccessResult access_ttlbis(CPUARMState *env, const ARMCPRegInfo *ri,
--                             bool isread)
--{
--    if (arm_current_el(env) == 1 &&
--        (arm_hcr_el2_eff(env) & (HCR_TTLB | HCR_TTLBIS))) {
--        return CP_ACCESS_TRAP_EL2;
--    }
--    return CP_ACCESS_OK;
--}
--
--#ifdef TARGET_AARCH64
--/* Check for traps from EL1 due to HCR_EL2.TTLB or TTLBOS. */
--CPAccessResult access_ttlbos(CPUARMState *env, const ARMCPRegInfo *ri,
--                             bool isread)
--{
--    if (arm_current_el(env) == 1 &&
--        (arm_hcr_el2_eff(env) & (HCR_TTLB | HCR_TTLBOS))) {
--        return CP_ACCESS_TRAP_EL2;
--    }
--    return CP_ACCESS_OK;
--}
--#endif
--
- static void dacr_write(CPUARMState *env, const ARMCPRegInfo *ri, uint64_t value)
- {
-     ARMCPU *cpu = env_archcpu(env);
-@@ -455,16 +421,6 @@ int alle1_tlbmask(CPUARMState *env)
-             ARMMMUIdxBit_Stage2_S);
- }
+ @qrrr_b         . q:1 ...... ... rm:5 ...... rn:5 rd:5  &qrrr_e esz=0
+@@ -1676,3 +1678,6 @@ XTN             0.00 1110 ..1 00001 00101 0 ..... .....     @qrr_e
+ SQXTUN_v        0.10 1110 ..1 00001 00101 0 ..... .....     @qrr_e
+ SQXTN_v         0.00 1110 ..1 00001 01001 0 ..... .....     @qrr_e
+ UQXTN_v         0.10 1110 ..1 00001 01001 0 ..... .....     @qrr_e
++
++FCVTN_v         0.00 1110 0.1 00001 01101 0 ..... .....     @qrr_hs
++BFCVTN_v        0.00 1110 101 00001 01101 0 ..... .....     @qrr_h
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index 7b76945b0ac..d4d19c9caaf 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -9051,6 +9051,49 @@ TRANS(SQXTUN_v, do_2misc_narrow_vector, a, f_scalar_sqxtun)
+ TRANS(SQXTN_v, do_2misc_narrow_vector, a, f_scalar_sqxtn)
+ TRANS(UQXTN_v, do_2misc_narrow_vector, a, f_scalar_uqxtn)
  
--/*
-- * Non-IS variants of TLB operations are upgraded to
-- * IS versions if we are at EL1 and HCR_EL2.FB is effectively set to
-- * force broadcast of these operations.
-- */
--bool tlb_force_broadcast(CPUARMState *env)
--{
--    return arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_FB);
--}
--
- static const ARMCPRegInfo cp_reginfo[] = {
-     /*
-      * Define the secure and non-secure FCSE identifier CP registers
-@@ -4680,182 +4636,6 @@ static CPAccessResult access_tocu(CPUARMState *env, const ARMCPRegInfo *ri,
-     return do_cacheop_pou_access(env, HCR_TOCU | HCR_TPU);
- }
++static void gen_fcvtn_hs(TCGv_i64 d, TCGv_i64 n)
++{
++    TCGv_i32 tcg_lo = tcg_temp_new_i32();
++    TCGv_i32 tcg_hi = tcg_temp_new_i32();
++    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
++    TCGv_i32 ahp = get_ahp_flag();
++
++    tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, n);
++    gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
++    gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
++    tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
++    tcg_gen_extu_i32_i64(d, tcg_lo);
++}
++
++static void gen_fcvtn_sd(TCGv_i64 d, TCGv_i64 n)
++{
++    TCGv_i32 tmp = tcg_temp_new_i32();
++    gen_helper_vfp_fcvtsd(tmp, n, tcg_env);
++    tcg_gen_extu_i32_i64(d, tmp);
++}
++
++static ArithOneOp * const f_vector_fcvtn[] = {
++    NULL,
++    gen_fcvtn_hs,
++    gen_fcvtn_sd,
++};
++TRANS(FCVTN_v, do_2misc_narrow_vector, a, f_vector_fcvtn)
++
++static void gen_bfcvtn_hs(TCGv_i64 d, TCGv_i64 n)
++{
++    TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
++    TCGv_i32 tmp = tcg_temp_new_i32();
++    gen_helper_bfcvt_pair(tmp, n, fpst);
++    tcg_gen_extu_i32_i64(d, tmp);
++}
++
++static ArithOneOp * const f_vector_bfcvtn[] = {
++    NULL,
++    gen_bfcvtn_hs,
++    NULL,
++};
++TRANS_FEAT(BFCVTN_v, aa64_bf16, do_2misc_narrow_vector, a, f_vector_bfcvtn)
++
+ /* Common vector code for handling integer to FP conversion */
+ static void handle_simd_intfp_conv(DisasContext *s, int rd, int rn,
+                                    int elements, int is_signed,
+@@ -9633,33 +9676,6 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
+         tcg_res[pass] = tcg_temp_new_i64();
  
--/*
-- * See: D4.7.2 TLB maintenance requirements and the TLB maintenance instructions
-- * Page D4-1736 (DDI0487A.b)
-- */
+         switch (opcode) {
+-        case 0x16: /* FCVTN, FCVTN2 */
+-            /* 32 bit to 16 bit or 64 bit to 32 bit float conversion */
+-            if (size == 2) {
+-                TCGv_i32 tmp = tcg_temp_new_i32();
+-                gen_helper_vfp_fcvtsd(tmp, tcg_op, tcg_env);
+-                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
+-            } else {
+-                TCGv_i32 tcg_lo = tcg_temp_new_i32();
+-                TCGv_i32 tcg_hi = tcg_temp_new_i32();
+-                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
+-                TCGv_i32 ahp = get_ahp_flag();
 -
--int vae1_tlbmask(CPUARMState *env)
--{
--    uint64_t hcr = arm_hcr_el2_eff(env);
--    uint16_t mask;
--
--    assert(arm_feature(env, ARM_FEATURE_AARCH64));
--
--    if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
--        mask = ARMMMUIdxBit_E20_2 |
--               ARMMMUIdxBit_E20_2_PAN |
--               ARMMMUIdxBit_E20_0;
--    } else {
--        /* This is AArch64 only, so we don't need to touch the EL30_x TLBs */
--        mask = ARMMMUIdxBit_E10_1 |
--               ARMMMUIdxBit_E10_1_PAN |
--               ARMMMUIdxBit_E10_0;
--    }
--    return mask;
--}
--
--int vae2_tlbmask(CPUARMState *env)
--{
--    uint64_t hcr = arm_hcr_el2_eff(env);
--    uint16_t mask;
--
--    if (hcr & HCR_E2H) {
--        mask = ARMMMUIdxBit_E20_2 |
--               ARMMMUIdxBit_E20_2_PAN |
--               ARMMMUIdxBit_E20_0;
--    } else {
--        mask = ARMMMUIdxBit_E2;
--    }
--    return mask;
--}
--
--/* Return 56 if TBI is enabled, 64 otherwise. */
--int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
--                       uint64_t addr)
--{
--    uint64_t tcr = regime_tcr(env, mmu_idx);
--    int tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
--    int select = extract64(addr, 55, 1);
--
--    return (tbi >> select) & 1 ? 56 : 64;
--}
--
--int vae1_tlbbits(CPUARMState *env, uint64_t addr)
--{
--    uint64_t hcr = arm_hcr_el2_eff(env);
--    ARMMMUIdx mmu_idx;
--
--    assert(arm_feature(env, ARM_FEATURE_AARCH64));
--
--    /* Only the regime of the mmu_idx below is significant. */
--    if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
--        mmu_idx = ARMMMUIdx_E20_0;
--    } else {
--        mmu_idx = ARMMMUIdx_E10_0;
--    }
--
--    return tlbbits_for_regime(env, mmu_idx, addr);
--}
--
--int vae2_tlbbits(CPUARMState *env, uint64_t addr)
--{
--    uint64_t hcr = arm_hcr_el2_eff(env);
--    ARMMMUIdx mmu_idx;
--
--    /*
--     * Only the regime of the mmu_idx below is significant.
--     * Regime EL2&0 has two ranges with separate TBI configuration, while EL2
--     * only has one.
--     */
--    if (hcr & HCR_E2H) {
--        mmu_idx = ARMMMUIdx_E20_2;
--    } else {
--        mmu_idx = ARMMMUIdx_E2;
--    }
--
--    return tlbbits_for_regime(env, mmu_idx, addr);
--}
--
--void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                               uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = vae1_tlbmask(env);
--
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
--}
--
--int e2_tlbmask(CPUARMState *env)
--{
--    return (ARMMMUIdxBit_E20_0 |
--            ARMMMUIdxBit_E20_2 |
--            ARMMMUIdxBit_E20_2_PAN |
--            ARMMMUIdxBit_E2);
--}
--
--void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = alle1_tlbmask(env);
--
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
--}
--
--void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = e2_tlbmask(env);
--
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
--}
--
--void tlbi_aa64_alle3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                             uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--
--    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E3);
--}
--
--void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                            uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = vae1_tlbmask(env);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--    int bits = vae1_tlbbits(env, pageaddr);
--
--    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
--}
--
--void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                                   uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    int mask = vae2_tlbmask(env);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--    int bits = vae2_tlbbits(env, pageaddr);
--
--    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
--}
--
--void tlbi_aa64_vae3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
--                            uint64_t value)
--{
--    CPUState *cs = env_cpu(env);
--    uint64_t pageaddr = sextract64(value << 12, 0, 56);
--    int bits = tlbbits_for_regime(env, ARMMMUIdx_E3, pageaddr);
--
--    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr,
--                                                  ARMMMUIdxBit_E3, bits);
--}
--
--int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
--{
--    /*
--     * The MSB of value is the NS field, which only applies if SEL2
--     * is implemented and SCR_EL3.NS is not set (i.e. in secure mode).
--     */
--    return (value >= 0
--            && cpu_isar_feature(aa64_sel2, env_archcpu(env))
--            && arm_is_secure_below_el3(env)
--            ? ARMMMUIdxBit_Stage2_S
--            : ARMMMUIdxBit_Stage2);
--}
--
- static CPAccessResult aa64_zva_access(CPUARMState *env, const ARMCPRegInfo *ri,
-                                       bool isread)
- {
-diff --git a/target/arm/tcg/tlb-insns.c b/target/arm/tcg/tlb-insns.c
-index 45ebfc512f9..51b4756e31e 100644
---- a/target/arm/tcg/tlb-insns.c
-+++ b/target/arm/tcg/tlb-insns.c
-@@ -13,6 +13,40 @@
- #include "cpu-features.h"
- #include "cpregs.h"
+-                tcg_gen_extr_i64_i32(tcg_lo, tcg_hi, tcg_op);
+-                gen_helper_vfp_fcvt_f32_to_f16(tcg_lo, tcg_lo, fpst, ahp);
+-                gen_helper_vfp_fcvt_f32_to_f16(tcg_hi, tcg_hi, fpst, ahp);
+-                tcg_gen_deposit_i32(tcg_lo, tcg_lo, tcg_hi, 16, 16);
+-                tcg_gen_extu_i32_i64(tcg_res[pass], tcg_lo);
+-            }
+-            break;
+-        case 0x36: /* BFCVTN, BFCVTN2 */
+-            {
+-                TCGv_ptr fpst = fpstatus_ptr(FPST_FPCR);
+-                TCGv_i32 tmp = tcg_temp_new_i32();
+-                gen_helper_bfcvt_pair(tmp, tcg_op, fpst);
+-                tcg_gen_extu_i32_i64(tcg_res[pass], tmp);
+-            }
+-            break;
+         case 0x56:  /* FCVTXN, FCVTXN2 */
+             {
+                 /*
+@@ -9675,6 +9691,8 @@ static void handle_2misc_narrow(DisasContext *s, bool scalar,
+         default:
+         case 0x12: /* XTN, SQXTUN */
+         case 0x14: /* SQXTN, UQXTN */
++        case 0x16: /* FCVTN, FCVTN2 */
++        case 0x36: /* BFCVTN, BFCVTN2 */
+             g_assert_not_reached();
+         }
  
-+/* Check for traps from EL1 due to HCR_EL2.TTLB. */
-+static CPAccessResult access_ttlb(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                  bool isread)
-+{
-+    if (arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_TTLB)) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+/* Check for traps from EL1 due to HCR_EL2.TTLB or TTLBIS. */
-+static CPAccessResult access_ttlbis(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    bool isread)
-+{
-+    if (arm_current_el(env) == 1 &&
-+        (arm_hcr_el2_eff(env) & (HCR_TTLB | HCR_TTLBIS))) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+
-+#ifdef TARGET_AARCH64
-+/* Check for traps from EL1 due to HCR_EL2.TTLB or TTLBOS. */
-+static CPAccessResult access_ttlbos(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    bool isread)
-+{
-+    if (arm_current_el(env) == 1 &&
-+        (arm_hcr_el2_eff(env) & (HCR_TTLB | HCR_TTLBOS))) {
-+        return CP_ACCESS_TRAP_EL2;
-+    }
-+    return CP_ACCESS_OK;
-+}
-+#endif
-+
- /* IS variants of TLB operations must affect all cores */
- static void tlbiall_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                              uint64_t value)
-@@ -46,6 +80,16 @@ static void tlbimvaa_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_all_cpus_synced(cs, value & TARGET_PAGE_MASK);
- }
- 
-+/*
-+ * Non-IS variants of TLB operations are upgraded to
-+ * IS versions if we are at EL1 and HCR_EL2.FB is effectively set to
-+ * force broadcast of these operations.
-+ */
-+static bool tlb_force_broadcast(CPUARMState *env)
-+{
-+    return arm_current_el(env) == 1 && (arm_hcr_el2_eff(env) & HCR_FB);
-+}
-+
- static void tlbiall_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                           uint64_t value)
- {
-@@ -170,6 +214,102 @@ static void tlbiall_hyp_is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E2);
- }
- 
-+/*
-+ * See: D4.7.2 TLB maintenance requirements and the TLB maintenance instructions
-+ * Page D4-1736 (DDI0487A.b)
-+ */
-+
-+static int vae1_tlbmask(CPUARMState *env)
-+{
-+    uint64_t hcr = arm_hcr_el2_eff(env);
-+    uint16_t mask;
-+
-+    assert(arm_feature(env, ARM_FEATURE_AARCH64));
-+
-+    if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-+        mask = ARMMMUIdxBit_E20_2 |
-+               ARMMMUIdxBit_E20_2_PAN |
-+               ARMMMUIdxBit_E20_0;
-+    } else {
-+        /* This is AArch64 only, so we don't need to touch the EL30_x TLBs */
-+        mask = ARMMMUIdxBit_E10_1 |
-+               ARMMMUIdxBit_E10_1_PAN |
-+               ARMMMUIdxBit_E10_0;
-+    }
-+    return mask;
-+}
-+
-+static int vae2_tlbmask(CPUARMState *env)
-+{
-+    uint64_t hcr = arm_hcr_el2_eff(env);
-+    uint16_t mask;
-+
-+    if (hcr & HCR_E2H) {
-+        mask = ARMMMUIdxBit_E20_2 |
-+               ARMMMUIdxBit_E20_2_PAN |
-+               ARMMMUIdxBit_E20_0;
-+    } else {
-+        mask = ARMMMUIdxBit_E2;
-+    }
-+    return mask;
-+}
-+
-+/* Return 56 if TBI is enabled, 64 otherwise. */
-+static int tlbbits_for_regime(CPUARMState *env, ARMMMUIdx mmu_idx,
-+                       uint64_t addr)
-+{
-+    uint64_t tcr = regime_tcr(env, mmu_idx);
-+    int tbi = aa64_va_parameter_tbi(tcr, mmu_idx);
-+    int select = extract64(addr, 55, 1);
-+
-+    return (tbi >> select) & 1 ? 56 : 64;
-+}
-+
-+static int vae1_tlbbits(CPUARMState *env, uint64_t addr)
-+{
-+    uint64_t hcr = arm_hcr_el2_eff(env);
-+    ARMMMUIdx mmu_idx;
-+
-+    assert(arm_feature(env, ARM_FEATURE_AARCH64));
-+
-+    /* Only the regime of the mmu_idx below is significant. */
-+    if ((hcr & (HCR_E2H | HCR_TGE)) == (HCR_E2H | HCR_TGE)) {
-+        mmu_idx = ARMMMUIdx_E20_0;
-+    } else {
-+        mmu_idx = ARMMMUIdx_E10_0;
-+    }
-+
-+    return tlbbits_for_regime(env, mmu_idx, addr);
-+}
-+
-+static int vae2_tlbbits(CPUARMState *env, uint64_t addr)
-+{
-+    uint64_t hcr = arm_hcr_el2_eff(env);
-+    ARMMMUIdx mmu_idx;
-+
-+    /*
-+     * Only the regime of the mmu_idx below is significant.
-+     * Regime EL2&0 has two ranges with separate TBI configuration, while EL2
-+     * only has one.
-+     */
-+    if (hcr & HCR_E2H) {
-+        mmu_idx = ARMMMUIdx_E20_2;
-+    } else {
-+        mmu_idx = ARMMMUIdx_E2;
-+    }
-+
-+    return tlbbits_for_regime(env, mmu_idx, addr);
-+}
-+
-+static void tlbi_aa64_vmalle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                      uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae1_tlbmask(env);
-+
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
-+}
-+
- static void tlbi_aa64_vmalle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                     uint64_t value)
- {
-@@ -183,6 +323,14 @@ static void tlbi_aa64_vmalle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     }
- }
- 
-+static int e2_tlbmask(CPUARMState *env)
-+{
-+    return (ARMMMUIdxBit_E20_0 |
-+            ARMMMUIdxBit_E20_2 |
-+            ARMMMUIdxBit_E20_2_PAN |
-+            ARMMMUIdxBit_E2);
-+}
-+
- static void tlbi_aa64_alle1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                   uint64_t value)
- {
-@@ -210,6 +358,32 @@ static void tlbi_aa64_alle3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_by_mmuidx(cs, ARMMMUIdxBit_E3);
- }
- 
-+static void tlbi_aa64_alle1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = alle1_tlbmask(env);
-+
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
-+}
-+
-+static void tlbi_aa64_alle2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = e2_tlbmask(env);
-+
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, mask);
-+}
-+
-+static void tlbi_aa64_alle3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                    uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+
-+    tlb_flush_by_mmuidx_all_cpus_synced(cs, ARMMMUIdxBit_E3);
-+}
-+
- static void tlbi_aa64_vae2_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                  uint64_t value)
- {
-@@ -241,6 +415,17 @@ static void tlbi_aa64_vae3_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     tlb_flush_page_by_mmuidx(cs, pageaddr, ARMMMUIdxBit_E3);
- }
- 
-+static void tlbi_aa64_vae1is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                   uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae1_tlbmask(env);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+    int bits = vae1_tlbbits(env, pageaddr);
-+
-+    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
-+}
-+
- static void tlbi_aa64_vae1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                  uint64_t value)
- {
-@@ -262,6 +447,41 @@ static void tlbi_aa64_vae1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     }
- }
- 
-+static void tlbi_aa64_vae2is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                   uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    int mask = vae2_tlbmask(env);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+    int bits = vae2_tlbbits(env, pageaddr);
-+
-+    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr, mask, bits);
-+}
-+
-+static void tlbi_aa64_vae3is_write(CPUARMState *env, const ARMCPRegInfo *ri,
-+                                   uint64_t value)
-+{
-+    CPUState *cs = env_cpu(env);
-+    uint64_t pageaddr = sextract64(value << 12, 0, 56);
-+    int bits = tlbbits_for_regime(env, ARMMMUIdx_E3, pageaddr);
-+
-+    tlb_flush_page_bits_by_mmuidx_all_cpus_synced(cs, pageaddr,
-+                                                  ARMMMUIdxBit_E3, bits);
-+}
-+
-+static int ipas2e1_tlbmask(CPUARMState *env, int64_t value)
-+{
-+    /*
-+     * The MSB of value is the NS field, which only applies if SEL2
-+     * is implemented and SCR_EL3.NS is not set (i.e. in secure mode).
-+     */
-+    return (value >= 0
-+            && cpu_isar_feature(aa64_sel2, env_archcpu(env))
-+            && arm_is_secure_below_el3(env)
-+            ? ARMMMUIdxBit_Stage2_S
-+            : ARMMMUIdxBit_Stage2);
-+}
-+
- static void tlbi_aa64_ipas2e1_write(CPUARMState *env, const ARMCPRegInfo *ri,
-                                     uint64_t value)
- {
+@@ -10088,21 +10106,6 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+                 unallocated_encoding(s);
+                 return;
+             }
+-            /* fall through */
+-        case 0x16: /* FCVTN, FCVTN2 */
+-            /* handle_2misc_narrow does a 2*size -> size operation, but these
+-             * instructions encode the source size rather than dest size.
+-             */
+-            if (!fp_access_check(s)) {
+-                return;
+-            }
+-            handle_2misc_narrow(s, false, opcode, 0, is_q, size - 1, rn, rd);
+-            return;
+-        case 0x36: /* BFCVTN, BFCVTN2 */
+-            if (!dc_isar_feature(aa64_bf16, s) || size != 2) {
+-                unallocated_encoding(s);
+-                return;
+-            }
+             if (!fp_access_check(s)) {
+                 return;
+             }
+@@ -10155,6 +10158,8 @@ static void disas_simd_two_reg_misc(DisasContext *s, uint32_t insn)
+             }
+             break;
+         default:
++        case 0x16: /* FCVTN, FCVTN2 */
++        case 0x36: /* BFCVTN, BFCVTN2 */
+             unallocated_encoding(s);
+             return;
+         }
 -- 
 2.34.1
 
