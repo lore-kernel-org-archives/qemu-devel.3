@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05272E77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5581BE7717F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Dec 2024 23:35:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMF8N-000324-74; Fri, 13 Dec 2024 18:31:47 -0500
+	id 1tMF9W-0004mG-QL; Fri, 13 Dec 2024 18:32:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8C-0002kP-6y
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:40 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8l-0003fI-TE
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:17 -0500
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8A-000317-Fm
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:31:35 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so1249118f8f.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:31:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMF8g-000358-Tv
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 18:32:09 -0500
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-385e27c75f4so1763665f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 15:32:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734132692; x=1734737492; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734132725; x=1734737525; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CzHeNsZnxQi+It9LDPqSmZfWCtnOxBbi6olOAYenQV4=;
- b=QK8WgHlZQmTjj2Tq6aYEGFk9tNsRTXlV4L3CMSBqr6uZeRqQ7zsYnm5oFRJVw+JVZ4
- HSGcbW4NImBXnc1JxBFIoe20OOunClS0qW7SUcxrXX8XC7uqPLa3kDYa6H+5+xKz6iW3
- OduAbKrNP0T2h4WI6F9kv/hWb+Bu7iwoGCbeOhX9xEABZnLyyiOlCdenwbWxyQAyl9zU
- vUUXSSuRtsPRanA6Q+iWgBGL8imyFnB+as4snwHAdTX8fPHzIcOU9O6WwA3qGa0S6FyO
- dxneX2syAD/DkiGVMkDllnC/3pYzkfYAJ/a4jSX5/DFDp3SvlQC2fM17JVXBL5PTWZoD
- Qc7Q==
+ bh=MVMMyVcYu4LVL1Yzkvds/PCKbLlLdQN2hgXKn39Ce2s=;
+ b=sZ8mJPsjoVPohgFMzPx0eX/ZeI68Idlja/rqpaadGMRZrAFh1wrwp2lsIsVGd24CRc
+ PCZCUi+BNuJs0AcaE7tkiPNI7e9DIAsSJjk7zrV1EzSQ+fcZLVc/+jDej0d+99dZ7ipi
+ yPyjm+JHJvxh2nKw4hzvrAkb+l3LmFglOql6sleiw7/ajX6e1AjxlYfXupg/mkroxp9z
+ 9f3SnltaZLCjJpABK7NbTRKp/cadpPa4c/MM04Jg+lfSfg9AOOjjoaaGCgH7NK6VIk1L
+ K7NU/Q4/4G5kLSd6Ja00+jf/gHhUIiW5Tc94lwS4Ze+MSvC01WqU/47N8d4krpXRakxE
+ FC6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734132692; x=1734737492;
+ d=1e100.net; s=20230601; t=1734132725; x=1734737525;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=CzHeNsZnxQi+It9LDPqSmZfWCtnOxBbi6olOAYenQV4=;
- b=xPr5Ho71afzFrz38gnuRLeBVttbhosS/tchNLAIeOeGd/rxbOgsEUiLR+NTTStV6Fx
- GUaokwc6X9ILIEIQIcVyKxUtXvHNJJb8TZHfZjVADxxUqKysMMHVV9pwabmeXPkcfF2+
- 1o33V1Z04dtCWhSmyqODGz8DB/Gc5LummGMdMtGgBRsGXl07V3Ay22J7EZ+R7eKW00zP
- aBJnlf6V7xY/DNuMA5WdW43aoB9TDIFNaY3uhz4ybJ8NLOnbPkUBrT4Uk91WRMingE2n
- 6v/+iWJzHUVeSvLBh1BettI/W6xH0QFKq/V4SihoHGTtaKUrljWIisep2NCRUUZ41BOF
- P7KQ==
-X-Gm-Message-State: AOJu0Yz75Wt7+VycEbtCzAVtimSdgMscsoACy4gzu1svKnvdWnKZieRx
- GiPRXKCMSxG8W91R0T3spMzM2b1sb8pchfJALsG6nGadKfOTSgHRT8IUukROGEJIXrLdlrF5yB4
- +PbM=
-X-Gm-Gg: ASbGncup+fMSfasuyn6nReflNJd5X6PP0N1E95JpzR6CzsvDQoECqmKc/OjCkxuDE36
- HRw6KT75MhWFt1b9Iy+VooxsIh4W6jkNajs0QSEaU5VrWrwfFFM2x7elaVFwHKWWi8joBkdaRR0
- XNLpTFk94O91Z11zpdHl4g1C1q/usDC2jFxnkQ95UPqA56tKxnFoeotFnFmxtDG3sGohoyfwBnt
- VhyOX2QLQ76ffhMr6tgG/hfjBAGgy3Txq9AoTtHV64R/ZdXnUG4MJ1b3bilaoMUwB/+yUf4wzQ1
- ERgjWA==
-X-Google-Smtp-Source: AGHT+IHjBslLDLMU0bNikTKcI4izg0tmyn+2Bt/EJJxJGAd9F8ZLEcI6ddUzf2A/253O7lHdq2O7+w==
-X-Received: by 2002:a5d:5f8b:0:b0:385:fc97:9c63 with SMTP id
- ffacd0b85a97d-38880ac4dddmr3371282f8f.9.1734132691768; 
- Fri, 13 Dec 2024 15:31:31 -0800 (PST)
+ bh=MVMMyVcYu4LVL1Yzkvds/PCKbLlLdQN2hgXKn39Ce2s=;
+ b=gEroSdipNcEXloCWabEuatBZo3vnfmx31qLL+ml0kxnNODcQMBD+aQgr+iu2aIs7Sb
+ Jt41YXNutvS6TxsDQZ8dDsLyy3P1rIDxmaBkHjFjLxiQSO3y5E4Pwr9DVS3ge+g36jKS
+ OKIsPxr96FdTr87X4xUEn559OoQlhydIDmP4/E/TvyeHpFIpiz7LINLKtYY7VgSagosg
+ axMEWauSjtTML/p/swWj4KP5DE6x5GE3D6882EB8pbFyYRB0tRShSdmePTz9D67s/7UF
+ RxzYorYakfmwG6TuVkeN+6eNfUSwjTxNyiit1Zqmz5bfyW+13su2HkWK3PJf1/uxFmeT
+ +LcQ==
+X-Gm-Message-State: AOJu0Yz7IZduGb2XBS9C9H7a+f40D4BXLXjc3fRIJctTZ8v8sUs7crvh
+ 0I2TAZqIQQ3RV0mDfiUDkBoN3KYhF+UG8BP/ZVZ+7Jcu2mqlDNK5uvfn6zONpdopjpIH5yJEAZn
+ oyHg=
+X-Gm-Gg: ASbGncuZKB/r37ijCY+PoqgYdQlPJ5I9/iEehsl47jJUyNPUngj5DeuS4LGVAopJgdM
+ 7n8dveLBXPuAx/tSnK8quPNm6HOhkpJFP9pDAAl7raimcKC6jRPPKirE2BB8JHsVLE0KoHQs5yQ
+ jxcOvT0EtPFQGwSORUypFusMKY1MAGJrcVEc0LGBf8vvIjiyfykjBs/KC6XjaHcwq4HFf3XUz3g
+ S5CvtTIKcjoyRbtC8Yc5kzcd/rFPK2F0LEJWB6dU/goOaSJ9/ti/5IZv0RLl3afJeRFOG0EUFCc
+ cOAxwg==
+X-Google-Smtp-Source: AGHT+IHqwFss8Ao8YZJ62/8iDw0BsLag2BNuJcyyb0U7qIAVtmz1jrEApjEPAtHaqnL+Rn095sR48Q==
+X-Received: by 2002:a5d:64eb:0:b0:386:1cd3:8a07 with SMTP id
+ ffacd0b85a97d-38880ac3066mr3254822f8f.7.1734132725046; 
+ Fri, 13 Dec 2024 15:32:05 -0800 (PST)
 Received: from localhost.localdomain ([45.93.146.194])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c801bb00sm820086f8f.62.2024.12.13.15.31.30
+ ffacd0b85a97d-388c806ce56sm786880f8f.111.2024.12.13.15.32.03
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 13 Dec 2024 15:31:30 -0800 (PST)
+ Fri, 13 Dec 2024 15:32:04 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 06/20] hw/nvram/fw_cfg: Pass QOM parent to
- fw_cfg_add_file_from_generator()
-Date: Sat, 14 Dec 2024 00:30:41 +0100
-Message-ID: <20241213233055.39574-7-philmd@linaro.org>
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 13/20] hw/usb/msd: Add status to usb_msd_packet_complete()
+ function
+Date: Sat, 14 Dec 2024 00:30:48 +0100
+Message-ID: <20241213233055.39574-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241213233055.39574-1-philmd@linaro.org>
 References: <20241213233055.39574-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,98 +100,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently fw_cfg_add_file_from_generator() is restricted
-to command line created objects which reside in the
-'/objects' QOM container. In order to extend to other
-types of containers, pass the QOM parent by argument.
+From: Nicholas Piggin <npiggin@gmail.com>
 
+This is a convenience change that accepts a status when completing a
+packet.
+
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20241110034000.379463-2-npiggin@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-Id: <20241206181352.6836-3-philmd@linaro.org>
 ---
- include/hw/nvram/fw_cfg.h | 10 ++++++----
- hw/nvram/fw_cfg.c         | 11 ++++++-----
- system/vl.c               |  3 ++-
- 3 files changed, 14 insertions(+), 10 deletions(-)
+ hw/usb/dev-storage.c | 17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
-index 14e68966c59..fcb06f18cc3 100644
---- a/include/hw/nvram/fw_cfg.h
-+++ b/include/hw/nvram/fw_cfg.h
-@@ -294,11 +294,12 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
-  * fw_cfg_add_file_from_generator:
-  * @s: fw_cfg device being modified
-  * @filename: name of new fw_cfg file item
-- * @gen_id: name of object implementing FW_CFG_DATA_GENERATOR interface
-+ * @part: name of object implementing FW_CFG_DATA_GENERATOR interface
-+ * @parent: the object in which to resolve the @part
-  * @errp: pointer to a NULL initialized error object
-  *
-  * Add a new NAMED fw_cfg item with the content generated from the
-- * @gen_id object. The data generated by the @gen_id object is copied
-+ * @part object. The data generated by the @part object is copied
-  * into the data structure of the fw_cfg device.
-  * The next available (unused) selector key starting at FW_CFG_FILE_FIRST
-  * will be used; also, a new entry will be added to the file directory
-@@ -307,8 +308,9 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename, void *data,
-  *
-  * Returns: %true on success, %false on error.
-  */
--bool fw_cfg_add_file_from_generator(FWCfgState *s, const char *filename,
--                                    const char *gen_id, Error **errp);
-+bool fw_cfg_add_file_from_generator(FWCfgState *s,
-+                                    Object *parent, const char *part,
-+                                    const char *filename, Error **errp);
+diff --git a/hw/usb/dev-storage.c b/hw/usb/dev-storage.c
+index 341e505bd0a..4f1e8b7f6cb 100644
+--- a/hw/usb/dev-storage.c
++++ b/hw/usb/dev-storage.c
+@@ -177,7 +177,7 @@ static const USBDesc desc = {
+     .str   = desc_strings,
+ };
  
- /**
-  * fw_cfg_add_extra_pci_roots:
-diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
-index fe3b86135a7..b94cd27bd85 100644
---- a/hw/nvram/fw_cfg.c
-+++ b/hw/nvram/fw_cfg.c
-@@ -1027,22 +1027,23 @@ void *fw_cfg_modify_file(FWCfgState *s, const char *filename,
-     return NULL;
- }
- 
--bool fw_cfg_add_file_from_generator(FWCfgState *s, const char *filename,
--                                    const char *gen_id, Error **errp)
-+bool fw_cfg_add_file_from_generator(FWCfgState *s,
-+                                    Object *parent, const char *part,
-+                                    const char *filename, Error **errp)
+-static void usb_msd_packet_complete(MSDState *s)
++static void usb_msd_packet_complete(MSDState *s, int status)
  {
-     FWCfgDataGeneratorClass *klass;
-     GByteArray *array;
-     Object *obj;
-     gsize size;
+     USBPacket *p = s->packet;
  
--    obj = object_resolve_path_component(object_get_objects_root(), gen_id);
-+    obj = object_resolve_path_component(parent, part);
-     if (!obj) {
--        error_setg(errp, "Cannot find object ID '%s'", gen_id);
-+        error_setg(errp, "Cannot find object ID '%s'", part);
-         return false;
+@@ -187,6 +187,7 @@ static void usb_msd_packet_complete(MSDState *s)
+      * usb_packet_complete returns.
+      */
+     trace_usb_msd_packet_complete();
++    p->status = status;
+     s->packet = NULL;
+     usb_packet_complete(&s->dev, p);
+ }
+@@ -196,8 +197,7 @@ static void usb_msd_fatal_error(MSDState *s)
+     trace_usb_msd_fatal_error();
+ 
+     if (s->packet) {
+-        s->packet->status = USB_RET_STALL;
+-        usb_msd_packet_complete(s);
++        usb_msd_packet_complete(s, USB_RET_STALL);
      }
-     if (!object_dynamic_cast(obj, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE)) {
-         error_setg(errp, "Object ID '%s' is not a '%s' subclass",
--                   gen_id, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE);
-+                   part, TYPE_FW_CFG_DATA_GENERATOR_INTERFACE);
-         return false;
-     }
-     klass = FW_CFG_DATA_GENERATOR_GET_CLASS(obj);
-diff --git a/system/vl.c b/system/vl.c
-index f103532a9a1..4a370da624a 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -1184,7 +1184,8 @@ static int parse_fw_cfg(void *opaque, QemuOpts *opts, Error **errp)
-         size = strlen(str); /* NUL terminator NOT included in fw_cfg blob */
-         buf = g_memdup(str, size);
-     } else if (nonempty_str(gen_id)) {
--        if (!fw_cfg_add_file_from_generator(fw_cfg, name, gen_id, errp)) {
-+        if (!fw_cfg_add_file_from_generator(fw_cfg, object_get_objects_root(),
-+                                            gen_id, name, errp)) {
-             return -1;
+ 
+     /*
+@@ -255,8 +255,8 @@ void usb_msd_transfer_data(SCSIRequest *req, uint32_t len)
+         usb_msd_copy_data(s, p);
+         p = s->packet;
+         if (p && p->actual_length == p->iov.size) {
+-            p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
+-            usb_msd_packet_complete(s);
++            /* USB_RET_SUCCESS status clears previous ASYNC status */
++            usb_msd_packet_complete(s, USB_RET_SUCCESS);
          }
-         return 0;
+     }
+ }
+@@ -295,8 +295,8 @@ void usb_msd_command_complete(SCSIRequest *req, size_t resid)
+                 s->mode = USB_MSDM_CSW;
+             }
+         }
+-        p->status = USB_RET_SUCCESS; /* Clear previous ASYNC status */
+-        usb_msd_packet_complete(s);
++        /* USB_RET_SUCCESS status clears previous ASYNC status */
++        usb_msd_packet_complete(s, USB_RET_SUCCESS);
+     } else if (s->data_len == 0) {
+         s->mode = USB_MSDM_CSW;
+     }
+@@ -332,8 +332,7 @@ void usb_msd_handle_reset(USBDevice *dev)
+     assert(s->req == NULL);
+ 
+     if (s->packet) {
+-        s->packet->status = USB_RET_STALL;
+-        usb_msd_packet_complete(s);
++        usb_msd_packet_complete(s, USB_RET_STALL);
+     }
+ 
+     memset(&s->csw, 0, sizeof(s->csw));
 -- 
 2.45.2
 
