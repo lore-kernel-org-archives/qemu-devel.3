@@ -4,71 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D5EE7717F
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 02:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A89DE7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 03:45:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMHTk-0005Lo-8q; Fri, 13 Dec 2024 21:02:00 -0500
+	id 1tMJ5R-0007Lo-GU; Fri, 13 Dec 2024 22:45:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tMHTi-0005LM-Rm; Fri, 13 Dec 2024 21:01:58 -0500
-Received: from out203-205-221-231.mail.qq.com ([203.205.221.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tMHTd-0005a1-TP; Fri, 13 Dec 2024 21:01:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1734141692; bh=kDLUMkjjzYKh6GiL9pmLN4IOqKgzN2FcvSUdTyQ48ok=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=zm5gWOp6TZrZbJdlFWW7BsJ9mm8xXxF35fuCovAl4zyKHh1DxY59CxbldkeVXeyW/
- rWX77xZp5Nee/Mar/j0iiixNtFu1iV6vsoS3FXzDTrQ4vxvXYsfHsu7niwcea2yFay
- uTNOy2gc24qBScGf411CxdNX9LNBxauOzACybuIM=
-Received: from [192.168.1.13] ([220.167.33.182])
- by newxmesmtplogicsvrszc25-0.qq.com (NewEsmtp) with SMTP
- id 5D06E9A; Sat, 14 Dec 2024 10:01:29 +0800
-X-QQ-mid: xmsmtpt1734141689tm76lh56s
-Message-ID: <tencent_20FAAD91C9BA033D18489DAD01233DCD6B0A@qq.com>
-X-QQ-XMAILINFO: NZFlUIrZ4HCZx9fCutvCLLryKEjtOnfziBU53CfbE4adybuTN9CZKluH508FfG
- IL3bDApmYmdMm5oBStPRYQAwKu6WFajrTAXkdf0grtiYRbQLn6xH2tlBCMCtjwvMRVwfwbB7lmhz
- rQK4CtQl8+WVkbCpxAWsYjYPS8IOQM+3c36PjWRXKps0DMB5EzxFFUKYV7GU7L3F7g6rp1PCOIvM
- A725zS0hTpTrXMl8KegibM5Sxm1piIUxcf77rD9xQ1AKWbU+f4VLIdtOqvTcfOF+asm9dcvrDrfi
- Z4bFtFkJBmH5wjicMjpdhiNkhwZe71MFlONxxr7EZyWHSwa1fHX50C9TZjIPMweGgOV1vVqCQ02P
- sjv7FZchyWXfGeEEIFnNlr0Db++ZsdGzC0qbRBVcgWJnYf0bwqjP9POyUuCkkhgUmDc9b8dxiIB8
- H+X3Punt3BX6TswoJeUkX1ginqT7S9rRxgaH208YPA7+6sO/vBum2IeBNFWQ/al9qFmFnkGFRrTA
- KnZDGBnZS8Z3BA9JO+dbHdEhvH+pJ4ZItkggobbZXnr20cxTlKmGG5h8KLyEhHyjEXI7/KtzVXNC
- xvpJgAfKgYXGg+xRspZT+OrUq6OIqPx+1Zs9daD6M9nVfx+gG7arQSIxS7Md0RMIFyYfQk9HBBh9
- LtarZ8EMrnIHiUxebhMDpvvsbmBdl1/lUmz4TJro/IcDWuH/3ep/cK8P9ANvp1JvhHe2fSTTpWcv
- XiMVWhZb9gao/ER9YhtW3dlTw2tn5cP3PPdiKTa4ZXpIJ2jfh4IXo/VjasqgH9oOW+OIPdC+DO7F
- 6I8wP5sEciq82P3OfqMUDOye6PIfZed6akLWBS8xE2JtW6mALJlbJaraP2iCRTOKR4RbRIkdCp7Q
- YdvE4HhrVXAuQMPb3idUKEXRSnY6YbPv4lydrAv3Xj2cboXanu7+zHd5QmSV5n9vlpDZyxaclKDo
- XMplPf20785ArpPjJycg==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-OQ-MSGID: <418e65d0dc751130a624a63c0620aa042414a5f9.camel@qq.com>
-Subject: Re: [PATCH v3] riscv/gdb: add V bit to priv register
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: Mario Fleischmann <mario.fleischmann@lauterbach.com>, 
- qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, alex.bennee@linaro.org
-Date: Sat, 14 Dec 2024 10:01:28 +0800
-In-Reply-To: <5d28f5aa-bb59-4198-a6ff-495a0ea9a16a@lauterbach.com>
-References: <tencent_D006B250779A0740A99BB51DA4A8F95EBF07@qq.com>
- <5d28f5aa-bb59-4198-a6ff-495a0ea9a16a@lauterbach.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tMJ5P-0007Le-Sk
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 22:44:59 -0500
+Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tMJ5N-0006V5-Or
+ for qemu-devel@nongnu.org; Fri, 13 Dec 2024 22:44:59 -0500
+Received: by mail-pj1-x1034.google.com with SMTP id
+ 98e67ed59e1d1-2ef28f07dbaso1668039a91.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 19:44:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734147894; x=1734752694; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Y25GbSlcda+N8rqP7pwO3LNxhy+C5I1ik7XFPVz/aD8=;
+ b=fmGTTeHNTO6rESUHz6EpITGzDFsKoHx7fDD5ORrE+jMKXUrWW+fVpj+km/BGvi286Y
+ hdnSs6SxrtEq6AUUqbAvyfYrNOwSJNYOjs8vWFOMBLRudpzllVN/FfEucV7ysg4qvIYb
+ EEjQwaccFP8S1qXJukkG1gg0tSsosAF0kRCtdgQGkWVBVddlnHAnXjrSh3YNSt+qRPMg
+ KmOjqb5uDQsatZdwEDSzHoCa7LyVWCdpuEVI8RaK8+M29CB+nl1pUxkrKFPpl5KjYuga
+ HQLInUFRmG58novd/73n/0n958cEwMsL0rs/svtXOMqYcaeqAEtd72FxyHNQAubm+DQy
+ zFPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734147894; x=1734752694;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Y25GbSlcda+N8rqP7pwO3LNxhy+C5I1ik7XFPVz/aD8=;
+ b=DXUY7fzWJAwV58HmumEnhg8Pa6MK3C4SJg5vMS7WnxtbF+dVIcYfvyWVld6csLK13O
+ y/nJdUQZDa2rV+5rdHGhxP7fZcR4UjQv+vrBkQGW+RPoF+L7jbHVwwn1Fyo5cTaaQ/mm
+ S39VmUm46CKOYgxBzkBuMCdqZYZQ3gBoDkpappoGZmwSVdKB0Z7YfQB4SfkttGLY43Rb
+ upWokSfo+VS14WDbXLRPWhGJlgkJCFVmOZjMKZZnxVVlrpoNCq/gLkzsxWMPOrBROgvK
+ mRTwVdibodEbfR7e9jUWIfyqKZVrVJRhHIiZB3i0brgpxH2x/0/ya5SA9EC4+xQ4st0v
+ CArQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVemaYZUwNfbzhQO0lNCURUcsl9S6wxXcx7s9r3OzVocX6Tib/haVozgyozPM02phUvaat8T3vAxAg2@nongnu.org
+X-Gm-Message-State: AOJu0YyHoMlEB0dRwiKkhoe0FnqomZKiHZge1rvztKdCTbUKvjU0GmLf
+ Kg3T6bgYbzTIN2jERRbV17zjeNDsGvxX9PIW0urbx+ITS3Ajmgp6Faf32M4wCxs=
+X-Gm-Gg: ASbGnctTJYdWIAt0RZZEFjWmb3sSMAP1thmazzlbla4u9W3amRUaCWpejVkSPGdmEaB
+ UxtYtz6Nf1XDYvVQzFAuehJC5pA0RtlS94R50tR4JVkHT+KB4BBoE6VhP6ptLGpM5MfnUhLKuml
+ K1U3tO1g6gIcArJdEhIOAIOkHUpIj/hj9G+XXBYQQTQa3TSaDGfLVAeeaRTnFSjfqR6rtKdeOFt
+ FU0DoMMcjveRsJ+pIUuzylFB5pbILeMcARVd02dKntEAoLvGNB6WRLesHULeZU6M9/R7gHT9NY7
+ aUfpK+BpXWWp+DHvCYSrbsKhV9qj
+X-Google-Smtp-Source: AGHT+IH3vRaXpNjOPPT+wB0SZwUFcOWR/r6ekG18V3VbNmFvQdnxmrHN73nev/0rtevQDm6+KD+9Ag==
+X-Received: by 2002:a17:90b:3803:b0:2ee:8358:385 with SMTP id
+ 98e67ed59e1d1-2f28fa5476amr7473176a91.4.1734147894349; 
+ Fri, 13 Dec 2024 19:44:54 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f2a2434a4asm620662a91.32.2024.12.13.19.44.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Dec 2024 19:44:52 -0800 (PST)
+Message-ID: <718f3f80-eb3b-4d9b-b2a0-24946a8c5b79@linaro.org>
+Date: Fri, 13 Dec 2024 19:44:50 -0800
 MIME-Version: 1.0
-Received-SPF: pass client-ip=203.205.221.231; envelope-from=yfliu2008@qq.com;
- helo=out203-205-221-231.mail.qq.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: contrib/plugins does not build on 32-bit host
+To: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+References: <dbb6dbf1-1ceb-48c0-8174-ee5dea7533dc@linaro.org>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <dbb6dbf1-1ceb-48c0-8174-ee5dea7533dc@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,122 +103,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 2024-12-13 at 10:04 +0100, Mario Fleischmann wrote:
+Hi Richard,
+
+On 12/13/24 13:47, Richard Henderson wrote:
 > Hi,
->=20
-> apologies for the delayed review; I've just gotten to it now.
->=20
-> On 06.12.2024 01:14, Yanfeng Liu wrote:
-> > This adds virtualization mode (V bit) as bit(2) of register `priv`
-> > per RiscV debug spec v1.0.0-rc3. Checked with gdb-multiarch v12.1.
-> >=20
-> > Note that GDB may display `INVALID` tag for the value when V bit
-> > is set, this doesn't affect accessing to the bit.
-> >=20
-> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> > ---
-> > =C2=A0 target/riscv/gdbstub.c | 7 ++++++-
-> > =C2=A0 1 file changed, 6 insertions(+), 1 deletion(-)
-> >=20
-> > diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-> > index c07df972f1..8cc095cda3 100644
-> > --- a/target/riscv/gdbstub.c
-> > +++ b/target/riscv/gdbstub.c
-> > @@ -213,7 +213,10 @@ static int riscv_gdb_get_virtual(CPUState *cs,
-> > GByteArray *buf, int n)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =
-=3D RISCV_CPU(cs);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *e=
-nv =3D &cpu->env;
-> > =C2=A0=20
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
-v->priv);
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Per RiscV debug spec v1.=
-0.0 rc3 */
->=20
-> Now that rc4 is released, you might also cite "RISC-V Debug
-> Specification v1.0.0 rc4".
-Okay, will do.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_ulong vbit =3D (env-=
->virt_enabled) ? BIT(2) : 0;
-> > +
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
-v->priv | vbit);
-> > =C2=A0 #endif
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
-> > @@ -230,6 +233,8 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint=
-8_t
-> > *mem_buf, int n)
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env->priv =
-=3D=3D PRV_RESERVED) {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 env->priv =3D PRV_S;
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->virt_enabled =3D (env-=
->priv =3D=3D PRV_M) ? 0 :
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 ((ldtul_p(mem_buf) & BIT(2)) >> 2);
->=20
-> Looking at the other places in the source code where virt_enabled is=20
-> set, we should also check here if the H extension is active.
-> Alternatively, you might also consider using riscv_cpu_set_mode():
->=20
-> Message-ID: <20240711-smcntrpmf_v7-v8-1-b7c38ae7b263@rivosinc.com>
-> Date: Thu, 11 Jul 2024 15:31:04 -0700
-> Subject: [PATCH v8 01/13] target/riscv: Combine set_mode and set_virt=20
-> functions.
-> From: Atish Patra <atishp@rivosinc.com>
->=20
-Thanks for this, I will check both and see what is easier for a QEMU newbie
-later.
+> 
+> Several of the recent contrib/plugins/ patches do not build on e.g. arm32.
+> All of the issues are related to casting between pointers and uint64_t; there is a Werror
+> generated for casting between pointers and integers of different sizes.
+> 
+> I suspect all of the instances will need to use separate structures to store uint64_t
+> within the hash tables.  The hash values themselves can use uintptr_t, as "hash" by
+> definition loses data.
+> 
+> The following is *not* a suggested patch, just touches every place with an error to
+> highlight all of the places.
+> 
 
-> >=20
-> > =C2=A0 #endif
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sizeof(ta=
-rget_ulong);
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->=20
-> In addition, we need to swap the virtual supervisor registers from the H=
-=20
-> extension, e.g. vsstatus:
->=20
-> "When V=3D1, vsstatus substitutes for the usual sstatus, so instructions=
-=20
-> that normally read or modify sstatus actually access vsstatus instead."=
-=20
-> (privileged spec)
->=20
-> With the current patch, I was able to read and modify V, but the=20
-> registers were not changing:
->=20
-> (gdb) info register $priv
-> priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x4=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:4 [INVALID]
-> (gdb) info register $sstatus
-> sstatus=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x200004022=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 8589951010
-> (gdb) set $priv =3D 0x0
-> (gdb) info register $priv
-> priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:0 [User/Application]
-> (gdb) info register $sstatus
-> sstatus=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x200004022=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 8589951010
->=20
-> Take a look at riscv_cpu_swap_hypervisor_regs() which I believe does the=
-=20
-> thing we need here. Note that the function is supposed be called before=
-=20
-> the mode switch.
+This is something I already tried to fix this way, but alas, casting 
+values is not enough, we might lose information (in the case where guest 
+is 64 bits). Some plugins need a refactoring to allocate data 
+dynamically, instead of hiding it under a pointer.
 
-thanks again, I will check that swapping method and use it before changing =
-the v
-bit.=20
+See this previous series:
+https://patchew.org/QEMU/20240814233645.944327-1-pierrick.bouvier@linaro.org/
 
-Regards,
-yf
+Finally, we discussed it was not worth the effort, and Alex simply 
+deactivated plugins by default for 32 bits platform, so it should not be 
+built for arm 32 bits. If we really have someone that needs this 
+usecase, we might make the effort, but for now, it does not seem worth 
+the hassle.
 
+Note: we already had those warnings before, but since plugins used to be 
+built by an external Makefile, werror was not enabled, so functionally 
+it was already "broken".
+
+> 
+> r~
+> 
+> 
+> diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+> index 512ef6776b..9f1b05fc35 100644
+> --- a/contrib/plugins/cache.c
+> +++ b/contrib/plugins/cache.c
+> @@ -474,7 +474,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>            uint64_t effective_addr;
+> 
+>            if (sys) {
+> -            effective_addr = (uint64_t) qemu_plugin_insn_haddr(insn);
+> +            effective_addr = (uint64_t)(uintptr_t) qemu_plugin_insn_haddr(insn);
+>            } else {
+>                effective_addr = (uint64_t) qemu_plugin_insn_vaddr(insn);
+>            }
+> diff --git a/contrib/plugins/cflow.c b/contrib/plugins/cflow.c
+> index b39974d1cf..8f8ebf87cd 100644
+> --- a/contrib/plugins/cflow.c
+> +++ b/contrib/plugins/cflow.c
+> @@ -215,10 +215,10 @@ static NodeData *fetch_node(uint64_t addr, bool create_if_not_found)
+>        NodeData *node = NULL;
+> 
+>        g_mutex_lock(&node_lock);
+> -    node = (NodeData *) g_hash_table_lookup(nodes, (gconstpointer) addr);
+> +    node = (NodeData *) g_hash_table_lookup(nodes, (gconstpointer)(uintptr_t) addr);
+>        if (!node && create_if_not_found) {
+>            node = create_node(addr);
+> -        g_hash_table_insert(nodes, (gpointer) addr, (gpointer) node);
+> +        g_hash_table_insert(nodes, (gpointer)(uintptr_t) addr, (gpointer) node);
+>        }
+>        g_mutex_unlock(&node_lock);
+>        return node;
+> diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+> index 02bc5078bd..9b3d356dea 100644
+> --- a/contrib/plugins/hotblocks.c
+> +++ b/contrib/plugins/hotblocks.c
+> @@ -111,7 +111,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+>        ExecCount *cnt;
+>        uint64_t pc = qemu_plugin_tb_vaddr(tb);
+>        size_t insns = qemu_plugin_tb_n_insns(tb);
+> -    uint64_t hash = pc ^ insns;
+> +    uintptr_t hash = pc ^ insns;
+> 
+>        g_mutex_lock(&lock);
+>        cnt = (ExecCount *) g_hash_table_lookup(hotblocks, (gconstpointer) hash);
+> diff --git a/contrib/plugins/hwprofile.c b/contrib/plugins/hwprofile.c
+> index 739ac0c66b..6d84ea77f2 100644
+> --- a/contrib/plugins/hwprofile.c
+> +++ b/contrib/plugins/hwprofile.c
+> @@ -169,7 +169,7 @@ static IOLocationCounts *new_location(GHashTable *table, uint64_t
+> off_or_pc)
+>    {
+>        IOLocationCounts *loc = g_new0(IOLocationCounts, 1);
+>        loc->off_or_pc = off_or_pc;
+> -    g_hash_table_insert(table, (gpointer) off_or_pc, loc);
+> +    g_hash_table_insert(table, (gpointer)(uintptr_t) off_or_pc, loc);
+>        return loc;
+>    }
+> 
+> @@ -201,7 +201,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t
+> meminfo,
+>            return;
+>        } else {
+>            const char *name = qemu_plugin_hwaddr_device_name(hwaddr);
+> -        uint64_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
+> +        uintptr_t off = qemu_plugin_hwaddr_phys_addr(hwaddr);
+>            bool is_write = qemu_plugin_mem_is_store(meminfo);
+>            DeviceCounts *counts;
+> 
+> @@ -224,7 +224,7 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t
+> meminfo,
+> 
+>            /* either track offsets or source of access */
+>            if (source) {
+> -            off = (uint64_t) udata;
+> +            off = (uintptr_t) udata;
+>            }
+> 
+>            if (pattern || source) {
+> @@ -247,7 +247,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> 
+>        for (i = 0; i < n; i++) {
+>            struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> -        gpointer udata = (gpointer) (source ? qemu_plugin_insn_vaddr(insn) : 0);
+> +        gpointer udata = (gpointer)(uintptr_t) (source ? qemu_plugin_insn_vaddr(insn) : 0);
+>            qemu_plugin_register_vcpu_mem_cb(insn, vcpu_haddr,
+>                                             QEMU_PLUGIN_CB_NO_REGS,
+>                                             rw, udata);
+> 
 
 
