@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 829B0E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 05:27:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D007EE7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 05:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMKfi-0001bb-0N; Sat, 14 Dec 2024 00:26:34 -0500
+	id 1tMKi3-0002FW-Mp; Sat, 14 Dec 2024 00:28:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKfg-0001bQ-3y
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:26:32 -0500
-Received: from mail-ej1-f45.google.com ([209.85.218.45])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKi0-0002FJ-QK
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:28:56 -0500
+Received: from mail-ed1-f46.google.com ([209.85.208.46])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKfc-0003bM-MG
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:26:31 -0500
-Received: by mail-ej1-f45.google.com with SMTP id
- a640c23a62f3a-aa6aad76beeso353247266b.2
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 21:26:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKhz-0005oH-6Y
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:28:56 -0500
+Received: by mail-ed1-f46.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e6274015so4117436a12.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 21:28:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734153987; x=1734758787;
+ d=1e100.net; s=20230601; t=1734154133; x=1734758933;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9SV5o9nKbLA9Jo4o+9PHWgPneN96Qa3r7/XZGbde2RE=;
- b=otLO0NhQqD/sU19FBWVV/mgSEBQMWJ/6oygYvAkoea4DVahJZyaE6bXibQv8LRdgGq
- Nrr5to+OBKyHEdzhoSuyiw5r7GjHEvlLjxiLKeAQN5sK7/QD1WzbtguGjqsOeY+vWQPr
- q0+RYaYwWPi7NZjGdCkTVMBFjDJsg4fYvzSoM6U3H2qWft/zbF/Jhgd+yBFzdW5Xi2L8
- MHDDir66ccZzA3wl0lM/Jjrw4UnGxB1u6pDLzlJuOOIa79zTwgj7MyUOKRTp//19UWjo
- Kl6O08E/Z0Eobdl4p2nKRK8DJX8uC9kChV1nJFLsAyfIqY8d07/ohEG26Y0o4H3okTcV
- kw/w==
-X-Gm-Message-State: AOJu0YxN9u4gTe1Y6gnwJfj3HCVN2GkFXvnZTlLRUvuRa1iHXvElHUIw
- tAdANGfksppINhO2KdwtTOQdpL9Aw0rd6E7HcesKhEi/gPyWH83Q
-X-Gm-Gg: ASbGncuMiNuhiqeRlWUoL5VwYvXiV2RkTyXal7RQ/wPUVyG7ZQFiIGQEM9erqTOM0Gy
- wLBUofGI+T16O2eJ4zc+8lb/VVdzfW0vveQPsWEpdUkneOJL40Rx1qRAdtyBxj7O7CuXNwoyhGr
- kdJd2qq0GdQteJcUZazXugF8sgqkrCprMRtJqDUbqwM1p43h/54hV3evFU27yedow5aq6k3N9BO
- u3Xr1P0Ga6lTSyWmRRNkKS8N0IHLyZunRK318oSO7+Os9K7pQII7H4CxMgYClJjNxb1zYCqZkvL
-X-Google-Smtp-Source: AGHT+IFt6JNv0P+BbvUZb9XnIhGFfy/2Xz3ZnkcrFlEKBAXQMN5gT1ErL+1S8DPLh5UJkDP9Xh3YMw==
-X-Received: by 2002:a17:906:7944:b0:aa6:6e04:eef6 with SMTP id
- a640c23a62f3a-aab77f07a24mr571023766b.61.1734153986772; 
- Fri, 13 Dec 2024 21:26:26 -0800 (PST)
+ bh=Q0/WhonVpe/IavMDfKL51e3DbdGlaOGK01hLWj0CT74=;
+ b=emhdgqqOR1rDOyoPG9azevrQJ0RoEHA4qSbVVl0F94dQAWEj18sEyHiAqR4UCRNUoz
+ ENH8cCkj6XCI9VwSmIlMlVC7L7tx0Urp+rE0o4yami1LuzmYWYC4913Tdmj146BUF5gT
+ nU4eUCn2WQgeONZAMKUzqvTpQLJJ9fePGdAIeqh7KKwzfz/Zf18sleGs2NI3L603/Kjz
+ 0zTPDpLOSU+zlSE3Ye4G17eFu6cO8+gxfQ7dt8iBfIYn0Sy9G3AEAKeMW4sbQ0O/5oU0
+ z2roqfuslDZkc0Z5PBuimxM3bBV4aP4CbeTsWQZH2khptUXHyQ87QCqZ72gqyOL/+B0u
+ zNSQ==
+X-Gm-Message-State: AOJu0YwY5iftzCAz0DcHVWkCEwrqOkYAlstGoInrUXHi6NYVIv8fI+DO
+ inE6oaz4w9NtOqV7GWzCWR+FtteRxVszXd7feIvaNPNKInTY/kqtvqClWA==
+X-Gm-Gg: ASbGnct1WsxgsqQ6Wc/UHUgqBKClQtoBYr9GL4XVp5qz7zqqC3RNCmboquimEmbeZ0k
+ h/vNSI7bYZCUjNPwogrmEPXfY6CEktWIPKhWb4ducSiLvYPST9dggEsHGcjSLqIgs+BQ9ny3hXw
+ qBqO+FZXeOAHzkxc9ewErx5eX6Vrrp7W/eQbmlg5S+jFk0q6CK2jqxReh6QLTS6Dkzgd8N3smpp
+ BkVHRnsD4sWjRJDAqmA9PxRfVfHEfsMO5vvU5MYanVmjHSHhEs4CAJI23OdO7kCv0w8pf86D31u
+X-Google-Smtp-Source: AGHT+IElJ/dpBpZWB0V6gh69Qei3GFFGPV+FxhwhrmXpnALX3vftaB2jnGBNddGCV/eZqYplVMlSaw==
+X-Received: by 2002:a05:6402:40d4:b0:5d0:ed71:3ce4 with SMTP id
+ 4fb4d7f45d1cf-5d63c2e9060mr4207787a12.6.1734154133331; 
+ Fri, 13 Dec 2024 21:28:53 -0800 (PST)
 Received: from tpx1 (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab9638ec32sm49594766b.151.2024.12.13.21.26.25
+ 4fb4d7f45d1cf-5d652f25d6csm578238a12.67.2024.12.13.21.28.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 21:26:26 -0800 (PST)
-Date: Sat, 14 Dec 2024 06:26:23 +0100
+ Fri, 13 Dec 2024 21:28:52 -0800 (PST)
+Date: Sat, 14 Dec 2024 06:28:50 +0100
 From: Thomas Huth <huth@tuxfamily.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 03/34] next-cube: create new next.scsi container
- memory region
-Message-ID: <20241214062623.3b717db3@tpx1>
-In-Reply-To: <20241212114620.549285-4-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 07/34] next-cube: move SCSI CSRs from next-pc to the
+ next-scsi device
+Message-ID: <20241214062850.480546a1@tpx1>
+In-Reply-To: <20241212114620.549285-8-mark.cave-ayland@ilande.co.uk>
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-4-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-8-mark.cave-ayland@ilande.co.uk>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.218.45; envelope-from=th.huth@gmail.com;
- helo=mail-ej1-f45.google.com
+Received-SPF: pass client-ip=209.85.208.46; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f46.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
 X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
  FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
  HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,16 +88,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Thu, 12 Dec 2024 11:45:49 +0000
+Am Thu, 12 Dec 2024 11:45:53 +0000
 schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> Move the ESP SCSI and SCSI CSR registers to the new next.scsi container memory
-> region.
+> The SCSI CSRs are located within the SCSI subsystem of the NeXT PC (Peripheral
+> Contoller) which is now modelled as a separate QEMU device. Add a new memory
+> region subregion to contain the SCSI CSRs that simply store and retrieve the
+> register values.
+> 
+> Add a new VMStateDescription for the next-scsi device to enable the SCSI CSRs
+> to be migrated.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->  hw/m68k/next-cube.c | 8 +++++++-
->  1 file changed, 7 insertions(+), 1 deletion(-)
+>  hw/m68k/next-cube.c | 88 +++++++++++++++++++++++++++++++++++++++------
+>  1 file changed, 78 insertions(+), 10 deletions(-)
 
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 
