@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF176E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 21:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027B6E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 21:43:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMZkO-0000RT-Oh; Sat, 14 Dec 2024 16:32:26 -0500
+	id 1tMZuG-0003Aa-Gj; Sat, 14 Dec 2024 16:42:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZkK-0000R8-5v
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:32:20 -0500
+ id 1tMZuE-0003AQ-OY
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:42:34 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZkI-0002Pl-Fp
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:32:19 -0500
+ id 1tMZuD-0004Nt-44
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:42:34 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=6ZukYXMpWAQMC8+/V8b8qX79cOjTxa2TnaaMEliPqq4=; b=VzDrLEYR0ZtAwIiFMFtA5hZuGm
- Vq38VkcITvg5EEGMYJyU77Ae26aOk1f4YVibZApAqsQCwI/DTVw9b6kyw5nwxzYWyLZgMa14f7RO2
- f5qrQOhXVjEaoXLH0V9PBRqJCA0qTl4KMyS8aBAMq+OAsdcHqD//7TWH35H5FniVDE28Ryb4JVY0d
- 5PHJhD+FViowqZCx3ebL/l8jAvlgAiOFsbBoPc3nUkw7PkNFfcy3Vkc2VCp/tzv2pbhCtH0YlUoU3
- 66hDF57hP15Zfaxv61Awicuvsz1ug8EyVBvdkf06DBy6NjN9wzDVFE6RR0Pl+CWxbHUNBs39bdl/h
- dUs+ZKR8oiyk27LP3k8PNDcXjVYQowlAmJv6a3xP2CJ7jXaiyNRMos2LWrsWPzhEZKFKdgIp2+RWx
- dOES/j1AlC6I9PesP0LFjf2R1wZLuZyRhv1mbZafIv9nka85ON0/R5IcQs8ZNJCGSVfyZ1G7SV2gy
- R/Fpvohv/SqUNHWzty1ih4110LJdrTiR69DHRO2j8JqHKsqa2IWKNNSJ1ouxg+/k+bPgcknaLyCSI
- wzxrmIRzgAlaF6B5MFXS5VuR0tIi23BU3bSZTw9pGRNC2EUZA7mdRnth+yIYdnmkftI9YH3G/vK+9
- wRN2llUCc1Qu1B4nulWpOa7mI+DN0ToCwzSooBEyE=;
+ In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
+ Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+ Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=FR9d2JdnmTsPS7IW3m2uTnoe1BwJQx+0eE7eBIPAmng=; b=NOKic0bQpoh4r2vQdKX+GjEM03
+ 7TJH3A0Apd0XuAQZQn2ZqL6nEEG7qj/tONaGqAXTbbgOz9YnAFXu4xykU6eZnDiopbsVnvxs57mkl
+ p3zdS/MKn+WQHa71GYQ3QLu6qWqy6JNnwU1z7nclV46760mVUuKQdDgDtUPlVSDjEYqy6fP4otONl
+ IWIsUFIn5DUOZTv29diEQL68LQU4Fkavc2EDJ5yDzlrzrSqEUHPGJa7zWnie6cWfrAGTx6eLCLn34
+ 0CEzpHbkLRd2SrAlNjMkzUStFcMFG5PU+Cnsw6Y+9S3jEH6XzpoXuCOWfVwlNcFI2KWX5/AyJPDP0
+ 84xsSeN8GRmjMiIeC+jm50JuE6pMbAI2pD1wMdPIAVzH6YxamckkXlaJ1D988SzAIhIS06OeaShMU
+ 4/KZ75atxMIF9i5J0QMWoOTJYQSa1RCe+aGz8ggXVgp2e/lwrPUAmU9oUPEkhf0DnZfWQNX2lG7ad
+ wUBCGEjxBz4nAzI8MQ8Mi4YmpHsZdbV7nHEcPgnY+Insi+iZx2MhJem7ilZJ92rUjM/rO3JReDF73
+ bsqgicv9Q+hqEe7EkUrYT2hVaMQ0nwHgLj3bs4lEj9kb28UCwiRUIK4EzKcJARguZrvfj1chJ/Cgw
+ IdS3TzA5dZD1qNkdozuJ2lgmT16tiAxDYPfe16vQ8=;
 Received: from [2a02:8012:2f01:0:839f:b883:9bde:613a]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZjg-0006ED-S7; Sat, 14 Dec 2024 21:31:44 +0000
-Message-ID: <772a20e9-c606-4231-b94b-345573ffecfd@ilande.co.uk>
-Date: Sat, 14 Dec 2024 21:32:11 +0000
+ id 1tMZta-0006HN-SM; Sat, 14 Dec 2024 21:41:58 +0000
+Message-ID: <78df79e5-c662-450d-b9c0-96476dbcc107@ilande.co.uk>
+Date: Sat, 14 Dec 2024 21:42:25 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Thomas Huth <huth@tuxfamily.org>
-Cc: qemu-devel@nongnu.org
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-12-mark.cave-ayland@ilande.co.uk>
- <20241214071058.7097e28d@tpx1>
+To: Thomas Huth <huth@tuxfamily.org>, qemu-devel@nongnu.org
+References: <20241214091720.49779-1-huth@tuxfamily.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +71,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241214071058.7097e28d@tpx1>
+In-Reply-To: <20241214091720.49779-1-huth@tuxfamily.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:839f:b883:9bde:613a
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 11/34] next-cube: move ESCC to be QOM child of next-pc
- device
+Subject: Re: [PATCH] hw/m68k/next-cube: Disable the default CD-ROM drive
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,98 +102,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/12/2024 06:10, Thomas Huth wrote:
+On 14/12/2024 09:17, Thomas Huth wrote:
 
-> Am Thu, 12 Dec 2024 11:45:57 +0000
-> schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+> The NeXT-Cube does not have a CD-ROM drive by default, and the
+> kernel does not seem to deal with the empty drive very well, so
+> let's disable the CD-ROM drive for this machine.
 > 
->> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
->> of the next-pc device.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
->>   1 file changed, 26 insertions(+), 28 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index efbb11e74b..20a0b073e1 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -124,6 +124,8 @@ struct NeXTPC {
->>       qemu_irq scsi_reset;
->>       qemu_irq scsi_dma;
->>   
->> +    ESCCState escc;
->> +
->>       NextRtc rtc;
->>   };
->>   
->> @@ -978,31 +980,6 @@ static const MemoryRegionOps next_floppy_ops = {
->>       .endianness = DEVICE_BIG_ENDIAN,
->>   };
->>   
->> -static void next_escc_init(DeviceState *pcdev)
->> -{
->> -    NeXTPC *next_pc = NEXT_PC(pcdev);
->> -    DeviceState *dev;
->> -    SysBusDevice *s;
->> -
->> -    dev = qdev_new(TYPE_ESCC);
->> -    qdev_prop_set_uint32(dev, "disabled", 0);
->> -    qdev_prop_set_uint32(dev, "frequency", 9600 * 384);
->> -    qdev_prop_set_uint32(dev, "it_shift", 0);
->> -    qdev_prop_set_bit(dev, "bit_swap", true);
->> -    qdev_prop_set_chr(dev, "chrB", serial_hd(1));
->> -    qdev_prop_set_chr(dev, "chrA", serial_hd(0));
->> -    qdev_prop_set_uint32(dev, "chnBtype", escc_serial);
->> -    qdev_prop_set_uint32(dev, "chnAtype", escc_serial);
->> -
->> -    s = SYS_BUS_DEVICE(dev);
->> -    sysbus_realize_and_unref(s, &error_fatal);
->> -    sysbus_connect_irq(s, 0, qdev_get_gpio_in(pcdev, NEXT_SCC_I));
->> -    sysbus_connect_irq(s, 1, qdev_get_gpio_in(pcdev, NEXT_SCC_DMA_I));
->> -
->> -    memory_region_add_subregion(&next_pc->scrmem, 0x18000,
->> -                                sysbus_mmio_get_region(s, 0));
->> -}
->> -
->>   static void next_pc_reset(DeviceState *dev)
->>   {
->>       NeXTPC *s = NEXT_PC(dev);
->> @@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
->>       /* Floppy */
->>       memory_region_add_subregion(&s->scrmem, 0x14108,
->>                                   &s->floppy_mem);
->> +
->> +    /* ESCC */
->> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "escc"));
+> Signed-off-by: Thomas Huth <huth@tuxfamily.org>
+> ---
+>   hw/m68k/next-cube.c | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> Can't you use s->escc directly here instead of taking the detour via
-> object_resolve_path_component() ?
+> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+> index f576452fc3..de7ce13762 100644
+> --- a/hw/m68k/next-cube.c
+> +++ b/hw/m68k/next-cube.c
+> @@ -1052,6 +1052,7 @@ static void next_machine_class_init(ObjectClass *oc, void *data)
+>       mc->default_ram_size = RAM_SIZE;
+>       mc->default_ram_id = "next.ram";
+>       mc->default_cpu_type = M68K_CPU_TYPE_NAME("m68040");
+> +    mc->no_cdrom = true;
+>   }
+>   
+>   static const TypeInfo next_typeinfo = {
 
-Indeed, its only there for the same reason as my previous email. I'll update it for v3.
+Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
->> +    qdev_prop_set_uint32(d, "disabled", 0);
->> +    qdev_prop_set_uint32(d, "frequency", 9600 * 384);
->> +    qdev_prop_set_uint32(d, "it_shift", 0);
->> +    qdev_prop_set_bit(d, "bit_swap", true);
->> +    qdev_prop_set_chr(d, "chrB", serial_hd(1));
->> +    qdev_prop_set_chr(d, "chrA", serial_hd(0));
->> +    qdev_prop_set_uint32(d, "chnBtype", escc_serial);
->> +    qdev_prop_set_uint32(d, "chnAtype", escc_serial);
->> +
->> +    sbd = SYS_BUS_DEVICE(d);
->> +    if (!sysbus_realize(sbd, errp)) {
->> +        return;
->> +    }
->> +    sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
->> +    sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
->> +
->> +    memory_region_add_subregion(&s->scrmem, 0x18000,
->> +                                sysbus_mmio_get_region(sbd, 0));
->> +
->>   }
-> 
+Just out of curiosity, can you share the kernel configuration you are using for testing?
+
 
 ATB,
 
