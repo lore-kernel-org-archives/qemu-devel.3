@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E983E77180
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 10:03:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAA5E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 10:04:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMOzD-0007bx-ER; Sat, 14 Dec 2024 05:02:59 -0500
+	id 1tMP00-0000Uk-53; Sat, 14 Dec 2024 05:03:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=YvF0=TH=kaod.org=clg@ozlabs.org>)
- id 1tMOz9-0007bF-Qf; Sat, 14 Dec 2024 05:02:55 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tMOzx-0000Nu-Fw; Sat, 14 Dec 2024 05:03:45 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=YvF0=TH=kaod.org=clg@ozlabs.org>)
- id 1tMOz7-0007Mn-9l; Sat, 14 Dec 2024 05:02:55 -0500
+ id 1tMOzv-0007gc-Jr; Sat, 14 Dec 2024 05:03:45 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y9MFj4PBBz4wvd;
- Sat, 14 Dec 2024 21:02:33 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y9MGw4Wssz4wyV;
+ Sat, 14 Dec 2024 21:03:36 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y9MFX28g1z4w2R;
- Sat, 14 Dec 2024 21:02:23 +1100 (AEDT)
-Message-ID: <468c26b2-45a3-4a1f-a4f6-6e3b9ee133c5@kaod.org>
-Date: Sat, 14 Dec 2024 11:02:21 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y9MGq0qHjz4w2R;
+ Sat, 14 Dec 2024 21:03:30 +1100 (AEDT)
+Message-ID: <9469e317-957b-44ed-8bfa-718da8c8ab73@kaod.org>
+Date: Sat, 14 Dec 2024 11:03:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 14/71] hw/adc: Constify all Property
+Subject: Re: [PATCH 28/71] hw/i2c: Constify all Property
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- "open list:STM32F205" <qemu-arm@nongnu.org>
+ Corey Minyard <cminyard@mvista.com>, Patrick Leis <venture@google.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-19-richard.henderson@linaro.org>
+ <20241213190750.2513964-33-richard.henderson@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -86,18 +85,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241213190750.2513964-19-richard.henderson@linaro.org>
+In-Reply-To: <20241213190750.2513964-33-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=YvF0=TH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,8 +111,9 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/13/24 20:06, Richard Henderson wrote:
+On 12/13/24 20:07, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
@@ -124,34 +123,71 @@ C.
 
 
 > ---
->   hw/adc/aspeed_adc.c  | 2 +-
->   hw/adc/npcm7xx_adc.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   hw/i2c/aspeed_i2c.c      | 4 ++--
+>   hw/i2c/core.c            | 2 +-
+>   hw/i2c/i2c_mux_pca954x.c | 2 +-
+>   hw/i2c/omap_i2c.c        | 2 +-
+>   4 files changed, 5 insertions(+), 5 deletions(-)
 > 
-> diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
-> index 598f2bdf48..f94c6f2be3 100644
-> --- a/hw/adc/aspeed_adc.c
-> +++ b/hw/adc/aspeed_adc.c
-> @@ -286,7 +286,7 @@ static const VMStateDescription vmstate_aspeed_adc_engine = {
+> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+> index 3ae22cb052..2ea68c3090 100644
+> --- a/hw/i2c/aspeed_i2c.c
+> +++ b/hw/i2c/aspeed_i2c.c
+> @@ -1258,7 +1258,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
 >       }
->   };
+>   }
 >   
-> -static Property aspeed_adc_engine_properties[] = {
-> +static const Property aspeed_adc_engine_properties[] = {
->       DEFINE_PROP_UINT32("engine-id", AspeedADCEngineState, engine_id, 0),
->       DEFINE_PROP_UINT32("nr-channels", AspeedADCEngineState, nr_channels, 0),
+> -static Property aspeed_i2c_properties[] = {
+> +static const Property aspeed_i2c_properties[] = {
+>       DEFINE_PROP_LINK("dram", AspeedI2CState, dram_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
 >       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/adc/npcm7xx_adc.c b/hw/adc/npcm7xx_adc.c
-> index de8469dae4..1781ff4c0b 100644
-> --- a/hw/adc/npcm7xx_adc.c
-> +++ b/hw/adc/npcm7xx_adc.c
-> @@ -267,7 +267,7 @@ static const VMStateDescription vmstate_npcm7xx_adc = {
->       },
->   };
+> @@ -1446,7 +1446,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
+>       sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr_pool);
+>   }
 >   
-> -static Property npcm7xx_timer_properties[] = {
-> +static const Property npcm7xx_timer_properties[] = {
->       DEFINE_PROP_UINT32("iref", NPCM7xxADCState, iref, NPCM7XX_ADC_DEFAULT_IREF),
+> -static Property aspeed_i2c_bus_properties[] = {
+> +static const Property aspeed_i2c_bus_properties[] = {
+>       DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
+>       DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
+>                        AspeedI2CState *),
+> diff --git a/hw/i2c/core.c b/hw/i2c/core.c
+> index 4cf30b2c86..4118d3db50 100644
+> --- a/hw/i2c/core.c
+> +++ b/hw/i2c/core.c
+> @@ -18,7 +18,7 @@
+>   
+>   #define I2C_BROADCAST 0x00
+>   
+> -static Property i2c_props[] = {
+> +static const Property i2c_props[] = {
+>       DEFINE_PROP_UINT8("address", struct I2CSlave, address, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
+> index db5db956a6..80c570fd10 100644
+> --- a/hw/i2c/i2c_mux_pca954x.c
+> +++ b/hw/i2c/i2c_mux_pca954x.c
+> @@ -211,7 +211,7 @@ static void pca954x_init(Object *obj)
+>       }
+>   }
+>   
+> -static Property pca954x_props[] = {
+> +static const Property pca954x_props[] = {
+>       DEFINE_PROP_STRING("name", Pca954xState, name),
+>       DEFINE_PROP_END_OF_LIST()
+>   };
+> diff --git a/hw/i2c/omap_i2c.c b/hw/i2c/omap_i2c.c
+> index e78505ebdd..172df135f5 100644
+> --- a/hw/i2c/omap_i2c.c
+> +++ b/hw/i2c/omap_i2c.c
+> @@ -511,7 +511,7 @@ void omap_i2c_set_fclk(OMAPI2CState *i2c, omap_clk clk)
+>       i2c->fclk = clk;
+>   }
+>   
+> -static Property omap_i2c_properties[] = {
+> +static const Property omap_i2c_properties[] = {
+>       DEFINE_PROP_UINT8("revision", OMAPI2CState, revision, 0),
 >       DEFINE_PROP_END_OF_LIST(),
 >   };
 
