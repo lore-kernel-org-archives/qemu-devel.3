@@ -4,98 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5BEE7717F
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 00:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D5EE7717F
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 02:03:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMFjB-000795-LN; Fri, 13 Dec 2024 19:09:49 -0500
+	id 1tMHTk-0005Lo-8q; Fri, 13 Dec 2024 21:02:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tMFj9-00078W-Hw
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 19:09:47 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tMHTi-0005LM-Rm; Fri, 13 Dec 2024 21:01:58 -0500
+Received: from out203-205-221-231.mail.qq.com ([203.205.221.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1tMFj7-00061Z-GA
- for qemu-devel@nongnu.org; Fri, 13 Dec 2024 19:09:47 -0500
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDNwLZv032739;
- Sat, 14 Dec 2024 00:09:43 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=v7Vhh6
- sW5VxPBRWIJJJLrf9CMCK1v9svUNJsqkCRHs4=; b=YDT2oKJTyZZ+Wp610zHgL+
- BKHPehDJx20N8QTby4DjQtCb9wx9SfIjE+Q1QG7jSLTLFre9NKmmNOd0mfDNy21K
- Cn6iUHxWs7CKuuGEJmIIbtuyB0MuwkqStdgMv+gNIQ9307OH8M5ZWiYvDZeMrH3A
- O0UXKtgWLt/gdUy5hzlGbZciu1DEYK0hwHOVLmHlfK6Pb+E9vD7e6cWum/K0/kD4
- 3dJWzuDegPONKFwa5gmr+0y/tTA7/14pjBdkk31h39Gmzu6eSsNHOI2n54PjEh8/
- L0xHe/xMDcF/N2XhUQy086RZhIu6OdTvuOmm4pZGsgYlboUyB0WRCWqDp08EpUtg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43gy2h010w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 14 Dec 2024 00:09:42 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BDNssjQ032739;
- Sat, 14 Dec 2024 00:09:41 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43d0pt0k2q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 14 Dec 2024 00:09:41 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BE09eXc39125622
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 14 Dec 2024 00:09:41 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A1FAA58052;
- Sat, 14 Dec 2024 00:09:40 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6462A5805D;
- Sat, 14 Dec 2024 00:09:40 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 14 Dec 2024 00:09:40 +0000 (GMT)
-Message-ID: <7a655f83-8a29-4edc-a8d8-a700fcda378a@linux.ibm.com>
-Date: Fri, 13 Dec 2024 19:09:40 -0500
+ (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
+ id 1tMHTd-0005a1-TP; Fri, 13 Dec 2024 21:01:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1734141692; bh=kDLUMkjjzYKh6GiL9pmLN4IOqKgzN2FcvSUdTyQ48ok=;
+ h=Subject:From:To:Cc:Date:In-Reply-To:References;
+ b=zm5gWOp6TZrZbJdlFWW7BsJ9mm8xXxF35fuCovAl4zyKHh1DxY59CxbldkeVXeyW/
+ rWX77xZp5Nee/Mar/j0iiixNtFu1iV6vsoS3FXzDTrQ4vxvXYsfHsu7niwcea2yFay
+ uTNOy2gc24qBScGf411CxdNX9LNBxauOzACybuIM=
+Received: from [192.168.1.13] ([220.167.33.182])
+ by newxmesmtplogicsvrszc25-0.qq.com (NewEsmtp) with SMTP
+ id 5D06E9A; Sat, 14 Dec 2024 10:01:29 +0800
+X-QQ-mid: xmsmtpt1734141689tm76lh56s
+Message-ID: <tencent_20FAAD91C9BA033D18489DAD01233DCD6B0A@qq.com>
+X-QQ-XMAILINFO: NZFlUIrZ4HCZx9fCutvCLLryKEjtOnfziBU53CfbE4adybuTN9CZKluH508FfG
+ IL3bDApmYmdMm5oBStPRYQAwKu6WFajrTAXkdf0grtiYRbQLn6xH2tlBCMCtjwvMRVwfwbB7lmhz
+ rQK4CtQl8+WVkbCpxAWsYjYPS8IOQM+3c36PjWRXKps0DMB5EzxFFUKYV7GU7L3F7g6rp1PCOIvM
+ A725zS0hTpTrXMl8KegibM5Sxm1piIUxcf77rD9xQ1AKWbU+f4VLIdtOqvTcfOF+asm9dcvrDrfi
+ Z4bFtFkJBmH5wjicMjpdhiNkhwZe71MFlONxxr7EZyWHSwa1fHX50C9TZjIPMweGgOV1vVqCQ02P
+ sjv7FZchyWXfGeEEIFnNlr0Db++ZsdGzC0qbRBVcgWJnYf0bwqjP9POyUuCkkhgUmDc9b8dxiIB8
+ H+X3Punt3BX6TswoJeUkX1ginqT7S9rRxgaH208YPA7+6sO/vBum2IeBNFWQ/al9qFmFnkGFRrTA
+ KnZDGBnZS8Z3BA9JO+dbHdEhvH+pJ4ZItkggobbZXnr20cxTlKmGG5h8KLyEhHyjEXI7/KtzVXNC
+ xvpJgAfKgYXGg+xRspZT+OrUq6OIqPx+1Zs9daD6M9nVfx+gG7arQSIxS7Md0RMIFyYfQk9HBBh9
+ LtarZ8EMrnIHiUxebhMDpvvsbmBdl1/lUmz4TJro/IcDWuH/3ep/cK8P9ANvp1JvhHe2fSTTpWcv
+ XiMVWhZb9gao/ER9YhtW3dlTw2tn5cP3PPdiKTa4ZXpIJ2jfh4IXo/VjasqgH9oOW+OIPdC+DO7F
+ 6I8wP5sEciq82P3OfqMUDOye6PIfZed6akLWBS8xE2JtW6mALJlbJaraP2iCRTOKR4RbRIkdCp7Q
+ YdvE4HhrVXAuQMPb3idUKEXRSnY6YbPv4lydrAv3Xj2cboXanu7+zHd5QmSV5n9vlpDZyxaclKDo
+ XMplPf20785ArpPjJycg==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-OQ-MSGID: <418e65d0dc751130a624a63c0620aa042414a5f9.camel@qq.com>
+Subject: Re: [PATCH v3] riscv/gdb: add V bit to priv register
+From: Yanfeng Liu <yfliu2008@qq.com>
+To: Mario Fleischmann <mario.fleischmann@lauterbach.com>, 
+ qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, alex.bennee@linaro.org
+Date: Sat, 14 Dec 2024 10:01:28 +0800
+In-Reply-To: <5d28f5aa-bb59-4198-a6ff-495a0ea9a16a@lauterbach.com>
+References: <tencent_D006B250779A0740A99BB51DA4A8F95EBF07@qq.com>
+ <5d28f5aa-bb59-4198-a6ff-495a0ea9a16a@lauterbach.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu2 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 61/71] hw/tpm: Constify all Property
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-66-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20241213190750.2513964-66-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 3lqGb2z4bdY_yHMDXArfrpyKxSIH0CmH
-X-Proofpoint-GUID: 3lqGb2z4bdY_yHMDXArfrpyKxSIH0CmH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- adultscore=0 malwarescore=0 clxscore=1015 impostorscore=0 mlxlogscore=999
- phishscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 bulkscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412130171
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=203.205.221.231; envelope-from=yfliu2008@qq.com;
+ helo=out203-205-221-231.mail.qq.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,85 +84,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 2024-12-13 at 10:04 +0100, Mario Fleischmann wrote:
+> Hi,
+>=20
+> apologies for the delayed review; I've just gotten to it now.
+>=20
+> On 06.12.2024 01:14, Yanfeng Liu wrote:
+> > This adds virtualization mode (V bit) as bit(2) of register `priv`
+> > per RiscV debug spec v1.0.0-rc3. Checked with gdb-multiarch v12.1.
+> >=20
+> > Note that GDB may display `INVALID` tag for the value when V bit
+> > is set, this doesn't affect accessing to the bit.
+> >=20
+> > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> > ---
+> > =C2=A0 target/riscv/gdbstub.c | 7 ++++++-
+> > =C2=A0 1 file changed, 6 insertions(+), 1 deletion(-)
+> >=20
+> > diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
+> > index c07df972f1..8cc095cda3 100644
+> > --- a/target/riscv/gdbstub.c
+> > +++ b/target/riscv/gdbstub.c
+> > @@ -213,7 +213,10 @@ static int riscv_gdb_get_virtual(CPUState *cs,
+> > GByteArray *buf, int n)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 RISCVCPU *cpu =
+=3D RISCV_CPU(cs);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 CPURISCVState *e=
+nv =3D &cpu->env;
+> > =C2=A0=20
+> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
+v->priv);
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 /* Per RiscV debug spec v1.=
+0.0 rc3 */
+>=20
+> Now that rc4 is released, you might also cite "RISC-V Debug
+> Specification v1.0.0 rc4".
+Okay, will do.
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 target_ulong vbit =3D (env-=
+>virt_enabled) ? BIT(2) : 0;
+> > +
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return gdb_get_regl(buf, en=
+v->priv | vbit);
+> > =C2=A0 #endif
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+> > @@ -230,6 +233,8 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint=
+8_t
+> > *mem_buf, int n)
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (env->priv =
+=3D=3D PRV_RESERVED) {
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 env->priv =3D PRV_S;
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 env->virt_enabled =3D (env-=
+>priv =3D=3D PRV_M) ? 0 :
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 ((ldtul_p(mem_buf) & BIT(2)) >> 2);
+>=20
+> Looking at the other places in the source code where virt_enabled is=20
+> set, we should also check here if the H extension is active.
+> Alternatively, you might also consider using riscv_cpu_set_mode():
+>=20
+> Message-ID: <20240711-smcntrpmf_v7-v8-1-b7c38ae7b263@rivosinc.com>
+> Date: Thu, 11 Jul 2024 15:31:04 -0700
+> Subject: [PATCH v8 01/13] target/riscv: Combine set_mode and set_virt=20
+> functions.
+> From: Atish Patra <atishp@rivosinc.com>
+>=20
+Thanks for this, I will check both and see what is easier for a QEMU newbie
+later.
 
+> >=20
+> > =C2=A0 #endif
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return sizeof(ta=
+rget_ulong);
+> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>=20
+> In addition, we need to swap the virtual supervisor registers from the H=
+=20
+> extension, e.g. vsstatus:
+>=20
+> "When V=3D1, vsstatus substitutes for the usual sstatus, so instructions=
+=20
+> that normally read or modify sstatus actually access vsstatus instead."=
+=20
+> (privileged spec)
+>=20
+> With the current patch, I was able to read and modify V, but the=20
+> registers were not changing:
+>=20
+> (gdb) info register $priv
+> priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x4=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:4 [INVALID]
+> (gdb) info register $sstatus
+> sstatus=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x200004022=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 8589951010
+> (gdb) set $priv =3D 0x0
+> (gdb) info register $priv
+> priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:0 [User/Application]
+> (gdb) info register $sstatus
+> sstatus=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0x200004022=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0 8589951010
+>=20
+> Take a look at riscv_cpu_swap_hypervisor_regs() which I believe does the=
+=20
+> thing we need here. Note that the function is supposed be called before=
+=20
+> the mode switch.
 
-On 12/13/24 2:07 PM, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+thanks again, I will check that swapping method and use it before changing =
+the v
+bit.=20
 
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Regards,
+yf
 
-> ---
->   hw/tpm/tpm_crb.c        | 2 +-
->   hw/tpm/tpm_spapr.c      | 2 +-
->   hw/tpm/tpm_tis_i2c.c    | 2 +-
->   hw/tpm/tpm_tis_isa.c    | 2 +-
->   hw/tpm/tpm_tis_sysbus.c | 2 +-
->   5 files changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-> index 5cd5a2533b..2bf6e7ffe9 100644
-> --- a/hw/tpm/tpm_crb.c
-> +++ b/hw/tpm/tpm_crb.c
-> @@ -226,7 +226,7 @@ static const VMStateDescription vmstate_tpm_crb = {
->       }
->   };
-> 
-> -static Property tpm_crb_properties[] = {
-> +static const Property tpm_crb_properties[] = {
->       DEFINE_PROP_TPMBE("tpmdev", CRBState, tpmbe),
->       DEFINE_PROP_BOOL("ppi", CRBState, ppi_enabled, true),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/tpm/tpm_spapr.c b/hw/tpm/tpm_spapr.c
-> index 5f7a0dfc61..e15b67dd45 100644
-> --- a/hw/tpm/tpm_spapr.c
-> +++ b/hw/tpm/tpm_spapr.c
-> @@ -364,7 +364,7 @@ static const VMStateDescription vmstate_spapr_vtpm = {
->       }
->   };
-> 
-> -static Property tpm_spapr_properties[] = {
-> +static const Property tpm_spapr_properties[] = {
->       DEFINE_SPAPR_PROPERTIES(SpaprTpmState, vdev),
->       DEFINE_PROP_TPMBE("tpmdev", SpaprTpmState, be_driver),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/tpm/tpm_tis_i2c.c b/hw/tpm/tpm_tis_i2c.c
-> index c5548b0a45..b27af230cd 100644
-> --- a/hw/tpm/tpm_tis_i2c.c
-> +++ b/hw/tpm/tpm_tis_i2c.c
-> @@ -491,7 +491,7 @@ static int tpm_tis_i2c_send(I2CSlave *i2c, uint8_t data)
->       return 1;
->   }
-> 
-> -static Property tpm_tis_i2c_properties[] = {
-> +static const Property tpm_tis_i2c_properties[] = {
->       DEFINE_PROP_TPMBE("tpmdev", TPMStateI2C, state.be_driver),
->       DEFINE_PROP_END_OF_LIST(),
->   };
-> diff --git a/hw/tpm/tpm_tis_isa.c b/hw/tpm/tpm_tis_isa.c
-> index 21109edcaa..9b2160972a 100644
-> --- a/hw/tpm/tpm_tis_isa.c
-> +++ b/hw/tpm/tpm_tis_isa.c
-> @@ -91,7 +91,7 @@ static void tpm_tis_isa_reset(DeviceState *dev)
->       return tpm_tis_reset(s);
->   }
-> 
-> -static Property tpm_tis_isa_properties[] = {
-> +static const Property tpm_tis_isa_properties[] = {
->       DEFINE_PROP_UINT32("irq", TPMStateISA, state.irq_num, TPM_TIS_IRQ),
->       DEFINE_PROP_TPMBE("tpmdev", TPMStateISA, state.be_driver),
->       DEFINE_PROP_BOOL("ppi", TPMStateISA, state.ppi_enabled, true),
-> diff --git a/hw/tpm/tpm_tis_sysbus.c b/hw/tpm/tpm_tis_sysbus.c
-> index 967f264634..88c1f1e478 100644
-> --- a/hw/tpm/tpm_tis_sysbus.c
-> +++ b/hw/tpm/tpm_tis_sysbus.c
-> @@ -90,7 +90,7 @@ static void tpm_tis_sysbus_reset(DeviceState *dev)
->       return tpm_tis_reset(s);
->   }
-> 
-> -static Property tpm_tis_sysbus_properties[] = {
-> +static const Property tpm_tis_sysbus_properties[] = {
->       DEFINE_PROP_UINT32("irq", TPMStateSysBus, state.irq_num, TPM_TIS_IRQ),
->       DEFINE_PROP_TPMBE("tpmdev", TPMStateSysBus, state.be_driver),
->       DEFINE_PROP_END_OF_LIST(),
 
 
