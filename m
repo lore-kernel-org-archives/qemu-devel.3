@@ -4,50 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B479E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 21:00:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DF45E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 21:31:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMZEl-0002rV-Ot; Sat, 14 Dec 2024 15:59:43 -0500
+	id 1tMZiy-0008HR-ME; Sat, 14 Dec 2024 16:30:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZEj-0002qz-PN
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 15:59:41 -0500
+ id 1tMZiu-0008Gw-EM
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:30:52 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZEf-0002ay-Iw
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 15:59:41 -0500
+ id 1tMZis-0001ow-QN
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:30:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=Zqt8crQgIcZTWZRqVqnhQzBa0zPymKNTfWbIpyqR1K8=; b=ZX8kcA4NXgA0jzkGlywaMp5aPX
- tKY1CCCiNPQc8fcUGIUFNx+69QAd7bnueiz4hHcTLiJqwsCONcx2z63exfa85cHYVRuLTE/Fikwxm
- 2ImH24T7CuIZ21rkO6Z8CJGieifHDFZFjR5kr9GjDhn4ASQ75WHFERYGCP0E2z5zi7V312L/SIMM5
- hOopK3cJsxG+V1oocdkk7pD7/FncLy54NMMRvLf/PTiYKLUTZo8iOs4MTKELw9BbWFYqLLobT9RTa
- y2EeJuM/kQOi1mHzYfvAGXDL2b3rRgDTUNe51CJ0tZVA64D7syF4QxipcZJRTPjXiKFY1PSfSmJjG
- tbUWwnJaeIYA75gjloOfUM3E9Mv6KKPB+F6MhFB5YF/Vdl4Fe26On4BJ+upOSeHvkUlBs3mprSdoo
- NVIzuP+QLKDJR3A122+D+EdXTDeF8SA8ieVwUnHlId8/AvG1RZSSRaDu3I0IgNvPrnwhB7xl0hjmv
- P41q2o6+c+MPGN6VfC98nI9oDwO95wN7cbw6UvmEs6MAVLdOj+sjCXWSYgflaILPm4/IBAp6ufamC
- I9Cji9pzfkqPVafWsH+gmF1F2Vz2xNuaulQ9k2+A6EwaCdBc8oJa+fi4nN+KU69h21oUjIJ6DP+sQ
- bgJESUnFuhT4IrAtz0OZbVk8oKOTndqp3ZFv1KLis=;
+ bh=YH9/+MCqhaSVtsnyddNQYAReXBbwiUwOVcVCzrxb2qw=; b=TJkSEWYlKy12kBDn3ITcazbjst
+ +NZ59VI+RCpE0R0kEisILZqvhbpN7K/uu/Nx4VsIK4IlGk6SQe5GnEdmveSdqgjGxxe4Wty9pNlZH
+ RhfyNj2OpuMsJLZ4AUL9FVGOKJ11xgbAxabw/3HixqUVDIz5ObWII8lrT6EmY6ekY6cnUNL+QG7ak
+ ptSjgjqYX4ILHeHa53xy6MjwtQY/2L2h2qGutEWCcBVjqzDIM6p+zeYQIfzYap+RKDLPeYhpPnVwn
+ npnfYvwTJR3uBHGxGzdowQ5eHIe9ap10rqU2CXZfAJfN6sv3F1N7Bj+JMdwgSYIaTEhtErSZukt4c
+ b+uHfMrAN3YPo39qFtN0WNHBK+DLfbQ8XERJN7EF1d1ksc+UEOn3CsxrAMFLgdnpPt/vwEsYuS3Hr
+ x5TmAWpudHs4a4ptpJv/CpTvOsQ4B35OASZYrNiDe4YnCswJhlHalr7GV0xaEKGuoce8rMTTOemxw
+ ZZ96O5UjCZrbAv7vK+SetsXMQZDHsgXF8fIXEJZjSiDmK/nDJFCEcOFbQWW7OMTYAdvzvm//21BS4
+ fe62cmgPjkc0JrOvP8bgJbNH1pewVxaixBFctbYrNrRbIX7/Dgtu6fm9ntgFiE+VxDpZzjy4VhFIB
+ j16bz1MID09MEchvQ6p2fM/TemSrJDmnsqK11SZm0=;
 Received: from [2a02:8012:2f01:0:839f:b883:9bde:613a]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZE3-00065L-Q6; Sat, 14 Dec 2024 20:59:03 +0000
-Message-ID: <f5eb4ef4-3563-4792-911c-767118e1c5e9@ilande.co.uk>
-Date: Sat, 14 Dec 2024 20:59:30 +0000
+ id 1tMZiG-0006Ds-8d; Sat, 14 Dec 2024 21:30:16 +0000
+Message-ID: <e53a10c3-7f54-44ed-9426-8c3064873dab@ilande.co.uk>
+Date: Sat, 14 Dec 2024 21:30:42 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 To: Thomas Huth <huth@tuxfamily.org>
 Cc: qemu-devel@nongnu.org
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-3-mark.cave-ayland@ilande.co.uk>
- <20241213203722.62490442@tpx1>
+ <20241212114620.549285-26-mark.cave-ayland@ilande.co.uk>
+ <20241214070815.1fc6c597@tpx1>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -74,13 +74,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241213203722.62490442@tpx1>
+In-Reply-To: <20241214070815.1fc6c597@tpx1>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:839f:b883:9bde:613a
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 02/34] next-cube: remove overlap between next.dma and
- next.mmio memory regions
+Subject: Re: [PATCH v2 25/34] next-cube: QOMify NeXTRTC
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -106,72 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/12/2024 19:37, Thomas Huth wrote:
+On 14/12/2024 06:08, Thomas Huth wrote:
 
->   Hi Mark!
-> 
-> Am Thu, 12 Dec 2024 11:45:48 +0000
+> Am Thu, 12 Dec 2024 11:46:11 +0000
 > schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 > 
->> Change the start of the next.mmio memory region so that it follows on directly
->> after the next.dma memory region. Increase the address offsets in
->> next_mmio_read() and next_mmio_write(), and reduce the size of the next.mmio
->> memory region accordingly.
+>> This is to allow the RTC functionality to be maintained within its own separate
+>> device rather than as part of the next-pc device.
 >>
 >> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 >> ---
->>   hw/m68k/next-cube.c | 28 ++++++++++++++--------------
->>   1 file changed, 14 insertions(+), 14 deletions(-)
+>>   hw/m68k/next-cube.c | 71 +++++++++++++++++++++++++++++++--------------
+>>   1 file changed, 50 insertions(+), 21 deletions(-)
 >>
 >> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index 0418fbc8aa..550e7f0b0a 100644
+>> index 9c91ee146a..c947af65e2 100644
 >> --- a/hw/m68k/next-cube.c
 >> +++ b/hw/m68k/next-cube.c
->> @@ -266,23 +266,23 @@ static uint64_t next_mmio_read(void *opaque, hwaddr addr, unsigned size)
->>       uint64_t val;
->>   
->>       switch (addr) {
->> -    case 0x7000:
->> +    case 0x2000:    /* 0x2005000 */
->>           /* DPRINTF("Read INT status: %x\n", s->int_status); */
->>           val = s->int_status;
->>           break;
->>   
->> -    case 0x7800:
->> +    case 0x2800:    /* 0x2007800 */
->>           DPRINTF("MMIO Read INT mask: %x\n", s->int_mask);
->>           val = s->int_mask;
->>           break;
->>   
->> -    case 0xc000 ... 0xc003:
->> -        val = extract32(s->scr1, (4 - (addr - 0xc000) - size) << 3,
->> +    case 0x7000 ... 0x7003:    /* 0x200c000 */
->> +        val = extract32(s->scr1, (4 - (addr - 0x7000) - size) << 3,
->>                           size << 3);
->>           break;
->>   
->> -    case 0xd000 ... 0xd003:
->> -        val = extract32(s->scr2, (4 - (addr - 0xd000) - size) << 3,
->> +    case 0x8000 ... 0x8003:    /* 0x200d000 */
->> +        val = extract32(s->scr2, (4 - (addr - 0x8000) - size) << 3,
->>                           size << 3);
->>           break;
->>   
->> @@ -301,25 +301,25 @@ static void next_mmio_write(void *opaque, hwaddr addr, uint64_t val,
->>       NeXTPC *s = NEXT_PC(opaque);
->>   
->>       switch (addr) {
->> -    case 0x7000:
->> +    case 0x2000:    /* 0x2005000 */
+> ...
+>> @@ -1078,6 +1115,12 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+>>       }
+>>       sysbus_connect_irq(sbd, 0, qdev_get_gpio_in(dev, NEXT_SCC_I));
+>>       sysbus_connect_irq(sbd, 1, qdev_get_gpio_in(dev, NEXT_SCC_DMA_I));
+>> +
+>> +    /* RTC */
+>> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "rtc"));
+>> +    if (!sysbus_realize(SYS_BUS_DEVICE(d), errp)) {
+>> +        return;
+>> +    }
+>>   }
 > 
-> Comment should be /* 0x2007000 */ instead.
+> Would it be easier to directly use s->rtc instead of taking the detour via
+> object_resolve_path_component?
 > 
-> With that fixed:
-> 
-> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+>   Thomas
 
-Ooops yes, thanks for spotting this. I'll fix it in v3.
+That would also work. FWIW the object_resolve_path_component() version of the device 
+lookup comes from a follow-up series that wires up the interrupts outside of the 
+next-pc device, but it's easy enough for me to change for v3.
 
 
 ATB,
