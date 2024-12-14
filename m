@@ -4,47 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 027B6E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 21:43:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43855E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 22:10:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMZuG-0003Aa-Gj; Sat, 14 Dec 2024 16:42:36 -0500
+	id 1tMaKa-0006CN-RZ; Sat, 14 Dec 2024 17:09:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZuE-0003AQ-OY
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:42:34 -0500
+ id 1tMaKZ-0006CC-1F
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 17:09:47 -0500
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZuD-0004Nt-44
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 16:42:34 -0500
+ id 1tMaKX-0001lB-Ao
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 17:09:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
  Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
  Resent-To:Resent-Cc:Resent-Message-ID;
- bh=FR9d2JdnmTsPS7IW3m2uTnoe1BwJQx+0eE7eBIPAmng=; b=NOKic0bQpoh4r2vQdKX+GjEM03
- 7TJH3A0Apd0XuAQZQn2ZqL6nEEG7qj/tONaGqAXTbbgOz9YnAFXu4xykU6eZnDiopbsVnvxs57mkl
- p3zdS/MKn+WQHa71GYQ3QLu6qWqy6JNnwU1z7nclV46760mVUuKQdDgDtUPlVSDjEYqy6fP4otONl
- IWIsUFIn5DUOZTv29diEQL68LQU4Fkavc2EDJ5yDzlrzrSqEUHPGJa7zWnie6cWfrAGTx6eLCLn34
- 0CEzpHbkLRd2SrAlNjMkzUStFcMFG5PU+Cnsw6Y+9S3jEH6XzpoXuCOWfVwlNcFI2KWX5/AyJPDP0
- 84xsSeN8GRmjMiIeC+jm50JuE6pMbAI2pD1wMdPIAVzH6YxamckkXlaJ1D988SzAIhIS06OeaShMU
- 4/KZ75atxMIF9i5J0QMWoOTJYQSa1RCe+aGz8ggXVgp2e/lwrPUAmU9oUPEkhf0DnZfWQNX2lG7ad
- wUBCGEjxBz4nAzI8MQ8Mi4YmpHsZdbV7nHEcPgnY+Insi+iZx2MhJem7ilZJ92rUjM/rO3JReDF73
- bsqgicv9Q+hqEe7EkUrYT2hVaMQ0nwHgLj3bs4lEj9kb28UCwiRUIK4EzKcJARguZrvfj1chJ/Cgw
- IdS3TzA5dZD1qNkdozuJ2lgmT16tiAxDYPfe16vQ8=;
+ bh=KxKZmcn3kP8SU3gS4WPEtsX0n9HPWlLcZUcfBQ/Nch0=; b=VkuxAjrcHSn2640GYu8PA2MKb/
+ seL14E3hSsDVFw5iPqr55mwQOx1TaGYJSRFjKxJtrrGMVDXbrm7vDIPS5QPgTZkS7p+ObKkFV3Ylv
+ scTeGp2QC1f4KBl9ul0/qXuvRWK2iz/4Xdv901ZnLB7F6GSSYU6o8hHGPc0p9zHSKRLL3Ka9Q25D3
+ 7pgHHK8tSWnc/WC+whk0VKm+kT7sVcxitE/6Z888QWsGrsQChFqZjY2wuMUL3u0KCq2UpP/2ilIWP
+ Q+g6YBoDVgGdfHxxGimEj9IPY16No7mT+gPW59unxZBmQzIAD5rQy82Cii34DZH+cSAyOQEWn+wBy
+ 9GbSnHwL5CtL9itYK9Ze3nfZwZ3Fg8UwiGFf0KAUeYXysQyi7vquRT6PBmoNx63b7UvToyNa93QA5
+ 8GVOD+d+J+qULdqQwfQdSrneyoh7XU4j3X5gBgFcyPiOSOT1hdlRbR/W/a1aLeSavswK3QLB1hWod
+ q2BREBgp6pieXiMD46Hyi8G0UwaNwT9pg8PNlbX1K8iOpCQcrLKqwrasgtGXRCi0bn9BtgJ2ej4tP
+ YBzaSxoh6qY2vyXGeum0EIdoVwk60oNRS40TMGUsl5TZsnzwER+Y9u/PvTNfr9P1jovHxDcQnj8Di
+ dhNrHacD7yIGHhjVahNSfpZYA725csHYoj9mXCAms=;
 Received: from [2a02:8012:2f01:0:839f:b883:9bde:613a]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMZta-0006HN-SM; Sat, 14 Dec 2024 21:41:58 +0000
-Message-ID: <78df79e5-c662-450d-b9c0-96476dbcc107@ilande.co.uk>
-Date: Sat, 14 Dec 2024 21:42:25 +0000
+ id 1tMaJu-0006Tp-3u; Sat, 14 Dec 2024 22:09:10 +0000
+Message-ID: <d2fdd9cd-dade-4aae-ac5f-e6ad55c1e037@ilande.co.uk>
+Date: Sat, 14 Dec 2024 22:09:37 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Thomas Huth <huth@tuxfamily.org>, qemu-devel@nongnu.org
-References: <20241214091720.49779-1-huth@tuxfamily.org>
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ huth@tuxfamily.org, qemu-devel@nongnu.org
+References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-13-mark.cave-ayland@ilande.co.uk>
+ <1c80c24a-547e-4212-a4fa-5b9665edf09a@linaro.org>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -71,12 +74,13 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20241214091720.49779-1-huth@tuxfamily.org>
+In-Reply-To: <1c80c24a-547e-4212-a4fa-5b9665edf09a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:839f:b883:9bde:613a
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/m68k/next-cube: Disable the default CD-ROM drive
+Subject: Re: [PATCH v2 12/34] next-cube: move timer MMIO to separate memory
+ region on next-pc device
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -102,33 +106,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/12/2024 09:17, Thomas Huth wrote:
+On 14/12/2024 13:29, Philippe Mathieu-Daudé wrote:
 
-> The NeXT-Cube does not have a CD-ROM drive by default, and the
-> kernel does not seem to deal with the empty drive very well, so
-> let's disable the CD-ROM drive for this machine.
+> On 12/12/24 12:45, Mark Cave-Ayland wrote:
+>> Move the timer MMIO accesses to a separate memory region on the next-pc device
+>> instead of being part of the next.scr MMIO memory region.
+>>
+>> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+>> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+>> ---
+>>   hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
+>>   1 file changed, 50 insertions(+), 13 deletions(-)
 > 
-> Signed-off-by: Thomas Huth <huth@tuxfamily.org>
-> ---
->   hw/m68k/next-cube.c | 1 +
->   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> index f576452fc3..de7ce13762 100644
-> --- a/hw/m68k/next-cube.c
-> +++ b/hw/m68k/next-cube.c
-> @@ -1052,6 +1052,7 @@ static void next_machine_class_init(ObjectClass *oc, void *data)
->       mc->default_ram_size = RAM_SIZE;
->       mc->default_ram_id = "next.ram";
->       mc->default_cpu_type = M68K_CPU_TYPE_NAME("m68040");
-> +    mc->no_cdrom = true;
->   }
->   
->   static const TypeInfo next_typeinfo = {
+>> +static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
+>> +{
+>> +    uint64_t val;
+>> +
+>> +    switch (addr) {
+>> +    case 0 ... 3:
+>> +        /*
+>> +         * These 4 registers are the hardware timer, not sure which register
+>> +         * is the latch instead of data, but no problems so far.
+>> +         *
+>> +         * Hack: We need to have the LSB change consistently to make it work
+>> +         */
+>> +        val = extract32(clock(), (4 - addr - size) << 3,
+>> +                        size << 3);
+> 
+> Does this mean ...
+> 
+>> +        break;
+>> +
+>> +    default:
+>> +        g_assert_not_reached();
+>> +    }
+>> +
+>> +    return val;
+>> +}
+>> +
+>> +static const MemoryRegionOps next_timer_ops = {
+>> +    .read = next_timer_read,
+>> +    .write = next_timer_write,
+>> +    .valid.min_access_size = 1,
+>> +    .valid.max_access_size = 4,
+>> +    .endianness = DEVICE_BIG_ENDIAN,
+> 
+> ... this should be in little endianness?
+> 
+> Anyhow,
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
+>> +};
 
-Reviewed-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-
-Just out of curiosity, can you share the kernel configuration you are using for testing?
+That's a good point re: endian. I don't have any documentation for the timer device, 
+so the patch is focused to moving its registers to a separate memory region. It's 
+definitely something to consider in the future though.
 
 
 ATB,
