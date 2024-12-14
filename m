@@ -4,157 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFEEDE7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 17:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6517CE7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 18:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMWLr-0005ST-MH; Sat, 14 Dec 2024 12:54:51 -0500
+	id 1tMX2P-0006Rw-Mk; Sat, 14 Dec 2024 13:38:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
- id 1tMWLo-0005S6-AB
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 12:54:48 -0500
-Received: from mail-bn7nam10on2061c.outbound.protection.outlook.com
- ([2a01:111:f403:2009::61c]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Jason.Andryuk@amd.com>)
- id 1tMWLi-000444-38
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 12:54:48 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=rY3ew6M64TBE0L3g4xq8PczDQyR3+AAdI2R4RkNQRQ5dHC/P67XJv2i5jWab8sWv2GsYRnRysE8LzgcoczGLmUNvpjbTz3qTOwlNaSRQS2QAroorOoHjjWwwXQdnHdrNVHcm1sH6jWRQ6IlkHhaKjJyuEAir/M2WVWR/trfiRVCdUasXDnrKEIgJhTdGD5KEU6+woKsLa3bFZ/BJC6+EsuG5UayAsJ0QN7kB68oQ9AmraF+G7BMVI1T6yelLf7Nystk4l7bP9j8Opx5esUrLO00rEMvAlHVscDhrXznPE8NDbaLp3qfvhND5IbeycTdUeo8ef7MS6TCF7q1OkIC1iA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0GnafECtgxI2eDydWJ5XeykP2Zok967VY/jGtFS4mds=;
- b=WTh6sNikz7H2Yt8j1j2plFqQ19J7e9dzbgd4Ovi2pM8Pg6M1BPPfHSz2iZaq3p11n+N6Lgp/XvowH3Jn69a0Qtn16YlgRjk1EL5rbwHQQuKnw9y1M8+UbOYQ9d89fx3LCo+zTeGujLZo0VCXBVUZ1BsFWTy42ctDxb8VDw7GKtJtU0xX24MA2z/FY39agAvcNTFeIn9KTR83BkiPNe131wBLFFSiv57giNMzrW2lHLjkLXiLDYNk0vPztjs184Im6TIefX80dYlrYIgmSWANuNwweWktVHz066W4BlHff1bfiPjCC6x6eUJkS/QuCaoA/EhXGpeiglBvP7m1+3q54A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=linaro.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0GnafECtgxI2eDydWJ5XeykP2Zok967VY/jGtFS4mds=;
- b=HEeuj9e7v6W5qv15kO5QmQ0TYt6Q1feE3AQNTmXhlv4b/FYEJVyjGnTeHLU+ZRiwzCCXJEXW4N+WF+NslHBU3K+eTPQDmQexEuYajo9z32JccNH03V02pRXv7wm6ePgh0bQUjk89x7PTpFeNz4c8tbksAM5okKKJtyxgDh6G1nM=
-Received: from BN9P220CA0018.NAMP220.PROD.OUTLOOK.COM (2603:10b6:408:13e::23)
- by IA1PR12MB6459.namprd12.prod.outlook.com (2603:10b6:208:3a9::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.15; Sat, 14 Dec
- 2024 17:54:37 +0000
-Received: from BN2PEPF000055DF.namprd21.prod.outlook.com
- (2603:10b6:408:13e:cafe::4f) by BN9P220CA0018.outlook.office365.com
- (2603:10b6:408:13e::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.17 via Frontend Transport; Sat,
- 14 Dec 2024 17:54:37 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB03.amd.com; pr=C
-Received: from SATLEXMB03.amd.com (165.204.84.17) by
- BN2PEPF000055DF.mail.protection.outlook.com (10.167.245.9) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8272.0 via Frontend Transport; Sat, 14 Dec 2024 17:54:37 +0000
-Received: from SATLEXMB05.amd.com (10.181.40.146) by SATLEXMB03.amd.com
- (10.181.40.144) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 14 Dec
- 2024 11:54:37 -0600
-Received: from SATLEXMB04.amd.com (10.181.40.145) by SATLEXMB05.amd.com
- (10.181.40.146) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 14 Dec
- 2024 11:54:37 -0600
-Received: from [172.28.102.118] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server id 15.1.2507.39 via Frontend
- Transport; Sat, 14 Dec 2024 11:54:36 -0600
-Message-ID: <ac59742b-575f-49b2-8d34-00b8897863b7@amd.com>
-Date: Sat, 14 Dec 2024 12:54:35 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 69/71] hw/xen: Use DEFINE_PROP_END_OF_LIST in
- xen_sysdev_properties
-To: Richard Henderson <richard.henderson@linaro.org>, <qemu-devel@nongnu.org>
-CC: Stefano Stabellini <sstabellini@kernel.org>, Anthony PERARD
- <anthony@xenproject.org>, Paul Durrant <paul@xen.org>, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, "open list:X86 Xen CPUs"
- <xen-devel@lists.xenproject.org>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tMX2M-0006Pe-6R; Sat, 14 Dec 2024 13:38:46 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1tMX2K-0004rT-Fa; Sat, 14 Dec 2024 13:38:45 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4361fe642ddso29340305e9.2; 
+ Sat, 14 Dec 2024 10:38:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734201520; x=1734806320; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=86wLUwSF1OZgLJAl27kejU/Ni89VOyQc9iW47FX90+k=;
+ b=CtlxrjSc86AtpDqMJw+VoB9m0yaj3Pop8/e3LovZPlHD1Tb2Dfdnpjq3qClGqOx+o+
+ 7TMNrvOBsZwnufoelAJLoJZLKNLbLJayBsfYgbSeOb7669X99V7ZHy4c19gYUaVxGinU
+ TtdOMkHuD8g9I+EcLmUa6sD9F0JpSjrNITGiDCr2mrVWeXT0ZSnD8Sure20tEVzhrCj4
+ 4gnuEmNh0uF/1cxUYIUoFIfgbTBhUIUyabURky05DBqY9ztadAXqh2auzOpHm8pLrRFV
+ jyspb6oXFFY2cHQPuSY1QGXjkU4ZXGViCn0gT973cPEw+DM41yf5q3Acc2eM3dSbS0Bt
+ r0ZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734201520; x=1734806320;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=86wLUwSF1OZgLJAl27kejU/Ni89VOyQc9iW47FX90+k=;
+ b=CRkcpXPXAJ+yiuxTflis4kLLq9IAEQU9uSZBIRqT2ENzK32xaMH5Cv1kJXK5T6NcBQ
+ ulG6z2SK1othWfqKL4t8HlIg/HkF1Wiiv3t6ZwOhvXz/tO2yaHMvdxkLwfviEhVVsvsU
+ DPH+DDBcjduyxjMaF+sf3Xa+MN2jmrJvpuYAj5iuIvzCi+VezWmI7zuRJs0HtrOHPiiG
+ i0a1jdP4Fd4cRP6lkiSxu4CM3IixnsMEpE3YxpGu66hCJjP8yjEMG6Eeo1FBveLVgJeZ
+ b/ZM4U2bxdSzcGfqAeNqHBIAdokllIbVZoTzSWXVeq2k4sqcFsU7qwHDQI77NgBh8gcL
+ l1LQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXY1UQ7gykrbKcj6+DgGLsZ3xuHi/nSVLkVN1Ch7xsHIEBjFzZ8lrNeDZ1qal0thfbWc5A4wqOavx43@nongnu.org
+X-Gm-Message-State: AOJu0YznzOJwQlbp4v3cQ4YnkYzJYkhOdq+h2X+oNrfREoW7pGE7wCyh
+ EyZDFgimjjv0V5Ra9e4Xu6IeOdvQYb7218iCvDy7GzhXOPsyVfKGovT8jw==
+X-Gm-Gg: ASbGncv9KTShrk3hfS8ONhjG+jxK9IPHqO/kPQUAHsVq4GQGJv/cPtLHqYvjjjRc/vP
+ cGZJzP3EbBOCFVOhWG07bb7MpIb6cRDLu+ZtQHk1CGYKpYix+wZLuXx4sNz42pfS1H4u1kq5C7/
+ ihFY0TWIDmxsaT2/ykpoB8iWQ99BQ+561kGXGBAhokNn2Kq6G/JOjZt839SDTCheI5tPb2SkND/
+ uE/iKupvSf8AV0EWbdu2WxuyLl0NXIvsZe2up8tGxuGldalhg1f
+X-Google-Smtp-Source: AGHT+IEL1GM3310Rk8uHPnMhNjleeyl5qpPYTLb48XHeeHBC0JuH5JgJvLcH1Prhj5mKIx5XzJ+U9w==
+X-Received: by 2002:a05:600c:1c1e:b0:436:30e4:459b with SMTP id
+ 5b1f17b1804b1-43630e4465amr62870405e9.18.1734201519635; 
+ Sat, 14 Dec 2024 10:38:39 -0800 (PST)
+Received: from [127.0.0.1] ([185.238.219.73]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4363602c92csm31667435e9.15.2024.12.14.10.38.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 14 Dec 2024 10:38:38 -0800 (PST)
+Date: Sat, 14 Dec 2024 18:38:36 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+CC: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH 30/71] hw/ide: Constify all Property
+In-Reply-To: <20241213190750.2513964-35-richard.henderson@linaro.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213193004.2515684-1-richard.henderson@linaro.org>
- <20241213193004.2515684-7-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Jason Andryuk <jason.andryuk@amd.com>
-In-Reply-To: <20241213193004.2515684-7-richard.henderson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: None (SATLEXMB05.amd.com: jason.andryuk@amd.com does not
- designate permitted sender hosts)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN2PEPF000055DF:EE_|IA1PR12MB6459:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a0cc2cb-cfae-4cdf-4bb0-08dd1c68608a
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|82310400026|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eEpta0lCZE1YTGlseTBwZGdjM1BmVlBJRXNzUTQ1Rlo0c1JLZnpYQUFDV0xp?=
- =?utf-8?B?TWdWclFDVW5RMEc2MUcwWk5rbU5MbmRKanlNU3UvSWlqVTZ0aEljZjA2V3lD?=
- =?utf-8?B?dlFkUlhtQldTeE1KQTJEdFdBZEc2VHAxaVBaYkNRbkhacElPcEpPNlJxQXZV?=
- =?utf-8?B?WnNTbUpQTVl3QmZ6TDRMZG9wWExqYnFoOW5xYkRrY1BNbDJMNGJMSWpwbHk5?=
- =?utf-8?B?YWdkU0wzSjJTLzJOVnoxd3lkN252ZVpoVWk0VXZhaUxIL0kxVTZoUXVaS3ht?=
- =?utf-8?B?ZTdJdWl5UWpmZ0t3emJreEZXWTlndTVielhUTTVObVpzbmVQN1duL3pBZmdy?=
- =?utf-8?B?VC92N21weXFWQzlWNkdLSENMWlZGb2VBc2pINGp1RkVsMFdsRlZDbzdROTVq?=
- =?utf-8?B?L2xXS2Rad0FDYWtweDQraExtemx0R2FiTzBWbFEzRkJQWkJBNXJ1ZVNEekhW?=
- =?utf-8?B?ZE5SZUN4RWFqak5SbklTS1BXZHFpVTZQVWlXaUw5dk84UVJJUE1BbFpRMTF0?=
- =?utf-8?B?dEtEYzBtbCsrTyswVWUwOXljbitPOTBESktEL015Z3MvQ1hLenQrYm01aHZl?=
- =?utf-8?B?Y1VHaWJqd0NpczV4VzhrN0FJcjA2WWgvRkFSOEtKNUpzaHBxUWZTV3BBWFVM?=
- =?utf-8?B?SVpsdWw3emFMWnUwWFh4dndBbVFIU09WSG11eE50VXNnU2FTd2dFMkcxSTZL?=
- =?utf-8?B?aDdWU0o0a3oxOUc0U0VsRFpYKzVNNVNUSEcvclZPUXgrN0c1NjFyZW5rOWIw?=
- =?utf-8?B?L1QyTVV1KzloV0NyZnBydW16RmVuRklvcVVibElpTllWVHpDVDFSQmZkTGho?=
- =?utf-8?B?RFhLQWptaEd4RE9uSDNBNHVlSkhla1lCYzdybTZPa2Q3Q28rNER6TUJoNFJn?=
- =?utf-8?B?cFpiejVsQUY0S0Fkc1VEWUZTeVNJTm1rTGdONlhOVWthZzBsUkFQNG10SFpQ?=
- =?utf-8?B?Q1FxdllUck9xZVArOXpHeXNNc29JbGtpclc5eVFRdjlrSURMSWUvMlNtZ0Rk?=
- =?utf-8?B?TXBqdW5oKzN3TkZCalRkR1pBUnU0Q05VRWc3WGZ3QzBEWXNLcWh2akUwbmM5?=
- =?utf-8?B?N0FTeFlSeWwwbEwzSXNDN0llZXJXdk1PWUZoOWxZL0pUSkxkTUlTSndGV1Fo?=
- =?utf-8?B?ckkxTHMycTZ3SVZhRHFmdDBCcUVwZCtOaWRDZ1B6Nm5zS05Fb0hrN1ZmeUFr?=
- =?utf-8?B?UkRjeDZ6R3hFRWxkVTlOSWJMcnZLYlpwZFV5eEpmbC9GVDlTTWRZUUcwZDQ2?=
- =?utf-8?B?VDMwRVkybkZ5UU8yTWlvMVBOeE9CZWplKzFTVExVZTFmTXNheEpaMWZGVUh0?=
- =?utf-8?B?dWlrd1BZTW5CTjF3MlNqU056WXN4WEFQSnhxelYwbHJuWnlZbXN3TVpjRXA5?=
- =?utf-8?B?QWJnaHhaQkYzYnVYaVhtWFdGV250UjY4R2JWQzkwdzM3dkJzdlZncUxIeUFG?=
- =?utf-8?B?WkF1TTZ3blJ6Y1Y3bmFxSjh4MG0veVFFWkxYMVNsZllac2tDclB4K0lnbFZU?=
- =?utf-8?B?WDhzWXJzN0g3eFU0bFhqdzlpcWxGejF0UldTUi85cGJJdmpVTVBiYU9vNjV1?=
- =?utf-8?B?NkZmYjBRbE5DcmRsYnZlWnV3aWp0SGYyaWJNY0x3Q1RoVFk5MHRYcExIanRz?=
- =?utf-8?B?ei92UzhCaHpvemk4UFl1QTBaR09YYlRJRzJwV0R5N0NBRzZyVlhNNUg0S3oz?=
- =?utf-8?B?QWpGQ2RrZWNtek5zenRBZFEvWndGTklaR014d20yU2lxMmN6d0dJOXFaY0JL?=
- =?utf-8?B?T01OSXIwRTluQ3JsQ1p3ZzJKSXJWOHNRZGFNVkRpK0YrUm5JYmxWNVZVWkg3?=
- =?utf-8?B?eWpBVm9FcFRHTnRrSTJrTTBDQkhYK0pRU2tyNmNlcG9keDR4OEZTajk2bXdF?=
- =?utf-8?B?YW1xbmgxTXZ5KzBqZjYram1hVGpEQjl2QlJYd2JtdTBQTVI1dHhKNnVDUTVz?=
- =?utf-8?B?eDBKOUZSbXV0TmdySmw0NDRjN2M5cXpzNmRuem93VzNBMmNySmhldVh4WHUy?=
- =?utf-8?Q?8Mw47UrbQdOKlS8snLWTjXWSZVGmE8=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB03.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(82310400026)(1800799024)(7053199007);
- DIR:OUT; SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Dec 2024 17:54:37.7549 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a0cc2cb-cfae-4cdf-4bb0-08dd1c68608a
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB03.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN2PEPF000055DF.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6459
-Received-SPF: permerror client-ip=2a01:111:f403:2009::61c;
- envelope-from=Jason.Andryuk@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -23
-X-Spam_score: -2.4
+ <20241213190750.2513964-35-richard.henderson@linaro.org>
+Message-ID: <20326C49-CDA0-4B35-BAEA-662861E74B48@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.292,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -170,8 +98,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024-12-13 14:30, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Jason Andryuk <jason.andryuk@amd.com>
+
+Am 13=2E Dezember 2024 19:07:04 UTC schrieb Richard Henderson <richard=2Eh=
+enderson@linaro=2Eorg>:
+>Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
+>---
+> hw/ide/ahci=2Ec    | 2 +-
+> hw/ide/cf=2Ec      | 2 +-
+> hw/ide/cmd646=2Ec  | 2 +-
+> hw/ide/ide-dev=2Ec | 6 +++---
+> hw/ide/isa=2Ec     | 2 +-
+> hw/ide/macio=2Ec   | 2 +-
+> hw/ide/mmio=2Ec    | 2 +-
+> 7 files changed, 9 insertions(+), 9 deletions(-)
+>
+>diff --git a/hw/ide/ahci=2Ec b/hw/ide/ahci=2Ec
+>index 0eb24304ee=2E=2E8ee015c1a4 100644
+>--- a/hw/ide/ahci=2Ec
+>+++ b/hw/ide/ahci=2Ec
+>@@ -1867,7 +1867,7 @@ static void sysbus_ahci_realize(DeviceState *dev, E=
+rror **errp)
+>     ahci_realize(&s->ahci, dev, &address_space_memory);
+> }
+>=20
+>-static Property sysbus_ahci_properties[] =3D {
+>+static const Property sysbus_ahci_properties[] =3D {
+>     DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci=2Eports, 1),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>diff --git a/hw/ide/cf=2Ec b/hw/ide/cf=2Ec
+>index 2a425cb0f2=2E=2E190914f513 100644
+>--- a/hw/ide/cf=2Ec
+>+++ b/hw/ide/cf=2Ec
+>@@ -24,7 +24,7 @@ static void ide_cf_realize(IDEDevice *dev, Error **errp=
+)
+>     ide_dev_initfn(dev, IDE_CFATA, errp);
+> }
+>=20
+>-static Property ide_cf_properties[] =3D {
+>+static const Property ide_cf_properties[] =3D {
+>     DEFINE_IDE_DEV_PROPERTIES(),
+>     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev=2Econf),
+>     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
+>diff --git a/hw/ide/cmd646=2Ec b/hw/ide/cmd646=2Ec
+>index 6b02fc81ec=2E=2E942f6c470c 100644
+>--- a/hw/ide/cmd646=2Ec
+>+++ b/hw/ide/cmd646=2Ec
+>@@ -313,7 +313,7 @@ static void pci_cmd646_ide_exitfn(PCIDevice *dev)
+>     }
+> }
+>=20
+>-static Property cmd646_ide_properties[] =3D {
+>+static const Property cmd646_ide_properties[] =3D {
+>     DEFINE_PROP_UINT32("secondary", PCIIDEState, secondary, 0),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>diff --git a/hw/ide/ide-dev=2Ec b/hw/ide/ide-dev=2Ec
+>index 03f7967798=2E=2Ecc92531f1c 100644
+>--- a/hw/ide/ide-dev=2Ec
+>+++ b/hw/ide/ide-dev=2Ec
+>@@ -29,7 +29,7 @@
+> #include "qapi/visitor=2Eh"
+> #include "ide-internal=2Eh"
+>=20
+>-static Property ide_props[] =3D {
+>+static const Property ide_props[] =3D {
+>     DEFINE_PROP_UINT32("unit", IDEDevice, unit, -1),
+>     DEFINE_PROP_BOOL("win2k-install-hack", IDEDevice, win2k_install_hack=
+, false),
+>     DEFINE_PROP_END_OF_LIST(),
+>@@ -191,7 +191,7 @@ static void ide_cd_realize(IDEDevice *dev, Error **er=
+rp)
+>     ide_dev_initfn(dev, IDE_CD, errp);
+> }
+>=20
+>-static Property ide_hd_properties[] =3D {
+>+static const Property ide_hd_properties[] =3D {
+>     DEFINE_IDE_DEV_PROPERTIES(),
+>     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev=2Econf),
+>     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
+>@@ -218,7 +218,7 @@ static const TypeInfo ide_hd_info =3D {
+>     =2Eclass_init    =3D ide_hd_class_init,
+> };
+>=20
+>-static Property ide_cd_properties[] =3D {
+>+static const Property ide_cd_properties[] =3D {
+>     DEFINE_IDE_DEV_PROPERTIES(),
+>     DEFINE_PROP_END_OF_LIST(),
+> };
+>diff --git a/hw/ide/isa=2Ec b/hw/ide/isa=2Ec
+>index 211ebc9ba7=2E=2Ea0a7e4837c 100644
+>--- a/hw/ide/isa=2Ec
+>+++ b/hw/ide/isa=2Ec
+>@@ -101,7 +101,7 @@ ISADevice *isa_ide_init(ISABus *bus, int iobase, int =
+iobase2, int irqnum,
+>     return isadev;
+> }
+>=20
+>-static Property isa_ide_properties[] =3D {
+>+static const Property isa_ide_properties[] =3D {
+>     DEFINE_PROP_UINT32("iobase",  ISAIDEState, iobase,  0x1f0),
+>     DEFINE_PROP_UINT32("iobase2", ISAIDEState, iobase2, 0x3f6),
+>     DEFINE_PROP_UINT32("irq",     ISAIDEState, irqnum,  14),
+>diff --git a/hw/ide/macio=2Ec b/hw/ide/macio=2Ec
+>index 99477a3d13=2E=2E25f8403e80 100644
+>--- a/hw/ide/macio=2Ec
+>+++ b/hw/ide/macio=2Ec
+>@@ -459,7 +459,7 @@ static void macio_ide_initfn(Object *obj)
+>                              qdev_prop_allow_set_link_before_realize, 0)=
+;
+> }
+>=20
+>-static Property macio_ide_properties[] =3D {
+>+static const Property macio_ide_properties[] =3D {
+>     DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
+>     DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
+>     DEFINE_PROP_END_OF_LIST(),
+>diff --git a/hw/ide/mmio=2Ec b/hw/ide/mmio=2Ec
+>index 53d22fb37f=2E=2E43ab66f347 100644
+>--- a/hw/ide/mmio=2Ec
+>+++ b/hw/ide/mmio=2Ec
+>@@ -141,7 +141,7 @@ static void mmio_ide_initfn(Object *obj)
+>     sysbus_init_irq(d, &s->irq);
+> }
+>=20
+>-static Property mmio_ide_properties[] =3D {
+>+static const Property mmio_ide_properties[] =3D {
+>     DEFINE_PROP_UINT32("shift", MMIOIDEState, shift, 0),
+>     DEFINE_PROP_END_OF_LIST()
+> };
+
+Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
 
