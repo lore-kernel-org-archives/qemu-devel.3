@@ -4,75 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70792E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 06:15:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC02CE77180
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 06:57:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMLQ9-0001cw-LT; Sat, 14 Dec 2024 01:14:33 -0500
+	id 1tMM4T-0006iQ-Tq; Sat, 14 Dec 2024 01:56:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMLQ8-0001co-Pz
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:14:32 -0500
-Received: from mail-ed1-f45.google.com ([209.85.208.45])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMLQ3-0000vU-V1
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:14:32 -0500
-Received: by mail-ed1-f45.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e8f64d5dso4374922a12.3
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 22:14:27 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734156866; x=1734761666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=W4hpbAF6YCK7jTq1JrgbAWgOwdtX4wWjrtTMOvnzZQI=;
- b=HmnIgOtWECpgOvsbIvD5vbYOjPxxhTSlhY9r8OSHNV2UzDrRl05F3zVmZJfkNcd4bY
- PIEn3rRI/KrRQQTF+DdV3geFmmVCMJlafuCJObhKr0ZD0wC4sP8uWRfqtI4GEJ2psul5
- TKbY/aMTz6l2rtx5uiUtR7m/Cn443vedFeBNMBJg6tp+wBcKbLwO55u+KFcAHiAaKlX4
- W8kxKIDKlDDL8okcwjv5M7MOwF8+G8HOyA477uhqBtndsHEK+Zcky7/+6tM+sAxrLQF1
- EuTUJkiBchy8IkDvNajmbciW/EAiuQrfgZ7bLNUu/r8WOyGqNPa/chMhApGNg60EJ5JR
- jjvQ==
-X-Gm-Message-State: AOJu0YzGdod5yt9tGDFl0suCcoxvVoXj8j2pmUrgGYk5Ay2Kyi0l7cUP
- QeyMomjcKfBUllFSZhUjPgssbkfJ/0lkRebsSRg8lEUvjN3XHePq
-X-Gm-Gg: ASbGncuP+bzJtUk7UDJ4oykOsh8dXDflDPX+sECZ9fmt9rPHDTkhcCZlypMIJc9GLF6
- 6Gl2kZndoxn/Bzvf8Hvj2gwMymqO8EjaiVevpSLF8ZBJ6JFjF7cx9UEfcbuVjkwnqQrq2ElKswx
- LR8PSKrR8d5Thu0sZ7puO8ZDLSwo9dRf2RD96tNz+1yoMHO76cPDZbEYHO5ovzIzdu5AkHB7Lor
- t5BQEe3P7m94pRq4kc62TuovBg83XSk5DQhN7tGWAmjoq0j9ENxhW2je8BNHcSm5+U6VNo7pZ9/
-X-Google-Smtp-Source: AGHT+IFeN06X8WjD4Fo59KIPKZq6dh7ZSphPYTn/5DUMK9PdaKWomHiklLIrZeK2BCJxDIXtEpxqLw==
-X-Received: by 2002:a17:906:2932:b0:aa6:ab70:4a7d with SMTP id
- a640c23a62f3a-aab77ee9adbmr503129966b.58.1734156866143; 
- Fri, 13 Dec 2024 22:14:26 -0800 (PST)
-Received: from tpx1 (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab9639363asm53858066b.169.2024.12.13.22.14.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 22:14:25 -0800 (PST)
-Date: Sat, 14 Dec 2024 07:14:22 +0100
-From: Thomas Huth <huth@tuxfamily.org>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 31/34] next-cube: move next_rtc_cmd_is_write() and
- next_rtc_data_in_irq() functions
-Message-ID: <20241214071422.73f243d7@tpx1>
-In-Reply-To: <20241212114620.549285-32-mark.cave-ayland@ilande.co.uk>
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-32-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tMM4S-0006iB-4M
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:56:12 -0500
+Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tMM4O-0004x1-Sp
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:56:11 -0500
+Received: from mxplan5.mail.ovh.net (unknown [10.108.25.244])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4Y9H6V0sgTz10G4;
+ Sat, 14 Dec 2024 06:56:02 +0000 (UTC)
+Received: from kaod.org (37.59.142.108) by DAG6EX1.mxp5.local (172.16.2.51)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 14 Dec
+ 2024 07:56:01 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-108S0022c799553-3930-475f-b5a9-a412d099ab2e,
+ 7F0875366495B486867DF4DA7C1512417F974EE7) smtp.auth=groug@kaod.org
+X-OVh-ClientIp: 78.113.106.80
+Date: Sat, 14 Dec 2024 07:56:00 +0100
+From: Greg Kurz <groug@kaod.org>
+To: Richard Henderson <richard.henderson@linaro.org>
+CC: <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, "Christian
+ Schoenebeck" <qemu_oss@crudebyte.com>
+Subject: Re: [PATCH 12/71] hw/9pfs: Constify all Property
+Message-ID: <20241214075600.49a57f89@bahia>
+In-Reply-To: <20241213190750.2513964-17-richard.henderson@linaro.org>
+References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ <20241213190750.2513964-17-richard.henderson@linaro.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.45; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f45.google.com
-X-Spam_score_int: -15
-X-Spam_score: -1.6
-X-Spam_bar: -
-X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=no autolearn_force=no
+X-Originating-IP: [37.59.142.108]
+X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG6EX1.mxp5.local
+ (172.16.2.51)
+X-Ovh-Tracer-GUID: 14d6a2f0-dd1c-408d-8a69-63bf6caddca7
+X-Ovh-Tracer-Id: 3171097087764503008
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrkeekgddutddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdekpdejkedruddufedruddtiedrkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepgedprhgtphhtthhopehrihgthhgrrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhhsthesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdfovfetjfhoshhtpehmohehvdelmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=0dMfaA8s5t30AtxJIZGz8Rl5VUoVGRQSYM6Ys8saa00=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1734159362; v=1;
+ b=piHqg0kFJCI7urxIHJnMh6CAYV/OQjMYFMsrkw6EasXnfDSTcvDJ4SBAS+Xp1o+UPsIr5Yen
+ EX/LPr3XQMEffMGN/Y8M76XwGY0e8CsaTlRwezDmsiCYYO1ZkOQdjUlcJd5iNbnHv8RdxRCwE1+
+ +GBZ/j5k5KKsDmEvKc3yG2bgmIXutkLQgj36pFO9XqUnLT8fZO5gwpE+mJSGjGZrT4CEdXGI2Vn
+ E4I3yxKxOSbWdGcVJpJNkVPP/lEEax9yOm2dChLU4fj0OKQ8yHxT5nuymydsHnsg64h8AjZD7Br
+ 26FRHLZNpSgU3XV11fBJX/iSmnZ0AS2Cu5KS2apfXJ/BQ==
+Received-SPF: pass client-ip=46.105.54.81; envelope-from=groug@kaod.org;
+ helo=smtpout3.mo529.mail-out.ovh.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,16 +83,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Thu, 12 Dec 2024 11:46:17 +0000
-schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+On Fri, 13 Dec 2024 13:06:46 -0600
+Richard Henderson <richard.henderson@linaro.org> wrote:
 
-> Move these functions in next-cube.c so that they are with the rest of the
-> next-rtc functions.
-> 
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->  hw/m68k/next-cube.c | 172 ++++++++++++++++++++++----------------------
->  1 file changed, 86 insertions(+), 86 deletions(-)
 
-Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+
+>  hw/9pfs/virtio-9p-device.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
+> index efa41cfd73..b764e4cd3d 100644
+> --- a/hw/9pfs/virtio-9p-device.c
+> +++ b/hw/9pfs/virtio-9p-device.c
+> @@ -243,7 +243,7 @@ static const VMStateDescription vmstate_virtio_9p = {
+>      },
+>  };
+>  
+> -static Property virtio_9p_properties[] = {
+> +static const Property virtio_9p_properties[] = {
+>      DEFINE_PROP_STRING("mount_tag", V9fsVirtioState, state.fsconf.tag),
+>      DEFINE_PROP_STRING("fsdev", V9fsVirtioState, state.fsconf.fsdev_id),
+>      DEFINE_PROP_END_OF_LIST(),
+
+
+
+-- 
+Greg
 
