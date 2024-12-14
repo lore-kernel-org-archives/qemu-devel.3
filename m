@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40063E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 13:42:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F9BDE7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 13:42:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMSOi-00066I-DJ; Sat, 14 Dec 2024 08:41:32 -0500
+	id 1tMSPI-0006LR-7m; Sat, 14 Dec 2024 08:42:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSOe-00065i-BH
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:41:29 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSPG-0006Kw-0p
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:42:06 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSOb-0000Xl-K3
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:41:27 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38633b5dbcfso2917172f8f.2
- for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 05:41:24 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSPD-0000ge-Cx
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:42:05 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-43622354a3eso18285025e9.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 05:42:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734183683; x=1734788483; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734183721; x=1734788521; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=l8HT69QtbfQhpFU2wKVMNmKDJzVqtpk3QtxcDOo0QVw=;
- b=JK8+KGl21Ns38LxEWItU690Xf7kX/6KfYcjeu+uBatvwC+QH33TfMvIvT/mjJOxnUM
- rm6eeAsIgFVqq4OnxPaE4nhxdYHpBdik4JMhf4EctbBsHd0fqiWLXs2B7NFTGvcqoSi9
- dx0dg4sfJAy/KgVaB27WksKf2FrYDoOb0cXDsg2qg0GiLnHGVLjaE1F1CeLCmjdGQNdi
- cOlEzBl0VSQ8ms2U41+Nm8PpIRb3zZP233o+zvjrs5u3iNQKvnLl0/IqeNKUTF9jL86T
- rE31WWsg89Xwoh5SLgRV6tCc2H8URlPNuM8LBx0lWS5N8/vtXypKPU/kmgDRrEwMQ1go
- X3WA==
+ bh=Ahi267ki5vYUZDOwg+ix38OXxZvj6kYiJn8Ue6NFTUk=;
+ b=QaHVrSa4DpDll6VIPj0rsrj6Hjo9XSTFSjdFoSpmgU+uSPKzaNLsiBVEvXb4PmJ2s6
+ gB969BAC95NkU+vzBCDCrOIUNAjwASxL9WuBRSTker6zPOU3A6E/FBkviVPmcbLF69jU
+ aNauqjG5g0pDSwuLgu37UZeaE4H0aQa4T02NwAL2blHRmYvF3OTbFB/xU0m5fH4aDf1k
+ R29dMvsRVXuUjmcddB2YrutUtNuWH4xEqeDrFUAK7YdZzJ58imbXeZeYnF5D3RTSbs1f
+ wXHAUfIrRUzvwYB6RGchR9xOBYYFrcSD4fCwfqBGJ2t6HivEHzU7l18oXpyKG3lAMlry
+ th1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734183683; x=1734788483;
+ d=1e100.net; s=20230601; t=1734183721; x=1734788521;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=l8HT69QtbfQhpFU2wKVMNmKDJzVqtpk3QtxcDOo0QVw=;
- b=k84mloB5/pG6ud7kqHlH70WZ8M2EVzvLxbkGbjPQ8TBxc5fUdxFDUGVxkL6FrbV7KJ
- 6VDZNGCA9tWsw27AKFZw8tAjRF0f9tTDl1/sMWH6T3TnNl4zGxzgVzTN+jZbhwzEdTer
- 1TFJTnhtkZKvUsyTc/KdeDcltl49+mL716mO0vvSwj+RnC20nVC2NltlrKeCDajXx5HW
- tfuXKAr+03YaPY09FLPXGsEKdplghzwf0HFat1xoFEmL9BY906Fyp3eZt3J5BldQE4us
- b1ZwTEDDsXlB3T936X6DV3pJ60LhSkW1nfx9UoI3nmM5QUPzgd+DW4395GFuR1wXwFGM
- lekg==
+ bh=Ahi267ki5vYUZDOwg+ix38OXxZvj6kYiJn8Ue6NFTUk=;
+ b=dmRWl9H4ZB8pmyWsiMP6WAs3NpEYfhzCSTT1OoazKZv56xSxN/S0KzaB5q1OPuX6BO
+ TyflxaYIXNxS0Oga+DNi5m1hcSyu8oFmgUBytV4uo87RGPJpoBHLmwH9khJuGY7F9r8L
+ Z26ERTzsWK2r/Lar+2MzLfRO259x3rULGzRL2pR75WCLHQIFJ3cxf9owFGHa+P1lFUC8
+ 84qjhHLzC/1s/k8tsi+vsE7ZcO+PLtbR1SPuyfEMGxfy/2evlHErKriwKlKEQc4L/q1T
+ i5cFW4T/6VNIK9Pp0obRw3XAKuyTDbg0Q4VIUu6RpGxrAvFxNV4sectSKw/HlZpPTbHs
+ lQnQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUo18/DKp5XZuLp3LNUEDw9rBo8sk7BKttG11/HTQrGRcK4WMk6j2LjjouBS9Ga6djz2WhZ6oSUe+2V@nongnu.org
-X-Gm-Message-State: AOJu0YwYVD9U5+XxbsQSbfYAHZOa9s1ZvgSm6+/NkUytWeu/vMWY0cEJ
- tBdPlTDbf9BLaw48Qy0f7YZdyJh27DthWlqu5+Il3fPSjWEeF76LFACiI5Wqx5A=
-X-Gm-Gg: ASbGnctfA2AGqbtCCXJQU2z11GojD6BWbd9EmmrxALcvRd4dSUjjHwk9/XHIB3i91Ha
- ochdmFHz0wQRwofUoM+3wpoV2WUvB6aP0gwDbhKaL9JNdaxzjclE+0PHMbS3stKFXwjlGgDUaZn
- /E6SvtiVwiPHjx6Eo1zmlKQajCzMZ6lEPx4bFGsfqR0lOz5UWRdXuHzyycSl9OY2OqwAA0tOeCY
- iV34IHFGB8cBnQfm4ARjrTxq0VtBRyDrSD4t/BhzsEEf58ZrprqYaZk1E+jxBQagXuMMDFkXrNW
- 3TBPP9FgH7QQgbxXusu+87H+Zg==
-X-Google-Smtp-Source: AGHT+IHMDvrm1GzyZLxe7s53V8BJI0v7LIWzg2SE/4bM6E3YE400fJhbfkveSyMgpuGbA8v6njuvSA==
-X-Received: by 2002:a5d:5f50:0:b0:382:3959:f429 with SMTP id
- ffacd0b85a97d-38880ac5f31mr5912265f8f.5.1734183682965; 
- Sat, 14 Dec 2024 05:41:22 -0800 (PST)
+ AJvYcCXB7UbACMARrEg6pJFMWVRGXR/KViuJwq+LPNTOz82UjqFpUdPpZ/KPiO+LvXxgcHvAQXVKV10dDq37@nongnu.org
+X-Gm-Message-State: AOJu0Yyilc++egi6TzrPxfJ0WdJavFtehv6jjSB9yLBusslnPozpSflf
+ 3rFkUbOBFdvIi4p7kWc0r+jmwAIRdznM28ZDbz/wq7yFnoryl6yYcTnel1D7mr+tgiwp0myjg+e
+ yHLM=
+X-Gm-Gg: ASbGncsyNZdOM23Ymy+DtOmyaKresQrzMWDlLOB1/Ig+6M5kvvseCRqmgS/cHeHNJ/8
+ XTQIdQiHZw8A+brIwIVmN++CfOIopMWwVqZquBJG2r6TqzrTVOeDvtBOQvjwBiLWuwcwYg3MqH8
+ K38hDFZ3NWBd1lwdF02QBgyKP2MsscIYeNKQ/lRHgrnJA4N7VBj2hxAa7AFKvMLkfxFeJEJVq0V
+ oRZnSEEVPDN5zatRi+aESLzb/XmZJiaZsY/0GqK0ay1o+eWl0/Z3A9AAWOE+q3e2Z+2s9hQZKNj
+ VRpeLSu5YCOZaka4hCpt5kv4EQ==
+X-Google-Smtp-Source: AGHT+IEpGOBVSYRoZkdmP0Q78N/bB+iI9kSuQVq80k28rPB0txZ4PMs+c8yPpLaRF/ksVpW8Jcx+Sg==
+X-Received: by 2002:a05:600c:384c:b0:434:fa24:b84a with SMTP id
+ 5b1f17b1804b1-4362aaa9441mr48947225e9.25.1734183721409; 
+ Sat, 14 Dec 2024 05:42:01 -0800 (PST)
 Received: from [192.168.224.213] (201.19.205.77.rev.sfr.net. [77.205.19.201])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c805d489sm2627857f8f.88.2024.12.14.05.41.21
+ 5b1f17b1804b1-43625717c9fsm79965555e9.44.2024.12.14.05.42.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Dec 2024 05:41:21 -0800 (PST)
-Message-ID: <808e1429-6c6f-4ff7-9c3d-3f43ebbd94c0@linaro.org>
-Date: Sat, 14 Dec 2024 14:41:20 +0100
+ Sat, 14 Dec 2024 05:42:00 -0800 (PST)
+Message-ID: <de034e4c-c209-4a0a-8b47-cae37ef8d98b@linaro.org>
+Date: Sat, 14 Dec 2024 14:41:59 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 26/34] next-cube: move reset of next-rtc fields from
- next-pc to next-rtc
+Subject: Re: [PATCH v2 33/34] next-cube: add my copyright to the top of the
+ file
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, huth@tuxfamily.org,
  qemu-devel@nongnu.org
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-27-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-34-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241212114620.549285-27-mark.cave-ayland@ilande.co.uk>
+In-Reply-To: <20241212114620.549285-34-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,39 +104,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/12/24 12:46, Mark Cave-Ayland wrote:
+> This series has involved rewriting and/or updating a considerable part of the
+> next-cube emulation so update the copyright in next-cube.c to reflect this.
+> 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 > ---
->   hw/m68k/next-cube.c | 17 ++++++++++++-----
->   1 file changed, 12 insertions(+), 5 deletions(-)
+>   hw/m68k/next-cube.c | 1 +
+>   1 file changed, 1 insertion(+)
 
-
-> +static void next_rtc_reset_hold(Object *obj, ResetType type)
-> +{
-> +    NeXTRTC *rtc = NEXT_RTC(obj);
-> +
-> +    rtc->status = 0x90;
-> +
-> +    /* Load RTC RAM - TODO: provide possibility to load contents from file */
-> +    memcpy(rtc->ram, rtc_ram2, 32);
-> +}
-
->   static const TypeInfo next_rtc_info = {
-> @@ -1072,11 +1084,6 @@ static void next_pc_reset_hold(Object *obj, ResetType type)
->       s->scr1 = 0x00011102;
->       s->scr2 = 0x00ff0c80;
->       s->old_scr2 = s->scr2;
-> -
-> -    s->rtc.status = 0x90;
-> -
-> -    /* Load RTC RAM - TODO: provide possibility to load contents from file */
-> -    memcpy(s->rtc.ram, rtc_ram2, 32);
-
-Pre-existing, this looks suspicious to reset RTC device state
-during device reset.
-
->   }
->   
->   static void next_pc_realize(DeviceState *dev, Error **errp)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
