@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6017E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 05:32:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67CBCE7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 05:51:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMKlJ-0003aE-4P; Sat, 14 Dec 2024 00:32:21 -0500
+	id 1tML2t-0005kH-Pl; Sat, 14 Dec 2024 00:50:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKlF-0003Zd-HE
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:32:18 -0500
-Received: from mail-ed1-f43.google.com ([209.85.208.43])
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tML2r-0005k4-IJ
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:50:29 -0500
+Received: from mail-ed1-f52.google.com ([209.85.208.52])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMKlD-0006AD-7l
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:32:16 -0500
-Received: by mail-ed1-f43.google.com with SMTP id
- 4fb4d7f45d1cf-5d0d32cd31aso2877234a12.0
- for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 21:32:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tML2o-0002Ik-F5
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 00:50:29 -0500
+Received: by mail-ed1-f52.google.com with SMTP id
+ 4fb4d7f45d1cf-5cecbddb574so4153702a12.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Dec 2024 21:50:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734154333; x=1734759133;
+ d=1e100.net; s=20230601; t=1734155424; x=1734760224;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=S3SlfIrSElHvSJS8sCPhnUBbm4Mq3+boU/m1JKaoe4Q=;
- b=Erl8+yGfPGwjaxwzzNIWysdg5NNw55+yx9w3hNzl2rFDzhksKYCgoEy27gpwhtAzjj
- Hy7ZztCnWJeejcGPjnRt9lJ2gqBW1h8ufDedhIytj4wFFDVh1dZl5u3PsKIbaOJAnwWr
- KVTX0OdG8t6Ew9TWeporHF79qRngJUaMObKa6luVyA1m+k06DNsjSAPUpme4+aOcH1wP
- 8kTixl8oL52Mn+zPO55+Id7T1CmtHtmpmZ2xjOfOdZsy2zVRVIIOXAdD+oVj5ixE5RiF
- bFg6grfhRdI4jYcXri1JrHZtgp0GpYJRhNh8w5UCkWkNI028OEHAEQs8MS7Fj2ua4AIL
- kTMw==
-X-Gm-Message-State: AOJu0Yx6TClEIQTDoJdQm9o7MFyqSxb89EX++Pp1DKuvrHOlaxxOFpWk
- QP6db3tgftYcDlaexRTpTkd79ug7vQXY3zuC/1ZoeOkuCnpwu+Nn
-X-Gm-Gg: ASbGnctR0IABgXaBSplfFtPZBVGZ5E/smes+rzif22e3LZ6JeOFy+T+RL244RQ1wRaC
- 8GXwZc+RIsNvdO42KGp2MRxtUVBBM0Tn+dNGq8YF87xIVZQMk43k5MHmtxSD1aShj+tuXn+MGMv
- wQ0JLeDYIfBGqDaID1xID/RAokpRpfq4z6yZyzsw5+ylMc9tBR2JEJSEZDEIFeJihmgFnvANKbm
- +d1h381FM3VHMdShjDPTTa4m7oGHoA+fvsBTRWJsPsaSUFnCkFvUeCE7Zk/3O2DK/Vim+d2JB61
-X-Google-Smtp-Source: AGHT+IF2AvGlci96PhElqZ9wfdytiXpIimf5SNLu9sohsUAQJfdG3gb0b2511oMm7nGpOpdAsG68sA==
-X-Received: by 2002:a05:6402:5389:b0:5d0:d818:559d with SMTP id
- 4fb4d7f45d1cf-5d63c31936dmr12663982a12.11.1734154333513; 
- Fri, 13 Dec 2024 21:32:13 -0800 (PST)
+ bh=nJ4IWLbtfLJGzZRDsq5WGLRrMUdi8HdsFnOfuqxil/w=;
+ b=E8CedTIU0sS4SmzkXluXpukFDBknC7hNn3xh61Px96JKe65twFAyFcpIXgCKNaXHnd
+ tFhjC5sKO+DldxxiRRPc626REeZ4Ur1xa5BNFFfdonyfBiu1yUUxBcisB5L2eOCoLB9v
+ pCi+UETFwmKVaFJIPKrS8ggqt0C6Z5z5Clrc1Rp5b/dba8klPCICJSFPB+JvSA8CK9JO
+ SrdQbmdvzK3mloQl/XboiWquJXiKUstlr2tb9dLYYmz3cSErsgf/OPUbjq19gnqErwPI
+ ru8BgViJ4+tzcWXyrSMkh6KrqTuHLCAQIiyAPNuWVWRj6WeMIs2rG1RByBqLx+gIxyg1
+ RS6g==
+X-Gm-Message-State: AOJu0YxMj6j1TWDIKKz5wSI9kQ8GF5t12a6NfFDlxc5CNAlXILtquJlQ
+ FVE1RejZr+2W3lvazx7ugsdgRuL8OTKcfsxSFMeA3UJQv2cywxrIBFAX7g==
+X-Gm-Gg: ASbGncuHz54Q/deQPdDuE3kTxby0efI05Tzq0dUA+00Hs9D1+2xXUfICvgU1ZwGYqan
+ LBnTimEcdT6f4Bn6afxM4BGg/3vxiRAvU8SAFLLo2hpXANnQmah8PNPYlAC9apYjJ2/Yy5gozNe
+ eRA/fg+hy6KuCiGqSvsRDbsL2Cy1mmCf1w4HJ4suDMBvdu2LWthXmqb1ZfQiZ8SRJwhZZ8RE46z
+ F0JoTlZ0eYBvHYwLqgrclW36AJz9mP/cwfHK4J7h0lqPyicW5cUGpcKE6hoAAdlgIXmb8xlDaw6
+X-Google-Smtp-Source: AGHT+IEPKQ+QMW6Hh1bOOkEjO0BZZcJmLZZXmoBUcumr6QS0bmqq08vUwYavpe17L27e/SLYQipzFw==
+X-Received: by 2002:a05:6402:3898:b0:5d1:2440:9ad3 with SMTP id
+ 4fb4d7f45d1cf-5d63c42a6c3mr4932971a12.30.1734155424339; 
+ Fri, 13 Dec 2024 21:50:24 -0800 (PST)
 Received: from tpx1 (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab9638ec48sm50696166b.147.2024.12.13.21.32.11
+ 4fb4d7f45d1cf-5d652ad15bfsm591812a12.19.2024.12.13.21.50.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Dec 2024 21:32:12 -0800 (PST)
-Date: Sat, 14 Dec 2024 06:32:09 +0100
+ Fri, 13 Dec 2024 21:50:23 -0800 (PST)
+Date: Sat, 14 Dec 2024 06:50:20 +0100
 From: Thomas Huth <huth@tuxfamily.org>
 To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 08/34] next-cube: move SCSI 4020/4021 logic from
- next-pc device to next-scsi device
-Message-ID: <20241214063209.66539045@tpx1>
-In-Reply-To: <20241212114620.549285-9-mark.cave-ayland@ilande.co.uk>
+Subject: Re: [PATCH v2 11/34] next-cube: move ESCC to be QOM child of
+ next-pc device
+Message-ID: <20241214065020.4a3b274f@tpx1>
+In-Reply-To: <20241212114620.549285-12-mark.cave-ayland@ilande.co.uk>
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-9-mark.cave-ayland@ilande.co.uk>
+ <20241212114620.549285-12-mark.cave-ayland@ilande.co.uk>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.43; envelope-from=th.huth@gmail.com;
- helo=mail-ed1-f43.google.com
+Received-SPF: pass client-ip=209.85.208.52; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f52.google.com
 X-Spam_score_int: -15
 X-Spam_score: -1.6
 X-Spam_bar: -
@@ -88,24 +88,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Thu, 12 Dec 2024 11:45:54 +0000
+Am Thu, 12 Dec 2024 11:45:57 +0000
 schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
 
-> The SCSI 4020/4021 logic refers to the offset of the SCSI CSRs within the NeXTCube
-> address space. Due to the previously overlapping memory regions, there were
-> duplicate MMIO accessors in the next.scr memory region for these registers but
-> this has now been resolved.
-> 
-> Move the remaining SCSI 4020/4021 logic from the next-pc device to the next-scsi
-> device, with the exception that the SCSI 4021 register now returns its previous
-> value like a normal register instead of a hardcoded 0x40 value. This also matches
-> how the registers are implemented in the Previous emulator.
+> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
+> of the next-pc device.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 > ---
->  hw/m68k/next-cube.c | 139 ++++++++++++++++++++------------------------
->  1 file changed, 62 insertions(+), 77 deletions(-)
+>  hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
+>  1 file changed, 26 insertions(+), 28 deletions(-)
 
 Reviewed-by: Thomas Huth <huth@tuxfamily.org>
-
 
