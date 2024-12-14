@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90952E77180
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 12:46:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B578E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 13:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMRWw-0000Zr-4r; Sat, 14 Dec 2024 07:45:58 -0500
+	id 1tMSDY-0000r8-HF; Sat, 14 Dec 2024 08:30:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMRWi-0000Z3-Sb
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 07:45:45 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSDX-0000qz-6V
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:29:59 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMRWc-0001pV-Nq
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 07:45:41 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3863494591bso1396949f8f.1
- for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 04:45:37 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSDU-0006iE-Ek
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:29:58 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so18836795e9.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 05:29:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734180336; x=1734785136; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734182994; x=1734787794; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=487mrID2d41wYPTl50QjHD+lNgf9qPw4UegTf1MKqcw=;
- b=mlyVUS/A6YaPaAuGR/h7zdN4IonnCXsHbnWUvEv5fmXEJ0bY+MA6jsHeFG/kj42knU
- mBcXOJPUcEQpUfivGR69CoRnS/R60MEpLlcaJeHWVYMAiukODx5/gK9Wgry+S9rGGTZd
- IOGD3p0ffyEtLJ/DS5OvoqcKFHAhHpHTsMPDM28DVN74eaDwnyz7KTNd6JP0LtdNQNTp
- TClV8eB3EXmhMa3/YHJdNtg0xyZgM9iM24M3ja/qsL7NLgasdSt7HffXKELAx5C9RaaE
- UnsXiN4xUcGzoPUtSM8RUsER3X1wnxKa5uyxbywrXPL73pCNerXfz5xLCyHz3485pav5
- hSAg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Jg9uYNwTIhdKic0/eFwfk4JfuBopr67QrHO/JrKqnuk=;
+ b=GCVDioDsP822w2N/88iRAnis5XDe74VNjoxQvh/infHDxA8gyFNSYsr8idwQc5zd7Y
+ T33WHMPYTKRvnsnvRJCI87ZV+VKPYiuzXNudtevO0eZkWUOgX9Jjc69WYoP0QDaEjs0v
+ WHMavBGi/IrahppNpSLdbjesraF7XnT3DvkEdf5djPlaxdDV5RB1KowzgTZ4i9QY/j42
+ +qoymZ2D5xBQiDTQywIZJnzlqLINbMIscU/GVJoxyq/JC0AuX0VniBNNehoghLqqfpr2
+ 2GSYOxd4P1Gv8UgtOYqK3+cQJhacUQSYIsUMQcW+HrPfCvbkauwCV/p9lpa7A+DP6mEJ
+ hN/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734180336; x=1734785136;
+ d=1e100.net; s=20230601; t=1734182994; x=1734787794;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=487mrID2d41wYPTl50QjHD+lNgf9qPw4UegTf1MKqcw=;
- b=wJ6ZgDz0MLyM8Ay4E8wrd2JOVHIXSmlVkTyEpvIuYGBxeGTeXqANnFuOfjKswmj6vt
- 4ieG9zB8bBD+rAaRWOG1ukPeilPeba1hn4WintlNcQTfQTGMl5NGPx9l2bdmImPRY/Ev
- ytnnD3GnGi99tAsljR2DLO3b2EEqOpewQhJV5Rt/Vh6UgX63Pbo1qoEeuufsuUtDvsEt
- lSLBWunTlo5dEyK5hhyk4OfPpuTjHS0ZROxsW0cKPXm+0l3oNZHCYa+hTFilNASLd0m6
- 01cKZujhPD2Yf0WZvKeJexrDaJ8ShlVzYSFpaSfv8MprjmTmh0EP4iyKtRko7Z52/LTL
- jLRA==
-X-Gm-Message-State: AOJu0YxNFeGf0fXyvNVm9QFojgitaFEGKIA9nV+HhNspTWyvpKovm0sY
- VSnPLFE77RgTWyhWMdFVk/KDsZwul7OWRJ4wfwvM2Hgam7yr151+WWVLqHo3TxSsR05FTmepIKx
- eyxE=
-X-Gm-Gg: ASbGnct9oZDqNKlXCEtntxUvVVb36bXanUdP4tQRCrT0cYYb9e4edPcht5i8KdapsDI
- qhJ5Malj0jfBPi2SNl/erHnCe0DGtsFmq4m++nbQ4yXnyE8oE5HHMTAKFnKNYjn2W0YFepvg51J
- joSavSHy0LRTRYz9V6yhU4c5aVeKZ6fn/up2ALyNgW5bRUQ9vMCM1Ca9p8haFsO9blBbvGivtAs
- lZuRbV7IPbzv6qyODXiSO8EuVpO6LY70vfKXLEJxJ21+Ap3CuIfspruwBJ9YZ58823jFFLDD2HV
- Ukh50edvbNe9dnG1IDv8vwCDTkLbSusbhYe4uHbA8O5Y5A==
-X-Google-Smtp-Source: AGHT+IHjBUezK6/KL98NpfzYYRNUBygh7vdyc3sc8ukSQ1E3ery5yAFLZHCldbqmSUWYww6STyDGAQ==
-X-Received: by 2002:a5d:64a8:0:b0:385:f349:ffef with SMTP id
- ffacd0b85a97d-3888e0b8723mr5426587f8f.41.1734180336491; 
- Sat, 14 Dec 2024 04:45:36 -0800 (PST)
-Received: from [192.168.224.213] (196.red-95-127-57.dynamicip.rima-tde.net.
- [95.127.57.196]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80613a9sm2468230f8f.101.2024.12.14.04.45.34
+ bh=Jg9uYNwTIhdKic0/eFwfk4JfuBopr67QrHO/JrKqnuk=;
+ b=XrHbiAXULvs70/URJoc7mI/61kAiZNPHFuV+TV6ERla5JHxryCzjESo+sWh2ekur/V
+ nuB7T52/2nCnHH0BKcKiq/bLzuh042FD2vOXFltVZTljhJs0sMch3ERinKBEMXtfT4zQ
+ dTNRhStt9LUJATIEqxkCy+bd9dOZA+z8p4qWNXZxX0TuQZe+GGz2AzD3PfvwYEbkxg5e
+ zhXRy1w7a4XpJIQ6NQpcwIev1ETrbwRGIxOWmfq+QzZR/wxHJuW/KJzuuo+7LnohwHOU
+ 26JAoEKLprSVLBuUxaiWW8TIUsGaH5yqqJM2pMbAWZl685oGmhc99BxlLjO+CWbIZcgt
+ S2jw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVT44xpgESY5HeGPcAXFfYW/54XelKVWGa2ziKPVQUjnEbp8XQZES3TSI7ucmSsp4n6unoHZ6Ba/0g0@nongnu.org
+X-Gm-Message-State: AOJu0YwL4fDeOdjgrzw6zbYbp7IyF/mb5vJ2/i1BpGECDHou0N9QNUGv
+ Q38XKM1tzyyrqJXHE4Nv0Oj4xjEPf3n29p5rk8ZhmfVJ1/kreWtYmK8JpVqldJMvrS/KKJWuOro
+ 00QI=
+X-Gm-Gg: ASbGncsEH8N6m7GP3wGBTS4ahltWjlwk+l82F2u+kYJtkXJlneqoOsqwcrrLTSGmxxU
+ h249b78Mc0qZw7GqbzbRycJr7Znx+Pv1hG09FnrK+604VEwTo3d9kMhnWmFl8TqAZ4MxFkgYn2j
+ jK6gGPMv94sWarERdrUqp1Gg+owXWcDeh0QCdSESBIH9SkrZ4v17u+F5Yq9F/UOzf8vmaTM05Gb
+ y/g8x2O1b080uW2954MPPSMTfjtsMVosxxpPPCIWICpuw7MZCFoAoPs7jWtpuBtn3lFJXvzNvEx
+ 1CaGfN5T9w21zzurilY3CXITYQ==
+X-Google-Smtp-Source: AGHT+IH6ZvM2QX8haKbWy7fDY1z2crOFHlrpwLucMmH4A/tPZBpl9UIu/ol34U0qnRZFm6sng3prmQ==
+X-Received: by 2002:a05:600c:1d86:b0:435:136:75f6 with SMTP id
+ 5b1f17b1804b1-4362a98815cmr58343365e9.0.1734182994545; 
+ Sat, 14 Dec 2024 05:29:54 -0800 (PST)
+Received: from [192.168.224.213] (201.19.205.77.rev.sfr.net. [77.205.19.201])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-436362c6818sm24295615e9.38.2024.12.14.05.29.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Dec 2024 04:45:36 -0800 (PST)
-Message-ID: <8e3fcde0-1199-488d-8acb-e324deac415b@linaro.org>
-Date: Sat, 14 Dec 2024 13:45:33 +0100
+ Sat, 14 Dec 2024 05:29:53 -0800 (PST)
+Message-ID: <1c80c24a-547e-4212-a4fa-5b9665edf09a@linaro.org>
+Date: Sat, 14 Dec 2024 14:29:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 11/34] next-cube: move ESCC to be QOM child of next-pc
- device
-To: Thomas Huth <huth@tuxfamily.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 12/34] next-cube: move timer MMIO to separate memory
+ region on next-pc device
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, huth@tuxfamily.org,
+ qemu-devel@nongnu.org
 References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-12-mark.cave-ayland@ilande.co.uk>
- <20241214071058.7097e28d@tpx1>
+ <20241212114620.549285-13-mark.cave-ayland@ilande.co.uk>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241214071058.7097e28d@tpx1>
+In-Reply-To: <20241212114620.549285-13-mark.cave-ayland@ilande.co.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,47 +103,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/12/24 07:10, Thomas Huth wrote:
-> Am Thu, 12 Dec 2024 11:45:57 +0000
-> schrieb Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>:
+On 12/12/24 12:45, Mark Cave-Ayland wrote:
+> Move the timer MMIO accesses to a separate memory region on the next-pc device
+> instead of being part of the next.scr MMIO memory region.
 > 
->> Since the ESCC is part of the next-pc device, move the ESCC to be a QOM child
->> of the next-pc device.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> ---
->>   hw/m68k/next-cube.c | 54 ++++++++++++++++++++++-----------------------
->>   1 file changed, 26 insertions(+), 28 deletions(-)
->>
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index efbb11e74b..20a0b073e1 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -124,6 +124,8 @@ struct NeXTPC {
->>       qemu_irq scsi_reset;
->>       qemu_irq scsi_dma;
->>   
->> +    ESCCState escc;
->> +
->>       NextRtc rtc;
->>   };
+> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
+> ---
+>   hw/m68k/next-cube.c | 63 +++++++++++++++++++++++++++++++++++----------
+>   1 file changed, 50 insertions(+), 13 deletions(-)
 
->>   static void next_pc_reset(DeviceState *dev)
->>   {
->>       NeXTPC *s = NEXT_PC(dev);
->> @@ -1043,6 +1020,28 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
->>       /* Floppy */
->>       memory_region_add_subregion(&s->scrmem, 0x14108,
->>                                   &s->floppy_mem);
->> +
->> +    /* ESCC */
->> +    d = DEVICE(object_resolve_path_component(OBJECT(dev), "escc"));
-> 
-> Can't you use s->escc directly here instead of taking the detour via
-> object_resolve_path_component() ?
 
-Indeed.
+> +static uint64_t next_timer_read(void *opaque, hwaddr addr, unsigned size)
+> +{
+> +    uint64_t val;
+> +
+> +    switch (addr) {
+> +    case 0 ... 3:
+> +        /*
+> +         * These 4 registers are the hardware timer, not sure which register
+> +         * is the latch instead of data, but no problems so far.
+> +         *
+> +         * Hack: We need to have the LSB change consistently to make it work
+> +         */
+> +        val = extract32(clock(), (4 - addr - size) << 3,
+> +                        size << 3);
 
+Does this mean ...
+
+> +        break;
+> +
+> +    default:
+> +        g_assert_not_reached();
+> +    }
+> +
+> +    return val;
+> +}
+> +
+> +static const MemoryRegionOps next_timer_ops = {
+> +    .read = next_timer_read,
+> +    .write = next_timer_write,
+> +    .valid.min_access_size = 1,
+> +    .valid.max_access_size = 4,
+> +    .endianness = DEVICE_BIG_ENDIAN,
+
+... this should be in little endianness?
+
+Anyhow,
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
+> +};
 
