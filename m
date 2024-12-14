@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE401E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 13:34:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16DE6E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 13:40:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMSHz-0002dl-El; Sat, 14 Dec 2024 08:34:35 -0500
+	id 1tMSMy-00052i-AS; Sat, 14 Dec 2024 08:39:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSHv-0002cc-JG
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:34:31 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tMSMv-00052O-7U
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:39:42 -0500
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tMSHt-0007Sn-P6
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:34:31 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4361b6f9faeso16355275e9.1
- for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 05:34:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tMSMs-0008Oc-W4
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 08:39:40 -0500
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0d32cd31aso3178373a12.0
+ for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 05:39:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734183267; x=1734788067; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0ZbxlpViG1TsgZog67GaVzFQ+LOIA2rnkrsVrbST9Mg=;
- b=FgHjEkapDdFzDr8TB593OfGg0N+cUvm7cLBkaAP5j9FK12o9OkFzAedH9EuVM4K2/z
- Bl4nydQiGGtj+yfa98TYpXl5aPwyc1Y7MKQbzsZuJXQhl2BdzELi1WA5bfRloGweOURY
- BD6T7sracIYX0bK0RJtwFspPU41NYrO7DqdJ1N9O7w4rxrtpnmN4Pt1kNs0pb9K9g0Pu
- 7HFf4lFgEOtgcW2flytlcDRpDNq79qOpqGELziEOi02dKx/vRBJjPvsS4qiVEZ0dzcLZ
- Pgae7qj6EO2WFypA2HXRYbMYUxCcgQcpx6C8Ax39pyNYU/flcFdWOHLYTmDgtb58Mt4d
- Sb2A==
+ d=gmail.com; s=20230601; t=1734183575; x=1734788375; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=EMBHIQkG4m2krJUW5sPQ9UuXOL5SIA2WgXPyp2MJb3k=;
+ b=JHKQ8Q5AV7li36tTnrp1TuabA7dSjuT7VyKed/Bept6XJFpPzYni7qPqJdhWzEz1ju
+ xBHJwbWdkLGmzUDmtlGLMwqz/At6XveEGX1rIagdUgzaGzrKYMqQ9RIdfbMUAYi1TZ5B
+ BJuRfh0RPyEcY+qH2O4u9WkCtpx3khj4Y/ZMkXrI5WcPtzl1ywnKPLPBGsBklHNybhB3
+ US52G10+4dOIHdBs7fxnmetkBWWJWa1GcvsY0n5eAWE+TPMPTtuBgsCfp9MTuPCunEOX
+ N0WqOsf0CDEAuWMERsUUUSoMBhwx7YGY1/wIwYGSwY4SRp9LTFXQkwFI6qAzIpZXLAcZ
+ V4gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734183267; x=1734788067;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0ZbxlpViG1TsgZog67GaVzFQ+LOIA2rnkrsVrbST9Mg=;
- b=e5Evy689CFgh43xnqyzpEi0sh7bk33gS8kqYk2rRZgn2/pDoQpwjFaUY6AVsXM0yQR
- MR84jrOjRV9c7FRHfByVexdRfA3AXRec5tyFRztdswp8DAnTx3t3h1RonHfEAQTswA7F
- yXK17RtjYwKeWSbtfN7POeAVAKLfSWzKtQj46/U3vAooSEtyFqi+0CHKVZJ6fXGFMAQs
- QM3/4BQ0LFPHRZBKagl6tdDfd+eDSS07z6RIH9X7vNgBtbvjwIHlzBiuIDnk0YbqQKHW
- DUjYPPl01BkBKDa1BkWrPXsydrqNLc1Z9be9wKts4Tbu2fmpIfMWdp3INW40gYoSupaF
- 4dIQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW4dYsUUADvDAzBIZZ1fJgX4zQ/c8GYT0k9Vo6A41HGXDaWBYzmW8p2Ly31MDxeL7IC/KD8TAuD8Ogg@nongnu.org
-X-Gm-Message-State: AOJu0Yy6XafBrYLaHaXNAQ6Bkq2cbCvh0KUH40gsORGkd+LSKLoVA2mv
- M0TfHdikFjBrZz6DKlnkRauDEHY6ytXqpSibUHJXJoUvzpnbGV+I2bIbg1q//jjSfBFJlZez4Fp
- lFqg=
-X-Gm-Gg: ASbGncsRDN37hs+ebq4T03OU1c2ha2Cu7bcuqeWD1k7VpTXwtgThgGYu4WM5D6Sgubc
- ykiOOpomA/m5bfsw1ybDcENTIMeePFQ2wte8fkMLyve8ZkfFDuem4j7LpEpvSdz/Qfy+2sGAc6M
- uMHxyMd8bVBNBP8+Fteekzz8G++4EJDI8s3WYRn4ewlZP1qA1AUa4LyR4vP6v4iKpObZ1rR1dov
- a2AHwryrmBkQqwshwEfuRJtbB3modikj+R2uk7T/oxFynO4U+8w1LEKPx6z7CMB9yoc4+bVVNuj
- W9kND1hQC3RkF3GDvA/LnJOipQ==
-X-Google-Smtp-Source: AGHT+IHjLAzwE8VKbE+qRhCsBAoHruf3iu6yCtVlCbQZRBihv8/i92iMSFZHaltj80AxDJzanQuK2g==
-X-Received: by 2002:a05:600c:4f0b:b0:434:9e17:190c with SMTP id
- 5b1f17b1804b1-4362abd3ce0mr44250835e9.0.1734183266899; 
- Sat, 14 Dec 2024 05:34:26 -0800 (PST)
-Received: from [192.168.224.213] (201.19.205.77.rev.sfr.net. [77.205.19.201])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43625553234sm81675435e9.3.2024.12.14.05.34.25
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Dec 2024 05:34:25 -0800 (PST)
-Message-ID: <1c8c1ea5-0ec1-49ea-a568-3d19cc22e3fe@linaro.org>
-Date: Sat, 14 Dec 2024 14:34:24 +0100
+ d=1e100.net; s=20230601; t=1734183575; x=1734788375;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EMBHIQkG4m2krJUW5sPQ9UuXOL5SIA2WgXPyp2MJb3k=;
+ b=psp4IO/wjJvnwvj2F19yS066sG4wjEaKxk4YsO+TJjqvqho1x49vUtD6nA6jUcF6Lj
+ apdcHufvPt4HXUQs8vUmt3HIL9Y3emFtI0aNDlAFgR9vGGJnISJtEc278f7qY5H0u/P7
+ RrxXgzRgN2vKgunWkOPadLsYH6cqsaLt8iJejD6GUziQ+rls9QMJW6xLbUtHBpedF1jl
+ mQbJl+lxL1yqjoyQW9h6vha8reTUBkLHDylfZsNjbE0h4Z4oohVbcMf9d1+sCSee56Yq
+ aR7am5nzeylPgE/s2IeT6BK44tTMzRaaj8Sm++Yp7UXDj8k95NaB5NriT7bIQrjz1Rj0
+ vP5A==
+X-Gm-Message-State: AOJu0Yz7um1wkf/3QyeUJn3X3epQCdiPmVryIIOzKwIKx2hg4MxlQpYq
+ vnWv72X3QovQyIypb5roGBikAy6nwwAXqh3qNSLPuL7SP8M409RWC/aVy3ARWZXYH/cWFpU4CJZ
+ kzfznR9TAgcQN2LmuKT36DLiY0QQ=
+X-Gm-Gg: ASbGncuqqm9jGuLBp0DlNL1EUGGUNakrp92nRnby0UxBmZ0JEo8ElPYKj+Y0sq5Ap59
+ +FPA3Vgdp1b70iEQ7Yaw7TGmNw1ZSURV2IDbp
+X-Google-Smtp-Source: AGHT+IFgkFWOFgbdHC26pCIuPDIApJY5C+i6QbbyNaLWPZTG5vMK6L8vDdS8yBN1hegUHZS3LrdzjUh+iD6dy1nt6bw=
+X-Received: by 2002:a05:6402:1e96:b0:5d0:d491:2d5e with SMTP id
+ 4fb4d7f45d1cf-5d63c300d72mr14419135a12.7.1734183575010; Sat, 14 Dec 2024
+ 05:39:35 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 17/34] next-cube: convert next-pc device to use
- Resettable interface
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, huth@tuxfamily.org,
- qemu-devel@nongnu.org
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-18-mark.cave-ayland@ilande.co.uk>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241212114620.549285-18-mark.cave-ayland@ilande.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20241213094027.1732484-1-maobibo@loongson.cn>
+In-Reply-To: <20241213094027.1732484-1-maobibo@loongson.cn>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Sat, 14 Dec 2024 08:39:23 -0500
+Message-ID: <CAJSP0QWwaqbA26mDEM+-y0-rGicFgrSDH0n+EAN8d9LTWsbm0w@mail.gmail.com>
+Subject: Re: [PULL 00/18] loongarch-to-apply queue
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,13 +91,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 12:46, Mark Cave-Ayland wrote:
-> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> Acked-by: Thomas Huth <huth@tuxfamily.org>
-> ---
->   hw/m68k/next-cube.c | 7 ++++---
->   1 file changed, 4 insertions(+), 3 deletions(-)
+On Fri, 13 Dec 2024 at 04:42, Bibo Mao <maobibo@loongson.cn> wrote:
+>
+> The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
+>
+>   Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bibo-mao/qemu.git pull-loongarch-20241213
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This tag is not in the repository. Did you forget to push it?
 
+Thanks,
+Stefan
+
+>
+> for you to fetch changes up to 78aa256571aa06f32001bd80635a1858187c609b:
+>
+>   hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic (2024-12-13 14:39:39 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20241213
+>
+> ----------------------------------------------------------------
+> Bibo Mao (8):
+>       include: Add loongarch_pic_common header file
+>       include: Move struct LoongArchPCHPIC to loongarch_pic_common header file
+>       hw/intc/loongarch_pch: Merge instance_init() into realize()
+>       hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICCommonState
+>       hw/intc/loongarch_pch: Move some functions to file loongarch_pic_common
+>       hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+>       hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+>       hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
+>
+>  hw/intc/loongarch_pch_pic.c            | 106 +++++++++++----------------------
+>  hw/intc/loongarch_pic_common.c         |  97 ++++++++++++++++++++++++++++++
+>  hw/intc/meson.build                    |   2 +-
+>  hw/loongarch/virt.c                    |   2 +-
+>  include/hw/intc/loongarch_pch_pic.h    |  70 +++++-----------------
+>  include/hw/intc/loongarch_pic_common.h |  82 +++++++++++++++++++++++++
+>  6 files changed, 230 insertions(+), 129 deletions(-)
+>  create mode 100644 hw/intc/loongarch_pic_common.c
+>  create mode 100644 include/hw/intc/loongarch_pic_common.h
+>
+>
 
