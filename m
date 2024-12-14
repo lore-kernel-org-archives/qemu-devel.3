@@ -4,55 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2005E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 10:05:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29A42E77180
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 10:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMP21-0003QN-4a; Sat, 14 Dec 2024 05:05:53 -0500
+	id 1tMP1T-0002pX-8X; Sat, 14 Dec 2024 05:05:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=YvF0=TH=kaod.org=clg@ozlabs.org>)
- id 1tMP1x-0003Jo-Pa; Sat, 14 Dec 2024 05:05:49 -0500
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1tMP1R-0002og-Eg; Sat, 14 Dec 2024 05:05:17 -0500
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=YvF0=TH=kaod.org=clg@ozlabs.org>)
- id 1tMP1v-0001TW-7l; Sat, 14 Dec 2024 05:05:49 -0500
+ id 1tMP1O-0001Qf-21; Sat, 14 Dec 2024 05:05:17 -0500
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y9MKH6kxTz4x0G;
- Sat, 14 Dec 2024 21:05:39 +1100 (AEDT)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4Y9MJf5d2dz4wj2;
+ Sat, 14 Dec 2024 21:05:06 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y9MK21vkQz4wbx;
- Sat, 14 Dec 2024 21:05:25 +1100 (AEDT)
-Message-ID: <af9fef2b-f79b-4ba9-a810-ca58ebc98d3f@kaod.org>
-Date: Sat, 14 Dec 2024 11:05:24 +0100
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4Y9MJ53k8qz4w2R;
+ Sat, 14 Dec 2024 21:04:37 +1100 (AEDT)
+Message-ID: <3bdef0a1-df2e-400e-91ea-76c3196aead4@kaod.org>
+Date: Sat, 14 Dec 2024 11:04:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 60/71] hw/timer: Constify all Property
+Subject: Re: [PATCH 41/71] hw/net: Constify all Property
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Beniamino Galvani <b.galvani@gmail.com>,
+Cc: Beniamino Galvani <b.galvani@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jason Wang <jasowang@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Alistair Francis <alistair@alistair23.me>, Pavel Pisa
+ <pisa@cmp.felk.cvut.cz>, Francisco Iglesias <francisco.iglesias@amd.com>,
+ Vikram Garhwal <vikram.garhwal@bytedance.com>,
+ Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Stefan Weil <sw@weilnetz.de>,
+ Bernhard Beschow <shentey@gmail.com>, Steven Lee
+ <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Michael Rolnik <mrolnik@gmail.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
- <chigot@adacore.com>, Frederic Konrad <konrad.frederic@yahoo.fr>,
- "Michael S. Tsirkin" <mst@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Alistair Francis <Alistair.Francis@wdc.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>, Bin Meng <bmeng.cn@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- "open list:ARM cores" <qemu-arm@nongnu.org>,
- "open list:OpenTitan" <qemu-riscv@nongnu.org>
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Helge Deller <deller@gmx.de>, Thomas Huth <huth@tuxfamily.org>,
+ Aleksandar Rikalo <arikalo@gmail.com>,
+ Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
+ Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ Max Filippov <jcmvbkbc@gmail.com>, Jiri Pirko <jiri@resnulli.us>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Sven Schnelle <svens@stackframe.org>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Stabellini <sstabellini@kernel.org>,
+ Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
+ Rob Herring <robh@kernel.org>, "open list:Allwinner-a10"
+ <qemu-arm@nongnu.org>, "open list:e500" <qemu-ppc@nongnu.org>,
+ "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-65-richard.henderson@linaro.org>
+ <20241213190750.2513964-46-richard.henderson@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -97,18 +108,17 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20241213190750.2513964-65-richard.henderson@linaro.org>
+In-Reply-To: <20241213190750.2513964-46-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=YvF0=TH=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_score_int: -23
+X-Spam_score: -2.4
+X-Spam_bar: --
+X-Spam_report: (-2.4 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_LOW=-0.7,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,296 +137,586 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 12/13/24 20:07, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   hw/timer/a9gtimer.c          | 2 +-
->   hw/timer/allwinner-a10-pit.c | 2 +-
->   hw/timer/arm_mptimer.c       | 2 +-
->   hw/timer/arm_timer.c         | 2 +-
->   hw/timer/aspeed_timer.c      | 2 +-
->   hw/timer/avr_timer16.c       | 2 +-
->   hw/timer/grlib_gptimer.c     | 2 +-
->   hw/timer/hpet.c              | 2 +-
->   hw/timer/i8254_common.c      | 2 +-
->   hw/timer/ibex_timer.c        | 2 +-
->   hw/timer/mss-timer.c         | 2 +-
->   hw/timer/nrf51_timer.c       | 2 +-
->   hw/timer/pxa2xx_timer.c      | 2 +-
->   hw/timer/renesas_cmt.c       | 2 +-
->   hw/timer/renesas_tmr.c       | 2 +-
->   hw/timer/sifive_pwm.c        | 2 +-
->   hw/timer/slavio_timer.c      | 2 +-
->   hw/timer/sse-timer.c         | 2 +-
->   hw/timer/stm32f2xx_timer.c   | 2 +-
->   hw/timer/xilinx_timer.c      | 2 +-
->   20 files changed, 20 insertions(+), 20 deletions(-)
+>   hw/net/allwinner-sun8i-emac.c  | 2 +-
+>   hw/net/allwinner_emac.c        | 2 +-
+>   hw/net/cadence_gem.c           | 2 +-
+>   hw/net/can/xlnx-versal-canfd.c | 2 +-
+>   hw/net/can/xlnx-zynqmp-can.c   | 2 +-
+>   hw/net/dp8393x.c               | 2 +-
+>   hw/net/e1000.c                 | 2 +-
+>   hw/net/e1000e.c                | 2 +-
+>   hw/net/eepro100.c              | 2 +-
+>   hw/net/fsl_etsec/etsec.c       | 2 +-
+>   hw/net/ftgmac100.c             | 4 ++--
+>   hw/net/igb.c                   | 2 +-
+>   hw/net/imx_fec.c               | 2 +-
+>   hw/net/lan9118.c               | 2 +-
+>   hw/net/lance.c                 | 2 +-
+>   hw/net/lasi_i82596.c           | 2 +-
+>   hw/net/mcf_fec.c               | 2 +-
+>   hw/net/mipsnet.c               | 2 +-
+>   hw/net/msf2-emac.c             | 2 +-
+>   hw/net/mv88w8618_eth.c         | 2 +-
+>   hw/net/ne2000-isa.c            | 2 +-
+>   hw/net/ne2000-pci.c            | 2 +-
+>   hw/net/npcm7xx_emc.c           | 2 +-
+>   hw/net/npcm_gmac.c             | 2 +-
+>   hw/net/opencores_eth.c         | 2 +-
+>   hw/net/pcnet-pci.c             | 2 +-
+>   hw/net/rocker/rocker.c         | 2 +-
+>   hw/net/rtl8139.c               | 2 +-
+>   hw/net/smc91c111.c             | 2 +-
+>   hw/net/spapr_llan.c            | 2 +-
+>   hw/net/stellaris_enet.c        | 2 +-
+>   hw/net/sungem.c                | 2 +-
+>   hw/net/sunhme.c                | 2 +-
+>   hw/net/tulip.c                 | 2 +-
+>   hw/net/virtio-net.c            | 2 +-
+>   hw/net/vmxnet3.c               | 2 +-
+>   hw/net/xen_nic.c               | 2 +-
+>   hw/net/xgmac.c                 | 2 +-
+>   hw/net/xilinx_axienet.c        | 2 +-
+>   hw/net/xilinx_ethlite.c        | 2 +-
+>   40 files changed, 41 insertions(+), 41 deletions(-)
 
 
-For the aspeed part,
+For the ftgmac100,
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 > 
-> diff --git a/hw/timer/a9gtimer.c b/hw/timer/a9gtimer.c
-> index 8091ec18c7..c0a91bab0c 100644
-> --- a/hw/timer/a9gtimer.c
-> +++ b/hw/timer/a9gtimer.c
-> @@ -373,7 +373,7 @@ static const VMStateDescription vmstate_a9_gtimer = {
->       }
->   };
->   
-> -static Property a9_gtimer_properties[] = {
-> +static const Property a9_gtimer_properties[] = {
->       DEFINE_PROP_UINT32("num-cpu", A9GTimerState, num_cpu, 0),
->       DEFINE_PROP_END_OF_LIST()
->   };
-> diff --git a/hw/timer/allwinner-a10-pit.c b/hw/timer/allwinner-a10-pit.c
-> index d488e9782b..2904ccfb42 100644
-> --- a/hw/timer/allwinner-a10-pit.c
-> +++ b/hw/timer/allwinner-a10-pit.c
-> @@ -188,7 +188,7 @@ static const MemoryRegionOps a10_pit_ops = {
->       .endianness = DEVICE_NATIVE_ENDIAN,
->   };
->   
-> -static Property a10_pit_properties[] = {
-> +static const Property a10_pit_properties[] = {
->       DEFINE_PROP_UINT32("clk0-freq", AwA10PITState, clk_freq[0], 0),
->       DEFINE_PROP_UINT32("clk1-freq", AwA10PITState, clk_freq[1], 0),
->       DEFINE_PROP_UINT32("clk2-freq", AwA10PITState, clk_freq[2], 0),
-> diff --git a/hw/timer/arm_mptimer.c b/hw/timer/arm_mptimer.c
-> index defa30b46d..6244a7a84f 100644
-> --- a/hw/timer/arm_mptimer.c
-> +++ b/hw/timer/arm_mptimer.c
-> @@ -300,7 +300,7 @@ static const VMStateDescription vmstate_arm_mptimer = {
->       }
->   };
->   
-> -static Property arm_mptimer_properties[] = {
-> +static const Property arm_mptimer_properties[] = {
->       DEFINE_PROP_UINT32("num-cpu", ARMMPTimerState, num_cpu, 0),
->       DEFINE_PROP_END_OF_LIST()
->   };
-> diff --git a/hw/timer/arm_timer.c b/hw/timer/arm_timer.c
-> index 0940e03f1d..dfa034296c 100644
-> --- a/hw/timer/arm_timer.c
-> +++ b/hw/timer/arm_timer.c
-> @@ -387,7 +387,7 @@ static const TypeInfo icp_pit_info = {
->       .instance_init = icp_pit_init,
->   };
->   
-> -static Property sp804_properties[] = {
-> +static const Property sp804_properties[] = {
->       DEFINE_PROP_UINT32("freq0", SP804State, freq0, 1000000),
->       DEFINE_PROP_UINT32("freq1", SP804State, freq1, 1000000),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
-> index 149f7cc5a6..4c16b5016e 100644
-> --- a/hw/timer/aspeed_timer.c
-> +++ b/hw/timer/aspeed_timer.c
-> @@ -674,7 +674,7 @@ static const VMStateDescription vmstate_aspeed_timer_state = {
->       }
->   };
->   
-> -static Property aspeed_timer_properties[] = {
-> +static const Property aspeed_timer_properties[] = {
->       DEFINE_PROP_LINK("scu", AspeedTimerCtrlState, scu, TYPE_ASPEED_SCU,
->                        AspeedSCUState *),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/timer/avr_timer16.c b/hw/timer/avr_timer16.c
-> index 421920054f..2e3ce83c43 100644
-> --- a/hw/timer/avr_timer16.c
-> +++ b/hw/timer/avr_timer16.c
-> @@ -542,7 +542,7 @@ static const MemoryRegionOps avr_timer16_ifr_ops = {
->       .impl = {.max_access_size = 1}
->   };
->   
-> -static Property avr_timer16_properties[] = {
-> +static const Property avr_timer16_properties[] = {
->       DEFINE_PROP_UINT8("id", struct AVRTimer16State, id, 0),
->       DEFINE_PROP_UINT64("cpu-frequency-hz", struct AVRTimer16State,
->                          cpu_freq_hz, 0),
-> diff --git a/hw/timer/grlib_gptimer.c b/hw/timer/grlib_gptimer.c
-> index 6ef08f25fd..a7428ed938 100644
-> --- a/hw/timer/grlib_gptimer.c
-> +++ b/hw/timer/grlib_gptimer.c
-> @@ -403,7 +403,7 @@ static void grlib_gptimer_realize(DeviceState *dev, Error **errp)
->       sysbus_init_mmio(sbd, &unit->iomem);
+> diff --git a/hw/net/allwinner-sun8i-emac.c b/hw/net/allwinner-sun8i-emac.c
+> index cdae74f503..3f03060bf5 100644
+> --- a/hw/net/allwinner-sun8i-emac.c
+> +++ b/hw/net/allwinner-sun8i-emac.c
+> @@ -829,7 +829,7 @@ static void allwinner_sun8i_emac_realize(DeviceState *dev, Error **errp)
+>       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
 >   }
 >   
-> -static Property grlib_gptimer_properties[] = {
-> +static const Property grlib_gptimer_properties[] = {
->       DEFINE_PROP_UINT32("frequency", GPTimerUnit, freq_hz,   40000000),
->       DEFINE_PROP_UINT32("irq-line",  GPTimerUnit, irq_line,  8),
->       DEFINE_PROP_UINT32("nr-timers", GPTimerUnit, nr_timers, 2),
-> diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-> index 5399f1b2a3..46886c379e 100644
-> --- a/hw/timer/hpet.c
-> +++ b/hw/timer/hpet.c
-> @@ -745,7 +745,7 @@ static void hpet_realize(DeviceState *dev, Error **errp)
->       qdev_init_gpio_out(dev, &s->pit_enabled, 1);
+> -static Property allwinner_sun8i_emac_properties[] = {
+> +static const Property allwinner_sun8i_emac_properties[] = {
+>       DEFINE_NIC_PROPERTIES(AwSun8iEmacState, conf),
+>       DEFINE_PROP_UINT8("phy-addr", AwSun8iEmacState, mii_phy_addr, 0),
+>       DEFINE_PROP_LINK("dma-memory", AwSun8iEmacState, dma_mr,
+> diff --git a/hw/net/allwinner_emac.c b/hw/net/allwinner_emac.c
+> index c104c2588e..39c10426cf 100644
+> --- a/hw/net/allwinner_emac.c
+> +++ b/hw/net/allwinner_emac.c
+> @@ -462,7 +462,7 @@ static void aw_emac_realize(DeviceState *dev, Error **errp)
+>       fifo8_create(&s->tx_fifo[1], TX_FIFO_SIZE);
 >   }
 >   
-> -static Property hpet_device_properties[] = {
-> +static const Property hpet_device_properties[] = {
->       DEFINE_PROP_UINT8("timers", HPETState, num_timers, HPET_MIN_TIMERS),
->       DEFINE_PROP_BIT("msi", HPETState, flags, HPET_MSI_SUPPORT, false),
->       DEFINE_PROP_UINT32(HPET_INTCAP, HPETState, intcap, 0),
-> diff --git a/hw/timer/i8254_common.c b/hw/timer/i8254_common.c
-> index 28fdabc321..953c1e11eb 100644
-> --- a/hw/timer/i8254_common.c
-> +++ b/hw/timer/i8254_common.c
-> @@ -238,7 +238,7 @@ static const VMStateDescription vmstate_pit_common = {
+> -static Property aw_emac_properties[] = {
+> +static const Property aw_emac_properties[] = {
+>       DEFINE_NIC_PROPERTIES(AwEmacState, conf),
+>       DEFINE_PROP_UINT8("phy-addr", AwEmacState, phy_addr, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
+> index 526739887c..3fce01315f 100644
+> --- a/hw/net/cadence_gem.c
+> +++ b/hw/net/cadence_gem.c
+> @@ -1784,7 +1784,7 @@ static const VMStateDescription vmstate_cadence_gem = {
 >       }
 >   };
 >   
-> -static Property pit_common_properties[] = {
-> +static const Property pit_common_properties[] = {
->       DEFINE_PROP_UINT32("iobase", PITCommonState, iobase,  -1),
+> -static Property gem_properties[] = {
+> +static const Property gem_properties[] = {
+>       DEFINE_NIC_PROPERTIES(CadenceGEMState, conf),
+>       DEFINE_PROP_UINT32("revision", CadenceGEMState, revision,
+>                          GEM_MODID_VALUE),
+> diff --git a/hw/net/can/xlnx-versal-canfd.c b/hw/net/can/xlnx-versal-canfd.c
+> index e148bd7b46..97fa46c4b3 100644
+> --- a/hw/net/can/xlnx-versal-canfd.c
+> +++ b/hw/net/can/xlnx-versal-canfd.c
+> @@ -2042,7 +2042,7 @@ static const VMStateDescription vmstate_canfd = {
+>       }
+>   };
+>   
+> -static Property canfd_core_properties[] = {
+> +static const Property canfd_core_properties[] = {
+>       DEFINE_PROP_UINT8("rx-fifo0", XlnxVersalCANFDState, cfg.rx0_fifo, 0x40),
+>       DEFINE_PROP_UINT8("rx-fifo1", XlnxVersalCANFDState, cfg.rx1_fifo, 0x40),
+>       DEFINE_PROP_UINT8("tx-fifo", XlnxVersalCANFDState, cfg.tx_fifo, 0x20),
+> diff --git a/hw/net/can/xlnx-zynqmp-can.c b/hw/net/can/xlnx-zynqmp-can.c
+> index 58f1432bb3..61c104c18b 100644
+> --- a/hw/net/can/xlnx-zynqmp-can.c
+> +++ b/hw/net/can/xlnx-zynqmp-can.c
+> @@ -1169,7 +1169,7 @@ static const VMStateDescription vmstate_can = {
+>       }
+>   };
+>   
+> -static Property xlnx_zynqmp_can_properties[] = {
+> +static const Property xlnx_zynqmp_can_properties[] = {
+>       DEFINE_PROP_UINT32("ext_clk_freq", XlnxZynqMPCANState, cfg.ext_clk_freq,
+>                          CAN_DEFAULT_CLOCK),
+>       DEFINE_PROP_LINK("canbus", XlnxZynqMPCANState, canbus, TYPE_CAN_BUS,
+> diff --git a/hw/net/dp8393x.c b/hw/net/dp8393x.c
+> index c0977308ba..e3ca11991b 100644
+> --- a/hw/net/dp8393x.c
+> +++ b/hw/net/dp8393x.c
+> @@ -931,7 +931,7 @@ static const VMStateDescription vmstate_dp8393x = {
+>       }
+>   };
+>   
+> -static Property dp8393x_properties[] = {
+> +static const Property dp8393x_properties[] = {
+>       DEFINE_NIC_PROPERTIES(dp8393xState, conf),
+>       DEFINE_PROP_LINK("dma_mr", dp8393xState, dma_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
+> diff --git a/hw/net/e1000.c b/hw/net/e1000.c
+> index ab72236d18..ef0af31751 100644
+> --- a/hw/net/e1000.c
+> +++ b/hw/net/e1000.c
+> @@ -1677,7 +1677,7 @@ static void pci_e1000_realize(PCIDevice *pci_dev, Error **errp)
+>                                           e1000_flush_queue_timer, d);
+>   }
+>   
+> -static Property e1000_properties[] = {
+> +static const Property e1000_properties[] = {
+>       DEFINE_NIC_PROPERTIES(E1000State, conf),
+>       DEFINE_PROP_BIT("extra_mac_registers", E1000State,
+>                       compat_flags, E1000_FLAG_MAC_BIT, true),
+> diff --git a/hw/net/e1000e.c b/hw/net/e1000e.c
+> index 843892ce09..e2b7576f67 100644
+> --- a/hw/net/e1000e.c
+> +++ b/hw/net/e1000e.c
+> @@ -661,7 +661,7 @@ static PropertyInfo e1000e_prop_disable_vnet,
+>                       e1000e_prop_subsys_ven,
+>                       e1000e_prop_subsys;
+>   
+> -static Property e1000e_properties[] = {
+> +static const Property e1000e_properties[] = {
+>       DEFINE_NIC_PROPERTIES(E1000EState, conf),
+>       DEFINE_PROP_SIGNED("disable_vnet_hdr", E1000EState, disable_vnet, false,
+>                           e1000e_prop_disable_vnet, bool),
+> diff --git a/hw/net/eepro100.c b/hw/net/eepro100.c
+> index 20b22d8e49..b8cb8d5cf1 100644
+> --- a/hw/net/eepro100.c
+> +++ b/hw/net/eepro100.c
+> @@ -2058,7 +2058,7 @@ static E100PCIDeviceInfo *eepro100_get_class(EEPRO100State *s)
+>       return eepro100_get_class_by_name(object_get_typename(OBJECT(s)));
+>   }
+>   
+> -static Property e100_properties[] = {
+> +static const Property e100_properties[] = {
+>       DEFINE_NIC_PROPERTIES(EEPRO100State, conf),
 >       DEFINE_PROP_END_OF_LIST(),
 >   };
-> diff --git a/hw/timer/ibex_timer.c b/hw/timer/ibex_timer.c
-> index 2bdcff532d..fba4466a89 100644
-> --- a/hw/timer/ibex_timer.c
-> +++ b/hw/timer/ibex_timer.c
-> @@ -263,7 +263,7 @@ static const VMStateDescription vmstate_ibex_timer = {
->       }
->   };
+> diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
+> index d8076e7be4..764be2c6a2 100644
+> --- a/hw/net/fsl_etsec/etsec.c
+> +++ b/hw/net/fsl_etsec/etsec.c
+> @@ -414,7 +414,7 @@ static void etsec_instance_init(Object *obj)
+>       sysbus_init_irq(sbd, &etsec->err_irq);
+>   }
 >   
-> -static Property ibex_timer_properties[] = {
-> +static const Property ibex_timer_properties[] = {
->       DEFINE_PROP_UINT32("timebase-freq", IbexTimerState, timebase_freq, 10000),
+> -static Property etsec_properties[] = {
+> +static const Property etsec_properties[] = {
+>       DEFINE_NIC_PROPERTIES(eTSEC, conf),
 >       DEFINE_PROP_END_OF_LIST(),
 >   };
-> diff --git a/hw/timer/mss-timer.c b/hw/timer/mss-timer.c
-> index b66aed56ea..e5c5cd6a84 100644
-> --- a/hw/timer/mss-timer.c
-> +++ b/hw/timer/mss-timer.c
-> @@ -279,7 +279,7 @@ static const VMStateDescription vmstate_mss_timer = {
+> diff --git a/hw/net/ftgmac100.c b/hw/net/ftgmac100.c
+> index 478356ee3e..4adc7fb10c 100644
+> --- a/hw/net/ftgmac100.c
+> +++ b/hw/net/ftgmac100.c
+> @@ -1254,7 +1254,7 @@ static const VMStateDescription vmstate_ftgmac100 = {
 >       }
 >   };
 >   
-> -static Property mss_timer_properties[] = {
-> +static const Property mss_timer_properties[] = {
->       /* Libero GUI shows 100Mhz as default for clocks */
->       DEFINE_PROP_UINT32("clock-frequency", MSSTimerState, freq_hz,
->                         100 * 1000000),
-> diff --git a/hw/timer/nrf51_timer.c b/hw/timer/nrf51_timer.c
-> index 35b0e62d5b..48fccec1bf 100644
-> --- a/hw/timer/nrf51_timer.c
-> +++ b/hw/timer/nrf51_timer.c
-> @@ -379,7 +379,7 @@ static const VMStateDescription vmstate_nrf51_timer = {
+> -static Property ftgmac100_properties[] = {
+> +static const Property ftgmac100_properties[] = {
+>       DEFINE_PROP_BOOL("aspeed", FTGMAC100State, aspeed, false),
+>       DEFINE_NIC_PROPERTIES(FTGMAC100State, conf),
+>       DEFINE_PROP_BOOL("dma64", FTGMAC100State, dma64, false),
+> @@ -1415,7 +1415,7 @@ static const VMStateDescription vmstate_aspeed_mii = {
 >       }
 >   };
 >   
-> -static Property nrf51_timer_properties[] = {
-> +static const Property nrf51_timer_properties[] = {
->       DEFINE_PROP_UINT8("id", NRF51TimerState, id, 0),
+> -static Property aspeed_mii_properties[] = {
+> +static const Property aspeed_mii_properties[] = {
+>       DEFINE_PROP_LINK("nic", AspeedMiiState, nic, TYPE_FTGMAC100,
+>                        FTGMAC100State *),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/net/igb.c b/hw/net/igb.c
+> index b92bba402e..ad0f748d82 100644
+> --- a/hw/net/igb.c
+> +++ b/hw/net/igb.c
+> @@ -591,7 +591,7 @@ static const VMStateDescription igb_vmstate = {
+>       }
+>   };
+>   
+> -static Property igb_properties[] = {
+> +static const Property igb_properties[] = {
+>       DEFINE_NIC_PROPERTIES(IGBState, conf),
+>       DEFINE_PROP_BOOL("x-pcie-flr-init", IGBState, has_flr, true),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/net/imx_fec.c b/hw/net/imx_fec.c
+> index 4ee6f74206..9b64968477 100644
+> --- a/hw/net/imx_fec.c
+> +++ b/hw/net/imx_fec.c
+> @@ -1222,7 +1222,7 @@ static void imx_eth_realize(DeviceState *dev, Error **errp)
+>       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
+>   }
+>   
+> -static Property imx_eth_properties[] = {
+> +static const Property imx_eth_properties[] = {
+>       DEFINE_NIC_PROPERTIES(IMXFECState, conf),
+>       DEFINE_PROP_UINT32("tx-ring-num", IMXFECState, tx_ring_num, 1),
+>       DEFINE_PROP_UINT32("phy-num", IMXFECState, phy_num, 0),
+> diff --git a/hw/net/lan9118.c b/hw/net/lan9118.c
+> index 99e87b7178..237e9b97d5 100644
+> --- a/hw/net/lan9118.c
+> +++ b/hw/net/lan9118.c
+> @@ -1304,7 +1304,7 @@ static void lan9118_realize(DeviceState *dev, Error **errp)
+>       ptimer_transaction_commit(s->timer);
+>   }
+>   
+> -static Property lan9118_properties[] = {
+> +static const Property lan9118_properties[] = {
+>       DEFINE_NIC_PROPERTIES(lan9118_state, conf),
+>       DEFINE_PROP_UINT32("mode_16bit", lan9118_state, mode_16bit, 0),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/net/lance.c b/hw/net/lance.c
+> index 269615b452..9ed9c94cff 100644
+> --- a/hw/net/lance.c
+> +++ b/hw/net/lance.c
+> @@ -137,7 +137,7 @@ static void lance_instance_init(Object *obj)
+>                                     DEVICE(obj));
+>   }
+>   
+> -static Property lance_properties[] = {
+> +static const Property lance_properties[] = {
+>       DEFINE_PROP_LINK("dma", SysBusPCNetState, state.dma_opaque,
+>                        TYPE_DEVICE, DeviceState *),
+>       DEFINE_NIC_PROPERTIES(SysBusPCNetState, state.conf),
+> diff --git a/hw/net/lasi_i82596.c b/hw/net/lasi_i82596.c
+> index 183fab8712..248e3841db 100644
+> --- a/hw/net/lasi_i82596.c
+> +++ b/hw/net/lasi_i82596.c
+> @@ -158,7 +158,7 @@ static void lasi_82596_instance_init(Object *obj)
+>                                     DEVICE(obj));
+>   }
+>   
+> -static Property lasi_82596_properties[] = {
+> +static const Property lasi_82596_properties[] = {
+>       DEFINE_NIC_PROPERTIES(SysBusI82596State, state.conf),
 >       DEFINE_PROP_END_OF_LIST(),
 >   };
-> diff --git a/hw/timer/pxa2xx_timer.c b/hw/timer/pxa2xx_timer.c
-> index 3234bbb1f4..345145bfa8 100644
-> --- a/hw/timer/pxa2xx_timer.c
-> +++ b/hw/timer/pxa2xx_timer.c
-> @@ -549,7 +549,7 @@ static const VMStateDescription vmstate_pxa2xx_timer_regs = {
->       }
->   };
->   
-> -static Property pxa25x_timer_dev_properties[] = {
-> +static const Property pxa25x_timer_dev_properties[] = {
->       DEFINE_PROP_UINT32("freq", PXA2xxTimerInfo, freq, PXA25X_FREQ),
->       DEFINE_PROP_BIT("tm4", PXA2xxTimerInfo, flags,
->                       PXA2XX_TIMER_HAVE_TM4, false),
-> diff --git a/hw/timer/renesas_cmt.c b/hw/timer/renesas_cmt.c
-> index cd59b08c87..6d451fa86b 100644
-> --- a/hw/timer/renesas_cmt.c
-> +++ b/hw/timer/renesas_cmt.c
-> @@ -253,7 +253,7 @@ static const VMStateDescription vmstate_rcmt = {
->       }
->   };
->   
-> -static Property rcmt_properties[] = {
-> +static const Property rcmt_properties[] = {
->       DEFINE_PROP_UINT64("input-freq", RCMTState, input_freq, 0),
->       DEFINE_PROP_END_OF_LIST(),
->   };
-> diff --git a/hw/timer/renesas_tmr.c b/hw/timer/renesas_tmr.c
-> index a93e075fcd..890f803cf8 100644
-> --- a/hw/timer/renesas_tmr.c
-> +++ b/hw/timer/renesas_tmr.c
-> @@ -463,7 +463,7 @@ static const VMStateDescription vmstate_rtmr = {
->       }
->   };
->   
-> -static Property rtmr_properties[] = {
-> +static const Property rtmr_properties[] = {
->       DEFINE_PROP_UINT64("input-freq", RTMRState, input_freq, 0),
->       DEFINE_PROP_END_OF_LIST(),
->   };
-> diff --git a/hw/timer/sifive_pwm.c b/hw/timer/sifive_pwm.c
-> index 4602fc1a61..042c89c67a 100644
-> --- a/hw/timer/sifive_pwm.c
-> +++ b/hw/timer/sifive_pwm.c
-> @@ -404,7 +404,7 @@ static const VMStateDescription vmstate_sifive_pwm = {
->       }
->   };
->   
-> -static Property sifive_pwm_properties[] = {
-> +static const Property sifive_pwm_properties[] = {
->       /* 0.5Ghz per spec after FSBL */
->       DEFINE_PROP_UINT64("clock-frequency", struct SiFivePwmState,
->                          freq_hz, 500000000ULL),
-> diff --git a/hw/timer/slavio_timer.c b/hw/timer/slavio_timer.c
-> index 12cb3bac97..32991f4436 100644
-> --- a/hw/timer/slavio_timer.c
-> +++ b/hw/timer/slavio_timer.c
-> @@ -420,7 +420,7 @@ static void slavio_timer_init(Object *obj)
+> diff --git a/hw/net/mcf_fec.c b/hw/net/mcf_fec.c
+> index 037cd2028e..55bad4c069 100644
+> --- a/hw/net/mcf_fec.c
+> +++ b/hw/net/mcf_fec.c
+> @@ -660,7 +660,7 @@ static void mcf_fec_instance_init(Object *obj)
 >       }
 >   }
 >   
-> -static Property slavio_timer_properties[] = {
-> +static const Property slavio_timer_properties[] = {
->       DEFINE_PROP_UINT32("num_cpus",  SLAVIO_TIMERState, num_cpus,  0),
+> -static Property mcf_fec_properties[] = {
+> +static const Property mcf_fec_properties[] = {
+>       DEFINE_NIC_PROPERTIES(mcf_fec_state, conf),
 >       DEFINE_PROP_END_OF_LIST(),
 >   };
-> diff --git a/hw/timer/sse-timer.c b/hw/timer/sse-timer.c
-> index 115b0138c8..6b7a67941c 100644
-> --- a/hw/timer/sse-timer.c
-> +++ b/hw/timer/sse-timer.c
-> @@ -440,7 +440,7 @@ static const VMStateDescription sse_timer_vmstate = {
->       }
->   };
->   
-> -static Property sse_timer_properties[] = {
-> +static const Property sse_timer_properties[] = {
->       DEFINE_PROP_LINK("counter", SSETimer, counter, TYPE_SSE_COUNTER, SSECounter *),
->       DEFINE_PROP_END_OF_LIST(),
->   };
-> diff --git a/hw/timer/stm32f2xx_timer.c b/hw/timer/stm32f2xx_timer.c
-> index 16b47887a5..d9d745cd76 100644
-> --- a/hw/timer/stm32f2xx_timer.c
-> +++ b/hw/timer/stm32f2xx_timer.c
-> @@ -298,7 +298,7 @@ static const VMStateDescription vmstate_stm32f2xx_timer = {
->       }
->   };
->   
-> -static Property stm32f2xx_timer_properties[] = {
-> +static const Property stm32f2xx_timer_properties[] = {
->       DEFINE_PROP_UINT64("clock-frequency", struct STM32F2XXTimerState,
->                          freq_hz, 1000000000),
->       DEFINE_PROP_END_OF_LIST(),
-> diff --git a/hw/timer/xilinx_timer.c b/hw/timer/xilinx_timer.c
-> index 32a9df69e0..7fe3e83baa 100644
-> --- a/hw/timer/xilinx_timer.c
-> +++ b/hw/timer/xilinx_timer.c
-> @@ -242,7 +242,7 @@ static void xilinx_timer_init(Object *obj)
->       sysbus_init_irq(SYS_BUS_DEVICE(obj), &t->irq);
+> diff --git a/hw/net/mipsnet.c b/hw/net/mipsnet.c
+> index 31bbd6fb89..c9ef1beb7b 100644
+> --- a/hw/net/mipsnet.c
+> +++ b/hw/net/mipsnet.c
+> @@ -266,7 +266,7 @@ static void mipsnet_sysbus_reset(DeviceState *dev)
+>       mipsnet_reset(s);
 >   }
 >   
-> -static Property xilinx_timer_properties[] = {
-> +static const Property xilinx_timer_properties[] = {
->       DEFINE_PROP_UINT32("clock-frequency", XpsTimerState, freq_hz, 62 * 1000000),
->       DEFINE_PROP_UINT8("one-timer-only", XpsTimerState, one_timer_only, 0),
+> -static Property mipsnet_properties[] = {
+> +static const Property mipsnet_properties[] = {
+>       DEFINE_NIC_PROPERTIES(MIPSnetState, conf),
 >       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/msf2-emac.c b/hw/net/msf2-emac.c
+> index d28fc6c570..8d9015f962 100644
+> --- a/hw/net/msf2-emac.c
+> +++ b/hw/net/msf2-emac.c
+> @@ -546,7 +546,7 @@ static void msf2_emac_init(Object *obj)
+>       sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+>   }
+>   
+> -static Property msf2_emac_properties[] = {
+> +static const Property msf2_emac_properties[] = {
+>       DEFINE_PROP_LINK("ahb-bus", MSF2EmacState, dma_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
+>       DEFINE_NIC_PROPERTIES(MSF2EmacState, conf),
+> diff --git a/hw/net/mv88w8618_eth.c b/hw/net/mv88w8618_eth.c
+> index 96c65f4d46..ccb11512db 100644
+> --- a/hw/net/mv88w8618_eth.c
+> +++ b/hw/net/mv88w8618_eth.c
+> @@ -371,7 +371,7 @@ static const VMStateDescription mv88w8618_eth_vmsd = {
+>       }
+>   };
+>   
+> -static Property mv88w8618_eth_properties[] = {
+> +static const Property mv88w8618_eth_properties[] = {
+>       DEFINE_NIC_PROPERTIES(mv88w8618_eth_state, conf),
+>       DEFINE_PROP_LINK("dma-memory", mv88w8618_eth_state, dma_mr,
+>                        TYPE_MEMORY_REGION, MemoryRegion *),
+> diff --git a/hw/net/ne2000-isa.c b/hw/net/ne2000-isa.c
+> index 26980e087e..1cd070d419 100644
+> --- a/hw/net/ne2000-isa.c
+> +++ b/hw/net/ne2000-isa.c
+> @@ -79,7 +79,7 @@ static void isa_ne2000_realizefn(DeviceState *dev, Error **errp)
+>       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->c.macaddr.a);
+>   }
+>   
+> -static Property ne2000_isa_properties[] = {
+> +static const Property ne2000_isa_properties[] = {
+>       DEFINE_PROP_UINT32("iobase", ISANE2000State, iobase, 0x300),
+>       DEFINE_PROP_UINT32("irq",   ISANE2000State, isairq, 9),
+>       DEFINE_NIC_PROPERTIES(ISANE2000State, ne2000.c),
+> diff --git a/hw/net/ne2000-pci.c b/hw/net/ne2000-pci.c
+> index 74773069c6..12fa579d22 100644
+> --- a/hw/net/ne2000-pci.c
+> +++ b/hw/net/ne2000-pci.c
+> @@ -96,7 +96,7 @@ static void ne2000_instance_init(Object *obj)
+>                                     &pci_dev->qdev);
+>   }
+>   
+> -static Property ne2000_properties[] = {
+> +static const Property ne2000_properties[] = {
+>       DEFINE_NIC_PROPERTIES(PCINE2000State, ne2000.c),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/npcm7xx_emc.c b/hw/net/npcm7xx_emc.c
+> index 7307a13400..f06e908d04 100644
+> --- a/hw/net/npcm7xx_emc.c
+> +++ b/hw/net/npcm7xx_emc.c
+> @@ -845,7 +845,7 @@ static const VMStateDescription vmstate_npcm7xx_emc = {
+>       },
+>   };
+>   
+> -static Property npcm7xx_emc_properties[] = {
+> +static const Property npcm7xx_emc_properties[] = {
+>       DEFINE_NIC_PROPERTIES(NPCM7xxEMCState, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
+> index 685905f9e2..1db29307d7 100644
+> --- a/hw/net/npcm_gmac.c
+> +++ b/hw/net/npcm_gmac.c
+> @@ -912,7 +912,7 @@ static const VMStateDescription vmstate_npcm_gmac = {
+>       },
+>   };
+>   
+> -static Property npcm_gmac_properties[] = {
+> +static const Property npcm_gmac_properties[] = {
+>       DEFINE_NIC_PROPERTIES(NPCMGMACState, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/opencores_eth.c b/hw/net/opencores_eth.c
+> index 2c0ebda100..003b452bc9 100644
+> --- a/hw/net/opencores_eth.c
+> +++ b/hw/net/opencores_eth.c
+> @@ -743,7 +743,7 @@ static void qdev_open_eth_reset(DeviceState *dev)
+>       open_eth_reset(d);
+>   }
+>   
+> -static Property open_eth_properties[] = {
+> +static const Property open_eth_properties[] = {
+>       DEFINE_NIC_PROPERTIES(OpenEthState, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/pcnet-pci.c b/hw/net/pcnet-pci.c
+> index 6190b76916..83ba8cd949 100644
+> --- a/hw/net/pcnet-pci.c
+> +++ b/hw/net/pcnet-pci.c
+> @@ -252,7 +252,7 @@ static void pcnet_instance_init(Object *obj)
+>                                     DEVICE(obj));
+>   }
+>   
+> -static Property pcnet_properties[] = {
+> +static const Property pcnet_properties[] = {
+>       DEFINE_NIC_PROPERTIES(PCIPCNetState, state.conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
+> index 5e74acc969..efc20396aa 100644
+> --- a/hw/net/rocker/rocker.c
+> +++ b/hw/net/rocker/rocker.c
+> @@ -1459,7 +1459,7 @@ static void rocker_reset(DeviceState *dev)
+>       DPRINTF("Reset done\n");
+>   }
+>   
+> -static Property rocker_properties[] = {
+> +static const Property rocker_properties[] = {
+>       DEFINE_PROP_STRING("name", Rocker, name),
+>       DEFINE_PROP_STRING("world", Rocker, world_name),
+>       DEFINE_PROP_MACADDR("fp_start_macaddr", Rocker,
+> diff --git a/hw/net/rtl8139.c b/hw/net/rtl8139.c
+> index bc56075c0d..064a73b6b4 100644
+> --- a/hw/net/rtl8139.c
+> +++ b/hw/net/rtl8139.c
+> @@ -3410,7 +3410,7 @@ static void rtl8139_instance_init(Object *obj)
+>                                     DEVICE(obj));
+>   }
+>   
+> -static Property rtl8139_properties[] = {
+> +static const Property rtl8139_properties[] = {
+>       DEFINE_NIC_PROPERTIES(RTL8139State, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+> index 180ba5c791..a853c30fa2 100644
+> --- a/hw/net/smc91c111.c
+> +++ b/hw/net/smc91c111.c
+> @@ -788,7 +788,7 @@ static void smc91c111_realize(DeviceState *dev, Error **errp)
+>       /* ??? Save/restore.  */
+>   }
+>   
+> -static Property smc91c111_properties[] = {
+> +static const Property smc91c111_properties[] = {
+>       DEFINE_NIC_PROPERTIES(smc91c111_state, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/spapr_llan.c b/hw/net/spapr_llan.c
+> index 8af33d91b6..d381c041db 100644
+> --- a/hw/net/spapr_llan.c
+> +++ b/hw/net/spapr_llan.c
+> @@ -786,7 +786,7 @@ static target_ulong h_change_logical_lan_mac(PowerPCCPU *cpu,
+>       return H_SUCCESS;
+>   }
+>   
+> -static Property spapr_vlan_properties[] = {
+> +static const Property spapr_vlan_properties[] = {
+>       DEFINE_SPAPR_PROPERTIES(SpaprVioVlan, sdev),
+>       DEFINE_NIC_PROPERTIES(SpaprVioVlan, nicconf),
+>       DEFINE_PROP_BIT("use-rx-buffer-pools", SpaprVioVlan,
+> diff --git a/hw/net/stellaris_enet.c b/hw/net/stellaris_enet.c
+> index 9ebff296c4..4af1afa733 100644
+> --- a/hw/net/stellaris_enet.c
+> +++ b/hw/net/stellaris_enet.c
+> @@ -497,7 +497,7 @@ static void stellaris_enet_realize(DeviceState *dev, Error **errp)
+>       qemu_format_nic_info_str(qemu_get_queue(s->nic), s->conf.macaddr.a);
+>   }
+>   
+> -static Property stellaris_enet_properties[] = {
+> +static const Property stellaris_enet_properties[] = {
+>       DEFINE_NIC_PROPERTIES(stellaris_enet_state, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/sungem.c b/hw/net/sungem.c
+> index 67087e9842..bcc7a18382 100644
+> --- a/hw/net/sungem.c
+> +++ b/hw/net/sungem.c
+> @@ -1420,7 +1420,7 @@ static void sungem_instance_init(Object *obj)
+>                                     DEVICE(obj));
+>   }
+>   
+> -static Property sungem_properties[] = {
+> +static const Property sungem_properties[] = {
+>       DEFINE_NIC_PROPERTIES(SunGEMState, conf),
+>       /* Phy address should be 0 for most Apple machines except
+>        * for K2 in which case it's 1. Will be set by a machine
+> diff --git a/hw/net/sunhme.c b/hw/net/sunhme.c
+> index 0e6c655a5b..86f472fcbe 100644
+> --- a/hw/net/sunhme.c
+> +++ b/hw/net/sunhme.c
+> @@ -177,7 +177,7 @@ struct SunHMEState {
+>       uint16_t miiregs[HME_MII_REGS_SIZE];
+>   };
+>   
+> -static Property sunhme_properties[] = {
+> +static const Property sunhme_properties[] = {
+>       DEFINE_NIC_PROPERTIES(SunHMEState, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/tulip.c b/hw/net/tulip.c
+> index 9df3e17162..f35b58a88c 100644
+> --- a/hw/net/tulip.c
+> +++ b/hw/net/tulip.c
+> @@ -1007,7 +1007,7 @@ static void tulip_instance_init(Object *obj)
+>                                     &pci_dev->qdev);
+>   }
+>   
+> -static Property tulip_properties[] = {
+> +static const Property tulip_properties[] = {
+>       DEFINE_NIC_PROPERTIES(TULIPState, c),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 6e8c51a2db..4fd1f9acca 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -3985,7 +3985,7 @@ static const VMStateDescription vmstate_virtio_net = {
+>       .dev_unplug_pending = dev_unplug_pending,
+>   };
+>   
+> -static Property virtio_net_properties[] = {
+> +static const Property virtio_net_properties[] = {
+>       DEFINE_PROP_BIT64("csum", VirtIONet, host_features,
+>                       VIRTIO_NET_F_CSUM, true),
+>       DEFINE_PROP_BIT64("guest_csum", VirtIONet, host_features,
+> diff --git a/hw/net/vmxnet3.c b/hw/net/vmxnet3.c
+> index 8aa8c46228..f69547cad5 100644
+> --- a/hw/net/vmxnet3.c
+> +++ b/hw/net/vmxnet3.c
+> @@ -2471,7 +2471,7 @@ static const VMStateDescription vmstate_vmxnet3 = {
+>       }
+>   };
+>   
+> -static Property vmxnet3_properties[] = {
+> +static const Property vmxnet3_properties[] = {
+>       DEFINE_NIC_PROPERTIES(VMXNET3State, conf),
+>       DEFINE_PROP_BIT("x-old-msi-offsets", VMXNET3State, compat_flags,
+>                       VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS_BIT, false),
+> diff --git a/hw/net/xen_nic.c b/hw/net/xen_nic.c
+> index 89487b49ba..5a5259150a 100644
+> --- a/hw/net/xen_nic.c
+> +++ b/hw/net/xen_nic.c
+> @@ -555,7 +555,7 @@ static void xen_netdev_unrealize(XenDevice *xendev)
+>   
+>   /* ------------------------------------------------------------- */
+>   
+> -static Property xen_netdev_properties[] = {
+> +static const Property xen_netdev_properties[] = {
+>       DEFINE_NIC_PROPERTIES(XenNetDev, conf),
+>       DEFINE_PROP_INT32("idx", XenNetDev, dev, -1),
+>       DEFINE_PROP_END_OF_LIST(),
+> diff --git a/hw/net/xgmac.c b/hw/net/xgmac.c
+> index ffe3fc8dbe..6e0f96f485 100644
+> --- a/hw/net/xgmac.c
+> +++ b/hw/net/xgmac.c
+> @@ -414,7 +414,7 @@ static void xgmac_enet_realize(DeviceState *dev, Error **errp)
+>                                     s->conf.macaddr.a[0];
+>   }
+>   
+> -static Property xgmac_properties[] = {
+> +static const Property xgmac_properties[] = {
+>       DEFINE_NIC_PROPERTIES(XgmacState, conf),
+>       DEFINE_PROP_END_OF_LIST(),
+>   };
+> diff --git a/hw/net/xilinx_axienet.c b/hw/net/xilinx_axienet.c
+> index faf27947b0..9d0c618e2f 100644
+> --- a/hw/net/xilinx_axienet.c
+> +++ b/hw/net/xilinx_axienet.c
+> @@ -996,7 +996,7 @@ static void xilinx_enet_init(Object *obj)
+>       sysbus_init_mmio(sbd, &s->iomem);
+>   }
+>   
+> -static Property xilinx_enet_properties[] = {
+> +static const Property xilinx_enet_properties[] = {
+>       DEFINE_PROP_UINT32("phyaddr", XilinxAXIEnet, c_phyaddr, 7),
+>       DEFINE_PROP_UINT32("rxmem", XilinxAXIEnet, c_rxmem, 0x1000),
+>       DEFINE_PROP_UINT32("txmem", XilinxAXIEnet, c_txmem, 0x1000),
+> diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+> index bd81290808..9413731d20 100644
+> --- a/hw/net/xilinx_ethlite.c
+> +++ b/hw/net/xilinx_ethlite.c
+> @@ -251,7 +251,7 @@ static void xilinx_ethlite_init(Object *obj)
+>       sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
+>   }
+>   
+> -static Property xilinx_ethlite_properties[] = {
+> +static const Property xilinx_ethlite_properties[] = {
+>       DEFINE_PROP_UINT32("tx-ping-pong", struct xlx_ethlite, c_tx_pingpong, 1),
+>       DEFINE_PROP_UINT32("rx-ping-pong", struct xlx_ethlite, c_rx_pingpong, 1),
+>       DEFINE_NIC_PROPERTIES(struct xlx_ethlite, conf),
 
 
