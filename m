@@ -4,69 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC02CE77180
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 06:57:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45B4E77183
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 08:24:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMM4T-0006iQ-Tq; Sat, 14 Dec 2024 01:56:13 -0500
+	id 1tMNRS-0006B5-Vi; Sat, 14 Dec 2024 03:24:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tMM4S-0006iB-4M
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:56:12 -0500
-Received: from smtpout3.mo529.mail-out.ovh.net ([46.105.54.81])
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1tMNRN-0006Af-1s
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 03:23:57 -0500
+Received: from nylar.uni-paderborn.de ([2001:638:502:c003::18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groug@kaod.org>) id 1tMM4O-0004x1-Sp
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 01:56:11 -0500
-Received: from mxplan5.mail.ovh.net (unknown [10.108.25.244])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 4Y9H6V0sgTz10G4;
- Sat, 14 Dec 2024 06:56:02 +0000 (UTC)
-Received: from kaod.org (37.59.142.108) by DAG6EX1.mxp5.local (172.16.2.51)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Sat, 14 Dec
- 2024 07:56:01 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-108S0022c799553-3930-475f-b5a9-a412d099ab2e,
- 7F0875366495B486867DF4DA7C1512417F974EE7) smtp.auth=groug@kaod.org
-X-OVh-ClientIp: 78.113.106.80
-Date: Sat, 14 Dec 2024 07:56:00 +0100
-From: Greg Kurz <groug@kaod.org>
+ (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
+ id 1tMNRH-00056A-Iw
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 03:23:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+ Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+ List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=oZTWn4pHjaxWnkmtqimNrIg5XXEBCIgSQlWlAJ6gdgY=; b=FtEw1P4Elb2l5Jhqau3ZVXkXwT
+ WIdjInVRb5OrJEDNK6iWtmg4LMmNRFQbhZy9uu1DzgZHVkVJyOHqroUxX2Zb2AHHGAZMuo/wZxQUp
+ 3mU4iIw15lzl7DInRrELhvfZ0TPdU6x0KDUO8Frofyyjss5RJqvurcxSuxZSMlv4ne0Y=;
+Date: Sat, 14 Dec 2024 09:23:39 +0100
+From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 To: Richard Henderson <richard.henderson@linaro.org>
-CC: <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, "Christian
- Schoenebeck" <qemu_oss@crudebyte.com>
-Subject: Re: [PATCH 12/71] hw/9pfs: Constify all Property
-Message-ID: <20241214075600.49a57f89@bahia>
-In-Reply-To: <20241213190750.2513964-17-richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: Re: [PATCH 62/71] hw/tricore: Constify all Property
+Message-ID: <eweotjqvsz4jd4iur4gc3jwrgbqgbwj4k3ryvgfqn53zkw2muu@jjtyzc7flvyv>
 References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-17-richard.henderson@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.43; x86_64-redhat-linux-gnu)
+ <20241213190750.2513964-67-richard.henderson@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.108]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG6EX1.mxp5.local
- (172.16.2.51)
-X-Ovh-Tracer-GUID: 14d6a2f0-dd1c-408d-8a69-63bf6caddca7
-X-Ovh-Tracer-Id: 3171097087764503008
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeefuddrkeekgddutddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkjghfofggtgfgihesthejredtredtvdenucfhrhhomhepifhrvghgucfmuhhriicuoehgrhhouhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepgeekjedtveegkeeileffvdetvddvgedtudduiefghffhgfdvhfegjeetkeehfeeknecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrddutdekpdejkedruddufedruddtiedrkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehgrhhouhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepgedprhgtphhtthhopehrihgthhgrrhgurdhhvghnuggvrhhsohhnsehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhhsthesrhgvughhrghtrdgtohhmpdhrtghpthhtohepqhgvmhhupghoshhssegtrhhuuggvsgihthgvrdgtohhmpdfovfetjfhoshhtpehmohehvdelmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=0dMfaA8s5t30AtxJIZGz8Rl5VUoVGRQSYM6Ys8saa00=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1734159362; v=1;
- b=piHqg0kFJCI7urxIHJnMh6CAYV/OQjMYFMsrkw6EasXnfDSTcvDJ4SBAS+Xp1o+UPsIr5Yen
- EX/LPr3XQMEffMGN/Y8M76XwGY0e8CsaTlRwezDmsiCYYO1ZkOQdjUlcJd5iNbnHv8RdxRCwE1+
- +GBZ/j5k5KKsDmEvKc3yG2bgmIXutkLQgj36pFO9XqUnLT8fZO5gwpE+mJSGjGZrT4CEdXGI2Vn
- E4I3yxKxOSbWdGcVJpJNkVPP/lEEax9yOm2dChLU4fj0OKQ8yHxT5nuymydsHnsg64h8AjZD7Br
- 26FRHLZNpSgU3XV11fBJX/iSmnZ0AS2Cu5KS2apfXJ/BQ==
-Received-SPF: pass client-ip=46.105.54.81; envelope-from=groug@kaod.org;
- helo=smtpout3.mo529.mail-out.ovh.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241213190750.2513964-67-richard.henderson@linaro.org>
+X-IMT-Source: Intern
+X-IMT-rspamd-score: -25
+X-UPB-Report: Action: no action, RCVD_TLS_ALL(0.00), FROM_HAS_DN(0.00),
+ FROM_EQ_ENVFROM(0.00), BAYES_HAM(-2.99), TO_MATCH_ENVRCPT_ALL(0.00),
+ MID_RHS_NOT_FQDN(0.50), MIME_GOOD(-0.10), NEURAL_HAM(0.00),
+ RCPT_COUNT_TWO(0.00), RCVD_VIA_SMTP_AUTH(0.00), ARC_NA(0.00), ASN(0.00),
+ RCVD_COUNT_ONE(0.00), MIME_TRACE(0.00), TO_DN_SOME(0.00), MISSING_XM_UA(0.00),
+ Message-ID: eweotjqvsz4jd4iur4gc3jwrgbqgbwj4k3ryvgfqn53zkw2muu@jjtyzc7flvyv
+X-IMT-Spam-Score: 0.0 ()
+X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
+Received-SPF: pass client-ip=2001:638:502:c003::18;
+ envelope-from=kbastian@mail.uni-paderborn.de; helo=nylar.uni-paderborn.de
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -83,33 +74,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Dec 2024 13:06:46 -0600
-Richard Henderson <richard.henderson@linaro.org> wrote:
-
+On Fri, Dec 13, 2024 at 01:07:36PM -0600, Richard Henderson wrote:
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
+>  hw/tricore/tc27x_soc.c          | 2 +-
+>  hw/tricore/tricore_testdevice.c | 2 +-
+>  2 files changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Greg Kurz <groug@kaod.org>
+Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
 
->  hw/9pfs/virtio-9p-device.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-> index efa41cfd73..b764e4cd3d 100644
-> --- a/hw/9pfs/virtio-9p-device.c
-> +++ b/hw/9pfs/virtio-9p-device.c
-> @@ -243,7 +243,7 @@ static const VMStateDescription vmstate_virtio_9p = {
->      },
->  };
->  
-> -static Property virtio_9p_properties[] = {
-> +static const Property virtio_9p_properties[] = {
->      DEFINE_PROP_STRING("mount_tag", V9fsVirtioState, state.fsconf.tag),
->      DEFINE_PROP_STRING("fsdev", V9fsVirtioState, state.fsconf.fsdev_id),
->      DEFINE_PROP_END_OF_LIST(),
-
-
-
--- 
-Greg
+Cheers,
+Bastian
 
