@@ -4,61 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C45B4E77183
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 08:24:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C52F0E7716A
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 09:18:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMNRS-0006B5-Vi; Sat, 14 Dec 2024 03:24:03 -0500
+	id 1tMOHk-0006Uo-8i; Sat, 14 Dec 2024 04:18:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1tMNRN-0006Af-1s
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 03:23:57 -0500
-Received: from nylar.uni-paderborn.de ([2001:638:502:c003::18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kbastian@mail.uni-paderborn.de>)
- id 1tMNRH-00056A-Iw
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 03:23:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=mail.uni-paderborn.de; s=20170601; h=In-Reply-To:Content-Type:MIME-Version:
- References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:
- Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
- Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=oZTWn4pHjaxWnkmtqimNrIg5XXEBCIgSQlWlAJ6gdgY=; b=FtEw1P4Elb2l5Jhqau3ZVXkXwT
- WIdjInVRb5OrJEDNK6iWtmg4LMmNRFQbhZy9uu1DzgZHVkVJyOHqroUxX2Zb2AHHGAZMuo/wZxQUp
- 3mU4iIw15lzl7DInRrELhvfZ0TPdU6x0KDUO8Frofyyjss5RJqvurcxSuxZSMlv4ne0Y=;
-Date: Sat, 14 Dec 2024 09:23:39 +0100
-From: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: Re: [PATCH 62/71] hw/tricore: Constify all Property
-Message-ID: <eweotjqvsz4jd4iur4gc3jwrgbqgbwj4k3ryvgfqn53zkw2muu@jjtyzc7flvyv>
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-67-richard.henderson@linaro.org>
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMOHi-0006UX-Eo
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 04:18:02 -0500
+Received: from mail-ed1-f49.google.com ([209.85.208.49])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <th.huth@gmail.com>) id 1tMOHc-0004kP-1y
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 04:18:02 -0500
+Received: by mail-ed1-f49.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d14336f0so4500863a12.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 01:17:55 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734167874; x=1734772674;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qszqZMQ0FHL2LU/f/AHoxskxZJYUgdn2A4lJkbne9X4=;
+ b=tWiWeNgCh5f58izlorx843iqCTR7a7CVyC8gseLEwi/GKfBp+h19SL7EENXpHfIr6b
+ HITQKdcsAwZgg3UtNqSUK3aa++kUtZGvLvSuZ603jeYqtPQLFCyz43oLYERCRIf1VnOq
+ kGNPETWVBvg1UbAkRTlREp4iIUOK13bYkolY/YsqPktQ9aCZ3YR8Ydf24v7hnL+Vdiyk
+ eR9VEIW4IdreIY+JG2QaEZnf1VFrgxqJth0f7oM3BR7pwYYFMzFgdiFcfWNk+W4mBQ0R
+ cST+W7nNupegmNk9SbQgDm346HmIyiF2f3RAwvGyC083ib7y9CTS8CdPFHJ+xltQ02vC
+ n2dw==
+X-Gm-Message-State: AOJu0Ywr0XE+PxP4kEEjFAsWzgNtOsjgE/7KfYLd0RslVLbo/rQEohm0
+ QYC7DO01kFStmtr6uNMqGKWIAE7o8ySUvz7GUT8lTbJ9JyzrqeDRBNPdAg==
+X-Gm-Gg: ASbGnctodHIbyruBwOZZg7JWpcrJPdSUTUHtAau8nNUYsyZ4RdUaSBm726oNJI3rt+K
+ WsWXybe9DkU2ZMIVIq7znj1r2xwWw6oXEc3aRQh1JreAK/J5j1Xntedy1j36dygBNsrAEIOq06Q
+ ttx3NYCJDT9gLgHhhjQDe1wkpxc7kk4HZhUTyFWDSGjndodu9+oDBf+BQxgWdJyF3v09yuIViZ6
+ R1z3GSslraGF/YwbQJ3oysiem9TbhidM6D34M6WGg2p5r5OUcOctfcx0kK3l93VJcILiFnvTXKl
+ 9fw=
+X-Google-Smtp-Source: AGHT+IFL4s3W6g7wu8hOqu2zg+iu0lCo3bzRrudQEU2Zf/HzSqORU7hzaHEoz9iWwFaSsZ8xOGpnXQ==
+X-Received: by 2002:a17:906:7953:b0:aa6:8676:3b3d with SMTP id
+ a640c23a62f3a-aab779b051amr682636266b.29.1734167873822; 
+ Sat, 14 Dec 2024 01:17:53 -0800 (PST)
+Received: from tpx1.. (ip-109-42-51-17.web.vodafone.de. [109.42.51.17])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab9638ad42sm70147766b.135.2024.12.14.01.17.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 14 Dec 2024 01:17:53 -0800 (PST)
+From: Thomas Huth <huth@tuxfamily.org>
+To: qemu-devel@nongnu.org
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Subject: [PATCH] hw/m68k/next-cube: Disable the default CD-ROM drive
+Date: Sat, 14 Dec 2024 10:17:20 +0100
+Message-ID: <20241214091720.49779-1-huth@tuxfamily.org>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241213190750.2513964-67-richard.henderson@linaro.org>
-X-IMT-Source: Intern
-X-IMT-rspamd-score: -25
-X-UPB-Report: Action: no action, RCVD_TLS_ALL(0.00), FROM_HAS_DN(0.00),
- FROM_EQ_ENVFROM(0.00), BAYES_HAM(-2.99), TO_MATCH_ENVRCPT_ALL(0.00),
- MID_RHS_NOT_FQDN(0.50), MIME_GOOD(-0.10), NEURAL_HAM(0.00),
- RCPT_COUNT_TWO(0.00), RCVD_VIA_SMTP_AUTH(0.00), ARC_NA(0.00), ASN(0.00),
- RCVD_COUNT_ONE(0.00), MIME_TRACE(0.00), TO_DN_SOME(0.00), MISSING_XM_UA(0.00),
- Message-ID: eweotjqvsz4jd4iur4gc3jwrgbqgbwj4k3ryvgfqn53zkw2muu@jjtyzc7flvyv
-X-IMT-Spam-Score: 0.0 ()
-X-IMT-Authenticated-Sender: kbastian@UNI-PADERBORN.DE
-Received-SPF: pass client-ip=2001:638:502:c003::18;
- envelope-from=kbastian@mail.uni-paderborn.de; helo=nylar.uni-paderborn.de
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=209.85.208.49; envelope-from=th.huth@gmail.com;
+ helo=mail-ed1-f49.google.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.249, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=-0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,15 +84,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 13, 2024 at 01:07:36PM -0600, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-> ---
->  hw/tricore/tc27x_soc.c          | 2 +-
->  hw/tricore/tricore_testdevice.c | 2 +-
->  2 files changed, 2 insertions(+), 2 deletions(-)
+The NeXT-Cube does not have a CD-ROM drive by default, and the
+kernel does not seem to deal with the empty drive very well, so
+let's disable the CD-ROM drive for this machine.
 
-Reviewed-by: Bastian Koppelmann <kbastian@mail.uni-paderborn.de>
+Signed-off-by: Thomas Huth <huth@tuxfamily.org>
+---
+ hw/m68k/next-cube.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Cheers,
-Bastian
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index f576452fc3..de7ce13762 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -1052,6 +1052,7 @@ static void next_machine_class_init(ObjectClass *oc, void *data)
+     mc->default_ram_size = RAM_SIZE;
+     mc->default_ram_id = "next.ram";
+     mc->default_cpu_type = M68K_CPU_TYPE_NAME("m68040");
++    mc->no_cdrom = true;
+ }
+ 
+ static const TypeInfo next_typeinfo = {
+-- 
+2.47.1
+
 
