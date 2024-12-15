@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAD14E7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:08:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25796E7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwY-0001LJ-UU; Sun, 15 Dec 2024 14:06:20 -0500
+	id 1tMtwq-0001iw-Lt; Sun, 15 Dec 2024 14:06:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwT-0001J9-6p
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:13 -0500
-Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
+ id 1tMtwm-0001bx-0a
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:32 -0500
+Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwQ-00016w-JP
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:12 -0500
-Received: by mail-oo1-xc2f.google.com with SMTP id
- 006d021491bc7-5f2e13cb356so1711363eaf.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:09 -0800 (PST)
+ id 1tMtwk-0001HM-Ae
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:31 -0500
+Received: by mail-oi1-x232.google.com with SMTP id
+ 5614622812f47-3eba0f09c3aso971351b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289569; x=1734894369; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289589; x=1734894389; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Onf0PGU0mdWT869pO9aPdv4Isif7mSe2YqGwVARTFhY=;
- b=fDyEW8sPpHsY8nyANHbmTr3BLByk/TuQQovxfHFwGYej4hID+yH6Y5ENwG8Ed/UTy/
- sZDsCLoZutaIPNmURkPOfYOOUM/G++v/mp71Bn878tVO/JQKQXKphVnmQM6PmIKehYYE
- SzRApyMFphc+cq8AD9NuoAl9EIU0uD9Zsdj1X1b5UU0JhTiASi921iXLLP3+GrkHcFbq
- jzTUQ3cknlc8kyFNRWw/tGp9iaXokVSo4ZgNjEkRBsbV/vpVTq8oqxaTSCDwMi9MOlPa
- qpOKjS5qwdbXxIfXAqoFYA0OdVPPeRAdMKAD33VZNWYdfppvr2TXf5US0q/SSPiKtifQ
- mT7Q==
+ bh=JUWs487i1AsoAZAXsWndCvFPp5W8PVatVy6EB92egpU=;
+ b=ikVD3swCOWjwojdsy7+s5V6A2wVDgtLC8l35sKzF2vLga1nnJpCwFJ5QFM1DcZFfYs
+ Iio8kSPuSDx71QD3U2bpxnFiUAcOig93mHIkMc9SXP1PpZn7gPw+90+2MpKDy7Rj/J6k
+ ZdmV3Oo6k5n1ZFeEjE4aLzM5Udz4fssG490hdKHJT70Cnd/LrKU1uytQEWl471sTXTOB
+ s2+WoEXHU41KU1WCJLwF1r2MOCa8oSoGFdkGzPDMWGcy8iNrhJW+nlI9R/VcZ0eRaNIX
+ 59jTbY0p06eT6O5zCQHf3JC8kcDBe2F/eRts4wd36KBtMaOWS3oqVKfZq1vm60Uh2kIO
+ fZPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289569; x=1734894369;
+ d=1e100.net; s=20230601; t=1734289589; x=1734894389;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Onf0PGU0mdWT869pO9aPdv4Isif7mSe2YqGwVARTFhY=;
- b=Bvyj3qcljCuMC56Y21Tt4nJEiM3sLo7ex5XrPUQB1veQiWQciJsmv7vSx0H+SrTNIf
- rThM/hcvu2mJZo9SLOiWZa2K1BZuMGO9TCGXUoHl9nyJyveOS2f4Q85eXurxSkVPG+VA
- rJOXmZkfig393GTfXnfwyflyNrOamRqBq9ZjhTguc2DBdfvbzvR0/l8VdyAK3+CJ4z3b
- MU1sykxmw9W2+9apJQYKbmibsJ2Pg/5WhkjxmBN/qI3tR6P4E3v7l9Casvch9GgjI2R4
- xS2qDM4iv7F1Gw5D2Jq45ZSZp3KIvNbzIwZuzmQNLxu/y+mdIYfN2hTtIC3wrYFUp+XP
- eLoQ==
-X-Gm-Message-State: AOJu0Yz0XinqTnsFsR15rjkac+naz0hkI4mF1aPTkHkwyk6rLyex5QcU
- 9qkZGp6Rn9nBsP7HqEZB9WpmKbJqpSVCniFMGLgNkLzglFF+M66NeSSDbHEd/aP/ABQVoLjyMR4
- E1CJIJbIr
-X-Gm-Gg: ASbGncuwUPAT+K/1HaKLgaZs33v4V4oahjC6qmNx7OveqNEJihxHb+2ZPmq+b5m1GX/
- A6cYvStI05m5p7MXEebJDF2oOFqKpTZKavYg3mUWuvF1I3xQR1Hy4U6V8lqT1F+6/He8h25PX4I
- sw7/yKVvqYVsh6wpxVqp7rzpSzJjY9zTBl6aQKvGNXVmFplGXF1UZKzuHU4kfx9D4M7p9a3JR2W
- sFxGydfdsHjg2hq3gdoo9dJ7bLEXYuedl02Gh0G06NUm9o90t0mrvB4unrczWiuCl3jtZ/om22B
- GqCoP4rOMHbY9t9osxHjnw1UIT08M7BBWmQiK2LufkU=
-X-Google-Smtp-Source: AGHT+IHPFE56rw18y2eUFVhclP42EU1J/Vr4dVcT37Bdn+/zB4ePs5UulirhYpINFLvSm45AYJaUSg==
-X-Received: by 2002:a05:6870:414c:b0:2a3:c59d:f09d with SMTP id
- 586e51a60fabf-2a3c59f6a81mr4816084fac.14.1734289568951; 
- Sun, 15 Dec 2024 11:06:08 -0800 (PST)
+ bh=JUWs487i1AsoAZAXsWndCvFPp5W8PVatVy6EB92egpU=;
+ b=uhgW6CDnKJvFAippZ330lsdJT8rcYrad/GicH2x1ceoAr3NMMXxta9lrhdKX1r8s8j
+ XHmUpRnyx5hwVaHa9MIl04oBjOPbqxNpF77it7yIsZwMT5eZwHROSgG61e/g3CIK3xJ4
+ 2yCGSFtReTEBdN+A+Y86tcylW5jR9lKym5PwZJzK3zWbFmtL5MCRcinCKVJGX8fLEfA3
+ mA20btq95cQioSX8I+v9mTS0Y8hQJU7JNC5qwub4qCjjr3Lr+CNson60ArRHrokOxWHF
+ EBhs2ZLh6J8PK1Fqhh1BJFspicO47P3+j/tJBpD2fpB8hwtqOj/LdHmCZkeRpHRNQWcu
+ ujyQ==
+X-Gm-Message-State: AOJu0YwG5oat9Bb8LwglPc/JRnLAllcMUvyMx4lGjywFE64pPg1uA+7Y
+ nekaGpsX/lxZZweRFsd3UtNS9TUuXzt3ntBi4W/sEZhfWysj2gmCd5sm3OKsZSW/MReuoI6yR9e
+ aQ3+umQn4
+X-Gm-Gg: ASbGnctHIMOi2+cpMZALbfRCsDgb4N1bInyt7lkCPtv7SrJbB2HcsJQUjjdp8c+TCs1
+ Qio4YQsB4Os55hpDa+LQUYwDOrtBes6W/Q5z6RYSLeFDUYr1sOH67ybYxvFbFGmSL3w0e6WDWUg
+ vQK4+qHWrW8FvZOvV+00QOyN1lM1GGUOpM4PGCa0rZEkiV/FpfqR/QqcOCUICxO0DivIKPfE3/o
+ SWRw8N7Fj6C+FpUovgHesxvM1GM2yCG/8ZbqeLkU5kNfht7yQlNpn1bmeGShhFcsXwWBKey6nZ4
+ 8KRhcFt7VQqMWgQOV9H5NzbK0Myfz2lPPMTAWcKoH0s=
+X-Google-Smtp-Source: AGHT+IFTW8F33dbe8A2pkkrH62aDRWrTUnM6O4tZZCFjbobhHYUkDmPNusDsZoaRrXnBy/MIbCeswQ==
+X-Received: by 2002:a05:6870:9713:b0:29e:6bdb:e362 with SMTP id
+ 586e51a60fabf-2a3ac5ee1b4mr4474334fac.17.1734289589015; 
+ Sun, 15 Dec 2024 11:06:29 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.07
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:08 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:28 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 21/67] hw/cpu: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:47 -0600
-Message-ID: <20241215190533.3222854-22-richard.henderson@linaro.org>
+Subject: [PULL 37/67] hw/mips: Constify all Property
+Date: Sun, 15 Dec 2024 13:05:03 -0600
+Message-ID: <20241215190533.3222854-38-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,78 +104,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/cpu/a15mpcore.c       | 2 +-
- hw/cpu/a9mpcore.c        | 2 +-
- hw/cpu/arm11mpcore.c     | 2 +-
- hw/cpu/cluster.c         | 2 +-
- hw/cpu/realview_mpcore.c | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ hw/mips/cps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/cpu/a15mpcore.c b/hw/cpu/a15mpcore.c
-index 967d8d3dd5..5346b8b6c6 100644
---- a/hw/cpu/a15mpcore.c
-+++ b/hw/cpu/a15mpcore.c
-@@ -144,7 +144,7 @@ static void a15mp_priv_realize(DeviceState *dev, Error **errp)
-     }
+diff --git a/hw/mips/cps.c b/hw/mips/cps.c
+index 13046628cd..1a2208666c 100644
+--- a/hw/mips/cps.c
++++ b/hw/mips/cps.c
+@@ -166,7 +166,7 @@ static void mips_cps_realize(DeviceState *dev, Error **errp)
+                             sysbus_mmio_get_region(SYS_BUS_DEVICE(&s->gcr), 0));
  }
  
--static Property a15mp_priv_properties[] = {
-+static const Property a15mp_priv_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", A15MPPrivState, num_cpu, 1),
-     /* The Cortex-A15MP may have anything from 0 to 224 external interrupt
-      * IRQ lines (with another 32 internal). We default to 128+32, which
-diff --git a/hw/cpu/a9mpcore.c b/hw/cpu/a9mpcore.c
-index c30ef72c66..c3fdfb92e1 100644
---- a/hw/cpu/a9mpcore.c
-+++ b/hw/cpu/a9mpcore.c
-@@ -158,7 +158,7 @@ static void a9mp_priv_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static Property a9mp_priv_properties[] = {
-+static const Property a9mp_priv_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", A9MPPrivState, num_cpu, 1),
-     /* The Cortex-A9MP may have anything from 0 to 224 external interrupt
-      * IRQ lines (with another 32 internal). We default to 64+32, which
-diff --git a/hw/cpu/arm11mpcore.c b/hw/cpu/arm11mpcore.c
-index 89c4e35143..193fc182ab 100644
---- a/hw/cpu/arm11mpcore.c
-+++ b/hw/cpu/arm11mpcore.c
-@@ -131,7 +131,7 @@ static void mpcore_priv_initfn(Object *obj)
-     object_initialize_child(obj, "wdtimer", &s->wdtimer, TYPE_ARM_MPTIMER);
- }
- 
--static Property mpcore_priv_properties[] = {
-+static const Property mpcore_priv_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", ARM11MPCorePriveState, num_cpu, 1),
-     /* The ARM11 MPCORE TRM says the on-chip controller may have
-      * anything from 0 to 224 external interrupt IRQ lines (with another
-diff --git a/hw/cpu/cluster.c b/hw/cpu/cluster.c
-index 61289a840d..8e43621b5c 100644
---- a/hw/cpu/cluster.c
-+++ b/hw/cpu/cluster.c
-@@ -25,7 +25,7 @@
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- 
--static Property cpu_cluster_properties[] = {
-+static const Property cpu_cluster_properties[] = {
-     DEFINE_PROP_UINT32("cluster-id", CPUClusterState, cluster_id, 0),
-     DEFINE_PROP_END_OF_LIST()
- };
-diff --git a/hw/cpu/realview_mpcore.c b/hw/cpu/realview_mpcore.c
-index 72c792eef1..9a0ff1df86 100644
---- a/hw/cpu/realview_mpcore.c
-+++ b/hw/cpu/realview_mpcore.c
-@@ -108,7 +108,7 @@ static void mpcore_rirq_init(Object *obj)
-     }
- }
- 
--static Property mpcore_rirq_properties[] = {
-+static const Property mpcore_rirq_properties[] = {
-     DEFINE_PROP_UINT32("num-cpu", mpcore_rirq_state, num_cpu, 1),
-     DEFINE_PROP_END_OF_LIST(),
- };
+-static Property mips_cps_properties[] = {
++static const Property mips_cps_properties[] = {
+     DEFINE_PROP_UINT32("num-vp", MIPSCPSState, num_vp, 1),
+     DEFINE_PROP_UINT32("num-irq", MIPSCPSState, num_irq, 256),
+     DEFINE_PROP_STRING("cpu-type", MIPSCPSState, cpu_type),
 -- 
 2.43.0
 
