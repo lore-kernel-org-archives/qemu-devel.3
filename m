@@ -4,93 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23A96E7716A
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Dec 2024 22:28:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44A00E7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 03:30:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMabd-0000qe-1l; Sat, 14 Dec 2024 17:27:25 -0500
+	id 1tMfJy-0002bj-Ip; Sat, 14 Dec 2024 22:29:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMabZ-0000qT-UX
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 17:27:22 -0500
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tMfJu-0002bS-Hh
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 22:29:27 -0500
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMabY-0004v8-1O
- for qemu-devel@nongnu.org; Sat, 14 Dec 2024 17:27:21 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:To:MIME-Version:Date:Message-ID:Sender:Reply-To:
- Cc:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID;
- bh=iAW1Y/96QoalpJ2Nb+wdUicojFfIapRrCEmL26tmNGI=; b=bbeFnpvf+T8kHqoblZnM8g+6Uc
- pbD473WLyXo0wRX0qEBb5G8F0VkBtBcfBbGCeSwZry+fOIhBmZ2yRvu5hBNurK6wpl6ZwsLb899pn
- crPjJz9gNqSx5+t9b0HSdIFz5BXdBQ9RB7YCa86Xy/b8/fr1imSBi5fla86weBLuFqC9einDyH92z
- B0rGFbfnNgGdsTU+FAxz8n6WHEWFsk1EfGcYH1rhDwu+Jd34MlzqNN3Q8KrXNtFd5NCJhY24zgWSh
- tbW+VpHrVxgkwasrF3c19JOwPLXnriDSuwlcXOn1LqcntkNGLKdIO6yhhFhcdxyvnQ8f8TixsG3jD
- jNPzUgIr3zCJsn44vYC9Qvwqi9YsBG+oqyCCRIYAw8C5wQIngf4cCJpl8+UJ2aAfS8rMx/fhMzIa3
- eriWowwi12nbk6eZqyts/y/XrlffmtJ8GCFNALr9htuehBTiIonnvX6RmSOWp6RF50fFf51EOTZxY
- Beawzhk9YGBjoOay/QTNAGQLf5r8BFPpFHi1cM3FKMg/muwL8EsjSnpdAT7gZuKEPN1ubLeJfapDn
- 0ea5ovcbESYKs1U/muBjYlkj5t5dv6FkVbvCTGCiVUgMOhPisP4jLofPXKd017SeQ8OTaMTcXEvr7
- UIhNtEQx3Q91tKJou2wuQunGbUCbG280C92j2V8Dc=;
-Received: from [2a02:8012:2f01:0:839f:b883:9bde:613a]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1tMaau-0006YR-F8; Sat, 14 Dec 2024 22:26:44 +0000
-Message-ID: <23e50b5c-a7e4-402f-a615-0e8ed6717c8f@ilande.co.uk>
-Date: Sat, 14 Dec 2024 22:27:11 +0000
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1tMfJr-0006dh-BM
+ for qemu-devel@nongnu.org; Sat, 14 Dec 2024 22:29:26 -0500
+Received: from pps.filterd (m0279863.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BF00S5B030404
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 03:29:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ /8dC74CJloYj0vAe/N7HsXW2Xb40Opwj6UWN7CznR3Y=; b=M90mxbc1hEkzvZ3k
+ 1aJ3ISwocZcw8alTHYUdd09xSpO5bQFVNxVk17gLIBrMfsPGdqOUXZEuquHX4J99
+ z1IO1IzEYUFIBaGy3avm7nNH2Go+5l9v2bJCVVK4lh63sX+mJEUGkunGRS9Z11bP
+ RgQSZdTq+di6UwZTcElBBcHRkrw+MXCvNXdzcAabkKBUyeVdif8zC61yVwplJtaW
+ B5MQeKgZetb/7ueUF59qXAJzcwnk5fiZa6Pe7zgG9QOXu9ENfp7J4zdmXkNNoOKo
+ 26Vi1k+xoWMkenelZIpoz6bRtPZ5+T9iXvYhboZDkC0k8k0gKteg6MBsg12oifn4
+ Bq5AiA==
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 43h31usch5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 03:29:15 +0000 (GMT)
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d8d44e17a2so85898046d6.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Dec 2024 19:29:15 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734233354; x=1734838154;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/8dC74CJloYj0vAe/N7HsXW2Xb40Opwj6UWN7CznR3Y=;
+ b=dVFfQ9JKGR0JB7taNu1jQzwEb0AudFt4Nse/oqQ0vCaEB3YeR8mzHqIbPtadZ0sfC9
+ 9cEJbKOXnu1+DqbXnsmR4noLZOKB7GTzBdAvA4BFwdANkjuoHGM8YGJrPnTFuO6wX8Bv
+ gE4P0PAlWBO5eWU0jL1a6hx5rnG569NLYKkJqrlo2NawQMnJrLLi3i9B1dhUgVTPH0f4
+ wIRoBZH2fZ2BwejsgYfUX3oJ20WNPXoR0kFFw2R9pW5nOc9z4oL7ygAzCQTxMNJ/p+D2
+ id5phQTWWlH8/ARQDOXoj0XjTvdJMJ2iMxm9GASadc23kvKLKxm8ltBIskkADmv77F6R
+ c1xQ==
+X-Gm-Message-State: AOJu0YxAAXoNYFabc0H5uw1BSi3UONstza+wKVoyt39T2WfOHvaW6n2G
+ kJKmfHkgDqPjpKZFaOi1RKxKyNpbdbJjcixEshliC6G1qJBAHvUEcYf/vZv5Uub934nGjwYi7uF
+ 8MlZOXiK9ExF4xZ/OteDXHfTE86wnZmtVEE3l5Y7y6yKJLn3QhCaOJDOJACR5xA==
+X-Gm-Gg: ASbGncuKh5nATju03q/ShIu2glNh5Na7Os5ispiDA0yhYTKBkwXkP8uORAd9cbxhK//
+ LwDdKemc3Y53r91+Qxg9vgYdXKamMnTkwqJoTlYtGuMWd3zbvMO0IY7Dy8X0V2IjAx9DznwCyW+
+ ostAKHwCREqHRNCQt6hwN82GOmIfohbZUQfuQs8sgZ8Hx4xI7lIxHSrCCXEqxsomn2ChTM22Dcv
+ p5vtqvEYtABN0Msx9WldC2B2Nj8UNsk5o5wQyerc1yPtIugdGiLHBXex/Eiom2RVsyoVyojEgUx
+ CxWEbVgU8iT7i7ovCIiJgi93xlc8GwFdXoMt7Q==
+X-Received: by 2002:a05:6214:248e:b0:6d8:96a6:ec1e with SMTP id
+ 6a1803df08f44-6dc8ca3e95dmr157395146d6.2.1734233354073; 
+ Sat, 14 Dec 2024 19:29:14 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0jC7c3jAw+WW6ANe6Yu0UQkE3mhMOPspFbZwNvKii6NDRMNiQttdby6BGqIzEeoVC6KrNBA==
+X-Received: by 2002:a05:6214:248e:b0:6d8:96a6:ec1e with SMTP id
+ 6a1803df08f44-6dc8ca3e95dmr157394946d6.2.1734233353736; 
+ Sat, 14 Dec 2024 19:29:13 -0800 (PST)
+Received: from [192.168.228.69] (59.sub-174-246-195.myvzw.com.
+ [174.246.195.59]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd367a09sm13106946d6.83.2024.12.14.19.29.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 14 Dec 2024 19:29:13 -0800 (PST)
+Message-ID: <db50d106-0b0f-45c1-9bd5-375d27ad06c3@oss.qualcomm.com>
+Date: Sat, 14 Dec 2024 21:29:10 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- huth@tuxfamily.org, qemu-devel@nongnu.org
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-15-mark.cave-ayland@ilande.co.uk>
- <df9030cb-cc19-4d2b-8d6a-0acb7b8b32ca@linaro.org>
+Subject: Re: [PULL 0/5] hex queue
+To: qemu-devel@nongnu.org, stefanha@redhat.com
+Cc: philmd@linaro.org, peter.maydell@linaro.org, quic_mathbern@quicinc.com,
+ ale@rev.ng, anjo@rev.ng, quic_mliebel@quicinc.com, ltaylorsimpson@gmail.com
+References: <20241213041836.39986-1-brian.cain@oss.qualcomm.com>
 Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <df9030cb-cc19-4d2b-8d6a-0acb7b8b32ca@linaro.org>
+From: Brian Cain <brian.cain@oss.qualcomm.com>
+In-Reply-To: <20241213041836.39986-1-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:839f:b883:9bde:613a
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH v2 14/34] next-cube: add empty slots for unknown accesses
- to next.scr memory region
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-GUID: qSn1e2FTZdPZpIkBOdlGqCQc0WIS177b
+X-Proofpoint-ORIG-GUID: qSn1e2FTZdPZpIkBOdlGqCQc0WIS177b
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1039,Hydra:6.0.680,FMLib:17.12.60.29
+ definitions=2024-09-06_09,2024-09-06_01,2024-09-02_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 suspectscore=0
+ lowpriorityscore=0 spamscore=0 mlxlogscore=999 bulkscore=0 mlxscore=0
+ phishscore=0 malwarescore=0 priorityscore=1501 clxscore=1015
+ impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412150025
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,70 +122,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/12/2024 13:32, Philippe Mathieu-Daudé wrote:
++ Stefan
 
-> On 12/12/24 12:46, Mark Cave-Ayland wrote:
->> The next.scr memory is now effectively unused, however there are 3 separate region
->> accesses still logged that occur when booting a NeXTStep disk image. Use the
->> empty_slot device to capture and ignore memory accesses to these 3 memory regions.
->>
->> Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
->> Reviewed-by: Thomas Huth <huth@tuxfamily.org>
->> ---
->>   hw/m68k/Kconfig     | 1 +
->>   hw/m68k/next-cube.c | 8 ++++++++
->>   2 files changed, 9 insertions(+)
->>
->> diff --git a/hw/m68k/Kconfig b/hw/m68k/Kconfig
->> index 0092cda4e9..aff769b30f 100644
->> --- a/hw/m68k/Kconfig
->> +++ b/hw/m68k/Kconfig
->> @@ -18,6 +18,7 @@ config NEXTCUBE
->>       depends on M68K
->>       select FRAMEBUFFER
->>       select ESCC
->> +    select EMPTY_SLOT
->>   config Q800
->>       bool
->> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
->> index 76ecf86ed0..95d01030cd 100644
->> --- a/hw/m68k/next-cube.c
->> +++ b/hw/m68k/next-cube.c
->> @@ -22,6 +22,7 @@
->>   #include "qom/object.h"
->>   #include "hw/char/escc.h" /* ZILOG 8530 Serial Emulation */
->>   #include "hw/block/fdc.h"
->> +#include "hw/misc/empty_slot.h"
->>   #include "hw/qdev-properties.h"
->>   #include "qapi/error.h"
->>   #include "qemu/error-report.h"
->> @@ -1239,6 +1240,13 @@ static void next_cube_init(MachineState *machine)
->>       /* BMAP IO - acts as a catch-all for now */
->>       sysbus_mmio_map(SYS_BUS_DEVICE(pcdev), 1, 0x02100000);
->> +    /* unknown: Brightness control register? */
->> +    empty_slot_init("next.unknown", 0x02110000, 0x10);
->> +    /* unknown: Magneto-Optical drive controller? */
->> +    empty_slot_init("next.unknown", 0x02112000, 0x10);
->> +    /* unknown: Serial clock configuration register? */
->> +    empty_slot_init("next.unknown", 0x02118004, 0x10);
-> 
-> IIRC the 'name' argument of empty_slot_init() was to log accesses,
-> but apparently the patch has never been merged.
-> 
-> Maybe use "next.unknown0/1/2" in preparation?
-> 
->> +
->>       /* BMAP memory */
->>       memory_region_init_ram_flags_nomigrate(&m->bmapm1, NULL, "next.bmapmem",
->>                                              64, RAM_SHARED, &error_fatal);
-> 
-> 
-
-That's a good idea: I'll use a numerical suffix for v3.
-
-
-ATB,
-
-Mark.
-
+On 12/12/2024 10:18 PM, Brian Cain wrote:
+> The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
+>
+>    Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
+>
+> are available in the Git repository at:
+>
+>    https://github.com/quic/qemu tags/pull-hex-20241212
+>
+> for you to fetch changes up to b29b11b51f1ac1884a64c5b6bde969a46206263f:
+>
+>    target/hexagon: Make HVX vector args. restrict * (2024-12-12 21:43:57 -0600)
+>
+> ----------------------------------------------------------------
+> Remove HEX_DEBUG, EXCP/CAUSE fixes
+>
+> ----------------------------------------------------------------
+> Anton Johansson (2):
+>        target/hexagon: Use argparse in all python scripts
+>        target/hexagon: Make HVX vector args. restrict *
+>
+> Brian Cain (2):
+>        target/hexagon: rename HEX_EXCP_*=>HEX_CAUSE_*
+>        target/hexagon: add enums for event, cause
+>
+> Taylor Simpson (1):
+>        Hexagon (target/hexagon) Remove HEX_DEBUG/HEX_DEBUG_LOG
+>
+>   linux-user/hexagon/cpu_loop.c           |   4 +-
+>   target/hexagon/README                   |   9 ---
+>   target/hexagon/cpu.h                    |   8 +--
+>   target/hexagon/cpu_bits.h               |  21 ++++--
+>   target/hexagon/gen_analyze_funcs.py     |   6 +-
+>   target/hexagon/gen_decodetree.py        |  19 ++++--
+>   target/hexagon/gen_helper_funcs.py      |   7 +-
+>   target/hexagon/gen_helper_protos.py     |   7 +-
+>   target/hexagon/gen_idef_parser_funcs.py |  11 +++-
+>   target/hexagon/gen_op_attribs.py        |  11 +++-
+>   target/hexagon/gen_opcodes_def.py       |  11 +++-
+>   target/hexagon/gen_printinsn.py         |  11 +++-
+>   target/hexagon/gen_tcg.h                |   2 +-
+>   target/hexagon/gen_tcg_func_table.py    |  11 +++-
+>   target/hexagon/gen_tcg_funcs.py         |   9 +--
+>   target/hexagon/gen_trans_funcs.py       |  18 ++++-
+>   target/hexagon/genptr.c                 |   7 --
+>   target/hexagon/helper.h                 |   3 -
+>   target/hexagon/hex_common.py            |  33 +++++-----
+>   target/hexagon/internal.h               |  11 ----
+>   target/hexagon/meson.build              |   2 +-
+>   target/hexagon/mmvec/macros.h           |  36 +++++-----
+>   target/hexagon/op_helper.c              | 112 --------------------------------
+>   target/hexagon/translate.c              |  72 +-------------------
+>   target/hexagon/translate.h              |   2 -
+>   25 files changed, 148 insertions(+), 295 deletions(-)
 
