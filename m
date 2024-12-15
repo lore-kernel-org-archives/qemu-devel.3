@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E49BE7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:19:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 405B0E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtx8-0002Or-Bb; Sun, 15 Dec 2024 14:06:54 -0500
+	id 1tMu0A-0004Er-2x; Sun, 15 Dec 2024 14:10:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwZ-0001Lw-1p
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:20 -0500
-Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
+ id 1tMtzz-0002t1-HA
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:51 -0500
+Received: from mail-oa1-x2d.google.com ([2001:4860:4864:20::2d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwW-0001AA-D1
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:17 -0500
-Received: by mail-oo1-xc36.google.com with SMTP id
- 006d021491bc7-5f2da12248fso2170297eaf.1
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:16 -0800 (PST)
+ id 1tMtzx-0001Wm-Hv
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:51 -0500
+Received: by mail-oa1-x2d.google.com with SMTP id
+ 586e51a60fabf-29e5c0c46c3so1728295fac.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:09:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289575; x=1734894375; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289788; x=1734894588; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/7D9unWrlHZoR8A1dN23AeSaSZJKRolZppIb6v+BQvE=;
- b=BIbGXi3jLljHc1VMbaADM/GoIZj0Wl9xrdqE1BTCt9JlLRWY6AxGNUHXcq/xp55PeQ
- O9vf2kXziTj3SdooccJxNErmhRecgYAWBd+y69xo3zb8E9jzb0Bdg3BESRdhJVjvOkXp
- GPoHsbgoZYmyW4f70Eh2gtwvzTrL9ZqF3LYyXnuoqTYU0hAUf/jBiyfocNgQP+XEC6bt
- Yzd0HfQOk6U6pL2+khC6QbOjxLpoCQ5+GY8KxBsqdGt94oWsdQKwnXptzENS91DqqoA/
- /anqxHWIthkDdyeq3mvEf7vZLPy/sjP2+jYhyp2DspGq+yTFGpQcjLeUY6futKVVBSa+
- leWg==
+ bh=9YuFtZ+DmVXtIMH4G5/Ti8ZD+nNOe3CzMTkLQ80e6uw=;
+ b=oQANsbIMUl6PAywZ+OLxg9fAHcCY6AU35oF6RsQ35VbaWE04cNSL1IJ5LnY36Ne56C
+ ChfX4sJkxsj5op62MvIjH5rdUb2WVfJj+WbT6jswhHR+8GJh0947Nt3Tho/5PsHbuk3p
+ sxAsXG6hQWhx+36GkWq7XR2AJeB551wa8AogQfTr+FDryXV3Wu3TjxaHZpMbt0vc6V+r
+ XexekvmwgMssu62+tMuE1chbab+bHOzHnrvmG2tC3tknAoN80EclI4B5v4TkI/XCvnBb
+ ZIxY3LDV+VA0mNieXcpCQPqYSPzJ2HtCP3YGKUnA0Hic3fwQQjn8U+oMtkit2UYPu2TU
+ qtJA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289575; x=1734894375;
+ d=1e100.net; s=20230601; t=1734289788; x=1734894588;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/7D9unWrlHZoR8A1dN23AeSaSZJKRolZppIb6v+BQvE=;
- b=dd2VdXJEQlmCog4V4aaXG3rfF14svuaBnoemXV3rbwoaLjYh3LSkCLHWEfpQfxH6rs
- 915DUMKlYclVNKZsMnNg60U6HO0YXolsc8hA4IIuknYidZR5JeAeu64dNG0yGypB8Sm4
- 6FidPMW7gan8SXqI7ukDIWvrfwHIQfgDfG4U77mJR2GjLUqqyTfR30FS+YXSufIBi/m1
- LplDDSnCj2C2IY30JUBTn+2xFdLJso9UPilpm2VHHq4QEfj4JNox95QVHh4ufYhV/FMy
- dBs61C11P5OMWubygCs4yPLty629HjCJ3EffACj0Cej3zGjwQyvAwLFAANhLsup4pkwB
- RofA==
-X-Gm-Message-State: AOJu0Yy4Qwg5ogPhWee49T5JNPzb2sLhErhu7JtaOwvy/iwXOjUANhDq
- hyOyLH+4F1s7GkQJMvEtSccRd3pqi5P6h+oif1t/kIKCTe4a8Kcyua0CXS1VVdVBE/IWnF0GR6s
- nt7OJpeTY
-X-Gm-Gg: ASbGnctpP+fuY2R9PMjMFCBW3TziFjKL7ZNDfzjQNGEukgWijgeUuvCPS61vcqJPuL0
- TOQuXxLKOLO3NqW2zVIP6qKdOme55F11nx9OYriGSi/8m1miM9dkg5+bKWNSIUdfaZAs54YUufN
- +G+9B6vXJ4yYN+Ld/Hbew6MlooWJZGvB7sRK7JU/ItzOojTKdghIqGFv0gjCfYi6cZ7r6yECVCf
- Z+hdGmptvlyollQ9WVWIR1WABpBhnAtowkvjTXBYj74UEVoiSv3d409yeGlzDbQHj3YVVn09L6a
- HXF7dtqmkZHxehImMB/hmyyHpchxOdchzVM7wE5qLdU=
-X-Google-Smtp-Source: AGHT+IHhyoMuUFa1Wi2ZrHrrsSIkgRylhCcCpewSYlx2G64qXKLgMO5+8oxEEOCpXCOodpB2oeBUDQ==
-X-Received: by 2002:a05:6870:1d1:b0:29e:1962:7a23 with SMTP id
- 586e51a60fabf-2a3aef703cdmr5561380fac.4.1734289574698; 
- Sun, 15 Dec 2024 11:06:14 -0800 (PST)
+ bh=9YuFtZ+DmVXtIMH4G5/Ti8ZD+nNOe3CzMTkLQ80e6uw=;
+ b=asyVrMV23JboBaUUGQBtotiFbZl6Tc2eAZ1CB2dKoB4NLPkCziD8v5WCbrmu2VI7z1
+ hBvNeFHek9ir2KQoKbHuA61JQWCjTcoeioVaJ4sIrvluGSjWPCpoBgW2Dx8/9F5Zx+3s
+ 5M5+c5FowuTrgeEja40J1NNq5klIBSlmJlJbV8Oub2DL43kbVhph+++mMaOiacIZhjfJ
+ Ng5NS5T0aR0utlOasSRtRsRu4yTVx0fdQ/G/DiHz5Yp64946j7sQn2jybdN+Hx46ZD5B
+ +EipBL1KR1UdCHzuOxAIGkytNRmehMghrnBLqXRvdKmhLGV2nqyzZEgqKhg+RbVEobW3
+ Sybg==
+X-Gm-Message-State: AOJu0YwF7O8PMHB12FVys+BgT5+/gZUx6eoGg/Il0LybyBHQUPrxvhJW
+ rX0Q0KINF6ERBDL9/FvLEEBEmOvNosRhhgnTbrPLHEtjdH/4n6G5smtkqfL9r8+0RGUrzeM8lbf
+ GIXIoTZFy
+X-Gm-Gg: ASbGncs7XuKszaHmBZ5qA4l2ZUCV5P/jVW2rqzaaz/hs/dLHR7+U9zlLnnTusHzZtX/
+ +0BRwSOQTND+MTCHps2SmnQm1iHIpvwoac1ql3IDZK9Ss2npvUtjOSTbz764RT3E8H9C1B+J6Vs
+ 5CMYex4FzjcxZXu2qfT8YV0sh5ZV/K783LsFZCCMPehpXmiFcm9FADuwEhJR6J+dqy6re7jvKTY
+ lKvpjhX5IaA9WxeVjpcdcV8ZmGqJQji5EUDA+MNccL+jOy67s1ky0AZK5Aedt2KaTrFvvhMEARQ
+ yPuoaRcEIoQrfpkBeSHWchIZrQ6wguo+hoyLT43g3Rw=
+X-Google-Smtp-Source: AGHT+IHEQLQvcGXXB5ibjNpl/QOe5oqEfsMII3bjSId+bszJJnD6Gjn5oY/v9RR3KtPB3ApXz2Bz5g==
+X-Received: by 2002:a05:6871:4095:b0:29f:ecfc:32df with SMTP id
+ 586e51a60fabf-2a3ac5bc2b5mr5741324fac.14.1734289788281; 
+ Sun, 15 Dec 2024 11:09:48 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.14
+ 46e09a7af769-71e4836f8c2sm1015316a34.34.2024.12.15.11.09.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:14 -0800 (PST)
+ Sun, 15 Dec 2024 11:09:48 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 26/67] hw/hyperv: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:52 -0600
-Message-ID: <20241215190533.3222854-27-richard.henderson@linaro.org>
+Subject: [PULL 54/67] hw/sd: Constify all Property
+Date: Sun, 15 Dec 2024 13:05:20 -0600
+Message-ID: <20241215190533.3222854-55-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,62 +102,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/hyperv/hv-balloon.c | 2 +-
- hw/hyperv/syndbg.c     | 2 +-
- hw/hyperv/vmbus.c      | 4 ++--
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ hw/sd/allwinner-sdhost.c | 2 +-
+ hw/sd/aspeed_sdhci.c     | 2 +-
+ hw/sd/sd.c               | 6 +++---
+ hw/sd/sdhci-pci.c        | 2 +-
+ hw/sd/sdhci.c            | 2 +-
+ 5 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 3a9ef07691..74897b1604 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -1733,7 +1733,7 @@ static void hv_balloon_finalize(Object *obj)
-     hv_balloon_unrealize_finalize_common(balloon);
- }
- 
--static Property hv_balloon_properties[] = {
-+static const Property hv_balloon_properties[] = {
-     DEFINE_PROP_BOOL("status-report", HvBalloon,
-                      status_report.enabled, false),
- 
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index 065e12fb1e..0193addd42 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -366,7 +366,7 @@ static const VMStateDescription vmstate_hv_syndbg = {
-     .unmigratable = 1,
+diff --git a/hw/sd/allwinner-sdhost.c b/hw/sd/allwinner-sdhost.c
+index bcfb4c1322..be39ec2e71 100644
+--- a/hw/sd/allwinner-sdhost.c
++++ b/hw/sd/allwinner-sdhost.c
+@@ -808,7 +808,7 @@ static const VMStateDescription vmstate_allwinner_sdhost = {
+     }
  };
  
--static Property hv_syndbg_properties[] = {
-+static const Property hv_syndbg_properties[] = {
-     DEFINE_PROP_STRING("host_ip", HvSynDbg, host_ip),
-     DEFINE_PROP_UINT16("host_port", HvSynDbg, host_port, 50000),
-     DEFINE_PROP_BOOL("use_hcalls", HvSynDbg, use_hcalls, false),
-diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-index b36bd3d67d..3d1f4d14e8 100644
---- a/hw/hyperv/vmbus.c
-+++ b/hw/hyperv/vmbus.c
-@@ -2346,7 +2346,7 @@ static void vmbus_dev_unrealize(DeviceState *dev)
-     free_channels(vdev);
- }
- 
--static Property vmbus_dev_props[] = {
-+static const Property vmbus_dev_props[] = {
-     DEFINE_PROP_UUID("instanceid", VMBusDevice, instanceid),
-     DEFINE_PROP_END_OF_LIST()
- };
-@@ -2653,7 +2653,7 @@ static const VMStateDescription vmstate_vmbus_bridge = {
+-static Property allwinner_sdhost_properties[] = {
++static const Property allwinner_sdhost_properties[] = {
+     DEFINE_PROP_LINK("dma-memory", AwSdHostState, dma_mr,
+                      TYPE_MEMORY_REGION, MemoryRegion *),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/sd/aspeed_sdhci.c b/hw/sd/aspeed_sdhci.c
+index f82b05397e..99703f1842 100644
+--- a/hw/sd/aspeed_sdhci.c
++++ b/hw/sd/aspeed_sdhci.c
+@@ -204,7 +204,7 @@ static const VMStateDescription vmstate_aspeed_sdhci = {
      },
  };
  
--static Property vmbus_bridge_props[] = {
-+static const Property vmbus_bridge_props[] = {
-     DEFINE_PROP_UINT8("irq", VMBusBridge, irq, 7),
+-static Property aspeed_sdhci_properties[] = {
++static const Property aspeed_sdhci_properties[] = {
+     DEFINE_PROP_UINT8("num-slots", AspeedSDHCIState, num_slots, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/sd/sd.c b/hw/sd/sd.c
+index f9bd03f3fd..b994ef581e 100644
+--- a/hw/sd/sd.c
++++ b/hw/sd/sd.c
+@@ -2798,18 +2798,18 @@ static void emmc_realize(DeviceState *dev, Error **errp)
+     sd_realize(dev, errp);
+ }
+ 
+-static Property sdmmc_common_properties[] = {
++static const Property sdmmc_common_properties[] = {
+     DEFINE_PROP_DRIVE("drive", SDState, blk),
      DEFINE_PROP_END_OF_LIST()
  };
+ 
+-static Property sd_properties[] = {
++static const Property sd_properties[] = {
+     DEFINE_PROP_UINT8("spec_version", SDState,
+                       spec_version, SD_PHY_SPECv3_01_VERS),
+     DEFINE_PROP_END_OF_LIST()
+ };
+ 
+-static Property emmc_properties[] = {
++static const Property emmc_properties[] = {
+     DEFINE_PROP_UINT64("boot-partition-size", SDState, boot_part_size, 0),
+     DEFINE_PROP_UINT8("boot-config", SDState, boot_config, 0x0),
+     DEFINE_PROP_END_OF_LIST()
+diff --git a/hw/sd/sdhci-pci.c b/hw/sd/sdhci-pci.c
+index 9b7bee8b3f..83892a7a15 100644
+--- a/hw/sd/sdhci-pci.c
++++ b/hw/sd/sdhci-pci.c
+@@ -22,7 +22,7 @@
+ #include "hw/sd/sdhci.h"
+ #include "sdhci-internal.h"
+ 
+-static Property sdhci_pci_properties[] = {
++static const Property sdhci_pci_properties[] = {
+     DEFINE_SDHCI_COMMON_PROPERTIES(SDHCIState),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+index 37875c02c3..e697ee05b3 100644
+--- a/hw/sd/sdhci.c
++++ b/hw/sd/sdhci.c
+@@ -1544,7 +1544,7 @@ void sdhci_common_class_init(ObjectClass *klass, void *data)
+ 
+ /* --- qdev SysBus --- */
+ 
+-static Property sdhci_sysbus_properties[] = {
++static const Property sdhci_sysbus_properties[] = {
+     DEFINE_SDHCI_COMMON_PROPERTIES(SDHCIState),
+     DEFINE_PROP_BOOL("pending-insert-quirk", SDHCIState, pending_insert_quirk,
+                      false),
 -- 
 2.43.0
 
