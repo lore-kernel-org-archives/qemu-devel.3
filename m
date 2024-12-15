@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52325E7717F
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADDE4E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwK-0001HA-Gm; Sun, 15 Dec 2024 14:06:04 -0500
+	id 1tMtxA-0002ZJ-DA; Sun, 15 Dec 2024 14:06:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwF-0001GE-06
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:05:59 -0500
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
+ id 1tMtwn-0001g5-Am
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:33 -0500
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwD-000118-Dn
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:05:58 -0500
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-29fbba47ca4so1352913fac.3
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:05:56 -0800 (PST)
+ id 1tMtwl-0001Hu-PC
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:33 -0500
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5f2d5b3c094so725339eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289555; x=1734894355; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289590; x=1734894390; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=llJ8necg6Hk67Yi1QiP/nuY6/jPOVfZRsl8P8QhMvXY=;
- b=o6w87x72CphAIoKJoSs1ttGTE0Y+7sUeKHr3Phr1fz/6isTTVyYqtF1sE7PbCZZkSy
- O4JTfhIc0JOF68wXS2QYqPgTf5kRHMTWlytVHWC/q89jnoz71g0qvi4MrUaIz0VkFj2+
- fqdqiO255+dkVjp2i+ZFUAG8aTaT2W9gul/QVHUcHnxZbfq/LuXIDjR08/YZOPDjl1IJ
- WN35CNLzPdPAB0qaEHXwPDibENBiEq2N8E2xUzA24Cy4N/k6/W9FYEYC9gUET/cEU1po
- uRkztH0gc3zPV+25qYoPIlUAf4D3FoNSt+SSQGyucnH4PFCgPohP0UnHPMN5B9uQcco+
- Z2JA==
+ bh=ATtwQCefwxDmcYM/q677d/D/wRuo4QtIQ9za2txrGkk=;
+ b=EwsCtyh+QraUjogqCkw57795a9Yg9tuPiepYpgMQs3oGl1gdhv9nQwC6/pe2TrPKb7
+ RL8ykVxZOSiqB2JT3k+Phh5PMp4lUWhUT7aMB7/SoGu8O9Rv25CGw4XjQ+GbgK5dbFJq
+ 78fzFQO3o/xDxCC0YZVwiBY9MlHhM7Tt6z0mlQhrfw1gXXSTVqXN1m/akdPwDlLZJS0j
+ 6Yb+BnZSoJQTyI0iQi6Go5QOWTCOuZ2sQA3r6ljZHJKhMWTKjsK3v151sKgPyTE3SsNi
+ QaTpUxE00lBDOx1Knh5e/VbAwZnjIzTTL2o7jOiAoK82azFHqURRb7qnz5CSkLbCPnkx
+ tA8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289555; x=1734894355;
+ d=1e100.net; s=20230601; t=1734289590; x=1734894390;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=llJ8necg6Hk67Yi1QiP/nuY6/jPOVfZRsl8P8QhMvXY=;
- b=aVVDEG8Hp6JJaGoeA/fuWfBTOhNKiMgmEsacuW0Q7HnoqO4TALb5Yj57yv79tm6UF1
- oGFMQ9P9fHMfSV6U3WLEZRWBZ9Um+XT/RiE3LycMO3oMFESlSgKPt/3eXlYcyFpMUDl4
- kAx+4IaqPYXM/piA114xJuXbJCXYPaLztXN50ljIu62nhADzCxqIxb9GDzGKgdDBIDNp
- AywMwjvbH7Sfa5U1uYB12uN+IzGZoikhcdATMfdMU+N65dl4b6+96TbdBHrLNsx1GJB8
- uQpp+R0gdWUe2XT/2SllYYAZl+n19lWUze1YzPwDEpqC35UzzE0PTuwhiu7cLMFHV4A2
- LFVA==
-X-Gm-Message-State: AOJu0YxPQdg4tCLSfPmXwdeQXadsJOMm3kS542Ph6pkml0zOj72gC6u6
- /UG5uCsJs480Pp4mOskPnAVnYzAW8E9u3tM8HC7uGr4fKjFo7+8HN/JD7HaGS0ZALGwn6T+iUg8
- Kttd7PPNr
-X-Gm-Gg: ASbGncs/I3mihu9jQpSdWwWtVf4+xmKnr+sZk9PQHRqLuvlnltl8nXGJ0fVpc5CkpzB
- zn+YBif76ZPxq055yh3voDyisekZurb5MmsD6Nq/Od/ffXtM0uOU9913CqnVtEbHRaYepad2qMA
- +dzIRVIlETYlYG6h3ImPlMI9FpRiIWx5US2Tp1+Yuyawk09O9UcF+KJ0qcZnYwoeiMJtSBZ9h63
- ZOxRFkNxmh9YgUCCUsWHOtb7C5xhMbrUVWgjsT4f4MNwRcMjpxMEacGeZfgMzBtBaaaKFN6Qxbv
- 6Sm8aqkyc5sOyCZS6v88WPZxEI8itOuSwlI+gyhqiP8=
-X-Google-Smtp-Source: AGHT+IFTM8+CK5Byz1cfrhHjTwBHAvf7u1BvqMGrYYQOnHmxZ2AV8R1UFSpBl9VhpXsX16zKcbIZAg==
-X-Received: by 2002:a05:6870:e8d:b0:29e:5bb8:fb35 with SMTP id
- 586e51a60fabf-2a3ac8c0fedmr5454400fac.37.1734289555469; 
- Sun, 15 Dec 2024 11:05:55 -0800 (PST)
+ bh=ATtwQCefwxDmcYM/q677d/D/wRuo4QtIQ9za2txrGkk=;
+ b=KLhIdy1kinEu01YRr2V+lY0rhslUsASMPBpt2KNtzEDkTJA6DdG6yePw/UTiB6g4BP
+ Q9tsBECMUv405+lM5kchjeSGV76iJSqCAY/7xJ6MDUpwZHmmTHZEXctP9BAkusEUco16
+ ogyGqpCfTpG3jlBaybfL8HyQfNcqDdu5oKMQT/vZX9n2NQ0IgsShE+45Ss8lHcZBhPDq
+ N43BbFUHg53DuQrK5MrGQK1lEU5Pr5NP8UenR8ySNzIiNsgYjWHWqSfG+8Oa6gx+hlOr
+ WEWgifRkyhRXHrKjNWMs1pkF474otSHr+elNw3fUhFoXjgJx/OWvrZ1Dp5M1Jn97t58N
+ obtw==
+X-Gm-Message-State: AOJu0YzefWNwZeBWMmPkEt2/p85cOB0NKLuNUHIy9ojfYReAeQEygyPi
+ hhbTzXFERfzKI/IfRzxov2R5hzrO28+OyBQ8vM+p1mJFa4Oql4aONq8W7eZLus0HW4+fU7Ics5C
+ hBF8m/RZp
+X-Gm-Gg: ASbGnct2n4aBXWXKSEFdYVh/pg0y/D836FM//BohSk7nq6nkULnMIILQQG5yvrzOKaw
+ Iq6naL6WEVktGMafp4tyddTdI2++iuIAeQHSr8EFEQNGoP6DtaVaY0LwqGawXS+DtrtEScRpEl+
+ aHfu5W9PoxQV2tQUgtaDBXQWp3wej0/6ig7h8mK+0tmWuP8xooOoaDIJTrV8jVM99d/TK9OTn5S
+ 7ab+OS66PmkCWSTbnxKdwontDsSzkvHiRuTgyydwuEd+NQD9vQUfodJdWAPmY9a9kWFoaYc5NiP
+ DPm1hLGS1ypScw1Iz6+TIb16oEe9nu/RJUuG7SWhImU=
+X-Google-Smtp-Source: AGHT+IEZ4IlnLMje/ViaSSc2glQE2SRrIF9ytnNa+2KeQEabSQoX4uznGVH3CxXdpkOrIDSsfX7BAw==
+X-Received: by 2002:a05:6871:5814:b0:29e:5a4c:4ad8 with SMTP id
+ 586e51a60fabf-2a3ac8d9e7amr5253466fac.40.1734289590247; 
+ Sun, 15 Dec 2024 11:06:30 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.05.54
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:05:54 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:29 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Greg Kurz <groug@kaod.org>, Christian Schoenebeck <qemu_oss@crudebyte.com>
-Subject: [PULL 11/67] hw/9pfs: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:37 -0600
-Message-ID: <20241215190533.3222854-12-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 38/67] hw/misc/xlnx-versal-trng: Constify trng_props
+Date: Sun, 15 Dec 2024 13:05:04 -0600
+Message-ID: <20241215190533.3222854-39-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x29.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc34.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,27 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Use DEFINE_PROP_UNSIGNED instead of DEFINE_PROP_UINT64
+so that we can set the PropertyInfo during initialization,
+instead of updating within trng_class_init.
+
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/9pfs/virtio-9p-device.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/misc/xlnx-versal-trng.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/9pfs/virtio-9p-device.c b/hw/9pfs/virtio-9p-device.c
-index efa41cfd73..b764e4cd3d 100644
---- a/hw/9pfs/virtio-9p-device.c
-+++ b/hw/9pfs/virtio-9p-device.c
-@@ -243,7 +243,7 @@ static const VMStateDescription vmstate_virtio_9p = {
-     },
- };
+diff --git a/hw/misc/xlnx-versal-trng.c b/hw/misc/xlnx-versal-trng.c
+index 86905479b8..2f6af4f680 100644
+--- a/hw/misc/xlnx-versal-trng.c
++++ b/hw/misc/xlnx-versal-trng.c
+@@ -660,8 +660,9 @@ static const PropertyInfo trng_prop_fault_events = {
  
--static Property virtio_9p_properties[] = {
-+static const Property virtio_9p_properties[] = {
-     DEFINE_PROP_STRING("mount_tag", V9fsVirtioState, state.fsconf.tag),
-     DEFINE_PROP_STRING("fsdev", V9fsVirtioState, state.fsconf.fsdev_id),
-     DEFINE_PROP_END_OF_LIST(),
+ static PropertyInfo trng_prop_uint64; /* to extend qdev_prop_uint64 */
+ 
+-static Property trng_props[] = {
+-    DEFINE_PROP_UINT64("forced-prng", XlnxVersalTRng, forced_prng_seed, 0),
++static const Property trng_props[] = {
++    DEFINE_PROP_UNSIGNED("forced-prng", XlnxVersalTRng, forced_prng_seed,
++                         0, trng_prop_uint64, uint64_t),
+     DEFINE_PROP_UINT32("hw-version", XlnxVersalTRng, hw_version, 0x0200),
+     DEFINE_PROP("fips-fault-events", XlnxVersalTRng, forced_faults,
+                 trng_prop_fault_events, uint32_t),
+@@ -694,7 +695,6 @@ static void trng_class_init(ObjectClass *klass, void *data)
+     /* Clone uint64 property with set allowed after realized */
+     trng_prop_uint64 = qdev_prop_uint64;
+     trng_prop_uint64.realized_set_allowed = true;
+-    trng_props[0].info = &trng_prop_uint64;
+ 
+     device_class_set_props(dc, trng_props);
+ }
 -- 
 2.43.0
 
