@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33179E7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 266B0E7716A
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:17:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwV-0001Ka-Bw; Sun, 15 Dec 2024 14:06:15 -0500
+	id 1tMu03-0003DY-5W; Sun, 15 Dec 2024 14:09:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwR-0001Iq-PP
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:11 -0500
-Received: from mail-oa1-x2c.google.com ([2001:4860:4864:20::2c])
+ id 1tMtzw-0002Uj-GQ
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:48 -0500
+Received: from mail-ot1-x331.google.com ([2607:f8b0:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwO-00016P-Hi
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:11 -0500
-Received: by mail-oa1-x2c.google.com with SMTP id
- 586e51a60fabf-2a01bcd0143so2494536fac.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:08 -0800 (PST)
+ id 1tMtzu-0001WL-VI
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:48 -0500
+Received: by mail-ot1-x331.google.com with SMTP id
+ 46e09a7af769-71e10e6a1ceso667893a34.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:09:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289567; x=1734894367; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289785; x=1734894585; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NmMi/xuqJ4zahJFECv1RiZkhOgP/JH9kb/vELILAgfs=;
- b=Pg90uEjLJhJxN+rlFFyL45ONSMrj3vQ+IGIjvLSe0wRxpAYbFxDHG4UUG2csEJdee1
- x3oYOfCMmVH87fYqHl6sh68kwWOlSdZa+Kk3RwJ9WGWcxiirSyaNUVMt3DQJy5dh36qM
- 90fcj75ZveKwUDDVG3dHObVxXAQ37bshHMOYFYinbKT96T8HCekx+8M6IY/y2XHblTmQ
- GAcupm95ywSnB+j/kYn53Axwg++4LlThJWrKusYsvSXQyxbHotegL6VypGLEIgEKBFBO
- Ox41La7l5MuyRqnnssi1tnTRPuMzp2YlYzumSf07Wu9DvYhEtP+10H5cQgn1JNt0lNxG
- a/5g==
+ bh=K+GZ9ZCLooOJN0Ye6NhWRD2E6T7UhJ11+zH6uUVM34k=;
+ b=S/IQ+E+I5ZyhTAPwwGgk9HsdyDEPME63AD4fz8eSz4vUoaStdmzNYxVxxJEf86vVsF
+ hNiqgythNiREu3B2MYpAkEB+DJX8GgxmwlzAdXCzl5XefJM2oGPqBhQnbqYLdZwyJ8tc
+ p+5IRsw3r8mYsW6F9bL2EsRJWX7BSkjP1ehtPxKAjshATeVhi8ZuX+YnlYFoNeupGdb1
+ TVLnR7H4P84uykSzJT9HA/PC+XEyeNxDe67D7LtYoGextL8RIQrJFGHsIMkxGo82vE0N
+ LmKBP8khWRnAFrW9jGUGR3dFKOkWD8skFG7W/JQ9NTF4uf2hgquAQOS9JhRziLxeLq0j
+ XOVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289567; x=1734894367;
+ d=1e100.net; s=20230601; t=1734289785; x=1734894585;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NmMi/xuqJ4zahJFECv1RiZkhOgP/JH9kb/vELILAgfs=;
- b=Z+EfJu+uoPuZT07HRuh1BIRRxTdkV+uKIuqMwT+peIRwGs5I85FvxbZH7t7oX6jXPH
- /0fadknr2ufOihh+EK2lpFpKdD6ysWkkBc/nUd1rPHYRhlZQPNhGhhKtIjqnf9jqzfL3
- 4xK5DGtu5w299h7IDShHEeJBfP8LWSmLq+YdwwZWRpuKjMxu2CvhEAfZovHA0QN+8nLr
- PrhL0xrQYDeXk2HlsQr4lU/FkUrwhmZiZuMnSr5V08MJxA/AQ2iaS4EIdUiTyFjjwdEc
- l/qwTB4Ou/EUZTEQur6p7tDAoFI6A8uUipB4sy3kLhiwtFcGUusXGoDWraaEYg4f7z+Z
- Tkjw==
-X-Gm-Message-State: AOJu0YxvOrjYrp+E6LKpm1VAryLCe5f02Nq4kz9nPajd3L/4ptbDTNXU
- k/ofBN0YnjdlnOtXTQgm6N6FMhYuX7/86YhjdvOig0KpB/llHbUOEIU+f99ECP0ozucEZLXIRdh
- 19rYcdb6K
-X-Gm-Gg: ASbGncvcwnLz2thnKWdbt2WTZkk4yVzUlkqIC9m05xHTQs87GP54JSsanxg7hgqcglb
- x/sl1IHGG6BRrN6CtUWVMQD6mIwnODumINC8O97kW8DpgMj8AZ+qlOgX613e9lVDRGbRuAWFRK7
- uXeuCO6HH5PfUbJNQAxrXXFTRBHxaFHtl29Ny9+IvW0VXS0TFeS4DmXEZMWuOiyf0CKKhCa4Clg
- 1PKCQBVgYvDOWpT+0beNs6Unc6/Sub7CXOBeknzR0qlW5QRCIxkJJ4u1M+DgS+392JekrbYcUdb
- CLJpA4Ub4WJTU90JBZH/iGSJU6Py4Mchiu12yNCGci8=
-X-Google-Smtp-Source: AGHT+IHiCQu6sjwm4Y9ry9LkmVThzBIfIM4bCMN67wfuzkimYtLH884ZzmJBepXgel3dvQh8+ow1yA==
-X-Received: by 2002:a05:6870:a10c:b0:29e:27bd:69ef with SMTP id
- 586e51a60fabf-2a3ac8b7813mr5401873fac.30.1734289567558; 
- Sun, 15 Dec 2024 11:06:07 -0800 (PST)
+ bh=K+GZ9ZCLooOJN0Ye6NhWRD2E6T7UhJ11+zH6uUVM34k=;
+ b=B428indqoW/2dAE5xpQpyIEYQKjIemY41rZIQk6e6pqsqlUMdgXDKOad99kQVeBNVr
+ wpjmh5+vZkbqzbliDMc+BKV1usfl7HB4d18Ts4KG21xybkSmqrR1Vp9Q7SmfepPTvn9u
+ ls7uh3LDuFRzCgm6UJ8UAkjY49v2bBkt755qMxXmvCMJgc03kfHMnJ7eILud6VkXUare
+ YLsyS1D9zCobjhe1Ai6lQGMp/+pLyloAuqiM02VCvueWXuOfv4jAwNJnp2nlB4pzT6lN
+ A3HWfS6fI+mMRp/VLYjt7hdeQ927ukpUJ50qc1e/K4Gm52AOlVx4KSf1QzByr6ZIAH82
+ pg0g==
+X-Gm-Message-State: AOJu0YxqffB3v+CKR3MDaVb0GxLgbaXQ5xC54tPevYw8Ht7MuDwUwxZC
+ 5S/KDWTk5h36WEq5OnuXGOy7XanfveYWpOLNpfImpASaFX5yZZEnlZGufERuhVXlR2FEqz5qPn7
+ AXKnbcbPk
+X-Gm-Gg: ASbGncsfdFTBwXGgm+bwk+avj/UCUzWMjh8jNb8B9oq2iWtAC6B7tRMdXmw6ZGUUngw
+ +0J5CCuYZyELVduhEU05f6z8C9ExV3PeiiXPqpNm/APxW81rvkzbjYPKRgdNuO6ZdCXhwF811KD
+ 0Fi7UVA72Twi0YyRgJUYS9WSQT48VsCw7A3sNTWA6qd+KGbZHwagkh0AneKLlyRy1I9Ergzlu7v
+ uJf9F4GHzvYys4JuGdoBscnZDoatgQZdco6XZ1QuZeET8/Qtxudy3j+ULKwVVTb9aPJ/8BK1pmO
+ FQXu8VIgbg4APHwDWqlJfEj4vmF33RwnpYNHrnH8WQ8=
+X-Google-Smtp-Source: AGHT+IEiCpz5QlRa9H2oNgzo1ulL+3orpaQqyfYBC03EqO1phBMuGtFEbMrQP6CLk/EL/yej98bArQ==
+X-Received: by 2002:a05:6830:44a3:b0:718:8dc:a5e with SMTP id
+ 46e09a7af769-71e3b84ec34mr5875790a34.9.1734289785261; 
+ Sun, 15 Dec 2024 11:09:45 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.06
+ 46e09a7af769-71e4836f8c2sm1015316a34.34.2024.12.15.11.09.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:07 -0800 (PST)
+ Sun, 15 Dec 2024 11:09:44 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 20/67] hw/core: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:46 -0600
-Message-ID: <20241215190533.3222854-21-richard.henderson@linaro.org>
+Subject: [PULL 51/67] hw/rx: Constify all Property
+Date: Sun, 15 Dec 2024 13:05:17 -0600
+Message-ID: <20241215190533.3222854-52-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::331;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,78 +104,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/core/generic-loader.c | 2 +-
- hw/core/guest-loader.c   | 2 +-
- hw/core/or-irq.c         | 2 +-
- hw/core/platform-bus.c   | 2 +-
- hw/core/split-irq.c      | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ hw/rx/rx62n.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-index ea8628b892..c1cddecf60 100644
---- a/hw/core/generic-loader.c
-+++ b/hw/core/generic-loader.c
-@@ -179,7 +179,7 @@ static void generic_loader_unrealize(DeviceState *dev)
-     qemu_unregister_reset(generic_loader_reset, dev);
+diff --git a/hw/rx/rx62n.c b/hw/rx/rx62n.c
+index 560f53a58a..dfa27bc94e 100644
+--- a/hw/rx/rx62n.c
++++ b/hw/rx/rx62n.c
+@@ -257,7 +257,7 @@ static void rx62n_realize(DeviceState *dev, Error **errp)
+     register_sci(s, 0);
  }
  
--static Property generic_loader_props[] = {
-+static const Property generic_loader_props[] = {
-     DEFINE_PROP_UINT64("addr", GenericLoaderState, addr, 0),
-     DEFINE_PROP_UINT64("data", GenericLoaderState, data, 0),
-     DEFINE_PROP_UINT8("data-len", GenericLoaderState, data_len, 0),
-diff --git a/hw/core/guest-loader.c b/hw/core/guest-loader.c
-index 391c875a29..74af00cee7 100644
---- a/hw/core/guest-loader.c
-+++ b/hw/core/guest-loader.c
-@@ -111,7 +111,7 @@ static void guest_loader_realize(DeviceState *dev, Error **errp)
-     loader_insert_platform_data(s, size, errp);
- }
- 
--static Property guest_loader_props[] = {
-+static const Property guest_loader_props[] = {
-     DEFINE_PROP_UINT64("addr", GuestLoaderState, addr, 0),
-     DEFINE_PROP_STRING("kernel", GuestLoaderState, kernel),
-     DEFINE_PROP_STRING("bootargs", GuestLoaderState, args),
-diff --git a/hw/core/or-irq.c b/hw/core/or-irq.c
-index b25468e38a..fc52796f54 100644
---- a/hw/core/or-irq.c
-+++ b/hw/core/or-irq.c
-@@ -115,7 +115,7 @@ static const VMStateDescription vmstate_or_irq = {
-     },
- };
- 
--static Property or_irq_properties[] = {
-+static const Property or_irq_properties[] = {
-     DEFINE_PROP_UINT16("num-lines", OrIRQState, num_lines, 1),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/core/platform-bus.c b/hw/core/platform-bus.c
-index dc58bf505a..a29c9c6e59 100644
---- a/hw/core/platform-bus.c
-+++ b/hw/core/platform-bus.c
-@@ -204,7 +204,7 @@ static void platform_bus_realize(DeviceState *dev, Error **errp)
-     plaform_bus_refresh_irqs(pbus);
- }
- 
--static Property platform_bus_properties[] = {
-+static const Property platform_bus_properties[] = {
-     DEFINE_PROP_UINT32("num_irqs", PlatformBusDevice, num_irqs, 0),
-     DEFINE_PROP_UINT32("mmio_size", PlatformBusDevice, mmio_size, 0),
-     DEFINE_PROP_END_OF_LIST()
-diff --git a/hw/core/split-irq.c b/hw/core/split-irq.c
-index 3b90af2e8f..40fc7e2e77 100644
---- a/hw/core/split-irq.c
-+++ b/hw/core/split-irq.c
-@@ -59,7 +59,7 @@ static void split_irq_realize(DeviceState *dev, Error **errp)
-     qdev_init_gpio_out(dev, s->out_irq, s->num_lines);
- }
- 
--static Property split_irq_properties[] = {
-+static const Property split_irq_properties[] = {
-     DEFINE_PROP_UINT16("num-lines", SplitIRQ, num_lines, 1),
-     DEFINE_PROP_END_OF_LIST(),
- };
+-static Property rx62n_properties[] = {
++static const Property rx62n_properties[] = {
+     DEFINE_PROP_LINK("main-bus", RX62NState, sysmem, TYPE_MEMORY_REGION,
+                      MemoryRegion *),
+     DEFINE_PROP_BOOL("load-kernel", RX62NState, kernel, false),
 -- 
 2.43.0
 
