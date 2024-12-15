@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F33BE7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78DBBE77183
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:13:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtxA-0002f4-RY; Sun, 15 Dec 2024 14:06:56 -0500
+	id 1tMtwn-0001eb-6O; Sun, 15 Dec 2024 14:06:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwW-0001L2-Mh
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:16 -0500
-Received: from mail-oi1-x233.google.com ([2607:f8b0:4864:20::233])
+ id 1tMtwd-0001Pi-Ka
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:28 -0500
+Received: from mail-oi1-x230.google.com ([2607:f8b0:4864:20::230])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwT-00018v-Qd
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:16 -0500
-Received: by mail-oi1-x233.google.com with SMTP id
- 5614622812f47-3ebadbb14dcso910973b6e.3
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:13 -0800 (PST)
+ id 1tMtwa-0001CU-Dn
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:23 -0500
+Received: by mail-oi1-x230.google.com with SMTP id
+ 5614622812f47-3eba7784112so1171245b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289572; x=1734894372; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289579; x=1734894379; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ermVyfZ+KD5ml0lXaGRWdiJA/VpXEa7zOPDhDo5E/rU=;
- b=VepLBZkNCfdfnIE5NCWx+n6qBwzkoi1VPcr7BNoT9VCj0XrHrKHcyjpnnURsYX2yv9
- sj/5mMVrac4XHRlpv0FEWOdBcROO/CAAVT5lHEG18Dg2gpQVPXkbxQouq9rU3nXyz33T
- 8iLlruknEj5K+Y27J48Z7TNu+M0GIb+OE1Vmi99Jdhbq3vW5pi/wZ6Upxt+VRxOMUjrv
- uDwFS0Ug4iVkU6WwgFICLiZQOv0UqqkZfRKUZKZBI9dwy3qaQzxn7hqyuYAu8e9l3l/l
- LFbX7NnttQobFv20JCXPBTNrKND4IQGBfUViS32u1+qtAiVbMlkbKg+BZeR+d43JFf3B
- 20Ig==
+ bh=U53muPL2bLLdVoKOwxM9M3Aqazdis5rVRboOucVaBPk=;
+ b=pO3HyqEM+ENdMvVcISzSpx4NJU1xqaeQvbhcUAH5ZNgaFTdsHXc8buK9VcVsF/p1b2
+ vOetcHOILxS4Jx0QD+LK+xhKEocpBQ5rUCl6gJ+DrDs5t7NoW4B+xRvy1l5ne0nsF1dI
+ CHkPTJ3fKG8ubO96bvAWye+vAssqNgtB3leb58nu2mQBW6BPHcsPZP9gjAgGaoKDwPVW
+ 7/q14xgKR7fe4/KNTg0u0x8CAF4a0OVzPFnE0wsli6MsiNLgJ7bgCLCkwZYvtjCzCXOQ
+ 1G9EgywNmr45KliWr8TBO3mr/PgKomYDcWD9+RiPBbxzMvaGXk6cp1uzj9kA0DXIy/Bo
+ B2Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289572; x=1734894372;
+ d=1e100.net; s=20230601; t=1734289579; x=1734894379;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ermVyfZ+KD5ml0lXaGRWdiJA/VpXEa7zOPDhDo5E/rU=;
- b=VjJNYpPHocyBwgTOZCgLfQrXZbbcnQVmYHtPxl1F3+EN18hDolTls/bdDDx7gvvMsl
- 4t5Aoq/7+CqgWhku5/NjOuPhoZJMBvIBl5rBU/4nNSRjxqYIVcCXj55ELoEXc3MTK5jg
- VYFX3NvGmmWBZK0RXQYqfEAo3wu7M9uj2dHtrOopEmEajUxPDOKubNWMYcSVZ+azO/pk
- 1Dh7UynhrFoxSkOqa3rgypxLujI1j9r5cQYuFowjlxgdL5jlusJDhWwSO5vLpaCCU2aa
- O1IROcSowUoTy9sQv63lgoGY79zSe4Z67QP4XQYjYde8l2TbAwDfme1Bjf4AYN/ceEXc
- esdA==
-X-Gm-Message-State: AOJu0YyPsxlW7N23+ro4blwjRm2dtW2WUO6OLOsT/P8LC9PyIn8VrtG/
- x/G73L5hsr/xnnMuijFBmsd0GsaeNTljPdEKr2UEgJYfT0nNXOK8GZHydvtDX24CFquiqXJzfL+
- DdVzmNU35
-X-Gm-Gg: ASbGncs3sWS2HxTFIbMMLnjQdqPqGMChRUMfh95k5ELJTLRr3yVxbeonLri98qABJ1/
- RlTs8JXswyVXgaNP4N7rzK2XKpv+zAO4IypFjEN7cXIOfaR5pI0WzvCPldVSGe8aOHa1+zqrbeq
- gwG8stwBNUeKEpua26+ZF+jHpSol85a/jSJ7E1v4sHeCR0zuVnIQkZrYRFPbIR0cppEAEa/nzzw
- KMAwz71kI9ipkMhcf/asUvwuhSgIiXXuzorFtndGf+wPdKXnvBYGUnOiiF52dIyb8QL1/FAdcqY
- xPEf0MsCh21jSNFYkNS40yPAj1cEb2VYpOXfEbINZpk=
-X-Google-Smtp-Source: AGHT+IEJz5nfx4mTwCqhfYwWhj3h+O6YqMhRsxq8cO0fgrXGJZ54mkTeK5tdFK17eNo2AiCndUiMXg==
-X-Received: by 2002:a05:6870:6388:b0:297:241b:c48 with SMTP id
- 586e51a60fabf-2a3ac8c10f2mr4638298fac.40.1734289572604; 
- Sun, 15 Dec 2024 11:06:12 -0800 (PST)
+ bh=U53muPL2bLLdVoKOwxM9M3Aqazdis5rVRboOucVaBPk=;
+ b=qILTJViycN2bc6jsQO9HHQpuq6aTTRBJIQwIHtf6XHGIHPOV0XZxYin3LBVHjbaFs3
+ hRgm5PZ4DRYyhpwH15XSurSNQINqjotr446hVGG0veR69tLqXzb3fZCwdUG+ezCgIMXT
+ uDA6Rmp9BupTJB/lcT1uOX6dCOirOHYY1aeJTu0m8Bxad4C2yp9AW77SeF1q3Z13LU3v
+ waRHGQ4kC6lvO+fi3TtWi2omxlcaRJdOe7pBj96v91lPiI7A5SDYDSSNv0QU1o16gwVh
+ kqaB9lwQjnKPfoRkwCjQlQZa0kO6alErS0A1D575TyS5OXRslGybErWYn5uVUsTOF4D5
+ pj+A==
+X-Gm-Message-State: AOJu0YyaYn8x6T25a7x5133yusy5TtZsFAocLMDIkHxazQldmosOj9FE
+ XJKOCIfNhdsiYxzBdp7moJe1C7xBo8zqqfRWL3gtZwkjhr3PfXxOBK3qIcWOxGSUrqoSQibbd4i
+ PVMmH0xmx
+X-Gm-Gg: ASbGncuIRBusmRLnEHaAR6aroQtMyTRxRwtrwLofDRzMytoNFbfMYUKhQSucBFZIT2e
+ EcMmFoQviQMevvqZPYZYwQEA1f6Mi0D9z6+q0eurIWooM+nRppxo5p731NL/lp0IFAuOQZ+WNRr
+ DRjozPc+/UKt6XN/1VyGSkjsNBgXhMPiTP7Jw+NsK+Wxa3cHKg5nEj3nKBYK+7Lue0asL8Xcs+m
+ iRirf3dM6HYmFrpz4CJlP9LVQkSns+ms3UcJqUNWsyLwLEAj1LdpQuZPtuggSHb6Za/RUgfUo3K
+ h2DoY+EqwhwenUtbGqB9yaAyZrMgEisKg8RsV7d29ag=
+X-Google-Smtp-Source: AGHT+IGBFYhBH09OjShaFJCpxuiq35SNwAz3WadjuUmJoYQwQM3Y7M8YU3/FnRtY+JaQleJMf9a56w==
+X-Received: by 2002:a05:6870:e247:b0:27b:61df:2160 with SMTP id
+ 586e51a60fabf-2a3ac8a887amr4906891fac.31.1734289579061; 
+ Sun, 15 Dec 2024 11:06:19 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.11
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:12 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:18 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com,
+Cc: stefanha@redhat.com, Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 24/67] hw/dma: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:50 -0600
-Message-ID: <20241215190533.3222854-25-richard.henderson@linaro.org>
+Subject: [PULL 29/67] hw/ide: Constify all Property
+Date: Sun, 15 Dec 2024 13:04:55 -0600
+Message-ID: <20241215190533.3222854-30-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::233;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x233.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::230;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x230.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,109 +101,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/dma/i82374.c        | 2 +-
- hw/dma/i8257.c         | 2 +-
- hw/dma/pl080.c         | 2 +-
- hw/dma/pl330.c         | 2 +-
- hw/dma/xilinx_axidma.c | 2 +-
- hw/dma/xlnx-zdma.c     | 2 +-
- hw/dma/xlnx_csu_dma.c  | 2 +-
- 7 files changed, 7 insertions(+), 7 deletions(-)
+ hw/ide/cf.c      | 2 +-
+ hw/ide/cmd646.c  | 2 +-
+ hw/ide/ide-dev.c | 6 +++---
+ hw/ide/isa.c     | 2 +-
+ hw/ide/macio.c   | 2 +-
+ hw/ide/mmio.c    | 2 +-
+ 6 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/hw/dma/i82374.c b/hw/dma/i82374.c
-index e72aa2e1ce..032afedde2 100644
---- a/hw/dma/i82374.c
-+++ b/hw/dma/i82374.c
-@@ -139,7 +139,7 @@ static void i82374_realize(DeviceState *dev, Error **errp)
-     memset(s->commands, 0, sizeof(s->commands));
+diff --git a/hw/ide/cf.c b/hw/ide/cf.c
+index 2a425cb0f2..190914f513 100644
+--- a/hw/ide/cf.c
++++ b/hw/ide/cf.c
+@@ -24,7 +24,7 @@ static void ide_cf_realize(IDEDevice *dev, Error **errp)
+     ide_dev_initfn(dev, IDE_CFATA, errp);
  }
  
--static Property i82374_properties[] = {
-+static const Property i82374_properties[] = {
-     DEFINE_PROP_UINT32("iobase", I82374State, iobase, 0x400),
+-static Property ide_cf_properties[] = {
++static const Property ide_cf_properties[] = {
+     DEFINE_IDE_DEV_PROPERTIES(),
+     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
+     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
+diff --git a/hw/ide/cmd646.c b/hw/ide/cmd646.c
+index 6b02fc81ec..942f6c470c 100644
+--- a/hw/ide/cmd646.c
++++ b/hw/ide/cmd646.c
+@@ -313,7 +313,7 @@ static void pci_cmd646_ide_exitfn(PCIDevice *dev)
+     }
+ }
+ 
+-static Property cmd646_ide_properties[] = {
++static const Property cmd646_ide_properties[] = {
+     DEFINE_PROP_UINT32("secondary", PCIIDEState, secondary, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/ide/ide-dev.c b/hw/ide/ide-dev.c
+index 03f7967798..cc92531f1c 100644
+--- a/hw/ide/ide-dev.c
++++ b/hw/ide/ide-dev.c
+@@ -29,7 +29,7 @@
+ #include "qapi/visitor.h"
+ #include "ide-internal.h"
+ 
+-static Property ide_props[] = {
++static const Property ide_props[] = {
+     DEFINE_PROP_UINT32("unit", IDEDevice, unit, -1),
+     DEFINE_PROP_BOOL("win2k-install-hack", IDEDevice, win2k_install_hack, false),
+     DEFINE_PROP_END_OF_LIST(),
+@@ -191,7 +191,7 @@ static void ide_cd_realize(IDEDevice *dev, Error **errp)
+     ide_dev_initfn(dev, IDE_CD, errp);
+ }
+ 
+-static Property ide_hd_properties[] = {
++static const Property ide_hd_properties[] = {
+     DEFINE_IDE_DEV_PROPERTIES(),
+     DEFINE_BLOCK_CHS_PROPERTIES(IDEDrive, dev.conf),
+     DEFINE_PROP_BIOS_CHS_TRANS("bios-chs-trans",
+@@ -218,7 +218,7 @@ static const TypeInfo ide_hd_info = {
+     .class_init    = ide_hd_class_init,
+ };
+ 
+-static Property ide_cd_properties[] = {
++static const Property ide_cd_properties[] = {
+     DEFINE_IDE_DEV_PROPERTIES(),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/ide/isa.c b/hw/ide/isa.c
+index 211ebc9ba7..a0a7e4837c 100644
+--- a/hw/ide/isa.c
++++ b/hw/ide/isa.c
+@@ -101,7 +101,7 @@ ISADevice *isa_ide_init(ISABus *bus, int iobase, int iobase2, int irqnum,
+     return isadev;
+ }
+ 
+-static Property isa_ide_properties[] = {
++static const Property isa_ide_properties[] = {
+     DEFINE_PROP_UINT32("iobase",  ISAIDEState, iobase,  0x1f0),
+     DEFINE_PROP_UINT32("iobase2", ISAIDEState, iobase2, 0x3f6),
+     DEFINE_PROP_UINT32("irq",     ISAIDEState, irqnum,  14),
+diff --git a/hw/ide/macio.c b/hw/ide/macio.c
+index 99477a3d13..25f8403e80 100644
+--- a/hw/ide/macio.c
++++ b/hw/ide/macio.c
+@@ -459,7 +459,7 @@ static void macio_ide_initfn(Object *obj)
+                              qdev_prop_allow_set_link_before_realize, 0);
+ }
+ 
+-static Property macio_ide_properties[] = {
++static const Property macio_ide_properties[] = {
+     DEFINE_PROP_UINT32("channel", MACIOIDEState, channel, 0),
+     DEFINE_PROP_UINT32("addr", MACIOIDEState, addr, -1),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/ide/mmio.c b/hw/ide/mmio.c
+index 53d22fb37f..43ab66f347 100644
+--- a/hw/ide/mmio.c
++++ b/hw/ide/mmio.c
+@@ -141,7 +141,7 @@ static void mmio_ide_initfn(Object *obj)
+     sysbus_init_irq(d, &s->irq);
+ }
+ 
+-static Property mmio_ide_properties[] = {
++static const Property mmio_ide_properties[] = {
+     DEFINE_PROP_UINT32("shift", MMIOIDEState, shift, 0),
      DEFINE_PROP_END_OF_LIST()
  };
-diff --git a/hw/dma/i8257.c b/hw/dma/i8257.c
-index 3e6700e53b..8b04177393 100644
---- a/hw/dma/i8257.c
-+++ b/hw/dma/i8257.c
-@@ -585,7 +585,7 @@ static void i8257_realize(DeviceState *dev, Error **errp)
-     d->dma_bh = qemu_bh_new(i8257_dma_run, d);
- }
- 
--static Property i8257_properties[] = {
-+static const Property i8257_properties[] = {
-     DEFINE_PROP_INT32("base", I8257State, base, 0x00),
-     DEFINE_PROP_INT32("page-base", I8257State, page_base, 0x80),
-     DEFINE_PROP_INT32("pageh-base", I8257State, pageh_base, 0x480),
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 8e76f88a69..3f392822ed 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -408,7 +408,7 @@ static void pl081_init(Object *obj)
-     s->nchannels = 2;
- }
- 
--static Property pl080_properties[] = {
-+static const Property pl080_properties[] = {
-     DEFINE_PROP_LINK("downstream", PL080State, downstream,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/dma/pl330.c b/hw/dma/pl330.c
-index 0668caed7c..d5a0a1caa2 100644
---- a/hw/dma/pl330.c
-+++ b/hw/dma/pl330.c
-@@ -1646,7 +1646,7 @@ static void pl330_realize(DeviceState *dev, Error **errp)
-     pl330_fifo_init(&s->fifo, s->data_width / 4 * s->data_buffer_dep);
- }
- 
--static Property pl330_properties[] = {
-+static const Property pl330_properties[] = {
-     /* CR0 */
-     DEFINE_PROP_UINT32("num_chnls", PL330State, num_chnls, 8),
-     DEFINE_PROP_UINT8("num_periph_req", PL330State, num_periph_req, 4),
-diff --git a/hw/dma/xilinx_axidma.c b/hw/dma/xilinx_axidma.c
-index 73a480bfbf..f09452d0b5 100644
---- a/hw/dma/xilinx_axidma.c
-+++ b/hw/dma/xilinx_axidma.c
-@@ -611,7 +611,7 @@ static void xilinx_axidma_init(Object *obj)
-     sysbus_init_mmio(sbd, &s->iomem);
- }
- 
--static Property axidma_properties[] = {
-+static const Property axidma_properties[] = {
-     DEFINE_PROP_UINT32("freqhz", XilinxAXIDMA, freqhz, 50000000),
-     DEFINE_PROP_LINK("axistream-connected", XilinxAXIDMA,
-                      tx_data_dev, TYPE_STREAM_SINK, StreamSink *),
-diff --git a/hw/dma/xlnx-zdma.c b/hw/dma/xlnx-zdma.c
-index 46f50631ff..1a63d5f3b2 100644
---- a/hw/dma/xlnx-zdma.c
-+++ b/hw/dma/xlnx-zdma.c
-@@ -810,7 +810,7 @@ static const VMStateDescription vmstate_zdma = {
-     }
- };
- 
--static Property zdma_props[] = {
-+static const Property zdma_props[] = {
-     DEFINE_PROP_UINT32("bus-width", XlnxZDMA, cfg.bus_width, 64),
-     DEFINE_PROP_LINK("dma", XlnxZDMA, dma_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
-diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
-index 43738c4350..d78dc6444b 100644
---- a/hw/dma/xlnx_csu_dma.c
-+++ b/hw/dma/xlnx_csu_dma.c
-@@ -691,7 +691,7 @@ static const VMStateDescription vmstate_xlnx_csu_dma = {
-     }
- };
- 
--static Property xlnx_csu_dma_properties[] = {
-+static const Property xlnx_csu_dma_properties[] = {
-     /*
-      * Ref PG021, Stream Data Width:
-      * Data width in bits of the AXI S2MM AXI4-Stream Data bus.
 -- 
 2.43.0
 
