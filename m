@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D443E7717F
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37629E7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtx4-00021n-TI; Sun, 15 Dec 2024 14:06:50 -0500
+	id 1tMtx6-0002AW-AV; Sun, 15 Dec 2024 14:06:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwa-0001M1-KK
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:20 -0500
+ id 1tMtwk-0001Z5-Ie
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:30 -0500
 Received: from mail-oo1-xc33.google.com ([2607:f8b0:4864:20::c33])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwY-0001Au-Qp
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:20 -0500
+ id 1tMtwi-0001GL-O8
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:30 -0500
 Received: by mail-oo1-xc33.google.com with SMTP id
- 006d021491bc7-5f2d8f62290so1754863eaf.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:17 -0800 (PST)
+ 006d021491bc7-5f2e2608681so1684308eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289576; x=1734894376; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289586; x=1734894386; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FhWboubb5SD2Tb3kEHoXaDk4aNSp8HDO/dk92ZtG/zg=;
- b=umQLr6cEIxKwJLhmN1n0d7G5tJ5s82wNevRaBBDaDwjZlagLhKYidDHzq8PpTI3EES
- znCkrkWW2FomB8efZMALZtyL0bmIxGgCeJTH25FuIgjOZ5JHDqs3KRYjLdgDgiHW/Fc6
- PF0UjdwWbdqkqCuxJuQZNIbfiinvwllh3XWhJNB8H8kDHfMvcQdOFhKEWEm6O8tGUlSf
- lizEc/pLfBVj9ADsIK+CHR103YGbE93o6TGRT92qQ4ykSIm9eOeQwVzVaSb5QMj0mfh6
- lWed2vgLemfdLT1Xrm+pHliurk3YKBrDmK//7M6cW9w+AHbEtWbx9pYc0GOSfeF+OYzI
- nNYA==
+ bh=1ECW39NRqpfZ/PTyPriCYZSRdWHi5xzzMmZM9BZOJCk=;
+ b=dC9rJAoR4xIpGIImMB/rUoDvTJsn4zH+rcrPbEoR5Vkc8qAS4oKvFxFGr3HUZLZ6KQ
+ BDk57+TFqNQ+gjmmqSs7QfBWrEa2KPd0UaO/brWuy4GX5jRqM2sGzqPOTu/zluFzOgay
+ MeuqHb8ysDUn/QcB/YKvcg7H3RnTdSrzmrLRWQbo3Oiz6M0eVaeSwtDx+c8gZIXM290q
+ EIl8T0J5oVgpvrwIQ+mf3dEulB3ekCjJDdVQqs123mDfiEBGVYoFPdJC97tnX4G9rI+Y
+ EP0adBUDKQd5f1Nevo1Mh1MZCquAgczyKiWwUOtqecIjd7dNLzViTbN58qr4ZCPr8fR9
+ 8wZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289576; x=1734894376;
+ d=1e100.net; s=20230601; t=1734289586; x=1734894386;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=FhWboubb5SD2Tb3kEHoXaDk4aNSp8HDO/dk92ZtG/zg=;
- b=rFqbsRbWMEbhpP52q5cM6qQ4CiqbyQFaxNs47Zw/DYfFg9GoXl0lVGifdspNC5vmAx
- eEG2cg5WUVQ1ZrTi/SOCHJkqc/hK5NPuanNMcKNVFO4YZ+AtmoSuTDalOU82AmfKyqsf
- GMJVrxWtLYEuV7d7Azd3cPl2KuMGt4mqsS4YxhwELR9hlJtHHbFT+HyYrPECpKJVIjvM
- gRJ01nwfXhD4drGWMysh1wJwNqQBmD/8loraQLOaCR+5xZeTrz9gMh9nSxSDm3BE/vpa
- W7b0qGYdTH72az4Qs+n0mtGHVMzsi9BUY4ySM+cFrO4sxYLlPN8XPFg6MKBhCU/MjTHb
- 1y9A==
-X-Gm-Message-State: AOJu0Yz/TNpJEZhHfsezuXj+aXk+Tw2yKuRQzq+CVxDzn5+I42h8iBuu
- cU/xRxH+TEdiwMqaqTBuK/7rNQ7thIOgpWkxgP6WxPEzgejciJvjzwAg6qtO8jT0m9blnEUsOQP
- x4GDTsapS
-X-Gm-Gg: ASbGncv56VBOSF+jbBGcvOs4qPZqYvU0xLZOwRZu6lm15BcVXQnAZRJuxSEfZfr4fMS
- F2OMQwmekivGR/V5vNWukBnsNHgiVfJskdaFqFZ0vpvpoaaUjuJftJ4+AHuuz6jZO+MQuP4hJ2O
- i3FTnJnIDLnCclch1R3bgCQ0ZWI8EJ++fnah9DKlzvxSP8dfw5tpWwz+jeFYKxWscl3sNC3z0I7
- Qv89j4nliN22numc7fsuLkEd3Jt2ywwkQW4rlMY47O64G5ySk6hDoX4bKoJHmTDIOWu7ez1fynw
- Af9ZPdDVx3JUemM/1OaTJ5bGBqa4ZSatqA9tkKlwqBs=
-X-Google-Smtp-Source: AGHT+IGkZzE7+yFJQmJC/QjGjfFQbP0LE8HZAYEQwg1hWGqNZ10Gm5KeuxpyVwrAR6FDKtY2hltEJw==
-X-Received: by 2002:a05:6870:e313:b0:29e:443b:edcd with SMTP id
- 586e51a60fabf-2a3ac914920mr5178427fac.37.1734289576737; 
- Sun, 15 Dec 2024 11:06:16 -0800 (PST)
+ bh=1ECW39NRqpfZ/PTyPriCYZSRdWHi5xzzMmZM9BZOJCk=;
+ b=YuW+Rzsi/tO/xaiQsj+KwXuWqO23rm07is6+1WozeqXsmclIR8EJuLR8iri0vhIGcq
+ gxVhK6FJhmSwNMqQMy1bv5v8O8C1XJFA2Az590KHU5BVZ2xXkarIBo2E1X/7d8u46lXF
+ xsWYoq2zqxYi8beCYL4+7aaxuvuaFoiCWe41dIq0+6sYEB4cjmbgbqdlJA6PlCgPy+Cr
+ JTFAmTWGqyavK+IpmpbPrQMkKCui/NpdQHRxwvTGIyX/hPboXWAFtgtFFS9yOqtxnYoZ
+ 54LPDAJbOiGLJMRN2M62scozycgOLr0LkwbwAkfEVUi59DFCuWHHRjGlFjFHATWIbAGp
+ qAkw==
+X-Gm-Message-State: AOJu0YyhUkSilDxT8Bgcrmva8r5S7bWgJkohTfHy5gImcslddj9GyCCl
+ eAFJlDk55SCewQzN+zwAPJgSKRZlu9+JynOzh4Qm0AQbJfu7NN34zg1Stlq6HNgqpZ9FpM12WKn
+ SwKVZTs0c
+X-Gm-Gg: ASbGncscBv2Rk+9jQSys5RtuuOYaiQegf/MD4eaDvhl3BfomlUS3Ua+cuE7F7KzFIlS
+ S9UjVaZznq2LKAIazC8XlRkqO+8y/eRj4+SZENSZC31H3zatJPjrjPI1rM3bDVuUQl6tvZlcO0t
+ ORg3aP5V6K0bUs/6zINus3coPPbbeUSw9r2/XEq6Pp7h9Dp63YnhkC4swBTczPJjQ6Pb0Y1lkw9
+ 0jBXPYUyd27z4GSGeZjquPpsBn0hah+GKyTiKVL2s5EjaQmmH8AhKvwVAEyPBnd7khEqedgBZV8
+ YZmG1Cs6hntlkIxfjmyuJdRRMNd7xjtl3/N+m4PYuBY=
+X-Google-Smtp-Source: AGHT+IH2hTaEOBrh61FJ8UoPd8ZEa2UrcfXEvROJsOyIYUUp0OyodvKHyHny/+bqAXpW26qKHbCryA==
+X-Received: by 2002:a05:6870:8a10:b0:29e:8068:e089 with SMTP id
+ 586e51a60fabf-2a3ac7285demr5901565fac.19.1734289586753; 
+ Sun, 15 Dec 2024 11:06:26 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.15
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:16 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, Corey Minyard <cminyard@mvista.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: stefanha@redhat.com, Thomas Huth <huth@tuxfamily.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 27/67] hw/i2c: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:53 -0600
-Message-ID: <20241215190533.3222854-28-richard.henderson@linaro.org>
+Subject: [PULL 35/67] hw/m68k: Constify all Property
+Date: Sun, 15 Dec 2024 13:05:01 -0600
+Message-ID: <20241215190533.3222854-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
@@ -102,76 +101,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Acked-by: Corey Minyard <cminyard@mvista.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Thomas Huth <huth@tuxfamily.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/i2c/aspeed_i2c.c      | 4 ++--
- hw/i2c/core.c            | 2 +-
- hw/i2c/i2c_mux_pca954x.c | 2 +-
- hw/i2c/omap_i2c.c        | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ hw/m68k/mcf5206.c   | 2 +-
+ hw/m68k/mcf_intc.c  | 2 +-
+ hw/m68k/next-cube.c | 2 +-
+ hw/m68k/q800-glue.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index 3ae22cb052..2ea68c3090 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -1258,7 +1258,7 @@ static void aspeed_i2c_realize(DeviceState *dev, Error **errp)
-     }
+diff --git a/hw/m68k/mcf5206.c b/hw/m68k/mcf5206.c
+index 7247cdbe5e..45e5f74600 100644
+--- a/hw/m68k/mcf5206.c
++++ b/hw/m68k/mcf5206.c
+@@ -600,7 +600,7 @@ static void mcf5206_mbar_realize(DeviceState *dev, Error **errp)
+     s->uart[1] = mcf_uart_create(s->pic[13], serial_hd(1));
  }
  
--static Property aspeed_i2c_properties[] = {
-+static const Property aspeed_i2c_properties[] = {
-     DEFINE_PROP_LINK("dram", AspeedI2CState, dram_mr,
-                      TYPE_MEMORY_REGION, MemoryRegion *),
+-static Property mcf5206_mbar_properties[] = {
++static const Property mcf5206_mbar_properties[] = {
+     DEFINE_PROP_LINK("m68k-cpu", m5206_mbar_state, cpu,
+                      TYPE_M68K_CPU, M68kCPU *),
      DEFINE_PROP_END_OF_LIST(),
-@@ -1446,7 +1446,7 @@ static void aspeed_i2c_bus_realize(DeviceState *dev, Error **errp)
-     sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr_pool);
+diff --git a/hw/m68k/mcf_intc.c b/hw/m68k/mcf_intc.c
+index 9fc30b03ba..c24b0b715d 100644
+--- a/hw/m68k/mcf_intc.c
++++ b/hw/m68k/mcf_intc.c
+@@ -177,7 +177,7 @@ static void mcf_intc_instance_init(Object *obj)
+     sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->iomem);
  }
  
--static Property aspeed_i2c_bus_properties[] = {
-+static const Property aspeed_i2c_bus_properties[] = {
-     DEFINE_PROP_UINT8("bus-id", AspeedI2CBus, id, 0),
-     DEFINE_PROP_LINK("controller", AspeedI2CBus, controller, TYPE_ASPEED_I2C,
-                      AspeedI2CState *),
-diff --git a/hw/i2c/core.c b/hw/i2c/core.c
-index 4cf30b2c86..4118d3db50 100644
---- a/hw/i2c/core.c
-+++ b/hw/i2c/core.c
-@@ -18,7 +18,7 @@
- 
- #define I2C_BROADCAST 0x00
- 
--static Property i2c_props[] = {
-+static const Property i2c_props[] = {
-     DEFINE_PROP_UINT8("address", struct I2CSlave, address, 0),
+-static Property mcf_intc_properties[] = {
++static const Property mcf_intc_properties[] = {
+     DEFINE_PROP_LINK("m68k-cpu", mcf_intc_state, cpu,
+                      TYPE_M68K_CPU, M68kCPU *),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index 08886d432c..a37ce00874 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -914,7 +914,7 @@ static void next_pc_realize(DeviceState *dev, Error **errp)
+  * this cpu link property and could instead provide outbound IRQ lines
+  * that the board could wire up to the CPU.
+  */
+-static Property next_pc_properties[] = {
++static const Property next_pc_properties[] = {
+     DEFINE_PROP_LINK("cpu", NeXTPC, cpu, TYPE_M68K_CPU, M68kCPU *),
      DEFINE_PROP_END_OF_LIST(),
  };
-diff --git a/hw/i2c/i2c_mux_pca954x.c b/hw/i2c/i2c_mux_pca954x.c
-index db5db956a6..80c570fd10 100644
---- a/hw/i2c/i2c_mux_pca954x.c
-+++ b/hw/i2c/i2c_mux_pca954x.c
-@@ -211,7 +211,7 @@ static void pca954x_init(Object *obj)
-     }
- }
- 
--static Property pca954x_props[] = {
-+static const Property pca954x_props[] = {
-     DEFINE_PROP_STRING("name", Pca954xState, name),
-     DEFINE_PROP_END_OF_LIST()
- };
-diff --git a/hw/i2c/omap_i2c.c b/hw/i2c/omap_i2c.c
-index e78505ebdd..172df135f5 100644
---- a/hw/i2c/omap_i2c.c
-+++ b/hw/i2c/omap_i2c.c
-@@ -511,7 +511,7 @@ void omap_i2c_set_fclk(OMAPI2CState *i2c, omap_clk clk)
-     i2c->fclk = clk;
- }
- 
--static Property omap_i2c_properties[] = {
-+static const Property omap_i2c_properties[] = {
-     DEFINE_PROP_UINT8("revision", OMAPI2CState, revision, 0),
+diff --git a/hw/m68k/q800-glue.c b/hw/m68k/q800-glue.c
+index e2ae7c3201..0d8cb8b1cb 100644
+--- a/hw/m68k/q800-glue.c
++++ b/hw/m68k/q800-glue.c
+@@ -203,7 +203,7 @@ static const VMStateDescription vmstate_glue = {
+  * this cpu link property and could instead provide outbound IRQ lines
+  * that the board could wire up to the CPU.
+  */
+-static Property glue_properties[] = {
++static const Property glue_properties[] = {
+     DEFINE_PROP_LINK("cpu", GLUEState, cpu, TYPE_M68K_CPU, M68kCPU *),
      DEFINE_PROP_END_OF_LIST(),
  };
 -- 
