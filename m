@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FAA2E7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 09:07:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769B0E7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 09:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMkaD-0004WH-QO; Sun, 15 Dec 2024 04:06:37 -0500
+	id 1tMkaV-0004eE-MB; Sun, 15 Dec 2024 04:06:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMkaA-0004VI-Kj
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tMkaU-0004dn-PV
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:54 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMka9-0006xm-0U
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:34 -0500
+ id 1tMkaT-0006zY-6E
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:54 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734253591;
+ s=mimecast20190719; t=1734253611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MWGGAB5XdcB3pXdVxuTkeezPYKORB6/K7AYCSGtJfhg=;
- b=cFgKsDnQPeg4cwvQ/2OBq91zm/HHTeXohAw55N8sKylPd+106qQ3p+E2ddCiWtqDRSza5D
- vmEyaPWgCGtt4aAzGxhyr/6T1OiTS6BM58GY7gIB96oo+0ZwFC6fu41JtYkJqAkrHbfX2X
- vWNFHBXePcryR8OPOO82pTsk2rI3VCU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=acGgMB4ZUdKs37fWXnZnKDTObj/dNL285Lmn4GAtSdY=;
+ b=LlpphGMKIxiMQ7cXYoT0m3idjCowk7Z70ZPCAldQKZFQEtVPpQwuDTG5n0geAri7n0oil8
+ dn5wMsXiTEnczXphnCqO8nYxdshnOIFDrelIhuQXEpzf4qLyR1DOdVr4v0k4d9mKZAmbSS
+ ZgwM2btFutmPLhPiHU/TkQQ/CnLQyfw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-592-UZwQwHsvNUSFCDEtU5SRfg-1; Sun, 15 Dec 2024 04:06:30 -0500
-X-MC-Unique: UZwQwHsvNUSFCDEtU5SRfg-1
-X-Mimecast-MFC-AGG-ID: UZwQwHsvNUSFCDEtU5SRfg
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4362552ce62so16871455e9.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 01:06:30 -0800 (PST)
+ us-mta-663-o2un7vbGNLC61w5WYgSFxA-1; Sun, 15 Dec 2024 04:06:50 -0500
+X-MC-Unique: o2un7vbGNLC61w5WYgSFxA-1
+X-Mimecast-MFC-AGG-ID: o2un7vbGNLC61w5WYgSFxA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43582d49dacso27609815e9.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 01:06:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734253587; x=1734858387;
+ d=1e100.net; s=20230601; t=1734253608; x=1734858408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MWGGAB5XdcB3pXdVxuTkeezPYKORB6/K7AYCSGtJfhg=;
- b=UsgbLQDfYmijbroetfo3W2JZA68w9fqDvh9JCzYiYWMaswd+ciCVR6uP5r7/FzWC4e
- 39wNAHwJrryEAz9BWShYZOP894/ze15XnXAS2G670hDQMaSNSDKlEkz2quFuddC/Q0GI
- kA5NWxy/pKQIJQBw9GUpgj4tFs4z2BjtZzGcnILDZDt1vGgAGaWWW3UP0sNqZLuUDygG
- qvO8yOrhw+lugV4zl64L1BHS8DdR1ZoZnLWrHxt0yZS8zlNtLIRQyf5YVMsXNTk74PFR
- Xh1v26NBlLLse16TKeW4JVvvOzVuKsvpYsmqL3x4BY8oQzpe8/Z/OTQCaFeVIJTJftiI
- lP0w==
-X-Gm-Message-State: AOJu0YyAcW2gwj2LAu5/7fG4S52kL2mdfXcflbN8QZApEAEHXN4jv/V1
- wBYRxQghmm9iOpK+F/S0Udiz60WGscRCVD5AcNJdycDbj2wxQ6PW47OfzwkMvMTvS2wXKupQYt3
- GPQxsEPHed1h0z/PbJiFdi6Z2q8kZL3cWmRust9o3bgqwtOi7fdxG26BMUKji1R03dDfKYQW0lJ
- DaoTyHZLVNaFSyBpewEqy1ksFTBp93G5z7JdoQ
-X-Gm-Gg: ASbGncvu729yz+2RIGPvyTkE+49ppF7obdRmU+e32WNz8KPkOWVVV4ErumRW10bK3VE
- UPkFJFva9ug4wylYw89O2a33uOQfXZDCJIg8QDomIl1aRladroHsec0rQv53VcoBUFy68e65N1L
- mGzjrsPKCFSLC8etkLhBKjuKrlJSeNRESr6sFntxwnfQkLVHBok5uOMISXa63CcP3TnDZqVe6OP
- GgSmDspYIfcyG4KK6ym+MVD/nZJZfWy6og5m8FHs0viSQnY5CxJ/D10xGE=
-X-Received: by 2002:a7b:cb89:0:b0:434:f609:1af7 with SMTP id
- 5b1f17b1804b1-4362aa1b8b7mr70035375e9.4.1734253587525; 
- Sun, 15 Dec 2024 01:06:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcAGny48HTP4vXyDylRpMDew+hC6I3hTf1IlYLkzKABiVKleioHELcWDkBG9kmvwEEBwqHtQ==
-X-Received: by 2002:a7b:cb89:0:b0:434:f609:1af7 with SMTP id
- 5b1f17b1804b1-4362aa1b8b7mr70035105e9.4.1734253587098; 
- Sun, 15 Dec 2024 01:06:27 -0800 (PST)
+ bh=acGgMB4ZUdKs37fWXnZnKDTObj/dNL285Lmn4GAtSdY=;
+ b=Q9KSHEYbIcSYZ9V08RHIllz4TBrn3TmihDU6K6G19J4MmgHClmRXeFvfEop/9xoKjI
+ zrNXC6PKa0MLDbOmaM/pyvqfTZkbbRxSkhJHi1j8jmF+TkGLUVj2/aOs2gK7qwCRNM9S
+ 1Tz6ZmcPrDXq8hOFnxAfG7wWvJfK2L45EvMS0ZdXk+BWCAg9oPzDz1X1RvolG3dHGWJh
+ 5bPJ/0UB/2QSfJGpPG0QFNLzm0yl3/A1MsDKjFROEW335yRAQIYQuYLfCgeqYGGitKsy
+ 9wa2xmajxRtuhb/6A7UhLUmpBJwWtEA6qkCs2vfB8hdLPN6Mm25TkQCF0Pae0qQ24bnZ
+ TFtA==
+X-Gm-Message-State: AOJu0YxKA+wtgPgzXisdnvowdu+xv9qHiiJP67Wn5TDkG1Yt2f8iGq5A
+ PMRlpCnVDuoLvykq8QUXVfHzEJVxRam4TuNMdLgIUCXlWPMNaXwdoU0mtxayOOjCCNbCpu72pnz
+ b9eHd4iQmgWuqSbRmCJdFUSndWXRM3GXLbnIdYew6wAD9hcTbzjilMDebF/0yMafJlMmlVLqL2z
+ 1o7QQEQt4Uxlbjtnznyxn5RolqDX33tLjAmXZI
+X-Gm-Gg: ASbGncsLpNWo7Il+OqSngq5EAN0bw9HaiAdCnNX5jOfRqs9Y4ImiR1WK0BMONhDsj4r
+ lteZdXRmXMa/hxUv5N9XdvZ6fJTqZ0Xrz/W0k9OyzVocQgmbNZ+Aymwsedo2JnnYEL7GkuGe5m+
+ ++DmUonBFLTPzcAzqa3y8h9O/Qk2r1U0oIdB/UYiZ03Y88zA10SsJh9ILVnN/aYHx6hc+kgqtS2
+ Z8bJSIJFGd4+qCL1WFWJswGYNFdXyg/tmmsX9mdxfZ5TYVWsxVHOrKfBXc=
+X-Received: by 2002:a5d:59a6:0:b0:385:e5d8:3ec2 with SMTP id
+ ffacd0b85a97d-38880ada81amr5975211f8f.28.1734253607979; 
+ Sun, 15 Dec 2024 01:06:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG8dLJJHHNe/eEwhUHzLWm75h30pKMYt44IkH6wsgF6P8LfDHX6+SSXRUw2OpQWUOXhLhwp4w==
+X-Received: by 2002:a5d:59a6:0:b0:385:e5d8:3ec2 with SMTP id
+ ffacd0b85a97d-38880ada81amr5975187f8f.28.1734253607439; 
+ Sun, 15 Dec 2024 01:06:47 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4361ec97d13sm83866495e9.1.2024.12.15.01.06.24
+ ffacd0b85a97d-388c805d489sm4767112f8f.88.2024.12.15.01.06.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 01:06:24 -0800 (PST)
+ Sun, 15 Dec 2024 01:06:45 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 04/13] target/i386: unify choice between single and repeated
- string instructions
-Date: Sun, 15 Dec 2024 10:06:03 +0100
-Message-ID: <20241215090613.89588-5-pbonzini@redhat.com>
+Subject: [PATCH 11/13] target/i386: execute multiple REP/REPZ iterations
+ without leaving TB
+Date: Sun, 15 Dec 2024 10:06:10 +0100
+Message-ID: <20241215090613.89588-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241215090613.89588-1-pbonzini@redhat.com>
 References: <20241215090613.89588-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -23
 X-Spam_score: -2.4
@@ -108,138 +108,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The same "if" is present in all generator functions for string instructions.
-Push it inside gen_repz() and gen_repz_nz() instead.
+Use a TCG loop so that it is not necessary to go through the setup steps
+of REP and through the I/O check on every iteration.  Interestingly, this
+is not a particularly effective optimization on its own, though it avoids
+the cost of correct RF emulation that was added in the previous patch.
+The main benefit lies in allowing the hoisting of loop invariants outside
+the loop, which will happen separately.
+
+The loop exits when the low 16 bits of CX/ECX/RCX are zero (so generally
+speaking the string operation runs in 65536 iteration batches) to give
+the main loop an opportunity to pick up interrupts.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 12 +++++++++--
- target/i386/tcg/emit.c.inc  | 42 +++++++------------------------------
- 2 files changed, 17 insertions(+), 37 deletions(-)
+ target/i386/tcg/translate.c | 55 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 49 insertions(+), 6 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 8bf6aa1fcf6..63a39d9f15a 100644
+index 2ea8a418612..e0f9f7748bc 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -1340,13 +1340,21 @@ static void gen_repz(DisasContext *s, MemOp ot,
-                      void (*fn)(DisasContext *s, MemOp ot))
+@@ -1331,13 +1331,28 @@ static void gen_outs(DisasContext *s, MemOp ot)
+     gen_bpt_io(s, s->tmp2_i32, ot);
+ }
  
++#define REP_MAX 65535
++
+ static void do_gen_rep(DisasContext *s, MemOp ot,
+                        void (*fn)(DisasContext *s, MemOp ot),
+                        bool is_repz_nz)
  {
--    do_gen_rep(s, ot, fn, false);
-+    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
-+        do_gen_rep(s, ot, fn, false);
-+    } else {
-+        fn(s, ot);
++    TCGLabel *last = gen_new_label();
++    TCGLabel *loop = gen_new_label();
+     TCGLabel *done = gen_new_label();
++
+     target_ulong cx_mask = MAKE_64BIT_MASK(0, 8 << s->aflag);
+     TCGv cx_next = tcg_temp_new();
++
++    /*
++     * Check if we must translate a single iteration only.  Normally, HF_RF_MASK
++     * would also limit translation blocks to one instruction, so that gen_eob
++     * can reset the flag; here however RF is set throughout the repetition, so
++     * we can plow through until CX/ECX/RCX is zero.
++     */
++    bool can_loop =
++        (!(tb_cflags(s->base.tb) & (CF_USE_ICOUNT | CF_SINGLE_STEP))
++	 && !(s->flags & (HF_TF_MASK | HF_INHIBIT_IRQ_MASK)));
+     bool had_rf = s->flags & HF_RF_MASK;
+ 
+     /*
+@@ -1362,19 +1377,29 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+     /* Any iteration at all?  */
+     tcg_gen_brcondi_tl(TCG_COND_TSTEQ, cpu_regs[R_ECX], cx_mask, done);
+ 
+-    fn(s, ot);
+-
+-    tcg_gen_subi_tl(cx_next, cpu_regs[R_ECX], 1);
+-
+     /*
+-     * Write back cx_next to CX/ECX/RCX.  There can be no carry, so zero
+-     * extend if needed but do not do expensive deposit operations.
++     * From now on we operate on the value of CX/ECX/RCX that will be written
++     * back, which is stored in cx_next.  There can be no carry, so we can zero
++     * extend here if needed and not do any expensive deposit operations later.
+      */
++    tcg_gen_subi_tl(cx_next, cpu_regs[R_ECX], 1);
+ #ifdef TARGET_X86_64
+     if (s->aflag == MO_32) {
+         tcg_gen_ext32u_tl(cx_next, cx_next);
++        cx_mask = ~0;
+     }
+ #endif
++
++    /*
++     * The last iteration is handled outside the loop, so that cx_next
++     * can never underflow.
++     */
++    if (can_loop) {
++        tcg_gen_brcondi_tl(TCG_COND_TSTEQ, cx_next, cx_mask, last);
 +    }
- }
++
++    gen_set_label(loop);
++    fn(s, ot);
+     tcg_gen_mov_tl(cpu_regs[R_ECX], cx_next);
+     gen_update_cc_op(s);
  
- static void gen_repz_nz(DisasContext *s, MemOp ot,
-                         void (*fn)(DisasContext *s, MemOp ot))
- {
--    do_gen_rep(s, ot, fn, true);
-+    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
-+        do_gen_rep(s, ot, fn, true);
-+    } else {
-+        fn(s, ot);
-+    }
- }
- 
- static void gen_helper_fp_arith_ST0_FT0(int op)
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index a05ba019026..c346bf53c5f 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -1722,11 +1722,7 @@ static void gen_CMPccXADD(DisasContext *s, X86DecodedInsn *decode)
- static void gen_CMPS(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[2].ot;
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz_nz(s, ot, gen_cmps);
--    } else {
--        gen_cmps(s, ot);
--    }
-+    gen_repz_nz(s, ot, gen_cmps);
- }
- 
- static void gen_CMPXCHG(DisasContext *s, X86DecodedInsn *decode)
-@@ -2217,11 +2213,7 @@ static void gen_INS(DisasContext *s, X86DecodedInsn *decode)
+@@ -1384,6 +1409,12 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+         gen_jcc_noeob(s, (JCC_Z << 1) | (nz ^ 1), done);
      }
  
-     translator_io_start(&s->base);
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz(s, ot, gen_ins);
--    } else {
--        gen_ins(s, ot);
--    }
-+    gen_repz(s, ot, gen_ins);
- }
++    if (can_loop) {
++        tcg_gen_subi_tl(cx_next, cpu_regs[R_ECX], 1);
++        tcg_gen_brcondi_tl(TCG_COND_TSTNE, cx_next, REP_MAX, loop);
++        tcg_gen_brcondi_tl(TCG_COND_TSTEQ, cx_next, cx_mask, last);
++    }
++
+     /*
+      * Traps or interrupts set RF_MASK if they happen after any iteration
+      * but the last.  Set it here before giving the main loop a chance to
+@@ -1396,6 +1427,18 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+     /* Go to the main loop but reenter the same instruction.  */
+     gen_jmp_rel_csize(s, -cur_insn_len(s), 0);
  
- static void gen_INSERTQ_i(DisasContext *s, X86DecodedInsn *decode)
-@@ -2406,11 +2398,7 @@ static void gen_LGS(DisasContext *s, X86DecodedInsn *decode)
- static void gen_LODS(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[1].ot;
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz(s, ot, gen_lods);
--    } else {
--        gen_lods(s, ot);
--    }
-+    gen_repz(s, ot, gen_lods);
- }
- 
- static void gen_LOOP(DisasContext *s, X86DecodedInsn *decode)
-@@ -2608,11 +2596,7 @@ static void gen_MOVq_dq(DisasContext *s, X86DecodedInsn *decode)
- static void gen_MOVS(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[2].ot;
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz(s, ot, gen_movs);
--    } else {
--        gen_movs(s, ot);
--    }
-+    gen_repz(s, ot, gen_movs);
- }
- 
- static void gen_MUL(DisasContext *s, X86DecodedInsn *decode)
-@@ -2774,11 +2758,7 @@ static void gen_OUTS(DisasContext *s, X86DecodedInsn *decode)
-     }
- 
-     translator_io_start(&s->base);
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz(s, ot, gen_outs);
--    } else {
--        gen_outs(s, ot);
--    }
-+    gen_repz(s, ot, gen_outs);
- }
- 
- static void gen_PALIGNR(DisasContext *s, X86DecodedInsn *decode)
-@@ -3859,11 +3839,7 @@ static void gen_SBB(DisasContext *s, X86DecodedInsn *decode)
- static void gen_SCAS(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[2].ot;
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz_nz(s, ot, gen_scas);
--    } else {
--        gen_scas(s, ot);
--    }
-+    gen_repz_nz(s, ot, gen_scas);
- }
- 
- static void gen_SETcc(DisasContext *s, X86DecodedInsn *decode)
-@@ -4069,11 +4045,7 @@ static void gen_STMXCSR(DisasContext *s, X86DecodedInsn *decode)
- static void gen_STOS(DisasContext *s, X86DecodedInsn *decode)
- {
-     MemOp ot = decode->op[1].ot;
--    if (s->prefix & (PREFIX_REPZ | PREFIX_REPNZ)) {
--        gen_repz(s, ot, gen_stos);
--    } else {
--        gen_stos(s, ot);
--    }
-+    gen_repz(s, ot, gen_stos);
- }
- 
- static void gen_SUB(DisasContext *s, X86DecodedInsn *decode)
++    if (can_loop) {
++        /*
++         * The last iteration needs no conditional jump, even if is_repz_nz,
++         * because the repeats are ending anyway.
++         */
++        gen_set_label(last);
++        set_cc_op(s, CC_OP_DYNAMIC);
++        fn(s, ot);
++        tcg_gen_mov_tl(cpu_regs[R_ECX], cx_next);
++        gen_update_cc_op(s);
++    }
++
+     /* CX/ECX/RCX is zero, or REPZ/REPNZ broke the repetition.  */
+     gen_set_label(done);
+     set_cc_op(s, CC_OP_DYNAMIC);
 -- 
 2.47.1
 
