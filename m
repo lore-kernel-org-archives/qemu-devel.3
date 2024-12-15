@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21F76E7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 09:07:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B7AAE77183
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 09:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMka3-0004SG-J8; Sun, 15 Dec 2024 04:06:27 -0500
+	id 1tMkaL-0004Yr-VC; Sun, 15 Dec 2024 04:06:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMka1-0004Rk-Dc
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:25 -0500
+ id 1tMkaJ-0004YP-Nb
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMkZy-0006wR-Pl
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:25 -0500
+ id 1tMkaI-0006yZ-0C
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 04:06:43 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734253582;
+ s=mimecast20190719; t=1734253600;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/dGFERRWFUpZlIsQTMSnLpRN54/m8liDcvkRPsprq7k=;
- b=hZTJ396JI+t1G1Z0w0UWPV+kXyXGl2QgIvhU/5AOkOuVsCS05OFeLFnl6xrrkdefFDns9G
- o6HI620Z5vt+hj+liuXxwKePpO5WCr8b/OKcNsvFaraMI4ROYuD9lgegshO4WBBcFa6w5C
- 8JPx8CN7BAu8wZ3R21qzmSFbI1A4ELg=
+ bh=T4DOvj8ea+R+4uCgyE0WisdYjtGttU2oS4PXE8TXzoY=;
+ b=OcjNxbPzix2yBBoXvmkYFSOK0BVWw9DJxzVub9MRSnYM7NESbTSHPdSuRkKYmEwREjCHpU
+ r7L0q8FLK7fhFuOA1GP9XSr9PFo5BvxcOb9U7iMaTxUDn6hBSStsqSzOxXSO1+FULwvJZ3
+ /aL95aaeO+/dEkqJ3DrfoSxO8Ef8dhU=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-637-Ht9I7XYAOqKQNCZ1s1RtGQ-1; Sun, 15 Dec 2024 04:06:20 -0500
-X-MC-Unique: Ht9I7XYAOqKQNCZ1s1RtGQ-1
-X-Mimecast-MFC-AGG-ID: Ht9I7XYAOqKQNCZ1s1RtGQ
+ us-mta-523-lQB2gfseO9uiscaMScozzQ-1; Sun, 15 Dec 2024 04:06:36 -0500
+X-MC-Unique: lQB2gfseO9uiscaMScozzQ-1
+X-Mimecast-MFC-AGG-ID: lQB2gfseO9uiscaMScozzQ
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4361d4e8359so6339175e9.3
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 01:06:20 -0800 (PST)
+ 5b1f17b1804b1-4361ac8b25fso17281115e9.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 01:06:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734253578; x=1734858378;
+ d=1e100.net; s=20230601; t=1734253594; x=1734858394;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/dGFERRWFUpZlIsQTMSnLpRN54/m8liDcvkRPsprq7k=;
- b=DFvpHXpKfkE6tMmgmmPpWQavGLlyuHwWAlMIzIjPhMFNQ4z2wcPaTd8Nj7IiuJUms5
- QqyHQosRoec8AVdm038M+BkAFZXfIP+xIDv7dIr/78ax2K/JeC6Vh25AM1Fon0cv6Ku0
- omMk+xGU83NFeJdWWpl1bPr1GFjq7TaaB2RP/JLy7ciA8124u/GREdPJhTdWc0BlYKFY
- 0WeHO3p3W4vu7T8eSPwe+8ZSvlf60QppSEyFwkp2WGTU1Eym4iiB1Ts9sP9nEnNGEn4Z
- pYYIk6ZXpwfQuWhHUpjtWCIegLH52eKD3Ugs4RSvXTzp5RW/fZ9LZSmsoQ5lWaHk/MVo
- tNgA==
-X-Gm-Message-State: AOJu0YyT+Y08G4uDHnqguLL2kbUUxBPESrMO44f7Bom/vgBpCSo5I7h0
- fTsRfIZ5xFDV9xTP7hKf/n8dcyUBCN+zav5+PQ3Xx8FwWUbSEMO7K2fhJJbcVNtvPI1ydrM8szO
- IGXwGQK6p+ZqZAPbcagG77Xv4mOK+sWCfz8Kt/1i/vXJuGI0Oxt3EiTaZvBwLJqhHHC7wnSn1Kc
- 9QRqDgVHThwNLKwu+atl3omAn7TlJJyj0ewNN0
-X-Gm-Gg: ASbGnctqzqgcsS4azQfZsWGPC728O/p4aXSAERrVvW6AU6ldA9aQ1NWx8by2cJ4mZPu
- Q+FLcLhFR+NmRZtSUa2Gius0lzV/SDzZAhZRnDWe3214xr0M4Eg9bkdTx7uME7munB7j8h4qBFA
- Rp6BFjncYGEAfQEOXW8hpd+W/YwknxTIKCpgVha0V25SUKIoTt1Xi0Vd5mz3fDLWinS7dXNMKHM
- c0WwSuTrAYedjTeC2X3xCTgBGDYAODTvIKv+9XULlf5qEUVsudTmBShFgg=
-X-Received: by 2002:a05:600c:b95:b0:431:44f6:566f with SMTP id
- 5b1f17b1804b1-4362aa3acf9mr81406155e9.13.1734253578461; 
- Sun, 15 Dec 2024 01:06:18 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHpOtXrJ8muv+pnGwrgPQCn6Yb59VbQ2DNB6/Qc9t+r2Lb44jBmGDyLo9nCZqDjud7SytvMfw==
-X-Received: by 2002:a05:600c:b95:b0:431:44f6:566f with SMTP id
- 5b1f17b1804b1-4362aa3acf9mr81405835e9.13.1734253578104; 
- Sun, 15 Dec 2024 01:06:18 -0800 (PST)
+ bh=T4DOvj8ea+R+4uCgyE0WisdYjtGttU2oS4PXE8TXzoY=;
+ b=HVbS5uFwCV2lbEq208fxjiNPm/amTAiGzmWvlRcaa+wyBtg7JfSzPEVWOXDM8lPoSN
+ yI9y319Qj0pdZx4JGVQkM7tk42BkCk1zl56SojnXIP14l6jVZM8snKaZj+/DWYuavVSB
+ brTEIOaer51a9ZsCg70NilMOK0RKo1t4Y6RMQ8PfW6FNC8n9yd+8zLmFKRLt/LOdQMlp
+ aVfSKkEts9egjImBkNLaxUuOjWypGRjEvsHMjj007pnQY7jncUZDVh7NXwh15x80yP9S
+ +B9nxh1YKo1uFrTRhcc1rzIJBqADP45qq0Y+nEKl3Yyinap9ZzVUfe3cD+q/G9LaWDXa
+ 7ALg==
+X-Gm-Message-State: AOJu0Yzfg0ASLjdHuR5UnL99qjdqa+3GiWwDXGPInym+GEYA9H70oIJh
+ ogP64yNuNj2p/IHL2Ye0bMfw7KQVpV+WJpkD3e+diqjdIv8eheC6rsruopq6fQAeAZp7cKHLmMV
+ 3Z1H6slsziBeAfvzfIFfToWLT12Nk5nBlOo8Nv6+1YMJwzGwOSbltRugeeRFKO8FCaVaGnfypoP
+ AeoZRYWBfmBE9Cz3XQPdl5jBEOl5lhNTtlaOoR
+X-Gm-Gg: ASbGncudvHSVPPk/ZiVmQ2pUO8Msr8YaVs+b74BgXX2FPYx1NF7ubUf4DywRSx0al3T
+ RBvq4RETdHfXOfGglQ4uAoKUik5vc1ag8Oxhxn+S/WdBucXa0Y8crWEBe9CjjD+3E0Aax9gIHBm
+ tGENJHt2hD/TS5Nfav7iqBJJ0My+uJbCuO3ng8epBybclOZt94ByIJ9Qd1TwBOFLQYf0CqWLTCa
+ kNUIAgOMFr+/CwvShzzG62Z1OoOyYf4xDbhoKfpq09eDPiC93ft1jNY7/k=
+X-Received: by 2002:a05:600c:1c07:b0:434:9fac:b158 with SMTP id
+ 5b1f17b1804b1-4362aa34e8amr66686565e9.1.1734253593983; 
+ Sun, 15 Dec 2024 01:06:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGc17yO0imPYbv18wiVlrvIXjcZ5jDUNimWVX4Jej1xi0CXP5bbcyUl6dfRb6WIqymS+yt1bg==
+X-Received: by 2002:a05:600c:1c07:b0:434:9fac:b158 with SMTP id
+ 5b1f17b1804b1-4362aa34e8amr66686255e9.1.1734253593497; 
+ Sun, 15 Dec 2024 01:06:33 -0800 (PST)
 Received: from [192.168.10.3] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43625706c82sm103757765e9.35.2024.12.15.01.06.16
+ 5b1f17b1804b1-4362559ed8dsm106580625e9.23.2024.12.15.01.06.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 01:06:16 -0800 (PST)
+ Sun, 15 Dec 2024 01:06:31 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: richard.henderson@linaro.org
-Subject: [PATCH 01/13] target/i386: inline gen_jcc into sole caller
-Date: Sun, 15 Dec 2024 10:06:00 +0100
-Message-ID: <20241215090613.89588-2-pbonzini@redhat.com>
+Subject: [PATCH 06/13] target/i386: tcg: move gen_set/reset_* earlier in the
+ file
+Date: Sun, 15 Dec 2024 10:06:05 +0100
+Message-ID: <20241215090613.89588-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241215090613.89588-1-pbonzini@redhat.com>
 References: <20241215090613.89588-1-pbonzini@redhat.com>
@@ -107,52 +108,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code of gen_Jcc is very similar to gen_LOOP* and gen_JCXZ, but this
-is hidden by gen_jcc.
+Allow using them in the code that translates REP/REPZ, without
+forward declarations.
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 8 --------
- target/i386/tcg/emit.c.inc  | 6 +++++-
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ target/i386/tcg/translate.c | 80 ++++++++++++++++++-------------------
+ 1 file changed, 40 insertions(+), 40 deletions(-)
 
 diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 5d729e68c98..298842d46b6 100644
+index 3732d05d5f5..0fe7ed4ec8d 100644
 --- a/target/i386/tcg/translate.c
 +++ b/target/i386/tcg/translate.c
-@@ -1846,14 +1846,6 @@ static void gen_conditional_jump_labels(DisasContext *s, target_long diff,
-     gen_jmp_rel(s, s->dflag, diff, 0);
+@@ -724,6 +724,46 @@ static inline void gen_op_jnz_ecx(DisasContext *s, TCGLabel *label1)
+     gen_op_j_ecx(s, TCG_COND_NE, label1);
  }
  
--static void gen_jcc(DisasContext *s, int b, int diff)
++static void gen_set_hflag(DisasContext *s, uint32_t mask)
++{
++    if ((s->flags & mask) == 0) {
++        TCGv_i32 t = tcg_temp_new_i32();
++        tcg_gen_ld_i32(t, tcg_env, offsetof(CPUX86State, hflags));
++        tcg_gen_ori_i32(t, t, mask);
++        tcg_gen_st_i32(t, tcg_env, offsetof(CPUX86State, hflags));
++        s->flags |= mask;
++    }
++}
++
++static void gen_reset_hflag(DisasContext *s, uint32_t mask)
++{
++    if (s->flags & mask) {
++        TCGv_i32 t = tcg_temp_new_i32();
++        tcg_gen_ld_i32(t, tcg_env, offsetof(CPUX86State, hflags));
++        tcg_gen_andi_i32(t, t, ~mask);
++        tcg_gen_st_i32(t, tcg_env, offsetof(CPUX86State, hflags));
++        s->flags &= ~mask;
++    }
++}
++
++static void gen_set_eflags(DisasContext *s, target_ulong mask)
++{
++    TCGv t = tcg_temp_new();
++
++    tcg_gen_ld_tl(t, tcg_env, offsetof(CPUX86State, eflags));
++    tcg_gen_ori_tl(t, t, mask);
++    tcg_gen_st_tl(t, tcg_env, offsetof(CPUX86State, eflags));
++}
++
++static void gen_reset_eflags(DisasContext *s, target_ulong mask)
++{
++    TCGv t = tcg_temp_new();
++
++    tcg_gen_ld_tl(t, tcg_env, offsetof(CPUX86State, eflags));
++    tcg_gen_andi_tl(t, t, ~mask);
++    tcg_gen_st_tl(t, tcg_env, offsetof(CPUX86State, eflags));
++}
++
+ static void gen_helper_in_func(MemOp ot, TCGv v, TCGv_i32 n)
+ {
+     switch (ot) {
+@@ -2083,46 +2123,6 @@ static void gen_interrupt(DisasContext *s, uint8_t intno)
+     s->base.is_jmp = DISAS_NORETURN;
+ }
+ 
+-static void gen_set_hflag(DisasContext *s, uint32_t mask)
 -{
--    TCGLabel *l1 = gen_new_label();
--
--    gen_jcc1(s, b, l1);
--    gen_conditional_jump_labels(s, diff, NULL, l1);
+-    if ((s->flags & mask) == 0) {
+-        TCGv_i32 t = tcg_temp_new_i32();
+-        tcg_gen_ld_i32(t, tcg_env, offsetof(CPUX86State, hflags));
+-        tcg_gen_ori_i32(t, t, mask);
+-        tcg_gen_st_i32(t, tcg_env, offsetof(CPUX86State, hflags));
+-        s->flags |= mask;
+-    }
 -}
 -
- static void gen_cmovcc1(DisasContext *s, int b, TCGv dest, TCGv src)
+-static void gen_reset_hflag(DisasContext *s, uint32_t mask)
+-{
+-    if (s->flags & mask) {
+-        TCGv_i32 t = tcg_temp_new_i32();
+-        tcg_gen_ld_i32(t, tcg_env, offsetof(CPUX86State, hflags));
+-        tcg_gen_andi_i32(t, t, ~mask);
+-        tcg_gen_st_i32(t, tcg_env, offsetof(CPUX86State, hflags));
+-        s->flags &= ~mask;
+-    }
+-}
+-
+-static void gen_set_eflags(DisasContext *s, target_ulong mask)
+-{
+-    TCGv t = tcg_temp_new();
+-
+-    tcg_gen_ld_tl(t, tcg_env, offsetof(CPUX86State, eflags));
+-    tcg_gen_ori_tl(t, t, mask);
+-    tcg_gen_st_tl(t, tcg_env, offsetof(CPUX86State, eflags));
+-}
+-
+-static void gen_reset_eflags(DisasContext *s, target_ulong mask)
+-{
+-    TCGv t = tcg_temp_new();
+-
+-    tcg_gen_ld_tl(t, tcg_env, offsetof(CPUX86State, eflags));
+-    tcg_gen_andi_tl(t, t, ~mask);
+-    tcg_gen_st_tl(t, tcg_env, offsetof(CPUX86State, eflags));
+-}
+-
+ /* Clear BND registers during legacy branches.  */
+ static void gen_bnd_jmp(DisasContext *s)
  {
-     CCPrepare cc = gen_prepare_cc(s, b, NULL);
-diff --git a/target/i386/tcg/emit.c.inc b/target/i386/tcg/emit.c.inc
-index 785ff63f2ac..8d18407facf 100644
---- a/target/i386/tcg/emit.c.inc
-+++ b/target/i386/tcg/emit.c.inc
-@@ -2276,8 +2276,12 @@ static void gen_IRET(DisasContext *s, X86DecodedInsn *decode)
- 
- static void gen_Jcc(DisasContext *s, X86DecodedInsn *decode)
- {
-+    TCGLabel *taken = gen_new_label();
-+
-     gen_bnd_jmp(s);
--    gen_jcc(s, decode->b & 0xf, decode->immediate);
-+    gen_jcc1(s, decode->b & 0xf, taken);
-+    gen_conditional_jump_labels(s, decode->immediate, NULL, taken);
-+
- }
- 
- static void gen_JCXZ(DisasContext *s, X86DecodedInsn *decode)
 -- 
 2.47.1
 
