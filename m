@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6773CE7716A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4304E77183
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 14:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMpTH-0001gU-RX; Sun, 15 Dec 2024 09:19:47 -0500
+	id 1tMpSp-0001du-70; Sun, 15 Dec 2024 09:19:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMpTE-0001fq-Hn
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 09:19:44 -0500
-Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
+ id 1tMpSm-0001dM-JD
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 09:19:16 -0500
+Received: from mail-oi1-x22a.google.com ([2607:f8b0:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMpTD-0004v2-4H
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 09:19:44 -0500
-Received: by mail-ot1-x333.google.com with SMTP id
- 46e09a7af769-71e17de2816so1709375a34.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 06:19:42 -0800 (PST)
+ id 1tMpSk-0004t8-U1
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 09:19:16 -0500
+Received: by mail-oi1-x22a.google.com with SMTP id
+ 5614622812f47-3eb9de518e2so1556042b6e.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 06:19:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734272382; x=1734877182; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734272353; x=1734877153; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=bbmH0GOIz8UQk3GDcpri0r0/LigTKN1A9rlpr7JCQiw=;
- b=VfUi21s6ctREwgOKSei5YTUL5yF7U3y1CiFxaKVNB0ERlq+BzHmqSLl95GGnKpXKnF
- pguMc6Xy5ZWAIOSEZD7OIws4HFnyrLD/NnJ0q6JVGwfd7k8oSQB4tqstYD8ilDgOgldZ
- 551GqFcavgLSJgspvhLFHuMwxkM+5CmYpMFXcTqCY8JVU5gneDsINAOxFFPo131Miyle
- 5UHw50iyJEBvamDk8gnvkf/KWe+v0R2HJzMAqBfq9oPBbb2Kr5eYPekXXX/m18yB1ihA
- Xxh1x3Ej+3/cvt1azjqJMqAuC383a68v/TdMvJpL3lbhQ1lkbx7CZftDPPenoW15lwqI
- FhVg==
+ bh=4fqV0K9zA+8GshNBoiptyOLuhjYqtR205wLwUCFY4j8=;
+ b=nNIc1pNLai86t82/gOzT9b3dCVS/2DBSBtWlEXjAdmbHREBN2jgwc2lMhMydaCKNUn
+ JwNkAUW/phxo05oHuawoHhmiervYQHCEIhoznCbrN/65fS1nSYVxnea3IDj+1xhFJzbu
+ Nf0n/uUAocTDZ/CdeWWgrSO6ueSl9AIiD8s5KFEUf9dekA0LcOZ7mkE1fnB3VSAlBnTy
+ WhpM46YUFFvx/uzDCEt1aleKlb6XjTDZIsz+sdD239H9xh1f1ciLQvmj+KD3ypiiGari
+ kq+2349iwCskQa6k1mkO/NnwqbwHlWAuMtUXKYgoUu6X1PXQGcmDM2KOtoSZwFqXgGcW
+ 0UfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734272382; x=1734877182;
+ d=1e100.net; s=20230601; t=1734272353; x=1734877153;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bbmH0GOIz8UQk3GDcpri0r0/LigTKN1A9rlpr7JCQiw=;
- b=SUf3DDR5wLwV5mFj3hyWkA56t/K1+2F2bU2R+6t5MNhjgya3ShehvYqMqhsHikSXsc
- qIwPqNUkz5Y2FlqIpPOsU2kLInAoc5UhP7wl+IpnBEfvxeI60jsXXqdA/etI8Mbinzp+
- 99OlZZDLgNGArg6fBPgq64hDeZyC24jH7Tl2jHqdhddjApypj8JdO1cRm5YdzWCOx67s
- n8stiHQHNGwwlaWwDp5oGcv6EfLV/D2HTt7lSiPJ+PkMRiW8NtfzESM2yhMtQsb7FrrB
- EudhJZahMKTtP0nIF7DXvu9RmFuHa6gK4jT/LCkUrptR/o8A2JiaG1mLnMupy/MNz2Kh
- ccLw==
+ bh=4fqV0K9zA+8GshNBoiptyOLuhjYqtR205wLwUCFY4j8=;
+ b=K/wZFTQhn7FPH8zZPeg+G0VxadWZxONix+gEY+8sPYCCchDvywsJqi9VRXeyRx6miU
+ 0D922QLtlxO3ROg45n7MCD1adWCZjaUdNkoLleb4ER+zE+//8AGSgDi3UwbOeTeMRu2g
+ HiXN3v8yDHVPY2oxnoN1Ft2CJezUeu9I1emzl/fxPWd60AREu2wzN4IwNGzSVo/QVKbF
+ sB/JmVwQadgt60OlBkHtPXqV/PTmprfEqpUtHCP8J4zWnvCnnGMhAnHqMfyNsMc7bX6S
+ 1pZXujQIJZyB7UMcHxf6GKzn/tQjH7n39LS0H8Bz+UTgt69BoGUdLyd1O5xcSwKEoTJD
+ LCUQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW5zZSJSNiU/iQih+Imi9e4S8tnaAU6C06McSY+rbUq4o+AR4ojA6iERXI3jRTZ7eNSYuHSaY4rYJTV@nongnu.org
-X-Gm-Message-State: AOJu0Yy6KtJTxc8oYzoAdQYHdvJ3uNCEKx1/CxtGUNhm1j6ob5HVHiXe
- t19UHt9lfdVYEXPhGfOn64IZSN7GPK0t2n3jAen/cOr54/JmiFNmccF5yEDPKVqgylpgVgsOXeO
- NNxR61kEl
-X-Gm-Gg: ASbGnctUVD5m56I0ovGIz9GfGQsGiEXsCMj0fynBjtiuX8XC3SBJGKAsH9JJe/5tsIy
- H5ncBdtuDB4x8HeQdQEJ3Q9iEeWkPIbE5paF/ZdF8x7URLBBwsae0bG9wmauuN0FuocyiqKS1Ol
- ttvHajp24a7RnkdGPZ7BlFNOlBOWYs+p8QPa+aRvtp4gYC2+qqPkotlbZDv+Xz1LQ5egdOrNjNr
- YMkmaaJx89jWMj0tHBMDXyHF9AFRMGK62e9+DOMjRqf3820uGJF94NwU01V5wvLBBR1qEAu4+FI
- 9ilaF7bNCr5+HN56KZKJ9HAz0EvSmsg2ISA=
-X-Google-Smtp-Source: AGHT+IEkiGNdKujxdLTas+OrgCYauIN72ukwkL7j3oQ0iu9TmzKS9e8uP+kbLGJaf0M3hFq2fxTCow==
-X-Received: by 2002:a05:6830:730f:b0:71d:fdf7:f8da with SMTP id
- 46e09a7af769-71e3ba7127fmr5128698a34.27.1734272382005; 
- Sun, 15 Dec 2024 06:19:42 -0800 (PST)
+ AJvYcCXqh/6N/JksZjzwO+5X9+9xhb9pCumrRw7HJPGPrtq0+P3Cuv930R0ZfFmicQIj6mI8kQBUp7smthTq@nongnu.org
+X-Gm-Message-State: AOJu0YwJ8D0ls2YPWLlPIVVRHV7HtP0y9TdQTr/oEcsvU84+eB8qAVUR
+ 1GJmrmC3s5wiX3EQEFuLoIAXuXzqnJ0zJ9qokeMzhTRwTnQiBaxcZtkqZyMp5TZfhSqRCODh3ut
+ NmPBs/U8u
+X-Gm-Gg: ASbGncuXax3M5oLy2sc4UqgMfgnYlHs/SKBk4II+f+rmP+2P1GV1cgGjg+nhlychDsV
+ FV4/jR5OKfWCkxT0xreMeeiE0cJ0U9bcQ3TXY3Har3nrSV2UKa48CP8cj1hGw0AOHrwR/++5SJC
+ ITdLWo0AJHCCKTgtgwa+FTYZf6PpahAjmv9ROjOpP2fbR+2Wf2mRHAC9VD04I8/UDzvGrBNsf8m
+ cU+plpd14GMRgxpCG8nDOnqk4PjsccdnAgeza5l4gZRzVNAZGoBeIw5g3LBVwIBSXFw/+Gthr0p
+ XYVH1p+6yAEsXVWThJA3G1fG4Xhk3gF1kUE=
+X-Google-Smtp-Source: AGHT+IGmrdtk/bWvhzv+gnRP3cGY0eW9zPrX1B4SvWKtZVt3AvXXvEWV2OYZyuNDNjbDqpOUgCyShQ==
+X-Received: by 2002:a05:6808:189e:b0:3eb:71a4:9854 with SMTP id
+ 5614622812f47-3eba67fe536mr5648450b6e.1.1734272352987; 
+ Sun, 15 Dec 2024 06:19:12 -0800 (PST)
 Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4835607bsm868564a34.26.2024.12.15.06.19.40
+ 5614622812f47-3ebb4545546sm1026635b6e.0.2024.12.15.06.19.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Dec 2024 06:19:41 -0800 (PST)
-Message-ID: <5adb38ae-a9d4-44c2-90a6-367524093816@linaro.org>
-Date: Sun, 15 Dec 2024 08:19:39 -0600
+ Sun, 15 Dec 2024 06:19:12 -0800 (PST)
+Message-ID: <63ef3af5-d1dc-42b5-8102-3ae604468555@linaro.org>
+Date: Sun, 15 Dec 2024 08:19:10 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/13] target/i386: tcg: move gen_set/reset_* earlier in
- the file
+Subject: Re: [PATCH 05/13] target/i386: reorganize ops emitted by do_gen_rep, 
+ drop repz_opt
 To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
 References: <20241215090613.89588-1-pbonzini@redhat.com>
- <20241215090613.89588-7-pbonzini@redhat.com>
+ <20241215090613.89588-6-pbonzini@redhat.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241215090613.89588-7-pbonzini@redhat.com>
+In-Reply-To: <20241215090613.89588-6-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,15 +105,45 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/15/24 03:06, Paolo Bonzini wrote:
-> Allow using them in the code that translates REP/REPZ, without
-> forward declarations.
+> The condition for optimizing repeat instruction is more or less the
+> opposite of what you imagine: almost always the string instruction
+> was_not_ optimized and optimizing the loop relied on goto_tb.
+> This is obviously not great for performance, due to the cost of the
+> exit-to-main-loop check, but also wrong.  In fact, after expanding
+> dc->jmp_opt and simplifying "!!x" to "x", the condition for looping used
+> to be:
+> 
+>     ((cflags & CF_NO_GOTO_TB) ||
+>      (flags & (HF_RF_MASK | HF_TF_MASK | HF_INHIBIT_IRQ_MASK))) && !(cflags & CF_USE_ICOUNT)
+> 
+> In other words, setting aside RF (it requires special handling for REP
+> instructions and it was completely missing), repeat instruction were
+> being optimized if TF or inhibit IRQ flags were set.  This is certainly
+> wrong for TF, because string instructions trap after every execution,
+> and probably for interrupt shadow too.
+> 
+> Get rid of repz_opt completely.  The next patches will reintroduce the
+> optimization, applying it in the common case instead of the unlikely
+> and wrong one.
+> 
+> While at it, place the CX/ECX/RCX=0 case is at the end of the function,
+> which saves a label and is clearer when reading the generated ops.
+> For clarity, mark the cc_op explicitly as DYNAMIC even if at the end
+> of the translation block; the cc_op can come from either the previous
+> instruction or the string instruction, and currently we rely on
+> a gen_update_cc_op() that is hidden in the bowels of gen_jcc() to
+> spill cc_op and mark it clean.
 > 
 > Signed-off-by: Paolo Bonzini<pbonzini@redhat.com>
 > ---
->   target/i386/tcg/translate.c | 80 ++++++++++++++++++-------------------
->   1 file changed, 40 insertions(+), 40 deletions(-)
+>   target/i386/tcg/translate.c | 60 ++++++++-----------------------------
+>   1 file changed, 13 insertions(+), 47 deletions(-)
+
+It might have been clearer inlining gen_jz_ecx_string as a separate step, but no need to 
+do that now.  Yes, this is much clearer code generation.
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
 
 r~
 
