@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD4FE7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 15:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3FAE7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 15:21:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMqNN-0002HA-I0; Sun, 15 Dec 2024 10:17:45 -0500
+	id 1tMqQU-0003mU-K8; Sun, 15 Dec 2024 10:20:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMqNM-0002Gm-Jz
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 10:17:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tMqNL-0005Ar-3U
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 10:17:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734275862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hoOeSHk01gUgu1TNmVkgXOJaH51dfBUuz6nP+GNP8mw=;
- b=Wj9J2eJF6SjaJFaNPdU/bZK40E/rpVe1F6V1C4D1E8ZIFDksajIcL68tHA7Ru4tXhUHOXY
- AtSVyrYqaXVTDgrqy0SjJ6SbkrhBn43YI3JgD48Toz3DfNhxXdFLlAfkWNTurY9TVsmQI5
- saRx24MaNJc+oh1Hb3s04Clghr8L0S0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-132-n4iub9zwO8GY007_DRziow-1; Sun, 15 Dec 2024 10:17:40 -0500
-X-MC-Unique: n4iub9zwO8GY007_DRziow-1
-X-Mimecast-MFC-AGG-ID: n4iub9zwO8GY007_DRziow
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-38629a685fdso721150f8f.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 07:17:40 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMqQT-0003mE-B5
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 10:20:57 -0500
+Received: from mail-oi1-x231.google.com ([2607:f8b0:4864:20::231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tMqQR-0005yy-MO
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 10:20:57 -0500
+Received: by mail-oi1-x231.google.com with SMTP id
+ 5614622812f47-3ebbec36900so259379b6e.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 07:20:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734276054; x=1734880854; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ZTXkqeDO03oQQio7LV6Ebhxt0KLSXOR13nLUHhpZlRA=;
+ b=r4e4MDFCakps2y6MKFEM+DjF8zgp7sZWOiPF4ltJgAG3AILdJXhq5Zv1uM1D8x6YYy
+ hAhbEpsz3MQBLgjo9O0JIgBCFw8EhAKJp3nlYR5c2VyFFGrQEeliP6sa/hvdUgyThHrX
+ viJHFUBwZwy2IlrzOD2HtM+z8+/eIDoiutgQnVQHkwBZ7YDuB4BQUi44XJgXeFmjOrgu
+ 1GOA4xg8W2f2VYFH4UNC63AdlqrDCMAmAw0Aojxm8zkBQlB7w2W9py4oppesfQnjbDQm
+ l7FGo9ILN9Fg5B2xsie6mbx3J1vshpqUa4XDCHOaGk4qfTk+4TYTPLP/Kek5LvkJirPm
+ OUyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734275859; x=1734880659;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hoOeSHk01gUgu1TNmVkgXOJaH51dfBUuz6nP+GNP8mw=;
- b=cAlKYiRC+hIQ4Gj2UQ16fKdKDZLpurDKnf0OCJ6vClQPkMDRFcVlpOlg9JOGIwblM0
- 5nILoe6fNGAhiKKJUUVsSUuZ5e4dedo5VdQN33zfPlzg7ks12mel0PUgxs9GSyOtG5fs
- EGZkugrZOeOP1WUfWlQjmIABysEn1XL911eBsZXSz4y4hM0QfXpQChMpGQOEsrL6K9pb
- Aa6zJNx1Fyh9ZLb3qyD3Av6X6PGGVVYBUGygbLUGtlEYUxsf7P4IsrmcAEafpbruocFD
- t9uQpt7Mto8cYYHk/OsjPZ0hGEzmv68NmeTL0rW9agoMr2ARf9mAV6veTpjNRrX0TLMO
- b75A==
-X-Gm-Message-State: AOJu0YwhI6G1CK7rmSYlPbDW6PmaF2K0oFYPmlbrw7+Vjbiw0zUZ5qTJ
- DhhjOnW0PLDf26ZH6SYpUH1cER2zLGpxMhNTJ9qO8lpcg0IwHEECdB/huC6cubn5ls+oKqMpsBH
- gO6cog2k+MdJcr9Ujbf7sioZJYL3yRLs+Leel3D5fThJMSfdfJvKidWaPVnhi42QuuzzWMWgtyl
- NO7piRXt/FZkGCpJ4jZAxZip+8hSs=
-X-Gm-Gg: ASbGnctCCeUUFwc6tD2WBuyJa6KFwHMeEqxHJZgzTrsI6TedMwitN+XS5FtO88GXbgn
- Oe8sK4zuMVLgzUDWxgQJJFUTr8JLKWqMCMgFO
-X-Received: by 2002:a05:6000:4b12:b0:385:edb7:69ba with SMTP id
- ffacd0b85a97d-38880ac5f25mr8916373f8f.1.1734275859209; 
- Sun, 15 Dec 2024 07:17:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFh+AqXUakHp1bpVuFdFw6iOK1yq9n5rJI1hqDGWdL3pMELzLZO+Sx6nxiYL6Lx7MpsurHdVnsuQ4cEAYThPhk=
-X-Received: by 2002:a05:6000:4b12:b0:385:edb7:69ba with SMTP id
- ffacd0b85a97d-38880ac5f25mr8916362f8f.1.1734275858853; Sun, 15 Dec 2024
- 07:17:38 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734276054; x=1734880854;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZTXkqeDO03oQQio7LV6Ebhxt0KLSXOR13nLUHhpZlRA=;
+ b=LV/EZQjsl6HLbH+yazlg5ClJW4LkeCr2MBxiMY4pbFSh4ZTuhj4NscLkY9UytuvLb5
+ QSw/o+VatX50ZRI49xkzLynHpx0ZlGp3LWPl+Rw4SXqAvlyOuxugWzXGuIfAPsEbHfkH
+ U4vi+xI7gK+zAy+Op4wWqdpDlaSQSGdkSUPOrhCrC951clmwzoHVTeSP6WK/4+vkDObN
+ 1ksf44xrTxP/+n2Ambit53LRKzZ3+o1x62tmZS6+iQfe9a+181LXpmmIhq39Gr2qwWiy
+ D6HVke9IgizWk9HTtbkMQsQHXnWBttv5IPX6slkud9+Lm/iOaOzKH5wSI/hEAshvG1b6
+ Z60A==
+X-Gm-Message-State: AOJu0YyeQZZcrgQQuYHwIzlC05cKxTYpZvJcyNKCpb8+KIYokn5qisRd
+ UKbvKVnB08nYni8hSTYwXD278IOu6bCQcwxl7lEY0k5wnJmP1neIwt5HJBQfAuY=
+X-Gm-Gg: ASbGncvFNgT5AIFEJKboCtFp0TcomOCuFvjGffZDVzYvTG2AR7DPwx2WYfpqQF25WLg
+ 9lV/kviaGk0Cd6jiTMb+rXGTs8IAkKry6CoNaY/tcYDbPDnaYot5d+26ktxvvkvqoEmCiBQiOfh
+ X38hWBl6d1OoXvUIe9TpyMcDJSoVbICrrd+Lbh5pQlgg/B7ECYOPXgchde+zIvKvUhpMlS66Dh2
+ uh1UYDZ+ZX/X3U+moCrZvYKVRECpZwOXje24v4TXfj84yW/OVFuRnO50wL3pDLOsNgluKsnQ78v
+ vUsa+YjspEzooadvs1QFh8St4aPJGnUTx1o=
+X-Google-Smtp-Source: AGHT+IFTYittD9kfS33bJCeRnY4WpuLRN2LRlh3CUnU4/kuq0DpDzXZLMo0BcHzei8BNt8lpgb4CzQ==
+X-Received: by 2002:a05:6808:2191:b0:3eb:5c03:2508 with SMTP id
+ 5614622812f47-3eba6871df0mr5318815b6e.18.1734276054297; 
+ Sun, 15 Dec 2024 07:20:54 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 5614622812f47-3ebb478a362sm1051237b6e.4.2024.12.15.07.20.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 15 Dec 2024 07:20:53 -0800 (PST)
+Message-ID: <bb8030dc-bf47-42cc-a4a1-49e4f9fc825c@linaro.org>
+Date: Sun, 15 Dec 2024 09:20:51 -0600
 MIME-Version: 1.0
-References: <20241215090613.89588-1-pbonzini@redhat.com>
- <20241215090613.89588-12-pbonzini@redhat.com>
- <376ee81c-6465-4592-b4f8-9beec26199dd@linaro.org>
-In-Reply-To: <376ee81c-6465-4592-b4f8-9beec26199dd@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Sun, 15 Dec 2024 16:17:27 +0100
-Message-ID: <CABgObfY9idHAZzBB7AXkQgbd4O04bk6G6SR7N+qyEXLFekqyLQ@mail.gmail.com>
-Subject: Re: [PATCH 11/13] target/i386: execute multiple REP/REPZ iterations
- without leaving TB
-To: Richard Henderson <richard.henderson@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/13] target/i386: make cc_op handling more explicit for
+ repeated string instructions.
+To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="00000000000082981c0629509098"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -32
-X-Spam_score: -3.3
-X-Spam_bar: ---
-X-Spam_report: (-3.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.168,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241215090613.89588-1-pbonzini@redhat.com>
+ <20241215090613.89588-9-pbonzini@redhat.com>
+ <98175648-fd1e-470d-a8e4-a6053cc3c35f@linaro.org>
+ <CABgObfbV4A71dRi+hrjkTUKoq_=g2TLWBs5f0JwT=2pd0+dOWA@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CABgObfbV4A71dRi+hrjkTUKoq_=g2TLWBs5f0JwT=2pd0+dOWA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::231;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x231.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,81 +104,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000082981c0629509098
-Content-Type: text/plain; charset="UTF-8"
+On 12/15/24 09:13, Paolo Bonzini wrote:
+> 
+> 
+> Il dom 15 dic 2024, 15:45 Richard Henderson <richard.henderson@linaro.org 
+> <mailto:richard.henderson@linaro.org>> ha scritto:
+> 
+>     On 12/15/24 03:06, Paolo Bonzini wrote:
+>      >       fn(s, ot);
+>      >       gen_op_add_reg_im(s, s->aflag, R_ECX, -1);
+>      > +    gen_update_cc_op(s);
+>      > +
+>      > +    /* Leave if REP condition fails.  */
+>      >       if (is_repz_nz) {
+>      >           int nz = (s->prefix & PREFIX_REPNZ) ? 1 : 0;
+>      > -        gen_jcc(s, (JCC_Z << 1) | (nz ^ 1), done);
+>      > +        gen_jcc_noeob(s, (JCC_Z << 1) | (nz ^ 1), done);
+> 
+>     The comment in gen_jcc would still seem to apply:
+> 
+>           CCPrepare cc = gen_prepare_cc(s, b, NULL);
+> 
+>           /*
+>            * Note that this must be _after_ gen_prepare_cc, because it
+>            * can change the cc_op from CC_OP_DYNAMIC to CC_OP_EFLAGS!
+>            */
+>           gen_update_cc_op(s);
+> 
+>     via any path through gen_prepare_cc that reaches gen_compute_eflags.
+> 
+>     However!  Because this is JCC_Z, we will never call gen_compute_eflags, we will always go
+>     through the gen_prepare_eflags_z, which doesn't have the same problem.
+> 
+> 
+> Or more simply, fn(s, ot) must have left CC_OP_SUBx in cc_op.
 
-Il dom 15 dic 2024, 16:07 Richard Henderson <richard.henderson@linaro.org>
-ha scritto:
+No, even CC_OP_SUBx can (and in this case, will) goto slow_jcc.
+My correctness analysis is strictly based on JCC_Z.
 
-> > @@ -1384,6 +1409,12 @@ static void do_gen_rep(DisasContext *s, MemOp ot,
+>     This subtlety deserves a comment and maybe an assert.  Perhaps
+> 
+>           gen_jcc_noeob(...);
+>           assert(!s->cc_op_dirty);
+> 
+> 
+> Either that or an assert(s->cc_op != CC_OP_DYNAMIC) before the call to gen_jcc_noeob().
 
->           gen_jcc_noeob(s, (JCC_Z << 1) | (nz ^ 1), done);
-> >       }
-> >
-> > +    if (can_loop) {
-> > +        tcg_gen_subi_tl(cx_next, cpu_regs[R_ECX], 1);
->
-> Since we've just written back cx_next to ECX, this is the same as cx_next
-> -= 1, yes?
->
+No, not before gen_jcc_noeob, since that's where any buggy change would occur.
 
-Yeah, I wanted to make cx_next die at the assignment to ECX but it probably
-does not make a difference to generated code.
-
-Paolo
-
->
->
-> Anyway,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
->
-> r~
->
->
-
---00000000000082981c0629509098
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il dom 15 dic 2024, 16:07 Richar=
-d Henderson &lt;<a href=3D"mailto:richard.henderson@linaro.org">richard.hen=
-derson@linaro.org</a>&gt; ha scritto:<br></div><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">&gt; @@ -1384,6 +1409,12 @@ static void do_gen_rep(Di=
-sasContext *s, MemOp ot,</blockquote></div></div><div dir=3D"auto"><div cla=
-ss=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_jcc_noeob(s, (JCC_Z &lt;&l=
-t; 1) | (nz ^ 1), done);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt; +=C2=A0 =C2=A0 if (can_loop) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_subi_tl(cx_next, cpu_regs[R_ECX],=
- 1);<br>
-<br>
-Since we&#39;ve just written back cx_next to ECX, this is the same as cx_ne=
-xt -=3D 1, yes?<br></blockquote></div></div><div dir=3D"auto"><br></div><di=
-v dir=3D"auto">Yeah, I wanted to make cx_next die at the assignment to ECX =
-but it probably does not make a difference to generated code.</div><div dir=
-=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=A0</div><div dir=3D"auto"><d=
-iv class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_q=
-uote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,2=
-04);padding-left:1ex">
-<br>
-<br>
-Anyway,<br>
-Reviewed-by: Richard Henderson &lt;<a href=3D"mailto:richard.henderson@lina=
-ro.org" target=3D"_blank" rel=3D"noreferrer">richard.henderson@linaro.org</=
-a>&gt;<br>
-<br>
-<br>
-r~<br>
-<br>
-</blockquote></div></div></div>
-
---00000000000082981c0629509098--
-
+r~
 
