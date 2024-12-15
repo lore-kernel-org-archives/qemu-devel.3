@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4003DE7717F
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:13:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5350E7717F
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtzy-0002fU-G1; Sun, 15 Dec 2024 14:09:50 -0500
+	id 1tMu0b-00054y-RB; Sun, 15 Dec 2024 14:10:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtzs-0002AE-Hn
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:44 -0500
-Received: from mail-ot1-x332.google.com ([2607:f8b0:4864:20::332])
+ id 1tMtzv-0002Nr-2j
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:47 -0500
+Received: from mail-ot1-x32c.google.com ([2607:f8b0:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtzq-0001VA-9l
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:44 -0500
-Received: by mail-ot1-x332.google.com with SMTP id
- 46e09a7af769-71e1d6c7738so1859557a34.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:09:41 -0800 (PST)
+ id 1tMtzt-0001W6-Ba
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:09:46 -0500
+Received: by mail-ot1-x32c.google.com with SMTP id
+ 46e09a7af769-71e3284f963so1731399a34.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:09:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289781; x=1734894581; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289784; x=1734894584; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=58JEzJZNC/h2emt8SjpI9FL7tkce7AMQ5VVYFBXHJwk=;
- b=s/ivcCka8afQwh43G6fOWRyIGzesUHQdRnDmv/aRmFZxhxOKAQzPXiSlPHX1c6FcJN
- k1/jZL7cBQ63d5PdhR2p/1FO4KI6k5lJxiY6J8tgkq2YpQIESy7D9CSFckc/md9kE4RR
- 1TeajShDdJraVZH/BOsc2zlI4aDwml3QtpN2gxRv94/IXj6idDdNlQGfZGb30e3P6iM1
- quHLHAZoA55Gyu5fVxu8K108QH3Rj92WuEo5OY2aZudJNR40pBXfIHFqkdtkMp1YzRE3
- VQobs/8ovPta4lnAynIl09G+xuiwH71h4g6xE8h4ebi7/5CnV9CmOlWIyJ063BAK2q1A
- 4QNQ==
+ bh=8s/OID5KE9oMd0XN+uqlFnMR3Q80aL2JeEILGul62oQ=;
+ b=PEeEEEvD7dX14nDqFPDWqZhy4EioSj5z7FrIPQWOYF5U9oJ/77ozZTyBLPuGzaIDBK
+ dZmxyoXpcszY06IaadnGs/9lg+CdNUzTIo58ksRgEQZFq9lz1BAhBOixT0w56Kv9/Kim
+ PjaBpq2JSR/JI9rE3EN7MgAjg92kpcBciVqlHMW+hWyhTmX5l5Nah5zn773lC22q1s1K
+ EiGRwDtr3Xfkj7aYDg9rx2bKMhHYC9VP+OmzfbAM+HL3Q2We1jfezuRSsJEkTo/fRyVf
+ IHwt3YW/d4km0nBdiWI7lCTGmvnMFOZqgiNPQQVR2Oeq7WqysHZjhMHbzDnGMUNKCHJk
+ FJ4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289781; x=1734894581;
+ d=1e100.net; s=20230601; t=1734289784; x=1734894584;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=58JEzJZNC/h2emt8SjpI9FL7tkce7AMQ5VVYFBXHJwk=;
- b=HEjhDosZ4eqwj8B/pZF+2hoaSK2zaszSaGvCxFMzZVjLQDgvmsXljDZBGS/DTt6xwI
- uLlFDMIP0NVsOyuhQkWQQYIDuDmMZ/pTct1T39M4f1tQcNsFAkjep3OTfmcCpJXPvpS6
- vVB17mj/Rk1D8YkNiGib/FrjXuDrcj5PCmv+Jf6VvJ9qPEAj5RldwoazoOW4GDPQ5VM/
- F6JhGAHoRC1pPPNmUx6LHZa260NtZ4RzZlBLBwesW6O36PLsdf/TCHeBbYgTnvDbZ/d9
- DHdQTD4D1ug9+/kdgLFKIRSZuocMFfxGRKaMmcJFJNZwl31HRsN1Czinv8YujsYIvIeQ
- CPZw==
-X-Gm-Message-State: AOJu0YyFYbOIiMinMqZQiihEoypYltoQilMRxnl5ycEIupESIvG5yS1D
- sc9qFyz27NgSUARNkD+gHT9I2W+9a1/3RqipEhd2pXKbcC1OjRzUOUbLptn8cRU2mJUDgbtpn/B
- 0ULVRo8Yc
-X-Gm-Gg: ASbGncvQDIvkczaqFxgMPTnkPtenHHC2vst/DWvBN3bWfSxES/b179k1oIrm+R+MOb3
- EUpAApZrSso60iEvBvJ9wlkc+kWIwwZTWff+uZWfix4sjbhCZO+dUIVM9P13b7dZeeLC/cQjX9p
- K1JB+UGvUNkkr1w/6siahR9jlBavmFz120Z1m78kzNcqv7nr/ARYSBFiXt3G3WF0obQzb7G9Yms
- kP5fgQCpw7n/QHUreLysEn3H7nLoaLRj+jaMGFGQTg4jIaz4DjZckIHEWedleHzPjP7py7KVEUW
- hdPSd4adQKcU+FvUZpKlhcWQ+zMrj32cXnMtU0C5sUo=
-X-Google-Smtp-Source: AGHT+IGT8KiP82mN7Myusu4r3MV5eWE72NmJXn418T+zBsgVY5zqW4Lbt/DvXa4C5etEwm3Cw1NSDQ==
-X-Received: by 2002:a05:6830:dc4:b0:71d:5209:5cec with SMTP id
- 46e09a7af769-71e3b821215mr5898411a34.3.1734289780998; 
- Sun, 15 Dec 2024 11:09:40 -0800 (PST)
+ bh=8s/OID5KE9oMd0XN+uqlFnMR3Q80aL2JeEILGul62oQ=;
+ b=oT1KnJn1FlQkYKvAHR9x0a6viinQ1odilPWXy5mYmoOG5DSITOK1v5ka3GRAymMON9
+ Gx/PU3F5SP60zP/2d5dG3DI87YE5VnoBVMEv2encpyo4nXEvL5Co0kB5Le4jQTxuSZKK
+ Xy1JZFIVEnY2MWNTuY58vnFpa227nVf046OFENN8vQfXSVvhcdQQLTKR7Bjsk+6Rrf+8
+ vFDud3V3e6OOF5s5s0BSsd3Nm0haH+8vmWmD5FFcXtsvu3hI37JJff7w3gPrfV7c3Uyk
+ d1M2XOUzTvg3EpRE0zybgc7hDEbSzmbry9JPi8v/AlLDRsdiw4Fbl5NrGY07NyibOPy+
+ xMEQ==
+X-Gm-Message-State: AOJu0Yz1ZTG7zcwkoQ5jI2LHDhjZQ91+Ir+OrS4TBwr0AIC8bBhsUQdA
+ uCLs+E2jxNkXMSCmxXKKpA20QcNljNZMTfqAKzX924AUqNHFYnSO9tWFbIrNTiqrOeZd/s58yUl
+ 2Ad6iY/dm
+X-Gm-Gg: ASbGnctL5Pl7g5uKDGaVhNU7Hp59wAgtXv9DH1RR+4Mgr+d8WUxy+/d344vZGJdKJkH
+ 09hbVgsTuYOODvJxWs8BBhQ2Q3QRSV3VT8D4Uh1KpVKOIZJhPaYwycxmI09OKiQ8ZtWFf0HBhvd
+ 6n6Lz5Bqzt6y0y+WBnlVWvdPcUFcTiBIeEJbFqIFvcUApb1V93uaQqdtSTDCxuwiLg7ZZDfVdFa
+ mW3NFVWwH82EatEhcF5J5ALwUm+nGyu/Dh+D7v5TtVFhGwuPk9ZGt1k1cgat2tASCLOFNOTtjDo
+ 0FHPerDcJhtit5epweotkjD4ow0De/8IZhUE02vz5aY=
+X-Google-Smtp-Source: AGHT+IFG6edkwzKvdC/4pz+BakNrOf33Chq4NfoA/aUcggFgEyw3+ChOFWavfks0XHE08gJyxzIz8A==
+X-Received: by 2002:a05:6830:6705:b0:71d:3e4d:becf with SMTP id
+ 46e09a7af769-71e3ba3a756mr6078411a34.27.1734289784325; 
+ Sun, 15 Dec 2024 11:09:44 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e4836f8c2sm1015316a34.34.2024.12.15.11.09.40
+ 46e09a7af769-71e4836f8c2sm1015316a34.34.2024.12.15.11.09.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:09:40 -0800 (PST)
+ Sun, 15 Dec 2024 11:09:44 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 47/67] hw/ppc: Constify all Property
-Date: Sun, 15 Dec 2024 13:05:13 -0600
-Message-ID: <20241215190533.3222854-48-richard.henderson@linaro.org>
+Subject: [PULL 50/67] hw/rtc: Constify all Property
+Date: Sun, 15 Dec 2024 13:05:16 -0600
+Message-ID: <20241215190533.3222854-51-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::332;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,315 +104,92 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/ppc/pnv.c             | 2 +-
- hw/ppc/pnv_adu.c         | 2 +-
- hw/ppc/pnv_chiptod.c     | 2 +-
- hw/ppc/pnv_core.c        | 4 ++--
- hw/ppc/pnv_homer.c       | 2 +-
- hw/ppc/pnv_i2c.c         | 2 +-
- hw/ppc/pnv_lpc.c         | 2 +-
- hw/ppc/pnv_pnor.c        | 2 +-
- hw/ppc/pnv_psi.c         | 2 +-
- hw/ppc/ppc405_uc.c       | 2 +-
- hw/ppc/ppc440_uc.c       | 2 +-
- hw/ppc/ppc4xx_devs.c     | 4 ++--
- hw/ppc/ppc4xx_sdram.c    | 4 ++--
- hw/ppc/prep_systemio.c   | 2 +-
- hw/ppc/rs6000_mc.c       | 2 +-
- hw/ppc/spapr_cpu_core.c  | 2 +-
- hw/ppc/spapr_nvdimm.c    | 2 +-
- hw/ppc/spapr_pci.c       | 2 +-
- hw/ppc/spapr_rng.c       | 2 +-
- hw/ppc/spapr_tpm_proxy.c | 2 +-
- 20 files changed, 23 insertions(+), 23 deletions(-)
+ hw/rtc/allwinner-rtc.c | 2 +-
+ hw/rtc/goldfish_rtc.c  | 2 +-
+ hw/rtc/m48t59-isa.c    | 2 +-
+ hw/rtc/m48t59.c        | 2 +-
+ hw/rtc/mc146818rtc.c   | 2 +-
+ hw/rtc/pl031.c         | 2 +-
+ 6 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index f0f0d7567d..b90a052ce0 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -2422,7 +2422,7 @@ static void pnv_chip_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/rtc/allwinner-rtc.c b/hw/rtc/allwinner-rtc.c
+index 1057d6a57f..838db72136 100644
+--- a/hw/rtc/allwinner-rtc.c
++++ b/hw/rtc/allwinner-rtc.c
+@@ -311,7 +311,7 @@ static const VMStateDescription allwinner_rtc_vmstate = {
      }
- }
- 
--static Property pnv_chip_properties[] = {
-+static const Property pnv_chip_properties[] = {
-     DEFINE_PROP_UINT32("chip-id", PnvChip, chip_id, 0),
-     DEFINE_PROP_UINT64("ram-start", PnvChip, ram_start, 0),
-     DEFINE_PROP_UINT64("ram-size", PnvChip, ram_size, 0),
-diff --git a/hw/ppc/pnv_adu.c b/hw/ppc/pnv_adu.c
-index f636dedf79..646736f7e9 100644
---- a/hw/ppc/pnv_adu.c
-+++ b/hw/ppc/pnv_adu.c
-@@ -185,7 +185,7 @@ static void pnv_adu_realize(DeviceState *dev, Error **errp)
-                           PNV9_XSCOM_ADU_SIZE);
- }
- 
--static Property pnv_adu_properties[] = {
-+static const Property pnv_adu_properties[] = {
-     DEFINE_PROP_LINK("lpc", PnvADU, lpc, TYPE_PNV_LPC, PnvLpcController *),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ppc/pnv_chiptod.c b/hw/ppc/pnv_chiptod.c
-index 1e41fe557a..840ef23128 100644
---- a/hw/ppc/pnv_chiptod.c
-+++ b/hw/ppc/pnv_chiptod.c
-@@ -450,7 +450,7 @@ static int pnv_chiptod_power9_dt_xscom(PnvXScomInterface *dev, void *fdt,
-     return pnv_chiptod_dt_xscom(dev, fdt, xscom_offset, compat, sizeof(compat));
- }
- 
--static Property pnv_chiptod_properties[] = {
-+static const Property pnv_chiptod_properties[] = {
-     DEFINE_PROP_BOOL("primary", PnvChipTOD, primary, false),
-     DEFINE_PROP_BOOL("secondary", PnvChipTOD, secondary, false),
-     DEFINE_PROP_LINK("chip", PnvChipTOD , chip, TYPE_PNV_CHIP, PnvChip *),
-diff --git a/hw/ppc/pnv_core.c b/hw/ppc/pnv_core.c
-index e6b02294b1..22864c92f3 100644
---- a/hw/ppc/pnv_core.c
-+++ b/hw/ppc/pnv_core.c
-@@ -435,7 +435,7 @@ static void pnv_core_unrealize(DeviceState *dev)
-     g_free(pc->threads);
- }
- 
--static Property pnv_core_properties[] = {
-+static const Property pnv_core_properties[] = {
-     DEFINE_PROP_UINT32("hwid", PnvCore, hwid, 0),
-     DEFINE_PROP_UINT64("hrmor", PnvCore, hrmor, 0),
-     DEFINE_PROP_BOOL("big-core", PnvCore, big_core, false),
-@@ -693,7 +693,7 @@ static void pnv_quad_power10_realize(DeviceState *dev, Error **errp)
-                           pqc->xscom_qme_size);
- }
- 
--static Property pnv_quad_properties[] = {
-+static const Property pnv_quad_properties[] = {
-     DEFINE_PROP_UINT32("quad-id", PnvQuad, quad_id, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ppc/pnv_homer.c b/hw/ppc/pnv_homer.c
-index f9a203d11d..b1f83e2cf2 100644
---- a/hw/ppc/pnv_homer.c
-+++ b/hw/ppc/pnv_homer.c
-@@ -412,7 +412,7 @@ static void pnv_homer_realize(DeviceState *dev, Error **errp)
-                           hmrc->homer_size);
- }
- 
--static Property pnv_homer_properties[] = {
-+static const Property pnv_homer_properties[] = {
-     DEFINE_PROP_LINK("chip", PnvHomer, chip, TYPE_PNV_CHIP, PnvChip *),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ppc/pnv_i2c.c b/hw/ppc/pnv_i2c.c
-index eec5047ce8..4bd61abeed 100644
---- a/hw/ppc/pnv_i2c.c
-+++ b/hw/ppc/pnv_i2c.c
-@@ -543,7 +543,7 @@ static void pnv_i2c_realize(DeviceState *dev, Error **errp)
-     qdev_init_gpio_out(DEVICE(dev), &i2c->psi_irq, 1);
- }
- 
--static Property pnv_i2c_properties[] = {
-+static const Property pnv_i2c_properties[] = {
-     DEFINE_PROP_LINK("chip", PnvI2C, chip, TYPE_PNV_CHIP, PnvChip *),
-     DEFINE_PROP_UINT32("engine", PnvI2C, engine, 1),
-     DEFINE_PROP_UINT32("num-busses", PnvI2C, num_busses, 1),
-diff --git a/hw/ppc/pnv_lpc.c b/hw/ppc/pnv_lpc.c
-index 8c203d2059..4d47167163 100644
---- a/hw/ppc/pnv_lpc.c
-+++ b/hw/ppc/pnv_lpc.c
-@@ -828,7 +828,7 @@ static void pnv_lpc_realize(DeviceState *dev, Error **errp)
-     qdev_init_gpio_out_named(dev, &lpc->psi_irq_lpchc, "LPCHC", 1);
- }
- 
--static Property pnv_lpc_properties[] = {
-+static const Property pnv_lpc_properties[] = {
-     DEFINE_PROP_BOOL("psi-serirq", PnvLpcController, psi_has_serirq, false),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ppc/pnv_pnor.c b/hw/ppc/pnv_pnor.c
-index 6280408299..eed6d32650 100644
---- a/hw/ppc/pnv_pnor.c
-+++ b/hw/ppc/pnv_pnor.c
-@@ -112,7 +112,7 @@ static void pnv_pnor_realize(DeviceState *dev, Error **errp)
-                           TYPE_PNV_PNOR, s->size);
- }
- 
--static Property pnv_pnor_properties[] = {
-+static const Property pnv_pnor_properties[] = {
-     DEFINE_PROP_INT64("size", PnvPnor, size, 128 * MiB),
-     DEFINE_PROP_DRIVE("drive", PnvPnor, blk),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/ppc/pnv_psi.c b/hw/ppc/pnv_psi.c
-index 37c56882b8..e7d6ceee99 100644
---- a/hw/ppc/pnv_psi.c
-+++ b/hw/ppc/pnv_psi.c
-@@ -552,7 +552,7 @@ static int pnv_psi_dt_xscom(PnvXScomInterface *dev, void *fdt, int xscom_offset)
-     return 0;
- }
- 
--static Property pnv_psi_properties[] = {
-+static const Property pnv_psi_properties[] = {
-     DEFINE_PROP_UINT64("bar", PnvPsi, bar, 0),
-     DEFINE_PROP_UINT64("fsp-bar", PnvPsi, fsp_bar, 0),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/ppc/ppc405_uc.c b/hw/ppc/ppc405_uc.c
-index 58cbd0507a..801f97811f 100644
---- a/hw/ppc/ppc405_uc.c
-+++ b/hw/ppc/ppc405_uc.c
-@@ -965,7 +965,7 @@ static void ppc405_cpc_realize(DeviceState *dev, Error **errp)
-                         &dcr_read_epcpc, &dcr_write_epcpc);
- }
- 
--static Property ppc405_cpc_properties[] = {
-+static const Property ppc405_cpc_properties[] = {
-     DEFINE_PROP_UINT32("sys-clk", Ppc405CpcState, sysclk, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
-index 1312aa2080..05a5ef6f77 100644
---- a/hw/ppc/ppc440_uc.c
-+++ b/hw/ppc/ppc440_uc.c
-@@ -1020,7 +1020,7 @@ static void ppc460ex_pcie_realize(DeviceState *dev, Error **errp)
-     ppc460ex_pcie_register_dcrs(s);
- }
- 
--static Property ppc460ex_pcie_props[] = {
-+static const Property ppc460ex_pcie_props[] = {
-     DEFINE_PROP_INT32("busnum", PPC460EXPCIEState, num, -1),
-     DEFINE_PROP_INT32("dcrn-base", PPC460EXPCIEState, dcrn_base, -1),
-     DEFINE_PROP_LINK("cpu", PPC460EXPCIEState, cpu, TYPE_POWERPC_CPU,
-diff --git a/hw/ppc/ppc4xx_devs.c b/hw/ppc/ppc4xx_devs.c
-index db8f6b9497..530a392f2a 100644
---- a/hw/ppc/ppc4xx_devs.c
-+++ b/hw/ppc/ppc4xx_devs.c
-@@ -231,7 +231,7 @@ static void ppc4xx_mal_finalize(Object *obj)
-     g_free(mal->txctpr);
- }
- 
--static Property ppc4xx_mal_properties[] = {
-+static const Property ppc4xx_mal_properties[] = {
-     DEFINE_PROP_UINT8("txc-num", Ppc4xxMalState, txcnum, 0),
-     DEFINE_PROP_UINT8("rxc-num", Ppc4xxMalState, rxcnum, 0),
-     DEFINE_PROP_END_OF_LIST(),
-@@ -539,7 +539,7 @@ bool ppc4xx_dcr_realize(Ppc4xxDcrDeviceState *dev, PowerPCCPU *cpu,
-     return sysbus_realize(SYS_BUS_DEVICE(dev), errp);
- }
- 
--static Property ppc4xx_dcr_properties[] = {
-+static const Property ppc4xx_dcr_properties[] = {
-     DEFINE_PROP_LINK("cpu", Ppc4xxDcrDeviceState, cpu, TYPE_POWERPC_CPU,
-                      PowerPCCPU *),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/ppc/ppc4xx_sdram.c b/hw/ppc/ppc4xx_sdram.c
-index 2ee21f1ca7..6cfb07a11f 100644
---- a/hw/ppc/ppc4xx_sdram.c
-+++ b/hw/ppc/ppc4xx_sdram.c
-@@ -425,7 +425,7 @@ static void ppc4xx_sdram_ddr_realize(DeviceState *dev, Error **errp)
-                         s, &sdram_ddr_dcr_read, &sdram_ddr_dcr_write);
- }
- 
--static Property ppc4xx_sdram_ddr_props[] = {
-+static const Property ppc4xx_sdram_ddr_props[] = {
-     DEFINE_PROP_LINK("dram", Ppc4xxSdramDdrState, dram_mr, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_UINT32("nbanks", Ppc4xxSdramDdrState, nbanks, 4),
-@@ -710,7 +710,7 @@ static void ppc4xx_sdram_ddr2_realize(DeviceState *dev, Error **errp)
-                         s, &sdram_ddr2_dcr_read, &sdram_ddr2_dcr_write);
- }
- 
--static Property ppc4xx_sdram_ddr2_props[] = {
-+static const Property ppc4xx_sdram_ddr2_props[] = {
-     DEFINE_PROP_LINK("dram", Ppc4xxSdramDdr2State, dram_mr, TYPE_MEMORY_REGION,
-                      MemoryRegion *),
-     DEFINE_PROP_UINT32("nbanks", Ppc4xxSdramDdr2State, nbanks, 4),
-diff --git a/hw/ppc/prep_systemio.c b/hw/ppc/prep_systemio.c
-index 4d3a251ed8..ca475c69f4 100644
---- a/hw/ppc/prep_systemio.c
-+++ b/hw/ppc/prep_systemio.c
-@@ -285,7 +285,7 @@ static const VMStateDescription vmstate_prep_systemio = {
-     },
  };
  
--static Property prep_systemio_properties[] = {
-+static const Property prep_systemio_properties[] = {
-     DEFINE_PROP_UINT8("ibm-planar-id", PrepSystemIoState, ibm_planar_id, 0),
-     DEFINE_PROP_UINT8("equipment", PrepSystemIoState, equipment, 0),
-     DEFINE_PROP_END_OF_LIST()
-diff --git a/hw/ppc/rs6000_mc.c b/hw/ppc/rs6000_mc.c
-index 07b0b664d9..bee9bc62d4 100644
---- a/hw/ppc/rs6000_mc.c
-+++ b/hw/ppc/rs6000_mc.c
-@@ -207,7 +207,7 @@ static const VMStateDescription vmstate_rs6000mc = {
-     },
+-static Property allwinner_rtc_properties[] = {
++static const Property allwinner_rtc_properties[] = {
+     DEFINE_PROP_INT32("base-year", AwRtcState, base_year, 0),
+     DEFINE_PROP_END_OF_LIST(),
  };
+diff --git a/hw/rtc/goldfish_rtc.c b/hw/rtc/goldfish_rtc.c
+index a6dfbf89f3..389f192efa 100644
+--- a/hw/rtc/goldfish_rtc.c
++++ b/hw/rtc/goldfish_rtc.c
+@@ -286,7 +286,7 @@ static void goldfish_rtc_realize(DeviceState *d, Error **errp)
+     s->timer = timer_new_ns(rtc_clock, goldfish_rtc_interrupt, s);
+ }
  
--static Property rs6000mc_properties[] = {
-+static const Property rs6000mc_properties[] = {
-     DEFINE_PROP_UINT32("ram-size", RS6000MCState, ram_size, 0),
-     DEFINE_PROP_BOOL("auto-configure", RS6000MCState, autoconfigure, true),
-     DEFINE_PROP_END_OF_LIST()
-diff --git a/hw/ppc/spapr_cpu_core.c b/hw/ppc/spapr_cpu_core.c
-index 135f86a622..88d743a3c3 100644
---- a/hw/ppc/spapr_cpu_core.c
-+++ b/hw/ppc/spapr_cpu_core.c
-@@ -361,7 +361,7 @@ static void spapr_cpu_core_realize(DeviceState *dev, Error **errp)
+-static Property goldfish_rtc_properties[] = {
++static const Property goldfish_rtc_properties[] = {
+     DEFINE_PROP_BOOL("big-endian", GoldfishRTCState, big_endian,
+                       false),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/rtc/m48t59-isa.c b/hw/rtc/m48t59-isa.c
+index b642b82680..51f80d27ef 100644
+--- a/hw/rtc/m48t59-isa.c
++++ b/hw/rtc/m48t59-isa.c
+@@ -77,7 +77,7 @@ static void m48txx_isa_toggle_lock(Nvram *obj, int lock)
+     m48t59_toggle_lock(&d->state, lock);
+ }
+ 
+-static Property m48t59_isa_properties[] = {
++static const Property m48t59_isa_properties[] = {
+     DEFINE_PROP_INT32("base-year", M48txxISAState, state.base_year, 0),
+     DEFINE_PROP_UINT32("iobase", M48txxISAState, io_base, 0x74),
+     DEFINE_PROP_UINT8("irq", M48txxISAState, isairq, 8),
+diff --git a/hw/rtc/m48t59.c b/hw/rtc/m48t59.c
+index 90299ea56f..5a2c7b4abd 100644
+--- a/hw/rtc/m48t59.c
++++ b/hw/rtc/m48t59.c
+@@ -618,7 +618,7 @@ static void m48txx_sysbus_toggle_lock(Nvram *obj, int lock)
+     m48t59_toggle_lock(&d->state, lock);
+ }
+ 
+-static Property m48t59_sysbus_properties[] = {
++static const Property m48t59_sysbus_properties[] = {
+     DEFINE_PROP_INT32("base-year", M48txxSysBusState, state.base_year, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/rtc/mc146818rtc.c b/hw/rtc/mc146818rtc.c
+index 8ccee9a385..973ed9914d 100644
+--- a/hw/rtc/mc146818rtc.c
++++ b/hw/rtc/mc146818rtc.c
+@@ -960,7 +960,7 @@ MC146818RtcState *mc146818_rtc_init(ISABus *bus, int base_year,
+     return s;
+ }
+ 
+-static Property mc146818rtc_properties[] = {
++static const Property mc146818rtc_properties[] = {
+     DEFINE_PROP_INT32("base_year", MC146818RtcState, base_year, 1980),
+     DEFINE_PROP_UINT16("iobase", MC146818RtcState, io_base, RTC_ISA_BASE),
+     DEFINE_PROP_UINT8("irq", MC146818RtcState, isairq, RTC_ISA_IRQ),
+diff --git a/hw/rtc/pl031.c b/hw/rtc/pl031.c
+index 563bb4b446..1dc8e6e00f 100644
+--- a/hw/rtc/pl031.c
++++ b/hw/rtc/pl031.c
+@@ -319,7 +319,7 @@ static const VMStateDescription vmstate_pl031 = {
      }
- }
- 
--static Property spapr_cpu_core_properties[] = {
-+static const Property spapr_cpu_core_properties[] = {
-     DEFINE_PROP_INT32("node-id", SpaprCpuCore, node_id, CPU_UNSET_NUMA_NODE_ID),
-     DEFINE_PROP_END_OF_LIST()
  };
-diff --git a/hw/ppc/spapr_nvdimm.c b/hw/ppc/spapr_nvdimm.c
-index 7d2dfe5e3d..2ef6f29f3d 100644
---- a/hw/ppc/spapr_nvdimm.c
-+++ b/hw/ppc/spapr_nvdimm.c
-@@ -884,7 +884,7 @@ static void spapr_nvdimm_unrealize(NVDIMMDevice *dimm)
-     vmstate_unregister(NULL, &vmstate_spapr_nvdimm_states, dimm);
- }
  
--static Property spapr_nvdimm_properties[] = {
-+static const Property spapr_nvdimm_properties[] = {
- #ifdef CONFIG_LIBPMEM
-     DEFINE_PROP_BOOL("pmem-override", SpaprNVDIMMDevice, pmem_override, false),
- #endif
-diff --git a/hw/ppc/spapr_pci.c b/hw/ppc/spapr_pci.c
-index 7e24084673..3edff528ca 100644
---- a/hw/ppc/spapr_pci.c
-+++ b/hw/ppc/spapr_pci.c
-@@ -2033,7 +2033,7 @@ static void spapr_phb_reset(DeviceState *qdev)
-     g_hash_table_remove_all(sphb->msi);
- }
- 
--static Property spapr_phb_properties[] = {
-+static const Property spapr_phb_properties[] = {
-     DEFINE_PROP_UINT32("index", SpaprPhbState, index, -1),
-     DEFINE_PROP_UINT64("mem_win_size", SpaprPhbState, mem_win_size,
-                        SPAPR_PCI_MEM32_WIN_SIZE),
-diff --git a/hw/ppc/spapr_rng.c b/hw/ppc/spapr_rng.c
-index c2fda7ad20..51c3a54d45 100644
---- a/hw/ppc/spapr_rng.c
-+++ b/hw/ppc/spapr_rng.c
-@@ -130,7 +130,7 @@ static void spapr_rng_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
--static Property spapr_rng_properties[] = {
-+static const Property spapr_rng_properties[] = {
-     DEFINE_PROP_BOOL("use-kvm", SpaprRngState, use_kvm, false),
-     DEFINE_PROP_LINK("rng", SpaprRngState, backend, TYPE_RNG_BACKEND,
-                      RngBackend *),
-diff --git a/hw/ppc/spapr_tpm_proxy.c b/hw/ppc/spapr_tpm_proxy.c
-index e10af35a18..37521b88cb 100644
---- a/hw/ppc/spapr_tpm_proxy.c
-+++ b/hw/ppc/spapr_tpm_proxy.c
-@@ -145,7 +145,7 @@ static void spapr_tpm_proxy_unrealize(DeviceState *d)
-     qemu_unregister_reset(spapr_tpm_proxy_reset, tpm_proxy);
- }
- 
--static Property spapr_tpm_proxy_properties[] = {
-+static const Property spapr_tpm_proxy_properties[] = {
-     DEFINE_PROP_STRING("host-path", SpaprTpmProxy, host_path),
-     DEFINE_PROP_END_OF_LIST(),
- };
+-static Property pl031_properties[] = {
++static const Property pl031_properties[] = {
+     /*
+      * True to correctly migrate the tick offset of the RTC. False to
+      * obtain backward migration compatibility with older QEMU versions,
 -- 
 2.43.0
 
