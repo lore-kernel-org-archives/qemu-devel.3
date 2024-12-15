@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8950E7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:19:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E49BE7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwW-0001Kz-AY; Sun, 15 Dec 2024 14:06:16 -0500
+	id 1tMtx8-0002Or-Bb; Sun, 15 Dec 2024 14:06:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwT-0001J7-5a
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:13 -0500
-Received: from mail-oa1-x31.google.com ([2001:4860:4864:20::31])
+ id 1tMtwZ-0001Lw-1p
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:20 -0500
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwR-00017a-9u
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:12 -0500
-Received: by mail-oa1-x31.google.com with SMTP id
- 586e51a60fabf-29fc424237bso1650867fac.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:10 -0800 (PST)
+ id 1tMtwW-0001AA-D1
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:17 -0500
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5f2da12248fso2170297eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289570; x=1734894370; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289575; x=1734894375; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MlAoTFD+08/sI+8RxL3MBAcylSFIhB9jm1qQSnpdSj4=;
- b=gnRGo7VQhnL7BZ7HmukjoP+fj61CCYSX4Kp7eC4ErE4kjKTzLYC8VdbNEIYM4Fvbgd
- 0vr6PE1iHXsxy/bnaIWab7cZ3pLW1rh4ZtUmfpdTbfdbIHg3qciDNJYD822nyWut8u7T
- uV+EcC3mYPJ7S7xODjDLX0cjG5nmphUE+38D7nkq3N4kbGhMTNJ0gNeMRiietC8A+k+a
- NLsIirZWSjLA+mCBTdYOH7eIAGh4Sydaw6oO3d5ceBsvvkkOikNPr9YYVI/7doQgz7rZ
- EnlWarwdMPkCqyP8mncW9h8FxEmYI0Rw8U5mq+P/OaHrwYhw9hCkXHfHU124POeuGJR4
- Mx5Q==
+ bh=/7D9unWrlHZoR8A1dN23AeSaSZJKRolZppIb6v+BQvE=;
+ b=BIbGXi3jLljHc1VMbaADM/GoIZj0Wl9xrdqE1BTCt9JlLRWY6AxGNUHXcq/xp55PeQ
+ O9vf2kXziTj3SdooccJxNErmhRecgYAWBd+y69xo3zb8E9jzb0Bdg3BESRdhJVjvOkXp
+ GPoHsbgoZYmyW4f70Eh2gtwvzTrL9ZqF3LYyXnuoqTYU0hAUf/jBiyfocNgQP+XEC6bt
+ Yzd0HfQOk6U6pL2+khC6QbOjxLpoCQ5+GY8KxBsqdGt94oWsdQKwnXptzENS91DqqoA/
+ /anqxHWIthkDdyeq3mvEf7vZLPy/sjP2+jYhyp2DspGq+yTFGpQcjLeUY6futKVVBSa+
+ leWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289570; x=1734894370;
+ d=1e100.net; s=20230601; t=1734289575; x=1734894375;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MlAoTFD+08/sI+8RxL3MBAcylSFIhB9jm1qQSnpdSj4=;
- b=vYL78q3wd+QwZikAk0MlpIvF3S5CRLHg2/+tlsuSp3zW4DqvAR5NpSj0mXL1/6Cefg
- zaXArpPPkUl9M+cXftm3xkfsdGDaiRS1YghgW2+pIM1MJ465ry6zauW2+T8zkDNRwyo/
- U7sVWek4AC38eMbDpxdxayaTxZptoTZCU6z4DANm7lHm0piZpKbEQAufo7q3I1sv+paG
- na7ZDVvtaT7oufbBYPnx843zzmGXU11gDq1ATQZ+h36B9lK/1YrT46MQX70T4JNls/He
- vP6hz4oVKfhPmTWJZi+xz8x6W5+yB5rpXS3/DhKkST/+rCmAIh7sGR5Ef8Q95KcFglPx
- 5QAQ==
-X-Gm-Message-State: AOJu0YxAzEezc0YrPnDlpa2MiZyZd9kUCyrlrVNct5PTb6XFCz2kisRd
- 8fPRM/ODgR+wiwtPCnCkXJEGhUqo4ZlO+Xo18UOWWDbbD3Ou/OcD3+9MS0ucWLfxaQqWe60b8ux
- 2OTr9BZ67
-X-Gm-Gg: ASbGncssTMWJOfHPHGIMymbVHdGo8IEvP2wUsOgk7LMWFwGi6FKkwt2s4kKMdKNn7JG
- OjbaFD62Lbb8wRdXawLnn56/5rVe4SVIRGY2hsAyRlX9MhHYlcyfRuhxOAaSKvs66si49WAJDXw
- DUqQlQ4jkdRHJq8DqqeQD2YgxEKiiA0+89y6k4ldVc6MXb89s8rcnzyHygtAOs73OmrTPbCnn9G
- oE/bveWhcEOYpsayx9cpaYHHsq4GCBn36BQiX0XwqsAILckpe8YAQLk4GehLnrTfu1XpdLsOpzr
- ioOW/70xM6Pmu22S46DWvJWS3SxkOiMUXpAgk7ukSP8=
-X-Google-Smtp-Source: AGHT+IEGZumyOGcggsArKLhsSjq1xvxsthXYALlpPfNS/YswWe1vZi3r2Yy9WShlL6cSnitvWYy+aQ==
-X-Received: by 2002:a05:6870:ac90:b0:29f:df27:8b80 with SMTP id
- 586e51a60fabf-2a3ac6ee99amr4776591fac.24.1734289570275; 
- Sun, 15 Dec 2024 11:06:10 -0800 (PST)
+ bh=/7D9unWrlHZoR8A1dN23AeSaSZJKRolZppIb6v+BQvE=;
+ b=dd2VdXJEQlmCog4V4aaXG3rfF14svuaBnoemXV3rbwoaLjYh3LSkCLHWEfpQfxH6rs
+ 915DUMKlYclVNKZsMnNg60U6HO0YXolsc8hA4IIuknYidZR5JeAeu64dNG0yGypB8Sm4
+ 6FidPMW7gan8SXqI7ukDIWvrfwHIQfgDfG4U77mJR2GjLUqqyTfR30FS+YXSufIBi/m1
+ LplDDSnCj2C2IY30JUBTn+2xFdLJso9UPilpm2VHHq4QEfj4JNox95QVHh4ufYhV/FMy
+ dBs61C11P5OMWubygCs4yPLty629HjCJ3EffACj0Cej3zGjwQyvAwLFAANhLsup4pkwB
+ RofA==
+X-Gm-Message-State: AOJu0Yy4Qwg5ogPhWee49T5JNPzb2sLhErhu7JtaOwvy/iwXOjUANhDq
+ hyOyLH+4F1s7GkQJMvEtSccRd3pqi5P6h+oif1t/kIKCTe4a8Kcyua0CXS1VVdVBE/IWnF0GR6s
+ nt7OJpeTY
+X-Gm-Gg: ASbGnctpP+fuY2R9PMjMFCBW3TziFjKL7ZNDfzjQNGEukgWijgeUuvCPS61vcqJPuL0
+ TOQuXxLKOLO3NqW2zVIP6qKdOme55F11nx9OYriGSi/8m1miM9dkg5+bKWNSIUdfaZAs54YUufN
+ +G+9B6vXJ4yYN+Ld/Hbew6MlooWJZGvB7sRK7JU/ItzOojTKdghIqGFv0gjCfYi6cZ7r6yECVCf
+ Z+hdGmptvlyollQ9WVWIR1WABpBhnAtowkvjTXBYj74UEVoiSv3d409yeGlzDbQHj3YVVn09L6a
+ HXF7dtqmkZHxehImMB/hmyyHpchxOdchzVM7wE5qLdU=
+X-Google-Smtp-Source: AGHT+IHhyoMuUFa1Wi2ZrHrrsSIkgRylhCcCpewSYlx2G64qXKLgMO5+8oxEEOCpXCOodpB2oeBUDQ==
+X-Received: by 2002:a05:6870:1d1:b0:29e:1962:7a23 with SMTP id
+ 586e51a60fabf-2a3aef703cdmr5561380fac.4.1734289574698; 
+ Sun, 15 Dec 2024 11:06:14 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.09
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:09 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:14 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 22/67] hw/cxl: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:48 -0600
-Message-ID: <20241215190533.3222854-23-richard.henderson@linaro.org>
+Subject: [PULL 26/67] hw/hyperv: Constify all Property
+Date: Sun, 15 Dec 2024 13:04:52 -0600
+Message-ID: <20241215190533.3222854-27-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,22 +104,59 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/cxl/switch-mailbox-cci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hyperv/hv-balloon.c | 2 +-
+ hw/hyperv/syndbg.c     | 2 +-
+ hw/hyperv/vmbus.c      | 4 ++--
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/hw/cxl/switch-mailbox-cci.c b/hw/cxl/switch-mailbox-cci.c
-index 4f419443ab..3fde0f8aae 100644
---- a/hw/cxl/switch-mailbox-cci.c
-+++ b/hw/cxl/switch-mailbox-cci.c
-@@ -65,7 +65,7 @@ static void cswmbcci_exit(PCIDevice *pci_dev)
-     /* Nothing to do here yet */
+diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
+index 3a9ef07691..74897b1604 100644
+--- a/hw/hyperv/hv-balloon.c
++++ b/hw/hyperv/hv-balloon.c
+@@ -1733,7 +1733,7 @@ static void hv_balloon_finalize(Object *obj)
+     hv_balloon_unrealize_finalize_common(balloon);
  }
  
--static Property cxl_switch_cci_props[] = {
-+static const Property cxl_switch_cci_props[] = {
-     DEFINE_PROP_LINK("target", CSWMBCCIDev,
-                      target, TYPE_CXL_USP, PCIDevice *),
-     DEFINE_PROP_END_OF_LIST(),
+-static Property hv_balloon_properties[] = {
++static const Property hv_balloon_properties[] = {
+     DEFINE_PROP_BOOL("status-report", HvBalloon,
+                      status_report.enabled, false),
+ 
+diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+index 065e12fb1e..0193addd42 100644
+--- a/hw/hyperv/syndbg.c
++++ b/hw/hyperv/syndbg.c
+@@ -366,7 +366,7 @@ static const VMStateDescription vmstate_hv_syndbg = {
+     .unmigratable = 1,
+ };
+ 
+-static Property hv_syndbg_properties[] = {
++static const Property hv_syndbg_properties[] = {
+     DEFINE_PROP_STRING("host_ip", HvSynDbg, host_ip),
+     DEFINE_PROP_UINT16("host_port", HvSynDbg, host_port, 50000),
+     DEFINE_PROP_BOOL("use_hcalls", HvSynDbg, use_hcalls, false),
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index b36bd3d67d..3d1f4d14e8 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -2346,7 +2346,7 @@ static void vmbus_dev_unrealize(DeviceState *dev)
+     free_channels(vdev);
+ }
+ 
+-static Property vmbus_dev_props[] = {
++static const Property vmbus_dev_props[] = {
+     DEFINE_PROP_UUID("instanceid", VMBusDevice, instanceid),
+     DEFINE_PROP_END_OF_LIST()
+ };
+@@ -2653,7 +2653,7 @@ static const VMStateDescription vmstate_vmbus_bridge = {
+     },
+ };
+ 
+-static Property vmbus_bridge_props[] = {
++static const Property vmbus_bridge_props[] = {
+     DEFINE_PROP_UINT8("irq", VMBusBridge, irq, 7),
+     DEFINE_PROP_END_OF_LIST()
+ };
 -- 
 2.43.0
 
