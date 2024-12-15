@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68B11E77186
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FF2E77183
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwO-0001HT-Ij; Sun, 15 Dec 2024 14:06:08 -0500
+	id 1tMtwo-0001gb-2W; Sun, 15 Dec 2024 14:06:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwF-0001GY-FJ
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:02 -0500
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1tMtwd-0001Sy-QH
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:28 -0500
+Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwD-00011W-JV
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:05:58 -0500
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5f32de85789so1034447eaf.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:05:57 -0800 (PST)
+ id 1tMtwc-0001DD-1g
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:23 -0500
+Received: by mail-oa1-x2e.google.com with SMTP id
+ 586e51a60fabf-288fa5ce8f0so933181fac.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289556; x=1734894356; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289580; x=1734894380; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LkTIOJvxAZpwekaMnF4W9WKYdFapWxP/f2wAmpMVyBY=;
- b=PseLGHiWshvw8/qw0OC5u2R9P3MXXMNvzPRoqllMe44DGX8re6x6worPDJ6TKCa6pU
- kNZT+il9Y//tyPFILontTfltkblbF9WaUqIoi0qoAk9in+ZOQf7B/T+OGFFPeTseirgW
- 1CQ7pEMAzjEDr+kMFZ0SIjJFfU9uLpwSe79jACS8ZXyhFVYkSJuhGN0XVybcI+mLVnUt
- uPpYRdTWdLcOPjC9r73/Sj88ndKmzYBkxX9OHC+JALqnqJ5ER9dE7gVmhajxD7Q82wU9
- eiNc64alMPw9NGfrsxGTFKkU4YnXECKjbSLjVcuP/sYIZy94DW1ZfSjjZoMOuZBJn7kZ
- Fiow==
+ bh=AXOLh9yZNgpRyWamRBq8wsPa5UlUqVmERW2UrYN4jVU=;
+ b=i2ydotqxMmlpT0Szl5lqLG89dX5gu8MzPKUN1lVfwrIA8DMw7G7rD4jSxhbId4p5EQ
+ bLCSDAmV58hfQRw9unMTkJRx33m4omfp/RiZYCkkMsNuNJqlF32OB0QsAVvJKsONoxJj
+ HG33yfuphRztM7+PHVA/av8NCwIoFpo0rwzcEPKFM2Tnpm1tcXThUERtt3QQnuQVxh4s
+ Bdj4zxBuKIkU3s1PdWvxZdZghFN4lPcV/iu5q9/srjcXBX7OUigb/eYs8v3IcVyrV0Q+
+ +tUPD+oGw8wuxnSCEkmzqyIJv9Yrd9ZqOQAIZ6jPuH1K1AznZnwQ8EdN5kDns7vCpjme
+ rxMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289556; x=1734894356;
+ d=1e100.net; s=20230601; t=1734289580; x=1734894380;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=LkTIOJvxAZpwekaMnF4W9WKYdFapWxP/f2wAmpMVyBY=;
- b=RXpb28Mv/F4+Zq/E8ZbHW5DerjngpI9dL3ehA1W4zS//1cYMdkGxhND9x08sk3Lhow
- ZOUmufVPqQQGNmJoO8JAbOm2BwC2JkbizkvfqNAxzGLJDzPSg/Nj3bxf0+6rIUneRkqM
- ZLZDlxlA8jSEXr5SOHNczw4TA29saXUulNNZqzKLzAyNAJKugPfgCgWc6/RVlT0NYMUE
- WuJa8DrYg11FkkA8p+DVR5JdoSSVIBoieEENZJbx0ZpGrV7IikuaoCuiCtmQHa1wuXQ9
- 3dqWyZi6Vo53d4+jjaskdz8R0g0e1KtabPaL+Eg9RVAG+MUK9pIsvLo1VLyDPi6l4ex/
- ewrw==
-X-Gm-Message-State: AOJu0Yxe02NzTBPVwVB5+UVYArgtdipr/32MhsIHeomO076FAK1nUdyf
- zFl6pMFeokjtnJvgm3GBRJTopIgsu8VKKowZo92ki0UUS8rTj7lM1Yjv2k3hkd9zASho9SEPXR6
- IAzeGqUoM
-X-Gm-Gg: ASbGncumCUoTgHRONalENsFFqK1q1VX8g1qK0aKUr3wMEL3LZ5VPpqZWAJVIeEZKL6z
- 0DZ3yqJQl2oOiTsUak2Fms7HrCgCERa+DT032sxmZK6CQ7cd8N/wQECm9hVh6hkMfHo9D1mAYLY
- MCzG9FSq1Irngmyi/DFjGnXyWZIGEkDFlS8aXdrIR31h/CQHr9BkN66k+O3DBt33HSfa9ZimFss
- u0ACBpsTxYVmMGmUt+BScTTgbutbvmH1DawuTW69YfsOPiA+uDtkEjtm13TgGDHNGu5eQXva+ZX
- ow4ndNvL8BB6bXg4OwcOjpcDmekWu1AkTBCnn54um6s=
-X-Google-Smtp-Source: AGHT+IG+M/6zhR5loTcSQyWHKz/7wp55zlbqX0+AJWOLJMWgv8xroVuI7zcQvV8TRc4azMLn6CqcBg==
-X-Received: by 2002:a05:6870:d114:b0:29e:7629:1466 with SMTP id
- 586e51a60fabf-2a385335461mr7476534fac.7.1734289556543; 
- Sun, 15 Dec 2024 11:05:56 -0800 (PST)
+ bh=AXOLh9yZNgpRyWamRBq8wsPa5UlUqVmERW2UrYN4jVU=;
+ b=e7oqQux8rR732iuLrm83CK6CCxBN3kzZKWOKwDnd8CWoMUE/NZgldkIUZrrqWpKWxR
+ mZZX9WB2gphUleh/X6eT4qOSKXBjV42gJwv6mp2TGJeul5TUpOcigWMWCQi5p+O/iuJh
+ de9m+0NsaZCTjWVYKSxtwLe8thGSiYMkbOdKo1yA8s04enSpWn7Q+Li00xve70v/POGN
+ 36xvXpoazfw7M/bToFEqeM2YzA0kTY/LReONd+yHhW/6LCKlTsuhcT1AAdg5Tn+ImclM
+ 1UIFBKzLpYFW9fL9PIgCEnyus26blPnDvt4bRUdbvBsLnBmpaQoV+yqIfU8wTvHtCge1
+ ZNiA==
+X-Gm-Message-State: AOJu0YxOioWHsxMNRmzy7F9z0s9yYDDZuVPg0uL98mz3nU5C20LO+rOA
+ QY+NtyNSni6UW4S1s+UBf2I3txZT5M4oToPC/Bh9nNePQs6f5zpwF0jqzcXh9rbmMvnQbX6He82
+ osub1MWw/
+X-Gm-Gg: ASbGncvzz89NbI3a3yI8CmuVheJr1tN9m5NqnRUzgLGJGMo6vHc3Xyy97saeKs5FaA1
+ MNhZHor68vVxMPWr5grB9uHMyAYZ4qVAga3pPDE2wEyDa8LLz+I3EUIp/oeNByDzJZDbUsi4KOm
+ ChT4au/b9gN3S7Kutn3nedOIfhANUa+Pimtf3WO+CzTylfLZgGVu18K/oDv4KMA+EgFs+KjciMu
+ 04/SrJfxSAs0NlqD0E6w0omXTCbx8CqHrCcT+ZnM8Q2O/d1iM3mtXot0wFoBTHY3fBk49VRoO4l
+ Zn0oLyHsCrX3R8bjKPVFDP2noUd7IBOE7p2F2o7nNqc=
+X-Google-Smtp-Source: AGHT+IF/DX66qzlGFmPlROxakzib22ndkzEGAgTCL09zZe6EnwyZYS2PYhy8lvAXe+uDGqYzQopt3w==
+X-Received: by 2002:a05:6870:912b:b0:29e:1b72:7586 with SMTP id
+ 586e51a60fabf-2a3ac62d5d6mr5871603fac.18.1734289580401; 
+ Sun, 15 Dec 2024 11:06:20 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.05.55
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:05:56 -0800 (PST)
+ Sun, 15 Dec 2024 11:06:19 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 12/67] hw/acpi: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:38 -0600
-Message-ID: <20241215190533.3222854-13-richard.henderson@linaro.org>
+Subject: [PULL 30/67] hw/input: Constify all Property
+Date: Sun, 15 Dec 2024 13:04:56 -0600
+Message-ID: <20241215190533.3222854-31-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,62 +104,103 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/acpi/erst.c                 | 2 +-
- hw/acpi/generic_event_device.c | 2 +-
- hw/acpi/piix4.c                | 2 +-
- hw/acpi/vmgenid.c              | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ hw/input/pckbd.c             | 4 ++--
+ hw/input/stellaris_gamepad.c | 2 +-
+ hw/input/virtio-input-hid.c  | 6 +++---
+ hw/input/virtio-input-host.c | 2 +-
+ hw/input/virtio-input.c      | 2 +-
+ 5 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/hw/acpi/erst.c b/hw/acpi/erst.c
-index a108cfe49b..5ef5ddccb6 100644
---- a/hw/acpi/erst.c
-+++ b/hw/acpi/erst.c
-@@ -1011,7 +1011,7 @@ static void erst_reset(DeviceState *dev)
-     trace_acpi_erst_reset_out(le32_to_cpu(s->header->record_count));
+diff --git a/hw/input/pckbd.c b/hw/input/pckbd.c
+index 04c1b3cbf9..24a133fd25 100644
+--- a/hw/input/pckbd.c
++++ b/hw/input/pckbd.c
+@@ -735,7 +735,7 @@ static void i8042_mmio_init(Object *obj)
+                             "ps2-mouse-input-irq", 1);
  }
  
--static Property erst_properties[] = {
-+static const Property erst_properties[] = {
-     DEFINE_PROP_LINK(ACPI_ERST_MEMDEV_PROP, ERSTDeviceState, hostmem,
-                      TYPE_MEMORY_BACKEND, HostMemoryBackend *),
-     DEFINE_PROP_UINT32(ACPI_ERST_RECORD_SIZE_PROP, ERSTDeviceState,
-diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-index 663d9cb093..8c4706f8cf 100644
---- a/hw/acpi/generic_event_device.c
-+++ b/hw/acpi/generic_event_device.c
-@@ -316,7 +316,7 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-     qemu_irq_pulse(s->irq);
+-static Property i8042_mmio_properties[] = {
++static const Property i8042_mmio_properties[] = {
+     DEFINE_PROP_UINT64("mask", MMIOKBDState, kbd.mask, UINT64_MAX),
+     DEFINE_PROP_UINT32("size", MMIOKBDState, size, -1),
+     DEFINE_PROP_END_OF_LIST(),
+@@ -933,7 +933,7 @@ static void i8042_build_aml(AcpiDevAmlIf *adev, Aml *scope)
+     aml_append(scope, mou);
  }
  
--static Property acpi_ged_properties[] = {
-+static const Property acpi_ged_properties[] = {
-     DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+-static Property i8042_properties[] = {
++static const Property i8042_properties[] = {
+     DEFINE_PROP_BOOL("extended-state", ISAKBDState, kbd.extended_state, true),
+     DEFINE_PROP_BOOL("kbd-throttle", ISAKBDState, kbd_throttle, false),
+     DEFINE_PROP_UINT8("kbd-irq", ISAKBDState, kbd_irq, 1),
+diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
+index 17ee42b9fc..b1cc693189 100644
+--- a/hw/input/stellaris_gamepad.c
++++ b/hw/input/stellaris_gamepad.c
+@@ -77,7 +77,7 @@ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
+     memset(s->pressed, 0, s->num_buttons * sizeof(uint8_t));
+ }
+ 
+-static Property stellaris_gamepad_properties[] = {
++static const Property stellaris_gamepad_properties[] = {
+     DEFINE_PROP_ARRAY("keycodes", StellarisGamepad, num_buttons,
+                       keycodes, qdev_prop_uint32, uint32_t),
+     DEFINE_PROP_END_OF_LIST(),
+diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
+index 45e4d4c75d..7396385508 100644
+--- a/hw/input/virtio-input-hid.c
++++ b/hw/input/virtio-input-hid.c
+@@ -237,7 +237,7 @@ static void virtio_input_hid_handle_status(VirtIOInput *vinput,
+     }
+ }
+ 
+-static Property virtio_input_hid_properties[] = {
++static const Property virtio_input_hid_properties[] = {
+     DEFINE_PROP_STRING("display", VirtIOInputHID, display),
+     DEFINE_PROP_UINT32("head", VirtIOInputHID, head, 0),
+     DEFINE_PROP_END_OF_LIST(),
+@@ -380,7 +380,7 @@ static struct virtio_input_config virtio_mouse_config_v2[] = {
+     { /* end of list */ },
+ };
+ 
+-static Property virtio_mouse_properties[] = {
++static const Property virtio_mouse_properties[] = {
+     DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
      DEFINE_PROP_END_OF_LIST(),
  };
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index 1de3fe3261..2bfaf5a38d 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -602,7 +602,7 @@ static void piix4_send_gpe(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-     acpi_send_gpe_event(&s->ar, s->irq, ev);
- }
+@@ -505,7 +505,7 @@ static struct virtio_input_config virtio_tablet_config_v2[] = {
+     { /* end of list */ },
+ };
  
--static Property piix4_pm_properties[] = {
-+static const Property piix4_pm_properties[] = {
-     DEFINE_PROP_UINT32("smb_io_base", PIIX4PMState, smb_io_base, 0),
-     DEFINE_PROP_UINT8(ACPI_PM_PROP_S3_DISABLED, PIIX4PMState, disable_s3, 0),
-     DEFINE_PROP_UINT8(ACPI_PM_PROP_S4_DISABLED, PIIX4PMState, disable_s4, 0),
-diff --git a/hw/acpi/vmgenid.c b/hw/acpi/vmgenid.c
-index e63c8af4c3..9c2ca85cc7 100644
---- a/hw/acpi/vmgenid.c
-+++ b/hw/acpi/vmgenid.c
-@@ -214,7 +214,7 @@ static void vmgenid_realize(DeviceState *dev, Error **errp)
-     vmgenid_update_guest(vms);
- }
+-static Property virtio_tablet_properties[] = {
++static const Property virtio_tablet_properties[] = {
+     DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/input/virtio-input-host.c b/hw/input/virtio-input-host.c
+index fea7139382..2be2c633ab 100644
+--- a/hw/input/virtio-input-host.c
++++ b/hw/input/virtio-input-host.c
+@@ -221,7 +221,7 @@ static const VMStateDescription vmstate_virtio_input_host = {
+     .unmigratable = 1,
+ };
  
--static Property vmgenid_device_properties[] = {
-+static const Property vmgenid_device_properties[] = {
-     DEFINE_PROP_UUID(VMGENID_GUID, VmGenIdState, guid),
+-static Property virtio_input_host_properties[] = {
++static const Property virtio_input_host_properties[] = {
+     DEFINE_PROP_STRING("evdev", VirtIOInputHost, evdev),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+diff --git a/hw/input/virtio-input.c b/hw/input/virtio-input.c
+index 3bcdae41b2..edcd94dedb 100644
+--- a/hw/input/virtio-input.c
++++ b/hw/input/virtio-input.c
+@@ -300,7 +300,7 @@ static const VMStateDescription vmstate_virtio_input = {
+     .post_load = virtio_input_post_load,
+ };
+ 
+-static Property virtio_input_properties[] = {
++static const Property virtio_input_properties[] = {
+     DEFINE_PROP_STRING("serial", VirtIOInput, serial),
      DEFINE_PROP_END_OF_LIST(),
  };
 -- 
