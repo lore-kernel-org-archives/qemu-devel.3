@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63FF2E77183
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB36CE7716A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 19:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMtwo-0001gb-2W; Sun, 15 Dec 2024 14:06:34 -0500
+	id 1tMtwT-0001J2-1H; Sun, 15 Dec 2024 14:06:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwd-0001Sy-QH
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:28 -0500
-Received: from mail-oa1-x2e.google.com ([2001:4860:4864:20::2e])
+ id 1tMtwN-0001HW-2F
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:08 -0500
+Received: from mail-oa1-x36.google.com ([2001:4860:4864:20::36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tMtwc-0001DD-1g
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:23 -0500
-Received: by mail-oa1-x2e.google.com with SMTP id
- 586e51a60fabf-288fa5ce8f0so933181fac.3
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:06:21 -0800 (PST)
+ id 1tMtwF-00012G-4K
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 14:06:01 -0500
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-29e91e58584so1787025fac.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 11:05:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734289580; x=1734894380; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734289558; x=1734894358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AXOLh9yZNgpRyWamRBq8wsPa5UlUqVmERW2UrYN4jVU=;
- b=i2ydotqxMmlpT0Szl5lqLG89dX5gu8MzPKUN1lVfwrIA8DMw7G7rD4jSxhbId4p5EQ
- bLCSDAmV58hfQRw9unMTkJRx33m4omfp/RiZYCkkMsNuNJqlF32OB0QsAVvJKsONoxJj
- HG33yfuphRztM7+PHVA/av8NCwIoFpo0rwzcEPKFM2Tnpm1tcXThUERtt3QQnuQVxh4s
- Bdj4zxBuKIkU3s1PdWvxZdZghFN4lPcV/iu5q9/srjcXBX7OUigb/eYs8v3IcVyrV0Q+
- +tUPD+oGw8wuxnSCEkmzqyIJv9Yrd9ZqOQAIZ6jPuH1K1AznZnwQ8EdN5kDns7vCpjme
- rxMQ==
+ bh=j18ed1KLeCdcC88rHm7RU/Cx4ZNx0nJUwplEJrZ/anY=;
+ b=f/Mb444+A9viJfRBp+jcDpMKVKHjU7adk3iwVKsOZfHz1NHbVVXBfRNRJg4aVuigsc
+ 1T6UrMMZzyc1U/qtuXKaj7jtQeeQAfF4MDX+sRsQogUEnemQSZUISGIO1Y6WMsCRUYN5
+ YqaxRNYlXoRxjXPmf/QiGoxL2KBqoQT06BrGSqIQXaua1N5nWYwp0n3IpFzwm2e8mBmL
+ +KbBvYcqEKvqkChZCh6NmH7g6OydiF4MEnOto4HsmdW25JB3MwLiE8H4HbleE8ge6FTD
+ +NvocIPrXaApobSo4kv7jJEYW/Ne2OyH1sxQgqjV9RZUXLhV8HPgkEkX9XFSY4caoMAg
+ NXOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734289580; x=1734894380;
+ d=1e100.net; s=20230601; t=1734289558; x=1734894358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AXOLh9yZNgpRyWamRBq8wsPa5UlUqVmERW2UrYN4jVU=;
- b=e7oqQux8rR732iuLrm83CK6CCxBN3kzZKWOKwDnd8CWoMUE/NZgldkIUZrrqWpKWxR
- mZZX9WB2gphUleh/X6eT4qOSKXBjV42gJwv6mp2TGJeul5TUpOcigWMWCQi5p+O/iuJh
- de9m+0NsaZCTjWVYKSxtwLe8thGSiYMkbOdKo1yA8s04enSpWn7Q+Li00xve70v/POGN
- 36xvXpoazfw7M/bToFEqeM2YzA0kTY/LReONd+yHhW/6LCKlTsuhcT1AAdg5Tn+ImclM
- 1UIFBKzLpYFW9fL9PIgCEnyus26blPnDvt4bRUdbvBsLnBmpaQoV+yqIfU8wTvHtCge1
- ZNiA==
-X-Gm-Message-State: AOJu0YxOioWHsxMNRmzy7F9z0s9yYDDZuVPg0uL98mz3nU5C20LO+rOA
- QY+NtyNSni6UW4S1s+UBf2I3txZT5M4oToPC/Bh9nNePQs6f5zpwF0jqzcXh9rbmMvnQbX6He82
- osub1MWw/
-X-Gm-Gg: ASbGncvzz89NbI3a3yI8CmuVheJr1tN9m5NqnRUzgLGJGMo6vHc3Xyy97saeKs5FaA1
- MNhZHor68vVxMPWr5grB9uHMyAYZ4qVAga3pPDE2wEyDa8LLz+I3EUIp/oeNByDzJZDbUsi4KOm
- ChT4au/b9gN3S7Kutn3nedOIfhANUa+Pimtf3WO+CzTylfLZgGVu18K/oDv4KMA+EgFs+KjciMu
- 04/SrJfxSAs0NlqD0E6w0omXTCbx8CqHrCcT+ZnM8Q2O/d1iM3mtXot0wFoBTHY3fBk49VRoO4l
- Zn0oLyHsCrX3R8bjKPVFDP2noUd7IBOE7p2F2o7nNqc=
-X-Google-Smtp-Source: AGHT+IF/DX66qzlGFmPlROxakzib22ndkzEGAgTCL09zZe6EnwyZYS2PYhy8lvAXe+uDGqYzQopt3w==
-X-Received: by 2002:a05:6870:912b:b0:29e:1b72:7586 with SMTP id
- 586e51a60fabf-2a3ac62d5d6mr5871603fac.18.1734289580401; 
- Sun, 15 Dec 2024 11:06:20 -0800 (PST)
+ bh=j18ed1KLeCdcC88rHm7RU/Cx4ZNx0nJUwplEJrZ/anY=;
+ b=VhHZHp7YL3CFWawcCVdfc8rOTJTIEMQR5ylPG7CnBp445uQEU0Na39b0wmxxl1+NDg
+ M1u85Xn2A+BcqzKJyVfQLEtKTtF3QWC5g+1auHLhLyF6px7CWSxI5lkD440trtl72MM0
+ z+3oi3hvr+EI/mzZnMwszboLkb0rzvh+ATKd2RVw2M3G6XhBf34VKv1KTm6K7b0DPgWv
+ kbTH5O0D25ZcDGPupDIMV2YL/mWKFUwofDXw8ITCNZG8iJjeJ8ZEGIc5pzciyhvHLnqW
+ BFJR3KPVJjowjJ4zB+sLXO1Z3cipTNOn6ukDdM2nNzI7jMkjpr4VXk3obnK5tsXPoiaL
+ zAtw==
+X-Gm-Message-State: AOJu0YxStxg2wNLUuVPOESy1cPJx6H53PLRJqePlpx+tZt0J/ibtzfGd
+ 99A3R4q2z5ShA0cA3M+vScIQlR/uqTOs7vYa322+L9HLcx7p7SZCouizyPaHuOAHwrGvx2tE70N
+ CtvsBDOtf
+X-Gm-Gg: ASbGnct6kWq1hN+sD1gcMK1dmlva4BxaFbssSl0exfB12v92HCt6/lHx3TZn3CtTYM8
+ BCdMUr5THPE3CAux1IIKVC37Cwjq7JPDpuaLJWr/lXBZXaIkbBdMLQQGo6D+i7lNiTYm+BG0NDh
+ EEqSgXHQujeZN0peyQnWbHMfwLuFS10TIxa66wpEt2fiiplfKlPxQDkUmKyxToj2yoxEnmWwUEo
+ 6SalK03qvTmhXtv113Ys3yTxyQl1u0a/mCfh2J+I9mJOpFDmMISs/C4HfKQXj9fKcFYCTrDTVos
+ bvHH3K+EklsA9avN2HzM3jLDyPKN/fnLpLwSkG/CmGw=
+X-Google-Smtp-Source: AGHT+IEnu1fhsoN+hB8uYOK3uHOOGAgUoSsBBxW+0ImjhxJjcTeorL4fpLa0joUq1FDtEuVmN6NoOA==
+X-Received: by 2002:a05:6870:e0d1:b0:29e:27b6:bea5 with SMTP id
+ 586e51a60fabf-2a3ac7ce43fmr5789476fac.25.1734289557812; 
+ Sun, 15 Dec 2024 11:05:57 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.06.19
+ 586e51a60fabf-2a3d2914ac6sm1423214fac.39.2024.12.15.11.05.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 11:06:19 -0800 (PST)
+ Sun, 15 Dec 2024 11:05:57 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 30/67] hw/input: Constify all Property
-Date: Sun, 15 Dec 2024 13:04:56 -0600
-Message-ID: <20241215190533.3222854-31-richard.henderson@linaro.org>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 13/67] hw/adc: Constify all Property
+Date: Sun, 15 Dec 2024 13:04:39 -0600
+Message-ID: <20241215190533.3222854-14-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241215190533.3222854-1-richard.henderson@linaro.org>
 References: <20241215190533.3222854-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2001:4860:4864:20::2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x2e.google.com
+Received-SPF: pass client-ip=2001:4860:4864:20::36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,105 +103,37 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/input/pckbd.c             | 4 ++--
- hw/input/stellaris_gamepad.c | 2 +-
- hw/input/virtio-input-hid.c  | 6 +++---
- hw/input/virtio-input-host.c | 2 +-
- hw/input/virtio-input.c      | 2 +-
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ hw/adc/aspeed_adc.c  | 2 +-
+ hw/adc/npcm7xx_adc.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/input/pckbd.c b/hw/input/pckbd.c
-index 04c1b3cbf9..24a133fd25 100644
---- a/hw/input/pckbd.c
-+++ b/hw/input/pckbd.c
-@@ -735,7 +735,7 @@ static void i8042_mmio_init(Object *obj)
-                             "ps2-mouse-input-irq", 1);
- }
- 
--static Property i8042_mmio_properties[] = {
-+static const Property i8042_mmio_properties[] = {
-     DEFINE_PROP_UINT64("mask", MMIOKBDState, kbd.mask, UINT64_MAX),
-     DEFINE_PROP_UINT32("size", MMIOKBDState, size, -1),
-     DEFINE_PROP_END_OF_LIST(),
-@@ -933,7 +933,7 @@ static void i8042_build_aml(AcpiDevAmlIf *adev, Aml *scope)
-     aml_append(scope, mou);
- }
- 
--static Property i8042_properties[] = {
-+static const Property i8042_properties[] = {
-     DEFINE_PROP_BOOL("extended-state", ISAKBDState, kbd.extended_state, true),
-     DEFINE_PROP_BOOL("kbd-throttle", ISAKBDState, kbd_throttle, false),
-     DEFINE_PROP_UINT8("kbd-irq", ISAKBDState, kbd_irq, 1),
-diff --git a/hw/input/stellaris_gamepad.c b/hw/input/stellaris_gamepad.c
-index 17ee42b9fc..b1cc693189 100644
---- a/hw/input/stellaris_gamepad.c
-+++ b/hw/input/stellaris_gamepad.c
-@@ -77,7 +77,7 @@ static void stellaris_gamepad_reset_enter(Object *obj, ResetType type)
-     memset(s->pressed, 0, s->num_buttons * sizeof(uint8_t));
- }
- 
--static Property stellaris_gamepad_properties[] = {
-+static const Property stellaris_gamepad_properties[] = {
-     DEFINE_PROP_ARRAY("keycodes", StellarisGamepad, num_buttons,
-                       keycodes, qdev_prop_uint32, uint32_t),
-     DEFINE_PROP_END_OF_LIST(),
-diff --git a/hw/input/virtio-input-hid.c b/hw/input/virtio-input-hid.c
-index 45e4d4c75d..7396385508 100644
---- a/hw/input/virtio-input-hid.c
-+++ b/hw/input/virtio-input-hid.c
-@@ -237,7 +237,7 @@ static void virtio_input_hid_handle_status(VirtIOInput *vinput,
+diff --git a/hw/adc/aspeed_adc.c b/hw/adc/aspeed_adc.c
+index 598f2bdf48..f94c6f2be3 100644
+--- a/hw/adc/aspeed_adc.c
++++ b/hw/adc/aspeed_adc.c
+@@ -286,7 +286,7 @@ static const VMStateDescription vmstate_aspeed_adc_engine = {
      }
- }
+ };
  
--static Property virtio_input_hid_properties[] = {
-+static const Property virtio_input_hid_properties[] = {
-     DEFINE_PROP_STRING("display", VirtIOInputHID, display),
-     DEFINE_PROP_UINT32("head", VirtIOInputHID, head, 0),
+-static Property aspeed_adc_engine_properties[] = {
++static const Property aspeed_adc_engine_properties[] = {
+     DEFINE_PROP_UINT32("engine-id", AspeedADCEngineState, engine_id, 0),
+     DEFINE_PROP_UINT32("nr-channels", AspeedADCEngineState, nr_channels, 0),
      DEFINE_PROP_END_OF_LIST(),
-@@ -380,7 +380,7 @@ static struct virtio_input_config virtio_mouse_config_v2[] = {
-     { /* end of list */ },
+diff --git a/hw/adc/npcm7xx_adc.c b/hw/adc/npcm7xx_adc.c
+index de8469dae4..1781ff4c0b 100644
+--- a/hw/adc/npcm7xx_adc.c
++++ b/hw/adc/npcm7xx_adc.c
+@@ -267,7 +267,7 @@ static const VMStateDescription vmstate_npcm7xx_adc = {
+     },
  };
  
--static Property virtio_mouse_properties[] = {
-+static const Property virtio_mouse_properties[] = {
-     DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
-     DEFINE_PROP_END_OF_LIST(),
- };
-@@ -505,7 +505,7 @@ static struct virtio_input_config virtio_tablet_config_v2[] = {
-     { /* end of list */ },
- };
- 
--static Property virtio_tablet_properties[] = {
-+static const Property virtio_tablet_properties[] = {
-     DEFINE_PROP_BOOL("wheel-axis", VirtIOInputHID, wheel_axis, true),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/input/virtio-input-host.c b/hw/input/virtio-input-host.c
-index fea7139382..2be2c633ab 100644
---- a/hw/input/virtio-input-host.c
-+++ b/hw/input/virtio-input-host.c
-@@ -221,7 +221,7 @@ static const VMStateDescription vmstate_virtio_input_host = {
-     .unmigratable = 1,
- };
- 
--static Property virtio_input_host_properties[] = {
-+static const Property virtio_input_host_properties[] = {
-     DEFINE_PROP_STRING("evdev", VirtIOInputHost, evdev),
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/hw/input/virtio-input.c b/hw/input/virtio-input.c
-index 3bcdae41b2..edcd94dedb 100644
---- a/hw/input/virtio-input.c
-+++ b/hw/input/virtio-input.c
-@@ -300,7 +300,7 @@ static const VMStateDescription vmstate_virtio_input = {
-     .post_load = virtio_input_post_load,
- };
- 
--static Property virtio_input_properties[] = {
-+static const Property virtio_input_properties[] = {
-     DEFINE_PROP_STRING("serial", VirtIOInput, serial),
+-static Property npcm7xx_timer_properties[] = {
++static const Property npcm7xx_timer_properties[] = {
+     DEFINE_PROP_UINT32("iref", NPCM7xxADCState, iref, NPCM7XX_ADC_DEFAULT_IREF),
      DEFINE_PROP_END_OF_LIST(),
  };
 -- 
