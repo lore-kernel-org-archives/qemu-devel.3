@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBCFDE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 01:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 197B8E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 01:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN0Lc-0006KY-6G; Sun, 15 Dec 2024 20:56:36 -0500
+	id 1tN0LW-0006JA-Oo; Sun, 15 Dec 2024 20:56:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tN0LZ-0006Jx-Mg
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:34 -0500
+ id 1tN0LN-0006Gg-Jt
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:25 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tN0LS-0007no-4R
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:32 -0500
+ (envelope-from <maobibo@loongson.cn>) id 1tN0LK-0007lw-6j
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:20 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxyuDHiF9njUBXAA--.38243S3;
- Mon, 16 Dec 2024 09:56:23 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxDeO+iF9ngEBXAA--.38273S3;
+ Mon, 16 Dec 2024 09:56:14 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMAxnsK3iF9nKNCEAA--.50112S12;
- Mon, 16 Dec 2024 09:56:23 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxnsK3iF9nKNCEAA--.50112S6;
+ Mon, 16 Dec 2024 09:56:14 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 10/18] include: Move struct LoongArchExtIOI to header file
- loongarch_extioi_common
-Date: Mon, 16 Dec 2024 09:55:59 +0800
-Message-Id: <20241216015607.1795880-11-maobibo@loongson.cn>
+Subject: [PULL 04/18] hw/intc/loongarch_pch: Rename LoongArchPCHPIC with
+ LoongArchPICCommonState
+Date: Mon, 16 Dec 2024 09:55:53 +0800
+Message-Id: <20241216015607.1795880-5-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20241216015607.1795880-1-maobibo@loongson.cn>
 References: <20241216015607.1795880-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxnsK3iF9nKNCEAA--.50112S12
+X-CM-TRANSID: qMiowMAxnsK3iF9nKNCEAA--.50112S6
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -66,89 +66,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move definiton of structure LoongArchExtIOI from header file loongarch_extioi.h
-to file loongarch_extioi_common.h.
+With pic vmstate, rename structure name vmstate_loongarch_pch_pic with
+vmstate_loongarch_pic_common, and with pic property rename
+loongarch_pch_pic_properties with loongarch_pic_common_properties.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/intc/loongarch_extioi.h        | 26 ----------------------
- include/hw/intc/loongarch_extioi_common.h | 27 +++++++++++++++++++++++
- 2 files changed, 27 insertions(+), 26 deletions(-)
+ hw/intc/loongarch_pch_pic.c | 52 +++++++++++++++++++++++--------------
+ 1 file changed, 32 insertions(+), 20 deletions(-)
 
-diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-index b1f87cd246..64924f5a0a 100644
---- a/include/hw/intc/loongarch_extioi.h
-+++ b/include/hw/intc/loongarch_extioi.h
-@@ -10,32 +10,6 @@
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 96d0e9c16c..64f30d8916 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -379,13 +379,25 @@ static void loongarch_pch_pic_reset(DeviceState *d)
+     s->int_polarity = 0x0;
+ }
  
- #include "hw/intc/loongarch_extioi_common.h"
++static void loongarch_pic_common_realize(DeviceState *dev, Error **errp)
++{
++    LoongArchPICCommonState *s = LOONGARCH_PCH_PIC(dev);
++
++    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
++        error_setg(errp, "Invalid 'pic_irq_num'");
++        return;
++    }
++}
++
+ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
+ {
+     LoongArchPCHPIC *s = LOONGARCH_PCH_PIC(dev);
+     SysBusDevice *sbd  = SYS_BUS_DEVICE(dev);
++    Error *local_err = NULL;
  
--typedef struct ExtIOICore {
--    uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
--    DECLARE_BITMAP(sw_isr[LS3A_INTC_IP], EXTIOI_IRQS);
--    qemu_irq parent_irq[LS3A_INTC_IP];
--} ExtIOICore;
--
- #define TYPE_LOONGARCH_EXTIOI "loongarch.extioi"
- OBJECT_DECLARE_SIMPLE_TYPE(LoongArchExtIOI, LOONGARCH_EXTIOI)
--struct LoongArchExtIOI {
--    SysBusDevice parent_obj;
--    uint32_t num_cpu;
--    uint32_t features;
--    uint32_t status;
--    /* hardware state */
--    uint32_t nodetype[EXTIOI_IRQS_NODETYPE_COUNT / 2];
--    uint32_t bounce[EXTIOI_IRQS_GROUP_COUNT];
--    uint32_t isr[EXTIOI_IRQS / 32];
--    uint32_t enable[EXTIOI_IRQS / 32];
--    uint32_t ipmap[EXTIOI_IRQS_IPMAP_SIZE / 4];
--    uint32_t coremap[EXTIOI_IRQS / 4];
--    uint32_t sw_pending[EXTIOI_IRQS / 32];
--    uint8_t  sw_ipmap[EXTIOI_IRQS_IPMAP_SIZE];
--    uint8_t  sw_coremap[EXTIOI_IRQS];
--    qemu_irq irq[EXTIOI_IRQS];
--    ExtIOICore *cpu;
--    MemoryRegion extioi_system_mem;
--    MemoryRegion virt_extend;
--};
- #endif /* LOONGARCH_EXTIOI_H */
-diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
-index 09e2b760f3..1eb8780549 100644
---- a/include/hw/intc/loongarch_extioi_common.h
-+++ b/include/hw/intc/loongarch_extioi_common.h
-@@ -55,4 +55,31 @@
- #define  EXTIOI_ENABLE_CPU_ENCODE    (3)
- #define EXTIOI_VIRT_COREMAP_START    (0x40)
- #define EXTIOI_VIRT_COREMAP_END      (0x240)
-+
-+typedef struct ExtIOICore {
-+    uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
-+    DECLARE_BITMAP(sw_isr[LS3A_INTC_IP], EXTIOI_IRQS);
-+    qemu_irq parent_irq[LS3A_INTC_IP];
-+} ExtIOICore;
-+
-+struct LoongArchExtIOI {
-+    SysBusDevice parent_obj;
-+    uint32_t num_cpu;
-+    uint32_t features;
-+    uint32_t status;
-+    /* hardware state */
-+    uint32_t nodetype[EXTIOI_IRQS_NODETYPE_COUNT / 2];
-+    uint32_t bounce[EXTIOI_IRQS_GROUP_COUNT];
-+    uint32_t isr[EXTIOI_IRQS / 32];
-+    uint32_t enable[EXTIOI_IRQS / 32];
-+    uint32_t ipmap[EXTIOI_IRQS_IPMAP_SIZE / 4];
-+    uint32_t coremap[EXTIOI_IRQS / 4];
-+    uint32_t sw_pending[EXTIOI_IRQS / 32];
-+    uint8_t  sw_ipmap[EXTIOI_IRQS_IPMAP_SIZE];
-+    uint8_t  sw_coremap[EXTIOI_IRQS];
-+    qemu_irq irq[EXTIOI_IRQS];
-+    ExtIOICore *cpu;
-+    MemoryRegion extioi_system_mem;
-+    MemoryRegion virt_extend;
-+};
- #endif /* LOONGARCH_EXTIOI_H */
+-    if (!s->irq_num || s->irq_num  > VIRT_PCH_PIC_IRQ_NUM) {
+-        error_setg(errp, "Invalid 'pic_irq_num'");
++    loongarch_pic_common_realize(dev, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
+         return;
+     }
+ 
+@@ -405,28 +417,28 @@ static void loongarch_pch_pic_realize(DeviceState *dev, Error **errp)
+ 
+ }
+ 
+-static Property loongarch_pch_pic_properties[] = {
+-    DEFINE_PROP_UINT32("pch_pic_irq_num",  LoongArchPCHPIC, irq_num, 0),
++static Property loongarch_pic_common_properties[] = {
++    DEFINE_PROP_UINT32("pch_pic_irq_num", LoongArchPICCommonState, irq_num, 0),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+-static const VMStateDescription vmstate_loongarch_pch_pic = {
+-    .name = TYPE_LOONGARCH_PCH_PIC,
++static const VMStateDescription vmstate_loongarch_pic_common = {
++    .name = "loongarch_pch_pic",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+-        VMSTATE_UINT64(int_mask, LoongArchPCHPIC),
+-        VMSTATE_UINT64(htmsi_en, LoongArchPCHPIC),
+-        VMSTATE_UINT64(intedge, LoongArchPCHPIC),
+-        VMSTATE_UINT64(intclr, LoongArchPCHPIC),
+-        VMSTATE_UINT64(auto_crtl0, LoongArchPCHPIC),
+-        VMSTATE_UINT64(auto_crtl1, LoongArchPCHPIC),
+-        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPCHPIC, 64),
+-        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPCHPIC, 64),
+-        VMSTATE_UINT64(last_intirr, LoongArchPCHPIC),
+-        VMSTATE_UINT64(intirr, LoongArchPCHPIC),
+-        VMSTATE_UINT64(intisr, LoongArchPCHPIC),
+-        VMSTATE_UINT64(int_polarity, LoongArchPCHPIC),
++        VMSTATE_UINT64(int_mask, LoongArchPICCommonState),
++        VMSTATE_UINT64(htmsi_en, LoongArchPICCommonState),
++        VMSTATE_UINT64(intedge, LoongArchPICCommonState),
++        VMSTATE_UINT64(intclr, LoongArchPICCommonState),
++        VMSTATE_UINT64(auto_crtl0, LoongArchPICCommonState),
++        VMSTATE_UINT64(auto_crtl1, LoongArchPICCommonState),
++        VMSTATE_UINT8_ARRAY(route_entry, LoongArchPICCommonState, 64),
++        VMSTATE_UINT8_ARRAY(htmsi_vector, LoongArchPICCommonState, 64),
++        VMSTATE_UINT64(last_intirr, LoongArchPICCommonState),
++        VMSTATE_UINT64(intirr, LoongArchPICCommonState),
++        VMSTATE_UINT64(intisr, LoongArchPICCommonState),
++        VMSTATE_UINT64(int_polarity, LoongArchPICCommonState),
+         VMSTATE_END_OF_LIST()
+     }
+ };
+@@ -437,8 +449,8 @@ static void loongarch_pch_pic_class_init(ObjectClass *klass, void *data)
+ 
+     dc->realize = loongarch_pch_pic_realize;
+     device_class_set_legacy_reset(dc, loongarch_pch_pic_reset);
+-    dc->vmsd = &vmstate_loongarch_pch_pic;
+-    device_class_set_props(dc, loongarch_pch_pic_properties);
++    dc->vmsd = &vmstate_loongarch_pic_common;
++    device_class_set_props(dc, loongarch_pic_common_properties);
+ }
+ 
+ static const TypeInfo loongarch_pch_pic_info = {
 -- 
 2.43.5
 
