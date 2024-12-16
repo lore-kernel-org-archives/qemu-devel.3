@@ -4,69 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D857E77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 10:39:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39677E77184
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 10:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN8V5-0002Db-Ri; Mon, 16 Dec 2024 05:38:55 -0500
+	id 1tN8gy-0004Gu-3l; Mon, 16 Dec 2024 05:51:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tN8Uw-0002D7-Pt
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:38:51 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gv-0004GR-EB
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:09 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tN8Uq-0003ns-Ft
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:38:46 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gt-0005PB-M2
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734345513;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1734346267;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zfEjOUN1qr5EIEJMPucLNCDqx+hQvwKDNLpOppyBpII=;
- b=fqZmDnL23Y5QRn0Dh9aH709Y3wq39oFrES1Nxl2iQSqt/IdOVxhwSZlQ4b8BmG0DLkfTrq
- m5ZR+BNVbamNH5kcu/L6uT8jdiaZwXEgd4xUyif+9P/gifI1Ha2XVT0ljku/ljK/x5E/UN
- IsBVDA6TyBawmEM+UT1vZGpcOoo56WM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=BzEirAAXK/ozxEg7mC0UzzBp19Ca7Nvyd3V63vTxjiM=;
+ b=aoxf3x+ONVafxIT6yWiXo7AccLVcer1JVFcjGyhrIy0l7L5l1/H31UAA+d8kWH41ZMgzgs
+ uKlOvGvyySS6fiBOJarsBQKSor+a+NN1tktBApGc4vcbUdPiTsLcDLjlvYt1v3kqSBqpn0
+ pIo+PfHfpWuyoNE2LNRp5nHwzTqQCVg=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-A3veRcQFOOWTECYIbu-xGA-1; Mon,
- 16 Dec 2024 05:38:28 -0500
-X-MC-Unique: A3veRcQFOOWTECYIbu-xGA-1
-X-Mimecast-MFC-AGG-ID: A3veRcQFOOWTECYIbu-xGA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-458-61ldTIgnMhOMO6H6MxOAEg-1; Mon,
+ 16 Dec 2024 05:51:01 -0500
+X-MC-Unique: 61ldTIgnMhOMO6H6MxOAEg-1
+X-Mimecast-MFC-AGG-ID: 61ldTIgnMhOMO6H6MxOAEg
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9BBE81956048; Mon, 16 Dec 2024 10:38:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.145])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 195EF3000197; Mon, 16 Dec 2024 10:38:24 +0000 (UTC)
-Date: Mon, 16 Dec 2024 10:38:21 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: huth@tuxfamily.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2 34/34] next-cube: replace boiler-plate GPL 2.0 or
- later license text with SPDX identifier
-Message-ID: <Z2ADHbndSn-vrYsK@redhat.com>
-References: <20241212114620.549285-1-mark.cave-ayland@ilande.co.uk>
- <20241212114620.549285-35-mark.cave-ayland@ilande.co.uk>
- <Z1sdIURVdJL8p6cC@redhat.com>
- <fa8ce465-e539-48ec-abf8-d7296ae42b8a@ilande.co.uk>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 26A2819560A7; Mon, 16 Dec 2024 10:51:00 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.88])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 110901956086; Mon, 16 Dec 2024 10:50:59 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id CAA7A18000AF; Mon, 16 Dec 2024 11:50:53 +0100 (CET)
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 2/7] x86/loader: read complete kernel
+Date: Mon, 16 Dec 2024 11:50:48 +0100
+Message-ID: <20241216105053.246204-3-kraxel@redhat.com>
+In-Reply-To: <20241216105053.246204-1-kraxel@redhat.com>
+References: <20241216105053.246204-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <fa8ce465-e539-48ec-abf8-d7296ae42b8a@ilande.co.uk>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
@@ -88,63 +86,59 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Dec 14, 2024 at 08:38:06PM +0000, Mark Cave-Ayland wrote:
-> On 12/12/2024 17:28, Daniel P. Berrangé wrote:
-> 
-> > On Thu, Dec 12, 2024 at 11:46:20AM +0000, Mark Cave-Ayland wrote:
-> > > Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-> > > ---
-> > >   hw/m68k/next-cube.c | 5 +----
-> > >   1 file changed, 1 insertion(+), 4 deletions(-)
-> > > 
-> > > diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> > > index 1e96bb02f8..3c2f3e295c 100644
-> > > --- a/hw/m68k/next-cube.c
-> > > +++ b/hw/m68k/next-cube.c
-> > > @@ -4,10 +4,7 @@
-> > >    * Copyright (c) 2011 Bryce Lanham
-> > >    * Copyright (c) 2024 Mark Cave-Ayland
-> > >    *
-> > > - * This code is free software; you can redistribute it and/or modify
-> > > - * it under the terms of the GNU General Public License as published
-> > > - * by the Free Software Foundation; either version 2 of the License,
-> > > - * or (at your option) any later version.
-> > > + * SPDX-License-Identifier: GPL-2.0-or-later
-> > >    */
-> > 
-> > While adding a SPDX-License-Identifier alongside existing header text
-> > is acceptable, my view is that we should stay away from removing existing
-> > license headers. There are some difficult questions wrt interpretation
-> > of the GPL in this area & avoiding opening that can of worms would be
-> > nice.
-> 
-> I remember you mentioned this before, but I wasn't sure if this would be
-> mitigated by the fact that the code originated from GSoC? I'm sure I've seen
-> at least one recent patch that made a similar change, but if there really
-> are legal reasons not to allow changes of this type then I shall drop it
-> from the series.
+Load the complete kernel (including setup) into memory.  Excluding the
+setup is handled later when adding the FW_CFG_KERNEL_SIZE and
+FW_CFG_KERNEL_DATA entries.
 
-GSoC isn't really important. The challenging problem here is GPL clause 1
-which says
+This is a preparation for the next patch which adds a new fw_cfg file
+containing the complete, unpatched kernel.  No functional change.
 
-  "keep intact all the notices that refer to this License and to the
-   absence of any warranty"
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+Message-ID: <20240905141211.1253307-4-kraxel@redhat.com>
+---
+ hw/i386/x86-common.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-there are differing opinions on how strictly to interpret the "keep intact"
-language there.
-
-While we could have a debate over this and come to some project opinion
-IMHO it is a better use of our time to just not remove existing notices.
-
-With regards,
-Daniel
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index dadc9d99e78f..28341b42d949 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -895,7 +895,6 @@ void x86_load_linux(X86MachineState *x86ms,
+         fprintf(stderr, "qemu: invalid kernel header\n");
+         exit(1);
+     }
+-    kernel_size -= setup_size;
+ 
+     setup  = g_malloc(setup_size);
+     kernel = g_malloc(kernel_size);
+@@ -904,6 +903,7 @@ void x86_load_linux(X86MachineState *x86ms,
+         fprintf(stderr, "fread() failed\n");
+         exit(1);
+     }
++    fseek(f, 0, SEEK_SET);
+     if (fread(kernel, 1, kernel_size, f) != kernel_size) {
+         fprintf(stderr, "fread() failed\n");
+         exit(1);
+@@ -950,10 +950,11 @@ void x86_load_linux(X86MachineState *x86ms,
+     }
+ 
+     fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_ADDR, prot_addr);
+-    fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_SIZE, kernel_size);
+-    fw_cfg_add_bytes(fw_cfg, FW_CFG_KERNEL_DATA, kernel, kernel_size);
+-    sev_load_ctx.kernel_data = (char *)kernel;
+-    sev_load_ctx.kernel_size = kernel_size;
++    fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_SIZE, kernel_size - setup_size);
++    fw_cfg_add_bytes(fw_cfg, FW_CFG_KERNEL_DATA,
++                     kernel + setup_size, kernel_size - setup_size);
++    sev_load_ctx.kernel_data = (char *)kernel + setup_size;
++    sev_load_ctx.kernel_size = kernel_size - setup_size;
+ 
+     fw_cfg_add_i32(fw_cfg, FW_CFG_SETUP_ADDR, real_addr);
+     fw_cfg_add_i32(fw_cfg, FW_CFG_SETUP_SIZE, setup_size);
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
