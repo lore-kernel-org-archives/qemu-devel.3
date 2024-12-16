@@ -4,82 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CE0E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 04:56:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A33CE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 05:02:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN392-0006fw-Rr; Sun, 15 Dec 2024 23:55:48 -0500
+	id 1tN3F0-0007mu-7s; Mon, 16 Dec 2024 00:01:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN391-0006fA-14; Sun, 15 Dec 2024 23:55:47 -0500
-Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN38z-0004MI-7K; Sun, 15 Dec 2024 23:55:46 -0500
-Received: by mail-vk1-xa32.google.com with SMTP id
- 71dfb90a1353d-51619b06a1cso1970109e0c.3; 
- Sun, 15 Dec 2024 20:55:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734324943; x=1734929743; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EDbbJ8/0/ImSc1Hn0zTVodv5EIlnSBzh0NR3dPMWfiM=;
- b=G8KZTZZLOUMHgCpvbS4JHc1qT6bj4VxucNeDm6pvWR5l4ERKVUJhGOqVb2F5QtrMF6
- 8U6gr9pHSx4JsRlG9hkWjxec0F6GCVFSFELjT3HOH2EUQ3m7gVUgDKGxycK2+rzNb2Sq
- eOcAnaA5ApzsbJ335ghP4Lfm8bZGrZK0cXcdNnj0hRBKXRxSNsXd4KZfFcze2KF7uVGD
- OGUJRVm60oGt78HiuCebWn2uqRccZC2L2Mu7Z3d0AICrgp05F/7dNgYAw6QP99Davnnm
- Kvnc2p5SB20NpfrsTBVkXEJnaYIjio8yqgTEw3yOASUGcs9jqO6per9ZRLERMJTq2XFr
- KxhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734324943; x=1734929743;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=EDbbJ8/0/ImSc1Hn0zTVodv5EIlnSBzh0NR3dPMWfiM=;
- b=PN9Y4bVdvJTMqO6s1gIy9vCmQNYx1T/zpvBGGRsARFXbz4ASozgaNdlI7rccj/Z5v3
- qdnLK4f5T9aR+T6fhe4HHWrRx6IGPAM/c+bdoWZ/u7EhiDwCKnAS4UsrkyiCdlX6JHSB
- LH3P8KPyoKFzGlxXW9OtD7GSVOFIO/0szX8YY/64vdb5scSdz3JAEdLSlZcv0obJTX7y
- ffmKM9LK0wUnvfNLlEHMLo7cyUuIdGkOnETjVu+UEn8HLiYJxb142d0tkqUXVfV7ZqLJ
- VfapMMXFxoC8ONlGr+yk32W6psdPuLasVwo9i7i46BcImmLN6Co/cI2qdp7XjKTL8EWq
- NM/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVk1AKIe6XgXwfZ0HiiYGXEfvO9VCFLi+u2khIWJKgyeMA7ijA6ZycL9iiMGAhzEyLA2RDVxZuarHds@nongnu.org
-X-Gm-Message-State: AOJu0YxQiFyG+Hoy9YIj5R8RuOhvuw3J3ScceG9MZfNm6i9zdyEptpB1
- ltXr+/8I6lI3CSZgx4olOww3oKwHK5i0fL1CzddgyVcpoQZeQYvKe9qjuX3tV3EG2cphFCbTAHZ
- kHFLMwvYqVPf/9NQ9dKm9YjcV34M=
-X-Gm-Gg: ASbGncux9qRcEDXcvB168j2HFriOFGjoik+ENSav4Lul3nGlc3lkwJ9tqFjg518v5c2
- uiU28F/VB5MoVFdE2oZvbE+IKQqaYIyGGPpSIu0kA3+rbIfIptQdjHxKOKYx2FoVXSIXE
-X-Google-Smtp-Source: AGHT+IG1y6P/MBv2ymasYVym1ij5dHBIDbZr9PwCYaPDQgZfiIJc03Fhgjv+Ufg/BkE+/zvpuyfXr5iLI6HMqM3h1u8=
-X-Received: by 2002:a05:6122:1dab:b0:518:9040:6700 with SMTP id
- 71dfb90a1353d-518ca4a4181mr10817771e0c.11.1734324942846; Sun, 15 Dec 2024
- 20:55:42 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tN3Ep-0007mB-Pp; Mon, 16 Dec 2024 00:01:51 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tN3Ei-00051r-Pl; Mon, 16 Dec 2024 00:01:44 -0500
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG3qPP5011550;
+ Mon, 16 Dec 2024 05:01:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=BW1LHu
+ yZa4SAS96gQ1wMOU3LDEHc8U6xsO8VikfBhYI=; b=ttQLmi1o3NPJaJ15T4W5Yy
+ YL00/MixXmRAOS8mMQt31piTvaAyvhPgGus6lySP1pOt809ezMGVWBghKganBtQu
+ +yZ3CIMcA5UPQVUFE2ryLGRNxR6rMHDJKW4VaD8txL7NSBYn7dsMsS9s+s4yuT3B
+ MY/cndzJsz44rokAaSB5L8nMJva+HV8kDcnjTS9i3lOYiocoTS1OdMDVwVxYWDdO
+ DB1wQEcETaa0qQ3X4l+aCdnVvKbbKgV3B+gpoWbPmxzGWEtqCFVtjG7qTXQmLIxh
+ o3VJGQT5qUEoxYA61lSlZTExDAojqqckmfPj2GMggcPR2xUnXqHkHWDOi23mP42g
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jcpb07qq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Dec 2024 05:01:29 +0000 (GMT)
+Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4BG4vlHe010291;
+ Mon, 16 Dec 2024 05:01:29 GMT
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jcpb07qm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Dec 2024 05:01:29 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG22nHR014412;
+ Mon, 16 Dec 2024 05:01:28 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hq21c2k8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Dec 2024 05:01:28 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BG51SsT60293570
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Dec 2024 05:01:28 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 223315805D;
+ Mon, 16 Dec 2024 05:01:28 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 45D4D58059;
+ Mon, 16 Dec 2024 05:01:26 +0000 (GMT)
+Received: from [9.124.213.164] (unknown [9.124.213.164])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 16 Dec 2024 05:01:25 +0000 (GMT)
+Message-ID: <3f7bc4f9-7579-47aa-baf3-0562f0901b4f@linux.ibm.com>
+Date: Mon, 16 Dec 2024 10:31:21 +0530
 MIME-Version: 1.0
-References: <20241211211933.198792-1-fkonrad@amd.com>
- <20241211211933.198792-2-fkonrad@amd.com>
-In-Reply-To: <20241211211933.198792-2-fkonrad@amd.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 16 Dec 2024 14:55:16 +1000
-Message-ID: <CAKmqyKNeqRNfB3p_U4Q3kmV43rdD+b3P0t7qq7FZtGv46imQnQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/riscv: add a trap-misaligned-access property
-To: Frederic Konrad <fkonrad@amd.com>
-Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
- bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
- zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, 
- francisco.iglesias@amd.com, Luc.Michel@amd.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 07/71] target/ppc: Remove empty property list
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>
+References: <20241213190750.2513964-1-richard.henderson@linaro.org>
+ <20241213190750.2513964-12-richard.henderson@linaro.org>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20241213190750.2513964-12-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: hbxgFMGUDQpekAmAvO9rJcmoE6sL6aZK
+X-Proofpoint-GUID: uATlN78vnqTs3Q9nc9gipVu3UNAJROzz
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 clxscore=1015
+ lowpriorityscore=0 impostorscore=0 spamscore=0 mlxscore=0 adultscore=0
+ mlxlogscore=999 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
+ definitions=main-2412160038
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.168, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -96,42 +118,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 7:21=E2=80=AFAM Frederic Konrad <fkonrad@amd.com> w=
-rote:
->
-> On riscv target, misaligned accesses are either authorized and implemente=
-d in
-> hardware, or unimplemented and generate a trap to be implemented in softw=
-are.
->
-> At the moment misaligned accesses for rvi just succeed, the intention of =
-this
-> new property is to let the user choose to have a trap when a misaligned a=
-ccess
-> happens.
->
-> Signed-off-by: Frederic Konrad <fkonrad@amd.com>
+
+
+On 12/14/24 00:36, Richard Henderson wrote:
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
 > ---
->  target/riscv/cpu.c     | 5 +++++
->  target/riscv/cpu_cfg.h | 1 +
->  2 files changed, 6 insertions(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index f219f0c3b5..1696d3db2a 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2697,6 +2697,11 @@ static Property riscv_cpu_properties[] =3D {
->       * it with -x and default to 'false'.
->       */
->      DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
-> +    /*
-> +     * when set, misaligned accesses will generate a trap.
-> +     */
-> +    DEFINE_PROP_BOOL("trap-misaligned-access", RISCVCPU,
-> +                     cfg.trap_misaligned_access, false),
-
-This should be the last patch, we want to implement the feature before
-we expose it.
-
-Alistair
+>   target/ppc/cpu_init.c | 6 ------
+>   1 file changed, 6 deletions(-)
+> 
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 1253dbf622..5e95790def 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -7414,11 +7414,6 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+>   #endif
+>   }
+>   
+> -static Property ppc_cpu_properties[] = {
+> -    /* add default property here */
+> -    DEFINE_PROP_END_OF_LIST(),
+> -};
+> -
+>   #ifndef CONFIG_USER_ONLY
+>   #include "hw/core/sysemu-cpu-ops.h"
+>   
+> @@ -7468,7 +7463,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+>       device_class_set_parent_unrealize(dc, ppc_cpu_unrealize,
+>                                         &pcc->parent_unrealize);
+>       pcc->pvr_match = ppc_pvr_match_default;
+> -    device_class_set_props(dc, ppc_cpu_properties);
+>   
+>       resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
+>                                          &pcc->parent_phases);
 
