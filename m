@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C1DE77183
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B61E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN28y-0007Iz-N0; Sun, 15 Dec 2024 22:51:40 -0500
+	id 1tN28t-0007GE-MU; Sun, 15 Dec 2024 22:51:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN28v-0007HP-Nz
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:37 -0500
-Received: from mail-oo1-xc2a.google.com ([2607:f8b0:4864:20::c2a])
+ id 1tN28o-0007Ez-Ps
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:31 -0500
+Received: from mail-oo1-xc36.google.com ([2607:f8b0:4864:20::c36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN28u-0005zU-CF
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:37 -0500
-Received: by mail-oo1-xc2a.google.com with SMTP id
- 006d021491bc7-5f31b3db5ecso1532965eaf.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:36 -0800 (PST)
+ id 1tN28m-0005xV-Me
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:30 -0500
+Received: by mail-oo1-xc36.google.com with SMTP id
+ 006d021491bc7-5f2efbc31deso1914113eaf.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734321095; x=1734925895; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734321086; x=1734925886; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8juOusyYDwgDek08M8B/UbOOdf1Iwz3qnbDYJf9UoPA=;
- b=VJaf/xXNFHr7k2QGBNV+42aadxN+xl5cHOSDCt937ivDWPXZ01/waivFBfIYz0wA1a
- 1y0eGj1nIA/e55itQdi799zrIngrgTOaTDQYyZ9KKZJnJUNJNlOQEjFtgD/KKG/3fWNA
- 0VUqQEYgdEFDFBkVSzAtDAHZ410x7NPEFsuMCEcYd5O2zkH7scBCuUgaOPpY8UcZdbhu
- fhuPoodIERZPSlWuLIBUpCqeNIGxOLfAouX85u4dSjIAEI98/BVvcMs3fxHUhHkuKjPc
- zQPWcD86hxizFhKxUR0vOSQ4xFit4abM7AuhX8Mm4XsRM3iuPSwjT5qds0/rdJayb3KD
- asOg==
+ :reply-to; bh=/N1O6+KdnI0Nthc0qwwbnzGBocJ9psam8as1orMligo=;
+ b=kDg4Hem8fcHOQv+0inKtV9f2Oa6LspJi0VJswYYkKdIyli5icGc0qWZHbu1Ywxd/mK
+ xBg+jCd/orzjPpNEhVh2bRtMqXtK4kI7Remn9evaPxfDRvxT5OEDEtBRX+y8FNCTqMvq
+ 74W7wilUc+ZhMb8NO42FktI5oqJQTDXoVYFt+7oApQ2vLAmxVZzjH67xBhkcuoO+GmmS
+ 0GfNU0h4BqBLeGzOKkt2DOg6vuhmPuJammN9Z8RpMAVIvcx1S5hO/ZmkhQvTV9OU2c5+
+ cbZoMCYGvkdcAgfExgxJZTAbfOLlKfc+K209auNzbVSMcwHKfly+8r58UWw1tdaKdtpq
+ uYig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734321095; x=1734925895;
+ d=1e100.net; s=20230601; t=1734321086; x=1734925886;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8juOusyYDwgDek08M8B/UbOOdf1Iwz3qnbDYJf9UoPA=;
- b=MA6KdZo9noCZIPLbFwyy19R3s5laROtjJRPWFVNX5kWAzcoPbNsw4zchpDy60YlC0m
- CE12wvhueF3obS+RRTg1mcf60vzYLBl/Un13Dm80obOdT50pS8CaxNhG5F+o81UXiN6W
- 5CG1rctQYjdO6uJq+TqqUTNm3Pt/eYg9uFWnsD7gyid9GAEh+pOIZcqNklgHMsM1qfxL
- AZsgnOsoAGKinj7EqD27XFf641FfD4jxuKcHBR5XUxKTMHXzi9h6B/UpmzeRH4X3SD4T
- TgDFuqm95cufmOyoE9R3eW/4k60WCHyOI4TdXZ1LYmQbuNCcJz8HNH0bHGrcEig9twrM
- HZJw==
-X-Gm-Message-State: AOJu0YwZCDm+PB4DUuC8wJvta9DBfxxvgunyaY7e4kV6wDhQ4YNdSps+
- UWgdhxYGXvqJjKAky6FZFoRFLJtG77RrVnbhz/T8EHzCDbjr4nmzLx669CcqZbykfxNJmbWRZRQ
- 7P96gAh1h
-X-Gm-Gg: ASbGncsOE/IDlaVbkvNhHUjkwuEu8IrI3PMGqa0rOLVrIUQSrt2YNW+ElmdJSdmwN+z
- KX206eBfjBU2415MSJtFNJ3nQblCk1s8qZIn05vL8RUhhVa0VoJthn9XZ7jOOWjMwS/jBe2ND3r
- StJRc2/k4VATlsAJFCOKwG0VnRfwIoRaCSguKJvD45sxxUNuZrLRXeJHAWGvxgXdBreKqiM+X3k
- gR47t6+5GLV28BGqiwAFNfAJ3fkE5XsSk2GV5l62kiEX1xFVD6wSIFn0EX6iSwdRnVChhRUZHfS
- +B6RyqIswQ6hSYViT0WmlAL/ZD2ATUTisStOYd9B+FQ=
-X-Google-Smtp-Source: AGHT+IF/wjW46Il+03hdrFjzx/y3XttmJXmPuZlplnEEMWjDbeVNk1fjMH0XI4hQp06ncMQST7uLkg==
-X-Received: by 2002:a05:6820:1b93:b0:5f2:e72c:ce55 with SMTP id
- 006d021491bc7-5f3292b4282mr6102219eaf.1.1734321095295; 
- Sun, 15 Dec 2024 19:51:35 -0800 (PST)
+ bh=/N1O6+KdnI0Nthc0qwwbnzGBocJ9psam8as1orMligo=;
+ b=IHDuOaRPXe58JJdexl9imDNHHqqkYOOHjo/Yw/w9W8tNBPqzxqdVsWa2fFdXxg2VlH
+ cwOQRTUIrTwOuK9DyVfOlH8TyeL+rLNV29Vk9IWt/19ltknYSOYDCJsL+DP5pWwkGeqL
+ R8WW6l2RDkabrAo0UP4WNo0gUB9FlRffnGGd78PuKdft/mmVMmSIF0PfeWxlSA2OAAA+
+ peLcP8r0rK7cYW3IU/abi0pBJ8R61wbI6OoJScECridnCoa/3kHkpf8X9lrTqzqtP1DR
+ N+zJKP/tVid09u6APcyGidnW/jPuZiX3mjlsSCE32utWM1bEhPuxiUwvvlo4NbhvZyr0
+ OBhg==
+X-Gm-Message-State: AOJu0YwIwR+a3Xk0JZH1ICfpMLbpyApwrxTK24lHq9OqRLyzUc1SnN94
+ mDzgUNIfWJcbEKRfEw3S8Zp6dMy6rmuaI9ZmJ5bVyHt3YnnFdscKXpcYUTmWsb5lEBh63obCpBb
+ pbBDof5Cn
+X-Gm-Gg: ASbGnctOfaWgr9txtPjhY9n+qzfnQJyUzxzJ6NXM5riMhwy5J5E4k8mCYshb74t6MyU
+ 8FNUJKeJxANqN6mpA8Q2DwMp6rQkkwxohdV6lCyLh/HqgTGfKYejHiVUYwHW/u1rLZoSuRDFQBJ
+ cFMBjWfUq9pF7gp3mVo9MuvAaGwxTcxmWRYFXLoQOlwGrEk2bHylLce2dFQJQG745c07ZzkD21Q
+ C59H/j7qBA3cPlzrWbRA9CW5UCKwyao+khOWiKV3gNnfyKIzPlHhOEqqkgcJw9YDrPI11OyNQFu
+ v1jtp+erTcLecI7xkzPZJJbTIcFwg9U0l9KutwMhvy8=
+X-Google-Smtp-Source: AGHT+IHSgrafdxT9a0I1t13r1xMjDdKxgTuPo6lcfigmCjcEnHNbiVwdf66H0BAd/0aTDnFQor3TMw==
+X-Received: by 2002:a05:6820:2086:b0:5f2:b981:fcdf with SMTP id
+ 006d021491bc7-5f32947fa3amr5910224eaf.5.1734321086672; 
+ Sun, 15 Dec 2024 19:51:26 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.34
+ 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.25
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 19:51:34 -0800 (PST)
+ Sun, 15 Dec 2024 19:51:26 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 09/24] hw/xen: Remove empty Property lists
-Date: Sun, 15 Dec 2024 21:50:54 -0600
-Message-ID: <20241216035109.3486070-10-richard.henderson@linaro.org>
+Subject: [PATCH 03/24] target/ppc: Remove empty property list
+Date: Sun, 15 Dec 2024 21:50:48 -0600
+Message-ID: <20241216035109.3486070-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
 References: <20241216035109.3486070-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2a;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c36;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc36.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,57 +98,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no point in registering no properties.
-Remove xen_sysdev_class_init entirely, as it did nothing else.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/xen/xen-legacy-backend.c | 17 -----------------
- 1 file changed, 17 deletions(-)
+ target/ppc/cpu_init.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/hw/xen/xen-legacy-backend.c b/hw/xen/xen-legacy-backend.c
-index e8e1ee4f7d..118c571b3a 100644
---- a/hw/xen/xen-legacy-backend.c
-+++ b/hw/xen/xen-legacy-backend.c
-@@ -635,15 +635,10 @@ int xen_be_bind_evtchn(struct XenLegacyDevice *xendev)
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1253dbf622..5e95790def 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7414,11 +7414,6 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+ #endif
  }
  
- 
--static Property xendev_properties[] = {
+-static Property ppc_cpu_properties[] = {
+-    /* add default property here */
 -    DEFINE_PROP_END_OF_LIST(),
 -};
 -
- static void xendev_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    device_class_set_props(dc, xendev_properties);
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-     /* xen-backend devices can be plugged/unplugged dynamically */
-     dc->user_creatable = true;
-@@ -674,22 +669,10 @@ static const TypeInfo xensysbus_info = {
-     }
- };
+@@ -7468,7 +7463,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+     device_class_set_parent_unrealize(dc, ppc_cpu_unrealize,
+                                       &pcc->parent_unrealize);
+     pcc->pvr_match = ppc_pvr_match_default;
+-    device_class_set_props(dc, ppc_cpu_properties);
  
--static Property xen_sysdev_properties[] = {
--    {/* end of property list */},
--};
--
--static void xen_sysdev_class_init(ObjectClass *klass, void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    device_class_set_props(dc, xen_sysdev_properties);
--}
--
- static const TypeInfo xensysdev_info = {
-     .name          = TYPE_XENSYSDEV,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(SysBusDevice),
--    .class_init    = xen_sysdev_class_init,
- };
- 
- static void xenbe_register_types(void)
+     resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
+                                        &pcc->parent_phases);
 -- 
 2.43.0
 
