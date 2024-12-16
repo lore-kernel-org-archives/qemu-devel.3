@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38B3E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87E53E77183
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:11:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNBlo-0000iu-BX; Mon, 16 Dec 2024 09:08:24 -0500
+	id 1tNBoo-0001hI-K0; Mon, 16 Dec 2024 09:11:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNBlm-0000iN-Eu
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:08:22 -0500
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNBoi-0001gx-K5
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:11:26 -0500
+Received: from mail-oa1-x32.google.com ([2001:4860:4864:20::32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNBlj-0007E1-Pr
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:08:22 -0500
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-6f145e5cd83so33687227b3.1
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:08:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNBoc-0007fn-Se
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:11:20 -0500
+Received: by mail-oa1-x32.google.com with SMTP id
+ 586e51a60fabf-29fc424237bso1889714fac.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:11:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734358098; x=1734962898; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=q0GyJjjnZ37UxeSbRujj75zDGS5Zc2xrI0ozr18gJP0=;
- b=lAxkyt09Fn5VuXe+vhlHlDxLVnfT5ge5vwc0rwAe2YfhNsrJWUD+zSATWiqWnmjgVP
- 1CIgSQw9cyLMT9hEj2iYEq70/O+BcImkMKZ85AFX6FXvpjUBkglDJ0NWZqJNmAf2b1xI
- WwllOF40XjQGzhEHWyynjtp2Vv7CGBSU5K2NbUjpnmX+EW2NNP03Ycl3C+LP6lIt8nWU
- 0UYHRRwyPGTFMuDon49lEXVigMxMNzIkLzNdr0BYTKf3F+m/wy1ayWMzhHzSicwufPFV
- 7yDGcrbZ/yqy38R6YmHkHy5WtgKzsC5aGZ9IAm4THK34bJ8+C++P4SkXtgLZ9aZSY9KL
- XdCw==
+ d=linaro.org; s=google; t=1734358277; x=1734963077; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dl7va4bMEy4UsAhgaxe/RmvDU+0cIOOibLwaTU5mkuQ=;
+ b=ELGbGRMDcW71p/Mf287zRKznnL8+/C2Ym6X8O2uj4lf1MBFO6RRxu2gY9htZfklTWX
+ Ei5+becVzLWIPDCXdbNXN3EMmyNxF9J1xTDgOjK584cVCXSoBt+vMCpW7N5zRl1V3zgA
+ fQAxkbQjZhvDR6gRxxyEzVOhZMlHtfAXITUBKas0C7GwM+nabxdDHN2raBIHwAZplCZX
+ dLH2yrVuE3gXdis1UocMRnnTV36RX6pEkfaUa0WhsmaX2ReKL7Jgb5W1A80eWHJmkI5N
+ htqi+t46BjzV/u4zFDXhe+1uN+VwZhlSDYk3CjE3MUJp/dxT26rbFIR+NLnJpsSIxypa
+ HS3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734358098; x=1734962898;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=q0GyJjjnZ37UxeSbRujj75zDGS5Zc2xrI0ozr18gJP0=;
- b=on/trrsl+d5le02tViLNKTHKuqC5Jb7jvN8RYhkTQO0qD1BXjq1gWG4vEJGXy2mIuM
- tCcvAmMnxptTiPGGIZG+VQ8VYcw9mmIH83rhw5GaFIMaC/1rGEAPYmTCVUegU8JAWP5U
- VbP9EdRmvlKEg+yHb9Mmrild0Yrkd0L853W1UxCUvi5Gx0zNh80BGjL5mYffc7w2oblM
- ynh6cGVga+kJatD2pUIMB34qJ6QkQNKCQT0d22jbG+C/1J9Ofd8qAO7RcqJ6fiV9ytHp
- UW/dqEJIw3bBXc1GSA2AQeXl6ppxs/1F6xoijiRvT1030VTPEfIHlyojEotvXnKVY3nY
- VAVg==
-X-Gm-Message-State: AOJu0YxMDCXmnrfy9FUi0LQ0aACnjsjw3v5tQdxAdIM1Cks+hpDisw4/
- FshAJGWYaYk5wMPK+KqKxVzCoNka6yLyef29B7e57o0GewlZNXbVDnfAg+q8+iRf5tN181oVTC/
- 3f8aqFLIRKBktwFAkGRXmQm2y7pkpABXiIeCJ2SuhGGliazKR
-X-Gm-Gg: ASbGncsSJqWTMYjaWRLHlSFifGkfDUhzXVG77rB9eJWAja0tkhgOVh/LnK2dE5SwTe7
- Wunr7d5p78T6ylh5cmk0s5IpR+oiSAd5HDZUYSos=
-X-Google-Smtp-Source: AGHT+IGHI7ww0IgT30GDBuj4f1NsFwPnMgLXb6BGOS9hRJKPihfY46vY2jfVEf8j98FO/i6vf+iO7/2ffJJ9pBNM/nc=
-X-Received: by 2002:a05:690c:ecc:b0:6ef:6107:69c9 with SMTP id
- 00721157ae682-6f279adc3e8mr90559587b3.4.1734358098551; Mon, 16 Dec 2024
- 06:08:18 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734358277; x=1734963077;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dl7va4bMEy4UsAhgaxe/RmvDU+0cIOOibLwaTU5mkuQ=;
+ b=QLMh1aHEMnFteetgH+7z6tXQoY7Mesk5ue9IsoohEEUE8XmT/I8OP7LmarOAIGcY9G
+ 9wqazXqZzmvzkD2GVWEGg3XCoIwBjdlnyjYvcCgBVtoQbPJCiV3q5G9duRbbW0kg5aZm
+ ryYwK3tihZpe/4RBGxzManC7T9RDH+tcwzzLIh6MSf+OTUW5rqzLTYZLsVx0KEdYGOQn
+ nXRZ6Rna4pMGQKActe9A0zPbyBQPepZV0/C18TF5XWwhog8eVW/Cvmc9iyGTZx56dXfe
+ ZbRhW0sv0D3+xVfdlWBJ6FvYV6ZtSr8z9Y+fm8hh+2SUsilmUKL+KB9puVq6WEG+axjd
+ jgjg==
+X-Gm-Message-State: AOJu0YxaljpnUJx60qasw23SEgoRPiI7EuCygJZblPqOwG13GiH+2m77
+ 4I+A0NR1aOqMnlvvvp08dq1wDgfWCxOaGJ4PrbTvLqLZC15RZhiLbWwfXgFFcec=
+X-Gm-Gg: ASbGnctIbNJzaDEbWy2zxlQxsSUUlfFiE8zgHm4EJjr7g6ngXVAznXgJzdBcrGAIUGa
+ OOpJb+VgNwMEw8r53LqzF7J2vukVlmYvHvYP7V1cSbdFNZyyxTO4WIoelnAXSgnHxwmzH/rd1cR
+ newr5uRH9HCy9rZrCQzN8XikjELDN8atH57iudkfW7hyKXzdUrOhaEXu4CWqoN+yH99S5ZDCyWi
+ UzFbtOcLwDyJd4V9xQ6baPhQu7NHP8LgX8Za4pTtXfyE9Oj9uAXN4XxGXYhi47Q0u/OcFF8nuQc
+ DEwhNjNY4ZfOIfhavFPUTgruASMtjpVjf9I=
+X-Google-Smtp-Source: AGHT+IFRa+SQHheE6SwPVdutuDmvYg9eBmlZKv+/kFmTI2Z7Dsdn18iwnggJHFVxL54ftoeNgCbRlg==
+X-Received: by 2002:a05:6870:207:b0:29d:c709:a76c with SMTP id
+ 586e51a60fabf-2a3ac4a4ceemr5522285fac.4.1734358276846; 
+ Mon, 16 Dec 2024 06:11:16 -0800 (PST)
+Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 586e51a60fabf-2a3d29cd6dbsm1904042fac.45.2024.12.16.06.11.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Dec 2024 06:11:16 -0800 (PST)
+Message-ID: <038d99ca-65f4-4a76-bb2b-409108b47ad7@linaro.org>
+Date: Mon, 16 Dec 2024 08:11:13 -0600
 MIME-Version: 1.0
-References: <20241206160239.3229094-1-alex.bennee@linaro.org>
- <20241206160239.3229094-2-alex.bennee@linaro.org>
-In-Reply-To: <20241206160239.3229094-2-alex.bennee@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Dec 2024 14:08:07 +0000
-Message-ID: <CAFEAcA_TEaikCWjfMBNMc9Ra09+Zbt4X-9L-0ty=euxt2tLHyQ@mail.gmail.com>
-Subject: Re: [PATCH 1/3] target/arm: document the architectural names of our
- GTIMERs
-To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Leif Lindholm <quic_llindhol@quicinc.com>, 
- Radoslaw Biernacki <rad@semihalf.com>, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/9] target/arm: Helper type cleanups
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <20241206031224.78525-1-richard.henderson@linaro.org>
+ <CAFEAcA8-P=cmov6FNP1uhD3YRpZk8BB0tdrS_yx-5L18SX5y4g@mail.gmail.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <CAFEAcA8-P=cmov6FNP1uhD3YRpZk8BB0tdrS_yx-5L18SX5y4g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2001:4860:4864:20::32;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,41 +101,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Dec 2024 at 16:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
-e:
->
-> As we are about to add more physical and virtual timers lets make it
-> clear what each timer does.
->
-> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> Cc: qemu-stable@nongnu.org
-> ---
->  target/arm/gtimer.h | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
->
-> diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
-> index b992941bef..de016e6da3 100644
-> --- a/target/arm/gtimer.h
-> +++ b/target/arm/gtimer.h
-> @@ -10,11 +10,11 @@
->  #define TARGET_ARM_GTIMER_H
->
->  enum {
-> -    GTIMER_PHYS     =3D 0,
-> -    GTIMER_VIRT     =3D 1,
-> -    GTIMER_HYP      =3D 2,
-> -    GTIMER_SEC      =3D 3,
-> -    GTIMER_HYPVIRT  =3D 4,
-> +    GTIMER_PHYS     =3D 0, /* EL1 physical timer */
-> +    GTIMER_VIRT     =3D 1, /* EL1 virtual timer */
-> +    GTIMER_HYP      =3D 2, /* EL2 physical timer */
-> +    GTIMER_SEC      =3D 3, /* EL3 physical timer */
-> +    GTIMER_HYPVIRT  =3D 4, /* EL2 virtual timer */
->  #define NUM_GTIMERS   5
->  };
+On 12/16/24 08:01, Peter Maydell wrote:
+> On Fri, 6 Dec 2024 at 03:13, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>>
+>> Add macros such that "fpst" can be used with DEF_HELPER to
+>> indicate float_status* instead of "ptr" for void*.
+>> In addition, fix a few uses of "ptr" that should be "env".
+>>
+>> r~
+>>
+>> Richard Henderson (9):
+>>    target/arm: Introduce fpst alias for helper.h
+>>    target/arm: Convert vfp_helper.c to fpst alias
+>>    target/arm: Convert helper-a64.c to fpst alias
+>>    target/arm: Convert vec_helper.c to fpst alias
+>>    target/arm: Convert neon_helper.c to fpst alias
+>>    target/arm: Convert sve_helper.c to fpst alias
+>>    target/arm: Convert sme_helper.c to fpst alias
+>>    target/arm: Convert vec_helper.c to use env alias
+>>    target/arm: Convert neon_helper.c to use env alias
+> 
+> I see that commit a9af119f3d to put the fpst alias into
+> helper-head.h.inc is already upstream, superseding patch
+> 1 from this series, so I've queued the remaining patches
+> 2..9 to target-arm.next.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Thanks!
 
-thanks
--- PMM
+r~
 
