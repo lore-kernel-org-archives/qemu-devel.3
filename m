@@ -4,92 +4,157 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 504E0E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5E6BE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:29:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNEta-00007t-Af; Mon, 16 Dec 2024 12:28:38 -0500
+	id 1tNEuY-0000ZM-FQ; Mon, 16 Dec 2024 12:29:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tNEtY-00007d-Hj
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:28:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNEuC-0000NK-Ot
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:29:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tNEtV-0001sL-Gf
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:28:36 -0500
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNEu6-0001w8-I2
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:29:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734370111;
+ s=mimecast20190719; t=1734370149;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HMJkkyR7sgMKNGc+S7+MJpnO3O5Hh3/bTITJGIiLBNE=;
- b=PiIncDmHqVzrWyA85jiM0A9umyDoFc8QVulxBsNiIlhp+QL3zLuRfaG6IocDnw9Pph4Ion
- ZZWvFkPywlVsJ+vY78k39BhBJufzwbu+18z+F3o5CO2xtPDC7M8g3I3waZNSgJ3sPI5Ska
- fB9WW3VUrt1ga+BNg0NvrNiENPlkhbQ=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=RthFyiiO1bV6Bp3f0bMBrsKQi6hz1y+H7k5xZu9vRs0=;
+ b=QR8OfrakIelJwYxI8AQpJps/4vZ2ONkRjsVsuWW9vR2/Epx9GQl2dCKIIRt8tr1RlshvZe
+ sl0fD2bFwe1dod1nvIz93KTOqxhlYQQd23XF/6lTMrmYrsQ2pCoCHQfoSEfOsoo3QM0KFe
+ t6Z+ffGRQ/NeQs+R/0uqj2Dcs+yUs/Y=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-552-yyzb7U01OimdAt1jWvyrgg-1; Mon, 16 Dec 2024 12:28:30 -0500
-X-MC-Unique: yyzb7U01OimdAt1jWvyrgg-1
-X-Mimecast-MFC-AGG-ID: yyzb7U01OimdAt1jWvyrgg
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6d8edb40083so105304076d6.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:28:30 -0800 (PST)
+ us-mta-539-811fN4SyOLqLGlgIKrhsJg-1; Mon, 16 Dec 2024 12:29:06 -0500
+X-MC-Unique: 811fN4SyOLqLGlgIKrhsJg-1
+X-Mimecast-MFC-AGG-ID: 811fN4SyOLqLGlgIKrhsJg
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361a8fc3bdso23811085e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:29:06 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734370110; x=1734974910;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=HMJkkyR7sgMKNGc+S7+MJpnO3O5Hh3/bTITJGIiLBNE=;
- b=II6+SqQpJ4k7bJhVfRUr0jHHs2dFcFV/+iE37zfaZsG7J9gP1RpnvBXb/lFqk+VScQ
- tu50Sl9w0aJLyRyvCFAPHxbEVOyJe3FOg7mwt/D2Mo7WNKaQXs535imUMFXV4tQ011KG
- ZsDcDUOm4X/DhYzb1QTrUc90AGtiOiCT/bdhCy7Hd8ew02wJm7uDae57YaYXrhdxrfni
- 4X59rHrYP0yI8DHHkM5V7m3gQTUWKztmA4kaOK1wg+FQmwMBAPx4CTirUYG0xUhlqHw6
- A/mVYfX6iDIIV6EZ5N0WY48fHb1HxC5OPwE/sqHdTd7pHXLSU1k2KF/zf7evhsbaHR3v
- y1GA==
+ d=1e100.net; s=20230601; t=1734370145; x=1734974945;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RthFyiiO1bV6Bp3f0bMBrsKQi6hz1y+H7k5xZu9vRs0=;
+ b=pW8BRqd5WEwJXlp4Cc2YXJDddeK8UKzMXUJjzxNKeAUWy/N1t/yxHsDgwTz8ulpnyq
+ qOdfenKO90qbLWysqgTTGtRl7zBu1HUuvtH4SF4sJxkGsAAt4EjXsdHwZmInS0eJ2b2b
+ VBsTMgQLFEKILJzm1lA7QzpORjRqzwvXbrAhpQTwNl22Osfq+PXSJw4MN6D/4AIley+L
+ 93b4bEuZu9jsLARvqTBXq64yYOO+E/MKLF8fz9Jb4oxyYSuRBaJOR1RhUrhU4sEQ2UqM
+ QleZCq9iAmp8UtJ5yQwXGPABom9X78bkbu2mCpCPwZkW4mZb4tuP0VQoN+wFvh5STntw
+ QNjA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX1AK+9vTXxr2SfqXHq0P0bmT7B+NlOQa5FpR5gzK6mYO2F+Erktx3Z7kcZDQYmajaQgftc9gIakP6B@nongnu.org
-X-Gm-Message-State: AOJu0Yzy4QXQ0phrBVQSr0o41o2TqldzR9Ntq2hhhsGQ9SISF8C4CeY1
- OdOx9L3R8orK6C8Cm4i4IV3Q9qCGHYfMFdGtuw/o9rusCSpyw0R/GnGy7hvveNNeHOVnjmrMkNq
- nFeceldYEiYPO0YV+JKjUZUS+5DDYOhq/xI6u6qPIdrOToT/Jh/AOJRJz+u6nfPTx1xP14jXIP6
- ahC/bhQR8vFF//+Q19SoaatBlAhjY=
-X-Gm-Gg: ASbGnctFJgU7od/HJvVph/XZdYk4YKCzdVLJr2UAwXe/VkB20QE+2s6gZwu+ha0ZxYR
- yrJ0Z6Dqg3w25Tyjbo72u+WpD2H8/uP6PU2qCN1Pg
-X-Received: by 2002:a05:6214:202c:b0:6dc:c8bc:f913 with SMTP id
- 6a1803df08f44-6dcf4c84ad6mr2060766d6.15.1734370110058; 
- Mon, 16 Dec 2024 09:28:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHB30Z1z3mKBXF24asuySrQPsivaWfz7Ad2KSPVt3rk7MSK4l11foTqEEbLvJz/4rQmnwcEB21LqcR2vblO6as=
-X-Received: by 2002:a05:6214:202c:b0:6dc:c8bc:f913 with SMTP id
- 6a1803df08f44-6dcf4c84ad6mr2060516d6.15.1734370109824; Mon, 16 Dec 2024
- 09:28:29 -0800 (PST)
+ AJvYcCUZcJXgCkW5DW0Vs9G0HeTbDUs1soyrHjimtDi6VYGHY95OMbjvhZ+oZZMAUfzeiSvEOsFtmnieN92d@nongnu.org
+X-Gm-Message-State: AOJu0YxXJsCIrdslZt/E0ah9qrbqiVeUCXPhHtvKH2Aafaoe6amHBU+G
+ qcBSP7KIaaweMBc5crY3riTjDvGtyiFSHvANJ04NTDErkZ3vPo7Czg789tOdO0gddHJDl/jCUAR
+ YtofOHVrXpK05sVKXrwhLLVLP793Y2HyiOV9tDPN/TckrxkbWcPkV
+X-Gm-Gg: ASbGncs4MBpR3zONyqXVH77UdT/seYUUUtkuDcKzViOzGkO972Nk4nimSkjUq8BKnVA
+ 8eIi4twHh/8ZUwl4gZZ8cSR6eRQRi/59tUqDgS3lbq9MaQH1AlZX7RxmyuW27X42iWZhp+OFeq2
+ REv1siWD82LAEXKtSAexcMfZkMmhMR2e/ukWYxd/1vgj0gWhvvT5NzjiG8JVFC72eP8BCOi3aKj
+ /PQA8RFhYDjRX/0JayQpYqUEbQMh5QORnLXCGgPxw05ccV3OMYqEphryHCIEvT98vMOskt8uVdK
+ hYVMhvxSHSE751iHyS0ksrM4YDjE2tDO4cYLAbXfiI3VP1xz0S3w/YISpfoqGp2zgKw+4HVbowk
+ kfdCzT5sc
+X-Received: by 2002:a5d:64e9:0:b0:385:fc00:f5f3 with SMTP id
+ ffacd0b85a97d-388da380c48mr362477f8f.4.1734370145057; 
+ Mon, 16 Dec 2024 09:29:05 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGTejaOmG5hrWlYzOxV+TzX1X/v+I26AsZI7I5bIcxihyz8uAVaEv2ufJqUngH1NCgryJNqSQ==
+X-Received: by 2002:a5d:64e9:0:b0:385:fc00:f5f3 with SMTP id
+ ffacd0b85a97d-388da380c48mr362456f8f.4.1734370144694; 
+ Mon, 16 Dec 2024 09:29:04 -0800 (PST)
+Received: from ?IPV6:2003:cb:c72a:f600:c577:b537:f52a:b994?
+ (p200300cbc72af600c577b537f52ab994.dip0.t-ipconnect.de.
+ [2003:cb:c72a:f600:c577:b537:f52a:b994])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c801233asm8971950f8f.9.2024.12.16.09.29.03
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Dec 2024 09:29:04 -0800 (PST)
+Message-ID: <49ed5940-8995-42cd-9587-8a2a01461f43@redhat.com>
+Date: Mon, 16 Dec 2024 18:29:03 +0100
 MIME-Version: 1.0
-References: <20241216161413.1644171-1-peterx@redhat.com>
- <20241216161413.1644171-2-peterx@redhat.com>
- <CAFEAcA_u++fJudO1ca9q76NYWTg75PRGAEHBqDyjUDEnR5m8Cw@mail.gmail.com>
- <Z2BfhvPfYNYoHA5Z@x1n>
-In-Reply-To: <Z2BfhvPfYNYoHA5Z@x1n>
-From: Konstantin Kostiuk <kkostiuk@redhat.com>
-Date: Mon, 16 Dec 2024 19:28:19 +0200
-Message-ID: <CAPMcbCq6bU_L3xgj1tC9hDpDSG5_ppHgxRYO8qww49PSAGdCWg@mail.gmail.com>
-Subject: Re: [PATCH 1/3] osdep: Add qemu_mkdir_with_parents()
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org, 
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Fabiano Rosas <farosas@suse.de>
-Content-Type: multipart/alternative; boundary="0000000000004e32410629668277"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] s390x/pci: add support for guests that request
+ direct mapping
+To: Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org
+References: <20241213225440.571382-1-mjrosato@linux.ibm.com>
+ <20241213225440.571382-2-mjrosato@linux.ibm.com>
+ <7e07ef1e-4fa5-40d7-85f9-d7a199901b4f@linaro.org>
+ <46acb391-154e-43a1-a459-1646dc27fb33@redhat.com>
+ <f1cba8bd-b15a-456c-8640-7c0ed221b2d3@linux.ibm.com>
+ <eb6b9c83-fedb-4765-a902-695fe889e45d@redhat.com>
+ <625c8ade-f87f-4203-81ff-a4ea396f15ac@linux.ibm.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <625c8ade-f87f-4203-81ff-a4ea396f15ac@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,220 +170,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000004e32410629668277
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 16.12.24 18:26, Matthew Rosato wrote:
+> 
+>>> Good point.  Using s390_get_memory_limit() sounds good to me; That will make v3 of this series dependent on the s390x virtio-mem series but sounds like you're sending that sometime this week anyway.
+>>
+>> If my testing is good and there are no further comments, I'll queue it directly (no change to v2) to send it upstream.
+>>
+>> So it's probably a good idea to wait with a new series her.
+>>
+> 
+> OK
+> 
+>>
+>> We discussed at some point maybe requiring disabling uncoordinated discarding of RAM (virtio-balloon), is that already done implicitly now?
+>>
+> 
+> Yes, this should be handled via the call to ram_block_uncoordinated_discard_disable() in vfio_ram_block_discard_disable() - I just traced that now to double-check.
+> 
 
-On Mon, Dec 16, 2024 at 7:12=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+Cool, can you briefly mention that in the patch description? Thanks!
 
-> On Mon, Dec 16, 2024 at 04:56:33PM +0000, Peter Maydell wrote:
-> > On Mon, 16 Dec 2024 at 16:14, Peter Xu <peterx@redhat.com> wrote:
-> > >
-> > > QEMU uses g_mkdir_with_parents() a lot, especially in the case where
-> the
-> > > failure case is ignored so an abort is expected when happened.
-> > >
-> > > Provide a helper qemu_mkdir_with_parents() to do that, and use it in
-> the
-> > > two cases in qga/.  To be used in more places later.
-> > >
-> > > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > > ---
-> > >  include/qemu/osdep.h     | 7 +++++++
-> > >  qga/commands-posix-ssh.c | 8 ++------
-> > >  util/osdep.c             | 6 ++++++
-> > >  3 files changed, 15 insertions(+), 6 deletions(-)
-> > >
-> > > diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> > > index fdff07fd99..dc67fb2e5e 100644
-> > > --- a/include/qemu/osdep.h
-> > > +++ b/include/qemu/osdep.h
-> > > @@ -828,6 +828,13 @@ static inline int
-> platform_does_not_support_system(const char *command)
-> > >  }
-> > >  #endif /* !HAVE_SYSTEM_FUNCTION */
-> > >
-> > > +/**
-> > > + * qemu_mkdir_with_parents:
-> > > + *
-> > > + * Create directories with parents.  Abort on failures.
-> > > + */
-> > > +void qemu_mkdir_with_parents(const char *dir, int mode);
-> >
-> > Don't put new function prototypes into osdep.h, please.
-> > It is included by every single C file in the codebase.
-> > There is always somewhere better to put things.
-> >
-> > QEMU shouldn't abort on things that are kind of expected
-> > OS errors like "couldn't create a directory", so I'm
-> > a bit dubious about this function.
->
-> That's what qga/ is doing right now, rather than a decision made in this
-> series, though.
->
+-- 
+Cheers,
 
-I think we need to fix this behavior in QGA and report the real error,
-instead of wrapping the `assert` into some function that will make
-it not so obvious.
-
-
->
-> >
-> > The two use cases in this commit seem to be test code,
-> > so asserting is reasonable. But a "for test code only"
-> > function should go in a header file that's only included
-> > by test cases and the comment should be clear about that,
-> > and it shouldn't have a function name that implies
-> > "this is the normal way any code in QEMU might want
-> > to create directories".
-> >
-> > For the qtest tests, I currently ignore Coverity
-> > reports in our test code unless it seems particularly
-> > worthwhile to fix them. This is especially true for
-> > complaints about unchecked return values and the like.
->
-> OK.
->
-> >
-> > Even in a test case it is still not great to call
-> > g_assert(), because this makes the test binary crash,
-> > rather than reporting an error. The surrounding TAP
-> > protocol parsing code then doesn't report the test
-> > failure the way you might like.
->
-> Hmm, I normally always think crash is better especially in tests to keep
-> everything around when an error happens as general rule.
->
-> TAP parsing especially on errors is more useful to me when we constantly
-> expect failures, IIUC that's not the case for QEMU tests?  Because I do
-> expect the CI to pass all the tests always.  But I also admit I don't kno=
-w
-> the whole picture of QEMU tests..
->
-> If we don't care about retval checks in tests, we can definitely drop pat=
-ch
-> 1-2 here in all cases.
->
-> Thanks,
->
-> --
-> Peter Xu
->
->
-
---0000000000004e32410629668277
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Dec 16,=
- 2024 at 7:12=E2=80=AFPM Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com">=
-peterx@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">On Mon, Dec 16, 2024 at 04:56:33PM +0000, Peter Maydell wr=
-ote:<br>
-&gt; On Mon, 16 Dec 2024 at 16:14, Peter Xu &lt;<a href=3D"mailto:peterx@re=
-dhat.com" target=3D"_blank">peterx@redhat.com</a>&gt; wrote:<br>
-&gt; &gt;<br>
-&gt; &gt; QEMU uses g_mkdir_with_parents() a lot, especially in the case wh=
-ere the<br>
-&gt; &gt; failure case is ignored so an abort is expected when happened.<br=
->
-&gt; &gt;<br>
-&gt; &gt; Provide a helper qemu_mkdir_with_parents() to do that, and use it=
- in the<br>
-&gt; &gt; two cases in qga/.=C2=A0 To be used in more places later.<br>
-&gt; &gt;<br>
-&gt; &gt; Signed-off-by: Peter Xu &lt;<a href=3D"mailto:peterx@redhat.com" =
-target=3D"_blank">peterx@redhat.com</a>&gt;<br>
-&gt; &gt; ---<br>
-&gt; &gt;=C2=A0 include/qemu/osdep.h=C2=A0 =C2=A0 =C2=A0| 7 +++++++<br>
-&gt; &gt;=C2=A0 qga/commands-posix-ssh.c | 8 ++------<br>
-&gt; &gt;=C2=A0 util/osdep.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0| 6 ++++++<br>
-&gt; &gt;=C2=A0 3 files changed, 15 insertions(+), 6 deletions(-)<br>
-&gt; &gt;<br>
-&gt; &gt; diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h<br>
-&gt; &gt; index fdff07fd99..dc67fb2e5e 100644<br>
-&gt; &gt; --- a/include/qemu/osdep.h<br>
-&gt; &gt; +++ b/include/qemu/osdep.h<br>
-&gt; &gt; @@ -828,6 +828,13 @@ static inline int platform_does_not_support_=
-system(const char *command)<br>
-&gt; &gt;=C2=A0 }<br>
-&gt; &gt;=C2=A0 #endif /* !HAVE_SYSTEM_FUNCTION */<br>
-&gt; &gt;<br>
-&gt; &gt; +/**<br>
-&gt; &gt; + * qemu_mkdir_with_parents:<br>
-&gt; &gt; + *<br>
-&gt; &gt; + * Create directories with parents.=C2=A0 Abort on failures.<br>
-&gt; &gt; + */<br>
-&gt; &gt; +void qemu_mkdir_with_parents(const char *dir, int mode);<br>
-&gt; <br>
-&gt; Don&#39;t put new function prototypes into osdep.h, please.<br>
-&gt; It is included by every single C file in the codebase.<br>
-&gt; There is always somewhere better to put things.<br>
-&gt; <br>
-&gt; QEMU shouldn&#39;t abort on things that are kind of expected<br>
-&gt; OS errors like &quot;couldn&#39;t create a directory&quot;, so I&#39;m=
-<br>
-&gt; a bit dubious about this function.<br>
-<br>
-That&#39;s what qga/ is doing right now, rather than a decision made in thi=
-s<br>
-series, though.<br></blockquote><div><br></div>I think we need to fix this =
-behavior in QGA and report the real error,</div><div class=3D"gmail_quote g=
-mail_quote_container">instead of wrapping the `assert` into some function t=
-hat will make</div><div class=3D"gmail_quote gmail_quote_container">it not =
-so obvious.<div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
-<br>
-&gt; <br>
-&gt; The two use cases in this commit seem to be test code,<br>
-&gt; so asserting is reasonable. But a &quot;for test code only&quot;<br>
-&gt; function should go in a header file that&#39;s only included<br>
-&gt; by test cases and the comment should be clear about that,<br>
-&gt; and it shouldn&#39;t have a function name that implies<br>
-&gt; &quot;this is the normal way any code in QEMU might want<br>
-&gt; to create directories&quot;.<br>
-&gt; <br>
-&gt; For the qtest tests, I currently ignore Coverity<br>
-&gt; reports in our test code unless it seems particularly<br>
-&gt; worthwhile to fix them. This is especially true for<br>
-&gt; complaints about unchecked return values and the like.<br>
-<br>
-OK.<br>
-<br>
-&gt; <br>
-&gt; Even in a test case it is still not great to call<br>
-&gt; g_assert(), because this makes the test binary crash,<br>
-&gt; rather than reporting an error. The surrounding TAP<br>
-&gt; protocol parsing code then doesn&#39;t report the test<br>
-&gt; failure the way you might like.<br>
-<br>
-Hmm, I normally always think crash is better especially in tests to keep<br=
->
-everything around when an error happens as general rule.<br>
-<br>
-TAP parsing especially on errors is more useful to me when we constantly<br=
->
-expect failures, IIUC that&#39;s not the case for QEMU tests?=C2=A0 Because=
- I do<br>
-expect the CI to pass all the tests always.=C2=A0 But I also admit I don&#3=
-9;t know<br>
-the whole picture of QEMU tests..<br>
-<br>
-If we don&#39;t care about retval checks in tests, we can definitely drop p=
-atch<br>
-1-2 here in all cases.<br>
-<br>
-Thanks,<br>
-<br>
--- <br>
-Peter Xu<br>
-<br>
-</blockquote></div></div>
-
---0000000000004e32410629668277--
+David / dhildenb
 
 
