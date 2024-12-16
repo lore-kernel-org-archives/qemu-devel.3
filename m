@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A65FE77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:03:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F34E77183
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNDYm-0001hy-CQ; Mon, 16 Dec 2024 11:03:07 -0500
+	id 1tNDb2-0003eg-TG; Mon, 16 Dec 2024 11:05:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDY1-0001cV-Vr
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:02:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDXu-0005bA-Gf
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:02:12 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734364928;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=jUezM7Yuk+cPxurDXaWs/3FxNcYR6EdeumJ/ltVmEKQ=;
- b=YWVNFM4wIui9JUdGBrV/B+3oAfjIU/74WlrPilzU7WCJIMI2cN6fdC9fiPmYy9dTD5An5x
- jk65E9whfZWJaAw0lV9IU996Fnm4J7Z5guUAq+AHMbj9UCFqqdnObxq6/kemj/y1kZj955
- Q1kfXyw1a4VCEZ3V6R3iqQfrLfhRzqg=
-Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
- [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-625-JZEShMwSO3CqyS3bKmaIbg-1; Mon, 16 Dec 2024 11:02:07 -0500
-X-MC-Unique: JZEShMwSO3CqyS3bKmaIbg-1
-X-Mimecast-MFC-AGG-ID: JZEShMwSO3CqyS3bKmaIbg
-Received: by mail-io1-f72.google.com with SMTP id
- ca18e2360f4ac-844cffcb685so358669339f.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:02:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNDaz-0003c6-Np
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:05:22 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNDax-00064f-TO
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:05:21 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385ddcfc97bso3608115f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:05:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734365117; x=1734969917; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+cEtuPLfzX3+HA+p4O6VB2iDGKV4RmaMNbJGKVtmUNo=;
+ b=Omj0Uq2H56UwvZykc2uicU2FI2FNvowJaQR29Ovydcz2gTWrAS5gR5X5ktzZ+Lj652
+ yWLFgH+wSu8MUzrd42aTOQ1nyDN0fYNppe0S7hTFkJyOx6y2XlQMYKoshErsRCgJqxmJ
+ QYLlraKsO+A/0U49lkCPb7ee/+3yjzOkZoneCOFQoJHPqs3cDfkeW719TEz+S7nbCzET
+ hqYrD43/fFWPKcwXfEz08+k9YUQxn83a4Dc+DZHSawEaSB3dd6jmM8mQQ26vUDBtlkZ4
+ SU9nEma0fDqZQulTQ56qE6hd+ms1BHbvEjdNenYIdsFrTfAMHpEWr/MziJnX7CjXv/xj
+ 10YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734364927; x=1734969727;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jUezM7Yuk+cPxurDXaWs/3FxNcYR6EdeumJ/ltVmEKQ=;
- b=nk/zCpMLZa8tf7Y7UXiHtPZoBVZpVB0S9jweJ3YJ22sWLluwE67YgLC/7N/WvwYQOr
- kAuIrVaBAmatYiceDEuv8vAOV5Nxim9jZcV/CIl9ySpylWZRGETCswCbGram8BMUlXUW
- 3IpaOuSQxc9erb8mGZ+AuNr1R2YFM/kA45ykHKOPuvDxYKoHf8h/o9uA/+gB31I7BxDx
- 56pJrDPdspaFpp0hfYdrBtoBfxrdLBOoudcuGrTEYSc+OwQPgWVst5QjemCW2B+tczQW
- YRv+FHbfpAZZM5Brmkaqi7BXMBJkADpVt+M6v9c3lwdw/udhy/tGs0diYzrL5Rzrl1Yo
- y73A==
-X-Gm-Message-State: AOJu0YykSVb/MgafF2fb3APcBK1vO1L4UUBWilSg6qa+NShLlONyqxFc
- LHcUeH5d+yNukPrXg/Nj0QsRdlC/F5rVMJIW2vXqOF3MZrB8LJVKUPJgfIZ4CPlxFCy94KOm0Rs
- gFPe7/1lk1NRfwsMLXyuyXt4YINcOuDu3EcJesvTMvzAkM2Q0VKmN
-X-Gm-Gg: ASbGncueBQFUN4YUqKpVFiwzUbJSYtwssJagZpONHoH2xsSeR53pd9j2o/7PGoOr8rW
- XdWMcudaXMufqWJq3X2j8osEVTSN9NKv625eSu+E4C4+jUuQizC0ZM1w4tPKyWn2W+5YT+JqLu8
- SlNtlfnAh+MY6idA7m7poKIEY1ze5CUXOE4NDtSJyaPl5P9fu0j9+89cl1OBKhcjdpTmEx/bMOI
- B+ofRdoWayVM9jZy/v6v0g2tMZ8R6YyE033DwAR3zWwJbb3zG62EfyLxhJJhCowuepHfmKma4Yx
- /7/+N9EgiI1ezIfSXw==
-X-Received: by 2002:a05:6602:1494:b0:843:e89d:b62b with SMTP id
- ca18e2360f4ac-844e8b69bdemr1214027139f.11.1734364926730; 
- Mon, 16 Dec 2024 08:02:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGJG0jXMMZAc0OiPem4tdjF0rPMUNRZmVsHW7yhIvyO3yOYiWp1lgSoOXyu4+Or/kaw07a8Ww==
-X-Received: by 2002:a05:6602:1494:b0:843:e89d:b62b with SMTP id
- ca18e2360f4ac-844e8b69bdemr1214019239f.11.1734364926065; 
- Mon, 16 Dec 2024 08:02:06 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- ca18e2360f4ac-844f626b622sm132851539f.15.2024.12.16.08.02.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Dec 2024 08:02:05 -0800 (PST)
-Date: Mon, 16 Dec 2024 11:02:03 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Subject: Re: [PATCH 1/2] migration/multifd: Fix compat with QEMU < 9.0
-Message-ID: <Z2BO-3vdEyNrMhhR@x1n>
-References: <20241213160120.23880-1-farosas@suse.de>
- <20241213160120.23880-2-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1734365117; x=1734969917;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+cEtuPLfzX3+HA+p4O6VB2iDGKV4RmaMNbJGKVtmUNo=;
+ b=Vsv+tTlx3KMGWhraLfylAx7dkyKzOQCeRV5YBFr4Jfe5R1kmOnUSq2YLwya4oiUitz
+ 3h6vpu9XlmC9oAAswQ7ZYbre09mAR8B2bde27tdV4I9/3XA2RwXmnF19gqquwvRh5i2P
+ /6ijnule6jwUjyzUNza4jpJWelDPt4bn/MeqEFY1LrEqDwUCai5deIjYoeatFYM3etEZ
+ fYiWSjYP+ysG+vYas3phg6V+Ae6V2BA2bL29bgvnydTPNNdxIsW+MXsEIdJh9fx98m4J
+ m5qKKsBpJgo3TPICb6Y4lPmZM8bpRmlR9qnmzb83PUFIqbx2EHqxwLdh51G0TeFIp8n8
+ YueQ==
+X-Gm-Message-State: AOJu0Yzl5oOQes5wyJCXjB3Bm3V4WGzZLrfRTyzjxlIZ3f6zRcZA6+vp
+ jjm2KaklCJMk7CRt0gfu8ZQ2Z7UpxamZLViGnR7lXX2JKo3TKbmHnV15TcKpU2RpPhF7w8L95u1
+ m
+X-Gm-Gg: ASbGncuWTvVbHSr5/0X9S2TDGwYljP0QxNus003ShHEZZlKhql1OYZNpvg836XY2hT9
+ Up7qgcy5ggXAParJQP+nv/7hyNzq6ihL3IKNKDGhFYbKW0U6c83o4suGrMfMGjtkKanvKGGinBw
+ doFadDxFSqGEf/4dSMotuljK2G1vt9MRt0eNTu0mSsVgQPugvZfQ2eP2W8BspFHBiaLXm+4vZvk
+ wRdOOlZUnL/2xcZmMzxheI3SM4ec+vyRiGAah5E6ZUFTA01KtYIu+TIiaVG7BWm2BELIFbjpBaE
+ CQbV
+X-Google-Smtp-Source: AGHT+IHKpHGtjr7EXe5iUl22xi99EKVfiSzIkBRlbVabhF3rInBG9uRHZVNEn0FN8FRmbyyusXPIrQ==
+X-Received: by 2002:a5d:588e:0:b0:385:df63:4c49 with SMTP id
+ ffacd0b85a97d-3888e0ae5c3mr10543297f8f.25.1734365117359; 
+ Mon, 16 Dec 2024 08:05:17 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c801a628sm8686657f8f.47.2024.12.16.08.05.16
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 16 Dec 2024 08:05:16 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] accel/tcg: Really restrict cpu_io_recompile() to system
+ emulation
+Date: Mon, 16 Dec 2024 17:05:14 +0100
+Message-ID: <20241216160514.56630-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241213160120.23880-2-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +98,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Dec 13, 2024 at 01:01:19PM -0300, Fabiano Rosas wrote:
-> Commit f5f48a7891 ("migration/multifd: Separate SYNC request with
-> normal jobs") changed the multifd source side to stop sending data
-> along with the MULTIFD_FLAG_SYNC, effectively introducing the concept
-> of a SYNC-only packet. Relying on that, commit d7e58f412c
-> ("migration/multifd: Don't send ram data during SYNC") later came
-> along and skipped reading data from SYNC packets.
-> 
-> In a versions timeline like this:
-> 
->   8.2 f5f48a7 9.0 9.1 d7e58f41 9.2
-> 
-> The issue arises that QEMUs < 9.0 still send data along with SYNC, but
-> QEMUs > 9.1 don't gather that data anymore. This leads to various
-> kinds of migration failures due to desync/missing data.
-> 
-> Stop checking for a SYNC packet on the destination and unconditionally
-> unfill the packet.
-> 
-> From now on:
-> 
-> old -> new:
-> the source sends data + sync, destination reads normally
-> 
-> new -> new:
-> source sends only sync, destination reads zeros
-> 
-> new -> old:
-> source sends only sync, destination reads zeros
-> 
-> CC: qemu-stable@nongnu.org
-> Fixes: d7e58f412c ("migration/multifd: Don't send ram data during SYNC")
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2720
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Commit 38fc4b11e03 ("accel/tcg: Restrict cpu_io_recompile() to
+system emulation") inadvertently restricted cpu_io_recompile()
+to SoftMMU. Correct to restrict to system emulation.
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+Based-on: <20241212185341.2857-11-philmd@linaro.org>
+---
+ accel/tcg/internal-target.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 1cfa318dc6c..3ed81e740d3 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -36,9 +36,9 @@ static inline void page_table_config_init(void) { }
+ void page_table_config_init(void);
+ #endif
+ 
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+-#endif /* CONFIG_SOFTMMU */
++#endif /* CONFIG_USER_ONLY */
+ 
+ /**
+  * tcg_req_mo:
 -- 
-Peter Xu
+2.45.2
 
 
