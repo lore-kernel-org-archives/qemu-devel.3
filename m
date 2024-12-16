@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014D1E77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:17:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398E1E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNEiC-0004BV-Kx; Mon, 16 Dec 2024 12:16:52 -0500
+	id 1tNErs-0007dd-DU; Mon, 16 Dec 2024 12:26:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNEi3-00043Z-U5
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:44 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNEhx-0000Ez-4b
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:43 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aa69107179cso815291466b.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:16:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734369394; x=1734974194; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GBM4uFpiayLJP/bLXti6ZTvwMuTbtotx1NQbTLq1mY8=;
- b=VdoFcMOAgq6XbX5QPp5a9F8sS/OllR/lySoBRePys0hqPWrp8b94kVbvbM4ftx+bbd
- YKJ+l3MxPepWuou/tGGFIFJJFFckGGW74cz5Qm5MtH4DFt7/BOTjBkaNo3BfGehwr2hQ
- HHWdyn0eSZEoaAt2OD3iojUOLuUxxdVxxE8ykWsW+Tc1dg3bHk0ADMQSlAieQB6ZtWxc
- Jha/qjzcZmf1MSRXhLrXhXP7N+mStqiDPhKc6HHKYun01seCa4jUzuR5eoVtpl3pOr5M
- cDSD+mba6Ape2gDkbqw72BWvbx+sZIJ35pOHn/dYsSsisaw74gI9psJx7p2fIBPK8PsK
- C13Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734369394; x=1734974194;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GBM4uFpiayLJP/bLXti6ZTvwMuTbtotx1NQbTLq1mY8=;
- b=JyPKNSvEvDJXVOLy9xIuB8WiVBDdyGtp1eGMITcn4zyU210pS+lzkjgXenOx/o0hW6
- bo5eIoA1+Hkekva9/5GFyT1Z5+Ab9ylsaEWcrkdH19qFHtFtZ3QLci5sWgrayMOytLXP
- ygq4HyuxPSKM1AqG2TdBWilpcGVP4qLchinw/BkNIoDpVFdPNFAj+VmBqiUiPyL17yLr
- ebFfrarR4tJTHkUU0c6VRAS2ZecVF8q1j9DbZ6AjGTHZsNmOWx6vEVRc/Is1AHnbE40z
- SfT/l8OLPDpXRi04jq5gw93HeiNce0B8muD2mCGuXp7unSKCuA9aQztYfOA8iITtjGd+
- 4GEQ==
-X-Gm-Message-State: AOJu0YxUXeAHaNDvznm+A5hAdokabygWv07D0Dy4hYCZjLGAiXwGIsUv
- 1+3r8lmye8K513wIx5//O37zpyM9w2AMvVMMsg5yALwChXcE6t2mXFFf1oJufWJNj1XrxqNuqy2
- lml8=
-X-Gm-Gg: ASbGnctrj+ABH1ml5ZnKj5XoisCuzQL6ickn24vPJeflnyuz3mDYvXM3LzFWG01auYM
- w/1McOlasfNfN1HMvEFbJtMsMTszTnQvAzsEmpYqh+jwEPVOmrl2aYNmjJNCEd7s4IXkbDt6/kB
- mAXGciMiVGHCpK1RrdI3YB1PENmZm6RljcpR7+cRRIMUoQmpdbVRsC6uiWXb9dbKgEYMZROgoBS
- vf+OG57LxJdXnjwc90TrwVTcZf4XzIxNHkydorcX1XNeXPLUMYaLI8=
-X-Google-Smtp-Source: AGHT+IGVyfqFHYRqv4RLpllqzRlpHhRxNN4YWpb5a1wMUm/28DGqk6pNna02r/BdxLXV21fwWynbKQ==
-X-Received: by 2002:a17:906:3112:b0:aa6:7ab9:e24d with SMTP id
- a640c23a62f3a-aab77ed3586mr1224978966b.57.1734369394131; 
- Mon, 16 Dec 2024 09:16:34 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab963c5477sm354444866b.185.2024.12.16.09.16.33
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Dec 2024 09:16:33 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0A74D5F952;
- Mon, 16 Dec 2024 17:16:33 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,
- Michael Roth <michael.roth@amd.com>,  Fabiano Rosas <farosas@suse.de>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH 2/3] tests: Use qemu_mkdir_with_parents() for all test code
-In-Reply-To: <20241216161413.1644171-3-peterx@redhat.com> (Peter Xu's message
- of "Mon, 16 Dec 2024 11:14:12 -0500")
-References: <20241216161413.1644171-1-peterx@redhat.com>
- <20241216161413.1644171-3-peterx@redhat.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 16 Dec 2024 17:16:33 +0000
-Message-ID: <87ikrj1rbi.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tNErp-0007VX-Em; Mon, 16 Dec 2024 12:26:49 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1tNErn-0001eR-RS; Mon, 16 Dec 2024 12:26:49 -0500
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGE6MCw011353;
+ Mon, 16 Dec 2024 17:26:45 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=DoqIvK
+ T+7Hv/M1vHarZEvXeW4IZnVopiMBqUeg0goR4=; b=bXs1YfuFW0q6BvnXm5cdTF
+ fi26+1qdWjICnZmD+OoQsCV6W/YymIAAd7kckGGydkytAapQ4FQhR4WV5IlJo57r
+ HtvqpbizlK56/PRDsYhaJ3uczRrlxp8kkTdL3qr63KPbjhyzU0zVLTnSpPxCQnwb
+ ztsXCwibLiNb00j291v5CUplGlrbOXrOLVJYdIm0+aEzobjSzYL/fojOXi36Etga
+ RH+NUHtN7Hr5ilmbAFruU2TLRcWWrSTUtBl2ux/S054LUIXNQV9PpOaDm5DK+eAk
+ SM9JVRnOCYuLxhfm2cqS00kd9AljIKptgSj2qCdl4OzY5VSbP9UP0FNL2th6LQwQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jnp4h25f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Dec 2024 17:26:44 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGF3BUQ010923;
+ Mon, 16 Dec 2024 17:26:44 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hpjjxq5c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Dec 2024 17:26:44 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BGHQhCJ31654554
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Dec 2024 17:26:43 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F03A458059;
+ Mon, 16 Dec 2024 17:26:42 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A027058043;
+ Mon, 16 Dec 2024 17:26:41 +0000 (GMT)
+Received: from [9.61.117.46] (unknown [9.61.117.46])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 16 Dec 2024 17:26:41 +0000 (GMT)
+Message-ID: <625c8ade-f87f-4203-81ff-a4ea396f15ac@linux.ibm.com>
+Date: Mon, 16 Dec 2024 12:26:41 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/2] s390x/pci: add support for guests that request
+ direct mapping
+To: David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-s390x@nongnu.org
+Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
+ pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
+ qemu-devel@nongnu.org
+References: <20241213225440.571382-1-mjrosato@linux.ibm.com>
+ <20241213225440.571382-2-mjrosato@linux.ibm.com>
+ <7e07ef1e-4fa5-40d7-85f9-d7a199901b4f@linaro.org>
+ <46acb391-154e-43a1-a459-1646dc27fb33@redhat.com>
+ <f1cba8bd-b15a-456c-8640-7c0ed221b2d3@linux.ibm.com>
+ <eb6b9c83-fedb-4765-a902-695fe889e45d@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <eb6b9c83-fedb-4765-a902-695fe889e45d@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: CNTzdYWBBrNBG8X1YU4RkzJs6qGvezrJ
+X-Proofpoint-ORIG-GUID: CNTzdYWBBrNBG8X1YU4RkzJs6qGvezrJ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1015
+ malwarescore=0 adultscore=0 bulkscore=0 mlxscore=0 spamscore=0
+ priorityscore=1501 phishscore=0 suspectscore=0 mlxlogscore=999
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160142
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.13, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,19 +119,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> Coverity isn't happy on the QEMU test cases where g_mkdir_with_parents() =
-is
-> used without checking retvals.  Use qemu_mkdir_with_parents() to fix them.
->
-> Resolves: Coverity CID 1568381
-> Resolves: Coverity CID 1568378
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> Good point.  Using s390_get_memory_limit() sounds good to me; That will make v3 of this series dependent on the s390x virtio-mem series but sounds like you're sending that sometime this week anyway.
+> 
+> If my testing is good and there are no further comments, I'll queue it directly (no change to v2) to send it upstream.
+> 
+> So it's probably a good idea to wait with a new series her.
+> 
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+OK
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> 
+> We discussed at some point maybe requiring disabling uncoordinated discarding of RAM (virtio-balloon), is that already done implicitly now?
+> 
+
+Yes, this should be handled via the call to ram_block_uncoordinated_discard_disable() in vfio_ram_block_discard_disable() - I just traced that now to double-check.
 
