@@ -4,20 +4,20 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBA6FE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 07:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF6E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 07:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN5vn-0004Up-Lp; Mon, 16 Dec 2024 02:54:19 -0500
+	id 1tN5vx-0004Wz-TB; Mon, 16 Dec 2024 02:54:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tN5vl-0004U8-Qe; Mon, 16 Dec 2024 02:54:17 -0500
+ id 1tN5vv-0004WK-7z; Mon, 16 Dec 2024 02:54:27 -0500
 Received: from mail.aspeedtech.com ([211.20.114.72] helo=TWMBX01.aspeed.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1tN5ve-000791-3g; Mon, 16 Dec 2024 02:54:17 -0500
+ id 1tN5vs-000791-8v; Mon, 16 Dec 2024 02:54:27 -0500
 Received: from TWMBX01.aspeed.com (192.168.0.62) by TWMBX01.aspeed.com
  (192.168.0.62) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1258.12; Mon, 16 Dec
@@ -32,9 +32,9 @@ To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>, Peter Maydell
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 CC: <jamin_lin@aspeedtech.com>, <troy_lee@aspeedtech.com>,
  <yunlin.tang@aspeedtech.com>
-Subject: [PATCH v1 1/3] hw/timer/aspeed: Support different memory region ops
-Date: Mon, 16 Dec 2024 15:53:50 +0800
-Message-ID: <20241216075353.1308043-2-jamin_lin@aspeedtech.com>
+Subject: [PATCH v1 3/3] aspeed/soc: Support Timer for AST2700
+Date: Mon, 16 Dec 2024 15:53:52 +0800
+Message-ID: <20241216075353.1308043-4-jamin_lin@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241216075353.1308043-1-jamin_lin@aspeedtech.com>
 References: <20241216075353.1308043-1-jamin_lin@aspeedtech.com>
@@ -66,103 +66,76 @@ From:  Jamin Lin via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It set "aspeed_timer_ops" struct which containing read and write callbacks
-to be used when I/O is performed on the TIMER region.
+Add Timer model for AST2700 Timer support. The Timer controller include 8 sets
+of 32-bit decrement counters.
 
-Besides, in the previous design of ASPEED SOCs, the timer registers address
-space are contiguous.
+The base address of TIMER0 to TIMER7 as following.
+Base Address of Timer 0 = 0x12C1_0000
+Base Address of Timer 1 = 0x12C1_0040
+Base Address of Timer 2 = 0x12C1_0080
+Base Address of Timer 3 = 0x12C1_00C0
+Base Address of Timer 4 = 0x12C1_0100
+Base Address of Timer 5 = 0x12C1_0140
+Base Address of Timer 6 = 0x12C1_0180
+Base Address of Timer 7 = 0x12C1_01C0
 
-ex: TMC00-TMC0C are used for TIMER0.
-ex: TMC10-TMC1C are used for TIMER1.
-ex: TMC80-TMC8C are used for TIMER7.
-
-The TMC30 is a control register and TMC34 is an interrupt status register for
-TIMER0-TIMER7.
-
-However, the register set have a significant change in AST2700. The TMC00-TMC3C
-are used for TIMER0 and TMC40-TMC7C are used for TIMER1. In additional,
-TMC20-TMC3C and TMC60-TMC7C are reserved registers for TIMER0 and TIMER1,
-respectively.
-
-Besides, each TIMER has their own control and interrupt status register.
-In other words, users are able to set control and interrupt status for TIMER0
-in one register. Both aspeed_timer_read and aspeed_timer_write callback
-functions are not compatible AST2700.
-
-Introduce a new "const MemoryRegionOps *" attribute in AspeedTIMERClass and use
-it in aspeed_timer_realize function.
+The interrupt of TIMER0 to TIMER7 as following.
+GICINT16 = TIMER 0 interrupt
+GICINT17 = TIMER 1 interrupt
+GICINT18 = TIMER 2 interrupt
+GICINT19 = TIMER 3 interrupt
+GICINT20 = TIMER 4 interrupt
+GICINT21 = TIMER 5 interrupt
+GICINT22 = TIMER 6 interrupt
+GICINT23 = TIMER 7 interrupt
 
 Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 ---
- hw/timer/aspeed_timer.c         | 7 ++++++-
- include/hw/timer/aspeed_timer.h | 1 +
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/arm/aspeed_ast27x0.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/hw/timer/aspeed_timer.c b/hw/timer/aspeed_timer.c
-index 149f7cc5a6..970bf1d79d 100644
---- a/hw/timer/aspeed_timer.c
-+++ b/hw/timer/aspeed_timer.c
-@@ -606,6 +606,7 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
-     int i;
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     AspeedTimerCtrlState *s = ASPEED_TIMER(dev);
-+    AspeedTimerClass *atc = ASPEED_TIMER_GET_CLASS(s);
- 
-     assert(s->scu);
- 
-@@ -613,7 +614,7 @@ static void aspeed_timer_realize(DeviceState *dev, Error **errp)
-         aspeed_init_one_timer(s, i);
-         sysbus_init_irq(sbd, &s->timers[i].irq);
-     }
--    memory_region_init_io(&s->iomem, OBJECT(s), &aspeed_timer_ops, s,
-+    memory_region_init_io(&s->iomem, OBJECT(s), atc->reg_ops, s,
-                           TYPE_ASPEED_TIMER, 0x1000);
-     sysbus_init_mmio(sbd, &s->iomem);
- }
-@@ -708,6 +709,7 @@ static void aspeed_2400_timer_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 2400 Timer";
-     awc->read = aspeed_2400_timer_read;
-     awc->write = aspeed_2400_timer_write;
-+    awc->reg_ops = &aspeed_timer_ops;
- }
- 
- static const TypeInfo aspeed_2400_timer_info = {
-@@ -724,6 +726,7 @@ static void aspeed_2500_timer_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 2500 Timer";
-     awc->read = aspeed_2500_timer_read;
-     awc->write = aspeed_2500_timer_write;
-+    awc->reg_ops = &aspeed_timer_ops;
- }
- 
- static const TypeInfo aspeed_2500_timer_info = {
-@@ -740,6 +743,7 @@ static void aspeed_2600_timer_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 2600 Timer";
-     awc->read = aspeed_2600_timer_read;
-     awc->write = aspeed_2600_timer_write;
-+    awc->reg_ops = &aspeed_timer_ops;
- }
- 
- static const TypeInfo aspeed_2600_timer_info = {
-@@ -756,6 +760,7 @@ static void aspeed_1030_timer_class_init(ObjectClass *klass, void *data)
-     dc->desc = "ASPEED 1030 Timer";
-     awc->read = aspeed_2600_timer_read;
-     awc->write = aspeed_2600_timer_write;
-+    awc->reg_ops = &aspeed_timer_ops;
- }
- 
- static const TypeInfo aspeed_1030_timer_info = {
-diff --git a/include/hw/timer/aspeed_timer.h b/include/hw/timer/aspeed_timer.h
-index 07dc6b6f2c..8d0b15f055 100644
---- a/include/hw/timer/aspeed_timer.h
-+++ b/include/hw/timer/aspeed_timer.h
-@@ -73,6 +73,7 @@ struct AspeedTimerClass {
- 
-     uint64_t (*read)(AspeedTimerCtrlState *s, hwaddr offset);
-     void (*write)(AspeedTimerCtrlState *s, hwaddr offset, uint64_t value);
-+    const MemoryRegionOps *reg_ops;
+diff --git a/hw/arm/aspeed_ast27x0.c b/hw/arm/aspeed_ast27x0.c
+index 23571584b2..292bb1c5b7 100644
+--- a/hw/arm/aspeed_ast27x0.c
++++ b/hw/arm/aspeed_ast27x0.c
+@@ -66,6 +66,7 @@ static const hwaddr aspeed_soc_ast2700_memmap[] = {
+     [ASPEED_DEV_GPIO]      =  0x14C0B000,
+     [ASPEED_DEV_RTC]       =  0x12C0F000,
+     [ASPEED_DEV_SDHCI]     =  0x14080000,
++    [ASPEED_DEV_TIMER1]    =  0x12C10000
  };
  
- #endif /* ASPEED_TIMER_H */
+ #define AST2700_MAX_IRQ 256
+@@ -397,6 +398,9 @@ static void aspeed_soc_ast2700_init(Object *obj)
+ 
+     object_initialize_child(obj, "emmc-controller.sdhci", &s->emmc.slots[0],
+                             TYPE_SYSBUS_SDHCI);
++
++    snprintf(typename, sizeof(typename), "aspeed.timer-%s", socname);
++    object_initialize_child(obj, "timerctrl", &s->timerctrl, typename);
+ }
+ 
+ /*
+@@ -716,6 +720,19 @@ static void aspeed_soc_ast2700_realize(DeviceState *dev, Error **errp)
+     sysbus_connect_irq(SYS_BUS_DEVICE(&s->emmc), 0,
+                        aspeed_soc_get_irq(s, ASPEED_DEV_EMMC));
+ 
++    /* Timer */
++    object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
++                             &error_abort);
++    if (!sysbus_realize(SYS_BUS_DEVICE(&s->timerctrl), errp)) {
++        return;
++    }
++    aspeed_mmio_map(s, SYS_BUS_DEVICE(&s->timerctrl), 0,
++                    sc->memmap[ASPEED_DEV_TIMER1]);
++    for (i = 0; i < ASPEED_TIMER_NR_TIMERS; i++) {
++        irq = aspeed_soc_get_irq(s, ASPEED_DEV_TIMER1 + i);
++        sysbus_connect_irq(SYS_BUS_DEVICE(&s->timerctrl), i, irq);
++    }
++
+     create_unimplemented_device("ast2700.dpmcu", 0x11000000, 0x40000);
+     create_unimplemented_device("ast2700.iomem0", 0x12000000, 0x01000000);
+     create_unimplemented_device("ast2700.iomem1", 0x14000000, 0x01000000);
 -- 
 2.25.1
 
