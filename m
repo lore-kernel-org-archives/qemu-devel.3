@@ -4,146 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5F82E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5E30E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:01:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNEOZ-0004Gv-Gb; Mon, 16 Dec 2024 11:56:35 -0500
+	id 1tNESG-0005iL-V6; Mon, 16 Dec 2024 12:00:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNEOX-0004GX-Va
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:56:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tNESC-0005hO-Dr
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:00:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNEOW-0005e0-0i
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:56:33 -0500
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tNES8-00068p-7W
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:00:18 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734368190;
+ s=mimecast20190719; t=1734368414;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5YC3H5hxesju5n1SIeu4R5CVLoqAEpWTMjq+Ga2jNLI=;
- b=YAMlK9/Mp+nqT/atSXEHCxL7ASntJA08U5pq29PojOChVDJfEla6lrstRw3HErhlUrwD+f
- n19l245S1CAOEiQZmgcRGIYarrUk4PuUusLli957YaQkNDoQundFHh83nd5KJ1b3wdi28h
- uH+x7OiCjh03MJnKGEGDllfRcu4XdWk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-421-Lceao1DLMk-Bb8_3rQhBYA-1; Mon, 16 Dec 2024 11:56:28 -0500
-X-MC-Unique: Lceao1DLMk-Bb8_3rQhBYA-1
-X-Mimecast-MFC-AGG-ID: Lceao1DLMk-Bb8_3rQhBYA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43582d49dacso6129375e9.2
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:56:28 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734368187; x=1734972987;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=5YC3H5hxesju5n1SIeu4R5CVLoqAEpWTMjq+Ga2jNLI=;
- b=OQqr7alNZIJgzfMIE5FxqUmN16iyWJsFa3l52GPJGvN2fxAP3MbNyhpO4Lzzjf4KOq
- ERcteYqDGYyGNoQ57JyaSwPXpeIHEqqhB5Z8agjUP4jpt+Acm0lwjDT9QU+FERt5LbVs
- KGJxx7eM842orRnPQJRYHIKsYdsS1eIVVTe1srbdhmqGqPETsGjLAWq4dJ6Xm9D8Qt33
- T6Z2wodHUWNlvJTnH6q7+DzQjO2ru8SEyglB8GxmkXvnAiXXEjb0KUJwIZ1hUS2cFN5p
- GBpcNIAOkJAe3onCIjXzI1RdZvJs2CgRizuoXiuVm8DgUrghlZA+uXNVnDOTqN0P0xy1
- V1Mg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK+oNs3o/VOD8SM31rG6dpJY1PP0NYV8Nc/31Bv4ozphcwLBZgGvkPMmWJzrPV3sy/umido3zK2nA2@nongnu.org
-X-Gm-Message-State: AOJu0YxdOQhIPDqfRjuMWUgELPkkw8JjyUXCUWr2q9/gG2qNzhjUSapr
- sW17bqtAZhwvhcPWDKzelQomfnQBXf+Utkk8riL9tITP7Nkw+qqg3OQjDg1s4U+bTfcT/P0y1ZZ
- HR8zlSrjtNOyK5ZvZhwlRW6a2RMrjVjElgjWpVQpgnf6mFK0TMWml
-X-Gm-Gg: ASbGncu9pIjcRV79FCH4IK1AXA5FYzYL5p2jYRQv1EJK9lZ306bkPOf+hHfULSENXXF
- DZ/5YSgZC5s15zViDC0AWV1baDDVGIqokzTybo0ruppWwhJjJe+AN92SmikHmnidFxBFtJnnGaN
- 00clw5o7FdV1V0bkgq0HMxFqpxaBbsLIP4eC8uVxASq7Pu+HiSWA57eWvyZ4ubduaH2oVt7xfER
- exT0RdDg5oyb5fIfLE/B6bNE7w70onpCvfkiSxiyHxIZ+9v0oh7SvNcdDSCT/aMJ6EIRxzMAuze
- ZnmF2d5aN2dsM9XlW0oxv+NiFQYw5nG2WU2ueRyQkNJciViMgJoEwGYm0XnczhasFRipKnp1fCv
- P4X5r7aAB
-X-Received: by 2002:a05:600c:348f:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-4362aa9f682mr113934685e9.27.1734368187467; 
- Mon, 16 Dec 2024 08:56:27 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGnaOCNd480G9yf9ihtZjdgEVY/oBPneRv5o0wgsgcIFywVg18ua5YaEpxHd5HmKUl/BPeHag==
-X-Received: by 2002:a05:600c:348f:b0:434:a802:43d with SMTP id
- 5b1f17b1804b1-4362aa9f682mr113934485e9.27.1734368187143; 
- Mon, 16 Dec 2024 08:56:27 -0800 (PST)
-Received: from ?IPV6:2003:cb:c72a:f600:c577:b537:f52a:b994?
- (p200300cbc72af600c577b537f52ab994.dip0.t-ipconnect.de.
- [2003:cb:c72a:f600:c577:b537:f52a:b994])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43625553234sm148088255e9.3.2024.12.16.08.56.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 08:56:25 -0800 (PST)
-Message-ID: <eb6b9c83-fedb-4765-a902-695fe889e45d@redhat.com>
-Date: Mon, 16 Dec 2024 17:56:24 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=q1Ov2XF8Bfd0lpNvypBIiw/JaUwz0bdBJBIkRN/Bo30=;
+ b=NsoDki/kvORCQByPzPhnMtcGodXqcrFbOIXuRZVsMioaBwRzfdl6cP87/39UJ/K2IW/SI8
+ HAa9pDgEXybO5aA/CkhPnNwk27cIFKyU0+Bjc9We6RRFYyLpunOc3VX9kM7i2DahB+H7bM
+ seNY83t1mgGq5sN5hGKKvg8SFHVn8Bo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-aL26ZOMIOXKwalJGZKkHpA-1; Mon,
+ 16 Dec 2024 11:58:53 -0500
+X-MC-Unique: aL26ZOMIOXKwalJGZKkHpA-1
+X-Mimecast-MFC-AGG-ID: aL26ZOMIOXKwalJGZKkHpA
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A53311955EC7; Mon, 16 Dec 2024 16:58:45 +0000 (UTC)
+Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C6ADA1956056; Mon, 16 Dec 2024 16:58:43 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger@redhat.com, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+In-Reply-To: <87wmfzbmut.fsf@redhat.com>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <87wmfzbmut.fsf@redhat.com>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Mon, 16 Dec 2024 17:58:40 +0100
+Message-ID: <87ttb3bm4f.fsf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] s390x/pci: add support for guests that request
- direct mapping
-To: Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20241213225440.571382-1-mjrosato@linux.ibm.com>
- <20241213225440.571382-2-mjrosato@linux.ibm.com>
- <7e07ef1e-4fa5-40d7-85f9-d7a199901b4f@linaro.org>
- <46acb391-154e-43a1-a459-1646dc27fb33@redhat.com>
- <f1cba8bd-b15a-456c-8640-7c0ed221b2d3@linux.ibm.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <f1cba8bd-b15a-456c-8640-7c0ed221b2d3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -152,7 +81,7 @@ X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,52 +97,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.12.24 17:53, Matthew Rosato wrote:
-> 
->>>> +{
->>>> +    MachineState *ms = MACHINE(qdev_get_machine());
->>>> +
->>>> +    /*
->>>> +     * For direct-mapping we must map the entire guest address space.  Rather
->>>> +     * than using an iommu, create a memory region alias that maps GPA X to
->>>> +     * iova X + SDMA.  VFIO will handle pinning via its memory listener.
->>>> +     */
->>>> +    g_autofree char *name = g_strdup_printf("iommu-dm-s390-%04x",
->>>> +                                            iommu->pbdev->uid);
->>>> +    memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name, ms->ram,
->>>> +                             0, ms->ram_size);
->>>
->>> Is it a good idea to take the whole machine ram-size here?
->>> Could it be better to pass it as qdev property?
+On Mon, Dec 16 2024, Cornelia Huck <cohuck@redhat.com> wrote:
+
+> On Thu, Dec 12 2024, Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Connie,
 >>
->> I think we want all guest RAM, just like ordinary vfio on !s390x without a viommu would do.
+>> On 12/6/24 12:21, Cornelia Huck wrote:
+>>> Whether it make sense to continue with the approach of tweaking values =
+in
+>>> the ID registers in general. If we want to be able to migrate between c=
+pus
+>>> that do not differ wildly, we'll encounter differences that cannot be
+>>> expressed via FEAT_xxx -- e.g. when comparing various AmpereAltra Max s=
+ystems,
+>>> they only differ in parts of CTR_EL0 -- which is not a feature register=
+, but
+>>> a writable register.
+>> In v1 most of the commenters said they would prefer to see FEAT props
+>> instead of IDREG field props. I think we shall try to go in this
+>> direction anyway. As you pointed out there will be some cases where FEAT
+>> won't be enough (CTR_EL0 is a good example). So I tend to think the end
+>> solution will be a mix of FEAT and ID reg field props.
+>
+> Some analysis of FEAT_xxx mappings:
+> https://lore.kernel.org/qemu-devel/87ikstn8sc.fsf@redhat.com/
+>
+> (actually, ~190 of FEAT_xxx map to a single value in a single register,
+> so mappings are easy other than the sheer amount of them)
+>
+> We probably should simply not support FEAT_xxx that are solely defined
+> via dependencies.
+>
+> Some more real-world examples from some cpu pairings I had looked at:
+> https://lore.kernel.org/qemu-devel/87ldx2krdp.fsf@redhat.com/
+> (but also see Peter's follow-up, the endianness field is actually
+> covered by a feature)
+>
+> The values-in-registers-not-covered-by-features we are currently aware
+> of are:
+> - number of breakpoints
+> - PARange values
+> - GIC
+> - some fields in CTR_EL0
+> (see also
+> https://lore.kernel.org/qemu-devel/4fb49b5b02bb417399ee871b2c85bb35@huawe=
+i.com/
+> for the latter two)
+
+And the differences in GIC might be actually due to a GICv3 not being
+configured, together with running a recent kernel, which will zero the
+field. So we might actually already be able to handle it for most cases.
+
+>
+> Also, MIDR/REVIDR handling.
+>
+> Given that we'll need a mix if we support FEAT_xxx, should we mandate
+> the FEAT_xxx syntax if there is a mapping and allow direct specification
+> of register fields only if there is none, or allow them as alternatives
+> (with proper priority handling, or alias handling?)
+>
 >>
->> Matthew, I assume to handle virtio-mem, we would actually pass in here the result from s390_get_memory_limit(), which will cover initial+device RAM, correct? Until then, this would map initial RAM only.
+>> Personally I would smoothly migrate what we can from ID reg field props
+>> to FEAT props (maybe using prop aliases?), starting from the easiest 1-1
+>> mappings and then adressing the FEAT that are more complex but are
+>> explictly needed to enable the use cases we are interested in, at RedHat:
+>> migration within Ampere AltraMax family, migration within NVidia Grace
+>> family, migration within AmpereOne family and migration between Graviton=
+3/4.
+>
+> For these, we'll already need the mix (my examples above all came from
+> these use cases.)
+>
+> (Of course, the existing legacy props need to be expressed as well. I
+> guess they should map to registers directly.)
+>
 >>
-> 
-> Good point.  Using s390_get_memory_limit() sounds good to me; That will make v3 of this series dependent on the s390x virtio-mem series but sounds like you're sending that sometime this week anyway.
-
-If my testing is good and there are no further comments, I'll queue it 
-directly (no change to v2) to send it upstream.
-
-So it's probably a good idea to wait with a new series her.
-
-> 
-> I'll start testing on top of that with something like..
-> 
-> memory_region_init_alias(&iommu->dm_mr, OBJECT(&iommu->mr), name, ms->ram,
->                           0, s390_get_memory_limit(s390ms));
-> 
-
-Yes, I think so.
-
-
-We discussed at some point maybe requiring disabling uncoordinated 
-discarding of RAM (virtio-balloon), is that already done implicitly now?
-
--- 
-Cheers,
-
-David / dhildenb
+>> We have no info about other's use cases. If some of you want to see some
+>> other live migration combinations addressed, please raise your voice.
+>> Some CSPs may have their own LM solution/requirements but they don't use
+>> qemu. So I think we shall concentrate on those use cases.
+>>
+>> You did the exercise to identify most prevalent patterns for FEAT to
+>> IDREG fields mappings. I think we should now encode this conversion
+>> table for those which are needed in above use cases.
+>
+> I'd focus on the actually needed features first, as otherwise it's
+> really overwhelming.
+>
+>>
+>> From a named model point of view, since I do not see much traction
+>> upstream besides Red Hat use cases, targetting ARM spec revision
+>> baselines may be overkill. Personally I would try to focus on above
+>> models: AltraMax, AmpereOne, Grace, ... Or maybe the ARM cores they may
+>> be derived from. According to the discussion we had with Marc in [1] it
+>> seems it does not make sense to target migration between very
+>> heterogeneous machines and Dan said we would prefer to avoid adding
+>> plenty of feat add-ons to a named models. So I would rather be as close
+>> as possible to a specific family definition.=C2=A0 =C2=A0
+>
+> Using e.g. Neoverse-V2 as a base currently looks most attractive to
+> me -- going with Armv<x>.<y> would probably give a larger diff (although
+> the diff for Graviton3/4 is pretty large anyway.)
+>
+>>
+>> Thanks
+>>
+>> Eric
+>>
+>> [1]
+>> https://lore.kernel.org/all/c879fda9-db5a-4743-805d-03c0acba8060@redhat.=
+com/#r
 
 
