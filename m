@@ -4,83 +4,205 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F449E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:15:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90E88E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:16:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN9zI-000146-R6; Mon, 16 Dec 2024 07:14:12 -0500
+	id 1tNA0y-0001oi-5z; Mon, 16 Dec 2024 07:15:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tN9zH-00013E-Ad; Mon, 16 Dec 2024 07:14:11 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <baturo.alexey@gmail.com>)
- id 1tN9zE-00081v-R6; Mon, 16 Dec 2024 07:14:10 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5d3d143376dso5864269a12.3; 
- Mon, 16 Dec 2024 04:14:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1tNA0h-0001kJ-Af
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 07:15:53 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <joao.m.martins@oracle.com>)
+ id 1tNA0e-0008LL-P4
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 07:15:39 -0500
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG9NQvN017299;
+ Mon, 16 Dec 2024 12:15:33 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=c51t1JMBJuwme/s3cXda40Dow4JqsjrshYrhVryz1RU=; b=
+ ZzFcCHb0W/YKVFKvVI4AAFHK0O9C43H25IKYf8mUXjx6f0qPwyKom6zxcWpcfoty
+ Efymz4eWEVsJoNumVZrh2a3XG7IgwsPPRarFBJQbmbtWG2uPhkZSjEQA/ASe7XpZ
+ NgKio6Bex4W3wtSR5iPuTlGuwm5fCkZkNeVGWmCgJLywdtdXXikKQVlr0nC5okLz
+ sLkWWYu3MYgGReqFref8biO4s42J8KJoVce9ePBTjy8koc+Ektn8rGXQPx3POgQr
+ ydVpfepX+44/vcwWCm4Z99XF9gRFZnz2vLakK4+ydALvrMfNDg2Ne4vMr2i1NUov
+ Fw7SbPn0QKrbmXC7zoC7hw==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43h0m034mq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Dec 2024 12:15:33 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4BGB9kHw000719; Mon, 16 Dec 2024 12:15:32 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10lp2045.outbound.protection.outlook.com [104.47.58.45])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 43h0f76m53-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Dec 2024 12:15:32 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Bq7vqVY2sdSFIqArTAdnljXGxWfcBnlsjYCipgBVY0Jb/E07zrmfPEPk9WyZBbGIykFkn1bn6V+8UP6MS9VMGgGGSAnv49QcmHAMzR7ee+etBkh6JKMUAy7VfMCfMmVLooIOPAfPMrOovExaqc/PyFnDHTrWYU61dGWr8QEmaS/Z6bc3ZPC7U2OAHO8kk4WiiSGMU9PNkY91cG52oDhHhq+izF/31j+KfTp2kWM3Jk4EnhaOnUY3TeIeV5z9PE3bGJMOG9J5MGWdApEjXimg5KGHuVCFds1yHcxgCELOQXxIb2FL2DG039v2GuytZSeh+wDtOFbKW3AOHLvGTZc1Yg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=c51t1JMBJuwme/s3cXda40Dow4JqsjrshYrhVryz1RU=;
+ b=sr+xjSTLtKxGzKEoIszlO9xa66RtbPZlPZmgGCzB515IU4cYszj+44jYRYTWcnmsXpRThZP+Z9Nv2JhmYvxqGhCqSz+fqYVA6C9+byMWkw1ccIlNjbBxwebdglfvv2tTBsgibitlcigWiiC1F5zBnSYXtpsAbCTy7JAWY5aCzhrrpAiL8bfAzvHqNU360rMUD/1cbYDlkGCT4XWH1YZrNOPCfPN00nYMlBlcTe7P5yxCQk0uPXKbQOPRP/O7rLbvJS+l0cD4nE5Kg3fCwvkXHIFKYOXejtFge6rEOTgHzR5LZZctEhnX6alHyIM6nrdSZcZmt5qTRtozJTVCXCENdg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734351246; x=1734956046; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FNDxWqgFsGnWmRg1i9qY2ULYE2ALkrCOmLnQdvdwU6k=;
- b=Fl5y9urFB/QoBKDOKsUAtOEPOX56Ek3MKHQY79Ef5/588zhdWIj1iKeYpzYma1m1Wd
- 9d2z3u7iVljIQl/PRymiPMwHIaLD2keQN0VbZkbIPuf2Ovb/43tb4KzCOzp0/Qo5GxdS
- KHlsgMMKMouqfYYxbu4d/HLRPYtTm3OEAIaqlDy7AW0VPZTgdm1tPBUFX7r/IUVNjG6G
- oF3sUrqmGKvMlKx3NczaSKCBkNSO/XY7Za1G+esHGkmM22TbWG+CuBv19FYiBgGVujSw
- oYM58CT2S1VhfVRxlcyJgEzfU59jySTBE2xuVWHldlQ9X8VlMAu+JhWqRa7QNzVPvJPU
- wZfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734351246; x=1734956046;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=FNDxWqgFsGnWmRg1i9qY2ULYE2ALkrCOmLnQdvdwU6k=;
- b=wBg4S6BzKkvSgvQXyNamdtuYcMYPDvafUggF2JBNxepUN4/NE7MX+KjCPyuZ50bfWZ
- vgoNhAkEvnokJDiwn9w1FMqWBooqVGoCpmx5xHWRbQboZdhm9Ha1nRJEKJY4KrRmST5D
- NsGOp/b6kFVwwd0JSId8XGCamcYOJV6emtXIZ3ae5oH2EyiATqtD+/fXaNoWrz2YI6c3
- Dlvg/JFma7+ZzqSjn4rX0Pn9PtHoc0V/iEBNpcrH85onG+PlXs1o+KMJ5XEd7qFeM8WH
- KnF3DFCEuTGlJLA5rmgpNwYlJEinQVDCYkGmrcBH63sG2oxHFUGCTk4dHV6qy0LN3Z/G
- FsTw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVDqGbK3uO3GceAj63AWlFizoXaSDWQCSXEpIXQ/7MbNgsT6SuXFV6gai9de5VPJFVUQV+WqrwDdsSlyQ==@nongnu.org,
- AJvYcCW7J/55SEd+8UK1YFuUqX0NFHsabsqruvo8qa6RtqpUNnHmHTSylG56U6VsJuSf6Tym6GKP1ZMcyeyo@nongnu.org
-X-Gm-Message-State: AOJu0YxOCj36RtGVZNZDHHwo5clb1QYSK6oDFHbJpAK7mBSyRydot8Ai
- /KvGGzR6J3GFK7rBN1C/00ZKihTVUVBLv9YiAOn3KlKQl4ZiAOiLIPLToOYpWSRqJw190iD/IGR
- F6WbZkeiXaMl8un/eCqwIakLsEOA=
-X-Gm-Gg: ASbGnctVfTN4Iv2WkYQf44Voa1HUj33jBBYRgp7J4gDYi0vjFYf57HLsWhbJ50Z9Qd8
- iJ5L72amS/M8f8E74AjgksoZ66Or17VZLClKcEw==
-X-Google-Smtp-Source: AGHT+IEK0N40SMWBroWHewoUVrHNyWu9tRfYcp5unYtNm5L1hjseze+O95Vb9gpwIMgJZCv2vPEYKowGrlAkDqkU6Kg=
-X-Received: by 2002:a05:6402:5213:b0:5d0:8664:9f56 with SMTP id
- 4fb4d7f45d1cf-5d63c30bb5cmr13089661a12.11.1734351245797; Mon, 16 Dec 2024
- 04:14:05 -0800 (PST)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=c51t1JMBJuwme/s3cXda40Dow4JqsjrshYrhVryz1RU=;
+ b=n6+ftoXCa6NR7//MHu1+J74ifMfFXvqee29lzwhyGVWuYybLLzBgMVGJqAnVK6zOqSkqcLfNZcag6M3KQ/X1oN5YF7kmUyXTxuGsyPzNoDxHtR8D6s4tzTnKrXvgKWMgcXprfIov9tNBc0Jz7AnjsSXkyqBYhdXWzckA6cpfY48=
+Received: from PH0PR10MB5893.namprd10.prod.outlook.com (2603:10b6:510:149::11)
+ by BLAPR10MB4834.namprd10.prod.outlook.com (2603:10b6:208:307::8)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.22; Mon, 16 Dec
+ 2024 12:15:30 +0000
+Received: from PH0PR10MB5893.namprd10.prod.outlook.com
+ ([fe80::79f1:d24f:94ea:2b53]) by PH0PR10MB5893.namprd10.prod.outlook.com
+ ([fe80::79f1:d24f:94ea:2b53%6]) with mapi id 15.20.8251.015; Mon, 16 Dec 2024
+ 12:15:30 +0000
+Message-ID: <6aeef4b7-728e-47e8-b51f-eb2870d6df7d@oracle.com>
+Date: Mon, 16 Dec 2024 12:15:23 +0000
+Subject: Re: [PATCH 1/9] vfio/container: Add dirty tracking started flag
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Hyman Huang <yong.huang@smartx.com>, Maor Gottlieb <maorg@nvidia.com>,
+ qemu-devel@nongnu.org
+References: <20241216094638.26406-1-avihaih@nvidia.com>
+ <20241216094638.26406-2-avihaih@nvidia.com>
+Content-Language: en-US
+From: Joao Martins <joao.m.martins@oracle.com>
+In-Reply-To: <20241216094638.26406-2-avihaih@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: LO6P123CA0012.GBRP123.PROD.OUTLOOK.COM
+ (2603:10a6:600:338::18) To PH0PR10MB5893.namprd10.prod.outlook.com
+ (2603:10b6:510:149::11)
 MIME-Version: 1.0
-References: <20241205112304.593204-1-baturo.alexey@gmail.com>
- <20241205112304.593204-8-baturo.alexey@gmail.com>
- <69de5c69-1583-4a0f-9db6-c61e721adbe1@ventanamicro.com>
-In-Reply-To: <69de5c69-1583-4a0f-9db6-c61e721adbe1@ventanamicro.com>
-From: Alexey Baturo <baturo.alexey@gmail.com>
-Date: Mon, 16 Dec 2024 15:13:54 +0300
-Message-ID: <CAFukJ-Dwfg33GuXs9oqe0D5KqGBtBydn9AQ6p96iD6vSi_akHQ@mail.gmail.com>
-Subject: Re: [PATCH v12 7/7] target/riscv: Enable updates for pointer masking
- variables and thus enable pointer masking extension
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: richard.henderson@linaro.org, zhiwei_liu@linux.alibaba.com, 
- liwei1518@gmail.com, alistair23@gmail.com, frank.chang@sifive.com, 
- palmer@dabbelt.com, Alistair.Francis@wdc.com, sagark@eecs.berkeley.edu, 
- kbastian@mail.uni-paderborn.de, qemu-devel@nongnu.org, qemu-riscv@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ebf27d0629621d72"
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=baturo.alexey@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR10MB5893:EE_|BLAPR10MB4834:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0db43725-3abc-4656-462d-08dd1dcb5521
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cHhJNHBJN3lMeVMxdDFucVVOcjJaRzRrRXVtMVNoK055azFuaDk2Y2JnZVY0?=
+ =?utf-8?B?OFNERlZXa25La1B3L3J0d0lYeWFLMkVxTlQwTmhBWmFaK3c1T2VZMzJjVjhH?=
+ =?utf-8?B?OThDWVlMTTVuTy9HOHNQcms3NnFxOW5ZQk5jZm1neTBKV2thWG85QnFpZVph?=
+ =?utf-8?B?Z3VqTUlmLzEyVGdmTWV3UkNSSyt5UEtzaUFJQ0I1UWxQdnRXNGhSWnAySFR2?=
+ =?utf-8?B?UU40STk2UlI4eS9LSHlSMkhMalhBOU1MaUU0N1M4dlArckxPaEYzN08yMHF1?=
+ =?utf-8?B?OEV6c3dpbmRlQU52NHkyby93MUd1aVVZT0drT3pMeWtZK3pwbXhLMU5Id0dp?=
+ =?utf-8?B?MlhhUnlBTTFSbjg2L1Z3ZzF1TXd3Q2pMQlpVaXdraTBUWnJ4MTVNTHZaU08w?=
+ =?utf-8?B?djYyWlZXSVFhK1FOZWdqY2VnS1Qyc2htQjV5OWJRQnU1R0c0RzhnYXBMNU9n?=
+ =?utf-8?B?elU4VUh1aU5oRWVPV3FNVytMbW9LeWFibUh0SGpiZTVXSGNvUk5aY09tSVJy?=
+ =?utf-8?B?eUFRZm1sUE0yYU9DdGxIcVJVMnBwMDlMMG1Pa2Z6UXJvVVpjRng3ay9pREJH?=
+ =?utf-8?B?S0UyUWRVRkZLSDVHZXNaRW82OFNleDc0cUhWcGs5RTVXQ2JsSFdlVEdVYy9y?=
+ =?utf-8?B?OFozVGtOZjR0VEZjMlRXeTBrTHQ5NG5FbnlnaW9FTjZhVE5BbElYNk44NUs1?=
+ =?utf-8?B?VVRNY2l1ekF1ajNYd2pTaFNxZ1V1d09hZzdEM3BLbS9MWjJ0TmcvKzdleHhP?=
+ =?utf-8?B?WW1hQ3N1UEpZRkExaG9QYjVVQVFRWFNmcUhLZTVNRGJHbGZLd1N4QnFWS0cx?=
+ =?utf-8?B?VTBhNFhtYTBDR1d2U1pRa1NZaVJVRjJrSGZza1cvNnV4cGNKeXBMNEhienBS?=
+ =?utf-8?B?NDgzOERlOGEwU2xid21seGx6MDdOWnQxQUJva2J2UmNaVlhLN1NCamtlSG52?=
+ =?utf-8?B?OXVyY29ENFdDUkx1QXdiR0xUbGdmaVFBa0FnNmhCZmIvNStYcW56S0xKWmpM?=
+ =?utf-8?B?N0xOV2kycGtQaE4xRjZyM0VvSmpaa2NKajZFVGFEUUFwOHFNN2NiUXRwdlc1?=
+ =?utf-8?B?eVQ4RmZXc1E2MDN6OGlybWVLdE80TlpGQlR2U1ZwSlVweTJCbXVERUJGV3lZ?=
+ =?utf-8?B?WEltdTRhTmNybCtKQUR3QW5XZCt6cTk2SlRkSTE5cnBQSWQ2SnA2UmViMi9G?=
+ =?utf-8?B?UDYzUDNhZ1Fzdm93L3NmdXJESnBSejVlbFZabytQQ0lvQkNmalJ2VEtDZ2JP?=
+ =?utf-8?B?T2ZMVUtjZ0MybDVtd1lJMzdTcnIvUktOWXM2T2greW5LcWQzQlZ1bUc2Umph?=
+ =?utf-8?B?K1dRWmQreG0rY2x6eFEzQ3ViZlpDRCt3OU92WTN1VXB3WmlKdnBmTWxraEQw?=
+ =?utf-8?B?Rk9FRkRMS1NqQkN3cWFPOWdkdmVDOC9EN2dkT3JPL0xhYlBOTy9wMUdBRElt?=
+ =?utf-8?B?VHk5bXNVS0xWWk9XdzByQmtOUk5EODVqWjhKM0JNcVRyS0hhc0JxUDZWWlVQ?=
+ =?utf-8?B?b2FWQTRRclR1TnZubUpnYXhLdWtDbTVsQ3p2OEU4byt2bkd2YkpWZWlMaHlN?=
+ =?utf-8?B?U0tjSkdpZ2FILzN4QTk1ci9qYW1Xb0pSVnNKTk0rMTgxM2orbVU5bTFDaTFx?=
+ =?utf-8?B?Y3gwVHA2V3lpQ3JIYUN1N1Zxdjhqa2hiS3llSGFvOE1MYVlzeS9MdU5wOGp1?=
+ =?utf-8?B?eHdoNDV5MFJPU1cwTDJoTmFBd25ScGRYUEtreEFGaXNNRWlNVlZwQm4zclZN?=
+ =?utf-8?B?ODZ1Q0xCS2VUemZQcGkwR21hc3UzdFRwYWdjbnZKTjJ0ZGw0N21TaEhsclVW?=
+ =?utf-8?B?VFIwc0g2bWQyNDBhTVZacVRVWmRhdTloZmRVeHAzS2FxOFdReXJSd1hRVWlq?=
+ =?utf-8?Q?XwmYsLAOk8WJB?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR10MB5893.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(1800799024)(366016)(7053199007); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QzgwTmxSdjl6cmQ5d252NTRuQk9JSFdteHdoS0hOSmdmNlRBYm8zZ0ZWbnNT?=
+ =?utf-8?B?QURlKzdRbmV6YURoTWptY1BsbTN4NmJnR2RHdHVYYmlzQzBaMnh6QUMrNFd3?=
+ =?utf-8?B?Y09zU3N3OG5CejA5bytYWi9IOGVlS2IxSmYvcXdyVGRyeFNJR28yWTg4eWQy?=
+ =?utf-8?B?Q1dVWGp1WHRhcWo1WjlTakZlN0lRenZSWVVRN0FXeDBFWkc1NHczVWdmenpa?=
+ =?utf-8?B?NlEyREVGaFR5b0dFN2k4cUZCZUgwK2xXZSs3Y2FlY00zZ29zcTBhUXFqUGxM?=
+ =?utf-8?B?WEYxRk5SaUhKYTRtOWc0SWpiMDFEYUhGeHBsbURFRVFEdklLL3AyZHZweHdE?=
+ =?utf-8?B?T2ZDUmxJUlBXS1RMcVhjRkdVQnVVK0owSjJ3YlJVN1dEUmQxTTNqWkFpZ1l3?=
+ =?utf-8?B?WW5HK3RoSWFkRUs2UG9SOHZMZC8wc1BCY3dZTUl0S2VoZDZja3lxVEpNM2Ex?=
+ =?utf-8?B?bVJmUSs5L1MyZVVBU0Nzak5CbGw2SCtXT0pUN0owWXlxK0xGWDNIblZhY0Rh?=
+ =?utf-8?B?cExWQXQ3dkZTanBRQzdwU1oyMTVKblcwSklFd1RNWTR5Wm1sVFZPNHZmaXM2?=
+ =?utf-8?B?Y1QwYTc2TXJCWXNic2I4TmFPb29kai9zVjZPeG1iM1JSSVBkYWdXQXppRzRt?=
+ =?utf-8?B?U0hIcVFvWWs4YWdmSTRjWEhqdFhpS1JtTWJUU2FQdW5ybWlrUjBVTDVXNy9n?=
+ =?utf-8?B?NXIxR1FPaXlRZTZsdmVacFBRK2VjNGRrYXlJWFNGK0ROOFJLREJZZ0lRU0Zl?=
+ =?utf-8?B?d1V1VmVGOXhvUVpGOTFyR1VDSXluK2FTVTdxOGU5RUgrL0FmV1Q4ZUxHMVZT?=
+ =?utf-8?B?K1hYR1ROcm9JTytlbUplWDFoKzJiK1JMR0tYMUNyVEpqayt3S0srNXBiQmU2?=
+ =?utf-8?B?TStqaVZQMTFNTmkydnZmTzAzQ3NWOHRLeUZ4dzYrdEhaVThXaDRkQ3ZiRDFM?=
+ =?utf-8?B?US80emdqY3NwQ28wVVRqNEVPT04zOTVJN01xdWVQZ1MwSkpnQ3ZiRjM2YVRZ?=
+ =?utf-8?B?eUttZ1VuYXA3bU1pY0h4SEgvTjcrQTJ2ZEJMa3ZZMFZnSFNDbDlrVVU5SWNa?=
+ =?utf-8?B?WTY1ZEc5ejRBd0w1WGhINlZNcUVsYWFUbkVwOG1GNnBvZzhqV1VabTV6Y09R?=
+ =?utf-8?B?RStIUmpFT2hTUXpNRWRDOStPV0J5aXdBR3Q3dzFOTWwreU9nbnd0ME1iNVZ4?=
+ =?utf-8?B?M1k5WGZ2NG5kRHVqMkZHM1p0OVBMTFk0cVp6LzZ1TzdkZEQzQlRFNzkwdmJw?=
+ =?utf-8?B?TER5cHY4cWZNRlFnRDFWZkVyeDlURFFHVFc0RXNJeHhhaVZCT0ZhVjNpajk1?=
+ =?utf-8?B?SVNYWXFHUGxQU1NHWTZNZWdUOVRsbXlMZXdBL05mdlJKTE1JeWVTM3JtRHM0?=
+ =?utf-8?B?eUZPV2xDM1BDUUNKRzZqWmE1Znl0M2tvREJFYkhXSVNVQjBHSEhCZ2pSUDRJ?=
+ =?utf-8?B?VUFQNnN2RkliS0YxeFVVSm5EUGdMNkxDRzZvalBEYytrWnRnVXA5S2NMcHFp?=
+ =?utf-8?B?SlM0RTh5WG53ZUZ2dDJ6ck50ZGlKSUxoa056UXliVjlLdE84a0l1MlJGR0RZ?=
+ =?utf-8?B?ejRwUS9NWHpFcWsxREFTaEpkK1lPeXF5UVh3YVNOVVJnWXRRNk42U011R0lk?=
+ =?utf-8?B?TGxLK3BESUNHaWVpSGRQczlBc1JSVXcrZngwQUZGSk1OaXdDYmczTnRtK2Nz?=
+ =?utf-8?B?RTRNcnQvTWttdjNJbU5LRWJidldjVlhrL0pOdTZ5TTIyakVxWTB6QVNnUXdP?=
+ =?utf-8?B?WXB3VGxIK1Bwak4wR2ZZNkF3RkN6K1VTNFNvMlYzRTBBZzUrM3pwZW5MSFhy?=
+ =?utf-8?B?dFQrc2VoTkdRWG14R0tJV3BTck81ckRLT1BHNjZ4UmNWWWlwb1dvY09MVWxn?=
+ =?utf-8?B?bktsYXNQQnJIS1U2WFViaVR5dHh5UDJIYmVDZUNGRGNGTnJ0ZEpJK2VjeWVw?=
+ =?utf-8?B?SlJqSDVrZk1tK1diRldYeml5RHFzQjQxUHhZVjMrZG55Q0N1ZHVncTFvdTJK?=
+ =?utf-8?B?ZWJuRzA2ejR6ZXM5aWNxT0ZEQXBKQVp0d0x3MGliTXlaQ3R3Y3plQzRBMnFE?=
+ =?utf-8?B?RW51MGM2YithMUNsMkt1VXYyUy9IcUVsc3JzZFRQeU1OekJ0S2FqL3loQTFZ?=
+ =?utf-8?B?Tnd2QWxEU1VsME8zdDR5QmpWZFJOZ0dxNGFHMXQ1NS9saGpJWGNENjJ2RmZH?=
+ =?utf-8?B?ZHc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: amftcEJPf41YBv494W/kiXHicFAExVe4G8z94ibzQ6JrtOsEdDUG12coaZVURZX/qfmmeNVBBiuQY0oGuxSoJyLsMkbpjR/WsxlSjY2kKuj0eR4JiE2wDFTDWGBf5+9l9i5wcy4TaiL+qwzuT4mHrIEXZMUIXBmlt+EfuthgML0WoSNmidoQx8jWy9YcmhDUzXrkZJTdiDKaSCUYNGuZntKERXZZPw6wkw/MFzBtxCtBXPW27F1yVkQM+BFxgPy0j2BqOkHzYNNxneXDvSZKc+5lLpfP9O7a7ZP3w6G6m2tgPPwt/Lu/sy1jVlZDa0qp/cLgBhIU3UlPFnQjOGXDduWwlq2srYQtv1Ta/A8Cz1DbLgRAGFSjAM6KmTMWc2zglIDWE3uW/LQjZhqa+Lkw5N83xaSKmMufAMZVK/pxTLZeg24V4D+Qawewmqm3NtZrFMEQBf+/MZcNNYk+w1mfgLvGB2UTPl5vfNvO4A8rU+RVwBUGcfLq06KL7vSc3WCZShqER9wQnRw5DI735kdOyzMdK+FGZz+Oo0wQ+V3k/6ylLYkD+xU6ym1x39af7+yfI71PasBYny+WLdPTlymAhjMMDY8HnCL4DBoivjtUbZc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0db43725-3abc-4656-462d-08dd1dcb5521
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB5893.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Dec 2024 12:15:30.2817 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: /N/ez1BytZTChp3Yiii+WK28ed2QTl3Nq2rwmDOcRTVkesPSIpywV0W02yn1FI+TIDs6jI3j1XgUhsK1e71ctCLb5YdlJT0L+Q8OLwDDPGs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BLAPR10MB4834
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-16_04,2024-12-16_01,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ spamscore=0 bulkscore=0
+ suspectscore=0 malwarescore=0 phishscore=0 mlxscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
+ definitions=main-2412160103
+X-Proofpoint-GUID: gNn4L2j8Raq8ux9b27_JGvRtEwtwwwEp
+X-Proofpoint-ORIG-GUID: gNn4L2j8Raq8ux9b27_JGvRtEwtwwwEp
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=joao.m.martins@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,232 +218,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ebf27d0629621d72
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 16/12/2024 09:46, Avihai Horon wrote:
+> Add a flag to VFIOContainerBase that indicates whether dirty tracking
+> has been started for the container or not.
+> 
+> This will be used in the following patches to allow dirty page syncs
+> only if dirty tracking has been started.
+> 
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
-Hi Daniel,
+Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 
-Indeed this series doesn't include the *Supm* extension, but it's mandatory
-for RVA23U64.
-As for the *Supm* itself, if I get it right, I don't think it should be
-always-on, unless the proper profile is selected.
-I think we might need to add extra flags like *ext_supm* and *ext_sspm*.
-Then, to avoid adding extra checks to the existing code, I think we could
-enable *Ssnpm* or *Smnpm* or both somewhere during the initialization if
-*Supm* is set. And do the same for *Sspm*.
-From what I see right now in the code, there's no mention of RVA23, so
-maybe we could just add some fields for the missing extensions and support
-them later, when RVA23 support is implemented.
-Personally, I'd like to do this in a separate patch after these ones are
-merged.
+Just a nit below, but it's optional.
 
-What do you think?
+> ---
+>  include/hw/vfio/vfio-container-base.h | 1 +
+>  hw/vfio/container-base.c              | 8 +++++++-
+>  2 files changed, 8 insertions(+), 1 deletion(-)
+> 
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 62a8b60d87..4cff9943ab 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -44,6 +44,7 @@ typedef struct VFIOContainerBase {
+>      unsigned long pgsizes;
+>      unsigned int dma_max_mappings;
+>      bool dirty_pages_supported;
+> +    bool dirty_pages_started; /* Protected by BQL */
+>      QLIST_HEAD(, VFIOGuestIOMMU) giommu_list;
+>      QLIST_HEAD(, VFIORamDiscardListener) vrdl_list;
+>      QLIST_ENTRY(VFIOContainerBase) next;
+> diff --git a/hw/vfio/container-base.c b/hw/vfio/container-base.c
+> index 6f86c37d97..48fc75cd62 100644
+> --- a/hw/vfio/container-base.c
+> +++ b/hw/vfio/container-base.c
+> @@ -64,13 +64,19 @@ int vfio_container_set_dirty_page_tracking(VFIOContainerBase *bcontainer,
+>                                             bool start, Error **errp)
+>  {
+>      VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +    int ret;
+>  
+>      if (!bcontainer->dirty_pages_supported) {
+>          return 0;
+>      }
+>  
 
-Thanks
+It's a nop when no state is changed; don't know if you wanna capture that here.
+Something like this below now that you track container dirty tracking status:
 
-=D1=87=D1=82, 12 =D0=B4=D0=B5=D0=BA. 2024=E2=80=AF=D0=B3. =D0=B2 12:48, Dan=
-iel Henrique Barboza <
-dbarboza@ventanamicro.com>:
+if (!(bcontainer->dirty_pages_started == start)) {
+	return 0;
+}
 
->
->
-> On 12/5/24 8:23 AM, baturo.alexey@gmail.com wrote:
-> > From: Alexey Baturo <baturo.alexey@gmail.com>
-> >
-> > Signed-off-by: Alexey Baturo <baturo.alexey@gmail.com>
-> >
-> > Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-> > ---
-> >   target/riscv/cpu.c | 6 ++++++
-> >   1 file changed, 6 insertions(+)
-> >
-> > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> > index 4e80dcd2e6..fd3ea9ce76 100644
-> > --- a/target/riscv/cpu.c
-> > +++ b/target/riscv/cpu.c
-> > @@ -186,11 +186,14 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
-> >       ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
-> >       ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf)=
-,
-> >       ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
-> > +    ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmpm),
-> > +    ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnpm),
-> >       ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1_12_0, ext_smstateen)=
-,
-> >       ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_0, ext_ssaia),
-> >       ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_11_0, has_priv_1_11),
-> >       ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_12_0, ext_sscofpmf),
-> >       ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSION_1_12_0,
-> has_priv_1_12),
-> > +    ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
->
-> I just realized that we're not adding "ext_supm":
->
-> "Supm Pointer masking, with the execution environment providing a means
-> to select PMLEN=3D0 and PMLEN=3D7 at minimum."
->
-> IIUC this is always enabled in the code so this would be a flag that woul=
-d
-> be always enabled, i.e. it would be a ISA_EXT_DATA_ENTRY that defaults to
-> "has_priv_1_13". "sscounterenw" is an example of this kind of extension.
->
-> If that's really the case I believe you can add "supm" in this patch or
-> maybe
-> a new patch right after. We need to advertise support for "supm" for RVA2=
-3
-> anyway.
->
->
-> Thanks,
->
-> Daniel
->
->
-> >       ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
-> >       ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-> >       ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
-> > @@ -1490,9 +1493,12 @@ const RISCVCPUMultiExtConfig
-> riscv_cpu_extensions[] =3D {
-> >       MULTI_EXT_CFG_BOOL("zvfh", ext_zvfh, false),
-> >       MULTI_EXT_CFG_BOOL("zvfhmin", ext_zvfhmin, false),
-> >       MULTI_EXT_CFG_BOOL("sstc", ext_sstc, true),
-> > +    MULTI_EXT_CFG_BOOL("ssnpm", ext_ssnpm, false),
-> >
-> >       MULTI_EXT_CFG_BOOL("smaia", ext_smaia, false),
-> >       MULTI_EXT_CFG_BOOL("smepmp", ext_smepmp, false),
-> > +    MULTI_EXT_CFG_BOOL("smmpm", ext_smmpm, false),
-> > +    MULTI_EXT_CFG_BOOL("smnpm", ext_smnpm, false),
-> >       MULTI_EXT_CFG_BOOL("smstateen", ext_smstateen, false),
-> >       MULTI_EXT_CFG_BOOL("ssaia", ext_ssaia, false),
-> >       MULTI_EXT_CFG_BOOL("svade", ext_svade, false),
->
->
+>      g_assert(vioc->set_dirty_page_tracking);
+> -    return vioc->set_dirty_page_tracking(bcontainer, start, errp);
+> +    ret = vioc->set_dirty_page_tracking(bcontainer, start, errp);
+> +    if (!ret) {
+> +        bcontainer->dirty_pages_started = start;
+> +    }
+> +
+> +    return ret;
+>  }
 
---000000000000ebf27d0629621d72
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Daniel,<div><br></div><div>Indeed this series doesn&#39=
-;t include the <b>Supm</b> extension, but it&#39;s mandatory for RVA23U64.<=
-/div><div>As for the <b>Supm</b> itself, if I get it right, I don&#39;t thi=
-nk it should be always-on, unless the proper profile is selected.</div><div=
->I think we might need to add extra flags like <b>ext_supm</b> and <b>ext_s=
-spm</b>. Then, to avoid adding extra checks to the existing code, I think w=
-e could enable <b>Ssnpm</b> or <b>Smnpm</b> or both somewhere during the in=
-itialization if <b>Supm</b> is set. And do the same for <b>Sspm</b>.</div><=
-div>From what I see right now in the code, there&#39;s no mention of RVA23,=
- so maybe we could just add some fields for the missing extensions and supp=
-ort them later, when RVA23 support is implemented.</div><div>Personally, I&=
-#39;d like to do this in a separate patch after these ones are merged.</div=
-><div><br></div><div>What do you think?</div><div><br></div><div>Thanks</di=
-v></div><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"lt=
-r" class=3D"gmail_attr">=D1=87=D1=82, 12 =D0=B4=D0=B5=D0=BA. 2024=E2=80=AF=
-=D0=B3. =D0=B2 12:48, Daniel Henrique Barboza &lt;<a href=3D"mailto:dbarboz=
-a@ventanamicro.com">dbarboza@ventanamicro.com</a>&gt;:<br></div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex"><br>
-<br>
-On 12/5/24 8:23 AM, <a href=3D"mailto:baturo.alexey@gmail.com" target=3D"_b=
-lank">baturo.alexey@gmail.com</a> wrote:<br>
-&gt; From: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail.com" tar=
-get=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Signed-off-by: Alexey Baturo &lt;<a href=3D"mailto:baturo.alexey@gmail=
-.com" target=3D"_blank">baturo.alexey@gmail.com</a>&gt;<br>
-&gt; <br>
-&gt; Reviewed-by: Alistair Francis &lt;<a href=3D"mailto:alistair.francis@w=
-dc.com" target=3D"_blank">alistair.francis@wdc.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 =C2=A0target/riscv/cpu.c | 6 ++++++<br>
-&gt;=C2=A0 =C2=A01 file changed, 6 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c<br>
-&gt; index 4e80dcd2e6..fd3ea9ce76 100644<br>
-&gt; --- a/target/riscv/cpu.c<br>
-&gt; +++ b/target/riscv/cpu.c<br>
-&gt; @@ -186,11 +186,14 @@ const RISCVIsaExtData isa_edata_arr[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_=
-0, ext_smaia),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1=
-_12_0, ext_smcntrpmf),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12=
-_0, ext_smepmp),<br>
-&gt; +=C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smmpm, PRIV_VERSION_1_13_0, ext_smmp=
-m),<br>
-&gt; +=C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(smnpm, PRIV_VERSION_1_13_0, ext_smnp=
-m),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(smstateen, PRIV_VERSION_1=
-_12_0, ext_smstateen),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(ssaia, PRIV_VERSION_1_12_=
-0, ext_ssaia),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(ssccptr, PRIV_VERSION_1_1=
-1_0, has_priv_1_11),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(sscofpmf, PRIV_VERSION_1_=
-12_0, ext_sscofpmf),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(sscounterenw, PRIV_VERSIO=
-N_1_12_0, has_priv_1_12),<br>
-&gt; +=C2=A0 =C2=A0 ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnp=
-m),<br>
-<br>
-I just realized that we&#39;re not adding &quot;ext_supm&quot;:<br>
-<br>
-&quot;Supm Pointer masking, with the execution environment providing a mean=
-s<br>
-to select PMLEN=3D0 and PMLEN=3D7 at minimum.&quot;<br>
-<br>
-IIUC this is always enabled in the code so this would be a flag that would<=
-br>
-be always enabled, i.e. it would be a ISA_EXT_DATA_ENTRY that defaults to<b=
-r>
-&quot;has_priv_1_13&quot;. &quot;sscounterenw&quot; is an example of this k=
-ind of extension.<br>
-<br>
-If that&#39;s really the case I believe you can add &quot;supm&quot; in thi=
-s patch or maybe<br>
-a new patch right after. We need to advertise support for &quot;supm&quot; =
-for RVA23<br>
-anyway.<br>
-<br>
-<br>
-Thanks,<br>
-<br>
-Daniel<br>
-<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0=
-, ext_sstc),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_1=
-2_0, has_priv_1_12),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_1=
-2_0, has_priv_1_12),<br>
-&gt; @@ -1490,9 +1493,12 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensio=
-ns[] =3D {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;zvfh&quot;, ext_zvf=
-h, false),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;zvfhmin&quot;, ext_=
-zvfhmin, false),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;sstc&quot;, ext_sst=
-c, true),<br>
-&gt; +=C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;ssnpm&quot;, ext_ssnpm, false)=
-,<br>
-&gt;=C2=A0 =C2=A0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;smaia&quot;, ext_sm=
-aia, false),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;smepmp&quot;, ext_s=
-mepmp, false),<br>
-&gt; +=C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smmpm&quot;, ext_smmpm, false)=
-,<br>
-&gt; +=C2=A0 =C2=A0 MULTI_EXT_CFG_BOOL(&quot;smnpm&quot;, ext_smnpm, false)=
-,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;smstateen&quot;, ex=
-t_smstateen, false),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;ssaia&quot;, ext_ss=
-aia, false),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0MULTI_EXT_CFG_BOOL(&quot;svade&quot;, ext_sv=
-ade, false),<br>
-<br>
-</blockquote></div>
+>  
+>  int vfio_container_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
 
---000000000000ebf27d0629621d72--
 
