@@ -4,67 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8856E7716A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Dec 2024 21:38:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0753AE77183
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 00:50:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMwIk-0005Bo-Rw; Sun, 15 Dec 2024 16:37:22 -0500
+	id 1tMzIt-0001EP-FZ; Sun, 15 Dec 2024 19:49:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tMwIh-000596-Kz; Sun, 15 Dec 2024 16:37:20 -0500
-Received: from out203-205-221-242.mail.qq.com ([203.205.221.242])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tMwIe-00015J-QP; Sun, 15 Dec 2024 16:37:19 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1734298612; bh=TJjZMs7FrhFO7tdzWpuWUKuaFUOpqZNElm73YzJdYRQ=;
- h=From:To:Cc:Subject:Date;
- b=Wu6gv/Iit/PFH7iWloIcv6OLm7NfYOUasfHBkPddZqg1C+pnrhK2IwCC8DvX7OaXg
- 7CS8hWy2TR+7/b1Oii0pefeQERCMB7nQEz50Iai1XTJTyINuy9MRCpvYt5Ee8z2l6+
- n1zo3oS34XKiNfqgP/3UCA/y2RWP2OQtlKRH9Z64=
-Received: from qq.com ([171.213.183.116])
- by newxmesmtplogicsvrszb20-0.qq.com (NewEsmtp) with SMTP
- id 9321843C; Mon, 16 Dec 2024 05:36:50 +0800
-X-QQ-mid: xmsmtpt1734298610t0bi8nnlr
-Message-ID: <tencent_1993B55C24DE7979BF34B200F78287002907@qq.com>
-X-QQ-XMAILINFO: OGZxhFXqN7PJrgxZbfykKsvYPE36Ys8+B6nzHGT2OWpf1cEEihnjVrHL9z5pF2
- E9s5nHy3n5TsDag3VLkQDyIxPPXbiaMevp7tY16kwo6q8H8uI4kMZ5ZkgqFcTVtXTmJrSQC3mVGH
- voKM9XYHoz22D36ExidWnnag1zijJRSie9lNgk0F+SAUzAACCs2vKQvRNT+D11O41ayKNTMYy/pC
- XrAZtxr8gqRo9mZdMUWZNnzWkkPf159mTcDAjbFdbyb0ntnp7ookhlmKgILyb/suPAYsEx20rJE2
- PfeZwQeznJCfZH2brxUiNyE6gta6MC3hFSFXB0cP3uiS+5OAZPn5FrU0Cxz3fPEBgznDDWUd1DRL
- iXBPmZH7XSxfzNUeNIofM/caAhBiSOcsGeyn4lLcVB0ZI+ZXsIQBB+vrbopro1EhBXSkDls5ySaj
- L0M9Guqy7n0o0Bym17x1BTFeQJWIfB8RFg5ivZZ9e3P6Qzs80RTPbzDiE4aH0urCnRGLjkwoJnTp
- gul+HQLUQXa8/hlK1ap9KJ/CnS7zFm4VJpZ66yKiyQ98pSH8X9LcUuxgqvQQ+oX+RqNN4Sale4BJ
- sO1EGmcNaXVB9v1hVhNEMb7r9YOEZGTp7j0BH9hTPiic6SO4tMBhrDrSP0HHT84ddhHDtBrI3oiP
- aITYiEbHAOaKlotMMCMD22V6VVLj9QYNLUQKpNs19x/vTdDXNNgovjcwFghPkv99FDaRwUMb1wnc
- DgQdF4OD6dRrnps2eySGOC7zkW0lfpwmzRXAT4uB1v7ydj4VEhrh7Bebv6gdBV2pUIrNuYZXPL+i
- Mnms1jIRO8pB2ExgLUAwV+K16OV/fPjG9BrKu/CMItTWj5Lkip+fXYvflDXz7ANJ3eLAJR1r9iLJ
- 1L00Y+sAqxd2pXRvk9fFQ8T15A3O/BR0s3NxtuMEiNarhYZQvylt4lLGq2fNzB6VsaaqC/IlxQ+V
- EE7ZrEM48=
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com, alex.bennee@linaro.org,
- mario.fleischmann@lauterbach.com, Yanfeng Liu <yfliu2008@qq.com>
-Subject: [PATCH v4] riscv/gdbstub: add V bit to priv reg
-Date: Mon, 16 Dec 2024 05:36:35 +0800
-X-OQ-MSGID: <20241215213635.15902-1-yfliu2008@qq.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tMzIr-0001EC-NE
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:49:41 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
+ id 1tMzIm-00072R-7T
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:49:41 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-728f1525565so4121048b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 16:49:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1734310172; x=1734914972; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=EkAbQ8l4cE3htAJebY446JQ2pMWQgz+noRlfRZ4NeVQ=;
+ b=MCSOqlVHkVrmVxxwqo8fFDdAiDm0caSy/u4CNDkH8myb+pePbspbD2tFQdy334Lavn
+ 0k99gdMdcPpE+72qqp8oPZlSefUi3lWN8PZW0j7i1oNycud5+nW1cswOeFXq47otjT1P
+ T1pOf+5uDY+BTDHC75u/SyCXRVp7wnn48qde4165l0TmxzdO04lw5IFj2cduoEfkeRew
+ /4G94kVOIlCWoVa0qdfBo2I8ddsuS6JQ9ntqjZ4XQZMZ2H6HGtvv3t6kbbx6DMp2BZ3C
+ qWHI8o72f7kCbQIgJ04zfHU/dwfxfdXlOQJBpzhTMzZNg5SuL7VRmLAvB3mGo0GTvQWK
+ kh2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734310172; x=1734914972;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=EkAbQ8l4cE3htAJebY446JQ2pMWQgz+noRlfRZ4NeVQ=;
+ b=G9fbrX6qWNuMbnE0i6QY+7i1X1Zt9HZNnrgjblIvP15WAIb2Kt04G9wxXQJNcGiNKo
+ v9PifFvTQKjMgvVhVM6shIGZ1ijeRP2XKYtS6A0qkIREC788kwIGxMvFeJOeeIv28E3N
+ Nm2Sm4kCueILqDO+AKkM0w4+1gIjKbI+oL6DKWh6s/HlT3dRH7JBopnK4FyEj0ppfnYj
+ 2LtSRGva67aW6aGlz1iyRtDUcVTZ+fAZPvv6bb/oFomGtweJhZJEksANy+Iw7rqBudKB
+ 6YFABGUnH3Sh8lJhQtQ/jRkKW/mCriWYW6H+E99fmzZXxpxDyyl7ILiGrumUe8/98buY
+ AUuA==
+X-Gm-Message-State: AOJu0YzDz9D7mhyQtvU6jlxGdo5Nd8hT43VektgKTzrFKMwA4ggAT+vc
+ +AW07rG6pDKV7Qb1oSqVjTTaJVGbPohqZg47LlKHuyI9bJJ7ko2xsk3IRpIaxyi68c18T8U6j5x
+ QxQs05WE1ZKEmIUdDQ0bbOxFljI+jKE092a9OFk8vUYhTKoq/acnpANNmnmKJfENHWXk/8tbXZM
+ 6gh6qose6X1uo0iHdesGQJ0P2Bg32HgEVBtCQScZUBEAf9L2U=
+X-Gm-Gg: ASbGncuZvnKNZbbq1/UaZrKLElhOqc1mxpY1M70u6RAJeuEyTipz0NX36+o9TjsQL6W
+ 8i+tyRUWGbleCYooAxE3HFtvRJRDi2hiGqV72J8eB5LFwLYkNKyM3YQcPytuoGROF/IttuGNZUM
+ wQ7Ii83ePOWKb2ElddWwdEwq+oTNCJv28G5vTaIj19/PAtO709ELgrNeR1g90p3n++X3f0zqcXV
+ qVvcWwfjuIRTs+oAXHoBD9RkTH2+9RXdQhTlNeoqZez87HjUlYV/z1FB/3KtlDYJY7Je9zJWarE
+ +6EL/XTp
+X-Google-Smtp-Source: AGHT+IFik9rUa0aQDkCaFNDFpKFtw5PhG2sMtdXMOgxisPqilqhXwKazPWcScO03cVyX16CPUstvEQ==
+X-Received: by 2002:a05:6a21:8985:b0:1e2:5c9:65e0 with SMTP id
+ adf61e73a8af0-1e205c98ae6mr7213125637.32.1734310172128; 
+ Sun, 15 Dec 2024 16:49:32 -0800 (PST)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-801d5addbf9sm3059586a12.47.2024.12.15.16.49.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 15 Dec 2024 16:49:31 -0800 (PST)
+From: Jason Chien <jason.chien@sifive.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Andrey Smirnov <andrew.smirnov@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-arm@nongnu.org (open list:MCIMX7D SABRE / i...),
+ Jason Chien <jason.chien@sifive.com>
+Subject: [RFC PATCH 0/6] Avoid contention for PCIIOMMUOps between IOMMU and
+ PCIe host
+Date: Mon, 16 Dec 2024 08:48:51 +0800
+Message-ID: <20241216004857.9367-1-jason.chien@sifive.com>
+X-Mailer: git-send-email 2.43.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=203.205.221.242; envelope-from=yfliu2008@qq.com;
- helo=out203-205-221-242.mail.qq.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=jason.chien@sifive.com; helo=mail-pf1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,60 +109,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This adds virtualization mode (V bit) as bit(2) of register `priv`
-per RiscV debug spec v1.0.0-rc4. Checked with gdb-multiarch v12.1.
+When PCIIOMMUOps.get_address_space() is already registered by the pci host,
+e.g. TYPE_DESIGNWARE_PCIE_HOST, IOMMU cannot overwrite this hook without
+breaking the PCIe translation rule, which means that IOMMU and the pci host
+cannot coexist.
 
-Note that GDB may display `INVALID` tag for `priv` reg when V bit
-is set, this doesn't affect actual access to the bit though.
+This RFC introduces a new callback, PCIIOMMUOps.set_memory_region(), and
+an API, pci_setup_iommu_downstream_mem, to avoid the contention for
+PCIIOMMUOps.get_address_space().
 
-Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
----
- target/riscv/gdbstub.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+Jason Chien (6):
+  include/hw/pci: Add a callback to set the downstream memory region of
+    a pci bus
+  hw/pci: Add an API to set the downstream memory region of a PCI bus
+  hw/pci-host: Enable DW PCIe host to send memory transactions over
+    specific mr
+  hw/riscv/riscv-iommu: Allow PCI hosts with iommu_ops registered
+    connecting to the IOMMU
+  hw/riscv/riscv-iommu: Acquire device IDs dynamically
+  include/hw/pci: Send PCI dma requests with memory attributes
+    containing BDF
 
-diff --git a/target/riscv/gdbstub.c b/target/riscv/gdbstub.c
-index c07df972f1..18e88f416a 100644
---- a/target/riscv/gdbstub.c
-+++ b/target/riscv/gdbstub.c
-@@ -213,7 +213,10 @@ static int riscv_gdb_get_virtual(CPUState *cs, GByteArray *buf, int n)
-         RISCVCPU *cpu = RISCV_CPU(cs);
-         CPURISCVState *env = &cpu->env;
- 
--        return gdb_get_regl(buf, env->priv);
-+        /* Per RiscV debug spec v1.0.0 rc4 */
-+        target_ulong vbit = (env->virt_enabled) ? BIT(2) : 0;
-+
-+        return gdb_get_regl(buf, env->priv | vbit);
- #endif
-     }
-     return 0;
-@@ -226,10 +229,22 @@ static int riscv_gdb_set_virtual(CPUState *cs, uint8_t *mem_buf, int n)
-         RISCVCPU *cpu = RISCV_CPU(cs);
-         CPURISCVState *env = &cpu->env;
- 
--        env->priv = ldtul_p(mem_buf) & 0x3;
--        if (env->priv == PRV_RESERVED) {
--            env->priv = PRV_S;
-+        target_ulong new_priv = ldtul_p(mem_buf) & 0x3;
-+        bool new_virt = 0;
-+
-+        if (new_priv == PRV_RESERVED) {
-+            new_priv = PRV_S;
-+        }
-+
-+        if (new_priv != PRV_M) {
-+            new_virt = (ldtul_p(mem_buf) & BIT(2)) >> 2;
-         }
-+
-+        if (riscv_has_ext(env, RVH) && new_virt != env->virt_enabled) {
-+            riscv_cpu_swap_hypervisor_regs(env);
-+        }
-+
-+        riscv_cpu_set_mode(env, new_priv, new_virt);
- #endif
-         return sizeof(target_ulong);
-     }
+ hw/pci-host/designware.c         | 18 +++++++++++++++---
+ hw/pci/pci.c                     |  6 ++++++
+ hw/riscv/riscv-iommu.c           | 21 +++++++++++++++++++--
+ include/hw/pci-host/designware.h |  2 ++
+ include/hw/pci/pci.h             | 20 ++++++++++++++++++++
+ include/hw/pci/pci_device.h      | 15 ++++++++++++---
+ 6 files changed, 74 insertions(+), 8 deletions(-)
+
 -- 
-2.34.1
+2.43.2
 
 
