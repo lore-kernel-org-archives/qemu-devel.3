@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FD15E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 15:17:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37917E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 15:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNCpw-0001EK-Fq; Mon, 16 Dec 2024 10:16:44 -0500
+	id 1tNCqV-0001OK-IL; Mon, 16 Dec 2024 10:17:19 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNCpk-0001Bz-9c; Mon, 16 Dec 2024 10:16:36 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ id 1tNCqT-0001NA-EN; Mon, 16 Dec 2024 10:17:17 -0500
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNCpi-0008KA-AK; Mon, 16 Dec 2024 10:16:31 -0500
+ id 1tNCqR-0008P0-Tj; Mon, 16 Dec 2024 10:17:17 -0500
 Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 26B832111F;
- Mon, 16 Dec 2024 15:16:26 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id E61B22111F;
+ Mon, 16 Dec 2024 15:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734362186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734362234; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=P2s+gCmqM5Sv7ZxSPSWF5o7JMNY7ndjU62hqBJ2vtHs=;
- b=dWv6UdGoCQnGCufg9CvvCUQPRSy8w83Dnhu7kTpWX6B30Fm+VHkdgP1lrKOWYYUm+8DVmF
- xCNSLSx3eU3CD/PU/E8U3IS9jX35fOa1RS8HXdCJ7TrgTcEIaVIXHCI/MDFrRtAK10K3fp
- DDA91le12tAQFUE+jL/xR1wxmGPnAqA=
+ bh=XmKfLXzv81KKp2gGD+8S42PfuY3sq0pgK5uwggMYRw8=;
+ b=jcklV2E5yNyUeBTyrnJNE409xJ6cwF991HMvCpAEaIeHaZED0ac4iCLW8gdtuXjKD95zYc
+ pDtn+LOC1YAkM9EVpazXQdeyIdHoXhVcRIPEindCKvOnigDTNVyGnghL868F6N308V5nZn
+ igd+b1h9EeGYcHBVUGuLf95FDF0yl9k=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734362186;
+ s=susede2_ed25519; t=1734362234;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=P2s+gCmqM5Sv7ZxSPSWF5o7JMNY7ndjU62hqBJ2vtHs=;
- b=bdeB+8EDFODv2jkK3rL+zIiNLIpzPHUTEKokspiQU1en34nmcF6KAJcw79V5PG9pweqGIS
- bqEu317YoBu1ItCQ==
+ bh=XmKfLXzv81KKp2gGD+8S42PfuY3sq0pgK5uwggMYRw8=;
+ b=id5Nb4Vi6tzT6/fG6Nh8vYAeTIPdD3QgnFapLiY95Cri3LIHDi9Va3lMBWGXPiG/pZ4zw+
+ GZcp7YfndvKLnDAA==
 Authentication-Results: smtp-out1.suse.de;
 	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734362186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734362233; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=P2s+gCmqM5Sv7ZxSPSWF5o7JMNY7ndjU62hqBJ2vtHs=;
- b=dWv6UdGoCQnGCufg9CvvCUQPRSy8w83Dnhu7kTpWX6B30Fm+VHkdgP1lrKOWYYUm+8DVmF
- xCNSLSx3eU3CD/PU/E8U3IS9jX35fOa1RS8HXdCJ7TrgTcEIaVIXHCI/MDFrRtAK10K3fp
- DDA91le12tAQFUE+jL/xR1wxmGPnAqA=
+ bh=XmKfLXzv81KKp2gGD+8S42PfuY3sq0pgK5uwggMYRw8=;
+ b=wZU8sG3BQ6wWWB8ednKMdxTCoNxRRgoBjAVp4yIE+gn1VUZaFKqeBjTmSC29zYOlhN+Bj2
+ UU6vds5H+4MqYshiAH6JZ3xPK0TtMYDvaJFEUJZAaNVBdu0kuDsEsEG/dbe4YAUkdVr/3d
+ lai6Mh5Pn/Eq6ha/gb4wrupIb0uazTY=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734362186;
+ s=susede2_ed25519; t=1734362233;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=P2s+gCmqM5Sv7ZxSPSWF5o7JMNY7ndjU62hqBJ2vtHs=;
- b=bdeB+8EDFODv2jkK3rL+zIiNLIpzPHUTEKokspiQU1en34nmcF6KAJcw79V5PG9pweqGIS
- bqEu317YoBu1ItCQ==
+ bh=XmKfLXzv81KKp2gGD+8S42PfuY3sq0pgK5uwggMYRw8=;
+ b=wzGweN1NadnjV9ccjMt6qgZjKxeh+7L0QtSuHjM7NoqV1YEIKoqt5Aorf7jBZWCf0KIXah
+ seYYm1wgfKIpKnCw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9A9AD13418;
- Mon, 16 Dec 2024 15:16:25 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6DBE413418;
+ Mon, 16 Dec 2024 15:17:13 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id L+fyF0lEYGd9EgAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 16 Dec 2024 15:16:25 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id b+sVDXlEYGezEgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Dec 2024 15:17:13 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
 Cc: peterx@redhat.com, qemu-block@nongnu.org, Vladimir Sementsov-Ogievskiy
@@ -75,12 +75,13 @@ Cc: peterx@redhat.com, qemu-block@nongnu.org, Vladimir Sementsov-Ogievskiy
  <eblake@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>, Kevin
  Wolf <kwolf@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
  <berrange@redhat.com>
-Subject: Re: [PATCH v2 3/6] migration/block: Make late-block-active the default
-In-Reply-To: <20241206230838.1111496-4-peterx@redhat.com>
+Subject: Re: [PATCH v2 4/6] migration/block: Apply late-block-active
+ behavior to postcopy
+In-Reply-To: <20241206230838.1111496-5-peterx@redhat.com>
 References: <20241206230838.1111496-1-peterx@redhat.com>
- <20241206230838.1111496-4-peterx@redhat.com>
-Date: Mon, 16 Dec 2024 12:16:23 -0300
-Message-ID: <874j33y7y0.fsf@suse.de>
+ <20241206230838.1111496-5-peterx@redhat.com>
+Date: Mon, 16 Dec 2024 12:17:10 -0300
+Message-ID: <871py7y7wp.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
 X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
@@ -93,17 +94,16 @@ X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
  TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
  RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
+ suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -122,18 +122,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> Migration capability 'late-block-active' controls when the block drives
-> will be activated.  If enabled, block drives will only be activated until
-> VM starts, either src runstate was "live" (RUNNING, or SUSPENDED), or it'll
-> be postponed until qmp_cont().
+> Postcopy never cared about late-block-active.  However there's no mention
+> in the capability that it doesn't apply to postcopy.
 >
-> Let's do this unconditionally.  There's no harm to delay activation of
-> block drives.  Meanwhile there's no ABI breakage if dest does it, because
-> src QEMU has nothing to do with it, so it's no concern on ABI breakage.
->
-> IIUC we could avoid introducing this cap when introducing it before, but
-> now it's still not too late to just always do it.  Cap now prone to
-> removal, but it'll be for later patches.
+> Considering that we _assumed_ late activation is always good, do that too
+> for postcopy unconditionally, just like precopy.  After this patch, we
+> should have unified the behavior across all.
 >
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
