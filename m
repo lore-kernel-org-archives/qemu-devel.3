@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2785AE7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35300E77183
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 10:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN8gx-0004Gs-Iy; Mon, 16 Dec 2024 05:51:11 -0500
+	id 1tN8h7-0004NW-DT; Mon, 16 Dec 2024 05:51:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gv-0004GJ-32
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:09 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8h3-0004Ll-KH
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:19 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gs-0005P4-Vr
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:07 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8h2-0005QR-3d
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:17 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734346265;
+ s=mimecast20190719; t=1734346274;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jIjnYThMGNILIBqfVTQiDX57CjjFSUzCwV568kgeiCU=;
- b=DlfkpiGmGn9TlKhsEEa8bkdEy3v2+UL0PdxQ9u5RJPDAZ+QvGb88BC4MQk9gHJFmunQH3Q
- dXYLbs+u23GSC7u0wInOTf65Iikb+/Rm7G8M1R50QUUKeTXx8PpoeXJsJJjyVe6kP60/1Z
- 1e1epEGRYySm6CcCkbWDhBi6qvjNPpY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=1EA3zxXos502LtgsWMd6Ob6LJRsWVtues3Dl//blLqc=;
+ b=UPLsaZnkwe3mtTpw58HC0peNfNedIqrL4AVzdRVRMvTctxatVzVhkivmlZSNy8BnhT5dJW
+ eYHOd/BsKwE7Yd3kcYStoP0Kp3pxbbMsQej3Om8B32Smq+gkXG1BPYryMoDlSUB+JTlK/L
+ 3xt6rvUUa0CzcfVpiGYj/XKqwPEodEw=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-386-B0GRdS5ZOUuTN_CIaFR4lQ-1; Mon,
- 16 Dec 2024 05:51:04 -0500
-X-MC-Unique: B0GRdS5ZOUuTN_CIaFR4lQ-1
-X-Mimecast-MFC-AGG-ID: B0GRdS5ZOUuTN_CIaFR4lQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-355-gePYdYmcP36xX4tYXtpCow-1; Mon,
+ 16 Dec 2024 05:51:09 -0500
+X-MC-Unique: gePYdYmcP36xX4tYXtpCow-1
+X-Mimecast-MFC-AGG-ID: gePYdYmcP36xX4tYXtpCow
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 26D2D1955EA2; Mon, 16 Dec 2024 10:51:03 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 220CA19560B6; Mon, 16 Dec 2024 10:51:08 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.88])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 71D61195606B; Mon, 16 Dec 2024 10:51:02 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3E9119560A7; Mon, 16 Dec 2024 10:51:07 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id DA8B618003B9; Mon, 16 Dec 2024 11:50:53 +0100 (CET)
+ id 1E7721800601; Mon, 16 Dec 2024 11:50:54 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
@@ -55,16 +55,17 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 3/7] x86/loader: expose unpatched kernel
-Date: Mon, 16 Dec 2024 11:50:49 +0100
-Message-ID: <20241216105053.246204-4-kraxel@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Subject: [PULL 6/7] pc-bios: add missing riscv64 descriptor
+Date: Mon, 16 Dec 2024 11:50:52 +0100
+Message-ID: <20241216105053.246204-7-kraxel@redhat.com>
 In-Reply-To: <20241216105053.246204-1-kraxel@redhat.com>
 References: <20241216105053.246204-1-kraxel@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -32
 X-Spam_score: -3.3
@@ -89,33 +90,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new "etc/boot/kernel" fw_cfg file, containing the kernel without
-the setup header patches.  Intended use is booting in UEFI with secure
-boot enabled, where the setup header patching breaks secure boot
-verification.
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-Needs OVMF changes too to be actually useful.
+Without descriptor libvirt cannot discover the EDK II binaries via
+the qemu:///system connection.
 
+Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+Message-ID: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240905141211.1253307-5-kraxel@redhat.com>
 ---
- hw/i386/x86-common.c | 3 +++
- 1 file changed, 3 insertions(+)
+ pc-bios/descriptors/60-edk2-riscv64.json | 31 ++++++++++++++++++++++++
+ pc-bios/descriptors/meson.build          |  3 ++-
+ 2 files changed, 33 insertions(+), 1 deletion(-)
+ create mode 100644 pc-bios/descriptors/60-edk2-riscv64.json
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index 28341b42d949..1cef3045ad83 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -962,6 +962,9 @@ void x86_load_linux(X86MachineState *x86ms,
-     sev_load_ctx.setup_data = (char *)setup;
-     sev_load_ctx.setup_size = setup_size;
- 
-+    /* kernel without setup header patches */
-+    fw_cfg_add_file(fw_cfg, "etc/boot/kernel", kernel, kernel_size);
+diff --git a/pc-bios/descriptors/60-edk2-riscv64.json b/pc-bios/descriptors/60-edk2-riscv64.json
+new file mode 100644
+index 000000000000..14811ca307f6
+--- /dev/null
++++ b/pc-bios/descriptors/60-edk2-riscv64.json
+@@ -0,0 +1,31 @@
++{
++    "description": "UEFI firmware for riscv64",
++    "interface-types": [
++        "uefi"
++    ],
++    "mapping": {
++        "device": "flash",
++        "executable": {
++            "filename": "@DATADIR@/edk2-riscv-code.fd",
++            "format": "raw"
++        },
++        "nvram-template": {
++            "filename": "@DATADIR@/edk2-riscv-vars.fd",
++            "format": "raw"
++        }
++    },
++    "targets": [
++        {
++            "architecture": "riscv64",
++            "machines": [
++                "virt*"
++            ]
++        }
++    ],
++    "features": [
 +
-     if (sev_enabled()) {
-         sev_add_kernel_loader_hashes(&sev_load_ctx, &error_fatal);
-     }
++    ],
++    "tags": [
++
++    ]
++}
+diff --git a/pc-bios/descriptors/meson.build b/pc-bios/descriptors/meson.build
+index afb5a959ccf4..cdd0be01a356 100644
+--- a/pc-bios/descriptors/meson.build
++++ b/pc-bios/descriptors/meson.build
+@@ -6,7 +6,8 @@ if unpack_edk2_blobs and get_option('install_blobs')
+     '60-edk2-arm.json',
+     '60-edk2-i386.json',
+     '60-edk2-x86_64.json',
+-    '60-edk2-loongarch64.json'
++    '60-edk2-loongarch64.json',
++    '60-edk2-riscv64.json'
+   ]
+     configure_file(input: files(f),
+                    output: f,
 -- 
 2.47.1
 
