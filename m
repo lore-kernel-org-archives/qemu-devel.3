@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 691BCE77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:39:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEB4E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:46:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN1wN-00046Y-99; Sun, 15 Dec 2024 22:38:39 -0500
+	id 1tN238-0005SW-8w; Sun, 15 Dec 2024 22:45:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN1wL-00046P-FD
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:38:37 -0500
-Received: from mail-vs1-xe31.google.com ([2607:f8b0:4864:20::e31])
+ id 1tN237-0005SA-3a
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:45:37 -0500
+Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN1wJ-0004JK-Ua
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:38:37 -0500
-Received: by mail-vs1-xe31.google.com with SMTP id
- ada2fe7eead31-4afdf8520c2so1050062137.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:38:35 -0800 (PST)
+ id 1tN235-0005Qb-IY
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:45:36 -0500
+Received: by mail-vk1-xa2b.google.com with SMTP id
+ 71dfb90a1353d-5174f9c0d2aso1142320e0c.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:45:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734320314; x=1734925114; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734320734; x=1734925534; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=o5Auj5bXvIU3M/ZhTOO5T/5v0/M+U3l9IKRi2L9eQWQ=;
- b=JKFEXDB7iAYCfSbVA4FnKWK09cDjlP5Nct2ijrCWB5WLelrFD3FfwGPH7Dmr8/ujqo
- 6TjbiKeJoEOZNduOBZ1TN2KoZ4f9mrwdTbhwQdcQqLx5zuKoyzYlYrGQvG0CjE+Mxwxb
- IkWRWNqP5z9ITW+yjmOzd/OHSLYtgtMfYd5WaVI04UfYiTVDNdBkVltaNqtzGtoFUOFh
- l+hf9izfZkoD3qh7POtNzkSHpJGeiwl6y8A9VbKm12a7rWxW1fs8KSAz+U5I94YHLLPb
- 4jvIw2Ct/vQva6qCZMkkRlzVFF4n3w9ZsHxqV1P352RTkZxN7RxQtafR1bpfzZW9t3Ll
- sBPQ==
+ bh=X3N40PezsruY20z3fP3NKgqtXUKVRVqUowJvry6Rl90=;
+ b=TGkvWfVjRwhCVi0MuplZM9Q8QcMwLV++q5WD4qiFM5Za1EV96GKtKe14avQ4aic1DF
+ tfYdakyWfsqUaW25f/YMY2eLFBjWpXgw5zEHZkV/LTEJn63UsKStESKNiE3hMxIEfY2a
+ TOR/4PqQicAlohohf3ejvvuvRBpG2jbYBYL+zn2+fT50hs0fuHQvMjKXDSRxPpLZ5ozh
+ gRUhJUQP9JiYWGjdDkhx6XD6qREe3CM6DfFUK6pk+QGFSx25o8/rMcQduv58drQhSaxx
+ 6kx0G/qJMv5rzF8+pHiIIiLGC9Kp0QyvsTxyj4n8Rme1veDgi4tHDvKIn4poJxmhArBM
+ THmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734320314; x=1734925114;
+ d=1e100.net; s=20230601; t=1734320734; x=1734925534;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=o5Auj5bXvIU3M/ZhTOO5T/5v0/M+U3l9IKRi2L9eQWQ=;
- b=on05l43RzazWtVDwyIQsbBeG/iIXnbodpa/zYU9gUhleZMjazZ9Yy32kpz1/Ci2CPd
- ndP8B8RCLysPom2KNvSfghjXm1xTul6s22VZToX5f2Du3Qjp09jiuoFekBiY+iDW8NcQ
- rDq1cKoNHZFSDYCCtXL0Gon/aM5ZhXeq+fDGa3nqADUydysFrHIR6PxsOL2DvYCNvEhx
- nO7ZWgnRshxcW27aAjSyVqqaRlXouUZnxir4D1nNmfYR5SAUXhPXbJXH9oPC2QO1UE0l
- z1BNFnwBL/w3pbDkHyjesPN9r9RMakPbo+PZLRL6zOSzcjCiIihgpwqOjJTqSPI/K1Q8
- 5c2Q==
+ bh=X3N40PezsruY20z3fP3NKgqtXUKVRVqUowJvry6Rl90=;
+ b=vIYTioHRTsH0OP1+rDJVmACFAVFQtB2KUSFmwQGptbe/tnKyrkWIMOSW/rAZxHpHlo
+ AHQEehmapKps2xa0S/AL5vRaUOthf7UDlsQmmmCNe+4b0SZ9pEB/KGHGupY5uJCRY6Oz
+ wbv69mpTmjJ5wXBADbzgHizCcKm9PpXzxyXWDpfX3YvyHuxKPChqE23pJrlqXaCa6a1h
+ BfXTXvg/EN73EU9GBtD3zBtIIYVuppwMA46ZJQ/z+FaOV09cbykQdg1pH/ovb3NJpYU5
+ F4kpTq37bh5ef+wHRjXqP++REDSVi9reRxkEj5I+W3IaoBschC/gKtYhq6ENqBzzSFqa
+ FTqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCURBzBHwzepI0yTrjO9OGotnfr4jn3302FH5J5oqYRJgmjlAOvE7QEuSJHjOpZ+uc0kBX8O0qz+qOi7@nongnu.org
-X-Gm-Message-State: AOJu0Yyb2UOqDl2jOuMy5hhxzb0WINMc3ZM58dD2oAczGdqV+r8Iyv8A
- V/mmW1aWahkorcREGsRM/wCDCrXPCiUNXMe/rYnYdPUARhcn5p65sqUh3pT1xhvZCWU+7I/bYnS
- Efndqtd0mIKREDMpfxYPTsa/ESZ8=
-X-Gm-Gg: ASbGnctPaGJDP/4UYLgbEQ9L7M8w6151YjgGBYeCSUoMAhdDrfpgmPizcyeDqkIpOYm
- u/GteJhgK1EhRzFS9IoeeZj6H9zelZy51shNmFcKuvTKJnvHTAjZG+9POpfxAo9NhdIwc
-X-Google-Smtp-Source: AGHT+IE/3eg8u06pcWg0r9WtT2b69NXT5IgfpSE7JvyDe/KCac26TZ/BOoWjS2IuTm2i2snmnJHEMz8wzbxZUKBD6vU=
-X-Received: by 2002:a05:6102:3e85:b0:4b1:5cc6:92df with SMTP id
- ada2fe7eead31-4b25d9d5deemr9371253137.0.1734320314157; Sun, 15 Dec 2024
- 19:38:34 -0800 (PST)
+ AJvYcCU08oK7yZYAkP6WdlMCLU3UvgafxZoVnAoL428J8i0FPsahCfyBXfs9ucBTdYcxRht9Csh9fdA4NAyt@nongnu.org
+X-Gm-Message-State: AOJu0YzEN0Hw6LYNx9h/WAOD41koz9hxFM3kgeCcyNnU7Oc/5A5HZqjT
+ pG39fdIhT9xKp54xmxcrRzOH2M/a14bInD9KswmcVOGHLi+2pmsDp33foIil1OrYvHB3784bf/z
+ IagYSFNgXYh4zA+Fcor0vR3YirSI=
+X-Gm-Gg: ASbGnctZDrvuvc15WqBWu9oM46BVLxEXLx+ekkmdfJblJ9n9WpQzNy0QdxXiB4Piqnx
+ KkZMfbs8OG0hKAP29ctN/NGHCWpm4U0LIyEhdw7EK+z5mu+em0BuTO4HGujAIbORuUlt2
+X-Google-Smtp-Source: AGHT+IEMx/mYvea+2wKV50yjmzYSjOu0vT5zcoH3nqKXe6C5G6/+K0P64tQXIkmEGIUZfXfjJZL+o2N4p4rIUKr9zHI=
+X-Received: by 2002:a05:6102:50ab:b0:4b1:20b1:bff3 with SMTP id
+ ada2fe7eead31-4b25dccc0a4mr10629965137.16.1734320734244; Sun, 15 Dec 2024
+ 19:45:34 -0800 (PST)
 MIME-Version: 1.0
 References: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
 In-Reply-To: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 16 Dec 2024 13:38:08 +1000
-Message-ID: <CAKmqyKObo+01P6WUK9OpkPHX++htMdYK+r+7HA27mLEVyi0+rw@mail.gmail.com>
+Date: Mon, 16 Dec 2024 13:45:08 +1000
+Message-ID: <CAKmqyKP4gm4xMuMwwvv3fQ_Quq64LU26xcO7ZegBSvVSC_QCeQ@mail.gmail.com>
 Subject: Re: [PATCH 1/1] pc-bios: add missing riscv64 descriptor
 To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
  Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e31;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,7 +103,9 @@ On Thu, Dec 12, 2024 at 7:01=E2=80=AFPM Heinrich Schuchardt
 >
 > Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
