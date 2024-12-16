@@ -4,65 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D01DE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 18:34:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C07CFE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 18:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNFvZ-0008HC-Bp; Mon, 16 Dec 2024 13:34:45 -0500
+	id 1tNFx8-0000tP-4W; Mon, 16 Dec 2024 13:36:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNFvY-0008Go-15
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 13:34:44 -0500
+ id 1tNFx0-0000t3-Mh
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 13:36:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNFvW-0004vZ-7F
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 13:34:43 -0500
+ id 1tNFwy-0005IL-8T
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 13:36:13 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734374081;
+ s=mimecast20190719; t=1734374170;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=oX+PFfVLcwU8lvZn6CnKDr7lsXmRjQomzHtOPNjgCH8=;
- b=RuOmS/qljcfTLv/pEhnUkXMKORhBrArWOdA9zLzXiAHWFSGylAns1EqxbEXgrjImjtkC6Q
- ZgQJh0uOe1pl65jDi6vgro2SClibeZFK8fGOXkWwQJhNGXzi0gxt6q6gOxcnuA+CqmPL39
- 26lYz9OdCq36lGYGBBoK79jgH98nNgM=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=umyYVBlkBafRDtFaAw/6Rh91VNwas1/AFyrRQATMRbQ=;
+ b=iMhYy8EIVc/TTLzDJzlz+LZHVuVtmlFTGiaVIm/LePIdnFPxf8OX3OjLUx/i5NXlykhhMf
+ kSA6nUryX9A78gS3CfeRu/TUVlNooR05yH0QO9m8Og9sRkMKThOFLnnyviclLLBD4GEoR2
+ sccAbWnw3P0GkL4fG/3+q45FSj+OZQs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-648-zg6r2p0pNgaAf8Ism7fi8A-1; Mon,
- 16 Dec 2024 13:34:38 -0500
-X-MC-Unique: zg6r2p0pNgaAf8Ism7fi8A-1
-X-Mimecast-MFC-AGG-ID: zg6r2p0pNgaAf8Ism7fi8A
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-378-WJ2XSpoAMny8jrWmncnotw-1; Mon,
+ 16 Dec 2024 13:36:07 -0500
+X-MC-Unique: WJ2XSpoAMny8jrWmncnotw-1
+X-Mimecast-MFC-AGG-ID: WJ2XSpoAMny8jrWmncnotw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C53D11956052; Mon, 16 Dec 2024 18:34:35 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF7F71955E7D; Mon, 16 Dec 2024 18:36:02 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.145])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 503A31956086; Mon, 16 Dec 2024 18:34:33 +0000 (UTC)
-Date: Mon, 16 Dec 2024 18:34:29 +0000
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0109919560A2; Mon, 16 Dec 2024 18:36:00 +0000 (UTC)
+Date: Mon, 16 Dec 2024 18:35:57 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
- Michael Roth <michael.roth@amd.com>, Fabiano Rosas <farosas@suse.de>,
- Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH 1/3] osdep: Add qemu_mkdir_with_parents()
-Message-ID: <Z2BytXujGDCrydhK@redhat.com>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Fabiano Rosas <farosas@suse.de>, Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: Re: [PATCH 2/3] tests: Use qemu_mkdir_with_parents() for all test code
+Message-ID: <Z2BzDSM74jFYOglT@redhat.com>
 References: <20241216161413.1644171-1-peterx@redhat.com>
- <20241216161413.1644171-2-peterx@redhat.com>
- <CAFEAcA_u++fJudO1ca9q76NYWTg75PRGAEHBqDyjUDEnR5m8Cw@mail.gmail.com>
+ <20241216161413.1644171-3-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAFEAcA_u++fJudO1ca9q76NYWTg75PRGAEHBqDyjUDEnR5m8Cw@mail.gmail.com>
+In-Reply-To: <20241216161413.1644171-3-peterx@redhat.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -89,72 +87,129 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 16, 2024 at 04:56:33PM +0000, Peter Maydell wrote:
-> On Mon, 16 Dec 2024 at 16:14, Peter Xu <peterx@redhat.com> wrote:
-> >
-> > QEMU uses g_mkdir_with_parents() a lot, especially in the case where the
-> > failure case is ignored so an abort is expected when happened.
-> >
-> > Provide a helper qemu_mkdir_with_parents() to do that, and use it in the
-> > two cases in qga/.  To be used in more places later.
-> >
-> > Signed-off-by: Peter Xu <peterx@redhat.com>
-> > ---
-> >  include/qemu/osdep.h     | 7 +++++++
-> >  qga/commands-posix-ssh.c | 8 ++------
-> >  util/osdep.c             | 6 ++++++
-> >  3 files changed, 15 insertions(+), 6 deletions(-)
-> >
-> > diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-> > index fdff07fd99..dc67fb2e5e 100644
-> > --- a/include/qemu/osdep.h
-> > +++ b/include/qemu/osdep.h
-> > @@ -828,6 +828,13 @@ static inline int platform_does_not_support_system(const char *command)
-> >  }
-> >  #endif /* !HAVE_SYSTEM_FUNCTION */
-> >
-> > +/**
-> > + * qemu_mkdir_with_parents:
-> > + *
-> > + * Create directories with parents.  Abort on failures.
-> > + */
-> > +void qemu_mkdir_with_parents(const char *dir, int mode);
+On Mon, Dec 16, 2024 at 11:14:12AM -0500, Peter Xu wrote:
+> Coverity isn't happy on the QEMU test cases where g_mkdir_with_parents() is
+> used without checking retvals.  Use qemu_mkdir_with_parents() to fix them.
 > 
-> Don't put new function prototypes into osdep.h, please.
-> It is included by every single C file in the codebase.
-> There is always somewhere better to put things.
+> Resolves: Coverity CID 1568381
+> Resolves: Coverity CID 1568378
+> Signed-off-by: Peter Xu <peterx@redhat.com>
+> ---
+>  tests/qtest/migration/tls-tests.c     | 6 +++---
+>  tests/unit/test-crypto-tlscredsx509.c | 4 ++--
+>  tests/unit/test-crypto-tlssession.c   | 6 +++---
+>  tests/unit/test-io-channel-tls.c      | 6 +++---
+>  4 files changed, 11 insertions(+), 11 deletions(-)
 > 
-> QEMU shouldn't abort on things that are kind of expected
-> OS errors like "couldn't create a directory", so I'm
-> a bit dubious about this function.
-> 
-> The two use cases in this commit seem to be test code,
-> so asserting is reasonable. But a "for test code only"
-> function should go in a header file that's only included
-> by test cases and the comment should be clear about that,
-> and it shouldn't have a function name that implies
-> "this is the normal way any code in QEMU might want
-> to create directories".
-> 
-> For the qtest tests, I currently ignore Coverity
-> reports in our test code unless it seems particularly
-> worthwhile to fix them. This is especially true for
-> complaints about unchecked return values and the like.
-> 
-> Even in a test case it is still not great to call
-> g_assert(), because this makes the test binary crash,
-> rather than reporting an error. The surrounding TAP
-> protocol parsing code then doesn't report the test
-> failure the way you might like.
+> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+> index 5704a1f992..c78daff998 100644
+> --- a/tests/qtest/migration/tls-tests.c
+> +++ b/tests/qtest/migration/tls-tests.c
+> @@ -43,14 +43,14 @@ migrate_hook_start_tls_psk_common(QTestState *from,
+>      data->workdir = g_strdup_printf("%s/tlscredspsk0", tmpfs);
+>      data->pskfile = g_strdup_printf("%s/%s", data->workdir,
+>                                      QCRYPTO_TLS_CREDS_PSKFILE);
+> -    g_mkdir_with_parents(data->workdir, 0700);
+> +    qemu_mkdir_with_parents(data->workdir, 0700);
 
-I also think qemu_mkdir_with_parents is *worse* than the
-current code. It saves 1 line in the test file, but hides
-the fact that it asserts on failure which is an relevant
-observation. If we really want to save that 1 line of code
-then just condense it inplace
+I dislike this as a solution as it is not obvious that qemu_mkdir_with_parents
+is any different. IMHO the right solution for tests is to assert inline
 
-  g_assert(g_mkdir_with_parents(dir, mode) == 0);
+  g_asset(g_mkdir_with_parents(...) == 0);
 
+>      test_tls_psk_init(data->pskfile);
+>  
+>      if (mismatch) {
+>          data->workdiralt = g_strdup_printf("%s/tlscredspskalt0", tmpfs);
+>          data->pskfilealt = g_strdup_printf("%s/%s", data->workdiralt,
+>                                             QCRYPTO_TLS_CREDS_PSKFILE);
+> -        g_mkdir_with_parents(data->workdiralt, 0700);
+> +        qemu_mkdir_with_parents(data->workdiralt, 0700);
+>          test_tls_psk_init_alt(data->pskfilealt);
+>      }
+>  
+> @@ -152,7 +152,7 @@ migrate_hook_start_tls_x509_common(QTestState *from,
+>          data->clientcert = g_strdup_printf("%s/client-cert.pem", data->workdir);
+>      }
+>  
+> -    g_mkdir_with_parents(data->workdir, 0700);
+> +    qemu_mkdir_with_parents(data->workdir, 0700);
+>  
+>      test_tls_init(data->keyfile);
+>  #ifndef _WIN32
+> diff --git a/tests/unit/test-crypto-tlscredsx509.c b/tests/unit/test-crypto-tlscredsx509.c
+> index 3c25d75ca1..57ce0134df 100644
+> --- a/tests/unit/test-crypto-tlscredsx509.c
+> +++ b/tests/unit/test-crypto-tlscredsx509.c
+> @@ -75,7 +75,7 @@ static void test_tls_creds(const void *opaque)
+>      QCryptoTLSCreds *creds;
+>  
+>  #define CERT_DIR "tests/test-crypto-tlscredsx509-certs/"
+> -    g_mkdir_with_parents(CERT_DIR, 0700);
+> +    qemu_mkdir_with_parents(CERT_DIR, 0700);
+>  
+>      unlink(CERT_DIR QCRYPTO_TLS_CREDS_X509_CA_CERT);
+>      if (data->isServer) {
+> @@ -141,7 +141,7 @@ int main(int argc, char **argv)
+>      g_test_init(&argc, &argv, NULL);
+>      g_setenv("GNUTLS_FORCE_FIPS_MODE", "2", 1);
+>  
+> -    g_mkdir_with_parents(WORKDIR, 0700);
+> +    qemu_mkdir_with_parents(WORKDIR, 0700);
+>  
+>      test_tls_init(KEYFILE);
+>  
+> diff --git a/tests/unit/test-crypto-tlssession.c b/tests/unit/test-crypto-tlssession.c
+> index 3395f73560..db97cbefe7 100644
+> --- a/tests/unit/test-crypto-tlssession.c
+> +++ b/tests/unit/test-crypto-tlssession.c
+> @@ -271,8 +271,8 @@ static void test_crypto_tls_session_x509(const void *opaque)
+>  
+>  #define CLIENT_CERT_DIR "tests/test-crypto-tlssession-client/"
+>  #define SERVER_CERT_DIR "tests/test-crypto-tlssession-server/"
+> -    g_mkdir_with_parents(CLIENT_CERT_DIR, 0700);
+> -    g_mkdir_with_parents(SERVER_CERT_DIR, 0700);
+> +    qemu_mkdir_with_parents(CLIENT_CERT_DIR, 0700);
+> +    qemu_mkdir_with_parents(SERVER_CERT_DIR, 0700);
+>  
+>      unlink(SERVER_CERT_DIR QCRYPTO_TLS_CREDS_X509_CA_CERT);
+>      unlink(SERVER_CERT_DIR QCRYPTO_TLS_CREDS_X509_SERVER_CERT);
+> @@ -420,7 +420,7 @@ int main(int argc, char **argv)
+>      g_test_init(&argc, &argv, NULL);
+>      g_setenv("GNUTLS_FORCE_FIPS_MODE", "2", 1);
+>  
+> -    g_mkdir_with_parents(WORKDIR, 0700);
+> +    qemu_mkdir_with_parents(WORKDIR, 0700);
+>  
+>      test_tls_init(KEYFILE);
+>      test_tls_psk_init(PSKFILE);
+> diff --git a/tests/unit/test-io-channel-tls.c b/tests/unit/test-io-channel-tls.c
+> index e036ac5df4..6cb83e891a 100644
+> --- a/tests/unit/test-io-channel-tls.c
+> +++ b/tests/unit/test-io-channel-tls.c
+> @@ -125,8 +125,8 @@ static void test_io_channel_tls(const void *opaque)
+>  
+>  #define CLIENT_CERT_DIR "tests/test-io-channel-tls-client/"
+>  #define SERVER_CERT_DIR "tests/test-io-channel-tls-server/"
+> -    g_mkdir_with_parents(CLIENT_CERT_DIR, 0700);
+> -    g_mkdir_with_parents(SERVER_CERT_DIR, 0700);
+> +    qemu_mkdir_with_parents(CLIENT_CERT_DIR, 0700);
+> +    qemu_mkdir_with_parents(SERVER_CERT_DIR, 0700);
+>  
+>      unlink(SERVER_CERT_DIR QCRYPTO_TLS_CREDS_X509_CA_CERT);
+>      unlink(SERVER_CERT_DIR QCRYPTO_TLS_CREDS_X509_SERVER_CERT);
+> @@ -273,7 +273,7 @@ int main(int argc, char **argv)
+>      g_test_init(&argc, &argv, NULL);
+>      g_setenv("GNUTLS_FORCE_FIPS_MODE", "2", 1);
+>  
+> -    g_mkdir_with_parents(WORKDIR, 0700);
+> +    qemu_mkdir_with_parents(WORKDIR, 0700);
+>  
+>      test_tls_init(KEYFILE);
+>  
+> -- 
+> 2.47.0
+> 
 
 With regards,
 Daniel
