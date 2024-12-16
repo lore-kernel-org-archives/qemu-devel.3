@@ -4,108 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C915EE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:38:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57472E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:54:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNF2j-0006TE-5l; Mon, 16 Dec 2024 12:38:05 -0500
+	id 1tNFHi-0005fz-UK; Mon, 16 Dec 2024 12:53:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tNF2h-0006RH-K7; Mon, 16 Dec 2024 12:38:03 -0500
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1tNF2f-0003c5-QW; Mon, 16 Dec 2024 12:38:03 -0500
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG85mFM027354;
- Mon, 16 Dec 2024 17:37:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jvp6xz
- qYCnZ1GCvLgmFF89AfgJ984nTOuiYSR33fGa4=; b=H7IZBbkLTOjEPReMtKNT8+
- bcv9oFlYCe1IVuKALsVCi1nYADBCnxbGTzZG/ZoagYLpAiOoUCWgzbS70jKczRRJ
- Qq4+qgRpOsURR8O+4IZq9AzARcPjC7B7TsGIhsXTBBxfHqEZxV26SckrXRiMGVjc
- LVMnK+2o6kOhpuTLfoGf+PiLJjzWAtKkqN98bfdkiTQRevRyNR8B7wgq6TOsy9xK
- sVBMER4qzze4yGlcfOkaGuoXtloNZqu/gkwMNylHZUGnDTKKkZZ3VgCriP5MGVuf
- /qhw6aPgyfUB+j+Lm7gpswVCUgj4p3hVWR52L5AGkC2NWWw2ifD8neld7hhJtwdg
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jgd2aq3g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 17:37:56 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGHJt63014961;
- Mon, 16 Dec 2024 17:37:55 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43hmqxy3wd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 17:37:55 +0000
-Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
- [10.39.53.232])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BGHbsds25100872
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Dec 2024 17:37:54 GMT
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8DF1958053;
- Mon, 16 Dec 2024 17:37:54 +0000 (GMT)
-Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 47E0358043;
- Mon, 16 Dec 2024 17:37:53 +0000 (GMT)
-Received: from [9.61.117.46] (unknown [9.61.117.46])
- by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 16 Dec 2024 17:37:53 +0000 (GMT)
-Message-ID: <37918007-83ad-4422-ad7c-56ee95e0c206@linux.ibm.com>
-Date: Mon, 16 Dec 2024 12:37:52 -0500
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNFHg-0005bD-1J
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:53:32 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNFHd-0005ti-SC
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:53:31 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-21675fd60feso46395115ad.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:53:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734371606; x=1734976406; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MBzqm+6+i/WpgbOCL2Iux3DANRrssM7vUL0Y79rULN8=;
+ b=Xi8nuqSjKVNjS5a/lB+rsjA5kAfAXVGh9mEcX4P2xzQ89ItwLaQ5TQjrZlWe4WuTEZ
+ 56bWxC7+4k1oWewTLfWodqPqDwu0YawsY/gQcJgAczzrl9XTeyhrsHzxWv3TOro3k2Ia
+ bozushOJkR0/irJ1KDhXwlIWGDKTZVOLeubNl2lc6OMVpGnB342cxM5pXreVPl0Gyvfn
+ Xf2GrBW4toaTossWDNk3koZ1U6ON5Qs1Br4ThpWD/j/D7qLsCqZr6bG370E7qZxjY2Y3
+ Ri5+8dOSXThw6grpGkVDNxq9F4iBnmPIufBPAiWz1PWTAjlPhF+ce2Iq+aof1w+nzowx
+ 9veg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734371606; x=1734976406;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MBzqm+6+i/WpgbOCL2Iux3DANRrssM7vUL0Y79rULN8=;
+ b=iUAG5dzXBdCTM5W4yGGKDjel9H9tklxbpT1Qp1hpNbg4vYJfgmjIZ4vnR/j6gdQ9hA
+ vHQSVrhUheR6Q5/bewdZbI7fesKZLfga0ngDuVYC9bcWLQMwz2Hg6kY5+w1kojCh0Xdd
+ G6eP2uAyljfkeBaCateO95W7Kctl+mj58vi3EudCkKiiKPo+AHSS4iLkS2GquJKGX2sB
+ miRms897Gma5WkzNo1DGWwE8b+Cklkn+HTohHJfgkp6cEHQGQrHRgNj3wPh66OCCYJg3
+ 1nw+7ubESwdTDHvCdqlRv3KkVPMsdgNszXy+9rLR7M/v8zXOXFNrSYZUSWJcyV+ROMpc
+ jlag==
+X-Gm-Message-State: AOJu0Yyggk6E26nGLIb15mNyHcljTSyWnnX0Dv0kUjOrH/fFiczE4DvD
+ ZcjAXZDyneBX0dJaV56WSNHcRYaxfHY0caERjFnw8op2Igef7274kGk8Hju78M0pJw6UZZbM5T+
+ 0cnE=
+X-Gm-Gg: ASbGncsqgG/kU9oswEzsvYVNzxTuv25QHvjA3ZoMk1IAPiQZfsBz+te80Vgq63AlIZ3
+ nm/aXb4+RdP2YmwXk12d/3tbMm+eo8Dm4zXiNpSjyhni3M8Tzne9yz+nQ494JJ4e7TKHLQsbCCE
+ sfgRgUbmeJ1KjA9GcRyUWgAoYBHt6vVk7Wgrww8LgtkfUZzVsjJ5NUWFF1TeaXoowI5zPKsLOlQ
+ IfaCV1AUAjDfb7DBgGmamwA08t/lkTpu+aEEcXVhDr6TE4NXbEU8YY4MfxGW0++F7rSa0eNToS3
+ PwSn3rqLThefymPB0G52K5GN2tQK
+X-Google-Smtp-Source: AGHT+IG+5tBIo4tnR2W3OtwzOX5nHv6Z64YhRO7rPfxHEdYGouQ7NQQG37t87dPhNsbDyFgeM5/Vog==
+X-Received: by 2002:a17:903:284:b0:216:2e5e:96ff with SMTP id
+ d9443c01a7336-218928de5e4mr198675035ad.0.1734371606345; 
+ Mon, 16 Dec 2024 09:53:26 -0800 (PST)
+Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
+ [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-218a1e640desm45746135ad.214.2024.12.16.09.53.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Dec 2024 09:53:25 -0800 (PST)
+Message-ID: <73c89377-d8e8-4018-8448-3c8acedc94aa@linaro.org>
+Date: Mon, 16 Dec 2024 09:53:25 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] s390x/pci: add support for guests that request
- direct mapping
-To: David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-s390x@nongnu.org
-Cc: farman@linux.ibm.com, schnelle@linux.ibm.com, thuth@redhat.com,
- pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- richard.henderson@linaro.org, iii@linux.ibm.com, clegoate@redhat.com,
- qemu-devel@nongnu.org
-References: <20241213225440.571382-1-mjrosato@linux.ibm.com>
- <20241213225440.571382-2-mjrosato@linux.ibm.com>
- <7e07ef1e-4fa5-40d7-85f9-d7a199901b4f@linaro.org>
- <46acb391-154e-43a1-a459-1646dc27fb33@redhat.com>
- <f1cba8bd-b15a-456c-8640-7c0ed221b2d3@linux.ibm.com>
- <eb6b9c83-fedb-4765-a902-695fe889e45d@redhat.com>
- <625c8ade-f87f-4203-81ff-a4ea396f15ac@linux.ibm.com>
- <49ed5940-8995-42cd-9587-8a2a01461f43@redhat.com>
+Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
+ aarch64 to impdef
 Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <49ed5940-8995-42cd-9587-8a2a01461f43@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 9znOwJYSU3nCjwg8DCVQjW0D2U7Z6lkP
-X-Proofpoint-GUID: 9znOwJYSU3nCjwg8DCVQjW0D2U7Z6lkP
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 bulkscore=0
- suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
- mlxlogscore=999 priorityscore=1501 malwarescore=0 impostorscore=0
- mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.19.0-2411120000 definitions=main-2412160146
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
-X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.13, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ alex.bennee@linaro.org, Fabiano Rosas <farosas@suse.de>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,32 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/24 12:29 PM, David Hildenbrand wrote:
-> On 16.12.24 18:26, Matthew Rosato wrote:
->>
->>>> Good point.  Using s390_get_memory_limit() sounds good to me; That will make v3 of this series dependent on the s390x virtio-mem series but sounds like you're sending that sometime this week anyway.
->>>
->>> If my testing is good and there are no further comments, I'll queue it directly (no change to v2) to send it upstream.
->>>
->>> So it's probably a good idea to wait with a new series her.
->>>
->>
->> OK
->>
->>>
->>> We discussed at some point maybe requiring disabling uncoordinated discarding of RAM (virtio-balloon), is that already done implicitly now?
->>>
->>
->> Yes, this should be handled via the call to ram_block_uncoordinated_discard_disable() in vfio_ram_block_discard_disable() - I just traced that now to double-check.
->>
+Hi,
+
+On 12/4/24 13:12, Pierrick Bouvier wrote:
+> qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
+> spent up to 50% of the emulation time running it (when using TCG).
 > 
-> Cool, can you briefly mention that in the patch description? Thanks!
+> Switching to pauth-impdef=on is often given as a solution to speed up execution.
+> Thus we talked about making it the new default.
+> 
+> The first patch introduce a new property (pauth-qarma5) to allow to select
+> current default algorithm.
+> The second one change the default.
+> 
+> Pierrick Bouvier (2):
+>    target/arm: add new property to select pauth-qarma5
+>    target/arm: change default pauth algorithm to impdef
+> 
+>   docs/system/arm/cpu-features.rst |  7 +++++--
+>   docs/system/introduction.rst     |  2 +-
+>   target/arm/cpu.h                 |  1 +
+>   target/arm/arm-qmp-cmds.c        |  2 +-
+>   target/arm/cpu64.c               | 30 +++++++++++++++++++-----------
+>   tests/qtest/arm-cpu-features.c   | 15 +++++++++++----
+>   6 files changed, 38 insertions(+), 19 deletions(-)
 > 
 
-Sure, I'll add something like
+gentle ping on this series.
 
-Pinning for the direct mapping case is handled via vfio and its memory
-listener.  Additionally, ram discard settings are inherited from vfio:
-coordinated discards (e.g. virtio-mem) are allowed while uncoordinated
-discards (e.g. virtio-balloon) are disabled.
+Thanks,
+Pierrick
 
