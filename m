@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5222FE77183
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:02:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75F23E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNBfO-0004zp-3s; Mon, 16 Dec 2024 09:01:46 -0500
+	id 1tNBgm-0006LF-IN; Mon, 16 Dec 2024 09:03:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNBfJ-0004ys-8n
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:01:41 -0500
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1tNBgk-0006Fu-5i
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:03:10 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNBfF-0006Mi-UE
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:01:39 -0500
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-6ef7f8d4f30so34357397b3.1
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:01:37 -0800 (PST)
+ id 1tNBgi-0006Y1-Fl
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:03:09 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-6f145e5cd83so33626207b3.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:03:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734357696; x=1734962496; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734357787; x=1734962587; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=utJvzy3zZQcbbkMPAN++kwF5ocQoRVsyPTFt71LWUTw=;
- b=rWojyGXtDcAhKFOcdtsYWx0ctdJ2sVDSSj39awzeY91RhQgkjyjyC8ZEUfgEWwmTCJ
- Dtn9ZIne/Q+dehwlhaCbw+BJSwAExq0VCD+0xF7oe2PzHcV+PuEbjx/qO/yByZY0ldiR
- PYTKrAf+Y3V/6Q3Z59w6qCEmeQvvq+DqKcH89JoQDiXjbQhvUmpTfmhw570pK8UguLmT
- EZmpcnwOoVobExwwKSMbCKqq2fLwIgQhU3nl2eXAo+HjUeE87XgoauFEoNWTkR/skUPT
- xtvenI677gY+yF4BNEAJYPv2g+H96r4g+tMTI4joLZgpcbeJzAajU2hM4VxOs9g4lrtk
- qNlg==
+ bh=RzNMTvisVl00JWzDIXfMvjdII9ZM6+cpVBAh6Ss7FO4=;
+ b=DyvOOJj9K/FEgR1ZL0Y2nF1dHwGQrNf/80bg/K0rCkGBx1VWri12Za4srgzlkKEGKU
+ aVUgXnIgFutsiw/vhQyiFs0Cfys8C65fRFewMWGzP57mDWvqOnBJgd3TPsvYHZZugrsU
+ qrAifGD44G3IFSoycNkbORXaqtl05hFTCVzXDTdvCXmKktf6azM7d0+oHbi7Ovb4jiTe
+ iL5KdwyNNpHtm6W+3/yvspvTFCkdcVijqgGEOACMxwF5a3FwOdyuC12cGZbtGyPaCy8A
+ 7qUr4PGdRGTWzCMh3h0+rBezEkWL7eCXu159xs6iZ8dEYQVARvYJXh1HfhA3exnlPvxy
+ /UHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734357696; x=1734962496;
+ d=1e100.net; s=20230601; t=1734357787; x=1734962587;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=utJvzy3zZQcbbkMPAN++kwF5ocQoRVsyPTFt71LWUTw=;
- b=d+uFNdgvgyRvRw4odJFyTu5fYbyY7D412cldVa8Upfzbuq/fehDn7T3BzL9V85319H
- Zz9DVmyfl+akLjDwlsifkjhp/D+6eZs2Dzwdx92ooXLifkHABm6nZED4O8QmAdSGqx+/
- P2VkiZcW9VV0YUa/DI9MvhCFU3nJiJvaXrx5YClPkcInLAw2IQ1xvRP2cWhWTM3YBvTJ
- 6A+JloKLs/vrILPT6Mr2UDX5me3gUOLXd1hTUCjZUWZOuNuvYc5aFC7DR08eMtweOqxT
- /W83eYLe8wGUkm2zix9zAyqcCF7Z+oUWHXaNgew1GkZQr3aRoVP3VOxRhtHRPbvl/OrV
- rIYA==
-X-Gm-Message-State: AOJu0YyyupCfvHRN0UQYHDg6kx6S9xuebww729K7tsim1UgPzvrQgdyY
- a29GGoJUSsR3uHBlVJLTu6AVrByCqaqINh2cY6DCcq31S3toW5HEzKJ0Cr/Q/ijkmEURJN82bqH
- JgCJJzSfJmwon+N+ZYk7hHng9botPeGId2HOt2Q==
-X-Gm-Gg: ASbGnctf6xGHxjm5s/HGHu5PyIeyse8Y4R6h+q3v8ha/Dcihwu6R+NYqFgFIlneGwb0
- pqXzUcY4F4d2hK2s5zv0QfBhfsbSVGG2/k4b7I/M=
-X-Google-Smtp-Source: AGHT+IGCs3bvRitEhRguZ0PqbDWmhAx7Hf1i287a/j/ctBlEk+9Lx8QB/prZBd57Ga8179YovdFePfDh3ebuDAbhZ7M=
-X-Received: by 2002:a05:690c:6c07:b0:6ef:6a91:4971 with SMTP id
- 00721157ae682-6f279ba6c8cmr108983837b3.36.1734357696075; Mon, 16 Dec 2024
- 06:01:36 -0800 (PST)
+ bh=RzNMTvisVl00JWzDIXfMvjdII9ZM6+cpVBAh6Ss7FO4=;
+ b=Zx0w2F1COyTVkYT+m78ruYxpbb0khoxysuvMl8E3/Hv0Kb/Kz5nz/vjKwGenm3QM7k
+ M3hE6m0wcSHpIWpy6wHq872pSeFL/gS3+dN0CscsqYmFUb2rQAf9xTxqZUMwPXPd8yei
+ IU45PN+FJ5HrY9buWL4B5CZLycfN1+NvfSY09ZYGgrvbLyDNacbclYGFPvM+Goghw8VL
+ Xf5qVCMBG1niHIvk7J7RaJ2ApJE73c8nDqc/tLhY6c0bZ+IUwyJ2Pj9l59T6R0+4b1le
+ jfKqwf7UcD7nzOe5Ic/0gZKz8L2SfcrsHSDb7cVNkmtSQnC/WRM250oDRT6AoLuCewxu
+ orRw==
+X-Gm-Message-State: AOJu0YwrwV70TIQEJxzNSLFs3KR38ZjwsjvnXiN8SoEBYI82KgTWC4Ga
+ 7zISjQ/KfYUUGpHxBX6L6ue7SPvv5Q3Unb6+XAmFHbOJ1yhHpulQfE+d4OMAAiSpumcXSyfclm8
+ Z7npDwERI/DvbiU4xVG44t+VR5Ps/IZSiSnUdFKZo20zwf44c
+X-Gm-Gg: ASbGncvJPvE5Wfy+Hox60G//WpnfzPc2OVBA5ZO8MsgIB1uSiVCpqVMnD9bFTPcS9AU
+ mujgEZ+EmoLjQdq9747oA9jiVurGgcFYlHg3x1Hg=
+X-Google-Smtp-Source: AGHT+IEEVSu0vpsy8bvqsQEWExhOs4LtDHA2Ygnbba9EKrVgm3vz5hnYOvlKwSGfGYdJ0naI9rFg4Rzn/F2Ld/6DOVA=
+X-Received: by 2002:a05:690c:4b0b:b0:6ee:66d2:e738 with SMTP id
+ 00721157ae682-6f279adbfb9mr114447157b3.2.1734357787083; Mon, 16 Dec 2024
+ 06:03:07 -0800 (PST)
 MIME-Version: 1.0
-References: <20241206031224.78525-1-richard.henderson@linaro.org>
-In-Reply-To: <20241206031224.78525-1-richard.henderson@linaro.org>
+References: <20241206031952.78776-1-richard.henderson@linaro.org>
+In-Reply-To: <20241206031952.78776-1-richard.henderson@linaro.org>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Dec 2024 14:01:23 +0000
-Message-ID: <CAFEAcA8-P=cmov6FNP1uhD3YRpZk8BB0tdrS_yx-5L18SX5y4g@mail.gmail.com>
-Subject: Re: [PATCH 0/9] target/arm: Helper type cleanups
+Date: Mon, 16 Dec 2024 14:02:55 +0000
+Message-ID: <CAFEAcA_ERdrBHqX4nOP7L5Vcs4ZQownF4_=QxYjRfJEuRigfpA@mail.gmail.com>
+Subject: Re: [PATCH 0/2] target/arm: Two more float_status conversions
 To: Richard Henderson <richard.henderson@linaro.org>
 Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,31 +89,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Dec 2024 at 03:13, Richard Henderson
+On Fri, 6 Dec 2024 at 03:20, Richard Henderson
 <richard.henderson@linaro.org> wrote:
 >
-> Add macros such that "fpst" can be used with DEF_HELPER to
-> indicate float_status* instead of "ptr" for void*.
-> In addition, fix a few uses of "ptr" that should be "env".
+> Hi Peter,
 >
-> r~
+> You probably have something like this in your AFP tree already,
+> but while I'm sending all of the other float_status patches, I
+> thought I might as well send these two.
 >
-> Richard Henderson (9):
->   target/arm: Introduce fpst alias for helper.h
->   target/arm: Convert vfp_helper.c to fpst alias
->   target/arm: Convert helper-a64.c to fpst alias
->   target/arm: Convert vec_helper.c to fpst alias
->   target/arm: Convert neon_helper.c to fpst alias
->   target/arm: Convert sve_helper.c to fpst alias
->   target/arm: Convert sme_helper.c to fpst alias
->   target/arm: Convert vec_helper.c to use env alias
->   target/arm: Convert neon_helper.c to use env alias
+> Based-on: 20241206031224.78525-1-richard.henderson@linaro.org
+> (target/arm: Helper type cleanups)
+>
 
-I see that commit a9af119f3d to put the fpst alias into
-helper-head.h.inc is already upstream, superseding patch
-1 from this series, so I've queued the remaining patches
-2..9 to target-arm.next.
 
-thanks
+
+Applied to target-arm.next, thanks.
+
 -- PMM
 
