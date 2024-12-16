@@ -4,69 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0894DE7716A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 00:58:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15E42E7716A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 01:57:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMzRN-0007bc-TG; Sun, 15 Dec 2024 19:58:29 -0500
+	id 1tN0Li-0006M3-1E; Sun, 15 Dec 2024 20:56:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tMzRM-0007ZJ-2Y
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:58:28 -0500
+ id 1tN0Lg-0006Lh-JX
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:40 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tMzRI-0008N3-Vx
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:58:27 -0500
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Dx_64je19nGDlXAA--.257S3;
- Mon, 16 Dec 2024 08:58:11 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxpsAge19n6MOEAA--.14728S3;
- Mon, 16 Dec 2024 08:58:08 +0800 (CST)
-Subject: Re: [PULL 00/18] loongarch-to-apply queue
+ (envelope-from <maobibo@loongson.cn>) id 1tN0Le-0007oA-F5
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:40 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8AxaeHKiF9nk0BXAA--.38443S3;
+ Mon, 16 Dec 2024 09:56:26 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMAxnsK3iF9nKNCEAA--.50112S15;
+ Mon, 16 Dec 2024 09:56:25 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Song Gao <gaosong@loongson.cn>
-References: <20241213094027.1732484-1-maobibo@loongson.cn>
- <CAJSP0QWwaqbA26mDEM+-y0-rGicFgrSDH0n+EAN8d9LTWsbm0w@mail.gmail.com>
-From: bibo mao <maobibo@loongson.cn>
-Message-ID: <101115df-8c1e-6728-645c-d43650faa05c@loongson.cn>
-Date: Mon, 16 Dec 2024 08:57:26 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Cc: qemu-devel@nongnu.org,
+	Song Gao <gaosong@loongson.cn>
+Subject: [PULL 13/18] hw/intc/loongarch_extioi: Add common realize interface
+Date: Mon, 16 Dec 2024 09:56:02 +0800
+Message-Id: <20241216015607.1795880-14-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20241216015607.1795880-1-maobibo@loongson.cn>
+References: <20241216015607.1795880-1-maobibo@loongson.cn>
 MIME-Version: 1.0
-In-Reply-To: <CAJSP0QWwaqbA26mDEM+-y0-rGicFgrSDH0n+EAN8d9LTWsbm0w@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxpsAge19n6MOEAA--.14728S3
+X-CM-TRANSID: qMiowMAxnsK3iF9nKNCEAA--.50112S15
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tFyUZrW3uFWkCFykZFWxXwc_yoW8tr17pr
- W3uF1akr4DJr17Xrn3tw1UWFs5Jrn7Wry2vF13KryxCrsxAr1rXr18JryfuFyUG3yUGr1j
- qF1rtr1UW3WUJwbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
- UUU==
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
  helo=mail.loongson.cn
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.641,
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,58 +65,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Add common realize function, it is only to check validity of property.
 
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/intc/loongarch_extioi.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-On 2024/12/14 下午9:39, Stefan Hajnoczi wrote:
-> On Fri, 13 Dec 2024 at 04:42, Bibo Mao <maobibo@loongson.cn> wrote:
->>
->> The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
->>
->>    Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
->>
->> are available in the Git repository at:
->>
->>    https://gitlab.com/bibo-mao/qemu.git pull-loongarch-20241213
-> 
-> This tag is not in the repository. Did you forget to push it?
-Sorry for that.
-Yes, I forget to push it :(, will submit the second version.
-
-Regards
-Bibo Mao
-> 
-> Thanks,
-> Stefan
-> 
->>
->> for you to fetch changes up to 78aa256571aa06f32001bd80635a1858187c609b:
->>
->>    hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic (2024-12-13 14:39:39 +0800)
->>
->> ----------------------------------------------------------------
->> pull-loongarch-20241213
->>
->> ----------------------------------------------------------------
->> Bibo Mao (8):
->>        include: Add loongarch_pic_common header file
->>        include: Move struct LoongArchPCHPIC to loongarch_pic_common header file
->>        hw/intc/loongarch_pch: Merge instance_init() into realize()
->>        hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICCommonState
->>        hw/intc/loongarch_pch: Move some functions to file loongarch_pic_common
->>        hw/intc/loongarch_pch: Inherit from loongarch_pic_common
->>        hw/intc/loongarch_pch: Add pre_save and post_load interfaces
->>        hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
->>
->>   hw/intc/loongarch_pch_pic.c            | 106 +++++++++++----------------------
->>   hw/intc/loongarch_pic_common.c         |  97 ++++++++++++++++++++++++++++++
->>   hw/intc/meson.build                    |   2 +-
->>   hw/loongarch/virt.c                    |   2 +-
->>   include/hw/intc/loongarch_pch_pic.h    |  70 +++++-----------------
->>   include/hw/intc/loongarch_pic_common.h |  82 +++++++++++++++++++++++++
->>   6 files changed, 230 insertions(+), 129 deletions(-)
->>   create mode 100644 hw/intc/loongarch_pic_common.c
->>   create mode 100644 include/hw/intc/loongarch_pic_common.h
->>
->>
+diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
+index 2ec5a75817..c88e99974a 100644
+--- a/hw/intc/loongarch_extioi.c
++++ b/hw/intc/loongarch_extioi.c
+@@ -318,14 +318,26 @@ static const MemoryRegionOps extioi_virt_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
+ 
++static void loongarch_extioi_common_realize(DeviceState *dev, Error **errp)
++{
++    LoongArchExtIOICommonState *s = (LoongArchExtIOICommonState *)dev;
++
++    if (s->num_cpu == 0) {
++        error_setg(errp, "num-cpu must be at least 1");
++        return;
++    }
++}
++
+ static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
+ {
+     LoongArchExtIOI *s = LOONGARCH_EXTIOI(dev);
+     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
++    Error *local_err = NULL;
+     int i, pin;
+ 
+-    if (s->num_cpu == 0) {
+-        error_setg(errp, "num-cpu must be at least 1");
++    loongarch_extioi_common_realize(dev, &local_err);
++    if (local_err) {
++        error_propagate(errp, local_err);
+         return;
+     }
+ 
+-- 
+2.43.5
 
 
