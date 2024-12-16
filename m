@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E60BE77183
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0B8E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:54:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNAbw-0006cY-M0; Mon, 16 Dec 2024 07:54:10 -0500
+	id 1tNAcJ-0006sZ-02; Mon, 16 Dec 2024 07:54:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tNAbp-0006WH-16; Mon, 16 Dec 2024 07:54:01 -0500
+ id 1tNAbq-0006Xs-BW; Mon, 16 Dec 2024 07:54:02 -0500
 Received: from fout-b4-smtp.messagingengine.com ([202.12.124.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1tNAbm-0004qC-7h; Mon, 16 Dec 2024 07:53:59 -0500
+ id 1tNAbo-0004qd-EP; Mon, 16 Dec 2024 07:54:02 -0500
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal
  [10.202.2.44])
- by mailfout.stl.internal (Postfix) with ESMTP id 01D2C114010F;
- Mon, 16 Dec 2024 07:53:56 -0500 (EST)
+ by mailfout.stl.internal (Postfix) with ESMTP id 9B9AF114009C;
+ Mon, 16 Dec 2024 07:53:58 -0500 (EST)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-04.internal (MEProxy); Mon, 16 Dec 2024 07:53:57 -0500
+ by phl-compute-04.internal (MEProxy); Mon, 16 Dec 2024 07:53:58 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1734353636; x=1734440036; bh=9z/YDyajUnGWonhABTYCxOkzMyeMtyCB
- LStW9KJXm6I=; b=M5ySqa5PoquflqIgLQ/DT5A3TQ4d0cEAbNiby1mOUhsPAdM5
- cR+eevKt1LQ9v+oCqm2ojDXzqbIh2n/fhSuAoTm+2oePLjrEPybab5OnpgDcd104
- ySdDRHAMGHB9Pc/f071unwdkhyg6KaBMo62Ctx/b1p4gQc9we3PD0kqn6RHfv5t/
- 0CyPhaV2vnON9SdSGcpvMt/KmH6i1bhVli3DpEbOsG2x5JwcetquQ+CAqNwsDaOe
- re8pv1+lWbuWlK36vSBHH6ITycHQx7n4ZVPFoK2bq+clFyewPb0FIPRJU73MWbER
- FZxDOjuBe7Efu9WAeQi2U6byHThNgGzqWsPWGQ==
+ t=1734353638; x=1734440038; bh=r9epBbkm1wQQ7uw9a461rxWc+dB0unZN
+ n4KULiKW6Oo=; b=krxxo4rw/kunvkrsTO6MYsZr1zJkBYRMHb6HaKrrgfe9YcbB
+ AxADMKNtUaW7Pu5AdcNzEKvi+wR+Zn/kMTUoXwtoHBEHgiyyeSkcY6wNvuyP5fEC
+ 8Ukiedv16OqE89tPA28y3nGZODPEZvC8okWu8HVnXBW1hibrBibKwNc+jDmcJyyS
+ BYzk0tHPpcmsLd90Dr+sIGLsbYrJXRy+CbF7MKQCZ/HgrXGDAvZ1nNaH/S2d/nxr
+ XelaqYXiUxqO6VXf04VnNW8JZAUaOjh+2mvDb6r8tcDr53a2Ci47LlxP5BLmy2uT
+ CAOIRxw31QTiX2ULmzlVu2jvUUEYJIvXTte6Wg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734353636; x=
- 1734440036; bh=9z/YDyajUnGWonhABTYCxOkzMyeMtyCBLStW9KJXm6I=; b=R
- cwg5wqote14QFNwx2U5DHMzTgC+yLFwYXCi9dMj5spGDeYSgt0PjtV7+iC0NeZkE
- zY1foPJtZcGweQcj9X2I3low+1OVa5JptJubRaK14NvNaGup5Etm8NrUMAONB2t5
- ECm+7VXYpsiKOA+C9UEPrS40pPesXmVmXrUDWlTIfKX9s+U/KREN5edLYEquxpfj
- kmt4+ckdNRcBKUnQ2HkLGLP2G63dPCdlWVxee9Z311Bfdzdbh2WQrArzvJAWgUEk
- +i3jAEGmxMJxIW/JxYMaMoHxMl7v1wCFjICQID+GhQZ4/SsALTZApQNRYelAv5jH
- QicV7xu/zkP9XZqv4USNQ==
-X-ME-Sender: <xms:4yJgZyHebqkJnwOEaLtSMGSMAEvLS44G8peVpHke5lQuMryHJT93lw>
- <xme:4yJgZzVWKGwS8Wy_obe-UyjR-RUe4TUlvasKfCms1eA7NZJycMfV5H1S3Yjlj5_TE
- n6DpDEZmK3vTqpC0A8>
-X-ME-Received: <xmr:4yJgZ8Kq3LCBxCTqdP9AJWVqQbf67tEDQhNitYDr1vqVm1OZd8cKE_teOwWf5JhLzSYkthGdsuM7wO8l-qEx374>
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1734353638; x=
+ 1734440038; bh=r9epBbkm1wQQ7uw9a461rxWc+dB0unZNn4KULiKW6Oo=; b=y
+ 21wl1aoU58CmIfgtzWyQf153JIEh78pVFzSGxRFsj5idTuGfQIkZ6UKyb5XSbaWT
+ ckITWCf5pRXFAtQc6RUqGuQ8DA8x3KyiJi3t/+lptJktlOzjuDhxLij39qMRbiZO
+ iB9Qq/d5OjT5HpoU5uIePbcXsgmzJnPtQTarN6jiOaC4MjbKfUeNj5tG+sgWgQSd
+ 0GK+fvyqOvWeljQrH923rLzhHAaspAyUXMqu/Xa+Dso3c6luI0ruysmhJi92Up01
+ O8wqEk0m0vrhLfrA9FvgwkU6x4oEvCLiOd93yI9m3szU9KwJ4Jgh8p81ndzeMjWz
+ Hi8SYv5QWE51kRr94j5Mg==
+X-ME-Sender: <xms:5iJgZ8tqdf2oMEiPF0pzSjL2Flc7UICCCHiltg5HZSJ5rHoVSTIZNw>
+ <xme:5iJgZ5f2Ci6iRQgDgunDKW55S9rufKWd-KiMgudezopasETGhVC1EJj7_eFIb2bRv
+ -FY8WR56edv-nBNsGs>
+X-ME-Received: <xmr:5iJgZ3wAy7CvkJMaMdfjcJ0TGzOBAo8D2uaUC-MUCJHs24QSvtJ5jznX44lIndYxwp0kVEij99nxzKShezf48mo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdegiecutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
  tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -66,21 +66,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefuddrleefgdegiecutefuodetggdote
  huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehksghushgthheskhgv
  rhhnvghlrdhorhhgpdhrtghpthhtohepkhdrjhgvnhhsvghnsehsrghmshhunhhgrdgtoh
  hm
-X-ME-Proxy: <xmx:4yJgZ8FsGns95CL2IzEsKoLC2Dsq8WCGfUWxtehokDe9YzqRDGQYJQ>
- <xmx:4yJgZ4V4JQQuLvOVwrH_ycRMxr68ukjH8QWMWxHcEfQnhF3ftHaMFw>
- <xmx:4yJgZ_Nqvl9himnBZ1ztRN86BMrCw-YuNiKKa2bmSqdr5Nl85BHLLw>
- <xmx:4yJgZ_1sy5xUBQfNDdzDDLBuNcvydSxSfazU4dNDc8yiD9Vn2tI6Dw>
- <xmx:5CJgZ6INRJW0DhVBpMjY-rcgcsSNmeHOSgaKWpLXDtimDzEM32W8Gu8i>
+X-ME-Proxy: <xmx:5iJgZ_MIEujjwsgmPqpm43_d9kYGChsiSDqvUXxY9M6yrK3NfYXxoA>
+ <xmx:5iJgZ8_l_zm2yjkeFmrAMmbZB66GZxXcSqleeWwElYblePzCRRhP6g>
+ <xmx:5iJgZ3VvJ3iUhn0auri1RyWQs8A5NlMJTWkBQhroJ2wBUPkVqwUnSQ>
+ <xmx:5iJgZ1ckZz8UBmmdtFfRD-mS3L5Fxfr3l5gldbgOEuJSjEOegOL2Yg>
+ <xmx:5iJgZ8wYD3Wh5z8kj0BEhHGJ6D3YC55WNiIGRNTd2Nc6zgVzT0kftPpo>
 Feedback-ID: idc91472f:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Dec 2024 07:53:54 -0500 (EST)
+ 16 Dec 2024 07:53:57 -0500 (EST)
 From: Klaus Jensen <its@irrelevant.dk>
-Date: Mon, 16 Dec 2024 13:53:04 +0100
-Subject: [PATCH 3/9] hw/nvme: add knob for doorbell buffer config support
+Date: Mon, 16 Dec 2024 13:53:05 +0100
+Subject: [PATCH 4/9] nvme: fix iocs status code values
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20241216-nvme-queue-v1-3-4e42212b92f7@samsung.com>
+Message-Id: <20241216-nvme-queue-v1-4-4e42212b92f7@samsung.com>
 References: <20241216-nvme-queue-v1-0-4e42212b92f7@samsung.com>
 In-Reply-To: <20241216-nvme-queue-v1-0-4e42212b92f7@samsung.com>
 To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
@@ -88,19 +88,19 @@ To: Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>,
  qemu-devel@nongnu.org
 Cc: Klaus Jensen <k.jensen@samsung.com>
 X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3034; i=k.jensen@samsung.com; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2205; i=k.jensen@samsung.com; 
  h=from:subject:message-id;
- bh=fmOgDBvOD2dhh117ujn12LpGBM6Ktn4dln6NNvtv1L0=; 
+ bh=hVGGanRiCXCVL65SS7momc62QHYk6VKSLoOWiILVNxk=; 
  b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR2RnSXRsOE1RNnZtUklmL1ZZOEJiZzRnVnV0Ck15SElNNkN4d2pod3NwektG
- Uk1YZUlrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKbllDTFp
- BQW9KRUUzaHJ6RnRUdzNwdklFSUFMb2YyVHE4M2gvS1d0NkUzTjcvemxVVTloYllOZGQ3djRLTA
- poUEJBVHJhUWhRR0JKc1VWSGM2aTJZQkZVRld3akNYbUtUOExlb2ZVVXM1UFJpcmdIbEpjQk93Q
- lpzSDNMaDFRCktic3NlWXdYRVNWWjZheFQ0Wko3WkR1UzlYRFlMaWEyUm0zSXAwZTFnd0Z3WjRa
- ZmFCVXh5SHlsdE9MMXZRZE8Kc0EyaDFUOFlmNUZxV005b3RvQUcyN2ZYV01pRldpSG50QjFFbU8
- 5OFR4c09JWmlhN04wUkpubGpWR2EwQXB0NApuTmY2ZnJBL3FDdE84MjVGbUZoaGE3dVVjMnNQZU
- 9CS2s3TnFQeHNueWFIemh0Z1VoTURwbUc2TW1SUEs1T3dMCmh1em44N3g5bTJkVXg3Z3dzcHI4V
- 3BuYkF2Y004TndaNFJxWVQxVDFjK0Z6a0hOZVUvVk5IS2V4Cj1ZQ3JQCi0tLS0tRU5EIFBHUCBN
+ zFQRGVrQnl5WmlBR2RnSXRtYXVMUWQ2ZG1ITS9mVXRqYXprSmZTCk15aktkTzdOV1ZCVEpxaGt1
+ Y2hZZ1lrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKbllDTFp
+ BQW9KRUUzaHJ6RnRUdzNwbUFvSC8zRitPTENaU3EwREU0dTYwcmRianpxYy9sR1RoRnRlQlNMZA
+ p2YkhxYVVTRjJ5TFlyT1J0S0tIOE9Lc01zT1krSDlQTUo2Sm84Wm43TG93c2J1VUNaWGhXZEhHd
+ 0lFaWI1THhHCmFMZWRVeEdLejBmWjluOXE0dGtmNG1veVJmUlFycnhoT0ZndjdtNUFDNk1SRGp3
+ WEhNdjJFdGo0aUxuc0tMZW0KUk5FVy9qY1MvWmRlN2JMMkRtdkNZTnkrVEhySXBsL0dBMXE5Zkd
+ mUGlhMXFOUktGaDQrMFJFOEdJMGhtQTBrKwoxWTRaQXd5SHg4Wm1SMWlGb1dnTStESlc4YWVJQm
+ x1WXFGV3I2b01Wa3FQVldUNWo5RFZTTENHVjZ0Rm5ZbTFSCllIKzlQU3ZSb3NoTkNRNGJrbHlZV
+ jhaR2p1NHh1RDUzYUpXano3c3BKVU1GTlVONGpaaDFxNmRRCj13MEgwCi0tLS0tRU5EIFBHUCBN
  RVNTQUdFLS0tLS0K
 X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
  fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
@@ -131,77 +131,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Klaus Jensen <k.jensen@samsung.com>
 
-Add a 'dbcs' knob to allow Doorbell Buffer Config command to be
-disabled.
+The status codes related to I/O Command Sets are in the wrong group.
 
 Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- hw/nvme/ctrl.c       | 11 ++++++++---
- hw/nvme/nvme.h       |  1 +
- include/block/nvme.h |  2 +-
- 3 files changed, 10 insertions(+), 4 deletions(-)
+ hw/nvme/ctrl.c       | 4 ++--
+ include/block/nvme.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index 0e95c07c5314fa33674963ef2cea74c78954e86b..d544789f92ffe6b758ce35cecfc025d87efb9b7e 100644
+index d544789f92ffe6b758ce35cecfc025d87efb9b7e..120a1ca1076c8110d8550a5e75082c6ed4f23e16 100644
 --- a/hw/nvme/ctrl.c
 +++ b/hw/nvme/ctrl.c
-@@ -278,7 +278,6 @@ static const uint32_t nvme_cse_acs_default[256] = {
-     [NVME_ADM_CMD_GET_FEATURES]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_ASYNC_EV_REQ]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_NS_ATTACHMENT]    = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_NIC,
--    [NVME_ADM_CMD_DBBUF_CONFIG]     = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_FORMAT_NVM]       = NVME_CMD_EFF_CSUPP | NVME_CMD_EFF_LBCC,
-     [NVME_ADM_CMD_DIRECTIVE_RECV]   = NVME_CMD_EFF_CSUPP,
-     [NVME_ADM_CMD_DIRECTIVE_SEND]   = NVME_CMD_EFF_CSUPP,
-@@ -8709,8 +8708,13 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
-     id->mdts = n->params.mdts;
-     id->ver = cpu_to_le32(NVME_SPEC_VER);
+@@ -5623,7 +5623,7 @@ static uint16_t nvme_identify_ns(NvmeCtrl *n, NvmeRequest *req, bool active)
+         return nvme_c2h(n, (uint8_t *)&ns->id_ns, sizeof(NvmeIdNs), req);
+     }
  
--    oacs = NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DBBUF |
--        NVME_OACS_DIRECTIVES;
-+    oacs = NVME_OACS_NMS | NVME_OACS_FORMAT | NVME_OACS_DIRECTIVES;
-+
-+    if (n->params.dbcs) {
-+        oacs |= NVME_OACS_DBCS;
-+
-+        n->cse.acs[NVME_ADM_CMD_DBBUF_CONFIG] = NVME_CMD_EFF_CSUPP;
-+    }
+-    return NVME_INVALID_CMD_SET | NVME_DNR;
++    return NVME_INVALID_IOCS | NVME_DNR;
+ }
  
-     if (n->params.sriov_max_vfs) {
-         oacs |= NVME_OACS_VMS;
-@@ -8960,6 +8964,7 @@ static Property nvme_props[] = {
-     DEFINE_PROP_BOOL("use-intel-id", NvmeCtrl, params.use_intel_id, false),
-     DEFINE_PROP_BOOL("legacy-cmb", NvmeCtrl, params.legacy_cmb, false),
-     DEFINE_PROP_BOOL("ioeventfd", NvmeCtrl, params.ioeventfd, false),
-+    DEFINE_PROP_BOOL("dbcs", NvmeCtrl, params.dbcs, true),
-     DEFINE_PROP_UINT8("zoned.zasl", NvmeCtrl, params.zasl, 0),
-     DEFINE_PROP_BOOL("zoned.auto_transition", NvmeCtrl,
-                      params.auto_transition_zones, true),
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index 191b6c5398d0c4583051a6a9773c677a49caffd6..cb314e91af32a20f47e0a393e2458b7d4bdd03d9 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -539,6 +539,7 @@ typedef struct NvmeParams {
-     bool     auto_transition_zones;
-     bool     legacy_cmb;
-     bool     ioeventfd;
-+    bool     dbcs;
-     uint16_t  sriov_max_vfs;
-     uint16_t sriov_vq_flexible;
-     uint16_t sriov_vi_flexible;
+ static uint16_t nvme_identify_ctrl_list(NvmeCtrl *n, NvmeRequest *req,
+@@ -6589,7 +6589,7 @@ static uint16_t nvme_set_feature(NvmeCtrl *n, NvmeRequest *req)
+     case NVME_COMMAND_SET_PROFILE:
+         if (dw11 & 0x1ff) {
+             trace_pci_nvme_err_invalid_iocsci(dw11 & 0x1ff);
+-            return NVME_CMD_SET_CMB_REJECTED | NVME_DNR;
++            return NVME_IOCS_COMBINATION_REJECTED | NVME_DNR;
+         }
+         break;
+     case NVME_FDP_MODE:
 diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 9ebee69369d6bfa6835154a91b2bdaaf7984bf0c..a68a07455d0330b8f7cc283da0a5eadbcc140dab 100644
+index a68a07455d0330b8f7cc283da0a5eadbcc140dab..145a0b65933a699504d6d89222f7979a06f615df 100644
 --- a/include/block/nvme.h
 +++ b/include/block/nvme.h
-@@ -1195,7 +1195,7 @@ enum NvmeIdCtrlOacs {
-     NVME_OACS_NMS           = 1 << 3,
-     NVME_OACS_DIRECTIVES    = 1 << 5,
-     NVME_OACS_VMS           = 1 << 7,
--    NVME_OACS_DBBUF         = 1 << 8,
-+    NVME_OACS_DBCS          = 1 << 8,
- };
- 
- enum NvmeIdCtrlOncs {
+@@ -906,8 +906,6 @@ enum NvmeStatusCodes {
+     NVME_SGL_DESCR_TYPE_INVALID = 0x0011,
+     NVME_INVALID_USE_OF_CMB     = 0x0012,
+     NVME_INVALID_PRP_OFFSET     = 0x0013,
+-    NVME_CMD_SET_CMB_REJECTED   = 0x002b,
+-    NVME_INVALID_CMD_SET        = 0x002c,
+     NVME_FDP_DISABLED           = 0x0029,
+     NVME_INVALID_PHID_LIST      = 0x002a,
+     NVME_LBA_RANGE              = 0x0080,
+@@ -940,6 +938,8 @@ enum NvmeStatusCodes {
+     NVME_INVALID_SEC_CTRL_STATE = 0x0120,
+     NVME_INVALID_NUM_RESOURCES  = 0x0121,
+     NVME_INVALID_RESOURCE_ID    = 0x0122,
++    NVME_IOCS_COMBINATION_REJECTED = 0x012b,
++    NVME_INVALID_IOCS           = 0x012c,
+     NVME_CONFLICTING_ATTRS      = 0x0180,
+     NVME_INVALID_PROT_INFO      = 0x0181,
+     NVME_WRITE_TO_RO            = 0x0182,
 
 -- 
 2.45.2
