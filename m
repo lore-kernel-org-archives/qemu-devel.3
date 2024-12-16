@@ -4,99 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8DD7E77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:06:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38B3E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 14:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNBjg-0008V9-US; Mon, 16 Dec 2024 09:06:12 -0500
+	id 1tNBlo-0000iu-BX; Mon, 16 Dec 2024 09:08:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNBjY-0008Uj-Uu
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:06:07 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNBlm-0000iN-Eu
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:08:22 -0500
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNBjW-00073l-Vw
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:06:04 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eb972dd8e5so2040216b6e.2
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:06:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNBlj-0007E1-Pr
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 09:08:22 -0500
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-6f145e5cd83so33687227b3.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 06:08:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734357960; x=1734962760; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kSWekSVktEYmf12kc9swILeOvBfo99CjqVpCRN5BqHM=;
- b=k6AIZZZbHvuTfBTqppul0TZ4J0s6gGu6w+zlZkhtx/GeFj73CRt/miCot45hmnMG+T
- 1Mv+kpFk8q+XkNhe5+PKsdlxbGTgpdpK/MqppmrT/H2smGJbAVCr3noN3MGlkHfsOmQT
- ZqDAZ4g9AAAIbh6I8rGZsygBbcszJn4dtkAvRjplSadvG0vl5I82xSr3KVyeYiuziXlg
- 7lQN+xIEwkHoiWklfBPhUR4HIp02oGVoXUEgW5RENBbLs7a9SSY0dviJ8PgDV3sDJ/vo
- JAOpVi7qQ6XIIyM5bSYyVohxQ6wGz9xpW64V2bMSBm8+hJmOO54wFjwzf52UVEkxYN4x
- QJwQ==
+ d=linaro.org; s=google; t=1734358098; x=1734962898; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q0GyJjjnZ37UxeSbRujj75zDGS5Zc2xrI0ozr18gJP0=;
+ b=lAxkyt09Fn5VuXe+vhlHlDxLVnfT5ge5vwc0rwAe2YfhNsrJWUD+zSATWiqWnmjgVP
+ 1CIgSQw9cyLMT9hEj2iYEq70/O+BcImkMKZ85AFX6FXvpjUBkglDJ0NWZqJNmAf2b1xI
+ WwllOF40XjQGzhEHWyynjtp2Vv7CGBSU5K2NbUjpnmX+EW2NNP03Ycl3C+LP6lIt8nWU
+ 0UYHRRwyPGTFMuDon49lEXVigMxMNzIkLzNdr0BYTKf3F+m/wy1ayWMzhHzSicwufPFV
+ 7yDGcrbZ/yqy38R6YmHkHy5WtgKzsC5aGZ9IAm4THK34bJ8+C++P4SkXtgLZ9aZSY9KL
+ XdCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734357960; x=1734962760;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kSWekSVktEYmf12kc9swILeOvBfo99CjqVpCRN5BqHM=;
- b=NcAZKR+5APfSx5lOA8DXeZUJmL4Zu3bYL0re7Vg0FjUWTSjr/03eFGqcQRGt+ENfoW
- Txmz0t8zGzx9GuVbmRoT3suHjT0kGpdfmBvo9xslIIPl/JnOE2DZeXCtf07A4Jlq+hN7
- 74C7q7JrH7i6eK6Rttz6NW2N+EMZyxZqkVIuyZC2JWDjcXd/QUE77OHLmW4TYsc8sgf5
- 6dXODBVp/cgLDunBRdKMPyX9bL9G2W2Ta2hS+vLqCeBT7/zNelsO7hDID6VGKQYGwrIn
- KyAGfFST1faLD8DxvqZHHiMAMcH/333DauaUME/LpUXRfn4NjdJWvow6Z57bfbb5pY5m
- 3G3A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0wcYgnU6NtOWf6TYjUHcDHGzmNcOMfB/43AVe5NAvMMD9+eY0rx+PCjCk/LIclARr6/wOrvWWFrK1@nongnu.org
-X-Gm-Message-State: AOJu0YzInvPYAr//z53duSmGaC2PoJ40y0pwJIYwjOuJtKQ8tsPLmMuN
- VPRz8LU0UqqfYFE7/nhXQwfsMjZTGW51KLyQKBqwsa93jYXfYmwH3FgzG5/2JEM=
-X-Gm-Gg: ASbGncsaGNGcwOWznCGmFCZp1JAbpAQc2L7PxaanfQdmYuq2aPQ9iviEpdOMvqfSmCz
- WNzSqJaetfg8gcel0nWBF9nUe3D944HIYj6x7/msgATmMAg6hz07vMKDZa1bMu6Cw9BBnHFomoX
- l68Ozjgeqf1oiPX+YiQMFjbCOd+ab6P9yCHP2Jj//EXz60ZWuz8Vu7xcCYjYHe8zLicRxzZJJ1n
- nQIxlZZAGYiMbn7Rs+cM2wvfLq7Xybnc8Km8BAuT8EOWNoCil4PLmEl9RzrEQAiX3cn1NeajN+7
- aZD/q0l3BBskdPsWJ/VHPv2yqQwVUE+RyxU=
-X-Google-Smtp-Source: AGHT+IEYZltRF3Xk2M2/eYQrbngda+UogA4Snbi+1SqsSAHFMIXRUkYBThrOo1fnHuEkK/CNGlSqJA==
-X-Received: by 2002:a05:6808:bca:b0:3eb:428b:fa5f with SMTP id
- 5614622812f47-3eba691e695mr5189702b6e.33.1734357960125; 
- Mon, 16 Dec 2024 06:06:00 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb492a328sm1552586b6e.44.2024.12.16.06.05.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 06:05:59 -0800 (PST)
-Message-ID: <10d4be0d-1d50-415d-aed8-f71e81098604@linaro.org>
-Date: Mon, 16 Dec 2024 08:05:56 -0600
+ d=1e100.net; s=20230601; t=1734358098; x=1734962898;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=q0GyJjjnZ37UxeSbRujj75zDGS5Zc2xrI0ozr18gJP0=;
+ b=on/trrsl+d5le02tViLNKTHKuqC5Jb7jvN8RYhkTQO0qD1BXjq1gWG4vEJGXy2mIuM
+ tCcvAmMnxptTiPGGIZG+VQ8VYcw9mmIH83rhw5GaFIMaC/1rGEAPYmTCVUegU8JAWP5U
+ VbP9EdRmvlKEg+yHb9Mmrild0Yrkd0L853W1UxCUvi5Gx0zNh80BGjL5mYffc7w2oblM
+ ynh6cGVga+kJatD2pUIMB34qJ6QkQNKCQT0d22jbG+C/1J9Ofd8qAO7RcqJ6fiV9ytHp
+ UW/dqEJIw3bBXc1GSA2AQeXl6ppxs/1F6xoijiRvT1030VTPEfIHlyojEotvXnKVY3nY
+ VAVg==
+X-Gm-Message-State: AOJu0YxMDCXmnrfy9FUi0LQ0aACnjsjw3v5tQdxAdIM1Cks+hpDisw4/
+ FshAJGWYaYk5wMPK+KqKxVzCoNka6yLyef29B7e57o0GewlZNXbVDnfAg+q8+iRf5tN181oVTC/
+ 3f8aqFLIRKBktwFAkGRXmQm2y7pkpABXiIeCJ2SuhGGliazKR
+X-Gm-Gg: ASbGncsSJqWTMYjaWRLHlSFifGkfDUhzXVG77rB9eJWAja0tkhgOVh/LnK2dE5SwTe7
+ Wunr7d5p78T6ylh5cmk0s5IpR+oiSAd5HDZUYSos=
+X-Google-Smtp-Source: AGHT+IGHI7ww0IgT30GDBuj4f1NsFwPnMgLXb6BGOS9hRJKPihfY46vY2jfVEf8j98FO/i6vf+iO7/2ffJJ9pBNM/nc=
+X-Received: by 2002:a05:690c:ecc:b0:6ef:6107:69c9 with SMTP id
+ 00721157ae682-6f279adc3e8mr90559587b3.4.1734358098551; Mon, 16 Dec 2024
+ 06:08:18 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 29/71] hw/i386: Constify all Property
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Jason Wang <jasowang@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-34-richard.henderson@linaro.org>
- <774bd939-8015-47c2-910d-f36c44bc0379@eviden.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <774bd939-8015-47c2-910d-f36c44bc0379@eviden.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+References: <20241206160239.3229094-1-alex.bennee@linaro.org>
+ <20241206160239.3229094-2-alex.bennee@linaro.org>
+In-Reply-To: <20241206160239.3229094-2-alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Dec 2024 14:08:07 +0000
+Message-ID: <CAFEAcA_TEaikCWjfMBNMc9Ra09+Zbt4X-9L-0ty=euxt2tLHyQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/arm: document the architectural names of our
+ GTIMERs
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, 
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,17 +96,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/24 00:14, CLEMENT MATHIEU--DRIF wrote:
-> Hi Rihard.
-> 
-> Good idea, LGTM.
-> 
-> Just out of curiosity, what was the motivation for such a patch?
-> It it simply about cleaning the code or is it intended to solve a deeper
-> problem.
+On Fri, 6 Dec 2024 at 16:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
+>
+> As we are about to add more physical and virtual timers lets make it
+> clear what each timer does.
+>
+> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> Cc: qemu-stable@nongnu.org
+> ---
+>  target/arm/gtimer.h | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/target/arm/gtimer.h b/target/arm/gtimer.h
+> index b992941bef..de016e6da3 100644
+> --- a/target/arm/gtimer.h
+> +++ b/target/arm/gtimer.h
+> @@ -10,11 +10,11 @@
+>  #define TARGET_ARM_GTIMER_H
+>
+>  enum {
+> -    GTIMER_PHYS     =3D 0,
+> -    GTIMER_VIRT     =3D 1,
+> -    GTIMER_HYP      =3D 2,
+> -    GTIMER_SEC      =3D 3,
+> -    GTIMER_HYPVIRT  =3D 4,
+> +    GTIMER_PHYS     =3D 0, /* EL1 physical timer */
+> +    GTIMER_VIRT     =3D 1, /* EL1 virtual timer */
+> +    GTIMER_HYP      =3D 2, /* EL2 physical timer */
+> +    GTIMER_SEC      =3D 3, /* EL3 physical timer */
+> +    GTIMER_HYPVIRT  =3D 4, /* EL2 virtual timer */
+>  #define NUM_GTIMERS   5
+>  };
 
-Simply cleaning the code, prompted by a change to core QAPI code for Rust enablement.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-
-r~
+thanks
+-- PMM
 
