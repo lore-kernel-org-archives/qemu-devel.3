@@ -4,40 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5A0BE7716A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 01:58:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92395E77183
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 01:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN0LN-0006GZ-Gi; Sun, 15 Dec 2024 20:56:25 -0500
+	id 1tN0LR-0006Gf-8K; Sun, 15 Dec 2024 20:56:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tN0LK-0006Fn-76
+ id 1tN0LK-0006Fo-7G
  for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:18 -0500
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tN0LH-0007lb-OK
+ (envelope-from <maobibo@loongson.cn>) id 1tN0LH-0007lU-EB
  for qemu-devel@nongnu.org; Sun, 15 Dec 2024 20:56:17 -0500
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8Bx3668iF9nekBXAA--.65098S3;
- Mon, 16 Dec 2024 09:56:12 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxaeG3iF9nd0BXAA--.38440S3;
+ Mon, 16 Dec 2024 09:56:07 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMAxnsK3iF9nKNCEAA--.50112S3;
- Mon, 16 Dec 2024 09:56:11 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxnsK3iF9nKNCEAA--.50112S2;
+ Mon, 16 Dec 2024 09:56:07 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org,
 	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 01/18] include: Add loongarch_pic_common header file
-Date: Mon, 16 Dec 2024 09:55:50 +0800
-Message-Id: <20241216015607.1795880-2-maobibo@loongson.cn>
+Subject: [PULL 00/18] loongarch-to-apply queue
+Date: Mon, 16 Dec 2024 09:55:49 +0800
+Message-Id: <20241216015607.1795880-1-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241216015607.1795880-1-maobibo@loongson.cn>
-References: <20241216015607.1795880-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxnsK3iF9nKNCEAA--.50112S3
+X-CM-TRANSID: qMiowMAxnsK3iF9nKNCEAA--.50112S2
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,123 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add common header file hw/intc/loongarch_pic_common.h, and move
-some macro definition from hw/intc/loongarch_pch_pic.h to the common
-header file.
+The following changes since commit ca80a5d026a280762e0772615f1988db542b3ade:
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
----
- include/hw/intc/loongarch_pch_pic.h    | 36 +++-------------------
- include/hw/intc/loongarch_pic_common.h | 42 ++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+), 31 deletions(-)
+  Merge tag 'hw-misc-20241214' of https://github.com/philmd/qemu into staging (2024-12-14 08:42:53 -0500)
+
+are available in the Git repository at:
+
+  https://gitlab.com/bibo-mao/qemu.git tags/pull-loongarch-20241216
+
+for you to fetch changes up to efada537c6c49e414ae87ce66803d6d8543ad140:
+
+  hw/intc/loongarch_extioi: Code cleanup about loongarch_extioi (2024-12-16 09:05:14 +0800)
+
+----------------------------------------------------------------
+pull-loongarch-20241216
+  v1 .. v2: Push patch again since forgot to push to upstream
+
+----------------------------------------------------------------
+Bibo Mao (18):
+      include: Add loongarch_pic_common header file
+      include: Move struct LoongArchPCHPIC to loongarch_pic_common header file
+      hw/intc/loongarch_pch: Merge instance_init() into realize()
+      hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICCommonState
+      hw/intc/loongarch_pch: Move some functions to file loongarch_pic_common
+      hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+      hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+      hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
+      include: Add loongarch_extioi_common header file
+      include: Move struct LoongArchExtIOI to header file loongarch_extioi_common
+      include: Rename LoongArchExtIOI with LoongArchExtIOICommonState
+      hw/intc/loongarch_extioi: Rename LoongArchExtIOI with LoongArchExtIOICommonState
+      hw/intc/loongarch_extioi: Add common realize interface
+      hw/intc/loongarch_extioi: Add unrealize interface
+      hw/intc/loongarch_extioi: Add common file loongarch_extioi_common
+      hw/intc/loongarch_extioi: Inherit from loongarch_extioi_common
+      hw/intc/loongarch_extioi: Add pre_save interface
+      hw/intc/loongarch_extioi: Code cleanup about loongarch_extioi
+
+ hw/intc/loongarch_extioi.c                | 110 +++++++++--------------------
+ hw/intc/loongarch_extioi_common.c         | 113 ++++++++++++++++++++++++++++++
+ hw/intc/loongarch_pch_pic.c               | 106 +++++++++-------------------
+ hw/intc/loongarch_pic_common.c            |  97 +++++++++++++++++++++++++
+ hw/intc/meson.build                       |   4 +-
+ hw/loongarch/virt.c                       |   2 +-
+ include/hw/intc/loongarch_extioi.h        |  84 +++-------------------
+ include/hw/intc/loongarch_extioi_common.h |  98 ++++++++++++++++++++++++++
+ include/hw/intc/loongarch_pch_pic.h       |  70 ++++--------------
+ include/hw/intc/loongarch_pic_common.h    |  82 ++++++++++++++++++++++
+ 10 files changed, 488 insertions(+), 278 deletions(-)
+ create mode 100644 hw/intc/loongarch_extioi_common.c
+ create mode 100644 hw/intc/loongarch_pic_common.c
+ create mode 100644 include/hw/intc/loongarch_extioi_common.h
  create mode 100644 include/hw/intc/loongarch_pic_common.h
-
-diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
-index d5437e88f2..861b32313b 100644
---- a/include/hw/intc/loongarch_pch_pic.h
-+++ b/include/hw/intc/loongarch_pch_pic.h
-@@ -5,42 +5,15 @@
-  * Copyright (c) 2021 Loongson Technology Corporation Limited
-  */
- 
--#include "hw/sysbus.h"
-+#ifndef HW_LOONGARCH_PCH_PIC_H
-+#define HW_LOONGARCH_PCH_PIC_H
-+
-+#include "hw/intc/loongarch_pic_common.h"
- 
- #define TYPE_LOONGARCH_PCH_PIC "loongarch_pch_pic"
- #define PCH_PIC_NAME(name) TYPE_LOONGARCH_PCH_PIC#name
- OBJECT_DECLARE_SIMPLE_TYPE(LoongArchPCHPIC, LOONGARCH_PCH_PIC)
- 
--#define PCH_PIC_INT_ID_VAL              0x7000000UL
--#define PCH_PIC_INT_ID_VER              0x1UL
--
--#define PCH_PIC_INT_ID_LO               0x00
--#define PCH_PIC_INT_ID_HI               0x04
--#define PCH_PIC_INT_MASK_LO             0x20
--#define PCH_PIC_INT_MASK_HI             0x24
--#define PCH_PIC_HTMSI_EN_LO             0x40
--#define PCH_PIC_HTMSI_EN_HI             0x44
--#define PCH_PIC_INT_EDGE_LO             0x60
--#define PCH_PIC_INT_EDGE_HI             0x64
--#define PCH_PIC_INT_CLEAR_LO            0x80
--#define PCH_PIC_INT_CLEAR_HI            0x84
--#define PCH_PIC_AUTO_CTRL0_LO           0xc0
--#define PCH_PIC_AUTO_CTRL0_HI           0xc4
--#define PCH_PIC_AUTO_CTRL1_LO           0xe0
--#define PCH_PIC_AUTO_CTRL1_HI           0xe4
--#define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
--#define PCH_PIC_ROUTE_ENTRY_END         0x13f
--#define PCH_PIC_HTMSI_VEC_OFFSET        0x200
--#define PCH_PIC_HTMSI_VEC_END           0x23f
--#define PCH_PIC_INT_STATUS_LO           0x3a0
--#define PCH_PIC_INT_STATUS_HI           0x3a4
--#define PCH_PIC_INT_POL_LO              0x3e0
--#define PCH_PIC_INT_POL_HI              0x3e4
--
--#define STATUS_LO_START                 0
--#define STATUS_HI_START                 0x4
--#define POL_LO_START                    0x40
--#define POL_HI_START                    0x44
- struct LoongArchPCHPIC {
-     SysBusDevice parent_obj;
-     qemu_irq parent_irq[64];
-@@ -67,3 +40,4 @@ struct LoongArchPCHPIC {
-     MemoryRegion iomem8;
-     unsigned int irq_num;
- };
-+#endif /* HW_LOONGARCH_PCH_PIC_H */
-diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
-new file mode 100644
-index 0000000000..6d0e33e1ac
---- /dev/null
-+++ b/include/hw/intc/loongarch_pic_common.h
-@@ -0,0 +1,42 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch 7A1000 I/O interrupt controller definitions
-+ * Copyright (c) 2024 Loongson Technology Corporation Limited
-+ */
-+
-+#ifndef HW_LOONGARCH_PIC_COMMON_H
-+#define HW_LOONGARCH_PIC_COMMON_H
-+
-+#include "hw/pci-host/ls7a.h"
-+#include "hw/sysbus.h"
-+
-+#define PCH_PIC_INT_ID_VAL              0x7000000UL
-+#define PCH_PIC_INT_ID_VER              0x1UL
-+#define PCH_PIC_INT_ID_LO               0x00
-+#define PCH_PIC_INT_ID_HI               0x04
-+#define PCH_PIC_INT_MASK_LO             0x20
-+#define PCH_PIC_INT_MASK_HI             0x24
-+#define PCH_PIC_HTMSI_EN_LO             0x40
-+#define PCH_PIC_HTMSI_EN_HI             0x44
-+#define PCH_PIC_INT_EDGE_LO             0x60
-+#define PCH_PIC_INT_EDGE_HI             0x64
-+#define PCH_PIC_INT_CLEAR_LO            0x80
-+#define PCH_PIC_INT_CLEAR_HI            0x84
-+#define PCH_PIC_AUTO_CTRL0_LO           0xc0
-+#define PCH_PIC_AUTO_CTRL0_HI           0xc4
-+#define PCH_PIC_AUTO_CTRL1_LO           0xe0
-+#define PCH_PIC_AUTO_CTRL1_HI           0xe4
-+#define PCH_PIC_ROUTE_ENTRY_OFFSET      0x100
-+#define PCH_PIC_ROUTE_ENTRY_END         0x13f
-+#define PCH_PIC_HTMSI_VEC_OFFSET        0x200
-+#define PCH_PIC_HTMSI_VEC_END           0x23f
-+#define PCH_PIC_INT_STATUS_LO           0x3a0
-+#define PCH_PIC_INT_STATUS_HI           0x3a4
-+#define PCH_PIC_INT_POL_LO              0x3e0
-+#define PCH_PIC_INT_POL_HI              0x3e4
-+
-+#define STATUS_LO_START                 0
-+#define STATUS_HI_START                 0x4
-+#define POL_LO_START                    0x40
-+#define POL_HI_START                    0x44
-+#endif  /* HW_LOONGARCH_PIC_COMMON_H */
--- 
-2.43.5
 
 
