@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CC4EE77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 10:52:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3268EE77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 10:52:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN8h5-0004Mh-Or; Mon, 16 Dec 2024 05:51:19 -0500
+	id 1tN8h6-0004Mu-9c; Mon, 16 Dec 2024 05:51:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gy-0004H0-1s
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:12 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8h2-0004Kd-DB
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:17 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8gw-0005Pk-9M
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:11 -0500
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tN8h0-0005QE-9A
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 05:51:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734346269;
+ s=mimecast20190719; t=1734346272;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TY4hAJQjBk/15nGN3Ji1/d2AR0NMVV1xghd2nVRI1CM=;
- b=LEEqhcN7n9CivpQElcDrKJnBWcBiwn2yztcc1llwAAWHAXBB66NnSLB3HRYT3pCxhYV+2a
- YwE7h1YrKOMXWWbvnShwtBjyzPOBh1mvLiypw8vjKR9Wdkc3eeFPkgxvie/pyacPGhE/C8
- gh5h4K4MjViwKcT5tFC/q3AmxihsO4Y=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=8lJRS/uMo3zV7XiUqogGKGMtiS1CO54wNJfbudnlOtg=;
+ b=Rd2v4DDDgbbt3mTXeNcZcMwiGkUwpvdUMKp+bzTN3wcbO3XPOBVWl4iLyyglV6+yxSpQl0
+ IFqSjsfV0o+YxvU8fvGSjh2iqMKmp0oFN3nzNR3yfpWmsHXrKNSSZB0Y6IxkP8IzXTkBEP
+ YqTuj2gwKphSDNeTgRFb11BjrSPSMUo=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-320-f4GAySKDO5O20ohGRdq4kg-1; Mon,
- 16 Dec 2024 05:51:04 -0500
-X-MC-Unique: f4GAySKDO5O20ohGRdq4kg-1
-X-Mimecast-MFC-AGG-ID: f4GAySKDO5O20ohGRdq4kg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-rWyZwKU_P5KJL4J-XzVHgw-1; Mon,
+ 16 Dec 2024 05:51:09 -0500
+X-MC-Unique: rWyZwKU_P5KJL4J-XzVHgw-1
+X-Mimecast-MFC-AGG-ID: rWyZwKU_P5KJL4J-XzVHgw
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 318C219560A2; Mon, 16 Dec 2024 10:51:02 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4E48E1956046; Mon, 16 Dec 2024 10:51:08 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.39.192.88])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 067E719560A3; Mon, 16 Dec 2024 10:50:56 +0000 (UTC)
+ id 0A226195394B; Mon, 16 Dec 2024 10:51:08 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id BB1FF18000AE; Mon, 16 Dec 2024 11:50:53 +0100 (CET)
+ id 2C5F51800602; Mon, 16 Dec 2024 11:50:54 +0100 (CET)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
@@ -55,10 +55,11 @@ Cc: Zhao Liu <zhao1.liu@intel.com>,
  Eduardo Habkost <eduardo@habkost.net>, Gerd Hoffmann <kraxel@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 1/7] x86/loader: only patch linux kernels
-Date: Mon, 16 Dec 2024 11:50:47 +0100
-Message-ID: <20241216105053.246204-2-kraxel@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Liu Jaloo <liu.jaloo@gmail.com>
+Subject: [PULL 7/7] roms: re-add edk2-basetools target
+Date: Mon, 16 Dec 2024 11:50:53 +0100
+Message-ID: <20241216105053.246204-8-kraxel@redhat.com>
 In-Reply-To: <20241216105053.246204-1-kraxel@redhat.com>
 References: <20241216105053.246204-1-kraxel@redhat.com>
 MIME-Version: 1.0
@@ -89,38 +90,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the binary loaded via -kernel is *not* a linux kernel (in which
-case protocol == 0), do not patch the linux kernel header fields.
+Needed to build ipxe nic roms.
 
-It's (a) pointless and (b) might break binaries by random patching
-and (c) changes the binary hash which in turn breaks secure boot
-verification.
-
-Background: OVMF happily loads and runs not only linux kernels but
-any efi binary via direct kernel boot.
-
-Note: Breaking the secure boot verification is a problem for linux
-kernels too, but fixed that is left for another day ...
-
+Reported-by: Liu Jaloo <liu.jaloo@gmail.com>
+Fixes: 22e11539e167 ("edk2: replace build scripts")
 Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-Message-ID: <20240905141211.1253307-3-kraxel@redhat.com>
+Message-ID: <20241212084408.1390728-1-kraxel@redhat.com>
 ---
- hw/i386/x86-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ roms/Makefile | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index dc031af66217..dadc9d99e78f 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -945,7 +945,7 @@ void x86_load_linux(X86MachineState *x86ms,
-      * kernel on the other side of the fw_cfg interface matches the hash of the
-      * file the user passed in.
-      */
--    if (!sev_enabled()) {
-+    if (!sev_enabled() && protocol > 0) {
-         memcpy(setup, header, MIN(sizeof(header), setup_size));
-     }
+diff --git a/roms/Makefile b/roms/Makefile
+index dfed2b216a1e..31e4b97c983b 100644
+--- a/roms/Makefile
++++ b/roms/Makefile
+@@ -157,6 +157,11 @@ edk2-version: edk2
+ 		touch $@; \
+ 	fi
  
++edk2-basetools: edk2-version
++	$(PYTHON) edk2-build.py --config edk2-build.config \
++		--silent --no-logs \
++		--match none # build only basetools
++
+ efi: edk2-version
+ 	$(PYTHON) edk2-build.py --config edk2-build.config \
+ 		--version-override "$(EDK2_STABLE)$(FIRMWARE_EXTRAVERSION)" \
 -- 
 2.47.1
 
