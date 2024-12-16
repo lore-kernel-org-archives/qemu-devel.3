@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF9FE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:34:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45D61E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 12:35:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNAJJ-0002vA-7s; Mon, 16 Dec 2024 07:34:53 -0500
+	id 1tNAJ4-0002hh-5e; Mon, 16 Dec 2024 07:34:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tNAIy-0002VI-CP
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tNAIy-0002VH-AI
  for qemu-devel@nongnu.org; Mon, 16 Dec 2024 07:34:32 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tNAIv-0002MJ-AE
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1tNAIv-0002MP-BA
  for qemu-devel@nongnu.org; Mon, 16 Dec 2024 07:34:32 -0500
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG3qt6I020220;
- Mon, 16 Dec 2024 12:34:20 GMT
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG865Ar027742;
+ Mon, 16 Dec 2024 12:34:23 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=TXEDPvrPW+KpzpgVg
- WZBv+7ZlGIxTLrvq9RB5xDFys4=; b=ecWRHFD42duetVQLf/3MSDhtSMzeEEar8
- jrOSeDEMwgH+/9ZRAZZz5kjnu7R2B1yJS0iLpBXL7SJ71R1TahF7bdUvqQk0nFGi
- D8kjZ0zjklaakB4Dprsve6fw3UEOqIp6fjEfo1ywLJv84YANtGNdoEYM1vJdNy/Q
- aJZXL2pfBXyoR04PjgVaWdwm7DwM2d7x133gHs2YIkzfNjrt+x9trYMTiPwRMg7X
- qG6bZI0xeWWt/hjHWTZumnLw1GADYDCkPRuIQskjIRjteXJfTiIkd/CcHVEZTyjS
- TT6M9uboWbpgaekxLINH+e0BTD7fB97ADzLjHfBiNXbwZB3FB4wKw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jcpgt7g9-1
+ :mime-version:references:subject:to; s=pp1; bh=RbmIvg6WV9A+b3mU/
+ FObKmI+mzX05PtGjHKT+QOCS6g=; b=SikZ98iVtF9xkPswYrLzs0P0pSqiZn2Hn
+ BYboUGgrT9jqHifUHQ+OywFMV3gj5zh0EDQ3idKbJeYHKwjhopm0sDV7415j/rlk
+ AmDwtxoePOZ3Rq7KnJm7ZiH+cb76R8k2Aziu23Ug2U2jmyv86K5rVkCRauwCg65L
+ NEfN1vQ066aa94CcPxooY/gXIFpxnPYLRZEk3kdjLKZaBxg7889G/aUo/h0EwPzx
+ vU4IrTjYAGQa6XIuK+lljK20dVZJNjdTx631x8pItac1yU7LkWuKUImF6iZUZJty
+ GCBYJgt1Kd6BHB2PyHqnplqDH6Bsbj0qEVPMgXcY2M6XO8gUqzmVA==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jgd295yr-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 12:34:20 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGBUQqq014391;
- Mon, 16 Dec 2024 12:34:19 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hq21dgn7-1
+ Mon, 16 Dec 2024 12:34:23 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BG8tEWC014350;
+ Mon, 16 Dec 2024 12:34:22 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43hmqxx0ka-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 12:34:19 +0000
+ Mon, 16 Dec 2024 12:34:22 +0000
 Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
  [10.20.54.105])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BGCYH6f55902540
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BGCYKgs47710674
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Dec 2024 12:34:17 GMT
+ Mon, 16 Dec 2024 12:34:20 GMT
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9A49E20049;
- Mon, 16 Dec 2024 12:34:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 56EBE20049;
+ Mon, 16 Dec 2024 12:34:20 +0000 (GMT)
 Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F03720040;
- Mon, 16 Dec 2024 12:34:17 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BFFA120040;
+ Mon, 16 Dec 2024 12:34:19 +0000 (GMT)
 Received: from heavy.ibm.com (unknown [9.171.68.106])
  by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon, 16 Dec 2024 12:34:16 +0000 (GMT)
+ Mon, 16 Dec 2024 12:34:19 +0000 (GMT)
 From: Ilya Leoshkevich <iii@linux.ibm.com>
 To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
  Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -64,28 +64,28 @@ To: Warner Losh <imp@bsdimp.com>, Riku Voipio <riku.voipio@iki.fi>,
 Cc: Kyle Evans <kevans@freebsd.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v3 4/8] user: Introduce host_interrupt_signal
-Date: Mon, 16 Dec 2024 13:33:22 +0100
-Message-ID: <20241216123412.77450-5-iii@linux.ibm.com>
+Subject: [PATCH v3 8/8] tests/tcg: Add late gdbstub attach test
+Date: Mon, 16 Dec 2024 13:33:26 +0100
+Message-ID: <20241216123412.77450-9-iii@linux.ibm.com>
 X-Mailer: git-send-email 2.47.0
 In-Reply-To: <20241216123412.77450-1-iii@linux.ibm.com>
 References: <20241216123412.77450-1-iii@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: HdfBypf8peIyLDgapbMFqaEf_at9h43Y
-X-Proofpoint-ORIG-GUID: HdfBypf8peIyLDgapbMFqaEf_at9h43Y
+X-Proofpoint-ORIG-GUID: XT45QtjWq5S6GVaYvOXDFC2HwjLC0BCr
+X-Proofpoint-GUID: XT45QtjWq5S6GVaYvOXDFC2HwjLC0BCr
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
  definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 clxscore=1015
- mlxscore=0 phishscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0
- spamscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412160105
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ spamscore=0 bulkscore=0
+ suspectscore=0 lowpriorityscore=0 adultscore=0 clxscore=1015
+ mlxlogscore=999 priorityscore=1501 malwarescore=0 impostorscore=0
+ mlxscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412160105
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -37
 X-Spam_score: -3.8
 X-Spam_bar: ---
@@ -109,156 +109,162 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Attaching to the gdbstub of a running process requires stopping its
-threads. For threads that run on a CPU, cpu_exit() is enough, but the
-only way to grab attention of a thread that is stuck in a long-running
-syscall is to interrupt it with a signal.
+Add a small test to prevent regressions.
+Make sure that host_interrupt_signal is not visible to the guest.
 
-Reserve a host realtime signal for this, just like it's already done
-for TARGET_SIGABRT on Linux. This may reduce the number of available
-guest realtime signals by one, but this is acceptable, since there are
-quite a lot of them, and it's unlikely that there are apps that need
-them all.
-
-Set signal_pending for the safe_sycall machinery to prevent invoking
-the syscall. This is a lie, since we don't queue a guest signal, but
-process_pending_signals() can handle the absence of pending signals.
-The syscall returns with QEMU_ERESTARTSYS errno, which arranges for
-the automatic restart. This is important, because it helps avoiding
-disturbing poorly written guests.
-
-Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
 ---
- bsd-user/signal.c     | 12 ++++++++++++
- include/user/signal.h |  2 ++
- linux-user/signal.c   | 25 ++++++++++++++++++++-----
- 3 files changed, 34 insertions(+), 5 deletions(-)
+ tests/guest-debug/run-test.py              | 15 ++++++--
+ tests/tcg/multiarch/Makefile.target        |  9 ++++-
+ tests/tcg/multiarch/gdbstub/late-attach.py | 28 +++++++++++++++
+ tests/tcg/multiarch/late-attach.c          | 41 ++++++++++++++++++++++
+ 4 files changed, 90 insertions(+), 3 deletions(-)
+ create mode 100644 tests/tcg/multiarch/gdbstub/late-attach.py
+ create mode 100644 tests/tcg/multiarch/late-attach.c
 
-diff --git a/bsd-user/signal.c b/bsd-user/signal.c
-index a2b11a97131..992736df5c5 100644
---- a/bsd-user/signal.c
-+++ b/bsd-user/signal.c
-@@ -49,6 +49,8 @@ static inline int sas_ss_flags(TaskState *ts, unsigned long sp)
-         on_sig_stack(ts, sp) ? SS_ONSTACK : 0;
- }
+diff --git a/tests/guest-debug/run-test.py b/tests/guest-debug/run-test.py
+index 5a091db8be9..75e9c92e036 100755
+--- a/tests/guest-debug/run-test.py
++++ b/tests/guest-debug/run-test.py
+@@ -36,6 +36,8 @@ def get_args():
+     parser.add_argument("--gdb-args", help="Additional gdb arguments")
+     parser.add_argument("--output", help="A file to redirect output to")
+     parser.add_argument("--stderr", help="A file to redirect stderr to")
++    parser.add_argument("--no-suspend", action="store_true",
++                        help="Ask the binary to not wait for GDB connection")
  
-+int host_interrupt_signal = SIGRTMAX;
+     return parser.parse_args()
+ 
+@@ -73,10 +75,19 @@ def log(output, msg):
+ 
+     # Launch QEMU with binary
+     if "system" in args.qemu:
++        if args.no_suspend:
++            suspend = ''
++        else:
++            suspend = ' -S'
+         cmd = f'{args.qemu} {args.qargs} {args.binary}' \
+-            f' -S -gdb unix:path={socket_name},server=on'
++            f'{suspend} -gdb unix:path={socket_name},server=on'
+     else:
+-        cmd = f'{args.qemu} {args.qargs} -g {socket_name} {args.binary}'
++        if args.no_suspend:
++            suspend = ',suspend=n'
++        else:
++            suspend = ''
++        cmd = f'{args.qemu} {args.qargs} -g {socket_name}{suspend}' \
++            f' {args.binary}'
+ 
+     log(output, "QEMU CMD: %s" % (cmd))
+     inferior = subprocess.Popen(shlex.split(cmd))
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 18d3cf4ae00..688a6be203c 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -130,6 +130,13 @@ run-gdbstub-follow-fork-mode-parent: follow-fork-mode
+ 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/follow-fork-mode-parent.py, \
+ 	following parents on fork)
+ 
++run-gdbstub-late-attach: late-attach
++	$(call run-test, $@, env LATE_ATTACH_PY=1 $(GDB_SCRIPT) \
++		--gdb $(GDB) \
++		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" --no-suspend \
++		--bin $< --test $(MULTIARCH_SRC)/gdbstub/late-attach.py, \
++	attaching to a running process)
 +
- /*
-  * The BSD ABIs use the same signal numbers across all the CPU architectures, so
-  * (unlike Linux) these functions are just the identity mapping. This might not
-@@ -489,6 +491,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
-     uintptr_t pc = 0;
-     bool sync_sig = false;
+ else
+ run-gdbstub-%:
+ 	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
+@@ -139,7 +146,7 @@ EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
+ 	      run-gdbstub-registers run-gdbstub-prot-none \
+ 	      run-gdbstub-catch-syscalls run-gdbstub-follow-fork-mode-child \
+ 	      run-gdbstub-follow-fork-mode-parent \
+-	      run-gdbstub-qxfer-siginfo-read
++	      run-gdbstub-qxfer-siginfo-read run-gdbstub-late-attach
  
-+    if (host_sig == host_interrupt_signal) {
-+        ts->signal_pending = 1;
-+        cpu_exit(thread_cpu);
-+        return;
-+    }
+ # ARM Compatible Semi Hosting Tests
+ #
+diff --git a/tests/tcg/multiarch/gdbstub/late-attach.py b/tests/tcg/multiarch/gdbstub/late-attach.py
+new file mode 100644
+index 00000000000..1d40efb5ec8
+--- /dev/null
++++ b/tests/tcg/multiarch/gdbstub/late-attach.py
+@@ -0,0 +1,28 @@
++"""Test attaching GDB to a running process.
 +
-     /*
-      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
-      * handling wrt signal blocking and unwinding.
-@@ -852,6 +860,9 @@ void signal_init(void)
- 
-     for (i = 1; i <= TARGET_NSIG; i++) {
-         host_sig = target_to_host_signal(i);
-+        if (host_sig == host_interrupt_signal) {
-+            continue;
++SPDX-License-Identifier: GPL-2.0-or-later
++"""
++from test_gdbstub import main, report
++
++
++def run_test():
++    """Run through the tests one by one"""
++    try:
++        phase = gdb.parse_and_eval("phase").string()
++    except gdb.error:
++        # Assume the guest did not reach main().
++        phase = "start"
++
++    if phase == "start":
++        gdb.execute("break sigwait")
++        gdb.execute("continue")
++        phase = gdb.parse_and_eval("phase").string()
++    report(phase == "sigwait", "{} == \"sigwait\"".format(phase))
++
++    gdb.execute("signal SIGUSR1")
++
++    exitcode = int(gdb.parse_and_eval("$_exitcode"))
++    report(exitcode == 0, "{} == 0".format(exitcode))
++
++
++main(run_test)
+diff --git a/tests/tcg/multiarch/late-attach.c b/tests/tcg/multiarch/late-attach.c
+new file mode 100644
+index 00000000000..20a364034b5
+--- /dev/null
++++ b/tests/tcg/multiarch/late-attach.c
+@@ -0,0 +1,41 @@
++/*
++ * Test attaching GDB to a running process.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include <assert.h>
++#include <signal.h>
++#include <stdio.h>
++#include <stdlib.h>
++
++static const char *phase = "start";
++
++int main(void)
++{
++    sigset_t set;
++    int sig;
++
++    assert(sigfillset(&set) == 0);
++    assert(sigprocmask(SIG_BLOCK, &set, NULL) == 0);
++
++    /* Let GDB know it can send SIGUSR1. */
++    phase = "sigwait";
++    if (getenv("LATE_ATTACH_PY")) {
++        assert(sigwait(&set, &sig) == 0);
++        if (sig != SIGUSR1) {
++            fprintf(stderr, "Unexpected signal %d\n", sig);
++            return EXIT_FAILURE;
 +        }
-         sigaction(host_sig, NULL, &oact);
-         if (oact.sa_sigaction == (void *)SIG_IGN) {
-             sigact_table[i - 1]._sa_handler = TARGET_SIG_IGN;
-@@ -870,6 +881,7 @@ void signal_init(void)
-             sigaction(host_sig, &act, NULL);
-         }
-     }
-+    sigaction(host_interrupt_signal, &act, NULL);
- }
- 
- static void handle_pending_signal(CPUArchState *env, int sig,
-diff --git a/include/user/signal.h b/include/user/signal.h
-index 19b6b9e5ddc..7fa33b05d91 100644
---- a/include/user/signal.h
-+++ b/include/user/signal.h
-@@ -20,4 +20,6 @@
-  */
- int target_to_host_signal(int sig);
- 
-+extern int host_interrupt_signal;
-+
- #endif
-diff --git a/linux-user/signal.c b/linux-user/signal.c
-index b1c468cf5c3..551c6bb1448 100644
---- a/linux-user/signal.c
-+++ b/linux-user/signal.c
-@@ -515,6 +515,8 @@ static int core_dump_signal(int sig)
-     }
- }
- 
-+int host_interrupt_signal;
-+
- static void signal_table_init(const char *rtsig_map)
- {
-     int hsig, tsig, count;
-@@ -578,10 +580,10 @@ static void signal_table_init(const char *rtsig_map)
-          * Attempts for configure "missing" signals via sigaction will be
-          * silently ignored.
-          *
--         * Reserve one signal for internal usage (see below).
-+         * Reserve two signals for internal usage (see below).
-          */
- 
--        hsig = SIGRTMIN + 1;
-+        hsig = SIGRTMIN + 2;
-         for (tsig = TARGET_SIGRTMIN;
-              hsig <= SIGRTMAX && tsig <= TARGET_NSIG;
-              hsig++, tsig++) {
-@@ -602,12 +604,17 @@ static void signal_table_init(const char *rtsig_map)
-     host_to_target_signal_table[SIGABRT] = 0;
-     for (hsig = SIGRTMIN; hsig <= SIGRTMAX; hsig++) {
-         if (!host_to_target_signal_table[hsig]) {
--            host_to_target_signal_table[hsig] = TARGET_SIGABRT;
--            break;
-+            if (host_interrupt_signal) {
-+                host_to_target_signal_table[hsig] = TARGET_SIGABRT;
-+                break;
-+            } else {
-+                host_interrupt_signal = hsig;
-+            }
-         }
-     }
-     if (hsig > SIGRTMAX) {
--        fprintf(stderr, "No rt signals left for SIGABRT mapping\n");
-+        fprintf(stderr,
-+                "No rt signals left for interrupt and SIGABRT mapping\n");
-         exit(EXIT_FAILURE);
-     }
- 
-@@ -687,6 +694,8 @@ void signal_init(const char *rtsig_map)
-         }
-         sigact_table[tsig - 1]._sa_handler = thand;
-     }
-+
-+    sigaction(host_interrupt_signal, &act, NULL);
- }
- 
- /* Force a synchronously taken signal. The kernel force_sig() function
-@@ -1034,6 +1043,12 @@ static void host_signal_handler(int host_sig, siginfo_t *info, void *puc)
-     bool sync_sig = false;
-     void *sigmask;
- 
-+    if (host_sig == host_interrupt_signal) {
-+        ts->signal_pending = 1;
-+        cpu_exit(thread_cpu);
-+        return;
 +    }
 +
-     /*
-      * Non-spoofed SIGSEGV and SIGBUS are synchronous, and need special
-      * handling wrt signal blocking and unwinding.  Non-spoofed SIGILL,
++    /* Check that the guest does not see host_interrupt_signal. */
++    assert(sigpending(&set) == 0);
++    for (sig = 1; sig < NSIG; sig++) {
++        if (sigismember(&set, sig)) {
++            fprintf(stderr, "Unexpected signal %d\n", sig);
++            return EXIT_FAILURE;
++        }
++    }
++
++    return EXIT_SUCCESS;
++}
 -- 
 2.47.0
 
