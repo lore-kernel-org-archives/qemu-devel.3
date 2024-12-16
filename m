@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A63A2E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:54:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84FFCE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:55:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNFId-0006Zd-8a; Mon, 16 Dec 2024 12:54:32 -0500
+	id 1tNFJ0-0007N8-Ao; Mon, 16 Dec 2024 12:54:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tNFIb-0006YR-92; Mon, 16 Dec 2024 12:54:29 -0500
+ id 1tNFIx-00079t-F3; Mon, 16 Dec 2024 12:54:51 -0500
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1tNFIY-00061k-6H; Mon, 16 Dec 2024 12:54:28 -0500
+ id 1tNFIv-00066M-9D; Mon, 16 Dec 2024 12:54:50 -0500
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YBnY05TXwz6K5W5;
- Tue, 17 Dec 2024 01:50:44 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4YBnYc5vXYz6K9ZV;
+ Tue, 17 Dec 2024 01:51:16 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 75790140B30;
- Tue, 17 Dec 2024 01:54:15 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8487C140B30;
+ Tue, 17 Dec 2024 01:54:47 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.47.64.21) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 16 Dec 2024 18:54:14 +0100
+ 15.1.2507.39; Mon, 16 Dec 2024 18:54:46 +0100
 To: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>
 CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <dapeng1.mi@linux.intel.com>, <yongwei.ma@intel.com>, <armbru@redhat.com>,
@@ -37,10 +37,12 @@ CC: <zhao1.liu@intel.com>, <zhenyu.z.wang@intel.com>,
  <linuxarm@huawei.com>, <shameerali.kolothum.thodi@huawei.com>,
  <Jonathan.Cameron@Huawei.com>, <jiangkunkun@huawei.com>,
  <yangyicong@hisilicon.com>, <sarsanaee@gmail.com>
-Subject: [RFC PATCH v4 0/7] Specifying cache topology on ARM
-Date: Mon, 16 Dec 2024 17:54:07 +0000
-Message-ID: <20241216175414.1953-1-alireza.sanaee@huawei.com>
+Subject: [PATCH v4 1/7] i386/cpu: add IsDefined flag to smp-cache property
+Date: Mon, 16 Dec 2024 17:54:08 +0000
+Message-ID: <20241216175414.1953-2-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241216175414.1953-1-alireza.sanaee@huawei.com>
+References: <20241216175414.1953-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -73,131 +75,43 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Specifying the cache layout in virtual machines is useful for
-applications and operating systems to fetch accurate information about
-the cache structure and make appropriate adjustments. Enforcing correct
-sharing information can lead to better optimizations. This patch enables
-the specification of cache layout through a command line parameter,
-building on a patch set by Intel [1,2]. It uses this set as a
-foundation.  The device tree and ACPI/PPTT table, and device tree are
-populated based on user-provided information and CPU topology.
+This commit adds IsDefined flag to the object and this helps in avoiding
+extra checks for every single layer of caches in both x86 and ARM.
 
-Example:
+There is already a discussion on mailing list to have this flag. A
+patch that enables this flag will follow later.
 
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ hw/core/machine-smp.c | 2 ++
+ include/hw/boards.h   | 1 +
+ 2 files changed, 3 insertions(+)
 
-+----------------+                            +----------------+
-|    Socket 0    |                            |    Socket 1    |
-|    (L3 Cache)  |                            |    (L3 Cache)  |
-+--------+-------+                            +--------+-------+
-         |                                             |
-+--------+--------+                            +--------+--------+
-|   Cluster 0     |                            |   Cluster 0     |
-|   (L2 Cache)    |                            |   (L2 Cache)    |
-+--------+--------+                            +--------+--------+
-         |                                             |
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
-|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
-+--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
-         |                   |                       |                   |
-+--------+              +--------+              +--------+          +--------+
-|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
-+--------+              +--------+              +--------+          +--------+
-|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
-+--------+              +--------+              +--------+          +--------+
-
-
-The following command will represent the system relying on **ACPI PPTT tables**.
-
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
- -initrd rootfs.cpio.gz \
- -bios ./edk2-aarch64-code.fd \
- -nographic
-
-The following command will represent the system relying on **the device tree**.
-
-./qemu-system-aarch64 \
- -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
- -cpu max \
- -m 2048 \
- -smp sockets=2,clusters=1,cores=2,threads=2 \
- -kernel ./Image.gz \
- -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
- -initrd rootfs.cpio.gz \
- -bios ./edk2-aarch64-code.fd \
- -nographic
-
-Failure cases:
-    1) there are cases where QEMU might not have any clusters selected in the
-    -smp option, while user specifies caches to be shared at cluster level. In
-    this situations, qemu returns error.
-
-    2) There are other scenarios where caches exist in systems' registers but
-    not left unspecified by users. In this case qemu returns failure.
-
-    3) At the moment, the device tree is not able to describe caches shared at
-    core level. In another word, SMT threads cannot share caches. This will need
-    adjustments in the SPEC. It is worth noting that this particular case is completely
-    OK in ACPI PPTT tables.
-
-Currently only three levels of caches are supported to be specified from
-the command line. However, increasing the value does not require
-significant changes. Further, this patch assumes l2 and l3 unified
-caches and does not allow l(2/3)(i/d). The level terminology is
-thread/core/cluster/socket right now.
-
-Here is the hierarchy assumed in this patch:
-Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
-
-TODO:
-1) Making the code to work with arbitrary levels
-2) Separated data and instruction cache at L2 and L3.
-3) Additional cache controls.  e.g. size of L3 may not want to just
-match the underlying system, because only some of the associated host
-CPUs may be bound to this VM.
-
-Depends-on: target/arm/tcg: refine cache descriptions with a wrapper
-Depends-on: Msg-id: 20240903144550.280-1-alireza.sanaee@huawei.com
-
-Depends-on: Building PPTT with root node and identical implementation flag
-Depends-on: Msg-id: 20240926113323.55991-1-yangyicong@huawei.com
-
-[1] https://lore.kernel.org/kvm/20240908125920.1160236-1-zhao1.liu@intel.com/
-[2] https://lore.kernel.org/qemu-devel/20240704031603.1744546-1-zhao1.liu@intel.com/
-
-v3->v4:
-Device tree added.
-
-Alireza Sanaee (7):
-  i386/cpu: add IsDefined flag to smp-cache property
-  target/arm/tcg: increase cache level for cpu=max
-  arm/virt.c: add cache hierarchy to device tree
-  bios-tables-test: prepare to change ARM ACPI virt PPTT
-  hw/acpi/aml-build.c: add cache hierarchy to pptt table
-  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
-  Update the ACPI tables according to the acpi aml_build change, also
-    empty bios-tables-test-allowed-diff.h.
-
- hw/acpi/aml-build.c                        | 235 ++++++++++++-
- hw/arm/virt-acpi-build.c                   |   8 +-
- hw/arm/virt.c                              | 390 +++++++++++++++++++++
- hw/core/machine-smp.c                      |   2 +
- hw/cpu/core.c                              |  97 +++++
- include/hw/acpi/aml-build.h                |   4 +-
- include/hw/arm/virt.h                      |   5 +
- include/hw/boards.h                        |   1 +
- include/hw/cpu/core.h                      |  27 ++
- target/arm/tcg/cpu64.c                     |  13 +
- tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
- tests/qtest/bios-tables-test.c             |   6 +-
- 12 files changed, 779 insertions(+), 9 deletions(-)
-
+diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+index 9a28194676..5a02bbf584 100644
+--- a/hw/core/machine-smp.c
++++ b/hw/core/machine-smp.c
+@@ -371,6 +371,8 @@ bool machine_parse_smp_cache(MachineState *ms,
+         return false;
+     }
+ 
++    ms->smp_cache.IsDefined = true;
++
+     return true;
+ }
+ 
+diff --git a/include/hw/boards.h b/include/hw/boards.h
+index db2aa2b706..2883a57084 100644
+--- a/include/hw/boards.h
++++ b/include/hw/boards.h
+@@ -373,6 +373,7 @@ typedef struct CpuTopology {
+ 
+ typedef struct SmpCache {
+     SmpCacheProperties props[CACHE_LEVEL_AND_TYPE__MAX];
++    bool IsDefined;
+ } SmpCache;
+ 
+ /**
 -- 
 2.34.1
 
