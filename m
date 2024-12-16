@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F728E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:55:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40CE0E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 04:56:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN28v-0007HM-8Y; Sun, 15 Dec 2024 22:51:37 -0500
+	id 1tN392-0006fw-Rr; Sun, 15 Dec 2024 23:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN28r-0007G0-U6
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:35 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tN391-0006fA-14; Sun, 15 Dec 2024 23:55:47 -0500
+Received: from mail-vk1-xa32.google.com ([2607:f8b0:4864:20::a32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN28k-0005xL-Ub
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:33 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-71e2851de95so814203a34.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tN38z-0004MI-7K; Sun, 15 Dec 2024 23:55:46 -0500
+Received: by mail-vk1-xa32.google.com with SMTP id
+ 71dfb90a1353d-51619b06a1cso1970109e0c.3; 
+ Sun, 15 Dec 2024 20:55:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734321085; x=1734925885; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=erU6zn+OhBWNmEfsxWhLXaeN8yOIETd3sIFSxTHF/88=;
- b=iSJlBBwDrM6hKE6CS88DFGp7mC9UL4TqFrPBJyZLIDPbpZkkKxCpUsojy4dcGQKx9T
- pqaXS4UvxHCvTvcT+U7b6ccPltOW8JLCbxISghZLD7PVVJG6ygWWWPY4FM7IQcAw6FBf
- DNgHn72FaMuTJCDXjnY7wv4D/LI/hr94tdGucvWSyvbhNxKdFA3wtgpQoqlX9pWW6vfG
- uTwK48BwnxgA0sy8VtSvmMRMiNBiUqXGkY4h5jxYLJ5yPkQ6/mFXMYikURKukXtGQ+Z6
- oyZJcFfOHeVqbcdf/c6TfZZ6Vlzn+4lLD0rASoWW9wXD3bj4yuaxVWm0lIJ/+VU/0/V0
- 2ntQ==
+ d=gmail.com; s=20230601; t=1734324943; x=1734929743; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EDbbJ8/0/ImSc1Hn0zTVodv5EIlnSBzh0NR3dPMWfiM=;
+ b=G8KZTZZLOUMHgCpvbS4JHc1qT6bj4VxucNeDm6pvWR5l4ERKVUJhGOqVb2F5QtrMF6
+ 8U6gr9pHSx4JsRlG9hkWjxec0F6GCVFSFELjT3HOH2EUQ3m7gVUgDKGxycK2+rzNb2Sq
+ eOcAnaA5ApzsbJ335ghP4Lfm8bZGrZK0cXcdNnj0hRBKXRxSNsXd4KZfFcze2KF7uVGD
+ OGUJRVm60oGt78HiuCebWn2uqRccZC2L2Mu7Z3d0AICrgp05F/7dNgYAw6QP99Davnnm
+ Kvnc2p5SB20NpfrsTBVkXEJnaYIjio8yqgTEw3yOASUGcs9jqO6per9ZRLERMJTq2XFr
+ KxhQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734321085; x=1734925885;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734324943; x=1734929743;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=erU6zn+OhBWNmEfsxWhLXaeN8yOIETd3sIFSxTHF/88=;
- b=hHmL7OQcLTK3DAQfgTzVBhFaMNogKPb2d0UrBEn4G77C3JB+2aJ+VRd0FCM3I3AEuV
- 224tos30QkGL/SMJqzQMNbanCjtg3n4nZlfwkusx/TnLGEyOYHggwdA4+xaQ6Ned55Zl
- WDXXS2oUeROmm7C5gYiJnsmIpLE8d8SP+8dkvjgH73dM5Yf1qLUKg2e2ATfLTVMY7JQe
- erRwcqtKMlXsCFlXTTOCxkn8wFkwgs1KvpoG5rwc6E8T9lCSQR6eiKL7RizBPnHn5Y/z
- 8LwuGDn4ADzlFC/zycRi7fBYZLZqNUL+dh8kLzHI8MrBq8Gsqj9pZLrU6CeDXofpDa3D
- /upw==
-X-Gm-Message-State: AOJu0YyUg3mSzSQRXvSEisH2WYtyPtJOnzGdTBsQX1680mgYHDMuVivt
- 0ppW4PorfuOhtI1K8n081igVT/NGhrS5N34IxjUcooDRqLQDq6ec6x1xU0KnsRSDbacb6TfwE7f
- Ma29M4YF/
-X-Gm-Gg: ASbGncuBN2mv5fC3j+2wPZKUuOjquW0SIHtpxFuEwul5MahZfE6hnyAz1PUJU375T2T
- EjNOlsWxsQCIXL4YL0jUi+raL7EKfDv4BgCSNTlDAIlUWdZ4PXBs30lZ1qqVBX5ZUsWm0Hxt1qT
- wjZWPDxogmYFrkWGky2ycJ0c5SwGlJ2q+wM/7IaaUZ3Txpv5/9QDkD+B9qfr7jrxEjOpatFDfiQ
- lMIxDFxffwR31IPyiJQU6IHS7RJMovAPL0U/1i9yU7QA5txxytyb4woYNB6f8uO8DwVNaNrEZtO
- BYhNX/nXO2dryhNfb2gcNwjVh6j1RUz66lpfxmli6as=
-X-Google-Smtp-Source: AGHT+IFXSkeOrNahCcS7hlm+hirO28G3W9xhmO+ub7Liq1zm8Gh9YzpUsYI4RY4MQwzu6RintfPNnA==
-X-Received: by 2002:a05:6830:64cb:b0:71d:f239:c0a7 with SMTP id
- 46e09a7af769-71e3ba2683emr6305262a34.19.1734321085335; 
- Sun, 15 Dec 2024 19:51:25 -0800 (PST)
-Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.24
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 19:51:24 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PATCH 02/24] hw/ide: Constify sysbus_ahci_properties
-Date: Sun, 15 Dec 2024 21:50:47 -0600
-Message-ID: <20241216035109.3486070-3-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
-References: <20241216035109.3486070-1-richard.henderson@linaro.org>
+ bh=EDbbJ8/0/ImSc1Hn0zTVodv5EIlnSBzh0NR3dPMWfiM=;
+ b=PN9Y4bVdvJTMqO6s1gIy9vCmQNYx1T/zpvBGGRsARFXbz4ASozgaNdlI7rccj/Z5v3
+ qdnLK4f5T9aR+T6fhe4HHWrRx6IGPAM/c+bdoWZ/u7EhiDwCKnAS4UsrkyiCdlX6JHSB
+ LH3P8KPyoKFzGlxXW9OtD7GSVOFIO/0szX8YY/64vdb5scSdz3JAEdLSlZcv0obJTX7y
+ ffmKM9LK0wUnvfNLlEHMLo7cyUuIdGkOnETjVu+UEn8HLiYJxb142d0tkqUXVfV7ZqLJ
+ VfapMMXFxoC8ONlGr+yk32W6psdPuLasVwo9i7i46BcImmLN6Co/cI2qdp7XjKTL8EWq
+ NM/A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVk1AKIe6XgXwfZ0HiiYGXEfvO9VCFLi+u2khIWJKgyeMA7ijA6ZycL9iiMGAhzEyLA2RDVxZuarHds@nongnu.org
+X-Gm-Message-State: AOJu0YxQiFyG+Hoy9YIj5R8RuOhvuw3J3ScceG9MZfNm6i9zdyEptpB1
+ ltXr+/8I6lI3CSZgx4olOww3oKwHK5i0fL1CzddgyVcpoQZeQYvKe9qjuX3tV3EG2cphFCbTAHZ
+ kHFLMwvYqVPf/9NQ9dKm9YjcV34M=
+X-Gm-Gg: ASbGncux9qRcEDXcvB168j2HFriOFGjoik+ENSav4Lul3nGlc3lkwJ9tqFjg518v5c2
+ uiU28F/VB5MoVFdE2oZvbE+IKQqaYIyGGPpSIu0kA3+rbIfIptQdjHxKOKYx2FoVXSIXE
+X-Google-Smtp-Source: AGHT+IG1y6P/MBv2ymasYVym1ij5dHBIDbZr9PwCYaPDQgZfiIJc03Fhgjv+Ufg/BkE+/zvpuyfXr5iLI6HMqM3h1u8=
+X-Received: by 2002:a05:6122:1dab:b0:518:9040:6700 with SMTP id
+ 71dfb90a1353d-518ca4a4181mr10817771e0c.11.1734324942846; Sun, 15 Dec 2024
+ 20:55:42 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20241211211933.198792-1-fkonrad@amd.com>
+ <20241211211933.198792-2-fkonrad@amd.com>
+In-Reply-To: <20241211211933.198792-2-fkonrad@amd.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 16 Dec 2024 14:55:16 +1000
+Message-ID: <CAKmqyKNeqRNfB3p_U4Q3kmV43rdD+b3P0t7qq7FZtGv46imQnQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] target/riscv: add a trap-misaligned-access property
+To: Frederic Konrad <fkonrad@amd.com>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ bmeng.cn@gmail.com, liwei1518@gmail.com, dbarboza@ventanamicro.com, 
+ zhiwei_liu@linux.alibaba.com, qemu-devel@nongnu.org, 
+ francisco.iglesias@amd.com, Luc.Michel@amd.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a32;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa32.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -98,25 +96,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- hw/ide/ahci-sysbus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Thu, Dec 12, 2024 at 7:21=E2=80=AFAM Frederic Konrad <fkonrad@amd.com> w=
+rote:
+>
+> On riscv target, misaligned accesses are either authorized and implemente=
+d in
+> hardware, or unimplemented and generate a trap to be implemented in softw=
+are.
+>
+> At the moment misaligned accesses for rvi just succeed, the intention of =
+this
+> new property is to let the user choose to have a trap when a misaligned a=
+ccess
+> happens.
+>
+> Signed-off-by: Frederic Konrad <fkonrad@amd.com>
+> ---
+>  target/riscv/cpu.c     | 5 +++++
+>  target/riscv/cpu_cfg.h | 1 +
+>  2 files changed, 6 insertions(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index f219f0c3b5..1696d3db2a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2697,6 +2697,11 @@ static Property riscv_cpu_properties[] =3D {
+>       * it with -x and default to 'false'.
+>       */
+>      DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
+> +    /*
+> +     * when set, misaligned accesses will generate a trap.
+> +     */
+> +    DEFINE_PROP_BOOL("trap-misaligned-access", RISCVCPU,
+> +                     cfg.trap_misaligned_access, false),
 
-diff --git a/hw/ide/ahci-sysbus.c b/hw/ide/ahci-sysbus.c
-index d43db0923f..2432039290 100644
---- a/hw/ide/ahci-sysbus.c
-+++ b/hw/ide/ahci-sysbus.c
-@@ -62,7 +62,7 @@ static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
-     ahci_realize(&s->ahci, dev, &address_space_memory);
- }
- 
--static Property sysbus_ahci_properties[] = {
-+static const Property sysbus_ahci_properties[] = {
-     DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
-     DEFINE_PROP_END_OF_LIST(),
- };
--- 
-2.43.0
+This should be the last patch, we want to implement the feature before
+we expose it.
 
+Alistair
 
