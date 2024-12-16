@@ -4,99 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8711FE7716A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 00:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0894DE7716A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 00:58:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tMzJJ-0001O0-F5; Sun, 15 Dec 2024 19:50:09 -0500
+	id 1tMzRN-0007bc-TG; Sun, 15 Dec 2024 19:58:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tMzJG-0001KI-Fq
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:50:06 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jason.chien@sifive.com>)
- id 1tMzJA-00075b-Ne
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:50:03 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-725ed193c9eso2789831b3a.1
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 16:49:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1734310198; x=1734914998; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/txMo+Nnraz9AAcWBO+Ht1SEClLczXwE0l/xGp309E0=;
- b=ZQ79rw5yMoXteReU93aya5jSGkqUHK8c1CM55eWycUxoGivb/ogC47OWoNXa57fSyW
- r340yCGHSX3g0vPhdtXNPsrpiuLtJTPEpY7ljMAL1w0ARycHzkMdR+uH4FHTiMeECE2C
- ckwOR5ZiPaD7CB4axXb6UAX4SuwfuEUT0jToKFFsqxkQMxEi4djVVkUpQQdru64LDJ11
- aRX6AiAE8bOFMvjLOvgHYpDyzUgt/vFpdMHhbzzGRYFSivJTlB7BtDwiLrhuJr9e67L0
- YumdacWErYtx3+UoGRdQBiQjrmxXuWGg/eYCz7RWisFfYpvWBtsHRog+n9loLv9P1Z8P
- jouw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734310198; x=1734914998;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/txMo+Nnraz9AAcWBO+Ht1SEClLczXwE0l/xGp309E0=;
- b=TxYlVTsR4rJLMza8+sL75Uhz6mSJvviZmX2LbThnp8AvkM83uKXHsCxyqO+b3xNNDZ
- UXA0+7wpKzPszXANgmCzk7A/1w+5Q2WBcbyg6Qv/gDAlDAZdDld/Tey/heU7w/8v0Gxq
- dlt8/mWXuFO/RZwpJH4Ci/k8b8WNB2+pJYh7JDw1NrB0RGpw41gB11WSYaoYiFI1k1qt
- aZdVZKXA1Jk90zL5A7hGPr3EVExUiEdRphhiA/JEEvEzevNxz+60ITK2PVG3s14ex90v
- 0vj3xXI5TcZJSsiYNujvltPk2fCthaCagKhSpPW8PbfUxNfiyGSLLvk+KteGDxhZqp80
- BDJA==
-X-Gm-Message-State: AOJu0YyJITMtqfNDe+j8Ux1oh9Le6LqpKexKYz1BQ0BZ9YcHzJqxUWYl
- Ssr6bWJIPkdWLg9pznm5sZU8DdBBnHs15s7cy6NbfecMPwDu5WFKIdG0W933/NX+q2rfjfV2JEX
- vszcVSJUiHcB7I/okRPeZatmj/84L/wo8D9du/y0RgKwL6lBwSFO6n4/nWaKiEzmoJfnUrfcZS4
- XpyJbCj93/cRGMApd0A+jw9n574EhSQoTgMlyn6zqW1Q5Kmjs=
-X-Gm-Gg: ASbGncvCCa7ohwFFJQqxf1XikiTCJfRqzIZazj7uJKTd9+4D1hk8omlQ/R7+ssvvmJk
- PMay7uwihuSMxj0CDqwokor8uVSP/HPhbiG7uby9te2asyK4kBeSuukfihoAAiRrDOfqNRBU2vS
- u5Q1BqOX25SwMSM4zAzRngWuTHKOXnnL4I2azUIgZ4buh4nt1EJNggLGBu58i0vRHkyXSqMg3I3
- pO0d+3Q8kyqGBchOQ11Zt/+Yj1ISiVrDwloWJq6qkDroVLR47f23BEV/EEoyvaGhHmdlgBA54G9
- AmwH7rNA
-X-Google-Smtp-Source: AGHT+IG7C/z9lqXQKhZELwgwHH6ev+PqxHmUpUtpuDtnyBnjuDPC1LlZ9b9OL21KR951RrunYjL69Q==
-X-Received: by 2002:a05:6a20:9f05:b0:1e0:cf9a:87b1 with SMTP id
- adf61e73a8af0-1e1dfbfbcbemr15265933637.6.1734310197718; 
- Sun, 15 Dec 2024 16:49:57 -0800 (PST)
-Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-801d5addbf9sm3059586a12.47.2024.12.15.16.49.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 16:49:57 -0800 (PST)
-From: Jason Chien <jason.chien@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Andrey Smirnov <andrew.smirnov@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-arm@nongnu.org (open list:MCIMX7D SABRE / i...),
- Jason Chien <jason.chien@sifive.com>
-Subject: [RFC PATCH 4/6] hw/riscv/riscv-iommu: Allow PCI hosts with iommu_ops
- registered connecting to the IOMMU
-Date: Mon, 16 Dec 2024 08:48:55 +0800
-Message-ID: <20241216004857.9367-5-jason.chien@sifive.com>
-X-Mailer: git-send-email 2.43.2
-In-Reply-To: <20241216004857.9367-1-jason.chien@sifive.com>
-References: <20241216004857.9367-1-jason.chien@sifive.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tMzRM-0007ZJ-2Y
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:58:28 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tMzRI-0008N3-Vx
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 19:58:27 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Dx_64je19nGDlXAA--.257S3;
+ Mon, 16 Dec 2024 08:58:11 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMBxpsAge19n6MOEAA--.14728S3;
+ Mon, 16 Dec 2024 08:58:08 +0800 (CST)
+Subject: Re: [PULL 00/18] loongarch-to-apply queue
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Song Gao <gaosong@loongson.cn>
+References: <20241213094027.1732484-1-maobibo@loongson.cn>
+ <CAJSP0QWwaqbA26mDEM+-y0-rGicFgrSDH0n+EAN8d9LTWsbm0w@mail.gmail.com>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <101115df-8c1e-6728-645c-d43650faa05c@loongson.cn>
+Date: Mon, 16 Dec 2024 08:57:26 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <CAJSP0QWwaqbA26mDEM+-y0-rGicFgrSDH0n+EAN8d9LTWsbm0w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=jason.chien@sifive.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-CM-TRANSID: qMiowMBxpsAge19n6MOEAA--.14728S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tFyUZrW3uFWkCFykZFWxXwc_yoW8tr17pr
+ W3uF1akr4DJr17Xrn3tw1UWFs5Jrn7Wry2vF13KryxCrsxAr1rXr18JryfuFyUG3yUGr1j
+ qF1rtr1UW3WUJwbCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.641,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,34 +84,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pci_setup_iommu_downstream_mem() is called to set the downstream memory
-region of the PCIe devices.
 
-Signed-off-by: Jason Chien <jason.chien@sifive.com>
----
- hw/riscv/riscv-iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index e9a0775d6e..f5d53a36b2 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2436,6 +2436,14 @@ void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-         QLIST_INSERT_AFTER(last, iommu, iommus);
-     } else if (!bus->iommu_ops && !bus->iommu_opaque) {
-         pci_setup_iommu(bus, &riscv_iommu_ops, iommu);
-+    } else if (bus->iommu_ops && bus->iommu_ops->set_memory_region) {
-+        /*
-+         * TODO:
-+         * All memory transactions of this bus will be directed to this AS.
-+         * We need to distinguish the source device dynamically.
-+         */
-+        AddressSpace *as = riscv_iommu_space(iommu, 0);
-+        pci_setup_iommu_downstream_mem(bus, as->root);
-     } else {
-         error_setg(errp, "can't register secondary IOMMU for PCI bus #%d",
-             pci_bus_num(bus));
--- 
-2.43.2
+On 2024/12/14 下午9:39, Stefan Hajnoczi wrote:
+> On Fri, 13 Dec 2024 at 04:42, Bibo Mao <maobibo@loongson.cn> wrote:
+>>
+>> The following changes since commit a5ba0a7e4e150d1350a041f0d0ef9ca6c8d7c307:
+>>
+>>    Merge tag 'pull-aspeed-20241211' of https://github.com/legoater/qemu into staging (2024-12-11 15:16:47 +0000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/bibo-mao/qemu.git pull-loongarch-20241213
+> 
+> This tag is not in the repository. Did you forget to push it?
+Sorry for that.
+Yes, I forget to push it :(, will submit the second version.
+
+Regards
+Bibo Mao
+> 
+> Thanks,
+> Stefan
+> 
+>>
+>> for you to fetch changes up to 78aa256571aa06f32001bd80635a1858187c609b:
+>>
+>>    hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic (2024-12-13 14:39:39 +0800)
+>>
+>> ----------------------------------------------------------------
+>> pull-loongarch-20241213
+>>
+>> ----------------------------------------------------------------
+>> Bibo Mao (8):
+>>        include: Add loongarch_pic_common header file
+>>        include: Move struct LoongArchPCHPIC to loongarch_pic_common header file
+>>        hw/intc/loongarch_pch: Merge instance_init() into realize()
+>>        hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICCommonState
+>>        hw/intc/loongarch_pch: Move some functions to file loongarch_pic_common
+>>        hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+>>        hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+>>        hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
+>>
+>>   hw/intc/loongarch_pch_pic.c            | 106 +++++++++++----------------------
+>>   hw/intc/loongarch_pic_common.c         |  97 ++++++++++++++++++++++++++++++
+>>   hw/intc/meson.build                    |   2 +-
+>>   hw/loongarch/virt.c                    |   2 +-
+>>   include/hw/intc/loongarch_pch_pic.h    |  70 +++++-----------------
+>>   include/hw/intc/loongarch_pic_common.h |  82 +++++++++++++++++++++++++
+>>   6 files changed, 230 insertions(+), 129 deletions(-)
+>>   create mode 100644 hw/intc/loongarch_pic_common.c
+>>   create mode 100644 include/hw/intc/loongarch_pic_common.h
+>>
+>>
 
 
