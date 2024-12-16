@@ -4,91 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72686E77183
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:13:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5822EE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNDhi-0006cz-F1; Mon, 16 Dec 2024 11:12:18 -0500
+	id 1tNDji-0007QC-Ry; Mon, 16 Dec 2024 11:14:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNDhf-0006cb-KO
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:12:15 -0500
-Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNDhd-0006xO-Uk
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:12:15 -0500
-Received: by mail-oi1-x22e.google.com with SMTP id
- 5614622812f47-3eba559611aso1076757b6e.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:12:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734365532; x=1734970332; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TDPOoO4r7H6+hn+VQiOPXUN8IY0yg3oT3dpNNjOWGso=;
- b=dYkh3zYiYOteaCC7ZQxcCLo/AOIDoi1QPE3guu226NnB/en9HqN3WaG6pUl6Le0EfR
- eiG/UXxcYuuW1svr4uyHmSxMlU3K0QCIkf92uBWkzZ3YvK20EVqD4v6m8ybTv5fsorky
- fC8vLjn4I2zvpLzHot/zBpO9Gh98BGnZhfxirRdzfCOeqhCtJWhfukA/anu6CYX/7fiL
- WKE4SVxnlSTxs2Nj1omEI4Ma3CtA6xGkJzARr9t87k/qS8aZYwVUAycD0uD4aj1EJhcI
- +vafn9HtoQQc/jQPWT9+V6YutZKTnpkbLpBNgpMVhxBrN3dfLk0tXonviT9+9DFk9XPp
- Mz7Q==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDjh-0007Q1-6g
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:14:21 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDje-00075I-OX
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:14:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734365657;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=65WmvjxxT0bl00rWNMB1Gzo/IZ5+O93mNP1PqVOv+vc=;
+ b=QSU+4TeE7DV1YTMMNjleJI3xjPmvxVo0Yca1my6JlYnXBE5aSc66G44S//eCYF4iVHSLu5
+ U93yn28Zp0fZgVZJAj1TQ63m6mzhOXan3nNnLVzvH8Ob1owvXl1sdlpUt3s5WKjIoVTH4+
+ kDLDwnarBLPeTlbaGI2nAckgsqPmWW8=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-138-l0k3MkQEPb--VxNbfDUgKA-1; Mon, 16 Dec 2024 11:14:16 -0500
+X-MC-Unique: l0k3MkQEPb--VxNbfDUgKA-1
+X-Mimecast-MFC-AGG-ID: l0k3MkQEPb--VxNbfDUgKA
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-3a9cefa1969so44526105ab.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:14:16 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734365532; x=1734970332;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TDPOoO4r7H6+hn+VQiOPXUN8IY0yg3oT3dpNNjOWGso=;
- b=cDDfJOdcLoloygPcxsE1uire1LKuQ5IUBFja1SB27D13gSYH66I6tBNquAM/zE2h6v
- B0B7XRukX6j3Siyy9ZoHl2nfhfJ1j890uCNCPR5J3I2DnMY9pSHgrlToNiwU172C9OsC
- 6dIdGVEuPFkAhSYaJ1sa/X7huqGIopHhvnRC6t6Y8XTdYwLAstXstJUTp25wSmLWnT2Y
- N79gS1oSuo9Q7YXeTV8ICtfDcdqAf+WVco4MVoqeCjZQCnu8dyLHR0Zlg/wjOdVtRjm6
- xORRyveYQGKtr6tWj35JjuufyfMm5VB8KyBeiMLhfug3mQnmW23O65TbXzDMZTAr7Spn
- mQ0Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVanb+6iBUYwCbGYsR11M/wuqvCi6xCUjyeuzpHhQLiXzIt9YDc53UhUkLxQDEuDDWbt3k1EXEt/LsP@nongnu.org
-X-Gm-Message-State: AOJu0YyS4heUipkDKsUj6v0gnpdMZkAnZADua4iHmJOaIYbzFN81vACc
- HdQeWkZwvNm4WitAd48Vpx5abSsD69MLvpLkknic4Ak41PmzetnrHzDgMsdYM6E=
-X-Gm-Gg: ASbGncsLvC0gWGbyLzmLtST/vXLiXGkTJ4WVC26AIrc1PZ36mpSi5jVW2kYRCud1UqD
- kUiMamf2fX8sOEj9hnjQTxFQmMB/bPIVqMnPrVeSiUq/+unM18grkK/dgVml8EB0f+7NKBNIQfC
- PxBPk8OkKp5DikWaxrIRnfD+IRly4tSiR0JSxZ4oBP8dyHEJJierCoiK2SuWB1ELhZAsT6eCbnU
- jxAEtfmeUzXUB0Wq1QqcxMljViqne0Ng6fgxPszcjFHF3O9uljtvA9/gaJdFXwI0aRZjZcOCK34
- zJk/H7JabB9vO+QOx5YNWyh/gVeAQ30bES0=
-X-Google-Smtp-Source: AGHT+IGRZfsL0hBGxeNkFvQjXne65hBOuhZlYr2QLQ2ClEklg9Ed4dBvZMPsMqq9FK1TH/d+nP1VMQ==
-X-Received: by 2002:a05:6808:f01:b0:3eb:66a1:9d8f with SMTP id
- 5614622812f47-3eba6895b43mr6250845b6e.25.1734365531762; 
- Mon, 16 Dec 2024 08:12:11 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb479737dsm1617019b6e.20.2024.12.16.08.12.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 08:12:11 -0800 (PST)
-Message-ID: <558ee1e8-40c4-4517-bd34-a486826c4d1e@linaro.org>
-Date: Mon, 16 Dec 2024 10:12:09 -0600
+ d=1e100.net; s=20230601; t=1734365655; x=1734970455;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=65WmvjxxT0bl00rWNMB1Gzo/IZ5+O93mNP1PqVOv+vc=;
+ b=aQIqFjVJbkqdFOBO1nHVdo/VvsoJ+/Xj6aWrDE8oM3+md69DfdzGupvhha4K+7Tnb6
+ xf8QRXLWlBm2JUoyIOWMYQHb23MCcx9/RjNK/x/2nSlEKS2CvCW285LTXSrcAi4galaP
+ KLUVmv01LCdo74lKoRMhHeZzl38HWcT1oV/R+gbqE4i0cXAOl4ZpJ6DLKGWyPJQQjOsO
+ yBZlowghvaLXMAmZKucq8dhAJ+gTnriaNoFxUssJjh5vtRtpvtvxpiyg437g3rKP1GnM
+ rPk/szf+7ETMTl36KKdfn6zpKw+2NlaaoEOv+AlSo7pe7HVtEOd5YiT4sBe4NIoNwBwx
+ D3rA==
+X-Gm-Message-State: AOJu0YyaY3ogN+Xepe+PInxdw7GjbGqVPSMs9T4eIBDoxZtxXl9DOLz1
+ Q7w4KgBrs/jsWRtQ7bEYvRALfuKJKXUdatkXE37sUMOhf461+FPf0NIB06Ff8LqzbpGWpmfz7z2
+ 5NyMrV+cyorZOV5CKxT9xRRj4nmtnIzYOzPfqlHG/KpfX1fKQ5RjqYWavprIl1zh70k7HrhPEut
+ nok1lLcVAFHIblf2Stz254yNec12HX0bNvXQ==
+X-Gm-Gg: ASbGncuSN0ZB4CSPfU7ZFlu3+Nb4gRkzLxYRbhq/fyETJu23J3lEVoYfI3lN/oBUbJK
+ dAXx0DyC6VXWQICUQbvGzBzB6SMypw3+MZ8X8kAJxqcAzVTb0GSXd38eMzsaO+C+QzptAgYWZAI
+ peMdOP7rsnQfgCm1ylPdIUtFFOQou+jtXD8agAfe3VfkwPGaqGHTO7FpaM3deqKeOewc8UvR+BZ
+ 3jMlT9LLuAXYvKiPGWxKVKbL9KXekc4gelQU0AmKi9MZaLAoBW2LlXxAKupoiTnP1v8M0cLseJQ
+ 08XBndjEGtAdwMPTOZA4
+X-Received: by 2002:a05:6e02:156f:b0:3a7:e452:db5 with SMTP id
+ e9e14a558f8ab-3aff800ffcfmr111147345ab.15.1734365655571; 
+ Mon, 16 Dec 2024 08:14:15 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH0h4TAv0ZPXcp4F1C64SDVsolqvBw0t5KGYfn0ZIXkReJn1BXeaaBZw3jj7xF1RbQdDDA7nw==
+X-Received: by 2002:a05:6e02:156f:b0:3a7:e452:db5 with SMTP id
+ e9e14a558f8ab-3aff800ffcfmr111147175ab.15.1734365655246; 
+ Mon, 16 Dec 2024 08:14:15 -0800 (PST)
+Received: from x1n.. (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ e9e14a558f8ab-3b248cb74fbsm15895765ab.34.2024.12.16.08.14.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Dec 2024 08:14:14 -0800 (PST)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, peterx@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, Konstantin Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH 0/3] tests: Fix some new coverity issues reported
+Date: Mon, 16 Dec 2024 11:14:10 -0500
+Message-ID: <20241216161413.1644171-1-peterx@redhat.com>
+X-Mailer: git-send-email 2.47.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] accel/tcg: Really restrict cpu_io_recompile() to system
- emulation
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-References: <20241216160514.56630-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241216160514.56630-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,37 +106,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/24 10:05, Philippe Mathieu-Daudé wrote:
-> Commit 38fc4b11e03 ("accel/tcg: Restrict cpu_io_recompile() to
-> system emulation") inadvertently restricted cpu_io_recompile()
-> to SoftMMU. Correct to restrict to system emulation.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> Based-on: <20241212185341.2857-11-philmd@linaro.org>
-> ---
->   accel/tcg/internal-target.h | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
-> index 1cfa318dc6c..3ed81e740d3 100644
-> --- a/accel/tcg/internal-target.h
-> +++ b/accel/tcg/internal-target.h
-> @@ -36,9 +36,9 @@ static inline void page_table_config_init(void) { }
->   void page_table_config_init(void);
->   #endif
->   
-> -#ifdef CONFIG_SOFTMMU
-> +#ifndef CONFIG_USER_ONLY
->   G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
-> -#endif /* CONFIG_SOFTMMU */
-> +#endif /* CONFIG_USER_ONLY */
->   
->   /**
->    * tcg_req_mo:
+Fix four recent coverity reports on migration tests.  When at it, also
+applied the same helper to some crypto/tls tests.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks,
 
+Peter Xu (3):
+  osdep: Add qemu_mkdir_with_parents()
+  tests: Use qemu_mkdir_with_parents() for all test code
+  tests/migration: Drop arch_[source|target]
 
-r~
+ include/qemu/osdep.h                  | 7 +++++++
+ qga/commands-posix-ssh.c              | 8 ++------
+ tests/qtest/migration/framework.c     | 8 ++------
+ tests/qtest/migration/tls-tests.c     | 6 +++---
+ tests/unit/test-crypto-tlscredsx509.c | 4 ++--
+ tests/unit/test-crypto-tlssession.c   | 6 +++---
+ tests/unit/test-io-channel-tls.c      | 6 +++---
+ util/osdep.c                          | 6 ++++++
+ 8 files changed, 28 insertions(+), 23 deletions(-)
+
+-- 
+2.47.0
+
 
