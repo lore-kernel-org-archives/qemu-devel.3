@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB60EE77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5DCE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN29A-0007OG-FS; Sun, 15 Dec 2024 22:51:52 -0500
+	id 1tN294-0007Lw-Hj; Sun, 15 Dec 2024 22:51:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN297-0007NC-4X
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:49 -0500
-Received: from mail-ot1-x334.google.com ([2607:f8b0:4864:20::334])
+ id 1tN292-0007L1-BQ
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:45 -0500
+Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN295-00061Q-Jo
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:48 -0500
-Received: by mail-ot1-x334.google.com with SMTP id
- 46e09a7af769-71e1d7130a5so1828593a34.0
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:47 -0800 (PST)
+ id 1tN290-00060Y-NG
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:43 -0500
+Received: by mail-oo1-xc2e.google.com with SMTP id
+ 006d021491bc7-5f1dfb0b44dso790708eaf.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734321106; x=1734925906; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734321101; x=1734925901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1oXFqOkhT6DaTbVsGylyQNbBUTG5JzXi4jRR+/4cnEM=;
- b=HITAyQa8fYQf0MSxuem3jtlSq/6USuSgu49ssZ1c4dsxTholHsQwKWngpbZhbYd24X
- BVZvJ+RZe+m3hXXQZ/XAvoXkXy/ZLdA19qORRXMHdeuOVdaXMrLe07NwFAKvC7AHiZAT
- lew70zEoZmYZ1m/DnStLXsmUseppfIagbsNA7SiA4gErnowUYijbmBSr2/KVSwrV93vK
- 9DCbGz52b6z/5kEAjDAmnlxpStMwbKngN0inHiMlLvJGLXf7QTXpdtKSDJ9j0Qh++iTp
- B+23LS1TSZeQ+HA3/roT7e5GuC45qUEEmyN4RzP/iMb4GvZdPUp4yTvAVCWrYbhuw2Rc
- EFuQ==
+ :reply-to; bh=6kwxpp6H6DpWLzGbf6AeTqxyXU7uHDghdBpIzRPpVmo=;
+ b=GePnLH0ip1YYxMhETcuOH4G9Cjyc3FObFV7HqaHZkGBZNayT7h8nHX8OKDIjLynGEG
+ AIswKzl9zUjtCdXHafomMis2/aGwnXqfZhFVHdKTxli9nh/3JSp2SKxulgrDvIDy2op4
+ M9djGWWongHUayy9FuwAsUlcyKhpjXun/tqiQzXGKnAwZUuXFz8J1CTHrLlOu4fmZSEr
+ 5ArID20oL+gsMsPBHfqmaQQYanxjHT5PRNNCSeS1Ovi7i7ishE4yHbpP/kI91F5AdIqa
+ jGq3sOJSUUUX6k0iuNcEyxEKVi80rzfP/kRg3iX1Ns4nCFdN0lxVsU9i4v+JeCUDJ4Pu
+ gfMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734321106; x=1734925906;
+ d=1e100.net; s=20230601; t=1734321101; x=1734925901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1oXFqOkhT6DaTbVsGylyQNbBUTG5JzXi4jRR+/4cnEM=;
- b=ntvEIQS4Np5rMpDn49IB8+X1DKYs+wlgs2uid/bWxzxfqVyil0orLs/sBngDInutKO
- 7LLaVXfznQVIH7zgxS2t+6Qsq71aeglsLplbbhsqfcZROC6yeJPnkrMAQJM/R1haJ+VM
- 5iBfSwPYCGdRbMPNOwYn+adIxq2txhHGrEYEZ6i2zbOTowgNrVmfHGq6KVVoy8pIAwv2
- L7d+U9Kwe+ikOSJulaG5ShOYk1f3vt0rbsvtoqP48papXoAp/tvPk1GE00CaMful+fjz
- AQoka6xUIiSrmuRoF5bo/wB/f0hi+EA4ygaOVyUPDd37oxd90wSFzjH4Z4WI/iAvs/zO
- ZyPw==
-X-Gm-Message-State: AOJu0YwLs3h0vDmmOBBSFUPkAS+eq94S8VmmEGUE+ozPdoqhz0JRgA4T
- Q+BTjg3Sy9me5zsiOjg0TuZD8jpT/8NHYYWQBKyZAlNKeGU9TbSL5A0o017AtPHDyZo7p2DA2wI
- 21uJQvRo6
-X-Gm-Gg: ASbGncvYG3ehSLpq/dxbD4ZHBOxIw+h72fwh464vncDvSW3MZUqbPHSBayn4mOrULgN
- 6xO+Yv3bGfxNu5fZOT/54jSb54KGjv3g5vJjDolRNxg+dRACoipdzEaZbFXOinYgJyYfTpn7asV
- StjjvIKOR/e6cHdzPz9LyQI10fDYZC6aoSpA5l7PwKK5NqzryA1LqO6C+SrIt3+gwp/98Cj9FIy
- vigYOszTxI0V0C6ZnCV6xkgc5Pst45viDR5P06Rs7Z0Gmp8nr2Umaxs+2wdLt6L8TEK7Ok/oqy0
- sfbBkkigrjOtmPLz+1Xfj0cOC7BYOD8UP23s2Wo1WAY=
-X-Google-Smtp-Source: AGHT+IHygaHvhL8Nfae9fW3F1gOrvttA55LHrMWHTPl+a6kV6cxVdCq5MUAhUMopr1DL2gdRMAQm2w==
-X-Received: by 2002:a05:6830:2107:b0:71d:415a:5d18 with SMTP id
- 46e09a7af769-71e3b82a420mr6827838a34.3.1734321104951; 
- Sun, 15 Dec 2024 19:51:44 -0800 (PST)
+ bh=6kwxpp6H6DpWLzGbf6AeTqxyXU7uHDghdBpIzRPpVmo=;
+ b=vJZPNKtnZ93+KTEdYCakLtgYHiBP531hD/v7cgrwAaIaOf6L8r0Dit0yZgIEU3HIsu
+ xbDOSnowr4y0RG3ZXhSlh8CV3++u1vATOde0XZgV0x5E2MvvFCLeaSZlSduOECPn3qRG
+ orRGnFXnkJvJDQWcD5T55SyCu96wkDyqwNMBLO6FOhWLaKT+XraVdAANXVYzOHXjC/oO
+ wGQRUc9NXGkTFGp1dxjkrNz5DekWtF6p6wg1NrnfSnwJQbkYhYZfgLkaMCcgS5P+qFdt
+ 3oDmvqmP8oFD2DZSJUDULVKIg1nEdLWqSaKq+jgLHT8qh4a2hoKvR+CZ9RnDtewQST8N
+ dwLQ==
+X-Gm-Message-State: AOJu0YyDFyMoC9ohU/u+7OCBRzwuQ08GE+mTqIziyvcsx7XQVEPboWd5
+ JeELfzgxnMrG86stI4Ie1pMHAujCV1YikKqfPgYd2Q3KYEOUW2dimspkBKhnxvuU3RcNVyHwvt3
+ x5F9F8w3r
+X-Gm-Gg: ASbGncvyM+qf6W8+lvNsCWsriGyUtPKLxBB15MtqNii7ZJqU0wfAJHJkDQfJ35KtYMU
+ msCxCTC64CJ9k3Ae0by6ZpioSrd5L2lJapom/+D9WzaPaS82/5vdtksyHWWHiiXHi/1/Siz19Mx
+ xvW3FQ9SvhqMYoBds7Ktn9UCr6VSVtAm91jr3D9JscGMvaMXju3An2LQ/QK1wamf79363n3D0sc
+ SkhSL7lPCoJVYkdSmQqpqrI+yOX//MZIeZHzvVgGiCdb3Nkzl9HNjZwsWDLq21T9agQU+Jr9PU3
+ bhNeys2J6k9XBsDkQuF4QEhX9aSvqnkJbFXrWlrKW0M=
+X-Google-Smtp-Source: AGHT+IFSMgOgEo2PL6SMfZaRgfJ044zBmN1jZjwc2ZSoDID5e18a8ZD4nCzb7487YXJzDyuEIhDFeg==
+X-Received: by 2002:a05:6820:1a0b:b0:5ee:ebcb:e701 with SMTP id
+ 006d021491bc7-5f32948e3e2mr7252869eaf.6.1734321101568; 
+ Sun, 15 Dec 2024 19:51:41 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.43
+ 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.40
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 19:51:44 -0800 (PST)
+ Sun, 15 Dec 2024 19:51:41 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 18/24] hw/core: Replace device_class_set_props with a macro
-Date: Sun, 15 Dec 2024 21:51:03 -0600
-Message-ID: <20241216035109.3486070-19-richard.henderson@linaro.org>
+Subject: [PATCH 15/24] hw/scsi/megasas: Use device_class_set_props_n
+Date: Sun, 15 Dec 2024 21:51:00 -0600
+Message-ID: <20241216035109.3486070-16-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
 References: <20241216035109.3486070-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x334.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,80 +98,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use ARRAY_SIZE to implement as device_class_set_props_n.
-Remove any DEFINE_PROP_END_OF_LIST terminator from the count.
+We must remove DEFINE_PROP_END_OF_LIST so the count is correct.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/qdev-core.h    | 21 +++++++++++++--------
- hw/core/qdev-properties.c | 16 ----------------
- 2 files changed, 13 insertions(+), 24 deletions(-)
+ hw/scsi/megasas.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index cd0ddf84ca..5dc4640258 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -941,20 +941,25 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
- /**
-  * device_class_set_props(): add a set of properties to an device
-  * @dc: the parent DeviceClass all devices inherit
-- * @props: an array of properties, terminate by DEFINE_PROP_END_OF_LIST()
-+ * @props: an array of properties
-  *
-  * This will add a set of properties to the object. It will fault if
-  * you attempt to add an existing property defined by a parent class.
-  * To modify an inherited property you need to use????
-+ *
-+ * Validate that @props has at least one Property plus the terminator.
-+ * Validate that @props is an array, not a pointer, via ARRAY_SIZE.
-+ * Validate that the array is terminated at compile-time (with -O2),
-+ * which requires the array to be const.
-  */
--void device_class_set_props(DeviceClass *dc, const Property *props);
--
--/* Validate at least one Property, plus the terminator. */
--#define device_class_set_props(DC, PROPS) \
-+#define device_class_set_props(dc, props) \
-     do {                                                                \
--        QEMU_BUILD_BUG_ON(sizeof(PROPS) != sizeof(const Property *) &&  \
--                          sizeof(PROPS) < 2 * sizeof(Property));        \
--        (device_class_set_props)(DC, PROPS);                            \
-+        QEMU_BUILD_BUG_ON(sizeof(props) < 2 * sizeof(Property));        \
-+        size_t props_count_ = ARRAY_SIZE(props) - 1;                    \
-+        if ((props)[props_count_].name != NULL) {                       \
-+            qemu_build_not_reached();                                   \
-+        }                                                               \
-+        device_class_set_props_n((dc), (props), props_count_);          \
-     } while (0)
+diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
+index 8323cd18e3..7f012c218b 100644
+--- a/hw/scsi/megasas.c
++++ b/hw/scsi/megasas.c
+@@ -2459,7 +2459,6 @@ static const Property megasas_properties_gen1[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
+                     MEGASAS_FLAG_USE_JBOD, false),
+-    DEFINE_PROP_END_OF_LIST(),
+ };
  
- /**
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 31e3072b55..a3d49e2020 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -1058,22 +1058,6 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop
-         NULL, NULL, (Property *)prop);
- }
+ static const Property megasas_properties_gen2[] = {
+@@ -2473,7 +2472,6 @@ static const Property megasas_properties_gen2[] = {
+     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
+     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
+                     MEGASAS_FLAG_USE_JBOD, false),
+-    DEFINE_PROP_END_OF_LIST(),
+ };
  
--void (device_class_set_props)(DeviceClass *dc, const Property *props)
--{
--    const Property *prop;
--    size_t n;
--
--    dc->props_ = props;
--    for (prop = props, n = 0; prop && prop->name; prop++, n++) {
--        qdev_class_add_legacy_property(dc, prop);
--        qdev_class_add_property(dc, prop->name, prop);
--    }
--
--    /* We used a hole in DeviceClass because that's still a lot. */
--    assert(n <= UINT16_MAX);
--    dc->props_count_ = n;
--}
--
- void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n)
- {
-     /* We used a hole in DeviceClass because that's still a lot. */
+ typedef struct MegasasInfo {
+@@ -2488,6 +2486,7 @@ typedef struct MegasasInfo {
+     int osts;
+     const VMStateDescription *vmsd;
+     const Property *props;
++    size_t props_count;
+     InterfaceInfo *interfaces;
+ } MegasasInfo;
+ 
+@@ -2504,6 +2503,7 @@ static struct MegasasInfo megasas_devices[] = {
+         .osts = MFI_1078_RM | 1,
+         .vmsd = &vmstate_megasas_gen1,
+         .props = megasas_properties_gen1,
++        .props_count = ARRAY_SIZE(megasas_properties_gen1),
+         .interfaces = (InterfaceInfo[]) {
+             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
+             { },
+@@ -2520,6 +2520,7 @@ static struct MegasasInfo megasas_devices[] = {
+         .osts = MFI_GEN2_RM,
+         .vmsd = &vmstate_megasas_gen2,
+         .props = megasas_properties_gen2,
++        .props_count = ARRAY_SIZE(megasas_properties_gen2),
+         .interfaces = (InterfaceInfo[]) {
+             { INTERFACE_PCIE_DEVICE },
+             { }
+@@ -2546,7 +2547,7 @@ static void megasas_class_init(ObjectClass *oc, void *data)
+     e->osts = info->osts;
+     e->product_name = info->product_name;
+     e->product_version = info->product_version;
+-    device_class_set_props(dc, info->props);
++    device_class_set_props_n(dc, info->props, info->props_count);
+     device_class_set_legacy_reset(dc, megasas_scsi_reset);
+     dc->vmsd = info->vmsd;
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
 -- 
 2.43.0
 
