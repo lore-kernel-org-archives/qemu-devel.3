@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E464E7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41223E77183
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 23:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNKJe-00028P-MU; Mon, 16 Dec 2024 18:15:54 -0500
+	id 1tNKJd-00027o-DS; Mon, 16 Dec 2024 18:15:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tNKJc-00027X-Bj
+ id 1tNKJc-00027V-8k
  for qemu-devel@nongnu.org; Mon, 16 Dec 2024 18:15:52 -0500
 Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tNKJa-0006st-0g
+ id 1tNKJa-0006tx-3t
  for qemu-devel@nongnu.org; Mon, 16 Dec 2024 18:15:52 -0500
 Received: from MUA
  by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
  (Exim 4.98) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1tNKJR-00000003wPy-1y8j; Tue, 17 Dec 2024 00:15:41 +0100
-Message-ID: <db0cce73-e04d-4baf-8e45-06c65d3c529d@maciej.szmigiero.name>
-Date: Tue, 17 Dec 2024 00:15:36 +0100
+ id 1tNKJW-00000003wPy-0iBP; Tue, 17 Dec 2024 00:15:46 +0100
+Message-ID: <8bc3828d-f715-4099-b36b-615c659fcada@maciej.szmigiero.name>
+Date: Tue, 17 Dec 2024 00:15:46 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
  threads
 To: Peter Xu <peterx@redhat.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, Eric Blake
- <eblake@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>,
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
- qemu-devel@nongnu.org
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
 References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
  <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
- <9a229308-2c80-4ee2-8c49-5fec2207ad74@redhat.com>
- <489d1769-3807-4007-888c-608c1e9407fb@maciej.szmigiero.name>
- <Z1DcVH6j7pzboucr@x1n>
- <366e5477-9d3f-4c11-8042-542e9b4b7f65@maciej.szmigiero.name>
- <Z1sReL5wrlhvO3P5@x1n>
- <d45267a6-74a6-4eeb-b8fa-f427db03afde@maciej.szmigiero.name>
- <Z2BVYvO1359M1i9Q@x1n>
+ <198ca4a4-01fd-42b4-9e1a-d2860277be9e@nvidia.com>
+ <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
+ <Z1DbH5fwBaxtgrvH@x1n>
+ <7e6373ca-b344-409f-a9ad-bce72779c10f@maciej.szmigiero.name>
+ <Z1sVcJRamoUFshwk@x1n>
+ <2c1d2c4c-d09f-4603-8bf6-c11a4faca0eb@maciej.szmigiero.name>
+ <Z2BWVSI7lu1JRMfI@x1n>
 Content-Language: en-US, pl-PL
 From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
 Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
@@ -90,9 +89,9 @@ Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
  xNT833IQSNqyuEnxG9/M82yYa+9ClBiRKM2JyvgnBEbiWA15rAQkOqZGJfFJ3bmTFePx4R/I
  ZVehUxCRY5IS1FLe16tymf9lCASrPXnkO2+hkHpBCwt75wnccS3DwtIGqwagVVmciCxAFg9E
  WZ4dI5B0IUziKtBxgwJG4xY5rp7WbzywjCeaaKubtcLQ9bSBkkK4U8Fu58g6Hg==
-In-Reply-To: <Z2BVYvO1359M1i9Q@x1n>
+In-Reply-To: <Z2BWVSI7lu1JRMfI@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=145.239.82.108;
  envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
 X-Spam_score_int: -16
@@ -117,109 +116,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.12.2024 17:29, Peter Xu wrote:
-> On Thu, Dec 12, 2024 at 11:53:24PM +0100, Maciej S. Szmigiero wrote:
->> On 12.12.2024 17:38, Peter Xu wrote:
->>> On Wed, Dec 11, 2024 at 12:05:23AM +0100, Maciej S. Szmigiero wrote:
->>>>> Maybe move it over to migration_object_init()?  Then we keep
->>>>> qemu_loadvm_state_setup() only invoke the load_setup()s.
->>>>
->>>> AFAIK migration_object_init() is called unconditionally
->>>> at QEMU startup even if there won't me any migration done?
->>>>
->>>> Creating a load thread pool there seems wasteful if no
->>>> incoming migration will ever take place (or will but only
->>>> much later).
->>>
->>> I was expecting an empty pool to not be a major resource, but if that's a
->>> concern, yes we can do that until later.
->>>
->>> [...]
->>>
->>>>>>>> @@ -3007,6 +3071,19 @@ int qemu_loadvm_state(QEMUFile *f)
->>>>>>>>              return ret;
->>>>>>>>          }
->>>>>>>> +    if (ret == 0) {
->>>>>>>> +        bql_unlock(); /* Let load threads do work requiring BQL */
->>>>>>>> +        thread_pool_wait(load_threads);
->>>>>>>> +        bql_lock();
->>>>>>>> +
->>>>>>>> +        ret = load_threads_ret;
->>>>>>>> +    }
->>>>>>>> +    /*
->>>>>>>> +     * Set this flag unconditionally so we'll catch further attempts to
->>>>>>>> +     * start additional threads via an appropriate assert()
->>>>>>>> +     */
->>>>>>>> +    qatomic_set(&load_threads_abort, true);
->>>>>
->>>>> I assume this is only for debugging purpose and not required.
->>>>>
->>>>> Setting "abort all threads" to make sure "nobody will add more thread
->>>>> tasks" is pretty awkward, IMHO.  If we really want to protect against it
->>>>> and fail hard, it might be easier after the thread_pool_wait() we free the
->>>>> pool directly (destroy() will see NULL so it'll skip; still need to free
->>>>> there in case migration failed before this).  Then any enqueue will access
->>>>> null pointer on the pool.
->>>>
->>>> We don't want to destroy the thread pool in the path where the downtime
->>>> is still counting.
->>>
->>> Yeah this makes sense.
->>>
->>>>
->>>> That's why we only do cleanup after the migration is complete.
->>>>
->>>> The above setting of load_threads_abort flag also makes sure that we abort
->>>> load threads if the migration is going to fail for other reasons (non-load
->>>> threads related) - in other words, when the above block with thread_pool_wait()
->>>> isn't even entered due to ret already containing an earlier error.
->>>
->>> In that case IIUC we should cleanup the load threads in destroy(), not
->>> here?  Especially with the comment that's even more confusing.
->>>
+On 16.12.2024 17:33, Peter Xu wrote:
+> On Thu, Dec 12, 2024 at 11:53:42PM +0100, Maciej S. Szmigiero wrote:
+>> migrate_set_error() wouldn't be called until qemu_loadvm_state() exits
+>> into process_incoming_migration_co().
 >>
->> This flag only asks the threads in pool which are still running to exit ASAP
->> (without waiting for them in the "fail for other reasons"
->> qemu_loadvm_state() code flow).
-> 
-> I thought we could switch to an Error** model as we talked elsewhere, then
-> the thread who hits the error should set the quit flag, IIUC.
-> 
-> Even without it..
-> 
+>> Also this does not account other qemu_loadvm_state() callers like
+>> qmp_xen_load_devices_state() or load_snapshot().
 >>
->> Setting this flag does *not* do the cleanup of the whole thread pool - this
->> only happens in qemu_loadvm_state_cleanup().
+>> While these other callers might not use load threads currently, it feels
+>> wrong to wait for these threads in qemu_loadvm_state() but set their
+>> termination/abort flag as a side effect of completely different function
+>> (migrate_set_error()).
+>>
+>> Having a dedicated abort flag also makes the semantics easy to infer
+>> from code since once can simply grep for this flag name (load_threads_abort)
+>> to see where it is being written.
+>>
+>> Its name is also pretty descriptive making it easy to immediately tell
+>> what it does.
 > 
-> ... we have two cases here:
-> 
-> Either no error at all, then thread_pool_wait() will wait for all threads
-> until finished.  When reaching here setting this flag shouldn't matter for
-> the threads because they're all finished.
-> 
-> Or there's error in some thread, then QEMU should be stuck at
-> thread_pool_wait() anyway, until all threads quit.  Again, I thought it
-> could be the qemu_loadvm_load_thread() that sets the quit flag (rather than
-> here) so the failed thread will notify all threads to quit.
-> 
-> I just still don't see what's the help of setting it after
-> thread_pool_wait(), which already marked all threads finished at its
-> return.  That goes back to my question on whether it was only for debugging
-> (so no new threads to be created after this), rather than the flag to tell
-> all threads to quit.
+> That's fine. As long as we can at least report an Error** and remember that
+> it's OK to me.
 
-There's also a possibility of earlier error in qemu_loadvm_state()
-(not in the load threads themselves), for example if qemu_loadvm_state_main()
-returns an error.
-
-In this case thread_pool_wait() *won't* be called but the load threads
-would still be running needlessly - setting load_threads_abort flag makes
-them stop.
-
-The debugging benefit of assert()ing when someone tries to create
-a load thread after that point comes essentially for free then.
-
-> Thanks,
+I think the above will be a good design indeed.
+  > Thanks,
 > 
 
 Thanks,
