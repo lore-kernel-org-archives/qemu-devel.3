@@ -4,77 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EDF0E77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 05:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0258E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 05:34:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN3hC-0004JB-7n; Mon, 16 Dec 2024 00:31:06 -0500
+	id 1tN3k8-0005m9-1m; Mon, 16 Dec 2024 00:34:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN3gx-0004Gn-Gv; Mon, 16 Dec 2024 00:30:55 -0500
-Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
+ id 1tN3k2-0005kS-4G; Mon, 16 Dec 2024 00:34:02 -0500
+Received: from mail-vs1-xe2a.google.com ([2607:f8b0:4864:20::e2a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN3gm-0008QP-Oo; Mon, 16 Dec 2024 00:30:51 -0500
-Received: by mail-vk1-xa31.google.com with SMTP id
- 71dfb90a1353d-5187aa2c97dso1098500e0c.2; 
- Sun, 15 Dec 2024 21:30:37 -0800 (PST)
+ id 1tN3jz-00008Z-V8; Mon, 16 Dec 2024 00:34:01 -0500
+Received: by mail-vs1-xe2a.google.com with SMTP id
+ ada2fe7eead31-4b11a11a4f0so981155137.3; 
+ Sun, 15 Dec 2024 21:33:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734327037; x=1734931837; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734327238; x=1734932038; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rTBHQHQGxQjoIgsvjXNKqi1s+x2i0J8CHQQ19MySAjg=;
- b=BkqmjtlEeX2JI61O+2J6r6XsYUlHkSriCl/5r4xmRxOA/8ApHY8399sDfW4Eim3zxD
- tUEfE5lyFRCdLYP3PjtYapQiJu+7JSDfIk3rOzb39qVxsI6ssSe75tsflSdm1+lroAeU
- c6LtwgsItSowJXDOYB13585yqZGdWVzv4JCXSU56IEOCgrxZnWpOE7WOw2onSlQJ1Jp/
- Y/9OpWNuIjZkJ3iXP3oFuEf9Kbei1AxcXSWZFJ6JO+Q6Xak7i9sFGiPYCByRSu7QFGXr
- IEKtq2E9pdUg9LnmWmt4DsSACuAIaWKoceXRmxvHkBkOCpV/ZEd4RpKCvGq1S4NVwjap
- bYhw==
+ bh=GQ8NRM4pwYIeNPbqMkOkg3JqEBNtwJI7DX9dM13ksuo=;
+ b=dEaTGN5gEfYhEZPJ9OK5QMJvtp0B79jG80thEZC6l9/YwNNpIWPfjPaib7UnVzjADS
+ qE2ydMJNz2yL6RvQc6O0DIIhezla4TLozVMptzY4/T8dznU/LCMdkGu+sVQ/D6IPf6WF
+ jWpBPt4fw0NHUOYFac8qbZTJlD71juyWH86DdydOI9bR9gzqEii9CYUqpDQGvZjVOQ5y
+ uwqSbvfMW/fWcYF5S9/YOyzLKeo3d7VDZlDhdSs+xrQNeLlpcKqZ8//wfS6IzQO+1YvY
+ lkd9nieRPUxslwljph72b0B1K+saUnHJpAb//6wUFMNa171aOZVHtjlBJoIg6pNLK3pa
+ PfwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734327037; x=1734931837;
+ d=1e100.net; s=20230601; t=1734327238; x=1734932038;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rTBHQHQGxQjoIgsvjXNKqi1s+x2i0J8CHQQ19MySAjg=;
- b=Wu7eJFO+bJfLvWxAEzJrBQfR6eVigAJDFve489s2oHXDX9fPbY9JQNaChh8fBl3ued
- jtqgfCkkH48rSlRV7nF819iqCcBNjLWwP/JxrUDAuJbsRQ/g7q+IRv8LLwJ7yyGc/n8h
- p97srBOWjsem67X/POCNl4exwx7lyLcxtpiEc+2jo5sQ+UInknI7rJGefs92YaF6kbpX
- dM7sT2IG73qlVIAp6lwSXKhuLBSfDNLsoY7a5fklD0UfrM1emhoC35U2iPfriw1Y0B/9
- a9bPzukO2CEThdUKBMO3pl2WoepESXVNdoO7A7no8cYH1Mcf+P3Z0p9WZIjB8ZHe/fF0
- e6EQ==
+ bh=GQ8NRM4pwYIeNPbqMkOkg3JqEBNtwJI7DX9dM13ksuo=;
+ b=IuErykouLiBM+vWV2WlXlrXSk3jMIwBfMn8Oekg8fOa4+/ZFE2Km9z81zYyszUd6HU
+ gWIQANProbnCZZZDKF9vC1c7fe1m9lnNUTQefuiDrhg0Oc7KXf2a1SfredZgGNiWBgHZ
+ cyptg3AbIIXobgZDv5stdxAnPJzYOuhLKvdPNEq7dus5Embf4KKb0oFMY8Fpp3w6rWjv
+ Qva5Oroolu8i4ZiYB1jaK7UdUEoZOKleu5TNWe4rp8qzMd0SpvTKcpTlmj4g4aETmprS
+ kMKDq2Sk3+NtVP8Lj8axndElNwcNk+/CtsTgAAz4Qsmo/A2QQIpaw3IlTqBXgQX+rI+1
+ KIJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVl5KqqZe4rWNeuXbGyiaH6KYIGV5t0enRv7frc5YciM5zQcCkgRQ+68FhiOfV3pqVRixir+ES/0W+c@nongnu.org,
- AJvYcCWW0A1KfCtFl3PfJJmLeVZqW+zTc4A1hvkwwXTucP4h5iMweiGbEpoJQAJbAg2lNCnNPP/2TZ1cKXX8tw==@nongnu.org
-X-Gm-Message-State: AOJu0YyfswHw2xz/b3BV7g15uBwu6dUgW8uVHxQIXRAzQy1ui4Hm3tpc
- V4eRREn1F0ELRGD9ShyXuP15eZKLg2UiPRryLgCdVvMqNd72tjv73H+N9qr3vzB/3REGb3/IJZK
- jMfqA498ZxPbVvULKwOGCr6viI1Y=
-X-Gm-Gg: ASbGncslSdEUMf78rzj2Bd020HUeYVBUYVDX8lq5c/HL7dE4fMyAnFe+4VqBcmUD0Cf
- Md1cZhojdlsWQg6Xp8F7rplRxUOGtpfjxzJfO+95Lbx6u58dIuTaggl3dp5S2pUUJyz5d
-X-Google-Smtp-Source: AGHT+IGUfy37jrTKyN5UG/W0PYeHrbuaWJ3w4BbOKdYxhcNu+OWdZ1vUht3BxZTLflmHqS33152yqekk1CLTiLD412s=
-X-Received: by 2002:a05:6102:3e93:b0:4af:de39:c55 with SMTP id
- ada2fe7eead31-4b25dc60ef3mr9731793137.27.1734327036716; Sun, 15 Dec 2024
- 21:30:36 -0800 (PST)
+ AJvYcCUMQTmLiR+wKIflW34I0tsgsWA4DS/361YjOziFokuiUB4xrUV1dAk+UdnW6vjYX+UZVY7WJrDi4kl7DA==@nongnu.org,
+ AJvYcCUYt0wfh4z6nYCR0DUqvQeqtnLqHoP9zFrm4hTC7X250Ud/l1Pq4H4RRrgWtvZ8su6l8XvpQDpFK+n/@nongnu.org
+X-Gm-Message-State: AOJu0YypBv0sCT/3j0oPE3n2XjV/Yl7WDJxS3lYGcqHRuxiu+/HoiDQP
+ Ix5XavhCklNGK8HjxWQxSJJqoo0+elKwZK1YjAXfATgLrXMRAf8G24xCMNhnuFdVcKdXFcNRTs/
+ vuzRrAd7tV/xxUbV5bYe0gowZaas=
+X-Gm-Gg: ASbGncuGPJX5CpNMxUzqqMjXjJd/GIoe4c60Hy+kgKSM/HUdvdG/PD2GCqAqiPtihU3
+ aol6BXGz8Y63dzXdIwrJ3yVH05JwcpCTTe9ub6BOpPprTqpk4iVMT0vyeMW3Yt4N+JluN
+X-Google-Smtp-Source: AGHT+IF1dz/rOtHO89Hmjj8v0O06fM4l9yBI/NDErbqLSVpEBvs7aXnRR3JkHaeKEk3846bLx9Rma1IfVBXp2ecNlag=
+X-Received: by 2002:a05:6102:b04:b0:4af:eccf:e3ca with SMTP id
+ ada2fe7eead31-4b25d9a5d19mr8923960137.10.1734327238150; Sun, 15 Dec 2024
+ 21:33:58 -0800 (PST)
 MIME-Version: 1.0
-References: <20241205073622.46052-1-xiaoou@iscas.ac.cn>
-In-Reply-To: <20241205073622.46052-1-xiaoou@iscas.ac.cn>
+References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
+ <8734jbh21e.fsf@draig.linaro.org>
+ <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com>
+ <87r06ufjiz.fsf@draig.linaro.org>
+ <tencent_AADD9A1292CD7CB89F16999E7BDD03895406@qq.com>
+ <0516feb0-ba9a-4ac0-a2bd-1bf97ca9694e@lauterbach.com>
+ <tencent_06871EF8A4ECD65A90D4E769FC60C972DC09@qq.com>
+ <874j3ibldp.fsf@draig.linaro.org>
+ <tencent_F33CF7D60707A9F1B567A493F92CBF77B207@qq.com>
+In-Reply-To: <tencent_F33CF7D60707A9F1B567A493F92CBF77B207@qq.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 16 Dec 2024 15:30:10 +1000
-Message-ID: <CAKmqyKOPvv8mTmGdTB1CmNwmDZkuis=_TWHQUD=KYHNg5fOncg@mail.gmail.com>
-Subject: Re: [PATCH v1] target/riscv: add support for RV64 Xiangshan Nanhu CPU
-To: MollyChen <xiaoou@iscas.ac.cn>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Date: Mon, 16 Dec 2024 15:33:32 +1000
+Message-ID: <CAKmqyKNzYM=BvXETpkuPJDd66C7NNUFTFZqacPJJeXwbMyKdFg@mail.gmail.com>
+Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
+To: Yanfeng Liu <yfliu2008@qq.com>
+Cc: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Mario Fleischmann <mario.fleischmann@lauterbach.com>, qemu-riscv@nongnu.org, 
+ qemu-devel@nongnu.org, alistair.francis@wdc.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2a;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -98,96 +103,242 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 5, 2024 at 5:38=E2=80=AFPM MollyChen <xiaoou@iscas.ac.cn> wrote=
+On Thu, Dec 5, 2024 at 7:17=E2=80=AFPM Yanfeng Liu <yfliu2008@qq.com> wrote=
 :
 >
-> Add a CPU entry for the RV64 XiangShan NANHU CPU which
-> supports single-core and dual-core configurations. More
-> details can be found at
-> https://docs.xiangshan.cc/zh-cn/latest/integration/overview
+> On Thu, 2024-12-05 at 08:10 +0000, Alex Benn=C3=A9e wrote:
+> > Yanfeng Liu <yfliu2008@qq.com> writes:
+> >
+> > > On Wed, 2024-12-04 at 17:03 +0100, Mario Fleischmann wrote:
+> > > > Hi everyone,
+> > > >
+> > > > I'd like to chime in here because we are sitting on a similar patch
+> > > > which I wanted to send to the mailing list as soon as riscv-debug-s=
+pec
+> > > > v1.0.0 becomes ratified.
+> > > >
+> > > > For hypervisor support, `(qemu) info registers` isn't enough. We ne=
+ed to
+> > > > have both read and write access to the V-bit.
+> > > >
+> > > > On 04.12.2024 14:43, Yanfeng Liu wrote:
+> > > > > On Fri, 2024-11-29 at 09:59 +0000, Alex Benn=C3=A9e wrote:
+> > > > > > Yanfeng <yfliu2008@qq.com> writes:
+> > > > > >
+> > > > > > > On Thu, 2024-11-28 at 14:21 +0000, Alex Benn=C3=A9e wrote:
+> > > > > > > > Yanfeng Liu <yfliu2008@qq.com> writes:
+> > > > > > > >
+> > > > > > > > > This adds `virt` virtual register on debug interface so t=
+hat
+> > > > > > > > > users
+> > > > > > > > > can access current virtualization mode for debugging purp=
+oses.
+> > > > > > > > >
+> > > > > > > > > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
+> > > > > > > > > ---
+> > > > > > > > >   gdb-xml/riscv-32bit-virtual.xml |  1 +
+> > > > > > > > >   gdb-xml/riscv-64bit-virtual.xml |  1 +
+> > > > > > > > >   target/riscv/gdbstub.c          | 18 ++++++++++++------
+> > > > > > > > >   3 files changed, 14 insertions(+), 6 deletions(-)
+> > > > > > > > >
+> > > > > > > > > diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-xml/ri=
+scv-
+> > > > > > > > > 32bit-
+> > > > > > > > > virtual.xml
+> > > > > > > > > index 905f1c555d..d44b6ca2dc 100644
+> > > > > > > > > --- a/gdb-xml/riscv-32bit-virtual.xml
+> > > > > > > > > +++ b/gdb-xml/riscv-32bit-virtual.xml
+> > > > > > > > > @@ -8,4 +8,5 @@
+> > > > > > > > >   <!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> > > > > > > > >   <feature name=3D"org.gnu.gdb.riscv.virtual">
+> > > > > > > > >     <reg name=3D"priv" bitsize=3D"32"/>
+> > > > > > > > > +  <reg name=3D"virt" bitsize=3D"32"/>
+> > > > > > > > >   </feature>
+> > > > > > > > > diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-xml/ri=
+scv-
+> > > > > > > > > 64bit-
+> > > > > > > > > virtual.xml
+> > > > > > > > > index 62d86c237b..7c9b63d5b6 100644
+> > > > > > > > > --- a/gdb-xml/riscv-64bit-virtual.xml
+> > > > > > > > > +++ b/gdb-xml/riscv-64bit-virtual.xml
+> > > > > > > > > @@ -8,4 +8,5 @@
+> > > > > > > > >   <!DOCTYPE feature SYSTEM "gdb-target.dtd">
+> > > > > > > > >   <feature name=3D"org.gnu.gdb.riscv.virtual">
+> > > > > > > > >     <reg name=3D"priv" bitsize=3D"64"/>
+> > > > > > > > > +  <reg name=3D"virt" bitsize=3D"64"/>
+> > > > > > > > >   </feature>
+> > > > > > > >
+> > > > > > > > I assume these are mirrored in gdb not a QEMU only extensio=
+n?
+> > > > > > >
+> > > > > > > So far I think it is a QEMU extension and the `gdb-multiarch`
+> > > > > > > doesn't
+> > > > > > > treat
+> > > > > > > is
+> > > > > > > specially. My tests shows it basically works:
+> > > > > > >
+> > > > > > > ```
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x3      prv:3 [Machine]
+> > > > > > > virt           0x0      0
+> > > > > > > (gdb) set $priv =3D 2
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x1      prv:1 [Supervisor]
+> > > > > > > virt           0x0      0
+> > > > > > > (gdb) set $virt =3D 1
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x1      prv:1 [Supervisor]
+> > > > > > > virt           0x1      1
+> > > > > > > (gdb) set $virt =3D 0
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x1      prv:1 [Supervisor]
+> > > > > > > virt           0x0      0
+> > > > > > > (gdb) set $virt =3D 1
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x1      prv:1 [Supervisor]
+> > > > > > > virt           0x1      1
+> > > > > > > (gdb) set $priv =3D 3
+> > > > > > > (gdb) ir virt
+> > > > > > > priv           0x3      prv:3 [Machine]
+> > > > > > > virt           0x0      0
+> > > > > > > ```
+> > > > > >
+> > > > > > A gdbstub test case would be useful for this although I don't k=
+now if
+> > > > > > the RiscV check-tcg tests switch mode at all.
+> > > > > >
+> > > > > > >
+> > > > > > > As I am rather new to QEMU, please teach how we can add it as=
+ a QEMU
+> > > > > > > only
+> > > > > > > extension.
+> > > > > >
+> > > > > > You don't need to extend the XML from GDB, you can build a spec=
+ific
+> > > > > > one
+> > > > > > for QEMU extensions. For example:
+> > > > > >
+> > > > > >      gdb_feature_builder_init(&param.builder,
+> > > > > >                               &cpu->dyn_sysreg_feature.desc,
+> > > > > >                               "org.qemu.gdb.arm.sys.regs",
+> > > > > >                               "system-registers.xml",
+> > > > > >                               base_reg);
+> > > > > >
+> > > > > > This exports all the system registers QEMU knows about and GDB =
+can
+> > > > > > access generically. Note the id is org.qemu..., indicating its =
+our
+> > > > > > schema not gdbs.
+> > > > > Thanks for teaching, I need time to digest. I guess more feature =
+builder
+> > > > > APIs
+> > > > > are needed (like append_reg) and the getter/setter callbacks migh=
+t be at
+> > > > > a
+> > > > > different place.
+> > > > >
+> > > > > BTW, compared to adding virtual register `virt`, how do you think=
+ if we
+> > > > > share
+> > > > > the V bit as part of existing `priv` register?
+> > > >
+> > > > IMHO this is a very good idea since the latest release candidate of
+> > > > riscv-debug-spec also includes the V bit in priv:2.
+> > > >
+> > >
+> > > Thanks for this information, I noticed the bit(2) of `priv` register =
+is for
+> > > the
+> > > V bit as per section 4.10.1.
+> > >
+> > > > > Or maybe we shall talk to GDB community to get their opinions? If=
+ they
+> > > > > agree
+> > > > > to
+> > > > > add a few words about V bit here
+> > > > > https://sourceware.org/gdb/current/onlinedocs/gdb.html/RISC_002dV=
+-Features.html
+> > > > > ,
+> > > > > then it saves us a lot.
+> > > >
+> > > > Except being currently not supported by GDB
+> > > >
+> > > > (gdb) info register $priv
+> > > > priv           0x5      prv:5 [INVALID]
+> > > >
+> > > > are there any reasons from QEMU's side that would speak against
+> > > > including V in priv?
+> > > >
+> > >
+> > > My v1 patch used `bit(8)` to avoid seeing the `[INVALID]` thing at GD=
+B side,
+> > > though that is due to GDB isn't in line with its own manual (i.e. use=
+ the
+> > > two
+> > > lowest bits only).
+> > >
+> > > Without a doc or specification. we felt people may not know `bit(8)` =
+in v1
+> > > patch
+> > > was for the V bit, so I drafted patch v2 as Alistair suggested. Howev=
+er, as
+> > > Alex
+> > > pointed out, directly adding `virt` register in "org.gnu.gdb.riscv.vi=
+rtual"
+> > > XML
+> > > is improper. I also wanted to raise this in GDB side but my applicati=
+on to
+> > > join
+> > > the mail list is still pending.
+> > >
+> > > Alex and Alistair, now I am wondering if we can follow the RiscV debu=
+g
+> > > specification to use `bit(2)` of `priv` virtual register? My test sho=
+ws
+> > > except
+> > > for the `[INVALID]` label, both set/get access seems working.
+> >
+> > I guess the INVALID just means gdb needs teaching about the format of
+> > the register.
 >
-> Signed-off-by: MollyChen <xiaoou@iscas.ac.cn>
+> Yes, GDB currently uses mask `0xff`(instead of `0x3`) to get the mode val=
+ue when
+> adding the string label, this violates its own manual:
+>
+> 1303           else if (regnum =3D=3D RISCV_PRIV_REGNUM)
+> 1304             {
+> 1305               LONGEST d;
+> 1306               uint8_t priv;
+> 1307
+> 1308               d =3D value_as_long (val);
+> 1309               priv =3D d & 0xff;
+> 1310
+> 1311               if (priv < 4)
+> 1312                 {
+> 1313                   static const char * const sprv[] =3D
+> 1314                     {
+> 1315                       "User/Application",
+> 1316                       "Supervisor",
+> 1317                       "Hypervisor",
+> 1318                       "Machine"
+> 1319                     };
+> 1320                   gdb_printf (file, "\tprv:%d [%s]",
+> 1321                               priv, sprv[priv]);
+> 1322                 }
+> 1323               else
+> 1324                 gdb_printf (file, "\tprv:%d [INVALID]", priv);
+> 1325             }
+>
+>
+> I am wondering if we can go ahead to follow RiscV debug specification and=
+ sync
+> with GDB later?
 
-Thanks!
+If there is a spec then that is the way to go. Just link to it when
+submitting the patch.
 
-Applied to riscv-to-apply.next
+We also at least want to be sending a patch to GDB to fix it,
+otherwise we are going to break people.
 
 Alistair
-
-> ---
->  target/riscv/cpu-qom.h |  1 +
->  target/riscv/cpu.c     | 29 +++++++++++++++++++++++++++++
->  2 files changed, 30 insertions(+)
->
-> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-> index 6547642287..d56b067bf2 100644
-> --- a/target/riscv/cpu-qom.h
-> +++ b/target/riscv/cpu-qom.h
-> @@ -50,6 +50,7 @@
->  #define TYPE_RISCV_CPU_THEAD_C906       RISCV_CPU_TYPE_NAME("thead-c906"=
-)
->  #define TYPE_RISCV_CPU_VEYRON_V1        RISCV_CPU_TYPE_NAME("veyron-v1")
->  #define TYPE_RISCV_CPU_TT_ASCALON       RISCV_CPU_TYPE_NAME("tt-ascalon"=
-)
-> +#define TYPE_RISCV_CPU_XIANGSHAN_NANHU  RISCV_CPU_TYPE_NAME("xiangshan-n=
-anhu")
->  #define TYPE_RISCV_CPU_HOST             RISCV_CPU_TYPE_NAME("host")
->
->  OBJECT_DECLARE_CPU_TYPE(RISCVCPU, RISCVCPUClass, RISCV_CPU)
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 8447ad0dfb..38baaa39f8 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -645,6 +645,34 @@ static void rv64_tt_ascalon_cpu_init(Object *obj)
->  #endif
->  }
->
-> +static void rv64_xiangshan_nanhu_cpu_init(Object *obj)
-> +{
-> +    CPURISCVState *env =3D &RISCV_CPU(obj)->env;
-> +    RISCVCPU *cpu =3D RISCV_CPU(obj);
-> +
-> +    riscv_cpu_set_misa_ext(env, RVG | RVC | RVB | RVS | RVU);
-> +    env->priv_ver =3D PRIV_VERSION_1_12_0;
-> +
-> +    /* Enable ISA extensions */
-> +    cpu->cfg.ext_zbc =3D true;
-> +    cpu->cfg.ext_zbkb =3D true;
-> +    cpu->cfg.ext_zbkc =3D true;
-> +    cpu->cfg.ext_zbkx =3D true;
-> +    cpu->cfg.ext_zknd =3D true;
-> +    cpu->cfg.ext_zkne =3D true;
-> +    cpu->cfg.ext_zknh =3D true;
-> +    cpu->cfg.ext_zksed =3D true;
-> +    cpu->cfg.ext_zksh =3D true;
-> +    cpu->cfg.ext_svinval =3D true;
-> +
-> +    cpu->cfg.mmu =3D true;
-> +    cpu->cfg.pmp =3D true;
-> +
-> +#ifndef CONFIG_USER_ONLY
-> +    set_satp_mode_max_supported(cpu, VM_1_10_SV39);
-> +#endif
-> +}
-> +
->  #ifdef CONFIG_TCG
->  static void rv128_base_cpu_init(Object *obj)
->  {
-> @@ -3050,6 +3078,7 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_THEAD_C906, MXL_RV64,  rv64_thead_c=
-906_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_TT_ASCALON, MXL_RV64,  rv64_tt_asca=
-lon_cpu_init),
->      DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_VEYRON_V1,  MXL_RV64,  rv64_veyron_=
-v1_cpu_init),
-> +    DEFINE_VENDOR_CPU(TYPE_RISCV_CPU_XIANGSHAN_NANHU, MXL_RV64, rv64_xia=
-ngshan_nanhu_cpu_init),
->  #ifdef CONFIG_TCG
->      DEFINE_DYNAMIC_CPU(TYPE_RISCV_CPU_BASE128,   MXL_RV128, rv128_base_c=
-pu_init),
->  #endif /* CONFIG_TCG */
-> --
-> 2.34.1
->
->
 
