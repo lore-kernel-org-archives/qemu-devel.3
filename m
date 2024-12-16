@@ -4,90 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE714E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 19:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94B10E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 19:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNGUF-000259-8U; Mon, 16 Dec 2024 14:10:35 -0500
+	id 1tNGcu-0004S8-Hm; Mon, 16 Dec 2024 14:19:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNGUD-00024A-3z
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 14:10:33 -0500
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tNGcp-0004Rd-GP
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 14:19:28 -0500
+Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNGUA-0002Sw-Q4
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 14:10:32 -0500
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-71e1d7130a5so2209617a34.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 11:10:30 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1tNGcm-0003iq-PN
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 14:19:27 -0500
+Received: by mail-ej1-x629.google.com with SMTP id
+ a640c23a62f3a-aabbb507998so277702466b.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 11:19:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734376229; x=1734981029; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vrMzXbGQ/6saqJjq9+YQdrMgVIjm8J/9nparMXKjcCU=;
- b=voZf0SF4jR3Ik9PfnVlgWZ71kLZH5pD6H1dhPdF8zI9QejUcH5YC/Qn+3HJY9Ks39M
- 1EpNQu9KPE4vvnQ9INnUwLZ97T34++lakIezgsvlzeXOYI9Jrpuo3g2R1xvti+6Z7eFz
- HYqN5I/H8TYZoEmDI/9bV7lLkQSnAq+CmvHsskUjVDBSgZo3XA0FA3y0cn6yM7Sfui4N
- qQt9F5F1A1j5Fkp7N2zrsFkWxYdnxp7UK2uGfsywzM5FhtaTra0xbvW0Szcr+RrW1nV9
- UUEAc9QKafJjPbXasDi+XCzNTPXCJGoIqqXPY8WVTrXZ4ZC2nD+e81v455g6MEFRIdxt
- neJQ==
+ d=gmail.com; s=20230601; t=1734376762; x=1734981562; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xDOso7LWbJPOlcxvusbQVKc/YAolT9YoGZNfAA8A16g=;
+ b=EDO4SbhWJR1lGcQ6IW23i8pnmC8XZfVVkUBmTlEPnQJTNAGyOpS7iu+3MTU//FnNPt
+ AG09+yUfnHPajIvOnDdHXr7pcGCipIw9IlBTAY2wpG4FTK22jyFjB0HzpPDy6p3YWwmw
+ YKKdqjOeT/TabdRdhafnITKbYi46DXQ19LP5M0WiYN/ISfY+hpKEXRyz2Hodn71kJu5N
+ 2Y7ppvshVPEQMY5Gv9CfQ0bFIPKH8HXJUW2y4pymXTfArnu4NR9Munf7WWSH2ERQFYEG
+ n3iz7X/U4dt0ZVThF7RuwybPACQSm5pEWzFK0KN6iitzbZoLiY9fC2jeSTjbwTuVNbfg
+ L1+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734376229; x=1734981029;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vrMzXbGQ/6saqJjq9+YQdrMgVIjm8J/9nparMXKjcCU=;
- b=fuMi1Ca1jq5MwudBSV1CQCIU/LVPRBBGVWcBVII/aixTgTENJFd0jDRFqlEuW2XcW/
- 4aN1YotrN/eOgdGJdrZZilsi4zoXlyYKy/zJXK397tq22kJ7T5lsnhXH5RtrfXZdIKeh
- IuQp6EJEU4fs19zk9iI4LDriqFQWau+UJOwCMm+IIolJSYdK9FLc0zgk60rUxeGP4tt7
- Wykj6/BT9WFnetov6HtX41nsZPGi3U2RS9xG91XgvzQ2spi41VoLaOCeKm5hjOeGZCOu
- 9Nlw1VfFRWSwnoWjSjW1dlhAu1lFuvHinvPtseNOhx8ZHECBk5nojDqdlC2H43Umj1j/
- ZiCw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVH0DOG4jBztI11c+UbIP2mBQBuYInzdBpWCO7KEL6904UdWgYNoXKpuwnehZJrYAAn1xOTuP0qkZPk@nongnu.org
-X-Gm-Message-State: AOJu0Yzf1J4S68k6EuKGiNwOq/xD+8pRSSKQETr5ieG/glCGhWg5vnLJ
- EFDYB6xQOYG+5Xqde0/QyCsZu6rnGcqYmMYwD9bcMWxdaIjjjYfV598ASDbW8cM=
-X-Gm-Gg: ASbGnctpbZn4uWqikzvigAn9qH5GPyac5DQ9fTuUDm/UeBSAGpICgFgq0MRFQoxJTZ5
- 6XEFuul4TAClHZQ4AIn+DjM6t4B8mDeQOYUoUL1E5bpXNaRZnuN1ZhBtxE8wI5rdU9+hXAE8N32
- He0R7GKJ6ntZGkzaWswujXlmPwufw9lYx5V/i8hXddQdkmncBkAgTffL3jSvw8VIRbD+QL//LJS
- qqZudom6fvk4WaSIW0MKT0kVro179WdcLfMQ6F1RaBylQMwLABep1GCEUodfkKjmKl92+ijiAVg
- cIQeMckDvHYZ12qPybJDTNakpMkVzfykn9A=
-X-Google-Smtp-Source: AGHT+IGNNy3SvbQnCH/70Byv4fsxCVwaA8q+xVu9Qw7jp+XKmDKbZVcDMj4AV3JrmsSjmHNJhgOfzQ==
-X-Received: by 2002:a05:6830:2641:b0:710:f375:a6c9 with SMTP id
- 46e09a7af769-71efdb92b78mr601421a34.7.1734376229525; 
- Mon, 16 Dec 2024 11:10:29 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-71e48308005sm1545654a34.13.2024.12.16.11.10.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 11:10:29 -0800 (PST)
-Message-ID: <7cd98960-0c0d-481f-96ea-08e0578d5cad@linaro.org>
-Date: Mon, 16 Dec 2024 13:10:26 -0600
+ d=1e100.net; s=20230601; t=1734376762; x=1734981562;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=xDOso7LWbJPOlcxvusbQVKc/YAolT9YoGZNfAA8A16g=;
+ b=YSt5x+XPqHHfx2xpagOCN3kHT0bwbQdGvM1WMetTPOUQn1mLP+f18/u005J/N3lWvi
+ xaqWhLjML1iuFgM+Uq5NnHiWa0itUd1iKTYOUVsLcpOtWGtjcOBUCH2Qee1vNUbqT1w2
+ cANutPIFDQOywqLUYlAi+TQBoFSgy8QvvC3sqL4an3fqqrqaKLslOaqN7+RbpYBFyhvg
+ Fy/hdkiYdw4axxFF7erKg6fs6VOhD8+Qhnh+tN/+zbjdV+S01cNBKzUQkyPCSRWZGZgw
+ pr9BpaS4kHOnTEQREsfxpGmGvT4nNz4H50hPtZ0V+umssGJIHkJfnAFOvyljVhDBsDRb
+ rP3w==
+X-Gm-Message-State: AOJu0Yw+b2CWZWcMqqbEvogpWcTchoQX4oY1SJvllFIMU7n3zxC3RlnU
+ rZXNnAtTepSXAceA8GBPhxw0s6pYfLMUdAkaSsHY8xKHSbtqKkGCMR1CWSistUZgaVSXMOILunu
+ BFNbPSn5kT1GvOBpSlfTIor3Eg7TSRlpx
+X-Gm-Gg: ASbGncu63zdXwlPbMziNgxwQT0zcMq2ASLK8jFs3dMsmFwcwviI3RM1uKdxLUv2eN/k
+ dLy5t9Tuo31dDfXSJBJUa2qe/rbT9ac2OavV6
+X-Google-Smtp-Source: AGHT+IE36JRjIjbfIyRaSkGNHt79bUo5qHt7W91MNzyGTZpILOMT0ggZwWHnztwhPE7VLtdRYqY8l5HdvVk/4nUVkgE=
+X-Received: by 2002:a17:907:7f29:b0:aa6:7b34:c1a8 with SMTP id
+ a640c23a62f3a-aab77eaf35cmr1403834866b.55.1734376762006; Mon, 16 Dec 2024
+ 11:19:22 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
- aarch64 to impdef
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- alex.bennee@linaro.org, Fabiano Rosas <farosas@suse.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32d.google.com
+References: <20241216015607.1795880-1-maobibo@loongson.cn>
+In-Reply-To: <20241216015607.1795880-1-maobibo@loongson.cn>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 16 Dec 2024 14:19:10 -0500
+Message-ID: <CAJSP0QV84ssXWHQrrWQrpwZS7Ko90eRnR46WS+jvNn5_3Zss=Q@mail.gmail.com>
+Subject: Re: [PULL 00/18] loongarch-to-apply queue
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, Song Gao <gaosong@loongson.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::629;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -105,35 +91,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/4/24 15:12, Pierrick Bouvier wrote:
-> qemu-system-aarch64 default pointer authentication (QARMA5) is expensive, we
-> spent up to 50% of the emulation time running it (when using TCG).
-> 
-> Switching to pauth-impdef=on is often given as a solution to speed up execution.
-> Thus we talked about making it the new default.
-> 
-> The first patch introduce a new property (pauth-qarma5) to allow to select
-> current default algorithm.
-> The second one change the default.
-> 
-> Pierrick Bouvier (2):
->    target/arm: add new property to select pauth-qarma5
->    target/arm: change default pauth algorithm to impdef
-> 
->   docs/system/arm/cpu-features.rst |  7 +++++--
->   docs/system/introduction.rst     |  2 +-
->   target/arm/cpu.h                 |  1 +
->   target/arm/arm-qmp-cmds.c        |  2 +-
->   target/arm/cpu64.c               | 30 +++++++++++++++++++-----------
->   tests/qtest/arm-cpu-features.c   | 15 +++++++++++----
->   6 files changed, 38 insertions(+), 19 deletions(-)
-> 
+On Sun, 15 Dec 2024 at 20:56, Bibo Mao <maobibo@loongson.cn> wrote:
+>
+> The following changes since commit ca80a5d026a280762e0772615f1988db542b3a=
+de:
+>
+>   Merge tag 'hw-misc-20241214' of https://github.com/philmd/qemu into sta=
+ging (2024-12-14 08:42:53 -0500)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bibo-mao/qemu.git tags/pull-loongarch-20241216
+>
+> for you to fetch changes up to efada537c6c49e414ae87ce66803d6d8543ad140:
+>
+>   hw/intc/loongarch_extioi: Code cleanup about loongarch_extioi (2024-12-=
+16 09:05:14 +0800)
+>
+> ----------------------------------------------------------------
+> pull-loongarch-20241216
+>   v1 .. v2: Push patch again since forgot to push to upstream
 
-I understand the motivation, but as-is this will break migration.
+Please take a look at following qtest failure from the
+x64-freebsd-14-build CI job:
 
-I think this will need to be versioned somehow, but the only thing that really gets 
-versioned are the boards, and I'm not sure how to link that to the instantiated cpu.
+8/730 qemu:qtest+qtest-loongarch64 / qtest-loongarch64/qom-test ERROR
+0.84s killed by signal 6 SIGABRT
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95 =E2=9C=80 =E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=
+=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=
+=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=95=E2=80=
+=95
+stderr:
+Broken pipe
+../tests/qtest/libqtest.c:205: kill_qemu() detected QEMU death from
+signal 11 (Segmentation fault) (core dumped)
+(test program exited with status code -6)
+TAP parsing error: Too few tests run (expected 2, got 0)
 
+https://gitlab.com/qemu-project/qemu/-/jobs/8656122662/viewer
 
-r~
+You can reproduce the FreeBSD 14 environment using `make
+vm-build-freebsd`. See `make vm-help` for more options.
+
+Here is the merge tag where this happened. It probably also happens on
+your pull request tag:
+https://gitlab.com/qemu-project/qemu/-/commit/466535ecb37d28ef79aecc4550b7c=
+d1160c6beac
+
+If you find that there was an issue with the commits in your pull
+request, please send a new pull request revision. If you find that the
+issue was not caused by a commit in your pull request, please reply
+here so we can discuss how to solve it.
+
+Thanks,
+Stefan
+
+>
+> ----------------------------------------------------------------
+> Bibo Mao (18):
+>       include: Add loongarch_pic_common header file
+>       include: Move struct LoongArchPCHPIC to loongarch_pic_common header=
+ file
+>       hw/intc/loongarch_pch: Merge instance_init() into realize()
+>       hw/intc/loongarch_pch: Rename LoongArchPCHPIC with LoongArchPICComm=
+onState
+>       hw/intc/loongarch_pch: Move some functions to file loongarch_pic_co=
+mmon
+>       hw/intc/loongarch_pch: Inherit from loongarch_pic_common
+>       hw/intc/loongarch_pch: Add pre_save and post_load interfaces
+>       hw/intc/loongarch_pch: Code cleanup about loongarch_pch_pic
+>       include: Add loongarch_extioi_common header file
+>       include: Move struct LoongArchExtIOI to header file loongarch_extio=
+i_common
+>       include: Rename LoongArchExtIOI with LoongArchExtIOICommonState
+>       hw/intc/loongarch_extioi: Rename LoongArchExtIOI with LoongArchExtI=
+OICommonState
+>       hw/intc/loongarch_extioi: Add common realize interface
+>       hw/intc/loongarch_extioi: Add unrealize interface
+>       hw/intc/loongarch_extioi: Add common file loongarch_extioi_common
+>       hw/intc/loongarch_extioi: Inherit from loongarch_extioi_common
+>       hw/intc/loongarch_extioi: Add pre_save interface
+>       hw/intc/loongarch_extioi: Code cleanup about loongarch_extioi
+>
+>  hw/intc/loongarch_extioi.c                | 110 +++++++++---------------=
+-----
+>  hw/intc/loongarch_extioi_common.c         | 113 ++++++++++++++++++++++++=
+++++++
+>  hw/intc/loongarch_pch_pic.c               | 106 +++++++++---------------=
+----
+>  hw/intc/loongarch_pic_common.c            |  97 ++++++++++++++++++++++++=
++
+>  hw/intc/meson.build                       |   4 +-
+>  hw/loongarch/virt.c                       |   2 +-
+>  include/hw/intc/loongarch_extioi.h        |  84 +++-------------------
+>  include/hw/intc/loongarch_extioi_common.h |  98 ++++++++++++++++++++++++=
+++
+>  include/hw/intc/loongarch_pch_pic.h       |  70 ++++--------------
+>  include/hw/intc/loongarch_pic_common.h    |  82 ++++++++++++++++++++++
+>  10 files changed, 488 insertions(+), 278 deletions(-)
+>  create mode 100644 hw/intc/loongarch_extioi_common.c
+>  create mode 100644 hw/intc/loongarch_pic_common.c
+>  create mode 100644 include/hw/intc/loongarch_extioi_common.h
+>  create mode 100644 include/hw/intc/loongarch_pic_common.h
+>
 
