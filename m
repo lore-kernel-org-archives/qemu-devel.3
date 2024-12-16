@@ -4,117 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39410E77180
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 15:59:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A65FE77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:03:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNDUz-00005t-KY; Mon, 16 Dec 2024 10:59:09 -0500
+	id 1tNDYm-0001hy-CQ; Mon, 16 Dec 2024 11:03:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNDUx-00005B-JH; Mon, 16 Dec 2024 10:59:07 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNDUu-0005EF-Ii; Mon, 16 Dec 2024 10:59:07 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id E3AFA1F38F;
- Mon, 16 Dec 2024 15:59:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734364742; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDY1-0001cV-Vr
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:02:22 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNDXu-0005bA-Gf
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:02:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734364928;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CS3n90eSIH8sOgKTbbwT0CdRZ7DNn6rkD8bwWPE2DvQ=;
- b=Sx9BX34eADK2t0J7JHyT0WcJvZ1veL07ZvGdf13yIQfRSjlPGYMJlmkpUFWz8G+VWPdfG/
- OMOuaCYclSLIgaiUOlxnOYDFTew/hEo5054sWXqIad3fLqu4PFhQeBVXPW/xvK9DUlSWgN
- FK6YYzjvj8MOIUkiZ+It9GwbFJ4zbfU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734364742;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CS3n90eSIH8sOgKTbbwT0CdRZ7DNn6rkD8bwWPE2DvQ=;
- b=JRY4Tttpuos0/AtbdO7UERp7GFV7e81C9fF30I3PLzzV6Mc0lnKUs5Kt1tj9TOr4CJxvYA
- vUmWNQAWtz5bN4Cw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=FMv++6Ov;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=bNb2LnuP
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734364741; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CS3n90eSIH8sOgKTbbwT0CdRZ7DNn6rkD8bwWPE2DvQ=;
- b=FMv++6OvUv5DnGHTDSzPRlKI9P6pmJUQ275eVZw7JN+8ujZKBf+Xr3qt4j4CaS+xQOWqR+
- H0TXRHX8OL69DRhcq/i8CINTpyxo+lldB9Hiz6yNMZFmRrRpp1TaK4HGSczO7oOGIMiukQ
- 43WkHVXgPf1RtDLkfossX40BMpa03Is=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734364741;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CS3n90eSIH8sOgKTbbwT0CdRZ7DNn6rkD8bwWPE2DvQ=;
- b=bNb2LnuPdJl2W4C+ZJ2I0Aac24RTwVoojL8bjB9mPnnI7+qy4yMtXsQQt6vHy1QtHVjsYj
- J3XQdjy/E9E2GSAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6171513418;
- Mon, 16 Dec 2024 15:59:01 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id h80SCkVOYGexHwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 16 Dec 2024 15:59:01 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, qemu-block@nongnu.org, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, Stefan Hajnoczi <stefanha@redhat.com>, Andrey
- Drobyshev <andrey.drobyshev@virtuozzo.com>, Eric Blake
- <eblake@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>, Kevin
- Wolf <kwolf@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v2 6/6] migration/block: Rewrite disk activation
-In-Reply-To: <20241206230838.1111496-7-peterx@redhat.com>
-References: <20241206230838.1111496-1-peterx@redhat.com>
- <20241206230838.1111496-7-peterx@redhat.com>
-Date: Mon, 16 Dec 2024 12:58:58 -0300
-Message-ID: <87v7vjwrel.fsf@suse.de>
+ bh=jUezM7Yuk+cPxurDXaWs/3FxNcYR6EdeumJ/ltVmEKQ=;
+ b=YWVNFM4wIui9JUdGBrV/B+3oAfjIU/74WlrPilzU7WCJIMI2cN6fdC9fiPmYy9dTD5An5x
+ jk65E9whfZWJaAw0lV9IU996Fnm4J7Z5guUAq+AHMbj9UCFqqdnObxq6/kemj/y1kZj955
+ Q1kfXyw1a4VCEZ3V6R3iqQfrLfhRzqg=
+Received: from mail-io1-f72.google.com (mail-io1-f72.google.com
+ [209.85.166.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-625-JZEShMwSO3CqyS3bKmaIbg-1; Mon, 16 Dec 2024 11:02:07 -0500
+X-MC-Unique: JZEShMwSO3CqyS3bKmaIbg-1
+X-Mimecast-MFC-AGG-ID: JZEShMwSO3CqyS3bKmaIbg
+Received: by mail-io1-f72.google.com with SMTP id
+ ca18e2360f4ac-844cffcb685so358669339f.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:02:07 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734364927; x=1734969727;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jUezM7Yuk+cPxurDXaWs/3FxNcYR6EdeumJ/ltVmEKQ=;
+ b=nk/zCpMLZa8tf7Y7UXiHtPZoBVZpVB0S9jweJ3YJ22sWLluwE67YgLC/7N/WvwYQOr
+ kAuIrVaBAmatYiceDEuv8vAOV5Nxim9jZcV/CIl9ySpylWZRGETCswCbGram8BMUlXUW
+ 3IpaOuSQxc9erb8mGZ+AuNr1R2YFM/kA45ykHKOPuvDxYKoHf8h/o9uA/+gB31I7BxDx
+ 56pJrDPdspaFpp0hfYdrBtoBfxrdLBOoudcuGrTEYSc+OwQPgWVst5QjemCW2B+tczQW
+ YRv+FHbfpAZZM5Brmkaqi7BXMBJkADpVt+M6v9c3lwdw/udhy/tGs0diYzrL5Rzrl1Yo
+ y73A==
+X-Gm-Message-State: AOJu0YykSVb/MgafF2fb3APcBK1vO1L4UUBWilSg6qa+NShLlONyqxFc
+ LHcUeH5d+yNukPrXg/Nj0QsRdlC/F5rVMJIW2vXqOF3MZrB8LJVKUPJgfIZ4CPlxFCy94KOm0Rs
+ gFPe7/1lk1NRfwsMLXyuyXt4YINcOuDu3EcJesvTMvzAkM2Q0VKmN
+X-Gm-Gg: ASbGncueBQFUN4YUqKpVFiwzUbJSYtwssJagZpONHoH2xsSeR53pd9j2o/7PGoOr8rW
+ XdWMcudaXMufqWJq3X2j8osEVTSN9NKv625eSu+E4C4+jUuQizC0ZM1w4tPKyWn2W+5YT+JqLu8
+ SlNtlfnAh+MY6idA7m7poKIEY1ze5CUXOE4NDtSJyaPl5P9fu0j9+89cl1OBKhcjdpTmEx/bMOI
+ B+ofRdoWayVM9jZy/v6v0g2tMZ8R6YyE033DwAR3zWwJbb3zG62EfyLxhJJhCowuepHfmKma4Yx
+ /7/+N9EgiI1ezIfSXw==
+X-Received: by 2002:a05:6602:1494:b0:843:e89d:b62b with SMTP id
+ ca18e2360f4ac-844e8b69bdemr1214027139f.11.1734364926730; 
+ Mon, 16 Dec 2024 08:02:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGJG0jXMMZAc0OiPem4tdjF0rPMUNRZmVsHW7yhIvyO3yOYiWp1lgSoOXyu4+Or/kaw07a8Ww==
+X-Received: by 2002:a05:6602:1494:b0:843:e89d:b62b with SMTP id
+ ca18e2360f4ac-844e8b69bdemr1214019239f.11.1734364926065; 
+ Mon, 16 Dec 2024 08:02:06 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-844f626b622sm132851539f.15.2024.12.16.08.02.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Dec 2024 08:02:05 -0800 (PST)
+Date: Mon, 16 Dec 2024 11:02:03 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Subject: Re: [PATCH 1/2] migration/multifd: Fix compat with QEMU < 9.0
+Message-ID: <Z2BO-3vdEyNrMhhR@x1n>
+References: <20241213160120.23880-1-farosas@suse.de>
+ <20241213160120.23880-2-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: E3AFA1F38F
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- ARC_NA(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; MID_RHS_MATCH_FROM(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,gitlab.com:url];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241213160120.23880-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,567 +105,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, Dec 13, 2024 at 01:01:19PM -0300, Fabiano Rosas wrote:
+> Commit f5f48a7891 ("migration/multifd: Separate SYNC request with
+> normal jobs") changed the multifd source side to stop sending data
+> along with the MULTIFD_FLAG_SYNC, effectively introducing the concept
+> of a SYNC-only packet. Relying on that, commit d7e58f412c
+> ("migration/multifd: Don't send ram data during SYNC") later came
+> along and skipped reading data from SYNC packets.
+> 
+> In a versions timeline like this:
+> 
+>   8.2 f5f48a7 9.0 9.1 d7e58f41 9.2
+> 
+> The issue arises that QEMUs < 9.0 still send data along with SYNC, but
+> QEMUs > 9.1 don't gather that data anymore. This leads to various
+> kinds of migration failures due to desync/missing data.
+> 
+> Stop checking for a SYNC packet on the destination and unconditionally
+> unfill the packet.
+> 
+> From now on:
+> 
+> old -> new:
+> the source sends data + sync, destination reads normally
+> 
+> new -> new:
+> source sends only sync, destination reads zeros
+> 
+> new -> old:
+> source sends only sync, destination reads zeros
+> 
+> CC: qemu-stable@nongnu.org
+> Fixes: d7e58f412c ("migration/multifd: Don't send ram data during SYNC")
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2720
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-> This patch proposes a flag to maintain disk activation status globally.  It
-> mostly rewrites disk activation mgmt for QEMU, including COLO and QMP
-> command xen_save_devices_state.
->
-> Backgrounds
-> ===========
->
-> We have two problems on disk activations, one resolved, one not.
->
-> Problem 1: disk activation recover (for switchover interruptions)
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> When migration is either cancelled or failed during switchover, especially
-> when after the disks are inactivated, QEMU needs to remember re-activate
-> the disks again before vm starts.
->
-> It used to be done separately in two paths: one in qmp_migrate_cancel(),
-> the other one in the failure path of migration_completion().
->
-> It used to be fixed in different commits, all over the places in QEMU.  So
-> these are the relevant changes I saw, I'm not sure if it's complete list:
->
->  - In 2016, commit fe904ea824 ("migration: regain control of images when
->    migration fails to complete")
->
->  - In 2017, commit 1d2acc3162 ("migration: re-active images while migration
->    been canceled after inactive them")
->
->  - In 2023, commit 6dab4c93ec ("migration: Attempt disk reactivation in
->    more failure scenarios")
->
-> Now since we have a slightly better picture maybe we can unify the
-> reactivation in a single path.
->
-> One side benefit of doing so is, we can move the disk operation outside QMP
-> command "migrate_cancel".  It's possible that in the future we may want to
-> make "migrate_cancel" be OOB-compatible, while that requires the command
-> doesn't need BQL in the first place.  This will already do that and make
-> migrate_cancel command lightweight.
->
-> Problem 2: disk invalidation on top of invalidated disks
-> ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->
-> This is an unresolved bug for current QEMU.  Link in "Resolves:" at the
-> end.  It turns out besides the src switchover phase (problem 1 above), QEMU
-> also needs to remember block activation on destination.
->
-> Consider two continuous migration in a row, where the VM was always paused.
-> In that scenario, the disks are not activated even until migration
-> completed in the 1st round.  When the 2nd round starts, if QEMU doesn't
-> know the status of the disks, it needs to try inactivate the disk again.
->
-> Here the issue is the block layer API bdrv_inactivate_all() will crash a
-> QEMU if invoked on already inactive disks for the 2nd migration.  For
-> detail, see the bug link at the end.
->
-> Implementation
-> ==============
->
-> This patch proposes to maintain disk activation with a global flag, so we
-> know:
->
->   - If we used to inactivate disks for migration, but migration got
->   cancelled, or failed, QEMU will know it should reactivate the disks.
->
->   - On incoming side, if the disks are never activated but then another
->   migration is triggered, QEMU should be able to tell that inactivate is
->   not needed for the 2nd migration.
->
-> We used to have disk_inactive, but it only solves the 1st issue, not the
-> 2nd.  Also, it's done in completely separate paths so it's extremely hard
-> to follow either how the flag changes, or the duration that the flag is
-> valid, and when we will reactivate the disks.
->
-> Convert the existing disk_inactive flag into that global flag (also invert
-> its naming), and maintain the disk activation status for the whole
-> lifecycle of qemu.  That includes the incoming QEMU.
->
-> Put both of the error cases of source migration (failure, cancelled)
-> together into migration_iteration_finish(), which will be invoked for
-> either of the scenario.  So from that part QEMU should behave the same as
-> before.  However with such global maintenance on disk activation status, we
-> not only cleanup quite a few temporary paths that we try to maintain the
-> disk activation status (e.g. in postcopy code), meanwhile it fixes the
-> crash for problem 2 in one shot.
->
-> For freshly started QEMU, the flag is initialized to TRUE showing that the
-> QEMU owns the disks by default.
->
-> For incoming migrated QEMU, the flag will be initialized to FALSE once and
-> for all showing that the dest QEMU doesn't own the disks until switchover.
-> That is guaranteed by the "once" variable.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2395
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+-- 
+Peter Xu
 
-Just a note about errp below and a comment about a pre-existing
-condition, but nothing that requires action.
-
-> ---
->  include/migration/misc.h |  4 ++
->  migration/migration.h    |  6 +--
->  migration/block-active.c | 94 ++++++++++++++++++++++++++++++++++++++++
->  migration/colo.c         |  2 +-
->  migration/migration.c    | 80 ++++++++--------------------------
->  migration/savevm.c       | 33 ++++++--------
->  monitor/qmp-cmds.c       |  8 +---
->  migration/meson.build    |  1 +
->  migration/trace-events   |  3 ++
->  9 files changed, 140 insertions(+), 91 deletions(-)
->  create mode 100644 migration/block-active.c
->
-> diff --git a/include/migration/misc.h b/include/migration/misc.h
-> index 804eb23c06..e68a473feb 100644
-> --- a/include/migration/misc.h
-> +++ b/include/migration/misc.h
-> @@ -106,4 +106,8 @@ bool migration_incoming_postcopy_advised(void);
->  /* True if background snapshot is active */
->  bool migration_in_bg_snapshot(void);
->  
-> +/* Wrapper for block active/inactive operations */
-> +bool migration_block_activate(Error **errp);
-> +bool migration_block_inactivate(void);
-> +
->  #endif
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 3857905c0e..fab3cad2b9 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -370,9 +370,6 @@ struct MigrationState {
->      /* Flag set once the migration thread is running (and needs joining) */
->      bool migration_thread_running;
->  
-> -    /* Flag set once the migration thread called bdrv_inactivate_all */
-> -    bool block_inactive;
-> -
->      /* Migration is waiting for guest to unplug device */
->      QemuSemaphore wait_unplug_sem;
->  
-> @@ -556,4 +553,7 @@ void migration_bitmap_sync_precopy(bool last_stage);
->  /* migration/block-dirty-bitmap.c */
->  void dirty_bitmap_mig_init(void);
->  
-> +/* migration/block-active.c */
-> +void migration_block_active_setup(bool active);
-> +
->  #endif
-> diff --git a/migration/block-active.c b/migration/block-active.c
-> new file mode 100644
-> index 0000000000..d477cf8182
-> --- /dev/null
-> +++ b/migration/block-active.c
-> @@ -0,0 +1,94 @@
-> +/*
-> + * Block activation tracking for migration purpose
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * Copyright (C) 2024 Red Hat, Inc.
-> + */
-> +#include "qemu/osdep.h"
-> +#include "block/block.h"
-> +#include "qapi/error.h"
-> +#include "migration/migration.h"
-> +#include "qemu/error-report.h"
-> +#include "trace.h"
-> +
-> +/*
-> + * Migration-only cache to remember the block layer activation status.
-> + * Protected by BQL.
-> + *
-> + * We need this because..
-> + *
-> + * - Migration can fail after block devices are invalidated (during
-> + *   switchover phase).  When that happens, we need to be able to recover
-> + *   the block drive status by re-activating them.
-> + *
-> + * - Currently bdrv_inactivate_all() is not safe to be invoked on top of
-> + *   invalidated drives (even if bdrv_activate_all() is actually safe to be
-> + *   called any time!).  It means remembering this could help migration to
-> + *   make sure it won't invalidate twice in a row, crashing QEMU.  It can
-> + *   happen when we migrate a PAUSED VM from host1 to host2, then migrate
-> + *   again to host3 without starting it.  TODO: a cleaner solution is to
-> + *   allow safe invoke of bdrv_inactivate_all() at anytime, like
-> + *   bdrv_activate_all().
-> + *
-> + * For freshly started QEMU, the flag is initialized to TRUE reflecting the
-> + * scenario where QEMU owns block device ownerships.
-> + *
-> + * For incoming QEMU taking a migration stream, the flag is initialized to
-> + * FALSE reflecting that the incoming side doesn't own the block devices,
-> + * not until switchover happens.
-> + */
-> +static bool migration_block_active;
-> +
-> +/* Setup the disk activation status */
-> +void migration_block_active_setup(bool active)
-> +{
-> +    migration_block_active = active;
-> +}
-> +
-> +bool migration_block_activate(Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +
-> +    assert(bql_locked());
-> +
-> +    if (migration_block_active) {
-> +        trace_migration_block_activation("active-skipped");
-> +        return true;
-> +    }
-> +
-> +    trace_migration_block_activation("active");
-> +
-> +    bdrv_activate_all(errp);
-> +    if (*errp) {
-> +        error_report_err(error_copy(*errp));
-> +        return false;
-> +    }
-> +
-> +    migration_block_active = true;
-> +    return true;
-> +}
-> +
-> +bool migration_block_inactivate(void)
-> +{
-> +    int ret;
-> +
-> +    assert(bql_locked());
-> +
-> +    if (!migration_block_active) {
-> +        trace_migration_block_activation("inactive-skipped");
-> +        return true;
-> +    }
-> +
-> +    trace_migration_block_activation("inactive");
-> +
-> +    ret = bdrv_inactivate_all();
-> +    if (ret) {
-> +        error_report("%s: bdrv_inactivate_all() failed: %d",
-> +                     __func__, ret);
-> +        return false;
-> +    }
-> +
-> +    migration_block_active = false;
-> +    return true;
-> +}
-> diff --git a/migration/colo.c b/migration/colo.c
-> index 9590f281d0..ae3387a7a4 100644
-> --- a/migration/colo.c
-> +++ b/migration/colo.c
-> @@ -836,7 +836,7 @@ static void *colo_process_incoming_thread(void *opaque)
->  
->      /* Make sure all file formats throw away their mutable metadata */
->      bql_lock();
-> -    bdrv_activate_all(&local_err);
-> +    migration_block_activate(&local_err);
->      bql_unlock();
->      if (local_err) {
->          error_report_err(local_err);
-> diff --git a/migration/migration.c b/migration/migration.c
-> index ba5deec5bc..d755ccb03d 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -738,7 +738,6 @@ static void qemu_start_incoming_migration(const char *uri, bool has_channels,
->  
->  static void process_incoming_migration_bh(void *opaque)
->  {
-> -    Error *local_err = NULL;
->      MigrationIncomingState *mis = opaque;
->  
->      trace_vmstate_downtime_checkpoint("dst-precopy-bh-enter");
-> @@ -769,11 +768,7 @@ static void process_incoming_migration_bh(void *opaque)
->               * Make sure all file formats throw away their mutable
->               * metadata.  If error, don't restart the VM yet.
->               */
-> -            bdrv_activate_all(&local_err);
-> -            if (local_err) {
-> -                error_report_err(local_err);
-> -                local_err = NULL;
-> -            } else {
-> +            if (migration_block_activate(NULL)) {
->                  vm_start();
->              }
->          } else {
-> @@ -1552,16 +1547,6 @@ static void migrate_fd_cancel(MigrationState *s)
->              }
->          }
->      }
-> -    if (s->state == MIGRATION_STATUS_CANCELLING && s->block_inactive) {
-> -        Error *local_err = NULL;
-> -
-> -        bdrv_activate_all(&local_err);
-> -        if (local_err) {
-> -            error_report_err(local_err);
-> -        } else {
-> -            s->block_inactive = false;
-> -        }
-> -    }
->  }
->  
->  void migration_add_notifier_mode(NotifierWithReturn *notify,
-> @@ -1860,6 +1845,12 @@ void qmp_migrate_incoming(const char *uri, bool has_channels,
->          return;
->      }
->  
-> +    /*
-> +     * Newly setup incoming QEMU.  Mark the block active state to reflect
-> +     * that the src currently owns the disks.
-> +     */
-> +    migration_block_active_setup(false);
-> +
->      once = false;
->  }
->  
-> @@ -2512,7 +2503,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->      QIOChannelBuffer *bioc;
->      QEMUFile *fb;
->      uint64_t bandwidth = migrate_max_postcopy_bandwidth();
-> -    bool restart_block = false;
->      int cur_state = MIGRATION_STATUS_ACTIVE;
->  
->      if (migrate_postcopy_preempt()) {
-> @@ -2548,13 +2538,10 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->          goto fail;
->      }
->  
-> -    ret = bdrv_inactivate_all();
-> -    if (ret < 0) {
-> -        error_setg_errno(errp, -ret, "%s: Failed in bdrv_inactivate_all()",
-> -                         __func__);
-> +    if (!migration_block_inactivate()) {
-> +        error_setg(errp, "%s: Failed in bdrv_inactivate_all()", __func__);
->          goto fail;
->      }
-> -    restart_block = true;
->  
->      /*
->       * Cause any non-postcopiable, but iterative devices to
-> @@ -2624,8 +2611,6 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->          goto fail_closefb;
->      }
->  
-> -    restart_block = false;
-> -
->      /* Now send that blob */
->      if (qemu_savevm_send_packaged(ms->to_dst_file, bioc->data, bioc->usage)) {
->          error_setg(errp, "%s: Failed to send packaged data", __func__);
-> @@ -2670,17 +2655,7 @@ fail_closefb:
->  fail:
->      migrate_set_state(&ms->state, MIGRATION_STATUS_POSTCOPY_ACTIVE,
->                            MIGRATION_STATUS_FAILED);
-> -    if (restart_block) {
-> -        /* A failure happened early enough that we know the destination hasn't
-> -         * accessed block devices, so we're safe to recover.
-> -         */
-> -        Error *local_err = NULL;
-> -
-> -        bdrv_activate_all(&local_err);
-> -        if (local_err) {
-> -            error_report_err(local_err);
-> -        }
-> -    }
-> +    migration_block_activate(NULL);
->      migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
->      bql_unlock();
->      return -1;
-> @@ -2778,31 +2753,6 @@ static void migration_completion_postcopy(MigrationState *s)
->      trace_migration_completion_postcopy_end_after_complete();
->  }
->  
-> -static void migration_completion_failed(MigrationState *s,
-> -                                        int current_active_state)
-> -{
-> -    if (s->block_inactive && (s->state == MIGRATION_STATUS_ACTIVE ||
-> -                              s->state == MIGRATION_STATUS_DEVICE)) {
-> -        /*
-> -         * If not doing postcopy, vm_start() will be called: let's
-> -         * regain control on images.
-> -         */
-> -        Error *local_err = NULL;
-> -
-> -        bql_lock();
-> -        bdrv_activate_all(&local_err);
-> -        if (local_err) {
-> -            error_report_err(local_err);
-> -        } else {
-> -            s->block_inactive = false;
-> -        }
-> -        bql_unlock();
-> -    }
-> -
-> -    migrate_set_state(&s->state, current_active_state,
-> -                      MIGRATION_STATUS_FAILED);
-> -}
-> -
->  /**
->   * migration_completion: Used by migration_thread when there's not much left.
->   *   The caller 'breaks' the loop when this returns.
-> @@ -2856,7 +2806,8 @@ fail:
->          error_free(local_err);
->      }
->  
-> -    migration_completion_failed(s, current_active_state);
-> +    migrate_set_state(&s->state, current_active_state,
-> +                      MIGRATION_STATUS_FAILED);
->  }
->  
->  /**
-> @@ -3286,6 +3237,11 @@ static void migration_iteration_finish(MigrationState *s)
->      case MIGRATION_STATUS_FAILED:
->      case MIGRATION_STATUS_CANCELLED:
->      case MIGRATION_STATUS_CANCELLING:
-
-Pre-existing, but can we even reach here with CANCELLED? If we can start
-the VM with both CANCELLED and CANCELLING, that means the
-MIG_EVENT_PRECOPY_FAILED notifier is not being consistently called. So I
-think CANCELLED here must be unreachable...
-
-> +        /*
-> +         * Re-activate the block drives if they're inactivated.  Note, COLO
-> +         * shouldn't use block_active at all, so it should be no-op there.
-> +         */
-> +        migration_block_activate(NULL);
->          if (runstate_is_live(s->vm_old_state)) {
->              if (!runstate_check(RUN_STATE_SHUTDOWN)) {
->                  vm_start();
-> @@ -3858,6 +3814,8 @@ static void migration_instance_init(Object *obj)
->      ms->state = MIGRATION_STATUS_NONE;
->      ms->mbps = -1;
->      ms->pages_per_second = -1;
-> +    /* Freshly started QEMU owns all the block devices */
-> +    migration_block_active_setup(true);
->      qemu_sem_init(&ms->pause_sem, 0);
->      qemu_mutex_init(&ms->error_mutex);
->  
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 706b77ffab..969a994a85 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1547,19 +1547,18 @@ int qemu_savevm_state_complete_precopy_non_iterable(QEMUFile *f,
->      }
->  
->      if (inactivate_disks) {
-> -        /* Inactivate before sending QEMU_VM_EOF so that the
-> -         * bdrv_activate_all() on the other end won't fail. */
-> -        ret = bdrv_inactivate_all();
-> -        if (ret) {
-> -            error_setg(&local_err, "%s: bdrv_inactivate_all() failed (%d)",
-> -                       __func__, ret);
-> +        /*
-> +         * Inactivate before sending QEMU_VM_EOF so that the
-> +         * bdrv_activate_all() on the other end won't fail.
-> +         */
-> +        if (!migration_block_inactivate()) {
-> +            error_setg(&local_err, "%s: bdrv_inactivate_all() failed",
-> +                       __func__);
->              migrate_set_error(ms, local_err);
->              error_report_err(local_err);
-> -            qemu_file_set_error(f, ret);
-> +            qemu_file_set_error(f, -EFAULT);
->              return ret;
->          }
-> -        /* Remember that we did this */
-> -        s->block_inactive = true;
->      }
->      if (!in_postcopy) {
->          /* Postcopy stream will still be going */
-> @@ -2123,7 +2122,6 @@ static int loadvm_postcopy_handle_listen(MigrationIncomingState *mis)
->  
->  static void loadvm_postcopy_handle_run_bh(void *opaque)
->  {
-> -    Error *local_err = NULL;
->      MigrationIncomingState *mis = opaque;
->  
->      trace_vmstate_downtime_checkpoint("dst-postcopy-bh-enter");
-> @@ -2146,12 +2144,11 @@ static void loadvm_postcopy_handle_run_bh(void *opaque)
->           * Make sure all file formats throw away their mutable metadata.
->           * If we get an error here, just don't restart the VM yet.
->           */
-> -        bdrv_activate_all(&local_err);
-> +        bool success = migration_block_activate(NULL);
-> +
->          trace_vmstate_downtime_checkpoint("dst-postcopy-bh-cache-invalidated");
-> -        if (local_err) {
-> -            error_report_err(local_err);
-> -            local_err = NULL;
-> -        } else {
-> +
-> +        if (success) {
->              vm_start();
->          }
->      } else {
-> @@ -3193,11 +3190,7 @@ void qmp_xen_save_devices_state(const char *filename, bool has_live, bool live,
->           * side of the migration take control of the images.
->           */
->          if (live && !saved_vm_running) {
-> -            ret = bdrv_inactivate_all();
-> -            if (ret) {
-> -                error_setg(errp, "%s: bdrv_inactivate_all() failed (%d)",
-> -                           __func__, ret);
-> -            }
-> +            migration_block_inactivate();
->          }
->      }
->  
-> diff --git a/monitor/qmp-cmds.c b/monitor/qmp-cmds.c
-> index 76f21e8af3..6f76d9beaf 100644
-> --- a/monitor/qmp-cmds.c
-> +++ b/monitor/qmp-cmds.c
-> @@ -31,6 +31,7 @@
->  #include "qapi/type-helpers.h"
->  #include "hw/mem/memory-device.h"
->  #include "hw/intc/intc.h"
-> +#include "migration/misc.h"
->  
->  NameInfo *qmp_query_name(Error **errp)
->  {
-> @@ -103,13 +104,8 @@ void qmp_cont(Error **errp)
->           * Continuing after completed migration. Images have been
->           * inactivated to allow the destination to take control. Need to
->           * get control back now.
-> -         *
-> -         * If there are no inactive block nodes (e.g. because the VM was
-> -         * just paused rather than completing a migration),
-> -         * bdrv_inactivate_all() simply doesn't do anything.
->           */
-> -        bdrv_activate_all(&local_err);
-> -        if (local_err) {
-> +        if (!migration_block_activate(&local_err)) {
->              error_propagate(errp, local_err);
-
-Could use errp directly here.
-
->              return;
->          }
-> diff --git a/migration/meson.build b/migration/meson.build
-> index d53cf3417a..dac687ee3a 100644
-> --- a/migration/meson.build
-> +++ b/migration/meson.build
-> @@ -11,6 +11,7 @@ migration_files = files(
->  
->  system_ss.add(files(
->    'block-dirty-bitmap.c',
-> +  'block-active.c',
->    'channel.c',
->    'channel-block.c',
->    'cpu-throttle.c',
-> diff --git a/migration/trace-events b/migration/trace-events
-> index bb0e0cc6dc..b82a1c5e40 100644
-> --- a/migration/trace-events
-> +++ b/migration/trace-events
-> @@ -383,3 +383,6 @@ migration_pagecache_insert(void) "Error allocating page"
->  # cpu-throttle.c
->  cpu_throttle_set(int new_throttle_pct)  "set guest CPU throttled by %d%%"
->  cpu_throttle_dirty_sync(void) ""
-> +
-> +# block-active.c
-> +migration_block_activation(const char *name) "%s"
 
