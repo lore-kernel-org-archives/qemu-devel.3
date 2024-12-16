@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACBA4E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:53:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90428E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN29K-0007Q9-3U; Sun, 15 Dec 2024 22:52:02 -0500
+	id 1tN295-0007MX-D0; Sun, 15 Dec 2024 22:51:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN29F-0007Ov-Jm
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:57 -0500
-Received: from mail-oo1-xc31.google.com ([2607:f8b0:4864:20::c31])
+ id 1tN294-0007Lt-87
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:46 -0500
+Received: from mail-oi1-x236.google.com ([2607:f8b0:4864:20::236])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN29B-00061u-SF
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:56 -0500
-Received: by mail-oo1-xc31.google.com with SMTP id
- 006d021491bc7-5f321876499so1745343eaf.1
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:53 -0800 (PST)
+ id 1tN292-00060r-Pt
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:46 -0500
+Received: by mail-oi1-x236.google.com with SMTP id
+ 5614622812f47-3eb7e725aa0so1762471b6e.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734321113; x=1734925913; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734321103; x=1734925903; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=DaDZY2PakYwtW8fn8wM9TTYAQMU58H2dT6JGLMZPUmI=;
- b=qzePmA3ph7gtye729jsj2XGO+jx7FBXlmcmiyjWpwiv3NMdtMxf21ntt+0EyfzCxxn
- 1FCE8DiOO+e0z1rmyRaCoLtFGj0Zz6mXoLmzMSc4aYf1+GW3Q99VRI5HXnv6Kf8+Nvzk
- 88YMDpJFj9RUoI6cOk473O1VJCAZy0AKrel+mhLIvhRDamKnpM7RPf8/xd5WMSopgr76
- ydQZIzdV2rd6KdhWbCXm0R3wzxI+1tC0Wr+ciuvoHMpgVKA1q/cw2pvkWw8UQJ3kNW3R
- wUR3x4tP8t8/n3z0c1+w5kMmo/pFD6hEnUlCEjk4TjrCxc54IK2Z+rc2bu+UoGSTmha3
- DEAQ==
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=LQ8DmbEliR36Gw9tzToNMCsxXQSyqG0+BCSp50GnSP8=;
+ b=hIWlae6xZoB2uA8InVyLjMKmQJfXzQhny6urf95sneeUQP1Pa6BmS5Bc49kyrSAwy8
+ xrxW1le3NDYE1S0kh6Md3i7PMt75MmFy64Dc32TgTMsDZkuLyQD5u8e3WQGfG/0Xr1Lf
+ nAe2UMeAC0VebwdizhmSPZwF8N+ELobvUr/PWFjEoQYcbIV0GYjpjvEDa0QZDug+uSzb
+ kzOA4+PM7tnQwTWvgDeTvFrI6XnM+2SdMuwjmEiFCW26LkAr/nCa3N6pIVSy4AzZuPK5
+ iHJ+woL+Z0SI/8RYmZElc6OeHsPqUmQCerDxCDhDf8LB1OJU10xMNnOe7CvlXzJBuJeA
+ aCBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734321113; x=1734925913;
+ d=1e100.net; s=20230601; t=1734321103; x=1734925903;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DaDZY2PakYwtW8fn8wM9TTYAQMU58H2dT6JGLMZPUmI=;
- b=JXy7ELZoybT1He6rXI3ipKSwyyE+c2wVGCg46L6VJKgLNMQZAoWqacXz30BVf/fqIN
- qaLo7nhFKY6hPJjvvBwznDRu6bUI0/OmNRaDtHjkgSSiaWotG2CzxZAfalbPkWqAIuL2
- FiXGrj+1d0EpePoZ/jJ8U04G4ZcASPfquYzXeeJrGMBb5iJmNBxwhtaN8WxD6EWZrckP
- Me8s7F5ZcZ6j9wuOENx3PMQtCvcU1fg+ZEHNDQWJ561CVWnC7NUJKpLYbqTSfRu6XLcW
- MkO9sosqLgl2Z8dug/IdrjzBVXkB6FVwxhwGAAuIr8F1cUsU8YLI0f+3A46uczW+KW2H
- CeRw==
-X-Gm-Message-State: AOJu0YwsQfRRv5bsBxScHoEe7PFW7kvIPeCXUGdGBaViPYmsDyCBn18r
- dybbOkISRhW5wkpl2fxjT5naUibq+d06Ch7EqiXtnyaJ2o6cIyRAvYcRi/KhZiH3RPxuIvKSgA4
- nOAWDJxyw
-X-Gm-Gg: ASbGncv/WqEwl6nW1it7ZW36H9b5FdGVcf2X5j4MjPWzudhKVI+MvuuVmcQyW6cRWBB
- gXDC0BjbAoIJYNMwxyMuf1jzc2utIvJzhGLm5am9WogqOwFkLrmwF22ixz6zz1su/X56unO4cR6
- 9HiOdb9KT+W3O+I6iSAufzc0xixBGTuTKu7fcxnBFE2eflbQFyRmQ2dQ3cpBH79sedOQLm+Yyhv
- bfXIMY3RkaJnR4y0XWGuwDIzsmbUDonHtrVGpjUSA/L91yiRaP4hU46UWNfFKYNXiMkqs+5qR0Y
- tH0eeM1CphDUtujlNpT/av188BPCPbWHX3j3dGJtieM=
-X-Google-Smtp-Source: AGHT+IEGt2Pn32YK3d4DOMXRbDlRJTeMqTXjNrIgljomyxAiHsj3nhZWCHGeq540Tmjy1gDfrt8l9A==
-X-Received: by 2002:a4a:d310:0:b0:5f2:b6d5:bf53 with SMTP id
- 006d021491bc7-5f3240152e9mr7890576eaf.1.1734321112780; 
- Sun, 15 Dec 2024 19:51:52 -0800 (PST)
+ bh=LQ8DmbEliR36Gw9tzToNMCsxXQSyqG0+BCSp50GnSP8=;
+ b=pudVfF1kyATGgR82dALma4255upwuUDNKiNpC0ublQabu9QorrFv2Kg3nVHpiDsEYK
+ LFbIrbQgVJ4quDLU4qSpwxEaLXlJihlrr7QfiZa4dzPOsUwwvGBl20N+0mNe0CtJSpvO
+ A42dv1rkfXj5LWmPR/Zzo73q1uF1eFrC3E6TcaU/qI28b33veP/kCDIk6RoAg10og73+
+ JIwUBalGp8/czZ5wk5hylrVFVEBoTX0R35VLdwKSOMcS8VzV/FBnQHRIp7arbwedIscP
+ E0k/yphvZq+gakay65bMzS2VNIn6bgxEYQ8I5hE4HsKBBHwL4vC+dTQ6oiLEWGhl9Vwn
+ H4Qw==
+X-Gm-Message-State: AOJu0YyOGTo1BdFhCIeF8DIHHJUA/uqnZVwa8oLdeyYHqy849vfD4KdQ
+ eO5Uy3pK0YhpRpuEiON2lz10WGRVFOccAfb0AMte/xW+O04zf8veufi+F7B/QhISoamGgeEw7yR
+ 5PJrNIm4b
+X-Gm-Gg: ASbGncs9ZjsZzJ5nuupWqkHpZZhD+NF4LUfqds++sTzvEBugd32kkM9daqWjPV0Zoqo
+ MX1Yuj/19p7gHby2Uh+Xh2i+0zrIUNOuUWa+TI1MDUx5AT84DA1txgSHs4VkLcXBisyfIk0pZUa
+ bBAbImGkrPa31PD8qzUgDTaGo9pvwyDb24zgPBuleBu8BYa55+LyQgw06TnS4/RKJUQSR8ySCm+
+ VN/5eQy4O3LsGKbkDHxkDFNuDuEn9HosRM/FOZd9GaunY+E4AsraAMI6jKrmXwnGmf7KYdvH0+l
+ ie/sKoGsBRiURcc1/gHML+CovaEsdHVajMr97rTJSx4=
+X-Google-Smtp-Source: AGHT+IHOtWQ7btirqjH1OislPe5s72vDzrqnrAM6Pe7Fyp67u/vGiNyvYw4bE90FQvyey6z8L0FPfQ==
+X-Received: by 2002:a05:6808:4488:b0:3eb:7399:29d3 with SMTP id
+ 5614622812f47-3eba6955c77mr6097287b6e.43.1734321103632; 
+ Sun, 15 Dec 2024 19:51:43 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.51
- for <qemu-devel@nongnu.org>
+ 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 19:51:52 -0800 (PST)
+ Sun, 15 Dec 2024 19:51:43 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 22/24] hw/core/qdev-properties: Constify Property argument to
- object_field_prop_ptr
-Date: Sun, 15 Dec 2024 21:51:07 -0600
-Message-ID: <20241216035109.3486070-23-richard.henderson@linaro.org>
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH 17/24] rust/qemu-api: Use device_class_set_props_n
+Date: Sun, 15 Dec 2024 21:51:02 -0600
+Message-ID: <20241216035109.3486070-18-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
 References: <20241216035109.3486070-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c31;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::236;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x236.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,38 +99,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This means we can update declare_properties to drop the
+zero terminator at the end of the array as well.
+
+Cc: qemu-rust@nongnu.org
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/qdev-properties.h | 2 +-
- hw/core/qdev-properties.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ rust/qemu-api/src/device_class.rs | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 3680cd239f..447767688b 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -201,7 +201,7 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value);
- /* Takes ownership of @values */
- void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values);
+diff --git a/rust/qemu-api/src/device_class.rs b/rust/qemu-api/src/device_class.rs
+index 03d03feee8..cca51fe1a9 100644
+--- a/rust/qemu-api/src/device_class.rs
++++ b/rust/qemu-api/src/device_class.rs
+@@ -7,7 +7,6 @@
+ use crate::{
+     bindings::{self, DeviceClass, DeviceState, Error, ObjectClass, Property, VMStateDescription},
+     prelude::*,
+-    zeroable::Zeroable,
+ };
  
--void *object_field_prop_ptr(Object *obj, Property *prop);
-+void *object_field_prop_ptr(Object *obj, const Property *prop);
+ /// Trait providing the contents of [`DeviceClass`].
+@@ -31,7 +30,7 @@ pub trait DeviceImpl {
+     /// device.  Not a `const` because referencing statics in constants
+     /// is unstable until Rust 1.83.0.
+     fn properties() -> &'static [Property] {
+-        &[Zeroable::ZERO; 1]
++        &[]
+     }
  
- void qdev_prop_register_global(GlobalProperty *prop);
- const GlobalProperty *qdev_find_global_prop(Object *obj,
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index a3d49e2020..61929b2865 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -51,7 +51,7 @@ void qdev_prop_allow_set_link_before_realize(const Object *obj,
+     /// A `VMStateDescription` providing the migration format for the device
+@@ -87,7 +86,10 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+         if let Some(vmsd) = <T as DeviceImpl>::vmsd() {
+             dc.vmsd = vmsd;
+         }
+-        bindings::device_class_set_props(dc, <T as DeviceImpl>::properties().as_ptr());
++        let prop = <T as DeviceImpl>::properties();
++        if prop.len() != 0 {
++            bindings::device_class_set_props_n(dc, prop.as_ptr(), prop.len());
++        }
      }
  }
  
--void *object_field_prop_ptr(Object *obj, Property *prop)
-+void *object_field_prop_ptr(Object *obj, const Property *prop)
- {
-     void *ptr = obj;
-     ptr += prop->offset;
+@@ -134,7 +136,7 @@ macro_rules! define_property {
+ macro_rules! declare_properties {
+     ($ident:ident, $($prop:expr),*$(,)*) => {
+         pub static $ident: [$crate::bindings::Property; {
+-            let mut len = 1;
++            let mut len = 0;
+             $({
+                 _ = stringify!($prop);
+                 len += 1;
+@@ -142,7 +144,6 @@ macro_rules! declare_properties {
+             len
+         }] = [
+             $($prop),*,
+-            $crate::zeroable::Zeroable::ZERO,
+         ];
+     };
+ }
 -- 
 2.43.0
 
