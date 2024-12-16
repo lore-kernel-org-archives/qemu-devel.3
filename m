@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22235E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 014D1E77180
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 17:17:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNEhe-0003gO-Iu; Mon, 16 Dec 2024 12:16:18 -0500
+	id 1tNEiC-0004BV-Kx; Mon, 16 Dec 2024 12:16:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNEhd-0003c0-1L
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:17 -0500
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ id 1tNEi3-00043Z-U5
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:44 -0500
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNEhb-0000DP-M3
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:16 -0500
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-aabbb507998so255725466b.2
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:16:15 -0800 (PST)
+ id 1tNEhx-0000Ez-4b
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 12:16:43 -0500
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-aa69107179cso815291466b.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 09:16:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734369374; x=1734974174; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734369394; x=1734974194; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Scu0IeblFWxlvgGfVSrSZe4ylCDzsPgQyeQRCuepEIs=;
- b=AtsezyxcLLuSHdiI6osRVwLKDxCVhCdRh/RnJkAGc2yZInMrAWkCulx35jRjTLni6Y
- z1KUuKnirKlVakSRe6llE9FtGQZNNc+3ZzUBApL0naqhhTEm/zTxPYj1mPQog5Xm5qbW
- 9Xt+b64ZcaPheHv4wy8e2B+JK1bMzTegtCMZ6Uye2OJGAFqiTnEkffhI6uacDMXxhrJi
- Pridje7SCa8Umq0MWrHJJZ6DZEw7XZ47qldOTxWdOdA4LN+BY14Osw/l8egOFXaA+adW
- pAAZJMqNO8M7EU4zmogIlqoxanaoUKbwBl2REhu2016BxPxcFsn7sDo49LFKbuNGz3/R
- RktQ==
+ bh=GBM4uFpiayLJP/bLXti6ZTvwMuTbtotx1NQbTLq1mY8=;
+ b=VdoFcMOAgq6XbX5QPp5a9F8sS/OllR/lySoBRePys0hqPWrp8b94kVbvbM4ftx+bbd
+ YKJ+l3MxPepWuou/tGGFIFJJFFckGGW74cz5Qm5MtH4DFt7/BOTjBkaNo3BfGehwr2hQ
+ HHWdyn0eSZEoaAt2OD3iojUOLuUxxdVxxE8ykWsW+Tc1dg3bHk0ADMQSlAieQB6ZtWxc
+ Jha/qjzcZmf1MSRXhLrXhXP7N+mStqiDPhKc6HHKYun01seCa4jUzuR5eoVtpl3pOr5M
+ cDSD+mba6Ape2gDkbqw72BWvbx+sZIJ35pOHn/dYsSsisaw74gI9psJx7p2fIBPK8PsK
+ C13Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734369374; x=1734974174;
+ d=1e100.net; s=20230601; t=1734369394; x=1734974194;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Scu0IeblFWxlvgGfVSrSZe4ylCDzsPgQyeQRCuepEIs=;
- b=cWQwnxjhrI4Sm/ki3vWb5jxOirEN4Bl52ct8xAmcC6/FRA0+9VWlkYoBNInEirsm1c
- jcG9EMkry7Hh4zqse4WyJcnnQJnXWCiyE1BZwPKxjwTa3J6AuI78MAMC+ZRrRCO46SbS
- fqsddcafyxWK87uRNKAWW54wo7ud/LgIgzbwkpHZIPEbimHttd4wEwDxy7Yhjhz/DqVO
- Nzlf/xt3N6qJJL3h4wIp6LV65rO7+8wHzfKg8+dSN+Oy/+jIEGf1Z9WPN65tUpHFxRmd
- vDNpslyIqwlkS5pCepyIinjYP5Kum2H6N6lCzB9cZMUJ66rsbMgx0mSTjuwm4cYDMh3F
- bP6w==
-X-Gm-Message-State: AOJu0Yw/ik6f0xxy/SVW/doJk9McoRlnrRRJfnDoVzxCSvsFJ8xL1QQb
- NdU99dlAXHRAcxwXTteFjUz7DogZAwtQOnr7uC4sZ3NEB76ODlCYLeDOfmPavMk=
-X-Gm-Gg: ASbGncvQt//g9E4zaN91KUtQm8yQpGBQczfkWusZL2JS29HRHAZjile3yCqzHW7kLtv
- qQ5ZBKY7hP7LijiBDYL9RSu7DZ0JUGx2r8KPLmHYtBtlY2mWGu/xdZNrqIaXBu6WpEIgap/0IQi
- j62uN7v5UMq0ZPssP1IMSJFmhLtllwHkN6NSAOw6hRo9fxONJlydN0pan2QYV7BPvaoVwBNtRSZ
- b9VYxGTt4OOYe9uYEddTzU5+7ZOTO6YxGGAe29PspYsuu6vOnng7H4=
-X-Google-Smtp-Source: AGHT+IFw/3c4FqBjVaV9o1cpTDsLl8VdW61oHLXREEv2ICovellpBZ2z8b51A6V6ZevJX1lw5Y5TAQ==
-X-Received: by 2002:a17:907:7f29:b0:aa6:7b34:c1a8 with SMTP id
- a640c23a62f3a-aab77eaf35cmr1365225366b.55.1734369373755; 
- Mon, 16 Dec 2024 09:16:13 -0800 (PST)
+ bh=GBM4uFpiayLJP/bLXti6ZTvwMuTbtotx1NQbTLq1mY8=;
+ b=JyPKNSvEvDJXVOLy9xIuB8WiVBDdyGtp1eGMITcn4zyU210pS+lzkjgXenOx/o0hW6
+ bo5eIoA1+Hkekva9/5GFyT1Z5+Ab9ylsaEWcrkdH19qFHtFtZ3QLci5sWgrayMOytLXP
+ ygq4HyuxPSKM1AqG2TdBWilpcGVP4qLchinw/BkNIoDpVFdPNFAj+VmBqiUiPyL17yLr
+ ebFfrarR4tJTHkUU0c6VRAS2ZecVF8q1j9DbZ6AjGTHZsNmOWx6vEVRc/Is1AHnbE40z
+ SfT/l8OLPDpXRi04jq5gw93HeiNce0B8muD2mCGuXp7unSKCuA9aQztYfOA8iITtjGd+
+ 4GEQ==
+X-Gm-Message-State: AOJu0YxUXeAHaNDvznm+A5hAdokabygWv07D0Dy4hYCZjLGAiXwGIsUv
+ 1+3r8lmye8K513wIx5//O37zpyM9w2AMvVMMsg5yALwChXcE6t2mXFFf1oJufWJNj1XrxqNuqy2
+ lml8=
+X-Gm-Gg: ASbGnctrj+ABH1ml5ZnKj5XoisCuzQL6ickn24vPJeflnyuz3mDYvXM3LzFWG01auYM
+ w/1McOlasfNfN1HMvEFbJtMsMTszTnQvAzsEmpYqh+jwEPVOmrl2aYNmjJNCEd7s4IXkbDt6/kB
+ mAXGciMiVGHCpK1RrdI3YB1PENmZm6RljcpR7+cRRIMUoQmpdbVRsC6uiWXb9dbKgEYMZROgoBS
+ vf+OG57LxJdXnjwc90TrwVTcZf4XzIxNHkydorcX1XNeXPLUMYaLI8=
+X-Google-Smtp-Source: AGHT+IGVyfqFHYRqv4RLpllqzRlpHhRxNN4YWpb5a1wMUm/28DGqk6pNna02r/BdxLXV21fwWynbKQ==
+X-Received: by 2002:a17:906:3112:b0:aa6:7ab9:e24d with SMTP id
+ a640c23a62f3a-aab77ed3586mr1224978966b.57.1734369394131; 
+ Mon, 16 Dec 2024 09:16:34 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab96087424sm347642466b.83.2024.12.16.09.16.13
+ a640c23a62f3a-aab963c5477sm354444866b.185.2024.12.16.09.16.33
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Dec 2024 09:16:13 -0800 (PST)
+ Mon, 16 Dec 2024 09:16:33 -0800 (PST)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 977375F952;
- Mon, 16 Dec 2024 17:16:12 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 0A74D5F952;
+ Mon, 16 Dec 2024 17:16:33 +0000 (GMT)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
  <berrange@redhat.com>,
  Michael Roth <michael.roth@amd.com>,  Fabiano Rosas <farosas@suse.de>,
  Konstantin Kostiuk <kkostiuk@redhat.com>
-Subject: Re: [PATCH 1/3] osdep: Add qemu_mkdir_with_parents()
-In-Reply-To: <20241216161413.1644171-2-peterx@redhat.com> (Peter Xu's message
- of "Mon, 16 Dec 2024 11:14:11 -0500")
+Subject: Re: [PATCH 2/3] tests: Use qemu_mkdir_with_parents() for all test code
+In-Reply-To: <20241216161413.1644171-3-peterx@redhat.com> (Peter Xu's message
+ of "Mon, 16 Dec 2024 11:14:12 -0500")
 References: <20241216161413.1644171-1-peterx@redhat.com>
- <20241216161413.1644171-2-peterx@redhat.com>
+ <20241216161413.1644171-3-peterx@redhat.com>
 User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Mon, 16 Dec 2024 17:16:12 +0000
-Message-ID: <87o71b1rc3.fsf@draig.linaro.org>
+Date: Mon, 16 Dec 2024 17:16:33 +0000
+Message-ID: <87ikrj1rbi.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,12 +108,12 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> QEMU uses g_mkdir_with_parents() a lot, especially in the case where the
-> failure case is ignored so an abort is expected when happened.
+> Coverity isn't happy on the QEMU test cases where g_mkdir_with_parents() =
+is
+> used without checking retvals.  Use qemu_mkdir_with_parents() to fix them.
 >
-> Provide a helper qemu_mkdir_with_parents() to do that, and use it in the
-> two cases in qga/.  To be used in more places later.
->
+> Resolves: Coverity CID 1568381
+> Resolves: Coverity CID 1568378
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 
 Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
