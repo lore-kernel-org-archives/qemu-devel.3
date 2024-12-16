@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F05A9E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55821E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 16:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNE0y-0003kn-PF; Mon, 16 Dec 2024 11:32:12 -0500
+	id 1tNE2K-0004j9-W7; Mon, 16 Dec 2024 11:33:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbab@linux.ibm.com>)
- id 1tNE0x-0003kb-JB
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:32:11 -0500
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNE2K-0004ii-9i
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:33:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <arbab@linux.ibm.com>)
- id 1tNE0v-0001Ks-SF
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:32:11 -0500
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGE0T2r012254;
- Mon, 16 Dec 2024 16:32:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=+b6DHOM4M+E7Gt7j9FYGubUSt/oikmSLmfYO3oc6E
- gc=; b=bFlsjQd0n7t5fE5zRCN8KC3ppFvp/YkijCn4Wk2ye86JGsXBGWxdX0QEy
- AUcynww6Pr7rif4D165D/Vy5NDsQnN1CLPqEKxCdR8NHj9OkMLkH40GoVzPSRKLz
- ei73UN8Z9Wn9u54+iffSfaSjKmsy/4o4q3kBUkwhDXVPkRULuUGtfa2lfr0+sMpD
- 7/K04K84t+hx1Hftfj8zcyzXM4IWWDvF9zAGtbAOkVSRlJ2SNnsRbMpdcMcsXbwB
- THmVPT10t7+gxV+q4zCLWwqWApmOHRkzuYdeM/dsW83hAVBURtlvNVNab48omBk9
- ZMCCG4Wni9w/4bAULVkqLZq047R8A==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jcpb3f6g-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 16:32:00 +0000 (GMT)
-Received: from m0360083.ppops.net (m0360083.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4BGGVxjO031204;
- Mon, 16 Dec 2024 16:31:59 GMT
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43jcpb3f6c-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 16:31:59 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BGGUV6b029728;
- Mon, 16 Dec 2024 16:31:58 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hmbsex7h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Dec 2024 16:31:58 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 4BGGVv8c25428672
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Dec 2024 16:31:57 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C002B58055;
- Mon, 16 Dec 2024 16:31:57 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F4615804B;
- Mon, 16 Dec 2024 16:31:56 +0000 (GMT)
-Received: from arbab-laptop.localdomain (unknown [9.67.86.249])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with SMTP;
- Mon, 16 Dec 2024 16:31:56 +0000 (GMT)
-Received: by arbab-laptop.localdomain (Postfix, from userid 152845)
- id E3296D9485; Mon, 16 Dec 2024 10:31:53 -0600 (CST)
-From: Reza Arbab <arbab@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>
-Subject: [PATCH] virtio-balloon-pci: Allow setting nvectors,
- so we can use MSI-X
-Date: Mon, 16 Dec 2024 10:31:25 -0600
-Message-ID: <20241216163125.438156-1-arbab@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNE2H-0001VZ-T9
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 11:33:35 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734366812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B1+6KC++alXOU/47+GrsHZX0GfIao5HC3bjlQJdMKfg=;
+ b=daek5JVUHJhL82z07WcRGBd3ijlQjc6C/jNoRhpv+13k7T4gc9HB8hVPG7N2f+SNi96zBa
+ ZxiRAYBIRRuZkq65CYI4KZar0rESSx+fhaS9gNd93c9fFhnW4QE18g2sYBgRg/WJDmOcI5
+ 1Isl0WugFlnbJ65aBLQ2/5bU7RJywuc=
+Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
+ [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-657-7NMr0T2UPw-1ZkeKj9-azw-1; Mon, 16 Dec 2024 11:33:28 -0500
+X-MC-Unique: 7NMr0T2UPw-1ZkeKj9-azw-1
+X-Mimecast-MFC-AGG-ID: 7NMr0T2UPw-1ZkeKj9-azw
+Received: by mail-io1-f71.google.com with SMTP id
+ ca18e2360f4ac-844db0decffso390788039f.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 08:33:28 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734366807; x=1734971607;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=B1+6KC++alXOU/47+GrsHZX0GfIao5HC3bjlQJdMKfg=;
+ b=QeERIOqWxOhhj5/2OMuO97Zi/go5c9qeeVQ3/B2Cq9Gtj4owDCsfC9aGgOhgg1GLVa
+ T0D5upYO9CSMBRbF7oCcwCt2xxOcF3fJ/5Ips+cuKe9oPdUkY2aMLOU6E9xyzt6qloRA
+ za4WjJh8mV4aBJQ8FCWn1yR0Moyt7stpk7mo9IlSzm06Qm+qgD1PKVu5ypoA4EZn/bNO
+ XQ+IR6grJonEIppLqSPoDXcdSG0ANQL5+WVEe0hCV7lVrGXBetNYMxIbacWC/JCnSR6F
+ R/lGoXKZ3EFOkbQRmWIIlfei4zQwr3FjXTWN4shDxZvMh1yjqjRczPAekyqFsMLZ93VI
+ loeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUl10RasXQIkH89KGITVvSyQFiMx03759nkhzGXLjGvPPmzYIhv4CHkrevMb1q2V6KqHqeeAVP5pOtg@nongnu.org
+X-Gm-Message-State: AOJu0Yx1kHqjVWdWSvJ74VbyyePa1MNGmcYJLZ4lpdifFMndOPmZLHXo
+ lwjILu6bUpNdxHmP7VBHhB2Gw9VfrAHYCBSTnN+pn+D2teooOrj3yh/TlneldOMs3Tl+nJREMZ3
+ 7OEBy00QMzXc7X8kWjUreS3YxpEWaRn//BkJIoJmxE9g7tAbWt6hS
+X-Gm-Gg: ASbGncvRCxvGnWZ7ajlrijZ1n1TQxV0mx/SZ9hndYdGFxwhXMyUl/WHKUdqhjaIEaDF
+ VKp+a7n7oAQacK0Cc4SAYNcC6Nbk0+w/QJ7ee+HxKL3dkw19kwUKgteoBUx/F+DkDdUd2fYsX4a
+ kTl4OWkcF3PRH8lZgbp92MdSzKnMg1NXLAWeTKuhV1vtgF9lHNguGYPuQEsbNPdgJHlrqKyhqr5
+ XHQ/w+58x0N5hydxTCeWQ0PcjOdf2iVzbI3U+y4q8F7Z8vjR5Iq3CRxfuBZOzRjKU8QmcqGSskc
+ uHJacQp3Umz7x9eU5Q==
+X-Received: by 2002:a05:6602:2c88:b0:83a:ae9d:9300 with SMTP id
+ ca18e2360f4ac-844e982ba67mr887638439f.3.1734366807546; 
+ Mon, 16 Dec 2024 08:33:27 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrflbGl5jAioQ5LmKgBp0A8laTn8ugaFd2hj6L11Bm7lxvIYJuqGatd1rD2WMvBR9r8u1yXw==
+X-Received: by 2002:a05:6602:2c88:b0:83a:ae9d:9300 with SMTP id
+ ca18e2360f4ac-844e982ba67mr887637339f.3.1734366807264; 
+ Mon, 16 Dec 2024 08:33:27 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ ca18e2360f4ac-844f628d2a9sm132895739f.22.2024.12.16.08.33.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Dec 2024 08:33:26 -0800 (PST)
+Date: Mon, 16 Dec 2024 11:33:25 -0500
+From: Peter Xu <peterx@redhat.com>
+To: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Cc: Avihai Horon <avihaih@nvidia.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>,
+ Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 08/24] migration: Add thread pool of optional load
+ threads
+Message-ID: <Z2BWVSI7lu1JRMfI@x1n>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <877b7108c9cb9064615606d4c731cb12c549b7f9.1731773021.git.maciej.szmigiero@oracle.com>
+ <198ca4a4-01fd-42b4-9e1a-d2860277be9e@nvidia.com>
+ <ceff9e17-b23e-472b-9f29-bf4c3c895c55@maciej.szmigiero.name>
+ <Z1DbH5fwBaxtgrvH@x1n>
+ <7e6373ca-b344-409f-a9ad-bce72779c10f@maciej.szmigiero.name>
+ <Z1sVcJRamoUFshwk@x1n>
+ <2c1d2c4c-d09f-4603-8bf6-c11a4faca0eb@maciej.szmigiero.name>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: pBCPaWAn6W4qaeecn-wdihSFcu-2OU3O
-X-Proofpoint-GUID: 7NFiIfgNXHVUYM149Vga1uA0jKto_aeL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
- definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 clxscore=1011
- lowpriorityscore=0 impostorscore=0 spamscore=0 mlxscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 bulkscore=0 phishscore=0 priorityscore=1501
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.19.0-2411120000
- definitions=main-2412160137
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=arbab@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -37
-X-Spam_score: -3.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <2c1d2c4c-d09f-4603-8bf6-c11a4faca0eb@maciej.szmigiero.name>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
 X-Spam_bar: ---
-X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H2=-1.13, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,82 +120,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Most virtio-pci devices allow MSI-X. Add it to virtio-balloon-pci, but
-only enable it in new machine types, so we don't break migration of
-existing machine types between different qemu versions.
+On Thu, Dec 12, 2024 at 11:53:42PM +0100, Maciej S. Szmigiero wrote:
+> migrate_set_error() wouldn't be called until qemu_loadvm_state() exits
+> into process_incoming_migration_co().
+> 
+> Also this does not account other qemu_loadvm_state() callers like
+> qmp_xen_load_devices_state() or load_snapshot().
+> 
+> While these other callers might not use load threads currently, it feels
+> wrong to wait for these threads in qemu_loadvm_state() but set their
+> termination/abort flag as a side effect of completely different function
+> (migrate_set_error()).
+> 
+> Having a dedicated abort flag also makes the semantics easy to infer
+> from code since once can simply grep for this flag name (load_threads_abort)
+> to see where it is being written.
+> 
+> Its name is also pretty descriptive making it easy to immediately tell
+> what it does.
 
-This copies what was done for virtio-rng-pci in:
-9ea02e8f1306 ("virtio-rng-pci: Allow setting nvectors, so we can use MSI-=
-X")
-bad9c5a5166f ("virtio-rng-pci: fix migration compat for vectors")
-62bdb8871512 ("virtio-rng-pci: fix transitional migration compat for vect=
-ors")
+That's fine. As long as we can at least report an Error** and remember that
+it's OK to me.
 
-Signed-off-by: Reza Arbab <arbab@linux.ibm.com>
----
- hw/core/machine.c              |  6 +++++-
- hw/virtio/virtio-balloon-pci.c | 13 +++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+Thanks,
 
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index e6900b43efa2..db59c7771ec4 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -36,7 +36,11 @@
- #include "hw/virtio/virtio-iommu.h"
- #include "audio/audio.h"
-=20
--GlobalProperty hw_compat_9_2[] =3D {};
-+GlobalProperty hw_compat_9_2[] =3D {
-+    { "virtio-balloon-pci", "vectors", "0" },
-+    { "virtio-balloon-pci-transitional", "vectors", "0" },
-+    { "virtio-balloon-pci-non-transitional", "vectors", "0" },
-+};
- const size_t hw_compat_9_2_len =3D G_N_ELEMENTS(hw_compat_9_2);
-=20
- GlobalProperty hw_compat_9_1[] =3D {
-diff --git a/hw/virtio/virtio-balloon-pci.c b/hw/virtio/virtio-balloon-pc=
-i.c
-index ce2645ba7187..1c2b071eff0c 100644
---- a/hw/virtio/virtio-balloon-pci.c
-+++ b/hw/virtio/virtio-balloon-pci.c
-@@ -35,11 +35,23 @@ struct VirtIOBalloonPCI {
-     VirtIOBalloon vdev;
- };
-=20
-+static Property virtio_balloon_properties[] =3D {
-+    DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
-+                    VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
-+    DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
-+                       DEV_NVECTORS_UNSPECIFIED),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
- static void virtio_balloon_pci_realize(VirtIOPCIProxy *vpci_dev, Error *=
-*errp)
- {
-     VirtIOBalloonPCI *dev =3D VIRTIO_BALLOON_PCI(vpci_dev);
-     DeviceState *vdev =3D DEVICE(&dev->vdev);
-=20
-+    if (vpci_dev->nvectors =3D=3D DEV_NVECTORS_UNSPECIFIED) {
-+        vpci_dev->nvectors =3D 2;
-+    }
-+
-     vpci_dev->class_code =3D PCI_CLASS_OTHERS;
-     qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
- }
-@@ -55,6 +67,7 @@ static void virtio_balloon_pci_class_init(ObjectClass *=
-klass, void *data)
-     pcidev_k->device_id =3D PCI_DEVICE_ID_VIRTIO_BALLOON;
-     pcidev_k->revision =3D VIRTIO_PCI_ABI_VERSION;
-     pcidev_k->class_id =3D PCI_CLASS_OTHERS;
-+    device_class_set_props(dc, virtio_balloon_properties);
- }
-=20
- static void virtio_balloon_pci_instance_init(Object *obj)
-
-base-commit: ca80a5d026a280762e0772615f1988db542b3ade
---=20
-2.47.1
+-- 
+Peter Xu
 
 
