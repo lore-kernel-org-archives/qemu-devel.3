@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEB4E7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:46:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DADFCE7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:52:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN238-0005SW-8w; Sun, 15 Dec 2024 22:45:38 -0500
+	id 1tN299-0007Nu-BP; Sun, 15 Dec 2024 22:51:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN237-0005SA-3a
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:45:37 -0500
-Received: from mail-vk1-xa2b.google.com ([2607:f8b0:4864:20::a2b])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tN296-0007N3-Ll
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:48 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tN235-0005Qb-IY
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:45:36 -0500
-Received: by mail-vk1-xa2b.google.com with SMTP id
- 71dfb90a1353d-5174f9c0d2aso1142320e0c.1
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:45:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tN295-00061H-3O
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:48 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-71ded02b779so1894275a34.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734320734; x=1734925534; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X3N40PezsruY20z3fP3NKgqtXUKVRVqUowJvry6Rl90=;
- b=TGkvWfVjRwhCVi0MuplZM9Q8QcMwLV++q5WD4qiFM5Za1EV96GKtKe14avQ4aic1DF
- tfYdakyWfsqUaW25f/YMY2eLFBjWpXgw5zEHZkV/LTEJn63UsKStESKNiE3hMxIEfY2a
- TOR/4PqQicAlohohf3ejvvuvRBpG2jbYBYL+zn2+fT50hs0fuHQvMjKXDSRxPpLZ5ozh
- gRUhJUQP9JiYWGjdDkhx6XD6qREe3CM6DfFUK6pk+QGFSx25o8/rMcQduv58drQhSaxx
- 6kx0G/qJMv5rzF8+pHiIIiLGC9Kp0QyvsTxyj4n8Rme1veDgi4tHDvKIn4poJxmhArBM
- THmA==
+ d=linaro.org; s=google; t=1734321106; x=1734925906; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=nSGD2w+KCzI3jUXBSuSbJy5TW+wbwk1/L1q8EYKN6hM=;
+ b=sCeghu22UqAm54P9sD/d1kBOy1KZ/mxmaosSfnuqE1l3ey8GQB5VyW6LCKEX8Syy0s
+ 71qB0T2l8DLdyEtVNm2NkH2Uv/zPbJhfuFRWHE3+j8at8by+UjyGxh1zYl9x9XkFcMQr
+ 6HDbRwA0QD3DRzInPsWHEgjSQeb7tJSdPPp55Bq2d5o2ognAu9YLa7SMOyfEze7u24J/
+ R+DSuJ8OfxLCGopcLfy8mX6Ke+lyDLvx6P6wXijv9+U+yuY3yVhO6DWD50n02vyCMwbZ
+ apeg7sL6FhfA+06JfGLgj4g2iWg5lcsS275PxhaSJnp6woCspMZ+hfqQc0MC+o9qbBBA
+ mA5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734320734; x=1734925534;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734321106; x=1734925906;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=X3N40PezsruY20z3fP3NKgqtXUKVRVqUowJvry6Rl90=;
- b=vIYTioHRTsH0OP1+rDJVmACFAVFQtB2KUSFmwQGptbe/tnKyrkWIMOSW/rAZxHpHlo
- AHQEehmapKps2xa0S/AL5vRaUOthf7UDlsQmmmCNe+4b0SZ9pEB/KGHGupY5uJCRY6Oz
- wbv69mpTmjJ5wXBADbzgHizCcKm9PpXzxyXWDpfX3YvyHuxKPChqE23pJrlqXaCa6a1h
- BfXTXvg/EN73EU9GBtD3zBtIIYVuppwMA46ZJQ/z+FaOV09cbykQdg1pH/ovb3NJpYU5
- F4kpTq37bh5ef+wHRjXqP++REDSVi9reRxkEj5I+W3IaoBschC/gKtYhq6ENqBzzSFqa
- FTqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU08oK7yZYAkP6WdlMCLU3UvgafxZoVnAoL428J8i0FPsahCfyBXfs9ucBTdYcxRht9Csh9fdA4NAyt@nongnu.org
-X-Gm-Message-State: AOJu0YzEN0Hw6LYNx9h/WAOD41koz9hxFM3kgeCcyNnU7Oc/5A5HZqjT
- pG39fdIhT9xKp54xmxcrRzOH2M/a14bInD9KswmcVOGHLi+2pmsDp33foIil1OrYvHB3784bf/z
- IagYSFNgXYh4zA+Fcor0vR3YirSI=
-X-Gm-Gg: ASbGnctZDrvuvc15WqBWu9oM46BVLxEXLx+ekkmdfJblJ9n9WpQzNy0QdxXiB4Piqnx
- KkZMfbs8OG0hKAP29ctN/NGHCWpm4U0LIyEhdw7EK+z5mu+em0BuTO4HGujAIbORuUlt2
-X-Google-Smtp-Source: AGHT+IEMx/mYvea+2wKV50yjmzYSjOu0vT5zcoH3nqKXe6C5G6/+K0P64tQXIkmEGIUZfXfjJZL+o2N4p4rIUKr9zHI=
-X-Received: by 2002:a05:6102:50ab:b0:4b1:20b1:bff3 with SMTP id
- ada2fe7eead31-4b25dccc0a4mr10629965137.16.1734320734244; Sun, 15 Dec 2024
- 19:45:34 -0800 (PST)
+ bh=nSGD2w+KCzI3jUXBSuSbJy5TW+wbwk1/L1q8EYKN6hM=;
+ b=UXkIRtq1264IYVMb/afKnypixAdiQOJA/nBga83/1QV3DxGv9EhzogpRu5HSvGH2pZ
+ IjIF8u6THu5c6xZDqJBzkImOAS/sc/2rfAvGRzUAIfUSXc6SrcEzaZlQoZoOA9C8JWBy
+ kuVfyRO7c0lyU8GfwSLarWYf9DgXRwUzo28wvCuVekCj+BeINyUC3bum1eKjbZWFi/8d
+ +CUvg93ZV9+qaDiyzBEA1mFMRtih2+k132V95LyuzezGNfnpfUN7SyvV8OPC+SpHr7qZ
+ smDovqlnypEOuQeDndX1ASdO+wgKdwB1lzmvqg5ryUJHnNCqXmio35747Zy/rr/0eGsP
+ v6LA==
+X-Gm-Message-State: AOJu0YyEw5eCHx/5AmfXy+TlRtTWzUbYIvO6t1uKmnrUfT5WEmKH9A1a
+ n8Fqe6AAYmUG4pn3IqhJZ6/4+BLgRCz3FR9nfTa3yIWXgsMQdbhmNu8OelbwN2ex0C8CFlahji5
+ bB/kjYjX0
+X-Gm-Gg: ASbGncs+r5WDrpsbK+5oLiKJZ49TPJODaRxUrNmuefE/VU5G4F8qXbflRBQ1cyl9eZb
+ cW1lTzZwWvNuMhu+GLZUndiNpk+mgWWoCVfnWyJnANZrCt7uwBTExJYfyhITHxjweSAwzPKyXSt
+ yXSSIEBmxLw+gfROD8HlfexDAo/9B37PcOSrB1+XTRTbyW6gaxyH9nZOI68q5+CnUkHy06Xmsaa
+ 1pZxOnWdaHNDrM+8eAUrCAEqkFbidh4YqW1hYsfYAEKjcgfIo49xINZ+pYwwyOX7tnyZn/Ej9aM
+ zSIwriz+UzPzXs5/yviAjOG8yLe+VYYg2zFScbwlank=
+X-Google-Smtp-Source: AGHT+IFERf8wsgLnia/hGUwDf0/6LqjXMU+FkZp7frufT87+TlR4kPDVHorOmC78QY82fXoghhseRw==
+X-Received: by 2002:a05:6830:6997:b0:71e:223c:1786 with SMTP id
+ 46e09a7af769-71e3ba3afcfmr7000314a34.29.1734321105835; 
+ Sun, 15 Dec 2024 19:51:45 -0800 (PST)
+Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
+ [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
+ 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 15 Dec 2024 19:51:45 -0800 (PST)
+From: Richard Henderson <richard.henderson@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PATCH 19/24] target/riscv: Do not abuse DEFINE_PROP_END_OF_LIST
+Date: Sun, 15 Dec 2024 21:51:04 -0600
+Message-ID: <20241216035109.3486070-20-richard.henderson@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
+References: <20241216035109.3486070-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
-References: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
-In-Reply-To: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 16 Dec 2024 13:45:08 +1000
-Message-ID: <CAKmqyKP4gm4xMuMwwvv3fQ_Quq64LU26xcO7ZegBSvVSC_QCeQ@mail.gmail.com>
-Subject: Re: [PATCH 1/1] pc-bios: add missing riscv64 descriptor
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2b;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,81 +98,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 7:01=E2=80=AFPM Heinrich Schuchardt
-<heinrich.schuchardt@canonical.com> wrote:
->
-> Without descriptor libvirt cannot discover the EDK II binaries via
-> the qemu:///system connection.
->
-> Signed-off-by: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+These are not arrays of Property and had no business
+using DEFINE_PROP_END_OF_LIST.  Use plain { } instead.
 
-Thanks!
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ target/riscv/cpu.c | 13 ++++++-------
+ 1 file changed, 6 insertions(+), 7 deletions(-)
 
-Applied to riscv-to-apply.next
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4329015076..a5aa3a8670 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -213,7 +213,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
+     ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentanaCondOps),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ bool isa_ext_is_enabled(RISCVCPU *cpu, uint32_t ext_offset)
+@@ -1575,7 +1575,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zvksc", ext_zvksc, false),
+     MULTI_EXT_CFG_BOOL("zvksg", ext_zvksg, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+@@ -1592,12 +1592,12 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
+     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /* These are experimental so mark with 'x-' */
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /*
+@@ -1610,7 +1610,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /* Deprecated entries marked for future removal */
+@@ -1627,7 +1627,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[] = {
+     MULTI_EXT_CFG_BOOL("Zve64f", ext_zve64f, false),
+     MULTI_EXT_CFG_BOOL("Zve64d", ext_zve64d, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
+@@ -2699,7 +2699,6 @@ static const Property riscv_cpu_properties[] = {
+      * it with -x and default to 'false'.
+      */
+     DEFINE_PROP_BOOL("x-misa-w", RISCVCPU, cfg.misa_w, false),
+-    DEFINE_PROP_END_OF_LIST(),
+ };
+ 
+ #if defined(TARGET_RISCV64)
+-- 
+2.43.0
 
-Alistair
-
-> ---
->  pc-bios/descriptors/60-edk2-riscv64.json | 31 ++++++++++++++++++++++++
->  pc-bios/descriptors/meson.build          |  3 ++-
->  2 files changed, 33 insertions(+), 1 deletion(-)
->  create mode 100644 pc-bios/descriptors/60-edk2-riscv64.json
->
-> diff --git a/pc-bios/descriptors/60-edk2-riscv64.json b/pc-bios/descripto=
-rs/60-edk2-riscv64.json
-> new file mode 100644
-> index 0000000000..14811ca307
-> --- /dev/null
-> +++ b/pc-bios/descriptors/60-edk2-riscv64.json
-> @@ -0,0 +1,31 @@
-> +{
-> +    "description": "UEFI firmware for riscv64",
-> +    "interface-types": [
-> +        "uefi"
-> +    ],
-> +    "mapping": {
-> +        "device": "flash",
-> +        "executable": {
-> +            "filename": "@DATADIR@/edk2-riscv-code.fd",
-> +            "format": "raw"
-> +        },
-> +        "nvram-template": {
-> +            "filename": "@DATADIR@/edk2-riscv-vars.fd",
-> +            "format": "raw"
-> +        }
-> +    },
-> +    "targets": [
-> +        {
-> +            "architecture": "riscv64",
-> +            "machines": [
-> +                "virt*"
-> +            ]
-> +        }
-> +    ],
-> +    "features": [
-> +
-> +    ],
-> +    "tags": [
-> +
-> +    ]
-> +}
-> diff --git a/pc-bios/descriptors/meson.build b/pc-bios/descriptors/meson.=
-build
-> index afb5a959cc..cdd0be01a3 100644
-> --- a/pc-bios/descriptors/meson.build
-> +++ b/pc-bios/descriptors/meson.build
-> @@ -6,7 +6,8 @@ if unpack_edk2_blobs and get_option('install_blobs')
->      '60-edk2-arm.json',
->      '60-edk2-i386.json',
->      '60-edk2-x86_64.json',
-> -    '60-edk2-loongarch64.json'
-> +    '60-edk2-loongarch64.json',
-> +    '60-edk2-riscv64.json'
->    ]
->      configure_file(input: files(f),
->                     output: f,
-> --
-> 2.45.2
->
->
 
