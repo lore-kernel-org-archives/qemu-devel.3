@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A5DCE7717F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BC70E7717F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Dec 2024 03:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tN294-0007Lw-Hj; Sun, 15 Dec 2024 22:51:46 -0500
+	id 1tN294-0007Lp-7h; Sun, 15 Dec 2024 22:51:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN292-0007L1-BQ
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:45 -0500
-Received: from mail-oo1-xc2e.google.com ([2607:f8b0:4864:20::c2e])
+ id 1tN291-0007KZ-Dp
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:43 -0500
+Received: from mail-oo1-xc2f.google.com ([2607:f8b0:4864:20::c2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tN290-00060Y-NG
- for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:43 -0500
-Received: by mail-oo1-xc2e.google.com with SMTP id
- 006d021491bc7-5f1dfb0b44dso790708eaf.2
- for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:42 -0800 (PST)
+ id 1tN28z-00060M-Ql
+ for qemu-devel@nongnu.org; Sun, 15 Dec 2024 22:51:42 -0500
+Received: by mail-oo1-xc2f.google.com with SMTP id
+ 006d021491bc7-5f340d6db09so543711eaf.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Dec 2024 19:51:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734321101; x=1734925901; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734321100; x=1734925900; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=6kwxpp6H6DpWLzGbf6AeTqxyXU7uHDghdBpIzRPpVmo=;
- b=GePnLH0ip1YYxMhETcuOH4G9Cjyc3FObFV7HqaHZkGBZNayT7h8nHX8OKDIjLynGEG
- AIswKzl9zUjtCdXHafomMis2/aGwnXqfZhFVHdKTxli9nh/3JSp2SKxulgrDvIDy2op4
- M9djGWWongHUayy9FuwAsUlcyKhpjXun/tqiQzXGKnAwZUuXFz8J1CTHrLlOu4fmZSEr
- 5ArID20oL+gsMsPBHfqmaQQYanxjHT5PRNNCSeS1Ovi7i7ishE4yHbpP/kI91F5AdIqa
- jGq3sOJSUUUX6k0iuNcEyxEKVi80rzfP/kRg3iX1Ns4nCFdN0lxVsU9i4v+JeCUDJ4Pu
- gfMw==
+ :reply-to; bh=cXrXbfwgiws2bkMK/0sJxto8toVBigST19xjjR4sDbs=;
+ b=uvH9vXAm6Z5+GZZsDLaS3X4TZiUdAnK0/wSG1VdNZ76sdcFfUZpTlYIfodK9WcGqXu
+ z2OdZI+9MTfxNtsfl06KkSJQY03OFflDqL2Ffrs5WyirZxArLDNOgx7acGmMuvEUJa8b
+ eSL2dLBn5UdnVuHt3na8vWTruOtQUrFVfkP20q0ezYTWvqZYJYd9Rwo0Wsc0rwerbFZH
+ bve598QqV246KSIe0j2ulzTuZr3EsHmcCivvP1DYusw1oDe4dw0MVokmKFHPB/RAZNdJ
+ wT38qBeGuwtgtms/YrmHfaI2jf4iy+fapaQ+bMuy+OfCkP2zkm9X4Vjs4xyLelCg0LFT
+ 7Leg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734321101; x=1734925901;
+ d=1e100.net; s=20230601; t=1734321100; x=1734925900;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6kwxpp6H6DpWLzGbf6AeTqxyXU7uHDghdBpIzRPpVmo=;
- b=vJZPNKtnZ93+KTEdYCakLtgYHiBP531hD/v7cgrwAaIaOf6L8r0Dit0yZgIEU3HIsu
- xbDOSnowr4y0RG3ZXhSlh8CV3++u1vATOde0XZgV0x5E2MvvFCLeaSZlSduOECPn3qRG
- orRGnFXnkJvJDQWcD5T55SyCu96wkDyqwNMBLO6FOhWLaKT+XraVdAANXVYzOHXjC/oO
- wGQRUc9NXGkTFGp1dxjkrNz5DekWtF6p6wg1NrnfSnwJQbkYhYZfgLkaMCcgS5P+qFdt
- 3oDmvqmP8oFD2DZSJUDULVKIg1nEdLWqSaKq+jgLHT8qh4a2hoKvR+CZ9RnDtewQST8N
- dwLQ==
-X-Gm-Message-State: AOJu0YyDFyMoC9ohU/u+7OCBRzwuQ08GE+mTqIziyvcsx7XQVEPboWd5
- JeELfzgxnMrG86stI4Ie1pMHAujCV1YikKqfPgYd2Q3KYEOUW2dimspkBKhnxvuU3RcNVyHwvt3
- x5F9F8w3r
-X-Gm-Gg: ASbGncvyM+qf6W8+lvNsCWsriGyUtPKLxBB15MtqNii7ZJqU0wfAJHJkDQfJ35KtYMU
- msCxCTC64CJ9k3Ae0by6ZpioSrd5L2lJapom/+D9WzaPaS82/5vdtksyHWWHiiXHi/1/Siz19Mx
- xvW3FQ9SvhqMYoBds7Ktn9UCr6VSVtAm91jr3D9JscGMvaMXju3An2LQ/QK1wamf79363n3D0sc
- SkhSL7lPCoJVYkdSmQqpqrI+yOX//MZIeZHzvVgGiCdb3Nkzl9HNjZwsWDLq21T9agQU+Jr9PU3
- bhNeys2J6k9XBsDkQuF4QEhX9aSvqnkJbFXrWlrKW0M=
-X-Google-Smtp-Source: AGHT+IFSMgOgEo2PL6SMfZaRgfJ044zBmN1jZjwc2ZSoDID5e18a8ZD4nCzb7487YXJzDyuEIhDFeg==
-X-Received: by 2002:a05:6820:1a0b:b0:5ee:ebcb:e701 with SMTP id
- 006d021491bc7-5f32948e3e2mr7252869eaf.6.1734321101568; 
- Sun, 15 Dec 2024 19:51:41 -0800 (PST)
+ bh=cXrXbfwgiws2bkMK/0sJxto8toVBigST19xjjR4sDbs=;
+ b=SZ2whE3yBWQQb21T2PzWVTzsUHnn5zCRpIit59RpDZYuf70I5bmHfG82k6XWZ2v8qO
+ pQ4iHZb322073KSizyc1ksdwV7CnUCAUr4vbEx4rPz+T9aPmdwSze8zZD1R/P5mL6t9L
+ LPbmvrkqc9dFWbM3smSLRvLZJysGFC9vTHahaVQ516tiRfjRAC4qzKgX2eA/8V3qkW/T
+ ovFLCtqAO4m8E+JwKhkQiHGPqxkMcQ+rnMaC2PaTSVXdU0V4Ar08d9TZ4/KPxGCvvHGi
+ OKk2Ot8h6B+dzG8jKQR7ybId6Rt2I/546oeKA+Wl3o+/Wyt5V+lOGYwDjiKzyXo/vFOW
+ En+w==
+X-Gm-Message-State: AOJu0Yxp7lrtBunuxvEojWaEOQN9bfWiZhVKTsfY2m48nXk40/dwb0w+
+ rSf+jrkxdznDoohJiCzmSVhPeS2GY4ZKSTBanTPOr4OBFHQbi08ngF4KnG7BPsB3Ct6lPaQTKTw
+ ng+nGdGtc
+X-Gm-Gg: ASbGncu5nM/ouLDKNoIQIl1A++TxOCozjNvk85bYt/lZOM4ne75Lku4Dknn0nPZleYu
+ DezqdQfTh36uGtLkx7mYjWdcbnYZ6rXk5sQJ/XyGMV8TP9+JRcbumamI4FmK8BuxxkC1TscCVge
+ f0IDeKN3bdFUmcsAleCuc1WB/2/0/ASDJZdboNo0o/9rMOwArGZNu9QYqZ+5RrKKHvEkUYEw72h
+ BIZsOt4ETqxOlr1I9EP6vkoRJD10QX30lJ4QUnpW6YpLOOmEqNj98zyho008WNL2MW8KXmyQRiZ
+ gaED798iZXPfcZFxnoz0smzd1bM2Ou2kOkZdqBzk5Q8=
+X-Google-Smtp-Source: AGHT+IE/UFwQcxCn64toeJArnDUlyIzOvptCK6zwkkiyd9SAaXJVd2SABqJb3JQKL0NKF5+npYp/GA==
+X-Received: by 2002:a05:6820:1c8d:b0:5f2:c5e0:452f with SMTP id
+ 006d021491bc7-5f32952271amr6415108eaf.7.1734321100569; 
+ Sun, 15 Dec 2024 19:51:40 -0800 (PST)
 Received: from localhost.localdomain (fixed-187-189-51-143.totalplay.net.
  [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.40
+ 006d021491bc7-5f33a93a6d1sm1287493eaf.33.2024.12.15.19.51.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Dec 2024 19:51:41 -0800 (PST)
+ Sun, 15 Dec 2024 19:51:40 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH 15/24] hw/scsi/megasas: Use device_class_set_props_n
-Date: Sun, 15 Dec 2024 21:51:00 -0600
-Message-ID: <20241216035109.3486070-16-richard.henderson@linaro.org>
+Subject: [PATCH 14/24] migration: Use device_class_set_props_n
+Date: Sun, 15 Dec 2024 21:50:59 -0600
+Message-ID: <20241216035109.3486070-15-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
 References: <20241216035109.3486070-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c2e;
- envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c2f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oo1-xc2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,66 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We must remove DEFINE_PROP_END_OF_LIST so the count is correct.
+Export the migration_properties array size from options.c;
+use that to feed device_class_set_props_n.  We must remove
+DEFINE_PROP_END_OF_LIST so the count is correct.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/scsi/megasas.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ migration/options.h   | 1 +
+ migration/migration.c | 3 ++-
+ migration/options.c   | 2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index 8323cd18e3..7f012c218b 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -2459,7 +2459,6 @@ static const Property megasas_properties_gen1[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
-                     MEGASAS_FLAG_USE_JBOD, false),
+diff --git a/migration/options.h b/migration/options.h
+index a360f93a44..762be4e641 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -21,6 +21,7 @@
+ /* migration properties */
+ 
+ extern const Property migration_properties[];
++extern const size_t migration_properties_count;
+ 
+ /* capabilities */
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index 6b3b85d31e..d23d392685 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3822,7 +3822,8 @@ static void migration_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->user_creatable = false;
+-    (device_class_set_props)(dc, migration_properties);
++    device_class_set_props_n(dc, migration_properties,
++                             migration_properties_count);
+ }
+ 
+ static void migration_instance_finalize(Object *obj)
+diff --git a/migration/options.c b/migration/options.c
+index 24cc8471aa..70ff56535a 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -196,8 +196,8 @@ const Property migration_properties[] = {
+                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
+     DEFINE_PROP_MIG_CAP("mapped-ram", MIGRATION_CAPABILITY_MAPPED_RAM),
 -    DEFINE_PROP_END_OF_LIST(),
  };
++const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
  
- static const Property megasas_properties_gen2[] = {
-@@ -2473,7 +2472,6 @@ static const Property megasas_properties_gen2[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
-                     MEGASAS_FLAG_USE_JBOD, false),
--    DEFINE_PROP_END_OF_LIST(),
- };
- 
- typedef struct MegasasInfo {
-@@ -2488,6 +2486,7 @@ typedef struct MegasasInfo {
-     int osts;
-     const VMStateDescription *vmsd;
-     const Property *props;
-+    size_t props_count;
-     InterfaceInfo *interfaces;
- } MegasasInfo;
- 
-@@ -2504,6 +2503,7 @@ static struct MegasasInfo megasas_devices[] = {
-         .osts = MFI_1078_RM | 1,
-         .vmsd = &vmstate_megasas_gen1,
-         .props = megasas_properties_gen1,
-+        .props_count = ARRAY_SIZE(megasas_properties_gen1),
-         .interfaces = (InterfaceInfo[]) {
-             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-             { },
-@@ -2520,6 +2520,7 @@ static struct MegasasInfo megasas_devices[] = {
-         .osts = MFI_GEN2_RM,
-         .vmsd = &vmstate_megasas_gen2,
-         .props = megasas_properties_gen2,
-+        .props_count = ARRAY_SIZE(megasas_properties_gen2),
-         .interfaces = (InterfaceInfo[]) {
-             { INTERFACE_PCIE_DEVICE },
-             { }
-@@ -2546,7 +2547,7 @@ static void megasas_class_init(ObjectClass *oc, void *data)
-     e->osts = info->osts;
-     e->product_name = info->product_name;
-     e->product_version = info->product_version;
--    device_class_set_props(dc, info->props);
-+    device_class_set_props_n(dc, info->props, info->props_count);
-     device_class_set_legacy_reset(dc, megasas_scsi_reset);
-     dc->vmsd = info->vmsd;
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+ bool migrate_auto_converge(void)
+ {
 -- 
 2.43.0
 
