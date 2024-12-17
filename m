@@ -4,67 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAC7E77187
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:54:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F97FE77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:57:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNX5K-0000A1-5T; Tue, 17 Dec 2024 07:53:58 -0500
+	id 1tNX8a-00023N-M9; Tue, 17 Dec 2024 07:57:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tNX5H-00009b-GS
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1tNX8Z-000235-FE
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:57:19 -0500
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tNX5F-0005DQ-6g
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734440033; x=1765976033;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=9k/m0mTKdFDTyLClgbunE6OdVwthgmh4AeguZdPXB1g=;
- b=gnCPwjx04zqqqRMhMGAWGN0C8fTViMjeCc/EFddfKBiObfVKa16hKfRU
- hhZK8kAe9IvHvtJkOVxwlZ/s41eiqykW4cHwEgBqnUuARwGl0U7AnrWoJ
- pKp+w91eLdiVzVm1FkoX1vietvjTgM1cEyEWwenlmMFmsh701AzqqyTWS
- nsf7eg5zaKqaf/v2WiGVaSJfzm+qtFOYP35MhN6cnC8I/C2Jh3B5mAKuO
- QsEQ3cdv3kRZSrg5P4pFeBDqfNZqrtSHOmBe2Zd7M6qhQ0CsaEXX6czu5
- sZODMT6q1+6i7fF8+wMTb72kS2fAi0xYjeaQBWVEWtyD3jZmOJ/Ux0Xlp w==;
-X-CSE-ConnectionGUID: 3ewEgwXmRmSpGS1DKO+a9Q==
-X-CSE-MsgGUID: WRNgHXYNScGZ3JI4mlHNuw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="34993234"
-X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="34993234"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2024 04:53:50 -0800
-X-CSE-ConnectionGUID: TjtosO/ZRNWpqNDA9tw3aQ==
-X-CSE-MsgGUID: 3X7IEfaTTHKHiMP3zrVnYw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="97760173"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 17 Dec 2024 04:53:49 -0800
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,
-	qemu-devel@nongnu.org
-Subject: [PATCH 0/2] Clean up and enhance of feature_word_description()
-Date: Tue, 17 Dec 2024 07:39:30 -0500
-Message-Id: <20241217123932.948789-1-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1tNX8W-0005pF-O5
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:57:18 -0500
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 0E8F03F637
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 12:57:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1734440233;
+ bh=Rhi7HFzE3FornoPkY++ubVfWbvJGQt7urPEmXmbiH9I=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=I0swwLNQaw3zpx3KmnlFYGTUTuX6xR7upvQCcvkmqRE0Ol4W51Jkhihsn93vqPFlb
+ 5YNP0g/3m9Op1Kg1qE+7jHT94zJOf701n9NfsLr/kJEGveeriXBWqwg/RcUNTtuzo7
+ 7cE9cwuRp+VBMXEvxm1kBxJgKURIVn1+MuMz/FmrmZ0tu4VNt87IcSGFp6R2PnpihQ
+ CD+fjLNKkI2BAnUfaU8E+gf1Ktahtd5yJBDlSXZgBSDgSsKPs5brBylLNmebkE//du
+ RTR1+OOzrIo8pwlXFguuhijw80ouAqWei0hZKaUC6VhCePKyZzRrAHc2AtJ3mMw0Pc
+ 47cQ7gAWJkb4A==
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-aa680e17f6dso367904466b.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 04:57:12 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734440232; x=1735045032;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Rhi7HFzE3FornoPkY++ubVfWbvJGQt7urPEmXmbiH9I=;
+ b=qoAh9x6CG+zaCsWx3uUNeSNVcZTlPiPiWa0o/oHFSTQ28p6m3jr0Id4ped6w+S3kxv
+ 4BSjtTJ/Q+u0oQCNgMAEpcRkH4Nq9tYFXfeVn0QxcsLUJNiMkzknF6kQlNE59z97owPT
+ OGp6P/JFXla+oE9RoscB320w4ibIwwoXPXeqyOKkSJNz6iJ5axq3dv/PLOoELIgS6hx/
+ 6OtuFJRXT67rEbo13Tx7YX9zBQx38hYx/MOSaKt4ulv8vqjGh3f+m4LVgQ9Eia4TPZcn
+ 83lW5EdLLj1jQUtjbHUSJS2F5jL+U3h73snSNs3fJSX4Ex13gQBVvx7j7yPCtcu64Acp
+ HNFQ==
+X-Gm-Message-State: AOJu0YxfLFu7gVZVGDu08ce3IJJoF3lmS1HiVDcLhvomwEZgbo5KCKK3
+ SULRfpcO7iLMfBgFeaviBHqUtQbryujQ/SoLEgCyj11/n0X2a8w9WWq0Uc1Shtmfps1bt0nMTqV
+ MVvuhgtSp20y6HS1BQD2GICVvvhD1SdvTkLqQBUm65/3LZqPoaTETn1Z6a7rA1qjX1tNX
+X-Gm-Gg: ASbGnctwhC267mGWh9kWQlM2R4e0miWwjMAIQr6UB6307SS4JxTGmQCB/w32tvminv9
+ gY9EgNZkykHNe2hywHeIVbc9Awlt58Lp1atye+rj9Cj0wYM/MsGXokM7FWP1DhofU94ekoOh45t
+ jsa/hQhdzXUhOf1JW5aLWX31wVsxsXWojaoD9tmLqWGv6pllI6P1qzW6gkDSFmCUdeGgAu4eglR
+ Yyg4Kxxo4AWI59TO5KE08VAvQEOXPU00EjdfvHHxlWILdtzewPL+hJSqBsuB6znkpxYlUsLBsNq
+ 7S46kiS+ER0Ck/dk877nLFYNDBGbkRDy/Fvus6P+s+Fqydy+KvvOeg==
+X-Received: by 2002:a05:6402:40d4:b0:5d0:e73c:b7f0 with SMTP id
+ 4fb4d7f45d1cf-5d63c405fbbmr42102945a12.28.1734440232437; 
+ Tue, 17 Dec 2024 04:57:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH7SHUQGCStRoC8LvakOy6u8zaCN65EXejY1KM+xHIiICg2pgg0INnIQYHZ42nfMHfCpwtQgQ==
+X-Received: by 2002:a05:6402:40d4:b0:5d0:e73c:b7f0 with SMTP id
+ 4fb4d7f45d1cf-5d63c405fbbmr42102899a12.28.1734440232136; 
+ Tue, 17 Dec 2024 04:57:12 -0800 (PST)
+Received: from [192.168.103.102]
+ (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab960684fesm442291366b.56.2024.12.17.04.57.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 04:57:10 -0800 (PST)
+Message-ID: <830d04a3-04ec-4ab8-9485-baa88ca9f855@canonical.com>
+Date: Tue, 17 Dec 2024 13:57:09 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] pc-bios: add missing riscv64 descriptor
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
+ <1108ce53-aa02-4909-b974-e90d99eb67fb@tls.msk.ru>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <1108ce53-aa02-4909-b974-e90d99eb67fb@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,25 +116,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series grabs two patches related to feature_word_description() from
-two different old threads, they are simple and straightforward. 
+On 17.12.24 12:12, Michael Tokarev wrote:
+> 12.12.2024 12:00, Heinrich Schuchardt wrote:
+>> Without descriptor libvirt cannot discover the EDK II binaries via
+>> the qemu:///system connection.
+> 
+> Shouldn't this one be picked up for qemu-stable@?
+> 
+> Thanks,
+> 
+> /mjt
 
-Patch 1 is grabbed from [1] while patch 2 is grabbed from [2].
+Hello Michael,
 
-[1]: https://lore.kernel.org/qemu-devel/20230106083826.5384-3-lei4.wang@intel.com/
-[2]: https://lore.kernel.org/qemu-devel/20220808085834.3227541-2-xiaoyao.li@intel.com/
+Yes, please, the patch should be backported.
 
-Lei Wang (1):
-  i386: Remove unused parameter "uint32_t bit" in
-    feature_word_description()
+The relevant prerequisite patch is Gerd's
+b0494f131ed4 ("edk2: update build config")
+which appeared in v8.2.0.
 
-Xiaoyao Li (1):
-  target/i386: Print CPUID subleaf info for unsupported feature
+Best regards
 
- target/i386/cpu.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
-
--- 
-2.34.1
+Heinrich
 
 
