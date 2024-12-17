@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3AFE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5804DE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:11:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNa1A-0006me-IG; Tue, 17 Dec 2024 11:01:52 -0500
+	id 1tNa0A-0004Nr-Pn; Tue, 17 Dec 2024 11:00:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNa0u-0005t6-Ns
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:40 -0500
-Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNa0r-0002Fq-Pj
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:36 -0500
-Received: by mail-yw1-x112f.google.com with SMTP id
- 00721157ae682-6ef7640e484so62915677b3.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 08:01:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734451292; x=1735056092; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=6rvr1pDFmp2BQW3QOEsi6mwCNhkrwstgFWp2nCEUrpg=;
- b=GpaeFVcl/JBzRNlxe3dv7frId+SYH2wEj7dRcBVRCCHs6Lau6WmQNKziKZbqMjab3W
- dzf28AGPXg64M0CuZQtgfyz4cG8g5g/mLIIYblPsuOP3oI97UXZDbke/+zPwn0MIAWqJ
- 4pYRhqFgLCs1vzzUe2LgdqX0WERo8985lf5Zj4vHiHP5iMe4B3XaAl1NeJSnhKpqxfY4
- u/OjmbVd8M5FS+p0z8OGpGd0QxoWxvCcy0ZdrYHZX6HIOI7J/6H+Yq3kFFTybMD9GtwD
- Fz3t/QFVldd131+qmi34Kc1jVVt20nmTDVIaWt9TxZxvoWZ01wz13vPTr9kak9Mfe5U7
- bcKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734451292; x=1735056092;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=6rvr1pDFmp2BQW3QOEsi6mwCNhkrwstgFWp2nCEUrpg=;
- b=KZx1xJOkuZC4+Yirx5n1l/MwK9Z3CFPzE+AwC6VHHEoPFdigHIvTmXMnIxxBMXCSop
- dFIx8De1s1X/A+oDOIWb1NhTuQ7afMvlFwVZfXhgePuKnsoq7AE2n445GGk8o7R7LitN
- Cl2nwwVcIrt4AnkdPApfT14SjNI7AJ4gu7nvlIq8z23s0gzimqMIPrPSGFrSoSB8z06O
- mUN/z//04Hvf2CS4YbIX0k4MaL3DRdjCjvyjTIvQBFIUqCoGsaDmKJ+RsfTzJw1L1ac7
- +sgY2ENJdJAkv4bXetoJLunSArsRSvUUR3Hp+/fOsxNtmz4koqcUG3lT9PN6/OU2ILir
- LJJQ==
-X-Gm-Message-State: AOJu0Ywva3gdJsiNV0mURKVBq0vYtZKJFRwEYb723CvDIgrqebPfh3ab
- xNRVJafxWvgKOx5BLflz9OHjntzV/WyGqZdcsmGqZlrKnBqU/TInkrmNnj365zcufM8QUO+BOlM
- B62gO3ycfNHRaYVn80DzewLrybB72mghrDyNf9oNym2t8HWKj
-X-Gm-Gg: ASbGncubfX/QwLQioERgIlODzXScUTSMi0RTDBHw3FKP2pHWUZkJOlKdQu88YBYbGS3
- JglY5Kkg5hcZ9IWqlfC9xQVRLhQ0fKBtdCuK3pXA=
-X-Google-Smtp-Source: AGHT+IHN2I+zbFtCtrw5kE84f8aTezXrK5u+qrtIzidP4bsaw6mWEjDSR5hJqPvt7lrF24pZfUn3cQRQuGz8cMI0HzY=
-X-Received: by 2002:a05:690c:317:b0:6ef:9dbe:9f82 with SMTP id
- 00721157ae682-6f2d1c4b3dfmr773267b3.29.1734451291684; Tue, 17 Dec 2024
- 08:01:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNa00-0004JO-KO
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:42 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNZzy-00028W-UA
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734451238;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=U9esgIthrudvDaRJ+rEBiuyKD4+iIMzGIxm2i96hJI8=;
+ b=LHl3qwsH8HZ58+Wcpt1Qtsksw2twVCurQwPQAej4RtkiztabAQosD5AznMncrJbDnOPFDK
+ TJlfcwmA8PVfpDu1lcc+uOhe54ARWTfj3VMynNI1jJNOXet5WarL4SaI4pZ7TxO5LmDM7C
+ 4xrlJfgfjTgHKYXdiqNPsbgxh730mkQ=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-nd6-OT58PFyGYdfA8cxuAg-1; Tue,
+ 17 Dec 2024 11:00:34 -0500
+X-MC-Unique: nd6-OT58PFyGYdfA8cxuAg-1
+X-Mimecast-MFC-AGG-ID: nd6-OT58PFyGYdfA8cxuAg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90FBD195608F; Tue, 17 Dec 2024 16:00:33 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9F84430044C1; Tue, 17 Dec 2024 16:00:28 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 11/32] tests/functional: switch over to using
+ self.log_file(...)
+Date: Tue, 17 Dec 2024 15:59:32 +0000
+Message-ID: <20241217155953.3950506-12-berrange@redhat.com>
+In-Reply-To: <20241217155953.3950506-1-berrange@redhat.com>
+References: <20241217155953.3950506-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <cover.1730549443.git.balaton@eik.bme.hu>
- <1bb0d0e91ba14aca13056df3b0a774f89cbf966c.1730549443.git.balaton@eik.bme.hu>
-In-Reply-To: <1bb0d0e91ba14aca13056df3b0a774f89cbf966c.1730549443.git.balaton@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Dec 2024 16:01:18 +0000
-Message-ID: <CAFEAcA-+-YRfYN5+RDscaaBr-fqKL0xKTBK5yG7SAJYRDvtOGA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] log: Add separate debug option for logging invalid
- memory accesses
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,19 +89,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 2 Nov 2024 at 12:18, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> Currently -d guest_errors enables logging of different invalid actions
-> by the guest such as misusing hardware, accessing missing features or
-> invalid memory areas. The memory access logging can be quite verbose
-> which obscures the other messages enabled by this debug switch so
-> separate it by adding a new -d invalid_mem option to make it possible
-> to control it independently of other guest error logs.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+This removes direct access of the 'self.logdir' variable.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/functional/qemu_test/testcase.py | 9 ++++-----
+ tests/functional/test_virtio_gpu.py    | 4 +---
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-thanks
--- PMM
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 89425b737c..2174fbb155 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -126,7 +126,7 @@ def scratch_file(self, *args):
+     Returns: string representing a file path
+     '''
+     def log_file(self, *args):
+-        return str(Path(self.logdir, *args))
++        return str(Path(self.outputdir, *args))
+ 
+     def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+@@ -138,8 +138,7 @@ def setUp(self, bin_prefix):
+         self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
+ 
+-        self.logdir = self.outputdir
+-        self.log_filename = os.path.join(self.logdir, 'base.log')
++        self.log_filename = self.log_file('base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+         self._log_fh = logging.FileHandler(self.log_filename, mode='w')
+@@ -215,7 +214,7 @@ def setUp(self):
+ 
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.logdir, 'console.log')
++        self.console_log_name = self.log_file('console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
+@@ -269,7 +268,7 @@ def _new_vm(self, name, *args):
+         vm = QEMUMachine(self.qemu_bin,
+                          name=name,
+                          base_temp_dir=self.workdir,
+-                         log_dir=self.logdir)
++                         log_dir=self.log_file())
+         self.log.debug('QEMUMachine "%s" created', name)
+         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
+ 
+diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+index 2d298b1f02..7654421e6b 100755
+--- a/tests/functional/test_virtio_gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -100,9 +100,7 @@ def test_vhost_user_vga_virgl(self):
+         os.set_inheritable(qemu_sock.fileno(), True)
+         os.set_inheritable(vug_sock.fileno(), True)
+ 
+-        self._vug_log_path = os.path.join(
+-            self.logdir, "vhost-user-gpu.log"
+-        )
++        self._vug_log_path = self.log_file("vhost-user-gpu.log")
+         self._vug_log_file = open(self._vug_log_path, "wb")
+         self.log.info('Complete vhost-user-gpu.log file can be '
+                       'found at %s', self._vug_log_path)
+-- 
+2.46.0
+
 
