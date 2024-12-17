@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E41FE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:23:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FD6E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:23:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbEs-0007xy-Nz; Tue, 17 Dec 2024 12:20:06 -0500
+	id 1tNbEs-0007xw-Gc; Tue, 17 Dec 2024 12:20:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEq-0007ww-72
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:04 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ id 1tNbEq-0007x6-RA
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:05 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEg-0006CE-Uv
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:03 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so40539675e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:52 -0800 (PST)
+ id 1tNbEf-0006BT-OT
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:04 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-43635796b48so22927005e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734455990; x=1735060790; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734455988; x=1735060788; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1Hsh5oYkK0qGRNGYgfI/fGPKBabcD1hBH/Yj4A7Q0+w=;
- b=iG5GGXO5PavB/SH1Qdf+tCmPO5M1hq53UbtXvVRFDeGnThk/tYAj3CT2fHxKztdeqI
- fIgu87qWPh1d7nq6KVQNwcW4vcQGGHmNleN7+YlZluwCWLr9yNP41YOD2XkvqV2e9dX3
- dIL/RMP3sUOBCHGEKuSJ7MZDFcjhPizLKk+MXq5m6/wrwJJtk2FW+mBAKzUZNaEvClb4
- NWJ3+hUL5CHnbOQYWRfA46OgE1Bmg3IkWZMD5MZpHzPbkLhp3nyxKYDoFxJNncQ6A7RD
- AAnPhSdA4Iz2wQ9S06tZyifGzY1hLD4+lJKjAdkGBdOzQ7Ouep1/NbxT1t+UnC1ocf0v
- d1UA==
+ :reply-to; bh=xF0sOxJFHtjA3NYMq21N6K3jmjQXICidMHaId+8egGs=;
+ b=BabktNGSo7n8rNKZVJ0YujODZi/FZhX6Zx0Thk52McoVX5X7nDnWvSt2OP7ipJQNrW
+ DBfFIORJsysOqpr3BOafUIZvbGgqqGurUPyH8StgOE9Nb1s+o0A9FzPLtq0eSLWmEqBB
+ FlFHfGm9t24ySnyDYlj2qfNE+I2kp0v7L5IqF/6QJIUr4kFBW7F3yKuyeHxgDvU9XQht
+ DCO6ww/sPQ7tNFeRD1/fBzURyUkAJf8TLDcqCMViKQkIPYxOrB93E0gdbGqPktGnqzRH
+ 8NL0gnyK051SOZ81jr0ERQqgAzBaldJ5S275yHabL5azkXRr3rtAjPZQpVzqOnR4Ri6Z
+ 2ueQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734455990; x=1735060790;
+ d=1e100.net; s=20230601; t=1734455988; x=1735060788;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=1Hsh5oYkK0qGRNGYgfI/fGPKBabcD1hBH/Yj4A7Q0+w=;
- b=UnOJWNjzGXe0mQWvVArqzVByEpi6rOLeIPU5/Vm4LzZKw9BPCl3262yjHkpjc98E3J
- Osai7xklRzkkXbnBKyaSBBvSZF5/VeOghbBwpg51eQUVMQdMN4g/LllqKfsZTupBSC8v
- R/ZV7n+v8mNjVxCDELcuJt/0r0U1XsfgOt6XXxP0DlTLQQN6s5lQbrN3MdE+5mWCx/yy
- MgeT3WJxZgqYuDjg5QtgI3h9ilODgYv5rouHsr1yyP+aNYIeb/HriTu89Pc2uGEayq1s
- HTC5L1pidngN15m/HhLUWS4zOj7stf7Re9z88oEjerOU8se6YDEe5fDCnmMC0/bZnsrg
- lP4A==
-X-Gm-Message-State: AOJu0YwBpWEhYwfu/r92Ooq/9zk6PQojuYxClfBDn2N3dUkqx0uHoVWj
- FuzJK5geiFLcZuRjK7XUn009uvMG8xvyWcg8DMoGY5nX/4eDxp1MRjBpkuSJz7/MjwwtehhZuTv
- r
-X-Gm-Gg: ASbGncsdLxOBdPhyMlvHipG5+91PIkAg1PMkvcrttazE44aG5LwXGyR9DfnQJgpyFr9
- 7SwFAuoAPWEQLva1vcq6PoIXiJEm/Vq0Sa9YcYjARpp/6r7+fPkResaig72/Tab9G51ApRsvb8j
- nCnC7LjhOAXGtrlHXtDXIkj3AH61zXriYrdcxwxGVIW73qQURVjxACyhHqRlolHZuXtqNl5fHG7
- Owy6uoJbPZB9FYbAsEyonV859+khSbBNWHGmOUkGKTUv2wSN5p6EhJZsnEU5QI=
-X-Google-Smtp-Source: AGHT+IGWoDKeNcp29JPHXf9EE78OsF4oeQ1TBkM6HqZfK5FHHcQTwiJJKStUpiy2D9T/PWSeKNeg+Q==
-X-Received: by 2002:a05:6000:4714:b0:385:e8f9:e839 with SMTP id
- ffacd0b85a97d-388da5b7ccfmr3088182f8f.56.1734455990125; 
- Tue, 17 Dec 2024 09:19:50 -0800 (PST)
+ bh=xF0sOxJFHtjA3NYMq21N6K3jmjQXICidMHaId+8egGs=;
+ b=DwLx5dEy1ZUqWaf7Qkbx3jATQD3+ED9VGc5lOr9pX8lEPiV/AqZcBycnWViw4567EJ
+ Qjz3NaYAXapt2PbbrWQ7jVQMLT6myrhL5muVNZlyznnYdCe+EiY5FkcjKSM+6hH3jqir
+ FKVS+VJJu5rndFpsbvWl2/E4bHuEf8PTeJxPcJp5gyLI3SKgSgmumr66fUi7dZ4xc3w+
+ wwcBByA/8nejiLToK0d9ETnAQjPkCzqRU3IQ3RgxcyfA0GqXqDt8QyC5kaU9l3uyQcrY
+ xoMcp192tsy7HNHcXmYSobhxpYBPafJbPOVHi44jCUTS8w0EIdlMCdoad/GXzqw00eEC
+ vcSA==
+X-Gm-Message-State: AOJu0Yx7f41fKc/IUMvf1aP/clTlaSNJYIK2HCoH57teuHqgHIijRBz8
+ AStQBFUwxAZVByVDvFlPyI2mlweRak4IZ9FKXeUWObfQ07zxP5yworh/+g+hjb4pd+4HTz3Lng4
+ B
+X-Gm-Gg: ASbGncszoRaG3N92mQmLK23Ugc9jGNz+dbywauWWSvlKI91bLCulD7l5YthzdDeLHkm
+ daxxgpvbyK1nZj6X0Wlqxi/r/mzjQWpR3fc4I20SIKrjzeP2pGrFU8S0UX7wglv/N5Mvlde6teg
+ trKSpH5ajeBEwGy+Yyk8Ft4nR42w83hBi1hvsWvDWFPz6AQHo7ZRu7QIOkspfF9b5KjDigH6H5o
+ NbccHrteYro+Hzysd4GfNo86SszYcvgGdNG/Ik/ydvOu3s72qxU04HZJhbYbqU=
+X-Google-Smtp-Source: AGHT+IFbBMuZoyKyCGjUjedRG+UVVH2OsudYyuuh0HXUhMIa83bFNZMtRc0AM7rMAjW1OHvxUJJfsQ==
+X-Received: by 2002:a05:600c:3b22:b0:434:fa73:a906 with SMTP id
+ 5b1f17b1804b1-4364814eefdmr34512335e9.4.1734455988294; 
+ Tue, 17 Dec 2024 09:19:48 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.49
+ ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 09:19:49 -0800 (PST)
+ Tue, 17 Dec 2024 09:19:47 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/19] target/arm: Use float_status in helper_fcvtx_f64_to_f32
-Date: Tue, 17 Dec 2024 17:19:28 +0000
-Message-Id: <20241217171937.3899947-11-peter.maydell@linaro.org>
+Subject: [PULL 08/19] target/arm: Convert vec_helper.c to use env alias
+Date: Tue, 17 Dec 2024 17:19:26 +0000
+Message-Id: <20241217171937.3899947-9-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241217171937.3899947-1-peter.maydell@linaro.org>
 References: <20241217171937.3899947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,60 +100,147 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-Pass float_status not env to match other functions.
+Allow the helpers to receive CPUARMState* directly
+instead of via void*.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241206031952.78776-2-richard.henderson@linaro.org
+Message-id: 20241206031224.78525-9-richard.henderson@linaro.org
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- target/arm/tcg/helper-a64.h    | 2 +-
- target/arm/tcg/helper-a64.c    | 3 +--
- target/arm/tcg/translate-a64.c | 2 +-
- 3 files changed, 3 insertions(+), 4 deletions(-)
+ target/arm/helper.h         | 12 ++++++------
+ target/arm/tcg/helper-a64.h |  2 +-
+ target/arm/tcg/vec_helper.c | 21 +++++++--------------
+ 3 files changed, 14 insertions(+), 21 deletions(-)
 
+diff --git a/target/arm/helper.h b/target/arm/helper.h
+index 9a1b6d1b6d7..bb241df8260 100644
+--- a/target/arm/helper.h
++++ b/target/arm/helper.h
+@@ -859,13 +859,13 @@ DEF_HELPER_FLAGS_5(gvec_suqadd_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, i32)
+ 
+ DEF_HELPER_FLAGS_5(gvec_fmlal_a32, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmlal_a64, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmlal_idx_a32, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_5(gvec_fmlal_idx_a64, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, env, i32)
+ 
+ DEF_HELPER_FLAGS_2(frint32_s, TCG_CALL_NO_RWG, f32, f32, fpst)
+ DEF_HELPER_FLAGS_2(frint64_s, TCG_CALL_NO_RWG, f32, f32, fpst)
+@@ -1036,9 +1036,9 @@ DEF_HELPER_FLAGS_4(sve2_sqrdmulh_idx_d, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, i32)
+ 
+ DEF_HELPER_FLAGS_6(sve2_fmlal_zzzw_s, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_6(sve2_fmlal_zzxw_s, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, env, i32)
+ 
+ DEF_HELPER_FLAGS_4(gvec_xar_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ 
 diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 26e327af3a2..0c120bf3883 100644
+index 4d704939145..26e327af3a2 100644
 --- a/target/arm/tcg/helper-a64.h
 +++ b/target/arm/tcg/helper-a64.h
-@@ -44,7 +44,7 @@ DEF_HELPER_FLAGS_3(rsqrtsf_f64, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f64, TCG_CALL_NO_RWG, f64, f64, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f32, TCG_CALL_NO_RWG, f32, f32, fpst)
- DEF_HELPER_FLAGS_2(frecpx_f16, TCG_CALL_NO_RWG, f16, f16, fpst)
--DEF_HELPER_FLAGS_2(fcvtx_f64_to_f32, TCG_CALL_NO_RWG, f32, f64, env)
-+DEF_HELPER_FLAGS_2(fcvtx_f64_to_f32, TCG_CALL_NO_RWG, f32, f64, fpst)
- DEF_HELPER_FLAGS_3(crc32_64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i32)
- DEF_HELPER_FLAGS_3(crc32c_64, TCG_CALL_NO_RWG_SE, i64, i64, i64, i32)
- DEF_HELPER_FLAGS_3(advsimd_maxh, TCG_CALL_NO_RWG, f16, f16, f16, fpst)
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index ff48bac1a8e..35dce4bef3c 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -384,10 +384,9 @@ float64 HELPER(frecpx_f64)(float64 a, float_status *fpst)
-     }
+@@ -29,7 +29,7 @@ DEF_HELPER_3(vfp_cmps_a64, i64, f32, f32, fpst)
+ DEF_HELPER_3(vfp_cmpes_a64, i64, f32, f32, fpst)
+ DEF_HELPER_3(vfp_cmpd_a64, i64, f64, f64, fpst)
+ DEF_HELPER_3(vfp_cmped_a64, i64, f64, f64, fpst)
+-DEF_HELPER_FLAGS_4(simd_tblx, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(simd_tblx, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_3(vfp_mulxs, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
+ DEF_HELPER_FLAGS_3(vfp_mulxd, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
+ DEF_HELPER_FLAGS_3(neon_ceq_f64, TCG_CALL_NO_RWG, i64, i64, i64, fpst)
+diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
+index d2d9d5e8295..e3083c6e84e 100644
+--- a/target/arm/tcg/vec_helper.c
++++ b/target/arm/tcg/vec_helper.c
+@@ -2057,28 +2057,25 @@ static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
  }
  
--float32 HELPER(fcvtx_f64_to_f32)(float64 a, CPUARMState *env)
-+float32 HELPER(fcvtx_f64_to_f32)(float64 a, float_status *fpst)
+ void HELPER(gvec_fmlal_a32)(void *vd, void *vn, void *vm,
+-                            void *venv, uint32_t desc)
++                            CPUARMState *env, uint32_t desc)
  {
-     float32 r;
--    float_status *fpst = &env->vfp.fp_status;
-     int old = get_float_rounding_mode(fpst);
- 
-     set_float_rounding_mode(float_round_to_odd, fpst);
-diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
-index 3e57b98c27f..fda1176b3f4 100644
---- a/target/arm/tcg/translate-a64.c
-+++ b/target/arm/tcg/translate-a64.c
-@@ -9102,7 +9102,7 @@ static void gen_fcvtxn_sd(TCGv_i64 d, TCGv_i64 n)
-      * with von Neumann rounding (round to odd)
-      */
-     TCGv_i32 tmp = tcg_temp_new_i32();
--    gen_helper_fcvtx_f64_to_f32(tmp, n, tcg_env);
-+    gen_helper_fcvtx_f64_to_f32(tmp, n, fpstatus_ptr(FPST_FPCR));
-     tcg_gen_extu_i32_i64(d, tmp);
+-    CPUARMState *env = venv;
+     do_fmlal(vd, vn, vm, &env->vfp.standard_fp_status, desc,
+              get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
  }
  
+ void HELPER(gvec_fmlal_a64)(void *vd, void *vn, void *vm,
+-                            void *venv, uint32_t desc)
++                            CPUARMState *env, uint32_t desc)
+ {
+-    CPUARMState *env = venv;
+     do_fmlal(vd, vn, vm, &env->vfp.fp_status, desc,
+              get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
+ }
+ 
+ void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
+-                               void *venv, uint32_t desc)
++                               CPUARMState *env, uint32_t desc)
+ {
+     intptr_t i, oprsz = simd_oprsz(desc);
+     uint16_t negn = extract32(desc, SIMD_DATA_SHIFT, 1) << 15;
+     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
+-    CPUARMState *env = venv;
+     float_status *status = &env->vfp.fp_status;
+     bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16);
+ 
+@@ -2122,29 +2119,26 @@ static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
+ }
+ 
+ void HELPER(gvec_fmlal_idx_a32)(void *vd, void *vn, void *vm,
+-                                void *venv, uint32_t desc)
++                                CPUARMState *env, uint32_t desc)
+ {
+-    CPUARMState *env = venv;
+     do_fmlal_idx(vd, vn, vm, &env->vfp.standard_fp_status, desc,
+                  get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
+ }
+ 
+ void HELPER(gvec_fmlal_idx_a64)(void *vd, void *vn, void *vm,
+-                                void *venv, uint32_t desc)
++                                CPUARMState *env, uint32_t desc)
+ {
+-    CPUARMState *env = venv;
+     do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status, desc,
+                  get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
+ }
+ 
+ void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
+-                               void *venv, uint32_t desc)
++                               CPUARMState *env, uint32_t desc)
+ {
+     intptr_t i, j, oprsz = simd_oprsz(desc);
+     uint16_t negn = extract32(desc, SIMD_DATA_SHIFT, 1) << 15;
+     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
+     intptr_t idx = extract32(desc, SIMD_DATA_SHIFT + 2, 3) * sizeof(float16);
+-    CPUARMState *env = venv;
+     float_status *status = &env->vfp.fp_status;
+     bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16);
+ 
+@@ -2562,10 +2556,9 @@ DO_VRINT_RMODE(gvec_vrint_rm_s, helper_rints, uint32_t)
+ #undef DO_VRINT_RMODE
+ 
+ #ifdef TARGET_AARCH64
+-void HELPER(simd_tblx)(void *vd, void *vm, void *venv, uint32_t desc)
++void HELPER(simd_tblx)(void *vd, void *vm, CPUARMState *env, uint32_t desc)
+ {
+     const uint8_t *indices = vm;
+-    CPUARMState *env = venv;
+     size_t oprsz = simd_oprsz(desc);
+     uint32_t rn = extract32(desc, SIMD_DATA_SHIFT, 5);
+     bool is_tbx = extract32(desc, SIMD_DATA_SHIFT + 5, 1);
 -- 
 2.34.1
 
