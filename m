@@ -4,36 +4,34 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 372EBE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 11:12:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFFEAE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 11:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNVV3-0007iM-VU; Tue, 17 Dec 2024 06:12:26 -0500
+	id 1tNVWU-0000As-4U; Tue, 17 Dec 2024 06:13:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tNVV1-0007hg-Pb; Tue, 17 Dec 2024 06:12:23 -0500
+ id 1tNVWS-0000AZ-Fq; Tue, 17 Dec 2024 06:13:52 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tNVV0-0004lC-7E; Tue, 17 Dec 2024 06:12:23 -0500
+ id 1tNVWQ-0004yB-LJ; Tue, 17 Dec 2024 06:13:52 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A5AE6C60A1;
- Tue, 17 Dec 2024 14:11:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4515EC60A4;
+ Tue, 17 Dec 2024 14:13:25 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0619F18A672;
- Tue, 17 Dec 2024 14:12:19 +0300 (MSK)
-Message-ID: <1108ce53-aa02-4909-b974-e90d99eb67fb@tls.msk.ru>
-Date: Tue, 17 Dec 2024 14:12:19 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9E60918A674;
+ Tue, 17 Dec 2024 14:13:48 +0300 (MSK)
+Message-ID: <78fb76f4-55d8-452e-8076-4321378e557f@tls.msk.ru>
+Date: Tue, 17 Dec 2024 14:13:48 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] pc-bios: add missing riscv64 descriptor
-To: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>
-References: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
+Subject: Re: [PATCH] roms: re-add edk2-basetools target
+To: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Cc: Liu Jaloo <liu.jaloo@gmail.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20241212084408.1390728-1-kraxel@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -79,7 +77,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241212090059.94167-1-heinrich.schuchardt@canonical.com>
+In-Reply-To: <20241212084408.1390728-1-kraxel@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -105,11 +103,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-12.12.2024 12:00, Heinrich Schuchardt wrote:
-> Without descriptor libvirt cannot discover the EDK II binaries via
-> the qemu:///system connection.
+12.12.2024 11:44, Gerd Hoffmann wrote:
+> Needed to build ipxe nic roms.
 
-Shouldn't this one be picked up for qemu-stable@?
+This one seems to be for qemu-stable too, no?
 
 Thanks,
 
