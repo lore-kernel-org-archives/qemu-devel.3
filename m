@@ -4,76 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 023FFE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 18:23:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE03E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 18:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNcDO-0004rB-NH; Tue, 17 Dec 2024 13:22:38 -0500
+	id 1tNcQl-0006rX-4R; Tue, 17 Dec 2024 13:36:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNcDG-0004qq-Du
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 13:22:31 -0500
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNcDA-00015i-Ng
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 13:22:28 -0500
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-6eff8289d0eso55990347b3.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 10:22:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734459740; x=1735064540; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2KlVJUlAkH0bB0a1/WZiu0eCP+a/ffW0431lgZmTL00=;
- b=UutZt8O5ZSukOwGwAFUzWasFPLv24VI7sNrYnW7ZO1Oy3LfK78m0ZqUuLuhXywi8fn
- lk9HSrfW/W7B5qQCwvn1zWTXWiz8I7B301nLIpIT2ocIgFF0hO3l0YvSQjvw7u7rZXFt
- 324Xv543vlk/i1xez7mIeW/xcXinvI5NQzDkzqm0z+g2RqJM4kfPUNrrcxJPEyDvQ7Uy
- X3Y3So4HAnyIrZQMtGZHIiefSMEOOCEu7iRZ9QTR27Xq+mSuXKtsVNaMBL9wswa6DL0P
- WZQneLoDxUsgxSPdYQrWbb3PTDRgeNIiqIt+Qxeb2Wuz1+bnGx7bPwikOLarnGR2S5zM
- 7ePg==
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tNcQk-0006rD-1t
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 13:36:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1tNcQg-0004sg-5j
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 13:36:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734460578;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VhNRHwQJN+qr5GRuAJxkLst4QTuVIPazKslo8UWX+m4=;
+ b=NOtVnDEUvKRYryaWQDIUkzQjTWwuSsBZh4cBBcVDWpV6jpqHoG8+okDe60bUeDpnqoEQKy
+ xj9L7AWvsoKRNDCuRNvTc44W4Ti6u2GiRhhdDCwn0PNjFmGa4ItvJPwclgwCpQBRahKtvw
+ Hzz4yofBYBbHQof0nk7/N+7r1v/fdfE=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-436-CEL4lziqMfa5pB_7ZNPfqw-1; Tue, 17 Dec 2024 13:36:17 -0500
+X-MC-Unique: CEL4lziqMfa5pB_7ZNPfqw-1
+X-Mimecast-MFC-AGG-ID: CEL4lziqMfa5pB_7ZNPfqw
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d8edc021f9so97054706d6.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 10:36:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734459740; x=1735064540;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2KlVJUlAkH0bB0a1/WZiu0eCP+a/ffW0431lgZmTL00=;
- b=IbuzX03eoblKh2M5+OzHxF6cJ/pDCf+piS6xHxE4wraiPqdIs+eycTwCJFhiZZcPYz
- Ss1vV3H+nbDbpWRp2coIyFOtOnpNOgmMHtEeanpD/Msr5D9lAeL55NY21QBpf7wb/8vb
- Bua27+ITeYl3qookvsJH2A0jh7TTi1pCueEMcEsvvE/bNEHkpqC8HVOdF3ZbsC4gy97R
- QMF8tmOLXojOxJemdvF7LO1gCOHfDNDJLDQCY9JqVjFl0ifDa47vYOSWo0kYGxFw8P8l
- GGFULfgKd/oZyUXvaJDA4pIakvKM0N1AjjFspEr2/cCbinVOGb6blJqq/Jm5AG2nJXQp
- Tq6w==
-X-Gm-Message-State: AOJu0YzE1fl3lfwSReAK/tsop6NR3Vt3mSVVhsXzQX3jqH6m3+8leVBT
- JltC1nEOQzl1OI1IB0oR0wqs1oKjQHLkZHaw4ujYO5TtjRoh2lciVbG0MaCDY5lALyRlOZTI2/2
- MLnQrlccDVc0ZgRHRlpgjgkgp7wkJ/IIS/x1hBA==
-X-Gm-Gg: ASbGncsDBxmrEb0YIegmZhfnlRL1bl2EaWYCB2+M6NnV2EOOMQL1nHAc/49BQq5hukV
- 1dWHqAzN6O0ST37B8uzrg3E79LyRxJKdnXk8AbyA=
-X-Google-Smtp-Source: AGHT+IH0dyXkL8iQ6t3SZrJ5M4264DKduFPCwm/nw59fGvobsWGrABnVGUFqmjq+A32BdnQpYZKZRVWfiM/BT/q2klU=
-X-Received: by 2002:a05:690c:3813:b0:6ef:4ba4:ec8e with SMTP id
- 00721157ae682-6f2cc13ca32mr7389487b3.4.1734459740677; Tue, 17 Dec 2024
- 10:22:20 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734460577; x=1735065377;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VhNRHwQJN+qr5GRuAJxkLst4QTuVIPazKslo8UWX+m4=;
+ b=tqTVYwj7G8vs/1SK6h2tu7VPR4FeAetRcN9bfXBuAAf+qBRK+VkTt0OQAo5xwBCXKR
+ 4/hWD1LOWcxUJYi+lHIGF3henj/IC7NgdgJWlNT+b2p1jj1SaJ3pDTvatAVPsXMncoqC
+ VyHUxgR+LZVu5ugOWgfCr1pUxCyi+qKEQYq54a+d5auuX1FCEqK/maXNp/lES8PP65XP
+ BLF5tI9DlUiIKd0yD42K5ILL2wb4b4Pnl+LssnRFmS/5LjUhwVAb8zurTeq72aOht79z
+ ZgaKJNZKOcRb2JiWLy8+YoN2bopjJEl4ALdmIjyP+BYmyui8T/Q9tvP6u8cpfNBgJrrp
+ nohA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWbPsZmomIIiQDUIpqHri0leAsYQH6bT61sN1Pnk+thxXKVHWSOo800p+HDMDinxm7aCedkkdgV3EWp@nongnu.org
+X-Gm-Message-State: AOJu0Yz6lB2Dgbk8wATRxHV3lFFlWQ6KeUKJoUGAgxQ9Z2JDaJJ73Ekb
+ 1e++if8OybiaD0Ictcz4X5WIgKPBqf3HBLxE+4jND9Ftggb+MGQ3SEEwgvSn2IZ9mvjHR5ex++D
+ v7RNpXKzUcb8S3WuJHmP0k+NmRnCgjpeGF6GlX2RjMEYL6DSWjj+r
+X-Gm-Gg: ASbGncsjVcITsYG3eJo4X+TcJqxYAsykbZBO6enlARZXm4HX0kBnLEyMaYK5WollT1Q
+ gnVodQtXtQeCLUqROmd9X7h2rKugFchEYEu2HbjmEGuBgAyVCYJyHQNiJrWSb/WQhc18spJPblB
+ yFVhr5W9xmUb6i0x3pt+6e77Fqy1W7hajmCNqjGpjCJYMwkWNcmuGznn/CzZ2ULwRCIWweq2ox7
+ e52ua8oDigIBMd81qN33DN6FbA5tSWcYLCqWbgj4OtWGhrlZKJ1dEc4gw==
+X-Received: by 2002:a05:6214:501a:b0:6d8:b292:1e17 with SMTP id
+ 6a1803df08f44-6dd091ac0dfmr1226936d6.15.1734460577069; 
+ Tue, 17 Dec 2024 10:36:17 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFQCgR/teYysj1/C6LIaIiaiHv7aWhFXCzpHJYOfkLE8BKYl1Ii0A1QQ7JTgLTcAiF1grbSwA==
+X-Received: by 2002:a05:6214:501a:b0:6d8:b292:1e17 with SMTP id
+ 6a1803df08f44-6dd091ac0dfmr1226606d6.15.1734460576753; 
+ Tue, 17 Dec 2024 10:36:16 -0800 (PST)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd36312csm41432126d6.82.2024.12.17.10.36.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 10:36:15 -0800 (PST)
+Message-ID: <7c7c52c1-9558-4547-95d8-fb2ded592309@redhat.com>
+Date: Tue, 17 Dec 2024 13:36:14 -0500
 MIME-Version: 1.0
-References: <20241217174442.3914177-1-peter.maydell@linaro.org>
- <0f9d4f78-88dc-46da-b987-2929758b5d6f@linaro.org>
-In-Reply-To: <0f9d4f78-88dc-46da-b987-2929758b5d6f@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Dec 2024 18:22:09 +0000
-Message-ID: <CAFEAcA_7qAMb4id01vEyYh4aeCtTYx7eDK43Sadj60T8JEf6sA@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Move minor arithmetic helpers out of helper.c
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/5] hw/arm/virt: Add support for user-creatable
+ nested SMMUv3
+Content-Language: en-US
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Jason Gunthorpe <jgg@nvidia.com>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, eric.auger@redhat.com,
+ peter.maydell@linaro.org, nicolinc@nvidia.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20241108125242.60136-1-shameerali.kolothum.thodi@huawei.com>
+ <Z1wh69_gZ9izr1iU@redhat.com> <Z1wsslDnwlth3A8+@nvidia.com>
+ <Z1w0cgrK6Ri6smFM@redhat.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <Z1w0cgrK6Ri6smFM@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,46 +118,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Dec 2024 at 18:17, Richard Henderson
-<richard.henderson@linaro.org> wrote:
->
-> On 12/17/24 11:44, Peter Maydell wrote:
-> > helper.c includes some small TCG helper functions used for mostly
-> > arithmetic instructions.  These are TCG only and there's no need for
-> > them to be in the large and unwieldy helper.c.  Move them out to
-> > their own source file in the tcg/ subdirectory, together with the
-> > op_addsub.h multiply-included template header that they use.
-> >
-> > (Ironically, this means that helper.c no longer contains
-> > any TCG helper function definitions at all.)
-> >
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> > One last tiny cleanup for the end of the year...this is a pure
-> > code movement, with no changes.
->
-> Because of pure code movement,
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
->
-> Ideally op_addsub.h would become tcg/op_addsub.h.inc too.
 
-Yeah, I did think about that but decided to be lazy :-)
 
-> > +/*
-> > + * Note that signed overflow is undefined in C.  The following routines are
-> > + * careful to use unsigned types where modulo arithmetic is required.
-> > + * Failure to do so _will_ break on newer gcc.
-> > + */
->
-> The comment is out-of-date vs -fwrapv, which we use.
->
-> There are a bunch of other saturation related macros/functions hanging about.  We should
-> probably unify them.
+On 12/13/24 8:19 AM, Daniel P. Berrangé wrote:
+> On Fri, Dec 13, 2024 at 08:46:42AM -0400, Jason Gunthorpe wrote:
+>> On Fri, Dec 13, 2024 at 12:00:43PM +0000, Daniel P. Berrangé wrote:
+>>> On Fri, Nov 08, 2024 at 12:52:37PM +0000, Shameer Kolothum via wrote:
+>>>> Hi,
+>>>>
+>>>> This series adds initial support for a user-creatable "arm-smmuv3-nested"
+>>>> device to Qemu. At present the Qemu ARM SMMUv3 emulation is per machine
+>>>> and cannot support multiple SMMUv3s.
+>>>>
+>>>> In order to support vfio-pci dev assignment with vSMMUv3, the physical
+>>>> SMMUv3 has to be configured in nested mode. Having a pluggable
+>>>> "arm-smmuv3-nested" device enables us to have multiple vSMMUv3 for Guests
+>>>> running on a host with multiple physical SMMUv3s. A few benefits of doing
+>>>> this are,
+>>>
+>>> I'm not very familiar with arm, but from this description I'm not
+>>> really seeing how "nesting" is involved here. You're only talking
+>>> about the host and 1 L1 guest, no L2 guest.
+>>
+>> nesting is the term the iommu side is using to refer to the 2
+>> dimensional paging, ie a guest page table on top of a hypervisor page
+>> table.
+>>
+>> Nothing to do with vm nesting.
+> 
+> Ok, that naming is destined to cause confusion for many, given the
+> commonly understood use of 'nesting' in the context of VMs...
+> 
+>>   
+>>> Also what is the relation between the physical SMMUv3 and the guest
+>>> SMMUv3 that's referenced ? Is this in fact some form of host device
+>>> passthrough rather than nesting ?
+>>
+>> It is an acceeleration feature, the iommu HW does more work instead of
+>> the software emulating things. Similar to how the 2d paging option in
+>> KVM is an acceleration feature.
+>>
+>> All of the iommu series on vfio are creating paravirtualized iommu
+>> models inside the VM. They access various levels of HW acceleration to
+>> speed up the paravirtualization.
+> 
+> ... describing it as a HW accelerated iommu makes it significantly clearer
+> to me what this proposal is about. Perhaps the device is better named as
+> "arm-smmuv3-accel" ?
+> 
+I'm having deja-vu! ;-)
+Thanks for echo-ing my earlier statements in this patch series about the use of 'nested'.
+and the better use of 'accel' in these circumstances.
+Even 'accel' on an 'arm-smmuv3' is a bit of a hammer, as there can be multiple accel's features
+&/or implementations... I would like to see the 'accel' as a parameter to 'arm-smmuv3', and not
+a complete name-space onto itself, so we can do things like 'accel=cmdvq', accel='2-level', ...
 
-Mmmm; this is all rather elderly code from the A32 decoder,
-though. I'm not sure it hugely merits much effort. My
-aim here was really just to do another little bit
-towards slimming down helper.c.
+and for libvirt's sanity, a way to get those hw features from sysfs for
+(possible) migration-compatibility testing.
 
--- PMM
+> 
+> With regards,
+> Daniel
+
 
