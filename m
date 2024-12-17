@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4AD2E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:38:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F679E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:49:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZeT-0006eP-Dg; Tue, 17 Dec 2024 10:38:25 -0500
+	id 1tNZo1-0001HY-LZ; Tue, 17 Dec 2024 10:48:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZeQ-0006dp-Tk
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:38:23 -0500
-Received: from mail-oi1-x234.google.com ([2607:f8b0:4864:20::234])
+ id 1tNZo0-0001HP-2Z
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:48:16 -0500
+Received: from mail-oa1-x35.google.com ([2001:4860:4864:20::35])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZeP-00078u-BV
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:38:22 -0500
-Received: by mail-oi1-x234.google.com with SMTP id
- 5614622812f47-3ebbec36900so1262539b6e.1
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:38:19 -0800 (PST)
+ id 1tNZnx-0000FH-KK
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:48:15 -0500
+Received: by mail-oa1-x35.google.com with SMTP id
+ 586e51a60fabf-2a01bcd0143so3868061fac.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:48:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734449899; x=1735054699; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734450488; x=1735055288; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=kE9b+bsMJaxcLbz/q+E5WzaB3WJhURRgldDoPdFE/aY=;
- b=k6nSus3NHxIR/UIDIrjJCyqzn4S+ofQjEUUb58cTlujBj4UHxknmp5cQh0Oo6SD4c0
- N9BG8vWezoxwWpOfqnuACk0m9ThfnQmfvcRUL6azOmybxgPPAb0QnuOg1iHY58zGMzLU
- Vs3GyN4QKFs9KVVROB3oPBZdx3EdNwFSSzDI63X1FxvmazLG9pohWqeG8f6wJW7EvmS5
- 5NnYPEc6WSeccgs4ZnOWzwNDpnTZMVj8pKo52wKOf3IYYqzeAY4jpA/L9UTNn2GXQXz/
- ZVK4Smpzz3jmQGYpT7FDFUvVKLoQx2mbbIIDtQaqCT3cC/IjT1ietNvWSY3yBqtLFSPU
- 2Jdg==
+ bh=f0mmYM+VbtglGVT88HwKy5Bu24H9an/svIIsHPSJEpQ=;
+ b=yGt67Gz7yloIRWnC0ESWw8O6g6on6amACcUJO634E2FPawkPG/F0Idgra839UNnIjr
+ Bvs3+YLkPwOfgnCwazPMA/4409fatZCtamvK34N0p2XhgqQX/FIVij+plMDo/2RMrM/P
+ 5W0B6K8yPf5mO9f6f7dzpZMU7CZJ1lTo8omjVpbwoI71Y69VbKMyzbN5OUIxS7579IJX
+ gi2lNERFH5NJEhRSIeHi7SXyiD4CufPyvVyGvmkGqMZF+rzwk5f76bYpqNvTwvmsaV9g
+ nz16ZEi8rRXALpab4f+eviarIA5OPgQcCziJEsSKMOaJChMcgqxLc4cnCnS0kpaZUSQe
+ fJtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734449899; x=1735054699;
+ d=1e100.net; s=20230601; t=1734450488; x=1735055288;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kE9b+bsMJaxcLbz/q+E5WzaB3WJhURRgldDoPdFE/aY=;
- b=nARXtKkxOkkWw+YpK2rdi3ykqiCNregvHWxIUlEdxv6xKPBBKAB0ndrJLIAlsVJh//
- 1Vm6TYh6symRpwb7jBkSt0j5ha7S+f1ulSs3v1V+lBOlx8OSthOuOqNjZUgqphYUkMqC
- KV+2ZLRLGUipvaUA8ezbWN/F9/okYnp4dvyZYGaI2lPfs0mHjDaTNZZ8lhq4R9VvfpuY
- yG8hfiq1Qli2ZrrnZktarvbNchasVyMukl4CV1O9dt2E2+azZs3apl1/Nath3QjOMYJu
- ST4AxRGld65aFH7IQQ/QoJuraIpIi0X1XArgA54d4YPLjo+4wE1PIQ0TWK1lkYrGsVEZ
- Zr+g==
+ bh=f0mmYM+VbtglGVT88HwKy5Bu24H9an/svIIsHPSJEpQ=;
+ b=Eb4vCm2gNndKTKKaNvqb3k2TBG4YKTMmWcUR/UexJ1RNsdxRn0uz2iKdLtLbbrX/LL
+ EOcX0LR6kWe2XcRGYYzFgpxz4AJfWk9y5obAIoe19RODO6hGwBcrzkNRIDVT5J2xqf3W
+ u7txFBisKflUMSdQ1Us92UpLsD0l/oyTgZ9sZMaXkGP4Hs05m+Tt0dA1SNbAtHuoUwtH
+ uQg8/dhdfJKexhw/B8YaY+2TSHT7t6Pq2Y+h7UvyujFjZxz9NmwvXtlDxyYID+peDOTt
+ Qx2Xi47dOMsBTd8xqoz0VQ577sQ3nsAqS2abQ8BowIXNAB/a0J1rHjZBtUCUzmQKK5/b
+ T0sw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUGWKmoHTFdeJcG0/esCZUH7e1RlQW+DLLBkKaUgOALXHEecmP4f6YdEJdFuTqV3Jo/ZADmUzsUQu1S@nongnu.org
-X-Gm-Message-State: AOJu0Yz96u5Rk+BRYOhyfYSm0oQax4l4iuQYrQy8o8YbGVl2hn9kFswj
- Mwwm1DvHUnMtSvgS1EujF2cIkabxdzRGrZKWx+wKTHPlCz/TWi+6U1Dl6Cfqgs6f57Tc8SQtXDi
- W60pba8u8
-X-Gm-Gg: ASbGnct49khCnpNUcO/DQGowxgBNY7Bvu3ErNFnrnBozy84xoVsvvpsW6emJiKPolrr
- AbvbK4N9FQ2k7KtZnwdTWfXUmHvV4pWemLJdit61d4woGvMt6YsCcZrjuoYJGUYSE8nMySqxqGM
- QWHel+NDyGX1CWhVd8pGwJ96gzxc+/Vo+OhrsMLzVi+9ElFd3k6l8/8dL8MuuXCYuYvx65Bjgy4
- nMuAAWsrhZF+CH4d+BpMpjtrNBp14mIRIG8Mf8b9az5yvBc+3aJwOUHEunXVtPe1fGmigap+A==
-X-Google-Smtp-Source: AGHT+IHbCf+E5WdLLspuHw77k+g3Of7s7+vfvOy0YtlORABMUC3Q4Al676o5xVbdh9Aoeg2mdUM3AQ==
-X-Received: by 2002:a05:6808:191f:b0:3e8:1f5d:b804 with SMTP id
- 5614622812f47-3ebcb2cf0a3mr1231198b6e.15.1734449898989; 
- Tue, 17 Dec 2024 07:38:18 -0800 (PST)
+ AJvYcCWlWL7Xr9RVyUdiBJMKHK4wJo1pEtkYpKq6wNYeghBkZZDXCdJftLNwU3rDz9LEjo/IF6XC45gV4Yfu@nongnu.org
+X-Gm-Message-State: AOJu0Yyr5hq9zD4TPQ4YvG4Sutsf8Y9jLFIqXxoftF430OJP1kXVrwbo
+ 8DeK003AKam/47SLrlElc6rAERV+bMRc6in3R+zXAth5gtNTMZYvwdPfGoLurqw=
+X-Gm-Gg: ASbGncu03C6M47JHfPfx2viwaokSGdyoJYIue7Y2To7qarNXuyxOtF8/2MEACEdD+PT
+ 34DRBk5/U7KOHFdhl3r5jziTglX2ybjcb9JrESKy4GVnNRICDCw27cjCLJ62cr2xO/EVcjvhQhx
+ pc7HaBXnHjJ/awTXS7VS5dw59OHVvyLlBFmYw9GPdVrkiw/1XrjbBpOkVUjoAXQhOUrd3hSIqVd
+ ka7B8v6Aq8t0Rw0FzBLK66k3BjDIVSpm570neI+4oaRHScoqVHob6REQ+YZQSnEFLGf2FU3+Q==
+X-Google-Smtp-Source: AGHT+IGRz3A2ptnwB7Owk61+AP8XwGp3U+GE+iecH8uI4ib2xQbTKNBFAXxFrfg7epRGuva8qv6lLQ==
+X-Received: by 2002:a05:6870:71c4:b0:27c:52a1:f311 with SMTP id
+ 586e51a60fabf-2a3ac96d7cemr8441207fac.42.1734450488663; 
+ Tue, 17 Dec 2024 07:48:08 -0800 (PST)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb493d417sm2283402b6e.49.2024.12.17.07.38.16
+ 586e51a60fabf-2a3d2928e81sm2820976fac.37.2024.12.17.07.48.06
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 07:38:18 -0800 (PST)
-Message-ID: <b7aa912d-6ea2-40bc-9ec4-52b6d0a046cc@linaro.org>
-Date: Tue, 17 Dec 2024 09:38:14 -0600
+ Tue, 17 Dec 2024 07:48:08 -0800 (PST)
+Message-ID: <e9045660-8cfa-4cbd-a920-89af4d033aea@linaro.org>
+Date: Tue, 17 Dec 2024 09:48:05 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 13/13] configure: reenable plugins by default for 32-bit
- hosts
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
- philmd@linaro.org
-References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
- <20241217010707.2557258-14-pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 0/3] include: Cleanups around 'exec/cpu-common.h' header
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Stefano Stabellini <sstabellini@kernel.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, Paul Durrant <paul@xen.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Anton Johansson <anjo@rev.ng>,
+ Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
+References: <20241217151305.29196-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241217010707.2557258-14-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241217151305.29196-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::234;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x234.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2001:4860:4864:20::35;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oa1-x35.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,55 +106,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/24 19:07, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   configure | 21 +--------------------
->   1 file changed, 1 insertion(+), 20 deletions(-)
+On 12/17/24 09:13, Philippe Mathieu-Daudé wrote:
+> Philippe Mathieu-Daudé (3):
+>    hw/xen: Remove unnecessary 'exec/cpu-common.h' header
+>    system/numa: Remove unnecessary 'exec/cpu-common.h' header
+>    system/accel-ops: Remove unnecessary 'exec/cpu-common.h' header
 
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
-
-> 
-> diff --git a/configure b/configure
-> index 18336376bff..02f1dd2311f 100755
-> --- a/configure
-> +++ b/configure
-> @@ -528,25 +528,6 @@ case "$cpu" in
->       ;;
->   esac
->   
-> -# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
-> -# 64 bit host.
-> -
-> -check_64bit_host() {
-> -cat > $TMPC <<EOF
-> -#if __SIZEOF_POINTER__ != 8
-> -#error not 64 bit system
-> -#endif
-> -int main(void) { return 0; }
-> -EOF
-> -  compile_object "$1"
-> -}
-> -
-> -if check_64bit_host "$CPU_CFLAGS"; then
-> -    host_bits=64
-> -else
-> -    host_bits=32
-> -fi
-> -
->   if test -n "$host_arch" && {
->       ! test -d "$source_path/linux-user/include/host/$host_arch" ||
->       ! test -d "$source_path/common-user/host/$host_arch"; }; then
-> @@ -1072,7 +1053,7 @@ if test "$static" = "yes" ; then
->     fi
->     plugins="no"
->   fi
-> -if test "$plugins" != "no" && test $host_bits -eq 64; then
-> +if test "$plugins" != "no"; then
->       if has_meson_option "-Dtcg_interpreter=true"; then
->           plugins="no"
->       else
-
 
