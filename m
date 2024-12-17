@@ -4,92 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E858E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:24:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 199D8E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:24:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZQ4-0006zg-7D; Tue, 17 Dec 2024 10:23:32 -0500
+	id 1tNZR0-0008HD-MN; Tue, 17 Dec 2024 10:24:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZQ2-0006zT-HK
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:23:30 -0500
-Received: from mail-qv1-xf2d.google.com ([2607:f8b0:4864:20::f2d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNZQz-0008Gm-Cj
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:24:29 -0500
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZPx-0004ga-V4
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:23:30 -0500
-Received: by mail-qv1-xf2d.google.com with SMTP id
- 6a1803df08f44-6d8fd060e27so44765226d6.1
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:23:25 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNZQx-0004mY-RW
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:24:29 -0500
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9a88793so9069844a12.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:24:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734449004; x=1735053804; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S8n/b40YqN8YOJUL/vNnP/8gd8jY2MrA/ZCcqfJu+EQ=;
- b=BCuG13As7HDeaPP/+HbkY+8PRTs+OSQ5gGGmAf4cJHSjX0TwQ5p5xDM4LMouWoU9Ss
- 5g5Mh6LP0O2z2VDD3lJ3diL+3Omm9c3SM+T/Q4reYlGyya9acLaWsyKwO80vrTHxUPXC
- lbDRb5uSrXqs4P1D3vFzF9EwzcOBXvi4cqCxjDrjCgoO/z2NxMNpimOZ/rs7SKsRkubk
- WXcDraqBobGyl5USsrikbOrvfRLB87Fb2HhNUsAsQs0ku3xoP5GsA8QBfwJd2hvfPvw3
- GuhkHfwpEUPk5YMVgTCJvqJrYU51v2KtzLKKUMJp+hwBAfFG6oN7YVn0ptmvLIiZSGPG
- jsqw==
+ d=linaro.org; s=google; t=1734449066; x=1735053866; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=KGacxlOZQAptlHnSzuUMpoaURNl1rAufdDjm6Dz77lg=;
+ b=Fhu2+pmU2KLcS8D2MVUh+b5RGSoguHDZ0fFyYTUwJhgOAROYZGTyvMDAnU5NT8PCeh
+ L8cXWi6pH+A2RQIpKaXJYja5GWC6tmb8n1Eg75nZV3Qe+dYYAfRnugzLH/jUHRZqHyfw
+ 1KztJmQKWW7kQyHqry87/XVdyM33ZIPP3zFPSW5E+rub0F2W7FmRTcywbIEy8pl+9z9y
+ WECPBxxpaorJ7meGyDppY7X2y0awIBgfXvGzWo66RSCjlD2QQlRPPDzZ9pq7jkrcdXX4
+ o/fBtQvS6Pj3FVREgFuRtJjs4yLID23Ip2PNtY3vFYe/g0h6UNqt24CJN78z5OYLX+9R
+ B7Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734449004; x=1735053804;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S8n/b40YqN8YOJUL/vNnP/8gd8jY2MrA/ZCcqfJu+EQ=;
- b=WzrfpT9cKOBMnx0xUbfeF5exmONwZUEtDqb1vUq11G8qLC0rOTsWPoAWdK+K6MOufX
- agsQZMB8wN/zRTD0rZe7efFeiQ57lAPq4BJjzQELO9srGKMqJswnbselmNntWePQMlI2
- aRraoh8YawqJ8uy6vnqK59hYuSS7QW5jY5C1ESayHh6sPpkqaEHoDHs6bAGlwbZIcmrs
- uEwiNzNKjonqSHTZB0/0Vt6rFeTJldl0IwUvvsRegHZe4fVShO4k3WgTsoA8EHqBlDeH
- G3yB5sWThnlg6UGiIyIuDE9bllGPEnu4ElcckDm2mx0g5hWR18vM1pIJ8ZVG2wSfwpId
- dAcw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW0Sw0fLqXoQ4UniJTEQbwoOrewYU1XpIFMMxiHiVf7eg3YpKW7JsQPU2PCT/iNb4R5OfE/R2dsk8P1@nongnu.org
-X-Gm-Message-State: AOJu0Ywn1oHnt3iVYsPxELZ/KSSAu1mdpO3ZM/FADQzTyYLVyhXWUsLo
- HgobAfqS6e2hduqkagiP6DiaYW3ZrIhF/RVfjQy3q3q9yh+gjEzhR7OW+P5PFt8=
-X-Gm-Gg: ASbGncsfQPn6L/kt8GssnW1XGPH8l9ivgmCZEN76/2YtrcqZVOUXppk02z8djagwhhs
- knJRgLhiKaxRAJjZ7OGUrhBok6fA9Vv75OVRhHvxO5zpPXdASWsPWfpJ5RXAqCn/29IujRDXWzx
- rditdv8qzLPw1Y/636IOY4RXnOhoeTGbsy683Xo46J4lRRYH63KPvLzEA5P67/beDbzTa/SqNzU
- I3V6kLAo4XyW1ghcN4GLj9p3b933M2/D7DcEtJ7I5vejJYFEyJcFwfkIt8u57aJuLuBXBX7Ag==
-X-Google-Smtp-Source: AGHT+IFunO5uDHzKBFW35RDmWjypGrTsE0h533xgwbjv9A8vxGVNOpabFT5sFpVswOskfVm2Zj4p4g==
-X-Received: by 2002:a05:6214:2a4c:b0:6d8:821d:7370 with SMTP id
- 6a1803df08f44-6dc9698f0afmr251713366d6.49.1734449004491; 
- Tue, 17 Dec 2024 07:23:24 -0800 (PST)
-Received: from [172.20.0.130] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dccd2570d7sm39502536d6.34.2024.12.17.07.23.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 07:23:24 -0800 (PST)
-Message-ID: <6a5d4c63-72b9-47b1-a247-bc90ec0ffe43@linaro.org>
-Date: Tue, 17 Dec 2024 09:23:15 -0600
+ d=1e100.net; s=20230601; t=1734449066; x=1735053866;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=KGacxlOZQAptlHnSzuUMpoaURNl1rAufdDjm6Dz77lg=;
+ b=WjMB+aBThd7xoVz3cap+1Fc+GLyInMkUSDEWtRX2krKz8VhVgQWg3CaoDxQsnsReUT
+ 4hijXXJODQuk5li4M/YS0PxAjbwCCXFOG4+bYPM3hkiKhvLD2pTuRrCsUf3AU3N0aUcW
+ mS9IFAqdrkF2VueHIV5pHfY1vXcni8GTvqtehCxHEDXyinpm///XFDa+xVciVtxtvZME
+ mt9nip6tbPImJkm7pBVjSxg3cBRbkaDqhuFXF/ZpnNPMjQqEU9jKffKl8fFm6ysnUA0L
+ RpvRI+7/5TasZh2ybyyz7GcU/2gvcB/C7Af33Nv3dTyHDqym51IFhlOf+q+JMaF8JEOy
+ rJMQ==
+X-Gm-Message-State: AOJu0Yw7eRe91twZvqwckgkQmB1IS1R183EUSjlV0+khjcz2dT75e83D
+ cErPKeCIgyyC5tvIUxwjwi9wMOUxB41OkFYsiBLrklreODY4jgc/fmKmVbk1Tq7uuOGHxd8ZHO+
+ lg975RHxjzv8kkKI8FS+/isK3JLqdJGLRCd23ngh09/Dyd9f3
+X-Gm-Gg: ASbGncuPslesasUSMHCJja6EV7t/UkZyzaw7YyXiAuVFdp9reZqfWMzYvF/OkS++61N
+ JHuuPm9g8/JbXdtENjUcMRzb8vXsOfoz/JV6bVgQ=
+X-Google-Smtp-Source: AGHT+IEPREsy3tCxR+oa0KRXVtr1Fc/ptbRSHNDCph9czTN2LKZENDbeysVTapx4FpC/zfsUXHN+wuQ5ujL9rd0KaiI=
+X-Received: by 2002:a05:6402:35c2:b0:5d0:ea2a:726c with SMTP id
+ 4fb4d7f45d1cf-5d63c307086mr14679256a12.8.1734449065664; Tue, 17 Dec 2024
+ 07:24:25 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/13] tests/tcg/plugins/syscall: fix 32-bit build
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
- philmd@linaro.org
-References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
- <20241217010707.2557258-6-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241217010707.2557258-6-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2d;
- envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf2d.google.com
+References: <20241125125448.185504-1-marcin.juszkiewicz@linaro.org>
+ <CAFEAcA-V3PGF7vst8QFjh+bWVx5EGDt_B9ZCe1OryNV8e39N4w@mail.gmail.com>
+ <CAFEAcA_SRU5UtttB=G2=L2YSK2D1U7Rumbc6eafioxR3yfnYUQ@mail.gmail.com>
+ <7d5f349e-761c-459c-93db-cc32ec2a207d@linaro.org>
+In-Reply-To: <7d5f349e-761c-459c-93db-cc32ec2a207d@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 17 Dec 2024 15:24:12 +0000
+Message-ID: <CAFEAcA_xRN_yjn1UCpD9xyv2Rkn0X0QzDzqUCd70W7L4ZNZb=A@mail.gmail.com>
+Subject: Re: [PATCH 1/1] tests/avocado: update sbsa-ref firmware
+To: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>, 
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,44 +93,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/16/24 19:06, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   tests/tcg/plugins/syscall.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+On Tue, 17 Dec 2024 at 07:10, Marcin Juszkiewicz
+<marcin.juszkiewicz@linaro.org> wrote:
+>
+> W dniu 16.12.2024 o 13:46, Peter Maydell pisze:
+> > On Mon, 25 Nov 2024 at 13:25, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >>
+> >> On Mon, 25 Nov 2024 at 12:54, Marcin Juszkiewicz
+> >> <marcin.juszkiewicz@linaro.org> wrote:
+> >>>
+> >>> Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
+> >>>
+> >>> Used versions:
+> >>>
+> >>> - Trusted Firmware v2.12.0
+> >>> - Tianocore EDK2 stable202411
+> >>> - Tianocore EDK2 Platforms code commit 4b3530d
+> >>>
+> >>> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+> >>
+> >> Hi; what's the benefit to taking this update? Would it be better
+> >> postponed until the 9.2 release is complete?
+> >
+> > We're now past the 9.2 release, but it would still be good
+> > to know what the benefit to updating the firmware images
+> > for this test is.
+>
+> We tend to update firmware to the latest in all places it is used.
+> Previous one was built from pre-selected git commits due to changes done
+> during cycle.
+>
+> Now we got both components (TF-A and EDK2) from stable releases.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Thanks; I've applied this to target-arm.next with the commit
+message updated to include the rationale for the change.
 
-r~
-
-> 
-> diff --git a/tests/tcg/plugins/syscall.c b/tests/tcg/plugins/syscall.c
-> index ff452178b18..47aad55fc1b 100644
-> --- a/tests/tcg/plugins/syscall.c
-> +++ b/tests/tcg/plugins/syscall.c
-> @@ -76,12 +76,12 @@ static int64_t write_sysno = -1;
->   static SyscallStats *get_or_create_entry(int64_t num)
->   {
->       SyscallStats *entry =
-> -        (SyscallStats *) g_hash_table_lookup(statistics, GINT_TO_POINTER(num));
-> +        (SyscallStats *) g_hash_table_lookup(statistics, &num);
->   
->       if (!entry) {
->           entry = g_new0(SyscallStats, 1);
->           entry->num = num;
-> -        g_hash_table_insert(statistics, GINT_TO_POINTER(num), (gpointer) entry);
-> +        g_hash_table_insert(statistics, &entry->num, entry);
->       }
->   
->       return entry;
-> @@ -232,7 +232,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->       }
->   
->       if (!do_print) {
-> -        statistics = g_hash_table_new_full(NULL, g_direct_equal, NULL, g_free);
-> +        statistics = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, g_free);
->       }
->   
->       if (do_log_writes) {
-
+-- PMM
 
