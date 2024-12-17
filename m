@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F176E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:29:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22862E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:35:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZVz-00039n-Qn; Tue, 17 Dec 2024 10:29:39 -0500
+	id 1tNZae-00047j-1c; Tue, 17 Dec 2024 10:34:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZVy-00039b-Fr
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:29:38 -0500
-Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
+ id 1tNZab-00047R-6r
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:34:25 -0500
+Received: from mail-ot1-x329.google.com ([2607:f8b0:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNZVw-0005oK-Tj
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:29:38 -0500
-Received: by mail-qt1-x832.google.com with SMTP id
- d75a77b69052e-467725245a2so52553271cf.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:29:36 -0800 (PST)
+ id 1tNZaU-0006Sy-VL
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:34:24 -0500
+Received: by mail-ot1-x329.google.com with SMTP id
+ 46e09a7af769-71e1e051e50so1211829a34.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:34:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734449375; x=1735054175; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734449657; x=1735054457; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oU/r0i563De0NrV2eXivMK70+lBQ9PWriyHQbatCaUY=;
- b=N+ehyc7bdDtEOCxpQB0fV9rSFHy8aw1xbZVA+JiU8MSOQLgYP2nYTZEvf86a+DyzGw
- 59E6KTAs9dk4LPTZOTym6Wnu4enWlEgcBUZd88LNFCbOYz1vVtlwTqBf20qeS2P49vJt
- 8ed0rvDz+P0s+g9dQsigtJdfsRcxPNJK6K7j0gGM90zgFKp9GJE9GlDtbZxJ1CxP5QLo
- gb/H/S/H0RY1qcXMpH0b2NgCQHZxxAeQaXAtAAz+joHcSq8iBH5D6tM/692DPCUehOHn
- opQ4zGFClLL+dvHs76Q29AIu8ofTzThxn/AYGz9Zv6HXPwdwoAk9lPncz7RvKASDF+YW
- boZw==
+ bh=RF2e0vHl7eHDKLOZnAXYsa/F6qzkBeBInG2A8jmpCEI=;
+ b=F691otraobUoveAbGwzcAIo60ohAZnUOP2hhrsBg1XgzQMGjzK2BFRZqfaVN1t8IMw
+ BdXgf80ouOqzIoOCeDl9N+BxQVlmCugA6LnoNriq/rGjHgRy9JVo6/Mr9bJTUOArwCfb
+ sMpOPO8YSeRFemWNYg+OzasKR6liL1VQiqhK/7dfTMMj1jbWfm0V/FHMyUfvI3cSoAZJ
+ k/2l/+NDX9lKdro6nJ1ny4tecRqf+bh0v5A07VD6Vbf9HiI74Hjd2VWDuthtF6GPEpIh
+ SoCMZ1yxRnCiJNeTb/yOhNDkSWH/XuXFlU+g2hH1S3Px6T4EoS/rj90oB7n3CuycDUAp
+ diMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734449375; x=1735054175;
+ d=1e100.net; s=20230601; t=1734449657; x=1735054457;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oU/r0i563De0NrV2eXivMK70+lBQ9PWriyHQbatCaUY=;
- b=BXeGVYmuv6Zwrt6w6hymN8ZVRm+HuMwUx4oClaMNgA6RtI38eGRkfNAGeqF5jpsx0u
- lS2+kzHWNQpJx9Qj88EsuaZZBOKaND8+rK+dCpx2cVDnrEL3gxgGOODB8UQ94omFyM/f
- npEyCUxNcZ0byPCvyUU+lj4wnYn33POya/1yclphoMO2vvNKo6hJ/rprw4W70LEFMuwQ
- RncAgpugD0+nXZTZVUqUZEpKgNaUOgziFp02t+k0bR07S9CLQarUBcSLhTK8ulqrxPcg
- 8bDF1fY/I3HYzHDX31XI9kHtJ5FVfl7WQzS+jtgEcPBGTU9juSGcINj3Nnxc+MY2biRj
- xPIA==
+ bh=RF2e0vHl7eHDKLOZnAXYsa/F6qzkBeBInG2A8jmpCEI=;
+ b=qzoopVLFPrDa3JAqhipJGFSoh3Dvqg1+VUtQLNOjs1FQr1zjyzWJR49FfdBmxXrILD
+ BIW0402Ar8998Pf5AdhYLRKygMFl15d+0+pgX8Iq7INpWSrDoFew8jJeDYFiLVtARVTm
+ 7Z/EKVDjVm1GdVLb2P0shtYdNuV9yUIjpOGgWkN5g7+9aBqT9+t0tzLVoeQF9HET+dOQ
+ NyODlP0cNwbvNYkJlWNg5Gy30I5o0GWC9f1eIzE1fwogzxLRYAJz7HhkucYrW4jaXUcI
+ 7UfQ8Ut5Ix8TWTyWPGRvYlBf2ewIJkIR27YYz0bM60rVPtKP0WC6u4dnMn79O9fXgxlY
+ 7QKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWOqmePbR7dfpn563rkxBsklPXG3wPlQwnMx0IsX3/Su9y34HW2U8n2G1ElwdsI03ASe4+RK3MJXCE+@nongnu.org
-X-Gm-Message-State: AOJu0YxL+wgNTwYKZLPrGMFOASlM7YAp6VLGaxP/8KQlakRJPSUvbGnj
- F6RrllYiXUvc+ym2fCBxWn69Ap/SBarXXS5Ru3lZWEw2aWpErFuLcLXbpWhLdXA=
-X-Gm-Gg: ASbGnctQ/GyYwjhSb3uKK4JLj35MWA1bBBIJZgaEyPoPm6h2eqfdW2uYvP0jHmFeqwy
- 4OjkRFVZJ9Zwtr/5hRzE7amO9Jo09Py1kWrLUxIBgFqi4gaUwFt/6PyEf5zTIzqn20zSxEreOk2
- z3E7PBoYYTdR4epf0cHNHFm5+2Bp4oBz+y0/YXjH2no9Se9sLVxVJVOdTNsznC6UUdsbTWyfx+D
- sVPs6tye8YzDdrZbzYsUB0Ah0mokDfZdtg6DgqidiuekVLADKFlEdZexJ14bu04dELDHGnqFA==
-X-Google-Smtp-Source: AGHT+IF0QiF9xbqSCNoECU7YpaM2n8y0YmtZR3EDerhP4V9kcAYBBkCwhau8ehbvx3sTyUKT2BPpEA==
-X-Received: by 2002:ac8:5d10:0:b0:466:8eb7:59c5 with SMTP id
- d75a77b69052e-467a580242bmr284934981cf.34.1734449375417; 
- Tue, 17 Dec 2024 07:29:35 -0800 (PST)
+ AJvYcCWfw8O7eVkSgoqJpTqmjvcEPnv5ztjFasJ4dvxAB3DO952SEbvdOHV+IP2iEa9pjLHn1Z499rDj6tt2@nongnu.org
+X-Gm-Message-State: AOJu0YyCW8Or7lNawJ0XYmgWHAvDrR9KBLaUmIkWbz27LdzxZcklCFAM
+ r+wSNW9wh61/w8tcFaXxvCleo0r3SW4oh2KVYPxtC9MZ2yzCFv0OxHFj5cAdIB0=
+X-Gm-Gg: ASbGnctgPVun14L0GUfsXGHO/p0YO1lNNtOgSoHhPXZBfz7g9oS23Hmv/5Cd2uGAair
+ lwvIdHD2CCGQ5MHL2B78hbBfg7Ta37+/mu2j99mKHFmcBw6y8zQKsqDZhzpb1muG2ywHqSPhjkZ
+ 3gA2rxvSksPP/mWAX92I9QzCAHHTuCOnfe61hPT+lYm3ne5+tbSjTsorbo4Qf/wi8AHZHrJ5QNY
+ Y4cg8M+dxRnmquRtYn0mvnFbfuY9rx+brYTwui4p/MeLBYSx2JLnGDIw6CX+zV+1YmW4/8Wjg==
+X-Google-Smtp-Source: AGHT+IHAeo6x25osTJ+JzA3STElXExeV1ZwJydJC4y8ZHYzg7EmUZqzGBxhT3ME9o3C/NDTI1tpmtA==
+X-Received: by 2002:a05:6870:7a0c:b0:29e:6096:c271 with SMTP id
+ 586e51a60fabf-2a3ac53f419mr9180694fac.9.1734449657453; 
+ Tue, 17 Dec 2024 07:34:17 -0800 (PST)
 Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-467b2e83181sm40232001cf.62.2024.12.17.07.29.33
+ 586e51a60fabf-2a3d269e078sm2803989fac.30.2024.12.17.07.34.15
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 07:29:35 -0800 (PST)
-Message-ID: <600bd66a-5b76-4e12-884a-4cf8182ba992@linaro.org>
-Date: Tue, 17 Dec 2024 09:29:31 -0600
+ Tue, 17 Dec 2024 07:34:16 -0800 (PST)
+Message-ID: <a1a38b2f-fd2f-4e02-8e12-e9acdf852864@linaro.org>
+Date: Tue, 17 Dec 2024 09:34:13 -0600
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 06/13] tests/tcg/plugins/mem: fix 32-bit build
+Subject: Re: [PATCH 09/13] contrib/plugins/hotblocks: fix 32-bit build
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
  philmd@linaro.org
 References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
- <20241217010707.2557258-7-pierrick.bouvier@linaro.org>
+ <20241217010707.2557258-10-pierrick.bouvier@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241217010707.2557258-7-pierrick.bouvier@linaro.org>
+In-Reply-To: <20241217010707.2557258-10-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
- envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x832.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::329;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -108,43 +107,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 12/16/24 19:07, Pierrick Bouvier wrote:
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   tests/tcg/plugins/mem.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>   contrib/plugins/hotblocks.c | 8 +++++---
+>   1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+> index 02bc5078bdd..09b0932275c 100644
+> --- a/contrib/plugins/hotblocks.c
+> +++ b/contrib/plugins/hotblocks.c
+> @@ -34,6 +34,7 @@ static guint64 limit = 20;
+>    */
+>   typedef struct {
+>       uint64_t start_addr;
+> +    uint64_t hash;
+>       struct qemu_plugin_scoreboard *exec_count;
+>       int trans_count;
+>       unsigned long insns;
+> @@ -91,7 +92,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>   
+>   static void plugin_init(void)
+>   {
+> -    hotblocks = g_hash_table_new(NULL, g_direct_equal);
+> +    hotblocks = g_hash_table_new(g_int64_hash, g_int64_equal);
+>   }
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+I think this one should be using a proper comparison function: compare both pc and insns, 
+the inputs to the simplistic hash function:
+
+>       uint64_t hash = pc ^ insns;
+
+An existing bug with the plugin, obviously.
+
 
 r~
-
-> 
-> diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
-> index b0fa8a9f277..d87d6628e09 100644
-> --- a/tests/tcg/plugins/mem.c
-> +++ b/tests/tcg/plugins/mem.c
-> @@ -135,14 +135,14 @@ static void update_region_info(uint64_t region, uint64_t offset,
->       g_assert(offset + size <= region_size);
->   
->       g_mutex_lock(&lock);
-> -    ri = (RegionInfo *) g_hash_table_lookup(regions, GUINT_TO_POINTER(region));
-> +    ri = (RegionInfo *) g_hash_table_lookup(regions, &region);
->   
->       if (!ri) {
->           ri = g_new0(RegionInfo, 1);
->           ri->region_address = region;
->           ri->data = g_malloc0(region_size);
->           ri->seen_all = true;
-> -        g_hash_table_insert(regions, GUINT_TO_POINTER(region), (gpointer) ri);
-> +        g_hash_table_insert(regions, &ri->region_address, ri);
->       }
->   
->       if (is_store) {
-> @@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
->   
->       if (do_region_summary) {
->           region_mask = (region_size - 1);
-> -        regions = g_hash_table_new(NULL, g_direct_equal);
-> +        regions = g_hash_table_new(g_int64_hash, g_int64_equal);
->       }
->   
->       counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
-
 
