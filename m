@@ -4,75 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF605E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE9BE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:49:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbd8-0003aM-LM; Tue, 17 Dec 2024 12:45:10 -0500
+	id 1tNbgy-0005mW-VQ; Tue, 17 Dec 2024 12:49:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tNbd6-0003a6-Cw
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:45:08 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgt-0005ly-AN
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:03 -0500
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tNbd4-0006Vo-Jp
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:45:08 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5cedf5fe237so9193020a12.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:45:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734457504; x=1735062304; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yrYJamrZy4F4vKdhgAoiUYA9tkW/ZoouGfFWVJ902E8=;
- b=LWyYX0PaZ8mxbXAU3ZHmQ4f4/rvnm7OsYuEfEI13Iftc9xdktczOO69tYW/N40nxjr
- YPHOcKToVBuYeksJyyTC3j0xMV2KVhUnHHtjFBkIWvnAesnDT6M2ll6cSAMeTz0WWV1j
- EQ90ujJVUr+YrF0b6K3jdjzCOj0h99yfQXREqFweJucKf0hzYYdmZ6b8eghutgjS9H7f
- oMb+sdbmpm+4Yb13S+CTDzB7XCloJ6z4aC4MjTXo05A7rWNbRveDzVmMyaGuKdx+aR1K
- X2EUIWJnaGHI0EHAvh7AQZS0qV1hOVVadE+GHpXlL6dAMzCnXyHhGKxuG25U1jpONX4B
- vpyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734457504; x=1735062304;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yrYJamrZy4F4vKdhgAoiUYA9tkW/ZoouGfFWVJ902E8=;
- b=m0TdwX+N8VJrKeEdkTSMqPJzdHoHjF/nmAQtzpr6xy6i3iKehgfpUZy6Q9vOoKo7kV
- JhVPL/go+NnH7ExXjvwIP6M3pLVHHCagrSeO+I63GZZuk0fH4vclMvTJC1m42cVGTle6
- vZWAR25eK4zZtJl5Mj3VHOOI/f6mnstk6/q4Cc8fmLQA3LyfsKLBp1vseVrO+L+vsr57
- SwPbjXmmrzTV9G5LCs/9lFfv4/ikf5QsuudtITmiHcFDwYrOdkNLD6VhNGHjrYv+vaeL
- MAkm/24u8rjOsKzY5l4YtcqWkepiNN7q2Tj3HZiOg5fXNqoGruT3uzIY6VRaPMBCyJn2
- MOWQ==
-X-Gm-Message-State: AOJu0Yxn4RhmmuwSAIJwviQPQlrOSrwPi13IkYaRhbMEuzU+NLHKGCON
- 8Ny6pryd7Z7T96jYDev0cSXYj6sfoDkoZ4Q8JW9iFcv2A93fZqpcL9VlWN1eLFayQcLHYAuVoxn
- 95y77OMZ7nkm4deXrtnIV/iXSVsEVSw==
-X-Gm-Gg: ASbGnctJLpo6mIrjFNRr2gSEpAyCUKqqPpuYCvA6SWmDxCU83YYel+Ft56NYutAO7Vi
- zbMSFzptgqYuXUie+ErHsATterqlNS5FkPohx
-X-Google-Smtp-Source: AGHT+IETm17b5sZlTppCanARf2g6ZE5TN0fff1dHeAzma+HOsc1E6P0giZpWac7exI8KlxEz75MUezcTi+rzImIxjGs=
-X-Received: by 2002:a05:6402:354a:b0:5ce:d028:e11 with SMTP id
- 4fb4d7f45d1cf-5d63c32e25dmr16062761a12.17.1734457503405; Tue, 17 Dec 2024
- 09:45:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgr-0007Zt-LD
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:03 -0500
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id C1D111F395;
+ Tue, 17 Dec 2024 17:48:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734457738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
+ b=q2RQJeqinamgWpXyfABL+/TuQUkIRi/0+NSKu/AX0yvqEv6cW5GTf8EIUB8yOMBVm5bdJg
+ mGqfTDw9Rrpv0uWEtxADf/ZdUuGGN4s2HuZyJCerFtD5n0IiiiruJqhm/khfK8HE225wCc
+ ueAmdAJOjokmPR3oJVxDPkmw2pwFW9A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734457738;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
+ b=LWIOsklc8gOmcTN+24ikNx5ybaid1Xhf7KoYZ7gtViRugXRhM2Hi9fohUpp+YTF7gsK8Sm
+ QQompefJvyhx3fAg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1734457738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
+ b=q2RQJeqinamgWpXyfABL+/TuQUkIRi/0+NSKu/AX0yvqEv6cW5GTf8EIUB8yOMBVm5bdJg
+ mGqfTDw9Rrpv0uWEtxADf/ZdUuGGN4s2HuZyJCerFtD5n0IiiiruJqhm/khfK8HE225wCc
+ ueAmdAJOjokmPR3oJVxDPkmw2pwFW9A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1734457738;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
+ b=LWIOsklc8gOmcTN+24ikNx5ybaid1Xhf7KoYZ7gtViRugXRhM2Hi9fohUpp+YTF7gsK8Sm
+ QQompefJvyhx3fAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2F7513A3C;
+ Tue, 17 Dec 2024 17:48:57 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id uNbDIYm5YWd1TwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:48:57 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>
+Subject: [PULL 00/17] Migration patches for 2024-12-17
+Date: Tue, 17 Dec 2024 14:48:38 -0300
+Message-Id: <20241217174855.24971-1-farosas@suse.de>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-References: <CAOzwu7cgeUmy_kxrTXS5Emi8ZmNK7JHUyXKXEXz7_hHG-VVNwQ@mail.gmail.com>
-In-Reply-To: <CAOzwu7cgeUmy_kxrTXS5Emi8ZmNK7JHUyXKXEXz7_hHG-VVNwQ@mail.gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Tue, 17 Dec 2024 12:44:51 -0500
-Message-ID: <CAJSP0QXen6dbsfV95_NTqR2zkJ6oddE24QmwNw7rrZwHgahnAA@mail.gmail.com>
-Subject: Re: Missing PDF file download.
-To: Asif <asif.haswarey@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
+ RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -89,16 +112,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 20 Nov 2024 at 17:41, Asif <asif.haswarey@gmail.com> wrote:
-> Secondly, you have broken links on you page:
-> QEMU Internals: Big Picture Overview
->
-> Broken Link:
-> Jan Kiszka's Linux Kongress 2010 presentation on the Architecture of the Kernel-based Virtual Machine (KVM). Very good material.
+The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
 
-Hi Asif,
-Sorry for the late reply! I have updated the link to a mirror of the
-PDF file. Thanks for letting me know.
+  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
 
-Stefan
+are available in the Git repository at:
+
+  https://gitlab.com/farosas/qemu.git tags/migration-20241217-pull-request
+
+for you to fetch changes up to 1bed6df0c71d3a74286f53c01fafd21fde8777f4:
+
+  tests/qtest/migration: Fix compile errors when CONFIG_UADK is set (2024-12-17 13:51:19 -0300)
+
+----------------------------------------------------------------
+Migration pull request
+
+- Shameer's fixes for CONFIG_UADK code
+
+- Peter's multifd sync cleanups, prereq. for VFIO and postcopy work
+
+- Fabiano's fix for multifd regression in pre-9.0 -> post-9.1
+  migrations (#2720)
+
+- Fabiano's fix for s390x migration regression (#2704)
+
+- Peter's fix for assertions during paused migrations; reworks
+  late-block-activate logic (#2395, #686)
+
+----------------------------------------------------------------
+
+Fabiano Rosas (2):
+  migration/multifd: Fix compat with QEMU < 9.0
+  s390x: Fix CSS migration
+
+Peter Xu (13):
+  migration/multifd: Further remove the SYNC on complete
+  migration/multifd: Allow to sync with sender threads only
+  migration/ram: Move RAM_SAVE_FLAG* into ram.h
+  migration/multifd: Unify RAM_SAVE_FLAG_MULTIFD_FLUSH messages
+  migration/multifd: Remove sync processing on postcopy
+  migration/multifd: Cleanup src flushes on condition check
+  migration/multifd: Document the reason to sync for save_setup()
+  migration: Add helper to get target runstate
+  qmp/cont: Only activate disks if migration completed
+  migration/block: Make late-block-active the default
+  migration/block: Apply late-block-active behavior to postcopy
+  migration/block: Fix possible race with block_inactive
+  migration/block: Rewrite disk activation
+
+Shameer Kolothum (2):
+  migration/multifd: Fix compile error caused by page_size usage
+  tests/qtest/migration: Fix compile errors when CONFIG_UADK is set
+
+ hw/s390x/s390-virtio-ccw.c                |   2 +-
+ include/migration/misc.h                  |   4 +
+ migration/block-active.c                  |  94 +++++++++++++++
+ migration/colo.c                          |   2 +-
+ migration/meson.build                     |   1 +
+ migration/migration.c                     | 136 +++++++++-------------
+ migration/migration.h                     |   6 +-
+ migration/multifd-nocomp.c                |  74 +++++++++++-
+ migration/multifd-uadk.c                  |   2 +-
+ migration/multifd.c                       |  32 +++--
+ migration/multifd.h                       |  27 ++++-
+ migration/ram.c                           |  89 +++++++-------
+ migration/ram.h                           |  28 +++++
+ migration/rdma.h                          |   7 --
+ migration/savevm.c                        |  46 ++++----
+ migration/trace-events                    |   3 +
+ monitor/qmp-cmds.c                        |  22 ++--
+ tests/qtest/migration/compression-tests.c |  54 ---------
+ 18 files changed, 372 insertions(+), 257 deletions(-)
+ create mode 100644 migration/block-active.c
+
+-- 
+2.35.3
+
 
