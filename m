@@ -4,77 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04A5AE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:13:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B4AFE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYJX-0007zl-IV; Tue, 17 Dec 2024 09:12:43 -0500
+	id 1tNYKo-0000DA-4o; Tue, 17 Dec 2024 09:14:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tNYJW-0007zR-7B
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:12:42 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tNYJU-0001xp-R9
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:12:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734444759;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=P8FCoh5d8PjZU4dSBocn837/7dxxwurYY9CqN5r2LyU=;
- b=SXyQfPljfOnN3KeOuQn44ry+zGCuao4iJv7rlZRCRc6iVKSRjfwtlTLtTaUyZirJa0jnhm
- jwLQSlQVGr9DLQOt2lQTLKbEtGzyYxHQNfb5YI6vtC7W5I2KoxkPdka84wWDiPQHADQSnL
- 2gDl/AlBt5XNjcLkmtv4W0WPhL2wozU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-cLCDRGthNSyg2oAGjIoP6A-1; Tue,
- 17 Dec 2024 09:12:34 -0500
-X-MC-Unique: cLCDRGthNSyg2oAGjIoP6A-1
-X-Mimecast-MFC-AGG-ID: cLCDRGthNSyg2oAGjIoP6A
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6CAA71955F2F; Tue, 17 Dec 2024 14:12:30 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.39.192.88])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AF09619560A2; Tue, 17 Dec 2024 14:12:28 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 7D12F1800399; Tue, 17 Dec 2024 15:12:26 +0100 (CET)
-Date: Tue, 17 Dec 2024 15:12:26 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>
-Subject: Re: [PATCH 2/5] x86/loader: only patch linux kernels
-Message-ID: <3gl2kpllzfyuo2hydjj6usmt7jundqzottquxylwzgxae755m2@kpvy6t2qvevj>
-References: <20240411094830.1337658-1-kraxel@redhat.com>
- <20240411094830.1337658-3-kraxel@redhat.com>
- <bbc28a3a-7e4b-4f36-b072-f803e48b6198@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNYKe-00005t-FA
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:13:52 -0500
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNYKa-000274-Qj
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:13:50 -0500
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-7265c18d79bso5696989b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 06:13:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734444827; x=1735049627; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+AInIhe3xWLXuYtEN1l+ucfFt841V2nbagQTKyY3VfE=;
+ b=BmrA7PGAFMzQ8462QW/Lx7HKiQf00HqY7Ei8IWDnoz3SzmGX4o0iJAytVpxFXTEYiv
+ +UUS5jcNAu9bXjyhJAMU+b9Ci7dljIRnJI8+IYZPJs1H0PKA21BisjQ/eBtbFcNoB5Fj
+ N09zcxDWURgwCgaavNmNZ38ruN5N1nuqu27dazj4RFtyOK5+MS0ZXUkjlC9KDJVSsIgy
+ TnaEUn8cZNq8rrm2Efz0nSCZ0QijnlotBbgqaj9HrWCPvYtWVFvcqao4MYE0YSrGnYWx
+ 0oMa/RQMdTdmGA89dWlz2uYWoOOOdzv+ao1MswcbRSazfIgVsI3v8FOr+nI4wT9IU2eb
+ 1Qgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734444827; x=1735049627;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+AInIhe3xWLXuYtEN1l+ucfFt841V2nbagQTKyY3VfE=;
+ b=lRJ2/EDK/UrCJhL88rcfi9ng4y4VHsn6CVhdUB5/cw5CL36RcPpqhC6nIvF8AsSZOc
+ GgiHf5jEST2QSHPQiXU0hs2ZDGsLxOPKrfHpF390P5XonWsvYiUFGBnKweBPmzKIOXJy
+ JoxP1GmlW1/6qDDFKFYzLq3D0Wno4vV19pEqOe+/fD72UTjLfXRELyXqQ0JjjeuW06hl
+ voN2Q9bz8AV5sgN8ngEepIvueEfl0VR2CR366VgWmsTleUYClzAwNUfUOZyLOICG2rWB
+ X8+GYeAg6RiEB4GPmrs+2beUvyKsOWSP0LKPQ28VSrzpQfgsgWvJNPrVUcQudS9McK1c
+ PUmQ==
+X-Gm-Message-State: AOJu0Yyfy6DJ05JHaaGHYZcQ1XnyM/TMFpu1go7Q+Mr+WlwzB+d8oO/r
+ Rb/TMvy9niLtNdUIOV3qI9T9ECpVPBz8/rMiiJdAruZibhCiDT7SwXfLzHz0xLILv8rt+FY6x1A
+ 0
+X-Gm-Gg: ASbGncscJQNjqvF5zZhvHIfQqUauulMo6WovssjIf3qpVmKpC8oE8b1HWug6BD0531k
+ sp+0FH3sqxNv1j+w1Y9IV8a5Ucm/THiow6A41lwzv6T11D//gvvWSid07hTvslD9vBsUqVIQxdF
+ l3cLrM3zVuHWsaq+Q9Emw+0UOqRZ0ZjpUIkuVwje4CnhnFtoCNvck+dqOOkycMm4dpWlvGLZSXd
+ J9GTdkopde8fXAo7KTmo5fnHTyOEUa0d6cQwoB/P1KPaSJtMQTTFvjEFKfvJEBBG34GjFJ3AjRe
+ KM7f
+X-Google-Smtp-Source: AGHT+IH/YtRibfR2S2DXipZ7jPyMQ6GmXJj+RxHTfdpdUm0lFBmUvyLl/w/P0MH8ZL8lcytgBim/1g==
+X-Received: by 2002:a05:6a20:2d14:b0:1e1:f5a:db33 with SMTP id
+ adf61e73a8af0-1e1dfdda9edmr23047208637.36.1734444827298; 
+ Tue, 17 Dec 2024 06:13:47 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-801d5c3ded0sm5838893a12.83.2024.12.17.06.13.43
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 17 Dec 2024 06:13:46 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 1/2] exec/translation-block: Include missing 'qemu/atomic.h'
+ header
+Date: Tue, 17 Dec 2024 15:13:25 +0100
+Message-ID: <20241217141326.98947-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241217141326.98947-1-philmd@linaro.org>
+References: <20241217141326.98947-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <bbc28a3a-7e4b-4f36-b072-f803e48b6198@tls.msk.ru>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,26 +102,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 02:09:30PM +0300, Michael Tokarev wrote:
-> 11.04.2024 12:48, Gerd Hoffmann wrote:
-> > If the binary loaded via -kernel is *not* a linux kernel (in which
-> > case protocol == 0), do not patch the linux kernel header fields.
-> > 
-> > It's (a) pointless and (b) might break binaries by random patching
-> > and (c) changes the binary hash which in turn breaks secure boot
-> > verification.
-> > 
-> > Background: OVMF happily loads and runs not only linux kernels but
-> > any efi binary via direct kernel boot.
-> > 
-> > Note: Breaking the secure boot verification is a problem for linux
-> > kernels too, but fixed that is left for another day ...
-> 
-> Shouldn't this one be picked up for -stable?
+When moving tb_cflags() in commit 88d4b5138a8 ("tcg: Make
+tb_cflags() usable from target-agnostic code") we forgot to
+include "qemu/atomic.h", which declares qatomic_read().
+Explicitly include it now to avoid issue when refactoring
+unrelated headers.
 
-yes, please.
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/exec/translation-block.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-thanks,
-  Gerd
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index b99afb00779..81299b7bdb5 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -7,6 +7,7 @@
+ #ifndef EXEC_TRANSLATION_BLOCK_H
+ #define EXEC_TRANSLATION_BLOCK_H
+ 
++#include "qemu/atomic.h"
+ #include "qemu/thread.h"
+ #include "exec/cpu-common.h"
+ #include "exec/vaddr.h"
+-- 
+2.45.2
 
 
