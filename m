@@ -4,67 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28C6DE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:43:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0F5E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:44:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYn0-00022l-HB; Tue, 17 Dec 2024 09:43:10 -0500
+	id 1tNYnv-0002Kp-SL; Tue, 17 Dec 2024 09:44:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <1900011634@pku.edu.cn>)
- id 1tNYhE-0000OA-Me; Tue, 17 Dec 2024 09:37:12 -0500
-Received: from mx16.pku.edu.cn ([162.105.129.179] helo=pku.edu.cn)
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <1900011634@pku.edu.cn>)
- id 1tNYh7-00061w-6J; Tue, 17 Dec 2024 09:37:12 -0500
-Received: from pku.edu.cn (unknown [10.7.217.246])
- by mtasvr (Coremail) with SMTP id _____7DwdzGBjGFnee4RAA--.3371S3;
- Tue, 17 Dec 2024 22:36:50 +0800 (CST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=pku.edu.cn; s=dkim; h=Received:From:To:Cc:Subject:Date:
- Message-Id:MIME-Version:Content-Transfer-Encoding; bh=arPODaSXgi
- vVhuH8/UL0foLKwZv7ZXqUP1yBPikTolI=; b=HmpWkrHrYYbO5phWTK85dIkkjA
- TeHD+ewX5F1HCIIQVb//mLkfB4/xts2UhdXxEs7cgMySW7/Ew4a9qL7P3BDcpl2x
- ZkSI1PQdk/Aeps25MPvTT/y8TA3bBiXNv+rNjVdkTU/5tAGKMe2FrLqB09B7lWYu
- sVLoIhKbdZiRMivAA=
-Received: from localhost.localdomain (unknown [10.7.217.246])
- by front02 (Coremail) with SMTP id 54FpogAXJKWAjGFnVSxIAA--.4445S2;
- Tue, 17 Dec 2024 22:36:48 +0800 (CST)
-From: ckf104 <1900011634@pku.edu.cn>
-To: qemu-trivial@nongnu.org
-Cc: ckf104 <1900011634@pku.edu.cn>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- qemu-devel@nongnu.org (open list:All patches CC here)
-Subject: [PATCH] contrib/plugins/bbv.c: Start bb index from 1
-Date: Tue, 17 Dec 2024 22:24:15 +0800
-Message-Id: <20241217142413.148978-1-1900011634@pku.edu.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNYnr-0002KM-Ov
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:44:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNYnZ-0006yB-4Y
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:43:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734446621;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=n/AKrXHd+b6mRjdl5u4Bw1015eGC/aoj5jqCJDpR2PQ=;
+ b=U5p5TV2VCOY/c3XrWg2OvX935uRO+WcjbqNp08FIdPEzZnSJNY2Yz0ayiqHjEZSgNm2eX6
+ b/rc4XZt2Cl2+DhVtSbmoFgUjY/VMoQcx+og9303Vbxo94dALHBc3eSRlfBpsC9EB9YJS3
+ SvLL/dLe9Bq7S8E+G96EIl5YvEwBmQ4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-q5mJt-RoNNy2CY2LcJzJEg-1; Tue, 17 Dec 2024 09:43:40 -0500
+X-MC-Unique: q5mJt-RoNNy2CY2LcJzJEg-1
+X-Mimecast-MFC-AGG-ID: q5mJt-RoNNy2CY2LcJzJEg
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d87ee5fb22so85697226d6.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 06:43:40 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734446613; x=1735051413;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=n/AKrXHd+b6mRjdl5u4Bw1015eGC/aoj5jqCJDpR2PQ=;
+ b=NUqi7mKHYPqlzH34xh9+hut3zN4zma3gTvI25hCvr4khVD7M5IEy96c0NKj/8CCVmv
+ qJmZTAwqzerqgEH4Tjb1wMF5skefbTAb1304GBZlWDpS2usg1mpm9Ql38em8EWdXmh+H
+ yJ+okeY+L1+4iCuUlusOwAP+mfB0AtBKG5pLWwv0lhx0gDvgpB3V+DYQyhLS/7hJpAOj
+ lW6ueDuhUqG7K2/5VSfUftuoaUraE4Sv72S/kurlWHgu0SmlGD98QrAYwMncza/Byhz5
+ R3FHKg4ClIkRPo+X0PWkTte2RFlWLWyCQ2pVhSVno7w4wcT0UinT+JrV6tsT/5S20+qm
+ ti5Q==
+X-Gm-Message-State: AOJu0YzVrum4In7EELTwhxhuz46A9tuNF+vxqk21fBfmpDsTvzPDuNKS
+ GRZlsToDGxAJsIHI11Yi1EWvlVslxfm0jKYIddax/TjCWExKjHN0L16fD8W+aqtw5UR8Xw2s5kF
+ 1B0M0D6Y6vyYDXe5GwN/CxeT3TALLOmjmd1xDIfnU4zW5SumiK2OX
+X-Gm-Gg: ASbGncvQ2bcOJRinVabgIpY1mFnhXKHXJS3hbNHLr83pGtex2ukUmQ3rYTZIMIzCeoY
+ /W+576T8XT+3EHBd6Ag1RK7GMGTSnQaX98K/OcJAjInCI3oMprA5oSp1XEgGd1u2197vPRTlTmf
+ BjoaAfabHAbRtsK69khURYooB2IGlMquCIsTC+AmPdNVtCiSO1euSyneGGmsiF0HPzKOgmmmx2Q
+ 0APKQkq8ycOeNzUZcLI267sOHKP6xpFGWK9RZ2DvJEFTNtoiZxd2mohjq3wxFNHvj6Iahifq9lO
+ BDTmEpI3A8OiBwEhZQ==
+X-Received: by 2002:ad4:5de6:0:b0:6d8:b3a7:75ab with SMTP id
+ 6a1803df08f44-6dc9684a93emr292068876d6.44.1734446613739; 
+ Tue, 17 Dec 2024 06:43:33 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHszwCwL+kTZUIQq1loM8fvAtv55bzke7Ln5yqcer24F0+5+PFwKf4l2avRDYTF4uW6mBAsNA==
+X-Received: by 2002:ad4:5de6:0:b0:6d8:b3a7:75ab with SMTP id
+ 6a1803df08f44-6dc9684a93emr292068686d6.44.1734446613441; 
+ Tue, 17 Dec 2024 06:43:33 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd26c8cbsm39014416d6.54.2024.12.17.06.43.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Dec 2024 06:43:32 -0800 (PST)
+Date: Tue, 17 Dec 2024 09:43:30 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, linuxarm@huawei.com,
+ zhangfei.gao@linaro.org
+Subject: Re: [PATCH] tests/qtest/migration: Fix compile errors when
+ CONFIG_UADK is set
+Message-ID: <Z2GOEoiVGoegx2z4@x1n>
+References: <20241217131046.83844-1-shameerali.kolothum.thodi@huawei.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: 54FpogAXJKWAjGFnVSxIAA--.4445S2
-X-CM-SenderInfo: istqijqrtsiko6sn3hxhgxhubq/1tbiAwEOEWdgbPERCgAFsZ
-X-CM-DELIVERINFO: =?B?Hn0nEKaAH6dYjNjDbLdWX9VB7tvCgFsWh6gq2SLela0U3wZu5GTe0OKCMDL6rypGpz
- qJlKNnGD0k5JE1EzxpQyIhfppD2kv5l0QpMK9HIo+3hhve9QiyMXRPLYtgHjlI/hiwFJMU
- nF2q22G7ZL26fWzEX773JPR/O6MHo6a/0AEr5ld0/PTB4dnK6yWm2Y9BQMI/UA==
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=162.105.129.179;
- envelope-from=1900011634@pku.edu.cn; helo=pku.edu.cn
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=-1.116, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241217131046.83844-1-shameerali.kolothum.thodi@huawei.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 17 Dec 2024 09:43:06 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,27 +107,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Standard simpoint tool reqeusts that index of basic block index starts from 1.
+On Tue, Dec 17, 2024 at 01:10:46PM +0000, Shameer Kolothum wrote:
+> Removes accidental inclusion of unrelated functions within CONFIG_UADK
+> as this causes compile errors like:
+> 
+> error: redefinition of ‘migrate_hook_start_xbzrle’
+> 
+> Fixes: 932f74f3fe6e ("tests/qtest/migration: Split compression tests from migration-test.c")
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 
-Signed-off-by: ckf104 <1900011634@pku.edu.cn>
----
- contrib/plugins/bbv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/contrib/plugins/bbv.c b/contrib/plugins/bbv.c
-index a5256517dd..b9da6f815e 100644
---- a/contrib/plugins/bbv.c
-+++ b/contrib/plugins/bbv.c
-@@ -109,7 +109,7 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-         bb = g_new(Bb, 1);
-         bb->vaddr = vaddr;
-         bb->count = qemu_plugin_scoreboard_new(sizeof(uint64_t));
--        bb->index = g_hash_table_size(bbs);
-+        bb->index = g_hash_table_size(bbs) + 1;
-         g_hash_table_replace(bbs, &bb->vaddr, bb);
-     }
-     g_rw_lock_writer_unlock(&bbs_lock);
 -- 
-2.34.1
+Peter Xu
 
 
