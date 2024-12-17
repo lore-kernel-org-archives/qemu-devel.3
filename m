@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A92F8E77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:45:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE11E77188
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNgHj-0004LJ-18; Tue, 17 Dec 2024 17:43:23 -0500
+	id 1tNgHl-0004NJ-LS; Tue, 17 Dec 2024 17:43:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHf-0004JG-8K
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:19 -0500
+ id 1tNgHj-0004M9-Nr
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:23 -0500
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHa-00018u-De
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:19 -0500
+ id 1tNgHi-0001Bb-1o
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:23 -0500
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-725ef0397aeso5228161b3a.2
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:13 -0800 (PST)
+ d2e1a72fcca58-7292a83264eso2468954b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734475392; x=1735080192; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734475401; x=1735080201; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NOzYfBh0zmSLp+iKqt+C5cDNqScuCpesF/tusP6QFbo=;
- b=rEWGNR369wdoc06ayRxkHSUnPdDE9NKxzf5Kivzx16yYZPMZSaStqaMJTKNMeVeZGZ
- jfDawKWGULon7JIXsAzEevh0LKshkStIbusreQ5ANzduQtp7LjBQlUlJ5+mPd+7sGkJV
- L/L1RGJfPiyj3FFWvDFePVTCyzNxKLfFV15XjTsJJqW/bkKNz1rmCG61zmvChtSmFgVn
- c/ZM32y3GyTB/08AAC2Z56GcQrQRHeQhhaeLXPNA5gMrApzQv1ZAGqjHelT8BwHLIEOg
- LSGOYWNrvzR4gW0eSw9P2etLExL8qa2X3keST39vey9GjEYbraRUC2aiPcgRSTF0N3uT
- UejQ==
+ bh=jgxR9arESI3Aidanx+cexjGed292D3H2X6RqwRpaLC4=;
+ b=B/Eee2/BQZ6S80+QlreecIwlDk6/dbBNBBjqgkezvwtqEpcnmTEv791tAaDcAiLSkw
+ 30pOxW1Jj8KbxGOU/FOQTrf0RUNNyIaI79nrNkVncJnhFwLONAUPXAaMuLvBDk8EI+2M
+ hMn7PiFIpWF9ay/rgbJ1bL14Waqo+qDzLewjTJBvT2wgj+9x8FRXa4dwrweViD32XCh3
+ 4cC/P8wisHxF4B2ZuWed+shYtql8xxYh69Oa+kDpmTdkWmEEdzwu8jTKuchJm9lXfXg/
+ PR8xDDyzh159dsAYt4Izb9fh3LrpIMJ5JvndqnKytH413Dm7uF6EKfHun/OJGgjuBPqw
+ 8Idw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734475392; x=1735080192;
+ d=1e100.net; s=20230601; t=1734475401; x=1735080201;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NOzYfBh0zmSLp+iKqt+C5cDNqScuCpesF/tusP6QFbo=;
- b=hp91nQqv+pP2Zx59YmmyvRZfyaCG5RL4rlmkugwQ2L0a81ZQFVg72OhSBG5npg9Fj4
- jvRurS1OZjo4I5TKfGAOd6Unzwn+CHyzir8yQUKJe2aqH0drLmIEDGv0WZj56ZoxCnjg
- b+Dw9gqMLYQEda9P2FTeez7zwDfdAuOLemfHZVRixiIBGTUfsuit9kJZDwDlxhgquokq
- J6BLQTOcth2XpF4V/xbkd+rwjCVX3CUbGHDSvYh6ObiM0eRt5QwTu1b5/XxZtX78gzKK
- f+ob4rVJFHKUa74FIjzUiKV8KBaMkDIsYPO5C4YLQi1wXfn0Um4VBT0VSLa4a4wIQitu
- M8zg==
-X-Gm-Message-State: AOJu0YxTC/V/h2+UrxrieZqfnSCytU9jJOfqUe0Rky5vcKqs/wpPT6Rv
- pujUCQEfGogzI8er0GYOsSr2+9yBQX+CAB7C8mn/E7xrDQYF9bBjoUTgb9Dp477gUbus+n7lkx8
- j/2M=
-X-Gm-Gg: ASbGncsvZbz2mnwS1jNYTRkFgiG8mKpDwqCCMtsasIWzqx7FoZ9be3pwpHUxymumsqw
- CK+y8NWMGxZSJhXGIEebnOd7pxvb2c8+3kHpmfCG/aHjLMdIRzGREQW7BqFSJ2nVUYVR1MUqxQp
- Bai/sB9+CPhUMvcw7Udtq7gm02fahZ6TqyzRz1Nmbdwxq8gVxPWxUY+Zc5K/+0yYws64b3gUkN2
- fHxqkDH5s4g07GtleXonesZ6Z9WMSnl5yiQRE22Tf96IdLIppzaUF35
-X-Google-Smtp-Source: AGHT+IEUxcPkbKMgJH8DF+rpWL0LnbAVVqUrC6NlUMoZ/OUexBFb6RJ9bcwqusG3AvdU7hFLKEfDCw==
-X-Received: by 2002:a05:6a00:21c6:b0:728:eb32:356c with SMTP id
- d2e1a72fcca58-72a8d2611f2mr991827b3a.11.1734475392496; 
- Tue, 17 Dec 2024 14:43:12 -0800 (PST)
+ bh=jgxR9arESI3Aidanx+cexjGed292D3H2X6RqwRpaLC4=;
+ b=IOt8pi6ORp4MI+FzTxjZI2xGnatoBrA01ysYEmJRjoOkMLGBIHRAiE9Mel78Lkj3m9
+ oUYl3NZbx+XBx4MXFbnaopglA+RtA3od/qBVV6dhWJZ37M+k6zp9pRWSaiZrl3Nt6T97
+ Pzn475U25a1+AwLBlcnmg2eEoHNMRyIiq+z7bzDClSSEhZUi4xCIFwChYr9BmCoLJvSh
+ YdQzBEiiGgd9Gm4oYhQIzWboBIjTBSAd/7My8V7rZHJ5+doD/AuvbkOHv78jUrkMG8D0
+ OXdcmixOd9PNTLTSYhHHyu/oHpcV7xOrkkqZsdcd3NH4+HfIWGSLDJSFsTaKI3f5Bi9r
+ DwrA==
+X-Gm-Message-State: AOJu0YzdXZXLcq431zl2Fl5hmz+XZ3S1r+IboPs5wuHGVEd5UQYBa5Nk
+ Vs5bfyw2yqCRn2LGSsbQ+F93fKyAsY09tjM463mNtB0DaqRDJRnATX+ik8r4BMQf04CqigSZbz/
+ /9HA=
+X-Gm-Gg: ASbGnctAYUKq2jceSpZWucifDkx4JTaGxv14N99KfYxGhcOTMSBQxuwbrWBVylbVdMW
+ Oiyecs4xktnaS6p5zo/7SNe2y/1mVpBnV1Zph3M+TNuQN3tQrqm9abbpTVZRC62o6WxYx9nABFh
+ uhrTcEuQ7PHtPXQcdm6tnz58s8YdJyWc0t16VXNlYuxKMVPZFMLlb5keSrPEqk5INeqStRriG+7
+ +BPHjVpPmanHtnMsOD38fOVjKPq3LDZni6joUdiSxZWAe+0DUL8EYq9
+X-Google-Smtp-Source: AGHT+IGN6BduqgEMB5ckD0vOMFunG6nxzDmBNpQZSvK87izGm+GAny8oGTFSVPrUOI3ohevVDfFeag==
+X-Received: by 2002:a05:6a00:2906:b0:724:f86e:e3d9 with SMTP id
+ d2e1a72fcca58-72a8d260780mr971134b3a.14.1734475400871; 
+ Tue, 17 Dec 2024 14:43:20 -0800 (PST)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72918ac53f3sm7463214b3a.27.2024.12.17.14.43.11
+ d2e1a72fcca58-72918ac53f3sm7463214b3a.27.2024.12.17.14.43.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 14:43:12 -0800 (PST)
+ Tue, 17 Dec 2024 14:43:20 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -70,10 +70,10 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 02/11] contrib/plugins/howvec: ensure we don't regress if
- this plugin is extended
-Date: Tue, 17 Dec 2024 14:42:57 -0800
-Message-Id: <20241217224306.2900490-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 11/11] configure: reenable plugins by default for 32-bit
+ hosts
+Date: Tue, 17 Dec 2024 14:43:06 -0800
+Message-Id: <20241217224306.2900490-12-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
 References: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
@@ -87,7 +87,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,41 +106,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- contrib/plugins/howvec.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ configure | 21 +--------------------
+ 1 file changed, 1 insertion(+), 20 deletions(-)
 
-diff --git a/contrib/plugins/howvec.c b/contrib/plugins/howvec.c
-index 9be67f74534..2aa9029c3f0 100644
---- a/contrib/plugins/howvec.c
-+++ b/contrib/plugins/howvec.c
-@@ -253,6 +253,8 @@ static struct qemu_plugin_scoreboard *find_counter(
-     int i;
-     uint64_t *cnt = NULL;
-     uint32_t opcode = 0;
-+    /* if opcode is greater than 32 bits, we should refactor insn hash table. */
-+    G_STATIC_ASSERT(sizeof(opcode) == sizeof(uint32_t));
-     InsnClassExecCount *class = NULL;
+diff --git a/configure b/configure
+index 18336376bff..02f1dd2311f 100755
+--- a/configure
++++ b/configure
+@@ -528,25 +528,6 @@ case "$cpu" in
+     ;;
+ esac
  
-     /*
-@@ -284,7 +286,7 @@ static struct qemu_plugin_scoreboard *find_counter(
- 
-         g_mutex_lock(&lock);
-         icount = (InsnExecCount *) g_hash_table_lookup(insns,
--                                                       GUINT_TO_POINTER(opcode));
-+                                                       (gpointer)(intptr_t) opcode);
- 
-         if (!icount) {
-             icount = g_new0(InsnExecCount, 1);
-@@ -295,8 +297,7 @@ static struct qemu_plugin_scoreboard *find_counter(
-                 qemu_plugin_scoreboard_new(sizeof(uint64_t));
-             icount->count = qemu_plugin_scoreboard_u64(score);
- 
--            g_hash_table_insert(insns, GUINT_TO_POINTER(opcode),
--                                (gpointer) icount);
-+            g_hash_table_insert(insns, (gpointer)(intptr_t) opcode, icount);
-         }
-         g_mutex_unlock(&lock);
- 
+-# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
+-# 64 bit host.
+-
+-check_64bit_host() {
+-cat > $TMPC <<EOF
+-#if __SIZEOF_POINTER__ != 8
+-#error not 64 bit system
+-#endif
+-int main(void) { return 0; }
+-EOF
+-  compile_object "$1"
+-}
+-
+-if check_64bit_host "$CPU_CFLAGS"; then
+-    host_bits=64
+-else
+-    host_bits=32
+-fi
+-
+ if test -n "$host_arch" && {
+     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
+     ! test -d "$source_path/common-user/host/$host_arch"; }; then
+@@ -1072,7 +1053,7 @@ if test "$static" = "yes" ; then
+   fi
+   plugins="no"
+ fi
+-if test "$plugins" != "no" && test $host_bits -eq 64; then
++if test "$plugins" != "no"; then
+     if has_meson_option "-Dtcg_interpreter=true"; then
+         plugins="no"
+     else
 -- 
 2.39.5
 
