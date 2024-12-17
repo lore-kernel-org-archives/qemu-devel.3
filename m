@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B126E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434C6E77187
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:29:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYYv-0000Oo-PR; Tue, 17 Dec 2024 09:28:39 -0500
+	id 1tNYZH-0000oC-QU; Tue, 17 Dec 2024 09:29:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNYYa-0000E2-Ea
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:19 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNYYZ-0004qe-4L
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:16 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eba7784112so2034052b6e.2
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 06:28:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734445693; x=1735050493; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Mwr6j7WKsoUaJKNoDlicQzwu9oyBrseSjkpYJ2Ah9K8=;
- b=fm50J3QW5qUTiaEd0RsTPPqgSGEjwW6EgjT4GV22YFbsJr86hYfAuK5m2U86LXqV/A
- d1f2lN6X4W0l+f39toxnCIw12ExSwLf4gCArRAeUmW1Y41XQj7EIeAmmHakggkrWggMN
- RDz8N7PEFOLEUYsdqNUhIacUSbyoYhbJMRZa47fYTM1ENSoyMrBXfAcNrYE5Yi8VmJ2O
- 2FGj5/0xbFsfV2Z28Ov5BIIsj5MUTStbXZ+wvXA4ETSdqTAMf5ijD/ujTcK9CmQ5nxLK
- dwTsFbCdhak1zpzTL3UzCUAn8L4tlLo9oE4ULcPSjieaBDrlsDbZ57K+MNIFM6UUYfWb
- 3pdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734445693; x=1735050493;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Mwr6j7WKsoUaJKNoDlicQzwu9oyBrseSjkpYJ2Ah9K8=;
- b=L77/35XetKWSpz1Uqz2V1DrQWH+aclstAoGFJMGGNIla3aFag+Q/D5xTlDktptITao
- IulxZvMFSqP7J6mgara653n/KBA7T1GhwShrM7J6uYTwEBwxyWAA1dSVbFWV3DylgJ6L
- ML3Sm/8WWOH3EEnNYEtugL7LTqqs3BUZWMNykQTAXllkS2NT0rWZ1x2tGXWn/9CC6oxm
- 1uiJe/WGsb+SI6kKyJ3RuqnjOVzcv7mrDh0P0Sj23FT6U+f6TatGcqeueuYWrZvLLpG1
- gicVa9V5pR4nRkFocZeAOh64D5C8fEFT5PbjspXZ47koHJU17AE8BGWfjiybrFl8RhoX
- UK5Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXDEvzHTHgiTqx2rnO+D5wza3MuaALAB+QngTz8w/WXafALAZB7shhoh2gpOA+USBjynQTxJgq/Xw/b@nongnu.org
-X-Gm-Message-State: AOJu0Yzdik6Js63xYE5OxTZjpmQG+VMvF8auqZrgEo+EbdMXaVa+cHZk
- 3oNNPv7MVUoO9erU1Y983IK5hb6+7MVGExh3WLZk4wfM+ZWRZT9d/J1sl7LkGJg=
-X-Gm-Gg: ASbGnctYeXqJJPAugE3uzUTVSaxJrwrHw3wxQruVQPoD3SAZDOdIwibBf5gZ9zWXIIR
- oNuI/KdMiIKwRDRkS14JgTEdwvVPFzW6+1wsl+iB4R7oIKlOzO0ifVNM5DZK2FQuYqAFkkM+FAK
- +2uTJPDJsj5QlcunWVvN3lrn715h4pjjXoCkOCSlg9xxPw/YvUujmZVzU3ey9XesILbXokQi8jW
- nxniWrTCyqEWEJ4E4Znb4EZ4x9UFPGYBHWwaxLBaD5YeMo4dLi7QJNF2fMkBrQ/6aFI+yHCzk/0
- BQuD/T3h1vqGBlTwqI8Ug7/fe4MIERZyvGI=
-X-Google-Smtp-Source: AGHT+IGq/QVziB8GatTC0StKVjZMJ3sXs+pj5j/6rLC1W2D+Q6CLwXhrN1Q6vR13uXaIW9ogLBMPZQ==
-X-Received: by 2002:a05:6808:2219:b0:3e6:14a6:4288 with SMTP id
- 5614622812f47-3ebcb276778mr2017297b6e.11.1734445692743; 
- Tue, 17 Dec 2024 06:28:12 -0800 (PST)
-Received: from [192.168.4.112] (fixed-187-189-51-143.totalplay.net.
- [187.189.51.143]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a33dsm2238980b6e.8.2024.12.17.06.28.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 06:28:12 -0800 (PST)
-Message-ID: <6c6eecff-8d6c-4cf1-bc61-652fc3cc8668@linaro.org>
-Date: Tue, 17 Dec 2024 08:28:09 -0600
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNYZD-0000jm-OG
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:56 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNYZB-0004vE-8w
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734445731;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MJW9xnEDOcxQWtRflbCqPWqvmcKAnhbeHQpZcHs/d74=;
+ b=XspSWEY0idWw4J1uGh11mz9o6FQLTRSaawcgEAO3SSoYDLCAS4QDA58jGn/KOdhSavm3og
+ vyS+Ezc3zi1X2rf2OKS4EBVpA51m+6J7qacP9Xm57/kVztEdyWcHz0DsFK32OXnsNmd7lP
+ 47OgGOcEy9qPE71qxoVJrhwDKVY0I08=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-HXG03kKrNSKOfdVGjeOxYA-1; Tue,
+ 17 Dec 2024 09:28:50 -0500
+X-MC-Unique: HXG03kKrNSKOfdVGjeOxYA-1
+X-Mimecast-MFC-AGG-ID: HXG03kKrNSKOfdVGjeOxYA
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8160619560B2; Tue, 17 Dec 2024 14:28:47 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A01A1300F9B7; Tue, 17 Dec 2024 14:28:42 +0000 (UTC)
+Date: Tue, 17 Dec 2024 14:28:40 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PULL 3/7] x86/loader: expose unpatched kernel
+Message-ID: <Z2GKmE0kxkbhs8tp@redhat.com>
+References: <20241216105053.246204-1-kraxel@redhat.com>
+ <20241216105053.246204-4-kraxel@redhat.com>
+ <Z2GHc5qwDub89qCa@redhat.com>
+ <52zucjcan5q4dwgsdchkwqi6bhdfx3ziw7ud52rratqhyzikci@3ainfgz6e4yp>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] include: Two cleanups around missing 'qemu/atomic.h'
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>
-References: <20241217141326.98947-1-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241217141326.98947-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <52zucjcan5q4dwgsdchkwqi6bhdfx3ziw7ud52rratqhyzikci@3ainfgz6e4yp>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,15 +93,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/17/24 08:13, Philippe Mathieu-Daudé wrote:
-> Philippe Mathieu-Daudé (2):
->    exec/translation-block: Include missing 'qemu/atomic.h' header
->    qemu/coroutine: Include missing 'qemu/atomic.h' header
+On Tue, Dec 17, 2024 at 03:26:35PM +0100, Gerd Hoffmann wrote:
+> On Tue, Dec 17, 2024 at 02:15:15PM +0000, Daniel P. Berrangé wrote:
+> > On Mon, Dec 16, 2024 at 11:50:49AM +0100, Gerd Hoffmann wrote:
+> > > Add a new "etc/boot/kernel" fw_cfg file, containing the kernel without
+> > > the setup header patches.  Intended use is booting in UEFI with secure
+> > > boot enabled, where the setup header patching breaks secure boot
+> > > verification.
+> > > 
+> > > Needs OVMF changes too to be actually useful.
+> > > 
+> > > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> > > Message-ID: <20240905141211.1253307-5-kraxel@redhat.com>
+> > > ---
+> > >  hw/i386/x86-common.c | 3 +++
+> > >  1 file changed, 3 insertions(+)
+> > > 
+> > > diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+> > > index 28341b42d949..1cef3045ad83 100644
+> > > --- a/hw/i386/x86-common.c
+> > > +++ b/hw/i386/x86-common.c
+> > > @@ -962,6 +962,9 @@ void x86_load_linux(X86MachineState *x86ms,
+> > >      sev_load_ctx.setup_data = (char *)setup;
+> > >      sev_load_ctx.setup_size = setup_size;
+> > >  
+> > > +    /* kernel without setup header patches */
+> > > +    fw_cfg_add_file(fw_cfg, "etc/boot/kernel", kernel, kernel_size);
+> > > +
+> > 
+> > How concerned should we be about the memory duplication overhead
+> > from loading the kernel image twice ?
+> 
+> It's not loaded twice, see 214191f6b574 ("x86/loader: read complete
+> kernel"), both fw_cfg entries point to the same memory block.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Ah, I see now, that's subtle :-)
 
-r~
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
