@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3FD6E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:23:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0D0BE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:23:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbEs-0007xw-Gc; Tue, 17 Dec 2024 12:20:06 -0500
+	id 1tNbF3-00081z-Sj; Tue, 17 Dec 2024 12:20:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEq-0007x6-RA
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:05 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tNbEw-0007z3-7P
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:10 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEf-0006BT-OT
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:04 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so22927005e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:50 -0800 (PST)
+ id 1tNbEi-0006DM-31
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:08 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3862b364538so3245691f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734455988; x=1735060788; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734455992; x=1735060792; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=xF0sOxJFHtjA3NYMq21N6K3jmjQXICidMHaId+8egGs=;
- b=BabktNGSo7n8rNKZVJ0YujODZi/FZhX6Zx0Thk52McoVX5X7nDnWvSt2OP7ipJQNrW
- DBfFIORJsysOqpr3BOafUIZvbGgqqGurUPyH8StgOE9Nb1s+o0A9FzPLtq0eSLWmEqBB
- FlFHfGm9t24ySnyDYlj2qfNE+I2kp0v7L5IqF/6QJIUr4kFBW7F3yKuyeHxgDvU9XQht
- DCO6ww/sPQ7tNFeRD1/fBzURyUkAJf8TLDcqCMViKQkIPYxOrB93E0gdbGqPktGnqzRH
- 8NL0gnyK051SOZ81jr0ERQqgAzBaldJ5S275yHabL5azkXRr3rtAjPZQpVzqOnR4Ri6Z
- 2ueQ==
+ :reply-to; bh=qu7n5SMfurjzkPz6Mh3VSolF3Qw9b8ZT5LnuFsdfpCY=;
+ b=MJPqB2yW/FW+/dIQhjnSV8kPxzktMNX+IiHp+37+r3eEgzLmHBGZPUcZct2pRyjcAW
+ JhLnR/qkNwEuRiPYTmuJR9Jpr/KS53LYLgSWVjUzXRSL28+6ssMLs20j6VaUgevTFUes
+ 5Jy9/WbXpIUMSgCXv5W1fXeg+ZyRtqBPcHNWjaxcPZpanwZ1Lw3X6db/RwK/HpKnBx29
+ TJTN2y0iYzTKe6Ky8o/6KKzwg2/EdbaH3aClpPL4ROy/+SYRq+3WX9rMBMUfHv47n+C9
+ vfuZHCeVbwEAXbCFD63tn/qrcEwZwr0OcpHo2SckCa8Mt/heuoRU68DQ5HiX1Tk0cKDD
+ WEdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734455988; x=1735060788;
+ d=1e100.net; s=20230601; t=1734455992; x=1735060792;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xF0sOxJFHtjA3NYMq21N6K3jmjQXICidMHaId+8egGs=;
- b=DwLx5dEy1ZUqWaf7Qkbx3jATQD3+ED9VGc5lOr9pX8lEPiV/AqZcBycnWViw4567EJ
- Qjz3NaYAXapt2PbbrWQ7jVQMLT6myrhL5muVNZlyznnYdCe+EiY5FkcjKSM+6hH3jqir
- FKVS+VJJu5rndFpsbvWl2/E4bHuEf8PTeJxPcJp5gyLI3SKgSgmumr66fUi7dZ4xc3w+
- wwcBByA/8nejiLToK0d9ETnAQjPkCzqRU3IQ3RgxcyfA0GqXqDt8QyC5kaU9l3uyQcrY
- xoMcp192tsy7HNHcXmYSobhxpYBPafJbPOVHi44jCUTS8w0EIdlMCdoad/GXzqw00eEC
- vcSA==
-X-Gm-Message-State: AOJu0Yx7f41fKc/IUMvf1aP/clTlaSNJYIK2HCoH57teuHqgHIijRBz8
- AStQBFUwxAZVByVDvFlPyI2mlweRak4IZ9FKXeUWObfQ07zxP5yworh/+g+hjb4pd+4HTz3Lng4
- B
-X-Gm-Gg: ASbGncszoRaG3N92mQmLK23Ugc9jGNz+dbywauWWSvlKI91bLCulD7l5YthzdDeLHkm
- daxxgpvbyK1nZj6X0Wlqxi/r/mzjQWpR3fc4I20SIKrjzeP2pGrFU8S0UX7wglv/N5Mvlde6teg
- trKSpH5ajeBEwGy+Yyk8Ft4nR42w83hBi1hvsWvDWFPz6AQHo7ZRu7QIOkspfF9b5KjDigH6H5o
- NbccHrteYro+Hzysd4GfNo86SszYcvgGdNG/Ik/ydvOu3s72qxU04HZJhbYbqU=
-X-Google-Smtp-Source: AGHT+IFbBMuZoyKyCGjUjedRG+UVVH2OsudYyuuh0HXUhMIa83bFNZMtRc0AM7rMAjW1OHvxUJJfsQ==
-X-Received: by 2002:a05:600c:3b22:b0:434:fa73:a906 with SMTP id
- 5b1f17b1804b1-4364814eefdmr34512335e9.4.1734455988294; 
- Tue, 17 Dec 2024 09:19:48 -0800 (PST)
+ bh=qu7n5SMfurjzkPz6Mh3VSolF3Qw9b8ZT5LnuFsdfpCY=;
+ b=avBBfQjVFrYDmc0Ri/1/q3THwFczgesxcaFX2tNOdUT12r4hyLhBSoTUBvqjK64kQj
+ uzzwyO3qsISnvmoT8YenLLAdIi8x7fbS8URUhXL27hGciHHgR/zwMrq5YPxH3cQ8VyZG
+ ItXxbxkb8gpwG41x5Ami0g0Gbsm3a9c+OxetlccSs5V/k7UcRjtM3p3oXPS0o/As0OtS
+ IBnyH1YiDWBFQyzRycsXKh7vV5ZaI+sm9Tz3Kc8HQFP/RxnMhAUJSNk4ixu2zhetyXPA
+ SSoIHooOloxSW9G2muoKixJO9Q8NV11CF2/PA0dcFqSKQwL6aQ3C/8tWqdi7qcHViRvr
+ 9qAg==
+X-Gm-Message-State: AOJu0Yzk5D6xCqgMIhxt6E9bra4otFAxoAQdIxwLfeK6//Bci8FP2Ils
+ RJ1Gu2zPJpJ4ilzei4wMU+U8pT9pbUyk81Ov9gzmAeYyVCxQSxp1N7pPGPXoD3SF1NtkVdb6loj
+ S
+X-Gm-Gg: ASbGnctYGtERCX1DqK+liMgMtOmWS4NAdw2vZhuWe8+yxKWdyQ8HmFPiU5QRF+2/gcH
+ PDbwQionf8YCIOUKDRfH3GZOECjGYqIK6t1d1tUXJmIIFoIZLKX27LfMK6e4/5gi0DVa21hc8Sp
+ tIOzePML+keaFhVjRLMaNVajchgpR3tHklKqlbb3kuf6o+KVXSMYzgXidl8F2dB7hAzysubOn7X
+ C/Psmn7i5rZnMQs0G+jtjQ/rf9gApjZ0u9UXtAI5HeWRHAEqOqlqLF2v1jGVVY=
+X-Google-Smtp-Source: AGHT+IFVeC4pUB7v1Jj5/UlFinktIcDBnioe3qyD5qpPCY8WJO4+cXmanU2sKzYGF4i37Qs+zNEEpw==
+X-Received: by 2002:a05:6000:987:b0:382:3211:6b7e with SMTP id
+ ffacd0b85a97d-388db266e4amr2913090f8f.31.1734455992187; 
+ Tue, 17 Dec 2024 09:19:52 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.47
+ ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.51
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 09:19:47 -0800 (PST)
+ Tue, 17 Dec 2024 09:19:51 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/19] target/arm: Convert vec_helper.c to use env alias
-Date: Tue, 17 Dec 2024 17:19:26 +0000
-Message-Id: <20241217171937.3899947-9-peter.maydell@linaro.org>
+Subject: [PULL 12/19] target/arm: Implement fine-grained-trap handling for
+ FEAT_XS
+Date: Tue, 17 Dec 2024 17:19:30 +0000
+Message-Id: <20241217171937.3899947-13-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241217171937.3899947-1-peter.maydell@linaro.org>
 References: <20241217171937.3899947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,149 +98,196 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Richard Henderson <richard.henderson@linaro.org>
+FEAT_XS introduces a set of new TLBI maintenance instructions with an
+"nXS" qualifier.  These behave like the stardard ones except that
+they do not wait for memory accesses with the XS attribute to
+complete.  They have an interaction with the fine-grained-trap
+handling: the FGT bits that a hypervisor can use to trap TLBI
+maintenance instructions normally trap also the nXS variants, but the
+hypervisor can elect to not trap the nXS variants by setting
+HCRX_EL2.FGTnXS to 1.
 
-Allow the helpers to receive CPUARMState* directly
-instead of via void*.
+Add support to our FGT mechanism for these TLBI bits. For each
+TLBI-trapping FGT bit we define, for example:
+ * FGT_TLBIVAE1 -- the same value we do at present for the
+   normal variant of the insn
+ * FGT_TLBIVAE1NXS -- for the nXS qualified insn; the value of
+   this enum has an NXS bit ORed into it
 
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20241206031224.78525-9-richard.henderson@linaro.org
+In access_check_cp_reg() we can then ignore the trap bit for an
+access where ri->fgt has the NXS bit set and HCRX_EL2.FGTnXS is 1.
+
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20241211144440.2700268-2-peter.maydell@linaro.org
 ---
- target/arm/helper.h         | 12 ++++++------
- target/arm/tcg/helper-a64.h |  2 +-
- target/arm/tcg/vec_helper.c | 21 +++++++--------------
- 3 files changed, 14 insertions(+), 21 deletions(-)
+ target/arm/cpregs.h        | 72 ++++++++++++++++++++++----------------
+ target/arm/cpu-features.h  |  5 +++
+ target/arm/helper.c        |  5 ++-
+ target/arm/tcg/op_helper.c | 11 +++++-
+ 4 files changed, 61 insertions(+), 32 deletions(-)
 
-diff --git a/target/arm/helper.h b/target/arm/helper.h
-index 9a1b6d1b6d7..bb241df8260 100644
---- a/target/arm/helper.h
-+++ b/target/arm/helper.h
-@@ -859,13 +859,13 @@ DEF_HELPER_FLAGS_5(gvec_suqadd_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, i32)
+diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
+index cc7c54378f4..87704762ef9 100644
+--- a/target/arm/cpregs.h
++++ b/target/arm/cpregs.h
+@@ -621,6 +621,7 @@ FIELD(HDFGWTR_EL2, NBRBCTL, 60, 1)
+ FIELD(HDFGWTR_EL2, NBRBDATA, 61, 1)
+ FIELD(HDFGWTR_EL2, NPMSNEVFR_EL1, 62, 1)
  
- DEF_HELPER_FLAGS_5(gvec_fmlal_a32, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_5(gvec_fmlal_a64, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_5(gvec_fmlal_idx_a32, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_5(gvec_fmlal_idx_a64, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, env, i32)
++FIELD(FGT, NXS, 13, 1) /* Honour HCR_EL2.FGTnXS to suppress FGT */
+ /* Which fine-grained trap bit register to check, if any */
+ FIELD(FGT, TYPE, 10, 3)
+ FIELD(FGT, REV, 9, 1) /* Is bit sense reversed? */
+@@ -639,6 +640,17 @@ FIELD(FGT, BITPOS, 0, 6) /* Bit position within the uint64_t */
+ #define DO_REV_BIT(REG, BITNAME)                                        \
+     FGT_##BITNAME = FGT_##REG | FGT_REV | R_##REG##_EL2_##BITNAME##_SHIFT
  
- DEF_HELPER_FLAGS_2(frint32_s, TCG_CALL_NO_RWG, f32, f32, fpst)
- DEF_HELPER_FLAGS_2(frint64_s, TCG_CALL_NO_RWG, f32, f32, fpst)
-@@ -1036,9 +1036,9 @@ DEF_HELPER_FLAGS_4(sve2_sqrdmulh_idx_d, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, i32)
- 
- DEF_HELPER_FLAGS_6(sve2_fmlal_zzzw_s, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_6(sve2_fmlal_zzxw_s, TCG_CALL_NO_RWG,
--                   void, ptr, ptr, ptr, ptr, ptr, i32)
-+                   void, ptr, ptr, ptr, ptr, env, i32)
- 
- DEF_HELPER_FLAGS_4(gvec_xar_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
- 
-diff --git a/target/arm/tcg/helper-a64.h b/target/arm/tcg/helper-a64.h
-index 4d704939145..26e327af3a2 100644
---- a/target/arm/tcg/helper-a64.h
-+++ b/target/arm/tcg/helper-a64.h
-@@ -29,7 +29,7 @@ DEF_HELPER_3(vfp_cmps_a64, i64, f32, f32, fpst)
- DEF_HELPER_3(vfp_cmpes_a64, i64, f32, f32, fpst)
- DEF_HELPER_3(vfp_cmpd_a64, i64, f64, f64, fpst)
- DEF_HELPER_3(vfp_cmped_a64, i64, f64, f64, fpst)
--DEF_HELPER_FLAGS_4(simd_tblx, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_4(simd_tblx, TCG_CALL_NO_RWG, void, ptr, ptr, env, i32)
- DEF_HELPER_FLAGS_3(vfp_mulxs, TCG_CALL_NO_RWG, f32, f32, f32, fpst)
- DEF_HELPER_FLAGS_3(vfp_mulxd, TCG_CALL_NO_RWG, f64, f64, f64, fpst)
- DEF_HELPER_FLAGS_3(neon_ceq_f64, TCG_CALL_NO_RWG, i64, i64, i64, fpst)
-diff --git a/target/arm/tcg/vec_helper.c b/target/arm/tcg/vec_helper.c
-index d2d9d5e8295..e3083c6e84e 100644
---- a/target/arm/tcg/vec_helper.c
-+++ b/target/arm/tcg/vec_helper.c
-@@ -2057,28 +2057,25 @@ static void do_fmlal(float32 *d, void *vn, void *vm, float_status *fpst,
++/*
++ * The FGT bits for TLBI maintenance instructions accessible at EL1 always
++ * affect the "normal" TLBI insns; they affect the corresponding TLBI insns
++ * with the nXS qualifier only if HCRX_EL2.FGTnXS is 0. We define e.g.
++ * FGT_TLBIVAE1 to use for the normal insn, and FGT_TLBIVAE1NXS to use
++ * for the nXS qualified insn.
++ */
++#define DO_TLBINXS_BIT(REG, BITNAME)                             \
++    FGT_##BITNAME = FGT_##REG | R_##REG##_EL2_##BITNAME##_SHIFT, \
++    FGT_##BITNAME##NXS = FGT_##BITNAME | R_FGT_NXS_MASK
++
+ typedef enum FGTBit {
+     /*
+      * These bits tell us which register arrays to use:
+@@ -772,36 +784,36 @@ typedef enum FGTBit {
+     DO_BIT(HFGITR, ATS1E0W),
+     DO_BIT(HFGITR, ATS1E1RP),
+     DO_BIT(HFGITR, ATS1E1WP),
+-    DO_BIT(HFGITR, TLBIVMALLE1OS),
+-    DO_BIT(HFGITR, TLBIVAE1OS),
+-    DO_BIT(HFGITR, TLBIASIDE1OS),
+-    DO_BIT(HFGITR, TLBIVAAE1OS),
+-    DO_BIT(HFGITR, TLBIVALE1OS),
+-    DO_BIT(HFGITR, TLBIVAALE1OS),
+-    DO_BIT(HFGITR, TLBIRVAE1OS),
+-    DO_BIT(HFGITR, TLBIRVAAE1OS),
+-    DO_BIT(HFGITR, TLBIRVALE1OS),
+-    DO_BIT(HFGITR, TLBIRVAALE1OS),
+-    DO_BIT(HFGITR, TLBIVMALLE1IS),
+-    DO_BIT(HFGITR, TLBIVAE1IS),
+-    DO_BIT(HFGITR, TLBIASIDE1IS),
+-    DO_BIT(HFGITR, TLBIVAAE1IS),
+-    DO_BIT(HFGITR, TLBIVALE1IS),
+-    DO_BIT(HFGITR, TLBIVAALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAE1IS),
+-    DO_BIT(HFGITR, TLBIRVAAE1IS),
+-    DO_BIT(HFGITR, TLBIRVALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAALE1IS),
+-    DO_BIT(HFGITR, TLBIRVAE1),
+-    DO_BIT(HFGITR, TLBIRVAAE1),
+-    DO_BIT(HFGITR, TLBIRVALE1),
+-    DO_BIT(HFGITR, TLBIRVAALE1),
+-    DO_BIT(HFGITR, TLBIVMALLE1),
+-    DO_BIT(HFGITR, TLBIVAE1),
+-    DO_BIT(HFGITR, TLBIASIDE1),
+-    DO_BIT(HFGITR, TLBIVAAE1),
+-    DO_BIT(HFGITR, TLBIVALE1),
+-    DO_BIT(HFGITR, TLBIVAALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1OS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1IS),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIRVAALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVMALLE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIASIDE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAAE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVALE1),
++    DO_TLBINXS_BIT(HFGITR, TLBIVAALE1),
+     DO_BIT(HFGITR, CFPRCTX),
+     DO_BIT(HFGITR, DVPRCTX),
+     DO_BIT(HFGITR, CPPRCTX),
+diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
+index e806f138b8f..30302d6c5b4 100644
+--- a/target/arm/cpu-features.h
++++ b/target/arm/cpu-features.h
+@@ -474,6 +474,11 @@ static inline bool isar_feature_aa64_fcma(const ARMISARegisters *id)
+     return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, FCMA) != 0;
  }
  
- void HELPER(gvec_fmlal_a32)(void *vd, void *vn, void *vm,
--                            void *venv, uint32_t desc)
-+                            CPUARMState *env, uint32_t desc)
- {
--    CPUARMState *env = venv;
-     do_fmlal(vd, vn, vm, &env->vfp.standard_fp_status, desc,
-              get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
- }
++static inline bool isar_feature_aa64_xs(const ARMISARegisters *id)
++{
++    return FIELD_EX64(id->id_aa64isar1, ID_AA64ISAR1, XS) != 0;
++}
++
+ /*
+  * These are the values from APA/API/APA3.
+  * In general these must be compared '>=', per the normal Arm ARM
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 910ae62c476..8e62769ec0d 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -5346,10 +5346,13 @@ static void hcrx_write(CPUARMState *env, const ARMCPRegInfo *ri,
+         valid_mask |= HCRX_TALLINT | HCRX_VINMI | HCRX_VFNMI;
+     }
+     /* FEAT_CMOW adds CMOW */
+-
+     if (cpu_isar_feature(aa64_cmow, cpu)) {
+         valid_mask |= HCRX_CMOW;
+     }
++    /* FEAT_XS adds FGTnXS, FnXS */
++    if (cpu_isar_feature(aa64_xs, cpu)) {
++        valid_mask |= HCRX_FGTNXS | HCRX_FNXS;
++    }
  
- void HELPER(gvec_fmlal_a64)(void *vd, void *vn, void *vm,
--                            void *venv, uint32_t desc)
-+                            CPUARMState *env, uint32_t desc)
- {
--    CPUARMState *env = venv;
-     do_fmlal(vd, vn, vm, &env->vfp.fp_status, desc,
-              get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
- }
+     /* Clear RES0 bits.  */
+     env->cp15.hcrx_el2 = value & valid_mask;
+diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
+index 1ecb4659889..1161d301b71 100644
+--- a/target/arm/tcg/op_helper.c
++++ b/target/arm/tcg/op_helper.c
+@@ -817,6 +817,7 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+         unsigned int idx = FIELD_EX32(ri->fgt, FGT, IDX);
+         unsigned int bitpos = FIELD_EX32(ri->fgt, FGT, BITPOS);
+         bool rev = FIELD_EX32(ri->fgt, FGT, REV);
++        bool nxs = FIELD_EX32(ri->fgt, FGT, NXS);
+         bool trapbit;
  
- void HELPER(sve2_fmlal_zzzw_s)(void *vd, void *vn, void *vm, void *va,
--                               void *venv, uint32_t desc)
-+                               CPUARMState *env, uint32_t desc)
- {
-     intptr_t i, oprsz = simd_oprsz(desc);
-     uint16_t negn = extract32(desc, SIMD_DATA_SHIFT, 1) << 15;
-     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
--    CPUARMState *env = venv;
-     float_status *status = &env->vfp.fp_status;
-     bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16);
+         if (ri->fgt & FGT_EXEC) {
+@@ -830,7 +831,15 @@ const void *HELPER(access_check_cp_reg)(CPUARMState *env, uint32_t key,
+             trapword = env->cp15.fgt_write[idx];
+         }
  
-@@ -2122,29 +2119,26 @@ static void do_fmlal_idx(float32 *d, void *vn, void *vm, float_status *fpst,
- }
- 
- void HELPER(gvec_fmlal_idx_a32)(void *vd, void *vn, void *vm,
--                                void *venv, uint32_t desc)
-+                                CPUARMState *env, uint32_t desc)
- {
--    CPUARMState *env = venv;
-     do_fmlal_idx(vd, vn, vm, &env->vfp.standard_fp_status, desc,
-                  get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
- }
- 
- void HELPER(gvec_fmlal_idx_a64)(void *vd, void *vn, void *vm,
--                                void *venv, uint32_t desc)
-+                                CPUARMState *env, uint32_t desc)
- {
--    CPUARMState *env = venv;
-     do_fmlal_idx(vd, vn, vm, &env->vfp.fp_status, desc,
-                  get_flush_inputs_to_zero(&env->vfp.fp_status_f16));
- }
- 
- void HELPER(sve2_fmlal_zzxw_s)(void *vd, void *vn, void *vm, void *va,
--                               void *venv, uint32_t desc)
-+                               CPUARMState *env, uint32_t desc)
- {
-     intptr_t i, j, oprsz = simd_oprsz(desc);
-     uint16_t negn = extract32(desc, SIMD_DATA_SHIFT, 1) << 15;
-     intptr_t sel = extract32(desc, SIMD_DATA_SHIFT + 1, 1) * sizeof(float16);
-     intptr_t idx = extract32(desc, SIMD_DATA_SHIFT + 2, 3) * sizeof(float16);
--    CPUARMState *env = venv;
-     float_status *status = &env->vfp.fp_status;
-     bool fz16 = get_flush_inputs_to_zero(&env->vfp.fp_status_f16);
- 
-@@ -2562,10 +2556,9 @@ DO_VRINT_RMODE(gvec_vrint_rm_s, helper_rints, uint32_t)
- #undef DO_VRINT_RMODE
- 
- #ifdef TARGET_AARCH64
--void HELPER(simd_tblx)(void *vd, void *vm, void *venv, uint32_t desc)
-+void HELPER(simd_tblx)(void *vd, void *vm, CPUARMState *env, uint32_t desc)
- {
-     const uint8_t *indices = vm;
--    CPUARMState *env = venv;
-     size_t oprsz = simd_oprsz(desc);
-     uint32_t rn = extract32(desc, SIMD_DATA_SHIFT, 5);
-     bool is_tbx = extract32(desc, SIMD_DATA_SHIFT + 5, 1);
+-        trapbit = extract64(trapword, bitpos, 1);
++        if (nxs && (arm_hcrx_el2_eff(env) & HCRX_FGTNXS)) {
++            /*
++             * If HCRX_EL2.FGTnXS is 1 then the fine-grained trap for
++             * TLBI maintenance insns does *not* apply to the nXS variant.
++             */
++            trapbit = 0;
++        } else {
++            trapbit = extract64(trapword, bitpos, 1);
++        }
+         if (trapbit != rev) {
+             res = CP_ACCESS_TRAP_EL2;
+             goto fail;
 -- 
 2.34.1
 
