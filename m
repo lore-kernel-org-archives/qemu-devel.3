@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6890E77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:43:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B921CE77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:43:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNgHc-0004Ig-UN; Tue, 17 Dec 2024 17:43:17 -0500
+	id 1tNgHi-0004L8-Rt; Tue, 17 Dec 2024 17:43:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHb-0004I8-3U
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:15 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1tNgHg-0004Jy-QE
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:20 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHY-00018S-RN
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:14 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-728eccf836bso5151592b3a.1
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:12 -0800 (PST)
+ id 1tNgHd-00019v-Kb
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:20 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-728ea1e0bdbso4575812b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734475390; x=1735080190; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=JC4GxJz38t3F03j+PKDd/gQkOP6CLd7q7r5tKLCpngM=;
- b=UhDz7pdQQce6uzxkrFdiVcXc8U9NjBAWc/1GiBH7tbH+h1C+xP/Ys3KhPif3k7BxKg
- ahMOCkMfgC0J0BA8ujOYvTjWpXGoXzuJ9yttF/Fh/xvUPs2Ub0gD0kASo57pKyTVhoNw
- tgupT4BrVGA0ANQtNwAg+Mmq39wvVsy/lBrummea2HacybLNcpFBZPdfS5bRhUQaGQJW
- zTnvThjv6Thj3iZJldZaaRXHq5owtiRQYE67faXCe9AinDnwyHBkRvvdTizXnNPesN6K
- jQBZbOvwVAoCwE5XEBrW5fkWPyTjIyb7Pq1tBaern2vCS8L+MS6quhUUfL/WC6lO7yDS
- rY3w==
+ d=linaro.org; s=google; t=1734475396; x=1735080196; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7+nQuV745MSVduGtVwWvyxFW8ma4a2v2SK14uCf1mjQ=;
+ b=a/mBksHYTHQ9MkPGP5YM74WEz2oxK4mDr7QnXTbYQ+MEFSVFNcNjd9BryGmFMugfnl
+ rIcxnJ/BC3FibTJGS3cp/VYsI7ooq8jUpoNopzqxA+W7PZf5KeRQPy6IsrZSgFJObtya
+ miVvADzU+b0CzjGfM6c4mD/30p2FEsXmzgyUcoECW8XrSqNuyMtPeoMufpozEmNNTOy9
+ afYVAFgzwJkRwYL5164wicbfSK0J7ScfULG3q1l6W4fIFOeM42aDEJLrC/DqO+xqwd0p
+ BeZaFb4atUDB8jrb33EVm4kflANqf5cIK9iS9M48t1Dvm/TPGICwnXMDAsuxFvONIfDc
+ GXVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734475390; x=1735080190;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JC4GxJz38t3F03j+PKDd/gQkOP6CLd7q7r5tKLCpngM=;
- b=SbX913sFfKmR+v5uJdgYHQqQjKg1mmzaD0XozobUXI0ypTC0Z7XXfZchmuiU9CMrhv
- QMLuorvA2t9Iooyz81vrjC9v5E5qba6d60F1X89JWj6qidlJ9iPP0rmfYWuSNRDJLbxb
- viTjDY6r3sdHzW/tQes5ci8vm4S/polylOP+DT/NUeVE0CREI0So0SWwBtdE4NrGSdDJ
- pYCyQ1f8Pxlo8urjJSvl1JSx+m6BzTtg9vBhqdZl0rTU50wqIhnXrs5ncdhXnfFq1jf0
- BpjkUP2jzadv78u1WHyWiDy5uEtt6I258JEsJoFCstMQUS8C3bSkYpaV4wrNlBtBwb3b
- kmgw==
-X-Gm-Message-State: AOJu0YzhI3ZFGCllyOzxWSkLtHa5AJtDlXpB194X8qmirrEB2X7d6rrU
- xu9aUZlD7F/hf3xKAXuC0Ger1FpGRFGfl4OxdAxxIicJBiK8AS7HUpiJYaRxc/iZt2O0vs2q5i9
- YiOI=
-X-Gm-Gg: ASbGncveuL58r0aAO+klyLXhQrDx49ljPuKZbPO4EiMkORt8SLq8W5JKo0lDcDMFxRg
- 0m/O9Yo+AXK0mXfrtOWZslo4/3nsbhKTucwaAR8VoSFzJR5yzoM8hOCLkZV8rPjDFQXubG8sqiD
- 2JMFkQs9eY9t3hOArTjnnmCfz70P/sQPiSJDt0ALB0TyJO3Z+tP9RE/GrdfqT2SP0TgRGXSP9e9
- UwB8jDKB3QW+CpSc321a17psvMSosW0Mr1KK7kyQRklmaHozMlKcGCD
-X-Google-Smtp-Source: AGHT+IHJpV31k8QAKjDi4oz5R5Jgde/bPz6tlQJ8cmo4qIzIyp/PhswW8uLHfkodELdcpIG/pUln7Q==
-X-Received: by 2002:a05:6a00:1941:b0:725:b347:c3cc with SMTP id
- d2e1a72fcca58-72a8d2f0b7amr989542b3a.23.1734475390623; 
- Tue, 17 Dec 2024 14:43:10 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734475396; x=1735080196;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7+nQuV745MSVduGtVwWvyxFW8ma4a2v2SK14uCf1mjQ=;
+ b=l7U6OJQexbmEVYBbZX37ccD0QgqtT0B/Szj9uMX/0TfLT8yIbYoRD9r3fg1UW8CPKY
+ 0Et8PadJzz/zGLtiG5+VzIagBaIDYX0WE4wCxCwrz/WVqJN69RwXiOsKhGN3sECgKoGz
+ dGiPN9FQHWevvgfXOXl4ii0eMf3y+fwOKSDQ04ZMfFIcwMOw6Jv5O0Z2KWyGN3GUpIBx
+ S0dUuJLCS32Q4DfA4i1Tu3zkFjQ7226c9PbMD9luztVW8oXLotRirWBM3SeEBQ3Ltk8a
+ ye5IehL8kZCFR0OPq2btCb0PjXLzWWAc+QrBbhQFaMeYbVmj/hXT8gabbGarqxALWupu
+ y55g==
+X-Gm-Message-State: AOJu0YxIik0dBH56eQFgpaiq6uQQB+oywNoSrKWtWmvj+9bvTFSaArA1
+ NBlRbfzPyrtvv0wbs21vqwgXlsTTOUscLE5XO37fBVsNH2T5BTW6CZ/iKMhXNY+881wGK0EBILQ
+ MUzQ=
+X-Gm-Gg: ASbGncsXykDm6gIP9LyxlSwu5uTUOZgni6C3F+QUtYUTI7NzLjnwooaJr1tEnNN9nZE
+ AucKjpnXo1pBo2XLzoXdT+GRa/2cYftOLO3f/BOoj4wyCg/EePpOlqxvulAcEmgyLne9+SJozVl
+ JLo7v1YvrHG4fRZx8S1gqdH9+4s8E0PX6TQW0ZY2W0RGIXQ7IC0m1LfGGiTcEjGZnmqApfYH2VG
+ IgYedQzitSwzOp6p1sH8wns9HJb2e13VG/XoCjKsoMsb/yf5+L7v8cv
+X-Google-Smtp-Source: AGHT+IEVcYxo6vfxppxRKBr1g1wRzj7evYJKsUDoSV9n/lBdfgjMuj/TntCbYjVt5fdyvnhspmDK5Q==
+X-Received: by 2002:a05:6a00:114c:b0:71e:16b3:e5dc with SMTP id
+ d2e1a72fcca58-72a8d2dee69mr1079991b3a.19.1734475396186; 
+ Tue, 17 Dec 2024 14:43:16 -0800 (PST)
 Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72918ac53f3sm7463214b3a.27.2024.12.17.14.43.09
+ d2e1a72fcca58-72918ac53f3sm7463214b3a.27.2024.12.17.14.43.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 14:43:10 -0800 (PST)
+ Tue, 17 Dec 2024 14:43:15 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -69,15 +70,16 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 00/11] Fix 32-bit build for plugins
-Date: Tue, 17 Dec 2024 14:42:55 -0800
-Message-Id: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 06/11] contrib/plugins/cache: fix 32-bit build
+Date: Tue, 17 Dec 2024 14:43:01 -0800
+Message-Id: <20241217224306.2900490-7-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
+References: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since 9.2.0 release, we are building contrib plugins using the QEMU build system
-(before, it was external makefiles). When building for 32-bit host platform,
-some warnings are triggered and build fail.
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/cache.c | 18 ++++++------------
+ 1 file changed, 6 insertions(+), 12 deletions(-)
 
-Thus, at the time, the decision was to not fix those plugins, and
-disable by default plugins for 32-bit host platforms (see cf2a78cb).
-
-This series fix plugins to have the same behaviour on 32-bit and 64-bit
-platform, and reenable plugins for 32-bit platforms.
-
-There are two portability issues:
-- we use hash tables, and use data as key directly. As key has a pointer size,
-  it limits its size for 32-bit platform.
-  The fix is to use pointer as a key, and point to allocated 64-bit data. The
-  change is pretty straightforward for concerned plugins, and does not imply a
-  memory overhead, as hash table entry is already heap allocated usually.
-- we use plugins callback data to pass a pc. This does not work on 32-bit
-  platform, as we are limited to a pointer size.
-  To avoid doing memory allocations, we simply we simply use
-  inline operations and a scoreboard to achieve the same result.
-
-Tested (for every plugin modified) on i686 and x86_64.
-The behaviour before and after this series was checked as well, and there is no
-difference, apart from bug fixing (some pc were clipped at 32-bit values, even
-on the 64-bit platform).
-
-v2:
-- do not modify qemu_plugin_insn_haddr signature
-- fix cache plugin to use a correct hash/equal function
-
-v3:
-- add missing Reviewed-by tags
-
-Pierrick Bouvier (11):
-  tests/tcg/plugins/insn: remove unused callback parameter
-  contrib/plugins/howvec: ensure we don't regress if this plugin is
-    extended
-  tests/tcg/plugins/syscall: fix 32-bit build
-  tests/tcg/plugins/mem: fix 32-bit build
-  contrib/plugins/stoptrigger: fix 32-bit build
-  contrib/plugins/cache: fix 32-bit build
-  contrib/plugins/hotblocks: fix 32-bit build
-  contrib/plugins/cflow: fix 32-bit build
-  contrib/plugins/hwprofile: fix 32-bit build
-  contrib/plugins/hotpages: fix 32-bit build
-  configure: reenable plugins by default for 32-bit hosts
-
- configure                     | 21 +--------------
- contrib/plugins/cache.c       | 18 +++++--------
- contrib/plugins/cflow.c       | 17 ++++++++-----
- contrib/plugins/hotblocks.c   | 29 +++++++++++++++++----
- contrib/plugins/hotpages.c    |  6 ++---
- contrib/plugins/howvec.c      |  7 ++---
- contrib/plugins/hwprofile.c   | 27 ++++++++++++--------
- contrib/plugins/stoptrigger.c | 48 ++++++++++++++++++++---------------
- tests/tcg/plugins/insn.c      |  4 +--
- tests/tcg/plugins/mem.c       |  6 ++---
- tests/tcg/plugins/syscall.c   |  6 ++---
- 11 files changed, 99 insertions(+), 90 deletions(-)
-
+diff --git a/contrib/plugins/cache.c b/contrib/plugins/cache.c
+index 512ef6776b7..7baff868609 100644
+--- a/contrib/plugins/cache.c
++++ b/contrib/plugins/cache.c
+@@ -208,7 +208,7 @@ static int fifo_get_first_block(Cache *cache, int set)
+ static void fifo_update_on_miss(Cache *cache, int set, int blk_idx)
+ {
+     GQueue *q = cache->sets[set].fifo_queue;
+-    g_queue_push_head(q, GINT_TO_POINTER(blk_idx));
++    g_queue_push_head(q, (gpointer)(intptr_t) blk_idx);
+ }
+ 
+ static void fifo_destroy(Cache *cache)
+@@ -471,13 +471,8 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+     n_insns = qemu_plugin_tb_n_insns(tb);
+     for (i = 0; i < n_insns; i++) {
+         struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+-        uint64_t effective_addr;
+-
+-        if (sys) {
+-            effective_addr = (uint64_t) qemu_plugin_insn_haddr(insn);
+-        } else {
+-            effective_addr = (uint64_t) qemu_plugin_insn_vaddr(insn);
+-        }
++        uint64_t effective_addr = sys ? (uintptr_t) qemu_plugin_insn_haddr(insn) :
++                                        qemu_plugin_insn_vaddr(insn);
+ 
+         /*
+          * Instructions might get translated multiple times, we do not create
+@@ -485,14 +480,13 @@ static void vcpu_tb_trans(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+          * entry from the hash table and register it for the callback again.
+          */
+         g_mutex_lock(&hashtable_lock);
+-        data = g_hash_table_lookup(miss_ht, GUINT_TO_POINTER(effective_addr));
++        data = g_hash_table_lookup(miss_ht, &effective_addr);
+         if (data == NULL) {
+             data = g_new0(InsnData, 1);
+             data->disas_str = qemu_plugin_insn_disas(insn);
+             data->symbol = qemu_plugin_insn_symbol(insn);
+             data->addr = effective_addr;
+-            g_hash_table_insert(miss_ht, GUINT_TO_POINTER(effective_addr),
+-                               (gpointer) data);
++            g_hash_table_insert(miss_ht, &data->addr, data);
+         }
+         g_mutex_unlock(&hashtable_lock);
+ 
+@@ -853,7 +847,7 @@ int qemu_plugin_install(qemu_plugin_id_t id, const qemu_info_t *info,
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+ 
+-    miss_ht = g_hash_table_new_full(NULL, g_direct_equal, NULL, insn_free);
++    miss_ht = g_hash_table_new_full(g_int64_hash, g_int64_equal, NULL, insn_free);
+ 
+     return 0;
+ }
 -- 
 2.39.5
 
