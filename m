@@ -4,77 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50811E77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8992E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNa4o-000210-QE; Tue, 17 Dec 2024 11:05:47 -0500
+	id 1tNa16-0006E1-Cm; Tue, 17 Dec 2024 11:01:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNa3i-0001GN-Vh
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:04:31 -0500
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNa3f-0002Wr-OH
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:04:29 -0500
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-6f26c517979so40637247b3.2
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 08:04:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734451466; x=1735056266; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dIZOgxF/tRYx2sIQR6Y3DY+73cDyS/9EAfk34n4Xl5A=;
- b=qOPoVmIvgllw/pyllIt6s0AfMjZj0xzebVbBarhOZbRBpPrpqUIls5tilT5BWZLStE
- MUD7FaUkFYQKxlfA3NkE8GU+PDvynHsfqoplREzvZpgxIkLj0AcNOlXd83lq+O5ebTh4
- sRjUytMzrYh4zF3PRBh65fyHdqiwmHP9fLYvzVFOWvX0jKm3hc+dlqEtlOcbomFCaRBY
- Lp00oDU99pzZ0yYZVRh+Q7oF1Uzk+mC6r7Vsc4m2EWn29CLqZfmVHENSVPgVvTAkHaUU
- SJc/70H8RJPIE0igldO+gdCtINejyh0Bn3ETgkr28mVpRdL42eMlKhYvbH1LWWxrVpha
- /B+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734451466; x=1735056266;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=dIZOgxF/tRYx2sIQR6Y3DY+73cDyS/9EAfk34n4Xl5A=;
- b=fKXsyGQTSdYNbGoFQfHxL5/eg5LVoYVxHp30lMj2dTFsYVfn5BXorKQUh4QejjDmWi
- BteMLFYYj+qTOOiB6wIeJYJzVMBoBYL0bnji+jjHhPVcSU88d2VICqw8dg9bqfC0T1Kd
- r+ifHCGug6kxg4YM9eO1ajLvHtC9eAa2BPKZSCgVBUkVnUUpafPmy0XexBjiSitv7fxQ
- s/Fg3oFxAGkcskTuYe6Rme3vbbhRqGCHc9Uv8wRsuy7oM5eeRpu2d543yBuRitRW8C8J
- Gi/MxbtnJ8EnDsRDhGOI2OIXehCp73hUCRfquvsv9TxbwJbq4AYUIzmPEn6+F8HioDkQ
- F84g==
-X-Gm-Message-State: AOJu0Yw1A3c9ayia9IK0GvCyGjbEnuN54Uz4Z/z/masyqDxUrgexPRwj
- jr2seSd7wc70WNdvyMEEVHVHiC4FkvG5bz6eyXKU+IShs7+cfAyfzEfnsYONGhx0pjUlEFrdNFD
- dq6R+09jV/kbOABQTazcjm7vy3mcFaH36Ac6KJw==
-X-Gm-Gg: ASbGncvZIs8Lo+06pklZbNCUWf57LG3hmZx6Ufs3CKNRSVsf/67pYI9mA1hWSwzPIfD
- CPiVVVIxB4pkmtdlRYvpkJZQ2jAGp+6iLpA5dJKE=
-X-Google-Smtp-Source: AGHT+IF54cnKa352eM/Tn5bIfVGqRcPNrdxqeLawidmh2oLK383q7mSy8kaTimg9AlBnANP0/Q2YmP85pFsnEnNAXmk=
-X-Received: by 2002:a05:690c:4b86:b0:6ef:761e:cfc with SMTP id
- 00721157ae682-6f279b3bca1mr127690777b3.25.1734451466606; Tue, 17 Dec 2024
- 08:04:26 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNa0t-0005q6-FF
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNa0r-0002FY-2h
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734451290;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=9JgAzoDpeTQFBC9n+2CaNMSXOqGQ9KwDLWynNApg7Qs=;
+ b=EJTycXAP13a1mc8xtG1w79krOqXT02OzB3VcCSQWOx46KlxGe4ZRPd7T3iKLG4+4XFeGni
+ ILwBii/axv/zWNzPIKMx0Z4upTJEGtGShL+3z3po79tRcW7GsTMSsrzitqkJ1V5XxmDsUa
+ 64dA9FtY9Pj69VTHKPLl7hJN97iGsag=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-TEDREFR1MKytSIQ8twz82Q-1; Tue,
+ 17 Dec 2024 11:01:27 -0500
+X-MC-Unique: TEDREFR1MKytSIQ8twz82Q-1
+X-Mimecast-MFC-AGG-ID: TEDREFR1MKytSIQ8twz82Q
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7D9961956046; Tue, 17 Dec 2024 16:01:25 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0772430044C1; Tue, 17 Dec 2024 16:01:22 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 29/32] tests/functional: remove now unused 'run_cmd' helper
+Date: Tue, 17 Dec 2024 15:59:50 +0000
+Message-ID: <20241217155953.3950506-30-berrange@redhat.com>
+In-Reply-To: <20241217155953.3950506-1-berrange@redhat.com>
+References: <20241217155953.3950506-1-berrange@redhat.com>
 MIME-Version: 1.0
-References: <cover.1730549443.git.balaton@eik.bme.hu>
- <a8f9fa5e-62e3-61b5-36d2-ab37a1f18ff0@eik.bme.hu>
-In-Reply-To: <a8f9fa5e-62e3-61b5-36d2-ab37a1f18ff0@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Dec 2024 16:04:14 +0000
-Message-ID: <CAFEAcA9HNay784yf21GgyxzOqkRdWmPSLBM8Qi9yY+UpB0gM1w@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Separate memory access logs from guest_errors
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,44 +88,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Dec 2024 at 12:41, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> On Sat, 2 Nov 2024, BALATON Zoltan wrote:
-> > Originally memory access logs were a debug define that then were
-> > converted to log messages but were classified as guest_errors which
-> > already logs misc errors. As invalid memory access logs can come from
-> > accessing not emulated peripherals or memory areas, these often
-> > generate a lot of messages that are better be controlled separately
-> > from other errors to avoid obscuring those. As an example try
-> > 'qemu-system-ppc -d guest_errors' to see the problem. After this
-> > series the actual guest error logs are easier to spot. I've tried to
-> > submit this before but there were some people who liked the current
-> > behaviour so now this series has another patch that preserves the old
-> > option printing a warning to allow time to get used to the new
-> > behaviour (which actually brings back the old behaviour when mem
-> > access logs were a debug define). This second patch is optional if
-> > changing the behaviour without notice is acceptable. As these are
-> > debug switches no deprecation period is needed so the second patch
-> > could be omitted. I leave that decision to the maintainers.
-> >
-> > v2: Rename the option from memaccess to invalid_mem as suggested by
-> > Peter Maydell
->
-> Ping? <https://patchew.org/QEMU/cover.1730549443.git.balaton@eik.bme.hu/>
+All usage has been replaced by direct 'subprocess' helpers.
 
-Personally I do not think we need the back-compat handling so
-I would be happy with just patch 1.
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+---
+ tests/functional/qemu_test/__init__.py |  2 +-
+ tests/functional/qemu_test/cmd.py      | 11 -----------
+ 2 files changed, 1 insertion(+), 12 deletions(-)
 
-(I think the way I envisaged this working was that if there
-were cases where some missing device generates a ton of
-errors that we would stick in a TYPE_UNIMPLEMENTED_DEVICE in
-that region, so that the logging in the invalid access
-paths in memory.c would not be hit except where the guest
-was doing something wrong. But obviously we haven't actually
-done that, and I don't think there's a strong reason not
-to split out the invalid-access logging into its own
-category.)
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index 3bd043e608..da1830286d 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -8,7 +8,7 @@
+ 
+ from .asset import Asset
+ from .config import BUILD_DIR
+-from .cmd import run_cmd, is_readable_executable_file, \
++from .cmd import is_readable_executable_file, \
+     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
+ from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index c8971de00a..dc5f422b77 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -14,7 +14,6 @@
+ import logging
+ import os
+ import os.path
+-import subprocess
+ 
+ 
+ def which(tool):
+@@ -28,16 +27,6 @@ def which(tool):
+             return p
+     return None
+ 
+-def run_cmd(args):
+-    subp = subprocess.Popen(args,
+-                            stdout=subprocess.PIPE,
+-                            stderr=subprocess.PIPE,
+-                            universal_newlines=True)
+-    stdout, stderr = subp.communicate()
+-    ret = subp.returncode
+-
+-    return (stdout, stderr, ret)
+-
+ def is_readable_executable_file(path):
+     return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
+ 
+-- 
+2.46.0
 
-thanks
--- PMM
 
