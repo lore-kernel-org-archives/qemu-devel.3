@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 377F6E77183
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 03:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E719E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 03:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNORG-0005JN-9n; Mon, 16 Dec 2024 22:40:03 -0500
+	id 1tNOVn-0007jY-15; Mon, 16 Dec 2024 22:44:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tNORD-0005J7-Qh; Mon, 16 Dec 2024 22:39:59 -0500
-Received: from mail-vs1-xe36.google.com ([2607:f8b0:4864:20::e36])
+ id 1tNOVj-0007ip-Br; Mon, 16 Dec 2024 22:44:39 -0500
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tNORC-0001kY-0J; Mon, 16 Dec 2024 22:39:59 -0500
-Received: by mail-vs1-xe36.google.com with SMTP id
- ada2fe7eead31-4aff1c57377so2570203137.0; 
- Mon, 16 Dec 2024 19:39:55 -0800 (PST)
+ id 1tNOVc-0002jW-3V; Mon, 16 Dec 2024 22:44:38 -0500
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-5187f0b893dso1416075e0c.3; 
+ Mon, 16 Dec 2024 19:44:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734406795; x=1735011595; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734407068; x=1735011868; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e0QNTPLjcwfUBSTQjEvcVF/2fKXU6mt6AS/45tw3vE4=;
- b=KNvDY/Y3FNhVbO09mDGRyL34tqvCi2HVs3lygcgDoj+/5Qo/1VZ2PNGgYx0XfELmpB
- wd/JUm56rWPd6n20h0Nr0gEsgUZjo5MWTJmN8uIqYZJRAdcUU/bfT9kh+OAGxnOxi42V
- Fvg+p7T6ezuyvGaGjLr4vvbuY4GCgwgbyjB9JH6+qNhQKgLTZ+6k4ZIsw3Q09k4ACx3K
- 3G+zOm4QOiPd7uKn62FNIQ0VSQPEEp4ku3nWdduMWP9Z4VIWourvT47drGiNjmCLpyOQ
- LWWSECQPge42pkaohH00O0hyq82XjfHCbjxGHq8gnLBWnJptDT+O+/c8Vi4i0NzqCmfL
- qvbA==
+ bh=xS1uRdtgRHRunrec9YX/waY4rIkzt6y+X+JIP9pJ9RQ=;
+ b=gZLTM+65ErzOESG19YTX+o1bRbwRI13UQbVFSmNUAkDUVu88faET7Y9qZfBA7LbJ8A
+ 2R4VJm9Uh74cctaUppwZSy4L6p0CI3Pale7WB9cM735W+1Cjc5f0OWDey4cRzEEI56xF
+ YW2qQqz80FI3B5eQIgnChgqpx6MtpR1uJQvU13FhjUKPFWV94Qxl+0qruMArW/lPpY5U
+ XrpOpp9X+fbvvx0fagcqoiCoM7GOHhWtByI2Gcsr0zje4X5x9mMpSUUYQkqHjzLt056f
+ 6UwiuGem1fABmtKA7QSqm9tIl7pXZgI7NV0kkbK4Ge3WYs3Qz4N4TFNz9Kr68pqLHCwu
+ CztA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734406795; x=1735011595;
+ d=1e100.net; s=20230601; t=1734407068; x=1735011868;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e0QNTPLjcwfUBSTQjEvcVF/2fKXU6mt6AS/45tw3vE4=;
- b=wKWW5cu84Bp2gE62Sib+QifIrQGthPRaChTJHdjzb38cNfOvTGOai7Yr7Dpq1OIIzu
- lHVq1sLpOI8BezGwIScfPvpfUuCqcPWW0rJVjOeQEHLdU40RGgqwYQfruplxZX5oRDQ2
- U/go7GB6127nZ0pLxAT41jrNhKCpwHYTH8yCggkcs86cxGSXUBwt8afgR+tGeckdIugD
- EfHNo/BuQKaTmWz3jYEpVAB4F8pZrHX/6b3i8SbqW+2Mh3wV5UFg+ef+FvE5aUjW/kZq
- 528xfOGG2UySrsmdWqxH9CQqLydrPCTkUhESaBZPCeJK/cnpAYRIm72e/IRB3I72wtfc
- d7HA==
+ bh=xS1uRdtgRHRunrec9YX/waY4rIkzt6y+X+JIP9pJ9RQ=;
+ b=jRkXb9TJcC8TvQeV7zAl0D0M2uAtTgeaYo3JwB3EpFTGOyLffUKo5kZ2AvLPIy00I3
+ T5tDEn5aUwdl+DbITWYp8waQLo9UBf/pvuxURl6gEGxf3wA1QYDSRaHtAMIcR0QK2Kl1
+ F0SlpxwgFGEumlcXTk7VImLPva6TA3TtOdBr/sU/PEyiBA49Am8b4YHlru2QTDKgpKFH
+ lm4IDTYfmS+gRKfYvaRjWkDs/fDycm/gQ9JS4nFhYwtnPkQo9K/+Fy7t2eH/2VjA8p26
+ sWRSSSLKCIgZ80GpDJy0V3dWVN5B30NmvpNl/DSJGi/M43LCQR2clw8VPp8gZpQVJj0L
+ 4BpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3/QQ44e5VZXYF6xQOb+OYjXydrS9dsRfgfRtCDiWaIhaupNM8LsoiRea6eYp1WCs+c+HJYOmovJI8@nongnu.org
-X-Gm-Message-State: AOJu0Yxgd1m/hvZtuQ/SWB6SUJlTWEWkTPCU9oMcvDZLgLvtJn9cGM9Z
- CP3KgRjQnmNJSa3cwJktFs6R0Rtcc+2tu31Nm2btw3UbRLoz1ny4tM5DCgJHfsc74WE9b4WM9+/
- hoEBm5GksfGgIPFgqgzhW+NpYVjk=
-X-Gm-Gg: ASbGncuu/0PTCAhfxN8HX6tbQzmssdA1jzyTD/lZ5bmmX6n7LOSv+ORmXaA8mltgw8y
- ffifDiN5LLWJGMhsOX68JHZ/s9slIQrP8O7iw7NTJDmXvoFyDU7Eqe4t8gxkhiBbSJBRb
-X-Google-Smtp-Source: AGHT+IHFiIeTPAyKiUiNnIDUxhtnpGkOwL5yujW4LtZCgpd6qTAp5+V4B4lFxnTh9nK8UQVJM4oP+/FBnK29yMk/9W4=
-X-Received: by 2002:a67:ebd6:0:b0:4b1:f903:98d3 with SMTP id
- ada2fe7eead31-4b29dc54ee8mr1822566137.7.1734406795097; Mon, 16 Dec 2024
- 19:39:55 -0800 (PST)
+ AJvYcCVCdIkI5SJm3nCqTz50D+Sepk5f+D4v/tBOrcFI4INVONwyPu4VkDoMXXlpK7CRaE3DMP1BtA9MREBz@nongnu.org
+X-Gm-Message-State: AOJu0Yzmwt5cBjyyc8sm+vrDlsXAvgK8xV03Yl7sCpJ7zK/PHCRI9oL1
+ YCVRQwSaRPHYuHrwq9jhlwbdvS5Lub+RoMFOoJ7ghNYvrdwnIPfbLOsVOSAEKM0YXKbA6fR5QD4
+ +RcQV3rGKKClVwqgXJBmCXuFNZj4s0zfS
+X-Gm-Gg: ASbGnctLw0SxzcXOg3TTH3UaVRrXwnDFwr2Osn95ipMvlYrzZWxpe79qRtGpmSxDTYw
+ kN8HtH+ny7TZ6lLCSS9QDEpDan4X4HZ1lYA4fosed+iNsl4IpIyqP9zln23A2X29uKGVX
+X-Google-Smtp-Source: AGHT+IGtKsS90BibuS4GJNzE6CsKThIISpRnbde3pZEOQXVrku2nygsgOyAX2kad89sAXbJKal43qykQ6vlrTRVG3tU=
+X-Received: by 2002:a05:6122:8c12:b0:517:4fb0:749c with SMTP id
+ 71dfb90a1353d-518ca3798ffmr15134512e0c.3.1734407068286; Mon, 16 Dec 2024
+ 19:44:28 -0800 (PST)
 MIME-Version: 1.0
-References: <20241120153935.24706-1-jim.shu@sifive.com>
- <20241120153935.24706-2-jim.shu@sifive.com>
-In-Reply-To: <20241120153935.24706-2-jim.shu@sifive.com>
+References: <20241128141230.284320-1-cleger@rivosinc.com>
+In-Reply-To: <20241128141230.284320-1-cleger@rivosinc.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 17 Dec 2024 13:39:29 +1000
-Message-ID: <CAKmqyKOTBkNpwvuGonW80T6LQtMu4sBWA_cu58S4+pMMkZAvcw@mail.gmail.com>
-Subject: Re: [PATCH v4 1/3] hw/riscv: Support to load DTB after 3GB memory on
- 64-bit system.
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Bin Meng <bmeng.cn@gmail.com>, Weiwei Li <liwei1518@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Date: Tue, 17 Dec 2024 13:44:02 +1000
+Message-ID: <CAKmqyKMk=8C-viR9Z+ATjxUNfq45krtS+3ccvhEdiKt-nG4Rfw@mail.gmail.com>
+Subject: Re: [PATCH v6 0/9] target/riscv: Add support for Smdbltrp and
+ Ssdbltrp extensions
+To: =?UTF-8?B?Q2zDqW1lbnQgTMOpZ2Vy?= <cleger@rivosinc.com>
+Cc: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>, 
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bin.meng@windriver.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Ved Shanbhogue <ved@rivosinc.com>, 
+ Atish Patra <atishp@rivosinc.com>, qemu-devel@nongnu.org, 
+ Frank Chang <frank.chang@sifive.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e36;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe36.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -83,7 +83,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,148 +99,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Nov 21, 2024 at 1:41=E2=80=AFAM Jim Shu <jim.shu@sifive.com> wrote:
+On Fri, Nov 29, 2024 at 12:15=E2=80=AFAM Cl=C3=A9ment L=C3=A9ger <cleger@ri=
+vosinc.com> wrote:
 >
-> Larger initrd image will overlap the DTB at 3GB address. Since 64-bit
-> system doesn't have 32-bit addressable issue, we just load DTB to the end
-> of dram in 64-bit system.
+> A double trap typically arises during a sensitive phase in trap handling
+> operations =E2=80=94 when an exception or interrupt occurs while the trap
+> handler (the component responsible for managing these events) is in a
+> non-reentrant state. This non-reentrancy usually occurs in the early
+> phase of trap handling, wherein the trap handler has not yet preserved
+> the necessary state to handle and resume from the trap. The occurrence
+> of such event is unlikely but can happen when dealing with hardware
+> errors.
 >
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> This series adds support for Ssdbltrp and Smdbltrp ratified ISA
+> extensions [1]. It is based on the Smrnmi series [5].
+>
+> Ssdbltrp can be tested using qemu[2], opensbi (master branch), linux[3] a=
+nd
+> kvm-unit-tests[4]. Assuming you have a riscv environment available and
+> configured (CROSS_COMPILE), it can be built for riscv64 using the
+> following instructions:
+>
+> Qemu:
+>   $ git clone https://github.com/rivosinc/qemu.git
+>   $ cd qemu
+>   $ git switch -C dbltrp_v6 dev/cleger/dbltrp_v6
+>   $ mkdir build && cd build
+>   $ ../configure --target-list=3Driscv64-softmmu
+>   $ make
+>
+> OpenSBI:
+>   $ git clone https://github.com/rivosinc/opensbi.git
+>   $ cd opensbi
+>   $ make O=3Dbuild PLATFORM_RISCV_XLEN=3D64 PLATFORM=3Dgeneric
+>
+> Linux:
+>   $ git clone https://github.com/rivosinc/linux.git
+>   $ cd linux
+>   $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
+>   $ export ARCH=3Driscv
+>   $ make O=3Dbuild defconfig
+>   $ ./script/config --file build/.config --enable RISCV_DBLTRP
+>   $ make O=3Dbuild
+>
+> kvm-unit-tests:
+>   $ git clone https://github.com/clementleger/kvm-unit-tests.git
+>   $ cd kvm-unit-tests
+>   $ git switch -C dbltrp_v1 dev/cleger/dbltrp_v1
+>   $ ./configure --arch=3Driscv64 --cross-prefix=3D$CROSS_COMPILE
+>   $ make
+>
+> You will also need kvmtool in your rootfs.
+>
+> Run with kvm-unit-test test as kernel:
+>   $ qemu-system-riscv64 \
+>     -M virt \
+>     -cpu rv64,ssdbltrp=3Dtrue,smdbltrp=3Dtrue \
+>     -nographic \
+>     -serial mon:stdio \
+>     -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
+>     -kernel kvm-unit-tests-dbltrp/riscv/sbi_dbltrp.flat
+>   ...
+>   [OpenSBI boot partially elided]
+>   Boot HART ISA Extensions  : sscofpmf,sstc,zicntr,zihpm,zicboz,zicbom,sd=
+trig,svadu,ssdbltrp
+>   ...
+>   #######################################################################=
+###
+>   #    kvm-unit-tests
+>   #######################################################################=
+###
+>
+>   PASS: sbi: fwft: FWFT extension probing no error
+>   PASS: sbi: fwft: FWFT extension is present
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value
+>   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 0
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 0
+>   PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
+>   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 1
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 1
+>   PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
+>   INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
+>
+>   sbi_trap_error: hart0: trap0: double trap handler failed (error -10)
+>
+>   sbi_trap_error: hart0: trap0: mcause=3D0x0000000000000010 mtval=3D0x000=
+0000000000000
+>   sbi_trap_error: hart0: trap0: mtval2=3D0x0000000000000003 mtinst=3D0x00=
+00000000000000
+>   sbi_trap_error: hart0: trap0: mepc=3D0x00000000802000d8 mstatus=3D0x800=
+0000a01006900
+>   sbi_trap_error: hart0: trap0: ra=3D0x00000000802001fc sp=3D0x0000000080=
+213e70
+>   sbi_trap_error: hart0: trap0: gp=3D0x0000000000000000 tp=3D0x0000000080=
+088000
+>   sbi_trap_error: hart0: trap0: s0=3D0x0000000080213e80 s1=3D0x0000000000=
+000001
+>   sbi_trap_error: hart0: trap0: a0=3D0x0000000080213e80 a1=3D0x0000000080=
+208193
+>   sbi_trap_error: hart0: trap0: a2=3D0x000000008020dc20 a3=3D0x0000000000=
+00000f
+>   sbi_trap_error: hart0: trap0: a4=3D0x0000000080210cd8 a5=3D0x0000000080=
+2110d0
+>   sbi_trap_error: hart0: trap0: a6=3D0x00000000802136e4 a7=3D0x0000000046=
+574654
+>   sbi_trap_error: hart0: trap0: s2=3D0x0000000080210cd9 s3=3D0x0000000000=
+000000
+>   sbi_trap_error: hart0: trap0: s4=3D0x0000000000000000 s5=3D0x0000000000=
+000000
+>   sbi_trap_error: hart0: trap0: s6=3D0x0000000000000000 s7=3D0x0000000000=
+000001
+>   sbi_trap_error: hart0: trap0: s8=3D0x0000000000002000 s9=3D0x0000000080=
+083700
+>   sbi_trap_error: hart0: trap0: s10=3D0x0000000000000000 s11=3D0x00000000=
+00000000
+>   sbi_trap_error: hart0: trap0: t0=3D0x0000000000000000 t1=3D0x0000000080=
+213ed8
+>   sbi_trap_error: hart0: trap0: t2=3D0x0000000000001000 t3=3D0x0000000080=
+213ee0
+>   sbi_trap_error: hart0: trap0: t4=3D0x0000000000000000 t5=3D0x0000000080=
+20f8d0
+>   sbi_trap_error: hart0: trap0: t6=3D0x0000000000000000
+>
+> Run with linux and kvm-unit-test test in kvm (testing VS-mode):
+>   $ qemu-system-riscv64 \
+>     -M virt \
+>     -cpu rv64,ssdbltrp=3Dtrue,smdbltrp=3Dtrue \
+>     -nographic \
+>     -serial mon:stdio \
+>     -bios opensbi/build/platform/generic/firmware/fw_jump.bin \
+>     -kernel linux/build/arch/riscv/boot/Image
+>   ...
+>   [Linux boot partially elided]
+>   [    0.735079] riscv-dbltrp: Double trap handling registered
+>   ...
+>
+>   $ lkvm run -k sbi_dbltrp.flat -m 128 -c 2
+>   #######################################################################=
+###
+>   #    kvm-unit-tests
+>   #######################################################################=
+###
+>
+>   PASS: sbi: fwft: FWFT extension probing no error
+>   PASS: sbi: fwft: FWFT extension is present
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value
+>   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 0
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 0
+>   PASS: sbi: fwft: dbltrp: Double trap disabled, trap first time ok
+>   PASS: sbi: fwft: dbltrp: Set double trap enable feature value =3D=3D 1
+>   PASS: sbi: fwft: dbltrp: Get double trap enable feature value =3D=3D 1
+>   PASS: sbi: fwft: dbltrp: Trapped twice allowed ok
+>   INFO: sbi: fwft: dbltrp: Should generate a double trap and crash !
+>   [   51.939077] Guest double trap
+>   [   51.939323] kvm [93]: VCPU exit error -95
+>   [   51.939683] kvm [93]: SEPC=3D0x802000d8 SSTATUS=3D0x200004520 HSTATU=
+S=3D0x200200180
+>   [   51.939947] kvm [93]: SCAUSE=3D0x10 STVAL=3D0x0 HTVAL=3D0x3 HTINST=
+=3D0x0
+>   KVM_RUN failed: Operation not supported
+>   $
+>
+> Testing Smbdbltrp can be done using gdb and trigger some trap. For
+> instance, interrupt M-mode firmware at some point, set mstatus.mdt =3D 1
+> and corrupt some register to generate a NULL pointer exception.
+>
+> Link: https://github.com/riscv/riscv-isa-manual/commit/52a5742d5ab5a07920=
+19033631b2035a493ad981 [1]
+> Link: https://github.com/rivosinc/qemu/tree/dev/cleger/dbltrp_v5 [2]
+> Link: https://github.com/rivosinc/linux/tree/dev/cleger/dbltrp_v1 [3]
+> Link: https://github.com/clementleger/kvm-unit-tests/tree/dev/cleger/dblt=
+rp_v1 [4]
+> Link: https://lore.kernel.org/qemu-riscv/20241122032217.3816540-1-frank.c=
+hang@sifive.com/T/ [5]
+>
 > ---
->  hw/riscv/boot.c            | 14 +++++++++-----
->  hw/riscv/microchip_pfsoc.c |  4 ++--
->  hw/riscv/sifive_u.c        |  4 ++--
->  hw/riscv/spike.c           |  4 ++--
->  hw/riscv/virt.c            |  2 +-
->  include/hw/riscv/boot.h    |  2 +-
->  6 files changed, 17 insertions(+), 13 deletions(-)
 >
-> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-> index 2e319168db..d36d3a7104 100644
-> --- a/hw/riscv/boot.c
-> +++ b/hw/riscv/boot.c
-> @@ -293,7 +293,7 @@ out:
->   * The FDT is fdt_packed() during the calculation.
->   */
->  uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
-> -                                MachineState *ms)
-> +                                MachineState *ms, RISCVHartArrayState *h=
-arts)
->  {
->      int ret =3D fdt_pack(ms->fdt);
->      hwaddr dram_end, temp;
-> @@ -317,11 +317,15 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, h=
-waddr dram_size,
+> V6:
+>  - Simplify and fix write_henvcfg() masking by assigning the written
+>    value to henvcfg and mask the value to be written as well as clearing
+>    the upper part of henvcfgh upon writing.
+>  - Rebased on RNMI v9 series.
 >
->      /*
->       * We should put fdt as far as possible to avoid kernel/initrd overw=
-riting
-> -     * its content. But it should be addressable by 32 bit system as wel=
-l.
-> -     * Thus, put it at an 2MB aligned address that less than fdt size fr=
-om the
-> -     * end of dram or 3GB whichever is lesser.
-> +     * its content. But it should be addressable by 32 bit system as wel=
-l in RV32.
-> +     * Thus, put it near to the end of dram in RV64, and put it near to =
-the end
-> +     * of dram or 3GB whichever is lesser in RV32.
->       */
-> -    temp =3D (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram=
-_end;
-> +    if (!riscv_is_32bit(harts)) {
-> +        temp =3D dram_end;
-> +    } else {
-> +        temp =3D (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : =
-dram_end;
-> +    }
+> V5:
+>  - Use 0 instead of false to set MSTATUS_MDT in helper_mnret()
+>  - Added explicit comments about henvcfg write mask being tricky.
+>  - Fixed a invalid menvcfg_mask in write_henvcfgh
 >
->      return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
->  }
-> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-> index f9a3b43d2e..ba8b0a2c26 100644
-> --- a/hw/riscv/microchip_pfsoc.c
-> +++ b/hw/riscv/microchip_pfsoc.c
-> @@ -519,7 +519,7 @@ static void microchip_icicle_kit_machine_init(Machine=
-State *machine)
->      bool kernel_as_payload =3D false;
->      target_ulong firmware_end_addr, kernel_start_addr;
->      uint64_t kernel_entry;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->      DriveInfo *dinfo =3D drive_get(IF_SD, 0, 0);
+> V4:
+>  - Remove DTE from sstatus_v1_10_mask variable and add specific if for
+>    DTE masking where it's used.
+>  - Use mstatus_hs.sdt field rather than setting DTE to 0 in
+>    riscv_do_cpu_interrupt().
+>  - Add a fix for henvcfg value which was incorrectly set after changing
+>    menvcfg
+>  - Remove useless ext_ssdbltrp check in
+>    riscv_env_smode_dbltrp_enabled().
+>  - Remove useless mstatus clear in write_mstatus().
+>  - Add proper handling of SDT writing to vsstatus.
+>  - Add clearing of vsstatus//mstatus SDT field when DTE is disabled.
+>  - Fix wrong value being written for MDT/MIE in write_mstatush().
+>  - Rebased on Frank Snrnmi v7
 >
->      /* Sanity check on RAM size */
-> @@ -625,7 +625,7 @@ static void microchip_icicle_kit_machine_init(Machine=
-State *machine)
->          /* Compute the fdt load address in dram */
->          fdt_load_addr =3D riscv_compute_fdt_addr(memmap[MICROCHIP_PFSOC_=
-DRAM_LO].base,
->                                                 memmap[MICROCHIP_PFSOC_DR=
-AM_LO].size,
-> -                                               machine);
-> +                                               machine, &s->soc.u_cpus);
->          riscv_load_fdt(fdt_load_addr, machine->fdt);
+> V3:
+>  - Fix spec version from 1.12 to 1.13 for Smdbltrp and Ssdbltrp
+>  - Add better comments for dte/sdt computation in
+>    riscv_cpu_do_interrupt().
+>  - Move some CSR related changes to the CSRs related commits.
 >
->          /* Load the reset vector */
-> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-> index c5e74126b1..05467e833a 100644
-> --- a/hw/riscv/sifive_u.c
-> +++ b/hw/riscv/sifive_u.c
-> @@ -519,7 +519,7 @@ static void sifive_u_machine_init(MachineState *machi=
-ne)
->      const char *firmware_name;
->      uint32_t start_addr_hi32 =3D 0x00000000;
->      int i;
-> -    uint32_t fdt_load_addr;
-> +    uint64_t fdt_load_addr;
->      uint64_t kernel_entry;
->      DriveInfo *dinfo;
->      BlockBackend *blk;
-> @@ -606,7 +606,7 @@ static void sifive_u_machine_init(MachineState *machi=
-ne)
+> V2:
+>  - Squashed commits that added ext_s{s|m}dbltrp as suggested by Daniel
 >
->      fdt_load_addr =3D riscv_compute_fdt_addr(memmap[SIFIVE_U_DEV_DRAM].b=
-ase,
->                                             memmap[SIFIVE_U_DEV_DRAM].siz=
-e,
-> -                                           machine);
-> +                                           machine, &s->soc.u_cpus);
+> Cl=C3=A9ment L=C3=A9ger (9):
+>   target/riscv: fix henvcfg potentially containing stale bits
+>   target/riscv: Add Ssdbltrp CSRs handling
+>   target/riscv: Implement Ssdbltrp sret, mret and mnret behavior
+>   target/riscv: Implement Ssdbltrp exception handling
+>   target/riscv: Add Ssdbltrp ISA extension enable switch
+>   target/riscv: Add Smdbltrp CSRs handling
+>   target/riscv: Implement Smdbltrp sret, mret and mnret behavior
+>   target/riscv: Implement Smdbltrp behavior
+>   target/riscv: Add Smdbltrp ISA extension enable switch
 
-This patch breaks boots with the sifive_u board.
+Do you mind rebasing this on:
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next
 
-This diff fixes it, I'm going to squash the diff into this patch
+Alistair
 
-diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
-index ff6e26dec8..fd59124500 100644
---- a/hw/riscv/sifive_u.c
-+++ b/hw/riscv/sifive_u.c
-@@ -518,6 +518,7 @@ static void sifive_u_machine_init(MachineState *machine=
-)
-    target_ulong firmware_end_addr, kernel_start_addr;
-    const char *firmware_name;
-    uint32_t start_addr_hi32 =3D 0x00000000;
-+    uint32_t fdt_load_addr_hi32 =3D 0x00000000;
-    int i;
-    uint64_t fdt_load_addr;
-    uint64_t kernel_entry;
-@@ -611,6 +612,7 @@ static void sifive_u_machine_init(MachineState *machine=
-)
-
-    if (!riscv_is_32bit(&s->soc.u_cpus)) {
-        start_addr_hi32 =3D (uint64_t)start_addr >> 32;
-+        fdt_load_addr_hi32 =3D fdt_load_addr >> 32;
-    }
-
-    /* reset vector */
-@@ -625,7 +627,7 @@ static void sifive_u_machine_init(MachineState *machine=
-)
-        start_addr,                    /* start: .dword */
-        start_addr_hi32,
-        fdt_load_addr,                 /* fdt_laddr: .dword */
--        0x00000000,
-+        fdt_load_addr_hi32,
-        0x00000000,
-                                       /* fw_dyn: */
-    };
+>
+>  target/riscv/cpu.c        |   9 ++-
+>  target/riscv/cpu.h        |   1 +
+>  target/riscv/cpu_bits.h   |   8 +++
+>  target/riscv/cpu_cfg.h    |   2 +
+>  target/riscv/cpu_helper.c | 115 +++++++++++++++++++++++++++++++-------
+>  target/riscv/csr.c        |  95 ++++++++++++++++++++++++++-----
+>  target/riscv/op_helper.c  |  47 +++++++++++++++-
+>  7 files changed, 239 insertions(+), 38 deletions(-)
+>
+> --
+> 2.45.2
+>
+>
 
