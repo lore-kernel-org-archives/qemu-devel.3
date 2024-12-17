@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A539E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 01:09:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77F09E77183
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 01:10:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNM3v-0008LF-M5; Mon, 16 Dec 2024 20:07:47 -0500
+	id 1tNM3v-0008L2-5T; Mon, 16 Dec 2024 20:07:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNM3h-0008IZ-Q5
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:07:35 -0500
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1tNM3h-0008Ia-Qg
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:07:36 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNM3f-0004ze-Oh
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:07:33 -0500
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-7292a83264eso1539770b3a.0
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 17:07:30 -0800 (PST)
+ id 1tNM3e-0004zE-8i
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:07:32 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso43438585ad.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 17:07:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1734397649; x=1735002449; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3xW+LPUYaCaHyMzbWV59CTTMsUuCbv/1PDmcaQ3NGQk=;
- b=Vgqk60jOfLQ9tUw5G8eoC6AuFnp220QK3/an/P6h2A8H1KhcClobiNp7t6KOCpj2EN
- eAb+qDSwLX+KewxkdLiNmO9GFnwUeIJyN1mnjUxaAUX3tYnhSsIzr6qYyZih8DEP3FEa
- Hcx/4Zv1/WXSveT4ebd/kNHIXo/nnShK1bmV0+huQnIacttiLheUsl5uzv2qC1ixGVLT
- bpiMwFzaRp4GoTuSrX+eudyLt5nq0IdczJGv8cleD4aOE5cOi3seRBXFpca5EYo/+5+k
- ug4+SFb+3wVa9mJsYr188A4rvlrR/iOqdT0RipJbGr+0Qia+T8Mqas6HAjjkhetwgp/X
- gKTA==
+ bh=TUx/z/kSAyzvf2YQEv1ycgw2smpEnSTqQjMUa4oS88s=;
+ b=KL+jpnPXdUs3udCGlQjsC46UYU6uOZBPcWj9zcp3Up58LNzsOa3jYDXqS+xQkKMbFv
+ uniqjmBW9tMRAculV2+jRSoMZP1CTDYuCwSBfu7ItiziflUqpPxwHTaPQ/2rSSrqs1Gx
+ UT+tGccBBjw2E24FDU2vZeuB44m0vWG3s1DF8qKg3MM/OlIUullcc5fl8hIfg07tJ9C7
+ z2f8tDGBYszslDNWwTVMz0ehnXNybXfLgUeNyM7rvmeiV67zAGUQl8TSlZ5Wzr/7lmex
+ XUjL/+heAnKpqoYUuu98e2p9PpjCqLrlvc/lueXTbI/zfCfSP24NF/cXpFW0YsnEv4JO
+ rSfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1734397649; x=1735002449;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3xW+LPUYaCaHyMzbWV59CTTMsUuCbv/1PDmcaQ3NGQk=;
- b=tKBzYAV7WZijz8Vee0rwszrPGx2kRs7dJsEGn+zy4joQc56k+81NlzM1dncAd6/q8L
- 6+wQ3oqP2UqEaghf7sYt7AnvWlyFGu+kDcy4ckHyyt+1QACOXefGfWHqPXp/1FpSFoXL
- WylVQ+/VBLluNFmFPK9M72yaZtxisEWN0NWxZK4ywkMBwK5aAnLNAHH0VgrcSZumg3kV
- aod8Iovpi4IgJaEdE9hIf2yKE7MlqMCaWklCi0HLJCjdubfCP3Vjs457R8LRCtKT4lpv
- OY/o7/h4g3LWN2/1/y5Yl3aoYmlPTcWYHbDdgcKm6AF45a+dGbkHYwbfNcFtveRC4Fbu
- JZSg==
-X-Gm-Message-State: AOJu0YyN4VAvI09bX5htUjK/nGgdn+i65rNRexq1kUHyke085xB+LFL2
- QkTZN5AYbdE0U4ft5AftubSM3zceKdbtKjn+G69eykiw5QJZy9ow5ft1ZzDrk6owRXbuGvoPs+w
- 9pZU=
-X-Gm-Gg: ASbGncuk1rgg0BowRCHIiwUH7ym7Fnl0OilTgUdS+HPtVNrazEQ08FG/w30VidLIsuX
- BOWZcl4O/zpN584iVHKUZRlW4SoP9j18ee4opYDjqK5kpwV4Z/hY6E0nZcxYXqHARGOGn2kX1Yb
- QtaUcqVZmblT/GMZl3oaioTx1VS0UQ+eiiupstMSH8IQHUsHcXf+I1ENVx2x3XprNj21E8uPJHc
- tonu3CUcPTx7KUoKWyRCdI5UOJ6KTzfZKIrVXKswvfuqgaI+o4GyNnGNa3abeLWtbWzhEqaqcMe
- xZPxwY228izdu+8=
-X-Google-Smtp-Source: AGHT+IE3vppnMbpnhDV1YKBjofgA4Uz9lQ2xCyzGLQYVTD9SfYA2tWDwUmgDmwEuYoXcFOIDE1EK9g==
-X-Received: by 2002:a17:902:e545:b0:216:7ee9:2212 with SMTP id
- d9443c01a7336-218929ca98cmr207827245ad.23.1734397649582; 
- Mon, 16 Dec 2024 17:07:29 -0800 (PST)
+ bh=TUx/z/kSAyzvf2YQEv1ycgw2smpEnSTqQjMUa4oS88s=;
+ b=HWXaj/iuWg/jkVLpoUdomEN63lovtxvQwkb1o3zQWenxG22AE3S/oEXFu77/Q8MUdv
+ B+bu/T1BHxYiQnMjfTceck9rfvzkEJ4LGrGrfV6qTmz1oVxrQ96pG7FR6IbpLDHuBWSE
+ 83RI7IGejvwgGNbaAeDf8070yV0SD11ePqAjfyQDeLg1ieADOffdW5pTlXAUkTbjdbFM
+ d/4ubRgCCJpm8rv3Djb9p+Duspj6mwy6mLMvFnLE5S3MnytVJIicLvvd4FZ7ZqmjFMDo
+ OoPyYoTRPaKFfuTnjNLQI9ifC5pr1Azxji2xeeGQS1wvg74WlFAUpEC6e+IsNNzu0pDM
+ Sn4w==
+X-Gm-Message-State: AOJu0YwE2peagQW4T858C/Q/dXb0KUoOImW6d2p00cinKMV3U1T44/ZB
+ ONQcSBKjhemPyFhkegSyVvglhTtYwKsLwiQpGRWZKt/1snhs1H5G0wigZ0Tj1U3RDOsp7bl+9qH
+ AnX8=
+X-Gm-Gg: ASbGncsYvbW3d0So5Qm5rA8spj/HkBKC+TVH2sj/cL+UuCsX46gGYEmzlsxPzHORcDk
+ G5TcxXENnOl2aoewvOGOt0/5shPKu50e6QkdDH1xLMpE3Ee+U9eEb1A2x+ZRAQVcIxf8YBTU0XW
+ 5kg5Y6CaO3PFKj5c0PCoJsEFXWnFU+lxWlfw1fHGM9xiEX1zNC6MXH8y5M9902gZATExlFTMC5I
+ P2IbusRJ0sek45CT2J/Zntcnnlt0VVg3slF7ghUR8JFhv90NIrjXTdN/tkJ1En4U5y9L4tj2Zaa
+ plqEntbqWA7rvzc=
+X-Google-Smtp-Source: AGHT+IHI99Y90NE1wFfp/KJftXkx6z24BTKHfmq+EBay4HTqB6rMJZB43aazwBmT1zGzeHgfCOtfrQ==
+X-Received: by 2002:a17:903:2c9:b0:216:3466:7414 with SMTP id
+ d9443c01a7336-218c9009468mr24597185ad.44.1734397648750; 
+ Mon, 16 Dec 2024 17:07:28 -0800 (PST)
 Received: from pc.. (216-180-64-156.dyn.novuscom.net. [216.180.64.156])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-218a1e6d0e4sm48746595ad.261.2024.12.16.17.07.28
+ d9443c01a7336-218a1e6d0e4sm48746595ad.261.2024.12.16.17.07.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Dec 2024 17:07:29 -0800 (PST)
+ Mon, 16 Dec 2024 17:07:28 -0800 (PST)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -72,16 +72,16 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
  Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
  philmd@linaro.org
-Subject: [PATCH 13/13] configure: reenable plugins by default for 32-bit hosts
-Date: Mon, 16 Dec 2024 17:07:07 -0800
-Message-Id: <20241217010707.2557258-14-pierrick.bouvier@linaro.org>
+Subject: [PATCH 12/13] contrib/plugins/hotpages: fix 32-bit build
+Date: Mon, 16 Dec 2024 17:07:06 -0800
+Message-Id: <20241217010707.2557258-13-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
 References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,48 +106,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- configure | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+ contrib/plugins/hotpages.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/configure b/configure
-index 18336376bff..02f1dd2311f 100755
---- a/configure
-+++ b/configure
-@@ -528,25 +528,6 @@ case "$cpu" in
-     ;;
- esac
+diff --git a/contrib/plugins/hotpages.c b/contrib/plugins/hotpages.c
+index 8316ae50c72..c6e64937194 100644
+--- a/contrib/plugins/hotpages.c
++++ b/contrib/plugins/hotpages.c
+@@ -103,7 +103,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+ static void plugin_init(void)
+ {
+     page_mask = (page_size - 1);
+-    pages = g_hash_table_new(NULL, g_direct_equal);
++    pages = g_hash_table_new(g_int64_hash, g_int64_equal);
+ }
  
--# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
--# 64 bit host.
--
--check_64bit_host() {
--cat > $TMPC <<EOF
--#if __SIZEOF_POINTER__ != 8
--#error not 64 bit system
--#endif
--int main(void) { return 0; }
--EOF
--  compile_object "$1"
--}
--
--if check_64bit_host "$CPU_CFLAGS"; then
--    host_bits=64
--else
--    host_bits=32
--fi
--
- if test -n "$host_arch" && {
-     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
-     ! test -d "$source_path/common-user/host/$host_arch"; }; then
-@@ -1072,7 +1053,7 @@ if test "$static" = "yes" ; then
-   fi
-   plugins="no"
- fi
--if test "$plugins" != "no" && test $host_bits -eq 64; then
-+if test "$plugins" != "no"; then
-     if has_meson_option "-Dtcg_interpreter=true"; then
-         plugins="no"
-     else
+ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+@@ -130,12 +130,12 @@ static void vcpu_haddr(unsigned int cpu_index, qemu_plugin_meminfo_t meminfo,
+     page &= ~page_mask;
+ 
+     g_mutex_lock(&lock);
+-    count = (PageCounters *) g_hash_table_lookup(pages, GUINT_TO_POINTER(page));
++    count = (PageCounters *) g_hash_table_lookup(pages, &page);
+ 
+     if (!count) {
+         count = g_new0(PageCounters, 1);
+         count->page_address = page;
+-        g_hash_table_insert(pages, GUINT_TO_POINTER(page), (gpointer) count);
++        g_hash_table_insert(pages, &count->page_address, count);
+     }
+     if (qemu_plugin_mem_is_store(meminfo)) {
+         count->writes++;
 -- 
 2.39.5
 
