@@ -4,72 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7947E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 13:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0AB2E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 13:46:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNXjk-0006J2-7h; Tue, 17 Dec 2024 08:35:44 -0500
+	id 1tNXtf-0000YI-Er; Tue, 17 Dec 2024 08:45:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNXjg-0006HA-Or
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 08:35:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNXjf-0004Xo-1p
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 08:35:40 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734442535;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9VDcw38uD9HPz0Suq64X3vqv0CwECnWrtTRUJTI/pG8=;
- b=Y37tfI2tu4t+YBIT1RA0SP1L6fNL4E/Af1gt4AXLqiNP3w8XCNzJ9iHy/Ela2SoR8aPnUj
- 9ftkB4D1LE+WGsnJXd0A0l17pczm1UDi+Tk5TjGXW+A9/4TkUcGFnXPv6xH5KTJ7HGcDqv
- 2KmZZewBX8WDZutX98bDRW8SqEo9IiA=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-I0IxTzycN8uEis51W5OZbA-1; Tue,
- 17 Dec 2024 08:35:32 -0500
-X-MC-Unique: I0IxTzycN8uEis51W5OZbA-1
-X-Mimecast-MFC-AGG-ID: I0IxTzycN8uEis51W5OZbA
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BCFB71955F08; Tue, 17 Dec 2024 13:35:29 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.136])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1549A1953951; Tue, 17 Dec 2024 13:35:26 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Wainer dos Santos Moschetta <wainersm@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] tests/lcitool: remove temp workaround for debian mips64el
-Date: Tue, 17 Dec 2024 13:35:25 +0000
-Message-ID: <20241217133525.3836570-1-berrange@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNXtW-0000Xe-1M
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 08:45:50 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNXtU-00065k-BT
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 08:45:49 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-434b3e32e9dso58007605e9.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 05:45:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734443146; x=1735047946; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=do9a+GsoK8fyYZPzjPqZjR9Y9T+197O23pdyi+E4q7E=;
+ b=opNmQTC7QRZqz1JuQz4xCQdaz4lDB3yabKWsp4t1ThQdZPqeirAMv1xaZ4HsD4D3HN
+ iPkMuw//6MInS6ccqN4QAmXYJxxPE/3QT4ML8qHEvyFGeX8hqcjcoOpwJTIe6908hg5A
+ kH/rTX7wC/3KYLW7K9sUMPfNxY+1O+RtVyS1TEQjws5v1YSM/A1pPXmI2IhLZb4QJq8g
+ Fi3qFLjA9Huc3Be41LUdPW+OC+mLo4loFVqJMsdEGhT9fO3tgVoRrP/eMcbtg5R0nm5B
+ gWIcTcgbw4W+ET5gcPHO76gGXfYJ4uc40PZp9SIAzBUuXTvhCbqvQfwqFPUtWgh1l/4c
+ fdEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734443146; x=1735047946;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=do9a+GsoK8fyYZPzjPqZjR9Y9T+197O23pdyi+E4q7E=;
+ b=t6/8BDy00QDAoSrrNj9ljA2qjBGA+ohnii7C4YQoDs66MfhCUmzJ/q48N23SwOW2RA
+ DK88GC3IekYGvh7GD1XU6tRRbcW6h1xuRdF/Mb+S04rcAodAO3Eea9dlz0/BiBE/pba2
+ H9LcPluvO/nMu8+m7+BGCLzskQtMJC7BuThiJ8hRT/3iD/ryh44i8qGwWWs7ZoAKvsBz
+ +S5NkeCef7ZoClxqTD9CXdRVjEimYnISPIYgW9qdK9ZAcCMAu4Q29ut4cDhm/086Fhsj
+ Dv5w4j9ut5YdUpkmxhjTASDH0kZkZ3E+Lo8ytA85b0FXdTyn99DExU9QWaaM9eTJ8Ob1
+ hJvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVSW93tLYbJ9MaTl0Jqbp6PFcPAuiMNV1NkrD+QWQ8ESjODXcum11OZzds97/Olt/yyvS/XbGa2Rn6W@nongnu.org
+X-Gm-Message-State: AOJu0YwV+UEjDqj3NdUhY0S2DSPntzxz8+oLLqjze9QpFFIEkW8C74xY
+ ozgnRMvBKxrMDNNdZ0pagH1FzqCQl9JEf0q35zBN7ZDlkBLfOwdK2WyCH1OrxhE=
+X-Gm-Gg: ASbGncvjgsPSWWLXm2loPJkVMEsiqKSdaVLGkm62ubTvC4aJgwizzaytV4sW0//N4AV
+ lEun9PkrSJGey9ghV6Y7C+BTq/hERZj3qdSVSVUzrqJJ6gV43FRVURddDu/KyT6ejkwt/0hhvOi
+ 9ORo/4YwnzJOpeYiVefFNU5Do4iS0KdrbvfQ3PAag7E79zKOLnSwmQlAN4X2yEJGIXCdWoa72YJ
+ /mmOkCPLDL2FMx4D+cseS95pfxp+TsDd3wxcGdKfkkKenxuxRA5H7y6EBa8kFAeX3bfIh0O
+X-Google-Smtp-Source: AGHT+IErONB06oDQw+OW61g+ZSdGOxbhHavS4H42eeUXsV9NMojxvTOgJJPcMe80ni7TivzTHQ9DGg==
+X-Received: by 2002:a05:600c:83cf:b0:434:edcf:7474 with SMTP id
+ 5b1f17b1804b1-4362aaa1ee4mr135626515e9.33.1734443146600; 
+ Tue, 17 Dec 2024 05:45:46 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4362559ebe1sm172971525e9.19.2024.12.17.05.45.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 05:45:46 -0800 (PST)
+Message-ID: <2cc30514-15a8-4765-8463-8d14ad270e51@linaro.org>
+Date: Tue, 17 Dec 2024 14:45:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+ <26c97140-6ec5-49f5-b0d4-d4f7f82a12f0@linaro.org>
+ <E18F7A48-BA4D-46B3-BD73-38322BF33CEC@redhat.com>
+ <0d6d208a-00ee-47c9-8d47-bb5758133ecb@linaro.org>
+ <FE6D8668-84D4-457E-994A-8066D52AD9B5@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <FE6D8668-84D4-457E-994A-8066D52AD9B5@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,111 +106,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The workaround applied in
+On 17/12/24 12:09, Ani Sinha wrote:
+> 
+> 
+>> On 17 Dec 2024, at 4:11 PM, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 17/12/24 11:06, Ani Sinha wrote:
+>>>> On 16 Dec 2024, at 8:35 PM, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>>>
+>>>> Hi Ani,
 
-  commit c60473d29254b79d9437eface8b342e84663ba66
-  Author: Alex Bennée <alex.bennee@linaro.org>
-  Date:   Wed Oct 2 10:03:33 2024 +0200
 
-    testing: bump mips64el cross to bookworm and fix package list
+>>>>> +static void vmfwupdate_device_class_init(ObjectClass *klass, void *data)
+>>>>> +{
+>>>>> +    DeviceClass *dc = DEVICE_CLASS(klass);
+>>>>> +
+>>>>> +    /* we are not interested in migration - so no need to populate dc->vmsd */
+>>>>> +    dc->desc = "VM firmware blob update device";
+>>>>> +    dc->realize = vmfwupdate_realize;
+>>>>> +    dc->hotpluggable = false;
+>>>>> +    device_class_set_props(dc, vmfwupdate_properties);
+>>>>> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+>>>>
+>>>> How is this device instantiated?
+>>> Something like this:
+>>> $ ./qemu-system-x86_64 -device vmfwupdate
+>>> VNC server running on ::1:5900
+>>
+>> But this device is not marked as allowed to be created on the
+>> command line with:
+>>
+>>     dc->user_creatable = true;
+>>
+>> Am I missing something?
+> 
+> Isnt’ it true by default? See device_class_init(). Only when it’s a private device we need to set it explicitly to false.
+> 
+> Let me know if its me who is missing something :-)
 
-Is no longer required since the affected builds are now fixed.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- .../dockerfiles/debian-mips64el-cross.docker  |  9 ++++++
- tests/lcitool/mappings.yml                    | 29 -------------------
- 2 files changed, 9 insertions(+), 29 deletions(-)
-
-diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-index c09a8da890..9f6c4763c5 100644
---- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
-+++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
-@@ -93,13 +93,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libcmocka-dev:mips64el \
-                       libcurl4-gnutls-dev:mips64el \
-                       libdaxctl-dev:mips64el \
-+                      libdrm-dev:mips64el \
-+                      libepoxy-dev:mips64el \
-                       libfdt-dev:mips64el \
-                       libffi-dev:mips64el \
-                       libfuse3-dev:mips64el \
-+                      libgbm-dev:mips64el \
-                       libgcrypt20-dev:mips64el \
-                       libglib2.0-dev:mips64el \
-                       libglusterfs-dev:mips64el \
-                       libgnutls28-dev:mips64el \
-+                      libgtk-3-dev:mips64el \
-+                      libgtk-vnc-2.0-dev:mips64el \
-                       libibverbs-dev:mips64el \
-                       libiscsi-dev:mips64el \
-                       libjemalloc-dev:mips64el \
-@@ -119,6 +124,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       librbd-dev:mips64el \
-                       librdmacm-dev:mips64el \
-                       libsasl2-dev:mips64el \
-+                      libsdl2-dev:mips64el \
-+                      libsdl2-image-dev:mips64el \
-                       libseccomp-dev:mips64el \
-                       libselinux1-dev:mips64el \
-                       libslirp-dev:mips64el \
-@@ -134,6 +141,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
-                       libusb-1.0-0-dev:mips64el \
-                       libusbredirhost-dev:mips64el \
-                       libvdeplug-dev:mips64el \
-+                      libvirglrenderer-dev:mips64el \
-+                      libvte-2.91-dev:mips64el \
-                       libxdp-dev:mips64el \
-                       libzstd-dev:mips64el \
-                       nettle-dev:mips64el \
-diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
-index f8186b0e69..74eb13d62b 100644
---- a/tests/lcitool/mappings.yml
-+++ b/tests/lcitool/mappings.yml
-@@ -6,23 +6,6 @@ mappings:
-   flake8:
-     OpenSUSELeap15:
- 
--  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
--  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
--  gtk3:
--    mips64el-deb:
--
--  libdrm:
--    mips64el-deb:
--
--  libepoxy:
--    mips64el-deb:
--
--  gtk-vnc:
--    mips64el-deb:
--
--  mesa-libgbm:
--    mips64el-deb:
--
-   meson:
-     OpenSUSELeap15:
- 
-@@ -81,18 +64,6 @@ mappings:
-   python3-wheel:
-     OpenSUSELeap15: python311-pip
- 
--  sdl2:
--    mips64el-deb:
--
--  sdl2-image:
--    mips64el-deb:
--
--  virglrenderer:
--    mips64el-deb:
--
--  vte:
--    mips64el-deb:
--
- pypi_mappings:
-   # Request more recent version
-   meson:
--- 
-2.46.0
-
+Indeed, you are correct! I forgot about that default.
 
