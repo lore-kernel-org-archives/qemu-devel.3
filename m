@@ -4,78 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C053DE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EE7FE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:21:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYMH-0002BH-OO; Tue, 17 Dec 2024 09:15:33 -0500
+	id 1tNYRD-0004Ln-EW; Tue, 17 Dec 2024 09:20:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNYMF-00026M-4P
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:15:31 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNYRC-0004Lf-EP
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:20:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNYMC-0002Vp-Po
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:15:30 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNYR7-0003ed-2X
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:20:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734444927;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=slcCUGbgXCiWDiMyH5TcYh6YKKSdiiIUuVyVyVeOsho=;
- b=Foe4hEHbxkHMeVOJ6unxp5gxSpVVcbNoHbU+X2QxN3lE8HzFUHqIBh6wXKfeLsgRkdU2Qc
- nkP7pTRtCXt+S48fmpFdnAa/ITBCUNZ7kb2tZMEma7yjE7Ex5RuylwxExEGwohK1NtpdTf
- Ch09NIoeDga8Nr+2hggufaXXZJKxX9Q=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1734445231;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=rrlIDxm3IfgDoQVK3+FJ5lXZbKF2nswBY2eezG9QYSk=;
+ b=h46RtvBUmdZZ5JOILIngsvW0a5Tt4cdWEpgHMILh6va9XSmV3B9nTDDvOArPKr9vKPr841
+ NCI/+3D5ch23pRg/xhfisErl34U6HFj8qUda1RxUNECSyDweav+P5h77tsqG6X7jx84JzO
+ vWklTfOWlDJ+7J8tmJsLg8NhmpZwq4s=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-FDBL5Lk0O9G4Vx8u6JQ2Ig-1; Tue,
- 17 Dec 2024 09:15:24 -0500
-X-MC-Unique: FDBL5Lk0O9G4Vx8u6JQ2Ig-1
-X-Mimecast-MFC-AGG-ID: FDBL5Lk0O9G4Vx8u6JQ2Ig
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-115-XxnGoRkzMFqQgdbDnVjZEw-1; Tue,
+ 17 Dec 2024 09:20:26 -0500
+X-MC-Unique: XxnGoRkzMFqQgdbDnVjZEw-1
+X-Mimecast-MFC-AGG-ID: XxnGoRkzMFqQgdbDnVjZEw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AFB9E19560B3; Tue, 17 Dec 2024 14:15:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.136])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B2AA919560A2; Tue, 17 Dec 2024 14:15:18 +0000 (UTC)
-Date: Tue, 17 Dec 2024 14:15:15 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PULL 3/7] x86/loader: expose unpatched kernel
-Message-ID: <Z2GHc5qwDub89qCa@redhat.com>
-References: <20241216105053.246204-1-kraxel@redhat.com>
- <20241216105053.246204-4-kraxel@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 497241956095; Tue, 17 Dec 2024 14:20:25 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.194.49])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5CED61953951; Tue, 17 Dec 2024 14:20:22 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] tests/functional: Convert the hotplug_cpu avocado test
+Date: Tue, 17 Dec 2024 15:20:20 +0100
+Message-ID: <20241217142020.155776-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241216105053.246204-4-kraxel@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,60 +77,140 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 16, 2024 at 11:50:49AM +0100, Gerd Hoffmann wrote:
-> Add a new "etc/boot/kernel" fw_cfg file, containing the kernel without
-> the setup header patches.  Intended use is booting in UEFI with secure
-> boot enabled, where the setup header patching breaks secure boot
-> verification.
-> 
-> Needs OVMF changes too to be actually useful.
-> 
-> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> Message-ID: <20240905141211.1253307-5-kraxel@redhat.com>
-> ---
->  hw/i386/x86-common.c | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> index 28341b42d949..1cef3045ad83 100644
-> --- a/hw/i386/x86-common.c
-> +++ b/hw/i386/x86-common.c
-> @@ -962,6 +962,9 @@ void x86_load_linux(X86MachineState *x86ms,
->      sev_load_ctx.setup_data = (char *)setup;
->      sev_load_ctx.setup_size = setup_size;
->  
-> +    /* kernel without setup header patches */
-> +    fw_cfg_add_file(fw_cfg, "etc/boot/kernel", kernel, kernel_size);
-> +
+Since we don't have ssh support in the functional test framework yet,
+simply use the serial console for this test instead. It's also
+sufficient to only boot into an initrd here, no need to fire up a
+full-blown guest, so the test now finishes much faster.
 
-How concerned should we be about the memory duplication overhead
-from loading the kernel image twice ?
+While we're at it, also unplug the CPU now and check that it is gone
+in the guest.
 
-A bare modular kernel is 16MB, a non-modular one would be bigger
-perhaps 10's of MB, a UKI meanwhile could easily be 100's of MB
-in size, and >=1GB is not entirely insane to contemplate with a
-UKI depending on how much is put into the embedded initrd.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS                                   |  1 +
+ tests/functional/meson.build                  |  1 +
+ .../test_x86_64_hotplug_cpu.py}               | 58 ++++++++++++++-----
+ 3 files changed, 47 insertions(+), 13 deletions(-)
+ rename tests/{avocado/hotplug_cpu.py => functional/test_x86_64_hotplug_cpu.py} (25%)
+ mode change 100644 => 100755
 
-I don't think the memory for fw_cfg is counted against the guest
-RAM, right?
-
-Is there anyway the duplicate kernel gets erased from memory once
-the firmware is done, otherwise we live with this extra host RAM
-overhead forever ?
-
->      if (sev_enabled()) {
->          sev_add_kernel_loader_hashes(&sev_load_ctx, &error_fatal);
->      }
-
-With regards,
-Daniel
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 822f34344b..878409c121 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -476,6 +476,7 @@ F: docs/system/i386/sgx.rst
+ F: target/i386/kvm/
+ F: target/i386/sev*
+ F: scripts/kvm/vmxcap
++F: tests/functional/test_x86_64_hotplug_cpu.py
+ 
+ Xen emulation on X86 KVM CPUs
+ M: David Woodhouse <dwmw2@infradead.org>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 1bc5ba5229..04f8b858ed 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -229,6 +229,7 @@ tests_x86_64_system_thorough = [
+   'multiprocess',
+   'netdev_ethtool',
+   'virtio_gpu',
++  'x86_64_hotplug_cpu',
+ ]
+ 
+ tests_xtensa_system_thorough = [
+diff --git a/tests/avocado/hotplug_cpu.py b/tests/functional/test_x86_64_hotplug_cpu.py
+old mode 100644
+new mode 100755
+similarity index 25%
+rename from tests/avocado/hotplug_cpu.py
+rename to tests/functional/test_x86_64_hotplug_cpu.py
+index 342c838539..b1d5156c72
+--- a/tests/avocado/hotplug_cpu.py
++++ b/tests/functional/test_x86_64_hotplug_cpu.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # Functional test that hotplugs a CPU and checks it on a Linux guest
+ #
+ # Copyright (c) 2021 Red Hat, Inc.
+@@ -8,30 +10,60 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from avocado_qemu.linuxtest import LinuxTest
++from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
++
++
++class HotPlugCPU(LinuxKernelTest):
+ 
++    ASSET_KERNEL = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
++        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
+ 
+-class HotPlugCPU(LinuxTest):
++    ASSET_INITRD = Asset(
++        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
++         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
++        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
++
++    def test_hotplug(self):
+ 
+-    def test(self):
+-        """
+-        :avocado: tags=arch:x86_64
+-        :avocado: tags=machine:q35
+-        :avocado: tags=accel:kvm
+-        """
+         self.require_accelerator('kvm')
+         self.vm.add_args('-accel', 'kvm')
+         self.vm.add_args('-cpu', 'Haswell')
+         self.vm.add_args('-smp', '1,sockets=1,cores=2,threads=1,maxcpus=2')
+-        self.launch_and_wait()
++        self.vm.add_args('-m', '1G')
++        self.vm.add_args('-append', 'console=ttyS0 rd.rescue')
++
++        self.launch_kernel(self.ASSET_KERNEL.fetch(),
++                           self.ASSET_INITRD.fetch(),
++                           wait_for='Entering emergency mode.')
++        prompt = '# '
++        self.wait_for_console_pattern(prompt)
+ 
+-        self.ssh_command('test -e /sys/devices/system/cpu/cpu0')
+-        with self.assertRaises(AssertionError):
+-            self.ssh_command('test -e /sys/devices/system/cpu/cpu1')
++        exec_command_and_wait_for_pattern(self,
++                                          'cd /sys/devices/system/cpu/cpu0',
++                                          'cpu0#')
++        exec_command_and_wait_for_pattern(self,
++                                          'cd /sys/devices/system/cpu/cpu1',
++                                          'No such file or directory')
+ 
+         self.vm.cmd('device_add',
+                     driver='Haswell-x86_64-cpu',
++                    id='c1',
+                     socket_id=0,
+                     core_id=1,
+                     thread_id=0)
+-        self.ssh_command('test -e /sys/devices/system/cpu/cpu1')
++        self.wait_for_console_pattern('CPU1 has been hot-added')
++
++        exec_command_and_wait_for_pattern(self,
++                                          'cd /sys/devices/system/cpu/cpu1',
++                                          'cpu1#')
++
++        self.vm.cmd('device_del', id='c1')
++
++        exec_command_and_wait_for_pattern(self,
++                                          'cd /sys/devices/system/cpu/cpu1',
++                                          'No such file or directory')
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
