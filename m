@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51A32E77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 709C9E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZMz-0004KX-Eq; Tue, 17 Dec 2024 10:20:21 -0500
+	id 1tNZOA-0005W7-1G; Tue, 17 Dec 2024 10:21:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZMx-0004HH-9L
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:20:19 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZMv-00048A-HO
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:20:19 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43635796b48so22032075e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:20:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734448815; x=1735053615; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3XBk8Jjn5DR2szWJNgkjKw+0Pf3QK5WLRr6yAt6muaw=;
- b=vAFy2EYMTTYQxWYenrEoDlVNv1bRcy8N9+azomCniTooiZuaWrGyZNWQ5QsOritzLu
- AoAx0E+Ti9DKLZm47ElRmoEp2Dq32pZ4LX3W1cf28xzhqhRhTfVQp3rJ7rtw5wUxsNHs
- PLDGnEyVoEGTx+CCjxGsWhjDvd+pOsKMt1FzdKVV6MsEAZ+5/ceJa+qEKMiV7GKLwdZu
- DofP965u5M2R23UF6ZirWIriMGVy86JKIYqvVIBWNEw3Aj1xvDkXO6d7rWiXn53R/ajh
- KwOopyqElXB/HTPEOg3HUbn98q3o/zyIIA1CCPg5KiaWWA7kq3k3ugFAkm1qayoW2QgF
- JIUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734448815; x=1735053615;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3XBk8Jjn5DR2szWJNgkjKw+0Pf3QK5WLRr6yAt6muaw=;
- b=ufQpPcvwJYPxPtgXmObcrmJjTF+uYc7KlV9z0nkjS6AeB8c6hH1QvjDzfKQYUJWNAk
- zW4//cG+zdumnSXwWurFvRFj8UfvAMfrVuUAvtuxRApLlxt3c9WfcN/8LaopUQSFDxr8
- +qzxwlrclirtxB3MJxo1CL2Dz+1riodQ5pnv740OP20vIJksLNUMowNNUDWwhCOxkkbZ
- XmMi6d0n30Ixt7ZEHGjc7HzCcvkCXbNBjjMHJOry0Mgj+W8Z/BHlIhn0BCSI0rcbl4Z8
- 7DhSdCwh8zXI7f/PHGtd3TinO2JisclzcTGezSpos60E1Fe73vAPCkqFi05+F/gEuEJf
- VYvw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4ZM4JV5HFasjAsrVLpHUgb/wZKW4+c04rzu50OMRzWmLXWCpfz3ALyPowUpfO32PzoHZiTrQ/SqET@nongnu.org
-X-Gm-Message-State: AOJu0YzV0jypVUF/AsMLU3N6wMJJq9bZIgtEszfk5YTBQ9IJrxp9vt16
- NYRoEI7EnrPxjpPW7VDDabS4SXsYAdlfDVBC+LhKBEcYJouS92qFJl5nqXg7rg4=
-X-Gm-Gg: ASbGncsqzMoYAPXnBujSqAhdpL3rnDtgSecjxOB9C+INVybNr9WJswtgY+RGFlNrYSd
- LKiaerxRoPgyV8lIUZIeVJCSLrRl8Z1mM4J/LmBhMRutBsROp28YquL93QBL75W4IpKFaIOHOec
- TxIz4v5eOPJhMB5A1Eoi6lqIvwpmIZnuu4aidjQ83l+RvLpjOlgK8sijkQtNyf71bbOsit+9BnB
- +AcFQdZVtNDWexDNIhv4PJcRQYcdjLx2cPwIAJNFUghAiz/F2wae3Ehvht3+KEh5z6qqcgz
-X-Google-Smtp-Source: AGHT+IEVeqsXuNFGqhhhRpdo+vYacFvNZidciwLuAAkJJnA+nopy+oDMdfNqlV+x/GjuVVn+4XAlqg==
-X-Received: by 2002:a05:600c:3516:b0:436:1b77:b5aa with SMTP id
- 5b1f17b1804b1-4364815c7d6mr36013015e9.8.1734448815574; 
- Tue, 17 Dec 2024 07:20:15 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4364a376846sm22946685e9.0.2024.12.17.07.20.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 07:20:14 -0800 (PST)
-Message-ID: <e8b9c9d8-c838-4418-8af0-b1e009b41e3c@linaro.org>
-Date: Tue, 17 Dec 2024 16:20:13 +0100
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tNZO7-0005VV-N6
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:21:31 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1tNZO5-0004W2-Pt
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:21:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734448887;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yLXIcfhEljzQGKGN6Spe/86GGKOa6LWHXnv/zAkDeQw=;
+ b=G0TgHaLDvqRtoqHpmDeOvw+tqwAKsRsQ96u/pa4SbJ2HL7j9MMMvT1wcQbe4F563k3rmyR
+ UWH1MIIOqqsBCIvqYixU+bD2+ILz+/I9hPpTt1HsfTMMfIjW7G0SDHIv5Pe3CHcUHdj8Jr
+ p++l5QnSGXX1ux/AWA+csZT0LIswMMI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-368-zHj2tfTzNMy9l1G9k50q_Q-1; Tue,
+ 17 Dec 2024 10:21:24 -0500
+X-MC-Unique: zHj2tfTzNMy9l1G9k50q_Q-1
+X-Mimecast-MFC-AGG-ID: zHj2tfTzNMy9l1G9k50q_Q
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0DAA11955F2B; Tue, 17 Dec 2024 15:21:23 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.39.192.88])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 744BA195395A; Tue, 17 Dec 2024 15:21:22 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 430E01800399; Tue, 17 Dec 2024 16:21:20 +0100 (CET)
+Date: Tue, 17 Dec 2024 16:21:20 +0100
+From: Gerd Hoffman <kraxel@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>
+Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+Message-ID: <rnhi7vmax2vicc56xpaltjbfnffto3k7awaum4eblqlts4uhd2@ivqgxapmdnj2>
+References: <20241216114841.1025070-1-anisinha@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/9] hw/arm: Include missing 'exec/tswap.h' header
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-ppc@nongnu.org, qemu-arm@nongnu.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20241211230357.97036-1-philmd@linaro.org>
- <20241211230357.97036-5-philmd@linaro.org>
- <0cd4b1da-eebe-425c-9a6b-b712e0a877e0@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0cd4b1da-eebe-425c-9a6b-b712e0a877e0@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241216114841.1025070-1-anisinha@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,44 +88,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 00:53, Richard Henderson wrote:
-> On 12/11/24 17:03, Philippe Mathieu-Daudé wrote:
->> Some files indirectly get "exec/tswap.h" declarations via
->> "exec/cpu-all.h". Include it directly to be able to remove
->> the former from the latter, otherwise we get:
->>
->>    hw/arm/boot.c:175:19: error: call to undeclared function 'tswap32'; 
->> ISO C99 and later do not support implicit function declarations [- 
->> Wimplicit-function-declaration]
->>      175 |         code[i] = tswap32(insn);
->>          |                   ^
->>    hw/arm/npcm7xx.c:326:26: error: call to undeclared function 
->> 'tswap32'; ISO C99 and later do not support implicit function 
->> declarations [-Wimplicit-function-declaration]
->>      326 |         board_setup[i] = tswap32(board_setup[i]);
->>          |                          ^
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   hw/arm/boot.c    | 1 +
->>   hw/arm/npcm7xx.c | 1 +
->>   2 files changed, 2 insertions(+)
->>
-> 
-> These could all be cpu_to_le32, since TARGET_BIG_ENDIAN is always false 
-> for qemu-system-arm.
+  Hi,
 
-I agree, but last time I did that Peter insisted for tswap():
-https://lore.kernel.org/qemu-devel/CAFEAcA8Exn0VMzM1h048q4Nm7toxkpaOv4B-ZE4FEXKgHoqy7A@mail.gmail.com/
+> +Fw-cfg Files
+> +************
+> +
+> +Guests drive vmfwupdate through special ``fw-cfg`` files that control its flow
+> +followed by a standard system reset operation. When vmfwupdate is available,
+> +it provides the following ``fw-cfg`` files:
+> +
+> +* ``vmfwupdate/cap`` (``u64``) - Read-only Little Endian encoded bitmap of additional
+> +  capabilities the interface supports. List of available capabilities:
+> +
+> +     ``VMFWUPDATE_CAP_BIOS_RESIZE        0x0000000000000001``
+> +
+> +* ``vmfwupdate/bios-size`` (``u32``) - Little Endian encoded size of the BIOS region.
+> +  Read-only by default. Optionally Read-write if ``vmfwupdate/cap`` contains
+> +  ``VMFWUPDATE_CAP_BIOS_RESIZE``. On write, the BIOS region may resize. Guests are
+> +  required to read the value after writing and compare it with the requested size
+> +  to determine whether the resize was successful. Note, x86 BIOS regions always
+> +  start at 4GiB - bios-size.
+> +
+> +* ``vmfwupdate/opaque`` (``1024 bytes``) - A 1KiB buffer that survives the BIOS replacement
+> +  flow. Can be used by the guest to propagate guest physical addresses of payloads
+> +  to its BIOS stage. It’s recommended to make the new BIOS clear this file on boot
+> +  if it exists. Contents of this file are under control by the hypervisor. In an
+> +  environment that considers the hypervisor outside of its trust boundary, guests
+> +  are advised to validate its contents before consumption.
+> +
+> +* ``vmfwupdate/disable`` (``u8``) - Indicates whether the interface is disabled.
+> +  Returns 0 for enabled, 1 for disabled. Writing any value disables it. Writing is
+> +  only allowed if the value is 0. When the interface is disabled, the replace file
+> +  is ignored on reset. This value resets to 0 on system reset.
+> +
+> +* ``vmfwupdate/bios-addr`` (``u64``) - A 64bit Little Endian encoded guest physical address
+> +  at the beginning of the replacement BIOS region. The provided payload must reside
+> +  in shared memory. 0 on system reset.
 
-Peter, was my wording in that previous series not clear (in that case
-I can try to clarify) or was it OK but you reject the possibility of
-using cpu_to_le32() to remove tswap() calls?
+I'd suggest to make all integers u64 (little endian).
 
-(Here my goal is to have a single binary, so I start removing target-
-specific endianness).
+Any specific reason why vmfwupdate/opaque is 1024 bytes?
+How about using 4096 (aka PAGE_SIZE) bytes?
 
-Thanks,
+> +On reset, the hypervisor evaluates whether ``vmfwupdate/disable`` is ``1``. If it is, it ignores
+> +any other vmfwupdate values and performs a standard system reset.
+> +
+> +If ``vmfwupdate/disable`` is ``0``, the hypervisor checks if bios-addr is ``0``. If it is, it
+> +performs a standard system reset.
 
-Phil.
+What is 'standard system reset' in SEV-SNP mode?  I think qemu does not
+support it right now and will simply poweroff the guest instead.  Will
+that continue to be the case?  Or should qemu re-create the VM context
+in that case, simliar to the firmware update case, except that qemu
+would have to use the default firmware image then?
+
+Will the vmfwupdate be supported without SEV-SNP too?  Might be useful
+for development + testing.  If so the spec should clarify what happens
+in that case, because the concept of "shared memory" does not exist
+then.
+
+take care,
+  Gerd
+
 
