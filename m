@@ -4,74 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434C6E77187
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D817E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:29:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYZH-0000oC-QU; Tue, 17 Dec 2024 09:29:00 -0500
+	id 1tNYZe-00015x-OJ; Tue, 17 Dec 2024 09:29:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNYZD-0000jm-OG
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:56 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZN-0000xe-Fi
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNYZB-0004vE-8w
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:28:55 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZL-0004wa-OZ
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734445731;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MJW9xnEDOcxQWtRflbCqPWqvmcKAnhbeHQpZcHs/d74=;
- b=XspSWEY0idWw4J1uGh11mz9o6FQLTRSaawcgEAO3SSoYDLCAS4QDA58jGn/KOdhSavm3og
- vyS+Ezc3zi1X2rf2OKS4EBVpA51m+6J7qacP9Xm57/kVztEdyWcHz0DsFK32OXnsNmd7lP
- 47OgGOcEy9qPE71qxoVJrhwDKVY0I08=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1734445742;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=p+wm30l20MB5VCsuk3dLOge/kuvbSRnrpFUqqlnKAm0=;
+ b=g+vAa2iE4nn3FnlRLchKN8dtxLu35yukwLgEgIFIKEz656SBk/eL8T9GNDRRwpbserENlb
+ sKK218KxQECQfqO2MVdRdtW1I9fjRMNrr/ai06jjfDWCEL8HGfZUfbgvnxAQtawkyx/CgI
+ pfwFqmNH5nyA27+zWTSEzsUt0Sg5ZE0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-213-HXG03kKrNSKOfdVGjeOxYA-1; Tue,
- 17 Dec 2024 09:28:50 -0500
-X-MC-Unique: HXG03kKrNSKOfdVGjeOxYA-1
-X-Mimecast-MFC-AGG-ID: HXG03kKrNSKOfdVGjeOxYA
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-687-xwJcvz-hMK-IU3bYMu8LXQ-1; Tue,
+ 17 Dec 2024 09:28:59 -0500
+X-MC-Unique: xwJcvz-hMK-IU3bYMu8LXQ-1
+X-Mimecast-MFC-AGG-ID: xwJcvz-hMK-IU3bYMu8LXQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8160619560B2; Tue, 17 Dec 2024 14:28:47 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.136])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A01A1300F9B7; Tue, 17 Dec 2024 14:28:42 +0000 (UTC)
-Date: Tue, 17 Dec 2024 14:28:40 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PULL 3/7] x86/loader: expose unpatched kernel
-Message-ID: <Z2GKmE0kxkbhs8tp@redhat.com>
-References: <20241216105053.246204-1-kraxel@redhat.com>
- <20241216105053.246204-4-kraxel@redhat.com>
- <Z2GHc5qwDub89qCa@redhat.com>
- <52zucjcan5q4dwgsdchkwqi6bhdfx3ziw7ud52rratqhyzikci@3ainfgz6e4yp>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E5B11955F45; Tue, 17 Dec 2024 14:28:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C78A19560AD; Tue, 17 Dec 2024 14:28:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0878521E6740; Tue, 17 Dec 2024 15:28:55 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com,
+	berrange@redhat.com,
+	eduardo@habkost.net
+Subject: [PATCH 0/6] Property type reporting improvements
+Date: Tue, 17 Dec 2024 15:28:48 +0100
+Message-ID: <20241217142855.3805068-1-armbru@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <52zucjcan5q4dwgsdchkwqi6bhdfx3ziw7ud52rratqhyzikci@3ainfgz6e4yp>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -93,52 +79,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 03:26:35PM +0100, Gerd Hoffmann wrote:
-> On Tue, Dec 17, 2024 at 02:15:15PM +0000, Daniel P. Berrangé wrote:
-> > On Mon, Dec 16, 2024 at 11:50:49AM +0100, Gerd Hoffmann wrote:
-> > > Add a new "etc/boot/kernel" fw_cfg file, containing the kernel without
-> > > the setup header patches.  Intended use is booting in UEFI with secure
-> > > boot enabled, where the setup header patching breaks secure boot
-> > > verification.
-> > > 
-> > > Needs OVMF changes too to be actually useful.
-> > > 
-> > > Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
-> > > Message-ID: <20240905141211.1253307-5-kraxel@redhat.com>
-> > > ---
-> > >  hw/i386/x86-common.c | 3 +++
-> > >  1 file changed, 3 insertions(+)
-> > > 
-> > > diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-> > > index 28341b42d949..1cef3045ad83 100644
-> > > --- a/hw/i386/x86-common.c
-> > > +++ b/hw/i386/x86-common.c
-> > > @@ -962,6 +962,9 @@ void x86_load_linux(X86MachineState *x86ms,
-> > >      sev_load_ctx.setup_data = (char *)setup;
-> > >      sev_load_ctx.setup_size = setup_size;
-> > >  
-> > > +    /* kernel without setup header patches */
-> > > +    fw_cfg_add_file(fw_cfg, "etc/boot/kernel", kernel, kernel_size);
-> > > +
-> > 
-> > How concerned should we be about the memory duplication overhead
-> > from loading the kernel image twice ?
-> 
-> It's not loaded twice, see 214191f6b574 ("x86/loader: read complete
-> kernel"), both fw_cfg entries point to the same memory block.
+QOM properties could use similar work.  Left for another day.
 
-Ah, I see now, that's subtle :-)
+Markus Armbruster (6):
+  qdev: Delete unused qdev_prop_enum
+  qdev: Change qdev_prop_pci_devfn member @name from "int32" to "str"
+  qdev: Rename PropertyInfo member @name to @type
+  qdev: Change values of PropertyInfo member @type to be QAPI types
+  qdev: Improve PropertyInfo member @description for enum properties
+  qdev: Improve a few more PropertyInfo @description members
 
+ include/hw/qdev-properties.h     |  3 +-
+ backends/tpm/tpm_util.c          |  2 +-
+ hw/block/xen-block.c             |  4 +-
+ hw/core/qdev-properties-system.c | 76 +++++++++++++++-----------------
+ hw/core/qdev-properties.c        | 44 ++++++++----------
+ hw/misc/xlnx-versal-trng.c       |  2 +-
+ hw/nvme/nguid.c                  |  2 +-
+ hw/nvram/xlnx-bbram.c            |  2 +-
+ hw/nvram/xlnx-efuse.c            |  2 +-
+ hw/pci/pci.c                     |  2 +-
+ hw/s390x/ccw-device.c            |  6 +--
+ hw/s390x/css.c                   |  4 +-
+ hw/s390x/s390-pci-bus.c          |  3 +-
+ hw/vfio/pci-quirks.c             |  2 +-
+ target/riscv/cpu.c               | 44 ++++++++++++------
+ target/sparc/cpu.c               |  3 +-
+ 16 files changed, 104 insertions(+), 97 deletions(-)
 
-With regards,
-Daniel
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.0
 
 
