@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FA1E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 06:27:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE85DE7716A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 07:11:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNR1Q-000371-2x; Tue, 17 Dec 2024 01:25:32 -0500
+	id 1tNRj4-0003EL-MO; Tue, 17 Dec 2024 02:10:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tNR1J-00033Q-IZ
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 01:25:26 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tNRj3-0003Du-3f
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:10:37 -0500
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1tNR1F-00055e-Rc
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 01:25:24 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-728f1525565so5815167b3a.1
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 22:25:20 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
+ id 1tNRj1-0001KK-Dm
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:10:36 -0500
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-53e28cf55cdso4367021e87.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 23:10:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1734416719; x=1735021519; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tl/PDO9SOOn4SJKgZz+HudXPKCnTCdotF3cwk73STA0=;
- b=MzDCMtkYWA01WKyxuu8tH0hxi0dWYmK3bZHoofdWCi2P82euhsUfMGfZ40BquCTE+Q
- 8NKVtWl+sVJ5sAvWoN/p4S9A1cA4XvkJrpUY/cW46v2KB0vo1tRuhgjziGFQdo41fk8J
- H2DPv8z88BxE0CyQwgdVJW3TMwvGWRgWwghJyCOrLwOKTsGCWJLDRMxExpzMwP1iv5ns
- mzKfMVXHmi+03qPKdopte6R+UBEXcccZIvxz/26N6kUPXkFkKeDJAQGesR6YQC5Yw2py
- 1ZiKjZL9z3S/rrfJ6+CfU2I3GyaK0CYNbsZHpFgDe7lzElZlAKHf+99SmyRv7BSXztzL
- wTcQ==
+ d=linaro.org; s=google; t=1734419432; x=1735024232; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:organization:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=UQae+zCcA79EIlsX+SB2839BhRUwlMBvl5iQNG5MpRI=;
+ b=zXqETOF0PTHPyQ2xgbCnCEaQrWUk4DWaLpvj4/rw5VNzwfTTlXOLiqOZCDajB/UcUz
+ vNPhYLPOxD+LSSTmX5BtjZ+UXdZ7oGw4u5KrO55XxnRvtshWc47QaDasBrXCezUs3/ER
+ fFHHOtN/N9NY7WHQ2VICo3Axp96JK1Rg+dCAlXEldkeQD8ozJ6n+E6Vj2Xfs9dpgg/Yb
+ OsJCQr8EPu7NDwF8r52cdp+bqqQr4pj7SrHSbDEeT7V0pu/KF8XzK0pQsLvwBAmXECFJ
+ rJ1TJWa6AQIsGMIYIjvn5QVms/yGawBi4SHC/ZBTZtyqoeE2006NiorYW+dvnChptUhj
+ zLOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734416719; x=1735021519;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tl/PDO9SOOn4SJKgZz+HudXPKCnTCdotF3cwk73STA0=;
- b=eoq8KMcU7/JrLrHgpXNodkw/KnJ6SLWa1bJliQ0t1wN2z7vhlSqPNnRv0CWZsCg/DW
- 1ZLLf7k/rKpCuCIk9rfYcpjRQtEEhRQPcs8pKAkvs5GeIWTKwn+J9HsrVyA+tAQgH8+o
- UI2kDPTRpLHXHfzuY+FEj6gtEHdimdExbLKJxRHA4GlzWFOvVMaUuE/78TRaG+hdtRW5
- a4zdDt1ex8vCOeB6oWgg9y2YLZ6VAWv8JsYYvAiOp2hCmlnf5SXkJwJw+x8fHYGZJbIL
- pBVCIlbyT04s9ZHSVVULAnRDhiBvf5mQr86cZAy5+gYY9CnfuHiL/4HAcGd2pZagawxI
- iDlg==
-X-Gm-Message-State: AOJu0Yyjvg9d0i6kddQGAk/yCtt3aSDp0Kqkcd54X8FWtYk6r78Zb+8v
- WxqT9DKte5SbBhANJJ8VCIXlO3njBP3C54qMtD9DuSAVGZYV4hfXFF4cG9yaAGNhBAB5apDD58x
- gUq+6twUg/gjZK6X1YXcwC3NE5vkTysCDzuMDd9D4A2MAZxBOaKbpS7jwAqhGJchohno/aPeFgx
- uvhSuaM3wsy14ul/FygdJUMUMGibuRFkgEKxDhrczgxw==
-X-Gm-Gg: ASbGnctCE+PlkRsUF1b7VeREZ6iLy024fHJbHANZm1HF+ZYV9YMalW6ze73LcB8DTSe
- io1mhoL0zuTWzv9W90c+86D4fry15r0Hd1lzUlp3ZtOIQlMDgP8dMoqlT+KD1raMusO5fyWVsCv
- 7+2N36vSCovPHtfmSnfdH10f4SR2PhxilRoyUQKesC3QTziBZE3PnNGlcHTL4SebIlXUwx16tOA
- aVBaXRIVNrvJaf7BMIbhzDd8tiHxPHsXYCqUxks+UuNSQbh/XH2Xe+A2lXmu8yyphPfGM+qVk9x
- rL8XFMEZtLo=
-X-Google-Smtp-Source: AGHT+IGEzxKvdwsW3/o8+hACJ64Q7X4/KJM+RPkNXJ2J2uih2Ep2XnbA9al+Pcu1PUrUCbHwnJ2kmg==
-X-Received: by 2002:a05:6a00:ac02:b0:725:ebab:bb32 with SMTP id
- d2e1a72fcca58-7290c27c888mr22537423b3a.26.1734416718898; 
- Mon, 16 Dec 2024 22:25:18 -0800 (PST)
-Received: from fchang-1826.internal.sifive.com ([210.176.154.33])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72925e6e8b1sm4354301b3a.139.2024.12.16.22.25.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Dec 2024 22:25:18 -0800 (PST)
-From: frank.chang@sifive.com
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v10 7/7] target/riscv: Disable Smrnmi for the 'max' type CPU
-Date: Tue, 17 Dec 2024 14:24:40 +0800
-Message-Id: <20241217062440.884261-8-frank.chang@sifive.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241217062440.884261-1-frank.chang@sifive.com>
-References: <20241217062440.884261-1-frank.chang@sifive.com>
+ d=1e100.net; s=20230601; t=1734419432; x=1735024232;
+ h=content-transfer-encoding:in-reply-to:organization:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UQae+zCcA79EIlsX+SB2839BhRUwlMBvl5iQNG5MpRI=;
+ b=P5Eg3j9NCsvTWIkAnLNDbbugX2naqDWYIh/eYkTuqgzuqNfis6MQbo0TDMS0sdMEoJ
+ DJbuAH/eEbT+hn3obJ13+qMZlyR79bAHT8nFBsqgmaq27/TacxDgBOerVMSxRY/PvemX
+ TK2+e2t/TOZIYrlvjT+PVOlTMEYjURueqXQLk2u9L+JEjPngkEd6vMVdnDmEhcaaq7Rs
+ 3Dy8BlpZ6Rr4V+QskT18VJFSS1r5emP6E5xeyme4JD14ydNM8ZB06xEMvOWaLd0ndAdw
+ nnhgbL+/YsJSgel22f0RaQme3QGVHk8RJECgZB+sZ5SwuAVbkESO6vr6LOyQYjOs/FCz
+ cVxQ==
+X-Gm-Message-State: AOJu0YzSAvd7HsoGDvGtSSCC0YmsARuweozGVbqtjQEGXCaS/gObwweK
+ UE0+qmfBBrREXoVT8ozsKm/cbnUGhvHceD1DoKro4OdRchI6bMD5HApd8z4lueM=
+X-Gm-Gg: ASbGnctxTyAQX9vVwFpRsR37LajDAUxKN/rtoU1uN3B9HsZGBWSIkYGQaXyfV0dbhe4
+ cKIOEPizTti0oHvltT96VsDfw3zsyRxugdgA0nfnPTvJj7yOK+6NJcm8kHUY8pgGSE5apgqx8Ck
+ BF97+BFM+s+CKxtrSnju9En5nrqtV/VyT09qdFKZr1vK2cbVmYdqgbZF3VF+KifTTBXgvcGwCB8
+ MvEbGMS/PJK48z3PFl0qumElY4lfJJKfCGu0tvKJyA8E1k9HCqtStcWlInldvwMESZ21pI0O/7Z
+ Zz5+OTSDrUNJ7UYZShsKnswZFAsptpOkKvUUMQ==
+X-Google-Smtp-Source: AGHT+IHD6XuXugCi6AsXneXRa4HMYsydL/++C0anz1aIBR1qOR2wJK/J8yz9PCDGsflx//1E8bv5ZQ==
+X-Received: by 2002:a05:6512:39c8:b0:540:2fe6:936f with SMTP id
+ 2adb3069b0e04-5408fac7b04mr5674884e87.3.1734419431628; 
+ Mon, 16 Dec 2024 23:10:31 -0800 (PST)
+Received: from [192.168.210.26] (83.11.13.135.ipv4.supernova.orange.pl.
+ [83.11.13.135]) by smtp.gmail.com with ESMTPSA id
+ 2adb3069b0e04-54120b9f3f2sm1077214e87.31.2024.12.16.23.10.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Dec 2024 23:10:30 -0800 (PST)
+Message-ID: <7d5f349e-761c-459c-93db-cc32ec2a207d@linaro.org>
+Date: Tue, 17 Dec 2024 08:10:29 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/1] tests/avocado: update sbsa-ref firmware
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>, qemu-arm@nongnu.org
+References: <20241125125448.185504-1-marcin.juszkiewicz@linaro.org>
+ <CAFEAcA-V3PGF7vst8QFjh+bWVx5EGDt_B9ZCe1OryNV8e39N4w@mail.gmail.com>
+ <CAFEAcA_SRU5UtttB=G2=L2YSK2D1U7Rumbc6eafioxR3yfnYUQ@mail.gmail.com>
+Content-Language: pl-PL, en-GB
+From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+Organization: Linaro
+In-Reply-To: <CAFEAcA_SRU5UtttB=G2=L2YSK2D1U7Rumbc6eafioxR3yfnYUQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=frank.chang@sifive.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,38 +105,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+W dniu 16.12.2024 o 13:46, Peter Maydell pisze:
+> On Mon, 25 Nov 2024 at 13:25, Peter Maydell <peter.maydell@linaro.org> wrote:
+>>
+>> On Mon, 25 Nov 2024 at 12:54, Marcin Juszkiewicz
+>> <marcin.juszkiewicz@linaro.org> wrote:
+>>>
+>>> Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
+>>>
+>>> Used versions:
+>>>
+>>> - Trusted Firmware v2.12.0
+>>> - Tianocore EDK2 stable202411
+>>> - Tianocore EDK2 Platforms code commit 4b3530d
+>>>
+>>> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
+>>
+>> Hi; what's the benefit to taking this update? Would it be better
+>> postponed until the 9.2 release is complete?
+> 
+> We're now past the 9.2 release, but it would still be good
+> to know what the benefit to updating the firmware images
+> for this test is.
 
-When Smrnmi is present, the firmware (e.g., OpenSBI) must set
-mnstatus.NMIE to 1 before enabling any interrupts. Otherwise, all
-interrupts will be disabled. Since our current OpenSBI does not
-support Smrnmi yet, let's disable Smrnmi for the 'max' type CPU for
-now. We can re-enable it once OpenSBI includes proper support for it.
+We tend to update firmware to the latest in all places it is used. 
+Previous one was built from pre-selected git commits due to changes done 
+during cycle.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/tcg/tcg-cpu.c | 6 ++++++
- 1 file changed, 6 insertions(+)
-
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index 3480767b35..f3fb1c432b 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1429,6 +1429,12 @@ static void riscv_init_max_cpu_extensions(Object *obj)
-     if (env->misa_mxl != MXL_RV32) {
-         isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcf), false);
-     }
-+
-+    /*
-+     * ext_smrnmi requires OpenSBI changes that our current
-+     * image does not have. Disable it for now.
-+     */
-+    isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_smrnmi), false);
- }
- 
- static bool riscv_cpu_has_max_extensions(Object *cpu_obj)
--- 
-2.34.1
-
+Now we got both components (TF-A and EDK2) from stable releases.
 
