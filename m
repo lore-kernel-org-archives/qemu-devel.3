@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFE11E77188
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:45:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA27E77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 22:45:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNgHl-0004NJ-LS; Tue, 17 Dec 2024 17:43:25 -0500
+	id 1tNgI8-0004gt-5L; Tue, 17 Dec 2024 17:43:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHj-0004M9-Nr
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:23 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1tNgI6-0004gF-Bh
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:46 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNgHi-0001Bb-1o
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:23 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7292a83264eso2468954b3a.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:21 -0800 (PST)
+ id 1tNgI4-0001GN-6i
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 17:43:45 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-728ea1e0bdbso4576119b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 14:43:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734475401; x=1735080201; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jgxR9arESI3Aidanx+cexjGed292D3H2X6RqwRpaLC4=;
- b=B/Eee2/BQZ6S80+QlreecIwlDk6/dbBNBBjqgkezvwtqEpcnmTEv791tAaDcAiLSkw
- 30pOxW1Jj8KbxGOU/FOQTrf0RUNNyIaI79nrNkVncJnhFwLONAUPXAaMuLvBDk8EI+2M
- hMn7PiFIpWF9ay/rgbJ1bL14Waqo+qDzLewjTJBvT2wgj+9x8FRXa4dwrweViD32XCh3
- 4cC/P8wisHxF4B2ZuWed+shYtql8xxYh69Oa+kDpmTdkWmEEdzwu8jTKuchJm9lXfXg/
- PR8xDDyzh159dsAYt4Izb9fh3LrpIMJ5JvndqnKytH413Dm7uF6EKfHun/OJGgjuBPqw
- 8Idw==
+ d=linaro.org; s=google; t=1734475423; x=1735080223; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LNK18GmLLWC1Gkt31PfdfrwF0KHp5RTE2VoXyCRDNkU=;
+ b=vt/jFjcjQ/5PRuXP/MC59FIHZMEC2P45d8MFjkD8/JW3eSKdQg3z/Y1uC6WrgrFvUm
+ wCDaZRurwwCVrP1DViuqVex1WgSwKhOrcVf3yi1H8Gn13VS3FiXaoPdHAA5oS5D34ZtQ
+ 0sEIdzBHezIBsqhS7HBY9J3HMQZysgF0ap0B8cVCvb1yfbrcqyOC+RfbbKf37O6fkj1o
+ g5uVCsLWoJsK1GQjbycKPQez+4bKbGUkNdUHYriOH8xrZHRGvEq7ACJZi4cBI31AWLx8
+ mTedq8iZtAriCZ23jGcwjrFO+Qh37fR5gc0WEcwOPb7fPniO6qlTh1JMCMyGFZQyaO6O
+ G8mg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734475401; x=1735080201;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jgxR9arESI3Aidanx+cexjGed292D3H2X6RqwRpaLC4=;
- b=IOt8pi6ORp4MI+FzTxjZI2xGnatoBrA01ysYEmJRjoOkMLGBIHRAiE9Mel78Lkj3m9
- oUYl3NZbx+XBx4MXFbnaopglA+RtA3od/qBVV6dhWJZ37M+k6zp9pRWSaiZrl3Nt6T97
- Pzn475U25a1+AwLBlcnmg2eEoHNMRyIiq+z7bzDClSSEhZUi4xCIFwChYr9BmCoLJvSh
- YdQzBEiiGgd9Gm4oYhQIzWboBIjTBSAd/7My8V7rZHJ5+doD/AuvbkOHv78jUrkMG8D0
- OXdcmixOd9PNTLTSYhHHyu/oHpcV7xOrkkqZsdcd3NH4+HfIWGSLDJSFsTaKI3f5Bi9r
- DwrA==
-X-Gm-Message-State: AOJu0YzdXZXLcq431zl2Fl5hmz+XZ3S1r+IboPs5wuHGVEd5UQYBa5Nk
- Vs5bfyw2yqCRn2LGSsbQ+F93fKyAsY09tjM463mNtB0DaqRDJRnATX+ik8r4BMQf04CqigSZbz/
- /9HA=
-X-Gm-Gg: ASbGnctAYUKq2jceSpZWucifDkx4JTaGxv14N99KfYxGhcOTMSBQxuwbrWBVylbVdMW
- Oiyecs4xktnaS6p5zo/7SNe2y/1mVpBnV1Zph3M+TNuQN3tQrqm9abbpTVZRC62o6WxYx9nABFh
- uhrTcEuQ7PHtPXQcdm6tnz58s8YdJyWc0t16VXNlYuxKMVPZFMLlb5keSrPEqk5INeqStRriG+7
- +BPHjVpPmanHtnMsOD38fOVjKPq3LDZni6joUdiSxZWAe+0DUL8EYq9
-X-Google-Smtp-Source: AGHT+IGN6BduqgEMB5ckD0vOMFunG6nxzDmBNpQZSvK87izGm+GAny8oGTFSVPrUOI3ohevVDfFeag==
-X-Received: by 2002:a05:6a00:2906:b0:724:f86e:e3d9 with SMTP id
- d2e1a72fcca58-72a8d260780mr971134b3a.14.1734475400871; 
- Tue, 17 Dec 2024 14:43:20 -0800 (PST)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72918ac53f3sm7463214b3a.27.2024.12.17.14.43.20
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 14:43:20 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- richard.henderson@linaro.org, philmd@linaro.org,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 11/11] configure: reenable plugins by default for 32-bit
- hosts
-Date: Tue, 17 Dec 2024 14:43:06 -0800
-Message-Id: <20241217224306.2900490-12-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
-References: <20241217224306.2900490-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1734475423; x=1735080223;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LNK18GmLLWC1Gkt31PfdfrwF0KHp5RTE2VoXyCRDNkU=;
+ b=oStyrafNR6arynoN1okZVUleEc9DEXrypkJJdjluljJTpcrLAZYKx3gLK0FiN6f/Ur
+ 3Zfi407/CGS/DB0MdFVJRCrY4W7Eb8U2v8FSzB/rLXHgiG/i7ZfNhRHjVxAMKAdcvXFk
+ C/OnPvAMHcoUs45BowdvJuK+jEKkoeYc4ldUzOrgXK10MuDYeX3tAxfYEUqc/e5EfRTS
+ KQW9gpA+q4iNboPea/Mkh2qzUq4DodGtstRk7Kv2U7fHGJRvx2E8TtrwYYD5MmSn3CUr
+ Wja/OQBP5S1KRbLVugaHPQbJcxAAitBy6o3OKe7fX4tlEaZa22z6+iTXyU3B9ttFr1eT
+ a4BA==
+X-Gm-Message-State: AOJu0Yyl/I8crJoGmp/AyjY225JF818QUdxUopvT2K9TFN46wBe+BL1C
+ UIHUfbfhyYlf1fc9dw46jIOWNZUbYaQTSvwldtwZXK7a4KP7MpKrqgSuIti3GmZBE1lM7/AYVRH
+ ZNHI=
+X-Gm-Gg: ASbGncu7S59bM1xZpgH7Fy1ZJVFS/YyyyM61w0n7W66r1jp4Y6a+OUGxuhcRZEyt2vj
+ bCeoW0p0wTUF7IRKBMzT7ET9g0x75xEschSBN/GWeOggr6JabMSSn/Uahxg754N5T2DfEigOeU4
+ XeJKyTbfORLhq55tZcpl6li4Qr8+vA5QS9v72fgWYT6VYJmu2A8r0yUrNtdmpaJakATqHPm608l
+ ylepW8Rfw1AtDmymVCNnPgc/O0HZfFXyq2UBvx/GMNpie8VRG0TjyQ1Q4FEMgE4R6kKrA==
+X-Google-Smtp-Source: AGHT+IH1YyPI1TpdDIz/wVvbo/l/FtZ0c13f5HD3kR9/zhaZoSWlCllPv/rVuxhbMFMmJ0lu/6o+AA==
+X-Received: by 2002:a05:6a00:114c:b0:71e:16b3:e5dc with SMTP id
+ d2e1a72fcca58-72a8d2dee69mr1081568b3a.19.1734475422798; 
+ Tue, 17 Dec 2024 14:43:42 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72a805c49adsm1361869b3a.65.2024.12.17.14.43.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 14:43:42 -0800 (PST)
+Message-ID: <126f24d2-008a-4e87-b743-223744464ab4@linaro.org>
+Date: Tue, 17 Dec 2024 14:43:41 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/11] Fix 32-bit build for plugins
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, richard.henderson@linaro.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>
+References: <20241217223825.2895749-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241217223825.2895749-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- configure | 21 +--------------------
- 1 file changed, 1 insertion(+), 20 deletions(-)
+On 12/17/24 14:38, Pierrick Bouvier wrote:
+> Since 9.2.0 release, we are building contrib plugins using the QEMU build system
+> (before, it was external makefiles). When building for 32-bit host platform,
+> some warnings are triggered and build fail.
+> 
+> Thus, at the time, the decision was to not fix those plugins, and
+> disable by default plugins for 32-bit host platforms (see cf2a78cb).
+> 
+> This series fix plugins to have the same behaviour on 32-bit and 64-bit
+> platform, and reenable plugins for 32-bit platforms.
+> 
+> There are two portability issues:
+> - we use hash tables, and use data as key directly. As key has a pointer size,
+>    it limits its size for 32-bit platform.
+>    The fix is to use pointer as a key, and point to allocated 64-bit data. The
+>    change is pretty straightforward for concerned plugins, and does not imply a
+>    memory overhead, as hash table entry is already heap allocated usually.
+> - we use plugins callback data to pass a pc. This does not work on 32-bit
+>    platform, as we are limited to a pointer size.
+>    To avoid doing memory allocations, we simply we simply use
+>    inline operations and a scoreboard to achieve the same result.
+> 
+> Tested (for every plugin modified) on i686 and x86_64.
+> The behaviour before and after this series was checked as well, and there is no
+> difference, apart from bug fixing (some pc were clipped at 32-bit values, even
+> on the 64-bit platform).
+> 
+> v2:
+> - do not modify qemu_plugin_insn_haddr signature
+> - fix cache plugin to use a correct hash/equal function
+> 
+> Pierrick Bouvier (11):
+>    tests/tcg/plugins/insn: remove unused callback parameter
+>    contrib/plugins/howvec: ensure we don't regress if this plugin is
+>      extended
+>    tests/tcg/plugins/syscall: fix 32-bit build
+>    tests/tcg/plugins/mem: fix 32-bit build
+>    contrib/plugins/stoptrigger: fix 32-bit build
+>    contrib/plugins/cache: fix 32-bit build
+>    contrib/plugins/hotblocks: fix 32-bit build
+>    contrib/plugins/cflow: fix 32-bit build
+>    contrib/plugins/hwprofile: fix 32-bit build
+>    contrib/plugins/hotpages: fix 32-bit build
+>    configure: reenable plugins by default for 32-bit hosts
+> 
+>   configure                     | 21 +--------------
+>   contrib/plugins/cache.c       | 18 +++++--------
+>   contrib/plugins/cflow.c       | 17 ++++++++-----
+>   contrib/plugins/hotblocks.c   | 29 +++++++++++++++++----
+>   contrib/plugins/hotpages.c    |  6 ++---
+>   contrib/plugins/howvec.c      |  7 ++---
+>   contrib/plugins/hwprofile.c   | 27 ++++++++++++--------
+>   contrib/plugins/stoptrigger.c | 48 ++++++++++++++++++++---------------
+>   tests/tcg/plugins/insn.c      |  4 +--
+>   tests/tcg/plugins/mem.c       |  6 ++---
+>   tests/tcg/plugins/syscall.c   |  6 ++---
+>   11 files changed, 99 insertions(+), 90 deletions(-)
+> 
 
-diff --git a/configure b/configure
-index 18336376bff..02f1dd2311f 100755
---- a/configure
-+++ b/configure
-@@ -528,25 +528,6 @@ case "$cpu" in
-     ;;
- esac
- 
--# Now we have our CPU_CFLAGS we can check if we are targeting a 32 or
--# 64 bit host.
--
--check_64bit_host() {
--cat > $TMPC <<EOF
--#if __SIZEOF_POINTER__ != 8
--#error not 64 bit system
--#endif
--int main(void) { return 0; }
--EOF
--  compile_object "$1"
--}
--
--if check_64bit_host "$CPU_CFLAGS"; then
--    host_bits=64
--else
--    host_bits=32
--fi
--
- if test -n "$host_arch" && {
-     ! test -d "$source_path/linux-user/include/host/$host_arch" ||
-     ! test -d "$source_path/common-user/host/$host_arch"; }; then
-@@ -1072,7 +1053,7 @@ if test "$static" = "yes" ; then
-   fi
-   plugins="no"
- fi
--if test "$plugins" != "no" && test $host_bits -eq 64; then
-+if test "$plugins" != "no"; then
-     if has_meson_option "-Dtcg_interpreter=true"; then
-         plugins="no"
-     else
--- 
-2.39.5
+Forgot to include reviewed-by from v1, please ignore and look at v3 instead.
 
+Thanks,
+Pierrick
 
