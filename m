@@ -4,106 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9F72E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 21:23:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6B9E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 21:31:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNf1F-0007oo-3G; Tue, 17 Dec 2024 16:22:17 -0500
+	id 1tNf9f-00021p-Gd; Tue, 17 Dec 2024 16:30:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNf1B-0007oZ-I5
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 16:22:14 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNf9e-00021c-Dj
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 16:30:58 -0500
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNf17-00038b-Fj
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 16:22:12 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2B9C921158;
- Tue, 17 Dec 2024 21:22:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734470525; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=dM9ds9TSRiG2F28y/QlI7ars7QcNscdI6p6B7V2aXAE=;
- b=RXLpydTUkUZK7Bwtt8YMJ4biHeguCdeIkrOSgj2GXqP5PELYCmQmYefb94aYr3C6L11T49
- 3C0lyEI+E5eVWb0ditidSrIKfuwyYE+Bu5QyuYzj3Bxz6iA0gU/dH8JqUnZEL/ZTtxkPuX
- ryukBRj95v4vscZbblzNBIPCO59PdXM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734470525;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=dM9ds9TSRiG2F28y/QlI7ars7QcNscdI6p6B7V2aXAE=;
- b=n6Xu3VtpxkYLb0oqTaPnEu9gSr1Uo5jYIMnk7EHoNlqrdvovqb9jRGIu2oSmHjWlj/wmDx
- nRcwCR9fNWrC40Cg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=RXLpydTU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=n6Xu3Vtp
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734470525; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=dM9ds9TSRiG2F28y/QlI7ars7QcNscdI6p6B7V2aXAE=;
- b=RXLpydTUkUZK7Bwtt8YMJ4biHeguCdeIkrOSgj2GXqP5PELYCmQmYefb94aYr3C6L11T49
- 3C0lyEI+E5eVWb0ditidSrIKfuwyYE+Bu5QyuYzj3Bxz6iA0gU/dH8JqUnZEL/ZTtxkPuX
- ryukBRj95v4vscZbblzNBIPCO59PdXM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734470525;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=dM9ds9TSRiG2F28y/QlI7ars7QcNscdI6p6B7V2aXAE=;
- b=n6Xu3VtpxkYLb0oqTaPnEu9gSr1Uo5jYIMnk7EHoNlqrdvovqb9jRGIu2oSmHjWlj/wmDx
- nRcwCR9fNWrC40Cg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 3121B132EA;
- Tue, 17 Dec 2024 21:22:03 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id q0xYOXvrYWeeCgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 21:22:03 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>
-Subject: [PATCH] tests/qtest/migration: Restore include for postcopy
-Date: Tue, 17 Dec 2024 18:22:01 -0300
-Message-Id: <20241217212201.23376-1-farosas@suse.de>
-X-Mailer: git-send-email 2.35.3
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNf9a-0004ua-RN
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 16:30:58 -0500
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-21631789fcdso737455ad.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 13:30:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734471051; x=1735075851; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=xh3vsa+mVkkBICrwQgkLWWLVAlIeMypOHB9EJuk89+M=;
+ b=PpdexZOt6lSeoBzOqPd9pP281rT9pSO3wwM9pMPadV34Le36TcJkYfb+7wGQ9XgqdV
+ 2YrW9vpxFKPeu4crRjPZKHjYi/x6QzOP9+poVI6/HVjFqaSd2+toevj/aJlOtP60FskK
+ tNQXqK64X3awmH8IJKVYXnFaOjoIuIXvAMin6PO8OhZuqJCOXytrbu1/oC1aXYpn3HKK
+ DxmtK4R+AJgYytCPzGZPbFKd6/16Jw62Ncsz57MkV2o8xM7vs/SYlufbeq6vX/+EnfEl
+ SL40tRVT29pF3RqZoaTfROx3iUBsHWgAMjrWzGnzQTyJE+HoUvoWNvMHCAQojH4++8bQ
+ 9PCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734471051; x=1735075851;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=xh3vsa+mVkkBICrwQgkLWWLVAlIeMypOHB9EJuk89+M=;
+ b=ohYtim+IJMzuhytVnxi7JOYxiE4MS3+ZddSSpFAEqpm8if3p02pECbzr2RQ4haAUBU
+ QR9gSXIPmq5D4I/b7Ae//lEKHlx0WooVy1sATO4NK4kytxwYdGMNYkTUIqZCKVG/wvnO
+ qKMTk9NRk7++90sVwUjCadPPiYCk/w1ZyD8Y6B0g7cdtKCMf669CxipQn5sHgdp3dqz/
+ OF9gSYGZhd5iBnkA62rItAZ4XpMu9gJe9PVrV/l35+nxzxWYb9Uu7tw2UEvd6Eyd33Q2
+ qt35XQJcf6uDf4RlnOGioBKaC9vQzUNsCPTM0SlnApR0vPefHRPHIp3LygMmqzlb+v6z
+ Ka9g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUSsxppUxFby4PKKHKotwsAvoPO1+FpPqRA4R3Q2wOQ/0+AROF27xomYCiYGmk/PlAAgKCMBbEXqPrX@nongnu.org
+X-Gm-Message-State: AOJu0YxXA78cwfB8/YpCWY9TYdhTvNBLd7KDL0aCpV6Pie6eAKMdUB28
+ RUBMbBK4kt0Pa5xwY/cTcYw8pJqbx304c1R8HfcuImHhiqpCZHPop9IdOXPAILs=
+X-Gm-Gg: ASbGncvJH3xldGfFJjg9gQxZ1aB/i+Jzz/QsEf38a2f/9ehGmj+X5ADW/kfGCo64Lsk
+ 0Syglcqa+dt3uGbwi1nQXACBeE637NiXmWAchnCpxnIXP1tYS9R//iRwFZHb7hoIUhrW7m8z6Rx
+ 77NYD7uXuv5BQF2hDxuJVxmLo+R0q/9BEUohgIegDFSxL5nlLoirEZU6XPhR/aSEWWLp173gTI1
+ Wv1TrZh93cpLPTUJVaHpv4euV/bQbRYmvkiH0b3ffXPhGFfqVwMr3y5tAS4jTb29GPwlQ==
+X-Google-Smtp-Source: AGHT+IEktHoBM9sjyz8ivoxQU5b+W5z79oalpeYeOfQxnUJAV68gWUVo9frWnaGv+emxCjVptafJfw==
+X-Received: by 2002:a17:903:946:b0:215:2d2c:dd0c with SMTP id
+ d9443c01a7336-218c9216b43mr84574075ad.14.1734471051461; 
+ Tue, 17 Dec 2024 13:30:51 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-218a1e6578fsm64190915ad.248.2024.12.17.13.30.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 13:30:51 -0800 (PST)
+Message-ID: <07675f0a-f398-4caf-8824-aebb733fa63c@linaro.org>
+Date: Tue, 17 Dec 2024 13:30:50 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Queue-Id: 2B9C921158
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- MIME_TRACE(0.00)[0:+];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_COUNT_TWO(0.00)[2];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 09/13] contrib/plugins/hotblocks: fix 32-bit build
+Content-Language: en-US
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ philmd@linaro.org
+References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
+ <20241217010707.2557258-10-pierrick.bouvier@linaro.org>
+ <a1a38b2f-fd2f-4e02-8e12-e9acdf852864@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <a1a38b2f-fd2f-4e02-8e12-e9acdf852864@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x630.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,60 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 124a3c58b8 ("tests/qtest/migration: Move ufd_version_check to
-utils") moved the ufd_version_check() function to another file but
-failed to bring along the <sys/syscall> include, which is necessary to
-pull in <asm/unistd.h> for __NR_userfaultd.
+On 12/17/24 07:34, Richard Henderson wrote:
+> On 12/16/24 19:07, Pierrick Bouvier wrote:
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> ---
+>>    contrib/plugins/hotblocks.c | 8 +++++---
+>>    1 file changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+>> index 02bc5078bdd..09b0932275c 100644
+>> --- a/contrib/plugins/hotblocks.c
+>> +++ b/contrib/plugins/hotblocks.c
+>> @@ -34,6 +34,7 @@ static guint64 limit = 20;
+>>     */
+>>    typedef struct {
+>>        uint64_t start_addr;
+>> +    uint64_t hash;
+>>        struct qemu_plugin_scoreboard *exec_count;
+>>        int trans_count;
+>>        unsigned long insns;
+>> @@ -91,7 +92,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+>>    
+>>    static void plugin_init(void)
+>>    {
+>> -    hotblocks = g_hash_table_new(NULL, g_direct_equal);
+>> +    hotblocks = g_hash_table_new(g_int64_hash, g_int64_equal);
+>>    }
+> 
+> I think this one should be using a proper comparison function: compare both pc and insns,
+> the inputs to the simplistic hash function:
+> 
 
-Restore the missing include.
+I will replace the equal function, and the hash one as well, so we don't 
+have to store hash in the entry.
 
-While here, remove the ifdef __linux__ that's redundant and fix a
-couple of typos.
-
-Fixes: 124a3c58b8 ("tests/qtest/migration: Move ufd_version_check to utils")
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/migration/migration-util.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
-
-diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
-index 525bf1eed4..d18841e357 100644
---- a/tests/qtest/migration/migration-util.c
-+++ b/tests/qtest/migration/migration-util.c
-@@ -22,8 +22,12 @@
- #include "migration/bootfile.h"
- #include "migration/migration-util.h"
- 
--/* for uffd_version_check() */
--#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-+#if defined(__linux__)
-+#include <sys/syscall.h>
-+#endif
-+
-+/* for ufd_version_check() */
-+#if defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
- #include <sys/eventfd.h>
- #include "qemu/userfaultfd.h"
- #endif
-@@ -297,7 +301,7 @@ bool probe_o_direct_support(const char *tmpfs)
- }
- #endif
- 
--#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-+#if defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
- bool ufd_version_check(bool *uffd_feature_thread_id)
- {
-     struct uffdio_api api_struct;
-@@ -333,7 +337,7 @@ bool ufd_version_check(bool *uffd_feature_thread_id)
- #else
- bool ufd_version_check(bool *uffd_feature_thread_id)
- {
--    g_test_message("Skipping test: Userfault not available (builtdtime)");
-+    g_test_message("Skipping test: Userfault not available (buildtime)");
-     return false;
- }
- #endif
--- 
-2.35.3
+>>        uint64_t hash = pc ^ insns;
+> 
+> An existing bug with the plugin, obviously.
+> 
+> 
+> r~
 
 
