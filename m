@@ -4,90 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFE9BE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F3F8E77187
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:50:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbgy-0005mW-VQ; Tue, 17 Dec 2024 12:49:09 -0500
+	id 1tNbh9-0005qn-B9; Tue, 17 Dec 2024 12:49:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgt-0005ly-AN
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:03 -0500
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbh2-0005od-3a
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:12 -0500
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgr-0007Zt-LD
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:03 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgz-0007dN-Jh
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:11 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id C1D111F395;
- Tue, 17 Dec 2024 17:48:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 6D8651F395;
+ Tue, 17 Dec 2024 17:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734457738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
- b=q2RQJeqinamgWpXyfABL+/TuQUkIRi/0+NSKu/AX0yvqEv6cW5GTf8EIUB8yOMBVm5bdJg
- mGqfTDw9Rrpv0uWEtxADf/ZdUuGGN4s2HuZyJCerFtD5n0IiiiruJqhm/khfK8HE225wCc
- ueAmdAJOjokmPR3oJVxDPkmw2pwFW9A=
+ t=1734457747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aRgVCDj971n1n1jhJ4h/qM/OXShmjuM64b5SfKdkGOw=;
+ b=yD41BlFoZj0IGaQdWbTzHmLI+ETtcmRWqHb9/22EDQmAOSXDdPIoRh7TEwRtxU1TVkU0rQ
+ V69yJMqG+yUU8P6pra5+2rH4I/5blFk1N7OyzBXiwpvL5DINhqq6Qw3bLs7j8GgBbodiGV
+ Hy3hF7KJBykgBGvpYcOoks5XlSSf93w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734457738;
+ s=susede2_ed25519; t=1734457747;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
- b=LWIOsklc8gOmcTN+24ikNx5ybaid1Xhf7KoYZ7gtViRugXRhM2Hi9fohUpp+YTF7gsK8Sm
- QQompefJvyhx3fAg==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aRgVCDj971n1n1jhJ4h/qM/OXShmjuM64b5SfKdkGOw=;
+ b=WiBoeaxd88EE5YPDJqwP7IV69ycQXv/27TcoCtCLOi8gP7g0oZ889ZJScyxc+QxUEeCcc+
+ aNw3Xd84BIcQIEBg==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=yD41BlFo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WiBoeaxd
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734457738; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
- b=q2RQJeqinamgWpXyfABL+/TuQUkIRi/0+NSKu/AX0yvqEv6cW5GTf8EIUB8yOMBVm5bdJg
- mGqfTDw9Rrpv0uWEtxADf/ZdUuGGN4s2HuZyJCerFtD5n0IiiiruJqhm/khfK8HE225wCc
- ueAmdAJOjokmPR3oJVxDPkmw2pwFW9A=
+ t=1734457747; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aRgVCDj971n1n1jhJ4h/qM/OXShmjuM64b5SfKdkGOw=;
+ b=yD41BlFoZj0IGaQdWbTzHmLI+ETtcmRWqHb9/22EDQmAOSXDdPIoRh7TEwRtxU1TVkU0rQ
+ V69yJMqG+yUU8P6pra5+2rH4I/5blFk1N7OyzBXiwpvL5DINhqq6Qw3bLs7j8GgBbodiGV
+ Hy3hF7KJBykgBGvpYcOoks5XlSSf93w=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734457738;
+ s=susede2_ed25519; t=1734457747;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=a87cQIK/obwFca/RZswdQH9QU5AhJ5V3nJ68iwWAMXE=;
- b=LWIOsklc8gOmcTN+24ikNx5ybaid1Xhf7KoYZ7gtViRugXRhM2Hi9fohUpp+YTF7gsK8Sm
- QQompefJvyhx3fAg==
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aRgVCDj971n1n1jhJ4h/qM/OXShmjuM64b5SfKdkGOw=;
+ b=WiBoeaxd88EE5YPDJqwP7IV69ycQXv/27TcoCtCLOi8gP7g0oZ889ZJScyxc+QxUEeCcc+
+ aNw3Xd84BIcQIEBg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2F7513A3C;
- Tue, 17 Dec 2024 17:48:57 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7AEC913A3C;
+ Tue, 17 Dec 2024 17:49:06 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id uNbDIYm5YWd1TwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:48:57 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id KAlLEJK5YWd1TwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:49:06 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 00/17] Migration patches for 2024-12-17
-Date: Tue, 17 Dec 2024 14:48:38 -0300
-Message-Id: <20241217174855.24971-1-farosas@suse.de>
+Subject: [PULL 06/17] migration/multifd: Remove sync processing on postcopy
+Date: Tue, 17 Dec 2024 14:48:44 -0300
+Message-Id: <20241217174855.24971-7-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
+In-Reply-To: <20241217174855.24971-1-farosas@suse.de>
+References: <20241217174855.24971-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+X-Rspamd-Queue-Id: 6D8651F395
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
  RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; FROM_HAS_DN(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo,suse.de:dkim,suse.de:mid,suse.de:email];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,imap1.dmz-prg2.suse.org:helo]
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -27
@@ -112,79 +130,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+From: Peter Xu <peterx@redhat.com>
 
-  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+Multifd never worked with postcopy, at least yet so far.
 
-are available in the Git repository at:
+Remove the sync processing there, because it's confusing, and they should
+never appear.  Now if RAM_SAVE_FLAG_MULTIFD_FLUSH is observed, we fail hard
+instead of trying to invoke multifd code.
 
-  https://gitlab.com/farosas/qemu.git tags/migration-20241217-pull-request
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-Id: <20241206224755.1108686-6-peterx@redhat.com>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/ram.c | 8 --------
+ 1 file changed, 8 deletions(-)
 
-for you to fetch changes up to 1bed6df0c71d3a74286f53c01fafd21fde8777f4:
-
-  tests/qtest/migration: Fix compile errors when CONFIG_UADK is set (2024-12-17 13:51:19 -0300)
-
-----------------------------------------------------------------
-Migration pull request
-
-- Shameer's fixes for CONFIG_UADK code
-
-- Peter's multifd sync cleanups, prereq. for VFIO and postcopy work
-
-- Fabiano's fix for multifd regression in pre-9.0 -> post-9.1
-  migrations (#2720)
-
-- Fabiano's fix for s390x migration regression (#2704)
-
-- Peter's fix for assertions during paused migrations; reworks
-  late-block-activate logic (#2395, #686)
-
-----------------------------------------------------------------
-
-Fabiano Rosas (2):
-  migration/multifd: Fix compat with QEMU < 9.0
-  s390x: Fix CSS migration
-
-Peter Xu (13):
-  migration/multifd: Further remove the SYNC on complete
-  migration/multifd: Allow to sync with sender threads only
-  migration/ram: Move RAM_SAVE_FLAG* into ram.h
-  migration/multifd: Unify RAM_SAVE_FLAG_MULTIFD_FLUSH messages
-  migration/multifd: Remove sync processing on postcopy
-  migration/multifd: Cleanup src flushes on condition check
-  migration/multifd: Document the reason to sync for save_setup()
-  migration: Add helper to get target runstate
-  qmp/cont: Only activate disks if migration completed
-  migration/block: Make late-block-active the default
-  migration/block: Apply late-block-active behavior to postcopy
-  migration/block: Fix possible race with block_inactive
-  migration/block: Rewrite disk activation
-
-Shameer Kolothum (2):
-  migration/multifd: Fix compile error caused by page_size usage
-  tests/qtest/migration: Fix compile errors when CONFIG_UADK is set
-
- hw/s390x/s390-virtio-ccw.c                |   2 +-
- include/migration/misc.h                  |   4 +
- migration/block-active.c                  |  94 +++++++++++++++
- migration/colo.c                          |   2 +-
- migration/meson.build                     |   1 +
- migration/migration.c                     | 136 +++++++++-------------
- migration/migration.h                     |   6 +-
- migration/multifd-nocomp.c                |  74 +++++++++++-
- migration/multifd-uadk.c                  |   2 +-
- migration/multifd.c                       |  32 +++--
- migration/multifd.h                       |  27 ++++-
- migration/ram.c                           |  89 +++++++-------
- migration/ram.h                           |  28 +++++
- migration/rdma.h                          |   7 --
- migration/savevm.c                        |  46 ++++----
- migration/trace-events                    |   3 +
- monitor/qmp-cmds.c                        |  22 ++--
- tests/qtest/migration/compression-tests.c |  54 ---------
- 18 files changed, 372 insertions(+), 257 deletions(-)
- create mode 100644 migration/block-active.c
-
+diff --git a/migration/ram.c b/migration/ram.c
+index 90811aabd4..154ff5abd4 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -3772,15 +3772,7 @@ int ram_load_postcopy(QEMUFile *f, int channel)
+                                          TARGET_PAGE_SIZE);
+             }
+             break;
+-        case RAM_SAVE_FLAG_MULTIFD_FLUSH:
+-            multifd_recv_sync_main();
+-            break;
+         case RAM_SAVE_FLAG_EOS:
+-            /* normal exit */
+-            if (migrate_multifd() &&
+-                migrate_multifd_flush_after_each_section()) {
+-                multifd_recv_sync_main();
+-            }
+             break;
+         default:
+             error_report("Unknown combination of migration flags: 0x%x"
 -- 
 2.35.3
 
