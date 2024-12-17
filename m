@@ -4,113 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75808E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:04:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5EF2E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:04:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNayf-0002kz-Rn; Tue, 17 Dec 2024 12:03:21 -0500
+	id 1tNazh-0003UI-KG; Tue, 17 Dec 2024 12:04:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNayd-0002kQ-4x
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:03:19 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNayb-0000S4-Jx
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:03:18 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2A63421224;
- Tue, 17 Dec 2024 17:03:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734454995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNaze-0003OJ-LW
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:04:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNazX-0000ta-PF
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:04:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734455052;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=EP2J0IWUqLBhX/N573gKc6M30rhKa9jwzJbhsmQAjWE=;
- b=IV1hYAmFOda3zYM3S9hcUhHe7cRZbkrhipeVRd041Qzo1VAh/vCfPmM1Ry/CqMOaWoFFq5
- xVMls+ewylrN7eLeXpenAvQF30gNOyXOyeojfwhqQR79DdSmg3nsqi3FByDDE1XmHzTKIP
- WyA6L+MOXtXOZhQSX+l1JmyWuH1DI4k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734454995;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EP2J0IWUqLBhX/N573gKc6M30rhKa9jwzJbhsmQAjWE=;
- b=+IXqzjci6oRmS5+jyfr8FiIn8lSDdV9ZIkRiHLOKYB5JLEmkoQNyKovP+hNoxGOIAJO9N7
- vuSOjW07hFgi47AQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734454995; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EP2J0IWUqLBhX/N573gKc6M30rhKa9jwzJbhsmQAjWE=;
- b=IV1hYAmFOda3zYM3S9hcUhHe7cRZbkrhipeVRd041Qzo1VAh/vCfPmM1Ry/CqMOaWoFFq5
- xVMls+ewylrN7eLeXpenAvQF30gNOyXOyeojfwhqQR79DdSmg3nsqi3FByDDE1XmHzTKIP
- WyA6L+MOXtXOZhQSX+l1JmyWuH1DI4k=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734454995;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=EP2J0IWUqLBhX/N573gKc6M30rhKa9jwzJbhsmQAjWE=;
- b=+IXqzjci6oRmS5+jyfr8FiIn8lSDdV9ZIkRiHLOKYB5JLEmkoQNyKovP+hNoxGOIAJO9N7
- vuSOjW07hFgi47AQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9E97D132EA;
- Tue, 17 Dec 2024 17:03:14 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id IxsOGdKuYWfyQQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:03:14 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: Re: [PATCH v8 03/12] util/dsa: Implement DSA device start and stop
- logic.
-In-Reply-To: <20241204021142.24184-4-yichen.wang@bytedance.com>
-References: <20241204021142.24184-1-yichen.wang@bytedance.com>
- <20241204021142.24184-4-yichen.wang@bytedance.com>
-Date: Tue, 17 Dec 2024 14:03:12 -0300
-Message-ID: <878qsew8bz.fsf@suse.de>
+ bh=tQDvVBt2IMPoLvNk/glKL6naDwGiberdwSxNAmeFte4=;
+ b=Gia4cYdtknECqHt6/75Who4PrMirKL1+CwhseZ2eTBsaq4tTbLsh9EerkDp9cWAQ64B5OC
+ X3umAoTt863djypwXPqW7yC0fsCmLNLYaDuKgYHwqhCAkBnHndHUGepq6xrqxoMwRttEs3
+ MdMmtHtldG0RQC/sR672SNvmU2n9sv8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-433-b0IoZTrLPXy2It4VA2-Tzw-1; Tue, 17 Dec 2024 12:04:10 -0500
+X-MC-Unique: b0IoZTrLPXy2It4VA2-Tzw-1
+X-Mimecast-MFC-AGG-ID: b0IoZTrLPXy2It4VA2-Tzw
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6d88c987fc7so96930796d6.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:04:10 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734455050; x=1735059850;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tQDvVBt2IMPoLvNk/glKL6naDwGiberdwSxNAmeFte4=;
+ b=TiPBrWKPrrN36vhI3ULBoWr1vHwan5v0yvx0yhc0usYrZwmzUEHe6Dtg2YiHbSxAae
+ hmSUNIIKBof7Ayf6Rdzq1rVsPt9gFNiaBdpPsHNWxnTCXgHX2QG9zlWWRie9N9EWt5R9
+ a5hudUQMBOe0FKEhUQre8ZEcj0h4xcZ6DKuhIYuXUD0ygCl+rkK8JNhcs2bIZsA68Tyb
+ qqj3/M6D4QSaBbvZibS9zhHHa7Hbn/NRcH6Gye08ojs9539CKLZpXYd106z+U4vcbeTT
+ 2fVnzpOtPUA8BZrDqUb0dHhndqIolmv9I7fGm1KmhOqklpQmViY3eKyPmpgqCPqkSSV4
+ DSDA==
+X-Gm-Message-State: AOJu0YzvNDaiq4+Emga1LJb7SWe6PDs7eI4FxY7QIW4sjvyRshUYxNXf
+ qmnTZ91NGJ6rsfGC4aUcItpysd59Zdp374uujDsGen8spsmZM0X1qiSz49MYxk2kSbSB/+YUXkQ
+ 1gzFoOaUuhy3AM4hrl2dvQ21VadS+sRSMfDxbriHTM3TA3FYnSciZ
+X-Gm-Gg: ASbGncsgI1btujKdYu1AxGWRSx3iibQxJN8u+pTCxsDnV+Mxsr4+oHfoDHsWoEqgFJz
+ H3mPIYvxwz3ZyA9sV4mgy6nhHGNIWPb8CDZytNO0u0YQRJEiQjiQpL5/KoIljPyxtNWfU7tZW53
+ p2pQxVxSpZb6igOb7g0FMzp/5nfFVdzYtS71au9U5WK+GkMxsnNxjfT803iv8+JYFhHBPqYGahe
+ ErS9CA0KwTHRN3o/frTFUzzqhOWIJsv0djSyilwALTngoOXE3yTPWo7rowoU7qfbBQ474uTVV8I
+ edYfhKHe+dvvzz4+ZA==
+X-Received: by 2002:a05:6214:e8e:b0:6d8:871d:49f1 with SMTP id
+ 6a1803df08f44-6dc9686f932mr304223706d6.44.1734455049824; 
+ Tue, 17 Dec 2024 09:04:09 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHhvYc2LcystLttUiLmRYBCbNH0AZUoMLKE4LHGxn2uEtYTrCKg6YtL9Scg5BPbQGQPWhlniw==
+X-Received: by 2002:a05:6214:e8e:b0:6d8:871d:49f1 with SMTP id
+ 6a1803df08f44-6dc9686f932mr304223096d6.44.1734455049451; 
+ Tue, 17 Dec 2024 09:04:09 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd26e469sm40341266d6.59.2024.12.17.09.04.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Dec 2024 09:04:08 -0800 (PST)
+Date: Tue, 17 Dec 2024 12:04:06 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Hyman Huang <yong.huang@smartx.com>,
+ Maor Gottlieb <maorg@nvidia.com>
+Subject: Re: [PATCH 8/9] migration: Drop migration_is_device()
+Message-ID: <Z2GvBnucMGFXv9tb@x1n>
+References: <20241216094638.26406-1-avihaih@nvidia.com>
+ <20241216094638.26406-9-avihaih@nvidia.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.98 / 50.00]; BAYES_HAM(-1.68)[92.97%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[18]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email, suse.de:mid, linux.dev:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241216094638.26406-9-avihaih@nvidia.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -127,17 +108,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yichen Wang <yichen.wang@bytedance.com> writes:
+On Mon, Dec 16, 2024 at 11:46:37AM +0200, Avihai Horon wrote:
+> After being removed from VFIO, migration_is_device() no longer has any
+> users. Drop it.
+> 
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
 
-> From: Hao Xiang <hao.xiang@linux.dev>
->
-> * DSA device open and close.
-> * DSA group contains multiple DSA devices.
-> * DSA group configure/start/stop/clean.
->
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+Thanks for working on this, Avihai!
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Acked-by: Peter Xu <peterx@redhat.com>
+
+-- 
+Peter Xu
+
 
