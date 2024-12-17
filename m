@@ -4,85 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE85DE7716A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 07:11:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0971E7716A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 07:41:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNRj4-0003EL-MO; Tue, 17 Dec 2024 02:10:39 -0500
+	id 1tNSCH-0000Uh-Fu; Tue, 17 Dec 2024 02:40:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tNRj3-0003Du-3f
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:10:37 -0500
-Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNSCE-0000U5-3S
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:40:47 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcin.juszkiewicz@linaro.org>)
- id 1tNRj1-0001KK-Dm
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:10:36 -0500
-Received: by mail-lf1-x12b.google.com with SMTP id
- 2adb3069b0e04-53e28cf55cdso4367021e87.3
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 23:10:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNSC9-0004dm-4X
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 02:40:44 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e8f64d5dso9107765a12.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 23:40:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734419432; x=1735024232; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=UQae+zCcA79EIlsX+SB2839BhRUwlMBvl5iQNG5MpRI=;
- b=zXqETOF0PTHPyQ2xgbCnCEaQrWUk4DWaLpvj4/rw5VNzwfTTlXOLiqOZCDajB/UcUz
- vNPhYLPOxD+LSSTmX5BtjZ+UXdZ7oGw4u5KrO55XxnRvtshWc47QaDasBrXCezUs3/ER
- fFHHOtN/N9NY7WHQ2VICo3Axp96JK1Rg+dCAlXEldkeQD8ozJ6n+E6Vj2Xfs9dpgg/Yb
- OsJCQr8EPu7NDwF8r52cdp+bqqQr4pj7SrHSbDEeT7V0pu/KF8XzK0pQsLvwBAmXECFJ
- rJ1TJWa6AQIsGMIYIjvn5QVms/yGawBi4SHC/ZBTZtyqoeE2006NiorYW+dvnChptUhj
- zLOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734419432; x=1735024232;
- h=content-transfer-encoding:in-reply-to:organization:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1734421239; x=1735026039; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UQae+zCcA79EIlsX+SB2839BhRUwlMBvl5iQNG5MpRI=;
- b=P5Eg3j9NCsvTWIkAnLNDbbugX2naqDWYIh/eYkTuqgzuqNfis6MQbo0TDMS0sdMEoJ
- DJbuAH/eEbT+hn3obJ13+qMZlyR79bAHT8nFBsqgmaq27/TacxDgBOerVMSxRY/PvemX
- TK2+e2t/TOZIYrlvjT+PVOlTMEYjURueqXQLk2u9L+JEjPngkEd6vMVdnDmEhcaaq7Rs
- 3Dy8BlpZ6Rr4V+QskT18VJFSS1r5emP6E5xeyme4JD14ydNM8ZB06xEMvOWaLd0ndAdw
- nnhgbL+/YsJSgel22f0RaQme3QGVHk8RJECgZB+sZ5SwuAVbkESO6vr6LOyQYjOs/FCz
- cVxQ==
-X-Gm-Message-State: AOJu0YzSAvd7HsoGDvGtSSCC0YmsARuweozGVbqtjQEGXCaS/gObwweK
- UE0+qmfBBrREXoVT8ozsKm/cbnUGhvHceD1DoKro4OdRchI6bMD5HApd8z4lueM=
-X-Gm-Gg: ASbGnctxTyAQX9vVwFpRsR37LajDAUxKN/rtoU1uN3B9HsZGBWSIkYGQaXyfV0dbhe4
- cKIOEPizTti0oHvltT96VsDfw3zsyRxugdgA0nfnPTvJj7yOK+6NJcm8kHUY8pgGSE5apgqx8Ck
- BF97+BFM+s+CKxtrSnju9En5nrqtV/VyT09qdFKZr1vK2cbVmYdqgbZF3VF+KifTTBXgvcGwCB8
- MvEbGMS/PJK48z3PFl0qumElY4lfJJKfCGu0tvKJyA8E1k9HCqtStcWlInldvwMESZ21pI0O/7Z
- Zz5+OTSDrUNJ7UYZShsKnswZFAsptpOkKvUUMQ==
-X-Google-Smtp-Source: AGHT+IHD6XuXugCi6AsXneXRa4HMYsydL/++C0anz1aIBR1qOR2wJK/J8yz9PCDGsflx//1E8bv5ZQ==
-X-Received: by 2002:a05:6512:39c8:b0:540:2fe6:936f with SMTP id
- 2adb3069b0e04-5408fac7b04mr5674884e87.3.1734419431628; 
- Mon, 16 Dec 2024 23:10:31 -0800 (PST)
-Received: from [192.168.210.26] (83.11.13.135.ipv4.supernova.orange.pl.
- [83.11.13.135]) by smtp.gmail.com with ESMTPSA id
- 2adb3069b0e04-54120b9f3f2sm1077214e87.31.2024.12.16.23.10.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 23:10:30 -0800 (PST)
-Message-ID: <7d5f349e-761c-459c-93db-cc32ec2a207d@linaro.org>
-Date: Tue, 17 Dec 2024 08:10:29 +0100
+ bh=fDl/XqDOdT7cEpuWvOyHd1F81KG2ObsI+n0RVGMaZhk=;
+ b=y0ggzFtfEwxPJOuanf46DDSUuD+wJ6Fy1uW/mxNChM09PjzT+WuPNL9phZNP2rmDka
+ sTQseJKsCYeOthPfyHnzE8zwZWsCzYF4kkB2HR5yxMsW+D5irtsUEC2eMCQdTR6/M6FX
+ XA0JbNw2ZDIlA7KDbRfzdj825TbDYdZF+wqGmoET9vN50US/oPc/SARcbO9A4dF6alj4
+ jHTMvUFdwQnwjmCaRSEGauS7SpOiPd+HjMG3YapEIjtdye/Zhp7HtrY1oQ7rNBI5o8s6
+ mQ5iyu6lOSaK0b1Hw15wz9bzvzeB/AHpkG7SoIojeeOpSVmWMl2vMG6/fW1g58KkAPok
+ 6n/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734421239; x=1735026039;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fDl/XqDOdT7cEpuWvOyHd1F81KG2ObsI+n0RVGMaZhk=;
+ b=ClnsL4sjLKW1B2OnXStc4BdCrJQ51rv14c98pe+IDCx0yGXN6c5QWxj6MPJ4ZjmtZ9
+ bhW6YV1YajRdOCiIOKsiu1vbyaVsdLNTK4JJkvEeqTYQZJU/io47/FPKHdL3hVIG/NoB
+ kt8nK+neC2KZeMImwxS2NH+gmGHQ5Vo+7KecJjPHq7NXiIZ1e0vrd6DtMdpDJLaHfdUw
+ P4g87f61L48SWgEAnBIOan79xQ75k+5iyzVktZbrhi78E8heVKtW+xFbtIXzS695KRA/
+ gAbMQlszKdAzjjmeo94wZOuzH664mtFoWCtnxByh4QafnFhD6Jj9BIlfKDtXbx7z3+2n
+ Dz3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU5WXZtudfhMGHorc+y2tcVCQKVxBnTiSw9GmXa9JwB/ICAKEJndYeVkIg4Wv3pc1ProuIg9N45buhP@nongnu.org
+X-Gm-Message-State: AOJu0YxIS/UbtHs+yxsf40TWvgJG2JDCfdSX4xwzQjvoU8YaWHih+qw4
+ nRZRmZrZAkjXuPNf4A72b1aNTssuSQW0tLbJXvPoSWk9vaAwKLvEcMnVncdblfw=
+X-Gm-Gg: ASbGncvvaBsYsQ14TumWB26u8EHDZiYHpDWRL2ZXAH27ybMR66gZfO8fuealyHm+rLI
+ QqaaclVQ4+thjLDBwiZJePSzM9S2Iyd9uc9JpDewrWmfUjoUVcCuA504qDpHvIXP7fuzCDZRntL
+ QQV9c5HT+v937aeSRVvEDCm09Eo9v9ur7yr1V+wMPHR6i+c18nNPBs7CUJRJKGRL0HBd3mFlQ4r
+ 2VnCLYYGT9azKYkzqRKEOsXgD4KQ3R9ycZ+JZeKpfkaY9nFHkpTI9c=
+X-Google-Smtp-Source: AGHT+IHJWPDXz4NWLBrj6ZV0El9QWA4ONTn5ruLlFqLxWIVXenyMN3+Aabcl4ifzZJyqo4p3/fQ5TA==
+X-Received: by 2002:a17:906:31d2:b0:aa6:a501:7c2f with SMTP id
+ a640c23a62f3a-aab779bff6dmr1577877266b.27.1734421239115; 
+ Mon, 16 Dec 2024 23:40:39 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab960062a4sm415565866b.32.2024.12.16.23.40.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Dec 2024 23:40:38 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 94A2D5F891;
+ Tue, 17 Dec 2024 07:40:37 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ qemu-devel@nongnu.org,  Laurent Vivier <lvivier@redhat.com>,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ qemu-arm@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
+ aarch64 to impdef
+In-Reply-To: <19df9957-6653-4086-aa1f-07263efcddde@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 16 Dec 2024 17:37:17 -0800")
+References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+ <7cd98960-0c0d-481f-96ea-08e0578d5cad@linaro.org>
+ <b0962854-65c3-47d0-8f0a-072fdf51e7b6@linaro.org>
+ <6e29d9cb-1c67-4fdc-97f1-32c90bed1048@linaro.org>
+ <19df9957-6653-4086-aa1f-07263efcddde@linaro.org>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Tue, 17 Dec 2024 07:40:37 +0000
+Message-ID: <87pllq69l6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] tests/avocado: update sbsa-ref firmware
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>, qemu-arm@nongnu.org
-References: <20241125125448.185504-1-marcin.juszkiewicz@linaro.org>
- <CAFEAcA-V3PGF7vst8QFjh+bWVx5EGDt_B9ZCe1OryNV8e39N4w@mail.gmail.com>
- <CAFEAcA_SRU5UtttB=G2=L2YSK2D1U7Rumbc6eafioxR3yfnYUQ@mail.gmail.com>
-Content-Language: pl-PL, en-GB
-From: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
-Organization: Linaro
-In-Reply-To: <CAFEAcA_SRU5UtttB=G2=L2YSK2D1U7Rumbc6eafioxR3yfnYUQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
- envelope-from=marcin.juszkiewicz@linaro.org; helo=mail-lf1-x12b.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,32 +111,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-W dniu 16.12.2024 o 13:46, Peter Maydell pisze:
-> On Mon, 25 Nov 2024 at 13:25, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> On Mon, 25 Nov 2024 at 12:54, Marcin Juszkiewicz
->> <marcin.juszkiewicz@linaro.org> wrote:
->>>
->>> Firmware is built using Debian 'bookworm' cross toolchain (gcc 12.2.0).
->>>
->>> Used versions:
->>>
->>> - Trusted Firmware v2.12.0
->>> - Tianocore EDK2 stable202411
->>> - Tianocore EDK2 Platforms code commit 4b3530d
->>>
->>> Signed-off-by: Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>
->>
->> Hi; what's the benefit to taking this update? Would it be better
->> postponed until the 9.2 release is complete?
-> 
-> We're now past the 9.2 release, but it would still be good
-> to know what the benefit to updating the firmware images
-> for this test is.
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-We tend to update firmware to the latest in all places it is used. 
-Previous one was built from pre-selected git commits due to changes done 
-during cycle.
+> On 12/16/24 11:50, Richard Henderson wrote:
+>> On 12/16/24 13:26, Pierrick Bouvier wrote:
+>>> On 12/16/24 11:10, Richard Henderson wrote:
+>>>> On 12/4/24 15:12, Pierrick Bouvier wrote:
+>>>>> qemu-system-aarch64 default pointer authentication (QARMA5) is expens=
+ive, we
+>>>>> spent up to 50% of the emulation time running it (when using TCG).
+>>>>>
+>>>>> Switching to pauth-impdef=3Don is often given as a solution to speed =
+up execution.
+>>>>> Thus we talked about making it the new default.
+>>>>>
+>>>>> The first patch introduce a new property (pauth-qarma5) to allow to s=
+elect
+>>>>> current default algorithm.
+>>>>> The second one change the default.
+>>>>>
+>>>>> Pierrick Bouvier (2):
+>>>>>  =C2=A0=C2=A0=C2=A0 target/arm: add new property to select pauth-qarm=
+a5
+>>>>>  =C2=A0=C2=A0=C2=A0 target/arm: change default pauth algorithm to imp=
+def
+>>>>>
+>>>>>  =C2=A0=C2=A0 docs/system/arm/cpu-features.rst |=C2=A0 7 +++++--
+>>>>>  =C2=A0=C2=A0 docs/system/introduction.rst=C2=A0=C2=A0=C2=A0=C2=A0 |=
+=C2=A0 2 +-
+>>>>>  =C2=A0=C2=A0 target/arm/cpu.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 1 +
+>>>>>  =C2=A0=C2=A0 target/arm/arm-qmp-cmds.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 |=C2=A0 2 +-
+>>>>>  =C2=A0=C2=A0 target/arm/cpu64.c=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 30 +++++++++++++++++++--=
+---------
+>>>>>  =C2=A0=C2=A0 tests/qtest/arm-cpu-features.c=C2=A0=C2=A0 | 15 +++++++=
+++++----
+>>>>>  =C2=A0=C2=A0 6 files changed, 38 insertions(+), 19 deletions(-)
+>>>>>
+>>>>
+>>>> I understand the motivation, but as-is this will break migration.
+>>>>
+>>>> I think this will need to be versioned somehow, but the only thing tha=
+t really gets
+>>>> versioned are the boards, and I'm not sure how to link that to the ins=
+tantiated cpu.
+>>>>
+>>>
+>>>   From what I understood, and I may be wrong, the use case to migrate (=
+tcg) vm with cpu max
+>>> between QEMU versions is *not* supported, as we can't guarantee which f=
+eatures are present
+>>> or not.
+>> This doesn't affect only -cpu max, but anything using aarch64_add_pauth_=
+properties():
+>> neoverse-n1, neoverse-n2, cortex-a710.
+>>=20
+>
+> I think this is still a change worth to do, because people can get a
+> 100% speedup with this simple change, and it's a better default than
+> the previous value.
+> In more, in case of this migration scenario, QEMU will immediately
+> abort upon accessing memory through a pointer.
+>
+> I'm not sure about what would be the best way to make this change as
+> smooth as possible for QEMU users.
 
-Now we got both components (TF-A and EDK2) from stable releases.
+Surely we can only honour and apply the new default to -cpu max?
+
+>
+> Peter, Alex, do you have any suggestion on this topic?
+>
+> Thanks,
+> Pierrick
+>
+>> r~
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
