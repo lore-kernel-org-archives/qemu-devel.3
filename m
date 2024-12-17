@@ -4,95 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8918FE7716A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 09:11:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FFF1E7716A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 09:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNTYL-0008V9-81; Tue, 17 Dec 2024 04:07:41 -0500
+	id 1tNTlu-0002Cp-SF; Tue, 17 Dec 2024 04:21:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tNTY3-0008Mm-JA
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:07:23 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cleger@rivosinc.com>)
- id 1tNTY1-0001Ye-Go
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:07:23 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385eed29d17so2536953f8f.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 01:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=rivosinc-com.20230601.gappssmtp.com; s=20230601; t=1734426439; x=1735031239;
- darn=nongnu.org; 
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xOP7Hqao7kiNDStvwCeVXCCvUD1H/qgyxYLIdZ3OWV8=;
- b=NICwzmHebaBeFeUcmFfM/zM0IXEr3EEE3lGGhXLAn/7grFul54XDuwOEGn7thcHWBu
- 4ZB7dEk6cbjH33707Z2xWRAkatxi7FzJBU1i/sFsmb/SDV3hq2n3lSr+16NHWuk2r3Du
- 0CcvvcIYt71qR5WQan3JQVk+ckBKgBO6wkDwel4Wo/6R8uZF1iCNt4vezn894NbhVpK2
- xttoIcq9fDxg9VdI5vmPrVzG8Ra2yAiBaPb/ZmYBwsyhvZyWkUbnhFwY/7hZlnMXT1vE
- gdmbxHc9F56c2tH31xo3bZoD0V7495XkXxIDoutXcXIrvI48hPZqvDmIw4KdabWYZYT9
- Idzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734426439; x=1735031239;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xOP7Hqao7kiNDStvwCeVXCCvUD1H/qgyxYLIdZ3OWV8=;
- b=huRN96a3xizDf9Pv4JHMiHJHQKq/BTVaBjfGRHg5zCaEPTZarlIHa7DhxOvCCEqDqO
- EzSFZ9oAN0uKnHjKtl9vkLqvbGPDW6hnXt/Z9+Y8chymjGLkETcHO5SMztAUE4WMvaqP
- tatJcQsuCW9sboOcklFZ/jwQUxNPHkJpuUR4cmDBmu+qNdjXrZVbNy3kER6vYjfzQt2v
- 7I5Rdf3T0nvMi6OHi14x2diU7fD/mzSXHERI1jRhr4G8ao+UuWWBNRZRfP9WSN+96Emx
- OmokrKSLLHj/+MKfx0d9/UCZYaO7cbhF68aELeO/tB0O494c5/xz0FHTqrHIHwjoZQmO
- JqOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOLZ+buC4SRMDheDPg8ai3Ygg/vGM/ks9AELf4RuMLobfEvU9hpZ7XlwgOY/zj+gpiCfpa8ydTU8oc@nongnu.org
-X-Gm-Message-State: AOJu0YxI19euT5sg34rpGP+4LjKNHKF3ckVR2Cpc6OT85108zyb7pQs7
- sHtOf4j+XDMhAhPaEY4QACCgmPRU9cYcuTIC8iomQK1xfF/IvjIUehyuetcQvyw=
-X-Gm-Gg: ASbGnctNkb9atFOjDsqUY5aN9ksu9QCpyJXdNIxYEPYukMxX/yFLt+c5tid3rBn4nsp
- zZO0uhkmxqZRRjWFkakN4bkWhBkKJKhl4/2rgY4hDfl1Bjng6y090C7z2wIEd86o9hRQCYtzB5j
- zlEFpqUGpHQJI/xdEFNO7HYFA+L/TdJNStx8RIcuYtRDvvoFfjNLCoLRyg2W/M3O/1MrwbFr2ZH
- cHGlEdeMdnQ4Yh9XpzykpVYIkbXeqVks/DZhltnJy8E64R4yaGu5Zs47g==
-X-Google-Smtp-Source: AGHT+IG1/qaNQM74O9mE85VtMUgHRXRyff+/ytiyti4AwKg+Z96ZfyDBhujJ7JcB/jKgGucoOsVnfw==
-X-Received: by 2002:a5d:64a1:0:b0:385:f092:e16 with SMTP id
- ffacd0b85a97d-3888e0c07aemr11158473f8f.55.1734426439099; 
- Tue, 17 Dec 2024 01:07:19 -0800 (PST)
-Received: from carbon-x1.. ([2a01:e0a:e17:9700:16d2:7456:6634:9626])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8046c46sm10704122f8f.71.2024.12.17.01.07.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 01:07:18 -0800 (PST)
-From: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>
-To: qemu-riscv@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>
-Cc: =?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <cleger@rivosinc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Ved Shanbhogue <ved@rivosinc.com>, Atish Patra <atishp@rivosinc.com>,
- qemu-devel@nongnu.org, Frank Chang <frank.chang@sifive.com>
-Subject: [PATCH v7 7/9] target/riscv: Implement Smdbltrp sret,
- mret and mnret behavior
-Date: Tue, 17 Dec 2024 10:07:03 +0100
-Message-ID: <20241217090707.3511160-8-cleger@rivosinc.com>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241217090707.3511160-1-cleger@rivosinc.com>
-References: <20241217090707.3511160-1-cleger@rivosinc.com>
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tNTls-0002Ce-SO
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:21:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <victortoso@redhat.com>)
+ id 1tNTlo-0004K1-Cp
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:21:39 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734427293;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4m/ATkixV7QqWvLtZUm43UQjJxK2lmN/VDm/laZEako=;
+ b=KEu+mij0wiJQYVf1v4zjnNPsCFvzcuHLDEJLTXEM6YfT51wKFOqZm9bRhYMSG0+lib5f5j
+ O1lW12KaJJ6wesP1S7ndIgzOUrpYYwiiunNUePi6VoV3J3ZYYLTcTaRzgHo24Jnq5uwo7d
+ lxaGS3MZJ3hqatJw66yXooteamt5KB8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-157-JRwkTossN7K4FV3uHnsotg-1; Tue,
+ 17 Dec 2024 04:15:08 -0500
+X-MC-Unique: JRwkTossN7K4FV3uHnsotg-1
+X-Mimecast-MFC-AGG-ID: JRwkTossN7K4FV3uHnsotg
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A61A719560B2
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:15:07 +0000 (UTC)
+Received: from tapioca.redhat.com (unknown [10.45.225.15])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4A81E1956053; Tue, 17 Dec 2024 09:15:05 +0000 (UTC)
+From: Victor Toso <victortoso@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH] qapi: fix colon in Since tag section
+Date: Tue, 17 Dec 2024 10:15:04 +0100
+Message-ID: <20241217091504.16416-1-victortoso@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=cleger@rivosinc.com; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=victortoso@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,54 +81,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the Ssdbltrp extension is enabled, SSTATUS.MDT field is cleared
-when executing sret if executed in M-mode. When executing mret/mnret,
-SSTATUS.MDT is cleared.
+As described in docs/devel/qapi-code-gen.rst line 998,
+there should be no space between "Since" and ":".
 
-Signed-off-by: Clément Léger <cleger@rivosinc.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Victor Toso <victortoso@redhat.com>
 ---
- target/riscv/op_helper.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ qapi/cxl.json | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index eeacb2d1a1..9de4df207c 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -299,6 +299,9 @@ target_ulong helper_sret(CPURISCVState *env)
-         }
-         mstatus = set_field(mstatus, MSTATUS_SDT, 0);
-     }
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp && env->priv >= PRV_M) {
-+        mstatus = set_field(mstatus, MSTATUS_MDT, 0);
-+    }
-     if (env->priv_ver >= PRIV_VERSION_1_12_0) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
-     }
-@@ -384,6 +387,9 @@ target_ulong helper_mret(CPURISCVState *env)
-     if (riscv_cpu_cfg(env)->ext_ssdbltrp) {
-         mstatus = ssdbltrp_mxret(env, mstatus, prev_priv, prev_virt);
-     }
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        mstatus = set_field(mstatus, MSTATUS_MDT, 0);
-+    }
-     if ((env->priv_ver >= PRIV_VERSION_1_12_0) && (prev_priv != PRV_M)) {
-         mstatus = set_field(mstatus, MSTATUS_MPRV, 0);
-     }
-@@ -429,6 +435,12 @@ target_ulong helper_mnret(CPURISCVState *env)
-         env->mstatus = ssdbltrp_mxret(env, env->mstatus, prev_priv, prev_virt);
-     }
- 
-+    if (riscv_cpu_cfg(env)->ext_smdbltrp) {
-+        if (prev_priv < PRV_M) {
-+            env->mstatus = set_field(env->mstatus, MSTATUS_MDT, 0);
-+        }
-+    }
-+
-     if (riscv_has_ext(env, RVH) && prev_virt) {
-         riscv_cpu_swap_hypervisor_regs(env);
-     }
+diff --git a/qapi/cxl.json b/qapi/cxl.json
+index 9f65589bce..dd947d3bbc 100644
+--- a/qapi/cxl.json
++++ b/qapi/cxl.json
+@@ -460,7 +460,7 @@
+ #
+ # @unstable: For now this command is subject to change.
+ #
+-# Since : 9.1
++# Since: 9.1
+ ##
+ { 'command': 'cxl-add-dynamic-capacity',
+   'data': { 'path': 'str',
+@@ -539,7 +539,7 @@
+ #
+ # @unstable: For now this command is subject to change.
+ #
+-# Since : 9.1
++# Since: 9.1
+ ##
+ { 'command': 'cxl-release-dynamic-capacity',
+   'data': { 'path': 'str',
 -- 
-2.45.2
+2.47.1
 
 
