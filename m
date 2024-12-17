@@ -4,104 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81176E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:51:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45931E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:51:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbhF-0005un-Iw; Tue, 17 Dec 2024 12:49:25 -0500
+	id 1tNbh4-0005pb-Tq; Tue, 17 Dec 2024 12:49:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbh9-0005qV-68
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:19 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgz-0005nC-AS
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:10 -0500
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbh7-0007g5-BS
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:18 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNbgx-0007cG-Jm
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:49:09 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 61D1B1F394;
- Tue, 17 Dec 2024 17:49:15 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 9271B1F396;
+ Tue, 17 Dec 2024 17:49:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734457755; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734457744; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f52bRWf/v6rIigY/5WKOLrUTMhJuwoO7LzcaSgmBRt4=;
- b=nTHcmtnwE72xRBa0FAjnBcV39+esrapu4GLSXNURHsY42YaVGQm3kgD/rLWsbR8XcLvoz7
- eHYjbTreNmTsqJ8oSNuQfiDeKt0KDSycuIKH+Rl/c7JDWVwai3JccwQG3BXgRJKJOPleST
- Hl6S7XdDzbm+o2zb4inzSfDghLeAGSs=
+ bh=xyZeqXRdSrCfn1j2t8Ubxid/SZHL8s8nKkuPCj8SLbw=;
+ b=Va7MdDD95plq/boUzqs9KwAD7QfXFtI4NyuzjK8rcvl9/8U6G24ZURZZWnM/Toa/0pwMSK
+ J5+Ie1MGDpSNb4HtEcHaNNLHKARoA7d5mq3KDvzF1krCu1FnllJMUhZIExPjmSyC9MGjnY
+ 0sbXpEWpXLXgFEVzqlWln/qaao7+otU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734457755;
+ s=susede2_ed25519; t=1734457744;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f52bRWf/v6rIigY/5WKOLrUTMhJuwoO7LzcaSgmBRt4=;
- b=w+0zdba1h90TBGsoxQcYKrX5C62SMqmDtFfFWKEzqf3GGmc1h0kPAvcCWyBopWqX/TGfTI
- fWzKDBDGkV9MZxDg==
+ bh=xyZeqXRdSrCfn1j2t8Ubxid/SZHL8s8nKkuPCj8SLbw=;
+ b=mNXnKZcIjSa0zY9O0RwOREj+MHgHLlFr17UZAe5VLSUCzgHPzlRWbTawA8JxsAjoHVHOyx
+ hFhpx/Ak3tqIInBQ==
 Authentication-Results: smtp-out2.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Va7MdDD9;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=mNXnKZcI
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734457755; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734457744; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f52bRWf/v6rIigY/5WKOLrUTMhJuwoO7LzcaSgmBRt4=;
- b=nTHcmtnwE72xRBa0FAjnBcV39+esrapu4GLSXNURHsY42YaVGQm3kgD/rLWsbR8XcLvoz7
- eHYjbTreNmTsqJ8oSNuQfiDeKt0KDSycuIKH+Rl/c7JDWVwai3JccwQG3BXgRJKJOPleST
- Hl6S7XdDzbm+o2zb4inzSfDghLeAGSs=
+ bh=xyZeqXRdSrCfn1j2t8Ubxid/SZHL8s8nKkuPCj8SLbw=;
+ b=Va7MdDD95plq/boUzqs9KwAD7QfXFtI4NyuzjK8rcvl9/8U6G24ZURZZWnM/Toa/0pwMSK
+ J5+Ie1MGDpSNb4HtEcHaNNLHKARoA7d5mq3KDvzF1krCu1FnllJMUhZIExPjmSyC9MGjnY
+ 0sbXpEWpXLXgFEVzqlWln/qaao7+otU=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734457755;
+ s=susede2_ed25519; t=1734457744;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f52bRWf/v6rIigY/5WKOLrUTMhJuwoO7LzcaSgmBRt4=;
- b=w+0zdba1h90TBGsoxQcYKrX5C62SMqmDtFfFWKEzqf3GGmc1h0kPAvcCWyBopWqX/TGfTI
- fWzKDBDGkV9MZxDg==
+ bh=xyZeqXRdSrCfn1j2t8Ubxid/SZHL8s8nKkuPCj8SLbw=;
+ b=mNXnKZcIjSa0zY9O0RwOREj+MHgHLlFr17UZAe5VLSUCzgHPzlRWbTawA8JxsAjoHVHOyx
+ hFhpx/Ak3tqIInBQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7072E13A3C;
- Tue, 17 Dec 2024 17:49:14 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 9DFED13A3C;
+ Tue, 17 Dec 2024 17:49:03 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id wPG9DZq5YWd1TwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:49:14 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id WAXBGI+5YWd1TwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:49:03 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>
-Subject: [PULL 11/17] migration: Add helper to get target runstate
-Date: Tue, 17 Dec 2024 14:48:49 -0300
-Message-Id: <20241217174855.24971-12-farosas@suse.de>
+Subject: [PULL 04/17] migration/ram: Move RAM_SAVE_FLAG* into ram.h
+Date: Tue, 17 Dec 2024 14:48:42 -0300
+Message-Id: <20241217174855.24971-5-farosas@suse.de>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20241217174855.24971-1-farosas@suse.de>
 References: <20241217174855.24971-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; RCPT_COUNT_TWO(0.00)[2];
- RCVD_VIA_SMTP_AUTH(0.00)[]; MIME_TRACE(0.00)[0:+];
- ARC_NA(0.00)[];
+X-Rspamd-Queue-Id: 9271B1F396
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+ RCVD_TLS_ALL(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_TWO(0.00)[2];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
- RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,73 +133,118 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Xu <peterx@redhat.com>
 
-In 99% cases, after QEMU migrates to dest host, it tries to detect the
-target VM runstate using global_state_get_runstate().
+Firstly, we're going to use the multifd flag soon in multifd code, so ram.c
+isn't gonna work.
 
-There's one outlier so far which is Xen that won't send global state.
-That's the major reason why global_state_received() check was always there
-together with global_state_get_runstate().
+Secondly, we have a separate RDMA flag dangling around, which is definitely
+not obvious.  There's one comment that helps, but not too much.
 
-However it's utterly confusing why global_state_received() has anything to
-do with "let's start VM or not".
+Put all RAM save flags altogether, so nothing will get overlooked.
 
-Provide a helper to explain it, then we have an unified entry for getting
-the target dest QEMU runstate after migration.
+Add a section explain why we can't use bits over 0x200.
 
-Suggested-by: Fabiano Rosas <farosas@suse.de>
+Remove RAM_SAVE_FLAG_FULL as it's already not used in QEMU, as the comment
+explained.
+
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-Id: <20241206230838.1111496-2-peterx@redhat.com>
+Message-Id: <20241206224755.1108686-4-peterx@redhat.com>
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/migration.c | 21 +++++++++++++++++----
- 1 file changed, 17 insertions(+), 4 deletions(-)
+ migration/ram.c  | 21 ---------------------
+ migration/ram.h  | 28 ++++++++++++++++++++++++++++
+ migration/rdma.h |  7 -------
+ 3 files changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index 8c5bd0a75c..d2a6b939cf 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -135,6 +135,21 @@ static bool migration_needs_multiple_sockets(void)
-     return migrate_multifd() || migrate_postcopy_preempt();
- }
+diff --git a/migration/ram.c b/migration/ram.c
+index 7284c34bd8..44010ff325 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -71,27 +71,6 @@
+ /***********************************************************/
+ /* ram save/restore */
  
-+static RunState migration_get_target_runstate(void)
-+{
-+    /*
-+     * When the global state is not migrated, it means we don't know the
-+     * runstate of the src QEMU.  We don't have much choice but assuming
-+     * the VM is running.  NOTE: this is pretty rare case, so far only Xen
-+     * uses it.
-+     */
-+    if (!global_state_received()) {
-+        return RUN_STATE_RUNNING;
-+    }
+-/*
+- * RAM_SAVE_FLAG_ZERO used to be named RAM_SAVE_FLAG_COMPRESS, it
+- * worked for pages that were filled with the same char.  We switched
+- * it to only search for the zero value.  And to avoid confusion with
+- * RAM_SAVE_FLAG_COMPRESS_PAGE just rename it.
+- *
+- * RAM_SAVE_FLAG_FULL was obsoleted in 2009.
+- *
+- * RAM_SAVE_FLAG_COMPRESS_PAGE (0x100) was removed in QEMU 9.1.
+- */
+-#define RAM_SAVE_FLAG_FULL     0x01
+-#define RAM_SAVE_FLAG_ZERO     0x02
+-#define RAM_SAVE_FLAG_MEM_SIZE 0x04
+-#define RAM_SAVE_FLAG_PAGE     0x08
+-#define RAM_SAVE_FLAG_EOS      0x10
+-#define RAM_SAVE_FLAG_CONTINUE 0x20
+-#define RAM_SAVE_FLAG_XBZRLE   0x40
+-/* 0x80 is reserved in rdma.h for RAM_SAVE_FLAG_HOOK */
+-#define RAM_SAVE_FLAG_MULTIFD_FLUSH    0x200
+-/* We can't use any flag that is bigger than 0x200 */
+-
+ /*
+  * mapped-ram migration supports O_DIRECT, so we need to make sure the
+  * userspace buffer, the IO operation size and the file offset are
+diff --git a/migration/ram.h b/migration/ram.h
+index 0d1981f888..921c39a2c5 100644
+--- a/migration/ram.h
++++ b/migration/ram.h
+@@ -33,6 +33,34 @@
+ #include "exec/cpu-common.h"
+ #include "io/channel.h"
+ 
++/*
++ * RAM_SAVE_FLAG_ZERO used to be named RAM_SAVE_FLAG_COMPRESS, it
++ * worked for pages that were filled with the same char.  We switched
++ * it to only search for the zero value.  And to avoid confusion with
++ * RAM_SAVE_FLAG_COMPRESS_PAGE just rename it.
++ *
++ * RAM_SAVE_FLAG_FULL (0x01) was obsoleted in 2009.
++ *
++ * RAM_SAVE_FLAG_COMPRESS_PAGE (0x100) was removed in QEMU 9.1.
++ *
++ * RAM_SAVE_FLAG_HOOK is only used in RDMA. Whenever this is found in the
++ * data stream, the flags will be passed to rdma functions in the
++ * incoming-migration side.
++ *
++ * We can't use any flag that is bigger than 0x200, because the flags are
++ * always assumed to be encoded in a ramblock address offset, which is
++ * multiple of PAGE_SIZE.  Here it means QEMU supports migration with any
++ * architecture that has PAGE_SIZE>=1K (0x400).
++ */
++#define RAM_SAVE_FLAG_ZERO                    0x002
++#define RAM_SAVE_FLAG_MEM_SIZE                0x004
++#define RAM_SAVE_FLAG_PAGE                    0x008
++#define RAM_SAVE_FLAG_EOS                     0x010
++#define RAM_SAVE_FLAG_CONTINUE                0x020
++#define RAM_SAVE_FLAG_XBZRLE                  0x040
++#define RAM_SAVE_FLAG_HOOK                    0x080
++#define RAM_SAVE_FLAG_MULTIFD_FLUSH           0x200
 +
-+    return global_state_get_runstate();
-+}
-+
- static bool transport_supports_multi_channels(MigrationAddress *addr)
- {
-     if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET) {
-@@ -735,8 +750,7 @@ static void process_incoming_migration_bh(void *opaque)
-      * unless we really are starting the VM.
-      */
-     if (!migrate_late_block_activate() ||
--         (autostart && (!global_state_received() ||
--            runstate_is_live(global_state_get_runstate())))) {
-+        (autostart && runstate_is_live(migration_get_target_runstate()))) {
-         /* Make sure all file formats throw away their mutable metadata.
-          * If we get an error here, just don't restart the VM yet. */
-         bdrv_activate_all(&local_err);
-@@ -759,8 +773,7 @@ static void process_incoming_migration_bh(void *opaque)
+ extern XBZRLECacheStats xbzrle_counters;
  
-     dirty_bitmap_mig_before_vm_start();
+ /* Should be holding either ram_list.mutex, or the RCU lock. */
+diff --git a/migration/rdma.h b/migration/rdma.h
+index a8d27f33b8..f55f28bbed 100644
+--- a/migration/rdma.h
++++ b/migration/rdma.h
+@@ -33,13 +33,6 @@ void rdma_start_incoming_migration(InetSocketAddress *host_port, Error **errp);
+ #define RAM_CONTROL_ROUND     1
+ #define RAM_CONTROL_FINISH    3
  
--    if (!global_state_received() ||
--        runstate_is_live(global_state_get_runstate())) {
-+    if (runstate_is_live(migration_get_target_runstate())) {
-         if (autostart) {
-             vm_start();
-         } else {
+-/*
+- * Whenever this is found in the data stream, the flags
+- * will be passed to rdma functions in the incoming-migration
+- * side.
+- */
+-#define RAM_SAVE_FLAG_HOOK     0x80
+-
+ #define RAM_SAVE_CONTROL_NOT_SUPP -1000
+ #define RAM_SAVE_CONTROL_DELAYED  -2000
+ 
 -- 
 2.35.3
 
