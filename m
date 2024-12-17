@@ -4,171 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99F94E7716A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 09:39:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF57EE7716A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 09:42:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNU2b-0004YY-Qx; Tue, 17 Dec 2024 04:38:57 -0500
+	id 1tNU5T-0005So-M3; Tue, 17 Dec 2024 04:41:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tNU2a-0004YC-AF
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:38:56 -0500
-Received: from mail-dm3nam02on2060f.outbound.protection.outlook.com
- ([2a01:111:f403:2405::60f]
- helo=NAM02-DM3-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNU5Q-0005SZ-5m
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:41:52 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tNU2X-0006Dk-Qw
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:38:55 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bQFs95Dp3KvfDjULghwCCqDLmHzdTG6aPvJd21vkPgVJ6+VJX+06VcMALja2j0WNar/jzC6M/GcTVuUtGVRGQxMrEj8t4rQtIq0uLr1yFsDPGBptlKWAh/4bxd6hol9udbdAU+o65HA2Gg8JUSMpzmLV944/ATGoEZiPYz6/6Ya46UK+Nw/bgQ5Q7lieKs9sG7GSOwWYVBBaxMqEk5UBATfvDOSiLzVCmgd+WhSViqhNT5uBXWJD98K2jWcX2X86mkRidBweVYTj1J1l5Zog42sNCV7MrOf5zlUz/eMi8zSbqGBhK0YdBmIFKnBPM2BtlT61neT23vxbGwWsJBk99g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Jt5zcHFxu8eK60DM3Cx72SANoBaD7aR+L717nq3ncaQ=;
- b=cQlf2f7O9+cuQIvkH5dqHFIlck1vVby2ngFnJPe7ob6ZZNvXAiRNcBMLWWw0VANzLX+l282Jw06I+ZONce9Pd3JJLlN5Zc3yn3g/LLDV5YkAh6kwt7byI/m0ZGq3FQVe1meA2+P7qN/T2uGPsUu++2rHzenCSCpSxdCnHBUi/X9cvrcnAYDE8E30MB2yaxkaoyU43Abx8Mf1XauLOAOnkUmw7peQl8FqUy6JjDVDeIfvIBQy75W18hssX76A1e7p9nweqZUltw56ZXI5wnsriEbYixSNxh9YbZn6K8A3akpbalFhmBFv89klF/r9kIg9B+2vR0/+cFBxMzDXNjEHLA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Jt5zcHFxu8eK60DM3Cx72SANoBaD7aR+L717nq3ncaQ=;
- b=dwKLH/UI21DG12WEksj+Vg+/CHrCHRU3FcYSz9mQpx7S7Cnn3vJyozYt9abTzXVGfJF2n8CDw0zNB4Fn+9rr89iQpBxMrLstOT1TYwtuWJ0tCReQzKahZ+4A2daAE8fCN7fma9OZpDeMXGA3erL1KTGpwPhpDXEgQ1yGqrKD2SRegl6TsqurRlozZvsBOZdDkVfJ6cKn9KTN+zeos+PrkyRcNkrQ4ufUBgj6ZL+L8aNzmFHthv5vRWkapWszI3uwCxkAQk3lXqBag6tbVJIkM7OwCZqj2vS21WcIQa9FuljFawYPthXum+c9UGVBI6ApTQjuZIWnUEa01BWIxiAyxA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from BY5PR12MB5544.namprd12.prod.outlook.com (2603:10b6:a03:1d9::22)
- by DS7PR12MB6360.namprd12.prod.outlook.com (2603:10b6:8:93::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.21; Tue, 17 Dec
- 2024 09:38:48 +0000
-Received: from BY5PR12MB5544.namprd12.prod.outlook.com
- ([fe80::1a4a:10e9:d53c:d25d]) by BY5PR12MB5544.namprd12.prod.outlook.com
- ([fe80::1a4a:10e9:d53c:d25d%4]) with mapi id 15.20.8251.015; Tue, 17 Dec 2024
- 09:38:48 +0000
-Message-ID: <91f82153-280b-4782-bbe9-736494c41c44@nvidia.com>
-Date: Tue, 17 Dec 2024 11:38:41 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/9] vfio/migration: Refactor
- vfio_devices_all_running_and_mig_active() logic
-To: Joao Martins <joao.m.martins@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Hyman Huang <yong.huang@smartx.com>, Maor Gottlieb <maorg@nvidia.com>
-References: <20241216094638.26406-1-avihaih@nvidia.com>
- <20241216094638.26406-4-avihaih@nvidia.com>
- <14070e26-ef99-4a6c-b3ba-ef910270856d@oracle.com>
- <63082412-a42f-42b9-88f5-8e40a8f28c8b@nvidia.com>
- <4741b80f-cdf6-4e43-8bae-f3604e858200@oracle.com>
-Content-Language: en-US
-From: Avihai Horon <avihaih@nvidia.com>
-In-Reply-To: <4741b80f-cdf6-4e43-8bae-f3604e858200@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: FR3P281CA0085.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:1f::22) To BY5PR12MB5544.namprd12.prod.outlook.com
- (2603:10b6:a03:1d9::22)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNU5O-0006op-At
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 04:41:51 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734428506;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=fXqH9um9w5h8Ggdovb54C2n4fbfuDUHfmKGXh4mGHQA=;
+ b=KNbPo/tp0bmoic5RkZ1WrcbqeWAVrK6mv1U2xNBEQfgyN7V1gofId/M3lE6GN0yQrO5sLi
+ mYbIcqXQPgkQ0EWObqr/GhtG7AkN9v3HT3SdX/gEKOfLERk3qDIAr/hoNUQf+6cYkWzgBo
+ A7DD1ZTBHZVkH2B/J2aJt3vo9Tnz8Ac=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-647-o7tgBhPyOSmZSNgM8dTPdw-1; Tue, 17 Dec 2024 04:41:45 -0500
+X-MC-Unique: o7tgBhPyOSmZSNgM8dTPdw-1
+X-Mimecast-MFC-AGG-ID: o7tgBhPyOSmZSNgM8dTPdw
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3862e986d17so2109152f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 01:41:44 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734428504; x=1735033304;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fXqH9um9w5h8Ggdovb54C2n4fbfuDUHfmKGXh4mGHQA=;
+ b=vw6UGXkBrRqNr0ZxlsPYebeUn1Mhqlw8r4GkQQC6IZzUILoUzJFz+t0qNH/kZtjFbs
+ 6n8H03VPaARyWwTnVV7kdqjbIGcwrMVRT62I+wzPx0HwCpVIKfG39k84AbKL7ab7j4ji
+ ocU4GCnjti7uTunqmJVGNj1GCp8KqnWszvcTQ59wgZHd5X/TDf3z0G55ROwSiKD+n7Zz
+ vOhasPRHwTAHBOhwy2opdRa9blG6xr4cHZmMsMonWA4VhMFVZ1GrY4mJ+vFr3+LcOakg
+ JwktGmOKVYtt/J3EANjhhAooT2mFS2jlAWIEr9ZnDUg0ylkUt3oF5pixwhn9aFLIir4F
+ PQKw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWh9ZxeU9SkyI9UlmA55BpMD2os08B7Vz8JIbipUzJOZhkRYPzRkmC8xXk10r2Iz0mQq+jI2k5eeR8L@nongnu.org
+X-Gm-Message-State: AOJu0YyVxq7aF+ZNSHlWDcVeRpnSi5J2N7njFBpYLqwcZ4ysjfaD7W9M
+ Rxkmb4Q5sbsfjXUpgyxSMHaFMQgcIltND6Xeqrvs0ko0M+PShOhHW6/oQ8Hqj3T1wR1f1kgRmDK
+ zzPT6VJB1ZeRadE9L48o1FOLlKhh29m8sKb/UajFWiXIZjTCfksud
+X-Gm-Gg: ASbGncsECxt2frYvCFr/zaJAblyhKWB6DiAiO1fM8r8rv1VhWVC45i4gDT+2lLxwHny
+ rvmRmlSsfg3iSTIOyOk3AJkoihVUloOYxZBrYeA1hAGMBOK6LgRsmE/mk3sLgGzecBYvNhVkmwa
+ LHvRLQLDhwtiTq5a4/ZYETgWPWz2lomcDcag9i2o/cCahAwkOx0oyPgyZjpVrRlgV7e/PN6lVdD
+ Clc0BB8RjKZQ9m9hauZQaFPt9LH5XmHmrgSbtgUgJnZKQ52o3mEd0CpP+Ei
+X-Received: by 2002:a5d:648a:0:b0:385:f677:8594 with SMTP id
+ ffacd0b85a97d-3888e0f30ccmr11614375f8f.43.1734428503927; 
+ Tue, 17 Dec 2024 01:41:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEpe13aD2kSJpTmfKM9PKcTiCkzTDRM65j9w6bpOOqimB7xacV0EEtG4T0dXT4blDMOwOlxUg==
+X-Received: by 2002:a5d:648a:0:b0:385:f677:8594 with SMTP id
+ ffacd0b85a97d-3888e0f30ccmr11614339f8f.43.1734428503582; 
+ Tue, 17 Dec 2024 01:41:43 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-388c801a8bbsm10648723f8f.56.2024.12.17.01.41.41
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 01:41:42 -0800 (PST)
+Message-ID: <8011ba26-d0eb-4e18-be8d-b464235e89b8@redhat.com>
+Date: Tue, 17 Dec 2024 10:41:36 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BY5PR12MB5544:EE_|DS7PR12MB6360:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a4b9249-1afd-481f-bbe5-08dd1e7e9b73
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?TjZPWFpmei9ESm5qVEQya3RSOHZIaXBEMlBWVmlwdFB4WDZsUit3dzRnTzF2?=
- =?utf-8?B?MTVoSGQvUmtFUUZ6eDdZUEFCRnphUDQyS1FPSE9yVkVVcU5MS3o0WE56MzRT?=
- =?utf-8?B?aFdGc09jdHU0YW1kUzM5Ky82NmMxTDU5OWtXSHphZDRFSHl6c1lycW5jbjdH?=
- =?utf-8?B?VHJvZE9USGlvK1QzNUlKalRBMlI4NVltL2FUalE0ZU5SLzNVM0wyUmJDaWR6?=
- =?utf-8?B?SzhDMWgza2pwZW02d3NTR3I5SVh1K2F5SjVjVnJrUG5nWkRUaEQrcSsrWERk?=
- =?utf-8?B?SyttQ2hTeHpjRG9oOWJ0cjd4c2Erb0dwclMwTDVSWHRtaENXcTBxZksrY08w?=
- =?utf-8?B?U2xHVStWR1ZIRU5IeUhUV2p4NzFQWFd4Zzc3SldTWjd4TUFad1VMMmVaQ05v?=
- =?utf-8?B?TDBRUnMzNHhJV3RUU1Q1cytNNWU1NmMydSsvQ2pKUGFwMFhPb1FyWEltWGVM?=
- =?utf-8?B?aXl2OUdXT0xWRForWE4vRVVCNmZ4OGFWamthUE9Semo2ZlorTXFFcG1tTzZU?=
- =?utf-8?B?K2p4NHVDMHFISlp6dXhtR1N0a0FYMGlramdWVkQ0WWhIZW9rOEJqeXk4UWYr?=
- =?utf-8?B?SmIvWHpyYk84eDBwNkp2SzF3QUo3WlRPNkppZlNZUkppcGtEdEN2akxENk4y?=
- =?utf-8?B?K3pJTHJBcUs4YjN5d2xGVkRzZnlvemtvV3ZtaTZ6SCsxNXBxTVJkbW5YbE1r?=
- =?utf-8?B?SHIrbVRuSjd0V25RSWcxK1FSME8welNsWGpXVmJTMzhVK0xtcWxTOUl0dFJO?=
- =?utf-8?B?MFoyMXIrMmFiVGRSdFhTSXRPMkZpbjM1bDFpVUN3VzI5U0FCSHdqc2xNd2F0?=
- =?utf-8?B?YWoyNXAvVzdJbjJiZW9Lb2JKZ1lNS3RQa1ZtZWRQeEwvR1RJbk1sZlRzZno2?=
- =?utf-8?B?Qzg0ZnliMlg1UzNXMmpMd1JGMG9ieUdoSmFHOGVFMThaN0lxbER6QVd4ZnJj?=
- =?utf-8?B?RDJaT2xWbFhSZjR6TEdiUi8yOWhnWmtnKytWbUdrdlJzczJNMzdJYUMyZGhi?=
- =?utf-8?B?Nk1kQnA5S2lJT29vaWpudnMwV3p2b2dTSUp0MlF1ZzQ2Z1FXQUtxRjQ0WDlu?=
- =?utf-8?B?UDlYODNwYmlBTTBUTU9NWHNxTUR6QWN4OWtjVHQ5N1cyTkxubDFwRzhyY3Br?=
- =?utf-8?B?T1lPWWRpWnlNRWMxbDBkWDBldE54QXRyeTB0bzYwR09jL2U0UnhOYWI5T0lp?=
- =?utf-8?B?RitTWHdDczlSOExBaWhBbjZxMUtRaDFXVm1BSk5kY0h2TXBEVlIxZ1JFUHla?=
- =?utf-8?B?RHNIVkFmVFJPMjJPdFNEYXZtSGJHRW84ZVRBdElPcHllYThMVEpEaldBdmp1?=
- =?utf-8?B?QlRUYjd6eHZrd3o4STdrYkc2VmMxbzcrQ2VORmZheWxnbEwzdFpMM1d4RDlw?=
- =?utf-8?B?b1VSWnVmRUc1QURXSjA3dUZDNWpldFo5UDFmVGVheVZ0cm9CZzBhQ0hwZGtq?=
- =?utf-8?B?cDJiKzJvT2N6eS8vUzU5SU5rby8rWVhCL0E2L3JnOTdnbGdZT2hwOGUveEt1?=
- =?utf-8?B?UzFuNVZCend1cG0zQm83eXlpd0pWaWloZGZROENyTThWaUVWMHdHd1kwUUxm?=
- =?utf-8?B?eGxUR2xnZGQvRUM5R2tWNGttaFJJOXU3cnBjOU9LR1FOWG1qTVdyU3IvcnVY?=
- =?utf-8?B?UUVpRG40cnFwaTk5Z3pPMjdvQ0FJamRMd1ppREhLRFl2WU9za1RWNDZ6M2Zx?=
- =?utf-8?B?elF2MVZqR0c0KzV4WGFMUWwzNGNUMWpIQ3BicGVMVlFHU3JnWmY4WVdLcjVw?=
- =?utf-8?B?VmpwS25WaXpoZkMvR0F3NkEyUWd2VkhkTTBpTm5JTlJiNElMQThTZHRZTmg2?=
- =?utf-8?B?cjhidVRTeGlwWnp4YVFjNHVnR1hvbDhqSlN2SVhxWnFrNDZsd213bzZPcUN3?=
- =?utf-8?Q?xdLCz182BwRGe?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:BY5PR12MB5544.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WVRwTWovcVh3emVGL0xOUCtIVlJSUVpkMy9qWU5Kblp2NkxiVEFpcUQxU0pD?=
- =?utf-8?B?YjF1Rm1HcU81YmFGUzJUQS9sNkphZ0s0VG5meWdBMjQ0eEFadmJVOGVMRElG?=
- =?utf-8?B?Q2dvc2ltUVk1RklkekhIYW1LcWpmSVFabm1qcWlJN3Nhd1I0RnZKejFRL0Zk?=
- =?utf-8?B?K0hMT3JiL3NEaFlWdk9CcDdrNVpZWlNtSUZrQ2RMeG5XbzJpTWNpN09qTlUy?=
- =?utf-8?B?Q3dsYWtsZzBNTHgxZU5qRFdOemxkUlB0am5pbDQyN0FtZ3hnWkZOZ0o1cUx0?=
- =?utf-8?B?RDNqQXhkRmlmWjZIeG1LaXZMbDk1MStJa3dsaUh5VzZKa0V5WktTSXNuS3RY?=
- =?utf-8?B?Sks1Y0ZNaHRhUzJUcGIrSkxMVWo3Qkd0Vmh1VlBMeG5GOWkzS1NHcFdoNmtU?=
- =?utf-8?B?cmZJNnZXeGxuWFd2cXRtb1k1NFdIMi8vTUgreDRqc2FKSmUyNnFmUGVLQjcx?=
- =?utf-8?B?QTU1UXJGVGJQWWN4N09CZndxYVhISWdqekw3alEwc000cTI1ODhjS1MxS1VV?=
- =?utf-8?B?NDlGR1kxc1A5alVVamQrMnpSbFpxWU1IY1liVVBYOUx5RUtGQ20zdHlXR01D?=
- =?utf-8?B?OFgzaElWMjdwNGd2bFdIbEptU29MWTNBZ3loTlBNS3RnclBiYUVnTm82Y0Fh?=
- =?utf-8?B?emZiQm04cW5NZldydi9xbkJqVHJyWFhOWnRWZEVpckJxKzVtUWJZQjdKR1U5?=
- =?utf-8?B?dkVvb0NaRG9VTUxQZnNhNjc0bUwramFjU2k4NS9JdmhST0tFOVZqN090SHZ4?=
- =?utf-8?B?SjIyVGE1U0xlNUlTK1IyTzQyYzF1MG8yU1J2OTFhbDdodGs2QUJyUjNUN1FH?=
- =?utf-8?B?R2gzTnF5SzRiRjBiU3BGaFkrL0hlWUFiQm4yZWMrQnZjSUdadzBMU2pWT1lt?=
- =?utf-8?B?Y1NGbE1hWHhDQWlGcDA2RHNuNVc5TVlXRVZ6dEI4YmFRa0QzbCtvemNKeWxX?=
- =?utf-8?B?UFhQOC96eXhEWlpwckZtOEl2ZkpVcjJtNHdKbjdQY2xjZG5ud0UvZStCNmtj?=
- =?utf-8?B?Y3dPMjlnRUtHbS9DaUIzbEM2c1BOUmh4Q3BBN2xTRm5xOGZGOEM4VTc4QWRu?=
- =?utf-8?B?RFVsTzhlSCtqTHNkT1A4TE5BeDFNRm5wV2tsTkJRUllVNGxJM3diSDBmVzRI?=
- =?utf-8?B?QitsMktnMXlmbnFGNVdwcnp1eXlGWWZ3RjRvVmdrTldaTXFKTG9GT1ptYWVQ?=
- =?utf-8?B?a1JRUWlBZXQvcFdEdXFXNmsyblFXNW8yU3ZJWDVpY0JzbVluQTJyNE9OQXZi?=
- =?utf-8?B?Q3FtUEI1YXduSTZnUmNkQ3hMUE5wRXp1S0QvZW5HWkt3Q3dNYjBFZkpQVVph?=
- =?utf-8?B?Y1I2ekwrbHEzcGpMd0Q4ZGErcTNNUFBlSXFQbmhvZFNQSDBZTHhuK2J1M2xM?=
- =?utf-8?B?YjcxQU1mODNvK0grbTV3Yjd3MmtyOXRWdUkxWXdaTTNnQTBDcXdXZkZRTVFP?=
- =?utf-8?B?S3ROWHFtdURVcHZEcWRTQTRhM2Jaa0NGeXdqU2hTeGszWXoyczFJc1BQT3Ur?=
- =?utf-8?B?U3g0b2U2L3NVcHdYYlplRzlLV3Q4MmVKaHlDZnlGT1RtWG04NFk4SFpSNHdH?=
- =?utf-8?B?OGh6VWIyZnUyTUdEbHBZUDlKa3B3eU0zanRrK1VPejlYZDBzUUxoQmlYVVZo?=
- =?utf-8?B?MGpBeCthcVJBWk45eWhvZk9HM2Q5bUZlQzYyR1Brd2s3ZnlGbVAxdEFUNjRa?=
- =?utf-8?B?eGRJbURBNFRTc0ZWdHgxQ25kSVhML05IN2N6dEZMUUdxRWxCSkFSZ2diTFVC?=
- =?utf-8?B?RTJpYnFRTjFRc2YxT2t2UG04VmlUWElDV0Y5L2RpcWNtSDRHVFBHZ0NXMmRk?=
- =?utf-8?B?K1ZDczd3VVFlN2JIUExTNG81aGsvR3NNbmJLUHVYempPQXd0LzdOUklDYUR2?=
- =?utf-8?B?UnBKRWUyeVptQmZzYkhLaE5kQXFjc05IWlNCTlgySW5zTGoySmJjZ2xYMk4w?=
- =?utf-8?B?MjQ0V05KQUQwaER4Wm9DRmhuVnhNM0MzSnEzUkFTNEFYbC9qdURyQUgwTmw4?=
- =?utf-8?B?UmZ1TjZUNGo2dkVGdFE4ZmJaVFpJSkd4U0JLWlIyZlE1SjNVSHBMeWxNNGtq?=
- =?utf-8?B?ckdZUVVoMC9JSXU5eVlkWHJQUjlXVUVZUFBJTCtGQmJFSlNQWW4wbzVwT3U4?=
- =?utf-8?Q?0kzPRzv8qMo65rWQQn5oOW8PI?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a4b9249-1afd-481f-bbe5-08dd1e7e9b73
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR12MB5544.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Dec 2024 09:38:48.1811 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: fAnTbIa7o6Hz+oqps+YhLez9+OYUTc9i9MmCztT2o9qcUtofQyGKkQgs8jPURZfSyhlXHiHpcwygDfqfjiQ26w==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB6360
-Received-SPF: softfail client-ip=2a01:111:f403:2405::60f;
- envelope-from=avihaih@nvidia.com;
- helo=NAM02-DM3-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 43/60] i386/tdx: Only configure MSR_IA32_UCODE_REV in
+ kvm_init_msrs() for TDs
+To: Ira Weiny <ira.weiny@intel.com>, Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Riku Voipio <riku.voipio@iki.fi>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, rick.p.edgecombe@intel.com,
+ kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <20241105062408.3533704-1-xiaoyao.li@intel.com>
+ <20241105062408.3533704-44-xiaoyao.li@intel.com>
+ <Z1xHztTldnFDih8W@iweiny-mobl>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <Z1xHztTldnFDih8W@iweiny-mobl>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -184,119 +159,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 12/13/24 15:42, Ira Weiny wrote:
+> On Tue, Nov 05, 2024 at 01:23:51AM -0500, Xiaoyao Li wrote:
+>> For TDs, only MSR_IA32_UCODE_REV in kvm_init_msrs() can be configured
+>> by VMM, while the features enumerated/controlled by other MSRs except
+>> MSR_IA32_UCODE_REV in kvm_init_msrs() are not under control of VMM.
+> 
+> I'm confused by this commit message.  If these features are not under VMM
+> control with TDX who controls them?  I assume it is the TDX module.  But where
+> are the qemu hooks to talk to the module?  Are they not needed in qemu at all?
 
-On 16/12/2024 17:58, Joao Martins wrote:
-> External email: Use caution opening links or attachments
->
->
-> On 16/12/2024 14:55, Avihai Horon wrote:
->> On 16/12/2024 14:45, Joao Martins wrote:
->>> External email: Use caution opening links or attachments
->>>
->>>
->>> On 16/12/2024 09:46, Avihai Horon wrote:
->>>> During DMA unmap with vIOMMU, vfio_devices_all_running_and_mig_active()
->>>> is used to check whether a dirty page log sync of the unmapped pages is
->>>> required. Such log sync is needed during migration pre-copy phase, and
->>>> the current logic detects it by checking if migration is active and if
->>>> the VFIO devices are running.
->>>>
->>>> However, recently there has been an effort to simplify the migration
->>>> status API and reduce it to a single migration_is_running() function.
->>>>
->>>> To accommodate this, refactor vfio_devices_all_running_and_mig_active()
->>>> logic so it won't use migration_is_active().
->>>>
->>>> Do it by modifying the logic to check if migration is running and dirty
->>>> tracking has been started. This should be equivalent to the previous
->>>> logic because when the guest is stopped there shouldn't be DMA unmaps
->>>> coming from it. Also rename the function properly.
->>>>
->>>> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
->>>> ---
->>>>    include/hw/vfio/vfio-common.h |  3 +--
->>>>    hw/vfio/common.c              | 28 ++++------------------------
->>>>    hw/vfio/container.c           |  2 +-
->>>>    3 files changed, 6 insertions(+), 27 deletions(-)
->>>>
->>>> diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
->>>> index e0ce6ec3a9..c23ca34871 100644
->>>> --- a/include/hw/vfio/vfio-common.h
->>>> +++ b/include/hw/vfio/vfio-common.h
->>>> @@ -296,8 +296,7 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error
->>>> **errp);
->>>>    void vfio_migration_exit(VFIODevice *vbasedev);
->>>>
->>>>    int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
->>>> -bool
->>>> -vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer);
->>>> +bool vfio_dma_unmap_dirty_sync_needed(const VFIOContainerBase *bcontainer);
->>>>    bool
->>>>    vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
->>>>    int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->>>> diff --git a/hw/vfio/common.c b/hw/vfio/common.c
->>>> index a99796403e..81fba81a6f 100644
->>>> --- a/hw/vfio/common.c
->>>> +++ b/hw/vfio/common.c
->>>> @@ -229,34 +229,14 @@ bool vfio_devices_all_device_dirty_tracking(const
->>>> VFIOContainerBase *bcontainer)
->>>>        return true;
->>>>    }
->>>>
->>>> -/*
->>>> - * Check if all VFIO devices are running and migration is active, which is
->>>> - * essentially equivalent to the migration being in pre-copy phase.
->>>> - */
->>>> -bool
->>>> -vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer)
->>>> +bool vfio_dma_unmap_dirty_sync_needed(const VFIOContainerBase *bcontainer)
->>>>    {
->>>> -    VFIODevice *vbasedev;
->>>> -
->>>> -    if (!migration_is_active()) {
->>>> +    if (!migration_is_running()) {
->>>>            return false;
->>>>        }
->>>>
->>>> -    QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
->>>> -        VFIOMigration *migration = vbasedev->migration;
->>>> -
->>>> -        if (!migration) {
->>>> -            return false;
->>>> -        }
->>>> -
->>>> -        if (vfio_device_state_is_running(vbasedev) ||
->>>> -            vfio_device_state_is_precopy(vbasedev)) {
->>>> -            continue;
->>>> -        } else {
->>>> -            return false;
->>>> -        }
->>> Functionally the change implies that even if non-migratable VFIO devices behind
->>> IOMMUs with dirty tracking would still sync DMA bitmap. I think this is OK as it
->>> increases the coverage for calc-dirty-rate (provided my comment in an earlier
->>> patch) such that if you try to get a dirty rate included the IOMMU invalidations
->>> marking the bits accordingly.
->> We still have the "if (!migration_is_running())" check above, so non-migratable
->> VFIO devices won't sync.
->> But that's a valid point for when we'll allow VFIO log syncs for clac-dirty-rate.
->>
-> It's the other way around :) This change helps calc-dirty-rate because you can
-> use it and still account for DMA unmap based dirties.
->
-> migration_is_running just stops logs if migration is not running. And that
-> doesn't care about VFIO migation support.
->
-> But if migration is running, whether the device supports migration or not...
+The TDX module controls the values of the MSRs, and the values cannot be 
+affected by QEMU so there is nothing that QEMU needs to (or can) do.
 
-If the device doesn't support migration then migration can't run, no?
-But anyway, as we talked in the other thread, I can untie this from 
-migration and then, as you said above, it may also dirty sync for 
-non-migratable devices which will make calc-dirty-rate more accurate.
+> Also, why are the has_msr_* flags true for a TDX TD in the first place?
 
->   it
-> will still sync for pages. It won't sync if it has no VF dirty tracking, but
-> there's still the container dirty tracker.
->
-> Whereby previously, you skip checking all together if the VFIO migration state
-> wasn't initialized and the VF was not in the right VF device-state.
+KVM only provides a system ioctl for this purpose, not a VM ioctl; so 
+there is currently no way to obtain the information for the VM.
+
+Paolo
+
 
