@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EECFE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:30:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 813FFE77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:30:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYaD-0001oz-Pe; Tue, 17 Dec 2024 09:30:00 -0500
+	id 1tNYZo-0001Gy-9x; Tue, 17 Dec 2024 09:29:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZO-0000xg-6b
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:10 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZN-0000xc-Fo
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:07 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZM-0004wR-4w
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZL-0004wY-8G
  for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1734445742;
@@ -24,43 +24,42 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=FPzOHjVETNGAqdsG7EQpmY5dkKRFCfWVL5M7/yQ1yDY=;
- b=cuNz9yVuRO175sODtCi2LMfvyL4Nw4HIhAK5MeOZNhT7fnd1tgNYFDWkEah2Ge3vCRopn9
- 0YCmzBYa4+b2Bbo3qfHcxgJmXpOIw6/LQss+Hnl64Tv7BSWwKMIq20wa7kwFOtS0LZ3zLl
- DVfzFyZNxxFycCqVx2+UWSGNyrnkVHA=
+ bh=r4wK3v+/PfbFX1aitYHsoHtsQk/8x2gQh7RTaACX+R0=;
+ b=MQu+IKpLoD348uepTeoPULsZskUBkczFXBelz7l1oItbZllOUy9e9vSsSV1A6H0h4un4Sx
+ qoH2L07sTNaqmU5mSXiUqFQKp/ubtk77FAyeBTlPWE/MspkWdgoiXQ7CWpxaKeTA8JPN0+
+ TlpV1VB5thfyd9zrc+fj0mKbmXXzlF8=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-WpNrUqLVOnmqvNvAdPjfNQ-1; Tue,
- 17 Dec 2024 09:28:58 -0500
-X-MC-Unique: WpNrUqLVOnmqvNvAdPjfNQ-1
-X-Mimecast-MFC-AGG-ID: WpNrUqLVOnmqvNvAdPjfNQ
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-gcwfWr0wPiqrNlsqhCpcOQ-1; Tue,
+ 17 Dec 2024 09:29:01 -0500
+X-MC-Unique: gcwfWr0wPiqrNlsqhCpcOQ-1
+X-Mimecast-MFC-AGG-ID: gcwfWr0wPiqrNlsqhCpcOQ
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9FE7919560A2; Tue, 17 Dec 2024 14:28:57 +0000 (UTC)
+ id 41FEC195605A; Tue, 17 Dec 2024 14:29:00 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60C1D1955F54; Tue, 17 Dec 2024 14:28:57 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 023FF19560B0; Tue, 17 Dec 2024 14:28:59 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0D2D921E6605; Tue, 17 Dec 2024 15:28:55 +0100 (CET)
+ id 197B321EC340; Tue, 17 Dec 2024 15:28:55 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com,
 	berrange@redhat.com,
 	eduardo@habkost.net
-Subject: [PATCH 2/6] qdev: Change qdev_prop_pci_devfn member @name from
- "int32" to "str"
-Date: Tue, 17 Dec 2024 15:28:50 +0100
-Message-ID: <20241217142855.3805068-3-armbru@redhat.com>
+Subject: [PATCH 6/6] qdev: Improve a few more PropertyInfo @description members
+Date: Tue, 17 Dec 2024 15:28:54 +0100
+Message-ID: <20241217142855.3805068-7-armbru@redhat.com>
 In-Reply-To: <20241217142855.3805068-1-armbru@redhat.com>
 References: <20241217142855.3805068-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -86,47 +85,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Properties using qdev_prop_pci_devfn initially accepted a string of
-the form "DEV.FN" or "DEV" where DEV and FN are in hexadecimal.
-Member @name was "pci-devfn" initially.
-
-Commit b403298adb5 (qdev: make the non-legacy pci address property
-accept an integer) changed them to additionally accept integers: bits
-3..7 are DEV, and bits 0..2 are FN.  This is inaccessible externally
-in device_add so far.
-
-The commit also changed @name to "int32", and set member @legacy-name
-to "pci-devfn".  Together, this kept QMP command
-device-list-properties unaffected: it used @name only when
-@legacy_name was null.
-
-Commit 07d09c58dbb (qmp: Print descriptions of object properties)
-quietly dumbed that down to use @name always, and the next commit
-18b91a3e082q (qdev: Drop legacy_name from qdev properties) dropped
-member @legacy_name.  This changed the value of @type reported by QMP
-command device-list-properties from "pci-devfn" to "int32".
-
-But "int32" is misleading: device_add actually wants QAPI type "str".
-So change @name to that.
-
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
+ hw/block/xen-block.c             | 2 +-
  hw/core/qdev-properties-system.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/core/qdev-properties.c        | 1 +
+ hw/s390x/ccw-device.c            | 4 ++--
+ target/sparc/cpu.c               | 1 +
+ 5 files changed, 6 insertions(+), 4 deletions(-)
 
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index 1303c9dcc9..722e8723f5 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -661,7 +661,7 @@ invalid:
+  */
+ const PropertyInfo xen_block_prop_vdev = {
+     .type  = "str",
+-    .description = "Virtual Disk specifier: d*p*/xvd*/hd*/sd*",
++    .description = "Virtual Disk specifier (d*p*/xvd*/hd*/sd*)",
+     .get = xen_block_get_vdev,
+     .set = xen_block_set_vdev,
+ };
 diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 22ea1ed358..3177678861 100644
+index 9d1f358263..986123d188 100644
 --- a/hw/core/qdev-properties-system.c
 +++ b/hw/core/qdev-properties-system.c
-@@ -882,7 +882,7 @@ static int print_pci_devfn(Object *obj, Property *prop, char *dest,
- }
+@@ -985,7 +985,7 @@ inval:
  
- const PropertyInfo qdev_prop_pci_devfn = {
--    .name  = "int32",
-+    .name  = "str",
-     .description = "Slot and optional function number, example: 06.0 or 06",
-     .print = print_pci_devfn,
-     .get   = qdev_propinfo_get_int32,
+ const PropertyInfo qdev_prop_pci_host_devaddr = {
+     .type = "str",
+-    .description = "Address (bus/device/function) of "
++    .description = "Address (bus:device.function) of "
+                    "the host device, example: 04:10.0",
+     .get = get_pci_host_devaddr,
+     .set = set_pci_host_devaddr,
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 67b17848b8..02f9b0850a 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -247,6 +247,7 @@ static void set_bool(Object *obj, Visitor *v, const char *name, void *opaque,
+ 
+ const PropertyInfo qdev_prop_bool = {
+     .type  = "bool",
++    .description = "on/off",
+     .get   = get_bool,
+     .set   = set_bool,
+     .set_default_value = set_default_value_bool,
+diff --git a/hw/s390x/ccw-device.c b/hw/s390x/ccw-device.c
+index ecf735e9fe..ae66d846b3 100644
+--- a/hw/s390x/ccw-device.c
++++ b/hw/s390x/ccw-device.c
+@@ -75,8 +75,8 @@ static void ccw_device_set_loadparm(Object *obj, Visitor *v,
+ 
+ const PropertyInfo ccw_loadparm = {
+     .type  = "str",
+-    .description = "Up to 8 chars in set of [A-Za-z0-9. ] to pass"
+-            " to the guest loader/kernel",
++    .description = "Up to 8 chars in set of [A-Za-z0-9. ] to select"
++            " a guest kernel",
+     .get = ccw_device_get_loadparm,
+     .set = ccw_device_set_loadparm,
+ };
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index c3572b8a57..7d2833b2b2 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -870,6 +870,7 @@ static void sparc_set_nwindows(Object *obj, Visitor *v, const char *name,
+ 
+ static PropertyInfo qdev_prop_nwindows = {
+     .type  = "int",
++    .description = "Number of register windows",
+     .get   = sparc_get_nwindows,
+     .set   = sparc_set_nwindows,
+ };
 -- 
 2.47.0
 
