@@ -4,98 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 122A4E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:26:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AD2AE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:27:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZT3-0000qg-Oq; Tue, 17 Dec 2024 10:26:37 -0500
+	id 1tNZTY-0001Mm-Vw; Tue, 17 Dec 2024 10:27:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNZT1-0000qF-Jz
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:26:35 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNZTX-0001FZ-DM
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:27:07 -0500
+Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNZSz-00057M-TF
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:26:35 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNZTS-0005BF-Iw
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:27:07 -0500
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8D4211F392;
- Tue, 17 Dec 2024 15:26:28 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 2A50F21153;
+ Tue, 17 Dec 2024 15:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734449188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734449221; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gZDB3fcFVU4129eajeeMY2oMjHdmlUIrEBkrQ99A6cU=;
- b=F0n+RaPa8+cviV23Yy4KZQDYzVfn6qKkky5Vz45O4KSVKtea8LO7/zjnt24o2rjQ6VyRFJ
- dbrRToFOsyPjZrCzh0kZ5/WOgE1YBlYQS+c+QAJ+guYsYK7XXZsn4EzJTmAZsCuLpzpUFF
- 3IoOlxH7TR8dCMgc70+QmuZuEeJ5Zsg=
+ bh=d+5J6yZPjVYpQtjLESjqLkV5VUHmeUmTowMeXp+QIQ4=;
+ b=jaxoeYhfZjJQBL6UGxMDY3VnxuXteqxMzC5xzieTzW/I4no4KGcGZRhrM0Z/6r60okd28l
+ 1E3JSjJfXBCMHCCvIewGPkenbBF0wsOva3CLQYQ0Czcm/2RCn+YJRo1xp+QumQRZBjZWt/
+ GTHM5jKE2z1xXSm5tOZTx6rbCBiuNTc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734449188;
+ s=susede2_ed25519; t=1734449221;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gZDB3fcFVU4129eajeeMY2oMjHdmlUIrEBkrQ99A6cU=;
- b=IlAy/kG5YjYY+SeLVVM18uQKEWa3wiiLMZXFtzQMg/hPRop7XQkkhvwbVEHNX0o0L9sdJe
- XBauNt0Iiefa93CQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
+ bh=d+5J6yZPjVYpQtjLESjqLkV5VUHmeUmTowMeXp+QIQ4=;
+ b=dUgc94RIytmgBxLm9jbmVCfMjsVucumDjwU3IiKjWYw3bgdEI3kSwUolhKMOVuxDaxwPKk
+ u2az/zx2rxVh6WDw==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=jaxoeYhf;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=dUgc94RI
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734449188; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1734449221; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gZDB3fcFVU4129eajeeMY2oMjHdmlUIrEBkrQ99A6cU=;
- b=F0n+RaPa8+cviV23Yy4KZQDYzVfn6qKkky5Vz45O4KSVKtea8LO7/zjnt24o2rjQ6VyRFJ
- dbrRToFOsyPjZrCzh0kZ5/WOgE1YBlYQS+c+QAJ+guYsYK7XXZsn4EzJTmAZsCuLpzpUFF
- 3IoOlxH7TR8dCMgc70+QmuZuEeJ5Zsg=
+ bh=d+5J6yZPjVYpQtjLESjqLkV5VUHmeUmTowMeXp+QIQ4=;
+ b=jaxoeYhfZjJQBL6UGxMDY3VnxuXteqxMzC5xzieTzW/I4no4KGcGZRhrM0Z/6r60okd28l
+ 1E3JSjJfXBCMHCCvIewGPkenbBF0wsOva3CLQYQ0Czcm/2RCn+YJRo1xp+QumQRZBjZWt/
+ GTHM5jKE2z1xXSm5tOZTx6rbCBiuNTc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734449188;
+ s=susede2_ed25519; t=1734449221;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gZDB3fcFVU4129eajeeMY2oMjHdmlUIrEBkrQ99A6cU=;
- b=IlAy/kG5YjYY+SeLVVM18uQKEWa3wiiLMZXFtzQMg/hPRop7XQkkhvwbVEHNX0o0L9sdJe
- XBauNt0Iiefa93CQ==
+ bh=d+5J6yZPjVYpQtjLESjqLkV5VUHmeUmTowMeXp+QIQ4=;
+ b=dUgc94RIytmgBxLm9jbmVCfMjsVucumDjwU3IiKjWYw3bgdEI3kSwUolhKMOVuxDaxwPKk
+ u2az/zx2rxVh6WDw==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 122F1132EA;
- Tue, 17 Dec 2024 15:26:27 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A666E132EA;
+ Tue, 17 Dec 2024 15:27:00 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QMU+MiOYYWfdIwAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 15:26:27 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 26jJGkSYYWcXJAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 15:27:00 +0000
 From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: Prasad Pandit <ppandit@redhat.com>, "Maciej S . Szmigiero"
- <mail@maciej.szmigiero.name>, =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>, Alex
- Williamson <alex.williamson@redhat.com>, peterx@redhat.com, Avihai Horon
- <avihaih@nvidia.com>
-Subject: Re: [PATCH v3 0/7] migration/multifd: Some VFIO / postcopy
- preparations on flush
-In-Reply-To: <20241206224755.1108686-1-peterx@redhat.com>
-References: <20241206224755.1108686-1-peterx@redhat.com>
-Date: Tue, 17 Dec 2024 12:26:25 -0300
-Message-ID: <87jzbywcta.fsf@suse.de>
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-devel@nongnu.org, peterx@redhat.com
+Cc: linuxarm@huawei.com, zhangfei.gao@linaro.org
+Subject: Re: [PATCH] tests/qtest/migration: Fix compile errors when
+ CONFIG_UADK is set
+In-Reply-To: <20241217131046.83844-1-shameerali.kolothum.thodi@huawei.com>
+References: <20241217131046.83844-1-shameerali.kolothum.thodi@huawei.com>
+Date: Tue, 17 Dec 2024 12:26:58 -0300
+Message-ID: <87ed26wcsd.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 2A50F21153
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- MIME_TRACE(0.00)[0:+]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- ARC_NA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCVD_TLS_ALL(0.00)[]; FROM_HAS_DN(0.00)[];
- MISSING_XM_UA(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[8];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
- helo=smtp-out2.suse.de
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -103,7 +112,7 @@ X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,57 +128,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Shameer Kolothum via <qemu-devel@nongnu.org> writes:
 
-> CI: https://gitlab.com/peterx/qemu/-/pipelines/1577280033
->  (note: it's a pipeline of two patchsets, to save CI credits and time)
+> Removes accidental inclusion of unrelated functions within CONFIG_UADK
+> as this causes compile errors like:
 >
-> v1: https://lore.kernel.org/r/20241205185303.897010-1-peterx@redhat.com
-> v2: https://lore.kernel.org/r/20241206005834.1050905-1-peterx@redhat.com
+> error: redefinition of =E2=80=98migrate_hook_start_xbzrle=E2=80=99
 >
-> v3 changelog:
-> - R-bs collected
-> - Update commit message of patch 1 [Fabiano]
-> - English updates [Fabiano]
-> - Update comment for MULTIFD_SYNC_ALL [Fabiano]
-> - In multifd_send_sync_main(), assert on req type [Fabiano]
-> - Some more comments and cleanup for RAM_SAVE_FLAG_* movement [Fabiano]
-> - Update the last document patch [Fabiano]
+> Fixes: 932f74f3fe6e ("tests/qtest/migration: Split compression tests from=
+ migration-test.c")
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  tests/qtest/migration/compression-tests.c | 54 -----------------------
+>  1 file changed, 54 deletions(-)
 >
-> This series provides some changes that may be helpful for either VFIO or
-> postcopy integration on top of multifd.
->
-> For VFIO, only patches 1 & 2 are relevant.
->
-> For postcopy, it's about patches 3-7, but it needs to be based on 1+2
-> because of a context dependency.
->
-> All these patches can be seen as cleanups / slight optimizations on top of
-> master branch with/without the VFIO/postcopy work.
->
-> Besides CI, qtests, and some real-world multifd tests just to monitor the
-> sync events happen all correct, I made sure to cover 7.2 machine type
-> (which uses the legacy sync) so it still works as before - basically sync
-> will be more frequent, but all thing keeps working smoothly so far.
->
-> Thanks,
->
-> Peter Xu (7):
->   migration/multifd: Further remove the SYNC on complete
->   migration/multifd: Allow to sync with sender threads only
->   migration/ram: Move RAM_SAVE_FLAG* into ram.h
->   migration/multifd: Unify RAM_SAVE_FLAG_MULTIFD_FLUSH messages
->   migration/multifd: Remove sync processing on postcopy
->   migration/multifd: Cleanup src flushes on condition check
->   migration/multifd: Document the reason to sync for save_setup()
->
->  migration/multifd.h        | 27 ++++++++++--
->  migration/ram.h            | 28 ++++++++++++
->  migration/rdma.h           |  7 ---
->  migration/multifd-nocomp.c | 74 ++++++++++++++++++++++++++++++-
->  migration/multifd.c        | 17 +++++---
->  migration/ram.c            | 89 +++++++++++++++++---------------------
->  6 files changed, 173 insertions(+), 69 deletions(-)
+> diff --git a/tests/qtest/migration/compression-tests.c b/tests/qtest/migr=
+ation/compression-tests.c
+> index 6de87bc47d..d78f1f11f1 100644
+> --- a/tests/qtest/migration/compression-tests.c
+> +++ b/tests/qtest/migration/compression-tests.c
+> @@ -88,59 +88,6 @@ migrate_hook_start_precopy_tcp_multifd_uadk(QTestState=
+ *from,
+>      return migrate_hook_start_precopy_tcp_multifd_common(from, to, "uadk=
+");
+>  }
+>=20=20
+> -static void *
+> -migrate_hook_start_xbzrle(QTestState *from,
+> -                          QTestState *to)
+> -{
+> -    migrate_set_parameter_int(from, "xbzrle-cache-size", 33554432);
+> -
+> -    migrate_set_capability(from, "xbzrle", true);
+> -    migrate_set_capability(to, "xbzrle", true);
+> -
+> -    return NULL;
+> -}
+> -
+> -static void test_precopy_unix_xbzrle(void)
+> -{
+> -    g_autofree char *uri =3D g_strdup_printf("unix:%s/migsocket", tmpfs);
+> -    MigrateCommon args =3D {
+> -        .connect_uri =3D uri,
+> -        .listen_uri =3D uri,
+> -        .start_hook =3D migrate_hook_start_xbzrle,
+> -        .iterations =3D 2,
+> -        /*
+> -         * XBZRLE needs pages to be modified when doing the 2nd+ round
+> -         * iteration to have real data pushed to the stream.
+> -         */
+> -        .live =3D true,
+> -    };
+> -
+> -    test_precopy_common(&args);
+> -}
+> -
+> -static void *
+> -migrate_hook_start_precopy_tcp_multifd_zlib(QTestState *from,
+> -                                            QTestState *to)
+> -{
+> -    /*
+> -     * Overloading this test to also check that set_parameter does not e=
+rror.
+> -     * This is also done in the tests for the other compression methods.
+> -     */
+> -    migrate_set_parameter_int(from, "multifd-zlib-level", 2);
+> -    migrate_set_parameter_int(to, "multifd-zlib-level", 2);
+> -
+> -    return migrate_hook_start_precopy_tcp_multifd_common(from, to, "zlib=
+");
+> -}
+> -
+> -static void test_multifd_tcp_zlib(void)
+> -{
+> -    MigrateCommon args =3D {
+> -        .listen_uri =3D "defer",
+> -        .start_hook =3D migrate_hook_start_precopy_tcp_multifd_zlib,
+> -    };
+> -    test_precopy_common(&args);
+> -}
+> -
+>  static void test_multifd_tcp_uadk(void)
+>  {
+>      MigrateCommon args =3D {
+> @@ -151,7 +98,6 @@ static void test_multifd_tcp_uadk(void)
+>  }
+>  #endif /* CONFIG_UADK */
+>=20=20
+> -
+>  static void *
+>  migrate_hook_start_xbzrle(QTestState *from,
+>                            QTestState *to)
 
 Queued, thanks!
 
