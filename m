@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47633E77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:06:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C297EE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:07:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNa12-00060e-Vy; Tue, 17 Dec 2024 11:01:45 -0500
+	id 1tNa03-0004Ko-Eo; Tue, 17 Dec 2024 11:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNa0r-0005cD-B9
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tNZzq-0004GD-En
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNa0m-0002F7-8t
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:31 -0500
+ id 1tNZzo-00027c-PI
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734451287;
+ s=mimecast20190719; t=1734451228;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sAmrbxoAoZ9PR/4gbrF0EEd1IpdvHSc5XD3afoe70/Q=;
- b=XaW1uTxEZSWISHbagSxsLwSVnHlOHElPOIM8T0v23cVu5wDh6OLRWy9snscCULkG+mzXvF
- QQ6lUM5Ny6IuNNtkJHKoW6+SwOcR1C6euEdVDOT7HQ2Rci5Dl2pduhkzvCudp9fZuBV2im
- SG43qAMs6XNOvSzpRQ49A842PN0mMHw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=ELr/rM7FSdeA0GsZz078xGh7Vop7TiEuEBNFFMFo/R8=;
+ b=ZEvew5ZIDqNb20wCLfDVl2Qc/w10oTckRmCiW9HD9vIrls9URxW2HIj3XqdGRlFtqLJjYT
+ CikA2PYniJ+0mx6zJjvTMDZLp25VbN4l3B4gW1IuKGNhW7Z22wp2jWFmHBJfEjSKcguFHh
+ hr6JwHTnOpcT4lTfuNcMsCme3aBNH/U=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-ivtFr7s1MwyQ1lxfSn-rUQ-1; Tue,
- 17 Dec 2024 11:01:23 -0500
-X-MC-Unique: ivtFr7s1MwyQ1lxfSn-rUQ-1
-X-Mimecast-MFC-AGG-ID: ivtFr7s1MwyQ1lxfSn-rUQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-416-ccDHzOj-OW21ZdNZzgs5rg-1; Tue,
+ 17 Dec 2024 11:00:24 -0500
+X-MC-Unique: ccDHzOj-OW21ZdNZzgs5rg-1
+X-Mimecast-MFC-AGG-ID: ccDHzOj-OW21ZdNZzgs5rg
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 83C59195605E; Tue, 17 Dec 2024 16:01:22 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3E6E11955F3F; Tue, 17 Dec 2024 16:00:23 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.136])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E950A30044C1; Tue, 17 Dec 2024 16:01:19 +0000 (UTC)
+ id EE2B730044C1; Tue, 17 Dec 2024 16:00:20 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -54,17 +54,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 28/32] tests/functional: replace 'run_cmd' with subprocess
+Subject: [PATCH v3 09/32] tests/functional: drop 'has_cmd' and 'has_cmds'
  helpers
-Date: Tue, 17 Dec 2024 15:59:49 +0000
-Message-ID: <20241217155953.3950506-29-berrange@redhat.com>
+Date: Tue, 17 Dec 2024 15:59:30 +0000
+Message-ID: <20241217155953.3950506-10-berrange@redhat.com>
 In-Reply-To: <20241217155953.3950506-1-berrange@redhat.com>
 References: <20241217155953.3950506-1-berrange@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -89,233 +89,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'run_cmd' helper is re-implementing a convenient helper that
-already exists in the form of the 'run' and 'check_call' methods
-provided by 'subprocess'.
+The 'which' helper is simpler, not depending on the external 'which'
+binary, and is sufficient for test needs.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/qemu_test/archive.py    |  9 ++++---
- tests/functional/qemu_test/tesseract.py  | 10 ++++----
- tests/functional/qemu_test/testcase.py   | 31 +++++++++++++-----------
- tests/functional/qemu_test/tuxruntest.py |  8 +++---
- tests/functional/test_aarch64_virt.py    |  6 +++--
- tests/functional/test_ppc64_tuxrun.py    |  7 ++++--
- 6 files changed, 41 insertions(+), 30 deletions(-)
+ tests/functional/qemu_test/__init__.py   |  2 +-
+ tests/functional/qemu_test/cmd.py        | 54 ++----------------------
+ tests/functional/qemu_test/tuxruntest.py | 10 ++---
+ 3 files changed, 9 insertions(+), 57 deletions(-)
 
-diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
-index c439d9413a..c803fdaf6d 100644
---- a/tests/functional/qemu_test/archive.py
-+++ b/tests/functional/qemu_test/archive.py
-@@ -14,7 +14,6 @@
- import zipfile
+diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
+index 7dee3522f2..fe6cbe3a8a 100644
+--- a/tests/functional/qemu_test/__init__.py
++++ b/tests/functional/qemu_test/__init__.py
+@@ -8,7 +8,7 @@
  
  from .asset import Asset
--from .cmd import run_cmd
- 
- 
- def tar_extract(archive, dest_dir, member=None):
-@@ -52,9 +51,11 @@ def deb_extract(archive, dest_dir, member=None):
-     cwd = os.getcwd()
-     os.chdir(dest_dir)
-     try:
--        (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
--        file_path = stdout.split()[2]
--        run_cmd(['ar', 'x', archive, file_path])
-+        proc = run(['ar', 't', archive],
-+                   check=True, capture_output=True, encoding='utf8')
-+        file_path = proc.stdout.split()[2]
-+        check_call(['ar', 'x', archive, file_path],
-+                   stdout=DEVNULL, stderr=DEVNULL)
-         tar_extract(file_path, dest_dir, member)
-     finally:
-         os.chdir(cwd)
-diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
-index 1b7818090a..ede6c6501e 100644
---- a/tests/functional/qemu_test/tesseract.py
-+++ b/tests/functional/qemu_test/tesseract.py
-@@ -6,18 +6,18 @@
- # later. See the COPYING file in the top-level directory.
- 
- import logging
-+from subprocess import run
- 
--from . import run_cmd
- 
- def tesseract_ocr(image_path, tesseract_args=''):
-     console_logger = logging.getLogger('console')
-     console_logger.debug(image_path)
--    (stdout, stderr, ret) = run_cmd(['tesseract', image_path,
--                                     'stdout'])
--    if ret:
-+    proc = run(['tesseract', image_path, 'stdout'],
-+               capture_output=True, encoding='utf8')
-+    if proc.returncode:
-         return None
-     lines = []
--    for line in stdout.split('\n'):
-+    for line in proc.stdout.split('\n'):
-         sline = line.strip()
-         if len(sline):
-             console_logger.debug(sline)
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index d0bb3141d5..aa6c9c0d64 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -16,7 +16,7 @@
- from pathlib import Path
- import pycotap
- import shutil
--import subprocess
-+from subprocess import run
- import sys
- import tempfile
- import unittest
-@@ -27,7 +27,6 @@
- 
- from .archive import archive_extract
- from .asset import Asset
--from .cmd import run_cmd
  from .config import BUILD_DIR
- from .uncompress import uncompress
+-from .cmd import has_cmd, has_cmds, run_cmd, is_readable_executable_file, \
++from .cmd import run_cmd, is_readable_executable_file, \
+     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
+     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
+ from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index 600e0509db..bebcd46dcf 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -29,52 +29,6 @@ def which(tool):
+             return p
+     return None
  
-@@ -251,11 +250,11 @@ def add_ldpath(self, ldpath):
-         self._ldpath.append(os.path.abspath(ldpath))
- 
-     def run_cmd(self, bin_path, args=[]):
--        return subprocess.run([self.qemu_bin]
--                              + ["-L %s" % ldpath for ldpath in self._ldpath]
--                              + [bin_path]
--                              + args,
--                              text=True, capture_output=True)
-+        return run([self.qemu_bin]
-+                   + ["-L %s" % ldpath for ldpath in self._ldpath]
-+                   + [bin_path]
-+                   + args,
-+                   text=True, capture_output=True)
- 
- class QemuSystemTest(QemuBaseTest):
-     """Facilitates system emulation tests."""
-@@ -282,7 +281,9 @@ def setUp(self):
-     def set_machine(self, machinename):
-         # TODO: We should use QMP to get the list of available machines
-         if not self._machinehelp:
--            self._machinehelp = run_cmd([self.qemu_bin, '-M', 'help'])[0];
-+            self._machinehelp = run(
-+                [self.qemu_bin, '-M', 'help'],
-+                capture_output=True, check=True, encoding='utf8').stdout
-         if self._machinehelp.find(machinename) < 0:
-             self.skipTest('no support for machine ' + machinename)
-         self.machine = machinename
-@@ -310,15 +311,17 @@ def require_accelerator(self, accelerator):
-                           "available" % accelerator)
- 
-     def require_netdev(self, netdevname):
--        netdevhelp = run_cmd([self.qemu_bin,
--                             '-M', 'none', '-netdev', 'help'])[0];
--        if netdevhelp.find('\n' + netdevname + '\n') < 0:
-+        help = run([self.qemu_bin,
-+                    '-M', 'none', '-netdev', 'help'],
-+                   capture_output=True, check=True, encoding='utf8').stdout;
-+        if help.find('\n' + netdevname + '\n') < 0:
-             self.skipTest('no support for " + netdevname + " networking')
- 
-     def require_device(self, devicename):
--        devhelp = run_cmd([self.qemu_bin,
--                           '-M', 'none', '-device', 'help'])[0];
--        if devhelp.find(devicename) < 0:
-+        help = run([self.qemu_bin,
-+                    '-M', 'none', '-device', 'help'],
-+                   capture_output=True, check=True, encoding='utf8').stdout;
-+        if help.find(devicename) < 0:
-             self.skipTest('no support for device ' + devicename)
- 
-     def _new_vm(self, name, *args):
+-def has_cmd(name, args=None):
+-    """
+-    This function is for use in a @skipUnless decorator, e.g.:
+-
+-        @skipUnless(*has_cmd('sudo -n', ('sudo', '-n', 'true')))
+-        def test_something_that_needs_sudo(self):
+-            ...
+-    """
+-
+-    if args is None:
+-        args = ('which', name)
+-
+-    try:
+-        _, stderr, exitcode = run_cmd(args)
+-    except Exception as e:
+-        exitcode = -1
+-        stderr = str(e)
+-
+-    if exitcode != 0:
+-        cmd_line = ' '.join(args)
+-        err = f'{name} required, but "{cmd_line}" failed: {stderr.strip()}'
+-        return (False, err)
+-    else:
+-        return (True, '')
+-
+-def has_cmds(*cmds):
+-    """
+-    This function is for use in a @skipUnless decorator and
+-    allows checking for the availability of multiple commands, e.g.:
+-
+-        @skipUnless(*has_cmds(('cmd1', ('cmd1', '--some-parameter')),
+-                              'cmd2', 'cmd3'))
+-        def test_something_that_needs_cmd1_and_cmd2(self):
+-            ...
+-    """
+-
+-    for cmd in cmds:
+-        if isinstance(cmd, str):
+-            cmd = (cmd,)
+-
+-        ok, errstr = has_cmd(*cmd)
+-        if not ok:
+-            return (False, errstr)
+-
+-    return (True, '')
+-
+ def run_cmd(args):
+     subp = subprocess.Popen(args,
+                             stdout=subprocess.PIPE,
+@@ -254,7 +208,7 @@ def get_qemu_img(test):
+     qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
+     if os.path.exists(qemu_img):
+         return qemu_img
+-    (has_system_qemu_img, errmsg) = has_cmd('qemu-img')
+-    if has_system_qemu_img:
+-        return 'qemu-img'
+-    test.skipTest(errmsg)
++    qemu_img = which('qemu-img')
++    if qemu_img is not None:
++        return qemu_img
++    test.skipTest(f"qemu-img not found in {BUILD_DIR} or '$PATH'")
 diff --git a/tests/functional/qemu_test/tuxruntest.py b/tests/functional/qemu_test/tuxruntest.py
-index 0b1bb8f0ed..7227a83757 100644
+index d375f2713b..2e5c6d110c 100644
 --- a/tests/functional/qemu_test/tuxruntest.py
 +++ b/tests/functional/qemu_test/tuxruntest.py
-@@ -11,11 +11,12 @@
- 
- import os
- import stat
-+from subprocess import check_call, DEVNULL
- 
+@@ -15,7 +15,7 @@
  from qemu_test import QemuSystemTest
  from qemu_test import exec_command_and_wait_for_pattern
  from qemu_test import wait_for_console_pattern
--from qemu_test import which, run_cmd, get_qemu_img
-+from qemu_test import which, get_qemu_img
+-from qemu_test import has_cmd, run_cmd, get_qemu_img
++from qemu_test import which, run_cmd, get_qemu_img
  
  class TuxRunBaselineTest(QemuSystemTest):
  
-@@ -76,8 +77,9 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
+@@ -38,10 +38,8 @@ def setUp(self):
+         super().setUp()
  
-         disk_image = self.scratch_file("rootfs.ext4")
+         # We need zstd for all the tuxrun tests
+-        (has_zstd, msg) = has_cmd('zstd')
+-        if has_zstd is False:
+-            self.skipTest(msg)
+-        self.zstd = 'zstd'
++        if which('zstd') is None:
++            self.skipTest("zstd not found in $PATH")
  
--        run_cmd(['zstd', "-f", "-d", disk_image_zst,
--                 "-o", disk_image])
-+        check_call(['zstd', "-f", "-d", disk_image_zst,
-+                    "-o", disk_image],
-+                   stdout=DEVNULL, stderr=DEVNULL)
+         # Pre-init TuxRun specific settings: Most machines work with
+         # reasonable defaults but we sometimes need to tweak the
+@@ -78,7 +76,7 @@ def fetch_tuxrun_assets(self, kernel_asset, rootfs_asset, dtb_asset=None):
+ 
+         disk_image = self.workdir + "/rootfs.ext4"
+ 
+-        run_cmd([self.zstd, "-f", "-d", disk_image_zst,
++        run_cmd(['zstd', "-f", "-d", disk_image_zst,
+                  "-o", disk_image])
          # zstd copies source archive permissions for the output
          # file, so must make this writable for QEMU
-         os.chmod(disk_image, stat.S_IRUSR | stat.S_IWUSR)
-diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
-index cc49f8963d..08576b0694 100755
---- a/tests/functional/test_aarch64_virt.py
-+++ b/tests/functional/test_aarch64_virt.py
-@@ -12,10 +12,11 @@
- 
- import time
- import logging
-+from subprocess import check_call, DEVNULL
- 
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import exec_command, wait_for_console_pattern
--from qemu_test import get_qemu_img, run_cmd
-+from qemu_test import get_qemu_img
- 
- 
- class Aarch64VirtMachine(QemuSystemTest):
-@@ -96,7 +97,8 @@ def common_aarch64_virt(self, machine):
-         logger.info('creating scratch qcow2 image')
-         image_path = self.scratch_file('scratch.qcow2')
-         qemu_img = get_qemu_img(self)
--        run_cmd([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'])
-+        check_call([qemu_img, 'create', '-f', 'qcow2', image_path, '8M'],
-+                   stdout=DEVNULL, stderr=DEVNULL)
- 
-         # Add the device
-         self.vm.add_args('-blockdev',
-diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
-index 03b47e07f2..8a98d18ab3 100755
---- a/tests/functional/test_ppc64_tuxrun.py
-+++ b/tests/functional/test_ppc64_tuxrun.py
-@@ -11,9 +11,10 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- 
-+from subprocess import check_call, DEVNULL
- import tempfile
- 
--from qemu_test import run_cmd, Asset
-+from qemu_test import Asset
- from qemu_test.tuxruntest import TuxRunBaselineTest
- 
- class TuxRunPPC64Test(TuxRunBaselineTest):
-@@ -70,7 +71,9 @@ def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
-         # Create a temporary qcow2 and launch the test-case
-         with tempfile.NamedTemporaryFile(prefix=prefix,
-                                          suffix='.qcow2') as qcow2:
--            run_cmd([self.qemu_img, 'create', '-f', 'qcow2', qcow2.name, ' 1G'])
-+            check_call([self.qemu_img, 'create', '-f', 'qcow2',
-+                        qcow2.name, ' 1G'],
-+                       stdout=DEVNULL, stderr=DEVNULL)
- 
-             self.vm.add_args('-drive', 'file=' + qcow2.name +
-                          ',format=qcow2,if=none,id='
 -- 
 2.46.0
 
