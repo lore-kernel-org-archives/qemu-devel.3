@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22601E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:13:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6645E77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZG6-0008QL-4S; Tue, 17 Dec 2024 10:13:14 -0500
+	id 1tNZGF-0008RZ-5u; Tue, 17 Dec 2024 10:13:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZG4-0008QC-P5
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:13:12 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZGD-0008RQ-AI
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:13:21 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZG3-0003Hr-9S
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:13:12 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3862b364538so3154222f8f.1
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:13:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNZGB-0003It-UD
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:13:21 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3862d161947so2606231f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:13:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734448388; x=1735053188; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=nhjwbb2cLaV8+g7K6eWDoGH3jLVsHMMck+CiKHhGFfc=;
- b=LM52cTGC8qksStuY8Sz3CSuxQkOtu76TS2RiLc7Bx+AUT+Te1Cpmy+8ka8Q7AixZlT
- eBPZWehOPk//+GBrQUt8RzzWde17O3ArJElsHaVBXDhgM14QlusbluteYhQwZ7PWK87r
- MlQvQLKMQubkeWBMxpyK6+PrH7zJToQa6lbDgSJ2NKu8tV0Al1pheNeiorZhmbwhRGQ+
- Z77AT0PZhB3sfD9ZloD49urhg2FBeAqppsZEsc+UPpcLqP3ONjQLgNDgi0k6mMniAZmJ
- qgpF9n1lIHbg3xlwPM+sWhn+rhN6s0B8U0X5j3NgfYyIG06S/C/CXj1tmS1aLn9dWaGd
- SEzg==
+ d=linaro.org; s=google; t=1734448398; x=1735053198; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=S6S2xlttjp4VhpiTH5RBxnctIn3RW53HPZ3WyhXqjYw=;
+ b=MqAJZ1g5ylMx22uovF6OxvUrMBd/pzq2spycCCkzn3IqiTDqiFpSVtRMyejLdQX9pJ
+ n7lLEzSiPGcLoMJMZTmD9+f0xhwj17AAq2aWGJAzqokPBSdj9vlJuRbtO4HZUGWGw/bg
+ YHSdoAw9yOYrBG1uWqpio/iaHvd7SyxyKEvcqBWyZXkgYccjKzHovhFkKB+7MuaYgMkl
+ rQT8knyj2vAsUkmdOEFYe9tVr6Kqy6Ly8m9av4o6g6jOWICmjM5u0p9Ipo3s0ISuIktv
+ V4LLvmEWnpmK/AoL098pTuaLF646D4BMByierfxwIoamgt/KQ4pBjpWi7ZeLHUgF+x4b
+ SkTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734448388; x=1735053188;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nhjwbb2cLaV8+g7K6eWDoGH3jLVsHMMck+CiKHhGFfc=;
- b=p3EVuawDsnqYiImmS97n9pPB0p4UMUHAAVGb5PDqhoNLTNahC7h5FSY+WrEXoDJ4il
- dNq0JXdw2S0v7Mk1lCVvkZoNClYRjEbtYH+1TW4PNcNrL2F8Sgsf7JPq40ynSR1k4TxE
- tYVe+GCn3QQsHXI079N2Jl5uiObPJo57E8TQtRr2YzVX+DOx+7YecP2evXAgT4VYc9BC
- FRP1s1QJ6tl+saxfBDm9WkQKLjiw21+DbGGKB+TbYffgqZ8+pISGcPnLuf3YS7u6U1Az
- cAxNj7MMxWDYS72PmGXdwVa2T+brdbNKYkg8HInXGH6YXDtC3U+N618FnZKN0JxDe/89
- g4Ng==
-X-Gm-Message-State: AOJu0YzgTLKyKxnUohdvPfabC2jeicKTbJY5vPrIDN8cSgchFJhnvl+u
- P3zTjvxwRIUx83OncIZHMVSCmbc4zAxIHHQejHK5VggAJcynNOD8mOHKnKeNb3PCd9ZfifL1z58
- x
-X-Gm-Gg: ASbGncvznk2eHBWWSv72VenI3vKqVXY64tisWVbB5/mVWVSBnkfrTfnuh8pMk3FeOQF
- GPYJnhSe0FceGyj9pKJ6QrYRu77rZx0M6LeY2G3m76WAMZE2TgzMQEInPIP/bETOHMX2+5pzYcH
- 1LBKpK/Fl8lm/sIy9Ih+A/h1lxhEKozoZzbSgmQf8PiyzYZRd/2kfXDLxTx8CM0xTtevrC3euUe
- /AIbu1nkLAFx1NEv7lcT0/WtTX1N0pNUSdk2ovlle+NWFiRX5tq/+pFBzOrzN0Bwz5+fFMzxSeQ
- +fmg
-X-Google-Smtp-Source: AGHT+IGhZvwcrecH/l3tzZxp/9lmRQKKnuH2G+g15sJ2oF8K5YoB0LcEYki3ScgNkajyj1I0/t17Gw==
-X-Received: by 2002:adf:e0c6:0:b0:385:fa30:4f87 with SMTP id
- ffacd0b85a97d-388daf909b5mr3090065f8f.0.1734448387783; 
- Tue, 17 Dec 2024 07:13:07 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734448398; x=1735053198;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=S6S2xlttjp4VhpiTH5RBxnctIn3RW53HPZ3WyhXqjYw=;
+ b=i+0JUuwvd/okee6dUNt85TqnyY2t8BuZr6v+cRM3QUu7lnB5LevnMxTCpQSWH0ZB7s
+ FEGo13TqcJU6fwa5GGWOwFBZUTQ8fbHK9b3qMCA+9qjO6lz3H3roqWSNAjC2voJYFVfz
+ RWGlTpVWVRZfhDPFXaVqsVW0H5F3+WQIeDaWivmq+Ir88c6g86Sxtf0aOZ6Jcy3URbXb
+ dAtuTxKA7NawR6TwJW2IL9qrBjSQVof2FDnCv4VP0Q94/XhAVi9OQU1PRbmOUOgL4v6x
+ UQhONzsXXdWNFX9KGXWbqEeUt0G7lmhCAi27j+6SKt2Pl8XjccmzWvm75prcWxQPg79K
+ Cs3Q==
+X-Gm-Message-State: AOJu0Yy35yFl/PxfbbUm0zSLKNAIWQgj2OOCTL/KRDefqcPeMRj4AudU
+ 3Nh3qkK6M1IBLQaRS/A6sbzsXIt/DqdOe6Sk/zixllMnJ1DvgLJUm2os8UTvgVpZ5+X71EFN0Sk
+ Y
+X-Gm-Gg: ASbGncvMeDEVHOXrwhc/fF7A2d8nKuf3aIlcypJEMUjpWiKih2nZgw2q5vOwFB0LkWf
+ FaLsryaGHqtTPcnazjce/zG/smy/C1wCIddPwBl6f5/dv5s2OmRy9eVG7K+rdu9PtS8rlq19I6k
+ T5BoDBOw5q0aSrF4RzdELjCx30zzi8Gb2Gwo/+K2gQKw4nq4WP/wIquH/WHohbfhg6ezycIB2sN
+ fCA3kalZkW69JIMwEhPx4oCv6XjubvP7ldlIIuCNVP6NeGZUIUQ6fe24/w+nN/Kfp9hBJgW7qvw
+ Y2+c
+X-Google-Smtp-Source: AGHT+IGcIc9C+9xF7u7hW0QxoRTcmmxZgIQEQHrG2A+QXqPWKTn7jmn5F5uLxS1c0rghk9D+Onu6dA==
+X-Received: by 2002:a05:6000:4012:b0:385:f220:f788 with SMTP id
+ ffacd0b85a97d-3888e0c0656mr14540012f8f.48.1734448397845; 
+ Tue, 17 Dec 2024 07:13:17 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8060582sm11225037f8f.93.2024.12.17.07.13.06
+ ffacd0b85a97d-388c8049facsm11612456f8f.79.2024.12.17.07.13.16
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Dec 2024 07:13:07 -0800 (PST)
+ Tue, 17 Dec 2024 07:13:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Stefano Stabellini <sstabellini@kernel.org>,
@@ -71,15 +72,17 @@ Cc: Stefano Stabellini <sstabellini@kernel.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, Anton Johansson <anjo@rev.ng>,
  Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Subject: [PATCH 0/3] include: Cleanups around 'exec/cpu-common.h' header
-Date: Tue, 17 Dec 2024 16:13:02 +0100
-Message-ID: <20241217151305.29196-1-philmd@linaro.org>
+Subject: [PATCH 2/3] system/numa: Remove unnecessary 'exec/cpu-common.h' header
+Date: Tue, 17 Dec 2024 16:13:04 +0100
+Message-ID: <20241217151305.29196-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241217151305.29196-1-philmd@linaro.org>
+References: <20241217151305.29196-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,20 +105,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not include "exec/cpu-common.h" when we don't need it.
+Nothing requires definitions from "exec/cpu-common.h",
+do not include this header.
 
-(I plan to merge this series myself).
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/sysemu/numa.h | 1 -
+ 1 file changed, 1 deletion(-)
 
-Philippe Mathieu-Daudé (3):
-  hw/xen: Remove unnecessary 'exec/cpu-common.h' header
-  system/numa: Remove unnecessary 'exec/cpu-common.h' header
-  system/accel-ops: Remove unnecessary 'exec/cpu-common.h' header
-
- include/hw/xen/xen.h       | 2 --
- include/sysemu/accel-ops.h | 2 +-
- include/sysemu/numa.h      | 1 -
- 3 files changed, 1 insertion(+), 4 deletions(-)
-
+diff --git a/include/sysemu/numa.h b/include/sysemu/numa.h
+index 04676141470..1338db9502d 100644
+--- a/include/sysemu/numa.h
++++ b/include/sysemu/numa.h
+@@ -3,7 +3,6 @@
+ 
+ #include "qemu/bitmap.h"
+ #include "qapi/qapi-types-machine.h"
+-#include "exec/cpu-common.h"
+ 
+ struct CPUArchId;
+ 
 -- 
 2.45.2
 
