@@ -4,94 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C03E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:43:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09EB5E77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNWtv-0005BJ-Vw; Tue, 17 Dec 2024 07:42:12 -0500
+	id 1tNX5L-0000Ar-2e; Tue, 17 Dec 2024 07:53:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tNWtp-0005Ar-ER
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:42:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tNX5H-00009d-KL
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
+Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1tNWtl-0003OE-GF
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:42:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734439307;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=9vsTGjpT995nBSScRodX+d95bnmCNkwLraykxKT7HPk=;
- b=WeLuSaPGOGKTZH6GxgLdl8i+F75hVcCuz0fj//KVrrxlIP7fe988cQF97JWdPZSt0Ln7gP
- FBQNhJOkTe5JWMtU7+/vM5jBG7kAqaJD8g2I8rtwRLPAhMdTpWH7O18Yir0NnP0ogoRHPP
- 8x/tSXtV+fQDVNE7tq2Jo88VGuJuhJQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-313-wEv52gM6MAKCA2mpeFoOaQ-1; Tue, 17 Dec 2024 07:41:45 -0500
-X-MC-Unique: wEv52gM6MAKCA2mpeFoOaQ-1
-X-Mimecast-MFC-AGG-ID: wEv52gM6MAKCA2mpeFoOaQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385e1339790so3093969f8f.2
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 04:41:45 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734439304; x=1735044104;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9vsTGjpT995nBSScRodX+d95bnmCNkwLraykxKT7HPk=;
- b=Npy7N+lb4OqE+bqCt6xsiPzL8X4fFDVdxzWz/lxvQm9p/ukP610VmngLtS7Lb9pW81
- VvJAMHT2vHN5hTf6TZnmnElu8Oto40fEhd6NNET0UlD/Om2o6ErPRB63iXjbjIOfMn7p
- BkFDyFYcoeYt6ZDxG7eM3O+hrzCCmYN9Jy4JjCEYY8oLfokAii8YxgQ7ku6OSWN6rs8R
- usz9LoIJrjY467uHcTDTFXnsfVE5MiCtS55zHynQyyqakdpVruCxLb7J9JEQMIfaNEeY
- sOWUbDG/hq6xjUvi0YU1WnLJ3mEtqi+PuPq88G3LksLFA530fI/AUXFuZ/334bd24TeQ
- PFTQ==
-X-Gm-Message-State: AOJu0Yy6jGLbRt8QIldKCumplUBQudDhDI640Dy/4Bb7735KIbOhm4kb
- ShchnjONx27z/S3I8QXofKDVWq/QLeqiiVFGCLXaLPaCLeFlLJvtikLNxY4UOKHn80z41K3nH/H
- 77kfrnLwTzIcRIov2GWMqqSQT4DVkfKX+ZHFJ58/9uFC0S9WmgFvS
-X-Gm-Gg: ASbGncsP8k/t1oc+UhLy8AIbkOqRkjT4rkWuJdX8ql1fR6LY5ov3lpdB/6WPuyDoc/8
- ICW5YqNAxqCN8yphf17F8laAcqEqpGwwQWN75jJyB14bq3CYTWkEHipptKN8u7pwlmdG8TlkXzd
- ct3oDKIdqA3quwjvIe1y6LZMV7jNnkFOgnuo5FM5r76fhGxuHzGB6Gggh9Hrfr3YXZwBfgBHezr
- +xwU6CthvkRfwjher7xdLXmRW5Qz5H8sAxvZ+3ZxpsY56JFA5g=
-X-Received: by 2002:a05:6000:471b:b0:386:3835:9fff with SMTP id
- ffacd0b85a97d-3888e0c06c7mr15616917f8f.59.1734439304570; 
- Tue, 17 Dec 2024 04:41:44 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE2x162+dU56dRRqFXnpTJkePC0pcIHkhRm9zsYVGWOqow2UoeQ9s/8QIrtggPa4n9USGM+ew==
-X-Received: by 2002:a05:6000:471b:b0:386:3835:9fff with SMTP id
- ffacd0b85a97d-3888e0c06c7mr15616894f8f.59.1734439304270; 
- Tue, 17 Dec 2024 04:41:44 -0800 (PST)
-Received: from redhat.com ([2a02:14f:1ed:dd96:e5cc:8b38:146f:2e38])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c804a297sm10974189f8f.67.2024.12.17.04.41.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 04:41:43 -0800 (PST)
-Date: Tue, 17 Dec 2024 07:41:40 -0500
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>,
- Eric Auger <eric.auger@redhat.com>,
- =?iso-8859-1?Q?Cl=E9ment?= Mathieu--Drif <clement.mathieu--drif@eviden.com>,
- Yi Liu <yi.l.liu@intel.com>, Jason Wang <jasowang@redhat.com>
-Subject: Re: [PATCH v3 0/2] Convert the intel_iommu avocado test
-Message-ID: <20241217074128-mutt-send-email-mst@kernel.org>
-References: <20241217121550.141072-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tNX5G-0005Dm-4r
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734440034; x=1765976034;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=eP9ccYSBy7WauejSMKCP7v6630KiEs32C3sTsU8g46Y=;
+ b=Nh+B6fmib3jYwKAGkNOkx9X80zujMIc7YRlbUq0wjvN5cRF41amblvMv
+ J4udurNbWiRrhHGUmFqHHkUwSsTMre21GzrA3D3Zw1NFPJkSAHIR8gyI4
+ GLf0WQts9lclD+kxjazHeMYq0D+Hxk1DBPHBxQhHGYGEifP6G4/POe4f4
+ hul1F+ZHszrewu/KQ6d0pv1RlPFM56tqFeZX+aAvmVF9bjoPzASyojP4H
+ +USSjQxfXEYU+5+EW9W8KF7kB4BK44WwsCxV6c8wCeJJ3NF7d5V2hB83y
+ ozafkH6mcGsIRLabmxNfvQVGBxMcQv9S81+w37vtxZ0tZpgj3hO6I/AnW Q==;
+X-CSE-ConnectionGUID: zOQtWqgTShqNNGS4z0D3oA==
+X-CSE-MsgGUID: zdWApjetQEyWaad8ug11ww==
+X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="34993238"
+X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="34993238"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Dec 2024 04:53:51 -0800
+X-CSE-ConnectionGUID: M4b/ap9nSbyKrtqK9UQIUw==
+X-CSE-MsgGUID: eGgFOjKxScaJfq4ryYMwOA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="97760190"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa008.fm.intel.com with ESMTP; 17 Dec 2024 04:53:50 -0800
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+	qemu-devel@nongnu.org
+Subject: [PATCH 1/2] i386: Remove unused parameter "uint32_t bit" in
+ feature_word_description()
+Date: Tue, 17 Dec 2024 07:39:31 -0500
+Message-Id: <20241217123932.948789-2-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241217123932.948789-1-xiaoyao.li@intel.com>
+References: <20241217123932.948789-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241217121550.141072-1-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -109,37 +83,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 01:15:48PM +0100, Thomas Huth wrote:
-> The first patch introduces a helper function for retrieving the
-> hostfwd ports from QEMU.
-> We then use this helper function to run a HTTP server in the guest
-> in the second patch to exercise the network of the guest.
+From: Lei Wang <lei4.wang@intel.com>
 
-Good stuff
+Parameter "uint32_t bit" is not used in function feature_word_description(),
+so remove it.
 
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Lei Wang <lei4.wang@intel.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ target/i386/cpu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-
-> v3:
-> - Use the new hostfwd helper function instead of trying to probe
->   for an unused port on the host
-> - Use a constant for the guest port 8080
-> 
-> Thomas Huth (2):
->   tests/functional: Add a helper function for retrieving the hostfwd
->     port
->   tests/functional: Convert the intel_iommu avocado test
-> 
->  MAINTAINERS                                   |   1 +
->  tests/functional/meson.build                  |   2 +
->  tests/functional/qemu_test/utils.py           |   7 +
->  tests/functional/test_info_usernet.py         |   8 +-
->  .../test_intel_iommu.py}                      | 191 +++++++++++-------
->  5 files changed, 135 insertions(+), 74 deletions(-)
->  rename tests/{avocado/intel_iommu.py => functional/test_intel_iommu.py} (26%)
->  mode change 100644 => 100755
-> 
-> -- 
-> 2.47.1
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 525339945920..d09e2f868c35 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -5451,7 +5451,7 @@ static const TypeInfo max_x86_cpu_type_info = {
+     .class_init = max_x86_cpu_class_init,
+ };
+ 
+-static char *feature_word_description(FeatureWordInfo *f, uint32_t bit)
++static char *feature_word_description(FeatureWordInfo *f)
+ {
+     assert(f->type == CPUID_FEATURE_WORD || f->type == MSR_FEATURE_WORD);
+ 
+@@ -5490,6 +5490,7 @@ static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+     CPUX86State *env = &cpu->env;
+     FeatureWordInfo *f = &feature_word_info[w];
+     int i;
++    g_autofree char *feat_word_str = feature_word_description(f);
+ 
+     if (!cpu->force_features) {
+         env->features[w] &= ~mask;
+@@ -5502,7 +5503,6 @@ static void mark_unavailable_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+ 
+     for (i = 0; i < 64; ++i) {
+         if ((1ULL << i) & mask) {
+-            g_autofree char *feat_word_str = feature_word_description(f, i);
+             warn_report("%s: %s%s%s [bit %d]",
+                         verbose_prefix,
+                         feat_word_str,
+-- 
+2.34.1
 
 
