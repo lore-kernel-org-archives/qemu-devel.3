@@ -4,118 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18053E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:13:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245C7E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNb7x-00061B-18; Tue, 17 Dec 2024 12:12:57 -0500
+	id 1tNbEf-0007rI-Dv; Tue, 17 Dec 2024 12:19:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNb7s-0005zI-4r
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:12:52 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNbEc-0007qm-Cv
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:50 -0500
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNb7h-00044i-I6
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:12:51 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 26F712115F;
- Tue, 17 Dec 2024 17:12:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734455560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zx+ULgkuVcNLF8vJFieiWS5wBbjnLgHtljJLFmINynI=;
- b=BkrpZdUskfLHAsz9Bs6P2DurkBCVVVy6uguvlNi+BFRBH0sEbt3CUp2QAILDF9sjxA5XrR
- y/7vTDn4WvZYI07BbKmJSEtF6qG6t8DE2/oOkMfNJhnM5dF+o5Hwo/FTB4A9N89HQ0onGY
- a4WVVacLcZUP5bzk034nZSSzLUeDlNo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734455560;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zx+ULgkuVcNLF8vJFieiWS5wBbjnLgHtljJLFmINynI=;
- b=PqxFlgfOhZewTbMboF5i+dN/J7ctnAHdFP450x9eyIQTaxCy6ih6F8uLdPqUr9ZAugFPCv
- GBd3Mm/b8Ggb/mCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BkrpZdUs;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=PqxFlgfO
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734455560; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zx+ULgkuVcNLF8vJFieiWS5wBbjnLgHtljJLFmINynI=;
- b=BkrpZdUskfLHAsz9Bs6P2DurkBCVVVy6uguvlNi+BFRBH0sEbt3CUp2QAILDF9sjxA5XrR
- y/7vTDn4WvZYI07BbKmJSEtF6qG6t8DE2/oOkMfNJhnM5dF+o5Hwo/FTB4A9N89HQ0onGY
- a4WVVacLcZUP5bzk034nZSSzLUeDlNo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734455560;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Zx+ULgkuVcNLF8vJFieiWS5wBbjnLgHtljJLFmINynI=;
- b=PqxFlgfOhZewTbMboF5i+dN/J7ctnAHdFP450x9eyIQTaxCy6ih6F8uLdPqUr9ZAugFPCv
- GBd3Mm/b8Ggb/mCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A2D6A132EA;
- Tue, 17 Dec 2024 17:12:39 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id BOkdGgexYWfdRAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 17:12:39 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Yichen Wang <yichen.wang@bytedance.com>, Peter Xu <peterx@redhat.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>, Paolo Bonzini
- <pbonzini@redhat.com>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Eric Blake <eblake@redhat.com>, Markus Armbruster
- <armbru@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck
- <cohuck@redhat.com>, qemu-devel@nongnu.org
-Cc: Hao Xiang <hao.xiang@linux.dev>, "Liu, Yuan1" <yuan1.liu@intel.com>,
- Shivam Kumar <shivam.kumar1@nutanix.com>, "Ho-Ren (Jack) Chuang"
- <horenchuang@bytedance.com>, Yichen Wang <yichen.wang@bytedance.com>,
- Bryan Zhang <bryan.zhang@bytedance.com>
-Subject: Re: [PATCH v8 07/12] util/dsa: Implement DSA task asynchronous
- submission and wait for completion.
-In-Reply-To: <20241204021142.24184-8-yichen.wang@bytedance.com>
-References: <20241204021142.24184-1-yichen.wang@bytedance.com>
- <20241204021142.24184-8-yichen.wang@bytedance.com>
-Date: Tue, 17 Dec 2024 14:12:37 -0300
-Message-ID: <8734imw7wa.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1tNbEW-00068M-0U
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:49 -0500
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3862d6d5765so3831726f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734455980; x=1735060780; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=9/36KvWVh5CZpYM1n8Wct054yNOoZi4upNBiJ3viOns=;
+ b=uLY7yeMH+u7ZkBBm02yse0gSqzDxBKDQyKGWGxpSmXWmixVyQrVK/3LkullV3Nkwrh
+ VRM93nGffXv4pHBMeo0LoxV+HWTWgnlK14KBspvtV9cU7nNF7wZKn2eLh5jXwHa7Ljmd
+ nEu0+QwUrdpivlhGAZ3yyxvfOQQu7iX6polm7Xkpb1R1DUHRgOJk2iSVGCxqz2pNKUws
+ b3ZwXFdtKY/j0y+rb+JlWDw2/6F07ZurI6V32sGdhmnvHP2RXkfXHZh2FKul+rwb329z
+ I1jnKpSxsW05j0JHVD6zUSQgHZUQR36XlZx6A0Y+up59CrF2pPiHhV8TBxJ0x9bJu2eT
+ QxfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734455980; x=1735060780;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9/36KvWVh5CZpYM1n8Wct054yNOoZi4upNBiJ3viOns=;
+ b=FvOdBQPtulakhcT5Z95pG+/Z6jHFqmaMObZ/RzTlP87axXm0//+HYUWWTv1L37htA0
+ +xn7PWXd9iJKcDhjxfRLS4a2quwVBF19tOobB5J8WOd4ApYVwGTU1EUri9sqtsoHseVQ
+ jVs+0iDpoCAE5eopdbzLgGqkkJZcJWlQVsWAFNzoztMpv2qLazEUeaa2nR8rFBOxtQr3
+ sGF17WoxNKql8jC7yXdzwr7R8MLtWgErEfb22gEWARlGIDwlPegDrnGqshNpccpfBkq/
+ bwHj2faHfCYeslqsOZ/MAXCNpP1O6u9JOWP0+HypjU84jSOBw1/RtVEpnSeZ0127QKST
+ S2hw==
+X-Gm-Message-State: AOJu0Yz7W6PV/Qt4e2udORpFALS9cIVLjjDOmGfC5dVcFstNea0ZuB9N
+ AVXs3gHyrcWKBov/WkuqE7232a93CdAYD+w8hyBoMestS4Bec+3abf1Y7lfqUrfSsGsKhu+v6Ac
+ u
+X-Gm-Gg: ASbGncul0AwRIE3xCpZiebML+DM+bhcnB5USqFwfZkMzC0L1N7SYmIloPDdILgF5i5t
+ O1N9tbgZKLav0gLGPoSXGiJhdkTyN06nhvNrtl5HDJd/TxG6PYbcpwc6okrP9q/Bn5xPjZUtMzp
+ gOynrH1gaMGITabpo3YDidqJTG2Eq7dbbrUXe3yGFNNgvC4elC+7218y8Yl9zsxiWRErtJ7OcBS
+ 6ll4iZudwLyHDf5Vpv9WZh0NDOxIoSzwk0wH05FjDxJ8KJalaoN4xmANSe6R8o=
+X-Google-Smtp-Source: AGHT+IEUx0HjN97ZhpkgAc7gtWPknB+L7wQ9/ZvLa96RPam2PUnMziY/a9yhDIkFnCYTIyEhLMaefA==
+X-Received: by 2002:a05:6000:188f:b0:386:5b2:a9d9 with SMTP id
+ ffacd0b85a97d-3888e0c04aemr14523523f8f.53.1734455980033; 
+ Tue, 17 Dec 2024 09:19:40 -0800 (PST)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.39
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Dec 2024 09:19:39 -0800 (PST)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 00/19] target-arm queue
+Date: Tue, 17 Dec 2024 17:19:18 +0000
+Message-Id: <20241217171937.3899947-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: 26F712115F
-X-Spamd-Result: default: False [-1.78 / 50.00]; NEURAL_HAM_LONG(-1.00)[-1.000];
- BAYES_HAM(-0.27)[73.98%];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWELVE(0.00)[18];
- MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,19 +95,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Yichen Wang <yichen.wang@bytedance.com> writes:
+Hi; this is one last arm pullreq before the end of the year.
+Mostly minor cleanups, and also implementation of the
+FEAT_XS architectural feature.
 
-> From: Hao Xiang <hao.xiang@linux.dev>
->
-> * Add a DSA task completion callback.
-> * DSA completion thread will call the tasks's completion callback
-> on every task/batch task completion.
-> * DSA submission path to wait for completion.
-> * Implement CPU fallback if DSA is not able to complete the task.
->
-> Signed-off-by: Hao Xiang <hao.xiang@linux.dev>
-> Signed-off-by: Bryan Zhang <bryan.zhang@bytedance.com>
-> Signed-off-by: Yichen Wang <yichen.wang@bytedance.com>
+thanks
+-- PMM
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+
+  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241217
+
+for you to fetch changes up to e91254250acb8570bd7b8a8f89d30e6d18291d02:
+
+  tests/functional: update sbsa-ref firmware used in test (2024-12-17 15:21:06 +0000)
+
+----------------------------------------------------------------
+target-arm queue:
+ * remove a line of redundant code
+ * convert various TCG helper fns to use 'fpst' alias
+ * Use float_status in helper_fcvtx_f64_to_f32
+ * Use float_status in helper_vfp_fcvt{ds,sd}
+ * Implement FEAT_XS
+ * hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
+ * tests/functional: update sbsa-ref firmware used in test
+
+----------------------------------------------------------------
+Denis Rastyogin (1):
+      target/arm: remove redundant code
+
+Manos Pitsidianakis (3):
+      target/arm: Add decodetree entry for DSB nXS variant
+      target/arm: Enable FEAT_XS for the max cpu
+      tests/tcg/aarch64: add system test for FEAT_XS
+
+Marcin Juszkiewicz (1):
+      tests/functional: update sbsa-ref firmware used in test
+
+Peter Maydell (4):
+      target/arm: Implement fine-grained-trap handling for FEAT_XS
+      target/arm: Add ARM_CP_ADD_TLBI_NXS type flag for NXS insns
+      target/arm: Add ARM_CP_ADD_TLBI_NXS type flag to TLBI insns
+      hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
+
+Richard Henderson (10):
+      target/arm: Convert vfp_helper.c to fpst alias
+      target/arm: Convert helper-a64.c to fpst alias
+      target/arm: Convert vec_helper.c to fpst alias
+      target/arm: Convert neon_helper.c to fpst alias
+      target/arm: Convert sve_helper.c to fpst alias
+      target/arm: Convert sme_helper.c to fpst alias
+      target/arm: Convert vec_helper.c to use env alias
+      target/arm: Convert neon_helper.c to use env alias
+      target/arm: Use float_status in helper_fcvtx_f64_to_f32
+      target/arm: Use float_status in helper_vfp_fcvt{ds,sd}
+
+ docs/system/arm/emulation.rst            |   1 +
+ target/arm/cpregs.h                      |  80 ++--
+ target/arm/cpu-features.h                |   5 +
+ target/arm/helper.h                      | 638 +++++++++++++++----------------
+ target/arm/tcg/helper-a64.h              | 116 +++---
+ target/arm/tcg/helper-sme.h              |   4 +-
+ target/arm/tcg/helper-sve.h              | 426 ++++++++++-----------
+ target/arm/tcg/a64.decode                |   3 +
+ hw/intc/arm_gicv3_its.c                  |  44 +--
+ target/arm/helper.c                      |  30 +-
+ target/arm/tcg/cpu64.c                   |   1 +
+ target/arm/tcg/helper-a64.c              | 101 ++---
+ target/arm/tcg/neon_helper.c             |  27 +-
+ target/arm/tcg/op_helper.c               |  11 +-
+ target/arm/tcg/sme_helper.c              |   8 +-
+ target/arm/tcg/sve_helper.c              |  96 ++---
+ target/arm/tcg/tlb-insns.c               | 202 ++++++----
+ target/arm/tcg/translate-a64.c           |  26 +-
+ target/arm/tcg/translate-vfp.c           |   4 +-
+ target/arm/tcg/vec_helper.c              |  81 ++--
+ target/arm/vfp_helper.c                  | 130 +++----
+ tests/tcg/aarch64/system/feat-xs.c       |  27 ++
+ tests/functional/test_aarch64_sbsaref.py |  20 +-
+ 23 files changed, 1083 insertions(+), 998 deletions(-)
+ create mode 100644 tests/tcg/aarch64/system/feat-xs.c
 
