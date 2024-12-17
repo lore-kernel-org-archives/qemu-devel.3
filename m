@@ -4,80 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA92E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 03:02:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35932E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 03:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNNqP-0000HO-3p; Mon, 16 Dec 2024 22:01:57 -0500
+	id 1tNOQz-0005Gv-NK; Mon, 16 Dec 2024 22:39:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tNNqM-0000Gp-AK
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 22:01:54 -0500
-Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
- id 1tNNqJ-0002zZ-8W
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 22:01:54 -0500
-Received: by mail-oo1-xc34.google.com with SMTP id
- 006d021491bc7-5f2dee7d218so2043567eaf.2
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 19:01:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1734404508; x=1735009308;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=99sTfcxkpVttkMcJNRBz5EeqlxZno4A0EzwAzLhHQjk=;
- b=pf4moVNdnZDFVBl/Bz5LvCZMMB2kjBH9QUsjljrQ+Jsgy+Th/HUYsIYyGgZcFMkV4W
- kQ8Ghu2ZnMTZjnQFNYedhqNut6qQCtbdly4EOVFpL9IUcljsk7k1KoXPZ3NZ72HSTVHr
- TVDJ+iluMQ/csuGhlBDzKnP0iFXYCL9tF6aLGyNw0be390Ukh/VYqUPPaGfG8scoZuwv
- Sfc7GicFf2Sk0Q7pibPV94ma89hGZRxF7cEHic8kPsuM3/bXeVgfu3sf8vRf/f4U0bhy
- SYndLzOLsbJ6jf2H/ZpOdykgWkHcFXWXMxJQNsC/Uaeg20iGI4pVQeolDTTdcNFQGWiY
- sIPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734404508; x=1735009308;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=99sTfcxkpVttkMcJNRBz5EeqlxZno4A0EzwAzLhHQjk=;
- b=ehrr78yEKTB2Dcbf3Wzdh/1DMkltLsdaPUuldUYufpLJUC8tVYLC6JHftLXB+a8nFs
- GO2qVHflAeGLTa5p1+2MdL7Esrnw/7h126W717+IF1C+3NVYMYAIrdYPDWaqF9WPtdfw
- kblWT+dgcAZ80mi85aJfWz9PNGB75JsQ1vTo6PjoZFXFeujouYaIzEsBUeXjjmhk2AQp
- 2jR0P6k/dSC+VwfhoaLzgNC1hhatbavItxdHX8PVVnrE7u/5Y4Vth6KTQvIsrhdn8iwj
- t6YFzY941H6CxD6f59z/KXEPcGGUwu3tTGFFeH+X64LfPrJPaT3FNbf2HyHUuC0AVRdp
- 01Jg==
-X-Gm-Message-State: AOJu0YziPInqcPhcbci+L71zLAoOenwoV9RiEv9+u65Cx2XhRxob67U5
- V0i+SyMHXg1wF1W5kyewhpT0l5/hkkS1hg/hCoO+/N4ofJGCOjFK46fSq1uVNs1EbDQYrAjVQms
- 1uySfNiXEgMorWL6AUKW+BZLM2oGqzUCrt559mQ==
-X-Gm-Gg: ASbGnctcNIHeVfyhVk2i8z7Y+fJ4M+SZWw3tVCTo4i/BYRw7Y6/6DeJaKnljnRdVx3+
- QErrKa1AQsTyf+S8T7p5TESCQuID3Sn2soX7ca+s=
-X-Google-Smtp-Source: AGHT+IHoBi10y1CbHFUqfjUHTFuWduSYYgmOBSV/LyFAztYw6VCSWQtmvvpay7+HQzwOOSid/R3n2jgkcoROzzanugM=
-X-Received: by 2002:a05:6870:3c15:b0:29e:491b:96db with SMTP id
- 586e51a60fabf-2a3ac49fa7emr8821952fac.5.1734404508171; Mon, 16 Dec 2024
- 19:01:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNOQr-0005GS-RC; Mon, 16 Dec 2024 22:39:38 -0500
+Received: from mgamail.intel.com ([192.198.163.14])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNOQn-0001Yf-2R; Mon, 16 Dec 2024 22:39:37 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734406773; x=1765942773;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=1lKqA14A+q7aPJdRP/DccKwQ8mg3UVxW3vBWti0y9/g=;
+ b=Fsa5aVrnEb4PGByXTHuQvacMHaNcWL8pTAoa4Yti/ca/AS3LItq375iV
+ ejzg0EbVKtghQ+sp31ddgeE1aMfJjUClTTXlIDHcLzFjp/VuS1vzrFPG4
+ OVxz+4E+okONk12ycnaNaV9Ze2NU1KSbKRxFMa/zBS4sC72X8RT0jdgBu
+ bJjs4K2msIntDfg5xSiPJl9ijJ//1wfwWZEhKdbnPWd+VPA7hSchcvCS2
+ 5OyN4/apRSud3nUXnoagE3EJkMpkydNlit7jRwYIfPgzCe5wKpqEK91Fs
+ 4ux2uH+80dT59YEieqg6L74OtjHykyATIsLH8URHfdPf3GbCtwv2XPLDJ A==;
+X-CSE-ConnectionGUID: VPMbF/lqREaaGVIFyda7+g==
+X-CSE-MsgGUID: lMsednBQQM6dhvzaIFyLIg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="35043055"
+X-IronPort-AV: E=Sophos;i="6.12,240,1728975600"; d="scan'208";a="35043055"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Dec 2024 19:39:28 -0800
+X-CSE-ConnectionGUID: nE2bIs7RRzCXKEMu/Pf2Mg==
+X-CSE-MsgGUID: 8qEa4zJVRGueQ2UJONimRg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,240,1728975600"; d="scan'208";a="97445348"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa006.jf.intel.com with ESMTP; 16 Dec 2024 19:39:27 -0800
+Date: Tue, 17 Dec 2024 11:58:06 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
+Message-ID: <Z2D2zk2Wdlqc5q2k@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-25-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20241216094638.26406-1-avihaih@nvidia.com>
- <20241216094638.26406-8-avihaih@nvidia.com>
-In-Reply-To: <20241216094638.26406-8-avihaih@nvidia.com>
-From: Yong Huang <yong.huang@smartx.com>
-Date: Tue, 17 Dec 2024 11:01:32 +0800
-Message-ID: <CAK9dgmYowKNMD=5-PXGTL71K=sa22tuusZZPojkRQeMbaHyd3w@mail.gmail.com>
-Subject: Re: [PATCH 7/9] system/dirtylimit: Don't use migration_is_active()
-To: Avihai Horon <avihaih@nvidia.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Maor Gottlieb <maorg@nvidia.com>
-Content-Type: multipart/alternative; boundary="0000000000009b588d06296e84df"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
- envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc34.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20241209123717.99077-25-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,111 +82,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009b588d06296e84df
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> +impl ClassInitImpl<PL011Class> for PL011State {
+> +    fn class_init(klass: &mut PL011Class) {
+> +        klass.device_id = DeviceId::ARM;
+> +        <Self as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut klass.parent_class);
 
-On Mon, Dec 16, 2024 at 5:47=E2=80=AFPM Avihai Horon <avihaih@nvidia.com> w=
-rote:
+This seems a bit of a conflict with the C version of QOM semantics. In C,
+class_init is registered in TypeInfo, and then the QOM code will
+automatically call the parent's class_init without needing to explicitly
+call the parent's in the child's class_init.
 
-> vcpu_dirty_rate_stat_collect() uses migration_is_active() to detect
-> whether migration is running or not, in order to get the correct dirty
-> rate period value.
->
-> However, recently there has been an effort to simplify the migration
-> status API and reduce it to a single migration_is_running() function.
->
+However, SysBusDevice (and Device) is a bit different. Its TypeInfo is
+registered on the C side, and the class_init method on the Rust side is not
+actually a real QOM class_init (because it is not registered on the Rust
+side).
 
-Could you post the related links?
+Therefore, the call here seems valid from the code logic's perspective.
+But, when there is deeper class inheritance, it seems impossible to
+prevent class_init from being called both by the C side's QOM code and by
+this kind of recursive case on the Rust side.
 
+So, for devices like SysBusDevice that are registered on the C side,
+should we not implement class_init and also not call it explicitly?
 
->
-> To accommodate this, and since the same functionality can be achieved
-> with migration_is_running(), use it instead of migration_is_active().
->
-> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-> ---
->  system/dirtylimit.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
->
-> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
-> index ab20da34bb..d7a855c603 100644
-> --- a/system/dirtylimit.c
-> +++ b/system/dirtylimit.c
-> @@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)
->      int i =3D 0;
->      int64_t period =3D DIRTYLIMIT_CALC_TIME_MS;
->
-> -    if (migrate_dirty_limit() &&
-> -        migration_is_active()) {
-> +    if (migrate_dirty_limit() && migration_is_running()) {
->          period =3D migrate_vcpu_dirty_limit_period();
->      }
->
-> --
-> 2.40.1
->
->
+Or should we distinguish between two different usages of class_init? One
+is registered in TypeInfo (only as a callback in rust_class_init) - perhaps
+rename it as qom_class_init, and the other is used as a helper for Rust-side
+calls (similar to the recursive usage here) - maybe rename it as
+class_inter_init.
 
---=20
-Best regards
-
---0000000000009b588d06296e84df
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
-t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
-ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Mon, Dec 16, 2024 at 5:47=E2=80=AFPM Avihai Horon &lt;<a href=3D"mai=
-lto:avihaih@nvidia.com">avihaih@nvidia.com</a>&gt; wrote:<br></div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-wid=
-th:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-l=
-eft:1ex">vcpu_dirty_rate_stat_collect() uses migration_is_active() to detec=
-t<br>
-whether migration is running or not, in order to get the correct dirty<br>
-rate period value.<br>
-<br>
-However, recently there has been an effort to simplify the migration<br>
-status API and reduce it to a single migration_is_running() function.<br></=
-blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sans m=
-s&quot;,sans-serif" class=3D"gmail_default">Could you post the related link=
-s?</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
-argin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;borde=
-r-left-color:rgb(204,204,204);padding-left:1ex">
-<br>
-To accommodate this, and since the same functionality can be achieved<br>
-with migration_is_running(), use it instead of migration_is_active().<br>
-<br>
-Signed-off-by: Avihai Horon &lt;<a href=3D"mailto:avihaih@nvidia.com" targe=
-t=3D"_blank">avihaih@nvidia.com</a>&gt;<br>
----<br>
-=C2=A0system/dirtylimit.c | 3 +--<br>
-=C2=A01 file changed, 1 insertion(+), 2 deletions(-)<br>
-<br>
-diff --git a/system/dirtylimit.c b/system/dirtylimit.c<br>
-index ab20da34bb..d7a855c603 100644<br>
---- a/system/dirtylimit.c<br>
-+++ b/system/dirtylimit.c<br>
-@@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)<br>
-=C2=A0 =C2=A0 =C2=A0int i =3D 0;<br>
-=C2=A0 =C2=A0 =C2=A0int64_t period =3D DIRTYLIMIT_CALC_TIME_MS;<br>
-<br>
--=C2=A0 =C2=A0 if (migrate_dirty_limit() &amp;&amp;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_is_active()) {<br>
-+=C2=A0 =C2=A0 if (migrate_dirty_limit() &amp;&amp; migration_is_running())=
- {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0period =3D migrate_vcpu_dirty_limit_perio=
-d();<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
--- <br>
-2.40.1<br>
-<br>
-</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
-=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
-ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
-gards</font></div></div></div>
-
---0000000000009b588d06296e84df--
+> +    }
+> +}
 
