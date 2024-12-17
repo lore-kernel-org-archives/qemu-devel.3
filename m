@@ -4,96 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72EEDE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 01:54:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF49CE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 02:15:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNMmW-0007yf-Hr; Mon, 16 Dec 2024 20:53:52 -0500
+	id 1tNN68-00021W-W7; Mon, 16 Dec 2024 21:14:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3pdlgZwYKCh4M84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com>)
- id 1tNMmU-0007yT-Tx
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:53:50 -0500
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3pdlgZwYKCh4M84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com>)
- id 1tNMmT-0004JF-9b
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:53:50 -0500
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-218ad674181so18439815ad.1
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 17:53:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1734400421; x=1735005221; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=KTzYjrWXJcMf7xD7/sgDE240NDaU1rTlGzLti0JBz6s=;
- b=zSZxYUvXYJOEOPAIjtA907CIQwtxSZVj3GiPhKSOiehHRVeMF31FS7bGge4ccTN23T
- NtwSJ48GkCd76YgBDFKcDrvut9Ndt1u3fc6HPoZDQA8tD5RUJV+UIPtkOCCYDItqgOEW
- sWoD1cZRbN234uacxBol8F3AyKGQ8u2ONa1UXQUI7aY0pWbulOqrEck3dqDlwCZqw3R6
- Byh+6x+LZ+8pyTD29tVCVZC8fanY8dsgroGDq9E/O+stn3aLFqCeKYp5QMYKthRKYfRC
- zwGMcGeUGxZwUYCt3hWV2J6yTuzqm8DxeK50RceXk1ECZvaKB+gH9OgHL+LIA+kYOObb
- XTZg==
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tNN65-00021L-TD
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 21:14:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1tNN62-0006c6-H5
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 21:14:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734401636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HNJaRZGWUI6ejL02MyLNfK8QQl59e5Fr5o9oJVbFLC0=;
+ b=EJGmP6CmKfx8rGBPrWqX7/LZG496aw60q42BGmvZhs0dV4yLN3OPJNj+vxx+OrlcQ4sQUg
+ zsAD6Uxjj+Lfu/ROy2vAaoCY84GcunQjAgheylUQsMwbTDAAEbcLI6VC6xDulaLrfBB4Fi
+ l2xVPK8KJELccBF+2XTQBhpMvLC7+Zk=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-282-6oLfz5S1Pq2iHrUuR_bO-Q-1; Mon, 16 Dec 2024 21:13:54 -0500
+X-MC-Unique: 6oLfz5S1Pq2iHrUuR_bO-Q-1
+X-Mimecast-MFC-AGG-ID: 6oLfz5S1Pq2iHrUuR_bO-Q
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-2ee5668e09bso4480951a91.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 18:13:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734400421; x=1735005221;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=KTzYjrWXJcMf7xD7/sgDE240NDaU1rTlGzLti0JBz6s=;
- b=HP3fo+/zUtToxaLuxUNrkM3qIaELRvAZHHVxUzuQEEcutZPYLpw7qIPs0mSG/Wf4Bk
- A4iztvv1WNe10KbAZK5QqPUGUWNKnqipjsqsSCDr5pxuoiTlVniy7i5rht6WwPKmJJzm
- qiGujmpbl2lJI/hcUIlqnRy/Pai58BC+qLjkS5ohSq7u4jKcecZBBNPqKZs8YZwr6GBY
- Kb87btOgDpCKAW8jEyzhmymEGRe7imHgTBt+EjIygD31wpXSLeJxC3WdKL4Do4biFSHo
- Ea5Mjv8rLBZIhO5XqOkWTQAyxprexJeZWeLOtR+v0kULcfwHOtW8eMigXbwXZFs/Q5cy
- 2NRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX0f2beFQXpurK59YAgNvF0twKjTPm33gPjjTnxg7jf6OsgGqu2AcaBwdFZBYZRlQFpfutW+BwJWzh3@nongnu.org
-X-Gm-Message-State: AOJu0YyKZu669Ygg4cs79kCoyaiRPt65byleh4wUZ+ti9iCcvS2dEDxl
- ypUdH5jcMvWnFCn91VnglHp8V9InsY7tX+YAIek9H9wS9OvlPvY/AO8zUB+nCGYDzOvubvMvC5+
- hyw==
-X-Google-Smtp-Source: AGHT+IHv2boA/tZKcg2YKHvyns8uPZgq+Desi9Yft6dkx0kwb1X6UpJKnJ9YbVAAXAi+a9ZwUe/kONiIzFI=
-X-Received: from plxm1.prod.google.com ([2002:a17:902:db01:b0:214:bcea:1b7a])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:120e:b0:215:5d8c:7e46
- with SMTP id d9443c01a7336-218c9262f10mr21055695ad.27.1734400421608; Mon, 16
- Dec 2024 17:53:41 -0800 (PST)
-Date: Mon, 16 Dec 2024 17:53:40 -0800
-In-Reply-To: <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
-Mime-Version: 1.0
-References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
- <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
- <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
- <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
-Message-ID: <Z2DZpJz5K9W92NAE@google.com>
-Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
- CPUID Bits
-From: Sean Christopherson <seanjc@google.com>
-To: Rick P Edgecombe <rick.p.edgecombe@intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- "pbonzini@redhat.com" <pbonzini@redhat.com>, 
- Kai Huang <kai.huang@intel.com>, 
- "binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
- Reinette Chatre <reinette.chatre@intel.com>, 
- Yan Y Zhao <yan.y.zhao@intel.com>, 
- "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
- Adrian Hunter <adrian.hunter@intel.com>,
- Isaku Yamahata <isaku.yamahata@intel.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="utf-8"
+ d=1e100.net; s=20230601; t=1734401633; x=1735006433;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HNJaRZGWUI6ejL02MyLNfK8QQl59e5Fr5o9oJVbFLC0=;
+ b=ToAkgX0wXakpxtTvD6NI6/Ae7lYjLYjOnGT3akoeA1DIWIme2HLIoxca2IzrL27zok
+ MW67nGnKg6j4zHzRCtvi16PpXTmB13Pa8gnNadlimpU+AvZglloZOPL5wNxprpOZac9n
+ C9VURqPYWhZoP9ZspRTjsbnhePuE2FWMPtf9n4oa5ngxkDMQdKy+ccKPtIGzhzKSfEyZ
+ s2va5nTr4ymyxaJXuaDD/JPfjgMz9BkKP+IqINzLUNA0VE6ciifr3BFLfr/W6fFO57WV
+ k17a6OSDwTUom5SoBaPlaMxqTrI/ktPEZxrFhkeSUQQBZ29vS102FDlyRPw50WzUXBJm
+ u0Zg==
+X-Gm-Message-State: AOJu0YxTPRg/t4r+4bNfCREriTy75UkloK1YcuQtoXao+mXII+Zbczzq
+ DXcN3E51cB2JzN8pm/OLUh+EsS1tNQylr33cQPrjbQf+m4prnq+C0/MAzL9IZbiuJzWb150OKqq
+ +ZDqD5NAsepGm1N6x8wkyvqE2puqRbGXufBMb5WYcU0BORATxvY8NwsIZ5oH+QO5qQ3X9PiYzmp
+ fXXZssDszr2OSU88EGTyOGkU83as4=
+X-Gm-Gg: ASbGncukjD0BBs28bCG5yfIuZj+lIMvYEKBOlnVJWis9vexqL2WTod+vQq56Iw7mALr
+ tc/NbUhMqLxC6oxckxEKwgLvL3P1Bqu+nxxPJV20=
+X-Received: by 2002:a17:90b:314d:b0:2ee:f80c:6884 with SMTP id
+ 98e67ed59e1d1-2f2901b44c3mr21813801a91.33.1734401633483; 
+ Mon, 16 Dec 2024 18:13:53 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtqbmmSjVisTI/K/P4GN2VSEDjirNw18cpNTFsQKa1PtHtZKuAFT8wJb3gWVcQXVdMk6SOiVzxaIlHo2VCAv8=
+X-Received: by 2002:a17:90b:314d:b0:2ee:f80c:6884 with SMTP id
+ 98e67ed59e1d1-2f2901b44c3mr21813755a91.33.1734401632963; Mon, 16 Dec 2024
+ 18:13:52 -0800 (PST)
+MIME-Version: 1.0
+References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
+ <20240911052255.1294071-13-zhenzhong.duan@intel.com>
+ <CACGkMEscZB9f6toOcm_+3pQknDgnp3r6MvzbejB9BVEsKz7rjA@mail.gmail.com>
+ <SJ0PR11MB67441D158F394CE1EA620CA9926B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <CACGkMEuXX6UE0=dNjeNJ5rHxkJADUrTG0tU1Cd1n0cvik5NnKg@mail.gmail.com>
+ <SJ0PR11MB67447F79B1350833A5D878F8923B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+In-Reply-To: <SJ0PR11MB67447F79B1350833A5D878F8923B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 17 Dec 2024 10:13:41 +0800
+Message-ID: <CACGkMEv1uVaqu9c6e51qUQj17MGBj78CMOtBEFVYD=KHMMUA_A@mail.gmail.com>
+Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-based device
+ IOTLB invalidation
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, 
+ "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, 
+ "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, 
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, 
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian,
+ Kevin" <kevin.tian@intel.com>, 
+ "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3pdlgZwYKCh4M84HD6AIIAF8.6IGK8GO-78P8FHIHAHO.ILA@flex--seanjc.bounces.google.com;
- helo=mail-pl1-x64a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,78 +120,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 10, 2024, Rick P Edgecombe wrote:
-> On Tue, 2024-12-10 at 11:22 +0800, Xiaoyao Li wrote:
-> > > The solution in this proposal decreases the work the VMM has to do, b=
-ut
-> > > in the long term won't remove hand coding completely. As long as we a=
-re
-> > > designing something, what kind of bar should we target?
-> >=20
-> > For this specific #VE reduction case, I think userspace doesn't need to=
-=20
-> > do any hand coding. Userspace just treats the bits related to #VE=20
-> > reduction as configurable as reported by TDX module/KVM. And userspace=
-=20
-> > doesn't care if the value seen by TD guest is matched with what gets=20
-> > configured by it because they are out of control of userspace.
+On Mon, Dec 16, 2024 at 4:22=E2=80=AFPM Duan, Zhenzhong
+<zhenzhong.duan@intel.com> wrote:
 >
-> Besides a specific problem, here reduced #VE is also an example of increa=
-sing
-> complexity for TD CPUID. If we have more things like it, it could make th=
-is
-> interface too rigid.
+>
+>
+> >-----Original Message-----
+> >From: Jason Wang <jasowang@redhat.com>
+> >Sent: Sunday, September 29, 2024 9:59 AM
+> >Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-based d=
+evice
+> >IOTLB invalidation
+> >
+> >On Fri, Sep 27, 2024 at 3:18=E2=80=AFPM Duan, Zhenzhong
+> ><zhenzhong.duan@intel.com> wrote:
+> >>
+> >>
+> >>
+> >> >-----Original Message-----
+> >> >From: Jason Wang <jasowang@redhat.com>
+> >> >Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-base=
+d
+> >> >device IOTLB invalidation
+> >> >
+> >> >On Wed, Sep 11, 2024 at 1:27=E2=80=AFPM Zhenzhong Duan
+> >> ><zhenzhong.duan@intel.com> wrote:
+> >> >>
+> >> >> From: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.com>
+> >> >>
+> >> >> Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@ev=
+iden.com>
+> >> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> >> >> ---
+> >> >>  hw/i386/intel_iommu_internal.h | 11 ++++++++
+> >> >>  hw/i386/intel_iommu.c          | 50
+> >> >++++++++++++++++++++++++++++++++++
+> >> >>  2 files changed, 61 insertions(+)
+> >> >>
+> >> >> diff --git a/hw/i386/intel_iommu_internal.h
+> >> >b/hw/i386/intel_iommu_internal.h
+> >> >> index 4f2c3a9350..52bdbf3bc5 100644
+> >> >> --- a/hw/i386/intel_iommu_internal.h
+> >> >> +++ b/hw/i386/intel_iommu_internal.h
+> >> >> @@ -375,6 +375,7 @@ typedef union VTDInvDesc VTDInvDesc;
+> >> >>  #define VTD_INV_DESC_WAIT               0x5 /* Invalidation Wait D=
+escriptor
+> >> >*/
+> >> >>  #define VTD_INV_DESC_PIOTLB             0x6 /* PASID-IOTLB Invalid=
+ate Desc
+> >> >*/
+> >> >>  #define VTD_INV_DESC_PC                 0x7 /* PASID-cache Invalid=
+ate Desc */
+> >> >> +#define VTD_INV_DESC_DEV_PIOTLB         0x8 /* PASID-based-DIOTLB
+> >> >inv_desc*/
+> >> >>  #define VTD_INV_DESC_NONE               0   /* Not an Invalidate D=
+escriptor
+> >> >*/
+> >> >>
+> >> >>  /* Masks for Invalidation Wait Descriptor*/
+> >> >> @@ -413,6 +414,16 @@ typedef union VTDInvDesc VTDInvDesc;
+> >> >>  #define VTD_INV_DESC_DEVICE_IOTLB_RSVD_HI 0xffeULL
+> >> >>  #define VTD_INV_DESC_DEVICE_IOTLB_RSVD_LO 0xffff0000ffe0fff8
+> >> >>
+> >> >> +/* Mask for PASID Device IOTLB Invalidate Descriptor */
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_ADDR(val) ((val) & \
+> >> >> +                                                   0xfffffffffffff=
+000ULL)
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_SIZE(val) ((val >> 11) & 0=
+x1)
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_GLOBAL(val) ((val) & 0x1)
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_SID(val) (((val) >> 16) &
+> >> >0xffffULL)
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_PASID(val) ((val >> 32) &
+> >> >0xfffffULL)
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_HI 0x7feULL
+> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_LO
+> >> >0xfff000000000f000ULL
+> >> >> +
+> >> >>  /* Rsvd field masks for spte */
+> >> >>  #define VTD_SPTE_SNP 0x800ULL
+> >> >>
+> >> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> >> >> index d28c862598..4cf56924e1 100644
+> >> >> --- a/hw/i386/intel_iommu.c
+> >> >> +++ b/hw/i386/intel_iommu.c
+> >> >> @@ -3017,6 +3017,49 @@ static void
+> >> >do_invalidate_device_tlb(VTDAddressSpace *vtd_dev_as,
+> >> >>      memory_region_notify_iommu(&vtd_dev_as->iommu, 0, event);
+> >> >>  }
+> >> >>
+> >> >> +static bool vtd_process_device_piotlb_desc(IntelIOMMUState *s,
+> >> >> +                                           VTDInvDesc *inv_desc)
+> >> >> +{
+> >> >> +    uint16_t sid;
+> >> >> +    VTDAddressSpace *vtd_dev_as;
+> >> >> +    bool size;
+> >> >> +    bool global;
+> >> >> +    hwaddr addr;
+> >> >> +    uint32_t pasid;
+> >> >> +
+> >> >> +    if ((inv_desc->hi & VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_HI) |=
+|
+> >> >> +         (inv_desc->lo & VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_LO))=
+ {
+> >> >> +        error_report_once("%s: invalid pasid-based dev iotlb inv d=
+esc:"
+> >> >> +                          "hi=3D%"PRIx64 "(reserved nonzero)",
+> >> >> +                          __func__, inv_desc->hi);
+> >> >> +        return false;
+> >> >> +    }
+> >> >> +
+> >> >> +    global =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_GLOBAL(inv_desc->hi=
+);
+> >> >> +    size =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_SIZE(inv_desc->hi);
+> >> >> +    addr =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_ADDR(inv_desc->hi);
+> >> >> +    sid =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_SID(inv_desc->lo);
+> >> >> +    if (global) {
+> >> >> +        QLIST_FOREACH(vtd_dev_as, &s->vtd_as_with_notifiers, next)=
+ {
+> >> >> +            if ((vtd_dev_as->pasid !=3D PCI_NO_PASID) &&
+> >> >> +                (PCI_BUILD_BDF(pci_bus_num(vtd_dev_as->bus),
+> >> >> +                                           vtd_dev_as->devfn) =3D=
+=3D sid)) {
+> >> >> +                do_invalidate_device_tlb(vtd_dev_as, size, addr);
+> >> >> +            }
+> >> >> +        }
+> >> >> +    } else {
+> >> >> +        pasid =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_PASID(inv_desc->=
+lo);
+> >> >> +        vtd_dev_as =3D vtd_get_as_by_sid_and_pasid(s, sid, pasid);
+> >> >> +        if (!vtd_dev_as) {
+> >> >> +            return true;
+> >> >> +        }
+> >> >> +
+> >> >> +        do_invalidate_device_tlb(vtd_dev_as, size, addr);
+> >> >
+> >> >Question:
+> >> >
+> >> >I wonder if current vhost (which has a device IOTLB abstraction via
+> >> >virtio-pci) can work with this (PASID based IOTLB invalidation)
+> >>
+> >> Currently, it depends on if caching-mode is on. If it's off, vhost wor=
+ks. E.g.:
+> >>
+> >> -device intel-iommu,caching-mode=3Doff,dma-drain=3Don,device-iotlb=3Do=
+n,x-
+> >scalable-mode=3Don
+> >> -netdev tap,id=3Dtap0,vhost=3Don,script=3D/etc/qemu-ifup
+> >> -device virtio-net-pci,netdev=3Dtap0,bus=3Droot0,iommu_platform=3Don,a=
+ts=3Don
+> >>
+> >> It doesn't work currently when caching-mode is on.
+> >> Reason is linux kernel has an optimization to send only piotlb invalid=
+ation,
+> >> no device-piotlb invalidation is sent. But I heard from Yi the optimiz=
+ation
+> >> will be dropped, then it will work too when caching-mode is on.
+> >
+> >Great, if possible please copy me when sending those fixes.
+>
+> FYI, I just found the optimization had already been dropped since April 2=
+024 by commit https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linu=
+x.git/commit/?id=3D304b3bde24b58515a75fd198beb52ca57df6275f
+>
+> After updating guest kernel to a new version containing above commit,
+> vhost works irrespective the value of caching-mode.
+>
+> Thanks
+> Zhenzhong
 
-I agree with Rick in that having QEMU treat them as configurable is going t=
-o be
-a disaster.  But I don't think it's actually problematic in practice.
+Great. Thanks for the updating.
 
-If QEMU (or KVM) has no visibility into the state of the guest's view of th=
-e
-affected features, then it doesn't matter whether they are fixed or configu=
-rable.
-They're effectively Schr=C3=B6dinger's bits: until QEMU/KVM actually looks =
-at them,
-they're neither dead nor alive, and since QEMU/KVM *can't* look at them, wh=
-o cares?
-
-So, if the TDX Module *requires* them to be set/cleared when the TD is crea=
-ted,
-then they should be reported as fixed.  If the TDX module doesn't care, the=
-n they
-should be reported as configurable.  The fact that the guest can muck with =
-things
-under the hood doesn't factor into that logic.
-
-If TDX pulls something like this for features that KVM cares about, then we=
- have
-problems, but that's already true today.  If a feature requires KVM support=
-, it
-doesn't really matter if the feature is fixed or configurable.  What matter=
-s is
-that KVM has a chance to enforce that the feature can be used by the guest =
-if
-and only if KVM has the proper support in place.  Because if KVM is complet=
-ely
-unaware of a feature, it's impossible for KVM to know that the feature need=
-s to
-be rejected.
-
-This isn't unique to TDX, CoCo, or firmware.  Every new feature that lands =
-in
-hardware needs to either be "benign" or have the appropriate virtualization
-controls.  KVM already has to deal with cases where features can effectivel=
-y be
-used without KVM's knowledge.  E.g. there are plenty of instruction-level
-virtualization holes, and SEV-ES doubled down by essentially forcing KVM to=
- let
-the guest write XCR0 and XSS directly.
-
-It all works, so long as the hardware vendor doesn't screw up and let the g=
-uest
-use a feature that impacts host safety and/or functionality, without the hy=
-pervisor's
-knowledge.
-
-So, just don't screw up :-)
 
