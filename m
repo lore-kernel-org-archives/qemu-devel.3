@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245C7E7717F
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39988E77184
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbEf-0007rI-Dv; Tue, 17 Dec 2024 12:19:54 -0500
+	id 1tNbEk-0007tn-L1; Tue, 17 Dec 2024 12:19:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEc-0007qm-Cv
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:50 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ id 1tNbEi-0007sM-Nf
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:56 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEW-00068M-0U
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:49 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3862d6d5765so3831726f8f.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:41 -0800 (PST)
+ id 1tNbEc-0006B9-6q
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:19:56 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-435f8f29f8aso40547475e9.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734455980; x=1735060780; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=9/36KvWVh5CZpYM1n8Wct054yNOoZi4upNBiJ3viOns=;
- b=uLY7yeMH+u7ZkBBm02yse0gSqzDxBKDQyKGWGxpSmXWmixVyQrVK/3LkullV3Nkwrh
- VRM93nGffXv4pHBMeo0LoxV+HWTWgnlK14KBspvtV9cU7nNF7wZKn2eLh5jXwHa7Ljmd
- nEu0+QwUrdpivlhGAZ3yyxvfOQQu7iX6polm7Xkpb1R1DUHRgOJk2iSVGCxqz2pNKUws
- b3ZwXFdtKY/j0y+rb+JlWDw2/6F07ZurI6V32sGdhmnvHP2RXkfXHZh2FKul+rwb329z
- I1jnKpSxsW05j0JHVD6zUSQgHZUQR36XlZx6A0Y+up59CrF2pPiHhV8TBxJ0x9bJu2eT
- QxfA==
+ d=linaro.org; s=google; t=1734455987; x=1735060787; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vrDwAbHNT4Cd7QvVHPbpgZ6d5UYILLlvDeKOUF5Nqdc=;
+ b=N/guLylDgTa34HEz/hV5UXrtezGa4ykQwQxnMz0XAcpqF3JprQrtjNjgpE0/hPUsJ8
+ rQcCHqN1450ojrvi4KJO2yy5U8+xyIfcRVGZ0woAOfrcx1pNCA7GIR8jTGtpu/g8QPcf
+ 5x/7KA70INXHHkJkLBrSpOxdmwgVxT6C49fiomV+Jur+NvpqwS8RJcaEFJWAts5wITAQ
+ pNCm3/d6dLZEp6hZfAqgh6rQQ9oKEFEeKIydJE7IMFzeSXbgq+rglQC0DRE+TQRTL8pB
+ K/B9bwNQ3CaDWt3Ir27iZofwjKjNK/ZfnhBIFMf9Rc92Jd5nx6jjynzTEM1rl/4XossH
+ eVgg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734455980; x=1735060780;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9/36KvWVh5CZpYM1n8Wct054yNOoZi4upNBiJ3viOns=;
- b=FvOdBQPtulakhcT5Z95pG+/Z6jHFqmaMObZ/RzTlP87axXm0//+HYUWWTv1L37htA0
- +xn7PWXd9iJKcDhjxfRLS4a2quwVBF19tOobB5J8WOd4ApYVwGTU1EUri9sqtsoHseVQ
- jVs+0iDpoCAE5eopdbzLgGqkkJZcJWlQVsWAFNzoztMpv2qLazEUeaa2nR8rFBOxtQr3
- sGF17WoxNKql8jC7yXdzwr7R8MLtWgErEfb22gEWARlGIDwlPegDrnGqshNpccpfBkq/
- bwHj2faHfCYeslqsOZ/MAXCNpP1O6u9JOWP0+HypjU84jSOBw1/RtVEpnSeZ0127QKST
- S2hw==
-X-Gm-Message-State: AOJu0Yz7W6PV/Qt4e2udORpFALS9cIVLjjDOmGfC5dVcFstNea0ZuB9N
- AVXs3gHyrcWKBov/WkuqE7232a93CdAYD+w8hyBoMestS4Bec+3abf1Y7lfqUrfSsGsKhu+v6Ac
- u
-X-Gm-Gg: ASbGncul0AwRIE3xCpZiebML+DM+bhcnB5USqFwfZkMzC0L1N7SYmIloPDdILgF5i5t
- O1N9tbgZKLav0gLGPoSXGiJhdkTyN06nhvNrtl5HDJd/TxG6PYbcpwc6okrP9q/Bn5xPjZUtMzp
- gOynrH1gaMGITabpo3YDidqJTG2Eq7dbbrUXe3yGFNNgvC4elC+7218y8Yl9zsxiWRErtJ7OcBS
- 6ll4iZudwLyHDf5Vpv9WZh0NDOxIoSzwk0wH05FjDxJ8KJalaoN4xmANSe6R8o=
-X-Google-Smtp-Source: AGHT+IEUx0HjN97ZhpkgAc7gtWPknB+L7wQ9/ZvLa96RPam2PUnMziY/a9yhDIkFnCYTIyEhLMaefA==
-X-Received: by 2002:a05:6000:188f:b0:386:5b2:a9d9 with SMTP id
- ffacd0b85a97d-3888e0c04aemr14523523f8f.53.1734455980033; 
- Tue, 17 Dec 2024 09:19:40 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734455987; x=1735060787;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vrDwAbHNT4Cd7QvVHPbpgZ6d5UYILLlvDeKOUF5Nqdc=;
+ b=m3XNMMFthKIXrT/CSdwpFAnPdNSVEXSyA4+95avKyluubWQrzGkBbcaAR1avbwXRi3
+ dDTONkeD1tV2UCSGIosOv78fHmW8Ye2LmNq0lH2e4nics6XVzR6eaUg4SFyKzxUpPHvz
+ LFPcjR7eDq8E9oKBVavB2jYPrpVJnaJvihq+8iwFX3Y8m65AnNqAMkydqgkI+yVqBBHv
+ FQX7/TCn4eCWTQWFyI90oZPTeXfr5Gn1xK0h3BIx9hh8Vxzl0iJZr/Pyn7t0xZftlcT+
+ HB7GYGmlfbTcSHm0WH7L//qnjZDrNkjuWPOvBjfNurGkJwhgIYYMPs7dpzZLu8dQZewv
+ t03g==
+X-Gm-Message-State: AOJu0Ywi0RxDINoMB1t8i97ihOFBkLpkKKu/6irhB1RB4OQaUfp5mZxz
+ ov9VQwZ2XTjsSKR/YizVuYtEcxOlUG5802Edbk8BWToka/SYGxBpeZmJqxlMcmYaxsYpXfpvhmV
+ b
+X-Gm-Gg: ASbGncs+4mrjuGI7SQYeUHBsv5oghigYHnFgLd5UHqNW3ezebVdayH7lGmFS6UE2Vkg
+ rerBXhFq8v7K6zE/33D3wiCm9K2/nfyQlLMffi0e2HXm+sUrOc6bithYfP5UWjeEGXaQ9B8pPo9
+ TSvWkQa6UJ/uHVubBiznUj5PmxjOUSi8XF5GJP97lGB3jT8uYOqoOjkZzddK4QVPUSbJbacGByY
+ 6RsfqSzHtaPFiCbjwiBEmpWEJh1hB+YvrKjrW0kWIt/BEAxbpBO9wZ30vo+x0g=
+X-Google-Smtp-Source: AGHT+IEfmANZ7uDGgG+8AFZb1NTOo0mwZLN/MQqYO1fwWahu9VCmwLNxhLUZRmCrqc6/abf9oBAU/Q==
+X-Received: by 2002:a05:6000:4806:b0:385:f38e:c0c3 with SMTP id
+ ffacd0b85a97d-388da380bcdmr3884223f8f.6.1734455987359; 
+ Tue, 17 Dec 2024 09:19:47 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.39
+ ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 09:19:39 -0800 (PST)
+ Tue, 17 Dec 2024 09:19:46 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/19] target-arm queue
-Date: Tue, 17 Dec 2024 17:19:18 +0000
-Message-Id: <20241217171937.3899947-1-peter.maydell@linaro.org>
+Subject: [PULL 07/19] target/arm: Convert sme_helper.c to fpst alias
+Date: Tue, 17 Dec 2024 17:19:25 +0000
+Message-Id: <20241217171937.3899947-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20241217171937.3899947-1-peter.maydell@linaro.org>
+References: <20241217171937.3899947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,88 +97,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi; this is one last arm pullreq before the end of the year.
-Mostly minor cleanups, and also implementation of the
-FEAT_XS architectural feature.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-thanks
--- PMM
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20241206031224.78525-8-richard.henderson@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ target/arm/tcg/helper-sme.h | 4 ++--
+ target/arm/tcg/sme_helper.c | 8 ++++----
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
-The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index 59ecaa15485..858d69188fb 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -123,9 +123,9 @@ DEF_HELPER_FLAGS_5(sme_addva_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_h, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_s, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_7(sme_fmopa_d, TCG_CALL_NO_RWG,
+-                   void, ptr, ptr, ptr, ptr, ptr, ptr, i32)
++                   void, ptr, ptr, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_7(sme_bfmopa, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, ptr, ptr, env, i32)
+ DEF_HELPER_FLAGS_6(sme_smopa_s, TCG_CALL_NO_RWG,
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 8cf12654e56..a0e6b4a41ea 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -904,7 +904,7 @@ void HELPER(sme_addva_d)(void *vzda, void *vzn, void *vpn,
+ }
+ 
+ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, void *vst, uint32_t desc)
++                         void *vpm, float_status *fpst_in, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_maxsz(desc);
+     uint32_t neg = simd_data(desc) << 31;
+@@ -916,7 +916,7 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+      * update the cumulative fp exception status.  It also produces
+      * default nans.
+      */
+-    fpst = *(float_status *)vst;
++    fpst = *fpst_in;
+     set_default_nan_mode(true, &fpst);
+ 
+     for (row = 0; row < oprsz; ) {
+@@ -946,13 +946,13 @@ void HELPER(sme_fmopa_s)(void *vza, void *vzn, void *vzm, void *vpn,
+ }
+ 
+ void HELPER(sme_fmopa_d)(void *vza, void *vzn, void *vzm, void *vpn,
+-                         void *vpm, void *vst, uint32_t desc)
++                         void *vpm, float_status *fpst_in, uint32_t desc)
+ {
+     intptr_t row, col, oprsz = simd_oprsz(desc) / 8;
+     uint64_t neg = (uint64_t)simd_data(desc) << 63;
+     uint64_t *za = vza, *zn = vzn, *zm = vzm;
+     uint8_t *pn = vpn, *pm = vpm;
+-    float_status fpst = *(float_status *)vst;
++    float_status fpst = *fpst_in;
+ 
+     set_default_nan_mode(true, &fpst);
+ 
+-- 
+2.34.1
 
-  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
-
-are available in the Git repository at:
-
-  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20241217
-
-for you to fetch changes up to e91254250acb8570bd7b8a8f89d30e6d18291d02:
-
-  tests/functional: update sbsa-ref firmware used in test (2024-12-17 15:21:06 +0000)
-
-----------------------------------------------------------------
-target-arm queue:
- * remove a line of redundant code
- * convert various TCG helper fns to use 'fpst' alias
- * Use float_status in helper_fcvtx_f64_to_f32
- * Use float_status in helper_vfp_fcvt{ds,sd}
- * Implement FEAT_XS
- * hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
- * tests/functional: update sbsa-ref firmware used in test
-
-----------------------------------------------------------------
-Denis Rastyogin (1):
-      target/arm: remove redundant code
-
-Manos Pitsidianakis (3):
-      target/arm: Add decodetree entry for DSB nXS variant
-      target/arm: Enable FEAT_XS for the max cpu
-      tests/tcg/aarch64: add system test for FEAT_XS
-
-Marcin Juszkiewicz (1):
-      tests/functional: update sbsa-ref firmware used in test
-
-Peter Maydell (4):
-      target/arm: Implement fine-grained-trap handling for FEAT_XS
-      target/arm: Add ARM_CP_ADD_TLBI_NXS type flag for NXS insns
-      target/arm: Add ARM_CP_ADD_TLBI_NXS type flag to TLBI insns
-      hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc structs
-
-Richard Henderson (10):
-      target/arm: Convert vfp_helper.c to fpst alias
-      target/arm: Convert helper-a64.c to fpst alias
-      target/arm: Convert vec_helper.c to fpst alias
-      target/arm: Convert neon_helper.c to fpst alias
-      target/arm: Convert sve_helper.c to fpst alias
-      target/arm: Convert sme_helper.c to fpst alias
-      target/arm: Convert vec_helper.c to use env alias
-      target/arm: Convert neon_helper.c to use env alias
-      target/arm: Use float_status in helper_fcvtx_f64_to_f32
-      target/arm: Use float_status in helper_vfp_fcvt{ds,sd}
-
- docs/system/arm/emulation.rst            |   1 +
- target/arm/cpregs.h                      |  80 ++--
- target/arm/cpu-features.h                |   5 +
- target/arm/helper.h                      | 638 +++++++++++++++----------------
- target/arm/tcg/helper-a64.h              | 116 +++---
- target/arm/tcg/helper-sme.h              |   4 +-
- target/arm/tcg/helper-sve.h              | 426 ++++++++++-----------
- target/arm/tcg/a64.decode                |   3 +
- hw/intc/arm_gicv3_its.c                  |  44 +--
- target/arm/helper.c                      |  30 +-
- target/arm/tcg/cpu64.c                   |   1 +
- target/arm/tcg/helper-a64.c              | 101 ++---
- target/arm/tcg/neon_helper.c             |  27 +-
- target/arm/tcg/op_helper.c               |  11 +-
- target/arm/tcg/sme_helper.c              |   8 +-
- target/arm/tcg/sve_helper.c              |  96 ++---
- target/arm/tcg/tlb-insns.c               | 202 ++++++----
- target/arm/tcg/translate-a64.c           |  26 +-
- target/arm/tcg/translate-vfp.c           |   4 +-
- target/arm/tcg/vec_helper.c              |  81 ++--
- target/arm/vfp_helper.c                  | 130 +++----
- tests/tcg/aarch64/system/feat-xs.c       |  27 ++
- tests/functional/test_aarch64_sbsaref.py |  20 +-
- 23 files changed, 1083 insertions(+), 998 deletions(-)
- create mode 100644 tests/tcg/aarch64/system/feat-xs.c
 
