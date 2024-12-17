@@ -4,72 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF3DDE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5D47E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 14:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNYag-0002gV-VD; Tue, 17 Dec 2024 09:30:27 -0500
+	id 1tNYhf-0000Qe-Jq; Tue, 17 Dec 2024 09:37:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZU-00011S-KW
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:15 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tNYhd-0000QK-FE; Tue, 17 Dec 2024 09:37:37 -0500
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNYZM-0004wq-P1
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 09:29:10 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734445744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=6SqltVUWNc6UgRkUvEyjQbL5CA7fkjtW7Wbr++SLBQk=;
- b=aZwWInuK9TZu+AHd4/9xTN7GkuPpPfsNI1scNz8A19NXMCVuqcg8jMMVY7qpGswaK4lRXp
- PJUHjV2JDgWUvyjV53q/Q7oe8Z0KT6N48Hm4VOGJIv1FXcnmqA3BAJkrK7jowRXuZVDPli
- M1wqCNVhCkHv4BwGIsLN2wHcPi5w6RY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-mnlxul7lP9GIfrE2gJfNTw-1; Tue,
- 17 Dec 2024 09:29:01 -0500
-X-MC-Unique: mnlxul7lP9GIfrE2gJfNTw-1
-X-Mimecast-MFC-AGG-ID: mnlxul7lP9GIfrE2gJfNTw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FF591955EA3; Tue, 17 Dec 2024 14:29:00 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F41DE19560AD; Tue, 17 Dec 2024 14:28:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1688F21E6613; Tue, 17 Dec 2024 15:28:55 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com,
-	berrange@redhat.com,
-	eduardo@habkost.net
-Subject: [PATCH 5/6] qdev: Improve PropertyInfo member @description for enum
- properties
-Date: Tue, 17 Dec 2024 15:28:53 +0100
-Message-ID: <20241217142855.3805068-6-armbru@redhat.com>
-In-Reply-To: <20241217142855.3805068-1-armbru@redhat.com>
-References: <20241217142855.3805068-1-armbru@redhat.com>
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1tNYhX-00065L-Np; Tue, 17 Dec 2024 09:37:37 -0500
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BH85lI8032685;
+ Tue, 17 Dec 2024 14:37:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=xy6ApJ
+ IStjwTjsJV4f9Emd0vn3cRDHkWbDwTtpZ6bBA=; b=DUjbsy9fRFdwjb6wWTTCaX
+ +cq22mkR1NArhz9/hjW5NdGWPX/6MsFrEck5AwC2YXP1mNCtJfiMfQ5RI/T1LIGH
+ 3Le56bUb4oq1kRsKIoG1M5kiNFIdZcEzzA918vBMGhl52B92kmx0PEHD55cEJo0Y
+ otc0cFONENX8P/WmjwsZhwCtftC9ohu+aZ7OLHOz28h3l8jOIol3bcsNP03c7bJK
+ Fyq2Y+qbDn1fEX6TGEdBIIFpNRW0PehrXMI8mv9SH3vUG22oBaej/PMwwQZ1EbnZ
+ J5VzB9Fxu7gR+SuSZRK/i3/nO6AznedW8uROJdkPQzlfUOJLolKoD3mppR+DBy5g
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43k5g2hpxy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Dec 2024 14:37:27 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BHAoERJ029773;
+ Tue, 17 Dec 2024 14:37:27 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hmbskcer-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Dec 2024 14:37:26 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BHEbPlR38207902
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Dec 2024 14:37:25 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5402920080;
+ Tue, 17 Dec 2024 14:37:25 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DFF672007F;
+ Tue, 17 Dec 2024 14:37:24 +0000 (GMT)
+Received: from [127.0.0.1] (unknown [9.152.108.100])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Dec 2024 14:37:24 +0000 (GMT)
+Message-ID: <6ff0009bb7079735feacb477c0285f83bf2a7b3d.camel@linux.ibm.com>
+Subject: Re: [PATCH 0/2] include: Two cleanups around missing 'qemu/atomic.h'
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Date: Tue, 17 Dec 2024 15:37:24 +0100
+In-Reply-To: <20241217141326.98947-1-philmd@linaro.org>
+References: <20241217141326.98947-1-philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.52.4 (3.52.4-2.fc40) 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: HoFfXBjzuBUFqOXM329zU63vlBy0mpV_
+X-Proofpoint-GUID: HoFfXBjzuBUFqOXM329zU63vlBy0mpV_
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 bulkscore=0
+ phishscore=0 clxscore=1011 priorityscore=1501 lowpriorityscore=0
+ impostorscore=0 suspectscore=0 spamscore=0 mlxlogscore=720 malwarescore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412170115
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.116, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,107 +108,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Consistently use format "DESCRIPTION (VALUE/VALUE...)".
+On Tue, 2024-12-17 at 15:13 +0100, Philippe Mathieu-Daud=C3=A9 wrote:
+> We have 2 headers using qatomic_read() without including
+> its declaration from "qemu/atomic.h". Include the missing
+> header. For my own convenience I plan to merge these 2 patches
+> via my tree.
+>=20
+> Regards,
+>=20
+> Phil.
+>=20
+> Philippe Mathieu-Daud=C3=A9 (2):
+> =C2=A0 exec/translation-block: Include missing 'qemu/atomic.h' header
+> =C2=A0 qemu/coroutine: Include missing 'qemu/atomic.h' header
+>=20
+> =C2=A0include/exec/translation-block.h | 1 +
+> =C2=A0include/qemu/coroutine.h=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 | 1 +
+> =C2=A02 files changed, 2 insertions(+)
 
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- hw/core/qdev-properties-system.c | 26 +++++++++++---------------
- 1 file changed, 11 insertions(+), 15 deletions(-)
-
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index bd6ea9673d..9d1f358263 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -603,6 +603,7 @@ QEMU_BUILD_BUG_ON(sizeof(LostTickPolicy) != sizeof(int));
- 
- const PropertyInfo qdev_prop_losttickpolicy = {
-     .type  = "LostTickPolicy",
-+    .description = "Policy for handling lost ticks (discard/delay/slew)",
-     .enum_table  = &LostTickPolicy_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_losttickpolicy,
-@@ -642,8 +643,7 @@ QEMU_BUILD_BUG_ON(sizeof(BlockdevOnError) != sizeof(int));
- 
- const PropertyInfo qdev_prop_blockdev_on_error = {
-     .type = "BlockdevOnError",
--    .description = "Error handling policy, "
--                   "report/ignore/enospc/stop/auto",
-+    .description = "Error handling policy (report/ignore/enospc/stop/auto)",
-     .enum_table = &BlockdevOnError_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -656,8 +656,8 @@ QEMU_BUILD_BUG_ON(sizeof(BiosAtaTranslation) != sizeof(int));
- 
- const PropertyInfo qdev_prop_bios_chs_trans = {
-     .type = "BiosAtaTranslation",
--    .description = "Logical CHS translation algorithm, "
--                   "auto/none/lba/large/rechs",
-+    .description = "Logical CHS translation algorithm "
-+                   " (auto/none/lba/large/rechs)",
-     .enum_table = &BiosAtaTranslation_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -668,8 +668,7 @@ const PropertyInfo qdev_prop_bios_chs_trans = {
- 
- const PropertyInfo qdev_prop_fdc_drive_type = {
-     .type = "FloppyDriveType",
--    .description = "FDC drive type, "
--                   "144/288/120/none/auto",
-+    .description = "Floppy drive type (144/288/120/none/auto)",
-     .enum_table = &FloppyDriveType_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -680,8 +679,8 @@ const PropertyInfo qdev_prop_fdc_drive_type = {
- 
- const PropertyInfo qdev_prop_multifd_compression = {
-     .type = "MultiFDCompression",
--    .description = "multifd_compression values, "
--                   "none/zlib/zstd/qpl/uadk/qatzip",
-+    .description = "multifd_compression values"
-+                   " (none/zlib/zstd/qpl/uadk/qatzip)",
-     .enum_table = &MultiFDCompression_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -694,8 +693,7 @@ QEMU_BUILD_BUG_ON(sizeof(MigMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_mig_mode = {
-     .type = "MigMode",
--    .description = "mig_mode values, "
--                   "normal,cpr-reboot",
-+    .description = "Migration mode (normal/cpr-reboot)",
-     .enum_table = &MigMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -708,8 +706,7 @@ QEMU_BUILD_BUG_ON(sizeof(GranuleMode) != sizeof(int));
- 
- const PropertyInfo qdev_prop_granule_mode = {
-     .type = "GranuleMode",
--    .description = "granule_mode values, "
--                   "4k, 8k, 16k, 64k, host",
-+    .description = "Granule page size (4k/8k/16k/64k/host)",
-     .enum_table = &GranuleMode_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -718,8 +715,7 @@ const PropertyInfo qdev_prop_granule_mode = {
- 
- const PropertyInfo qdev_prop_zero_page_detection = {
-     .type = "ZeroPageDetection",
--    .description = "zero_page_detection values, "
--                   "none,legacy,multifd",
-+    .description = "Zero page detection (none/legacy/multifd)",
-     .enum_table = &ZeroPageDetection_lookup,
-     .get = qdev_propinfo_get_enum,
-     .set = qdev_propinfo_set_enum,
-@@ -1232,7 +1228,7 @@ QEMU_BUILD_BUG_ON(sizeof(S390CpuEntitlement) != sizeof(int));
- 
- const PropertyInfo qdev_prop_cpus390entitlement = {
-     .type  = "S390CpuEntitlement",
--    .description = "low/medium (default)/high",
-+    .description = "auto/low/medium/high (default medium)",
-     .enum_table  = &S390CpuEntitlement_lookup,
-     .get   = qdev_propinfo_get_enum,
-     .set   = qdev_propinfo_set_enum,
--- 
-2.47.0
-
+Acked-by: Ilya Leoshkevich <iii@linux.ibm.com>
 
