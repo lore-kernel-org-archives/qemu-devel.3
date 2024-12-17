@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DD95E77187
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:27:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F176E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 15:29:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNZTR-00014i-0R; Tue, 17 Dec 2024 10:27:01 -0500
+	id 1tNZVz-00039n-Qn; Tue, 17 Dec 2024 10:29:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNZTK-00013x-JS; Tue, 17 Dec 2024 10:26:55 -0500
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNZVy-00039b-Fr
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:29:38 -0500
+Received: from mail-qt1-x832.google.com ([2607:f8b0:4864:20::832])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tNZTF-00059S-91; Tue, 17 Dec 2024 10:26:54 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 4775321157;
- Tue, 17 Dec 2024 15:26:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734449207; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AKRNRuFju2hq/ZYAhw2F1m7cfBcgkqHN6/9anGtjvOA=;
- b=WEGAK8uPNYPzT0Y3KdTEoqvbVreIqZyV7q1rbFVA97Z2j3qOUYby1shZAIoEkYJxc/00rY
- aILWbVNqarRHJVtOyXMqG6pr27OQ0ygvjrZSFgIFUVIk4cJbsFQyCbNMS5/iPeSqf3IUUp
- jtMBs2Xx7/WWFWA6/+k2SKd1LKf5CDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734449207;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AKRNRuFju2hq/ZYAhw2F1m7cfBcgkqHN6/9anGtjvOA=;
- b=kZ0trdVx1vEV9bumJ+SeG8JRK+69Lxc/hmCm87MMum+wcvLp/tHTep2SLIee5Z4pWa+egE
- MT2V09deH8l6YpDw==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734449207; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AKRNRuFju2hq/ZYAhw2F1m7cfBcgkqHN6/9anGtjvOA=;
- b=WEGAK8uPNYPzT0Y3KdTEoqvbVreIqZyV7q1rbFVA97Z2j3qOUYby1shZAIoEkYJxc/00rY
- aILWbVNqarRHJVtOyXMqG6pr27OQ0ygvjrZSFgIFUVIk4cJbsFQyCbNMS5/iPeSqf3IUUp
- jtMBs2Xx7/WWFWA6/+k2SKd1LKf5CDM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734449207;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=AKRNRuFju2hq/ZYAhw2F1m7cfBcgkqHN6/9anGtjvOA=;
- b=kZ0trdVx1vEV9bumJ+SeG8JRK+69Lxc/hmCm87MMum+wcvLp/tHTep2SLIee5Z4pWa+egE
- MT2V09deH8l6YpDw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C399C132EA;
- Tue, 17 Dec 2024 15:26:46 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id pHkQIjaYYWcCJAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 17 Dec 2024 15:26:46 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: peterx@redhat.com, qemu-block@nongnu.org, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, Stefan Hajnoczi <stefanha@redhat.com>, Andrey
- Drobyshev <andrey.drobyshev@virtuozzo.com>, Eric Blake
- <eblake@redhat.com>, "Dr . David Alan Gilbert" <dave@treblig.org>, Kevin
- Wolf <kwolf@redhat.com>, =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH v2 0/6] migration/block: disk activation rewrite
-In-Reply-To: <20241206230838.1111496-1-peterx@redhat.com>
-References: <20241206230838.1111496-1-peterx@redhat.com>
-Date: Tue, 17 Dec 2024 12:26:44 -0300
-Message-ID: <87h672wcsr.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNZVw-0005oK-Tj
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 10:29:38 -0500
+Received: by mail-qt1-x832.google.com with SMTP id
+ d75a77b69052e-467725245a2so52553271cf.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 07:29:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734449375; x=1735054175; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oU/r0i563De0NrV2eXivMK70+lBQ9PWriyHQbatCaUY=;
+ b=N+ehyc7bdDtEOCxpQB0fV9rSFHy8aw1xbZVA+JiU8MSOQLgYP2nYTZEvf86a+DyzGw
+ 59E6KTAs9dk4LPTZOTym6Wnu4enWlEgcBUZd88LNFCbOYz1vVtlwTqBf20qeS2P49vJt
+ 8ed0rvDz+P0s+g9dQsigtJdfsRcxPNJK6K7j0gGM90zgFKp9GJE9GlDtbZxJ1CxP5QLo
+ gb/H/S/H0RY1qcXMpH0b2NgCQHZxxAeQaXAtAAz+joHcSq8iBH5D6tM/692DPCUehOHn
+ opQ4zGFClLL+dvHs76Q29AIu8ofTzThxn/AYGz9Zv6HXPwdwoAk9lPncz7RvKASDF+YW
+ boZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734449375; x=1735054175;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oU/r0i563De0NrV2eXivMK70+lBQ9PWriyHQbatCaUY=;
+ b=BXeGVYmuv6Zwrt6w6hymN8ZVRm+HuMwUx4oClaMNgA6RtI38eGRkfNAGeqF5jpsx0u
+ lS2+kzHWNQpJx9Qj88EsuaZZBOKaND8+rK+dCpx2cVDnrEL3gxgGOODB8UQ94omFyM/f
+ npEyCUxNcZ0byPCvyUU+lj4wnYn33POya/1yclphoMO2vvNKo6hJ/rprw4W70LEFMuwQ
+ RncAgpugD0+nXZTZVUqUZEpKgNaUOgziFp02t+k0bR07S9CLQarUBcSLhTK8ulqrxPcg
+ 8bDF1fY/I3HYzHDX31XI9kHtJ5FVfl7WQzS+jtgEcPBGTU9juSGcINj3Nnxc+MY2biRj
+ xPIA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWOqmePbR7dfpn563rkxBsklPXG3wPlQwnMx0IsX3/Su9y34HW2U8n2G1ElwdsI03ASe4+RK3MJXCE+@nongnu.org
+X-Gm-Message-State: AOJu0YxL+wgNTwYKZLPrGMFOASlM7YAp6VLGaxP/8KQlakRJPSUvbGnj
+ F6RrllYiXUvc+ym2fCBxWn69Ap/SBarXXS5Ru3lZWEw2aWpErFuLcLXbpWhLdXA=
+X-Gm-Gg: ASbGnctQ/GyYwjhSb3uKK4JLj35MWA1bBBIJZgaEyPoPm6h2eqfdW2uYvP0jHmFeqwy
+ 4OjkRFVZJ9Zwtr/5hRzE7amO9Jo09Py1kWrLUxIBgFqi4gaUwFt/6PyEf5zTIzqn20zSxEreOk2
+ z3E7PBoYYTdR4epf0cHNHFm5+2Bp4oBz+y0/YXjH2no9Se9sLVxVJVOdTNsznC6UUdsbTWyfx+D
+ sVPs6tye8YzDdrZbzYsUB0Ah0mokDfZdtg6DgqidiuekVLADKFlEdZexJ14bu04dELDHGnqFA==
+X-Google-Smtp-Source: AGHT+IF0QiF9xbqSCNoECU7YpaM2n8y0YmtZR3EDerhP4V9kcAYBBkCwhau8ehbvx3sTyUKT2BPpEA==
+X-Received: by 2002:ac8:5d10:0:b0:466:8eb7:59c5 with SMTP id
+ d75a77b69052e-467a580242bmr284934981cf.34.1734449375417; 
+ Tue, 17 Dec 2024 07:29:35 -0800 (PST)
+Received: from [172.20.0.130] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-467b2e83181sm40232001cf.62.2024.12.17.07.29.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 07:29:35 -0800 (PST)
+Message-ID: <600bd66a-5b76-4e12-884a-4cf8182ba992@linaro.org>
+Date: Tue, 17 Dec 2024 09:29:31 -0600
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-0.999]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCPT_COUNT_SEVEN(0.00)[11];
- ARC_NA(0.00)[]; RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/13] tests/tcg/plugins/mem: fix 32-bit build
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Thomas Huth <thuth@redhat.com>,
+ philmd@linaro.org
+References: <20241217010707.2557258-1-pierrick.bouvier@linaro.org>
+ <20241217010707.2557258-7-pierrick.bouvier@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241217010707.2557258-7-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::832;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qt1-x832.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -118,102 +105,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 12/16/24 19:07, Pierrick Bouvier wrote:
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   tests/tcg/plugins/mem.c | 6 +++---
+>   1 file changed, 3 insertions(+), 3 deletions(-)
 
-> CI: https://gitlab.com/peterx/qemu/-/pipelines/1577280033
->  (note: it's a pipeline of two patchsets, to save CI credits and time)
->
-> v1: https://lore.kernel.org/r/20241204005138.702289-1-peterx@redhat.com
->
-> This is v2 of the series, removing RFC tag, because my goal is to have them
-> (or some newer version) merged.
->
-> The major change is I merged last three patches, and did quite some changes
-> here and there, to make sure the global disk activation status is always
-> consistent.  The whole idea is still the same.  I say changelog won't help.
->
-> I also temporarily dropped Fabiano's ping-pong test cases to avoid
-> different versions floating on the list (as I know a new version is coming
-> at some point. Fabiano: you're taking over the 10.0 pulls, so I assume
-> you're aware so there's no concern on order of merges).  I'll review the
-> test cases separately when they're ready, but this series is still tested
-> with that pingpong test and it keeps working.
->
-> I started looking at this problem as a whole when reviewing Fabiano's
-> series, especially the patch (for a QEMU crash [1]):
->
-> https://lore.kernel.org/r/20241125144612.16194-5-farosas@suse.de
->
-> The proposed patch could work, but it's unwanted to add such side effect to
-> migration.  So I start to think about whether we can provide a cleaner
-> approach, because migration doesn't need the disks to be active to work at
-> all.  Hence we should try to avoid adding a migration ABI (which doesn't
-> matter now, but may matter some day) into prepare phase on disk activation
-> status.  Migration should happen with disks inactivated.
->
-> It's also a pure wish that, if bdrv_inactivate_all() could be benign to be
-> called even if all disks are already inactive.  Then the bug is also gone.
-> After all, similar call on bdrv_activate_all() upon all-active disks is all
-> fine.  I hope that wish could still be fair.  But I don't know well on
-> block layer to say anything meaningful.
->
-> And when I was looking at that, I found more things spread all over the
-> place on disk activation.  I decided to clean all of them up, while
-> hopefully fixing the QEMU crash [1] too.
->
-> For this v2, I did some more tests, I want to make sure all the past paths
-> keep working at least on failure or cancel races, also in postcopy failure
-> cases.  So I did below and they all run pass (when I said "emulated" below,
-> I meant I hacked something to trigger those race / rare failures, because
-> they aren't easy to trigger with vanilla binary):
->
-> - Tested generic migrate_cancel during precopy, disk activation won't be
->   affected.  Disk status reports correct values in tracepoints.
->
-> - Test Fabiano's ping-pong migration tests on PAUSED state VM.
->
-> - Emulated precopy failure before sending non-iterable, disk inactivation
->   won't happen, and also activation won't trigger after migration cleanups
->   (even if activation on top of activate disk is benign, I checked traces
->   to make sure it'll provide consistent disk status, skipping activation).
->
-> - Emulated precopy failure right after sending non-iterable. Disks will be
->   inactivated, but then can be reactivated properly before VM starts.
->
-> - Emulated postcopy failure when sending the packed data (which is after
->   disk invalidated), and making sure src VM will get back to live properly,
->   re-activate the disks before starting.
->
-> - Emulated concurrent migrate_cancel at the end of migration_completion()
->   of precopy, after disk inactivated.  Disks can be reactivated properly.
->
->   NOTE: here if dest QEMU didn't quit before migrate_cancel,
->   bdrv_activate_all() can crash src QEMU.  This behavior should be the same
->   before/after this patch.
->
-> Comments welcomed, thanks.
->
-> [1] https://gitlab.com/qemu-project/qemu/-/issues/2395
->
-> Peter Xu (6):
->   migration: Add helper to get target runstate
->   qmp/cont: Only activate disks if migration completed
->   migration/block: Make late-block-active the default
->   migration/block: Apply late-block-active behavior to postcopy
->   migration/block: Fix possible race with block_inactive
->   migration/block: Rewrite disk activation
->
->  include/migration/misc.h |   4 ++
->  migration/migration.h    |   6 +-
->  migration/block-active.c |  94 +++++++++++++++++++++++++++
->  migration/colo.c         |   2 +-
->  migration/migration.c    | 136 +++++++++++++++------------------------
->  migration/savevm.c       |  46 ++++++-------
->  monitor/qmp-cmds.c       |  22 +++----
->  migration/meson.build    |   1 +
->  migration/trace-events   |   3 +
->  9 files changed, 188 insertions(+), 126 deletions(-)
->  create mode 100644 migration/block-active.c
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-Queued, thanks!
+r~
+
+> 
+> diff --git a/tests/tcg/plugins/mem.c b/tests/tcg/plugins/mem.c
+> index b0fa8a9f277..d87d6628e09 100644
+> --- a/tests/tcg/plugins/mem.c
+> +++ b/tests/tcg/plugins/mem.c
+> @@ -135,14 +135,14 @@ static void update_region_info(uint64_t region, uint64_t offset,
+>       g_assert(offset + size <= region_size);
+>   
+>       g_mutex_lock(&lock);
+> -    ri = (RegionInfo *) g_hash_table_lookup(regions, GUINT_TO_POINTER(region));
+> +    ri = (RegionInfo *) g_hash_table_lookup(regions, &region);
+>   
+>       if (!ri) {
+>           ri = g_new0(RegionInfo, 1);
+>           ri->region_address = region;
+>           ri->data = g_malloc0(region_size);
+>           ri->seen_all = true;
+> -        g_hash_table_insert(regions, GUINT_TO_POINTER(region), (gpointer) ri);
+> +        g_hash_table_insert(regions, &ri->region_address, ri);
+>       }
+>   
+>       if (is_store) {
+> @@ -392,7 +392,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+>   
+>       if (do_region_summary) {
+>           region_mask = (region_size - 1);
+> -        regions = g_hash_table_new(NULL, g_direct_equal);
+> +        regions = g_hash_table_new(g_int64_hash, g_int64_equal);
+>       }
+>   
+>       counts = qemu_plugin_scoreboard_new(sizeof(CPUCount));
+
 
