@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2118E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:54:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAC7E77187
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 12:54:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNX5L-0000As-33; Tue, 17 Dec 2024 07:53:59 -0500
+	id 1tNX5K-0000A1-5T; Tue, 17 Dec 2024 07:53:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tNX5J-0000AC-Rr
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:57 -0500
+ id 1tNX5H-00009b-GS
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tNX5H-0005DQ-RX
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:57 -0500
+ id 1tNX5F-0005DQ-6g
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 07:53:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734440036; x=1765976036;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=FxrxvgyTxe7v2slGilL0hs9RicUqXHpApITr+EHT6TU=;
- b=ALXJ5zmQ4AnEDBgy+/xdfQEoI9UfcbfjLIR9Ul3+2Mg9Mk0dtzlVekVJ
- 98rCOjBWVbZjirs0Y4dTeXjrE6UpOudegvDNaX9F7LrGDYxL7kPMtHxbw
- W5D6BIWjUCsOBbA0FcamWP+vAxx/GvZmqHZxeyaxzIw2mzjWjsgGMWmL3
- axHIlgn4nOtQsQYfWO/BEwmruO3AYw1y6phr2A6/mA+MjzLqBic89T0sx
- jKUDc/E6F2zxcDagFXBDvqnSk9Fri/kkjuvx5KZyqo14WXGnqkb9VRq3g
- a9uuTAh2yBVEGme3JjjpYJVXCgPPI7/bJOP3+UWAMNsBfXhTTJUSCHaw6 w==;
-X-CSE-ConnectionGUID: d7WDq8bjSmWMmhbdigzwUQ==
-X-CSE-MsgGUID: JTEPH3nsSI2cBIwBgqaAkA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="34993244"
-X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="34993244"
+ t=1734440033; x=1765976033;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=9k/m0mTKdFDTyLClgbunE6OdVwthgmh4AeguZdPXB1g=;
+ b=gnCPwjx04zqqqRMhMGAWGN0C8fTViMjeCc/EFddfKBiObfVKa16hKfRU
+ hhZK8kAe9IvHvtJkOVxwlZ/s41eiqykW4cHwEgBqnUuARwGl0U7AnrWoJ
+ pKp+w91eLdiVzVm1FkoX1vietvjTgM1cEyEWwenlmMFmsh701AzqqyTWS
+ nsf7eg5zaKqaf/v2WiGVaSJfzm+qtFOYP35MhN6cnC8I/C2Jh3B5mAKuO
+ QsEQ3cdv3kRZSrg5P4pFeBDqfNZqrtSHOmBe2Zd7M6qhQ0CsaEXX6czu5
+ sZODMT6q1+6i7fF8+wMTb72kS2fAi0xYjeaQBWVEWtyD3jZmOJ/Ux0Xlp w==;
+X-CSE-ConnectionGUID: 3ewEgwXmRmSpGS1DKO+a9Q==
+X-CSE-MsgGUID: WRNgHXYNScGZ3JI4mlHNuw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="34993234"
+X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="34993234"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2024 04:53:52 -0800
-X-CSE-ConnectionGUID: Xrux9+hATXWF/a9AVGVCdQ==
-X-CSE-MsgGUID: rfymQn0eRoqLK8H1V60LZg==
+ 17 Dec 2024 04:53:50 -0800
+X-CSE-ConnectionGUID: TjtosO/ZRNWpqNDA9tw3aQ==
+X-CSE-MsgGUID: 3X7IEfaTTHKHiMP3zrVnYw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="97760211"
+X-IronPort-AV: E=Sophos;i="6.12,241,1728975600"; d="scan'208";a="97760173"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa008.fm.intel.com with ESMTP; 17 Dec 2024 04:53:51 -0800
+ by fmviesa008.fm.intel.com with ESMTP; 17 Dec 2024 04:53:49 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: Zhao Liu <zhao1.liu@intel.com>,
 	qemu-devel@nongnu.org
-Subject: [PATCH 2/2] target/i386: Print CPUID subleaf info for unsupported
- feature
-Date: Tue, 17 Dec 2024 07:39:32 -0500
-Message-Id: <20241217123932.948789-3-xiaoyao.li@intel.com>
+Subject: [PATCH 0/2] Clean up and enhance of feature_word_description()
+Date: Tue, 17 Dec 2024 07:39:30 -0500
+Message-Id: <20241217123932.948789-1-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20241217123932.948789-1-xiaoyao.li@intel.com>
-References: <20241217123932.948789-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=198.175.65.18; envelope-from=xiaoyao.li@intel.com;
@@ -83,31 +80,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some CPUID leaves have meaningful subleaf index. Print the subleaf info
-in feature_word_description for CPUID features.
+This series grabs two patches related to feature_word_description() from
+two different old threads, they are simple and straightforward. 
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Eduardo Habkost <ehabkost@redhat.com>
----
- target/i386/cpu.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Patch 1 is grabbed from [1] while patch 2 is grabbed from [2].
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index d09e2f868c35..3a697834e3ad 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -5460,8 +5460,9 @@ static char *feature_word_description(FeatureWordInfo *f)
-         {
-             const char *reg = get_register_name_32(f->cpuid.reg);
-             assert(reg);
--            return g_strdup_printf("CPUID.%02XH:%s",
--                                   f->cpuid.eax, reg);
-+            return g_strdup_printf("CPUID.%02XH_%02XH:%s",
-+                                   f->cpuid.eax,
-+                                   f->cpuid.needs_ecx ? f->cpuid.ecx : 0, reg);
-         }
-     case MSR_FEATURE_WORD:
-         return g_strdup_printf("MSR(%02XH)",
+[1]: https://lore.kernel.org/qemu-devel/20230106083826.5384-3-lei4.wang@intel.com/
+[2]: https://lore.kernel.org/qemu-devel/20220808085834.3227541-2-xiaoyao.li@intel.com/
+
+Lei Wang (1):
+  i386: Remove unused parameter "uint32_t bit" in
+    feature_word_description()
+
+Xiaoyao Li (1):
+  target/i386: Print CPUID subleaf info for unsupported feature
+
+ target/i386/cpu.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
 -- 
 2.34.1
 
