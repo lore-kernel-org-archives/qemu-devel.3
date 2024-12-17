@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E41ABE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:20:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF90CE7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 17:21:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNbEz-00080T-LQ; Tue, 17 Dec 2024 12:20:14 -0500
+	id 1tNbF0-00080i-Ma; Tue, 17 Dec 2024 12:20:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEw-0007z4-95
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:10 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ id 1tNbEw-0007zV-W7
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:11 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1tNbEi-0006Dc-8f
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:09 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so62296505e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:55 -0800 (PST)
+ id 1tNbEl-0006GI-Li
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 12:20:10 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so3640441f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 09:19:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734455993; x=1735060793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734455998; x=1735060798; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hC9M0XpdNJx8hwrzBQKl1ZaJYPNdEGDotHyFjhLEqJ4=;
- b=vQQdfec977TCsgpPW124Y72axHemMyeW7ZDzj0ZhkqzRofpEih2tAExGvIZR7jFkyO
- atbACmMSvNTCceCaeV2FPHLNcY0r79VowgyvPYKA8ntwRS2ng8rAMvpR1gpmv/6T/tXu
- U/lv7/4oiw9ZgM1CUWAgD/M0tRJIws2V86bVdxysoyZzhAIr1kKgjHzStVYb6m5DbblK
- KtV1pUXiwEmPTROqlg0AvsckW/d0P8u4sqis8bAMvX7EKTv/T36u4YeWMd05xJC1DJYo
- eVBiukz8pXbgfud5DqnqtFN4O+h6MOPY0ucYofPx2B3uulLYCei1U46dUQcEeBSjeKxS
- qj1w==
+ :reply-to; bh=673gMgKWT3TLRKI285qFmHPbfGLkvDLWeFaKIf5VVwQ=;
+ b=mm+QtEs6kMdUJrkiMRXHHADtrMxmOIBUp0dQp4ZtvGUlBoRlpJAVKjY2DE8rmEu7zx
+ 2bdmNrU3wmW7Fq+up2PDCsVU/pCuM6yVjdvRdSeT77fsbU+UYf5H7d1X0MV1O+5pBjVE
+ xa0fhQRyw9fQYQv1cKMNtRYfaLUMbjPnpf1CSIC9igdnUqMfIdA+8+MMF/h7p4PcjnIs
+ UsKri+hy9XC0HkTaZyFdTdaR6iHEQvYaLX7Y7Tdx4AOFOex1NH/S5IP11+bf+w3k5vlJ
+ 40jqvL+LbmXQJ3M/r/G4pU8rDy3e+RyJQHNORVgun6spl0M/yY7haO0ErxbcDZlZAArw
+ jEiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734455993; x=1735060793;
+ d=1e100.net; s=20230601; t=1734455998; x=1735060798;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hC9M0XpdNJx8hwrzBQKl1ZaJYPNdEGDotHyFjhLEqJ4=;
- b=qruboN+2VvTTDnxq3gssYkKKHciut4iDkOkdwTFQidlJ8DDA5OhTNN7jr4l2sN1yiP
- 7uIWIB7/p8VtlS0RCTPviYVWApDETfCCf4ewiaRqwVmWRwZrL7KLLO0vthNRVoOzLMuS
- /JZbXzQBkjXbZPutPeIcvNSTxub5stsUhzF3+738Rtw38DeQn+U3oZTuI+0i9O0mcLFK
- v6duTjXDeD+iYnrP18RR3phlurTCkSpd2lYLw0KWqlxOMGPyywxPpVwYFkKf2DAG6abP
- FvkThUrSvljGpLLeS17a35wvthWUcp0S/nrAkuZPmZqbwsylOl4vW+zTowx92FdKteUM
- 7Dmg==
-X-Gm-Message-State: AOJu0Yzep6hGakRleuBiTNsaiyBEQY29NGTOZoP8x5pnWpb4ag4lh1xq
- 8TSBLMpZ3C3l95dxqHDXqmZUVF7D4tXRDo1Jcn6Rqj51glBXb2CMQc1ILAfKZJZzz/4RqssGRn6
- Z
-X-Gm-Gg: ASbGncseXsbCqRHkBXofXmUFPbWLC63UY701e56f9Lv6bPZG+db63Y2Lo4YW5r65L7v
- iLb8E+PFECl+6DWvN7LQwBAW/uO+Cxp0l6UBRr9dhcewW9tzdielinpmAZMXe1DdYrErJ1HPKNs
- pdo5dDIqtH4Tz7p9fqvEGHqVlerVIFQaRI5H+A1f2JlSic17gEKSFgXzYWJNzKYSdL1+bg8DzTf
- /cB8Ewh8zpynrwCQ1JzwHh1/649UMammlt6TlWbbzc0TbKbJ1ywjBhDS+zuA6Y=
-X-Google-Smtp-Source: AGHT+IE9glgKAMtf/ySxxi40oKwnxGiLQkUfJTDm9SpaIl4PvjILtamL9DzJchF//22DdKFUSV/BCw==
-X-Received: by 2002:a5d:648b:0:b0:385:f17b:de5a with SMTP id
- ffacd0b85a97d-38880ae13c4mr17519610f8f.28.1734455993089; 
- Tue, 17 Dec 2024 09:19:53 -0800 (PST)
+ bh=673gMgKWT3TLRKI285qFmHPbfGLkvDLWeFaKIf5VVwQ=;
+ b=cvQV/aK23JckS8rwAEv6PaPCGRm+BmO1VrzzOICsNnnh7SFRnAO/GJwhQCDQ9Vo07E
+ B2anP2m7K+gZtru/R4gLNI79dreCSUwruLc5ZXps+dk+oLArkNcNHKNW7c3QwY1MbOo5
+ IPs6zz9iE1SG8Lp33RH/NLnc+LOKTPInGA+cFl1T7NuJoRdstyMMhbUX2Dn09kpga6XO
+ XWsXvmeoOaZ8wHw1ZkT8IBcQAPkV5c84ds88mMVJURCIRHk49pdvn4YQd9GI1bbjNGeq
+ nQCveMuLZZpdO5nqOvIXCYD3bN2Y/5jSc69+2LaS1pegnH1wGcI0xcbH6M+4W3kaq828
+ wPNg==
+X-Gm-Message-State: AOJu0Yw7dBnR8iB6cXhTKGCM6C7hQyn+TWKu2SA0a1IF7lwLJiubJWCX
+ DA0Ux1aAOjXXBcJb/QG+ET+BopTUoMBl24dYJfvi8vFEjsUnvijwVRew8NSmgIbXcgkTbkPcFZR
+ 4
+X-Gm-Gg: ASbGncssSmr20EbsDkRsfiNTtrwY7sUCwLPeZFOlRoTaQm6I4PENhBbmHFwYHF1LgDn
+ rwCKzCEvaZ8VAKc9C5l+eKDi+mjwh9LuCP+DAkn9ZfuT6iTHya1wcTFAbf/jULoh2NDhICKlbxx
+ DYZ2vlsSaaVa8ZWDuxaZmIPLo6torCrf/WYqOkqnvSe+UukGRdcHiAG0cJkUUVt0WfZMOchS3mb
+ E04rgj7olYhHc5116hUBkFaygkchnL9kS8tSEvUqNJazOodw97oMboVxT79we0=
+X-Google-Smtp-Source: AGHT+IH0tOPNuWiD53itQaNu2HLTWCiUr77EnqnzWs6MhyYQI2PEMYaRLqVgXIOCqJiJ66rN4xTgOA==
+X-Received: by 2002:a05:6000:144d:b0:385:e37a:2a56 with SMTP id
+ ffacd0b85a97d-3888e0bb669mr12691509f8f.52.1734455998044; 
+ Tue, 17 Dec 2024 09:19:58 -0800 (PST)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.52
+ ffacd0b85a97d-388c8016389sm11569728f8f.32.2024.12.17.09.19.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Dec 2024 09:19:52 -0800 (PST)
+ Tue, 17 Dec 2024 09:19:57 -0800 (PST)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 13/19] target/arm: Add ARM_CP_ADD_TLBI_NXS type flag for NXS
- insns
-Date: Tue, 17 Dec 2024 17:19:31 +0000
-Message-Id: <20241217171937.3899947-14-peter.maydell@linaro.org>
+Subject: [PULL 18/19] hw/intc/arm_gicv3_its: Zero initialize local DTEntry etc
+ structs
+Date: Tue, 17 Dec 2024 17:19:36 +0000
+Message-Id: <20241217171937.3899947-19-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241217171937.3899947-1-peter.maydell@linaro.org>
 References: <20241217171937.3899947-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,85 +99,168 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All of the TLBI insns with an NXS variant put that variant at the
-same encoding but with a CRn field that is one greater than for the
-original TLBI insn.  To avoid having to define every TLBI insn
-effectively twice, once in the normal way and once in a set of cpreg
-arrays that are only registered when FEAT_XS is present, we define a
-new ARM_CP_ADD_TLB_NXS type flag for cpregs.  When this flag is set
-in a cpreg struct and FEAT_XS is present,
-define_one_arm_cp_reg_with_opaque() will automatically add a second
-cpreg to the hash table for the TLBI NXS insn with:
- * the crn+1 encoding
- * an FGT field that indicates that it should honour HCR_EL2.FGTnXS
- * a name with the "NXS" suffix
+In the GICv3 ITS model, we have a common coding pattern which has a
+local C struct like "DTEntry dte", which is a C representation of an
+in-guest-memory data structure, and we call a function such as
+get_dte() to read guest memory and fill in the C struct.  These
+functions to read in the struct sometimes have cases where they will
+leave early and not fill in the whole struct (for instance get_dte()
+will set "dte->valid = false" and nothing else for the case where it
+is passed an entry_addr implying that there is no L2 table entry for
+the DTE).  This then causes potential use of uninitialized memory
+later, for instance when we call a trace event which prints all the
+fields of the struct.  Sufficiently advanced compilers may produce
+-Wmaybe-uninitialized warnings about this, especially if LTO is
+enabled.
 
-(If there are future TLBI NXS insns that don't use this same
-encoding convention, it is also possible to define them manually.)
+Rather than trying to carefully separate out these trace events into
+"only the 'valid' field is initialized" and "all fields can be
+printed", zero-init all the structs when we define them. None of
+these structs are large (the biggest is 24 bytes) and having
+consistent behaviour is less likely to be buggy.
 
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2718
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20241211144440.2700268-3-peter.maydell@linaro.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20241213182337.3343068-1-peter.maydell@linaro.org
 ---
- target/arm/cpregs.h |  8 ++++++++
- target/arm/helper.c | 25 +++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
+ hw/intc/arm_gicv3_its.c | 44 ++++++++++++++++++++---------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
-diff --git a/target/arm/cpregs.h b/target/arm/cpregs.h
-index 87704762ef9..1759d9defbe 100644
---- a/target/arm/cpregs.h
-+++ b/target/arm/cpregs.h
-@@ -126,6 +126,14 @@ enum {
-      * equivalent EL1 register when FEAT_NV2 is enabled.
-      */
-     ARM_CP_NV2_REDIRECT          = 1 << 20,
-+    /*
-+     * Flag: this is a TLBI insn which (when FEAT_XS is present) also has
-+     * an NXS variant at the same encoding except that crn is 1 greater,
-+     * so when registering this cpreg automatically also register one
-+     * for the TLBI NXS variant. (For QEMU the NXS variant behaves
-+     * identically to the normal one, other than FGT trapping handling.)
-+     */
-+    ARM_CP_ADD_TLBI_NXS          = 1 << 21,
- };
+diff --git a/hw/intc/arm_gicv3_its.c b/hw/intc/arm_gicv3_its.c
+index f50b1814eaf..0de76430089 100644
+--- a/hw/intc/arm_gicv3_its.c
++++ b/hw/intc/arm_gicv3_its.c
+@@ -465,7 +465,7 @@ static ItsCmdResult lookup_vte(GICv3ITSState *s, const char *who,
+ static ItsCmdResult process_its_cmd_phys(GICv3ITSState *s, const ITEntry *ite,
+                                          int irqlevel)
+ {
+-    CTEntry cte;
++    CTEntry cte = {};
+     ItsCmdResult cmdres;
  
- /*
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 8e62769ec0d..c2a70f8c053 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -9146,6 +9146,31 @@ void define_one_arm_cp_reg_with_opaque(ARMCPU *cpu,
-                     if (r->state != state && r->state != ARM_CP_STATE_BOTH) {
-                         continue;
-                     }
-+                    if ((r->type & ARM_CP_ADD_TLBI_NXS) &&
-+                        cpu_isar_feature(aa64_xs, cpu)) {
-+                        /*
-+                         * This is a TLBI insn which has an NXS variant. The
-+                         * NXS variant is at the same encoding except that
-+                         * crn is +1, and has the same behaviour except for
-+                         * fine-grained trapping. Add the NXS insn here and
-+                         * then fall through to add the normal register.
-+                         * add_cpreg_to_hashtable() copies the cpreg struct
-+                         * and name that it is passed, so it's OK to use
-+                         * a local struct here.
-+                         */
-+                        ARMCPRegInfo nxs_ri = *r;
-+                        g_autofree char *name = g_strdup_printf("%sNXS", r->name);
-+
-+                        assert(state == ARM_CP_STATE_AA64);
-+                        assert(nxs_ri.crn < 0xf);
-+                        nxs_ri.crn++;
-+                        if (nxs_ri.fgt) {
-+                            nxs_ri.fgt |= R_FGT_NXS_MASK;
-+                        }
-+                        add_cpreg_to_hashtable(cpu, &nxs_ri, opaque, state,
-+                                               ARM_CP_SECSTATE_NS,
-+                                               crm, opc1, opc2, name);
-+                    }
-                     if (state == ARM_CP_STATE_AA32) {
-                         /*
-                          * Under AArch32 CP registers can be common
+     cmdres = lookup_cte(s, __func__, ite->icid, &cte);
+@@ -479,7 +479,7 @@ static ItsCmdResult process_its_cmd_phys(GICv3ITSState *s, const ITEntry *ite,
+ static ItsCmdResult process_its_cmd_virt(GICv3ITSState *s, const ITEntry *ite,
+                                          int irqlevel)
+ {
+-    VTEntry vte;
++    VTEntry vte = {};
+     ItsCmdResult cmdres;
+ 
+     cmdres = lookup_vte(s, __func__, ite->vpeid, &vte);
+@@ -514,8 +514,8 @@ static ItsCmdResult process_its_cmd_virt(GICv3ITSState *s, const ITEntry *ite,
+ static ItsCmdResult do_process_its_cmd(GICv3ITSState *s, uint32_t devid,
+                                        uint32_t eventid, ItsCmdType cmd)
+ {
+-    DTEntry dte;
+-    ITEntry ite;
++    DTEntry dte = {};
++    ITEntry ite = {};
+     ItsCmdResult cmdres;
+     int irqlevel;
+ 
+@@ -583,8 +583,8 @@ static ItsCmdResult process_mapti(GICv3ITSState *s, const uint64_t *cmdpkt,
+     uint32_t pIntid = 0;
+     uint64_t num_eventids;
+     uint16_t icid = 0;
+-    DTEntry dte;
+-    ITEntry ite;
++    DTEntry dte = {};
++    ITEntry ite = {};
+ 
+     devid = (cmdpkt[0] & DEVID_MASK) >> DEVID_SHIFT;
+     eventid = cmdpkt[1] & EVENTID_MASK;
+@@ -651,8 +651,8 @@ static ItsCmdResult process_vmapti(GICv3ITSState *s, const uint64_t *cmdpkt,
+ {
+     uint32_t devid, eventid, vintid, doorbell, vpeid;
+     uint32_t num_eventids;
+-    DTEntry dte;
+-    ITEntry ite;
++    DTEntry dte = {};
++    ITEntry ite = {};
+ 
+     if (!its_feature_virtual(s)) {
+         return CMD_CONTINUE;
+@@ -761,7 +761,7 @@ static bool update_cte(GICv3ITSState *s, uint16_t icid, const CTEntry *cte)
+ static ItsCmdResult process_mapc(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+     uint16_t icid;
+-    CTEntry cte;
++    CTEntry cte = {};
+ 
+     icid = cmdpkt[2] & ICID_MASK;
+     cte.valid = cmdpkt[2] & CMD_FIELD_VALID_MASK;
+@@ -822,7 +822,7 @@ static bool update_dte(GICv3ITSState *s, uint32_t devid, const DTEntry *dte)
+ static ItsCmdResult process_mapd(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+     uint32_t devid;
+-    DTEntry dte;
++    DTEntry dte = {};
+ 
+     devid = (cmdpkt[0] & DEVID_MASK) >> DEVID_SHIFT;
+     dte.size = cmdpkt[1] & SIZE_MASK;
+@@ -886,9 +886,9 @@ static ItsCmdResult process_movi(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+     uint32_t devid, eventid;
+     uint16_t new_icid;
+-    DTEntry dte;
+-    CTEntry old_cte, new_cte;
+-    ITEntry old_ite;
++    DTEntry dte = {};
++    CTEntry old_cte = {}, new_cte = {};
++    ITEntry old_ite = {};
+     ItsCmdResult cmdres;
+ 
+     devid = FIELD_EX64(cmdpkt[0], MOVI_0, DEVICEID);
+@@ -965,7 +965,7 @@ static bool update_vte(GICv3ITSState *s, uint32_t vpeid, const VTEntry *vte)
+ 
+ static ItsCmdResult process_vmapp(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+-    VTEntry vte;
++    VTEntry vte = {};
+     uint32_t vpeid;
+ 
+     if (!its_feature_virtual(s)) {
+@@ -1030,7 +1030,7 @@ static void vmovp_callback(gpointer data, gpointer opaque)
+      */
+     GICv3ITSState *s = data;
+     VmovpCallbackData *cbdata = opaque;
+-    VTEntry vte;
++    VTEntry vte = {};
+     ItsCmdResult cmdres;
+ 
+     cmdres = lookup_vte(s, __func__, cbdata->vpeid, &vte);
+@@ -1085,9 +1085,9 @@ static ItsCmdResult process_vmovi(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+     uint32_t devid, eventid, vpeid, doorbell;
+     bool doorbell_valid;
+-    DTEntry dte;
+-    ITEntry ite;
+-    VTEntry old_vte, new_vte;
++    DTEntry dte = {};
++    ITEntry ite = {};
++    VTEntry old_vte = {}, new_vte = {};
+     ItsCmdResult cmdres;
+ 
+     if (!its_feature_virtual(s)) {
+@@ -1186,10 +1186,10 @@ static ItsCmdResult process_vinvall(GICv3ITSState *s, const uint64_t *cmdpkt)
+ static ItsCmdResult process_inv(GICv3ITSState *s, const uint64_t *cmdpkt)
+ {
+     uint32_t devid, eventid;
+-    ITEntry ite;
+-    DTEntry dte;
+-    CTEntry cte;
+-    VTEntry vte;
++    ITEntry ite = {};
++    DTEntry dte = {};
++    CTEntry cte = {};
++    VTEntry vte = {};
+     ItsCmdResult cmdres;
+ 
+     devid = FIELD_EX64(cmdpkt[0], INV_0, DEVICEID);
 -- 
 2.34.1
 
