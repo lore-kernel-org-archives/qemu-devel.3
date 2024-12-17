@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B71E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08125E77187
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNa0r-0005Yk-Es; Tue, 17 Dec 2024 11:01:33 -0500
+	id 1tNa03-0004KZ-BB; Tue, 17 Dec 2024 11:00:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNa0k-0005P2-9Z
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:26 -0500
+ id 1tNZzp-0004G8-9V
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:32 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNa0g-0002E6-Cw
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:26 -0500
+ id 1tNZzl-00026y-FY
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:00:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734451281;
+ s=mimecast20190719; t=1734451224;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ch76bbC64yQqfIteF7QKTIH/aMk7uJFkuVjRD/eCd+0=;
- b=f9f+mlH1Xe96qOJeOelCX/kWlHMViqLhVHFNJs3j9Kdy5saO8oCtot1i4oRJn+p/vWbnvc
- i5W3fSUoz8crIKWAD2TmXVG/j7fFbnjaLvrFBwoVG7UCLe1EvKB62YnpZJusVsbKFTkuCj
- WpozNvJv4ms01UIpuVZGxwq9vbVBFfE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cHGZ45//i/AB/+rLnMXUK685IrJCFCJA/gUWhS7JhRE=;
+ b=DRHHolD0fAc1BjN2JSW9LXoF8ZPTedCQhvWNaRoIhat5a10wEOzhAi9diOcNo4mYWAucU4
+ 9mEKI/cyGudWQXu8HeyWUAAoHTOlxRK0D/U/kH39wRBg8sYQ5QlUGbiphVjvV6FU6Sr9P/
+ Pf1cUc595qun+Zeo0Ew/k5B9t2ikCPo=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-jMwnZR-ePZueKxF_0UxW3Q-1; Tue,
- 17 Dec 2024 11:01:17 -0500
-X-MC-Unique: jMwnZR-ePZueKxF_0UxW3Q-1
-X-Mimecast-MFC-AGG-ID: jMwnZR-ePZueKxF_0UxW3Q
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-opf9Q9i8NPunC_VtOwiLig-1; Tue,
+ 17 Dec 2024 11:00:21 -0500
+X-MC-Unique: opf9Q9i8NPunC_VtOwiLig-1
+X-Mimecast-MFC-AGG-ID: opf9Q9i8NPunC_VtOwiLig
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7BB5119560B3; Tue, 17 Dec 2024 16:01:16 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 44E101956050; Tue, 17 Dec 2024 16:00:20 +0000 (UTC)
 Received: from toolbox.redhat.com (unknown [10.42.28.136])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1CABF30044C1; Tue, 17 Dec 2024 16:01:13 +0000 (UTC)
+ id 9067A30044C1; Tue, 17 Dec 2024 16:00:17 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -54,10 +54,9 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>
-Subject: [PATCH v3 26/32] tests/functional: convert tests to new uncompress
- helper
-Date: Tue, 17 Dec 2024 15:59:47 +0000
-Message-ID: <20241217155953.3950506-27-berrange@redhat.com>
+Subject: [PATCH v3 08/32] tests/functional: switch to new test skip decorators
+Date: Tue, 17 Dec 2024 15:59:29 +0000
+Message-ID: <20241217155953.3950506-9-berrange@redhat.com>
 In-Reply-To: <20241217155953.3950506-1-berrange@redhat.com>
 References: <20241217155953.3950506-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,468 +88,591 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Replace use of lzma_uncompress and gzip_uncompress with the
-new uncompress helper.
+This ensures consistency of behaviour across all the tests, and requires
+that we provide gitlab bug links when marking a test to be skipped due
+to unreliability.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- tests/functional/test_aarch64_raspi4.py   |  5 +----
- tests/functional/test_aarch64_sbsaref.py  | 10 +++-------
- tests/functional/test_alpha_clipper.py    |  4 +---
- tests/functional/test_arm_bpim2u.py       | 13 +++----------
- tests/functional/test_arm_cubieboard.py   | 14 ++++----------
- tests/functional/test_arm_orangepi.py     | 17 ++++-------------
- tests/functional/test_arm_raspi2.py       |  5 +----
- tests/functional/test_arm_smdkc210.py     |  6 ++----
- tests/functional/test_mips64el_malta.py   |  9 ++-------
- tests/functional/test_mips_malta.py       |  5 +----
- tests/functional/test_mipsel_malta.py     | 15 +++++----------
- tests/functional/test_rx_gdbsim.py        |  5 +----
- tests/functional/test_s390x_ccw_virtio.py |  6 ++----
- tests/functional/test_s390x_topology.py   |  5 +----
- 14 files changed, 31 insertions(+), 88 deletions(-)
+ tests/functional/test_acpi_bits.py           | 25 +++--------------
+ tests/functional/test_arm_aspeed_ast2600.py  |  7 +++--
+ tests/functional/test_arm_bflt.py            |  7 +++--
+ tests/functional/test_arm_bpim2u.py          |  5 ++--
+ tests/functional/test_arm_cubieboard.py      |  5 ++--
+ tests/functional/test_arm_integratorcp.py    | 25 +++++------------
+ tests/functional/test_arm_orangepi.py        |  8 +++---
+ tests/functional/test_linux_initrd.py        |  7 +++--
+ tests/functional/test_m68k_nextcube.py       | 15 +++--------
+ tests/functional/test_mips64el_fuloong2e.py  |  4 +--
+ tests/functional/test_mips64el_loongson3v.py |  8 +++---
+ tests/functional/test_mips64el_malta.py      | 28 +++++++-------------
+ tests/functional/test_ppc64_hv.py            | 18 +++----------
+ tests/functional/test_ppc_40p.py             |  7 ++---
+ tests/functional/test_rx_gdbsim.py           |  6 ++---
+ tests/functional/test_sh4_r2d.py             |  8 +++---
+ 16 files changed, 61 insertions(+), 122 deletions(-)
 
-diff --git a/tests/functional/test_aarch64_raspi4.py b/tests/functional/test_aarch64_raspi4.py
-index 3918e35e82..7a4302b0c5 100755
---- a/tests/functional/test_aarch64_raspi4.py
-+++ b/tests/functional/test_aarch64_raspi4.py
-@@ -7,7 +7,6 @@
+diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
+index 1e6d082ecb..8763ea0822 100755
+--- a/tests/functional/test_acpi_bits.py
++++ b/tests/functional/test_acpi_bits.py
+@@ -32,7 +32,6 @@
+ """
  
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test.utils import gzip_uncompress
+ import os
+-import platform
+ import re
+ import shutil
+ import subprocess
+@@ -46,28 +45,13 @@
+     Sequence,
+ )
+ from qemu.machine import QEMUMachine
+-from unittest import skipIf
+-from qemu_test import QemuSystemTest, Asset, which
++from qemu_test import (QemuSystemTest, Asset, skipIfMissingCommands,
++                       skipIfNotMachine)
  
+-deps = ["xorriso", "mformat"] # dependent tools needed in the test setup/box.
+-supported_platforms = ['x86_64'] # supported test platforms.
  
- class Aarch64Raspi4Machine(LinuxKernelTest):
-@@ -63,9 +62,7 @@ def test_arm_raspi4_initrd(self):
-                                            member='boot/kernel8.img')
-         dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-                                         member='boot/bcm2711-rpi-4-b.dtb')
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
+ # default timeout of 120 secs is sometimes not enough for bits test.
+ BITS_TIMEOUT = 200
  
-         self.set_machine('raspi4b')
-         self.vm.set_console()
-diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index 533ca64407..2d756efdab 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -11,7 +11,7 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import wait_for_console_pattern
- from qemu_test import interrupt_interactive_console_until_pattern
--from qemu_test.utils import lzma_uncompress
+-def missing_deps():
+-    """ returns True if any of the test dependent tools are absent.
+-    """
+-    for dep in deps:
+-        if which(dep) is None:
+-            return True
+-    return False
+-
+-def supported_platform():
+-    """ checks if the test is running on a supported platform.
+-    """
+-    return platform.machine() in supported_platforms
+-
+ class QEMUBitsMachine(QEMUMachine): # pylint: disable=too-few-public-methods
+     """
+     A QEMU VM, with isa-debugcon enabled and bits iso passed
+@@ -110,9 +94,8 @@ def base_args(self):
+         """return the base argument to QEMU binary"""
+         return self._base_args
+ 
+-@skipIf(not supported_platform() or missing_deps(),
+-        'unsupported platform or dependencies (%s) not installed' \
+-        % ','.join(deps))
++@skipIfMissingCommands("xorriso", "mformat")
++@skipIfNotMachine("x86_64")
+ class AcpiBitsTest(QemuSystemTest): #pylint: disable=too-many-instance-attributes
+     """
+     ACPI and SMBIOS tests using biosbits.
+diff --git a/tests/functional/test_arm_aspeed_ast2600.py b/tests/functional/test_arm_aspeed_ast2600.py
+index 74d025e0fc..9c749f96b4 100755
+--- a/tests/functional/test_arm_aspeed_ast2600.py
++++ b/tests/functional/test_arm_aspeed_ast2600.py
+@@ -11,10 +11,9 @@
+ 
+ from qemu_test import Asset
+ from aspeed import AspeedTest
+-from qemu_test import exec_command_and_wait_for_pattern
+-from qemu_test import has_cmd
++from qemu_test import exec_command_and_wait_for_pattern, skipIfMissingCommands
+ from qemu_test.utils import archive_extract
+-from unittest import skipUnless
 +
  
- def fetch_firmware(test):
-     """
-@@ -29,14 +29,10 @@ def fetch_firmware(test):
-     """
+ class AST2600Machine(AspeedTest):
  
-     # Secure BootRom (TF-A code)
--    fs0_xz_path = Aarch64SbsarefMachine.ASSET_FLASH0.fetch()
--    fs0_path = test.scratch_file("SBSA_FLASH0.fd")
--    lzma_uncompress(fs0_xz_path, fs0_path)
-+    fs0_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH0)
+@@ -68,7 +67,7 @@ def test_arm_ast2600_evb_buildroot(self):
+          'images/ast2600-evb/buildroot-2023.02-tpm/flash.img'),
+         'a46009ae8a5403a0826d607215e731a8c68d27c14c41e55331706b8f9c7bd997')
  
-     # Non-secure rom (UEFI and EFI variables)
--    fs1_xz_path = Aarch64SbsarefMachine.ASSET_FLASH1.fetch()
--    fs1_path = test.scratch_file("SBSA_FLASH1.fd")
--    lzma_uncompress(fs1_xz_path, fs1_path)
-+    fs1_path = test.uncompress(Aarch64SbsarefMachine.ASSET_FLASH1)
+-    @skipUnless(*has_cmd('swtpm'))
++    @skipIfMissingCommands('swtpm')
+     def test_arm_ast2600_evb_buildroot_tpm(self):
+         self.set_machine('ast2600-evb')
  
-     for path in [fs0_path, fs1_path]:
-         with open(path, "ab+") as fd:
-diff --git a/tests/functional/test_alpha_clipper.py b/tests/functional/test_alpha_clipper.py
-index 72cd7b57e6..c5d7181953 100755
---- a/tests/functional/test_alpha_clipper.py
-+++ b/tests/functional/test_alpha_clipper.py
-@@ -6,7 +6,6 @@
- # SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/tests/functional/test_arm_bflt.py b/tests/functional/test_arm_bflt.py
+index 281925d11a..9095b08539 100755
+--- a/tests/functional/test_arm_bflt.py
++++ b/tests/functional/test_arm_bflt.py
+@@ -10,9 +10,8 @@
+ import bz2
  
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import gzip_uncompress
+ from qemu_test import QemuUserTest, Asset
+-from qemu_test import has_cmd
++from qemu_test import skipIfMissingCommands, skipUntrustedTest
+ from qemu_test.utils import cpio_extract
+-from unittest import skipUnless
  
  
- class AlphaClipperTest(LinuxKernelTest):
-@@ -20,8 +19,7 @@ def test_alpha_clipper(self):
-         self.set_machine('clipper')
-         kernel_path = self.ASSET_KERNEL.fetch()
+ class LoadBFLT(QemuUserTest):
+@@ -21,8 +20,8 @@ class LoadBFLT(QemuUserTest):
+         ('https://elinux.org/images/5/51/Stm32_mini_rootfs.cpio.bz2'),
+          'eefb788e4980c9e8d6c9d60ce7d15d4da6bf4fbc6a80f487673824600d5ba9cc')
  
--        uncompressed_kernel = self.scratch_file('vmlinux')
--        gzip_uncompress(kernel_path, uncompressed_kernel)
-+        uncompressed_kernel = self.uncompress(self.ASSET_KERNEL, format="gz")
- 
-         self.vm.set_console()
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE + 'console=ttyS0'
+-    @skipUnless(*has_cmd('cpio'))
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipIfMissingCommands('cpio')
++    @skipUntrustedTest()
+     def test_stm32(self):
+         # See https://elinux.org/STM32#User_Space
+         rootfs_path_bz2 = self.ASSET_ROOTFS.fetch()
 diff --git a/tests/functional/test_arm_bpim2u.py b/tests/functional/test_arm_bpim2u.py
-index 91c56b0930..12cd359746 100755
+index c9cf43c147..fcd111f59d 100755
 --- a/tests/functional/test_arm_bpim2u.py
 +++ b/tests/functional/test_arm_bpim2u.py
-@@ -10,7 +10,6 @@
+@@ -9,9 +9,10 @@
+ 
  from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
  from qemu_test import Asset, interrupt_interactive_console_until_pattern
- from qemu_test import skipBigDataTest
--from qemu_test.utils import gzip_uncompress, lzma_uncompress
++from qemu_test import skipBigDataTest
+ from qemu_test.utils import gzip_uncompress, lzma_uncompress
  from qemu_test.utils import image_pow2ceil_expand
+-from unittest import skipUnless
++
  
+ class BananaPiMachine(LinuxKernelTest):
  
-@@ -65,9 +64,7 @@ def test_arm_bpim2u_initrd(self):
-         dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
+@@ -143,7 +144,7 @@ def test_arm_bpim2u_gmac(self):
+         os.remove(dtb_path)
+         os.remove(rootfs_path)
  
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -103,9 +100,7 @@ def test_arm_bpim2u_gmac(self):
-         dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/'
-                     'sun8i-r40-bananapi-m2-ultra.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
--        rootfs_path_xz = self.ASSET_ROOTFS.fetch()
--        rootfs_path = self.scratch_file('rootfs.cpio')
--        lzma_uncompress(rootfs_path_xz, rootfs_path)
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-         image_pow2ceil_expand(rootfs_path)
- 
-         self.vm.set_console()
-@@ -147,9 +142,7 @@ def test_arm_bpim2u_openwrt_22_03_3(self):
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
++    @skipBigDataTest()
+     def test_arm_bpim2u_openwrt_22_03_3(self):
          self.set_machine('bpim2u')
          # This test download a 8.9 MiB compressed image and expand it
-         # to 127 MiB.
--        image_path_gz = self.ASSET_SD_IMAGE.fetch()
--        image_path = self.scratch_file('sdcard.img')
--        gzip_uncompress(image_path_gz, image_path)
-+        image_path = self.uncompress(self.ASSET_SD_IMAGE)
-         image_pow2ceil_expand(image_path)
- 
-         self.vm.set_console()
 diff --git a/tests/functional/test_arm_cubieboard.py b/tests/functional/test_arm_cubieboard.py
-index 32db303253..423db710e8 100755
+index 9e42b72060..fdbd52a33c 100755
 --- a/tests/functional/test_arm_cubieboard.py
 +++ b/tests/functional/test_arm_cubieboard.py
-@@ -9,7 +9,7 @@
+@@ -8,8 +8,9 @@
+ 
  from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
  from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import skipBigDataTest
--from qemu_test.utils import gzip_uncompress, image_pow2ceil_expand
-+from qemu_test.utils import image_pow2ceil_expand
- 
++from qemu_test import skipBigDataTest
+ from qemu_test.utils import gzip_uncompress, image_pow2ceil_expand
+-from unittest import skipUnless
++
  
  class CubieboardMachine(LinuxKernelTest):
-@@ -43,9 +43,7 @@ def test_arm_cubieboard_initrd(self):
-         dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-                     'sun4i-a10-cubieboard.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
  
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -77,9 +75,7 @@ def test_arm_cubieboard_sata(self):
-                     'sun4i-a10-cubieboard.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
+@@ -105,7 +106,7 @@ def test_arm_cubieboard_sata(self):
+         # Wait for VM to shut down gracefully
+         self.vm.wait()
  
--        rootfs_path_gz = self.ASSET_SATA_ROOTFS.fetch()
--        rootfs_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(rootfs_path_gz, rootfs_path)
-+        rootfs_path = self.uncompress(self.ASSET_SATA_ROOTFS)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -111,9 +107,7 @@ def test_arm_cubieboard_openwrt_22_03_2(self):
+-    @skipUnless(os.getenv('AVOCADO_ALLOW_LARGE_STORAGE'), 'storage limited')
++    @skipBigDataTest()
+     def test_arm_cubieboard_openwrt_22_03_2(self):
          # This test download a 7.5 MiB compressed image and expand it
          # to 126 MiB.
-         self.set_machine('cubieboard')
--        image_path_gz = self.ASSET_OPENWRT.fetch()
--        image_path = self.scratch_file('sdcard.img')
--        gzip_uncompress(image_path_gz, image_path)
-+        image_path = self.uncompress(self.ASSET_OPENWRT)
-         image_pow2ceil_expand(image_path)
+diff --git a/tests/functional/test_arm_integratorcp.py b/tests/functional/test_arm_integratorcp.py
+index 0fe083f661..54fa366ad4 100755
+--- a/tests/functional/test_arm_integratorcp.py
++++ b/tests/functional/test_arm_integratorcp.py
+@@ -17,20 +17,7 @@
  
-         self.vm.set_console()
-diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
-index aa2d9d19a4..18ee50216b 100755
---- a/tests/functional/test_arm_orangepi.py
-+++ b/tests/functional/test_arm_orangepi.py
-@@ -11,7 +11,6 @@
- from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
- from qemu_test import Asset, interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern, skipBigDataTest
--from qemu_test.utils import gzip_uncompress, lzma_uncompress
- from qemu_test.utils import image_pow2ceil_expand
- 
- 
-@@ -76,9 +75,7 @@ def test_arm_orangepi_initrd(self):
-         dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-                     'sun8i-h3-orangepi-pc.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-@@ -112,9 +109,7 @@ def test_arm_orangepi_sd(self):
-         dtb_path = ('usr/lib/linux-image-6.6.16-current-sunxi/' +
-                     'sun8i-h3-orangepi-pc.dtb')
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
--        rootfs_path_xz = self.ASSET_ROOTFS.fetch()
--        rootfs_path = self.scratch_file('rootfs.cpio')
--        lzma_uncompress(rootfs_path_xz, rootfs_path)
-+        rootfs_path = self.uncompress(self.ASSET_ROOTFS)
-         image_pow2ceil_expand(rootfs_path)
- 
-         self.vm.set_console()
-@@ -155,9 +150,7 @@ def test_arm_orangepi_armbian(self):
-         # This test download a 275 MiB compressed image and expand it
-         # to 1036 MiB, but the underlying filesystem is 1552 MiB...
-         # As we expand it to 2 GiB we are safe.
--        image_path_xz = self.ASSET_ARMBIAN.fetch()
--        image_path = self.scratch_file('armbian.img')
--        lzma_uncompress(image_path_xz, image_path)
-+        image_path = self.uncompress(self.ASSET_ARMBIAN)
-         image_pow2ceil_expand(image_path)
- 
-         self.vm.set_console()
-@@ -195,9 +188,7 @@ def test_arm_orangepi_uboot_netbsd9(self):
-         # before to boot NetBSD.
-         uboot_path = 'usr/lib/u-boot/orangepi_plus/u-boot-sunxi-with-spl.bin'
-         uboot_path = self.archive_extract(self.ASSET_UBOOT, member=uboot_path)
--        image_path_gz = self.ASSET_NETBSD.fetch()
--        image_path = self.scratch_file('armv7.img')
--        gzip_uncompress(image_path_gz, image_path)
-+        image_path = self.uncompress(self.ASSET_NETBSD)
-         image_pow2ceil_expand(image_path)
-         image_drive_args = 'if=sd,format=raw,snapshot=on,file=' + image_path
- 
-diff --git a/tests/functional/test_arm_raspi2.py b/tests/functional/test_arm_raspi2.py
-index 5e38d1a937..d3c7aaa39b 100755
---- a/tests/functional/test_arm_raspi2.py
-+++ b/tests/functional/test_arm_raspi2.py
-@@ -9,7 +9,6 @@
- 
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test.utils import gzip_uncompress
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+-from unittest import skipUnless
+-
+-
+-NUMPY_AVAILABLE = True
+-try:
+-    import numpy as np
+-except ImportError:
+-    NUMPY_AVAILABLE = False
+-
+-CV2_AVAILABLE = True
+-try:
+-    import cv2
+-except ImportError:
+-    CV2_AVAILABLE = False
++from qemu_test import skipIfMissingImports, skipUntrustedTest
  
  
- class ArmRaspi2Machine(LinuxKernelTest):
-@@ -64,9 +63,7 @@ def test_arm_raspi2_initrd(self):
-                                            member='boot/kernel7.img')
-         dtb_path = self.archive_extract(self.ASSET_KERNEL_20190215,
-                                         member='boot/bcm2709-rpi-2-b.dtb')
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
+ class IntegratorMachine(QemuSystemTest):
+@@ -63,7 +50,7 @@ def boot_integratorcp(self):
+                          '-append', 'printk.time=0 console=ttyAMA0')
+         self.vm.launch()
  
-         self.set_machine('raspi2b')
-         self.vm.set_console()
-diff --git a/tests/functional/test_arm_smdkc210.py b/tests/functional/test_arm_smdkc210.py
-index f4e86f7e2b..0fda45c63a 100755
---- a/tests/functional/test_arm_smdkc210.py
-+++ b/tests/functional/test_arm_smdkc210.py
-@@ -7,7 +7,7 @@
- import os
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUntrustedTest()
+     def test_integratorcp_console(self):
+         """
+         Boots the Linux kernel and checks that the console is operational
+@@ -71,13 +58,15 @@ def test_integratorcp_console(self):
+         self.boot_integratorcp()
+         wait_for_console_pattern(self, 'Log in as root')
  
- from qemu_test import LinuxKernelTest, Asset
--from qemu_test.utils import gzip_uncompress
+-    @skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+-    @skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipIfMissingImports("numpy", "cv2")
++    @skipUntrustedTest()
+     def test_framebuffer_tux_logo(self):
+         """
+         Boot Linux and verify the Tux logo is displayed on the framebuffer.
+         """
++        import numpy as np
++        import cv2
 +
- 
- class Smdkc210Machine(LinuxKernelTest):
- 
-@@ -30,9 +30,7 @@ def test_arm_exynos4210_initrd(self):
-         dtb_path = 'usr/lib/linux-image-4.19.0-6-armmp/exynos4210-smdkv310.dtb'
-         dtb_path = self.archive_extract(self.ASSET_DEB, member=dtb_path)
- 
--        initrd_path_gz = self.ASSET_ROOTFS.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_ROOTFS)
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE +
-diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
-index 39fafb8bf1..a8da15a26b 100755
---- a/tests/functional/test_mips64el_malta.py
-+++ b/tests/functional/test_mips64el_malta.py
-@@ -15,7 +15,6 @@
- from qemu_test import LinuxKernelTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
--from qemu_test.utils import gzip_uncompress
- 
- 
- class MaltaMachineConsole(LinuxKernelTest):
-@@ -67,9 +66,7 @@ def test_mips64el_malta(self):
-     @skipUntrustedTest()
-     def test_mips64el_malta_5KEc_cpio(self):
-         kernel_path = self.ASSET_KERNEL_3_19_3.fetch()
--        initrd_path_gz = self.ASSET_CPIO_R1.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_CPIO_R1)
- 
-         self.set_machine('malta')
-         self.vm.set_console()
-@@ -119,9 +116,7 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
- 
-         screendump_path = self.scratch_file('screendump.pbm')
- 
--        kernel_path_gz = self.ASSET_KERNEL_4_7_0.fetch()
--        kernel_path = self.scratch_file("vmlinux")
--        gzip_uncompress(kernel_path_gz, kernel_path)
-+        kernel_path = self.uncompress(self.ASSET_KERNEL_4_7_0)
- 
+         screendump_path = os.path.join(self.workdir, "screendump.pbm")
          tuxlogo_path = self.ASSET_TUXLOGO.fetch()
  
-diff --git a/tests/functional/test_mips_malta.py b/tests/functional/test_mips_malta.py
-index 6ab6c0832a..3b15038d89 100755
---- a/tests/functional/test_mips_malta.py
-+++ b/tests/functional/test_mips_malta.py
-@@ -8,7 +8,6 @@
+diff --git a/tests/functional/test_arm_orangepi.py b/tests/functional/test_arm_orangepi.py
+index a872305e93..b113adfe61 100755
+--- a/tests/functional/test_arm_orangepi.py
++++ b/tests/functional/test_arm_orangepi.py
+@@ -10,10 +10,10 @@
+ 
+ from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
+ from qemu_test import Asset, interrupt_interactive_console_until_pattern
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, skipBigDataTest
+ from qemu_test.utils import gzip_uncompress, lzma_uncompress
+ from qemu_test.utils import image_pow2ceil_expand
+-from unittest import skipUnless
++
+ 
+ class BananaPiMachine(LinuxKernelTest):
+ 
+@@ -149,7 +149,7 @@ def test_arm_orangepi_sd(self):
+         os.remove(dtb_path)
+         os.remove(rootfs_path)
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
++    @skipBigDataTest()
+     def test_arm_orangepi_armbian(self):
+         self.set_machine('orangepi-pc')
+         # This test download a 275 MiB compressed image and expand it
+@@ -185,7 +185,7 @@ def test_arm_orangepi_armbian(self):
+                                       'to <orangepipc>')
+         self.wait_for_console_pattern('Starting Load Kernel Modules...')
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
++    @skipBigDataTest()
+     def test_arm_orangepi_uboot_netbsd9(self):
+         self.set_machine('orangepi-pc')
+         # This test download a 304MB compressed image and expand it to 2GB
+diff --git a/tests/functional/test_linux_initrd.py b/tests/functional/test_linux_initrd.py
+index c71a59d4c9..2207f83fbf 100755
+--- a/tests/functional/test_linux_initrd.py
++++ b/tests/functional/test_linux_initrd.py
+@@ -10,12 +10,10 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-import os
+ import logging
+ import tempfile
+ 
+-from qemu_test import QemuSystemTest, Asset
+-from unittest import skipUnless
++from qemu_test import QemuSystemTest, Asset, skipFlakyTest
+ 
+ 
+ class LinuxInitrd(QemuSystemTest):
+@@ -60,7 +58,8 @@ def test_with_2gib_file_should_exit_error_msg_with_linux_v3_6(self):
+                 max_size + 1)
+             self.assertRegex(self.vm.get_log(), expected_msg)
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    # XXX file tracking bug
++    @skipFlakyTest(bug_url=None)
+     def test_with_2gib_file_should_work_with_linux_v4_16(self):
+         """
+         QEMU has supported up to 4 GiB initrd for recent kernel
+diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
+index e6e8d4fd3f..25a17d4794 100755
+--- a/tests/functional/test_m68k_nextcube.py
++++ b/tests/functional/test_m68k_nextcube.py
+@@ -11,17 +11,9 @@
+ import time
+ 
+ from qemu_test import QemuSystemTest, Asset
+-from unittest import skipUnless
+-
+-from qemu_test import has_cmd
++from qemu_test import skipIfMissingImports, skipIfMissingCommands
+ from qemu_test.tesseract import tesseract_ocr
+ 
+-PIL_AVAILABLE = True
+-try:
+-    from PIL import Image
+-except ImportError:
+-    PIL_AVAILABLE = False
+-
+ 
+ class NextCubeMachine(QemuSystemTest):
+ 
+@@ -44,17 +36,18 @@ def check_bootrom_framebuffer(self, screenshot_path):
+         self.vm.cmd('human-monitor-command',
+                     command_line='screendump %s' % screenshot_path)
+ 
+-    @skipUnless(PIL_AVAILABLE, 'Python PIL not installed')
++    @skipIfMissingImports("PIL")
+     def test_bootrom_framebuffer_size(self):
+         self.set_machine('next-cube')
+         screenshot_path = os.path.join(self.workdir, "dump.ppm")
+         self.check_bootrom_framebuffer(screenshot_path)
+ 
++        from PIL import Image
+         width, height = Image.open(screenshot_path).size
+         self.assertEqual(width, 1120)
+         self.assertEqual(height, 832)
+ 
+-    @skipUnless(*has_cmd('tesseract'))
++    @skipIfMissingCommands('tesseract')
+     def test_bootrom_framebuffer_ocr_with_tesseract(self):
+         self.set_machine('next-cube')
+         screenshot_path = os.path.join(self.workdir, "dump.ppm")
+diff --git a/tests/functional/test_mips64el_fuloong2e.py b/tests/functional/test_mips64el_fuloong2e.py
+index a32d5f9d08..531d16d8f6 100755
+--- a/tests/functional/test_mips64el_fuloong2e.py
++++ b/tests/functional/test_mips64el_fuloong2e.py
+@@ -13,7 +13,7 @@
+ import subprocess
+ 
+ from qemu_test import LinuxKernelTest, Asset
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, skipUntrustedTest
+ from unittest import skipUnless
+ 
+ class MipsFuloong2e(LinuxKernelTest):
+@@ -39,7 +39,7 @@ def test_linux_kernel_3_16(self):
+         console_pattern = 'Kernel command line: %s' % kernel_command_line
+         self.wait_for_console_pattern(console_pattern)
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUntrustedTest()
+     @skipUnless(os.getenv('RESCUE_YL_PATH'), 'RESCUE_YL_PATH not available')
+     def test_linux_kernel_2_6_27_isa_serial(self):
+         # Recovery system for the Yeeloong laptop
+diff --git a/tests/functional/test_mips64el_loongson3v.py b/tests/functional/test_mips64el_loongson3v.py
+index e57ec5499e..f85371e50c 100755
+--- a/tests/functional/test_mips64el_loongson3v.py
++++ b/tests/functional/test_mips64el_loongson3v.py
+@@ -9,11 +9,9 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
+ 
+-import os
+-
+-from unittest import skipUnless
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, skipUntrustedTest
++
+ 
+ class MipsLoongson3v(QemuSystemTest):
+     timeout = 60
+@@ -23,7 +21,7 @@ class MipsLoongson3v(QemuSystemTest):
+          'releases/download/20210112/pmon-3avirt.bin'),
+         'fcdf6bb2cb7885a4a62f31fcb0d5e368bac7b6cea28f40c6dfa678af22fea20a')
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUntrustedTest()
+     def test_pmon_serial_console(self):
+         self.set_machine('loongson3-virt')
+ 
+diff --git a/tests/functional/test_mips64el_malta.py b/tests/functional/test_mips64el_malta.py
+index 6d1195d362..52283e2dbd 100755
+--- a/tests/functional/test_mips64el_malta.py
++++ b/tests/functional/test_mips64el_malta.py
+@@ -14,20 +14,8 @@
  
  from qemu_test import LinuxKernelTest, Asset
  from qemu_test import exec_command_and_wait_for_pattern
--from qemu_test.utils import gzip_uncompress
++from qemu_test import skipIfMissingImports, skipFlakyTest, skipUntrustedTest
+ from qemu_test.utils import gzip_uncompress
+-from unittest import skipUnless
+-
+-NUMPY_AVAILABLE = True
+-try:
+-    import numpy as np
+-except ImportError:
+-    NUMPY_AVAILABLE = False
+-
+-CV2_AVAILABLE = True
+-try:
+-    import cv2
+-except ImportError:
+-    CV2_AVAILABLE = False
  
  
  class MaltaMachineConsole(LinuxKernelTest):
-@@ -49,9 +48,7 @@ def test_mips_malta_cpio(self):
-         kernel_path = self.archive_extract(
-             self.ASSET_KERNEL_4_5_0,
-             member='boot/vmlinux-4.5.0-2-4kc-malta')
--        initrd_path_gz = self.ASSET_INITRD.fetch()
--        initrd_path = self.scratch_file('rootfs.cpio')
--        gzip_uncompress(initrd_path_gz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_INITRD)
+@@ -76,7 +64,7 @@ def test_mips64el_malta(self):
+          'rootfs.mipsel64r1.cpio.gz'),
+         '75ba10cd35fb44e32948eeb26974f061b703c81c4ba2fab1ebcacf1d1bec3b61')
  
-         self.set_machine('malta')
-         self.vm.set_console()
-diff --git a/tests/functional/test_mipsel_malta.py b/tests/functional/test_mipsel_malta.py
-index 1f44881c78..fe9c3a172e 100755
---- a/tests/functional/test_mipsel_malta.py
-+++ b/tests/functional/test_mipsel_malta.py
-@@ -12,7 +12,6 @@
- from qemu_test import QemuSystemTest, LinuxKernelTest, Asset
- from qemu_test import interrupt_interactive_console_until_pattern
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import lzma_uncompress
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUntrustedTest()
+     def test_mips64el_malta_5KEc_cpio(self):
+         kernel_path = self.ASSET_KERNEL_3_19_3.fetch()
+         initrd_path_gz = self.ASSET_CPIO_R1.fetch()
+@@ -106,8 +94,7 @@ def test_mips64el_malta_5KEc_cpio(self):
+         self.vm.wait()
  
  
- class MaltaMachineConsole(LinuxKernelTest):
-@@ -33,9 +32,8 @@ class MaltaMachineConsole(LinuxKernelTest):
-          'generic_nano32r6el_page64k_dbg.xz'),
-         'ce21ff4b07a981ecb8a39db2876616f5a2473eb2ab459c6f67465b9914b0c6b6')
+-@skipUnless(NUMPY_AVAILABLE, 'Python NumPy not installed')
+-@skipUnless(CV2_AVAILABLE, 'Python OpenCV not installed')
++@skipIfMissingImports('numpy', 'cv2')
+ class MaltaMachineFramebuffer(LinuxKernelTest):
  
--    def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
--        kernel_path = self.scratch_file('kernel')
--        lzma_uncompress(kernel_path_xz, kernel_path)
-+    def do_test_mips_malta32el_nanomips(self, kernel):
-+        kernel_path = self.uncompress(kernel)
+     timeout = 30
+@@ -126,6 +113,10 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+         """
+         Boot Linux kernel and check Tux logo is displayed on the framebuffer.
+         """
++
++        import numpy as np
++        import cv2
++
+         screendump_path = os.path.join(self.workdir, 'screendump.pbm')
  
-         self.set_machine('malta')
-         self.vm.set_console()
-@@ -51,16 +49,13 @@ def do_test_mips_malta32el_nanomips(self, kernel_path_xz):
-         self.wait_for_console_pattern(console_pattern)
+         kernel_path_gz = self.ASSET_KERNEL_4_7_0.fetch()
+@@ -171,11 +162,12 @@ def do_test_i6400_framebuffer_logo(self, cpu_cores_count):
+     def test_mips_malta_i6400_framebuffer_logo_1core(self):
+         self.do_test_i6400_framebuffer_logo(1)
  
-     def test_mips_malta32el_nanomips_4k(self):
--        kernel_path_xz = self.ASSET_KERNEL_4K.fetch()
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+        self.do_test_mips_malta32el_nanomips(self.ASSET_KERNEL_4K)
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    # XXX file tracking bug
++    @skipFlakyTest(bug_url=None)
+     def test_mips_malta_i6400_framebuffer_logo_7cores(self):
+         self.do_test_i6400_framebuffer_logo(7)
  
-     def test_mips_malta32el_nanomips_16k_up(self):
--        kernel_path_xz = self.ASSET_KERNEL_16K.fetch()
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+        self.do_test_mips_malta32el_nanomips(self.ASSET_KERNEL_16K)
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    @skipFlakyTest(bug_url=None)
+     def test_mips_malta_i6400_framebuffer_logo_8cores(self):
+         self.do_test_i6400_framebuffer_logo(8)
  
-     def test_mips_malta32el_nanomips_64k_dbg(self):
--        kernel_path_xz = self.ASSET_KERNEL_16K.fetch()
--        self.do_test_mips_malta32el_nanomips(kernel_path_xz)
-+        self.do_test_mips_malta32el_nanomips(self.ASSET_KERNEL_64K)
+diff --git a/tests/functional/test_ppc64_hv.py b/tests/functional/test_ppc64_hv.py
+index 7c6f8234f5..88f0f99f24 100755
+--- a/tests/functional/test_ppc64_hv.py
++++ b/tests/functional/test_ppc64_hv.py
+@@ -9,24 +9,14 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-from unittest import skipIf, skipUnless
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import wait_for_console_pattern, exec_command, which
++from qemu_test import wait_for_console_pattern, exec_command
++from qemu_test import skipIfMissingCommands, skipBigDataTest
+ import os
+ import time
+ import subprocess
+ from datetime import datetime
+ 
+-deps = ["xorriso"] # dependent tools needed in the test setup/box.
+-
+-def missing_deps():
+-    """ returns True if any of the test dependent tools are absent.
+-    """
+-    for dep in deps:
+-        if which(dep) is None:
+-            return True
+-    return False
+-
+ # Alpine is a light weight distro that supports QEMU. These tests boot
+ # that on the machine then run a QEMU guest inside it in KVM mode,
+ # that runs the same Alpine distro image.
+@@ -34,8 +24,8 @@ def missing_deps():
+ # large download, but it may be more polite to create qcow2 image with
+ # QEMU already installed and use that.
+ # XXX: The order of these tests seems to matter, see git blame.
+-@skipIf(missing_deps(), 'dependencies (%s) not installed' % ','.join(deps))
+-@skipUnless(os.getenv('QEMU_TEST_ALLOW_LARGE_STORAGE'), 'storage limited')
++@skipIfMissingCommands("xorriso")
++@skipBigDataTest()
+ class HypervisorTest(QemuSystemTest):
+ 
+     timeout = 1000
+diff --git a/tests/functional/test_ppc_40p.py b/tests/functional/test_ppc_40p.py
+index 67bcdae53a..7a74e0cca7 100755
+--- a/tests/functional/test_ppc_40p.py
++++ b/tests/functional/test_ppc_40p.py
+@@ -7,11 +7,8 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later. See the COPYING file in the top-level directory.
+ 
+-import os
+-
+-from unittest import skipUnless
+ from qemu_test import QemuSystemTest, Asset
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, skipUntrustedTest
  
  
- class MaltaMachineYAMON(QemuSystemTest):
+ class IbmPrep40pMachine(QemuSystemTest):
+@@ -37,7 +34,7 @@ class IbmPrep40pMachine(QemuSystemTest):
+     # All rights reserved.
+     # U.S. Government Users Restricted Rights - Use, duplication or disclosure
+     # restricted by GSA ADP Schedule Contract with IBM Corp.
+-    @skipUnless(os.getenv('QEMU_TEST_ALLOW_UNTRUSTED_CODE'), 'untrusted code')
++    @skipUntrustedTest()
+     def test_factory_firmware_and_netbsd(self):
+         self.set_machine('40p')
+         self.require_accelerator("tcg")
 diff --git a/tests/functional/test_rx_gdbsim.py b/tests/functional/test_rx_gdbsim.py
-index b0adb38a45..20623aa51c 100755
+index 5687f756bb..f7621d999d 100755
 --- a/tests/functional/test_rx_gdbsim.py
 +++ b/tests/functional/test_rx_gdbsim.py
-@@ -13,7 +13,6 @@
+@@ -12,10 +12,9 @@
+ 
+ import os
+ 
+-from unittest import skipUnless
  from qemu_test import QemuSystemTest, Asset
  from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import wait_for_console_pattern, skipFlakyTest
--from qemu_test.utils import gzip_uncompress
+-from qemu_test import wait_for_console_pattern
++from qemu_test import wait_for_console_pattern, skipFlakyTest
+ from qemu_test.utils import gzip_uncompress
  
  
- class RxGdbSimMachine(QemuSystemTest):
-@@ -37,9 +36,7 @@ def test_uboot(self):
+@@ -52,9 +51,10 @@ def test_uboot(self):
+         wait_for_console_pattern(self, uboot_version)
+         gcc_version = 'rx-unknown-linux-gcc (GCC) 9.0.0 20181105 (experimental)'
+         # FIXME limit baudrate on chardev, else we type too fast
++        #  https://gitlab.com/qemu-project/qemu/-/issues/2691
+         #exec_command_and_wait_for_pattern(self, 'version', gcc_version)
+ 
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable on GitLab')
++    @skipFlakyTest(bug_url="https://gitlab.com/qemu-project/qemu/-/issues/2691")
+     def test_linux_sash(self):
          """
-         self.set_machine('gdbsim-r5f562n8')
+         Boots a Linux kernel and checks that the console is operational.
+diff --git a/tests/functional/test_sh4_r2d.py b/tests/functional/test_sh4_r2d.py
+index c3cfff79ad..e2fcde2d6b 100755
+--- a/tests/functional/test_sh4_r2d.py
++++ b/tests/functional/test_sh4_r2d.py
+@@ -4,11 +4,8 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
--        uboot_path_gz = self.ASSET_UBOOT.fetch()
--        uboot_path = self.scratch_file('u-boot.bin')
--        gzip_uncompress(uboot_path_gz, uboot_path)
-+        uboot_path = self.uncompress(self.ASSET_UBOOT)
+-import os
+-
+-from qemu_test import LinuxKernelTest, Asset
++from qemu_test import LinuxKernelTest, Asset, skipFlakyTest
+ from qemu_test.utils import archive_extract
+-from unittest import skipUnless
  
-         self.vm.set_console()
-         self.vm.add_args('-bios', uboot_path,
-diff --git a/tests/functional/test_s390x_ccw_virtio.py b/tests/functional/test_s390x_ccw_virtio.py
-index e5884a4dd0..453711aa0f 100755
---- a/tests/functional/test_s390x_ccw_virtio.py
-+++ b/tests/functional/test_s390x_ccw_virtio.py
-@@ -17,7 +17,7 @@
- from qemu_test import QemuSystemTest, Asset
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import lzma_uncompress
-+
+ class R2dTest(LinuxKernelTest):
  
- class S390CCWVirtioMachine(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-@@ -174,9 +174,7 @@ def test_s390x_fedora(self):
+@@ -18,7 +15,8 @@ class R2dTest(LinuxKernelTest):
  
-         kernel_path = self.ASSET_F31_KERNEL.fetch()
- 
--        initrd_path_xz = self.ASSET_F31_INITRD.fetch()
--        initrd_path = self.scratch_file('initrd-raw.img')
--        lzma_uncompress(initrd_path_xz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_F31_INITRD, format="xz")
- 
-         self.vm.set_console()
-         kernel_command_line = (self.KERNEL_COMMON_COMMAND_LINE + ' audit=0 '
-diff --git a/tests/functional/test_s390x_topology.py b/tests/functional/test_s390x_topology.py
-index 82acff4e55..eefd9729cb 100755
---- a/tests/functional/test_s390x_topology.py
-+++ b/tests/functional/test_s390x_topology.py
-@@ -14,7 +14,6 @@
- from qemu_test import exec_command
- from qemu_test import exec_command_and_wait_for_pattern
- from qemu_test import wait_for_console_pattern
--from qemu_test.utils import lzma_uncompress
- 
- 
- class S390CPUTopology(QemuSystemTest):
-@@ -86,9 +85,7 @@ def kernel_init(self):
-         """
-         self.require_accelerator("kvm")
-         kernel_path = self.ASSET_F35_KERNEL.fetch()
--        initrd_path_xz = self.ASSET_F35_INITRD.fetch()
--        initrd_path = self.scratch_file('initrd-raw.img')
--        lzma_uncompress(initrd_path_xz, initrd_path)
-+        initrd_path = self.uncompress(self.ASSET_F35_INITRD, format="xz")
- 
-         self.vm.set_console()
-         kernel_command_line = self.KERNEL_COMMON_COMMAND_LINE
+     # This test has a 6-10% failure rate on various hosts that look
+     # like issues with a buggy kernel.
+-    @skipUnless(os.getenv('QEMU_TEST_FLAKY_TESTS'), 'Test is unstable')
++    # XXX file tracking bug
++    @skipFlakyTest(bug_url=None)
+     def test_r2d(self):
+         self.set_machine('r2d')
+         file_path = self.ASSET_DAY09.fetch()
 -- 
 2.46.0
 
