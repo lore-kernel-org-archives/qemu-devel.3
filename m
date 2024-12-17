@@ -4,88 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4E05E7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 01:38:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9E4E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 01:39:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNMWZ-0004VI-R4; Mon, 16 Dec 2024 20:37:23 -0500
+	id 1tNMXi-0004vH-Mm; Mon, 16 Dec 2024 20:38:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNMWX-0004UY-UW
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:37:21 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1tNMXY-0004qj-UX
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:38:25 -0500
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNMWV-00017f-Vr
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:37:21 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7265c18d79bso5084598b3a.3
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 17:37:19 -0800 (PST)
+ id 1tNMXV-0001Ee-Nj
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 20:38:23 -0500
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-2ef6af22ea8so4163090a91.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 17:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734399438; x=1735004238; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734399500; x=1735004300; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=58S9uhqOfe6b2kK2jKkLS81vpX910XTN9+ZeO7HTvTo=;
- b=uBnxxGM6c/gfwLd8p9kavUoqeji7TKdUmUxhZeERhWSWCOZcHcDpGDfqh3vr9KjDdK
- jeUoMfZhFyxrR5VNuRrZe1UaGWlOP294i5bFwdbTUSUcsk/7ykTahISG0fahUFDEGANA
- cGYNWL5EOn5utagv3S+LNNEDtLHai+sXNWVf1iLx8pljp/tcKq3icrg6ZHfPeECWqdXY
- fOpApMmKQTxe32QOHrTxngmMIZYZmi6riRheR8yNjR+VQVf85EwmogJJjSM2ff3T+JWM
- vwoFvdJ7iHJoTAhm0De4dWokLTgHDJitI8wSEpH96H61MxdhOGoA+fvkgV2rJZeQwEwy
- ngIw==
+ bh=17sle2ol5/VlndT97jJOm0rWRhLgcec3mPbKepTzUJs=;
+ b=pBcNGMZQkP3/ngyy2NUsckfTDVJY2Yffz++UHGZZNYDuDEvzD9mKS3Nlt8vGzEiC4c
+ qcumOm9TGXa91BjqyrM+qkpzbfCEE3HdQ1+1XHdbWuKa3gPpXP0Ea1PpJXLhYUo4NdNj
+ eC/ECNg+WyObaERFNejoJVZcr0z66Vu4BIpJN8leUmR4w7+CuM/WXuN+Vx/QhrAXEMAY
+ AYIotojPgDsRpi8jhMHlQFva9tcg2xHv0vyUTeT154LDAMBzGSC1YRt2IOIx/A1WNgYG
+ mQt76eJyetpRkoTsRRZnhMPHT3k7rqy5odU5AG5rQTyfUCTw9FKcsGyY4409sToZFloc
+ doAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734399438; x=1735004238;
+ d=1e100.net; s=20230601; t=1734399500; x=1735004300;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=58S9uhqOfe6b2kK2jKkLS81vpX910XTN9+ZeO7HTvTo=;
- b=bixz8sDCKDEKp/07eJ8udBIvp9Bb7scTecPL1HEh3HwkBLM9Dz5fQtDstMtixJozYJ
- LWtg3PXXGiDLshKqbIZml7RVaHC8GixQh6CWqwmmN0QOKSQuEhlf68/BUq1vOFDTfjbz
- 6Hqunl2O88ZsEMvRnXFqnqpG9EIIvfJPugnjuJs14gF7JA18gMAby+H2aTjomHfgwphj
- IkTAxog3aYG5KH3YhLLGF9lA8aNLQAybjBjd7Ylp5x8IaFOvYi9hA66y+vvGHwIJttZg
- FkgIhU7WVpl7rAfKnJ4hW5nCzuT7gIrwfIStzqF0km3U6YwJdCaXCyiEXt04TOMbunWl
- c5Ig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXgiFU+h0ARgdIaEja9RqkHlUv9Ie/j0cczucYkm+1GrjW2ieCkw8uW80vNIaGX+iDY47V1eqHTqsh/@nongnu.org
-X-Gm-Message-State: AOJu0YzZfOtCYrLihhRZ4A7iiVjBk+DtK2pMUM/O9KRKUYrjWKekCVPI
- PjOEmejVl+J7Gbp/atnxSgy1rZaJwRRYQr8Ga2vwColvEAErrNPkwHtcmTRVWMM=
-X-Gm-Gg: ASbGncvBOqrKYtTLmXFraeyf4VT4Rxm3SnUliFUdDA0IosttlkglYFNSSdegE8ZVG9A
- ewIFJ+8aj5g0hQ6CM0IFPTqv34/R6788bq6bQrxIfgi7SwWOZG/uewxqQmoy/ykCzOOnZt+AaIi
- OZTSBJBdVlTHifmqq63hU1sYUoWKE15dEuBrYE1Qdkt94h/0FphjWVhZ2iVarOvTfbCZB30Gyur
- jtFt9mOkKcuLuTLajBQs6dQ+9C9T98qdTNVkWBawkWz7FByB9LDE95m7XtOZpBtbkaD4/xfMFo9
- Cwbq8zjLy/pPurMfwLFMRnitX7gP
-X-Google-Smtp-Source: AGHT+IEBgl1hnPj4HXBP9uZZaA3d+A2ih14wjGSoHZ+0RaZbtAoP3bUfaoqg/F/qFJuOQZQwO+Ufkw==
-X-Received: by 2002:a05:6a00:32ca:b0:729:49a:2da6 with SMTP id
- d2e1a72fcca58-7290c10d751mr22431588b3a.3.1734399438223; 
- Mon, 16 Dec 2024 17:37:18 -0800 (PST)
+ bh=17sle2ol5/VlndT97jJOm0rWRhLgcec3mPbKepTzUJs=;
+ b=gvZFrjvFYpwhUo08F4COrw5ypxNcFFiAfl25ewSl0ODLOVPlU/YoAX4jwy3yccKXXr
+ 46nTPdShX7k39KRxyFp3cE2QoPlbLzAnPR7h95u/OmeT/JOEBd1Lrs5jQw6VLLMP5aa0
+ kb6aadJGt/CMwcI12MntxeZt1hDg+tJONE7pCOhJHLTo38/gCO8E7aH7vrNcXK5EuZGu
+ Zb4RMkBK6cAm9MxaqBeJ5xclxG8NpicnRIhqMNLBfiKE9tJoPRM5/ujqadDm9tR16SK5
+ t7pyHbIvjm5MF9ch54PRpnb1V2nJFNSe/IF/l9AK+jt534ObvWDaJ73Uny+eaQc6NWBJ
+ yulw==
+X-Gm-Message-State: AOJu0YxPXp/P/DTdS6xEPQztLQyTXG5uo0uwWUbd6XifG/cGosUmbeHp
+ kzz5YEHwwvnzjZoqjNJeQw2zAsLCA5cFymsVEKsljajz/0vpzcGfmXu0axCTrFRRnpNuHTaKeFT
+ 009o=
+X-Gm-Gg: ASbGnctDeLMzWTxfljjd3ItOiDz4/JUJBBqUtpv9qqXQtHx5puoLQFf/KyfIlwAc1w6
+ zO00KxomVMIjIAZ396TfEsthUm1wuJZLU2w8D5RuINMXowhazUfLXYqlw+I8rt8AQLF91jkN6zY
+ hqOFTfT+/o43NbuWMeFP+zlbMnOGQa1Je3mlmYkIprItAdljVh+rdriSc/7HUgshKPwT4C7LS15
+ deTFriKPIxkzCkYPPhjo04FG7yiL0RMrdGN+wqH6hsQcG7barjFLDxbAQkMP08dlot1CvWcAcKZ
+ DEPp1rOKRsyDEshriEELDupKMB7g
+X-Google-Smtp-Source: AGHT+IHvdKf4myfKBlpqcNHb8QCOJS+jHawrYo4DWUyAnek8lUZOfPgbe9ttHfDE3SWoYW2Bug3CLA==
+X-Received: by 2002:a17:90b:3c8a:b0:2ea:a25d:3baa with SMTP id
+ 98e67ed59e1d1-2f28fb52241mr21369921a91.5.1734399500202; 
+ Mon, 16 Dec 2024 17:38:20 -0800 (PST)
 Received: from [192.168.1.67] (216-180-64-156.dyn.novuscom.net.
  [216.180.64.156]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-801d5c3662csm4718560a12.71.2024.12.16.17.37.17
+ d9443c01a7336-218a1dbac63sm49238145ad.5.2024.12.16.17.38.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Dec 2024 17:37:17 -0800 (PST)
-Message-ID: <19df9957-6653-4086-aa1f-07263efcddde@linaro.org>
-Date: Mon, 16 Dec 2024 17:37:17 -0800
+ Mon, 16 Dec 2024 17:38:19 -0800 (PST)
+Message-ID: <3f6f2d79-753a-4dc4-8ff5-6eb6c801a9c7@linaro.org>
+Date: Mon, 16 Dec 2024 17:38:19 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
- aarch64 to impdef
+Subject: Re: [PATCH] vvfat: fix ubsan issue in create_long_filename
 Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- alex.bennee@linaro.org, Fabiano Rosas <farosas@suse.de>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
- <7cd98960-0c0d-481f-96ea-08e0578d5cad@linaro.org>
- <b0962854-65c3-47d0-8f0a-072fdf51e7b6@linaro.org>
- <6e29d9cb-1c67-4fdc-97f1-32c90bed1048@linaro.org>
+To: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Cc: qemu-block@nongnu.org, alex.bennee@linaro.org,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ peter.maydell@linaro.org
+References: <20241204195111.2921141-1-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <6e29d9cb-1c67-4fdc-97f1-32c90bed1048@linaro.org>
+In-Reply-To: <20241204195111.2921141-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,49 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTYvMjQgMTE6NTAsIFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPiBPbiAxMi8x
-Ni8yNCAxMzoyNiwgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+IE9uIDEyLzE2LzI0IDEx
-OjEwLCBSaWNoYXJkIEhlbmRlcnNvbiB3cm90ZToNCj4+PiBPbiAxMi80LzI0IDE1OjEyLCBQ
-aWVycmljayBCb3V2aWVyIHdyb3RlOg0KPj4+PiBxZW11LXN5c3RlbS1hYXJjaDY0IGRlZmF1
-bHQgcG9pbnRlciBhdXRoZW50aWNhdGlvbiAoUUFSTUE1KSBpcyBleHBlbnNpdmUsIHdlDQo+
-Pj4+IHNwZW50IHVwIHRvIDUwJSBvZiB0aGUgZW11bGF0aW9uIHRpbWUgcnVubmluZyBpdCAo
-d2hlbiB1c2luZyBUQ0cpLg0KPj4+Pg0KPj4+PiBTd2l0Y2hpbmcgdG8gcGF1dGgtaW1wZGVm
-PW9uIGlzIG9mdGVuIGdpdmVuIGFzIGEgc29sdXRpb24gdG8gc3BlZWQgdXAgZXhlY3V0aW9u
-Lg0KPj4+PiBUaHVzIHdlIHRhbGtlZCBhYm91dCBtYWtpbmcgaXQgdGhlIG5ldyBkZWZhdWx0
-Lg0KPj4+Pg0KPj4+PiBUaGUgZmlyc3QgcGF0Y2ggaW50cm9kdWNlIGEgbmV3IHByb3BlcnR5
-IChwYXV0aC1xYXJtYTUpIHRvIGFsbG93IHRvIHNlbGVjdA0KPj4+PiBjdXJyZW50IGRlZmF1
-bHQgYWxnb3JpdGhtLg0KPj4+PiBUaGUgc2Vjb25kIG9uZSBjaGFuZ2UgdGhlIGRlZmF1bHQu
-DQo+Pj4+DQo+Pj4+IFBpZXJyaWNrIEJvdXZpZXIgKDIpOg0KPj4+PiAgwqDCoMKgIHRhcmdl
-dC9hcm06IGFkZCBuZXcgcHJvcGVydHkgdG8gc2VsZWN0IHBhdXRoLXFhcm1hNQ0KPj4+PiAg
-wqDCoMKgIHRhcmdldC9hcm06IGNoYW5nZSBkZWZhdWx0IHBhdXRoIGFsZ29yaXRobSB0byBp
-bXBkZWYNCj4+Pj4NCj4+Pj4gIMKgwqAgZG9jcy9zeXN0ZW0vYXJtL2NwdS1mZWF0dXJlcy5y
-c3QgfMKgIDcgKysrKystLQ0KPj4+PiAgwqDCoCBkb2NzL3N5c3RlbS9pbnRyb2R1Y3Rpb24u
-cnN0wqDCoMKgwqAgfMKgIDIgKy0NCj4+Pj4gIMKgwqAgdGFyZ2V0L2FybS9jcHUuaMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHzCoCAxICsNCj4+Pj4gIMKgwqAgdGFyZ2V0
-L2FybS9hcm0tcW1wLWNtZHMuY8KgwqDCoMKgwqDCoMKgIHzCoCAyICstDQo+Pj4+ICDCoMKg
-IHRhcmdldC9hcm0vY3B1NjQuY8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgfCAzMCAr
-KysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0NCj4+Pj4gIMKgwqAgdGVzdHMvcXRlc3Qv
-YXJtLWNwdS1mZWF0dXJlcy5jwqDCoCB8IDE1ICsrKysrKysrKysrLS0tLQ0KPj4+PiAgwqDC
-oCA2IGZpbGVzIGNoYW5nZWQsIDM4IGluc2VydGlvbnMoKyksIDE5IGRlbGV0aW9ucygtKQ0K
-Pj4+Pg0KPj4+DQo+Pj4gSSB1bmRlcnN0YW5kIHRoZSBtb3RpdmF0aW9uLCBidXQgYXMtaXMg
-dGhpcyB3aWxsIGJyZWFrIG1pZ3JhdGlvbi4NCj4+Pg0KPj4+IEkgdGhpbmsgdGhpcyB3aWxs
-IG5lZWQgdG8gYmUgdmVyc2lvbmVkIHNvbWVob3csIGJ1dCB0aGUgb25seSB0aGluZyB0aGF0
-IHJlYWxseSBnZXRzDQo+Pj4gdmVyc2lvbmVkIGFyZSB0aGUgYm9hcmRzLCBhbmQgSSdtIG5v
-dCBzdXJlIGhvdyB0byBsaW5rIHRoYXQgdG8gdGhlIGluc3RhbnRpYXRlZCBjcHUuDQo+Pj4N
-Cj4+DQo+PiAgIEZyb20gd2hhdCBJIHVuZGVyc3Rvb2QsIGFuZCBJIG1heSBiZSB3cm9uZywg
-dGhlIHVzZSBjYXNlIHRvIG1pZ3JhdGUgKHRjZykgdm0gd2l0aCBjcHUgbWF4DQo+PiBiZXR3
-ZWVuIFFFTVUgdmVyc2lvbnMgaXMgKm5vdCogc3VwcG9ydGVkLCBhcyB3ZSBjYW4ndCBndWFy
-YW50ZWUgd2hpY2ggZmVhdHVyZXMgYXJlIHByZXNlbnQNCj4+IG9yIG5vdC4NCj4gVGhpcyBk
-b2Vzbid0IGFmZmVjdCBvbmx5IC1jcHUgbWF4LCBidXQgYW55dGhpbmcgdXNpbmcgYWFyY2g2
-NF9hZGRfcGF1dGhfcHJvcGVydGllcygpOg0KPiBuZW92ZXJzZS1uMSwgbmVvdmVyc2UtbjIs
-IGNvcnRleC1hNzEwLg0KPiANCg0KSSB0aGluayB0aGlzIGlzIHN0aWxsIGEgY2hhbmdlIHdv
-cnRoIHRvIGRvLCBiZWNhdXNlIHBlb3BsZSBjYW4gZ2V0IGEgDQoxMDAlIHNwZWVkdXAgd2l0
-aCB0aGlzIHNpbXBsZSBjaGFuZ2UsIGFuZCBpdCdzIGEgYmV0dGVyIGRlZmF1bHQgdGhhbiB0
-aGUgDQpwcmV2aW91cyB2YWx1ZS4NCkluIG1vcmUsIGluIGNhc2Ugb2YgdGhpcyBtaWdyYXRp
-b24gc2NlbmFyaW8sIFFFTVUgd2lsbCBpbW1lZGlhdGVseSBhYm9ydCANCnVwb24gYWNjZXNz
-aW5nIG1lbW9yeSB0aHJvdWdoIGEgcG9pbnRlci4NCg0KSSdtIG5vdCBzdXJlIGFib3V0IHdo
-YXQgd291bGQgYmUgdGhlIGJlc3Qgd2F5IHRvIG1ha2UgdGhpcyBjaGFuZ2UgYXMgDQpzbW9v
-dGggYXMgcG9zc2libGUgZm9yIFFFTVUgdXNlcnMuDQoNClBldGVyLCBBbGV4LCBkbyB5b3Ug
-aGF2ZSBhbnkgc3VnZ2VzdGlvbiBvbiB0aGlzIHRvcGljPw0KDQpUaGFua3MsDQpQaWVycmlj
-aw0KDQo+IA0KPiByfg0KDQo=
+On 12/4/24 11:51, Pierrick Bouvier wrote:
+> Found with test sbsaref introduced in [1].
+> 
+> [1] https://patchew.org/QEMU/20241203213629.2482806-1-pierrick.bouvier@linaro.org/
+> 
+> ../block/vvfat.c:433:24: runtime error: index 14 out of bounds for type 'uint8_t [11]'
+>      #0 0x56151a66b93a in create_long_filename ../block/vvfat.c:433
+>      #1 0x56151a66f3d7 in create_short_and_long_name ../block/vvfat.c:725
+>      #2 0x56151a670403 in read_directory ../block/vvfat.c:804
+>      #3 0x56151a674432 in init_directories ../block/vvfat.c:964
+>      #4 0x56151a67867b in vvfat_open ../block/vvfat.c:1258
+>      #5 0x56151a3b8e19 in bdrv_open_driver ../block.c:1660
+>      #6 0x56151a3bb666 in bdrv_open_common ../block.c:1985
+>      #7 0x56151a3cadb9 in bdrv_open_inherit ../block.c:4153
+>      #8 0x56151a3c8850 in bdrv_open_child_bs ../block.c:3731
+>      #9 0x56151a3ca832 in bdrv_open_inherit ../block.c:4098
+>      #10 0x56151a3cbe40 in bdrv_open ../block.c:4248
+>      #11 0x56151a46344f in blk_new_open ../block/block-backend.c:457
+>      #12 0x56151a388bd9 in blockdev_init ../blockdev.c:612
+>      #13 0x56151a38ab2d in drive_new ../blockdev.c:1006
+>      #14 0x5615190fca41 in drive_init_func ../system/vl.c:649
+>      #15 0x56151aa796dd in qemu_opts_foreach ../util/qemu-option.c:1135
+>      #16 0x5615190fd2b6 in configure_blockdev ../system/vl.c:708
+>      #17 0x56151910a307 in qemu_create_early_backends ../system/vl.c:2004
+>      #18 0x561519113fcf in qemu_init ../system/vl.c:3685
+>      #19 0x56151a7e438e in main ../system/main.c:47
+>      #20 0x7f72d1a46249 in __libc_start_call_main ../sysdeps/nptl/libc_start_call_main.h:58
+>      #21 0x7f72d1a46304 in __libc_start_main_impl ../csu/libc-start.c:360
+>      #22 0x561517e98510 in _start (/home/user/.work/qemu/build/qemu-system-aarch64+0x3b9b510)
+> 
+> The offset used can easily go beyond entry->name size. It's probably a
+> bug, but I don't have the time to dive into vfat specifics for now.
+> 
+> This change solves the ubsan issue, and is functionally equivalent, as
+> anything written past the entry->name array would not be read anyway.
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   block/vvfat.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/block/vvfat.c b/block/vvfat.c
+> index 8ffe8b3b9bf..f2eafaa9234 100644
+> --- a/block/vvfat.c
+> +++ b/block/vvfat.c
+> @@ -426,6 +426,10 @@ static direntry_t *create_long_filename(BDRVVVFATState *s, const char *filename)
+>           else if(offset<22) offset=14+offset-10;
+>           else offset=28+offset-22;
+>           entry=array_get(&(s->directory),s->directory.next-1-(i/26));
+> +        /* ensure we don't write anything past entry->name */
+> +        if (offset >= sizeof(entry->name)) {
+> +            continue;
+> +        }
+>           if (i >= 2 * length + 2) {
+>               entry->name[offset] = 0xff;
+>           } else if (i % 2 == 0) {
+
+cc qemu-trivial.
 
