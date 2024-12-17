@@ -4,106 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF49CE7717F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 02:15:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA92E7717F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 03:02:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNN68-00021W-W7; Mon, 16 Dec 2024 21:14:09 -0500
+	id 1tNNqP-0000HO-3p; Mon, 16 Dec 2024 22:01:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tNN65-00021L-TD
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 21:14:06 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1tNN62-0006c6-H5
- for qemu-devel@nongnu.org; Mon, 16 Dec 2024 21:14:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734401636;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HNJaRZGWUI6ejL02MyLNfK8QQl59e5Fr5o9oJVbFLC0=;
- b=EJGmP6CmKfx8rGBPrWqX7/LZG496aw60q42BGmvZhs0dV4yLN3OPJNj+vxx+OrlcQ4sQUg
- zsAD6Uxjj+Lfu/ROy2vAaoCY84GcunQjAgheylUQsMwbTDAAEbcLI6VC6xDulaLrfBB4Fi
- l2xVPK8KJELccBF+2XTQBhpMvLC7+Zk=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-282-6oLfz5S1Pq2iHrUuR_bO-Q-1; Mon, 16 Dec 2024 21:13:54 -0500
-X-MC-Unique: 6oLfz5S1Pq2iHrUuR_bO-Q-1
-X-Mimecast-MFC-AGG-ID: 6oLfz5S1Pq2iHrUuR_bO-Q
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-2ee5668e09bso4480951a91.3
- for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 18:13:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tNNqM-0000Gp-AK
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 22:01:54 -0500
+Received: from mail-oo1-xc34.google.com ([2607:f8b0:4864:20::c34])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yong.huang@smartx.com>)
+ id 1tNNqJ-0002zZ-8W
+ for qemu-devel@nongnu.org; Mon, 16 Dec 2024 22:01:54 -0500
+Received: by mail-oo1-xc34.google.com with SMTP id
+ 006d021491bc7-5f2dee7d218so2043567eaf.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Dec 2024 19:01:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=smartx-com.20230601.gappssmtp.com; s=20230601; t=1734404508; x=1735009308;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=99sTfcxkpVttkMcJNRBz5EeqlxZno4A0EzwAzLhHQjk=;
+ b=pf4moVNdnZDFVBl/Bz5LvCZMMB2kjBH9QUsjljrQ+Jsgy+Th/HUYsIYyGgZcFMkV4W
+ kQ8Ghu2ZnMTZjnQFNYedhqNut6qQCtbdly4EOVFpL9IUcljsk7k1KoXPZ3NZ72HSTVHr
+ TVDJ+iluMQ/csuGhlBDzKnP0iFXYCL9tF6aLGyNw0be390Ukh/VYqUPPaGfG8scoZuwv
+ Sfc7GicFf2Sk0Q7pibPV94ma89hGZRxF7cEHic8kPsuM3/bXeVgfu3sf8vRf/f4U0bhy
+ SYndLzOLsbJ6jf2H/ZpOdykgWkHcFXWXMxJQNsC/Uaeg20iGI4pVQeolDTTdcNFQGWiY
+ sIPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734401633; x=1735006433;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HNJaRZGWUI6ejL02MyLNfK8QQl59e5Fr5o9oJVbFLC0=;
- b=ToAkgX0wXakpxtTvD6NI6/Ae7lYjLYjOnGT3akoeA1DIWIme2HLIoxca2IzrL27zok
- MW67nGnKg6j4zHzRCtvi16PpXTmB13Pa8gnNadlimpU+AvZglloZOPL5wNxprpOZac9n
- C9VURqPYWhZoP9ZspRTjsbnhePuE2FWMPtf9n4oa5ngxkDMQdKy+ccKPtIGzhzKSfEyZ
- s2va5nTr4ymyxaJXuaDD/JPfjgMz9BkKP+IqINzLUNA0VE6ciifr3BFLfr/W6fFO57WV
- k17a6OSDwTUom5SoBaPlaMxqTrI/ktPEZxrFhkeSUQQBZ29vS102FDlyRPw50WzUXBJm
- u0Zg==
-X-Gm-Message-State: AOJu0YxTPRg/t4r+4bNfCREriTy75UkloK1YcuQtoXao+mXII+Zbczzq
- DXcN3E51cB2JzN8pm/OLUh+EsS1tNQylr33cQPrjbQf+m4prnq+C0/MAzL9IZbiuJzWb150OKqq
- +ZDqD5NAsepGm1N6x8wkyvqE2puqRbGXufBMb5WYcU0BORATxvY8NwsIZ5oH+QO5qQ3X9PiYzmp
- fXXZssDszr2OSU88EGTyOGkU83as4=
-X-Gm-Gg: ASbGncukjD0BBs28bCG5yfIuZj+lIMvYEKBOlnVJWis9vexqL2WTod+vQq56Iw7mALr
- tc/NbUhMqLxC6oxckxEKwgLvL3P1Bqu+nxxPJV20=
-X-Received: by 2002:a17:90b:314d:b0:2ee:f80c:6884 with SMTP id
- 98e67ed59e1d1-2f2901b44c3mr21813801a91.33.1734401633483; 
- Mon, 16 Dec 2024 18:13:53 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGtqbmmSjVisTI/K/P4GN2VSEDjirNw18cpNTFsQKa1PtHtZKuAFT8wJb3gWVcQXVdMk6SOiVzxaIlHo2VCAv8=
-X-Received: by 2002:a17:90b:314d:b0:2ee:f80c:6884 with SMTP id
- 98e67ed59e1d1-2f2901b44c3mr21813755a91.33.1734401632963; Mon, 16 Dec 2024
- 18:13:52 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734404508; x=1735009308;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=99sTfcxkpVttkMcJNRBz5EeqlxZno4A0EzwAzLhHQjk=;
+ b=ehrr78yEKTB2Dcbf3Wzdh/1DMkltLsdaPUuldUYufpLJUC8tVYLC6JHftLXB+a8nFs
+ GO2qVHflAeGLTa5p1+2MdL7Esrnw/7h126W717+IF1C+3NVYMYAIrdYPDWaqF9WPtdfw
+ kblWT+dgcAZ80mi85aJfWz9PNGB75JsQ1vTo6PjoZFXFeujouYaIzEsBUeXjjmhk2AQp
+ 2jR0P6k/dSC+VwfhoaLzgNC1hhatbavItxdHX8PVVnrE7u/5Y4Vth6KTQvIsrhdn8iwj
+ t6YFzY941H6CxD6f59z/KXEPcGGUwu3tTGFFeH+X64LfPrJPaT3FNbf2HyHUuC0AVRdp
+ 01Jg==
+X-Gm-Message-State: AOJu0YziPInqcPhcbci+L71zLAoOenwoV9RiEv9+u65Cx2XhRxob67U5
+ V0i+SyMHXg1wF1W5kyewhpT0l5/hkkS1hg/hCoO+/N4ofJGCOjFK46fSq1uVNs1EbDQYrAjVQms
+ 1uySfNiXEgMorWL6AUKW+BZLM2oGqzUCrt559mQ==
+X-Gm-Gg: ASbGnctcNIHeVfyhVk2i8z7Y+fJ4M+SZWw3tVCTo4i/BYRw7Y6/6DeJaKnljnRdVx3+
+ QErrKa1AQsTyf+S8T7p5TESCQuID3Sn2soX7ca+s=
+X-Google-Smtp-Source: AGHT+IHoBi10y1CbHFUqfjUHTFuWduSYYgmOBSV/LyFAztYw6VCSWQtmvvpay7+HQzwOOSid/R3n2jgkcoROzzanugM=
+X-Received: by 2002:a05:6870:3c15:b0:29e:491b:96db with SMTP id
+ 586e51a60fabf-2a3ac49fa7emr8821952fac.5.1734404508171; Mon, 16 Dec 2024
+ 19:01:48 -0800 (PST)
 MIME-Version: 1.0
-References: <20240911052255.1294071-1-zhenzhong.duan@intel.com>
- <20240911052255.1294071-13-zhenzhong.duan@intel.com>
- <CACGkMEscZB9f6toOcm_+3pQknDgnp3r6MvzbejB9BVEsKz7rjA@mail.gmail.com>
- <SJ0PR11MB67441D158F394CE1EA620CA9926B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <CACGkMEuXX6UE0=dNjeNJ5rHxkJADUrTG0tU1Cd1n0cvik5NnKg@mail.gmail.com>
- <SJ0PR11MB67447F79B1350833A5D878F8923B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-In-Reply-To: <SJ0PR11MB67447F79B1350833A5D878F8923B2@SJ0PR11MB6744.namprd11.prod.outlook.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Tue, 17 Dec 2024 10:13:41 +0800
-Message-ID: <CACGkMEv1uVaqu9c6e51qUQj17MGBj78CMOtBEFVYD=KHMMUA_A@mail.gmail.com>
-Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-based device
- IOTLB invalidation
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, 
- "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, 
- "peterx@redhat.com" <peterx@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, 
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>, 
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian,
- Kevin" <kevin.tian@intel.com>, 
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.13,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+References: <20241216094638.26406-1-avihaih@nvidia.com>
+ <20241216094638.26406-8-avihaih@nvidia.com>
+In-Reply-To: <20241216094638.26406-8-avihaih@nvidia.com>
+From: Yong Huang <yong.huang@smartx.com>
+Date: Tue, 17 Dec 2024 11:01:32 +0800
+Message-ID: <CAK9dgmYowKNMD=5-PXGTL71K=sa22tuusZZPojkRQeMbaHyd3w@mail.gmail.com>
+Subject: Re: [PATCH 7/9] system/dirtylimit: Don't use migration_is_active()
+To: Avihai Horon <avihaih@nvidia.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>, 
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Maor Gottlieb <maorg@nvidia.com>
+Content-Type: multipart/alternative; boundary="0000000000009b588d06296e84df"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c34;
+ envelope-from=yong.huang@smartx.com; helo=mail-oo1-xc34.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -120,175 +93,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 16, 2024 at 4:22=E2=80=AFPM Duan, Zhenzhong
-<zhenzhong.duan@intel.com> wrote:
->
->
->
-> >-----Original Message-----
-> >From: Jason Wang <jasowang@redhat.com>
-> >Sent: Sunday, September 29, 2024 9:59 AM
-> >Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-based d=
-evice
-> >IOTLB invalidation
-> >
-> >On Fri, Sep 27, 2024 at 3:18=E2=80=AFPM Duan, Zhenzhong
-> ><zhenzhong.duan@intel.com> wrote:
-> >>
-> >>
-> >>
-> >> >-----Original Message-----
-> >> >From: Jason Wang <jasowang@redhat.com>
-> >> >Subject: Re: [PATCH v3 12/17] intel_iommu: Add support for PASID-base=
-d
-> >> >device IOTLB invalidation
-> >> >
-> >> >On Wed, Sep 11, 2024 at 1:27=E2=80=AFPM Zhenzhong Duan
-> >> ><zhenzhong.duan@intel.com> wrote:
-> >> >>
-> >> >> From: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@eviden.com>
-> >> >>
-> >> >> Signed-off-by: Cl=C3=A9ment Mathieu--Drif <clement.mathieu--drif@ev=
-iden.com>
-> >> >> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> >> >> ---
-> >> >>  hw/i386/intel_iommu_internal.h | 11 ++++++++
-> >> >>  hw/i386/intel_iommu.c          | 50
-> >> >++++++++++++++++++++++++++++++++++
-> >> >>  2 files changed, 61 insertions(+)
-> >> >>
-> >> >> diff --git a/hw/i386/intel_iommu_internal.h
-> >> >b/hw/i386/intel_iommu_internal.h
-> >> >> index 4f2c3a9350..52bdbf3bc5 100644
-> >> >> --- a/hw/i386/intel_iommu_internal.h
-> >> >> +++ b/hw/i386/intel_iommu_internal.h
-> >> >> @@ -375,6 +375,7 @@ typedef union VTDInvDesc VTDInvDesc;
-> >> >>  #define VTD_INV_DESC_WAIT               0x5 /* Invalidation Wait D=
-escriptor
-> >> >*/
-> >> >>  #define VTD_INV_DESC_PIOTLB             0x6 /* PASID-IOTLB Invalid=
-ate Desc
-> >> >*/
-> >> >>  #define VTD_INV_DESC_PC                 0x7 /* PASID-cache Invalid=
-ate Desc */
-> >> >> +#define VTD_INV_DESC_DEV_PIOTLB         0x8 /* PASID-based-DIOTLB
-> >> >inv_desc*/
-> >> >>  #define VTD_INV_DESC_NONE               0   /* Not an Invalidate D=
-escriptor
-> >> >*/
-> >> >>
-> >> >>  /* Masks for Invalidation Wait Descriptor*/
-> >> >> @@ -413,6 +414,16 @@ typedef union VTDInvDesc VTDInvDesc;
-> >> >>  #define VTD_INV_DESC_DEVICE_IOTLB_RSVD_HI 0xffeULL
-> >> >>  #define VTD_INV_DESC_DEVICE_IOTLB_RSVD_LO 0xffff0000ffe0fff8
-> >> >>
-> >> >> +/* Mask for PASID Device IOTLB Invalidate Descriptor */
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_ADDR(val) ((val) & \
-> >> >> +                                                   0xfffffffffffff=
-000ULL)
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_SIZE(val) ((val >> 11) & 0=
-x1)
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_GLOBAL(val) ((val) & 0x1)
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_SID(val) (((val) >> 16) &
-> >> >0xffffULL)
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_PASID(val) ((val >> 32) &
-> >> >0xfffffULL)
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_HI 0x7feULL
-> >> >> +#define VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_LO
-> >> >0xfff000000000f000ULL
-> >> >> +
-> >> >>  /* Rsvd field masks for spte */
-> >> >>  #define VTD_SPTE_SNP 0x800ULL
-> >> >>
-> >> >> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-> >> >> index d28c862598..4cf56924e1 100644
-> >> >> --- a/hw/i386/intel_iommu.c
-> >> >> +++ b/hw/i386/intel_iommu.c
-> >> >> @@ -3017,6 +3017,49 @@ static void
-> >> >do_invalidate_device_tlb(VTDAddressSpace *vtd_dev_as,
-> >> >>      memory_region_notify_iommu(&vtd_dev_as->iommu, 0, event);
-> >> >>  }
-> >> >>
-> >> >> +static bool vtd_process_device_piotlb_desc(IntelIOMMUState *s,
-> >> >> +                                           VTDInvDesc *inv_desc)
-> >> >> +{
-> >> >> +    uint16_t sid;
-> >> >> +    VTDAddressSpace *vtd_dev_as;
-> >> >> +    bool size;
-> >> >> +    bool global;
-> >> >> +    hwaddr addr;
-> >> >> +    uint32_t pasid;
-> >> >> +
-> >> >> +    if ((inv_desc->hi & VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_HI) |=
-|
-> >> >> +         (inv_desc->lo & VTD_INV_DESC_PASID_DEVICE_IOTLB_RSVD_LO))=
- {
-> >> >> +        error_report_once("%s: invalid pasid-based dev iotlb inv d=
-esc:"
-> >> >> +                          "hi=3D%"PRIx64 "(reserved nonzero)",
-> >> >> +                          __func__, inv_desc->hi);
-> >> >> +        return false;
-> >> >> +    }
-> >> >> +
-> >> >> +    global =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_GLOBAL(inv_desc->hi=
-);
-> >> >> +    size =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_SIZE(inv_desc->hi);
-> >> >> +    addr =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_ADDR(inv_desc->hi);
-> >> >> +    sid =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_SID(inv_desc->lo);
-> >> >> +    if (global) {
-> >> >> +        QLIST_FOREACH(vtd_dev_as, &s->vtd_as_with_notifiers, next)=
- {
-> >> >> +            if ((vtd_dev_as->pasid !=3D PCI_NO_PASID) &&
-> >> >> +                (PCI_BUILD_BDF(pci_bus_num(vtd_dev_as->bus),
-> >> >> +                                           vtd_dev_as->devfn) =3D=
-=3D sid)) {
-> >> >> +                do_invalidate_device_tlb(vtd_dev_as, size, addr);
-> >> >> +            }
-> >> >> +        }
-> >> >> +    } else {
-> >> >> +        pasid =3D VTD_INV_DESC_PASID_DEVICE_IOTLB_PASID(inv_desc->=
-lo);
-> >> >> +        vtd_dev_as =3D vtd_get_as_by_sid_and_pasid(s, sid, pasid);
-> >> >> +        if (!vtd_dev_as) {
-> >> >> +            return true;
-> >> >> +        }
-> >> >> +
-> >> >> +        do_invalidate_device_tlb(vtd_dev_as, size, addr);
-> >> >
-> >> >Question:
-> >> >
-> >> >I wonder if current vhost (which has a device IOTLB abstraction via
-> >> >virtio-pci) can work with this (PASID based IOTLB invalidation)
-> >>
-> >> Currently, it depends on if caching-mode is on. If it's off, vhost wor=
-ks. E.g.:
-> >>
-> >> -device intel-iommu,caching-mode=3Doff,dma-drain=3Don,device-iotlb=3Do=
-n,x-
-> >scalable-mode=3Don
-> >> -netdev tap,id=3Dtap0,vhost=3Don,script=3D/etc/qemu-ifup
-> >> -device virtio-net-pci,netdev=3Dtap0,bus=3Droot0,iommu_platform=3Don,a=
-ts=3Don
-> >>
-> >> It doesn't work currently when caching-mode is on.
-> >> Reason is linux kernel has an optimization to send only piotlb invalid=
-ation,
-> >> no device-piotlb invalidation is sent. But I heard from Yi the optimiz=
-ation
-> >> will be dropped, then it will work too when caching-mode is on.
-> >
-> >Great, if possible please copy me when sending those fixes.
->
-> FYI, I just found the optimization had already been dropped since April 2=
-024 by commit https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linu=
-x.git/commit/?id=3D304b3bde24b58515a75fd198beb52ca57df6275f
->
-> After updating guest kernel to a new version containing above commit,
-> vhost works irrespective the value of caching-mode.
->
-> Thanks
-> Zhenzhong
+--0000000000009b588d06296e84df
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Great. Thanks for the updating.
+On Mon, Dec 16, 2024 at 5:47=E2=80=AFPM Avihai Horon <avihaih@nvidia.com> w=
+rote:
 
+> vcpu_dirty_rate_stat_collect() uses migration_is_active() to detect
+> whether migration is running or not, in order to get the correct dirty
+> rate period value.
+>
+> However, recently there has been an effort to simplify the migration
+> status API and reduce it to a single migration_is_running() function.
+>
+
+Could you post the related links?
+
+
+>
+> To accommodate this, and since the same functionality can be achieved
+> with migration_is_running(), use it instead of migration_is_active().
+>
+> Signed-off-by: Avihai Horon <avihaih@nvidia.com>
+> ---
+>  system/dirtylimit.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/system/dirtylimit.c b/system/dirtylimit.c
+> index ab20da34bb..d7a855c603 100644
+> --- a/system/dirtylimit.c
+> +++ b/system/dirtylimit.c
+> @@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)
+>      int i =3D 0;
+>      int64_t period =3D DIRTYLIMIT_CALC_TIME_MS;
+>
+> -    if (migrate_dirty_limit() &&
+> -        migration_is_active()) {
+> +    if (migrate_dirty_limit() && migration_is_running()) {
+>          period =3D migrate_vcpu_dirty_limit_period();
+>      }
+>
+> --
+> 2.40.1
+>
+>
+
+--=20
+Best regards
+
+--0000000000009b588d06296e84df
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-family:&quot;comic sans ms&quot;,sans-serif"><br></div></div><br><div cla=
+ss=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Mon, Dec 16, 2024 at 5:47=E2=80=AFPM Avihai Horon &lt;<a href=3D"mai=
+lto:avihaih@nvidia.com">avihaih@nvidia.com</a>&gt; wrote:<br></div><blockqu=
+ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-wid=
+th:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padding-l=
+eft:1ex">vcpu_dirty_rate_stat_collect() uses migration_is_active() to detec=
+t<br>
+whether migration is running or not, in order to get the correct dirty<br>
+rate period value.<br>
+<br>
+However, recently there has been an effort to simplify the migration<br>
+status API and reduce it to a single migration_is_running() function.<br></=
+blockquote><div><br></div><div><div style=3D"font-family:&quot;comic sans m=
+s&quot;,sans-serif" class=3D"gmail_default">Could you post the related link=
+s?</div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;borde=
+r-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+To accommodate this, and since the same functionality can be achieved<br>
+with migration_is_running(), use it instead of migration_is_active().<br>
+<br>
+Signed-off-by: Avihai Horon &lt;<a href=3D"mailto:avihaih@nvidia.com" targe=
+t=3D"_blank">avihaih@nvidia.com</a>&gt;<br>
+---<br>
+=C2=A0system/dirtylimit.c | 3 +--<br>
+=C2=A01 file changed, 1 insertion(+), 2 deletions(-)<br>
+<br>
+diff --git a/system/dirtylimit.c b/system/dirtylimit.c<br>
+index ab20da34bb..d7a855c603 100644<br>
+--- a/system/dirtylimit.c<br>
++++ b/system/dirtylimit.c<br>
+@@ -80,8 +80,7 @@ static void vcpu_dirty_rate_stat_collect(void)<br>
+=C2=A0 =C2=A0 =C2=A0int i =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0int64_t period =3D DIRTYLIMIT_CALC_TIME_MS;<br>
+<br>
+-=C2=A0 =C2=A0 if (migrate_dirty_limit() &amp;&amp;<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 migration_is_active()) {<br>
++=C2=A0 =C2=A0 if (migrate_dirty_limit() &amp;&amp; migration_is_running())=
+ {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0period =3D migrate_vcpu_dirty_limit_perio=
+d();<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+<br>
+-- <br>
+2.40.1<br>
+<br>
+</blockquote></div><div><br clear=3D"all"></div><div><br></div><span class=
+=3D"gmail_signature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_s=
+ignature"><div dir=3D"ltr"><font face=3D"comic sans ms, sans-serif">Best re=
+gards</font></div></div></div>
+
+--0000000000009b588d06296e84df--
 
