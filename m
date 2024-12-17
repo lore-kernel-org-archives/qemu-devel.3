@@ -4,77 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE66BE77184
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EAF2E77184
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Dec 2024 16:10:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNa5V-0002fI-7L; Tue, 17 Dec 2024 11:06:23 -0500
+	id 1tNa1A-0006jt-4n; Tue, 17 Dec 2024 11:01:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNa4M-0001w1-9P
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:05:11 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNa0x-0005up-8h
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNa4J-0002kr-Mp
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:05:09 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734451508; x=1765987508;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=bo86RRfkr3shVB+cRKwVtLE8HuM1MXjOYJ7K7zRqdXU=;
- b=G7GPLR3j32QgEQOX+OJnBHpxj9dvPXvmqgoiFbjnjuR7MYnpuHFs5cY7
- qxNqr26s60qWieL11wFDN32VNm4raNQrd7LK52W7TwJaJoR/mmtqRtHMy
- K5XRzWDYBrJYF4X/9hTl5fQIgs9mB/vjFKHvZF5Wmzd9lODMAgbAt4pkP
- uxyYV20qK7FrVwBiBp73rSjzhOKwfvo5Qmtzl+ZCLu9DUBDpLFhnjdqDX
- 94KK7Yqivjpl4MVEdPPfpE0HbwF+9FS+rTYe9QAbBj52eOjEW1NlgL4hN
- 0aqzw8WOiY+q+wypwLigRe196J95fMpd736nmLMP9oOMLSGSdKwL8dn8Q g==;
-X-CSE-ConnectionGUID: J7ZXAwbgT5+8fOmulyg7IQ==
-X-CSE-MsgGUID: IemNg2qTRkORbnb1FZPUlw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11288"; a="52294485"
-X-IronPort-AV: E=Sophos;i="6.12,242,1728975600"; d="scan'208";a="52294485"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2024 08:05:05 -0800
-X-CSE-ConnectionGUID: 1pLt2+9cR3y1jBA5/W6pxw==
-X-CSE-MsgGUID: qZtreTkoSoyAj1VrHL4AjQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,242,1728975600"; d="scan'208";a="102409761"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 17 Dec 2024 08:05:03 -0800
-Date: Wed, 18 Dec 2024 00:23:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Paul Durrant <paul@xen.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Anton Johansson <anjo@rev.ng>,
- Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 2/3] system/numa: Remove unnecessary 'exec/cpu-common.h'
- header
-Message-ID: <Z2GljuPLP2xO3JTN@intel.com>
-References: <20241217151305.29196-1-philmd@linaro.org>
- <20241217151305.29196-3-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tNa0v-0002Gn-GC
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 11:01:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734451296;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ujZ23YBoEtRTbeD5bsCjK9gju82WtT8tPgmcvcVFHr4=;
+ b=d/eU3LyenXSF+SgzaRmg2lOXjUvFO9rOgW4razbcGPYDEx+4QIDSBeNSFWafmoOaMKoWDB
+ DEW2ACpVXCBPBbLuNyD986jxX3pWPmfEf5gO8ZQtkL3YC40a2934s/rLGFbttdGQ7y1pM2
+ Jk5+DoDLkcOYSYh6vw0FHy+8Lrp6uH8=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-fRLLplPAPVWc0E1F0YbL2Q-1; Tue,
+ 17 Dec 2024 11:01:32 -0500
+X-MC-Unique: fRLLplPAPVWc0E1F0YbL2Q-1
+X-Mimecast-MFC-AGG-ID: fRLLplPAPVWc0E1F0YbL2Q
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6CA3F19560B2; Tue, 17 Dec 2024 16:01:31 +0000 (UTC)
+Received: from toolbox.redhat.com (unknown [10.42.28.136])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id EC50230044C1; Tue, 17 Dec 2024 16:01:28 +0000 (UTC)
+From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Thomas Huth <huth@tuxfamily.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH v3 31/32] tests/functional: ignore errors when caching assets,
+ except for 404
+Date: Tue, 17 Dec 2024 15:59:52 +0000
+Message-ID: <20241217155953.3950506-32-berrange@redhat.com>
+In-Reply-To: <20241217155953.3950506-1-berrange@redhat.com>
+References: <20241217155953.3950506-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241217151305.29196-3-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,21 +89,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 04:13:04PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Tue, 17 Dec 2024 16:13:04 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 2/3] system/numa: Remove unnecessary 'exec/cpu-common.h'
->  header
-> X-Mailer: git-send-email 2.45.2
-> 
-> Nothing requires definitions from "exec/cpu-common.h",
-> do not include this header.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  include/sysemu/numa.h | 1 -
->  1 file changed, 1 deletion(-)
+We see periodic errors caching assets due to a combination of transient
+networking and server problems. With the previous patch to skip running
+a test when it has missing assets, we can now treat most cache download
+errors as non-fatal.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Only HTTP 404 is retained as fatal, since it is a strong indicator of
+a fully broken test rather than a transient error.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. BerrangÃ© <berrange@redhat.com>
+---
+ tests/functional/qemu_test/asset.py | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index 39832b2587..f0730695f0 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -15,6 +15,7 @@
+ from time import sleep
+ from pathlib import Path
+ from shutil import copyfileobj
++from urllib.error import HTTPError
+ 
+ 
+ # Instances of this class must be declared as class level variables
+@@ -170,7 +171,18 @@ def precache_test(test):
+         for name, asset in vars(test.__class__).items():
+             if name.startswith("ASSET_") and type(asset) == Asset:
+                 log.info("Attempting to cache '%s'" % asset)
+-                asset.fetch()
++                try:
++                    asset.fetch()
++                except HTTPError as e:
++                    # Treat 404 as fatal, since it is highly likely to
++                    # indicate a broken test rather than a transient
++                    # server or networking problem
++                    if e.code == 404:
++                        raise
++
++                    log.debug(f"HTTP error {e.code} from {asset.url} " +
++                              "skipping asset precache")
++
+         log.removeHandler(handler)
+ 
+     def precache_suite(suite):
+-- 
+2.46.0
 
 
