@@ -4,62 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76293E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16AFE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:33:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxrP-0005bA-Ss; Wed, 18 Dec 2024 12:29:23 -0500
+	id 1tNxuO-0006qO-5a; Wed, 18 Dec 2024 12:32:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNxrO-0005az-PH
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:29:22 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNxuK-0006pF-Qu
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:32:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNxrM-0001KM-LI
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:29:22 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNxuI-0002Ub-Hp
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:32:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734542958;
+ s=mimecast20190719; t=1734543133;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5tokgQBzHEagMosxvso3PWuoLSEI2dJOOavHCTAly1c=;
- b=Ypk65A/habI3LO6HFiGAOAeAQpnr5/119nlYsDDIK3gYVC5aUAjlPZOY5lSUOr91K1IGd9
- M3Ak0EfeP8nTkuJGcM7AxRLJn4s4E59Z8ycXdayF9B6dBTfut/FxOu428k6jL8+VvaqyD+
- UutaXhq6QzYgoDi4H3w+BjzI2O8XgHM=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ in-reply-to:in-reply-to:references:references;
+ bh=xr/TAEC/kCY1GdHt3m9cZEp9v9fEfpLXyxsE9WSsSOM=;
+ b=A33Q9Dds2kxBzf8OJCsv+SPmoo4pS2muBMV/zPCEbKJozcJ7RRyR9bC9NgTtnfzuFkgBe/
+ pPwGbUzJmaWkyXZTWt1a+uoZt6dq0l5Sqlse+bYQimM4LJjYSEbP7tcuYxYuRswefK/YpP
+ 47+DxJRR0YoIU9dxGbTdDMMWpWpBAJ4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-z3bjGKO-MsGQFdaZP-ZbHA-1; Wed,
- 18 Dec 2024 12:29:17 -0500
-X-MC-Unique: z3bjGKO-MsGQFdaZP-ZbHA-1
-X-Mimecast-MFC-AGG-ID: z3bjGKO-MsGQFdaZP-ZbHA
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-KaqHN6kIP7W0b4iMcoApBQ-1; Wed,
+ 18 Dec 2024 12:32:10 -0500
+X-MC-Unique: KaqHN6kIP7W0b4iMcoApBQ-1
+X-Mimecast-MFC-AGG-ID: KaqHN6kIP7W0b4iMcoApBQ
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EA8941955D4D
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 17:29:15 +0000 (UTC)
-Received: from toolbox.redhat.com (unknown [10.42.28.61])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BE9951956053; Wed, 18 Dec 2024 17:29:13 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hw/virtio: reset virtio balloon stats on machine reset
-Date: Wed, 18 Dec 2024 17:29:12 +0000
-Message-ID: <20241218172912.4170899-1-berrange@redhat.com>
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 021F61955DD2; Wed, 18 Dec 2024 17:32:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 48D7F1955F41; Wed, 18 Dec 2024 17:32:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 0F65E21E6682; Wed, 18 Dec 2024 18:32:05 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: <qemu-devel@nongnu.org>,  <pbonzini@redhat.com>,  <berrange@redhat.com>,
+ <eduardo@habkost.net>,  <pankaj.gupta@amd.com>,  <huibo.wang@amd.com>,
+ <jroedel@suse.com>
+Subject: Re: [PATCH v1 3/3] i386/sev: Add KVM_EXIT_SNP_REQ_CERTS support for
+ certificate-fetching
+In-Reply-To: <20241218154939.1114831-4-michael.roth@amd.com> (Michael Roth's
+ message of "Wed, 18 Dec 2024 09:49:39 -0600")
+References: <20241218154939.1114831-1-michael.roth@amd.com>
+ <20241218154939.1114831-4-michael.roth@amd.com>
+Date: Wed, 18 Dec 2024 18:32:05 +0100
+Message-ID: <878qscrj6y.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -84,336 +88,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a machine is first booted, all virtio balloon stats are initialized
-to their default value -1 (18446744073709551615 when represented as
-unsigned).
+Michael Roth <michael.roth@amd.com> writes:
 
-They remain that way while the firmware is loading, and early phase of
-guest OS boot, until the virtio-balloon driver is activated. Thereafter
-the reported stats reflect the guest OS activity.
+> The GHCB specification[1] defines a VMGEXIT-based Guest Request
+> hypercall to allow an SNP guest to issue encrypted requests directly to
+> SNP firmware to do things like query the attestation report for the
+> guest. These are generally handled purely in the kernel.
+>
+> In some some cases, it's useful for the host to be able to additionally
+> supply the certificate chain for the signing key that SNP firmware uses
+> to sign these attestation reports. To allow for this, the GHCB
+> specification defines an Extended Guest Request where this certificate
+> data can be provided in a special format described in the GHCB spec.
+> This certificate data may be global or guest-specific depending on how
+> the guest was configured. Rather than providing interfaces to manage
+> these within the kernel, KVM provides a new KVM_EXIT_SNP_REQ_CERTS exit
+> to request the certificate contents from userspace. Implement support
+> for that here.
+>
+> To synchronize delivery of the certificates to the guest in a way where
+> they will not be rendered invalid by updates to SNP firmware or
+> attestation singing/endorsement keys by management tools outside the
+> purview of QEMU, it is expected by users of KVM_EXIT_SNP_REQ_CERTS to
+> obtain a shared/read lock on the certificate file prior to delivering
+> them back to KVM. Only after this will the attestation report be
+> retrieved from firmware and bundled with the certificate data, so QEMU
+> must continue to hold the file lock until KVM confirms that the
+> attestation report has been retrieved/bundled. This confirmation is done
+> by way of the kvm_immediate_exit callback infrastructure that was
+> introduced in a previous patch.
 
-When a machine reset is performed, however, the virtio-balloon stats are
-left unchanged by QEMU, despite the guest OS no longer updating them,
-nor indeed even still existing.
+The "management tools outside the purview of QEMU" will all obtain the
+same kind of file lock?
 
-IOW, the mgmt app keeps getting stale stats until the guest OS starts
-once more and loads the virtio-balloon driver (if ever). At that point
-the app will see a discontinuity in the reported values as they sudden
-jump from the stale value to the new value. This jump is indigituishable
-from a valid data update.
+> [1] "Guest Hypervisor Communication Block (GHCB) Standardization",
+>     https://www.amd.com/en/developer/sev.html
+>
+> Signed-off-by: Michael Roth <michael.roth@amd.com>
+> ---
+>  qapi/qom.json                 |  23 +++-
+>  target/i386/kvm/kvm.c         |  10 ++
+>  target/i386/sev-sysemu-stub.c |   5 +
+>  target/i386/sev.c             | 249 ++++++++++++++++++++++++++++++++++
+>  target/i386/sev.h             |   2 +
+>  5 files changed, 288 insertions(+), 1 deletion(-)
+>
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index 28ce24cd8d..6eaf0e7721 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1034,6 +1034,25 @@
+>  #     firmware.  Set this to true to disable the use of VCEK.
+>  #     (default: false) (since: 9.1)
+>  #
+> +# @certs-path: Path to certificate data that can be passed to guests via
+> +#              SNP Extended Guest Requests. File should be in the format
+> +#              described in the GHCB specification. (default: none)
+> +#              (since: 10.0)
 
-While there is an "last-updated" field to report on the freshness of
-the stats, that does not unambiguously tell the mgmt app whether the
-stats are still conceptually relevant to the current running workload.
+I prefer "filename" to "path".  We have many kinds of paths: pathnames
+(denoting files), QOM paths (denoting objects), qdev paths, search
+paths, ...  With "filename", your readers immediately know what you're
+talking about.
 
-It is more conceptually useful to reset the stats to their default
-values on machine reset, given that the previous guest workload the
-stats reflect no longer exists. The mgmt app can now clearly identify
-that there are is no stats information available from the current
-executing workload.
+SevGuestProperties has a member 'dh-cert-file'.  Whether that's related
+to your file I can't tell from its documentation.
 
-The 'last-updated' time is also reset back to 0.
+> +#
+> +# @certs-timeout: Max time in milliseconds to wait to obtain a read lock
 
-IOW, on every machine reset, the virtio stats are in the same clean
-state they were when the macine first powered on.
+Please don't abbreviate "Maximum" here.
 
-A functional test is added to validate this behaviour with a real
-world guest OS.
+Confident millisecond granularity will suffice forever?
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
+> +#                 on the certificate file specified by @certs-path. This
+> +#                 is not a cumulative value and only affects how long
+> +#                 QEMU waits before returning execution to the vCPU and
+> +#                 informing the guest of the timeout, so the guest can
+> +#                 still continuing retrying for as long as it likes
+> +#                 (which will be about 60 seconds for linux guests at
+> +#                 the time of this writing). If the guest-side timeout
+> +#                 is insufficient, set this higher to allow more time to
+> +#                 fetch the certificate. If the guest-side timeout is
+> +#                 sufficient, set this lower to reduce the likelihood of
+> +#                 soft lockups in the guest.
+> +#                 (default: 100) (since: 10.0)
+> +#
+>  # Since: 9.1
+>  ##
 
-One side-thought I have, is whether it makes sense to add a
-'reset-count' field in the virtio stats, alongside the
-'last-updated' field. While apps can infer a reset from seeing
-the stats all go back to their defaults, an explicit flag is
-simpler...
+Please format like
 
- MAINTAINERS                             |   1 +
- hw/virtio/virtio-balloon.c              |  30 ++++-
- include/hw/virtio/virtio-balloon.h      |   4 +
- tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
- 4 files changed, 195 insertions(+), 1 deletion(-)
- create mode 100755 tests/functional/test_virtio_balloon.py
+   # @certs-path: Path to certificate data that can be passed to guests
+   #     via SNP Extended Guest Requests.  File should be in the format
+   #     described in the GHCB specification.
+   #     (default: none) (since: 10.0)
+   #
+   # @certs-timeout: Max time in milliseconds to wait to obtain a read
+   #     lock on the certificate file specified by @certs-path.  This is
+   #     not a cumulative value and only affects how long QEMU waits
+   #     before returning execution to the vCPU and informing the guest
+   #     of the timeout, so the guest can still continuing retrying for
+   #     as long as it likes (which will be about 60 seconds for linux
+   #     guests at the time of this writing).  If the guest-side timeout
+   #     is insufficient, set this higher to allow more time to fetch the
+   #     certificate.  If the guest-side timeout is sufficient, set this
+   #     lower to reduce the likelihood of soft lockups in the guest.
+   #     (default: 100) (since: 10.0)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 822f34344b..1380d53d03 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2234,6 +2234,7 @@ F: include/hw/virtio/virtio-balloon.h
- F: system/balloon.c
- F: include/sysemu/balloon.h
- F: tests/qtest/virtio-balloon-test.c
-+F: tests/functional/test_virtio_balloon.py
- 
- virtio-9p
- M: Greg Kurz <groug@kaod.org>
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index ab2ee30475..fe0854e198 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -31,7 +31,7 @@
- #include "trace.h"
- #include "qemu/error-report.h"
- #include "migration/misc.h"
--
-+#include "sysemu/reset.h"
- #include "hw/virtio/virtio-bus.h"
- #include "hw/virtio/virtio-access.h"
- 
-@@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-     }
- 
-     reset_stats(s);
-+    s->stats_last_update = 0;
-+    qemu_register_resettable(OBJECT(dev));
- }
- 
- static void virtio_balloon_device_unrealize(DeviceState *dev)
-@@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOBalloon *s = VIRTIO_BALLOON(dev);
- 
-+    qemu_unregister_resettable(OBJECT(dev));
-     if (s->free_page_bh) {
-         qemu_bh_delete(s->free_page_bh);
-         object_unref(OBJECT(s->iothread));
-@@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
-     }
- }
- 
-+static ResettableState *virtio_balloon_get_reset_state(Object *obj)
-+{
-+    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-+    return &s->reset_state;
-+}
-+
-+static void virtio_balloon_system_reset_enter(Object *obj, ResetType type)
-+{
-+    VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-+
-+    /*
-+     * When waking up from standby/suspend-to-ram, do not reset stats.
-+     */
-+    if (type == RESET_TYPE_WAKEUP) {
-+        return;
-+    }
-+
-+    reset_stats(s);
-+    s->stats_last_update = 0;
-+}
-+
- static void virtio_balloon_instance_init(Object *obj)
- {
-     VirtIOBalloon *s = VIRTIO_BALLOON(obj);
-@@ -1039,6 +1063,7 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-     VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
- 
-     device_class_set_props(dc, virtio_balloon_properties);
-     dc->vmsd = &vmstate_virtio_balloon;
-@@ -1051,6 +1076,9 @@ static void virtio_balloon_class_init(ObjectClass *klass, void *data)
-     vdc->get_features = virtio_balloon_get_features;
-     vdc->set_status = virtio_balloon_set_status;
-     vdc->vmsd = &vmstate_virtio_balloon_device;
-+
-+    rc->get_state = virtio_balloon_get_reset_state;
-+    rc->phases.enter = virtio_balloon_system_reset_enter;
- }
- 
- static const TypeInfo virtio_balloon_info = {
-diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
-index 5139cf8ab6..e8a4dcbee2 100644
---- a/include/hw/virtio/virtio-balloon.h
-+++ b/include/hw/virtio/virtio-balloon.h
-@@ -16,6 +16,7 @@
- #define QEMU_VIRTIO_BALLOON_H
- 
- #include "standard-headers/linux/virtio_balloon.h"
-+#include "hw/resettable.h"
- #include "hw/virtio/virtio.h"
- #include "sysemu/iothread.h"
- #include "qom/object.h"
-@@ -71,6 +72,9 @@ struct VirtIOBalloon {
- 
-     bool qemu_4_0_config_size;
-     uint32_t poison_val;
-+
-+    /* State of the resettable container */
-+    ResettableState reset_state;
- };
- 
- #endif
-diff --git a/tests/functional/test_virtio_balloon.py b/tests/functional/test_virtio_balloon.py
-new file mode 100755
-index 0000000000..d66df4b2cd
---- /dev/null
-+++ b/tests/functional/test_virtio_balloon.py
-@@ -0,0 +1,161 @@
-+#!/usr/bin/env python3
-+#
-+# virtio-balloon tests
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+import time
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+
-+UNSET_STATS_VALUE = 18446744073709551615
-+
-+
-+class VirtioBalloonx86(QemuSystemTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+
-+    ASSET_DISKIMAGE = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Cloud/x86_64/images/Fedora-Cloud-Base-31-1.9.x86_64.qcow2'),
-+        'e3c1b309d9203604922d6e255c2c5d098a309c2d46215d8fc026954f3c5c27a0')
-+
-+    DEFAULT_KERNEL_PARAMS = ('root=/dev/vda1 console=ttyS0 net.ifnames=0 '
-+                             'rd.rescue')
-+
-+    def wait_for_console_pattern(self, success_message, vm=None):
-+        wait_for_console_pattern(
-+            self,
-+            success_message,
-+            failure_message="Kernel panic - not syncing",
-+            vm=vm,
-+        )
-+
-+    def mount_root(self):
-+        self.wait_for_console_pattern('Entering emergency mode.')
-+        prompt = '# '
-+        self.wait_for_console_pattern(prompt)
-+
-+        exec_command_and_wait_for_pattern(self, 'mount /dev/vda1 /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, 'chroot /sysroot',
-+                                          prompt)
-+        exec_command_and_wait_for_pattern(self, "modprobe virtio-balloon",
-+                                          prompt)
-+
-+    def assert_initial_stats(self):
-+        ret = self.vm.qmp('qom-get',
-+                          {'path': '/machine/peripheral/balloon',
-+                           'property': 'guest-stats'})['return']
-+        when = ret.get('last-update')
-+        assert when == 0
-+        stats = ret.get('stats')
-+        for name, val in stats.items():
-+            assert val == UNSET_STATS_VALUE
-+
-+    def assert_running_stats(self, then):
-+        ret = self.vm.qmp('qom-get',
-+                          {'path': '/machine/peripheral/balloon',
-+                           'property': 'guest-stats'})['return']
-+        when = ret.get('last-update')
-+        now = time.time()
-+
-+        assert when > then and when < now
-+        stats = ret.get('stats')
-+        # Stat we expect this particular Kernel to have set
-+        expectData = [
-+            "stat-available-memory",
-+            "stat-disk-caches",
-+            "stat-free-memory",
-+            "stat-htlb-pgalloc",
-+            "stat-htlb-pgfail",
-+            "stat-major-faults",
-+            "stat-minor-faults",
-+            "stat-swap-in",
-+            "stat-swap-out",
-+            "stat-total-memory",
-+        ]
-+        for name, val in stats.items():
-+            if name in expectData:
-+                assert val != UNSET_STATS_VALUE
-+            else:
-+                assert val == UNSET_STATS_VALUE
-+
-+    def test_virtio_balloon_stats(self):
-+        self.set_machine('q35')
-+        kernel_path = self.ASSET_KERNEL.fetch()
-+        initrd_path = self.ASSET_INITRD.fetch()
-+        diskimage_path = self.ASSET_DISKIMAGE.fetch()
-+
-+        self.vm.set_console()
-+        self.vm.add_args("-S")
-+        self.vm.add_args("-cpu", "max")
-+        self.vm.add_args("-m", "2G")
-+        # Slow down BIOS phase with boot menu, so that after a system
-+        # reset, we can reliably catch the clean stats again in BIOS
-+        # phase before the guest OS launches
-+        self.vm.add_args("-boot", "menu=on")
-+        self.vm.add_args("-machine", "q35,accel=kvm:tcg")
-+        self.vm.add_args("-device", "virtio-balloon,id=balloon")
-+        self.vm.add_args('-drive',
-+                         f'file={diskimage_path},if=none,id=drv0,snapshot=on')
-+        self.vm.add_args('-device', 'virtio-blk-pci,bus=pcie.0,' +
-+                         'drive=drv0,id=virtio-disk0,bootindex=1')
-+
-+        self.vm.add_args(
-+            "-kernel",
-+            kernel_path,
-+            "-initrd",
-+            initrd_path,
-+            "-append",
-+            self.DEFAULT_KERNEL_PARAMS
-+        )
-+        self.vm.launch()
-+
-+        # Poll stats at 100ms
-+        self.vm.qmp('qom-set',
-+                    {'path': '/machine/peripheral/balloon',
-+                     'property': 'guest-stats-polling-interval',
-+                     'value': 100 })
-+
-+        # We've not run any guest code yet, neither BIOS or guest,
-+        # so stats should be all default values
-+        self.assert_initial_stats()
-+
-+        self.vm.qmp('cont')
-+
-+        then = time.time()
-+        self.mount_root()
-+        self.assert_running_stats(then)
-+
-+        # Race window between these two commands, where we
-+        # rely on '-boot menu=on' to (hopefully) ensure we're
-+        # still executing the BIOS when QEMU processes the
-+        # 'stop', and thus not loaded the virtio-balloon driver
-+        # in the guest
-+        self.vm.qmp('system_reset')
-+        self.vm.qmp('stop')
-+
-+        # If the above assumption held, we're in BIOS now and
-+        # stats should be all back at their default values
-+        self.assert_initial_stats()
-+        self.vm.qmp('cont')
-+
-+        then = time.time()
-+        self.mount_root()
-+        self.assert_running_stats(then)
-+
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.46.0
+to blend in with commit a937b6aa739 (qapi: Reformat doc comments to
+conform to current conventions).
+
+>  { 'struct': 'SevSnpGuestProperties',
+> @@ -1045,7 +1064,9 @@
+>              '*id-auth': 'str',
+>              '*author-key-enabled': 'bool',
+>              '*host-data': 'str',
+> -            '*vcek-disabled': 'bool' } }
+> +            '*vcek-disabled': 'bool',
+> +            '*certs-path': 'str',
+> +            '*certs-timeout': 'uint32' } }
+>  
+>  ##
+>  # @ThreadContextProperties:
+
+[...]
 
 
