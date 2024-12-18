@@ -4,56 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26B86E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:07:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A8ACE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO1Fm-0000jv-TG; Wed, 18 Dec 2024 16:06:46 -0500
+	id 1tO1Fl-0000jE-QS; Wed, 18 Dec 2024 16:06:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tNztu-00038V-1M
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:40:06 -0500
-Received: from out-186.mta0.migadu.com ([91.218.175.186])
+ (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tNzpQ-0002Rn-43
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:35:29 -0500
+Received: from out-170.mta0.migadu.com ([91.218.175.170])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tNztr-0008Em-PW
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:40:05 -0500
-Message-ID: <3da73b08-5c85-4894-84da-8ebd8d72690d@zabka.it>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zabka.it; s=key1;
- t=1734550801;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2SWV+QGAEgoKk1s8f7SySdWSzcgv+4WILDWnFWHTdXU=;
- b=DhwOFRzT3TCXBTU+PQ8Q0SuN9uALEA5KipVrMFhgYoz0J0c22jOJdw4RvfA/kUuJFOAbT4
- 5hLeeL41kE/4wHW+V2uk/rvLZ+BvrX3E5gP6Mp+ghgC0h61hEmiR+No1k+neTJxp74UBMg
- Rpf2YDni9v2VaLbw7GpfqXurVXCPJ94=
-Date: Wed, 18 Dec 2024 20:40:00 +0100
-MIME-Version: 1.0
-Subject: Re: [PATCH] physmem: allow cpu_memory_rw_debug to write to MMIO
- devices
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20241218193153.151578-1-git@zabka.it>
-Content-Language: de-DE, en-GB
+ (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tNzpN-0004pD-WF
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:35:27 -0500
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
-From: vringar <git@zabka.it>
-In-Reply-To: <20241218193153.151578-1-git@zabka.it>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zabka.it; s=key1;
+ t=1734550518;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5IHdsE4vyhVCTmft2b7H4Lze6ALZhpG3BZSBWwvudSU=;
+ b=eo6JJ82+o4QWs8b/sLjnIs9doZMywE9OEdwq9lOVgYgrKm79vaA/cuz4uC5kOlyvofJ4sD
+ ExTtt8RFkZhQn4om1GC29N7jPe7DIkCYkSEeJxxJzTbQnvYEFWWWbSG3dDaY8bbQKd8X/C
+ ulKbkL7DMrcG3lxHTkfsOS85gtsyjuU=
+From: Stefan Zabka <git@zabka.it>
+To: qemu-devel@nongnu.org
+Cc: Stefan Zabka <git@zabka.it>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] physmem: allow cpu_memory_rw_debug to write to MMIO devices
+Date: Wed, 18 Dec 2024 20:31:53 +0100
+Message-ID: <20241218193153.151578-1-git@zabka.it>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.186; envelope-from=git@zabka.it;
- helo=out-186.mta0.migadu.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+Received-SPF: pass client-ip=91.218.175.170; envelope-from=git@zabka.it;
+ helo=out-170.mta0.migadu.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
  URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -72,9 +66,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Sorry, I forgot to add the following comments:
-1. This is my first time contributing via e-mail. Please lmk if I got 
-anything wrong.
-2. This is a minimally adapted version of the change proposed by 
-andreas-rasmusson in the linked bug. Do I need to credit them in the patch?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
+Signed-off-by: Stefan Zabka <git@zabka.it>
+---
+ system/physmem.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index dc1db3a384..53cdccefcb 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3556,6 +3556,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+     hwaddr phys_addr;
+     vaddr l, page;
+     uint8_t *buf = ptr;
++    bool is_memcpy_access;
+ 
+     cpu_synchronize_state(cpu);
+     while (len > 0) {
+@@ -3574,11 +3575,24 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+             l = len;
+         phys_addr += (addr & ~TARGET_PAGE_MASK);
+         if (is_write) {
+-            res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
+-                                          attrs, buf, l);
++            /* if ram/rom region we access the memory
++              via memcpy instead of via the cpu */
++            hwaddr mr_len, addr1;
++            AddressSpace *as = cpu->cpu_ases[asidx].as;
++            MemoryRegion *mr = address_space_translate(as, phys_addr, &addr1, &mr_len, is_write, attrs);
++
++            is_memcpy_access = memory_region_is_ram(mr) || memory_region_is_romd(mr);
++            if(!is_memcpy_access) {
++                l = memory_access_size(mr, l, addr1);
++            }
++        } else {
++            is_memcpy_access = false;
++        }
++
++        if (is_write && is_memcpy_access) {
++            res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf, l);
+         } else {
+-            res = address_space_read(cpu->cpu_ases[asidx].as, phys_addr,
+-                                     attrs, buf, l);
++            res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr, attrs, buf, l, is_write);
+         }
+         if (res != MEMTX_OK) {
+             return -1;
+-- 
+2.47.1
+
 
