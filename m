@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A134BE77184
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 00:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79B6E77184
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 01:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNiGq-0007hB-KF; Tue, 17 Dec 2024 19:50:36 -0500
+	id 1tNijD-0004Bd-FS; Tue, 17 Dec 2024 20:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tNiGo-0007gt-2T; Tue, 17 Dec 2024 19:50:34 -0500
-Received: from out162-62-57-87.mail.qq.com ([162.62.57.87])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yfliu2008@qq.com>)
- id 1tNiGi-0005lJ-2p; Tue, 17 Dec 2024 19:50:33 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1734483015; bh=3OwnRdR57hfmzLJRKizaJnAfCmbxmlWvAkN/WFLhVzk=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References;
- b=F97xOeo9G2V4JShs+QhdzdjS3W6CWGrt2gtL9r/7Q3Ho4LXStNjlfSgoXvgY8lnM+
- 3L97T3X8DU5afXWukvLzDz4gTVkxC5cNi14wH8ab4QKfTxz7pvpTML7WinaZuq6zBX
- dhy4z79rjYYnvMcBuKxbKxKLqi8AO+wFTFVLcbgI=
-Received: from [192.168.1.13] ([171.213.183.116])
- by newxmesmtplogicsvrsza29-0.qq.com (NewEsmtp) with SMTP
- id C75B60B3; Wed, 18 Dec 2024 08:49:53 +0800
-X-QQ-mid: xmsmtpt1734482993tbfxpyz42
-Message-ID: <tencent_957F3C1C4BF5ADE520ADCCDFFBD990D5B80A@qq.com>
-X-QQ-XMAILINFO: OOWntbL6xj16jVTOPNwoNfLLFo3CZ0MY8UCzE4MHJyTA28jHlKcdnYae5a0r+m
- 3EY1b0Xx5laSIzHNzTKTD1WIhH58ZGsL4we12h2lMf6PMsHZD5WuQlyL5tfYaeVyR4l6+zb5mzG4
- Hk7MuFuVK3sA+7kr5m/KqY/W3OWuNI0Pp/fhmX20ogWadkbmzM6pM1s2xi3zI5yQOK++dXb1ezCt
- YxQNMe9TQx3I4f9yyf1ulLl83Nm52xrouNcWncL4xFN+Ysh1MPTeaddY6/Iq6PH4IlmUKat+CtpO
- +S9Pd4viy7W+8z5tc+9NKLX3cxG/Kixl99ZptCK0D0VFkS7vyt3a+WJMeQEP/puw6GI9Pj3QQN+4
- 6xmAkpachSf5/Zd3oRkfww4cUzDCO/o7SXphNzDZVXKoko8QdYdRIDKZLVCqUjjE/vafwwHQCTWS
- PG5s6S0iz4HHyVc1oHiuGqF2GCiNLoYW1T37y4dA9XbEzbIuN0jxpDm4cIZwUI93zgDm4AB0081r
- C9AlsbJKA/uYdAnyMToFoXliVzaqgFtjmrDbsqebbUK74qlu342e40aFmwn1kIk04UxNBR9cmggV
- 2XQd8Ry1zo6HZ5KTnletZqSFErJcuVqNGaOJMdfb/FVLLzqzkDVPFmklrUR3hTBGJRiphBhClqUn
- x5ru8U5ulxgD6TRq2Ma3Q+beIo+dVJa1Y6aqCvUIiKX0IjATcFBVxhS1H2QC6tEFJOkDodbhA+Q1
- iVcS63YYlaibn+z7Tl6lEtsAkmClKZ6uPWR/sbemsjur94EEUtP7tD+17kvwe4218OlTnn61XOLe
- tcRnu3j6iidDNHhtKxkKg8aMfoJlm6kw4HA+8lcEaCWLiXtWwZsGnm5fcbLO6UZ3IdQ08L4z5Gb/
- 7z21LTs3CPIq8ko5l9g6qQDp3ViDN8UFJRQdp0YnnSRA1vHllrG5bovOYa/SucOk1x8M7aKxl6o+
- Ul4PneIqI=
-X-QQ-XMRINFO: OWPUhxQsoeAVDbp3OJHYyFg=
-X-OQ-MSGID: <616fcd51810da5d86c492bc3e0b3c973502ec512.camel@qq.com>
-Subject: Re: [PATCH v2] riscv/gdb: add virt mode debug interface
-From: Yanfeng Liu <yfliu2008@qq.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: Alex =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>, Mario
- Fleischmann <mario.fleischmann@lauterbach.com>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org,  alistair.francis@wdc.com
-Date: Wed, 18 Dec 2024 08:49:53 +0800
-In-Reply-To: <CAKmqyKNzYM=BvXETpkuPJDd66C7NNUFTFZqacPJJeXwbMyKdFg@mail.gmail.com>
-References: <tencent_B52B1EB0A504D6F690B6E6F3FD3AC9BCDC09@qq.com>
- <8734jbh21e.fsf@draig.linaro.org>
- <tencent_CA6E4D0C897F3ED0EF988CCE5DF541442A05@qq.com>
- <87r06ufjiz.fsf@draig.linaro.org>
- <tencent_AADD9A1292CD7CB89F16999E7BDD03895406@qq.com>
- <0516feb0-ba9a-4ac0-a2bd-1bf97ca9694e@lauterbach.com>
- <tencent_06871EF8A4ECD65A90D4E769FC60C972DC09@qq.com>
- <874j3ibldp.fsf@draig.linaro.org>
- <tencent_F33CF7D60707A9F1B567A493F92CBF77B207@qq.com>
- <CAKmqyKNzYM=BvXETpkuPJDd66C7NNUFTFZqacPJJeXwbMyKdFg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tNijB-0004BS-O1
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 20:19:53 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tNij9-00039y-NA
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 20:19:53 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2162c0f6a39so2420965ad.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 17:19:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734484789; x=1735089589; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CTzEj1erqbAIl3Bsg9EW9dODbx2pv9PYvhzUEJKtQ1E=;
+ b=Ax3WRFNPFTMCwllLPOGOwM8fiNLI7l/A3vJBGyiBji34uapfCFwrHjFT2a6bkoaR8a
+ QKWeVxMgoEwB8xaqv+QUPmRN7uipgZiQvmsVzpAOSedTHmqEINUxoNj+4BKmmgDOwC9a
+ 6jLfJHDL2vgZEGPHz13+oUwMpj+LvLbcRHLNBK8T2W7vWJ6btVZBuCf+If7AUE8Fsh8l
+ 4Zh+36sWLYMVKkcUoN39hGatRpKXlHc5lOCd6sWxsE3pqU7aPllutd0Zdhq1MXqKGI+w
+ j2DAer5RskVdLV0zATG5n+HCYKcUmr7AkEQlPXyFk91vQxNcS7ZQ/heDIOLq0PHRHV93
+ rlVg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734484789; x=1735089589;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=CTzEj1erqbAIl3Bsg9EW9dODbx2pv9PYvhzUEJKtQ1E=;
+ b=BYg/sH/RsSxWSkx/b1e3hv6CN86dMLSLf9Fw/h/lhko/ziUHlbN2+htC9C/weT9P5U
+ JvIC82xH0BOvuOdghyhEzLhfaxtr5dCHbjdUeCQfcMC1boTSI3G0IPb+1fFVozL+dyaS
+ mNMxyswkyha4k2JOoDS+RQxV7VaiqzZNvBmEsAvqt0xhiDQhEkmaSwIvfZ7YItNnv6V1
+ I+bfTpGXbVtwI6QTwAOZromgo/WK6S5I58RADUv47LXFTiPrKXO93qrssFdqgz0E1/ro
+ O4amMb5VXJexwiIzK/XJIk2QXRXMYJJOJOqs5X3dDYhWHp0gaeYboE1Kk7D5fcekJ8d4
+ G1dA==
+X-Gm-Message-State: AOJu0YwBxSqhAA88qWkS//b6n7WPovLRWVTkTyEjNvmQz2QFCMF4evcC
+ uydexfXbjry4Nc+u9anYIdLeL8Y4FdvGlgEWJwCWg7/tFxx3ALBJ
+X-Gm-Gg: ASbGnctfEwEuvfjTewecUXkrhln/0BSg8DNsWnUsjE841T26JW3teXOyIp0dGPrtcMt
+ b/1CvOPWLpuensguZqq/bskKD7cq0GHB+1X4/BessiHf2JmSGT1mKT5SX/uAlefOQYmb2VxvRHi
+ BA5Hcuu9rWlw0vbSIBz20Zne2h2ornN6kdl3gVN+pmPiS3apoYhHL0LWQuZd+eZDf45c9RcElHL
+ jGTTFh1U0SX/1wzfiFmQk2UUGtcHUseqvp5fUKMMk++MVxZ9WllkSza5E3szxMe8h3jSmDJMUg=
+X-Google-Smtp-Source: AGHT+IFLI3SugUG33XnKq0wNXQ0BPOmQgwyLueJy1XIlRrubmtnF+580a/mF+TzG1KR0th3IIiN5PA==
+X-Received: by 2002:a17:903:230e:b0:215:b1e3:c051 with SMTP id
+ d9443c01a7336-218d7292478mr14658675ad.11.1734484789251; 
+ Tue, 17 Dec 2024 17:19:49 -0800 (PST)
+Received: from localhost (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-218a1e72111sm64951235ad.271.2024.12.17.17.19.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Dec 2024 17:19:48 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu2 
-MIME-Version: 1.0
-Received-SPF: pass client-ip=162.62.57.87; envelope-from=yfliu2008@qq.com;
- helo=out162-62-57-87.mail.qq.com
-X-Spam_score_int: 0
-X-Spam_score: -0.0
-X-Spam_bar: /
-X-Spam_report: (-0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- HELO_DYNAMIC_IPADDR=1.951, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=-1.116, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 18 Dec 2024 11:19:43 +1000
+Message-Id: <D6EFJHL1PDCX.2TZC2E8DZLNU3@gmail.com>
+Cc: <qemu-devel@nongnu.org>, "Akihiko Odaki" <akihiko.odaki@daynix.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/2] hw/usb/hcd-xhci-pci: Make PCI device more
+ configurable
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Phil Dennis-Jordan" <phil@philjordan.eu>
+X-Mailer: aerc 0.18.2
+References: <20241212085207.1439501-1-npiggin@gmail.com>
+ <20241212085207.1439501-2-npiggin@gmail.com>
+ <CAAibmn3NsDewTEFdWoR=VpTRSb5C67bFMYXnf74zBQOwWCLi1Q@mail.gmail.com>
+In-Reply-To: <CAAibmn3NsDewTEFdWoR=VpTRSb5C67bFMYXnf74zBQOwWCLi1Q@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,322 +100,262 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2024-12-16 at 15:33 +1000, Alistair Francis wrote:
-> On Thu, Dec 5, 2024 at 7:17=E2=80=AFPM Yanfeng Liu <yfliu2008@qq.com> wro=
-te:
-> >=20
-> > On Thu, 2024-12-05 at 08:10 +0000, Alex Benn=C3=A9e wrote:
-> > > Yanfeng Liu <yfliu2008@qq.com> writes:
-> > >=20
-> > > > On Wed, 2024-12-04 at 17:03 +0100, Mario Fleischmann wrote:
-> > > > > Hi everyone,
-> > > > >=20
-> > > > > I'd like to chime in here because we are sitting on a similar pat=
-ch
-> > > > > which I wanted to send to the mailing list as soon as riscv-debug=
--spec
-> > > > > v1.0.0 becomes ratified.
-> > > > >=20
-> > > > > For hypervisor support, `(qemu) info registers` isn't enough. We =
-need
-> > > > > to
-> > > > > have both read and write access to the V-bit.
-> > > > >=20
-> > > > > On 04.12.2024 14:43, Yanfeng Liu wrote:
-> > > > > > On Fri, 2024-11-29 at 09:59 +0000, Alex Benn=C3=A9e wrote:
-> > > > > > > Yanfeng <yfliu2008@qq.com> writes:
-> > > > > > >=20
-> > > > > > > > On Thu, 2024-11-28 at 14:21 +0000, Alex Benn=C3=A9e wrote:
-> > > > > > > > > Yanfeng Liu <yfliu2008@qq.com> writes:
-> > > > > > > > >=20
-> > > > > > > > > > This adds `virt` virtual register on debug interface so=
- that
-> > > > > > > > > > users
-> > > > > > > > > > can access current virtualization mode for debugging
-> > > > > > > > > > purposes.
-> > > > > > > > > >=20
-> > > > > > > > > > Signed-off-by: Yanfeng Liu <yfliu2008@qq.com>
-> > > > > > > > > > ---
-> > > > > > > > > > =C2=A0 gdb-xml/riscv-32bit-virtual.xml |=C2=A0 1 +
-> > > > > > > > > > =C2=A0 gdb-xml/riscv-64bit-virtual.xml |=C2=A0 1 +
-> > > > > > > > > > =C2=A0 target/riscv/gdbstub.c=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 | 18 ++++++++++++------
-> > > > > > > > > > =C2=A0 3 files changed, 14 insertions(+), 6 deletions(-=
-)
-> > > > > > > > > >=20
-> > > > > > > > > > diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdb-
-> > > > > > > > > > xml/riscv-
-> > > > > > > > > > 32bit-
-> > > > > > > > > > virtual.xml
-> > > > > > > > > > index 905f1c555d..d44b6ca2dc 100644
-> > > > > > > > > > --- a/gdb-xml/riscv-32bit-virtual.xml
-> > > > > > > > > > +++ b/gdb-xml/riscv-32bit-virtual.xml
-> > > > > > > > > > @@ -8,4 +8,5 @@
-> > > > > > > > > > =C2=A0 <!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> > > > > > > > > > =C2=A0 <feature name=3D"org.gnu.gdb.riscv.virtual">
-> > > > > > > > > > =C2=A0=C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"32"/>
-> > > > > > > > > > +=C2=A0 <reg name=3D"virt" bitsize=3D"32"/>
-> > > > > > > > > > =C2=A0 </feature>
-> > > > > > > > > > diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdb-
-> > > > > > > > > > xml/riscv-
-> > > > > > > > > > 64bit-
-> > > > > > > > > > virtual.xml
-> > > > > > > > > > index 62d86c237b..7c9b63d5b6 100644
-> > > > > > > > > > --- a/gdb-xml/riscv-64bit-virtual.xml
-> > > > > > > > > > +++ b/gdb-xml/riscv-64bit-virtual.xml
-> > > > > > > > > > @@ -8,4 +8,5 @@
-> > > > > > > > > > =C2=A0 <!DOCTYPE feature SYSTEM "gdb-target.dtd">
-> > > > > > > > > > =C2=A0 <feature name=3D"org.gnu.gdb.riscv.virtual">
-> > > > > > > > > > =C2=A0=C2=A0=C2=A0 <reg name=3D"priv" bitsize=3D"64"/>
-> > > > > > > > > > +=C2=A0 <reg name=3D"virt" bitsize=3D"64"/>
-> > > > > > > > > > =C2=A0 </feature>
-> > > > > > > > >=20
-> > > > > > > > > I assume these are mirrored in gdb not a QEMU only extens=
-ion?
-> > > > > > > >=20
-> > > > > > > > So far I think it is a QEMU extension and the `gdb-multiarc=
-h`
-> > > > > > > > doesn't
-> > > > > > > > treat
-> > > > > > > > is
-> > > > > > > > specially. My tests shows it basically works:
-> > > > > > > >=20
-> > > > > > > > ```
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x3=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:3 [Machine]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
-> > > > > > > > (gdb) set $priv =3D 2
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
-> > > > > > > > (gdb) set $virt =3D 1
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1
-> > > > > > > > (gdb) set $virt =3D 0
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
-> > > > > > > > (gdb) set $virt =3D 1
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:1 [Supervisor]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x1=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 1
-> > > > > > > > (gdb) set $priv =3D 3
-> > > > > > > > (gdb) ir virt
-> > > > > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x3=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:3 [Machine]
-> > > > > > > > virt=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 0x0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0
-> > > > > > > > ```
-> > > > > > >=20
-> > > > > > > A gdbstub test case would be useful for this although I don't=
- know
-> > > > > > > if
-> > > > > > > the RiscV check-tcg tests switch mode at all.
-> > > > > > >=20
-> > > > > > > >=20
-> > > > > > > > As I am rather new to QEMU, please teach how we can add it =
-as a
-> > > > > > > > QEMU
-> > > > > > > > only
-> > > > > > > > extension.
-> > > > > > >=20
-> > > > > > > You don't need to extend the XML from GDB, you can build a
-> > > > > > > specific
-> > > > > > > one
-> > > > > > > for QEMU extensions. For example:
-> > > > > > >=20
-> > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0 gdb_feature_builder_init(&param.buil=
-der,
-> > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &cpu->dyn_sysreg_feature.desc,
-> > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "org.qemu.gdb.arm.sys.regs",
-> > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "system-registers.xml",
-> > > > > > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 base_reg);
-> > > > > > >=20
-> > > > > > > This exports all the system registers QEMU knows about and GD=
-B can
-> > > > > > > access generically. Note the id is org.qemu..., indicating it=
-s our
-> > > > > > > schema not gdbs.
-> > > > > > Thanks for teaching, I need time to digest. I guess more featur=
-e
-> > > > > > builder
-> > > > > > APIs
-> > > > > > are needed (like append_reg) and the getter/setter callbacks mi=
-ght
-> > > > > > be at
-> > > > > > a
-> > > > > > different place.
-> > > > > >=20
-> > > > > > BTW, compared to adding virtual register `virt`, how do you thi=
-nk if
-> > > > > > we
-> > > > > > share
-> > > > > > the V bit as part of existing `priv` register?
-> > > > >=20
-> > > > > IMHO this is a very good idea since the latest release candidate =
-of
-> > > > > riscv-debug-spec also includes the V bit in priv:2.
-> > > > >=20
-> > > >=20
-> > > > Thanks for this information, I noticed the bit(2) of `priv` registe=
-r is
-> > > > for
-> > > > the
-> > > > V bit as per section 4.10.1.
-> > > >=20
-> > > > > > Or maybe we shall talk to GDB community to get their opinions? =
-If
-> > > > > > they
-> > > > > > agree
-> > > > > > to
-> > > > > > add a few words about V bit here
-> > > > > > https://sourceware.org/gdb/current/onlinedocs/gdb.html/RISC_002=
-dV-Features.html
-> > > > > > ,
-> > > > > > then it saves us a lot.
-> > > > >=20
-> > > > > Except being currently not supported by GDB
-> > > > >=20
-> > > > > (gdb) info register $priv
-> > > > > priv=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
-0x5=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 prv:5 [INVALID]
-> > > > >=20
-> > > > > are there any reasons from QEMU's side that would speak against
-> > > > > including V in priv?
-> > > > >=20
-> > > >=20
-> > > > My v1 patch used `bit(8)` to avoid seeing the `[INVALID]` thing at =
-GDB
-> > > > side,
-> > > > though that is due to GDB isn't in line with its own manual (i.e. u=
-se
-> > > > the
-> > > > two
-> > > > lowest bits only).
-> > > >=20
-> > > > Without a doc or specification. we felt people may not know `bit(8)=
-` in
-> > > > v1
-> > > > patch
-> > > > was for the V bit, so I drafted patch v2 as Alistair suggested. How=
-ever,
-> > > > as
-> > > > Alex
-> > > > pointed out, directly adding `virt` register in
-> > > > "org.gnu.gdb.riscv.virtual"
-> > > > XML
-> > > > is improper. I also wanted to raise this in GDB side but my applica=
-tion
-> > > > to
-> > > > join
-> > > > the mail list is still pending.
-> > > >=20
-> > > > Alex and Alistair, now I am wondering if we can follow the RiscV de=
-bug
-> > > > specification to use `bit(2)` of `priv` virtual register? My test s=
-hows
-> > > > except
-> > > > for the `[INVALID]` label, both set/get access seems working.
-> > >=20
-> > > I guess the INVALID just means gdb needs teaching about the format of
-> > > the register.
-> >=20
-> > Yes, GDB currently uses mask `0xff`(instead of `0x3`) to get the mode v=
-alue
-> > when
-> > adding the string label, this violates its own manual:
-> >=20
-> > 1303=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 else i=
-f (regnum =3D=3D RISCV_PRIV_REGNUM)
-> > 1304=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 {
-> > 1305=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 LONGEST d;
-> > 1306=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 uint8_t priv;
-> > 1307
-> > 1308=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 d =3D value_as_long (val);
-> > 1309=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 priv =3D d & 0xff;
-> > 1310
-> > 1311=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 if (priv < 4)
-> > 1312=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {
-> > 1313=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 static const char * const sprv[]=
- =3D
-> > 1314=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {
-> > 1315=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "User/Ap=
-plication",
-> > 1316=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Supervi=
-sor",
-> > 1317=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Hypervi=
-sor",
-> > 1318=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Machine=
-"
-> > 1319=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 };
-> > 1320=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdb_printf (file, "\tprv:%d [%s]=
-",
-> > 1321=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 priv, sprv[priv]);
-> > 1322=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-> > 1323=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 else
-> > 1324=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 gdb_printf (file, "\tprv:%d [INVALID]", priv=
+On Thu Dec 12, 2024 at 8:41 PM AEST, Phil Dennis-Jordan wrote:
+> Hey Nicholas,
+>
+> I'm not an XHCI & PCI expert (yet?) so apologies if I've got some of this
+> wrong, but I've asked some questions and made some comments inline:
+
+Hey Phil,
+
+Thanks for the review, looks like you are the expert now :)
+
+>
+> On Thu, 12 Dec 2024 at 09:52, Nicholas Piggin <npiggin@gmail.com> wrote:
+>
+> > To prepare to support another USB PCI Host Controller, make some PCI
+> > configuration dynamic.
+> >
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >  hw/usb/hcd-xhci-pci.h |  9 ++++++
+> >  hw/usb/hcd-xhci-nec.c | 10 +++++++
+> >  hw/usb/hcd-xhci-pci.c | 69 ++++++++++++++++++++++++++++++++++++-------
+> >  3 files changed, 78 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/hw/usb/hcd-xhci-pci.h b/hw/usb/hcd-xhci-pci.h
+> > index 08f70ce97cc..213076aabf6 100644
+> > --- a/hw/usb/hcd-xhci-pci.h
+> > +++ b/hw/usb/hcd-xhci-pci.h
+> > @@ -40,6 +40,15 @@ typedef struct XHCIPciState {
+> >      XHCIState xhci;
+> >      OnOffAuto msi;
+> >      OnOffAuto msix;
+> > +    uint8_t cache_line_size;
+> > +    uint8_t pm_cap_off;
+> > +    uint8_t pcie_cap_off;
+> > +    uint8_t msi_cap_off;
+> > +    uint8_t msix_cap_off;
+> > +    int msix_bar_nr;
+> > +    uint64_t msix_bar_size;
+> > +    uint32_t msix_table_off;
+> > +    uint32_t msix_pba_off;
+> >  } XHCIPciState;
+> >
+> >  #endif
+> > diff --git a/hw/usb/hcd-xhci-nec.c b/hw/usb/hcd-xhci-nec.c
+> > index 0e61c6c4f06..6ac1dc7764c 100644
+> > --- a/hw/usb/hcd-xhci-nec.c
+> > +++ b/hw/usb/hcd-xhci-nec.c
+> > @@ -52,6 +52,16 @@ static void nec_xhci_instance_init(Object *obj)
+> >
+> >      pci->xhci.numintrs =3D nec->intrs;
+> >      pci->xhci.numslots =3D nec->slots;
+> > +
+> > +    pci->cache_line_size =3D 0x10;
+> > +    pci->pm_cap_off =3D 0;
+> > +    pci->pcie_cap_off =3D 0xa0;
+> > +    pci->msi_cap_off =3D 0x70;
+> > +    pci->msix_cap_off =3D 0x90;
+> > +    pci->msix_bar_nr =3D 0;
+> > +    pci->msix_bar_size =3D 0;
+> > +    pci->msix_table_off =3D 0x3000;
+> > +    pci->msix_pba_off =3D 0x3800;
+> >  }
+>
+>
+> What about the "qemu-xhci" device, does that need similar treatment? I
+> suspect it does at least for a bunch of these settings. Perhaps
+> xhci_instance_init() in the abstract "pci-xhci" base might be a better
+> place for these "sensible defaults" and then override them only in the
+> specific implementations that need to do so, such as the new TI model?
+> And/or have suitably named helper init function for configuring single-BA=
+R
+> PCI XHCI controllers so we can get some meaning behind all these magic
+> numbers?
+
+No you're right, I missed this entirely and the qemu-xhci dev is
+indeed broken after this patch. Just moving it into the parent
+instance init gets it to work.
+
+> >  static void nec_xhci_class_init(ObjectClass *klass, void *data)
+> > diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
+> > index a039f5778a6..948d75b7379 100644
+> > --- a/hw/usb/hcd-xhci-pci.c
+> > +++ b/hw/usb/hcd-xhci-pci.c
+> > @@ -32,8 +32,9 @@
+> >  #include "trace.h"
+> >  #include "qapi/error.h"
+> >
+> > -#define OFF_MSIX_TABLE  0x3000
+> > -#define OFF_MSIX_PBA    0x3800
+> > +#define MSIX_BAR_SIZE   0x800000
+> >
+>
+> MSIX_BAR_SIZE doesn't seem to be used anywhere, and patch 2/2 uses 0x8000=
+00
+> explicitly. (8 MiB also seems=E2=80=A6 huge? But I'm guessing you're matc=
+hing this
+> with the physical TI controller hardware - either way I don't think it
+> belongs in this file.)
+>
+>
+> > +#define OFF_MSIX_TABLE  0x0000
+> > +#define OFF_MSIX_PBA    0x1000
+> >
+>
+> Maybe instead of redefining these constants to only apply to the split BA=
+R
+> device variants, there should be 2 variants of them, one for single-BAR
+> controllers, and one for controllers with separate BARs. That would also
+> help make sense of the "magic numbers" in nec_xhci_instance_init().
+
+You're right on both counts, I tidied these up.
+
+> >  static void xhci_pci_intr_update(XHCIState *xhci, int n, bool enable)
+> >  {
+> > @@ -104,6 +105,31 @@ static int xhci_pci_vmstate_post_load(void *opaque=
+,
+> > int version_id)
+> >     return 0;
+> >  }
+> >
+> > +static int xhci_pci_add_pm_capability(PCIDevice *pci_dev, uint8_t offs=
+et,
+> > +                                      Error **errp)
+> > +{
+> > +    int err;
+> > +
+> > +    err =3D pci_add_capability(pci_dev, PCI_CAP_ID_PM, offset,
+> > +                             PCI_PM_SIZEOF, errp);
+> > +    if (err < 0) {
+> > +        return err;
+> > +    }
+> > +
+> > +    pci_set_word(pci_dev->config + offset + PCI_PM_PMC,
+> > +                 PCI_PM_CAP_VER_1_2 |
+> > +                 PCI_PM_CAP_D1 | PCI_PM_CAP_D2 |
+> > +                 PCI_PM_CAP_PME_D0 | PCI_PM_CAP_PME_D1 |
+> > +                 PCI_PM_CAP_PME_D2 | PCI_PM_CAP_PME_D3hot);
+> > +    pci_set_word(pci_dev->wmask + offset + PCI_PM_PMC, 0);
+> > +    pci_set_word(pci_dev->config + offset + PCI_PM_CTRL,
+> > +                 PCI_PM_CTRL_NO_SOFT_RESET);
+> > +    pci_set_word(pci_dev->wmask + offset + PCI_PM_CTRL,
+> > +                 PCI_PM_CTRL_STATE_MASK);
+> > +
+> > +    return 0;
+> > +}
+> > +
+> >  static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
+> >  {
+> >      int ret;
+> > @@ -112,7 +138,7 @@ static void usb_xhci_pci_realize(struct PCIDevice
+> > *dev, Error **errp)
+> >
+> >      dev->config[PCI_CLASS_PROG] =3D 0x30;    /* xHCI */
+> >      dev->config[PCI_INTERRUPT_PIN] =3D 0x01; /* interrupt pin 1 */
+> > -    dev->config[PCI_CACHE_LINE_SIZE] =3D 0x10;
+> > +    dev->config[PCI_CACHE_LINE_SIZE] =3D s->cache_line_size;
+> >      dev->config[0x60] =3D 0x30; /* release number */
+> >
+> >      object_property_set_link(OBJECT(&s->xhci), "host", OBJECT(s), NULL=
 );
-> > 1325=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 }
-> >=20
-> >=20
-> > I am wondering if we can go ahead to follow RiscV debug specification a=
-nd
-> > sync
-> > with GDB later?
->=20
-> If there is a spec then that is the way to go. Just link to it when
-> submitting the patch.
->=20
-> We also at least want to be sending a patch to GDB to fix it,
-> otherwise we are going to break people.
->=20
-Thanks for the suggestion, a patch was sent to GDB:
-https://sourceware.org/pipermail/gdb-patches/2024-December/214221.html
+> > @@ -125,8 +151,16 @@ static void usb_xhci_pci_realize(struct PCIDevice
+> > *dev, Error **errp)
+> >          s->xhci.nec_quirks =3D true;
+> >      }
+> >
+> > +    if (s->pm_cap_off) {
+> > +        if (xhci_pci_add_pm_capability(dev, s->pm_cap_off, &err)) {
+> > +            error_propagate(errp, err);
+> > +            return;
+> >
+>
+> Can't we just pass errp straight to xhci_pci_add_pm_capability and skip t=
+he
+> error_propagate() here?
 
-> Alistair
+Yes I think so.
 
-Regards,
-yf
+> > +        }
+> > +    }
+> > +
+> >      if (s->msi !=3D ON_OFF_AUTO_OFF) {
+> > -        ret =3D msi_init(dev, 0x70, s->xhci.numintrs, true, false, &er=
+r);
+> > +        ret =3D msi_init(dev, s->msi_cap_off, s->xhci.numintrs,
+> > +                       true, false, &err);
+> >          /*
+> >           * Any error other than -ENOTSUP(board's MSI support is broken=
+)
+> >           * is a programming error
+> > @@ -143,22 +177,37 @@ static void usb_xhci_pci_realize(struct PCIDevice
+> > *dev, Error **errp)
+> >          /* With msi=3Dauto, we fall back to MSI off silently */
+> >          error_free(err);
+> >      }
+> > +
+> >      pci_register_bar(dev, 0,
+> >                       PCI_BASE_ADDRESS_SPACE_MEMORY |
+> >                       PCI_BASE_ADDRESS_MEM_TYPE_64,
+> >                       &s->xhci.mem);
+> >
+> >      if (pci_bus_is_express(pci_get_bus(dev))) {
+> > -        ret =3D pcie_endpoint_cap_init(dev, 0xa0);
+> > +        ret =3D pcie_endpoint_cap_init(dev, s->pcie_cap_off);
+> >          assert(ret > 0);
+> >      }
+> >
+> >      if (s->msix !=3D ON_OFF_AUTO_OFF) {
+> > -        /* TODO check for errors, and should fail when msix=3Don */
+> > -        msix_init(dev, s->xhci.numintrs,
+> > -                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
+> > -                  &s->xhci.mem, 0, OFF_MSIX_PBA,
+> > -                  0x90, NULL);
+> > +        MemoryRegion *msix_bar =3D &s->xhci.mem;
+> > +        if (s->msix_bar_nr !=3D 0) {
+> > +            memory_region_init(&dev->msix_exclusive_bar, OBJECT(dev),
+> > +                               "xhci-msix", s->msix_bar_size);
+> > +            msix_bar =3D &dev->msix_exclusive_bar;
+> > +        }
+> > +
+> > +        ret =3D msix_init(dev, s->xhci.numintrs,
+> > +                        msix_bar, s->msix_bar_nr, s->msix_table_off,
+> > +                        msix_bar, s->msix_bar_nr, s->msix_pba_off,
+> > +                        s->msix_cap_off, errp);
+> > +        if (ret) {
+> > +            return;
+> > +        }
+> >
+>
+> Surely we should only propagate the error and fail realize() iff s->msix =
+is
+> ON_OFF_AUTO_ON?
+>
+> For ON_OFF_AUTO_AUTO, msix_init returning failure isn't a critical error.
 
+Yep you're right... you had been testing with msix disabled. I wonder if
+there is a good way to force fail this in qtests?
 
+> > +
+> > +        pci_register_bar(dev, s->msix_bar_nr,
+> > +                         PCI_BASE_ADDRESS_SPACE_MEMORY |
+> > +                         PCI_BASE_ADDRESS_MEM_TYPE_64,
+> > +                         msix_bar);
+> >
+>
+> Is it safe to call pci_register_bar() again for the msix_bar_nr =3D 0 cas=
+e?
+> Even if it is safe, is it sensible? If we're calling it twice for the sam=
+e
+> BAR, and the arguments of either of the calls changes in future, the othe=
+r
+> needs to change too. Doesn't seem ideal.
+
+Good catch. It looks like it "works" so long as the bar wasn't mapped,
+but I'm sure bad practice... Interesting there is no assertion in
+there though. I'll fix it though.
+
+Thanks,
+Nick
 
