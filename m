@@ -4,121 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B1BE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:25:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CCCDE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:25:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwnR-0007OM-9i; Wed, 18 Dec 2024 11:21:13 -0500
+	id 1tNwop-0000ry-QF; Wed, 18 Dec 2024 11:22:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnP-0007N5-Am
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:11 -0500
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwoZ-0000J4-Du
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:22:23 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnL-0006bu-Ib
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:10 -0500
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-aa6c0d1833eso1195763366b.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwoW-00078d-MW
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:22:23 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so48518065e9.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:22:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734538866; x=1735143666; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Vz2EL6CTwFEi6T4j67jXxOQuHyLmeJyyOHpPY04XAmo=;
- b=aWZ1Ejl7CmfGccD7LokM4N5hwLY7luHsdNdqR5cTL22K4ZvwurppjDHKxT7hTa5IR9
- XrCOvA5zJNNvi9t4dmLAKmyX3ajqabtJjWaKStGBO80UMpeLwnGD+mHpq/zfq1txG+z6
- zEEpi2krWoL/1DsIQz9Yeb9YZcbPzSgfQLmpceizEv8iofv6kNahvGs4hXphGVL6glnK
- Q5DybIv4Q8cobUJM3a1eqQmjFZivTUSRXr4EJPvFJSC6kKuRKI1w/jFPkjOS4mK8MKKH
- 4mWvwOXgMF/ymL/1YXYcqIJzFAszIE3ru8YfRETTWokZY39fB7bekXG/jnSgxQp3AEyO
- 4hZQ==
+ d=linaro.org; s=google; t=1734538939; x=1735143739; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DBGqBoFFTtrTgjei5JE6lR139nQig/betbm5L9Jguls=;
+ b=J1k1Q8iemJYH4wRlhH4tfts3/ps7ti4JzcZPteh269DcGpgU4Z0RDYj+yjvbPNjU6v
+ RiUL/fnhybaEPxvz/BUZmjzM56yEDQTbGIn2zEWdVvyXePwyOIQgJRhW7XXJLdt7CWYH
+ 9JlFWApFYPwSK1VawO1mXHnUbgI9Z3CNIXtbjYpFMe9D7eaKc1ONv5qVtZHwcOTl/oIw
+ fMo2gvHtnaX4bCLSKX6dPv73EunyvllIUd/MsByujzEhwTh+VeIasQAWXzrrolsNhB1R
+ iqzI9jEAKb5pPEQfoP91CsV45xh7cQocNgYFISzBWm1Iw4geYZy8zy6yGjTtdFPyaaU3
+ 02jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734538866; x=1735143666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Vz2EL6CTwFEi6T4j67jXxOQuHyLmeJyyOHpPY04XAmo=;
- b=wPY1R6iuVdbXlfHoql1Hp25GXBlzaZpAopMrL9CVF2x3Bux5Bn6mhZzBNPt4YfkVwm
- E6A+a4cEbXz0yT1XsdCO/92RX16vk2k0nhcHKrgCqMawCw/L4NzmOscQPXeqs3SB3UkM
- wcMxv2TnyezYzjCepR/CStGW9W52y9skUE7Oo7+csbCVdDhFLc4WydptEAXocV/wWxqI
- XATgS+jDc4kjqZZOhchE9uWS5/105yfeD/kRp9k3fPLTgOAN+FYdoX2pqe8rDChrBMN5
- b2dSXXcyBRpgXbSC1P1ciQgZMDR1XBUfhZG1iwZ2+5PC7Ex8o4zJk+7D1aDlyh7Z1QTA
- yQbQ==
-X-Gm-Message-State: AOJu0Yy03RC4ba9jpRe29gefz2FwGY9gNkclw/LtfjEJBZaHUSQAUcDo
- VxCeroeUvZw30JomNv7PQRu59DI8e2K7LcQa0kRVNKCC9NxclxrWMFQh5cQcL58=
-X-Gm-Gg: ASbGnctJeG9+2Z7tWPHWjfo742kx4nmb12Vo3F5E2t6A66vTTlBTVol8Aag8WxtjuN+
- 8SuEY4HC2lPV/542m9UzFQCeZAaKbliBGGGh6JP+89LYTP3u1Wr+908eYpqI79RJzGC84ehV847
- OJ0VB41pGE8tQEWVhmLsoCWnO49bfRQcWhoAvDhy7hKWh7TIn55CjT6AsUjfj+vvGSPkVqQo6zh
- NqTLHyBPBP44IOhYY6seCCykoKGJRgU5w4gFl5jylEkl6U6cQzUKKY=
-X-Google-Smtp-Source: AGHT+IGnMUT3OywAG9CsFo+XVUiZ4w7jR+R68xT85Lx56jJweE+LTeY47nibDo9GbWE7OyVDILtCyQ==
-X-Received: by 2002:a17:906:7313:b0:aa6:2fdc:db1a with SMTP id
- a640c23a62f3a-aabf48d513cmr274876366b.38.1734538865820; 
- Wed, 18 Dec 2024 08:21:05 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab9600dd9csm578696466b.10.2024.12.18.08.21.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 08:21:05 -0800 (PST)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 640F55FBC6;
- Wed, 18 Dec 2024 16:21:04 +0000 (GMT)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- John Snow <jsnow@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
- Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v2 03/27] tests/functional: add a m68k tuxrun tests
-Date: Wed, 18 Dec 2024 16:20:39 +0000
-Message-Id: <20241218162104.3493551-4-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
-References: <20241218162104.3493551-1-alex.bennee@linaro.org>
+ d=1e100.net; s=20230601; t=1734538939; x=1735143739;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DBGqBoFFTtrTgjei5JE6lR139nQig/betbm5L9Jguls=;
+ b=D5gmbiDqxvmO38yxsLCba7Rp0IsJc2S5PuJzmBdNnKl3V19Q6pOi+nU7fDQ9HC3quT
+ kKfIkisIQKAiVxKYRjlIa68alPY2HMa9gYD/TVjSd2Q4yoo0RsJVKATgKkggdixyERf5
+ CL51Wb4GbQfYQOZXsZ53UtsjBi1HnpLwZQFxnMFTjNg4hezojHRxac1Zwjsz/83+NU6B
+ Svw3G3Na81XKj+hRx9n55aeOqQKt+6Akzc/6zMsrssnXNzfOU7F4K0Sbhjifg/+/m01V
+ F+RLn4Tl2pDBHCA8BHv1MD9cWUMJ9yZp0oXsBqmp4W7UdwCHkTgk8aNDWYG3xLQsYedG
+ 2VgA==
+X-Gm-Message-State: AOJu0YxIqPAfWsCFrTHnx0wPxJnIypDtW5C94vwLV20w4tWntbtd8tWN
+ dQ7hbIAJeP9rfSEXbMKeztjY7QnIzK0wbUMso6zkPJN+yarG3wu7w91a7e09Jxs=
+X-Gm-Gg: ASbGncu1EQC1grwepwHs+cZ8qsPKHC5Ctfa2mQSRpu5SBVuyAFBilXVp2OP/qaj4xuF
+ fvyjgr7stbaqc4l/8CvhtZ6K8kl61vu+AFcNrd4Ul5rpBpd/Hb8xRP9T21vw3vyIC3aFny0BOv+
+ 1ogkSWOLigIAtvsxNooFVYi0IyZam+OVc9o7RJwjGSL4JUFUDCX2xooGQWVK6+wNbnPeEXF2zDk
+ Fv6l3LDH6HSdZS/uqdex0WY9EtzwhHx7hnGWclRuDTssS1EOmbkfCHH+IAT7C/wX+IQKE8u
+X-Google-Smtp-Source: AGHT+IGdFMvwZNNIwVpThNbKf0YkrO9/XNDycyE19O9fkL4PvUz6c2Tkd/A2lNWHlCWOeP2NEK6MgQ==
+X-Received: by 2002:a05:600c:2e49:b0:434:fbda:1f36 with SMTP id
+ 5b1f17b1804b1-436553ec834mr26884775e9.20.1734538939077; 
+ Wed, 18 Dec 2024 08:22:19 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656afc179sm24856065e9.3.2024.12.18.08.22.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 08:22:18 -0800 (PST)
+Message-ID: <098c063d-ce67-4f2e-aa25-6eac7db9b170@linaro.org>
+Date: Wed, 18 Dec 2024 17:22:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ kvm@vger.kernel.org, Marcelo Tosatti <mtosatti@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, qemu-s390x@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+References: <20241218155913.72288-1-philmd@linaro.org>
+ <20241218155913.72288-3-philmd@linaro.org> <Z2L1o7xesp5EcRuW@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <Z2L1o7xesp5EcRuW@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,91 +111,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We didn't have this before and as it exercises the m68k virt platform
-it seems worth adding. We don't wait for the shutdown because QEMU
-will auto-exit on the shutdown.
+On 18/12/24 17:17, Daniel P. Berrangé wrote:
+> On Wed, Dec 18, 2024 at 04:59:13PM +0100, Philippe Mathieu-Daudé wrote:
+>> "system/confidential-guest-support.h" is not needed,
+>> remove it. Reorder #ifdef'ry to reduce declarations
+>> exposed on user emulation.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   target/i386/sev.h  | 29 ++++++++++++++++-------------
+>>   hw/i386/pc_sysfw.c |  2 +-
+>>   2 files changed, 17 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/target/i386/sev.h b/target/i386/sev.h
+>> index 2664c0b1b6c..373669eaace 100644
+>> --- a/target/i386/sev.h
+>> +++ b/target/i386/sev.h
+>> @@ -18,7 +18,17 @@
+>>   #include CONFIG_DEVICES /* CONFIG_SEV */
+>>   #endif
+>>   
+>> -#include "system/confidential-guest-support.h"
+>> +#if !defined(CONFIG_SEV) || defined(CONFIG_USER_ONLY)
+>> +#define sev_enabled() 0
+>> +#define sev_es_enabled() 0
+>> +#define sev_snp_enabled() 0
+>> +#else
+>> +bool sev_enabled(void);
+>> +bool sev_es_enabled(void);
+>> +bool sev_snp_enabled(void);
+>> +#endif
+>> +
+>> +#if !defined(CONFIG_USER_ONLY)
+> 
+> I'm surprised any of this header file is relevant to
+> user mode. If something is mistakely calling sev_ functions
+> from user mode compiled code, I'd be inclined to fix the
+> caller such that its #include ".../sev.h" can be wrapped
+> by !CONFIG_USER_ONLY
 
-Cc: Laurent Vivier <laurent@vivier.eu>
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-24-alex.bennee@linaro.org>
+I forgot to mention and just replied in another post:
 
----
-v2
-  - add to MAINTAINERS
----
- MAINTAINERS                          |  1 +
- tests/functional/meson.build         |  1 +
- tests/functional/test_m68k_tuxrun.py | 34 ++++++++++++++++++++++++++++
- 3 files changed, 36 insertions(+)
- create mode 100644 tests/functional/test_m68k_tuxrun.py
+   The motivation is to reduce system-specific definitions
+   exposed to user-mode in target/i386/cpu.c, like hwaddr &co,
+   but I'm not there yet and have too many local patches so
+   starting to send what's ready.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 822f34344b..f7aa069d47 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1283,6 +1283,7 @@ F: include/hw/intc/goldfish_pic.h
- F: include/hw/intc/m68k_irqc.h
- F: include/hw/misc/virt_ctrl.h
- F: docs/specs/virt-ctlr.rst
-+F: tests/functional/test_m68k_tuxrun.py
- 
- MicroBlaze Machines
- -------------------
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 1bc5ba5229..0e1bfb8c44 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -112,6 +112,7 @@ tests_m68k_system_thorough = [
-   'm68k_mcf5208evb',
-   'm68k_nextcube',
-   'm68k_q800',
-+  'm68k_tuxrun',
- ]
- 
- tests_microblaze_system_thorough = [
-diff --git a/tests/functional/test_m68k_tuxrun.py b/tests/functional/test_m68k_tuxrun.py
-new file mode 100644
-index 0000000000..7eacba135f
---- /dev/null
-+++ b/tests/functional/test_m68k_tuxrun.py
-@@ -0,0 +1,34 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots known good tuxboot images the same way
-+# that tuxrun (www.tuxrun.org) does. This tool is used by things like
-+# the LKFT project to run regression tests on kernels.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author:
-+#  Alex Bennée <alex.bennee@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import Asset
-+from qemu_test.tuxruntest import TuxRunBaselineTest
-+
-+class TuxRunM68KTest(TuxRunBaselineTest):
-+
-+    ASSET_M68K_KERNEL = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/m68k/vmlinux',
-+        '7754e1d5cec753ccf1dc6894729a7f54c1a4965631ebf56df8e4ce1163ad19d8')
-+    ASSET_M68K_ROOTFS = Asset(
-+        'https://storage.tuxboot.com/buildroot/20241119/m68k/rootfs.ext4.zst',
-+        '557962ffff265607912e82232cf21adbe0e4e5a88e1e1d411ce848c37f0213e9')
-+
-+    def test_m68k(self):
-+        self.set_machine('virt')
-+        self.cpu="m68040"
-+        self.common_tuxrun(kernel_asset=self.ASSET_M68K_KERNEL,
-+                           rootfs_asset=self.ASSET_M68K_ROOTFS,
-+                           drive="virtio-blk-device")
-+
-+if __name__ == '__main__':
-+    TuxRunBaselineTest.main()
--- 
-2.39.5
+WRT SEV what is bugging me is in cpu_x86_cpuid():
+
+target/i386/cpu.c-7137-    case 0x8000001F:
+target/i386/cpu.c-7138-        *eax = *ebx = *ecx = *edx = 0;
+target/i386/cpu.c:7139:        if (sev_enabled()) {
+target/i386/cpu.c-7140-            *eax = 0x2;
+target/i386/cpu.c-7141-            *eax |= sev_es_enabled() ? 0x8 : 0;
+target/i386/cpu.c-7142-            *eax |= sev_snp_enabled() ? 0x10 : 0;
+target/i386/cpu.c-7143-            *ebx = sev_get_cbit_position() & 
+0x3f; /* EBX[5:0] */
+target/i386/cpu.c-7144-            *ebx |= (sev_get_reduced_phys_bits() 
+& 0x3f) << 6; /* EBX[11:6] */
+target/i386/cpu.c-7145-        }
+target/i386/cpu.c-7146-        break;
+
+but maybe I can use #ifdef'ry around CONFIG_USER_ONLY like
+with SGX:
+
+     case 0x12:
+#ifndef CONFIG_USER_ONLY
+         if (count > 1) {
+             uint64_t epc_addr, epc_size;
+
+             if (sgx_epc_get_section(count - 2, &epc_addr, &epc_size)) {
+                 *eax = *ebx = *ecx = *edx = 0;
+                 break;
+             }
+             ...
+#endif
+         break;
+
+> 
+>>   
+>>   #define TYPE_SEV_COMMON "sev-common"
+>>   #define TYPE_SEV_GUEST "sev-guest"
+>> @@ -45,18 +55,6 @@ typedef struct SevKernelLoaderContext {
+>>       size_t cmdline_size;
+>>   } SevKernelLoaderContext;
+>>   
+>> -#ifdef CONFIG_SEV
+>> -bool sev_enabled(void);
+>> -bool sev_es_enabled(void);
+>> -bool sev_snp_enabled(void);
+>> -#else
+>> -#define sev_enabled() 0
+>> -#define sev_es_enabled() 0
+>> -#define sev_snp_enabled() 0
+>> -#endif
+>> -
+>> -uint32_t sev_get_cbit_position(void);
+>> -uint32_t sev_get_reduced_phys_bits(void);
+>>   bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
+>>   
+>>   int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
 
 
