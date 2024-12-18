@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ABDAE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 09:15:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09BA2E7718A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 09:15:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNq8U-0006ZH-94; Wed, 18 Dec 2024 04:14:30 -0500
+	id 1tNq8U-0006ZJ-PJ; Wed, 18 Dec 2024 04:14:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1tNq8S-0006YG-EA
+ id 1tNq8S-0006YI-GO
  for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:28 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1tNq8P-0001ms-A3
+ id 1tNq8P-0001nF-Ku
  for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734513266; x=1766049266;
+ t=1734513265; x=1766049265;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=SsQyQYlE/+wDejDYWwjUjjhhdveMqSUSALy6nEYsHk4=;
- b=Bi3HgeqEm4i8a/0dbakiixY6kjXUX6aFiFSE0Q2+f/jf1wLTDYzTGS3k
- hAMud8vHrPWJ42pwyzoCevft+0OD+6EzyaDYHDfRTDqRPw6awmCtZGBYM
- OagxMOlog4WwX6MKtr+ec6k1EyYyOC+YInJT0YecV6J+M4CYVFGx52EeO
- jL/EKRPzw+ZxNxuzby9vSWrKFMUKA6slaE9q9wc80leNpxwCjknR1Y3y3
- mVxO5PdSf9UdARuB4Y0homIafen9IDn6++SVi6VD+OMi+IvYjKwxEyo5m
- gPULXvK3Kckki2V8GKpcwaac1met0asrJugqD4mxtxNvvu1jYAT32xqeB Q==;
-X-CSE-ConnectionGUID: QkvvU8wuT7yqV8W6I4D+Yw==
-X-CSE-MsgGUID: VBEUOL34Rhu5HK0TjIUf3g==
-X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="37815606"
-X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="37815606"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 01:14:21 -0800
-X-CSE-ConnectionGUID: oF0LLJ6TRRKuWRzpfqnV8w==
-X-CSE-MsgGUID: STAJwx1ISMKrq9DMLCYmWg==
+ bh=fxPgzF2ktFu+HE+iDNfw/JIEC9OxbBQtqbPt3YWfSZ8=;
+ b=kFkbvzw1CAVFf+G++0B69F7N8JQPWVzRuE4l6RWNMgAVkHtMucy9tenT
+ hMZj/uSF51WsUY2HkFYhgfpOAtfDkxJkDO6HYIRN6hmAkS2eh1EnwV2A2
+ n1Shsd90F3cUAT6w8TxIRVhtXGHk2b366ka3uN63x4RR3fDMui/nX2W32
+ 6/X757uL4YNMExCuoZ4PoxBVY00Lo8VgECXgZejF8urXgvg4QkDiMuWPy
+ pxC8wAQ5gjxcBacWJgA6drFpZjK3kV6c0FVAK+JHc3c1WhrRWysxu/rGx
+ KGb3jyXzYv8j4zpDvXel2+EVoqXzS0K1rY6XMdX5QbiDrykM9S5YlcSqP g==;
+X-CSE-ConnectionGUID: Xs1I6t0hRrGZ4WSwL/99rg==
+X-CSE-MsgGUID: VoqA4tKOQ464mawozxqOdw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="38760658"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="38760658"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 01:14:23 -0800
+X-CSE-ConnectionGUID: PP+i61UUSAqO+fZoqliEsg==
+X-CSE-MsgGUID: ereCnxXLQTaprSBc7H3U3w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="121066402"
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="102896455"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa002.fm.intel.com with ESMTP; 18 Dec 2024 01:14:19 -0800
+ by orviesa003.jf.intel.com with ESMTP; 18 Dec 2024 01:14:22 -0800
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, jason.zeng@intel.com,
  yichen.wang@bytedance.com
-Subject: [PATCH 2/3] multifd: bugfix for incorrect migration data with QPL
+Subject: [PATCH 3/3] multifd: bugfix for incorrect migration data with qatzip
  compression
-Date: Wed, 18 Dec 2024 17:14:12 +0800
-Message-ID: <20241218091413.140396-3-yuan1.liu@intel.com>
+Date: Wed, 18 Dec 2024 17:14:13 +0800
+Message-ID: <20241218091413.140396-4-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241218091413.140396-1-yuan1.liu@intel.com>
 References: <20241218091413.140396-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -99,21 +99,21 @@ to record the normal pages.
 Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
 Reviewed-by: Jason Zeng <jason.zeng@intel.com>
 ---
- migration/multifd-qpl.c | 1 +
+ migration/multifd-qatzip.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/migration/multifd-qpl.c b/migration/multifd-qpl.c
-index bbe466617f..88e2344af2 100644
---- a/migration/multifd-qpl.c
-+++ b/migration/multifd-qpl.c
-@@ -679,6 +679,7 @@ static int multifd_qpl_recv(MultiFDRecvParams *p, Error **errp)
-         qpl->zlen[i] = be32_to_cpu(qpl->zlen[i]);
-         assert(qpl->zlen[i] <= multifd_ram_page_size());
-         zbuf_len += qpl->zlen[i];
+diff --git a/migration/multifd-qatzip.c b/migration/multifd-qatzip.c
+index 7b68397625..6a0e989fae 100644
+--- a/migration/multifd-qatzip.c
++++ b/migration/multifd-qatzip.c
+@@ -373,6 +373,7 @@ static int qatzip_recv(MultiFDRecvParams *p, Error **errp)
+     /* Copy each page to its appropriate location. */
+     for (int i = 0; i < p->normal_num; i++) {
+         memcpy(p->host + p->normal[i], q->out_buf + page_size * i, page_size);
 +        ramblock_recv_bitmap_set_offset(p->block, p->normal[i]);
      }
- 
-     /* read compressed pages */
+     return 0;
+ }
 -- 
 2.43.0
 
