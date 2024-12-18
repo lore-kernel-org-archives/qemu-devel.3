@@ -4,138 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F8FE7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 15:51:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D4A8E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 15:52:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwK9-0005UG-F1; Wed, 18 Dec 2024 10:50:57 -0500
+	id 1tNwKs-0006DY-Ro; Wed, 18 Dec 2024 10:51:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tNwK5-0005Tu-Hv
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:53 -0500
-Received: from mail-mw2nam10on20604.outbound.protection.outlook.com
- ([2a01:111:f403:2412::604]
- helo=NAM10-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwKq-00069O-Ox
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:51:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tNwK3-0003qh-MX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:53 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JVCKdTgX0O7g7A4Zp92fXCkS9mcD7GTLRAtUB7BLc6onzBUOaG2L0zZh5NhSo3+21bhDqEX7TY+A5EwLX+HB8A2V2MqbPyfuB2QdrUafpFZwOqhX3YV6o3xg21uTz3W5E55hGJzyM4E1w1uhB3f2NuFJtHpM5ccIO9tiRZOtq49leHORQB9Xd4MLf9j/E83pxSgtPMlz07i/Mm43FefH61JvQGa5se9CevTKWdfxp3NWXFFIWCSjl3c7R5edrs0MfQKhOnMxOKGqvcOeAnPf8d8ULs0PZLVH+7catQvf0SCmgg3ZPTEcnmn0P+P0m0hGxPr+MPdZa6wjVtnh6417Bw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wVTGCtF0LtdOoZKaoC5Qzv6XnhHaUpQchyQXz90KzY0=;
- b=DfszbgmS3VNHfGVYcDWvA5c9xMi0Tc7Rj1fHm0qRCuevsVrW+cV90lPTAVUOw6C69duJpte0Bwy+9MytfJ8IbSpFon65KIPqkeyuhRmnaQem5r71cR3LJpV6Z2JLp6uGmYbhhGZrFQeVyM0Y5p0bxyE8NfjABMSXkL1bTTJpy7NABJQAQqBQOjGx4773ZGbk9hxuWxa86v/n8pUPF5niB9WrZhZVRW13DTPUuF0JhZqQijgeE5L0qElNhxEY0sNz2Yahh8R55a6VTB9rodGK9u+0hnuMx4tMyZIB7WtR4yXtBKVIntKB+xXpVVUZA+Hc8wiUetam0viRiO4EMF0pWg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wVTGCtF0LtdOoZKaoC5Qzv6XnhHaUpQchyQXz90KzY0=;
- b=CpKund+x1LWKOtiLHLhod3JhofjTqza5bfgoKhAvsHC8f4J4x3vZwy88fCV4JuGkg3l/0tIXV1oiqujAJzZ++vLTePbPpsmtJzzzwU6twemXTiJJtklQX7RqVZpa3FrWC7/ajb2RT3UMgkY+yUZ5yjUSd0W5FzCIEqcC6hNNzpg=
-Received: from BLAPR03CA0050.namprd03.prod.outlook.com (2603:10b6:208:32d::25)
- by LV3PR12MB9234.namprd12.prod.outlook.com (2603:10b6:408:1a0::8)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.12; Wed, 18 Dec
- 2024 15:50:44 +0000
-Received: from MN1PEPF0000ECD9.namprd02.prod.outlook.com
- (2603:10b6:208:32d:cafe::59) by BLAPR03CA0050.outlook.office365.com
- (2603:10b6:208:32d::25) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.22 via Frontend Transport; Wed,
- 18 Dec 2024 15:50:41 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MN1PEPF0000ECD9.mail.protection.outlook.com (10.167.242.138) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8251.15 via Frontend Transport; Wed, 18 Dec 2024 15:50:41 +0000
-Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 18 Dec
- 2024 09:50:41 -0600
-From: Michael Roth <michael.roth@amd.com>
-To: <qemu-devel@nongnu.org>
-CC: <pbonzini@redhat.com>, <berrange@redhat.com>, <eduardo@habkost.net>,
- <armbru@redhat.com>, <pankaj.gupta@amd.com>, <huibo.wang@amd.com>,
- <jroedel@suse.com>
-Subject: [PATCH v1 2/3] accel/kvm: Add kvm_immediate_exit callback
- infrastructure
-Date: Wed, 18 Dec 2024 09:49:38 -0600
-Message-ID: <20241218154939.1114831-3-michael.roth@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20241218154939.1114831-1-michael.roth@amd.com>
-References: <20241218154939.1114831-1-michael.roth@amd.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwKk-0004PU-Sv
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:51:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734537093;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=m8bl9bV5kPJoySX5GxcHuiJbUAcMKhEGAUiWNaKwv9k=;
+ b=Ndx/wzCEqqqc+i9fT83tyCNKxVFqhah5GGCDBVk1/VeuG17pMo9G+86Zb6w+5eAAncZu0B
+ qOEwK2zVZf5FcZenxYGDqmI+F3bM+tS4hSprWxedT6WOwF/WH4ag4/5YtkqQZItvRatYop
+ iVUOuQZrNoIaQPJROfFBYVAVzlYCM1Y=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-qKMHawTEO4S5AHsW8GkBrg-1; Wed, 18 Dec 2024 10:51:29 -0500
+X-MC-Unique: qKMHawTEO4S5AHsW8GkBrg-1
+X-Mimecast-MFC-AGG-ID: qKMHawTEO4S5AHsW8GkBrg
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7b6e7f07332so1010474285a.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 07:51:29 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734537089; x=1735141889;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=m8bl9bV5kPJoySX5GxcHuiJbUAcMKhEGAUiWNaKwv9k=;
+ b=BumARUjnz6OLV5j/w3RoCC/GdflSbcr2ddmCV0czcmkfQ4HE6gfH3wQutQ2TAottM4
+ H/8lhDci/o1GDhfPi0AlNjgDSJ4FGqpDeF5NP8pUA/2e6luMLTwPrL+NIDAWFHY4+NDF
+ g2Yxmy9B7PeQdKgm1jRlrm9KaeK/Iud7Xu9UmM8ZnJXcponKQTw5qeeiIsjyK6FqECGB
+ 7f+/LqF56L4DZQEMPRuSy3bR+k55fXZ0sPKcuO9yNCKKM8bm0hnP3MPKcqJVvcHbLYLq
+ HOtpOCPRFy7uc5J2HHyQ45/uAHfGJ6unnTurnqGDRnTZeAUUq/QKCUabJzoi+6MSKXBT
+ 9rzA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXabsXjcXvqTvkJ0DpifY4G2MLxd7rRv8TWRWbEzdFUSacjJ9xbB/s3Id7uJTrUmpk+6bMQ5GS6Ec9Z@nongnu.org
+X-Gm-Message-State: AOJu0YyBQG/Cdw0P6EHGfuUasmNZZ9xJ+0t3CdEiovb5X9X5Iqo5M3vK
+ RzeMoIBPWkFleNYZ4HSitBhluMizi/lqqfsFtT7Kvi58JdBueUWYHJcrnKarqsCT61PdbVMNOyr
+ JFNO2HT1Zzx1R4Z0LpaKXZK+bNtWtAqdpxI1XgJ8TN5RW+Km7PQEb
+X-Gm-Gg: ASbGncvZmPyCORe/vXuDN4is0NCFpjkQQ7VcPoU5ulhs9waEW+sl60UYfQXrfBJe/Qr
+ cwVXTNQ5s3qsH7bDRAPSmcnGbn3u3Qk0uoxbY0ASPZwQxj2no0GyxjPa7+i4xkWPLyFqhdYDWIy
+ XYgQ6su9XILZ3iw+bekKMG9+eJWDCTet/yXzUFCcbPyBrGuQUFyl/5FExiqqWqwXnH3SFnpps4E
+ SSHA5+sk8nAWDWiU7BqC2HrG29sQpzuvkY3QHIT1kA7Y6hKsQ6VCU5PXQznjV6qYrQHRA46yM+Z
+ i6g11Qy8mYwl
+X-Received: by 2002:a05:620a:2454:b0:7b6:d1e1:a22e with SMTP id
+ af79cd13be357-7b86375d4e0mr451737185a.29.1734537089190; 
+ Wed, 18 Dec 2024 07:51:29 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFGvME7NcCBZ+j2j0Xy5p/avzgHoasJTbaPTs2iz+PHmpIddLI0h8fKIGz2IeecE75kvXUdQg==
+X-Received: by 2002:a05:620a:2454:b0:7b6:d1e1:a22e with SMTP id
+ af79cd13be357-7b86375d4e0mr451734385a.29.1734537088893; 
+ Wed, 18 Dec 2024 07:51:28 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
+ [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b7048ca123sm436753085a.101.2024.12.18.07.51.26
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 07:51:28 -0800 (PST)
+Message-ID: <3399461b-b623-4950-a800-9e244dd10785@redhat.com>
+Date: Wed, 18 Dec 2024 16:51:24 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD9:EE_|LV3PR12MB9234:EE_
-X-MS-Office365-Filtering-Correlation-Id: c5a5486c-4cff-46aa-56e0-08dd1f7bb9de
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?jOE2fXB17azWBl/n16vjzNSSNamdHDyOKY1F5Mpvoz+OB5wfw/7vP12zED1S?=
- =?us-ascii?Q?5aiGZ3s3DcvKtCpVdf2LdS+0Ht/TlxnboqOQAbngDBwxb4amHtY3xAsHsF61?=
- =?us-ascii?Q?ZIFe3bJYzTZEBEVuZ0UxNnue66i2vdD5l3iSFVEnjel6tzxRPUIA0lYjobxG?=
- =?us-ascii?Q?3oxCBQcY5uMWbRNw23Bd7+W8Q50T90/DUjsPbi6vQi95TAYhWQrkfGAGSjYo?=
- =?us-ascii?Q?zcsEUIeaD7GcC1+3tpY/+fNXOLVkJenzhUV2bZ9CV2bn3qlqwF1P4A0bsBrv?=
- =?us-ascii?Q?zzAYZe2PqI1/HdGjsQxcF9ggKRsasqypUgsHrZ44mje2gzbcXYBjgbOMGlkC?=
- =?us-ascii?Q?FjZ0234uDoAOzNA98B4TKUXBV/2rxb6M2RYsFPSwvjx3WV8T/GI02oCpMLe6?=
- =?us-ascii?Q?/CwWyaK8KQN+xSodjeOr/np5yJTK0GgV82PO49LqPfjNk7tgQ/suMd0PknSC?=
- =?us-ascii?Q?XqHBIZ0zZtKoL+XWj560Br0bIH8ah4cQOcI/lTCLrMq1sZowekb45AgRDNHh?=
- =?us-ascii?Q?EFIX3k9AD7Vx/nQkUOD7Vu3oS3448MMOSPxUFH7uh+VsXy3J19Rcbpg/ET09?=
- =?us-ascii?Q?/hExj/ApHs4W08UyKZrgFwvbFhZDhbmm88OCgHIvAJZZ2+qZkN6sAiTCFqln?=
- =?us-ascii?Q?JbtA4y5CmrIcywY6lwFry2nP3QVnczUA76ZCnoWVfG5SDAF+g+Fq54Z2YXlk?=
- =?us-ascii?Q?QVmtYiNfrXGKZLHeejw1E4CVkQDPMSOog1KxXEUks2k1F9DO8qfsFThcOGrG?=
- =?us-ascii?Q?HQU39SCVzJp40dIobvCRFHWjPfa0zUr43vpH1daiJADkKgPyaOTUMMGm1Sdp?=
- =?us-ascii?Q?G+Xt7lxOKH5visbXUBMVNhtmGxGvITzFA6ulonAS5ZytzgINfnRUbVn4cRym?=
- =?us-ascii?Q?NdiumOtCWv+AjMeAmjndBAsa7zHPxAzzybX1kQge20t7a5lHRnBKaJKtiQqH?=
- =?us-ascii?Q?lojrjQpQAXG14/oRQ52YJagEB9nunR4iYDBW/RiNLKZ08gOJUhimOD1nC6I+?=
- =?us-ascii?Q?Oda7192yRcTn+ib3d5EKpPdH6EsU7pGrNpuI6q/EmZUjCi3eHjHnZhaDhyz1?=
- =?us-ascii?Q?/8FE4sNpDI2rm0RZqgXheyBjTxYABlupc0qn+WYwckSAY4zY9a8o8rILld6J?=
- =?us-ascii?Q?Eu+cm041hdyAPLVcoTjhEBhquieAzfTqNZ6tdDfTFK01znZ7Nbp6OMh9zZVC?=
- =?us-ascii?Q?4QcFEulgQ/SuBlMkbiShhqa7vslBTCleCTzzbVQAbLiBKC8RK4qkveyyQO5M?=
- =?us-ascii?Q?q6LJbGVDE00Ds/8aonpJ9AlyiTO5njwZMHWBSxPBnP4mEBZQR6siIEL7rLkn?=
- =?us-ascii?Q?YuEVBpsSp1vTKRCBk40LChL4lP0KT3OPGUITBZEHE+Ln51RnNqywmgud/Os3?=
- =?us-ascii?Q?9jiTAwFKaCtp5/W8LJ1hRjhMimNiccwdeRuMbQo2lLTv15RRLbVp8K6ki05a?=
- =?us-ascii?Q?pNXd7CY1HlV2Buu8eJBpWMt6lOGCNfSwNT3vNg1lMJRvKJM6ZRVIs4fhvq4G?=
- =?us-ascii?Q?IxEgarNkDPn6nec=3D?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 15:50:41.5648 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: c5a5486c-4cff-46aa-56e0-08dd1f7bb9de
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD9.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9234
-Received-SPF: permerror client-ip=2a01:111:f403:2412::604;
- envelope-from=Michael.Roth@amd.com;
- helo=NAM10-MW2-obe.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 5/5] tests/functional: Convert the migration avocado
+ test
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>
+References: <20241218131439.255841-1-thuth@redhat.com>
+ <20241218131439.255841-6-thuth@redhat.com> <87o719umj5.fsf@suse.de>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <87o719umj5.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,90 +156,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Provide a generic mechanism so that users of struct kvm_run's
-'immediate_exit' flag can register a callback that can be issued after
-returning from KVM.
+On 18/12/2024 14.51, Fabiano Rosas wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> Now that we've got a find_free_port() function in the functional
+>> test framework, we can convert the migration test, too.
+>> While the original avocado test was only meant to run on aarch64,
+>> ppc64 and x86, we can turn this into a more generic test by now
+>> and run it on all architectures that have a default machine that
+>> ships with a working firmware.
+> 
+> I'd rather drop this test. I haven't looked at it in ages and it has
+> never been useful.
 
-Signed-off-by: Michael Roth <michael.roth@amd.com>
----
- accel/kvm/kvm-all.c  | 43 +++++++++++++++++++++++++++++++++++++++++++
- include/sysemu/kvm.h |  3 +++
- 2 files changed, 46 insertions(+)
+I think I agree for the scope of the old avocado test - x86, ppc64 and 
+aarch64 certainly have better test coverage by the qtest already... but we 
+don't have any test coverage for other architectures at all yet, which is 
+bad (see below).
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 801cff16a5..14e98a96e6 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3080,6 +3080,46 @@ out_unref:
-     return ret;
- }
- 
-+typedef struct ImmediateExitEntry ImmediateExitEntry;
-+
-+struct ImmediateExitEntry {
-+    ImmediateExitCb *cb;
-+    void *opaque;
-+    QTAILQ_ENTRY(ImmediateExitEntry) next;
-+};
-+
-+static QTAILQ_HEAD(, ImmediateExitEntry) immediate_exit_list = \
-+    QTAILQ_HEAD_INITIALIZER(immediate_exit_list);
-+
-+void add_immediate_exit_callback(CPUState *cpu, ImmediateExitCb *cb, void *opaque)
-+{
-+    ImmediateExitEntry *entry = g_new(ImmediateExitEntry, 1);
-+    entry->cb = cb;
-+    entry->opaque = opaque;
-+
-+    bql_lock();
-+    QTAILQ_INSERT_TAIL(&immediate_exit_list, entry, next);
-+    bql_unlock();
-+
-+    kvm_cpu_kick(cpu);
-+}
-+
-+static void process_immediate_exit_callbacks(void)
-+{
-+    ImmediateExitEntry *entry, *tmp;
-+
-+    bql_lock();
-+
-+    /* Handle any pending immediate-exit callbacks */
-+    QTAILQ_FOREACH_SAFE(entry, &immediate_exit_list, next, tmp) {
-+        entry->cb(entry->opaque);
-+        QTAILQ_REMOVE(&immediate_exit_list, entry, next);
-+        g_free(entry);
-+    }
-+
-+    bql_unlock();
-+}
-+
- int kvm_cpu_exec(CPUState *cpu)
- {
-     struct kvm_run *run = cpu->kvm_run;
-@@ -3149,6 +3189,9 @@ int kvm_cpu_exec(CPUState *cpu)
-             if (run_ret == -EINTR || run_ret == -EAGAIN) {
-                 trace_kvm_io_window_exit();
-                 kvm_eat_signals(cpu);
-+                if (kvm_immediate_exit) {
-+                    process_immediate_exit_callbacks();
-+                }
-                 ret = EXCP_INTERRUPT;
-                 break;
-             }
-diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
-index c3a60b2890..5974645c62 100644
---- a/include/sysemu/kvm.h
-+++ b/include/sysemu/kvm.h
-@@ -578,4 +578,7 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
- 
- int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
- 
-+typedef void ImmediateExitCb(void *opaque);
-+void add_immediate_exit_callback(CPUState *cpu, ImmediateExitCb *cb, void *opaque);
-+
- #endif
--- 
-2.25.1
+So if you like I can change the patch so that the test is not run on x86, 
+ppc64 and aarch64 anymore, just on the other architectures that do not have 
+test coverage by the qtest yet?
+
+> I haven't been following the development of the
+> functional suite so this might not apply this time (fingers crossed),
+> but Python tests have always been a pain to work with.
+
+Well, one of the motivations with the functional test framework was to 
+simplify things. You can now run the individual tests without any test 
+runner at all, what makes debugging way easier (see 
+docs/devel/testing/functional.rst for details)!
+
+> About adding more architectures to the set, this is not simply enabling
+> more testing, it is also adding workload to maintain these other arches
+> that were never tested with migration. Is that something we want?
+
+I think yes. Otherwise the bugs are just dormant until someone hits the 
+issue, making bisection way more complicated later.
+Remember this one for example:
+
+  https://mail.gnu.org/archive/html/qemu-commits/2023-02/msg00030.html
+
+?
+
+It would have been good to have a migration test for alpha in the CI, then 
+we could have prevented that bug from being merged.
+
+> Also note that what is actually prone to break is compatibility between
+> versions, which is not covered by this test.
+
+I think it should be possible to add such a check later.
+
+  Thomas
 
 
