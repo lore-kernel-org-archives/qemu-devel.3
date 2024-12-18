@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 284FEE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 599EFE77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2aP-00041W-3N; Wed, 18 Dec 2024 17:32:12 -0500
+	id 1tO2ZM-00038W-B6; Wed, 18 Dec 2024 17:31:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2ZP-0003GI-U8
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:08 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tO2ZG-00037P-0a
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:58 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2ZO-0003GQ-5w
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:07 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-216281bc30fso2360125ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:31:04 -0800 (PST)
+ id 1tO2ZE-0003F8-BU
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:57 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2164b1f05caso1577605ad.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734561063; x=1735165863; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734561055; x=1735165855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TYqdC2K3zGvnkeyV3z/811UC20D+6gf+j2aj8oIckc=;
- b=KOlYB2L2LSuFeO0vaNl36ENod4wb+6rWgJkOjlCH/EA1jc8EEnj9gQNKlilmQu8Ohv
- JcXcjP7u/kpMb+eH47WsZhUbmdnqbw/cSUSu2W1Sl8Q+jXtaSzAmFPjfAn+MxkZcDast
- lD+YfGnS8UhkbqJjm9PV8g09VGjKDSJNgyH9FvBi4I7ZOjqJuSSCCcu/RUGCkWbY+Gi0
- XQlwcr7k0bk6ZF0u3BXAVexxfPK/xeuNlWYjaIed273CpnasfaM8dIzLj1rAH++ptvq7
- BtuF7BRnrmGcfMQBjCetsAPQMnj8RaPqjrw0xrtGjz+RwM9Ym6uEnKbaMhw4hJFqjtuM
- TiYw==
+ bh=w9kGRz8yBDn3xNhaRpjl5eLNif1NBmGaYms609zt52g=;
+ b=UQy8oaq1Q+IynoiIYPpZqXz/BWX0OjcMh3zT900ELNARF/+MCHa/uZpzVFyyI2FqRh
+ KSuzHTc36RYDO3WuzA2s+AbNkMIFWiA17ao+uSPuGI7nawl7dg8iY6qRwMN9qSMahyJm
+ ZH6lxwQRe3F9RmF+fPUjQ2ijId8NZwD9aFPqktsKrXZTbOPdhSEJ9A1aBPfFCrNq+FXL
+ 6tbWNevCLXrC/q//Sg/cjJQr5G1xVdGAjqmCzrZTIbjy07ADMOty9eflXhEK3nnBR2pB
+ GJBXjZBSKT8yCVEmMvLmbFM/2oOPeLTF8GAktKfij3nllJJNkxW33xasBpvmlhWjiZzJ
+ YoYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734561063; x=1735165863;
+ d=1e100.net; s=20230601; t=1734561055; x=1735165855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4TYqdC2K3zGvnkeyV3z/811UC20D+6gf+j2aj8oIckc=;
- b=nLw/w52doxBGl/WODRY3CdIRkCura1EWI7hfPF90dTBOntXqIbnZdD/QGzxkBRVi2v
- NWY4sWRm84jrIVHnYbUboQ3uFG0GoVl7ocxu4jyVVBtAgQDd9e3FTbGWjmDUdEmjune8
- yktYpePWwZXvafFigPEVRhkG580/qqpVj10Y4nUvtitfKnc9rhfyMMw0NnHUbYa6GSEC
- +szya6tRwz90NPrGp4gYK8WKd0O5LtrcpKP0OZhyS3qlqmHi4dGMj5CCX6f/X8ob0AId
- m4cGPJVv37XxNieRC9Byk+B+LKkd3E1qy6wfFGt9fIlmu3JJFLUv1dLIQhzB9zOrZQHm
- +ELw==
-X-Gm-Message-State: AOJu0YxIcfu75hhfK3B1zHB4+UyT9MEov/HTAjbiZHAmdXn+0ZzItyHq
- qhgMSydgRns14Df5vi1p8+rNOBc4fHPTu8HKNyW8w9LwWa7SzTMiQUxyCbhc
-X-Gm-Gg: ASbGnctX0ONHCTa+YpFqZhuW6R+lWfYltK64eAGG4Js9CwJZPMP9RREqOE3vjvItwGr
- UlzEIX/1psF/v0Obt2os9U7AsiwRBvOpAA1f4gbzPsQsJp4mqDQUwvqZngxUp9gtkc3zDxvshO6
- LpBSw9KnZ3DkOLAUk3cJ0PvOOiL4ShV+oD5M9eE/0LeDLz4fHtSkaeMh89x7fjYAgPM4DA56f32
- cTPbXCEfLoJTw3jPox6odE3G0L0H9+70TirU6s38Jo0sfbugSphjSn6l7vkADmcz3MEQMcknxWU
- PWaR6RoCQaYwSU6/ijKZoGqyMunk6wvdSJw34T6x+6YqImaOYoYGUVTJNvkRB3o=
-X-Google-Smtp-Source: AGHT+IEmRkY/ZKJjCyChhN+7okAA9y6iAKnGwzxkGtI65VLuIdVoiH1sheT+4A/f3tzjaMrjKzTSQw==
-X-Received: by 2002:a17:902:ce0b:b0:216:2474:3c9f with SMTP id
- d9443c01a7336-218d727da85mr72130575ad.52.1734561063222; 
- Wed, 18 Dec 2024 14:31:03 -0800 (PST)
+ bh=w9kGRz8yBDn3xNhaRpjl5eLNif1NBmGaYms609zt52g=;
+ b=lX/fduyOkzDufWVP9QRvhygP3K7XdRfVqVSctyz+Il1jO0FVftds0V3U/cGXl72rTp
+ JAXbF8hZJ1vj58LOhDTrL3lgg0yycqwaddl9peecxJbhPrJyiO/dRCE2CSE33QuJkoPc
+ wtnXhuqa2FUbztNGggrRb7gE2z0VThhhq8YxnQt/vWsyvsUYgbn003PptI9I9LnSf0UW
+ UkoDRWDljyzalHLnIMhWZesXSpR7uknLN7fhF3aUz4H5QdCryrs6yzP7GKYJ0BRwVGuS
+ hrYWw9qWQdlqajEFEtkgt2H63lmbvyyG5RcQHaloTDz/i0YCKtBBbskZEQxGmG8fHOmm
+ RWTQ==
+X-Gm-Message-State: AOJu0YxDFVhxKalOcM2JMj9qi/PhHHKEpw9gEaeeNO4/ytwzF9q7WGx/
+ 0sypEe9dX3F8jvtrTvR3B0Vye3JYWJRrqqVRqF8s/eArnXsvJ0iSVUS/rL8/
+X-Gm-Gg: ASbGncs62P2bUyM6/imHLeAsCegduBsnsbMQVF4xC2q09J6pQxM/xgmRVIfJwgo1N+D
+ dV6CX1bAnveo7pURQvlxZGaFlaMDhPvptZTXmEb3gl3caFsHE/FMBhj4amlFpCTLcrp7o+9gsd1
+ MKTQgRmj0GE7RwU7XnV5IcVLzFc0lLOAb4HHq4pi7PI/OJ5ylKunBAqRMVmN17i08amJR0aibyH
+ 0IMoeGtVbIu0QA5aHTC0O8dI+hDt/L++4UaqjdD4u0pJ1akdn8vjFUishwRxMDk7CEtkBwQ6Eyg
+ KdC9L2ob8On28mY3E/JC1/bmYWm5C3LIhTLC0EMM5ScLGmePuVbya2HQxWm5ovM=
+X-Google-Smtp-Source: AGHT+IGPqEWuwEry06U5g4/L1T2HfYDkIDdSkl3cm2TvsZtZroBSzVw3YdCJMzx+lc2ToJvExsZCVA==
+X-Received: by 2002:a17:903:22c4:b0:215:5c1a:f369 with SMTP id
+ d9443c01a7336-218d6fca33bmr62402215ad.11.1734561054867; 
+ Wed, 18 Dec 2024 14:30:54 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.31.00
+ d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:31:02 -0800 (PST)
+ Wed, 18 Dec 2024 14:30:54 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
 Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 16/39] hw/intc/riscv_aplic: add kvm_msicfgaddr for split mode
- aplic-imsic
-Date: Thu, 19 Dec 2024 08:29:46 +1000
-Message-ID: <20241218223010.1931245-17-alistair.francis@wdc.com>
+Subject: [PULL 13/39] hw/riscv/virt.c: rename helper to
+ virt_use_kvm_aia_aplic_imsic()
+Date: Thu, 19 Dec 2024 08:29:43 +1000
+Message-ID: <20241218223010.1931245-14-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
 References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,166 +106,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The last step to enable KVM AIA aplic-imsic with irqchip in split mode
-is to deal with how MSIs are going to be sent. In our current design we
-don't allow an APLIC controller to send MSIs unless it's on m-mode. And
-we also do not allow Supervisor MSI address configuration via the
-'smsiaddrcfg' and 'smsiaddrcfgh' registers unless it's also a m-mode
-APLIC controller.
+Similar to the riscv_is_kvm_aia_aplic_imsic() helper from riscv_aplic.c,
+the existing virt_use_kvm_aia() is testing for KVM aia=aplic-imsic with
+in-kernel irqchip enabled. It is not checking for a generic AIA support.
 
-Add a new RISCVACPLICState attribute called 'kvm_msicfgaddr'. This
-attribute represents the base configuration address for MSIs, in our
-case the base addr of the IMSIC controller. This attribute is being set
-only when running irqchip_split() mode with aia=aplic-imsic.
-
-During riscv_aplic_msi_send() we'll check if the attribute was set to
-skip the check for a m-mode APLIC controller and to change the resulting
-MSI addr by adding kvm_msicfgaddr right before address_space_stl_le().
+Rename the helper to virt_use_kvm_aia_aplic_imsic() to reflect what the
+helper is doing, and use the existing riscv_is_kvm_aia_aplic_imsic() to
+obscure details such as the presence of the in-kernel irqchip.
 
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241119191706.718860-7-dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241119191706.718860-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/intc/riscv_aplic.h |  6 +++++
- hw/intc/riscv_aplic.c         | 42 +++++++++++++++++++++++++++--------
- hw/riscv/virt.c               |  6 ++++-
- 3 files changed, 44 insertions(+), 10 deletions(-)
+ hw/riscv/virt.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-index 74ae5d87b5..489b9133c2 100644
---- a/include/hw/intc/riscv_aplic.h
-+++ b/include/hw/intc/riscv_aplic.h
-@@ -68,11 +68,17 @@ struct RISCVAPLICState {
-     uint32_t num_irqs;
-     bool msimode;
-     bool mmode;
-+
-+    /* To support KVM aia=aplic-imsic with irqchip split mode */
-+    bool kvm_splitmode;
-+    uint32_t kvm_msicfgaddr;
-+    uint32_t kvm_msicfgaddrH;
- };
- 
- void riscv_aplic_add_child(DeviceState *parent, DeviceState *child);
- bool riscv_is_kvm_aia_aplic_imsic(bool msimode);
- bool riscv_use_emulated_aplic(bool msimode);
-+void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr);
- 
- DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
-     uint32_t hartid_base, uint32_t num_harts, uint32_t num_sources,
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index ba4e802888..1e4cdb500c 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -177,6 +177,16 @@ bool riscv_use_emulated_aplic(bool msimode)
- #endif
- }
- 
-+void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
-+{
-+#ifdef CONFIG_KVM
-+    if (riscv_use_emulated_aplic(aplic->msimode)) {
-+        aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
-+        aplic->kvm_msicfgaddrH = extract64(addr, 32, 32);
-+    }
-+#endif
-+}
-+
- static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
-                                           uint32_t irq)
- {
-@@ -381,13 +391,16 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-     uint32_t lhxs, lhxw, hhxs, hhxw, group_idx, msicfgaddr, msicfgaddrH;
- 
-     aplic_m = aplic;
--    while (aplic_m && !aplic_m->mmode) {
--        aplic_m = aplic_m->parent;
--    }
--    if (!aplic_m) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
--                      __func__);
--        return;
-+
-+    if (!aplic->kvm_splitmode) {
-+        while (aplic_m && !aplic_m->mmode) {
-+            aplic_m = aplic_m->parent;
-+        }
-+        if (!aplic_m) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
-+                          __func__);
-+            return;
-+        }
-     }
- 
-     if (aplic->mmode) {
-@@ -419,6 +432,11 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-     addr |= (uint64_t)(guest_idx & APLIC_xMSICFGADDR_PPN_HART(lhxs));
-     addr <<= APLIC_xMSICFGADDR_PPN_SHIFT;
- 
-+    if (aplic->kvm_splitmode) {
-+        addr |= aplic->kvm_msicfgaddr;
-+        addr |= ((uint64_t)aplic->kvm_msicfgaddrH << 32);
-+    }
-+
-     address_space_stl_le(&address_space_memory, addr,
-                          eiid, MEMTXATTRS_UNSPECIFIED, &result);
-     if (result != MEMTX_OK) {
-@@ -892,6 +910,10 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         memory_region_init_io(&aplic->mmio, OBJECT(dev), &riscv_aplic_ops,
-                               aplic, TYPE_RISCV_APLIC, aplic->aperture_size);
-         sysbus_init_mmio(SYS_BUS_DEVICE(dev), &aplic->mmio);
-+
-+        if (kvm_enabled()) {
-+            aplic->kvm_splitmode = true;
-+        }
-     }
- 
-     /*
-@@ -939,8 +961,8 @@ static const Property riscv_aplic_properties[] = {
- 
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
-             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-@@ -948,6 +970,8 @@ static const VMStateDescription vmstate_riscv_aplic = {
-             VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-             VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-             VMSTATE_UINT32(genmsi, RISCVAPLICState),
-+            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-+            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-             VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
 diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 937dfd1ef2..43a1c86c33 100644
+index e54e1257c0..a67ab80b16 100644
 --- a/hw/riscv/virt.c
 +++ b/hw/riscv/virt.c
-@@ -1300,7 +1300,7 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
-                                     int base_hartid, int hart_count)
- {
-     int i;
--    hwaddr addr;
-+    hwaddr addr = 0;
-     uint32_t guest_bits;
-     DeviceState *aplic_s = NULL;
-     DeviceState *aplic_m = NULL;
-@@ -1350,6 +1350,10 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
-                                  VIRT_IRQCHIP_NUM_PRIO_BITS,
-                                  msimode, false, aplic_m);
+@@ -59,9 +59,11 @@
+ #include "hw/virtio/virtio-iommu.h"
  
-+    if (kvm_enabled() && msimode) {
-+        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
-+    }
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+-static bool virt_use_kvm_aia(RISCVVirtState *s)
++static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
+ {
+-    return kvm_irqchip_in_kernel() && s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
++    bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
 +
-     return kvm_enabled() ? aplic_s : aplic_m;
++    return riscv_is_kvm_aia_aplic_imsic(msimode);
  }
  
+ static bool virt_aclint_allowed(void)
+@@ -777,8 +779,8 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+         *msi_pcie_phandle = msi_s_phandle;
+     }
+ 
+-    /* KVM AIA only has one APLIC instance */
+-    if (kvm_enabled() && virt_use_kvm_aia(s)) {
++    /* KVM AIA aplic-imsic only has one APLIC instance */
++    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+         create_fdt_socket_aplic(s, memmap, 0,
+                                 msi_m_phandle, msi_s_phandle, phandle,
+                                 &intc_phandles[0], xplic_phandles,
+@@ -1619,7 +1621,7 @@ static void virt_machine_init(MachineState *machine)
+         }
+     }
+ 
+-    if (kvm_enabled() && virt_use_kvm_aia(s)) {
++    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+         kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
+                              VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_NUM_MSIS,
+                              memmap[VIRT_APLIC_S].base,
 -- 
 2.47.1
 
