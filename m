@@ -4,97 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 899E3E77184
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 00:10:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9473BE77184
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 00:35:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNhcf-0001Go-MN; Tue, 17 Dec 2024 19:09:05 -0500
+	id 1tNi1L-0004iG-Ki; Tue, 17 Dec 2024 19:34:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3kxJiZwYKCoIykgtpimuumrk.iuswks0-jk1krtutmt0.uxm@flex--seanjc.bounces.google.com>)
- id 1tNhcc-0001GU-H8
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 19:09:03 -0500
-Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tNi1K-0004hv-55; Tue, 17 Dec 2024 19:34:34 -0500
+Received: from mail-vk1-xa36.google.com ([2607:f8b0:4864:20::a36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3kxJiZwYKCoIykgtpimuumrk.iuswks0-jk1krtutmt0.uxm@flex--seanjc.bounces.google.com>)
- id 1tNhcU-0007id-Nu
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 19:09:02 -0500
-Received: by mail-pj1-x104a.google.com with SMTP id
- 98e67ed59e1d1-2eeeb5b7022so5509381a91.0
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 16:08:52 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tNi1I-0003UX-EA; Tue, 17 Dec 2024 19:34:33 -0500
+Received: by mail-vk1-xa36.google.com with SMTP id
+ 71dfb90a1353d-518957b0533so1776205e0c.1; 
+ Tue, 17 Dec 2024 16:34:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1734480532; x=1735085332; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=st2IAj6IOBo51GPhAmFtzPu7zBrruXbW4TvInWYdQ6A=;
- b=UPCRU1OMEbibNzCn/COsiXChlO8yV/oTxehbffrIP3GZVDSONMDmAmoFAVsotKCFBL
- 6C/BP8sJ9IboNTXl5D7Rfq20ahekTxT9cF7ZwndlJfVPiOjdF28YsdwfKgYDL0jBLoRR
- RwZ17u9JFRuYM6JL4w8sqkioKdcUXG9FoO5UPWLFd0RDVvjyu7ZgaVWgFmXKcd+il6YD
- bRuj4bvhmEcl65y8FoW1fYt4z0vpm7fgQkgaNwJ0K8SKDNsJs36QAZqoBRUjXBaJJUeT
- lTNIjAnAwuID7/kh6vjW2LbUVhwHttZDhZego+HH94Yc8YiH+cOhTLYjVMSzl0y3H4dC
- ZdPg==
+ d=gmail.com; s=20230601; t=1734482070; x=1735086870; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1TMzGlMsrCcGkpwFbvE9gmCB4lso8C6CsP/b+1xGL7c=;
+ b=Tq+hUfinERbGYTo5BTal16n5S59EbjDL/MjhdnzTGc4H/te9dtn/iJ+JAFmZxXkolL
+ M+4Pti4zLxMzexvyIhHaqNB8SKgP3uFXyVE9+90tvxG460xYo1OUX0IW6CUzivRjE39U
+ f5/+yjutrbSecgzkJe8EUVnU38z0xOWCBxE/ZUeO7qUexLS5RXfTbxqwPN52acJXaCP/
+ QyPCkn0LY+9nr0dER3Pe50cj0igs4koOB5CRl7fFiETdTOVmo5edLrXjqMOIpLrjnTac
+ 0SZC6qbCJGKSprTL3u85klhmmMm0cqh7gQPpnsuod0f13GBNSd1vPcXSA4y1iHiUsfen
+ xUSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734480532; x=1735085332;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=st2IAj6IOBo51GPhAmFtzPu7zBrruXbW4TvInWYdQ6A=;
- b=B+DweHSH+txyQ03KLrpzQy8C9dl628eIkkuGbReNRYmEFM7ROIg/wxnzYuq+BZMXOk
- qoDEIHfrR+rrxIh5JxvlWruPVJPikFkIiusVhEhTZeWHWkJ76in3teJaBGiyG/FsaEjm
- LhjiAXEpmyZyGoLBbDHcWF3UWkv6pgQUt1yeyEvAoBMqSi4FojoUSUQ+8c/tZdKhs9OG
- m1MA3q/WLDZVH+6l8hcNkGV3zFOJSrbRXis6JIPXtGInDOEGhmQhr5S1Su1oFNW+2fz3
- TV66l0MlgBGJgylM62KtRpYZECFAajbvNe/lnoUkV6cThRUl5di+4xD2n0x70wJHv1wB
- GqNQ==
+ d=1e100.net; s=20230601; t=1734482070; x=1735086870;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1TMzGlMsrCcGkpwFbvE9gmCB4lso8C6CsP/b+1xGL7c=;
+ b=XNpTjQ1FOraj0bhy6tDR6N1UZ7yWgpkeFGzvAbMEPv6Y32h2ZojamoxuwhlKUDsU1D
+ 1kHDRtyrBtyozT9u56byysy05oOd26i9R0HMDPLR4bOCIJLsWIAV5JAqABBS897DkFDS
+ ns9hWX32zfNHHNvNCT1nOHIz6j+0GEowiaxw1gZGwDZYBMSPLF/tLkV3yTbhRdaLDNaJ
+ 1Odu7cSizUtQkHhL4ptXaEoopjTkGli9qLSzH+7DjA2W+daiAsw2wDy/sKmlHP0WD5wm
+ OB95gmBa3/Kqy1TJWyXQcz4NGovCaNO3rb1IB1P2lnBU+jfxzDjkfTcsStSLX/hVQq96
+ ZxKg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVdFPLb22noxbOjO85jcDKX+UC5zQfuDVGLboeuqM8Dao7OIzeeX6WaHJA2fHYm6YUt2TVOnUArSPBU@nongnu.org
-X-Gm-Message-State: AOJu0Yxhg+WpRJLEJHSQ+hj57famDxjoRG8GGXAQMxgciKQWOR01EEMe
- N63sAIXoVs2G7B8Gk9zuMoiBIJhBQ3nxtT2zjXNWchkJA2V2YyntGPE7RycJTDLdcb71IQ/4y1n
- 9mA==
-X-Google-Smtp-Source: AGHT+IEvw+3WTZ19MkBtE5+J2V7DUw5s6WfLWarD7KcORBXUM2PQBWzwSUsIh3pqEldb+UbEIvQfqAeEFdI=
-X-Received: from pjbst15.prod.google.com ([2002:a17:90b:1fcf:b0:2ef:94c6:5048])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:90b:350f:b0:2ee:b666:d14a
- with SMTP id 98e67ed59e1d1-2f2e91f813amr1345849a91.17.1734480531629; Tue, 17
- Dec 2024 16:08:51 -0800 (PST)
-Date: Tue, 17 Dec 2024 16:08:50 -0800
-In-Reply-To: <3ef942fa615dae07822e8ffce75991947f62f933.camel@intel.com>
-Mime-Version: 1.0
-References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
- <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
- <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
- <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
- <Z2DZpJz5K9W92NAE@google.com>
- <3ef942fa615dae07822e8ffce75991947f62f933.camel@intel.com>
-Message-ID: <Z2INi480K96q2m5S@google.com>
-Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
- CPUID Bits
-From: Sean Christopherson <seanjc@google.com>
-To: Rick P Edgecombe <rick.p.edgecombe@intel.com>
-Cc: Kai Huang <kai.huang@intel.com>, 
- "binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>, 
- Reinette Chatre <reinette.chatre@intel.com>, Yan Y Zhao <yan.y.zhao@intel.com>,
- "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
- "pbonzini@redhat.com" <pbonzini@redhat.com>,
- Isaku Yamahata <isaku.yamahata@intel.com>, 
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Adrian Hunter <adrian.hunter@intel.com>
-Content-Type: text/plain; charset="utf-8"
+ AJvYcCUqlL7n8eGYaIQXw+jRHm9gog0/N/axvvqinnsIIyf78Yb0bhMJQN5+5+1dKpGXK+b0F2N6GJKYfmlN@nongnu.org
+X-Gm-Message-State: AOJu0YysOtpwI0xowB2+6i4V8Jzt7mvxZ18W669wiSPQMwEuQbzXpwTl
+ 48TtQBfSgmTJzl1iz07vU7VkkSAghlGjo4KBZKybh0VT/xN1oXuq+AD60ZaBHU1CZPhj/7f+pdK
+ kSmQ9f8qUMmRJEHfjs+lYeLIcMKc=
+X-Gm-Gg: ASbGnctv5pvI204Za1oVhgDNRFtR0+Z1c56GJ0l7r9B4f5bTbHjdgEceHaWUr553hZK
+ lmjZzOC0y9bDG8Et8ZwERSnyCaejVLsPeFaBrqXdZtPT3oHNH7DDcPTkkq40JfwKhweq6
+X-Google-Smtp-Source: AGHT+IHRPsNA2Q+eKi2IKKn9epMpXLbn+rOHugv+/7LP06xafaJ8vX0L6DovroeE6G1L8eEMCvaWbHvLMVZeMKfXFnU=
+X-Received: by 2002:a05:6122:4693:b0:517:4d53:4272 with SMTP id
+ 71dfb90a1353d-51a36d65533mr1170069e0c.7.1734482069806; Tue, 17 Dec 2024
+ 16:34:29 -0800 (PST)
+MIME-Version: 1.0
+References: <20241113171755.978109-1-dbarboza@ventanamicro.com>
+ <20241113171755.978109-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20241113171755.978109-4-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 18 Dec 2024 10:34:03 +1000
+Message-ID: <CAKmqyKMiFAduuiQDuo2Zcs0FXHG3e+VT2BsB5cE1rQjL2+5FFg@mail.gmail.com>
+Subject: Re: [PATCH for-10.0 3/9] target/riscv: add shcounterenw
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ bmeng@tinylab.org, liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, 
+ palmer@rivosinc.com
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
- envelope-from=3kxJiZwYKCoIykgtpimuumrk.iuswks0-jk1krtutmt0.uxm@flex--seanjc.bounces.google.com;
- helo=mail-pj1-x104a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a36;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa36.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,248 +95,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024, Rick P Edgecombe wrote:
-> On Mon, 2024-12-16 at 17:53 -0800, Sean Christopherson wrote:
-> > Every new feature that lands in hardware needs to either be "benign" or=
- have the
-> > appropriate virtualization controls.=C2=A0 KVM already has to deal with=
- cases where
-> > features can effectively be used without KVM's knowledge.=C2=A0 E.g. th=
-ere are plenty
-> > of instruction-level virtualization holes, and SEV-ES doubled down by e=
-ssentially
-> > forcing KVM to let the guest write XCR0 and XSS directly.
->=20
-> We discussed this in the PUCK call.
+On Thu, Nov 14, 2024 at 3:20=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> shcounterenw is defined in RVA22 as:
+>
+> "For any hpmcounter that is not read-only zero, the corresponding bit in
+> hcounteren must be writable."
+>
+> This is always true in TCG so let's claim support for it.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Argh, I had a response to Xiaoyao all typed up and didn't hit "send" earlie=
-r today.
+This seems to break `make check`, specifically the
+`qtest-riscv64/bios-tables-test` test
 
-> It turns out there were two different ideas on how this fixed bit API wou=
-ld be
-> used. One is to help userspace understand which configurations are possib=
-le. For
-> this one, I'm not sure how helpful this proposal will be in the long run.=
- I'll
-> respond on the other branch of the thread.
->=20
-> The other usage people were thinking of, which I didn't realize before, w=
-as to
-> prevent the TDX module from setting fixed bits that might require VMMs su=
-pport
-> (i.e. save/restoring something that could affect the host). The rest of t=
-he mail
-> is about this issue.
->=20
-> Due to the steps involved in resolving this confusion, and that we didn't=
- really
-> reach a conclusion, the discussion is hard to summarize. So instead I'll =
-try to
-> re-kick it off with an idea which has bits and pieces of what people said=
-...
->=20
-> I think we can't have the TDX module setting new fixed bits that require =
-any VMM
-> enabling. When we finally have settled upstream TDX support, the TDX modu=
-le
-> needs to understand what things KVM relies on so it doesn't break them wi=
-th
-> updates. But new fixed CPUID bits that require VMM enabling to prevent ho=
-st
-> issues seems like the kind of thing in general that just shouldn't happen=
-.
->=20
-> As for new configurable bits that require VMM enabling. Adrian was sugges=
-ting
-> that the TDX module currently only has two guest CPUID bits that are prob=
-lematic
-> for KVM today (and the next vcpu enter/exit series has a patch to forbid =
-them).
-> But a re-check of this assertion is warranted.
->=20
-> It seems like an anti-pattern to have KVM maintaining any code to defend =
-against
-> TDX module changes that could instead be handled with a promise.=20
+Alistair
 
-I disagree, sanity checking hardware and firmware is a good thing.  E.g. se=
-e KVM's
-VMCS checks, the sanity checks for features SEV depends on, etc.
-
-That said, I'm not terribly concerned about more features that are uncondit=
-ionally
-exposed to the guest, because that will cause problems for other reasons, i=
-.e.
-Intel should already be heavily incentivized to not do silly things.
-
-> However, KVM having code to defend against userspace prodding the TDX mod=
-ule
-> to do something bad to the host seems valid. So fixed bit issues should b=
-e
-> handled with a promise, but issues related to new configurable bits seems
-> open.
->=20
-> Some options discussed on the call:
->=20
-> 1. If we got a promise to require any new CPUID bits that clobber host st=
-ate to
-> require an opt-in (attributes bit, etc) then we could get by with a promi=
-se for
-> that too. The current situation was basically to assume TDX module wouldn=
-'t open
-> up the issue with new CPUID bits (only attributes/xfam).
-> 2. If we required any new configurable CPUID bits to save/restore host st=
-ate
-> automatically then we could also get by, but then KVM's code that does ho=
-st
-> save/restore would either be redundant or need a TDX branch.
-> 3. If we prevent setting any CPUID bits not supported by KVM, we would ne=
-ed to
-> track these bits in KVM. The data backing GET_SUPPORTED_CPUID is not suff=
-icient
-> for this purpose since it is actually more like "default values" then a m=
-ask of
-> supported bits. A patch to try to do this filtering was dropped after ups=
-tream
-> discussion.[0]
-
-The only CPUID bits that truly matter are those that are associated with ha=
-rdware
-features the TDX module allows the guest to use directly.  And for those, K=
-VM
-*must* know if they are fixed0 (inverted polarity only?), fixed1, or config=
-urable.
-As Adrian asserted, there probably aren't many of them.
-
-For all other CPUID bits, what the TDX Module thinks and/or presents to the=
- guest
-is completely irrelevant, at least as far as KVM cares, and to some extent =
-as far
-as QEMU cares.  This includes the TDX Module's FEATURE_PARAVIRT_CTRL, which=
- frankly
-is asinine and should be ignored.  IMO, the TDX Module spec is entirely off=
- the
-mark in its assessment of paravirtualization.  Injecting a #VE instead of a=
- #GP
-isn't "paravirtualization".
-=20
-Take TSC_DEADLINE as an example.  "Disabling" the feature from the guest's =
-side
-simply means that WRMSR #GPs instead of #VEs.  *Nothing* has changed from K=
-VM's
-perspective.  If the guest makes a TDVMCALL to write IA32_TSC_DEADLINE, KVM=
- has
-no idea if the guest has opted in/out of #VE vs #GP.  And IMO, a sane guest=
- will
-never take a #VE or #GP if it wants to use TSC_DEADLINE; the kernel should =
-instead
-make a direct TDVMCALL and save itself a pointless exception.
-
-  Enabling Guest TDs are not allowed to access the IA32_TSC_DEADLINE MSR di=
-rectly.
-  Virtualization of IA32_TSC_DEADLINE depends on the virtual value of
-  CPUID(1).ECX[24] bit (TSC Deadline). The host VMM may configure (as an in=
-put to
-  TDH.MNG.INIT) virtual CPUID(1).ECX[24] to be a constant 0 or allow it to =
-be 1
-  if the CPU=E2=80=99s native value is 1.
-
-  If the TDX module supports #VE reduction, as enumerated by TDX_FEATURES0.=
-VE_REDUCTION
-  (bit 30), and the guest TD has set TD_CTLS.REDUCE_VE to 1, it may control=
- the
-  value of virtual CPUID(1).ECX[24] by writing TDCS.FEATURE_PARAVIRT_CTRL.T=
-SC_DEADLINE.=20
-
-  =E2=80=A2 If the virtual value of CPUID(1).ECX[24] is 0, IA32_TSC_DEADLIN=
-E is virtualized
-    as non-existent. WRMSR or RDMSR attempts result in a #GP(0).
-
-  =E2=80=A2 If the virtual value of CPUID(1).ECX[24] is 1, WRMSR or RDMSR a=
-ttempts result
-    in a #VE(CONFIG_PARAVIRT). This enables the TD=E2=80=99s #VE handler.
-
-Ditto for TME, MKTME.
-
-FEATURE_PARAVIRT_CTRL.MCA is even weirder, but I still don't see any reason=
- for
-KVM or QEMU to care if it's fixed or configurable.  There's some crazy logi=
-c for
-whether or not CR4.MCE can be cleared, but the host can't see guest CR4, an=
-d so
-once again, the TDX Module's view of MCA is irrelevant when it comes to han=
-dling
-TDVMCALL for the machine check MSRs.
-
-So I think this again purely comes to back to KVM correctness and safety.  =
-More
-specifically, the TDX Module needs to report features that are unconditiona=
-lly
-enabled or disabled and can't be emulated by KVM.  For everything else, I d=
-on't
-see any reason to care what the TDX module does.
-
-I'm pretty sure that gives us a way forward.  If there only a handful of fe=
-atures
-that are unconditionally exposed to the guest, then KVM forces those featur=
-es in
-cpu_caps[*].  I.e. treat them kinda like XSAVES on AMD, where KVM assumes t=
-he
-guest can use XSAVES if it's supported in hardware and XSAVE is exposed to =
-the
-guest, because AMD didn't provide an interception knob for XSAVES.
-
-If the list is "too" long (sujbective) for KVM to hardcode, then we revisit=
- and
-get the TDX module to provide a list.
-
-This probably doesn't solve Xiaoyao's UX problem in QEMU, but I think it gi=
-ves
-us a sane approach for KVM.
-
-[*] https://lore.kernel.org/all/20241128013424.4096668-1-seanjc@google.com
-
-> Other idea
-> ----------
-> Previously we tried to maintain an allow list of KVM supported configurab=
-le bits
-> [0]. It was do-able, but not ideal. It would be smaller for KVM to protec=
-t
-> itself with a deny list of bits, or rather a list of bits that needs to b=
-e in
-> KVM_GET_SUPPORTED_CPUID, or they should not be allowed to be configured. =
-But KVM
-> can't keep a list of bits that it doesn't know about.
->=20
-> But the TDX module does know which bits that it supports result in host s=
-tate
-> getting clobbered. So we could ask TDX module to expose a list of bits th=
-at have
-> an effect on host state. We could check those against KVM_GET_SUPPORTED_C=
-PUID.
-> That check could be expected to fit better than when we tried to massage
-> KVM_GET_SUPPORTED_CPUID to be a mask that includes all possible configura=
-ble
-> bits (multi-bit fields, etc).
->=20
-> In the meantime we could keep a list of all of today's host affecting bit=
-s. TDX
-> module would need to gate any new bits that effect host state behind a ne=
-w sys-
-> wide opt-in that comes with the "clobber bits" metadata. Before entering =
-a TD,
-> KVM would check the clobber bits in KVM's copy of CPUID against the TD's =
-copy to
-> make sure everyone knows what they have to do.
->=20
-> (and also this opt-in stuff would need to be run by the TDX module team o=
-f
-> course)
->=20
-> It leaves open the possibility that there is some other bits KVM cares ab=
-out
-> that don't have to do with clobbering host state. Not sure about it.
->=20
-> [0]
-> https://lore.kernel.org/kvm/20240812224820.34826-26-rick.p.edgecombe@inte=
-l.com/
+> ---
+>  target/riscv/cpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 4ad91722a0..6bfb1b1530 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -183,6 +183,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
+>      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
+>      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
+> +    ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
+,
+>      ISA_EXT_DATA_ENTRY(smaia, PRIV_VERSION_1_12_0, ext_smaia),
+>      ISA_EXT_DATA_ENTRY(smcntrpmf, PRIV_VERSION_1_12_0, ext_smcntrpmf),
+>      ISA_EXT_DATA_ENTRY(smepmp, PRIV_VERSION_1_12_0, ext_smepmp),
+> --
+> 2.47.0
+>
+>
 
