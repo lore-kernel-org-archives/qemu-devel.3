@@ -4,76 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94840E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:01:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F933E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwTk-0007W7-5y; Wed, 18 Dec 2024 11:00:52 -0500
+	id 1tNwUa-0001r1-22; Wed, 18 Dec 2024 11:01:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNwTG-00073h-F3
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:00:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNwUP-0001lB-Si
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:01:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNwTE-00089g-KK
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:00:22 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNwUO-0008FZ-BC
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:01:33 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734537617;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=s0X84kExHg3oacrlQZ9Uy/VSgjWiPJSewAt63suJqD0=;
- b=TWXtJVHSrlNse2PYRqLyuZpZbZo4CUm1NOjL27Yu8c7Ls7Gk4yNFEDrCO3fG15qFwpl402
- CZ+7uFKKEYlfCJFX5zi4ZBXrbrP5DlB1AgLPFW+Nx71+b/msNQtuC7WfBTLjKFm3Nf9Ia6
- gwJg4y2qkri1eSk8sVaYKOK6EeOaO8Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-152-OCq_Hcn4PISCDQ-oVXIEzA-1; Wed,
- 18 Dec 2024 11:00:15 -0500
-X-MC-Unique: OCq_Hcn4PISCDQ-oVXIEzA-1
-X-Mimecast-MFC-AGG-ID: OCq_Hcn4PISCDQ-oVXIEzA
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8A98A1955F2C; Wed, 18 Dec 2024 16:00:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4470A1955F57; Wed, 18 Dec 2024 16:00:11 +0000 (UTC)
-Date: Wed, 18 Dec 2024 16:00:07 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v2 5/5] tests/functional: Convert the migration avocado
- test
-Message-ID: <Z2Lxh22H_ZcdmREg@redhat.com>
-References: <20241218131439.255841-1-thuth@redhat.com>
- <20241218131439.255841-6-thuth@redhat.com> <87o719umj5.fsf@suse.de>
- <3399461b-b623-4950-a800-9e244dd10785@redhat.com>
+ s=mimecast20190719; t=1734537690;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=s5EBVjzY+BbvqF9tO8LMu8C8as/z/S9MTTCoLGwires=;
+ b=iFyvBbBGjzag+WvdFqmXv1Z6NvCm/5Mmui3YjcqtMkRRsFqkpTjMEl5k31r7YpR8ZWmJET
+ k1ZFQcULmHPBWo6dnmXyUKN7Dvmwel9zopsJRKbGYlBfjwp8qwc+RvLH9KTlbuu8F/gtF/
+ QznybxcO55LEoJf4Y0DWcuFY6p1BiXg=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-617-tUpsR5tMMU6Cpo9Rh_eMnA-1; Wed, 18 Dec 2024 11:01:27 -0500
+X-MC-Unique: tUpsR5tMMU6Cpo9Rh_eMnA-1
+X-Mimecast-MFC-AGG-ID: tUpsR5tMMU6Cpo9Rh_eMnA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385dc37cb3eso3741200f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:01:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734537686; x=1735142486;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=s5EBVjzY+BbvqF9tO8LMu8C8as/z/S9MTTCoLGwires=;
+ b=SU7004zStZ5MN4Zd6XcozONnB3hg1NnkUtT36NrcETrdmb/fZHek83idxFVlJD94Q7
+ TrKNYPeZVrpmAgMyqqxAZCPVrSdHPH0bVGVycRAp28HPfPoOy0qivfBTadkkAbU6sLio
+ WxNiUt/05XlSqtxyZaarclcwyAlGcX0LK1NGO9G+qQopVBFlXg4ww1x+iOqZIOZ5nQQJ
+ sky7pVY2t5XLzyo6dBflKY6ztpTIPP/jNFXFpGEcY2Psq802oTQuTa5rq9/zMUvUwV0j
+ zCOpnppsHgNx7oCpoMH12hJoiwWRTC4VCsPvKVX7vTSRiY/Ldyiu7iLe1GJNZv81aAE1
+ Msww==
+X-Gm-Message-State: AOJu0Yz3ACU+xxw0XzYg+WqxpmM9P5aZ637VZGlYX6Zphsu4vARQHG17
+ DtkBKZVCr7fMhMSD4vb0O4E1zojTplUC1Z+8ch9cxxANGmoPr+x7HKTc+JxNIckTQ2Tz7vW4i5o
+ 1v7pROL3vqAY9M9ZNHoD4eyJDBgMV1G0jvhqNEHbJaZGuUHDLvKL63slvuK06R45TSC+xuqicEt
+ UkP0bMWn1g6NO+kw88RCjryfdjM5U=
+X-Gm-Gg: ASbGnctafl3APTMO9TgG7jbe9bNfDsVyK4C0WzPZiMJK7Hfs53xZbofzCgXhDgKQoAZ
+ Yw2DowmpG1JeSjaso3twuYJwgPkKXRK2bA0q6VQ==
+X-Received: by 2002:a5d:6d0a:0:b0:385:e8ce:7483 with SMTP id
+ ffacd0b85a97d-388e4d2f4e5mr2597057f8f.4.1734537686337; 
+ Wed, 18 Dec 2024 08:01:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGxPDuNT9R7ci8QVWtzOfIiKbpe4LatA8q39zVQTD0hSHV63I+9haxUDQrhYCCa6RhelisYwuE0Ffx6YZhbuC8=
+X-Received: by 2002:a5d:6d0a:0:b0:385:e8ce:7483 with SMTP id
+ ffacd0b85a97d-388e4d2f4e5mr2596963f8f.4.1734537685408; Wed, 18 Dec 2024
+ 08:01:25 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <3399461b-b623-4950-a800-9e244dd10785@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-25-pbonzini@redhat.com>
+ <Z2D2zk2Wdlqc5q2k@intel.com>
+ <CABgObfY=jyu96eZ+ZcU9GXU+amt2wRm53vpvubHYTaeY9MWd2A@mail.gmail.com>
+ <Z2JycooziPsfV8vX@intel.com>
+ <CABgObfboJFTRMsuqO055g11ZWNx1qKNxrLgvYLc-Hh6RcmWtOw@mail.gmail.com>
+ <d01798d5-1c93-48f7-bb78-d4602a13baac@redhat.com> <Z2LgScN1f/C3UdcD@intel.com>
+In-Reply-To: <Z2LgScN1f/C3UdcD@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 18 Dec 2024 17:01:14 +0100
+Message-ID: <CABgObfYqqkJeWRHt3Vrs=v0vTGo6Xh8kQk5KVgET_t=Vp0PEBQ@mail.gmail.com>
+Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
+ Junjie Mao <junjie.mao@hotmail.com>
+Content-Type: multipart/alternative; boundary="00000000000096bbd206298d8667"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,89 +102,67 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 04:51:24PM +0100, Thomas Huth wrote:
-> On 18/12/2024 14.51, Fabiano Rosas wrote:
-> > Thomas Huth <thuth@redhat.com> writes:
-> > 
-> > > Now that we've got a find_free_port() function in the functional
-> > > test framework, we can convert the migration test, too.
-> > > While the original avocado test was only meant to run on aarch64,
-> > > ppc64 and x86, we can turn this into a more generic test by now
-> > > and run it on all architectures that have a default machine that
-> > > ships with a working firmware.
-> > 
-> > I'd rather drop this test. I haven't looked at it in ages and it has
-> > never been useful.
-> 
-> I think I agree for the scope of the old avocado test - x86, ppc64 and
-> aarch64 certainly have better test coverage by the qtest already... but we
-> don't have any test coverage for other architectures at all yet, which is
-> bad (see below).
-> 
-> So if you like I can change the patch so that the test is not run on x86,
-> ppc64 and aarch64 anymore, just on the other architectures that do not have
-> test coverage by the qtest yet?
-> 
-> > I haven't been following the development of the
-> > functional suite so this might not apply this time (fingers crossed),
-> > but Python tests have always been a pain to work with.
-> 
-> Well, one of the motivations with the functional test framework was to
-> simplify things. You can now run the individual tests without any test
-> runner at all, what makes debugging way easier (see
-> docs/devel/testing/functional.rst for details)!
-> 
-> > About adding more architectures to the set, this is not simply enabling
-> > more testing, it is also adding workload to maintain these other arches
-> > that were never tested with migration. Is that something we want?
-> 
-> I think yes. Otherwise the bugs are just dormant until someone hits the
-> issue, making bisection way more complicated later.
-> Remember this one for example:
-> 
->  https://mail.gnu.org/archive/html/qemu-commits/2023-02/msg00030.html
-> 
-> ?
-> 
-> It would have been good to have a migration test for alpha in the CI, then
-> we could have prevented that bug from being merged.
+--00000000000096bbd206298d8667
+Content-Type: text/plain; charset="UTF-8"
 
-IIUC, we run the migration-test  qtest for *every* softmmu target.
+Il mer 18 dic 2024, 15:32 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
-So, assuming you're referring to alpha guest, we were already
-exercising it.
+> On Wed, Dec 18, 2024 at 11:26:35AM +0100, Paolo Bonzini wrote:
+> > Date: Wed, 18 Dec 2024 11:26:35 +0100
+> > From: Paolo Bonzini <pbonzini@redhat.com>
+> > Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
+> >
+> > On 12/18/24 08:14, Paolo Bonzini wrote:
+> > >     Moving on to another topic, about the gap (or question :-)) where a
+> > >     child class inherits the ClassInitImpl trait from the parent,
+> please see
+> > >     my test case example below: Doing something similar to
+> SysBusDevice and
+> > >     DeviceState using a generic T outside of the QOM library would
+> violate
+> > >     the orphan rule.
+>
+> BTW, maybe we could also squash my previous example in test? :-)
+>
 
-The migration qtest as it exists today is pushing the boundaries of
-what a qtest is. I'd actually call the migration qtest a functional
-test that happens to use the qtest framework for historical reasons.
+Sure.
 
-The only slight thing that makes it not a functional test is that it
-is using a specialized guest, which is just the custom boot sector
-that dirties ram.
+Paolo
 
-A true migration functional test is conceptually interesting, as we
-have had bugs in the past which only hit when using real guest OS
-in certain ways. The trouble is that worst bugs have been pretty
-niche, such that its unlikely we would have pre-empatively have
-a test combination that would have hit them.
+--00000000000096bbd206298d8667
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 18 dic 2024, 15:32 Zhao L=
+iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
+a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On We=
+d, Dec 18, 2024 at 11:26:35AM +0100, Paolo Bonzini wrote:<br>
+&gt; Date: Wed, 18 Dec 2024 11:26:35 +0100<br>
+&gt; From: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=
+=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
+&gt; Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class si=
+de<br>
+&gt; <br>
+&gt; On 12/18/24 08:14, Paolo Bonzini wrote:<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0Moving on to another topic, about the gap (or =
+question :-)) where a<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0child class inherits the ClassInitImpl trait f=
+rom the parent, please see<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0my test case example below: Doing something si=
+milar to SysBusDevice and<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0DeviceState using a generic T outside of the Q=
+OM library would violate<br>
+&gt; &gt;=C2=A0 =C2=A0 =C2=A0the orphan rule.<br>
+<br>
+BTW, maybe we could also squash my previous example in test? :-)<br></block=
+quote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Sure.</div>=
+<div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
 
-Anyway, I think a true functional test for migration is relevant
-to keep, as long as we make it clearly different from the qtest.
-A simple smoke test using a real Linux guest is different enough
-from our hand crafted boot sector that I think it is valuable
-coverage. Even better if we make the functional test add *lots*
-of different devices.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+--00000000000096bbd206298d8667--
 
 
