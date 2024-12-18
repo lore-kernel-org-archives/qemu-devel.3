@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7116DE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2235E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuKz-0001tM-LG; Wed, 18 Dec 2024 08:43:42 -0500
+	id 1tNuL2-00027W-NR; Wed, 18 Dec 2024 08:43:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKg-0001QH-AD
+ id 1tNuKh-0001TK-QI
  for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:25 -0500
-Received: from mail-oi1-x232.google.com ([2607:f8b0:4864:20::232])
+Received: from mail-oi1-x22e.google.com ([2607:f8b0:4864:20::22e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKd-0005hk-V5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:21 -0500
-Received: by mail-oi1-x232.google.com with SMTP id
- 5614622812f47-3eba347aa6fso3483028b6e.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:19 -0800 (PST)
+ id 1tNuKf-0005hv-9Q
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:23 -0500
+Received: by mail-oi1-x22e.google.com with SMTP id
+ 5614622812f47-3eb7e725aa0so2988096b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734529399; x=1735134199; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734529400; x=1735134200; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=B3IR2BqpFJt9aWmYFdrw1drrXTVRXnm5WkItRBYentE=;
- b=rX0GlPMoqa+NUnZGJhUamwsKRuKb4p9IAskQfsVyucmTTN8rDSs1O2+hCZPp+jcHBi
- +oQlE2s+Qd+k5ZA+3ekluHu5fxovEyKPMN0YtQnzWYSGbwR4MmCcXIRWIYPzA5nayANA
- NswZa5ItpCuuqMVfyu1L2qZ6efh6qkjVsoGfPlyuzHb4bPipQpVRr7INBc6PiXN6Gt5A
- kQy3CxLsrc55rG2UEaGbG9MaRYjijdS6QXy2+qljtTf7fBiIaStGaLw66uibfCpx/EYO
- uUhmkAyx49dyxqjy5mnvQhmFaI0Ux71I8/kH+IJXm8VSmTN5CpGgnpFlI/EMtKGkYuLq
- IwkA==
+ bh=OxSMPB70buoVfSmQQZxKUhg3EBcEeRKpWGkuRu9RGT4=;
+ b=R0e5zsjHAM0RWujYxxS1aptx4L7Eg7vlAk26homr5EU43I7uzhTjbTdgmN13smZW8N
+ KRMZJVpwf0BNnTPPQ1rtNgDR5T5glTs0lhmWXkHf5Rtt6xM2y7KL5jbCY4/wEDkqh77T
+ WRzF+YAmMySY9amRLfWGUo5SfAMY3qHZBwU0uBX7FZNxwqpSEhQEJZWt7fmGmnqpHnBt
+ aC1Ne+Ew1pZNmpql0BoJ9SUJdB7NKjE2F7EdbjQCzusfnzD8eg3JI03YGH3Fk/drZP79
+ oCOj4NaUxsVDtIF63K0RLwQ7ijFgxO78Yh19z1g6x4znF0TRdCH6nKgJsN7kKuNmBUA7
+ Odrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734529399; x=1735134199;
+ d=1e100.net; s=20230601; t=1734529400; x=1735134200;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B3IR2BqpFJt9aWmYFdrw1drrXTVRXnm5WkItRBYentE=;
- b=NO0FpzGAJGwNbKNPzZPxWoKpkGhpc+RkeQMZIkyCuMRUtX1V7wkteiqJ00GOvTtDNC
- 7dTCCM/5IrJ9lv7dFFM6ozSeXwMkX8ZbX47zPgAoB+sq9w2s/uYfD+m5wGo35kKe6JGd
- Cr9VzrIaafjUDrbjgrDldMaPk+eoneXvet9/f/5ZOxcA8FquKFIVw/DU3JDxhkYDxQKk
- tXXM6MySxF6GMzjT+x5rRe1OE8Ak1kuHDM+9RP1x7R1lekpTqA9wPEMH7d66vZ306MkO
- aLXHPhB5FOflxtvpzAXbpfvZ4xWSMZ3itjpf6XImGBVT9t0fsDRkhUyy/RSlrawN1/tA
- RvlQ==
-X-Gm-Message-State: AOJu0YzoQuNrIDzrFJoIxhzzsPzAOCE24uJ/KtsP98pJp63slqbgieYU
- AOdgqrBi+JImxPTPEMa0Hk1kdK+UJMfH2bOVAI+l+03huD+t6ULs/8xXA4Cq27CrRSQ+WElR6F7
- KdeL8S4wN
-X-Gm-Gg: ASbGnctQWt1zP5j5L4v44x+XB0K8QFeA6NLqotTLwSs8KFM9s1edGw6HgA8vENgzqwl
- 5ioLJrv6VyZdvgj6y94oE5rt6K256VLfMrOH5f7q96ug4Q3/Mu2JIEomBUpuYWAF501l0+Rhggq
- Yan9aSyjSP5+6te5Se6kYEQ5ftsDvUpHNSZkK0+HQ78x02/bw06N5fP9b7gPXt9iP2O0ohos/Mi
- s04NJKgd9m4u7xhA8jz570VhMkNfqMY0smnp8FLg642iG1NA0fV8fAxgia2k9n8
-X-Google-Smtp-Source: AGHT+IHYuSQ6mfZcE4QD9IXpiiu0UyT6xaxrze2ZXBBYMQSsDHBThrT57oWPQw9eCEKIZW1gmYMTPw==
-X-Received: by 2002:a05:6808:1a02:b0:3ea:66c3:d066 with SMTP id
- 5614622812f47-3eccbf2e273mr1678231b6e.7.1734529398744; 
- Wed, 18 Dec 2024 05:43:18 -0800 (PST)
+ bh=OxSMPB70buoVfSmQQZxKUhg3EBcEeRKpWGkuRu9RGT4=;
+ b=ZVgvVMb5CUr5OXYYzQXBgvhyXHX42cGI24zVKRLgKeDrmnEL119W4BI7CUs00l8Icq
+ XxIR7b7vKPU5KAaPtDy/6c05HVte96XuyNgt92bScOP5ZDRTuGjferaEGH8CnwRk6uNp
+ nSr7YQtDY0pMZORDnhbbMH7tKmWL+DCvd+h+0jdlILdLeEN731un8il9XzmeKWK781Rf
+ f7eE5vf2AvDXbEGVKi5TiQnF7KaqPZ0xd8smdgaAigkWHx2vrF6yf78XVYRMgjCT4NT2
+ X50afdf7tNUDW5HxGvcNSJ/Rdz4aHamIjtUcvXhMkjpO2kLOnyeeO/zG32BbXroUNK3D
+ 4G5Q==
+X-Gm-Message-State: AOJu0YwOAUp1G2WHNilOiwHQ5AJL4KQg1XrdITUPBaBjj9LlxzFMJ//e
+ B+XGocRmaYOIk4ojiTAMaZ/mTpYBmd2NA8fIgJ8v9Zr5+0SiodC2ZrKh5CKpCM+VneNk0v4y6uu
+ Id4buCiNt
+X-Gm-Gg: ASbGncvDK0wwE0ixnFu4EaymRkrppdD7lLp7s+MU1xF4ahlr1SLnTfmlsyxx+yAFp/4
+ EiOaq8ShHAtYFVreo7M19eKd7qgBB8sh8C9JzfwcaxnQODzuvF7zJn4oMPrIaI9PWCJUXEiDZ3j
+ TrH+zRi+kYJ0Q5kBa2kC8LCL61qfAcfWkDSl3S8dLj6KVAKile+i1nHwXL6PeQeGxDgaGVIzVrk
+ gA3mlRKYhHo9j847NcosTMwGxivWkUAUNiBo5k6yi+LUbOGZa19xkKMYlpirMVv
+X-Google-Smtp-Source: AGHT+IFLmoO8dajMIUuuHLNGN3/y6Jw+BcOC/s5dZTx7YyN11O68NBaiKI9vivKUfmr+sMJYvBRBew==
+X-Received: by 2002:a05:6808:2dcb:b0:3e7:df63:15bc with SMTP id
+ 5614622812f47-3eccbf54608mr1786724b6e.12.1734529399954; 
+ Wed, 18 Dec 2024 05:43:19 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.43.17
+ 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.43.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 05:43:18 -0800 (PST)
+ Wed, 18 Dec 2024 05:43:19 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [PATCH v2 18/24] hw/core: Remove device_class_set_props function
-Date: Wed, 18 Dec 2024 07:42:45 -0600
-Message-ID: <20241218134251.4724-19-richard.henderson@linaro.org>
+Subject: [PATCH v2 19/24] target/riscv: Do not abuse DEFINE_PROP_END_OF_LIST
+Date: Wed, 18 Dec 2024 07:42:46 -0600
+Message-ID: <20241218134251.4724-20-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241218134251.4724-1-richard.henderson@linaro.org>
 References: <20241218134251.4724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::232;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x232.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22e;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,76 +97,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-All uses of device_class_set_props() are now using arrays.
-Validate this compile-time in the device_class_set_props macro and
-call device_class_set_props_n using the known size of the array.
+These are not arrays of Property and had no business
+using DEFINE_PROP_END_OF_LIST.  Use plain { } instead.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- include/hw/qdev-core.h    | 16 ++++++----------
- hw/core/qdev-properties.c | 16 ----------------
- 2 files changed, 6 insertions(+), 26 deletions(-)
+ target/riscv/cpu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/hw/qdev-core.h b/include/hw/qdev-core.h
-index e9b4891f55..fc13623d43 100644
---- a/include/hw/qdev-core.h
-+++ b/include/hw/qdev-core.h
-@@ -948,22 +948,18 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
-  * To modify an inherited property you need to use????
-  *
-  * Validate that @props has at least one Property plus the terminator.
-+ * Validate that @props is an array via ARRAY_SIZE.
-  * Validate that the array is terminated at compile-time (with -O2),
-  * which requires the array to be const.
-  */
--void device_class_set_props(DeviceClass *dc, const Property *props);
--
- #define device_class_set_props(dc, props) \
-     do {                                                                \
--        QEMU_BUILD_BUG_ON(sizeof(props) != sizeof(const Property *) &&  \
--                          sizeof(props) < 2 * sizeof(Property));        \
--        if (sizeof(props) != sizeof(const Property *)) {                \
--            size_t props_count_ = sizeof(props) / sizeof(Property) - 1; \
--            if ((props)[props_count_].name != NULL) {                   \
--                qemu_build_not_reached();                               \
--            }                                                           \
-+        QEMU_BUILD_BUG_ON(sizeof(props) == 0);                          \
-+        size_t props_count_ = ARRAY_SIZE(props) - 1;                    \
-+        if ((props)[props_count_].name != NULL) {                       \
-+            qemu_build_not_reached();                                   \
-         }                                                               \
--        (device_class_set_props)((dc), (props));                        \
-+        device_class_set_props_n((dc), (props), props_count_);          \
-     } while (0)
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 4329015076..7aa041f57a 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -213,7 +213,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(xtheadsync, PRIV_VERSION_1_11_0, ext_xtheadsync),
+     ISA_EXT_DATA_ENTRY(xventanacondops, PRIV_VERSION_1_12_0, ext_XVentanaCondOps),
  
- /**
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 31e3072b55..a3d49e2020 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -1058,22 +1058,6 @@ static void qdev_class_add_legacy_property(DeviceClass *dc, const Property *prop
-         NULL, NULL, (Property *)prop);
- }
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
  
--void (device_class_set_props)(DeviceClass *dc, const Property *props)
--{
--    const Property *prop;
--    size_t n;
--
--    dc->props_ = props;
--    for (prop = props, n = 0; prop && prop->name; prop++, n++) {
--        qdev_class_add_legacy_property(dc, prop);
--        qdev_class_add_property(dc, prop->name, prop);
--    }
--
--    /* We used a hole in DeviceClass because that's still a lot. */
--    assert(n <= UINT16_MAX);
--    dc->props_count_ = n;
--}
--
- void device_class_set_props_n(DeviceClass *dc, const Property *props, size_t n)
- {
-     /* We used a hole in DeviceClass because that's still a lot. */
+ bool isa_ext_is_enabled(RISCVCPU *cpu, uint32_t ext_offset)
+@@ -1575,7 +1575,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
+     MULTI_EXT_CFG_BOOL("zvksc", ext_zvksc, false),
+     MULTI_EXT_CFG_BOOL("zvksg", ext_zvksg, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+@@ -1592,12 +1592,12 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
+     MULTI_EXT_CFG_BOOL("xtheadsync", ext_xtheadsync, false),
+     MULTI_EXT_CFG_BOOL("xventanacondops", ext_XVentanaCondOps, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /* These are experimental so mark with 'x-' */
+ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /*
+@@ -1610,7 +1610,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
+ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ /* Deprecated entries marked for future removal */
+@@ -1627,7 +1627,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[] = {
+     MULTI_EXT_CFG_BOOL("Zve64f", ext_zve64f, false),
+     MULTI_EXT_CFG_BOOL("Zve64d", ext_zve64d, false),
+ 
+-    DEFINE_PROP_END_OF_LIST(),
++    { },
+ };
+ 
+ static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
 -- 
 2.43.0
 
