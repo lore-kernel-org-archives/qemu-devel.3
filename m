@@ -4,88 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40D40E7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 14:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D885E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 14:51:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNvO9-0000BS-RJ; Wed, 18 Dec 2024 09:51:02 -0500
+	id 1tNvOY-0001GN-Eo; Wed, 18 Dec 2024 09:51:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNvNx-0008Ra-U2
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 09:50:52 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNvNv-0002dY-2M
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 09:50:49 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4361d5dcf5bso70898485e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 06:50:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734533443; x=1735138243; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6AK1Nr4GAxPNWG0jPbZSxB54s81TDKSUOrtUjE2cjWc=;
- b=bt2uIVfo8kTCmPncwcnk+0KJIrTGH8Q9qDtZ0YAZWQ6UORhrGNQ3InpCkxhWKlMimN
- RWnOGpXR8k2044ZDKhPa/MNw5rdhMIFrCKTydoAXYBuml8z1kpJZTYzs5ndMl0cUBbzv
- SRqj/gSYCriftr70GpfXIxNUAYsoLbQDpzuHOEq9wsjpuAfuthWb0V1xcQM2/unAiJTR
- p2vg3qL+4pRtlykeClpQsBY8u786EBsxGydlB9Z2N3wR1h6ds65LhVbAGbRDnKDRKeHL
- 6fkfGDsH77Wy75m7TWjLzFUd9EJRJxWJm0MwuXB2+enSo5YZ6lNuW+3vGoVXr/sxA4XZ
- /VAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734533443; x=1735138243;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6AK1Nr4GAxPNWG0jPbZSxB54s81TDKSUOrtUjE2cjWc=;
- b=OeZICbAOYZSx1huLPYnmc5y5sXeNQXMrB5bEWWYZTIexQ60XZVf4SxxP4K6FDFzoEz
- L6WAmFOSNiesJQ+cHy/+weGRbKzY5SC80Pgsacvm00PPkaKq+vFdZeJ4fqAvmOjYx5Vo
- aRBEMZgUfoth4g370oMtNG/5rGmcdvvbTNm0TATKI+S1lJQ+jWUGCnJ1mqL2x8pDTaP9
- 2lYpJEOUzaQW4QRdHk6LmCl16syb3nPT2XYHUI7jSlmR+qRNzxZaNae6E6vPCApZ2QRh
- ALtDu+o6c+9RICMKQ7dOxpZdqw9UxyVtnsXmqBnlYLTU0B6FGXfgtVRAYRJT84Z40Owv
- UBPQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUF0Dzu0VUPZ/NR4L06TloDZpVR+9ywUY0L6klhmL1DyfPPtCNpOShqyebbKG3adLuQHfo7u/QGwxvN@nongnu.org
-X-Gm-Message-State: AOJu0YyfThjEcLN2ohZnguj8jLxyrhx4T8kKVbchFetC3ZoeLg/LXu3J
- AhVj41JOYN0vit7PhU0thHhx/0Qp4oCHL4INdzfJvxBkyowZavlKDgjcHwn/MZTr8TiXi5ylekF
- r
-X-Gm-Gg: ASbGncuQR9fvao33lZWQVuQRjsAEKkNGS3o+e0KflwaYd3ErbwZZSJfVfFrZ8DQYeGW
- 94i2t8uLCuW/3QBHYERCfgkMK42ISFyboHr5heNuvTypxWzCjHejiqgwQSOXnlPG+XGcBBSWa4e
- nyUYOyqGOTPFC3dI52YiZR/iGM2GpG8Fw63JOkTO2Qp7XCQfG6st4PsUD8YJA6CXZREZgyGc+vS
- aZFZg00gvqm/gMFYJHE9bmbQDM93Rpf3k8743PtbjLujzWC3SuD43iJ4GLRbfm6kgl2/BUI
-X-Google-Smtp-Source: AGHT+IHhj6LUxI15dXVuEDCj1YKs56HG9xZbA4YSQugFxrCQNTYjaX8SUP42Kxgvz9wJjNin83KE3w==
-X-Received: by 2002:a05:6000:1f8f:b0:382:4b2a:4683 with SMTP id
- ffacd0b85a97d-388e4d2f6aamr3062189f8f.2.1734533443500; 
- Wed, 18 Dec 2024 06:50:43 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656afc163sm22497005e9.1.2024.12.18.06.50.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 06:50:43 -0800 (PST)
-Message-ID: <73aace5a-ef71-47e2-9760-2cd690db1cbe@linaro.org>
-Date: Wed, 18 Dec 2024 15:50:42 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNvOW-0001Ce-E1; Wed, 18 Dec 2024 09:51:24 -0500
+Received: from mgamail.intel.com ([192.198.163.16])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNvOT-0002j3-VJ; Wed, 18 Dec 2024 09:51:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734533482; x=1766069482;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=l3HZTrZ+0p1cuZlAvihWKKHeIlgkeQ3WncjZpuEJROY=;
+ b=aSWnFYTOdLX35+RtrkBmJemgk/vqUkR/wsRz87wotCTLmXJHZXJxx0hy
+ B/W5O/3x9+SAPq9iTYsN4I7S25eM0J8Eq/mBCcm5C+HsMcavFrr9/Jhbe
+ 2i+PgwPmTFIuoMc3teFUsrz4xFXCYXuNrxZc4UXHkgXM6CG0qchyyIy2z
+ aMkPFaTm351DpC5Z5cBhhe7Q3nuPXrxbrEwy4dqXiw2W+Hm3qvfDjHpYi
+ I3MSsGsbzUhGNFw/HigoHSWYpyhwOF395BndJwFT1dK69ZeCKTZt4Iclx
+ q+gnuoM7AaqcpdAutc2f7U2300VEYVO1idIBptOwyg5+EratSurrx0aS4 w==;
+X-CSE-ConnectionGUID: sLlhATyBQheMvy1d1x3kgw==
+X-CSE-MsgGUID: Mq5ouA4MT26XqpH1nlnaOA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="22599420"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="22599420"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa110.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 06:51:17 -0800
+X-CSE-ConnectionGUID: kLRSAmeCSu2ZJuwCsBY6Og==
+X-CSE-MsgGUID: y8P7Ir/3RUadcA9+MWXBqw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.11,199,1725346800"; d="scan'208";a="102976666"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa003.jf.intel.com with ESMTP; 18 Dec 2024 06:51:16 -0800
+Date: Wed, 18 Dec 2024 23:09:55 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional callbacks
+ as ()
+Message-ID: <Z2Llw0dHB6SpGMwr@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-27-pbonzini@redhat.com>
+ <Z2GjLOppRcHFBpAT@intel.com>
+ <CABgObfYE8z5QeVSWT7odaPcZYNfW0Ox1gNmGyCvj0YRTsDEGrg@mail.gmail.com>
+ <Z2J1EI+R51GqPhVA@intel.com>
+ <CABgObfZJNC2EWsYYSZfTYF8mebRzAmiYwD=d6bdG=10oQ3tQBg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/7] rust: pl011: fix migration stream
-To: Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>
-Cc: qemu-rust@nongnu.org, qemu-devel@nongnu.org
-References: <20241212172209.533779-1-pbonzini@redhat.com>
- <20241212172209.533779-7-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241212172209.533779-7-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfZJNC2EWsYYSZfTYF8mebRzAmiYwD=d6bdG=10oQ3tQBg@mail.gmail.com>
+Received-SPF: pass client-ip=192.198.163.16; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,163 +87,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-LGTM, still happily deferring to Alex =)
+On Wed, Dec 18, 2024 at 08:32:59AM +0100, Paolo Bonzini wrote:
+> Date: Wed, 18 Dec 2024 08:32:59 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional
+>  callbacks as ()
+> 
+> Il mer 18 dic 2024, 07:50 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> 
+> > Am I using the wrong terminology? Function pointers in a structure should
+> > be called a vtable, rather than callbacks (for example, methods in
+> > TypeInfo,
+> > read/write methods in MemoryRegionOps). Callbacks are typically function
+> > pointers used as function parameters (for example, timer/gpio). So, is the
+> > callback implementation here only used for the latter case?
+> >
+> 
+> The callback implementation is not used for QOM indeed. In that case, using
+> FnCall would require something like
+> 
+> const UNPARENT: impl FnCall((&Self,));
+> 
+> which does not exist as far as I know?
 
-On 12/12/24 18:22, Paolo Bonzini wrote:
-> The Rust vmstate macros lack the type-safety of their C equivalents (so
-> safe, much abstraction), and therefore they were predictably wrong.
+Yes, it's incorrect. (I know you have some magic, so I have this question
+to see your idea.)
+
+> MemoryRegionOps is a mix of callbacks and a vtable.  From the Rust point of
+> view, with the API that uses the builder pattern, MemoryRegionOps (and
+> VMStateDescription too) would be closer to callbacks. Instead when you use
+> traits and fill in the class object, that's clearly a vtable.
 > 
-> The registers have already been changed to 32-bits in the previous patch,
-> but read_pos/read_count/read_trigger also have to be u32 instead of usize.
-> The easiest way to do so is to let the FIFO use u32 indices instead
-> of usize.
-> 
-> My plan for making VMStateField typesafe is to have a trait to retrieve
-> a basic VMStateField; for example something like vmstate_uint32 would
-> become an implementation of the VMState trait on u32.  Then you'd write
-> something like "vmstate_of!(Type, field).with_version_id(2)".  That is,
-> vmstate_of retrieves the basic VMStateField and fills in the offset,
-> and then more changes can be applied on top.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   rust/hw/char/pl011/src/device.rs       | 38 ++++++++++++++++++++++----
->   rust/hw/char/pl011/src/device_class.rs |  8 +++---
->   rust/qemu-api/src/vmstate.rs           | 22 ---------------
->   3 files changed, 36 insertions(+), 32 deletions(-)
-> 
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-> index 332e0a31a82..cfe2734703e 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -31,7 +31,7 @@
->   const FBRD_MASK: u32 = 0x3f;
->   
->   /// QEMU sourced constant.
-> -pub const PL011_FIFO_DEPTH: usize = 16_usize;
-> +pub const PL011_FIFO_DEPTH: u32 = 16;
->   
->   #[derive(Clone, Copy)]
->   struct DeviceId(&'static [u8; 8]);
-> @@ -49,6 +49,32 @@ impl DeviceId {
->       const LUMINARY: Self = Self(&[0x11, 0x00, 0x18, 0x01, 0x0d, 0xf0, 0x05, 0xb1]);
->   }
->   
-> +// FIFOs use 32-bit indices instead of usize, for compatibility with
-> +// the migration stream produced by the C version of this device.
-> +#[repr(transparent)]
-> +#[derive(Debug, Default)]
-> +pub struct Fifo([registers::Data; PL011_FIFO_DEPTH as usize]);
-> +
-> +impl Fifo {
-> +    const fn len(&self) -> u32 {
-> +        self.0.len() as u32
-> +    }
-> +}
-> +
-> +impl std::ops::IndexMut<u32> for Fifo {
-> +    fn index_mut(&mut self, idx: u32) -> &mut Self::Output {
-> +        &mut self.0[idx as usize]
-> +    }
-> +}
-> +
-> +impl std::ops::Index<u32> for Fifo {
-> +    type Output = registers::Data;
-> +
-> +    fn index(&self, idx: u32) -> &Self::Output {
-> +        &self.0[idx as usize]
-> +    }
-> +}
-> +
->   #[repr(C)]
->   #[derive(Debug, qemu_api_macros::Object, qemu_api_macros::offsets)]
->   /// PL011 Device Model in QEMU
-> @@ -66,14 +92,14 @@ pub struct PL011State {
->       pub dmacr: u32,
->       pub int_enabled: u32,
->       pub int_level: u32,
-> -    pub read_fifo: [registers::Data; PL011_FIFO_DEPTH],
-> +    pub read_fifo: Fifo,
->       pub ilpr: u32,
->       pub ibrd: u32,
->       pub fbrd: u32,
->       pub ifl: u32,
-> -    pub read_pos: usize,
-> -    pub read_count: usize,
-> -    pub read_trigger: usize,
-> +    pub read_pos: u32,
-> +    pub read_count: u32,
-> +    pub read_trigger: u32,
->       #[doc(alias = "chr")]
->       pub char_backend: CharBackend,
->       /// QEMU interrupts
-> @@ -485,7 +511,7 @@ pub fn loopback_enabled(&self) -> bool {
->       }
->   
->       #[inline]
-> -    pub fn fifo_depth(&self) -> usize {
-> +    pub fn fifo_depth(&self) -> u32 {
->           // Note: FIFO depth is expected to be power-of-2
->           if self.fifo_enabled() {
->               return PL011_FIFO_DEPTH;
-> diff --git a/rust/hw/char/pl011/src/device_class.rs b/rust/hw/char/pl011/src/device_class.rs
-> index 975c3d42be7..759c521a99e 100644
-> --- a/rust/hw/char/pl011/src/device_class.rs
-> +++ b/rust/hw/char/pl011/src/device_class.rs
-> @@ -6,7 +6,7 @@
->   use std::os::raw::{c_int, c_void};
->   
->   use qemu_api::{
-> -    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_int32, vmstate_subsections,
-> +    bindings::*, c_str, vmstate_clock, vmstate_fields, vmstate_subsections,
->       vmstate_uint32, vmstate_uint32_array, vmstate_unused, zeroable::Zeroable,
->   };
->   
-> @@ -64,9 +64,9 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
->           vmstate_uint32!(ibrd, PL011State),
->           vmstate_uint32!(fbrd, PL011State),
->           vmstate_uint32!(ifl, PL011State),
-> -        vmstate_int32!(read_pos, PL011State),
-> -        vmstate_int32!(read_count, PL011State),
-> -        vmstate_int32!(read_trigger, PL011State),
-> +        vmstate_uint32!(read_pos, PL011State),
-> +        vmstate_uint32!(read_count, PL011State),
-> +        vmstate_uint32!(read_trigger, PL011State),
->       },
->       subsections: vmstate_subsections! {
->           VMSTATE_PL011_CLOCK
-> diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-> index 25c68b703ea..63c897abcdf 100644
-> --- a/rust/qemu-api/src/vmstate.rs
-> +++ b/rust/qemu-api/src/vmstate.rs
-> @@ -106,28 +106,6 @@ macro_rules! vmstate_uint32 {
->       }};
->   }
->   
-> -#[doc(alias = "VMSTATE_INT32_V")]
-> -#[macro_export]
-> -macro_rules! vmstate_int32_v {
-> -    ($field_name:ident, $struct_name:ty, $version_id:expr) => {{
-> -        $crate::vmstate_single!(
-> -            $field_name,
-> -            $struct_name,
-> -            $version_id,
-> -            ::core::ptr::addr_of!($crate::bindings::vmstate_info_int32),
-> -            ::core::mem::size_of::<i32>()
-> -        )
-> -    }};
-> -}
-> -
-> -#[doc(alias = "VMSTATE_INT32")]
-> -#[macro_export]
-> -macro_rules! vmstate_int32 {
-> -    ($field_name:ident, $struct_name:ty) => {{
-> -        $crate::vmstate_int32_v!($field_name, $struct_name, 0)
-> -    }};
-> -}
-> -
->   #[doc(alias = "VMSTATE_ARRAY")]
->   #[macro_export]
->   macro_rules! vmstate_array {
+> But in this sense MemoryRegionOps do not need optional callbacks. You just
+> don't call the ops.read() method if you don't need to set a read callback
+> for example. So I am not sure if anything that is planned right now needs
+> the optional callbacks. It's good to have the patch for the future but it's
+> not necessary right now.
+
+Thanks for your explaination. I agree your plan. I also think it will be
+useful in the future.
+
+Regards,
+Zhao
 
 
