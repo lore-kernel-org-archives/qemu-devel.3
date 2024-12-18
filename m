@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6C0E77183
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 06:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1805E77183
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 06:52:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNntC-000190-T5; Wed, 18 Dec 2024 01:50:34 -0500
+	id 1tNnup-0001yL-EQ; Wed, 18 Dec 2024 01:52:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNntA-000186-Kd; Wed, 18 Dec 2024 01:50:32 -0500
-Received: from mgamail.intel.com ([198.175.65.17])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNnul-0001yB-I8
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 01:52:11 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNnt8-00050N-5x; Wed, 18 Dec 2024 01:50:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734504630; x=1766040630;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=Coeb0/EJZfk8W8t/7szNv8f/QMvQSM5Hksl+GpfjeW0=;
- b=GmIh4Y4QJBKlBYJ0SEUrlbUzfWfVdMZv8JzGwSuv2WD9i0g3beJAdFxN
- v2LFC1+KwbNrCP8ZJM1KiH+2jUiDfhubo7rlp7Gtvi0xuEvZbVsufCLU0
- w+EX4cLy51+wi9GoIEmvZSULYyaKbnmLkwdv71U+HvxowiM9FPnraIItq
- T25gZT52bpFc7hVxzyTwTQ/FBlHaD+Vb29eGpuW30F/teEYbgbebneo0G
- 5MzH5WbRqaw/6sSaKq/Sb+/3sPLygKD1fzzej215lLXuGaTY7/gulevA6
- UIoJOucqAgWtIoubWSDnCskD5HtP+11+s5ujh3AyldVOsYJhyRPF0imj6 A==;
-X-CSE-ConnectionGUID: eUvdtILERM66kspsupBvEg==
-X-CSE-MsgGUID: kAP/p5AsR+eGe8frTlsFqw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="34998226"
-X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="34998226"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2024 22:50:26 -0800
-X-CSE-ConnectionGUID: UdqYtNE4R62+jjyMZ5EzKw==
-X-CSE-MsgGUID: cClgMYqtTW6kPRukSwZBdQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="101902041"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa003.fm.intel.com with ESMTP; 17 Dec 2024 22:50:24 -0800
-Date: Wed, 18 Dec 2024 15:09:04 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
- Junjie Mao <junjie.mao@hotmail.com>
-Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional callbacks
- as ()
-Message-ID: <Z2J1EI+R51GqPhVA@intel.com>
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-27-pbonzini@redhat.com>
- <Z2GjLOppRcHFBpAT@intel.com>
- <CABgObfYE8z5QeVSWT7odaPcZYNfW0Ox1gNmGyCvj0YRTsDEGrg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNnuj-0005I8-Vy
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 01:52:11 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734504728;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=36tJbW8XEdf5gp7xMFAnV2MXBnFS7AfOKTl6jc+0tlg=;
+ b=e/QvZuuKBK5bniqeO3UuTrnpPZnLNosBqwdAmQk0H+Y8+CTeB7Aif+IV8PEsmHZPC4hSwX
+ CJYLO3YZqBZKEk6fBOu2BgY5d9zTkzwWUq5PtvyLAghMdazbN0JX9F40FAFV3c8NQ2soOx
+ D7Uhi4gHLsPn5P+hjrnz5zdDN4byUQI=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-2g_FrauMN_aiBZeIKjAL7Q-1; Wed,
+ 18 Dec 2024 01:52:06 -0500
+X-MC-Unique: 2g_FrauMN_aiBZeIKjAL7Q-1
+X-Mimecast-MFC-AGG-ID: 2g_FrauMN_aiBZeIKjAL7Q
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0556C1956069; Wed, 18 Dec 2024 06:52:05 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 24111195606B; Wed, 18 Dec 2024 06:51:59 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Lieven <pl@dlhnet.de>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PATCH] meson.build: Disallow libnfs v6 to fix the broken macOS build
+Date: Wed, 18 Dec 2024 07:51:57 +0100
+Message-ID: <20241218065157.209020-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CABgObfYE8z5QeVSWT7odaPcZYNfW0Ox1gNmGyCvj0YRTsDEGrg@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,43 +84,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Dec 17, 2024 at 05:40:14PM +0100, Paolo Bonzini wrote:
-> Date: Tue, 17 Dec 2024 17:40:14 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional
->  callbacks as ()
-> 
-> Il mar 17 dic 2024, 16:55 Zhao Liu <zhao1.liu@intel.com> ha scritto:
-> 
-> > On Mon, Dec 09, 2024 at 01:37:17PM +0100, Paolo Bonzini wrote:
-> > > Date: Mon,  9 Dec 2024 13:37:17 +0100
-> > > From: Paolo Bonzini <pbonzini@redhat.com>
-> > > Subject: [PATCH 26/26] rust: callbacks: allow passing optional callbacks
-> > as
-> > >  ()
-> > > X-Mailer: git-send-email 2.47.1
-> > >
-> > > In some cases, callbacks are optional.  Using "Some(function)" and "None"
-> > > does not work well, because when someone writes "None" the compiler does
-> > > not know what to use for "F" in "Option<F>".
-> >
-> > I understand the direct use case is MemoryRegionOps, which has optional
-> > callbacks. However, I'm not quite sure how exactly it should be applied
-> > to C bindings and how it will play with Option<callback>.
-> >
-> 
-> You wouldn't use Option<callback> at all, using () instead of None; the
-> difference is that () does not have a parameter while None does (and the
-> compiler cannot infer it). But I am okay with leaving this patch behind
-> until there's a need.
+The macOS build in our CI is currently broken since homebrew
+updated libnfs to version 6 - and that version apparently comes
+with a big API breakage. Disallow that version for now to get the
+broken CI job working again. Once somebody had enough time to
+adapt our code in block/nfs.c, we can revert this change again.
 
-Am I using the wrong terminology? Function pointers in a structure should
-be called a vtable, rather than callbacks (for example, methods in TypeInfo,
-read/write methods in MemoryRegionOps). Callbacks are typically function
-pointers used as function parameters (for example, timer/gpio). So, is the
-callback implementation here only used for the latter case?
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Zhao
+diff --git a/meson.build b/meson.build
+index 85f7485473..6149b50db2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1145,7 +1145,7 @@ endif
+ 
+ libnfs = not_found
+ if not get_option('libnfs').auto() or have_block
+-  libnfs = dependency('libnfs', version: '>=1.9.3',
++  libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
+                       required: get_option('libnfs'),
+                       method: 'pkg-config')
+ endif
+-- 
+2.47.1
 
 
