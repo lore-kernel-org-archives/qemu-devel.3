@@ -4,88 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0040E7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA62E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:19:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwkT-00059F-Sq; Wed, 18 Dec 2024 11:18:10 -0500
+	id 1tNwl5-0005hb-JI; Wed, 18 Dec 2024 11:18:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNwkQ-00054c-RX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:07 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tNwkI-0003U1-Ma
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:06 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734538676;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=gYKjrkJRWjzHKmM/pQpwasuiCDmRdGn9UbHhpJk1ymM=;
- b=aZlRgKkmmKyPNOrHlsh0WqSfWkCWlKsiq39atDnWO7FjbNzpBFOxdLPpCEgakMDAn3Mraw
- 1Ts9X52qn3w86i8rlFEovNeqoon/jCByG+QYd728HksrGGL7PviiRJ4eLGZwLJYROmRDsu
- 2mTta1m0OPFH8BZZe1kJnigdBOr50fI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-lrRuWrC_OG2bWpCNTzju7g-1; Wed,
- 18 Dec 2024 11:17:52 -0500
-X-MC-Unique: lrRuWrC_OG2bWpCNTzju7g-1
-X-Mimecast-MFC-AGG-ID: lrRuWrC_OG2bWpCNTzju7g
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 312AF1956065; Wed, 18 Dec 2024 16:17:50 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.61])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3940B300F9B5; Wed, 18 Dec 2024 16:17:41 +0000 (UTC)
-Date: Wed, 18 Dec 2024 16:17:39 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- kvm@vger.kernel.org, Marcelo Tosatti <mtosatti@redhat.com>,
- David Hildenbrand <david@redhat.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwkw-0005Zw-10
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:41 -0500
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwkr-00046V-OJ
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:36 -0500
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-436281c8a38so45379115e9.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:18:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734538711; x=1735143511; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9fO8nMjzZFLc8R8WzCO9PefY3tpK9vwCpbuaZ4XFGiY=;
+ b=R9sTHckGlKWUKRNUgkJeBDHqpeuV1pCZuczxPw1q4q5yXhLqwixqNbPGeaDTuQ3vQo
+ mQUOM6WBEl3OFKBdXRxG7JACpz0tolnrwlLVKrCwj+7pc+sbyslagfez777OFSiNQZ1T
+ PhxhzY0SlnMmuIbr+c+zQl5Z78jBbpjNqzVeaPJnuGRjxA/rHmS+9vBPB6AuRahyueH9
+ F7mzYNDrXu/qCj4X1vVOTJrDYNgHggq/2HAhzAotC/EPDCWkbhIo83G67FE3bP7QetWp
+ GikxWpnceQ+2+wNi1XDctyCB1buVM18qfy5rfKR03UGZoqPfoj51/SsB94PWyGIUB18r
+ daog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734538711; x=1735143511;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=9fO8nMjzZFLc8R8WzCO9PefY3tpK9vwCpbuaZ4XFGiY=;
+ b=SGNUQIG5fy7P6y0a4NcM+uGA/6iYix621jHGQoUfJgiymGbJ8EjBxOVZlWBm1fiNE5
+ HH7KPkke///9Zy0BQusK2h9TvjNRz+JUsKWX3evckOJ3yyY02b/9RsECuWO87BA6so+F
+ Mp2qpdoWaf0v4FDn6mFE3zmBsd2390y7f6j9aEC02QR0LFFH2QCf3nxD19l/UHb0+gCt
+ yW+KazHGsojwOABN+oUdtX7KCmWUVnNu6gDoewBPDjAnO4EqKWvmn56qq2syUQE2xaGh
+ zZhsbA+/dvjN9G+udw0ZdrXjH4obYG0IBB+OHC5GQeJIHvcczEULOosdB+RyA2gV3RB4
+ vdsg==
+X-Gm-Message-State: AOJu0YyaIVMu1KH2mj1eSmMpQwIYg8Bynoi7suo3q/xfvZY4n2t5i9Vo
+ a4HramCmpUuYYuGjdzGYBPh673it8fqs8mb6JDnYVGk2qDeMbGYwwyudwrytUzQeQob7PnFyaKh
+ l
+X-Gm-Gg: ASbGncvSJOIV0lOxlq3PhiYLhAxo1/eraR7g3iZEB0YjKA/K7GvJBl9UZcjUj4gvknG
+ 4MBwBnzpzczLT1bJGeF1rqIY/hAY3j3y15Q1K840ck4IKVXF4Eo+xl2E7fyJuwl0XJsmLM2iOuu
+ 0O7i/ajrhxm/BAOD7UyJDcxkzF8TUwdTxFyoOdn1lQ1Tv+cJoYO8UHSefuCyjEniTaQgdmDT+in
+ gYiux/HB8URwCIE/Y5yXnsJt1y5V1fbrbM6/tPIryryCNz22Y/p8OQ3DiUMw+SmsmoSsJ1k
+X-Google-Smtp-Source: AGHT+IHKmuvMJW7nt1Lc5C2c7tw2Z7JNAi6p9+cbthJj4Q2DIpLHipgLC7L9mplOXcKwdUSugJuFvA==
+X-Received: by 2002:a05:600c:190f:b0:434:9e1d:7626 with SMTP id
+ 5b1f17b1804b1-436553f4992mr27309735e9.25.1734538711536; 
+ Wed, 18 Dec 2024 08:18:31 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b015absm24745605e9.13.2024.12.18.08.18.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 08:18:31 -0800 (PST)
+Message-ID: <027fccdc-4ae8-4761-907a-3810b8e30cbb@linaro.org>
+Date: Wed, 18 Dec 2024 17:18:30 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
+To: qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>, kvm@vger.kernel.org,
+ Marcelo Tosatti <mtosatti@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- qemu-s390x@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, qemu-s390x@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
-Message-ID: <Z2L1o7xesp5EcRuW@redhat.com>
 References: <20241218155913.72288-1-philmd@linaro.org>
  <20241218155913.72288-3-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20241218155913.72288-3-philmd@linaro.org>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,55 +108,29 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 04:59:13PM +0100, Philippe Mathieu-Daudé wrote:
+On 18/12/24 16:59, Philippe Mathieu-Daudé wrote:
 > "system/confidential-guest-support.h" is not needed,
 > remove it. Reorder #ifdef'ry to reduce declarations
 > exposed on user emulation.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/i386/sev.h  | 29 ++++++++++++++++-------------
->  hw/i386/pc_sysfw.c |  2 +-
->  2 files changed, 17 insertions(+), 14 deletions(-)
-> 
-> diff --git a/target/i386/sev.h b/target/i386/sev.h
-> index 2664c0b1b6c..373669eaace 100644
-> --- a/target/i386/sev.h
-> +++ b/target/i386/sev.h
-> @@ -18,7 +18,17 @@
->  #include CONFIG_DEVICES /* CONFIG_SEV */
->  #endif
->  
-> -#include "system/confidential-guest-support.h"
-> +#if !defined(CONFIG_SEV) || defined(CONFIG_USER_ONLY)
-> +#define sev_enabled() 0
-> +#define sev_es_enabled() 0
-> +#define sev_snp_enabled() 0
-> +#else
-> +bool sev_enabled(void);
-> +bool sev_es_enabled(void);
-> +bool sev_snp_enabled(void);
-> +#endif
-> +
+>   target/i386/sev.h  | 29 ++++++++++++++++-------------
+>   hw/i386/pc_sysfw.c |  2 +-
+>   2 files changed, 17 insertions(+), 14 deletions(-)
+
+
 > +#if !defined(CONFIG_USER_ONLY)
-
-I'm surprised any of this header file is relevant to
-user mode. If something is mistakely calling sev_ functions
-from user mode compiled code, I'd be inclined to fix the
-caller such that its #include ".../sev.h" can be wrapped
-by !CONFIG_USER_ONLY
-
->  
->  #define TYPE_SEV_COMMON "sev-common"
->  #define TYPE_SEV_GUEST "sev-guest"
+>   
+>   #define TYPE_SEV_COMMON "sev-common"
+>   #define TYPE_SEV_GUEST "sev-guest"
 > @@ -45,18 +55,6 @@ typedef struct SevKernelLoaderContext {
->      size_t cmdline_size;
->  } SevKernelLoaderContext;
->  
+>       size_t cmdline_size;
+>   } SevKernelLoaderContext;
+>   
 > -#ifdef CONFIG_SEV
 > -bool sev_enabled(void);
 > -bool sev_es_enabled(void);
@@ -159,42 +143,24 @@ by !CONFIG_USER_ONLY
 > -
 > -uint32_t sev_get_cbit_position(void);
 > -uint32_t sev_get_reduced_phys_bits(void);
->  bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
->  
->  int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+>   bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
+>   
+>   int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+
+The motivation is to reduce system-specific definitions
+exposed to user-mode in target/i386/cpu.c, like hwaddr &co,
+but I'm not there yet and have too many local patches so
+starting to send what's ready.
+
 > @@ -68,4 +66,9 @@ void sev_es_set_reset_vector(CPUState *cpu);
->  
->  void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size);
->  
+>   
+>   void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size);
+>   
 > +#endif /* !CONFIG_USER_ONLY */
 > +
 > +uint32_t sev_get_cbit_position(void);
 > +uint32_t sev_get_reduced_phys_bits(void);
 > +
->  #endif
-> diff --git a/hw/i386/pc_sysfw.c b/hw/i386/pc_sysfw.c
-> index da7ed121292..1eeb58ab37f 100644
-> --- a/hw/i386/pc_sysfw.c
-> +++ b/hw/i386/pc_sysfw.c
-> @@ -36,7 +36,7 @@
->  #include "hw/qdev-properties.h"
->  #include "hw/block/flash.h"
->  #include "system/kvm.h"
-> -#include "sev.h"
-> +#include "target/i386/sev.h"
->  
->  #define FLASH_SECTOR_SIZE 4096
->  
-> -- 
-> 2.45.2
-> 
-> 
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+>   #endif
 
 
