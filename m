@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F167E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6AC6E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:16:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNweo-00008x-GN; Wed, 18 Dec 2024 11:12:18 -0500
+	id 1tNwig-0003HF-0J; Wed, 18 Dec 2024 11:16:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNwel-00007p-Ih; Wed, 18 Dec 2024 11:12:16 -0500
-Received: from mgamail.intel.com ([198.175.65.13])
+ id 1tNwiM-0003G4-66; Wed, 18 Dec 2024 11:15:59 -0500
+Received: from mgamail.intel.com ([192.198.163.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tNwei-0002MS-V3; Wed, 18 Dec 2024 11:12:15 -0500
+ id 1tNwiJ-0003Cq-Jx; Wed, 18 Dec 2024 11:15:57 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734538333; x=1766074333;
+ t=1734538556; x=1766074556;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=ucG6hpTV+IReE+lOfCzMaRfXRUtudEvIopsU4oH+NGE=;
- b=M/GS5RtrVveGtudhlsZ878c9COMJ1ngBOf9r/9TxqpDyqameeEpxEajO
- s+qzTY+9nw3/E6kMHWHlI8vkPcoiKYAtpeOyF6NcfJHsEUsNi/hlQtDvx
- 9/onnS7zLaxFRckgGQZk+Zju/Jn45xG8wSYGFtQiXcgx7uCuG4fhk2tu5
- Y1Nmm07V+Yrf/EHMbffnlr5lszUke2x1dyYmnBBgCEgU6ZXS7EElWSOb2
- IXNw2WI+KcY4qLiPJEqo+qdeoHeUIYA7RxtQzjWq/FcgF2PTJlQrpnn/I
- +P0VxlIqQmVfat03KQRofkNAqHbDeb38dxAa+n9Gw0y1l88MY+tArMStK w==;
-X-CSE-ConnectionGUID: fGBVPlgSTWa57y9aRZgTag==
-X-CSE-MsgGUID: OrVy+VuiSSGBkZVs7DrZOA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="46029670"
-X-IronPort-AV: E=Sophos;i="6.12,245,1728975600"; d="scan'208";a="46029670"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 08:12:06 -0800
-X-CSE-ConnectionGUID: tmGK/hGKRq60K++Lad7knw==
-X-CSE-MsgGUID: fWJY/bGUTrOKqmE5Tbi2rw==
+ bh=ZDuCEKT0/oRRNImm1XMVi47v0lb6hMFRoy25AeCBJaw=;
+ b=hs5unfKaj6L6rs5Za2gWQmuJhmBPpBlfOTaLwj8lE8rMPyo4+G6SR80Q
+ B9UY+ECeobBqnop2WsmWz2HYK6XmeYqdF/bKmOmHhXQ6g/lTUoRNfcXTo
+ 9ijEVfdRTNPz3Ql03Dt0Y8x4rqx5VGbzSk8b08BR61Afz6Uv6ebfr10AH
+ lMBVJ2mcxLI02J2eJP8M2Lg3rhDjmsb8nU4wPMW1CIw/deBvoLs7dANSM
+ lIaUxlurulRx1s4KxEet+taWPNQn420iEy9b94D/eQ0kE79mGw/Ni/Pod
+ Mj8/t7qKzhgkBLN3FklKKdndw+nOR0MHY+OM6v2WvDnvUoVFNH+m9/Z/G g==;
+X-CSE-ConnectionGUID: nL1VGdUxSeGdTJ1sYs6v/w==
+X-CSE-MsgGUID: TDiVPVK7Q/uDF/7WbGmulw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34911668"
+X-IronPort-AV: E=Sophos;i="6.12,245,1728975600"; d="scan'208";a="34911668"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 08:15:52 -0800
+X-CSE-ConnectionGUID: aEJDl8zWTMqdq1zsFDQVMA==
+X-CSE-MsgGUID: or0tceHkRTuUzrBj/QC8pA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="98724460"
+X-IronPort-AV: E=Sophos;i="6.12,245,1728975600"; d="scan'208";a="98464566"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa008.jf.intel.com with ESMTP; 18 Dec 2024 08:12:02 -0800
-Date: Thu, 19 Dec 2024 00:30:41 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 18 Dec 2024 08:15:46 -0800
+Date: Thu, 19 Dec 2024 00:34:26 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
@@ -61,26 +61,25 @@ Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-Subject: Re: [PATCH 1/2] system: Move 'exec/confidential-guest-support.h' to
- system/
-Message-ID: <Z2L4seQo7Z7LPpTh@intel.com>
+Subject: Re: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
+Message-ID: <Z2L5kvVIr3JpvMzu@intel.com>
 References: <20241218155913.72288-1-philmd@linaro.org>
- <20241218155913.72288-2-philmd@linaro.org>
+ <20241218155913.72288-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241218155913.72288-2-philmd@linaro.org>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241218155913.72288-3-philmd@linaro.org>
+Received-SPF: pass client-ip=192.198.163.17; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_score_int: -54
+X-Spam_score: -5.5
+X-Spam_bar: -----
+X-Spam_report: (-5.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,39 +95,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 04:59:12PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Wed, 18 Dec 2024 16:59:12 +0100
+On Wed, Dec 18, 2024 at 04:59:13PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Wed, 18 Dec 2024 16:59:13 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 1/2] system: Move 'exec/confidential-guest-support.h' to
->  system/
+> Subject: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
 > X-Mailer: git-send-email 2.45.2
 > 
-> "exec/confidential-guest-support.h" is specific to system
-> emulation, so move it under the system/ namespace.
-> Mechanical change doing:
-> 
->   $ sed -i \
->     -e 's,exec/confidential-guest-support.h,sysemu/confidential-guest-support.h,' \
->         $(git grep -l exec/confidential-guest-support.h)
+> "system/confidential-guest-support.h" is not needed,
+> remove it. Reorder #ifdef'ry to reduce declarations
+> exposed on user emulation.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  include/{exec => system}/confidential-guest-support.h | 6 +++---
->  target/i386/confidential-guest.h                      | 2 +-
->  target/i386/sev.h                                     | 2 +-
->  backends/confidential-guest-support.c                 | 2 +-
->  hw/core/machine.c                                     | 2 +-
->  hw/ppc/pef.c                                          | 2 +-
->  hw/ppc/spapr.c                                        | 2 +-
->  hw/s390x/s390-virtio-ccw.c                            | 2 +-
->  system/vl.c                                           | 2 +-
->  target/s390x/kvm/pv.c                                 | 2 +-
->  10 files changed, 12 insertions(+), 12 deletions(-)
->  rename include/{exec => system}/confidential-guest-support.h (96%)
+>  target/i386/sev.h  | 29 ++++++++++++++++-------------
+>  hw/i386/pc_sysfw.c |  2 +-
+>  2 files changed, 17 insertions(+), 14 deletions(-)
 > 
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-
-(MAINTAINERS is missed to change? :-))
 
 
