@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7CFE77183
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 03:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 730EAE77183
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 06:40:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNkkK-0003sL-1r; Tue, 17 Dec 2024 22:29:12 -0500
+	id 1tNniQ-0007EE-Fs; Wed, 18 Dec 2024 01:39:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNkkH-0003s4-S1
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 22:29:09 -0500
-Received: from mail-oi1-x22c.google.com ([2607:f8b0:4864:20::22c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNkkE-0000BM-P1
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 22:29:09 -0500
-Received: by mail-oi1-x22c.google.com with SMTP id
- 5614622812f47-3ebb669df2eso159158b6e.1
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 19:29:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734492543; x=1735097343; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=agV6bBNdOw8VtTOZgL+VaPIz8tfB9LkiE8zJ70mfHqg=;
- b=GHIyoNyRf4N7xUrtHRYyq/NLmJjgeA7E7XYM27tCVulYTLZT62HdC13JXYLkAlQoHS
- rF6Nfj1axZtoVQlmSpOEZXy+dO6HnTBH41gjb8zMnSvph1q6XhwY+C6FuDeN2C278ivp
- GMVYZDUg0a5Od5a6d4ygogUAHkhqL2PBTtzUpYOCLFvAWoubuxbfi+tL9b/JMAhMdMrh
- tMYduAcxEiddcCdXz2FW0//0YMxTVElguovU6V4brSTZcGPkxBqmsZ26SOTHIOiBlCnb
- Mr03zrSKt96sEldhgdMkY2D4a/Xr3K0ttmwIiDja8HVcsa9oolAC3YiL0XL8x8/VUvg+
- CTpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734492543; x=1735097343;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=agV6bBNdOw8VtTOZgL+VaPIz8tfB9LkiE8zJ70mfHqg=;
- b=jHLo/R1ZUUParxNWSSXC7jzk/4Ibj3RWr8wV+Tvykow5AFd7gq82Rc5y3E68Bqbu+U
- RjbmKSFzBdAdB//Fmef8Jz+nliBZZ9Vu37loOBWfRrmlEk7Mw+bHtEuj05JG4AlxQK/V
- 8y3jguz9OXZR8dQLMYeKOtYmSF8Ng92kgxUZM/Syu7L2VDZPdascvfuumB8lVtQ3uaF0
- wUgvKAbdY6Y2s5CWwjywfXArqAd5JTjgmgvBPhVjWbGT+DF7HYHAgm7HrHT+wTnzC2IS
- l+65AI0PQDNpTm+xL+eNl5wGhMf55RnMKrogvj/q9XMNGuvlP9QcWBASlco3TbCF+xHl
- +Dzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXpb1Vjv8aDth29zP+kJDDyIvAyCM1mzDMyskrlZk38x4dHiaDSEX9hrmanrFpKY278tB1ZY74/ulPX@nongnu.org
-X-Gm-Message-State: AOJu0YykU4phCOc24gt3YWKkdCnhFQD5pvPeRmn1q3jFP0IDCzmAL2P5
- I0JuxwRK1VuAW4Xw493y2hXfbUC00Di8lhjD0165dvlD09UMsPfbsyX1s2VCrLs=
-X-Gm-Gg: ASbGncuQwLbNPKBpTlXSxWCq7roik+nC8pr9LZLKSziWLZoQE60gcDdlRXnsFdVNm+d
- Mb+EBnfBek5EL4F3hLjJQyjg+0sVoRs4/8GY+HlfEYiIYCrZFEjhOw0864nCdwBfmTwmHHNTlpf
- ukozCFeMYD00yWTXQj4idPZJm45uuLRVwnfASnPaR6CxrYF4b+BwPhJVY4xt2LogWqkAiTuUiKG
- zkvysqHLcdNgpOQFbcsXfevHC7ZFMKFckpTDm8JIA7DUDTSEVZTcQENEJ1rq/3kqGwgsK8RuA==
-X-Google-Smtp-Source: AGHT+IFkHHJM8r7ED+n/YjpcevPxjvqQJ0//S9+pW6XpFF2FYoC+Ti6zUZfhUFRcmLO6qDX6gy0acA==
-X-Received: by 2002:a05:6808:1a1d:b0:3eb:4681:a890 with SMTP id
- 5614622812f47-3eccd06b919mr666673b6e.8.1734492542985; 
- Tue, 17 Dec 2024 19:29:02 -0800 (PST)
-Received: from [172.20.0.130] ([187.217.227.247])
- by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb48ce949sm2713360b6e.43.2024.12.17.19.29.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 19:29:02 -0800 (PST)
-Message-ID: <c9830f41-d08f-4ecc-835a-e938d66c6360@linaro.org>
-Date: Tue, 17 Dec 2024 21:29:00 -0600
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNniN-0007Ct-9N; Wed, 18 Dec 2024 01:39:23 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNniK-0001KA-3o; Wed, 18 Dec 2024 01:39:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734503960; x=1766039960;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=0j7yWL1ku3s8tx6AjaydGcnQsUTd3IjyXBmPGFmWXw4=;
+ b=GvFvsplt2pUE2lgTitB1sbsiAQXoGTlk/lNcZ17yPMZngwJvAiEs/V+6
+ /SfcNnxAboJqciCm3Zsq3UoyFne1OSFXhdriCynMQfmtuI8ksoPXNnyVv
+ is5PTBBG5ownrfGD45WFiQWm7wpTk/pCQ9rBMJGKGTRfrqOyYOkOaikQC
+ OhNjj1bMoBp3FbgXUpaGF8KId1uh3UnOoXkRKAzNMm/lWRidyRAqpayRT
+ O9db9d1RCyJ9zXi0u+8K1GpErwm9qXasvuQZ0YIwCbZP4wneQW6xdhDJJ
+ a5aJiTExrjAnWhkhFNsmJ7BqASg667RO6ae3iC7a4BGBpHjSzo1Or8UWi g==;
+X-CSE-ConnectionGUID: 7d4lqVZhQ8KqsxyM7AZeww==
+X-CSE-MsgGUID: MYBb8/2/TnuYxp+LGqMWgA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="38639578"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="38639578"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Dec 2024 22:39:16 -0800
+X-CSE-ConnectionGUID: miwF27DHQMy1dnIxi9voKQ==
+X-CSE-MsgGUID: VCB4b5HMSme3Hf7isY3xtQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="102604995"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa004.fm.intel.com with ESMTP; 17 Dec 2024 22:39:14 -0800
+Date: Wed, 18 Dec 2024 14:57:54 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
+Message-ID: <Z2JycooziPsfV8vX@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-25-pbonzini@redhat.com>
+ <Z2D2zk2Wdlqc5q2k@intel.com>
+ <CABgObfY=jyu96eZ+ZcU9GXU+amt2wRm53vpvubHYTaeY9MWd2A@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 41/46] tcg/optimize: Use fold_masks_zs in fold_xor
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-References: <20241210152401.1823648-1-richard.henderson@linaro.org>
- <20241210152401.1823648-42-richard.henderson@linaro.org>
- <6e176656-7c87-4dc6-8dcf-2a53a43e4981@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <6e176656-7c87-4dc6-8dcf-2a53a43e4981@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22c;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+In-Reply-To: <CABgObfY=jyu96eZ+ZcU9GXU+amt2wRm53vpvubHYTaeY9MWd2A@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,31 +85,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/17/24 14:45, Pierrick Bouvier wrote:
-> On 12/10/24 07:23, Richard Henderson wrote:
->> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
->> ---
->>   tcg/optimize.c | 17 +++++++----------
->>   1 file changed, 7 insertions(+), 10 deletions(-)
->>
->> diff --git a/tcg/optimize.c b/tcg/optimize.c
->> index 46116970f3..fec46014be 100644
->> --- a/tcg/optimize.c
->> +++ b/tcg/optimize.c
->> @@ -1093,11 +1093,6 @@ static bool fold_masks_z(OptContext *ctx, TCGOp *op, uint64_t 
->> z_mask)
->>       return fold_masks_zsa(ctx, op, z_mask, smask_from_zmask(z_mask), -1);
->>   }
->> -static bool fold_masks(OptContext *ctx, TCGOp *op)
->> -{
->> -    return fold_masks_zsa(ctx, op, ctx->z_mask, ctx->s_mask, ctx->a_mask);
->> -}
->> -
+On Tue, Dec 17, 2024 at 05:50:09PM +0100, Paolo Bonzini wrote:
+> Date: Tue, 17 Dec 2024 17:50:09 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
 > 
-> Not so important, but eliminating this function could be done in its own commit.
+> Il mar 17 dic 2024, 04:39 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> 
+> > > +impl ClassInitImpl<PL011Class> for PL011State {
+> > > +    fn class_init(klass: &mut PL011Class) {
+> > > +        klass.device_id = DeviceId::ARM;
+> > > +        <Self as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut
+> > klass.parent_class);
+> >
+> > This seems a bit of a conflict with the C version of QOM semantics. In C,
+> > class_init is registered in TypeInfo, and then the QOM code will
+> > automatically call the parent's class_init without needing to explicitly
+> > call the parent's in the child's class_init.
+> >
+> 
+> This is the same in Rust.
+> 
+> The difference is that in C you have a single class_init function that sets
+> all members of ObjectClass, DeviceClass, etc. In Rust each class has one
+> trait and there is a chain of ClassInitImpl implementations—one filling in
+> "oc" from ObjectImpl, one filling in "dc" from DeviceImpl and so on.
+>
+> But in both cases you get a chain of calls from qom/object.c.
+> 
+> Therefore, the call here seems valid from the code logic's perspective.
 
-No, we get a Werror for an unused function.
+I supposed a case, where there is such a QOM (QEMU Object Model)
+structure relationship:
+
+* DummyState / DummyClass: defined in Rust side, and registered the
+  TypeInfo by `Object` macro.
+
+  - So its class_init will be called by C QOM code.
+
+* DummyChildState / DummyChildClass: defined in Rust side as the
+  child-object of DummyState, and registered the TypeInfo by `Object`
+  macro. And suppose it can inherit the trait of DummyClass -
+  ClassInitImpl<DummyClass> (but I found a gap here, as detailed later;
+  I expect it should be able to inherit normally).
+
+ - So its class_init will be called by C QOM code. In C code call chain,
+   its parent's class_init should be called by C before its own
+   class_init.
+ - However, note that according to the Rust class initialization call
+   chain, it should also call the parent's class_init within its own
+   class_init.
+ - :( the parent's class_init gets called twice.
+
+If you agree this case indeed exists, then I think we should distinguish
+between different class_init methods for the Rust and C call chains.
+
+Moving on to another topic, about the gap (or question :-)) where a
+child class inherits the ClassInitImpl trait from the parent, please see
+my test case example below: Doing something similar to SysBusDevice and
+DeviceState using a generic T outside of the QOM library would violate
+the orphan rule.
+
+diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
+index 7edadf911cca..8cae222a37be 100644
+--- a/rust/qemu-api/tests/tests.rs
++++ b/rust/qemu-api/tests/tests.rs
+@@ -13,8 +13,8 @@
+ use qemu_api::{
+     bindings::*,
+     c_str, declare_properties, define_property,
+-    qdev::{DeviceImpl, DeviceState, Property},
+-    qom::{ObjectCast, ObjectCastMut, ObjectImpl, ObjectMethods, ObjectType},
++    qdev::{DeviceClass, DeviceImpl, DeviceState, Property},
++    qom::{ClassInitImpl, ObjectCast, ObjectCastMut, ObjectImpl, ObjectMethods, ObjectType},
+     qom_isa,
+     vmstate::VMStateDescription,
+     zeroable::Zeroable,
+@@ -37,6 +37,10 @@ pub struct DummyState {
+
+ qom_isa!(DummyState: Object, DeviceState);
+
++pub struct DummyClass {
++    parent_class: <DeviceState as ObjectType>::Class,
++}
++
+ declare_properties! {
+     DUMMY_PROPERTIES,
+         define_property!(
+@@ -49,7 +53,7 @@ pub struct DummyState {
+ }
+
+ unsafe impl ObjectType for DummyState {
+-    type Class = <DeviceState as ObjectType>::Class;
++    type Class = DummyClass;
+     const TYPE_NAME: &'static CStr = c_str!("dummy");
+ }
+
+@@ -67,6 +71,51 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+     }
+ }
+
++// `impl<T> ClassInitImpl<DummyClass> for T` doesn't work since it violates orphan rule.
++impl ClassInitImpl<DummyClass> for DummyState {
++    fn class_init(klass: &mut DummyClass) {
++        <Self as ClassInitImpl<DeviceClass>>::class_init(&mut klass.parent_class);
++    }
++}
++
++#[derive(qemu_api_macros::offsets)]
++#[repr(C)]
++#[derive(qemu_api_macros::Object)]
++pub struct DummyChildState {
++    parent: DummyState,
++    migrate_clock: bool,
++}
++
++qom_isa!(DummyChildState: Object, DeviceState, DummyState);
++
++pub struct DummyChildClass {
++    parent_class: <DummyState as ObjectType>::Class,
++}
++
++unsafe impl ObjectType for DummyChildState {
++    type Class = DummyChildClass;
++    const TYPE_NAME: &'static CStr = c_str!("dummy_child");
++}
++
++impl ObjectImpl for DummyChildState {
++    type ParentType = DummyState;
++    const ABSTRACT: bool = false;
++}
++
++impl DeviceImpl for DummyChildState {}
++
++impl ClassInitImpl<DummyClass> for DummyChildState {
++    fn class_init(klass: &mut DummyClass) {
++        <Self as ClassInitImpl<DeviceClass>>::class_init(&mut klass.parent_class);
++    }
++}
++
++impl ClassInitImpl<DummyChildClass> for DummyChildState {
++    fn class_init(klass: &mut DummyChildClass) {
++        <Self as ClassInitImpl<DummyClass>>::class_init(&mut klass.parent_class);
++    }
++}
++
+ fn init_qom() {
+     static ONCE: Mutex<Cell<bool>> = Mutex::new(Cell::new(false));
+
+@@ -85,6 +134,7 @@ fn test_object_new() {
+     init_qom();
+     unsafe {
+         object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
++        object_unref(object_new(DummyChildState::TYPE_NAME.as_ptr()).cast());
+     }
+ }
+
+> > But, when there is deeper class inheritance, it seems impossible to
+> > prevent class_init from being called both by the C side's QOM code and by
+> > this kind of recursive case on the Rust side.
+> >
+> 
+> Note that here you have two parameters: what class is being filled (the
+> argument C of ClassInitImpl<C>) *and* what type is being initialized
+> (that's Self).
+> 
+> The "recursion" is only on the argument C, and matches the way C code
+> implements class_init.
+
+For Rust side, PL011Class' class_init calls SysBusDeviceClass' class_init,
+and SysBusDeviceClass will also call DeviceClass' class_init. So this is
+also recursion, right?
+
+> Maybe the confusion is because I implemented class_init twice instead of
+> using a separate trait "PL011Impl"?
+
+Ah, yes! But I think the Rust call chain should not use class_init anymore
+but should use a different method. This way, the original class_init would
+only serve the C QOM. A separate trait might break the inheritance
+relationship similar to ClassInitImpl.
+
+Regards,
+Zhao
 
 
-r~
 
