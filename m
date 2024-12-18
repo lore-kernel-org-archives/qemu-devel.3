@@ -4,85 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E78DE7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080C7E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2eC-0000t2-I7; Wed, 18 Dec 2024 17:36:06 -0500
+	id 1tO2Yp-00031H-0C; Wed, 18 Dec 2024 17:30:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2aA-00041S-OO
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:58 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tO2Yk-00030d-Oz
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:26 -0500
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2a8-0003Rv-AJ
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:53 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2164b1f05caso1581625ad.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:31:49 -0800 (PST)
+ id 1tO2Yi-0002Dh-Ow
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:26 -0500
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2156e078563so1505025ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734561108; x=1735165908; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734561023; x=1735165823; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=KFA5ekI+kAcNMU4k/jpblMJI0Pebf31uGHT3NoHxS7k=;
- b=mZn6eemLlyFtdnX3WeP43hkQA5vC8JIcKb2eY66OObdfIcK/O6ajLjlEAgK6f7dcyu
- IYIsy4xby1Hgd4sIs4/95gtDs1iyQzKuPA4eQUe/FuDrtDBM9Xtmbqz1IcxigSXP20dN
- b9+8zMCqBxNwGZBVeBByDv81vPK2zBdk7GGy9FkjyyQthsJD6MnkD+3LbulG0fpfEcbF
- /Lwm4DbLfdxYLOYN1I9lkm/dF5VzluTmdJrzSy/gpS375ar126l/X8vflrBKKXK5c38G
- tAPc725GgSRZDN+9MncJPtN36TBbIP4WXsPRCO24cemXZaWgJQ/mNU117e1i7P2n1l3L
- ABWg==
+ bh=pZX0TgFMJ8uN9pbvITB6VLJTDE458zw/ldNK20g8Glo=;
+ b=RTMSdsGNhOf2l7NajdcWj+9fNzCJlr9rioX7D6NI3sj+fzVevV+e3NA3cQ/f5YFfWb
+ inUEZ8JpAuEuGgzh52K25be7E8LcYuEg3SRIEWcGumySi42zcT+Z2ZLq4rdKgdodwb8D
+ 6FxL9qoJ4VyyYhXpCyHVHIvQgPZA2Lo2vuNWC1j5KJNDppn8QFodOIQDKhcw63DBK2pf
+ tgZPQdSsibCKA3pYVVk43IKAzeYq2UfgSrxNx79IqcQx7Fu0xZQSEmmAoKktDZh+K4Su
+ PkspxHRbEaupm4CDKrDHJpjsbSq4ULdZ8sdX3kJ3/f/eZgWnzyRTR1k2rbU0q9q38nAs
+ S3Yw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734561108; x=1735165908;
+ d=1e100.net; s=20230601; t=1734561023; x=1735165823;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KFA5ekI+kAcNMU4k/jpblMJI0Pebf31uGHT3NoHxS7k=;
- b=WV4ZBe8evpaitobOeTXlaTAgJdRfOJx66Yj+k7kULYUcg2GoRCWSI1JGCPADymfu9m
- 1VcbQwaQxIcgwPtxwJj4wzXWF3EAW79gB/nyuXvnHN9iESbql8xoTjSuyxlIqAnRZ2MK
- 0K3G7Y8jjCOsLDG+2pKCiltR6pQcxfT++M6faAb+PlxyrUiKHXgRCA6/X2d5wNLIKl7/
- Z5ZuYV6RPCxSH2bs7oDDnma277AS7w3xRpq5Dy4Zv0caX2io7QKVyyxtOs4WUqPWR2kf
- 9Dxp3R7EcxAlcpP1Ptp+XQvDdS9U+UmrcPiwF9gRsi4yx++YEPA2yO1FY9HxfVAz5TPJ
- c4aQ==
-X-Gm-Message-State: AOJu0YzgWa6mqxpcU/UHdQwIFJa1sVILuhI7dQIg1qccl2FmGs/EzeSm
- UA3AnrKgM3dgvc+bg5QdF/fIXwWev30/p4WcTAqbMwlYxRxYC6DSp2iwz+nA
-X-Gm-Gg: ASbGnct6AoY2AKZF8FgN+yindzNBoPFDElc6D/Xr49OqH0IF2JcHnkXOKf7CQLSjQFV
- +LETq0H/vT2ovVvtO+PnU3j2f9DtVlKicn3Dsj/ipVAFYF70qDZMBg7gKtNxHholLgp9KVLhsvP
- 9Wqn8nl9TgeNg5mmZcVQ27Ixp5nCE7E8Dsel5RGEGKYa565ZSVfMooZBRIQ8E/ob8M1Dwv1mPt0
- RtNpD6Fx17Aikmr/Ujq6EkTxWResufKIXM6r/Bja+sIHp6QtHir5axaA7QHWNngkLt50z2lq/pY
- dWPvGDCsMMEupXEEYRhkdr0wRxdduXhi91+5EesYRImnRwp35HLN9PIPz0tPN2E=
-X-Google-Smtp-Source: AGHT+IFwk8S9YGDVvKrniUQxpzk4r7fcwjwjLB4R803OSbLdNPuqSMUMtarqwiup9yz/5k9EC5e4VA==
-X-Received: by 2002:a17:903:2bce:b0:216:7ee9:2227 with SMTP id
- d9443c01a7336-218d724d328mr66790935ad.36.1734561108166; 
- Wed, 18 Dec 2024 14:31:48 -0800 (PST)
+ bh=pZX0TgFMJ8uN9pbvITB6VLJTDE458zw/ldNK20g8Glo=;
+ b=k7WlPqS3ruJhahF1wnjGPrlw2CuZzoOaQXGEeuERDl718j+fWRorqcjmExAvCwhZNc
+ Ha2pnJM/IBoEi1rN3maqo6oxxv6ZcecUC0uwhR0zRr0D92Si+o4cFyEeyju+xp9/8fGv
+ QA6Yep8CuyL9mcNjcSKEfDWEOJQBT1TToOlgVv+HShFPfVFqrHg3notqVPjb8rXkuANJ
+ U/j/Bz9N9KRpl0uSVezw0UcBd3Il86csZGH7QN0w9O8RIxrnyS2/i0arDWI4obZHZOBN
+ B+6Ir+JeEBqvRlogeXjX/MxvXqwEP2nqKzxlNkoHH+yYyJ4P1Asm+jeQX7ekICI9UAd0
+ PcTQ==
+X-Gm-Message-State: AOJu0YyVdvE04Jqs/NxKSJKr/lIooAMZf/DAQg4DepTui9vH37jRn5vu
+ 39fWlJHyuAmBQEh4X5UJafUltAqs8FAKblR3wcomiQsw4eInnSRYy3pwhGRe
+X-Gm-Gg: ASbGnctt7G3wmRMZmupxK+fE0oVmt8crIhE2DvBhLRXT13VS4sR1UIZOnOSkaWERfIE
+ FzgPQ9ddXeUqyzUZPIfMAcUSv/GlhGlbrV1bYSwl2S1E9X6JWkJKpmNd1HtTVBNuqIKb8/+CaVR
+ qzN/+2HsH82T/w+Uwu4EaW0624zErGqdqPbuSwH97HRLMMALZrGvRlWjG5DuhG4AJV3aIeWxciP
+ nM+i1ankNxQi36I98rX4KuLonBECUpvkGG1/hvlwcPtxvINmMiLyc+AVtcu5aoVCsjkeqCMD5xe
+ /88p8RS3pAoMFICsTX97ZkX1YlozaNtey5oL7UqZMsfPqWiYaOSrAU7gejXpLaU=
+X-Google-Smtp-Source: AGHT+IHguVXEyGSuWB4Q51iAQ+wvlAlcSF6iEU7BK74W+Ig9W6bBS/QZbYzqxB50saaw92crBTug/g==
+X-Received: by 2002:a17:903:22c8:b0:215:9379:4650 with SMTP id
+ d9443c01a7336-218d7269c85mr61004635ad.42.1734561022938; 
+ Wed, 18 Dec 2024 14:30:22 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.31.44
+ d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:31:47 -0800 (PST)
+ Wed, 18 Dec 2024 14:30:22 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 30/39] target/riscv: Support senvcfg[UKTE] bit when svukte
- extension is enabled
-Date: Thu, 19 Dec 2024 08:30:00 +1000
-Message-ID: <20241218223010.1931245-31-alistair.francis@wdc.com>
+Subject: [PULL 02/39] hw/intc/riscv_aplic: Fix APLIC in_clrip and clripnum
+ write emulation
+Date: Thu, 19 Dec 2024 08:29:32 +1000
+Message-ID: <20241218223010.1931245-3-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
 References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,54 +104,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Fea.Wang" <fea.wang@sifive.com>
+From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
 
-Svukte extension add UKTE bit, bit[8] in senvcfg CSR. The bit will be
-supported when the svukte extension is enabled.
+In the section "4.7 Precise effects on interrupt-pending bits"
+of the RISC-V AIA specification defines that:
 
-When senvcfg[UKTE] bit is set, the memory access from U-mode should do
-the svukte check only except HLV/HLVX/HSV H-mode instructions which
-depend on hstatus[HUKTE].
+"If the source mode is Level1 or Level0 and the interrupt domain
+is configured in MSI delivery mode (domaincfg.DM = 1):
+The pending bit is cleared whenever the rectified input value is
+low, when the interrupt is forwarded by MSI, or by a relevant
+write to an in_clrip register or to clripnum."
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241203034932.25185-3-fea.wang@sifive.com>
+Update the riscv_aplic_set_pending() to match the spec.
+
+Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation for APLIC MSI-mode")
+Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241029085349.30412-1-yongxuan.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_bits.h | 1 +
- target/riscv/csr.c      | 4 ++++
- 2 files changed, 5 insertions(+)
+ hw/intc/riscv_aplic.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-index 385a2c67c2..4b9f899217 100644
---- a/target/riscv/cpu_bits.h
-+++ b/target/riscv/cpu_bits.h
-@@ -785,6 +785,7 @@ typedef enum RISCVException {
- #define SENVCFG_CBIE                       MENVCFG_CBIE
- #define SENVCFG_CBCFE                      MENVCFG_CBCFE
- #define SENVCFG_CBZE                       MENVCFG_CBZE
-+#define SENVCFG_UKTE                       BIT(8)
+diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
+index 353eec8136..3edab64b97 100644
+--- a/hw/intc/riscv_aplic.c
++++ b/hw/intc/riscv_aplic.c
+@@ -248,9 +248,12 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
  
- #define HENVCFG_FIOM                       MENVCFG_FIOM
- #define HENVCFG_LPE                        MENVCFG_LPE
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 9846770820..1936a6f32a 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -2453,6 +2453,10 @@ static RISCVException write_senvcfg(CPURISCVState *env, int csrno,
-         mask |= SENVCFG_SSE;
+     if ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
+         (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
+-        if (!aplic->msimode || (aplic->msimode && !pending)) {
++        if (!aplic->msimode) {
+             return;
+         }
++        if (aplic->msimode && !pending) {
++            goto noskip_write_pending;
++        }
+         if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
+             (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
+             return;
+@@ -261,6 +264,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
+         }
      }
  
-+    if (env_archcpu(env)->cfg.ext_svukte) {
-+        mask |= SENVCFG_UKTE;
-+    }
-+
-     env->senvcfg = (env->senvcfg & ~mask) | (val & mask);
-     return RISCV_EXCP_NONE;
++noskip_write_pending:
+     riscv_aplic_set_pending_raw(aplic, irq, pending);
  }
+ 
 -- 
 2.47.1
 
