@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32399E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C008E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:29:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwon-0000oN-K9; Wed, 18 Dec 2024 11:22:37 -0500
+	id 1tNwsZ-0002ze-TL; Wed, 18 Dec 2024 11:26:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwo5-00087X-4X
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:53 -0500
-Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
+ id 1tNwsX-0002qJ-Oi
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:29 -0500
+Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnk-0006th-O6
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:52 -0500
-Received: by mail-ej1-x62b.google.com with SMTP id
- a640c23a62f3a-aa696d3901bso1276845866b.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:21 -0800 (PST)
+ id 1tNwsT-0007qe-JF
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:29 -0500
+Received: by mail-ej1-x633.google.com with SMTP id
+ a640c23a62f3a-aa6b4cc7270so903310266b.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:26:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734538880; x=1735143680; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734539183; x=1735143983; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
- b=WLIAeKFRnr++H5USIvBm85uaXGIL0AXbkXfGNKxVv+7O6UE9ETyrbj+NKITbJpHiPb
- 6UZdV/pbGPV7aNPXk8YOhV+d8CyhGPGxrdxKc53RRQkV3efrzwVSOpskEIOUAp+JKMGB
- upiT4wu4Hmyegk3rdlx2ODnjw5UGpxaPCnWSSWk/I+lcWQ/ABC+xifqZ/HzmGiG8n6Wt
- tfDAfdiYTSflGXu0Uuq+9FGattbGjrIk9051t570xBMoSZVjJf9Z9LORmopi6VKVDf0u
- McpmegNIAg/JnvUhuVs97aYDi/olykf52BuKtT9ZC9cZ7rbYRFPRfPKNljfDdwyUnRxR
- EJBA==
+ bh=zmufaNphf2V1gjeMaS6HYVWY1pzqo9T3TKjafKi2Pnk=;
+ b=oYtCUOjmK+3uDkfBgxSM/gWYnBYeCSMun7T6MO4a2tjG7NTvpqzSqJ2rbo15BrmDh1
+ crB96kJDDiOVYk9xB1R8bVVXcLN/fncuplg24rhJeKt7R3WUUb9mDB+ib9iX9GZOZJ05
+ T15WXczI8XirrE7vG9mlMCMOP6+pIIDuIiqI3+Q/rc/KtCl39zr3HHbU1B96i8XskCx5
+ 3xIAUo5QEUAtFtEZaOsXRJJvwMu1PGmiDrK0u01pUBtyRdwj7jVQI9EilUXCB8YGhXan
+ oJNtZITEOqyqSaTvOG1XT+JoKQY3/j+mzsH4kG1MQldm3YrC/ugVvlaetvZ1dt2j9UU6
+ Yq8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734538880; x=1735143680;
+ d=1e100.net; s=20230601; t=1734539183; x=1735143983;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
- b=AVpclMslHL1hDBtNgLZdyVqQHbhS+ifUx3QroKYxx5XWwvDE3psWlTwQCATZqHP116
- lz4ySJVrtcMjXgtLfOOyxr8+d3i++IEFDyGHZPrRvmjo6R+tbqqbGThdgX1ZH4BWvRr0
- YRKh/p/rFIhsnyon+mxo+11Ac0Pxnj+57l69v8ZsLzCsu5je3F8jTID8XhdPv2AyIrVx
- fzxHZQlsAN5U2rKU7xTUKpXrblT2teevAPSVVZXatZ//yNUwIa+VD5q0jM53KPf9ibLB
- clHo6AoXKWpMvvSig1q7zGt93l+BYvEWuzwF3SJkndMnDhCVkb7ymTp584JUNz9bB43h
- 73TA==
-X-Gm-Message-State: AOJu0YwfSPUdRz+YE2Qu7ujxU7HTpVOmC87Wtd5JJZhTbP431VqnVBQL
- fACt680rl1GFKzShOFzSD5BF8XSqw498DxFYLheZP0+YxhkTRpLIXaOaI8NJ8fI=
-X-Gm-Gg: ASbGncvCxJdTpcGS0Lm+8iaQ46Vi6oHE6JD1to2nsi+97dqi/uqkA5xMxub6VqmqJ9t
- 1V7IjHBbreHPNRCld1F4sSe2bIh1BAEE4bcgSMdy3p8RdTt3aTIV52so9toSy/PF5Fju+TNUbgX
- rq/nI+JdNOKAqDIlxf6eS1IHG2CWqnRbeITH5lbQgY5Tyc+Ek9yN/7ETzOH59lKltAIGi9lrPAl
- dI9j49jDBuNJw+yMU2xuAIIajJQDXc6Z3tIe1mg1IfAaEXgjKAqAO0=
-X-Google-Smtp-Source: AGHT+IEgo38+JTFTQe2QWD2SzXBn5GgMF3Ncp7VExom07hK+kgRY5m2GSWEr6D3P47raWVJ4deeNiA==
-X-Received: by 2002:a17:906:32d6:b0:aa6:75e1:1864 with SMTP id
- a640c23a62f3a-aabf46ff260mr292000366b.4.1734538880368; 
- Wed, 18 Dec 2024 08:21:20 -0800 (PST)
+ bh=zmufaNphf2V1gjeMaS6HYVWY1pzqo9T3TKjafKi2Pnk=;
+ b=vgZHPdtPjX0pAJJxGyn+7IUT2PRE3Z/0JQR4dGsR9IRRtT/kf/skJnMKpwm6M9KWic
+ txqUN0BvQB9QApzv/gxke9PSaNkNNVaqS8z28+q2RVXvowYUpzW/9laSNK/hJubpZIpz
+ yFabAW6pCH5j/foy4p58Yym1XwfFSdZ1aCmCLpbXqB7X8HK2cRoeo0gIWw7lBDroU634
+ CWpz5GMb8xRVEwxzB91BBjqDRLQrW3Mh+TKkOxa0Ca4yR9G960J0v0qR4NBPydiTJPQ7
+ 2koJ45JhMaL0ISP3dv9p70P2Hn9RYMYm+W24NlXjnc5GyA6sWw2UDb5lHc6QlCOYWcwV
+ pNLw==
+X-Gm-Message-State: AOJu0YySiJ2/FOj5RCAJVfhpM6xRNjNw1GHRqSQxS2/rpMUlkOVA7NAA
+ xj7e2PHGsvztqjpKF5PtUo0NXhf6nD73+RdketoyiMKkTVQz4MO2gQwSe8jKaI0=
+X-Gm-Gg: ASbGncs1t/SfHD74nX5SeBSFzjy7Zj/U2qB7zyWCgQnuWzYLUYIb2I326xZaq2dRR7x
+ E+P3fHuq8d2/+m/BF7RZbx8M/2tDZqIFXjqm8VNxcwkHPN0U9RWKxg6TwvOqF0zIUteiJTBydTR
+ sq5G2jPnKApf5FdKTvA3qQ4VYeD1WOmke1yZAgCE1Or7EOsLVrjHI0pTgXQFiop7m9Aoyuy6zMF
+ xoMxJy1JrlnsstmDIC1bzUTy0IewgYt87+wrAhdvQUylhJZ9EQpzhY=
+X-Google-Smtp-Source: AGHT+IFuUEHFx13lXdUOlZYt0rXroYUwQYZ2XCyJUvfsyymkg5v6w/loru6q3NyyO0B3TN4XuvXZGg==
+X-Received: by 2002:a05:6402:13cf:b0:5d0:d491:2d5e with SMTP id
+ 4fb4d7f45d1cf-5d7ee37b60dmr8142158a12.7.1734539183339; 
+ Wed, 18 Dec 2024 08:26:23 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d652f2599fsm5463542a12.68.2024.12.18.08.21.13
+ 4fb4d7f45d1cf-5d652ab5198sm5489266a12.8.2024.12.18.08.26.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 08:21:17 -0800 (PST)
+ Wed, 18 Dec 2024 08:26:22 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 911F260BBC;
- Wed, 18 Dec 2024 16:21:06 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id DB7CF60729;
+ Wed, 18 Dec 2024 16:21:05 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -100,24 +100,25 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 25/27] tests/vm: partially un-tabify help output
-Date: Wed, 18 Dec 2024 16:21:01 +0000
-Message-Id: <20241218162104.3493551-26-alex.bennee@linaro.org>
+Subject: [PATCH v2 18/27] system/qtest: properly feedback results of
+ clock_[step|set]
+Date: Wed, 18 Dec 2024 16:20:54 +0000
+Message-Id: <20241218162104.3493551-19-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
 References: <20241218162104.3493551-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::633;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,56 +134,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-While the make syntax itself uses tabs having a mixture of tabs and
-spaces in the vm-help output make no sense and confuses things lining
-up between terminal and editor. Fix that.
+Time will not advance if the system is paused or there are no timer
+events set for the future. In absence of pending timer events
+advancing time would make no difference the system state. Attempting
+to do so would be a bug and the test or device under test would need
+fixing.
+
+Tighten up the result reporting to `FAIL` if time was not advanced.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2687
 ---
- tests/vm/Makefile.include | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ system/qtest.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
-index 13ed80f72d..d80ca79a28 100644
---- a/tests/vm/Makefile.include
-+++ b/tests/vm/Makefile.include
-@@ -64,23 +64,23 @@ endif
- 	@echo "  vm-boot-ssh-<guest>             - Boot guest and login via ssh"
- 	@echo
- 	@echo "Special variables:"
--	@echo "    BUILD_TARGET=foo		 - Override the build target"
--	@echo "    DEBUG=1              	 - Enable verbose output on host and interactive debugging"
--	@echo '    EXTRA_CONFIGURE_OPTS="..."   - Pass to configure step'
--	@echo "    J=[0..9]*            	 - Override the -jN parameter for make commands"
--	@echo "    LOG_CONSOLE=1        	 - Log console to file in: ~/.cache/qemu-vm "
--	@echo "    USE_TCG=1        	         - Use TCG for cross-arch images"
--	@echo "    QEMU=/path/to/qemu		 - Change path to QEMU binary"
-+	@echo "    BUILD_TARGET=foo              - Override the build target"
-+	@echo "    DEBUG=1                       - Enable verbose output on host and interactive debugging"
-+	@echo '    EXTRA_CONFIGURE_OPTS="..."    - Pass to configure step'
-+	@echo "    J=[0..9]*                     - Override the -jN parameter for make commands"
-+	@echo "    LOG_CONSOLE=1                 - Log console to file in: ~/.cache/qemu-vm "
-+	@echo "    USE_TCG=1                     - Use TCG for cross-arch images"
-+	@echo "    QEMU=/path/to/qemu            - Change path to QEMU binary"
- ifeq ($(HAVE_PYTHON_YAML),yes)
--	@echo "    QEMU_CONFIG=/path/conf.yml   - Change path to VM configuration .yml file."
-+	@echo "    QEMU_CONFIG=/path/conf.yml    - Change path to VM configuration .yml file."
- else
- 	@echo "    (install python3-yaml to enable support for yaml file to configure a VM.)"
- endif
--	@echo "                                   See conf_example_*.yml for file format details."
--	@echo "    QEMU_IMG=/path/to/qemu-img	 - Change path to qemu-img tool"
--	@echo "    QEMU_LOCAL=1                 - Use QEMU binary local to this build."
--	@echo "    TARGET_LIST=a,b,c    	 - Override target list in builds"
--	@echo "    V=1				 - Enable verbose output on host and guest commands"
-+	@echo "                                    See conf_example_*.yml for file format details."
-+	@echo "    QEMU_IMG=/path/to/qemu-img    - Change path to qemu-img tool"
-+	@echo "    QEMU_LOCAL=1                  - Use QEMU binary local to this build."
-+	@echo "    TARGET_LIST=a,b,c             - Override target list in builds"
-+	@echo "    V=1                           - Enable verbose output on host and guest commands"
+diff --git a/system/qtest.c b/system/qtest.c
+index 12703a2045..d9501153a4 100644
+--- a/system/qtest.c
++++ b/system/qtest.c
+@@ -78,6 +78,11 @@ static void *qtest_server_send_opaque;
+  * let you adjust the value of the clock (monotonically).  All the commands
+  * return the current value of the clock in nanoseconds.
+  *
++ * If the commands FAIL then time wasn't advanced which is likely
++ * because the machine was in a paused state or no timer events exist
++ * in the future. This will cause qtest to abort and the test will
++ * need to check its assumptions.
++ *
+  * .. code-block:: none
+  *
+  *  > clock_step
+@@ -710,7 +715,8 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             qtest_sendf(chr, "OK little\n");
+         }
+     } else if (qtest_enabled() && strcmp(words[0], "clock_step") == 0) {
+-        int64_t ns;
++        int64_t old_ns = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
++        int64_t ns, new_ns;
  
- vm-build-all: $(addprefix vm-build-, $(IMAGES))
+         if (words[1]) {
+             int ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+@@ -719,11 +725,10 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             ns = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
+                                             QEMU_TIMER_ATTR_ALL);
+         }
+-        qemu_clock_advance_virtual_time(
+-            qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + ns);
++        new_ns = qemu_clock_advance_virtual_time(old_ns + ns);
+         qtest_send_prefix(chr);
+-        qtest_sendf(chr, "OK %"PRIi64"\n",
+-                    (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qtest_sendf(chr, "%s %"PRIi64"\n",
++                    new_ns > old_ns ? "OK" : "FAIL", new_ns);
+     } else if (strcmp(words[0], "module_load") == 0) {
+         Error *local_err = NULL;
+         int rv;
+@@ -740,16 +745,16 @@ static void qtest_process_command(CharBackend *chr, gchar **words)
+             qtest_sendf(chr, "FAIL\n");
+         }
+     } else if (qtest_enabled() && strcmp(words[0], "clock_set") == 0) {
+-        int64_t ns;
++        int64_t ns, new_ns;
+         int ret;
  
+         g_assert(words[1]);
+         ret = qemu_strtoi64(words[1], NULL, 0, &ns);
+         g_assert(ret == 0);
+-        qemu_clock_advance_virtual_time(ns);
++        new_ns = qemu_clock_advance_virtual_time(ns);
+         qtest_send_prefix(chr);
+-        qtest_sendf(chr, "OK %"PRIi64"\n",
+-                    (int64_t)qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL));
++        qtest_sendf(chr, "%s %"PRIi64"\n",
++                    new_ns == ns ? "OK" : "FAIL", new_ns);
+     } else if (process_command_cb && process_command_cb(chr, words)) {
+         /* Command got consumed by the callback handler */
+     } else {
 -- 
 2.39.5
 
