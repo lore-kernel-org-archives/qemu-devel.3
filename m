@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89C41E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:46:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93553E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:46:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuLO-0002aB-OG; Wed, 18 Dec 2024 08:44:07 -0500
+	id 1tNuL1-0001yr-E7; Wed, 18 Dec 2024 08:43:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKt-0001gK-0K
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:36 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuKZ-0001Kk-Aa
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:16 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKm-0005ir-EV
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:34 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eba347aa6fso3483101b6e.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:28 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuKR-0005ey-Ic
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:14 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361f65ca01so63008075e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734529407; x=1735134207; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f+XQR0giWaYJSQ3hwaZ65nOMJP3BUJ/58MIcg1IC9xY=;
- b=B/1pA3WmqsXM9daOkjFBtIat+CNsfvJ3kHamieKoz8ylCR10RC1RqgV9OvQgpYJr0s
- +TOCuAmcR3UmNYN4d/hEHXT+Ua5gwmFf/1Rz98UP0Ta+tsJKcmlA7gfmxuZP9bDP67Ry
- djRtEwzG8kVX29XUIe/PwkxjNi+EULbLGDQzsGJjvvON5hvVFom3N1vrugoCWrR3PL5K
- 1MgxOh9uVjJvCPfyPChFVa9t6mpTIT3yLBCMQH5jZOxaS/bbJZGB5Upxa8b9guf9UIR2
- V/kO03Fn4dtLtqCS5Xr4Bg9ThJHmDSm9rI262b+k4IjTxnRVl/PQItK1EJaoFJt+7jZM
- KRTw==
+ d=linaro.org; s=google; t=1734529386; x=1735134186; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BpfgCgqmjRnFtWOFA/8n5tIUZ3UhRJDzx4+XUahnt+k=;
+ b=ABGGdBImiLaZ6L3zboa0U3yca+vFQPHKIxCZBmQ0rf+Fz+Y4glmLai0MXCp/WHJg+q
+ sDd1ehkEpM04TT/YKXWQ7Iqx1QvwsCrw/J6eX/KSnsO5xM24AHcqeiuK6khlxHPs69ue
+ eyFp/q29jdVnH9YxAykbji96iBgsouuMOYZjPu35ldDdSBXfg3cxDxh2+k9K+8GJ/GOn
+ +IAyaX0ThhR7+jUd5lE72CCa+8a/IyGGvO8+/f9XOGwaNNf0SWPfms3s2JsezrjV4wth
+ t6sFq4bP2XdgivvPCixI9i79B7YP9viezapkLeEsGtnvB8oOIEgatXafTkt5MPbHtQDG
+ jKQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734529407; x=1735134207;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=f+XQR0giWaYJSQ3hwaZ65nOMJP3BUJ/58MIcg1IC9xY=;
- b=Yw4oENVPA2+hnPQ2akVxcwatklX0YL8ygoYNST3xlMmIj8fkTc1LhmTe1/NJLquruh
- +GeEfIQfVi/l1vKSTito9snlMpux6soxUmwjH5zRgFwMcqjeSd8H7jGy7gg7AmoRdBT+
- uFTeEGhdNCsPwH4ESGxO9TkRChRboXHd7M7H+LdcgyXKWUvlsymSPx+ojLceaEyVDsOt
- 6E5P0E6qIP5s75EiX3/eyYORsP2flzrlvm5fuGv9PuAjlAbDBg3tyCXxtDjayZQ/Oyzw
- Fca4a3ThODuLnlSb2O5uA1cgD62i1bhSrHTJXr8pUL04Uf7HaEnnzyQ2QTc0+/xis1o4
- 8RZw==
-X-Gm-Message-State: AOJu0YxMPZ5+lTSjixZk26SKs+pZeX9zS0a/ps2hb8xAb9mRjSdGADnR
- 5NS5ExOmiwh+Ju6PM8purD/3KdRx8z0TByTheGWU1lx+YsOGax5eKeWsKIBnofZFMJXqgFI2e/y
- EhkdC69KY
-X-Gm-Gg: ASbGnctOouQXVwHXe1ehEioDyRvl2Tap7TRMT+OBu9rOo2uDvTInWTDEFDX0ZCNAcbi
- Lie1LZdiqwVcErcucwFhi59KFD0lG4IhCKA4/0onQpJZMRaW4MaV3vXSCLoBKmAHuLOrK+yAD1X
- 6lvoMESUEwRW6g4oLH671G5gv+3juI3MRTcivglHMYiTqG+KwvFOHED2kn4/2GjuVL+vth8GHrR
- CdFIIJazV2z2EeoF1ei+yBHHE+n+XR7/pYPTixUaASRx96796QzG4sns0FP19YJ
-X-Google-Smtp-Source: AGHT+IEgd5Vkii3xLVWXgEX02vJ/rkpXpt9mDR2B9Dufp35XOJIaJPt2HICss/RBUI8sTvRnmOCPJg==
-X-Received: by 2002:a05:6808:2394:b0:3eb:66a1:9da3 with SMTP id
- 5614622812f47-3eccbf5a8a1mr1473415b6e.18.1734529407384; 
- Wed, 18 Dec 2024 05:43:27 -0800 (PST)
-Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.43.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 05:43:26 -0800 (PST)
-From: Richard Henderson <richard.henderson@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-Subject: [PATCH v2 21/24] include/hw/qdev-properties: Shrink struct Property
-Date: Wed, 18 Dec 2024 07:42:48 -0600
-Message-ID: <20241218134251.4724-22-richard.henderson@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241218134251.4724-1-richard.henderson@linaro.org>
-References: <20241218134251.4724-1-richard.henderson@linaro.org>
+ d=1e100.net; s=20230601; t=1734529386; x=1735134186;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=BpfgCgqmjRnFtWOFA/8n5tIUZ3UhRJDzx4+XUahnt+k=;
+ b=Uba9ySZq0rE1pp3sAfURn6cCA9XkJ3WEV99pKTBFdCxQrA4Lg8vTpw5T2ezeyRafGF
+ bbwpu/bv3mX31U35dJFlVLd0A63ZCD54x0UjyQPaAvMW77U0Ddv5YjRWkLhvVk1kqD2K
+ xWTC3yCIahTJ1m/ywrHZ8zGxxbmXuzF+1abGG3U7/epuzMRMRjZfYQVAiEX4fYcO1ahl
+ OhvJemMoHK9RrhrFw81qLCoXQKPRUmsYG4RExZDUVDszpWua0MUNRA28UAVIjrFGYlOu
+ E8Q5ekxV3wYqmKkUEhMg5f/ZbzBCgzidg+J6vSmGa0CO8U6pi2HsVR9LBTBMYwsl+Wb9
+ Wv0w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjUDqw5dypzRXJQ6f7U7HZU1Mmwflmx3OUjzxX/qymhXebkX5pnDik9UpEKDxSvNL6s6mjfmUB/FCM@nongnu.org
+X-Gm-Message-State: AOJu0Yznn7SDU3/YLHgoyhfUeKMHahOF6QHBO0Dc3qIswKBvMaUNi4ZR
+ 2pce4gUXPDQOmaVapOtgznFaaF6d13BLah0ExcW8BQSVe2onRlF4G6AeveUMvuo=
+X-Gm-Gg: ASbGncuGiWBPvUNtwE+e2kBJtcC3ftikJddtuaXRC7qgn8veQXavh2TcYvPN3PEAHUB
+ kY0JrcjVL2sl7+PJG80UtrrWwwAbSbZgSjWDT0kdpJq+086RnQoaV20jv3CrZ6lhMLrYFP89efy
+ 1RCqHoBPNXKctS2NG1uvwulvjjHzME8fZn6/SZPfmNKKlNAzCOkjjVNRiR84pgQIWNt0wD19VxH
+ jRKcyek8+84edhoESe2yOxwBFd0/QBvEjT8pog3IokL2u0uP0J6SYexQ0gZcRoeyADqJVoQ
+X-Google-Smtp-Source: AGHT+IGMDVw0UvdLp/ZKIs8ScGhZu8pCTr4YSAgP21wA6B7azBCoRNbI0hhp4SbT+lh1tmWs6Gghlg==
+X-Received: by 2002:a05:600c:3b0e:b0:434:9df4:5485 with SMTP id
+ 5b1f17b1804b1-436553ff1ddmr23633015e9.32.1734529385746; 
+ Wed, 18 Dec 2024 05:43:05 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b12498sm20622655e9.21.2024.12.18.05.43.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 05:43:05 -0800 (PST)
+Message-ID: <b51dfeff-c567-4f21-95ae-59a59f371085@linaro.org>
+Date: Wed, 18 Dec 2024 14:43:04 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] rust: pl011: extend registers to 32 bits
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-rust@nongnu.org
+References: <20241212172209.533779-1-pbonzini@redhat.com>
+ <20241212172209.533779-6-pbonzini@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241212172209.533779-6-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,94 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before, via pahole:
+On 12/12/24 18:22, Paolo Bonzini wrote:
+> The PL011 Technical Reference Manual lists the "real" size of the
+> registers in table 3-1, and only rounds up to the next byte when
+> describing the registers; for example, UARTDR is listed as having
+> width 12/8 (12 bits read, 8 written) and only bits 15:0 are listed
+> in "Table 3-2 UARTDR Register".
+> 
+> However, in practice these are 32-bit registers, accessible only
+> through 32-bit MMIO accesses; preserving the fiction that they're
+> smaller introduces multiple casts (to go from the bilge bitfield
+> type to e.g u16 to u64) and more importantly it breaks the
+> migration stream (though only on big-endian machines) because
+> the Rust vmstate macros are not yet type safe.
 
-arm32, a 32-bit host which aligns uint64_t:
+This also better matches PL011_OPS::impl_.
 
-struct Property {
-        const char  *              name;                 /*     0     4 */
-        const PropertyInfo  *      info;                 /*     4     4 */
-        ptrdiff_t                  offset;               /*     8     4 */
-        uint8_t                    bitnr;                /*    12     1 */
-        /* XXX 3 bytes hole, try to pack */
-        uint64_t                   bitmask;              /*    16     8 */
-        _Bool                      set_default;          /*    24     1 */
-        /* XXX 7 bytes hole, try to pack */
-        union {
-                int64_t            i;                    /*    32     8 */
-                uint64_t           u;                    /*    32     8 */
-        } defval;                                        /*    32     8 */
-        int                        arrayoffset;          /*    40     4 */
-        const PropertyInfo  *      arrayinfo;            /*    44     4 */
-        int                        arrayfieldsize;       /*    48     4 */
-        const char  *              link_type;            /*    52     4 */
-        /* size: 56, cachelines: 1, members: 11 */
-        /* sum members: 46, holes: 2, sum holes: 10 */
-};
+> 
+> So, just make everything 32-bits wide.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>   rust/hw/char/pl011/src/device.rs | 36 ++++++++++++++------------------
+>   rust/hw/char/pl011/src/lib.rs    | 23 +++++++++-----------
+>   2 files changed, 26 insertions(+), 33 deletions(-)
 
-arm64, an arbitrary 64-bit host:
-
-struct Property {
-        const char  *              name;                 /*     0     8 */
-        const PropertyInfo  *      info;                 /*     8     8 */
-        ptrdiff_t                  offset;               /*    16     8 */
-        uint8_t                    bitnr;                /*    24     1 */
-        /* XXX 7 bytes hole, try to pack */
-        uint64_t                   bitmask;              /*    32     8 */
-        _Bool                      set_default;          /*    40     1 */
-        /* XXX 7 bytes hole, try to pack */
-        union {
-                int64_t            i;                    /*    48     8 */
-                uint64_t           u;                    /*    48     8 */
-        } defval;                                        /*    48     8 */
-        int                        arrayoffset;          /*    56     4 */
-        /* XXX 4 bytes hole, try to pack */
-        const PropertyInfo  *      arrayinfo;            /*    64     8 */
-        int                        arrayfieldsize;       /*    72     4 */
-        /* XXX 4 bytes hole, try to pack */
-        const char  *              link_type;            /*    80     8 */
-        /* size: 88, cachelines: 2, members: 11 */
-        /* sum members: 66, holes: 4, sum holes: 22 */
-};
-
-Afterward there are no holes in either structure.
-For arm32, size 48, padding 2, saved 8 bytes.
-For arm64, size 72, padding 6, saved 16 bytes.
-
-Saves 20k from qemu-system-aarch64 on a 64-bit host.
-
-Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
----
- include/hw/qdev-properties.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index ef3fd7b4ae..3680cd239f 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -16,17 +16,17 @@ struct Property {
-     const char   *name;
-     const PropertyInfo *info;
-     ptrdiff_t    offset;
--    uint8_t      bitnr;
-+    const char   *link_type;
-     uint64_t     bitmask;
--    bool         set_default;
-     union {
-         int64_t i;
-         uint64_t u;
-     } defval;
--    int          arrayoffset;
-     const PropertyInfo *arrayinfo;
-+    int          arrayoffset;
-     int          arrayfieldsize;
--    const char   *link_type;
-+    uint8_t      bitnr;
-+    bool         set_default;
- };
- 
- struct PropertyInfo {
--- 
-2.43.0
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
