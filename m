@@ -4,72 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E85ABE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF7D1E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuIL-0006fG-DF; Wed, 18 Dec 2024 08:40:57 -0500
+	id 1tNuIf-0006gS-NO; Wed, 18 Dec 2024 08:41:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tNuII-0006eq-V0
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:40:54 -0500
-Received: from mail-dm6nam10on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:2413::61a]
- helo=NAM10-DM6-obe.outbound.protection.outlook.com)
+ id 1tNuIK-0006f4-Ql
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:40:56 -0500
+Received: from mail-mw2nam10on20620.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::620]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <avihaih@nvidia.com>)
- id 1tNuIH-0004h7-0V
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:40:54 -0500
+ id 1tNuII-0004hL-Jm
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:40:56 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Fx6MVl3PqAN+63qPisv2aK/yT6IVJtdczMWntaTiI+eblbh+aSBscyDGzqLBOzss+Y3C9682zREnqrLxXCTikJL4DPiB6zboLrddzsHLFMhgW5kjjcKjVw67UHeF6O0PqWO5ikWGjWGXr/dcCQpcmZbMkDwIKKH4YyH0Rz2e9JQpoWOGgyXAUO8+lR6/ndjvByAnZDjV6k7Ynz3TOJE34xUsILbbfoi4j4fsKC0z146AclZfC/jbfrAMOyQvE2FwQEtLlkmdOybr1EPkTVufHmac5vFZ9a9aWL2bJ/nUpNHXMtyB7ubU2DfJsTjNWqARpwD7ECCq5bX23acPOyIU6w==
+ b=llewC75EW5R+nLAckMZEQUZdDzb4aQcsZEWjWyUz0Fp6qGry+Xp+hSKOz4ooeTHaZDBilt0CDHOXjTNBmACJgqGT9mZdgyxQOxx7Aodi4lR3ZTvyEIVX7ain1aIG1dcgu0UBJOfXxUzj/Q4SjV8Pk/jbEHZDQCs06Cn0VCl+OKjqUcdOlEqf+/YbFaduo2iz/BxKaaFJkqOOafnRa5nHCQoumd7kOFXTGBCHOVq6bFVX+ShHpDbN4Rz+XtRMkDgXwKFiQuyxKfYqdn5mM0i/8ZlCPw5NK+S3QuGwp3OYYgS0zKnfu/pV56u2z31eloq6YmhjDuhTPEsgjv74mPKXCg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XG7Kek0hDWz6Trc/DRDzAZ1rqHwRn1to69oRMngrhfI=;
- b=qLZeqY0o/xs2NMybVqXsveoIbexYJXCCURU+Vx/cTV+JSTfJq2ymbiCC0Sw6SV6/xi6Mv1vkPUAjo0zy7Crn8ltvL0Fc0ckACBAkwoEJf9EK1q3jf6TUYH2XP50Tx+0T295D5xV/tPaPOoQiAyL6ZR28P+jBg+G7/YN6tzLn20Am8l0Tx35a5oi1ptHfZfrsobzN8lUC4k1z2r5d+VFTx4zW2Iptb/NXEU3UXboh77/Uv51lfNTnM/zdbbw0l0O2vp7wTOurRsS9p4TLrQv0AzsShoXe4s/v/znFNqDaovQY/GvKC/FPein1k/b2/zHsFrjR46VE6jNdjsPpjmunNQ==
+ bh=DM4jKH5VoSupnigqCKHmVNpJHCChrXTI3MHzfuesa5U=;
+ b=qZnMc7MmawnhfGXZA/u9+BDYoi75wcAabUinxnC0yqtzKYZc68/cBJkK45JvKAZ/urCPHrqYUSJOPgk8DQSzUGbZJST2KL+5THh8m8slcHyRWJhELJSJAlo7unD/h7jCV8KuR31IInHmK1xL3O5UoL+aZPfuSs/gXQqHm9fNYYaExAumTmXEZMuClZy7WxGj2dkhCwbzu9CUaQ239EBsLUKDgtcksjXHr2E/fUkiiynodrJdwtyMDuKI3VDjZwijfSFJwsYRTCpE6Wf0+1yCyfwEXhTLPMEyfBfGQd71RDHZlbXnNfEW7IvtQtPUrf8Ht5qqncYe0sARLU0WhpQ45Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.232) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
+ 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
  dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XG7Kek0hDWz6Trc/DRDzAZ1rqHwRn1to69oRMngrhfI=;
- b=qOwbeTVzU6bHZxUNqlDh5Ya6yAb0AUYFzxeXb/PVNTNM6CEmDbRyNKwPEEFRBJZhTfmClgXI6OqjajqGIyHYqF//E3Ul+WD85fyZXMMNYwePnplGcdoSNYhVD5101e/pgY6yQTMkUs8/wUENLvzWk4px5/kMkFT9gDAFC0HZ6DS9cPWb3lUY9C+X8upHpqQmbwJYgzj9s/KQZ+bu0Eh7VD74PP3zs6RTDndxE4EGfX9frQLqlYS+nUH4pUc9l8lynm/7q3I4Kn6bQjS3jv+oS0KIhdXhydo30pWRijDr0N58dZ02KibhuXZN+zXwNoeTpEhUYKpgbE1AzUypFJL2bw==
-Received: from MW4P220CA0026.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:115::31)
- by CH3PR12MB7617.namprd12.prod.outlook.com (2603:10b6:610:140::21)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.13; Wed, 18 Dec
- 2024 13:40:48 +0000
-Received: from CO1PEPF000044F0.namprd05.prod.outlook.com
- (2603:10b6:303:115:cafe::24) by MW4P220CA0026.outlook.office365.com
- (2603:10b6:303:115::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.22 via Frontend Transport; Wed,
- 18 Dec 2024 13:40:48 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ bh=DM4jKH5VoSupnigqCKHmVNpJHCChrXTI3MHzfuesa5U=;
+ b=Lv/GQBwz2VHSB/Wnud877uFepyXMTrtGbnJlQBncad8r9HFeCafIhkxWEmfInVncTfZ3UVkMmQmExdJbyPIWsGPOd7bD7dJRAZ9xHs1yuFsEnJfssh+REurwTguseesYya+0hDwLG7CejvuZIb4GyYLSiPNCRwopjRrckuTnZb1gp+Shl4NFNG3fWG0POoaUNUPBxnE+Ylfjaz8hFBWNsnDC52TWxJRAQ5wsTKxgcqcapJ7hEgs4gXSqwfl8ZOYGBHnPbG1Sx2m/Mvx4w7snhq8sFxdDUBgkxSKcbgblDfXNBXcWpiO+p3iQkpmSHcXocQDq0UJuAYBS3l286AqlDA==
+Received: from MW2PR16CA0049.namprd16.prod.outlook.com (2603:10b6:907:1::26)
+ by DM4PR12MB6133.namprd12.prod.outlook.com (2603:10b6:8:ae::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8251.20; Wed, 18 Dec 2024 13:40:46 +0000
+Received: from SJ1PEPF0000231D.namprd03.prod.outlook.com
+ (2603:10b6:907:1:cafe::3b) by MW2PR16CA0049.outlook.office365.com
+ (2603:10b6:907:1::26) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8137.26 via Frontend Transport; Wed,
+ 18 Dec 2024 13:40:46 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
  smtp.mailfrom=nvidia.com;
  dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=nvidia.com;
 Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.232) by
- CO1PEPF000044F0.mail.protection.outlook.com (10.167.241.70) with Microsoft
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ SJ1PEPF0000231D.mail.protection.outlook.com (10.167.242.234) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
  15.20.8251.15 via Frontend Transport; Wed, 18 Dec 2024 13:40:46 +0000
 Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Wed, 18 Dec
- 2024 05:40:36 -0800
+ 2024 05:40:33 -0800
 Received: from drhqmail201.nvidia.com (10.126.190.180) by
  drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.4; Wed, 18 Dec 2024 05:40:35 -0800
+ 15.2.1544.4; Wed, 18 Dec 2024 05:40:33 -0800
 Received: from vdi.nvidia.com (10.127.8.9) by mail.nvidia.com (10.126.190.180)
  with Microsoft SMTP Server id 15.2.1544.4 via Frontend Transport;
- Wed, 18 Dec 2024 05:40:33 -0800
+ Wed, 18 Dec 2024 05:40:31 -0800
 From: Avihai Horon <avihaih@nvidia.com>
 To: <qemu-devel@nongnu.org>
 CC: Alex Williamson <alex.williamson@redhat.com>,
@@ -77,10 +76,10 @@ CC: Alex Williamson <alex.williamson@redhat.com>,
  <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, Hyman Huang
  <yong.huang@smartx.com>, Joao Martins <joao.m.martins@oracle.com>, "Maor
  Gottlieb" <maorg@nvidia.com>, Avihai Horon <avihaih@nvidia.com>
-Subject: [PATCH v2 4/7] vfio/migration: Rename
- vfio_devices_all_dirty_tracking()
-Date: Wed, 18 Dec 2024 15:40:19 +0200
-Message-ID: <20241218134022.21264-5-avihaih@nvidia.com>
+Subject: [PATCH v2 3/7] vfio/migration: Refactor
+ vfio_devices_all_running_and_mig_active() logic
+Date: Wed, 18 Dec 2024 15:40:18 +0200
+Message-ID: <20241218134022.21264-4-avihaih@nvidia.com>
 X-Mailer: git-send-email 2.21.3
 In-Reply-To: <20241218134022.21264-1-avihaih@nvidia.com>
 References: <20241218134022.21264-1-avihaih@nvidia.com>
@@ -90,55 +89,55 @@ Content-Type: text/plain
 X-NV-OnPremToCloud: AnonymousSubmission
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PEPF000044F0:EE_|CH3PR12MB7617:EE_
-X-MS-Office365-Filtering-Correlation-Id: bb0c6421-cc91-4288-f80a-08dd1f6993b3
+X-MS-TrafficTypeDiagnostic: SJ1PEPF0000231D:EE_|DM4PR12MB6133:EE_
+X-MS-Office365-Filtering-Correlation-Id: 19b22a8c-8306-4d1c-6764-08dd1f69936c
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|82310400026|1800799024|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?sfnh9acgJVmvkRsl0hKHhVHKidPmAc4uJB5rc8+jaSnD9mJWTU6Jk/7Zt+gU?=
- =?us-ascii?Q?FzmELBtagr2lVyhyVTIqPbeAKP3rJIM8+iY23DmCGG5GKJCoZ+S0xzv0zbYh?=
- =?us-ascii?Q?WRqNdsfYAHec/97yrFMyKjT5SvC5GUxlhJ5l1VU+UDh2gI53cFpd/6FyIlQk?=
- =?us-ascii?Q?wZ5m8P2a+8uk4gA9GDEO0/IiqTnALPXBCyLXyBE0xe14K07Zglv4/jfL/k+/?=
- =?us-ascii?Q?URFwUeKu0pGRPw4P367FvmkEcmp/bDk/fCJvD+YOCzcU3Lcq7dkmVncMESXZ?=
- =?us-ascii?Q?N2m28UXGSK4sXxiqXbE3fGLcFgf0kyJMN99kSEw5EvMgAmO72Vxq8yT/1JAK?=
- =?us-ascii?Q?ESPDKUrGy5XWBqEmdC1YxRUa3ciX00InMChy2+WeMzjDywloYRqhSg2e5yj7?=
- =?us-ascii?Q?l657yPgp3HGqtzKf4ld0AghMkGP5ts8mDbgT6lXJl4W3VRhdSpb+3TnQx4A0?=
- =?us-ascii?Q?HyjrGlFL3DNRDfK8ocjlYgbqsUTUP5GZ29vA0fU8ngXiBijtScHokF4dr0qa?=
- =?us-ascii?Q?okl+AbK+MNCBdiuL2wQYC5YrTS8GJigX5miAnWhKiVxkO7/nUWpPzXtTMWJn?=
- =?us-ascii?Q?JysEV94alO7b7GPQHI8YIC5zBvrJ4ZR8zs5T/1IC5xLl0+pTNIHxlWPULvpn?=
- =?us-ascii?Q?HzJMpgdzQejPT9DDGCGfheX7UoBxNShYi54ZVMRCkARfjVqUydfnW3EqxSx/?=
- =?us-ascii?Q?/sMsgLWSC/LqKKxI2cmYQuYg8RTHcOHZjRxHfRjUjCUbKExD7pQthXJDdCKo?=
- =?us-ascii?Q?jgwUecm81v4EeXvlZs9jOzciLJ6+HyDfGUY8HPFPL0wL08SXE8aDsEsrjeRN?=
- =?us-ascii?Q?W9Pxi795mtD6ArfQJAgjLoflNhBwhCpGVLFSKA3bV4RRn7rnJZltkt9MyG8w?=
- =?us-ascii?Q?x2gbgO6idqb40n27Jad8t+DhwFG3mPpaB/SBvm/wZ8t/xbgN3xZ5EnN+T1zM?=
- =?us-ascii?Q?83m78+zwMNe1lqUH11ZshTtaGEaRRJgGOkepmLGtxwWs4WCC+2alUxFf8oxI?=
- =?us-ascii?Q?RhH3S7Rc7hbLuJDwC4n0rGH+WtG3YGo+h1mB6tqIa9eRW2yfKk+cMj1hCHQo?=
- =?us-ascii?Q?lfl4Tc1ceD+O9HBQowMMomlqFp4NT1lyJfRF2Df2zN1pw/wEY4oc+3AQ15F3?=
- =?us-ascii?Q?qlM3ecLIpDRINPMwbTmLuCckz1lwFWTgt+IwhJWMHQlWKD9DRYLaHkp59jEU?=
- =?us-ascii?Q?H1BZwaXaks+Jk44XtUmoDJIqha/y/Y1BRGKwl19WdyDZumrdomC0zywU/iWU?=
- =?us-ascii?Q?G5P4JEy6a8ZC9bNs/nMQMlDIfd/ayr1A6Y73lpv65x0biYkP/f0RjaCE8bJS?=
- =?us-ascii?Q?/sCetePb+mq4yv8lzF5h9YiOxwyCY/oeiMGk22xAN06VVyFT+nZRIP8DbHw5?=
- =?us-ascii?Q?GqrgqAnB3wC+ztbCX02SKmC6rXNbMdlsNrVOpunENIzwRdnCpMJM+CKllmMK?=
- =?us-ascii?Q?kzPAlgkWV8gllCkP5FEnewtyWvC6S1+Mr3BWLvNPd7bsnm4QoUIdSjLA2WBX?=
- =?us-ascii?Q?Aq8i8n6pjbHGVyA=3D?=
-X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?JsASmH90Ve2PAzPNNkzghpgDveruM59Txtbhc5GhvBMLR50C6foH7iZgyBKf?=
+ =?us-ascii?Q?hpu4VyHlStMjy59lxaJcOO2kVJhoOZfjYTFkb7yDqlUyIIly6nvmj+c+yO9w?=
+ =?us-ascii?Q?81CURcK2MoV1SjAKDF4+C93KpccBS+y1x8MmCNv/YaQX17pkam2UYTbPDq+P?=
+ =?us-ascii?Q?5xPOhGnj4622+/hZY4PYj4l1CphZ0oOlx3QGl+KdN//llsun1Fb2qak+rHuh?=
+ =?us-ascii?Q?Ou5HtHgHMvocnSo+hjYziMI2EL5TYFWW7TEuokNCdneRV4WUxWjn7+4WV0zb?=
+ =?us-ascii?Q?gFQQYh3fXmBszBlCVCpY93Zd0efKarGkoqfA+FksJYz0MNb1XMJ/zgepaUbf?=
+ =?us-ascii?Q?DaUH2Z6vmNYP9EKP64oKBV6+JXN5/wdGvcUVqkFwkYV5oFSvD2aLOS1E6zC9?=
+ =?us-ascii?Q?Abm/3VGx8HDIiYBo8M8nID3+YzzMW5ciJu9+oa6t2LCtRqQRzPR0LPoeDkmQ?=
+ =?us-ascii?Q?C0L9knXOl9NCHT/SXuT52N+zkSsyn+OYlKf/lAxJXP9WLuzQf7sAZr/lORZQ?=
+ =?us-ascii?Q?qPeRD0yfeOxqh9J9MMkW+7f1FXOa6tsRHMyaXS0IyMxiAx3dE0BB4d6E0Ttk?=
+ =?us-ascii?Q?EOQYRFXvmU0dbQr/WK51qkgP8Y5AtSiYTv8Yr/KLpakO8sB1HCDq+0je9qNO?=
+ =?us-ascii?Q?4BXZjqYZAMx2MTWuymoNMosUx9Bt9DxZH9BFAnT5XpDOvwFuEeMnoPM2UQEr?=
+ =?us-ascii?Q?bm4qdCoABjLBaaYZ5aG4oEO+GxbXf18shZDA1CEMV7RD5rIveu13o6gGZo71?=
+ =?us-ascii?Q?2MPEq78Wf68M0CfSfFBqce2r1w8Iv6SJ1b8wzaycBdvPix6ZVDGOvIwfXIBC?=
+ =?us-ascii?Q?Cg5A+XvcNBjttFoKWpt6ihlvGNRuZnaW14MJMrNdV4xngjddECBWhOY1JoFV?=
+ =?us-ascii?Q?q70t7QuVUEfwRybB0E7rSRol5zPbbl6kUzz5ERwviWvZOv6Mw/KzW7vA85Mf?=
+ =?us-ascii?Q?4YZX2EXtGW9/7WHIPfv/AT5IvUb4cPFvgtXm4BnZ/+op8fzVyl2x6mJ9siaC?=
+ =?us-ascii?Q?PCi5BbW0cHE7siNez+VxtkhWJNeoQlNSNYZALrfoIYyYzmNvomu5gD8W6jx+?=
+ =?us-ascii?Q?lTOZ9uN4axR4J7d4TaPMup+eh51Qoua3n5wHwCCiuCsO48CpH0Ro/M1IZJF3?=
+ =?us-ascii?Q?CbF/q44cZ3LCuhTSnEyVtPHD/WTQ4beGeFavpoGgeUoaAcmSi7LPjbmhdRjM?=
+ =?us-ascii?Q?j/AELs2voQr8cLh9pv6Luxylt50ym+fAkmvOG8fpBWRyxdufOXvekiTEVBch?=
+ =?us-ascii?Q?cLDNl3AiuUso7e7/chYTWnxGKA1PtazIrIpEJuP0V0G5lF2ea9iuwa0Z9diY?=
+ =?us-ascii?Q?hsitjzRALbUXiiOH38XPvyJT1H5lW8bZa8qT0mjB6uupUGuks5spHwrjl99a?=
+ =?us-ascii?Q?QOtZNdgVx74iuhsl9r7N6TKWt1UE/Qgetp0gekirjnSgoeahmzTCzJ3LLwRM?=
+ =?us-ascii?Q?KWkY04zlLMETcH8cDAeD4Yfj3H+acl6R44/yGPDOFIU7MwFeDGIdp7NMIzNy?=
+ =?us-ascii?Q?krb6RnFtWG6QwAE=3D?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
  SFS:(13230040)(376014)(82310400026)(1800799024)(36860700013); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 13:40:46.5613 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: bb0c6421-cc91-4288-f80a-08dd1f6993b3
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 13:40:46.1548 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19b22a8c-8306-4d1c-6764-08dd1f69936c
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
  Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1PEPF000044F0.namprd05.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF0000231D.namprd03.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB7617
-Received-SPF: softfail client-ip=2a01:111:f403:2413::61a;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6133
+Received-SPF: softfail client-ip=2a01:111:f403:2412::620;
  envelope-from=avihaih@nvidia.com;
- helo=NAM10-DM6-obe.outbound.protection.outlook.com
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -160,42 +159,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-vfio_devices_all_dirty_tracking() is used to check if dirty page log
-sync is needed. However, besides checking the dirty page tracking
-status, it also checks the pre_copy_dirty_page_tracking flag.
+During DMA unmap with vIOMMU, vfio_devices_all_running_and_mig_active()
+is used to check whether a dirty page log sync of the unmapped pages is
+required. Such log sync is needed during migration pre-copy phase, and
+the current logic detects it by checking if migration is active and if
+the VFIO devices are running.
 
-Rename it to vfio_devices_log_sync_needed() which reflects its purpose
-more accurately and makes the code clearer as there are already several
-helpers with similar names.
+However, recently there has been an effort to simplify the migration
+status API and reduce it to a single migration_is_running() function.
+
+To accommodate this, refactor vfio_devices_all_running_and_mig_active()
+logic so it won't use migration_is_active(). Do it by simply checking if
+dirty tracking has been started using internal VFIO flags.
+
+This should be equivalent to the previous logic as during migration
+dirty tracking is active and when the guest is stopped there shouldn't
+be DMA unmaps coming from it.
+
+As a side effect, now that migration status is no longer used, DMA unmap
+log syncs are untied from migration. This will make calc-dirty-rate more
+accurate as now it will also include VFIO dirty pages that were DMA
+unmapped.
+
+Also rename the function to properly reflect its new logic and extract
+common code from vfio_devices_all_dirty_tracking().
 
 Signed-off-by: Avihai Horon <avihaih@nvidia.com>
-Reviewed-by: Joao Martins <joao.m.martins@oracle.com>
 ---
- hw/vfio/common.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/hw/vfio/vfio-common.h |  4 ++--
+ hw/vfio/common.c              | 40 +++++++----------------------------
+ hw/vfio/container.c           |  2 +-
+ 3 files changed, 11 insertions(+), 35 deletions(-)
 
+diff --git a/include/hw/vfio/vfio-common.h b/include/hw/vfio/vfio-common.h
+index 6c999be398..d5f542beab 100644
+--- a/include/hw/vfio/vfio-common.h
++++ b/include/hw/vfio/vfio-common.h
+@@ -296,8 +296,8 @@ bool vfio_migration_realize(VFIODevice *vbasedev, Error **errp);
+ void vfio_migration_exit(VFIODevice *vbasedev);
+ 
+ int vfio_bitmap_alloc(VFIOBitmap *vbmap, hwaddr size);
+-bool
+-vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer);
++bool vfio_devices_all_dirty_tracking_started(
++    const VFIOContainerBase *bcontainer);
+ bool
+ vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer);
+ int vfio_devices_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
 diff --git a/hw/vfio/common.c b/hw/vfio/common.c
-index 2831f674ff..d113d8f4f5 100644
+index e032ce1b6f..2831f674ff 100644
 --- a/hw/vfio/common.c
 +++ b/hw/vfio/common.c
-@@ -191,7 +191,7 @@ bool vfio_devices_all_dirty_tracking_started(
-            bcontainer->dirty_pages_started;
+@@ -184,12 +184,18 @@ static bool vfio_devices_all_device_dirty_tracking_started(
+     return true;
  }
  
--static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
-+static bool vfio_log_sync_needed(const VFIOContainerBase *bcontainer)
++bool vfio_devices_all_dirty_tracking_started(
++    const VFIOContainerBase *bcontainer)
++{
++    return vfio_devices_all_device_dirty_tracking_started(bcontainer) ||
++           bcontainer->dirty_pages_started;
++}
++
+ static bool vfio_devices_all_dirty_tracking(VFIOContainerBase *bcontainer)
  {
      VFIODevice *vbasedev;
  
-@@ -1364,7 +1364,7 @@ static void vfio_listener_log_sync(MemoryListener *listener,
-         return;
+-    if (!(vfio_devices_all_device_dirty_tracking_started(bcontainer) ||
+-          bcontainer->dirty_pages_started)) {
++    if (!vfio_devices_all_dirty_tracking_started(bcontainer)) {
+         return false;
      }
  
--    if (vfio_devices_all_dirty_tracking(bcontainer)) {
-+    if (vfio_log_sync_needed(bcontainer)) {
-         ret = vfio_sync_dirty_bitmap(bcontainer, section, &local_err);
-         if (ret) {
-             error_report_err(local_err);
+@@ -225,36 +231,6 @@ bool vfio_devices_all_device_dirty_tracking(const VFIOContainerBase *bcontainer)
+     return true;
+ }
+ 
+-/*
+- * Check if all VFIO devices are running and migration is active, which is
+- * essentially equivalent to the migration being in pre-copy phase.
+- */
+-bool
+-vfio_devices_all_running_and_mig_active(const VFIOContainerBase *bcontainer)
+-{
+-    VFIODevice *vbasedev;
+-
+-    if (!migration_is_active()) {
+-        return false;
+-    }
+-
+-    QLIST_FOREACH(vbasedev, &bcontainer->device_list, container_next) {
+-        VFIOMigration *migration = vbasedev->migration;
+-
+-        if (!migration) {
+-            return false;
+-        }
+-
+-        if (vfio_device_state_is_running(vbasedev) ||
+-            vfio_device_state_is_precopy(vbasedev)) {
+-            continue;
+-        } else {
+-            return false;
+-        }
+-    }
+-    return true;
+-}
+-
+ static bool vfio_listener_skipped_section(MemoryRegionSection *section)
+ {
+     return (!memory_region_is_ram(section->mr) &&
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 9ccdb639ac..15deffe3e4 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -131,7 +131,7 @@ static int vfio_legacy_dma_unmap(const VFIOContainerBase *bcontainer,
+     int ret;
+     Error *local_err = NULL;
+ 
+-    if (iotlb && vfio_devices_all_running_and_mig_active(bcontainer)) {
++    if (iotlb && vfio_devices_all_dirty_tracking_started(bcontainer)) {
+         if (!vfio_devices_all_device_dirty_tracking(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+             return vfio_dma_unmap_bitmap(container, iova, size, iotlb);
 -- 
 2.40.1
 
