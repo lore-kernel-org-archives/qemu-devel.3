@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2446E77187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6D72E77188
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:11:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrxP-0007A9-LB; Wed, 18 Dec 2024 06:11:11 -0500
+	id 1tNrwx-0006WI-8L; Wed, 18 Dec 2024 06:10:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxM-000751-DX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:08 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwv-0006VZ-9S
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:41 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxK-0005sp-KH
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:08 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrws-0005Ji-Eb
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520266;
+ s=mimecast20190719; t=1734520235;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=65MiMhA4jSO6oLI4hjrqt0Dpnla7RPH3avVMrOtkE1s=;
- b=GwOXSInBHHiPCp4fKBzWdjfeUXKrmHx1pq1mKTX4P+54XVvD7H4bHvik0VGM+9i11acPNB
- tePnp1BQx1+YNvkyi1rflvTtzvoj2cbwAwBTIOlHLxuXf3qmGFNsHKvt8oW6dicJCYzhfG
- 4UOtIGUFrC1UxkoiP0ASqbRj50RdfXE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=p/QjKv1R0AhQuUFehQsQg9Di7Nd4MAmaklYof9ekMiQ=;
+ b=OEzMkOIOGbsPodhAaLsFgLOItuUdtXgMUnsr24hMFggsdhgairzXisGS8r/lNfvNuqP3lw
+ ez2UlHCk/XTLagQnckpWZOi9ZLpLUhTCdgRMuFT/f4kluesf/+DavgqhPEM6qjfzI0umbI
+ 7SnRC1G5irPLuryqH7KfOhlnbsk9xeo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-486-Flz_xKLcOvCZ0d-v0Nzaxg-1; Wed,
- 18 Dec 2024 06:11:04 -0500
-X-MC-Unique: Flz_xKLcOvCZ0d-v0Nzaxg-1
-X-Mimecast-MFC-AGG-ID: Flz_xKLcOvCZ0d-v0Nzaxg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-HQJy2N4tO-CkcwlLKCUQQg-1; Wed,
+ 18 Dec 2024 06:10:33 -0500
+X-MC-Unique: HQJy2N4tO-CkcwlLKCUQQg-1
+X-Mimecast-MFC-AGG-ID: HQJy2N4tO-CkcwlLKCUQQg
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C50C719560B4
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:03 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F271C195608F
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:32 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DC748195606B; Wed, 18 Dec 2024 11:10:56 +0000 (UTC)
+ id 8756119560AD; Wed, 18 Dec 2024 11:10:31 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 24/38] tests/functional: add a generalized uncompress helper
-Date: Wed, 18 Dec 2024 12:09:44 +0100
-Message-ID: <20241218110958.226932-25-thuth@redhat.com>
+Subject: [PULL 13/38] tests/functional: switch over to using
+ self.data_file(...)
+Date: Wed, 18 Dec 2024 12:09:33 +0100
+Message-ID: <20241218110958.226932-14-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -85,90 +86,79 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-There are many types of compression that the tests deal with, and
-it makes sense to have a single helper 'uncompress' that can deal
-with all.
+This removes direct path manipulation to figure out the source dir
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-25-berrange@redhat.com>
+Message-ID: <20241217155953.3950506-14-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py   |  1 +
- tests/functional/qemu_test/uncompress.py | 47 ++++++++++++++++++++++++
- 2 files changed, 48 insertions(+)
+ tests/functional/test_acpi_bits.py | 22 +++++++---------------
+ 1 file changed, 7 insertions(+), 15 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 665c482d13..3bd043e608 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -17,3 +17,4 @@
-     skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-     skipIfMissingImports
- from .archive import archive_extract
-+from .uncompress import uncompress
-diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
-index 955170df65..6d02ded066 100644
---- a/tests/functional/qemu_test/uncompress.py
-+++ b/tests/functional/qemu_test/uncompress.py
-@@ -11,6 +11,9 @@
- import lzma
- import os
- import shutil
-+from urllib.parse import urlparse
-+
-+from .asset import Asset
+diff --git a/tests/functional/test_acpi_bits.py b/tests/functional/test_acpi_bits.py
+index 8763ea0822..59d0383563 100755
+--- a/tests/functional/test_acpi_bits.py
++++ b/tests/functional/test_acpi_bits.py
+@@ -38,7 +38,6 @@
+ import tarfile
+ import zipfile
  
+-from pathlib import Path
+ from typing import (
+     List,
+     Optional,
+@@ -119,7 +118,6 @@ class AcpiBitsTest(QemuSystemTest): #pylint: disable=too-many-instance-attribute
+     def __init__(self, *args, **kwargs):
+         super().__init__(*args, **kwargs)
+         self._vm = None
+-        self._baseDir = None
  
- def gzip_uncompress(gz_path, output_path):
-@@ -34,3 +37,47 @@ def lzma_uncompress(xz_path, output_path):
-         except:
-             os.remove(output_path)
-             raise
-+
-+'''
-+@params compressed: filename, Asset, or file-like object to uncompress
-+@params uncompressed: filename to uncompress into
-+@params format: optional compression format (gzip, lzma)
-+
-+Uncompresses @compressed into @uncompressed
-+
-+If @format is None, heuristics will be applied to guess the format
-+from the filename or Asset URL. @format must be non-None if @uncompressed
-+is a file-like object.
-+
-+Returns the fully qualified path to the uncompessed file
-+'''
-+def uncompress(compressed, uncompressed, format=None):
-+    if format is None:
-+        format = guess_uncompress_format(compressed)
-+
-+    if format == "xz":
-+        lzma_uncompress(str(compressed), uncompressed)
-+    elif format == "gz":
-+        gzip_uncompress(str(compressed), uncompressed)
-+    else:
-+        raise Exception(f"Unknown compression format {format}")
-+
-+'''
-+@params compressed: filename, Asset, or file-like object to guess
-+
-+Guess the format of @compressed, raising an exception if
-+no format can be determined
-+'''
-+def guess_uncompress_format(compressed):
-+    if type(compressed) == Asset:
-+        compressed = urlparse(compressed.url).path
-+    elif type(compressed) != str:
-+        raise Exception(f"Unable to guess compression cformat for {compressed}")
-+
-+    (name, ext) = os.path.splitext(compressed)
-+    if ext == ".xz":
-+        return "xz"
-+    elif ext == ".gz":
-+        return "gz"
-+    else:
-+        raise Exception(f"Unknown compression format for {compressed}")
+         self._debugcon_addr = '0x403'
+         self._debugcon_log = 'debugcon-log.txt'
+@@ -134,26 +132,22 @@ def _print_log(self, log):
+     def copy_bits_config(self):
+         """ copies the bios bits config file into bits.
+         """
+-        config_file = 'bits-cfg.txt'
+-        bits_config_dir = os.path.join(self._baseDir, 'acpi-bits',
+-                                       'bits-config')
++        bits_config_file = self.data_file('acpi-bits',
++                                          'bits-config',
++                                          'bits-cfg.txt')
+         target_config_dir = os.path.join(self.workdir,
+                                          'bits-%d' %self.BITS_INTERNAL_VER,
+                                          'boot')
+-        self.assertTrue(os.path.exists(bits_config_dir))
++        self.assertTrue(os.path.exists(bits_config_file))
+         self.assertTrue(os.path.exists(target_config_dir))
+-        self.assertTrue(os.access(os.path.join(bits_config_dir,
+-                                               config_file), os.R_OK))
+-        shutil.copy2(os.path.join(bits_config_dir, config_file),
+-                     target_config_dir)
++        shutil.copy2(bits_config_file, target_config_dir)
+         self.logger.info('copied config file %s to %s',
+-                         config_file, target_config_dir)
++                         bits_config_file, target_config_dir)
+ 
+     def copy_test_scripts(self):
+         """copies the python test scripts into bits. """
+ 
+-        bits_test_dir = os.path.join(self._baseDir, 'acpi-bits',
+-                                     'bits-tests')
++        bits_test_dir = self.data_file('acpi-bits', 'bits-tests')
+         target_test_dir = os.path.join(self.workdir,
+                                        'bits-%d' %self.BITS_INTERNAL_VER,
+                                        'boot', 'python')
+@@ -256,8 +250,6 @@ def setUp(self): # pylint: disable=arguments-differ
+         super().setUp()
+         self.logger = self.log
+ 
+-        self._baseDir = Path(__file__).parent
+-
+         prebuiltDir = os.path.join(self.workdir, 'prebuilt')
+         if not os.path.isdir(prebuiltDir):
+             os.mkdir(prebuiltDir, mode=0o775)
 -- 
 2.47.1
 
