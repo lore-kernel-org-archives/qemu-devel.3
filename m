@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98858E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 292D6E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:34:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2b1-0004og-4t; Wed, 18 Dec 2024 17:32:48 -0500
+	id 1tO2ZH-00038T-OS; Wed, 18 Dec 2024 17:31:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Zk-0003Tn-PX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:32 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1tO2ZD-00035v-7L
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:55 -0500
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Zf-0003Iq-TX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:25 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-218c80a97caso1724915ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:31:23 -0800 (PST)
+ id 1tO2ZB-0003EO-Op
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:54 -0500
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2156e078563so1507205ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734561082; x=1735165882; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734561052; x=1735165852; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=k+u/esspkIM84/pIeM30BE8iVEgZ0neo/04y/t2IyJ4=;
- b=ONxvZzvEUu1hjB61duMjLN3TznUnD+n2QmhL4C+TtAd/b5wWpmFudOfEAF88CD5Hf2
- eLz3RwDWPX65ptkkwAyJjDY/T8u+DneQXTveU1IIhnssroZUoXJRu0zhBxxd4ZXQzTxI
- o6jq5JTRrPpprpqLCW/ZqARqks9Gk0lrL8C8bShUYe6GyjcPkrzSfSY4eRk5uAk7/WQ8
- jY4iq2coZQmmkEg3iiXRGjPwhvBtdQ6wi3w078N3q+1y0odUa/64Y2G0JcrzvrqfrK4e
- 2FsvB7mD1n7P20U4wHve9nY2ucvehBU9i2IosBiptbtbiesj0lkT0LVNxdL2mWD89qi2
- Y1Tg==
+ bh=OfBsTLHHJAqAyiojHCc+AdM1qTiCchVJT8tynBYysmo=;
+ b=XNksyxaxyYwDBBO8gtlkOrQxCAPT0ma1tU3Ie7AKnmt6a0bgoNvwAHRT329txN/v1q
+ SuXIKQV5Y+X2WxRjRl8I1TnF+lnu1YhPBApMoJ01YXz2VDzv4sBEoKO7XdpAMXx7ZB4X
+ 6uqTTqi30/QhJHktLaRrkdthYh9rgkLNVX7ElH692iXZSekq1SkanCiHousNZgO0lF9w
+ CRAsUIO3L9obS8qbdAY51Ij6JAFmDvFL8OHZQdorWg0x2SEhVZRDhXSX4EucIOJfeFgt
+ dm+YEwST6zkH3KFpkCpxkaOHCiBs3yjuCDO47tmCYr8vb7+QCWub4KWXRByVjURSVi1e
+ plZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734561082; x=1735165882;
+ d=1e100.net; s=20230601; t=1734561052; x=1735165852;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=k+u/esspkIM84/pIeM30BE8iVEgZ0neo/04y/t2IyJ4=;
- b=avrNFm8dV9mPTnC6Q85+usvX9EFVxoTMKzn2WEb1JXqcoL7XDyqal973azoHO24iRn
- YWrwUdhM5NMs3GLeC5qDnEQUpcP1yLcfNI+XoPCWtVg5ZvUbjI7hSEMTeLZnkJWzLHXc
- 3iVOIa9hvE/ViHnaVt29SedXqh7VFzlhBhfkBoEEftCsdzO3klum+5oa1CL7Hgd4Btga
- gWOXeqns/BwRibppPhI2Fir2hzbw5Qb4eenbS+3z/9yP89u5h7P3uh/hByRGPBeCpM8H
- NWAWMdk9wkDbrYvEbu9iPJo0mlffr/qm0I6DtxddWVc3qWIqN9AZkBanSvKNcX1uITkr
- yvRg==
-X-Gm-Message-State: AOJu0Ywy4T73WBrwghK1/fjZ4dnR6txE6q8WGIVdAPKkARhLzmE6SrlH
- eqQ0Kdf8EJ5xVvnLLgYTgupQBHFcI7OL/d/oZhPfkLodhITRtyGszqMPIcRu
-X-Gm-Gg: ASbGnctM2tHcY8nFakGZqTEJsZAUbccdZOYtDp6RjVPLDKZi0nO0EPJ7wHbyYtOj6Wt
- eWhTa8aPoIjYmIuNU44v4H28sb0S4ZUT5/1/KARk8NbXVctYsD5pXsgvvCNhx+i795efvmcgzea
- DQkIRs4ojWQAMe6Uc1GUSKw3Pv0vA8l+eFufTDtgP41lDVR6mH3rEAgu4z5Mh/cemqVXtT0fWl/
- tq4SPy+2yJw99xzTIKrvmX3vsjKEsu6DLHk8gC80uxJtmHS9eoylj9F8WnDAyMIsQ6yDKiAzf4n
- RiKlZgySI+ff+i4fR77/6j5r2bm8ARZOCIWxU2ykZCN24nbegfGZSQhC/z9+hOw=
-X-Google-Smtp-Source: AGHT+IF2gREV/TlbKp6Vl3Ec8pUV06mz6PbeDfwmWIpiMGTjEGvxYCV+qz7ygCT16/3htdY5uVX77g==
-X-Received: by 2002:a17:903:1cb:b0:216:501e:e314 with SMTP id
- d9443c01a7336-218d710111bmr54130895ad.20.1734561082405; 
- Wed, 18 Dec 2024 14:31:22 -0800 (PST)
+ bh=OfBsTLHHJAqAyiojHCc+AdM1qTiCchVJT8tynBYysmo=;
+ b=U8UxtkmEip29jKpmWwIJ+ctIxmNlyzqw4I21isAlowbDGd6Vj89zwMFQSJd6YTkJXO
+ C4Nq+GNe+o+t7dxFqxzVJIV8S3fmKk7HzCULLqjPoTmnF2/z/q6RPSQrDnXNZc9KYbP8
+ hvFXuOIWWErvkrLnZzH4/f85k0uWeQ77fiuvTYNV3/GWB/sXFiBNqaN8IGOi6mzADXn+
+ zp5l9ASjGT5kuRCdsA21qDKydV/Kz/1CEN+KRa+IU2Ev3aZLuPka5KVUgyp0CV17YO4w
+ 79umLJME1g5TViL/pStrBc1a7piP8zn3ULavZIOOHrhzWbH3RlNAIH15XwniSoE38a+T
+ vfCA==
+X-Gm-Message-State: AOJu0Yw20jIAB1xze7Wy5RB5N6RaIE9O65Md09pY9O+9MuUIW/A8lTHs
+ +dZo/4hTnr5gNPOxpKYWKirR5uTY00QmGXPm8EuTJX9u1y1t1t5nGTh6Hs85
+X-Gm-Gg: ASbGnctahRW8UNE4o6ewpfLtNogfEqueSlxUQxm70eTKYuWr7pWJug408lbLTE8Oyo0
+ gvhqI4MObrCQAaM6lxKruBzp1ToV/OoowFD9tKdBbqac0M3u5A91/zwid21uKpToW+pOsZi388G
+ Kne0T75Fv9woS4G+xBTpqoF5Iu75BgbYMXWLQZKD44OZk4JjRsz1eqqLmb4hDBTM+/RMOjZ0DnA
+ +/2cmJasGqRxSTI9tH2rQl7OdGyjFSyMtquZ+mQq9WbBUte/xUaK9479l3LX2BBPFMxVwXeoYTL
+ pFEVowUNZKvqcvVgV1iQ3Q9RE8r+RVGuxilbMW2Q59qEQQMKCNHwWXRC6VN7DlU=
+X-Google-Smtp-Source: AGHT+IEGgCpMAx4JQ/oVktsslne4mSumHJuI0Itb4gIliA/h6dWXq3cN6fz1G76+gNd7R0Q6qCZlIQ==
+X-Received: by 2002:a17:902:da87:b0:20c:9821:6998 with SMTP id
+ d9443c01a7336-218d70fe3fdmr63676855ad.10.1734561051992; 
+ Wed, 18 Dec 2024 14:30:51 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.31.19
+ d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:31:21 -0800 (PST)
+ Wed, 18 Dec 2024 14:30:51 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 22/39] tests/qtest/bios-tables-test: Update virt SPCR golden
- reference for RISC-V
-Date: Thu, 19 Dec 2024 08:29:52 +1000
-Message-ID: <20241218223010.1931245-23-alistair.francis@wdc.com>
+Subject: [PULL 12/39] hw/riscv/virt.c: reduce virt_use_kvm_aia() usage
+Date: Thu, 19 Dec 2024 08:29:42 +1000
+Message-ID: <20241218223010.1931245-13-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
 References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,108 +103,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Update the virt SPCR golden reference file for RISC-V to accommodate the
-SPCR Table revision 4 [1], utilizing the iasl binary compiled from the
-latest ACPICA repository. The SPCR table has been modified to
-adhere to the revision 4 format [2].
+In create_fdt_sockets() we have the following pattern:
 
-[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-[2]: https://github.com/acpica/acpica/pull/931
+    if (kvm_enabled() && virt_use_kvm_aia(s)) {
+        (... do stuff ...)
+    } else {
+        (... do other stuff ...)
+    }
+    if (kvm_enabled() && virt_use_kvm_aia(s)) {
+        (... do more stuff ...)
+    } else {
+        (... do more other stuff)
+    }
 
-Diffs from iasl:
-/*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Wed Aug 28 18:28:19 2024
-+ * Disassembly of /tmp/aml-MN0NS2, Wed Aug 28 18:28:19 2024
-  *
-  * ACPI Data Table [SPCR]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
+Do everything in a single if/else clause to reduce the usage of
+virt_use_kvm_aia() helper and to make the code a bit less repetitive.
 
- [000h 0000   4]                    Signature : "SPCR"    [Serial Port Console Redirection table]
--[004h 0004   4]                 Table Length : 00000050
--[008h 0008   1]                     Revision : 02
--[009h 0009   1]                     Checksum : B9
-+[004h 0004   4]                 Table Length : 0000005A
-+[008h 0008   1]                     Revision : 04
-+[009h 0009   1]                     Checksum : 13
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
-
--[024h 0036   1]               Interface Type : 00
-+[024h 0036   1]               Interface Type : 12
- [025h 0037   3]                     Reserved : 000000
-
- [028h 0040  12]         Serial Port Register : [Generic Address Structure]
- [028h 0040   1]                     Space ID : 00 [SystemMemory]
- [029h 0041   1]                    Bit Width : 20
- [02Ah 0042   1]                   Bit Offset : 00
- [02Bh 0043   1]         Encoded Access Width : 01 [Byte Access:8]
- [02Ch 0044   8]                      Address : 0000000010000000
-
- [034h 0052   1]               Interrupt Type : 10
- [035h 0053   1]          PCAT-compatible IRQ : 00
- [036h 0054   4]                    Interrupt : 0000000A
- [03Ah 0058   1]                    Baud Rate : 07
- [03Bh 0059   1]                       Parity : 00
- [03Ch 0060   1]                    Stop Bits : 01
- [03Dh 0061   1]                 Flow Control : 00
- [03Eh 0062   1]                Terminal Type : 00
- [04Ch 0076   1]                     Reserved : 00
- [040h 0064   2]                PCI Device ID : FFFF
- [042h 0066   2]                PCI Vendor ID : FFFF
- [044h 0068   1]                      PCI Bus : 00
- [045h 0069   1]                   PCI Device : 00
- [046h 0070   1]                 PCI Function : 00
- [047h 0071   4]                    PCI Flags : 00000000
- [04Bh 0075   1]                  PCI Segment : 00
--[04Ch 0076   4]                     Reserved : 00000000
-+[04Ch 0076 004h]             Uart Clock Freq : 00000000
-+[050h 0080 004h]           Precise Baud rate : 00000000
-+[054h 0084 002h]       NameSpaceStringLength : 0002
-+[056h 0086 002h]       NameSpaceStringOffset : 0058
-+[058h 0088 002h]             NamespaceString : "."
-
--Raw Table Data: Length 80 (0x50)
-+Raw Table Data: Length 90 (0x5A)
-
--    0000: 53 50 43 52 50 00 00 00 02 B9 42 4F 43 48 53 20  // SPCRP.....BOCHS
-+    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 00 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
-+    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
-     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 00 03  // ................
-     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
-+    0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
-
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Message-ID: <20241028015744.624943-4-jeeheng.sia@starfivetech.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241119191706.718860-3-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- tests/data/acpi/riscv64/virt/SPCR           | Bin 80 -> 90 bytes
- 2 files changed, 1 deletion(-)
+ hw/riscv/virt.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index aae973048a..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/SPCR",
-diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
-index 4da9daf65f..09617f8793 100644
-Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index 5d058511be..e54e1257c0 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -783,6 +783,10 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+                                 msi_m_phandle, msi_s_phandle, phandle,
+                                 &intc_phandles[0], xplic_phandles,
+                                 ms->smp.cpus);
++
++        *irq_mmio_phandle = xplic_phandles[0];
++        *irq_virtio_phandle = xplic_phandles[0];
++        *irq_pcie_phandle = xplic_phandles[0];
+     } else {
+         phandle_pos = ms->smp.cpus;
+         for (socket = (socket_count - 1); socket >= 0; socket--) {
+@@ -800,13 +804,7 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+                                         s->soc[socket].num_harts);
+             }
+         }
+-    }
+ 
+-    if (kvm_enabled() && virt_use_kvm_aia(s)) {
+-        *irq_mmio_phandle = xplic_phandles[0];
+-        *irq_virtio_phandle = xplic_phandles[0];
+-        *irq_pcie_phandle = xplic_phandles[0];
+-    } else {
+         for (socket = 0; socket < socket_count; socket++) {
+             if (socket == 0) {
+                 *irq_mmio_phandle = xplic_phandles[socket];
 -- 
 2.47.1
 
