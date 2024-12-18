@@ -4,54 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1380DE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:12:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94502E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:15:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2Gy-000845-CQ; Wed, 18 Dec 2024 17:12:04 -0500
+	id 1tO2Jl-0000Sr-SE; Wed, 18 Dec 2024 17:14:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tO2Gw-00083d-F2
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:12:02 -0500
+ id 1tO2Jk-0000SY-Fr
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:14:56 -0500
 Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
  <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
- id 1tO2Gt-00069f-RY
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:12:02 -0500
+ id 1tO2Ji-0006Ka-RS
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:14:56 -0500
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
  In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
  Content-Transfer-Encoding:Content-ID:Content-Description;
- bh=/C2U3vOwdzkVgUrUNCvroNDiPUxTMo2xMCebvF7Rbxk=; b=aqXQOlGXCzdZ9Mawd3nDvdvZRA
- opl/XkL4PYZkh+1VSJhplkmQFVhUglg83+VESqUu7taEatx5A2KoJZJ5spj8FWaWkitnngqG3wyzv
- VvhUFNE4GXDToxHLo7cxkPSvm0SGxvJ7GJwZny2cy5ydKS3Cna7iNIXoNJuI/WmdSvk51RUMO0Mn6
- xiXp3MnPgcdZz6yAQrgV1/jESXMZr2DIa2HRQRjgZsaQ3uniIHFilpFBm+toL6cNK8EFFbIsS2v+D
- roxgExZpdneYfS9jHW4FBdGCHg65gzRt5D0aeofUr69UWL2pm8uNhrqQrhvdMJYB6PjwNsk9xkXHK
- DGINOp5A==;
+ bh=eVs5O2AZtu2k2Z0QCjp+rozroxjgZEZJeZqQq4ydsbE=; b=XD+HFB/l5hm23j7nAHew8QEf2J
+ 23LbZlAxMNFpK6VRr0S5quxwB+jLQ9ZRemSRQ73M40jDf+PEZwkIuPGDKObRfOq4JobQNa0xyFdeB
+ /gFURHqkP7vPKTYq/hZBgdCegjoqISC0YRqALRy7ldwufthfab8T7GjwHyyIpHhMtvU/vjYmdpnAz
+ 7qQ3Sy+5LcCJUgGAgw9wJkOSXJ6QxkYjlfYTM2/Dd/S9WMfQBeBPBrXcONgb7xTuPQPl3jJxTFSlD
+ taeWdEVpaz8ynZO1vG1o40UY0X/CBA7DVQHKBicloIvDD19I0uSyJ0m7+SU13RygKMeZZtOxvr258
+ c/HjYRDA==;
 Received: from [54.239.6.189] (helo=u09cd745991455d.ant.amazon.com)
  by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
- id 1tO2Go-00000000jEL-36AU; Wed, 18 Dec 2024 22:11:55 +0000
-Message-ID: <42f8f20edb250b650a322124f5993a9d45730445.camel@infradead.org>
+ id 1tO2Jg-00000000jPc-2H0S; Wed, 18 Dec 2024 22:14:53 +0000
+Message-ID: <8cef1bf9ffde6779ad322534c4469e6687b9c9d7.camel@infradead.org>
 Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
 From: David Woodhouse <dwmw2@infradead.org>
 To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
 Cc: Paul Durrant <paul@xen.org>
-Date: Wed, 18 Dec 2024 23:11:54 +0100
-In-Reply-To: <999a8203f0c800f1305aacdb500dbf6038ebf147.camel@infradead.org>
+Date: Wed, 18 Dec 2024 23:14:47 +0100
+In-Reply-To: <1d4faf8e-b2cd-42b8-a6a7-9034b9512b86@redhat.com>
 References: <20241218113255.232356-1-thuth@redhat.com>
  <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
- <31e85f4d-66f2-4790-8597-f43e291bcbea@redhat.com>
- <61cadf31-8656-4216-a345-e364bb85e45b@redhat.com>
- <44c87114343dc57b248ff0f86e5f4e0683533efb.camel@infradead.org>
- <f987b60d-9e73-4f6a-ae48-857f7af6cddc@redhat.com>
- <999a8203f0c800f1305aacdb500dbf6038ebf147.camel@infradead.org>
+ <1d4faf8e-b2cd-42b8-a6a7-9034b9512b86@redhat.com>
 Content-Type: multipart/signed; micalg="sha-256";
  protocol="application/pkcs7-signature"; 
- boundary="=-pGbfU3LQnNDblr7/9znK"
+ boundary="=-GEXXfkbcGxjV3o63+s74"
 User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
 X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
@@ -82,78 +78,35 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---=-pGbfU3LQnNDblr7/9znK
+--=-GEXXfkbcGxjV3o63+s74
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, 2024-12-18 at 22:42 +0100, David Woodhouse wrote:
+On Wed, 2024-12-18 at 16:54 +0100, Thomas Huth wrote:
+> On 18/12/2024 12.48, David Woodhouse wrote:
+> > On 18 December 2024 12:32:49 CET, Thomas Huth <thuth@redhat.com> wrote:
+> > > Use the serial console to execute the commands in the guest instead
+> > > of using ssh since we don't have ssh support in the functional
+> > > framework yet.
+> > >=20
+> > > Signed-off-by: Thomas Huth <thuth@redhat.com>
+> >=20
+> > Hm, but serial is lossy and experience shows that it leads to flaky tes=
+ts if the guest (or host) misses bytes. While SSH would just go slower.
 >=20
-> It seems like it's because of the way QEMU handles shared level-
-> triggered interrupts.
+> I now noticed some issue with the serial console in this test, too.
+> Looks like the "Starting dropbear sshd: OK" is not print in an atomic way=
+ by=20
+> the guest, sometimes there are other kernel messages between the ":" and =
+the=20
+> "OK". It works reliable when removing the "OK" from the string.
 
-Yeah, this hack seems to confirm it. As I said, PCI INTx manages to
-demux correctly, but any time you have non-PCI interrupt sharing, it's
-hosed because they all just set/clear the GSI as if they own it, and
-there's no OR gate in sight.
+Nah, that still isn't atomic; you just got lucky because the race
+window is smaller. It's not like serial ports are at a premium; can't
+you have a separate port for kernel vs. userspace messages?
 
-Now I have to decide if this is going to provoke me into attempting to
-fix it for the general case with callbacks and fixing VFIO resampling
-too, or whether I paper over it for QEMU with something *slightly* less
-icky than this (which ideally would not lose levels from PCI devices
-either)...
 
-diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
-index 07bd0c9ab8..4c2e8876e5 100644
---- a/hw/i386/kvm/xen_evtchn.c
-+++ b/hw/i386/kvm/xen_evtchn.c
-@@ -301,7 +301,20 @@ static void gsi_assert_bh(void *opaque)
-         xen_evtchn_set_callback_level(!!vi->evtchn_upcall_pending);
-     }
- }
--
-+int xen_evtchn_check_gsi(int n, int level)
-+{
-+    struct vcpu_info *vi =3D kvm_xen_get_vcpu_info_hva(0);
-+    XenEvtchnState *s =3D xen_evtchn_singleton;
-+    if (!s || n !=3D s->callback_gsi || !vi) {
-+        return level;
-+    }
-+    if (vi->evtchn_upcall_pending && !level) {
-+        printf("Refusing to deassert GSI#%d which is asserted by Xen\n",
-+               n);
-+        return 1;
-+    }
-+    return level;
-+}
- void xen_evtchn_create(unsigned int nr_gsis, qemu_irq *system_gsis)
- {
-     XenEvtchnState *s =3D XEN_EVTCHN(sysbus_create_simple(TYPE_XEN_EVTCHN,
-diff --git a/hw/i386/kvm/xen_evtchn.h b/hw/i386/kvm/xen_evtchn.h
-index b740acfc0d..c1f56869b3 100644
---- a/hw/i386/kvm/xen_evtchn.h
-+++ b/hw/i386/kvm/xen_evtchn.h
-@@ -31,6 +31,7 @@ struct kvm_irq_routing_entry;
- int xen_evtchn_translate_pirq_msi(struct kvm_irq_routing_entry *route,
-                                   uint64_t address, uint32_t data);
- bool xen_evtchn_deliver_pirq_msi(uint64_t address, uint32_t data);
-+int xen_evtchn_check_gsi(int n, int level);
-=20
-=20
- /*
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index dc031af662..4185f467ee 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -452,6 +452,7 @@ void gsi_handler(void *opaque, int n, int level)
-     GSIState *s =3D opaque;
-=20
-     trace_x86_gsi_interrupt(n, level);
-+    level =3D xen_evtchn_check_gsi(n, level);
-     switch (n) {
-     case 0 ... ISA_NUM_IRQS - 1:
-         if (s->i8259_irq[n]) {
-
---=-pGbfU3LQnNDblr7/9znK
+--=-GEXXfkbcGxjV3o63+s74
 Content-Type: application/pkcs7-signature; name="smime.p7s"
 Content-Disposition: attachment; filename="smime.p7s"
 Content-Transfer-Encoding: base64
@@ -245,25 +198,25 @@ IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
 dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
 NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
 xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
-DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMjE4MjIxMTU0WjAvBgkqhkiG9w0BCQQxIgQgxV7I24g4
-zFGtlxYnXf5akO91NHP2EnfTSxUvfPFu3/swgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMjE4MjIxNDQ3WjAvBgkqhkiG9w0BCQQxIgQgq3ZLUALZ
+mib7Fyic1WMB7ygvd5O9GOuBQRYR4txi17Uwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
 BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
 A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
 dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
 DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
 MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
 Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
-lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBiB0hzzpr7zmbRKlRSdPWfGw5Kjgc4eHld
-7qJP0p9VhiaPniejkZU5FM6U8CjXZMx7+n1kq3Wgx1ojAEqsiyeZ+zhhgm+DA0Lk+B3r+F1f9NyD
-PUkpwwdgO8sUu6AG3nry2zrxxgBdN8UBk4FalLzZTOXOtS+NcGti1sngzYMJPS/n6Yuza+eeXEP1
-XNq3PQcvlJ6EnifWIXU/HQzJUy8JYOQmUjo6JNKuWuTanZ6Xm2f2Y0bCl5/ts7SX4yHOKUjJ8h9J
-HUhccGFwId8vyJM1kSJ0X0CxfcDEJ3lI0Jdd3edSpYTpzXlVtoeRxCRvO23O8RluerKOj67QLmPf
-DdjBxvebbt5pWpng3UjXOQNZ2PwGlDC9nn84fxmOTOw2q4MCVNFW/+7CYe/87t2OyFCLPXvOJ++y
-e5pqr/ELGUcfRWLTgMqCO5vyiSj2iA6urY5RYrhrXngOAgyA4RHYsT7WGYsgUqALFtbfkG9tw9OS
-RpbkouJ13dRauEqjhk8vO9AHwRXaVN+xNjvfgnwEwhp6r3DQJcJDlEWavVCoDAhBrKmilqIk8+Wk
-LMf+lh2Z6p/w7TCcrmO3Y9WyY4eHOV1VOUi5luUOchaOHCxBg57p0I1zaucMpokGZ2v9A+3R9G0p
-lkWfuB7QVUcxYd5X4y2OLlyohyxINrW1rRF3thyRoQAAAAAAAA==
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBa3r9uxmu5rjoWwik2UHmE/6ABfw0NLoTU
+G1QaXqHxAq/ykTIzG9uBsmKupoHOQRIOMGP7eiKVVw9MiPPmtqMdD+7so9TbQZtUhvuYUzp4tK47
+67kYfid/NFFMgReXpTz31Uo+x8v7DlCHwiP/8sLjGcZpdHijs1jlipduaE6X5G3owGq7bpCPBiNR
+Y7+eQZ2hb2WrlJZyQtooGsih7AYz4vdoBbljynZJJ53d45XQqLusqhgrWbkG9t7kzRBPCOhmhgy4
+wFA1GYFOdMsi34sOKOIyTEnQNQ5CjXLlCltvleJxpAgWYvxxytZp3dyQNA0bkJ7L7Z6YSUfe9kCn
+dSD6OKLUc5wHrKEdNWsYtCb5jIxWT7mYjNhHTPvHC0ooeTCZbcmkoWzR4qIaIZdpwhSwKFeJFH27
+E2J2SqtJiSdjoBkFiJS9op7F7KzhxHgtRvjutKCzM5sKIgTppg9gQJKHx8F1D5Js4dJNfmfdjVkv
+z0At0O4hQUwSR4wI3zAgXgvWFnmW4mu+VOZfCxdz89zT5yeeQRdPbmZQJx6NhG/3zs58S0KFKRgn
+qoV4Iwu/gi4xZj/G2jUdp6Pf81GKAAw2aq1gf/M92lk8b6/Zp4ZoBXfw0z7VJ3uIanp/buh/Vawg
+n3ZncHamdSlkX+VFmcX8VKuqsRJFl0xbcxUXuG1wlwAAAAAAAA==
 
 
---=-pGbfU3LQnNDblr7/9znK--
+--=-GEXXfkbcGxjV3o63+s74--
 
