@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAB0E7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E76E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:09:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxWo-00080c-My; Wed, 18 Dec 2024 12:08:07 -0500
+	id 1tNxXm-0000Q1-6h; Wed, 18 Dec 2024 12:09:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNxWi-0007o3-B2
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:08:00 -0500
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tNxXZ-0000NF-Vi
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:08:56 -0500
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNxWg-0003iW-E5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:07:59 -0500
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e9a88793so11157043a12.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:07:57 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <paolo.savini@embecosm.com>)
+ id 1tNxXW-0003nD-6k
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:08:53 -0500
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-aa69077b93fso1010322366b.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:08:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734541677; x=1735146477; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tFTqBXWbrd+5Ar5eHaCN8PTh61B9XqjrZ3+wxsBR9V8=;
- b=LA6eiIcXi4ra+T/9FbOQWs6jjmjLf/z8GdzjdeE+6OnxgvoUBYJLuuZVA94bZLNpCN
- 4xqmZokMVouhk6h2QBZGxQZ2hZzG93M504ffiNMgKilxM+bGZmWRecb0elpWWfh0BBiX
- Nio1eRAuUgV1nWA2274FUw8k4KbUoD1RCDatLc3L4WlQtjXfVTPsGxm2IzPKhXIF46MM
- 8Ku1UGVcW15zoInpi3eNcsQchU/9rg/F6VKZ0LCtoUq7yDeaZat3qXHhzhrOCgowSCW0
- QXqYOQQXnXGnRat+IJOEbIP/UWl9R5RJPgWLGKpyCYXNqfx18uumhJ0GaQ4IcA8lmbKy
- hGrw==
+ d=embecosm.com; s=google; t=1734541726; x=1735146526; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wj53VmaKWxtGgzq29nXWsC+lzS5katF9PdJGMMTxpAc=;
+ b=grQBPboRSACIsWoTONAYVnpza1PtzwZCkmDHa5v3Ox99iZkAebLtoiZNesSL46x1iP
+ lO9epXgORzDLLW4+iwDEVZx+TaxQTK7HFovWamWzmmxqInkLmxrrkcG7v2Gdozn3DaQY
+ 92piRtTMvLB8l0e24jX6QRpxEw7y8WYvaGggcL6R0xcX0M94xyleKejjO01v1iHiDHei
+ jZqrVICLTiLdYmiIlTZKX90WKvP9vpimH6qbNeUBUTvK9S8W2U6JpyS51ZiuoYdC4gC5
+ LR/0PE10OhRV1zrHoBdgnfrnENqTI01g29G+p4Dm7MgVKxan6m6BS3uuUnoD8Q/YK4vm
+ Pjbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734541677; x=1735146477;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=tFTqBXWbrd+5Ar5eHaCN8PTh61B9XqjrZ3+wxsBR9V8=;
- b=W59LWi1jbzMfsI6SzdbcscNJAHFDR+r71reNHm7sLK6qakxN4UIT3UciJMMFrqnIiQ
- /38JCf9AQewWE+FllCcAKBGvrRcuZ6GTC/mvwRiFYQgrZPlWOwH/FCnsBe4Raqf2KrK7
- ULQCW04n0Plzk2fkW9eerUGMajB5L/WMkT/yjncvOJ1cFRPAmiLZxFTi7LxiCVmPeu+y
- 9bSw+SCSyhiAGuY8Ap7K7308XcbqCdP+r32EK3Ks9WbfapxwEbsVFsuMhex7Ju2VQOAN
- XJ5VZMDHQIB/Rkxsm9uM+8krvPWYPCQdUnVPpJKFFRsk1L5vuNRI0zt2pVk3ccTP4Dkh
- M3AQ==
-X-Gm-Message-State: AOJu0YxKChIfTe6Uue2eF+y0jpox+JdTsJaGXDPf8JcQBxpxPeb8c3y/
- LKpx0Y3iXXijFmBDwXPL4A0+QhVbIr7rWboTqPyj+XGKKVklIjDogwg6qwIoZUw=
-X-Gm-Gg: ASbGncuNn8OkS/i6JotE4P2IdXsh2mDL+HQ5bZODmGpHAvcMp+K4VsA0sgdhG2fTu++
- LZysIbzl/BJOs/kcUZr21uVGQpaS2vjzdX00nJRBCbzoVFp3HcbunWaqxNfmIDZ1qzPjUhaMTVE
- Oh4tKAycf500V6QR1WoOk4NP7tZD3A2sW7qtOpoW8Hi07bdhr8P8vwE+TgcFFQbjULr77808Dr4
- p5IBFXF1Xt6LEIdRqdwkEJn90k5hph/aeV+EwXbDVtBZpChfmkCfos=
-X-Google-Smtp-Source: AGHT+IHtyPIR1Mgh9eUz6zcTNxJOjznfozFN6xx+O7VrU0zDMzeDMCZRjRGyyAmyIu39LbfQCcoBaw==
-X-Received: by 2002:a05:6402:2807:b0:5cf:c97c:8206 with SMTP id
- 4fb4d7f45d1cf-5d7ee3fd6demr3832922a12.25.1734541676807; 
- Wed, 18 Dec 2024 09:07:56 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d652ad21b7sm5532071a12.36.2024.12.18.09.07.54
+ d=1e100.net; s=20230601; t=1734541726; x=1735146526;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wj53VmaKWxtGgzq29nXWsC+lzS5katF9PdJGMMTxpAc=;
+ b=p/b+fl23TyMfNkTGsIZTVihyARWxOV8Cdx4bHjzXg1w3Pdv8oaueTJ5sSpzSDAVlK6
+ iwcwT9wv2tcLgY1jzTtAtHzuGe0WHhigbYc9pF2HAc8zP07kdG5q7y00OLm5vnbTEzF3
+ CkkIbZ/ILtCOonqPfVG7lTleEnIoUYUBMB3lG/BHK81HnqGM3ciOGf3mVzUjL800LoGl
+ i9enwzo6c9hyh/3CjzMoOLr2t4vowU5660yEV4zRwYmH8VAgjElP+p82rIQClpEkJ6Ab
+ O/xxM37lm+50b8Q900y0FmNaioBAwLG3HAQQrIJO/c6B/U/jLqY5HQqBQkPYbsbgoE7u
+ 3mOQ==
+X-Gm-Message-State: AOJu0Yyojedp7uxmeqqZxUnq9OhvH4BMlvFJuAfTStk2EhJbDQRX3duR
+ YK4Avnl68KcjULCmqsA2M75zcM5ncxV+O89mcpQvH71wB7RaSKoErDZlK2OKbao5lrvaC1bpr4P
+ GBeZ4Yw==
+X-Gm-Gg: ASbGncv2oPOqnkBfjX2dyDVLdZRFgNq68vTzq5hJ48gPYiWN+e0ercJZpaF2X2KcTiI
+ J2equAcYx51fVoHGdKz8tTWuuxDq8j+6ITrsS652ObQlbd/DtH9KX2/u6TdjS8Qq0ak3pakQaVK
+ 8k7XiL8j29v3Rxqzp0FoagfJt31SRs5vU3QzsvHQ3+n7eTGYCiUgcUN3X6K006JFsZD2hfVDFi+
+ E68x9nOix4Bhbo4c+7y6Q7oYPtkVjOT2GN0bHLW0vLUfxoyqKnDGQJEQUorwNFRVkiiXIhN4xoA
+ TeIKp1S0DjW6XhF87xvqBlKjpmHXG+Mcytdmjmr8P1M=
+X-Google-Smtp-Source: AGHT+IES+IWWI8qu/Mln9BUyghDPHIMOGCPG5B75R/ta+SI+35ifI6BWGI+FYCKE43WWkEYNrO4Q+Q==
+X-Received: by 2002:a17:907:9409:b0:aab:cce0:f8b4 with SMTP id
+ a640c23a62f3a-aabf4956d7bmr312897966b.52.1734541726471; 
+ Wed, 18 Dec 2024 09:08:46 -0800 (PST)
+Received: from paolo-laptop-amd.station (mob-109-118-46-116.net.vodafone.it.
+ [109.118.46.116]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aabfbbb7a52sm70403966b.58.2024.12.18.09.08.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 09:07:55 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DBDED5F796;
- Wed, 18 Dec 2024 17:07:53 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Marcin Juszkiewicz
- <marcin.juszkiewicz@linaro.org>,  Leif Lindholm
- <quic_llindhol@quicinc.com>,  Radoslaw Biernacki <rad@semihalf.com>,
- qemu-stable@nongnu.org,  Andrei Homescu <ahomescu@google.com>,  Arve
- =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@google.com>,  =?utf-8?Q?R=C3=A9mi?=
- Denis-Courmont <remi.denis.courmont@huawei.com>
-Subject: Re: [PATCH 3/3] target/arm: implement SEL2 physical and virtual timers
-In-Reply-To: <CAFEAcA_AgkVcVm5nfCNb=PjB5qnYahTUuQxi-U=um92BFokccw@mail.gmail.com>
- (Peter Maydell's message of "Tue, 17 Dec 2024 13:34:49 +0000")
-References: <20241206160239.3229094-1-alex.bennee@linaro.org>
- <20241206160239.3229094-4-alex.bennee@linaro.org>
- <CAFEAcA_AgkVcVm5nfCNb=PjB5qnYahTUuQxi-U=um92BFokccw@mail.gmail.com>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Wed, 18 Dec 2024 17:07:53 +0000
-Message-ID: <877c7w5386.fsf@draig.linaro.org>
+ Wed, 18 Dec 2024 09:08:44 -0800 (PST)
+From: Paolo Savini <paolo.savini@embecosm.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: Paolo Savini <paolo.savini@embecosm.com>,
+ Richard Handerson <richard.henderson@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
+ Max Chou <max.chou@sifive.com>,
+ Jeremy Bennett <jeremy.bennett@embecosm.com>,
+ Craig Blackmore <craig.blackmore@embecosm.com>
+Subject: [RFC 0/1] target/riscv: use tcg ops generation to emulate whole reg
+ rvv loads/stores.
+Date: Wed, 18 Dec 2024 17:08:39 +0000
+Message-ID: <20241218170840.1090473-1-paolo.savini@embecosm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=paolo.savini@embecosm.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,47 +108,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+The following patch aims at speeding up the emulation of whole register loads/stores by generating tcg operations rather then going through the call of a helper function.
+The proposed implementation aims at using atomic 16 byte loads and store when possible and it updates the value of vstart in order to keep the state of the cpu consistent.
+This kind of precaution doesn't seem to be followed by other vector operations that use tcg ops generation so this might be redundant.
+Also the atomicity requirements of qemu loads and stores get removed if we are running in serial mode (!CF_PARALLEL).
+In light of this I wonder whether exceptions could be a concern or not in the context of tcg ops generation, above all when it comes to updating the state of the cpu consistently (vstart).
+Any feedback welcome.
 
-> On Fri, 6 Dec 2024 at 16:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
-ote:
->>
->> When FEAT_SEL2 was implemented the SEL2 timers where missed. This
->> shows up when building the latest Hafnium with SPMC_AT_EL=3D2. The
->> actual implementation utilises the same logic as the rest of the
->> timers so all we need to do is:
->>
->>   - define the timers and their access functions
->>   - conditionally add the correct system registers
->>   - create a new accessfn as the rules are subtly different to the
->>     existing secure timer
->
->> diff --git a/include/hw/arm/bsa.h b/include/hw/arm/bsa.h
->> index 8eaab603c0..b4ecca1b1c 100644
->> --- a/include/hw/arm/bsa.h
->> +++ b/include/hw/arm/bsa.h
->> @@ -22,6 +22,8 @@
->>  #define QEMU_ARM_BSA_H
->>
->>  /* These are architectural INTID values */
->> +#define ARCH_TIMER_S_VIRT_EL2_IRQ  19
->
-> Can we call this ARM_TIMER_S_EL2_VIRT_IRQ please?
+The proposed implementation aims at replacing the correspondent helper function, that will be removed in the final version of the patch, unless there are corner cases where it is still necessary to use it. 
 
-I'm going to assume you mean ARCH_TIMER_S_EL2_VIRT_IRQ ;-)
+Cc: Richard Handerson <richard.henderson@linaro.org>
+Cc: Palmer Dabbelt <palmer@dabbelt.com>
+Cc: Alistair Francis <alistair.francis@wdc.com>
+Cc: Bin Meng <bmeng.cn@gmail.com>
+Cc: Weiwei Li <liwei1518@gmail.com>
+Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: Helene Chelin <helene.chelin@embecosm.com>
+Cc: Nathan Egge <negge@google.com>
+Cc: Max Chou <max.chou@sifive.com>
+Cc: Jeremy Bennett <jeremy.bennett@embecosm.com>
+Cc: Craig Blackmore <craig.blackmore@embecosm.com>
 
-> We currently have ARCH_TIMER_NS_EL2_VIRT_IRQ
-> so we should be consistent about where in
-> the name we put the "VIRT" bit.
->
->> +#define ARCH_TIMER_S_EL2_IRQ       20
->>  #define VIRTUAL_PMU_IRQ            23
->>  #define ARCH_GIC_MAINT_IRQ         25
->>  #define ARCH_TIMER_NS_EL2_IRQ      26
->
-> -- PMM
+Paolo Savini (1):
+  target/riscv: use tcg ops generation to emulate whole reg rvv
+    loads/stores.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+ target/riscv/insn_trans/trans_rvv.c.inc | 104 +++++++++++++-----------
+ 1 file changed, 56 insertions(+), 48 deletions(-)
+
+-- 
+2.34.1
 
