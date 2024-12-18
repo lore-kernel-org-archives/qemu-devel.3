@@ -4,56 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E2DE77187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB47BE77188
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 12:05:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNsmv-0001ar-On; Wed, 18 Dec 2024 07:04:25 -0500
+	id 1tNsml-0001YA-EP; Wed, 18 Dec 2024 07:04:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tNsmI-0001VH-EX
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:03:59 -0500
+ id 1tNsmD-0001V9-Ut
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:03:46 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1tNsmB-00065f-1v
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:03:42 -0500
+ id 1tNsmB-00068i-5K
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:03:41 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734523410;
+ s=mimecast20190719; t=1734523412;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=w7S8gCXCaZDXrchATTVtEFwvhZ+Xm+BDYGwPiPYysSk=;
- b=Cc6nB2PiTim5654jUfvv58U7hGTW9oN4zUjo9tfVnuhnPKkkcsVu8060KcUjnRfMfsMGbz
- uYWQELuQkPYcKnWMxRjfPpMFSBDaiZU6JgPum4YgbdgwMb97IwFh0urfYvL44mxqT/xvm+
- DDwZFEuinGunDGWNuzRVv9EDnAV6Hv4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NJ8297c8r5xkp3T6CZN762sQo2LObmynWPnGlf1pTaU=;
+ b=PxuSHsueVU937gETBkHYLa2kISg7awdGmo05coiQIMJzbC2tin9erNwooI5kmfN8d5Tnn1
+ I8sJUS0cv7eOokEXwANQJRb0zvebISuxN+QQOxgTlWBZKJrpSXJx4vLgO3sUTXKxkjgPGy
+ IH3D+sSoFd4RXyAKxokYAUknPKZqC6s=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-eyS53BhTOaiaJTCpdjoRCw-1; Wed,
- 18 Dec 2024 07:03:27 -0500
-X-MC-Unique: eyS53BhTOaiaJTCpdjoRCw-1
-X-Mimecast-MFC-AGG-ID: eyS53BhTOaiaJTCpdjoRCw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-0_D-LUO1Pb6gjtV1QNAGTg-1; Wed,
+ 18 Dec 2024 07:03:29 -0500
+X-MC-Unique: 0_D-LUO1Pb6gjtV1QNAGTg-1
+X-Mimecast-MFC-AGG-ID: 0_D-LUO1Pb6gjtV1QNAGTg
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 299B81955F41; Wed, 18 Dec 2024 12:03:26 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2BA6D1956064; Wed, 18 Dec 2024 12:03:28 +0000 (UTC)
 Received: from srv1.redhat.com (unknown [10.45.225.146])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8F3A930044C1; Wed, 18 Dec 2024 12:03:24 +0000 (UTC)
+ id A8D3730044C1; Wed, 18 Dec 2024 12:03:26 +0000 (UTC)
 From: Konstantin Kostiuk <kkostiuk@redhat.com>
 To: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 0/3] Misc QGA patches for 2024-12-18
-Date: Wed, 18 Dec 2024 14:03:18 +0200
-Message-ID: <20241218120321.34998-1-kkostiuk@redhat.com>
+Subject: [PULL 1/3] qga: skip bind mounts in fs list
+Date: Wed, 18 Dec 2024 14:03:19 +0200
+Message-ID: <20241218120321.34998-2-kkostiuk@redhat.com>
+In-Reply-To: <20241218120321.34998-1-kkostiuk@redhat.com>
+References: <20241218120321.34998-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
@@ -81,37 +83,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+From: Jean-Louis Dupond <jean-louis@dupond.be>
 
-  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+The filesystem list in build_fs_mount_list should skip bind mounts.
+This because we end up in locking situations when doing fsFreeze. Like
+mentioned in [1] and [2].
 
-are available in the Git repository at:
+Next to that, the build_fs_mount_list call did a fallback via
+build_fs_mount_list_from_mtab if mountinfo did not exist.
+There it skipped bind mounts, but this is broken for newer OS.
+This as mounts does not return the path of the bind mount but the
+underlying dev/partition, so S_ISDIR will never return true in
+dev_major_minor call.
 
-  https://github.com/kostyanf14/qemu.git tags/qga-pull-2024-12-18
+This patch simply checks the existing devmajor:devminor tuple in the
+mounts, and if it already exists, this means we have the same devices
+mounted again, a bind mount. So skip this.
 
-for you to fetch changes up to 2657a92b5479c8705b128ed1e55feb8960ed498a:
+Same approach is used in open-vm-tools [3].
 
-  qga: Don't access global variable in run_agent_once() (2024-12-18 13:46:16 +0200)
+[1]: https://gitlab.com/qemu-project/qemu/-/issues/592
+[2]: https://gitlab.com/qemu-project/qemu/-/issues/520
+[3]: https://github.com/vmware/open-vm-tools/commit/d58847b497e212737007958c945af1df22a8ab58
 
-----------------------------------------------------------------
-qga-pull-2024-12-18
-
-----------------------------------------------------------------
-Dehan Meng (1):
-      qemu-ga-win: Fix a typo error
-
-Jean-Louis Dupond (1):
-      qga: skip bind mounts in fs list
-
-Michal Privoznik (1):
-      qga: Don't access global variable in run_agent_once()
-
+Signed-off-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Reviewed-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+Link: https://lore.kernel.org/r/20241002100634.162499-2-jean-louis@dupond.be
+Signed-off-by: Konstantin Kostiuk <kkostiuk@redhat.com>
+---
  qga/commands-linux.c | 25 +++++++++++++++++++++++++
- qga/commands-win32.c |  2 +-
- qga/main.c           |  2 +-
- 3 files changed, 27 insertions(+), 2 deletions(-)
+ 1 file changed, 25 insertions(+)
 
---
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index cf077eb03d..9e8a934b9a 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -58,6 +58,22 @@ static int dev_major_minor(const char *devpath,
+     return -1;
+ }
+ 
++/*
++ * Check if we already have the devmajor:devminor in the mounts
++ * If thats the case return true.
++ */
++static bool dev_exists(FsMountList *mounts, unsigned int devmajor, unsigned int devminor)
++{
++    FsMount *mount;
++
++    QTAILQ_FOREACH(mount, mounts, next) {
++        if (mount->devmajor == devmajor && mount->devminor == devminor) {
++            return true;
++        }
++    }
++    return false;
++}
++
+ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+ {
+     struct mntent *ment;
+@@ -88,6 +104,10 @@ static bool build_fs_mount_list_from_mtab(FsMountList *mounts, Error **errp)
+             /* Skip bind mounts */
+             continue;
+         }
++        if (dev_exists(mounts, devmajor, devminor)) {
++            /* Skip already existing devices (bind mounts) */
++            continue;
++        }
+ 
+         mount = g_new0(FsMount, 1);
+         mount->dirname = g_strdup(ment->mnt_dir);
+@@ -171,6 +191,11 @@ bool build_fs_mount_list(FsMountList *mounts, Error **errp)
+             }
+         }
+ 
++        if (dev_exists(mounts, devmajor, devminor)) {
++            /* Skip already existing devices (bind mounts) */
++            continue;
++        }
++
+         mount = g_new0(FsMount, 1);
+         mount->dirname = g_strdup(line + dir_s);
+         mount->devtype = g_strdup(dash + type_s);
+-- 
 2.47.1
 
 
