@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32DBE77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDF6BE77187
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrho-0000lc-Si; Wed, 18 Dec 2024 05:55:05 -0500
+	id 1tNrhr-0000mq-5c; Wed, 18 Dec 2024 05:55:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tNrhn-0000lG-SK
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:03 -0500
+ id 1tNrhp-0000lh-5Q
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:05 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tNrhm-0006qX-42
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:03 -0500
+ id 1tNrhn-0006qq-7C
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734519301;
+ s=mimecast20190719; t=1734519302;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/QBJrTf6g4Vqln67IUOCc7Xr8xeF+lIWKbSulfpvbBM=;
- b=Ln8v3H+TYV+P/KE3vaVBRM7KDnHEdra7WhHr9ODiKn8Ag1hdea4qwxS9OH2Pspod6XlfAU
- QIIU35Lxr3htDshqCU8A96rO49Ywb1e0naByEL6t69Pb+alFxEUK7U+ouMxKAMVPBnf9ix
- G5KR1O+SE1AIJDQbzCkYOyAhPDNT5Ic=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6jzX2pyO/iqHI0cjENwYLEKZ3ZU6j0kw5XT1+VOMzPg=;
+ b=BWtEpBBewq98msbsny2AYNjC3Sflz6Rpg50fpq8ii5KJKdy9jOMsYZe4HpBKxWc9oVfuGk
+ mNsM3W3AphNorGcvDiTcdqGOhOZKIjYAsL/kpwQuFl1LIUDdyoNuTuURzqUdUUnx1D2glm
+ NB6fx/Jt9F0Egt6SeD1gwLOxZ9ICYSY=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-22-eerHLl4cO7ijPjarwApByA-1; Wed, 18 Dec 2024 05:53:38 -0500
-X-MC-Unique: eerHLl4cO7ijPjarwApByA-1
-X-Mimecast-MFC-AGG-ID: eerHLl4cO7ijPjarwApByA
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-436289a570eso50744405e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:53:38 -0800 (PST)
+ us-mta-694-_4-4_-v-Piu2l-r7D0tT5A-1; Wed, 18 Dec 2024 05:53:36 -0500
+X-MC-Unique: _4-4_-v-Piu2l-r7D0tT5A-1
+X-Mimecast-MFC-AGG-ID: _4-4_-v-Piu2l-r7D0tT5A
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4362b9c1641so27884155e9.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:53:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734519217; x=1735124017;
+ d=1e100.net; s=20230601; t=1734519216; x=1735124016;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/QBJrTf6g4Vqln67IUOCc7Xr8xeF+lIWKbSulfpvbBM=;
- b=R7J/QK+0u6yx9fHcBFo8JzTP8Sr5AdCCBay///f7/oqcECjvBSqiOpT9ivyjnTyhXo
- oozYXwV2jyhSK4rHK7yN+FeUugapuqOP69daR1gPO8HsN2OQQfSabAIqO7zM7wP+up0d
- dJwh7l2qHjL3ALsIZolu0HB91YWrNkPYinb5W7ttsXA/e9RSv07wxqvIZ3OtKDrF28uQ
- 2wnnYT5dETEBQuNK1vhqtZAVfgMRI4FW5cUOyIgkhZnN++MUwY2He0zFaBPdXXLbzJyh
- 1d4KzVaxF7ECL5yCOkMmGUJFqG9h2pLikTujL8hmKzIgMDyHMagS1WGzoupQirfWOSMq
- bpgQ==
-X-Gm-Message-State: AOJu0YyCKRTRRSPWWYQtVcrDSqTgjHQEaoxODNDcAnK1XDZKBpN+gqNy
- gQ2r+CjKUsB3PT+kS+qwAWiAJtGj07RWFUyHxTzaX1U4b59lS5FF1mumKqThZxkxq/2PduFSf1R
- 0MUOipUFCkFgKbAioCsXROiSooXC+ot6CcPQrwSS1dsh3bnXJ5wjPCmAQpcZ6PLdBiJWO2P4tjK
- pzabwyHG3t3hHMK/ezYLOPzM5v28arc9qIMaQ=
-X-Gm-Gg: ASbGncsEUBBZlo7oygdmWqEmYC79MtOd+rTPji5NM2R26XTe7cUWNwmudBbfd5Tsy6H
- /wrbqzaeAdP/99Le54ossZhuDpDGuyMhm79klUnOC3zLCE40MsXSDfQFVmenOFOkyLp61+4z39C
- xmViUsfnqRkbaVOTdS9e9jTT4onCnl9aMHpKLv9hXJI1ArnoWZzXXQdb4AlffBfadR972vZZ/4D
- +TY5EJtKfV2L87pWx2CEub7OzUyQJvNOEbGLhs1T93JCvwbsdg8h459MaXy67cgxXOSOGgqUt9e
- W5sFDIuDM9r21HEHpJ2qORuVn1NvLWDH44qmSeefEQ==
-X-Received: by 2002:a05:6000:18a5:b0:386:3a8e:64bd with SMTP id
- ffacd0b85a97d-388e4d8b7c1mr1886343f8f.22.1734519217512; 
- Wed, 18 Dec 2024 02:53:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHGxtoL89ebJ7m7B7KkyshTksdkcAMmk1gEf7e125/rlETHyOKlqVT/HvkA0HnoJZacLw7wpg==
-X-Received: by 2002:a05:6000:18a5:b0:386:3a8e:64bd with SMTP id
- ffacd0b85a97d-388e4d8b7c1mr1886308f8f.22.1734519217017; 
- Wed, 18 Dec 2024 02:53:37 -0800 (PST)
+ bh=6jzX2pyO/iqHI0cjENwYLEKZ3ZU6j0kw5XT1+VOMzPg=;
+ b=sm7kb9OelrL+8HkA+wrl96N3V8J+rlNRZhGwowG4TmJ/EV1tseE5mwSz/PV1Q3HhkM
+ arOCPEyRWsVjeM4zyYgFkpoAPTq0Gtr2S72Xheahy89NOg5b2I02MjqL1tTsfMwYb6Qh
+ nQEiQa7YP6f41TAJj+yDMz388sxEFaO5i1oKt/A5LsPidYxikpElxHYejmtL3ePbCJ11
+ xM4k3QOifzVdoXtVEBOJTyqp+sio6mG6MgSgj23RUO/kk0A+nISUWEpfV2fnSJ+ynjnA
+ 10iFiHt6xmC9/4Ztf0Tjl8ZTCT415oDCudNqZPNFYGzNuTjOZYd5tICr1zH0ern1lzjf
+ 5Bjg==
+X-Gm-Message-State: AOJu0YxScXJPK1fa1hJSIZm252dVmOaqcgGa/+YTtzFRbbN1iBedfZnS
+ qemAG/h24rvO7xY8MlbNvzWj9Q/zUr8Yi3i97pm2QU40hUZP1xXtrXTALCPB4JG68Tn7mK1V6if
+ sI8mxCzCp+zp8vWjIDmrWTEF/iIO3BN47YVScI3Vi+oED0PhEmNqIqlPukpoo9i3b8LxLMpUjP6
+ +jl2/2UfUz+jXeyW6WaOrlnjt0aJyjrvWNk2M=
+X-Gm-Gg: ASbGncszFuG5ccEiu3apw4saAxrZxpvE2aRzT1/xRWypum4uy1o0woifWzt1YyZx45U
+ 4oJsV4OrMF/FMwhxmpfztOl5cQS+m+NniNyA2mxEfz+QyBUMn5OKKLxZsFoXMRWDvwAc8S2lU6T
+ c+9marESBjTeiHXVbpzxVJ23P5lsM+E/U4jzzWTzi1GZxzZypS3RsCZXkrty0DjKXd+fn+nxzch
+ xFA4KhCN+5mQHVb2wTmsprdXxX0Mx3C7XxQF5epx02N+sBMHyKTUDcOeIOK7Se3DAKUzbQN00uP
+ rtvZtdwPiaS3jxv65Dj6pcQ6p02SnjFReNgU0Q5wdQ==
+X-Received: by 2002:a05:600c:4f14:b0:434:a10f:c3 with SMTP id
+ 5b1f17b1804b1-4365535fe63mr20045045e9.9.1734519215758; 
+ Wed, 18 Dec 2024 02:53:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHlycrOknbfAPHpV3mL2rVWzzSXJoEXGLBTlnTJeXlmduzWviJD86gsYpPZfSZJtT41UWv8uA==
+X-Received: by 2002:a05:600c:4f14:b0:434:a10f:c3 with SMTP id
+ 5b1f17b1804b1-4365535fe63mr20044745e9.9.1734519215384; 
+ Wed, 18 Dec 2024 02:53:35 -0800 (PST)
 Received: from localhost
  (p200300cbc73f8300a5d5c21badd3cf50.dip0.t-ipconnect.de.
  [2003:cb:c73f:8300:a5d5:c21b:add3:cf50])
  by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-388c804a297sm13607480f8f.67.2024.12.18.02.53.36
+ ffacd0b85a97d-388c8060fb3sm13556545f8f.94.2024.12.18.02.53.33
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 02:53:36 -0800 (PST)
+ Wed, 18 Dec 2024 02:53:34 -0800 (PST)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Halil Pasic <pasic@linux.ibm.com>,
@@ -81,10 +81,11 @@ Cc: Halil Pasic <pasic@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
- David Hildenbrand <david@redhat.com>
-Subject: [PULL 13/15] s390x: remember the maximum page size
-Date: Wed, 18 Dec 2024 11:53:01 +0100
-Message-ID: <20241218105303.1966303-14-david@redhat.com>
+ David Hildenbrand <david@redhat.com>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Subject: [PULL 12/15] s390x/pv: prepare for memory devices
+Date: Wed, 18 Dec 2024 11:53:00 +0100
+Message-ID: <20241218105303.1966303-13-david@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241218105303.1966303-1-david@redhat.com>
 References: <20241218105303.1966303-1-david@redhat.com>
@@ -115,96 +116,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's remember the value (successfully) set via s390_set_max_pagesize().
-This will be helpful to reject hotplugged memory devices that would exceed
-this initially set page size.
+Let's avoid checking for the maxram_size, and instead rely on the memory
+limit determined in s390_memory_init(), that might be larger than
+maxram_size, for example due to alignment purposes.
 
-Handle it just like how we handle s390_get_memory_limit(), storing it in
-the machine, and moving the handling to machine code.
+This check now correctly mimics what the kernel will check in
+kvm_s390_pv_set_aside(), whereby a VM <= 2 GiB VM would end up using
+a segment type ASCE.
 
-Message-ID: <20241008105455.2302628-13-david@redhat.com>
+Message-ID: <20241008105455.2302628-12-david@redhat.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- hw/s390x/s390-virtio-ccw.c         | 12 +++++++++++-
- include/hw/s390x/s390-virtio-ccw.h |  1 +
- target/s390x/cpu-sysemu.c          |  7 -------
- target/s390x/cpu.h                 |  1 -
- 4 files changed, 12 insertions(+), 9 deletions(-)
+ target/s390x/kvm/pv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index aa06d07835..ef1bf32770 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -150,6 +150,16 @@ uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
-     return s390ms->memory_limit;
- }
- 
-+static void s390_set_max_pagesize(S390CcwMachineState *s390ms,
-+                                  uint64_t pagesize)
-+{
-+    assert(!s390ms->max_pagesize && pagesize);
-+    if (kvm_enabled()) {
-+        kvm_s390_set_max_pagesize(pagesize, &error_fatal);
-+    }
-+    s390ms->max_pagesize = pagesize;
-+}
-+
- static void s390_memory_init(MachineState *machine)
- {
-     S390CcwMachineState *s390ms = S390_CCW_MACHINE(machine);
-@@ -198,7 +208,7 @@ static void s390_memory_init(MachineState *machine)
-      * Configure the maximum page size. As no memory devices were created
-      * yet, this is the page size of initial memory only.
+diff --git a/target/s390x/kvm/pv.c b/target/s390x/kvm/pv.c
+index 424cce75ca..fa66607e7b 100644
+--- a/target/s390x/kvm/pv.c
++++ b/target/s390x/kvm/pv.c
+@@ -133,7 +133,7 @@ bool s390_pv_vm_try_disable_async(S390CcwMachineState *ms)
+      * If the feature is not present or if the VM is not larger than 2 GiB,
+      * KVM_PV_ASYNC_CLEANUP_PREPARE fill fail; no point in attempting it.
       */
--    s390_set_max_pagesize(qemu_maxrampagesize(), &error_fatal);
-+    s390_set_max_pagesize(s390ms, qemu_maxrampagesize());
-     /* Initialize storage key device */
-     s390_skeys_init();
-     /* Initialize storage attributes device */
-diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-index eb04542979..5a730f5d07 100644
---- a/include/hw/s390x/s390-virtio-ccw.h
-+++ b/include/hw/s390x/s390-virtio-ccw.h
-@@ -30,6 +30,7 @@ struct S390CcwMachineState {
-     bool pv;
-     uint8_t loadparm[8];
-     uint64_t memory_limit;
-+    uint64_t max_pagesize;
- 
-     SCLPDevice *sclp;
- };
-diff --git a/target/s390x/cpu-sysemu.c b/target/s390x/cpu-sysemu.c
-index 3118a25fee..706a5c53e2 100644
---- a/target/s390x/cpu-sysemu.c
-+++ b/target/s390x/cpu-sysemu.c
-@@ -255,13 +255,6 @@ unsigned int s390_cpu_set_state(uint8_t cpu_state, S390CPU *cpu)
-     return s390_count_running_cpus();
- }
- 
--void s390_set_max_pagesize(uint64_t pagesize, Error **errp)
--{
--    if (kvm_enabled()) {
--        kvm_s390_set_max_pagesize(pagesize, errp);
--    }
--}
--
- void s390_cmma_reset(void)
- {
-     if (kvm_enabled()) {
-diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
-index b4506539f0..5b7992deda 100644
---- a/target/s390x/cpu.h
-+++ b/target/s390x/cpu.h
-@@ -881,7 +881,6 @@ static inline void s390_do_cpu_load_normal(CPUState *cs, run_on_cpu_data arg)
- 
- /* cpu.c */
- void s390_crypto_reset(void);
--void s390_set_max_pagesize(uint64_t pagesize, Error **errp);
- void s390_cmma_reset(void);
- void s390_enable_css_support(S390CPU *cpu);
- void s390_do_cpu_set_diag318(CPUState *cs, run_on_cpu_data arg);
+-    if ((MACHINE(ms)->ram_size <= 2 * GiB) ||
++    if (s390_get_memory_limit(ms) <= 2 * GiB ||
+         !kvm_check_extension(kvm_state, KVM_CAP_S390_PROTECTED_ASYNC_DISABLE)) {
+         return false;
+     }
 -- 
 2.47.1
 
