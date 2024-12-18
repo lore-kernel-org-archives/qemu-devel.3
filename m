@@ -4,92 +4,154 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F933E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:01:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E07E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:03:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwUa-0001r1-22; Wed, 18 Dec 2024 11:01:44 -0500
+	id 1tNwVZ-00031y-NE; Wed, 18 Dec 2024 11:02:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tNwUP-0001lB-Si
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:01:41 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwVX-0002vZ-TM
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:02:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tNwUO-0008FZ-BC
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:01:33 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwVU-0008LD-D4
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:02:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734537690;
+ s=mimecast20190719; t=1734537758;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=s5EBVjzY+BbvqF9tO8LMu8C8as/z/S9MTTCoLGwires=;
- b=iFyvBbBGjzag+WvdFqmXv1Z6NvCm/5Mmui3YjcqtMkRRsFqkpTjMEl5k31r7YpR8ZWmJET
- k1ZFQcULmHPBWo6dnmXyUKN7Dvmwel9zopsJRKbGYlBfjwp8qwc+RvLH9KTlbuu8F/gtF/
- QznybxcO55LEoJf4Y0DWcuFY6p1BiXg=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1RVHCfcdqcEQIiL70TH4TJkxTcYPAUx4uhixmbAGrhM=;
+ b=ORUe4DzUgtYpSB9g1TtPoP976IN8znc5I4BNkAZBgGzslP8lCL/8bZTpacbDdihCUB3HFE
+ h2pvTGLqUF43UJOwQACJiJ5mjtyu0IUkO5IXiGyTvxgnVL3gxRE08QPpg/gwoe7l0iBBz3
+ mHaL2cpGnIopzVyxxsjpYS9kxQdlGOA=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-617-tUpsR5tMMU6Cpo9Rh_eMnA-1; Wed, 18 Dec 2024 11:01:27 -0500
-X-MC-Unique: tUpsR5tMMU6Cpo9Rh_eMnA-1
-X-Mimecast-MFC-AGG-ID: tUpsR5tMMU6Cpo9Rh_eMnA
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-385dc37cb3eso3741200f8f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:01:27 -0800 (PST)
+ us-mta-416-NxKyAtMfNUaW6l9b3chhsg-1; Wed, 18 Dec 2024 11:02:37 -0500
+X-MC-Unique: NxKyAtMfNUaW6l9b3chhsg-1
+X-Mimecast-MFC-AGG-ID: NxKyAtMfNUaW6l9b3chhsg
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6e4bea711so1097226385a.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:02:37 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734537686; x=1735142486;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1734537757; x=1735142557;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=s5EBVjzY+BbvqF9tO8LMu8C8as/z/S9MTTCoLGwires=;
- b=SU7004zStZ5MN4Zd6XcozONnB3hg1NnkUtT36NrcETrdmb/fZHek83idxFVlJD94Q7
- TrKNYPeZVrpmAgMyqqxAZCPVrSdHPH0bVGVycRAp28HPfPoOy0qivfBTadkkAbU6sLio
- WxNiUt/05XlSqtxyZaarclcwyAlGcX0LK1NGO9G+qQopVBFlXg4ww1x+iOqZIOZ5nQQJ
- sky7pVY2t5XLzyo6dBflKY6ztpTIPP/jNFXFpGEcY2Psq802oTQuTa5rq9/zMUvUwV0j
- zCOpnppsHgNx7oCpoMH12hJoiwWRTC4VCsPvKVX7vTSRiY/Ldyiu7iLe1GJNZv81aAE1
- Msww==
-X-Gm-Message-State: AOJu0Yz3ACU+xxw0XzYg+WqxpmM9P5aZ637VZGlYX6Zphsu4vARQHG17
- DtkBKZVCr7fMhMSD4vb0O4E1zojTplUC1Z+8ch9cxxANGmoPr+x7HKTc+JxNIckTQ2Tz7vW4i5o
- 1v7pROL3vqAY9M9ZNHoD4eyJDBgMV1G0jvhqNEHbJaZGuUHDLvKL63slvuK06R45TSC+xuqicEt
- UkP0bMWn1g6NO+kw88RCjryfdjM5U=
-X-Gm-Gg: ASbGnctafl3APTMO9TgG7jbe9bNfDsVyK4C0WzPZiMJK7Hfs53xZbofzCgXhDgKQoAZ
- Yw2DowmpG1JeSjaso3twuYJwgPkKXRK2bA0q6VQ==
-X-Received: by 2002:a5d:6d0a:0:b0:385:e8ce:7483 with SMTP id
- ffacd0b85a97d-388e4d2f4e5mr2597057f8f.4.1734537686337; 
- Wed, 18 Dec 2024 08:01:26 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGxPDuNT9R7ci8QVWtzOfIiKbpe4LatA8q39zVQTD0hSHV63I+9haxUDQrhYCCa6RhelisYwuE0Ffx6YZhbuC8=
-X-Received: by 2002:a5d:6d0a:0:b0:385:e8ce:7483 with SMTP id
- ffacd0b85a97d-388e4d2f4e5mr2596963f8f.4.1734537685408; Wed, 18 Dec 2024
- 08:01:25 -0800 (PST)
+ bh=1RVHCfcdqcEQIiL70TH4TJkxTcYPAUx4uhixmbAGrhM=;
+ b=kPdn1KsEu56qJQmKMDijf45gY2VOp8yEf2VtUHlTsyFhwqVG2HDsGxmq91YKpRW00b
+ iPUuyZbs8dyFIx/0YjAXQeFVqsFdLtUgSt14OnVMYu+/eQK1se640MPs2rZwbA819QJg
+ hB20FwRsexPVrRvE9fu7bs7YX7aIDZXVeYAuk8I1bw9YCDVNFbdFPjYAcuWhWHrIUrEb
+ M2WRAvahkb2g3r7wtxrgbiVJUr3lDUd+XVrpGDaYfvUfkioxUD4dk7cz7dXMcRblGoL2
+ 3osYAwtwz6OieCHlf3u8d1be4076taIyw7dDxuaxx/fI+z/6pJq2/V2uM22IT5jpOw7G
+ FKDA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU1TXlAN0l5wKhDxXdebu2v8ihHBxw36i3u0PweNbZP/GbMImLPA9lKhHkTO7JOzuC7JuD267+zwP0D@nongnu.org
+X-Gm-Message-State: AOJu0Yzs56uvMJt/krYGkf+gaBYjEVZ/1IDbHtWfoshy9/8Mq1jE5cIN
+ R0srCGTMxmB4t+VXa/bIYiXq2PMBViYrg5SkwzPIoQ1nkVE1BlqTnQ+WH6QS9O8kqxplNWjhXjh
+ VNsn8osESB7SlVlQO4K7hxcUezdpahfejlYRRTaptGA5siXqBMiBy
+X-Gm-Gg: ASbGncst5TeaFuobiIeftQ1OxCxKvqmjVDfNNJsTiFcxBvIWP7heP35OeN9C6Am8O25
+ awe+Xnd5AzcjZue6OP8yG0gIquiCzviadyC2nL723C6vqRuhM3NI71SFqzhL3bIz8lqcZqfNwwD
+ wtUm27Z6/uWqGueMiRogLnRJ5AiIwX/CbDwRl/1MPMBn76+h431J48+xFvUC45SyRJMbw0tZI4W
+ iM9qfDtopQd9EctylOqLmjW5oTTAO+EyjeKrohRUOUmmmodiN/wkozuwTwoxIDJO4DxuoPp2IU5
+ EBJzKLm1DlCG
+X-Received: by 2002:a05:620a:44d3:b0:7b6:d6e5:ac6e with SMTP id
+ af79cd13be357-7b8636e6e09mr424916585a.4.1734537756957; 
+ Wed, 18 Dec 2024 08:02:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEk8K8Li40AVxD7oY68g+83EbML+bij5y1nsmF6JgePbttJbriFRdhTg65OIR7WoiH27Z5Cpw==
+X-Received: by 2002:a05:620a:44d3:b0:7b6:d6e5:ac6e with SMTP id
+ af79cd13be357-7b8636e6e09mr424913285a.4.1734537756673; 
+ Wed, 18 Dec 2024 08:02:36 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
+ [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b7048bb8b6sm438319585a.89.2024.12.18.08.02.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 08:02:36 -0800 (PST)
+Message-ID: <d34b78bd-4add-4123-b0e7-5c5afb8a9e67@redhat.com>
+Date: Wed, 18 Dec 2024 17:02:30 +0100
 MIME-Version: 1.0
-References: <20241209123717.99077-1-pbonzini@redhat.com>
- <20241209123717.99077-25-pbonzini@redhat.com>
- <Z2D2zk2Wdlqc5q2k@intel.com>
- <CABgObfY=jyu96eZ+ZcU9GXU+amt2wRm53vpvubHYTaeY9MWd2A@mail.gmail.com>
- <Z2JycooziPsfV8vX@intel.com>
- <CABgObfboJFTRMsuqO055g11ZWNx1qKNxrLgvYLc-Hh6RcmWtOw@mail.gmail.com>
- <d01798d5-1c93-48f7-bb78-d4602a13baac@redhat.com> <Z2LgScN1f/C3UdcD@intel.com>
-In-Reply-To: <Z2LgScN1f/C3UdcD@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 18 Dec 2024 17:01:14 +0100
-Message-ID: <CABgObfYqqkJeWRHt3Vrs=v0vTGo6Xh8kQk5KVgET_t=Vp0PEBQ@mail.gmail.com>
-Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org, 
- Junjie Mao <junjie.mao@hotmail.com>
-Content-Type: multipart/alternative; boundary="00000000000096bbd206298d8667"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] system: Move 'exec/confidential-guest-support.h' to
+ system/
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>, kvm@vger.kernel.org,
+ Marcelo Tosatti <mtosatti@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, qemu-s390x@nongnu.org,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
+References: <20241218155913.72288-1-philmd@linaro.org>
+ <20241218155913.72288-2-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20241218155913.72288-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,64 +167,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000096bbd206298d8667
-Content-Type: text/plain; charset="UTF-8"
+On 18/12/2024 16.59, Philippe Mathieu-Daudé wrote:
+> "exec/confidential-guest-support.h" is specific to system
+> emulation, so move it under the system/ namespace.
+> Mechanical change doing:
+> 
+>    $ sed -i \
+>      -e 's,exec/confidential-guest-support.h,sysemu/confidential-guest-support.h,' \
+>          $(git grep -l exec/confidential-guest-support.h)
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/{exec => system}/confidential-guest-support.h | 6 +++---
+>   target/i386/confidential-guest.h                      | 2 +-
+>   target/i386/sev.h                                     | 2 +-
+>   backends/confidential-guest-support.c                 | 2 +-
+>   hw/core/machine.c                                     | 2 +-
+>   hw/ppc/pef.c                                          | 2 +-
+>   hw/ppc/spapr.c                                        | 2 +-
+>   hw/s390x/s390-virtio-ccw.c                            | 2 +-
+>   system/vl.c                                           | 2 +-
+>   target/s390x/kvm/pv.c                                 | 2 +-
+>   10 files changed, 12 insertions(+), 12 deletions(-)
+>   rename include/{exec => system}/confidential-guest-support.h (96%)
 
-Il mer 18 dic 2024, 15:32 Zhao Liu <zhao1.liu@intel.com> ha scritto:
-
-> On Wed, Dec 18, 2024 at 11:26:35AM +0100, Paolo Bonzini wrote:
-> > Date: Wed, 18 Dec 2024 11:26:35 +0100
-> > From: Paolo Bonzini <pbonzini@redhat.com>
-> > Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class side
-> >
-> > On 12/18/24 08:14, Paolo Bonzini wrote:
-> > >     Moving on to another topic, about the gap (or question :-)) where a
-> > >     child class inherits the ClassInitImpl trait from the parent,
-> please see
-> > >     my test case example below: Doing something similar to
-> SysBusDevice and
-> > >     DeviceState using a generic T outside of the QOM library would
-> violate
-> > >     the orphan rule.
->
-> BTW, maybe we could also squash my previous example in test? :-)
->
-
-Sure.
-
-Paolo
-
---00000000000096bbd206298d8667
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 18 dic 2024, 15:32 Zhao L=
-iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
-a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On We=
-d, Dec 18, 2024 at 11:26:35AM +0100, Paolo Bonzini wrote:<br>
-&gt; Date: Wed, 18 Dec 2024 11:26:35 +0100<br>
-&gt; From: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" target=
-=3D"_blank" rel=3D"noreferrer">pbonzini@redhat.com</a>&gt;<br>
-&gt; Subject: Re: [PATCH 24/26] rust: qom: move device_id to PL011 class si=
-de<br>
-&gt; <br>
-&gt; On 12/18/24 08:14, Paolo Bonzini wrote:<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0Moving on to another topic, about the gap (or =
-question :-)) where a<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0child class inherits the ClassInitImpl trait f=
-rom the parent, please see<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0my test case example below: Doing something si=
-milar to SysBusDevice and<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0DeviceState using a generic T outside of the Q=
-OM library would violate<br>
-&gt; &gt;=C2=A0 =C2=A0 =C2=A0the orphan rule.<br>
-<br>
-BTW, maybe we could also squash my previous example in test? :-)<br></block=
-quote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Sure.</div>=
-<div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
-
---00000000000096bbd206298d8667--
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
