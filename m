@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718DEE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D0FBE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:13:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrxC-0006mW-1u; Wed, 18 Dec 2024 06:10:58 -0500
+	id 1tNrx4-0006Y8-8H; Wed, 18 Dec 2024 06:10:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxA-0006ln-61
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx2-0006XX-Kb
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:48 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx8-0005qS-GG
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:55 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx0-0005av-Q8
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520253;
+ s=mimecast20190719; t=1734520245;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MtIzsVKamrUhyld3Jztu+ZWqd5i0r0qoSFohUp5BuIE=;
- b=beQSIgjTBGg8/zQ764NNdCDsRGN8lI3poYsnHiGCRMBheTmjwc8fV1Hr0+tIv20lPtury9
- 8fF+7Np9hrc7MAhPNINc+d5butG+g4sQEiL/a8Ck/b3MyVM80wIRSTWPAWVrnmSwaAaq8Q
- 8Lulc0YMlWXnAdL5up39DyI0TA5uX1g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=qs5dlXSPnSiSRt+HDWuEqrKKDqyGCdmAxE6Hu1wPZYI=;
+ b=JD+Zz5E8zBbdO5s/rnt0yg/1nNTq7oXvFPD/fQ8SZxClZ21ptWLuiHT4HIiQBPQ8TnxA8T
+ BQPfgfu6ml3PgZma4atPMh/D5+cKyjtVGxt7WeK9Rl4s36JgDwIuQu9EtX1SpGxrKpQYtB
+ nYkq/L0tflAnpQ8Wn2GmF9yEL8XBiWU=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-slr5ylzqPeyID3uvfq8hSg-1; Wed,
- 18 Dec 2024 06:10:52 -0500
-X-MC-Unique: slr5ylzqPeyID3uvfq8hSg-1
-X-Mimecast-MFC-AGG-ID: slr5ylzqPeyID3uvfq8hSg
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-sClXd2QzPVuu2ohxGjrPrQ-1; Wed,
+ 18 Dec 2024 06:10:43 -0500
+X-MC-Unique: sClXd2QzPVuu2ohxGjrPrQ-1
+X-Mimecast-MFC-AGG-ID: sClXd2QzPVuu2ohxGjrPrQ
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 89A1E1954B1E
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:51 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9721519560B8
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:42 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B03A119560AD; Wed, 18 Dec 2024 11:10:49 +0000 (UTC)
+ id 408F319560AD; Wed, 18 Dec 2024 11:10:40 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 21/38] tests/functional: add a generalized archive_extract
-Date: Wed, 18 Dec 2024 12:09:41 +0100
-Message-ID: <20241218110958.226932-22-thuth@redhat.com>
+Subject: [PULL 17/38] tests/functional: move uncompress handling into new
+ uncompress.py file
+Date: Wed, 18 Dec 2024 12:09:37 +0100
+Message-ID: <20241218110958.226932-18-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -85,104 +86,112 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-There are many types of archives that the tests deal with. Provide
-a generalized 'archive_extract' that can detect the format and
-delegate to the appropriate helper for extraction. This ensures
-that all archive extraction code follows the same design pattern.
+More uncompress related code will be added shortly, so having a
+separate file makes more sense.
+
+The utils.py imports the functions from archive.py, so that
+existing callers don't need to be modified. This avoids
+redundant code churn until later in the series when all
+calls will be adapted for other reasons.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-22-berrange@redhat.com>
+Message-ID: <20241217155953.3950506-18-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py |  1 +
- tests/functional/qemu_test/archive.py  | 58 ++++++++++++++++++++++++++
- 2 files changed, 59 insertions(+)
+ tests/functional/qemu_test/uncompress.py | 36 ++++++++++++++++++++++++
+ tests/functional/qemu_test/utils.py      | 27 ++----------------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
+ create mode 100644 tests/functional/qemu_test/uncompress.py
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index fe6cbe3a8a..665c482d13 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -16,3 +16,4 @@
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-     skipFlakyTest, skipUntrustedTest, skipBigDataTest, \
-     skipIfMissingImports
-+from .archive import archive_extract
-diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
-index bc448dee4a..c439d9413a 100644
---- a/tests/functional/qemu_test/archive.py
-+++ b/tests/functional/qemu_test/archive.py
-@@ -10,8 +10,10 @@
+diff --git a/tests/functional/qemu_test/uncompress.py b/tests/functional/qemu_test/uncompress.py
+new file mode 100644
+index 0000000000..955170df65
+--- /dev/null
++++ b/tests/functional/qemu_test/uncompress.py
+@@ -0,0 +1,36 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# Utilities for python-based QEMU tests
++#
++# Copyright 2024 Red Hat, Inc.
++#
++# Authors:
++#  Thomas Huth <thuth@redhat.com>
++
++import gzip
++import lzma
++import os
++import shutil
++
++
++def gzip_uncompress(gz_path, output_path):
++    if os.path.exists(output_path):
++        return
++    with gzip.open(gz_path, 'rb') as gz_in:
++        try:
++            with open(output_path, 'wb') as raw_out:
++                shutil.copyfileobj(gz_in, raw_out)
++        except:
++            os.remove(output_path)
++            raise
++
++def lzma_uncompress(xz_path, output_path):
++    if os.path.exists(output_path):
++        return
++    with lzma.open(xz_path, 'rb') as lzma_in:
++        try:
++            with open(output_path, 'wb') as raw_out:
++                shutil.copyfileobj(lzma_in, raw_out)
++        except:
++            os.remove(output_path)
++            raise
+diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
+index 5ce1c4388e..6b87af4414 100644
+--- a/tests/functional/qemu_test/utils.py
++++ b/tests/functional/qemu_test/utils.py
+@@ -8,13 +8,12 @@
+ # This work is licensed under the terms of the GNU GPL, version 2 or
+ # later.  See the COPYING file in the top-level directory.
+ 
+-import gzip
+-import lzma
  import os
- from subprocess import check_call, run, DEVNULL
- import tarfile
-+from urllib.parse import urlparse
- import zipfile
+-import shutil
  
-+from .asset import Asset
- from .cmd import run_cmd
+ from .archive import tar_extract as archive_extract
+ from .archive import cpio_extract
++from .uncompress import gzip_uncompress
++from .uncompress import lzma_uncompress
  
- 
-@@ -56,3 +58,59 @@ def deb_extract(archive, dest_dir, member=None):
-         tar_extract(file_path, dest_dir, member)
-     finally:
-         os.chdir(cwd)
-+
-+'''
-+@params archive: filename, Asset, or file-like object to extract
-+@params dest_dir: target directory to extract into
-+@params member: optional member file to limit extraction to
-+
-+Extracts @archive into @dest_dir. All files are extracted
-+unless @member specifies a limit.
-+
-+If @format is None, heuristics will be applied to guess the format
-+from the filename or Asset URL. @format must be non-None if @archive
-+is a file-like object.
-+'''
-+def archive_extract(archive, dest_dir, format=None, member=None):
-+    if format is None:
-+        format = guess_archive_format(archive)
-+    if type(archive) == Asset:
-+        archive = str(archive)
-+
-+    if format == "tar":
-+        tar_extract(archive, dest_dir, member)
-+    elif format == "zip":
-+        zip_extract(archive, dest_dir, member)
-+    elif format == "cpio":
-+        if member is not None:
-+            raise Exception("Unable to filter cpio extraction")
-+        cpio_extract(archive, dest_dir)
-+    elif format == "deb":
-+        if type(archive) != str:
-+            raise Exception("Unable to use file-like object with deb archives")
-+        deb_extract(archive, dest_dir, "./" + member)
-+    else:
-+        raise Exception(f"Unknown archive format {format}")
-+
-+'''
-+@params archive: filename, or Asset to guess
-+
-+Guess the format of @compressed, raising an exception if
-+no format can be determined
-+'''
-+def guess_archive_format(archive):
-+    if type(archive) == Asset:
-+        archive = urlparse(archive.url).path
-+    elif type(archive) != str:
-+        raise Exception(f"Unable to guess archive format for {archive}")
-+
-+    if ".tar." in archive or archive.endswith("tgz"):
-+        return "tar"
-+    elif archive.endswith(".zip"):
-+        return "zip"
-+    elif archive.endswith(".cpio"):
-+        return "cpio"
-+    elif archive.endswith(".deb") or archive.endswith(".udeb"):
-+        return "deb"
-+    else:
-+        raise Exception(f"Unknown archive format for {archive}")
+ """
+ Round up to next power of 2
+@@ -36,25 +35,3 @@ def image_pow2ceil_expand(path):
+         if size != size_aligned:
+             with open(path, 'ab+') as fd:
+                 fd.truncate(size_aligned)
+-
+-def gzip_uncompress(gz_path, output_path):
+-    if os.path.exists(output_path):
+-        return
+-    with gzip.open(gz_path, 'rb') as gz_in:
+-        try:
+-            with open(output_path, 'wb') as raw_out:
+-                shutil.copyfileobj(gz_in, raw_out)
+-        except:
+-            os.remove(output_path)
+-            raise
+-
+-def lzma_uncompress(xz_path, output_path):
+-    if os.path.exists(output_path):
+-        return
+-    with lzma.open(xz_path, 'rb') as lzma_in:
+-        try:
+-            with open(output_path, 'wb') as raw_out:
+-                shutil.copyfileobj(lzma_in, raw_out)
+-        except:
+-            os.remove(output_path)
+-            raise
 -- 
 2.47.1
 
