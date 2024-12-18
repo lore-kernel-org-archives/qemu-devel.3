@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2747BE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:55:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32DBE77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:55:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrhD-0000cQ-5U; Wed, 18 Dec 2024 05:54:27 -0500
+	id 1tNrho-0000lc-Si; Wed, 18 Dec 2024 05:55:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tNrhA-0000bl-1d
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:54:24 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tNrhn-0000lG-SK
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:03 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tNrh7-0006mD-M9
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:54:23 -0500
+ id 1tNrhm-0006qX-42
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:55:03 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734519258;
+ s=mimecast20190719; t=1734519301;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=t0lhJg/mvYw8fdRak6ZghlUJNMFCv8Se7K2CJkMME5Q=;
- b=XhCfRrbF4ROWURTRSlttEW8r45l7tNFmMcPTjEmWyaZRenvvGm2nxnRKrfDeuNyXbRPR/x
- EaVNuXemMlbWJo3yLGZpJcxaZXsznQxKspBKBFs8GFQIbuQDP4+nVM0KmJo+2I8/+HwKDq
- NGUymdJqBgZ0u6n9rPlGHKMvL6p9wEI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/QBJrTf6g4Vqln67IUOCc7Xr8xeF+lIWKbSulfpvbBM=;
+ b=Ln8v3H+TYV+P/KE3vaVBRM7KDnHEdra7WhHr9ODiKn8Ag1hdea4qwxS9OH2Pspod6XlfAU
+ QIIU35Lxr3htDshqCU8A96rO49Ywb1e0naByEL6t69Pb+alFxEUK7U+ouMxKAMVPBnf9ix
+ G5KR1O+SE1AIJDQbzCkYOyAhPDNT5Ic=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-205-aWtNE8_KO_iH6eOy6oEepA-1; Wed, 18 Dec 2024 05:53:08 -0500
-X-MC-Unique: aWtNE8_KO_iH6eOy6oEepA-1
-X-Mimecast-MFC-AGG-ID: aWtNE8_KO_iH6eOy6oEepA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4362b9c15d8so28986505e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:53:07 -0800 (PST)
+ us-mta-22-eerHLl4cO7ijPjarwApByA-1; Wed, 18 Dec 2024 05:53:38 -0500
+X-MC-Unique: eerHLl4cO7ijPjarwApByA-1
+X-Mimecast-MFC-AGG-ID: eerHLl4cO7ijPjarwApByA
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-436289a570eso50744405e9.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:53:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734519187; x=1735123987;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=t0lhJg/mvYw8fdRak6ZghlUJNMFCv8Se7K2CJkMME5Q=;
- b=MOQq5ACHumwUeQq2OHX+aP9jF5admvVO8eoeMwFA3MPbJreG/5wV0S0mbzP7gIeBoZ
- +M1FClNHFaye6WuU83KX1OmfGx05wHmnmKcmXXhYQ3m2VyoFkXTONWdIoKj7KAcD5Jm5
- VdB1fMZZ9eUAnG1ljLQ0Cib8OkM0yoKxUzKonzTz7x3/MmjHmq/4rZyVwaybTjgJr1fI
- VweIPNbjcKOCh3Y+fd3F1Wiuk7Bd4AvPrIvgKqEgJtNxsTeQgNdo8QvDqsbT4uSTIoGG
- kErPkdf8nm0hJFlmwudZGzykA67r/A8CoByXTmT5gfRRJeQD2E1ZQ+no97KWs8EJRk9h
- OU0g==
-X-Gm-Message-State: AOJu0Yy6mII4rl9oW859wbonkdvVdRJb772USUppmVr05fCo0rxff9dI
- 3VBdOt5fZv2jcrigs5yGr2SXF863ZUHQJ4dHb3BGwdynOkIJpOqyzqSQPwig9C6nmvz19PdrYJW
- R0vZibFkYI4L4Orya1nx7RRM/IpaBtr0CYTdYqseAUQ5mOnF1p+sPLE7c6WY2qzJmIDGTOHPfgN
- KUVRvyeYDRYrPefGbg90dsNFBuo9Yl0N/rHUg=
-X-Gm-Gg: ASbGncum8xbER5c5Uvqer2ASlBwBJh+aLJZpzubHujW6/uuPI2yv+Zh4uG2GsC0MRT/
- JKZv/wZtNz7g8KR41GrDbbQRhAOf1YjenwBnkDAdC8oouF2B2JC5IQ/ADlmd9ATQoctCAhz5wGP
- NYIVMfCp7hzsiqgJPZap0W5Fw6WuKT1/JZR5NUmAgur1tYhiyeZ6Ar6fe34vKXsLFYXt9za+BbV
- dzCVoikSb1WekAmlZ/09vo8ReY0Cqwo156MsvML7+PjZZDAsZRxo7fKrHTKDnv+oZLyF/J8bXkZ
- MEmy1eQSqOSZEkU49U4hZwuDmmkHgs+7A4H99tmMxQ==
-X-Received: by 2002:a05:600c:468a:b0:434:9499:9e87 with SMTP id
- 5b1f17b1804b1-436553fe17dmr15955555e9.25.1734519186821; 
- Wed, 18 Dec 2024 02:53:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGU6FOClPGPAy4B0xYMkACLZsqVugyK18upU6jqW8o/gMshW/5iQT7m8IsNYJ8/KH0/jXlKlA==
-X-Received: by 2002:a05:600c:468a:b0:434:9499:9e87 with SMTP id
- 5b1f17b1804b1-436553fe17dmr15955185e9.25.1734519186269; 
- Wed, 18 Dec 2024 02:53:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734519217; x=1735124017;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/QBJrTf6g4Vqln67IUOCc7Xr8xeF+lIWKbSulfpvbBM=;
+ b=R7J/QK+0u6yx9fHcBFo8JzTP8Sr5AdCCBay///f7/oqcECjvBSqiOpT9ivyjnTyhXo
+ oozYXwV2jyhSK4rHK7yN+FeUugapuqOP69daR1gPO8HsN2OQQfSabAIqO7zM7wP+up0d
+ dJwh7l2qHjL3ALsIZolu0HB91YWrNkPYinb5W7ttsXA/e9RSv07wxqvIZ3OtKDrF28uQ
+ 2wnnYT5dETEBQuNK1vhqtZAVfgMRI4FW5cUOyIgkhZnN++MUwY2He0zFaBPdXXLbzJyh
+ 1d4KzVaxF7ECL5yCOkMmGUJFqG9h2pLikTujL8hmKzIgMDyHMagS1WGzoupQirfWOSMq
+ bpgQ==
+X-Gm-Message-State: AOJu0YyCKRTRRSPWWYQtVcrDSqTgjHQEaoxODNDcAnK1XDZKBpN+gqNy
+ gQ2r+CjKUsB3PT+kS+qwAWiAJtGj07RWFUyHxTzaX1U4b59lS5FF1mumKqThZxkxq/2PduFSf1R
+ 0MUOipUFCkFgKbAioCsXROiSooXC+ot6CcPQrwSS1dsh3bnXJ5wjPCmAQpcZ6PLdBiJWO2P4tjK
+ pzabwyHG3t3hHMK/ezYLOPzM5v28arc9qIMaQ=
+X-Gm-Gg: ASbGncsEUBBZlo7oygdmWqEmYC79MtOd+rTPji5NM2R26XTe7cUWNwmudBbfd5Tsy6H
+ /wrbqzaeAdP/99Le54ossZhuDpDGuyMhm79klUnOC3zLCE40MsXSDfQFVmenOFOkyLp61+4z39C
+ xmViUsfnqRkbaVOTdS9e9jTT4onCnl9aMHpKLv9hXJI1ArnoWZzXXQdb4AlffBfadR972vZZ/4D
+ +TY5EJtKfV2L87pWx2CEub7OzUyQJvNOEbGLhs1T93JCvwbsdg8h459MaXy67cgxXOSOGgqUt9e
+ W5sFDIuDM9r21HEHpJ2qORuVn1NvLWDH44qmSeefEQ==
+X-Received: by 2002:a05:6000:18a5:b0:386:3a8e:64bd with SMTP id
+ ffacd0b85a97d-388e4d8b7c1mr1886343f8f.22.1734519217512; 
+ Wed, 18 Dec 2024 02:53:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHGxtoL89ebJ7m7B7KkyshTksdkcAMmk1gEf7e125/rlETHyOKlqVT/HvkA0HnoJZacLw7wpg==
+X-Received: by 2002:a05:6000:18a5:b0:386:3a8e:64bd with SMTP id
+ ffacd0b85a97d-388e4d8b7c1mr1886308f8f.22.1734519217017; 
+ Wed, 18 Dec 2024 02:53:37 -0800 (PST)
 Received: from localhost
  (p200300cbc73f8300a5d5c21badd3cf50.dip0.t-ipconnect.de.
  [2003:cb:c73f:8300:a5d5:c21b:add3:cf50])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-43656af6c5bsm16439475e9.2.2024.12.18.02.53.03
+ ffacd0b85a97d-388c804a297sm13607480f8f.67.2024.12.18.02.53.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 02:53:05 -0800 (PST)
+ Wed, 18 Dec 2024 02:53:36 -0800 (PST)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Halil Pasic <pasic@linux.ibm.com>,
@@ -81,13 +82,15 @@ Cc: Halil Pasic <pasic@linux.ibm.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>,
  David Hildenbrand <david@redhat.com>
-Subject: [PULL 00/15] Host Memory Backends and Memory devices queue 2024-12-18
-Date: Wed, 18 Dec 2024 11:52:48 +0100
-Message-ID: <20241218105303.1966303-1-david@redhat.com>
+Subject: [PULL 13/15] s390x: remember the maximum page size
+Date: Wed, 18 Dec 2024 11:53:01 +0100
+Message-ID: <20241218105303.1966303-14-david@redhat.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241218105303.1966303-1-david@redhat.com>
+References: <20241218105303.1966303-1-david@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -112,79 +115,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+Let's remember the value (successfully) set via s390_set_max_pagesize().
+This will be helpful to reject hotplugged memory devices that would exceed
+this initially set page size.
 
-  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+Handle it just like how we handle s390_get_memory_limit(), storing it in
+the machine, and moving the handling to machine code.
 
-are available in the Git repository at:
+Message-ID: <20241008105455.2302628-13-david@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ hw/s390x/s390-virtio-ccw.c         | 12 +++++++++++-
+ include/hw/s390x/s390-virtio-ccw.h |  1 +
+ target/s390x/cpu-sysemu.c          |  7 -------
+ target/s390x/cpu.h                 |  1 -
+ 4 files changed, 12 insertions(+), 9 deletions(-)
 
-  https://github.com/davidhildenbrand/qemu.git tags/mem-2024-12-18
-
-for you to fetch changes up to eb5c5f1ab479e9311d8e513e3eeafaf30f2b25b3:
-
-  s390x: virtio-mem support (2024-12-18 09:50:05 +0100)
-
-----------------------------------------------------------------
-Hi,
-
-"Host Memory Backends" and "Memory devices" queue ("mem"):
-- Fixup handling of virtio-mem unplug during system resets, as
-  preparation for s390x support (especially kdump in the Linux guest)
-- virtio-mem support for s390x
-
-----------------------------------------------------------------
-David Hildenbrand (15):
-      virtio-mem: unplug memory only during system resets, not device resets
-      s390x/s390-virtio-ccw: don't crash on weird RAM sizes
-      s390x/s390-virtio-hcall: remove hypercall registration mechanism
-      s390x/s390-virtio-hcall: prepare for more diag500 hypercalls
-      s390x: rename s390-virtio-hcall* to s390-hypercall*
-      s390x/s390-virtio-ccw: move setting the maximum guest size from sclp to machine code
-      s390x: introduce s390_get_memory_limit()
-      s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT
-      s390x/s390-stattrib-kvm: prepare for memory devices and sparse memory layouts
-      s390x/s390-skeys: prepare for memory devices
-      s390x/s390-virtio-ccw: prepare for memory devices
-      s390x/pv: prepare for memory devices
-      s390x: remember the maximum page size
-      s390x/virtio-ccw: add support for virtio based memory devices
-      s390x: virtio-mem support
-
- MAINTAINERS                        |   5 +
- hw/s390x/Kconfig                   |   1 +
- hw/s390x/meson.build               |   6 +-
- hw/s390x/s390-hypercall.c          |  85 ++++++++++++++
- hw/s390x/s390-hypercall.h          |  25 ++++
- hw/s390x/s390-skeys.c              |   6 +-
- hw/s390x/s390-stattrib-kvm.c       |  67 +++++++----
- hw/s390x/s390-virtio-ccw.c         | 165 ++++++++++++++++++---------
- hw/s390x/s390-virtio-hcall.c       |  41 -------
- hw/s390x/s390-virtio-hcall.h       |  25 ----
- hw/s390x/sclp.c                    |  17 +--
- hw/s390x/virtio-ccw-md-stubs.c     |  24 ++++
- hw/s390x/virtio-ccw-md.c           | 153 +++++++++++++++++++++++++
- hw/s390x/virtio-ccw-md.h           |  44 ++++++++
- hw/s390x/virtio-ccw-mem.c          | 226 +++++++++++++++++++++++++++++++++++++
- hw/s390x/virtio-ccw-mem.h          |  34 ++++++
- hw/virtio/Kconfig                  |   1 +
- hw/virtio/virtio-mem.c             | 107 ++++++++++++------
- include/hw/s390x/s390-virtio-ccw.h |   4 +
- include/hw/virtio/virtio-mem.h     |  13 ++-
- target/s390x/cpu-sysemu.c          |  15 ---
- target/s390x/cpu.h                 |   2 -
- target/s390x/kvm/kvm.c             |  18 +--
- target/s390x/kvm/pv.c              |   2 +-
- target/s390x/tcg/misc_helper.c     |   7 +-
- 25 files changed, 866 insertions(+), 227 deletions(-)
- create mode 100644 hw/s390x/s390-hypercall.c
- create mode 100644 hw/s390x/s390-hypercall.h
- delete mode 100644 hw/s390x/s390-virtio-hcall.c
- delete mode 100644 hw/s390x/s390-virtio-hcall.h
- create mode 100644 hw/s390x/virtio-ccw-md-stubs.c
- create mode 100644 hw/s390x/virtio-ccw-md.c
- create mode 100644 hw/s390x/virtio-ccw-md.h
- create mode 100644 hw/s390x/virtio-ccw-mem.c
- create mode 100644 hw/s390x/virtio-ccw-mem.h
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index aa06d07835..ef1bf32770 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -150,6 +150,16 @@ uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
+     return s390ms->memory_limit;
+ }
+ 
++static void s390_set_max_pagesize(S390CcwMachineState *s390ms,
++                                  uint64_t pagesize)
++{
++    assert(!s390ms->max_pagesize && pagesize);
++    if (kvm_enabled()) {
++        kvm_s390_set_max_pagesize(pagesize, &error_fatal);
++    }
++    s390ms->max_pagesize = pagesize;
++}
++
+ static void s390_memory_init(MachineState *machine)
+ {
+     S390CcwMachineState *s390ms = S390_CCW_MACHINE(machine);
+@@ -198,7 +208,7 @@ static void s390_memory_init(MachineState *machine)
+      * Configure the maximum page size. As no memory devices were created
+      * yet, this is the page size of initial memory only.
+      */
+-    s390_set_max_pagesize(qemu_maxrampagesize(), &error_fatal);
++    s390_set_max_pagesize(s390ms, qemu_maxrampagesize());
+     /* Initialize storage key device */
+     s390_skeys_init();
+     /* Initialize storage attributes device */
+diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+index eb04542979..5a730f5d07 100644
+--- a/include/hw/s390x/s390-virtio-ccw.h
++++ b/include/hw/s390x/s390-virtio-ccw.h
+@@ -30,6 +30,7 @@ struct S390CcwMachineState {
+     bool pv;
+     uint8_t loadparm[8];
+     uint64_t memory_limit;
++    uint64_t max_pagesize;
+ 
+     SCLPDevice *sclp;
+ };
+diff --git a/target/s390x/cpu-sysemu.c b/target/s390x/cpu-sysemu.c
+index 3118a25fee..706a5c53e2 100644
+--- a/target/s390x/cpu-sysemu.c
++++ b/target/s390x/cpu-sysemu.c
+@@ -255,13 +255,6 @@ unsigned int s390_cpu_set_state(uint8_t cpu_state, S390CPU *cpu)
+     return s390_count_running_cpus();
+ }
+ 
+-void s390_set_max_pagesize(uint64_t pagesize, Error **errp)
+-{
+-    if (kvm_enabled()) {
+-        kvm_s390_set_max_pagesize(pagesize, errp);
+-    }
+-}
+-
+ void s390_cmma_reset(void)
+ {
+     if (kvm_enabled()) {
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index b4506539f0..5b7992deda 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -881,7 +881,6 @@ static inline void s390_do_cpu_load_normal(CPUState *cs, run_on_cpu_data arg)
+ 
+ /* cpu.c */
+ void s390_crypto_reset(void);
+-void s390_set_max_pagesize(uint64_t pagesize, Error **errp);
+ void s390_cmma_reset(void);
+ void s390_enable_css_support(S390CPU *cpu);
+ void s390_do_cpu_set_diag318(CPUState *cs, run_on_cpu_data arg);
 -- 
 2.47.1
 
