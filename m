@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 434F3E7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:31:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B5B2E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:31:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2Yj-000302-W4; Wed, 18 Dec 2024 17:30:26 -0500
+	id 1tO2ZC-00035k-JJ; Wed, 18 Dec 2024 17:30:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Yf-0002zl-Pi
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:22 -0500
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
+ id 1tO2ZA-00033o-08
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:52 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Yd-0001rD-O5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:21 -0500
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-218c8aca5f1so2146805ad.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:18 -0800 (PST)
+ id 1tO2Z3-0002kq-Bk
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:51 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2166022c5caso1492755ad.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734561017; x=1735165817; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jdv9Pu830lPDIAEMJbLdF4GTTGNKTQjj20qmaHswvqE=;
- b=cmDtxOwbx1vEp1vwhtMwtlPHjeLW9E+SQEMFyBjyq5JzhxNtwO7HjwCnJ0+6qDkdkb
- RzrLYKzPP3ZHl5K80nyNKVIWeztwMgKjOy4mRg+tNzq9quFK7sbzPeVICWoOC+smKzvC
- eWYHwMn3dCl8jt/SNtcJEJa7QfsoQGaF5dkLwRugxO4grMwvV2miwpDsDyA7lERrLDcQ
- rXU1S8RJg65IXylmFqGpMiQwNMHOubjiRMGNfzdqWOXfd06z3GX7JM8T5E1akRmNJGij
- LVyyjGn+PdlgNjbIlH+do1g8oXvy2Rur6wUivZnfFRYsiKt8IQjlj/xkFYrwAnmuM+yV
- Q0sg==
+ d=gmail.com; s=20230601; t=1734561038; x=1735165838; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bQY3VcjBPjxrbcjSRiagBQ+xXLrlFjWQYHXXCoIwN2Q=;
+ b=jIVd5c8ggzAm2c0vkmrSeuyNplJxzBX56n8VsX4cSZKtuKl1Waqa3iXyi/7I+Fvz7m
+ QKkcOxib/zE7VH7KVUvmdN+zn3cr0vuxMqzCr3k15r7rsPAjQSThAHescdbGrsfXihFE
+ aMGCrrgXKVBW9c1drsr7MKbCuYMPPDpHSOZ21EZpwbftTRwvGcr0QhzaReSjteDVfTSa
+ OzzBeehYdTD8Z1ZScVbgjBYhGg3EN0uBWGqAChVIuuEJj6zGnCXopu6EBW4gynEno7F5
+ w26RGERDbZXGTuWZ5k4cBaVUwAf7FWI/9mq7jPRrFDcF44xJFELbs3acEUb90Ub6DHIw
+ GcSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734561017; x=1735165817;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jdv9Pu830lPDIAEMJbLdF4GTTGNKTQjj20qmaHswvqE=;
- b=Yb+3oimpAFwnNE2MDJFVxlvSIU9yc0XvBZ3oqgoLSp17zcynJxuN3vc2MScy6vH7XL
- edLyl23hKoVhSl4wSQS1zxpvrj9GQK4XgsTOVghsfm6dVP7zxV3hnZUb0XAIl07ezkLd
- 1XC/ajrloJKUMcn4wkYgJ9jMl8LdTtHsAmQFrtZ1Vw0K8AGnfyNq7wpNwE6/lgUQbaOR
- bYNh/2G6AUybJOESuyThmZzzfnr7XpcAoNjxNYIkCCx4MtB/FUibAobnxEwxKb4TD80R
- DT8p6pCG1o00WGYloG48pH5ouzTh9/y6OcWGYzW4Cja93khJV58FS5zSOols7XHjJwBm
- 6wEw==
-X-Gm-Message-State: AOJu0YyUwEtNnfMwy4RPHJLndYS8UDsvJruydaYVJbsqT5c1J3kuO+NP
- L+1jj4qhsGu3qUDqE6mjBm5HhLzAmUmUjgjOohIyPUWs07239L9wbrBKl439
-X-Gm-Gg: ASbGncuW52ie7RGWeSvaBTBpqwGsWAgaxmccwOoaF96erHWwdR894DjaI70FDIfZO3b
- 7GXBO28x5ooOvIEaQ12uLn717g3MAQ/N4ez6AFT81xZbqchPNYSJocD8XJpKVSuVSZb7XapZBwZ
- v4PCuifFZRh0kS0WxAUEGrL40Yl4AKV3qEADrAFZoSNL4KtJoM0m9lsAzBt6Iu01huLkSwJPwLZ
- 378JXaYdHoo3ZvQ3znUbm4Q8Ax/nxMv3q7qIXMROg+8RfDVLtI+65rjEob0ym9Q/7dgGT7qmcRK
- +SN9wFhN+BngCp8whMt4GGEuZzEqVuyFgfbKq2nol7nJxMB6xsFEixzCTBZje+Y=
-X-Google-Smtp-Source: AGHT+IHd9EK4+ugYTQFJ+w4sDJwE0W3C36m1F3lQHCtQ4RH79a5JAKsjbu6sWAdudQ1KQMBr8zep6w==
-X-Received: by 2002:a17:902:da8b:b0:215:3fb9:5201 with SMTP id
- d9443c01a7336-218d7252a53mr66062335ad.44.1734561016772; 
- Wed, 18 Dec 2024 14:30:16 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734561038; x=1735165838;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bQY3VcjBPjxrbcjSRiagBQ+xXLrlFjWQYHXXCoIwN2Q=;
+ b=nk65MUl5EJK0tmo70aBNyMxNfrgJm+lu/4zuFVqOrAdvzMs1cNKleA9aneBeOFp00d
+ y+6pLdTEjc9P5XEKc8BXJPJVm9uf9/WbZlCsNN8xlHC69OJUoiRN67GnAyXjIwo4HS1r
+ 2sEqaZh8xmcmXIOGJTL6WabVj5c8MMTGSk4oU2xS3VMEjYUFg1n10+BcMkH7oau/DoFb
+ u9jS4caWVrYhdnd18vIWK+uyCl4CzVDy7M5cI2vzGObaJN+IBxM04GvtYLQagnSsIs15
+ E3UEhgEkeu5niiWNQDjC1hZNHEeUhUiK39U4bu6E1a7jMtDJwn6mb/N/USU+vzQkcDWG
+ 3hFQ==
+X-Gm-Message-State: AOJu0YxueK66WwrJg05YkIZkBphE1X3W3WsFXFXFY/tPqvD62GrfmzUq
+ Ekx0rgwtlCYn7S/Bsgd8VufC3xdQKaZvkNUUXA91H8bvXmAlvJ0irLyIBJbL
+X-Gm-Gg: ASbGncsdCaZmCo13QWqmbm6B79zGxHaqfFE/jHc/Qfwi/NU4X0v06wcvXKWEnOaQqH/
+ sOkMPpjtBt82KnHGw47Eu+QlDRPyyfkfX51Sx3GHjU19FU0lFZrRAG4hBCUjGfyB+FKrc/uztQt
+ tWngIhbhx1PhrVB6TAgLPPuAf7zU0uP7CIevdzzDtSFaP/julOgDaA9f13jJhbboQPw/QznyPuH
+ MFFwNrWedwd5gvOz49iJXztAlmqaAM/Lzs5hwKSY6SRdarQH/73tZKMHEk7tb5qDnaW25T19O6H
+ XB8b1GyfvVzMfAYi2+dsW0dq6KXG3z50ttBlOIMfHam+W8vi/6lPTR0M2vC9z74=
+X-Google-Smtp-Source: AGHT+IGN9aWczH2D1sypf6xY/UgV5umsWdWBNSXvfolg9RpSKVutDdL1klaCweIyoTfugFhPFMNSYQ==
+X-Received: by 2002:a17:902:ceca:b0:215:6fcd:6cd1 with SMTP id
+ d9443c01a7336-218d6fc3a10mr50475845ad.7.1734561037818; 
+ Wed, 18 Dec 2024 14:30:37 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.14
+ d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:30:16 -0800 (PST)
+ Wed, 18 Dec 2024 14:30:37 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/39] riscv-to-apply queue
-Date: Thu, 19 Dec 2024 08:29:30 +1000
-Message-ID: <20241218223010.1931245-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 07/39] hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support
+Date: Thu, 19 Dec 2024 08:29:37 +1000
+Message-ID: <20241218223010.1931245-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
+References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -101,147 +103,253 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+MSIx support is added in the RISC-V IOMMU platform device by including
+the required MSIx facilities to alow software to properly setup the MSIx
+subsystem.
 
-are available in the Git repository at:
+We took inspiration of what is being done in the riscv-iommu-pci device,
+mainly msix_init() and msix_notify(), while keeping in mind that
+riscv-iommu-sys isn't a true PCI device and we don't need to copy/paste
+all the contents of these MSIx functions.
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20241219-1
+Two extra MSI MemoryRegions were added: 'msix-table' and 'msix-pba'.
+They are used to manage r/w of the MSI table and Pending Bit Array (PBA)
+respectively. Both are subregions of the main IOMMU memory region,
+iommu->regs_mr, initialized during riscv_iommu_realize(), and each one
+has their own handlers for MSIx reads and writes.
 
-for you to fetch changes up to 5632d271be16b5e769342d54198c4359658abcb7:
+This is the expected memory map when using this device in the 'virt'
+machine:
 
-  target/riscv: add support for RV64 Xiangshan Nanhu CPU (2024-12-18 11:07:59 +1000)
+    0000000003010000-0000000003010fff (prio 0, i/o): riscv-iommu-regs
+      0000000003010300-000000000301034f (prio 0, i/o): msix-table
+      0000000003010400-0000000003010407 (prio 0, i/o): msix-pba
 
-----------------------------------------------------------------
-RISC-V PR for 10.0
+We're now able to set IGS to RISCV_IOMMU_CAP_IGS_BOTH, and userspace is
+free to decide which interrupt model to use.
 
-* Correct the validness check of iova
-* Fix APLIC in_clrip and clripnum write emulation
-* Support riscv-iommu-sys device
-* Add Tenstorrent Ascalon CPU
-* Add AIA userspace irqchip_split support
-* Add Microblaze V generic board
-* Upgrade ACPI SPCR table to support SPCR table revision 4 format
-* Remove tswap64() calls from HTIF
-* Support 64-bit address of initrd
-* Introduce svukte ISA extension
-* Support ssstateen extension
-* Support for RV64 Xiangshan Nanhu CPU
+Enabling MSIx support for this device in the 'virt' machine requires
+adding 'msi-parent' in the iommu-sys DT.
 
-----------------------------------------------------------------
-Anton Blanchard (1):
-      target/riscv: Add Tenstorrent Ascalon CPU
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241106133407.604587-6-dbarboza@ventanamicro.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/riscv-iommu-sys.c | 116 +++++++++++++++++++++++++++++++++++--
+ hw/riscv/virt.c            |   6 +-
+ hw/riscv/trace-events      |   2 +
+ 3 files changed, 119 insertions(+), 5 deletions(-)
 
-Daniel Henrique Barboza (15):
-      hw/riscv/riscv-iommu.c: add riscv_iommu_instance_init()
-      hw/riscv/riscv-iommu: parametrize CAP.IGS
-      hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support
-      hw/riscv/riscv-iommu: implement reset protocol
-      docs/specs: add riscv-iommu-sys information
-      hw/intc/riscv_aplic: rename is_kvm_aia()
-      hw/riscv/virt.c: reduce virt_use_kvm_aia() usage
-      hw/riscv/virt.c: rename helper to virt_use_kvm_aia_aplic_imsic()
-      target/riscv/kvm: consider irqchip_split() in aia_create()
-      hw/riscv/virt.c, riscv_aplic.c: add 'emulated_aplic' helpers
-      hw/intc/riscv_aplic: add kvm_msicfgaddr for split mode aplic-imsic
-      target/riscv/kvm: remove irqchip_split() restriction
-      docs: update riscv/virt.rst with kernel-irqchip=split support
-      target/riscv/tcg: hide warn for named feats when disabling via priv_ver
-      target/riscv: add ssstateen
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index 4b82046ce9..a0ef67a20b 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -26,11 +26,15 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
++#include "exec/exec-all.h"
++#include "trace.h"
+ 
+ #include "riscv-iommu.h"
+ 
+ #define RISCV_IOMMU_SYSDEV_ICVEC_VECTORS 0x3333
+ 
++#define RISCV_IOMMU_PCI_MSIX_VECTORS 5
++
+ /* RISC-V IOMMU System Platform Device Emulation */
+ 
+ struct RISCVIOMMUStateSys {
+@@ -39,21 +43,123 @@ struct RISCVIOMMUStateSys {
+     uint32_t         base_irq;
+     DeviceState      *irqchip;
+     RISCVIOMMUState  iommu;
++
++    /* Wired int support */
+     qemu_irq         irqs[RISCV_IOMMU_INTR_COUNT];
++
++    /* Memory Regions for MSIX table and pending bit entries. */
++    MemoryRegion msix_table_mmio;
++    MemoryRegion msix_pba_mmio;
++    uint8_t *msix_table;
++    uint8_t *msix_pba;
++};
++
++static uint64_t msix_table_mmio_read(void *opaque, hwaddr addr,
++                                     unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    g_assert(addr + size <= RISCV_IOMMU_PCI_MSIX_VECTORS * PCI_MSIX_ENTRY_SIZE);
++    return pci_get_long(s->msix_table + addr);
++}
++
++static void msix_table_mmio_write(void *opaque, hwaddr addr,
++                                  uint64_t val, unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    g_assert(addr + size <= RISCV_IOMMU_PCI_MSIX_VECTORS * PCI_MSIX_ENTRY_SIZE);
++    pci_set_long(s->msix_table + addr, val);
++}
++
++static const MemoryRegionOps msix_table_mmio_ops = {
++    .read = msix_table_mmio_read,
++    .write = msix_table_mmio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .max_access_size = 4,
++    },
++};
++
++static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
++                                   unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    return pci_get_long(s->msix_pba + addr);
++}
++
++static void msix_pba_mmio_write(void *opaque, hwaddr addr,
++                                uint64_t val, unsigned size)
++{
++}
++
++static const MemoryRegionOps msix_pba_mmio_ops = {
++    .read = msix_pba_mmio_read,
++    .write = msix_pba_mmio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .max_access_size = 4,
++    },
+ };
+ 
++static void riscv_iommu_sysdev_init_msi(RISCVIOMMUStateSys *s,
++                                        uint32_t n_vectors)
++{
++    RISCVIOMMUState *iommu = &s->iommu;
++    uint32_t table_size = table_size = n_vectors * PCI_MSIX_ENTRY_SIZE;
++    uint32_t table_offset = RISCV_IOMMU_REG_MSI_CONFIG;
++    uint32_t pba_size = QEMU_ALIGN_UP(n_vectors, 64) / 8;
++    uint32_t pba_offset = RISCV_IOMMU_REG_MSI_CONFIG + 256;
++
++    s->msix_table = g_malloc0(table_size);
++    s->msix_pba = g_malloc0(pba_size);
++
++    memory_region_init_io(&s->msix_table_mmio, OBJECT(s), &msix_table_mmio_ops,
++                          s, "msix-table", table_size);
++    memory_region_add_subregion(&iommu->regs_mr, table_offset,
++                                &s->msix_table_mmio);
++
++    memory_region_init_io(&s->msix_pba_mmio, OBJECT(s), &msix_pba_mmio_ops, s,
++                          "msix-pba", pba_size);
++    memory_region_add_subregion(&iommu->regs_mr, pba_offset,
++                                &s->msix_pba_mmio);
++}
++
++static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUStateSys *s,
++                                        uint32_t vector)
++{
++    uint8_t *table_entry = s->msix_table + vector * PCI_MSIX_ENTRY_SIZE;
++    uint64_t msi_addr = pci_get_quad(table_entry + PCI_MSIX_ENTRY_LOWER_ADDR);
++    uint32_t msi_data = pci_get_long(table_entry + PCI_MSIX_ENTRY_DATA);
++    MemTxResult result;
++
++    address_space_stl_le(&address_space_memory, msi_addr,
++                         msi_data, MEMTXATTRS_UNSPECIFIED, &result);
++    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
++}
++
+ static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
+                                       unsigned vector)
+ {
+     RISCVIOMMUStateSys *s = container_of(iommu, RISCVIOMMUStateSys, iommu);
+     uint32_t fctl =  riscv_iommu_reg_get32(iommu, RISCV_IOMMU_REG_FCTL);
+ 
+-    /* We do not support MSIs yet */
+-    if (!(fctl & RISCV_IOMMU_FCTL_WSI)) {
++    if (fctl & RISCV_IOMMU_FCTL_WSI) {
++        qemu_irq_pulse(s->irqs[vector]);
++        trace_riscv_iommu_sys_irq_sent(vector);
+         return;
+     }
+ 
+-    qemu_irq_pulse(s->irqs[vector]);
++    riscv_iommu_sysdev_send_MSI(s, vector);
+ }
+ 
+ static void riscv_iommu_sys_realize(DeviceState *dev, Error **errp)
+@@ -82,6 +188,8 @@ static void riscv_iommu_sys_realize(DeviceState *dev, Error **errp)
+         irq = qdev_get_gpio_in(s->irqchip, s->base_irq + i);
+         sysbus_connect_irq(sysdev, i, irq);
+     }
++
++    riscv_iommu_sysdev_init_msi(s, RISCV_IOMMU_PCI_MSIX_VECTORS);
+ }
+ 
+ static void riscv_iommu_sys_init(Object *obj)
+@@ -93,7 +201,7 @@ static void riscv_iommu_sys_init(Object *obj)
+     qdev_alias_all_properties(DEVICE(iommu), obj);
+ 
+     iommu->icvec_avail_vectors = RISCV_IOMMU_SYSDEV_ICVEC_VECTORS;
+-    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_WSI);
++    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_BOTH);
+ }
+ 
+ static Property riscv_iommu_sys_properties[] = {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index c5ada635f1..5d058511be 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1043,6 +1043,7 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+ }
+ 
+ static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
++                                 uint32_t msi_phandle,
+                                  uint32_t *iommu_sys_phandle)
+ {
+     const char comp[] = "riscv,iommu";
+@@ -1077,6 +1078,8 @@ static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
+         iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
+         iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
+ 
++    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
++
+     *iommu_sys_phandle = iommu_phandle;
+ }
+ 
+@@ -1117,7 +1120,8 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_virtio(s, virt_memmap, irq_virtio_phandle);
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+-        create_fdt_iommu_sys(s, irq_mmio_phandle, &iommu_sys_phandle);
++        create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
++                             &iommu_sys_phandle);
+     }
+     create_fdt_pcie(s, virt_memmap, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
+diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+index 0527c56c91..94facbb8b1 100644
+--- a/hw/riscv/trace-events
++++ b/hw/riscv/trace-events
+@@ -15,3 +15,5 @@ riscv_iommu_icvec_write(uint32_t orig, uint32_t actual) "ICVEC write: incoming 0
+ riscv_iommu_ats(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: translate request %04x:%02x.%u iova: 0x%"PRIx64
+ riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb invalidate"
+ riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group response"
++riscv_iommu_sys_irq_sent(uint32_t vector) "IRQ sent to vector %u"
++riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32_t msi_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%lx msi_data 0x%x result %u"
+-- 
+2.47.1
 
-Fea.Wang (6):
-      target/riscv: Add svukte extension capability variable
-      target/riscv: Support senvcfg[UKTE] bit when svukte extension is enabled
-      target/riscv: Support hstatus[HUKTE] bit when svukte extension is enabled
-      target/riscv: Check memory access to meet svukte rule
-      target/riscv: Expose svukte ISA extension
-      target/riscv: Check svukte is not enabled in RV32
-
-Jason Chien (1):
-      hw/riscv/riscv-iommu.c: Correct the validness check of iova
-
-Jim Shu (3):
-      hw/riscv: Support to load DTB after 3GB memory on 64-bit system.
-      hw/riscv: Add a new struct RISCVBootInfo
-      hw/riscv: Add the checking if DTB overlaps to kernel or initrd
-
-MollyChen (1):
-      target/riscv: add support for RV64 Xiangshan Nanhu CPU
-
-Philippe Mathieu-Daudé (5):
-      MAINTAINERS: Cover RISC-V HTIF interface
-      hw/char/riscv_htif: Explicit little-endian implementation
-      hw/char/riscv_htif: Clarify MemoryRegionOps expect 32-bit accesses
-      target/riscv: Include missing headers in 'vector_internals.h'
-      target/riscv: Include missing headers in 'internals.h'
-
-Sai Pavan Boddu (1):
-      hw/riscv: Add Microblaze V generic board
-
-Sia Jee Heng (3):
-      qtest: allow SPCR acpi table changes
-      hw/acpi: Upgrade ACPI SPCR table to support SPCR table revision 4 format
-      tests/qtest/bios-tables-test: Update virt SPCR golden reference for RISC-V
-
-Sunil V L (1):
-      hw/riscv/virt: Add IOMMU as platform device if the option is set
-
-Tomasz Jeznach (1):
-      hw/riscv: add riscv-iommu-sys platform device
-
-Yong-Xuan Wang (1):
-      hw/intc/riscv_aplic: Fix APLIC in_clrip and clripnum write emulation
-
- MAINTAINERS                                |   8 +
- docs/specs/index.rst                       |   1 +
- docs/specs/riscv-aia.rst                   |  83 ++++++++++
- docs/specs/riscv-iommu.rst                 |  30 +++-
- docs/system/riscv/microblaze-v-generic.rst |  42 +++++
- docs/system/riscv/virt.rst                 |  17 ++
- docs/system/target-riscv.rst               |   1 +
- hw/riscv/riscv-iommu-bits.h                |   6 +
- hw/riscv/riscv-iommu.h                     |   5 +
- include/hw/acpi/acpi-defs.h                |   7 +-
- include/hw/acpi/aml-build.h                |   2 +-
- include/hw/intc/riscv_aplic.h              |   8 +
- include/hw/riscv/boot.h                    |  28 +++-
- include/hw/riscv/iommu.h                   |  10 +-
- include/hw/riscv/virt.h                    |   6 +-
- target/riscv/cpu-qom.h                     |   2 +
- target/riscv/cpu_bits.h                    |   2 +
- target/riscv/cpu_cfg.h                     |   2 +
- target/riscv/internals.h                   |   3 +
- target/riscv/vector_internals.h            |   1 +
- hw/acpi/aml-build.c                        |  20 ++-
- hw/arm/virt-acpi-build.c                   |   8 +-
- hw/char/riscv_htif.c                       |  15 +-
- hw/intc/riscv_aplic.c                      |  74 +++++++--
- hw/loongarch/acpi-build.c                  |   6 +-
- hw/riscv/boot.c                            | 100 +++++++----
- hw/riscv/microblaze-v-generic.c            | 184 +++++++++++++++++++++
- hw/riscv/microchip_pfsoc.c                 |  13 +-
- hw/riscv/opentitan.c                       |   4 +-
- hw/riscv/riscv-iommu-pci.c                 |  21 +++
- hw/riscv/riscv-iommu-sys.c                 | 256 +++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu.c                     | 137 ++++++++++-----
- hw/riscv/sifive_e.c                        |   4 +-
- hw/riscv/sifive_u.c                        |  18 +-
- hw/riscv/spike.c                           |  14 +-
- hw/riscv/virt-acpi-build.c                 |  12 +-
- hw/riscv/virt.c                            | 159 +++++++++++++++---
- target/riscv/cpu.c                         | 101 ++++++++++++
- target/riscv/cpu_helper.c                  |  55 +++++++
- target/riscv/csr.c                         |   7 +
- target/riscv/kvm/kvm-cpu.c                 |  43 ++---
- target/riscv/tcg/tcg-cpu.c                 |  27 ++-
- hw/riscv/Kconfig                           |   8 +
- hw/riscv/meson.build                       |   3 +-
- hw/riscv/trace-events                      |   4 +
- tests/data/acpi/riscv64/virt/SPCR          | Bin 80 -> 90 bytes
- 46 files changed, 1380 insertions(+), 177 deletions(-)
- create mode 100644 docs/specs/riscv-aia.rst
- create mode 100644 docs/system/riscv/microblaze-v-generic.rst
- create mode 100644 hw/riscv/microblaze-v-generic.c
- create mode 100644 hw/riscv/riscv-iommu-sys.c
 
