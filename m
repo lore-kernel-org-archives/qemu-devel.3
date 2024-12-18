@@ -4,75 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F16AFE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:33:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C788E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:43:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxuO-0006qO-5a; Wed, 18 Dec 2024 12:32:28 -0500
+	id 1tNy4s-0001fm-Gn; Wed, 18 Dec 2024 12:43:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNxuK-0006pF-Qu
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:32:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNxuI-0002Ub-Hp
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:32:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734543133;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xr/TAEC/kCY1GdHt3m9cZEp9v9fEfpLXyxsE9WSsSOM=;
- b=A33Q9Dds2kxBzf8OJCsv+SPmoo4pS2muBMV/zPCEbKJozcJ7RRyR9bC9NgTtnfzuFkgBe/
- pPwGbUzJmaWkyXZTWt1a+uoZt6dq0l5Sqlse+bYQimM4LJjYSEbP7tcuYxYuRswefK/YpP
- 47+DxJRR0YoIU9dxGbTdDMMWpWpBAJ4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-278-KaqHN6kIP7W0b4iMcoApBQ-1; Wed,
- 18 Dec 2024 12:32:10 -0500
-X-MC-Unique: KaqHN6kIP7W0b4iMcoApBQ-1
-X-Mimecast-MFC-AGG-ID: KaqHN6kIP7W0b4iMcoApBQ
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 021F61955DD2; Wed, 18 Dec 2024 17:32:08 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48D7F1955F41; Wed, 18 Dec 2024 17:32:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0F65E21E6682; Wed, 18 Dec 2024 18:32:05 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <pbonzini@redhat.com>,  <berrange@redhat.com>,
- <eduardo@habkost.net>,  <pankaj.gupta@amd.com>,  <huibo.wang@amd.com>,
- <jroedel@suse.com>
-Subject: Re: [PATCH v1 3/3] i386/sev: Add KVM_EXIT_SNP_REQ_CERTS support for
- certificate-fetching
-In-Reply-To: <20241218154939.1114831-4-michael.roth@amd.com> (Michael Roth's
- message of "Wed, 18 Dec 2024 09:49:39 -0600")
-References: <20241218154939.1114831-1-michael.roth@amd.com>
- <20241218154939.1114831-4-michael.roth@amd.com>
-Date: Wed, 18 Dec 2024 18:32:05 +0100
-Message-ID: <878qscrj6y.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNy4r-0001f4-3z
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:43:17 -0500
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNy4p-0007RA-4t
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:43:16 -0500
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so49136615e9.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:43:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734543786; x=1735148586; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4VMe4HhiOX8R8eFmeGMoYQIpRaNCqlkZdci/vz3PVyA=;
+ b=S9GnU8BwdPaqemaPf71yLmKU+mErLxd0nt4RrYvdvzr7boSrg1n+AW3HSlqosGW6+b
+ DYLVYNfy9lDTo+LnQ1NxkMxpfsMgiZYkGTR5wqrdAcoBPavke/EM7nVrMiEgg7C1KY1/
+ ey6Pq+SjB5Uhe2zXxmNa0SAmJJ1ToK1yHwKgaUZbUt5fHQS/CI88t15ExiNBTOV/Jj9r
+ 5M+CGpSq2/9M8N7L6IhmilDVJ/86UHjVU+lJvUpAG327qd/9ZMbhrIeF0gNBEwgjxyMn
+ eWbVewb+R/x37SbfHZkvmtd1GglJv1RuurVWNhpZH1uhCx4b+7BUOnRAbtSqtzot/lm3
+ cNPQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734543786; x=1735148586;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4VMe4HhiOX8R8eFmeGMoYQIpRaNCqlkZdci/vz3PVyA=;
+ b=pQ5TjjVQ2AOOU0SFyYdIs0tWuVQcM9z41oePeea+Q0HoWwyZ1lnVharX760JYilRFF
+ 583ArgshzDTHyrbKyEaoz4zcfjaUers2cpIkIl6LpOx9HK/0YcN7o4GtvM44ELM/TPNM
+ G8cdv3VSWNr+46OXs5ArT1bCMKJj1ZOpCYuPwTAye92eb5BMNyMyJNltuNLzzVWg838S
+ YG3RqglvfeAedKBDfnm4xOynci+1f8pBJ2tp4LEFgY9cMrEEuj+8ZCRpKpX5BdP/VZ+9
+ IlBSSIfBiflGRhm67ee+kSGIdiSxjWRmXse4ampY9O6zSSjeFBYaFQsKkwIobsgSr/4X
+ EALA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXUsT3OGXudQhqgY58Z607DV6UWakKy5qynI2Hwe/NXV+CNKWrY6ZDuPH8+n81faaYvFAIjMM2cTIX/@nongnu.org
+X-Gm-Message-State: AOJu0YzIKfsqMIqM2DHKcsY1FlnETxRtpaKP7zWlvEor9dFP1la1TX0i
+ GP1nK9T8a5AwoZRLLlmJ1CT9VYrwI6bsYHTbl4lA+S/CoM6iDBzeBhQs1asjnKQ=
+X-Gm-Gg: ASbGnctTKzbJMQUMF/9NRxb+hYXFqR0fdGrW7DscLGMqzbh5jW2xsaAkmpSYgfikH2P
+ yhTMnCvnzNrdRDgedz5irdHdxNYkmc4wdZCJ8OYSe3vU9JV9Ay6HQN2h/QwNSzxSh9rDpT2ws6n
+ 6xRSv1BtfWDLstUNXv4wrsgjmw2i6WR0LPXjY0dT76B4BDYtJr6pb4AOVEIzP5mdPF07CgwAJ3F
+ R4XWkJmuK408KbsP7qkOY2Lg6/wGWJvdh+W7prGkWvbnfqaB6Zm3f4TFXSCx9n1APxWBp4t
+X-Google-Smtp-Source: AGHT+IHbxPNuB0u9Mb8wNyTTy6gr+gavotIabm+vBsXFJrJflZluYV0SlhFFCuob32sRgGvuw9ZLQQ==
+X-Received: by 2002:a05:600c:524b:b0:434:a350:207c with SMTP id
+ 5b1f17b1804b1-436553ecb7cmr27021175e9.23.1734543786550; 
+ Wed, 18 Dec 2024 09:43:06 -0800 (PST)
+Received: from [192.168.1.117] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b4471bsm26557165e9.44.2024.12.18.09.43.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 09:43:05 -0800 (PST)
+Message-ID: <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
+Date: Wed, 18 Dec 2024 18:43:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241216114841.1025070-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,130 +103,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Michael Roth <michael.roth@amd.com> writes:
-
-> The GHCB specification[1] defines a VMGEXIT-based Guest Request
-> hypercall to allow an SNP guest to issue encrypted requests directly to
-> SNP firmware to do things like query the attestation report for the
-> guest. These are generally handled purely in the kernel.
->
-> In some some cases, it's useful for the host to be able to additionally
-> supply the certificate chain for the signing key that SNP firmware uses
-> to sign these attestation reports. To allow for this, the GHCB
-> specification defines an Extended Guest Request where this certificate
-> data can be provided in a special format described in the GHCB spec.
-> This certificate data may be global or guest-specific depending on how
-> the guest was configured. Rather than providing interfaces to manage
-> these within the kernel, KVM provides a new KVM_EXIT_SNP_REQ_CERTS exit
-> to request the certificate contents from userspace. Implement support
-> for that here.
->
-> To synchronize delivery of the certificates to the guest in a way where
-> they will not be rendered invalid by updates to SNP firmware or
-> attestation singing/endorsement keys by management tools outside the
-> purview of QEMU, it is expected by users of KVM_EXIT_SNP_REQ_CERTS to
-> obtain a shared/read lock on the certificate file prior to delivering
-> them back to KVM. Only after this will the attestation report be
-> retrieved from firmware and bundled with the certificate data, so QEMU
-> must continue to hold the file lock until KVM confirms that the
-> attestation report has been retrieved/bundled. This confirmation is done
-> by way of the kvm_immediate_exit callback infrastructure that was
-> introduced in a previous patch.
-
-The "management tools outside the purview of QEMU" will all obtain the
-same kind of file lock?
-
-> [1] "Guest Hypervisor Communication Block (GHCB) Standardization",
->     https://www.amd.com/en/developer/sev.html
->
-> Signed-off-by: Michael Roth <michael.roth@amd.com>
+On 16/12/24 12:48, Ani Sinha wrote:
+> VM firmware update is a mechanism where the virtual machines can use their
+> preferred and trusted firmware image in their execution environment without
+> having to depend on a untrusted party to provide the firmware bundle. This is
+> particularly useful for confidential virtual machines that are deployed in the
+> cloud where the tenant and the cloud provider are two different entities. In
+> this scenario, virtual machines can bring their own trusted firmware image
+> bundled as a part of their filesystem (using UKIs for example[1]) and then use
+> this hypervisor interface to update to their trusted firmware image. This also
+> allows the guests to have a consistent measurements on the firmware image.
+> 
+> This change introduces basic support for the fw-cfg based hypervisor interface
+> and the corresponding device. The change also includes the
+> specification document for this interface. The interface is made generic
+> enough so that guests are free to use their own ABI to pass required
+> information between initial and trusted execution contexts (where they are
+> running their own trusted firmware image) without the hypervisor getting
+> involved in between. In subsequent patches, we will introduce other minimal
+> changes on the hypervisor that are required to make the mechanism work.
+> 
+> [1] See systemd pull requests https://github.com/systemd/systemd/pull/35091
+> and https://github.com/systemd/systemd/pull/35281 for some discussions on
+> how we can bundle firmware image within an UKI.
+> 
+> CC: Alex Graf <graf@amazon.com>
+> CC: Paolo Bonzini <pbonzini@redhat.com>
+> CC: Gerd Hoffman <kraxel@redhat.com>
+> CC: Igor Mammedov <imammedo@redhat.com>
+> CC: Vitaly Kuznetsov <vkuznets@redhat.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
 > ---
->  qapi/qom.json                 |  23 +++-
->  target/i386/kvm/kvm.c         |  10 ++
->  target/i386/sev-sysemu-stub.c |   5 +
->  target/i386/sev.c             | 249 ++++++++++++++++++++++++++++++++++
->  target/i386/sev.h             |   2 +
->  5 files changed, 288 insertions(+), 1 deletion(-)
->
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index 28ce24cd8d..6eaf0e7721 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -1034,6 +1034,25 @@
->  #     firmware.  Set this to true to disable the use of VCEK.
->  #     (default: false) (since: 9.1)
->  #
-> +# @certs-path: Path to certificate data that can be passed to guests via
-> +#              SNP Extended Guest Requests. File should be in the format
-> +#              described in the GHCB specification. (default: none)
-> +#              (since: 10.0)
+>   MAINTAINERS                  |   9 ++
+>   docs/specs/index.rst         |   1 +
+>   docs/specs/vmfwupdate.rst    | 109 ++++++++++++++++++++++++
+>   hw/misc/meson.build          |   2 +
+>   hw/misc/vmfwupdate.c         | 157 +++++++++++++++++++++++++++++++++++
+>   include/hw/misc/vmfwupdate.h | 103 +++++++++++++++++++++++
+>   6 files changed, 381 insertions(+)
+>   create mode 100644 docs/specs/vmfwupdate.rst
+>   create mode 100644 hw/misc/vmfwupdate.c
+>   create mode 100644 include/hw/misc/vmfwupdate.h
 
-I prefer "filename" to "path".  We have many kinds of paths: pathnames
-(denoting files), QOM paths (denoting objects), qdev paths, search
-paths, ...  With "filename", your readers immediately know what you're
-talking about.
 
-SevGuestProperties has a member 'dh-cert-file'.  Whether that's related
-to your file I can't tell from its documentation.
+> +static void vmfwupdate_realize(DeviceState *dev, Error **errp)
+> +{
+> +    VMFwUpdateState *s = VMFWUPDATE(dev);
+> +    FWCfgState *fw_cfg = fw_cfg_find();
+> +
+> +    /* multiple devices are not supported */
+> +    if (!vmfwupdate_find()) {
+> +        error_setg(errp, "at most one %s device is permitted",
+> +                   TYPE_VMFWUPDATE);
+> +        return;
+> +    }
+> +
+> +    /* fw_cfg with DMA support is necessary to support this device */
+> +    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
+> +        error_setg(errp, "%s device requires fw_cfg",
+> +                   TYPE_VMFWUPDATE);
+> +        return;
+> +    }
+> +
+> +    memset(&s->fw_blob, 0, sizeof(s->fw_blob));
+> +    memset(&s->opaque_blobs, 0, sizeof(s->opaque_blobs));
+> +
+> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_OBLOB,
+> +                             NULL, NULL, s,
+> +                             &s->opaque_blobs,
+> +                             sizeof(s->opaque_blobs),
+> +                             false);
+> +
+> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_FWBLOB,
+> +                             NULL, fw_blob_write, s,
+> +                             &s->fw_blob,
+> +                             sizeof(s->fw_blob),
+> +                             false);
+> +
+> +    /*
+> +     * Add global capability fw_cfg file. This will be used by the guest to
+> +     * check capability of the hypervisor.
+> +     */
+> +    s->capability = cpu_to_le16(CAP_VMFWUPD_MASK | VMFWUPDATE_CAP_EDKROM);
+> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_CAP,
+> +                    &s->capability, sizeof(s->capability));
+> +
+> +    s->plat_bios_size = get_max_fw_size(); /* for non-pc, this is 0 */
+> +    /* size of bios region for the platform - read only by the guest */
+> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_BIOS_SIZE,
+> +                    &s->plat_bios_size, sizeof(s->plat_bios_size));
+> +    /*
+> +     * add fw cfg control file to disable the hypervisor interface.
+> +     */
+> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_CONTROL,
+> +                             NULL, NULL, s,
+> +                             &s->disable,
+> +                             sizeof(s->disable),
+> +                             false);
+> +    /*
+> +     * This device requires to register a global reset because it is
+> +     * not plugged to a bus (which, as its QOM parent, would reset it).
+> +     */
+> +    qemu_register_reset(fw_update_reset, dev);
 
-> +#
-> +# @certs-timeout: Max time in milliseconds to wait to obtain a read lock
+Shouldn't we use qemu_register_resettable() instead?
 
-Please don't abbreviate "Maximum" here.
+> +}
+> +
+> +static Property vmfwupdate_properties[] = {
+> +    DEFINE_PROP_UINT8("disable", VMFwUpdateState, disable, 0),
+> +    DEFINE_PROP_END_OF_LIST(),
+> +};
+> +
+> +static void vmfwupdate_device_class_init(ObjectClass *klass, void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +
+> +    /* we are not interested in migration - so no need to populate dc->vmsd */
+> +    dc->desc = "VM firmware blob update device";
+> +    dc->realize = vmfwupdate_realize;
+> +    dc->hotpluggable = false;
+> +    device_class_set_props(dc, vmfwupdate_properties);
+> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+> +}
+> +
+> +static const TypeInfo vmfwupdate_device_info = {
+> +    .name          = TYPE_VMFWUPDATE,
+> +    .parent        = TYPE_DEVICE,
 
-Confident millisecond granularity will suffice forever?
+What is the qdev API used here? Why not use a plain object?
 
-> +#                 on the certificate file specified by @certs-path. This
-> +#                 is not a cumulative value and only affects how long
-> +#                 QEMU waits before returning execution to the vCPU and
-> +#                 informing the guest of the timeout, so the guest can
-> +#                 still continuing retrying for as long as it likes
-> +#                 (which will be about 60 seconds for linux guests at
-> +#                 the time of this writing). If the guest-side timeout
-> +#                 is insufficient, set this higher to allow more time to
-> +#                 fetch the certificate. If the guest-side timeout is
-> +#                 sufficient, set this lower to reduce the likelihood of
-> +#                 soft lockups in the guest.
-> +#                 (default: 100) (since: 10.0)
-> +#
->  # Since: 9.1
->  ##
-
-Please format like
-
-   # @certs-path: Path to certificate data that can be passed to guests
-   #     via SNP Extended Guest Requests.  File should be in the format
-   #     described in the GHCB specification.
-   #     (default: none) (since: 10.0)
-   #
-   # @certs-timeout: Max time in milliseconds to wait to obtain a read
-   #     lock on the certificate file specified by @certs-path.  This is
-   #     not a cumulative value and only affects how long QEMU waits
-   #     before returning execution to the vCPU and informing the guest
-   #     of the timeout, so the guest can still continuing retrying for
-   #     as long as it likes (which will be about 60 seconds for linux
-   #     guests at the time of this writing).  If the guest-side timeout
-   #     is insufficient, set this higher to allow more time to fetch the
-   #     certificate.  If the guest-side timeout is sufficient, set this
-   #     lower to reduce the likelihood of soft lockups in the guest.
-   #     (default: 100) (since: 10.0)
-
-to blend in with commit a937b6aa739 (qapi: Reformat doc comments to
-conform to current conventions).
-
->  { 'struct': 'SevSnpGuestProperties',
-> @@ -1045,7 +1064,9 @@
->              '*id-auth': 'str',
->              '*author-key-enabled': 'bool',
->              '*host-data': 'str',
-> -            '*vcek-disabled': 'bool' } }
-> +            '*vcek-disabled': 'bool',
-> +            '*certs-path': 'str',
-> +            '*certs-timeout': 'uint32' } }
->  
->  ##
->  # @ThreadContextProperties:
-
-[...]
-
+> +    .instance_size = sizeof(VMFwUpdateState),
+> +    .class_init    = vmfwupdate_device_class_init,
+> +};
 
