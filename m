@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 501B4E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EC5E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:03:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxRy-0003nQ-Ip; Wed, 18 Dec 2024 12:03:06 -0500
+	id 1tNxRl-0003QL-Kb; Wed, 18 Dec 2024 12:02:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNxRw-0003lH-H8
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:03:04 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNxRb-0003Eu-1v
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:02:43 -0500
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNxRu-0001Rl-BE
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:03:04 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso5651041f8f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:03:01 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNxRW-0001NL-PN
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:02:40 -0500
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4363ae65100so44395565e9.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734541380; x=1735146180; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=MR5KoQU6NXC5lcdjooLgMl/qAwcNdBTJRIvU+ztV38s=;
- b=koQ90HY+mHUJAHvN9sibrLJJZKFcsPOJwnkp6cYA940BRAYMBZsEf7WHSKN04y/poC
- jHr9/3/Cz1A95mM6TWPDyuMU/cwTzo7hX6YoMZLPddD0FMXvuuf7mm7s/5XrHS1hNq33
- T9yVflnFJs3wZqjCoF/Q+pZ6N7jRMMDes0bG/r7EHRL65slZo6QcyyQLkLjm7s4SMup4
- qB9zpr5p/8+gAlj18u2jo+WvVq9+kdfd3AUxOPE+pABLTzeq6CXtWo+HqCIyL8e7Ck9K
- i7OaysyKQVkTvn+kSatduQCyXZ9hJaIGIbDAO9QHPwN8v3QcRAPdPml+f/rLezySmsTL
- uYPw==
+ d=linaro.org; s=google; t=1734541356; x=1735146156; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4oi1V5/2EqfFiyQXMNJY799ulFtXAnzfv5cyWO1EIjs=;
+ b=TAfK79GgiOl5KkP3weHL7MbCSlUMAi3h5ynlpS0zqIjrntrbN6VeznL8EdON2O5R1O
+ tyVJKiqbebkk/+Cx2B07oe8SUAAydtdKItZyFrHjOvmuHe0GB7GdY5luy7QWm8ClukDD
+ VEDd5AaqlHwxxg/avFZFRIQMBWozA6XtjGCuiEFYDV7KliOni+W6tRPWUOVhldtCv7Pl
+ CluxelTXy5NaPMzJoI2dXswsIew2lRL2iBhdT8HJKMbkyao9Dnlxxn3MJzS66IhlJVKV
+ n0Rqd4/rZ3sYsJgYuhvlxoHgJd810mEtd+sFznXXPepWvcx8N8f54B7tfXDlkafeCHUJ
+ GXRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734541380; x=1735146180;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MR5KoQU6NXC5lcdjooLgMl/qAwcNdBTJRIvU+ztV38s=;
- b=imHGmoT9UMVILnoOoXmWMVMDZJH0QuI45h+M0a2CHPpFIHnjn7TdGQYR2hG+Kx5Cl7
- HL2PJO8Cr4qLXcgmGyjoTU9yudVT0xG6r5Nh6zrutAnYqGXzVUaJ1XTwAF/H23ySj6GC
- CYdIrutPdz6uhgeSnEGEBEFg/2hnyLbRfV+1rUtHSTwddGNUwl+4FKSRE1ufl81f4SHN
- XbeZs/Kwi+AVf0xAg5rqyfvRNZ48ex7TtlgLJVrOwIoNiwNG6OwuwBf7KKHUoLzbC+y4
- fYb2V4U4H4kloBEFwrEwnm4nJs2JJmbGrqHXisylQ1f1ji9NuWgdu8U/Cis7iUpHibQA
- BIoA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXYa+1CzAEPkkGRyRCbyaLFMuq4SsAbIWDDCANcUj98MtugYEB3PN4AEci0AshbYIER0qXj9oVRY8rw@nongnu.org
-X-Gm-Message-State: AOJu0YwJJdDhT8doBHNeswKDHGGEV4yq9c4xcN0cHtxXPK+SmShiXzgN
- F8HwuFhyRZrZBLV0V2PTwxoLuOh8nWO3atou1N4ftl7856aqWoEN2GExHlO44mM=
-X-Gm-Gg: ASbGnct4gC4DFpUQ6D3glTee2pgQtAUeBOJsZGB+XOfAXY5qamQNPTQawadvvppT9Qd
- CAh9XHi2zXnB0/0TN2I4sy/weO925ygmLerJ5ICD4CvUWai51m46PrGyEDTnELQUIJPLm43cxva
- pBQvPAG1rUQqsItLEujD5lNcjRjrmpz/w4NqVTOoWyg5fkfg7zYjOY+AihNwjaj6uNqJTkYbc3+
- max/DTKgmgxau+4z61LhhgI/a2JdoHVB0kD0fa60zZrAHIJX6TgkDeE9YnZIxrOCSxDw8WP
-X-Google-Smtp-Source: AGHT+IFxRFIUncw0hLHKy0Sh5ENrf5mgeFxqM41CrgaeJq9WQh1VqSomamjFX2bptsmvdxjp8dZtlw==
-X-Received: by 2002:a5d:6d81:0:b0:386:3a8e:64bd with SMTP id
- ffacd0b85a97d-38a19b05201mr436331f8f.22.1734541378748; 
- Wed, 18 Dec 2024 09:02:58 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c8046c66sm14386927f8f.69.2024.12.18.09.02.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 09:02:58 -0800 (PST)
-Message-ID: <65ea7da3-cf1d-43c8-be93-075855c66e5d@linaro.org>
-Date: Wed, 18 Dec 2024 18:02:57 +0100
+ d=1e100.net; s=20230601; t=1734541356; x=1735146156;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4oi1V5/2EqfFiyQXMNJY799ulFtXAnzfv5cyWO1EIjs=;
+ b=XjoHG1ml8zvAIAgwa0uz2hjerAeU4BVCELVLwTbmFb4+CEZfCzfgZe9nRK4Xsxxprh
+ 53DIxBKvboC9b3FWrSGHLG7vBY7EYa6ZdPtAyZantmZOWk1saJLZC7klSNvlWqZBjfNx
+ EhfXuCSgnuOsu+ScQHwiowvvWsmniqBMqpHcltkAyx/qJlKcGMm8+iHOrhhEiLmXeH9r
+ Uh947BiJqM3R41/zvBYmbrLqcZQfCTH4Ogol+aAn//KBzJUNKn3NYnag3kQ7yvDYh5EX
+ dZiffeVi4kd/1L9NfpgnMzw++9I2pqQlGGWHm8NIkK+C4DFjZUR/hIRFnBqM9wJD63u3
+ +u8A==
+X-Gm-Message-State: AOJu0Yy8H9esJNO0WBQtTsjBNg1dxORtPUTnVa1F9NIFRgn/iaSGieYQ
+ 0ldOiHpLMn7SxFeebdcl873p9HvE7SOVD8u0+m+zbQciGBWZtnlB9j8ir6FpMq7l6Sap2O1/p75
+ UflU=
+X-Gm-Gg: ASbGnct7UGvoteWyQv2+9hzYf2aOCi6Oe0jEzj9P5jbnPf9x3tkIvQ09CGgq2VbK0Gm
+ qIdM2T9OWrAUl7mJEQvfUSkWDHyU3a92Yji540X09ZXxWudcOgeb0dwmyOnpobuNnXz1oMBrlvC
+ 1WJRQBcQcur7lnULQMzIqP8aIKpmNNKXB1HiSVauv8RKXuUUFcBvaMCjvzL+Xr0inQjYJzeWoVp
+ IrqYemxirdLIodoePsf2+ipA8yLUwSggpOoAmGPRh+nIvtsDsIUnos=
+X-Google-Smtp-Source: AGHT+IGrYSN9Hep9RC/lEJHNnaqSc0mDYT3c2GE6H+mN2G34BcMXFcti2eo90mraZu/iq4qOcbms1Q==
+X-Received: by 2002:a05:6512:1254:b0:540:fb1a:af1f with SMTP id
+ 2adb3069b0e04-542210255fbmr119120e87.39.1734541342383; 
+ Wed, 18 Dec 2024 09:02:22 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aabc80d4178sm334725466b.28.2024.12.18.09.02.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 09:02:21 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id B40175F796;
+ Wed, 18 Dec 2024 17:02:20 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+Cc: qemu-devel@nongnu.org,  Jean-Philippe Brucker
+ <jean-philippe@linaro.org>,  Mathieu Poirier <mathieu.poirier@linaro.org>,
+ Leonardo Garcia <leonardo.garcia@linaro.org>, Markus Armbruster
+ <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: Re: CCA capability qeury QMP command
+In-Reply-To: <A96F9591-F80E-4193-AEFF-5E23B4E0FD5C@linux.dev> (Itaru
+ Kitayama's message of "Wed, 25 Sep 2024 17:44:21 +0900")
+References: <A96F9591-F80E-4193-AEFF-5E23B4E0FD5C@linux.dev>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Wed, 18 Dec 2024 17:02:20 +0000
+Message-ID: <87cyho53hf.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] target/ppc: Include missing headers in
- mmu-hash[32,64].h
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
-References: <20241218155202.71931-1-philmd@linaro.org>
- <20241218155202.71931-2-philmd@linaro.org>
- <1b2eeff6-e559-449a-b3cf-3d1e0001f56e@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1b2eeff6-e559-449a-b3cf-3d1e0001f56e@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,70 +106,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 17:41, Richard Henderson wrote:
-> On 12/18/24 09:51, Philippe Mathieu-Daudé wrote:
->> CPUState* is dereferenced, so we need the structure definition
->> from "cpu.h". PowerPCCPU is declared in "cpu-qom.h". Include
->> them in order to avoid when refactoring:
->>
->>    In file included from ../../target/ppc/cpu_init.c:27:
->>    target/ppc/mmu-hash32.h:6:23: error: unknown type name 'PowerPCCPU'
->>        6 | bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, 
->> MMUAccessType access_type,
->>          |                       ^
->>    target/ppc/mmu-hash32.h:66:15: error: incomplete definition of type 
->> 'struct ArchCPU'
->>       66 |     return cpu->env.spr[SPR_SDR1] & SDR_32_HTABORG;
->>          |            ~~~^
->>    target/ppc/mmu-hash64.h:173:36: error: unknown type name 
->> ‘PowerPCCPU’; did you mean ‘PowerPCCPUAlias’?
->>      173 | static inline void ppc_hash64_init(PowerPCCPU *cpu)
->>          |                                    ^~~~~~~~~~
->>          |                                    PowerPCCPUAlias
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   target/ppc/mmu-hash32.h | 3 +++
->>   target/ppc/mmu-hash64.h | 2 ++
->>   2 files changed, 5 insertions(+)
->>
->> diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
->> index 2838de031c7..abbff206d4e 100644
->> --- a/target/ppc/mmu-hash32.h
->> +++ b/target/ppc/mmu-hash32.h
->> @@ -3,6 +3,9 @@
->>   #ifndef CONFIG_USER_ONLY
->> +#include "target/ppc/cpu-qom.h"
->> +#include "cpu.h"
-> 
-> cpu.h handles cpu-qom.h.
-> Do we really need both?
+Itaru Kitayama <itaru.kitayama@linux.dev> writes:
 
-"cpu-qom.h" is the one I want. Currently we need "cpu.h" for all the
-inlined functions dereferencing ArchCPU, like ppc_hash32_hpt_base(),
-but long term it should be avoided in .h because sources become too
-specific. Here we want to link the different MMU 32/64 in the same
-PPC binary, having 2 different ArchCPU implementations. This patch
-is quite old now so I don't remember well, I'll revisit and see if
-it is still necessary.
+(+CC Markus, Eduardo, Marcel for QMP API)
 
->> +
->>   bool ppc_hash32_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType 
->> access_type,
->>                         hwaddr *raddrp, int *psizep, int *protp, int 
->> mmu_idx,
->>                         bool guest_visible);
->> diff --git a/target/ppc/mmu-hash64.h b/target/ppc/mmu-hash64.h
->> index ae8d4b37aed..b32e17c2c58 100644
->> --- a/target/ppc/mmu-hash64.h
->> +++ b/target/ppc/mmu-hash64.h
->> @@ -3,6 +3,8 @@
->>   #ifndef CONFIG_USER_ONLY
->> +#include "target/ppc/cpu-qom.h"
->> +
->>   #ifdef TARGET_PPC64
->>   void dump_slb(PowerPCCPU *cpu);
->>   int ppc_store_slb(PowerPCCPU *cpu, target_ulong slot,
-> 
+> Hi,
+> I=E2=80=99ve been looking at the libvirt code to add Arm=E2=80=99s CCA su=
+pport for
+> some time and I am wondering how QEMU folk want to implement the CCA
+> query command. Any pointer would be appreciated.
 
+Jean-Philippe's latest posting is here:
+
+  Message-ID: <20241125195626.856992-2-jean-philippe@linaro.org>
+  Date: Mon, 25 Nov 2024 19:55:59 +0000
+  Subject: [PATCH v3 00/26] arm: Run Arm CCA VMs with KVM
+  From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+
+In that series the following objects are created:
+
+  static void rme_guest_class_init(ObjectClass *oc, void *data)
+  {
+      object_class_property_add_str(oc, "personalization-value", rme_get_rp=
+v,
+                                    rme_set_rpv);
+      object_class_property_set_description(oc, "personalization-value",
+              "Realm personalization value (512-bit hexadecimal number)");
+
+      object_class_property_add_enum(oc, "measurement-algorithm",
+                                     "RmeGuestMeasurementAlgorithm",
+                                     &RmeGuestMeasurementAlgorithm_lookup,
+                                     rme_get_measurement_algo,
+                                     rme_set_measurement_algo);
+      object_class_property_set_description(oc, "measurement-algorithm",
+              "Realm measurement algorithm ('sha256', 'sha512')");
+
+      object_class_property_add_bool(oc, "measurement-log",
+                                     rme_get_measurement_log,
+                                     rme_set_measurement_log);
+      object_class_property_set_description(oc, "measurement-log",
+              "Enable/disable Realm measurement log");
+  }
+
+So I guess we could probe for the personalization-value. However that
+seems very arch specific.
+
+All confidential guests (PPC PEF, s390x, CCA and x86 SEV) seem to set up
+ConfidentialGuestSupport with the ->ready field to true and a
+confidential-guest-support property associated with the machine. But I
+don't think that is currently exposed via QMP.
+
+I suspect from libvirt's point of view we want to have a common probing
+for CCA capable accelerators before we dive into architectural specifics?
+
+>
+> Thanks,
+> Itaru.=20
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
