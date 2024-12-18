@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F287E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:16:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 360F0E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:16:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrx5-0006Ym-DM; Wed, 18 Dec 2024 06:10:51 -0500
+	id 1tNrwu-0006V3-08; Wed, 18 Dec 2024 06:10:40 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx3-0006Xy-Cr
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:49 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrws-0006Uu-LR
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:38 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx1-0005eL-Gs
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:49 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwl-0005J5-DM
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520246;
+ s=mimecast20190719; t=1734520230;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1BtwNQv0aeO5C0XefNPuWFrrSrOTie30YUxUs+N42Q8=;
- b=FlWN+E7BqlkxLsXuzK88xQhvLusj33K8qJZAljk1chXjNQs6YNHJyeHGkab04uzut5EEXw
- iag/xoO2sid6vGYKdkTBPiBzZvIWPo0iVUfLXCjDS4gI+7CfBND6R57wWIMBJPLhVO8hak
- GIH3XRhl2FSWvGYRl7sgKN8WOTjdhEk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=RJAWklKih24xijrZ29wgrNKiDxRq+00Sr6cGaAp+rHc=;
+ b=Me9PrObksSLBzgMTHDYltSszDIcBxUjm5MN4GOnjLDi0Nm9BFPAFg0VjGBzNFA6XqsHvxM
+ x9TvWzN/Z761hXSox8XUOfpGpTpkn9OSCcpk2dRd5ksYkHw0mN1H1HXcYURmTTDezQwUpc
+ ySWXhCWRz1+zE1oXMHPRmj4w0T8Fwwc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-FrELtrxlOfWj3QU5ayUMIQ-1; Wed,
- 18 Dec 2024 06:10:45 -0500
-X-MC-Unique: FrELtrxlOfWj3QU5ayUMIQ-1
-X-Mimecast-MFC-AGG-ID: FrELtrxlOfWj3QU5ayUMIQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-507-VJQwLk4SNEicSykjlRg96w-1; Wed,
+ 18 Dec 2024 06:10:29 -0500
+X-MC-Unique: VJQwLk4SNEicSykjlRg96w-1
+X-Mimecast-MFC-AGG-ID: VJQwLk4SNEicSykjlRg96w
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D58251955F45
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:44 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AB0791955F3B
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:28 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 517C219560AD; Wed, 18 Dec 2024 11:10:42 +0000 (UTC)
+ id B5ADD195605F; Wed, 18 Dec 2024 11:10:26 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 18/38] tests/functional: add common zip_extract helper
-Date: Wed, 18 Dec 2024 12:09:38 +0100
-Message-ID: <20241218110958.226932-19-thuth@redhat.com>
+Subject: [PULL 11/38] tests/functional: switch over to using self.log_file(...)
+Date: Wed, 18 Dec 2024 12:09:31 +0100
+Message-ID: <20241218110958.226932-12-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,39 +85,73 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This mirrors the existing archive_extract and cpio_extract helpers
+This removes direct access of the 'self.logdir' variable.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-19-berrange@redhat.com>
+Message-ID: <20241217155953.3950506-12-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/archive.py | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tests/functional/qemu_test/testcase.py | 9 ++++-----
+ tests/functional/test_virtio_gpu.py    | 4 +---
+ 2 files changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
-index 9872f08d23..06b66701c0 100644
---- a/tests/functional/qemu_test/archive.py
-+++ b/tests/functional/qemu_test/archive.py
-@@ -10,6 +10,7 @@
- import os
- import subprocess
- import tarfile
-+import zipfile
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 89425b737c..2174fbb155 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -126,7 +126,7 @@ def scratch_file(self, *args):
+     Returns: string representing a file path
+     '''
+     def log_file(self, *args):
+-        return str(Path(self.logdir, *args))
++        return str(Path(self.outputdir, *args))
  
+     def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+@@ -138,8 +138,7 @@ def setUp(self, bin_prefix):
+         self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
  
- def tar_extract(archive, dest_dir, member=None):
-@@ -29,3 +30,10 @@ def cpio_extract(cpio_handle, output_path):
-                    input=cpio_handle.read(),
-                    stderr=subprocess.DEVNULL)
-     os.chdir(cwd)
-+
-+def zip_extract(archive, dest_dir, member=None):
-+    with zipfile.ZipFile(archive, 'r') as zf:
-+        if member:
-+            zf.extract(member=member, path=dest_dir)
-+        else:
-+            zf.extractall(path=dest_dir)
+-        self.logdir = self.outputdir
+-        self.log_filename = os.path.join(self.logdir, 'base.log')
++        self.log_filename = self.log_file('base.log')
+         self.log = logging.getLogger('qemu-test')
+         self.log.setLevel(logging.DEBUG)
+         self._log_fh = logging.FileHandler(self.log_filename, mode='w')
+@@ -215,7 +214,7 @@ def setUp(self):
+ 
+         console_log = logging.getLogger('console')
+         console_log.setLevel(logging.DEBUG)
+-        self.console_log_name = os.path.join(self.logdir, 'console.log')
++        self.console_log_name = self.log_file('console.log')
+         self._console_log_fh = logging.FileHandler(self.console_log_name,
+                                                    mode='w')
+         self._console_log_fh.setLevel(logging.DEBUG)
+@@ -269,7 +268,7 @@ def _new_vm(self, name, *args):
+         vm = QEMUMachine(self.qemu_bin,
+                          name=name,
+                          base_temp_dir=self.workdir,
+-                         log_dir=self.logdir)
++                         log_dir=self.log_file())
+         self.log.debug('QEMUMachine "%s" created', name)
+         self.log.debug('QEMUMachine "%s" temp_dir: %s', name, vm.temp_dir)
+ 
+diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+index 2d298b1f02..7654421e6b 100755
+--- a/tests/functional/test_virtio_gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -100,9 +100,7 @@ def test_vhost_user_vga_virgl(self):
+         os.set_inheritable(qemu_sock.fileno(), True)
+         os.set_inheritable(vug_sock.fileno(), True)
+ 
+-        self._vug_log_path = os.path.join(
+-            self.logdir, "vhost-user-gpu.log"
+-        )
++        self._vug_log_path = self.log_file("vhost-user-gpu.log")
+         self._vug_log_file = open(self._vug_log_path, "wb")
+         self.log.info('Complete vhost-user-gpu.log file can be '
+                       'found at %s', self._vug_log_path)
 -- 
 2.47.1
 
