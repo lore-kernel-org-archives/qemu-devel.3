@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65E8AE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:13:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 718A9E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:13:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNry3-00013p-L2; Wed, 18 Dec 2024 06:11:52 -0500
+	id 1tNrww-0006Vh-8B; Wed, 18 Dec 2024 06:10:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxz-0000vh-Qs
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwu-0006V4-1u
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:40 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxt-0005zy-Af
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:47 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwo-0005JU-Qs
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:39 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520299;
+ s=mimecast20190719; t=1734520233;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=icK9mZ+BTwutXpAcicRi0lYfEt7an4Ag3b0ftFSB2fE=;
- b=fCLQhPPcqKiDkXsOA/RwBuvqJvq/Tty3zn/RJR+AC4UsIXdpziKHfAZKspnTMaSjPIP0nP
- UC01RY+4eX61yaqtVYBIe5IjD6KkoRD5IpqqJ+kChYYLZvzB0qM7rnjiturFd7tjjJ+hkh
- pI6QPMD6ivdNXtsul865AOEBQdVnmV0=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=JT8UzJi5z7TY7wn9HUyaWCIMSynOf1E1G97gzTKRu6w=;
+ b=bL+GdGRdEV5zRNo23jxtWDJdUzAu9JNGNJEc+lKfO5OccU9KSVQBrw7Enbmc0ikf7/BPpC
+ FoW/RXPTOlrqbB/sMz3V80XYkIO2Fz3r66sNC0lZIoXX9potNwKhs1buqw0KkhdsCVhI2u
+ tGMTEi0iVOXtKFlD3virIa+kKG/AVHQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-uBRrxH4FM562Q-Uac020Dw-1; Wed,
- 18 Dec 2024 06:11:37 -0500
-X-MC-Unique: uBRrxH4FM562Q-Uac020Dw-1
-X-Mimecast-MFC-AGG-ID: uBRrxH4FM562Q-Uac020Dw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-453-9olMasc6O6ytJTsdz7ApcA-1; Wed,
+ 18 Dec 2024 06:10:31 -0500
+X-MC-Unique: 9olMasc6O6ytJTsdz7ApcA-1
+X-Mimecast-MFC-AGG-ID: 9olMasc6O6ytJTsdz7ApcA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 52E1C195421D
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:36 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CEC7F1956087
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:30 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05F5819560AD; Wed, 18 Dec 2024 11:11:34 +0000 (UTC)
+ id 3928119560AD; Wed, 18 Dec 2024 11:10:28 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 37/38] tests/functional: Convert the hotplug_cpu avocado test
-Date: Wed, 18 Dec 2024 12:09:57 +0100
-Message-ID: <20241218110958.226932-38-thuth@redhat.com>
+Subject: [PULL 12/38] tests/functional: switch over to using
+ self.build_file(...)
+Date: Wed, 18 Dec 2024 12:09:32 +0100
+Message-ID: <20241218110958.226932-13-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -83,155 +84,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we don't have ssh support in the functional test framework yet,
-simply use the serial console for this test instead. It's also
-sufficient to only boot into an initrd here, no need to fire up a
-full-blown guest, so the test now finishes much faster.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-While we're at it, also unplug the CPU now and check that it is gone
-in the guest.
+This removes direct access of the 'BUILD_DIR' variable.
 
-Message-ID: <20241217142020.155776-1-thuth@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20241217155953.3950506-13-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/avocado/hotplug_cpu.py                | 37 -----------
- tests/functional/meson.build                |  1 +
- tests/functional/test_x86_64_hotplug_cpu.py | 69 +++++++++++++++++++++
- 3 files changed, 70 insertions(+), 37 deletions(-)
- delete mode 100644 tests/avocado/hotplug_cpu.py
- create mode 100755 tests/functional/test_x86_64_hotplug_cpu.py
+ tests/functional/qemu_test/cmd.py      |  5 ++---
+ tests/functional/qemu_test/testcase.py |  4 ++--
+ tests/functional/test_aarch64_virt.py  |  5 ++---
+ tests/functional/test_virtio_gpu.py    | 11 +++--------
+ 4 files changed, 9 insertions(+), 16 deletions(-)
 
-diff --git a/tests/avocado/hotplug_cpu.py b/tests/avocado/hotplug_cpu.py
-deleted file mode 100644
-index 342c838539..0000000000
---- a/tests/avocado/hotplug_cpu.py
-+++ /dev/null
-@@ -1,37 +0,0 @@
--# Functional test that hotplugs a CPU and checks it on a Linux guest
--#
--# Copyright (c) 2021 Red Hat, Inc.
--#
--# Author:
--#  Cleber Rosa <crosa@redhat.com>
--#
--# This work is licensed under the terms of the GNU GPL, version 2 or
--# later.  See the COPYING file in the top-level directory.
--
--from avocado_qemu.linuxtest import LinuxTest
--
--
--class HotPlugCPU(LinuxTest):
--
--    def test(self):
--        """
--        :avocado: tags=arch:x86_64
--        :avocado: tags=machine:q35
--        :avocado: tags=accel:kvm
--        """
--        self.require_accelerator('kvm')
--        self.vm.add_args('-accel', 'kvm')
--        self.vm.add_args('-cpu', 'Haswell')
--        self.vm.add_args('-smp', '1,sockets=1,cores=2,threads=1,maxcpus=2')
--        self.launch_and_wait()
--
--        self.ssh_command('test -e /sys/devices/system/cpu/cpu0')
--        with self.assertRaises(AssertionError):
--            self.ssh_command('test -e /sys/devices/system/cpu/cpu1')
--
--        self.vm.cmd('device_add',
--                    driver='Haswell-x86_64-cpu',
--                    socket_id=0,
--                    core_id=1,
--                    thread_id=0)
--        self.ssh_command('test -e /sys/devices/system/cpu/cpu1')
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index d03fe0ca36..24f7f8f2f1 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -233,6 +233,7 @@ tests_x86_64_system_thorough = [
-   'multiprocess',
-   'netdev_ethtool',
-   'virtio_gpu',
-+  'x86_64_hotplug_cpu',
-   'x86_64_tuxrun',
- ]
+diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
+index bebcd46dcf..c8971de00a 100644
+--- a/tests/functional/qemu_test/cmd.py
++++ b/tests/functional/qemu_test/cmd.py
+@@ -16,7 +16,6 @@
+ import os.path
+ import subprocess
  
-diff --git a/tests/functional/test_x86_64_hotplug_cpu.py b/tests/functional/test_x86_64_hotplug_cpu.py
-new file mode 100755
-index 0000000000..b1d5156c72
---- /dev/null
-+++ b/tests/functional/test_x86_64_hotplug_cpu.py
-@@ -0,0 +1,69 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that hotplugs a CPU and checks it on a Linux guest
-+#
-+# Copyright (c) 2021 Red Hat, Inc.
-+#
-+# Author:
-+#  Cleber Rosa <crosa@redhat.com>
-+#
-+# This work is licensed under the terms of the GNU GPL, version 2 or
-+# later.  See the COPYING file in the top-level directory.
-+
-+from qemu_test import LinuxKernelTest, Asset, exec_command_and_wait_for_pattern
-+
-+
-+class HotPlugCPU(LinuxKernelTest):
-+
-+    ASSET_KERNEL = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/vmlinuz'),
-+        'd4738d03dbbe083ca610d0821d0a8f1488bebbdccef54ce33e3adb35fda00129')
-+
-+    ASSET_INITRD = Asset(
-+        ('https://archives.fedoraproject.org/pub/archive/fedora/linux/releases'
-+         '/31/Server/x86_64/os/images/pxeboot/initrd.img'),
-+        '277cd6c7adf77c7e63d73bbb2cded8ef9e2d3a2f100000e92ff1f8396513cd8b')
-+
-+    def test_hotplug(self):
-+
-+        self.require_accelerator('kvm')
-+        self.vm.add_args('-accel', 'kvm')
-+        self.vm.add_args('-cpu', 'Haswell')
-+        self.vm.add_args('-smp', '1,sockets=1,cores=2,threads=1,maxcpus=2')
-+        self.vm.add_args('-m', '1G')
-+        self.vm.add_args('-append', 'console=ttyS0 rd.rescue')
-+
-+        self.launch_kernel(self.ASSET_KERNEL.fetch(),
-+                           self.ASSET_INITRD.fetch(),
-+                           wait_for='Entering emergency mode.')
-+        prompt = '# '
-+        self.wait_for_console_pattern(prompt)
-+
-+        exec_command_and_wait_for_pattern(self,
-+                                          'cd /sys/devices/system/cpu/cpu0',
-+                                          'cpu0#')
-+        exec_command_and_wait_for_pattern(self,
-+                                          'cd /sys/devices/system/cpu/cpu1',
-+                                          'No such file or directory')
-+
-+        self.vm.cmd('device_add',
-+                    driver='Haswell-x86_64-cpu',
-+                    id='c1',
-+                    socket_id=0,
-+                    core_id=1,
-+                    thread_id=0)
-+        self.wait_for_console_pattern('CPU1 has been hot-added')
-+
-+        exec_command_and_wait_for_pattern(self,
-+                                          'cd /sys/devices/system/cpu/cpu1',
-+                                          'cpu1#')
-+
-+        self.vm.cmd('device_del', id='c1')
-+
-+        exec_command_and_wait_for_pattern(self,
-+                                          'cd /sys/devices/system/cpu/cpu1',
-+                                          'No such file or directory')
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+-from .config import BUILD_DIR
+ 
+ def which(tool):
+     """ looks up the full path for @tool, returns None if not found
+@@ -205,10 +204,10 @@ def get_qemu_img(test):
+ 
+     # If qemu-img has been built, use it, otherwise the system wide one
+     # will be used.
+-    qemu_img = os.path.join(BUILD_DIR, 'qemu-img')
++    qemu_img = test.build_file('qemu-img')
+     if os.path.exists(qemu_img):
+         return qemu_img
+     qemu_img = which('qemu-img')
+     if qemu_img is not None:
+         return qemu_img
+-    test.skipTest(f"qemu-img not found in {BUILD_DIR} or '$PATH'")
++    test.skipTest(f"qemu-img not found in build dir or '$PATH'")
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index 2174fbb155..493938240c 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -133,8 +133,8 @@ def setUp(self, bin_prefix):
+         self.arch = self.qemu_bin.split('-')[-1]
+         self.socketdir = None
+ 
+-        self.outputdir = os.path.join(BUILD_DIR, 'tests', 'functional',
+-                                      self.arch, self.id())
++        self.outputdir = self.build_file('tests', 'functional',
++                                         self.arch, self.id())
+         self.workdir = os.path.join(self.outputdir, 'scratch')
+         os.makedirs(self.workdir, exist_ok=True)
+ 
+diff --git a/tests/functional/test_aarch64_virt.py b/tests/functional/test_aarch64_virt.py
+index c967da41b4..5bc461b482 100755
+--- a/tests/functional/test_aarch64_virt.py
++++ b/tests/functional/test_aarch64_virt.py
+@@ -14,7 +14,6 @@
+ import os
+ import logging
+ 
+-from qemu_test import BUILD_DIR
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import exec_command, wait_for_console_pattern
+ from qemu_test import get_qemu_img, run_cmd
+@@ -54,8 +53,8 @@ def test_alpine_virt_tcg_gic_max(self):
+                          "mte=on,"
+                          "gic-version=max,iommu=smmuv3")
+         self.vm.add_args("-smp", "2", "-m", "1024")
+-        self.vm.add_args('-bios', os.path.join(BUILD_DIR, 'pc-bios',
+-                                               'edk2-aarch64-code.fd'))
++        self.vm.add_args('-bios', self.build_file('pc-bios',
++                                                  'edk2-aarch64-code.fd'))
+         self.vm.add_args("-drive", f"file={iso_path},media=cdrom,format=raw")
+         self.vm.add_args('-device', 'virtio-rng-pci,rng=rng0')
+         self.vm.add_args('-object', 'rng-random,id=rng0,filename=/dev/urandom')
+diff --git a/tests/functional/test_virtio_gpu.py b/tests/functional/test_virtio_gpu.py
+index 7654421e6b..81c9156d63 100755
+--- a/tests/functional/test_virtio_gpu.py
++++ b/tests/functional/test_virtio_gpu.py
+@@ -6,7 +6,6 @@
+ # later.  See the COPYING file in the top-level directory.
+ 
+ 
+-from qemu_test import BUILD_DIR
+ from qemu_test import QemuSystemTest, Asset
+ from qemu_test import wait_for_console_pattern
+ from qemu_test import exec_command_and_wait_for_pattern
+@@ -18,12 +17,8 @@
+ import subprocess
+ 
+ 
+-def pick_default_vug_bin():
+-    relative_path = "./contrib/vhost-user-gpu/vhost-user-gpu"
+-    if is_readable_executable_file(relative_path):
+-        return relative_path
+-
+-    bld_dir_path = os.path.join(BUILD_DIR, relative_path)
++def pick_default_vug_bin(test):
++    bld_dir_path = test.build_file("contrib", "vhost-user-gpu", "vhost-user-gpu")
+     if is_readable_executable_file(bld_dir_path):
+         return bld_dir_path
+ 
+@@ -86,7 +81,7 @@ def test_vhost_user_vga_virgl(self):
+         # FIXME: should check presence of vhost-user-gpu, virgl, memfd etc
+         self.require_accelerator('kvm')
+ 
+-        vug = pick_default_vug_bin()
++        vug = pick_default_vug_bin(self)
+         if not vug:
+             self.skipTest("Could not find vhost-user-gpu")
+ 
 -- 
 2.47.1
 
