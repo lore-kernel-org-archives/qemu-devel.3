@@ -4,93 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C8EC5E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:03:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6FC1E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxRl-0003QL-Kb; Wed, 18 Dec 2024 12:02:53 -0500
+	id 1tNxSN-0004Gl-Ej; Wed, 18 Dec 2024 12:03:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNxRb-0003Eu-1v
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:02:43 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNxRW-0001NL-PN
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:02:40 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4363ae65100so44395565e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:02:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734541356; x=1735146156; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4oi1V5/2EqfFiyQXMNJY799ulFtXAnzfv5cyWO1EIjs=;
- b=TAfK79GgiOl5KkP3weHL7MbCSlUMAi3h5ynlpS0zqIjrntrbN6VeznL8EdON2O5R1O
- tyVJKiqbebkk/+Cx2B07oe8SUAAydtdKItZyFrHjOvmuHe0GB7GdY5luy7QWm8ClukDD
- VEDd5AaqlHwxxg/avFZFRIQMBWozA6XtjGCuiEFYDV7KliOni+W6tRPWUOVhldtCv7Pl
- CluxelTXy5NaPMzJoI2dXswsIew2lRL2iBhdT8HJKMbkyao9Dnlxxn3MJzS66IhlJVKV
- n0Rqd4/rZ3sYsJgYuhvlxoHgJd810mEtd+sFznXXPepWvcx8N8f54B7tfXDlkafeCHUJ
- GXRw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNxSF-00049q-5S
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:03:23 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNxSD-0001VN-J3
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:03:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734541399;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=M+umMeQZWJAOb2QyAaZOingEdwoIhI/E9+ym/x0Jaz4=;
+ b=OfKcJVtccT1Sl1BRaSJmme2BVcrvTL37h6R8E9yHWvUIvnA+rxICq5tmkzjECROX1d1QO3
+ rVHrsZBgFLNzUBrHfx3Nsu3uzn+RLjBquFnrmwB0cR7o1mUktQF7Hz1nJ1lLud0+ZAQgcK
+ rZdn6ohvDpsz7XQ/CyG41UNQbvarjrQ=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-607-abSOP8wNOVGqLflklO_0Ow-1; Wed, 18 Dec 2024 12:03:18 -0500
+X-MC-Unique: abSOP8wNOVGqLflklO_0Ow-1
+X-Mimecast-MFC-AGG-ID: abSOP8wNOVGqLflklO_0Ow
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6d88d56beb7so66859926d6.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:03:18 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734541356; x=1735146156;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4oi1V5/2EqfFiyQXMNJY799ulFtXAnzfv5cyWO1EIjs=;
- b=XjoHG1ml8zvAIAgwa0uz2hjerAeU4BVCELVLwTbmFb4+CEZfCzfgZe9nRK4Xsxxprh
- 53DIxBKvboC9b3FWrSGHLG7vBY7EYa6ZdPtAyZantmZOWk1saJLZC7klSNvlWqZBjfNx
- EhfXuCSgnuOsu+ScQHwiowvvWsmniqBMqpHcltkAyx/qJlKcGMm8+iHOrhhEiLmXeH9r
- Uh947BiJqM3R41/zvBYmbrLqcZQfCTH4Ogol+aAn//KBzJUNKn3NYnag3kQ7yvDYh5EX
- dZiffeVi4kd/1L9NfpgnMzw++9I2pqQlGGWHm8NIkK+C4DFjZUR/hIRFnBqM9wJD63u3
- +u8A==
-X-Gm-Message-State: AOJu0Yy8H9esJNO0WBQtTsjBNg1dxORtPUTnVa1F9NIFRgn/iaSGieYQ
- 0ldOiHpLMn7SxFeebdcl873p9HvE7SOVD8u0+m+zbQciGBWZtnlB9j8ir6FpMq7l6Sap2O1/p75
- UflU=
-X-Gm-Gg: ASbGnct7UGvoteWyQv2+9hzYf2aOCi6Oe0jEzj9P5jbnPf9x3tkIvQ09CGgq2VbK0Gm
- qIdM2T9OWrAUl7mJEQvfUSkWDHyU3a92Yji540X09ZXxWudcOgeb0dwmyOnpobuNnXz1oMBrlvC
- 1WJRQBcQcur7lnULQMzIqP8aIKpmNNKXB1HiSVauv8RKXuUUFcBvaMCjvzL+Xr0inQjYJzeWoVp
- IrqYemxirdLIodoePsf2+ipA8yLUwSggpOoAmGPRh+nIvtsDsIUnos=
-X-Google-Smtp-Source: AGHT+IGrYSN9Hep9RC/lEJHNnaqSc0mDYT3c2GE6H+mN2G34BcMXFcti2eo90mraZu/iq4qOcbms1Q==
-X-Received: by 2002:a05:6512:1254:b0:540:fb1a:af1f with SMTP id
- 2adb3069b0e04-542210255fbmr119120e87.39.1734541342383; 
- Wed, 18 Dec 2024 09:02:22 -0800 (PST)
-Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aabc80d4178sm334725466b.28.2024.12.18.09.02.21
+ d=1e100.net; s=20230601; t=1734541398; x=1735146198;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=M+umMeQZWJAOb2QyAaZOingEdwoIhI/E9+ym/x0Jaz4=;
+ b=ddyoRz5ei2bu6cgnpcN6I1DvB/Y4fv4BJbZgvAV7EzCA5zMyc2Kx05UpfaI2+AEQ3e
+ ZZf92qAqlOsZn2shx4cyNAOPL0hOQdNpRXDxN7eRCn+Y9t8gAgFGczuQeZZI23jX5Ot/
+ 4M8bdWk91Mrs1jZHgxzqkweSlg1wZY96mLMk/EZiSJy+LsGnu+YyFFbWkmwA6npuRvbT
+ ydAbgK1ZgEb8l57kzLSQypoguuV9/+uRSWs4Z8tJDZQSun9/NnRK3B4mfwQvoq83i1u0
+ IQnkuu2pdIueOofNkKKN5job1Yysv9fG0dWiS9OUvXfzawkKgEaPDkIdTkXp3jesd9rU
+ y3uw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVQkJ/0/8dXT4Dr88caC3GH6I+pv2JF+QD5DfKxTaLBAec+bJYgCf5HMuSLJCs6k2R3MSN34Dod+ad1@nongnu.org
+X-Gm-Message-State: AOJu0Yz6FILziuqkjyiyyqNChjzL/2hVlfEJGNMPxTZQneVqXUrW8YP/
+ 38jgJ6wvsrgolhvcijH/3pxqfR9zOzFAcQalxt4La7D5+Wmcc3oqGwXmDSQtMDmqu7WoAD+Rf8d
+ 1HlVBBxF5L4/asyIQolNRHJmgPwl6UCuE5/ujvsFcyOczCxH5IHLF
+X-Gm-Gg: ASbGnctWWuj8r/f99Y5rdslrfxhvOKoHu0vVPOb+Gpw3mXADJCV0FyLADltwjCKxQcj
+ nXLhoCkNR63I5FyBz91DvZzLTKViSrDSfH0nt5ZCNlZcl8gtAydO/RF0VyZnWk3vShNT/1hKPDP
+ HYJgyu1PcIy644M/gc4m8052p326KHMPRkksaOtcHLmTl1OfNLu0ouFqb7Lc04zJbnZzf02UGYd
+ wVvnmOEyoHHaqypQFNwVvCSK8sGxwi18x5WibL2+N2daqrq6pstKF4fKM+kIeorvelvrsI1jPo6
+ WtiLRb/5E01G50S08Q==
+X-Received: by 2002:a05:6214:1c8b:b0:6d4:1a42:8efa with SMTP id
+ 6a1803df08f44-6dd090b5cd6mr61493536d6.0.1734541398029; 
+ Wed, 18 Dec 2024 09:03:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHZTyLOIuzK8BWUWs4HH4M9iygjds9ts/REi9W1TNlu86993+Q59ysB/tobW7X6gcvoJM0tng==
+X-Received: by 2002:a05:6214:1c8b:b0:6d4:1a42:8efa with SMTP id
+ 6a1803df08f44-6dd090b5cd6mr61492786d6.0.1734541397461; 
+ Wed, 18 Dec 2024 09:03:17 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd22fed2sm51983306d6.10.2024.12.18.09.03.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 09:02:21 -0800 (PST)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B40175F796;
- Wed, 18 Dec 2024 17:02:20 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Itaru Kitayama <itaru.kitayama@linux.dev>
-Cc: qemu-devel@nongnu.org,  Jean-Philippe Brucker
- <jean-philippe@linaro.org>,  Mathieu Poirier <mathieu.poirier@linaro.org>,
- Leonardo Garcia <leonardo.garcia@linaro.org>, Markus Armbruster
- <armbru@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: CCA capability qeury QMP command
-In-Reply-To: <A96F9591-F80E-4193-AEFF-5E23B4E0FD5C@linux.dev> (Itaru
- Kitayama's message of "Wed, 25 Sep 2024 17:44:21 +0900")
-References: <A96F9591-F80E-4193-AEFF-5E23B4E0FD5C@linux.dev>
-User-Agent: mu4e 1.12.7; emacs 29.4
-Date: Wed, 18 Dec 2024 17:02:20 +0000
-Message-ID: <87cyho53hf.fsf@draig.linaro.org>
+ Wed, 18 Dec 2024 09:03:16 -0800 (PST)
+Date: Wed, 18 Dec 2024 12:03:14 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Yuan Liu <yuan1.liu@intel.com>
+Cc: farosas@suse.de, qemu-devel@nongnu.org, jason.zeng@intel.com,
+ yichen.wang@bytedance.com
+Subject: Re: [PATCH 1/3] multifd: bugfix for migration using compression
+ methods
+Message-ID: <Z2MAUj-ComKI2HUE@x1n>
+References: <20241218091413.140396-1-yuan1.liu@intel.com>
+ <20241218091413.140396-2-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Disposition: inline
+In-Reply-To: <20241218091413.140396-2-yuan1.liu@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,64 +109,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Itaru Kitayama <itaru.kitayama@linux.dev> writes:
+On Wed, Dec 18, 2024 at 05:14:11PM +0800, Yuan Liu wrote:
+> When compression is enabled on the migration channel and
+> the pages processed are all zero pages, these pages will
+> not be sent and updated on the target side, resulting in
+> incorrect memory data on the source and target sides.
+> 
+> The root cause is that all compression methods call
+> multifd_send_prepare_common to determine whether to compress
+> dirty pages, but multifd_send_prepare_common does not update
+> the IOV of MultiFDPacket_t when all dirty pages are zero pages.
+> 
+> The solution is to always update the IOV of MultiFDPacket_t
+> regardless of whether the dirty pages are all zero pages.
+> 
+> Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
+> Reviewed-by: Jason Zeng <jason.zeng@intel.com>
 
-(+CC Markus, Eduardo, Marcel for QMP API)
+Ouch.. thanks for digging this out.
 
-> Hi,
-> I=E2=80=99ve been looking at the libvirt code to add Arm=E2=80=99s CCA su=
-pport for
-> some time and I am wondering how QEMU folk want to implement the CCA
-> query command. Any pointer would be appreciated.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Jean-Philippe's latest posting is here:
+Is this the correct Fixes tag (and copy stable for 9.0+)?
 
-  Message-ID: <20241125195626.856992-2-jean-philippe@linaro.org>
-  Date: Mon, 25 Nov 2024 19:55:59 +0000
-  Subject: [PATCH v3 00/26] arm: Run Arm CCA VMs with KVM
-  From: Jean-Philippe Brucker <jean-philippe@linaro.org>
+Fixes: 303e6f54f9 ("migration/multifd: Implement zero page transmission on the multifd thread.")
 
-In that series the following objects are created:
+> ---
+>  migration/multifd-nocomp.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
+> index 55191152f9..2e4aaac285 100644
+> --- a/migration/multifd-nocomp.c
+> +++ b/migration/multifd-nocomp.c
+> @@ -362,6 +362,7 @@ int multifd_ram_flush_and_sync(void)
+>  bool multifd_send_prepare_common(MultiFDSendParams *p)
+>  {
+>      MultiFDPages_t *pages = &p->data->u.ram;
+> +    multifd_send_prepare_header(p);
+>      multifd_send_zero_page_detect(p);
+>  
+>      if (!pages->normal_num) {
+> @@ -369,8 +370,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
+>          return false;
+>      }
+>  
+> -    multifd_send_prepare_header(p);
+> -
+>      return true;
+>  }
+>  
+> -- 
+> 2.43.0
+> 
 
-  static void rme_guest_class_init(ObjectClass *oc, void *data)
-  {
-      object_class_property_add_str(oc, "personalization-value", rme_get_rp=
-v,
-                                    rme_set_rpv);
-      object_class_property_set_description(oc, "personalization-value",
-              "Realm personalization value (512-bit hexadecimal number)");
+-- 
+Peter Xu
 
-      object_class_property_add_enum(oc, "measurement-algorithm",
-                                     "RmeGuestMeasurementAlgorithm",
-                                     &RmeGuestMeasurementAlgorithm_lookup,
-                                     rme_get_measurement_algo,
-                                     rme_set_measurement_algo);
-      object_class_property_set_description(oc, "measurement-algorithm",
-              "Realm measurement algorithm ('sha256', 'sha512')");
-
-      object_class_property_add_bool(oc, "measurement-log",
-                                     rme_get_measurement_log,
-                                     rme_set_measurement_log);
-      object_class_property_set_description(oc, "measurement-log",
-              "Enable/disable Realm measurement log");
-  }
-
-So I guess we could probe for the personalization-value. However that
-seems very arch specific.
-
-All confidential guests (PPC PEF, s390x, CCA and x86 SEV) seem to set up
-ConfidentialGuestSupport with the ->ready field to true and a
-confidential-guest-support property associated with the machine. But I
-don't think that is currently exposed via QMP.
-
-I suspect from libvirt's point of view we want to have a common probing
-for CCA capable accelerators before we dive into architectural specifics?
-
->
-> Thanks,
-> Itaru.=20
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
