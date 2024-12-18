@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0621BE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:33:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABD8DE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO0jJ-0000tk-Pf; Wed, 18 Dec 2024 15:33:13 -0500
+	id 1tO0sg-00036k-Kz; Wed, 18 Dec 2024 15:42:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO0jI-0000sh-BJ
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:33:12 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO0sf-00036b-6b
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:42:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO0jG-0005Po-PI
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:33:12 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO0sd-0007S3-RL
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:42:52 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734553988;
+ s=mimecast20190719; t=1734554569;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=viKc+1aW/jYoqOHEHbbthcu/n6InX8xqnx7vkHHQz8s=;
- b=OMSSuJK8KR/RJxURoBPfZP4IPvopcPdZt7Xp6yJtJejJq7kXoz0eMHsi8VfioQZ9YIl4pg
- iVgijyV532NP71diEE+/tb/MjNVKX3w2NqqeFe+4k0WJxNxqC20j8+8SR+ImM+PtkVlOI/
- cBgsXHJ+h4/nGgQlorGKJC/6YmsAV3o=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9dYdGs+fnALSL7gPsye24vzvLDfxsH70BxSCJGywpt4=;
+ b=XZ7SpVmic0HaWUIFdsZIL8qqH1BmR3amNckK95q1Jxj2qCKJmr7CVOl10wms4jB6kWatBT
+ mURgRQtm28qwn8AtPxg926VyRRraCkT4nn/Cd0wBhkdBUo4+syQ9X5fUk+/4dkU07D1m9V
+ sgf6OI2n7VzKtjBS9CHi6UFo40VtCh8=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-94-q457qehMNmiRHb8z0U8HJw-1; Wed, 18 Dec 2024 15:33:07 -0500
-X-MC-Unique: q457qehMNmiRHb8z0U8HJw-1
-X-Mimecast-MFC-AGG-ID: q457qehMNmiRHb8z0U8HJw
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d92f0737beso1181176d6.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 12:33:07 -0800 (PST)
+ us-mta-626-DjE2OmAKNHmBVfMAlkM-Sg-1; Wed, 18 Dec 2024 15:42:47 -0500
+X-MC-Unique: DjE2OmAKNHmBVfMAlkM-Sg-1
+X-Mimecast-MFC-AGG-ID: DjE2OmAKNHmBVfMAlkM-Sg
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-46792701b64so149155331cf.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 12:42:47 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734553986; x=1735158786;
+ d=1e100.net; s=20230601; t=1734554567; x=1735159367;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=viKc+1aW/jYoqOHEHbbthcu/n6InX8xqnx7vkHHQz8s=;
- b=Odn9RB0d0/a9h3nygRt7CJ1Hz1tbjEtKrVtH/7+kp7SA52K/LmCUpzPZJdaHtWGsNJ
- T26IpzEFM4/YJBzH0aRu3VF3T46M6vJLfMW0O5aVWCSFY0H9Xi+dg+ub82pQszVUUy4V
- XYSxXWQOU9vpTUGIkIJUjcGHoQw8wQIzVVW4O3+aV1+2x/Pb8afd59jaO42pDkPBhEkX
- Dj6r2HjIJHk/ICjesXgqmFTgr+G1gU0JshWGEN0tpl79YHd/ENCp+SUivQxCmBMlRBiw
- IjZGvCUtuUnEq70Ss/ZKeO9eNto6jPzZBJBn/XjZ/A3h42TFuZWHcSOBU0H5FhzrKxw/
- WFCw==
-X-Gm-Message-State: AOJu0YzB+0wAXt+cpLl+bcEk6Hbha+DkrNMwb/UL3CHYHmpK8qtLTyhP
- HUdnb/MDyl9eHFyLuqXcqiSJUYSpRBpFKGblb7h8ikMyfNZAdwDQNh/6EOE4u6x7ywIWAbuUaK0
- d/E1+rz8V6/ZAHJQG3cHVqP/C/lEHspaHAlqlB9huWpGO+jHdUQVm
-X-Gm-Gg: ASbGnctf1fksx7jTD3l92QEOTEw7ixJLkV1TbhEugVYwkjTDyPnjR20B3C59dxReY3g
- TLyjF2hoZijxDtiMc9wnkm+yX2DHa7HggaXOoMC7eUmrIXOxmMdKyurMrPz5ZWnLdIzA8kpraYS
- 0YCwTz5TEzxJ8+rY4AoABw4KxxoYkntn/NkHmxMpE0dEp0vK1aDiMXG0xuZvDYbfiWOV9kxYEdD
- 6QVaIT1PRhWTkvTJtAfxmOZ3kHaiYCeBYnF4xXLotOQIcxQzeKtnN7dm9j8cAGnxs10xu7FTK4/
- WW0LHr0lEYQo7/vOiQ==
-X-Received: by 2002:ad4:596a:0:b0:6d8:a1fe:7298 with SMTP id
- 6a1803df08f44-6dd0926132emr63960216d6.41.1734553986620; 
- Wed, 18 Dec 2024 12:33:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFAH5g0EnYs9Bf/6IXO6urQpIqwYDQukTVHZn1wwCpkrZsVwgFRTvFNOwgTv8GjSkWbAadKpA==
-X-Received: by 2002:ad4:596a:0:b0:6d8:a1fe:7298 with SMTP id
- 6a1803df08f44-6dd0926132emr63959896d6.41.1734553986246; 
- Wed, 18 Dec 2024 12:33:06 -0800 (PST)
+ bh=9dYdGs+fnALSL7gPsye24vzvLDfxsH70BxSCJGywpt4=;
+ b=iJxF5yc9p1MISc8uvYgeNlt2S5bthvJvTSY4VQbp6xPyLOge67lYya1HggVSt3J91Y
+ witk9awhkwZu+hNhS45mK6gVDxDSXoju+hX9l7ye43m4vcuo0446cjEOhhTwN36xNKBc
+ qRJgeiC0YcpqyFkO3ObOh/9CT4FoiReB8Sz06qQQ2++FZ6qqwxjN8fL9L/syW6iAJYS5
+ k2f8JGU3Efxdu2MOuKi/OF9Razih99xBisBIYzuOZ8NaGL1msAw8Bjvj1W2FDdaVmJWp
+ UcMeo8ewoRPYB4JjcWtB8rGXBGPpI6c2q+486zVQpmsJFDIJ8XH6HwH54lKORwSHXh6t
+ Ks7A==
+X-Gm-Message-State: AOJu0Yz3/LgKg+7i+tbipFL9A+lfTdWE53G9zd3KfP6WaScQUVvybQR1
+ CPO5CIvrj6Mq33eWKLhCttv+N3YyOwSbhGP1hbwkV+K53+5pgi2zATBJpDoiaMJq4QHHDR6lHRq
+ 2Z3K3MAkv0yNkJDnAuDo3nBdu4lhKrP2hPZmaJR69wpZZBoqnrM20
+X-Gm-Gg: ASbGncvLQhPBRvX6Fl34NtJgiVvkf0G2838J6qWj1ofY4SELKJ6Yul11cW+epcaknwK
+ eEUKihjOHTA9MPaXpmfW1Sv6c0o+4xDuDs7ejdNxtdVIz8lffuwNrdsWubXHI/oK1YUxP0t8KvB
+ KHcNizVY84Bhv+p65ZE/MSIazwaorc1IqbJtNCKVE+41mWr4Z0o6I4yMhvrggDomdZF+DoKKLJJ
+ UdrYs5QmEhTfq3Qx14HVzjfQt5G3WWKUkSYjeBro0K2fcm+3ydmxLt8CrKRmeMFdNLp6Ay0uYrv
+ B/1HVBBXHJPGyWC2cg==
+X-Received: by 2002:a05:622a:44e:b0:467:800f:f475 with SMTP id
+ d75a77b69052e-46908df7c7emr66756871cf.19.1734554567361; 
+ Wed, 18 Dec 2024 12:42:47 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE8OiqaESgF1G4k6LYShv22cSx0Oknkqoj2q4ipmzQtXLp7EbPd7UN4YE/be9mAncX39T6g8A==
+X-Received: by 2002:a05:622a:44e:b0:467:800f:f475 with SMTP id
+ d75a77b69052e-46908df7c7emr66756681cf.19.1734554567107; 
+ Wed, 18 Dec 2024 12:42:47 -0800 (PST)
 Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
  [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dccd3630a9sm53967886d6.90.2024.12.18.12.33.04
+ d75a77b69052e-467b2cd9b9asm54818471cf.51.2024.12.18.12.42.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 12:33:05 -0800 (PST)
-Date: Wed, 18 Dec 2024 15:33:02 -0500
+ Wed, 18 Dec 2024 12:42:46 -0800 (PST)
+Date: Wed, 18 Dec 2024 15:42:43 -0500
 From: Peter Xu <peterx@redhat.com>
-To: Steven Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 06/19] physmem: preserve ram blocks for cpr
-Message-ID: <Z2MxfoH4cJ6BhH6X@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
- <Z1dOBioqzQmEwW16@x1n>
- <bbb7b4a9-6078-4cb1-89c9-ec2d57b996f0@oracle.com>
- <Z1toIxDzI56ODYcC@x1n> <Z1xREcVCi-hn4BlW@x1n>
- <58935fbe-bb53-457d-b4d6-70c1d7b09e8c@oracle.com>
- <8406c79f-b7fb-4536-8d6a-126bb03a6c9f@oracle.com>
- <Z2L_mwAAEjbGRI0r@x1n>
- <3b2e7897-ff21-46ab-a900-551f78f7ca48@oracle.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH v2 2/2] tests/qtest/migration: Stop checking
+ __NR_userfaultfd
+Message-ID: <Z2Mzw3LFLAUi_eEE@x1n>
+References: <20241218192223.10551-1-farosas@suse.de>
+ <20241218192223.10551-3-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <3b2e7897-ff21-46ab-a900-551f78f7ca48@oracle.com>
+In-Reply-To: <20241218192223.10551-3-farosas@suse.de>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -119,65 +107,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 03:22:50PM -0500, Steven Sistare wrote:
-> On 12/18/2024 12:00 PM, Peter Xu wrote:
-> > On Wed, Dec 18, 2024 at 11:34:34AM -0500, Steven Sistare wrote:
-> > > After adding resizable support to qemu_ram_alloc_from_fd, I can also tweak it
-> > > to grow the file while preserving error checking for the general case, and
-> > > delete the explicit ftruncate in its caller:
-> > > 
-> > >      /*
-> > >       * Allow file_ram_alloc to grow the file during CPR, if a resizable
-> > >       * memory region wants a larger block than the incoming current size.
-> > >       */
-> > >      file_size = get_file_size(fd);
-> > >      if (file_size && file_size < offset + max_size && size == max_size &&
-> > >          migrate_mode() != MIG_MODE_CPR_TRANSFER) {
-> > > [...]
-> > 
-> > Firstly, this check is growing too long, maybe worthwhile to have a helper
-> > already.
-> > 
-> > file_size_check():
-> >      // COMMENTS...
-> >      if (migrate_mode() == XXX) {
-> >          return true;
-> >      }
-> > 
-> > Said that, I think it's better we also add the flag to enforce the
-> > truncation, only if cpr found a fd.  E.g. we may want to keep the old
-> > behavior even if the user sets migrate mode to CPR (even without a
-> > migration happening at all), then create a fd ramblock.
+On Wed, Dec 18, 2024 at 04:22:23PM -0300, Fabiano Rosas wrote:
+> We don't need to check for __NR_userfaultfd in the tests anymore, the
+> syscall has been present in Linux for a long time now.
 > 
-> That was my intent.  Normally mode becomes TRANSFER only when outgoing migration
-> is about to start, or is incoming, but conceivably the source qemu user could
-> set mode early, before creating some object requiring aux memory.
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Such ordering may not be wanted, and can be too trivial.
-
-We used to discuss with Dan, and we wished all migration caps/params/modes
-will only be set in the QMP "migrate" command, rather than being separate.
-
-Actually we may start supporting such in the near future, taking all
-migration setup in the QMP command 'migrate'.  Then none of migration
-caps/params/modes will be global anymore, but only taken from the QMP
-command.  From that POV, better not rely on that.
-
-> 
-> I can add a grow parameter to qemu_ram_alloc_from_fd and pass true only
-> if the fd came from cpr_find_fd.  Sound OK?
-> 
-> RAMBlock *qemu_ram_alloc_from_fd(..., bool grow)
->     if (file_size && file_size < offset + max_size && !grow) {
->         error_setg(...
->     ...
->     new_block->host = file_ram_alloc(new_block, max_size, fd,
->                                      file_size < offset + max_size,
->                                      offset, errp);
-
-Sounds good.
-
-Thanks,
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 -- 
 Peter Xu
