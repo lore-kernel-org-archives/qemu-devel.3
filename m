@@ -4,90 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C788E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DC2BE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:47:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNy4s-0001fm-Gn; Wed, 18 Dec 2024 12:43:18 -0500
+	id 1tNy8G-0003T2-3X; Wed, 18 Dec 2024 12:46:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNy4r-0001f4-3z
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:43:17 -0500
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNy4p-0007RA-4t
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:43:16 -0500
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4361c705434so49136615e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:43:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734543786; x=1735148586; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=4VMe4HhiOX8R8eFmeGMoYQIpRaNCqlkZdci/vz3PVyA=;
- b=S9GnU8BwdPaqemaPf71yLmKU+mErLxd0nt4RrYvdvzr7boSrg1n+AW3HSlqosGW6+b
- DYLVYNfy9lDTo+LnQ1NxkMxpfsMgiZYkGTR5wqrdAcoBPavke/EM7nVrMiEgg7C1KY1/
- ey6Pq+SjB5Uhe2zXxmNa0SAmJJ1ToK1yHwKgaUZbUt5fHQS/CI88t15ExiNBTOV/Jj9r
- 5M+CGpSq2/9M8N7L6IhmilDVJ/86UHjVU+lJvUpAG327qd/9ZMbhrIeF0gNBEwgjxyMn
- eWbVewb+R/x37SbfHZkvmtd1GglJv1RuurVWNhpZH1uhCx4b+7BUOnRAbtSqtzot/lm3
- cNPQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNy8F-0003Sp-4G
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:46:47 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tNy8D-0007tu-7S
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:46:46 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734544003;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=18oUAH1ggMCfdBu+K60OKUMwyBR7qMMqjhSlruMleFI=;
+ b=Xbj56eUfFwhR6bCjB6e4lGop2RhLE3etxvJuw5E3y2KPQarxgRzO+5gxLV1/+NO6RO/PqG
+ F+h3dai0mcgcyph8yGOpEEQN8yHjp7teKOyXW/dQ+cJJD5S1s6MMWvwj81khHD2mgWcrLb
+ RZgD7r/l1d5Z+8Qa7+3xwlKMk25KKr0=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-207-_pCefM96MFW7clqZq04ARg-1; Wed, 18 Dec 2024 12:46:38 -0500
+X-MC-Unique: _pCefM96MFW7clqZq04ARg-1
+X-Mimecast-MFC-AGG-ID: _pCefM96MFW7clqZq04ARg
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-7b6eabd51cfso956680385a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:46:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734543786; x=1735148586;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4VMe4HhiOX8R8eFmeGMoYQIpRaNCqlkZdci/vz3PVyA=;
- b=pQ5TjjVQ2AOOU0SFyYdIs0tWuVQcM9z41oePeea+Q0HoWwyZ1lnVharX760JYilRFF
- 583ArgshzDTHyrbKyEaoz4zcfjaUers2cpIkIl6LpOx9HK/0YcN7o4GtvM44ELM/TPNM
- G8cdv3VSWNr+46OXs5ArT1bCMKJj1ZOpCYuPwTAye92eb5BMNyMyJNltuNLzzVWg838S
- YG3RqglvfeAedKBDfnm4xOynci+1f8pBJ2tp4LEFgY9cMrEEuj+8ZCRpKpX5BdP/VZ+9
- IlBSSIfBiflGRhm67ee+kSGIdiSxjWRmXse4ampY9O6zSSjeFBYaFQsKkwIobsgSr/4X
- EALA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXUsT3OGXudQhqgY58Z607DV6UWakKy5qynI2Hwe/NXV+CNKWrY6ZDuPH8+n81faaYvFAIjMM2cTIX/@nongnu.org
-X-Gm-Message-State: AOJu0YzIKfsqMIqM2DHKcsY1FlnETxRtpaKP7zWlvEor9dFP1la1TX0i
- GP1nK9T8a5AwoZRLLlmJ1CT9VYrwI6bsYHTbl4lA+S/CoM6iDBzeBhQs1asjnKQ=
-X-Gm-Gg: ASbGnctTKzbJMQUMF/9NRxb+hYXFqR0fdGrW7DscLGMqzbh5jW2xsaAkmpSYgfikH2P
- yhTMnCvnzNrdRDgedz5irdHdxNYkmc4wdZCJ8OYSe3vU9JV9Ay6HQN2h/QwNSzxSh9rDpT2ws6n
- 6xRSv1BtfWDLstUNXv4wrsgjmw2i6WR0LPXjY0dT76B4BDYtJr6pb4AOVEIzP5mdPF07CgwAJ3F
- R4XWkJmuK408KbsP7qkOY2Lg6/wGWJvdh+W7prGkWvbnfqaB6Zm3f4TFXSCx9n1APxWBp4t
-X-Google-Smtp-Source: AGHT+IHbxPNuB0u9Mb8wNyTTy6gr+gavotIabm+vBsXFJrJflZluYV0SlhFFCuob32sRgGvuw9ZLQQ==
-X-Received: by 2002:a05:600c:524b:b0:434:a350:207c with SMTP id
- 5b1f17b1804b1-436553ecb7cmr27021175e9.23.1734543786550; 
- Wed, 18 Dec 2024 09:43:06 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b4471bsm26557165e9.44.2024.12.18.09.43.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 09:43:05 -0800 (PST)
-Message-ID: <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
-Date: Wed, 18 Dec 2024 18:43:04 +0100
+ d=1e100.net; s=20230601; t=1734543998; x=1735148798;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=18oUAH1ggMCfdBu+K60OKUMwyBR7qMMqjhSlruMleFI=;
+ b=bckpSyXfyE1swes1rLy15yd1Pzt6e/gFf7wOQCD8IxHTWb0WZypOmYTlf+Oo0GL9qc
+ IBQmksAMIg0ldNR1bYEycODtjbg5nGkD1LSN+FL7C2/t5P6Csz6sECowrb/TqjSML3VI
+ QL+pQeihXtO+Zs4hacwbOVBtqKmQdgdWvmFDJBtSzlBwSV7pxW1JxKjfmksrD3KdGq7H
+ OXFvqm7yzPru+jtd+Rr5UAUECuCJm4zNEWJJI6VDUMy588vPnJwR1sK3ZYo3Wkd2Fgwn
+ I3bYSx4+0RleLXAMPHBWhUkMAFP+4QCe0YHfquc6SR3iLK2H/jbjTIvn+055SpkB+mFr
+ CzKg==
+X-Gm-Message-State: AOJu0YwMmI2jBxc6Ia4V2yIoGv1MnZaMRbqzttYNxfLTByYqY8SnDg9n
+ Lt/H+sFqBXUxd2Q4F6EuLdju60y0g/5waG6gaJKTAdm1YQddY80jNUIIQhMjLDHHYlTN45f8XU3
+ /gqdPlOg9mgDkfx5sOq0hiNnjv1DLyb//LL4aD3hCLrpw9Irh5hzD
+X-Gm-Gg: ASbGncv6qYcwSOEXl/2nLZKpw28uINqeczqqXf4dcHXaKEO2h3HjRK2iO3j8BefJj0z
+ jcJKDXLMWCL9N3kn6QKotYYw9PyprPNmVwVk9eAh7FbGnMrX8AmquorJG0Jn47s3VCat2ldj+zu
+ 0LYzIcHAGEdpfTP1ORMnM1rUjzog13o2lf/YOABLfquovj5OfVXFMqRfn52Fa5U0PLq0ekOMBEJ
+ d74kRLEJss6AoIzl8wbnSiGNz95Ojx+gQYdWULYAsVtmo8vzUa+tvaz8OJA+ZHcqOqVmAp1QvJB
+ 6nrfc67ZnRBHx/dERg==
+X-Received: by 2002:a05:620a:4406:b0:7b6:c543:7e54 with SMTP id
+ af79cd13be357-7b86372077emr505484385a.22.1734543997787; 
+ Wed, 18 Dec 2024 09:46:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGrZUmTiIZXS34zLCoGcdW7GCtta8IXbeQ4GZFo+1yMP0F7yCzj/xGjQ8mY1/Xm6juJuzKlOA==
+X-Received: by 2002:a05:620a:4406:b0:7b6:c543:7e54 with SMTP id
+ af79cd13be357-7b86372077emr505481285a.22.1734543997351; 
+ Wed, 18 Dec 2024 09:46:37 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b7047d1cf5sm450203785a.34.2024.12.18.09.46.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 09:46:36 -0800 (PST)
+Date: Wed, 18 Dec 2024 12:46:34 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
+Message-ID: <Z2MKesakYn3fn2ue@x1n>
+References: <20241113194630.3385-1-farosas@suse.de>
+ <20241113194630.3385-20-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20241216114841.1025070-1-anisinha@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241216114841.1025070-1-anisinha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241113194630.3385-20-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,137 +108,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/12/24 12:48, Ani Sinha wrote:
-> VM firmware update is a mechanism where the virtual machines can use their
-> preferred and trusted firmware image in their execution environment without
-> having to depend on a untrusted party to provide the firmware bundle. This is
-> particularly useful for confidential virtual machines that are deployed in the
-> cloud where the tenant and the cloud provider are two different entities. In
-> this scenario, virtual machines can bring their own trusted firmware image
-> bundled as a part of their filesystem (using UKIs for example[1]) and then use
-> this hypervisor interface to update to their trusted firmware image. This also
-> allows the guests to have a consistent measurements on the firmware image.
-> 
-> This change introduces basic support for the fw-cfg based hypervisor interface
-> and the corresponding device. The change also includes the
-> specification document for this interface. The interface is made generic
-> enough so that guests are free to use their own ABI to pass required
-> information between initial and trusted execution contexts (where they are
-> running their own trusted firmware image) without the hypervisor getting
-> involved in between. In subsequent patches, we will introduce other minimal
-> changes on the hypervisor that are required to make the mechanism work.
-> 
-> [1] See systemd pull requests https://github.com/systemd/systemd/pull/35091
-> and https://github.com/systemd/systemd/pull/35281 for some discussions on
-> how we can bundle firmware image within an UKI.
-> 
-> CC: Alex Graf <graf@amazon.com>
-> CC: Paolo Bonzini <pbonzini@redhat.com>
-> CC: Gerd Hoffman <kraxel@redhat.com>
-> CC: Igor Mammedov <imammedo@redhat.com>
-> CC: Vitaly Kuznetsov <vkuznets@redhat.com>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
->   MAINTAINERS                  |   9 ++
->   docs/specs/index.rst         |   1 +
->   docs/specs/vmfwupdate.rst    | 109 ++++++++++++++++++++++++
->   hw/misc/meson.build          |   2 +
->   hw/misc/vmfwupdate.c         | 157 +++++++++++++++++++++++++++++++++++
->   include/hw/misc/vmfwupdate.h | 103 +++++++++++++++++++++++
->   6 files changed, 381 insertions(+)
->   create mode 100644 docs/specs/vmfwupdate.rst
->   create mode 100644 hw/misc/vmfwupdate.c
->   create mode 100644 include/hw/misc/vmfwupdate.h
-
-
-> +static void vmfwupdate_realize(DeviceState *dev, Error **errp)
+On Wed, Nov 13, 2024 at 04:46:27PM -0300, Fabiano Rosas wrote:
+> diff --git a/tests/qtest/migration-test-smoke.c b/tests/qtest/migration-test-smoke.c
+> new file mode 100644
+> index 0000000000..ff2d72881f
+> --- /dev/null
+> +++ b/tests/qtest/migration-test-smoke.c
+> @@ -0,0 +1,39 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +#include "qemu/osdep.h"
+> +#include "libqtest.h"
+> +#include "migration/test-framework.h"
+> +#include "qemu/module.h"
+> +
+> +int main(int argc, char **argv)
 > +{
-> +    VMFwUpdateState *s = VMFWUPDATE(dev);
-> +    FWCfgState *fw_cfg = fw_cfg_find();
+> +    MigrationTestEnv *env;
+> +    int ret;
 > +
-> +    /* multiple devices are not supported */
-> +    if (!vmfwupdate_find()) {
-> +        error_setg(errp, "at most one %s device is permitted",
-> +                   TYPE_VMFWUPDATE);
-> +        return;
+> +    g_test_init(&argc, &argv, NULL);
+> +    env = migration_get_env();
+> +    module_call_init(MODULE_INIT_QOM);
+> +
+> +    if (env->has_kvm) {
+> +        g_test_message(
+> +            "Smoke tests already run as part of the full suite on KVM hosts");
+> +        goto out;
 > +    }
-> +
-> +    /* fw_cfg with DMA support is necessary to support this device */
-> +    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
-> +        error_setg(errp, "%s device requires fw_cfg",
-> +                   TYPE_VMFWUPDATE);
-> +        return;
-> +    }
-> +
-> +    memset(&s->fw_blob, 0, sizeof(s->fw_blob));
-> +    memset(&s->opaque_blobs, 0, sizeof(s->opaque_blobs));
-> +
-> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_OBLOB,
-> +                             NULL, NULL, s,
-> +                             &s->opaque_blobs,
-> +                             sizeof(s->opaque_blobs),
-> +                             false);
-> +
-> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_FWBLOB,
-> +                             NULL, fw_blob_write, s,
-> +                             &s->fw_blob,
-> +                             sizeof(s->fw_blob),
-> +                             false);
-> +
-> +    /*
-> +     * Add global capability fw_cfg file. This will be used by the guest to
-> +     * check capability of the hypervisor.
-> +     */
-> +    s->capability = cpu_to_le16(CAP_VMFWUPD_MASK | VMFWUPDATE_CAP_EDKROM);
-> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_CAP,
-> +                    &s->capability, sizeof(s->capability));
-> +
-> +    s->plat_bios_size = get_max_fw_size(); /* for non-pc, this is 0 */
-> +    /* size of bios region for the platform - read only by the guest */
-> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_BIOS_SIZE,
-> +                    &s->plat_bios_size, sizeof(s->plat_bios_size));
-> +    /*
-> +     * add fw cfg control file to disable the hypervisor interface.
-> +     */
-> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_CONTROL,
-> +                             NULL, NULL, s,
-> +                             &s->disable,
-> +                             sizeof(s->disable),
-> +                             false);
-> +    /*
-> +     * This device requires to register a global reset because it is
-> +     * not plugged to a bus (which, as its QOM parent, would reset it).
-> +     */
-> +    qemu_register_reset(fw_update_reset, dev);
 
-Shouldn't we use qemu_register_resettable() instead?
+So the "smoke" here is almost "tcg".. and if i want to run a smoke test on
+a kvm-enabled host, it's noop.. which isn't easy to understand why.
 
-> +}
-> +
-> +static Property vmfwupdate_properties[] = {
-> +    DEFINE_PROP_UINT8("disable", VMFwUpdateState, disable, 0),
-> +    DEFINE_PROP_END_OF_LIST(),
-> +};
-> +
-> +static void vmfwupdate_device_class_init(ObjectClass *klass, void *data)
-> +{
-> +    DeviceClass *dc = DEVICE_CLASS(klass);
-> +
-> +    /* we are not interested in migration - so no need to populate dc->vmsd */
-> +    dc->desc = "VM firmware blob update device";
-> +    dc->realize = vmfwupdate_realize;
-> +    dc->hotpluggable = false;
-> +    device_class_set_props(dc, vmfwupdate_properties);
-> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-> +}
-> +
-> +static const TypeInfo vmfwupdate_device_info = {
-> +    .name          = TYPE_VMFWUPDATE,
-> +    .parent        = TYPE_DEVICE,
+If to rethink our goal, we have two requirements:
 
-What is the qdev API used here? Why not use a plain object?
+  (1) We want to categorize migration tests, so some are quick, some are
+      slow, some might be flacky.  Maybe more, but it's about putting one
+      test into only one bucket, and there're >1 buckets.
 
-> +    .instance_size = sizeof(VMFwUpdateState),
-> +    .class_init    = vmfwupdate_device_class_init,
-> +};
+  (2) We want to run only a small portion of tests on tcg, more tests on
+      kvm.
+
+Ideally, we don't need two separate main test files, do we?
+
+I mean, we can do (1) with the existing migration-test.c, with the help of
+either gtest's "-m" or something we invent.  The only unfortunate part is
+qtest only have quick/slow, afaiu the "thorough" mode is the same as
+"slow".. while we don't yet have real "perf" tests.  It means we only have
+two buckets if we want to reuse gtest's "-m".
+
+Maybe it's enough?  If not, we can implement >2 categories in whatever
+form, either custom argv/argc cmdline, or env variable.
+
+Then, if we always categorize one test (let me try to not reuse glib's
+terms to be clear) into any of: FAST|NORMAL|SLOW|..., then we have a single
+migration-test that have different level of tests.  We can invoke
+"migration-test --mode FAST" if kvm is not supported, and invoke the same
+"migration-test --mode SLOW" if kvm is supported.
+
+Would this be nicer?  At least we can still run a pretty fast smoke / FAST
+test even on kvm. Basically, untangle accel v.s. "test category".
+
+-- 
+Peter Xu
+
 
