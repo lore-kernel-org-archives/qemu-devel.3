@@ -4,135 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 486D4E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2747BE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:55:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrZ1-0007jN-Fn; Wed, 18 Dec 2024 05:45:59 -0500
+	id 1tNrhD-0000cQ-5U; Wed, 18 Dec 2024 05:54:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrYr-0007ib-W5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:45:50 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tNrhA-0000bl-1d
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:54:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrYp-00056q-D6
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:45:49 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tNrh7-0006mD-M9
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:54:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734518744;
+ s=mimecast20190719; t=1734519258;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=501tyJIPyTh+rYUdRL/jI48Nipd3Dv8ighqq8gy6OGU=;
- b=fT0YDyaLTrJrVnD7cnigh5DfeGxAEfDjh8N3jnBX5pOMCTDx+Gnp+NCYoQl7IJ8aWJ5YyD
- ipoDYQnhKhaIQNcdj0TlqEJ8J7IqvX0mfvIxCiZpMftwzUv6R/JLfKxz4O6dUDH3MYd1sA
- oAcifdDVZcbuM4SB/pii7dLPfdlYlt8=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=t0lhJg/mvYw8fdRak6ZghlUJNMFCv8Se7K2CJkMME5Q=;
+ b=XhCfRrbF4ROWURTRSlttEW8r45l7tNFmMcPTjEmWyaZRenvvGm2nxnRKrfDeuNyXbRPR/x
+ EaVNuXemMlbWJo3yLGZpJcxaZXsznQxKspBKBFs8GFQIbuQDP4+nVM0KmJo+2I8/+HwKDq
+ NGUymdJqBgZ0u6n9rPlGHKMvL6p9wEI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-507-8mU296ViPYixeHR7EbP4VQ-1; Wed, 18 Dec 2024 05:45:42 -0500
-X-MC-Unique: 8mU296ViPYixeHR7EbP4VQ-1
-X-Mimecast-MFC-AGG-ID: 8mU296ViPYixeHR7EbP4VQ
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361b090d23so18728635e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:45:42 -0800 (PST)
+ us-mta-205-aWtNE8_KO_iH6eOy6oEepA-1; Wed, 18 Dec 2024 05:53:08 -0500
+X-MC-Unique: aWtNE8_KO_iH6eOy6oEepA-1
+X-Mimecast-MFC-AGG-ID: aWtNE8_KO_iH6eOy6oEepA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4362b9c15d8so28986505e9.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 02:53:07 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734518741; x=1735123541;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=501tyJIPyTh+rYUdRL/jI48Nipd3Dv8ighqq8gy6OGU=;
- b=XkVgc5kM4uQ9jEjiv0IuAv+/DvGNaaQSySteHNetmIZ8t84SO5UvhktCe34UK/TRGN
- H5J3UpzqDtxctvhtuZM5orHn07QuDBC12RJw0cZg8RNAmBsTUgBQtNYERuyFJoTJTKz9
- WrazVsArQqDOkqFKGI12uY71zlJWuw+4RzlhtjnCTYLh6ZIbZu7G51PaYyZw4a6mE7bl
- 9HNXkwEujfYNB0ObQqDcXrQIvXeHEV9BcCxFTNjo+XrQ16QUFfHTsLftEPrXA09OkIBe
- gq5SGkqnjmyaQaGEmeaE+bX4WpmpClX2P/A7FyJquoxSqeZnd7viywa11oBr4QGUr77J
- FvYg==
-X-Gm-Message-State: AOJu0YxuswTfoM79eG+WcSX0F3lJ01WDAjHBfO3vWkmKwL8OzcpW2hAl
- qwclFULjfhmElfDrbuqxCCZ8woQjL2vqb8SgFM7BY4CPXl/kHKfyjRFf8Y7aDfx+YsI7IKbL4mo
- CisHeihth+EQupXf1HAAVm68lfgDwbjX+p9qrofRy2n815l2MBw0+
-X-Gm-Gg: ASbGncuZC7RwBTIua9iuJpAGb1VEEU/7hUY3kZqjxhzIotw1CYlzxhrYLrS508Ywddr
- ec9gkijYvLSDXSbf4D13QvWV82oMKlq7i/v2RMZlSnYHb5gDT/EaC3psQ7PCFaIKGjRP877pmMN
- ccV9nTI5sT3rUQCsNWz4kX3ze76sV4MzwGr/t3bRPonCgYmX3pu3jxb8W5hjt6H/lW/kw6t+7+8
- leTIL2LiBMfOswDJZTuzOYd/hVWfX+4iuO7Te+QTWmrstqHuEjCGHmJ5E4gzmQ9clZHs4z8pD7I
- JnB895JoE3RE
-X-Received: by 2002:a05:600c:4fd3:b0:434:fddf:5c13 with SMTP id
- 5b1f17b1804b1-4365536faa3mr19286725e9.14.1734518741360; 
- Wed, 18 Dec 2024 02:45:41 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IF/m+DxURddz39vus51uUDG63vLvWzECUsJWpSBdiNcuF/hjTwJb/lh4Xj7npiSTLV1Es8k/A==
-X-Received: by 2002:a05:600c:4fd3:b0:434:fddf:5c13 with SMTP id
- 5b1f17b1804b1-4365536faa3mr19286385e9.14.1734518740950; 
- Wed, 18 Dec 2024 02:45:40 -0800 (PST)
-Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
- [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b119d7sm16263095e9.20.2024.12.18.02.45.39
+ d=1e100.net; s=20230601; t=1734519187; x=1735123987;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=t0lhJg/mvYw8fdRak6ZghlUJNMFCv8Se7K2CJkMME5Q=;
+ b=MOQq5ACHumwUeQq2OHX+aP9jF5admvVO8eoeMwFA3MPbJreG/5wV0S0mbzP7gIeBoZ
+ +M1FClNHFaye6WuU83KX1OmfGx05wHmnmKcmXXhYQ3m2VyoFkXTONWdIoKj7KAcD5Jm5
+ VdB1fMZZ9eUAnG1ljLQ0Cib8OkM0yoKxUzKonzTz7x3/MmjHmq/4rZyVwaybTjgJr1fI
+ VweIPNbjcKOCh3Y+fd3F1Wiuk7Bd4AvPrIvgKqEgJtNxsTeQgNdo8QvDqsbT4uSTIoGG
+ kErPkdf8nm0hJFlmwudZGzykA67r/A8CoByXTmT5gfRRJeQD2E1ZQ+no97KWs8EJRk9h
+ OU0g==
+X-Gm-Message-State: AOJu0Yy6mII4rl9oW859wbonkdvVdRJb772USUppmVr05fCo0rxff9dI
+ 3VBdOt5fZv2jcrigs5yGr2SXF863ZUHQJ4dHb3BGwdynOkIJpOqyzqSQPwig9C6nmvz19PdrYJW
+ R0vZibFkYI4L4Orya1nx7RRM/IpaBtr0CYTdYqseAUQ5mOnF1p+sPLE7c6WY2qzJmIDGTOHPfgN
+ KUVRvyeYDRYrPefGbg90dsNFBuo9Yl0N/rHUg=
+X-Gm-Gg: ASbGncum8xbER5c5Uvqer2ASlBwBJh+aLJZpzubHujW6/uuPI2yv+Zh4uG2GsC0MRT/
+ JKZv/wZtNz7g8KR41GrDbbQRhAOf1YjenwBnkDAdC8oouF2B2JC5IQ/ADlmd9ATQoctCAhz5wGP
+ NYIVMfCp7hzsiqgJPZap0W5Fw6WuKT1/JZR5NUmAgur1tYhiyeZ6Ar6fe34vKXsLFYXt9za+BbV
+ dzCVoikSb1WekAmlZ/09vo8ReY0Cqwo156MsvML7+PjZZDAsZRxo7fKrHTKDnv+oZLyF/J8bXkZ
+ MEmy1eQSqOSZEkU49U4hZwuDmmkHgs+7A4H99tmMxQ==
+X-Received: by 2002:a05:600c:468a:b0:434:9499:9e87 with SMTP id
+ 5b1f17b1804b1-436553fe17dmr15955555e9.25.1734519186821; 
+ Wed, 18 Dec 2024 02:53:06 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGU6FOClPGPAy4B0xYMkACLZsqVugyK18upU6jqW8o/gMshW/5iQT7m8IsNYJ8/KH0/jXlKlA==
+X-Received: by 2002:a05:600c:468a:b0:434:9499:9e87 with SMTP id
+ 5b1f17b1804b1-436553fe17dmr15955185e9.25.1734519186269; 
+ Wed, 18 Dec 2024 02:53:06 -0800 (PST)
+Received: from localhost
+ (p200300cbc73f8300a5d5c21badd3cf50.dip0.t-ipconnect.de.
+ [2003:cb:c73f:8300:a5d5:c21b:add3:cf50])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-43656af6c5bsm16439475e9.2.2024.12.18.02.53.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 02:45:40 -0800 (PST)
-Message-ID: <92fcd473-588b-4981-9f14-b802a9e6aa84@redhat.com>
-Date: Wed, 18 Dec 2024 11:45:38 +0100
+ Wed, 18 Dec 2024 02:53:05 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: [PULL 00/15] Host Memory Backends and Memory devices queue 2024-12-18
+Date: Wed, 18 Dec 2024 11:52:48 +0100
+Message-ID: <20241218105303.1966303-1-david@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson.build: Disallow libnfs v6 to fix the broken macOS
- build
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-stable@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
- <marcandre.lureau@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Lieven <pl@dlhnet.de>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- "Richard W.M. Jones" <rjones@redhat.com>
-References: <20241218065157.209020-1-thuth@redhat.com>
- <Z2Kmo_Kixrun1mAl@redhat.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <Z2Kmo_Kixrun1mAl@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -141,7 +96,7 @@ X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,24 +112,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/2024 11.40, Daniel P. Berrangé wrote:
-> On Wed, Dec 18, 2024 at 07:51:57AM +0100, Thomas Huth wrote:
->> The macOS build in our CI is currently broken since homebrew
->> updated libnfs to version 6 - and that version apparently comes
->> with a big API breakage. Disallow that version for now to get the
->> broken CI job working again. Once somebody had enough time to
->> adapt our code in block/nfs.c, we can revert this change again.
-> 
-> NB This isn't limited to macOS. We've already been broken by
-> this in Fedora:
-> 
->    https://lists.nongnu.org/archive/html/qemu-block/2024-12/msg00151.html
-> 
-> other distros will no doubt break too soon enough.
+The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
 
-Ah, that discussion was on qemu-block, not on qemu-devel, that's why I 
-didn't notice it :-/ Thanks for the pointer!
+  Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
 
-  Thomas
+are available in the Git repository at:
+
+  https://github.com/davidhildenbrand/qemu.git tags/mem-2024-12-18
+
+for you to fetch changes up to eb5c5f1ab479e9311d8e513e3eeafaf30f2b25b3:
+
+  s390x: virtio-mem support (2024-12-18 09:50:05 +0100)
+
+----------------------------------------------------------------
+Hi,
+
+"Host Memory Backends" and "Memory devices" queue ("mem"):
+- Fixup handling of virtio-mem unplug during system resets, as
+  preparation for s390x support (especially kdump in the Linux guest)
+- virtio-mem support for s390x
+
+----------------------------------------------------------------
+David Hildenbrand (15):
+      virtio-mem: unplug memory only during system resets, not device resets
+      s390x/s390-virtio-ccw: don't crash on weird RAM sizes
+      s390x/s390-virtio-hcall: remove hypercall registration mechanism
+      s390x/s390-virtio-hcall: prepare for more diag500 hypercalls
+      s390x: rename s390-virtio-hcall* to s390-hypercall*
+      s390x/s390-virtio-ccw: move setting the maximum guest size from sclp to machine code
+      s390x: introduce s390_get_memory_limit()
+      s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT
+      s390x/s390-stattrib-kvm: prepare for memory devices and sparse memory layouts
+      s390x/s390-skeys: prepare for memory devices
+      s390x/s390-virtio-ccw: prepare for memory devices
+      s390x/pv: prepare for memory devices
+      s390x: remember the maximum page size
+      s390x/virtio-ccw: add support for virtio based memory devices
+      s390x: virtio-mem support
+
+ MAINTAINERS                        |   5 +
+ hw/s390x/Kconfig                   |   1 +
+ hw/s390x/meson.build               |   6 +-
+ hw/s390x/s390-hypercall.c          |  85 ++++++++++++++
+ hw/s390x/s390-hypercall.h          |  25 ++++
+ hw/s390x/s390-skeys.c              |   6 +-
+ hw/s390x/s390-stattrib-kvm.c       |  67 +++++++----
+ hw/s390x/s390-virtio-ccw.c         | 165 ++++++++++++++++++---------
+ hw/s390x/s390-virtio-hcall.c       |  41 -------
+ hw/s390x/s390-virtio-hcall.h       |  25 ----
+ hw/s390x/sclp.c                    |  17 +--
+ hw/s390x/virtio-ccw-md-stubs.c     |  24 ++++
+ hw/s390x/virtio-ccw-md.c           | 153 +++++++++++++++++++++++++
+ hw/s390x/virtio-ccw-md.h           |  44 ++++++++
+ hw/s390x/virtio-ccw-mem.c          | 226 +++++++++++++++++++++++++++++++++++++
+ hw/s390x/virtio-ccw-mem.h          |  34 ++++++
+ hw/virtio/Kconfig                  |   1 +
+ hw/virtio/virtio-mem.c             | 107 ++++++++++++------
+ include/hw/s390x/s390-virtio-ccw.h |   4 +
+ include/hw/virtio/virtio-mem.h     |  13 ++-
+ target/s390x/cpu-sysemu.c          |  15 ---
+ target/s390x/cpu.h                 |   2 -
+ target/s390x/kvm/kvm.c             |  18 +--
+ target/s390x/kvm/pv.c              |   2 +-
+ target/s390x/tcg/misc_helper.c     |   7 +-
+ 25 files changed, 866 insertions(+), 227 deletions(-)
+ create mode 100644 hw/s390x/s390-hypercall.c
+ create mode 100644 hw/s390x/s390-hypercall.h
+ delete mode 100644 hw/s390x/s390-virtio-hcall.c
+ delete mode 100644 hw/s390x/s390-virtio-hcall.h
+ create mode 100644 hw/s390x/virtio-ccw-md-stubs.c
+ create mode 100644 hw/s390x/virtio-ccw-md.c
+ create mode 100644 hw/s390x/virtio-ccw-md.h
+ create mode 100644 hw/s390x/virtio-ccw-mem.c
+ create mode 100644 hw/s390x/virtio-ccw-mem.h
+-- 
+2.47.1
 
 
