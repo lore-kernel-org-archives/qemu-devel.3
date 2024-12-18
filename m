@@ -4,64 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47BA5E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 10:58:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93354E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:05:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrky-0001sG-6B; Wed, 18 Dec 2024 05:58:20 -0500
+	id 1tNrrI-0004E3-MG; Wed, 18 Dec 2024 06:04:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNrkv-0001ca-ET
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:58:17 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNrrC-0004DM-Eu
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:04:47 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tNrkp-0000CH-Dv
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 05:58:16 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tNrr4-0001gx-Rh
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:04:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734519489;
+ s=mimecast20190719; t=1734519877;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VQnkA9wurQNI2ERFpWeQxW3K9XFEWmubu/lIfSrW7OA=;
- b=SjbnoB+6pFJQeMhHZ6xjN/OoEQ+wAZdcXyf+ZobZgcrjHpVLsuyM29rQNdqOaSBsBJ43Jn
- NsLig+AiRs1jf+nO3+8gax4am7GQ62xSvW76ma8PwtR6F0XzY/fudDtE4SUBk+2Xb9j4rO
- HWqMJ8fexlqJDmRstoumKciY4PUMljI=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-S0igBtF-MgSEV-8RbJozTg-1; Wed,
- 18 Dec 2024 05:58:06 -0500
-X-MC-Unique: S0igBtF-MgSEV-8RbJozTg-1
-X-Mimecast-MFC-AGG-ID: S0igBtF-MgSEV-8RbJozTg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 796E0195607D; Wed, 18 Dec 2024 10:58:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F15921956053; Wed, 18 Dec 2024 10:58:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 9D82021E6827; Wed, 18 Dec 2024 11:58:01 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 04/23] qapi: expand tags to all doc sections
-In-Reply-To: <20241213021827.2956769-5-jsnow@redhat.com> (John Snow's message
- of "Thu, 12 Dec 2024 21:18:07 -0500")
-References: <20241213021827.2956769-1-jsnow@redhat.com>
- <20241213021827.2956769-5-jsnow@redhat.com>
-Date: Wed, 18 Dec 2024 11:58:01 +0100
-Message-ID: <87y10dtg06.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=93mmvX8sqP0sgzc4wkkyRirLRSuC3P731vVx8fTgmH0=;
+ b=ePRAed9i2iAx7NutvlNMoS1xEPAuzTXmJqBtLcyaoAejfzbXX/Nga6qjQ/LCHSlyrytA8p
+ brldJ/dlVBp3+BP6BlxiPaR1dYOP3bB1oolhuaKgFGFHqJlsoJ9Dp94RRNkH2DematJl0V
+ /K4wtxlgAMZV0M31DWOnJmSVM5uqX+k=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-633-xHYUzYLJOV27rPRY8OfFDg-1; Wed, 18 Dec 2024 06:04:35 -0500
+X-MC-Unique: xHYUzYLJOV27rPRY8OfFDg-1
+X-Mimecast-MFC-AGG-ID: xHYUzYLJOV27rPRY8OfFDg
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4359206e1e4so56528545e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 03:04:35 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734519874; x=1735124674;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=93mmvX8sqP0sgzc4wkkyRirLRSuC3P731vVx8fTgmH0=;
+ b=Xq4yeIGQjGCKfsB0h9RBE6ZH760/0MQjEGVtGFE+KzIL3eQhUk59+KJXAaVKOkupFl
+ HuiV4CMnv03n0W5w0olmjpaZQNehNgJvkqUApzi8FT4aGcZWCqQcXk6Xdi07NgEy1u2A
+ lg84F3k16dtlO4xOYkB04zVhhEVtGNwjj7Ht1+U+qsac6OyoylplKuo3H+4ZYPANubP4
+ dlJ/uN5LQ+oqTt9nXgJw6rXYl0+i5A8EFVvnOoLdKqKiu/Nt8QQZUUddQEoTwelvPvtk
+ a9ba2sjKfIELLsyxmm/jgCJbQyF1XFMe2UZe1+EugVpQdSKTWnw/UFuoG2PCSXKoR90E
+ Q5xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUIH0EAsK1MYXl1wwSuaQGAmTW8RAsEkXm3fyplsCrWElctLSKykYBvJY3GW63bqkOIEbtPErCHbi13@nongnu.org
+X-Gm-Message-State: AOJu0YwE18qD4kYCaKX5R1IerQVVh8uqu+Db1VS5EbW44KnGrffd7b4+
+ joZGQS8Z9zZu92WHA8TB4p9/ldQ44v4w2lfg50vGGnWaHPocdrDlvlHbmFCvqxAuRwnNNTw8v0I
+ N68ZC0N67fw/+877BJAP8xhuvBwsjyPiW9yBwQ+tLWoe3dSuksx4h
+X-Gm-Gg: ASbGncsfKYmwtLTqVPDdYlLCGqbXCC2CrXgFbryof5rqZck5IMrrBjPqqv9d3NxYu4l
+ 49hc+oykGO0zJrfGS6I1AQbiDMuFKS1B4DYGrjq3CPaaavbYFRoij1S7XYbZCpKgX3YcvqBZdy+
+ Fqsy5sjO36U97Thq2fYjTPrKgR+lvw5M6V8yrTE2/+gPwHCFVPf8hOikHWa3PHSwmARIK3ho26t
+ Q8xzp1UsWSWpeIuDvTpb033SwMyK6BOEehs5GO+xL81JL/eQXYQ5++MnhW3
+X-Received: by 2002:a05:600c:3ca1:b0:434:fbe2:4f with SMTP id
+ 5b1f17b1804b1-436553ed060mr16189955e9.23.1734519874501; 
+ Wed, 18 Dec 2024 03:04:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEoacjbMxUvL/lG3cjism/UBNHVMtg2n0Q/HW28E0wae1NbjKOOHHwk9U48rZibjJUMcdt0Dg==
+X-Received: by 2002:a05:600c:3ca1:b0:434:fbe2:4f with SMTP id
+ 5b1f17b1804b1-436553ed060mr16189695e9.23.1734519874132; 
+ Wed, 18 Dec 2024 03:04:34 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b12399sm16955015e9.20.2024.12.18.03.04.33
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 03:04:33 -0800 (PST)
+Message-ID: <b8b87cd9-7cf8-4b6b-961a-c34bfa8a01f6@redhat.com>
+Date: Wed, 18 Dec 2024 12:04:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 00/24] More Property cleanups
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241216035109.3486070-1-richard.henderson@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <20241216035109.3486070-1-richard.henderson@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -70,7 +128,7 @@ X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,104 +144,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 12/16/24 04:50, Richard Henderson wrote:
+> Based-on: 20241215190533.3222854-1-richard.henderson@linaro.org
+> [PULL 00/67] Constify almost all Property
+> 
+> - Missed constifying two arrays.
+> - Eliminate all empty Property lists.
+> - Detect both of these cases during the build.
+> - Count the elements in the property list and eliminate
+>    DEFINE_PROP_END_OF_LIST.
+> - Constify Property callback pointers.
+> 
+> I expect that the rust api stuff can be simplified now that we don't
+> need to add the terminator.  But I only did enough to keep correctness.
 
-> This patch adds an explicit section tag to all QAPIDoc
-> sections. Members/Features are now explicitly tagged as such, with the
-> name now being stored in a dedicated "name" field (which qapidoc.py was
-> not actually using anyway.)
->
-> WIP: Yeah, the difference between "tagged" and "untagged" sections is
-> now pretty poorly named, and explicitly giving "untagged" sections an
-> "UNTAGGED" tag is ... well, worse. but mechanically, this accomplishes
-> what I need for the series.
->
-> Please suggest better naming conventions, keeping in mind that I
-> currently have plans for a future patch that splits the "UNTAGGED" tag
-> into "INTRO" and "DETAILS" tags. But, we still need a meta-name for the
-> category of sections that are "formerly known as untagged" but cannot be
-> called "freeform" because that name is used for the category of
-> docblocks that are not attached to an entity (but happens to be
-> comprised entirely of "formerly known as untagged" sections.)
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
+It's good.  Most remaining macros will go away sooner or later; for now 
+the loop is what we have...
 
-Doesn't pass 'make check' for me.  Diff appended.  It shows the error
-messages get worse.
+I queued this series myself since it conflicts with what I have ready 
+for Rust.  Thanks!
 
-
-diff --git a/tests/qapi-schema/doc-duplicated-return.err b/tests/qapi-schema/doc-duplicated-return.err
-index 503b916b25..c0036fe8aa 100644
---- a/tests/qapi-schema/doc-duplicated-return.err
-+++ b/tests/qapi-schema/doc-duplicated-return.err
-@@ -1 +1 @@
--doc-duplicated-return.json:8: duplicated 'Returns' section
-+doc-duplicated-return.json:8: duplicated 'Tag.RETURNS' section
-diff --git a/tests/qapi-schema/doc-duplicated-since.err b/tests/qapi-schema/doc-duplicated-since.err
-index a9b60c0c3d..1066040560 100644
---- a/tests/qapi-schema/doc-duplicated-since.err
-+++ b/tests/qapi-schema/doc-duplicated-since.err
-@@ -1 +1 @@
--doc-duplicated-since.json:8: duplicated 'Since' section
-+doc-duplicated-since.json:8: duplicated 'Tag.SINCE' section
-diff --git a/tests/qapi-schema/doc-empty-section.err b/tests/qapi-schema/doc-empty-section.err
-index 711a0d629c..3eae1b93c9 100644
---- a/tests/qapi-schema/doc-empty-section.err
-+++ b/tests/qapi-schema/doc-empty-section.err
-@@ -1 +1 @@
--doc-empty-section.json:6: text required after 'Errors:'
-+doc-empty-section.json:6: text required after 'Tag.ERRORS:'
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.out
-index ec277be91e..87d2f074cf 100644
---- a/tests/qapi-schema/doc-good.out
-+++ b/tests/qapi-schema/doc-good.out
-@@ -110,7 +110,7 @@ The _one_ {and only}, description on the same line
- Also _one_ {and only}
-     feature=enum-member-feat
- a member feature
--    section=None
-+    section=Tag.UNTAGGED
- @two is undocumented
- doc symbol=Base
-     body=
-@@ -168,15 +168,15 @@ description starts on the same line
- a feature
-     feature=cmd-feat2
- another feature
--    section=None
-+    section=Tag.UNTAGGED
- .. note:: @arg3 is undocumented
--    section=Returns
-+    section=Tag.RETURNS
- @Object
--    section=Errors
-+    section=Tag.ERRORS
- some
--    section=TODO
-+    section=Tag.TODO
- frobnicate
--    section=None
-+    section=Tag.UNTAGGED
- .. admonition:: Notes
- 
-  - Lorem ipsum dolor sit amet
-@@ -200,7 +200,7 @@ Examples::
- 
- Note::
-     Ceci n'est pas une note
--    section=Since
-+    section=Tag.SINCE
- 2.10
- doc symbol=cmd-boxed
-     body=
-@@ -209,7 +209,7 @@ If you're bored enough to read this, go see a video of boxed cats
- a feature
-     feature=cmd-feat2
- another feature
--    section=None
-+    section=Tag.UNTAGGED
- .. qmp-example::
- 
-    -> "this example"
+Paolo
 
 
