@@ -4,77 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AECE3E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:43:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D692E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:43:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuKJ-0001D4-Q0; Wed, 18 Dec 2024 08:43:00 -0500
+	id 1tNuKV-0001JR-CZ; Wed, 18 Dec 2024 08:43:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKH-0001Cd-W5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:42:58 -0500
-Received: from mail-oi1-x22b.google.com ([2607:f8b0:4864:20::22b])
+ id 1tNuKQ-0001Go-1N
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:06 -0500
+Received: from mail-oi1-x22f.google.com ([2607:f8b0:4864:20::22f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKG-0005dG-GF
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:42:57 -0500
-Received: by mail-oi1-x22b.google.com with SMTP id
- 5614622812f47-3eb8accbde3so381396b6e.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:42:56 -0800 (PST)
+ id 1tNuKO-0005eV-Hr
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:05 -0500
+Received: by mail-oi1-x22f.google.com with SMTP id
+ 5614622812f47-3eb8bdcac2eso1214603b6e.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734529375; x=1735134175; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734529383; x=1735134183; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wosSj0kWkq5cs0VFJpmmiyQOLWqM761SJCj5OeJxoag=;
- b=cU97gTqrNY62lNYHNmj8GIbpwweot4IQt+Q5VoHlNqNGPNFdGY7YGFx9tpUl5Aj2mp
- vH4+3lV4auwuOfdtWt5+mIwoZTy7HBAS2uuqsoVIJJW1cMr/CICwhMKmqASXgQWQjXhm
- tlt7kjw4GvrMvoMe5/U9d1vOmI4vnxlFJsH/ik/eGsuMmCD/Rn6I44vyC2ygluo/K+BH
- 55Z2w/kkEafKNNnG2T3hTOi6lAJh7STTynMQ4EHC5Xj3liTbozkOCMNy/Adt/JE+jVKS
- TBDWyZ54/8uGrVe6MBY2345Ap22SPgpu2HW9LFFneG41fwCmAdl8kjiDVgi6NL4fRs0x
- PPUg==
+ bh=iyJAxwEKb2I5MPVS5DJzWXO9WaSZYlw8mVsU36qO0T4=;
+ b=LEJLoPCYcosDRVdqJEJ+fWd22omGdmOEb3NLe/p2w7lkvCvgSar9kqN3M41FzgyXbT
+ uYjwK9FVXDD7UdzoxyBTQcst2yn0cVD91n83fraqB4uxA6mqyKMH2HKGZM9ggqyoh0Ns
+ i7phf7tObwG2qmC3k07sZa3Dr9L/yKtiqhGa0OJBhVryteieEbGeEqEXeOl+WaucDo49
+ Pc2j6V7SCK+cgFxXaLaWm1gl4h4Yx3C+YCmNt8UdRzzZHugdXmJTHAWrbn1SUCy3QK05
+ aVVNHk1GMpuuspxOnSlm29KQ8ARzw8AYWNzpvK+UgnfC+EBe2afyTjJEYZ73raXMYkUR
+ h2HQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734529375; x=1735134175;
+ d=1e100.net; s=20230601; t=1734529383; x=1735134183;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wosSj0kWkq5cs0VFJpmmiyQOLWqM761SJCj5OeJxoag=;
- b=PrVQesc90Q47JdbfqIz9lJi2ni/ktSlTePm5bawXojNocxT/9gbSf4jC2Kdya2RAyZ
- khW2h2zKfzuIc7ITiol/IoacqcP5y9yOUDOGKulsv8ex01/uzHEaHh1wPBxUqLsgLOrR
- O15yC6h3hXDvGHHyza5aT3kosijnLfWKp8XGz2Stwqu8gosij/P+3v3zqdArDM5lqVFT
- WdtUMkgo1pFyeQPSEH/tRNhrDCCraKFy0IZyB87TmwSS9KQMNkKp280lAb9q8GLXlICx
- dQLSUFAOCAkAcJ39TG40UzLXXJumGdEndgSXvybv/508hao97+eNe/yNwLd8ZPHlrziI
- 3Ecw==
-X-Gm-Message-State: AOJu0Ywv+YBtq/6SHweYE9z2hq9osFQ551sSjDrY+GCGJF121VtcS7tH
- yANLj7C/4S2CGfwVxQuaM9beFXQBiuF54BCSDXGeI8MKKI3jG1wR1yTlhCVFtSJBAXZjzsmHZ2B
- YsSdeKYvk
-X-Gm-Gg: ASbGnctXOjzSnEosAvHEebUleGlKy4dD3hHTDQZfAIf0aNJ9K8/v7eig9IcPIRk+X+J
- 2zUqHmTyrtNNkJF1dO6YMUV9Xee3JCm9WbUpd55mvj5dTfnlFFBY3VcETc4U9ENFTlVYvPL2+Mp
- 3hjxNhsuy5eMLOpJYxiZoH5jeUQjv0qjH3Nfyxum1bv8Is89EdzNQRkvUIvRPI3tLTuZl/gBEEp
- Cd8Zse1altSDMBx9D1l4T8h+rQJbjTLGRTRe+R7PRx8OJQOAUpb58WLfNyGtif5
-X-Google-Smtp-Source: AGHT+IEp8zoCh+qFjCE5koC+XJuvTX55Y0zkZ6B8OZ2XNcr+L/k/ot7dRlQpQEYXoDZpxiw7kpw7Fw==
-X-Received: by 2002:a05:6808:1492:b0:3eb:615a:eccf with SMTP id
- 5614622812f47-3eccd0c8f2bmr1274106b6e.10.1734529375248; 
- Wed, 18 Dec 2024 05:42:55 -0800 (PST)
+ bh=iyJAxwEKb2I5MPVS5DJzWXO9WaSZYlw8mVsU36qO0T4=;
+ b=N8F621PQp5bxSPJUDNppw+jErAtQCSA+ifXijPObDDyN/uyKuHtEDE0RtidXrYPl/z
+ nq8ACAZXxPV8WpClO0H6cciAvT/QK4zgP1rRPnndMDcDhgiBtCkVBa6+yQDLTDah+fIh
+ aMIhF25HfxohR6sO3u3hMnkM17Hk6gYMIKl1F40LIW9KhrqFHkcD2v+tOeywrhEyfncF
+ ITsTKxXSuBuoQxxVkmBUFjwYG7W7us8RIEwSTOTv0hgfP44wG/VPOcffgxVHbjiH2Xb2
+ 5uQurt5Bd/E9xDyzkluFo4mmrHvuNdzWAti74gwwo7QJdF/t9vputWLOLFoYgKZqMcLz
+ UGGQ==
+X-Gm-Message-State: AOJu0YwRWPTWQSWiq55b0AFHPo60a1XHlXMdu+yDWMNKD56TnrmgOZmw
+ f7XxlK0tBV1igvzkrViAYos7DzU1aVfz3g/EIQ6//aBDOkzuv/NTEj8L3/ERcJhrHAfBhbK64zh
+ FwA/iQnZ1
+X-Gm-Gg: ASbGncuo/U7pZqGC6oAWjBMsfrPki5ep7MgndJPmJ3FD1aqAjprGB3eePE+BWgr9Hap
+ qFhtVJsleK04YUhKZ2Q1rwurH0bjfjAdl2Z2VgpbBnhXK6loxTrCUt1J53xArYVHDWmzSNS8V0v
+ tsb4Syob0as164Ny7BQTRoEfrK0lHELKlGgm/naQVzsQLo6dwoh2tCDu28KYUNFPKry/Ap6cMrF
+ MzFiNYRVhOzRAZX9Ci0gObnTHoFjsA8iAKwbC6ovA6XLYXse0HPw8Bz3EWfWGeb
+X-Google-Smtp-Source: AGHT+IGSAsvXBcA7n8cGyuLNW9n/e9uOoGuntCeDVfdGHIvjD3t6SF0xU3/b1e9gL1db1IhfRodLpQ==
+X-Received: by 2002:a05:6808:3a12:b0:3eb:4b4c:80c9 with SMTP id
+ 5614622812f47-3eccbeaefe0mr1973170b6e.0.1734529383377; 
+ Wed, 18 Dec 2024 05:43:03 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.42.54
+ 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.43.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 05:42:54 -0800 (PST)
+ Wed, 18 Dec 2024 05:43:02 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
-Subject: [PATCH v2 01/24] migration: Constify migration_properties
-Date: Wed, 18 Dec 2024 07:42:28 -0600
-Message-ID: <20241218134251.4724-2-richard.henderson@linaro.org>
+Subject: [PATCH v2 07/24] hw/tricore: Remove empty Property lists
+Date: Wed, 18 Dec 2024 07:42:34 -0600
+Message-ID: <20241218134251.4724-8-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241218134251.4724-1-richard.henderson@linaro.org>
 References: <20241218134251.4724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::22b;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::22f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x22f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,36 +99,51 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- migration/options.h | 2 +-
- migration/options.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/tricore/tc27x_soc.c          | 5 -----
+ hw/tricore/tricore_testdevice.c | 5 -----
+ 2 files changed, 10 deletions(-)
 
-diff --git a/migration/options.h b/migration/options.h
-index 79084eed0d..a360f93a44 100644
---- a/migration/options.h
-+++ b/migration/options.h
-@@ -20,7 +20,7 @@
+diff --git a/hw/tricore/tc27x_soc.c b/hw/tricore/tc27x_soc.c
+index ecd92717b5..81bb16d89b 100644
+--- a/hw/tricore/tc27x_soc.c
++++ b/hw/tricore/tc27x_soc.c
+@@ -201,16 +201,11 @@ static void tc27x_soc_init(Object *obj)
+     object_initialize_child(obj, "tc27x", &s->cpu, sc->cpu_type);
+ }
  
- /* migration properties */
+-static Property tc27x_soc_properties[] = {
+-    DEFINE_PROP_END_OF_LIST(),
+-};
+-
+ static void tc27x_soc_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
--extern Property migration_properties[];
-+extern const Property migration_properties[];
+     dc->realize = tc27x_soc_realize;
+-    device_class_set_props(dc, tc27x_soc_properties);
+ }
  
- /* capabilities */
+ static void tc277d_soc_class_init(ObjectClass *oc, void *data)
+diff --git a/hw/tricore/tricore_testdevice.c b/hw/tricore/tricore_testdevice.c
+index ae95c49565..e60866d76f 100644
+--- a/hw/tricore/tricore_testdevice.c
++++ b/hw/tricore/tricore_testdevice.c
+@@ -58,15 +58,10 @@ static void tricore_testdevice_init(Object *obj)
+                           "tricore_testdevice", 0x4);
+ }
  
-diff --git a/migration/options.c b/migration/options.c
-index ad8d6989a8..24cc8471aa 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -85,7 +85,7 @@
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
- #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
+-static Property tricore_testdevice_properties[] = {
+-    DEFINE_PROP_END_OF_LIST()
+-};
+-
+ static void tricore_testdevice_class_init(ObjectClass *klass, void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
  
--Property migration_properties[] = {
-+const Property migration_properties[] = {
-     DEFINE_PROP_BOOL("store-global-state", MigrationState,
-                      store_global_state, true),
-     DEFINE_PROP_BOOL("send-configuration", MigrationState,
+-    device_class_set_props(dc, tricore_testdevice_properties);
+     device_class_set_legacy_reset(dc, tricore_testdevice_reset);
+ }
+ 
 -- 
 2.43.0
 
