@@ -4,80 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 383C2E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 18:55:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EC6DE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 19:09:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNzC2-0005Cw-DW; Wed, 18 Dec 2024 13:54:46 -0500
+	id 1tNzP1-0001If-6n; Wed, 18 Dec 2024 14:08:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3cBpjZwcKCnMmVekliVXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--venture.bounces.google.com>)
- id 1tNzC1-0005CQ-AG
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:54:45 -0500
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNzOy-0001HN-Lg
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:08:08 -0500
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3cBpjZwcKCnMmVekliVXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--venture.bounces.google.com>)
- id 1tNzBy-0001XP-W4
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:54:45 -0500
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-728cd4fd607so29486b3a.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 10:54:41 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tNzOw-0006fX-Q3
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:08:08 -0500
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-728ec840a8aso60529b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1734548081; x=1735152881; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=hWoPXfnVzFMIJNdiOHiPgOWuF2aqseWl5BOzP91fj7k=;
- b=HmsClwMQLXDpb/aRpA9zuTSSwl+OVaY4kdwjoC99k7Y4wncNgSxbMkh9A+Qf0nZqnS
- UY5CgjnWg+/4X3/1wDWMzt2gpfsgCgioakfmY04Her/jPkeE2Llq0oWUn0xyHzILRafq
- H1YblCD8hE9OE04pTbzdLmR4OOyH3SDslZSwfX1X4H89OnAuPgBr32lBeGWzA6kYccfI
- UGq+cAEauC2QmJF+TvPKcnn5LyhbcV32AcHf96XFUl9df96b5DjPRLgWK14vIEED0hoS
- wMeUekf+GPzudTJuaDoXTRbM3b2Hv8O4vf7T3GVPG3YrLsnHQJT7K8tq4u2LToyY/+Jf
- zf7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734548081; x=1735152881;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=linaro.org; s=google; t=1734548885; x=1735153685; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=hWoPXfnVzFMIJNdiOHiPgOWuF2aqseWl5BOzP91fj7k=;
- b=KA0cN57WGHiOUL4Ji2+jSNNUcywSlWP1zTN0abwGgSj85os+99WHkkRsOKOcTki09D
- WmMDVHrXZ+Zm3Ye/kUyP0JY+Q2B0mOHwE/SEgSJWj6UOm+lmaoLGxRv3fXcrBKcrSTAU
- CXzDjVvT3bX+7krck7UGjuiPsVIP6ZAlRQ5QHX6DcSfL9oFHQeI9eQm5DqRTFNCQ9dxJ
- nxWf3TquPcK22in4A1h/VxTwVjJaTgXUnagXBXIeVrgasBZuIsvln8XDKFYnFpymeJc/
- Lkb1EuSItjxa7aMtSRKy7uC2yvr3kmL6pGqR9hcTGRHbDjH4gdHQ9iFLEbFU/sKPqXue
- Jgog==
+ bh=jzDt1Xspui21S1Kn31W2/vdsDMdqjOAjc4XOxuIAPMo=;
+ b=HXVbqI9eTxbiYb4hwAD7C34lMeQ+OvSA2W0WhRMVO9y5DVdUI/Ct1E3uIxL3cWjaPd
+ UgwPuh8h5BcX0BnvoMBHCVD9GTzKNDRbPYWaSEukFnnc2Qyfi5k8Ac4bHn0ZumYXp1DX
+ z2HBmX70MQqJ/q3Tyywqah0eG31tIWluW9HmvqytODXqm68Lf0KnkNRznA78UnqqISzo
+ FiFHukwYcPpi1nNa3jcGAkj2EQ26BmGm4gdmZxT1NDgaH7PcXZYLIzNWSKV9sMpWF08e
+ SkoHHfwXHhA0xoOoDoMJTJ49H5OxoG4dxCmQB3EeR0aiXMSeRee5XNjh8xA01T+077/K
+ JGOg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734548885; x=1735153685;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=jzDt1Xspui21S1Kn31W2/vdsDMdqjOAjc4XOxuIAPMo=;
+ b=cCFSe56pdHkj+jdxaB2lNqEYAsf7bym/CW+C5Z2Oj94XymJ3h80usfwfhRs1u4pAhE
+ EqWNtO/IgqxKggyOGIvyc89aELSO31WOKrOU6x+SNRldDQpHuRqCv9+VFVztF1DeiLNv
+ UpLsUzI5bTHZ4Ld+eV3l9LspncUvytIqn9LF/kGLXE6fuvIRcVNCORsv6xJDY6l+UG/1
+ x84kD0Jx1qFCUSJNt6bv1JFV3aUNNa9kKzPLBoonLwJaGCUOJzPrX0OaA9rAhieYBEhT
+ wBO+1pAP80Rtgll+G10YwqjxBK8YpCs9+H5nH6IRBciyyK4AH6ehs6Bnvdzpb41RcX6W
+ FSKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWdpQkDkJt/73EXI5N6+Pb1nbEd2gRe5xEtoYQs4asglXE3Cm4lnfYcYBVv9brL2aZFqKQUyI4epGpK@nongnu.org
-X-Gm-Message-State: AOJu0YzpAWjabj5iIq9TRJmg+NyZ29BUkNLfx0N/3R7cpkJlNzNiwMht
- 8PRLV4m69czVgyix/zbQphOCrLcvDUsM4Cey1Dw+yZsz52ACXPte/jUgWO5OBmSTKlMG9Penhdd
- I58E3uA==
-X-Google-Smtp-Source: AGHT+IGzjSlk6HCpmZuzqIhJLi/igMU6IEO/u3EgU33YJCZHGnLgWlhQJcXGnjM91UeKtP21iqR55V9COQeS
-X-Received: from pfbfq2.prod.google.com ([2002:a05:6a00:60c2:b0:725:cd3b:3256])
- (user=venture job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:3396:b0:1e1:bf3d:a190
- with SMTP id adf61e73a8af0-1e5b48a0cdfmr5628330637.30.1734548080970; Wed, 18
- Dec 2024 10:54:40 -0800 (PST)
-Date: Wed, 18 Dec 2024 18:54:37 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.47.1.613.gc27f4b7a9f-goog
-Message-ID: <20241218185437.2694295-1-venture@google.com>
-Subject: [PATCH] hw/pci-bridge: Create PLX Virtual Switch Device
-From: Patrick Leis <venture@google.com>
-To: peter.maydell@linaro.org, mst@redhat.com, marcel.apfelbaum@gmail.com
-Cc: pbonzini@redhat.com, qemu-devel@nongnu.org, 
- Nabih Estefan <nabihestefan@google.com>, Patrick Leis <venture@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3cBpjZwcKCnMmVekliVXffXcV.TfdhVdl-UVmVcefeXel.fiX@flex--venture.bounces.google.com;
- helo=mail-pf1-x44a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ AJvYcCV3TFddd94xkFmMqnUjOK1aJwIpNeSa6dqsQJqz2xjsDEj48iGOaC4ZVB5ltcgooJHfSep32/TTr6Jc@nongnu.org
+X-Gm-Message-State: AOJu0YxyhUZ3Ar86eNd9jCggk2jNe6Fny80KW7puObta0spLo/Zm5oFw
+ H7C0JHRyZ6m84skKTXc7A2Tx/KAVhqajVPw9cb12HdmoLsA8gT2VcEEjudUywfs=
+X-Gm-Gg: ASbGncsvzb/HpimqPN5iUbOF451EHQ+do5ILaYiqJ3zGo73YZ3/mKFKKc5Ss24EHxWT
+ tMJjh5xN3RVPlh0ZqOoifnuz5jvihFbYnU8WvI8EM73bDmt5oo+ndU5fp3yzF17CN5/hLHrZLTR
+ ylTohqmfywAhHd9WijexoAAFPT/xBqgbhpzjIdd0WiJKrqgDhfsSxlW4D2C6is227G1N+ioaMy6
+ NQhn5s2pC8BMU9df02tZwKPfT8SMMXzuef7mnt9ZBJfvUz+m2LgY9nEsC8iqB580Ds5qA==
+X-Google-Smtp-Source: AGHT+IGqhpTuQPe6kEGFbiVxMx1YSzKxM62291jNhBO9WzytmHaclZkyN90QYasR+cQNA45cjGSzMg==
+X-Received: by 2002:a05:6a00:3992:b0:729:1c0f:b94a with SMTP id
+ d2e1a72fcca58-72a8d2cbcd7mr7086320b3a.23.1734548884791; 
+ Wed, 18 Dec 2024 11:08:04 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72918ad567csm8870911b3a.71.2024.12.18.11.08.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 11:08:04 -0800 (PST)
+Message-ID: <48dd3afc-d78d-4bd9-9392-873d5a8ac26a@linaro.org>
+Date: Wed, 18 Dec 2024 11:08:03 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
+ aarch64 to impdef
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, qemu-arm@nongnu.org
+References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+ <7cd98960-0c0d-481f-96ea-08e0578d5cad@linaro.org>
+ <b0962854-65c3-47d0-8f0a-072fdf51e7b6@linaro.org>
+ <6e29d9cb-1c67-4fdc-97f1-32c90bed1048@linaro.org>
+ <19df9957-6653-4086-aa1f-07263efcddde@linaro.org>
+ <87pllq69l6.fsf@draig.linaro.org>
+ <CAFEAcA_xe5QEPsrByM8ems_rxt-KsVRAgkKhGk24X-1J0vcCDA@mail.gmail.com>
+ <75ff92e0-7384-4af4-bc9f-64a6b0febc9f@linaro.org>
+ <CAFEAcA8YNcft8KU8mytHv+H71L7L8d=QBgQmSAmq9J7Ny23=tA@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CAFEAcA8YNcft8KU8mytHv+H71L7L8d=QBgQmSAmq9J7Ny23=tA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,479 +113,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
-
-Create a PLX PEX PCIe Virtual Switch implementation that can be used
-for modeling trays. This is a generalized version of the xio3130 switch where
-we can set the PCI information on creation, allowing us to model different
-trays without creating specific devices for all of them. It is used the same
-way the xio3130 switch is used + the PCI Signature information
-
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Signed-off-by: Patrick Leis <venture@google.com>
----
- hw/pci-bridge/Kconfig                  |   5 +
- hw/pci-bridge/meson.build              |   1 +
- hw/pci-bridge/plx_vswitch_downstream.c | 187 +++++++++++++++++++++++++
- hw/pci-bridge/plx_vswitch_upstream.c   | 177 +++++++++++++++++++++++
- include/hw/pci-bridge/plx_vswitch.h    |  41 ++++++
- 5 files changed, 411 insertions(+)
- create mode 100644 hw/pci-bridge/plx_vswitch_downstream.c
- create mode 100644 hw/pci-bridge/plx_vswitch_upstream.c
- create mode 100644 include/hw/pci-bridge/plx_vswitch.h
-
-diff --git a/hw/pci-bridge/Kconfig b/hw/pci-bridge/Kconfig
-index 449ec98643..dbba09d8b3 100644
---- a/hw/pci-bridge/Kconfig
-+++ b/hw/pci-bridge/Kconfig
-@@ -27,6 +27,11 @@ config IOH3420
-     default y if PCI_DEVICES
-     depends on PCI_EXPRESS && MSI_NONBROKEN
- 
-+config PLX_VSWITCH
-+    bool
-+    default y if PCI_DEVICES
-+    depends on PCI_EXPRESS && MSI_NONBROKEN
-+
- config I82801B11
-     bool
-     default y if PCI_DEVICES
-diff --git a/hw/pci-bridge/meson.build b/hw/pci-bridge/meson.build
-index 2e0eb0d233..02c18558bd 100644
---- a/hw/pci-bridge/meson.build
-+++ b/hw/pci-bridge/meson.build
-@@ -7,6 +7,7 @@ pci_ss.add(when: 'CONFIG_PCIE_PCI_BRIDGE', if_true: files('pcie_pci_bridge.c'))
- pci_ss.add(when: 'CONFIG_PXB', if_true: files('pci_expander_bridge.c'),
-                                if_false: files('pci_expander_bridge_stubs.c'))
- pci_ss.add(when: 'CONFIG_XIO3130', if_true: files('xio3130_upstream.c', 'xio3130_downstream.c'))
-+pci_ss.add(when: 'CONFIG_PLX_VSWITCH', if_true: files('plx_vswitch_upstream.c', 'plx_vswitch_downstream.c'))
- pci_ss.add(when: 'CONFIG_CXL', if_true: files('cxl_root_port.c', 'cxl_upstream.c', 'cxl_downstream.c'))
- 
- # Sun4u
-diff --git a/hw/pci-bridge/plx_vswitch_downstream.c b/hw/pci-bridge/plx_vswitch_downstream.c
-new file mode 100644
-index 0000000000..8987b3a57a
---- /dev/null
-+++ b/hw/pci-bridge/plx_vswitch_downstream.c
-@@ -0,0 +1,187 @@
-+/*
-+ * PLX PEX PCIe Virtual Switch - Downstream
-+ *
-+ * Copyright 2024 Google LLC
-+ * Author: Nabih Estefan <nabihestefan@google.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ *
-+ * Based on xio3130_downstream.c and guest_only_pci.c
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci_ids.h"
-+#include "hw/pci/msi.h"
-+#include "hw/pci/pcie.h"
-+#include "hw/pci/pcie_port.h"
-+#include "hw/pci-bridge/plx_vswitch.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/registerfields.h"
-+#include "migration/vmstate.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+
-+#define TYPE_PLX_VSWITCH_DOWNSTREAM_PCI "plx-vswitch-downstream-pci"
-+OBJECT_DECLARE_SIMPLE_TYPE(PlxVSwitchPci, PLX_VSWITCH_DOWNSTREAM_PCI)
-+
-+
-+static void plx_vswitch_downstream_write_config(PCIDevice *d, uint32_t address,
-+                                         uint32_t val, int len)
-+{
-+    pci_bridge_write_config(d, address, val, len);
-+    pcie_cap_flr_write_config(d, address, val, len);
-+    pcie_aer_write_config(d, address, val, len);
-+}
-+
-+static void plx_vswitch_downstream_reset(DeviceState *qdev)
-+{
-+    PCIDevice *d = PCI_DEVICE(qdev);
-+
-+    pcie_cap_deverr_reset(d);
-+    pcie_cap_arifwd_reset(d);
-+    pci_bridge_reset(qdev);
-+}
-+
-+static void plx_vswitch_downstream_realize(PCIDevice *d, Error **errp)
-+{
-+    PlxVSwitchPci *vs = PLX_VSWITCH_DOWNSTREAM_PCI(d);
-+    PCIEPort *p = PCIE_PORT(d);
-+    int rc;
-+
-+    if (vs->vendor_id == 0xffff) {
-+        error_setg(errp, "Vendor ID invalid, it must always be supplied");
-+        return;
-+    }
-+    if (vs->device_id == 0xffff) {
-+        error_setg(errp, "Device ID invalid, it must always be supplied");
-+        return;
-+    }
-+
-+    if (vs->subsystem_vendor_id == 0xffff) {
-+        error_setg(errp,
-+                   "Subsystem Vendor ID invalid, it must always be supplied");
-+        return;
-+    }
-+
-+    uint16_t ssvid = vs->subsystem_vendor_id;
-+    uint16_t ssdid = vs->subsystem_device_id;
-+
-+    pci_set_word(&d->config[PCI_VENDOR_ID], vs->vendor_id);
-+    pci_set_word(&d->config[PCI_DEVICE_ID], vs->device_id);
-+    pci_set_long(&d->config[PCI_CLASS_REVISION], vs->class_revision);
-+
-+    pci_bridge_initfn(d, TYPE_PCIE_BUS);
-+    pcie_port_init_reg(d);
-+
-+    rc = msi_init(d, PLX_VSWITCH_MSI_OFFSET, PLX_VSWITCH_MSI_NR_VECTOR,
-+                  PLX_VSWITCH_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_64BIT,
-+                  PLX_VSWITCH_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_MASKBIT,
-+                  errp);
-+    if (rc < 0) {
-+        assert(rc == -ENOTSUP);
-+        goto err_bridge;
-+    }
-+
-+    rc = pci_bridge_ssvid_init(d, PLX_VSWITCH_SSVID_OFFSET, ssvid, ssdid,
-+                               errp);
-+    if (rc < 0) {
-+        goto err_msi;
-+    }
-+
-+    rc = pcie_cap_init(d, PLX_VSWITCH_EXP_OFFSET, PCI_EXP_TYPE_DOWNSTREAM,
-+                       p->port, errp);
-+    if (rc < 0) {
-+        goto err_msi;
-+    }
-+    pcie_cap_flr_init(d);
-+    pcie_cap_deverr_init(d);
-+    pcie_cap_arifwd_init(d);
-+
-+    rc = pcie_aer_init(d, PCI_ERR_VER, PLX_VSWITCH_AER_OFFSET,
-+                       PCI_ERR_SIZEOF, errp);
-+    if (rc < 0) {
-+        goto err;
-+    }
-+
-+    return;
-+
-+err:
-+    pcie_cap_exit(d);
-+err_msi:
-+    msi_uninit(d);
-+err_bridge:
-+    pci_bridge_exitfn(d);
-+}
-+
-+static void plx_vswitch_downstream_exitfn(PCIDevice *d)
-+{
-+    pcie_aer_exit(d);
-+    pcie_cap_exit(d);
-+    msi_uninit(d);
-+    pci_bridge_exitfn(d);
-+}
-+
-+static const VMStateDescription vmstate_plx_vswitch_downstream = {
-+    .name = PLX_VSWITCH_DOWNSTREAM,
-+    .priority = MIG_PRI_PCI_BUS,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_PCI_DEVICE(parent_obj.parent_obj, PCIEPort),
-+        VMSTATE_STRUCT(parent_obj.parent_obj.exp.aer_log,
-+                       PCIEPort, 0, vmstate_pcie_aer_log, PCIEAERLog),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static Property plx_vswitch_downstream_pci_properties[] = {
-+    DEFINE_PROP_UINT16("vendor-id", PlxVSwitchPci, vendor_id, 0xffff),
-+    DEFINE_PROP_UINT16("device-id", PlxVSwitchPci, device_id, 0xffff),
-+    DEFINE_PROP_UINT16("subsystem-vendor-id", PlxVSwitchPci,
-+                       subsystem_vendor_id, 0),
-+    DEFINE_PROP_UINT16("subsystem-device-id", PlxVSwitchPci,
-+                       subsystem_device_id, 0),
-+    DEFINE_PROP_UINT32("class-revision", PlxVSwitchPci, class_revision,
-+                       0xff000000 /* Unknown class */),
-+    DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-+                    QEMU_PCIE_SLTCAP_PCP_BITNR, true),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void plx_vswitch_downstream_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-+    dc->desc = "Downstream Port of PLX PEX PCIe Virtual Switch";
-+    dc->reset = plx_vswitch_downstream_reset;
-+    dc->vmsd = &vmstate_plx_vswitch_downstream;
-+    device_class_set_props(dc, plx_vswitch_downstream_pci_properties);
-+
-+    k->config_write = plx_vswitch_downstream_write_config;
-+    k->realize = plx_vswitch_downstream_realize;
-+    k->exit = plx_vswitch_downstream_exitfn;
-+}
-+
-+static const TypeInfo plx_vswitch_downstream_pci_types[] = {
-+    {
-+        .name = TYPE_PLX_VSWITCH_DOWNSTREAM_PCI,
-+        .parent = TYPE_PCIE_PORT,
-+        .class_init = plx_vswitch_downstream_class_init,
-+        .interfaces = (InterfaceInfo[]) {
-+            { INTERFACE_PCIE_DEVICE },
-+            { }
-+        }
-+    },
-+};
-+DEFINE_TYPES(plx_vswitch_downstream_pci_types)
-diff --git a/hw/pci-bridge/plx_vswitch_upstream.c b/hw/pci-bridge/plx_vswitch_upstream.c
-new file mode 100644
-index 0000000000..fe93ab5a28
---- /dev/null
-+++ b/hw/pci-bridge/plx_vswitch_upstream.c
-@@ -0,0 +1,177 @@
-+/*
-+ * PLX PEX PCIe Virtual Switch - Upstream
-+ *
-+ * Copyright 2024 Google LLC
-+ * Author: Nabih Estefan <nabihestefan@google.com>
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ *
-+ * Based on xio3130_upstream.c and guest_only_pci.c
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/pci/pci_ids.h"
-+#include "hw/pci/msi.h"
-+#include "hw/pci/pcie.h"
-+#include "hw/pci/pcie_port.h"
-+#include "hw/pci-bridge/plx_vswitch.h"
-+#include "hw/qdev-properties-system.h"
-+#include "hw/registerfields.h"
-+#include "migration/vmstate.h"
-+#include "qemu/module.h"
-+
-+#define TYPE_PLX_VSWITCH_UPSTREAM_PCI "plx-vswitch-upstream-pci"
-+OBJECT_DECLARE_SIMPLE_TYPE(PlxVSwitchPci, PLX_VSWITCH_UPSTREAM_PCI)
-+
-+static void plx_vswitch_upstream_write_config(PCIDevice *d, uint32_t address,
-+                                          uint32_t val, int len)
-+{
-+    pci_bridge_write_config(d, address, val, len);
-+    pcie_cap_flr_write_config(d, address, val, len);
-+    pcie_aer_write_config(d, address, val, len);
-+}
-+
-+static void plx_vswitch_upstream_reset(DeviceState *qdev)
-+{
-+    PCIDevice *d = PCI_DEVICE(qdev);
-+
-+    pci_bridge_reset(qdev);
-+    pcie_cap_deverr_reset(d);
-+}
-+
-+static void plx_vswitch_upstream_realize(PCIDevice *d, Error **errp)
-+{
-+    PlxVSwitchPci *vs = PLX_VSWITCH_UPSTREAM_PCI(d);
-+    PCIEPort *p = PCIE_PORT(d);
-+    int rc;
-+
-+    if (vs->vendor_id == 0xffff) {
-+        error_setg(errp, "Vendor ID invalid, it must always be supplied");
-+        return;
-+    }
-+    if (vs->device_id == 0xffff) {
-+        error_setg(errp, "Device ID invalid, it must be specified");
-+        return;
-+    }
-+
-+    if (vs->subsystem_vendor_id == 0xffff) {
-+        error_setg(errp, "Subsystem Vendor ID invalid, it must be specified");
-+        return;
-+    }
-+
-+    uint16_t ssvid = vs->subsystem_vendor_id;
-+    uint16_t ssdid = vs->subsystem_device_id;
-+
-+    pci_set_word(&d->config[PCI_VENDOR_ID], vs->vendor_id);
-+    pci_set_word(&d->config[PCI_DEVICE_ID], vs->device_id);
-+    pci_set_long(&d->config[PCI_CLASS_REVISION], vs->class_revision);
-+
-+    pci_bridge_initfn(d, TYPE_PCIE_BUS);
-+    pcie_port_init_reg(d);
-+
-+    rc = msi_init(d, PLX_VSWITCH_MSI_OFFSET, PLX_VSWITCH_MSI_NR_VECTOR,
-+                  PLX_VSWITCH_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_64BIT,
-+                  PLX_VSWITCH_MSI_SUPPORTED_FLAGS & PCI_MSI_FLAGS_MASKBIT,
-+                  errp);
-+    if (rc < 0) {
-+        assert(rc == -ENOTSUP);
-+        goto err_bridge;
-+    }
-+
-+    rc = pci_bridge_ssvid_init(d, PLX_VSWITCH_SSVID_OFFSET, ssvid, ssdid, errp);
-+    if (rc < 0) {
-+        goto err_msi;
-+    }
-+
-+    rc = pcie_cap_init(d, PLX_VSWITCH_EXP_OFFSET, PCI_EXP_TYPE_UPSTREAM,
-+                       p->port, errp);
-+    if (rc < 0) {
-+        goto err_msi;
-+    }
-+    pcie_cap_flr_init(d);
-+    pcie_cap_deverr_init(d);
-+
-+    rc = pcie_aer_init(d, PCI_ERR_VER, PLX_VSWITCH_AER_OFFSET,
-+                       PCI_ERR_SIZEOF, errp);
-+    if (rc < 0) {
-+        goto err;
-+    }
-+
-+    return;
-+
-+err:
-+    pcie_cap_exit(d);
-+err_msi:
-+    msi_uninit(d);
-+err_bridge:
-+    pci_bridge_exitfn(d);
-+}
-+
-+static void plx_vswitch_upstream_exitfn(PCIDevice *d)
-+{
-+    pcie_aer_exit(d);
-+    pcie_cap_exit(d);
-+    msi_uninit(d);
-+    pci_bridge_exitfn(d);
-+}
-+
-+static const VMStateDescription vmstate_plx_vswitch_upstream = {
-+    .name = PLX_VSWITCH_UPSTREAM,
-+    .priority = MIG_PRI_PCI_BUS,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_PCI_DEVICE(parent_obj.parent_obj, PCIEPort),
-+        VMSTATE_STRUCT(parent_obj.parent_obj.exp.aer_log, PCIEPort, 0,
-+                       vmstate_pcie_aer_log, PCIEAERLog),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static Property plx_vswitch_upstream_pci_properties[] = {
-+    DEFINE_PROP_UINT16("vendor-id", PlxVSwitchPci, vendor_id, 0xffff),
-+    DEFINE_PROP_UINT16("device-id", PlxVSwitchPci, device_id, 0xffff),
-+    DEFINE_PROP_UINT16("subsystem-vendor-id", PlxVSwitchPci,
-+                       subsystem_vendor_id, 0xffff),
-+    DEFINE_PROP_UINT16("subsystem-device-id", PlxVSwitchPci,
-+                       subsystem_device_id, 0xffff),
-+    DEFINE_PROP_UINT32("class-revision", PlxVSwitchPci, class_revision,
-+                       0xff000000 /* Unknown class */),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void plx_vswitch_upstream_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    PCIDeviceClass *k = PCI_DEVICE_CLASS(klass);
-+
-+    set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
-+    dc->desc = "Upstream Port of PLX PEX PCIe Virtual Switch";
-+    dc->reset = plx_vswitch_upstream_reset;
-+    dc->vmsd = &vmstate_plx_vswitch_upstream;
-+    device_class_set_props(dc, plx_vswitch_upstream_pci_properties);
-+    k->config_write = plx_vswitch_upstream_write_config;
-+    k->realize = plx_vswitch_upstream_realize;
-+    k->exit = plx_vswitch_upstream_exitfn;
-+}
-+
-+static const TypeInfo plx_vswitch_upstream_pci_types[] = {
-+    {
-+        .name = TYPE_PLX_VSWITCH_UPSTREAM_PCI,
-+        .parent = TYPE_PCIE_PORT,
-+        .class_init = plx_vswitch_upstream_class_init,
-+        .interfaces = (InterfaceInfo[]) {
-+            { INTERFACE_PCIE_DEVICE },
-+            { }
-+        }
-+    },
-+};
-+DEFINE_TYPES(plx_vswitch_upstream_pci_types)
-diff --git a/include/hw/pci-bridge/plx_vswitch.h b/include/hw/pci-bridge/plx_vswitch.h
-new file mode 100644
-index 0000000000..4542ecf5e0
---- /dev/null
-+++ b/include/hw/pci-bridge/plx_vswitch.h
-@@ -0,0 +1,41 @@
-+/*
-+ * PLX PEX PCIe Virtual Switch
-+ *
-+ * Copyright 2024 Google LLC
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms of the GNU General Public License as published by the
-+ * Free Software Foundation; either version 2 of the License, or
-+ * (at your option) any later version.
-+ *
-+ * This program is distributed in the hope that it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
-+ * for more details.
-+ */
-+
-+#ifndef HW_PCI_BRIDGE_PLX_VSWITCH
-+#define HW_PCI_BRIDGE_PLX_VSWITCH
-+
-+#define PLX_VSWITCH_DOWNSTREAM "plx-vswitch-downstream"
-+#define PLX_VSWITCH_UPSTREAM "plx-vswitch-upstream"
-+
-+#define PLX_VSWITCH_MSI_OFFSET              0x70
-+#define PLX_VSWITCH_MSI_SUPPORTED_FLAGS     PCI_MSI_FLAGS_64BIT
-+#define PLX_VSWITCH_MSI_NR_VECTOR           1
-+#define PLX_VSWITCH_SSVID_OFFSET            0x80
-+#define PLX_VSWITCH_EXP_OFFSET              0x90
-+#define PLX_VSWITCH_AER_OFFSET              0x100
-+
-+typedef struct PlxVSwitchPci {
-+    PCIDevice parent;
-+
-+    /* PCI config properties */
-+    uint16_t vendor_id;
-+    uint16_t device_id;
-+    uint16_t subsystem_vendor_id;
-+    uint16_t subsystem_device_id;
-+    uint32_t class_revision;
-+} PlxVSwitchPci;
-+
-+#endif
--- 
-2.47.1.613.gc27f4b7a9f-goog
-
+T24gMTIvMTgvMjQgMDU6NTEsIFBldGVyIE1heWRlbGwgd3JvdGU6DQo+IE9uIFR1ZSwgMTcg
+RGVjIDIwMjQgYXQgMjE6MDgsIFBpZXJyaWNrIEJvdXZpZXINCj4gPHBpZXJyaWNrLmJvdXZp
+ZXJAbGluYXJvLm9yZz4gd3JvdGU6DQo+Pg0KPj4gT24gMTIvMTcvMjQgMDI6MzgsIFBldGVy
+IE1heWRlbGwgd3JvdGU6DQo+Pj4gT24gVHVlLCAxNyBEZWMgMjAyNCBhdCAwNzo0MCwgQWxl
+eCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5hcm8ub3JnPiB3cm90ZToNCj4+Pj4NCj4+Pj4g
+UGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPiB3cml0ZXM6
+DQo+Pj4+PiBJIHRoaW5rIHRoaXMgaXMgc3RpbGwgYSBjaGFuZ2Ugd29ydGggdG8gZG8sIGJl
+Y2F1c2UgcGVvcGxlIGNhbiBnZXQgYQ0KPj4+Pj4gMTAwJSBzcGVlZHVwIHdpdGggdGhpcyBz
+aW1wbGUgY2hhbmdlLCBhbmQgaXQncyBhIGJldHRlciBkZWZhdWx0IHRoYW4NCj4+Pj4+IHRo
+ZSBwcmV2aW91cyB2YWx1ZS4NCj4+Pj4+IEluIG1vcmUsIGluIGNhc2Ugb2YgdGhpcyBtaWdy
+YXRpb24gc2NlbmFyaW8sIFFFTVUgd2lsbCBpbW1lZGlhdGVseQ0KPj4+Pj4gYWJvcnQgdXBv
+biBhY2Nlc3NpbmcgbWVtb3J5IHRocm91Z2ggYSBwb2ludGVyLg0KPj4+Pj4NCj4+Pj4+IEkn
+bSBub3Qgc3VyZSBhYm91dCB3aGF0IHdvdWxkIGJlIHRoZSBiZXN0IHdheSB0byBtYWtlIHRo
+aXMgY2hhbmdlIGFzDQo+Pj4+PiBzbW9vdGggYXMgcG9zc2libGUgZm9yIFFFTVUgdXNlcnMu
+DQo+Pj4+DQo+Pj4+IFN1cmVseSB3ZSBjYW4gb25seSBob25vdXIgYW5kIGFwcGx5IHRoZSBu
+ZXcgZGVmYXVsdCB0byAtY3B1IG1heD8NCj4+Pg0KPj4NCj4+IFdpdGggYWxsIG15IHJlc3Bl
+Y3QsIEkgdGhpbmsgdGhlIGN1cnJlbnQgZGVmYXVsdCBpcyB3cm9uZywgYW5kIGl0IHdvdWxk
+DQo+PiBiZSBzYWQgdG8ga2VlcCBpdCB3aGVuIHBlb3BsZSBkb24ndCBwcmVjaXNlIGNwdSBt
+YXgsIG9yIGZvciBvdGhlciBjcHVzDQo+PiBlbmFibGluZyBwb2ludGVyIGF1dGhlbnRpY2F0
+aW9uLg0KPj4NCj4+IEluIGFsbCBvdXIgY29udmVyc2F0aW9ucywgdGhlcmUgc2VlbXMgdG8g
+YmUgYSBmb2N1cyBvbiBjaG9vc2luZyB0aGUNCj4+ICJmYXN0ZXN0IiBlbXVsYXRpb24gc29s
+dXRpb24gdGhhdCBzYXRpc2ZpZXMgdGhlIGd1ZXN0IChiZWhhdmlvdXIgd2lzZSkuDQo+PiBB
+bmQsIGZvciBhIHJlYXNvbiBJIGlnbm9yZSwgcG9pbnRlciBhdXRoZW50aWNhdGlvbiBlc2Nh
+cGVkIHRoaXMgcnVsZS4NCj4gDQo+IEkgdGhpbmsgdGhlIHJlYXNvbiBpcyBqdXN0IHRoYXQg
+d2UgZGlkbid0IHVuZGVyc3RhbmQgaG93IG11Y2gNCj4gb2YgYSBwZXJmb3JtYW5jZSBoaXQg
+dGhlIGFyY2hpdGVjdGVkIGFsZ29yaXRobSBmb3IgcG9pbnRlciBhdXRoDQo+IGlzIGluIGVt
+dWxhdGlvbi4gU28gd2UgdG9vayBvdXIgZGVmYXVsdCBhcHByb2FjaCBvZiAiaW1wbGVtZW50
+DQo+IHdoYXQgdGhlIGFyY2hpdGVjdHVyZSBzYXlzIi4gVGhlbiBsYXRlciB3aGVuIHdlIHJl
+YWxpc2VkIGhvdw0KPiBiYWQgdGhlIGVmZmVjdCB3YXMgd2UgYWRkZWQgaW4gYSBmYXN0ZXIg
+aW1wZGVmIGF1dGhlbnRpY2F0aW9uDQo+IGFsZ29yaXRobSwgYnV0IHdlIHB1dCBpdCBpbiBh
+cyBub3QtdGhlLWRlZmF1bHQgYmVjYXVzZSBvZiBvdXINCj4gdXN1YWwgYmlhcyB0b3dhcmRz
+ICJkb24ndCBjaGFuZ2UgZXhpc3RpbmcgYmVoYXZpb3VyIi4NCj4gDQoNCkkgdW5kZXJzdGFu
+ZCB0aGUgcmVhc29uIGJlaGluZCB0aGUgY3VycmVudCBjaG9pY2UuDQpGb3IgbXkgcGVyc29u
+YWwga25vd2xlZGdlLCBpcyB0aGVyZSBhIFFFTVUgcG9saWN5IGZvciAiYnJlYWtpbmcgY2hh
+bmdlcyI/DQoNCj4+IEkgdW5kZXJzdGFuZCB0aGUgY29uY2VybiByZWdhcmRpbmcgcmV0cm8g
+Y29tcGF0aWJpbGl0eSwgYnV0IGl0IHdvdWxkIGJlDQo+PiBiZXR0ZXIgdG8gYXNrIHBvbGl0
+ZWx5ICh3aXRoIGFuIGVycm9yIG1lc3NhZ2UpIHRvIHBlb3BsZSB0byByZXN0YXJ0DQo+PiB0
+aGVpciB2aXJ0dWFsIG1hY2hpbmVzIHdoZW4gdGhleSB0cnkgdG8gbWlncmF0ZSwgaW5zdGVh
+ZCBvZiBiZWluZyBzdHVjaw0KPj4gd2l0aCBhIHNsb3cgZGVmYXVsdCBmb3JldmVyLg0KPj4g
+SW4gbW9yZSwgd2UgYXJlIHRhbGtpbmcgb2YgYSB0Y2cgc2NlbmFyaW8sIGZvciB3aGljaCBJ
+J20gbm90IHN1cmUgcGVvcGxlDQo+PiB1c2UgbWlncmF0aW9uIGZlYXR1cmUgKHNhdmUvcmVz
+dG9yZSkgaGVhdmlseSwgYnV0IEkgbWF5IGJlIHdyb25nIG9uIHRoaXMuDQo+Pg0KPj4gQmV0
+d2VlbiB0aGUgcmlzayBvZiBicmVha2luZyBtaWdyYXRpb24gKHdpdGggYSBwb2xpdGUgZXJy
+b3IgbWVzc2FnZSksDQo+PiBhbmQgaGF2aW5nIGEgZGVmYXVsdCB0aGF0IGlzIDEwMCUgZmFz
+dGVyLCBJIHRoaW5rIGl0IHdvdWxkIGJlIGJldHRlciB0bw0KPj4gZmF2b3IgdGhlIHNlY29u
+ZCBvbmUuIElmIGl0IHdvdWxkIGJlIGEgNSUgc3BlZWR1cCwgSSB3b3VsZCBub3QgYXJndWUs
+DQo+PiBidXQgc2xvd2luZyBkb3duIGV4ZWN1dGlvbiB3aXRoIGEgZmFjdG9yIG9mIDIgaXMg
+cmVhbGx5IGEgbG90Lg0KPiANCj4gVGhlIHBvaW50IGhlcmUgYWJvdXQgImJyZWFraW5nIG1p
+Z3JhdGlvbiIgaXMgdGhhdCB3ZSBoYXZlIGEgc3Ryb25nDQo+IHNldCBvZiBydWxlczoNCj4g
+ICAqIGlmIHlvdSBzYXkgIi1tYWNoaW5lIHZpcnQtOC4yIiB5b3UgZ2V0ICJleGFjdGx5IHRo
+ZSBiZWhhdmlvdXINCj4gICAgIHRoYXQgdGhlICd2aXJ0JyBtYWNoaW5lIHR5cGUgaGFkIGlu
+IFFFTVUgOC4yLCBhbmQgaXQgaXMNCj4gICAgIG1pZ3JhdGlvbiBjb21wYXRpYmxlDQo+ICAg
+KiB3ZSBjYW4gbWFrZSBjaGFuZ2VzIHRoYXQgYXJlIG5vdCBtaWdyYXRpb24gY29tcGF0aWJs
+ZSBvbmx5IGlmIHdlDQo+ICAgICBlbnN1cmUgdGhhdCB0aGV5IGFyZSBub3QgYXBwbGllZCB0
+byBvbGRlciB2ZXJzaW9uZWQgbWFjaGluZSB0eXBlcw0KPiAgICAgKG9yIGlmIHRoZXkncmUg
+dG8gZGV2aWNlcyB0aGF0IGFyZSBvbmx5IHVzZWQgaW4gbWFjaGluZXMgd2hpY2gNCj4gICAg
+IGRvIG5vdCBoYXZlIHZlcnNpb25lZCBtYWNoaW5lIHR5cGVzIGF0IGFsbCkNCj4gICAqIFRD
+RyAnLWNwdSBtYXgnIGlzIGEgc3BlY2lhbCBjYXNlOiBpdCBpcyBub3QgYSBmaXhlZCB0aGlu
+ZywgYW5kIHNvDQo+ICAgICBpdCBtYXkgYWNxdWlyZSBuZXcgbm9uLW1pZ3JhdGlvbi1jb21w
+YXRpYmxlIGNoYW5nZXMgYmV0d2VlbiB2ZXJzaW9ucw0KPiAgICAgKGFuZCBzbyBpZiB5b3Ug
+Y2FyZSBhYm91dCBWTSBtaWdyYXRpb24gY29tcGF0IHlvdSBkb24ndCB1c2UgaXQpOw0KPiAg
+ICAgYnV0IHRoaXMgaXMgbm90IHRydWUgb2YgdGhlIG5hbWVkIENQVSB0eXBlcyB0aGF0IG1h
+dGNoIHJlYWwNCj4gICAgIGhhcmR3YXJlIGltcGxlbWVudGF0aW9ucw0KPiANCj4gVGhpcyBw
+YXRjaCBhcyBpdCBzdGFuZHMgd2lsbCBub3QgcHJlc2VydmUgdGhlIG1pZ3JhdGlvbg0KPiBn
+dWFyYW50ZWVzIHRoYXQgd2UgbWFrZS4gU28gd2UgbmVlZCB0byBmaXggaXQgYnkgZWl0aGVy
+Og0KPiAgICogb25seSBtYWtpbmcgdGhlIGRlZmF1bHQgY2hhbmdlIG9uIC1jcHUgbWF4DQo+
+ICAgKiBtYWtpbmcgdGhlIGRlZmF1bHQgY2hhbmdlIGJlIGJvdW5kIHRvIHZlcnNpb25lZCB0
+eXBlcw0KPiANCg0KSSdtIG5vdCBzdXJlIHRvIGZvbGxvdyB5b3Ugb24gdGhpcyBzZWNvbmQg
+YXBwcm9hY2guIFRoZSBjcHUgaXMgbm90IA0KdmVyc2lvbmVkLCBhbmQgaWYgc29tZW9uZSB1
+c2UgLW1hY2hpbmUgdmlydCAobm9uIHZlcnNpb25lZCksIGlzIHRoZXJlIGEgDQpndWFyYW50
+ZWUgaXQgc2hvdWxkIHN0YXkgcG9zc2libGUgdG8gbWlncmF0ZT8NCg0KSW4gb3RoZXIgd29y
+ZHMsIGNhbiB3ZSBicmVhayB0aGUgbWlncmF0aW9uIHdpdGggIi1tYWNoaW5lIHZpcnQgLWNw
+dSBtb2RlbCI/DQoNCj4gQXMgSSBzYXksIEkgZG9uJ3QgaGF2ZSBhIHN0cm9uZyB2aWV3IG9u
+IHdoaWNoIG9mIHRoZXNlIHdlIGdvIGZvcg0KPiAoYW5kIEknbSBhY3R1YWxseSBraW5kIG9m
+IGxlYW5pbmcgdG8gdGhlIHNlY29uZCwgZ2l2ZW4gdGhlIGRpc2N1c3Npb24pLg0KPiANCg0K
+QWZ0ZXIgbG9va2luZyBtb3JlIGNsb3NlbHksIGNvbXBhcmVkIHRvIGJhY2tjb21wYXRfY250
+ZnJlcSwgdGhlIGNwdSANCnJlZ2lzdGVycyB3aWxsIGJlIGRpZmZlcmVudCwgYW5kIG1pZ3Jh
+dGlvbiBmYWlsIHdoZW4gY2FsbGluZyANCiJ3cml0ZV9saXN0X3RvX2NwdXN0YXRlIiBmcm9t
+ICJjcHVfcG9zdF9sb2FkIiBmb3IgcmVnaXN0ZXIgDQpJRF9BQTY0SVNBUjFfRUwxLCB3aGlj
+aCBjb250YWlucyBwYXV0aCBjb25maWd1cmF0aW9uLg0KDQpJZiB3ZSBjYW4gYnJlYWsgdGhl
+IG1pZ3JhdGlvbiBmb3IgKG5vbiB2ZXJzaW9uZWQpIHZpcnQgbWFjaGluZSwgdGhlbiANCkkn
+bGwgbWFrZSB0aGUgY2hhbmdlIGZvciBhbGwgY3B1cyB1c2luZyB0aGUgYmFja2NvbXBhdCBz
+dHJhdGVneSwgYW5kIGlmIA0Kbm90IHBvc3NpYmxlLCBJJ2xsIG9ubHkgbWFrZSB0aGUgY2hh
+bmdlIGZvciAtY3B1IG1heC4NCg0KPj4+IFRoYXQgd2FzIHdoYXQgSSB0aG91Z2h0IHdlIHdl
+cmUgYWltaW5nIGZvciwgeWVzLiBXZSAqY291bGQqIGhhdmUNCj4+PiBhIHByb3BlcnR5IG9u
+IHRoZSBDUFUgdG8gc2F5ICJ1c2UgdGhlIG9sZCBiYWNrLWNvbXBhdGlibGUgZGVmYXVsdCwN
+Cj4+PiBub3QgdGhlIG5ldyBvbmUiLCB3aGljaCB3ZSB0aGVuIGxpc3QgaW4gdGhlIGFwcHJv
+cHJpYXRlIGh3X2NvbXBhdA0KPj4+IGFycmF5LiAoR3JlcCBmb3IgdGhlICJiYWNrY29tcGF0
+LWNudGZycSIgcHJvcGVydHkgZm9yIGFuIGV4YW1wbGUgb2YNCj4+PiB0aGlzLikgQnV0IEkn
+bSBub3Qgc3VyZSBpZiB0aGF0IGlzIHdvcnRoIHRoZSBlZmZvcnQgY29tcGFyZWQgdG8NCj4+
+PiBqdXN0IGNoYW5naW5nICdtYXgnLg0KPj4NCj4+IFdoZW4gd2UnbGwgZGVmaW5lIGh3X2Nv
+bXBhdF8xMF8wLCBhbmQgaHdfY29tcGF0XzExXzAsIGRvIHdlIGhhdmUgdG8NCj4+IGNhcnJ5
+IHRoaXMgb24gZm9yZXZlcj8gKFNhbWUgcXVlc3Rpb24gZm9yICJiYWNrY29tcGF0LWNudGZy
+cSIpLg0KPiANCj4gVGhlIG1hY2hpbmVyeSBmb3IgaG93IHRoaXMgd29ya3MgbWVhbnMgdGhh
+dCB5b3Ugb25seSBuZWVkIHRvDQo+IHB1dCB0aGUgcHJvcGVydHkgaW4gdGhlIGFwcHJvcHJp
+YXRlIGh3X2NvbXBhdCBhcnJheSBmb3IgdGhlDQo+IG1hY2hpbmUgdmVyc2lvbiBiZWZvcmUg
+d2hlcmUgaXQgd2FzIGludHJvZHVjZWQuIFRoZSAndmlydC05LjInDQo+IG1hY2hpbmUgdHlw
+ZSBhcHBsaWVzIHRoZSBwcm9wZXJ0aWVzIGxpc3RlZCBpbiBod19jb21wYXRfOV8yDQo+ICh5
+b3UgY2FuIHRoaW5rIG9mIHRoZSBwcm9wZXJ0aWVzIGxpc3RlZCB0aGVyZSBhcyBoYXZpbmcg
+dGhlDQo+IG1lYW5pbmcgImRvd25ncmFkZSB0aGUgZGVmYXVsdCBiZWhhdmlvdXIgYmFjayB0
+byB3aGF0IGl0IHdhcw0KPiBpbiA5LjIgYW5kIGVhcmxpZXIiLikgVGhlIHZpcnQtOS4xIG1h
+Y2hpbmUgdHlwZSBhcHBsaWVzIHRoZQ0KPiBwcm9wZXJ0aWVzIGxpc3RlZCBpbiBod19jb21w
+YXRfOV8xIGFuZCBod19jb21wYXRfOV8yLiBUaGUNCj4gdmlydC05LjAgbWFjaGluZSB0eXBl
+IGFwcGxpZXMgdGhlIHByb3BlcnRpZXMgbGlzdGVkIGluIGh3X2NvbXBhdF85XzAsDQo+IF85
+XzEgYW5kIF85XzIuDQo+IA0KPiBUaGlzIGlzIGFsbCBpbXBsZW1lbnRlZCBieSB0aGUgYm9p
+bGVycGxhdGUgREVGSU5FX1ZJUlRfTUFDSElORSgpIGFuZA0KPiB2aXJ0X21hY2hpbmVfKl9v
+cHRpb25zIGZ1bmN0aW9ucyBhdCB0aGUgYm90dG9tIG9mIGh3L2FybS92aXJ0LmMNCj4gKHBs
+dXMgdGhlIGNvbW1vbiBjb2RlIHRoYXQgaW52b2tlcykuIFdlIGhhdmUgdG8gY2FycnkgYWxs
+IHRoaXMNCj4gbWFjaGluZXJ5IGFyb3VuZCBhbnl3YXkgdG8gaGFuZGxlIG90aGVyIG1pZ3Jh
+dGlvbi1icmVha2luZyBjaGFuZ2VzDQo+IGluIG90aGVyIHBhcnRzIG9mIFFFTVUsIHNvIGl0
+J3MgcHJldHR5IGZyZWUgdG8gYWRkIGFub3RoZXIgcHJvcGVydHkNCj4gbGlrZSBiYWNrY29t
+cGF0LWNudGZycSBoZXJlLg0KPiANCj4gVGhlIHZlcnkgb2xkZXN0IHZlcnNpb25lZCBtYWNo
+aW5lIHR5cGVzIGFyZSBkZXByZWNhdGVkIGFmdGVyDQo+IDMgeWVhcnMgYW5kIGRyb3BwZWQg
+YWZ0ZXIgYW5vdGhlciAzIHllYXJzLCBzbyBldmVudHVhbGx5IHRoZQ0KPiBvbGRlciBod19j
+b21wYXQgYXJyYXlzIHdpbGwgZ28gYXdheS4NCj4gDQo+Pj4gKEl0J3Mgbm90IHRoYXQgbXVj
+aCBleHRyYSBjb2RlIHRvIGFkZCB0aGUgcHJvcGVydHksIHNvIEkgY291bGQNCj4+PiBlYXNp
+bHkgYmUgcGVyc3VhZGVkIHRoZSBvdGhlciB3YXkuIFBvc3NpYmxlIGFyZ3VtZW50cyBpbmNs
+dWRlDQo+Pj4gcHJlZmVycmluZyBjb25zaXN0ZW5jeSBhY3Jvc3MgYWxsIENQVXMuIElmIHdl
+IGFscmVhZHkgbWFrZSB0aGUNCj4+PiBkZWZhdWx0IGJlIG5vdCAid2hhdCB0aGUgcmVhbCBD
+UFUgb2YgdGhpcyB0eXBlIHVzZXMiIHRoZW4gdGhhdCdzDQo+Pj4gYWxzbyBhbiBhcmd1bWVu
+dCB0aGF0IHdlIGNhbiBzZXQgaXQgdG8gd2hhdGV2ZXIgaXMgY29udmVuaWVudDsNCj4+PiBp
+ZiB3ZSBkbyBob25vdXIgdGhlIENQVSBJRCByZWdpc3RlciB2YWx1ZXMgZm9yIHRoZSBpbXBs
+ZW1lbnRhdGlvbg0KPj4+IGRlZmF1bHQgdGhlbiB0aGF0J3MgYW4gYXJndW1lbnQgdGhhdCB3
+ZSBzaG91bGQgY29udGludWUgdG8gZG8NCj4+PiBzbyBhbmQgbm90IGNoYW5nZSB0aGUgZGVm
+YXVsdCB0byBvdXIgaW1wZGVmIG9uZS4pDQo+Pj4NCj4+DQo+PiBGb3IgdGhlIFRDRyB1c2Ug
+Y2FzZSwgaXMgdGhlcmUgYW55IHZpc2libGUgc2lkZSBlZmZlY3QgZm9yIHRoZSBndWVzdCB0
+bw0KPj4gdXNlIGFueSBzcGVjaWZpYyBwb2ludGVyIGF1dGhlbnRpY2F0aW9uIGFsZ29yaXRo
+bT8NCj4+IEluIG90aGVyIHdvcmRzLCBpcyB0aGVyZSBhIHNjZW5hcmlvIHdoZXJlIHBvaW50
+ZXIgYXV0aGVudGljYXRpb24gd291bGQNCj4+IHdvcmsgd2l0aCBpbXBkZWYsIGJ1dCBub3Qg
+d2l0aCBxYXJtYXszLDV9Pw0KPj4gSWYgbm8sIEkgZG9uJ3Qgc2VlIGFueSByZWFzb24gZm9y
+IGEgY3B1IHRvIGZhdm9yIGFuIGV4cGVuc2l2ZSBlbXVsYXRpb24uDQo+IA0KPiBUaGUgZ3Vl
+c3QgY2FuIGxvb2sgYXQgdGhlIHZhbHVlIHRoYXQgdGhlIHBvaW50ZXIgYXV0aCBpbnN0cnVj
+dGlvbg0KPiBwcm9kdWNlcyBpZiBpdCBsaWtlcywgc28gaXQgY2FuIGNlcnRhaW5seSB0ZWxs
+IHdoZXRoZXIgdGhlcmUncw0KPiBhIGRpZmZlcmVuY2UuIEJ1dCB0aGUgb25seSByZWFzb24g
+dG8gZG8gdGhhdCBpcyBpbiB0ZXN0IGNvZGUNCj4gdGhhdCdzIGNoZWNraW5nIHRoYXQgdGhl
+IHBhdXRoIGluc3RydWN0aW9ucyBkbyB3aGF0IHRoZXkncmUNCj4gc3VwcG9zZWQgdG8gZG8u
+IEFyY2hpdGVjdHVyYWxseSBiZWNhdXNlIG11bHRpcGxlIGF1dGhlbnRpY2F0aW9uDQo+IG9w
+dGlvbnMgYXJlIHBlcm1pdHRlZCBubyB3ZWxsIGJlaGF2ZWQgZ3Vlc3QgaXMgZ29pbmcgdG8g
+ZGVwZW5kDQo+IG9uIHdoaWNoIG9uZSBleGFjdGx5IGlzIGJlaW5nIHVzZWQuDQo+IA0KPiBB
+cyBJIHNheSwgSSBkbyB0aGluayBpdCB3b3VsZCBiZSBnb29kIHRvIGNoZWNrIHdoZXRoZXIg
+b3VyDQo+IGN1cnJlbnQgaW1wbGVtZW50YXRpb24gaXMgImRlZmF1bHQgdG8gcWFybWE1IGV2
+ZXJ5d2hlcmUiLCBvcg0KPiB3aGV0aGVyIGl0IGlzICJkZWZhdWx0IHRvIHdoYXQgdGhlIHJl
+YWwgQ1BVIHNheXMgaXQgaGFzIGluIGl0cw0KPiBJRCByZWdpc3RlcnMiLiBJZiB3ZSBhcmUg
+YWxyZWFkeSBkZWZhdWx0aW5nIHRvIHNvbWV0aGluZyB0aGF0J3MNCj4gbm90IHdoYXQgdGhl
+IHJlYWwgaW1wbGVtZW50YXRpb24gZG9lcyBpdCdzIGFub3RoZXIgcGllY2Ugb2YNCj4gZXZp
+ZGVuY2Ugb24gdGhlIHNpZGUgb2YgIndlIGNhbiBqdXN0IGRlZmF1bHQgdG8gYSBkaWZmZXJl
+bnQNCj4gbm90LW1hdGNoaW5nLXRoZS1oYXJkd2FyZSBjaG9pY2UiLg0KPiANCg0KV2UgZGVm
+YXVsdCB0byBxYXJtYTUgKGZvciB0Y2cpLCBvciBmb3Igd2hhdCBob3N0IGNwdSBjb25maWd1
+cmVzIChmb3IgDQpvdGhlciBhY2NlbGVyYXRvcnMpLg0KDQo+IHRoYW5rcw0KPiAtLSBQTU0N
+Cg0K
 
