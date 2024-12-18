@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11CC5E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:11:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31115E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:12:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrxG-0006ni-3g; Wed, 18 Dec 2024 06:11:02 -0500
+	id 1tNrx9-0006kK-BG; Wed, 18 Dec 2024 06:10:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxD-0006mr-GR
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:59 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx7-0006eG-Kt
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxB-0005rB-Pa
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:59 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx5-0005pN-Vh
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520257;
+ s=mimecast20190719; t=1734520251;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qK9FeF2ug4HC9bP+PICoWOfdfHK6SZEXv3UKwOI5wnI=;
- b=eesdjH+FIVrveU6dMaGeCKBxaMhriwPt2PqdM4D9iYQNsZRagQV7uEJh+V8fn9sDCZiOD5
- wUFFvAZAXrdb0li505tHEm/17clJ8Bm5bd8wOSbxHB5tx2lopM0+sx1HRTeVkp/qP1phNh
- eMwEwC/J4E+GZo0YtqNkar920Yf2djU=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YbcZHmjzHJRduhsQhH+ZO2ewFkMOoJ+O6L5jaHOvzeo=;
+ b=dwDf//1zlpvbepqKrZlbATwe3c3RMdf4PNYiqLMPITH2EgqgQ9hIDzLRlE8JeqmH1wOPkA
+ f8maAZjCJ2ugpmLLHN4wuNExbazV0OeF5/wVW9g/q/ihYAiJv535JK+h6qKzfgHaAnUHEI
+ 0Q6pfFWbOZCVftoUHKIV+I2O7j3+wYw=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-5Z1b7-gNPK2wxGfS4TYlLQ-1; Wed,
- 18 Dec 2024 06:10:54 -0500
-X-MC-Unique: 5Z1b7-gNPK2wxGfS4TYlLQ-1
-X-Mimecast-MFC-AGG-ID: 5Z1b7-gNPK2wxGfS4TYlLQ
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-xIjN5b9QMHGmwJHH-Dfgng-1; Wed,
+ 18 Dec 2024 06:10:49 -0500
+X-MC-Unique: xIjN5b9QMHGmwJHH-Dfgng-1
+X-Mimecast-MFC-AGG-ID: xIjN5b9QMHGmwJHH-Dfgng
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 35FAB1955EB5
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:54 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C0D0F1956048
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:48 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8984019560AD; Wed, 18 Dec 2024 11:10:52 +0000 (UTC)
+ id 3CFEF195605F; Wed, 18 Dec 2024 11:10:46 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 22/38] tests/functional: add 'archive_extract' to QemuBaseTest
-Date: Wed, 18 Dec 2024 12:09:42 +0100
-Message-ID: <20241218110958.226932-23-thuth@redhat.com>
+Subject: [PULL 20/38] tests/functional: let cpio_extract accept filenames
+Date: Wed, 18 Dec 2024 12:09:40 +0100
+Message-ID: <20241218110958.226932-21-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,69 +85,54 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This helper wrappers archive.archive_extract, forcing the use of the
-scratch directory, to ensure any extracted files are cleaned at test
-termination. If a specific member is requested, then the path to the
-extracted file is also returned.
+Currently cpio_extract differs from tar_extract/zip_extract
+in that it only allows a file-like object as input. Adapt it
+to also support filenames.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-23-berrange@redhat.com>
+Message-ID: <20241217155953.3950506-21-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/testcase.py | 32 ++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ tests/functional/qemu_test/archive.py | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
-index 493938240c..19fb1d0c07 100644
---- a/tests/functional/qemu_test/testcase.py
-+++ b/tests/functional/qemu_test/testcase.py
-@@ -25,6 +25,7 @@
- from qemu.machine import QEMUMachine
- from qemu.utils import kvm_available, tcg_available
+diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
+index a6fc97a557..bc448dee4a 100644
+--- a/tests/functional/qemu_test/archive.py
++++ b/tests/functional/qemu_test/archive.py
+@@ -8,7 +8,7 @@
+ #  Thomas Huth <thuth@redhat.com>
  
-+from .archive import archive_extract
- from .asset import Asset
- from .cmd import run_cmd
- from .config import BUILD_DIR
-@@ -39,6 +40,37 @@ class QemuBaseTest(unittest.TestCase):
-     log = None
-     logdir = None
+ import os
+-import subprocess
++from subprocess import check_call, run, DEVNULL
+ import tarfile
+ import zipfile
  
-+    '''
-+    @params archive: filename, Asset, or file-like object to extract
-+    @params format: optional archive format (tar, zip, deb, cpio)
-+    @params sub_dir: optional sub-directory to extract into
-+    @params member: optional member file to limit extraction to
-+
-+    Extracts @archive into the scratch directory, or a directory beneath
-+    named by @sub_dir. All files are extracted unless @member specifies
-+    a limit.
-+
-+    If @format is None, heuristics will be applied to guess the format
-+    from the filename or Asset URL. @format must be non-None if @archive
-+    is a file-like object.
-+
-+    If @member is non-None, returns the fully qualified path to @member
-+    '''
-+    def archive_extract(self, archive, format=None, sub_dir=None, member=None):
-+        self.log.debug(f"Extract {archive} format={format}" +
-+                       f"sub_dir={sub_dir} member={member}")
-+        if type(archive) == Asset:
-+            archive.fetch()
-+        if sub_dir is None:
-+            archive_extract(archive, self.scratch_file(), format, member)
-+        else:
-+            archive_extract(archive, self.scratch_file(sub_dir),
-+                            format, member)
-+
-+        if member is not None:
-+            return self.scratch_file(member)
-+        return None
-+
-     '''
-     Create a temporary directory suitable for storing UNIX
-     socket paths.
+@@ -25,12 +25,18 @@ def tar_extract(archive, dest_dir, member=None):
+         else:
+             tf.extractall(path=dest_dir)
+ 
+-def cpio_extract(cpio_handle, output_path):
++def cpio_extract(archive, output_path):
+     cwd = os.getcwd()
+     os.chdir(output_path)
+-    subprocess.run(['cpio', '-i'],
+-                   input=cpio_handle.read(),
+-                   stderr=subprocess.DEVNULL)
++    # Not passing 'check=True' as cpio exits with non-zero
++    # status if the archive contains any device nodes :-(
++    if type(archive) == str:
++        run(['cpio', '-i', '-F', archive],
++            stdout=DEVNULL, stderr=DEVNULL)
++    else:
++        run(['cpio', '-i'],
++            input=archive.read(),
++            stdout=DEVNULL, stderr=DEVNULL)
+     os.chdir(cwd)
+ 
+ def zip_extract(archive, dest_dir, member=None):
 -- 
 2.47.1
 
