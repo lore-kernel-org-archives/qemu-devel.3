@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D08E7718B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:13:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D9FE7718A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrxw-0000Xt-GS; Wed, 18 Dec 2024 06:11:44 -0500
+	id 1tNrxf-00081E-Ct; Wed, 18 Dec 2024 06:11:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxp-0008IH-NK
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:37 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxc-0007kv-3R
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxn-0005ys-S9
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:37 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxZ-0005uq-Me
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520295;
+ s=mimecast20190719; t=1734520281;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eXhXuw5tqkqtWior65+xZjlpA9nv946fEXN38ZGjnUw=;
- b=DvCRAnqnWXna8mqKf9shyrS4sj5KR1sXzlVS77wiRnu9SSlLYqRqmaX/0delv74u5qO14F
- WWlyBFRvDd8oadGzlVHL/RMxE33WZEPB8RLEz6R4PtfMcP4/uNkTTXTOSF+h1+xADGiATC
- boU4tHe1t1On8RT6wu9LM2ic9B3al8E=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=z3lAGJZgh87TWGw/P0Dg2h/VAfADNIRws+tUUgIHn+s=;
+ b=MFnBiVnr4JeiigXHd1wk1pBDcCRkLUOzvPzpp3ABdfpTiYhpASpsN7R97eF5QfzN+ydWna
+ dsYERp4+MuM5lU+KeVoSU1XnR4YvEmYQd0rOs6PF8Fx6oXV/rCUJZ8wfEokXZaq/n0AF3w
+ /TIdAAM/fqiC9XHcfb5bVBEFP9bFCUo=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-rnsvQ0fYPMKfVoEua5JDXw-1; Wed,
- 18 Dec 2024 06:11:33 -0500
-X-MC-Unique: rnsvQ0fYPMKfVoEua5JDXw-1
-X-Mimecast-MFC-AGG-ID: rnsvQ0fYPMKfVoEua5JDXw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-u0pa13KHNVKYNmQ0I4s6_g-1; Wed,
+ 18 Dec 2024 06:11:19 -0500
+X-MC-Unique: u0pa13KHNVKYNmQ0I4s6_g-1
+X-Mimecast-MFC-AGG-ID: u0pa13KHNVKYNmQ0I4s6_g
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4194119560A7
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:32 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C2F3819560BD
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:18 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E745719560AD; Wed, 18 Dec 2024 11:11:30 +0000 (UTC)
+ id 9114E19560AD; Wed, 18 Dec 2024 11:11:16 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 35/38] tests/functional: Add a helper function for retrieving
- the hostfwd port
-Date: Wed, 18 Dec 2024 12:09:55 +0100
-Message-ID: <20241218110958.226932-36-thuth@redhat.com>
+Subject: [PULL 30/38] tests/functional: skip tests if assets are not available
+Date: Wed, 18 Dec 2024 12:09:50 +0100
+Message-ID: <20241218110958.226932-31-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -83,62 +83,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It's just a wrapper around get_info_usernet_hostfwd_port from the
-qemu module that is also calling the right monitor command for
-retrieving the information from QEMU.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Message-ID: <20241217121550.141072-2-thuth@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+If downloading of assets has been disabled, then skip running a
+test if the assets it has registered are not already downloaded.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Message-ID: <20241217155953.3950506-31-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/utils.py   | 7 +++++++
- tests/functional/test_info_usernet.py | 8 +++-----
- 2 files changed, 10 insertions(+), 5 deletions(-)
+ tests/functional/qemu_test/asset.py    |  8 +++++++-
+ tests/functional/qemu_test/testcase.py | 11 +++++++++++
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/utils.py b/tests/functional/qemu_test/utils.py
-index 43853b4366..e7c8de8165 100644
---- a/tests/functional/qemu_test/utils.py
-+++ b/tests/functional/qemu_test/utils.py
-@@ -10,6 +10,13 @@
+diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qemu_test/asset.py
+index c5d3e73c4b..39832b2587 100644
+--- a/tests/functional/qemu_test/asset.py
++++ b/tests/functional/qemu_test/asset.py
+@@ -65,6 +65,12 @@ def _check(self, cache_file):
+     def valid(self):
+         return self.cache_file.exists() and self._check(self.cache_file)
  
- import os
- 
-+from qemu.utils import get_info_usernet_hostfwd_port
++    def fetchable(self):
++        return not os.environ.get("QEMU_TEST_NO_DOWNLOAD", False)
 +
++    def available(self):
++        return self.valid() or self.fetchable()
 +
-+def get_usernet_hostfwd_port(vm):
-+    res = vm.cmd('human-monitor-command', command_line='info usernet')
-+    return get_info_usernet_hostfwd_port(res)
+     def _wait_for_other_download(self, tmp_cache_file):
+         # Another thread already seems to download the asset, so wait until
+         # it is done, while also checking the size to see whether it is stuck
+@@ -103,7 +109,7 @@ def fetch(self):
+                            self.cache_file, self.url)
+             return str(self.cache_file)
+ 
+-        if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
++        if not self.fetchable():
+             raise Exception("Asset cache is invalid and downloads disabled")
+ 
+         self.log.info("Downloading %s to %s...", self.url, self.cache_file)
+diff --git a/tests/functional/qemu_test/testcase.py b/tests/functional/qemu_test/testcase.py
+index aa6c9c0d64..869f3949fe 100644
+--- a/tests/functional/qemu_test/testcase.py
++++ b/tests/functional/qemu_test/testcase.py
+@@ -184,6 +184,14 @@ def scratch_file(self, *args):
+     def log_file(self, *args):
+         return str(Path(self.outputdir, *args))
+ 
++    def assets_available(self):
++        for name, asset in vars(self.__class__).items():
++            if name.startswith("ASSET_") and type(asset) == Asset:
++                if not asset.available():
++                    self.log.debug(f"Asset {asset.url} not available")
++                    return False
++        return True
 +
- """
- Round up to next power of 2
- """
-diff --git a/tests/functional/test_info_usernet.py b/tests/functional/test_info_usernet.py
-index cd37524d94..e8cbc37eed 100755
---- a/tests/functional/test_info_usernet.py
-+++ b/tests/functional/test_info_usernet.py
-@@ -11,8 +11,7 @@
- # later.  See the COPYING file in the top-level directory.
+     def setUp(self, bin_prefix):
+         self.assertIsNotNone(self.qemu_bin, 'QEMU_TEST_QEMU_BINARY must be set')
+         self.arch = self.qemu_bin.split('-')[-1]
+@@ -209,6 +217,9 @@ def setUp(self, bin_prefix):
+         self.machinelog.setLevel(logging.DEBUG)
+         self.machinelog.addHandler(self._log_fh)
  
- from qemu_test import QemuSystemTest
--
--from qemu.utils import get_info_usernet_hostfwd_port
-+from qemu_test.utils import get_usernet_hostfwd_port
- 
- 
- class InfoUsernet(QemuSystemTest):
-@@ -22,9 +21,8 @@ def test_hostfwd(self):
-         self.set_machine('none')
-         self.vm.add_args('-netdev', 'user,id=vnet,hostfwd=:127.0.0.1:0-:22')
-         self.vm.launch()
--        res = self.vm.cmd('human-monitor-command',
--                          command_line='info usernet')
--        port = get_info_usernet_hostfwd_port(res)
++        if not self.assets_available():
++            self.skipTest('One or more assets is not available')
 +
-+        port = get_usernet_hostfwd_port(self.vm)
-         self.assertIsNotNone(port,
-                              ('"info usernet" output content does not seem to '
-                               'contain the redirected port'))
+     def tearDown(self):
+         if "QEMU_TEST_KEEP_SCRATCH" not in os.environ:
+             shutil.rmtree(self.workdir)
 -- 
 2.47.1
 
