@@ -4,97 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE1AAE7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1380DE77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2AG-0006Dm-10; Wed, 18 Dec 2024 17:05:08 -0500
+	id 1tO2Gy-000845-CQ; Wed, 18 Dec 2024 17:12:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO2AD-0006DX-Do
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:05:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from
+ <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tO2Gw-00083d-F2
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:12:02 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tO2AB-0005Ho-77
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:05:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734559500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=wDelh8jdNP8Wg3HZ0KGQumMBBKAqQ90N+I9N9Y0hcOg=;
- b=gMGKxIjuZeyBeF06SMWHYze+Jys33b7xgPEaKd779Facc9E0DwfzGuv4F/+i6KnnPI4SuT
- BmgL+9qeBXQXpxfpnxqHanGNuisvONASqo2pcB2UrCQzWXzB0RVBXWot/RUQmQU01U8xU9
- kwxzuecBqtUjZ/4E9oiLJS7dfVI+XLA=
-Received: from mail-io1-f71.google.com (mail-io1-f71.google.com
- [209.85.166.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-474-nTNRnGWgOfa0qoWYgDLm1A-1; Wed, 18 Dec 2024 17:04:57 -0500
-X-MC-Unique: nTNRnGWgOfa0qoWYgDLm1A-1
-X-Mimecast-MFC-AGG-ID: nTNRnGWgOfa0qoWYgDLm1A
-Received: by mail-io1-f71.google.com with SMTP id
- ca18e2360f4ac-844cffcb685so14848139f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:04:57 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734559497; x=1735164297;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wDelh8jdNP8Wg3HZ0KGQumMBBKAqQ90N+I9N9Y0hcOg=;
- b=VBbj7yZXuuXrY4LyscSDsDaxSvO8C0jLimNUx+9zN+4JzzNHGqSkftFo29XvZ0/T4B
- Cy/AgpMAOvBW5R/4qbOVh39s2IC+CIhU6YpZOefeQT2gMZfOP8u7NT27QTPrqeBy7K/m
- PnwnZFw55gnAHTOzU/6Nh/qtc1e+B/gGp8AJU5QJllmkS+/K0M1oR50ld/3f9fYHncly
- Q6NMgtQm57vvaoHF60od9pE45yQHSVbjJ36P8Q6OGmmiYkL88kW0MFEzTNcwNblQA875
- MieGzlJEhjkMoSFDOQQKKcZkb4UyT22Krz2BaGwOHrKG1KZxrf1o73eJbfGvpVn69us0
- ptwA==
-X-Gm-Message-State: AOJu0Yytuo4Ih8S4Wc/yxn1sy8dlilZIfcJnjwt6q4LRSHP5VlYTVYLP
- 8EciGBLDN0fYQF7IdIHJufSuwkgB43Jy7qr5rxp44VBaYmAYmTAHcKwTX8hlLIJoSu1gFyWqh90
- l7k8mE4rEoppvfIvchsUTv6ftUud+ykLZN0ytFHVxcAZ5HbMZ2kO2
-X-Gm-Gg: ASbGnctiNaq6+lxziwyvmiESrel5TYwzxhAjo79dzO4aW2+w3ukHcaHx8+bwbVZv6ea
- nW4v7acdBl9zeTPEZ0RvNdkeDoB2icNKR6nItbIBzw8IWL+C2uEyiEsBhbc54pPTFuKuBMSFFyE
- Th6X+yxAra4eOrLMbA/TjoWAEpLc29ZJbwOXnzpSG0w5619zA4k1M0fvQl1h3b9pCkF5GMXarCi
- LW8Cz9UEDcfVWrv2ZtoXY+bUXUup46MaS2d0JiiUWtPM+k4Eh8K9biu1hvkV7hDrJaandTo3K8L
- /2sEln+22hdEs5x3rw==
-X-Received: by 2002:a05:6602:2c88:b0:803:5e55:ecb2 with SMTP id
- ca18e2360f4ac-8475831e21emr480947239f.0.1734559496700; 
- Wed, 18 Dec 2024 14:04:56 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFDXF+/V/OBCBEwiF/8Ie8W6gU/IK+NCnAvfPxpl8mE97lgbXe/PPCpNEgwNQ1nTIHHloUYOQ==
-X-Received: by 2002:a05:6602:2c88:b0:803:5e55:ecb2 with SMTP id
- ca18e2360f4ac-8475831e21emr480945239f.0.1734559496248; 
- Wed, 18 Dec 2024 14:04:56 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-4e5e3c69bd4sm2430275173.148.2024.12.18.14.04.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:04:55 -0800 (PST)
-Date: Wed, 18 Dec 2024 17:04:53 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
-Message-ID: <Z2NHBQc9ixuvJ3k_@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-20-farosas@suse.de> <Z2MKesakYn3fn2ue@x1n>
- <87h670vozv.fsf@suse.de> <Z2MvCRYKLmYCj55i@x1n>
- <875xngvgwe.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from
+ <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tO2Gt-00069f-RY
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:12:02 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=/C2U3vOwdzkVgUrUNCvroNDiPUxTMo2xMCebvF7Rbxk=; b=aqXQOlGXCzdZ9Mawd3nDvdvZRA
+ opl/XkL4PYZkh+1VSJhplkmQFVhUglg83+VESqUu7taEatx5A2KoJZJ5spj8FWaWkitnngqG3wyzv
+ VvhUFNE4GXDToxHLo7cxkPSvm0SGxvJ7GJwZny2cy5ydKS3Cna7iNIXoNJuI/WmdSvk51RUMO0Mn6
+ xiXp3MnPgcdZz6yAQrgV1/jESXMZr2DIa2HRQRjgZsaQ3uniIHFilpFBm+toL6cNK8EFFbIsS2v+D
+ roxgExZpdneYfS9jHW4FBdGCHg65gzRt5D0aeofUr69UWL2pm8uNhrqQrhvdMJYB6PjwNsk9xkXHK
+ DGINOp5A==;
+Received: from [54.239.6.189] (helo=u09cd745991455d.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tO2Go-00000000jEL-36AU; Wed, 18 Dec 2024 22:11:55 +0000
+Message-ID: <42f8f20edb250b650a322124f5993a9d45730445.camel@infradead.org>
+Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+From: David Woodhouse <dwmw2@infradead.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Paul Durrant <paul@xen.org>
+Date: Wed, 18 Dec 2024 23:11:54 +0100
+In-Reply-To: <999a8203f0c800f1305aacdb500dbf6038ebf147.camel@infradead.org>
+References: <20241218113255.232356-1-thuth@redhat.com>
+ <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
+ <31e85f4d-66f2-4790-8597-f43e291bcbea@redhat.com>
+ <61cadf31-8656-4216-a345-e364bb85e45b@redhat.com>
+ <44c87114343dc57b248ff0f86e5f4e0683533efb.camel@infradead.org>
+ <f987b60d-9e73-4f6a-ae48-857f7af6cddc@redhat.com>
+ <999a8203f0c800f1305aacdb500dbf6038ebf147.camel@infradead.org>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-pGbfU3LQnNDblr7/9znK"
+User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <875xngvgwe.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,202 +81,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 06:08:01PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Wed, Dec 18, 2024 at 03:13:08PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Wed, Nov 13, 2024 at 04:46:27PM -0300, Fabiano Rosas wrote:
-> >> >> diff --git a/tests/qtest/migration-test-smoke.c b/tests/qtest/migration-test-smoke.c
-> >> >> new file mode 100644
-> >> >> index 0000000000..ff2d72881f
-> >> >> --- /dev/null
-> >> >> +++ b/tests/qtest/migration-test-smoke.c
-> >> >> @@ -0,0 +1,39 @@
-> >> >> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> >> >> +
-> >> >> +#include "qemu/osdep.h"
-> >> >> +#include "libqtest.h"
-> >> >> +#include "migration/test-framework.h"
-> >> >> +#include "qemu/module.h"
-> >> >> +
-> >> >> +int main(int argc, char **argv)
-> >> >> +{
-> >> >> +    MigrationTestEnv *env;
-> >> >> +    int ret;
-> >> >> +
-> >> >> +    g_test_init(&argc, &argv, NULL);
-> >> >> +    env = migration_get_env();
-> >> >> +    module_call_init(MODULE_INIT_QOM);
-> >> >> +
-> >> >> +    if (env->has_kvm) {
-> >> >> +        g_test_message(
-> >> >> +            "Smoke tests already run as part of the full suite on KVM hosts");
-> >> >> +        goto out;
-> >> >> +    }
-> >> >
-> >> > So the "smoke" here is almost "tcg".. and if i want to run a smoke test on
-> >> > a kvm-enabled host, it's noop.. which isn't easy to understand why.
-> >> >
-> >> > If to rethink our goal, we have two requirements:
-> >> >
-> >> >   (1) We want to categorize migration tests, so some are quick, some are
-> >> >       slow, some might be flacky.  Maybe more, but it's about putting one
-> >> >       test into only one bucket, and there're >1 buckets.
-> >> 
-> >> It's true that the smoke test should never have slow or flaky tests, but
-> >> we can't use this categorization for anything else. IOW, what you
-> >> describe here is not a goal. If a test is found to be slow we put it
-> >> under slow and it will only run with -m slow/thorough, that's it. We can
-> >> just ignore this.
-> >
-> > I could have missed something, but I still think it's the same issue.  In
-> > general, I think we want to provide different levels of tests, like:
-> >
-> >   - Level 1: the minimum set of tests (aka, the "smoke" idea here)
-> >   - Level 2: normal set of tests (aka, whatever we used to run by default)
-> >   - Level 3: slow tests (aka, only ran with '-m slow' before)
-> 
-> How are you going to make this one work? 'migration-test --level 3'
-> vs. 'migration-test --level 3 -m slow' vs. 'migration-test -m slow'
-> 
-> The only way I can see is to not have a level 3 at all and just use -m
-> slow.
 
-I meant remove "-m" and remove QEMU_TEST_FLAKY_TESTS, instead replacing all
-of them using --level.  Then migration-test ignores '-m' in the future
-because it's simply not enough for us.
+--=-pGbfU3LQnNDblr7/9znK
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> >   - Level 4: flaky tests (aka, only ran when QEMU_TEST_FLAKY_TESTS set)
-> >
-> > Then we want to run level1 test only in tcg, and level1+2 in kvm.  We can
-> > only trigger level 1-3 or level 1-4 in manual tests.
-> >
-> > We used to have different way to provide the level idea, now I think we can
-> > consider provide that level in migration-test in one shot.  Obviously it's
-> > more than quick/slow so I don't think we can reuse "-m", but we can add our
-> >
-> > own test level "--level" parameter, so --level N means run all tests lower
-> > than level N, for example.
-> >
-> 
-> I'm not sure that works semantically for level 4. Because the reason one
-> runs flaky tests is different from the reason one runs the other
-> tests. So we probably don't want to run a bunch of tests just to get to
-> the broken ones.
-> 
-> But we don't need to spend too much time on this. I hate the idea of
-> flaky tests anyway. Whatever we choose they'll just sit there doing
-> nothing.
+On Wed, 2024-12-18 at 22:42 +0100, David Woodhouse wrote:
+>=20
+> It seems like it's because of the way QEMU handles shared level-
+> triggered interrupts.
 
-Yes how to treat flaky tests isn't important yet.  If we don't care about
-QEMU_TEST_FLAKY_TESTS then we make it three levels.  The idea is the same.
+Yeah, this hack seems to confirm it. As I said, PCI INTx manages to
+demux correctly, but any time you have non-PCI interrupt sharing, it's
+hosed because they all just set/clear the GSI as if they own it, and
+there's no OR gate in sight.
 
-> 
-> >> 
-> >> >
-> >> >   (2) We want to run only a small portion of tests on tcg, more tests on
-> >> >       kvm.
-> >> 
-> >> Yes. Guests are fast with KVM and slow with TCG (generally) and the KVM
-> >> hosts are the ones where it's actually important to ensure all migration
-> >> features work OK. Non-KVM will only care about save/restore of
-> >> snapshots. Therefore we don't need to have all tests running with TCG,
-> >> only the smoke set.
-> >> 
-> >> And "smoke set" is arbitrary, not tied to speed, but of course no slow
-> >> tests please (which already happens because we don't pass -m slow to
-> >> migration-test-smoke).
-> >> 
-> >> >
-> >> > Ideally, we don't need two separate main test files, do we?
-> >> >
-> >> > I mean, we can do (1) with the existing migration-test.c, with the help of
-> >> > either gtest's "-m" or something we invent.  The only unfortunate part is
-> >> > qtest only have quick/slow, afaiu the "thorough" mode is the same as
-> >> > "slow".. while we don't yet have real "perf" tests.  It means we only have
-> >> > two buckets if we want to reuse gtest's "-m".
-> >> >
-> >> > Maybe it's enough?  If not, we can implement >2 categories in whatever
-> >> > form, either custom argv/argc cmdline, or env variable.
-> >> >
-> >> > Then, if we always categorize one test (let me try to not reuse glib's
-> >> > terms to be clear) into any of: FAST|NORMAL|SLOW|..., then we have a single
-> >> 
-> >> It's either normal or slow. Because we only know a test is only after it
-> >> bothers us.
-> >
-> > So I wonder if we can provide four levels, as above.. and define it for
-> > each test in migration-test.
-> >
-> >> 
-> >> > migration-test that have different level of tests.  We can invoke
-> >> > "migration-test --mode FAST" if kvm is not supported, and invoke the same
-> >> > "migration-test --mode SLOW" if kvm is supported.
-> >> 
-> >> This is messy due to how qtest/meson.build works. Having two tests is
-> >> the clean change. Otherwise we'll have to add "if migration-test" or
-> >> create artificial test names to be able to restrict the arguments that
-> >> are passed to the test per arch.
-> >
-> > Indeed it'll need a few extra lines in meson, but it doesn't look too bad,
-> > but yeah if anyone is not happy with it we can rethink.  I just want to
-> > know whether it's still acceptable.
-> >
-> > I tried to code it up, it looks like this:
-> >
-> > ====8<====
-> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> > index c5a70021c5..5bec33b627 100644
-> > --- a/tests/qtest/meson.build
-> > +++ b/tests/qtest/meson.build
-> > @@ -392,6 +392,12 @@ if dbus_display
-> >    qtests += {'dbus-display-test': [dbus_display1, gio]}
-> >  endif
-> >  
-> > +if run_command('test', '-e', '/dev/kvm', check: false).returncode() == 0
-> > +  has_kvm = true
-> > +else
-> > +  has_kvm =false
-> > +endif
-> 
-> This is not right. Checking /dev/kvm at configure time doesn't ensure it
-> will be present at test runtime. It also doesn't account for builds with
+Now I have to decide if this is going to provoke me into attempting to
+fix it for the general case with callbacks and fixing VFIO resampling
+too, or whether I paper over it for QEMU with something *slightly* less
+icky than this (which ideally would not lose levels from PCI devices
+either)...
 
-Why the test runtime would be a different host versus whoever setup the
-meson build?
+diff --git a/hw/i386/kvm/xen_evtchn.c b/hw/i386/kvm/xen_evtchn.c
+index 07bd0c9ab8..4c2e8876e5 100644
+--- a/hw/i386/kvm/xen_evtchn.c
++++ b/hw/i386/kvm/xen_evtchn.c
+@@ -301,7 +301,20 @@ static void gsi_assert_bh(void *opaque)
+         xen_evtchn_set_callback_level(!!vi->evtchn_upcall_pending);
+     }
+ }
+-
++int xen_evtchn_check_gsi(int n, int level)
++{
++    struct vcpu_info *vi =3D kvm_xen_get_vcpu_info_hva(0);
++    XenEvtchnState *s =3D xen_evtchn_singleton;
++    if (!s || n !=3D s->callback_gsi || !vi) {
++        return level;
++    }
++    if (vi->evtchn_upcall_pending && !level) {
++        printf("Refusing to deassert GSI#%d which is asserted by Xen\n",
++               n);
++        return 1;
++    }
++    return level;
++}
+ void xen_evtchn_create(unsigned int nr_gsis, qemu_irq *system_gsis)
+ {
+     XenEvtchnState *s =3D XEN_EVTCHN(sysbus_create_simple(TYPE_XEN_EVTCHN,
+diff --git a/hw/i386/kvm/xen_evtchn.h b/hw/i386/kvm/xen_evtchn.h
+index b740acfc0d..c1f56869b3 100644
+--- a/hw/i386/kvm/xen_evtchn.h
++++ b/hw/i386/kvm/xen_evtchn.h
+@@ -31,6 +31,7 @@ struct kvm_irq_routing_entry;
+ int xen_evtchn_translate_pirq_msi(struct kvm_irq_routing_entry *route,
+                                   uint64_t address, uint32_t data);
+ bool xen_evtchn_deliver_pirq_msi(uint64_t address, uint32_t data);
++int xen_evtchn_check_gsi(int n, int level);
+=20
+=20
+ /*
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index dc031af662..4185f467ee 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -452,6 +452,7 @@ void gsi_handler(void *opaque, int n, int level)
+     GSIState *s =3D opaque;
+=20
+     trace_x86_gsi_interrupt(n, level);
++    level =3D xen_evtchn_check_gsi(n, level);
+     switch (n) {
+     case 0 ... ISA_NUM_IRQS - 1:
+         if (s->i8259_irq[n]) {
 
-> CONFIG_KVM=n or builds without both KVM and TCG. This needs to be done
-> inside the test.
+--=-pGbfU3LQnNDblr7/9znK
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
 
-This is true, but IIUC that's not a blocker, as we can use (btw, I found
-fs.exists() a better alternative than my previous hack):
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMjE4MjIxMTU0WjAvBgkqhkiG9w0BCQQxIgQgxV7I24g4
+zFGtlxYnXf5akO91NHP2EnfTSxUvfPFu3/swgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBiB0hzzpr7zmbRKlRSdPWfGw5Kjgc4eHld
+7qJP0p9VhiaPniejkZU5FM6U8CjXZMx7+n1kq3Wgx1ojAEqsiyeZ+zhhgm+DA0Lk+B3r+F1f9NyD
+PUkpwwdgO8sUu6AG3nry2zrxxgBdN8UBk4FalLzZTOXOtS+NcGti1sngzYMJPS/n6Yuza+eeXEP1
+XNq3PQcvlJ6EnifWIXU/HQzJUy8JYOQmUjo6JNKuWuTanZ6Xm2f2Y0bCl5/ts7SX4yHOKUjJ8h9J
+HUhccGFwId8vyJM1kSJ0X0CxfcDEJ3lI0Jdd3edSpYTpzXlVtoeRxCRvO23O8RluerKOj67QLmPf
+DdjBxvebbt5pWpng3UjXOQNZ2PwGlDC9nn84fxmOTOw2q4MCVNFW/+7CYe/87t2OyFCLPXvOJ++y
+e5pqr/ELGUcfRWLTgMqCO5vyiSj2iA6urY5RYrhrXngOAgyA4RHYsT7WGYsgUqALFtbfkG9tw9OS
+RpbkouJ13dRauEqjhk8vO9AHwRXaVN+xNjvfgnwEwhp6r3DQJcJDlEWavVCoDAhBrKmilqIk8+Wk
+LMf+lh2Z6p/w7TCcrmO3Y9WyY4eHOV1VOUi5luUOchaOHCxBg57p0I1zaucMpokGZ2v9A+3R9G0p
+lkWfuB7QVUcxYd5X4y2OLlyohyxINrW1rRF3thyRoQAAAAAAAA==
 
-if fs.exists('/dev/kvm') and 'CONFIG_KVM' in config_all_accel
-  has_kvm = true
-else
-  has_kvm = false
-endif
 
-> 
-> I think the best we can do is have a qtest_migration_level_<ARCH> and
-> set it for every arch.
-> 
-> Also note that we must keep plain 'migration-test' invocation working
-> because of the compat test.
-
-We won't break it if we only switch to levels, right?
-
-Btw, I also don't know why we need to.  IIRC the compat test runs the test
-in previous release (but only feeds the new QEMU binary to the old
-migration-test)?  I think that's one reason why we decided to use the old
-migration-test (so we won't have new tests ran on compat tests, which is a
-loss), just to avoid any change in migration-test will break the compat
-test.. so I assume that should be fine regardless..
-
--- 
-Peter Xu
-
+--=-pGbfU3LQnNDblr7/9znK--
 
