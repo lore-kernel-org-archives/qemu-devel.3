@@ -4,212 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B7C6E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:25:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF3C3E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:25:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO0Zo-0006HY-7p; Wed, 18 Dec 2024 15:23:24 -0500
+	id 1tO0Xq-0001cG-88; Wed, 18 Dec 2024 15:21:22 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tO0Zi-00062U-D8
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:23:20 -0500
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tO0Zg-0000ZH-JR
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:23:18 -0500
-Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIKIcc2018174;
- Wed, 18 Dec 2024 20:23:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=ZwZS09vkAh0Uc76nN6scTO8Fl95lNRJJmwT8duU3gkY=; b=
- FUMZrbW3UExuoQ7rgDxuPRVQd8q0DNQBw7uY7jbe8JuIcxe7cumKxsmNWLY9sTcx
- 5XnjTsFAo+PmrX0T2F0nSvLdKpTFemXJpB5nt/6gdchAVNPUOnPB2eQYls6UrXIq
- 0M2qGEpSHQONcifaqhSZLikFIgBXVSjc/hXGj0vkytbVM6WWZEwL7vW/25syRKzy
- Ebo0ydxTbjM+ZeWeUuY3bpT+XSnGchfMnqXE3tIamyy/kENkowrjpgjcCkM8ILkh
- KtJpVc3+rxzdY+Tqg6P/lXGc1qINrvgywnlgB7GFBzKEXJUyOrASpgDFcj9wAL5Y
- toCxwCsW0b+YrY+/yEuJaw==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43h0ec9fx0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Dec 2024 20:23:11 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BIK1VjI006377; Wed, 18 Dec 2024 20:23:10 GMT
-Received: from nam02-dm3-obe.outbound.protection.outlook.com
- (mail-dm3nam02lp2043.outbound.protection.outlook.com [104.47.56.43])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43h0fb6t8p-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Dec 2024 20:23:10 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PDBiXPoTFvUmBSj7/GXoKaTdLQOuSz2tjIqjr737+YAETu+nhwdaru+dwskDWbN3Ue4fbgOevFgV3OH6OmLmVBFtlq2G+4meJKzAy+GbTEXiQNmrMfQhkC8naP5ylEnbl73GODdSEABm8L7hok2ypBHWAQmDHP9wBD40jhLoREM2H3dHTHeKk+eYvQCkawlwMX0Sj8T3E4lnu7bwN+sNQvHkRP5YgR5pDGb6R4g4V5OXOCpIBrGWrAycgLALTbyAnSaQLXZH12AKZs0p5kKl+8gom/EbiGvViASBnZFNzKT5HISM/Hq+tZQLkqfyF/Z2gXG4lyAhtMEkYzn0DM7J/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZwZS09vkAh0Uc76nN6scTO8Fl95lNRJJmwT8duU3gkY=;
- b=x8k7cEiFv5vDl+4VZiwGA8vLgA/kBkS+W7BavS3vg9ilzFSsS8koF5CWHWzKHU8+sO6c+2AibLtRP2IQNxBGFOlmFR7nH1WtwzdE/5uR3bSp9kO/OhiVSNvVy9jMkFNxcydUBCRYw/BAFMPiim0fKSKgPM6kf/FK6oQmilS+t0M/PGQgvVY062pGn2LM1PxfeNu9ObvzyUxRbLUU62OiMSw5WjURqz5jGIeNVqW3NBOegw5GMqyrFbjDpjBkin0azdaoT2TroHO8IikoNT8IfXwae9qIoemQnXLIJkN/op20cfYHj/0sI55eJbMXHd+UP5ZK8P2HAnw9wVx0DX5hQw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tO0Xm-0001Xv-Ak
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:21:18 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
+ id 1tO0Xj-0000Nm-Jo
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:21:18 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-43623f0c574so362945e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 12:21:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZwZS09vkAh0Uc76nN6scTO8Fl95lNRJJmwT8duU3gkY=;
- b=WrujPxNARg5WqCRkwoxa9sBULZ6MVgVOP2/YdZ8lThggoifVr7JHyUD3R0UbYqbDuJTpyYbBKEGg+YwNx6mYWAwA1SyLyTDJIRUqVhmtDOn2bmqEzT0+wm5O8o0HTxC3gfYsYo16rw+2N8ymR6YLKhvXlRlctVVCnePJANEolSA=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by DS0PR10MB6919.namprd10.prod.outlook.com (2603:10b6:8:11c::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.13; Wed, 18 Dec
- 2024 20:22:54 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8251.015; Wed, 18 Dec 2024
- 20:22:54 +0000
-Message-ID: <3b2e7897-ff21-46ab-a900-551f78f7ca48@oracle.com>
-Date: Wed, 18 Dec 2024 15:22:50 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 06/19] physmem: preserve ram blocks for cpr
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
- <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-7-git-send-email-steven.sistare@oracle.com>
- <Z1dOBioqzQmEwW16@x1n> <bbb7b4a9-6078-4cb1-89c9-ec2d57b996f0@oracle.com>
- <Z1toIxDzI56ODYcC@x1n> <Z1xREcVCi-hn4BlW@x1n>
- <58935fbe-bb53-457d-b4d6-70c1d7b09e8c@oracle.com>
- <8406c79f-b7fb-4536-8d6a-126bb03a6c9f@oracle.com> <Z2L_mwAAEjbGRI0r@x1n>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <Z2L_mwAAEjbGRI0r@x1n>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN9PR03CA0521.namprd03.prod.outlook.com
- (2603:10b6:408:131::16) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734553274; x=1735158074;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wRpyFiCQW73oP3HCBh+RKCpqOBvFZvQ+nxhkLxinTW8=;
+ b=2uDdtFhALa6mc9uPJG+4Jzmhu2DXjCdKM7VRuVMny1SAv3yu/gW2Gl0SsArQl/JHkv
+ x4V2s0pdY/AZMq+t+0U51vhdZW0BwozHZwR+6Xfieg8xYiP6LCjhfzxrVMaoHDV3LpRI
+ vyUdrSEpGMIS7lcDbNXfrJ7kINspY0QljTStwIMPNWQlEAnBHZCaspHUWC4PmSR8F/no
+ /98J8pGW6ZUTQOD2AUTrz706RvFbtdiyMLBXHgq4/CzJ50mvB4C9/Nm6uXElhJltyZvW
+ 82+BxT9XffH9xtUqf1WN3yAmQ+AfXif34H8yp3bx0l9o/nBPeQSsTWwirBG6d25DO4EF
+ vroA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734553274; x=1735158074;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wRpyFiCQW73oP3HCBh+RKCpqOBvFZvQ+nxhkLxinTW8=;
+ b=fStDmS/zs2Eqw3r+gUmQNIVyqmqfz51aCovfDfJR1AldB7uhL06xa6Sjmk+/bQgxvp
+ wZYPra25ctqxRjaFkxLUPJo9YmVUHFGW2QQGP+5pqwYKV9AEh5ZwqL5drXuScwlLgEa5
+ z20WFJk3V8T25JF6Cpkt6iL4m+KzpuRtJMSmUNYYiwlOB8W6kdzveiQSEy/NQP5BU5s6
+ 74aPTrCT+irLaoIaMOKFWI1kwwV6KJU1Qy3yHo6EintlS7JFFM8hMig0vqKHsOfyFVWI
+ 0uB/Wo1WocALobkd5eHh+V6LyNRP9IdD65Ajt18jEvhlWMfu6u9OwVhD0l8U4dZXrWhB
+ Ywpg==
+X-Gm-Message-State: AOJu0Yzz4SEwVgI74rmcvksDljITmu04Te29eORRpnFdjQyfxTMi0SnM
+ fGnsr6UqVaJTi94lnYv4XaoblpqRiz7MeG57q0HYYb7vfft2AlJNR64zVpk/Q0YrAOuJmZl+AQH
+ clg==
+X-Gm-Gg: ASbGncuvz/bSkAC5wxp2/e13A5+Byo9XDsXmMGWpqtIuddtZCcBNMF0vIgbkp/lyBmO
+ TNw5NCu65VZlgXF2vxXJ1ISrH9Y4UMqAjfSjzP7f2eGOyv5Ej5ulnh9WJXM0kpbgFajBc5JE6s8
+ bW+uICJ2YiwEdJjyUP5FnCimcD8wJYwDwGu1Mi46Mk7kVhiBgiVmfznHGpvKgERlAtCqhYhCB9I
+ FWOf0NFc4yDVjkm/g/TJTulO1UeHz2jC6c1vfcvcfV0uz8iGrmts8xl11Eq0i6VJjWdXNY2ayCl
+ prUGOTeqFXB/c834BNEEU+vA8KMt3xga
+X-Google-Smtp-Source: AGHT+IEypGWcRIKswGmgWRDNW66iD6GwxfRRmSYQGEUNiCXOie/PKSEL71cdET46HJeTdnrHtUKVig==
+X-Received: by 2002:a05:600c:1d0e:b0:434:f623:9fe3 with SMTP id
+ 5b1f17b1804b1-43655376cf4mr41658515e9.16.1734553274111; 
+ Wed, 18 Dec 2024 12:21:14 -0800 (PST)
+Received: from localhost.localdomain (h082218084190.host.wavenet.at.
+ [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c80120c7sm14842267f8f.13.2024.12.18.12.21.12
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Wed, 18 Dec 2024 12:21:13 -0800 (PST)
+From: Phil Dennis-Jordan <phil@philjordan.eu>
+To: qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
+ pbonzini@redhat.com, rad@semihalf.com, quic_llindhol@quicinc.com,
+ stefanha@redhat.com, mst@redhat.com, slp@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com, gaosong@loongson.cn, jiaxun.yang@flygoat.com,
+ chenhuacai@kernel.org, kwolf@redhat.com, hreitz@redhat.com,
+ philmd@linaro.org, shorne@gmail.com, palmer@dabbelt.com,
+ alistair.francis@wdc.com, bmeng.cn@gmail.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
+ akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
+ qemu-riscv@nongnu.org, balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
+Subject: [PATCH v15 13/15] hw/vmapple/virtio-blk: Add support for apple
+ virtio-blk
+Date: Wed, 18 Dec 2024 21:20:34 +0100
+Message-Id: <20241218202036.80064-14-phil@philjordan.eu>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20241218202036.80064-1-phil@philjordan.eu>
+References: <20241218202036.80064-1-phil@philjordan.eu>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DS0PR10MB6919:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6289fc96-9dbf-40a5-fecf-08dd1fa1c0b3
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RGExbVBtbURYSVpvcnRFemVrSWlaVStQMjVsWTI1VEpvOUttci9xVTQwVFlp?=
- =?utf-8?B?QlZ2dHR0OThPbUczOTdhUUZudk5vUFFDMk9uTkV4bGRRdzlSR205QzlkYXl5?=
- =?utf-8?B?d0FWTENlNVRmMU1wRHVlYmwyVHFMSWJCb1RKOFowVEtsYjI3dlpqc3NNRm96?=
- =?utf-8?B?L3oxV0tnVkxwZFl2U3JDeklDeWM4S3YrODIwLy9nOC9TS1p5RjVrVEpFL3Jl?=
- =?utf-8?B?cU5peUJSVmFraUlmc3lmMmxHcjFISXRkUG1RZnhmK1RQUHJSWFl3L3JmTlpO?=
- =?utf-8?B?YnJwUGNVWkgrV2VMM2taT0p0ZFJlMVNqTGtaajFKWUZRQVZGL3dUMHd6YVVm?=
- =?utf-8?B?T2poakZUVVRXRHNpTVZIRDA3SFNhc0lTU2tVUitVMGtLZHVmcjNCcWs4YXh1?=
- =?utf-8?B?b3ovRHlXNVVPdVJnekpKY1Ntb1laQXE1M3l5RkEza3BtZlo1aGpwaWtPWmhW?=
- =?utf-8?B?eGw5eFZ1dUZKNisvMEsrTzFvcG9FalNqSlZaRjlBZ3liZTBLbUN1ZFc0bW5Y?=
- =?utf-8?B?YjVjL1NhaTRnMERvSDNmUllXdWFPUVdKSUtGUzZUMHhVdytIWHJmRWF1ZWR0?=
- =?utf-8?B?bzliMis4aEFYVzFQRFlPb25qRGE5UldUNG9jd1ZNQld6MForYVNDRE9JUzlH?=
- =?utf-8?B?aTlpaUUzVDdjZWdseFNKblpNNFR1alo3a3ZBdzVIdnlzdHJ5U21GcUdwSFpm?=
- =?utf-8?B?SlpkQ0dtbVBleXlONS9OZVFrOEhXWmdqVFdLVXV6NXJremVOY1pMMFpwUDhH?=
- =?utf-8?B?MU5rK2VzblNZNndqRHF5OGhjOFdLUFA2a2U0MjI0aHVGc3RURzJLTERWYkpw?=
- =?utf-8?B?ZHljNGN5a2gzeTB1RmRvT1IvVW9PVUs4cmdrTTJiRUFkc3BudklQNXB5T2hl?=
- =?utf-8?B?QVRHaFlEWndtYlVBb3czUkhsSExRNDg2R0hBR24yQjVOV05YUkJQa1BLaFFH?=
- =?utf-8?B?bVJwdzNtTjdNb05TU1ZERUpSbjBpUGtGQzlPVEN5bmZxVnlPdGhPRUZKek5T?=
- =?utf-8?B?RVVHVmNQNHVyQmo0TXN3b0dKVmp1aHdiTmhUa0Z2N3RzdWd2M0RndnZvNGpq?=
- =?utf-8?B?bXYyM251aTdOT0JGYWNod2VXbFpUZmVQNmhkQ2Fqc3JjOEtqN2ZwR0R0NWh2?=
- =?utf-8?B?azh4eUo1MXgvV1UzY1lseHhSUUdsQURCRWdYeUZGMVk3WFl1ZHhDRGRzYXpm?=
- =?utf-8?B?OTJiZC9VOHVzUHRFQ29EZXhhVDhrZWx1cUh1S3JuTU5vTFRYeEVuZkp0eXg4?=
- =?utf-8?B?Um1LdnFnbkRmUmJKNWxUajBuRXMxM2hJZ1BkREw4aVdxNThwSTBuallvYmNz?=
- =?utf-8?B?QWN5SHBOMWhXVTFYWnNGU0RFTUxISXNWcktuamxLRldEQVRDbTh6QXRjdUFz?=
- =?utf-8?B?NEZkanNrRExxRXdKWGZ3R3dpOUpVWDFQY3ZVMUtNajZxbncvRTVQVlN4Sy9D?=
- =?utf-8?B?WWE1YXY0bXlkWVRPcnI4MkN3Q0lMQnd2dGlrb1pGTHFISi9uc1ZGK1ZHNXJm?=
- =?utf-8?B?WmYxeXdRZGFkNlRDaldQVVIyUTR2N0owSTQyRktLKzJ6UnI5SkoyZ2dpWmp3?=
- =?utf-8?B?Wk03Z3g1ditjODA0ZElIU2VGMWZTOFBMZzg3WkZlL1grVDNsdllYendSVUtC?=
- =?utf-8?B?TlpMK2FlbWs1b2ZRTzVQdk5FdExndGhQdU9LcHJRQ2VOd2YzcU85Wnp2YmZj?=
- =?utf-8?B?d3RIbEphZTdIUVVNcHFnYzZxUjJYQWNoWlFaYngrVUxKODZnZ2VEcEJyQ3hq?=
- =?utf-8?B?UHZvVUxWWFV6UytmclFZVERLV01QZzVvYk9HeklpNzduVnhDalF0V1AwVmg5?=
- =?utf-8?B?OVlCNnVDYStmZStKemlOWG8zWEJGSzQyeWlEeGREaU9hK0NGREF2ZXB5QS9x?=
- =?utf-8?Q?SaldnGVWK0Ka7?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?NGJZNWFKNVB2QkJUWkVTSXI5aks3SEJzSk45djl4UEVxZGxTdHpXU0dFWkVi?=
- =?utf-8?B?WmZvTTZyaGx3WG0wQzk0WmRSdUtwNFIwYUNXbnR4VFdOK2ZjUnhNYjJMRGl2?=
- =?utf-8?B?aVJ6WlRZeXBUaDZkZVRGMTFFSFVQQWRQems5N0pqbHlsbEVPY1UvelRxSTVQ?=
- =?utf-8?B?L3FnR0oyb3BZMkNIelAvMUc5R0EwdHhnaU5FMXE4VDM4WTVPVTNvZFpKL0Ju?=
- =?utf-8?B?YkhJaU1MMVlJMExaZzN4czNCNWRIVkRBUDJKZWQzQVNQV0twc1FxdEc4amYv?=
- =?utf-8?B?bElTcDBwUFM4NGgwa1RDWmJoeXVkNWRCaytQaFNNS1hLclRxUC9jMk1GWkd0?=
- =?utf-8?B?NmNJd0hSejZMMHNud0hLZnRqL2x1UmJ2MkFNQ0JUZHVvVHhmbjJSVnhrcUZu?=
- =?utf-8?B?YWZsTGxaVG9ES2djbW9lOVVLdWkvb2lRZVlzbldyZG9pVHR0RHBKQk9IMUtP?=
- =?utf-8?B?UXVYc0lUMmxseHVQSVEwdVZpZDdYamlEbm5wb08xbGJaUnd0K2JLV1dkcy8y?=
- =?utf-8?B?YzRYV2Noa09uZmFtV3JaQXVDeUQxNDVOU3krRHRpTFQ1QnJwenYvSjQ3VlRQ?=
- =?utf-8?B?cjFXcndxSTVQWm9WMVd0ZnVNa0VIUHJxNGc4M1pBVGJRT3FQejZJTWZyWFJD?=
- =?utf-8?B?R0FmYk9GTklYVUVCY05pOVFZN0EwRVdnZFVERmpkOWhzMkF5TEhjaUIvRWlm?=
- =?utf-8?B?L0M5MmpFSWlWMHNuRkFtcW9TRThReVV3WFVaNDJGNTByOVUrSXdBZmdBeTVn?=
- =?utf-8?B?Q2FWTHBKS3NtSkxXUVJBTXh4cHUrQ2lqS2Z3cEdsZmVmSTJqcXprV1N5bEVu?=
- =?utf-8?B?b1pZSHdxVXBEVVFUdTJWeVVkVDhpVEcwV0NqcGR0YjBGVGJkQlBJV2V0bnBv?=
- =?utf-8?B?dGUwZm5nRlJlMVdUaG4rOHNVdnV0bDExc0doVXhqU1ZZWTNVbUUvZFR3OWMv?=
- =?utf-8?B?Yy81ckhyUTFBMEJWSW5pYzYrV2lidjQ0bjdwVm43MDRHSlc5SFZUeTVRRGdB?=
- =?utf-8?B?cXpyemtla09peE90VHJEWEVqM1VNbXhXK0ZUc3YrbjZoNHphc2h0ME15clRn?=
- =?utf-8?B?bHBwN2h2ck9WeXd0T3lQSVh3L0VkWjFCK2lQbW9CWW52SHQ3aXJTdENTbkdK?=
- =?utf-8?B?YldKZk5SZjdmWFlST2RFR3JTSmZ5TjB1NHF6WXUzZFVMN1ovOGcxL1ZueUpP?=
- =?utf-8?B?VTZuYWJyQnVhc29Id1NJTHBGcThDczd2M1VZVm11bXdOakU3cFdKcDJ4TGRI?=
- =?utf-8?B?aVdhVENuQndpSFlGKzlXMjlaaG5yQUVhRVYyaFBZaTZXQzV4eDZqMXd4cmFR?=
- =?utf-8?B?Q1dibjBsNFRFMnAzVWxtNEFJY05wSW44K2FuUlZpb1BIc25zRlZ0dUg0ckpj?=
- =?utf-8?B?UVJLL01nd0Z2RWhaeFdKWUphWnhxemIyNDVRZC83UW41Q3ovTW1BZzFmYk8x?=
- =?utf-8?B?UEM3dSs5U3FGbjJKc3dFOGxieFpGckZ3VTlFdDdZek9aMWFYOWN5WGd2Qzhw?=
- =?utf-8?B?RkJNdFJZZlNRSXdXRkxuVkNheE9FVms2eFVFajFwbmRWdDl3YTlsRHdlQThR?=
- =?utf-8?B?ZHNKRm9wMGIzdDNTOUdPZml3VkpWdW9rZVhhYzI0UWRqeGovZWpFZ2FyMEk2?=
- =?utf-8?B?N3IyREdFbXVvc2xTZVpMbG5JU2RuL0swcWhtWnI3aXVUakVrcU5sdHkycVd0?=
- =?utf-8?B?QXpTUm9KdW9MVXpMWjE5YzlwWWJld2NOazRJOWFWYlpGK1hrTHNBR240bmJt?=
- =?utf-8?B?R1l2N0tkeUxDaU1sT3VwNmF3cm1tRlRhbWxKazFXZWtqQnZXNjJhNExNUDdr?=
- =?utf-8?B?SWc5UkhiQzZKM1VYemNoWVExLzE2K1BXb0dYTkFQRkExdUIvOElQNEF4N1hi?=
- =?utf-8?B?U3VsS3lSNnJETXVMeWJBRGRTZWliVnZlUnBSMTdRU0ZZY3ZwdnNqNVNkNjBR?=
- =?utf-8?B?cnpRaENwNEFyV0FCTEdicXV1dk4rZG1OWm1McWJZUkRMNytyNEFuQjBZaWNl?=
- =?utf-8?B?c0JNYkFxS2NjenBWMzltQ1dnc3BTZG5oQ04rRGEyMy9oODNVNWkvYXV0VzZw?=
- =?utf-8?B?Zm9md1p0MmlxY1BPK2huSmZNSDd4RnUyOXorOEJEUmVEUzBMYXE0cHN2eGJ2?=
- =?utf-8?B?T0c5QUtvUm03VjhLQk5JMTEyRytQZHhMcTlJQmZwUjYrb2dRQXRBTzBYSzg0?=
- =?utf-8?B?ekE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: nksGWqjmtwsUFC/tPKbl96VZPK/anZBKc3cdoPcc3cjpEoC3y/UFuem1Gg5jS30IuGlugoMy/HrciZ7faN/IhW8Z1ZgEBZe2cvsL8euPcJzbOKyKC8oPKuzhb26a+Zu3ygFl+2e31Hy0CIbWtB2w1paTKWneY5DBuDkT0Vq6oPIc12ZdszokeiI1NnH08biVJAYSE7Hc8ooERZmup1+DoINopY3wfLUckJCmBI7CKP8uMmyHqnnXkc6OGlVYmuM2IrnQkEoyJJVDsOU/RNwIK01q+H9ax2DcQixRLLNJnR4xwP8yVjbQJfj/cV62aMhGigqBhpBprdrBRp6AuJVg7spIY5OFxXMq+Ezs5yawMWlV+UvLPjlooNU0ka0SwjOy0mV/gHB7tiqY8KaHFBjcMewSEoj5VPl3Z4EWgm8UMzq6m3FJp3Evaz6cAgkcjbcodwWRpYKqeEqX5EtQVJOfr7LN7BiLyphLL/9Z4yVjPdkGEtn7z4Gomh0LgtvK316XMb41fqMocQQvCpxpZmoq4h+8pAtOHhXKYuk193TvVPpxLOjNB+8zyJbTbTaJoD3yy3G2z8lvdt2LkD8CSYgrqpR/R9Mn/Llb6kxyCIjzHfM=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6289fc96-9dbf-40a5-fecf-08dd1fa1c0b3
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 20:22:54.1379 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Og4ULOtoRNW7zhZtvquKbgUGvhLD/MVFEuuW6BaBcpqtYUh0jgyM02QFM4vKbU3cn7mUOYSjO+U2mcvPQKoLksExgzmHsxpMV625Oeea81w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR10MB6919
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
- definitions=2024-12-18_07,2024-12-18_02,2024-11-22_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- phishscore=0
- malwarescore=0 bulkscore=0 spamscore=0 mlxlogscore=966 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2411120000 definitions=main-2412180158
-X-Proofpoint-GUID: JbLYEiFV-SEUeBcGIMAZPHhRSMHZC3Gh
-X-Proofpoint-ORIG-GUID: JbLYEiFV-SEUeBcGIMAZPHhRSMHZC3Gh
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: neutral client-ip=2a00:1450:4864:20::331;
+ envelope-from=phil@philjordan.eu; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NEUTRAL=0.779 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -225,50 +112,457 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/18/2024 12:00 PM, Peter Xu wrote:
-> On Wed, Dec 18, 2024 at 11:34:34AM -0500, Steven Sistare wrote:
->> After adding resizable support to qemu_ram_alloc_from_fd, I can also tweak it
->> to grow the file while preserving error checking for the general case, and
->> delete the explicit ftruncate in its caller:
->>
->>      /*
->>       * Allow file_ram_alloc to grow the file during CPR, if a resizable
->>       * memory region wants a larger block than the incoming current size.
->>       */
->>      file_size = get_file_size(fd);
->>      if (file_size && file_size < offset + max_size && size == max_size &&
->>          migrate_mode() != MIG_MODE_CPR_TRANSFER) {
->>[...]
-> 
-> Firstly, this check is growing too long, maybe worthwhile to have a helper
-> already.
-> 
-> file_size_check():
->      // COMMENTS...
->      if (migrate_mode() == XXX) {
->          return true;
->      }
-> 
-> Said that, I think it's better we also add the flag to enforce the
-> truncation, only if cpr found a fd.  E.g. we may want to keep the old
-> behavior even if the user sets migrate mode to CPR (even without a
-> migration happening at all), then create a fd ramblock.
+From: Alexander Graf <graf@amazon.com>
 
-That was my intent.  Normally mode becomes TRANSFER only when outgoing migration
-is about to start, or is incoming, but conceivably the source qemu user could
-set mode early, before creating some object requiring aux memory.
+Apple has its own virtio-blk PCI device ID where it deviates from the
+official virtio-pci spec slightly: It puts a new "apple type"
+field at a static offset in config space and introduces a new barrier
+command.
 
-I can add a grow parameter to qemu_ram_alloc_from_fd and pass true only
-if the fd came from cpr_find_fd.  Sound OK?
+This patch first creates a mechanism for virtio-blk downstream classes to
+handle unknown commands. It then creates such a downstream class and a new
+vmapple-virtio-blk-pci class which support the additional apple type config
+identifier as well as the barrier command.
 
-RAMBlock *qemu_ram_alloc_from_fd(..., bool grow)
-     if (file_size && file_size < offset + max_size && !grow) {
-         error_setg(...
-     ...
-     new_block->host = file_ram_alloc(new_block, max_size, fd,
-                                      file_size < offset + max_size,
-                                      offset, errp);
+The 'aux' or 'root' device type are selected using the 'variant' property.
 
-- Steve
+Signed-off-by: Alexander Graf <graf@amazon.com>
+Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+---
+
+v4:
+
+ * Use recommended object type declaration pattern.
+ * Correctly log unimplemented code paths.
+ * Most header code moved to .c, type name #defines moved to vmapple.h
+
+v5:
+
+ * Corrected handling of potentially unaligned writes to virtio config area.
+ * Simplified passing through device variant type to subobject.
+
+v9:
+
+ * Correctly specify class_size for VMAppleVirtIOBlkClass
+
+v10:
+
+ * Folded v9 patch 16/16 into this one, changing the device type design to
+   provide a single device type with a variant property instead of 2 different
+   subtypes for aux and root volumes.
+ * Tidied up error reporting for the variant property.
+
+v15:
+
+ * Constified the property table.
+
+ hw/block/virtio-blk.c               |  19 ++-
+ hw/core/qdev-properties-system.c    |   8 ++
+ hw/vmapple/Kconfig                  |   3 +
+ hw/vmapple/meson.build              |   1 +
+ hw/vmapple/virtio-blk.c             | 205 ++++++++++++++++++++++++++++
+ include/hw/pci/pci_ids.h            |   1 +
+ include/hw/qdev-properties-system.h |   5 +
+ include/hw/virtio/virtio-blk.h      |  12 +-
+ include/hw/vmapple/vmapple.h        |   2 +
+ qapi/virtio.json                    |  14 ++
+ 10 files changed, 265 insertions(+), 5 deletions(-)
+ create mode 100644 hw/vmapple/virtio-blk.c
+
+diff --git a/hw/block/virtio-blk.c b/hw/block/virtio-blk.c
+index 9ca60fbc070..89a5697cf9b 100644
+--- a/hw/block/virtio-blk.c
++++ b/hw/block/virtio-blk.c
+@@ -50,12 +50,12 @@ static void virtio_blk_init_request(VirtIOBlock *s, VirtQueue *vq,
+     req->mr_next = NULL;
+ }
+ 
+-static void virtio_blk_free_request(VirtIOBlockReq *req)
++void virtio_blk_free_request(VirtIOBlockReq *req)
+ {
+     g_free(req);
+ }
+ 
+-static void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
++void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status)
+ {
+     VirtIOBlock *s = req->dev;
+     VirtIODevice *vdev = VIRTIO_DEVICE(s);
+@@ -966,8 +966,18 @@ static int virtio_blk_handle_request(VirtIOBlockReq *req, MultiReqBuffer *mrb)
+         break;
+     }
+     default:
+-        virtio_blk_req_complete(req, VIRTIO_BLK_S_UNSUPP);
+-        virtio_blk_free_request(req);
++    {
++        /*
++         * Give subclasses a chance to handle unknown requests. This way the
++         * class lookup is not in the hot path.
++         */
++        VirtIOBlkClass *vbk = VIRTIO_BLK_GET_CLASS(s);
++        if (!vbk->handle_unknown_request ||
++            !vbk->handle_unknown_request(req, mrb, type)) {
++            virtio_blk_req_complete(req, VIRTIO_BLK_S_UNSUPP);
++            virtio_blk_free_request(req);
++        }
++    }
+     }
+     return 0;
+ }
+@@ -2044,6 +2054,7 @@ static const TypeInfo virtio_blk_info = {
+     .instance_size = sizeof(VirtIOBlock),
+     .instance_init = virtio_blk_instance_init,
+     .class_init = virtio_blk_class_init,
++    .class_size = sizeof(VirtIOBlkClass),
+ };
+ 
+ static void virtio_register_types(void)
+diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
+index 22ea1ed3583..32abfc20b31 100644
+--- a/hw/core/qdev-properties-system.c
++++ b/hw/core/qdev-properties-system.c
+@@ -1283,3 +1283,11 @@ const PropertyInfo qdev_prop_iothread_vq_mapping_list = {
+     .set = set_iothread_vq_mapping_list,
+     .release = release_iothread_vq_mapping_list,
+ };
++
++const PropertyInfo qdev_prop_vmapple_virtio_blk_variant = {
++    .name  = "VMAppleVirtioBlkVariant",
++    .enum_table  = &VMAppleVirtioBlkVariant_lookup,
++    .get   = qdev_propinfo_get_enum,
++    .set   = qdev_propinfo_set_enum,
++    .set_default_value = qdev_propinfo_set_default_value_enum,
++};
+diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
+index 8bbeb9a9237..bcd1be63e3c 100644
+--- a/hw/vmapple/Kconfig
++++ b/hw/vmapple/Kconfig
+@@ -7,3 +7,6 @@ config VMAPPLE_BDIF
+ config VMAPPLE_CFG
+     bool
+ 
++config VMAPPLE_VIRTIO_BLK
++    bool
++
+diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
+index 64b78693a31..bf17cf906c9 100644
+--- a/hw/vmapple/meson.build
++++ b/hw/vmapple/meson.build
+@@ -1,3 +1,4 @@
+ system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
+ system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
+ system_ss.add(when: 'CONFIG_VMAPPLE_CFG',  if_true: files('cfg.c'))
++system_ss.add(when: 'CONFIG_VMAPPLE_VIRTIO_BLK',  if_true: files('virtio-blk.c'))
+diff --git a/hw/vmapple/virtio-blk.c b/hw/vmapple/virtio-blk.c
+new file mode 100644
+index 00000000000..d5d6a7b39dd
+--- /dev/null
++++ b/hw/vmapple/virtio-blk.c
+@@ -0,0 +1,205 @@
++/*
++ * VMApple specific VirtIO Block implementation
++ *
++ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * VMApple uses almost standard VirtIO Block, but with a few key differences:
++ *
++ *  - Different PCI device/vendor ID
++ *  - An additional "type" identifier to differentiate AUX and Root volumes
++ *  - An additional BARRIER command
++ */
++
++#include "qemu/osdep.h"
++#include "hw/vmapple/vmapple.h"
++#include "hw/virtio/virtio-blk.h"
++#include "hw/virtio/virtio-pci.h"
++#include "qemu/bswap.h"
++#include "qemu/log.h"
++#include "qemu/module.h"
++#include "qapi/error.h"
++
++#define TYPE_VMAPPLE_VIRTIO_BLK  "vmapple-virtio-blk"
++OBJECT_DECLARE_TYPE(VMAppleVirtIOBlk, VMAppleVirtIOBlkClass, VMAPPLE_VIRTIO_BLK)
++
++typedef struct VMAppleVirtIOBlkClass {
++    VirtIOBlkClass parent;
++
++    void (*get_config)(VirtIODevice *vdev, uint8_t *config);
++} VMAppleVirtIOBlkClass;
++
++typedef struct VMAppleVirtIOBlk {
++    VirtIOBlock parent_obj;
++
++    uint32_t apple_type;
++} VMAppleVirtIOBlk;
++
++/*
++ * vmapple-virtio-blk-pci: This extends VirtioPCIProxy.
++ */
++OBJECT_DECLARE_SIMPLE_TYPE(VMAppleVirtIOBlkPCI, VMAPPLE_VIRTIO_BLK_PCI)
++
++#define VIRTIO_BLK_T_APPLE_BARRIER     0x10000
++
++static bool vmapple_virtio_blk_handle_unknown_request(VirtIOBlockReq *req,
++                                                      MultiReqBuffer *mrb,
++                                                      uint32_t type)
++{
++    switch (type) {
++    case VIRTIO_BLK_T_APPLE_BARRIER:
++        qemu_log_mask(LOG_UNIMP, "%s: Barrier requests are currently no-ops\n",
++                      __func__);
++        virtio_blk_req_complete(req, VIRTIO_BLK_S_OK);
++        virtio_blk_free_request(req);
++        return true;
++    default:
++        return false;
++    }
++}
++
++/*
++ * VMApple virtio-blk uses the same config format as normal virtio, with one
++ * exception: It adds an "apple type" specififer at the same location that
++ * the spec reserves for max_secure_erase_sectors. Let's hook into the
++ * get_config code path here, run it as usual and then patch in the apple type.
++ */
++static void vmapple_virtio_blk_get_config(VirtIODevice *vdev, uint8_t *config)
++{
++    VMAppleVirtIOBlk *dev = VMAPPLE_VIRTIO_BLK(vdev);
++    VMAppleVirtIOBlkClass *vvbk = VMAPPLE_VIRTIO_BLK_GET_CLASS(dev);
++    struct virtio_blk_config *blkcfg = (struct virtio_blk_config *)config;
++
++    vvbk->get_config(vdev, config);
++
++    g_assert(dev->parent_obj.config_size >= endof(struct virtio_blk_config, zoned));
++
++    /* Apple abuses the field for max_secure_erase_sectors as type id */
++    stl_he_p(&blkcfg->max_secure_erase_sectors, dev->apple_type);
++}
++
++static void vmapple_virtio_blk_class_init(ObjectClass *klass, void *data)
++{
++    VirtIOBlkClass *vbk = VIRTIO_BLK_CLASS(klass);
++    VirtioDeviceClass *vdc = VIRTIO_DEVICE_CLASS(klass);
++    VMAppleVirtIOBlkClass *vvbk = VMAPPLE_VIRTIO_BLK_CLASS(klass);
++
++    vbk->handle_unknown_request = vmapple_virtio_blk_handle_unknown_request;
++    vvbk->get_config = vdc->get_config;
++    vdc->get_config = vmapple_virtio_blk_get_config;
++}
++
++static const TypeInfo vmapple_virtio_blk_info = {
++    .name          = TYPE_VMAPPLE_VIRTIO_BLK,
++    .parent        = TYPE_VIRTIO_BLK,
++    .instance_size = sizeof(VMAppleVirtIOBlk),
++    .class_size    = sizeof(VMAppleVirtIOBlkClass),
++    .class_init    = vmapple_virtio_blk_class_init,
++};
++
++/* PCI Devices */
++
++struct VMAppleVirtIOBlkPCI {
++    VirtIOPCIProxy parent_obj;
++    VMAppleVirtIOBlk vdev;
++    VMAppleVirtioBlkVariant variant;
++};
++
++
++static const Property vmapple_virtio_blk_pci_properties[] = {
++    DEFINE_PROP_UINT32("class", VirtIOPCIProxy, class_code, 0),
++    DEFINE_PROP_BIT("ioeventfd", VirtIOPCIProxy, flags,
++                    VIRTIO_PCI_FLAG_USE_IOEVENTFD_BIT, true),
++    DEFINE_PROP_UINT32("vectors", VirtIOPCIProxy, nvectors,
++                       DEV_NVECTORS_UNSPECIFIED),
++    DEFINE_PROP_VMAPPLE_VIRTIO_BLK_VARIANT("variant", VMAppleVirtIOBlkPCI, variant,
++                                           VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED),
++    DEFINE_PROP_END_OF_LIST(),
++};
++
++static void vmapple_virtio_blk_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
++{
++    ERRP_GUARD();
++    VMAppleVirtIOBlkPCI *dev = VMAPPLE_VIRTIO_BLK_PCI(vpci_dev);
++    DeviceState *vdev = DEVICE(&dev->vdev);
++    VirtIOBlkConf *conf = &dev->vdev.parent_obj.conf;
++
++    if (dev->variant == VM_APPLE_VIRTIO_BLK_VARIANT_UNSPECIFIED) {
++        error_setg(errp, "vmapple virtio block device variant unspecified");
++        error_append_hint(errp,
++                          "Variant property must be set to 'aux' or 'root'.\n"
++                          "Use a regular virtio-blk-pci device instead when "
++                          "neither is applicaple.\n");
++        return;
++    }
++
++    if (conf->num_queues == VIRTIO_BLK_AUTO_NUM_QUEUES) {
++        conf->num_queues = virtio_pci_optimal_num_queues(0);
++    }
++
++    if (vpci_dev->nvectors == DEV_NVECTORS_UNSPECIFIED) {
++        vpci_dev->nvectors = conf->num_queues + 1;
++    }
++
++    /*
++     * We don't support zones, but we need the additional config space size.
++     * Let's just expose the feature so the rest of the virtio-blk logic
++     * allocates enough space for us. The guest will ignore zones anyway.
++     */
++    virtio_add_feature(&dev->vdev.parent_obj.host_features, VIRTIO_BLK_F_ZONED);
++    /* Propagate the apple type down to the virtio-blk device */
++    dev->vdev.apple_type = dev->variant;
++    /* and spawn the virtio-blk device */
++    qdev_realize(vdev, BUS(&vpci_dev->bus), errp);
++
++    /*
++     * The virtio-pci machinery adjusts its vendor/device ID based on whether
++     * we support modern or legacy virtio. Let's patch it back to the Apple
++     * identifiers here.
++     */
++    pci_config_set_vendor_id(vpci_dev->pci_dev.config, PCI_VENDOR_ID_APPLE);
++    pci_config_set_device_id(vpci_dev->pci_dev.config,
++                             PCI_DEVICE_ID_APPLE_VIRTIO_BLK);
++}
++
++static void vmapple_virtio_blk_pci_class_init(ObjectClass *klass, void *data)
++{
++    DeviceClass *dc = DEVICE_CLASS(klass);
++    VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
++    PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
++
++    set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
++    device_class_set_props(dc, vmapple_virtio_blk_pci_properties);
++    k->realize = vmapple_virtio_blk_pci_realize;
++    pcidev_k->vendor_id = PCI_VENDOR_ID_APPLE;
++    pcidev_k->device_id = PCI_DEVICE_ID_APPLE_VIRTIO_BLK;
++    pcidev_k->revision = VIRTIO_PCI_ABI_VERSION;
++    pcidev_k->class_id = PCI_CLASS_STORAGE_SCSI;
++}
++
++static void vmapple_virtio_blk_pci_instance_init(Object *obj)
++{
++    VMAppleVirtIOBlkPCI *dev = VMAPPLE_VIRTIO_BLK_PCI(obj);
++
++    virtio_instance_init_common(obj, &dev->vdev, sizeof(dev->vdev),
++                                TYPE_VMAPPLE_VIRTIO_BLK);
++}
++
++static const VirtioPCIDeviceTypeInfo vmapple_virtio_blk_pci_info = {
++    .generic_name  = TYPE_VMAPPLE_VIRTIO_BLK_PCI,
++    .instance_size = sizeof(VMAppleVirtIOBlkPCI),
++    .instance_init = vmapple_virtio_blk_pci_instance_init,
++    .class_init    = vmapple_virtio_blk_pci_class_init,
++};
++
++static void vmapple_virtio_blk_register_types(void)
++{
++    type_register_static(&vmapple_virtio_blk_info);
++    virtio_pci_types_register(&vmapple_virtio_blk_pci_info);
++}
++
++type_init(vmapple_virtio_blk_register_types)
+diff --git a/include/hw/pci/pci_ids.h b/include/hw/pci/pci_ids.h
+index f1a53fea8d6..33e2898be95 100644
+--- a/include/hw/pci/pci_ids.h
++++ b/include/hw/pci/pci_ids.h
+@@ -191,6 +191,7 @@
+ #define PCI_DEVICE_ID_APPLE_UNI_N_AGP    0x0020
+ #define PCI_DEVICE_ID_APPLE_U3_AGP       0x004b
+ #define PCI_DEVICE_ID_APPLE_UNI_N_GMAC   0x0021
++#define PCI_DEVICE_ID_APPLE_VIRTIO_BLK   0x1a00
+ 
+ #define PCI_VENDOR_ID_SUN                0x108e
+ #define PCI_DEVICE_ID_SUN_EBUS           0x1000
+diff --git a/include/hw/qdev-properties-system.h b/include/hw/qdev-properties-system.h
+index 7ec37f6316c..3631e309690 100644
+--- a/include/hw/qdev-properties-system.h
++++ b/include/hw/qdev-properties-system.h
+@@ -30,6 +30,7 @@ extern const PropertyInfo qdev_prop_pcie_link_speed;
+ extern const PropertyInfo qdev_prop_pcie_link_width;
+ extern const PropertyInfo qdev_prop_cpus390entitlement;
+ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
++extern const PropertyInfo qdev_prop_vmapple_virtio_blk_variant;
+ 
+ #define DEFINE_PROP_PCI_DEVFN(_n, _s, _f, _d)                   \
+     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_pci_devfn, int32_t)
+@@ -97,4 +98,8 @@ extern const PropertyInfo qdev_prop_iothread_vq_mapping_list;
+     DEFINE_PROP(_name, _state, _field, qdev_prop_iothread_vq_mapping_list, \
+                 IOThreadVirtQueueMappingList *)
+ 
++#define DEFINE_PROP_VMAPPLE_VIRTIO_BLK_VARIANT(_n, _s, _f, _d) \
++    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_vmapple_virtio_blk_variant, \
++                       VMAppleVirtioBlkVariant)
++
+ #endif
+diff --git a/include/hw/virtio/virtio-blk.h b/include/hw/virtio/virtio-blk.h
+index 5c14110c4b1..28d5046ea6c 100644
+--- a/include/hw/virtio/virtio-blk.h
++++ b/include/hw/virtio/virtio-blk.h
+@@ -24,7 +24,7 @@
+ #include "qapi/qapi-types-virtio.h"
+ 
+ #define TYPE_VIRTIO_BLK "virtio-blk-device"
+-OBJECT_DECLARE_SIMPLE_TYPE(VirtIOBlock, VIRTIO_BLK)
++OBJECT_DECLARE_TYPE(VirtIOBlock, VirtIOBlkClass, VIRTIO_BLK)
+ 
+ /* This is the last element of the write scatter-gather list */
+ struct virtio_blk_inhdr
+@@ -100,6 +100,16 @@ typedef struct MultiReqBuffer {
+     bool is_write;
+ } MultiReqBuffer;
+ 
++typedef struct VirtIOBlkClass {
++    /*< private >*/
++    VirtioDeviceClass parent;
++    /*< public >*/
++    bool (*handle_unknown_request)(VirtIOBlockReq *req, MultiReqBuffer *mrb,
++                                   uint32_t type);
++} VirtIOBlkClass;
++
+ void virtio_blk_handle_vq(VirtIOBlock *s, VirtQueue *vq);
++void virtio_blk_free_request(VirtIOBlockReq *req);
++void virtio_blk_req_complete(VirtIOBlockReq *req, unsigned char status);
+ 
+ #endif
+diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
+index 3bba59f5ec7..9c1ad1bd8c3 100644
+--- a/include/hw/vmapple/vmapple.h
++++ b/include/hw/vmapple/vmapple.h
+@@ -18,4 +18,6 @@
+ 
+ #define TYPE_VMAPPLE_CFG "vmapple-cfg"
+ 
++#define TYPE_VMAPPLE_VIRTIO_BLK_PCI "vmapple-virtio-blk-pci"
++
+ #endif /* HW_VMAPPLE_VMAPPLE_H */
+diff --git a/qapi/virtio.json b/qapi/virtio.json
+index 2529c2d8b20..d351d2166ef 100644
+--- a/qapi/virtio.json
++++ b/qapi/virtio.json
+@@ -992,3 +992,17 @@
+ ##
+ { 'enum': 'GranuleMode',
+   'data': [ '4k', '8k', '16k', '64k', 'host' ] }
++
++##
++# @VMAppleVirtioBlkVariant:
++#
++# @unspecified: The default, not a valid setting.
++#
++# @root: Block device holding the root volume
++#
++# @aux: Block device holding auxiliary data required for boot
++#
++# Since: 9.2
++##
++{ 'enum': 'VMAppleVirtioBlkVariant',
++  'data': [ 'unspecified', 'root', 'aux' ] }
+-- 
+2.39.5 (Apple Git-154)
 
 
