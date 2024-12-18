@@ -4,61 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31115E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:12:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164E2E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrx9-0006kK-BG; Wed, 18 Dec 2024 06:10:55 -0500
+	id 1tNrxz-0000pT-4o; Wed, 18 Dec 2024 06:11:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx7-0006eG-Kt
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxx-0000fc-95
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:45 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx5-0005pN-Vh
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxu-00060K-Gk
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520251;
+ s=mimecast20190719; t=1734520301;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YbcZHmjzHJRduhsQhH+ZO2ewFkMOoJ+O6L5jaHOvzeo=;
- b=dwDf//1zlpvbepqKrZlbATwe3c3RMdf4PNYiqLMPITH2EgqgQ9hIDzLRlE8JeqmH1wOPkA
- f8maAZjCJ2ugpmLLHN4wuNExbazV0OeF5/wVW9g/q/ihYAiJv535JK+h6qKzfgHaAnUHEI
- 0Q6pfFWbOZCVftoUHKIV+I2O7j3+wYw=
+ bh=RLvJpCwwLpnoPeYc8xU07cbaU7PHI2UhHEMNtb6DWps=;
+ b=NxYNwiuW8LS7e7PPCWYDkDCV3mPedzRXTnhh2Zt/2lwFU7PPOrOY+iDIPlZPyNtkpvyHfP
+ Zrulpf6aDdz6o18AY7vaS2Tg9ln5WlGok/jUez61CBe/X4Upjd8hmYITjRpyrSm95HtECW
+ EOIuanHO4/aioX4ci+S/C5XD8z9Z6/o=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-593-xIjN5b9QMHGmwJHH-Dfgng-1; Wed,
- 18 Dec 2024 06:10:49 -0500
-X-MC-Unique: xIjN5b9QMHGmwJHH-Dfgng-1
-X-Mimecast-MFC-AGG-ID: xIjN5b9QMHGmwJHH-Dfgng
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-532-nxCM_ZwVN2SSFlft-UIzZQ-1; Wed,
+ 18 Dec 2024 06:11:40 -0500
+X-MC-Unique: nxCM_ZwVN2SSFlft-UIzZQ-1
+X-Mimecast-MFC-AGG-ID: nxCM_ZwVN2SSFlft-UIzZQ
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C0D0F1956048
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:48 +0000 (UTC)
+ id A8E2F19560B2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:39 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3CFEF195605F; Wed, 18 Dec 2024 11:10:46 +0000 (UTC)
+ id 1BE4C19560AD; Wed, 18 Dec 2024 11:11:36 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 20/38] tests/functional: let cpio_extract accept filenames
-Date: Wed, 18 Dec 2024 12:09:40 +0100
-Message-ID: <20241218110958.226932-21-thuth@redhat.com>
+Subject: [PULL 38/38] meson.build: Disallow libnfs v6 to fix the broken macOS
+ build
+Date: Wed, 18 Dec 2024 12:09:58 +0100
+Message-ID: <20241218110958.226932-39-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -83,56 +84,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+The macOS builds in our CI (and possibly other very recent distros)
+are currently broken since the update to libnfs version 6 there.
+That version apparently comes with a big API breakage. v5.0.3 was
+the final release of the old API (see the libnfs commit here:
+https://github.com/sahlberg/libnfs/commit/4379837 ).
 
-Currently cpio_extract differs from tar_extract/zip_extract
-in that it only allows a file-like object as input. Adapt it
-to also support filenames.
+Disallow version 6.x for now to get the broken CI job working
+again. Once somebody had enough time to adapt our code in
+block/nfs.c, we can revert this change again.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-21-berrange@redhat.com>
+Message-ID: <20241218065157.209020-1-thuth@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/archive.py | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
-index a6fc97a557..bc448dee4a 100644
---- a/tests/functional/qemu_test/archive.py
-+++ b/tests/functional/qemu_test/archive.py
-@@ -8,7 +8,7 @@
- #  Thomas Huth <thuth@redhat.com>
+diff --git a/meson.build b/meson.build
+index 85f7485473..6149b50db2 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1145,7 +1145,7 @@ endif
  
- import os
--import subprocess
-+from subprocess import check_call, run, DEVNULL
- import tarfile
- import zipfile
- 
-@@ -25,12 +25,18 @@ def tar_extract(archive, dest_dir, member=None):
-         else:
-             tf.extractall(path=dest_dir)
- 
--def cpio_extract(cpio_handle, output_path):
-+def cpio_extract(archive, output_path):
-     cwd = os.getcwd()
-     os.chdir(output_path)
--    subprocess.run(['cpio', '-i'],
--                   input=cpio_handle.read(),
--                   stderr=subprocess.DEVNULL)
-+    # Not passing 'check=True' as cpio exits with non-zero
-+    # status if the archive contains any device nodes :-(
-+    if type(archive) == str:
-+        run(['cpio', '-i', '-F', archive],
-+            stdout=DEVNULL, stderr=DEVNULL)
-+    else:
-+        run(['cpio', '-i'],
-+            input=archive.read(),
-+            stdout=DEVNULL, stderr=DEVNULL)
-     os.chdir(cwd)
- 
- def zip_extract(archive, dest_dir, member=None):
+ libnfs = not_found
+ if not get_option('libnfs').auto() or have_block
+-  libnfs = dependency('libnfs', version: '>=1.9.3',
++  libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
+                       required: get_option('libnfs'),
+                       method: 'pkg-config')
+ endif
 -- 
 2.47.1
 
