@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 080C7E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B993C3DA4A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 22:40:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO2Yp-00031H-0C; Wed, 18 Dec 2024 17:30:31 -0500
+	id 1tO2bG-0005Yl-IV; Wed, 18 Dec 2024 17:33:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Yk-00030d-Oz
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:26 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1tO2a0-0003sv-QZ
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:46 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tO2Yi-0002Dh-Ow
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:30:26 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2156e078563so1505025ad.2
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:30:24 -0800 (PST)
+ id 1tO2Zy-0003Ky-K3
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 17:31:44 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-216426b0865so1797825ad.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 14:31:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734561023; x=1735165823; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734561101; x=1735165901; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pZX0TgFMJ8uN9pbvITB6VLJTDE458zw/ldNK20g8Glo=;
- b=RTMSdsGNhOf2l7NajdcWj+9fNzCJlr9rioX7D6NI3sj+fzVevV+e3NA3cQ/f5YFfWb
- inUEZ8JpAuEuGgzh52K25be7E8LcYuEg3SRIEWcGumySi42zcT+Z2ZLq4rdKgdodwb8D
- 6FxL9qoJ4VyyYhXpCyHVHIvQgPZA2Lo2vuNWC1j5KJNDppn8QFodOIQDKhcw63DBK2pf
- tgZPQdSsibCKA3pYVVk43IKAzeYq2UfgSrxNx79IqcQx7Fu0xZQSEmmAoKktDZh+K4Su
- PkspxHRbEaupm4CDKrDHJpjsbSq4ULdZ8sdX3kJ3/f/eZgWnzyRTR1k2rbU0q9q38nAs
- S3Yw==
+ bh=RCANHJZzdmh7o/b4Y2SxAZxP9CzPNdbu0e2gMuhfVd8=;
+ b=LyuC4/sVuRo8Tw+TbfpQbPV1JiHZ5iUu91Z26Nq8biZ49n2GJbaM0vHz04NkqAziC5
+ nLwgCgEHmINLMI0CyjBiF8b27Lzykvn7Negwn2oTVp9bBmkxNVYH83tW3b3E1sTtlexn
+ 9SbLNaJhy6EBNJPI0gMAV95ONtjtOT/OIDdI4Hl2V8AGqGmd2Df0O8Tbb/J2mgdXye6h
+ tGz+h+a9ITp8Tjw9ACxxsK/4oIIBjqolOFqrWI4ITOWuuQzGRnGaCaH1vBqAWp2z4ZwT
+ xEegundVfGRWsHqhtdLDNsPW7cd4wwc6/eBb2Qyki6VTZibkilP/C/GX+9lSM2l3rCWj
+ Egqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734561023; x=1735165823;
+ d=1e100.net; s=20230601; t=1734561101; x=1735165901;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pZX0TgFMJ8uN9pbvITB6VLJTDE458zw/ldNK20g8Glo=;
- b=k7WlPqS3ruJhahF1wnjGPrlw2CuZzoOaQXGEeuERDl718j+fWRorqcjmExAvCwhZNc
- Ha2pnJM/IBoEi1rN3maqo6oxxv6ZcecUC0uwhR0zRr0D92Si+o4cFyEeyju+xp9/8fGv
- QA6Yep8CuyL9mcNjcSKEfDWEOJQBT1TToOlgVv+HShFPfVFqrHg3notqVPjb8rXkuANJ
- U/j/Bz9N9KRpl0uSVezw0UcBd3Il86csZGH7QN0w9O8RIxrnyS2/i0arDWI4obZHZOBN
- B+6Ir+JeEBqvRlogeXjX/MxvXqwEP2nqKzxlNkoHH+yYyJ4P1Asm+jeQX7ekICI9UAd0
- PcTQ==
-X-Gm-Message-State: AOJu0YyVdvE04Jqs/NxKSJKr/lIooAMZf/DAQg4DepTui9vH37jRn5vu
- 39fWlJHyuAmBQEh4X5UJafUltAqs8FAKblR3wcomiQsw4eInnSRYy3pwhGRe
-X-Gm-Gg: ASbGnctt7G3wmRMZmupxK+fE0oVmt8crIhE2DvBhLRXT13VS4sR1UIZOnOSkaWERfIE
- FzgPQ9ddXeUqyzUZPIfMAcUSv/GlhGlbrV1bYSwl2S1E9X6JWkJKpmNd1HtTVBNuqIKb8/+CaVR
- qzN/+2HsH82T/w+Uwu4EaW0624zErGqdqPbuSwH97HRLMMALZrGvRlWjG5DuhG4AJV3aIeWxciP
- nM+i1ankNxQi36I98rX4KuLonBECUpvkGG1/hvlwcPtxvINmMiLyc+AVtcu5aoVCsjkeqCMD5xe
- /88p8RS3pAoMFICsTX97ZkX1YlozaNtey5oL7UqZMsfPqWiYaOSrAU7gejXpLaU=
-X-Google-Smtp-Source: AGHT+IHguVXEyGSuWB4Q51iAQ+wvlAlcSF6iEU7BK74W+Ig9W6bBS/QZbYzqxB50saaw92crBTug/g==
-X-Received: by 2002:a17:903:22c8:b0:215:9379:4650 with SMTP id
- d9443c01a7336-218d7269c85mr61004635ad.42.1734561022938; 
- Wed, 18 Dec 2024 14:30:22 -0800 (PST)
+ bh=RCANHJZzdmh7o/b4Y2SxAZxP9CzPNdbu0e2gMuhfVd8=;
+ b=ulJTd96ZDbeplXBAL19qZjBCFLDsp2Q5zAwmLtdXJ19/lsBOTp5R1L732W8xO+tB7N
+ RaU+ggvVRTayCchb1zOMbiBNPjEebnyI7SBFn3V1oEKYTBzPZxQTXNIV0PlDP98CyRWz
+ 1wvwA40bVKTigQd+Y2gKwRklA51igFnJ3g7x987UzGu6jLDRK2TMw5BdhhwwNt09NZ1X
+ vLJo+kXM5pnNPQuVQ5tkY0A6k5i4kSShQCEa4SlEt2PJH8AURoJIxmwFcGfeskA4k4Kf
+ R1YZzypjQ3Z8C2v6RPUnbb9WrH3WHAxCb61N9hOW+/tziVrTgQFM1k6zG25Ni9ups0AP
+ iyWw==
+X-Gm-Message-State: AOJu0YxfeYEtVS41l4UnG8cJdhmZsIKyYQjfYCePHWXQhci1Ym1tOFfr
+ g1febASpav0XWhe/1WU3Ha1a3JHWv0MdVNFLZuK21kDn/WyfXxPgsaNHJlLx
+X-Gm-Gg: ASbGncu0KLaJUFoHkBq9pIxvq4cJFIgpflPeZHoCQOUO5wZq22ObAosu7IuM33YAcxV
+ WacF9mdhf1cZOKefkRc6+aUgqZBVN9Yt71hBNBAMXNPuuZ2G8rOlnMZ/5pyXv5AvrOVFDDzQumS
+ mrbtv471YxIolHagV/O5IZpOHJwM7mlxXDRkriUhHvFt25zC3WXGEVuuRFmbj6lnvO46HoV557q
+ EOz8rMU1dGgXUneoLW0lSUOWiATo7NdhBBfX7WPnMWeSyiqZaZ84nn4U7EHUj9o9HAc5T68MX5f
+ ORBkBosu/TJP2viHU7aAzRTNN8ORX1TwkdDqbgO3QT/AMnIcM4bZxirenVF6HNA=
+X-Google-Smtp-Source: AGHT+IHCWGFlo7VI5J18KznEOphYSvukB2w/g9pyxwF3JBopV5RpW6eJHIm4aO7WSue9+WAC1Ie7yg==
+X-Received: by 2002:a17:903:22c5:b0:216:7ee9:2235 with SMTP id
+ d9443c01a7336-219d96ff2c0mr17973605ad.43.1734561100931; 
+ Wed, 18 Dec 2024 14:31:40 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.30.20
+ d9443c01a7336-219dc9705d7sm375775ad.102.2024.12.18.14.31.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 14:30:22 -0800 (PST)
+ Wed, 18 Dec 2024 14:31:40 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Yong-Xuan Wang <yongxuan.wang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 02/39] hw/intc/riscv_aplic: Fix APLIC in_clrip and clripnum
- write emulation
-Date: Thu, 19 Dec 2024 08:29:32 +1000
-Message-ID: <20241218223010.1931245-3-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PULL 28/39] hw/riscv: Add the checking if DTB overlaps to kernel or
+ initrd
+Date: Thu, 19 Dec 2024 08:29:58 +1000
+Message-ID: <20241218223010.1931245-29-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
 References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,54 +105,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-In the section "4.7 Precise effects on interrupt-pending bits"
-of the RISC-V AIA specification defines that:
+DTB is placed to the end of memory, so we will check if the start
+address of DTB overlaps to the address of kernel/initrd.
 
-"If the source mode is Level1 or Level0 and the interrupt domain
-is configured in MSI delivery mode (domaincfg.DM = 1):
-The pending bit is cleared whenever the rectified input value is
-low, when the interrupt is forwarded by MSI, or by a relevant
-write to an in_clrip register or to clripnum."
-
-Update the riscv_aplic_set_pending() to match the spec.
-
-Fixes: bf31cf06eb ("hw/intc/riscv_aplic: Fix setipnum_le write emulation for APLIC MSI-mode")
-Signed-off-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241029085349.30412-1-yongxuan.wang@sifive.com>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20241120153935.24706-4-jim.shu@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/intc/riscv_aplic.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/hw/riscv/boot.h |  3 +++
+ hw/riscv/boot.c         | 25 ++++++++++++++++++++++++-
+ 2 files changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 353eec8136..3edab64b97 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -248,9 +248,12 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index 06b51ed086..7d59b2e6c6 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -32,6 +32,9 @@ typedef struct RISCVBootInfo {
+     hwaddr image_low_addr;
+     hwaddr image_high_addr;
  
-     if ((sm == APLIC_SOURCECFG_SM_LEVEL_HIGH) ||
-         (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
--        if (!aplic->msimode || (aplic->msimode && !pending)) {
-+        if (!aplic->msimode) {
-             return;
-         }
-+        if (aplic->msimode && !pending) {
-+            goto noskip_write_pending;
-+        }
-         if ((aplic->state[irq] & APLIC_ISTATE_INPUT) &&
-             (sm == APLIC_SOURCECFG_SM_LEVEL_LOW)) {
-             return;
-@@ -261,6 +264,7 @@ static void riscv_aplic_set_pending(RISCVAPLICState *aplic,
++    hwaddr initrd_start;
++    ssize_t initrd_size;
++
+     bool is_32bit;
+ } RISCVBootInfo;
+ 
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 81d27f935e..bc8074fec8 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -70,6 +70,7 @@ char *riscv_plic_hart_config_string(int hart_count)
+ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *harts)
+ {
+     info->kernel_size = 0;
++    info->initrd_size = 0;
+     info->is_32bit = riscv_is_32bit(harts);
+ }
+ 
+@@ -213,6 +214,9 @@ static void riscv_load_initrd(MachineState *machine, RISCVBootInfo *info)
          }
      }
  
-+noskip_write_pending:
-     riscv_aplic_set_pending_raw(aplic, irq, pending);
++    info->initrd_start = start;
++    info->initrd_size = size;
++
+     /* Some RISC-V machines (e.g. opentitan) don't have a fdt. */
+     if (fdt) {
+         end = start + size;
+@@ -309,6 +313,7 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+     int ret = fdt_pack(ms->fdt);
+     hwaddr dram_end, temp;
+     int fdtsize;
++    uint64_t dtb_start, dtb_start_limit;
+ 
+     /* Should only fail if we've built a corrupted tree */
+     g_assert(ret == 0);
+@@ -319,6 +324,17 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+         exit(1);
+     }
+ 
++    if (info->initrd_size) {
++        /* If initrd is successfully loaded, place DTB after it. */
++        dtb_start_limit = info->initrd_start + info->initrd_size;
++    } else if (info->kernel_size) {
++        /* If only kernel is successfully loaded, place DTB after it. */
++        dtb_start_limit = info->image_high_addr;
++    } else {
++        /* Otherwise, do not check DTB overlapping */
++        dtb_start_limit = 0;
++    }
++
+     /*
+      * A dram_size == 0, usually from a MemMapEntry[].size element,
+      * means that the DRAM block goes all the way to ms->ram_size.
+@@ -338,7 +354,14 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+         temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
+     }
+ 
+-    return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
++    dtb_start = QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
++
++    if (dtb_start_limit && (dtb_start < dtb_start_limit)) {
++        error_report("No enough memory to place DTB after kernel/initrd");
++        exit(1);
++    }
++
++    return dtb_start;
  }
  
+ /*
 -- 
 2.47.1
 
