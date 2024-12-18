@@ -4,99 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25F1EE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:28:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3B0E7718A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:28:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwsA-0001rz-8k; Wed, 18 Dec 2024 11:26:06 -0500
+	id 1tNwoZ-0000Jc-QS; Wed, 18 Dec 2024 11:22:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNws6-0001fp-92
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNws4-0007nl-9S
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:02 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734539159;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=r5JJSS4cJSqnn/MEVRTYbUDJnDkKD81QZB2/Z2Hzk+o=;
- b=MZ4QBij+aCFEWx35iXWOmsgDlXQtKa64QbEfQnNfY9kXVjKJ560POg/Rk5hCPZWCtZYmDh
- +kO2kp6Di5Td6zgUWuGmCv4Izriv+LADxWMFEjMvLI1s0prvOCVJ+TFUgfwbAbb1YEN8wF
- sH++F7UamxN4/R42483p6yMkrhR/Z/E=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-O3j9_z3rP-6gpyActIg-aA-1; Wed, 18 Dec 2024 11:25:54 -0500
-X-MC-Unique: O3j9_z3rP-6gpyActIg-aA-1
-X-Mimecast-MFC-AGG-ID: O3j9_z3rP-6gpyActIg-aA
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7b6e1b0373bso879241385a.2
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:25:54 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNwnm-0007Xp-EF
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:35 -0500
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNwnT-0006oM-F0
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:34 -0500
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-aa69107179cso1227097166b.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734538873; x=1735143673; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4gnnOboOf/0hyHRkIZm1r+Edttpq+V6vfS59OPkMcZA=;
+ b=vvpou3K4VhRyzD5QjXDQAMj/2cEJ+hh+KaQv1u4vTwOrxW/fK0eFomk8U+CAaaNbKg
+ OGuMbvuVhw/s1Bn8szivjndDgFkHHsgK1cfxE9JrH4TJdmw8DKGTiwvDuIpICUc6JfBT
+ j2vr6PtB9WZR3PhxNtT2qpdaur7ouPQS84xUFALB9t9t5tAZjs91A2HA/7FM2QJegiJy
+ dO7nW9UZgZf+FROhWwnktN7JEcHEC+3IMbMW1iHHc6h8vpOKBJSe8Nwuh4vBxxjUBUH2
+ R17va4Gzl9na8SYHtGrn7NGrj71bziks8k2HRbQHvUFRLyxwpk2kgyuQflS2+GdejXTF
+ A/FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734539154; x=1735143954;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r5JJSS4cJSqnn/MEVRTYbUDJnDkKD81QZB2/Z2Hzk+o=;
- b=Gq3opiTP9iKCr8qpR1KJvYp2karyGFAWdWYidXg5unO0vjik3mfbJ+RxrwK9Ows5cy
- I3D2Ro1BfYwmFflKGs3nn3Q5oJSJSSTnxDzxM5hMbyk5hunzddHb3RkntbAC0ij8S6zU
- Bu7uDBBPKL2VtVrjZnkp1eSsazAcfOOUXiBIfLy5oIPRbn4dk7o3RrotPRIaIoAWnPto
- WqOknjKruoX3v+ZeDmJ+MTpDa08TvoX8P2rVl51TLnENqITQt532zO2CLgo/lOQWMfFT
- 5TCTIsf4MgikcbgYumRPhrwc9LGFdEI8XGYpsRZxSe4wPd+3+smsx/4CbQk4ZmX5NZ2A
- 4Rmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVOgBszgQPBHG5mIz5tbJHMZ6iNLjASGzL1e6MUpQ7fuc0XCH4ZQ8w86iwsHJMviuIZu2T1gnc0akg+@nongnu.org
-X-Gm-Message-State: AOJu0Yy4YeFEz+O1oba+ao0jcOVCelMit3Lp7VYynNtzs+0GDBZRchpi
- hpnr1zEZVBrQjA8cNbsn4JziMlKdApzhqjYydMAPq0HyjVxu3l6aZOtEiu/FJcDJ6GPTC79mTYh
- yZjnCR9DuMopkoOKOtgejfjBND4ijVUXeLCXUExO/Vz5aM1s/GT/Z
-X-Gm-Gg: ASbGncsaEU9hBybFJI0io1XjNMbp4fw6p6yPWmjDdQDgA3f9zsg/8ydSFvy7AQj4P0t
- 34jc2E4gj5AQAKu4CQjNmtlCBZLqWswyrni5lUE2XHL8cpZAxkTbyv8C+SFCAL8RvJrpneinAzz
- 8/ZOqkn9yPFTGCJEgqoI3sd0ZGITP6aPMMOBAWNWxOoErC8n4RSb893hf2OdeKIfcLaZUfR40nR
- 6c0Ob7m8Z4CmHwtuDRvXm8/a73Eq1U2OeLA3sL2SwZEEUNTuffYVyszED4KxA8y2kl+IXIfzbB7
- SrETcv+V1ZqH
-X-Received: by 2002:a05:620a:45aa:b0:7b6:e47a:8e13 with SMTP id
- af79cd13be357-7b86375d0e9mr472999985a.31.1734539154464; 
- Wed, 18 Dec 2024 08:25:54 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFzmT4OrNRh3Wnx8sNZKszd6I2fb7aWAYKqTnxX48gPmyTiJCL5s6OKy0liV7BU7iUfLulpRg==
-X-Received: by 2002:a05:620a:45aa:b0:7b6:e47a:8e13 with SMTP id
- af79cd13be357-7b86375d0e9mr472994585a.31.1734539154160; 
- Wed, 18 Dec 2024 08:25:54 -0800 (PST)
-Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
- [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7b7047cd507sm443078285a.31.2024.12.18.08.25.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 08:25:53 -0800 (PST)
-Message-ID: <49df9668-5345-402e-bb0b-6a7e787c6da6@redhat.com>
-Date: Wed, 18 Dec 2024 17:25:39 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 19/27] tests/functional: remove hacky sleep from the
- tests
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ d=1e100.net; s=20230601; t=1734538873; x=1735143673;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=4gnnOboOf/0hyHRkIZm1r+Edttpq+V6vfS59OPkMcZA=;
+ b=WVyX28HedzdOuDJIMASPrsJEM6cXka1DkB47YYS612l597tKx/spDPTGnicXg0ugRn
+ k207Oa0aF/1jZrY5aIivUDIlpkCxUkKvu050Vl4v7nJjvwGgewkyC8d36LVgOAsqISjm
+ dpz9U8IPxVOOJZhtKvM8VyBcj4A/OiXiAhzj5IbJpSbzixy4mfWv0FiXsCkHdd90Vuor
+ +JtMt5tkr/BrNuPqT4HA4ei7PNCLWo4ZP4FiBYDgju3FTryn3VJZOe1oM4O5WwMf+MF4
+ 1buYrV96IIwy7srYKu+eCTeY6yjY9VPW3p29XI90q50gCFbo1+oS6eKM9NKsULGfzbbc
+ vGPg==
+X-Gm-Message-State: AOJu0YxXm6mtAip0GUJHSqT49fUhIV0R5sJuh/UdW1Btw8PhSB01jqzO
+ bfeHJAYiq78ZKvYVNqsgb3wnzwJmNMK4K2qjAF4Vvpc8Xp8IwjyOtX2eEG/XIk8=
+X-Gm-Gg: ASbGncsq8bL/2M38HdgzYEa7NM/vy+/BC76xHXJ8p30ZiBsEc0w6T6LC8wWKRysKOe4
+ nqd9bRLO66E6/0FCRwJQLRzS6I3s/Y8lUSAiw9DAfygSNpNMBCFj8Xd8057NjEUy9YJ+WbwK1lr
+ Rannh3pVRFRwidZEHBhpoCOSQag39VAIrOZ4WhtpOO/gzBOR5XrttgU58yJ46mRzD20SWcAPSKQ
+ I68ztSCIfpChxJaDZHkdpfMkwRc3sucFWZ8JjiR1DJqOzciAPZz4Qc=
+X-Google-Smtp-Source: AGHT+IFPSUncdulZfb9Z4PSXS4rfpeYKO+kazxM5vbYvuaPDBrEqxQq5ZzL3ZI95Eif6zaAuQbAVKg==
+X-Received: by 2002:a17:906:3190:b0:aa6:a844:8791 with SMTP id
+ a640c23a62f3a-aabf48b9baamr272133566b.45.1734538872992; 
+ Wed, 18 Dec 2024 08:21:12 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab96359dc5sm574984266b.128.2024.12.18.08.21.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 08:21:10 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id F28925FD18;
+ Wed, 18 Dec 2024 16:21:04 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Li-Wen Hsu <lwhsu@freebsd.org>,
+ Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
  Radoslaw Biernacki <rad@semihalf.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
  Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
  Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
  Leif Lindholm <quic_llindhol@quicinc.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
- John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ John Snow <jsnow@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
@@ -108,68 +95,30 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
  Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
+ Bernhard Beschow <shentey@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
+ Laurent Vivier <lvivier@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anders Roxell <anders.roxell@linaro.org>
+Subject: [PATCH v2 09/27] tests/functional: update the ppc64 tuxrun tests
+Date: Wed, 18 Dec 2024 16:20:45 +0000
+Message-Id: <20241218162104.3493551-10-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
 References: <20241218162104.3493551-1-alex.bennee@linaro.org>
- <20241218162104.3493551-20-alex.bennee@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20241218162104.3493551-20-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,14 +134,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/2024 17.20, Alex Bennée wrote:
-> We have proper detection of prompts now so we don't need to guess with
-> sleep() sprinkled through the test. The extra step of calling halt is
-> just to flush the final bits of the log (although the last line is
-> still missed).
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Now there are new up to date images available we should update to them.
 
+Cc: Anders Roxell <anders.roxell@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241121165806.476008-30-alex.bennee@linaro.org>
+---
+ tests/functional/test_ppc64_tuxrun.py | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/tests/functional/test_ppc64_tuxrun.py b/tests/functional/test_ppc64_tuxrun.py
+index 03b47e07f2..aee67f5e90 100755
+--- a/tests/functional/test_ppc64_tuxrun.py
++++ b/tests/functional/test_ppc64_tuxrun.py
+@@ -82,11 +82,11 @@ def ppc64_common_tuxrun(self, kernel_asset, rootfs_asset, prefix):
+                                drive="scsi-hd")
+ 
+     ASSET_PPC64_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64/vmlinux',
+-        'f22a9b9e924174a4c199f4c7e5d91a2339fcfe51c6eafd0907dc3e09b64ab728')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64/vmlinux',
++        '8219d5cb26e7654ad7826fe8aee6290f7c01eef44f2cd6d26c15fe8f99e1c17c')
+     ASSET_PPC64_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64/rootfs.ext4.zst',
+-        '1d953e81a4379e537fc8e41e05a0a59d9b453eef97aa03d47866c6c45b00bdff')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64/rootfs.ext4.zst',
++        'b68e12314303c5dd0fef37ae98021299a206085ae591893e73557af99a02d373')
+ 
+     def test_ppc64(self):
+         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64_KERNEL,
+@@ -94,11 +94,11 @@ def test_ppc64(self):
+                                  prefix='tuxrun_ppc64_')
+ 
+     ASSET_PPC64LE_KERNEL = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64le/vmlinux',
+-        '979eb61b445a010fb13e2b927126991f8ceef9c590fa2be0996c00e293e80cf2')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/vmlinux',
++        '21aea1fbc18bf6fa7d8ca4ea48d4940b2c8363c077acd564eb47d769b7495279')
+     ASSET_PPC64LE_ROOTFS = Asset(
+-        'https://storage.tuxboot.com/20230331/ppc64le/rootfs.ext4.zst',
+-        'b442678c93fb8abe1f7d3bfa20556488de6b475c22c8fed363f42cf81a0a3906')
++        'https://storage.tuxboot.com/buildroot/20241119/ppc64le/rootfs.ext4.zst',
++        '67d36a3f9597b738e8b7359bdf04500f4d9bb82fc35eaa65aa439d888b2392f4')
+ 
+     def test_ppc64le(self):
+         self.ppc64_common_tuxrun(kernel_asset=self.ASSET_PPC64LE_KERNEL,
+-- 
+2.39.5
 
 
