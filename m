@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C65E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49068E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwnU-0007Rb-Et; Wed, 18 Dec 2024 11:21:16 -0500
+	id 1tNwnU-0007S4-Pi; Wed, 18 Dec 2024 11:21:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnQ-0007OK-Td
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:12 -0500
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1tNwnS-0007Q7-LD
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:14 -0500
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnM-0006c1-Hy
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:12 -0500
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-aa6c0d1833eso1195765766b.1
+ id 1tNwnN-0006cg-Ji
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:14 -0500
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3f57582a2so1708514a12.1
  for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734538866; x=1735143666; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=IrrQjMVbhR9RdwYEWLL4oHpMcpoquerc/UfDV6TyNf5L2XAPS8ZjbHuROd6wV2Yz1K
- IHulQGx3NuiE+TR+6s8KM8yuemAxgrHkpgxSWIb6YYvCL7tRMigxWoxos4d3sUXKvINy
- 1dqq1SCFfgR/WC6gsQMXdVZZo6BFQjxPdo+EkqU8m6/vRd9yEEtNWhDjCpz5xQtvqPpn
- Ga/HL/4fk3D5ur4YyBUQNteIPe1lJzTZyj2oUYN2OvuavD0wZ/oP9xt4X0pDZTnZNANb
- PK6ouf1jgRyF+guqSFp3krxqWKkB5g/2hc4DVytr2naKOucuKsd3M+dN0F+naP69F4eo
- bKmw==
+ d=linaro.org; s=google; t=1734538868; x=1735143668; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mFxtokJTmV9YXqorDmZaKi+Dd7+RY6QHS5xgjxfqOhY=;
+ b=hy3B+jOGyPio1YofV1MqDlImRojtiWrqBLFqFbBhZNWi64KOjzz8w/79146dvoC2Om
+ okb0FqJpQ0J6yULt7AHw1UhrDtGKTt8QxeQsAuAjSAF/PLssp2tqSjTTUK2yoUtiCkUg
+ FIjTuGg2WyS0851GBNwLBOkzipETP8IdPmQU0/9pbJLmuFkgDDmct03bwZVkO9kw2++x
+ hwIr4zsXOjsLVMewhu/0+YSrcB7oMvgZLoMuQL6NEacaKRu94TMgD0zqbj1bRYhq4Iw3
+ EW2BlHN2jNMYzmCA/GS83vzhgywWWdVKP1cjfps7Ycqbffzn2YnE7hgWNpQ0kE/RdefM
+ NdCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734538866; x=1735143666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=i/SJr+0xAZP15vcEaFWAWnIHAp8JE9E44SGnC3D++lo=;
- b=b0TV5x+zeT/6OwuwoZwhnwAuiXdVVUgl/kZKFLi/k/CMasA2/kObRayljydiz0cnkV
- q8RO3q9JRczKe+YLREIWqFySZiqpQagnLz8HIMSLU7AGnqNl26fXvNRbJNHy1kDropLR
- RjRPMBJFUuUKezo9w9nqJ6wGHE7GsQFMOdtDG/CgaOidHkO1MN9xT4Q5ZYqCF6IsWujn
- InaCR1R/+IWy1EgY6A58IpNhyhsbFd2YVp6DJeU3pMHe9kqibBzA8kEn6G+fULQFltjx
- 9rUANURTdvWKcZ+JNpR9jfKT1Ni19ep7h20qIIva2V2yM5Tp3wr5HYXU0qLnAMrkglYA
- z4gw==
-X-Gm-Message-State: AOJu0YzCpqMoKwsRtC8BQDZvOIpfe3vq5MlY74F6fTxbpXY658rywKYr
- Y29twfEqmtbAfDRRbcl81vZpMAZze1A+6tK0Qj1mLtF55ldg9rJwgnD5Z+rKxZA=
-X-Gm-Gg: ASbGncsjZqY0iuRzl1Gsa19CW4s7XfnfQKqAZZQeXP0//YimFzStltJaiGaYXNaMdve
- paaF/4CHXOFq/5DPiLuGHWgEhgB1IUcfdi4EVvA0W8fef21Dg9mB3IjgS30U/z79BKA9j7G/wiT
- qxlBlBnW3cs2WSWGYdA6fzrMjTRVJ8e4L9SMM65vN1sRztX9Dhe9jIUeR4Ob3SyHcagfQjL9fBY
- cieLlKeu334NxJ4zcX484ABpGgs/likYroJ0Dug9VqKYEsEjyzGz7o=
-X-Google-Smtp-Source: AGHT+IFthPzbx6DY1sb7DlSTaktUVG3pixyKVA6o1865T4/8OhNarRdwyKxeCGIcknXole4IQIqUjA==
-X-Received: by 2002:a17:906:c104:b0:aab:dfef:8136 with SMTP id
- a640c23a62f3a-aabf475c2e7mr274489866b.24.1734538866182; 
- Wed, 18 Dec 2024 08:21:06 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734538868; x=1735143668;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mFxtokJTmV9YXqorDmZaKi+Dd7+RY6QHS5xgjxfqOhY=;
+ b=Ug16YvpuWdNTZcjnNSczMV7gHtLU0tXh23XxXvhSZSBBotbq0ytGMzLzHdK9bTTSSY
+ ooSDs7YS3lfjklalEKSx6ljoyz9sTc9rdrXae+SDmy4jeQoue6BWTRgFEPxe7jTT4gBo
+ 1dZxp/XLv8JifbsMgSNt22Yioxf258cm2t49wiqdz4XgFCwJmObUlws1Uow1Z3Y+COni
+ G/lKUTKTgH6OpmvUiliryvWb2LkkcdNE1RGSMOQZcnd4G5sEoc9dcWU3+uCyL1kWn4Lu
+ 4jqf2WQKy0LBvig0PaqSSGJiCvnUff4CLmXsl7G7WtD/2aPKAyfCaIKxWJ3O4bfoLrL2
+ Q9+g==
+X-Gm-Message-State: AOJu0YwhTV/awpzAmv2niti2tjxi/5RTihc1q7pCp7VCeuKqohAAk7yF
+ MAEW6LF4Mw1uNIT1/9sTsYQzut4yzgGMPg5hfIXIYKhoRgx8cSO0PtFAAbwD1+8=
+X-Gm-Gg: ASbGncuDXOOHIjVlxQHW2w0wRPxvy4MTPZJWtyc5mnI+m1/H8C6EKTy/OtQbNAoF5GQ
+ 8cYfKk5NAZ1JRNF8R+ST+Rx++QQ8rdAW4dL/VHzdS4nUaWfqa6J1HldRJY9NvrMv4VPMGzkL86C
+ uEg6oUKmVM5NaOBJONSF0Vs8HrnSAv2ztY1KmoRuBpD48ro2dnjSVX6BRTgCmo+yN2cyuv0qjOC
+ dYMJ5BeXMhdO8dUvuztwBA0TUnZE9/pMk3uby7w3dpwHbXfpp36ARw=
+X-Google-Smtp-Source: AGHT+IFHHAiIAM08YhllwgVvz8heQR42+SUHwU0RAyc43uh3+LVzo3vOMxKuxRHTzUL6E7xjdwulZw==
+X-Received: by 2002:a17:906:794c:b0:a9a:e0b8:5bac with SMTP id
+ a640c23a62f3a-aabdcba2655mr548405766b.23.1734538867631; 
+ Wed, 18 Dec 2024 08:21:07 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aab96359c8dsm573844466b.130.2024.12.18.08.21.04
+ a640c23a62f3a-aab96359831sm569381466b.95.2024.12.18.08.21.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Wed, 18 Dec 2024 08:21:05 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 492A25FB2E;
+ by draig.lan (Postfix) with ESMTP id 18E245F796;
  Wed, 18 Dec 2024 16:21:04 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -99,19 +98,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
  Laurent Vivier <lvivier@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v2 02/27] tests/functional: update the i386 tuxrun tests
-Date: Wed, 18 Dec 2024 16:20:38 +0000
-Message-Id: <20241218162104.3493551-3-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 00/27] testing/next: functional tests, qtest clocks,
+ vm and keymaps
+Date: Wed, 18 Dec 2024 16:20:36 +0000
+Message-Id: <20241218162104.3493551-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
-References: <20241218162104.3493551-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -134,37 +131,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+There are number of parts to this series.
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-23-alex.bennee@linaro.org>
----
- tests/functional/test_i386_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+The first is the updated images for all the guests that didn't make it
+into 9.2. There are also some new functional tests for virtio-gpu
+along with some other clean-ups.
 
-diff --git a/tests/functional/test_i386_tuxrun.py b/tests/functional/test_i386_tuxrun.py
-index c593ffbe8c..f3ccf11ae8 100755
---- a/tests/functional/test_i386_tuxrun.py
-+++ b/tests/functional/test_i386_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunI386Test(TuxRunBaselineTest):
- 
-     ASSET_I386_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/i386/bzImage',
--        'a3e5b32a354729e65910f5a1ffcda7c14a6c12a55e8213fb86e277f1b76ed956')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/bzImage',
-+        '47fb44e38e34101eb0f71a2a01742b959d40ed5fd67cefb5608a39be11d3b74e')
-     ASSET_I386_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/i386/rootfs.ext4.zst',
--        'f15e66b2bf673a210ec2a4b2e744a80530b36289e04f5388aab812b97f69754a')
-+        'https://storage.tuxboot.com/buildroot/20241119/i386/rootfs.ext4.zst',
-+        'a1a3b3b4c9dccd6475b58db95c107b468b736b700f6620985a8ed050a73d51c8')
- 
-     def test_i386(self):
-         self.set_machine('q35')
+The qtest patches focus on ensuring things calling clock_step and
+clock_set actually pay attention to return values. Currently only the
+virtio tests needed a little re-jigging although arguably the timeout
+loops aren't needed at all.
+
+We bump libvirt-ci so we can move the riscv64 cross container to
+testing/trixie which will hopefully make the image less prone to sid
+breakages.
+
+Finally we make a few tweaks to tests/vm which were helpful when
+chasing the keymap issue. I still think there is a race condition in
+there somewhere as I can't reliably build the FreeBSD VMs from
+scratch.
+
+The pc-bios dependency fixup I think addresses the failure but I'm a
+little unsure about the meason stuff.
+
+For v2
+  - add test/vm and lcitool updates
+  - don't move clock_step, remove them for virtio tests
+
+I was planning on on making this a pre-PR but as I'm off for Christmas
+this may as well percolate on the list for now. If any of the other
+testing maintainers want to cherry-pick stuff into their PRs then be
+my guest.
+
+The following still need review:
+
+  pc-bios: ensure keymaps dependencies set vnc tests
+  tests/vm: allow interactive login as root
+  tests/vm: partially un-tabify help output
+  tests/vm: fix build_path based path
+  tests/docker: move riscv64 cross container from sid to trixie
+  tests/lcitool: bump to latest version of libvirt-ci
+  tests/functional: extend test_aarch64_virt with vulkan test
+  tests/functional: remove hacky sleep from the tests
+  system/qtest: properly feedback results of clock_[step|set]
+  tests/qtest: remove clock_steps from virtio tests
+  util/qemu-timer: fix indentation
+
+Alex.
+
+Alex Bennée (25):
+  tests/functional: update the arm tuxrun tests
+  tests/functional: update the i386 tuxrun tests
+  tests/functional: add a m68k tuxrun tests
+  tests/functional: update the mips32 tuxrun tests
+  tests/functional: update the mips32el tuxrun tests
+  tests/functional: update the mips64 tuxrun tests
+  tests/functional: update the mips64el tuxrun tests
+  tests/functional: update the ppc32 tuxrun tests
+  tests/functional: update the ppc64 tuxrun tests
+  tests/functional: update the riscv32 tuxrun tests
+  tests/functional: update the riscv64 tuxrun tests
+  tests/functional: update the s390x tuxrun tests
+  tests/functional: update the sparc64 tuxrun tests
+  tests/functional: update the x86_64 tuxrun tests
+  util/qemu-timer: fix indentation
+  tests/qtest: remove clock_steps from virtio tests
+  system/qtest: properly feedback results of clock_[step|set]
+  tests/functional: remove hacky sleep from the tests
+  tests/functional: extend test_aarch64_virt with vulkan test
+  tests/lcitool: bump to latest version of libvirt-ci
+  tests/docker: move riscv64 cross container from sid to trixie
+  tests/vm: fix build_path based path
+  tests/vm: partially un-tabify help output
+  tests/vm: allow interactive login as root
+  pc-bios: ensure keymaps dependencies set vnc tests
+
+Daniel P. Berrangé (1):
+  tests/lcitool: remove temp workaround for debian mips64el
+
+Pierrick Bouvier (1):
+  tests/functional/aarch64: add tests for FEAT_RME
+
+ MAINTAINERS                                   |   1 +
+ system/qtest.c                                |  23 ++--
+ tests/qtest/libqos/virtio.c                   |   4 -
+ util/qemu-timer.c                             |   2 +-
+ .gitlab-ci.d/cirrus/freebsd-14.vars           |   2 +-
+ pc-bios/keymaps/meson.build                   |  17 ++-
+ .../dockerfiles/debian-mips64el-cross.docker  |   9 ++
+ .../dockerfiles/debian-riscv64-cross.docker   |   4 +-
+ tests/functional/meson.build                  |   5 +
+ tests/functional/test_aarch64_rme_sbsaref.py  |  70 +++++++++++
+ tests/functional/test_aarch64_rme_virt.py     | 100 ++++++++++++++++
+ tests/functional/test_aarch64_virt.py         | 113 +++++++++++++++---
+ tests/functional/test_arm_tuxrun.py           |  28 ++---
+ tests/functional/test_i386_tuxrun.py          |   8 +-
+ tests/functional/test_m68k_tuxrun.py          |  34 ++++++
+ tests/functional/test_mips64_tuxrun.py        |   8 +-
+ tests/functional/test_mips64el_tuxrun.py      |   8 +-
+ tests/functional/test_mips_tuxrun.py          |   8 +-
+ tests/functional/test_mipsel_tuxrun.py        |   8 +-
+ tests/functional/test_ppc64_tuxrun.py         |  16 +--
+ tests/functional/test_ppc_tuxrun.py           |   8 +-
+ tests/functional/test_riscv32_tuxrun.py       |   8 +-
+ tests/functional/test_riscv64_tuxrun.py       |  16 +--
+ tests/functional/test_s390x_tuxrun.py         |   8 +-
+ tests/functional/test_sparc64_tuxrun.py       |   8 +-
+ tests/functional/test_x86_64_tuxrun.py        |   8 +-
+ tests/lcitool/libvirt-ci                      |   2 +-
+ tests/lcitool/mappings.yml                    |  29 -----
+ tests/lcitool/refresh                         |   4 +-
+ tests/qtest/meson.build                       |   2 +-
+ tests/vm/Makefile.include                     |  29 ++---
+ tests/vm/basevm.py                            |  12 +-
+ tests/vm/generated/freebsd.json               |   2 +-
+ 33 files changed, 441 insertions(+), 163 deletions(-)
+ create mode 100755 tests/functional/test_aarch64_rme_sbsaref.py
+ create mode 100755 tests/functional/test_aarch64_rme_virt.py
+ create mode 100644 tests/functional/test_m68k_tuxrun.py
+
 -- 
 2.39.5
 
