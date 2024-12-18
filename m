@@ -4,120 +4,212 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57667E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7B9E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:36:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwxp-0000zp-2h; Wed, 18 Dec 2024 11:31:57 -0500
+	id 1tNx0V-0002FJ-M0; Wed, 18 Dec 2024 11:34:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNwxl-0000z1-8S
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:31:54 -0500
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNwxi-0002Sq-86
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:31:52 -0500
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-728d1a2f180so865569b3a.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:31:49 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tNx0S-0002Db-GO
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:34:41 -0500
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1tNx0K-0002gj-5m
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:34:40 -0500
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIFtrbb010466;
+ Wed, 18 Dec 2024 16:34:26 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2023-11-20; bh=T2KrkAp/6tCeUG8Evel9wTF0UELjsBArOvguBKG6lMI=; b=
+ l87j9B99ZqwYj+ittZ1fmQmdHshYF2wrtQmjqh7aVNNZytoTqwV8QiWf0f9RBlie
+ Twa4MMGDmarUsD0XSBCYs3L3DJiorET0703Cdo3oOfYFRUnwjQiKtjWIs3OC2Age
+ 9Qk//LhdMAs878JnAq6EtZ6yUcgOoeWTA16H7q/aa3BjdLmspdsNJJ+jsIxoQbNA
+ 660ShTdSOqcHRLH0zj27ADLSxRgBqQHwGdQYlGYevK1erSSy4gpw+0PRqtNTHWtw
+ NT7UAal2vh2qWOfx3DkoHD7I7eW6BlgGLKuTmIROVmeJcM9zxOz0JBeS2p6B9JJ9
+ eimN3YYrWBiLPO9xi9rCuQ==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43h2jt96aj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Dec 2024 16:34:25 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 4BIFogBr006433; Wed, 18 Dec 2024 16:34:24 GMT
+Received: from nam12-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam12lp2168.outbound.protection.outlook.com [104.47.55.168])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 43h0faxfue-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Dec 2024 16:34:24 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=nTCqLmtrG7kv1vbYA55+2HndxYjItxMNTI7ZV+b+/e/MlRvHoW1Q/Ea3aXqmVlvhvRDyl7taovv5cV1Q9pRBNzOaIL52OC4RTzt9UGNcqUXfFppF/GQ3KIFwxq9/UTSkK1bi5OtxMth3lW3GEz6O2Kedcuo/jCTbTBob1BjCT4cM4XnjAYxsMtKzvDhhdkwU/SAR4EK1tTksnwG2YOwQmSdREEBqWnL1T02FcoAySllMnfUIMIV0bShby0ZKj80SWNN2OFZUNqdvG/rjKeb4IKpvBmpu0iCyDS9yR0yDVSbQcE5OdSKXbGFf5assuTDCdL9oJgo5hxn0SnsD4O/5/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=T2KrkAp/6tCeUG8Evel9wTF0UELjsBArOvguBKG6lMI=;
+ b=ANlnBCLczM295eKF1WrdJvWrNg/jqhsxbx3CBwFV0lByV6gU5si7guVj0lSaiwViEORT++yUM8dS+FiDHehvEAG8524+i3K7S2YFfolySZb1ef2f78+19fuGP85gngjUc9tCOINO3cpz/WrNYvzUzwavJNEqjF795cY9LwL5bZD6Y02LjEqlGfxOMblozrS33TQCN799R0RbmMkaPFPHqVK7uBCTXAaclwQStu7Crab7UkhsrnyvHuybx1qu52cIx+UT4WNGv/zeoKKda0ye/FTzSKSk1dgYEMwibMt6WzJvPFAxfAgTzJfRMtbcnsWGRvqlQWIsZl6jbmLf1me8aQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734539508; x=1735144308; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=y76Ph/FY9XdkuGXlRedma+10fPfJYL25g8Vh9evw1/A=;
- b=EKufF4cgAKcYzgnJUlZUo/0HW5+wo04qppPLJD9ardMrC2uDp80QZSBQJWAlk0QnUY
- jPOFv6d8Cwxg8NUmKyiSxgrMMbQSOVAD7JbVmovo9yil0wd9EzEeHiIxliMed2Hb2Gsm
- fYDtYQbNYErjJNdGOxo6dYIjfrm+Qq2lst5biYveJLMYaFXW725aruTZGbhD78NUmNXr
- VTmB2pyKgZ4g9jhOpS7zoMyUjONMgYBEFSuW9A/vxEvQ4Bia1GRsBKQJQM2PxNcKWzYB
- XdszCHWhnCVMuKGkXnN/E2H7yaAaVc+JfX7B0/Z5TGDHSuj6Vt4TucWAMEkx3jxj6WFN
- S31A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734539508; x=1735144308;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=y76Ph/FY9XdkuGXlRedma+10fPfJYL25g8Vh9evw1/A=;
- b=ZazqWUE1JzNx/6kRaTKQdFO9Cq+DrF3z5vNorLNgiKd7OD31zQwHtsSFuVFJBff7vV
- jw4msa39ZKE7Y0hmN1W5GvxOQlgYS4I4kW7+7hpzR7FHBQxzKu8eGwGEjw1KJW/iZiWN
- /HnftbX0oRA7Rn86cD3YEFCslRE4TTHF8H/+7mf8tzAP/zQ2iMWfYjoJ0AYprSyvWC7J
- P9KHqg6x8MpfDBEXR3/6QZNFQDxMkUstWA255zz80sA9zeRtWu0T2y687/QhJ63KQNf5
- M/+l5AcXgm5Af+THU3NMEZrqh06vRp91IjX6EwlfATGSeF2OQxYlsmhhoJrYO2wijbDJ
- nfjA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWw1E+ktUff7Kqv5J7WxDYFmIW1pPNT0tREKkbKJYRtemhRI3JnndA2jbDa0cA03TaG8m5vWmV4BCoF@nongnu.org
-X-Gm-Message-State: AOJu0YzCPKrIuo26kwYV8HBw1FTRMcfL1TsiOCCKzUADD8+/iK6u438l
- fYnOLCQOmNriIVPpYcrHv1lf60Fu5WcN+hUh0EMLsAi6P6o85eEzbdaeYTv2DpY=
-X-Gm-Gg: ASbGncsRaIV6gK6/dGOpCcqoKPb4HXdBQgetN6mpzU0dVWQqz4RMfZ202YjLDhJNALp
- 7F15u3ICSuMzeG6F27Cutxkef8HkyErq1uF7yN2J/lVqoifQvSSTE4w/8TzExez7TvXFmorij1H
- +IuqCUeLIBNoYI0HvTiHwPTtLFY5o3hve6JHvFyQ+/h5C/x6dhNUIhmJI5CAidX2bdPAky4vpM2
- o2F5j3DlFLj9x/IDMiXP/16j6DEN2/9FZNhJMIiPE/YfhCibzMRz3UDnYx6aDWsKtRg0Q==
-X-Google-Smtp-Source: AGHT+IEzET+wZoSgs18+4kWbXFDbAjCsZQy+/yPNQNiXi7y4u/kbz79Hz75syhr3f0JENQ406BBypQ==
-X-Received: by 2002:a05:6a00:3c89:b0:725:4a1b:38ec with SMTP id
- d2e1a72fcca58-72a78702cbemr12942372b3a.3.1734539508274; 
- Wed, 18 Dec 2024 08:31:48 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72918ac5183sm9042666b3a.29.2024.12.18.08.31.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 08:31:47 -0800 (PST)
-Message-ID: <19b82366-a21d-420f-8519-e8be7aa88175@linaro.org>
-Date: Wed, 18 Dec 2024 08:31:46 -0800
-MIME-Version: 1.0
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=T2KrkAp/6tCeUG8Evel9wTF0UELjsBArOvguBKG6lMI=;
+ b=m9ZXO7AWT3nnMx/KyqL9yTJ5GVU0CJ8feXXnN9SiU6awih1ofb1RTzGw+BKfTXNAFSfENcXlsAaU5cH66bWT+j/TAZVZ0pVVWxRDR1gS1S/HoUxmzMBgt8o5uhcv3fEos2BlTkhQt1vKOlWU60vp78/iCF/948HnVXPhv0qSSsU=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by SJ0PR10MB5743.namprd10.prod.outlook.com (2603:10b6:a03:3ee::17)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.21; Wed, 18 Dec
+ 2024 16:34:21 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8251.015; Wed, 18 Dec 2024
+ 16:34:21 +0000
+Message-ID: <82b5e440-1ad8-474a-8622-7a8b26b82520@oracle.com>
+Date: Wed, 18 Dec 2024 11:34:13 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/27] tests/functional/aarch64: add tests for FEAT_RME
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20241218162104.3493551-1-alex.bennee@linaro.org>
- <20241218162104.3493551-16-alex.bennee@linaro.org>
+Subject: Re: [PATCH V4 02/19] physmem: fd-based shared memory
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ David Hildenbrand <david@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Philippe Mathieu-Daude <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Daniel P. Berrange"
+ <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
+References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-3-git-send-email-steven.sistare@oracle.com>
+ <Z1dIEUcSrI1aROSp@x1n> <ecbae03f-a8b2-4a41-89bc-5a671a4c3c7e@oracle.com>
+ <Z1tUBUcpf1XcVRhG@x1n> <bf0e7550-54a0-42ff-a281-6a65cb1ba7b5@oracle.com>
+ <Z2BvNs1zTz42Tpqx@x1n> <7acde39b-9448-408d-894c-6fd96eb2324e@oracle.com>
+ <Z2H_QTcgyHeONq9P@x1n>
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241218162104.3493551-16-alex.bennee@linaro.org>
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <Z2H_QTcgyHeONq9P@x1n>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SJ0PR03CA0206.namprd03.prod.outlook.com
+ (2603:10b6:a03:2ef::31) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SJ0PR10MB5743:EE_
+X-MS-Office365-Filtering-Correlation-Id: e68582a5-1856-4d4c-d2a3-08dd1f81d317
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?QkdxeVFZYmNQODRPdUNUMU5Udm1UZElHRzR4Q0kzNVh4VWNOQW1qQW5vejVp?=
+ =?utf-8?B?eW1Lc1owUXgxY0xCQitIL2c4WEZBOWg1aU9PaWtUbFVaOGZyYTVGN1lUNjlR?=
+ =?utf-8?B?dVc2cHJhQ0s4YkdvTVUxQUJzMDl5aGZQWmEydXhGWXJkdWsyOSs3RENVRys3?=
+ =?utf-8?B?cDZxeEFrSDA0ZW03Z1RUZjhQbVo0eU5zTTRvUC9XWklwMFRvNzVvLyt5WWRH?=
+ =?utf-8?B?N21DL3h1TmxMMEF6WTM5T1gxS0dVanBmZGFxd2xVaURLbWFWYTQ2SnN3UGpq?=
+ =?utf-8?B?U3hJazRMUFNNdjc5YWJCcm9xOFZnYk1zOUZEZXpGYmVPZEp4SHhLaExQRVls?=
+ =?utf-8?B?VFpnK0Jvak1pZjA1L0xpK0FCbEl5S0tCRUtGNnc2Y0NEZ2FoUU9OZ3BOZ2Vh?=
+ =?utf-8?B?cnZoaC91OFk2QUdoYVpPbmV5SFNKc1p0RnpjRko2aHhDVFlJaGU4M1NtVk85?=
+ =?utf-8?B?ZjZydG4xRDZNeTVKcW1PTUZzanBDdDdyMWwwUDU4Y2hWK1hqOVAvQTBZdzBZ?=
+ =?utf-8?B?TXBMeUkvSEovN2RTMExrWE5UclpvOThkcHZabDdzclBOVEorWERoUG4xMlFR?=
+ =?utf-8?B?dDVRY29QdXVJOEFGMlJRRnFld1VkR1k2SXdZWlkvdXNpd08yNVpYQnFxRzlM?=
+ =?utf-8?B?ZDFTR0pXYVRIaXVpWnhvVHg2ZkgyZ0VZN0dVV0FZTFRrL0RvbkZ2UURBazk0?=
+ =?utf-8?B?MWlnV1ZaN2RZWWRscDEvSXNqbGppQ2xGaExFaWxCOUtZWUpaNkRUeCtVMnVj?=
+ =?utf-8?B?YmJkZ0w4UTkydGZFYU5kWEhoTzR6UE5MYnZGUStwdjNRZWR0Z1NndXlXTEh5?=
+ =?utf-8?B?aFpYb3R5SzFycU9TNnZXODVTTWx0VUU3T29zVERET3pEMHBxaXFaZnc0bUto?=
+ =?utf-8?B?dkdKMlBMa05ERXNMaE1EVmFEd1lmRzE1WjMzbDFFbzFMczBkTjB0dmF2RXNR?=
+ =?utf-8?B?NWlOR0FWNi95RVdLaDBwNldQU2ovOFJRK1E1VFlYb2Q4V3M4aHcvR1FWR3kz?=
+ =?utf-8?B?TWNTVFdkSnBRVkVWcWtLd3VXcTJiSWFZejc4a2hKVjFQM2JvdDlUNXhiV05k?=
+ =?utf-8?B?bDJKbEZ6NzdzaHIwdXMrOGdpaWlvLzkwWUE3a1hmYm5GN3NMSDlpM0xGYVhW?=
+ =?utf-8?B?Rm5TSTQ0alVMTlhtRjB3M3BoOHFOKzdJcC9aQVdWMS8xbWN1dnhQYXJBWE9H?=
+ =?utf-8?B?ZFZCclhEd2VFMUM3NSs1R3NjVEdsbFE4WEpTWmZ5eU05d2c4aURoelVrNjlV?=
+ =?utf-8?B?ZmVCTTJjeFEwOEJaWFFQWEkyc2k4SmRkcTlYc2hqMXUreTJiaGZxcUFyYWdK?=
+ =?utf-8?B?QzdBL0RBQkg5QVJjTmdPRXNsVkhmSHFoN1lROU1FZUFUODhBQW5GdFVEdzll?=
+ =?utf-8?B?WVRwamc0SmlwRUsvMm40T2t6L0oyK0c2YS93REJ3NU5HS2V0RjQ3MDBvZWo3?=
+ =?utf-8?B?Q1ZQWE5UV1VtY1BHa3VOMzBEU3o2bW9FSXJkNzJZV01ROWpLN1d3d1FORUlr?=
+ =?utf-8?B?aFJ3c3JOaXNLM0Q1SFJCSXFaNTlNanBIVFhCTGxhbFVVOGdDd1lzb1B0MzVL?=
+ =?utf-8?B?cFJVRkc4ZWpQdFJkc1d1dG1raVNSd0xhYzBBUTkxVnMyVkxGTDBodkY0eGt6?=
+ =?utf-8?B?RVdNVnRvWmJFWGo4TlJIWGZBSzdqT2loUGh6NDcwb0JxaFhQV0xFcmY3UFBp?=
+ =?utf-8?B?M2NnWE8wQ21lWFJvV0ljTVFuRDYxZWo1eExNTlVnemFWNy9weVFBN3FvVEVD?=
+ =?utf-8?B?VW1TWFlKTWVOZlZHbE5aZE12UmtTS2R4NmE5SVV1YzdkcDZsdDhJWVgxK2VS?=
+ =?utf-8?B?UXhFS2JqenZ1VGVzMmt1ZUg0dnRTTkZWbkVjZStnYVZFR2xIY2JBekxua1NT?=
+ =?utf-8?Q?sn0cZe3jUgcyH?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QWw3T0dwWnBTanRFenVBMlpzeFJ6ZVVwQWdXMzRtdVQvcGFpZHRIYTU5Zm45?=
+ =?utf-8?B?TVd5YytLTytuYm43YlVPY0pOSGFYbTliTGtrejkzbEdickwvaTVaUnB2ZVR6?=
+ =?utf-8?B?Z2gyNzZTbzgvaHZGS2Q3Y1lMUUZMSnp6dmtiSm13N2FKT3VSdGhMUmlhZWNV?=
+ =?utf-8?B?V1ZoRjkxWForcEJQNU5tMlZNSjhxd3Zad2lremFtOFp4U2xyWmRLbHJpSThL?=
+ =?utf-8?B?Q2ovUVFGZ2pFLzRTY21ucTRtTU10b0lmZGNESkw1SHZoTDhpNjBUR1ExSlp3?=
+ =?utf-8?B?ZlhyVHFBWG5TUEljMzFFVUxEeFBFSERheThwYW9GZHNaWnhUMU1EdjlTbDVW?=
+ =?utf-8?B?TGhxUWRHOXphL09TRzFOa0FQcXVRTGlweXJwR2lySkRodVJXMFo4RTZHd1kx?=
+ =?utf-8?B?b3M4VjY4RGk3V3IxY1RtVHIxc3hKN3lQRDNUN1JJMlhsU1U5RDJkNCszUmov?=
+ =?utf-8?B?TUFKQTRuWmdBY2w2YkFua3RMcWNxdXVwOWppZmNzMG1CSnpJTlJkMGNoaVZz?=
+ =?utf-8?B?dEhraGRicGlTR2VmVDc0ZFZpK1lFWUg4YytBc2psN2VSdDNVSHluT3JZZjZh?=
+ =?utf-8?B?SHQyV3g1MVRGSWVwdHdsWVZNT1FqNWQ1Tkw3WFBlNjcwNU84WXFpYUNualZk?=
+ =?utf-8?B?Rjc4cE01V1RFdE1sbXZ2eXduWHpUU1JCTXZZb2Z6UGtZalFqVXNqemdHQVVO?=
+ =?utf-8?B?LzZHY01kb3h0dC9oNzB1dVZKRWlwUHlYeDN6ZkVVWXZxVWllNFBzejlHelRN?=
+ =?utf-8?B?MTZMV3c1Y2NMZUFNdnBuM2JTNWFFbytSMjZiaEJMdDV2a1dpeHBHU0Z6Sldu?=
+ =?utf-8?B?dnhYSkZTdXFzQW9naE5zNEhUdkJDd2orOElDWGJoZjdicHFIYVFLNmkyeFl4?=
+ =?utf-8?B?SnEzcXdqbFhVdEtpOGUweEQ2U1V0czN1VjdDUW5Xb2JsUnFBOENpSVdxTE96?=
+ =?utf-8?B?YTQ2Znhkdmg4bUhSWTluVVYxQkV0UHJQZkhsSGwwZkVIWGxNQXk4cjJNQ3FK?=
+ =?utf-8?B?V1o1VXVCemQ4MkhId2ZiWi9ScXowRW1ZVysydlBCT3pFUEVhWTRMZDZGeXU4?=
+ =?utf-8?B?MHRxZ3VaR2VxcGVrcSsxQnFaaEljOWdJQWtWdExPUUk4YkY5NUMyeTB4akQ0?=
+ =?utf-8?B?cWNIak9TWTRPczhyN3MzK2xZS3Jid3NzUFpVN0hpWmVNYXZYaWN0SFlnYjNz?=
+ =?utf-8?B?Z2w0MWlPTHdLRTNVSWdIT1JtNVFUeC9DaGo2N1RoUXVyZlYzL01vZHpzMHRp?=
+ =?utf-8?B?c25NbUxqWnhLL2hNVVlGL1EyNENXSVRpM0xlSUVtZFliRnM4WElKaC9BeVgx?=
+ =?utf-8?B?dGY2ZXd1NGszVkFWZGY5dlZRSkRqNG4zWWVmeXZ0d0d1UVkySjNYaDJFUFdK?=
+ =?utf-8?B?Mkhsb0x4VnFjbnpubkxDNCt4V3Rub2ROU2hhc2t5UlpqRFVKSkpMSy9vYmNa?=
+ =?utf-8?B?SUxVVHRLRlJFMU1reUVra3FDZms3Y25IMU1NSmNsRUNxNGVXV2dMRXNUUFBq?=
+ =?utf-8?B?RWQrM1VSRHJBNmVSRzg0dllUZTNIN3dBUzBUWnV2eDh0QTZKZWRLVjUrcThH?=
+ =?utf-8?B?eE4wdVlVaHVBeTl5N2hQaVBibmRyR295aSsvQzJ2L0xzRmlzU2h1M2R2Mkts?=
+ =?utf-8?B?WTR3TStNT2VGODVldUlKS3pRWUQrNmF5WUxaa1pYbGlIUEdBbjU2TXRXMnl6?=
+ =?utf-8?B?UzJZbDhMVWxrVlVWc2wxVVpnTVdGR0RRMWxRSTdCVTlOZ05OQ09VQkRVbC90?=
+ =?utf-8?B?RjB4K2dNaDVqdmYrTEMrUkVaSmJDcFhadEVWNENaTVUzMS8vM3dOQzY3YVdO?=
+ =?utf-8?B?dmhhT0RienNwZjhDeFlRVTFZUHhndmNmV1NPb28zT3FOQzNoNStSUndYcms0?=
+ =?utf-8?B?QjRvRGloS3cwTjdhekltT0NuRWlnYlVHZ2Q2ZDQ3ODE4RHdNbCtlVUpTeE9J?=
+ =?utf-8?B?Smg2Q09TVmVlNFZwM1dhWnduK3U1b0FydzkzblQxVnplb1BSbFRKRGRZMmtE?=
+ =?utf-8?B?MUVQWWJvQVpJM1daNUVtT0RVUXJmU05MWGxhWGJZQy9QQzFyQzdUMVlDOTlX?=
+ =?utf-8?B?Q1NJVE5JNC9QNmVhR2o0RUdYSlovbTQ2bG1SSFZsNlNobVVpVTZ3RDNFbHRn?=
+ =?utf-8?B?ajUvenZzSmxPdWhjNVdLQmMvRHh1TlhGQ1EweGI5T0c4U1hJd3VlY0puYkh5?=
+ =?utf-8?B?a2c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 27ODd48oHGYjZXvxylUJw3IDSTGwSdzsMs3EH46xBGWOhFriXbfTHStQAyhjp6ZDbK8cHSTCQDk5j13j7kVL4Pkpi4K6BO6G+wvxYJUdLiMjeaszQs3AQBagJXv84AsB64SOE72pd7/jCAEVM2rY82MrabP8THBIzzyKuKq1o+pZWzx1id24s9lBtlFW+0eemvxUOSGP1TqdprCpvPqIY9UwNK+CHR5h8iCMNgXlPDGi8dD2ordH4ursGKcS8XXv8B3QfPpPxsQrq3rvp7+zLVXTUWsl2dJ2eMC63YCIgOJs8XXvbTecA4JpiWyxtlj+Gvwvc7gYxxsFVrg9bpnvbPU82vwiWg3OiW1anfsm7GYxupQzREPkMVnhVWCshmRuXLFZW0IABJW12KworaT3v40c6c4Rm+S2NjFPCbRVZCKEr22auGat08kzOvjIoqzlxKV7o25UxCSLFaLcZfG3v6TpkDqHL/8+pg7x3JNOwvN48wBT+vlfxnnR2GeEt8yawZYIpR81W5/TPXLMnkby1b2k221ERzJzmIxPJnynjC0pFCGbMmag8PZba7m/rp2MRFh+pYJGdZQwa27H8z5jmAaytApbOSaIcKuPqH3Lojc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e68582a5-1856-4d4c-d2a3-08dd1f81d317
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 16:34:21.1531 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: YsXVDTKjDAQ4BBzUpcRWAFigZhUKkS1wQuwFZ+sXGHDJZn+9pzNSAS77YDbKaFgnqsa9H8V9x3WUIFw4bdfB2tj/Or2Hfcy9xJNILCW1qgA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR10MB5743
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
+ definitions=2024-12-18_06,2024-12-18_02,2024-11-22_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ phishscore=0
+ malwarescore=0 bulkscore=0 spamscore=0 mlxlogscore=999 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2411120000 definitions=main-2412180129
+X-Proofpoint-GUID: tbsWe87lyMaEJAqd1CGdvhiqNkaF2zc0
+X-Proofpoint-ORIG-GUID: tbsWe87lyMaEJAqd1CGdvhiqNkaF2zc0
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,194 +225,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTgvMjQgMDg6MjAsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gRnJvbTogUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiANCj4gVGhpcyBi
-b290IGFuIE9QLVRFRSBlbnZpcm9ubWVudCwgYW5kIGxhdW5jaCBhIG5lc3RlZCBndWVzdCBW
-TSBpbnNpZGUgaXQNCj4gdXNpbmcgdGhlIFJlYWxtcyBmZWF0dXJlLiBXZSBkbyBpdCBmb3Ig
-dmlydCBhbmQgc2JzYS1yZWYgcGxhdGZvcm1zLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUGll
-cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiBNZXNzYWdl
-LUlkOiA8MjAyNDEyMDMyMTM2MjkuMjQ4MjgwNi0xLXBpZXJyaWNrLmJvdXZpZXJAbGluYXJv
-Lm9yZz4NCj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5h
-cm8ub3JnPg0KPiANCj4gLS0tDQo+IHYyDQo+ICAgIC0gcmVtb3ZlIHZlcnNpb24gbG9nIGZy
-b20gbWFpbiBjb21taXQNCj4gLS0tDQo+ICAgdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
-ZCAgICAgICAgICAgICAgICAgfCAgIDQgKw0KPiAgIHRlc3RzL2Z1bmN0aW9uYWwvdGVzdF9h
-YXJjaDY0X3JtZV9zYnNhcmVmLnB5IHwgIDcwICsrKysrKysrKysrKysNCj4gICB0ZXN0cy9m
-dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSAgICB8IDEwMCArKysrKysrKysr
-KysrKysrKysrDQo+ICAgMyBmaWxlcyBjaGFuZ2VkLCAxNzQgaW5zZXJ0aW9ucygrKQ0KPiAg
-IGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVf
-c2JzYXJlZi5weQ0KPiAgIGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rl
-c3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiANCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL2Z1bmN0
-aW9uYWwvbWVzb24uYnVpbGQgYi90ZXN0cy9mdW5jdGlvbmFsL21lc29uLmJ1aWxkDQo+IGlu
-ZGV4IDBlMWJmYjhjNDQuLmI0OWM0ODYxMTUgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL2Z1bmN0
-aW9uYWwvbWVzb24uYnVpbGQNCj4gKysrIGIvdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
-ZA0KPiBAQCAtMTMsNiArMTMsOCBAQCBlbmRpZg0KPiAgIHRlc3RfdGltZW91dHMgPSB7DQo+
-ICAgICAnYWFyY2g2NF9hc3BlZWQnIDogNjAwLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JyA6
-IDQ4MCwNCj4gKyAgJ2FhcmNoNjRfcm1lX3ZpcnQnIDogMTIwMCwNCj4gKyAgJ2FhcmNoNjRf
-cm1lX3Nic2FyZWYnIDogMTIwMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJyA6
-IDcyMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcgOiA3MjAsDQo+ICAgICAn
-YWFyY2g2NF90dXhydW4nIDogMjQwLA0KPiBAQCAtNTgsNiArNjAsOCBAQCB0ZXN0c19hYXJj
-aDY0X3N5c3RlbV90aG9yb3VnaCA9IFsNCj4gICAgICdhYXJjaDY0X2FzcGVlZCcsDQo+ICAg
-ICAnYWFyY2g2NF9yYXNwaTMnLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JywNCj4gKyAgJ2Fh
-cmNoNjRfcm1lX3ZpcnQnLA0KPiArICAnYWFyY2g2NF9ybWVfc2JzYXJlZicsDQo+ICAgICAn
-YWFyY2g2NF9zYnNhcmVmJywNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJywNCj4g
-ICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcsDQo+IGRpZmYgLS1naXQgYS90ZXN0cy9m
-dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weSBiL3Rlc3RzL2Z1bmN0aW9u
-YWwvdGVzdF9hYXJjaDY0X3JtZV9zYnNhcmVmLnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1
-DQo+IGluZGV4IDAwMDAwMDAwMDAuLmMxMzZiNWNlMTcNCj4gLS0tIC9kZXYvbnVsbA0KPiAr
-KysgYi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weQ0KPiBA
-QCAtMCwwICsxLDcwIEBADQo+ICsjIS91c3IvYmluL2VudiBweXRob24zDQo+ICsjDQo+ICsj
-IEZ1bmN0aW9uYWwgdGVzdCB0aGF0IGJvb3RzIGEgUmVhbG1zIGVudmlyb25tZW50IG9uIHNi
-c2EtcmVmIG1hY2hpbmUgYW5kIGENCj4gKyMgbmVzdGVkIGd1ZXN0IFZNIHVzaW5nIGl0Lg0K
-PiArIw0KPiArIyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMg
-QXV0aG9yOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+
-DQo+ICsjDQo+ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVy
-DQo+ICsNCj4gK2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5n
-DQo+ICsNCj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQN
-Cj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNv
-bGVfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRf
-d2FpdF9mb3JfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hp
-dmVfZXh0cmFjdA0KPiArZnJvbSB0ZXN0X2FhcmNoNjRfcm1lX3ZpcnQgaW1wb3J0IHRlc3Rf
-cmVhbG1zX2d1ZXN0DQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVTYnNhUmVmTWFjaGluZShR
-ZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1aWx0IHdpdGggT1At
-VEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rpb25zOg0KPiArICAg
-ICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNlcy9RRU1VL3BhZ2Vz
-LzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29tL3Biby1saW5hcm8v
-cWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfU0JTQSA9IEFzc2V0KA0K
-PiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3JnL3MvS0p5ZUJ4TDgy
-bXoycjdGLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2stb3AtdGVlLTQuMi4w
-LWNjYS12NC1zYnNhLnRhci5neicpLA0KPiArICAgICAgICAgJ2RkOWFiMjhlYzg2OWJkZjNi
-NTM3NjExNmNiMzY4OTEwM2I0MzQzM2ZkNWM0YmNhMGY0YThkOGIzYzEwNDk5OWUnKQ0KPiAr
-DQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUgaW1wbGVtZW50YXRpb24s
-IGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAgICMgYW5kIGxhdW5jaGlu
-ZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVzdF9hYXJjaDY0X3JtZV9z
-YnNhcmVmKHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9neiA9IHNlbGYuQVNT
-RVRfUk1FX1NUQUNLX1NCU0EuZmV0Y2goKQ0KPiArICAgICAgICBhcmNoaXZlX2V4dHJhY3Qo
-c3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiArICAgICAgICBzZWxm
-LnNldF9tYWNoaW5lKCdzYnNhLXJlZicpDQo+ICsgICAgICAgIHNlbGYudm0uc2V0X2NvbnNv
-bGUoKQ0KPiArICAgICAgICBzZWxmLnJlcXVpcmVfYWNjZWxlcmF0b3IoJ3RjZycpDQo+ICsN
-Cj4gKyAgICAgICAgcm1lX3N0YWNrID0gb3MucGF0aC5qb2luKHNlbGYud29ya2RpciwNCj4g
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICdybWUtc3RhY2stb3AtdGVlLTQu
-Mi4wLWNjYS12NC1zYnNhJykNCj4gKyAgICAgICAgcGZsYXNoMCA9IG9zLnBhdGguam9pbihy
-bWVfc3RhY2ssICdpbWFnZXMnLCAnU0JTQV9GTEFTSDAuZmQnKQ0KPiArICAgICAgICBwZmxh
-c2gxID0gb3MucGF0aC5qb2luKHJtZV9zdGFjaywgJ2ltYWdlcycsICdTQlNBX0ZMQVNIMS5m
-ZCcpDQo+ICsgICAgICAgIHZpcnR1YWwgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnaW1h
-Z2VzJywgJ2Rpc2tzJywgJ3ZpcnR1YWwnKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGgu
-am9pbihybWVfc3RhY2ssICdvdXQtYnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4g
-Kw0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixw
-YXV0aC1pbXBkZWY9b24nKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcy
-RycpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1NJywgJ3Nic2EtcmVmJykNCj4g
-KyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywgZidmaWxlPXtwZmxhc2gwfSxm
-b3JtYXQ9cmF3LGlmPXBmbGFzaCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1k
-cml2ZScsIGYnZmlsZT17cGZsYXNoMX0sZm9ybWF0PXJhdyxpZj1wZmxhc2gnKQ0KPiArICAg
-ICAgICBzZWxmLnZtLmFkZF9hcmdzKCctZHJpdmUnLCBmJ2ZpbGU9ZmF0OnJ3Ont2aXJ0dWFs
-fSxmb3JtYXQ9cmF3JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywg
-Zidmb3JtYXQ9cmF3LGlmPW5vbmUsZmlsZT17ZHJpdmV9LGlkPWhkMCcpDQo+ICsgICAgICAg
-IHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLWJsay1wY2ksZHJpdmU9aGQw
-JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmljZScsICd2aXJ0aW8tOXAt
-cGNpLGZzZGV2PXNocjAsbW91bnRfdGFnPXNocjAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFk
-ZF9hcmdzKCctZnNkZXYnLCBmJ2xvY2FsLHNlY3VyaXR5X21vZGVsPW5vbmUscGF0aD17cm1l
-X3N0YWNrfSxpZD1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmlj
-ZScsICd2aXJ0aW8tbmV0LXBjaSxuZXRkZXY9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0u
-YWRkX2FyZ3MoJy1uZXRkZXYnLCAndXNlcixpZD1uZXQwJykNCj4gKw0KPiArICAgICAgICBz
-ZWxmLnZtLmxhdW5jaCgpDQo+ICsgICAgICAgICMgV2FpdCBmb3IgaG9zdCBWTSBib290IHRv
-IGNvbXBsZXRlLg0KPiArICAgICAgICB3YWl0X2Zvcl9jb25zb2xlX3BhdHRlcm4oc2VsZiwg
-J1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICAgICAgZXhlY19jb21tYW5kX2FuZF93
-YWl0X2Zvcl9wYXR0ZXJuKHNlbGYsICdyb290JywgJyMnKQ0KPiArDQo+ICsgICAgICAgIHRl
-c3RfcmVhbG1zX2d1ZXN0KHNlbGYpDQo+ICsNCj4gK2lmIF9fbmFtZV9fID09ICdfX21haW5f
-Xyc6DQo+ICsgICAgUWVtdVN5c3RlbVRlc3QubWFpbigpDQo+IGRpZmYgLS1naXQgYS90ZXN0
-cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSBiL3Rlc3RzL2Z1bmN0aW9u
-YWwvdGVzdF9hYXJjaDY0X3JtZV92aXJ0LnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1DQo+
-IGluZGV4IDAwMDAwMDAwMDAuLjM5ZTRlNGFkYjUNCj4gLS0tIC9kZXYvbnVsbA0KPiArKysg
-Yi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiBAQCAtMCww
-ICsxLDEwMCBAQA0KPiArIyEvdXNyL2Jpbi9lbnYgcHl0aG9uMw0KPiArIw0KPiArIyBGdW5j
-dGlvbmFsIHRlc3QgdGhhdCBib290cyBhIFJlYWxtcyBlbnZpcm9ubWVudCBvbiB2aXJ0IG1h
-Y2hpbmUgYW5kIGEgbmVzdGVkDQo+ICsjIGd1ZXN0IFZNIHVzaW5nIGl0Lg0KPiArIw0KPiAr
-IyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMgQXV0aG9yOiBQ
-aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+ICsjDQo+
-ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyDQo+ICsNCj4g
-K2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5nDQo+ICsNCj4g
-K2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQNCj4gK2Zyb20g
-cWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVy
-bg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3Jf
-cGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hpdmVfZXh0cmFj
-dA0KPiArDQo+ICtkZWYgdGVzdF9yZWFsbXNfZ3Vlc3QodGVzdF9ybWVfaW5zdGFuY2UpOg0K
-PiArDQo+ICsgICAgIyBCb290IHRoZSAobmVzdGVkKSBndWVzdCBWTQ0KPiArICAgIGV4ZWNf
-Y29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgJ3FlbXUt
-c3lzdGVtLWFhcmNoNjQgLU0gdmlydCxnaWMtdmVyc2lvbj0zICcNCj4gKyAgICAgICAgICAg
-ICAgICAgJy1jcHUgaG9zdCAtZW5hYmxlLWt2bSAtbSA1MTJNICcNCj4gKyAgICAgICAgICAg
-ICAgICAgJy1NIGNvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0PXJtZTAgJw0KPiArICAgICAg
-ICAgICAgICAgICAnLW9iamVjdCBybWUtZ3Vlc3QsaWQ9cm1lMCAnDQo+ICsgICAgICAgICAg
-ICAgICAgICctZGV2aWNlIHZpcnRpby1uZXQtcGNpLG5ldGRldj1uZXQwLHJvbWZpbGU9ICcN
-Cj4gKyAgICAgICAgICAgICAgICAgJy1uZXRkZXYgdXNlcixpZD1uZXQwICcNCj4gKyAgICAg
-ICAgICAgICAgICAgJy1rZXJuZWwgL21udC9vdXQvYmluL0ltYWdlICcNCj4gKyAgICAgICAg
-ICAgICAgICAgJy1pbml0cmQgL21udC9vdXQtYnIvaW1hZ2VzL3Jvb3Rmcy5jcGlvICcNCj4g
-KyAgICAgICAgICAgICAgICAgJy1zZXJpYWwgc3RkaW8nKQ0KPiArICAgICMgRGV0ZWN0IFJl
-YWxtIGFjdGl2YXRpb24gZHVyaW5nIChuZXN0ZWQpIGd1ZXN0IGJvb3QuDQo+ICsgICAgd2Fp
-dF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0KPiArICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAnU01DX1JNSV9SRUFMTV9BQ1RJVkFURScpDQo+ICsgICAg
-IyBXYWl0IGZvciAobmVzdGVkKSBndWVzdCBib290IHRvIGNvbXBsZXRlLg0KPiArICAgIHdh
-aXRfZm9yX2NvbnNvbGVfcGF0dGVybih0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgJ1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICBl
-eGVjX2NvbW1hbmRfYW5kX3dhaXRfZm9yX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsICdy
-b290JywgJyMnKQ0KPiArICAgICMgcXVlcnkgKG5lc3RlZCkgZ3Vlc3QgY2NhIHJlcG9ydA0K
-PiArICAgIGV4ZWNfY29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwgJ2NjYS13b3JrbG9hZC1h
-dHRlc3RhdGlvbiByZXBvcnQnKQ0KPiArICAgIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVybih0
-ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJyJj
-Y2EtcGxhdGZvcm0taGFzaC1hbGdvLWlkIjogInNoYS0yNTYiJykNCj4gKyAgICB3YWl0X2Zv
-cl9jb25zb2xlX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsDQo+ICsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICciY2NhLXJlYWxtLWhhc2gtYWxnby1pZCI6ICJzaGEtNTEyIicp
-DQo+ICsgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0K
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAnImNjYS1yZWFsbS1wdWJsaWMta2V5
-LWhhc2gtYWxnby1pZCI6ICJzaGEtMjU2IicpDQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVW
-aXJ0TWFjaGluZShRZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1
-aWx0IHdpdGggT1AtVEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rp
-b25zOg0KPiArICAgICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNl
-cy9RRU1VL3BhZ2VzLzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29t
-L3Biby1saW5hcm8vcWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfVklS
-VCA9IEFzc2V0KA0KPiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3Jn
-L3MvaWFSc05ESnAyQ1hITVNKLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2st
-b3AtdGVlLTQuMi4wLWNjYS12NC1xZW11X3Y4LnRhci5neicpLA0KPiArICAgICAgICAgJzE4
-NTFhZGMyMzJiMDk0Mzg0ZDhiODc5YjlhMmNmZmYwN2VmM2Q2MjA1MDMyYjg1ZTliM2E0YTlh
-ZTZiMGI3YWQnKQ0KPiArDQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUg
-aW1wbGVtZW50YXRpb24sIGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAg
-ICMgYW5kIGxhdW5jaGluZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVz
-dF9hYXJjaDY0X3JtZV92aXJ0KHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9n
-eiA9IHNlbGYuQVNTRVRfUk1FX1NUQUNLX1ZJUlQuZmV0Y2goKQ0KPiArICAgICAgICBhcmNo
-aXZlX2V4dHJhY3Qoc3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiAr
-ICAgICAgICBzZWxmLnNldF9tYWNoaW5lKCd2aXJ0JykNCj4gKyAgICAgICAgc2VsZi52bS5z
-ZXRfY29uc29sZSgpDQo+ICsgICAgICAgIHNlbGYucmVxdWlyZV9hY2NlbGVyYXRvcigndGNn
-JykNCj4gKw0KPiArICAgICAgICBybWVfc3RhY2sgPSBvcy5wYXRoLmpvaW4oc2VsZi53b3Jr
-ZGlyLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ3JtZS1zdGFjay1v
-cC10ZWUtNC4yLjAtY2NhLXY0LXFlbXVfdjgnKQ0KPiArICAgICAgICBrZXJuZWwgPSBvcy5w
-YXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdJbWFnZScpDQo+ICsgICAgICAg
-IGJpb3MgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdmbGFzaC5i
-aW4nKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGguam9pbihybWVfc3RhY2ssICdvdXQt
-YnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4gKw0KPiArICAgICAgICBzZWxmLnZt
-LmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixwYXV0aC1pbXBkZWY9b24nKQ0KPiAr
-ICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcyRycpDQo+ICsgICAgICAgIHNlbGYu
-dm0uYWRkX2FyZ3MoJy1NJywgJ3ZpcnQsYWNwaT1vZmYsJw0KPiArICAgICAgICAgICAgICAg
-ICAgICAgICAgICd2aXJ0dWFsaXphdGlvbj1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAg
-ICAgICAgJ3NlY3VyZT1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgJ2dpYy12
-ZXJzaW9uPTMnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctYmlvcycsIGJpb3Mp
-DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1rZXJuZWwnLCBrZXJuZWwpDQo+ICsg
-ICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kcml2ZScsIGYnZm9ybWF0PXJhdyxpZj1ub25l
-LGZpbGU9e2RyaXZlfSxpZD1oZDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCct
-ZGV2aWNlJywgJ3ZpcnRpby1ibGstcGNpLGRyaXZlPWhkMCcpDQo+ICsgICAgICAgIHNlbGYu
-dm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLTlwLWRldmljZSxmc2Rldj1zaHIwLG1v
-dW50X3RhZz1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWZzZGV2Jywg
-Zidsb2NhbCxzZWN1cml0eV9tb2RlbD1ub25lLHBhdGg9e3JtZV9zdGFja30saWQ9c2hyMCcp
-DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLW5ldC1w
-Y2ksbmV0ZGV2PW5ldDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbmV0ZGV2
-JywgJ3VzZXIsaWQ9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1hcHBl
-bmQnLCAncm9vdD0vZGV2L3ZkYScpDQo+ICsNCj4gKyAgICAgICAgc2VsZi52bS5sYXVuY2go
-KQ0KPiArICAgICAgICAjIFdhaXQgZm9yIGhvc3QgVk0gYm9vdCB0byBjb21wbGV0ZS4NCj4g
-KyAgICAgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHNlbGYsICdXZWxjb21lIHRvIEJ1
-aWxkcm9vdCcpDQo+ICsgICAgICAgIGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3JfcGF0dGVy
-bihzZWxmLCAncm9vdCcsICcjJykNCj4gKw0KPiArICAgICAgICB0ZXN0X3JlYWxtc19ndWVz
-dChzZWxmKQ0KPiArDQo+ICtpZiBfX25hbWVfXyA9PSAnX19tYWluX18nOg0KPiArICAgIFFl
-bXVTeXN0ZW1UZXN0Lm1haW4oKQ0KDQpZb3UgbWlnaHQgd2FudCB0byBhZGQgdGhpcyBwYXRj
-aCBbMV0gdG8gdGhlIHNlcmllcywgdGhhdCBmaXhlcyBhIHVic2FuIA0KaXNzdWUgdGhhdCB0
-aGlzIHNwZWNpZmljIHRlc3QgdHJpZ2dlcmVkLg0KDQpbMV0gDQpodHRwczovL2xvcmUua2Vy
-bmVsLm9yZy9xZW11LWRldmVsLzNmNmYyZDc5LTc1M2EtNGRjNC04ZmY1LTZlYjZjODAxYTlj
-N0BsaW5hcm8ub3JnLw0K
+On 12/17/2024 5:46 PM, Peter Xu wrote:
+> On Tue, Dec 17, 2024 at 04:54:43PM -0500, Steven Sistare wrote:
+>> On 12/16/2024 1:19 PM, Peter Xu wrote:
+>>> On Fri, Dec 13, 2024 at 11:41:45AM -0500, Steven Sistare wrote:
+>>>> On 12/12/2024 4:22 PM, Peter Xu wrote:
+>>>>> On Thu, Dec 12, 2024 at 03:38:00PM -0500, Steven Sistare wrote:
+>>>>>> On 12/9/2024 2:42 PM, Peter Xu wrote:
+>>>>>>> On Mon, Dec 02, 2024 at 05:19:54AM -0800, Steve Sistare wrote:
+>>>>>>>> @@ -2089,13 +2154,23 @@ RAMBlock *qemu_ram_alloc_internal(ram_addr_t size, ram_addr_t max_size,
+>>>>>>>>          new_block->page_size = qemu_real_host_page_size();
+>>>>>>>>          new_block->host = host;
+>>>>>>>>          new_block->flags = ram_flags;
+>>>>>>>> +
+>>>>>>>> +    if (!host && !xen_enabled()) {
+>>>>>>>
+>>>>>>> Adding one more xen check is unnecessary.  This patch needed it could mean
+>>>>>>> that the patch can be refactored.. because we have xen checks in both
+>>>>>>> ram_block_add() and also in the fd allocation path.
+>>>>>>>
+>>>>>>> At the meantime, see:
+>>>>>>>
+>>>>>>> qemu_ram_alloc_from_fd():
+>>>>>>>         if (kvm_enabled() && !kvm_has_sync_mmu()) {
+>>>>>>>             error_setg(errp,
+>>>>>>>                        "host lacks kvm mmu notifiers, -mem-path unsupported");
+>>>>>>>             return NULL;
+>>>>>>>         }
+>>>>>>>
+>>>>>>> I don't think any decent kernel could hit this, but that could be another
+>>>>>>> sign that this patch duplicated some file allocations.
+>>>>>>>
+>>>>>>>> +        if ((new_block->flags & RAM_SHARED) &&
+>>>>>>>> +            !qemu_ram_alloc_shared(new_block, &local_err)) {
+>>>>>>>> +            goto err;
+>>>>>>>> +        }
+>>>>>>>> +    }
+>>>>>>>> +
+>>>>>>>>          ram_block_add(new_block, &local_err);
+>>>>>>>> -    if (local_err) {
+>>>>>>>> -        g_free(new_block);
+>>>>>>>> -        error_propagate(errp, local_err);
+>>>>>>>> -        return NULL;
+>>>>>>>> +    if (!local_err) {
+>>>>>>>> +        return new_block;
+>>>>>>>>          }
+>>>>>>>> -    return new_block;
+>>>>>>>> +
+>>>>>>>> +err:
+>>>>>>>> +    g_free(new_block);
+>>>>>>>> +    error_propagate(errp, local_err);
+>>>>>>>> +    return NULL;
+>>>>>>>>      }
+>>>>>>>
+>>>>>>> IIUC we only need to conditionally convert an anon-allocation into an
+>>>>>>> fd-allocation, and then we don't need to mostly duplicate
+>>>>>>> qemu_ram_alloc_from_fd(), instead we reuse it.
+>>>>>>>
+>>>>>>> I do have a few other comments elsewhere, but when I was trying to comment.
+>>>>>>> E.g., we either shouldn't need to bother caching qemu_memfd_check()
+>>>>>>> results, or do it in qemu_memfd_check() directly.. and some more.
+>>>>>>
+>>>>>> Someone thought it a good idea to cache the result of qemu_memfd_alloc_check,
+>>>>>> and qemu_memfd_check will be called more often.  I'll cache the result inside
+>>>>>> qemu_memfd_check for the special case of flags=0.
+>>>>>
+>>>>> OK.
+>>>>>
+>>>>>>
+>>>>>>> Then I think it's easier I provide a patch, and also show that it can be
+>>>>>>> also smaller changes to do the same thing, with everything fixed up
+>>>>>>> (e.g. addressing above mmu notifier missing issue).  What do you think as
+>>>>>>> below?
+>>>>>>
+>>>>>> The key change you make is calling qemu_ram_alloc_from_fd instead of file_ram_alloc,
+>>>>>> which buys the xen and kvm checks for free.  Sounds good, I will do that in the
+>>>>>> context of my patch.
+>>>>>>
+>>>>>> Here are some other changes in your patch, and my responses:
+>>>>>>
+>>>>>> I will drop the "Retrying using MAP_ANON|MAP_SHARED" message, as you did.
+>>>>>>
+>>>>>> However, I am keeping QEMU_VMALLOC_ALIGN, qemu_set_cloexec, and trace_qemu_ram_alloc_shared.
+>>>>>
+>>>>> I guess no huge deal on these, however since we're talking..  Is that
+>>>>> QEMU_VMALLOC_ALIGN from qemu_anon_ram_alloc()?
+>>>>>
+>>>>> A quick dig tells me that it was used to be for anon THPs..
+>>>>>
+>>>>>        commit 36b586284e678da28df3af9fd0907d2b16f9311c
+>>>>>        Author: Avi Kivity <avi@redhat.com>
+>>>>>        Date:   Mon Sep 5 11:07:05 2011 +0300
+>>>>>
+>>>>>        qemu_vmalloc: align properly for transparent hugepages and KVM
+>>>>>
+>>>>> And I'm guessing if at that time was also majorly for guest ram.
+>>>>>
+>>>>> Considering that this path won't make an effect until the new aux mem
+>>>>> option is on, I'd think it better to stick without anything special like
+>>>>> QEMU_VMALLOC_ALIGN, until it's justified to be worthwhile.  E.g., Avi used
+>>>>> to explicitly mention this in that commit message:
+>>>>>
+>>>>>        Adjust qemu_vmalloc() to honor that requirement.  Ignore it for small regions
+>>>>>        to avoid fragmentation.
+>>>>>
+>>>>> And this is exactly mostly small regions when it's AUX.. probably except
+>>>>> VGA, but it'll be SHARED on top of shmem not PRIVATE on anon anyway... so
+>>>>> it'll be totally different things.
+>>>>>
+>>>>> So I won't worry on that 2M alignment, and I will try to not carry over
+>>>>> that, because then trying to remove it will be harder.. even when we want.
+>>>>
+>>>> Yes, currently the aux allocations get QEMU_VMALLOC_ALIGN alignment in
+>>>> qemu_anon_ram_alloc.  I do the same for the shared fd mappings to guarantee
+>>>> no performance regression,
+>>>
+>>> I don't know how we could guarantee that at all - anon and shmem uses
+>>> different knobs to enable/disable THPs after all.. For example:
+>>>
+>>>     $ ls /sys/kernel/mm/transparent_hugepage/*enabled
+>>>     /sys/kernel/mm/transparent_hugepage/enabled
+>>>     /sys/kernel/mm/transparent_hugepage/shmem_enabled
+>>
+>> Yes, but at least shmem_enabled is something the end user can fix.  If
+>> we bake a poor alignment into qemu, the user has no recourse.  By setting
+>> it to QEMU_VMALLOC_ALIGN, I eliminate alignment as a potential performance
+>> issue. There is no practical downside.  We should just do it, especially if
+>> you believe "no huge deal on these" as written above :)
+> 
+> I'd wager nobody will be able to notice the anon/shmem difference at all,
+> so if it really regressed nobody will be able fix it. :)
+> 
+> Not to mention it's a global knob, and IMHO it doesn't make a lot of sense
+> to change it for an aux mem not aligned.. while changing a global knob
+> could OTOH break other things.
+> 
+> But sure, if you do prefer having that I'm ok. Please still consider adding
+> a comment then explaining where it came from..
+> 
+>>
+>>> And their default values normally differ too... it means after switching to
+>>> fd based we do face the possibility that thp can be gone at least on the
+>>> 1st 2mb.
+>>>
+>>> When I was suggesting it, I was hoping thp doesn't really matter that lot
+>>> on aux mem, even for VGA.
+>>>
+>>> Btw, I don't even think the alignment will affect THP allocations for the
+>>> whole vma, anyway?  I mean, it's only about the initial 2MB portion.. IOW,
+>>> when not aligned, I think the worst case is we have <2MB at start address
+>>> that is not using THP, but later on when it starts to align with 2MB, THPs
+>>> will be allocated again.
+>>
+>> It depends on the kernel version/implementation.  In 6.13, it is not that
+>> clever for memfd_create + mmap.  An unaligned start means no huge pages anywhere
+>> in the allocation, as shown by the page-types utility.  Add QEMU_VMALLOC_ALIGN,
+>> and I get huge pages.
+>>
+>>> The challenge is more on the "fd-based" side, where shmem on most distros
+>>> will disable THP completely.
+>>>
+>>>> as some of them are larger than 2M and would
+>>>> benefit from using huge pages.  The VA fragmentation is trivial for this small
+>>>> number of aux blocks in a 64-bit address space, and is no different than it was
+>>>> for qemu_anon_ram_alloc.
+>>>>
+>>>>> For the 2nd.. Any quick answer on why explicit qemu_set_cloexec() needed?
+>>>>
+>>>> qemu sets cloexec for all descriptors it opens to prevent them from accidentally
+>>>> being leaked to another process via fork+exec.
+>>>
+>>> But my question is why this is special?  For example, we don't do that for
+>>> "-object memory-backend-memfd", am I right?
+>>
+>> We should, the backends also need to set cloexec when they use a cpr fd.
+>> I'll delete the call here and push it into cpr_find_fd.
+> 
+> Maybe we already have that?  As CPR receives fds from iochannels.  I am
+> looking at qio_channel_socket_copy_fds(), where we have:
+> 
+> #ifndef MSG_CMSG_CLOEXEC
+>              qemu_set_cloexec(fd);
+> #endif
+
+Oh, interesting.  qio_channel_socket_readv sets MSG_CMSG_CLOEXEC, and this
+is the fallback if MSG_CMSG_CLOEXEC is not defined.  QEMU does a good job of
+setting cloexec everywhere.  I'll remove my extra call.
+
+>>>>> For 3rd, tracepoint would definitely be fine whenever you feel necessary.
+>>>>>
+>>>>>> Also, when qemu_memfd_create + qemu_ram_alloc_from_fd fails, qemu should fail and exit,
+>>>>>> and not fall back, because something unexpected went wrong.  David said the same.
+>>>>>
+>>>>> Why?  I was trying to rely on such fallback to make it work on e.g. Xen.
+>>>>> In that case, Xen fails there and fallback to xen_ram_alloc() inside the
+>>>>> later call to ram_block_add(), no?
+>>>>
+>>>> Why -- because something went wrong that should have worked, and we should report the
+>>>> first fault so its cause can be fixed and cpr can be used.
+>>>
+>>> Ahh so it's only about the corner cases where CPR could raise an error?
+>>> Can we rely on the failure later on "migrate" command to tell which
+>>> ramblock doesn't support it, so the user could be aware as well?
+>>
+>> The ramblock migration blocker will indeed tell us which block is a problem.
+>>
+>> But, we are throwing away potentially useful information by dropping the
+>> first error message on the floor. We should only fall back for expected
+>> failures.  Unexpected failures mean there is something to fix.
+>>
+>> I can compromise and fail on errors from these:
+>>    qemu_memfd_create(name, 0, 0, 0, 0, errp);
+>>    qemu_shm_alloc(0, errp);
+> 
+> How are we going to be sure all existing systems using RAM_SHARED ramblocks
+> will always succeed on either memfd or sysv shm?  IOW, what if there's a
+> system that can only support mmap(MAP_SHARED) but none of the two?
+
+Non-POSIX will still quietly use mmap(MAP_SHARED) via ifdefs.
+I'll post V5 soon and we can further refine if necessary.
+
+- Steve
+
+> That's my major concern, on start failing some systems where it used to
+> work, even if they're corner cases.
+> 
+>>
+>> but ignore errors from the subsequent call to qemu_ram_alloc_from_fd,
+>> and fall back. That keeps the code simple.
+>>
+>>>> However, to do the above, but still quietly fallback if qemu_ram_alloc_from_fd
+>>>> fails because of xen or kvm, I would need to return different error codes from
+>>>> qemu_ram_alloc_from_fd.  Doable, but requires tweaks to all occurrences of
+>>>> qemu_ram_alloc_from_fd.
+>>>>
+>>>> And BTW, qemu_ram_alloc_from_fd is defined for CONFIG_POSIX only.  I need
+>>>> to modify the call site in the patch accordingly.
+>>>
+>>> Yep, I was thinking maybe qemu_ram_alloc_from_fd() had a stub function,
+>>> indeed looks not..  "allocating the fd" part definitely has, which I
+>>> remember I checked..
+>>>
+>>>> Overall, I am not convinced that using qemu_ram_alloc_from_fd in this patch
+>>>> is better/simpler than my V4 patch using file_ram_alloc, plus adding xen and
+>>>> kvm_has_sync_mmu checks in qemu_ram_alloc_internal.
+>>>
+>>> As long as you don't need to duplicate these two checks (or duplicate any
+>>> such check..) I'm ok.
+>>>
+>>> Reusing qemu_ram_alloc_from_fd() still sounds like the easiest to go.  Yes
+>>> we'll need to teach it about resize(), used_length etc. to it, but they all
+>>> look sane to me.  We didn't have those simply because we don't have use of
+>>> them, now we want to have resizable fd-based mem, that's the right thing to
+>>> do to support that on fd allocations.
+>>>
+>>> OTOH, duplicating xen/mmu checks isn't sane to me.. :( It will make the
+>>> code harder to maintain because the 3rd qemu_ram_alloc_from_fd() in the
+>>> future will need to duplicate it once more (or worse, forget it again until
+>>> xen / old kernels reports a failure)..
+>>
+>> I'll make the necessary changes to use qemu_ram_alloc_from_fd.
+> 
+> Thanks.
+> 
+
 
