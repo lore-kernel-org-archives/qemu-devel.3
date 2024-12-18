@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C010E77184
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 01:45:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DE55E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 03:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNj7W-000788-JP; Tue, 17 Dec 2024 20:45:02 -0500
+	id 1tNkcS-0001AS-NE; Tue, 17 Dec 2024 22:21:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tNj7V-00077i-4X
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 20:45:01 -0500
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNkcQ-0001AA-MU
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 22:21:02 -0500
+Received: from mail-ot1-x333.google.com ([2607:f8b0:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tNj7T-0007GH-9F
- for qemu-devel@nongnu.org; Tue, 17 Dec 2024 20:45:00 -0500
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-216634dd574so34716605ad.2
- for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 17:44:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNkcK-0005xf-JG
+ for qemu-devel@nongnu.org; Tue, 17 Dec 2024 22:21:02 -0500
+Received: by mail-ot1-x333.google.com with SMTP id
+ 46e09a7af769-71e2a32297dso195568a34.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Dec 2024 19:20:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734486298; x=1735091098; darn=nongnu.org;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ooLVj43p9vkhKiKtVu2n7rlFQaqiKe5x9AtS6yKY+dU=;
- b=ZeuGNIEa95do9ks9/Oyws+XM+i7Sdfliuq5TKW4/ThxVjJihfeOg6OdF1LLKDzfqXy
- ozu/r9yLoN17MnowuGgUgEM7ucw5NFnEgo7VCl2Fp4ps9gB6w+5Wbvjklz2xVi6zFmDs
- bPYNp/oD4RUyfNbYOSIl6GJKUeZmBo/Kpio3++BqJ/T3g55hnJ68iog6FOSyFb2HglIK
- NCTKhUP6atXbeKxSmyCfeCkgouobklPQyg3hs3cm/JB0YQlPhuoTeZwhNT1yRs3z3UiY
- Z5yQtT0qhSkMNooJP4OZKfKtfsbFI4LLmJ2vnSAWkc7V6A+gx2Bfhkb6oMZski0yZQ65
- mofg==
+ d=linaro.org; s=google; t=1734492054; x=1735096854; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=l9Gs5939KdWOiyzBIhFayRd6sPveSpvp6F/s/j87HVw=;
+ b=v8hHp1mJhnqlgoc1WGwdb91jmXVdFY/s917jjcuBuVUddI/FB64mUM7VAK2bXZzksU
+ hOxnM1sPFzXnC5nxbXmw5QPzejgL8XgGSp+N54KUM9Tdi6+HaNxLdGyhpa6RKQ/Uwg63
+ clWDQdyN3yGcE9TLltSsKlk4lzwyN3w/KCB7ZJkLtTQbXXjmcYJ41tVlflZjIp/r+iiS
+ iotdqJjda+GVpu8pEBE0k1xA++0Mk1PVZwo+l87Zr1MuoAlGTajEMJVqYFOMoy+8TB3N
+ F+lC4AmgYZhUYYdH9l0takzWAyAp48q2JbTwNrm7dFoatHPj/cCiNjFw4Pkgv4vcJMw9
+ pSbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734486298; x=1735091098;
- h=in-reply-to:references:from:subject:cc:to:message-id:date
- :content-transfer-encoding:mime-version:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=ooLVj43p9vkhKiKtVu2n7rlFQaqiKe5x9AtS6yKY+dU=;
- b=wz52TXtSwhjnEhIFNl2V1ewz2Fupu3uEagN8z8YIJw2N298RFKaxlpI/P9VI3DkRxX
- HTZGyRtpiTpE4Rf4Q+SaWhC2TL5sitb15J3OCB3JyX/OBvTLpg6A82qdH8sVAH+cw8ys
- tUORW5mvqyLkC0XNqZbXgtRnZEOM6MRtv5bKTBzaI3grcReE5C1Ch3rxW/3KkHaXPtPw
- rKN9EDAQ3GX5/OBJbkZxdjw2DX8luexCarY0s6b7Lhfc/CDb6hIKxbtBGvQMK7zgjOe1
- RSHUeb3+XADjqpbt8Jl2ZkFfuOZvNRlBUzbhNnKLNanr6SxF/hEyS388ZSKJ8VfROl94
- hYXg==
+ d=1e100.net; s=20230601; t=1734492054; x=1735096854;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=l9Gs5939KdWOiyzBIhFayRd6sPveSpvp6F/s/j87HVw=;
+ b=hEWeoMiLtIxGVLMVi9VAbCrlFAdAUChsPM4LsJFYnmIRHx51S4kBK7a3bv7EwbrFOk
+ XyM7Xn8E/wmxB1G/MnQK+59/7WOUgWQDlkcH0RY13SfqHLouQEfRKP3ngzOJxwbOcHcV
+ Qc5gckdS+2kCwvweEDjYyP6W0hU5y729EyNAvWx0aCctoxCcub2vtfRYiEdcxTacoDK4
+ z+Ir0wCJINd3TheYFHhYiOp6O+fjtegyYv0oNQ8v9AmDZSRXx1CzuJizunbQKWc0i5ZQ
+ ZUKkowVbTk9Gky+wloIyqPYMA98PCvx2ME+liF4F0YWEFNvaBaNZMitcraazCKGUu07t
+ scwQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVspZ8jZCm4fO4KRUNuCNztSC1Hqg/Kc3l5mfa4K/mZXFlLOkMwiRZAzq7FiA+fgwJej5b0fR4KBf3J@nongnu.org
-X-Gm-Message-State: AOJu0YzXJsBN1xwZ7xUA9CGzHLjOVTAOSRZfZQpnUSCx9omROSPamEga
- T39nxYwueEN1MoiwOj7RrhcmM3jnL0Y7V5TrgYHg30RwceBpAmJZ
-X-Gm-Gg: ASbGncuJpSEUUGXIciPXRCo3Q86jUlawNaGTl+uUuH3rvuO7LGs5tIYdIJ38LHcr/1H
- rA9ps1KVviDvdlzHg3SycLBMGetvh09dbVjR03g6oyq9xAMHrZZ82iYUe2vRFJsSNGEq4S/0qcc
- P+oH37bHBIZivxXkpWEIkC4UHS44QZeR5qJB+bLsYAjzcVTOze4G42xsWZAyDxxJPkn9W165RiR
- 59K2CUW4rPs0N0xc2Q4CC1FG8q1e3+Wv7HU+9lArphwInMuagBQYa8rO6dgUggzLPt3a0N6AoM=
-X-Google-Smtp-Source: AGHT+IE4tOUGRvaImZe5ju8R/fRdDrOg/hJc9lnToAuxeP/THu+EwaJt2vRi3vx7JXwtFX2ZR7bd/g==
-X-Received: by 2002:a17:902:fc4d:b0:216:7cbf:951f with SMTP id
- d9443c01a7336-218d6fdcc6bmr14393775ad.21.1734486297816; 
- Tue, 17 Dec 2024 17:44:57 -0800 (PST)
-Received: from localhost (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ AJvYcCXjamVikT5FhMsDYfPRrsCJYzZDbS0krJPLTmJFknOHRZt6AqCA2PGmL4plGp4rhP0pvrFw4fM+cT4E@nongnu.org
+X-Gm-Message-State: AOJu0YwLwvVVq1sQfakSqhyHb6eofFcxa3vReJFHdabpqIq4WnMlkezZ
+ q6+dllQAKdAimxf/Mb/R6dNaaq4VadxPfGhmYD2CIdWnK/ZwTxnG0LRUOZuAPP4=
+X-Gm-Gg: ASbGnct2uCcAAVJTkIUq3ZfJdUTIuP0QbtsYod+xADhMflyH7v7swLaaTc4UWj7kqzR
+ X4TNNlK0fRN+9Q/5K0uaVHPY1CMWOK299p3SKjFcbVPGucZmq8WpIyr7Ncena93t9J8HUcIpLBl
+ AVB87JblIRA2qoW5H5tasb101LSjqhVaj0pPTkLDekYzb7WOb7twmyOAYur6EJEWIW9n431C/5j
+ HkOQQr60ylFLcp0wS5JW3Dr5yfl1ADTr5RP4yx++p7JqPyfhUvl5iyNs4cHCCR6xJsgVeODtA==
+X-Google-Smtp-Source: AGHT+IGt7nikiLN90I0zGq9IrGZ9BePyGB6Z4WryltmqF0wZYmIFkxHKIeEz5lesmBJ0Y5r9JlPx8A==
+X-Received: by 2002:a05:6830:7003:b0:70f:7375:e2b5 with SMTP id
+ 46e09a7af769-71fb7a58b28mr593619a34.6.1734492053901; 
+ Tue, 17 Dec 2024 19:20:53 -0800 (PST)
+Received: from [172.20.0.130] ([187.217.227.247])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-218a1dcc748sm66166645ad.92.2024.12.17.17.44.53
+ 46e09a7af769-71e484a9edcsm2463868a34.48.2024.12.17.19.20.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Dec 2024 17:44:57 -0800 (PST)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 18 Dec 2024 11:44:50 +1000
-Message-Id: <D6EG2PWL6EFK.2I261I824YNAC@gmail.com>
-To: "Akihiko Odaki" <akihiko.odaki@daynix.com>, <qemu-devel@nongnu.org>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, "Marcel Apfelbaum"
- <marcel.apfelbaum@gmail.com>, "Fabiano Rosas" <farosas@suse.de>, "Laurent
- Vivier" <lvivier@redhat.com>, "Paolo Bonzini" <pbonzini@redhat.com>,
- "Dmitry Fleytman" <dmitry.fleytman@gmail.com>, "Sriram Yagnaraman"
- <sriram.yagnaraman@ericsson.com>
-Subject: Re: [PATCH 3/8] pci/msix: Implement PBA writes
-From: "Nicholas Piggin" <npiggin@gmail.com>
-X-Mailer: aerc 0.18.2
-References: <20241212083502.1439033-1-npiggin@gmail.com>
- <20241212083502.1439033-4-npiggin@gmail.com>
- <5dd989ee-e9d3-4c49-9031-a4bc320bbaa9@daynix.com>
-In-Reply-To: <5dd989ee-e9d3-4c49-9031-a4bc320bbaa9@daynix.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62f.google.com
+ Tue, 17 Dec 2024 19:20:53 -0800 (PST)
+Message-ID: <1b14277a-987e-4f69-b8a1-5a6891ff6fd6@linaro.org>
+Date: Tue, 17 Dec 2024 21:20:50 -0600
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 03/46] tcg/optimize: Add fold_masks_zsa, fold_masks_zs,
+ fold_masks_z
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+References: <20241210152401.1823648-1-richard.henderson@linaro.org>
+ <20241210152401.1823648-4-richard.henderson@linaro.org>
+ <f64769f6-ce7e-4502-9ce9-19bb57306752@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <f64769f6-ce7e-4502-9ce9-19bb57306752@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::333;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -104,52 +103,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Dec 13, 2024 at 3:14 PM AEST, Akihiko Odaki wrote:
-> On 2024/12/12 17:34, Nicholas Piggin wrote:
-> > Implement MMIO PBA writes, 1 to trigger and 0 to clear.
-> >=20
-> > This functionality is used by some qtests, which keep the msix irq
-> > masked and test irq pending via the PBA bits, for simplicity. Some
-> > tests expect to be able to clear the irq with a store, so a side-effect
-> > of this is that qpci_msix_pending() would actually clear the pending
-> > bit where it previously did not. This actually causes some [possibly
-> > buggy] tests to fail. So to avoid breakage until tests are re-examined,
-> > prior behavior of qpci_msix_pending() is kept by changing it to avoid
-> > clearing PBA.
-> >=20
-> > A new function qpci_msix_test_clear_pending() is added for tests that
-> > do want the PBA clearing, and it will be used by XHCI and e1000e/igb
-> > tests in subsequent changes.
->
-> The specification says software should never write Pending Bits and its=
-=20
-> result is undefined. Tests should have an alternative method to clear=20
-> Pending Bits.
+On 12/17/24 14:03, Pierrick Bouvier wrote:
+>> +__attribute__((unused))
+>> +static bool fold_masks_zs(OptContext *ctx, TCGOp *op,
+>> +                          uint64_t z_mask, uint64_t s_mask)
+>> +{
+>> +    return fold_masks_zsa(ctx, op, z_mask, s_mask, -1);
+>> +}
+>> +
+>> +__attribute__((unused))
+>> +static bool fold_masks_z(OptContext *ctx, TCGOp *op, uint64_t z_mask)
+>> +{
+>> +    return fold_masks_zsa(ctx, op, z_mask, smask_from_zmask(z_mask), -1);
+>> +}
+>> +
+>> +static bool fold_masks(OptContext *ctx, TCGOp *op)
+>> +{
+>> +    return fold_masks_zsa(ctx, op, ctx->z_mask, ctx->s_mask, ctx->a_mask);
+>> +}
+>> +
+>>   /*
+>>    * Convert @op to NOT, if NOT is supported by the host.
+>>    * Return true f the conversion is successful, which will still
+> 
+> I see the direction, but why not simply use a structure for this?
+> 
+> If I understand correctly, we'll only pass the masks to callees, so it's easy to pass the 
+> pointer down (without any heap allocation needed), and we can have associated builder 
+> functions to create the struct only with a limited set of masks, or directly from an 
+> existing "ctx".
 
-Thanks for correcting me. I guess qpci_msix_pending() should not be
-trying to write to the PBA either then.
+Why would we want to use a structure?  I'm confused by the question.
 
-> A possible solution is to unmask the interrupt, wait until the Pending=20
-> Bits get cleared, and mask it again.
 
-PCI spec says
-
-  If a masked vector has its Pending bit set, and the associated
-  underlying interrupt events are somehow satisfied (usually by software
-  though the exact manner is function-specific), the function must clear
-  the Pending bit, to avoid sending a spurious interrupt message later
-  when software unmasks the vector. However, if a subsequent interrupt
-  event occurs while the vector is still masked, the function must again
-  set the Pending bit.
-
-It looks like e1000e acutally does that with e1000e_msix_clear{_one}.
-So perhaps this will work just with the e1000e ICR clearing patch. I
-will test.
-
-e1000e and igb are the only devices that call msix_clr_pending. Does
-that mean many others probably do not implement this behaviour
-correctly?
-
-Thanks,
-Nick
+r~
 
