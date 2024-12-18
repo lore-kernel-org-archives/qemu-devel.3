@@ -4,86 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A2EE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:17:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB35E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:34:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNs3O-00037i-MA; Wed, 18 Dec 2024 06:17:22 -0500
+	id 1tNsIf-0005Sn-Ba; Wed, 18 Dec 2024 06:33:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNs3N-00033A-3c
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:17:21 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNs3K-00086R-7f
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:17:20 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-436341f575fso50631925e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 03:17:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734520635; x=1735125435; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=S+DB6N73yHGvsAXmUommk/ZUinIeBiSObIv3EDMmrBc=;
- b=DvgxtCf8qbud83AuklimUURy8pEUd4rDBSqpoYQgu5J2I/uwdrgA+wq2pSbjwQtBuM
- 05SfkgO4hccdUYcGTru5/djL0A/U8R+SFvfOX5IdGbi0IMiRUawD/68Zjh3yNdt0dv6o
- g62YlW+huFOEf5sPTx5P1J7iPeHcmc2RqecdHi+oRDWxMvdsBOvhqsCrk9ng/0xK7EWu
- F07j7aiJcdzxuDDskzN2yd2opqw8SML20L6gd0/no+VJfTuuW9ohhEu+upBWSDpJJ69Q
- tzV3/TjgMz4AEd/djy6a9znSK617cdJ7etOtMGVvZ70J4vawMw5j8XAxACgaWcBKlMR9
- Vdkw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734520635; x=1735125435;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S+DB6N73yHGvsAXmUommk/ZUinIeBiSObIv3EDMmrBc=;
- b=J+7BWAXy3wGPA3x2fxpGQ1pOcLANBrJ3toj7amLnT5RUFiaQSuU9M4qUuioqoPihyQ
- zoxe0ZcxRLv/OoLolq1VhZWPaqi/P/MVonqPpDNqlB0UlOBnLzAbs9mbT2xtgCW/moTt
- J5Zx5mYE86AAS79pcAyKty2mPIuaM+suLenC8f0P/SP/V57U92RJfeRFD8j+jMyoTkpo
- CgXoOTkGb+eu58EJ8jQkQ3qEiqukK8PbYAkAlALD32Bu8RMMEcMH0gOORavWDGYYpf6y
- p1FwL61cLwUgCEcXCgjG9gzbTw1/Ifqrbltdkoyhbcq53O9JCeLaCRC40oaIsKHt2a3B
- YOSA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlQKYpzoTMccaq+3AB2CT7xSvarLP7Pv5fdZZ9nLii+Imxb8j5JliRlFvCA+Rxon+sv8uFnS8ymy13@nongnu.org
-X-Gm-Message-State: AOJu0Yw1AHBK54NL/SKhpqTZKInTdab2rE7kXNLIXKxjsAqeexhu3C1Q
- P+3oTN1sdDNJLGi+hJgnlgnOiUMZY5BrQceM0QTnW2LG/pSnWrvxs8NOzAMfXuE=
-X-Gm-Gg: ASbGncsfyeMHO3VjWApbjIJdDFzRLisYrTONQzEciQQM5/pC0DbPUTuN6sdg3pHsLPa
- /yySzsh05TttCCeiDJBWy+WPsQMHC2C7oNmCEILYr4qc9WrcvP5JuJtAfITWbxPgPIY6hhaE2nK
- oKnCCMfdbhod45LeZ7fN2NSNjfM4W2cY0kC32dGQ+Mdz8ReH6HZ7/pIa6G/hWkSx/Yoe6Fc3dL/
- euWExyxN26Hkb0oBW6TmTOY2Khe58bUm2zlftt8R0M4dcxd7lL5GD0DVZUr8yvoa53uCC1b
-X-Google-Smtp-Source: AGHT+IGbWE0XttpHCE/SxeKtb2o43ZYzjwwHRxUlBlCCjHUwO3Qcs+aRXoJ+9uhRfvcCUGr4NB/K8Q==
-X-Received: by 2002:a05:6000:2a4:b0:385:f66a:4271 with SMTP id
- ffacd0b85a97d-388e4d6a338mr1994183f8f.4.1734520634899; 
- Wed, 18 Dec 2024 03:17:14 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c801a487sm14070763f8f.45.2024.12.18.03.17.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 03:17:14 -0800 (PST)
-Message-ID: <ecac6a6d-163d-42ba-83f5-e4e5980c9ee3@linaro.org>
-Date: Wed, 18 Dec 2024 12:17:13 +0100
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNsId-0005SP-EO
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:33:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNsIb-0006Ax-As
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:33:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734521581;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=6frv4J3h4Ygv7dh5HoDHxdNsd0NFWgQu07JMHnEE8Is=;
+ b=cHNBOZF+rkn8hQedfH7mMGP39SZTG2Q+C/tryGUZO3SSDHOR5gNogs/STPIpjkoksWImrd
+ V6zvrdDRshcXsL+tQlH7uNoQ7udvZNbLdZ7vM882vQ8T4nkUFijaaS/e3irGjoOmx0lHM/
+ yLXndRJanfFUX60PxxgtyH/4/HFVVZM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-rDVhukIOO8WXPY2mPwHFtg-1; Wed,
+ 18 Dec 2024 06:33:00 -0500
+X-MC-Unique: rDVhukIOO8WXPY2mPwHFtg-1
+X-Mimecast-MFC-AGG-ID: rDVhukIOO8WXPY2mPwHFtg
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D947B19560B3; Wed, 18 Dec 2024 11:32:58 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6CF13195394B; Wed, 18 Dec 2024 11:32:57 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Paul Durrant <paul@xen.org>,
+	David Woodhouse <dwmw2@infradead.org>
+Subject: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+Date: Wed, 18 Dec 2024 12:32:49 +0100
+Message-ID: <20241218113255.232356-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] rust: pl011: bug fixes
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-References: <20241212172209.533779-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241212172209.533779-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,30 +80,223 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/12/24 18:21, Paolo Bonzini wrote:
-> While preparing the comparison at
-> https://lists.nongnu.org/archive/html/qemu-rust/2024-12/msg00006.html,
-> I noticed some bugs in the code.  These are the corresponding fixes.
-> 
-> CCing Philippe because he expressed interest in bringing the Rust
-> version on par with the C version of the pl011 device.
+Use the serial console to execute the commands in the guest instead
+of using ssh since we don't have ssh support in the functional
+framework yet.
 
-Also cc'ing Zhao.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS                                   |  2 +-
+ tests/functional/meson.build                  |  2 +
+ .../test_x86_64_kvm_xen.py}                   | 81 +++++++++++--------
+ 3 files changed, 51 insertions(+), 34 deletions(-)
+ rename tests/{avocado/kvm_xen_guest.py => functional/test_x86_64_kvm_xen.py} (64%)
+ mode change 100644 => 100755
 
-> Paolo Bonzini (7):
->    rust: pl011: fix declaration of LineControl bits
->    rust: pl011: match break logic of C version
->    rust: pl011: always use reset() method on registers
->    rust: pl011: fix break errors and definition of Data struct
->    rust: pl011: extend registers to 32 bits
->    rust: pl011: fix migration stream
->    rust: pl011: simplify handling of the FIFO enabled bit in LCR
-> 
->   rust/hw/char/pl011/src/device.rs       | 119 +++++++++++-------
->   rust/hw/char/pl011/src/device_class.rs |   8 +-
->   rust/hw/char/pl011/src/lib.rs          | 161 +++++++++++++------------
->   rust/qemu-api/src/vmstate.rs           |  22 ----
->   4 files changed, 160 insertions(+), 150 deletions(-)
-> 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 430a0f4f8c..389b390de1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -484,7 +484,7 @@ S: Supported
+ F: include/sysemu/kvm_xen.h
+ F: target/i386/kvm/xen*
+ F: hw/i386/kvm/xen*
+-F: tests/avocado/kvm_xen_guest.py
++F: tests/functional/test_x86_64_kvm_xen.py
+ 
+ Guest CPU Cores (other accelerators)
+ ------------------------------------
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 16d4bd903f..8c3d1c26da 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -42,6 +42,7 @@ test_timeouts = {
+   'riscv64_tuxrun' : 120,
+   's390x_ccw_virtio' : 420,
+   'sh4_tuxrun' : 240,
++  'x86_64_kvm_xen' : 180,
+ }
+ 
+ tests_generic_system = [
+@@ -254,6 +255,7 @@ tests_x86_64_system_thorough = [
+   'netdev_ethtool',
+   'virtio_gpu',
+   'x86_64_hotplug_cpu',
++  'x86_64_kvm_xen',
+   'x86_64_tuxrun',
+ ]
+ 
+diff --git a/tests/avocado/kvm_xen_guest.py b/tests/functional/test_x86_64_kvm_xen.py
+old mode 100644
+new mode 100755
+similarity index 64%
+rename from tests/avocado/kvm_xen_guest.py
+rename to tests/functional/test_x86_64_kvm_xen.py
+index f8cb458d5d..849b4ecfc2
+--- a/tests/avocado/kvm_xen_guest.py
++++ b/tests/functional/test_x86_64_kvm_xen.py
+@@ -1,3 +1,5 @@
++#!/usr/bin/env python3
++#
+ # KVM Xen guest functional tests
+ #
+ # Copyright © 2021 Red Hat, Inc.
+@@ -13,17 +15,10 @@
+ 
+ from qemu.machine import machine
+ 
+-from avocado_qemu import LinuxSSHMixIn
+-from avocado_qemu import QemuSystemTest
+-from avocado_qemu import wait_for_console_pattern
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
+ 
+-class KVMXenGuest(QemuSystemTest, LinuxSSHMixIn):
+-    """
+-    :avocado: tags=arch:x86_64
+-    :avocado: tags=machine:q35
+-    :avocado: tags=accel:kvm
+-    :avocado: tags=kvm_xen_guest
+-    """
++class KVMXenGuest(QemuSystemTest):
+ 
+     KERNEL_DEFAULT = 'printk.time=0 root=/dev/xvda console=ttyS0'
+ 
+@@ -33,14 +28,15 @@ class KVMXenGuest(QemuSystemTest, LinuxSSHMixIn):
+     # Fetch assets from the kvm-xen-guest subdir of my shared test
+     # images directory on fileserver.linaro.org where you can find
+     # build instructions for how they where assembled.
+-    def get_asset(self, name, sha1):
+-        base_url = ('https://fileserver.linaro.org/s/'
+-                    'kE4nCFLdQcoBF9t/download?'
+-                    'path=%2Fkvm-xen-guest&files=' )
+-        url = base_url + name
+-        # use explicit name rather than failing to neatly parse the
+-        # URL into a unique one
+-        return self.fetch_asset(name=name, locations=(url), asset_hash=sha1)
++    ASSET_KERNEL = Asset(
++        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
++         'path=%2Fkvm-xen-guest&files=bzImage'),
++        'ec0ad7bb8c33c5982baee0a75505fe7dbf29d3ff5d44258204d6307c6fe0132a')
++
++    ASSET_ROOTFS = Asset(
++        ('https://fileserver.linaro.org/s/kE4nCFLdQcoBF9t/download?'
++         'path=%2Fkvm-xen-guest&files=rootfs.ext4'),
++        'b11045d649006c649c184e93339aaa41a8fe20a1a86620af70323252eb29e40b')
+ 
+     def common_vm_setup(self):
+         # We also catch lack of KVM_XEN support if we fail to launch
+@@ -51,10 +47,8 @@ def common_vm_setup(self):
+         self.vm.add_args("-accel", "kvm,xen-version=0x4000a,kernel-irqchip=split")
+         self.vm.add_args("-smp", "2")
+ 
+-        self.kernel_path = self.get_asset("bzImage",
+-                                          "367962983d0d32109998a70b45dcee4672d0b045")
+-        self.rootfs = self.get_asset("rootfs.ext4",
+-                                     "f1478401ea4b3fa2ea196396be44315bab2bb5e4")
++        self.kernel_path = self.ASSET_KERNEL.fetch()
++        self.rootfs = self.ASSET_ROOTFS.fetch()
+ 
+     def run_and_check(self):
+         self.vm.add_args('-kernel', self.kernel_path,
+@@ -79,10 +73,11 @@ def run_and_check(self):
+         console_pattern = 'Starting dropbear sshd: OK'
+         wait_for_console_pattern(self, console_pattern, 'Oops')
+         self.log.info('sshd ready')
+-        self.ssh_connect('root', '', False)
+ 
+-        self.ssh_command('cat /proc/cmdline')
+-        self.ssh_command('dmesg | grep -e "Grant table initialized"')
++        exec_command_and_wait_for_pattern(self, 'cat /proc/cmdline', 'xen')
++        exec_command_and_wait_for_pattern(self, 'dmesg | grep "Grant table"',
++                                          'Grant table initialized')
++        wait_for_console_pattern(self, '#', 'Oops')
+ 
+     def test_kvm_xen_guest(self):
+         """
+@@ -94,7 +89,9 @@ def test_kvm_xen_guest(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq.*msi /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq.*msi /proc/interrupts',
++                                'virtio0-output')
+ 
+     def test_kvm_xen_guest_nomsi(self):
+         """
+@@ -106,7 +103,9 @@ def test_kvm_xen_guest_nomsi(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks pci=nomsi')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq.* /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq.* /proc/interrupts',
++                                'virtio0')
+ 
+     def test_kvm_xen_guest_noapic_nomsi(self):
+         """
+@@ -118,7 +117,9 @@ def test_kvm_xen_guest_noapic_nomsi(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks noapic pci=nomsi')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq /proc/interrupts',
++                                'virtio0')
+ 
+     def test_kvm_xen_guest_vapic(self):
+         """
+@@ -130,8 +131,13 @@ def test_kvm_xen_guest_vapic(self):
+         self.kernel_params = (self.KERNEL_DEFAULT +
+                               ' xen_emul_unplug=ide-disks')
+         self.run_and_check()
+-        self.ssh_command('grep xen-pirq /proc/interrupts')
+-        self.ssh_command('grep PCI-MSI /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-pirq /proc/interrupts',
++                                'acpi')
++        wait_for_console_pattern(self, '#')
++        exec_command_and_wait_for_pattern(self,
++                                'grep PCI-MSI /proc/interrupts',
++                                'virtio0-output')
+ 
+     def test_kvm_xen_guest_novector(self):
+         """
+@@ -143,7 +149,9 @@ def test_kvm_xen_guest_novector(self):
+                               ' xen_emul_unplug=ide-disks' +
+                               ' xen_no_vector_callback')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'fasteoi')
+ 
+     def test_kvm_xen_guest_novector_nomsi(self):
+         """
+@@ -156,7 +164,9 @@ def test_kvm_xen_guest_novector_nomsi(self):
+                               ' xen_emul_unplug=ide-disks pci=nomsi' +
+                               ' xen_no_vector_callback')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'IO-APIC')
+ 
+     def test_kvm_xen_guest_novector_noapic(self):
+         """
+@@ -168,4 +178,9 @@ def test_kvm_xen_guest_novector_noapic(self):
+                               ' xen_emul_unplug=ide-disks' +
+                               ' xen_no_vector_callback noapic')
+         self.run_and_check()
+-        self.ssh_command('grep xen-platform-pci /proc/interrupts')
++        exec_command_and_wait_for_pattern(self,
++                                'grep xen-platform-pci /proc/interrupts',
++                                'XT-PIC')
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
+-- 
+2.47.1
 
 
