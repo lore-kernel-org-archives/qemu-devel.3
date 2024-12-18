@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33137E7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C256E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:15:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrxc-0007ly-Br; Wed, 18 Dec 2024 06:11:24 -0500
+	id 1tNrwi-0006Se-HR; Wed, 18 Dec 2024 06:10:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxa-0007eY-Ga
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwd-0006S5-OB
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:24 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrxY-0005uV-4N
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:11:22 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwb-0004wK-2E
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:23 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520278;
+ s=mimecast20190719; t=1734520219;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PyXcW9jwjnweYjxVPzyJN0rVNZBxBa+cbLGr4knT7F8=;
- b=R9d20O/hPf/vimy29uzJE7H54HYflvzPP/aJSrEfur31j8pkX5CftM1r4YavAR1gcGTf90
- o87o9Rl2SvHDXZ4kpM/bYMC0z/xM62hDyH7vdwQxYiBD7Y+DblzCbmKv6igF0w0BQuSoYn
- vU56DJ4ozx8CY5G30qkwwTWPJstO0B4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=cTTn2IhdolQSoysGUEZrfD716N6257SFKdo2UUyZe4g=;
+ b=H6E9WCyBg/if0Wq7NxLzdtj0/sf3RP7Z1Z+bx3Wl+j38lbuQsIpzufmROrKGzQGOewRWdj
+ TMAw3DxsPryvnDGxQl//pIWVPefMXFvnWDMibyCm0kZYqn4VRB6x9NKdrXfSG4nDlm/BJd
+ RNRY6Y3H/5jAllvbbh3fFUcRNL9HiE4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-_CrA04M5NGueG268gYA2Pw-1; Wed,
- 18 Dec 2024 06:11:16 -0500
-X-MC-Unique: _CrA04M5NGueG268gYA2Pw-1
-X-Mimecast-MFC-AGG-ID: _CrA04M5NGueG268gYA2Pw
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-PuLBNXt-NwWzCRNE8XGp4A-1; Wed,
+ 18 Dec 2024 06:10:18 -0500
+X-MC-Unique: PuLBNXt-NwWzCRNE8XGp4A-1
+X-Mimecast-MFC-AGG-ID: PuLBNXt-NwWzCRNE8XGp4A
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 12B381955F57
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:16 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CC2F1956057
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:17 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 51A2F19560AD; Wed, 18 Dec 2024 11:11:14 +0000 (UTC)
+ id A2A7119560AD; Wed, 18 Dec 2024 11:10:15 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 29/38] tests/functional: remove now unused 'run_cmd' helper
-Date: Wed, 18 Dec 2024 12:09:49 +0100
-Message-ID: <20241218110958.226932-30-thuth@redhat.com>
+Subject: [PULL 06/38] tests/functional: drop 'tesseract_available' helper
+Date: Wed, 18 Dec 2024 12:09:26 +0100
+Message-ID: <20241218110958.226932-7-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,59 +85,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-All usage has been replaced by direct 'subprocess' helpers.
+Platforms we target have new enough tesseract that it suffices to merely
+check if the binary exists.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-30-berrange@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20241217155953.3950506-7-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/__init__.py |  2 +-
- tests/functional/qemu_test/cmd.py      | 11 -----------
- 2 files changed, 1 insertion(+), 12 deletions(-)
+ tests/functional/qemu_test/tesseract.py | 12 +-----------
+ tests/functional/test_m68k_nextcube.py  |  8 +++-----
+ 2 files changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index 3bd043e608..da1830286d 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -8,7 +8,7 @@
+diff --git a/tests/functional/qemu_test/tesseract.py b/tests/functional/qemu_test/tesseract.py
+index ef1833139d..1b7818090a 100644
+--- a/tests/functional/qemu_test/tesseract.py
++++ b/tests/functional/qemu_test/tesseract.py
+@@ -7,17 +7,7 @@
  
- from .asset import Asset
- from .config import BUILD_DIR
--from .cmd import run_cmd, is_readable_executable_file, \
-+from .cmd import is_readable_executable_file, \
-     interrupt_interactive_console_until_pattern, wait_for_console_pattern, \
-     exec_command, exec_command_and_wait_for_pattern, get_qemu_img, which
- from .testcase import QemuBaseTest, QemuUserTest, QemuSystemTest
-diff --git a/tests/functional/qemu_test/cmd.py b/tests/functional/qemu_test/cmd.py
-index c8971de00a..dc5f422b77 100644
---- a/tests/functional/qemu_test/cmd.py
-+++ b/tests/functional/qemu_test/cmd.py
-@@ -14,7 +14,6 @@
  import logging
- import os
- import os.path
--import subprocess
  
- 
- def which(tool):
-@@ -28,16 +27,6 @@ def which(tool):
-             return p
-     return None
- 
--def run_cmd(args):
--    subp = subprocess.Popen(args,
--                            stdout=subprocess.PIPE,
--                            stderr=subprocess.PIPE,
--                            universal_newlines=True)
--    stdout, stderr = subp.communicate()
--    ret = subp.returncode
+-from . import has_cmd, run_cmd
 -
--    return (stdout, stderr, ret)
--
- def is_readable_executable_file(path):
-     return os.path.isfile(path) and os.access(path, os.R_OK | os.X_OK)
+-def tesseract_available(expected_version):
+-    (has_tesseract, _) = has_cmd('tesseract')
+-    if not has_tesseract:
+-        return False
+-    (stdout, stderr, ret) = run_cmd([ 'tesseract', '--version'])
+-    if ret:
+-        return False
+-    version = stdout.split()[1]
+-    return int(version.split('.')[0]) >= expected_version
++from . import run_cmd
  
+ def tesseract_ocr(image_path, tesseract_args=''):
+     console_logger = logging.getLogger('console')
+diff --git a/tests/functional/test_m68k_nextcube.py b/tests/functional/test_m68k_nextcube.py
+index 0124622c40..e6e8d4fd3f 100755
+--- a/tests/functional/test_m68k_nextcube.py
++++ b/tests/functional/test_m68k_nextcube.py
+@@ -13,7 +13,8 @@
+ from qemu_test import QemuSystemTest, Asset
+ from unittest import skipUnless
+ 
+-from qemu_test.tesseract import tesseract_available, tesseract_ocr
++from qemu_test import has_cmd
++from qemu_test.tesseract import tesseract_ocr
+ 
+ PIL_AVAILABLE = True
+ try:
+@@ -53,10 +54,7 @@ def test_bootrom_framebuffer_size(self):
+         self.assertEqual(width, 1120)
+         self.assertEqual(height, 832)
+ 
+-    # Tesseract 4 adds a new OCR engine based on LSTM neural networks. The
+-    # new version is faster and more accurate than version 3. The drawback is
+-    # that it is still alpha-level software.
+-    @skipUnless(tesseract_available(4), 'tesseract OCR tool not available')
++    @skipUnless(*has_cmd('tesseract'))
+     def test_bootrom_framebuffer_ocr_with_tesseract(self):
+         self.set_machine('next-cube')
+         screenshot_path = os.path.join(self.workdir, "dump.ppm")
 -- 
 2.47.1
 
