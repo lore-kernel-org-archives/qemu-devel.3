@@ -4,98 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCA62E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:19:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8BD9E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:20:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwl5-0005hb-JI; Wed, 18 Dec 2024 11:18:47 -0500
+	id 1tNwm9-0006e4-OK; Wed, 18 Dec 2024 11:19:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwkw-0005Zw-10
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:41 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNwkr-00046V-OJ
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:18:36 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so45379115e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:18:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734538711; x=1735143511; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9fO8nMjzZFLc8R8WzCO9PefY3tpK9vwCpbuaZ4XFGiY=;
- b=R9sTHckGlKWUKRNUgkJeBDHqpeuV1pCZuczxPw1q4q5yXhLqwixqNbPGeaDTuQ3vQo
- mQUOM6WBEl3OFKBdXRxG7JACpz0tolnrwlLVKrCwj+7pc+sbyslagfez777OFSiNQZ1T
- PhxhzY0SlnMmuIbr+c+zQl5Z78jBbpjNqzVeaPJnuGRjxA/rHmS+9vBPB6AuRahyueH9
- F7mzYNDrXu/qCj4X1vVOTJrDYNgHggq/2HAhzAotC/EPDCWkbhIo83G67FE3bP7QetWp
- GikxWpnceQ+2+wNi1XDctyCB1buVM18qfy5rfKR03UGZoqPfoj51/SsB94PWyGIUB18r
- daog==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwm7-0006dv-2D
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:19:51 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNwm5-00050r-Ic
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:19:50 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734538787;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=j3XyJ5bpmJgpMxCqNdRPyXMasy9LSv/6OnPBGcNEsCI=;
+ b=cfMCTdKXxMY3vB/odUdDy8846APHgofMrq0VPEdjWrz6sUJI8RwA/JOUZnAiJrUugPURTa
+ 7Wl9GW3GEfbz48XE4kIcnqbfrfcpjihNXpO5rt8XuHKEC4qR4NKKSHfFyBaryqBBkc9RmG
+ Ru5lxbfw/fUoOjLVpKUOluxMFtXh1g4=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-492-IG0tFgMeNQ21I7sBvDOzUw-1; Wed, 18 Dec 2024 11:19:46 -0500
+X-MC-Unique: IG0tFgMeNQ21I7sBvDOzUw-1
+X-Mimecast-MFC-AGG-ID: IG0tFgMeNQ21I7sBvDOzUw
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6d889fd0fd6so17479696d6.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:19:46 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734538711; x=1735143511;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9fO8nMjzZFLc8R8WzCO9PefY3tpK9vwCpbuaZ4XFGiY=;
- b=SGNUQIG5fy7P6y0a4NcM+uGA/6iYix621jHGQoUfJgiymGbJ8EjBxOVZlWBm1fiNE5
- HH7KPkke///9Zy0BQusK2h9TvjNRz+JUsKWX3evckOJ3yyY02b/9RsECuWO87BA6so+F
- Mp2qpdoWaf0v4FDn6mFE3zmBsd2390y7f6j9aEC02QR0LFFH2QCf3nxD19l/UHb0+gCt
- yW+KazHGsojwOABN+oUdtX7KCmWUVnNu6gDoewBPDjAnO4EqKWvmn56qq2syUQE2xaGh
- zZhsbA+/dvjN9G+udw0ZdrXjH4obYG0IBB+OHC5GQeJIHvcczEULOosdB+RyA2gV3RB4
- vdsg==
-X-Gm-Message-State: AOJu0YyaIVMu1KH2mj1eSmMpQwIYg8Bynoi7suo3q/xfvZY4n2t5i9Vo
- a4HramCmpUuYYuGjdzGYBPh673it8fqs8mb6JDnYVGk2qDeMbGYwwyudwrytUzQeQob7PnFyaKh
- l
-X-Gm-Gg: ASbGncvSJOIV0lOxlq3PhiYLhAxo1/eraR7g3iZEB0YjKA/K7GvJBl9UZcjUj4gvknG
- 4MBwBnzpzczLT1bJGeF1rqIY/hAY3j3y15Q1K840ck4IKVXF4Eo+xl2E7fyJuwl0XJsmLM2iOuu
- 0O7i/ajrhxm/BAOD7UyJDcxkzF8TUwdTxFyoOdn1lQ1Tv+cJoYO8UHSefuCyjEniTaQgdmDT+in
- gYiux/HB8URwCIE/Y5yXnsJt1y5V1fbrbM6/tPIryryCNz22Y/p8OQ3DiUMw+SmsmoSsJ1k
-X-Google-Smtp-Source: AGHT+IHKmuvMJW7nt1Lc5C2c7tw2Z7JNAi6p9+cbthJj4Q2DIpLHipgLC7L9mplOXcKwdUSugJuFvA==
-X-Received: by 2002:a05:600c:190f:b0:434:9e1d:7626 with SMTP id
- 5b1f17b1804b1-436553f4992mr27309735e9.25.1734538711536; 
- Wed, 18 Dec 2024 08:18:31 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b015absm24745605e9.13.2024.12.18.08.18.30
+ d=1e100.net; s=20230601; t=1734538786; x=1735143586;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=j3XyJ5bpmJgpMxCqNdRPyXMasy9LSv/6OnPBGcNEsCI=;
+ b=bre3iaXNVpwxST0aw1PUfS/rsnm5PrysBkFVohR5jbDECkOzhfF1aPNq2l3Pc11bmV
+ b3C7uWEUDKwYCewoJFcooSp5cjywXQyUtxflwpOJNCbd2omO7XB9BmWnBT/8ufJ5C9OA
+ q+KYBXU0iGhR4197aTYq8zD/O0hiHPOkToFZkpf/xUQUXlOaOn/VraLOv0Gc2kjvTzYb
+ adg7Ujqq7Bd5/XrQw4w4oomEDFPkHtcSD46HAYbcxvTp3OqHevqodQEmdR1JUfoycjdR
+ VSZFceu8r4SYf/HowHrorNwFCvEvpqIkyu6m+mGCsIYtwW+mx+ytOduaRDwYjEWxYTzS
+ arSw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUH2vaFAYB8+FDF7YLlTnL8bIQ3o/bbx4G7CPU25QzYmYoUNDqcijGe/ixCyfmAalzuAcWNvHsI7tIg@nongnu.org
+X-Gm-Message-State: AOJu0YyZwPuqkWk7htXBmZ+u1KWj4INoE0brZavcFmPYTnXHNkRgdcAw
+ taShgLA3dMudfkOAIDu0MeuJAYHThAcWW3kK8t014ANKnJwFr5roozxOOrv2NIWWpMTpYy+vCdt
+ aLJqPqc+NWxy1i1ag9T+6wMCNdD8GYHRB4wwzEPhG0YnSfaEC+HcEIMExzlv4
+X-Gm-Gg: ASbGncs+oFkFWsjXnBZKPFaI+Bh5OMXZtxbzmCbNAmmg1cbW1Htc6RPa6dzh413YD5u
+ VOa0m3n/s0UmcHh8iiREC6ES2uyVS4AscEU5o7Lv385ArcEGea7R3OOxo9zp+z5ry2CnP2MES3+
+ OgtAZqu/tsW1iCHaBiFxu2LZS5OilEXw6LF/8cn5lD/EMpappC6LsSrBBpUTtR31P0CDW5GR4mL
+ 78/BLwr900SJ+uuLH1eHDcPMWVyV8lNHOtQaCx/T5GaVQIUugQGCkiXV+1B2Hs9ZAaVXXHJISiC
+ jdKFQVovsb9x
+X-Received: by 2002:ad4:4ea1:0:b0:6d8:98a0:23b6 with SMTP id
+ 6a1803df08f44-6dd09967a9dmr51220346d6.4.1734538784747; 
+ Wed, 18 Dec 2024 08:19:44 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGULovIGtPfp+N6I0Guq3apKUWMPq2Q72WU52J0fzZl/tf8Tf4D236zGdb2zWxhJJUthUioqA==
+X-Received: by 2002:ad4:4ea1:0:b0:6d8:98a0:23b6 with SMTP id
+ 6a1803df08f44-6dd09967a9dmr51220016d6.4.1734538784424; 
+ Wed, 18 Dec 2024 08:19:44 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
+ [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd26d07asm51919876d6.58.2024.12.18.08.19.43
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 08:18:31 -0800 (PST)
-Message-ID: <027fccdc-4ae8-4761-907a-3810b8e30cbb@linaro.org>
-Date: Wed, 18 Dec 2024 17:18:30 +0100
+ Wed, 18 Dec 2024 08:19:44 -0800 (PST)
+Message-ID: <f987b60d-9e73-4f6a-ae48-857f7af6cddc@redhat.com>
+Date: Wed, 18 Dec 2024 17:19:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] target/i386/sev: Reduce system specific declarations
-To: qemu-devel@nongnu.org
-Cc: Eric Farman <farman@linux.ibm.com>, kvm@vger.kernel.org,
- Marcelo Tosatti <mtosatti@redhat.com>, David Hildenbrand <david@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, qemu-s390x@nongnu.org,
- Yanan Wang <wangyanan55@huawei.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Halil Pasic <pasic@linux.ibm.com>
-References: <20241218155913.72288-1-philmd@linaro.org>
- <20241218155913.72288-3-philmd@linaro.org>
+Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Paul Durrant <paul@xen.org>
+References: <20241218113255.232356-1-thuth@redhat.com>
+ <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
+ <31e85f4d-66f2-4790-8597-f43e291bcbea@redhat.com>
+ <61cadf31-8656-4216-a345-e364bb85e45b@redhat.com>
+ <44c87114343dc57b248ff0f86e5f4e0683533efb.camel@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218155913.72288-3-philmd@linaro.org>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <44c87114343dc57b248ff0f86e5f4e0683533efb.camel@infradead.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,56 +156,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 16:59, Philippe Mathieu-Daudé wrote:
-> "system/confidential-guest-support.h" is not needed,
-> remove it. Reorder #ifdef'ry to reduce declarations
-> exposed on user emulation.
+On 18/12/2024 15.11, David Woodhouse wrote:
+> On Wed, 2024-12-18 at 14:38 +0100, Thomas Huth wrote:
+...
+>> But FWIW, there seems to be another issue with this test. While running it
+>> multiple times, I sometimes see test_kvm_xen_guest_novector_noapic hanging.
+>> According to the console output, the guest waits in vain for a device:
+>>
+>> 2024-12-18 14:32:58,606: Initializing XFRM netlink socket
+>> 2024-12-18 14:32:58,607: NET: Registered PF_INET6 protocol family
+>> 2024-12-18 14:32:58,609: Segment Routing with IPv6
+>> 2024-12-18 14:32:58,609: In-situ OAM (IOAM) with IPv6
+>> 2024-12-18 14:32:58,610: NET: Registered PF_PACKET protocol family
+>> 2024-12-18 14:32:58,610: 8021q: 802.1Q VLAN Support v1.8
+>> 2024-12-18 14:32:58,611: 9pnet: Installing 9P2000 support
+>> 2024-12-18 14:32:58,613: NET: Registered PF_VSOCK protocol family
+>> 2024-12-18 14:32:58,614: IPI shorthand broadcast: enabled
+>> 2024-12-18 14:32:58,619: sched_clock: Marking stable (551147059, -6778955)->(590359530, -45991426)
+>> 2024-12-18 14:32:59,507: tsc: Refined TSC clocksource calibration: 2495.952 MHz
+>> 2024-12-18 14:32:59,508: clocksource: tsc: mask: 0xffffffffffffffff max_cycles: 0x23fa49fc138, max_idle_ns: 440795295059 ns
+>> 2024-12-18 14:32:59,509: clocksource: Switched to clocksource tsc
+>> 2024-12-18 14:33:28,667: xenbus_probe_frontend: Waiting for devices to initialise: 25s...20s...15s...10s...5s...0s...
+>>
+>> Have you seen this problem before?
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/i386/sev.h  | 29 ++++++++++++++++-------------
->   hw/i386/pc_sysfw.c |  2 +-
->   2 files changed, 17 insertions(+), 14 deletions(-)
+> That seems like event channel interrupts aren't being routed to the
+> legacy i8259 PIC. I've certainly seen that kind of thing before,
+> especially when asserted level-triggered interrupts weren't correctly
+> being asserted. But I don't expect that of QEMU. I'll see if I can
+> reproduce; thanks.
+> 
+> How often does it happen?
 
+With the new functional test, it happens maybe 2 times out of 100 test runs.
 
-> +#if !defined(CONFIG_USER_ONLY)
->   
->   #define TYPE_SEV_COMMON "sev-common"
->   #define TYPE_SEV_GUEST "sev-guest"
-> @@ -45,18 +55,6 @@ typedef struct SevKernelLoaderContext {
->       size_t cmdline_size;
->   } SevKernelLoaderContext;
->   
-> -#ifdef CONFIG_SEV
-> -bool sev_enabled(void);
-> -bool sev_es_enabled(void);
-> -bool sev_snp_enabled(void);
-> -#else
-> -#define sev_enabled() 0
-> -#define sev_es_enabled() 0
-> -#define sev_snp_enabled() 0
-> -#endif
-> -
-> -uint32_t sev_get_cbit_position(void);
-> -uint32_t sev_get_reduced_phys_bits(void);
->   bool sev_add_kernel_loader_hashes(SevKernelLoaderContext *ctx, Error **errp);
->   
->   int sev_encrypt_flash(hwaddr gpa, uint8_t *ptr, uint64_t len, Error **errp);
+I wasn't able to reproduce it with the avocado version yet, but that also 
+runs 10x slower, so it takes a longer time to get to that many runs...
 
-The motivation is to reduce system-specific definitions
-exposed to user-mode in target/i386/cpu.c, like hwaddr &co,
-but I'm not there yet and have too many local patches so
-starting to send what's ready.
+  Thomas
 
-> @@ -68,4 +66,9 @@ void sev_es_set_reset_vector(CPUState *cpu);
->   
->   void pc_system_parse_sev_metadata(uint8_t *flash_ptr, size_t flash_size);
->   
-> +#endif /* !CONFIG_USER_ONLY */
-> +
-> +uint32_t sev_get_cbit_position(void);
-> +uint32_t sev_get_reduced_phys_bits(void);
-> +
->   #endif
 
 
