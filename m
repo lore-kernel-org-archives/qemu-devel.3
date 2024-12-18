@@ -4,117 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB07CE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:08:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADAB0E7718A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 17:08:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNxW5-0007Zw-E9; Wed, 18 Dec 2024 12:07:21 -0500
+	id 1tNxWo-00080c-My; Wed, 18 Dec 2024 12:08:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNxW4-0007ZU-M7
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:07:20 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNxWi-0007o3-B2
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:08:00 -0500
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNxW1-0003Yw-TY
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:07:20 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43622354a3eso47090775e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:07:16 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNxWg-0003iW-E5
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:07:59 -0500
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3e9a88793so11157043a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 09:07:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734541636; x=1735146436; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=84Xp02vd965R6EVhlhdL+FhhEbC0vWzwkssxj/nxppI=;
- b=rurhmHGW5uTIQDT7jMoSKouI/m2r+pOoRWpgvk84PTq7q2dvNtFoiI+XrTo/R23l5O
- 4a1dVHQqxb1t+ifUlQfAl0bVitbSZ7hEHzuR+PL/XajCrm6VV7t3cIJaeUnvSmVgd9qW
- H5a2/HageUNGXkRAf64cCdBNdv4B+3NB1mz5WYmAfoqz5TfbfLLbwn4M49+YqnVhWIzA
- XmPmWw9sTYQzE6HDOSmvrpmVAxyM+VLJqeYmE6skQPIsdG0YMrAg4wcvbxSOdlOV+gKg
- fQH4w+RnqbYYVEJt/eItr7DIImCiJtk2DbFdhSPUjvhDFSQuHCPDhoseBxt3J6KWfg/l
- vEzA==
+ d=linaro.org; s=google; t=1734541677; x=1735146477; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=tFTqBXWbrd+5Ar5eHaCN8PTh61B9XqjrZ3+wxsBR9V8=;
+ b=LA6eiIcXi4ra+T/9FbOQWs6jjmjLf/z8GdzjdeE+6OnxgvoUBYJLuuZVA94bZLNpCN
+ 4xqmZokMVouhk6h2QBZGxQZ2hZzG93M504ffiNMgKilxM+bGZmWRecb0elpWWfh0BBiX
+ Nio1eRAuUgV1nWA2274FUw8k4KbUoD1RCDatLc3L4WlQtjXfVTPsGxm2IzPKhXIF46MM
+ 8Ku1UGVcW15zoInpi3eNcsQchU/9rg/F6VKZ0LCtoUq7yDeaZat3qXHhzhrOCgowSCW0
+ QXqYOQQXnXGnRat+IJOEbIP/UWl9R5RJPgWLGKpyCYXNqfx18uumhJ0GaQ4IcA8lmbKy
+ hGrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734541636; x=1735146436;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=84Xp02vd965R6EVhlhdL+FhhEbC0vWzwkssxj/nxppI=;
- b=WEzrOVh+uLbHaLBsg8c9TfR63WOvDgWpzZzuSce+FTNQwgguRx6OYFjxaI9TTXAx3Z
- iOrCmI1pld4kAvPJE2w5C6QZtcoGZ9ZBCp2T4fcLIzJipAvHADol5Q5xwDfNR+3wWvb5
- HORVQIvadlSXfCtTj/YtmpBw4wDw4V0+J+ICFqo2x36rTKxkLEgqViKwWZH0CYWH/STw
- 0WAfX9g45NtMCVc6shvpVx+JTrAxaUrPFj3rlhYEg5WoEDQ+TjG8Bzi/Qn8HY9tYk8F+
- NmY3cs2RHieVESNS7bAh2vGdu9CQYJZ1+tDO23uv3XOW/A8/NppdBwAO+i1n5vQBS2go
- EU4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2KPSVgNoTYRQEuFnuH/42yfCot940/Lev7zJ2/WsPtdRpCBWkqVBGz5khwxjg3LNmRQ0GrmQVxoj/@nongnu.org
-X-Gm-Message-State: AOJu0YzOdRfP9jM7e85Hcjlq3ZrESB+HE/3iG3jkdjhQ30t4Btkmb5WF
- D1O2gHVrTl46zB9zIMVpImiyKRZ8E2IC6dIIPQkM5gLjsvmEeCgy2Jhl0Q2bdbc=
-X-Gm-Gg: ASbGncsWeoK0GU4T7Y/efQ+O1WTEIdHOUazpmtOrwlnIF2gwlDYDPfFIcZogiKDc4jA
- ClOvUEmqs26dm/ETZoHIYJfyPC4+34VPSBdeFAC2C2eQt9X9Qex+IKRIWkAa1m2DrGh58Fr+lIT
- 7r0JUYBQ7jn6VJKqgwW9zFO6YJY3j/m0Lq/6kp1qM0bpKLcVPFW0GhyrSVj4/EzrxuE8BHtuqfh
- j/cUdX/ts/RDFltVPH+eA8bF5waL3E0zzJlWBs735UICyZhVEvNcUA1vf++dwbjeFL1PFnl
-X-Google-Smtp-Source: AGHT+IEgBsMsJq+hHwD0O44Y0o0aaOd3ofWzK08cLIPdBnnYipgVFHsDw/GjhdUOmRJDYKCm05ZQaA==
-X-Received: by 2002:a05:600c:4fd3:b0:436:346a:fa9b with SMTP id
- 5b1f17b1804b1-4365c7c9707mr97695e9.20.1734541635603; 
- Wed, 18 Dec 2024 09:07:15 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656afc125sm26909535e9.6.2024.12.18.09.07.13
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 09:07:14 -0800 (PST)
-Message-ID: <f4988fd0-62c7-41ec-baab-2433aee78f04@linaro.org>
-Date: Wed, 18 Dec 2024 18:07:12 +0100
+ d=1e100.net; s=20230601; t=1734541677; x=1735146477;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=tFTqBXWbrd+5Ar5eHaCN8PTh61B9XqjrZ3+wxsBR9V8=;
+ b=W59LWi1jbzMfsI6SzdbcscNJAHFDR+r71reNHm7sLK6qakxN4UIT3UciJMMFrqnIiQ
+ /38JCf9AQewWE+FllCcAKBGvrRcuZ6GTC/mvwRiFYQgrZPlWOwH/FCnsBe4Raqf2KrK7
+ ULQCW04n0Plzk2fkW9eerUGMajB5L/WMkT/yjncvOJ1cFRPAmiLZxFTi7LxiCVmPeu+y
+ 9bSw+SCSyhiAGuY8Ap7K7308XcbqCdP+r32EK3Ks9WbfapxwEbsVFsuMhex7Ju2VQOAN
+ XJ5VZMDHQIB/Rkxsm9uM+8krvPWYPCQdUnVPpJKFFRsk1L5vuNRI0zt2pVk3ccTP4Dkh
+ M3AQ==
+X-Gm-Message-State: AOJu0YxKChIfTe6Uue2eF+y0jpox+JdTsJaGXDPf8JcQBxpxPeb8c3y/
+ LKpx0Y3iXXijFmBDwXPL4A0+QhVbIr7rWboTqPyj+XGKKVklIjDogwg6qwIoZUw=
+X-Gm-Gg: ASbGncuNn8OkS/i6JotE4P2IdXsh2mDL+HQ5bZODmGpHAvcMp+K4VsA0sgdhG2fTu++
+ LZysIbzl/BJOs/kcUZr21uVGQpaS2vjzdX00nJRBCbzoVFp3HcbunWaqxNfmIDZ1qzPjUhaMTVE
+ Oh4tKAycf500V6QR1WoOk4NP7tZD3A2sW7qtOpoW8Hi07bdhr8P8vwE+TgcFFQbjULr77808Dr4
+ p5IBFXF1Xt6LEIdRqdwkEJn90k5hph/aeV+EwXbDVtBZpChfmkCfos=
+X-Google-Smtp-Source: AGHT+IHtyPIR1Mgh9eUz6zcTNxJOjznfozFN6xx+O7VrU0zDMzeDMCZRjRGyyAmyIu39LbfQCcoBaw==
+X-Received: by 2002:a05:6402:2807:b0:5cf:c97c:8206 with SMTP id
+ 4fb4d7f45d1cf-5d7ee3fd6demr3832922a12.25.1734541676807; 
+ Wed, 18 Dec 2024 09:07:56 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d652ad21b7sm5532071a12.36.2024.12.18.09.07.54
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 09:07:55 -0800 (PST)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id DBDED5F796;
+ Wed, 18 Dec 2024 17:07:53 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Marcin Juszkiewicz
+ <marcin.juszkiewicz@linaro.org>,  Leif Lindholm
+ <quic_llindhol@quicinc.com>,  Radoslaw Biernacki <rad@semihalf.com>,
+ qemu-stable@nongnu.org,  Andrei Homescu <ahomescu@google.com>,  Arve
+ =?utf-8?B?SGrDuG5uZXbDpWc=?= <arve@google.com>,  =?utf-8?Q?R=C3=A9mi?=
+ Denis-Courmont <remi.denis.courmont@huawei.com>
+Subject: Re: [PATCH 3/3] target/arm: implement SEL2 physical and virtual timers
+In-Reply-To: <CAFEAcA_AgkVcVm5nfCNb=PjB5qnYahTUuQxi-U=um92BFokccw@mail.gmail.com>
+ (Peter Maydell's message of "Tue, 17 Dec 2024 13:34:49 +0000")
+References: <20241206160239.3229094-1-alex.bennee@linaro.org>
+ <20241206160239.3229094-4-alex.bennee@linaro.org>
+ <CAFEAcA_AgkVcVm5nfCNb=PjB5qnYahTUuQxi-U=um92BFokccw@mail.gmail.com>
+User-Agent: mu4e 1.12.7; emacs 29.4
+Date: Wed, 18 Dec 2024 17:07:53 +0000
+Message-ID: <877c7w5386.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/27] tests/vm: fix build_path based path
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20241218162104.3493551-1-alex.bennee@linaro.org>
- <20241218162104.3493551-25-alex.bennee@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218162104.3493551-25-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,15 +108,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 17:21, Alex Bennée wrote:
-> We no longer need to go into the per-arch build directories to find
-> the build directories binary. Lets call it directly.
-> 
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> ---
->   tests/vm/basevm.py | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> On Fri, 6 Dec 2024 at 16:02, Alex Benn=C3=A9e <alex.bennee@linaro.org> wr=
+ote:
+>>
+>> When FEAT_SEL2 was implemented the SEL2 timers where missed. This
+>> shows up when building the latest Hafnium with SPMC_AT_EL=3D2. The
+>> actual implementation utilises the same logic as the rest of the
+>> timers so all we need to do is:
+>>
+>>   - define the timers and their access functions
+>>   - conditionally add the correct system registers
+>>   - create a new accessfn as the rules are subtly different to the
+>>     existing secure timer
+>
+>> diff --git a/include/hw/arm/bsa.h b/include/hw/arm/bsa.h
+>> index 8eaab603c0..b4ecca1b1c 100644
+>> --- a/include/hw/arm/bsa.h
+>> +++ b/include/hw/arm/bsa.h
+>> @@ -22,6 +22,8 @@
+>>  #define QEMU_ARM_BSA_H
+>>
+>>  /* These are architectural INTID values */
+>> +#define ARCH_TIMER_S_VIRT_EL2_IRQ  19
+>
+> Can we call this ARM_TIMER_S_EL2_VIRT_IRQ please?
 
+I'm going to assume you mean ARCH_TIMER_S_EL2_VIRT_IRQ ;-)
+
+> We currently have ARCH_TIMER_NS_EL2_VIRT_IRQ
+> so we should be consistent about where in
+> the name we put the "VIRT" bit.
+>
+>> +#define ARCH_TIMER_S_EL2_IRQ       20
+>>  #define VIRTUAL_PMU_IRQ            23
+>>  #define ARCH_GIC_MAINT_IRQ         25
+>>  #define ARCH_TIMER_NS_EL2_IRQ      26
+>
+> -- PMM
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
