@@ -4,118 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E85E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 18:06:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E28B3E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 18:17:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNyQs-0005Ji-7L; Wed, 18 Dec 2024 13:06:02 -0500
+	id 1tNyaq-0001KZ-VG; Wed, 18 Dec 2024 13:16:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dsterba@suse.cz>) id 1tNyIW-0003N3-32
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:57:24 -0500
-Received: from smtp-out2.suse.de ([195.135.223.131])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNya2-0001BD-Js
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:15:30 -0500
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dsterba@suse.cz>) id 1tNyIU-0002hD-Fm
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 12:57:23 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 69D3F1F396;
- Wed, 18 Dec 2024 17:57:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1734544639;
- h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
- cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyqu7+5hM/O675sj05pWPBOwQ7+qTbm8DFtagxH8B5Q=;
- b=IO77DBBmmo5IO25PJrBaW1lyPFyCmVO8hLEPKALr12BYpfqkYO/bb3vgdMywsPBXup+xBP
- FJLnDqac5cvPRZX4/MEL8vT5n51dlT8En9MGRZ17P+ITF34jzEpJ1qjTNyrlyd+QatfYF1
- K1vqsXLNAa5VaP25DnSEQOVuBbX3UH0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1734544639;
- h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
- cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyqu7+5hM/O675sj05pWPBOwQ7+qTbm8DFtagxH8B5Q=;
- b=HOAdHZ33gN4tFOuq97/OBFU7nh4aGK0FWIMyPlAAfa4KRFs8PB4Gs7sgZN6ccOmhUTtfOz
- 66iKvb1mJbGUceCw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
- t=1734544638;
- h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
- cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyqu7+5hM/O675sj05pWPBOwQ7+qTbm8DFtagxH8B5Q=;
- b=nB1BKta+MmBC9c0Kpsz50liSlps+HsuojVZC0wflIhcBOXENIN0L/Oejmg0NzoeyFe9b1L
- iubN0btzwaaHrtJQNK+PM5wib5PXgOpsSagwv7R6ZpupWea6dR+CjuWtoCo5NL8k+lyvQI
- 1qPESaLcXU2nHwf8vO1tSkmC6flNVf8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
- s=susede2_ed25519; t=1734544638;
- h=from:from:reply-to:reply-to:date:date:message-id:message-id:to:to:
- cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=vyqu7+5hM/O675sj05pWPBOwQ7+qTbm8DFtagxH8B5Q=;
- b=P9IEKNc38XOWAd9vPBDvgmOteNTo+CrsYoclclFQc9IPKjDX/l7EZyaF0+APk1SH+/UQR2
- I0LDEo23Ur7WD8Bw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 479AC137CF;
- Wed, 18 Dec 2024 17:57:18 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id hXXuEP4MY2e/ZAAAD6G6ig
- (envelope-from <dsterba@suse.cz>); Wed, 18 Dec 2024 17:57:18 +0000
-Date: Wed, 18 Dec 2024 18:57:16 +0100
-From: David Sterba <dsterba@suse.cz>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: qemu-devel@nongnu.org, open list <linux-kernel@vger.kernel.org>,
- Linux Regressions <regressions@lists.linux.dev>,
- linux-ext4 <linux-ext4@vger.kernel.org>,
- lkft-triage@lists.linaro.org, linux-mm <linux-mm@kvack.org>,
- Linux btrfs <linux-btrfs@vger.kernel.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
- Dan Carpenter <dan.carpenter@linaro.org>, Qu Wenruo <wqu@suse.com>,
- David Sterba <dsterba@suse.com>
-Subject: Re: qemu-arm64: CONFIG_ARM64_64K_PAGES=y kernel crash on qemu-arm64
- with Linux next-20241210 and above
-Message-ID: <20241218175716.GD31418@twin.jikos.cz>
-References: <CA+G9fYvf0YQw4EY4gsHdQ1gCtSgQLPYo8RGnkbo=_XnAe7ORhw@mail.gmail.com>
- <CA+G9fYv7_fMKOxA8DB8aUnsDjQ9TX8OQtHVRcRQkFGqdD0vjNQ@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNyZy-0007Vc-Bl
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:15:28 -0500
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-5d0ac27b412so9375904a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 10:15:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734545715; x=1735150515; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1kN/ZYXoIAzuNuSPL620rsLxZYj3p6quBDyJTtx4PN0=;
+ b=qR3VP4VtC82gaa/mOQQ5md1aRaSB3uy8pb6jAUlo59qovSG/6rTcudADLLUmg2X3lm
+ k0UvemaAg6upaw6UzB+y23qdWgn9PYqJPyrqF8o6lRnB0nEN3GmYNraat+ZoNPL2EGvW
+ BfvrwZzXlq3yGztVPl65AF5YkRlZkPESAhq2+zsXd/7xmw7oZpuk2v4+ukI65VMbzs6o
+ rzMpQkUjkbkwIONABlsQsfL9/4nVyuphu/JuLirHEP1ciAJbzB/ru97qAnsyITvAfxGa
+ OU8aRUDEvUTm1XajnOWXHo7BFL8nxPiRRiyHXvlCqLl6KwGtdhH4xCO0exams0Nxkwk0
+ xbxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734545715; x=1735150515;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1kN/ZYXoIAzuNuSPL620rsLxZYj3p6quBDyJTtx4PN0=;
+ b=LhmqSgRslf4pNzILmlnM+gvzMtGu7fyAMeTmGjGPtXJHIHAJuK1yPSz8DmhhvffIsr
+ jfFhK9R2Bgzt65+NyCbCfrzvDP9vk4/lx2KoktgdqPN1EFIxn0l3MTnnXXPbWWdrOMxb
+ xzxcjyitpVrWwEt8iywY5Csj35IOQ/wjzfSzANSo2b6bJ5OmhA8qQOEwRsArn9NSaztj
+ 9vERMTiCu4rzT/Zp6CnDA6MsxLI4QNubIM56V5gEu54nzPQX7jceqJcHgk3ChEMXiqOl
+ Q1SwuwJFvU/Yu2pZPp3AeyHZKDpfNWClANKBAEtxvODaT1KNgqaz2q2fw8e/YW0WAsXW
+ JHmA==
+X-Gm-Message-State: AOJu0YxmvR9TQF+z6M0gqIPWtjc19PxdSdhexAcpQJENHzCEsUKHpZTV
+ 3KXcINHDyktkSdmrNFqLQrxwQNdb61rnXnjmojPvDIit/YutbloZCYnE/OqdIxk=
+X-Gm-Gg: ASbGncsqp2UJdA8PvUlmQmOl2ctUIbDE51ob8jxXT+RrHU9/7Dw1/w4lMIZNDMGJo6b
+ wMpfePU18A9XHlrGMvmOD/E+XuP9ospGcOc2+iUyg9DxLE5zLsqF+aS483SAPP5KbrLW78VVeVP
+ 9tHVuWG5WtqfCIwvELgmZk9cshnXWMCoqrD1f2DWmRhbr61upjpKGhSbif1rEzAIYxDy1BR+Lp0
+ 6yvykqAVEXrQaPSPYcwaKCRPo7LonJx/1UT13vsHYiWBxixC8Ty4gQ=
+X-Google-Smtp-Source: AGHT+IHsI0Co9EhYUpBJrUuYBCdI+5ypIA6xtjjr4rxw6ykwwDq+P173riTxy0yOlEgy4uqPxlyrtQ==
+X-Received: by 2002:a05:6402:43c4:b0:5d0:b040:4616 with SMTP id
+ 4fb4d7f45d1cf-5d7ee41e7fdmr3678720a12.28.1734545715136; 
+ Wed, 18 Dec 2024 10:15:15 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-5d652ae10a7sm5564454a12.38.2024.12.18.10.15.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 10:15:13 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 9FF175FB2E;
+ Wed, 18 Dec 2024 18:15:11 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2 2/5] target/arm: ensure cntvoff_el2 also used for EL2 virt
+ timer
+Date: Wed, 18 Dec 2024 18:15:08 +0000
+Message-Id: <20241218181511.3575613-3-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241218181511.3575613-1-alex.bennee@linaro.org>
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CA+G9fYv7_fMKOxA8DB8aUnsDjQ9TX8OQtHVRcRQkFGqdD0vjNQ@mail.gmail.com>
-User-Agent: Mutt/1.5.23.1-rc1 (2014-03-12)
-X-Spamd-Result: default: False [-4.00 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- HAS_REPLYTO(0.30)[dsterba@suse.cz];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
- ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[14]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- RCVD_TLS_ALL(0.00)[]; REPLYTO_DOM_NEQ_TO_DOM(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- REPLYTO_ADDR_EQ_FROM(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email]
-Received-SPF: pass client-ip=195.135.223.131; envelope-from=dsterba@suse.cz;
- helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 18 Dec 2024 13:05:48 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,32 +104,57 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: dsterba@suse.cz
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 09:22:26PM +0530, Naresh Kamboju wrote:
-> On Wed, 18 Dec 2024 at 17:33, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
-> >
-> > The following kernel crash noticed on qemu-arm64 while running the
-> > Linux next-20241210 tag (to next-20241218) kernel built with
-> >  - CONFIG_ARM64_64K_PAGES=y
-> >  - CONFIG_ARM64_16K_PAGES=y
-> > and running LTP smoke tests.
-> >
-> > First seen on Linux next-20241210.
-> >   Good: next-20241209
-> >   Bad:  next-20241210 and next-20241218
-> >
-> > qemu-arm64: 9.1.2
-> >
-> > Anyone noticed this ?
-> >
-> 
-> Anders bisected this reported regression and found,
-> # first bad commit:
->   [9c1d66793b6faa00106ae4c866359578bfc012d2]
->   btrfs: validate system chunk array at btrfs_validate_super()
+We were missing this case and will shortly be adding another.
+Re-arrange the code and use a switch statement to group the virtual
+timers.
 
-Thanks, I'll drop the patch from linux-next for now.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+---
+ target/arm/helper.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
+
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 910ae62c47..5a1b416e18 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -2465,16 +2465,27 @@ static void gt_recalc_timer(ARMCPU *cpu, int timeridx)
+     ARMGenericTimer *gt = &cpu->env.cp15.c14_timer[timeridx];
+ 
+     if (gt->ctl & 1) {
++        uint64_t count = gt_get_countervalue(&cpu->env);
++        uint64_t offset;
++        uint64_t nexttick;
++        int istatus;
++
+         /*
+          * Timer enabled: calculate and set current ISTATUS, irq, and
+          * reset timer to when ISTATUS next has to change
+          */
+-        uint64_t offset = timeridx == GTIMER_VIRT ?
+-            cpu->env.cp15.cntvoff_el2 : gt_phys_raw_cnt_offset(&cpu->env);
+-        uint64_t count = gt_get_countervalue(&cpu->env);
++        switch (timeridx) {
++        case GTIMER_VIRT:
++        case GTIMER_HYPVIRT:
++            offset = cpu->env.cp15.cntvoff_el2;
++            break;
++        default:
++            offset =gt_phys_raw_cnt_offset(&cpu->env);
++            break;
++        }
++
+         /* Note that this must be unsigned 64 bit arithmetic: */
+-        int istatus = count - offset >= gt->cval;
+-        uint64_t nexttick;
++        istatus = count - offset >= gt->cval;
+ 
+         gt->ctl = deposit32(gt->ctl, 2, 1, istatus);
+ 
+-- 
+2.39.5
+
 
