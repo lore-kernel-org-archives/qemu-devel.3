@@ -4,81 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C0CAE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38E50E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuU2-0006Jq-86; Wed, 18 Dec 2024 08:53:04 -0500
+	id 1tNuUN-0006aD-ME; Wed, 18 Dec 2024 08:53:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuTn-0006DR-D0
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:52:48 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuUE-0006US-0k
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:53:15 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuTl-0000Jx-4V
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:52:47 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2161eb95317so60537485ad.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:52:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tNuUC-0000Le-HU
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:53:13 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-385f06d0c8eso3358951f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:53:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734529963; x=1735134763; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734529990; x=1735134790; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=8Oyg1T7MQCRZRVxQ3fI2sGjbPGs31sO+h++Cjx41b/U=;
- b=K7SJ0ZEJCbPpzfkLN+50rOv1qgeernCnPdOZR/sYHwP7k2WyVbKwQhYJBEuL3P6ogv
- VLt/AX0rM8eSZ5n0SNSs4lPYju6NHfMSCXmBJiZEYzv0GLEo62S+ugTQQNseeSzCTaIy
- cUl+vsAhZ1qEIwk0DGGsnxfbztx3HehwxQtVPA84yTPEATFvdg5eK8TlkIjTArKuddBr
- xImKSMMxX5IJwsr2v7q6vflw3FJjRSP4sDk0bdPZRy425GFTDamYf4XXBMV/h7GIz149
- yNrYNx5vmqv5uZFmYUlBjhj2wbV6pH76fK3YhQmu4eht6KFO6t+hje98nh5wO1FqJzWJ
- zy2g==
+ bh=rgYXvUecZM+Py6NjO1tKQt0hkpSQ+EMRzVvsnCAoock=;
+ b=vXqlPotSXMscJvkrCZ3E4biEtLHZ0DAOUzHltnP6/QoLtzL+qv1O0nOVix2wPQ3wKD
+ vk5pYRSQfFb7yD08IvWBYHOfJcfpk7AFyr8Tf37XmHD+4EivngvUWZ9sxHsRmZ8wLMzm
+ TFTKWF6GwvwUwAK8igzRDPXS/ZZKsLk0ASHPhV8E2P5hkaGf1rTl/tFuh8Xk1Kk+76xt
+ 9yNvCt6B5Eh5szHlGxHyQu0kswzr/Mxuo17+diDhc5tFXV6YvnTy7ZqPSUznWNpwmttu
+ 9yvC2840nnKEbvTHb7JVAU8ZwGbl+xI4oo/1gylybJMqOsMgU0KHhJruKH90W7QQ8NRs
+ OMVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734529963; x=1735134763;
+ d=1e100.net; s=20230601; t=1734529990; x=1735134790;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8Oyg1T7MQCRZRVxQ3fI2sGjbPGs31sO+h++Cjx41b/U=;
- b=KsQEAPiy0pPZjer22SxBwD29frT+XSDxQljAyfO4dsVypGpinGzJ/2qw/20m8cfFgV
- fOmW76hILsFwmcRj5bmrvYjFRVTVaTLfMYiujIxh2czn9AV/DHd+iGRgV8eCRWxhzlo5
- CyL3ia7KaroZv69zsg804GQpmLlOKC+X5IqA4cq/1fhRUcNzrHYC4Y9h3BqDTNtWqv2o
- mckr+FnD3/OTP5NVWF1md6rtcPNwNw+/JtUh/RHBemQot1I8AcrWQyD+zYMwgCSBFCQn
- RCqoCdNrr0Bf97oxDxFM7/dr0cUBZj9btsp4eRhjSP57mDfWra/fWVwVTEpHTt4Wzpa2
- 1/eQ==
+ bh=rgYXvUecZM+Py6NjO1tKQt0hkpSQ+EMRzVvsnCAoock=;
+ b=JTXgJ2cL+z3Mws+r6my+AP/hLIeKp8Yo9rPiY0y2vh+V/SXwnQGKXOc2mu0RSwTC3J
+ DSZZ90EnnlPDOJQ+bRZmRwXn8JMARcEguIYfrC0+gTBR0u+wyMs9fNQqI3IFvYOkBjku
+ ygX5RvXpAq+6w5gXs8uKoqQZh8Vv8FWFJAv5DxR4DeCzQxycvB074pTmqll/KzpaDf0i
+ 7tHTSXaycebFf3dN3xy5qpUT7rixpyDID7yjeE/Wpb6U0sPzitfJoposq3A9qgBo3NwY
+ dfq4jCPaAh5bscZa/NFyXcR0kiPmJsDX/PItHvAJ+EnyXaAVMpNlF+G6IldMY8ExqQaX
+ EF3Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUn8Dcj9bfF8oU29k+8FRd4mG6YTI1W1xVbOzDv2QfxbbiCgoaZWL3jvnNcl29CbBfRJutCDJaPXd+w@nongnu.org
-X-Gm-Message-State: AOJu0YwBtfTW8jGeEvZo/8RwlN8KhSGquHXzEBNFa2TLxfiPb1bYKe1T
- JDoAPMQ0TOJOwZPMIUi3Rhn2vM600n3kzilasml7OP//FkA3X+dUGwUC56IBYaI=
-X-Gm-Gg: ASbGncsNy0e4lWkkyURNxXfTcPVJ6TvDknTdF9Gyj1giQnB7Muz/nbP8raPeNP3QJEf
- Db/UNxF4DMZ6JdqvMei6YuAcK1uHEv3nPoPtr/FZJCfJ6sdu3lKVpNvS2mYAZDVDYWsVBYDhWlL
- dEK4vOmzkHCwZrFgsD/JsZMDdV416XiH5rI760EJRm4fWefkQMsDT36mRx/7VsRA1dwGt+IFjP1
- lgmHceDo+Zxxa60m+1aRhndCPE+X+UgxGfDaFTRpMSeKV8pjr6HA0pYcGlc7r/rKOLJJ9KF
-X-Google-Smtp-Source: AGHT+IHXOihy8bJ14JCiPf/+RyIKtWUIhwX2CKJ9OXM0VxbhpHviIb3ZFnaIsURL8YxhcvWCKDRC0w==
-X-Received: by 2002:a17:903:2a8f:b0:215:5240:bb3d with SMTP id
- d9443c01a7336-218d7244595mr41046655ad.42.1734529963677; 
- Wed, 18 Dec 2024 05:52:43 -0800 (PST)
+ AJvYcCUBZIvr3GpTTnMhscMOnslQO8anDzETekd853pd53FHwB3txLkQzmFKrYMNAGSbeD//xP8fHd/K0rPz@nongnu.org
+X-Gm-Message-State: AOJu0YyR5/Yz6Wc1EftNMbFEPHNwF95yBrUiqkrhMC4v98YJlKnQgCYN
+ I4J90L39nzamdGoV/Hzclsv51B7gSWExl4QYa7/1CMSNxxqNmLo67LR8d8lim54=
+X-Gm-Gg: ASbGncsHSDKKIBX13/JZG3JVnymnec/zkpId/bhn6S4WgsHpxhaXXj5TGjc/WiCoOVD
+ pQnwYvgBanS8HikxCZ4SZSUp4b7urEx00m8Uwm0rvyL7ITI2BP3dbtl4VfLF1csla3q2tAej8aR
+ J77Lr3GwR2z8ENsj2HQF+wN0+Yhex+R724naK1IXYEgQzDxeln4PTNKWLJavTLaboSIuYw7Tdtt
+ oFyJfBWYLxu1qVtQWin0H/lAbh+8OeFsUIfuv5rEMy9SHD7Uzx61g9gLOiPPR7KGKC9EQNP
+X-Google-Smtp-Source: AGHT+IHXVCjTjMYsSSA8v5V8lPNrMi+YYPbxaL5G+ew3qpzapHZgRuyGcjOXWX2dVYef+9nkTGWfXw==
+X-Received: by 2002:a5d:64eb:0:b0:385:e5d6:130c with SMTP id
+ ffacd0b85a97d-388e4db7edamr3197035f8f.51.1734529989887; 
+ Wed, 18 Dec 2024 05:53:09 -0800 (PST)
 Received: from [192.168.1.117] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-218a1dcb3ffsm76323415ad.75.2024.12.18.05.52.41
+ ffacd0b85a97d-388c8060862sm13931153f8f.100.2024.12.18.05.53.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 05:52:43 -0800 (PST)
-Message-ID: <54bf65a8-e813-4e47-a832-3f47948436e1@linaro.org>
-Date: Wed, 18 Dec 2024 14:52:39 +0100
+ Wed, 18 Dec 2024 05:53:09 -0800 (PST)
+Message-ID: <884e01d5-f32e-4995-832d-546c21e04463@linaro.org>
+Date: Wed, 18 Dec 2024 14:53:08 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 22/24] hw/core/qdev-properties: Constify Property
- argument to object_field_prop_ptr
+Subject: Re: [PATCH v2 23/24] hw/core/qdev-properties: Constify Property
+ argument to PropertyInfo.print
 To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com
 References: <20241218134251.4724-1-richard.henderson@linaro.org>
- <20241218134251.4724-23-richard.henderson@linaro.org>
+ <20241218134251.4724-24-richard.henderson@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218134251.4724-23-richard.henderson@linaro.org>
+In-Reply-To: <20241218134251.4724-24-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=philmd@linaro.org; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,10 +105,12 @@ On 18/12/24 14:42, Richard Henderson wrote:
 > This logically should have accompanied d36f165d952 which
 > allowed const Property to be registered.
 > 
+> There is exactly one instance of this method: print_pci_devfn.
+> 
 > Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/hw/qdev-properties.h | 2 +-
->   hw/core/qdev-properties.c    | 2 +-
+>   include/hw/qdev-properties.h     | 2 +-
+>   hw/core/qdev-properties-system.c | 2 +-
 >   2 files changed, 2 insertions(+), 2 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
