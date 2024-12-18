@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF223E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:27:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9ECFCE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:27:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwoZ-0000KB-Ud; Wed, 18 Dec 2024 11:22:23 -0500
+	id 1tNwoh-0000UC-6S; Wed, 18 Dec 2024 11:22:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnq-0007il-Su
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:39 -0500
+ id 1tNwo4-00085J-4q
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:52 -0500
 Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwnV-0006qc-DS
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:38 -0500
+ id 1tNwnk-0006sR-QO
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:51 -0500
 Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-5d414b8af7bso13462513a12.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:16 -0800 (PST)
+ 4fb4d7f45d1cf-5d3cf094768so10254771a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734538876; x=1735143676; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734538878; x=1735143678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/WD+OCh9xieXyi8aUL7na7hMYPj/U0GHInutd7eRNwQ=;
- b=Y2nME5dZeYtcJBmjx6ax9RpoZoFFa72POHjewp36RFIlS5MmrCKrGQMuVyoYcHe2lr
- q6qV9C5YfpUgwo4+eER9Ur6cQxIgZm+mJ8kR74d4tJ8HAohpCVBDLMA2CIrtiLDigeo6
- qBjkK8CIc7WyMwex9tkGTtIFjxRnQiL7XpIF6GptgLcgOptFGa51oOuO5/RyJ+UijoAz
- Zgov+Aoq9drseCfj7GLyxS3mvn4Tj4yc1W3fVZ1nsSGvd+NR5rnqDokD1OsVghRtrg/z
- 37kjHZcAgdIL8wWpRKhgY++1+tG82DRojT5QziYl4frk/DCGYvv674rZtjobtxGi7SYX
- QEAA==
+ bh=6UOxR9mHFC4u/8ZQKvQLQtYEWlgMJY9tIWZpiZZUDDA=;
+ b=FT7nZTJrmuqalQrzecENrHZ4kPXSnnQFOK/F+T9r1DMpAmt3/INsUJSaMiiTYfNpHQ
+ RK2Qy8wcH7Ymj3q4/jhwrOu/IhnE9wqUKjEXF0331Bi/afzuAmMuHogF3YTcjD3Tdq2E
+ EhWpdSxWiuQwF+h1uZM8EPA457lXK63oyljIcUNYPLn17RTJjT9e4dfihuLoAAZ0RqiV
+ analnDz0TIXL5CyWLRN+aSSbHHla1LowloyY8z/Vbha9ZAT9GyQ9HJm198SG5IRynkAS
+ FwohZfuusXZk+4ruvFb+wlwHeaBzmwFhneOX/HYcVLjSpBvoAAZpykxjIGf8opuwdhb4
+ qGiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734538876; x=1735143676;
+ d=1e100.net; s=20230601; t=1734538878; x=1735143678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/WD+OCh9xieXyi8aUL7na7hMYPj/U0GHInutd7eRNwQ=;
- b=wTUYcPOGadvfoAB6RDD/xJUKFlKKd880PXYvuuTes3zRD3kLxI1qS0HbJ8RPUlO1GY
- KHtx8tPES6mNpSmV/oHkBHOTz7mMAQnhjuNFZ02ynmw69UzwhPQOyUVroGVurbTqJndl
- rY9vGfm34OXAFAxRn5jJqx+oOxwtwOgeixZpnes1VvoaFwNR519qLZWrp9HzTeOx5OCY
- RmqapxAqmmnFcvdABELWbhiRUEctKPew+2Db4eXcmU9g5F1wSxsPmjj1BwL/1KwQR9dg
- MrLZ1HE4J+Se5QROy6r9urbDUKUBlBvKSHbJpMGS3MNOPC2wuax7jEXzbMMl43+CeN7r
- YYsQ==
-X-Gm-Message-State: AOJu0YxcsE3JB1DzxmaAI+63gupUVKCNKQcTU0HtiDOivZ5wFh1vwUY0
- Zdf+cfBhchdlws76lchaASNFtQp2P2EV/9McZu8p5D3VlZF0CKRsSFdMz7437gI=
-X-Gm-Gg: ASbGncu9qUNiQvpRnmikadS1wlJWq/pAfaUJ9T+mMKvFBmcIi0YPU5+pS2Wm0/vkYnl
- ifvDen2//hTtgctHBROYutgcxeoXghXrOY9cw0/AodBIf4e2AaGGlJNH4WHS54nWRNF8iXxQGoX
- 1HooZDUdg602lxE3Xosc9kVDOl9Hvk1qMzGTpR5OxHK1nWrgIq0sJMOsyW7ZgLPrj0W788tOiOq
- 99ZsrdQFCsitgAg0WMIkPCCoNkiX9w7yn3Dg5j5fazOnbDkQDLMgKo=
-X-Google-Smtp-Source: AGHT+IHiSqi+g0EE7Vs4MtUIdiCQOpAOtRZSSznSgSCmX7FN6dTmpkBuWIofdpLJUgqx25DZfIteqg==
-X-Received: by 2002:a05:6402:3589:b0:5d2:723c:a568 with SMTP id
- 4fb4d7f45d1cf-5d7ee3ba959mr3583489a12.10.1734538875792; 
- Wed, 18 Dec 2024 08:21:15 -0800 (PST)
+ bh=6UOxR9mHFC4u/8ZQKvQLQtYEWlgMJY9tIWZpiZZUDDA=;
+ b=Tk0orjo90meHgH07TwtE7QDfpPgQT1NJAwnEaWscRAHRg4m3B1PMuZmz95ldQreiwJ
+ RT+wr3B+rK5KMqJ1JphBMvhlz8javzU+FTeiUGIrS6JLvDEWrYLZ/GDC1KeF8ewaevE9
+ sIX+0LRNwA3kcS3eFbASBKveLlexT/N/gI1csqancpfED2k0eRusqrx3NtSvl7CAga0A
+ RJgkPHwaLTBcQK+PQDvvbTNDpadQBdmykf0l67AODoMMGgvUTcaORzTXWtBQQDDkNazq
+ jAaUZ+5ND9n04k94Q5k2Eny/e6W5B3oE00uuJGr04Fq0LjfyTy7YGp67DWDyeGuUK8QG
+ pL7w==
+X-Gm-Message-State: AOJu0YzhdvMq7pGUT5CiwIJJMVZ4IE58nTyaTBlDMpjALTFnhgoQ6sh6
+ va7UrpWpoY6fEpqKZzwqvIQt4deKucvHvEnUs0IMrXTJewB0wCiDJRGH/dJHmsA=
+X-Gm-Gg: ASbGncs01Jg7L8FlcDmXnNEUAs7qrZNoOiZ8F7DOh29K5OfR5IAYdK9kPmgsf+GHs7U
+ 8hulBoaLiOMyZ4W2I01W0BSYWn827ZUdqPQSL+3lgTCNuevpkjyd9II1gsu1iAp979OF0T7iZxM
+ 897LlPLV9xJqMqyJsyz+7PTXmrF4sbyv/qycI2hrHPvi94s+F1M/+r0QwgB7T+cib5C6sfNRvjV
+ xNmFe2HTDtMJUKYxucrV5IYvto+tNS82p+eZUsxB2lVi5JzLTRsBFk=
+X-Google-Smtp-Source: AGHT+IFUsU+f13bfPJMrD3lOWdIN7256Es7OHOr1fpoMcMexTS6rtVzttc2avyLYRgG5gEOHJlJSdA==
+X-Received: by 2002:a17:906:310d:b0:aa6:2704:4840 with SMTP id
+ a640c23a62f3a-aabf48fd3b2mr273562266b.51.1734538878515; 
+ Wed, 18 Dec 2024 08:21:18 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d652ab604fsm5553991a12.2.2024.12.18.08.21.08
+ a640c23a62f3a-aab96068a8bsm575047766b.76.2024.12.18.08.21.12
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 08:21:11 -0800 (PST)
+ Wed, 18 Dec 2024 08:21:15 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 449C55FDA3;
- Wed, 18 Dec 2024 16:21:05 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 5F3A65FB2E;
+ Wed, 18 Dec 2024 16:21:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -99,11 +99,11 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, qemu-s390x@nongnu.org,
  Laurent Vivier <lvivier@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>
-Subject: [PATCH v2 12/27] tests/functional: update the s390x tuxrun tests
-Date: Wed, 18 Dec 2024 16:20:48 +0000
-Message-Id: <20241218162104.3493551-13-alex.bennee@linaro.org>
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 23/27] tests/lcitool: remove temp workaround for debian
+ mips64el
+Date: Wed, 18 Dec 2024 16:20:59 +0000
+Message-Id: <20241218162104.3493551-24-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
 References: <20241218162104.3493551-1-alex.bennee@linaro.org>
@@ -118,7 +118,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,37 +134,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now there are new up to date images available we should update to them.
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+The workaround applied in
+
+  commit c60473d29254b79d9437eface8b342e84663ba66
+  Author: Alex Bennée <alex.bennee@linaro.org>
+  Date:   Wed Oct 2 10:03:33 2024 +0200
+
+    testing: bump mips64el cross to bookworm and fix package list
+
+Is no longer required since the affected builds are now fixed.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Tested-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20241217133525.3836570-1-berrange@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241121165806.476008-33-alex.bennee@linaro.org>
 ---
- tests/functional/test_s390x_tuxrun.py | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ .../dockerfiles/debian-mips64el-cross.docker  |  9 ++++++
+ tests/lcitool/mappings.yml                    | 29 -------------------
+ 2 files changed, 9 insertions(+), 29 deletions(-)
 
-diff --git a/tests/functional/test_s390x_tuxrun.py b/tests/functional/test_s390x_tuxrun.py
-index dcab17c68b..a7db4bfd84 100755
---- a/tests/functional/test_s390x_tuxrun.py
-+++ b/tests/functional/test_s390x_tuxrun.py
-@@ -17,11 +17,11 @@
- class TuxRunS390xTest(TuxRunBaselineTest):
+diff --git a/tests/docker/dockerfiles/debian-mips64el-cross.docker b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+index c09a8da890..9f6c4763c5 100644
+--- a/tests/docker/dockerfiles/debian-mips64el-cross.docker
++++ b/tests/docker/dockerfiles/debian-mips64el-cross.docker
+@@ -93,13 +93,18 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libcmocka-dev:mips64el \
+                       libcurl4-gnutls-dev:mips64el \
+                       libdaxctl-dev:mips64el \
++                      libdrm-dev:mips64el \
++                      libepoxy-dev:mips64el \
+                       libfdt-dev:mips64el \
+                       libffi-dev:mips64el \
+                       libfuse3-dev:mips64el \
++                      libgbm-dev:mips64el \
+                       libgcrypt20-dev:mips64el \
+                       libglib2.0-dev:mips64el \
+                       libglusterfs-dev:mips64el \
+                       libgnutls28-dev:mips64el \
++                      libgtk-3-dev:mips64el \
++                      libgtk-vnc-2.0-dev:mips64el \
+                       libibverbs-dev:mips64el \
+                       libiscsi-dev:mips64el \
+                       libjemalloc-dev:mips64el \
+@@ -119,6 +124,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       librbd-dev:mips64el \
+                       librdmacm-dev:mips64el \
+                       libsasl2-dev:mips64el \
++                      libsdl2-dev:mips64el \
++                      libsdl2-image-dev:mips64el \
+                       libseccomp-dev:mips64el \
+                       libselinux1-dev:mips64el \
+                       libslirp-dev:mips64el \
+@@ -134,6 +141,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
+                       libusb-1.0-0-dev:mips64el \
+                       libusbredirhost-dev:mips64el \
+                       libvdeplug-dev:mips64el \
++                      libvirglrenderer-dev:mips64el \
++                      libvte-2.91-dev:mips64el \
+                       libxdp-dev:mips64el \
+                       libzstd-dev:mips64el \
+                       nettle-dev:mips64el \
+diff --git a/tests/lcitool/mappings.yml b/tests/lcitool/mappings.yml
+index f8186b0e69..74eb13d62b 100644
+--- a/tests/lcitool/mappings.yml
++++ b/tests/lcitool/mappings.yml
+@@ -6,23 +6,6 @@ mappings:
+   flake8:
+     OpenSUSELeap15:
  
-     ASSET_S390X_KERNEL = Asset(
--        'https://storage.tuxboot.com/20230331/s390/bzImage',
--        '0414e98dd1c3dafff8496c9cd9c28a5f8d04553bb5ba37e906a812b48d442ef0')
-+        'https://storage.tuxboot.com/buildroot/20241119/s390/bzImage',
-+        'ee67e91db52a2aed104a7c72b2a08987c678f8179c029626789c35d6dd0fedf1')
-     ASSET_S390X_ROOTFS = Asset(
--        'https://storage.tuxboot.com/20230331/s390/rootfs.ext4.zst',
--        '88c37c32276677f873a25ab9ec6247895b8e3e6f8259134de2a616080b8ab3fc')
-+        'https://storage.tuxboot.com/buildroot/20241119/s390/rootfs.ext4.zst',
-+        'bff7971fc2fef56372d98afe4557b82fd0a785a241e44c29b058e577ad1bbb44')
+-  # Due to https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1081535 we
+-  # have to disable all packages that depend on libgl1-mesa-dri:mips64el
+-  gtk3:
+-    mips64el-deb:
+-
+-  libdrm:
+-    mips64el-deb:
+-
+-  libepoxy:
+-    mips64el-deb:
+-
+-  gtk-vnc:
+-    mips64el-deb:
+-
+-  mesa-libgbm:
+-    mips64el-deb:
+-
+   meson:
+     OpenSUSELeap15:
  
-     def test_s390(self):
-         self.wait_for_shutdown=False
+@@ -81,18 +64,6 @@ mappings:
+   python3-wheel:
+     OpenSUSELeap15: python311-pip
+ 
+-  sdl2:
+-    mips64el-deb:
+-
+-  sdl2-image:
+-    mips64el-deb:
+-
+-  virglrenderer:
+-    mips64el-deb:
+-
+-  vte:
+-    mips64el-deb:
+-
+ pypi_mappings:
+   # Request more recent version
+   meson:
 -- 
 2.39.5
 
