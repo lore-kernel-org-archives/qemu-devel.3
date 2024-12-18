@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB19CE77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:04:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE14E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:04:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO1Ce-0006cP-Il; Wed, 18 Dec 2024 16:03:32 -0500
+	id 1tO1Cg-0006d5-9M; Wed, 18 Dec 2024 16:03:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tO1Cc-0006c4-JH
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:03:30 -0500
+ id 1tO1Ce-0006cQ-By
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:03:32 -0500
 Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1tO1Ca-0004PL-OJ
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:03:30 -0500
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIKIbDt013072;
- Wed, 18 Dec 2024 21:03:26 GMT
+ id 1tO1CZ-0004PA-VZ
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:03:32 -0500
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BIKIbc1018155;
+ Wed, 18 Dec 2024 21:03:25 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- corp-2023-11-20; bh=ppy+7nhrlpG0bBv25N7r1G8z3f2WuRTdN85AP8SNE8o=; b=
- a6C7lKv9RugBg2HnKwV1DvyduguNODiUVWy5a8Rg0+oQr8VLTGjm5NhfZHLAHYgk
- KsjXnL5MGUQhVGwDMhWOs2CyfwMb5Ipo5F5RzMG7msV3VEMXkaAjltAZBRreChEs
- nb5IDxsv5bYK41k1f38sVpPeO4etHdd1ZPKBkQiZUULus0WfUMCvyY7fZ/o+BCDn
- cpIJvzhrM94YC/GKnq90ERlMPwvVxcUFJhwSgmNyXYdmNFBb+l+xxKoi+mB8sAqg
- 3XUk2mrsP3FDYa7iwzkC87TO62EOfIfZ8S6qbLWhHLnKMNCJEPM8RRoHalG9BOZi
- CU6/F4uvp1QU/RpgZNoksA==
+ corp-2023-11-20; bh=UKqHLH9+3ca3fbaN8GF9upzycHdPmNMmtidXoH8sUss=; b=
+ dyPHFaPq4JUMLGPWotNvP6hMbgcl3nDY+cGba8JR0b2nOMjMTbw18NL0v8me0X7W
+ ntXVqd7uIWzpYyVXctOWm2F6DGGxRujmsWsbfAu0Z1h03vaKvfpN+ZcQA7gCepsT
+ 2wiy78moSGLdDFyyYsvgY5ila3qll3MarKhkmNUGF0M3q7HGtkA8BTCoO5DL4Fi9
+ fX1rodb/WcD1mEZsAkoNBUKPAbBdNwttTjF/y62Yb3a9ntNPqUd5gnu4vd7kWxS6
+ 1qAwwera/XABcXctoqfT5xe2R/q9qu+dxS3q35lv2meL2K316hP9O564Vya5kEac
+ i63KU+3y4yupRCuYnu4lEg==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43jaj5fehy-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 43h0ec9kby-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Dec 2024 21:03:25 +0000 (GMT)
+ Wed, 18 Dec 2024 21:03:24 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 4BIKAY2X010969; Wed, 18 Dec 2024 21:03:25 GMT
+ with ESMTP id 4BIKAY2V010969; Wed, 18 Dec 2024 21:03:23 GMT
 Received: from nam12-mw2-obe.outbound.protection.outlook.com
  (mail-mw2nam12lp2042.outbound.protection.outlook.com [104.47.66.42])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 43h0fa7bve-3
+ 43h0fa7bve-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Dec 2024 21:03:24 +0000
+ Wed, 18 Dec 2024 21:03:23 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=STCudG2szb0j3muWPGOdNXC+emECtS5Y1KINktuO7yDqMARqHndjGhj/PPEk0rSX7XAMESXDLYA0AOTFysC9TbsGU75DsJO11s5pNA4QAJlVp2mS+0IYd0RzgNPXgmNtHPbz9AZe5n3PMPSs5oSMiFClsyNDGq60zSsr1JQYDQpASX+NOWbcXvOhLuRPrNwUlj8ue9vpoGkpaXATsWatX1ifpesdnRqknAa+H1m5cMSakDrGuJdqSM/UCIEfm6frHCGAcmXLVkAKqYzQGMXzYhr/v/w1RVNcrugGG5Z37FILwYNF2JT2vdPbA4xwgYz/n2BnmlAXRrMd84f6L2hVxQ==
+ b=EVbjXCGxlIt/cv+kPi4ACZxQ3spdAvRLVzL38Fp++6E0KZSHUL0PKLMsfgYl6fNLGq+Ig/hfEeUiAhm2ivys/9geIn9/0QAQWE4zgoKkQpVAhhoRcT9/e4LVEz4s+CQtSS13fs2y2FU+75fwDFVH0JNcQj5nyHReW56JV/XUBS/Xk5cJZwyXIDeuO5y8pFGi1XRsGfBM7T+YjDFZMZD7I3XtjDWvxiebilS1xRMVqMXTgbXe8HeW1yc5IPd5bsPKDwQdR64COLbNmCNbzBCf6THPurucbk/6fW5F3R28K5vPIBX4IJ9H57uq/HeUL+lBoLAJTG5pVTP9o27ipDib4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ppy+7nhrlpG0bBv25N7r1G8z3f2WuRTdN85AP8SNE8o=;
- b=AkMxxJTIopW3S78LrNTwPidc8HnhR6ptCnLCJ6kOoTtlma+h6lejG5El5zYSbJZXISclmWgE0/+EwUcDkpEQXCnl7rKEhOlz7GNUSzTvylFEzfX8x2eHmk/7IDKtbQ5PwDmtEdL53VdwkVzW3yJqACW/KRrHfhaGhFURK2JRv8BEFvzxz4wufgOsckGPP043qUd9aqTYr3v/u4V017+iU40oywIgD4F3i+v/QEusn32pe3uDmAcKS0GujdmZcrpiMOylzXEZ/0uamea2/IIEvvtQB3XVOkTcaOf609AuDB1yYQgGA2ynUp1vDeY5TCzfYxkI0aoSEY9a20eF7PpDtg==
+ bh=UKqHLH9+3ca3fbaN8GF9upzycHdPmNMmtidXoH8sUss=;
+ b=Ir/SrEdDHtY+qHD/9UzgC5l+MsppK5qUF/HQ6ajb3c0MqbW7cVGrAiKp31pOd9Ne4GM2Y6bwk3M4QCBFqfrfEQ/mNLwLbiDXIi31Qqd5Par71wj7EztnjuGuMxXJc2yM8veSuAB+Fvwd2ZKoKEf3WTHQCOX/QtUx/Ovx1pyAPZR+xkTuLULIJbGn+1M4gU/pBhmN6rcgEaXB76Tn1GJi4b2SXH8dhBzNPdVkBe5oqT+UrxxRVoqDdB3yXCxQw66BoRAeUg+CESqQI5ldhceoYpTaDBcTK1qkTUDGIhT/sjoHXqMfXgPGTXiE7kudImHh5wXcy29dyXZosn7a//QHtw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
  dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ppy+7nhrlpG0bBv25N7r1G8z3f2WuRTdN85AP8SNE8o=;
- b=CsdEALI+HtY1WqTahk4YKuDfHBMEPuNR7i4h3mgT4HqfPp88cR/bfEqocMBJYIGJL4EHVaAyXoAOnMH4ilvH29jped7AHMZoIkItH7Gz2LQiEp/GZ2JVkQUJ5p9g2WH5A6WXaVT4esR9RxQIIYzj/CWONunBXy4qVP0QYPMWjjM=
+ bh=UKqHLH9+3ca3fbaN8GF9upzycHdPmNMmtidXoH8sUss=;
+ b=gm1QlfX/Gu5rv+2q3dDHMmoAc2kDUBd2MPKYcmwzCKI72S+4005zVH9cVgvWyAD0AHbyo0GOVyj7mzaUmFN7VVM5gz7x586PLRn8iljrMcYQ6kuy5K9Ik2IDZNxiL3kEcqd3Ndwy62ovBcwsxAGfCRtAExzxhjB+PNSm9rQZxJc=
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
  by CH3PR10MB6763.namprd10.prod.outlook.com (2603:10b6:610:147::12)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.18; Wed, 18 Dec
- 2024 21:03:19 +0000
+ 2024 21:03:07 +0000
 Received: from IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
  ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8251.015; Wed, 18 Dec 2024
- 21:03:19 +0000
-Message-ID: <dbc90629-194a-4461-89e7-2073a97dea6d@oracle.com>
-Date: Wed, 18 Dec 2024 16:03:13 -0500
+ 21:03:07 +0000
+Message-ID: <f5e19435-b9eb-48b1-a87b-9d3149eef329@oracle.com>
+Date: Wed, 18 Dec 2024 16:02:59 -0500
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 18/19] migration-test: cpr-transfer
+Subject: Re: [PATCH V4 16/19] tests/qtest: defer connection
 To: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
 Cc: David Hildenbrand <david@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -85,10 +85,10 @@ Cc: David Hildenbrand <david@redhat.com>,
  <berrange@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
 References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-19-git-send-email-steven.sistare@oracle.com>
+ <1733145611-62315-17-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US
 From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <1733145611-62315-19-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1733145611-62315-17-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-ClientProxiedBy: LO3P265CA0030.GBRP265.PROD.OUTLOOK.COM
@@ -97,94 +97,94 @@ X-ClientProxiedBy: LO3P265CA0030.GBRP265.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CH3PR10MB6763:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0cc0bc1c-b415-4a67-1441-08dd1fa76627
+X-MS-Office365-Filtering-Correlation-Id: d89673ca-b4f8-43a8-1f6a-08dd1fa75efc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?R0F2M1E2RXR3bk1nTzVWaGI4VUxKTDc1OURkeE1qOHh5MEJOV2k2TjRwTjFo?=
- =?utf-8?B?ZGhmaTZlaE9lRHlCbklWYmJESzBVN3dIYk44bFl3OHJxZ2xndHRhQ1VGRTlh?=
- =?utf-8?B?REZPcGxua245S3FEMUlrL3FEakZNTWVLc3FzcEJ0ZVg4Q1VXNlgrNlVZNysv?=
- =?utf-8?B?SngyTE1FaVdwak1qR242dzhqTWo1cGpsUmtDakZXMEFZbkp5elVYTWdwdVAz?=
- =?utf-8?B?Q0RTWi94SC9GVWt3S3ZsT09hanNTVlc3T1hvTXhsNmFEMlVyc213NXlYYk9Q?=
- =?utf-8?B?OXdBV2lZVkZKSmU1Wm5YbUN1cDQ2UlVHMHNoeHNFaVNRemJ3emZGV0lLN1Zl?=
- =?utf-8?B?VGRsK0RoczNtTHJxbVFRaUErR2VEOUVvbHhzY2o5aTAvOE9EWm5PeFRDRytV?=
- =?utf-8?B?OWtFM3F4aHdKRXpiWUlYMU04cG91L202RHRaVFowMlRHZmF1Y2VYMURsNEZq?=
- =?utf-8?B?ZU9VK2F2dDZDRS94bXl6VVduaEo0aVEydWVhWVZ6Q0kyOFNUQVZZTU9NcU56?=
- =?utf-8?B?aTg3MzhJcUVjTUJ3TVBEOXByYnRQUTdSaUtQdWU5UGFjYnFpYUNRNlVCWndG?=
- =?utf-8?B?aXlaaWVOakxSR2lSQXFTQTlBT3E3YjNOQ1B3bTRqVUNBemlKdXpCaEJoQTJh?=
- =?utf-8?B?Q2p0THJ3emNMYVg2OXFicGJsN29VMTErbkhlNk5DcDBNL2xiSHZHalJMZUdy?=
- =?utf-8?B?UDQ0bWJvKzV2a0F0blJPR3h4ZGVFT2dydzlnTFBxekh1WWhvK3hEWmFaOThY?=
- =?utf-8?B?d1NVYXZaQm8rV3hBZXU5SkI1NWVCVUUvNmFCNUlxRmg2OVRpNmxGR3FibHZk?=
- =?utf-8?B?QVFrM3BpNEZwOG9xeUdrVWp2NGsvenhxZGJFM3Y1b3FISjhveHRWakplMEJi?=
- =?utf-8?B?ZnR4a3BncGQ3cmlNUGppbnJmOW03WVVIUFVIVmxnS2lvRlpTalN4UmZ5Ymdl?=
- =?utf-8?B?dkc3V0hJd0xXWHNKeGNCS0t4UlA2TDYvdlRlSGpRbUxUM0U3SXloRVpyemR3?=
- =?utf-8?B?czdFWlFGREVMTzNXZHBxdThva21JMEZ0LytZYzQ0a1Y2RzJLNGcwdTRZQlNX?=
- =?utf-8?B?TXFIYWIxbXg0bWliYkMvSEJ1NWcvR1YrallSTUQrUC9ZZ2lreC9XSGEySGZk?=
- =?utf-8?B?Q3YzcHFvUUFTcWpRUGk3aXFPQ0xyR0hTelA5S0VjblVubTJyZ3FibGlFL1Rp?=
- =?utf-8?B?SlQ5bDhBYThyTjRrczZVWStMNmRGckFCN3Y5YXRNclhycUMxYWtCOVhWbHV4?=
- =?utf-8?B?V1lobFlnTjBzeXEyT1FMRTcxWFdyakI4UTd2Y3ZDZEYvWFQyUnRmU3o3QmV1?=
- =?utf-8?B?Sm5xNkhQM0VwS2NJalE4empCQm9KK2FuRkk5NDM1emNnSEJnWCtYNmdUOFBU?=
- =?utf-8?B?a0VkRThtVkJ0WENJeThJa2kzWXVTazBQMUh0S09ubW9IckwxVUcxNU5VM3RG?=
- =?utf-8?B?MjNPWlg3Tm51eFNQaVlITkMxb0lwWjEwQjVXeEhNdlNidFFTRWlLQXlJNWpm?=
- =?utf-8?B?TTd5YUlCWjhoUHF5MVdzZFd2eHVNY3B5M3FTSGFVQ0tiVTFCeXduWkZLT0ZF?=
- =?utf-8?B?SGtURzFMNlFKT2V4eHJoY2pSRng5aU1YbFVTNGVzUnA5WFBVcFFiUFgvT1hu?=
- =?utf-8?B?Y2lsamk3NlFhUmRCNmh4dHFHMm4vcVVRYVBIMFRlVVNFVW5yR1RrMG5ETmRZ?=
- =?utf-8?B?KzVzbHFiNGtJdW5WUFI2T0VVZkJId0pIbVBhOEVtOWJ1OU5qTmlrRVRyaGxS?=
- =?utf-8?B?QjJWeElDWldkb0tiTEEvaFVaZDlLcnlHOCtVUGUxTys2M1UwSTZIR2FxVFhQ?=
- =?utf-8?B?RWR0WnVNakZrLzJ2Vkl5N0Jxa2VoK0JHNlc5WHMzaFpVeFpaR0xqYWdvdGZi?=
- =?utf-8?Q?dobQsBg0De0Ib?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Zy9yS2ZMbGFqUE0yeURxZ3U3SFFhYWhQZUhqM283MERaUEsxWmdjYzJWY05y?=
+ =?utf-8?B?dTFRaEdnRENlcXlNK3FTcXRDY2lNLzFOUXlQK1lxczFHWHdDQU5RbnE0Rm1Y?=
+ =?utf-8?B?WjFPUkZRYUpVd2xYUWFBN05Ma1ZVbXBodk1XcmhiR2x0dTlaVW1KL3lPcDRJ?=
+ =?utf-8?B?ekFtbzJTaTVZVURVWE5FeHZMaU5mUUUxOUd4V1N3cXBOZG9DeUF5ZElIWUxX?=
+ =?utf-8?B?ZXBtNnZsd0IwdlFuL1hmU3NjZlZNTHYrRU5icW1DR0RMUE84SXIvUEZiK0Jh?=
+ =?utf-8?B?Slh5VGprd0JjSFBENnpQQVFialMwQ0VqUVdvVkFXMXUva3dPcTI0b1c2YzZL?=
+ =?utf-8?B?R05DakJDVXNQZ3Z6Q09odUp6clBsOXRBUU1FS0E4NWRHY1NQQ3FTb2w1cGxN?=
+ =?utf-8?B?SEtoMFpJVDJ5V1VCZXptK2hSeGpMR0JlcWt6S1RaWFZTdzNaQ1FZWGpaekpM?=
+ =?utf-8?B?QWs0L3VabFlNWFZnL1dEcElBZU5maFlIbTcvZ0x6dGJkTjdqSkJYVTVFNkMy?=
+ =?utf-8?B?WFhxWHNuTEhZYlVWYWFHajZwSzY1OStLRXVQRms1anhESDAxS0xnKzhjN2h5?=
+ =?utf-8?B?blJ2SDFiRHh1cmJxbWRkRDVFbThjSm9Nckx5Vjk3VE0zd3poOG83dzNJc0tQ?=
+ =?utf-8?B?YnhMYVp4WEMvZVNWekRkSHBEZDBvNHlkb3ZMSmlvVWFTUk1ZRHI4aXpuUmxj?=
+ =?utf-8?B?K2tySmhUNE5EODEzenAvRTJ3WjlHMHRlQ1hmZHBPbTh2SHNPZm54NEVlT2gw?=
+ =?utf-8?B?T0xQakZFZi9RWS9veEJEbVNHSjdPRHB6bHNGVXJ6VXBpWGhXL1ZvU0RoZ3dD?=
+ =?utf-8?B?OEpZUWRzYkFPeFdseGFsSm9aclAyRjlENVFqRkl3aS9nVXExTzNiQTJscHBB?=
+ =?utf-8?B?Q0JsSnowNVpXY0xjTTcrQ2RPMkk3ZjBWYXJFU0R2Tm9pUkNwbEFLbkFkdFJi?=
+ =?utf-8?B?Y1lPMjVldzZrSVRad0hCQ3BqWTZwWHFvQTdmbzIzMjMycUNoTFptbXIxT1NQ?=
+ =?utf-8?B?SVVxK1VEaXVzQkxZbFpNNjhmUWZaVDFYb0cwK2I2MW1oQXVNOXlGbFIvZXd1?=
+ =?utf-8?B?YVBnT3VQVUlxck9Qa3BMYmhsclpaQnJGMTg3RUQ5em5KNmtOZFdEa2VLZ3dD?=
+ =?utf-8?B?SlR6Skd4N0pDS0IrcWZCbmdKTTlyVVBUWVhwT2tyUEFES1BOai90Qmpjbzdk?=
+ =?utf-8?B?YTF1TVAwUVBmb2xITDhUMEhmV0lDTWdWNVkxdHBpMUZCb2N2d2phRjFobk9L?=
+ =?utf-8?B?KytFUnY5NkhGanQwUDZJVW11WktXS1lrbk5jUysrN2puV1E1amZqMG80WXo3?=
+ =?utf-8?B?aUtkYTRONEk0eUhKT2g5NUNEbHpHUm9FTjBGZW9sVjZodkVKSFpzNCtLN01I?=
+ =?utf-8?B?Ri9GVml0eUtEaGczWWhSckkzOHBRSFVkelFWMzhlSkdVZkVmL0RCUFk0UlJm?=
+ =?utf-8?B?Ukh1akZBVGhPRU5SUkR3ZnN3UlZIaUgwcGJjSkNqcnh6V0tlUWV3OVN4NEU0?=
+ =?utf-8?B?aDhoRTlHK3pqY3dheWtXYko1dzBDYUhxaGRpOW50SERXN3lhRHNJNmp2ejlY?=
+ =?utf-8?B?cnF6Tzl1Y0JNT2pPRUtjNjE2d210YVVZZmpSNUY3Q3FvNFVIaytNTStnWmhR?=
+ =?utf-8?B?YSsxcUVBNUhlWERJdHcrV1FIZWhnSGFPVHd6eXdaZ25OR3ZWYmR4NXI3c0h5?=
+ =?utf-8?B?aEc4WTltTVd4L2VKcGpqeHZFSHcvdWdVdnhQZ2xLa0JBTUpicWpacVg3WStT?=
+ =?utf-8?B?Wk1XZjByS0N3N09RSmNoaXVKVFRwdkN4aWlqbjc5NXpRaTFEZ01vZlQvRnFs?=
+ =?utf-8?B?d0V1a2k5ZHZCcmVyNkR5Mi9LLzNKeHhCbG5UOGhvdWRnMnIwVWlya2NYcWp4?=
+ =?utf-8?Q?m5gPAxamJ/EXn?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bGk3cFVUeDh5ZFFsR0hvK0wrRFZSUVJBL283Umdack9KbzFKSDYvTkVycERQ?=
- =?utf-8?B?Ky96anJxNFRTMG9yV3pPTjFpRWwwd2VHTkVEdjlOSzVmMGVWNE9tMGVCSzQv?=
- =?utf-8?B?Vmp5RzFQek5rRTdqMFI0aE9LVEd0dXJuUzd1b2R4Z1lXTzJpZUdKLzM4OGNi?=
- =?utf-8?B?NDNmaUFLZ3RvbWsxQXZVajF0M2Q4N3I1WDl1UHhNUThtckNJT1JQcWEwRS9V?=
- =?utf-8?B?V2craGxGQnBmYXAzUU9KMDE1VFFnN1VPTVA4elFKZzNTanNaK0N4UVFaYmFy?=
- =?utf-8?B?bVhwd2tsbHVWaHkvY3NTQ2hKRis3Zkp2NEk0Y045R3loODFPakZZd3NzMytZ?=
- =?utf-8?B?Zlcybk1wNi9GUlRSV25NTEJRZGVHSFRrb0UxdGY3V2k4N1BYMk9FUi9QUjI2?=
- =?utf-8?B?WmJLbHhCVGtuTkt6Mi9YeEwrYWorNEFabGxsWW92VGVPcWdrK2VmWkhaTml4?=
- =?utf-8?B?aSs3S2tzOUxHNDlIS2lOYllCVXFrYWhrd1cyNGZONGphYjZPT3ZKSVpqcUZI?=
- =?utf-8?B?dllMenpLVGlnVVA4NldBQ2loZFU3TlhCME9weDF3K3krQm1QVHBxY0lTN0h1?=
- =?utf-8?B?TEdCUXpKdFNpU29IUWswallCMUdOdjBQaUZJbWFibExMNjJMdmU4WDBqbFhy?=
- =?utf-8?B?Q2xMMURFWTN6Z3o0blcvOEw2SFM5Zm0ycnJJQ09qYW1pRXFhVEs3T3FUMUtt?=
- =?utf-8?B?dHZiRVFIK1c2VVZlcitaSWNEbmVwVUtISnJTVjlBSmlwTlVFV25ad1ZXVWJZ?=
- =?utf-8?B?R0hqbitGK0lIc1J4L3JtZVk0a3pKV21vYnJxdnRmZVdsZGNHcTdmWm9GSTA1?=
- =?utf-8?B?Y3BXRWY2RTdqU1N2SXpTTGsvbGoyUG1idFhlQnFKYTBsUXNnSVN3Zms1UnJO?=
- =?utf-8?B?Vm9LR1BXS1BVdGFnR21PRVZpZTVzcFVoQkNPbDN2c3FTcnZrSHRkZ1grUmRV?=
- =?utf-8?B?Y3VUTU4wZjVsR3ZoOU9IUmlLYXZzVVVMNmV4VlgzTW5PcnZrZkdYanUzTUtV?=
- =?utf-8?B?NVVxbWJqK1lUdE8wLzNmNzRwV2l3bEk1bTM2VzkycXpIR2lvSzhwNzRNZFF2?=
- =?utf-8?B?ZmQ0clZMN3JNYkFDNzVXWjBHc1ZJVXJvbU9HWEJNc3pSYlNSbkhlZmR1WU03?=
- =?utf-8?B?bTlPVSsrS2ZObHk2elhPMTBMd0ZCZ0ZSUUp1dG51d3EyU0lGUnN4cFl1R2Jj?=
- =?utf-8?B?SkwvcVZ3ZUNtZHFDMXUxTGozUkZnUEVnaG02N1BhSkZrbys3bE5UcnlEbFJn?=
- =?utf-8?B?NnYrdlF4eUhrN3JQVTdMNFdhalJDNENzOVlTQVZyRndHR3p6TzE0NEI5bEZF?=
- =?utf-8?B?bHBwNWg5K3hyMUt6VThHOXBCdnNtT085anl4U3JZVEhIOVU5dlJMQlduTWFt?=
- =?utf-8?B?OTNlclN0Q093aDY5OEwvU0Z5cm0xM3lCREFqSjdlcTZaSGd1VXpWbCtHUkJ1?=
- =?utf-8?B?TlFIRDB4SCs3WTVXRHk2ZVdmWUVmZ2JQanRlRkRBaWs0bkJ5cmFLTU54RE9s?=
- =?utf-8?B?d1R0WHlJQW9wMmhrSFdNSlIvSXlJU2FOSllyRVJQcDZDbmt1d09BenJMd05N?=
- =?utf-8?B?VE5KNEljM2dpK3gxN3V6YWlteitWdkpCN3JiTVgxWnpRYTJSWXJ2TU8vOVpn?=
- =?utf-8?B?OVMxczYvNGdSaW1GZ0RHT05aRGMzRjd4djZ5Y1R6R3NNK3M1UGhBVm56NDIw?=
- =?utf-8?B?MTVKdWFTemRQOVVyN0RZQStYNzhuUDE4d0x3VWVydVVsQnVUUHZienZlNnZD?=
- =?utf-8?B?SVo1QzJtUVFZUVhVdGxIYytWOFpLcC9vRjhNWXhucyt0WlE4L3pMc3hCT0p1?=
- =?utf-8?B?VndRODZGVU0raWpnQ1oyc0IxN0NtQjRtVmdBR1dxTDQ0dGdxK3U5bmhBOW1O?=
- =?utf-8?B?MEZ2Q0lnYVdOZ1pua3MvaWtVUjd2cW1JT1hOYm9EcWNjTjNybTcwbTQxaUU1?=
- =?utf-8?B?NlFva3JsOXArdEVRRHVDNnYxZEw5UklMcC9yaUhHUFFnSzI5c1ovazlLeFls?=
- =?utf-8?B?Z2NySjZJMm9CMjdhTmthQUl4Q2lVazhUNEl4SXlKK2poRStFcW9NWXc4MGJE?=
- =?utf-8?B?aDhPYmtOeFhtangvSmRlU1JRdDE4aUQrQVFvTW5XamZJa3BObUsyb3g0UlBt?=
- =?utf-8?B?WjAzanZxZndTK2V4dGNPV1lSRE1pYzEyWWZGUnhwQVFGWmhYYXVqUGxsSEM4?=
- =?utf-8?B?bHc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RkxoM1pPTUhiK1htNkJzTXRhdnE4R0dUZnpUUEIwU2FsWnJQTXdKNkhuWnYv?=
+ =?utf-8?B?WnIvMGIyUnNIRXhKZ2J1cWVxM05OSE5kbDBqTkpoYjlTeU9XdHdMK2tQWk1q?=
+ =?utf-8?B?ZVYwM0QxckplUSt4VVpMU3g1Y2ttYVJ1RGRSNGFWWFVvdjJvbFpGVWlqd01T?=
+ =?utf-8?B?cFk3dU55OHlTazJBRW5nT0Z0dU9HNG5OOWtVMVo0ODEvL3YrUWpXSzFRbkNZ?=
+ =?utf-8?B?MUJlVXRxRGsyZUZ1VkVZY3N1ZEFiOXFlSlZ1eDdYYXdNMGYzU2p5aDUrbi9U?=
+ =?utf-8?B?VVp3d0puTTZnSlA3Sjl3TWhVTWhxYkNQb1VDRjBIZnJJRFAvdmhhUDJTYzhF?=
+ =?utf-8?B?bmtIKzFpdm0xanFkc09IMHppcS9kMjFlTThJR09jWVBpSXB3ZHhheURBWmU2?=
+ =?utf-8?B?cWd5RWdzWUNlQ1JUT0FsSjdyUmlUL2M2c3BJWnJ3Z0xKSlpGaGUxcUtybnNu?=
+ =?utf-8?B?ZUdIelhKSWRJNG9keG1jMEVXNm9jdWxwaUwvZ2lRZGFKM1dub2t5TUQzTGN4?=
+ =?utf-8?B?UGRaZ2tneHVFTEIvQmxSR25jZi8rL0NFOFhCSVVEbDlNdnhVNlVJQlZ5WEh0?=
+ =?utf-8?B?VTRDQnBSSklNbGNpVlVpYkNkc2pUUlZtV3N1MHFjd013OXJOU1BBM3p1TDBE?=
+ =?utf-8?B?MmtVMW5OVUdRSnJjcXF5ckhPdmpLUHNqMlk3aVE0UUM1Sy9WbExvYzRsUzhp?=
+ =?utf-8?B?Unlpc00zNy9MTWtDSkNHZTBNb3diTi9CR2drcTFTTy8xbEpYSm1SZEJTZUdi?=
+ =?utf-8?B?MEkzdEIweCtHSWpFZ3cvcU8vNWJJd1pnbm5qTGJZQ3R4K3kzMy9tYU9FeWhx?=
+ =?utf-8?B?YVVyL25jL0xoeVNhRFB3RnhWYlQzbXgxVXhHUFVKMDZLNGRmeFZMZm5iUDdj?=
+ =?utf-8?B?MDlEaFVvdkpSVkZ2d1ZEbFQ4WmZtUmNzSnJLZ3B0TkJ2SmZMQlRUVmlMajRJ?=
+ =?utf-8?B?WUdkRW1JVXE3dDdqdFNjNUgrR2N1ZXk3ZWZOWHZhaFMrMmVFdnZMSU5OMFFW?=
+ =?utf-8?B?YklFS21lYTEwbGVyVHIyYnhJT04zaDZTL2dJbUpYbm1vV2FNR1NBS3I2Q3k3?=
+ =?utf-8?B?U3RYMld6UXdzQlJOUzJjemYrckNIWlV3ZjNLT0kvYmV3L3ZDV0czUTBHS0kz?=
+ =?utf-8?B?NEZvYjNYL1UvRDA0U3Y4N1QrYWpXbDJOZFkvRFJXWVRwRS9jSURJWFZERHBC?=
+ =?utf-8?B?MFZtdS9IMm1rVU5YejNzb00ydEczcHprRkNLeVdkZWlTSVVJWmNJcklMYXJX?=
+ =?utf-8?B?aXhacnMrcGlTQUF1TVplS0FZUDY2dDd0UCtFRlB0aldnQ3l3REExc2t5VHpC?=
+ =?utf-8?B?b1BtQW1nUTFvWjljVmNMYStYUnozMHVZaDM3YjdaQzBnVWhtYnFxWFo1ajg5?=
+ =?utf-8?B?Q1ZiYWhDUWZtVnYrdHFQU3FraVZLU3VJMGVWNDlYZU52bFkyRU5RZkVNZ0oz?=
+ =?utf-8?B?a2IwRFNrc1NMckUxMTdGbGxmSEJ2Ly95OC9JVEFjSkU3aDE1WTJpeEgrbGM0?=
+ =?utf-8?B?c0dlZjhjM1lEcUhTQ2tnRTB1elFzVndFMXRVT3ZaK3pUTkpqMGRkUkNScHFW?=
+ =?utf-8?B?RUFiaVJJekpWdkNmZlZ2TjFQbXFCK2VBb1haOEEybGRweXRqVzJKYngvTm9N?=
+ =?utf-8?B?TTVicW1NYy9EYUIxM01IU0FaQktYME9ZSDVvRTVUTXo4UnNndWZkcXJ3UVln?=
+ =?utf-8?B?dFZENEE1MzR0bjd6eUtCRVJSbGp6Q2l4bXVjRmJEODhVT24vTDlyMmFXVXRX?=
+ =?utf-8?B?b1RLcHQ5Z2ZiNVVpeWZnK1ZSZTRIRWRadi94ZmI3N1ptNkNXay9Ub1NDY2F6?=
+ =?utf-8?B?bmlhMjF2MWRjcnpqUFMxWkZ0dFhuM3owcThlc1JuOTcyOWtyUWIyQmU5dUdz?=
+ =?utf-8?B?bjZaQ3hPUVdzbWhoMVJhcUZIWm1iSEZxNDBoVmZFYTBEdFNNQllkSFFpMGhr?=
+ =?utf-8?B?MXROYWRZWlFUZ2d2K3BHcS9OdVFQbXJOQ3pSekl4Y2Y2TmRwREhRMWZDMTdP?=
+ =?utf-8?B?dlBJdmk4V2dITUdFbWUxVWtaWUFHZEZaaStZRStaRUJ5ZmdsVnA5T2VBTThN?=
+ =?utf-8?B?UjREa25lOXJQcXRqdFNhaTcxekQ2czBFVE5UTVg4azJoa3RGRnB5aTdOMmQ4?=
+ =?utf-8?B?Y3U4bFpSM0o4aUxxRy9UTXExblBIaDYrTlBpa0xnMkFLcWNldWpmeEZ4UzFP?=
+ =?utf-8?B?MEE9PQ==?=
 X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: VupyTBvInNJ6AdYMaxIH/bJ1emVZnpPqMMYSk7ua5988ERnn2BXfmQkHS4DIc5UqlWyv3CKrQjsbkCZI3BOule6UAMc41YRykKawFMvvelyaUSsR85zAxBwjkrvGpUhHJhNoZuwCOe8DscPjjpoR3u6+AL0o00eUuqg47S8SrV/iW2MaAURfjk6ZNLYzdpzOkvks+PsrEoZra0ggUR0UrtKFIZFcRnUyyoMmpNd+WIhy97zlLHKdllMgrLLR1gOIoKgK14JYuolRXNVM29dQJVfrq722cYuALSdmx/UJzHM8vYW5CLbjukyQ6y9iwltPeregU37pdJTByTUR/aJWvusGtMFumzp6I52RGUf09EPleR3YHrvll/Xb15raTJbwsRwdPTX1i/eGdgleJjx1wmdRAeaPexAjGL5WiWC7b6cwIMrgprDAeOcVnGAH2OziwcFuOshFgneT8VJt8btUURbhbdn0AvJfxkK0QkSKo/dn9C0DxzgtG3/pgk2gQnJQe8iRwI65Z+nN32bhxOOjOX2tW6OMY7a45VfuwGDq5MuJQmAqW2HLnCJI0FXJVS4sMbTnivNTDKZew3cRdy/stW4O/5f2N+wmJbbruaKP/UE=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Z6LCAzOqiUO72HADlqqbFdWMXKp37L2uKKOrPYrnoj6jIF4b1sHI8DIgLlNU+xGXisequXpobpxL+Vj9vDE2E3KkKUAIopb6GLoc1VeH7pTE5ykYcT6Olyxb1aqKjbhgOV9Y9DgaBeBmcL1Cykjj4cB4W/kC5nrkX2TW+OSlCUrQAfD0FMSLeOeXzZ1EvLrG92dPf3bypE0aplBnMGz+bAD4S5mpQ3CQwRrjCU4C1fSes3NylBZOP/NSHhhXNJfZrHAc4xBtadLhMlZv9dp3tm7um6WX5aOmrtne5eijBTRRNUJgzy0UsRuXMPoZn4uAHWkvVoAheuleaYNPPENZOxpuG6hhVprzbZkTFxipX+z2ASJmEnWQ39ZSbSfF6PQ/Nt3u3br/+sNa0fATndzCsldLAylk+ZJs7hHP2ku8iVpQf7ZlH7kZcauqvTOLgSd4/NUXSf2yiLGSEB7aSUT8q7DSuNIMHrDsb9oU4moRQBanTo2ERacvF7VfFuL2DBp0GU2MtxDaQ6J3WveQnXjYQFOKm4Tvdnb3/Ygsej7gNV0xBUDDPyY2GgpNp0baYBy8XyRgps8EibgfejA7lXq1MgyIVFzfH/yyqNtjIz3Psqk=
 X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0cc0bc1c-b415-4a67-1441-08dd1fa76627
+X-MS-Exchange-CrossTenant-Network-Message-Id: d89673ca-b4f8-43a8-1f6a-08dd1fa75efc
 X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 21:03:19.2229 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 21:03:07.2416 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7vqsJZWIhx7DpWU1x/5uzMHl4CiJ8V9EEEM/dcU9hPXpr5tV8net0qrkYu05T05EyoGD9Jj3PI4VIGsmGBI6kWYTaYgRLGYdcV5eScShgrE=
+X-MS-Exchange-CrossTenant-UserPrincipalName: VxtM8liI2GX3wS2EIetLulsqubCYypNq+id2c3TB/z/pnX7J0aheT9iJw+QcM5F5ZHJ8IWaarKpuiuuPHW0NoL32tX3cd91s1Dqf6TRAqGo=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB6763
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1057,Hydra:6.0.680,FMLib:17.12.68.34
@@ -194,8 +194,8 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
  spamscore=0 mlxlogscore=999 phishscore=0 malwarescore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2411120000
  definitions=main-2412180164
-X-Proofpoint-GUID: MFHdvQPVolAO8V79Ahslt5M4RXhFVM9f
-X-Proofpoint-ORIG-GUID: MFHdvQPVolAO8V79Ahslt5M4RXhFVM9f
+X-Proofpoint-GUID: oNPK4Pqq_cwR9wyo8yqhMPjMaTjqc1rS
+X-Proofpoint-ORIG-GUID: oNPK4Pqq_cwR9wyo8yqhMPjMaTjqc1rS
 Received-SPF: pass client-ip=205.220.177.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
@@ -226,127 +226,282 @@ If someone is bored, this needs review, else let it ride until V5.
 - Steve
 
 On 12/2/2024 8:20 AM, Steve Sistare wrote:
-> Add a migration test for cpr-transfer mode.  Defer the connection to the
-> target monitor, else the test hangs because in cpr-transfer mode QEMU does
-> not listen for monitor connections until we send the migrate command to
-> source QEMU.
+> Add an option to defer making the connecting to the monitor and qtest
+> sockets when calling qtest_init_with_env.  The client makes the connection
+> later by calling qtest_connect_deferred and qtest_qmp_handshake.
 > 
-> To test -incoming defer, send a migrate incoming command to the target,
-> after sending the migrate command to the source, as required by
-> cpr-transfer mode.
+> A test cannot specify port=0 for a deferred connection, because qmp_migrate
+> cannot query for the assigned port, because the monitor is not connected
+> yet.  However, even if the test does not specify port=0, qmp_migrate ->
+> migrate_set_ports unconditionally queries connection parameters.
+> Modify migrate_set_ports to only query when port=0.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   tests/qtest/migration-test.c | 72 +++++++++++++++++++++++++++++++++++++++++++-
->   1 file changed, 71 insertions(+), 1 deletion(-)
+>   tests/qtest/libqtest.c          | 80 +++++++++++++++++++++++++----------------
+>   tests/qtest/libqtest.h          | 19 +++++++++-
+>   tests/qtest/migration-helpers.c | 19 +++++-----
+>   tests/qtest/migration-test.c    |  4 +--
+>   4 files changed, 80 insertions(+), 42 deletions(-)
 > 
+> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
+> index 817fd7a..31c4032 100644
+> --- a/tests/qtest/libqtest.c
+> +++ b/tests/qtest/libqtest.c
+> @@ -75,6 +75,8 @@ struct QTestState
+>   {
+>       int fd;
+>       int qmp_fd;
+> +    int sock;
+> +    int qmpsock;
+>       pid_t qemu_pid;  /* our child QEMU process */
+>       int wstatus;
+>   #ifdef _WIN32
+> @@ -442,18 +444,19 @@ static QTestState *G_GNUC_PRINTF(2, 3) qtest_spawn_qemu(const char *qemu_bin,
+>       return s;
+>   }
+>   
+> +static char *qtest_socket_path(const char *suffix)
+> +{
+> +    return g_strdup_printf("%s/qtest-%d.%s", g_get_tmp_dir(), getpid(), suffix);
+> +}
+> +
+>   static QTestState *qtest_init_internal(const char *qemu_bin,
+> -                                       const char *extra_args)
+> +                                       const char *extra_args,
+> +                                       bool defer_connect)
+>   {
+>       QTestState *s;
+>       int sock, qmpsock, i;
+> -    gchar *socket_path;
+> -    gchar *qmp_socket_path;
+> -
+> -    socket_path = g_strdup_printf("%s/qtest-%d.sock",
+> -                                  g_get_tmp_dir(), getpid());
+> -    qmp_socket_path = g_strdup_printf("%s/qtest-%d.qmp",
+> -                                      g_get_tmp_dir(), getpid());
+> +    g_autofree gchar *socket_path = qtest_socket_path("sock");
+> +    g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
+>   
+>       /*
+>        * It's possible that if an earlier test run crashed it might
+> @@ -485,22 +488,17 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+>       qtest_client_set_rx_handler(s, qtest_client_socket_recv_line);
+>       qtest_client_set_tx_handler(s, qtest_client_socket_send);
+>   
+> -    s->fd = socket_accept(sock);
+> -    if (s->fd >= 0) {
+> -        s->qmp_fd = socket_accept(qmpsock);
+> -    }
+> -    unlink(socket_path);
+> -    unlink(qmp_socket_path);
+> -    g_free(socket_path);
+> -    g_free(qmp_socket_path);
+> -
+> -    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
+> -
+>       s->rx = g_string_new("");
+>       for (i = 0; i < MAX_IRQ; i++) {
+>           s->irq_level[i] = false;
+>       }
+>   
+> +    s->sock = sock;
+> +    s->qmpsock = qmpsock;
+> +    if (!defer_connect) {
+> +        qtest_connect_deferred(s);
+> +    }
+> +
+>       /*
+>        * Stopping QEMU for debugging is not supported on Windows.
+>        *
+> @@ -515,34 +513,54 @@ static QTestState *qtest_init_internal(const char *qemu_bin,
+>       }
+>   #endif
+>   
+> +   return s;
+> +}
+> +
+> +void qtest_connect_deferred(QTestState *s)
+> +{
+> +    g_autofree gchar *socket_path = qtest_socket_path("sock");
+> +    g_autofree gchar *qmp_socket_path = qtest_socket_path("qmp");
+> +
+> +    g_assert(s->sock >= 0 && s->qmpsock >= 0);
+> +    s->fd = socket_accept(s->sock);
+> +    if (s->fd >= 0) {
+> +        s->qmp_fd = socket_accept(s->qmpsock);
+> +    }
+> +    unlink(socket_path);
+> +    unlink(qmp_socket_path);
+> +    g_assert(s->fd >= 0 && s->qmp_fd >= 0);
+> +    s->sock = s->qmpsock = -1;
+>       /* ask endianness of the target */
+> -
+>       s->big_endian = qtest_query_target_endianness(s);
+> -
+> -   return s;
+>   }
+>   
+>   QTestState *qtest_init_without_qmp_handshake(const char *extra_args)
+>   {
+> -    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args);
+> +    return qtest_init_internal(qtest_qemu_binary(NULL), extra_args, false);
+>   }
+>   
+> -QTestState *qtest_init_with_env(const char *var, const char *extra_args)
+> +void qtest_qmp_handshake(QTestState *s)
+>   {
+> -    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args);
+> -    QDict *greeting;
+> -
+>       /* Read the QMP greeting and then do the handshake */
+> -    greeting = qtest_qmp_receive(s);
+> +    QDict *greeting = qtest_qmp_receive(s);
+>       qobject_unref(greeting);
+>       qobject_unref(qtest_qmp(s, "{ 'execute': 'qmp_capabilities' }"));
+> +}
+>   
+> +QTestState *qtest_init_with_env(const char *var, const char *extra_args,
+> +                                bool defer_connect)
+> +{
+> +    QTestState *s = qtest_init_internal(qtest_qemu_binary(var), extra_args,
+> +                                        defer_connect);
+> +    if (!defer_connect) {
+> +        qtest_qmp_handshake(s);
+> +    }
+>       return s;
+>   }
+>   
+>   QTestState *qtest_init(const char *extra_args)
+>   {
+> -    return qtest_init_with_env(NULL, extra_args);
+> +    return qtest_init_with_env(NULL, extra_args, false);
+>   }
+>   
+>   QTestState *qtest_vinitf(const char *fmt, va_list ap)
+> @@ -1523,7 +1541,7 @@ static struct MachInfo *qtest_get_machines(const char *var)
+>   
+>       silence_spawn_log = !g_test_verbose();
+>   
+> -    qts = qtest_init_with_env(qemu_var, "-machine none");
+> +    qts = qtest_init_with_env(qemu_var, "-machine none", false);
+>       response = qtest_qmp(qts, "{ 'execute': 'query-machines' }");
+>       g_assert(response);
+>       list = qdict_get_qlist(response, "return");
+> @@ -1578,7 +1596,7 @@ static struct CpuModel *qtest_get_cpu_models(void)
+>   
+>       silence_spawn_log = !g_test_verbose();
+>   
+> -    qts = qtest_init_with_env(NULL, "-machine none");
+> +    qts = qtest_init_with_env(NULL, "-machine none", false);
+>       response = qtest_qmp(qts, "{ 'execute': 'query-cpu-definitions' }");
+>       g_assert(response);
+>       list = qdict_get_qlist(response, "return");
+> diff --git a/tests/qtest/libqtest.h b/tests/qtest/libqtest.h
+> index beb96b1..db76f2c 100644
+> --- a/tests/qtest/libqtest.h
+> +++ b/tests/qtest/libqtest.h
+> @@ -60,13 +60,15 @@ QTestState *qtest_init(const char *extra_args);
+>    * @var: Environment variable from where to take the QEMU binary
+>    * @extra_args: Other arguments to pass to QEMU.  CAUTION: these
+>    * arguments are subject to word splitting and shell evaluation.
+> + * @defer_connect: do not connect to qemu monitor and qtest socket.
+>    *
+>    * Like qtest_init(), but use a different environment variable for the
+>    * QEMU binary.
+>    *
+>    * Returns: #QTestState instance.
+>    */
+> -QTestState *qtest_init_with_env(const char *var, const char *extra_args);
+> +QTestState *qtest_init_with_env(const char *var, const char *extra_args,
+> +                                bool defer_connect);
+>   
+>   /**
+>    * qtest_init_without_qmp_handshake:
+> @@ -78,6 +80,21 @@ QTestState *qtest_init_with_env(const char *var, const char *extra_args);
+>   QTestState *qtest_init_without_qmp_handshake(const char *extra_args);
+>   
+>   /**
+> + * qtest_connect_deferred:
+> + * @s: #QTestState instance to connect
+> + * Connect to qemu monitor and qtest socket, after deferring them in
+> + * qtest_init_with_env.  Does not handshake with the monitor.
+> + */
+> +void qtest_connect_deferred(QTestState *s);
+> +
+> +/**
+> + * qtest_qmp_handshake:
+> + * @s: #QTestState instance to operate on.
+> + * Perform handshake after connecting to qemu monitor.
+> + */
+> +void qtest_qmp_handshake(QTestState *s);
+> +
+> +/**
+>    * qtest_init_with_serial:
+>    * @extra_args: other arguments to pass to QEMU.  CAUTION: these
+>    * arguments are subject to word splitting and shell evaluation.
+> diff --git a/tests/qtest/migration-helpers.c b/tests/qtest/migration-helpers.c
+> index 3f8ba7f..9f39401 100644
+> --- a/tests/qtest/migration-helpers.c
+> +++ b/tests/qtest/migration-helpers.c
+> @@ -127,25 +127,28 @@ migrate_get_connect_qdict(QTestState *who)
+>   
+>   static void migrate_set_ports(QTestState *to, QList *channel_list)
+>   {
+> -    QDict *addr;
+> +    g_autoptr(QDict) addr = NULL;
+>       QListEntry *entry;
+>       const char *addr_port = NULL;
+>   
+> -    addr = migrate_get_connect_qdict(to);
+> -
+>       QLIST_FOREACH_ENTRY(channel_list, entry) {
+>           QDict *channel = qobject_to(QDict, qlist_entry_obj(entry));
+>           QDict *addrdict = qdict_get_qdict(channel, "addr");
+>   
+> -        if (qdict_haskey(addrdict, "port") &&
+> -            qdict_haskey(addr, "port") &&
+> -            (strcmp(qdict_get_str(addrdict, "port"), "0") == 0)) {
+> +        if (!qdict_haskey(addrdict, "port") ||
+> +            strcmp(qdict_get_str(addrdict, "port"), "0")) {
+> +            continue;
+> +        }
+> +
+> +        if (!addr) {
+> +            addr = migrate_get_connect_qdict(to);
+> +        }
+> +
+> +        if (qdict_haskey(addr, "port")) {
+>               addr_port = qdict_get_str(addr, "port");
+>               qdict_put_str(addrdict, "port", addr_port);
+>           }
+>       }
+> -
+> -    qobject_unref(addr);
+>   }
+>   
+>   bool migrate_watch_for_events(QTestState *who, const char *name,
 > diff --git a/tests/qtest/migration-test.c b/tests/qtest/migration-test.c
-> index 8bc665d..4eb641c 100644
+> index 64e1c50..b7001b0 100644
 > --- a/tests/qtest/migration-test.c
 > +++ b/tests/qtest/migration-test.c
-> @@ -1729,6 +1729,7 @@ static void test_precopy_common(MigrateCommon *args)
->   {
->       QTestState *from, *to;
->       void *data_hook = NULL;
-> +    const char *connect_uri;
->   
->       if (test_migrate_start(&from, &to, args->listen_uri, &args->start)) {
->           return;
-> @@ -1766,11 +1767,16 @@ static void test_precopy_common(MigrateCommon *args)
->           goto finish;
->       }
->   
-> -    migrate_qmp(from, to, args->connect_uri, args->connect_channels, "{}");
-> +    /* If has channels, then connect_uri is only used for listen defer */
-> +    connect_uri = args->connect_channels ? NULL : args->connect_uri;
-> +    migrate_qmp(from, to, connect_uri, args->connect_channels, "{}");
->   
->       if (args->start.defer_target_connect) {
->           qtest_connect_deferred(to);
->           qtest_qmp_handshake(to);
-> +        if (!strcmp(args->listen_uri, "defer")) {
-> +            migrate_incoming_qmp(to, args->connect_uri, "{}");
-> +        }
->       }
->   
->       if (args->result != MIG_TEST_SUCCEED) {
-> @@ -2415,6 +2421,66 @@ static void test_multifd_file_mapped_ram_fdset_dio(void)
->   }
->   #endif /* !_WIN32 */
->   
-> +static void *test_mode_transfer_start(QTestState *from, QTestState *to)
-> +{
-> +    migrate_set_parameter_str(from, "mode", "cpr-transfer");
-> +    return NULL;
-> +}
-> +
-> +/*
-> + * cpr-transfer mode cannot use the target monitor prior to starting the
-> + * migration, and cannot connect synchronously to the monitor, so defer
-> + * the target connection.
-> + */
-> +static void test_mode_transfer_common(bool incoming_defer)
-> +{
-> +    g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
-> +    g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
-> +    g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
-> +
-> +    const char *opts = "-machine aux-ram-share=on -nodefaults";
-> +    g_autofree char *opts_target = g_strdup_printf(
-> +        "-incoming \\{\\\'channel-type\\\':\\\'cpr\\\',"
-> +        "\\\'addr\\\':\\{\\\'transport\\\':\\\'socket\\\',"
-> +        "\\\'type\\\':\\\'unix\\\',\\\'path\\\':\\\'%s\\\'\\}\\} %s",
-> +        cpr_path, opts);
-> +
-> +    g_autofree char *channels = g_strdup_printf(
-> +        "[ { 'channel-type': 'main',"
-> +        "    'addr': { 'transport': 'socket',"
-> +        "              'type': 'unix',"
-> +        "              'path': '%s' } },"
-> +        "  { 'channel-type': 'cpr',"
-> +        "    'addr': { 'transport': 'socket',"
-> +        "              'type': 'unix',"
-> +        "              'path': '%s' } } ]",
-> +        mig_path, cpr_path);
-> +
-> +    MigrateCommon args = {
-> +        .start.opts_source = opts,
-> +        .start.opts_target = opts_target,
-> +        .start.defer_target_connect = true,
-> +        .start.memory_backend = "-object memory-backend-memfd,id=pc.ram,size=%s"
-> +                                " -machine memory-backend=pc.ram",
-> +        .listen_uri = incoming_defer ? "defer" : uri,
-> +        .connect_uri = incoming_defer ? uri : NULL,
-> +        .connect_channels = channels,
-> +        .start_hook = test_mode_transfer_start,
-> +    };
-> +
-> +    test_precopy_common(&args);
-> +}
-> +
-> +static void test_mode_transfer(void)
-> +{
-> +    test_mode_transfer_common(NULL);
-> +}
-> +
-> +static void test_mode_transfer_defer(void)
-> +{
-> +    test_mode_transfer_common(true);
-> +}
-> +
->   static void test_precopy_tcp_plain(void)
->   {
->       MigrateCommon args = {
-> @@ -3905,6 +3971,10 @@ int main(int argc, char **argv)
->           migration_test_add("/migration/mode/reboot", test_mode_reboot);
->       }
->   
-> +    migration_test_add("/migration/mode/transfer", test_mode_transfer);
-> +    migration_test_add("/migration/mode/transfer/defer",
-> +                       test_mode_transfer_defer);
-> +
->       migration_test_add("/migration/precopy/file/mapped-ram",
->                          test_precopy_file_mapped_ram);
->       migration_test_add("/migration/precopy/file/mapped-ram/live",
+> @@ -844,7 +844,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>                                    args->opts_source ? args->opts_source : "",
+>                                    ignore_stderr);
+>       if (!args->only_target) {
+> -        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source);
+> +        *from = qtest_init_with_env(QEMU_ENV_SRC, cmd_source, false);
+>           qtest_qmp_set_event_callback(*from,
+>                                        migrate_watch_for_events,
+>                                        &src_state);
+> @@ -865,7 +865,7 @@ static int test_migrate_start(QTestState **from, QTestState **to,
+>                                    shmem_opts ? shmem_opts : "",
+>                                    args->opts_target ? args->opts_target : "",
+>                                    ignore_stderr);
+> -    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target);
+> +    *to = qtest_init_with_env(QEMU_ENV_DST, cmd_target, false);
+>       qtest_qmp_set_event_callback(*to,
+>                                    migrate_watch_for_events,
+>                                    &dst_state);
 
 
