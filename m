@@ -4,83 +4,149 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BAFE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 12:32:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB1FE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 12:34:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNtDs-0003q8-1z; Wed, 18 Dec 2024 07:32:24 -0500
+	id 1tNtFh-000597-Cl; Wed, 18 Dec 2024 07:34:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tNtCw-0003je-KC
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:31:19 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tNtCs-0007py-He
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:31:16 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so5521989f8f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 04:31:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734525070; x=1735129870; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=ixAP0AO6/46cJ/jWuvmUI7KMqJXizbt7Hm42tv5K8WY=;
- b=LjhtCKD4REbLRcpUyIqn61/xeliu5Ls45x4YcKqfkUGTrdJRKM49X8nPiuu+Glwsvt
- 8MffinxfdTOnn9ZWkcEtzjy/D27CSOphcWJSOKp+nAWZS14PrqSG/N4IQExIBiKVyGW6
- E06JGbiHnWTKVg4KlaHAftWVyNJ+zcGcXnQXEQLHBQggIij0aBh+E1yOlcJuOxGBLfPz
- jadRbz7SLy6FEzHXE2/b8F1Z70RtCOcdbxeHFP+CImkH1S8Fte4/prSBLUr7xcdg8zlk
- 9qX3UDcVGwHlDmfDWXV8kNy9yclvWV8eHg1uH+CQejeJrYoNaNVYB/z+p3bA4wqXR/ZA
- sNSg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNtFf-00058i-Od
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:34:07 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tNtFc-0000j4-7V
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 07:34:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734525242;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=yqdd/V/bKAUPiuxzl3/8CvS/nVflswvv2IwIkRrnVTE=;
+ b=MEFN93NlhVLmLbHnu78f8qTZ9h1X/P39uH6z+h6mXCTYuyMF/TNYBMkDttnQBSEGJ/jJJg
+ lkjpPCXow2OeZfb1xtf/2lODsOWnr8FKE5/eeUsJOX3cj+crzwRk2H8u7j1tnLoGVlwO9B
+ NaSJQPBn0puv0FmNcXR45U/aRMa0QBE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-25-zIesk3ohP3aGdgMceL_80Q-1; Wed, 18 Dec 2024 07:34:01 -0500
+X-MC-Unique: zIesk3ohP3aGdgMceL_80Q-1
+X-Mimecast-MFC-AGG-ID: zIesk3ohP3aGdgMceL_80Q
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-38639b4f19cso4431455f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 04:34:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734525070; x=1735129870;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ixAP0AO6/46cJ/jWuvmUI7KMqJXizbt7Hm42tv5K8WY=;
- b=rrjRKBYVUhlppQH/4wyEav/HRhD8FH1OMJ1CRw7yKh7l96V7In4FvLDwOGk6y4QMLw
- MUJ3MNQ9hL1Sf24MptnB6liKuN2XZdjtzsX+/Czm/q5dNHwpMfFdK4paaxyVy4u12qlE
- u/WTgFiJo/zHNJjcXOO+eqwQUHJy4meQKdwKPls2CAtXQMlAg6JT3WeProwoXrvtykQ0
- xF91TeRcvN3FM6UmW8XdZuvVRg5j/Vja/w+WP7p7ARNHwGCkGaxgYVgU6HULhv3TN64+
- u8toUcVjkzwtj7AiPAQAC9sD/1Hvs8nFBhReXFLAq/2TBCVk26L/J5UkOWcPSNVsOrwd
- /+5w==
-X-Gm-Message-State: AOJu0Yyv2pHal3qv7JXBXBWO291Y5+WIE5wo9oArmUgIQlZa1Y+GubeU
- HDP4u7W6YSpx8XAbOq3wLdNkDwkZVs+WZK2fP/I0MTKKqSihPLgbDUUEGw==
-X-Gm-Gg: ASbGncsiFlpUmNwVa349X1M0pY0juKrN9/kWum+10Zc8mgQC5bnFHPcSzXLZn4Lg2a1
- /NMApD6T3bjDMqcptL6xwvkOxJV5il9+zegYEv55zpqNy7DjsJiR9GIy+nR4QcUXq7eAu5nE6C1
- mh2xW1q3HLsoF6lcYEgYyXITPPI0xLjk9J7Iv5N251E7oBzMYqnyMRFRUxsHJ2uBkAC14gmzTD2
- 1WjmblcrTU2Gz01mbE2axpMLKtMJl1dq1QH8s46ZAf48u4xzdqp2tacBX+RSXoWjEByQNsc1ttz
- pvFGs5XS08VXvdHI3mLYIQXWxM4WBItn
-X-Google-Smtp-Source: AGHT+IFaFJoenALi29QHQ+yWUlCWzy0Dpcj+KjEUTYrGjWwKTsrjkIRhEfThVANtrbWa/kY4U1872g==
-X-Received: by 2002:a5d:59ae:0:b0:386:3082:ee2d with SMTP id
- ffacd0b85a97d-388e4d8eb0cmr2102083f8f.41.1734525069899; 
- Wed, 18 Dec 2024 04:31:09 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-093-128-019-174.93.128.pool.telefonica.de.
- [93.128.19.174]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c806115asm13811036f8f.107.2024.12.18.04.31.09
+ d=1e100.net; s=20230601; t=1734525240; x=1735130040;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=yqdd/V/bKAUPiuxzl3/8CvS/nVflswvv2IwIkRrnVTE=;
+ b=kzbGVP41oHJdZB7TahD1OyNe/H0FWnItTXUtDkVcvXK5URgGZgIimFUKRcSpd0OHS9
+ /yKvfwU79ZajX4yXfiyTozHBieMVO51vTmxbGtw2J3hWDWFMUEDcNfIaJ8M/EWY/JPt4
+ rVxxpY2RStxA7t4b8OmXCa8gm87A/1vHEqH40abTvASRi45gtvUuAQ7Em1BlHx4Coegq
+ sC2ilaxVxfYfUVeOlM0mbDRux0Buz1LKxMolWvvMYTmvSGjRuQWqd74eUEk8k6zBKah8
+ X7yIwfSb15s1I05UTqBGVQafXrPviV73E/PKZf5sPHh6DzSUr15kMfP0u2zUoznvTwi5
+ OlRA==
+X-Gm-Message-State: AOJu0YzZS+FJ4My0cGh03S2wEEwQ+1qiytOFWtGb5KFzrSX7REwhs6eT
+ ezdhONjHkwlWAqFd4zH86zhlcLTJ/jPen27SC6FFyRwxy4ShIb07oGHGCkoVXYd909m8JaM4r/G
+ jBxyJJb/+MiuNlGTfGT5SyZrtVhZ9YHzF6ChLciEpUhHGwxmabh98
+X-Gm-Gg: ASbGncuOz+MPR0sMB8n3Any5WtzFIT+x+qwF3b8nCf2y12xL5AFPb3X+wIRCPqUPP/k
+ K95knzjqX4Ku5LPwdbTQvb5V6rxj025JuodhojRA3p2Fh7Y+MH2w4SalgUm/bvWEUTQA4TBtAJv
+ C09kePP/YAS0VA/D5bAkQ8wBVkdwKRUoG2B2bsqVGB6044mGHRVaaElqjY6GToMO4WGUsHMzJdt
+ QFip3va+AdzPuBaFrNMZIwURyo/JKBcmnHOIitQIrWsRmGgRw2AzgMt6vYmg2x/Y7abo1ILgstq
+ jhFrJ6EMmtzXXkI=
+X-Received: by 2002:a5d:6d03:0:b0:385:eb7c:5d0f with SMTP id
+ ffacd0b85a97d-388e4d8bf86mr2407023f8f.26.1734525240136; 
+ Wed, 18 Dec 2024 04:34:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHjzyymPklDvLYaHRn9pY1XH0SNWpQVT5aMK6k2ZDebrB4+AA0btMW8PvvvlrwmjP3e4Z6+4A==
+X-Received: by 2002:a5d:6d03:0:b0:385:eb7c:5d0f with SMTP id
+ ffacd0b85a97d-388e4d8bf86mr2406996f8f.26.1734525239754; 
+ Wed, 18 Dec 2024 04:33:59 -0800 (PST)
+Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
+ ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-388c80605casm14094929f8f.86.2024.12.18.04.33.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 04:31:09 -0800 (PST)
-Date: Wed, 18 Dec 2024 12:31:06 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 02/24] hw/ide: Constify sysbus_ahci_properties
-In-Reply-To: <20241216035109.3486070-3-richard.henderson@linaro.org>
-References: <20241216035109.3486070-1-richard.henderson@linaro.org>
- <20241216035109.3486070-3-richard.henderson@linaro.org>
-Message-ID: <3CE6C8D3-97F0-43E0-B805-23C048A81E3B@gmail.com>
+ Wed, 18 Dec 2024 04:33:59 -0800 (PST)
+Message-ID: <533a9810-6d0e-4f46-ab9d-83907376c080@redhat.com>
+Date: Wed, 18 Dec 2024 13:33:57 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] memory: Export a helper to get intersection of a
+ MemoryRegionSection with a given range
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>,
+ Peng Chao P <chao.p.peng@intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>
+References: <20241213070852.106092-1-chenyi.qiang@intel.com>
+ <20241213070852.106092-2-chenyi.qiang@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20241213070852.106092-2-chenyi.qiang@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,29 +162,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 13.12.24 08:08, Chenyi Qiang wrote:
+> Rename the helper to memory_region_section_intersect_range() to make it
+> more generic.
+> 
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
+> ---
+>   hw/virtio/virtio-mem.c | 32 +++++---------------------------
+>   include/exec/memory.h  | 13 +++++++++++++
+>   system/memory.c        | 17 +++++++++++++++++
+>   3 files changed, 35 insertions(+), 27 deletions(-)
+> 
+> diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+> index 80ada89551..e3d1ccaeeb 100644
+> --- a/hw/virtio/virtio-mem.c
+> +++ b/hw/virtio/virtio-mem.c
+> @@ -242,28 +242,6 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
+>       return ret;
+>   }
+>   
+> -/*
+> - * Adjust the memory section to cover the intersection with the given range.
+> - *
+> - * Returns false if the intersection is empty, otherwise returns true.
+> - */
+> -static bool virtio_mem_intersect_memory_section(MemoryRegionSection *s,
+> -                                                uint64_t offset, uint64_t size)
+> -{
+> -    uint64_t start = MAX(s->offset_within_region, offset);
+> -    uint64_t end = MIN(s->offset_within_region + int128_get64(s->size),
+> -                       offset + size);
+> -
+> -    if (end <= start) {
+> -        return false;
+> -    }
+> -
+> -    s->offset_within_address_space += start - s->offset_within_region;
+> -    s->offset_within_region = start;
+> -    s->size = int128_make64(end - start);
+> -    return true;
+> -}
+> -
+>   typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
+>   
+>   static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+> @@ -285,7 +263,7 @@ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+>                                         first_bit + 1) - 1;
+>           size = (last_bit - first_bit + 1) * vmem->block_size;
+>   
+> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>               break;
+>           }
+>           ret = cb(&tmp, arg);
+> @@ -317,7 +295,7 @@ static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
+>                                    first_bit + 1) - 1;
+>           size = (last_bit - first_bit + 1) * vmem->block_size;
+>   
+> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>               break;
+>           }
+>           ret = cb(&tmp, arg);
+> @@ -353,7 +331,7 @@ static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
+>       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+>           MemoryRegionSection tmp = *rdl->section;
+>   
+> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>               continue;
+>           }
+>           rdl->notify_discard(rdl, &tmp);
+> @@ -369,7 +347,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+>       QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+>           MemoryRegionSection tmp = *rdl->section;
+>   
+> -        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
+> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>               continue;
+>           }
+>           ret = rdl->notify_populate(rdl, &tmp);
+> @@ -386,7 +364,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+>               if (rdl2 == rdl) {
+>                   break;
+>               }
+> -            if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
+> +            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>                   continue;
+>               }
+>               rdl2->notify_discard(rdl2, &tmp);
+> diff --git a/include/exec/memory.h b/include/exec/memory.h
+> index e5e865d1a9..ec7bc641e8 100644
+> --- a/include/exec/memory.h
+> +++ b/include/exec/memory.h
+> @@ -1196,6 +1196,19 @@ MemoryRegionSection *memory_region_section_new_copy(MemoryRegionSection *s);
+>    */
+>   void memory_region_section_free_copy(MemoryRegionSection *s);
+>   
+> +/**
+> + * memory_region_section_intersect_range: Adjust the memory section to cover
+> + * the intersection with the given range.
+> + *
+> + * @s: the #MemoryRegionSection to be adjusted
+> + * @offset: the offset of the given range in the memory region
+> + * @size: the size of the given range
+> + *
+> + * Returns false if the intersection is empty, otherwise returns true.
+> + */
+> +bool memory_region_section_intersect_range(MemoryRegionSection *s,
+> +                                           uint64_t offset, uint64_t size);
+> +
+>   /**
+>    * memory_region_init: Initialize a memory region
 
+Maybe it could simply be an inline function. In any case, LGTM:
 
-Am 16=2E Dezember 2024 03:50:47 UTC schrieb Richard Henderson <richard=2Eh=
-enderson@linaro=2Eorg>:
->Signed-off-by: Richard Henderson <richard=2Ehenderson@linaro=2Eorg>
->---
-> hw/ide/ahci-sysbus=2Ec | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
->diff --git a/hw/ide/ahci-sysbus=2Ec b/hw/ide/ahci-sysbus=2Ec
->index d43db0923f=2E=2E2432039290 100644
->--- a/hw/ide/ahci-sysbus=2Ec
->+++ b/hw/ide/ahci-sysbus=2Ec
->@@ -62,7 +62,7 @@ static void sysbus_ahci_realize(DeviceState *dev, Error=
- **errp)
->     ahci_realize(&s->ahci, dev, &address_space_memory);
-> }
->=20
->-static Property sysbus_ahci_properties[] =3D {
->+static const Property sysbus_ahci_properties[] =3D {
->     DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci=2Eports, 1),
->     DEFINE_PROP_END_OF_LIST(),
-> };
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
-Reviewed-by: Bernhard Beschow <shentey@gmail=2Ecom>
+-- 
+Cheers,
+
+David / dhildenb
+
 
