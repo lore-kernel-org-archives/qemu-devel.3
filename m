@@ -4,111 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 683D9E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 18:17:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59080E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 18:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNyb8-0001kt-Vf; Wed, 18 Dec 2024 13:16:39 -0500
+	id 1tNyb8-0001hh-Jl; Wed, 18 Dec 2024 13:16:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNya7-0001Bb-Qa
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNya3-0001BF-ER
  for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:15:39 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tNya3-0007Wh-7G
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:15:33 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id A9D7C1F396;
- Wed, 18 Dec 2024 18:15:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734545724; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fr4PCJWf1z/7qkA7bpPemTrE0aKfLWoErXYMz9di20A=;
- b=Xpm4TfGSaF7ptGoi32chqmwwCbi4AjW7e8y4xqY6ddCCcVvyMikZf2JQ4ez6GW9wogCFke
- YJKYxXWtFOUkcmtqJcSF3p/hDOWrGm4Se+8q+AKzZ5FjRS+cfoAU0kduOdaWUboPx4tgy8
- /QQya1Bf3TZ6jvY8X33M1ATze8klfhI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734545724;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fr4PCJWf1z/7qkA7bpPemTrE0aKfLWoErXYMz9di20A=;
- b=WOPBcAKc5/BwU7O93XxqLiDK+qTsDglJpxVNmBcXe5DjVnjJP2aO6UcgjnuxUx6sy8DSIw
- K74IsqbMKzJc0MCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Xpm4TfGS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=WOPBcAKc
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734545724; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fr4PCJWf1z/7qkA7bpPemTrE0aKfLWoErXYMz9di20A=;
- b=Xpm4TfGSaF7ptGoi32chqmwwCbi4AjW7e8y4xqY6ddCCcVvyMikZf2JQ4ez6GW9wogCFke
- YJKYxXWtFOUkcmtqJcSF3p/hDOWrGm4Se+8q+AKzZ5FjRS+cfoAU0kduOdaWUboPx4tgy8
- /QQya1Bf3TZ6jvY8X33M1ATze8klfhI=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734545724;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fr4PCJWf1z/7qkA7bpPemTrE0aKfLWoErXYMz9di20A=;
- b=WOPBcAKc5/BwU7O93XxqLiDK+qTsDglJpxVNmBcXe5DjVnjJP2aO6UcgjnuxUx6sy8DSIw
- K74IsqbMKzJc0MCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CC5D4137CF;
- Wed, 18 Dec 2024 18:15:23 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id SQDIIzsRY2fWaQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 18 Dec 2024 18:15:23 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
-In-Reply-To: <Z2MKesakYn3fn2ue@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-20-farosas@suse.de> <Z2MKesakYn3fn2ue@x1n>
-Date: Wed, 18 Dec 2024 15:13:08 -0300
-Message-ID: <87h670vozv.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1tNyZy-0007Vo-CI
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 13:15:29 -0500
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-aa6c0d1833eso1217956566b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 10:15:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734545715; x=1735150515; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=qe//gJViys+yhtB7j7EeuPsosME5JBmgNhwY0OmT6DE=;
+ b=fuV+O5jGEazW/kMYEL7vhf1bv9G3mcDeXU8uivlmCmHvNiYD/hWOfNK5G8merW+b9f
+ URvjLqlN3iex0D/v9K/6/xcbOQCj/tZ9udBvh4C1+DZbGjm21o/BIoOfR5Eus+cceh1E
+ nw+uUCd8pyfA5pG1ChLFs6Gh2b2wVzsG2mva7W2corRMNKC17PbI5ezuo58ZvHNd0jMb
+ klncAtK6KRY2+MQlQ6Zoafvcl0Y2iBHcHo8fdmUSKk9+EXJeoxJxHInk7tYjRqi4mJsN
+ XRjOr1LIkILD7NE/LgHYGlxRakPcLr+wKHiir4FucDhuukS3yjVE3ab7MB6U64aArGSA
+ ShFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734545715; x=1735150515;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qe//gJViys+yhtB7j7EeuPsosME5JBmgNhwY0OmT6DE=;
+ b=uWGDtA0NdD3BiV9g9QkbxpYCOUgd76jyncyUMunq2+4qVKuZcLBjoZWDeZvBgORz+V
+ HcQ1H8WlRZS0jblWnp5NeKNcTlYue3SaSKKSwOkeA4Q6AUmB610TvZo0KqP4VQ6sZFck
+ eoUVk/GJPeN24/JR9lJbuo0xDUVmleba6u8sQMzRC7g2rbTFEAUPAkLSTI3wQ5VwpD85
+ 6bsKX4HW1YSO6XZkF+42eog2/VnxYxfRKkNe+LnWxE55AkI14ne9Zl/RqzMY377oSzS1
+ kbsoqUGBbzi5IY714JbFCmuseQG1fup7Ykwy7XHLGxTl/ZkeObLQ78G+RJUpZWoVuts8
+ ljTQ==
+X-Gm-Message-State: AOJu0Yyzq2OeNBwGpkf7nE4kfRZKmuirf0kgIRLHA1P+ZYigWu2chmiS
+ Qs9GCKr/eMygGxd5w6AyxD5/1q8RHITK0kijHNqkH3BSbkfPBvmPD3H1vKizKH0=
+X-Gm-Gg: ASbGncvON4ZkjB6e9mA3qDLAeR6lR2yvQv2FpIgo4ZXE0Vz2E58P5Jwl1Nhy2pnHWAo
+ qzvJ6Jnsux0sBjp7bTkvt0qkRpZu7qjglNdf72okr0VBCarZxOEprZVCkNEb8+PjYAaq4VB/RlQ
+ wfW6YGyYzczvuTaq5HwAGfD1an4zNLLJcYhuyDjDnqGfleyabDYYaBFEqRiwKl7wV6VahKfuRz5
+ Y7gIjfuxa7BZPKWqPz1/N4fix5Y8dBF0Pf9+wCbJxoIpVe8p5F1Q7s=
+X-Google-Smtp-Source: AGHT+IEWg0lGJTdmj7iVoVggh5TZTrqiosrV2csXvzuMSzzLJdVA/ws4t9a4otc43XJj/nNSQO8Xfg==
+X-Received: by 2002:a17:906:319a:b0:aab:7467:3f70 with SMTP id
+ a640c23a62f3a-aabf471905bmr341369766b.2.1734545715455; 
+ Wed, 18 Dec 2024 10:15:15 -0800 (PST)
+Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-aab96006c2fsm578533666b.9.2024.12.18.10.15.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 10:15:14 -0800 (PST)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E685B5FC9D;
+ Wed, 18 Dec 2024 18:15:11 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Leif Lindholm <quic_llindhol@quicinc.com>,
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Radoslaw Biernacki <rad@semihalf.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v2 5/5] hw/arm: enable secure EL2 timers for sbsa machine
+Date: Wed, 18 Dec 2024 18:15:11 +0000
+Message-Id: <20241218181511.3575613-6-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20241218181511.3575613-1-alex.bennee@linaro.org>
+References: <20241218181511.3575613-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Queue-Id: A9D7C1F396
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
- MIME_TRACE(0.00)[0:+]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- FUZZY_BLOCKED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,100 +106,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Cc: qemu-stable@nongnu.org
+---
+ hw/arm/sbsa-ref.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-> On Wed, Nov 13, 2024 at 04:46:27PM -0300, Fabiano Rosas wrote:
->> diff --git a/tests/qtest/migration-test-smoke.c b/tests/qtest/migration-test-smoke.c
->> new file mode 100644
->> index 0000000000..ff2d72881f
->> --- /dev/null
->> +++ b/tests/qtest/migration-test-smoke.c
->> @@ -0,0 +1,39 @@
->> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> +
->> +#include "qemu/osdep.h"
->> +#include "libqtest.h"
->> +#include "migration/test-framework.h"
->> +#include "qemu/module.h"
->> +
->> +int main(int argc, char **argv)
->> +{
->> +    MigrationTestEnv *env;
->> +    int ret;
->> +
->> +    g_test_init(&argc, &argv, NULL);
->> +    env = migration_get_env();
->> +    module_call_init(MODULE_INIT_QOM);
->> +
->> +    if (env->has_kvm) {
->> +        g_test_message(
->> +            "Smoke tests already run as part of the full suite on KVM hosts");
->> +        goto out;
->> +    }
->
-> So the "smoke" here is almost "tcg".. and if i want to run a smoke test on
-> a kvm-enabled host, it's noop.. which isn't easy to understand why.
->
-> If to rethink our goal, we have two requirements:
->
->   (1) We want to categorize migration tests, so some are quick, some are
->       slow, some might be flacky.  Maybe more, but it's about putting one
->       test into only one bucket, and there're >1 buckets.
+diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+index e3195d5449..c02344004e 100644
+--- a/hw/arm/sbsa-ref.c
++++ b/hw/arm/sbsa-ref.c
+@@ -484,6 +484,8 @@ static void create_gic(SBSAMachineState *sms, MemoryRegion *mem)
+             [GTIMER_HYP]  = ARCH_TIMER_NS_EL2_IRQ,
+             [GTIMER_SEC]  = ARCH_TIMER_S_EL1_IRQ,
+             [GTIMER_HYPVIRT] = ARCH_TIMER_NS_EL2_VIRT_IRQ,
++            [GTIMER_SEC_PEL2] = ARCH_TIMER_S_EL2_IRQ,
++            [GTIMER_SEC_VEL2] = ARCH_TIMER_S_EL2_VIRT_IRQ,
+         };
+ 
+         for (irq = 0; irq < ARRAY_SIZE(timer_irq); irq++) {
+-- 
+2.39.5
 
-It's true that the smoke test should never have slow or flaky tests, but
-we can't use this categorization for anything else. IOW, what you
-describe here is not a goal. If a test is found to be slow we put it
-under slow and it will only run with -m slow/thorough, that's it. We can
-just ignore this.
-
->
->   (2) We want to run only a small portion of tests on tcg, more tests on
->       kvm.
-
-Yes. Guests are fast with KVM and slow with TCG (generally) and the KVM
-hosts are the ones where it's actually important to ensure all migration
-features work OK. Non-KVM will only care about save/restore of
-snapshots. Therefore we don't need to have all tests running with TCG,
-only the smoke set.
-
-And "smoke set" is arbitrary, not tied to speed, but of course no slow
-tests please (which already happens because we don't pass -m slow to
-migration-test-smoke).
-
->
-> Ideally, we don't need two separate main test files, do we?
->
-> I mean, we can do (1) with the existing migration-test.c, with the help of
-> either gtest's "-m" or something we invent.  The only unfortunate part is
-> qtest only have quick/slow, afaiu the "thorough" mode is the same as
-> "slow".. while we don't yet have real "perf" tests.  It means we only have
-> two buckets if we want to reuse gtest's "-m".
->
-> Maybe it's enough?  If not, we can implement >2 categories in whatever
-> form, either custom argv/argc cmdline, or env variable.
->
-> Then, if we always categorize one test (let me try to not reuse glib's
-> terms to be clear) into any of: FAST|NORMAL|SLOW|..., then we have a single
-
-It's either normal or slow. Because we only know a test is only after it
-bothers us.
-
-> migration-test that have different level of tests.  We can invoke
-> "migration-test --mode FAST" if kvm is not supported, and invoke the same
-> "migration-test --mode SLOW" if kvm is supported.
-
-This is messy due to how qtest/meson.build works. Having two tests is
-the clean change. Otherwise we'll have to add "if migration-test" or
-create artificial test names to be able to restrict the arguments that
-are passed to the test per arch.
-
-I also *think* we cannot have anything extra in argv because gtester
-expects to be able to parse those.
-
->
-> Would this be nicer?  At least we can still run a pretty fast smoke / FAST
-> test even on kvm. Basically, untangle accel v.s. "test category".
-
-We could just remove the restriction from migration-test-smoke if that's
-an issue.
 
