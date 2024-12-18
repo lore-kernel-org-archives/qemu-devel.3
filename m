@@ -4,58 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F356E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 19:19:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFBD0E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 19:20:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNzZW-0002x9-9p; Wed, 18 Dec 2024 14:19:03 -0500
+	id 1tNzbB-0004Ly-PY; Wed, 18 Dec 2024 14:20:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tNzZO-0002vh-Dk; Wed, 18 Dec 2024 14:18:54 -0500
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1tNzZM-0001ls-Hi; Wed, 18 Dec 2024 14:18:54 -0500
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 751AB4E603D;
- Wed, 18 Dec 2024 20:18:45 +0100 (CET)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id VXNnF758QW_b; Wed, 18 Dec 2024 20:18:43 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 2E0A94E602D; Wed, 18 Dec 2024 20:18:43 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 27430746F60;
- Wed, 18 Dec 2024 20:18:43 +0100 (CET)
-Date: Wed, 18 Dec 2024 20:18:43 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
- Nicholas Piggin <npiggin@gmail.com>, 
- Daniel Henrique Barboza <danielhb413@gmail.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
- qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 7/7] hw/ppc/epapr: Do not swap ePAPR magic value
-In-Reply-To: <20241218182106.78800-8-philmd@linaro.org>
-Message-ID: <277eeed4-0467-1529-f52d-2c128d8d46bb@eik.bme.hu>
-References: <20241218182106.78800-1-philmd@linaro.org>
- <20241218182106.78800-8-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNzb6-0004Hx-0f
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:20:42 -0500
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tNzb0-00026Z-4V
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:20:39 -0500
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-6d900c27af7so104376d6.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:20:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734549630; x=1735154430; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nTUiuF3k2d2jxVfM6MZEHkcGik4j8tVWuN7Zhk3p8T0=;
+ b=XGJ6YbA80CnVynzSIh4XgGlc0QMjfsbLNndmLyaU9TGgnM9s9g8RR3SX4b54za9Gk/
+ Y/imEqqcEcHJvOF0S9l5SttwjTY4Hc5KzsyudfQF3x2Lc2TtvukV8eFvDoiAm3re5YBw
+ 8b7J3PDi8uowKnEzukKF3+K6go3ULbBHfo/tVBTX6G2r5EyrtHzei39PRyMhBk1JUj9s
+ kZYaQcRwCZmdUq4Rg4evv1eFXoL/vD+JcQKJgEWvW7jfsNxLlKlni6JM/fzsx6drotR5
+ SDsrd1P/3F+9l3wyatCyw8cNh21eiokKR9Z7vvXue6XhkzoPUUxbO3kHiSX4L5eDvqEk
+ 2vsA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734549630; x=1735154430;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nTUiuF3k2d2jxVfM6MZEHkcGik4j8tVWuN7Zhk3p8T0=;
+ b=CRZMtNoWZULl8f7wTQIqZ/czHakm0x0Uk9TtbEfeB597AGPjxka6wSLNJINd6TFOe+
+ IoDczQlI+HHkVMQhwbuM8t8ItoHglKZ02z5wqAXykNlgelcpaC6JIa+q3iUR9oVSUOJ9
+ 9xpl+JuB0xXBDz+k4dPIIvYAmDUHSY+A12yff0VgogvLl2gheTjV5j7pB8ZKp1UrE2Q/
+ qp2ghV2wZNgBpvPtDZkvxcAS8r+c6wWEdAHdprqGyZt7aki9xsDg6glN2CRSWNU4qtFM
+ LsC0hYiPJHWGTS8Z25gemO4FeLZFGclsyrMkqyXkFqAtiGyOsS0KSflK/3tHHWWyEcP8
+ W00g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9n0Obm7hv19RyVcF1ipDKis1SfZm1LBrM43kazU4mvh3oOVkZtvM3XfEmkI6T7GmsHvIMpjI4ls8x@nongnu.org
+X-Gm-Message-State: AOJu0Yz1ss3a77H9vdMnihTCb/P3GAPXSgz5fAC/hel2VoYPJJGGa0de
+ 8+Q2bVwUt6hZUR0cWJ41GNqE+On7ueG4iLLh/tDv1UnD2q8IY+639T0nRzCB0GM=
+X-Gm-Gg: ASbGnctC0XVulS9FfCY7hZWNWvvGYBvmLF5pa75p+JL6iimQ1qpG+aDcNnJccPOpNR5
+ eBYZGmfgQtJA2Jyoly4TnzaRLe6rxgArfN1/Z34KdUkBQhKbsujUmW9B/ICe2Vsn4rA7IyujATx
+ ywREhPLsuVrwu0sHp2ILSIK2ke4VsLuQ4lQela59s5BxWJ2vG7rq74BHQ0613PnqTq4pqZ0f+OK
+ 067nBQUh8Uvs2/zI3+Fo6GdfqYH8XaxIZsevWTL2am0H2VLdoBVFYcDWx840JGoKhFyrlVUUQ==
+X-Google-Smtp-Source: AGHT+IFA02C79hInfKdrhXEk7KDC+KY+dUmLdo3XjPpyExppEQldcQ7ppDmxT5TO0bQQ2xEIY/VBYw==
+X-Received: by 2002:a05:6214:1308:b0:6d8:9124:878d with SMTP id
+ 6a1803df08f44-6dd0918de68mr81083506d6.2.1734549629705; 
+ Wed, 18 Dec 2024 11:20:29 -0800 (PST)
+Received: from [172.20.0.130] ([187.217.227.247])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6dccd363121sm53399886d6.89.2024.12.18.11.20.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 11:20:29 -0800 (PST)
+Message-ID: <f2bdc8f2-5735-400c-b15f-06289b467826@linaro.org>
+Date: Wed, 18 Dec 2024 13:20:26 -0600
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-1690185780-1734549523=:80922"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] Change default pointer authentication algorithm on
+ aarch64 to impdef
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ qemu-arm@nongnu.org
+References: <20241204211234.3077434-1-pierrick.bouvier@linaro.org>
+ <7cd98960-0c0d-481f-96ea-08e0578d5cad@linaro.org>
+ <b0962854-65c3-47d0-8f0a-072fdf51e7b6@linaro.org>
+ <6e29d9cb-1c67-4fdc-97f1-32c90bed1048@linaro.org>
+ <19df9957-6653-4086-aa1f-07263efcddde@linaro.org>
+ <87pllq69l6.fsf@draig.linaro.org>
+ <CAFEAcA_xe5QEPsrByM8ems_rxt-KsVRAgkKhGk24X-1J0vcCDA@mail.gmail.com>
+ <75ff92e0-7384-4af4-bc9f-64a6b0febc9f@linaro.org>
+ <CAFEAcA8YNcft8KU8mytHv+H71L7L8d=QBgQmSAmq9J7Ny23=tA@mail.gmail.com>
+ <48dd3afc-d78d-4bd9-9392-873d5a8ac26a@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <48dd3afc-d78d-4bd9-9392-873d5a8ac26a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=richard.henderson@linaro.org; helo=mail-qv1-xf29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,64 +115,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On 12/18/24 13:08, Pierrick Bouvier wrote:
+> On 12/18/24 05:51, Peter Maydell wrote:
+>> On Tue, 17 Dec 2024 at 21:08, Pierrick Bouvier
+>> <pierrick.bouvier@linaro.org> wrote:
+>>>
+>>> On 12/17/24 02:38, Peter Maydell wrote:
+>>>> On Tue, 17 Dec 2024 at 07:40, Alex Bennée <alex.bennee@linaro.org> wrote:
+>>>>>
+>>>>> Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+>>>>>> I think this is still a change worth to do, because people can get a
+>>>>>> 100% speedup with this simple change, and it's a better default than
+>>>>>> the previous value.
+>>>>>> In more, in case of this migration scenario, QEMU will immediately
+>>>>>> abort upon accessing memory through a pointer.
+>>>>>>
+>>>>>> I'm not sure about what would be the best way to make this change as
+>>>>>> smooth as possible for QEMU users.
+>>>>>
+>>>>> Surely we can only honour and apply the new default to -cpu max?
+>>>>
+>>>
+>>> With all my respect, I think the current default is wrong, and it would
+>>> be sad to keep it when people don't precise cpu max, or for other cpus
+>>> enabling pointer authentication.
+>>>
+>>> In all our conversations, there seems to be a focus on choosing the
+>>> "fastest" emulation solution that satisfies the guest (behaviour wise).
+>>> And, for a reason I ignore, pointer authentication escaped this rule.
+>>
+>> I think the reason is just that we didn't understand how much
+>> of a performance hit the architected algorithm for pointer auth
+>> is in emulation. So we took our default approach of "implement
+>> what the architecture says". Then later when we realised how
+>> bad the effect was we added in a faster impdef authentication
+>> algorithm, but we put it in as not-the-default because of our
+>> usual bias towards "don't change existing behaviour".
+>>
+> 
+> I understand the reason behind the current choice.
+> For my personal knowledge, is there a QEMU policy for "breaking changes"?
+> 
+>>> I understand the concern regarding retro compatibility, but it would be
+>>> better to ask politely (with an error message) to people to restart
+>>> their virtual machines when they try to migrate, instead of being stuck
+>>> with a slow default forever.
+>>> In more, we are talking of a tcg scenario, for which I'm not sure people
+>>> use migration feature (save/restore) heavily, but I may be wrong on this.
+>>>
+>>> Between the risk of breaking migration (with a polite error message),
+>>> and having a default that is 100% faster, I think it would be better to
+>>> favor the second one. If it would be a 5% speedup, I would not argue,
+>>> but slowing down execution with a factor of 2 is really a lot.
+>>
+>> The point here about "breaking migration" is that we have a strong
+>> set of rules:
+>>   * if you say "-machine virt-8.2" you get "exactly the behaviour
+>>     that the 'virt' machine type had in QEMU 8.2, and it is
+>>     migration compatible
+>>   * we can make changes that are not migration compatible only if we
+>>     ensure that they are not applied to older versioned machine types
+>>     (or if they're to devices that are only used in machines which
+>>     do not have versioned machine types at all)
+>>   * TCG '-cpu max' is a special case: it is not a fixed thing, and so
+>>     it may acquire new non-migration-compatible changes between versions
+>>     (and so if you care about VM migration compat you don't use it);
+>>     but this is not true of the named CPU types that match real
+>>     hardware implementations
+>>
+>> This patch as it stands will not preserve the migration
+>> guarantees that we make. So we need to fix it by either:
+>>   * only making the default change on -cpu max
+>>   * making the default change be bound to versioned types
+>>
+> 
+> I'm not sure to follow you on this second approach. The cpu is not versioned, and if 
+> someone use -machine virt (non versioned), is there a guarantee it should stay possible to 
+> migrate?
+> 
+> In other words, can we break the migration with "-machine virt -cpu model"?
 
---3866299591-1690185780-1734549523=:80922
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Yes, because "virt" is an alias for "virt-<current>".
+Folks who rely on migration compatibility must use "virt-9.2" etc.
 
-On Wed, 18 Dec 2024, Philippe Mathieu-Daudé wrote:
-> The ePAPR magic value in $r6 doesn't need to be byte swapped.
->
-> See ePAPR-v1.1.pdf chapter 5.4.1 "Boot CPU Initial Register State"
-> and the following mailing-list thread:
-> https://lore.kernel.org/qemu-devel/CAFEAcA_NR4XW5DNL4nq7vnH4XRH5UWbhQCxuLyKqYk6_FCBrAA@mail.gmail.com/
->
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
-> hw/ppc/sam460ex.c     | 2 +-
-> hw/ppc/virtex_ml507.c | 2 +-
-> 2 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-> index 78e2a46e753..db9c8f3fa6e 100644
-> --- a/hw/ppc/sam460ex.c
-> +++ b/hw/ppc/sam460ex.c
-> @@ -234,7 +234,7 @@ static void main_cpu_reset(void *opaque)
->
->         /* Create a mapping for the kernel.  */
->         booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1 << 31);
-> -        env->gpr[6] = tswap32(EPAPR_MAGIC);
-> +        env->gpr[6] = EPAPR_MAGIC;
+Thus having a global property set by version 9.2 compat which says "use qarma5 as default 
+pac" will work.  It's a little backward having the version on the board, not the cpu, but 
+we've done it before, as Peter mentioned re cpu clock time base.
 
-I don't know how to test this (or if anything actually uses it). What I'm 
-not sure about is what endianness env->gpr is? It's a host array so maybe 
-it needs to match the host endianness which is little endian most of the 
-time as opposed to PPC big endian on this machine. So maybe tswap is wrong 
-but is removing it right? Maybe we need to only swap on LE hosts. I think 
-it's only used by Linux kernels so maybe trying to boot one could test 
-this change but I'm not sure.
 
-Regards,
-BALATON Zoltan
-
->         env->gpr[7] = (16 * MiB) - 8; /* bi->ima_size; */
->
->     } else {
-> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-> index f378e5c4a90..6197d31d88f 100644
-> --- a/hw/ppc/virtex_ml507.c
-> +++ b/hw/ppc/virtex_ml507.c
-> @@ -119,7 +119,7 @@ static void main_cpu_reset(void *opaque)
->     /* Create a mapping spanning the 32bit addr space. */
->     booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1U << 31);
->     booke_set_tlb(&env->tlb.tlbe[1], 0x80000000, 0x80000000, 1U << 31);
-> -    env->gpr[6] = tswap32(EPAPR_MAGIC);
-> +    env->gpr[6] = EPAPR_MAGIC;
->     env->gpr[7] = bi->ima_size;
-> }
->
->
---3866299591-1690185780-1734549523=:80922--
+r~
 
