@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46A0BE7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 09:15:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAE18E77188
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 09:15:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNq8T-0006Yy-Ab; Wed, 18 Dec 2024 04:14:29 -0500
+	id 1tNq8T-0006Z4-S9; Wed, 18 Dec 2024 04:14:29 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1tNq8R-0006Y6-7j
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:27 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ id 1tNq8S-0006YH-GK
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:28 -0500
+Received: from mgamail.intel.com ([198.175.65.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yuan1.liu@intel.com>)
- id 1tNq8P-0001mR-2o
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:26 -0500
+ id 1tNq8P-0001m2-88
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 04:14:28 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1734513265; x=1766049265;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=VhK6YJCxy3UNdY56dm9LpsnVCa7MhAkw47y80bUy74U=;
- b=YOX4+En+aGoBoj0jB96BPTx+E5qeVU25kLvkfc8PT3YSqQrIIZMqGzXp
- ONWo44mFKRJl9yaynB/5ummmRYOIJoXBu0MvC+Pbikh3tWqKM1flN4Whp
- EcP/66QkO4ldEzgot7EOOg8Mkj5Q9FOiOt7wPvijzo/9Hm8KUKJKzBo6b
- wEkuY8DK3WJPgtIhQ9YuBypvGoR+QkFtDNKmLgrx2ScTKcrNt0q/K5f7b
- BmjSuPEjc4dTEFaLkys2HD1bTb9vRQoBZWYy49qKeSoBvMcWBeljH0Nox
- PjRWTjbqR3nEkjSxpRKIGWuM76Z0i82EWbhAE8yWtIjA8fjd9AAiggqkR A==;
-X-CSE-ConnectionGUID: mouUqFitQUiVJz4mjcy/5w==
-X-CSE-MsgGUID: AemB7ed9RcaAAl0XzgY6ug==
-X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="37815600"
-X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="37815600"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 01:14:18 -0800
-X-CSE-ConnectionGUID: mdKrFj6XToKvQIOU6dUTqg==
-X-CSE-MsgGUID: 7PxwsLOQRpetzpbqHhFP5w==
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=KwXXJzMCRS5GwtSEsZeuB8+Dtclfj96cO6pi3g/yz4Q=;
+ b=O7OSsioYSou5Xe1MPCnaiXleAy+qVeOet0ICom307316nXZV0Iyq/KQ/
+ L53UfGcPwTNKEYANrxucgwofp0jN0xUHpDsnCyFIQzGB4A13IgCs7B0Ir
+ Abjlo7nBd10npvCh4oJ2hscPkixZDuwY0VkevZiLNfnZ4f+WIBtppDhvE
+ PdtbnRUnxwTz3dQNhUUUIJXdajyKH+D7jPnrT40sBOeE566IbI0qjMAj1
+ 80Bk6025EgCITEMKYTh+T4G5mzyq8d8OAAEEpdwDPCZUSAoCEsT/MyaQH
+ gA00d226p8uWakSlXlGZsSTUih60IvdRuvPLBQiSkvFDvLd6/vvM90qn5 g==;
+X-CSE-ConnectionGUID: efyjvocpQmezC7lXt0+7DQ==
+X-CSE-MsgGUID: dCN2bDtNSrqyDIqd0RJrJg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="38654620"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="38654620"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 01:14:16 -0800
+X-CSE-ConnectionGUID: yT7LsxflRU28iBM0+Kt4XA==
+X-CSE-MsgGUID: Lzi8FpezTE6jfNrw3OF34w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="121066394"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="97659813"
 Received: from sae-gw02.sh.intel.com (HELO localhost) ([10.239.45.110])
- by fmviesa002.fm.intel.com with ESMTP; 18 Dec 2024 01:14:16 -0800
+ by fmviesa007.fm.intel.com with ESMTP; 18 Dec 2024 01:14:14 -0800
 From: Yuan Liu <yuan1.liu@intel.com>
 To: peterx@redhat.com,
 	farosas@suse.de
 Cc: qemu-devel@nongnu.org, yuan1.liu@intel.com, jason.zeng@intel.com,
  yichen.wang@bytedance.com
-Subject: [PATCH 1/3] multifd: bugfix for migration using compression methods
-Date: Wed, 18 Dec 2024 17:14:11 +0800
-Message-ID: <20241218091413.140396-2-yuan1.liu@intel.com>
+Subject: [PATCH 0/3] bugfixes for migration using compression methods
+Date: Wed, 18 Dec 2024 17:14:10 +0800
+Message-ID: <20241218091413.140396-1-yuan1.liu@intel.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20241218091413.140396-1-yuan1.liu@intel.com>
-References: <20241218091413.140396-1-yuan1.liu@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.13; envelope-from=yuan1.liu@intel.com;
+Received-SPF: pass client-ip=198.175.65.15; envelope-from=yuan1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -83,46 +81,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When compression is enabled on the migration channel and
-the pages processed are all zero pages, these pages will
-not be sent and updated on the target side, resulting in
-incorrect memory data on the source and target sides.
+This set of patches is used to fix the bugs of incorrect migration
+memory data when compression is enabled.
 
-The root cause is that all compression methods call
-multifd_send_prepare_common to determine whether to compress
-dirty pages, but multifd_send_prepare_common does not update
-the IOV of MultiFDPacket_t when all dirty pages are zero pages.
+The method to reproduce this bug is as follows
+1. Run "stress-ng --class memory --all 1" in the source side, the
+stress-ng tool comes from https://github.com/ColinIanKing/stress-ng.git
 
-The solution is to always update the IOV of MultiFDPacket_t
-regardless of whether the dirty pages are all zero pages.
+2. Enable the multifd compression methods and start migration
+   e.g. migrate_set_parameter multifd-compression qpl
 
-Signed-off-by: Yuan Liu <yuan1.liu@intel.com>
-Reviewed-by: Jason Zeng <jason.zeng@intel.com>
----
+3. The guest kernel will crash automatically or crash at shutdown after
+   the migration is complete
+
+The root cause of the bugs and the solutions are described in detail in
+the patch.
+
+My verification method as follows
+1. Start the VM and run the stess-ng test command on the source side.
+2. Start the VM with "-S" parameter on the target side, it is
+   used to pause the vCPUs after migration.
+3. After the migration is successful, use the dump-guest-memory command
+   to export the memory data of the source and target VMs respectively.
+4. Use "cmp -l source_memory target_memory" to verify memory data.
+
+Yuan Liu (3):
+  multifd: bugfix for migration using compression methods
+  multifd: bugfix for incorrect migration data with QPL compression
+  multifd: bugfix for incorrect migration data with qatzip compression
+
  migration/multifd-nocomp.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ migration/multifd-qatzip.c | 1 +
+ migration/multifd-qpl.c    | 1 +
+ 3 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/migration/multifd-nocomp.c b/migration/multifd-nocomp.c
-index 55191152f9..2e4aaac285 100644
---- a/migration/multifd-nocomp.c
-+++ b/migration/multifd-nocomp.c
-@@ -362,6 +362,7 @@ int multifd_ram_flush_and_sync(void)
- bool multifd_send_prepare_common(MultiFDSendParams *p)
- {
-     MultiFDPages_t *pages = &p->data->u.ram;
-+    multifd_send_prepare_header(p);
-     multifd_send_zero_page_detect(p);
- 
-     if (!pages->normal_num) {
-@@ -369,8 +370,6 @@ bool multifd_send_prepare_common(MultiFDSendParams *p)
-         return false;
-     }
- 
--    multifd_send_prepare_header(p);
--
-     return true;
- }
- 
 -- 
 2.43.0
 
