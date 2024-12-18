@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40EFCE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32399E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 16:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwsf-0003Ta-G8; Wed, 18 Dec 2024 11:26:37 -0500
+	id 1tNwon-0000oN-K9; Wed, 18 Dec 2024 11:22:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwsc-0003HT-Hd
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:34 -0500
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ id 1tNwo5-00087X-4X
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:53 -0500
+Received: from mail-ej1-x62b.google.com ([2a00:1450:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1tNwsV-0007rc-8U
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:26:34 -0500
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-5d3dce16a3dso1780898a12.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:26:26 -0800 (PST)
+ id 1tNwnk-0006th-O6
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 11:21:52 -0500
+Received: by mail-ej1-x62b.google.com with SMTP id
+ a640c23a62f3a-aa696d3901bso1276845866b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 08:21:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734539185; x=1735143985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734538880; x=1735143680; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QVtfGj1mN7IE9EjKx57fAetrjTJp1RBBY+kA+VK2230=;
- b=XmFu5YhYoKsCJIzA8Gj+zZNN4m3yfFkF2U7DR7z9lSd738xmHixsEnc0voLR5sCHv7
- Vn4bQzV91R4jhcEyQZovRoRtN/m4NOwp3td8Kz/MCd4pmPYOeJCBgHOjPwFJJwdu5XRL
- CHcFS8jZ3HubFcrbY8D0G+i5ocwI0CArCx5sY8QKUDv0VTr3v4XQk6BizN17MOFGPnmc
- S1fMeLFpZJBCDslXDb4dWATrk+EAsr7m84vZ3Ky8gKWQ3B2E3aTEiv2rEoe6mfjdUldj
- SJ+orEyKlQWzGUt293bM/tSbiOO+mDq9T7v/K/G+m8WuhmYoel73Fz+gZSo3OUOnI/TN
- tebA==
+ bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
+ b=WLIAeKFRnr++H5USIvBm85uaXGIL0AXbkXfGNKxVv+7O6UE9ETyrbj+NKITbJpHiPb
+ 6UZdV/pbGPV7aNPXk8YOhV+d8CyhGPGxrdxKc53RRQkV3efrzwVSOpskEIOUAp+JKMGB
+ upiT4wu4Hmyegk3rdlx2ODnjw5UGpxaPCnWSSWk/I+lcWQ/ABC+xifqZ/HzmGiG8n6Wt
+ tfDAfdiYTSflGXu0Uuq+9FGattbGjrIk9051t570xBMoSZVjJf9Z9LORmopi6VKVDf0u
+ McpmegNIAg/JnvUhuVs97aYDi/olykf52BuKtT9ZC9cZ7rbYRFPRfPKNljfDdwyUnRxR
+ EJBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734539185; x=1735143985;
+ d=1e100.net; s=20230601; t=1734538880; x=1735143680;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=QVtfGj1mN7IE9EjKx57fAetrjTJp1RBBY+kA+VK2230=;
- b=xLr+8mBLP0W3kd/bM4c9p9kox3MjhVbZ9/AmdmkO3NWCo/d46M6285DzjOjtB9xsXH
- 90yxtb+WQ6wh+brQHzGzdkfimA2MxE7WRmBHty8ZYj1E+OKfxCJykjrWrXkDR4F+uOfK
- lMVdEEhHh3b5wCxqQQz65H+8fjmU/5Wo1MgYo4lC2rVrYGQBAjCowqwx/L/AWbhwlP2Q
- YOmTCi5yvGsIxolLeRwX7nWUKxWnu2ry8ck4UvNe8R3sn+gkgqXTrRuUhQOV8ZJqewwS
- GyLKCVKibYjvNyKo6nXIDFWmS0c7GxOlxGBcO9kjkTJLfKYZ82YPDJRRA5NgnyT6NaMe
- Zt0g==
-X-Gm-Message-State: AOJu0YyKqTs+aQX5BzobrvYOy6nrda+m6ERa0wv/VdxyXD29WqKWHoXN
- lUhEN3UYMlIs6ylakEpFBbnladMh205X4C5eRiWCu3QQZinyYf0kG+6WcLAp8PQ=
-X-Gm-Gg: ASbGncv8J552zwkcxjFnxqctsCen5c9w8kvuzE+SoTJIj8E6JLHIoEp6LOx0Hxo8mNS
- 8I0FJIPHYQ7P9YInubH4GuE9lOY/K6y4TUzB4FjJBcsNV/etM0YbHhxsnl4FlkeBUQ/09eexokG
- zXJsIhDkOgNaMlX3NH0cLqZK9S3FdOwgdn/qF6VQF0i1HwJKqXjlgPj+YiBmoSmWkSV23fUfMtR
- CWr+dprTq6pR+khPtVoJH0LnZvbhTXdapgJY6C56n6W1lekxjsOj2s=
-X-Google-Smtp-Source: AGHT+IGomb4hxWiC7e6PCkn97aH7TQJwsHI4AvtNFMO+kaSQIbmzD4q1dayzAYda4S+IO0gz6xnC9Q==
-X-Received: by 2002:a05:6402:2482:b0:5d0:d2b1:6831 with SMTP id
- 4fb4d7f45d1cf-5d7efac5041mr3182443a12.14.1734539184676; 
- Wed, 18 Dec 2024 08:26:24 -0800 (PST)
+ bh=9bkcZ+UQ0l/G8BdjL46Ekgb6aiXVq9O7cYmGEkCbVeY=;
+ b=AVpclMslHL1hDBtNgLZdyVqQHbhS+ifUx3QroKYxx5XWwvDE3psWlTwQCATZqHP116
+ lz4ySJVrtcMjXgtLfOOyxr8+d3i++IEFDyGHZPrRvmjo6R+tbqqbGThdgX1ZH4BWvRr0
+ YRKh/p/rFIhsnyon+mxo+11Ac0Pxnj+57l69v8ZsLzCsu5je3F8jTID8XhdPv2AyIrVx
+ fzxHZQlsAN5U2rKU7xTUKpXrblT2teevAPSVVZXatZ//yNUwIa+VD5q0jM53KPf9ibLB
+ clHo6AoXKWpMvvSig1q7zGt93l+BYvEWuzwF3SJkndMnDhCVkb7ymTp584JUNz9bB43h
+ 73TA==
+X-Gm-Message-State: AOJu0YwfSPUdRz+YE2Qu7ujxU7HTpVOmC87Wtd5JJZhTbP431VqnVBQL
+ fACt680rl1GFKzShOFzSD5BF8XSqw498DxFYLheZP0+YxhkTRpLIXaOaI8NJ8fI=
+X-Gm-Gg: ASbGncvCxJdTpcGS0Lm+8iaQ46Vi6oHE6JD1to2nsi+97dqi/uqkA5xMxub6VqmqJ9t
+ 1V7IjHBbreHPNRCld1F4sSe2bIh1BAEE4bcgSMdy3p8RdTt3aTIV52so9toSy/PF5Fju+TNUbgX
+ rq/nI+JdNOKAqDIlxf6eS1IHG2CWqnRbeITH5lbQgY5Tyc+Ek9yN/7ETzOH59lKltAIGi9lrPAl
+ dI9j49jDBuNJw+yMU2xuAIIajJQDXc6Z3tIe1mg1IfAaEXgjKAqAO0=
+X-Google-Smtp-Source: AGHT+IEgo38+JTFTQe2QWD2SzXBn5GgMF3Ncp7VExom07hK+kgRY5m2GSWEr6D3P47raWVJ4deeNiA==
+X-Received: by 2002:a17:906:32d6:b0:aa6:75e1:1864 with SMTP id
+ a640c23a62f3a-aabf46ff260mr292000366b.4.1734538880368; 
+ Wed, 18 Dec 2024 08:21:20 -0800 (PST)
 Received: from draig.lan ([85.9.250.243]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d652ad1bf4sm5494985a12.34.2024.12.18.08.26.21
+ 4fb4d7f45d1cf-5d652f2599fsm5463542a12.68.2024.12.18.08.21.13
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 08:26:23 -0800 (PST)
+ Wed, 18 Dec 2024 08:21:17 -0800 (PST)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A95EE603BD;
- Wed, 18 Dec 2024 16:21:05 +0000 (GMT)
+ by draig.lan (Postfix) with ESMTP id 911F260BBC;
+ Wed, 18 Dec 2024 16:21:06 +0000 (GMT)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -100,17 +100,17 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PATCH v2 16/27] util/qemu-timer: fix indentation
-Date: Wed, 18 Dec 2024 16:20:52 +0000
-Message-Id: <20241218162104.3493551-17-alex.bennee@linaro.org>
+Subject: [PATCH v2 25/27] tests/vm: partially un-tabify help output
+Date: Wed, 18 Dec 2024 16:21:01 +0000
+Message-Id: <20241218162104.3493551-26-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20241218162104.3493551-1-alex.bennee@linaro.org>
 References: <20241218162104.3493551-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -133,26 +133,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Purely cosmetic.
+While the make syntax itself uses tabs having a mixture of tabs and
+spaces in the vm-help output make no sense and confuses things lining
+up between terminal and editor. Fix that.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- util/qemu-timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/vm/Makefile.include | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index ffe9a3c5c1..7b71655416 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -680,7 +680,7 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-     aio_context = qemu_get_aio_context();
+diff --git a/tests/vm/Makefile.include b/tests/vm/Makefile.include
+index 13ed80f72d..d80ca79a28 100644
+--- a/tests/vm/Makefile.include
++++ b/tests/vm/Makefile.include
+@@ -64,23 +64,23 @@ endif
+ 	@echo "  vm-boot-ssh-<guest>             - Boot guest and login via ssh"
+ 	@echo
+ 	@echo "Special variables:"
+-	@echo "    BUILD_TARGET=foo		 - Override the build target"
+-	@echo "    DEBUG=1              	 - Enable verbose output on host and interactive debugging"
+-	@echo '    EXTRA_CONFIGURE_OPTS="..."   - Pass to configure step'
+-	@echo "    J=[0..9]*            	 - Override the -jN parameter for make commands"
+-	@echo "    LOG_CONSOLE=1        	 - Log console to file in: ~/.cache/qemu-vm "
+-	@echo "    USE_TCG=1        	         - Use TCG for cross-arch images"
+-	@echo "    QEMU=/path/to/qemu		 - Change path to QEMU binary"
++	@echo "    BUILD_TARGET=foo              - Override the build target"
++	@echo "    DEBUG=1                       - Enable verbose output on host and interactive debugging"
++	@echo '    EXTRA_CONFIGURE_OPTS="..."    - Pass to configure step'
++	@echo "    J=[0..9]*                     - Override the -jN parameter for make commands"
++	@echo "    LOG_CONSOLE=1                 - Log console to file in: ~/.cache/qemu-vm "
++	@echo "    USE_TCG=1                     - Use TCG for cross-arch images"
++	@echo "    QEMU=/path/to/qemu            - Change path to QEMU binary"
+ ifeq ($(HAVE_PYTHON_YAML),yes)
+-	@echo "    QEMU_CONFIG=/path/conf.yml   - Change path to VM configuration .yml file."
++	@echo "    QEMU_CONFIG=/path/conf.yml    - Change path to VM configuration .yml file."
+ else
+ 	@echo "    (install python3-yaml to enable support for yaml file to configure a VM.)"
+ endif
+-	@echo "                                   See conf_example_*.yml for file format details."
+-	@echo "    QEMU_IMG=/path/to/qemu-img	 - Change path to qemu-img tool"
+-	@echo "    QEMU_LOCAL=1                 - Use QEMU binary local to this build."
+-	@echo "    TARGET_LIST=a,b,c    	 - Override target list in builds"
+-	@echo "    V=1				 - Enable verbose output on host and guest commands"
++	@echo "                                    See conf_example_*.yml for file format details."
++	@echo "    QEMU_IMG=/path/to/qemu-img    - Change path to qemu-img tool"
++	@echo "    QEMU_LOCAL=1                  - Use QEMU binary local to this build."
++	@echo "    TARGET_LIST=a,b,c             - Override target list in builds"
++	@echo "    V=1                           - Enable verbose output on host and guest commands"
  
-     deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                                      QEMU_TIMER_ATTR_ALL);
-+                                          QEMU_TIMER_ATTR_ALL);
-     /*
-      * A deadline of < 0 indicates this timer is not enabled, so we
-      * won't get far trying to run it forward.
+ vm-build-all: $(addprefix vm-build-, $(IMAGES))
+ 
 -- 
 2.39.5
 
