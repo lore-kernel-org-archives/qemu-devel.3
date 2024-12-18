@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A14EE7718A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:23:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC5B6E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 20:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO0Xk-0001XA-Cu; Wed, 18 Dec 2024 15:21:16 -0500
+	id 1tO0XW-0001H5-Mk; Wed, 18 Dec 2024 15:21:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tO0Xi-0001VS-Kb
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:21:14 -0500
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ id 1tO0XS-0001Fl-CP
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:20:59 -0500
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <phil@philjordan.eu>)
- id 1tO0Xf-0000M1-R5
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:21:14 -0500
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-38637614567so42248f8f.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 12:21:11 -0800 (PST)
+ id 1tO0XN-0000EM-P9
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 15:20:57 -0500
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3862d16b4f5so68135f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 12:20:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734553270; x=1735158070;
+ d=philjordan-eu.20230601.gappssmtp.com; s=20230601; t=1734553251; x=1735158051;
  darn=nongnu.org; 
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5Fw4UfehpOa8iFRLVWhmcIQODsFvtfteM0UFvIctdBs=;
- b=2jlAwxFfEfXLOms60APhwNGAbTJir4VeWXlxZpVBfa3ZCjTsisAe5IioRLfpVnQ9MA
- YnxuAi08pgy3bYS8D266Bk/laKf4FBmFByDbX/VLJjzfoYhRKADqZsAjiG5ona5hKEKx
- E6ry14zLqW8+JtW5lUo11/WNiZ29e94ENTQlxphn1GuBFq3hNG13J+cBk34ue/Xu3fns
- UwKaHJnDxQJ6bI8uxUcQrIiose6KiRzhc6OqyLbgPcKhjbpanJAretEGEL63s7OXTpBP
- 7F/wn8gGdjhArWp1gpPB6TMCD+ODXxE7xjJIaj3mhvzMwai3SjFAuUMrG76MceLkWFeC
- WeoA==
+ bh=QaGVqg0aHGH4DWdn7iYIHEUNRHJdC7/wkRuv1wPL8sQ=;
+ b=Lh5kNtUrZ4xuF2OtTSUevcr8EldfgcTwLWVl0d18/NnhCSeJclYAeO195WvLXSjlcS
+ mJBGb36R2x7F3k/dalQ+2pJF645N7815DHkJQMWOCqKLpVZEinGohp6CbxYDdkLqEeuy
+ borFlfoRxI+Cu0S9Uhz9zuMM/RsE/9b93pMEQbzC7zmIMFZhekAwIEmvwYXBtemnrsJN
+ ZkR9djEMp1Y/chrUnUcA4oZqj7pkSvDytqI7neTjth90S6nt72CYySrN7rIYVl+ARjWN
+ 7szQ1e3qxBHILam0y+Uauy+08d108TOMZBGCMQMZyGwGoYCizTQNO9qC8fJNR1WdNLZD
+ yjCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734553270; x=1735158070;
+ d=1e100.net; s=20230601; t=1734553251; x=1735158051;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=5Fw4UfehpOa8iFRLVWhmcIQODsFvtfteM0UFvIctdBs=;
- b=aGyYyf4bF6BxPxGeeH5rN8yPw6qTHkvPHare1KK5X6pI/mBtBwC89M5mZGO3RsX0Zx
- iw153PNU4eVCflGDYUlOFYd0oZvA9QTIYrn2p85j/skl8XhTMzntP0/zM2B0/hDFIEnf
- tn8b/uUG5YTgXzXREYPC/4Ddq03taU8L8IQo13ee/5txpCXO1JpLvAYkaoco9FhkXnk7
- 58bA3gw+7Jwcq2zASBwV9s2lhww0lFI5KV5b7S8PGsoWjF2x1Gxb+bjgb1eS8QwGHpar
- fUaPT1M9/fkQ34zPkJMwDz2+G9kOa+mIK8P6j5swgsNwjAgmzL0XTP7Pe2kGHsb5p+Cg
- 1pCw==
-X-Gm-Message-State: AOJu0Yzs97ayHIxmgctN/6ioc/Z3Vxo1ZIW8QGm2EgUiMSn45bizQBvf
- 5yytkzhwmM5+1uQ0elqCDhDvVPyECMnuz0CjbPhXqvWlm2ZdEpfjhROLO8d4/X6L7YVw5ZowapW
- 65w==
-X-Gm-Gg: ASbGncvGVVXt3S7zjtipIQp0VEo+4iM0JMJ/q+mPwtXjulAuRpzeB6zBLWk6o/3sbZ8
- IpIBLYmcGXzxkkbW7N49PiqVeIRttQ38ftIfEO1HDj63EzztS09J5JrwVYpOH9xRovM6HRYDRXZ
- /34HYR15g8U8/iTkZ2/Rg59n0Kbd0b7+afn1JJpP8NF7euFwW7Hl0AY13/uKpmcju0kA5SyRdEy
- ZtSB0HTVZCCJPUkiwAytrq6kUQOymrnT+J2ucK6jZmXCsh/pU3UfyeLjzVar1spfSCztWpqVziP
- 3KOMaqPzwiHj90fAGfoCeR2T+PoCARxY
-X-Google-Smtp-Source: AGHT+IH/pTn3AH7GkWXM1gO/KDHm8pt1JK6GjRtOtECiwfyn4qVcSXXqX3J/UFHZoPgYB9JiduZwfQ==
-X-Received: by 2002:a5d:64ab:0:b0:386:3803:bbd5 with SMTP id
- ffacd0b85a97d-388e4d8e6f3mr3801276f8f.45.1734553270367; 
- Wed, 18 Dec 2024 12:21:10 -0800 (PST)
+ bh=QaGVqg0aHGH4DWdn7iYIHEUNRHJdC7/wkRuv1wPL8sQ=;
+ b=hoHdMqE/PzJhSSSDz73z4w20FnBzXmzJ37pU04Dpky0mQq0sj7uazbjcyEgdtWaUgg
+ PcSycNY0tZRWU7aFwpu02NIK1Ylwf+/IYiTutF4h9p2bEeHQ+qyhBp2qxsuaMX0gIw8L
+ 4nMgNFnV4nmQ+E0QfqYVT1Lqke0vq+qpMvej+hagEqZo7EmzNHs8NRUySWKHJMIg/y6M
+ wwjwxfZhtgKBuf5X4H8HeCP76Xzmu0bVqNCPCbfXehNrCrTF0J67P1605c1UqNciG5AI
+ 4lB082Vhnqc4eu170NKwu2knOdm1FhSrSTE04gqjZ8vdvqJCl6JqHASuZRnWy5+x0yy4
+ 5dEg==
+X-Gm-Message-State: AOJu0YzQm84jPe3KA0iYGfDZ68E+7I2zSBStNq0cJAg95+ey2nx9+ZNU
+ RfH5PBbkFFomSzElH8m8DpFcCGaSt1UwxfseWadzdXoZPneb9X29PrznTGw3UzwWlojfJpMrv35
+ VrQ==
+X-Gm-Gg: ASbGncs4JrwqJJRBQlRiOM+5wrHT2WeZq8WXhLgOMkl1MF9l8XLptAQWZEV21MczNeE
+ ypvTZoS5qJ+cVpNR3ybmKXj6eiLChbiGiicgj76IJC7dIpA8MgceuvIhrCSHvqSulG988tR4e3n
+ HYst0Wt651GVhnpT/xjQKQRJRdpwVF6L7WlPKb32Q03tboUAOijlh4PXIJekrA+S/YA8P3ytNxl
+ B+uK7SLKlKovfVbJzw9ob3Xybk0qahqghGw4BNZQzu4f6fZFUlXgbOTfUebuTYkbC/Kb+OiYcSk
+ EyB27wD7/MgZ2HGimAzUvhxfq8jWao9j
+X-Google-Smtp-Source: AGHT+IHO1TAOD7UauYtRv5Rvj5xWC1aMvoeSXwg1do5NE26haKSyOguiHJMwt5DHrgIseowFVO43AQ==
+X-Received: by 2002:adf:a313:0:b0:385:e10a:4d97 with SMTP id
+ ffacd0b85a97d-38a1a2299d1mr525860f8f.21.1734553251319; 
+ Wed, 18 Dec 2024 12:20:51 -0800 (PST)
 Received: from localhost.localdomain (h082218084190.host.wavenet.at.
  [82.218.84.190]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-388c80120c7sm14842267f8f.13.2024.12.18.12.21.08
+ ffacd0b85a97d-388c80120c7sm14842267f8f.13.2024.12.18.12.20.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 18 Dec 2024 12:21:10 -0800 (PST)
+ Wed, 18 Dec 2024 12:20:50 -0800 (PST)
 From: Phil Dennis-Jordan <phil@philjordan.eu>
 To: qemu-devel@nongnu.org
 Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
@@ -78,19 +78,18 @@ Cc: agraf@csgraf.de, phil@philjordan.eu, peter.maydell@linaro.org,
  dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
  jcmvbkbc@gmail.com, marcandre.lureau@redhat.com, berrange@redhat.com,
  akihiko.odaki@daynix.com, qemu-arm@nongnu.org, qemu-block@nongnu.org,
- qemu-riscv@nongnu.org, balaton@eik.bme.hu, Alexander Graf <graf@amazon.com>
-Subject: [PATCH v15 11/15] hw/vmapple/bdif: Introduce vmapple backdoor
- interface
-Date: Wed, 18 Dec 2024 21:20:32 +0100
-Message-Id: <20241218202036.80064-12-phil@philjordan.eu>
+ qemu-riscv@nongnu.org, balaton@eik.bme.hu
+Subject: [PATCH v15 01/15] ui & main loop: Redesign of system-specific main
+ thread event handling
+Date: Wed, 18 Dec 2024 21:20:22 +0100
+Message-Id: <20241218202036.80064-2-phil@philjordan.eu>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20241218202036.80064-1-phil@philjordan.eu>
 References: <20241218202036.80064-1-phil@philjordan.eu>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: neutral client-ip=2a00:1450:4864:20::429;
- envelope-from=phil@philjordan.eu; helo=mail-wr1-x429.google.com
+Received-SPF: neutral client-ip=2a00:1450:4864:20::436;
+ envelope-from=phil@philjordan.eu; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -112,371 +111,350 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+macOS's Cocoa event handling must be done on the initial (main) thread
+of the process. Furthermore, if library or application code uses
+libdispatch, the main dispatch queue must be handling events on the main
+thread as well.
 
-The VMApple machine exposes AUX and ROOT block devices (as well as USB OTG
-emulation) via virtio-pci as well as a special, simple backdoor platform
-device.
+So far, this has affected Qemu in both the Cocoa and SDL UIs, although
+in different ways: the Cocoa UI replaces the default qemu_main function
+with one that spins Qemu's internal main event loop off onto a
+background thread. SDL (which uses Cocoa internally) on the other hand
+uses a polling approach within Qemu's main event loop. Events are
+polled during the SDL UI's dpy_refresh callback, which happens to run
+on the main thread by default.
 
-This patch implements this backdoor platform device to the best of my
-understanding. I left out any USB OTG parts; they're only needed for
-guest recovery and I don't understand the protocol yet.
+As UIs are mutually exclusive, this works OK as long as nothing else
+needs platform-native event handling. In the next patch, a new device is
+introduced based on the ParavirtualizedGraphics.framework in macOS.
+This uses libdispatch internally, and only works when events are being
+handled on the main runloop. With the current system, it works when
+using either the Cocoa or the SDL UI. However, it does not when running
+headless. Moreover, any attempt to install a similar scheme to the
+Cocoa UI's main thread replacement fails when combined with the SDL
+UI.
 
-Signed-off-by: Alexander Graf <graf@amazon.com>
+This change tidies up main thread management to be more flexible.
+
+ * The qemu_main global function pointer is a custom function for the
+   main thread, and it may now be NULL. When it is, the main thread
+   runs the main Qemu loop. This represents the traditional setup.
+ * When non-null, spawning the main Qemu event loop on a separate
+   thread is now done centrally rather than inside the Cocoa UI code.
+ * For most platforms, qemu_main is indeed NULL by default, but on
+   Darwin, it defaults to a function that runs the CFRunLoop.
+ * The Cocoa UI sets qemu_main to a function which runs the
+   NSApplication event handling runloop, as is usual for a Cocoa app.
+ * The SDL UI overrides the qemu_main function to NULL, thus
+   specifying that Qemu's main loop must run on the main
+   thread.
+ * The GTK UI also overrides the qemu_main function to NULL.
+ * For other UIs, or in the absence of UIs, the platform's default
+   behaviour is followed.
+
+This means that on macOS, the platform's runloop events are always
+handled, regardless of chosen UI. The new PV graphics device will
+thus work in all configurations. There is no functional change on other
+operating systems.
+
+Implementing this via a global function pointer variable is a bit
+ugly, but it's probably worth investigating the existing UI thread rule
+violations in the SDL (e.g. #2537) and GTK+ back-ends. Fixing those
+issues might precipitate requirements similar but not identical to those
+of the Cocoa UI; hopefully we'll see some kind of pattern emerge, which
+can then be used as a basis for an overhaul. (In fact, it may turn
+out to be simplest to split the UI/native platform event thread from the
+QEMU main event loop on all platforms, with any UI or even none at all.)
+
 Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
 Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Tested-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
 
-v4:
+v5:
 
- * Moved most header code to .c, rest to vmapple.h
- * Better compliance with coding, naming, and formatting conventions.
+ * Simplified the way of setting/clearing the main loop by going back
+   to setting qemu_main directly, but narrowing the scope of what it
+   needs to do, and it can now be NULL.
 
-v8:
+v6:
 
- * Replaced uses of cpu_physical_memory_read with dma_memory_read.
- * Replaced an instance of g_free with g_autofree.
+ * Folded function qemu_run_default_main_on_new_thread's code into
+   main()
+ * Removed whitespace changes left over on lines near code removed
+   between v4 and v5
 
 v9:
 
- * Replaced uses of cpu_physical_memory_write with dma_memory_write.
+ * Set qemu_main to NULL for GTK UI as well.
 
-v15:
+v10:
 
- * Constified the property table.
+ * Added comments clarifying the functionality and purpose of qemu_main.
 
- hw/vmapple/Kconfig           |   3 +
- hw/vmapple/bdif.c            | 275 +++++++++++++++++++++++++++++++++++
- hw/vmapple/meson.build       |   1 +
- hw/vmapple/trace-events      |   5 +
- include/hw/vmapple/vmapple.h |   2 +
- 5 files changed, 286 insertions(+)
- create mode 100644 hw/vmapple/bdif.c
+v11:
 
-diff --git a/hw/vmapple/Kconfig b/hw/vmapple/Kconfig
-index a73504d5999..68f88876eb9 100644
---- a/hw/vmapple/Kconfig
-+++ b/hw/vmapple/Kconfig
-@@ -1,3 +1,6 @@
- config VMAPPLE_AES
-     bool
+ * Removed the qemu_main_fn typedef again.
+ * Consolidation of main, qemu_default_main, and call_qemu_default_main
+   so that the latter has been eliminated altogether.
+ * Reinstated the #include <SDL.h> directive, added comment saying
+   why it's needed.
+ * Improved the comment on the qemu_main global variable.
+ * Expanded the commit message.
+
+v12:
+
+ * More precise wording of code comments.
+
+ include/qemu-main.h | 14 +++++++++++-
+ system/main.c       | 37 +++++++++++++++++++++++++++----
+ ui/cocoa.m          | 54 +++++++++++----------------------------------
+ ui/gtk.c            |  4 ++++
+ ui/sdl2.c           |  4 ++++
+ 5 files changed, 67 insertions(+), 46 deletions(-)
+
+diff --git a/include/qemu-main.h b/include/qemu-main.h
+index 940960a7dbc..2ee83bedff3 100644
+--- a/include/qemu-main.h
++++ b/include/qemu-main.h
+@@ -5,7 +5,19 @@
+ #ifndef QEMU_MAIN_H
+ #define QEMU_MAIN_H
  
-+config VMAPPLE_BDIF
-+    bool
-+
-diff --git a/hw/vmapple/bdif.c b/hw/vmapple/bdif.c
-new file mode 100644
-index 00000000000..412116c2768
---- /dev/null
-+++ b/hw/vmapple/bdif.c
-@@ -0,0 +1,275 @@
+-int qemu_default_main(void);
 +/*
-+ * VMApple Backdoor Interface
-+ *
-+ * Copyright © 2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * The function to run on the main (initial) thread of the process.
++ * NULL means QEMU's main event loop.
++ * When non-NULL, QEMU's main event loop will run on a purposely created
++ * thread, after which the provided function pointer will be invoked on
++ * the initial thread.
++ * This is useful on platforms which treat the main thread as special
++ * (macOS/Darwin) and/or require all UI API calls to occur from the main
++ * thread. Those platforms can initialise it to a specific function,
++ * while UI implementations may reset it to NULL during their init if they
++ * will handle system and UI events on the main thread via QEMU's own main
++ * event loop.
 + */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/units.h"
-+#include "qemu/log.h"
-+#include "qemu/module.h"
-+#include "trace.h"
-+#include "hw/vmapple/vmapple.h"
-+#include "hw/sysbus.h"
-+#include "hw/block/block.h"
-+#include "qapi/error.h"
-+#include "sysemu/block-backend.h"
-+#include "sysemu/dma.h"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VMAppleBdifState, VMAPPLE_BDIF)
-+
-+struct VMAppleBdifState {
-+    SysBusDevice parent_obj;
-+
-+    BlockBackend *aux;
-+    BlockBackend *root;
-+    MemoryRegion mmio;
-+};
-+
-+#define VMAPPLE_BDIF_SIZE   0x00200000
-+
-+#define REG_DEVID_MASK      0xffff0000
-+#define DEVID_ROOT          0x00000000
-+#define DEVID_AUX           0x00010000
-+#define DEVID_USB           0x00100000
-+
-+#define REG_STATUS          0x0
-+#define REG_STATUS_ACTIVE     BIT(0)
-+#define REG_CFG             0x4
-+#define REG_CFG_ACTIVE        BIT(1)
-+#define REG_UNK1            0x8
-+#define REG_BUSY            0x10
-+#define REG_BUSY_READY        BIT(0)
-+#define REG_UNK2            0x400
-+#define REG_CMD             0x408
-+#define REG_NEXT_DEVICE     0x420
-+#define REG_UNK3            0x434
-+
-+typedef struct VblkSector {
-+    uint32_t pad;
-+    uint32_t pad2;
-+    uint32_t sector;
-+    uint32_t pad3;
-+} VblkSector;
-+
-+typedef struct VblkReqCmd {
-+    uint64_t addr;
-+    uint32_t len;
-+    uint32_t flags;
-+} VblkReqCmd;
-+
-+typedef struct VblkReq {
-+    VblkReqCmd sector;
-+    VblkReqCmd data;
-+    VblkReqCmd retval;
-+} VblkReq;
-+
-+#define VBLK_DATA_FLAGS_READ  0x00030001
-+#define VBLK_DATA_FLAGS_WRITE 0x00010001
-+
-+#define VBLK_RET_SUCCESS  0
-+#define VBLK_RET_FAILED   1
-+
-+static uint64_t bdif_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    uint64_t ret = -1;
-+    uint64_t devid = offset & REG_DEVID_MASK;
-+
-+    switch (offset & ~REG_DEVID_MASK) {
-+    case REG_STATUS:
-+        ret = REG_STATUS_ACTIVE;
-+        break;
-+    case REG_CFG:
-+        ret = REG_CFG_ACTIVE;
-+        break;
-+    case REG_UNK1:
-+        ret = 0x420;
-+        break;
-+    case REG_BUSY:
-+        ret = REG_BUSY_READY;
-+        break;
-+    case REG_UNK2:
-+        ret = 0x1;
-+        break;
-+    case REG_UNK3:
-+        ret = 0x0;
-+        break;
-+    case REG_NEXT_DEVICE:
-+        switch (devid) {
-+        case DEVID_ROOT:
-+            ret = 0x8000000;
-+            break;
-+        case DEVID_AUX:
-+            ret = 0x10000;
-+            break;
-+        }
-+        break;
-+    }
-+
-+    trace_bdif_read(offset, size, ret);
-+    return ret;
-+}
-+
-+static void le2cpu_sector(VblkSector *sector)
-+{
-+    sector->sector = le32_to_cpu(sector->sector);
-+}
-+
-+static void le2cpu_reqcmd(VblkReqCmd *cmd)
-+{
-+    cmd->addr = le64_to_cpu(cmd->addr);
-+    cmd->len = le32_to_cpu(cmd->len);
-+    cmd->flags = le32_to_cpu(cmd->flags);
-+}
-+
-+static void le2cpu_req(VblkReq *req)
-+{
-+    le2cpu_reqcmd(&req->sector);
-+    le2cpu_reqcmd(&req->data);
-+    le2cpu_reqcmd(&req->retval);
-+}
-+
-+static void vblk_cmd(uint64_t devid, BlockBackend *blk, uint64_t gp_addr,
-+                     uint64_t static_off)
-+{
-+    VblkReq req;
-+    VblkSector sector;
-+    uint64_t off = 0;
-+    g_autofree char *buf = NULL;
-+    uint8_t ret = VBLK_RET_FAILED;
-+    int r;
-+    MemTxResult dma_result;
-+
-+    dma_result = dma_memory_read(&address_space_memory, gp_addr,
-+                                 &req, sizeof(req), MEMTXATTRS_UNSPECIFIED);
-+    if (dma_result != MEMTX_OK) {
-+        goto out;
-+    }
-+
-+    le2cpu_req(&req);
-+
-+    if (req.sector.len != sizeof(sector)) {
-+        goto out;
-+    }
-+
-+    /* Read the vblk command */
-+    dma_result = dma_memory_read(&address_space_memory, req.sector.addr,
-+                                 &sector, sizeof(sector),
-+                                 MEMTXATTRS_UNSPECIFIED);
-+    if (dma_result != MEMTX_OK) {
-+        goto out;
-+    }
-+    le2cpu_sector(&sector);
-+
-+    off = sector.sector * 512ULL + static_off;
-+
-+    /* Sanity check that we're not allocating bogus sizes */
-+    if (req.data.len > 128 * MiB) {
-+        goto out;
-+    }
-+
-+    buf = g_malloc0(req.data.len);
-+    switch (req.data.flags) {
-+    case VBLK_DATA_FLAGS_READ:
-+        r = blk_pread(blk, off, req.data.len, buf, 0);
-+        trace_bdif_vblk_read(devid == DEVID_AUX ? "aux" : "root",
-+                             req.data.addr, off, req.data.len, r);
-+        if (r < 0) {
-+            goto out;
-+        }
-+        dma_result = dma_memory_write(&address_space_memory, req.data.addr, buf,
-+                                      req.data.len, MEMTXATTRS_UNSPECIFIED);
-+        if (dma_result == MEMTX_OK) {
-+            ret = VBLK_RET_SUCCESS;
-+        }
-+        break;
-+    case VBLK_DATA_FLAGS_WRITE:
-+        /* Not needed, iBoot only reads */
-+        break;
-+    default:
-+        break;
-+    }
-+
-+out:
-+    dma_memory_write(&address_space_memory, req.retval.addr, &ret, 1,
-+                     MEMTXATTRS_UNSPECIFIED);
-+}
-+
-+static void bdif_write(void *opaque, hwaddr offset,
-+                       uint64_t value, unsigned size)
-+{
-+    VMAppleBdifState *s = opaque;
-+    uint64_t devid = (offset & REG_DEVID_MASK);
-+
-+    trace_bdif_write(offset, size, value);
-+
-+    switch (offset & ~REG_DEVID_MASK) {
-+    case REG_CMD:
-+        switch (devid) {
-+        case DEVID_ROOT:
-+            vblk_cmd(devid, s->root, value, 0x0);
-+            break;
-+        case DEVID_AUX:
-+            vblk_cmd(devid, s->aux, value, 0x0);
-+            break;
-+        }
-+        break;
-+    }
-+}
-+
-+static const MemoryRegionOps bdif_ops = {
-+    .read = bdif_read,
-+    .write = bdif_write,
-+    .endianness = DEVICE_NATIVE_ENDIAN,
-+    .valid = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+    .impl = {
-+        .min_access_size = 1,
-+        .max_access_size = 8,
-+    },
-+};
-+
-+static void bdif_init(Object *obj)
-+{
-+    VMAppleBdifState *s = VMAPPLE_BDIF(obj);
-+
-+    memory_region_init_io(&s->mmio, obj, &bdif_ops, obj,
-+                         "VMApple Backdoor Interface", VMAPPLE_BDIF_SIZE);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(obj), &s->mmio);
-+}
-+
-+static const Property bdif_properties[] = {
-+    DEFINE_PROP_DRIVE("aux", VMAppleBdifState, aux),
-+    DEFINE_PROP_DRIVE("root", VMAppleBdifState, root),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void bdif_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    dc->desc = "VMApple Backdoor Interface";
-+    device_class_set_props(dc, bdif_properties);
-+}
-+
-+static const TypeInfo bdif_info = {
-+    .name          = TYPE_VMAPPLE_BDIF,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(VMAppleBdifState),
-+    .instance_init = bdif_init,
-+    .class_init    = bdif_class_init,
-+};
-+
-+static void bdif_register_types(void)
-+{
-+    type_register_static(&bdif_info);
-+}
-+
-+type_init(bdif_register_types)
-diff --git a/hw/vmapple/meson.build b/hw/vmapple/meson.build
-index bcd4dcb28d2..d4624713deb 100644
---- a/hw/vmapple/meson.build
-+++ b/hw/vmapple/meson.build
-@@ -1 +1,2 @@
- system_ss.add(when: 'CONFIG_VMAPPLE_AES',  if_true: files('aes.c'))
-+system_ss.add(when: 'CONFIG_VMAPPLE_BDIF', if_true: files('bdif.c'))
-diff --git a/hw/vmapple/trace-events b/hw/vmapple/trace-events
-index 0d4a73d7d1c..d86f64d50fe 100644
---- a/hw/vmapple/trace-events
-+++ b/hw/vmapple/trace-events
-@@ -14,3 +14,8 @@ aes_2_read(uint64_t offset, uint64_t res) "offset=0x%"PRIx64" res=0x%"PRIx64
- aes_2_write(uint64_t offset, uint64_t val) "offset=0x%"PRIx64" val=0x%"PRIx64
- aes_dump_data(const char *desc, const char *hex) "%s%s"
+ extern int (*qemu_main)(void);
  
-+# bdif.c
-+bdif_read(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
-+bdif_write(uint64_t offset, uint32_t size, uint64_t value) "offset=0x%"PRIx64" size=0x%x value=0x%"PRIx64
-+bdif_vblk_read(const char *dev, uint64_t addr, uint64_t offset, uint32_t len, int r) "dev=%s addr=0x%"PRIx64" off=0x%"PRIx64" size=0x%x r=%d"
-+
-diff --git a/include/hw/vmapple/vmapple.h b/include/hw/vmapple/vmapple.h
-index 6762b6c869f..9090e9c5ac8 100644
---- a/include/hw/vmapple/vmapple.h
-+++ b/include/hw/vmapple/vmapple.h
-@@ -14,4 +14,6 @@
+ #endif /* QEMU_MAIN_H */
+diff --git a/system/main.c b/system/main.c
+index 9b91d21ea8c..668d0ecfe8c 100644
+--- a/system/main.c
++++ b/system/main.c
+@@ -24,26 +24,55 @@
  
- #define TYPE_APPLE_AES "apple-aes"
+ #include "qemu/osdep.h"
+ #include "qemu-main.h"
++#include "qemu/main-loop.h"
+ #include "sysemu/sysemu.h"
  
-+#define TYPE_VMAPPLE_BDIF "vmapple-bdif"
+ #ifdef CONFIG_SDL
++/*
++ * SDL insists on wrapping the main() function with its own implementation on
++ * some platforms; it does so via a macro that renames our main function, so
++ * <SDL.h> must be #included here even with no SDL code called from this file.
++ */
+ #include <SDL.h>
+ #endif
+ 
+-int qemu_default_main(void)
++#ifdef CONFIG_DARWIN
++#include <CoreFoundation/CoreFoundation.h>
++#endif
 +
- #endif /* HW_VMAPPLE_VMAPPLE_H */
++static void *qemu_default_main(void *opaque)
+ {
+     int status;
+ 
++    bql_lock();
+     status = qemu_main_loop();
+     qemu_cleanup(status);
++    bql_unlock();
+ 
+-    return status;
++    exit(status);
+ }
+ 
+-int (*qemu_main)(void) = qemu_default_main;
++int (*qemu_main)(void);
++
++#ifdef CONFIG_DARWIN
++static int os_darwin_cfrunloop_main(void)
++{
++    CFRunLoopRun();
++    g_assert_not_reached();
++}
++int (*qemu_main)(void) = os_darwin_cfrunloop_main;
++#endif
+ 
+ int main(int argc, char **argv)
+ {
+     qemu_init(argc, argv);
+-    return qemu_main();
++    bql_unlock();
++    if (qemu_main) {
++        QemuThread main_loop_thread;
++        qemu_thread_create(&main_loop_thread, "qemu_main",
++                           qemu_default_main, NULL, QEMU_THREAD_DETACHED);
++        return qemu_main();
++    } else {
++        qemu_default_main(NULL);
++    }
+ }
+diff --git a/ui/cocoa.m b/ui/cocoa.m
+index dd88115dc6f..0a9ad824aa5 100644
+--- a/ui/cocoa.m
++++ b/ui/cocoa.m
+@@ -73,6 +73,8 @@
+     int height;
+ } QEMUScreen;
+ 
++@class QemuCocoaPasteboardTypeOwner;
++
+ static void cocoa_update(DisplayChangeListener *dcl,
+                          int x, int y, int w, int h);
+ 
+@@ -107,6 +109,7 @@ static void cocoa_switch(DisplayChangeListener *dcl,
+ static NSInteger cbchangecount = -1;
+ static QemuClipboardInfo *cbinfo;
+ static QemuEvent cbevent;
++static QemuCocoaPasteboardTypeOwner *cbowner;
+ 
+ // Utility functions to run specified code block with the BQL held
+ typedef void (^CodeBlock)(void);
+@@ -1326,8 +1329,10 @@ - (void) dealloc
+ {
+     COCOA_DEBUG("QemuCocoaAppController: dealloc\n");
+ 
+-    if (cocoaView)
+-        [cocoaView release];
++    [cocoaView release];
++    [cbowner release];
++    cbowner = nil;
++
+     [super dealloc];
+ }
+ 
+@@ -1943,8 +1948,6 @@ - (void)pasteboard:(NSPasteboard *)sender provideDataForType:(NSPasteboardType)t
+ 
+ @end
+ 
+-static QemuCocoaPasteboardTypeOwner *cbowner;
+-
+ static void cocoa_clipboard_notify(Notifier *notifier, void *data);
+ static void cocoa_clipboard_request(QemuClipboardInfo *info,
+                                     QemuClipboardType type);
+@@ -2007,43 +2010,8 @@ static void cocoa_clipboard_request(QemuClipboardInfo *info,
+     }
+ }
+ 
+-/*
+- * The startup process for the OSX/Cocoa UI is complicated, because
+- * OSX insists that the UI runs on the initial main thread, and so we
+- * need to start a second thread which runs the qemu_default_main():
+- * in main():
+- *  in cocoa_display_init():
+- *   assign cocoa_main to qemu_main
+- *   create application, menus, etc
+- *  in cocoa_main():
+- *   create qemu-main thread
+- *   enter OSX run loop
+- */
+-
+-static void *call_qemu_main(void *opaque)
+-{
+-    int status;
+-
+-    COCOA_DEBUG("Second thread: calling qemu_default_main()\n");
+-    bql_lock();
+-    status = qemu_default_main();
+-    bql_unlock();
+-    COCOA_DEBUG("Second thread: qemu_default_main() returned, exiting\n");
+-    [cbowner release];
+-    exit(status);
+-}
+-
+ static int cocoa_main(void)
+ {
+-    QemuThread thread;
+-
+-    COCOA_DEBUG("Entered %s()\n", __func__);
+-
+-    bql_unlock();
+-    qemu_thread_create(&thread, "qemu_main", call_qemu_main,
+-                       NULL, QEMU_THREAD_DETACHED);
+-
+-    // Start the main event loop
+     COCOA_DEBUG("Main thread: entering OSX run loop\n");
+     [NSApp run];
+     COCOA_DEBUG("Main thread: left OSX run loop, which should never happen\n");
+@@ -2125,8 +2093,6 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+ 
+     COCOA_DEBUG("qemu_cocoa: cocoa_display_init\n");
+ 
+-    qemu_main = cocoa_main;
+-
+     // Pull this console process up to being a fully-fledged graphical
+     // app with a menubar and Dock icon
+     ProcessSerialNumber psn = { 0, kCurrentProcess };
+@@ -2190,6 +2156,12 @@ static void cocoa_display_init(DisplayState *ds, DisplayOptions *opts)
+     qemu_clipboard_peer_register(&cbpeer);
+ 
+     [pool release];
++
++    /*
++     * The Cocoa UI will run the NSApplication runloop on the main thread
++     * rather than the default Core Foundation one.
++     */
++    qemu_main = cocoa_main;
+ }
+ 
+ static QemuDisplay qemu_display_cocoa = {
+diff --git a/ui/gtk.c b/ui/gtk.c
+index f9a53ea78ed..be85b389958 100644
+--- a/ui/gtk.c
++++ b/ui/gtk.c
+@@ -38,6 +38,7 @@
+ #include "qemu/cutils.h"
+ #include "qemu/error-report.h"
+ #include "qemu/main-loop.h"
++#include "qemu-main.h"
+ 
+ #include "ui/console.h"
+ #include "ui/gtk.h"
+@@ -2485,6 +2486,9 @@ static void gtk_display_init(DisplayState *ds, DisplayOptions *opts)
+ #ifdef CONFIG_GTK_CLIPBOARD
+     gd_clipboard_init(s);
+ #endif /* CONFIG_GTK_CLIPBOARD */
++
++    /* GTK's event polling must happen on the main thread. */
++    qemu_main = NULL;
+ }
+ 
+ static void early_gtk_display_init(DisplayOptions *opts)
+diff --git a/ui/sdl2.c b/ui/sdl2.c
+index bd4f5a9da14..44ab2762262 100644
+--- a/ui/sdl2.c
++++ b/ui/sdl2.c
+@@ -34,6 +34,7 @@
+ #include "sysemu/sysemu.h"
+ #include "ui/win32-kbd-hook.h"
+ #include "qemu/log.h"
++#include "qemu-main.h"
+ 
+ static int sdl2_num_outputs;
+ static struct sdl2_console *sdl2_console;
+@@ -965,6 +966,9 @@ static void sdl2_display_init(DisplayState *ds, DisplayOptions *o)
+     }
+ 
+     atexit(sdl_cleanup);
++
++    /* SDL's event polling (in dpy_refresh) must happen on the main thread. */
++    qemu_main = NULL;
+ }
+ 
+ static QemuDisplay qemu_display_sdl2 = {
 -- 
 2.39.5 (Apple Git-154)
 
