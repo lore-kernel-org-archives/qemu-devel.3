@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5162E77187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F8FE7718A
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 15:51:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNwJs-0005PJ-7g; Wed, 18 Dec 2024 10:50:40 -0500
+	id 1tNwK9-0005UG-F1; Wed, 18 Dec 2024 10:50:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tNwJn-0005O8-D0
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:35 -0500
-Received: from mail-co1nam11on20625.outbound.protection.outlook.com
- ([2a01:111:f403:2416::625]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
+ id 1tNwK5-0005Tu-Hv
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:53 -0500
+Received: from mail-mw2nam10on20604.outbound.protection.outlook.com
+ ([2a01:111:f403:2412::604]
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Michael.Roth@amd.com>)
- id 1tNwJe-0003n7-V3
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:34 -0500
+ id 1tNwK3-0003qh-MX
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 10:50:53 -0500
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JO0Z2MbonTrzaPgbenJXao+qvZwsLsU9t0rh0vHp37F7F/OY1shePvI6EsUjcPZD9hKjOoTjUZLwZjuRFmUZ1Sm2fMhCP8GbLrN0iOBWVlGEFGd/mBqvG4WcCVj18BFeVzqNkRMQ9w6OzVoyy0IRhMdAlTkETB/LJRQL8yyulPT2YzrHiL7IXANFsmmiAlUdwjO9DoubvLjNA+NQ9SjpKvTwFU2EU2XN997bL6tUukB5fPWF6l9vKuvQuzFYUii7I8/uQ3dViKHvuzU1BD5bJn9qyxs6mOLNgZzR/JVGI0H5AKGE12+r0Zk5b4dsOXqXgMg5WTjLseHIH6v+ILhvnA==
+ b=JVCKdTgX0O7g7A4Zp92fXCkS9mcD7GTLRAtUB7BLc6onzBUOaG2L0zZh5NhSo3+21bhDqEX7TY+A5EwLX+HB8A2V2MqbPyfuB2QdrUafpFZwOqhX3YV6o3xg21uTz3W5E55hGJzyM4E1w1uhB3f2NuFJtHpM5ccIO9tiRZOtq49leHORQB9Xd4MLf9j/E83pxSgtPMlz07i/Mm43FefH61JvQGa5se9CevTKWdfxp3NWXFFIWCSjl3c7R5edrs0MfQKhOnMxOKGqvcOeAnPf8d8ULs0PZLVH+7catQvf0SCmgg3ZPTEcnmn0P+P0m0hGxPr+MPdZa6wjVtnh6417Bw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GGmmpmcTLV3AmYrzVnmgwyiRjPBVj+Lzuv/m/TuqAuo=;
- b=lPg1niKsNyXjaW6iLoWqrt4LwIXqjrNJLvzckiRxKbn/2LMGUqZ7d7Rn/6pt13gLXjP3aaLM5kQcsIybZgBR/610MCJNCM2QbGvPakKMMMyzbmmR2elpCV6aSWWmjw4fx//hGOjSKW3hHVYh85uGRgj+h1fAXdVf2X1eyHTtcoINYgfDTHoq4Q7O8hOfu4BkY2nCFRW0bxnjxg5TgXT/b3jvdlEY5ghSDWKZ7hm6TivN9lPXedOibM1voiHC9FEE4IFiCjYYtsnzu3IzB51L+f/SF32zn5BARXDkolSHo83ucuTKZ6Pq4nlkPiJBDCipfN+KofwS7RLNEOMpz3IWcQ==
+ bh=wVTGCtF0LtdOoZKaoC5Qzv6XnhHaUpQchyQXz90KzY0=;
+ b=DfszbgmS3VNHfGVYcDWvA5c9xMi0Tc7Rj1fHm0qRCuevsVrW+cV90lPTAVUOw6C69duJpte0Bwy+9MytfJ8IbSpFon65KIPqkeyuhRmnaQem5r71cR3LJpV6Z2JLp6uGmYbhhGZrFQeVyM0Y5p0bxyE8NfjABMSXkL1bTTJpy7NABJQAQqBQOjGx4773ZGbk9hxuWxa86v/n8pUPF5niB9WrZhZVRW13DTPUuF0JhZqQijgeE5L0qElNhxEY0sNz2Yahh8R55a6VTB9rodGK9u+0hnuMx4tMyZIB7WtR4yXtBKVIntKB+xXpVVUZA+Hc8wiUetam0viRiO4EMF0pWg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
  165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
  (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
  dkim=none (message not signed); arc=none (0)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GGmmpmcTLV3AmYrzVnmgwyiRjPBVj+Lzuv/m/TuqAuo=;
- b=qDSoxZPzNkRhk18qTNYLhrnSYixX7G4Zow4fCRYIMSogg+7h3/eoDjx+31riw5RqVZkXQ8b5FXDnJ0dyzgwEL3wZzyZ0BAgHeCjelRmR+yqxpAKyb0BZX4AhVj/+T8QtL4hIraMDupTs0VQ/GTCvl4MgmurdVvnI7Yi8i7CjZgE=
-Received: from MN2PR20CA0054.namprd20.prod.outlook.com (2603:10b6:208:235::23)
- by SN7PR12MB7347.namprd12.prod.outlook.com (2603:10b6:806:29a::15)
+ bh=wVTGCtF0LtdOoZKaoC5Qzv6XnhHaUpQchyQXz90KzY0=;
+ b=CpKund+x1LWKOtiLHLhod3JhofjTqza5bfgoKhAvsHC8f4J4x3vZwy88fCV4JuGkg3l/0tIXV1oiqujAJzZ++vLTePbPpsmtJzzzwU6twemXTiJJtklQX7RqVZpa3FrWC7/ajb2RT3UMgkY+yUZ5yjUSd0W5FzCIEqcC6hNNzpg=
+Received: from BLAPR03CA0050.namprd03.prod.outlook.com (2603:10b6:208:32d::25)
+ by LV3PR12MB9234.namprd12.prod.outlook.com (2603:10b6:408:1a0::8)
  with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.13; Wed, 18 Dec
- 2024 15:50:21 +0000
-Received: from MN1PEPF0000ECD8.namprd02.prod.outlook.com
- (2603:10b6:208:235:cafe::da) by MN2PR20CA0054.outlook.office365.com
- (2603:10b6:208:235::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.23 via Frontend Transport; Wed,
- 18 Dec 2024 15:50:21 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.12; Wed, 18 Dec
+ 2024 15:50:44 +0000
+Received: from MN1PEPF0000ECD9.namprd02.prod.outlook.com
+ (2603:10b6:208:32d:cafe::59) by BLAPR03CA0050.outlook.office365.com
+ (2603:10b6:208:32d::25) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8251.22 via Frontend Transport; Wed,
+ 18 Dec 2024 15:50:41 +0000
 X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
  smtp.mailfrom=amd.com; dkim=none (message not signed)
  header.d=none;dmarc=pass action=none header.from=amd.com;
@@ -54,22 +54,22 @@ Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
  165.204.84.17 as permitted sender) receiver=protection.outlook.com;
  client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
 Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MN1PEPF0000ECD8.mail.protection.outlook.com (10.167.242.137) with Microsoft
+ MN1PEPF0000ECD9.mail.protection.outlook.com (10.167.242.138) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8251.15 via Frontend Transport; Wed, 18 Dec 2024 15:50:20 +0000
+ 15.20.8251.15 via Frontend Transport; Wed, 18 Dec 2024 15:50:41 +0000
 Received: from localhost (10.180.168.240) by SATLEXMB04.amd.com
  (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Wed, 18 Dec
- 2024 09:50:20 -0600
+ 2024 09:50:41 -0600
 From: Michael Roth <michael.roth@amd.com>
 To: <qemu-devel@nongnu.org>
 CC: <pbonzini@redhat.com>, <berrange@redhat.com>, <eduardo@habkost.net>,
  <armbru@redhat.com>, <pankaj.gupta@amd.com>, <huibo.wang@amd.com>,
  <jroedel@suse.com>
-Subject: [PATCH v1 1/3] linux-headers: Update for 6.12 and SNP certificate
- support
-Date: Wed, 18 Dec 2024 09:49:37 -0600
-Message-ID: <20241218154939.1114831-2-michael.roth@amd.com>
+Subject: [PATCH v1 2/3] accel/kvm: Add kvm_immediate_exit callback
+ infrastructure
+Date: Wed, 18 Dec 2024 09:49:38 -0600
+Message-ID: <20241218154939.1114831-3-michael.roth@amd.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20241218154939.1114831-1-michael.roth@amd.com>
 References: <20241218154939.1114831-1-michael.roth@amd.com>
@@ -81,55 +81,55 @@ X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
  (10.181.40.145)
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD8:EE_|SN7PR12MB7347:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8ffc041e-0ad8-415d-953a-08dd1f7bad83
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD9:EE_|LV3PR12MB9234:EE_
+X-MS-Office365-Filtering-Correlation-Id: c5a5486c-4cff-46aa-56e0-08dd1f7bb9de
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|376014|1800799024|36860700013|82310400026; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?+B4gflJ2n0XZm8BvTHmoOB3y72yBN/UYqxvhWjcmgv3WH0R/XusWUFGyU/GF?=
- =?us-ascii?Q?CtT+JeZr+cq/iufyqrNnYIi7dH4iChyIGKVS7C1GsON6ex1UkdwbnTKqmnk8?=
- =?us-ascii?Q?VXrKCcvUQaCDm5L2TqsLQcPZMuAwBupY+SeLoyF1fQhr9d+TWE7DgaAE/L7f?=
- =?us-ascii?Q?5sA0cHRT4LwVmyHUVanLRMTizLab3q8CkRU+kwHA0ERz1oVSeznqnUhVjdpl?=
- =?us-ascii?Q?68P81WIvyQTFep4bM8Sl9PnhCULlbMOeY1fTfYxP2lbCPUpCC9cTCUWZX9k1?=
- =?us-ascii?Q?HBDktLVrX47KRyTaNNs4nwE1ajSJpJ04CcdKi53GAVASB3HDmasjl87ygr50?=
- =?us-ascii?Q?6O7FKuxXNyhZMVCVMvswsqpXaM/HebaBJ0/CCsfmWKof3+1zwKPLfaaoXcoS?=
- =?us-ascii?Q?vrEnC6MbMjl7c4ozNJAZ02PwUeTMUP2oQ/ZSsVN2jjMFBF3N/TyHwQK6WPhp?=
- =?us-ascii?Q?+PF+ovh6+nkuVUKuy+AxZt6gypwG1immVpYCZlkHFSix3/KWALwl1c2EPi4L?=
- =?us-ascii?Q?6EkNfpx/FYKSItDovfkSqZ0El+p4LEkb4HvAmISxhSxbgPTTtRbB5Q8PCbkr?=
- =?us-ascii?Q?w0vMB+U+zaNU4wY9vida5fFDSVo4Gsrjk6PX0G6ltV3qVvozJcFADEcqQDf1?=
- =?us-ascii?Q?kI2R4f1IjsULng7X5doz8ghMlqd75l7WljHTz7W3qKxPWhGnmnzZcbq+KKdv?=
- =?us-ascii?Q?QyZQJFwEX0+7oHmFxRp8g8bBYb2X4k52ahW/sVvKUxtz2svjvGdQerGnhnNo?=
- =?us-ascii?Q?YN14KnvGve5ODayNI2lmI6rnIxqk7NPMI87Xdoi35SY7aWwXvyUiMcjhW4Iv?=
- =?us-ascii?Q?o+Ke0rkxdgk4pVoEZFkKsepDzYiWjmScnGpabStQarI4B9hwapOgZmqcJhIA?=
- =?us-ascii?Q?FET3Dn3+F2/dKPkDplTHKH/M63AEyXm22J5q/YRAFfIWL555a+3xdgCTIhJw?=
- =?us-ascii?Q?2F2OHfJnFOTMIJv3QWoz75nBRJ505KGoHPH2GyZu25wZfabjAdpsNznsOy2b?=
- =?us-ascii?Q?pyTOBPE8CeIjYEXt7tpaTNVRH7wm4OjuHbgBcwRbaN0IPRVzx9GA5h/cPksh?=
- =?us-ascii?Q?36XLGftHz+uHIcweOboTUuC1A91YuTtRLV2C8tJiP3H1U2oJPPKJPLpS7eBb?=
- =?us-ascii?Q?C6awU/09948CdtyOFc53qlaYXBCkRxo+suE2L+Mc+ob+0ijLDUupngQSTDII?=
- =?us-ascii?Q?UwMQ7br8eD14JousFRXUVpGacNgRkaR5R4H37x1rCOWByIQGIBaBavNAsXPq?=
- =?us-ascii?Q?m7sQlZIOPEL3OOD3eZhZkAgYVK0TgqtH0qeQFa4lzO39dUc2MkJn3/7lr3RZ?=
- =?us-ascii?Q?w/tHm588iavdQy9B4j7XtzC8dsHx1y1zWOh570cnJioKeWUtQRMAYNYFTXsv?=
- =?us-ascii?Q?r0DJPEyfRts+hclg7ixJauIwMSvhQUiAt0CCd0CIbgKViPtxPGniLCrs7HUq?=
- =?us-ascii?Q?1jS8MgwDwyBWUK+RelKml4seJ4OvcVGYHCyhTzOpxEhyTvnN/XeUhmUYycpg?=
- =?us-ascii?Q?7JTScu7wvPX+QoI=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?jOE2fXB17azWBl/n16vjzNSSNamdHDyOKY1F5Mpvoz+OB5wfw/7vP12zED1S?=
+ =?us-ascii?Q?5aiGZ3s3DcvKtCpVdf2LdS+0Ht/TlxnboqOQAbngDBwxb4amHtY3xAsHsF61?=
+ =?us-ascii?Q?ZIFe3bJYzTZEBEVuZ0UxNnue66i2vdD5l3iSFVEnjel6tzxRPUIA0lYjobxG?=
+ =?us-ascii?Q?3oxCBQcY5uMWbRNw23Bd7+W8Q50T90/DUjsPbi6vQi95TAYhWQrkfGAGSjYo?=
+ =?us-ascii?Q?zcsEUIeaD7GcC1+3tpY/+fNXOLVkJenzhUV2bZ9CV2bn3qlqwF1P4A0bsBrv?=
+ =?us-ascii?Q?zzAYZe2PqI1/HdGjsQxcF9ggKRsasqypUgsHrZ44mje2gzbcXYBjgbOMGlkC?=
+ =?us-ascii?Q?FjZ0234uDoAOzNA98B4TKUXBV/2rxb6M2RYsFPSwvjx3WV8T/GI02oCpMLe6?=
+ =?us-ascii?Q?/CwWyaK8KQN+xSodjeOr/np5yJTK0GgV82PO49LqPfjNk7tgQ/suMd0PknSC?=
+ =?us-ascii?Q?XqHBIZ0zZtKoL+XWj560Br0bIH8ah4cQOcI/lTCLrMq1sZowekb45AgRDNHh?=
+ =?us-ascii?Q?EFIX3k9AD7Vx/nQkUOD7Vu3oS3448MMOSPxUFH7uh+VsXy3J19Rcbpg/ET09?=
+ =?us-ascii?Q?/hExj/ApHs4W08UyKZrgFwvbFhZDhbmm88OCgHIvAJZZ2+qZkN6sAiTCFqln?=
+ =?us-ascii?Q?JbtA4y5CmrIcywY6lwFry2nP3QVnczUA76ZCnoWVfG5SDAF+g+Fq54Z2YXlk?=
+ =?us-ascii?Q?QVmtYiNfrXGKZLHeejw1E4CVkQDPMSOog1KxXEUks2k1F9DO8qfsFThcOGrG?=
+ =?us-ascii?Q?HQU39SCVzJp40dIobvCRFHWjPfa0zUr43vpH1daiJADkKgPyaOTUMMGm1Sdp?=
+ =?us-ascii?Q?G+Xt7lxOKH5visbXUBMVNhtmGxGvITzFA6ulonAS5ZytzgINfnRUbVn4cRym?=
+ =?us-ascii?Q?NdiumOtCWv+AjMeAmjndBAsa7zHPxAzzybX1kQge20t7a5lHRnBKaJKtiQqH?=
+ =?us-ascii?Q?lojrjQpQAXG14/oRQ52YJagEB9nunR4iYDBW/RiNLKZ08gOJUhimOD1nC6I+?=
+ =?us-ascii?Q?Oda7192yRcTn+ib3d5EKpPdH6EsU7pGrNpuI6q/EmZUjCi3eHjHnZhaDhyz1?=
+ =?us-ascii?Q?/8FE4sNpDI2rm0RZqgXheyBjTxYABlupc0qn+WYwckSAY4zY9a8o8rILld6J?=
+ =?us-ascii?Q?Eu+cm041hdyAPLVcoTjhEBhquieAzfTqNZ6tdDfTFK01znZ7Nbp6OMh9zZVC?=
+ =?us-ascii?Q?4QcFEulgQ/SuBlMkbiShhqa7vslBTCleCTzzbVQAbLiBKC8RK4qkveyyQO5M?=
+ =?us-ascii?Q?q6LJbGVDE00Ds/8aonpJ9AlyiTO5njwZMHWBSxPBnP4mEBZQR6siIEL7rLkn?=
+ =?us-ascii?Q?YuEVBpsSp1vTKRCBk40LChL4lP0KT3OPGUITBZEHE+Ln51RnNqywmgud/Os3?=
+ =?us-ascii?Q?9jiTAwFKaCtp5/W8LJ1hRjhMimNiccwdeRuMbQo2lLTv15RRLbVp8K6ki05a?=
+ =?us-ascii?Q?pNXd7CY1HlV2Buu8eJBpWMt6lOGCNfSwNT3vNg1lMJRvKJM6ZRVIs4fhvq4G?=
+ =?us-ascii?Q?IxEgarNkDPn6nec=3D?=
 X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
  IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
  SFS:(13230040)(376014)(1800799024)(36860700013)(82310400026); DIR:OUT;
  SFP:1101; 
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 15:50:20.8217 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ffc041e-0ad8-415d-953a-08dd1f7bad83
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 15:50:41.5648 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: c5a5486c-4cff-46aa-56e0-08dd1f7bb9de
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
  Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD8.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD9.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7347
-Received-SPF: permerror client-ip=2a01:111:f403:2416::625;
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9234
+Received-SPF: permerror client-ip=2a01:111:f403:2412::604;
  envelope-from=Michael.Roth@amd.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
+ helo=NAM10-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -151,53 +151,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Provide a generic mechanism so that users of struct kvm_run's
+'immediate_exit' flag can register a callback that can be issued after
+returning from KVM.
+
 Signed-off-by: Michael Roth <michael.roth@amd.com>
 ---
- linux-headers/linux/kvm.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ accel/kvm/kvm-all.c  | 43 +++++++++++++++++++++++++++++++++++++++++++
+ include/sysemu/kvm.h |  3 +++
+ 2 files changed, 46 insertions(+)
 
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index 3bcd4eabe3..10f6c908d9 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -135,6 +135,12 @@ struct kvm_xen_exit {
- 	} u;
- };
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 801cff16a5..14e98a96e6 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -3080,6 +3080,46 @@ out_unref:
+     return ret;
+ }
  
-+struct kvm_exit_snp_req_certs {
-+	__u64 gfn;
-+	__u32 npages;
-+	__u32 ret;
++typedef struct ImmediateExitEntry ImmediateExitEntry;
++
++struct ImmediateExitEntry {
++    ImmediateExitCb *cb;
++    void *opaque;
++    QTAILQ_ENTRY(ImmediateExitEntry) next;
 +};
 +
- #define KVM_S390_GET_SKEYS_NONE   1
- #define KVM_S390_SKEYS_MAX        1048576
++static QTAILQ_HEAD(, ImmediateExitEntry) immediate_exit_list = \
++    QTAILQ_HEAD_INITIALIZER(immediate_exit_list);
++
++void add_immediate_exit_callback(CPUState *cpu, ImmediateExitCb *cb, void *opaque)
++{
++    ImmediateExitEntry *entry = g_new(ImmediateExitEntry, 1);
++    entry->cb = cb;
++    entry->opaque = opaque;
++
++    bql_lock();
++    QTAILQ_INSERT_TAIL(&immediate_exit_list, entry, next);
++    bql_unlock();
++
++    kvm_cpu_kick(cpu);
++}
++
++static void process_immediate_exit_callbacks(void)
++{
++    ImmediateExitEntry *entry, *tmp;
++
++    bql_lock();
++
++    /* Handle any pending immediate-exit callbacks */
++    QTAILQ_FOREACH_SAFE(entry, &immediate_exit_list, next, tmp) {
++        entry->cb(entry->opaque);
++        QTAILQ_REMOVE(&immediate_exit_list, entry, next);
++        g_free(entry);
++    }
++
++    bql_unlock();
++}
++
+ int kvm_cpu_exec(CPUState *cpu)
+ {
+     struct kvm_run *run = cpu->kvm_run;
+@@ -3149,6 +3189,9 @@ int kvm_cpu_exec(CPUState *cpu)
+             if (run_ret == -EINTR || run_ret == -EAGAIN) {
+                 trace_kvm_io_window_exit();
+                 kvm_eat_signals(cpu);
++                if (kvm_immediate_exit) {
++                    process_immediate_exit_callbacks();
++                }
+                 ret = EXCP_INTERRUPT;
+                 break;
+             }
+diff --git a/include/sysemu/kvm.h b/include/sysemu/kvm.h
+index c3a60b2890..5974645c62 100644
+--- a/include/sysemu/kvm.h
++++ b/include/sysemu/kvm.h
+@@ -578,4 +578,7 @@ int kvm_set_memory_attributes_shared(hwaddr start, uint64_t size);
  
-@@ -178,6 +184,7 @@ struct kvm_xen_exit {
- #define KVM_EXIT_NOTIFY           37
- #define KVM_EXIT_LOONGARCH_IOCSR  38
- #define KVM_EXIT_MEMORY_FAULT     39
-+#define KVM_EXIT_SNP_REQ_CERTS    40
+ int kvm_convert_memory(hwaddr start, hwaddr size, bool to_private);
  
- /* For KVM_EXIT_INTERNAL_ERROR */
- /* Emulate instruction failed. */
-@@ -438,6 +445,8 @@ struct kvm_run {
- 			__u64 gpa;
- 			__u64 size;
- 		} memory_fault;
-+		/* KVM_EXIT_SNP_REQ_CERTS */
-+		struct kvm_exit_snp_req_certs snp_req_certs;
- 		/* Fix the size of the union. */
- 		char padding[256];
- 	};
-@@ -925,6 +934,7 @@ struct kvm_enable_cap {
- #define KVM_CAP_PRE_FAULT_MEMORY 236
- #define KVM_CAP_X86_APIC_BUS_CYCLES_NS 237
- #define KVM_CAP_X86_GUEST_MODE 238
-+#define KVM_CAP_EXIT_SNP_REQ_CERTS 239
- 
- struct kvm_irq_routing_irqchip {
- 	__u32 irqchip;
++typedef void ImmediateExitCb(void *opaque);
++void add_immediate_exit_callback(CPUState *cpu, ImmediateExitCb *cb, void *opaque);
++
+ #endif
 -- 
 2.25.1
 
