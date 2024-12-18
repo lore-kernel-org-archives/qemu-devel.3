@@ -4,90 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4531E77188
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 19:11:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F356E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 19:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNzS8-0005gZ-CA; Wed, 18 Dec 2024 14:11:24 -0500
+	id 1tNzZW-0002x9-9p; Wed, 18 Dec 2024 14:19:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNzS3-0005Z2-U0
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:11:20 -0500
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tNzS1-0007IG-Hb
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 14:11:18 -0500
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-725ee6f56b4so28709b3a.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:11:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734549076; x=1735153876; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TjD0XH5lcQXo8BWMn/mugtch0hAda217TjSow7t/CAs=;
- b=mep7iYH53nyACSYSLChGsHTSqWzhUAOHyiPC2A71h1K68OG+s+SHPeGM3DauCvC/yh
- xQM1asQFSU5z+xTNjgZd6402xAwt/Wn69a8wt/4Dyaq6Rek/U+uIp6wyPXPkj+XZ//Dn
- EPjAtlTnYE18oC8LdhYiyW+D8odGAolAxcPtTrbFcdEse+xBtZk/oqYZtUnF2vjUc4yp
- 1ACfVmqV8+66KlsLoVpB8twm+kZpSDxP0SItpkSAVWIp6198ddCj8vYF+xKmTt9cccqI
- ef1GuwK1VtVwFnvGWyCnrNsgOVH9XwvaKpVCNdnfc//BzniMOjzJoi6E1wDGmBlFgREr
- oYAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734549076; x=1735153876;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TjD0XH5lcQXo8BWMn/mugtch0hAda217TjSow7t/CAs=;
- b=Rdl65f15fVRGfzNGLeHvZK8sDCBlb7y6TNYe12j9neFzHb/kaAw9CAmDbNzIpe4+xe
- GkpRLkMDPVRO4C6OlugnqIIWd9MqUSOHPcjORy+V5hVTLACLqCBALi0cHTOxteU3fz71
- STj8U1RIA8v0rf/1ImAs7uUI5Xvqru/s30CL5PO7icwOgWkmhWT9y/cg4ah8JzikKTk2
- rkcC57HvYkyHW5Hcp/fV+pczV7XMuap38vJeW5AlNm+U8C10Owykh+YNmcmLqftM2j8C
- o/bJHy0bcLtNoKjlIanG2zJkT7Y65FR92NyoOZYq8n6dDLRVnysEjcKTKpbFGAix2McM
- 7+yg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWAe/LCtmAcnSE0SFla/qjrR4klAp8I2QDy0WX1SAx/jsrpDjcdOc40wvEpOdNTWa6GxEBFMHJBSfaj@nongnu.org
-X-Gm-Message-State: AOJu0YwWRQqAbbE0NrjR72gLlqzar++SXemF0+gk8mRAsIy3HH0vfzqc
- h7b+uYxq21jkoVnpD0f5CR5kLWlkW0XJErGi3sjTCrWVZd6o5hkR0cC7zM7Ysdc=
-X-Gm-Gg: ASbGncvhckS5v8C9YHC+vxutAsfneiZVLs5o+Dmw6F+E2QM+C6tZ/n6jRW1f3OsvU8l
- nixO7a7DmnPdIq5djJub5Vgi1D6lON3olD6pcyVHTBy1Nz85d5Ubj+SKtBjiNZSNONLdWyICzvR
- Lya+4vIjv0jihd6XXNLPmsCdCRQNvsEIkrkitaJxlN0zjeAtdaHO1cJX3il6sy2XrmBz5/4Swpk
- mp+NvWAs/xBjCf4DB+xWcpfk4IjZmNhVLMLs2jzPB/i/9ANCjakjGURqRGk6xXJnqnR3g==
-X-Google-Smtp-Source: AGHT+IEJT/rSDJJtfEWe1sy/5Peu2Kzj8quQosPvVsJGofD61oIHfHFZ7ijiLwpWtU2bWgD3zZUAwg==
-X-Received: by 2002:a05:6a00:180b:b0:728:e27c:a9bc with SMTP id
- d2e1a72fcca58-72a8d237723mr4912068b3a.7.1734549075918; 
- Wed, 18 Dec 2024 11:11:15 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72918b78976sm9124284b3a.127.2024.12.18.11.11.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 11:11:15 -0800 (PST)
-Message-ID: <a034248f-77eb-4360-ae37-1f6a748bbce6@linaro.org>
-Date: Wed, 18 Dec 2024 11:11:14 -0800
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tNzZO-0002vh-Dk; Wed, 18 Dec 2024 14:18:54 -0500
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1tNzZM-0001ls-Hi; Wed, 18 Dec 2024 14:18:54 -0500
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 751AB4E603D;
+ Wed, 18 Dec 2024 20:18:45 +0100 (CET)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id VXNnF758QW_b; Wed, 18 Dec 2024 20:18:43 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 2E0A94E602D; Wed, 18 Dec 2024 20:18:43 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 27430746F60;
+ Wed, 18 Dec 2024 20:18:43 +0100 (CET)
+Date: Wed, 18 Dec 2024 20:18:43 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, Harsh Prateek Bora <harshpb@linux.ibm.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, 
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 7/7] hw/ppc/epapr: Do not swap ePAPR magic value
+In-Reply-To: <20241218182106.78800-8-philmd@linaro.org>
+Message-ID: <277eeed4-0467-1529-f52d-2c128d8d46bb@eik.bme.hu>
+References: <20241218182106.78800-1-philmd@linaro.org>
+ <20241218182106.78800-8-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 03/46] tcg/optimize: Add fold_masks_zsa, fold_masks_zs,
- fold_masks_z
-Content-Language: en-US
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-References: <20241210152401.1823648-1-richard.henderson@linaro.org>
- <20241210152401.1823648-4-richard.henderson@linaro.org>
- <f64769f6-ce7e-4502-9ce9-19bb57306752@linaro.org>
- <1b14277a-987e-4f69-b8a1-5a6891ff6fd6@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <1b14277a-987e-4f69-b8a1-5a6891ff6fd6@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1690185780-1734549523=:80922"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,35 +72,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTcvMjQgMTk6MjAsIFJpY2hhcmQgSGVuZGVyc29uIHdyb3RlOg0KPiBPbiAxMi8x
-Ny8yNCAxNDowMywgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+PiArX19hdHRyaWJ1dGVf
-XygodW51c2VkKSkNCj4+PiArc3RhdGljIGJvb2wgZm9sZF9tYXNrc196cyhPcHRDb250ZXh0
-ICpjdHgsIFRDR09wICpvcCwNCj4+PiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDY0X3Qgel9tYXNrLCB1aW50NjRfdCBzX21hc2sp
-DQo+Pj4gK3sNCj4+PiArwqDCoMKgIHJldHVybiBmb2xkX21hc2tzX3pzYShjdHgsIG9wLCB6
-X21hc2ssIHNfbWFzaywgLTEpOw0KPj4+ICt9DQo+Pj4gKw0KPj4+ICtfX2F0dHJpYnV0ZV9f
-KCh1bnVzZWQpKQ0KPj4+ICtzdGF0aWMgYm9vbCBmb2xkX21hc2tzX3ooT3B0Q29udGV4dCAq
-Y3R4LCBUQ0dPcCAqb3AsIHVpbnQ2NF90IHpfbWFzaykNCj4+PiArew0KPj4+ICvCoMKgwqAg
-cmV0dXJuIGZvbGRfbWFza3NfenNhKGN0eCwgb3AsIHpfbWFzaywgc21hc2tfZnJvbV96bWFz
-ayh6X21hc2spLCAtMSk7DQo+Pj4gK30NCj4+PiArDQo+Pj4gK3N0YXRpYyBib29sIGZvbGRf
-bWFza3MoT3B0Q29udGV4dCAqY3R4LCBUQ0dPcCAqb3ApDQo+Pj4gK3sNCj4+PiArwqDCoMKg
-IHJldHVybiBmb2xkX21hc2tzX3pzYShjdHgsIG9wLCBjdHgtPnpfbWFzaywgY3R4LT5zX21h
-c2ssIGN0eC0+YV9tYXNrKTsNCj4+PiArfQ0KPj4+ICsNCj4+PiAgwqAgLyoNCj4+PiAgwqDC
-oCAqIENvbnZlcnQgQG9wIHRvIE5PVCwgaWYgTk9UIGlzIHN1cHBvcnRlZCBieSB0aGUgaG9z
-dC4NCj4+PiAgwqDCoCAqIFJldHVybiB0cnVlIGYgdGhlIGNvbnZlcnNpb24gaXMgc3VjY2Vz
-c2Z1bCwgd2hpY2ggd2lsbCBzdGlsbA0KPj4NCj4+IEkgc2VlIHRoZSBkaXJlY3Rpb24sIGJ1
-dCB3aHkgbm90IHNpbXBseSB1c2UgYSBzdHJ1Y3R1cmUgZm9yIHRoaXM/DQo+Pg0KPj4gSWYg
-SSB1bmRlcnN0YW5kIGNvcnJlY3RseSwgd2UnbGwgb25seSBwYXNzIHRoZSBtYXNrcyB0byBj
-YWxsZWVzLCBzbyBpdCdzIGVhc3kgdG8gcGFzcyB0aGUNCj4+IHBvaW50ZXIgZG93biAod2l0
-aG91dCBhbnkgaGVhcCBhbGxvY2F0aW9uIG5lZWRlZCksIGFuZCB3ZSBjYW4gaGF2ZSBhc3Nv
-Y2lhdGVkIGJ1aWxkZXINCj4+IGZ1bmN0aW9ucyB0byBjcmVhdGUgdGhlIHN0cnVjdCBvbmx5
-IHdpdGggYSBsaW1pdGVkIHNldCBvZiBtYXNrcywgb3IgZGlyZWN0bHkgZnJvbSBhbg0KPj4g
-ZXhpc3RpbmcgImN0eCIuDQo+IA0KPiBXaHkgd291bGQgd2Ugd2FudCB0byB1c2UgYSBzdHJ1
-Y3R1cmU/ICBJJ20gY29uZnVzZWQgYnkgdGhlIHF1ZXN0aW9uLg0KPg0KDQpXaGVuIEkgc3Rh
-cnRlZCByZWFkaW5nIHRoZSBzZXJpZXMsIEkgdGhvdWdodCB3ZSB3b3VsZCBrZWVwIHRoZSBm
-bGFncyBpbiANCmN0eCBzdHJ1Y3R1cmUsIGJ1dCBhZnRlciBmaW5pc2hpbmcgaXQsIEkgdW5k
-ZXJzdG9vZCBiZXR0ZXIgd2hhdCB3YXMgdGhlIA0KaW50ZW50aW9uLg0KDQpUaGF0IHNhaWQs
-IGl0J3MganVzdCBhIG1hdHRlciBvZiBwcmVmZXJlbmNlLCBiZXR3ZWVuIGhhdmluZyBpbmRp
-dmlkdWFsIA0KdmFyaWFibGVzIG9yIGhhdmluZyBhIHN0cnVjdCBjb250YWluaW5nIHRoZW0s
-IHdpdGggZnVuY3Rpb25zIHRvIG9wZXJhdGUgDQpvbiBpdC4NCg0KPiANCj4gcn4NCg0K
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--3866299591-1690185780-1734549523=:80922
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Wed, 18 Dec 2024, Philippe Mathieu-Daudé wrote:
+> The ePAPR magic value in $r6 doesn't need to be byte swapped.
+>
+> See ePAPR-v1.1.pdf chapter 5.4.1 "Boot CPU Initial Register State"
+> and the following mailing-list thread:
+> https://lore.kernel.org/qemu-devel/CAFEAcA_NR4XW5DNL4nq7vnH4XRH5UWbhQCxuLyKqYk6_FCBrAA@mail.gmail.com/
+>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> hw/ppc/sam460ex.c     | 2 +-
+> hw/ppc/virtex_ml507.c | 2 +-
+> 2 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
+> index 78e2a46e753..db9c8f3fa6e 100644
+> --- a/hw/ppc/sam460ex.c
+> +++ b/hw/ppc/sam460ex.c
+> @@ -234,7 +234,7 @@ static void main_cpu_reset(void *opaque)
+>
+>         /* Create a mapping for the kernel.  */
+>         booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1 << 31);
+> -        env->gpr[6] = tswap32(EPAPR_MAGIC);
+> +        env->gpr[6] = EPAPR_MAGIC;
+
+I don't know how to test this (or if anything actually uses it). What I'm 
+not sure about is what endianness env->gpr is? It's a host array so maybe 
+it needs to match the host endianness which is little endian most of the 
+time as opposed to PPC big endian on this machine. So maybe tswap is wrong 
+but is removing it right? Maybe we need to only swap on LE hosts. I think 
+it's only used by Linux kernels so maybe trying to boot one could test 
+this change but I'm not sure.
+
+Regards,
+BALATON Zoltan
+
+>         env->gpr[7] = (16 * MiB) - 8; /* bi->ima_size; */
+>
+>     } else {
+> diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
+> index f378e5c4a90..6197d31d88f 100644
+> --- a/hw/ppc/virtex_ml507.c
+> +++ b/hw/ppc/virtex_ml507.c
+> @@ -119,7 +119,7 @@ static void main_cpu_reset(void *opaque)
+>     /* Create a mapping spanning the 32bit addr space. */
+>     booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1U << 31);
+>     booke_set_tlb(&env->tlb.tlbe[1], 0x80000000, 0x80000000, 1U << 31);
+> -    env->gpr[6] = tswap32(EPAPR_MAGIC);
+> +    env->gpr[6] = EPAPR_MAGIC;
+>     env->gpr[7] = bi->ima_size;
+> }
+>
+>
+--3866299591-1690185780-1734549523=:80922--
 
