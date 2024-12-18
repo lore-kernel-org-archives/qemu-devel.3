@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0506E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:44:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F354CE77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 13:45:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNuKy-0001px-Pt; Wed, 18 Dec 2024 08:43:41 -0500
+	id 1tNuKT-0001Iy-9f; Wed, 18 Dec 2024 08:43:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKW-0001Jz-Vk
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:14 -0500
-Received: from mail-oi1-x235.google.com ([2607:f8b0:4864:20::235])
+ id 1tNuKQ-0001HU-Vq
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:06 -0500
+Received: from mail-ot1-x32f.google.com ([2607:f8b0:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tNuKV-0005fm-9B
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:12 -0500
-Received: by mail-oi1-x235.google.com with SMTP id
- 5614622812f47-3eb8559b6b0so3467274b6e.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:43:09 -0800 (PST)
+ id 1tNuKJ-0005dm-7X
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 08:43:06 -0500
+Received: by mail-ot1-x32f.google.com with SMTP id
+ 46e09a7af769-71e1b1767b3so3251443a34.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 05:42:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734529389; x=1735134189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734529378; x=1735134178; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=75drLZGsEas3R26qUilFhzjUTWE9A4kYs2fwKy7AL8A=;
- b=AwkRJOHoAFgP2GrNCgajlmRk13RVaQ4n6URUqddACxMnhxiBJJDkZmgiYccU3Ht95I
- xiCZB0TH9L6fa0StitCK5Ubl25RCbOEyKRrObBtdDJs9KfstoypsHEKD8puQcPs+1PAn
- wdOluwow4J+lJBPO102NWLhb0LQVLKwSV/JUcpN4fx1YK28lQReGQGPbIhDXYx7OTYWW
- TUBbechVrlr61MkV+OBGFqj0hdCtGu3mahk4Z9PjO1743rlpvf2ZY813ad6IxmfiCHY2
- wd54u0DV8TR3cdQQJZTtxJkZFKf1IljQbylxdBorFpkIlcLTgRSzAKAXeKsshUIA5m5h
- wE8Q==
+ bh=zNGor91Xjo2TrZjyvRxbPbQsjTfqqtcCX9NnnDYkm1I=;
+ b=sAUU+ZVzLAjJF5QOnlLmA1e/gzRdTAqpQQ3iNGJ8svoh5cL308gW0/BEHus8dnEbjf
+ wG6waJItVtzTMUqWi5weKKZtdfBhxmf0AQ58+A4QXlgMx+oQ369n7aOd1x6Yq9Ylswa4
+ TWVAPTQmzXH7kXaHwIS4M6tKCQkr6feoYi06BGdf7e/VkpXGshqvF5j+GGAYMedGYIF8
+ fBiJF2Xjw0WosIsRTUTEPsSHj0vfl8ONGjt09+JC5aNexdIQE3eZGKseJBCuy9Cnrfep
+ 1Cln9M8k9g9UfwpANIibdhfa8uVKNNOKBZsp2kZ7byDNrqRHXujH7i27WKcbCiBCqKU/
+ KtxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734529389; x=1735134189;
+ d=1e100.net; s=20230601; t=1734529378; x=1735134178;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=75drLZGsEas3R26qUilFhzjUTWE9A4kYs2fwKy7AL8A=;
- b=IQaT1SoViemqgWpEHw/Uf7yR2HmTq5QozO8Jh/mXLbAc8duXfc/BCg5mlyydl+Fx4z
- 2eOBvtBgMvdcferqpkB1rOb2WPI6GfM0AXsDTk3eR7neQcOXcUsDu+z61aInbBnxBaiy
- HDUXo8/1v7Uztbno8QQzrkZvy4Ty2C8wEr51JtFoO+id8keI4t708s1oGXgx4I4hy166
- wZqQXWBWsihuXBSQ9v1RA8y0uAYwC8e1fxBfl3aXrUxGId+auBHdfDJVQTKa2Hpa56jG
- m43zq4PhBqilT0n+froSKjznK72mvMd78Fum5pwe3uncrYC/KuwRea9t92l2k6CLuJxS
- 8LIA==
-X-Gm-Message-State: AOJu0YxVHMNnw2AGQBOeOOI4yBkybbKwGK/d+ReLvjCewbKXZ4BYUfXK
- y8/2Lw/l4CIyiHEL/coTv0dn9ICXpmz7LWY03PKNmCkZNr5+AcmoHQj9M2B417VwFeu55qh8TKB
- uTupzEUuG
-X-Gm-Gg: ASbGncsHwjxNYj1894HEWzof6v/9xZ744aUz5xbPmKH6PDIpgtpmd9qEN78oI1SIzT/
- 0EpGZUa1mR3n+b0UrcyDxwUfLlHnIq0/jTjEleDpxqfA87hwpjR5jPbYPG5+m7ZI7/IyRpw4yyw
- ZPjQnU5qdcXSUiaKfAZJKobeXoOKRdQF1JX0y/bSp7XGWTfNM+5foCXgauKvry2OU/oU3y6IoGx
- M91+AMORsG/QALkD6OgOC4RpzogoM5mR8smrplY3ST0wty11wsdc0AnBsKuqjWN
-X-Google-Smtp-Source: AGHT+IH+pNMHzlwR8/iERwkER0vN33G2F8JwHdsG26t4pLM/9eeeF2X8zV/RGBCltOtEf01BlUwvuA==
-X-Received: by 2002:a05:6808:2220:b0:3e7:a201:dc31 with SMTP id
- 5614622812f47-3eccbf9aed6mr1893871b6e.23.1734529389280; 
- Wed, 18 Dec 2024 05:43:09 -0800 (PST)
+ bh=zNGor91Xjo2TrZjyvRxbPbQsjTfqqtcCX9NnnDYkm1I=;
+ b=gs+t+FMdvXh5kIJWpa/QKwIMlyZQpS3nICfjB4exu/bHZytUWbn/TafkQbBeHf6sXu
+ h29OmJugvLFXP/eoTTHmY42QZ/CD3Ac3Zv9MimebIoMDESpidc+d8jGE0u9Vf81OGbas
+ rjQW0mx7XjszH/1Sn4za0plTPf6t/FFht449vYZ4MG3aPxXvt9CNhtqYJMwiqK+1NCcH
+ 8hwH7HzN322nGRIGQ/XCjlxy4KzdvdEXYQl7sTbScAvbVVLKlnPzoEBEBYvHnSN/ypS4
+ 2ozerszzwnOTM/TUT+FnGG7qFRdfiUZ1gZKRg6m9eLoCM3TJtya9RWMSCnDqUSK10U3C
+ EGCg==
+X-Gm-Message-State: AOJu0YyGdCio6C4l7V3F+5pMaGMyt7SNtOR0sqSjT1TSsi2ubrjFV1jL
+ abW/G3A4z4c770Nsrn3Cq/PBoYEfVWIHWFEPVemFOHZ4XjsINCosDPpxsvwC8sXz0MfnMs+98bW
+ T8HW3Y3RT
+X-Gm-Gg: ASbGncuwpXlrhp3cF6IJdZLPN63TOjUdcqbwpO6v1Okl6OScgAQYi95TKDpGCSpkS3l
+ 3SwsW7EX8X7Riu5tUwa9W96F6VsVtdcTMtsGn22gqY5lTUFAATORgnAaqwi4XE0CqHaPZZlsoAl
+ TXKKxZBLJrng7Zsy6x3PIwZZb1FvsXu01Iz9E1L44+VirFSvSgtgL1JogsdTrh9nqQ41WQYLHrC
+ KYDsJFlwU8m7NAOU/SWi/H4BLrLhbPFfoWbsOmegiNDS9Y2lgv+TPNHacnUwIdO
+X-Google-Smtp-Source: AGHT+IE0BnyQT4GcKPLlMeBBxHPrIQvgpbbGzj75GFH7ZcRy+UqmTPOfZ+NJrqre06m5sLovv6PmRA==
+X-Received: by 2002:a05:6808:4441:b0:3e7:b2b4:ee7a with SMTP id
+ 5614622812f47-3eccc09c9b8mr2100634b6e.26.1734529377767; 
+ Wed, 18 Dec 2024 05:42:57 -0800 (PST)
 Received: from stoup.. ([187.217.227.247]) by smtp.gmail.com with ESMTPSA id
- 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.43.08
+ 5614622812f47-3ebb478a502sm2870951b6e.9.2024.12.18.05.42.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 05:43:08 -0800 (PST)
+ Wed, 18 Dec 2024 05:42:57 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com
-Subject: [PATCH v2 11/24] hw/virtio: Remove empty Property lists
-Date: Wed, 18 Dec 2024 07:42:38 -0600
-Message-ID: <20241218134251.4724-12-richard.henderson@linaro.org>
+Cc: pbonzini@redhat.com,
+	Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PATCH v2 03/24] target/ppc: Remove empty property list
+Date: Wed, 18 Dec 2024 07:42:30 -0600
+Message-ID: <20241218134251.4724-4-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20241218134251.4724-1-richard.henderson@linaro.org>
 References: <20241218134251.4724-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::235;
- envelope-from=richard.henderson@linaro.org; helo=mail-oi1-x235.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::32f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-ot1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,58 +98,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- hw/virtio/vdpa-dev-pci.c       | 5 -----
- hw/virtio/vhost-user-snd-pci.c | 5 -----
- 2 files changed, 10 deletions(-)
+ target/ppc/cpu_init.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/hw/virtio/vdpa-dev-pci.c b/hw/virtio/vdpa-dev-pci.c
-index 5446e6b393..787926801a 100644
---- a/hw/virtio/vdpa-dev-pci.c
-+++ b/hw/virtio/vdpa-dev-pci.c
-@@ -48,10 +48,6 @@ static void vhost_vdpa_device_pci_instance_init(Object *obj)
-                               "bootindex");
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1253dbf622..5e95790def 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7414,11 +7414,6 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+ #endif
  }
  
--static Property vhost_vdpa_device_pci_properties[] = {
+-static Property ppc_cpu_properties[] = {
+-    /* add default property here */
 -    DEFINE_PROP_END_OF_LIST(),
 -};
 -
- static int vhost_vdpa_device_pci_post_init(VhostVdpaDevice *v, Error **errp)
- {
-     VhostVdpaDevicePCI *dev = container_of(v, VhostVdpaDevicePCI, vdev);
-@@ -80,7 +76,6 @@ static void vhost_vdpa_device_pci_class_init(ObjectClass *klass, void *data)
-     VirtioPCIClass *k = VIRTIO_PCI_CLASS(klass);
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
  
-     set_bit(DEVICE_CATEGORY_MISC, dc->categories);
--    device_class_set_props(dc, vhost_vdpa_device_pci_properties);
-     k->realize = vhost_vdpa_device_pci_realize;
- }
+@@ -7468,7 +7463,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+     device_class_set_parent_unrealize(dc, ppc_cpu_unrealize,
+                                       &pcc->parent_unrealize);
+     pcc->pvr_match = ppc_pvr_match_default;
+-    device_class_set_props(dc, ppc_cpu_properties);
  
-diff --git a/hw/virtio/vhost-user-snd-pci.c b/hw/virtio/vhost-user-snd-pci.c
-index d61cfdae63..0cb86b7d85 100644
---- a/hw/virtio/vhost-user-snd-pci.c
-+++ b/hw/virtio/vhost-user-snd-pci.c
-@@ -23,10 +23,6 @@ typedef struct VHostUserSoundPCI VHostUserSoundPCI;
- DECLARE_INSTANCE_CHECKER(VHostUserSoundPCI, VHOST_USER_SND_PCI,
-                          TYPE_VHOST_USER_SND_PCI)
- 
--static Property vhost_user_snd_pci_properties[] = {
--    DEFINE_PROP_END_OF_LIST(),
--};
--
- static void vhost_user_snd_pci_realize(VirtIOPCIProxy *vpci_dev, Error **errp)
- {
-     VHostUserSoundPCI *dev = VHOST_USER_SND_PCI(vpci_dev);
-@@ -44,7 +40,6 @@ static void vhost_user_snd_pci_class_init(ObjectClass *klass, void *data)
-     PCIDeviceClass *pcidev_k = PCI_DEVICE_CLASS(klass);
-     k->realize = vhost_user_snd_pci_realize;
-     set_bit(DEVICE_CATEGORY_SOUND, dc->categories);
--    device_class_set_props(dc, vhost_user_snd_pci_properties);
-     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
-     pcidev_k->device_id = 0; /* Set by virtio-pci based on virtio id */
-     pcidev_k->revision = 0x00;
+     resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
+                                        &pcc->parent_phases);
 -- 
 2.43.0
 
