@@ -4,81 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86041E77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:10:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1E07E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 21:43:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO1Ip-0004qT-3d; Wed, 18 Dec 2024 16:09:55 -0500
+	id 1tO1oo-0002VF-JZ; Wed, 18 Dec 2024 16:42:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tO1Im-0004nd-BZ
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:09:52 -0500
-Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1tO1Ik-0005pA-F7
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:09:52 -0500
-Received: by mail-ed1-x529.google.com with SMTP id
- 4fb4d7f45d1cf-5d3e9a88793so113141a12.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 13:09:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734556188; x=1735160988; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xUa/Lipn/tg7d+VNJwdnQrVC6z+81dvheJ3nA/tND8Q=;
- b=cq5jyqNuIAVpdBmJTvu57F6jyjI+afZDe8z/uycHhWcFjCrww9SLc84XhYmW2XQJlQ
- 6exErE18E+bIGiqtRYWW82CadFwA2KjijMf58NLQs69dLnurGjDyBTpZMeZ1IoI/T0pu
- Ec0C5JZigLnpws6WSf1uQ1+TAYWi9AAyayJBRtQ9LKVFN7AIuUUybpYVV4fo5+q3tPtF
- 2yWjnT0XtyRFB1MgchQLCl+u9671fXOlP6V8sbws9rKThumZXRAlzXcx/vYgGG5FgQ3/
- DUFw4ZsjB9ypRKMg16G6RlBF9TBdxBUSAFuaKgaVPZ/YU86RL2PZcTV+CG9EH89g+T/5
- xmYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734556188; x=1735160988;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xUa/Lipn/tg7d+VNJwdnQrVC6z+81dvheJ3nA/tND8Q=;
- b=k+KXOldlWy+5R6atwtQIoQd4fmdcNngd7CW3cqyamsgDgetfi5agHhku2H9o6DENj+
- jWgODau+tsp2q7hwZnXwz4lgeXXE7i7AO4FRDUYbejM0eVWKVWa8flETeQjDXZ4BtG7k
- y2Y17VoUSRwpyx4qcZSLf0bPERs3TK84sZcpFK2A02reiSGJw63Yn89RJTwJ0yWH0CzC
- fUzK5xSt9no68FFZr5BawtjbxPEqhcT6umz6mtdJlmsGi0a+cfsZsKc8IzczJImhR2rY
- euDNQsudp/tO32mzsGyvoLqajp/mPBjb4gSeOklmY0pEXp5UrCe+UFKTc8lrepQgznxz
- JLZw==
-X-Gm-Message-State: AOJu0YyJhbg8+D6KFFv+o5QONCU6dDhKr1K5zBYg2fvcQEZyFjlSXRTK
- UwUPSiwuYxxTx8XDIUUzuYx4VmiEMZTUJJM5J/Jv0r4wHeKWxmLOZ5QlzzNVNmHRpVIIzRt7OFU
- K8xV0wAb9fUPagEcWwJL9qrb/1I4=
-X-Gm-Gg: ASbGnctsWH9qFMltHhJSag2lkqEc385araSFW8lcTzZH05aUTWb0zvyn7s9SkGuRAer
- PfV8UmE06WPEoLptRsBTIMAp9G7ZD/TZZJfGW
-X-Google-Smtp-Source: AGHT+IGFO+VeMedL+P4E/Eg//MJIAu71juokDJsngoxJqQuYQP/0BOSt88dGVk0nyGewWGzOg9t2IhbGDQ+cLUTVE9M=
-X-Received: by 2002:a05:6402:2345:b0:5d3:ce7f:ac05 with SMTP id
- 4fb4d7f45d1cf-5d802669266mr647260a12.31.1734556187494; Wed, 18 Dec 2024
- 13:09:47 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tO1om-0002Uw-Lc
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:42:56 -0500
+Received: from casper.infradead.org ([2001:8b0:10b:1236::1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org>)
+ id 1tO1ok-0007gz-Gg
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 16:42:56 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=casper.20170209; h=MIME-Version:Content-Type:References:
+ In-Reply-To:Date:Cc:To:From:Subject:Message-ID:Sender:Reply-To:
+ Content-Transfer-Encoding:Content-ID:Content-Description;
+ bh=MLHwjOh2kJr3l7z/tZbLRrjxhDbkdCNJYCokqE9rnbU=; b=Wo8dzOhz1tGpRa52DQZ8j+wfy5
+ Oze+qrzTKfDLJFX0Y6qlpKs/sv2/PS5u4Fz9/6X5o3vVZoNswWHwA5SErHFFd/AG6BJE7y9HGhcE0
+ GT7c9vsr2cMqKmYib+H24QoCjgeVsZU6M4B/Fp9UKBt4QeWlzljSs1w0kpCQI67IYiq07kuX/RO9X
+ dAuCqdt9u5jrVM5PRMViKJ6HJwqbQ7Oompv0ArE8ji3Ycp0pvz1+ZoEOsuTUslI2D9ahC/vxUVlZl
+ /9TDIigPZldr6O+UPUbRUlzBTlj2GlPEoUbp+iZ+rWV3BjkKpQKxmIUJnYlRoH/+ZtXmH5hU70sZ2
+ AFmPIYiQ==;
+Received: from [54.239.6.189] (helo=u09cd745991455d.ant.amazon.com)
+ by casper.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tO1oe-00000000h2o-1AC7; Wed, 18 Dec 2024 21:42:49 +0000
+Message-ID: <999a8203f0c800f1305aacdb500dbf6038ebf147.camel@infradead.org>
+Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+From: David Woodhouse <dwmw2@infradead.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+Cc: Paul Durrant <paul@xen.org>
+Date: Wed, 18 Dec 2024 22:42:47 +0100
+In-Reply-To: <f987b60d-9e73-4f6a-ae48-857f7af6cddc@redhat.com>
+References: <20241218113255.232356-1-thuth@redhat.com>
+ <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
+ <31e85f4d-66f2-4790-8597-f43e291bcbea@redhat.com>
+ <61cadf31-8656-4216-a345-e364bb85e45b@redhat.com>
+ <44c87114343dc57b248ff0f86e5f4e0683533efb.camel@infradead.org>
+ <f987b60d-9e73-4f6a-ae48-857f7af6cddc@redhat.com>
+Content-Type: multipart/signed; micalg="sha-256";
+ protocol="application/pkcs7-signature"; 
+ boundary="=-zk2MzP/ok9aNDKFhaluL"
+User-Agent: Evolution 3.52.3-0ubuntu1 
 MIME-Version: 1.0
-References: <20241218105303.1966303-1-david@redhat.com>
-In-Reply-To: <20241218105303.1966303-1-david@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 18 Dec 2024 16:09:35 -0500
-Message-ID: <CAJSP0QUoerckBWX=0PD_82jFwVbmtvftWf5QqSWxpK0Ttc+uvQ@mail.gmail.com>
-Subject: Re: [PULL 00/15] Host Memory Backends and Memory devices queue
- 2024-12-18
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>, 
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::529;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ casper.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1236::1;
+ envelope-from=BATV+c0487ad289ff35856000+7787+infradead.org+dwmw2@casper.srs.infradead.org;
+ helo=casper.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,98 +80,195 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Dec 2024 at 05:55, David Hildenbrand <david@redhat.com> wrote:
->
-> The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
->
->   Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
->
-> are available in the Git repository at:
->
->   https://github.com/davidhildenbrand/qemu.git tags/mem-2024-12-18
->
-> for you to fetch changes up to eb5c5f1ab479e9311d8e513e3eeafaf30f2b25b3:
->
->   s390x: virtio-mem support (2024-12-18 09:50:05 +0100)
->
-> ----------------------------------------------------------------
-> Hi,
->
-> "Host Memory Backends" and "Memory devices" queue ("mem"):
-> - Fixup handling of virtio-mem unplug during system resets, as
->   preparation for s390x support (especially kdump in the Linux guest)
-> - virtio-mem support for s390x
->
-> ----------------------------------------------------------------
-> David Hildenbrand (15):
->       virtio-mem: unplug memory only during system resets, not device resets
->       s390x/s390-virtio-ccw: don't crash on weird RAM sizes
->       s390x/s390-virtio-hcall: remove hypercall registration mechanism
->       s390x/s390-virtio-hcall: prepare for more diag500 hypercalls
->       s390x: rename s390-virtio-hcall* to s390-hypercall*
->       s390x/s390-virtio-ccw: move setting the maximum guest size from sclp to machine code
->       s390x: introduce s390_get_memory_limit()
->       s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT
->       s390x/s390-stattrib-kvm: prepare for memory devices and sparse memory layouts
->       s390x/s390-skeys: prepare for memory devices
->       s390x/s390-virtio-ccw: prepare for memory devices
->       s390x/pv: prepare for memory devices
->       s390x: remember the maximum page size
->       s390x/virtio-ccw: add support for virtio based memory devices
->       s390x: virtio-mem support
 
-Please take a look at the following s390x-related CI failures:
+--=-zk2MzP/ok9aNDKFhaluL
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972861
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972809
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972809
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972912
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972894
-https://gitlab.com/qemu-project/qemu/-/jobs/8679972931
+On Wed, 2024-12-18 at 17:19 +0100, Thomas Huth wrote:
+> On 18/12/2024 15.11, David Woodhouse wrote:
+> > On Wed, 2024-12-18 at 14:38 +0100, Thomas Huth wrote:
+> ...
+> > > But FWIW, there seems to be another issue with this test. While runni=
+ng it
+> > > multiple times, I sometimes see test_kvm_xen_guest_novector_noapic ha=
+nging.
+> > > According to the console output, the guest waits in vain for a device=
+:
+> > >=20
+> > > 2024-12-18 14:32:58,606: Initializing XFRM netlink socket
+> > > 2024-12-18 14:32:58,607: NET: Registered PF_INET6 protocol family
+> > > 2024-12-18 14:32:58,609: Segment Routing with IPv6
+> > > 2024-12-18 14:32:58,609: In-situ OAM (IOAM) with IPv6
+> > > 2024-12-18 14:32:58,610: NET: Registered PF_PACKET protocol family
+> > > 2024-12-18 14:32:58,610: 8021q: 802.1Q VLAN Support v1.8
+> > > 2024-12-18 14:32:58,611: 9pnet: Installing 9P2000 support
+> > > 2024-12-18 14:32:58,613: NET: Registered PF_VSOCK protocol family
+> > > 2024-12-18 14:32:58,614: IPI shorthand broadcast: enabled
+> > > 2024-12-18 14:32:58,619: sched_clock: Marking stable (551147059, -677=
+8955)->(590359530, -45991426)
+> > > 2024-12-18 14:32:59,507: tsc: Refined TSC clocksource calibration: 24=
+95.952 MHz
+> > > 2024-12-18 14:32:59,508: clocksource: tsc: mask: 0xffffffffffffffff m=
+ax_cycles: 0x23fa49fc138, max_idle_ns: 440795295059 ns
+> > > 2024-12-18 14:32:59,509: clocksource: Switched to clocksource tsc
+> > > 2024-12-18 14:33:28,667: xenbus_probe_frontend: Waiting for devices t=
+o initialise: 25s...20s...15s...10s...5s...0s...
+> > >=20
+> > > Have you seen this problem before?
+> >=20
+> > That seems like event channel interrupts aren't being routed to the
+> > legacy i8259 PIC. I've certainly seen that kind of thing before,
+> > especially when asserted level-triggered interrupts weren't correctly
+> > being asserted. But I don't expect that of QEMU. I'll see if I can
+> > reproduce; thanks.
+> >=20
+> > How often does it happen?
+>=20
+> With the new functional test, it happens maybe 2 times out of 100 test ru=
+ns.
+>=20
+> I wasn't able to reproduce it with the avocado version yet, but that also=
+=20
+> runs 10x slower, so it takes a longer time to get to that many runs...
 
-If you find that this pull request caused the issue, please send a new
-revision of the pull request. Thanks!
+I can reproduce it probably about one in ten attempts.
 
-Stefan
+It seems like it's because of the way QEMU handles shared level-
+triggered interrupts.
 
->
->  MAINTAINERS                        |   5 +
->  hw/s390x/Kconfig                   |   1 +
->  hw/s390x/meson.build               |   6 +-
->  hw/s390x/s390-hypercall.c          |  85 ++++++++++++++
->  hw/s390x/s390-hypercall.h          |  25 ++++
->  hw/s390x/s390-skeys.c              |   6 +-
->  hw/s390x/s390-stattrib-kvm.c       |  67 +++++++----
->  hw/s390x/s390-virtio-ccw.c         | 165 ++++++++++++++++++---------
->  hw/s390x/s390-virtio-hcall.c       |  41 -------
->  hw/s390x/s390-virtio-hcall.h       |  25 ----
->  hw/s390x/sclp.c                    |  17 +--
->  hw/s390x/virtio-ccw-md-stubs.c     |  24 ++++
->  hw/s390x/virtio-ccw-md.c           | 153 +++++++++++++++++++++++++
->  hw/s390x/virtio-ccw-md.h           |  44 ++++++++
->  hw/s390x/virtio-ccw-mem.c          | 226 +++++++++++++++++++++++++++++++++++++
->  hw/s390x/virtio-ccw-mem.h          |  34 ++++++
->  hw/virtio/Kconfig                  |   1 +
->  hw/virtio/virtio-mem.c             | 107 ++++++++++++------
->  include/hw/s390x/s390-virtio-ccw.h |   4 +
->  include/hw/virtio/virtio-mem.h     |  13 ++-
->  target/s390x/cpu-sysemu.c          |  15 ---
->  target/s390x/cpu.h                 |   2 -
->  target/s390x/kvm/kvm.c             |  18 +--
->  target/s390x/kvm/pv.c              |   2 +-
->  target/s390x/tcg/misc_helper.c     |   7 +-
->  25 files changed, 866 insertions(+), 227 deletions(-)
->  create mode 100644 hw/s390x/s390-hypercall.c
->  create mode 100644 hw/s390x/s390-hypercall.h
->  delete mode 100644 hw/s390x/s390-virtio-hcall.c
->  delete mode 100644 hw/s390x/s390-virtio-hcall.h
->  create mode 100644 hw/s390x/virtio-ccw-md-stubs.c
->  create mode 100644 hw/s390x/virtio-ccw-md.c
->  create mode 100644 hw/s390x/virtio-ccw-md.h
->  create mode 100644 hw/s390x/virtio-ccw-mem.c
->  create mode 100644 hw/s390x/virtio-ccw-mem.h
-> --
-> 2.47.1
->
->
+We kind of work around it with PCI INTx demultiplexing, but the Xen
+guest explicitly asks for the interrupt to be delivered to INT10. So it
+asserts INT10, then I suspect something on the PCI deasserts it, and
+the Xen interrupt is lost.
+
+The guest configures the Xen event channel IRQ to be delivered on
+IRQ10, but IRQ10 is *also* a PCI INTX of some device. So if the PCI
+device *clears* IRQ10 at the wrong moment, we miss a Xen interrupt...
+which means we end up waiting for ever.
+
+We *really* ought to do this with a callback when the interrupt is
+acked in the PIC/IOAPIC, and any interrupt source which wants it to be
+still asserted can reassert it from that callback, which is precisely
+how the vfio eventfd 'resampler' works. Or *should* work, if QEMU was
+actually capable of working that way.
+
+I'll see if I can come up with a workaround... or whether I fall into
+the rabbithole of fixing the overall level interrupt stuff.
+
+
+
+--=-zk2MzP/ok9aNDKFhaluL
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Transfer-Encoding: base64
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExDzANBglghkgBZQMEAgEFADCABgkqhkiG9w0BBwEAAKCCEkQw
+ggYQMIID+KADAgECAhBNlCwQ1DvglAnFgS06KwZPMA0GCSqGSIb3DQEBDAUAMIGIMQswCQYDVQQG
+EwJVUzETMBEGA1UECBMKTmV3IEplcnNleTEUMBIGA1UEBxMLSmVyc2V5IENpdHkxHjAcBgNVBAoT
+FVRoZSBVU0VSVFJVU1QgTmV0d29yazEuMCwGA1UEAxMlVVNFUlRydXN0IFJTQSBDZXJ0aWZpY2F0
+aW9uIEF1dGhvcml0eTAeFw0xODExMDIwMDAwMDBaFw0zMDEyMzEyMzU5NTlaMIGWMQswCQYDVQQG
+EwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYD
+VQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50
+aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKC
+AQEAyjztlApB/975Rrno1jvm2pK/KxBOqhq8gr2+JhwpKirSzZxQgT9tlC7zl6hn1fXjSo5MqXUf
+ItMltrMaXqcESJuK8dtK56NCSrq4iDKaKq9NxOXFmqXX2zN8HHGjQ2b2Xv0v1L5Nk1MQPKA19xeW
+QcpGEGFUUd0kN+oHox+L9aV1rjfNiCj3bJk6kJaOPabPi2503nn/ITX5e8WfPnGw4VuZ79Khj1YB
+rf24k5Ee1sLTHsLtpiK9OjG4iQRBdq6Z/TlVx/hGAez5h36bBJMxqdHLpdwIUkTqT8se3ed0PewD
+ch/8kHPo5fZl5u1B0ecpq/sDN/5sCG52Ds+QU5O5EwIDAQABo4IBZDCCAWAwHwYDVR0jBBgwFoAU
+U3m/WqorSs9UgOHYm8Cd8rIDZsswHQYDVR0OBBYEFAnA8vwL2pTbX/4r36iZQs/J4K0AMA4GA1Ud
+DwEB/wQEAwIBhjASBgNVHRMBAf8ECDAGAQH/AgEAMB0GA1UdJQQWMBQGCCsGAQUFBwMCBggrBgEF
+BQcDBDARBgNVHSAECjAIMAYGBFUdIAAwUAYDVR0fBEkwRzBFoEOgQYY/aHR0cDovL2NybC51c2Vy
+dHJ1c3QuY29tL1VTRVJUcnVzdFJTQUNlcnRpZmljYXRpb25BdXRob3JpdHkuY3JsMHYGCCsGAQUF
+BwEBBGowaDA/BggrBgEFBQcwAoYzaHR0cDovL2NydC51c2VydHJ1c3QuY29tL1VTRVJUcnVzdFJT
+QUFkZFRydXN0Q0EuY3J0MCUGCCsGAQUFBzABhhlodHRwOi8vb2NzcC51c2VydHJ1c3QuY29tMA0G
+CSqGSIb3DQEBDAUAA4ICAQBBRHUAqznCFfXejpVtMnFojADdF9d6HBA4kMjjsb0XMZHztuOCtKF+
+xswhh2GqkW5JQrM8zVlU+A2VP72Ky2nlRA1GwmIPgou74TZ/XTarHG8zdMSgaDrkVYzz1g3nIVO9
+IHk96VwsacIvBF8JfqIs+8aWH2PfSUrNxP6Ys7U0sZYx4rXD6+cqFq/ZW5BUfClN/rhk2ddQXyn7
+kkmka2RQb9d90nmNHdgKrwfQ49mQ2hWQNDkJJIXwKjYA6VUR/fZUFeCUisdDe/0ABLTI+jheXUV1
+eoYV7lNwNBKpeHdNuO6Aacb533JlfeUHxvBz9OfYWUiXu09sMAviM11Q0DuMZ5760CdO2VnpsXP4
+KxaYIhvqPqUMWqRdWyn7crItNkZeroXaecG03i3mM7dkiPaCkgocBg0EBYsbZDZ8bsG3a08LwEsL
+1Ygz3SBsyECa0waq4hOf/Z85F2w2ZpXfP+w8q4ifwO90SGZZV+HR/Jh6rEaVPDRF/CEGVqR1hiuQ
+OZ1YL5ezMTX0ZSLwrymUE0pwi/KDaiYB15uswgeIAcA6JzPFf9pLkAFFWs1QNyN++niFhsM47qod
+x/PL+5jR87myx5uYdBEQkkDc+lKB1Wct6ucXqm2EmsaQ0M95QjTmy+rDWjkDYdw3Ms6mSWE3Bn7i
+5ZgtwCLXgAIe5W8mybM2JzCCBhQwggT8oAMCAQICEQDGvhmWZ0DEAx0oURL6O6l+MA0GCSqGSIb3
+DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVyMRAwDgYD
+VQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNlY3RpZ28g
+UlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBMB4XDTIyMDEwNzAw
+MDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJARYTZHdtdzJAaW5mcmFkZWFkLm9y
+ZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3GpC2bomUqk+91wLYBzDMcCj5C9m6
+oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZHh7htyAkWYVoFsFPrwHounto8xTsy
+SSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT9YgcBqKCo65pTFmOnR/VVbjJk4K2
+xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNjP+qDrh0db7PAjO1D4d5ftfrsf+kd
+RR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy2U+eITZ5LLE5s45mX2oPFknWqxBo
+bQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3BgBEmfsYWlBXO8rVXfvPgLs32VdV
+NZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/7auNVRmPB3v5SWEsH8xi4Bez2V9U
+KxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmdlFYhAflWKQ03Ufiu8t3iBE3VJbc2
+5oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9aelIl6vtbhMA+l0nfrsORMa4kobqQ5
+C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMBAAGjggHMMIIByDAfBgNVHSMEGDAW
+gBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeDMcimo0oz8o1R1Nver3ZVpSkwDgYD
+VR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYwFAYIKwYBBQUHAwQGCCsGAQUFBwMC
+MEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYBBQUHAgEWF2h0dHBzOi8vc2VjdGln
+by5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9jcmwuc2VjdGlnby5jb20vU2VjdGln
+b1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1haWxDQS5jcmwwgYoGCCsGAQUFBwEB
+BH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdvLmNvbS9TZWN0aWdvUlNBQ2xpZW50
+QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAjBggrBgEFBQcwAYYXaHR0cDovL29j
+c3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5mcmFkZWFkLm9yZzANBgkqhkiG9w0B
+AQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQvQ/fzPXmtR9t54rpmI2TfyvcKgOXp
+qa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvIlSPrzIB4Z2wyIGQpaPLlYflrrVFK
+v9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9ChWFfgSXvrWDZspnU3Gjw/rMHrGnql
+Htlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0whpBtXdyDjzBtQTaZJ7zTT/vlehc/
+tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9IzCCBhQwggT8oAMCAQICEQDGvhmW
+Z0DEAx0oURL6O6l+MA0GCSqGSIb3DQEBCwUAMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3Jl
+YXRlciBNYW5jaGVzdGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0
+ZWQxPjA8BgNVBAMTNVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJl
+IEVtYWlsIENBMB4XDTIyMDEwNzAwMDAwMFoXDTI1MDEwNjIzNTk1OVowJDEiMCAGCSqGSIb3DQEJ
+ARYTZHdtdzJAaW5mcmFkZWFkLm9yZzCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBALQ3
+GpC2bomUqk+91wLYBzDMcCj5C9m6oZaHwvmIdXftOgTbCJXADo6G9T7BBAebw2JV38EINgKpy/ZH
+h7htyAkWYVoFsFPrwHounto8xTsySSePMiPlmIdQ10BcVSXMUJ3Juu16GlWOnAMJY2oYfEzmE7uT
+9YgcBqKCo65pTFmOnR/VVbjJk4K2xE34GC2nAdUQkPFuyaFisicc6HRMOYXPuF0DuwITEKnjxgNj
+P+qDrh0db7PAjO1D4d5ftfrsf+kdRR4gKVGSk8Tz2WwvtLAroJM4nXjNPIBJNT4w/FWWc/5qPHJy
+2U+eITZ5LLE5s45mX2oPFknWqxBobQZ8a9dsZ3dSPZBvE9ZrmtFLrVrN4eo1jsXgAp1+p7bkfqd3
+BgBEmfsYWlBXO8rVXfvPgLs32VdVNZxb/CDWPqBsiYv0Hv3HPsz07j5b+/cVoWqyHDKzkaVbxfq/
+7auNVRmPB3v5SWEsH8xi4Bez2V9UKxfYCnqsjp8RaC2/khxKt0A552Eaxnz/4ly/2C7wkwTQnBmd
+lFYhAflWKQ03Ufiu8t3iBE3VJbc25oMrglj7TRZrmKq3CkbFnX0fyulB+kHimrt6PIWn7kgyl9ae
+lIl6vtbhMA+l0nfrsORMa4kobqQ5C5rveVgmcIad67EDa+UqEKy/GltUwlSh6xy+TrK1tzDvAgMB
+AAGjggHMMIIByDAfBgNVHSMEGDAWgBQJwPL8C9qU21/+K9+omULPyeCtADAdBgNVHQ4EFgQUzMeD
+Mcimo0oz8o1R1Nver3ZVpSkwDgYDVR0PAQH/BAQDAgWgMAwGA1UdEwEB/wQCMAAwHQYDVR0lBBYw
+FAYIKwYBBQUHAwQGCCsGAQUFBwMCMEAGA1UdIAQ5MDcwNQYMKwYBBAGyMQECAQEBMCUwIwYIKwYB
+BQUHAgEWF2h0dHBzOi8vc2VjdGlnby5jb20vQ1BTMFoGA1UdHwRTMFEwT6BNoEuGSWh0dHA6Ly9j
+cmwuc2VjdGlnby5jb20vU2VjdGlnb1JTQUNsaWVudEF1dGhlbnRpY2F0aW9uYW5kU2VjdXJlRW1h
+aWxDQS5jcmwwgYoGCCsGAQUFBwEBBH4wfDBVBggrBgEFBQcwAoZJaHR0cDovL2NydC5zZWN0aWdv
+LmNvbS9TZWN0aWdvUlNBQ2xpZW50QXV0aGVudGljYXRpb25hbmRTZWN1cmVFbWFpbENBLmNydDAj
+BggrBgEFBQcwAYYXaHR0cDovL29jc3Auc2VjdGlnby5jb20wHgYDVR0RBBcwFYETZHdtdzJAaW5m
+cmFkZWFkLm9yZzANBgkqhkiG9w0BAQsFAAOCAQEAyW6MUir5dm495teKqAQjDJwuFCi35h4xgnQv
+Q/fzPXmtR9t54rpmI2TfyvcKgOXpqa7BGXNFfh1JsqexVkIqZP9uWB2J+uVMD+XZEs/KYNNX2PvI
+lSPrzIB4Z2wyIGQpaPLlYflrrVFKv9CjT2zdqvy2maK7HKOQRt3BiJbVG5lRiwbbygldcALEV9Ch
+WFfgSXvrWDZspnU3Gjw/rMHrGnqlHtlyebp3pf3fSS9kzQ1FVtVIDrL6eqhTwJxe+pXSMMqFiN0w
+hpBtXdyDjzBtQTaZJ7zTT/vlehc/tDuqZwGHm/YJy883Ll+GP3NvOkgaRGWEuYWJJ6hFCkXYjyR9
+IzGCBMcwggTDAgEBMIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVz
+dGVyMRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMT
+NVNlY3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEA
+xr4ZlmdAxAMdKFES+jupfjANBglghkgBZQMEAgEFAKCCAeswGAYJKoZIhvcNAQkDMQsGCSqGSIb3
+DQEHATAcBgkqhkiG9w0BCQUxDxcNMjQxMjE4MjE0MjQ3WjAvBgkqhkiG9w0BCQQxIgQgh8rdSzyN
+YrTPReKKmlrJVPKex/f1cI1I00GpZjiJ1Qcwgb0GCSsGAQQBgjcQBDGBrzCBrDCBljELMAkGA1UE
+BhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEYMBYG
+A1UEChMPU2VjdGlnbyBMaW1pdGVkMT4wPAYDVQQDEzVTZWN0aWdvIFJTQSBDbGllbnQgQXV0aGVu
+dGljYXRpb24gYW5kIFNlY3VyZSBFbWFpbCBDQQIRAMa+GZZnQMQDHShREvo7qX4wgb8GCyqGSIb3
+DQEJEAILMYGvoIGsMIGWMQswCQYDVQQGEwJHQjEbMBkGA1UECBMSR3JlYXRlciBNYW5jaGVzdGVy
+MRAwDgYDVQQHEwdTYWxmb3JkMRgwFgYDVQQKEw9TZWN0aWdvIExpbWl0ZWQxPjA8BgNVBAMTNVNl
+Y3RpZ28gUlNBIENsaWVudCBBdXRoZW50aWNhdGlvbiBhbmQgU2VjdXJlIEVtYWlsIENBAhEAxr4Z
+lmdAxAMdKFES+jupfjANBgkqhkiG9w0BAQEFAASCAgBBp43Y8XMunm3s3KRn7Iw3McPwgbuURM+O
+bCRHVQcUxDZd4gpo4h9Yk6n59x710zNBGzsFdaR+H9de6lT4jhidV2Pdno2MtB7ska2949d5VzzQ
+oC3M7iCsJRm7p9swEjr/LlUAARBNluPrT6NrGZzXjhNpqtQFQrXqcsPZjZ1zcjBqRstqwAFcrGoC
+esqK12eixKzBxPIdo6s2op1YrsXeDyqhw+ZNIFtn6yaQQEt0yV1y6HZVE5sgE8NHlkmyKH0IFzIY
+RNADdYw8EsRRI83jsbYOJtdwrMQTnIOx/3aXuIkzkTr6cfULSrgy9klcjK8p62W5tnf6Zy0NVOHn
+1ZIQffu12embs/r8SgRBL36BV2A+yM9voSmkAgu69Lb4HJeEesU2/3zWSCCw8828naYZUC6ReBVk
+Vh10C0Xg13k8N0eWw5Dw08y9ikBF+kMTAAy7E+Bt6rTEc+kA01OzGJnxy6rh5mYdfXw/Kn+Lwtfy
+Ph4sFnYk0lvYsrFEjPq3qWmbHQ6dI32cgwFwbwzPrurGPnkxfwpm6Zguh1jxk4kVhXkVBiAE6zE7
+L7DnwHslpf0Vg/Ia7RYlQf4sixcU4pegFLGaJqTWo173s8kpDvkdj+bI1dfCdmfEeyukVyPz/Bg1
+9KVFd6saAzIhL4PPPPT4uv+9sIg2YU42qh9t316mBQAAAAAAAA==
+
+
+--=-zk2MzP/ok9aNDKFhaluL--
 
