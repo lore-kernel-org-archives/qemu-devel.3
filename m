@@ -4,194 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8742E77183
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 06:46:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF6C0E77183
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 06:51:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNnol-0008R5-Sc; Wed, 18 Dec 2024 01:45:59 -0500
+	id 1tNntC-000190-T5; Wed, 18 Dec 2024 01:50:34 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tNnoj-0008Qo-8Y
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 01:45:57 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNntA-000186-Kd; Wed, 18 Dec 2024 01:50:32 -0500
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1tNnoe-0004FS-Qi
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 01:45:57 -0500
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tNnt8-00050N-5x; Wed, 18 Dec 2024 01:50:32 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734504353; x=1766040353;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=aLB3a4j+mCUCpnTUcZvuh2jnjbmiEbVC8yPxaDtHIfw=;
- b=VW+hFfZ0b7Q7o5AruyGLBdRk8wfU85F60Vhwh/9pOQoiCOAxDWXKflc3
- mMa49xnn70UrEOsgLSScc8MOJbPtD2Kl+8Ey0bDWMG5FOeJ6ix5JlzFl9
- liOy/naXIzG8Nu1C5YxXEUgmPNF1WG4yZvopZnEmxMMeJBJWFEGWoTVGH
- fvKHtxudx+Y2BvZ+O3WJFPnEkdKAItR/ooqOMzbJG4JwY2kHrvtqff4I0
- xnSBRbOMmGB4cY1KJ4jSZBvKXnAT1LDMo+gcTuIyEQfkrdESp9q058i0S
- jaSV0ZjtbNgX44AXVj78LgZWNchHzwAVAw7nKNdvq0ZAaU70woOOWj8bd A==;
-X-CSE-ConnectionGUID: IBaCs5CPSzyCWBIZYg4e9g==
-X-CSE-MsgGUID: 5fCuSwzlRQuerh8FLssLfw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="37800019"
-X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="37800019"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Dec 2024 22:45:45 -0800
-X-CSE-ConnectionGUID: uXqtmZ0URlan8GOEPEi/LQ==
-X-CSE-MsgGUID: gcrux4WoSU+E+blpo4HZEw==
+ t=1734504630; x=1766040630;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Coeb0/EJZfk8W8t/7szNv8f/QMvQSM5Hksl+GpfjeW0=;
+ b=GmIh4Y4QJBKlBYJ0SEUrlbUzfWfVdMZv8JzGwSuv2WD9i0g3beJAdFxN
+ v2LFC1+KwbNrCP8ZJM1KiH+2jUiDfhubo7rlp7Gtvi0xuEvZbVsufCLU0
+ w+EX4cLy51+wi9GoIEmvZSULYyaKbnmLkwdv71U+HvxowiM9FPnraIItq
+ T25gZT52bpFc7hVxzyTwTQ/FBlHaD+Vb29eGpuW30F/teEYbgbebneo0G
+ 5MzH5WbRqaw/6sSaKq/Sb+/3sPLygKD1fzzej215lLXuGaTY7/gulevA6
+ UIoJOucqAgWtIoubWSDnCskD5HtP+11+s5ujh3AyldVOsYJhyRPF0imj6 A==;
+X-CSE-ConnectionGUID: eUvdtILERM66kspsupBvEg==
+X-CSE-MsgGUID: kAP/p5AsR+eGe8frTlsFqw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11289"; a="34998226"
+X-IronPort-AV: E=Sophos;i="6.12,244,1728975600"; d="scan'208";a="34998226"
+Received: from fmviesa003.fm.intel.com ([10.60.135.143])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Dec 2024 22:50:26 -0800
+X-CSE-ConnectionGUID: UdqYtNE4R62+jjyMZ5EzKw==
+X-CSE-MsgGUID: cClgMYqtTW6kPRukSwZBdQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="128747237"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
- by fmviesa001.fm.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 17 Dec 2024 22:45:42 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Tue, 17 Dec 2024 22:45:40 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Tue, 17 Dec 2024 22:45:40 -0800
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (104.47.58.47) by
- edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Tue, 17 Dec 2024 22:45:39 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=d/aDiw5+re3yVC0HyClRygzpWa2ULcXLj51y/nmfO0cMJ1+FZnVGjflov/uBrkScZbK4LThQgs2nDlP2/H+DLzpc5jqpDEjAtsMzHoZikY3PYuipCiBEiZ3/QmqXjDJQUYGJO9hAftCglE/vv+a6NR9MThXnOTuk4kFe+1aoNtKpV4GM1DNeXKUuARZ208G8o1MK1rjTAuN+zOqMS+UZ0bfSyFtPxF77xWSjnisFr7sdVQobKPX0gGVw2i4X80W7ssyu//kc7j7sQyxlvSjxBktbN5fKDVbzn/SH11ODBylJiDGUl1xf0PHF74to+SIrKSA87bdSyFOxq6+to+AM6Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jZMo2sihx40RddUTaTAfsil/F6/ehq/Wto8FAajinXQ=;
- b=rhKASRcYzQtIsqNViDi37SgRGDPR0g68uEQKF9dOqlfDRcVskb2IlU9AeAOqdwERCeLBaiM6am8f1e+G1Sx4+Fy2DtxN1oVqd2Se1hYcc8J1CyVYZj1L77KFVIzGxCCPNYmbE+Km7u4RAI7I/eSQ/JXW89Svkx11jfEBT4kR35DxS7l5gNDFySisrco7OlfCR8j3Aw3GeMbBq+YOdSB0gJN81qT95G52iamhcMLi4FSk11RGxqY6j64645QuxXYDppfFXuFLGtsvO5I9++07NU40r1YWUBvoAAqkv0CeepvvQvifkzEy9DaBxn7W90JWoLwmbjH2Xj8jI7F59FG9Jg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- SN7PR11MB7419.namprd11.prod.outlook.com (2603:10b6:806:34d::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.21; Wed, 18 Dec
- 2024 06:45:33 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8251.015; Wed, 18 Dec 2024
- 06:45:33 +0000
-Message-ID: <7ee7534e-223f-4629-8523-622db551b66f@intel.com>
-Date: Wed, 18 Dec 2024 14:45:21 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/7] guest_memfd: Introduce an object to manage the
- guest-memfd with RamDiscardManager
-To: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
-CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
- <dan.j.williams@intel.com>, Peng Chao P <chao.p.peng@intel.com>, Gao Chao
- <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>
-References: <20241213070852.106092-1-chenyi.qiang@intel.com>
- <20241213070852.106092-3-chenyi.qiang@intel.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20241213070852.106092-3-chenyi.qiang@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2PR06CA0237.apcprd06.prod.outlook.com
- (2603:1096:4:ac::21) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="101902041"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa003.fm.intel.com with ESMTP; 17 Dec 2024 22:50:24 -0800
+Date: Wed, 18 Dec 2024 15:09:04 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org,
+ Junjie Mao <junjie.mao@hotmail.com>
+Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional callbacks
+ as ()
+Message-ID: <Z2J1EI+R51GqPhVA@intel.com>
+References: <20241209123717.99077-1-pbonzini@redhat.com>
+ <20241209123717.99077-27-pbonzini@redhat.com>
+ <Z2GjLOppRcHFBpAT@intel.com>
+ <CABgObfYE8z5QeVSWT7odaPcZYNfW0Ox1gNmGyCvj0YRTsDEGrg@mail.gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|SN7PR11MB7419:EE_
-X-MS-Office365-Filtering-Correlation-Id: 88a9bb02-3506-4ef7-4360-08dd1f2f91c0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?bHNrcXRRZ1hGSW5oemlLRGdkNGE2dldpenBTOG1FYTdJN1NKd3R1UEc2OVNK?=
- =?utf-8?B?ZWtBbmcxamtzWk5WUCtvdTV5STZUVWZhMU5xRUNydFp6RHdRZEN3bUgwa3Vt?=
- =?utf-8?B?UERlRW5pK3JkWGZBZWkzcFVGUzg4cjI2b1hJZ01wSEJaQ0VpWkJ1V0l0djd2?=
- =?utf-8?B?d0tJOUV0QkVlRkJqMnJCcVNWMm15SitEM0oyY1J0dE5ZL1ZXaVRKbi9yMjVt?=
- =?utf-8?B?eXlic0p4NDRRSW9tZVB1TG1PdGNqK2FTRnVYUHNDM0d1M0ZDMFlTOHc4MGQx?=
- =?utf-8?B?Zmo5djBHQUErTTJHa0R4YTF4K2daU1NLN3RwUjVRbnBNbmdoSGJzZmxoSDlK?=
- =?utf-8?B?WVBaWDhCNzRrQVIzVWN1NmxxRlRyc3BxbUpQMSt4S1RNYmNOc1YzNTE5VU01?=
- =?utf-8?B?dkRZU0hBQXYvdTlJc2FRYTJtTnMxR29DMkMzWHQyZXE2Smt0dHBxbEZneFEv?=
- =?utf-8?B?WDMvYUo3S1h2dklFL2NiSkoyczdJZC9xK2phdy91eW5CdU16WStkZmJ4bGlr?=
- =?utf-8?B?NWFXUWNNT1hFY1g0WlQ1eFl2NjEwSWNqY1cvMnF5UGE1NjJ0MlJ0UHZaN254?=
- =?utf-8?B?REgvVGg1aVl6WEk3c2xmSi9YOHNsRWF0Q1hxNjVZRWZCOWJGbHhENG01RWpH?=
- =?utf-8?B?UGpLeDFNMXFUTWlEaWhydUlmdTZhUVNLRFZJaldzNDZHbkYwVmdpcUZKMTM4?=
- =?utf-8?B?dUE1TU91bHpGZzRmbjFCRWo3cGZHRkZuaGEzQWZ5TU1Ga0MwM2l2cVl6MGdo?=
- =?utf-8?B?VUdXcGtTY0VkMU1KT3pibDgzMWRhZFcycGJydmhtbVFwN25tOEUwMXAwdEtG?=
- =?utf-8?B?djJUSE1MWk9pdGw5ZUkvQ0l2UTFRU2xyQjMyUGUwY0Q0WElYWXR4RkhlK0h3?=
- =?utf-8?B?MjRCdnRpclhKdnJMRkJsRCtWODJRK29FbkhUOXNIeDZTaThaRU9ZbGYyRlh3?=
- =?utf-8?B?aXEycDN0djV3aWg1YnJYZXNOWEFPaitHZlNrS0dhRXMwdEtuWkdBaEdpSWl1?=
- =?utf-8?B?ZkphbFI0Q0h2eTZoS3ZwSmtPVCt1VW5HWlBqTVUvZ244ZW8rc3ZmLzBVT0oy?=
- =?utf-8?B?S3QwZk5xRmJXYjRYcFB1dUg1d1RHY1VMRDRkVlN2NmlKV2Z1MFBpV2hBdDVj?=
- =?utf-8?B?QnR2MkNSWWx0VHZVNlNkUGk4dW1lVjdLRHpCMGlTTlMrZVBVRTRiazhPTWx6?=
- =?utf-8?B?dDA4d0xhTU9jOUh6WHpzT3hVTld1TStyS2h1OGtkOGxBdEtqdzBVUG1pY056?=
- =?utf-8?B?RnFWZ1pOdzNHVmFtY2ZJZ09hVXdKdUxDMUJOSVdScFV3SUFZNTNXekJOSmVJ?=
- =?utf-8?B?U2tsKzBCZlZMMzlLNEQ3WnU4bllMeUtwcmN3NUs5ZjNkaUg5U3BXZW5KTnE0?=
- =?utf-8?B?NldOYm5uemJXUmNXZUQxdmxobzF1cjdrMURxWXR0Um80Ymh4aUNLazNqakFU?=
- =?utf-8?B?TUdjTEN6SUw2cVQvb0pIak1xdW5JQmhFcFNMRS9pcmtOa3lYeHJ2UW1RR2wy?=
- =?utf-8?B?YndxQk0zMS9jRWpIM0FFRzB2bmJjRWdGZnV5WHhZcWhpQjNDN1hUVEg1Mlhi?=
- =?utf-8?B?a0lsVks5SmNDVlJXLzJ5UHNTbDZHNUlRTGpkVytVTy96TVNEMEZTNFcyamlY?=
- =?utf-8?B?UTgyTkQ3S1MvMWpoYWhzUWhmNmNQMXdMa2dMbVdKUXVwdk15eWFFT1VHNjJu?=
- =?utf-8?B?NkhuMFRZbmhMRWtJU1ZETWt2MjdXNTZZRVFRdTRVdXFWbC9DZmhxVEE5TG5y?=
- =?utf-8?B?dFcrL28xSUZ2Vzd4b2lKdTd5blpJT2lVUFhuMWZDdW1qZ09TWDhEaFh4cjJj?=
- =?utf-8?B?Y2hpTy9VRUVXenV6R3VDOEdFMFQ1WS9xZlViNkc0Y1JoVCtlR09FdXFTNlBS?=
- =?utf-8?Q?2r+ZrBWvzdSWk?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SksxWnljL21pUnozMzhyT1ZNQ0l6TE5OUjRSSjcxZ2dCcGpuSlUxY1ZzWklz?=
- =?utf-8?B?aG0rd25ScWVRMGs5N0pXZHdEV2RpeEEvTGw0TVpJY3hOTFNOekNwSnZNU21n?=
- =?utf-8?B?NURrR1NycENScHhNb0J1RDkyeVBnRjFHTXlDaGRoMDBkbCtrTkliVEw3NDBS?=
- =?utf-8?B?cmtRN0kyMEd6cG1LYjdMekpNUWRoaUJ0blRXS1ZTMVlSeWhoL01admhvMFBl?=
- =?utf-8?B?TWJpODlDbncrc1F2bWFmVEFxOTVRaXg0VTlmMjF3OVlhMXBZcVFHU3lUcHdh?=
- =?utf-8?B?a1IzZzVSS1NCYjJGVjZKaWF6bzhEVFY3UmIxbzFUOWkrSUNsUzduaExHSDlC?=
- =?utf-8?B?bTNEckh4blRaeVNVemgxUGhtdjJoT0JCSmVGY0tnM0Izb0M3Q0ZNMVU3REN1?=
- =?utf-8?B?cDNuZUFJdUxzY1hxa3AzTzIxZlFVeTIydkJCdjBONE41V1RCczBKUEI1a1Rx?=
- =?utf-8?B?MFhYRHlPSVIvNHE3RUVaWGVheDBxV2s4VUZvTHZMZlhKUW1lMGxWWk54Nk0x?=
- =?utf-8?B?Q0NNUVFDSHIwMktaNW1UeUkwdkNlK0VPbUViWXVMTTdkS0M2eGt6TC9wbXRy?=
- =?utf-8?B?N1FJTmQ2VEp2SDNoWCtKN2xWbmgwYStxcVdpSUtGODY2M0hwbGgrUlFpaFJs?=
- =?utf-8?B?TGJDU2RLYVlqWVlJUEowTzN2clRXUkkzT1QzNWt4SWp2ckRQY3o2NDJsMklL?=
- =?utf-8?B?a3lSclZxU0ZsOVJsRk1kMWtzZXRybllxSTM3bEhPOTFFV3lqR21ENk01Mkh1?=
- =?utf-8?B?NlJiNmN5anVOZE0xZ1RnWjB1VmJHbWYxWURqS25UbHJXOHVWR1JkSHNPU1Zh?=
- =?utf-8?B?RVhiSEoyZE1MWXBMb0R3WHJSWEdJeDNZSjV1T2JJR3JXSytPTXYyU1pjM2Rj?=
- =?utf-8?B?VWlIRkIyc21odzdsMS9oUDdrQk1sS1BpMWNuN1Z2NmRGWVhxWVNtem9SM0VT?=
- =?utf-8?B?d3pVUWl1eEJTOVlwNjk2L1RaT0hIc05jOVROTkJjT1dvQ0M1ZmE2a1RTOVpq?=
- =?utf-8?B?UjZ0VnZ1WmN5SkVFcFRvN0lvWHhhdTU5NCtDR3MxS24vZm5uOHJVaFRicCtO?=
- =?utf-8?B?NGpSOURVaExoWlRXQURPeWRXWU84TFU0YUZRZzVROUx3OCtraWZXL2RKRitk?=
- =?utf-8?B?M3RFdzJZSDBYOFlyUTlWVFhmOFZxNkVkamtMMm94ajVOc1paVFZVZmlLV2pu?=
- =?utf-8?B?ZUlhVE5IRkttamp6NjFEdnFxU1p0Q0FlWnRzOFhqcXFsWkdTM3I0aTlXY3NW?=
- =?utf-8?B?dE5RZmd5aDdwM2ZqWVpjMXN1QzcvdjdiMElQdnM4Q1hMbGxpNW9tdjM2ZGpj?=
- =?utf-8?B?Rkc2dGhBV05zeVFWOCswSmU1a3ZvZFd4ZFlZWk51d21SNjNtSnRUWCtOZEdF?=
- =?utf-8?B?eStobktBYWxPSS9HVDMwclM1aUpFQVY3THoxM01ZTXlDS0JxSk9BcW4yTjhs?=
- =?utf-8?B?WTBtWjZkcnM1c283RENMQkM3UkhzOTdVRkVad2tzZHhPSnBKbkJTcHpWWkVY?=
- =?utf-8?B?UFh2L0pvaWpIOTJoUDZnNlFQeVhiQWdwbU90dWQxcFV4OHF5Z1dERFFBMlBu?=
- =?utf-8?B?cXUrMWFJOW9yN1hxdGpER2dWeTFyUTU4cjRZN0I0UnRhZHkyd3RtN3dxQ3RP?=
- =?utf-8?B?cXhUd3VYMFlDbmtNbkhaMU5jb0x1VXdWYm1SbWRWdDQ2a2hkbWw4alRSVUZR?=
- =?utf-8?B?WU4rVjgvQWpzdjhSUmg5aDk4TFBWTkdsMnJrSy9CckZ3V1JqS0xtdmZxTmxK?=
- =?utf-8?B?VEttdVVPK3EyRUNYU2JtcGcyZiswUnpUd0RsSStvRGtSR1FMam9EdE1WYjdo?=
- =?utf-8?B?eWtxWXpOVXIxNTN5ZnZZQ1E4OFh3QjE4WFhmMTVIZXVsOTdJV1Jxc2x3QVM3?=
- =?utf-8?B?dkRXbS9FUFN1ZlloWGVoaCt2RDVKalZFdVZ4TTBSRys4a1hHVjJJRXgxWk1p?=
- =?utf-8?B?YzB1NVE4ejh5VTNmaG5EZ08xZWtuUTRTeXJkbVZHeVVvVG94eS9BckVvZnp0?=
- =?utf-8?B?Z1c4dlNxOVBXaC9DejBBbzFBMFI4ckhqL3N3aFpxWWpJKzR1RktaWFhTSU96?=
- =?utf-8?B?eStIOUtReitGZFc1MlVOU1R4Nlhlc0hLTDNHVkoyR0E1VmJ3aTl5YXBLSDR3?=
- =?utf-8?B?VWpKZlhmQStZQkQ1VFBqeXA5ajhPTiszWXVCb2pzMXp0aUg5R2ZtaTZ0WVNX?=
- =?utf-8?B?S3c9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 88a9bb02-3506-4ef7-4360-08dd1f2f91c0
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Dec 2024 06:45:32.9650 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: /wKR6O26HjrDFFchVtxtXFge3v68ioH3fJlxafJ5NqfrNYcFN5nhunu3HULAiYiJnUInc4k9hsNW9L/RRJ+QEQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB7419
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CABgObfYE8z5QeVSWT7odaPcZYNfW0Ox1gNmGyCvj0YRTsDEGrg@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
 X-Spam_bar: ----
@@ -215,172 +85,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, Dec 17, 2024 at 05:40:14PM +0100, Paolo Bonzini wrote:
+> Date: Tue, 17 Dec 2024 17:40:14 +0100
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH 26/26] rust: callbacks: allow passing optional
+>  callbacks as ()
+> 
+> Il mar 17 dic 2024, 16:55 Zhao Liu <zhao1.liu@intel.com> ha scritto:
+> 
+> > On Mon, Dec 09, 2024 at 01:37:17PM +0100, Paolo Bonzini wrote:
+> > > Date: Mon,  9 Dec 2024 13:37:17 +0100
+> > > From: Paolo Bonzini <pbonzini@redhat.com>
+> > > Subject: [PATCH 26/26] rust: callbacks: allow passing optional callbacks
+> > as
+> > >  ()
+> > > X-Mailer: git-send-email 2.47.1
+> > >
+> > > In some cases, callbacks are optional.  Using "Some(function)" and "None"
+> > > does not work well, because when someone writes "None" the compiler does
+> > > not know what to use for "F" in "Option<F>".
+> >
+> > I understand the direct use case is MemoryRegionOps, which has optional
+> > callbacks. However, I'm not quite sure how exactly it should be applied
+> > to C bindings and how it will play with Option<callback>.
+> >
+> 
+> You wouldn't use Option<callback> at all, using () instead of None; the
+> difference is that () does not have a parameter while None does (and the
+> compiler cannot infer it). But I am okay with leaving this patch behind
+> until there's a need.
 
+Am I using the wrong terminology? Function pointers in a structure should
+be called a vtable, rather than callbacks (for example, methods in TypeInfo,
+read/write methods in MemoryRegionOps). Callbacks are typically function
+pointers used as function parameters (for example, timer/gpio). So, is the
+callback implementation here only used for the latter case?
 
-On 12/13/2024 3:08 PM, Chenyi Qiang wrote:
-> As the commit 852f0048f3 ("RAMBlock: make guest_memfd require
-> uncoordinated discard") highlighted, some subsystems like VFIO might
-> disable ram block discard. However, guest_memfd relies on the discard
-> operation to perform page conversion between private and shared memory.
-> This can lead to stale IOMMU mapping issue when assigning a hardware
-> device to a confidential VM via shared memory (unprotected memory
-> pages). Blocking shared page discard can solve this problem, but it
-> could cause guests to consume twice the memory with VFIO, which is not
-> acceptable in some cases. An alternative solution is to convey other
-> systems like VFIO to refresh its outdated IOMMU mappings.
-> 
-> RamDiscardManager is an existing concept (used by virtio-mem) to adjust
-> VFIO mappings in relation to VM page assignment. Effectively page
-> conversion is similar to hot-removing a page in one mode and adding it
-> back in the other, so the similar work that needs to happen in response
-> to virtio-mem changes needs to happen for page conversion events.
-> Introduce the RamDiscardManager to guest_memfd to achieve it.
-> 
-> However, guest_memfd is not an object so it cannot directly implement
-> the RamDiscardManager interface.
-> 
-> One solution is to implement the interface in HostMemoryBackend. Any
-> guest_memfd-backed host memory backend can register itself in the target
-> MemoryRegion. However, this solution doesn't cover the scenario where a
-> guest_memfd MemoryRegion doesn't belong to the HostMemoryBackend, e.g.
-> the virtual BIOS MemoryRegion.
-> 
-> Thus, choose the second option, i.e. define an object type named
-> guest_memfd_manager with RamDiscardManager interface. Upon creation of
-> guest_memfd, a new guest_memfd_manager object can be instantiated and
-> registered to the managed guest_memfd MemoryRegion to handle the page
-> conversion events.
-> 
-> In the context of guest_memfd, the discarded state signifies that the
-> page is private, while the populated state indicated that the page is
-> shared. The state of the memory is tracked at the granularity of the
-> host page size (i.e. block_size), as the minimum conversion size can be
-> one page per request.
-> 
-> In addition, VFIO expects the DMA mapping for a specific iova to be
-> mapped and unmapped with the same granularity. However, the confidential
-> VMs may do partial conversion, e.g. conversion happens on a small region
-> within a large region. To prevent such invalid cases and before any
-> potential optimization comes out, all operations are performed with 4K
-> granularity.
-> 
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> ---
->  include/sysemu/guest-memfd-manager.h |  46 +++++
->  system/guest-memfd-manager.c         | 250 +++++++++++++++++++++++++++
->  system/meson.build                   |   1 +
->  3 files changed, 297 insertions(+)
->  create mode 100644 include/sysemu/guest-memfd-manager.h
->  create mode 100644 system/guest-memfd-manager.c
-> 
-> diff --git a/include/sysemu/guest-memfd-manager.h b/include/sysemu/guest-memfd-manager.h
-> new file mode 100644
-> index 0000000000..ba4a99b614
-> --- /dev/null
-> +++ b/include/sysemu/guest-memfd-manager.h
-> @@ -0,0 +1,46 @@
-> +/*
-> + * QEMU guest memfd manager
-> + *
-> + * Copyright Intel
-> + *
-> + * Author:
-> + *      Chenyi Qiang <chenyi.qiang@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory
-> + *
-> + */
-> +
-> +#ifndef SYSEMU_GUEST_MEMFD_MANAGER_H
-> +#define SYSEMU_GUEST_MEMFD_MANAGER_H
-> +
-> +#include "sysemu/hostmem.h"
-> +
-> +#define TYPE_GUEST_MEMFD_MANAGER "guest-memfd-manager"
-> +
-> +OBJECT_DECLARE_TYPE(GuestMemfdManager, GuestMemfdManagerClass, GUEST_MEMFD_MANAGER)
-> +
-> +struct GuestMemfdManager {
-> +    Object parent;
-> +
-> +    /* Managed memory region. */
-> +    MemoryRegion *mr;
-> +
-> +    /*
-> +     * 1-setting of the bit represents the memory is populated (shared).
-> +     */
-> +    int32_t bitmap_size;
-> +    unsigned long *bitmap;
-> +
-> +    /* block size and alignment */
-> +    uint64_t block_size;
-> +
-> +    /* listeners to notify on populate/discard activity. */
-> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
-> +};
-> +
-> +struct GuestMemfdManagerClass {
-> +    ObjectClass parent_class;
-> +};
-> +
-> +#endif
-> diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-manager.c
-> new file mode 100644
-> index 0000000000..d7e105fead
-> --- /dev/null
-> +++ b/system/guest-memfd-manager.c
-> @@ -0,0 +1,250 @@
-> +/*
-> + * QEMU guest memfd manager
-> + *
-> + * Copyright Intel
-> + *
-> + * Author:
-> + *      Chenyi Qiang <chenyi.qiang@intel.com>
-> + *
-> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
-> + * See the COPYING file in the top-level directory
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "sysemu/guest-memfd-manager.h"
-> +
-> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(GuestMemfdManager,
-> +                                          guest_memfd_manager,
-> +                                          GUEST_MEMFD_MANAGER,
-> +                                          OBJECT,
-> +                                          { TYPE_RAM_DISCARD_MANAGER },
-> +                                          { })
-> +
-
-Fixup: Use OBJECT_DEFINE_TYPE_WITH_INTERFACES() instead of
-OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES() as we define a class struct.
-
-diff --git a/system/guest-memfd-manager.c b/system/guest-memfd-manager.c
-index 50802b34d7..f7dc93071a 100644
---- a/system/guest-memfd-manager.c
-+++ b/system/guest-memfd-manager.c
-@@ -15,12 +15,12 @@
- #include "qemu/error-report.h"
- #include "sysemu/guest-memfd-manager.h"
-
--OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(GuestMemfdManager,
--                                          guest_memfd_manager,
--                                          GUEST_MEMFD_MANAGER,
--                                          OBJECT,
--                                          { TYPE_RAM_DISCARD_MANAGER },
--                                          { })
-+OBJECT_DEFINE_TYPE_WITH_INTERFACES(GuestMemfdManager,
-+                                   guest_memfd_manager,
-+                                   GUEST_MEMFD_MANAGER,
-+                                   OBJECT,
-+                                   { TYPE_RAM_DISCARD_MANAGER },
-+                                   { })
-
- static bool guest_memfd_rdm_is_populated(const RamDiscardManager *rdm,
-
+Thanks,
+Zhao
 
 
