@@ -4,88 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BB6FE77187
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:44:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB91E77187
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:49:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNsQd-0007gg-6b; Wed, 18 Dec 2024 06:41:23 -0500
+	id 1tNsXo-0006yH-HL; Wed, 18 Dec 2024 06:48:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tNsQV-0007ce-1s
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:41:18 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tNsQR-0007xx-TK
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:41:13 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2166651f752so66857245ad.3
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 03:41:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1734522068; x=1735126868; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oQDYd8goWFdiiQvBBrxBKIN+0R/MG7OS8oAWf14cKlo=;
- b=eNgTxk8Tk1rQ+yXxzcUQhtl+CCtpalQMKYx4TvMdyHH4p2CVP5332Ihp28XpUDc74M
- PvbJaSjVBuXVuGkZhTEfwBtEoNJiH3ECv2M0bIwfZZfMdL9bR33JUx0ZLHDnpnVNr0qU
- YsOWcxGVtn6wHR/3MXSV4iHaAaF8RFhb5sOa4ilEiDh9jmP9A9CwRrYyu1fhD23LSwod
- +dsCMNYn4zbmZjuNJ1XqnPbyQDqf31Urim1f416TKzVQa6e/s3uLhIQWtGiouvJ8aY82
- zxRdWOhhigPNXkIkksF60GGYxMVSivBniQKCruIN/m4rXRzhxJz1S5wgl4fqJGmanS3M
- zWAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734522068; x=1735126868;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oQDYd8goWFdiiQvBBrxBKIN+0R/MG7OS8oAWf14cKlo=;
- b=K4iaA6VXaevOzqgHT2MQT6B3rOGikMgF5zvcli/uhdUBpXu7FQDAp1xmQj192yTY10
- Eq8T8zebS6acs+e+FglpQE5XQRsomanpBb4vp1JSbRFfhVONU9RxhU7UyP9u8NuGQnKD
- hoTkUzP8VOwoFw4b6+AFa2ZTSvPqvb7adJKwRnMH4oPZ0vIWYVOOLjJncYSK3543jDSd
- w/jCd7pdjo0sRdRzL8QTtw/jphZoIQOPoPBKSTORISBsx1BU8hVgKEcxEfu9hrydIKVl
- sjX5Z8gvcMLtT+4OxCY7AxqxWBlOaoNkESVD5i2T4Z9U2oWkTiTQG0+31A7cV3u7iQKy
- CzlA==
-X-Gm-Message-State: AOJu0YyvH84gGJvhc213uf0biy0U4vpQi8km6cLAXkCtPS+wNuyKXUWQ
- IbmIElIb88XUtEsD+RLZuaiXMIQbYc4b3kbSYLVSMjfttN7OE89oH2VsCYR2qyZn1BnstJLOSBO
- rWDM=
-X-Gm-Gg: ASbGncvALS9ZtAXJpYfEOttPfiF2nfDNGX7XnMzuGxMIPwZ/w2zOFFCZh7rgzfFNLs6
- 2Vxt3SNAHLjusbe2MkUkK9srePqJXvjQ3RHU0AaLyy7qcbmp5vxgY4sFcEJVs4t5EWSkB97gtpS
- LB6YYTtfsw+0HaRcwIU4BtYy4siRDPNtHBVoMWzVTl7k3RkqVUZoGk8uHRVJ0J2LMW7Ya3yCzEp
- C4bJs1OaiSZZawOTWMWKL1B2PDvFyzHY+5gtNFOxrtJXV6/oOa37xXqouquutJ1Uj43BKxY78UC
- Uw==
-X-Google-Smtp-Source: AGHT+IGlbMKzSjQAr7+Exa84raNs/YbPOp6zO5xXJkkL81Qk7Rib8vvf8G97aZgunyVRf322FWA6hQ==
-X-Received: by 2002:a17:902:d481:b0:215:385e:921c with SMTP id
- d9443c01a7336-218d726cbf6mr29639195ad.51.1734522068679; 
- Wed, 18 Dec 2024 03:41:08 -0800 (PST)
-Received: from localhost.localdomain ([2804:7f0:bcc0:51cf:9cf:d2f2:d49e:7bd9])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-218a1dcb447sm74462285ad.68.2024.12.18.03.41.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 03:41:08 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 9/9] target/riscv/tcg: add sha
-Date: Wed, 18 Dec 2024 08:40:26 -0300
-Message-ID: <20241218114026.1652352-10-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241218114026.1652352-1-dbarboza@ventanamicro.com>
-References: <20241218114026.1652352-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from
+ <BATV+6cdea2fcdec3a6535aff+7787+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1tNsXM-0006t2-1f
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:48:24 -0500
+Received: from desiato.infradead.org ([2001:8b0:10b:1:d65d:64ff:fe57:4e05])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from
+ <BATV+6cdea2fcdec3a6535aff+7787+infradead.org+dwmw2@desiato.srs.infradead.org>)
+ id 1tNsXC-0001mZ-He
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:48:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=infradead.org; s=desiato.20200630; h=Content-Transfer-Encoding:Content-Type
+ :MIME-Version:Message-ID:References:In-Reply-To:Subject:CC:To:From:Date:
+ Sender:Reply-To:Content-ID:Content-Description;
+ bh=jg1ApF1FBq7qUthBRhKyBV5ogiYGWDI5PYkmARZl4IU=; b=nUr//ODTSo1hlngj5VlWTNO7jw
+ sMTChpaDv0WIb2blShekRxx37k01nCwAK1t9+684mDjKxkTWJK6x7s/DF26lr/vJptfumpMAPVacp
+ kl4cpLoIZb7nL2Qm0kTS3KGcjqBCP9M0cyTXupU8HwZzot02rTbh8CCPy6SPCpjF9qEdvixWnZeI7
+ cqv9hwl6vxtSoqhjDtaoc5EDI+9Fpatt7yJFc5m0h/uJKf5vnHgLYb/bPRkTauOa0Z9PHnMe3OXdt
+ VXzZ6376SDkkA/IKcmk23AA2eh67ztATq+t93XdTE6bmNIfugus8perHHztfS3k0MSCNyGBsjAmTU
+ JeiuKXxA==;
+Received: from [89.27.170.32] (helo=[127.0.0.1])
+ by desiato.infradead.org with esmtpsa (Exim 4.98 #2 (Red Hat Linux))
+ id 1tNsX4-00000005GQV-1qSB; Wed, 18 Dec 2024 11:48:02 +0000
+Date: Wed, 18 Dec 2024 12:48:01 +0100
+From: David Woodhouse <dwmw2@infradead.org>
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
+CC: Paul Durrant <paul@xen.org>
+Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20241218113255.232356-1-thuth@redhat.com>
+References: <20241218113255.232356-1-thuth@redhat.com>
+Message-ID: <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x62e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by
+ desiato.infradead.org. See http://www.infradead.org/rpr.html
+Received-SPF: none client-ip=2001:8b0:10b:1:d65d:64ff:fe57:4e05;
+ envelope-from=BATV+6cdea2fcdec3a6535aff+7787+infradead.org+dwmw2@desiato.srs.infradead.org;
+ helo=desiato.infradead.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,87 +75,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'sha' is the augmented hypervisor extension, defined in RVA22 as a set of
-the following extensions:
+On 18 December 2024 12:32:49 CET, Thomas Huth <thuth@redhat=2Ecom> wrote:
+>Use the serial console to execute the commands in the guest instead
+>of using ssh since we don't have ssh support in the functional
+>framework yet=2E
+>
+>Signed-off-by: Thomas Huth <thuth@redhat=2Ecom>
 
-- RVH
-- Ssstateen
-- Shcounterenw (always present)
-- Shvstvala (always present)
-- Shtvala (always present)
-- Shvstvecd (always present)
-- Shvsatpa (always present)
-- Shgatpa (always present)
-
-We can claim support for 'sha' by checking if we have RVH and ssstateen.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
----
- target/riscv/cpu.c         | 2 ++
- target/riscv/cpu_cfg.h     | 1 +
- target/riscv/tcg/tcg-cpu.c | 8 ++++++++
- 3 files changed, 11 insertions(+)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 41629019e2..9b55198a46 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -184,6 +184,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
-     ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-     ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12),
-+    ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
-     ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shtvala, PRIV_VERSION_1_12_0, has_priv_1_12),
-     ISA_EXT_DATA_ENTRY(shvsatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
-@@ -1713,6 +1714,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[] = {
- const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
-     MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
-     MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
-+    MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
- 
-     DEFINE_PROP_END_OF_LIST(),
- };
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index a1457ab4f4..fe0c4173d2 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -141,6 +141,7 @@ struct RISCVCPUConfig {
-     bool ext_svade;
-     bool ext_zic64b;
-     bool ext_ssstateen;
-+    bool ext_sha;
- 
-     /*
-      * Always 'true' booleans for named features
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index cbf2cf1963..3480767b35 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -210,6 +210,11 @@ static void riscv_cpu_enable_named_feat(RISCVCPU *cpu, uint32_t feat_offset)
-         cpu->cfg.cbop_blocksize = 64;
-         cpu->cfg.cboz_blocksize = 64;
-         break;
-+    case CPU_CFG_OFFSET(ext_sha):
-+        if (!cpu_misa_ext_is_user_set(RVH)) {
-+            riscv_cpu_write_misa_bit(cpu, RVH, true);
-+        }
-+        /* fallthrough */
-     case CPU_CFG_OFFSET(ext_ssstateen):
-         cpu->cfg.ext_smstateen = true;
-         break;
-@@ -350,6 +355,9 @@ static void riscv_cpu_update_named_features(RISCVCPU *cpu)
-                           cpu->cfg.cboz_blocksize == 64;
- 
-     cpu->cfg.ext_ssstateen = cpu->cfg.ext_smstateen;
-+
-+    cpu->cfg.ext_sha = riscv_has_ext(&cpu->env, RVH) &&
-+                       cpu->cfg.ext_ssstateen;
- }
- 
- static void riscv_cpu_validate_g(RISCVCPU *cpu)
--- 
-2.47.1
-
+Hm, but serial is lossy and experience shows that it leads to flaky tests =
+if the guest (or host) misses bytes=2E While SSH would just go slower=2E
 
