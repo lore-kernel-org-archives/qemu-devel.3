@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A19C9E77188
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30782E7718A
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Dec 2024 11:11:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tNrx9-0006kN-Ct; Wed, 18 Dec 2024 06:10:55 -0500
+	id 1tNrwz-0006Wk-PF; Wed, 18 Dec 2024 06:10:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx7-0006eF-Kl
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrww-0006W7-Mn
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrx5-0005oW-PC
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:53 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tNrwv-0005KY-9S
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 06:10:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734520250;
+ s=mimecast20190719; t=1734520239;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=fRCyX+UYpyuYRidoibsg41N/KfeGG5KFVTKDlxegYZQ=;
- b=cy5T+JHbxWTMmuJk0jFD9z/CqLFnqiIxJ6lYHd7hoMBL6ZYGdK/p6SpLNjOYlcmrJSOaDc
- IuSDh325e+wek0/3ALZq7TU34keziFk8KQeUHD3gBep6nRlC/lCoqNML5mC8VzFHSktYSQ
- H3/IrUlJe0qZwrn5ILQYLjxkli9CTsc=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=aLFfGcN1TsG1nkxaZI89r0GsfPOs6fnrs8HBT44Miqo=;
+ b=HJBOStGe99+XfSHhAMrpTG6WuLbQNch8wzpE7DSr1L6tSycISgQvZB+hKKXrP+Uqf2e0Pi
+ mxH7DKPIKqMBQMTndKobbhVj5Gq2yTN40GZ8+LJc7hpVRtsf4TKkqo6VWYbt0+kvpzgxbD
+ hrwdoEphAZMNTmI8EQHOrCwXIAqUv+w=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-42-b3afsMhdOhWWYQgD21ig3Q-1; Wed,
- 18 Dec 2024 06:10:47 -0500
-X-MC-Unique: b3afsMhdOhWWYQgD21ig3Q-1
-X-Mimecast-MFC-AGG-ID: b3afsMhdOhWWYQgD21ig3Q
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-xF03mqtsMmaKa791hC73AA-1; Wed,
+ 18 Dec 2024 06:10:38 -0500
+X-MC-Unique: xF03mqtsMmaKa791hC73AA-1
+X-Mimecast-MFC-AGG-ID: xF03mqtsMmaKa791hC73AA
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A3871955F35
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:46 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6F7E41955F0B
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 11:10:37 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.39.192.114])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5744019560AD; Wed, 18 Dec 2024 11:10:45 +0000 (UTC)
+ id 9FD7C19560AD; Wed, 18 Dec 2024 11:10:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 19/38] tests/functional: add common deb_extract helper
-Date: Wed, 18 Dec 2024 12:09:39 +0100
-Message-ID: <20241218110958.226932-20-thuth@redhat.com>
+Subject: [PULL 15/38] tests/functional: remove redundant 'rmtree' call
+Date: Wed, 18 Dec 2024 12:09:35 +0100
+Message-ID: <20241218110958.226932-16-thuth@redhat.com>
 In-Reply-To: <20241218110958.226932-1-thuth@redhat.com>
 References: <20241218110958.226932-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -85,77 +85,39 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-This mirrors the existing archive_extract, cpio_extract and zip_extract
-helpers
+Everything in the scratch directory is automatically purged. Calling
+'rmtree' again breaks the ability to optionally preserve the scratch
+directory contents.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Message-ID: <20241217155953.3950506-20-berrange@redhat.com>
+Message-ID: <20241217155953.3950506-16-berrange@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/qemu_test/archive.py     | 13 +++++++++++++
- tests/functional/qemu_test/linuxkernel.py | 13 ++++---------
- 2 files changed, 17 insertions(+), 9 deletions(-)
+ tests/functional/test_sh4eb_r2d.py | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tests/functional/qemu_test/archive.py b/tests/functional/qemu_test/archive.py
-index 06b66701c0..a6fc97a557 100644
---- a/tests/functional/qemu_test/archive.py
-+++ b/tests/functional/qemu_test/archive.py
-@@ -12,6 +12,8 @@
- import tarfile
- import zipfile
+diff --git a/tests/functional/test_sh4eb_r2d.py b/tests/functional/test_sh4eb_r2d.py
+index b8dadabf3c..c8954c93eb 100755
+--- a/tests/functional/test_sh4eb_r2d.py
++++ b/tests/functional/test_sh4eb_r2d.py
+@@ -4,8 +4,6 @@
+ #
+ # SPDX-License-Identifier: GPL-2.0-or-later
  
-+from .cmd import run_cmd
-+
+-import shutil
+-
+ from qemu_test import LinuxKernelTest, Asset
+ from qemu_test import exec_command_and_wait_for_pattern
+ from qemu_test.utils import archive_extract
+@@ -26,7 +24,6 @@ def test_sh4eb_r2d(self):
+                                                     'initramfs.cpio.gz'),
+                            console_index=1, wait_for='Type exit when done')
+         exec_command_and_wait_for_pattern(self, 'exit', 'Restarting system')
+-        shutil.rmtree(self.scratch_file('sh4eb'))
  
- def tar_extract(archive, dest_dir, member=None):
-     with tarfile.open(archive) as tf:
-@@ -37,3 +39,14 @@ def zip_extract(archive, dest_dir, member=None):
-             zf.extract(member=member, path=dest_dir)
-         else:
-             zf.extractall(path=dest_dir)
-+
-+def deb_extract(archive, dest_dir, member=None):
-+    cwd = os.getcwd()
-+    os.chdir(dest_dir)
-+    try:
-+        (stdout, stderr, ret) = run_cmd(['ar', 't', archive])
-+        file_path = stdout.split()[2]
-+        run_cmd(['ar', 'x', archive, file_path])
-+        tar_extract(file_path, dest_dir, member)
-+    finally:
-+        os.chdir(cwd)
-diff --git a/tests/functional/qemu_test/linuxkernel.py b/tests/functional/qemu_test/linuxkernel.py
-index 2e4f4e35fd..8f2810f3af 100644
---- a/tests/functional/qemu_test/linuxkernel.py
-+++ b/tests/functional/qemu_test/linuxkernel.py
-@@ -6,8 +6,9 @@
- import os
- 
- from .testcase import QemuSystemTest
--from .cmd import run_cmd, wait_for_console_pattern
--from .utils import archive_extract
-+from .cmd import wait_for_console_pattern
-+from .archive import deb_extract
-+
- 
- class LinuxKernelTest(QemuSystemTest):
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 '
-@@ -37,13 +38,7 @@ def extract_from_deb(self, deb_path, path):
-         :param path: path within the deb archive of the file to be extracted
-         :returns: path of the extracted file
-         """
--        cwd = os.getcwd()
--        os.chdir(self.workdir)
--        (stdout, stderr, ret) = run_cmd(['ar', 't', deb_path])
--        file_path = stdout.split()[2]
--        run_cmd(['ar', 'x', deb_path, file_path])
--        archive_extract(file_path, self.workdir)
--        os.chdir(cwd)
-+        deb_extract(deb_path, self.workdir, member="." + path)
-         # Return complete path to extracted file.  Because callers to
-         # extract_from_deb() specify 'path' with a leading slash, it is
-         # necessary to use os.path.relpath() as otherwise scratch_file()
+ if __name__ == '__main__':
+     LinuxKernelTest.main()
 -- 
 2.47.1
 
