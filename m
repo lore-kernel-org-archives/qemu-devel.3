@@ -4,86 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D797E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2CFE7718A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJIc-0000zZ-3e; Thu, 19 Dec 2024 11:22:54 -0500
+	id 1tOJHd-00061N-Dp; Thu, 19 Dec 2024 11:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFOX-0006DT-KM
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:45 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHih-0003AI-BE
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:43 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFOW-0008AI-03
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:45 -0500
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHif-0002O0-8o
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734610360;
+ s=mimecast20190719; t=1734619300;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=u9nMTxyosvlBNmWHbdS3uU97thxBhf1W17a5325xukk=;
- b=I0X8XtTksjAg5r9WDZkXE95XIzqLSXCESAbmPct8zwhYc8oxqJLCyIPiG+BFFTpbYP457i
- DcN+E7yc/DX5ZYS+mAbv1mGdZHH+ZBdefAsAFYWsE/vukYs/hBvbYpCyjHXT7VkoiXEwbK
- X7oSnBF7T/rbK71V4eWdyV3Cge1TAjI=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=l0gBfmC/71g11Jbf0onG2UBI9DIVGHNXDaOgDh8tn80=;
+ b=g8QzR9caDIwZh28IkI4gZxV7O54NEpB7h3VLaqcMYfJSsxvG6tNlM+UQYGrHPsmgD1qsFs
+ pV1a51WI4By3CCOswMIG8emEIQVSkIK49EJE0oB6sI2mPZJGp12S6m/wuIerOaDSQf9piz
+ GRwZJ/gyBm6l8k7WvtQYrkj5PQ5ZXDo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-392-80rFSyrUNfylHPk1a0ExHw-1; Thu, 19 Dec 2024 07:12:38 -0500
-X-MC-Unique: 80rFSyrUNfylHPk1a0ExHw-1
-X-Mimecast-MFC-AGG-ID: 80rFSyrUNfylHPk1a0ExHw
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso437059f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:12:38 -0800 (PST)
+ us-mta-567-fdMWavGkP12vxcYMK8NpqA-1; Thu, 19 Dec 2024 09:41:38 -0500
+X-MC-Unique: fdMWavGkP12vxcYMK8NpqA-1
+X-Mimecast-MFC-AGG-ID: fdMWavGkP12vxcYMK8NpqA
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4361efc9d23so7272785e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734610356; x=1735215156;
+ d=1e100.net; s=20230601; t=1734619297; x=1735224097;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=u9nMTxyosvlBNmWHbdS3uU97thxBhf1W17a5325xukk=;
- b=gbl973onmp5OGaCLU7wkcnd40uZCHJN1QGUHKYvXsq+h4llISD9QX58AkmJT3ldZZI
- 0idAF7XRkW27snWTjkcgxGjrKtFs1T2ql1XOGC48uRI5uI4pCMbDCfOl4+CDBJaac9Mv
- OgL3n+rJiSQrNaImCVAaOpOy5A2k+7uR561fRygTUKJtHV5haLp9Y+zgaV8QucJFW1aP
- 70H4NvRKZwQgqRxoGeUWDiWnJ22oedO/UFX4JLC9vGuEpkiExeqJ0pXnj/oQnPWn3bPy
- KYAMP6retaoT4NPWopnEI6w2aWEG1xJc0p/hFdOK1iqcA19M6tYyiZFjjKmKHyYmydkH
- GSvA==
-X-Gm-Message-State: AOJu0Yx0JNORx/1Mop6glHWt0E58dX3ymw46XgcRnZy8O91ONOTRHjxF
- +BX9XGY1d04/HpAjNQ2S93iFp3LqmJAnk8PLITlHZS329rkcyWa+o8OOqxvJIECrjNZrIpZOv1l
- bder6RECgxbtwA5e5TCjFORhUCkEQ0ZKJm5q5P61eRyed3XsSy9b41btljC0/QBwjnUx6/iS2V7
- oSf6rM82RSJd/i+CHGjL9UKKCR9pUL4CCNNJby
-X-Gm-Gg: ASbGncvnn/YazxB/ylKseL/A1VhuGAf99cCIMpFJKauBJg/PQcJuNS30ITZvVrgTKW0
- 4gtnGBZjbMpJSlObXqW3DDyeQyA6zexplEYpvQ4GquuDzTHWf4qmkkU3NniZa6FBruyRMgf1p1x
- bnr8KAqlfLIUwGfI+oE5Q5Wc1UF7z+iPHuikltBZdNwu7+BBs5nmGlnPNXX2W2ET/MBAJorczWl
- 2MC6rZgD0uAhwgQEZM+7nahLqEpxyIZ7JBKIWUq2UYisnPHi1DAaY3V9UmF
-X-Received: by 2002:a05:6000:184b:b0:385:df4e:3645 with SMTP id
- ffacd0b85a97d-388e4d9c528mr5233242f8f.50.1734610356160; 
- Thu, 19 Dec 2024 04:12:36 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEUh2M9/mnSogeQ773STUYnJzJNd5S5eWvf3oRcRQezB6U0AwDcAXGbiOpHZ9UUI+vGCXK0XQ==
-X-Received: by 2002:a05:6000:184b:b0:385:df4e:3645 with SMTP id
- ffacd0b85a97d-388e4d9c528mr5233203f8f.50.1734610355678; 
- Thu, 19 Dec 2024 04:12:35 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c4fcsm16696415e9.29.2024.12.19.04.12.32
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 04:12:32 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ bh=l0gBfmC/71g11Jbf0onG2UBI9DIVGHNXDaOgDh8tn80=;
+ b=PMWVqkz0ZyKY4Cc+AVJSEu+sTIaqtwEkTo2kgqxOi/mQ/3gsSIYqKH5lEhFD2JEC1V
+ DjTDkSmBwkSzNRuAqW/qGJsRXjwFuy8IOCxxId+zOLTRt9WE+T47/5oTtmfUnXFrZvNm
+ nJem7k1o7dRO1n4X67vOLOO3Z2u9dyNunlYI+zQWY4rAe9zeAz9l6Unw5iWw3xwoCpw2
+ zFz/wbXEteOwZWdB6maymbbgumJXBkB93ungLvIBqOQVZg1IN8LPgkWPiQ/4oZYvyhTz
+ AeDiDHN0Ye9Ch30h5iH0Fsp3ZvneJyFavHJWeXnGKPcp6Fle6iwG6XKEthRcI34Tm3/r
+ A89g==
+X-Gm-Message-State: AOJu0Yxfjov3bpfe98dUTSxYSnYEJbg6vaP1xRLn3kh/9UEnI91c7bH7
+ mWvRdTC1GIVc5p1NXuYIXtpjkEYLYLIAqqkDYQZzJthoNsHhe459kwHAuOV32ShDrbqfiiVFbZU
+ y01xUdeWm4l6HLHdTiQ9sOTBHqokQaQxMf/BERsA0ha0T1RmVqHBdSg8Usrnm+EhETiAe5AnvI7
+ 2sKUEVRwLeCvP0LAUN2C/g8InU8RNy4tMzEAQ=
+X-Gm-Gg: ASbGncs576cYB/gX0c4kBhZF5//FHk+QeIKZoAXThKCoM9VKd4W29EiUOQaHaQHzKi0
+ +goet3T6qf2FAze88Zl1XOKrbSlqoM0dEsnI7JLH3dve2EQdKploEIIhDYOmFiDTHIVWZ1z4ZiE
+ yBY6s+iWpZYtlr9UdcwU2Vaowh0UYkZWuUoxbjZ/KT2FzFrr1JLAoYhNLBLV/7qDQUwE2u8zbKn
+ oOkJEP/NulfEWiPfydWkpi8KnmdJCM6wYVy/RVldqfCa6nH0gY8zA292UfoeCj9uPbUcTLHPqFE
+ X8ogfgzXcdyUyL7OF6psNZjDVksWEnX1Mji+WSOw
+X-Received: by 2002:a05:600c:3511:b0:431:557e:b40c with SMTP id
+ 5b1f17b1804b1-4365c9ca659mr31322265e9.27.1734619297665; 
+ Thu, 19 Dec 2024 06:41:37 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHBHv0x2cGBRQlvqikuvgr/lcZ8/J/1BVJtjA5CBTOcv8QNv58HWKjkf4nZTQ93E/63qb90bQ==
+X-Received: by 2002:a05:600c:3511:b0:431:557e:b40c with SMTP id
+ 5b1f17b1804b1-4365c9ca659mr31321905e9.27.1734619297250; 
+ Thu, 19 Dec 2024 06:41:37 -0800 (PST)
+Received: from localhost
+ (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
+ [2003:cb:c749:6600:b73a:466c:e610:686])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-43656b442dasm53476785e9.42.2024.12.19.06.41.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 06:41:35 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: zhao1.liu@intel.com
-Subject: [PATCH 08/10] rust: qom: make INSTANCE_POST_INIT take a shared
- reference
-Date: Thu, 19 Dec 2024 13:12:14 +0100
-Message-ID: <20241219121216.416905-9-pbonzini@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 08/14] s390x/s390-stattrib-kvm: prepare for memory devices
+ and sparse memory layouts
+Date: Thu, 19 Dec 2024 15:41:09 +0100
+Message-ID: <20241219144115.2820241-9-david@redhat.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219121216.416905-1-pbonzini@redhat.com>
-References: <20241219121216.416905-1-pbonzini@redhat.com>
+In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
+References: <20241219144115.2820241-1-david@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -108,60 +120,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs | 4 ++--
- rust/qemu-api/src/qom.rs         | 8 ++------
- 2 files changed, 4 insertions(+), 8 deletions(-)
+With memory devices, we will have storage attributes for memory that
+exceeds the initial ram size. Further, we can easily have memory holes,
+for which there (currently) are no storage attributes.
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 72a4cea042c..6792d13fb77 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -145,7 +145,7 @@ impl ObjectImpl for PL011State {
-     type ParentType = SysBusDevice;
+In particular, with memory holes, KVM_S390_SET_CMMA_BITS will fail to set
+some storage attributes.
+
+So let's do it like we handle storage keys migration, relying on
+guest_phys_blocks_append(). However, in contrast to storage key
+migration, we will handle it on the migration destination.
+
+This is a preparation for virtio-mem support. Note that ever since the
+"early migration" feature was added (x-early-migration), the state
+of device blocks (plugged/unplugged) is migrated early such that
+guest_phys_blocks_append() will properly consider all currently plugged
+memory blocks and skip any unplugged ones.
+
+In the future, we should try getting rid of the large temporary buffer
+and also not send any attributes for any memory holes, just so they
+get ignored on the destination.
+
+Message-ID: <20241008105455.2302628-9-david@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ hw/s390x/s390-stattrib-kvm.c | 67 +++++++++++++++++++++++-------------
+ 1 file changed, 43 insertions(+), 24 deletions(-)
+
+diff --git a/hw/s390x/s390-stattrib-kvm.c b/hw/s390x/s390-stattrib-kvm.c
+index eeaa811098..33ec91422a 100644
+--- a/hw/s390x/s390-stattrib-kvm.c
++++ b/hw/s390x/s390-stattrib-kvm.c
+@@ -10,11 +10,12 @@
+  */
  
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
--    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
-+    const INSTANCE_POST_INIT: Option<fn(&Self)> = Some(Self::post_init);
- }
+ #include "qemu/osdep.h"
+-#include "hw/boards.h"
++#include "hw/s390x/s390-virtio-ccw.h"
+ #include "migration/qemu-file.h"
+ #include "hw/s390x/storage-attributes.h"
+ #include "qemu/error-report.h"
+ #include "sysemu/kvm.h"
++#include "sysemu/memory_mapping.h"
+ #include "exec/ram_addr.h"
+ #include "kvm/kvm_s390x.h"
+ #include "qapi/error.h"
+@@ -84,8 +85,8 @@ static int kvm_s390_stattrib_set_stattr(S390StAttribState *sa,
+                                         uint8_t *values)
+ {
+     KVMS390StAttribState *sas = KVM_S390_STATTRIB(sa);
+-    MachineState *machine = MACHINE(qdev_get_machine());
+-    unsigned long max = machine->ram_size / TARGET_PAGE_SIZE;
++    S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
++    unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
  
- impl DeviceImpl for PL011State {
-@@ -206,7 +206,7 @@ unsafe fn init(&mut self) {
+     if (start_gfn + count > max) {
+         error_report("Out of memory bounds when setting storage attributes");
+@@ -103,39 +104,57 @@ static int kvm_s390_stattrib_set_stattr(S390StAttribState *sa,
+ static void kvm_s390_stattrib_synchronize(S390StAttribState *sa)
+ {
+     KVMS390StAttribState *sas = KVM_S390_STATTRIB(sa);
+-    MachineState *machine = MACHINE(qdev_get_machine());
+-    unsigned long max = machine->ram_size / TARGET_PAGE_SIZE;
+-    /* We do not need to reach the maximum buffer size allowed */
+-    unsigned long cx, len = KVM_S390_SKEYS_MAX / 2;
++    S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
++    unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
++    unsigned long start_gfn, end_gfn, pages;
++    GuestPhysBlockList guest_phys_blocks;
++    GuestPhysBlock *block;
+     int r;
+     struct kvm_s390_cmma_log clog = {
+         .flags = 0,
+         .mask = ~0ULL,
+     };
+ 
+-    if (sas->incoming_buffer) {
+-        for (cx = 0; cx + len <= max; cx += len) {
+-            clog.start_gfn = cx;
+-            clog.count = len;
+-            clog.values = (uint64_t)(sas->incoming_buffer + cx);
+-            r = kvm_vm_ioctl(kvm_state, KVM_S390_SET_CMMA_BITS, &clog);
+-            if (r) {
+-                error_report("KVM_S390_SET_CMMA_BITS failed: %s", strerror(-r));
+-                return;
+-            }
+-        }
+-        if (cx < max) {
+-            clog.start_gfn = cx;
+-            clog.count = max - cx;
+-            clog.values = (uint64_t)(sas->incoming_buffer + cx);
++    if (!sas->incoming_buffer) {
++        return;
++    }
++    guest_phys_blocks_init(&guest_phys_blocks);
++    guest_phys_blocks_append(&guest_phys_blocks);
++
++    QTAILQ_FOREACH(block, &guest_phys_blocks.head, next) {
++        assert(QEMU_IS_ALIGNED(block->target_start, TARGET_PAGE_SIZE));
++        assert(QEMU_IS_ALIGNED(block->target_end, TARGET_PAGE_SIZE));
++
++        start_gfn = block->target_start / TARGET_PAGE_SIZE;
++        end_gfn = block->target_end / TARGET_PAGE_SIZE;
++
++        while (start_gfn < end_gfn) {
++            /* Don't exceed the maximum buffer size. */
++            pages = MIN(end_gfn - start_gfn, KVM_S390_SKEYS_MAX / 2);
++
++            /*
++             * If we ever get guest physical memory beyond the configured
++             * memory limit, something went very wrong.
++             */
++            assert(start_gfn + pages <= max);
++
++            clog.start_gfn = start_gfn;
++            clog.count = pages;
++            clog.values = (uint64_t)(sas->incoming_buffer + start_gfn);
+             r = kvm_vm_ioctl(kvm_state, KVM_S390_SET_CMMA_BITS, &clog);
+             if (r) {
+                 error_report("KVM_S390_SET_CMMA_BITS failed: %s", strerror(-r));
++                goto out;
+             }
++
++            start_gfn += pages;
          }
+-        g_free(sas->incoming_buffer);
+-        sas->incoming_buffer = NULL;
      }
- 
--    fn post_init(&mut self) {
-+    fn post_init(&self) {
-         let sbd: &SysBusDevice = self.upcast();
- 
-         sbd.init_mmio(&self.iomem);
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 861f1e50ac4..5934eb0cc50 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -163,11 +163,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     // SAFETY: obj is an instance of T, since rust_instance_post_init<T>
-     // is called from QOM core as the instance_post_init function
-     // for class T
--    //
--    // FIXME: it's not really guaranteed that there are no backpointers to
--    // obj; it's quite possible that they have been created by instance_init().
--    // The receiver should be &self, not &mut self.
--    T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
-+    T::INSTANCE_POST_INIT.unwrap()(unsafe { &*obj.cast::<T>() })
++
++out:
++    guest_phys_blocks_free(&guest_phys_blocks);
++    g_free(sas->incoming_buffer);
++    sas->incoming_buffer = NULL;
  }
  
- unsafe extern "C" fn rust_class_init<T: ObjectType + ClassInitImpl<T::Class>>(
-@@ -459,7 +455,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
- 
-     /// Function that is called to finish initialization of an object, once
-     /// `INSTANCE_INIT` functions have been called.
--    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = None;
-+    const INSTANCE_POST_INIT: Option<fn(&Self)> = None;
- 
-     /// Called on descendent classes after all parent class initialization
-     /// has occurred, but before the class itself is initialized.  This
+ static int kvm_s390_stattrib_set_migrationmode(S390StAttribState *sa, bool val,
 -- 
 2.47.1
 
