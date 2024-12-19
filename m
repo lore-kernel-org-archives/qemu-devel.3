@@ -4,92 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB550E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:33:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C64EE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:38:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOLJy-0002yt-G6; Thu, 19 Dec 2024 13:32:26 -0500
+	id 1tOLPo-0007Ip-3G; Thu, 19 Dec 2024 13:38:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOLJt-0002wj-DT
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:32:21 -0500
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOLJo-0002aI-HG
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:32:19 -0500
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-728f337a921so1230871b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:32:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734633135; x=1735237935; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bgg3DZOeSktQgwpMFQWYfQpPjrdNqQXpM4wVQei4S9U=;
- b=EHb7JArwr4gT8ZL/1ZtLzvZHiRm11C2rh3qflZ7KufVmLF/11BIJK5rTZs7DTdZqN6
- DwDCMj34yJhuEpAGho3D4I6HDhZOdpV7KlQTd58h+jabqtIXTqXASkhnQKxqWNmH8Mx8
- 2cWiy1PNkK1UWQo88TlQzADQSQLd6PnSH1HIBtOdYrQU2Hebo5k/4WQE7msgd91rUS9N
- Sw6od+sDTK+EXeAZhVThtQLVuUwC89Rw+nSHDRAwD6NI3lfOcbTflyRhPWZz+5fwIi1w
- pICx8Rt6OYYuFGlghUCOHMbECMXzjGiRy4DUeNUPZayGBbKTBdFyXB/d/Om8C2rr9A5y
- Bxrw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOLPm-0007IB-4o
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:38:26 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOLPi-0003GS-U9
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:38:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734633500;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uEToxiWur83dSpOktoEEZXa55rdz/uDNXPSKlWuq3h0=;
+ b=iN2Xu1uNoL9SGNsUtAl8mcBadWFtSDtDY6kn8RR0DgkAPMr/e4UgIwc+bjE5brgpCGLRtt
+ W2S5E0RFoelo4+/RrNfOb3bzRS48/46UYof3jgIh91GMtg+NTQqJySGZbp32zj8i7kaXdH
+ qTJ71bpgPrwCM69A02jebNCnASSdNCI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-361-sNz2JUygMdWrHkl4xUWvbg-1; Thu, 19 Dec 2024 13:38:15 -0500
+X-MC-Unique: sNz2JUygMdWrHkl4xUWvbg-1
+X-Mimecast-MFC-AGG-ID: sNz2JUygMdWrHkl4xUWvbg
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-386321c8f4bso655419f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:38:14 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734633135; x=1735237935;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=bgg3DZOeSktQgwpMFQWYfQpPjrdNqQXpM4wVQei4S9U=;
- b=huZCKzlL5xb3mHWMUQCfSh/KwIj34+U8+2g9LL/X5bC3D4gs2Cmo8Z1jdYQZwIYVR+
- gxXHsw66oW3ZrU/4d/2oPUHqIb9raaERuB/Q/19ydzMXen7otHvOOUPKP/0GPg76IiTP
- 1ooqXRfW3JNfYG0/qzzdYM8xyq6ZQWDrDwdmT1nabEKPXCF2dThAVdZNp0kXNA1EMRdw
- ek4/AaEh+ajbEGL9DeUKpaZ0E9cnAh9FYYu9oamAodJT8PU3dP3YNaZSgvFPFZCs2Ilu
- UrmFTUA9vg4Wlwjgmko9xhL3mI8oSuyuQ5ivCKNeVQJ081sgM/P5ILPpuke69KcqZhNZ
- alxw==
-X-Gm-Message-State: AOJu0YxK/abRbx/7F1DQ6HRego9UUq9J2VI7Zxdoy1h10p3+55RsS+IK
- s7MRdVZEL149DvHFHRmjkqwTicMhUpNloKaTD48bo2LHFLOXY5CcRTcNBzBULbte/W570TNPwLU
- TenA=
-X-Gm-Gg: ASbGnctCwe6lu/ALhTZqrqBMh/vCd2RUMJ1lFKqH+Kb2QVZPF0QcSLA4MfcMSVNq0wm
- GoXQ7kvX5VYEKkDyqbhDcQxZX50JvM45+E2hNrlNu4GmbjSxaTr1xSgHm5tLVtjR5F8KYR/KArq
- P3HvhNC7qUr3XqmjDmVB1Zh98yzNMb3gm7tPPK9tyE/L+b2hmr+chOhO0tLX17YVU3HRZF3kNNc
- UhleTgV3z7ECNCaFH8E3IB2Ztm/1GEuaFYf1x0XbE327IrwsFTyqwEl
-X-Google-Smtp-Source: AGHT+IGF+rRqeIO/bCUN5wAwJFBz7SmxzQKFiaqqz696UQGWaKpxx8rf70FBqiqEPKLWfIIKZTyu+Q==
-X-Received: by 2002:a05:6a00:1909:b0:71e:6b8:2f4a with SMTP id
- d2e1a72fcca58-72aa8d3a152mr6906058b3a.12.1734633135047; 
- Thu, 19 Dec 2024 10:32:15 -0800 (PST)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad90b302sm1624733b3a.175.2024.12.19.10.32.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 10:32:14 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>, Fabiano Rosas <farosas@suse.de>,
- Peter Maydell <peter.maydell@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- alex.bennee@linaro.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v2 1/3] target/arm: add new property to select pauth-qarma5
-Date: Thu, 19 Dec 2024 10:32:09 -0800
-Message-Id: <20241219183211.3493974-2-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
-References: <20241219183211.3493974-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1734633492; x=1735238292;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uEToxiWur83dSpOktoEEZXa55rdz/uDNXPSKlWuq3h0=;
+ b=htAtu3yrTnuioMaBTadfvOzysvZXGpUf/ki8QzAa39/kqVvEmtyQ+UOYhSVsaqFjQj
+ nFe3LSV9jv3/o0NsxYUD98+Ue4XnUf+S5XeABzF9lD7aNbQMMVRuflfxog1rXVr97HRG
+ NVEjIAr7RK+y4PnD8ya7M5mJqfUZUMon616ADkJ2uHRaWAdm8aqW1pf/cA2BwYXvWac6
+ UdQjF8qe7ihjuYOyV2vzGUp8s7G++t7aQ4zqWf3475iROYYM9MRKSjSIu1JqUo2bzccC
+ weJqnK/aMEcZE2Y5DdIgCuR/Q0BebNVIdnTri7iYj/fUfIzAYPuotbbqAHCRgR88fV2P
+ VsPw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAOIgmOjjAMQICR23xv+2ct0tZZScq6ZcC17H4br6SfD18JVqZsaPghaACF1aySEevAgqI+viRP4Gr@nongnu.org
+X-Gm-Message-State: AOJu0YzIJpcYyxDP6veC/jSnav6bnYKenC96inHhDs4dNwomv0i8ji+9
+ fd1lmielUwmfp6Zu+H93dgJ2qK8Vzui6CyLxDR6QhGTEbkeNO1vRcC5KLtZyTPdVT9g1Ad7dTi8
+ AeuLTURTUmvyDM+N68VXByQh3CoZVubBoVuQfExco7qxwK9Zj1AaL
+X-Gm-Gg: ASbGncv1KC+cS2oFXdaxpqoba4xJywKcM698KlB7MU52DmsXVd/3BjzAnDdAzVSSSPV
+ 2J23yZFFRFRb2feEHugZ+VN0GNJpVBX0prUyK/SSftMThbdBOC69vUFgQY7CyqEvC+1PpXu5xwu
+ N4NLZCi3+5osfGHmQYOHniOrTeoBYLgUCgpkfLf56C7x/iNT5/BZKNF7pKAvaSKGQPmygnLMAFP
+ Er53HiscSQcTzJMEt5DWDyzOw88nGQUVYOolUEDdb83udFJLXXqrzjixil3
+X-Received: by 2002:adf:ab0c:0:b0:386:37f5:99f6 with SMTP id
+ ffacd0b85a97d-38a223ff225mr79787f8f.53.1734633492430; 
+ Thu, 19 Dec 2024 10:38:12 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IG7gDXL6p7kkNy7P7aYsUUwaOs91EDg2NRNddxp1x1XUKpw5pDDMEvP/2ByQgVZpiCfop/gqw==
+X-Received: by 2002:adf:ab0c:0:b0:386:37f5:99f6 with SMTP id
+ ffacd0b85a97d-38a223ff225mr79774f8f.53.1734633491969; 
+ Thu, 19 Dec 2024 10:38:11 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8a6abesm2140962f8f.90.2024.12.19.10.38.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 10:38:11 -0800 (PST)
+Message-ID: <c22ccbb1-9fdc-410c-85c0-ffa91de16b09@redhat.com>
+Date: Thu, 19 Dec 2024 19:38:10 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL v2 00/42] Rust, qdev, target/i386 changes for 2024-12-19
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+References: <20241219134843.443085-1-pbonzini@redhat.com>
+ <e53e11b6-169f-4988-9cf1-8c5a5c79e42e@linaro.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <e53e11b6-169f-4988-9cf1-8c5a5c79e42e@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,155 +145,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Before changing default pauth algorithm, we need to make sure current
-default one (QARMA5) can still be selected.
+On 12/19/24 19:27, Richard Henderson wrote:
+> Please, really, replace my constify series with v2.
 
-$ qemu-system-aarch64 -cpu max,pauth-qarma5=on ...
+Sure, sorry about that.  I squashed this difference in from v1's final result:
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- docs/system/arm/cpu-features.rst |  5 ++++-
- target/arm/cpu.h                 |  1 +
- target/arm/arm-qmp-cmds.c        |  2 +-
- target/arm/cpu64.c               | 20 ++++++++++++++------
- tests/qtest/arm-cpu-features.c   | 15 +++++++++++----
- 5 files changed, 31 insertions(+), 12 deletions(-)
+diff --git b/include/hw/qdev-core.h a/include/hw/qdev-core.h
+index c404bf55550..e6ef80b7fd0 100644
+--- b/include/hw/qdev-core.h
++++ a/include/hw/qdev-core.h
+@@ -947,8 +947,8 @@ char *qdev_get_own_fw_dev_path_from_handler(BusState *bus, DeviceState *dev);
+   * you attempt to add an existing property defined by a parent class.
+   * To modify an inherited property you need to use????
+   *
+- * Validate that @props has at least one Property plus the terminator.
+- * Validate that @props is an array via ARRAY_SIZE.
++ * Validate that @props has at least one Property.
++ * Validate that @props is an array, not a pointer, via ARRAY_SIZE.
+   * Validate that the array does not have a legacy terminator at compile-time;
+   * requires -O2 and the array to be const.
+   */
 
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index a5fb929243c..d69ebc2b852 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -219,7 +219,10 @@ Below is the list of TCG VCPU features and their descriptions.
- ``pauth-qarma3``
-   When ``pauth`` is enabled, select the architected QARMA3 algorithm.
- 
--Without either ``pauth-impdef`` or ``pauth-qarma3`` enabled,
-+``pauth-qarma5``
-+  When ``pauth`` is enabled, select the architected QARMA5 algorithm.
-+
-+Without ``pauth-impdef``, ``pauth-qarma3`` or ``pauth-qarma5`` enabled,
- the architected QARMA5 algorithm is used.  The architected QARMA5
- and QARMA3 algorithms have good cryptographic properties, but can
- be quite slow to emulate.  The impdef algorithm used by QEMU is
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index d86e641280d..b7500bebd7f 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1062,6 +1062,7 @@ struct ArchCPU {
-     bool prop_pauth;
-     bool prop_pauth_impdef;
-     bool prop_pauth_qarma3;
-+    bool prop_pauth_qarma5;
-     bool prop_lpa2;
- 
-     /* DCZ blocksize, in log_2(words), ie low 4 bits of DCZID_EL0 */
-diff --git a/target/arm/arm-qmp-cmds.c b/target/arm/arm-qmp-cmds.c
-index 3cc8cc738bb..33cea080d11 100644
---- a/target/arm/arm-qmp-cmds.c
-+++ b/target/arm/arm-qmp-cmds.c
-@@ -94,7 +94,7 @@ static const char *cpu_model_advertised_features[] = {
-     "sve640", "sve768", "sve896", "sve1024", "sve1152", "sve1280",
-     "sve1408", "sve1536", "sve1664", "sve1792", "sve1920", "sve2048",
-     "kvm-no-adjvtime", "kvm-steal-time",
--    "pauth", "pauth-impdef", "pauth-qarma3",
-+    "pauth", "pauth-impdef", "pauth-qarma3", "pauth-qarma5",
-     NULL
- };
- 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index ec77c5b34ad..9a193d2b489 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -520,9 +520,12 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-         }
- 
-         if (cpu->prop_pauth) {
--            if (cpu->prop_pauth_impdef && cpu->prop_pauth_qarma3) {
-+            if ((cpu->prop_pauth_impdef && cpu->prop_pauth_qarma3) ||
-+                (cpu->prop_pauth_impdef && cpu->prop_pauth_qarma5) ||
-+                (cpu->prop_pauth_qarma3 && cpu->prop_pauth_qarma5)) {
-                 error_setg(errp,
--                           "cannot enable both pauth-impdef and pauth-qarma3");
-+                           "cannot enable pauth-impdef, pauth-qarma3 and "
-+                           "pauth-qarma5 at the same time");
-                 return;
-             }
- 
-@@ -532,13 +535,15 @@ void arm_cpu_pauth_finalize(ARMCPU *cpu, Error **errp)
-             } else if (cpu->prop_pauth_qarma3) {
-                 isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, APA3, features);
-                 isar2 = FIELD_DP64(isar2, ID_AA64ISAR2, GPA3, 1);
--            } else {
-+            } else { /* default is pauth-qarma5 */
-                 isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, APA, features);
-                 isar1 = FIELD_DP64(isar1, ID_AA64ISAR1, GPA, 1);
-             }
--        } else if (cpu->prop_pauth_impdef || cpu->prop_pauth_qarma3) {
--            error_setg(errp, "cannot enable pauth-impdef or "
--                       "pauth-qarma3 without pauth");
-+        } else if (cpu->prop_pauth_impdef ||
-+                   cpu->prop_pauth_qarma3 ||
-+                   cpu->prop_pauth_qarma5) {
-+            error_setg(errp, "cannot enable pauth-impdef, pauth-qarma3 or "
-+                       "pauth-qarma5 without pauth");
-             error_append_hint(errp, "Add pauth=on to the CPU property list.\n");
-         }
-     }
-@@ -553,6 +558,8 @@ static const Property arm_cpu_pauth_impdef_property =
-     DEFINE_PROP_BOOL("pauth-impdef", ARMCPU, prop_pauth_impdef, false);
- static const Property arm_cpu_pauth_qarma3_property =
-     DEFINE_PROP_BOOL("pauth-qarma3", ARMCPU, prop_pauth_qarma3, false);
-+static Property arm_cpu_pauth_qarma5_property =
-+    DEFINE_PROP_BOOL("pauth-qarma5", ARMCPU, prop_pauth_qarma5, false);
- 
- void aarch64_add_pauth_properties(Object *obj)
- {
-@@ -573,6 +580,7 @@ void aarch64_add_pauth_properties(Object *obj)
-     } else {
-         qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_impdef_property);
-         qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_qarma3_property);
-+        qdev_property_add_static(DEVICE(obj), &arm_cpu_pauth_qarma5_property);
-     }
- }
- 
-diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
-index cfd6f773535..98d6c970ea5 100644
---- a/tests/qtest/arm-cpu-features.c
-+++ b/tests/qtest/arm-cpu-features.c
-@@ -419,21 +419,28 @@ static void pauth_tests_default(QTestState *qts, const char *cpu_type)
-     assert_has_feature_enabled(qts, cpu_type, "pauth");
-     assert_has_feature_disabled(qts, cpu_type, "pauth-impdef");
-     assert_has_feature_disabled(qts, cpu_type, "pauth-qarma3");
-+    assert_has_feature_disabled(qts, cpu_type, "pauth-qarma5");
-     assert_set_feature(qts, cpu_type, "pauth", false);
-     assert_set_feature(qts, cpu_type, "pauth", true);
-     assert_set_feature(qts, cpu_type, "pauth-impdef", true);
-     assert_set_feature(qts, cpu_type, "pauth-impdef", false);
-     assert_set_feature(qts, cpu_type, "pauth-qarma3", true);
-     assert_set_feature(qts, cpu_type, "pauth-qarma3", false);
-+    assert_set_feature(qts, cpu_type, "pauth-qarma5", true);
-+    assert_set_feature(qts, cpu_type, "pauth-qarma5", false);
-     assert_error(qts, cpu_type,
--                 "cannot enable pauth-impdef or pauth-qarma3 without pauth",
-+                 "cannot enable pauth-impdef, pauth-qarma3 or pauth-qarma5 without pauth",
-                  "{ 'pauth': false, 'pauth-impdef': true }");
-     assert_error(qts, cpu_type,
--                 "cannot enable pauth-impdef or pauth-qarma3 without pauth",
-+                 "cannot enable pauth-impdef, pauth-qarma3 or pauth-qarma5 without pauth",
-                  "{ 'pauth': false, 'pauth-qarma3': true }");
-     assert_error(qts, cpu_type,
--                 "cannot enable both pauth-impdef and pauth-qarma3",
--                 "{ 'pauth': true, 'pauth-impdef': true, 'pauth-qarma3': true }");
-+                 "cannot enable pauth-impdef, pauth-qarma3 or pauth-qarma5 without pauth",
-+                 "{ 'pauth': false, 'pauth-qarma5': true }");
-+    assert_error(qts, cpu_type,
-+                 "cannot enable pauth-impdef, pauth-qarma3 and pauth-qarma5 at the same time",
-+                 "{ 'pauth': true, 'pauth-impdef': true, 'pauth-qarma3': true,"
-+                 "  'pauth-qarma5': true }");
- }
- 
- static void test_query_cpu_model_expansion(const void *data)
--- 
-2.39.5
+
+and this one because otherwise clippy complains:
+
+diff --git b/rust/qemu-api/src/device_class.rs a/rust/qemu-api/src/device_class.rs
+index cca51fe1a98..c98f0b2c7da 100644
+--- b/rust/qemu-api/src/device_class.rs
++++ a/rust/qemu-api/src/device_class.rs
+@@ -87,7 +87,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
+              dc.vmsd = vmsd;
+          }
+          let prop = <T as DeviceImpl>::properties();
+-        if prop.len() != 0 {
++        if !prop.is_empty() {
+              bindings::device_class_set_props_n(dc, prop.as_ptr(), prop.len());
+          }
+      }
+
+Paolo
 
 
