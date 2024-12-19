@@ -4,95 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56037E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 564C3E7718A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:24:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGh-0003IR-4H; Thu, 19 Dec 2024 11:20:55 -0500
+	id 1tOJGT-0002rN-5i; Thu, 19 Dec 2024 11:20:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tOHKH-00010d-Ls
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:16:29 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tOHKC-0006PL-Pg
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:16:29 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385d7f19f20so427154f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:16:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734617783; x=1735222583; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=xh4y+WQ9eMdjdzRhDj8FZbbXuTTw6o1hds5obhvcwis=;
- b=jhti0eMJG4/TFKHAV73GSyPWZbxRpbEXB+AoVjlfonZA9XG5I9GKFWMycy4hHtzRwp
- 0NLXtFdaRMlmVgdYP404YiFYBRTywNfBw5bNSZqSuv268eBObTwOHaGerzAilAEjXqe9
- Gv4pOmmNFrUq1F/eZr0Oj3k9essLYfTokphEn+FZDNQ/yWF2y+VAbI6ATBuySiA7Q5a0
- GjOxtlX31KHeCsvj32ni9IJWttDo88hcYWoXuB3+GnMZg3NQdCd0955xCklroHsKddAC
- c48u3G/3uXTVdW8fCI1pov+se9slRCQY9RMyhWtKb26D/5cKX+opkF4lWQv6v+BGZ3EK
- nTIw==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFoa-0001oS-MB
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:39:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFoY-0005MV-O8
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:39:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734611977;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=59r7XP/SJhf6pxvDvtuLjCTjfOfzk08RQUnBdj1cK5M=;
+ b=d2H4L2fbHsWZIqldIYNp1L+v/NekEQhJYH8u07KGVBL9defouk8mvmr38aNH8oItMm5OM5
+ GaGBR70XjGKkOWMUlbEXKTpkni0zSdjuCPg6Evjt+8+0bYQeFi+8BS7bhA/34u2yiLuuAp
+ QoJ5b128WAWSzqLRQKOzRicLw/xqy+c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-16-x_hygihiMAy1lbgq12goCA-1; Thu, 19 Dec 2024 07:39:36 -0500
+X-MC-Unique: x_hygihiMAy1lbgq12goCA-1
+X-Mimecast-MFC-AGG-ID: x_hygihiMAy1lbgq12goCA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-436328fcfeeso6222335e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:39:36 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734617783; x=1735222583;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xh4y+WQ9eMdjdzRhDj8FZbbXuTTw6o1hds5obhvcwis=;
- b=PNVYFyIXXj/Nn4uRVmh9rLvSUc1D2nanASOsyrgYpQd4cBbhzGSP+vNoTLPxRSqEqP
- 9DNyQMwDlun5xro00UMSJztFASJeLU8fBwR61KwWpNVIk28uvjBiu2dA05DAuaP45OfM
- yHXsY61SWxZvBs8dJ/kIIi0RzZwNIwDQAvrAcSswK9h1zbGKWPRqAAIBwJbWUCYxHCyR
- x5g8peD4rymCHgkekEO0oNpVPfjiAaKzc6rMmU6xO9XdL6FwW6ZmlbQIKVz2kN41Lj+l
- nZy034lJyySwVkIEd+nAcvgPzAEjiRdiqG/fT3mKp8LyLD94FzCrmMauVMHPSF4epmwM
- Q+JQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4yIpT8ddJz4hlP199xJuKGHZWe2vPMaptRD8ikibEST/VKI+nayEQno1FbtQo6qnnchUr+Wp/8M0H@nongnu.org
-X-Gm-Message-State: AOJu0Yx2b3p9ZLDRCTu+CfE0TNxHt/o/roAHumwwvaOZrpaeVKYW5B63
- ws7ytRG/Xz0S/9eLOmZNcaHLyvN0hPcEhfbJmH7Haqj90+Q6aUpb
-X-Gm-Gg: ASbGnctJIq2ol94GLurBj1zJslNLuvikuYzSoLrdMpemFoo9uWbXoNs8cC5jh/QkKlZ
- OdhtnmIDnn6spSYD0PXjmatdKt+/kyni3CwhkCJ+nE/MNfLy5Ye4m1jAAuaKPIYw2ZoTpBaZKFB
- VBL78PxmfRahxZfDdNWIy/ScDsc9FXjgF6GyufivwWIGWW2hnfiipmOlEhcfIesJ3L38G37qZ+C
- DFr3hirY7Opw6T6Fans9ED3lq7SLVGAF9rtoNnky7xikFURcYRmjryeEfbW+LoB9vfLLMeFYrS9
- KP1NWGFQ2D35yumpP5gRawh3JSKWwac=
-X-Google-Smtp-Source: AGHT+IHGwuRC6/XDNQlJPXOZ0L/prmw4JG/Sqb+PxdInQ+mfIRwDtNmnOwaZ+i+0Ql8YwjfJ4Y8pMA==
-X-Received: by 2002:a5d:47a3:0:b0:385:fb66:faee with SMTP id
- ffacd0b85a97d-388e4d42ce4mr5960163f8f.18.1734617782493; 
- Thu, 19 Dec 2024 06:16:22 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-077-191-068-081.77.191.pool.telefonica.de.
- [77.191.68.81]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e1cesm1609195f8f.64.2024.12.19.06.16.21
+ d=1e100.net; s=20230601; t=1734611975; x=1735216775;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=59r7XP/SJhf6pxvDvtuLjCTjfOfzk08RQUnBdj1cK5M=;
+ b=bV5TX6BgXo3wbB++ML4PURk5/WGA4pkJRPpNBWnK6wCGjKJLOjKCzpjUU1r195qBrC
+ V41yez0hGTkI5lqYS2IEeovz1OZoBHXZwXwB6ssRup5tmzZPz6+qLVmYocNMlZtlsgdF
+ 9/+drhbp9xencxX2e9TS0XmWjkV8gKhtsrUrjqfkzHFYOCpYZIEHZnrrhYsv/DP3VKHQ
+ UJAZIfenfqbil8+A/Dl2UK1XG+Dda+f5WnVII6sp4NLF2c6X568R/nx65lp7bgFFcf4J
+ ZE2PPh5+lmee6/XE48Y+5QlExGybJgnk6Mi+O73xPmeXI56ZcCIzQhM2oY7SmBGSLDtw
+ lm7g==
+X-Gm-Message-State: AOJu0YyBHh4EsBavrPTt2kFYKDhI9ouRaSh/JobpLRWNz0CewuD4kwIf
+ PN5EOd2iptNoekCaKcCsb9M03zsMYD6AND7OhWGjeTiGXVMQD92seIP5K50Xr3QcdMdnUEuZl9z
+ 3CeKxxq1OA4r3lfVbh18xlU3DBuGQTUjYuVYjUnE4GVNQ+lfQlB9e
+X-Gm-Gg: ASbGncsAPlXlWGLqjDVM3tfO8Ms03PvcMBJayM84Bc6jp4MF0oRnlazEoCgScxmXuH0
+ D13FVo8MotHfhRwxrZMsQwmtw4Grp1InGZdQS2OXdvtNrOS0T7s39043jDG7boKtvWQT27LLL92
+ t4fWe8v7QHxiIpkt2w/EJ1O/d6Dzyr6vahm0XwuWcAvOeAazO1sCQhf7SRyNzATXAsdwpZ1tEpW
+ q9L/ANNYJRy/BCakexP4T6oI1F57ohMZ6zan0wc2FDyFpxFcOKJ9OAu2Zx3hxfBGOAqN6hq3oJE
+ d4OHvdXsuj4UZi38NTd16Q0gOZdD/afyxLSnWYNg9UH/kYqyIrdZIlbIMrme4Ehtmc//KXkBEUS
+ f3ZmWxg==
+X-Received: by 2002:a05:600c:450a:b0:434:f4f9:8104 with SMTP id
+ 5b1f17b1804b1-43655428a0bmr54449055e9.33.1734611975108; 
+ Thu, 19 Dec 2024 04:39:35 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGjQJH2Xu8yfM5YNoZfem/fUqjGeAXTA67E2WjrxjFkCYRPk2orACbPTn5ngY2GfmGQ/NFyCg==
+X-Received: by 2002:a05:600c:450a:b0:434:f4f9:8104 with SMTP id
+ 5b1f17b1804b1-43655428a0bmr54448805e9.33.1734611974724; 
+ Thu, 19 Dec 2024 04:39:34 -0800 (PST)
+Received: from ?IPV6:2003:cb:c749:6600:b73a:466c:e610:686?
+ (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
+ [2003:cb:c749:6600:b73a:466c:e610:686])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b119b6sm52376225e9.22.2024.12.19.04.39.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:16:22 -0800 (PST)
-Date: Thu, 19 Dec 2024 14:16:20 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>,
- Phil Dennis-Jordan <phil@philjordan.eu>
-CC: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/2=5D_hw/usb/hcd-xhci-p?=
- =?US-ASCII?Q?ci=3A_Make_PCI_device_more_configurable?=
-In-Reply-To: <ba2749f3-8cc4-0ea6-57dd-aa122403b937@eik.bme.hu>
-References: <20241212085207.1439501-1-npiggin@gmail.com>
- <20241212085207.1439501-2-npiggin@gmail.com>
- <CAAibmn3NsDewTEFdWoR=VpTRSb5C67bFMYXnf74zBQOwWCLi1Q@mail.gmail.com>
- <D6EFJHL1PDCX.2TZC2E8DZLNU3@gmail.com>
- <CAAibmn3STc4hWJPfDtdp2rDscx_8cO=cO4JA=qhneif03Jf9QA@mail.gmail.com>
- <ba2749f3-8cc4-0ea6-57dd-aa122403b937@eik.bme.hu>
-Message-ID: <5FF37BC7-D27E-439C-97CA-D3E397056404@gmail.com>
+ Thu, 19 Dec 2024 04:39:33 -0800 (PST)
+Message-ID: <97e89fe6-d2f9-4e48-b284-4593d07bcd68@redhat.com>
+Date: Thu, 19 Dec 2024 13:39:32 +0100
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/15] Host Memory Backends and Memory devices queue
+ 2024-12-18
+To: Thomas Huth <thuth@redhat.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+References: <20241218105303.1966303-1-david@redhat.com>
+ <CAJSP0QUoerckBWX=0PD_82jFwVbmtvftWf5QqSWxpK0Ttc+uvQ@mail.gmail.com>
+ <2e6400d9-6fee-41ed-a317-329f275912c6@redhat.com>
+ <d19ab3d3-737d-4faa-a7d7-639b4ea3b172@redhat.com>
+ <ed949070-bb79-4357-b379-9374c40433bc@linux.ibm.com>
+ <728b07ae-17aa-49ca-967f-a35d62f8cc32@redhat.com>
+ <ed0d71d2-8ea0-4d3d-8458-774f7fcb479f@redhat.com>
+Content-Language: en-US
+From: David Hildenbrand <david@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <ed0d71d2-8ea0-4d3d-8458-774f7fcb479f@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,138 +168,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 19.12.24 13:20, Thomas Huth wrote:
+> On 19/12/2024 12.57, David Hildenbrand wrote:
+>> On 19.12.24 12:43, Christian Borntraeger wrote:
+>>> Am 19.12.24 um 12:18 schrieb David Hildenbrand:
+>>>> The following on top seems to make everything happy. I wish the
+>>>> CONFIG_S390_CCW_VIRTIO stuff would't have to be so complicated, just to
+>>>> handle odd configs that don't really make sense.
+>>>
+>>> WOuld it be possible to rid of this config?
+>>
+>> I was asking myself the same: when does it make sense to build for s390x
+>> system without CONFIG_S390_CCW_VIRTIO. But other archs that also have a
+>> single machine seem to be doing the same thing.
+>>
+>> We wouldn't want to have the option to disable it, but "bool" gives you the
+>> option to do that.
+> 
+> Since a while, (almost) all targets can be compiled without any machine
+> except for the "none" machine, so I think we should not diverge in the s390x
+> just for the sake of it.
+
+Well, okay, although such a qemu-system-s390x is of questionable use. :)
+
+At least hypercalls/skeys/stattrib only applies to the CONFIG_S390_CCW_VIRTIO
+machine, so maybe more files can be moved under CONFIG_S390_CCW_VIRTIO later.
+
+Anyhow, sounds like a bigger cleanup. The following on top seems to
+make gitlab CI happy, without messing with config options:
 
 
-Am 19=2E Dezember 2024 09:23:13 UTC schrieb BALATON Zoltan <balaton@eik=2E=
-bme=2Ehu>:
->On Wed, 18 Dec 2024, Phil Dennis-Jordan wrote:
->> On Wed, 18 Dec 2024 at 02:19, Nicholas Piggin <npiggin@gmail=2Ecom> wro=
-te:
->>> On Thu Dec 12, 2024 at 8:41 PM AEST, Phil Dennis-Jordan wrote:
->>>> Hey Nicholas,
->>>>=20
->>>> I'm not an XHCI & PCI expert (yet?) so apologies if I've got some of =
-this
->>>> wrong, but I've asked some questions and made some comments inline:
->>>=20
->>> Hey Phil,
->>>=20
->>> Thanks for the review, looks like you are the expert now :)
->>>=20
->>=20
->> The "hot potato" method for determining maintainership=2E :-)
->
->That's how I got some parts I'm maintainer of now=2E :-)
->
->[=2E=2E=2E]
->>>> On Thu, 12 Dec 2024 at 09:52, Nicholas Piggin <npiggin@gmail=2Ecom> w=
-rote:
->>>> Surely we should only propagate the error and fail realize() iff s->m=
-six
->>> is
->>>> ON_OFF_AUTO_ON?
->>>>=20
->>>> For ON_OFF_AUTO_AUTO, msix_init returning failure isn't a critical er=
-ror=2E
->>>=20
->>> Yep you're right=2E=2E=2E you had been testing with msix disabled=2E I=
- wonder if
->>> there is a good way to force fail this in qtests?
->>>=20
->>=20
->> I'm really the wrong person to ask about qtest, I'm only just beginning=
- to
->> get to grips with it=2E It seems the only real reason msix_init fails o=
-ther
->> than misconfiguration of the device/BAR is when msi_nonbroken =3D false=
-=2E
->>=20
->> At least on x86(-64), msi_nonbroken=3Dtrue is unconditionally set in
->> apic_realize()=2E (I think real hardware would not support MSI(-X) on t=
-he
->> i440FX chipset - I was fairly certain it was the PCI root/southbridge
->> catching the writes to the reserved memory region, and I didn't think t=
-he
->> PIIX did this; but at least in QEMU it doesn't seem to be implemented i=
-n a
->> chipset-dependent way=2E) I'm not sure it's possible to run QEMU withou=
-t an
->> APIC?
->
->There's isapc but you can't attach PCI card to that=2E It seems according=
- to -machine pc,help that there's a PIC=3D<OnOffAuto> option but no similar=
- for APIC=2E Maybe that could be added but not sure it would work=2E (Addin=
-g Bernhard to cc to quickly pass on the potato=2E)
+diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
+index 094435cd3b..3bbebfd817 100644
+--- a/hw/s390x/meson.build
++++ b/hw/s390x/meson.build
+@@ -12,7 +12,6 @@ s390x_ss.add(files(
+    's390-pci-inst.c',
+    's390-skeys.c',
+    's390-stattrib.c',
+-  's390-hypercall.c',
+    'sclp.c',
+    'sclpcpu.c',
+    'sclpquiesce.c',
+@@ -28,7 +27,10 @@ s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
+  s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
+    'tod-tcg.c',
+  ))
+-s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files('s390-virtio-ccw.c'))
++s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
++  's390-virtio-ccw.c',
++  's390-hypercall.c',
++))
+  s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
+  s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
+  
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index 248566f8dc..097ec78826 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -127,7 +127,7 @@ static void subsystem_reset(void)
+  static void s390_set_memory_limit(S390CcwMachineState *s390ms,
+                                    uint64_t new_limit)
+  {
+-    uint64_t hw_limit;
++    uint64_t hw_limit = 0;
+      int ret = 0;
+  
+      assert(!s390ms->memory_limit && new_limit);
+@@ -145,13 +145,6 @@ static void s390_set_memory_limit(S390CcwMachineState *s390ms,
+      s390ms->memory_limit = new_limit;
+  }
+  
+-uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
+-{
+-    /* We expect to be called only after the limit was set. */
+-    assert(s390ms->memory_limit);
+-    return s390ms->memory_limit;
+-}
+-
+  static void s390_set_max_pagesize(S390CcwMachineState *s390ms,
+                                    uint64_t pagesize)
+  {
+diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+index 5a730f5d07..599740a998 100644
+--- a/include/hw/s390x/s390-virtio-ccw.h
++++ b/include/hw/s390x/s390-virtio-ccw.h
+@@ -35,7 +35,12 @@ struct S390CcwMachineState {
+      SCLPDevice *sclp;
+  };
+  
+-uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms);
++static inline uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
++{
++    /* We expect to be called only after the limit was set. */
++    assert(s390ms->memory_limit);
++    return s390ms->memory_limit;
++}
+  
+  #define S390_PTF_REASON_NONE (0x00 << 8)
+  #define S390_PTF_REASON_DONE (0x01 << 8)
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 3732d79185..8002b1e2d0 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -43,6 +43,7 @@
+  #include "hw/s390x/s390-pci-inst.h"
+  #include "hw/boards.h"
+  #include "hw/s390x/tod.h"
++#include CONFIG_DEVICES
+  #endif
+  
+  /* #define DEBUG_HELPER */
+@@ -117,12 +118,14 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
+  
+      switch (num) {
++#ifdef CONFIG_S390_CCW_VIRTIO
+      case 0x500:
+          /* QEMU/KVM hypercall */
+          bql_lock();
+          handle_diag_500(env_archcpu(env), GETPC());
+          bql_unlock();
+          r = 0;
+          break;
++#endif /* CONFIG_S390_CCW_VIRTIO */
+      case 0x44:
+          /* yield */
+          r = 0;
 
-I agree, the only x86 machine with no APIC is the isapc machine=2E All oth=
-ers (i440fx, q35, microvm) have it always enabled=2E I guess there is just =
-no point in disabling it since the APIC is part of the architecture for age=
-s and SMP requires it=2E Although PIIX3+ didn't have an APIC built-in it ha=
-d interfaces for handling a dedicated one which is basically what QEMU emul=
-ates=2E
+-- 
+Cheers,
 
-Best regards,
-Bernhard
+David / dhildenb
 
->
->Regards,
->BALATON Zoltan
->
->> On aarch64, the GICv3 needs to explicitly enable support (via the ITS),=
- so
->> perhaps it's possible to set up an aarch64 qtest with ITS disabled? It
->> looks like the 'virt' machine type only supports the ITS from version 6=
-=2E2,
->> so older versions will disable it=2E
->>=20
->> Sorry, clutching at straws here=2E
->>=20
->>=20
->>>>> +
->>>>> +        pci_register_bar(dev, s->msix_bar_nr,
->>>>> +                         PCI_BASE_ADDRESS_SPACE_MEMORY |
->>>>> +                         PCI_BASE_ADDRESS_MEM_TYPE_64,
->>>>> +                         msix_bar);
->>>>>=20
->>>>=20
->>>> Is it safe to call pci_register_bar() again for the msix_bar_nr =3D 0=
- case?
->>>> Even if it is safe, is it sensible? If we're calling it twice for the
->>> same
->>>> BAR, and the arguments of either of the calls changes in future, the
->>> other
->>>> needs to change too=2E Doesn't seem ideal=2E
->>>=20
->>> Good catch=2E It looks like it "works" so long as the bar wasn't mappe=
-d,
->>> but I'm sure bad practice=2E=2E=2E Interesting there is no assertion i=
-n
->>> there though=2E I'll fix it though=2E
->>>=20
->>=20
->> I notice there's a msix_init_exclusive_bar()=E2=80=A6 I wonder if it'd =
-be simpler
->> to use that and modify it so it allows you to choose a size and layout =
-for
->> the BAR, rather than adding all that extra code to deal with the extra =
-BAR
->> in the XHCI?
->> (It already calls pci_register_bar() and msix_init() internally, but se=
-ems
->> to set the BAR's size to 4096 and places the PBA at halfway through the
->> BAR=2E Perhaps rename it to something like
->> msix_init_exclusive_bar_with_layout and pass the bar_size and
->> bar_pba_offset in as parameters; then make msix_init_exclusive_bar() a
->> wrapper for that function with the existing defaults for those variable=
-s?)
->>=20
->> Just kicking around some ideas here, I have no idea if that actually en=
-ds
->> up making things simpler=E2=80=A6
->>=20
->>=20
->>> Thanks,
->>> Nick
->>>=20
->> 
 
