@@ -4,59 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCB4E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 07:35:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4819DE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 07:37:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOB37-0007Iu-8i; Thu, 19 Dec 2024 02:34:21 -0500
+	id 1tOB5Z-0000CB-CM; Thu, 19 Dec 2024 02:36:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tOB2y-0007Fz-24; Thu, 19 Dec 2024 02:34:16 -0500
-Received: from mgamail.intel.com ([198.175.65.13])
+ id 1tOB5T-0008Vv-2d; Thu, 19 Dec 2024 02:36:47 -0500
+Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tOB2w-0008Hs-6n; Thu, 19 Dec 2024 02:34:11 -0500
+ id 1tOB5R-0000Lc-4E; Thu, 19 Dec 2024 02:36:46 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734593651; x=1766129651;
+ t=1734593805; x=1766129805;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=VSXnfC/+nR0iFTlqbuV2xSEtbkIHUp5UGQVwwn/8ZoE=;
- b=CpmF1QvZGOmtzjxGskwCbbf4UKwX5W4flXOSPbboXwFO7JtMU/MAMZ8A
- hdl4UVinlLiMgL2pj2zbfZOVE9+eLodjuOMJGHyPJxSkvdKlnM8K3Bait
- xE3bthntyoUPlY5hQG0wGsSWFTZkxUDLp12RKOs1D8SzlyX4PoIifPx/p
- RaWP2vyUEp9W7VSCjozDU29jtHmR7bVRS+nULfwQgVvAjZXur/sktQ5Rr
- z2jUr5+trke9HEeKMly3sYc/p+Km3XBQNn55ATm7F7OZR+WGQRPB5hwvl
- Ef1qqJJjwrlMI21Oa6zi7SLcN6bTpT1RydBfyx4VVcVTqJDVdsVfpRhtC g==;
-X-CSE-ConnectionGUID: lDqKUYgXQL61Z0dkTvONOA==
-X-CSE-MsgGUID: O6Yez/ByS6C4rS/E8DVMww==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="46100296"
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="46100296"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 23:34:06 -0800
-X-CSE-ConnectionGUID: 0lqVE+CcSoiO6tdt4Y203w==
-X-CSE-MsgGUID: JhoetIzvSrKUVMGAgJS5Lg==
+ bh=Gvc0SwrNU+az+om9HHFCHVWCt6tpqRvu0V8LhzumCaQ=;
+ b=dy/XwAGHrQlxUYYJMTOuBYQyPUcgyJYB4uD/7T6P78pvahOO3sYQdpb4
+ msh/dliixSmuz5er1meqIqbaPrZpcCZJ20OHep400zdwMsbdNCknLCfbh
+ NapBR3A7d8XlrXvo/SJXmD8W+vKOTU00UCA6hSPrsONpYWdAoesdEmr8O
+ Sc9iyBxTFcRZLwTxR1q2wfTZUomGBwrIue1AT7SI+TNT7V/0/ijGPqhLY
+ spT3Q+1cMgEUacz2FSU3te/1mqE+bvtCsHCXk48gZaY8FMSGK0xeLmDzu
+ Z5JfD3G31UP2Tnugdw4aiS9J3ylkzz5IRcIyand9WrdRFWk/GlZh2XyZ7 g==;
+X-CSE-ConnectionGUID: 6IHJ7FJwQVe6l9CIDz/gsg==
+X-CSE-MsgGUID: rcfn521zSxOrVKYbGSumlw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="52501878"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="52501878"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 23:36:42 -0800
+X-CSE-ConnectionGUID: Iqt26HL5RCukxSoZhzGQUg==
+X-CSE-MsgGUID: 92/48LjAQry/y59yfZf+tA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="102966802"
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="129089182"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 18 Dec 2024 23:34:06 -0800
-Date: Thu, 19 Dec 2024 15:52:45 +0800
+ by fmviesa001.fm.intel.com with ESMTP; 18 Dec 2024 23:36:41 -0800
+Date: Thu, 19 Dec 2024 15:55:21 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 6/7] rust: pl011: fix migration stream
-Message-ID: <Z2PQzYc3aoyElDSn@intel.com>
+Subject: Re: [PATCH 7/7] rust: pl011: simplify handling of the FIFO enabled
+ bit in LCR
+Message-ID: <Z2PRaazDXAkN65hF@intel.com>
 References: <20241212172209.533779-1-pbonzini@redhat.com>
- <20241212172209.533779-7-pbonzini@redhat.com>
+ <20241212172209.533779-8-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212172209.533779-7-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241212172209.533779-8-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -81,52 +82,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 06:22:03PM +0100, Paolo Bonzini wrote:
-> Date: Thu, 12 Dec 2024 18:22:03 +0100
+On Thu, Dec 12, 2024 at 06:22:04PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 12 Dec 2024 18:22:04 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 6/7] rust: pl011: fix migration stream
+> Subject: [PATCH 7/7] rust: pl011: simplify handling of the FIFO enabled bit
+>  in LCR
 > X-Mailer: git-send-email 2.47.1
 > 
-> The Rust vmstate macros lack the type-safety of their C equivalents (so
-> safe, much abstraction), and therefore they were predictably wrong.
-
-Yes, this makes Rust more unsafe than C code...
-
-> The registers have already been changed to 32-bits in the previous patch,
-> but read_pos/read_count/read_trigger also have to be u32 instead of usize.
-> The easiest way to do so is to let the FIFO use u32 indices instead
-> of usize.
-> 
-> My plan for making VMStateField typesafe is to have a trait to retrieve
-> a basic VMStateField; for example something like vmstate_uint32 would
-> become an implementation of the VMState trait on u32.  Then you'd write
-> something like "vmstate_of!(Type, field).with_version_id(2)".  That is,
-> vmstate_of retrieves the basic VMStateField and fills in the offset,
-> and then more changes can be applied on top.
+> Use ==/!= instead of going through bool and xor.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/hw/char/pl011/src/device.rs       | 38 ++++++++++++++++++++++----
->  rust/hw/char/pl011/src/device_class.rs |  8 +++---
->  rust/qemu-api/src/vmstate.rs           | 22 ---------------
->  3 files changed, 36 insertions(+), 32 deletions(-)
+>  rust/hw/char/pl011/src/device.rs | 6 ++----
+>  rust/hw/char/pl011/src/lib.rs    | 6 ------
+>  2 files changed, 2 insertions(+), 10 deletions(-)
 > 
-> @@ -64,9 +64,9 @@ extern "C" fn pl011_post_load(opaque: *mut c_void, version_id: c_int) -> c_int {
->          vmstate_uint32!(ibrd, PL011State),
->          vmstate_uint32!(fbrd, PL011State),
->          vmstate_uint32!(ifl, PL011State),
-> -        vmstate_int32!(read_pos, PL011State),
-> -        vmstate_int32!(read_count, PL011State),
-> -        vmstate_int32!(read_trigger, PL011State),
-> +        vmstate_uint32!(read_pos, PL011State),
-> +        vmstate_uint32!(read_count, PL011State),
-> +        vmstate_uint32!(read_trigger, PL011State),
-
-uint32 and int32 types both use `qemu_put_be32s` and `qemu_get_be32s`
-to save and store vmstate, so I think it's safe to convert
-vmstate_int32! to vmstate_uint32! here.
-
->      },
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
