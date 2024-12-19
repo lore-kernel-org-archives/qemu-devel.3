@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA00E7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60F95E7718A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGw-0004Zy-0R; Thu, 19 Dec 2024 11:21:10 -0500
+	id 1tOJGt-0004JG-Gx; Thu, 19 Dec 2024 11:21:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHiU-00038w-TC
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:30 -0500
+ id 1tOHiP-00038c-5i
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:25 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHiR-0002Lf-8B
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:28 -0500
+ id 1tOHiN-0002LM-7u
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734619286;
+ s=mimecast20190719; t=1734619281;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=CfUMyzBxkenPRXVObBB8fXXXKSaqPam0WqFh0G56Vy0=;
- b=RhPn7rXK6496eeGX5s9GBzjMNfnQpXyQ6RFHh1/dTwTkpRlqzCE7/WpUyfuEX+i6CMoVjg
- POxVhKx7UrsK/ijiqvM4wTlHG8V11BCSoo1/gy4yeYlYHWdh9U0vZrpsRSnx6NuFmD5xiL
- N8raYasI91MudL5bX95qFMC71R1IMwY=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=76jSE4Bt6ErxlHP8hWQFcVkQDv1Z2knZrsKerVGsv5M=;
+ b=Boe28twKIXWZl6wQlEvgaW7C8bJw9NSTxC+BzmE4Rgd18qE+j/ZiURaNIKHqARle3pc+GI
+ gNHycaLfFrmJF+lZ/ioP8vkFbvth3onmkA6mtI896ASEn5FP0U1RmjXKHrywqdYojqL6Ei
+ 11uOd+arg5IGmI2S7RpL7vCsreIns4g=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-264-E3e2hNHrPZeNPBrzQritSA-1; Thu, 19 Dec 2024 09:41:25 -0500
-X-MC-Unique: E3e2hNHrPZeNPBrzQritSA-1
-X-Mimecast-MFC-AGG-ID: E3e2hNHrPZeNPBrzQritSA
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-43624b08181so5260835e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:25 -0800 (PST)
+ us-mta-620-d06MBCg0MoytmS_JmX5LKw-1; Thu, 19 Dec 2024 09:41:20 -0500
+X-MC-Unique: d06MBCg0MoytmS_JmX5LKw-1
+X-Mimecast-MFC-AGG-ID: d06MBCg0MoytmS_JmX5LKw
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4361c040ba8so5411155e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:20 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734619284; x=1735224084;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CfUMyzBxkenPRXVObBB8fXXXKSaqPam0WqFh0G56Vy0=;
- b=szNLgN61yO/MW/jmMBiDebKw6+yPRfyYapgr8Y3g8wLHTWPl3eCDHgaBKMf9v9qxVY
- oHbjJcGyhWbM+6QR37bL5j2L3X6mOlimrNaCo9wuEr5HLMA21kbPvX3ZXGtAU2Aa70mA
- bcvq+CsIoYVHWvyHbKS9DNLxDJQTJLHZCMJ8t5NXWCp5yYV1yIA7OZs1lO7KL9sRvqAs
- O9lD87Jf665ehplfmY8/NwauiXLn1IRQMwP8sv1WRobHkUfljEMeG8E/jtGh8iqvMNmO
- sPuMKzy8JNumogbrl3zaoHuoO9L+LHIDjzpwQ1qzUVUBgNOQAGsfbQnFTMkZL9BMSyA1
- CRIQ==
-X-Gm-Message-State: AOJu0YyfCevDnHXYn9aBrL8/1R4gpTpc7WK5Wu6b175ZcR+gVwyDamA+
- l8Itdrs9HhCp4HPrLLkISZdKuxA8SxWp4ULGWc9zltWZXNBiyIk3QhUPvTgLHk99zZFUOgO+fz4
- cnqVrcPEJLjOUAtxZRhBlZGV5Us658llT6pu7cz9gTfBGeJmhkCDa8vceF6pZ/1qpKHqPju2h7Y
- YmqNC5wmpFPcpYIOggjwaCZkdB0v8UTFPzYoE=
-X-Gm-Gg: ASbGncv7qrNd5obd2REtZHUrac0Zk3JFCWLHLK5TssNJ3Cv9GYw6tRhMNrjONQHYBrm
- JWJ2GoQYXMnb/BfM0MjHz6FfjxlCxDW3tPpoL9uMR9YhcJMpgSMw0BGqo/jqt/6nA2Y90OSfnFe
- Muhz5yK+gMRGv6I3PTHvUXNdxSBZ7tmKS7ssBKL98b/7NNh0BQaSidDSK4xCvC3Moks9lIYT4dW
- wUEm0KHwyg0VPsYxgV3dwXLF8sab2QsaHfmkaA2fWBc/IZ1EZC047uisslafFAQjYAcqIJHbUUB
- h1+gllDn/Lfjm/zyYCRp1Mho5lGAlBJy/TG4JlV1
-X-Received: by 2002:a05:600c:3b98:b0:434:e69c:d338 with SMTP id
- 5b1f17b1804b1-4365c775994mr29757395e9.5.1734619283909; 
- Thu, 19 Dec 2024 06:41:23 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFwW+mEvolI/hBMEH/VMiivF08wHGLY3GmEDRdNEgw3Gd3twnsX+9fAxYHplsxuAe36Lw4IIw==
-X-Received: by 2002:a05:600c:3b98:b0:434:e69c:d338 with SMTP id
- 5b1f17b1804b1-4365c775994mr29756945e9.5.1734619283231; 
- Thu, 19 Dec 2024 06:41:23 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734619279; x=1735224079;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=76jSE4Bt6ErxlHP8hWQFcVkQDv1Z2knZrsKerVGsv5M=;
+ b=eIi3p03TId9oTwJszVbi0sQnObVU6VzHsH2851EOdtcNHVMX7zw95FFbz5MA5XvdCv
+ 6CuoMbq0K+ZyRzFAOliOlhPh7tPLdU1JjBO53VOKt2xjOaQBJ8Qgq4oYuIrnJNnuhi0R
+ pYpgBfz+Yv1JZOdglsdnl/URBb2h1uAqaWlU9CcObzTBCs+M1ci/rmDFBnQyGjrrDIkp
+ 0fuCN6qwasQN9xssnUuvWajDxp5H7H9i/GFvVPsHs5C2hHFo6VJwOC4tvrgcI6Fgf7os
+ sHughJ9+n1ayS1ndSIAy4XAAAfNrDK62nMMdQ4I7s1ydqx0dHVDiWqEGnTeN5/8TM/ti
+ AHaw==
+X-Gm-Message-State: AOJu0YyZ2v7K+D5tUpmIGMEe7/+9ZGs6MojnyBnqoEtlI78E4iw5dqM6
+ 4pMDz6OdAAnNF0SeZlxA/3uYqcrFXqyHDBTThq7bUY6F27eZPMxYvxhpOoqd9rb6yX0itFuup+k
+ JJR8znj3fCxut8u7m4D+tLbr/te3HN2XWylC9aT+wN/mjz5wk1xonQZH2el45DQc9fNEjpK7fV0
+ e2Je5UGrGGBZaxJ3uw4Hu+5rdoKgZrvt0qJhQ=
+X-Gm-Gg: ASbGnctC+o7L43iFuvfjYhTNx4q+RgdQjmsl9+Ju98Vj00vgxOfDcEAxfRUQH5pELES
+ b384mthE7dj95HV+HZ8cnLoh1kOQ6mYybQ5p0peRVwYVWA1Myv/oV/IPhzSur7FXTcDmT/eOKaw
+ iZaePdfLPD7HvutzYdNAtA9Q5kfMJrCCH04u9rvfz7sdNB0UbNDDt4954jBWs9bhGUa4qsugQjs
+ brKP9g/I5Kt5aJ563SacqCAEzif1TSTSZ8RR8r7wI+fYkXd7wQ31qH2Ornq+E+rcLnKT21MVIWv
+ KI9sbnG8AJHdVdolitu4+i661bw7qEZA5uILZnbV
+X-Received: by 2002:a7b:cde1:0:b0:436:5165:f21f with SMTP id
+ 5b1f17b1804b1-4365c7c9713mr26042265e9.26.1734619279292; 
+ Thu, 19 Dec 2024 06:41:19 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFXT8RyUcO8QSl9OvKQDVO5nyz9LKZerDZif2ke4kT8zU00teSon3++Ze8gcqOY1FzAuvDxAA==
+X-Received: by 2002:a7b:cde1:0:b0:436:5165:f21f with SMTP id
+ 5b1f17b1804b1-4365c7c9713mr26041875e9.26.1734619278723; 
+ Thu, 19 Dec 2024 06:41:18 -0800 (PST)
 Received: from localhost
  (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
  [2003:cb:c749:6600:b73a:466c:e610:686])
  by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-436611ea3e0sm20239125e9.7.2024.12.19.06.41.22
+ 5b1f17b1804b1-43656b119ccsm53830355e9.24.2024.12.19.06.41.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:41:22 -0800 (PST)
+ Thu, 19 Dec 2024 06:41:17 -0800 (PST)
 From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -86,14 +85,12 @@ Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Janosch Frank <frankja@linux.ibm.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 02/14] s390x/s390-virtio-hcall: remove hypercall
- registration mechanism
-Date: Thu, 19 Dec 2024 15:41:03 +0100
-Message-ID: <20241219144115.2820241-3-david@redhat.com>
+Subject: [PATCH v3 00/14] s390x: virtio-mem support
+Date: Thu, 19 Dec 2024 15:41:01 +0100
+Message-ID: <20241219144115.2820241-1-david@redhat.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
-References: <20241219144115.2820241-1-david@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -120,284 +117,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nowadays, we only have a single machine type in QEMU, everything is based
-on virtio-ccw and the traditional virtio machine does no longer exist. No
-need to dynamically register diag500 handlers. Move the two existing
-handlers into s390-virtio-hcall.c.
+Resending it with minor make-weird-things-compile fixes. Will queue this
+shortly again + resend the PULL request if there are no comments. Based on
+current master.
 
-Message-ID: <20241008105455.2302628-3-david@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- hw/s390x/meson.build           |  6 ++--
- hw/s390x/s390-virtio-ccw.c     | 58 ------------------------------
- hw/s390x/s390-virtio-hcall.c   | 65 +++++++++++++++++++++++++---------
- hw/s390x/s390-virtio-hcall.h   |  2 --
- target/s390x/kvm/kvm.c         |  5 ++-
- target/s390x/tcg/misc_helper.c |  3 ++
- 6 files changed, 60 insertions(+), 79 deletions(-)
+There is really not much left to do on s390x, because virtio-mem already
+implements most things we need today (e.g., early-migration,
+unplugged-inaccessible). The biggest part of this series is just doing what
+we do with virtio-pci, wiring it up in the machine hotplug handler and ...
+well, messing with the physical memory layout where we can now exceed
+initial RAM size and have sparsity (memory holes).
 
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 482fd13420..d6c8c33915 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -12,7 +12,6 @@ s390x_ss.add(files(
-   's390-pci-inst.c',
-   's390-skeys.c',
-   's390-stattrib.c',
--  's390-virtio-hcall.c',
-   'sclp.c',
-   'sclpcpu.c',
-   'sclpquiesce.c',
-@@ -28,7 +27,10 @@ s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
- s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
-   'tod-tcg.c',
- ))
--s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files('s390-virtio-ccw.c'))
-+s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
-+  's390-virtio-ccw.c',
-+  's390-virtio-hcall.c',
-+))
- s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
- s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
- 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index f2a17ecace..b0edaa0872 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -16,11 +16,8 @@
- #include "exec/ram_addr.h"
- #include "exec/confidential-guest-support.h"
- #include "hw/boards.h"
--#include "hw/s390x/s390-virtio-hcall.h"
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/s390_flic.h"
--#include "hw/s390x/ioinst.h"
--#include "hw/s390x/css.h"
- #include "virtio-ccw.h"
- #include "qemu/config-file.h"
- #include "qemu/ctype.h"
-@@ -124,58 +121,6 @@ static void subsystem_reset(void)
-     }
- }
- 
--static int virtio_ccw_hcall_notify(const uint64_t *args)
--{
--    uint64_t subch_id = args[0];
--    uint64_t data = args[1];
--    SubchDev *sch;
--    VirtIODevice *vdev;
--    int cssid, ssid, schid, m;
--    uint16_t vq_idx = data;
--
--    if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
--        return -EINVAL;
--    }
--    sch = css_find_subch(m, cssid, ssid, schid);
--    if (!sch || !css_subch_visible(sch)) {
--        return -EINVAL;
--    }
--
--    vdev = virtio_ccw_get_vdev(sch);
--    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
--        return -EINVAL;
--    }
--
--    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
--        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
--                                          (data >> 16) & 0xFFFF);
--    }
--
--    virtio_queue_notify(vdev, vq_idx);
--    return 0;
--}
--
--static int virtio_ccw_hcall_early_printk(const uint64_t *args)
--{
--    uint64_t mem = args[0];
--    MachineState *ms = MACHINE(qdev_get_machine());
--
--    if (mem < ms->ram_size) {
--        /* Early printk */
--        return 0;
--    }
--    return -EINVAL;
--}
--
--static void virtio_ccw_register_hcalls(void)
--{
--    s390_register_virtio_hypercall(KVM_S390_VIRTIO_CCW_NOTIFY,
--                                   virtio_ccw_hcall_notify);
--    /* Tolerate early printk. */
--    s390_register_virtio_hypercall(KVM_S390_VIRTIO_NOTIFY,
--                                   virtio_ccw_hcall_early_printk);
--}
--
- static void s390_memory_init(MemoryRegion *ram)
- {
-     MemoryRegion *sysmem = get_system_memory();
-@@ -296,9 +241,6 @@ static void ccw_init(MachineState *machine)
-                               OBJECT(dev));
-     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
- 
--    /* register hypercalls */
--    virtio_ccw_register_hcalls();
--
-     s390_enable_css_support(s390_cpu_addr2state(0));
- 
-     ret = css_create_css_image(VIRTUAL_CSSID, true);
-diff --git a/hw/s390x/s390-virtio-hcall.c b/hw/s390x/s390-virtio-hcall.c
-index ec7cf8beb3..ca49e3cd22 100644
---- a/hw/s390x/s390-virtio-hcall.c
-+++ b/hw/s390x/s390-virtio-hcall.c
-@@ -11,31 +11,64 @@
- 
- #include "qemu/osdep.h"
- #include "cpu.h"
-+#include "hw/boards.h"
- #include "hw/s390x/s390-virtio-hcall.h"
-+#include "hw/s390x/ioinst.h"
-+#include "hw/s390x/css.h"
-+#include "virtio-ccw.h"
- 
--#define MAX_DIAG_SUBCODES 255
-+static int handle_virtio_notify(uint64_t mem)
-+{
-+    MachineState *ms = MACHINE(qdev_get_machine());
- 
--static s390_virtio_fn s390_diag500_table[MAX_DIAG_SUBCODES];
-+    if (mem < ms->ram_size) {
-+        /* Early printk */
-+        return 0;
-+    }
-+    return -EINVAL;
-+}
- 
--void s390_register_virtio_hypercall(uint64_t code, s390_virtio_fn fn)
-+static int handle_virtio_ccw_notify(uint64_t subch_id, uint64_t data)
- {
--    assert(code < MAX_DIAG_SUBCODES);
--    assert(!s390_diag500_table[code]);
-+    SubchDev *sch;
-+    VirtIODevice *vdev;
-+    int cssid, ssid, schid, m;
-+    uint16_t vq_idx = data;
-+
-+    if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
-+        return -EINVAL;
-+    }
-+    sch = css_find_subch(m, cssid, ssid, schid);
-+    if (!sch || !css_subch_visible(sch)) {
-+        return -EINVAL;
-+    }
- 
--    s390_diag500_table[code] = fn;
-+    vdev = virtio_ccw_get_vdev(sch);
-+    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
-+        return -EINVAL;
-+    }
-+
-+    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
-+        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
-+                                          (data >> 16) & 0xFFFF);
-+    }
-+
-+    virtio_queue_notify(vdev, vq_idx);
-+    return 0;
- }
- 
- int s390_virtio_hypercall(CPUS390XState *env)
- {
--    s390_virtio_fn fn;
--
--    if (env->regs[1] < MAX_DIAG_SUBCODES) {
--        fn = s390_diag500_table[env->regs[1]];
--        if (fn) {
--            env->regs[2] = fn(&env->regs[2]);
--            return 0;
--        }
--    }
-+    const uint64_t subcode = env->regs[1];
- 
--    return -EINVAL;
-+    switch (subcode) {
-+    case KVM_S390_VIRTIO_NOTIFY:
-+        env->regs[2] = handle_virtio_notify(env->regs[2]);
-+        return 0;
-+    case KVM_S390_VIRTIO_CCW_NOTIFY:
-+        env->regs[2] = handle_virtio_ccw_notify(env->regs[2], env->regs[3]);
-+        return 0;
-+    default:
-+        return -EINVAL;
-+    }
- }
-diff --git a/hw/s390x/s390-virtio-hcall.h b/hw/s390x/s390-virtio-hcall.h
-index 3ae6d6ae3a..3d9fe147d2 100644
---- a/hw/s390x/s390-virtio-hcall.h
-+++ b/hw/s390x/s390-virtio-hcall.h
-@@ -18,8 +18,6 @@
- /* The only thing that we need from the old kvm_virtio.h file */
- #define KVM_S390_VIRTIO_NOTIFY 0
- 
--typedef int (*s390_virtio_fn)(const uint64_t *args);
--void s390_register_virtio_hypercall(uint64_t code, s390_virtio_fn fn);
- int s390_virtio_hypercall(CPUS390XState *env);
- 
- #endif /* HW_S390_VIRTIO_HCALL_H */
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index dd0322c43a..32cf70bb19 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -51,6 +51,7 @@
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-virtio-hcall.h"
- #include "target/s390x/kvm/pv.h"
-+#include CONFIG_DEVICES
- 
- #define kvm_vm_check_mem_attr(s, attr) \
-     kvm_vm_check_attr(s, KVM_S390_VM_MEM_CTRL, attr)
-@@ -1494,9 +1495,11 @@ static int handle_e3(S390CPU *cpu, struct kvm_run *run, uint8_t ipbl)
- static int handle_hypercall(S390CPU *cpu, struct kvm_run *run)
- {
-     CPUS390XState *env = &cpu->env;
--    int ret;
-+    int ret = -EINVAL;
- 
-+#ifdef CONFIG_S390_CCW_VIRTIO
-     ret = s390_virtio_hypercall(env);
-+#endif /* CONFIG_S390_CCW_VIRTIO */
-     if (ret == -EINVAL) {
-         kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
-         return 0;
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 303f86d363..f44136a568 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -43,6 +43,7 @@
- #include "hw/s390x/s390-pci-inst.h"
- #include "hw/boards.h"
- #include "hw/s390x/tod.h"
-+#include CONFIG_DEVICES
- #endif
- 
- /* #define DEBUG_HELPER */
-@@ -116,12 +117,14 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
-     uint64_t r;
- 
-     switch (num) {
-+#ifdef CONFIG_S390_CCW_VIRTIO
-     case 0x500:
-         /* KVM hypercall */
-         bql_lock();
-         r = s390_virtio_hypercall(env);
-         bql_unlock();
-         break;
-+#endif /* CONFIG_S390_CCW_VIRTIO */
-     case 0x44:
-         /* yield */
-         r = 0;
+I tested a lot of things, including:
+ * Memory hotplug/unplug
+ * Device hotplug/unplug
+ * System resets / reboots
+ * Migrate to/from file (including storage attributes under KVM)
+ * Basic live migration
+ * Basic postcopy live migration
+
+More details on how to use it on s390x -- which is pretty much how
+we use it on other architectures, except
+s/virtio-mem-pci/virtio-mem-ccw/ --- is in the last patch.
+
+This series introduces a new diag(500) "STORAGE LIMIT" subcode that will
+be documented in the kernel and at [2] once this+kernel part go upstream.
+
+There are not many s390x-specific virtio-mem future work items, except:
+* Storage attribute migration might be improved
+* We might want to reset storage attributes of unplugged memory
+  (might or might not be required for upcoming page table reclaim in
+   Linux; TBD)
+
+The Linux driver has been merged into 6.13-rc1.
+
+[1] https://lkml.kernel.org/r/20240906101658.514470-1-pbonzini@redhat.com
+[2] https://gitlab.com/davidhildenbrand/s390x-os-virt-spec
+
+v2 -> v3:
+- "s390x/s390-virtio-hcall: remove hypercall registration mechanism"
+ -> Move s390-virtio-hcall.c under CONFIG_S390_CCW_VIRTIO and use
+    ugly-but-necessary CONFIG_S390_CCW_VIRTIO in target/ code to
+    make it compile with weird configs without CONFIG_S390_CCW_VIRTIO.
+    (I don't think we want to use stubs, most of that code does not make
+     sense to compile without CONFIG_S390_CCW_VIRTIO; but that will have to
+     be a separate cleanup)
+- "s390x: introduce s390_get_memory_limit()"
+ -> Inline s390_get_memory_limit() for the same reason
+ -> Initialize hw_limit to 0 to make some compilers happy
+- Adjust other patches to these changes
+
+v1 -> v2:
+* "s390x/s390-virtio-hcall: prepare for more diag500 hypercalls"
+ - Turn handle_diag_500() into a void function
+ - Inject PGM_SPECIFICATION from handle_diag_500() directly
+* "s390x/s390-virtio-ccw: move setting the maximum guest size from sclp to
+   machine code"
+ - Move code to a new function to make further changes easier
+ - Adjust s390_pv_vm_try_disable_async() to stay in sync with the
+   maxram->ram change
+* "s390x: introduce s390_get_memory_limit()"
+ - Store limit in machine
+ - Move s390_set_memory_limit() from target code into machine code
+* "s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT"
+ - Move handling into a separate function now that we lookup the machine
+* "s390x/s390-stattrib-kvm: prepare for memory devices and sparse memory
+   layouts"
+ - Adjust to s390_get_memory_limit() changes
+* "s390x/s390-skeys: prepare for memory devices"
+ - Adjust to s390_get_memory_limit() changes
+* "s390x/pv: prepare for memory devices"
+ - Use s390_get_memory_limit()
+* "s390x: remember the maximum page size"
+ - Store it in the machine
+ - Move s390_set_max_pagesize() from target code into machine code
+ - No need for s390_get_max_pagesize()
+* "s390x/virtio-ccw: add support for virtio based memory devices"
+ - Move machine wire-up code from virtio-mem patch into this patch
+ - Add stubs to make compilation without virtio-mem work
+* "s390x: virtio-mem support"
+ - Move machine write-up code to previous patch
+
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Thomas Huth <thuth@redhat.com>
+Cc: Halil Pasic <pasic@linux.ibm.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>
+Cc: Eric Farman <farman@linux.ibm.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+Cc: Heiko Carstens <hca@linux.ibm.com>
+Cc: Ilya Leoshkevich <iii@linux.ibm.com>
+Cc: Janosch Frank <frankja@linux.ibm.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>
+Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+David Hildenbrand (14):
+  s390x/s390-virtio-ccw: don't crash on weird RAM sizes
+  s390x/s390-virtio-hcall: remove hypercall registration mechanism
+  s390x/s390-virtio-hcall: prepare for more diag500 hypercalls
+  s390x: rename s390-virtio-hcall* to s390-hypercall*
+  s390x/s390-virtio-ccw: move setting the maximum guest size from sclp
+    to machine code
+  s390x: introduce s390_get_memory_limit()
+  s390x/s390-hypercall: introduce DIAG500 STORAGE_LIMIT
+  s390x/s390-stattrib-kvm: prepare for memory devices and sparse memory
+    layouts
+  s390x/s390-skeys: prepare for memory devices
+  s390x/s390-virtio-ccw: prepare for memory devices
+  s390x/pv: prepare for memory devices
+  s390x: remember the maximum page size
+  s390x/virtio-ccw: add support for virtio based memory devices
+  s390x: virtio-mem support
+
+ MAINTAINERS                        |   5 +
+ hw/s390x/Kconfig                   |   1 +
+ hw/s390x/meson.build               |  10 +-
+ hw/s390x/s390-hypercall.c          |  85 +++++++++++
+ hw/s390x/s390-hypercall.h          |  25 ++++
+ hw/s390x/s390-skeys.c              |   6 +-
+ hw/s390x/s390-stattrib-kvm.c       |  67 ++++++---
+ hw/s390x/s390-virtio-ccw.c         | 160 +++++++++++++-------
+ hw/s390x/s390-virtio-hcall.c       |  41 ------
+ hw/s390x/s390-virtio-hcall.h       |  25 ----
+ hw/s390x/sclp.c                    |  17 +--
+ hw/s390x/virtio-ccw-md-stubs.c     |  24 +++
+ hw/s390x/virtio-ccw-md.c           | 153 +++++++++++++++++++
+ hw/s390x/virtio-ccw-md.h           |  44 ++++++
+ hw/s390x/virtio-ccw-mem.c          | 226 +++++++++++++++++++++++++++++
+ hw/s390x/virtio-ccw-mem.h          |  34 +++++
+ hw/virtio/Kconfig                  |   1 +
+ hw/virtio/virtio-mem.c             |   4 +-
+ include/hw/s390x/s390-virtio-ccw.h |   9 ++
+ target/s390x/cpu-sysemu.c          |  15 --
+ target/s390x/cpu.h                 |   2 -
+ target/s390x/kvm/kvm.c             |  21 +--
+ target/s390x/kvm/pv.c              |   2 +-
+ target/s390x/tcg/misc_helper.c     |  10 +-
+ 24 files changed, 790 insertions(+), 197 deletions(-)
+ create mode 100644 hw/s390x/s390-hypercall.c
+ create mode 100644 hw/s390x/s390-hypercall.h
+ delete mode 100644 hw/s390x/s390-virtio-hcall.c
+ delete mode 100644 hw/s390x/s390-virtio-hcall.h
+ create mode 100644 hw/s390x/virtio-ccw-md-stubs.c
+ create mode 100644 hw/s390x/virtio-ccw-md.c
+ create mode 100644 hw/s390x/virtio-ccw-md.h
+ create mode 100644 hw/s390x/virtio-ccw-mem.c
+ create mode 100644 hw/s390x/virtio-ccw-mem.h
+
 -- 
 2.47.1
 
