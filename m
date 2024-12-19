@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ECB5E7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 11:18:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE5EE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 11:18:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOEVq-0004bV-GL; Thu, 19 Dec 2024 06:16:14 -0500
+	id 1tOEW0-0004of-VM; Thu, 19 Dec 2024 06:16:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tOEVo-0004aG-V1
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:13 -0500
+ id 1tOEVy-0004ly-AD
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:23 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tOEVn-0005Jo-Ca
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:12 -0500
+ id 1tOEVv-0005Lm-TH
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:21 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734606972; x=1766142972;
+ t=1734606980; x=1766142980;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=iXysrcQtxF3+DT6qASzZRMSb17Gh/uEz3CgCSTb5hj8=;
- b=YHRvakkyno+pr3dQ73ko6le6FYephJAV0Kw1Hqh11pbT36zDT1NTkJLM
- IPFxuO1fw/RHhbH53gpc8SdNO/AveWBDYeQTwXU5EH/+2X1oZurE5RX58
- RXJQdGxF7ppAPXmGea7aHGEcuDkQn2AJSnLiJbJ2FXQqBa7ProfaQcqh8
- ByiVVo8aM3ZG426ZW4TYalsfQaqAzO10up7dkHOz9osg8Wzqj0VNMhcVd
- ppx1nv7u3IIcTR5ZQHrwP0m75XfrAaiJ3uof2+1UouwcrZ6cVEwav3NTc
- 3RgVNu74OmldRYex5MOVAF4Aob2Sw2ikwdwb2ifQ3qelcv+THZ8f2UlS/ A==;
-X-CSE-ConnectionGUID: MyaX/2gQS/2yBXrl2rjewg==
-X-CSE-MsgGUID: bHfqIfKZQbGV/hMyLAnUcQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34994971"
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="34994971"
+ bh=3aacQW4Go5h00Zo2AHmCDChkTH3OubD3GyFn8d6eHoo=;
+ b=kIUvQCHNW7aI0/UruYL4DXukO3jR7JKKvTw7bJmgLCbawFp1AZfchVgQ
+ CYOuQga1+xnkmTRJDvV0hIRGibXmEJ3aZ1E/ghLb4l+3/Pr3BXFCNlvML
+ exKnHQP7X9+SAho8vGx3gZ9zZpZTcPq2zV3Lu4ZvAiSEPT1r4Ftjh1DRF
+ mOE+XNGkFl04Yun7tAj2kk1exCFvHHZrk8jEsL4dt95zFg6Zf8axxpL5J
+ qIp980yj71kl0krdM2P3/L3sPwpVQHW2UFT4tvjknA2z7DP00pJ+xNaBx
+ Jz+vR8mQqUfiOrgQYrDNR3s1GG357QGm8XWtiJ5YT4c9gpzF3NtH0w0iC Q==;
+X-CSE-ConnectionGUID: 6PewRgOaTbiy0K6LD5j11g==
+X-CSE-MsgGUID: k54lDruQR2m7+974RH1rjg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34995001"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="34995001"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Dec 2024 03:16:11 -0800
-X-CSE-ConnectionGUID: e5mPFWv7TCOYVV25bSbAjA==
-X-CSE-MsgGUID: mRrOHL98S2+G6UNLTtQTuA==
+ 19 Dec 2024 03:16:19 -0800
+X-CSE-ConnectionGUID: wWQf+0NXSiadEMlzbe6Tmg==
+X-CSE-MsgGUID: d4h8tPa1Qh2o4FI+C5kYaA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="97956174"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="97956217"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa006.fm.intel.com with ESMTP; 19 Dec 2024 03:16:08 -0800
+ by fmviesa006.fm.intel.com with ESMTP; 19 Dec 2024 03:16:15 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -52,10 +52,10 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
 Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
  Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, xiaoyao.li@intel.com
-Subject: [PATCH v2 07/10] i386/cpu: Hoist check of CPUID_EXT3_TOPOEXT against
- threads_per_core
-Date: Thu, 19 Dec 2024 06:01:22 -0500
-Message-Id: <20241219110125.1266461-8-xiaoyao.li@intel.com>
+Subject: [PATCH v2 10/10] i386/cpu: Set and track CPUID_EXT3_CMP_LEG in
+ env->features[FEAT_8000_0001_ECX]
+Date: Thu, 19 Dec 2024 06:01:25 -0500
+Message-Id: <20241219110125.1266461-11-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241219110125.1266461-1-xiaoyao.li@intel.com>
 References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
@@ -86,64 +86,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now it changes to use env->topo_info.threads_per_core and doesn't depend
-on qemu_init_vcpu() anymore. Drop the comment of the order dependency on
-qemu_init_vcpu() and hoist code to put it together with other feature
-checking.
+The correct usage is tracking and maintaining features in env->features[]
+instead of manually set it in cpu_x86_cpuid().
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 ---
- target/i386/cpu.c | 30 +++++++++++++++---------------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+ target/i386/cpu.c | 20 +++++++++-----------
+ 1 file changed, 9 insertions(+), 11 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index d41768648ab9..fd59da5d445d 100644
+index bee494bdd029..8d3744aa6d26 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -7880,6 +7880,21 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-      */
-     cpu->mwait.ecx |= CPUID_MWAIT_EMX | CPUID_MWAIT_IBE;
+@@ -6952,17 +6952,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
+         *ecx = env->features[FEAT_8000_0001_ECX];
+         *edx = env->features[FEAT_8000_0001_EDX];
  
-+    /*
-+     * Most Intel and certain AMD CPUs support hyperthreading. Even though QEMU
-+     * fixes this issue by adjusting CPUID_0000_0001_EBX and CPUID_8000_0008_ECX
-+     * based on inputs (sockets,cores,threads), it is still better to give
-+     * users a warning.
-+     */
-+    if (IS_AMD_CPU(env) &&
-+        !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
-+        env->nr_threads > 1) {
-+            warn_report_once("This family of AMD CPU doesn't support "
-+                             "hyperthreading(%d). Please configure -smp "
-+                             "options properly or try enabling topoext "
-+                             "feature.", env->nr_threads);
-+    }
+-        /* The Linux kernel checks for the CMPLegacy bit and
+-         * discards multiple thread information if it is set.
+-         * So don't set it here for Intel to make Linux guests happy.
+-         */
+-        if (threads_per_pkg > 1) {
+-            if (env->cpuid_vendor1 != CPUID_VENDOR_INTEL_1 ||
+-                env->cpuid_vendor2 != CPUID_VENDOR_INTEL_2 ||
+-                env->cpuid_vendor3 != CPUID_VENDOR_INTEL_3) {
+-                *ecx |= 1 << 1;    /* CmpLegacy bit */
+-            }
+-        }
+         if (tcg_enabled() && env->cpuid_vendor1 == CPUID_VENDOR_INTEL_1 &&
+             !(env->hflags & HF_LMA_MASK)) {
+             *edx &= ~CPUID_EXT2_SYSCALL;
+@@ -7529,6 +7518,15 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+ 
+     if (x86_threads_per_pkg(&env->topo_info) > 1) {
+         env->features[FEAT_1_EDX] |= CPUID_HT;
 +
-     /* For 64bit systems think about the number of physical bits to present.
-      * ideally this should be the same as the host; anything other than matching
-      * the host can cause incorrect guest behaviour.
-@@ -7984,21 +7999,6 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
-     x86_cpu_gdb_init(cs);
-     qemu_init_vcpu(cs);
++        /*
++         * The Linux kernel checks for the CMPLegacy bit and
++         * discards multiple thread information if it is set.
++         * So don't set it here for Intel to make Linux guests happy.
++         */
++        if (!IS_INTEL_CPU(env)) {
++            env->features[FEAT_8000_0001_ECX] |= CPUID_EXT3_CMP_LEG;
++        }
+     }
  
--    /*
--     * Most Intel and certain AMD CPUs support hyperthreading. Even though QEMU
--     * fixes this issue by adjusting CPUID_0000_0001_EBX and CPUID_8000_0008_ECX
--     * based on inputs (sockets,cores,threads), it is still better to give
--     * users a warning.
--     */
--    if (IS_AMD_CPU(env) &&
--        !(env->features[FEAT_8000_0001_ECX] & CPUID_EXT3_TOPOEXT) &&
--        env->topo_info.threads_per_core > 1) {
--            warn_report_once("This family of AMD CPU doesn't support "
--                             "hyperthreading(%d). Please configure -smp "
--                             "options properly or try enabling topoext "
--                             "feature.", env->topo_info.threads_per_core);
--    }
--
- #ifndef CONFIG_USER_ONLY
-     x86_cpu_apic_realize(cpu, &local_err);
-     if (local_err != NULL) {
+     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
 -- 
 2.34.1
 
