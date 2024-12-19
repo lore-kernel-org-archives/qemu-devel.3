@@ -4,116 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B7ABE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445C0E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOBqk-0002MC-KG; Thu, 19 Dec 2024 03:25:40 -0500
+	id 1tOBxb-0004Rx-8x; Thu, 19 Dec 2024 03:32:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tOBqd-0002LN-Ln
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:25:35 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tOBqb-0002JB-8Q
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:25:31 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-728eedfca37so595822b3a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:25:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1734596727; x=1735201527;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=o67QXlwUSaMvrSq2RNzS6auV65CBM03JHc8UWQQqHC0=;
- b=UozECgo1bLUOMxAHxSN0T4V53vkKLk8rY0pUTZvuZc1fL5y53eTQiGQyg77wLqy98w
- /pg0ZXkgYwvZNKrU2D01AueWVsfOAfhZeZ0Rxkx45WXVlRhgvvEkye4qPhyLBhDzGtwW
- 4dfzY82AFqZ416LWSICoj07X3ty7QnkzTtuRZsJ+jP1s6EyYtus6W7ZyC2wlZpomHdej
- vkBIenr4JeAlfadLaWo2EVQC9i0/fj2azNeMXhZljP4ih8wuX7ofJX5SJziz6NLiBySX
- SGINvrm7W5GaxAAtWGMXmy2m+mmvHD0qj373+cgt7gus+21x5/n3lNtuZrLbyhWGctMp
- fdzg==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOBxY-0004R2-EY
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOBxW-00053t-Rq
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:40 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734597158;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WE9KFCxmYVUk9291lRKTVOkRERI6hjq2PtIskZNM7k8=;
+ b=IBSurRcFykpATRmCWkDqMOcjUeAKSyl/bT3oh5H7ZIEW6DUV6Y/jilCdf3eIMOaay0FEeq
+ Jf+rupwT/bmtwTzKo2OMBuGGfuyBUN7CP8+IkNS54/tWwUu5kbuch/+Mx0YpaPLyUg9JU+
+ 4Nsi4NQPhNWuo87q5mT9Vmavnk9+jFg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-540-LKQujxB6Op-t3n5_dxSyXQ-1; Thu, 19 Dec 2024 03:32:36 -0500
+X-MC-Unique: LKQujxB6Op-t3n5_dxSyXQ-1
+X-Mimecast-MFC-AGG-ID: LKQujxB6Op-t3n5_dxSyXQ
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-436248d1240so2774145e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:35 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734596727; x=1735201527;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=o67QXlwUSaMvrSq2RNzS6auV65CBM03JHc8UWQQqHC0=;
- b=sI3r/1U6owbA12jsOByRU8fZvnlQC+ME68k3WofJgJqhnPsL0Tk4L/qlppRxBkWpkD
- QSsPkmQG7aNx8b60MGojdUOPjtgnmGlVmC2DHvOqCmc51Kpr+stqHKK5dzKGLYqQZPfu
- fpYVyvq3qAjwboNqey2GWDsF/H287hxQg8P0Y3r9ZH93Yfv+3ewNp1JwWfGlh0mW0Ii6
- FemdwJ2tZbEiTmUtCtdMG/YQqUQ2gcfZliae+MAmN4tYo8/dWtMphOuWWTy1Cfiy/EtM
- Cv16+3b2e7e8IYcW+gEa0qFUlMKj650Aeobw4Wx2s6kuibKR1PGIhzcSq495eTlV73KT
- 91Bg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPRkTDMA1P+UTEdqTPQ09pOc/qC0F3rdJvG+sDIXUyfhEeqHeRPTaTH2TcEo6FIEF6DhxkfABDCJuC@nongnu.org
-X-Gm-Message-State: AOJu0Yy5C0dg8boI2+x2hz80ZCcb7GD5sKlWaUworWHGXfWegFqeEzbI
- QdYjXqBSGNE8eoJNQ9rFATbiREoH4fmPbW+XvxmM3hyZ8GtuDqQdWVIuaz8e824=
-X-Gm-Gg: ASbGncvsd8Jtsf1ZIM/0bPZQd8eptMqZOGT8eA2A5355hyHF9IXh18FAyu1DACynfuV
- Dm4IrI65xTy9DBil+DP+4iZ6o2tpiXUV7KI8Zj/6kCtOe6vdRzy+nsRJoHBymAoyioi7Q7vNL4a
- S34vUUcMZ9vke9WZmN8UWW4hf3zEL/GWj5/P253giGoiCpC7rB6gpUcH6PJGRqqHg22xmuu9l/g
- eWiTTxsmay81mbt/7NeDjCVGUXo6Bj3PYocu+on1jPbefSm5hzkhWStHjtPJXW4g6c=
-X-Google-Smtp-Source: AGHT+IFQJijP415U6JCAjCp82uq02Rg1oj+u9Wub9o3NGSctFU+2+abvxdsWCEhdbfKwmOkWOvHyhA==
-X-Received: by 2002:a05:6a20:7faa:b0:1e1:3970:d75a with SMTP id
- adf61e73a8af0-1e5c74f3244mr3839079637.9.1734596726802; 
- Thu, 19 Dec 2024 00:25:26 -0800 (PST)
-Received: from [157.82.203.37] ([157.82.203.37])
+ d=1e100.net; s=20230601; t=1734597154; x=1735201954;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=WE9KFCxmYVUk9291lRKTVOkRERI6hjq2PtIskZNM7k8=;
+ b=AUFgYlP2+HPfx69kHVkfgiAz9Xy8vLmjqasPj1JOWIzLXGjOI/OCknwKwuqRxdCXYY
+ /WbzgEjyZTU/VTO7JkwVAyoem+rT8kddqTO4lXgkbOJM/6+RV4Hkh0keJc/dpbKiGLB1
+ pvLpqA+dRw4UxYvi+lQQotuhTGCVD7Sdey6biKV7WLTnaBXrZj7Yf5knhBoJx+zeSrXn
+ HZyXyDhLhhPe+krRC3mE+V83oTniy0k/4pla1+BC7zwrhNgKpCyuhEcjR6bUmyFHxky+
+ fWrcViWKzb0MK+hL591fh2kaMu9rZ30IfseP0q4FAEbYpwfpqEKNrbGRf3cBI21jMRnd
+ SNmg==
+X-Gm-Message-State: AOJu0Yx057hs+3WcLgc/cf2aRmW1JMMNRYF0uGdTfCk2c/rHAHxHlsNx
+ CiTm9syiSp5njfPD7Y3xNdd/Land9RQ/RiqFOENQt7j8fO/WII3N6qBzyuzKiF2yYYTik8TcBa3
+ Hgtikc6/V6Ry+mgxC0hjrNDb7UPx+rzKOoWxV9plyBXywsGbO0xo5HFXX1fecmJfWSkjPB8HfRR
+ eTUmC0GhBVdQHm/rymjxghFs/tcEuE81bvjZ75
+X-Gm-Gg: ASbGncuN/D3DfMtRh/7wojIijBukQ0ojkf4PPJPRL0kkBMdyptjQpHsRSFgqHY0N79B
+ VbskUaGe4L918rn6zstXru3zK5ae7xr7RDoJ0qdE7aXhpVw4FeY/Ptu6ChAQ1iNEIRyjDSh0txp
+ IDllAAlRGfXE4oOJcdUn+nh+GJtMSQXjVW7NfcX8ePUbvjgJMrgJ7EoCl3DwEo83L/AOy9fdidx
+ WxZIWUFQgF7nh1oXQGg3JGQRZTlWMqNEBHJDEr3FlXaCj7upbHmjyZ2/1/V
+X-Received: by 2002:a05:600c:46ca:b0:434:f270:a4f0 with SMTP id
+ 5b1f17b1804b1-43655426983mr48859595e9.21.1734597154452; 
+ Thu, 19 Dec 2024 00:32:34 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE12NLXDvv4ugXxw1LDuIGbypwM/9didO30SVTtU9JCv9/7K+CKrdIruc+42G7t9pAbiskHxQ==
+X-Received: by 2002:a05:600c:46ca:b0:434:f270:a4f0 with SMTP id
+ 5b1f17b1804b1-43655426983mr48859335e9.21.1734597154044; 
+ Thu, 19 Dec 2024 00:32:34 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad90b2dcsm731694b3a.171.2024.12.19.00.25.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 00:25:26 -0800 (PST)
-Message-ID: <6c0ed1a4-d416-4d52-bbfd-40faadac35c4@daynix.com>
-Date: Thu, 19 Dec 2024 17:25:17 +0900
+ 5b1f17b1804b1-43661219a71sm11171835e9.26.2024.12.19.00.32.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Dec 2024 00:32:31 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 02/41] hw/ide: Constify sysbus_ahci_properties
+Date: Thu, 19 Dec 2024 09:31:49 +0100
+Message-ID: <20241219083228.363430-3-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
+References: <20241219083228.363430-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 41/71] hw/net: Constify all Property
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Beniamino Galvani <b.galvani@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Jason Wang <jasowang@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Alistair Francis <alistair@alistair23.me>, Pavel Pisa
- <pisa@cmp.felk.cvut.cz>, Francisco Iglesias <francisco.iglesias@amd.com>,
- Vikram Garhwal <vikram.garhwal@bytedance.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>, Stefan Weil <sw@weilnetz.de>,
- Bernhard Beschow <shentey@gmail.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>,
- Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Helge Deller <deller@gmx.de>, Thomas Huth <huth@tuxfamily.org>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>, Jan Kiszka <jan.kiszka@web.de>,
- Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- Max Filippov <jcmvbkbc@gmail.com>, Jiri Pirko <jiri@resnulli.us>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Sven Schnelle <svens@stackframe.org>, "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>, Paul Durrant <paul@xen.org>,
- Rob Herring <robh@kernel.org>, "open list:Allwinner-a10"
- <qemu-arm@nongnu.org>, "open list:e500" <qemu-ppc@nongnu.org>,
- "open list:X86 Xen CPUs" <xen-devel@lists.xenproject.org>
-References: <20241213190750.2513964-1-richard.henderson@linaro.org>
- <20241213190750.2513964-46-richard.henderson@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20241213190750.2513964-46-richard.henderson@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SPACE_RATIO=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,8 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/12/14 4:07, Richard Henderson wrote:
-> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20241216035109.3486070-3-richard.henderson@linaro.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/ide/ahci-sysbus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/ide/ahci-sysbus.c b/hw/ide/ahci-sysbus.c
+index d43db0923f1..2432039290b 100644
+--- a/hw/ide/ahci-sysbus.c
++++ b/hw/ide/ahci-sysbus.c
+@@ -62,7 +62,7 @@ static void sysbus_ahci_realize(DeviceState *dev, Error **errp)
+     ahci_realize(&s->ahci, dev, &address_space_memory);
+ }
+ 
+-static Property sysbus_ahci_properties[] = {
++static const Property sysbus_ahci_properties[] = {
+     DEFINE_PROP_UINT32("num-ports", SysbusAHCIState, ahci.ports, 1),
+     DEFINE_PROP_END_OF_LIST(),
+ };
+-- 
+2.47.1
+
 
