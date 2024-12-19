@@ -4,77 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECF98E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 19:53:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2202CE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 19:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOMaI-0007Pn-N9; Thu, 19 Dec 2024 14:53:22 -0500
+	id 1tOMdr-0008TR-SA; Thu, 19 Dec 2024 14:57:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOMaH-0007Ob-4V
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 14:53:21 -0500
-Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ id 1tOMdf-0008ST-1A
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 14:56:51 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOMaF-0005Fu-0m
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 14:53:20 -0500
-Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-218c80a97caso10505265ad.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 11:53:18 -0800 (PST)
+ id 1tOMdc-0005bv-Hr
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 14:56:50 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-725ee27e905so1545874b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 11:56:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734637997; x=1735242797; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wvaV57g/otsXFa0xdKkFwiLNACda5imzuK59SCTyNUQ=;
- b=qAbBfJIL97kWUOR4aGxNUhT2X3hqoHHRy8+uDYEThyJJn220S2Co/CQNSf9L7bFbul
- VA2lnsaLmHcGd9LjlsjeBSBDE3nml4kDD5eWi1nxoBMUMDlNFqYwHyUvlEtLui/4wWcP
- l/xcPyXGsOxsXInDi5pSWOW0Zx7SYpiG8ssJab5C8M2WRvtmWUwwSogSFwYttsJOjCTX
- r9bYYR5AHOZ2LEPV5tT6xCrbqhjFrRhZRXGVkwyArWLGadh24Wj84upyrIJUCJDOlohk
- 6tBuiU0z8H+riigs58+PkeGBA19EpUDSgGlfYfhry0PCuXF984a0LyDe4GoQ7bK+MD8v
- OcbA==
+ d=linaro.org; s=google; t=1734638206; x=1735243006; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fSqj8wokNUJjKrTPW6M1GIAg8CrLQbCBFXcV/VwAeBw=;
+ b=t7Yfn3Af0wvxIe2LfD3/xZ2dMS63O7I1aWdS7U4nbc0JC0bX/o0vrYoInHHqIWubkH
+ fMXOsDrF6YwL5Tnu2mczq1Z6UqZ+QmV0ePenbg3qMWjIjqbCu6LA6WBv1Sj7Rvu59Nm5
+ Ti5hiW8R4sC5U3OBrUxqs4XYzWuN0vuEVb6puiD7/eONyoY5zFUHXyc/vreiMtN7xByY
+ MoEllolR4yffiMMWdPul8wqzGB4+qwpD6v78tp9/7y3V4zWPv/2ZH3sE6W7FF/5IRjml
+ DeTtKItmvoOWySgF31i7/w97AVqWaqhgIkF6XBIgzhmX84arCVqKlnfmsJzN/w+dn7VT
+ vt9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734637997; x=1735242797;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wvaV57g/otsXFa0xdKkFwiLNACda5imzuK59SCTyNUQ=;
- b=YhxsL1X6xhlxMaswGd+1QtJDvyNQCwzIidAT06bwrMbjezkvr3Cnig6/fjfSf3R2yT
- Lrdf9DqwGzrhfnpEz4JewfZtLrs/9tUAHbNUFFuouIwzrRkj6Xu/oarLZ1g9h6ymu7NK
- +qPnui4dyoQr8woAqBj8azzt1SUnvwEmT4V2s32rdlZRcq4/jYOxpVHVH8gqhQCwUH7l
- pnneu5jaSz2puHp9a162fzyDTkjtzImfRa+yt5WH5DgqnqKjxXDJTdke9TZfB1kBi9+w
- bqxTOjE3naqh/cf+aHSNwEtLgTh8RwTzees/pmZ0/L+OlfF0Edd5+o2CqNMxvDxGxrWS
- zXaw==
-X-Gm-Message-State: AOJu0Yxqcpi6YxaBwbFOFGoB62CUltlF6131zV0TEZSrSDWAZRKpJeix
- z5d566LDz5ogp2GRgUNtjPFwM2SK4v5RydmWGuG8c513a8M3k9BSm3CHGhPyiLLdzMLMIX6fXmO
- AOmo=
-X-Gm-Gg: ASbGncsKqywCPrwCjXv1v+6Z5UVMWAYiPTeh99YtRBgZZ4vwNEVDXstYFqr7+4t888b
- sJGvwYoXBUPRlwAfikeKLvnEZ77byWyuNwnhKq/yQW0/Y3CycH7cVPCn+I49RIwI5m2nkIgHRgD
- SAo3aWPvk/+bPS692zePs/2sIqjWhf/RpoMP4ma0SCkSR8AOh8Zhev2YBIGF8D56BNE9gPTk6Mt
- 9UB/XR+tC0qORSp1tzOtsmVAWNrK4C8HN5qgyNCr2k+fUEppigFdpC8
-X-Google-Smtp-Source: AGHT+IGwgSno1orswArW8r97qJ7fl9AiYisN+n//fqdwD3Da6gExJgYKhqxn2xzXY3TjRoAqLRq+aA==
-X-Received: by 2002:a17:902:f705:b0:216:2e5e:971d with SMTP id
- d9443c01a7336-218d726c177mr111722155ad.51.1734637997109; 
- Thu, 19 Dec 2024 11:53:17 -0800 (PST)
-Received: from pc.. ([38.39.164.180]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96294bsm16259245ad.36.2024.12.19.11.53.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 11:53:16 -0800 (PST)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: mathieu.poirier@linaro.org, gustavo.romero@linaro.org,
- marcin.juszkiewicz@linaro.org, Peter Maydell <peter.maydell@linaro.org>,
- alex.bennee@linaro.org, jean-philippe@linaro.org, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v5] tests/functional/aarch64: add tests for FEAT_RME
-Date: Thu, 19 Dec 2024 11:53:04 -0800
-Message-Id: <20241219195304.3548246-1-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.39.5
+ d=1e100.net; s=20230601; t=1734638206; x=1735243006;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=fSqj8wokNUJjKrTPW6M1GIAg8CrLQbCBFXcV/VwAeBw=;
+ b=gI3CmwUORUmUnhTEBoVADI8K9TkONqOTm9MFW1wKBYbCJMd4uHhQ4aTBgsX5k+bZCB
+ sAULC1znB+TxsCI3karNjsbw0tVdHWmU7mhq6AP6kSZvi4ou+NxkC+eMdEXUIqUvXxkL
+ EYs0xdarVp1QJBjhAMMLbofCftZOIR0zjhadr53zSOAA3KXFLwWsj3pw1sCnl2PRwP7n
+ tACz9iMzx78iVmM6PGHo5/npppB3rMFfh/VT5JLalpUMjD5DGJ5/2ArjIvjNbg7wRpeY
+ FVHIkyZwE1QWZ94M+kDF2sXpBnwdMzzVkMX6HDlG6nepzPeoQLXgmo6yHy4iL76nO/Pa
+ ZcoA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV5Q/x1ezstxV6Sy0wGjlfx55n56ypJSMohBD/E9P9MWCkNfwdsBJ/YFNgUqgNXauwitefFxmTx3dff@nongnu.org
+X-Gm-Message-State: AOJu0YyFS6TBLntvDk3IvM51HNpNcJJx0xd9E/brnbBkSOfdfwAo6raT
+ EMgE/lgGgtTPB5/zeTg/iwf6p3CpWf5jabMk0Abi5TdpYBGu6SHr/+F2tYf9xSs=
+X-Gm-Gg: ASbGncvorPhVnUGNO+N8nZ6ZsLvYunPKevX/moIAFM6H0aE0LDd+KJ/GMqJh/AoROVm
+ EgNMfV8R0rdKaLAxEcIrq/A4W9Kimgw7Ip6zlBcWaHvH4T9B+h9uni48wRJoPxK56nL7c/YI4ME
+ JsrjJSH1MOoHBTFNuOEsr1GFjjU3o9TYCsCHR97XORWGU8z1qXhjU9ABEX6SL9hCkDQHRc+nvIt
+ 7ic1KfzqunoDSy//qD3wlHVZVViOp4HVprKR/oXQ/hF8DDmr2ie+pwxh3ZS1FGBw5VpxQ==
+X-Google-Smtp-Source: AGHT+IECxRDVlkAZZidUNiyhdl9qaAhZFSQFDfcVMtL3PyzNPLtPf9LXb14/HIe+WauNbPi/wl0ZXA==
+X-Received: by 2002:a05:6a00:8d8d:b0:726:8366:40ca with SMTP id
+ d2e1a72fcca58-72abdd3c228mr10832b3a.1.1734638205889; 
+ Thu, 19 Dec 2024 11:56:45 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8370d5sm1702515b3a.71.2024.12.19.11.56.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 11:56:45 -0800 (PST)
+Message-ID: <0aca19d9-395a-4347-889e-8872bc248f91@linaro.org>
+Date: Thu, 19 Dec 2024 11:56:44 -0800
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 15/27] tests/functional/aarch64: add tests for FEAT_RME
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20241218162104.3493551-1-alex.bennee@linaro.org>
+ <20241218162104.3493551-16-alex.bennee@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20241218162104.3493551-16-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,242 +133,194 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This boot an OP-TEE environment, and launch a nested guest VM inside it
-using the Realms feature. We do it for virt and sbsa-ref platforms.
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-
------
-
-v2:
-- move test to its own file
-- add sbsa test
-- check output of `cca-workload-attestation report`
-
-v3:
-- build and run test with cca-v4 images
-- factorize nested guest test between both tests
-- remove accel tcg option as it is the default when running tests
-Note: It's a long test and there is a work in progress to understand why
-debug build is so slow (x12 vs optimized).
-
-v4:
-- use pauth-impdef=on to speed up build time execution (x2.5 faster)
-- increase timeout value
-
-v5:
-- migrate test to new archive_extract helper
-
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- tests/functional/meson.build                 |  4 +
- tests/functional/test_aarch64_rme_sbsaref.py | 68 ++++++++++++++
- tests/functional/test_aarch64_rme_virt.py    | 98 ++++++++++++++++++++
- 3 files changed, 170 insertions(+)
- create mode 100755 tests/functional/test_aarch64_rme_sbsaref.py
- create mode 100755 tests/functional/test_aarch64_rme_virt.py
-
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index ee417b0a1f7..8c789970d48 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -13,6 +13,8 @@ endif
- test_timeouts = {
-   'aarch64_aspeed' : 600,
-   'aarch64_raspi4' : 480,
-+  'aarch64_rme_virt' : 1200,
-+  'aarch64_rme_sbsaref' : 1200,
-   'aarch64_sbsaref_alpine' : 720,
-   'aarch64_sbsaref_freebsd' : 720,
-   'aarch64_tuxrun' : 240,
-@@ -60,6 +62,8 @@ tests_aarch64_system_thorough = [
-   'aarch64_aspeed',
-   'aarch64_raspi3',
-   'aarch64_raspi4',
-+  'aarch64_rme_virt',
-+  'aarch64_rme_sbsaref',
-   'aarch64_sbsaref',
-   'aarch64_sbsaref_alpine',
-   'aarch64_sbsaref_freebsd',
-diff --git a/tests/functional/test_aarch64_rme_sbsaref.py b/tests/functional/test_aarch64_rme_sbsaref.py
-new file mode 100755
-index 00000000000..eb184fe201c
---- /dev/null
-+++ b/tests/functional/test_aarch64_rme_sbsaref.py
-@@ -0,0 +1,68 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Realms environment on sbsa-ref machine and a
-+# nested guest VM using it.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import time
-+import os
-+import logging
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command, wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+from test_aarch64_rme_virt import test_realms_guest
-+
-+class Aarch64RMESbsaRefMachine(QemuSystemTest):
-+
-+    # Stack is built with OP-TEE build environment from those instructions:
-+    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-+    # https://github.com/pbo-linaro/qemu-rme-stack
-+    ASSET_RME_STACK_SBSA = Asset(
-+        ('https://fileserver.linaro.org/s/KJyeBxL82mz2r7F/'
-+         'download/rme-stack-op-tee-4.2.0-cca-v4-sbsa.tar.gz'),
-+         'dd9ab28ec869bdf3b5376116cb3689103b43433fd5c4bca0f4a8d8b3c104999e')
-+
-+    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-+    # and launching a nested VM using it.
-+    def test_aarch64_rme_sbsaref(self):
-+        self.set_machine('sbsa-ref')
-+        self.vm.set_console()
-+        self.require_accelerator('tcg')
-+
-+        stack_path_tar_gz = self.ASSET_RME_STACK_SBSA.fetch()
-+        self.archive_extract(stack_path_tar_gz)
-+
-+        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-sbsa')
-+        pflash0 = os.path.join(rme_stack, 'images', 'SBSA_FLASH0.fd')
-+        pflash1 = os.path.join(rme_stack, 'images', 'SBSA_FLASH1.fd')
-+        virtual = os.path.join(rme_stack, 'images', 'disks', 'virtual')
-+        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
-+
-+        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-M', 'sbsa-ref')
-+        self.vm.add_args('-drive', f'file={pflash0},format=raw,if=pflash')
-+        self.vm.add_args('-drive', f'file={pflash1},format=raw,if=pflash')
-+        self.vm.add_args('-drive', f'file=fat:rw:{virtual},format=raw')
-+        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-+        self.vm.add_args('-device', 'virtio-9p-pci,fsdev=shr0,mount_tag=shr0')
-+        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-+        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+
-+        self.vm.launch()
-+        # Wait for host VM boot to complete.
-+        wait_for_console_pattern(self, 'Welcome to Buildroot')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+
-+        test_realms_guest(self)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
-diff --git a/tests/functional/test_aarch64_rme_virt.py b/tests/functional/test_aarch64_rme_virt.py
-new file mode 100755
-index 00000000000..9e30cc9325c
---- /dev/null
-+++ b/tests/functional/test_aarch64_rme_virt.py
-@@ -0,0 +1,98 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Realms environment on virt machine and a nested
-+# guest VM using it.
-+#
-+# Copyright (c) 2024 Linaro Ltd.
-+#
-+# Author: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import time
-+import os
-+import logging
-+
-+from qemu_test import QemuSystemTest, Asset
-+from qemu_test import exec_command, wait_for_console_pattern
-+from qemu_test import exec_command_and_wait_for_pattern
-+
-+def test_realms_guest(test_rme_instance):
-+
-+    # Boot the (nested) guest VM
-+    exec_command(test_rme_instance,
-+                 'qemu-system-aarch64 -M virt,gic-version=3 '
-+                 '-cpu host -enable-kvm -m 512M '
-+                 '-M confidential-guest-support=rme0 '
-+                 '-object rme-guest,id=rme0 '
-+                 '-device virtio-net-pci,netdev=net0,romfile= '
-+                 '-netdev user,id=net0 '
-+                 '-kernel /mnt/out/bin/Image '
-+                 '-initrd /mnt/out-br/images/rootfs.cpio '
-+                 '-serial stdio')
-+    # Detect Realm activation during (nested) guest boot.
-+    wait_for_console_pattern(test_rme_instance,
-+                             'SMC_RMI_REALM_ACTIVATE')
-+    # Wait for (nested) guest boot to complete.
-+    wait_for_console_pattern(test_rme_instance,
-+                             'Welcome to Buildroot')
-+    exec_command_and_wait_for_pattern(test_rme_instance, 'root', '#')
-+    # query (nested) guest cca report
-+    exec_command(test_rme_instance, 'cca-workload-attestation report')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-platform-hash-algo-id": "sha-256"')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-realm-hash-algo-id": "sha-512"')
-+    wait_for_console_pattern(test_rme_instance,
-+                             '"cca-realm-public-key-hash-algo-id": "sha-256"')
-+
-+class Aarch64RMEVirtMachine(QemuSystemTest):
-+
-+    # Stack is built with OP-TEE build environment from those instructions:
-+    # https://linaro.atlassian.net/wiki/spaces/QEMU/pages/29051027459/
-+    # https://github.com/pbo-linaro/qemu-rme-stack
-+    ASSET_RME_STACK_VIRT = Asset(
-+        ('https://fileserver.linaro.org/s/iaRsNDJp2CXHMSJ/'
-+         'download/rme-stack-op-tee-4.2.0-cca-v4-qemu_v8.tar.gz'),
-+         '1851adc232b094384d8b879b9a2cfff07ef3d6205032b85e9b3a4a9ae6b0b7ad')
-+
-+    # This tests the FEAT_RME cpu implementation, by booting a VM supporting it,
-+    # and launching a nested VM using it.
-+    def test_aarch64_rme_virt(self):
-+        self.set_machine('virt')
-+        self.vm.set_console()
-+        self.require_accelerator('tcg')
-+
-+        stack_path_tar_gz = self.ASSET_RME_STACK_VIRT.fetch()
-+        self.archive_extract(stack_path_tar_gz)
-+
-+        rme_stack = self.scratch_file('rme-stack-op-tee-4.2.0-cca-v4-qemu_v8')
-+        kernel = os.path.join(rme_stack, 'out', 'bin', 'Image')
-+        bios = os.path.join(rme_stack, 'out', 'bin', 'flash.bin')
-+        drive = os.path.join(rme_stack, 'out-br', 'images', 'rootfs.ext4')
-+
-+        self.vm.add_args('-cpu', 'max,x-rme=on,pauth-impdef=on')
-+        self.vm.add_args('-m', '2G')
-+        self.vm.add_args('-M', 'virt,acpi=off,'
-+                         'virtualization=on,'
-+                         'secure=on,'
-+                         'gic-version=3')
-+        self.vm.add_args('-bios', bios)
-+        self.vm.add_args('-kernel', kernel)
-+        self.vm.add_args('-drive', f'format=raw,if=none,file={drive},id=hd0')
-+        self.vm.add_args('-device', 'virtio-blk-pci,drive=hd0')
-+        self.vm.add_args('-device', 'virtio-9p-device,fsdev=shr0,mount_tag=shr0')
-+        self.vm.add_args('-fsdev', f'local,security_model=none,path={rme_stack},id=shr0')
-+        self.vm.add_args('-device', 'virtio-net-pci,netdev=net0')
-+        self.vm.add_args('-netdev', 'user,id=net0')
-+        self.vm.add_args('-append', 'root=/dev/vda')
-+
-+        self.vm.launch()
-+        # Wait for host VM boot to complete.
-+        wait_for_console_pattern(self, 'Welcome to Buildroot')
-+        exec_command_and_wait_for_pattern(self, 'root', '#')
-+
-+        test_realms_guest(self)
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.39.5
-
+T24gMTIvMTgvMjQgMDg6MjAsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gRnJvbTogUGllcnJp
+Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiANCj4gVGhpcyBi
+b290IGFuIE9QLVRFRSBlbnZpcm9ubWVudCwgYW5kIGxhdW5jaCBhIG5lc3RlZCBndWVzdCBW
+TSBpbnNpZGUgaXQNCj4gdXNpbmcgdGhlIFJlYWxtcyBmZWF0dXJlLiBXZSBkbyBpdCBmb3Ig
+dmlydCBhbmQgc2JzYS1yZWYgcGxhdGZvcm1zLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUGll
+cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiBNZXNzYWdl
+LUlkOiA8MjAyNDEyMDMyMTM2MjkuMjQ4MjgwNi0xLXBpZXJyaWNrLmJvdXZpZXJAbGluYXJv
+Lm9yZz4NCj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5h
+cm8ub3JnPg0KPiANCj4gLS0tDQo+IHYyDQo+ICAgIC0gcmVtb3ZlIHZlcnNpb24gbG9nIGZy
+b20gbWFpbiBjb21taXQNCj4gLS0tDQo+ICAgdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
+ZCAgICAgICAgICAgICAgICAgfCAgIDQgKw0KPiAgIHRlc3RzL2Z1bmN0aW9uYWwvdGVzdF9h
+YXJjaDY0X3JtZV9zYnNhcmVmLnB5IHwgIDcwICsrKysrKysrKysrKysNCj4gICB0ZXN0cy9m
+dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSAgICB8IDEwMCArKysrKysrKysr
+KysrKysrKysrDQo+ICAgMyBmaWxlcyBjaGFuZ2VkLCAxNzQgaW5zZXJ0aW9ucygrKQ0KPiAg
+IGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVf
+c2JzYXJlZi5weQ0KPiAgIGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rl
+c3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiANCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL2Z1bmN0
+aW9uYWwvbWVzb24uYnVpbGQgYi90ZXN0cy9mdW5jdGlvbmFsL21lc29uLmJ1aWxkDQo+IGlu
+ZGV4IDBlMWJmYjhjNDQuLmI0OWM0ODYxMTUgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL2Z1bmN0
+aW9uYWwvbWVzb24uYnVpbGQNCj4gKysrIGIvdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
+ZA0KPiBAQCAtMTMsNiArMTMsOCBAQCBlbmRpZg0KPiAgIHRlc3RfdGltZW91dHMgPSB7DQo+
+ICAgICAnYWFyY2g2NF9hc3BlZWQnIDogNjAwLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JyA6
+IDQ4MCwNCj4gKyAgJ2FhcmNoNjRfcm1lX3ZpcnQnIDogMTIwMCwNCj4gKyAgJ2FhcmNoNjRf
+cm1lX3Nic2FyZWYnIDogMTIwMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJyA6
+IDcyMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcgOiA3MjAsDQo+ICAgICAn
+YWFyY2g2NF90dXhydW4nIDogMjQwLA0KPiBAQCAtNTgsNiArNjAsOCBAQCB0ZXN0c19hYXJj
+aDY0X3N5c3RlbV90aG9yb3VnaCA9IFsNCj4gICAgICdhYXJjaDY0X2FzcGVlZCcsDQo+ICAg
+ICAnYWFyY2g2NF9yYXNwaTMnLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JywNCj4gKyAgJ2Fh
+cmNoNjRfcm1lX3ZpcnQnLA0KPiArICAnYWFyY2g2NF9ybWVfc2JzYXJlZicsDQo+ICAgICAn
+YWFyY2g2NF9zYnNhcmVmJywNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJywNCj4g
+ICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcsDQo+IGRpZmYgLS1naXQgYS90ZXN0cy9m
+dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weSBiL3Rlc3RzL2Z1bmN0aW9u
+YWwvdGVzdF9hYXJjaDY0X3JtZV9zYnNhcmVmLnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1
+DQo+IGluZGV4IDAwMDAwMDAwMDAuLmMxMzZiNWNlMTcNCj4gLS0tIC9kZXYvbnVsbA0KPiAr
+KysgYi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weQ0KPiBA
+QCAtMCwwICsxLDcwIEBADQo+ICsjIS91c3IvYmluL2VudiBweXRob24zDQo+ICsjDQo+ICsj
+IEZ1bmN0aW9uYWwgdGVzdCB0aGF0IGJvb3RzIGEgUmVhbG1zIGVudmlyb25tZW50IG9uIHNi
+c2EtcmVmIG1hY2hpbmUgYW5kIGENCj4gKyMgbmVzdGVkIGd1ZXN0IFZNIHVzaW5nIGl0Lg0K
+PiArIw0KPiArIyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMg
+QXV0aG9yOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+
+DQo+ICsjDQo+ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVy
+DQo+ICsNCj4gK2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5n
+DQo+ICsNCj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQN
+Cj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNv
+bGVfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRf
+d2FpdF9mb3JfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hp
+dmVfZXh0cmFjdA0KPiArZnJvbSB0ZXN0X2FhcmNoNjRfcm1lX3ZpcnQgaW1wb3J0IHRlc3Rf
+cmVhbG1zX2d1ZXN0DQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVTYnNhUmVmTWFjaGluZShR
+ZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1aWx0IHdpdGggT1At
+VEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rpb25zOg0KPiArICAg
+ICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNlcy9RRU1VL3BhZ2Vz
+LzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29tL3Biby1saW5hcm8v
+cWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfU0JTQSA9IEFzc2V0KA0K
+PiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3JnL3MvS0p5ZUJ4TDgy
+bXoycjdGLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2stb3AtdGVlLTQuMi4w
+LWNjYS12NC1zYnNhLnRhci5neicpLA0KPiArICAgICAgICAgJ2RkOWFiMjhlYzg2OWJkZjNi
+NTM3NjExNmNiMzY4OTEwM2I0MzQzM2ZkNWM0YmNhMGY0YThkOGIzYzEwNDk5OWUnKQ0KPiAr
+DQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUgaW1wbGVtZW50YXRpb24s
+IGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAgICMgYW5kIGxhdW5jaGlu
+ZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVzdF9hYXJjaDY0X3JtZV9z
+YnNhcmVmKHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9neiA9IHNlbGYuQVNT
+RVRfUk1FX1NUQUNLX1NCU0EuZmV0Y2goKQ0KPiArICAgICAgICBhcmNoaXZlX2V4dHJhY3Qo
+c3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiArICAgICAgICBzZWxm
+LnNldF9tYWNoaW5lKCdzYnNhLXJlZicpDQo+ICsgICAgICAgIHNlbGYudm0uc2V0X2NvbnNv
+bGUoKQ0KPiArICAgICAgICBzZWxmLnJlcXVpcmVfYWNjZWxlcmF0b3IoJ3RjZycpDQo+ICsN
+Cj4gKyAgICAgICAgcm1lX3N0YWNrID0gb3MucGF0aC5qb2luKHNlbGYud29ya2RpciwNCj4g
+KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICdybWUtc3RhY2stb3AtdGVlLTQu
+Mi4wLWNjYS12NC1zYnNhJykNCj4gKyAgICAgICAgcGZsYXNoMCA9IG9zLnBhdGguam9pbihy
+bWVfc3RhY2ssICdpbWFnZXMnLCAnU0JTQV9GTEFTSDAuZmQnKQ0KPiArICAgICAgICBwZmxh
+c2gxID0gb3MucGF0aC5qb2luKHJtZV9zdGFjaywgJ2ltYWdlcycsICdTQlNBX0ZMQVNIMS5m
+ZCcpDQo+ICsgICAgICAgIHZpcnR1YWwgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnaW1h
+Z2VzJywgJ2Rpc2tzJywgJ3ZpcnR1YWwnKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGgu
+am9pbihybWVfc3RhY2ssICdvdXQtYnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4g
+Kw0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixw
+YXV0aC1pbXBkZWY9b24nKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcy
+RycpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1NJywgJ3Nic2EtcmVmJykNCj4g
+KyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywgZidmaWxlPXtwZmxhc2gwfSxm
+b3JtYXQ9cmF3LGlmPXBmbGFzaCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1k
+cml2ZScsIGYnZmlsZT17cGZsYXNoMX0sZm9ybWF0PXJhdyxpZj1wZmxhc2gnKQ0KPiArICAg
+ICAgICBzZWxmLnZtLmFkZF9hcmdzKCctZHJpdmUnLCBmJ2ZpbGU9ZmF0OnJ3Ont2aXJ0dWFs
+fSxmb3JtYXQ9cmF3JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywg
+Zidmb3JtYXQ9cmF3LGlmPW5vbmUsZmlsZT17ZHJpdmV9LGlkPWhkMCcpDQo+ICsgICAgICAg
+IHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLWJsay1wY2ksZHJpdmU9aGQw
+JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmljZScsICd2aXJ0aW8tOXAt
+cGNpLGZzZGV2PXNocjAsbW91bnRfdGFnPXNocjAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFk
+ZF9hcmdzKCctZnNkZXYnLCBmJ2xvY2FsLHNlY3VyaXR5X21vZGVsPW5vbmUscGF0aD17cm1l
+X3N0YWNrfSxpZD1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmlj
+ZScsICd2aXJ0aW8tbmV0LXBjaSxuZXRkZXY9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0u
+YWRkX2FyZ3MoJy1uZXRkZXYnLCAndXNlcixpZD1uZXQwJykNCj4gKw0KPiArICAgICAgICBz
+ZWxmLnZtLmxhdW5jaCgpDQo+ICsgICAgICAgICMgV2FpdCBmb3IgaG9zdCBWTSBib290IHRv
+IGNvbXBsZXRlLg0KPiArICAgICAgICB3YWl0X2Zvcl9jb25zb2xlX3BhdHRlcm4oc2VsZiwg
+J1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICAgICAgZXhlY19jb21tYW5kX2FuZF93
+YWl0X2Zvcl9wYXR0ZXJuKHNlbGYsICdyb290JywgJyMnKQ0KPiArDQo+ICsgICAgICAgIHRl
+c3RfcmVhbG1zX2d1ZXN0KHNlbGYpDQo+ICsNCj4gK2lmIF9fbmFtZV9fID09ICdfX21haW5f
+Xyc6DQo+ICsgICAgUWVtdVN5c3RlbVRlc3QubWFpbigpDQo+IGRpZmYgLS1naXQgYS90ZXN0
+cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSBiL3Rlc3RzL2Z1bmN0aW9u
+YWwvdGVzdF9hYXJjaDY0X3JtZV92aXJ0LnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1DQo+
+IGluZGV4IDAwMDAwMDAwMDAuLjM5ZTRlNGFkYjUNCj4gLS0tIC9kZXYvbnVsbA0KPiArKysg
+Yi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiBAQCAtMCww
+ICsxLDEwMCBAQA0KPiArIyEvdXNyL2Jpbi9lbnYgcHl0aG9uMw0KPiArIw0KPiArIyBGdW5j
+dGlvbmFsIHRlc3QgdGhhdCBib290cyBhIFJlYWxtcyBlbnZpcm9ubWVudCBvbiB2aXJ0IG1h
+Y2hpbmUgYW5kIGEgbmVzdGVkDQo+ICsjIGd1ZXN0IFZNIHVzaW5nIGl0Lg0KPiArIw0KPiAr
+IyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMgQXV0aG9yOiBQ
+aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+ICsjDQo+
+ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyDQo+ICsNCj4g
+K2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5nDQo+ICsNCj4g
+K2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQNCj4gK2Zyb20g
+cWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVy
+bg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3Jf
+cGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hpdmVfZXh0cmFj
+dA0KPiArDQo+ICtkZWYgdGVzdF9yZWFsbXNfZ3Vlc3QodGVzdF9ybWVfaW5zdGFuY2UpOg0K
+PiArDQo+ICsgICAgIyBCb290IHRoZSAobmVzdGVkKSBndWVzdCBWTQ0KPiArICAgIGV4ZWNf
+Y29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgJ3FlbXUt
+c3lzdGVtLWFhcmNoNjQgLU0gdmlydCxnaWMtdmVyc2lvbj0zICcNCj4gKyAgICAgICAgICAg
+ICAgICAgJy1jcHUgaG9zdCAtZW5hYmxlLWt2bSAtbSA1MTJNICcNCj4gKyAgICAgICAgICAg
+ICAgICAgJy1NIGNvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0PXJtZTAgJw0KPiArICAgICAg
+ICAgICAgICAgICAnLW9iamVjdCBybWUtZ3Vlc3QsaWQ9cm1lMCAnDQo+ICsgICAgICAgICAg
+ICAgICAgICctZGV2aWNlIHZpcnRpby1uZXQtcGNpLG5ldGRldj1uZXQwLHJvbWZpbGU9ICcN
+Cj4gKyAgICAgICAgICAgICAgICAgJy1uZXRkZXYgdXNlcixpZD1uZXQwICcNCj4gKyAgICAg
+ICAgICAgICAgICAgJy1rZXJuZWwgL21udC9vdXQvYmluL0ltYWdlICcNCj4gKyAgICAgICAg
+ICAgICAgICAgJy1pbml0cmQgL21udC9vdXQtYnIvaW1hZ2VzL3Jvb3Rmcy5jcGlvICcNCj4g
+KyAgICAgICAgICAgICAgICAgJy1zZXJpYWwgc3RkaW8nKQ0KPiArICAgICMgRGV0ZWN0IFJl
+YWxtIGFjdGl2YXRpb24gZHVyaW5nIChuZXN0ZWQpIGd1ZXN0IGJvb3QuDQo+ICsgICAgd2Fp
+dF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0KPiArICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAnU01DX1JNSV9SRUFMTV9BQ1RJVkFURScpDQo+ICsgICAg
+IyBXYWl0IGZvciAobmVzdGVkKSBndWVzdCBib290IHRvIGNvbXBsZXRlLg0KPiArICAgIHdh
+aXRfZm9yX2NvbnNvbGVfcGF0dGVybih0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgJ1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICBl
+eGVjX2NvbW1hbmRfYW5kX3dhaXRfZm9yX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsICdy
+b290JywgJyMnKQ0KPiArICAgICMgcXVlcnkgKG5lc3RlZCkgZ3Vlc3QgY2NhIHJlcG9ydA0K
+PiArICAgIGV4ZWNfY29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwgJ2NjYS13b3JrbG9hZC1h
+dHRlc3RhdGlvbiByZXBvcnQnKQ0KPiArICAgIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVybih0
+ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJyJj
+Y2EtcGxhdGZvcm0taGFzaC1hbGdvLWlkIjogInNoYS0yNTYiJykNCj4gKyAgICB3YWl0X2Zv
+cl9jb25zb2xlX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsDQo+ICsgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICciY2NhLXJlYWxtLWhhc2gtYWxnby1pZCI6ICJzaGEtNTEyIicp
+DQo+ICsgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0K
+PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAnImNjYS1yZWFsbS1wdWJsaWMta2V5
+LWhhc2gtYWxnby1pZCI6ICJzaGEtMjU2IicpDQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVW
+aXJ0TWFjaGluZShRZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1
+aWx0IHdpdGggT1AtVEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rp
+b25zOg0KPiArICAgICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNl
+cy9RRU1VL3BhZ2VzLzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29t
+L3Biby1saW5hcm8vcWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfVklS
+VCA9IEFzc2V0KA0KPiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3Jn
+L3MvaWFSc05ESnAyQ1hITVNKLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2st
+b3AtdGVlLTQuMi4wLWNjYS12NC1xZW11X3Y4LnRhci5neicpLA0KPiArICAgICAgICAgJzE4
+NTFhZGMyMzJiMDk0Mzg0ZDhiODc5YjlhMmNmZmYwN2VmM2Q2MjA1MDMyYjg1ZTliM2E0YTlh
+ZTZiMGI3YWQnKQ0KPiArDQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUg
+aW1wbGVtZW50YXRpb24sIGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAg
+ICMgYW5kIGxhdW5jaGluZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVz
+dF9hYXJjaDY0X3JtZV92aXJ0KHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9n
+eiA9IHNlbGYuQVNTRVRfUk1FX1NUQUNLX1ZJUlQuZmV0Y2goKQ0KPiArICAgICAgICBhcmNo
+aXZlX2V4dHJhY3Qoc3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiAr
+ICAgICAgICBzZWxmLnNldF9tYWNoaW5lKCd2aXJ0JykNCj4gKyAgICAgICAgc2VsZi52bS5z
+ZXRfY29uc29sZSgpDQo+ICsgICAgICAgIHNlbGYucmVxdWlyZV9hY2NlbGVyYXRvcigndGNn
+JykNCj4gKw0KPiArICAgICAgICBybWVfc3RhY2sgPSBvcy5wYXRoLmpvaW4oc2VsZi53b3Jr
+ZGlyLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ3JtZS1zdGFjay1v
+cC10ZWUtNC4yLjAtY2NhLXY0LXFlbXVfdjgnKQ0KPiArICAgICAgICBrZXJuZWwgPSBvcy5w
+YXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdJbWFnZScpDQo+ICsgICAgICAg
+IGJpb3MgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdmbGFzaC5i
+aW4nKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGguam9pbihybWVfc3RhY2ssICdvdXQt
+YnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4gKw0KPiArICAgICAgICBzZWxmLnZt
+LmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixwYXV0aC1pbXBkZWY9b24nKQ0KPiAr
+ICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcyRycpDQo+ICsgICAgICAgIHNlbGYu
+dm0uYWRkX2FyZ3MoJy1NJywgJ3ZpcnQsYWNwaT1vZmYsJw0KPiArICAgICAgICAgICAgICAg
+ICAgICAgICAgICd2aXJ0dWFsaXphdGlvbj1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAg
+ICAgICAgJ3NlY3VyZT1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgJ2dpYy12
+ZXJzaW9uPTMnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctYmlvcycsIGJpb3Mp
+DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1rZXJuZWwnLCBrZXJuZWwpDQo+ICsg
+ICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kcml2ZScsIGYnZm9ybWF0PXJhdyxpZj1ub25l
+LGZpbGU9e2RyaXZlfSxpZD1oZDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCct
+ZGV2aWNlJywgJ3ZpcnRpby1ibGstcGNpLGRyaXZlPWhkMCcpDQo+ICsgICAgICAgIHNlbGYu
+dm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLTlwLWRldmljZSxmc2Rldj1zaHIwLG1v
+dW50X3RhZz1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWZzZGV2Jywg
+Zidsb2NhbCxzZWN1cml0eV9tb2RlbD1ub25lLHBhdGg9e3JtZV9zdGFja30saWQ9c2hyMCcp
+DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLW5ldC1w
+Y2ksbmV0ZGV2PW5ldDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbmV0ZGV2
+JywgJ3VzZXIsaWQ9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1hcHBl
+bmQnLCAncm9vdD0vZGV2L3ZkYScpDQo+ICsNCj4gKyAgICAgICAgc2VsZi52bS5sYXVuY2go
+KQ0KPiArICAgICAgICAjIFdhaXQgZm9yIGhvc3QgVk0gYm9vdCB0byBjb21wbGV0ZS4NCj4g
+KyAgICAgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHNlbGYsICdXZWxjb21lIHRvIEJ1
+aWxkcm9vdCcpDQo+ICsgICAgICAgIGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3JfcGF0dGVy
+bihzZWxmLCAncm9vdCcsICcjJykNCj4gKw0KPiArICAgICAgICB0ZXN0X3JlYWxtc19ndWVz
+dChzZWxmKQ0KPiArDQo+ICtpZiBfX25hbWVfXyA9PSAnX19tYWluX18nOg0KPiArICAgIFFl
+bXVTeXN0ZW1UZXN0Lm1haW4oKQ0KDQpUaGlzIHRlc3Qgd2FzIGJyb2tlbiBieSBhIHJlY2Vu
+dCBjaGFuZ2UgKG5ldyBhcmNoaXZlX2V4dHJhY3QgaGVscGVyKS4NClRoZSBuZXcgdmVyc2lv
+biBpcyBhdmFpbGFibGUgaGVyZToNCmh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL3FlbXUtZGV2
+ZWwvMjAyNDEyMTkxOTUzMDQuMzU0ODI0Ni0xLXBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9y
+Zy9ULyN1DQo=
 
