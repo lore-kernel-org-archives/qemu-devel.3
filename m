@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2953CE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:38:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43473E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:38:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOByE-0004p7-Iz; Thu, 19 Dec 2024 03:33:22 -0500
+	id 1tOBxn-0004U5-3F; Thu, 19 Dec 2024 03:32:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByC-0004lQ-Up
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:20 -0500
+ id 1tOBxc-0004S3-Cv
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:44 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByB-0005Ay-5G
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:20 -0500
+ id 1tOBxa-00054i-Q2
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734597198;
+ s=mimecast20190719; t=1734597162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mbyntGtYpHsSrSs698oFtn5IEUzoH+5caUeaY/RmSYI=;
- b=M/HAknR3EraJuKrgVKMPvqYAc1Za5nkBWLCOcw6AsXOY0SZbwjvsPjDRp46souN53gWALv
- j68vNgb8viWOufweJofgmcCcefH6Nn7Fuh6TP7URkB3h1W+YXXsvnLjuHduw/waaXys3b+
- /ITSqCuEfPiqPGApJybgcTPDX/fiCkQ=
+ bh=IFjwhxqsfjuevOjG/oLbzLqe5I9lt5Dktq2jkNMeE3k=;
+ b=T9BLULDwVateM4r2bYJNTtzZfma0zItH2Ie6143JePTOGCezrHsCzTnCXFkoeK8lWTwfaN
+ rKmQ0UCgV/1se9SQWixg/9TnKDAz6NDqDeJacN8Q21EJevk8wV0/pMAhBvkF7r0tT0njvP
+ 9UlmLmHSu6aeIHEWPCYuyPqyyEyP3ZE=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-210-R8F32i5KPSWwhYb6OTf-mA-1; Thu, 19 Dec 2024 03:33:16 -0500
-X-MC-Unique: R8F32i5KPSWwhYb6OTf-mA-1
-X-Mimecast-MFC-AGG-ID: R8F32i5KPSWwhYb6OTf-mA
+ us-mta-402-w-OLHRXdOYq9QELFSUeXWw-1; Thu, 19 Dec 2024 03:32:41 -0500
+X-MC-Unique: w-OLHRXdOYq9QELFSUeXWw-1
+X-Mimecast-MFC-AGG-ID: w-OLHRXdOYq9QELFSUeXWw
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4362b9c15d8so2896555e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:33:16 -0800 (PST)
+ 5b1f17b1804b1-436328fcfeeso4199915e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734597194; x=1735201994;
+ d=1e100.net; s=20230601; t=1734597159; x=1735201959;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mbyntGtYpHsSrSs698oFtn5IEUzoH+5caUeaY/RmSYI=;
- b=pohGNA9tRHv0ZNDlhxE7nSeD8NSG9EkgWnSdrWyXLzv8yq60UiHalG9gWV5Ln64+7O
- rEFCBdTMCvLFdbrT2g2ymOcVHeQIYrAlBVhir9sfiAxOpU8oTiXUi5sIUlqv14Aac5KU
- ABA0RmHumrMQFfCKVZcuXvCbsBZ16bxtn5jsCNnk5vz2DsgvIAIMwtOy9WjmYJpUW2NE
- aoArdrQl6GpP6FWfe9f2ilV/ZwIM/KE2kgqhR0S8pOr3NtXO96pu7JvnDgSIeZcXinsO
- UZc9UUg8foUECMXHj73ouS+MRu6q/scz3ersKM+CMBm7RpM1QPEuBpjiOigFVDLfNF12
- krJw==
-X-Gm-Message-State: AOJu0YxkNeIFNnZ9S1LYbxMT8VDB1Ady6hB3zWmf7J/I5DpPe+EgHRpW
- ACWaI6lP99OYa1Ic5a/au7km1EDrzv8fzQSSlboDI1Si+Td2w+kkMax1VKm7iGXcIiTvlhmK7gu
- hKQfB80cigma9kGgY8mRYv4bThkEI0vugT14MUMnAq693xTfC/1sIsCjc2fD1dWrqWZZdPsicPi
- 8IQWKofAV79RSbuwK6An5dEpufNcutdlSHwFvW
-X-Gm-Gg: ASbGncs/ME7nyg1y+4xuiaViJjhdZEbyo+HvxSMJh4cSUP0+I9NZw9Jeh7wRxpdoa83
- iCl9bvqxG+mtXlMzhcSHH255UnJvHAyw/fGCaVesackTXKwcoPUUQ4pKBSNdgvudKElIg2UdKUi
- udQvBqouGFJjK5CIWmYUL3U2oOnr5GNC5S1Vuvqa8K+QF0sN8sikseAZ+TUzkXhtPLDspbPyY6Z
- r2OOpkInxP/WMWZcVaAUL9kfkQpwlUHydNsn2kDDdPGd8juT7G1lHrXaGgU
-X-Received: by 2002:a05:600c:4f15:b0:436:30e4:4590 with SMTP id
- 5b1f17b1804b1-4365540cd9emr48113235e9.32.1734597194271; 
- Thu, 19 Dec 2024 00:33:14 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHWfazPnguJEwALqI+CCvmNXE2Rq8USpfKvrbXr66pIPLzYS2ZIJCMUpdLvYDfsmgf+UZaPNQ==
-X-Received: by 2002:a05:600c:4f15:b0:436:30e4:4590 with SMTP id
- 5b1f17b1804b1-4365540cd9emr48112955e9.32.1734597193831; 
- Thu, 19 Dec 2024 00:33:13 -0800 (PST)
+ bh=IFjwhxqsfjuevOjG/oLbzLqe5I9lt5Dktq2jkNMeE3k=;
+ b=OlxKKZIP8JoNeaGmXPZAA9BWtroPV7bU1LTdp4xT1zzs4Oxi7PdLaA6LradwAMCMxe
+ 1CbXCswBedEHTMBSvBjhoq5Aw4DEWiIR4+2TQLDQ6X6tKElDhvACIZekMujA9LofZd/M
+ CgYJkHa7s5/6l5a5PKoD6hkOCLFIrVe0HVviBPAe7NsnVSdPe7Lb/l9yjwJ0mGxZun6w
+ QzPJlEVGVvNo5TsNJ8Z2XpeDYNHqLNEiuMGKgLO9YeL+k0Dt/lhonQ+1oD3sP+Qcvl99
+ 1bYs71gDqn9C5TvPirvKus6KftbFPeUy6cFmxP47Xoy3jk/Bs2vDK4teB2qGirDGUCA6
+ xDug==
+X-Gm-Message-State: AOJu0YyzMsPvMaFxR8MzTYWFpaLnEJ23H6skagJwYAVFSyG4oe84MIo+
+ xNrU0Gg3xxbzs2krcv43iLg6qaHVpXjX2v2QbHo3TIezrqTzesZpI1MVSzMOXqujdITD1JDnVZ3
+ iFPY/i/99vsxKJRd1tggbhy6B/fX8Ofo5c7UUozW6NPelXjH2Oplhb2aiOLz2hkdUXswRVvpUpR
+ 6wmNtz5sod1RYsVGLftuIrgVliuxId/bGSrZ+0
+X-Gm-Gg: ASbGncvKUphowAVdMIzQ4/sS1ANMQ6pSl1r09/sa4BnmVBefaDPWhr5CdRsXvgeOkdZ
+ 7xAZRgubi7JZVE30d1dd8Qa/EXmmCFFHJOw1AtZGfF5J/fK3+FKePbvpetL3J28JrrQV1YxIjFM
+ SEVfewjy4ddvVsx/+JYyzmmMQIVTXlcBx62CQ0uCddFLLc9sET8TRus2zlNUkPhAkFdQRTeRP8g
+ u8375M4djgiQTwjIVQ+B1YLSHPEZhTdLQ7ZAMq29o30zxaXE5WQi9PVeeSD
+X-Received: by 2002:a5d:59a8:0:b0:385:faaa:9d1d with SMTP id
+ ffacd0b85a97d-388e4d65796mr5705114f8f.35.1734597159112; 
+ Thu, 19 Dec 2024 00:32:39 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHxYvK4bFK8oz8Gs/heaVQA/Xw+b2f52+IbKLAIyYECueKiz/SKsrjxskWMlF5NkIR7yZELZg==
+X-Received: by 2002:a5d:59a8:0:b0:385:faaa:9d1d with SMTP id
+ ffacd0b85a97d-388e4d65796mr5705087f8f.35.1734597158689; 
+ Thu, 19 Dec 2024 00:32:38 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b3b1e8sm45823375e9.30.2024.12.19.00.33.13
+ ffacd0b85a97d-38a1c832c45sm980369f8f.32.2024.12.19.00.32.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 00:33:13 -0800 (PST)
+ Thu, 19 Dec 2024 00:32:36 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 22/41] hw/core/qdev-properties: Constify Property argument to
- object_field_prop_ptr
-Date: Thu, 19 Dec 2024 09:32:09 +0100
-Message-ID: <20241219083228.363430-23-pbonzini@redhat.com>
+Subject: [PULL 04/41] target/s390x: Use s390x_cpu_properties for system mode
+ only
+Date: Thu, 19 Dec 2024 09:31:51 +0100
+Message-ID: <20241219083228.363430-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
 References: <20241219083228.363430-1-pbonzini@redhat.com>
@@ -110,40 +110,56 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
+Avoid the empty property list for user-only mode.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20241216035109.3486070-23-richard.henderson@linaro.org
+Link: https://lore.kernel.org/r/20241216035109.3486070-5-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/hw/qdev-properties.h | 2 +-
- hw/core/qdev-properties.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ target/s390x/cpu.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 3680cd239fb..447767688b6 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -201,7 +201,7 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value);
- /* Takes ownership of @values */
- void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values);
- 
--void *object_field_prop_ptr(Object *obj, Property *prop);
-+void *object_field_prop_ptr(Object *obj, const Property *prop);
- 
- void qdev_prop_register_global(GlobalProperty *prop);
- const GlobalProperty *qdev_find_global_prop(Object *obj,
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index a3d49e20202..61929b2865a 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -51,7 +51,7 @@ void qdev_prop_allow_set_link_before_realize(const Object *obj,
-     }
+diff --git a/target/s390x/cpu.c b/target/s390x/cpu.c
+index 4702761ca30..263f9e84ed6 100644
+--- a/target/s390x/cpu.c
++++ b/target/s390x/cpu.c
+@@ -309,8 +309,8 @@ static const gchar *s390_gdb_arch_name(CPUState *cs)
+     return "s390:64-bit";
  }
  
--void *object_field_prop_ptr(Object *obj, Property *prop)
-+void *object_field_prop_ptr(Object *obj, const Property *prop)
- {
-     void *ptr = obj;
-     ptr += prop->offset;
++#ifndef CONFIG_USER_ONLY
+ static const Property s390x_cpu_properties[] = {
+-#if !defined(CONFIG_USER_ONLY)
+     DEFINE_PROP_UINT32("core-id", S390CPU, env.core_id, 0),
+     DEFINE_PROP_INT32("socket-id", S390CPU, env.socket_id, -1),
+     DEFINE_PROP_INT32("book-id", S390CPU, env.book_id, -1),
+@@ -318,9 +318,9 @@ static const Property s390x_cpu_properties[] = {
+     DEFINE_PROP_BOOL("dedicated", S390CPU, env.dedicated, false),
+     DEFINE_PROP_CPUS390ENTITLEMENT("entitlement", S390CPU, env.entitlement,
+                                    S390_CPU_ENTITLEMENT_AUTO),
+-#endif
+     DEFINE_PROP_END_OF_LIST()
+ };
++#endif
+ 
+ #ifdef CONFIG_TCG
+ #include "hw/core/tcg-cpu-ops.h"
+@@ -388,7 +388,6 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+ 
+     device_class_set_parent_realize(dc, s390_cpu_realizefn,
+                                     &scc->parent_realize);
+-    device_class_set_props(dc, s390x_cpu_properties);
+     dc->user_creatable = true;
+ 
+     resettable_class_set_parent_phases(rc, NULL, s390_cpu_reset_hold, NULL,
+@@ -404,6 +403,7 @@ static void s390_cpu_class_init(ObjectClass *oc, void *data)
+     cc->gdb_read_register = s390_cpu_gdb_read_register;
+     cc->gdb_write_register = s390_cpu_gdb_write_register;
+ #ifndef CONFIG_USER_ONLY
++    device_class_set_props(dc, s390x_cpu_properties);
+     s390_cpu_class_init_sysemu(cc);
+ #endif
+     cc->disas_set_info = s390_cpu_disas_set_info;
 -- 
 2.47.1
 
