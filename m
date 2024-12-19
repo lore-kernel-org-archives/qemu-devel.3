@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDCAE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D73E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:16:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOL2X-0004YG-Ir; Thu, 19 Dec 2024 13:14:25 -0500
+	id 1tOL4E-0005L3-DX; Thu, 19 Dec 2024 13:16:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOL2T-0004Xx-Fd
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:14:22 -0500
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1tOL49-0005Kf-Ps
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:16:05 -0500
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOL2S-0007u1-38
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:14:21 -0500
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2161eb95317so10816245ad.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:14:19 -0800 (PST)
+ id 1tOL48-0008Gj-9E
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:16:05 -0500
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2163dc5155fso10511975ad.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:16:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734632058; x=1735236858; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734632163; x=1735236963; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=of7XpVT/u+BLQidS/sIzJ1C1gBA65Ws8iko5Ava5nf0=;
- b=E1aUKz0jqi/fCFZMrnRd0IgDvxAtXLVJYn/VPg3UYFJiURL90sKewe/faI35nQQV3H
- UuNFruvKbYYRCQ16SpszkD9iYxYuBtmvy8abUp5cvV5rAciCRAWWh1WadpNc/AQq+A7E
- kkENH0SETDD0V0DIpYk3+jppKO+DFQlSIL0lEZTa2QJW+eLP2ENa8pAVRO7pEaVFe6GB
- BTerL1xPMdDRoAgcRbXhAeME5FETSQQB8xD5yj6T+1l0TgBNcFIufFUJt9Cv9Rkvnd+d
- KPH1+crG9sENbuc3LzNeOcMvYyfv49CfwY4cc6dnFsoghClEB/a57wr7FVNUChY4HW5b
- 7sCw==
+ bh=JGYcyhpa6yfeH3/dLfyzh4mlH+pOslywyNNRxTTB8NQ=;
+ b=AfAJ9DBrlcegXyDfc9OGylBiA+lFbroXw+fB2tvYXQeqIenouSS+NejpcM2vSjv2OO
+ PY28JCxK2XajDQKxz4WGh5jls5Gd78LV0nx9R4Ub8H/V1WSflulqt11N4RCXNunh2Kwd
+ CmOSZ1s5CqbSh3kkTdCMrCyRgT+UP83R/N5gt4w1LnCr98TmuyaJC8njF5wD068Za280
+ MGCNJekatxNWW9L0ru+bwhz12hyacORed6wr6gyxz/gX6lAL4LA1gZh6n/mED5a3sRyY
+ yYR8U1ifn3itwnQkLdQ0c3DqWFCTV7hAMtyL5btWkj3kp8LCtTMKyv87kQ/gz47M0wME
+ jgag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734632058; x=1735236858;
+ d=1e100.net; s=20230601; t=1734632163; x=1735236963;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=of7XpVT/u+BLQidS/sIzJ1C1gBA65Ws8iko5Ava5nf0=;
- b=k8pFgo574dgSQV/h5KQCAJ+wkJJgQ1vshA+7vqslV8TC5+/iEiaKXCkk6LDKWthXXJ
- /jlKEPXQKtFY3Uy+E0rqJy/0bekgxxUAdDGM/Mvp5xkp0V1oOlXrcd7OTD73tfPct+n9
- QDKGoASpd9LSai6daIgxhj/iJfaINV07d7lfMX0yzl6931MyBJft5PNvFryjSJt5hXKG
- Er/S458V2W6BUGmysMzeR22jFe8dVIIpWbcYXwvqYVxsMuPdpYK4R36YIMDDGnbrjE/i
- KZqfHA6IzAykb4Q+6GURygcyJxm4FMdf1LH88NyonyQJoYwpsrGTCwHwoUA/vxYgIpzm
- L7AA==
-X-Gm-Message-State: AOJu0Yw9u/WmAxFEwB+vReXIszScz560G0xV7Za9iYLlIya0SA/+4b56
- diIPgtiK2kfONhkjGbIrIbVWWEEggl3D4U93dD9d7ygJec2R3afr7YGJ1pdT6zAxvfXdv8APdiv
- G3ra6kw==
-X-Gm-Gg: ASbGncvTvmV9llSXAKvhXpe5Rq5yOAn/U7GcS5YNTDsd8uVWhml+rSJau0BDsbXn2vw
- QW+/O4buJz/2LXg/OKssTpAAStSPPqKNO7wIXeGBDLK49JlMamvv4ONHbBzJmk6iYPJsrOkJcux
- LLB7JaKB0X1Zipl36OLXEnL58fcSHu++gPxSVqzgP356B3i02F6b/9JjawQjJTZgLsHNcNOcI2u
- j26AFC/+DRTwg+rICg4C2kRs3wHGru/mUQrKawpB08n0L3IqkzMxTGNjDzlFoIVo12G3JBQ7Ge0
- 1Hil2BgCCriY1v9PPLjYsSSxf8j9V2iW9DK4ceNdPw==
-X-Google-Smtp-Source: AGHT+IF5IwWz7w/J6yH2Q/YszOkk7x2C+fCC5w7vU8f2Zzf2s1Q/Yq1MNAzIIqlcYxhZ2wp7wUALlg==
-X-Received: by 2002:a17:902:e542:b0:216:30f9:93d4 with SMTP id
- d9443c01a7336-219d966c0c3mr59303925ad.8.1734632058319; 
- Thu, 19 Dec 2024 10:14:18 -0800 (PST)
+ bh=JGYcyhpa6yfeH3/dLfyzh4mlH+pOslywyNNRxTTB8NQ=;
+ b=N+0lil7y9nQ6IVB9a6VpnY4KYOHODKcFh30RQvNEoYCjj26onzQ3O2923Pqvf0AyKv
+ lpbEFSNBaBbPz3MVKLmuObaoIFo346jWXvka6YnYoV+S/b/631202OVoc7COtM+SUgeo
+ x8+6l4r/MQU70OV0lrgI6pZ5ToL30wUnRvhWJilOXi/thcF9v0NQPC6TlSzYdxG1u+HM
+ ZrZUK5mwXWTht5LgOQriUEDjQwuuTJAgm/Ix4JVIV8f6uN7oXFsSTCptPFJCzKdMhXTa
+ zZyuVL0LJiZn3e5bflWBsZecrRxtESBPfEzpaMI6UFZ4/YSiV6sDxjifOLabFzT00HKk
+ 277Q==
+X-Gm-Message-State: AOJu0YxSgWkV+O9XvkZWDbMI2aO06F7++r6Os5pG1L42Bl7FBUoJ9uL3
+ yAPnZjK94TakAOYuiaIgKvkC/39eiqVXW22Af/KwoxCOVq0J1x5iRVlSjuj8rTVmch2w4zjIKA6
+ l2T0axw==
+X-Gm-Gg: ASbGncsrX4an5jeO/Dhh7JNiOUz2arniY2oR8qYA5En7f7/i9PysvbZp3f484T2M5sZ
+ 4A/QuS3qR4hT6Kj2x45FpCrgDyd4Qc19rBQpmT2pghF070XWWfy1iOVKTfnMqxSAdic3vr5rtp5
+ /L/nRh4Tz26phY3V44/t7TsziDujXlVsvoThx8jT1R7OTjQ0x1jIOqTrGdJaOvwJ0un/QQipBZ2
+ mXuyJGvcDlh4T5EEFBoz/3Nc4y7nBuTCzYHpVPQYMJUMLilbOHCpYcHljXqHtjCkOpX8MToNGbT
+ +ifi4zPnkvHbykDkeMJwopMs28B6VFFrHAYgN+Ne2A==
+X-Google-Smtp-Source: AGHT+IFJF8CuIRcznvO9Ez4GRJz0N0Rw86UpIGvFiyAteuCT7P0WOFGOlB9OduCGgCZWrEmSkhTfgw==
+X-Received: by 2002:a17:902:f712:b0:216:59ed:1aa3 with SMTP id
+ d9443c01a7336-218d71030ddmr97113185ad.27.1734632162758; 
+ Thu, 19 Dec 2024 10:16:02 -0800 (PST)
 Received: from ?IPV6:2607:fb91:1ec0:c32f:435b:9081:64c9:3330?
  ([2607:fb91:1ec0:c32f:435b:9081:64c9:3330])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dca006fasm15338715ad.227.2024.12.19.10.14.17
+ d9443c01a7336-219dca02a97sm15320915ad.275.2024.12.19.10.16.02
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 10:14:17 -0800 (PST)
-Message-ID: <bcbac22f-dbce-499d-8328-333b8760d77c@linaro.org>
-Date: Thu, 19 Dec 2024 10:14:15 -0800
+ Thu, 19 Dec 2024 10:16:02 -0800 (PST)
+Message-ID: <9456cea0-7fc5-48ae-a7a6-c92f74f988c1@linaro.org>
+Date: Thu, 19 Dec 2024 10:15:59 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] meson: Run some compiler checks using
- -Wno-unused-value
+Subject: Re: [PATCH 1/2] target/riscv: use RISCVException enum in exception
+ helpers
 To: qemu-devel@nongnu.org
-References: <20241218182106.78800-1-philmd@linaro.org>
- <20241218182106.78800-2-philmd@linaro.org>
- <D6F99DW9FQ1Y.268COFM41BN5X@gmail.com>
- <f2cd3c5d-cacb-49f7-afec-1e48e5a9a92d@linaro.org>
+References: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
+ <20241219174657.1988767-2-dbarboza@ventanamicro.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <f2cd3c5d-cacb-49f7-afec-1e48e5a9a92d@linaro.org>
+In-Reply-To: <20241219174657.1988767-2-dbarboza@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,25 +104,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/24 09:39, Philippe Mathieu-Daudé wrote:
-> @@ -885,7 +885,8 @@ class CLikeCompiler(Compiler):
->                    dependencies: T.Optional[T.List['Dependency']] = None) -> T.Tuple[bool, 
-> bool]:
->           t = f'''{prefix}
->           void bar(void) {{
-> -            (void) sizeof({typename});
-> +            size_t foo = sizeof({typename});
-> +            (void) foo;
->           }}'''
+On 12/19/24 09:46, Daniel Henrique Barboza wrote:
+> Do a cosmetic change in riscv_raise_exception() to change 'exception'
+> type from uint32_t to RISCVException, making it a bit clear that the
+> arg is directly correlated to the RISCVException enum.
+> 
+> As a side effect, change 'excp' type from int to RISCVException in
+> generate_exception() to guarantee that all callers of
+> riscv_raise_exception() will use the enum.
+> 
+> Signed-off-by: Daniel Henrique Barboza<dbarboza@ventanamicro.com>
+> ---
+>   target/riscv/cpu.h       | 3 ++-
+>   target/riscv/op_helper.c | 3 ++-
+>   target/riscv/translate.c | 2 +-
+>   3 files changed, 5 insertions(+), 3 deletions(-)
 
-As I mentioned elsewhere, sizeof is a compile-time constant.
-The function wrapper is getting in the way.  This can be just
-
-unsigned long foo = sizeof({typename});
-
-I.e. initialization of a global variable, with no need for <stddef.h> or any other system 
-header for size_t.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
