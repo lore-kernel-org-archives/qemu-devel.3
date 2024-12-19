@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ECE2E7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:28:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 755D9E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:28:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOLFF-0000sI-Fw; Thu, 19 Dec 2024 13:27:33 -0500
+	id 1tOLFg-00010Q-Gh; Thu, 19 Dec 2024 13:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOLFE-0000s9-5B
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:27:32 -0500
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOLFd-0000uX-ST
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:27:57 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOLFC-0001YA-B1
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:27:31 -0500
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2163b0c09afso10888905ad.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:27:29 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOLFc-0001he-84
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:27:57 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43624b2d453so12255275e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:27:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734632848; x=1735237648; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=dmOxa/yP4xXhzSvm4NLjg5AR27L+fmd/ScAJOLOB8/Q=;
- b=PjD514Nr3r1f2l30gbnxU1xZAVldktXI/WRpe7gtVRvoaSSUIwEg5PduUsRzMDdPZ2
- oMOEQ0z+fGKOYHWKJtElVgcAiqU866KXTi3mbOo/p5dn5akL/Zs2FzNpuhklWWagT4VO
- gjDQcrOncTP2GPsWvVhdaxA4npHgAWp9gMl2u3TNVZchImEzsJU7oF1ydTzcwXd/BPgK
- AKSfsd0x0H2boSnbzFreUo5ehDIvLhd7gehuMuwRrXS/Yu2sKIaayzncuoOUUSm1C3fA
- b+MXu0x1wOTgu1kqkEWDaSL/CmuazWpbS8OzFXwagI8ZwjUtJ7Mu7SYGaL0BjxLuo+tK
- 0Stw==
+ d=linaro.org; s=google; t=1734632874; x=1735237674; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=3Ra14/MMFM6PTlNC92MKn407dEq3fjvpUikb7FfDVfA=;
+ b=lq6bxfRM5cb7Ym12x8MYPwllJtzK7DghltCsa1kqiinq3MTViD+TeU0kpaU73GZ4Yu
+ fWjfaHaEgcLCRM2GadWbqCvKoc3vVc0OpQzSNLL5oxW5G0ifaSZSvxeJWXWnb8MAGJW6
+ wlYScd2lmUUXSJhdfVjIDV6EK8YIxCw2GHDbxIP66dsnbItt0/BzPCnRgmwdSGdp0D7k
+ +RuRfU8oxxchBnSgrEl3vLeFGLzDoUpHrkxDMzqf6jcvCWObN/27Z59fFqG+5j3ts8eP
+ DJbdK1QdayXyjIr2OBE6DRycInHo3UiH+PvLUKqPo/KX4F+PnzLU3QcBXTl+u6cTEA/D
+ cdxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734632848; x=1735237648;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734632874; x=1735237674;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dmOxa/yP4xXhzSvm4NLjg5AR27L+fmd/ScAJOLOB8/Q=;
- b=mrNuYZsW+utzUyMUxPERYDcEnanRWcQAWm9OMje6MNEN3kksnfMJoKJVQ3PTorDjE8
- CfDho3MI9ZNgobGkRe7+z7oWjxNMaCZZvo4331QDNd694cp0onU42ikcFzsoskvLbAWw
- 9+P7Vib1oFvSWtuQ+ysExzucHHpJ35UZ4AF1ibzNN3T3TW0nfNgkBv8J+XDoQRCJeIS4
- CTMkafJShUSpYg0QY6Hf/XNVasXgTNg1InQJjycgim3256qaVqJK7SUS7iZWfCLO4TI2
- Jw/zlOL0hXolC4oIuItdkBo6tsSa0D5Ft7ltaBHLX7UIGXI2tOBC8vlATPISfNZZPAIh
- 0ROw==
+ bh=3Ra14/MMFM6PTlNC92MKn407dEq3fjvpUikb7FfDVfA=;
+ b=IpZEpI3VPlnBw6wZZQ48dNGYJRsH0qugm2qscqlqNjx2KR20LltpJbsVDxqw+GSf4J
+ FORXh9Lhtqfc32ZX5qa+4SlVEM1W/de8buJRwEXzqZuLOoMrhNXkzCt2ax18YhQpgp6d
+ G9DA+AXMzsacSuAGeC/HtG4YURdgjc7JSG+jtd4kpoAViBkdHwpaFClri3C1N6yEPLAE
+ QRHGMn+DyQr+Mm9mPYMF1dei1++dBFbwXduTvdkyarqhWPGOKWcBgy6m1AC+LDBWDqRy
+ J3fn59KUiN7fRrfPCGLz+J5cy38hSLXO3+4uix+WundasBvS8MkeLl/U9wkq273ExK+U
+ CLyg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX/Opy/OQ8Yx8vqD/IOW7P00yAPnSiy8NpDCeZRekRsjTrE4whiFiilYxrn5+iZl/7SHo5++w6uRXOV@nongnu.org
-X-Gm-Message-State: AOJu0YwsAa0DHWSLdMPpsZvaR4UbqJJUMmmEFBzBoSRKCZqluqEKyyHD
- qIBRGwvBcigWy6hqZ4i+GwxtbzDQP+ia/37jvZOGD1A2v5gVdjCzyvIRY8MBGkyx8nZjtk7sFk1
- iegD7fw==
-X-Gm-Gg: ASbGncvdlGr+o7/WfAwHPZOBhZz3X7SEU0qYpROydCp9KVMyUgZq0uRtWq9PCWYr6/s
- gGJcxOOKpVOiDSbdbs7sDyXrD7E4JBsDm8yjKkQZncKGf8GsrWRiBvdny7tSU5DxyU74PxIfqpl
- p0G01gayTWPF+bMSJEwc/9znhxQ/lF8yFhySqEKtmq7U9HoW0UZkba+ciQYiH8aXQJbIEnp6P98
- deni+mxxgl1FV/KOeEgGzff3H5twhe9B054kFHvQCMoXatQZ/c5uDst0CLI8sQfAom8OuxqXYxu
- mszZ6nqxJAdrl3AyiAl4LTr08uDlJ9tXu5ZDFmvpvg==
-X-Google-Smtp-Source: AGHT+IGsYwzWC/KSSFRrABZmAkyy7fdbkIURWvZftFCkMQEHEMdyCKqX4LAMle4b3RRjMTaZNy4NFw==
-X-Received: by 2002:a17:902:ebc8:b0:215:e98c:c5c1 with SMTP id
- d9443c01a7336-219e55915f9mr7252685ad.30.1734632848267; 
- Thu, 19 Dec 2024 10:27:28 -0800 (PST)
-Received: from ?IPV6:2607:fb91:1ec0:c32f:435b:9081:64c9:3330?
- ([2607:fb91:1ec0:c32f:435b:9081:64c9:3330])
+ AJvYcCVYOEAa5DXXTzOI1fx0UBkGIgQgL5tPKbKXHwmKAQEOSlFBjWOkyVhEQxBVOlqefHgz8m4l3+bhVhil@nongnu.org
+X-Gm-Message-State: AOJu0Yxn0aU3LMRMhgxVH6uGf5K9zDJCb2sgVudLeywUtgGci/Q2rHNO
+ I7gns3dcOG/e3nrBcxGPJHyAgEjBTmZ4tgIWlKG3vWYJdXf5VPS759HoiYLnayg=
+X-Gm-Gg: ASbGncucJDTjc7qS25IJAwCq1MBfvGTX8KoBxHr6x44WeE1EA0eOCMlAtSnsb6huDGz
+ nyale8WNTcPJ7+fBNP52ImY4vz7nYJCu7hqDcoqjDcZH7bq9aY2nXQiPOeg15UsezE+4o27+WwL
+ VdHgSXTvz1o8H+CI5U2SlqkevzzpTBDnRG326Hw9JEqh7LJTUgR7YLZaFCz07jZWqfSA+g5Ed6j
+ E1RxFAbALOsoQHf5VLzpJwlOzR45FlihhPxQP19jxaWPemnmOMxzqzcAgmjQZk7l+yiAh8=
+X-Google-Smtp-Source: AGHT+IGtsbk9EI6CQJsOirCJv1EU9762Gj1Yfi1IhT1tZo0Jr2lyhgUQUzfmPg/eWRtBDG8uArjqrQ==
+X-Received: by 2002:a05:6000:4a01:b0:385:f996:1b8e with SMTP id
+ ffacd0b85a97d-38a221ea879mr103358f8f.16.1734632874306; 
+ Thu, 19 Dec 2024 10:27:54 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9630a5sm15601715ad.51.2024.12.19.10.27.27
+ 5b1f17b1804b1-43656b3b287sm58095355e9.29.2024.12.19.10.27.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 10:27:27 -0800 (PST)
-Message-ID: <e53e11b6-169f-4988-9cf1-8c5a5c79e42e@linaro.org>
-Date: Thu, 19 Dec 2024 10:27:20 -0800
+ Thu, 19 Dec 2024 10:27:53 -0800 (PST)
+Message-ID: <a0e5950d-2de8-4500-8376-88c231818aed@linaro.org>
+Date: Thu, 19 Dec 2024 19:27:51 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL v2 00/42] Rust, qdev, target/i386 changes for 2024-12-19
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241219134843.443085-1-pbonzini@redhat.com>
+Subject: Re: [PATCH v2 08/13] qdev: Make qdev_get_machine() not use
+ container_get()
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20241121192202.4155849-1-peterx@redhat.com>
+ <20241121192202.4155849-9-peterx@redhat.com>
+ <dbe21846-ea9e-47b6-83c4-6ee350e891e5@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241219134843.443085-1-pbonzini@redhat.com>
+In-Reply-To: <dbe21846-ea9e-47b6-83c4-6ee350e891e5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x629.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,82 +108,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/24 05:48, Paolo Bonzini wrote:
-> The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
+On 19/12/24 19:20, Philippe Mathieu-Daudé wrote:
+> On 21/11/24 20:21, Peter Xu wrote:
+>> Currently, qdev_get_machine() has a slight misuse on container_get(), as
+>> the helper says "get a container" but in reality the goal is to get the
+>> machine object.  It is still a "container" but not strictly.
+>>
+>> Note that it _may_ get a container (at "/machine") in our current unit 
+>> test
+>> of test-qdev-global-props.c before all these changes, but it's probably
+>> unexpected and worked by accident.
+>>
+>> Switch to an explicit object_resolve_path_component(), with a side 
+>> benefit
+>> that qdev_get_machine() can happen a lot, and we don't need to split the
+>> string ("/machine") every time.  This also paves way for making the 
+>> helper
+>> container_get() never try to return a non-container at all.
+>>
+>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>> ---
+>>   hw/core/qdev.c | 7 ++++++-
+>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+>> index 5f13111b77..b622be15ee 100644
+>> --- a/hw/core/qdev.c
+>> +++ b/hw/core/qdev.c
+>> @@ -817,7 +817,12 @@ Object *qdev_get_machine(void)
+>>       static Object *dev;
+>>       if (dev == NULL) {
+>> -        dev = container_get(object_get_root(), "/machine");
+>> +        dev = object_resolve_path_component(object_get_root(), 
+>> "machine");
+>> +        /*
+>> +         * Any call to this function before machine is created is 
+>> treated
+>> +         * as a programming error as of now.
+>> +         */
+>> +        assert(dev);
 > 
->    Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
+> This fails for user-emulation:
 > 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> 
-> for you to fetch changes up to 9c70b74bd8c7a3753b80a1aab22a0dc58da1ed68:
-> 
->    rust: pl011: simplify handling of the FIFO enabled bit in LCR (2024-12-19 14:37:58 +0100)
-> 
-> ----------------------------------------------------------------
-> * qdev: second part of Property cleanups
-> * rust: second part of QOM rework
-> * rust: callbacks wrapper
-> * rust: pl011 bugfixes
-> * kvm: cleanup errors in kvm_convert_memory()
-> 
-> ----------------------------------------------------------------
-> v1->v2: I noticed that "meson test" returns success even if the tests actually failed
->          with SIGSEGV!  Sorry for not noticing that before.  For now I added a bandaid
->          in the form of "--test-threads 1" and replaced the Mutex<Cell<bool>> with a
->          BqlCell<bool> for documentation purposes.
-> 
-> Maciej S. Szmigiero (1):
->        target/i386: Reset TSCs of parked vCPUs too on VM reset
-> 
-> Paolo Bonzini (17):
->        rust: qom: put class_init together from multiple ClassInitImpl<>
->        rust: qom: add possibility of overriding unparent
->        rust: rename qemu-api modules to follow C code a bit more
->        rust: re-export C types from qemu-api submodules
->        bql: add a "mock" BQL for Rust unit tests
->        rust: tests: allow writing more than one test
->        rust: qom: add casting functionality
->        rust: qom: add initial subset of methods on Object
->        rust: qemu-api: add a module to wrap functions and zero-sized closures
->        kvm: consistently return 0/-errno from kvm_convert_memory
->        rust: pl011: fix declaration of LineControl bits
->        rust: pl011: match break logic of C version
->        rust: pl011: always use reset() method on registers
->        rust: pl011: fix break errors and definition of Data struct
->        rust: pl011: extend registers to 32 bits
->        rust: pl011: fix migration stream
->        rust: pl011: simplify handling of the FIFO enabled bit in LCR
-> 
-> Richard Henderson (24):
->        migration: Constify migration_properties
->        hw/ide: Constify sysbus_ahci_properties
->        target/ppc: Remove empty property list
->        target/s390x: Use s390x_cpu_properties for system mode only
->        hw/pci-host/astro: Remove empty Property list
->        hw/ppc: Only register spapr_nvdimm_properties if CONFIG_LIBPMEM
->        hw/tricore: Remove empty Property lists
->        hw/s390x: Remove empty Property lists
->        hw/xen: Remove empty Property lists
->        hw/sparc: Remove empty Property lists
->        hw/virtio: Remove empty Property lists
->        include/hw/qdev-core: Detect most empty Property lists at compile time
->        hw/core: Introduce device_class_set_props_n
->        migration: Use device_class_set_props_n
->        hw/scsi/megasas: Use device_class_set_props_n
->        hw/arm/armsse: Use device_class_set_props_n
->        rust/qemu-api: Use device_class_set_props_n
->        hw/core: Replace device_class_set_props with a macro
->        target/riscv: Do not abuse DEFINE_PROP_END_OF_LIST
->        include/hw/qdev-properties: Remove DEFINE_PROP_END_OF_LIST
->        include/hw/qdev-properties: Shrink struct Property
->        hw/core/qdev-properties: Constify Property argument to object_field_prop_ptr
->        hw/core/qdev-properties: Constify Property argument to PropertyInfo.print
->        Constify all opaque Property pointers
+> ./qemu-x86_64 /bin/echo foo
+> qemu-x86_64: ../../hw/core/qdev.c:825: qdev_get_machine: Assertion `dev' 
+> failed.
+> Aborted (core dumped)
 
-Please, really, replace my constify series with v2.
+(gdb) bt
+#5  0x00007ffff747171b in __assert_fail_base (fmt=0x7ffff7626130 
+"%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=0x555555725150 
+"dev",
+     file=0x55555571aff9 "../../hw/core/qdev.c", line=824, 
+function=<optimized out>) at ./assert/assert.c:92
+#8  0x000055555565e400 in qdev_get_machine () at ../../hw/core/qdev.c:824
+#9  machine_get_container (name=0x55555571b052 "unattached") at 
+../../hw/core/qdev.c:834
+#10 0x000055555565ea2d in device_set_realized (obj=0x5555558b6760, 
+value=<optimized out>, errp=0x7fffffffdb50) at ../../hw/core/qdev.c:479
+#11 0x000055555566181a in property_set_bool (obj=0x5555558b6760, 
+v=<optimized out>, name=<optimized out>, opaque=0x555555813350, 
+errp=0x7fffffffdb50)
+     at ../../qom/object.c:2375
+#12 0x00005555556649f8 in object_property_set 
+(obj=obj@entry=0x5555558b6760, name=name@entry=0x55555571b03e 
+"realized", v=v@entry=0x5555558c0680,
+     errp=errp@entry=0x7fffffffdb50) at ../../qom/object.c:1450
+#13 0x0000555555668754 in object_property_set_qobject 
+(obj=obj@entry=0x5555558b6760, name=name@entry=0x55555571b03e 
+"realized", value=value@entry=0x5555558be490,
+     errp=errp@entry=0x7fffffffdb50) at ../../qom/qom-qobject.c:28
+#14 0x00005555556650c9 in object_property_set_bool (obj=0x5555558b6760, 
+name=name@entry=0x55555571b03e "realized", value=value@entry=true,
+     errp=errp@entry=0x7fffffffdb50) at ../../qom/object.c:1520
+#15 0x000055555565dd52 in qdev_realize (dev=<optimized out>, 
+bus=bus@entry=0x0, errp=errp@entry=0x7fffffffdb50) at 
+../../hw/core/qdev.c:276
+#16 0x0000555555593dc9 in cpu_create (typename=<optimized out>) at 
+../../hw/core/cpu-common.c:61
+#17 0x00005555555925de in main (argc=3, argv=0x7fffffffe308, 
+envp=<optimized out>) at ../../linux-user/main.c:823
 
 
-r~
+> 
+> We need to skip this test for user emulation, but this file is in
+> hwcore_ss[] so the CONFIG_USER_ONLY definitions is not available.
+> 
+> Any simple enough idea to not block this?
+> 
+>>       }
+>>       return dev;
+> 
+
 
