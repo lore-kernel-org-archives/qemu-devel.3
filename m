@@ -4,82 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44A0E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16908E7718C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFP-0001mE-2i; Thu, 19 Dec 2024 11:19:35 -0500
+	id 1tOJFl-0001s3-I3; Thu, 19 Dec 2024 11:19:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOGid-0005ox-K5
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:37:36 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOIf5-0005fo-Nz; Thu, 19 Dec 2024 10:42:05 -0500
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOGib-0007UA-7r
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:37:35 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734615451;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=myZFG4swjpJk6SpV8qwg/0+a4lSE0/KYAqhoR+Mop18=;
- b=CdRNnc38ZD/B6mKjMJ5xfYLMrw2FSDr26oC2sZiG/N8aZXq2OdqWmfU3eErALTVmYrXcF4
- Vsuja89iZzLU1vp95ufiLW811d+dF5BEQGpSPhjdIY66XyXxQpuM5QWafvHzoifY1vPKoT
- Jg5+IILO5ogTHyk53RURkfmQbeHtdZU=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-Vc4tnAguM6-EGf2tzL-GPw-1; Thu,
- 19 Dec 2024 08:37:28 -0500
-X-MC-Unique: Vc4tnAguM6-EGf2tzL-GPw-1
-X-Mimecast-MFC-AGG-ID: Vc4tnAguM6-EGf2tzL-GPw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9D8131955D44; Thu, 19 Dec 2024 13:37:26 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 66AE619560AD; Thu, 19 Dec 2024 13:37:22 +0000 (UTC)
-Date: Thu, 19 Dec 2024 13:37:18 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, eduardo@habkost.net,
- armbru@redhat.com, pankaj.gupta@amd.com, huibo.wang@amd.com,
- jroedel@suse.com, dionnaglaze@google.com
-Subject: Re: [PATCH v1 3/3] i386/sev: Add KVM_EXIT_SNP_REQ_CERTS support for
- certificate-fetching
-Message-ID: <Z2QhjkgMQ0JDJYkb@redhat.com>
-References: <20241218154939.1114831-1-michael.roth@amd.com>
- <20241218154939.1114831-4-michael.roth@amd.com>
- <Z2MLfIFzzyEWEy5T@redhat.com>
- <20241218222951.v6yjhcd7j6uojcs4@amd.com>
- <Z2PVprpxdfa9MQR5@redhat.com>
- <20241219131601.ckebfuxy5ukpdcml@amd.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241219131601.ckebfuxy5ukpdcml@amd.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOIf3-0004y6-Qu; Thu, 19 Dec 2024 10:42:03 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 311EAA42009;
+ Thu, 19 Dec 2024 15:40:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F5EC4CECE;
+ Thu, 19 Dec 2024 15:41:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1734622919;
+ bh=JT6efBVKqubwl6mff1iO/fWWnelB4X1FDGSeUIpzVXY=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=YtuUEpUrjVn8+lKZ7otJAzgavXmA+SvAYu0KyW4vdH1VbreJ1cJKqVJvuq9QP16fW
+ 0UKeGlyTG3T/66OwubbvqpUfWa7xSwzAKORIbC/qVSavLi9/uaRWFUPTrHxoAwFCBW
+ anOTfhikMvHolmG8is56+dzfppsoWEXGLd1eXrl2pzw1/MQD1QSkF297wpqR3pr3Od
+ yoK/0qenK7+PdmErk4OM1dpVQASpd8sbfVGaPKk+DIOu3cNo/5W6AC9rQKDMm+rDai
+ aCUyWcbSsxSF1Eb+uZH9X1qium+y6ToYTTAhR/5KfgwYDAVJhfml3gsm1HXQBvahnU
+ JgemaMgfiWVqA==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1tOIez-005J4X-4n;
+ Thu, 19 Dec 2024 15:41:57 +0000
+Date: Thu, 19 Dec 2024 15:41:56 +0000
+Message-ID: <86zfkrptmj.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>,	Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?UTF-8?B?IlAuIEJlcnJhbmfDqSI=?= <berrange@redhat.com>,
+ eric.auger.pro@gmail.com,	qemu-devel@nongnu.org,	qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev,	peter.maydell@linaro.org,
+ richard.henderson@linaro.org,	alex.bennee@linaro.org,
+ oliver.upton@linux.dev,	sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com,	armbru@redhat.com,
+ abologna@redhat.com,	jdenemar@redhat.com,	shahuang@redhat.com,
+ mark.rutland@arm.com,	philmd@linaro.org,	pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+In-Reply-To: <Z2Q2rWj9cV0W_XVq@gezellig>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
+ <Z2Q2rWj9cV0W_XVq@gezellig>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kchamart@redhat.com, eric.auger@redhat.com,
+ cohuck@redhat.com, berrange@redhat.com, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com,
+ philmd@linaro.org, pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=147.75.193.91; envelope-from=maz@kernel.org;
+ helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,213 +101,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 07:16:01AM -0600, Michael Roth wrote:
-> On Thu, Dec 19, 2024 at 08:13:44AM +0000, Daniel P. Berrangé wrote:
-> > On Wed, Dec 18, 2024 at 04:29:51PM -0600, Michael Roth wrote:
-> > > On Wed, Dec 18, 2024 at 05:50:52PM +0000, Daniel P. Berrangé wrote:
-> > > > On Wed, Dec 18, 2024 at 09:49:39AM -0600, Michael Roth wrote:
-> > > > > The GHCB specification[1] defines a VMGEXIT-based Guest Request
-> > > > > hypercall to allow an SNP guest to issue encrypted requests directly to
-> > > > > SNP firmware to do things like query the attestation report for the
-> > > > > guest. These are generally handled purely in the kernel.
-> > > > > 
-> > > > > In some some cases, it's useful for the host to be able to additionally
-> > > > > supply the certificate chain for the signing key that SNP firmware uses
-> > > > > to sign these attestation reports. To allow for this, the GHCB
-> > > > > specification defines an Extended Guest Request where this certificate
-> > > > > data can be provided in a special format described in the GHCB spec.
-> > > > > This certificate data may be global or guest-specific depending on how
-> > > > > the guest was configured. Rather than providing interfaces to manage
-> > > > > these within the kernel, KVM provides a new KVM_EXIT_SNP_REQ_CERTS exit
-> > > > > to request the certificate contents from userspace. Implement support
-> > > > > for that here.
-> > > > > 
-> > > > > To synchronize delivery of the certificates to the guest in a way where
-> > > > > they will not be rendered invalid by updates to SNP firmware or
-> > > > > attestation singing/endorsement keys by management tools outside the
-> > > > > purview of QEMU, it is expected by users of KVM_EXIT_SNP_REQ_CERTS to
-> > > > > obtain a shared/read lock on the certificate file prior to delivering
-> > > > > them back to KVM. Only after this will the attestation report be
-> > > > > retrieved from firmware and bundled with the certificate data, so QEMU
-> > > > > must continue to hold the file lock until KVM confirms that the
-> > > > > attestation report has been retrieved/bundled. This confirmation is done
-> > > > > by way of the kvm_immediate_exit callback infrastructure that was
-> > > > > introduced in a previous patch.
-> > > > > 
-> > > > > [1] "Guest Hypervisor Communication Block (GHCB) Standardization",
-> > > > >     https://www.amd.com/en/developer/sev.html
-> > > > > 
-> > > > > Signed-off-by: Michael Roth <michael.roth@amd.com>
-> > > > > ---
-> > > > >  qapi/qom.json                 |  23 +++-
-> > > > >  target/i386/kvm/kvm.c         |  10 ++
-> > > > >  target/i386/sev-sysemu-stub.c |   5 +
-> > > > >  target/i386/sev.c             | 249 ++++++++++++++++++++++++++++++++++
-> > > > >  target/i386/sev.h             |   2 +
-> > > > >  5 files changed, 288 insertions(+), 1 deletion(-)
-> > > > > 
-> > > > > diff --git a/qapi/qom.json b/qapi/qom.json
-> > > > > index 28ce24cd8d..6eaf0e7721 100644
-> > > > > --- a/qapi/qom.json
-> > > > > +++ b/qapi/qom.json
-> > > > > @@ -1034,6 +1034,25 @@
-> > > > >  #     firmware.  Set this to true to disable the use of VCEK.
-> > > > >  #     (default: false) (since: 9.1)
-> > > > >  #
-> > > > > +# @certs-path: Path to certificate data that can be passed to guests via
-> > > > > +#              SNP Extended Guest Requests. File should be in the format
-> > > > > +#              described in the GHCB specification. (default: none)
-> > > > > +#              (since: 10.0)
-> > > > 
-> > > > Can we document the required format here explicitly, rather than expecting
-> > > > users to go searching for specs which are often practically impossible
-> > > > to find, and even harder to read & interpret ?
-> > > 
-> > > It'll be difficult to summarize in a way that will be self-reliant,
-> > > since knowing the certificate format is not sufficient to make sure
-> > > it coincides with the endorsement key being used by firmware. So I can't
-> > > promise to completely reduce reliance on external specs, but at least
-> > > give a better of the format and where those external specs will come
-> > > into play in filling out the data.
-> > > 
-> > > If it needs to be at least somewhat self-sufficient then that might
-> > > warrant a separate document in docs/system/i386/amd-memory-encryption.rst
-> > > or somewhere thereabouts that summarizes the whole attestation flow and
-> > > how certificates tie into that.
-> > > 
-> > > Any preferences?
-> > > 
-> > > > 
-> > > > > diff --git a/target/i386/sev.c b/target/i386/sev.c
-> > > > > index 1a4eb1ada6..2c41bdbccf 100644
-> > > > > --- a/target/i386/sev.c
-> > > > > +++ b/target/i386/sev.c
-> > > > > @@ -157,6 +157,9 @@ struct SevSnpGuestState {
-> > > > >      char *id_auth_base64;
-> > > > >      uint8_t *id_auth;
-> > > > >      char *host_data;
-> > > > > +    char *certs_path;
-> > > > > +    int certs_fd;
-> > > > > +    uint32_t certs_timeout;
-> > > > >  
-> > > > >      struct kvm_sev_snp_launch_start kvm_start_conf;
-> > > > >      struct kvm_sev_snp_launch_finish kvm_finish_conf;
-> > > > > @@ -1355,6 +1358,215 @@ sev_snp_launch_finish(SevCommonState *sev_common)
-> > > > >      }
-> > > > >  }
-> > > > >  
-> > > > > +static int open_certs_locked(SevSnpGuestState *sev_snp_guest)
-> > > > > +{
-> > > > > +    int fd, ret;
-> > > > > +
-> > > > > +    if (sev_snp_guest->certs_fd != -1) {
-> > > > > +        return 0;
-> > > > > +    }
-> > > > > +
-> > > > > +    fd = qemu_open(sev_snp_guest->certs_path, O_RDONLY, NULL);
-> > > > > +    if (fd == -1) {
-> > > > > +        error_report("Unable to open certificate blob at path %s, ret %d",
-> > > > > +                     sev_snp_guest->certs_path, fd);
-> > > > > +        return fd;
-> > > > > +    }
-> > > > > +
-> > > > > +    ret = qemu_lock_fd(fd, 0, 0, false);
-> > > > > +    if (ret == -EAGAIN || ret == -EACCES) {
-> > > > > +        ret = -EAGAIN;
-> > > > > +        goto out_close;
-> > > > > +    } else if (ret) {
-> > > > > +        goto out_close;
-> > > > > +    }
-> > > > 
-> > > > This locking scheme is likely unsafe. Consider this sequence
-> > > > 
-> > > >   * QEMU runs qemu_open(path)
-> > > >   * External mgmt app runs unlink(path)
-> > > >   * External mgmt app runs open(path)
-> > > >   * External mgmt app runs lock(fd)
-> > > >   * QEMU runs qemu_lock_fd(fd)
-> > > > 
-> > > > QEMU has successfully acquired a lock on an FD that corresponds to a
-> > > > deleted file, not the current existing file.
-> > > > 
-> > > > Avoiding this problem requires either that the external mgmt app agrees
-> > > > to *NEVER* unlink() the files under any circumstance, or for QEMU to
-> > > > run its open + lock logic in a loop, checking 'stat' and 'fstat' before
-> > > > opening and after locking, in order to detect a replaced file from its
-> > > > changed inode.
-> > > > 
-> > > > I'm not inclined to rely on mgmt apps never unlink()ing as that's to
-> > > > easy to mess up IMHO.
-> > > 
-> > > Yah I went into more detail in my response to Markus, but long story
-> > > short is that we are assuming mgmt is cooperative in this case, and
-> > > so as you mentioned, it would never unlink files while SNP guests are
-> > > running, but instead take an exclusive lock on them and update them in
-> > > place with the understanding that doing anything otherwise would open
-> > > a race window where guests might get stale certificates.
-> > 
-> > If there's an expectation & requirement that no SNP guests are running,
-> > then IMHO this whole thing is just over-engineered. Just remove all this
-> > locking code entirely, and document that none of this must be changed
-> > while QEMU is running - which is a common requirement for a great many
-> > things on the host.
-> 
-> VCEK endorsement keys can change as a result of SNP firmware updates,
-> which can be done while SNP guests are running and are often done in such
-> a way to patch bugs/security holes. VLEK endorsement keys can similarly be
-> updated on a live host. Both these sorts of interactions cannot be made
-> compatible with bundling certificates with attestation reports without some
-> orchestration in place to keep them atomic relative to the endorsement
-> key being used by firmware to sign attestation reports. Every CSP
-> implementing this will need to solve it in some way, and I'm sure some
-> will handle all this completely differently. But it will make
-> interoperative management/tooling a mess, and having a reference
-> implementation based around something common will make it easier to
-> steer CSPs to that common solution and give management tools authors
-> *some* reference approach to target rather than expecting to retrofit
-> some custom solution on top.
-> 
-> With these patches, you can update firmware and endorsement keys while
-> SNP guests are running, but it requires write locks on any active
-> certificates as defined here and in the kernel, and doing certificate
-> file updates in place while that write lock is still held. I don't really
-> think that's over-engineered. I think it's surprisingly simple given the
-> potential complexity of the above-mentioned requirements.
-> 
-> But yes if management tries to unlink certificates while SNP guests are
-> running, all bets are off. But at that point they are not cooperating
-> with kernel/QEMU, and we don't need to care about that. And if they
-> really do need to blow away certificates for a complete re-install
-> or data-wipe or whatever, at that point they'd just need to ensure
-> they stop all their SNP guests first.
+On Thu, 19 Dec 2024 15:07:25 +0000,
+Kashyap Chamarthy <kchamart@redhat.com> wrote:
+>=20
+> On Thu, Dec 19, 2024 at 12:26:29PM +0000, Marc Zyngier wrote:
+> > On Thu, 19 Dec 2024 11:35:16 +0000,
+> > Kashyap Chamarthy <kchamart@redhat.com> wrote:
+>=20
+> [...]
+>=20
+> > > Consider this:
+> > >=20
+> > > Say, there's a serious security issue in a released ARM CPU.  As part=
+ of
+> > > the fix, two new CPU flags need to be exposed to the guest OS, call t=
+hem
+> > > "secflag1" and "secflag2".  Here, the user is configuring a baseline
+> > > model + two extra CPU flags, not to get close to some other CPU model
+> > > but to mitigate itself against a serious security flaw.
+> >=20
+> > If there's such a security issue, that the hypervisor's job to do so,
+> > not userspace.=20
+>=20
+> I don't disagree.  Probably that has always been the case on ARM.  I
+> asked the above based on how QEMU on x86 handles it today.
+>=20
+> > See what KVM does for CSV3, for example (and all the
+> > rest of the side-channel stuff).
+>=20
+> Noted.  From a quick look in the kernel tree, I assume you're referring
+> to these commits[1].
+>=20
+> > You can't rely on userspace for security, that'd be completely
+> > ludicrous.
+>=20
+> As Dan Berrang=C3=A9 points out, it's the bog-standard way QEMU deals with
+> some of the CPU-related issues on x86 today.  See this "important CPU
+> flags"[2] section in the QEMU docs.
 
-IMHO we msut consider unlink() to be a valid thing, because the right
-way for apps to perform crash safe atomic updates of existing files,
-is to use rename() from a temporary file, and the rename() in has an
-implicit unlink as part of its operation. ie apps would be doing:
+I had a look, and we do things quite differently. For example, the
+spec-ctrl equivalent in implemented in FW and in KVM, and is exposed
+by default if the HW is vulnerable. Userspace could hide that the
+mitigation is there, but that's the extent of the configurability.
 
-   fd = open("foo.tmp")
-   write(fd, ...)
-   fsync(fd)
-   close(fd)
-   rename("foo.tmp", "foo")
+>=20
+> Mind you, I'm _not_ saying this is how ARM should do it.  I don't know
+> enough about ARM to make such remarks.
+>=20
+>     * * *
+>=20
+> To reply to your other question on this thread[3] about "which ABI?"  I
+> think Dan is talking about the *guest* ABI: the virtual "chipset" that
+> is exposed to a guest (e.g. PCI(e) topology, ACPI tables, CPU model,
+> etc).  As I understand it, this "guest ABI" should remain predictable,
+> regardless of:
+>=20
+>   - whether you're updating KVM, QEMU, or the underlying physical
+>     hardware itself; or
+>   - if the guest is migrated, live or offline
+>=20
+> (As you might know, QEMU's "machine types" concept allows to create a
+> stable guest ABI.)
 
-That final rename operation will have the same effect on the locks
-as unlink(). To cope with this anything doing locking has to run
-in a loop comparing the inode either side of acquiring the lock
+All of this is under control of QEMU, *except* for the "maximum" of
+the architectural features exposed to the guest. All you can do is
+*downgrade* from there, and only to a limited extent.
 
-TLDR: if we're going to do locking in QEMU, it needs to be done
-robustly.
+That, in turn has a direct impact on what you call the "CPU model",
+which for the ARM architecture really doesn't exist. All we have is a
+bag of discrete features, with intricate dependencies between them.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Even ignoring virtualisation: you can readily find two machines using
+the same CPUs (let's say Neoverse-N1), integrated by the same vendor
+(let's say, Ampere), in SoCs that bear the same name (Altra), and
+realise that they have a different feature set. Fun, isn't it?
 
+That's why I don't see CPU models as a viable thing in terms of ABI.
+They are an approximation of what you could have, but the ABI is
+elsewhere.
+
+Thanks,
+
+	M.
+
+--=20
+Without deviation from the norm, progress is not possible.
 
