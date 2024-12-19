@@ -4,67 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AFCEE77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52B77E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO798-0004wW-0S; Wed, 18 Dec 2024 22:24:18 -0500
+	id 1tO7P5-00070o-WA; Wed, 18 Dec 2024 22:40:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tO796-0004w9-D1; Wed, 18 Dec 2024 22:24:16 -0500
-Received: from mgamail.intel.com ([198.175.65.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tO794-0008He-F0; Wed, 18 Dec 2024 22:24:16 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734578654; x=1766114654;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=q37HglmJFbkIyET//zidT7en4ZdrnqcmKPRwLQlWZik=;
- b=PZgzNWhi4FaLE4aZHjz5wZR6BPkKMXgvJugRQuqkuFRZeA7JMmRo8Jcq
- SzC2nJ1x54mqBJ2JHrVnuclCWJeQvnX7cb+sYnMQJNgWSLsfvo8J3hh/P
- 3FND5zRoZO5hLRUcetLNg6WkFldcThO7gMoVNJPX8xqUkqrEuJFz7MawE
- 481CBuJ1r/fCHxYswGhOMb5QSOVSl8zcvySzac4cYEcUXi2unY7arBSYK
- Z0qzthIO3AGLyCOFtKIr4IubjySvkuIX/dd4ZgXGscoc4+5RE4UfL+bTC
- wKXkabTJQHCCeRpCExWrjWOT59Kup9fo7n/a/C2SQ36wcF/3DfD7QlufK g==;
-X-CSE-ConnectionGUID: PQKSqktxQBGiNWhZ48pIiA==
-X-CSE-MsgGUID: Erj5UCSDSsOQTGee/1JpuA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="35204726"
-X-IronPort-AV: E=Sophos;i="6.12,246,1728975600"; d="scan'208";a="35204726"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 19:24:09 -0800
-X-CSE-ConnectionGUID: KFAbH7pfQQGmecYSHdUhPA==
-X-CSE-MsgGUID: Y1FfmOe+RNC5DJl6nAvTCg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,246,1728975600"; d="scan'208";a="97895816"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 18 Dec 2024 19:24:07 -0800
-Date: Thu, 19 Dec 2024 11:42:47 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 1/7] rust: pl011: fix declaration of LineControl bits
-Message-ID: <Z2OWNxw/kAh6PYqO@intel.com>
-References: <20241212172209.533779-1-pbonzini@redhat.com>
- <20241212172209.533779-2-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tO7P4-00070a-EF; Wed, 18 Dec 2024 22:40:46 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tO7P2-0004Hc-Uv; Wed, 18 Dec 2024 22:40:46 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21636268e43so3875375ad.2; 
+ Wed, 18 Dec 2024 19:40:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734579643; x=1735184443; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=92NFufFhsFDGvrTgzEG6aRfej6pEjyfQArCcINBf5O0=;
+ b=cFvS4ik8Z1PNJOEa2x+ddpTg5SkRl2jVbHDmqUWVMnEKqT0a+nBM1hGEMgQn4w42Qz
+ HsBb0/HBTrl0s5FJ4pc0yp+DohepoGPjUykrgjYrqjT1COc/rCZOFqfq816mQ5ADfkMg
+ 8LbLswHuMrLQKo3IDOuBO9NijdKWMVftsyVWEiitkVin+NjiaGxrdQXLiIoye/4Jv16R
+ MRH4KhwjfEO6rvNgf6uPuHrBlWJtRjQIrmv0SnUZODihb2lchYd1zuDU4V+avKIwfXxL
+ CZlZRYea5tuEmxLP7DkJ0Ekm0LDwxOPhL/5+3unIRd5xvCrWbf8XVcO9V5wTCNIuuXGk
+ NpCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734579643; x=1735184443;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=92NFufFhsFDGvrTgzEG6aRfej6pEjyfQArCcINBf5O0=;
+ b=mvWGjooO0+zPjMUZYJ/SZfw67mBa/XqRg/0+rz3I4NLkJhFHRthew001vbZ8oU4x1g
+ Jlb+GqXeaaKOmxUIFDsarLkyz5mX+euTaFG4p9Ksftzs5sIUjPlh3aTpeisVvubblPFY
+ nmlREdniA6jcVmmoP+zbhLEQl/KLFlyyeed9hC8mleDj6s9G+pWuq6KRu8/Pi8UvqFMc
+ g959Gwt47HDTDwE5QGnmOv+v0uEhFDTf8gAZS3hnIODUI/kreZ1NRmiMStJ7s6rMwVnH
+ 5UuRSzAL3O/RqDRkBUmrhZCut19A26yTLZEpBYxWxnuzE5wXf8x065KJIpLvo+LzvQqY
+ N26g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYpNtqwQe1te/O1l0UFdL7G1oP8U4EtmnCMHwORbVKSwkNcLSLiTFJ8EfmGqlNpAdbHyBGDOiWhflI@nongnu.org
+X-Gm-Message-State: AOJu0YyZms1zJ23xv7qQhMaZNbrFxgMYzyet2t38revILYzx50130FZy
+ I0OxowGDA7C/QlK0wH2DNHfMbDYqycusaLlBRwotlFT9BtUytwQgU3CU+Q==
+X-Gm-Gg: ASbGncsmL1Kn8sjUc0b0Eg4Kf0VehYoAMKOmUkeu3Q+0MehgzDr4xRdmaD7m04tS2l5
+ ICVJi5tlV+0AQrrcaVuC7kwRg+k9VhpiSdQEAY57mDEw+gsvEOR+oAAA3QsgvHpWE7nb1ECMp+a
+ hSUbAqDMEFnnoIWGHXLdwGa5ySh7RdKM2uM9K47LDW93uKowsrYli72hQrBOEMY8fSgSYdMj9rR
+ HJFHyRtkTrfFuZl88K9e9+dVULWamnpQor60JEuU6m7z3N+2tk6dNB/Y1OoFgUzy067U3eIh8wf
+ iZXOhXq7Kw==
+X-Google-Smtp-Source: AGHT+IEAvyfOd74OBma3Wd3OqDHwJkJJh73HJteFa81g9XL7zeP3Cvl/xSz0Y36QSTHmVPavviIqPw==
+X-Received: by 2002:a17:902:dacb:b0:216:7ee9:2222 with SMTP id
+ d9443c01a7336-219d96d098bmr26204485ad.35.1734579642578; 
+ Wed, 18 Dec 2024 19:40:42 -0800 (PST)
+Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc970520sm2881595ad.75.2024.12.18.19.40.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Dec 2024 19:40:42 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-ppc@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Subject: [PATCH 0/5] ppc: misc ppc patches
+Date: Thu, 19 Dec 2024 13:40:30 +1000
+Message-ID: <20241219034035.1826173-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20241212172209.533779-2-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -81,20 +97,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 06:21:58PM +0100, Paolo Bonzini wrote:
-> Date: Thu, 12 Dec 2024 18:21:58 +0100
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 1/7] rust: pl011: fix declaration of LineControl bits
-> X-Mailer: git-send-email 2.47.1
-> 
-> The bits in the LineControl struct were backwards. :(
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  rust/hw/char/pl011/src/lib.rs | 82 +++++++++++++++++------------------
->  1 file changed, 41 insertions(+), 41 deletions(-)
-> 
+These are a bunch of small fixes and improvements for ppc. I've
+posted these before so I'll just end up merging them this cycle.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Thanks,
+Nick
+
+Nicholas Piggin (5):
+  target/ppc: fix timebase register reset state
+  spapr: Fix vpa dispatch count for record-replay
+  spapr: Generate random HASHPKEYR for spapr machines
+  target/ppc: Avoid warning message for zero process table entries
+  target/ppc: Wire up BookE ATB registers for e500 family
+
+ include/hw/ppc/spapr.h          |  1 +
+ include/hw/ppc/spapr_cpu_core.h |  3 +++
+ hw/ppc/ppc.c                    | 11 +++++++---
+ hw/ppc/spapr.c                  | 39 +++++----------------------------
+ hw/ppc/spapr_cpu_core.c         |  2 ++
+ hw/ppc/spapr_hcall.c            | 33 ++++++++++++++++++++++++++++
+ hw/ppc/spapr_rtas.c             |  1 +
+ target/ppc/cpu_init.c           | 17 ++++++++++++++
+ target/ppc/mmu-radix64.c        | 14 ++++++++++++
+ 9 files changed, 84 insertions(+), 37 deletions(-)
+
+-- 
+2.45.2
 
 
