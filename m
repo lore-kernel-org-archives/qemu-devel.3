@@ -4,95 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAD0E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 035EDE7718B
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:40:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKUc-0000OG-PQ; Thu, 19 Dec 2024 12:39:22 -0500
+	id 1tOKVG-0000dC-9B; Thu, 19 Dec 2024 12:40:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKUb-0000Ns-Hr
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:39:21 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKUZ-0001lS-RR
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:39:21 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-38632b8ae71so833810f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:39:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734629958; x=1735234758; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=87fce7ngh29CuTlsgk4GtPc7adzzXc0dzXeL/iHv3ww=;
- b=JxuUGWXIxKlSRd6uTfXb4IO7bNZheAD9NrMES1IYb5SbL0Cl/n9KESDAWUDP9/gl74
- eb4x++yFHXtqr3orafNd7xTGBGfNpaMsffEcSH/sAAWwlsMLH/LD++btDqWxPHWUhhK/
- Du9gBxo28fD0Td5iFEhGxlnBSc8Rrq76+XWzdA5RMH8b3x8OdCfsi/2gYAWHHuLTfiJz
- n+MeQOel/OBewFYm0K3NyEOd6WQK9LYyejD0soBcEd3agutlTqi4JRVVwXYLiSyuV2Jg
- sYwM7xZgsyK+LAdMe0rnyqQtcTQzv6me+dW6ocNJh1KV6axkeT9b/Zp74Bw5tMoLy1Sc
- bGUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734629958; x=1735234758;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=87fce7ngh29CuTlsgk4GtPc7adzzXc0dzXeL/iHv3ww=;
- b=sOvnAFN/5I1zUroYKifMVKcJyL32GF9pj2mrmhxeH4tI+IxyXFhYxgYsTuVAkSBmiy
- aNCrQ1wkYR6idxglrjhVKPxADR7YtgelXwxf90gfL16doq48m/4Ak7QxfCc/3iPqkHPp
- Sce+X5j0cIRZueNwBXdyqzxnO8TmoJtErJ+NXe4VWawC0cQYwieXYQKD62de4aQ6eAau
- 5ophz+3Sb4YhmG8BKNyuQoGRCC17ACl53kRIT1fmgc7RpR3bpHCAx1O/2n9RHsR4HsZ2
- MKC+yJJwZJcYg5H8kaC4R3h8orVMgtiG75J4RldFuRObQvee9S62he6GyKdDjHS2FvII
- KrRA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlEV81HzU/zSrBSPg5Fg1s+itJFzUWdSvIK/59+XpO7ffgSBF4bHaFPRdSp88UHvRi+F2Kk8FooWU+@nongnu.org
-X-Gm-Message-State: AOJu0YxRQyMcO2flgg4Z58BAei56vFefYemKGSxpiB7TbA8+C01leXTj
- h3NEwOX4IWIpNREIdl5AhJmtsIICXuHt41mJRKJw1AMSk36+d3HMk1NmFFfQO/A=
-X-Gm-Gg: ASbGnctEpy++dmd38UxxptIQVjvHvMqCPrTTQaz6AYSXkrv8uNqb9XbrmPyZ4zI1nLp
- +R1K3C0xL2BizLACN/gxV+vKNxep6mKUZwogek1xlUcNWRfKTKxVeS66087idaTmgIogdyLyrKq
- z7TakE1S2rqyjRCItTh/q45/1N+yNGdo7ZjkNln5wMJTFVZyed4SwvRzMs47sdGpnzTOwkwH+pX
- hkn2cv/6aYkFBWz1Lxb7o/+tWr57zkyiRQ8b6HWGD38L3oVjPwKhw3/tb9+e61x9ZFwDXc=
-X-Google-Smtp-Source: AGHT+IEy0sF56Tv8VKItZs2y9d/E4Bl1dNkdFtlSvuRp8NU/arrMlj+444Bwcpum7SgXmxtFv/1Ziw==
-X-Received: by 2002:a05:6000:1f89:b0:385:fa3d:1988 with SMTP id
- ffacd0b85a97d-388e4d311bcmr7850688f8f.8.1734629957942; 
- Thu, 19 Dec 2024 09:39:17 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8a8d7esm2036627f8f.101.2024.12.19.09.39.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 09:39:17 -0800 (PST)
-Message-ID: <f2cd3c5d-cacb-49f7-afec-1e48e5a9a92d@linaro.org>
-Date: Thu, 19 Dec 2024 18:39:15 +0100
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOKVE-0000a8-KP
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:40:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOKVC-0001vW-GQ
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:40:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734629996;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=/zcSvZ7eRbWw4Z4IJdiOlQvowwTZtOxqcEOvoDnKctQ=;
+ b=P+9bUIicGqb+XdKKjkUeLVfS7PW5smj60jmDa8Fob6zgFmmE5vBh3JLN97LMiVkfvF8Rwe
+ /rSK01H9lpHC0BSQzXwru/T74P5tUlHMkvKZUj6zHEnruG82AG00tvrohl3I3daj5JtHB3
+ 1Dk7F0D3FPId9KIdTdzrsObzQ95jpJk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-387-IalvRk_KOeWXx9qcK6CM6Q-1; Thu,
+ 19 Dec 2024 12:39:55 -0500
+X-MC-Unique: IalvRk_KOeWXx9qcK6CM6Q-1
+X-Mimecast-MFC-AGG-ID: IalvRk_KOeWXx9qcK6CM6Q
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EDC3A1955F3D; Thu, 19 Dec 2024 17:39:52 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.54])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 70A5619560AD; Thu, 19 Dec 2024 17:39:50 +0000 (UTC)
+Date: Thu, 19 Dec 2024 17:39:46 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: James Bottomley <James.Bottomley@hansenpartnership.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Stefan Berger <stefanb@linux.ibm.com>
+Subject: Re: [PATCH v11 2/2] tpm: add backend for mssim
+Message-ID: <Z2RaYsLkazgciofM@redhat.com>
+References: <20241212170528.30364-1-James.Bottomley@HansenPartnership.com>
+ <20241212170528.30364-3-James.Bottomley@HansenPartnership.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/7] meson: Run some compiler checks using
- -Wno-unused-value
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-References: <20241218182106.78800-1-philmd@linaro.org>
- <20241218182106.78800-2-philmd@linaro.org>
- <D6F99DW9FQ1Y.268COFM41BN5X@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <D6F99DW9FQ1Y.268COFM41BN5X@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241212170528.30364-3-James.Bottomley@HansenPartnership.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,136 +83,166 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 01:37, Nicholas Piggin wrote:
-> On Thu Dec 19, 2024 at 4:21 AM AEST, Philippe Mathieu-Daudé wrote:
->> When running Clang static analyzer on macOS I'm getting:
->>
->>    include/qemu/osdep.h:634:8: error: redefinition of 'iovec'
->>      634 | struct iovec {
->>          |        ^
->>    /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/_types/_iovec_t.h:31:8: note: previous definition is here
->>       31 | struct iovec {
->>          |        ^
->>    1 error generated.
->>
->> Looking at meson-logs.txt, the analyzer enables -Wunused-value
->> making meson generated code to fail:
->>
->>      Code:
->>      #include <sys/uio.h>
->>              void bar(void) {
->>                  sizeof(struct iovec);
->>              }
->>      -----------
->>      stderr:
->>      meson-private/tmpe8_1b_00/testfile.c:3:13: error: expression result unused [-Werror,-Wunused-value]
->>          3 |             sizeof(struct iovec);
->>            |             ^~~~~~~~~~~~~~~~~~~~
->>      1 error generated.
->>      -----------
->>      Checking for type "struct iovec" : NO
->>
->>      Code:
->>      #include <utmpx.h>
->>              void bar(void) {
->>                  sizeof(struct utmpx);
->>              }
->>      -----------
->>      stderr:
->>      meson-private/tmp3n0u490p/testfile.c:3:13: error: expression result unused [-Werror,-Wunused-value]
->>          3 |             sizeof(struct utmpx);
->>            |             ^~~~~~~~~~~~~~~~~~~~
->>      1 error generated.
->>      -----------
->>      Checking for type "struct utmpx" : NO
->>
->>      Code:
->>
->>              #include <getopt.h>
->>              int main(void) {
->>                  /* If it's not defined as a macro, try to use as a symbol */
->>                  #ifndef optreset
->>                      optreset;
->>                  #endif
->>                  return 0;
->>              }
->>      -----------
->>      stderr:
->>      meson-private/tmp1rzob_os/testfile.c:6:17: error: expression result unused [-Werror,-Wunused-value]
->>          6 |                 optreset;
->>            |                 ^~~~~~~~
->>      1 error generated.
->>      -----------
->>      Header "getopt.h" has symbol "optreset" : NO
->>
->>      Code:
->>
->>              #include <vmnet/vmnet.h>
->>              int main(void) {
->>                  /* If it's not defined as a macro, try to use as a symbol */
->>                  #ifndef VMNET_BRIDGED_MODE
->>                      VMNET_BRIDGED_MODE;
->>                  #endif
->>                  return 0;
->>              }
->>      -----------
->>      stderr:
->>      meson-private/tmpl9jgsxpt/testfile.c:6:17: error: expression result unused [-Werror,-Wunused-value]
->>          6 |                 VMNET_BRIDGED_MODE;
->>            |                 ^~~~~~~~~~~~~~~~~~
->>      1 error generated.
->>      -----------
->>      Header "vmnet/vmnet.h" has symbol "VMNET_BRIDGED_MODE" with dependency appleframeworks: NO
->>      ../meson.build:1174: WARNING: vmnet.framework API is outdated, disabling
->>
->> Fix by explicitly disabling -Wunused-value from these meson checks.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> RFC: Probably meson should do that in has_header_symbol() / has_type()?
+On Thu, Dec 12, 2024 at 12:05:28PM -0500, James Bottomley wrote:
+> The Microsoft Simulator (mssim) is the reference emulation platform
+> for the TCG TPM 2.0 specification.
 > 
-> I don't know about the build system to answer this, but should we
-> instead disable -Werror on these tests to be a bit more future-proof?
-> Compilers often add new warnings or catch more cases of existing
-> warnings.
+> https://github.com/Microsoft/ms-tpm-20-ref.git
+> 
+> It exports a fairly simple network socket based protocol on two
+> sockets, one for command (default 2321) and one for control (default
+> 2322).  This patch adds a simple backend that can speak the mssim
+> protocol over the network.  It also allows the two sockets to be
+> specified on the command line.  The benefits are twofold: firstly it
+> gives us a backend that actually speaks a standard TPM emulation
+> protocol instead of the linux specific TPM driver format of the
+> current emulated TPM backend and secondly, using the microsoft
+> protocol, the end point of the emulator can be anywhere on the
+> network, facilitating the cloud use case where a central TPM service
+> can be used over a control network.
+> 
+> The implementation does basic control commands like power off/on, but
+> doesn't implement cancellation or startup.  The former because
+> cancellation is pretty much useless on a fast operating TPM emulator
+> and the latter because this emulator is designed to be used with OVMF
+> which itself does TPM startup and I wanted to validate that.
+> 
+> To run this, simply download an emulator based on the MS specification
+> (package ibmswtpm2 on openSUSE) and run it, then add these two lines
+> to the qemu command and it will use the emulator.
+> 
+>     -tpmdev mssim,id=tpm0 \
+>     -device tpm-crb,tpmdev=tpm0 \
+> 
+> to use a remote emulator replace the first line with
+> 
+>     -tpmdev "{'type':'mssim','id':'tpm0','command':{'type':inet,'host':'remote','port':'2321'}}"
+> 
+> tpm-tis also works as the backend.
+> 
+> Signed-off-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+> Acked-by: Markus Armbruster <armbru@redhat.com>
+> 
+> ---
+> 
+> v2: convert to SocketAddr json and use qio_channel_socket_connect_sync()
+> v3: gate control power off by migration state keep control socket disconnected
+>     to test outside influence and add docs.
+> v7: TPMmssim -> TPMMssim; doc and json fixes
+>     Make command socket open each time (makes OS debugging easier)
+> v11: add startup method to make sure TPM is reset on reboot
+> ---
+>  MAINTAINERS              |   6 +
+>  backends/tpm/Kconfig     |   5 +
+>  backends/tpm/meson.build |   1 +
+>  backends/tpm/tpm_mssim.c | 335 +++++++++++++++++++++++++++++++++++++++
+>  backends/tpm/tpm_mssim.h |  44 +++++
+>  docs/specs/tpm.rst       |  39 +++++
+>  qapi/tpm.json            |  31 +++-
+>  system/tpm-hmp-cmds.c    |   9 ++
+>  8 files changed, 466 insertions(+), 4 deletions(-)
+>  create mode 100644 backends/tpm/tpm_mssim.c
+>  create mode 100644 backends/tpm/tpm_mssim.h
+> 
 
-Sorry, I didn't mean to include this patch in this series. I happen
-to have my series on top of it and forgot to change the base commit.
 
-> Alternative would be to keep -Werror but fail the build if a test
-> throws a warning, but that seems like a lot more work for little
-> benefit...
+> diff --git a/backends/tpm/tpm_mssim.c b/backends/tpm/tpm_mssim.c
+> new file mode 100644
+> index 0000000000..8f105fc924
+> --- /dev/null
+> +++ b/backends/tpm/tpm_mssim.c
+> @@ -0,0 +1,335 @@
+> +/*
+> + * Emulator TPM driver which connects over the mssim protocol
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Copyright (c) 2022
 
-I'm trying to fix it on the meson side with this:
+Copyright by whom ? I presume yourself, but I wouldn't normally
+assume the 'Author' line applies to the Copyright line.
 
--- >8 --
-diff --git a/mesonbuild/compilers/mixins/clike.py 
-b/mesonbuild/compilers/mixins/clike.py
-index d56547b47..9d6957973 100644
---- a/mesonbuild/compilers/mixins/clike.py
-+++ b/mesonbuild/compilers/mixins/clike.py
-@@ -360,7 +360,7 @@ class CLikeCompiler(Compiler):
-          int main(void) {{
-              /* If it's not defined as a macro, try to use as a symbol */
-              #ifndef {symbol}
--                {symbol};
-+            (void) {symbol};
-              #endif
-              return 0;
-          }}'''
-@@ -885,7 +885,8 @@ class CLikeCompiler(Compiler):
-                   dependencies: T.Optional[T.List['Dependency']] = 
-None) -> T.Tuple[bool, bool]:
-          t = f'''{prefix}
-          void bar(void) {{
--            (void) sizeof({typename});
-+            size_t foo = sizeof({typename});
-+            (void) foo;
-          }}'''
-          return self.compiles(t, env, extra_args=extra_args,
-                               dependencies=dependencies)
----
+> + * Author: James Bottomley <jejb@linux.ibm.com>
+> + */
+> +
+
+
+> diff --git a/backends/tpm/tpm_mssim.h b/backends/tpm/tpm_mssim.h
+> new file mode 100644
+> index 0000000000..397474e4f6
+> --- /dev/null
+> +++ b/backends/tpm/tpm_mssim.h
+> @@ -0,0 +1,44 @@
+> +/*
+> + * SPDX-License-Identifier: BSD-2-Clause
+> + *
+> + * The code below is copied from the Microsoft/TCG Reference implementation
+> + *
+> + *  https://github.com/Microsoft/ms-tpm-20-ref.git
+> + *
+> + * In file TPMCmd/Simulator/include/TpmTcpProtocol.h
+> + */
+
+That file has a volumous copyright header that I would expect to be
+preserved here.
+
+
+> diff --git a/qapi/tpm.json b/qapi/tpm.json
+> index e6345d424b..eed4cb9e82 100644
+> --- a/qapi/tpm.json
+> +++ b/qapi/tpm.json
+> @@ -6,6 +6,8 @@
+>  # = TPM (trusted platform module) devices
+>  ##
+>  
+> +{ 'include': 'sockets.json' }
+> +
+>  ##
+>  # @TpmModel:
+>  #
+> @@ -48,9 +50,11 @@
+>  #
+>  # @emulator: Software Emulator TPM type (since 2.11)
+>  #
+> +# @mssim: Microsoft TPM Emulator (since 9.0)
+
+Sorry, this needs a trivial bump to 10.0 now as that's
+the current dev cycle
+
+> +##
+> +# @TPMMssimOptions:
+> +#
+> +# Information for the mssim emulator connection
+> +#
+> +# @command: command socket for the TPM emulator
+> +#
+> +# @control: control socket for the TPM emulator
+> +#
+> +# Since: 9.0
+
+Likewise.
+
+> +##
+> +{ 'struct': 'TPMMssimOptions',
+> +  'data': { '*command': 'SocketAddress',
+> +            '*control': 'SocketAddress' },
+> +  'if': 'CONFIG_TPM' }
+> +
+>  ##
+>  # @TpmTypeOptions:
+>  #
+
+
+Functionally the code looks mergable with just those bureaucratic changes.
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
