@@ -4,100 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34D7EE7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 20:42:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B30EE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 20:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tONKd-0000pb-LB; Thu, 19 Dec 2024 15:41:15 -0500
+	id 1tONPF-0002Vh-Pc; Thu, 19 Dec 2024 15:46:01 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
- id 1tOIap-0003Ua-1N
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:37:39 -0500
-Received: from mail-ej1-x633.google.com ([2a00:1450:4864:20::633])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dan.carpenter@linaro.org>)
- id 1tOIan-0004Dy-0x
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:37:38 -0500
-Received: by mail-ej1-x633.google.com with SMTP id
- a640c23a62f3a-aabbb507998so173352466b.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:37:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734622655; x=1735227455; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=PUel+go/CfHo5w+Jm9alc/L9kT7jqDV+xMlQDoVR8Gw=;
- b=j7YIYwIxclGFVJs2FAsqKO1Xmpm2HGx+gCZcuSQBOlE1/z9VJ7K/f8JrOjJYG29EqF
- bQWBv8d8n4mvOwTPP+wSmF2ljxng7TiW/GfGK9D91Ir0TyfNy0PeSc+VO2rohQ4ACRIl
- XW1vWYaU/zM9uxDYkT+be4drL+HrbKSkuxLSiAaJhlw22kQ8DYSSC6+eypmXr2uAOzK3
- WlAG3sp/RizXh/2QQvhSK8KmPtE1jjmU70VZXFIzfhj+NL55G1Nh5i+xZQ3j8r1t00Ne
- Kpr5vhAQEEoty2Hca9Ypso/A3iw9JY7/QVuQEhAVNKF2vXLhh6ii7dahibPpPm7nJQpS
- wDAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734622655; x=1735227455;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=PUel+go/CfHo5w+Jm9alc/L9kT7jqDV+xMlQDoVR8Gw=;
- b=KE8F574iIahbMWFPewidpoz7OwpgmQFe1MmC4oazj8gC4ZcGkEzx/s/sXKevZMg1bK
- rDSxMkrjaSDUwPOehBl9T0Gt9dnd9S5P5WP52l4/d2C3k4GspsnSAG9XAT/GhRSsIoDN
- J5ieAkNG6858mEq59Tph4dbbd6Xtw6V84U2q2tUP0dpyv9624qyl+FcvP7ilHoop907L
- zMDSAxHRvpHsypMN7pAb8XN4kQM2YME9rfCVIKGZC5v6bcqagIi4gU6Nmqho9fv8JAgd
- dhssrUc3S5VvDxefagdQXn7GiNsvw3YsgnQThzCx4AtHIfAkn3iRw/La1TvZEugSJxMf
- kqWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXaTLLQX2VVRwBbU2qu9DqEP46KFN9EQGO/sA87cjXA4hmbpxiEztgnAECz3hDOwJxBEYVoJkK1d5/F@nongnu.org
-X-Gm-Message-State: AOJu0YzEowet+JrQKjkPX6xkJUXSw0ayNmgg6smpfzlOruEnPlUQz3eS
- RWTj6gIU4EmXs0fxPgnWqhdJgG3qvbj9dj0xWp+U1of3MXQpZnMPJrHwJwgqi8Q=
-X-Gm-Gg: ASbGncvhDnO8qPfjeHK1066xcCJQ2TKiwGZIZOk0QTk1GjA8l5L6asNTIjOnUv9xnMx
- eBEbCFtYqlZqnPDl9RbZPMKmCaEbfKlqnsJQo7WVffztkPTu4WlaOqlgRe7x4a9RqSpVxKdERvJ
- GXpqklFID3t20SDN0ztrNu8VYRvB3wFXH7Wox+K4hCakiGpUNnmjUtTFM/RKnYJ9ATR8T26MDIz
- tGnglvf0vBQTr7v28Ajh/u0BBNIADcKLFC/pBozuKq67zd1BhLHca5bwBEHBQ==
-X-Google-Smtp-Source: AGHT+IGOfjBlXmb85ooSC48O2PP6uDSwvgb94XqQqZFbgj/syi0wA374X0g0G+01L7MUNMWSd0nROw==
-X-Received: by 2002:a17:906:328a:b0:aa6:800a:1291 with SMTP id
- a640c23a62f3a-aabf470a0b4mr637938366b.7.1734622655089; 
- Thu, 19 Dec 2024 07:37:35 -0800 (PST)
-Received: from localhost ([196.207.164.177]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0eae74e4sm76965466b.91.2024.12.19.07.37.34
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 07:37:34 -0800 (PST)
-Date: Thu, 19 Dec 2024 18:37:30 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: Qu Wenruo <quwenruo.btrfs@gmx.com>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, qemu-devel@nongnu.org,
- open list <linux-kernel@vger.kernel.org>,
- Linux Regressions <regressions@lists.linux.dev>,
- linux-ext4 <linux-ext4@vger.kernel.org>,
- lkft-triage@lists.linaro.org, linux-mm <linux-mm@kvack.org>,
- Linux btrfs <linux-btrfs@vger.kernel.org>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
- Anders Roxell <anders.roxell@linaro.org>,
- Arnd Bergmann <arnd@arndb.de>, Qu Wenruo <wqu@suse.com>,
- David Sterba <dsterba@suse.com>
-Subject: Re: qemu-arm64: CONFIG_ARM64_64K_PAGES=y kernel crash on qemu-arm64
- with Linux next-20241210 and above
-Message-ID: <0c46224b-ed2b-4c8e-aa96-d8f657f59b9f@stanley.mountain>
-References: <CA+G9fYvf0YQw4EY4gsHdQ1gCtSgQLPYo8RGnkbo=_XnAe7ORhw@mail.gmail.com>
- <CA+G9fYv7_fMKOxA8DB8aUnsDjQ9TX8OQtHVRcRQkFGqdD0vjNQ@mail.gmail.com>
- <ac1e1168-d3af-43c5-9df7-4ef5a1dbd698@gmx.com>
- <feecfdc2-4df6-47cf-8f96-5044858dc881@gmx.com>
- <a3406049-7ab5-45b9-80bf-46f73ef73a4f@stanley.mountain>
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tONPD-0002VX-RP
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 15:46:00 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tONPC-0003OS-9S
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 15:45:59 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734641157;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=6WKV6j8ZtYAeagBcpxmXK9hLRRr2rST/QYsTauSVB9s=;
+ b=TJTp0z8g1jO+sJds2dPjYgoEFSnEPmHJA/byqJgbOpWB5QGCpZ8DFEbc2C5Hh3TljGa+Oq
+ O9cKCpeC1GEbUihB/GY505sFK586W2i5BIRG/uEjMYa95ejDMUL9d46D9y+ivlxQACzb79
+ KmyrsgN+q3+xVVVgp+hptoj+Du3ZKqQ=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-318-X1Cpwa_tOZS_0OMqe5-Gjg-1; Thu,
+ 19 Dec 2024 15:45:53 -0500
+X-MC-Unique: X1Cpwa_tOZS_0OMqe5-Gjg-1
+X-Mimecast-MFC-AGG-ID: X1Cpwa_tOZS_0OMqe5-Gjg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3C38E19560B2; Thu, 19 Dec 2024 20:45:51 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.70])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 94EBD30044C1; Thu, 19 Dec 2024 20:45:50 +0000 (UTC)
+Date: Thu, 19 Dec 2024 15:45:49 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, alistair23@gmail.com,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: Re: [PULL 00/39] riscv-to-apply queue
+Message-ID: <20241219204549.GA724589@fedora>
+References: <20241218223010.1931245-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="+UZF0ogYatnLodhi"
 Content-Disposition: inline
-In-Reply-To: <a3406049-7ab5-45b9-80bf-46f73ef73a4f@stanley.mountain>
-Received-SPF: pass client-ip=2a00:1450:4864:20::633;
- envelope-from=dan.carpenter@linaro.org; helo=mail-ej1-x633.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20241218223010.1931245-1-alistair.francis@wdc.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Dec 2024 15:41:15 -0500
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,53 +85,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 06:10:56PM +0300, Dan Carpenter wrote:
-> > > Mind to test it with KASAN enabled?
-> > 
-> 
-> Anders is going to try that later and report back.
-> 
 
-Anders ran it and emailed me.  I was going to tell him to respond to
-the thread but I decided to steal the credit.  #GreatArtists
+--+UZF0ogYatnLodhi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- BTRFS info (device loop0): using crc32c (crc32c-arm64) checksum algorithm
- ==================================================================
- BUG: KASAN: slab-out-of-bounds in __bitmap_set+0xf8/0x100
- Read of size 8 at addr fff0000020e4a3c8 by task chdir01/479
- 
- CPU: 1 UID: 0 PID: 479 Comm: chdir01 Not tainted 6.13.0-rc3-next-20241218 #1
- Hardware name: linux,dummy-virt (DT)
- Call trace:
-  show_stack+0x20/0x38 (C)
-  dump_stack_lvl+0x8c/0xd0
-  print_report+0x118/0x5e0
-  kasan_report+0xb4/0x100
-  __asan_report_load8_noabort+0x20/0x30
-  __bitmap_set+0xf8/0x100
-  btrfs_subpage_set_uptodate+0xd8/0x1d0 [btrfs]
-  set_extent_buffer_uptodate+0x1ac/0x288 [btrfs]
-  __alloc_dummy_extent_buffer+0x2cc/0x488 [btrfs]
-  alloc_dummy_extent_buffer+0x4c/0x78 [btrfs]
-  btrfs_check_system_chunk_array+0x30/0x308 [btrfs]
-  btrfs_validate_super+0x7e8/0xd40 [btrfs]
-  open_ctree+0x958/0x3c98 [btrfs]
-  btrfs_get_tree+0xce4/0x13d8 [btrfs]
-  vfs_get_tree+0x7c/0x290
-  fc_mount+0x20/0xa8
-  btrfs_get_tree+0x72c/0x13d8 [btrfs]
-  vfs_get_tree+0x7c/0x290
-  path_mount+0x748/0x1518
-  __arm64_sys_mount+0x234/0x4f8
-  invoke_syscall.constprop.0+0x78/0x1f0
-  do_el0_svc+0xcc/0x1d8
-  el0_svc+0x38/0xa8
-  el0t_64_sync_handler+0x10c/0x138
-  el0t_64_sync+0x198/0x1a0
+Hi Alistair,
+Please take a look at the following CI failure:
 
-Here are the full logs.
-https://people.linaro.org/~anders.roxell/next-20241218-issue-arm64-64k+kasan/
+x86_64-w64-mingw32-gcc -m64 -Ilibqemuutil.a.p -I. -I.. -Iqapi -Itrace -Iui =
+-Iui/shader -I/usr/x86_64-w64-mingw32/sys-root/mingw/include/glib-2.0 -I/us=
+r/x86_64-w64-mingw32/sys-root/mingw/lib/glib-2.0/include -I/usr/x86_64-w64-=
+mingw32/sys-root/mingw/include/p11-kit-1 -fdiagnostics-color=3Dauto -Wall -=
+Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-strong -Wempty-b=
+ody -Wendif-labels -Wexpansion-to-defined -Wformat-security -Wformat-y2k -W=
+ignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -Wmissing-format-=
+attribute -Wmissing-prototypes -Wnested-externs -Wold-style-declaration -Wo=
+ld-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wstrict-prototypes =
+-Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-include-dirs -Wno-=
+psabi -Wno-shift-negative-value -iquote . -iquote /builds/qemu-project/qemu=
+ -iquote /builds/qemu-project/qemu/include -iquote /builds/qemu-project/qem=
+u/host/include/x86_64 -iquote /builds/qemu-project/qemu/host/include/generi=
+c -iquote /builds/qemu-project/qemu/tcg/i386 -mms-bitfields -mcx16 -msse2 -=
+D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-alias=
+ing -fno-common -fwrapv -fno-pie -no-pie -ftrivial-auto-var-init=3Dzero -fz=
+ero-call-used-regs=3Dused-gpr -mms-bitfields -pthread -mms-bitfields -MD -M=
+Q libqemuutil.a.p/meson-generated_.._trace_trace-hw_riscv.c.obj -MF libqemu=
+util.a.p/meson-generated_.._trace_trace-hw_riscv.c.obj.d -o libqemuutil.a.p=
+/meson-generated_.._trace_trace-hw_riscv.c.obj -c trace/trace-hw_riscv.c
+In file included from trace/trace-hw_riscv.c:5:
+=2E./hw/riscv/trace-events: In function '_nocheck__trace_riscv_iommu_sys_ms=
+i_sent':
+=2E./hw/riscv/trace-events:19:22: error: format '%lx' expects argument of t=
+ype 'long unsigned int', but argument 6 has type 'uint64_t' {aka 'long long=
+ unsigned int'} [-Werror=3Dformat=3D]
+   19 | riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32=
+_t msi_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%lx msi_dat=
+a 0x%x result %u"
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+=2E.....
+=2E./hw/riscv/trace-events:19:22: error: format '%lx' expects argument of t=
+ype 'long unsigned int', but argument 3 has type 'uint64_t' {aka 'long long=
+ unsigned int'} [-Werror=3Dformat=3D]
+   19 | riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32=
+_t msi_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%lx msi_dat=
+a 0x%x result %u"
+      |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~                   =
+                                                           ~~~~~~~~
+      |                                                                    =
+                                                           |
+      |                                                                    =
+                                                           uint64_t {aka lo=
+ng long unsigned int}
+cc1: all warnings being treated as errors
 
-regards,
-dan carpenter
+https://gitlab.com/qemu-project/qemu/-/jobs/8691704969#L2578
+
+Once the issue has been solved, please send a new revision of this pull
+request.
+
+Thanks,
+Stefan
+
+--+UZF0ogYatnLodhi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdkhf0ACgkQnKSrs4Gr
+c8iXHgf/fj9jXWVRTBR9cZ5NGew6Ly1mAeDI3DDLJNi4lChFMk8lKKlFnRQWJumS
+OrQyUam8N7os5ngzNrgZeReuCBehjz/VOj9214t0jkbh4p6Wz1bPE7sDmo+W264+
+7b7yCNzChmZyZOGH37zH+zjNOJi5LnD7ViZjC3qFC7V1DH4S0Pp428db4xts3Cz8
+NhlqeL3Jkh/HRDqm+YKy626onqju9CqSUG9mURFpnonVcqZlG8GqdmhLbVHmxv60
+AoUjkeD9XNTys2NmlXIoKbebG0kXSg9dBUNBDggCz1m8d28kdFkvLYMB8e2UZ7gj
+eflHmqiGMHEE/wjaATNpVf4eAwRwcw==
+=9hPE
+-----END PGP SIGNATURE-----
+
+--+UZF0ogYatnLodhi--
+
 
