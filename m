@@ -4,88 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6751E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21412E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:30:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFg-0001re-Af; Thu, 19 Dec 2024 11:19:52 -0500
+	id 1tOJIF-0007Xv-Uy; Thu, 19 Dec 2024 11:22:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcz-0004qW-Uq
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:53 -0500
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcy-0004Yr-Kl
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:53 -0500
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4361815b96cso6828635e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:39:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734622791; x=1735227591; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=upFpBaO8cptavFRp1HZ7mKtcy+0BbSMhQQtCEJtj5Yg=;
- b=W4S47rPQjwyXvMsCuO1l1H7SSANpv3E3UMfbtLNCKIp5XtnmbeENAQuFLbh+wTZjw3
- /Biuh/CzGZ/BtRdmodlsVsI4rE5qliBsj3/lbo+BapZn6U8bMQ8yt+gZK3TABYVCfIVu
- BQHDJwAwc1rb5kS0xzl+4wFdZj6pC1YN95eHDJE2Ax8xHHU9z3BDEKvUTwMIQNO3Jsnw
- aQ+fLRw2LcAxCqPl9RP2nzQnv+tpASOp1E7q/cvxWqskGIER7avMZW/QDtNCO1SFQz56
- G1rpPrQc0uTvd/l0EnmdPFniCYu/UZa5nFXRGE7ZYyB0rWCBHKE6ZiXksVOFdbhhWF/d
- qhRg==
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHic-00039s-H5
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:40 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHia-0002NO-UU
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734619296;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MYii7dt2+ZtXvGWzQ4vYeXf89uLkAK1FjQNWVHIzMe4=;
+ b=Fg253PuIYJPMvge0N7WgjuE1XTEdb4hoflnuInryA34OBX46B6xRCP3OZy4/NZINbcfyaj
+ I4Kc28Kf5t48iuLudse7acdNVCbePM5IMbvOtyv3Yj+ejVYAPGQ408uHqQGwMm/7UwFDSR
+ kSpVk3Nrz549L44+V2BbDQJmIKKAwe4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-10-OxvOduDzOoii13xu81HQCw-1; Thu, 19 Dec 2024 09:41:33 -0500
+X-MC-Unique: OxvOduDzOoii13xu81HQCw-1
+X-Mimecast-MFC-AGG-ID: OxvOduDzOoii13xu81HQCw
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4362b9c1641so5081505e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:32 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734622791; x=1735227591;
+ d=1e100.net; s=20230601; t=1734619292; x=1735224092;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=upFpBaO8cptavFRp1HZ7mKtcy+0BbSMhQQtCEJtj5Yg=;
- b=BvlVp4ydOaT4xsToEpbV7Hhk2H/YysuZ3Glc+0wvUWzy8UzGws8BF4/yawUdo0/dj/
- 1PPk0KnooShoFEMXVm4t4Vob1XbUEB6l+OktAKzLs+3T8FdegiVAIFqFrqUHo1bBR2pr
- X/ZDBflwER7CmKCArP56oJ4YRy5iqQOZQ8pF6WwQfzE1EI3gkaZYDvlnol837BVnJeGj
- +WU4AuVCFma8XgGH2FFWt1l8xL2dddPqrsNOfuqG4v6MGXCZgtXdjmPvEvgeuflaC2mV
- 6rh7fBfSQogC/gSUw3woJV+8t6ooqKVJx0Ft7e6LW/Qx4DEtQjF/hznPzVABv7p9tmQ1
- BSyQ==
-X-Gm-Message-State: AOJu0YzA5adQRrwuafJQiAXPhaQw8SbkVSiSkomJpdlPZc9q08eJKECQ
- bFBlDGX4J7lc91x24QiUMi0TIuJ/pg8cFyPXRP5CWcnpPIcBP+AI1xfEZQXty11Cbv2LqkkWz6q
- Z
-X-Gm-Gg: ASbGnct5ev6AEBf0Sq+G2bAhzEP9vUtSugOGPs33iyQ/kK8sW0QsTniVJ3BrWAXFZ+F
- tfww1L8TtygB7puTjyxOFbyBU+pWtkge26d0axl51+MrXJTq11PsmXvnFESll2Wh2rdZkZnhnue
- mWRbnZU8q3cIXbAzRRz9KYIixdkscwAMItCXrIvQ84Na8k0umLq2Wt5pSPIjpULZkP0j2yv6eRY
- aj3GeqFiMF/BMg2Z/LGkXnvBb3rGXKjp3lY+bX0E8JxnD0YX439yReA5E5viOCM/2ooZixjMQ79
- HnHi
-X-Google-Smtp-Source: AGHT+IErehxBq4obOaVRcaYCREXohUvSxM4e0g+hUo+WwFbrfvi4FJvxnGJYLGiEEC/HTEknmJKr/Q==
-X-Received: by 2002:a05:600c:4fd3:b0:434:a468:4a57 with SMTP id
- 5b1f17b1804b1-4365c7c83d7mr28882795e9.26.1734622790613; 
- Thu, 19 Dec 2024 07:39:50 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c515sm21268325e9.30.2024.12.19.07.39.49
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Dec 2024 07:39:49 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=MYii7dt2+ZtXvGWzQ4vYeXf89uLkAK1FjQNWVHIzMe4=;
+ b=fL2g7GXL3Hnh6guPiWfcj38eQXDO7ii/uqATeU5shQCkOR1de1DlhCtgyFup4jZ4At
+ zGGV5xEELFe4oq+16NWRYXujnrmdd9htmy3XOY4mUChZUapJezxvYyOcJ0vD9zEX3MFN
+ RfKfQPTm4y0QwnSDHUEFfmTMYJ2QvRwJvXdUpYNkZjkQhYEhLRJRMwyfEkWCBf03pzjt
+ swiIKsn4kfCNgWMAfobGvuzI/wdChpM29rMzX3xtDpGsDjqoZRCtRcfh/4AJkFHHQEOD
+ 8Zhyi9zJpi+Zvj3LPMvbRjh7VJtcaKhBvmyl64GjBo7IEUXOCQYyD9WKomksTdpPBNqM
+ R4xA==
+X-Gm-Message-State: AOJu0YzJTkjfhHhjtYoBcqZCT+jy/lzEoEqY8Iz0PgRWXccVMfcMn4Ll
+ O5IqMeWcwlUGFo4v+5wLQvB4YSVqP6daxMBpLvkG/gMA3qsPPqkNEtNMwNr7NUpzjVeoz8fOFKR
+ VJzWBdatmVBhjW+mffluYJSw9XmTr4rBlEDNbgcynhcFGZOumkv/RbEHkTSt1xX6H0dCjUDihcx
+ 0T7yZdRoIc+XCCU+okaTFkmXomvERuJ1Gf5mk=
+X-Gm-Gg: ASbGnctbPmDEQBzTW8Bl3QAdQQU8tA2IGrkMbrc35lnfZ6ZKS1wObGSTG2Ps7mJ9/XF
+ o6Z5rvaT2A4lT8flwi60koafLRy3jnB30xoNXg0tzqnN8eJ5cy7VxkIREzWHUlfMqouWDx2cIsm
+ QMXRV7tX4vDbNBRK7GwoQT4WEkYTZq9xeCkGz0kCYhjrrtAsjuSsLsKIdORseFuR0mUBrZydKlK
+ /2wlAq1gKdhyWiSe00lpvqv4Y7/Ka82L5ABBaq60203uXahu1Wzb9d3hXLwoVhG6LL+5u8ABpZO
+ +4g+hiEzAlLlM/AeWskwIhECcw/y6qTvpZqElWlh
+X-Received: by 2002:a05:600c:3b84:b0:436:1b7a:c0b4 with SMTP id
+ 5b1f17b1804b1-43655347f09mr59357195e9.1.1734619291945; 
+ Thu, 19 Dec 2024 06:41:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGOvTcX2DH0l98NnpQo6d96dOrXG0tSWcFdWBJR/og7Qc5DYgKbKa2w1ExcQkSOC3v3XuriAg==
+X-Received: by 2002:a05:600c:3b84:b0:436:1b7a:c0b4 with SMTP id
+ 5b1f17b1804b1-43655347f09mr59356825e9.1.1734619291576; 
+ Thu, 19 Dec 2024 06:41:31 -0800 (PST)
+Received: from localhost
+ (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
+ [2003:cb:c749:6600:b73a:466c:e610:686])
+ by smtp.gmail.com with UTF8SMTPSA id
+ ffacd0b85a97d-38a1c8b830csm1704090f8f.108.2024.12.19.06.41.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 06:41:31 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org,
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 09/10] hw/misc/vmcoreinfo: Deprecate '-device vmcoreinfo'
-Date: Thu, 19 Dec 2024 16:38:56 +0100
-Message-ID: <20241219153857.57450-10-philmd@linaro.org>
+Subject: [PATCH v3 06/14] s390x: introduce s390_get_memory_limit()
+Date: Thu, 19 Dec 2024 15:41:07 +0100
+Message-ID: <20241219144115.2820241-7-david@redhat.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219153857.57450-1-philmd@linaro.org>
-References: <20241219153857.57450-1-philmd@linaro.org>
+In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
+References: <20241219144115.2820241-1-david@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,29 +119,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-'-device vmcoreinfo' is replaced by '-object vmcore-info'.
+Let's add s390_get_memory_limit(), to query what has been successfully
+set via s390_set_memory_limit(). Allow setting the limit only once.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+We'll remember the limit in the machine state. Move
+s390_set_memory_limit() to machine code, merging it into
+set_memory_limit(), because this really is a machine property.
+
+Message-ID: <20241008105455.2302628-7-david@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
 ---
- docs/about/deprecated.rst | 5 +++++
- 1 file changed, 5 insertions(+)
+ hw/s390x/s390-virtio-ccw.c         | 17 ++++++++++++-----
+ include/hw/s390x/s390-virtio-ccw.h |  8 ++++++++
+ target/s390x/cpu-sysemu.c          |  8 --------
+ target/s390x/cpu.h                 |  1 -
+ 4 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index d6809f94ea1..57a3d734081 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -79,6 +79,11 @@ described with -smp are supported by the target machine.
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index a28e615c5a..1c56b70dcd 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -45,6 +45,7 @@
+ #include "migration/blocker.h"
+ #include "qapi/visitor.h"
+ #include "hw/s390x/cpu-topology.h"
++#include "kvm/kvm_s390x.h"
+ #include CONFIG_DEVICES
  
- Use ``-run-with user=..`` instead.
+ static Error *pv_mig_blocker;
+@@ -121,12 +122,16 @@ static void subsystem_reset(void)
+     }
+ }
  
-+``-device vmcoreinfo`` (since 10.0)
-+'''''''''''''''''''''''''''''''''''
+-static void set_memory_limit(uint64_t new_limit)
++static void s390_set_memory_limit(S390CcwMachineState *s390ms,
++                                  uint64_t new_limit)
+ {
+-    uint64_t hw_limit;
+-    int ret;
++    uint64_t hw_limit = 0;
++    int ret = 0;
+ 
+-    ret = s390_set_memory_limit(new_limit, &hw_limit);
++    assert(!s390ms->memory_limit && new_limit);
++    if (kvm_enabled()) {
++        ret = kvm_s390_set_mem_limit(new_limit, &hw_limit);
++    }
+     if (ret == -E2BIG) {
+         error_report("host supports a maximum of %" PRIu64 " GB",
+                      hw_limit / GiB);
+@@ -135,10 +140,12 @@ static void set_memory_limit(uint64_t new_limit)
+         error_report("setting the guest size failed");
+         exit(EXIT_FAILURE);
+     }
++    s390ms->memory_limit = new_limit;
+ }
+ 
+ static void s390_memory_init(MachineState *machine)
+ {
++    S390CcwMachineState *s390ms = S390_CCW_MACHINE(machine);
+     MemoryRegion *sysmem = get_system_memory();
+     MemoryRegion *ram = machine->ram;
+     uint64_t ram_size = memory_region_size(ram);
+@@ -154,7 +161,7 @@ static void s390_memory_init(MachineState *machine)
+         exit(EXIT_FAILURE);
+     }
+ 
+-    set_memory_limit(ram_size);
++    s390_set_memory_limit(s390ms, ram_size);
+ 
+     /* Map the initial memory. Must happen after setting the memory limit. */
+     memory_region_add_subregion(sysmem, 0, ram);
+diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
+index 996864a34e..de04336c5a 100644
+--- a/include/hw/s390x/s390-virtio-ccw.h
++++ b/include/hw/s390x/s390-virtio-ccw.h
+@@ -29,10 +29,18 @@ struct S390CcwMachineState {
+     bool dea_key_wrap;
+     bool pv;
+     uint8_t loadparm[8];
++    uint64_t memory_limit;
+ 
+     SCLPDevice *sclp;
+ };
+ 
++static inline uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
++{
++    /* We expect to be called only after the limit was set. */
++    assert(s390ms->memory_limit);
++    return s390ms->memory_limit;
++}
 +
-+Use ``-object vmcore-info`` instead.
-+
+ #define S390_PTF_REASON_NONE (0x00 << 8)
+ #define S390_PTF_REASON_DONE (0x01 << 8)
+ #define S390_PTF_REASON_BUSY (0x02 << 8)
+diff --git a/target/s390x/cpu-sysemu.c b/target/s390x/cpu-sysemu.c
+index 1cd30c1d84..3118a25fee 100644
+--- a/target/s390x/cpu-sysemu.c
++++ b/target/s390x/cpu-sysemu.c
+@@ -255,14 +255,6 @@ unsigned int s390_cpu_set_state(uint8_t cpu_state, S390CPU *cpu)
+     return s390_count_running_cpus();
+ }
  
- User-mode emulator command line arguments
- -----------------------------------------
+-int s390_set_memory_limit(uint64_t new_limit, uint64_t *hw_limit)
+-{
+-    if (kvm_enabled()) {
+-        return kvm_s390_set_mem_limit(new_limit, hw_limit);
+-    }
+-    return 0;
+-}
+-
+ void s390_set_max_pagesize(uint64_t pagesize, Error **errp)
+ {
+     if (kvm_enabled()) {
+diff --git a/target/s390x/cpu.h b/target/s390x/cpu.h
+index 5ef61b1f75..b4506539f0 100644
+--- a/target/s390x/cpu.h
++++ b/target/s390x/cpu.h
+@@ -881,7 +881,6 @@ static inline void s390_do_cpu_load_normal(CPUState *cs, run_on_cpu_data arg)
+ 
+ /* cpu.c */
+ void s390_crypto_reset(void);
+-int s390_set_memory_limit(uint64_t new_limit, uint64_t *hw_limit);
+ void s390_set_max_pagesize(uint64_t pagesize, Error **errp);
+ void s390_cmma_reset(void);
+ void s390_enable_css_support(S390CPU *cpu);
 -- 
 2.47.1
 
