@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D48DE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:34:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3EAE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:34:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOByh-0006XI-DE; Thu, 19 Dec 2024 03:33:51 -0500
+	id 1tOBxz-0004YQ-FS; Thu, 19 Dec 2024 03:33:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByc-0006IV-G2
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:46 -0500
+ id 1tOBxy-0004Y7-6u
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByU-0005EZ-Pm
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:43 -0500
+ id 1tOBxw-00058E-OU
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:05 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734597218;
+ s=mimecast20190719; t=1734597184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WqWzh2h1UvpMsoMNNGnTwlEeWlCR/rC8pyJNwgBOdls=;
- b=C+fqFL4Bvk4jK5rs08jQ/VoyeHiWwWmKlLKpFqZk/oxnR5z097uTaGdBIp5r4MMao8gGDs
- gJYvXUQqAQk/6f60nQjDkHLsppmb/g2dEfkrAljW+ui8wr3ZN6L1tbr+sIj3Zi8ViDskLC
- endlTvl+mVXk6oaH6lEddkNVXfWsCxY=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CRUx0ihRVJNBkx25RdEddlnJRXUqJCkYhNyCELXxXGg=;
+ b=K6tsfJU5cMclqrbt4IwP4EmSHJmhf4PmERqK1n22xT0Nd4q4gJThbZUCEI11vrajL+3DvM
+ 8N60lElS8EIG7J/pBqeEkbqpz+s3KvwGBdsJASWGOrZYSps0Hb5p9g/Juizc1j8vLv4Ni+
+ uVOLGe8Mts7gYLKZkKum5juKHx2NalA=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-gl-Yzr8oP420DgZaq_5-Kw-1; Thu, 19 Dec 2024 03:33:36 -0500
-X-MC-Unique: gl-Yzr8oP420DgZaq_5-Kw-1
-X-Mimecast-MFC-AGG-ID: gl-Yzr8oP420DgZaq_5-Kw
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361ac607b6so4594735e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:33:36 -0800 (PST)
+ us-mta-686-TA4oGsRnO-m8vnCNBxDY_g-1; Thu, 19 Dec 2024 03:32:59 -0500
+X-MC-Unique: TA4oGsRnO-m8vnCNBxDY_g-1
+X-Mimecast-MFC-AGG-ID: TA4oGsRnO-m8vnCNBxDY_g
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43635895374so8047905e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734597215; x=1735202015;
+ d=1e100.net; s=20230601; t=1734597177; x=1735201977;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WqWzh2h1UvpMsoMNNGnTwlEeWlCR/rC8pyJNwgBOdls=;
- b=LWtDbKj+EH+m6gcygtgA3+4Evz98yBa+H2RrwAo5mp/W1qw58xY+yG51wm0etyaNYZ
- 34/k82T9DLv8+SK9vWlvy+p6TnOVJWvr6GMgpjZOvMBb0k0Cs7RGDx4kH8oDtQXw1PGO
- dQ9akwFvMJ6Dy/sTfREIZJ/s1wWQKOhhLKrM5iSPKrJDOoD2qmniPEqHfqukaSs9SsP2
- wQVzLuF5s3svlPC5X/g6+sCzpnxmxuHaiDxkqgOaHS4AiDvmjnPODL2jANg897aFFt+a
- 9sNEqNgcOSJ4yQCi8u3IM5QyES8Q8y4YgZ52EY3hrYL1mRRfuqv163IxNhZBJ1sKQfCl
- MxZA==
-X-Gm-Message-State: AOJu0YyXBgjGVW9hdnV/wWYpI3lxH5qrcOD0z+8v97wz9HGAe50Wv8J+
- rb+pXU6owQBGOQ8vonNf1MByBwdbI51sPnr6FVm513ywY6yjUJPiqOQUC/z3BLOFFZkZfWnVIgH
- 49O18Fj6vyeWbfAzjAYMixr4xMKdwrPuiUCLVYT5I9Rvc1uF5pppCjKqWwRQt3rH6H7xUbc7VL7
- PKOE+o6hKDu4xq0p1qWazwVJdn2S8kG2Af2Hog
-X-Gm-Gg: ASbGncvBsEcrcEVaFLdxYqcZ7mcSUokOvPPJBbqX/u57UBebTXhPQPDMnSTD30Pj1IG
- yBrlGm4s+DjRcHtdxnxPufcQyLmbV0WwCKNKHTu9IkzOiVBaC1nkMSKhFn7BnWbZqo8+dkiureg
- Wn2jYAO4VxtjAodsyG/evTO8+4DovTeOFqxPjSftcWzfHXch/1Tcfv7N+2+PtdPVhD/QY2005CS
- xp7fVlLNRz9QqZtfBUbDTWMLeb0uJ+/C81I5Nc992rInjp2Jx+i0QMUV7z5
-X-Received: by 2002:a05:600c:3106:b0:431:12a8:7f1a with SMTP id
- 5b1f17b1804b1-4365536801amr56420265e9.16.1734597214374; 
- Thu, 19 Dec 2024 00:33:34 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFb4wdZIV6TntoyBuhA0U9kU+314TdlbN0B2hR9+YHjFbfl8YkfjsFoMcqlA10Ols9g1JW9Fw==
-X-Received: by 2002:a05:600c:3106:b0:431:12a8:7f1a with SMTP id
- 5b1f17b1804b1-4365536801amr56419755e9.16.1734597213671; 
- Thu, 19 Dec 2024 00:33:33 -0800 (PST)
+ bh=CRUx0ihRVJNBkx25RdEddlnJRXUqJCkYhNyCELXxXGg=;
+ b=aVNVZXbfYZtQEaJ6H9mck4T2mEcxb+F15jwIDPFwg1eQkC9/pHRRtZPrvRqTGtjME0
+ q6SD/FVnpFRCVlT2HvtDs+GAbYs/oDrlnYGh6V0vqUF0YcS7jQxIE9iAGIjCCnOdnrMN
+ oaiEPJQzMX84PA4g0la8Kv4Ltu4mab/9YK6ReSgfbEag84QcUpfpwxPicePuXCxc5MdM
+ FfqHAWR3YOvaL7K3VWHKUA0bB6fM+/x37Wfx/WucjjbQ5isLaQl6gmCVhy4UJb0K4Eul
+ DoA+9D9zwpw1hO+FS9xz03gZoxfAPphAdymplH/f7LX+KeaNDYkV86xsI9+aBVzR2ogx
+ +n4Q==
+X-Gm-Message-State: AOJu0Yzmbby2xxaC7anytgo5exbIbQAtGb8sLhL+k6D63CcRhV9mFg/M
+ v3GuTab7SzMzcljN7Y1/D/rvLC4LkW5ii0B3xm9fTW2K/dW6tcAT71DgvnlwuaxVQht94i90zFB
+ ZvBmc5gb5PvqfSsaca0Cyqv7W9Vt0+Qpd/yE/UlrWare1n7Hrn+1dp2ARS4QVSQssI3ZEa1MFXT
+ hm+GISmw8HhceAPdGE9JnlPArPoMhpZ7JYqloU
+X-Gm-Gg: ASbGncvzFZUDv7NamuBXvWqCIJPVxyS3gIUbylUm9fkls4GmOtsG8IxXv12ErRhUCiK
+ q4kzIr7QF4ZOgBqGi/ojScXuOMqkvvadfmvBhRTElxruh00CnXSL20IgZj0klA0OFb/389iX78L
+ fD1ZW14k0RTzkrsbhoAGigLbdEYxdnHNil/JCkcZKO5SfQ9Zrsvv6sU0+VkbenKY93+ZbUU3cy0
+ zynTTxbWHUqfOsJGuKwdrTskHrsEIyNOl4CrtVqQPOV/Pfjjqk4KH/sXnZP
+X-Received: by 2002:a05:6000:1a85:b0:385:f64e:f177 with SMTP id
+ ffacd0b85a97d-38a1a20497fmr1844545f8f.11.1734597176903; 
+ Thu, 19 Dec 2024 00:32:56 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGtngBPPfg14UQsoMZ5uPMt/AMHpdSGsKHQkQGeKh2ZeglvOoSJmI59/+Vbg/oFOq2hosBb5g==
+X-Received: by 2002:a05:6000:1a85:b0:385:f64e:f177 with SMTP id
+ ffacd0b85a97d-38a1a20497fmr1844507f8f.11.1734597176462; 
+ Thu, 19 Dec 2024 00:32:56 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436611ea3d5sm11342085e9.5.2024.12.19.00.33.33
+ ffacd0b85a97d-38a1c89e219sm992373f8f.84.2024.12.19.00.32.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 00:33:33 -0800 (PST)
+ Thu, 19 Dec 2024 00:32:56 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 30/41] rust: qom: add casting functionality
-Date: Thu, 19 Dec 2024 09:32:17 +0100
-Message-ID: <20241219083228.363430-31-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 14/41] migration: Use device_class_set_props_n
+Date: Thu, 19 Dec 2024 09:32:01 +0100
+Message-ID: <20241219083228.363430-15-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
 References: <20241219083228.363430-1-pbonzini@redhat.com>
@@ -107,569 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add traits that let client cast typecast safely between object types.
-In particular, an upcast is compile-time guaranteed to succeed, and a
-YOLO C-style downcast must be marked as unsafe.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-The traits are based on an IsA<> trait that declares what
-is a subclass of what, which is an idea taken from glib-rs
-(https://docs.rs/glib/latest/glib/object/trait.IsA.html).
-The four primitives are also taken from there
-(https://docs.rs/glib/latest/glib/object/trait.Cast.html).  However,
-the implementation of casting itself is a bit different and uses the
-Deref trait.
+Export the migration_properties array size from options.c;
+use that to feed device_class_set_props_n.  We must remove
+DEFINE_PROP_END_OF_LIST so the count is correct.
 
-This removes some pointer arithmetic from the pl011 device; it is also a
-prerequisite for the definition of methods, so that they can be invoked
-on all subclass structs.  This will use the IsA<> trait to detect the
-structs that support the methods.
-
-glib also has a "monadic" casting trait which could be implemented on
-Option (as in https://docs.rs/glib/latest/glib/object/trait.CastNone.html)
-and perhaps even Result.  For now I'm leaving it out, as the patch is
-already big enough and the benefit seems debatable.
-
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Link: https://lore.kernel.org/r/20241216035109.3486070-15-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/Cargo.toml                  |   1 +
- rust/hw/char/pl011/src/device.rs |  12 +-
- rust/qemu-api/src/prelude.rs     |   7 +
- rust/qemu-api/src/qdev.rs        |   1 +
- rust/qemu-api/src/qom.rs         | 283 ++++++++++++++++++++++++++++++-
- rust/qemu-api/src/sysbus.rs      |   7 +-
- rust/qemu-api/tests/tests.rs     |  70 +++++++-
- 7 files changed, 368 insertions(+), 13 deletions(-)
+ migration/options.h   | 1 +
+ migration/migration.c | 3 ++-
+ migration/options.c   | 2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/rust/Cargo.toml b/rust/Cargo.toml
-index 6ec19b67297..5b6b6ca4382 100644
---- a/rust/Cargo.toml
-+++ b/rust/Cargo.toml
-@@ -38,6 +38,7 @@ should_implement_trait = "deny"
- unused_self = "allow"
+diff --git a/migration/options.h b/migration/options.h
+index a360f93a44f..762be4e641a 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -21,6 +21,7 @@
+ /* migration properties */
  
- # default-allow lints
-+as_ptr_cast_mut = "deny"
- as_underscore = "deny"
- assertions_on_result_states = "deny"
- bool_to_int_with_if = "deny"
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 3fed8b4ad25..e85d13c5a2b 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -106,6 +106,8 @@ pub struct PL011State {
-     device_id: DeviceId,
+ extern const Property migration_properties[];
++extern const size_t migration_properties_count;
+ 
+ /* capabilities */
+ 
+diff --git a/migration/migration.c b/migration/migration.c
+index 6b3b85d31e5..d23d392685e 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3822,7 +3822,8 @@ static void migration_class_init(ObjectClass *klass, void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     dc->user_creatable = false;
+-    (device_class_set_props)(dc, migration_properties);
++    device_class_set_props_n(dc, migration_properties,
++                             migration_properties_count);
  }
  
-+qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
-+
- unsafe impl ObjectType for PL011State {
-     type Class = <SysBusDevice as ObjectType>::Class;
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
-@@ -140,8 +142,6 @@ impl PL011State {
-     unsafe fn init(&mut self) {
-         const CLK_NAME: &CStr = c_str!("clk");
- 
--        let sbd = unsafe { &mut *(addr_of_mut!(*self).cast::<SysBusDevice>()) };
--
-         // SAFETY:
-         //
-         // self and self.iomem are guaranteed to be valid at this point since callers
-@@ -155,15 +155,16 @@ unsafe fn init(&mut self) {
-                 Self::TYPE_NAME.as_ptr(),
-                 0x1000,
-             );
-+
-+            let sbd: &mut SysBusDevice = self.upcast_mut();
-             sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
-         }
- 
-         for irq in self.interrupts.iter() {
-+            let sbd: &SysBusDevice = self.upcast();
-             sbd.init_irq(irq);
-         }
- 
--        let dev = addr_of_mut!(*self).cast::<DeviceState>();
--
-         // SAFETY:
-         //
-         // self.clock is not initialized at this point; but since `NonNull<_>` is Copy,
-@@ -172,6 +173,7 @@ unsafe fn init(&mut self) {
-         // calls this function to initialize the fields; therefore no code is
-         // able to access an invalid self.clock value.
-         unsafe {
-+            let dev: &mut DeviceState = self.upcast_mut();
-             self.clock = NonNull::new(qdev_init_clock_in(
-                 dev,
-                 CLK_NAME.as_ptr(),
-@@ -632,6 +634,8 @@ unsafe fn init(&mut self) {
-     }
- }
- 
-+qom_isa!(PL011Luminary : PL011State, SysBusDevice, DeviceState, Object);
-+
- unsafe impl ObjectType for PL011Luminary {
-     type Class = <PL011State as ObjectType>::Class;
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011_LUMINARY;
-diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
-index 5cc41f081f9..a0a71fcd6bc 100644
---- a/rust/qemu-api/src/prelude.rs
-+++ b/rust/qemu-api/src/prelude.rs
-@@ -7,4 +7,11 @@
- pub use crate::cell::BqlCell;
- pub use crate::cell::BqlRefCell;
- 
-+pub use crate::qom::IsA;
-+pub use crate::qom::Object;
-+pub use crate::qom::ObjectCast;
-+pub use crate::qom::ObjectCastMut;
-+pub use crate::qom::ObjectDeref;
- pub use crate::qom::ObjectType;
-+
-+pub use crate::qom_isa;
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 07a502a8371..686054e737a 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -144,3 +144,4 @@ unsafe impl ObjectType for DeviceState {
-     const TYPE_NAME: &'static CStr =
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_DEVICE) };
- }
-+qom_isa!(DeviceState: Object);
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index a663647ffe5..74ea5721f77 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -4,15 +4,22 @@
- 
- //! Bindings to access QOM functionality from Rust.
- //!
--//! This module provides automatic creation and registration of `TypeInfo`
--//! for classes that are written in Rust, and mapping between Rust traits
--//! and QOM vtables.
-+//! The QEMU Object Model (QOM) provides inheritance and dynamic typing for QEMU
-+//! devices. This module makes QOM's features available in Rust through two main
-+//! mechanisms:
-+//!
-+//! * Automatic creation and registration of `TypeInfo` for classes that are
-+//!   written in Rust, as well as mapping between Rust traits and QOM vtables.
-+//!
-+//! * Type-safe casting between parent and child classes, through the [`IsA`]
-+//!   trait and methods such as [`upcast`](ObjectCast::upcast) and
-+//!   [`downcast`](ObjectCast::downcast).
- //!
- //! # Structure of a class
- //!
- //! A leaf class only needs a struct holding instance state. The struct must
--//! implement the [`ObjectType`] trait, as well as any `*Impl` traits that exist
--//! for its superclasses.
-+//! implement the [`ObjectType`] and [`IsA`] traits, as well as any `*Impl`
-+//! traits that exist for its superclasses.
- //!
- //! If a class has subclasses, it will also provide a struct for instance data,
- //! with the same characteristics as for concrete classes, but it also needs
-@@ -31,11 +38,57 @@
- //!   the source for this is the `*Impl` trait; the associated consts and
- //!   functions if needed are wrapped to map C types into Rust types.
- 
--use std::{ffi::CStr, os::raw::c_void};
-+use std::{
-+    ffi::CStr,
-+    ops::{Deref, DerefMut},
-+    os::raw::c_void,
-+};
- 
- pub use bindings::{Object, ObjectClass};
- 
--use crate::bindings::{self, TypeInfo};
-+use crate::bindings::{self, object_dynamic_cast, TypeInfo};
-+
-+/// Marker trait: `Self` can be statically upcasted to `P` (i.e. `P` is a direct
-+/// or indirect parent of `Self`).
-+///
-+/// # Safety
-+///
-+/// The struct `Self` must be `#[repr(C)]` and must begin, directly or
-+/// indirectly, with a field of type `P`.  This ensures that invalid casts,
-+/// which rely on `IsA<>` for static checking, are rejected at compile time.
-+pub unsafe trait IsA<P: ObjectType>: ObjectType {}
-+
-+// SAFETY: it is always safe to cast to your own type
-+unsafe impl<T: ObjectType> IsA<T> for T {}
-+
-+/// Macro to mark superclasses of QOM classes.  This enables type-safe
-+/// up- and downcasting.
-+///
-+/// # Safety
-+///
-+/// This macro is a thin wrapper around the [`IsA`] trait and performs
-+/// no checking whatsoever of what is declared.  It is the caller's
-+/// responsibility to have $struct begin, directly or indirectly, with
-+/// a field of type `$parent`.
-+#[macro_export]
-+macro_rules! qom_isa {
-+    ($struct:ty : $($parent:ty),* ) => {
-+        $(
-+            // SAFETY: it is the caller responsibility to have $parent as the
-+            // first field
-+            unsafe impl $crate::qom::IsA<$parent> for $struct {}
-+
-+            impl AsRef<$parent> for $struct {
-+                fn as_ref(&self) -> &$parent {
-+                    // SAFETY: follows the same rules as for IsA<U>, which is
-+                    // declared above.
-+                    let ptr: *const Self = self;
-+                    unsafe { &*ptr.cast::<$parent>() }
-+                }
-+            }
-+        )*
-+    };
-+}
- 
- unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
-     // SAFETY: obj is an instance of T, since rust_instance_init<T>
-@@ -96,8 +149,224 @@ pub unsafe trait ObjectType: Sized {
-     /// The name of the type, which can be passed to `object_new()` to
-     /// generate an instance of this type.
-     const TYPE_NAME: &'static CStr;
-+
-+    /// Return the receiver as an Object.  This is always safe, even
-+    /// if this type represents an interface.
-+    fn as_object(&self) -> &Object {
-+        unsafe { &*self.as_object_ptr() }
-+    }
-+
-+    /// Return the receiver as a const raw pointer to Object.
-+    /// This is preferrable to `as_object_mut_ptr()` if a C
-+    /// function only needs a `const Object *`.
-+    fn as_object_ptr(&self) -> *const Object {
-+        self.as_ptr().cast()
-+    }
-+
-+    /// Return the receiver as a mutable raw pointer to Object.
-+    ///
-+    /// # Safety
-+    ///
-+    /// This cast is always safe, but because the result is mutable
-+    /// and the incoming reference is not, this should only be used
-+    /// for calls to C functions, and only if needed.
-+    unsafe fn as_object_mut_ptr(&self) -> *mut Object {
-+        self.as_object_ptr() as *mut _
-+    }
- }
- 
-+/// This trait provides safe casting operations for QOM objects to raw pointers,
-+/// to be used for example for FFI. The trait can be applied to any kind of
-+/// reference or smart pointers, and enforces correctness through the [`IsA`]
-+/// trait.
-+pub trait ObjectDeref: Deref
-+where
-+    Self::Target: ObjectType,
-+{
-+    /// Convert to a const Rust pointer, to be used for example for FFI.
-+    /// The target pointer type must be the type of `self` or a superclass
-+    fn as_ptr<U: ObjectType>(&self) -> *const U
-+    where
-+        Self::Target: IsA<U>,
-+    {
-+        let ptr: *const Self::Target = self.deref();
-+        ptr.cast::<U>()
-+    }
-+
-+    /// Convert to a mutable Rust pointer, to be used for example for FFI.
-+    /// The target pointer type must be the type of `self` or a superclass.
-+    /// Used to implement interior mutability for objects.
-+    ///
-+    /// # Safety
-+    ///
-+    /// This method is unsafe because it overrides const-ness of `&self`.
-+    /// Bindings to C APIs will use it a lot, but otherwise it should not
-+    /// be necessary.
-+    unsafe fn as_mut_ptr<U: ObjectType>(&self) -> *mut U
-+    where
-+        Self::Target: IsA<U>,
-+    {
-+        #[allow(clippy::as_ptr_cast_mut)]
-+        {
-+            self.as_ptr::<U>() as *mut _
-+        }
-+    }
-+}
-+
-+/// Trait that adds extra functionality for `&T` where `T` is a QOM
-+/// object type.  Allows conversion to/from C objects in generic code.
-+pub trait ObjectCast: ObjectDeref + Copy
-+where
-+    Self::Target: ObjectType,
-+{
-+    /// Safely convert from a derived type to one of its parent types.
-+    ///
-+    /// This is always safe; the [`IsA`] trait provides static verification
-+    /// trait that `Self` dereferences to `U` or a child of `U`.
-+    fn upcast<'a, U: ObjectType>(self) -> &'a U
-+    where
-+        Self::Target: IsA<U>,
-+        Self: 'a,
-+    {
-+        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait
-+        unsafe { self.unsafe_cast::<U>() }
-+    }
-+
-+    /// Attempt to convert to a derived type.
-+    ///
-+    /// Returns `None` if the object is not actually of type `U`. This is
-+    /// verified at runtime by checking the object's type information.
-+    fn downcast<'a, U: IsA<Self::Target>>(self) -> Option<&'a U>
-+    where
-+        Self: 'a,
-+    {
-+        self.dynamic_cast::<U>()
-+    }
-+
-+    /// Attempt to convert between any two types in the QOM hierarchy.
-+    ///
-+    /// Returns `None` if the object is not actually of type `U`. This is
-+    /// verified at runtime by checking the object's type information.
-+    fn dynamic_cast<'a, U: ObjectType>(self) -> Option<&'a U>
-+    where
-+        Self: 'a,
-+    {
-+        unsafe {
-+            // SAFETY: upcasting to Object is always valid, and the
-+            // return type is either NULL or the argument itself
-+            let result: *const U =
-+                object_dynamic_cast(self.as_object_mut_ptr(), U::TYPE_NAME.as_ptr()).cast();
-+
-+            result.as_ref()
-+        }
-+    }
-+
-+    /// Convert to any QOM type without verification.
-+    ///
-+    /// # Safety
-+    ///
-+    /// What safety? You need to know yourself that the cast is correct; only
-+    /// use when performance is paramount.  It is still better than a raw
-+    /// pointer `cast()`, which does not even check that you remain in the
-+    /// realm of QOM `ObjectType`s.
-+    ///
-+    /// `unsafe_cast::<Object>()` is always safe.
-+    unsafe fn unsafe_cast<'a, U: ObjectType>(self) -> &'a U
-+    where
-+        Self: 'a,
-+    {
-+        unsafe { &*(self.as_ptr::<Self::Target>().cast::<U>()) }
-+    }
-+}
-+
-+impl<T: ObjectType> ObjectDeref for &T {}
-+impl<T: ObjectType> ObjectCast for &T {}
-+
-+/// Trait for mutable type casting operations in the QOM hierarchy.
-+///
-+/// This trait provides the mutable counterparts to [`ObjectCast`]'s conversion
-+/// functions. Unlike `ObjectCast`, this trait returns `Result` for fallible
-+/// conversions to preserve the original smart pointer if the cast fails. This
-+/// is necessary because mutable references cannot be copied, so a failed cast
-+/// must return ownership of the original reference. For example:
-+///
-+/// ```ignore
-+/// let mut dev = get_device();
-+/// // If this fails, we need the original `dev` back to try something else
-+/// match dev.dynamic_cast_mut::<FooDevice>() {
-+///    Ok(foodev) => /* use foodev */,
-+///    Err(dev) => /* still have ownership of dev */
-+/// }
-+/// ```
-+pub trait ObjectCastMut: Sized + ObjectDeref + DerefMut
-+where
-+    Self::Target: ObjectType,
-+{
-+    /// Safely convert from a derived type to one of its parent types.
-+    ///
-+    /// This is always safe; the [`IsA`] trait provides static verification
-+    /// that `Self` dereferences to `U` or a child of `U`.
-+    fn upcast_mut<'a, U: ObjectType>(self) -> &'a mut U
-+    where
-+        Self::Target: IsA<U>,
-+        Self: 'a,
-+    {
-+        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait
-+        unsafe { self.unsafe_cast_mut::<U>() }
-+    }
-+
-+    /// Attempt to convert to a derived type.
-+    ///
-+    /// Returns `Ok(..)` if the object is of type `U`, or `Err(self)` if the
-+    /// object if the conversion failed. This is verified at runtime by
-+    /// checking the object's type information.
-+    fn downcast_mut<'a, U: IsA<Self::Target>>(self) -> Result<&'a mut U, Self>
-+    where
-+        Self: 'a,
-+    {
-+        self.dynamic_cast_mut::<U>()
-+    }
-+
-+    /// Attempt to convert between any two types in the QOM hierarchy.
-+    ///
-+    /// Returns `Ok(..)` if the object is of type `U`, or `Err(self)` if the
-+    /// object if the conversion failed. This is verified at runtime by
-+    /// checking the object's type information.
-+    fn dynamic_cast_mut<'a, U: ObjectType>(self) -> Result<&'a mut U, Self>
-+    where
-+        Self: 'a,
-+    {
-+        unsafe {
-+            // SAFETY: upcasting to Object is always valid, and the
-+            // return type is either NULL or the argument itself
-+            let result: *mut U =
-+                object_dynamic_cast(self.as_object_mut_ptr(), U::TYPE_NAME.as_ptr()).cast();
-+
-+            result.as_mut().ok_or(self)
-+        }
-+    }
-+
-+    /// Convert to any QOM type without verification.
-+    ///
-+    /// # Safety
-+    ///
-+    /// What safety? You need to know yourself that the cast is correct; only
-+    /// use when performance is paramount.  It is still better than a raw
-+    /// pointer `cast()`, which does not even check that you remain in the
-+    /// realm of QOM `ObjectType`s.
-+    ///
-+    /// `unsafe_cast::<Object>()` is always safe.
-+    unsafe fn unsafe_cast_mut<'a, U: ObjectType>(self) -> &'a mut U
-+    where
-+        Self: 'a,
-+    {
-+        unsafe { &mut *self.as_mut_ptr::<Self::Target>().cast::<U>() }
-+    }
-+}
-+
-+impl<T: ObjectType> ObjectDeref for &mut T {}
-+impl<T: ObjectType> ObjectCastMut for &mut T {}
-+
- /// Trait a type must implement to be registered with QEMU.
- pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
-     /// The parent of the type.  This should match the first field of
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index 9abc687a261..8193734bde4 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -7,7 +7,11 @@
- pub use bindings::{SysBusDevice, SysBusDeviceClass};
- 
- use crate::{
--    bindings, cell::bql_locked, irq::InterruptSource, prelude::*, qdev::DeviceClass,
-+    bindings,
-+    cell::bql_locked,
-+    irq::InterruptSource,
-+    prelude::*,
-+    qdev::{DeviceClass, DeviceState},
-     qom::ClassInitImpl,
+ static void migration_instance_finalize(Object *obj)
+diff --git a/migration/options.c b/migration/options.c
+index 24cc8471aa0..70ff56535a2 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -196,8 +196,8 @@ const Property migration_properties[] = {
+                         MIGRATION_CAPABILITY_SWITCHOVER_ACK),
+     DEFINE_PROP_MIG_CAP("x-dirty-limit", MIGRATION_CAPABILITY_DIRTY_LIMIT),
+     DEFINE_PROP_MIG_CAP("mapped-ram", MIGRATION_CAPABILITY_MAPPED_RAM),
+-    DEFINE_PROP_END_OF_LIST(),
  };
++const size_t migration_properties_count = ARRAY_SIZE(migration_properties);
  
-@@ -16,6 +20,7 @@ unsafe impl ObjectType for SysBusDevice {
-     const TYPE_NAME: &'static CStr =
-         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_SYS_BUS_DEVICE) };
- }
-+qom_isa!(SysBusDevice: DeviceState, Object);
- 
- // TODO: add SysBusDeviceImpl
- impl<T> ClassInitImpl<SysBusDeviceClass> for T
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 953cb15975b..5d9f13b15d4 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -2,7 +2,13 @@
- // Author(s): Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
--use std::{cell::Cell, ffi::CStr, sync::Mutex};
-+use std::{
-+    cell::Cell,
-+    ffi::CStr,
-+    os::raw::c_void,
-+    ptr::{addr_of, addr_of_mut},
-+    sync::Mutex,
-+};
- 
- use qemu_api::{
-     bindings::*,
-@@ -29,6 +35,8 @@ pub struct DummyState {
-     migrate_clock: bool,
- }
- 
-+qom_isa!(DummyState: Object, DeviceState);
-+
- declare_properties! {
-     DUMMY_PROPERTIES,
-         define_property!(
-@@ -85,3 +93,63 @@ fn test_object_new() {
-         object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
-     }
- }
-+
-+// a note on all "cast" tests: usually, especially for downcasts the desired
-+// class would be placed on the right, for example:
-+//
-+//    let sbd_ref = p.dynamic_cast::<SysBusDevice>();
-+//
-+// Here I am doing the opposite to check that the resulting type is correct.
-+
-+#[test]
-+#[allow(clippy::shadow_unrelated)]
-+/// Test casts on shared references.
-+fn test_cast() {
-+    init_qom();
-+    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
-+
-+    let p_ref: &DummyState = unsafe { &*p };
-+    let obj_ref: &Object = p_ref.upcast();
-+    assert_eq!(addr_of!(*obj_ref), p.cast());
-+
-+    let sbd_ref: Option<&SysBusDevice> = obj_ref.dynamic_cast();
-+    assert!(sbd_ref.is_none());
-+
-+    let dev_ref: Option<&DeviceState> = obj_ref.downcast();
-+    assert_eq!(addr_of!(*dev_ref.unwrap()), p.cast());
-+
-+    // SAFETY: the cast is wrong, but the value is only used for comparison
-+    unsafe {
-+        let sbd_ref: &SysBusDevice = obj_ref.unsafe_cast();
-+        assert_eq!(addr_of!(*sbd_ref), p.cast());
-+
-+        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
-+    }
-+}
-+
-+#[test]
-+#[allow(clippy::shadow_unrelated)]
-+/// Test casts on mutable references.
-+fn test_cast_mut() {
-+    init_qom();
-+    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
-+
-+    let p_ref: &mut DummyState = unsafe { &mut *p };
-+    let obj_ref: &mut Object = p_ref.upcast_mut();
-+    assert_eq!(addr_of_mut!(*obj_ref), p.cast());
-+
-+    let sbd_ref: Result<&mut SysBusDevice, &mut Object> = obj_ref.dynamic_cast_mut();
-+    let obj_ref = sbd_ref.unwrap_err();
-+
-+    let dev_ref: Result<&mut DeviceState, &mut Object> = obj_ref.downcast_mut();
-+    let dev_ref = dev_ref.unwrap();
-+    assert_eq!(addr_of_mut!(*dev_ref), p.cast());
-+
-+    // SAFETY: the cast is wrong, but the value is only used for comparison
-+    unsafe {
-+        let sbd_ref: &mut SysBusDevice = obj_ref.unsafe_cast_mut();
-+        assert_eq!(addr_of_mut!(*sbd_ref), p.cast());
-+
-+        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
-+    }
-+}
+ bool migrate_auto_converge(void)
+ {
 -- 
 2.47.1
 
