@@ -4,67 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 438E5E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C878E7718B
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:33:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGn-0003ZK-03; Thu, 19 Dec 2024 11:21:01 -0500
+	id 1tOJFV-0001nd-SH; Thu, 19 Dec 2024 11:19:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOHRc-0001dx-Ux
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:24:04 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOFOI-00065m-TW
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOHRb-0007NG-6k
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:24:04 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOFOH-000887-BA
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:30 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734618241;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1734610348;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PNHwBXHWEGQ6K3D4TEZBS4BdyLRsyYlRDVLQl3aWPsM=;
- b=QlWAylu1Xb4Dy5MME3sfL2JFCmH2OAngfysATDVOA5ruCjndiUSv1KhErSCsWf4cB4qMiy
- ONkLCRMznGgTLbf8LK4tGGxqazwuCVVNdMNbvs9/WMLBdoYFBsFggT4z2/4U/KH6Ke7/U8
- Nzmk2PRWO1cpaimcZP+tWUVAiXvpPBk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-650-URR_6VBbO-yNOXaf_475bg-1; Thu,
- 19 Dec 2024 09:24:00 -0500
-X-MC-Unique: URR_6VBbO-yNOXaf_475bg-1
-X-Mimecast-MFC-AGG-ID: URR_6VBbO-yNOXaf_475bg
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 49D22195608C
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 14:23:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8EF1F1956053; Thu, 19 Dec 2024 14:23:57 +0000 (UTC)
-Date: Thu, 19 Dec 2024 14:23:53 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] hw/virtio: reset virtio balloon stats on machine reset
-Message-ID: <Z2QsebYwZ51ohas7@redhat.com>
-References: <20241218172912.4170899-1-berrange@redhat.com>
- <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
+ bh=IqbmpoLQyfb2UAoXyBV1EOkxQeun0T/cCIXmsB4p+Sw=;
+ b=LeL45Zt3hBuL0W6Y4EXPzwFFEFpTgBkS9knwJtZNzmB5hS3fAFxYl10CB4KDqT/WPRIhm1
+ LIU1vu26T+lhlkK4weMELGG+SiPbJzwV/b+t823MPj4qBqY0zgqkbhEDSz6E4NZ2epm+Kp
+ LpkuWtEaWjOpHwaWht0OghY584HDnGo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-677-cjgOhLUvMWC5uv65QPs9Yw-1; Thu, 19 Dec 2024 07:12:27 -0500
+X-MC-Unique: cjgOhLUvMWC5uv65QPs9Yw-1
+X-Mimecast-MFC-AGG-ID: cjgOhLUvMWC5uv65QPs9Yw
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385e3cbf308so332600f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:12:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734610345; x=1735215145;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IqbmpoLQyfb2UAoXyBV1EOkxQeun0T/cCIXmsB4p+Sw=;
+ b=iLmb4CCLoc6DfhJ94oQFxo/K/RAk/JNP44Bo3IO59tusVZdgvU/UkOYP2W4uSZm6d9
+ SrBxFCwqXbsnslt71UipeTCRkMA6Vb71TL6PjCSsY78DwNPWtGqcFn0rjVaYDKA1ijOG
+ LGQG/KvPSIpNNkkiFKKmnVqdhJYFdBMBSZnM6cFlSOGHiMla1ZN/Pfbp34pXoPdqXj43
+ wQApFJA8102BwFf2mAIRC1hcAeDHiE5dN9HD0gOoN/wDnOQe3HQ3PT7KwFU6YCSZqWF0
+ RHee0htY5gyGdOtEhP2jLZTapjb0aaIeI34GL33PKV/kdEaTSPQ45EAdwMTOcUHxB+SI
+ A2Zw==
+X-Gm-Message-State: AOJu0YwV92FYg/0Zzk7VEPqEt+wpOD+RdaePK0/ylOmgG2V0LvqMj6mJ
+ Vf4D9Y6bMU43vy6eV+AodT/5l4pgU87j/E254Z2RfbdgPyOlvY3rUVyU4gfyh3TelGDF39HXym1
+ 2g3sfR63+Tj5v8Qz/SsUjzRZSErKm73rl0i5kdYz1sFu7jzvDFRTDUSBvCTQreK6ccHzBFEHsk+
+ F4uEhhHCKlmQYIt/kOZ8giwtQt6wAdzUWnXsjT
+X-Gm-Gg: ASbGncvKMatVfzpntLqA1vSbJM8MxKunYF2ar2UJElh6juu3j/ucZ5xhtVqNuCs8sOj
+ 96ZcsH3GKXabCYYtJfehztqf6nWuu2Sm0fuN6+pw2sTzdvNPfKPa4OR0Sj+dmqYaXDuSdx1yOji
+ af69njh+/Oy8h9tLXTU8TMEozILT8/9sIfqcFgLLGzbDBIVdphNyqArCCAs1BwxVF+YqQDa2uWL
+ 8DpN4H3MPmMXisjVIq6wN1Euq0fKthVkG1SL2Vk9x1+AncOhet925eTDiga
+X-Received: by 2002:a05:6000:4b0e:b0:386:3db6:2775 with SMTP id
+ ffacd0b85a97d-388e4d8a6d1mr6487621f8f.25.1734610345114; 
+ Thu, 19 Dec 2024 04:12:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFmhl4axdIZriMSkZ7wACfJo+CMThnd4qeBvW38nmBDRihMD+to10bkB0vMJsDp0g+d+vzJsg==
+X-Received: by 2002:a05:6000:4b0e:b0:386:3db6:2775 with SMTP id
+ ffacd0b85a97d-388e4d8a6d1mr6487584f8f.25.1734610344669; 
+ Thu, 19 Dec 2024 04:12:24 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-43656b015absm50490235e9.13.2024.12.19.04.12.21
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Dec 2024 04:12:21 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: zhao1.liu@intel.com
+Subject: [PATCH 03/10] rust: macros: check that the first field of a
+ #[derive(Object)] struct is a ParentField
+Date: Thu, 19 Dec 2024 13:12:09 +0100
+Message-ID: <20241219121216.416905-4-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241219121216.416905-1-pbonzini@redhat.com>
+References: <20241219121216.416905-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -86,123 +105,109 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 02:51:21PM +0100, David Hildenbrand wrote:
-> On 18.12.24 18:29, Daniel P. Berrangé wrote:
-> > When a machine is first booted, all virtio balloon stats are initialized
-> > to their default value -1 (18446744073709551615 when represented as
-> > unsigned).
-> > 
-> > They remain that way while the firmware is loading, and early phase of
-> > guest OS boot, until the virtio-balloon driver is activated. Thereafter
-> > the reported stats reflect the guest OS activity.
-> > 
-> > When a machine reset is performed, however, the virtio-balloon stats are
-> > left unchanged by QEMU, despite the guest OS no longer updating them,
-> > nor indeed even still existing.
-> > 
-> > IOW, the mgmt app keeps getting stale stats until the guest OS starts
-> > once more and loads the virtio-balloon driver (if ever). At that point
-> > the app will see a discontinuity in the reported values as they sudden
-> > jump from the stale value to the new value. This jump is indigituishable
-> > from a valid data update.
-> > 
-> > While there is an "last-updated" field to report on the freshness of
-> > the stats, that does not unambiguously tell the mgmt app whether the
-> > stats are still conceptually relevant to the current running workload.
-> > 
-> > It is more conceptually useful to reset the stats to their default
-> > values on machine reset, given that the previous guest workload the
-> > stats reflect no longer exists. The mgmt app can now clearly identify
-> > that there are is no stats information available from the current
-> > executing workload.
-> > 
-> > The 'last-updated' time is also reset back to 0.
-> > 
-> > IOW, on every machine reset, the virtio stats are in the same clean
-> > state they were when the macine first powered on.
-> > 
-> > A functional test is added to validate this behaviour with a real
-> > world guest OS.
-> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> > 
-> > One side-thought I have, is whether it makes sense to add a
-> > 'reset-count' field in the virtio stats, alongside the
-> > 'last-updated' field. While apps can infer a reset from seeing
-> > the stats all go back to their defaults, an explicit flag is
-> > simpler...
-> > 
-> >   MAINTAINERS                             |   1 +
-> >   hw/virtio/virtio-balloon.c              |  30 ++++-
-> >   include/hw/virtio/virtio-balloon.h      |   4 +
-> >   tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
-> >   4 files changed, 195 insertions(+), 1 deletion(-)
-> >   create mode 100755 tests/functional/test_virtio_balloon.py
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 822f34344b..1380d53d03 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2234,6 +2234,7 @@ F: include/hw/virtio/virtio-balloon.h
-> >   F: system/balloon.c
-> >   F: include/sysemu/balloon.h
-> >   F: tests/qtest/virtio-balloon-test.c
-> > +F: tests/functional/test_virtio_balloon.py
-> >   virtio-9p
-> >   M: Greg Kurz <groug@kaod.org>
-> > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-> > index ab2ee30475..fe0854e198 100644
-> > --- a/hw/virtio/virtio-balloon.c
-> > +++ b/hw/virtio/virtio-balloon.c
-> > @@ -31,7 +31,7 @@
-> >   #include "trace.h"
-> >   #include "qemu/error-report.h"
-> >   #include "migration/misc.h"
-> > -
-> > +#include "sysemu/reset.h"
-> >   #include "hw/virtio/virtio-bus.h"
-> >   #include "hw/virtio/virtio-access.h"
-> > @@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-> >       }
-> >       reset_stats(s);
-> > +    s->stats_last_update = 0;
-> > +    qemu_register_resettable(OBJECT(dev));
-> >   }
-> >   static void virtio_balloon_device_unrealize(DeviceState *dev)
-> > @@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
-> >       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> >       VirtIOBalloon *s = VIRTIO_BALLOON(dev);
-> > +    qemu_unregister_resettable(OBJECT(dev));
-> >       if (s->free_page_bh) {
-> >           qemu_bh_delete(s->free_page_bh);
-> >           object_unref(OBJECT(s->iothread));
-> > @@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
-> >       }
-> >   }
-> 
-> Using qemu_register_resettable() can have unfortunate side effects that this
-> code is triggered when the device is reset, not necessarily when the
-> complete machine.
-> 
-> For virtio-mem at least that's an issue, and here is how I'll fix it:
-> 
-> https://lore.kernel.org/qemu-devel/20241218105303.1966303-2-david@redhat.com/
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/qemu-api-macros/src/lib.rs | 61 +++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 25 deletions(-)
 
-IIUC, the scenario wrt kDump on s390x will be OK in this scenario. If
-you're resetting the balloon device across a kDump, I think it is likely
-desirable for the virtio balloon stats to be reset. The OS which populated
-those stats no longer exists, and has been replaced by the kExec kernel
-performing the kDump IIUC.
-
-With regards,
-Daniel
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+index 74a8bc7503e..778b698be45 100644
+--- a/rust/qemu-api-macros/src/lib.rs
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -19,6 +19,27 @@ fn from(err: CompileError) -> Self {
+     }
+ }
+ 
++fn get_fields<'a>(
++    input: &'a DeriveInput,
++    msg: &str,
++) -> Result<&'a Punctuated<Field, Comma>, CompileError> {
++    if let Data::Struct(s) = &input.data {
++        if let Fields::Named(fs) = &s.fields {
++            Ok(&fs.named)
++        } else {
++            Err(CompileError(
++                format!("Named fields required for {}", msg),
++                input.ident.span(),
++            ))
++        }
++    } else {
++        Err(CompileError(
++            format!("Struct required for {}", msg),
++            input.ident.span(),
++        ))
++    }
++}
++
+ fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), CompileError> {
+     let expected = parse_quote! { #[repr(C)] };
+ 
+@@ -32,38 +53,28 @@ fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), CompileError> {
+     }
+ }
+ 
+-#[proc_macro_derive(Object)]
+-pub fn derive_object(input: TokenStream) -> TokenStream {
+-    let input = parse_macro_input!(input as DeriveInput);
+-    let name = input.ident;
++fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, CompileError> {
++    let name = &input.ident;
++    let parent = &get_fields(&input, "#[derive(Object)]")?[0].ident;
++
++    Ok(quote! {
++        ::qemu_api::assert_field_type!(#name, #parent,
++            ::qemu_api::qom::ParentField<<#name as ::qemu_api::qom::ObjectImpl>::ParentType>);
+ 
+-    let expanded = quote! {
+         ::qemu_api::module_init! {
+             MODULE_INIT_QOM => unsafe {
+                 ::qemu_api::bindings::type_register_static(&<#name as ::qemu_api::qom::ObjectImpl>::TYPE_INFO);
+             }
+         }
+-    };
+-
+-    TokenStream::from(expanded)
++    })
+ }
+ 
+-fn get_fields(input: &DeriveInput) -> Result<&Punctuated<Field, Comma>, CompileError> {
+-    if let Data::Struct(s) = &input.data {
+-        if let Fields::Named(fs) = &s.fields {
+-            Ok(&fs.named)
+-        } else {
+-            Err(CompileError(
+-                "Cannot generate offsets for unnamed fields.".to_string(),
+-                input.ident.span(),
+-            ))
+-        }
+-    } else {
+-        Err(CompileError(
+-            "Cannot generate offsets for union or enum.".to_string(),
+-            input.ident.span(),
+-        ))
+-    }
++#[proc_macro_derive(Object)]
++pub fn derive_object(input: TokenStream) -> TokenStream {
++    let input = parse_macro_input!(input as DeriveInput);
++    let expanded = derive_object_or_error(input).unwrap_or_else(Into::into);
++
++    TokenStream::from(expanded)
+ }
+ 
+ #[rustfmt::skip::macros(quote)]
+@@ -71,7 +82,7 @@ fn derive_offsets_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStrea
+     is_c_repr(&input, "#[derive(offsets)]")?;
+ 
+     let name = &input.ident;
+-    let fields = get_fields(&input)?;
++    let fields = get_fields(&input, "#[derive(offsets)]")?;
+     let field_names: Vec<&Ident> = fields.iter().map(|f| f.ident.as_ref().unwrap()).collect();
+     let field_types: Vec<&Type> = fields.iter().map(|f| &f.ty).collect();
+     let field_vis: Vec<&Visibility> = fields.iter().map(|f| &f.vis).collect();
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.47.1
 
 
