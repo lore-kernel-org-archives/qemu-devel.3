@@ -4,89 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55A5AE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:54:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA2CDE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:56:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tODED-0007p0-8l; Thu, 19 Dec 2024 04:53:57 -0500
+	id 1tODGM-00006L-G8; Thu, 19 Dec 2024 04:56:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tODEB-0007op-SN
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:53:55 -0500
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tODE9-00063y-Rm
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:53:55 -0500
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-5d0ac27b412so707265a12.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 01:53:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734602031; x=1735206831; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XFfTaV5Kh0kifjTmwNZn7DxAiv8scTOj/bxUG58PHRU=;
- b=d+ER1JnwOfb+7NrUIllgYSnxMtqLtkidy2JqYEyBkAGZ26IhobuUVUST3+lMzJ0vks
- wd80XKS+WNObKXiHaLDCOxFJrUw+pEn4z9S3WAGbvAw042ed7+6+JsziEdWCUwhXybyx
- WXyTZBpCr13UQzlefUJB9kVhfwWGgtF70A4guHNQ5mW5ZXSxpNDLlwn+raIl5dS3OfZ0
- 7PzOQZhJQfG40m/ZsF13pHQj8P3OkRW4qq3NU43sHjmRzfwRJ+53A+cVwDg1MRS0rT/5
- wsV0uVj8MF8AzVXpSx1l1So9odapauEXR/XQj0AzQ4NQPyCQNUmMhqD+rvR2ZQ8TE4/o
- TOYw==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tODGK-000064-4F
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:56:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tODGI-0006Mc-5B
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:56:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734602164;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/mpMMVJZMXsFFgWtKqG1jVEAHUrlSUxk9h1r1mO9+0g=;
+ b=guZSbHvKVrAlefcjnsC03C3OUGkgfJv74qWGve9Cqiantb3aaDynrfMv2QPEAnqAMw6tMl
+ vLi2DawZABxGM7uTlihpcFwrIDhhyCKm0sGbct/pkjA+6GytqX7pdmQvuAnPoFQRAcglSk
+ Dn20w+WPv2l3e0lNuSw9VvnOsaDqTog=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-499-SgEc7G6COQ6yHk0Y4QW3lQ-1; Thu, 19 Dec 2024 04:56:01 -0500
+X-MC-Unique: SgEc7G6COQ6yHk0Y4QW3lQ-1
+X-Mimecast-MFC-AGG-ID: SgEc7G6COQ6yHk0Y4QW3lQ
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-7fd4e26676dso611561a12.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 01:56:01 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734602031; x=1735206831;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734602161; x=1735206961;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XFfTaV5Kh0kifjTmwNZn7DxAiv8scTOj/bxUG58PHRU=;
- b=civ2A6QptNpy/qSfIrzVdAqsnrplaa4QTN0pIUTYBg8oNnhhN/bPebBB2wSKCcOQ5V
- xOZlv+Kkzit2G4AiuBDbdcNtMndyB0vPDRGythyZAh7uu9C9XwE/Sj4vTaRnCrTvZzz9
- wK17qymqrmVQnIPZn8/2/cmpgW6g0ttjeI0P+0PEixb9FzrTbmQ1iNdk/zweus3JkVNk
- 02jv8aPsGEvsmJLkHUNHXEQrKuxNCVM0TO9JXHekJb3V/gb74+La47XRwnYqIKs+OtMt
- NGQ/XPP1rC52//U4zfjuNkp8276TfTnefMdkuRtrK8KUfsMq5SVUi4/2JZ7gfxqq2bbA
- Ks2w==
-X-Gm-Message-State: AOJu0Yw8FHJB7vRsM10P1FXCA2GpTnHoCaa0HbTN5hDH5jQHXB+X90oJ
- sIgqhFCpCTr1Oqr1NkDwC0dESvdLnwB3IKllfhkQxLpShYJZM1xUKy2D2g==
-X-Gm-Gg: ASbGncupLaqFyZyiZ44NFqYvzIft1xsf8f/jy4/axEVIAflsh8Kr3c4Mr3JSHpadF52
- BobkhNEvkKbidRt17MhlLsV+FHLT1H2HNuf/pSOkrFY4MjY/ivUdGSpFcCEA15LYLWpUrNklgl2
- khMF/CDguQyUhKzrWJ5vqTO+C6KNoiI3LPOwp4TtiasooFfWD81m+YOLgJeFMmgimyFK3+8Rb9E
- 3OEe6To8CeVFy6AyQY5I1bgBrgJu0BwZUyhClvJzQZBN7RVBTmsBPxOQONlSHLyrVFW3HzxvC+u
- hE+PWcXSmELaV+MKag5gqkP8zBhlJ1k=
-X-Google-Smtp-Source: AGHT+IGeF4foTLi6Ke1TEd3LJ32Njp//LITptEp6K3+Uk95k0jSg8G7mMNBGefzo1IQYJyd3eHYTaQ==
-X-Received: by 2002:a05:6402:2790:b0:5d3:ba42:ea03 with SMTP id
- 4fb4d7f45d1cf-5d7ee3c857emr5916701a12.8.1734602030378; 
- Thu, 19 Dec 2024 01:53:50 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-077-191-068-081.77.191.pool.telefonica.de.
- [77.191.68.81]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-5d80679f128sm472720a12.44.2024.12.19.01.53.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 01:53:49 -0800 (PST)
-Date: Thu, 19 Dec 2024 09:53:48 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-CC: =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PULL 12/40] rust: build integration test for the qemu_api crate
-In-Reply-To: <20241104172721.180255-13-pbonzini@redhat.com>
-References: <20241104172721.180255-1-pbonzini@redhat.com>
- <20241104172721.180255-13-pbonzini@redhat.com>
-Message-ID: <A90FCF2F-C8D9-49B7-A881-B0F849AC11A0@gmail.com>
-MIME-Version: 1.0
+ bh=/mpMMVJZMXsFFgWtKqG1jVEAHUrlSUxk9h1r1mO9+0g=;
+ b=b2q2BSBg0FdCWVyMTdyrHdSMBh19MCEoyoAsuPad2gCrySey+qlQkgI3U1vHZir6uH
+ ikvFAYcnUs7X2+6Yx0X+Y9+IjYHsJXNve9A8QoOz2jCYzm41+fMj3UqgQjWn0AEmL24H
+ KPquG1+cwty1Pm2SVqUj3DQZyfNLMIa9nhtesQUzyh1ipY4bpGPfIKp0CmghIsgTKPbe
+ DBzIv895wEosWZR0wiXV1tQhN5Mc/c/j8zcIWWuPDQgB5s2tfLRAWiy1jAnukZ2tXMtt
+ 4jWluyz8g62q9rQSeP2AbRgKPuVIruiDVdu7scRFLmC09WhnFGuZLs+nqhhFfIFpvTmn
+ pirQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVTM5E3VoOjNU4dgS9zjyTGL0OkCW23hEBQqBAjZS+bDPLMry9wGf7GSVfuG1mnFFySwwsE+OLx2soN@nongnu.org
+X-Gm-Message-State: AOJu0YzgBxdHR5vTIaiUU5kzm49HeYgoKKzoIx6NOlnvO43goUSQ/I0r
+ Pb/7fIjvmfcUH3bLFVhNr5XTqm4TKzCMimsOMMlvFeRiAZi2C0iQjqnKBN7YTiFxJSBkbZU7nxf
+ dhrI6iaU47eavXGC8HGVMUouISQDbJthc0XIzubZcX2Qx9ut09lFf
+X-Gm-Gg: ASbGncuFyiReqMl/wydbcimYPMEs/D6a+z6rt3foQwzOytkAtEa5RXsiq0SX7G/OIJt
+ uraKEkEXm8USoNLd8Ng8EhERwnWSLdpZvk0YKP4fHrTeT9/87HlSvNyGPEfqHUlScVF5/gDfaZJ
+ 1wRcW+zdABZWdDciDlQWDIbVV4+7M3wCrhzk24DGoPS0or8g/gG6vR8uHmfoPBmWdxdjdPGHEAw
+ uQYnxt3OzqEQABLI1MaovoF0PsqhSE+HcBk3z9dDPtCF6Sbawr8kLusDEaf2M+j2fBdMQbS8w==
+X-Received: by 2002:a05:6a20:d80b:b0:1e1:f281:8d36 with SMTP id
+ adf61e73a8af0-1e5b47fc194mr11264858637.10.1734602160709; 
+ Thu, 19 Dec 2024 01:56:00 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF/joEDmZ9yh4JWiYG9j0p3gGKi3RCg0ITK4ougL54TLQJrVsPVoUg5oPkF6ox9kvE6M6B83A==
+X-Received: by 2002:a05:6a20:d80b:b0:1e1:f281:8d36 with SMTP id
+ adf61e73a8af0-1e5b47fc194mr11264832637.10.1734602160362; 
+ Thu, 19 Dec 2024 01:56:00 -0800 (PST)
+Received: from smtpclient.apple ([116.73.135.226])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-842e32f5f00sm811221a12.72.2024.12.19.01.55.57
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Thu, 19 Dec 2024 01:55:59 -0800 (PST)
 Content-Type: text/plain;
- charset=utf-8
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.1\))
+Subject: Re: [PATCH v3] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20241219093749.15794-1-anisinha@redhat.com>
+Date: Thu, 19 Dec 2024 15:25:44 +0530
+Cc: Gerd Hoffmann <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <59FED971-E9B2-41DF-B898-8B683709E9FE@redhat.com>
+References: <20241219093749.15794-1-anisinha@redhat.com>
+To: Ani Sinha <anisinha@redhat.com>, Alexander Graf <graf@amazon.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.1)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,257 +115,133 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-Am 4=2E November 2024 17:26:51 UTC schrieb Paolo Bonzini <pbonzini@redhat=
-=2Ecom>:
->Adjust the integration test to compile with a subset of QEMU object
->files, and make it actually create an object of the class it defines=2E
->
->Follow the Rust filesystem conventions, where tests go in tests/ if
->they use the library in the same way any other code would=2E
->
->Reviewed-by: Junjie Mao <junjie=2Emao@hotmail=2Ecom>
->Reviewed-by: Kevin Wolf <kwolf@redhat=2Ecom>
->Signed-off-by: Paolo Bonzini <pbonzini@redhat=2Ecom>
->---
-> meson=2Ebuild                  | 10 ++++-
-> rust/qemu-api/meson=2Ebuild    | 26 ++++++++++--
-> rust/qemu-api/src/lib=2Ers     |  3 --
-> rust/qemu-api/src/tests=2Ers   | 49 ----------------------
-> rust/qemu-api/tests/tests=2Ers | 78 ++++++++++++++++++++++++++++++++++++
-> 5 files changed, 110 insertions(+), 56 deletions(-)
-> delete mode 100644 rust/qemu-api/src/tests=2Ers
-> create mode 100644 rust/qemu-api/tests/tests=2Ers
+> On 19 Dec 2024, at 3:07=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
+wrote:
+>=20
+> VM firmware update is a mechanism where the virtual machines can use =
+their
+> preferred and trusted firmware image in their execution environment =
+without
+> having to depend on a untrusted party to provide the firmware bundle. =
+This is
+> particularly useful for confidential virtual machines that are =
+deployed in the
+> cloud where the tenant and the cloud provider are two different =
+entities. In
+> this scenario, virtual machines can bring their own trusted firmware =
+image
+> bundled as a part of their filesystem (using UKIs for example[1]) and =
+then use
+> this hypervisor interface to update to their trusted firmware image. =
+This also
+> allows the guests to have a consistent measurements on the firmware =
+image.
+>=20
+> This change introduces basic support for the fw-cfg based hypervisor =
+interface
+> and the corresponding device. The change also includes the
+> specification document for this interface. The interface is made =
+generic
+> enough so that guests are free to use their own ABI to pass required
+> information between initial and trusted execution contexts (where they =
+are
+> running their own trusted firmware image) without the hypervisor =
+getting
+> involved in between. In subsequent patches, we will introduce other =
+minimal
+> changes on the hypervisor that are required to make the mechanism =
+work.
+>=20
+> A functional test has been added to test basic device creation and =
+failure mode
+> in cases where the user tries to create more than one device.
+>=20
+> [1] See systemd pull requests =
+https://github.com/systemd/systemd/pull/35091
+> and https://github.com/systemd/systemd/pull/35281 for some discussions =
+on
+> how we can bundle firmware image within an UKI.
+>=20
+> CC: Alex Graf <graf@amazon.com>
+> CC: Paolo Bonzini <pbonzini@redhat.com>
+> CC: Gerd Hoffman <kraxel@redhat.com>
+> CC: Igor Mammedov <imammedo@redhat.com>
+> CC: Vitaly Kuznetsov <vkuznets@redhat.com>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+> MAINTAINERS                         |   9 ++
+> docs/specs/index.rst                |   1 +
+> docs/specs/vmfwupdate.rst           | 119 +++++++++++++++++++++
+> hw/misc/meson
 
-When `--enable-modules` is passed to configure, this patch results in nume=
-rous undefined symbols=2E
+<snip>
 
-Best regards,
-Bernhard
+> #endif
+> diff --git a/tests/functional/meson.build =
+b/tests/functional/meson.build
+> index 758145d1e5..ac495fd026 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -201,6 +201,7 @@ tests_x86_64_system_quick =3D [
+>   'pc_cpu_hotplug_props',
+>   'virtio_version',
+>   'x86_cpu_model_versions',
+> +  'vmfwupdate',
+> ]
+>=20
+> tests_x86_64_system_thorough =3D [
+> diff --git a/tests/functional/test_vmfwupdate.py =
+b/tests/functional/test_vmfwupdate.py
+> new file mode 100644
+> index 0000000000..4ca203d53f
+> --- /dev/null
+> +++ b/tests/functional/test_vmfwupdate.py
+> @@ -0,0 +1,36 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Check for vmfwupdate device.
+> +#
+> +# Copyright (c) 2024 Red Hat, Inc.
+> +#
+> +# Author:
+> +#  Ani Sinha <anisinha@redhat.com>
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import QemuSystemTest
+> +
+> +class VmFwUpdateDeviceCheck(QemuSystemTest):
+> +    # after launch, in order to generate the logs from QEMU we need =
+to
+> +    # wait for some time. Launching and then immediately shutting =
+down
+> +    # the VM generates empty logs. A delay of 1 second is added for
+> +    # this reason.
+> +    DELAY_Q35_BOOT_SEQUENCE =3D 1
 
->
->diff --git a/meson=2Ebuild b/meson=2Ebuild
->index 34328f7394c=2E=2Ed360120b233 100644
->--- a/meson=2Ebuild
->+++ b/meson=2Ebuild
->@@ -3340,7 +3340,15 @@ if have_rust and have_system
+Sorry, sent too soon. This is not needed yet. Will remove in v4.
+
+> +
+> +    def test_multiple_device_fail(self):
+> +        """
+> +        Only one vmfwdevice can be instantiated. Ensure failure if
+> +        user tries to create more than one device.
+> +        """
+> +        self.vm.add_args('-device', 'vmfwupdate,id=3Dfwupd1',
+> +                         '-device', 'vmfwupdate,id=3Dfwupd2')
+> +        self.vm.set_qmp_monitor(enabled=3DFalse)
+> +        self.vm.launch()
+> +        self.vm.wait()
+> +        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code =
+should be 1")
+> +        self.assertRegex(self.vm.get_log(),
+> +                         r'at most one vmfwupdate device is =
+permitted')
+> +
+> +if __name__ =3D=3D '__main__':
+> +    QemuSystemTest.main()
+> --=20
+> 2.42.0
 >=20
->   # Prohibit code that is forbidden in Rust 2024
->   rustc_args +=3D ['-D', 'unsafe_op_in_unsafe_fn']
->-  add_project_arguments(rustc_args, native: false, language: 'rust')
->+
->+  # Apart from procedural macros, our Rust executables will often link
->+  # with C code, so include all the libraries that C code needs=2E  This
->+  # is safe; https://github=2Ecom/rust-lang/rust/pull/54675 says that
->+  # passing -nodefaultlibs to the linker "was more ideological to
->+  # start with than anything"=2E
->+  add_project_arguments(rustc_args + ['-C', 'default-linker-libraries'],
->+      native: false, language: 'rust')
->+
->   add_project_arguments(rustc_args, native: true, language: 'rust')
-> endif
->=20
->diff --git a/rust/qemu-api/meson=2Ebuild b/rust/qemu-api/meson=2Ebuild
->index 42ea815fa5a=2E=2E1fc36078027 100644
->--- a/rust/qemu-api/meson=2Ebuild
->+++ b/rust/qemu-api/meson=2Ebuild
->@@ -14,11 +14,31 @@ _qemu_api_rs =3D static_library(
->     '--cfg', 'MESON',
->     # '--cfg', 'feature=3D"allocator"',
->   ],
->-  dependencies: [
->-    qemu_api_macros,
->-  ],
-> )
->=20
-> qemu_api =3D declare_dependency(
->   link_with: _qemu_api_rs,
->+  dependencies: qemu_api_macros,
-> )
->+
->+# Rust executables do not support objects, so add an intermediate step=
-=2E
->+rust_qemu_api_objs =3D static_library(
->+    'rust_qemu_api_objs',
->+    objects: [libqom=2Eextract_all_objects(recursive: false),
->+              libhwcore=2Eextract_all_objects(recursive: false)])
->+
->+test('rust-qemu-api-integration',
->+    executable(
->+        'rust-qemu-api-integration',
->+        'tests/tests=2Ers',
->+        override_options: ['rust_std=3D2021', 'build=2Erust_std=3D2021']=
-,
->+        rust_args: ['--test'],
->+        install: false,
->+        dependencies: [qemu_api, qemu_api_macros],
->+        link_whole: [rust_qemu_api_objs, libqemuutil]),
->+    args: [
->+        '--test',
->+        '--format', 'pretty',
->+    ],
->+    protocol: 'rust',
->+    suite: ['unit', 'rust'])
->diff --git a/rust/qemu-api/src/lib=2Ers b/rust/qemu-api/src/lib=2Ers
->index e72fb4b4bb1=2E=2E6bc68076aae 100644
->--- a/rust/qemu-api/src/lib=2Ers
->+++ b/rust/qemu-api/src/lib=2Ers
->@@ -30,9 +30,6 @@ unsafe impl Sync for bindings::VMStateDescription {}
-> pub mod definitions;
-> pub mod device_class;
->=20
->-#[cfg(test)]
->-mod tests;
->-
-> use std::alloc::{GlobalAlloc, Layout};
->=20
-> #[cfg(HAVE_GLIB_WITH_ALIGNED_ALLOC)]
->diff --git a/rust/qemu-api/src/tests=2Ers b/rust/qemu-api/src/tests=2Ers
->deleted file mode 100644
->index df54edbd4e2=2E=2E00000000000
->--- a/rust/qemu-api/src/tests=2Ers
->+++ /dev/null
->@@ -1,49 +0,0 @@
->-// Copyright 2024, Linaro Limited
->-// Author(s): Manos Pitsidianakis <manos=2Epitsidianakis@linaro=2Eorg>
->-// SPDX-License-Identifier: GPL-2=2E0-or-later
->-
->-use crate::{
->-    bindings::*, declare_properties, define_property, device_class_init,=
- vm_state_description,
->-};
->-
->-#[test]
->-fn test_device_decl_macros() {
->-    // Test that macros can compile=2E
->-    vm_state_description! {
->-        VMSTATE,
->-        name: c"name",
->-        unmigratable: true,
->-    }
->-
->-    #[repr(C)]
->-    pub struct DummyState {
->-        pub char_backend: CharBackend,
->-        pub migrate_clock: bool,
->-    }
->-
->-    declare_properties! {
->-        DUMMY_PROPERTIES,
->-            define_property!(
->-                c"chardev",
->-                DummyState,
->-                char_backend,
->-                unsafe { &qdev_prop_chr },
->-                CharBackend
->-            ),
->-            define_property!(
->-                c"migrate-clk",
->-                DummyState,
->-                migrate_clock,
->-                unsafe { &qdev_prop_bool },
->-                bool
->-            ),
->-    }
->-
->-    device_class_init! {
->-        dummy_class_init,
->-        props =3D> DUMMY_PROPERTIES,
->-        realize_fn =3D> None,
->-        reset_fn =3D> None,
->-        vmsd =3D> VMSTATE,
->-    }
->-}
->diff --git a/rust/qemu-api/tests/tests=2Ers b/rust/qemu-api/tests/tests=
-=2Ers
->new file mode 100644
->index 00000000000=2E=2Eaa1e0568c69
->--- /dev/null
->+++ b/rust/qemu-api/tests/tests=2Ers
->@@ -0,0 +1,78 @@
->+// Copyright 2024, Linaro Limited
->+// Author(s): Manos Pitsidianakis <manos=2Epitsidianakis@linaro=2Eorg>
->+// SPDX-License-Identifier: GPL-2=2E0-or-later
->+
->+use core::ffi::CStr;
->+
->+use qemu_api::{
->+    bindings::*,
->+    declare_properties, define_property,
->+    definitions::{Class, ObjectImpl},
->+    device_class_init, vm_state_description,
->+};
->+
->+#[test]
->+fn test_device_decl_macros() {
->+    // Test that macros can compile=2E
->+    vm_state_description! {
->+        VMSTATE,
->+        name: c"name",
->+        unmigratable: true,
->+    }
->+
->+    #[repr(C)]
->+    #[derive(qemu_api_macros::Object)]
->+    pub struct DummyState {
->+        pub _parent: DeviceState,
->+        pub migrate_clock: bool,
->+    }
->+
->+    #[repr(C)]
->+    pub struct DummyClass {
->+        pub _parent: DeviceClass,
->+    }
->+
->+    declare_properties! {
->+        DUMMY_PROPERTIES,
->+            define_property!(
->+                c"migrate-clk",
->+                DummyState,
->+                migrate_clock,
->+                unsafe { &qdev_prop_bool },
->+                bool
->+            ),
->+    }
->+
->+    device_class_init! {
->+        dummy_class_init,
->+        props =3D> DUMMY_PROPERTIES,
->+        realize_fn =3D> None,
->+        legacy_reset_fn =3D> None,
->+        vmsd =3D> VMSTATE,
->+    }
->+
->+    impl ObjectImpl for DummyState {
->+        type Class =3D DummyClass;
->+        const TYPE_INFO: qemu_api::bindings::TypeInfo =3D qemu_api::type=
-_info! { Self };
->+        const TYPE_NAME: &'static CStr =3D c"dummy";
->+        const PARENT_TYPE_NAME: Option<&'static CStr> =3D Some(TYPE_DEVI=
-CE);
->+        const ABSTRACT: bool =3D false;
->+        const INSTANCE_INIT: Option<unsafe extern "C" fn(obj: *mut Objec=
-t)> =3D None;
->+        const INSTANCE_POST_INIT: Option<unsafe extern "C" fn(obj: *mut =
-Object)> =3D None;
->+        const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut O=
-bject)> =3D None;
->+    }
->+
->+    impl Class for DummyClass {
->+        const CLASS_INIT: Option<
->+            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut cor=
-e::ffi::c_void),
->+        > =3D Some(dummy_class_init);
->+        const CLASS_BASE_INIT: Option<
->+            unsafe extern "C" fn(klass: *mut ObjectClass, data: *mut cor=
-e::ffi::c_void),
->+        > =3D None;
->+    }
->+
->+    unsafe {
->+        module_call_init(module_init_type::MODULE_INIT_QOM);
->+        object_unref(object_new(DummyState::TYPE_NAME=2Eas_ptr()) as *mu=
-t _);
->+    }
->+}
+
 
