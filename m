@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC197E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:41:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB8EE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:41:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO7PB-000745-PU; Wed, 18 Dec 2024 22:40:53 -0500
+	id 1tO7PU-00077i-9A; Wed, 18 Dec 2024 22:41:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tO7PA-00072A-4x; Wed, 18 Dec 2024 22:40:52 -0500
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1tO7PM-00076i-El; Wed, 18 Dec 2024 22:41:04 -0500
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tO7P8-0004IR-Ek; Wed, 18 Dec 2024 22:40:51 -0500
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2166f1e589cso3871365ad.3; 
- Wed, 18 Dec 2024 19:40:49 -0800 (PST)
+ id 1tO7PH-0004JD-81; Wed, 18 Dec 2024 22:41:04 -0500
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-7fd49d85f82so184919a12.3; 
+ Wed, 18 Dec 2024 19:40:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734579648; x=1735184448; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734579657; x=1735184457; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wq3Jl1AW0pq6Ra+sjmnRZba6A1rNlSx3/9ckGBwUM5k=;
- b=N1I6fBynfxunFEfO3agZjbvaAIghid4dFT0XZW/G2zKld0C5XyFp9fizZaOWaFKsQe
- pPFB25OZBgy/PBVra1JO0Udp02zRI3pggtpSGZBToTJ8wcgx9tFqORELJg+YoK4hSJAM
- cyMObqymc1bkbtnIDQlEVknpreZQYK1+sd9wj1uamyLc+Bt6E/8hE6dV0tT9fv8wEBhk
- 6Yuif5zOcWAbQq/HeRYI3QFJymEjt20lj8LWqJLlezXC1t3yjUlGUHy87jDvctQyDMKF
- CTJ3cPeo9kH/CmBQUtbsW09v8CGAI7kuAqQUJIagIoC2HW8aCTNFZJmktoSvlEQNcusx
- 6p2Q==
+ bh=dH0e3/pZqO5cSRapQt3yCMopH0TKWEFkSF3QFzJFiLE=;
+ b=ibY8tRH0x64xikGaqRFhewe1HfIR8LRyNyG8dx2Prh14oygF8Oj8Um+uf7XS65clV8
+ NIJHYVKWnGz+lg6FCatnZC6kCcmlXNtX9/zyG3/QoNNs+inR5Fwcjk3Y+o3ftsIh/Tms
+ b5wn6b2QsISi4LKqGIcgcdLMGqy4RuZQ1Yfgbq2y6AjSrCk/hx7PePO/tqu4kT274gjL
+ BjXyAOWnWI3Ts9s6SYgh7mi3II2h4og2qnBU9PM8vwVAZM/rmlH+TE++0aF8XTRR2tU7
+ FBZ9Y6MC16xj2SH5rB4gHkSMqiSGZQ2/pXb6oEUOn3Tm9qmxyXeDDhXp8gz+RTQebJSb
+ biZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734579648; x=1735184448;
+ d=1e100.net; s=20230601; t=1734579657; x=1735184457;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Wq3Jl1AW0pq6Ra+sjmnRZba6A1rNlSx3/9ckGBwUM5k=;
- b=JrWJsWRPyiZZfZDAnUg1CyqweZKjGrG5du6FZlVhaB1WjH2Nm8WVQVqFN9B+xOPEDp
- oL8R6RmAqeQQgvSYlovt/OXyVbTwvtjSq1gGfNKtAPLh2Rq3ta6KTIwAB0qHEWukUQyi
- agGebiensHjegHJzCqaLKre1eB92WbnVNN+yW9eNf9pwKC8bk6vDcs/fru+QzxM4rXxr
- vu6rxqKngydnHHFMjz5/rKbBoSwJJ1u/ZnRt9Op7l5QuB+EYPSPJSPT9uXhuLcv6PL2B
- INU6J4SYQ6vwOQFKl1w2wxajAa7A12tdzka3wfTNsVz+NJMy6/3+xvaiv4VgoeBTigqN
- UGGQ==
+ bh=dH0e3/pZqO5cSRapQt3yCMopH0TKWEFkSF3QFzJFiLE=;
+ b=bB1uOACURmwt8NfveagC4s0p0bw8aLtkBurnkk9plyrwsEbdQ0VqTvFTEhDFnDt1Fm
+ WrYGESlHb5HepBZFcTz9Ol6UAGNzMhZgrPIarJD/pZoAU075Xm9ZtXQQNy6j+rFs57tz
+ O+EAaPnEbIfrEekKF1k7MLG5NnRAKuXn8jM+H/3xgJW4lMpypk46Rx3VrDUsgYowccei
+ gSg2+dYUx3uUm4XFx+Vfwradd10TuSJSXYjj5RFkZijGiOpsLVlan95L97fh87GHlB9K
+ s1BBROCtrFT2GjsmcNDm0KhbO9vnubbOmmSFX2p+BEEG8ocP3Cqk5PJt6rAh0Pql9U1z
+ GAYw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWO545UsORJXuqKRiQc+lkAk9tqHFjrxftTbOghPbcXcBAiQqksAum8CjABZjppcNgDSXSa2WYFUmb0@nongnu.org
-X-Gm-Message-State: AOJu0YyIDsR+c4yd+HlTAvtSTVqZik2vdZfw9slWoJQDj8XawKg4GZJs
- iS9uAEJOB72yQWHg8GKkhtQherxtEMT78exsYgiODyh6+6d7e+CLVAmWjA==
-X-Gm-Gg: ASbGncuRGhLZNgvFFvAOfLe8gOuK+sU6BkA3/d+bA06lCkJtnzzRiSAgG91awwfAY2h
- slbmEvHYByloXol9p2UMeW7G6+bxc+ojIf+NaRkGgvVLmkHYny4PIno71H5M+8SRKx6K2labmVw
- J/TmEmPe8aI4tLg8SYoGtbUzR0DmH+lAVpLnPOJ1nKrwRmJNdQh1Tpv4dAsL+tB+Y/cS/7In+rQ
- e2aY7mNIleVOqfMZpr60kwiL0mQAAIzo6pOA5UnYJKzch4sw+TtI/vO3IAy3nr2i9rWqj4uvxn/
- FTaAGnngmw==
-X-Google-Smtp-Source: AGHT+IEgl+l2kBLREVhNKE/n+rGiSiHtu/ZEc+oamSnL8zzqkTbnPmWbsC76IBjrhuScDNDKLkwelA==
-X-Received: by 2002:a17:902:db0f:b0:217:89da:fd54 with SMTP id
- d9443c01a7336-218d722f88fmr88039025ad.33.1734579648472; 
- Wed, 18 Dec 2024 19:40:48 -0800 (PST)
+ AJvYcCUOZs8GJ27DNti2wAddh32LIrPLH2dN53oeSBTMm0AUTIVc0dUVyQ8mWUQ+JCrf+mBVomgsUUtHivY4@nongnu.org
+X-Gm-Message-State: AOJu0YyR15PkcOL0FNl2VxQ1kEMaBD3T7vDUjevUCIw7aLK7I31HILm3
+ BqWbAmjmg1lBiLCYPtrxk3XCBd7bjAj7GWKHaGzKIMMF65YaW3efwphwfA==
+X-Gm-Gg: ASbGnctkKKKVm9+wWQRgvhHiwKbwKWxCM1JAvOczOcexCwdd0StQNJl0NYAJ1Cm5u7v
+ icDqgIYKUdq7+hbqql6afH3nfjdR/4A1LgToJg453dvS9FnC/ifgt1nCmyBEFQdU4L3xG1oWSny
+ sKj5OSzX2KreXKjWxFfJ9An4AVAzaqaCVmykHzPh2AmXBCrcGj0QcqZfzU8sqi1tjSU0PQm+I3o
+ W4LE6yGhHr4VQnrJXKHMRtPV/9nv5azfugaRN3NGNr+KM6lUASdlf1wosUPbz0qLx/7j/AiTKSs
+ Wa5noendUw==
+X-Google-Smtp-Source: AGHT+IF4F7xuIiB3HLAG4AJh4EeOoDe/9AIZQJAWe7c9SZj3c95DgHtuhbX1LEERG3D+53XZRg9AWA==
+X-Received: by 2002:a17:902:ea08:b0:215:2f00:67b1 with SMTP id
+ d9443c01a7336-218d6fd4be7mr65976105ad.6.1734579657231; 
+ Wed, 18 Dec 2024 19:40:57 -0800 (PST)
 Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc970520sm2881595ad.75.2024.12.18.19.40.45
+ d9443c01a7336-219dc970520sm2881595ad.75.2024.12.18.19.40.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 19:40:48 -0800 (PST)
+ Wed, 18 Dec 2024 19:40:56 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH 2/5] spapr: Fix vpa dispatch count for record-replay
-Date: Thu, 19 Dec 2024 13:40:32 +1000
-Message-ID: <20241219034035.1826173-3-npiggin@gmail.com>
+Subject: [PATCH 5/5] target/ppc: Wire up BookE ATB registers for e500 family
+Date: Thu, 19 Dec 2024 13:40:35 +1000
+Message-ID: <20241219034035.1826173-6-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241219034035.1826173-1-npiggin@gmail.com>
 References: <20241219034035.1826173-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,166 +100,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The dispatch count is a field in guest memory that the hypervisor
-increments when preempting and dispatching the guest. This was not
-being done deterministically with respect to icount, because tcg
-exec exit is not deterministic (e.g., an async event could cause it).
+From the Freescale PowerPC Architecture Primer:
 
-Change vpa dispatch count increment to keep track of whether the
-vCPU is considered dispatched or not, and only consider it preempted
-when calling cede / confer / join / stop-self / etc.
+  Alternate time base APU. This APU, implemented on the e500v2, defines
+  a 64-bit time base counter that differs from the PowerPC defined time
+  base in that it is not writable and counts at a different, and
+  typically much higher, frequency. The alternate time base always
+  counts up, wrapping when the 64-bit count overflows.
+
+This implementation of ATB uses the same frequency as the TB. The
+existing spr_read_atbu/l functions are unused without this patch
+to wire them into the SPR.
+
+RTEMS uses this SPR on the e6500, though this hasn't been tested.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/hw/ppc/spapr_cpu_core.h |  3 +++
- hw/ppc/spapr.c                  | 36 ++-------------------------------
- hw/ppc/spapr_hcall.c            | 33 ++++++++++++++++++++++++++++++
- hw/ppc/spapr_rtas.c             |  1 +
- 4 files changed, 39 insertions(+), 34 deletions(-)
+ target/ppc/cpu_init.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-diff --git a/include/hw/ppc/spapr_cpu_core.h b/include/hw/ppc/spapr_cpu_core.h
-index 68f70834832..feba3446194 100644
---- a/include/hw/ppc/spapr_cpu_core.h
-+++ b/include/hw/ppc/spapr_cpu_core.h
-@@ -46,6 +46,7 @@ typedef struct SpaprCpuState {
-     uint64_t vpa_addr;
-     uint64_t slb_shadow_addr, slb_shadow_size;
-     uint64_t dtl_addr, dtl_size;
-+    bool dispatched; /* for vpa dispatch counter tracking */
-     bool prod; /* not migrated, only used to improve dispatch latencies */
-     struct ICPState *icp;
-     struct XiveTCTX *tctx;
-@@ -60,4 +61,6 @@ static inline SpaprCpuState *spapr_cpu_state(PowerPCCPU *cpu)
-     return (SpaprCpuState *)cpu->machine_data;
- }
- 
-+void vpa_dispatch(CPUState *cs, SpaprCpuState *spapr_cpu, bool dispatch);
-+
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1253dbf622c..4f0a64e7f99 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -922,6 +922,18 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
  #endif
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 3b022e8da9e..fa05e0c5156 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -4519,47 +4519,15 @@ static void spapr_cpu_exec_enter(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
- {
-     SpaprCpuState *spapr_cpu = spapr_cpu_state(cpu);
- 
--    /* These are only called by TCG, KVM maintains dispatch state */
--
-     spapr_cpu->prod = false;
--    if (spapr_cpu->vpa_addr) {
-+    if (!spapr_cpu->dispatched) {
-         CPUState *cs = CPU(cpu);
--        uint32_t dispatch;
--
--        dispatch = ldl_be_phys(cs->as,
--                               spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER);
--        dispatch++;
--        if ((dispatch & 1) != 0) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "VPA: incorrect dispatch counter value for "
--                          "dispatched partition %u, correcting.\n", dispatch);
--            dispatch++;
--        }
--        stl_be_phys(cs->as,
--                    spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER, dispatch);
-+        vpa_dispatch(cs, spapr_cpu, true);
-     }
  }
  
- static void spapr_cpu_exec_exit(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu)
- {
--    SpaprCpuState *spapr_cpu = spapr_cpu_state(cpu);
--
--    if (spapr_cpu->vpa_addr) {
--        CPUState *cs = CPU(cpu);
--        uint32_t dispatch;
--
--        dispatch = ldl_be_phys(cs->as,
--                               spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER);
--        dispatch++;
--        if ((dispatch & 1) != 1) {
--            qemu_log_mask(LOG_GUEST_ERROR,
--                          "VPA: incorrect dispatch counter value for "
--                          "preempted partition %u, correcting.\n", dispatch);
--            dispatch++;
--        }
--        stl_be_phys(cs->as,
--                    spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER, dispatch);
--    }
- }
- 
- static void spapr_machine_class_init(ObjectClass *oc, void *data)
-diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
-index 5e1d020e3df..907e09c2c36 100644
---- a/hw/ppc/spapr_hcall.c
-+++ b/hw/ppc/spapr_hcall.c
-@@ -487,6 +487,36 @@ static target_ulong h_register_vpa(PowerPCCPU *cpu, SpaprMachineState *spapr,
-     return ret;
- }
- 
-+void vpa_dispatch(CPUState *cs, SpaprCpuState *spapr_cpu, bool dispatch)
++static void register_atb_sprs(CPUPPCState *env)
 +{
-+    uint32_t counter;
-+
-+    if (!dispatch) {
-+        assert(spapr_cpu->dispatched);
-+    } else {
-+        assert(!spapr_cpu->dispatched);
-+    }
-+    spapr_cpu->dispatched = dispatch;
-+
-+    return;
-+
-+    if (!spapr_cpu->vpa_addr) {
-+        return;
-+    }
-+
-+    /* These are only called by TCG, KVM maintains dispatch state */
-+    counter = ldl_be_phys(cs->as, spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER);
-+    counter++;
-+    if ((counter & 1) != dispatch) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "VPA: incorrect dispatch counter value for "
-+                      "%s partition %u, correcting.\n",
-+                      dispatch ? "preempted" : "running", counter);
-+        counter++;
-+    }
-+    stl_be_phys(cs->as, spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER, counter);
++    spr_register(env, SPR_ATBL, "ATBL",
++                 &spr_read_atbl, SPR_NOACCESS,
++                 &spr_read_atbl, SPR_NOACCESS,
++                 0x00000000);
++    spr_register(env, SPR_ATBU, "ATBU",
++                 &spr_read_atbu, SPR_NOACCESS,
++                 &spr_read_atbu, SPR_NOACCESS,
++                 0x00000000);
 +}
 +
- static target_ulong h_cede(PowerPCCPU *cpu, SpaprMachineState *spapr,
-                            target_ulong opcode, target_ulong *args)
+ /* SPR specific to PowerPC 440 implementation */
+ static void register_440_sprs(CPUPPCState *env)
  {
-@@ -505,6 +535,7 @@ static target_ulong h_cede(PowerPCCPU *cpu, SpaprMachineState *spapr,
+@@ -2911,6 +2923,11 @@ static void init_proc_e500(CPUPPCState *env, int version)
+     register_BookE206_sprs(env, 0x000000DF, tlbncfg, mmucfg);
+     register_usprgh_sprs(env);
  
-     if (!cpu_has_work(cs)) {
-         cs->halted = 1;
-+        vpa_dispatch(cs, spapr_cpu, false);
-         cs->exception_index = EXCP_HLT;
-         cs->exit_request = 1;
-         ppc_maybe_interrupt(env);
-@@ -531,6 +562,8 @@ static target_ulong h_confer_self(PowerPCCPU *cpu)
-     cs->exit_request = 1;
-     ppc_maybe_interrupt(&cpu->env);
- 
-+    vpa_dispatch(cs, spapr_cpu, false);
++    if (version != fsl_e500v1) {
++        /* e500v1 has no support for alternate timebase */
++        register_atb_sprs(env);
++    }
 +
-     return H_SUCCESS;
- }
- 
-diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
-index f329693c554..8ce42302234 100644
---- a/hw/ppc/spapr_rtas.c
-+++ b/hw/ppc/spapr_rtas.c
-@@ -216,6 +216,7 @@ static void rtas_stop_self(PowerPCCPU *cpu, SpaprMachineState *spapr,
-      */
-     env->spr[SPR_PSSCR] |= PSSCR_EC;
-     cs->halted = 1;
-+    vpa_dispatch(cs, spapr_cpu_state(cpu), false);
-     ppc_store_lpcr(cpu, env->spr[SPR_LPCR] & ~pcc->lpcr_pm);
-     kvmppc_set_reg_ppc_online(cpu, 0);
-     qemu_cpu_kick(cs);
+     spr_register(env, SPR_HID0, "HID0",
+                  SPR_NOACCESS, SPR_NOACCESS,
+                  &spr_read_generic, &spr_write_generic,
 -- 
 2.45.2
 
