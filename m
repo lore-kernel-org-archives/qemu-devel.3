@@ -4,86 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24F3E7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:16:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DE5E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:19:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOK8C-0002N7-5B; Thu, 19 Dec 2024 12:16:12 -0500
+	id 1tOKAc-0003nb-RZ; Thu, 19 Dec 2024 12:18:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOK8B-0002Ly-43
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:16:11 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKAb-0003nD-6d
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:18:41 -0500
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOK88-0006VQ-5z
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:16:10 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-43618283dedso10379105e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:16:07 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKAZ-00078N-LA
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:18:40 -0500
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-385e1fcb0e1so621592f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:18:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734628566; x=1735233366; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734628718; x=1735233518; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Wo3u0A0BS3E5gQ4LYgtO0QOrEsZE9LANmSBbKRQ7o14=;
- b=eX7f7uMoChz+R0rO7syI4jmcxwddX/rYOcWqMRynT1x+bMqbClK1of3Vf+UB4fOBad
- xBpdEcCLedPUXTHfAnWGYCvHg5K7mLGzGxis2gUqbnfBwhpi3WquRFN0A55hw6ZSGbL+
- 3v9bpY1ERbFv6loruPqoBMuYzRJANfDWymC/rZB3UsHARYkzl94jMXeJhpCoj/VdSb2o
- QkLI7tByL4J3vcKRHzfcocTjRtKPjLaR25SLKyd/FLQ/KsDD9xqTtSv0wpDWGCHUouet
- 8yhviWYnNdcYoHBPd+JOs/UtUi7WnwVfbIrlsyp7B8Hcst6UH3srSs5N5AIgBmcR1/DH
- rXPQ==
+ bh=KfPiPUjFsumJS64yYOjiSxWoR/mhyFpiejP9o5sILiY=;
+ b=u0PwwKgBJhnuzJRZXbKur4f8OdhL3mKWA6eu6QwVu7FW5OOfvD/vAEeqbipZ8oEmmN
+ esCFDSKQdS7YCapimm4+f5skmjeIHKTfhxHrM60KtkAvN0pdRsyyMj8a3KI8Eb7s3DaU
+ Stjj1gyRHRmBsqH5aBDuoEjstGamSAPvxYIvD2e/IAEY+ohCDBE48c5bnuvcPQWCqePm
+ YJdEAzHwK89vqgk4Tjr7qoUJ2sDBhps8h1FtGwM8NAOnGToHLznEvYZaUt9+vm3G8gyY
+ 8hLGVCvpYJ0gqVkj1m6lWQMVZ0SHmdo+p7Sq5RQM/LHRD+S+7lnuzZBLLP4pV/qxMOCB
+ G3+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734628566; x=1735233366;
+ d=1e100.net; s=20230601; t=1734628718; x=1735233518;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Wo3u0A0BS3E5gQ4LYgtO0QOrEsZE9LANmSBbKRQ7o14=;
- b=f4WG0DB20DPNU2U92dLlI0ecBkt/NrBNBJ4Cmmwr02DBpxGKRGxo8jgiyQI+56au8J
- 1pdh/Z90Mrg5NxLYdphSK6dePaS8nGxMrz4g2ewMVYWSSvKtWaZtsleUWo/U0qVI73P+
- LpLxrxBDYIaUwe+YE3iVki+3ovHOysTrG/fUZfMUFW/E4vLEBQJLv5X8sRZrAaByG5vx
- CoAfzJPxOOmddnpG6zjhYy4mOQLpjbWsmoZG0ZNm6fKQCLH+6whCZYbUxRk1R9nIRXaE
- LVDrXBVcejPI+wQyCrgBxgQ0sIG4Mr6ixyggHCGpNg364M0AAKJWcje0lXe5ufQscjRL
- RKtA==
+ bh=KfPiPUjFsumJS64yYOjiSxWoR/mhyFpiejP9o5sILiY=;
+ b=a/P+0q3LjF38z7d0a91pYeLfRxMoo8fDClTZ/EOEnFbnnqbMIy51Jp1FxEm9873P5L
+ 70W8ve9xlCbSRP9L7vD9+L5edwdByz41yfZahdGjDve/JUCGLkRtxMfCESaYDYPh0uvB
+ JZ2WfoAjSHkuuJoe9ulCMHWpChXekcLFIUfE+OxCUjXTzSPaLv53LRWDMpwgsQ01vDLe
+ n7IDgO+FjsgHkJDyxBv7dJ1CmJAdxLooXyA6pMOFOswZ8pk2AF2dqqb+Jkt+NIUkZ0e5
+ rflspDl/KiMJy9y4pwUTftF7igcATnhLy+gWdewvhuG8T9MSL9BApjPfshcsrtYyPuKx
+ Ijwg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVqczWdvshbtb9wayq+5/g/6EuobCSIThj/Dtft6mTq1WHA+b92umajmzgfQizqBpXqhRp2gQGLJGmu@nongnu.org
-X-Gm-Message-State: AOJu0YxXkSPPPZvpORKPbilJID74R9vpj8TYUZHOR/eSPn7wgIsvQKZA
- /+L68rkC9/tsjQWYgASNFgj7qt2C4RDwpaTcEntzqeej96/QOg3+cR1MctkaAVs=
-X-Gm-Gg: ASbGncu4yf3HvnT7Lzez2tWgc5/mojIL5nu4wZ1lwbS+WxKayFC1UuxdgnX/3RL8uOB
- 7GybTsKf1Tg/MAKFSLFRPO0Rt4h5goWrgHQ4u771rx6y9sfFiWMHQYrdsaq5z/Op4U9mnEB4dez
- GQnwqw5p46NGXCmWjK59TVZ+EbStl7Pf61HyFNW6fLfEcU4VD7BVfPVI86gU59SXgUTb7Hz2yJk
- jZSYMlf6kdp3SvLJzua/HgRbotmX/Iy7dRA5CCM+LnCA0r+cyCPZCInfmpUetXYupyPx3Q=
-X-Google-Smtp-Source: AGHT+IGpiqefMop0ORZkMAwC5rNF84+3w9zFQN8FGc7skKq93b3/Aw2aVI5iSBQrnFxWuWEPVqOmYA==
-X-Received: by 2002:a05:600c:190e:b0:435:1b:65ee with SMTP id
- 5b1f17b1804b1-436664ac50bmr101275e9.24.1734628566318; 
- Thu, 19 Dec 2024 09:16:06 -0800 (PST)
+ AJvYcCU4kT2dicLXvyMEg6wnOHxixV//fvBqF6mKgSSjp2M/z4LWE7lh4TVKzuk+d/mbvRP2AHi1512TDQKo@nongnu.org
+X-Gm-Message-State: AOJu0YytiYCuZbYQ/LbOKSqdVANy78N6YK0c0hxw34Lo4PamKqagTJs+
+ HjaVG6AsYC+yLBA2faNJWNcAoA0fvhNckpTkwjmTVW2Xd7Ah4rgHrzbNFkySwDnUB8hw1DRNQsR
+ l
+X-Gm-Gg: ASbGncspiXyKtfwooCvHhift1Gw+E4l9REBH2gJesRw8VIjU+kZTp5lkmm4lxd1deTW
+ ag/qj0JTitlDoNaWi1SdGiOq2i0+SlQuJ1yzZ9VI+qGF1OYq45ouFMynLr2a2Qhrx9GBH5PE5lA
+ R5IqPI0ihSgmeil2u7cwfg4zbG2B3FV6IgzdgB1NgKiZw3pzQwHDE0o4JLqAXhbJtnhaNBoXe8I
+ 0IPoBmz4FnksEZHrMfYOdBJ+kci7hWveFvhPaL9+ibYB15NRPCOqeW4HfvCaXb+0F+1Jh8=
+X-Google-Smtp-Source: AGHT+IGnspWY8onnkoERMGhexwEqNpeVF/hycDgqWhUuKyhLkiYS6OVGt7XkStdP+EuCWbhyDXbq8w==
+X-Received: by 2002:a5d:64cf:0:b0:385:f349:ffe7 with SMTP id
+ ffacd0b85a97d-388e4d2f488mr8592777f8f.2.1734628718035; 
+ Thu, 19 Dec 2024 09:18:38 -0800 (PST)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8292f4sm2032965f8f.3.2024.12.19.09.16.04
+ 5b1f17b1804b1-43656b11495sm57270105e9.19.2024.12.19.09.18.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 09:16:05 -0800 (PST)
-Message-ID: <7c1a7e86-8996-43ab-aa07-6763387b2bc5@linaro.org>
-Date: Thu, 19 Dec 2024 18:16:04 +0100
+ Thu, 19 Dec 2024 09:18:37 -0800 (PST)
+Message-ID: <06465848-f7a3-4d36-add8-ae0230d34495@linaro.org>
+Date: Thu, 19 Dec 2024 18:18:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
- <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
- <55f6dfe7-cadf-4942-81e8-18b15938c349@linaro.org>
- <CAK3XEhNN9EO75vgsdRboMZ7nwZbaL0eenSwSy-7Hze-ukyTZsQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] include: Header cleanups around "cpu.h"
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
+References: <20241218155202.71931-1-philmd@linaro.org>
+ <68eba002-1dc8-40f3-b1c7-72a6ad930a63@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAK3XEhNN9EO75vgsdRboMZ7nwZbaL0eenSwSy-7Hze-ukyTZsQ@mail.gmail.com>
+In-Reply-To: <68eba002-1dc8-40f3-b1c7-72a6ad930a63@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,125 +101,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 18:08, Ani Sinha wrote:
+On 18/12/24 17:42, Richard Henderson wrote:
+> On 12/18/24 09:51, Philippe Mathieu-Daudé wrote:
+>> Philippe Mathieu-Daudé (4):
+>>    target/ppc: Include missing headers in mmu-hash[32,64].h
+>>    tcg/tci: Include missing 'disas/dis-asm.h' header
+>>    exec/ram_addr: Include missing 'exec/hwaddr.h' and 'exec/cpu-common.h'
+>>    exec/cpu-all: Include 'cpu.h' earlier so MMU_USER_IDX is always
+>>      defined
 > 
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > 
-> On Thu, 19 Dec, 2024, 10:21 pm Philippe Mathieu-Daudé, 
-> <philmd@linaro.org <mailto:philmd@linaro.org>> wrote:
-> 
->     On 19/12/24 17:16, Ani Sinha wrote:
->      >
->      >
->      > On Thu, 19 Dec, 2024, 9:22 pm Philippe Mathieu-Daudé,
->     <philmd@linaro.org <mailto:philmd@linaro.org>
->      > <mailto:philmd@linaro.org <mailto:philmd@linaro.org>>> wrote:
->      >
->      >     On 16/12/24 12:48, Ani Sinha wrote:
->      >
->      >      > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
->      >      > index d02d96e403..4c5bdb0de2 100644
->      >      > --- a/hw/misc/meson.build
->      >      > +++ b/hw/misc/meson.build
->      >      > @@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA',
->      >     if_true: files('mac_via.c'))
->      >      >   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true:
->      >     files('mips_cmgcr.c', 'mips_cpc.c'))
->      >      >   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true:
->      >     files('mips_itu.c'))
->      >      >
->      >      > +specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true:
->      >     files('vmfwupdate.c'))
->      >
->      >     FW_CFG_DMA is offered by multiple targets ...:
->      >
->      >     $ git grep -w FW_CFG_DMA
->      >     hw/arm/Kconfig:19:    select FW_CFG_DMA
->      >     hw/i386/Kconfig:82:    select FW_CFG_DMA
->      >     hw/i386/Kconfig:113:    select FW_CFG_DMA
->      >     hw/loongarch/Kconfig:22:    select FW_CFG_DMA
->      >     hw/riscv/Kconfig:59:    select FW_CFG_DMA
->      >
->      >      > diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
->      >      > new file mode 100644
->      >      > index 0000000000..1e29a610c0
->      >      > --- /dev/null
->      >      > +++ b/hw/misc/vmfwupdate.c
->      >      > @@ -0,0 +1,157 @@
->      >      > +/*
->      >      > + * Guest driven VM boot component update device
->      >      > + * For details and specification, please look at docs/specs/
->      >     vmfwupdate.rst.
->      >      > + *
->      >      > + * Copyright (C) 2024 Red Hat, Inc.
->      >      > + *
->      >      > + * Authors: Ani Sinha <anisinha@redhat.com
->     <mailto:anisinha@redhat.com>
->      >     <mailto:anisinha@redhat.com <mailto:anisinha@redhat.com>>>
->      >      > + *
->      >      > + * This work is licensed under the terms of the GNU GPL,
->     version
->      >     2 or later.
->      >      > + * See the COPYING file in the top-level directory.
->      >      > + *
->      >      > + */
->      >      > +
->      >      > +#include "qemu/osdep.h"
->      >      > +#include "qapi/error.h"
->      >      > +#include "qemu/module.h"
->      >      > +#include "sysemu/reset.h"
->      >      > +#include "hw/nvram/fw_cfg.h"
->      >      > +#include "hw/i386/pc.h"
->      >
->      >     ... however ...
->      >
->      >      > +#include "hw/qdev-properties.h"
->      >      > +#include "hw/misc/vmfwupdate.h"
->      >      > +#include "qemu/error-report.h"
->      >      > +
->      >      > +static void fw_update_reset(void *dev)
->      >      > +{
->      >      > +    /* a NOOP at present */
->      >      > +    return;
->      >      > +}
->      >      > +
->      >      > +
->      >      > +static uint64_t get_max_fw_size(void)
->      >      > +{
->      >      > +    Object *m_obj = qdev_get_machine();
->      >      > +    PCMachineState *pcms = PC_MACHINE(m_obj);
->      >      > +
->      >      > +    if (pcms) {
->      >      > +        return pcms->max_fw_size;
->      >
->      >     ... this code depends on x86/PC.
->      >
->      >     Could it be wiser to add a new VM_FWUPDATE Kconfig
->      >     symbol, having it depending on FW_CFG_DMA && I386?
->      >
->      >
->      > There is no reason why vmfwupdate would be limited to x86 only.
->     There is
->      > minimal support needed from hypervisor side for this mechanism. That
->      > mechanism has little dependency on specific platform.
-> 
->     OK, then please remove that PCMachineState use
-> 
-> 
-> That is used because the max_fw_size property only exists for pc 
-> machines. Do you have a better idea to get this value in a platform 
-> agnostic way? Like I said in the previous reply I do not know how to get 
-> this value reliably for all machines. If anyone has better ideas, I'm 
-> all ears.
+> Though, frankly these are hard to review in isolation.
 
-Either add the I386 dependency or don't use PC_MACHINE, because on
-non-x86 targets PC_MACHINE(qdev_get_machine()) will crash.
+Sorry for that. I'll send a PR with what I've already queued.
+Next patches should be closer to the main tree.
 
->     What about the FW_CFG_DMA dependency?
-> 
-
-I wasted enough time on this so I'll stop reviewing this work.
-
-Regards,
-
-Phil.
+Queuing patches 2-4.
 
