@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B22ABE7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A59C9E7718A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:36:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOBxq-0004Vx-EA; Thu, 19 Dec 2024 03:32:58 -0500
+	id 1tOBxm-0004Tm-N8; Thu, 19 Dec 2024 03:32:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOBxo-0004Ud-0k
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:56 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1tOBxd-0004SB-5z
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:46 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOBxm-00056d-8j
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:55 -0500
+ id 1tOBxb-00054k-A8
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:44 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734597172;
+ s=mimecast20190719; t=1734597162;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=V/ENCW2ZbKsFmMbQzc45gFjdcifV8MZLOt5dduiBsBs=;
- b=RtWAtRQyb8h91gFSbC9OHiwsBc9Kx6EoeitqMgjgvauc2A5fV8sk9fXLbwmjPdYuIJ7oDt
- xCuJntnRjyCy2jAz8yHqSAbySnscIFdBrlCEfS1riqDVOsz74Ww6b60qH2QrVVCdUGjj7F
- BpgLDVqS429sPN29jHid6B8KvhFThi0=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NPK5B7YtV2XjDkMxiykKFLkaimx0AMVIvQ26Q2lKHEs=;
+ b=eICV+vo4N8BQskoZdr2vu1vYJFdP1E4X7JM5+BM7jHYrXMMvMn0UFvfBcJ9jDBpPXuj1hY
+ +XIPSD7xsTXgxZl1wopRW4ufksFf/P8mYqNn3pEuAkl51av0M91JRsxD7tqIMT0uTObzPQ
+ dUWBSaLnPs95xUEOy7qrU+zOLGn2CQc=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-269-me-VUX5AOXWAHkvO4-wAPg-1; Thu, 19 Dec 2024 03:32:51 -0500
-X-MC-Unique: me-VUX5AOXWAHkvO4-wAPg-1
-X-Mimecast-MFC-AGG-ID: me-VUX5AOXWAHkvO4-wAPg
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4361fc2b2d6so2983505e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:51 -0800 (PST)
+ us-mta-586-vYxBOmMuNpCxROYuzGv-KA-1; Thu, 19 Dec 2024 03:32:38 -0500
+X-MC-Unique: vYxBOmMuNpCxROYuzGv-KA-1
+X-Mimecast-MFC-AGG-ID: vYxBOmMuNpCxROYuzGv-KA
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-385e1fd40acso293550f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734597169; x=1735201969;
+ d=1e100.net; s=20230601; t=1734597156; x=1735201956;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V/ENCW2ZbKsFmMbQzc45gFjdcifV8MZLOt5dduiBsBs=;
- b=YmmLtnxSW5WF28qor+baCwaje4nnh0JYtuVlqrF1sCCpjm91v5vNjoQpe8U7lfUusJ
- paZIymDEa5kwpS38Aw6Zni8xeBR+w2F4PxEmx0CsJ6S9eHW99IbFhK9qiHrj6ykzi90c
- yEDekkUNsqxk8IXFU78S5Elj+1t8cnSTgwJFJHAZVYCPY8q7yoSxjbGPZH+aVGW/pwfu
- 7klrLAIDFBpw3nspOkvS46HW6bu2U+owz7z3Rvau5Vr03Hl0Z6SO/9xB1dYQ6oky0Mak
- R94Rg2VMKozhfJ5hfRG13Wf2DeCBGXLzULdiW2xMxeRkGEhmiIW7XeLR29xJU79kxpXJ
- SNPg==
-X-Gm-Message-State: AOJu0Yy1lm+6Z3k/Mjy6pnLI/NkYT/Q8osXSpHKE61ZxF0n1k/GuH/3C
- UvHzqHRm+XVxwHjD5uvmq6e3h9RC5KYB3pUsLXWizktaibgswHg96XsrqRwLXUY39v6A5Qhrv4d
- F0CB+/QUhnJDxZTwN+qWU8i16nQn3AD1D5JTNu+AUFNpphIb2i1wEryQRVURYIOTxzM4XiF/3ze
- fD8kvopaP4hs4HVksnTG5/NAJ7AvbVr0kFL75R
-X-Gm-Gg: ASbGncsOEsQOK+/svKZJfdQ2VgXh5dRmYRm2SQ52KNVgnim0T7dr6a5DMVmra/a9GG0
- HjGXnRe6TVLOL7ektm4a8JqH+ttXuKHlWGlzLEHMzQsYwLS7E1sFKVjTW+H4LGYvTo1/ULmUSiE
- QQpjtiRtcgBUTo7KV0BlbvpOZYOQMWLMGN68pdVhxRWp9O1dnrdEvSuFp58Q1Se3kCU1xrNz6mW
- 99DPOHcWbEK1eg0icd7EYFEhCmVlQa3Fh/g6jNhMzB0klQoY7EC21raQVZk
-X-Received: by 2002:a7b:cde1:0:b0:436:5165:f21f with SMTP id
- 5b1f17b1804b1-4365c7c9713mr14808285e9.26.1734597169705; 
- Thu, 19 Dec 2024 00:32:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGcjR+VMxAu0nFHCgL4AzVlqS/5SaastdJGcxUUecubn4xtJRVQYzz0CHTdDnXcZOqc/2/u+Q==
-X-Received: by 2002:a7b:cde1:0:b0:436:5165:f21f with SMTP id
- 5b1f17b1804b1-4365c7c9713mr14808035e9.26.1734597169333; 
- Thu, 19 Dec 2024 00:32:49 -0800 (PST)
+ bh=NPK5B7YtV2XjDkMxiykKFLkaimx0AMVIvQ26Q2lKHEs=;
+ b=NqYxxXZNSZ+Ekhfssvz07DNDMH7qv3pD0VDFp9GyqY4oWxL82BGkCaW1CEDyPEe6WN
+ Ql40hZ0I8hACUwlmm8yB0DDYfm7tr7oJwV+ycVELAeaxCaIVH5fyWzJjP+oFXiZJjmpc
+ 7FJp7EDX7oDQrTfkyDRC/A1IRnZp11CLTPvXE3o4xHQCUSqy96wYvkA9lkQmQFKdtumn
+ HxNKDMjcmN8OskCt8uwaYC6hexfdcCQ7awwDTEWrPSrPL6dSMAi5zquRR4YbxprH4gHZ
+ HYXVG0dFrPuxbtDYDSTlAl4DpUUOB9ZlgMyZ8VnXjPyr9w8Pd/T0DxHdH/M73dUW7VXG
+ f9eA==
+X-Gm-Message-State: AOJu0YxnChOsvKGjLIyswJwYcWfyTj70Wve2qcv/P6mOv0eCdT9j74QH
+ KbwNvUlbXyWRLADwRLFvqAwW6A1Kr27Stk9uLHKD9guKzhzWj0vezboCqV2h3PQNKxndvVLR0dJ
+ hPL8DcYGS+LqukZFnBL1MxuB3TQgT+5fv3uLCXJOdfUS6Lqzk9rMUNwFvdFMrSTvhqpJuU0DzIA
+ 1oTZVH7pFQf4Vip+sIW0V6+Uva4pLohdkfOV1z
+X-Gm-Gg: ASbGnctUiFGyg67to0Va0jy3VdEEBvr60Cizq0XmmH+RF/6P398pSuaOgVkmmkhNXHl
+ V+xJj/Tk0VwbiO4sdQ7Mt/ROWYzd+U/lMcBwA8DkFvr//tIJXnuxnI/3rMtJz3k5WAMUXSc6zuo
+ hBZeRziA/WEeSSWqugcp+gEdpHwjY1pWN97Ybn32H3xwVdyxUr8rE8tcNwMb8igic3co3KHgHzG
+ UEvXe6U1sAoKBLEG6j1PxEpgQmttDT0pq0KZY+LAM2ib2/gok0VQym95jML
+X-Received: by 2002:a05:6000:4b0b:b0:386:3b93:6ccf with SMTP id
+ ffacd0b85a97d-388e4d5f125mr5148607f8f.32.1734597156002; 
+ Thu, 19 Dec 2024 00:32:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFXiJ3hfiZdwZXJlW1EnLgdY5Q2vNsdKew//1XV57xNJzp6PUBRkYmYChmzUIKN60zymaLRVQ==
+X-Received: by 2002:a05:6000:4b0b:b0:386:3b93:6ccf with SMTP id
+ ffacd0b85a97d-388e4d5f125mr5148586f8f.32.1734597155652; 
+ Thu, 19 Dec 2024 00:32:35 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436612008bcsm11140035e9.16.2024.12.19.00.32.47
+ 5b1f17b1804b1-43656b4432dsm44551265e9.41.2024.12.19.00.32.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 00:32:48 -0800 (PST)
+ Thu, 19 Dec 2024 00:32:34 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 10/41] hw/sparc: Remove empty Property lists
-Date: Thu, 19 Dec 2024 09:31:57 +0100
-Message-ID: <20241219083228.363430-11-pbonzini@redhat.com>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>
+Subject: [PULL 03/41] target/ppc: Remove empty property list
+Date: Thu, 19 Dec 2024 09:31:50 +0100
+Message-ID: <20241219083228.363430-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
 References: <20241219083228.363430-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -110,53 +111,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 From: Richard Henderson <richard.henderson@linaro.org>
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20241216035109.3486070-11-richard.henderson@linaro.org
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Link: https://lore.kernel.org/r/20241216035109.3486070-4-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/sparc/sun4m.c   | 5 -----
- hw/sparc64/sun4u.c | 5 -----
- 2 files changed, 10 deletions(-)
+ target/ppc/cpu_init.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/hw/sparc/sun4m.c b/hw/sparc/sun4m.c
-index d52e6a7213f..7ec346533e2 100644
---- a/hw/sparc/sun4m.c
-+++ b/hw/sparc/sun4m.c
-@@ -732,15 +732,10 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     sysbus_init_mmio(dev, &s->prom);
+diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+index 1253dbf622c..5e95790deff 100644
+--- a/target/ppc/cpu_init.c
++++ b/target/ppc/cpu_init.c
+@@ -7414,11 +7414,6 @@ static void ppc_disas_set_info(CPUState *cs, disassemble_info *info)
+ #endif
  }
  
--static Property prom_properties[] = {
--    {/* end of property list */},
+-static Property ppc_cpu_properties[] = {
+-    /* add default property here */
+-    DEFINE_PROP_END_OF_LIST(),
 -};
 -
- static void prom_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/core/sysemu-cpu-ops.h"
  
--    device_class_set_props(dc, prom_properties);
-     dc->realize = prom_realize;
- }
+@@ -7468,7 +7463,6 @@ static void ppc_cpu_class_init(ObjectClass *oc, void *data)
+     device_class_set_parent_unrealize(dc, ppc_cpu_unrealize,
+                                       &pcc->parent_unrealize);
+     pcc->pvr_match = ppc_pvr_match_default;
+-    device_class_set_props(dc, ppc_cpu_properties);
  
-diff --git a/hw/sparc64/sun4u.c b/hw/sparc64/sun4u.c
-index 7088ac273ea..05b8c7369e2 100644
---- a/hw/sparc64/sun4u.c
-+++ b/hw/sparc64/sun4u.c
-@@ -471,15 +471,10 @@ static void prom_realize(DeviceState *ds, Error **errp)
-     sysbus_init_mmio(dev, &s->prom);
- }
- 
--static Property prom_properties[] = {
--    {/* end of property list */},
--};
--
- static void prom_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
--    device_class_set_props(dc, prom_properties);
-     dc->realize = prom_realize;
- }
- 
+     resettable_class_set_parent_phases(rc, NULL, ppc_cpu_reset_hold, NULL,
+                                        &pcc->parent_phases);
 -- 
 2.47.1
 
