@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79810E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 00:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E0EAE77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 00:50:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO4i2-00065J-UZ; Wed, 18 Dec 2024 19:48:10 -0500
+	id 1tO4kI-00075y-Fk; Wed, 18 Dec 2024 19:50:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tO4i1-000657-Kf
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 19:48:09 -0500
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tO4kH-00075h-IA
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 19:50:29 -0500
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tO4hz-0002YX-2l
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 19:48:09 -0500
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-3862ca8e0bbso181932f8f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 16:48:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tO4kF-0002vD-Oj
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 19:50:29 -0500
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-7f71f2b1370so92474a12.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 16:50:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734569284; x=1735174084; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1734569426; x=1735174226; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CGTHJPYbDv9tltyldkH3p9eNfvUvCZBSeH10dpM1wIY=;
- b=f5qR/cGxBa2YZfGWJjaRLQ8WyGipJZ5OdGyv55cSrxW+9fKE4yoGLQArRyDV+gClSZ
- 23g78s7LzIFuH42X9rTIUoLZo6V5+mG8rbXr3cnX7UZW9pC8PoL1z2MpNlYSbyjrZCSr
- fqv3lxfbRqE60X8q++YtxWlLfSmsyRoExBjgW1Sv/0F5chMysTx6ZNq5QsU7PBOW5WNS
- stmA67HHSavYYSHQ/1ORf2cJlksYooFySO9WX/HdirKZa0IOsGbvRMwc0VUCCTkYBes9
- dc3WQ/U8HwnR0qLx/pxF+0MD12pK+lmhkK7y+HmEos4sBTr1lbfo8NLHW7JxI0S6742R
- g8zg==
+ bh=rkJya71wtN7yKIm4zE/6//N5nBw5L1+wqJ27hcwaq5M=;
+ b=JXIHYeZCj/EZmoj5P/xn+K2NWcG9QQEp97kcjwRje1TGHTFO5T4UI7b4lK6LDGYazK
+ 9ir1aZdU2uhLkdpXqJJGuexqKc/RNzmNnJavX3StpVpglHodzaC/cLa7w2L/tLCTt4Be
+ WNzfZo4JH6zSdB8W5nuBMi9eLJG++7BKdb0/7Ul9LxdbX9rWK6UMriiOW5fJohE6w6k9
+ o0GBWPOgUnVeSkBKAfnuCsrhBXSopYNxJBERtIlLATyvDWyMZg70Dd1dEZAnp7KipuwH
+ oeCcdWIMBjEm0iT9cqg0X5Q8yI1JFJxJdhDzZV27hcVi1YCvuFyclD50cEkv60mg7ML/
+ IAuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734569284; x=1735174084;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CGTHJPYbDv9tltyldkH3p9eNfvUvCZBSeH10dpM1wIY=;
- b=tTjMlD9gGuZzvS0yk+4huj8ybqL1j8jPkPLa+xX8URReIouaoGQLzwY6gxmfcldglv
- HQHExAvcyQXbWCD5M33c2jNTGTPcQjXwYAIRLkN5e6VhQ8v6aVte0/L5CECr+EeY6i2n
- J+HzlOv8TD3eEul2IteqEsujt9kXouZO1K+q6xLpgclMyoDR6ISAwDFffXG1970XmJqU
- ULNj47T2ZuiF0XvGPM+nJeGMSsKS6fRh5DSLyhgppds2eOjow8XTVdmlkSGmtu5kMCXL
- v3R6HJW6kwRGEyRNAnoLJYG/VCjNoOQPzGw+gF0VxwgrtfJD+IR3xU1k0PXt+zXkvZ1j
- wYwA==
-X-Gm-Message-State: AOJu0YxrdEtUhnQ9AzB6fNzr/TxlXGjQa4VRtAvaBJSRwdkEFUFn63k4
- Fu010x4IgHwuXKVwfPigcZoemHGVGN+nkd02SKzx7Rp2a5yiVAqNvW5ePw==
-X-Gm-Gg: ASbGncte6S06EmBA2TVQb89RgA9OljMPi/+nezD/Hdesw86pcaJENfykCn7k5OiYw/u
- XYpsX/Bm9gQYIJRaolg1ScE7+43w/mRDL6C7UIo3VimaccIxBo0Q2r+6cTwxh3S2K0mhrTvVYB3
- 7RxDmZIEaVm2UmjlFTttJnEBdFJDaze30yq/VV3OA5+P2TaUEJbbSMVdU0grI8aCWmFeP/pg+l3
- cNTOPKXzoOWNKW/53CBRonHZWW7606KSYEBXTUx2GRFmzRJXcG6V/x3/TTv2w750Smr5DpCsRmm
- aIgPjDiLuQcFanOe9S+wFQflNbxT6a4I
-X-Google-Smtp-Source: AGHT+IH/OJVr/cM08hbGMwV0G6+ETkg3OqGmBDHdD0VZiC9/rJcdw+gPBxd/7QCsbqZIaKHrzXLGjA==
-X-Received: by 2002:a5d:64ee:0:b0:385:e2d5:cdf2 with SMTP id
- ffacd0b85a97d-38a19b05162mr1358846f8f.19.1734569284014; 
- Wed, 18 Dec 2024 16:48:04 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-093-128-019-174.93.128.pool.telefonica.de.
- [93.128.19.174]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e1c0sm190354f8f.77.2024.12.18.16.48.02
+ d=1e100.net; s=20230601; t=1734569426; x=1735174226;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=rkJya71wtN7yKIm4zE/6//N5nBw5L1+wqJ27hcwaq5M=;
+ b=BWj+aR5lfp5pOttKHavo5HR4qBqhbfPJMzU13tBn1K8LAXhl9hkLhssiCH3sopZLhi
+ CxedjoyvPVmO2wuZQdvxICAa2cuHBKb0EmUQOmnnW1T2rzy5op6MzvUvUsXyqDU/DTz5
+ uShYtvDwSVM6Wll0LPl99gh7VAK/XxahNcr+fcH9asqwETI+f+YG6QyY6G7Bs9O1fwDi
+ 8d7XejgKjjD2/+UFSSLpyZbrguDEgvNRLV1lSrTqxaDRSQ7IxFaVENXf9FSjb7Edgc+c
+ /WOvNK0mUSG593qvIAWp85b8eBvc4DS+ZEoI+p5AZAkURYCR8QaPj2nxQH3bkSefN/2W
+ zFjw==
+X-Gm-Message-State: AOJu0YyMMyUh/MrLs/ETtA1XWsQ1FdjBtTC8FIGqmBDbLbcJg65r5dFf
+ J4Dg1VObDCDSUUcqvdEdKWhzvYmLdFZeQJArV+9CZ0Go4ytHkxoe
+X-Gm-Gg: ASbGnctr8rJ5noAGrBiAyNDi6o/pk14i0cgVw5qQRVmT2cgdRI7sOK3jeQF5mX4ruiZ
+ +gQPKVV92gpp1t3vXaYZIqZaPF8iUuBCA3kQjnQeBCSCl81FfN3mymakzarDSduIznRUN0FhQew
+ hy8Y7PAdzpXR3nkFsmvcho27gTUkaHb6jNX/O0uQBOX1aS/7jpf7MsQfALJulM1DOITXJe5XF4a
+ CcIg4I50MeW0jTGFVzfH5reErSA8nkbKLRBZcF6c4gh+EERWhCmZU9LMJwquB72JnC3ia+mROc=
+X-Google-Smtp-Source: AGHT+IGIvKmBz7wgljwTQL2oQFNQVDPIQHGLbxWnxRc+mc5RVO61mHNgCdbtTanbMigFGHBsIJ46IA==
+X-Received: by 2002:a17:90b:2803:b0:2ea:4c4f:bd20 with SMTP id
+ 98e67ed59e1d1-2f2e93ad642mr6109877a91.32.1734569425878; 
+ Wed, 18 Dec 2024 16:50:25 -0800 (PST)
+Received: from localhost (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f2ed62cde6sm2267605a91.13.2024.12.18.16.50.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Dec 2024 16:48:03 -0800 (PST)
-Date: Thu, 19 Dec 2024 00:48:00 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>
-CC: Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_2/2=5D_hw/usb/hcd-xhci-pci?=
- =?US-ASCII?Q?=3A_Add_TI_TUSB73X0_XHCI_controller_model?=
-In-Reply-To: <20241212085207.1439501-3-npiggin@gmail.com>
-References: <20241212085207.1439501-1-npiggin@gmail.com>
- <20241212085207.1439501-3-npiggin@gmail.com>
-Message-ID: <B6A151CF-47E4-4E6A-BAD6-7C5BE8C35F52@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
+ Wed, 18 Dec 2024 16:50:25 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x436.google.com
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 19 Dec 2024 10:50:20 +1000
+Message-Id: <D6F9JJ5CT2YO.D1DXT3XHPQWS@gmail.com>
+Cc: <qemu-devel@nongnu.org>, "Akihiko Odaki" <akihiko.odaki@daynix.com>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2 1/2] hw/usb/hcd-xhci-pci: Make PCI device more
+ configurable
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Phil Dennis-Jordan" <phil@philjordan.eu>
+X-Mailer: aerc 0.18.2
+References: <20241212085207.1439501-1-npiggin@gmail.com>
+ <20241212085207.1439501-2-npiggin@gmail.com>
+ <CAAibmn3NsDewTEFdWoR=VpTRSb5C67bFMYXnf74zBQOwWCLi1Q@mail.gmail.com>
+ <D6EFJHL1PDCX.2TZC2E8DZLNU3@gmail.com>
+ <CAAibmn3STc4hWJPfDtdp2rDscx_8cO=cO4JA=qhneif03Jf9QA@mail.gmail.com>
+In-Reply-To: <CAAibmn3STc4hWJPfDtdp2rDscx_8cO=cO4JA=qhneif03Jf9QA@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x52d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,267 +102,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Am 12=2E Dezember 2024 08:52:07 UTC schrieb Nicholas Piggin <npiggin@gmail=
-=2Ecom>:
->The TI TUSB73X0 controller has some interesting differences from NEC,
->notably a separate BAR for MSIX, and PM capabilities=2E The spec is freel=
-y
->available without sign-up=2E
+On Thu Dec 19, 2024 at 7:06 AM AEST, Phil Dennis-Jordan wrote:
+> On Wed, 18 Dec 2024 at 02:19, Nicholas Piggin <npiggin@gmail.com> wrote:
 >
->This controller is accepted by IBM Power proprietary firmware and
->software (when the subsystem IDs are set to Power servers, which is not
->done here)=2E IBM code is picky about device support, so the NEC device
->can not be used=2E
+> > On Thu Dec 12, 2024 at 8:41 PM AEST, Phil Dennis-Jordan wrote:
+
+[...]
+
+> > > > @@ -143,22 +177,37 @@ static void usb_xhci_pci_realize(struct PCIDe=
+vice
+> > > > *dev, Error **errp)
+> > > >          /* With msi=3Dauto, we fall back to MSI off silently */
+> > > >          error_free(err);
+> > > >      }
+> > > > +
+> > > >      pci_register_bar(dev, 0,
+> > > >                       PCI_BASE_ADDRESS_SPACE_MEMORY |
+> > > >                       PCI_BASE_ADDRESS_MEM_TYPE_64,
+> > > >                       &s->xhci.mem);
+> > > >
+> > > >      if (pci_bus_is_express(pci_get_bus(dev))) {
+> > > > -        ret =3D pcie_endpoint_cap_init(dev, 0xa0);
+> > > > +        ret =3D pcie_endpoint_cap_init(dev, s->pcie_cap_off);
+> > > >          assert(ret > 0);
+> > > >      }
+> > > >
+> > > >      if (s->msix !=3D ON_OFF_AUTO_OFF) {
+> > > > -        /* TODO check for errors, and should fail when msix=3Don *=
+/
+> > > > -        msix_init(dev, s->xhci.numintrs,
+> > > > -                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
+> > > > -                  &s->xhci.mem, 0, OFF_MSIX_PBA,
+> > > > -                  0x90, NULL);
+> > > > +        MemoryRegion *msix_bar =3D &s->xhci.mem;
+> > > > +        if (s->msix_bar_nr !=3D 0) {
+> > > > +            memory_region_init(&dev->msix_exclusive_bar, OBJECT(de=
+v),
+> > > > +                               "xhci-msix", s->msix_bar_size);
+> > > > +            msix_bar =3D &dev->msix_exclusive_bar;
+> > > > +        }
+> > > > +
+> > > > +        ret =3D msix_init(dev, s->xhci.numintrs,
+> > > > +                        msix_bar, s->msix_bar_nr, s->msix_table_of=
+f,
+> > > > +                        msix_bar, s->msix_bar_nr, s->msix_pba_off,
+> > > > +                        s->msix_cap_off, errp);
+> > > > +        if (ret) {
+> > > > +            return;
+> > > > +        }
+> > > >
+> > >
+> > > Surely we should only propagate the error and fail realize() iff s->m=
+six
+> > is
+> > > ON_OFF_AUTO_ON?
+> > >
+> > > For ON_OFF_AUTO_AUTO, msix_init returning failure isn't a critical er=
+ror.
+> >
+> > Yep you're right... you had been testing with msix disabled. I wonder i=
+f
+> > there is a good way to force fail this in qtests?
+> >
 >
->Signed-off-by: Nicholas Piggin <npiggin@gmail=2Ecom>
->---
-> include/hw/pci/pci_ids=2Eh        |  1 +
-> include/hw/usb/xhci=2Eh           |  1 +
-> hw/usb/hcd-xhci-ti=2Ec            | 92 +++++++++++++++++++++++++++++++++
-> tests/qtest/usb-hcd-xhci-test=2Ec | 21 +++++---
-> hw/usb/Kconfig                  |  5 ++
-> hw/usb/meson=2Ebuild              |  1 +
-> 6 files changed, 115 insertions(+), 6 deletions(-)
-> create mode 100644 hw/usb/hcd-xhci-ti=2Ec
+> I'm really the wrong person to ask about qtest, I'm only just beginning t=
+o
+> get to grips with it.
+
+I'm not an expert in it, for the most part it can set up a machine as
+usual, but the test case itself pokes at the machine directly by
+talking to an interface on the host that can run memory access, qmp
+commands, etc.
+
+Can just make things easier and faster to set up and orchestrate than
+doing it from within the target machine code.
+
+> It seems the only real reason msix_init fails other
+> than misconfiguration of the device/BAR is when msi_nonbroken =3D false.
 >
->diff --git a/include/hw/pci/pci_ids=2Eh b/include/hw/pci/pci_ids=2Eh
->index f1a53fea8d6=2E=2Efdb692db513 100644
->--- a/include/hw/pci/pci_ids=2Eh
->+++ b/include/hw/pci/pci_ids=2Eh
->@@ -182,6 +182,7 @@
-> #define PCI_VENDOR_ID_HP                 0x103c
->=20
-> #define PCI_VENDOR_ID_TI                 0x104c
->+#define PCI_DEVICE_ID_TI_TUSB73X0        0x8241
->=20
-> #define PCI_VENDOR_ID_MOTOROLA           0x1057
-> #define PCI_DEVICE_ID_MOTOROLA_MPC106    0x0002
->diff --git a/include/hw/usb/xhci=2Eh b/include/hw/usb/xhci=2Eh
->index 5c90e1373e5=2E=2E203ec1fca32 100644
->--- a/include/hw/usb/xhci=2Eh
->+++ b/include/hw/usb/xhci=2Eh
->@@ -3,6 +3,7 @@
->=20
-> #define TYPE_XHCI "base-xhci"
-> #define TYPE_NEC_XHCI "nec-usb-xhci"
->+#define TYPE_TI_XHCI "ti-usb-xhci"
-> #define TYPE_QEMU_XHCI "qemu-xhci"
-> #define TYPE_XHCI_SYSBUS "sysbus-xhci"
->=20
->diff --git a/hw/usb/hcd-xhci-ti=2Ec b/hw/usb/hcd-xhci-ti=2Ec
->new file mode 100644
->index 00000000000=2E=2E6d4b44f6aaf
->--- /dev/null
->+++ b/hw/usb/hcd-xhci-ti=2Ec
->@@ -0,0 +1,92 @@
->+/*
->+ * USB xHCI controller emulation
->+ * Datasheet https://www=2Eti=2Ecom/product/TUSB7340
->+ *
->+ * Copyright (c) 2011 Securiforest
->+ * Date: 2011-05-11 ;  Author: Hector Martin <hector@marcansoft=2Ecom>
->+ * Based on usb-xhci-nec=2Ec, emulates TI TUSB73X0
->+ *
->+ * This library is free software; you can redistribute it and/or
->+ * modify it under the terms of the GNU Lesser General Public
->+ * License as published by the Free Software Foundation; either
->+ * version 2=2E1 of the License, or (at your option) any later version=
-=2E
->+ *
->+ * This library is distributed in the hope that it will be useful,
->+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
->+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE=2E  See the GNU
->+ * Lesser General Public License for more details=2E
->+ *
->+ * You should have received a copy of the GNU Lesser General Public
->+ * License along with this library; if not, see <http://www=2Egnu=2Eorg/=
-licenses/>=2E
->+ */
->+
->+#include "qemu/osdep=2Eh"
->+#include "hw/usb=2Eh"
->+#include "qemu/module=2Eh"
->+#include "hw/pci/pci=2Eh"
->+#include "hw/qdev-properties=2Eh"
->+
->+#include "hcd-xhci-pci=2Eh"
->+
->+OBJECT_DECLARE_SIMPLE_TYPE(XHCITiState, TI_XHCI)
->+
->+struct XHCITiState {
->+    /*< private >*/
->+    XHCIPciState parent_obj;
->+    /*< public >*/
+> At least on x86(-64), msi_nonbroken=3Dtrue is unconditionally set in
+> apic_realize(). (I think real hardware would not support MSI(-X) on the
+> i440FX chipset - I was fairly certain it was the PCI root/southbridge
+> catching the writes to the reserved memory region, and I didn't think the
+> PIIX did this; but at least in QEMU it doesn't seem to be implemented in =
+a
+> chipset-dependent way.) I'm not sure it's possible to run QEMU without an
+> APIC?
+>
+> On aarch64, the GICv3 needs to explicitly enable support (via the ITS), s=
+o
+> perhaps it's possible to set up an aarch64 qtest with ITS disabled? It
+> looks like the 'virt' machine type only supports the ITS from version 6.2=
+,
+> so older versions will disable it.
+>
+> Sorry, clutching at straws here.
 
-These markers are obsolete=2E Instead, a blank line after parent_obj shoul=
-d be inserted=2E
+No that's okay, thanks for the input. Finding a platform with
+broken msi could be an interesting test. I'll check it out.
 
->+    uint32_t intrs;
->+    uint32_t slots;
->+};
->+
->+static Property ti_xhci_properties[] =3D {
+> > > > +
+> > > > +        pci_register_bar(dev, s->msix_bar_nr,
+> > > > +                         PCI_BASE_ADDRESS_SPACE_MEMORY |
+> > > > +                         PCI_BASE_ADDRESS_MEM_TYPE_64,
+> > > > +                         msix_bar);
+> > > >
+> > >
+> > > Is it safe to call pci_register_bar() again for the msix_bar_nr =3D 0=
+ case?
+> > > Even if it is safe, is it sensible? If we're calling it twice for the
+> > same
+> > > BAR, and the arguments of either of the calls changes in future, the
+> > other
+> > > needs to change too. Doesn't seem ideal.
+> >
+> > Good catch. It looks like it "works" so long as the bar wasn't mapped,
+> > but I'm sure bad practice... Interesting there is no assertion in
+> > there though. I'll fix it though.
+> >
+>
+> I notice there's a msix_init_exclusive_bar()=E2=80=A6 I wonder if it'd be=
+ simpler
+> to use that and modify it so it allows you to choose a size and layout fo=
+r
+> the BAR, rather than adding all that extra code to deal with the extra BA=
+R
+> in the XHCI?
+> (It already calls pci_register_bar() and msix_init() internally, but seem=
+s
+> to set the BAR's size to 4096 and places the PBA at halfway through the
+> BAR. Perhaps rename it to something like
+> msix_init_exclusive_bar_with_layout and pass the bar_size and
+> bar_pba_offset in as parameters; then make msix_init_exclusive_bar() a
+> wrapper for that function with the existing defaults for those variables?=
+)
+>
+> Just kicking around some ideas here, I have no idea if that actually ends
+> up making things simpler=E2=80=A6
 
-s/static Property/static const Property/ as of recent tree-wide changes=2E
+Yeah, I ended up beginning with that, but ended up running into some of
+these issues and ended up being more code due to duplicating the non
+exclusive case.
 
-Best regards,
-Bernhard
+I'll stick with open-coding it for now, but it almost seems like there
+could be an API call that could encompass exclusive and non-exclusive
+cases in one. Would probably be good to have more than one caller before
+trying to refactor it though.
 
->+    DEFINE_PROP_ON_OFF_AUTO("msi", XHCIPciState, msi, ON_OFF_AUTO_AUTO),
->+    DEFINE_PROP_ON_OFF_AUTO("msix", XHCIPciState, msix, ON_OFF_AUTO_AUTO=
-),
->+    DEFINE_PROP_UINT32("intrs", XHCITiState, intrs, 8),
->+    DEFINE_PROP_UINT32("slots", XHCITiState, slots, XHCI_MAXSLOTS),
->+    DEFINE_PROP_END_OF_LIST(),
->+};
->+
->+static void ti_xhci_instance_init(Object *obj)
->+{
->+    XHCIPciState *pci =3D XHCI_PCI(obj);
->+    XHCITiState *ti =3D TI_XHCI(obj);
->+
->+    pci->xhci=2Enumintrs =3D ti->intrs;
->+    pci->xhci=2Enumslots =3D ti->slots;
->+
->+    pci->cache_line_size =3D 0x0;
->+    pci->pm_cap_off =3D 0x40;
->+    pci->pcie_cap_off =3D 0x70;
->+    pci->msi_cap_off =3D 0x48;
->+    pci->msix_cap_off =3D 0xc0;
->+    pci->msix_bar_nr =3D 0x2;
->+    pci->msix_bar_size =3D 0x800000;
->+    pci->msix_table_off =3D 0x0;
->+    pci->msix_pba_off =3D 0x1000;
->+}
->+
->+static void ti_xhci_class_init(ObjectClass *klass, void *data)
->+{
->+    PCIDeviceClass *k =3D PCI_DEVICE_CLASS(klass);
->+    DeviceClass *dc =3D DEVICE_CLASS(klass);
->+
->+    device_class_set_props(dc, ti_xhci_properties);
->+    k->vendor_id    =3D PCI_VENDOR_ID_TI;
->+    k->device_id    =3D PCI_DEVICE_ID_TI_TUSB73X0;
->+    k->revision     =3D 0x02;
->+}
->+
->+static const TypeInfo ti_xhci_info =3D {
->+    =2Ename          =3D TYPE_TI_XHCI,
->+    =2Eparent        =3D TYPE_XHCI_PCI,
->+    =2Einstance_size =3D sizeof(XHCITiState),
->+    =2Einstance_init =3D ti_xhci_instance_init,
->+    =2Eclass_init    =3D ti_xhci_class_init,
->+};
->+
->+static void ti_xhci_register_types(void)
->+{
->+    type_register_static(&ti_xhci_info);
->+}
->+
->+type_init(ti_xhci_register_types)
->diff --git a/tests/qtest/usb-hcd-xhci-test=2Ec b/tests/qtest/usb-hcd-xhci=
--test=2Ec
->index 93614e55461=2E=2Ed4a0d8cc217 100644
->--- a/tests/qtest/usb-hcd-xhci-test=2Ec
->+++ b/tests/qtest/usb-hcd-xhci-test=2Ec
->@@ -59,6 +59,9 @@ typedef struct XHCIQState {
-> #define XHCI_NEC_ID (PCI_DEVICE_ID_NEC_UPD720200 << 16 | \
->                      PCI_VENDOR_ID_NEC)
->=20
->+#define XHCI_TI_ID  (PCI_DEVICE_ID_TI_TUSB73X0 << 16 | \
->+                     PCI_VENDOR_ID_TI)
->+
-> /**
->  * Locate, verify, and return a handle to the XHCI device=2E
->  */
->@@ -78,6 +81,8 @@ static QPCIDevice *get_xhci_device(QTestState *qts, uin=
-t32_t *fingerprint)
->     switch (xhci_fingerprint) {
->     case XHCI_NEC_ID:
->         break;
->+    case XHCI_TI_ID:
->+        break;
->     default:
->         /* Unknown device=2E */
->         g_assert_not_reached();
->@@ -134,11 +139,12 @@ static XHCIQState *xhci_boot(const char *cli, =2E=
-=2E=2E)
->         va_end(ap);
->     } else {
->         s =3D xhci_boot("-M q35 "
->-                      "-device nec-usb-xhci,id=3Dxhci,bus=3Dpcie=2E0,add=
-r=3D1d=2E0 "
->+                      "-device %s,id=3Dxhci,bus=3Dpcie=2E0,addr=3D1d=2E0=
- "
->                       "-drive id=3Ddrive0,if=3Dnone,file=3Dnull-co://,"
->-                          "file=2Eread-zeroes=3Don,format=3Draw");
->+                          "file=2Eread-zeroes=3Don,format=3Draw",
->+                      qtest_has_device("ti-usb-xhci") ?
->+                          "ti-usb-xhci" : "nec-usb-xhci");
->     }
->-
->     return s;
-> }
->=20
->@@ -392,10 +398,12 @@ static void pci_xhci_stress_rings(void)
->     int i;
->=20
->     s =3D xhci_boot("-M q35 "
->-            "-device nec-usb-xhci,id=3Dxhci,bus=3Dpcie=2E0,addr=3D1d=2E0=
- "
->+            "-device %s,id=3Dxhci,bus=3Dpcie=2E0,addr=3D1d=2E0 "
->             "-device usb-storage,bus=3Dxhci=2E0,drive=3Ddrive0 "
->             "-drive id=3Ddrive0,if=3Dnone,file=3Dnull-co://,"
->-                "file=2Eread-zeroes=3Don,format=3Draw "
->+                "file=2Eread-zeroes=3Don,format=3Draw ",
->+            qtest_has_device("ti-usb-xhci") ?
->+                "ti-usb-xhci" : "nec-usb-xhci"
->             );
->=20
->     hcsparams1 =3D xhci_cap_readl(s, 0x4); /* HCSPARAMS1 */
->@@ -567,7 +575,8 @@ int main(int argc, char **argv)
->         return 0;
->     }
->=20
->-    if (!qtest_has_device("nec-usb-xhci")) {
->+    if (!qtest_has_device("nec-usb-xhci") &&
->+        !qtest_has_device("ti-usb-xhci")) {
->         return 0;
->     }
->=20
->diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
->index 5fbecd2f43b=2E=2E8e5c4747af9 100644
->--- a/hw/usb/Kconfig
->+++ b/hw/usb/Kconfig
->@@ -49,6 +49,11 @@ config USB_XHCI_NEC
->     default y if PCI_DEVICES
->     select USB_XHCI_PCI
->=20
->+config USB_XHCI_TI
->+    bool
->+    default y if PCI_DEVICES
->+    select USB_XHCI_PCI
->+
-> config USB_XHCI_SYSBUS
->     bool
->     select USB_XHCI
->diff --git a/hw/usb/meson=2Ebuild b/hw/usb/meson=2Ebuild
->index 1b4d1507e41=2E=2Eb874a93f16e 100644
->--- a/hw/usb/meson=2Ebuild
->+++ b/hw/usb/meson=2Ebuild
->@@ -23,6 +23,7 @@ system_ss=2Eadd(when: 'CONFIG_USB_XHCI', if_true: files=
-('hcd-xhci=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_USB_XHCI_PCI', if_true: files('hcd-xhci-pc=
-i=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_USB_XHCI_SYSBUS', if_true: files('hcd-xhci=
--sysbus=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_USB_XHCI_NEC', if_true: files('hcd-xhci-ne=
-c=2Ec'))
->+system_ss=2Eadd(when: 'CONFIG_USB_XHCI_TI', if_true: files('hcd-xhci-ti=
-=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_USB_DWC2', if_true: files('hcd-dwc2=2Ec'))
-> system_ss=2Eadd(when: 'CONFIG_USB_DWC3', if_true: files('hcd-dwc3=2Ec'))
->=20
+Thanks,
+Nick
 
