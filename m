@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32980E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 11:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50A55E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 11:17:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOEVy-0004lC-6b; Thu, 19 Dec 2024 06:16:22 -0500
+	id 1tOEVt-0004cA-Pr; Thu, 19 Dec 2024 06:16:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tOEVu-0004cD-4I
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:19 -0500
+ id 1tOEVs-0004bt-3I
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:16 -0500
 Received: from mgamail.intel.com ([198.175.65.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1tOEVs-0005Kx-Di
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:17 -0500
+ id 1tOEVq-0005Kx-G0
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:16:15 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734606977; x=1766142977;
+ t=1734606975; x=1766142975;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=MHgdNVgv8JU4EXomJN5hU+EHD1vfrDJJzg4gGCEl33Y=;
- b=CB5/rBGKLwHDOn+b9CWfz4Y8Y/EeCiWOb+bHbN+XsEIx15n4r4QjJV/E
- VWoBTS76/G5AW7G+EPEK2+eT6YFAhcQ9PywyWbs+5ki3h1a6rQS7wiql6
- K51DwDT7ciSX3VGUjep9YD3vVT9uK41TJFcVir7Y42PoIRSUwBeQ/lv9d
- 816l2XwUbCvGtQ7HmHjiorAa9yWPj9mJixqTFXkrXYwmOspEdzAyIq12b
- uOiDMqXRYDmVtu+L1xnQOAyhnH/8jPpS1mSTEEFrLXaVLY3MbW6kB8KJw
- qDUOrUtfGssBTPSygRMfVdsQ/3jx7WD5l+gryzkArrJc6dP+NF4lId2Fu A==;
-X-CSE-ConnectionGUID: WWiYbFKKTGGYWoJu9vYWUA==
-X-CSE-MsgGUID: 1MW9reJDRV265Krrk8NEdw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34994988"
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="34994988"
+ bh=bkOTh7sm1DEDqwgD7+5B/BRslnhPu8TCuJZZUpkjQy8=;
+ b=lXQ+dP6NZrx1pYg6b138glPblELdwwChd1V1mJkLGMaFMdHkE2Fk4LLg
+ C4wBKdMIuo8gse3tOYJd8kB0kz6fPETk1cCx0RBlzvp6RPOTeR7Y5tV6f
+ NoFb1uCUXFqXwK1wGhvBoakmJv/js2LrxuMlWaaLcpbD5G5+uPrMDWmD2
+ gMIp8zbCdE6spEfs8vB3xTu68fGZ8We/TDery4Y4Nvp/UL1Nj9a6xFqW/
+ RMOkGJlaHIG/oQCkXAK1FzEMweZHA2Gsv0mdGIGhPhcLU46eSEdfANnbq
+ GbOLmE6kIo3uHkE89SCE+piBVLT7InhJZbBycteS1n/DVOwcxWHlIn6hG w==;
+X-CSE-ConnectionGUID: qw0ivHvpRg6SjUSSSKhG8Q==
+X-CSE-MsgGUID: gdsjSQgSRumsz293etq9hQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34994976"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="34994976"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Dec 2024 03:16:16 -0800
-X-CSE-ConnectionGUID: +MY+tXIkTxakM5AkCiefYg==
-X-CSE-MsgGUID: KvXn05KtSXe/drhSwlIZ9Q==
+ 19 Dec 2024 03:16:14 -0800
+X-CSE-ConnectionGUID: mb9ALuozQ8eJr43EZAH5Jw==
+X-CSE-MsgGUID: 4o1dBuVZSgKccpVCfL7pDQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="97956195"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="97956179"
 Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa006.fm.intel.com with ESMTP; 19 Dec 2024 03:16:13 -0800
+ by fmviesa006.fm.intel.com with ESMTP; 19 Dec 2024 03:16:10 -0800
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -52,10 +52,9 @@ To: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
 Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>,
  Zhao Liu <zhao1.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Marcelo Tosatti <mtosatti@redhat.com>, xiaoyao.li@intel.com
-Subject: [PATCH v2 09/10] i386/cpu: Set up CPUID_HT in
- x86_cpu_expand_features() instead of cpu_x86_cpuid()
-Date: Thu, 19 Dec 2024 06:01:24 -0500
-Message-Id: <20241219110125.1266461-10-xiaoyao.li@intel.com>
+Subject: [PATCH v2 08/10] cpu: Remove nr_cores from struct CPUState
+Date: Thu, 19 Dec 2024 06:01:23 -0500
+Message-Id: <20241219110125.1266461-9-xiaoyao.li@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20241219110125.1266461-1-xiaoyao.li@intel.com>
 References: <20241219110125.1266461-1-xiaoyao.li@intel.com>
@@ -86,49 +85,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently CPUID_HT is evaluated in cpu_x86_cpuid() each time. It's not a
-correct usage of how feature bit is maintained and evaluated. The
-expected practice is that features are tracked in env->features[] and
-cpu_x86_cpuid() should be the consumer of env->features[].
-
-Track CPUID_HT in env->features[FEAT_1_EDX] instead and evaluate it in
-cpu's realizefn().
+There is no user of it now, remove it.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 ---
-There is one issue[1] of CPUID_HT being user settable that when
-"-cpu xxx,-ht" with "-smp 2", HT flag is still exposed to guest.
-However, the issue is not irrelevant to this patch. If anyone has
-interest to reslove it please go ahead.
+ hw/core/cpu-common.c  | 1 -
+ include/hw/core/cpu.h | 2 --
+ system/cpus.c         | 1 -
+ 3 files changed, 4 deletions(-)
 
-[1] https://lore.kernel.org/qemu-devel/Z1FUDGnenETEFV6Z@intel.com/
----
- target/i386/cpu.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index fd59da5d445d..bee494bdd029 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -6537,7 +6537,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         *edx = env->features[FEAT_1_EDX];
-         if (threads_per_pkg > 1) {
-             *ebx |= threads_per_pkg << 16;
--            *edx |= CPUID_HT;
-         }
-         if (!cpu->enable_pmu) {
-             *ecx &= ~CPUID_EXT_PDCM;
-@@ -7528,6 +7527,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
-     }
+diff --git a/hw/core/cpu-common.c b/hw/core/cpu-common.c
+index 09c79035949b..77089d4ed304 100644
+--- a/hw/core/cpu-common.c
++++ b/hw/core/cpu-common.c
+@@ -243,7 +243,6 @@ static void cpu_common_initfn(Object *obj)
+     cpu->cluster_index = UNASSIGNED_CLUSTER_INDEX;
+     /* user-mode doesn't have configurable SMP topology */
+     /* the default value is changed by qemu_init_vcpu() for system-mode */
+-    cpu->nr_cores = 1;
+     cpu->nr_threads = 1;
+     cpu->cflags_next_tb = -1;
  
-+    if (x86_threads_per_pkg(&env->topo_info) > 1) {
-+        env->features[FEAT_1_EDX] |= CPUID_HT;
-+    }
-+
-     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
-         FeatureDep *d = &feature_dependencies[i];
-         if (!(env->features[d->from.index] & d->from.mask)) {
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index c3ca0babcb3f..fb397cdfc53d 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -407,7 +407,6 @@ struct qemu_work_item;
+  *   Under TCG this value is propagated to @tcg_cflags.
+  *   See TranslationBlock::TCG CF_CLUSTER_MASK.
+  * @tcg_cflags: Pre-computed cflags for this cpu.
+- * @nr_cores: Number of cores within this CPU package.
+  * @nr_threads: Number of threads within this CPU core.
+  * @thread: Host thread details, only live once @created is #true
+  * @sem: WIN32 only semaphore used only for qtest
+@@ -466,7 +465,6 @@ struct CPUState {
+     CPUClass *cc;
+     /*< public >*/
+ 
+-    int nr_cores;
+     int nr_threads;
+ 
+     struct QemuThread *thread;
+diff --git a/system/cpus.c b/system/cpus.c
+index ba633c7688b2..3db4a7d0ab4a 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -681,7 +681,6 @@ void qemu_init_vcpu(CPUState *cpu)
+ {
+     MachineState *ms = MACHINE(qdev_get_machine());
+ 
+-    cpu->nr_cores = machine_topo_get_cores_per_socket(ms);
+     cpu->nr_threads =  ms->smp.threads;
+     cpu->stopped = true;
+     cpu->random_seed = qemu_guest_random_seed_thread_part1();
 -- 
 2.34.1
 
