@@ -4,60 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CFF5E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 06:59:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CB1E7718B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 07:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOAVC-0006le-10; Thu, 19 Dec 2024 01:59:18 -0500
+	id 1tOAhf-0000KP-L0; Thu, 19 Dec 2024 02:12:11 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tOAVA-0006l0-39; Thu, 19 Dec 2024 01:59:16 -0500
-Received: from mgamail.intel.com ([198.175.65.10])
+ id 1tOAhd-0000JK-B5; Thu, 19 Dec 2024 02:12:09 -0500
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1tOAV8-0005IP-52; Thu, 19 Dec 2024 01:59:15 -0500
+ id 1tOAhb-0000B0-It; Thu, 19 Dec 2024 02:12:09 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734591554; x=1766127554;
+ t=1734592328; x=1766128328;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=VaXttkF8EVBqFeyXTg6CWMny5d8W+6UWMMLUW+gPnPk=;
- b=NAQk+/m4rcggc5f6OMg8cIEGYz2dIbDz3pvtTFwx4yp4iO3LSUuJv2IJ
- hdjKozGd02utBeIiCILFA6HtIjwJMR9xXn29JVAHMHRqmeeiECJez28QJ
- 8X7+22G5GKaX212nJeA9Q9wlpKtGjkpQQjFcvNII51n74ZsVok9uRgZSV
- QkLyVZlO4dbrJrgoBoBcyU0YquGAS8Atf0uZO9MrNAVS+WbA4QiehBCc9
- Uurn0HrXQ4ZHigVr0hbmBBjbJvSwzS6c9iMv0kgV6LlZmrq/KqCpRKUvU
- PCPAWAAI14rhfcT5M/UYjMcO+FnoVZzDICfeOKKQqrwFUWXyhWphMSbBJ A==;
-X-CSE-ConnectionGUID: sX6mVR5YQT6HjL+pTO8Pig==
-X-CSE-MsgGUID: biti/0YHSS2SNFCKa5+OBw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="52498513"
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="52498513"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 22:59:11 -0800
-X-CSE-ConnectionGUID: /+sMp4nFRxOCC4U182JR7A==
-X-CSE-MsgGUID: c8HbErRiS/yNGGkJt8+Ubw==
+ bh=LUjbjnsIOgbLecN2TJ0VlLoVBCyQnwbHtcx8B3DCHF0=;
+ b=n69ozAMK2Tc4xFKc1oOWGszIxAR+CnCcZabCaouZb12jIOXcpyW/ozgW
+ ILWLVopGTcwhIAR62rnOGb8IVvQmu66+UrJA+D2YE1R7Hjw5SqgCOgvHA
+ wyNWr6Kin86y3CW/hwJajDDjeroNf0zD7aq03+IpEw0uvs57wYQWkLVfa
+ HoxzW8IuNidWuFHg7X4zfLllMTGwsOiL+ZcUMM83x0uLORNWfTx4X08mH
+ 1aPo9SieiQUjk5ANitOn0oSmDBneDHp11/FRicB0hGi31tml/fil6GG5H
+ uVJXJyiaBW1I7gepV5eXw/PgZnyQAV8NxIjZdDDIA+7aGzLbDpW1JaLB/ Q==;
+X-CSE-ConnectionGUID: g4FKpxGZRHWf1rTP+uT0Ew==
+X-CSE-MsgGUID: LW1Xm7LqRBKhc/UKJRRpag==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="35247497"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="35247497"
+Received: from fmviesa009.fm.intel.com ([10.60.135.149])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Dec 2024 23:12:05 -0800
+X-CSE-ConnectionGUID: OsH/+ug4R36jLBaXQcqErw==
+X-CSE-MsgGUID: NeY/xevERVKOpb75IBkcUg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="98510657"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="98641538"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 18 Dec 2024 22:59:10 -0800
-Date: Thu, 19 Dec 2024 15:17:49 +0800
+ by fmviesa009.fm.intel.com with ESMTP; 18 Dec 2024 23:12:03 -0800
+Date: Thu, 19 Dec 2024 15:30:43 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, qemu-rust@nongnu.org
-Subject: Re: [PATCH 4/7] rust: pl011: fix break errors and definition of Data
- struct
-Message-ID: <Z2PInQy1ag4szr5H@intel.com>
+Subject: Re: [PATCH 5/7] rust: pl011: extend registers to 32 bits
+Message-ID: <Z2PLo99JnPfNH/t0@intel.com>
 References: <20241212172209.533779-1-pbonzini@redhat.com>
- <20241212172209.533779-5-pbonzini@redhat.com>
+ <20241212172209.533779-6-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20241212172209.533779-5-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20241212172209.533779-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -82,31 +81,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 12, 2024 at 06:22:01PM +0100, Paolo Bonzini wrote:
-> Date: Thu, 12 Dec 2024 18:22:01 +0100
+On Thu, Dec 12, 2024 at 06:22:02PM +0100, Paolo Bonzini wrote:
+> Date: Thu, 12 Dec 2024 18:22:02 +0100
 > From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: [PATCH 4/7] rust: pl011: fix break errors and definition of Data
->  struct
+> Subject: [PATCH 5/7] rust: pl011: extend registers to 32 bits
 > X-Mailer: git-send-email 2.47.1
 > 
-> The Data struct is wrong, and does not show how bits 8-15 of DR
-> are the receive status.  Fix it, and use it to fix break
-> errors ("c >> 8" in the C code does not translate to
-> "c.to_be_bytes()[3]").
+> The PL011 Technical Reference Manual lists the "real" size of the
+> registers in table 3-1, and only rounds up to the next byte when
+> describing the registers; for example, UARTDR is listed as having
+> width 12/8 (12 bits read, 8 written) and only bits 15:0 are listed
+> in "Table 3-2 UARTDR Register".
+> 
+> However, in practice these are 32-bit registers, accessible only
+> through 32-bit MMIO accesses; preserving the fiction that they're
+> smaller introduces multiple casts (to go from the bilge bitfield
+> type to e.g u16 to u64) and more importantly it breaks the
+> migration stream (though only on big-endian machines) because
+> the Rust vmstate macros are not yet type safe.
+> 
+> So, just make everything 32-bits wide.
 > 
 > Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  rust/hw/char/pl011/src/device.rs | 15 ++++++------
->  rust/hw/char/pl011/src/lib.rs    | 41 ++++++++++++++++++++++----------
->  2 files changed, 36 insertions(+), 20 deletions(-)
-
->      impl ReceiveStatusErrorClear {
-> +        pub fn set_from_data(&mut self, data: Data) {
-> +            self.set_errors(data.errors());
-> +        }
-> +
-
-This is the clear and clever way.
+>  rust/hw/char/pl011/src/device.rs | 36 ++++++++++++++------------------
+>  rust/hw/char/pl011/src/lib.rs    | 23 +++++++++-----------
+>  2 files changed, 26 insertions(+), 33 deletions(-)
+> 
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
