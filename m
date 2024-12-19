@@ -4,104 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DC84E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:25:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD67E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJIG-0007bP-Rv; Thu, 19 Dec 2024 11:22:33 -0500
+	id 1tOJFa-0001oY-UZ; Thu, 19 Dec 2024 11:19:47 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHii-0003Aa-F0
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:44 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHih-0002O5-4b
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:44 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734619301;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=oIdN8k8UxbFd6pPRixbwE/O/YwzOJXLRbaptlMiUIjU=;
- b=XWmOV9wUwyPje4Vsu/KP4BYWBfv2DOxk5DjZrlLHQo+myGqqXcnlVsCYm0+2GskYFvRb8m
- +det+ogPsXSzjk/znJrjEpF05dqo283T6SB9uKvNYMAUPo3Ei+IPhqphKm+Mnpy0tRRAyq
- aXG3LZ/4sNEEbTbgcnuNou1hm+mCO44=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-536-V39AOP5YN_K4uAX--bvcUw-1; Thu, 19 Dec 2024 09:41:40 -0500
-X-MC-Unique: V39AOP5YN_K4uAX--bvcUw-1
-X-Mimecast-MFC-AGG-ID: V39AOP5YN_K4uAX--bvcUw
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-436219070b4so5115175e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734619299; x=1735224099;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oIdN8k8UxbFd6pPRixbwE/O/YwzOJXLRbaptlMiUIjU=;
- b=gg8NHc7kvw1WNOMbJKuWET0Azl2juFmVrBd9VKZlh93exuWYFRfw61SQR3uofrFQxZ
- 0344x8Si7866Zkq92ArvMqc7+rH0L4hz/Goy+fN0aPVJ/rLIfP40DVuCEi8y53i/uMtO
- v/cqeW0RfA0wglumvVfHpVKqWfSAgIN2vLOWEHr2JIET+edeYzsx5+PEQDe7csSNOcsc
- YHXit283nOdXjzp8y7MdbK9G/k4brXAVjiLCKpZOgp3u5vpteOeGtOGpuRutc3z+aiXw
- g2GuBKbWdOLJTRqJ2nG+sbvfrh1WwvqzBQw+cIwLDkx1htTVmjmqgVTnZRuVndy+lEvY
- ngpw==
-X-Gm-Message-State: AOJu0YxYNxTROByO5VSsn5kDwyVCkpV2SQYjMc8O25PNC8BW3b2IyYGu
- LP5wVI0WV1f/UAVTfCbWqtsqkcGG/NQB5oU32Dy1POsSTHbtoezy6KM/uW0j6r+NoVrnvNHkfaT
- Kjiw0jA2oB89atKBivNlYkV4OkFv/7mbTeIifJRNJEe8y+Jiz9CGWAcIJYiv+n/y52Dj/10fVWw
- EoBvY+aWNisuSQ9H08mmMh/4J/tO09iJFVjuw=
-X-Gm-Gg: ASbGncu+J81v+GhzGqxL3CZiSKQZrRvyRRUZYRGC1Y+MrIkmR+9hHwQFnwtZn9zLd+m
- gYczmKq1q9kTnNkgtQILnGZEjwfMhPD1ciZ5lKjppzIUzywv7Cbe5zvvrNnIxr64DmoSVtcaUsd
- n6Sjow8EErBfPsQUIOpnX28s+cX5/iEih5zkUZs7rMH+w1syrNkvhMBizoA8QfBFZPTy5naZiOI
- y6LF7Q1xZxAvHck4CyjK374hyXzoOilQjC23WhKLVqiuFEgta+GlcFnaPzXShSb5bpYbLHWm7Xy
- zuj1qkStbPNc9gxVtQcMtrE/wPje2PrFpfVnCEfH
-X-Received: by 2002:a05:6000:186d:b0:385:f677:8594 with SMTP id
- ffacd0b85a97d-388e4dae534mr6569882f8f.43.1734619299434; 
- Thu, 19 Dec 2024 06:41:39 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEFQKY2hGjqemM6rtrThUOVEhVLFMaAF+U6FklQxfKRNp1OyH97jHfYFfU2gMBiPflYIVnk9Q==
-X-Received: by 2002:a05:6000:186d:b0:385:f677:8594 with SMTP id
- ffacd0b85a97d-388e4dae534mr6569844f8f.43.1734619298986; 
- Thu, 19 Dec 2024 06:41:38 -0800 (PST)
-Received: from localhost
- (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
- [2003:cb:c749:6600:b73a:466c:e610:686])
- by smtp.gmail.com with UTF8SMTPSA id
- ffacd0b85a97d-38a1c84705esm1709900f8f.44.2024.12.19.06.41.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:41:38 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 09/14] s390x/s390-skeys: prepare for memory devices
-Date: Thu, 19 Dec 2024 15:41:10 +0100
-Message-ID: <20241219144115.2820241-10-david@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
-References: <20241219144115.2820241-1-david@redhat.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tOG2y-0005eq-Sj
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:54:32 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tOG2v-0007ze-P5
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:54:32 -0500
+Received: from loongson.cn (unknown [10.2.5.213])
+ by gateway (Coremail) with SMTP id _____8CxieGBF2RnDo9YAA--.45877S3;
+ Thu, 19 Dec 2024 20:54:25 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.213])
+ by front1 (Coremail) with SMTP id qMiowMBxXceAF2Rn72gCAA--.14917S4;
+ Thu, 19 Dec 2024 20:54:25 +0800 (CST)
+From: Bibo Mao <maobibo@loongson.cn>
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH v2 2/2] target/loongarch: Use auto method with LASX feature
+Date: Thu, 19 Dec 2024 20:54:24 +0800
+Message-Id: <20241219125424.3220321-3-maobibo@loongson.cn>
+X-Mailer: git-send-email 2.39.3
+In-Reply-To: <20241219125424.3220321-1-maobibo@loongson.cn>
+References: <20241219125424.3220321-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+X-CM-TRANSID: qMiowMBxXceAF2Rn72gCAA--.14917S4
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,46 +64,203 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With memory devices, we will have storage keys for memory that
-exceeds the initial ram size.
+Like LSX feature, add type OnOffAuto for LASX feature setting.
 
-The TODO already states that current handling is subopimal,
-but we won't worry about improving that (TCG-only) thing for now.
-
-Message-ID: <20241008105455.2302628-10-david@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/s390x/s390-skeys.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ target/loongarch/cpu.c     | 50 +++++++++++++++++++++++------------
+ target/loongarch/cpu.h     |  2 ++
+ target/loongarch/kvm/kvm.c | 53 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 89 insertions(+), 16 deletions(-)
 
-diff --git a/hw/s390x/s390-skeys.c b/hw/s390x/s390-skeys.c
-index 6d0a47ed73..6ea4d8c20e 100644
---- a/hw/s390x/s390-skeys.c
-+++ b/hw/s390x/s390-skeys.c
-@@ -11,7 +11,7 @@
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 09dc923f45..498151b4c4 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -622,6 +622,14 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+     uint32_t val;
  
- #include "qemu/osdep.h"
- #include "qemu/units.h"
--#include "hw/boards.h"
-+#include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/qdev-properties.h"
- #include "hw/s390x/storage-keys.h"
- #include "qapi/error.h"
-@@ -251,9 +251,9 @@ static bool qemu_s390_enable_skeys(S390SKeysState *ss)
-      *    g_once_init_enter() is good enough.
-      */
-     if (g_once_init_enter(&initialized)) {
--        MachineState *machine = MACHINE(qdev_get_machine());
-+        S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
- 
--        skeys->key_count = machine->ram_size / TARGET_PAGE_SIZE;
-+        skeys->key_count = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
-         skeys->keydata = g_malloc0(skeys->key_count);
-         g_once_init_leave(&initialized, 1);
+     cpu->lsx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    if (cpu->lsx == ON_OFF_AUTO_OFF) {
++        cpu->lasx = ON_OFF_AUTO_OFF;
++        if (cpu->lasx == ON_OFF_AUTO_ON) {
++            error_setg(errp, "Failed to disable LSX since LASX is enabled");
++            return;
++        }
++    }
++
+     if (kvm_enabled()) {
+         /* kvm feature detection in function kvm_arch_init_vcpu */
+         return;
+@@ -634,6 +642,9 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+             error_setg(errp, "Failed to enable LSX in TCG mode");
+             return;
+         }
++    } else {
++        cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, 0);
++        val = cpu->env.cpucfg[2];
      }
+ 
+     cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LSX, value);
+@@ -641,29 +652,35 @@ static void loongarch_set_lsx(Object *obj, bool value, Error **errp)
+ 
+ static bool loongarch_get_lasx(Object *obj, Error **errp)
+ {
+-    LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+-    bool ret;
+-
+-    if (FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LASX)) {
+-        ret = true;
+-    } else {
+-        ret = false;
+-    }
+-    return ret;
++    return LOONGARCH_CPU(obj)->lasx != ON_OFF_AUTO_OFF;
+ }
+ 
+ static void loongarch_set_lasx(Object *obj, bool value, Error **errp)
+ {
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
++    uint32_t val;
+ 
+-    if (value) {
+-	if (!FIELD_EX32(cpu->env.cpucfg[2], CPUCFG2, LSX)) {
+-            cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LSX, 1);
+-	}
+-        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 1);
+-    } else {
+-        cpu->env.cpucfg[2] = FIELD_DP32(cpu->env.cpucfg[2], CPUCFG2, LASX, 0);
++    cpu->lasx = value ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
++    if ((cpu->lsx == ON_OFF_AUTO_OFF) && (cpu->lasx == ON_OFF_AUTO_ON)) {
++        error_setg(errp, "Failed to enable LASX since lSX is disabled");
++        return;
++    }
++
++    if (kvm_enabled()) {
++        /* kvm feature detection in function kvm_arch_init_vcpu */
++        return;
+     }
++
++    /* LASX feature detection in TCG mode */
++    val = cpu->env.cpucfg[2];
++    if (cpu->lasx == ON_OFF_AUTO_ON) {
++        if (FIELD_EX32(val, CPUCFG2, LASX) == 0) {
++            error_setg(errp, "Failed to enable LASX in TCG mode");
++            return;
++        }
++    }
++
++    cpu->env.cpucfg[2] = FIELD_DP32(val, CPUCFG2, LASX, value);
+ }
+ 
+ static bool loongarch_get_lbt(Object *obj, Error **errp)
+@@ -695,6 +712,7 @@ void loongarch_cpu_post_init(Object *obj)
+     LoongArchCPU *cpu = LOONGARCH_CPU(obj);
+ 
+     cpu->lsx = ON_OFF_AUTO_AUTO;
++    cpu->lasx = ON_OFF_AUTO_AUTO;
+     object_property_add_bool(obj, "lsx", loongarch_get_lsx,
+                              loongarch_set_lsx);
+     object_property_add_bool(obj, "lasx", loongarch_get_lasx,
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 5bddf72c22..8eee49a984 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -284,6 +284,7 @@ typedef struct LoongArchTLB LoongArchTLB;
+ 
+ enum loongarch_features {
+     LOONGARCH_FEATURE_LSX,
++    LOONGARCH_FEATURE_LASX,
+     LOONGARCH_FEATURE_LBT, /* loongson binary translation extension */
+     LOONGARCH_FEATURE_PMU,
+ };
+@@ -406,6 +407,7 @@ struct ArchCPU {
+     OnOffAuto lbt;
+     OnOffAuto pmu;
+     OnOffAuto lsx;
++    OnOffAuto lasx;
+ 
+     /* 'compatible' string for this CPU for Linux device trees */
+     const char *dtb_compatible;
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index 390828ef78..5033b4070a 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -827,6 +827,32 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
+         }
+         return false;
+ 
++    case LOONGARCH_FEATURE_LASX:
++        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
++        attr.attr = KVM_LOONGARCH_VM_FEAT_LASX;
++        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
++        if (ret == 0) {
++            return true;
++        }
++
++        /* Fallback to old kernel detect interface */
++        val = 0;
++        attr.group = KVM_LOONGARCH_VCPU_CPUCFG;
++        /* Cpucfg2 */
++        attr.attr  = 2;
++        attr.addr = (uint64_t)&val;
++        ret = kvm_vcpu_ioctl(cs, KVM_HAS_DEVICE_ATTR, &attr);
++        if (!ret) {
++            ret = kvm_vcpu_ioctl(cs, KVM_GET_DEVICE_ATTR, &attr);
++            if (ret) {
++                return false;
++            }
++
++            ret = FIELD_EX32((uint32_t)val, CPUCFG2, LASX);
++            return (ret != 0);
++        }
++        return false;
++
+     case LOONGARCH_FEATURE_LBT:
+         /*
+          * Return all if all the LBT features are supported such as:
+@@ -878,6 +904,28 @@ static int kvm_cpu_check_lsx(CPUState *cs, Error **errp)
+     return 0;
+ }
+ 
++static int kvm_cpu_check_lasx(CPUState *cs, Error **errp)
++{
++    CPULoongArchState *env = cpu_env(cs);
++    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
++    bool kvm_supported;
++
++    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_LASX);
++    env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 0);
++    if (cpu->lasx == ON_OFF_AUTO_ON) {
++        if (kvm_supported) {
++            env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
++        } else {
++            error_setg(errp, "'lasx' feature not supported by KVM on host");
++            return -ENOTSUP;
++        }
++    } else if ((cpu->lasx == ON_OFF_AUTO_AUTO) && kvm_supported) {
++        env->cpucfg[2] = FIELD_DP32(env->cpucfg[2], CPUCFG2, LASX, 1);
++    }
++
++    return 0;
++}
++
+ static int kvm_cpu_check_lbt(CPUState *cs, Error **errp)
+ {
+     CPULoongArchState *env = cpu_env(cs);
+@@ -943,6 +991,11 @@ int kvm_arch_init_vcpu(CPUState *cs)
+         error_report_err(local_err);
+     }
+ 
++    ret = kvm_cpu_check_lasx(cs, &local_err);
++    if (ret < 0) {
++        error_report_err(local_err);
++    }
++
+     ret = kvm_cpu_check_lbt(cs, &local_err);
+     if (ret < 0) {
+         error_report_err(local_err);
 -- 
-2.47.1
+2.39.3
 
 
