@@ -4,54 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E932CE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44334E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:14:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOBZn-0007KY-Fb; Thu, 19 Dec 2024 03:08:07 -0500
+	id 1tOBfp-00054s-Rb; Thu, 19 Dec 2024 03:14:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1tOBZl-0007Jo-Jw
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:08:05 -0500
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1tOBZh-0007v1-Qm
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:08:05 -0500
-Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8CxPuNc1GNnBnpYAA--.41354S3;
- Thu, 19 Dec 2024 16:07:56 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMBx38da1GNnCCwCAA--.13753S3;
- Thu, 19 Dec 2024 16:07:55 +0800 (CST)
-From: Bibo Mao <maobibo@loongson.cn>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org,
-	Song Gao <gaosong@loongson.cn>
-Subject: [PULL 16/18] hw/intc/loongarch_extioi: Inherit from
- loongarch_extioi_common
-Date: Thu, 19 Dec 2024 16:07:51 +0800
-Message-Id: <20241219080753.3164733-2-maobibo@loongson.cn>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20241219080753.3164733-1-maobibo@loongson.cn>
-References: <20241219075502.3164644-1-maobibo@loongson.cn>
- <20241219080753.3164733-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tOBfn-00054K-F8
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:14:19 -0500
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1tOBfl-0000IM-8P
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:14:19 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734596057; x=1766132057;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=sJD1HzK00lYZY9+cHhZD1q8bcprwUdJTGT1EY0BZmJw=;
+ b=hkXMmc6u2AmaMCClHJ8fRg6gnNvMgFJTfqb0svK9jtiS+MTEAwuMz3ys
+ zuNcVEHVGeJkgdbWlgoGm7YVriZhDl7X8pxFdz0olPXMpcFtYBtw1Srd5
+ h0y+TwvGgvFLeCGlYkt/mdLX33xJA6Swp79NoReYAwFmXirmM2uM7F9vz
+ El0CIK/9xsTSEfjPwEXmnYajU9AgS/wFxsWDO5uRPTfsIsGTdXtO70C4b
+ MOyaS4iVMEMr+pLZRs8oIPeBXaKScTYPGyKH+UAyNdZDJ2y6gKBHahLMA
+ fzofmQGKUZWKxQI1QVwE8PW2kScCKIUnFpFGGVQVlFUFbqzmJEG8KDiFH Q==;
+X-CSE-ConnectionGUID: 69V0u23IT8a3eVRwoe4u2Q==
+X-CSE-MsgGUID: uqDgkgB3QFaAzRLjP6A6+g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="34378603"
+X-IronPort-AV: E=Sophos;i="6.12,247,1728975600"; d="scan'208";a="34378603"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Dec 2024 00:14:15 -0800
+X-CSE-ConnectionGUID: EOAUv0rrQ8ifIgUQ8s7VTg==
+X-CSE-MsgGUID: 6ckPH2LHT8mTQwa3lrXScw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="129097513"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa001.fm.intel.com with ESMTP; 19 Dec 2024 00:14:11 -0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH v6 0/4] i386: Support SMP Cache Topology
+Date: Thu, 19 Dec 2024 16:32:33 +0800
+Message-Id: <20241219083237.265419-1-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBx38da1GNnCCwCAA--.13753S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,220 +89,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Set TYPE_LOONGARCH_EXTIOI inherit from TYPE_LOONGARCH_EXTIOI_COMMON
-object, it shares vmsate and property of TYPE_LOONGARCH_EXTIOI_COMMON,
-and has its own realize() function.
+Hi folks,
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Song Gao <gaosong@loongson.cn>
+This is my v6. since Phili has already merged the general smp cache
+part, v6 just includes the remaining i386-specific changes to support
+SMP cache topology for PC machine (currently all patches have got
+Reviewed-by from previous review).
+
+Compared with v5 [1], there's no change and just series just picks
+the unmerged patches and rebases on the master branch (based on the
+commit 8032c78e556c "Merge tag 'firmware-20241216-pull-request' of
+https://gitlab.com/kraxel/qemu into staging").
+
+The patch 4 ("i386/cpu: add has_caches flag to check smp_cache"), which
+introduced a has_caches flag, is also ARM side wanted.
+
+Though now this series targets to i386, to help review, I still include
+the previous introduction about smp cache topology feature.
+
+
+Background
+==========
+
+The x86 and ARM (RISCV) need to allow user to configure cache properties
+(current only topology):
+ * For x86, the default cache topology model (of max/host CPU) does not
+   always match the Host's real physical cache topology. Performance can
+   increase when the configured virtual topology is closer to the
+   physical topology than a default topology would be.
+ * For ARM, QEMU can't get the cache topology information from the CPU
+   registers, then user configuration is necessary. Additionally, the
+   cache information is also needed for MPAM emulation (for TCG) to
+   build the right PPTT. (Originally from Jonathan)
+
+
+About smp-cache
+===============
+
+The API design has been discussed heavily in [3].
+
+Now, smp-cache is implemented as a array integrated in -machine. Though
+-machine currently can't support JSON format, this is the one of the
+directions of future.
+
+An example is as follows:
+
+smp_cache=smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=module,smp-cache.3.cache=l3,smp-cache.3.topology=die
+
+"cache" specifies the cache that the properties will be applied on. This
+field is the combination of cache level and cache type. Now it supports
+"l1d" (L1 data cache), "l1i" (L1 instruction cache), "l2" (L2 unified
+cache) and "l3" (L3 unified cache).
+
+"topology" field accepts CPU topology levels including "thread", "core",
+"module", "cluster", "die", "socket", "book", "drawer" and a special
+value "default".
+
+The "default" is introduced to make it easier for libvirt to set a
+default parameter value without having to care about the specific
+machine (because currently there is no proper way for machine to
+expose supported topology levels and caches).
+
+If "default" is set, then the cache topology will follow the
+architecture's default cache topology model. If other CPU topology level
+is set, the cache will be shared at corresponding CPU topology level.
+
+
+[1]: Patch v5: https://lore.kernel.org/qemu-devel/20241101083331.340178-1-zhao1.liu@intel.com/
+[2]: ARM smp-cache: https://lore.kernel.org/qemu-devel/20241010111822.345-1-alireza.sanaee@huawei.com/
+[3]: API disscussion: https://lore.kernel.org/qemu-devel/8734ndj33j.fsf@pond.sub.org/
+
+Thanks and Best Regards,
+Zhao
 ---
- hw/intc/loongarch_extioi.c                | 39 +++++++++++------------
- hw/intc/loongarch_extioi_common.c         | 39 ++++++++++++++++++++++-
- hw/intc/meson.build                       |  2 +-
- include/hw/intc/loongarch_extioi.h        | 17 ++++++++--
- include/hw/intc/loongarch_extioi_common.h | 12 +++++++
- 5 files changed, 85 insertions(+), 24 deletions(-)
+Alireza Sanaee (1):
+  i386/cpu: add has_caches flag to check smp_cache configuration
 
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index d7471ff165..c4d77a321f 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -318,17 +318,15 @@ static const MemoryRegionOps extioi_virt_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--static int vmstate_extioi_post_load(void *opaque, int version_id);
--#include "loongarch_extioi_common.c"
--
- static void loongarch_extioi_realize(DeviceState *dev, Error **errp)
- {
--    LoongArchExtIOI *s = LOONGARCH_EXTIOI(dev);
-+    LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(dev);
-+    LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_GET_CLASS(dev);
-     SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-     Error *local_err = NULL;
-     int i, pin;
- 
--    loongarch_extioi_common_realize(dev, &local_err);
-+    lec->parent_realize(dev, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-         return;
-@@ -399,24 +397,25 @@ static int vmstate_extioi_post_load(void *opaque, int version_id)
- static void loongarch_extioi_class_init(ObjectClass *klass, void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongArchExtIOIClass *lec = LOONGARCH_EXTIOI_CLASS(klass);
-+    LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
- 
--    dc->realize = loongarch_extioi_realize;
--    dc->unrealize = loongarch_extioi_unrealize;
-+    device_class_set_parent_realize(dc, loongarch_extioi_realize,
-+                                    &lec->parent_realize);
-+    device_class_set_parent_unrealize(dc, loongarch_extioi_unrealize,
-+                                      &lec->parent_unrealize);
-     device_class_set_legacy_reset(dc, loongarch_extioi_reset);
--    device_class_set_props(dc, extioi_properties);
--    dc->vmsd = &vmstate_loongarch_extioi;
-+    lecc->post_load = vmstate_extioi_post_load;
- }
- 
--static const TypeInfo loongarch_extioi_info = {
--    .name          = TYPE_LOONGARCH_EXTIOI,
--    .parent        = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(struct LoongArchExtIOI),
--    .class_init    = loongarch_extioi_class_init,
-+static const TypeInfo loongarch_extioi_types[] = {
-+    {
-+        .name          = TYPE_LOONGARCH_EXTIOI,
-+        .parent        = TYPE_LOONGARCH_EXTIOI_COMMON,
-+        .instance_size = sizeof(LoongArchExtIOIState),
-+        .class_size    = sizeof(LoongArchExtIOIClass),
-+        .class_init    = loongarch_extioi_class_init,
-+    }
- };
- 
--static void loongarch_extioi_register_types(void)
--{
--    type_register_static(&loongarch_extioi_info);
--}
--
--type_init(loongarch_extioi_register_types)
-+DEFINE_TYPES(loongarch_extioi_types)
-diff --git a/hw/intc/loongarch_extioi_common.c b/hw/intc/loongarch_extioi_common.c
-index 6c8366a5e5..428d105f78 100644
---- a/hw/intc/loongarch_extioi_common.c
-+++ b/hw/intc/loongarch_extioi_common.c
-@@ -3,6 +3,12 @@
-  * Loongson extioi interrupt controller emulation
-  * Copyright (C) 2024 Loongson Technology Corporation Limited
-  */
-+#include "qemu/osdep.h"
-+#include "qemu/module.h"
-+#include "qapi/error.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/intc/loongarch_extioi_common.h"
-+#include "migration/vmstate.h"
- 
- static void loongarch_extioi_common_realize(DeviceState *dev, Error **errp)
- {
-@@ -16,7 +22,14 @@ static void loongarch_extioi_common_realize(DeviceState *dev, Error **errp)
- 
- static int loongarch_extioi_common_post_load(void *opaque, int version_id)
- {
--    return vmstate_extioi_post_load(opaque, version_id);
-+    LoongArchExtIOICommonState *s = (LoongArchExtIOICommonState *)opaque;
-+    LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_GET_CLASS(s);
-+
-+    if (lecc->post_load) {
-+        return lecc->post_load(s, version_id);
-+    }
-+
-+    return 0;
- }
- 
- static const VMStateDescription vmstate_extioi_core = {
-@@ -61,3 +74,27 @@ static const Property extioi_properties[] = {
-                     features, EXTIOI_HAS_VIRT_EXTENSION, 0),
-     DEFINE_PROP_END_OF_LIST(),
- };
-+
-+static void loongarch_extioi_common_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    LoongArchExtIOICommonClass *lecc = LOONGARCH_EXTIOI_COMMON_CLASS(klass);
-+
-+    device_class_set_parent_realize(dc, loongarch_extioi_common_realize,
-+                                    &lecc->parent_realize);
-+    device_class_set_props(dc, extioi_properties);
-+    dc->vmsd = &vmstate_loongarch_extioi;
-+}
-+
-+static const TypeInfo loongarch_extioi_common_types[] = {
-+    {
-+        .name               = TYPE_LOONGARCH_EXTIOI_COMMON,
-+        .parent             = TYPE_SYS_BUS_DEVICE,
-+        .instance_size      = sizeof(LoongArchExtIOICommonState),
-+        .class_size         = sizeof(LoongArchExtIOICommonClass),
-+        .class_init         = loongarch_extioi_common_class_init,
-+        .abstract           = true,
-+    }
-+};
-+
-+DEFINE_TYPES(loongarch_extioi_common_types)
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 848cb6685e..510fdfb688 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -73,4 +73,4 @@ specific_ss.add(when: 'CONFIG_LOONGSON_IPI', if_true: files('loongson_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_IPI', if_true: files('loongarch_ipi.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_PIC', if_true: files('loongarch_pch_pic.c', 'loongarch_pic_common.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_PCH_MSI', if_true: files('loongarch_pch_msi.c'))
--specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c'))
-+specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extioi.c', 'loongarch_extioi_common.c'))
-diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-index d6747046b4..cc160c52dc 100644
---- a/include/hw/intc/loongarch_extioi.h
-+++ b/include/hw/intc/loongarch_extioi.h
-@@ -10,7 +10,20 @@
- 
- #include "hw/intc/loongarch_extioi_common.h"
- 
--#define LoongArchExtIOI LoongArchExtIOICommonState
- #define TYPE_LOONGARCH_EXTIOI "loongarch.extioi"
--OBJECT_DECLARE_SIMPLE_TYPE(LoongArchExtIOI, LOONGARCH_EXTIOI)
-+OBJECT_DECLARE_TYPE(LoongArchExtIOIState, LoongArchExtIOIClass, LOONGARCH_EXTIOI)
-+
-+struct LoongArchExtIOIState {
-+    LoongArchExtIOICommonState parent_obj;
-+};
-+
-+struct LoongArchExtIOIClass {
-+    LoongArchExtIOICommonClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+    DeviceUnrealize parent_unrealize;
-+};
-+
-+#define LoongArchExtIOI         LoongArchExtIOICommonState
-+#define LOONGARCH_EXTIOI(obj)   ((LoongArchExtIOICommonState *)obj)
- #endif /* LOONGARCH_EXTIOI_H */
-diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
-index 51243b8092..d45caa45f2 100644
---- a/include/hw/intc/loongarch_extioi_common.h
-+++ b/include/hw/intc/loongarch_extioi_common.h
-@@ -7,6 +7,7 @@
- #ifndef LOONGARCH_EXTIOI_COMMON_H
- #define LOONGARCH_EXTIOI_COMMON_H
- 
-+#include "qom/object.h"
- #include "hw/sysbus.h"
- #include "hw/loongarch/virt.h"
- 
-@@ -56,6 +57,10 @@
- #define EXTIOI_VIRT_COREMAP_START    (0x40)
- #define EXTIOI_VIRT_COREMAP_END      (0x240)
- 
-+#define TYPE_LOONGARCH_EXTIOI_COMMON "loongarch_extioi_common"
-+OBJECT_DECLARE_TYPE(LoongArchExtIOICommonState,
-+                    LoongArchExtIOICommonClass, LOONGARCH_EXTIOI_COMMON)
-+
- typedef struct ExtIOICore {
-     uint32_t coreisr[EXTIOI_IRQS_GROUP_COUNT];
-     DECLARE_BITMAP(sw_isr[LS3A_INTC_IP], EXTIOI_IRQS);
-@@ -82,4 +87,11 @@ struct LoongArchExtIOICommonState {
-     MemoryRegion extioi_system_mem;
-     MemoryRegion virt_extend;
- };
-+
-+struct LoongArchExtIOICommonClass {
-+    SysBusDeviceClass parent_class;
-+
-+    DeviceRealize parent_realize;
-+    int (*post_load)(void *s, int version_id);
-+};
- #endif /* LOONGARCH_EXTIOI_H */
+Zhao Liu (3):
+  i386/cpu: Support thread and module level cache topology
+  i386/cpu: Update cache topology with machine's configuration
+  i386/pc: Support cache topology in -machine for PC machine
+
+ hw/core/machine-smp.c |  2 ++
+ hw/i386/pc.c          |  4 +++
+ include/hw/boards.h   |  3 ++
+ qemu-options.hx       | 31 +++++++++++++++++-
+ target/i386/cpu.c     | 76 ++++++++++++++++++++++++++++++++++++++++---
+ 5 files changed, 111 insertions(+), 5 deletions(-)
+
 -- 
-2.43.5
+2.34.1
 
 
