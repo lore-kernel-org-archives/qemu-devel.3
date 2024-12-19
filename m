@@ -4,165 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6DEDE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 06:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4F08E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 06:32:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO9qi-0007Ni-GQ; Thu, 19 Dec 2024 01:17:28 -0500
+	id 1tOA4W-0000bY-JF; Thu, 19 Dec 2024 01:31:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.yuan@jaguarmicro.com>)
- id 1tO9qg-0007NR-N9; Thu, 19 Dec 2024 01:17:27 -0500
-Received: from mail-tyzapc01on20727.outbound.protection.outlook.com
- ([2a01:111:f403:2011::727]
- helo=APC01-TYZ-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOA4N-0000b8-BG
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 01:31:36 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrew.yuan@jaguarmicro.com>)
- id 1tO9qe-0004e4-Ac; Thu, 19 Dec 2024 01:17:26 -0500
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fDwB142H/4kMMPhRLrJbRRVCbsILTM+QAtGpHERH02bqxxBOzcdCeVnGqW19wdwtD9xIUwUhoFJgVYgsBtERc84Jta4Wqmgyq1zSbhaBROpLd1zY5DF0drVA0wTp7MMc2l0IsGiHSS62RcbIaYEgxSMPeehVX6upMZYgRDvoZN1Lgr8+FD3occcFRyrqMMVSha7XaZYitx9qiX4t9ngGn6FKR4f2ZbBuMOfNikJUTuXdodEX6ecsX/uoZ4yLfXuvRWGj2HUHyPBR4SIO22JKmA8F0S0YQp9MtKezNbKSEgEgIEOydnlOoc0mjJudmvMDJG0sl2qxsg+ROrkCMDN3kg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eKBXAcv7Y/JDvKnZe9LtSBDuGqQSzB8OKvrJg7SJO4g=;
- b=KxOXfA+aq7RXa+Cxw5l0EmhTof8iObZOSf0lZehu8yxWoftzRBwRT/+AnN9VtWa4+yPFcbi7z/Md9rxIeQKnh823+M1je621en2KplKzAV05Urnn5xp+MXxE6Memcftw1mTvBZ+NI74jrA2O3C3qrfxAxI19xSDJQ8smrSjX2SObqrTYoGyWCe+0y8eoeQjodbnEaXYixsVzRvPeLoHiEH8R/U845WVDlXGk9uXLIvT+VlIXrXBa3L1XQw9aubZxfGLgUeFrLSYqrinDGmyUfQuAWy59yPCiJMzrpTjxubniVeHpKWiUOYQfJ335IEuNhFHKvBMtMBdtMu8f8Zl92A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=jaguarmicro.com; dmarc=pass action=none
- header.from=jaguarmicro.com; dkim=pass header.d=jaguarmicro.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jaguarmicro.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eKBXAcv7Y/JDvKnZe9LtSBDuGqQSzB8OKvrJg7SJO4g=;
- b=i9kQjeUqcmUsPNdNoc1NQKQIJysNJmL/OGjmZn4BKET7IFhgRAHu7IKzmrEwiHhOSbnlH+Hh6FHeo/8mP6C6sP0RXGCNAUDbpzKojlB5GatxXXJZH8VoHtGTnNxJdgPJHOGHjVqq/lWWQgMGenJZ5SuAICEVgot8fVacTSgY306TReW0IRlKwPYf3w3XhkCOIEsPjPmP+SsKEIS3n0A0o+WHl+7TsZI0VdBqI4ifZLbUm1FMbKwhW1HQoph3r6QUf31wG4HV1HE8XW+Za0AtrUGT4KG/lGOheI/XKjagK8AQCPyt3UGamaCNnX8tplQxDbJ6yfgMJJ2qzKevcJuvng==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=jaguarmicro.com;
-Received: from KL1PR0601MB4891.apcprd06.prod.outlook.com (2603:1096:820:ae::7)
- by SEZPR06MB5391.apcprd06.prod.outlook.com (2603:1096:101:66::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8272.14; Thu, 19 Dec
- 2024 06:17:13 +0000
-Received: from KL1PR0601MB4891.apcprd06.prod.outlook.com
- ([fe80::8950:42de:2354:91b2]) by KL1PR0601MB4891.apcprd06.prod.outlook.com
- ([fe80::8950:42de:2354:91b2%6]) with mapi id 15.20.8272.005; Thu, 19 Dec 2024
- 06:17:13 +0000
-From: "Andrew.Yuan" <andrew.yuan@jaguarmicro.com>
-To: philmd@linaro.org, edgar.iglesias@gmail.com, alistair@alistair23.me,
- jasowang@redhat.com, peter.maydell@linaro.org, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: Andrew Yuan <andrew.yuan@jaguarmicro.com>
-Subject: [PATCH v3] hw/net: cadence_gem: feat: add logic for the DISABLE_MASK
- bit in type2_compare_x_word_1
-Date: Thu, 19 Dec 2024 14:16:58 +0800
-Message-Id: <20241219061658.805-1-andrew.yuan@jaguarmicro.com>
-X-Mailer: git-send-email 2.37.0.windows.1
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TYCP286CA0020.JPNP286.PROD.OUTLOOK.COM
- (2603:1096:400:263::12) To KL1PR0601MB4891.apcprd06.prod.outlook.com
- (2603:1096:820:ae::7)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOA4K-0008Og-VF
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 01:31:34 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734589889;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=jsx8h249WxpVgl/ARc3kRdycQhSKY/AaHGzTtsQ5gNc=;
+ b=Q2NFvJMHwGOqXsCNWULbGK7uPiwAx4jn5HcZWUdf/SQeq3BO7Gs0DNK5fNKOSWXYi+uZp6
+ 0YoukT3Mgg6UC9lIBrju2bPVbzFEe9Wwq1l4e9LJQlUSctXSz1DoChVT9eBd69CfCQWW8F
+ JWdGoJET+XQg6TOKXGz3NqWZdwJonUU=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-55-y2DlZYm8OimXvN-ZFQGVWA-1; Thu, 19 Dec 2024 01:31:27 -0500
+X-MC-Unique: y2DlZYm8OimXvN-ZFQGVWA-1
+X-Mimecast-MFC-AGG-ID: y2DlZYm8OimXvN-ZFQGVWA
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385e9c69929so197372f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 22:31:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734589886; x=1735194686;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jsx8h249WxpVgl/ARc3kRdycQhSKY/AaHGzTtsQ5gNc=;
+ b=bPrgI24xpLQB7sN4nnUmpMaOmvDgROr17n72QXjSK5zfL6UnVElWsjFn1gNKUNKBdI
+ hn29Bor4vhfoVknybyrWeaQcpoRDyB6JDYLR92cNHkqUOPlwVrGbU+yZcZ35xU5RRF4Z
+ lnp4occdEaRRkNRTbpVfW/y5NRvfQt6n3oF/B7wKEjW1SFjlCNWqLAET4BrMzJsXTspw
+ Z11ZX8w6oln3jZydggZwDL2cSE6d1GH2O+karKxyECpKDeeWWeG40VXya5ZVWh0wVfgC
+ YZor0D/4aKC+IFWRgN+zuwdlWtgweiVCnEW0f4L7ZX8frIXaQ5+HxwY8iSJRjO9WRYJi
+ Bruw==
+X-Gm-Message-State: AOJu0YzHfhWPT3iL+COvU6qQolMpICDDCz2xlbJW1x3CpyAV3DGgXkUA
+ 2wGxZ1kn1EgQTgIXTcPMYvNg72b5GmEDqoL3zqdhwGF3QkHkFxnAfo6nRWVRF/fUH2phKZNRuj6
+ CTRtKuv+YDzpjrK44iZ7GpIcK7Xi0q8XIYr9KZP2/BdN0THTEdh0uivAYylZzD48pPiWlCUk9lA
+ s7k3ZSGQ22lWyEs1i4BgtLdj6qi0Y=
+X-Gm-Gg: ASbGncuRxHSvZRkS8xORITYyiQu/3mco7PMjpWj52M2pm4qB/XMyWUpXZsLfegXlo/n
+ cmhkiTGZu1T1jMqVaTrLwGFBxmpswEcsqVmctDQ==
+X-Received: by 2002:a05:6000:79e:b0:385:e055:a28d with SMTP id
+ ffacd0b85a97d-388e4db69bamr4223570f8f.57.1734589886577; 
+ Wed, 18 Dec 2024 22:31:26 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFM4sscGNRGV0K+4r/N79UUPlg8jsZycQ2xPTUVzviN35atlEki0drZQzzKUhgvXA7lAvOhpLWkasmC3x4xRnI=
+X-Received: by 2002:a05:6000:79e:b0:385:e055:a28d with SMTP id
+ ffacd0b85a97d-388e4db69bamr4223558f8f.57.1734589886271; Wed, 18 Dec 2024
+ 22:31:26 -0800 (PST)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: KL1PR0601MB4891:EE_|SEZPR06MB5391:EE_
-X-MS-Office365-Filtering-Correlation-Id: c27e885c-831a-4f77-e0da-08dd1ff4c707
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|52116014|376014|366016|1800799024|38350700014|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?L0UrVTMvMUg5dkRJS2NDT2daUDAvU2tQdmdmSkRJVDV4cWtUY0piM3JISFo2?=
- =?utf-8?B?M2dBVGZ1eWZ4WnI2cEpLcUozYkpQQ3ZvbFMrUEp3d24rbFVKVzVyR0hNZDVY?=
- =?utf-8?B?MjJRZWV5YU8wVzNYUTdLRisrdkNFWWh2eVZ4YmhyM1hjakNtZnhQQTdTOFNY?=
- =?utf-8?B?SDdhYUpMbDVrelptWnBDTDc0M3NFTzdNbVlCRXZud2xlL1lFVkI2U1k5ZzlQ?=
- =?utf-8?B?V3ZwSkFobk5WYWZmZEdhMzZvd2ZOcFF4UFBnNVJBa1QwOE16eW8waHBPemdP?=
- =?utf-8?B?bElPUkh6aUZuZXpSUkdmQ29jL2lYVEZnRmV5YmZZTmpGYnpHNkpPTVpNYi91?=
- =?utf-8?B?N3RiNlNqMGJ3emN5aGFJdEhJb2UyTFlndGpSTkl1Y0ozMDc1WVhBWU1uQTZX?=
- =?utf-8?B?blRSTUJicXBqQ29CdGtkMHJYRGVEc2RrTy9XcmcvbUNDZjlmdHBjZVE4Uy9F?=
- =?utf-8?B?c21aS2lBSElqRlI1bzVtblp4bDRHVUhCOVRTdUU4c1RQR0RuaW9qdWFiT2w0?=
- =?utf-8?B?TE9hRDVsVGlqUVVyRWFVOURsNC9Kb1E0TVBneHBPNENraGwyTldtMEVFZjMz?=
- =?utf-8?B?bDJrNXFvcXd3NSt1cWswTkJ4WURzOFBmVGMzOFJRaGU4cDFjK2RWa09SWHJN?=
- =?utf-8?B?dDA0SzZqWkc2cXF0a1JVcmxlSVFZWlA4RFh6cDZZcVVLUzY5ZDdJOGZ3VG5S?=
- =?utf-8?B?VDNDYy9nVGpiM3cxdHdrWGdXTE84UTR3em95eEF6SmxrOEdRbmZJai9nWkVI?=
- =?utf-8?B?UWRxWnZVSCtJOWwzTGhYTkxVdlVxQm9GWThKcE52dkloaGhCSGVycjYzWE9h?=
- =?utf-8?B?T2FBdmVHRmNzbE1rQ1FXcmJrUXlHU1JZbHhVOUQwR2dxcUIwNStpOTJ3ZjRv?=
- =?utf-8?B?Q3B3SWlLZ3o4TEZwYUxqalY5WFo3UVUxaDJaS2Z2YlNYTk5URXJ1ZlVncmxY?=
- =?utf-8?B?a29FeHY5MzRmSG5ST1pCUkNTcFBFRmRnQldWM2p6Mzdoc2ZDeS9XQndEZmti?=
- =?utf-8?B?MzVpbS9qeXYvS3V2a25CdFB5NFBFRFIzbVhEdFV2Q0h3ZWhSem5FbU5WcUIx?=
- =?utf-8?B?U0ZLUkIrZXUyem1VWC9wblRrRzlTeXZYaEtBZUdmbXZFc0FidzQ4ZzhOSmg2?=
- =?utf-8?B?TDc2dWhuVmMwWmpya2xIMXFOa0JlZ1lleTI1ZlRpbngwT1VqVWV0QzNhSEZW?=
- =?utf-8?B?U3pydjZmenZpaC9ZMDB6bEhmbmVvalgwNTVYdEJqdWJUbVhiZTY0QTBYODNU?=
- =?utf-8?B?MVNjSmFwNm13SThYYVR5c2RGWm1hOXNwa0kydkRzWUVqZnZwUDhGQVpkekI2?=
- =?utf-8?B?c2FnRHUvd2J6cjFDMDU1cWVibEhXUkVLaU05eUxreGRtcVFpL2ZSNSs2ci93?=
- =?utf-8?B?eUx5cmRIa0czdEF4T0U3SmhQaWg4TkVBcFVPU2g4cnBWRFpMTEsxMzdpcDVW?=
- =?utf-8?B?b1VaUlRPVjlnSFd4OFFQenN0ajd5cmJUM2pmT1pDL1RPVWREb242TncyaS80?=
- =?utf-8?B?WkxqbkYwMHNabk5EeXB6S3k0VEl1Z0lucEhIbW92Znh5M1h5dUdWMjBDWGls?=
- =?utf-8?B?T2p2NUZLMzgyYVFNSUpqa2x4Zk5rOTF0azQ1dWNLZytvSmFLSVhsUGZHUVNp?=
- =?utf-8?B?eVNoekZFVnZNYm5RNXBBQktQU1QwcUcxdWJheHhIOFN1UEpONHQ3SklDVEdD?=
- =?utf-8?B?RktVL3kwZkdRbW9CaFFQOE1kMlBXNXJtaGVlYitSSmVaNnN1a3gzaFFhR3NU?=
- =?utf-8?B?a0dxTjNRQzdRM2p5T2dSK2VRZzNwR2FncDhMSGRTdHJMd0w5M3hxb1JTdUtH?=
- =?utf-8?B?RmlzNG5BcWJoZ21lN2NHbUJxMFhRelJmZnUrTUtRMVNBZ2VCcnZpRVRuMDNK?=
- =?utf-8?B?RWsrSDgzY2puNFdzeE5MZWZOeGFwcUhGQytacktISmhoeUdXcG9UeVQxNzAw?=
- =?utf-8?Q?5xNgqFEQkzJdnz+x+iq9zwqcAS260YQT?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:KL1PR0601MB4891.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(52116014)(376014)(366016)(1800799024)(38350700014)(7053199007);
- DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?UmUrQTF0dFFXb0hDSnYxdVlWem0rVzFjdTM5RnpGd0syU21jWXhDQ29GRVFz?=
- =?utf-8?B?dWZTYjZuZ2N4alpneThBMnN2NkNtU0hJbGUvOHNSUk5zZVNCN0hvK3ZpeU02?=
- =?utf-8?B?MWQySzh4YU5Pc1o3dnlldnJuSnUzZU03cys4WnNQMGJLdEZTSnFxNytmSXJ2?=
- =?utf-8?B?ajdyeGZrNlEvUUtYVFRhRUdLRmJrY1FFRURvazFLQUs2WFdVVVgxTjBHOWd6?=
- =?utf-8?B?RHJ5TlRMQ2ZES0JGdVhPZXgwdTRyVW40OEtNVjFoRk1RV3pFaE9sTDhxc25Q?=
- =?utf-8?B?aXhjaWRkME5TVWk4VDFUTTU4amJUWHZlODhZUGJHUWk3UjZwTVpiVFpWZ0ps?=
- =?utf-8?B?VWVGRjl0QWwwRkh2WEZrUGlsQzFXTStYcGVOVEZzZkx5b3BEN3QwZTF5Zlp6?=
- =?utf-8?B?K1Vjc3hubEkrc3htWDBUb2tVOGpGMWV3ZldmY21aZGQ5YmxCelcvWXJ4eXFK?=
- =?utf-8?B?dm1IRWNjSUJISURiTzRRci9FbUhzZHBhcHBHR3hQZlR2VzREeG5rSUlRYXhM?=
- =?utf-8?B?VnNRYjFpTVQvWFhBTWU0eFptSnNBUWUwTVN5TjcxVWJCNlBPQUZzNEorQ2xH?=
- =?utf-8?B?WE5yUDQ1TWQ2VC9FWEs2eEhwbWpCWThiNVZJS0czdXJlejk4Yys0YlhtcHpo?=
- =?utf-8?B?UzNrR2xMTWVIS0xUNC9YeXFUYUdZdGM2TlE3YUd5WlFBTWJuVklPTGt6b29Z?=
- =?utf-8?B?TXZHSjJwNUNZRmE1emVMbHppSml0amZuejI2NGZqc3RaWWhqT2VYMGdKdU5T?=
- =?utf-8?B?bUFad1I5eXI1UW1mUnViUDlKNlRhVUY1aVFGYitqczZ4ZWRiaWV5aTRkd2Nx?=
- =?utf-8?B?VnBxeEViMzhDNDFJNE5zeFFGVEtkQ0lWZmIxNU95dEpQblE0N1FjaDBoSUxD?=
- =?utf-8?B?NHQwOTFoUTdYMkhSWENtYVY4RTFCcGFZTStUeHRIOGVRNnVNOXJxZUdQMUpx?=
- =?utf-8?B?TktmeDVCVUVaNmRtTW1FUENmTDcvc0NrRW1XZHgxMGQyRDZORzE2NGZkYnZv?=
- =?utf-8?B?cThkR3ptUEtxaTVlQWpkbTl4N21WWWJTeldFOFJITFJjL216UDRJQ3EzN2la?=
- =?utf-8?B?YnJ3M1dLUTNnWnJKZExLL0V5WGFQb0hEaU1CV0NwbEVYdFUzTm0xaFhmU2hy?=
- =?utf-8?B?L1ZoaWlvMjBDcEFUY2QwbTNNT0FLbDY4RkJoNDdjakVPVm85eTNSTzJWdzdV?=
- =?utf-8?B?RS8vcGozcVpWblZHZ0V6V0ZUVEtzTUZGa0RzVlVrQmtEWm1GdC9aRmNESzR4?=
- =?utf-8?B?MDZsQVhxMFEzMURYRktQY1RzejZYdDl0NGNTRU1lYTFmUlFrVDlrTzNRZTVS?=
- =?utf-8?B?QUwvWnVxY3pPcVdVZ3NleHYvbnNtL3JLMWFULzh4VVB1WEM0VVQzZFlzYWFy?=
- =?utf-8?B?OGpISUkyTkpBMFVxcWR5cnp5di9jelhocm15Umo2ZHcyOExXb0xFd09JU3U1?=
- =?utf-8?B?bm05U1NHZjA1ZUJIbnI2ZDczaldFTjEza29UTEFGQ3l5Q2xaZlNmKzJEOTBV?=
- =?utf-8?B?dDQ0UWkrdGZVRnc1VkpYZEQ2SFE1MXpPUHJjNFRGSW5mNm9jRDdla1k4OEc1?=
- =?utf-8?B?RldxWWcrT1JoWXhHNXJjd3cxOUtOUGtzaEt2R0QxcGtuTG8rVTV6SndMcngy?=
- =?utf-8?B?d1pwdjN2VWxEbXJsZ1N1dXl0M0xSaSswVElrRTh3czMvTXdpMVR1aE40OGty?=
- =?utf-8?B?d1cxSUYvMWk4cUhEeUs4c3JRcWkxWmpDN3Vvdit5RFNSeG9IMk5ZcVRRella?=
- =?utf-8?B?ZGxHMklBY3RXKzExY2l1SGs4SFZ0YjlzdFlsRzJQZnFSeGpsTUNaOVdsWExO?=
- =?utf-8?B?VTRiRDJ2dEF0Vm9tNUMvUUlEb2sxSG96Wit4YXAvQ2R4MDdlZ0piUytDWXhj?=
- =?utf-8?B?L3NCa1NIU2puZkc5ZFQwSXk2a3BVRE4xK0FoS2tPNzVSWE4rNzNRT0tsY2Yr?=
- =?utf-8?B?bFZ6aFpTSDdtbUhoWWd3bHRqK1RibmpWVFFKMDhPNDdFNEdHUUhVMnZ2blVu?=
- =?utf-8?B?TEJkbHBjdG5VSU5nUjZWZDdSTEdXRlFPdXVwTHF2NVp6dHU4RHhObk1ma0dU?=
- =?utf-8?B?U0pqeFhST0VVMnp0V0pSSUduQTNhYnZ0NGgvbmMxbTcxMHBaVU9sMjNXMjJx?=
- =?utf-8?B?ZFhRbEx2blVCTlRwYzlVK2FkK2p5aWpmTHFlZWszWTQ2VVMxdUdmSCs5dEFS?=
- =?utf-8?B?OVE9PQ==?=
-X-OriginatorOrg: jaguarmicro.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c27e885c-831a-4f77-e0da-08dd1ff4c707
-X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB4891.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2024 06:17:13.4819 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 1e45a5c2-d3e1-46b3-a0e6-c5ebf6d8ba7b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: S0U7Q5wZ+3YeCLvkTOP0PigltFZp55SCH/anjU9qyEo7f/XmwiyWGTtbaxvo/cxN5yRU/QtCIy9rQU9ZJzjaonPPA/gmrufgnUXOzSdHL2I=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB5391
-Received-SPF: pass client-ip=2a01:111:f403:2011::727;
- envelope-from=andrew.yuan@jaguarmicro.com;
- helo=APC01-TYZ-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20241212172209.533779-1-pbonzini@redhat.com>
+ <20241212172209.533779-3-pbonzini@redhat.com>
+ <Z2OjU3CdoBFI7xA8@intel.com>
+In-Reply-To: <Z2OjU3CdoBFI7xA8@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 19 Dec 2024 07:31:14 +0100
+Message-ID: <CABgObfYaV=70CT0WoV2_CGVfnqJbuLSwXurGg9qgrKAtxNwzSA@mail.gmail.com>
+Subject: Re: [PATCH 2/7] rust: pl011: match break logic of C version
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ qemu-rust@nongnu.org
+Content-Type: multipart/alternative; boundary="00000000000000ad60062999ae7b"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,61 +102,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrew Yuan <andrew.yuan@jaguarmicro.com>
+--00000000000000ad60062999ae7b
+Content-Type: text/plain; charset="UTF-8"
 
-As in the Cadence IP for Gigabit Ethernet MAC Part Number: IP7014 IP Rev: R1p12 - Doc Rev: 1.3 User Guide,
-if the DISABLE_MASK bit in type2_compare_x_word_1 is set,
-mask_value in type2_compare_x_word_0 is used as an additional 2 byte Compare Value
+Il gio 19 dic 2024, 05:20 Zhao Liu <zhao1.liu@intel.com> ha scritto:
 
-Signed-off-by: Andrew Yuan <andrew.yuan@jaguarmicro.com>
-Suggested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/net/cadence_gem.c | 24 +++++++++++++++++++-----
- 1 file changed, 19 insertions(+), 5 deletions(-)
+> But when I double-check where to set up the rsr, I realized that the
+> rust version and the C version seem to be inconsistent?
+>
+> IIUC, I guess Rust should uses to_be_bytes()[2].
 
-diff --git a/hw/net/cadence_gem.c b/hw/net/cadence_gem.c
-index 3fce01315f..7bd176951e 100644
---- a/hw/net/cadence_gem.c
-+++ b/hw/net/cadence_gem.c
-@@ -909,8 +909,8 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
- 
-         /* Compare A, B, C */
-         for (j = 0; j < 3; j++) {
--            uint32_t cr0, cr1, mask, compare;
--            uint16_t rx_cmp;
-+            uint32_t cr0, cr1, mask, compare, disable_mask;
-+            uint32_t rx_cmp;
-             int offset;
-             int cr_idx = extract32(reg, R_SCREENING_TYPE2_REG0_COMPARE_A_SHIFT + j * 6,
-                                    R_SCREENING_TYPE2_REG0_COMPARE_A_LENGTH);
-@@ -946,9 +946,23 @@ static int get_queue_from_screen(CadenceGEMState *s, uint8_t *rxbuf_ptr,
-                 break;
-             }
- 
--            rx_cmp = rxbuf_ptr[offset] << 8 | rxbuf_ptr[offset];
--            mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
--            compare = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
-+            disable_mask =
-+                FIELD_EX32(cr1, TYPE2_COMPARE_0_WORD_1, DISABLE_MASK);
-+            if (disable_mask) {
-+                /*
-+                 * If disable_mask is set,
-+                 * mask_value is used as an additional 2 byte Compare Value.
-+                 * To simple, set mask = 0xFFFFFFFF, if disable_mask is set.
-+                 */
-+                rx_cmp = ldl_le_p(rxbuf_ptr + offset);
-+                mask = 0xFFFFFFFF;
-+                compare = cr0;
-+            } else {
-+                rx_cmp = lduw_le_p(rxbuf_ptr + offset);
-+                mask = FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, MASK_VALUE);
-+                compare =
-+                    FIELD_EX32(cr0, TYPE2_COMPARE_0_WORD_0, COMPARE_VALUE);
-+            }
- 
-             if ((rx_cmp & mask) == (compare & mask)) {
-                 matched = true;
--- 
-2.25.1
+
+Yes, that's patch 4 in this series. :)
+
+Paolo
+
+[*]: https://doc.rust-lang.org/std/primitive.u32.html#method.to_be_bytes
+>
+> Regards,
+> Zhao
+>
+>
+>
+
+--00000000000000ad60062999ae7b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 19 dic 2024, 05:20 Zhao L=
+iu &lt;<a href=3D"mailto:zhao1.liu@intel.com">zhao1.liu@intel.com</a>&gt; h=
+a scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">But=
+=C2=A0when I double-check where to set up the rsr, I realized that the<br>
+rust version and the C version seem to be inconsistent?<br>
+<br>IIUC, I guess Rust should uses to_be_bytes()[2].</blockquote></div></di=
+v><div dir=3D"auto"><br></div><div dir=3D"auto">Yes, that&#39;s patch 4 in =
+this series. :)</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo=C2=
+=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto"></div><div dir=3D"au=
+to"><div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">
+[*]: <a href=3D"https://doc.rust-lang.org/std/primitive.u32.html#method.to_=
+be_bytes" rel=3D"noreferrer noreferrer" target=3D"_blank">https://doc.rust-=
+lang.org/std/primitive.u32.html#method.to_be_bytes</a><br>
+<br>
+Regards,<br>
+Zhao<br>
+<br>
+<br>
+</blockquote></div></div></div>
+
+--00000000000000ad60062999ae7b--
 
 
