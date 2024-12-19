@@ -4,94 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A152E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E11E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGp-0003k5-3s; Thu, 19 Dec 2024 11:21:03 -0500
+	id 1tOJGt-0004G4-50; Thu, 19 Dec 2024 11:21:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOGta-00072n-2G
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:48:54 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOGtX-0000yG-BB
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:48:53 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734616130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qn4mquEweZ71Z9jDJcuQq1s3l2ovJcdloeaI6PAZhIY=;
- b=OBUgyNVZWiKaNlDg6Ev+NjePdWQIaAM+rN2ltZTLVdMcHH7JU3SI/HSyQe9xmO6L4gXvIr
- +XtXJvVDU7ZChuqzZ7LbMUyQ5hBqHfpiShrBMb8mAWheqMdDDmDzidI6CeaqkHHZ4mTmVn
- OzlRj5Q3e0NlNPkUPZZCZVc7m+jdFmw=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-a_TJoLt7NOGzlZSuFarY-w-1; Thu, 19 Dec 2024 08:48:49 -0500
-X-MC-Unique: a_TJoLt7NOGzlZSuFarY-w-1
-X-Mimecast-MFC-AGG-ID: a_TJoLt7NOGzlZSuFarY-w
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-436328fcfeeso6791315e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 05:48:48 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIpU-0006fS-Kj
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:52:48 -0500
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIpS-0007BS-W9
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:52:48 -0500
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4361fe642ddso9745025e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:52:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734623565; x=1735228365; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GPXeRSGyjZ0gYXKU9wNEYO46Esb50lQRGDHAWVN/JVM=;
+ b=RnpGpsLlFSo9+/NBAOFpIBOQHHieFqGhZRzjbS6q+SvGYtWg5onQOdn3wAXejqWFhz
+ 19HjbXazKSHGGmpq8n+eEvJii3yU0K8pxSVqTxekAND7ZhAZ5duZszJNBIECuFogkpMi
+ zxV7UnyjNktu6NeHu3woZneW1oK92EU05dgl7SP/MOXQF1xlW1GAig0z7X/Vf5cmvYBy
+ VSpKfEp4BvVWWCz3mn8DIOI5vQYqfiH6+gCPYt7hqEhKCucov68NYI4uOQwMxdeQC/2H
+ nCWL+75oJE9yLL70X80RWgR/qGphRDxMinphJhk1Yj3Ihp7/MhlgMCUAVOhr0yvO1C4/
+ psZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734616127; x=1735220927;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qn4mquEweZ71Z9jDJcuQq1s3l2ovJcdloeaI6PAZhIY=;
- b=Y22LVlu91Oq1pbqTGVYooDLWFkx20fm0X9+kdnp+wKKgGaZeGy4gYCbIzEjuC4Yhe3
- UfwpDiLlycbAjrj79Pe+jkG58phcoOuAKebErYXdTyfDgzPmjDj+6q8BwR0gDFIkoHfV
- OljFAuJH7MSxDhYso+zs3J4tSVnYcSBWtAddpSRHtNWXbi2Cs4uR0z+OCWGAA/r2FyBi
- pmhjakl2z1SHgn+Df29T3NDYtQlhbcEPdbXYLiuSXuYyj5qzQwLZGw4nnAFrD2+nF2UY
- KsDTJ649ziyPtAAtgmgdRlPiioHJIctCDvzsaagJDDaABmebPt+1HG7+UFmoVXPrcY5M
- tcxQ==
-X-Gm-Message-State: AOJu0Yz8l/3PuiNGppj539q4Psn+QIvbJ8b6Mwk/pDUQ6orKll5X61fO
- qAksukIpZ9e9ipXgKX/6otr+Sq4HveSAZFkIPPq7cdAJPnB4JUA4qDSV/QhHWh6rf7it3aZO3M9
- f9m1LU9HkKbv3QLxlc88KYWwUqLO+t9SeiNoDQWmonC69UyKVg7eYlzaXPL+lrDrV2dRN7pLnm2
- LfWPwgsLgdYXEHrTtIjmCojWPL0EMUIWDCEBq8
-X-Gm-Gg: ASbGncs34UyqaHASJBd68dtHxp5a5USK8FEJ69eNBgyFbaf3zRNoBOOm94HGQIAugGk
- z2k6pbAIWi/ecTTiN/wLcxQJB77rXyTc4rkQhRbBoloNDQoMoEt0bWdyZjt+0kINLAx20z8xvHI
- jdSbmWVQAoQ+k/g60FFGJMvUt0txm2aVnZQ/pIjvEBnz8/wtl6+sE3U4fGDziciBqTUqAkSWKZF
- H1NUdcCfHwqHrsHk36aQRe28jd2BqGrGReNyAyy9TvRvdljWv3SLZOctG0O
-X-Received: by 2002:a05:600c:3b23:b0:434:a684:9b1 with SMTP id
- 5b1f17b1804b1-436553452f9mr63293465e9.4.1734616126782; 
- Thu, 19 Dec 2024 05:48:46 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFmoaepJVMrUu55Nx90MG32ecMysRlQm8k6S6Ohz5xpxYumsO4Sw0un0me9jnRMsTeVZ/PCUg==
-X-Received: by 2002:a05:600c:3b23:b0:434:a684:9b1 with SMTP id
- 5b1f17b1804b1-436553452f9mr63293145e9.4.1734616126224; 
- Thu, 19 Dec 2024 05:48:46 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
+ d=1e100.net; s=20230601; t=1734623565; x=1735228365;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GPXeRSGyjZ0gYXKU9wNEYO46Esb50lQRGDHAWVN/JVM=;
+ b=EcDrfSQ6+DTz1H/0H8AURyirA5iBp0vs4CVezO5p2DJd5yqqmjfYqMqcbfIvgZ1klZ
+ qd3n53SX7jEjw8s2nZrc9e3Zha5Xy9pdkvQXFX91xCGifVPJdLZLfwEUsmirOQyc3QTl
+ HUHmmVtxpn64LbUuGLlmSvVn8vVt8YtxAu/W8L4CKmCDHu4yWksUPO2mzUWKIDlpjlj8
+ OFOtwa/RdpZoqDbCp1g7vaNY4eaQVM7pa0rq7zrH4Fsnlm30xpwwj/w25FVnsc2GMjgR
+ iAlDtfhM2pkpWP229uXur6DREjgD7s96IfD6sadqmBf+x0EEdhdkaoGD/Sw0FCikbun1
+ 3lrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5daHPa1ue2IgrGBqjNr9dKLIPRSNlxixch2oGMl1hqoWbm6nCugZdxw4hhsysHf5hZaPyMWMggfXY@nongnu.org
+X-Gm-Message-State: AOJu0YwJvrvl3jY3ROM0IElaLhK033fNlK5gBH/7/nikN9KJjaFUQTi5
+ Z0FYAzTZCJ05OqZTOf5gD6+MQpByp8QRbDU6W3PV+JRcF0+LC6xA0mKoEwHkPSU=
+X-Gm-Gg: ASbGnctAsfAIeXGeUTzCwEMVwUD3/eCwfLST3k9YnbcHQz2eArPcr6y0phgOOv/7UYo
+ wPnDfV76eZZBnq2Z2uO65vRUb7Ecw756+0Hqqz8mGznWRWqK33P2tiiu/irOzV0HPTemZNqjKak
+ goKzAIHQapFxG3qpWk1fZQviT7lX0Lm7Aow9Zw0E49wNNhFADE3wn5XhVacrf5UcpT2TE6Tmr5v
+ qaYgl4ADMInKEcMQM3onODI9GYfzdfFzND185wHxxemO2Oy7dFQtpqahAn+FQ2ciUspdGI=
+X-Google-Smtp-Source: AGHT+IHrtY2I9vntk9kX4h4+kZhDiu/0kSPInps6pMvOK2W0P1GqY/NTTtDGfQKMK1JnWaMS9DtksA==
+X-Received: by 2002:a05:6000:2a4:b0:385:fb2c:6034 with SMTP id
+ ffacd0b85a97d-388e4d91e80mr6888157f8f.47.1734623565376; 
+ Thu, 19 Dec 2024 07:52:45 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c833155sm1588971f8f.24.2024.12.19.05.48.45
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 05:48:45 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Subject: [PULL 29/42] bql: add a "mock" BQL for Rust unit tests
-Date: Thu, 19 Dec 2024 14:48:42 +0100
-Message-ID: <20241219134843.443085-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219134843.443085-1-pbonzini@redhat.com>
-References: <20241219134843.443085-1-pbonzini@redhat.com>
+ 5b1f17b1804b1-436611ea3d5sm22017145e9.5.2024.12.19.07.52.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 07:52:44 -0800 (PST)
+Message-ID: <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
+Date: Thu, 19 Dec 2024 16:52:43 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20241216114841.1025070-1-anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,189 +102,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Right now, the stub BQL in stubs/iothread-lock.c always reports itself as
-unlocked.  However, Rust would like to run its tests in an environment where
-the BQL *is* locked.  Provide an extremely dirty function that flips the
-return value of bql_is_locked() to true.
+On 16/12/24 12:48, Ani Sinha wrote:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- include/qemu/main-loop.h  |  8 ++++++++
- stubs/iothread-lock.c     |  8 +++++++-
- rust/qemu-api/meson.build |  2 +-
- rust/qemu-api/src/cell.rs | 26 +++++++++++++++++++++++---
- 4 files changed, 39 insertions(+), 5 deletions(-)
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index d02d96e403..4c5bdb0de2 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
+>   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cpc.c'))
+>   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
+>   
+> +specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmfwupdate.c'))
 
-diff --git a/include/qemu/main-loop.h b/include/qemu/main-loop.h
-index 646306c272f..3935a573391 100644
---- a/include/qemu/main-loop.h
-+++ b/include/qemu/main-loop.h
-@@ -247,6 +247,14 @@ void event_notifier_set_handler(EventNotifier *e,
- GSource *iohandler_get_g_source(void);
- AioContext *iohandler_get_aio_context(void);
- 
-+/**
-+ * rust_bql_mock_lock:
-+ *
-+ * Called from Rust doctests to make bql_lock() return true.
-+ * Do not touch.
-+ */
-+void rust_bql_mock_lock(void);
-+
- /**
-  * bql_locked: Return lock status of the Big QEMU Lock (BQL)
-  *
-diff --git a/stubs/iothread-lock.c b/stubs/iothread-lock.c
-index 54676598950..6050c081f53 100644
---- a/stubs/iothread-lock.c
-+++ b/stubs/iothread-lock.c
-@@ -1,11 +1,17 @@
- #include "qemu/osdep.h"
- #include "qemu/main-loop.h"
- 
-+static bool bql_is_locked = false;
- static uint32_t bql_unlock_blocked;
- 
- bool bql_locked(void)
- {
--    return false;
-+    return bql_is_locked;
-+}
-+
-+void rust_bql_mock_lock(void)
-+{
-+    bql_is_locked = true;
- }
- 
- void bql_lock_impl(const char *file, int line)
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 7ff408ad68e..50ec00e128d 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -60,7 +60,7 @@ test('rust-qemu-api-integration',
-         dependencies: [qemu_api, qemu_api_macros],
-         link_whole: [rust_qemu_api_objs, libqemuutil]),
-     args: [
--        '--test',
-+        '--test', '--test-threads', '1',
-         '--format', 'pretty',
-     ],
-     protocol: 'rust',
-diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
-index 28349de291a..eae4e2ce786 100644
---- a/rust/qemu-api/src/cell.rs
-+++ b/rust/qemu-api/src/cell.rs
-@@ -124,9 +124,18 @@
- 
- use crate::bindings;
- 
--// TODO: When building doctests do not include the actual BQL, because cargo
--// does not know how to link them to libqemuutil.  This can be fixed by
--// running rustdoc from "meson test" instead of relying on cargo.
-+/// An internal function that is used by doctests.
-+pub fn bql_start_test() {
-+    if cfg!(MESON) {
-+        // SAFETY: integration tests are run with --test-threads=1, while
-+        // unit tests and doctests are not multithreaded and do not have
-+        // any BQL-protected data.  Just set bql_locked to true.
-+        unsafe {
-+            bindings::rust_bql_mock_lock();
-+        }
-+    }
-+}
-+
- pub fn bql_locked() -> bool {
-     // SAFETY: the function does nothing but return a thread-local bool
-     !cfg!(MESON) || unsafe { bindings::bql_locked() }
-@@ -220,6 +229,7 @@ impl<T> BqlCell<T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     /// ```
-@@ -236,6 +246,7 @@ pub const fn new(value: T) -> BqlCell<T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     ///
-@@ -253,6 +264,7 @@ pub fn set(&self, val: T) {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let cell = BqlCell::new(5);
-     /// assert_eq!(cell.get(), 5);
-@@ -274,6 +286,7 @@ pub fn replace(&self, val: T) -> T {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     /// let five = c.into_inner();
-@@ -293,6 +306,7 @@ impl<T: Copy> BqlCell<T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     ///
-@@ -315,6 +329,7 @@ impl<T> BqlCell<T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     ///
-@@ -333,6 +348,7 @@ impl<T: Default> BqlCell<T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlCell::new(5);
-     /// let five = c.take();
-@@ -461,6 +477,7 @@ fn panic_already_borrowed(&self) -> ! {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlRefCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlRefCell::new(5);
-     ///
-@@ -472,6 +489,7 @@ fn panic_already_borrowed(&self) -> ! {
-     ///
-     /// ```should_panic
-     /// use qemu_api::cell::BqlRefCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlRefCell::new(5);
-     ///
-@@ -513,6 +531,7 @@ pub fn borrow(&self) -> BqlRef<'_, T> {
-     ///
-     /// ```
-     /// use qemu_api::cell::BqlRefCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlRefCell::new("hello".to_owned());
-     ///
-@@ -525,6 +544,7 @@ pub fn borrow(&self) -> BqlRef<'_, T> {
-     ///
-     /// ```should_panic
-     /// use qemu_api::cell::BqlRefCell;
-+    /// # qemu_api::cell::bql_start_test();
-     ///
-     /// let c = BqlRefCell::new(5);
-     /// let m = c.borrow();
--- 
-2.47.1
+FW_CFG_DMA is offered by multiple targets ...:
+
+$ git grep -w FW_CFG_DMA
+hw/arm/Kconfig:19:    select FW_CFG_DMA
+hw/i386/Kconfig:82:    select FW_CFG_DMA
+hw/i386/Kconfig:113:    select FW_CFG_DMA
+hw/loongarch/Kconfig:22:    select FW_CFG_DMA
+hw/riscv/Kconfig:59:    select FW_CFG_DMA
+
+> diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
+> new file mode 100644
+> index 0000000000..1e29a610c0
+> --- /dev/null
+> +++ b/hw/misc/vmfwupdate.c
+> @@ -0,0 +1,157 @@
+> +/*
+> + * Guest driven VM boot component update device
+> + * For details and specification, please look at docs/specs/vmfwupdate.rst.
+> + *
+> + * Copyright (C) 2024 Red Hat, Inc.
+> + *
+> + * Authors: Ani Sinha <anisinha@redhat.com>
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "qemu/module.h"
+> +#include "sysemu/reset.h"
+> +#include "hw/nvram/fw_cfg.h"
+> +#include "hw/i386/pc.h"
+
+... however ...
+
+> +#include "hw/qdev-properties.h"
+> +#include "hw/misc/vmfwupdate.h"
+> +#include "qemu/error-report.h"
+> +
+> +static void fw_update_reset(void *dev)
+> +{
+> +    /* a NOOP at present */
+> +    return;
+> +}
+> +
+> +
+> +static uint64_t get_max_fw_size(void)
+> +{
+> +    Object *m_obj = qdev_get_machine();
+> +    PCMachineState *pcms = PC_MACHINE(m_obj);
+> +
+> +    if (pcms) {
+> +        return pcms->max_fw_size;
+
+... this code depends on x86/PC.
+
+Could it be wiser to add a new VM_FWUPDATE Kconfig
+symbol, having it depending on FW_CFG_DMA && I386?
+
+> +    } else {
+> +        return 0;
+> +    }
+> +}
 
 
