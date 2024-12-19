@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA75EE7718E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:33:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 460F0E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:33:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGp-0003qh-SF; Thu, 19 Dec 2024 11:21:04 -0500
+	id 1tOJFd-0001pN-E5; Thu, 19 Dec 2024 11:19:49 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcY-0004c0-Rk
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:26 -0500
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcX-0004SO-Ei
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:26 -0500
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43623f0c574so6770955e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:39:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734622764; x=1735227564; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ltkM6wv4nnewbtt7Wl7DzeFeRkwimvs0bnn2crm+6CQ=;
- b=jPuJDHxmUdmGyU9OLHk8iuTuWp3JW2kZ4F9XDyzMqxyINfVIknTQPoHkYTrYXozAJE
- 5qEmr1yfKyi0tpM0jGMNHEYyfgcPOAegg4FTTn8wQPu8tKjRWKG4iagGIDjynnnNVoYM
- 3V1Vl/cpHItfxvi0Nq2L3nHcTBb2ndMFSms2e7A2v8y30LUl43HYeuX1WrR+UDu+gPIC
- nwNrsaEcDNG72AcNNEWlGiIpuvpEABniF0LExBtgDtlnb8YVLWgTGwAnbZxeHzTguW/d
- T/zGsvel3qRG3gRJXqmO9DkjzQTbJN6ni3+p87swLx4qW4gtmmUHQC7Z4YtEyyqUNyrI
- VSWw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734622764; x=1735227564;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ltkM6wv4nnewbtt7Wl7DzeFeRkwimvs0bnn2crm+6CQ=;
- b=Bc1G66UmBj20OlKRnrUP5zqijg4Ktx5IMjhRpHpCrvu7JbtnOhub3wJJX17wy1udR0
- 3lVmUmfwmIqXnxj8Cf1M3Pitcg6VBrTIfnZ1ij6KKHmkh5PauRqHq0mjL4340Fci+vo0
- 0xY7RL7TnkRcLvVMfx/WNkBExKG8tMIwhXnQYfNGbnsIwH7Dyhgb6TYQp2+WJ+Xos69R
- efyU3Y32Z0TPnbQK6DCKaCmOIcRtxfNMk90CzMQJ8tWYn7GpJ7Zvfd7j05779jCRVLta
- HNM0zC4itnj5L9CyAuqt9staprqKHeJkGun9yiL3Tk3F5Tdu2ms5+D3wlrRIPbOzivg5
- pSTQ==
-X-Gm-Message-State: AOJu0Yzx8d2C8te2mGoKgmDIf20EcSdaARgkMQ+9N58ZLc6sG9Ej28eB
- pFP9Br9pR/SmDeXFOPqQuM1+W4i1wy8TutZNNkpCLTX9SCgmEzh1BAYXE457RmfD1tiM3zMuEsO
- J
-X-Gm-Gg: ASbGncvnT6HdgiD8hKMWhLyR5/cOEqo/gPnEler+GKOVPSKEhvXVpjq7c3O7A3nY+DF
- xfX7CEo7lx8N0SRtDZ1qjXD/wD9BvWOQn2wcWtakfO0w3XvL8hLd8BAMxIbCuBKTQoWBLaq9n/y
- wv6tE0Lbyu8EXRxdnO0NRG2JItjVywE4gZoxSAxhk/y03BFclPig8RWI76BZh0TxPlLv2lqRtJZ
- D2zBs95FeS11GVqnHSKdCq/I8yWVWfq5DlIBRcqf/CHmRWUYv1NEXg+Ig20138PQCz68FB4214c
- Hrq6
-X-Google-Smtp-Source: AGHT+IHqT2aqNU6znhJmAnu6BPD6sDUBEfCZ/4rUkgoJAGrbRO4KYM8P8HUa1iOsstTrLxK5eACAcw==
-X-Received: by 2002:a05:600c:4586:b0:436:1c04:aa9a with SMTP id
- 5b1f17b1804b1-43655370395mr72815995e9.14.1734622763724; 
- Thu, 19 Dec 2024 07:39:23 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436604e9c2csm22880975e9.43.2024.12.19.07.39.22
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Dec 2024 07:39:23 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH 04/10] hw/misc/vmcoreinfo: Rename VMCOREINFO_DEVICE ->
- TYPE_VMCOREINFO_DEVICE
-Date: Thu, 19 Dec 2024 16:38:51 +0100
-Message-ID: <20241219153857.57450-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219153857.57450-1-philmd@linaro.org>
-References: <20241219153857.57450-1-philmd@linaro.org>
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOG9j-0007cu-AS; Thu, 19 Dec 2024 08:01:31 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOG9g-0000cv-CK; Thu, 19 Dec 2024 08:01:30 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 72168A424F2;
+ Thu, 19 Dec 2024 12:59:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D95EC4CECE;
+ Thu, 19 Dec 2024 13:01:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1734613285;
+ bh=O3IkwvJlk6EBCbr2lI7kMh54S9htt+kwglnpdJT+ukE=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=h3TIdzt5xtQnJM11PaGOl95b1BWvsSe+ZHJeBjhc31RHJgMZejnO1qDTuQfovc7TA
+ VwHy4cegzvveiwVKVCUJsqpLT01aPf5OQHz1VAZZVabKGxvMvzhy8EKN8Au0F8v132
+ d0/mAoKgfZ6P+JW+yHGxDSlAAQNt5pbN5mmVnIHXkIPfFXGCaDnbsmgggvYFmJcgQ6
+ 45lWnARrnByJ+BayzFIMnEciYmiq+crassTiJ4f295vWgONIvnY1+k+6XkBlXyu+Ly
+ voDsBzEOce4+quovWgOWv7uxL8WXfIXeJODctp9WBgyOtiq96yqT0PHADbAkeFqLil
+ vqSFVTU2CBidw==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1tOG9b-005GyE-BC;
+ Thu, 19 Dec 2024 13:01:23 +0000
+Date: Thu, 19 Dec 2024 13:01:22 +0000
+Message-ID: <861py3rfml.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Daniel =?UTF-8?B?IlAuIEJlcnJhbmfDqSI=?= <berrange@redhat.com>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+In-Reply-To: <Z2QT2tPbC1GsTJVL@redhat.com>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
+ <Z2QT2tPbC1GsTJVL@redhat.com>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: berrange@redhat.com, kchamart@redhat.com,
+ eric.auger@redhat.com, cohuck@redhat.com, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com,
+ philmd@linaro.org, pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=maz@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,71 +103,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Follow the assumed QOM type definition style, prefixing with 'TYPE_'.
+On Thu, 19 Dec 2024 12:38:50 +0000,
+Daniel "P. Berrang=C3=A9" <berrange@redhat.com> wrote:
+>=20
+> On Thu, Dec 19, 2024 at 12:26:29PM +0000, Marc Zyngier wrote:
+> > On Thu, 19 Dec 2024 11:35:16 +0000,
+> > Kashyap Chamarthy <kchamart@redhat.com> wrote:
+> > >=20
+> > > On Thu, Dec 12, 2024 at 11:04:30AM +0100, Eric Auger wrote:
+> > >=20
+> > > Hi Eric,
+> > >=20
+> > > > On 12/12/24 10:36, Cornelia Huck wrote:
+> > > > > On Thu, Dec 12 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com=
+> wrote:
+> > >=20
+> > > [...]
+> > >=20
+> > > > >> Consider you mgmt app wants to set a CPU model that's common acr=
+oss
+> > > > >> heterogeneous hardware. They don't neccessarily want/need to be
+> > > > >> able to live migrate between heterogeneous CPUs, but for simplic=
+ity
+> > > > >> of configuration desire to set a single named CPU across all gue=
+sts,
+> > > > >> irrespective of what host hey are launched on. The ARM spec base=
+line
+> > > > >> named models would give you that config simplicity.
+> > > > > If we use architecture extensions (i.e. Armv8.x/9.x) as baseline,=
+ I'm
+> > > > > seeing some drawbacks:
+> > > > > - a lot of work before we can address some specific use cases
+> > > > > - old models can get new optional features
+> > > > > - a specific cpu might have a huge set of optional features on to=
+p of
+> > > > >   the baseline model
+> > > > >
+> > > > > Using a reference core such as Neoverse-V2 probably makes more se=
+nse
+> > > > > (easier to get started, less feature diff?) It would still make a=
+ good
+> > > > > starting point for a simple config.
+> > > > >
+> > > > Actually from a dev point of view I am not sure it changes much to =
+have
+> > > > either ARM spec rev baseline or CPU ref core named model.
+> > > >=20
+> > > > One remark is that if you look at
+> > > > https://developer.arm.com/documentation/109697/2024_09?lang=3Den
+> > > > you will see there are quite a lot of spec revisions and quite a fe=
+w of
+> > > > them are actually meaningful in the light of currently avaiable and
+> > > > relevant HW we want to address. What I would like to avoid is to be
+> > > > obliged to look at all of them in a generic manner while we just wa=
+nt to
+> > > > address few cpu ref models.
+> > > >=20
+> > > > Also starting from the ARM spec rev baseline the end-user may need =
+to
+> > > > add more feature opt-ins to be close to a specific cpu model. So I
+> > > > foresee extra complexity for the end-user.
+> > >=20
+> > > (Assuming I'm parsing your last para right; correct me if not.)
+> > >=20
+> > > Isn't a user wanting to add extra CPU flags (on top of a baseline) a
+> > > "normal behaviour" and not "extra complexity"?  Besides coming close =
+to
+> > > a specific CPU model, there's the additional important use-case of CPU
+> > > flags that provide security mitigation.
+> > >=20
+> > > Consider this:
+> > >=20
+> > > Say, there's a serious security issue in a released ARM CPU.  As part=
+ of
+> > > the fix, two new CPU flags need to be exposed to the guest OS, call t=
+hem
+> > > "secflag1" and "secflag2".  Here, the user is configuring a baseline
+> > > model + two extra CPU flags, not to get close to some other CPU model
+> > > but to mitigate itself against a serious security flaw.
+> >=20
+> > If there's such a security issue, that the hypervisor's job to do so,
+> > not userspace. See what KVM does for CSV3, for example (and all the
+> > rest of the side-channel stuff).
+> >=20
+> > You can't rely on userspace for security, that'd be completely
+> > ludicrous.
+>=20
+> Actually that's a normal situation QEMU has to deal with.
+>=20
+> QEMU needs to be able to expose a deterministic fixed ABI to the guest
+> VM, and that includes control over what CPU features are exposed to
+> it. In most cases, the hypervisor cannot arbitrary force enable new
+> guest features without agreement from QEMU.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/hw/misc/vmcoreinfo.h | 6 +++---
- hw/misc/vmcoreinfo.c         | 8 ++++----
- 2 files changed, 7 insertions(+), 7 deletions(-)
+Which ABI? The only ABI that matters is what is defined by the
+architecture. When it comes to CPU features, new features are exposed
+by default. If QEMU wants to turn it off, it can in most (but not all)
+cases. But that's the extent of the "agreement" we have with
+userspace, QEMU or otherwise.
 
-diff --git a/include/hw/misc/vmcoreinfo.h b/include/hw/misc/vmcoreinfo.h
-index da1066d540c..122c69686b0 100644
---- a/include/hw/misc/vmcoreinfo.h
-+++ b/include/hw/misc/vmcoreinfo.h
-@@ -16,10 +16,10 @@
- #include "standard-headers/linux/qemu_fw_cfg.h"
- #include "qom/object.h"
- 
--#define VMCOREINFO_DEVICE "vmcoreinfo"
-+#define TYPE_VMCOREINFO_DEVICE "vmcoreinfo"
- typedef struct VMCoreInfoState VMCoreInfoState;
--DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO,
--                         VMCOREINFO_DEVICE)
-+DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO_DEVICE,
-+                         TYPE_VMCOREINFO_DEVICE)
- 
- typedef struct fw_cfg_vmcoreinfo FWCfgVMCoreInfo;
- 
-diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
-index c5bb5c9fa52..9822615cfed 100644
---- a/hw/misc/vmcoreinfo.c
-+++ b/hw/misc/vmcoreinfo.c
-@@ -37,7 +37,7 @@ static void vmcoreinfo_reset(void *opaque)
- 
- static void vmcoreinfo_realize(DeviceState *dev, Error **errp)
- {
--    VMCoreInfoState *s = VMCOREINFO(dev);
-+    VMCoreInfoState *s = VMCOREINFO_DEVICE(dev);
-     FWCfgState *fw_cfg = fw_cfg_find();
-     /* for gdb script dump-guest-memory.py */
-     static VMCoreInfoState * volatile vmcoreinfo_state G_GNUC_UNUSED;
-@@ -48,13 +48,13 @@ static void vmcoreinfo_realize(DeviceState *dev, Error **errp)
-      */
-     if (!vmcoreinfo_find()) {
-         error_setg(errp, "at most one %s instance is permitted",
--                   VMCOREINFO_DEVICE);
-+                   TYPE_VMCOREINFO_DEVICE);
-         return;
-     }
- 
-     if (!fw_cfg || !fw_cfg->dma_enabled) {
-         error_setg(errp, "%s device requires fw_cfg with DMA",
--                   VMCOREINFO_DEVICE);
-+                   TYPE_VMCOREINFO_DEVICE);
-         return;
-     }
- 
-@@ -96,7 +96,7 @@ static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
- 
- static const TypeInfo vmcoreinfo_types[] = {
-     {
--        .name           = VMCOREINFO_DEVICE,
-+        .name           = TYPE_VMCOREINFO_DEVICE,
-         .parent         = TYPE_DEVICE,
-         .instance_size  = sizeof(VMCoreInfoState),
-         .class_init     = vmcoreinfo_device_class_init,
--- 
-2.47.1
+If a feature is deemed broken or unsafe, KVM will turn it at least
+hide it from the guest without userspace's intervention, and if
+possible actively turn it off.
 
+> If a guest happens to be using '-cpu host', then when a new CPU flag
+> arrives as part of a security fix, there is at least no CPU config
+> change required. QEMU may or may not need changes, in order that
+> the behaviour associated with the new CPU flag is correctly handled.
+
+How is that "flag" visible from the guest? The only way to expose
+properties is through the ID registers, and you can't invent your own,
+nor expose something that is not already handled by the host.
+
+> If the guest is using a named CPU model, as well as modifying QEMU
+> to know about the new flag, the host admin needs to explicitly
+> decide whether & when to expose the new CPU flag for each guest VM
+> on the host.
+>
+> Until the new CPU flag is exposed to the guest, while the host itself
+> may be able to remain protected to the new security issue, the guest
+> OS is likely remain vulnerable, or have degraded operation in some way.
+
+I think that's the point where we talk past each other. There is no
+"flag" that can be exposed to a guest as part of the architecture. We
+have a set of architectural features, and in 99% of the cases, we can
+only expose to the guest a feature that both exists on the host and
+that the hypervisor understands.
+
+Thanks,
+
+	M.
+
+--=20
+Without deviation from the norm, progress is not possible.
 
