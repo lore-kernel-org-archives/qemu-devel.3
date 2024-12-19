@@ -4,71 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACEEDE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48210E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGh-0003J0-Bx; Thu, 19 Dec 2024 11:20:57 -0500
+	id 1tOJFS-0001n6-AH; Thu, 19 Dec 2024 11:19:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOGDB-0008WT-Bo
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:05:05 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOGD9-0001sm-5Y
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:05:05 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-725f4623df7so731771b3a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 05:05:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734613501; x=1735218301; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1tXuvZuQM+RjdVqq4gLXtYtavrGzu2dIZheB+s1Bo+k=;
- b=K3ABfCfkECWf7LKPVdDKWlL2lM4iTxNTQKtVhxGrFsXmOrPGeNpiNUcxLPIEeqeCvw
- e+S/p5AjpBJCB3TBe3u8G0xOTCGKkofCj96NOrPv8EpPOxsSRks1Wu5J1zEeU52/ohIy
- lbg40RSWDRd4kWyx/n8AY3IESAsWmyvgDYc6K0mhqaJcPjixB8ewS0CYJexpLfGGyi5N
- a9hG8sFJfxcUSCRsgiwgMaw9hDQaJRNmP6gcb99we3FVuKOB438CnbyPWnHNx4raz4fs
- MvPh7517Cq+vs6xOyPGUGCjfbDBb6QfWa4P+Wr+yf3EzkIiFUfPjAwlVzyZaaHn5HN9J
- JqLg==
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFAe-00035H-NE
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:58:24 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFAd-0004oc-Ds
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:58:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734609502;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=oRuEe6ucAO0eYhzom7FI+s0akhObBTVh0rVi/x+C/Cw=;
+ b=gh2AgRYIMJ+iH3UE2+6MaEHqxEIX3wJO7xuikKaPKtolBlWWXDuCvup1ORWGLdhNwAntg1
+ tT4Wgbt8+2xEHuD17ZkUnvi8au64/q4xbKd2L6UEkasMVZESNvPSrLozvb51MsQqP4f829
+ stqIryhS25/noCnx4xkmuAUYSU4BvXg=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-574-HieUukpvP8aZ24XU4KG4qg-1; Thu, 19 Dec 2024 06:58:21 -0500
+X-MC-Unique: HieUukpvP8aZ24XU4KG4qg-1
+X-Mimecast-MFC-AGG-ID: HieUukpvP8aZ24XU4KG4qg
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-385e1fd40acso416560f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 03:58:21 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734613501; x=1735218301;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1tXuvZuQM+RjdVqq4gLXtYtavrGzu2dIZheB+s1Bo+k=;
- b=cbg2040eREq8fr0p+DP8/dVE1CpdASC88bK2X/2hAUdzspKeQ+iT3iyahqP6zNFcSL
- nb7ZHRu9x/RL4d1n1JO23uPSaOX6vTOx4TN7lcTsBo9/GAywtlgy5yJ7min2+j+j6bUq
- qmywB2uN4B+FrXixScjbqjJORCFz5+YeOCpLw9vmZrPj1HHtt6V4LlEKnJEHh4lwYvq7
- sGzluNLak9g7caK/VT2ZtUXBPjxMMPYt0HBkSEgA1BRY1SfsAmsBUl5NyxlBwTlWdwVt
- SFHGwUHdozSWlLCqSlSlZ960qm130SUoVgPaKprIUZOmbRuI8EDdwJ5J0dq7J2r+RKtz
- 36cw==
-X-Gm-Message-State: AOJu0YylfbdelckfX6j/VnbMUX6RIy5HyC33QpdVczok0b5w7XEQSPeP
- HPj+Nu35WjGBQJ2f1UWA8O8PoOKqegViWOw+fSRXrm6W3hthBBvYn7iyWlaYzmw=
-X-Gm-Gg: ASbGncuF9yX6RYfun+gZ1y+Jjs+n11L1f1PQGk4CqPBjfTG8g2kn+v9XhZYSamHP947
- WZn3i9Pc0RC5Ib+4NDF5RPqUceSO36FXlQTahVMqMJqcvtHOLZjkJXCD7u1VvXk5uk5tJv0pp+K
- uBoaeH6ZTSqsy/9i6wE5oBkj7BREHLWNEhk2nW5cTadXE7SpyqNMnOU/6V6soWhBOr2V2DRke+m
- GuIhOE8lqWbBuX5OBqm8fhq6q3XtyO/FtnNvIcZShtKYzVqymvZBF4AcxLxQEgX0Q==
-X-Google-Smtp-Source: AGHT+IFGV9rtrIiWDuQgIhpg5bKj7jZ7obiQo0ZzHDsIlOfWFD5scLuwIzohUAcQCCeS6EoCQn0bzg==
-X-Received: by 2002:a05:6a00:44cb:b0:724:592d:aa5f with SMTP id
- d2e1a72fcca58-72a8d2c3c0fmr10935989b3a.19.1734613501194; 
- Thu, 19 Dec 2024 05:05:01 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
+ d=1e100.net; s=20230601; t=1734609500; x=1735214300;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:references:cc:to:from:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=oRuEe6ucAO0eYhzom7FI+s0akhObBTVh0rVi/x+C/Cw=;
+ b=E26Ft82J0z0KI9ZMvoOWMw8KAML6teQV8EXLZDl4xN/8sH8YM/uS2B6I8khM2TKDIi
+ 3z8G+p15FX37QrozokZsXv0wYqOeNFBfsh5vxiv8tdZjF0hCFg6NaKMBiLzxDoYsprSL
+ jQ0biSrKd+YPIg7Ozm4hZvAuLrV4wdGAywP1Lsir+Sswj1rwnsaZwKlFpKOyDWEoy7nH
+ +RTkGi7Dl7FZJe5Zhz6ASoJMrebbkCICs11UrnBUyHJ7nTe2wKPPI91v0pHIusCD9epS
+ 0iaCsPd8dhaoylOe2ySwkMuw2wXRbp1oSGm23oRJ3ZYZfMLnwldyrDvvCYH0586m1r4C
+ nY3g==
+X-Gm-Message-State: AOJu0YyDrhU3aqwg3Kuit4yyag1jieisFFUIowxLCKMUOjen8ZxljKcP
+ m/EYZTlMqX1hpHtYooEyxuripuIwadnCNvf6oI0Jft40VHbT2QGvIqsezJvhSuLsxxNzi7YctZN
+ sEXhhWgu2T27ipOOA1K9mXL74BqRzOGDakocUDc6QtbVQHxokEh0E
+X-Gm-Gg: ASbGnctEBqKNswSMUbIcylYZaYnmkyXKbf/sNKol39sL962HIVmKK+Jb9P4e/uvjJcG
+ N6jqasSolZvIZx9tk8/p4zqCof7Ki0DLczbg/13tn4HPENu8HAmN6scXS4HTUugB0MpkSO6RAsE
+ yEHYD/9r+VdFLVLiqN4TnvvuJ5THC4FoiGAeOtbt9w17gE+8kJOBs42VDevVzzZeAY6y7CtKDC7
+ zYnDhVroER/m/oVKEnZvxZRwH8RGSgKMzTrhC0Hfizaetp8Yc2TG659liAvXerizug622uh1fOD
+ GfgrVDHFAC49GsheaeoxJYN3kFq5BPRv6Nnmps+JfegtyDU8DWNGYThLDHb2nPkwurhIs+9MKo8
+ vralgwg==
+X-Received: by 2002:a5d:6c6a:0:b0:385:f44a:a3b with SMTP id
+ ffacd0b85a97d-388e4d8fd51mr4948291f8f.41.1734609500307; 
+ Thu, 19 Dec 2024 03:58:20 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IE417aVIp18tTrZtgvfHcpUp94db1bbN32d6gPOMshVN8S1Go+rPtYMpfVGARYhp77wJxarWQ==
+X-Received: by 2002:a5d:6c6a:0:b0:385:f44a:a3b with SMTP id
+ ffacd0b85a97d-388e4d8fd51mr4948262f8f.41.1734609499890; 
+ Thu, 19 Dec 2024 03:58:19 -0800 (PST)
+Received: from ?IPV6:2003:cb:c749:6600:b73a:466c:e610:686?
+ (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
+ [2003:cb:c749:6600:b73a:466c:e610:686])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8dbb87sm1217353b3a.113.2024.12.19.05.04.55
+ ffacd0b85a97d-38a1c832b3dsm1391612f8f.25.2024.12.19.03.58.17
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 05:05:00 -0800 (PST)
-Message-ID: <4080b391-95d3-4cd8-a9fc-d68fda6bc160@linaro.org>
-Date: Thu, 19 Dec 2024 14:04:52 +0100
+ Thu, 19 Dec 2024 03:58:18 -0800 (PST)
+Message-ID: <d4873e14-7b05-4f70-9abf-2f9d9ed0ea95@redhat.com>
+Date: Thu, 19 Dec 2024 12:58:17 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 00/15] Host Memory Backends and Memory devices queue
  2024-12-18
-To: David Hildenbrand <david@redhat.com>, Stefan Hajnoczi <stefanha@gmail.com>
+From: David Hildenbrand <david@redhat.com>
+To: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>
 Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
  Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S . Tsirkin" <mst@redhat.com>
@@ -76,20 +90,67 @@ References: <20241218105303.1966303-1-david@redhat.com>
  <CAJSP0QUoerckBWX=0PD_82jFwVbmtvftWf5QqSWxpK0Ttc+uvQ@mail.gmail.com>
  <2e6400d9-6fee-41ed-a317-329f275912c6@redhat.com>
  <d19ab3d3-737d-4faa-a7d7-639b4ea3b172@redhat.com>
+ <ed949070-bb79-4357-b379-9374c40433bc@linux.ibm.com>
+ <728b07ae-17aa-49ca-967f-a35d62f8cc32@redhat.com>
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <d19ab3d3-737d-4faa-a7d7-639b4ea3b172@redhat.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <728b07ae-17aa-49ca-967f-a35d62f8cc32@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,205 +166,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On 19.12.24 12:57, David Hildenbrand wrote:
+> On 19.12.24 12:43, Christian Borntraeger wrote:
+>> Am 19.12.24 um 12:18 schrieb David Hildenbrand:
+>>> The following on top seems to make everything happy. I wish the
+>>> CONFIG_S390_CCW_VIRTIO stuff would't have to be so complicated, just to
+>>> handle odd configs that don't really make sense.
+>>
+>> WOuld it be possible to rid of this config?
+> 
+> I was asking myself the same: when does it make sense to build for s390x
+> system without CONFIG_S390_CCW_VIRTIO. But other archs that also have a
+> single machine seem to be doing the same thing.
+> 
+> We wouldn't want to have the option to disable it, but "bool" gives you
+> the option to do that.
+> 
+> I suspect something that could work is:
+> 
+> diff --git a/target/s390x/Kconfig b/target/s390x/Kconfig
+> index 8a95f2bc3f..4c99b9cedd 100644
+> --- a/target/s390x/Kconfig
+> +++ b/target/s390x/Kconfig
+> @@ -1,5 +1,6 @@
+>    config S390X
+>        bool
+> +    select CONFIG_S390_CCW_VIRTIO
+>        select PCI
+>        select S390_FLIC
 
-On 19/12/24 12:18, David Hildenbrand wrote:
-> On 19.12.24 01:04, David Hildenbrand wrote:
->> On 18.12.24 22:09, Stefan Hajnoczi wrote:
->>> On Wed, 18 Dec 2024 at 05:55, David Hildenbrand <david@redhat.com> 
+(- CONFIG_ of course)
 
+-- 
+Cheers,
 
->>> Please take a look at the following s390x-related CI failures:
->>
->> Thanks, most of them seem related to this PULL.
->>
->>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/8679972912
->>> https://gitlab.com/qemu-project/qemu/-/jobs/8679972809
->>> https://gitlab.com/qemu-project/qemu/-/jobs/8679972931
->>
->> ../hw/s390x/s390-virtio-ccw.c: In function ‘s390_set_memory_limit’:
->> ../hw/s390x/s390-virtio-ccw.c:138:9: error: ‘hw_limit’ may be used 
->> uninitialized [-Werror=maybe-uninitialized]
->>     138 |         error_report("host supports a maximum of %" PRIu64 " 
->> GB",
->>         |         
->> ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
->>     139 |                      hw_limit / GiB);
->>         |                      ~~~~~~~~~~~~~~~
->> ../hw/s390x/s390-virtio-ccw.c:130:14: note: ‘hw_limit’ declared here
->>     130 |     uint64_t hw_limit;
->>         |              ^~~~~~~~
->>
->> Looks weird. Without kvm_enabled() ret = 0, so ret cannot be
->> -E2BIG and consequently that code won't be executed.
->>
->> Anyhow, I'll simply initialize hw_limit to 0 to silence the warning.
->>
->>
->>>
->>> https://gitlab.com/qemu-project/qemu/-/jobs/8679972861
->>
->> /usr/bin/ld: libqemu-s390x-softmmu.a.p/hw_s390x_s390-skeys.c.o: in 
->> function `qemu_s390_enable_skeys':
->> /builds/qemu-project/qemu/build/../hw/s390x/s390-skeys.c:256: 
->> undefined reference to `s390_get_memory_limit'
->> /usr/bin/ld: libqemu-s390x-softmmu.a.p/hw_s390x_s390-hypercall.c.o: in 
->> function `handle_virtio_ccw_notify':
->> /builds/qemu-project/qemu/build/../hw/s390x/s390-hypercall.c:46: 
->> undefined reference to `virtio_ccw_get_vdev'
->> /usr/bin/ld: /builds/qemu-project/qemu/build/../hw/s390x/s390- 
->> hypercall.c:47: undefined reference to `virtio_queue_get_num'
->> /usr/bin/ld: /builds/qemu-project/qemu/build/../hw/s390x/s390- 
->> hypercall.c:56: undefined reference to `virtio_queue_notify'
->> /usr/bin/ld: libqemu-s390x-softmmu.a.p/hw_s390x_s390-hypercall.c.o: in 
->> function `handle_storage_limit':
->> /builds/qemu-project/qemu/build/../hw/s390x/s390-hypercall.c:64: 
->> undefined reference to `s390_get_memory_limit'
->> /usr/bin/ld: libqemu-s390x-softmmu.a.p/hw_s390x_s390-hypercall.c.o: in 
->> function `handle_virtio_ccw_notify':
->> /builds/qemu-project/qemu/build/../hw/s390x/s390-hypercall.c:52: 
->> undefined reference to `virtio_get_queue'
->> /usr/bin/ld: /builds/qemu-project/qemu/build/../hw/s390x/s390- 
->> hypercall.c:52: undefined reference to 
->> `virtio_queue_set_shadow_avail_idx'
->>
->> We're building with "--without-default-devices' '--without-default- 
->> feature".
->> Consequently, we won't even have CONFIG_S390_CCW_VIRTIO
->>
->> So we won't compile s390-virtio-ccw.c, but we will compile things like 
->> s390-stattrib.c,
->> s390-hypercall.c, ... which to me is extremely odd.
->>
->> Is this maybe a leftover from the time when we had the old machine 
->> type? What value
->> is it to compile all these files without even having a machine that 
->> could make use
->> of these?
-
-
-> The following on top seems to make everything happy. I wish the
-> CONFIG_S390_CCW_VIRTIO stuff would't have to be so complicated, just to
-> handle odd configs that don't really make sense.
-> 
-> 
-> I'll do some more testing, then squash the changes into the respective
-> patches and resend.
-> 
-> 
-> diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-> index 094435cd3b..3bbebfd817 100644
-> --- a/hw/s390x/meson.build
-> +++ b/hw/s390x/meson.build
-> @@ -12,7 +12,6 @@ s390x_ss.add(files(
->     's390-pci-inst.c',
->     's390-skeys.c',
->     's390-stattrib.c',
-> -  's390-hypercall.c',
->     'sclp.c',
->     'sclpcpu.c',
->     'sclpquiesce.c',
-> @@ -28,7 +27,10 @@ s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
->   s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
->     'tod-tcg.c',
->   ))
-> -s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files('s390- 
-> virtio-ccw.c'))
-> +s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
-> +  's390-virtio-ccw.c',
-> +  's390-hypercall.c',
-> +))
->   s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
->   s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index 248566f8dc..097ec78826 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -127,7 +127,7 @@ static void subsystem_reset(void)
->   static void s390_set_memory_limit(S390CcwMachineState *s390ms,
->                                     uint64_t new_limit)
->   {
-> -    uint64_t hw_limit;
-> +    uint64_t hw_limit = 0;
->       int ret = 0;
-> 
->       assert(!s390ms->memory_limit && new_limit);
-> @@ -145,13 +145,6 @@ static void 
-> s390_set_memory_limit(S390CcwMachineState *s390ms,
->       s390ms->memory_limit = new_limit;
->   }
-> 
-> -uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
-> -{
-> -    /* We expect to be called only after the limit was set. */
-> -    assert(s390ms->memory_limit);
-> -    return s390ms->memory_limit;
-> -}
-> -
->   static void s390_set_max_pagesize(S390CcwMachineState *s390ms,
->                                     uint64_t pagesize)
->   {
-> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390- 
-> virtio-ccw.h
-> index 5a730f5d07..599740a998 100644
-> --- a/include/hw/s390x/s390-virtio-ccw.h
-> +++ b/include/hw/s390x/s390-virtio-ccw.h
-> @@ -35,7 +35,12 @@ struct S390CcwMachineState {
->       SCLPDevice *sclp;
->   };
-> 
-> -uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms);
-
-Pre-existing, I'm surprised this hw/ declaration is used
-in s390_pv_vm_try_disable_async() in target/s390x/kvm/pv.c.
-
-
-In hw/s390x/Kconfig, S390_CCW_VIRTIO doesn't depend on KVM,
-but due to this call, KVM depends on S390_CCW_VIRTIO...
-
-> +static inline uint64_t s390_get_memory_limit(S390CcwMachineState *s390ms)
-> +{
-> +    /* We expect to be called only after the limit was set. */
-> +    assert(s390ms->memory_limit);
-> +    return s390ms->memory_limit;
-> +}
-
-Short term, no better suggestion than inlining :(
-
-> 
->   #define S390_PTF_REASON_NONE (0x00 << 8)
->   #define S390_PTF_REASON_DONE (0x01 << 8)
-> diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/ 
-> misc_helper.c
-> index 3732d79185..be1870b07d 100644
-> --- a/target/s390x/tcg/misc_helper.c
-> +++ b/target/s390x/tcg/misc_helper.c
-> @@ -44,6 +44,7 @@
->   #include "hw/boards.h"
->   #include "hw/s390x/tod.h"
->   #endif
-> +#include CONFIG_DEVICES
-> 
->   /* #define DEBUG_HELPER */
->   #ifdef DEBUG_HELPER
-> @@ -117,12 +118,14 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, 
-> uint32_t r3, uint32_t num)
-> 
->       switch (num) {
->       case 0x500:
-> +#ifdef CONFIG_S390_CCW_VIRTIO
->           /* QEMU/KVM hypercall */
->           bql_lock();
->           handle_diag_500(env_archcpu(env), GETPC());
->           bql_unlock();
->           r = 0;
->           break;
-> +#endif /* CONFIG_S390_CCW_VIRTIO */
->       case 0x44:
->           /* yield */
->           r = 0;
-> 
+David / dhildenb
 
 
