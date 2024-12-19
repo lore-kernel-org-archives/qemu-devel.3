@@ -4,218 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23091E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 01:57:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D05F4E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 02:06:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO5mk-0002Y9-KJ; Wed, 18 Dec 2024 20:57:06 -0500
+	id 1tO5vR-00044j-Qg; Wed, 18 Dec 2024 21:06:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick.p.edgecombe@intel.com>)
- id 1tO5mi-0002Y0-4r
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:57:04 -0500
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tO5vN-00044P-6H
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 21:06:01 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rick.p.edgecombe@intel.com>)
- id 1tO5me-0002sm-OV
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:57:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1734573421; x=1766109421;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-id:content-transfer-encoding: mime-version;
- bh=n7i95pYVXG6O3ditvaV9CESkKWEx8khHrQ5QOkMJdow=;
- b=UCsNbQxvB3jJCgdKQRnHmhecr42kZeq6fPCCe25W61qi4D5EioW+cect
- +rwFYyigJJCNtmCQqux+FQ2MditjsWBpMJhYtgWaxRqMKRi0xRt4t0KPp
- L30fMae1/4OP3v5A34XW568cP1Pa7hH0H/2oEznUf9nKTtiLbDTtrOKij
- YyyyEhjt95c5mRr3tuVSVdgJb1UWutxn6IWovM9QQEDs70XXds3LGeipq
- vX50xCvV+gC/08l89vR/zfRnn9/W8V9NQTCj7OeY4v6cOBOCWmr7Uu4WQ
- vLBqJ2dC33p/cIYhrc4YDHp6wvbPQ/iFwqVbsPsFXos3jo66wAHzEVOCB g==;
-X-CSE-ConnectionGUID: dYVXyYgwT8Skjsfanp5PHQ==
-X-CSE-MsgGUID: gnArsDd6SDeQvPvih1wmAA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11290"; a="37913789"
-X-IronPort-AV: E=Sophos;i="6.12,246,1728975600"; d="scan'208";a="37913789"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Dec 2024 17:56:56 -0800
-X-CSE-ConnectionGUID: Jq09CoSDRN2wRBy0VtJLSw==
-X-CSE-MsgGUID: 5X268O3OTAOuYOw2k8+VYg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="135371560"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
- by orviesa001.jf.intel.com with ESMTP/TLS/AES256-GCM-SHA384;
- 18 Dec 2024 17:56:54 -0800
-Received: from orsmsx601.amr.corp.intel.com (10.22.229.14) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44; Wed, 18 Dec 2024 17:56:53 -0800
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- orsmsx601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.44 via Frontend Transport; Wed, 18 Dec 2024 17:56:53 -0800
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (104.47.57.175)
- by edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.44; Wed, 18 Dec 2024 17:56:53 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JfujGG93oOQydKlCWfr/TEyHrDvxq0vdDYTgqoOmc8JfDYk7wKXT3cBw8O013Xl2zHmWsjC9RtXkjdZmgu39JSWC4rosH+E22vdoMh6sZf1BA7yIsl4x86SYxD3q0dWs96ODmy9d2p965O8AAXtotyPCA2v6JzWY5g43XHmbWTqDpRQ9W/dqbd7xjvh7T5Qc3yPDSyOIuAw9n6N1jsZpw3GYRpwfIx001VQk8x4KyUq5KHV7IBN0LISVprLZA7DYzu6gKiR5vrca/LwGbD++0+JxFDNe23nHYdb4+bqU+HZEW7bgcBzBU4pO3y7Xjd9/7/N7Fp2IFsbyK3z0SSYCvA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=n7i95pYVXG6O3ditvaV9CESkKWEx8khHrQ5QOkMJdow=;
- b=Ctqv1Ib9gCJ/QJvGdTPLcp9MVVF571mzTWqlCg+zgr2MRpNCHub3YTyzwX4lr4if13wghtLQfkjUiWZLemGe2XF7R/8bes8T0r4HruHTSdxflD71xe8+vEuJ38xoBSnR0hNMWeEo3dKzX85QGDfaYhkfUgLuvQ8iyfBXOg+aoJgZoAE7Vv0mu99mkRB+yC9yGvnM6yCdU/FbwKrE0vN7mQjVcfpDw1HSvgQJcl/9widyrZQO0jdbVrFqkI0mbaJ97c+ZzmmWJfl5E1EBywvXcKvf21ofqXKF0HEL/FekvUjUie3ANPSZY1g4zrpa8mz7jbI5nI1SSHPa0hJvxSVd6w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from MN0PR11MB5963.namprd11.prod.outlook.com (2603:10b6:208:372::10)
- by MN6PR11MB8145.namprd11.prod.outlook.com (2603:10b6:208:474::13)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8251.25; Thu, 19 Dec
- 2024 01:56:23 +0000
-Received: from MN0PR11MB5963.namprd11.prod.outlook.com
- ([fe80::edb2:a242:e0b8:5ac9]) by MN0PR11MB5963.namprd11.prod.outlook.com
- ([fe80::edb2:a242:e0b8:5ac9%3]) with mapi id 15.20.8272.005; Thu, 19 Dec 2024
- 01:56:23 +0000
-From: "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
-To: "seanjc@google.com" <seanjc@google.com>
-CC: "Huang, Kai" <kai.huang@intel.com>, "binbin.wu@linux.intel.com"
- <binbin.wu@linux.intel.com>, "Li, Xiaoyao" <xiaoyao.li@intel.com>, "Chatre,
- Reinette" <reinette.chatre@intel.com>, "Zhao, Yan Y" <yan.y.zhao@intel.com>,
- "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>, "Yamahata, Isaku" <isaku.yamahata@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "Hunter, Adrian"
- <adrian.hunter@intel.com>
-Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
- CPUID Bits
-Thread-Topic: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
- CPUID Bits
-Thread-Index: AQHbR4iHazsMJxPtGkeCIJI86qO187LZjbkAgAVIvYCAAPE0gIAJ9kIAgAFI/QCAACwNAIABsF4A
-Date: Thu, 19 Dec 2024 01:56:23 +0000
-Message-ID: <f58c24757f8fd810e5d167c8b6da41870dace6b1.camel@intel.com>
-References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
- <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
- <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
- <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
- <Z2DZpJz5K9W92NAE@google.com>
- <3ef942fa615dae07822e8ffce75991947f62f933.camel@intel.com>
- <Z2INi480K96q2m5S@google.com>
-In-Reply-To: <Z2INi480K96q2m5S@google.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Evolution 3.44.4-0ubuntu2 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MN0PR11MB5963:EE_|MN6PR11MB8145:EE_
-x-ms-office365-filtering-correlation-id: 555df771-a142-4f32-595b-08dd1fd05734
-x-ld-processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|3613699012|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?K2tWa1lQUUF5UEdzMVUxNG9TK0ZobXlwODBxRStoQklRZ1k0Q0hVODN0UkJ1?=
- =?utf-8?B?Zm9ra0E1ZHp3YkM2STBCakpHSzg4TU1OTHZ3dlhLeFh6WXdZbEFxT0JZWFVQ?=
- =?utf-8?B?QVZjUTZLTStsRnNvQnAvVU9oM1VGOGRtY3M5MkR2UE9iUHRVS3VTNUVNbnVx?=
- =?utf-8?B?NDRGa0xnVndUZ2RDYnl4QVFTb3UreWk1aWJOUUpYQXZCM1dtOEp6VjZIZ3o2?=
- =?utf-8?B?UTBrY3lsbkd1dnAxeDQ0YzkzaitRRUdwRnJtYStJV3pwNkVoQVZpcmUrb2ZQ?=
- =?utf-8?B?TG9vczJXVWh4bm5McnlDU0M0Q2phZUdkK3NURnNQL2k1amFkeHhoVnFBZEgw?=
- =?utf-8?B?UmczQ3pxb05HaGVTMG5hRERCR2g4MFFnSGdUTVNTQmpYSUs1M2J2REdycDF3?=
- =?utf-8?B?TzN3cm9DWkFjakJPcEpvOWZMM1dONUNRZ1VKRWZFODMrWUFtL3Z4KzdFVlVx?=
- =?utf-8?B?TW5nazFPUDZNQUJtaDIveityL3ZPNFdsdWFqNm9RUHhSeklJSXNnWjlJSlJQ?=
- =?utf-8?B?emY4K0I1SlVNd2tWcWpyRDE5QTdrYXZaTXBWbVE4akxBRGliYlUxYS8xaGJn?=
- =?utf-8?B?N2NHNFA4b1dKWEtzOE9tZjczek1uN04zU01kNitQZC9WN0VGWG1waGNQNmFY?=
- =?utf-8?B?QWtYV2RQYmhyRWoxWkJUSjBvR3RTaU4zQzhadSs4V3pzakFQbGx4T2ZXZitt?=
- =?utf-8?B?dU5iTHJJZHFCKzUrckZ3UjRVL1I1VUk3enNaNHo2WVRFRWszdVIyQ0Qwc3JP?=
- =?utf-8?B?RFJ3enk3N2k4b09wS0FHWXU3VVJTSzNHb1FSUmM4OWpFYWZnalRGdWN4RDBk?=
- =?utf-8?B?UisrWDFiSC94NHVGaHdYbUdlRTAwMnRmTVJ6dEpSYjRqc2o5Sm9XR1BHR2c2?=
- =?utf-8?B?Y3VkbElDM2lhbjY4TVlJWGIwdXN4bzg5N1JBclVkS0cycE1qdHp3TmZrai9O?=
- =?utf-8?B?dnNZUDZOYTgvMTNoZEdsemhVdWQ5UWdUVWQwV1RnSkZ5TldtbWEyVi91MHNn?=
- =?utf-8?B?aHZWUXpLRHpCWWlRQXpZaGxzelZBQnU1RlVGVDd4KzRGWHpzTno1VktHc2Fk?=
- =?utf-8?B?dE1qWjZHR3BrdHNVK1pUVkZkcXM0NUpRWDVNbWxKYTgxS2tnY3d2UDZaVXV6?=
- =?utf-8?B?UnhISXhPd094SXBTc1FoOFdGZytTM1ZITkhvbFV2OFNMQldiMisveThRMEpR?=
- =?utf-8?B?RlVyVTc0TDFVNTJURjJzUDBuWUppMThheTBBc3hwd2w2YmI5T2FBdHY4Umww?=
- =?utf-8?B?L0JkRHd5Q3NFdFczUXNJWkw2V3MwVjZveDNaVnV0M1FjVnlqOEp1VjRJc3RR?=
- =?utf-8?B?Y09CMnBPK1hTdEFJRmYwcGNva3htOUxpNnRmendoZWpUNnFCZ24vOXd6M3gy?=
- =?utf-8?B?eWlaMVBmNDlWK2p0ci8xUENzSGJpZGFZdGR4T1lZNFg4S0l4VEhmb25qMFJF?=
- =?utf-8?B?QmZaUUdIaFA3MDBJY2dqaHZSWDVTdWlkTHcydktINlZ4Q1Vmc0RMYmhBck80?=
- =?utf-8?B?UjZnNEdvdFBRZEkrZElvS1RHUzdwZ0EwM2tKUGVIWGUwWDFvbmVrYkNxSS9S?=
- =?utf-8?B?a1RBNkU3YVRYaFFlTEZyaFpWdEdsOTBFZEZxcWlxcUhxQkFKaFFDYlZyYWtQ?=
- =?utf-8?B?U0pzR24va1F0SFdhNDIyclZwMWtQNFUxUStUZXVxNnVCOWRvc01ja1A1bTB4?=
- =?utf-8?B?ZU5ic2crbXRGMXlqSWFuaEh0OEpsWEhjZituaUN6b1p4NU03WU9VcEpwSFps?=
- =?utf-8?B?U0dUcDNNS1dtRWRZK3U3TTl0QWVuVUNMMWxjdDFwSkFqNHlGZ3E0QXpFTHYw?=
- =?utf-8?B?RWYzTmtIUzVRNkZOMFhVeDV4WWlkQTlGWklTQ0R4K1BLRHdoNWl0VjlhcHBt?=
- =?utf-8?B?MmlYQmRKc0s0QkpIOHp6Z1R5NU5GcEt3WVRKcEFjWGk3aUhOYnJ3eVREaVhM?=
- =?utf-8?Q?LrfxeWXVMFw=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MN0PR11MB5963.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(3613699012)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RittRnVnRnFOK0RpYW5iMlFxZlkxM3VXQVpuSFhScmZwUEQ4QXFueGpVeEsz?=
- =?utf-8?B?K3BWU293RXVuZkR4QnpWM3A1ajNuK0Flc2MxZGM5enI1eVprUEhBbjJCb1lW?=
- =?utf-8?B?OTZIdFU4WkNZc2lnVzhjNEVWbDg0MXBBa3V0VXU2QmtLSGl5bElKYVUyYWxa?=
- =?utf-8?B?UlRNeVZweGh0R2R0Q3NWdlRrOEt0SU1mQXMxcmxWMFh3VzhHeXRod2pBZ3NM?=
- =?utf-8?B?emowL0t5ME9mM0Z0WVlZY2tRU1FDWERGZzFGYmpvazdkUkdQbGY4VEJjWkZY?=
- =?utf-8?B?OS9XREpnQzdYU1FSaXZaMzI1YU9rNFhOWEJmdyt0YUhjYWdTN0pCMGFYM1oy?=
- =?utf-8?B?V2tMeTFVZ3kwVlo5Vk5RQndDRmZSaGxOcXFFeFU5VldJeWhTcXlKaVNjeTRV?=
- =?utf-8?B?dzNxM25jWXBZSk8xb1NkVW9CQktodGpqdnRBRkZTeEp2Wjk0eGpERTRjdGNC?=
- =?utf-8?B?YWdrYXJRUGJuMUpoSkpHNHpuSFVXMTUvVDE2T3VKSnRaSlZvK21lQWNqeHg3?=
- =?utf-8?B?eTBFNkQ1OG4yMURlbTlBcmtMVWlOdHE1VDI3bzZUWVc3WUZGcVM2RGhhL2px?=
- =?utf-8?B?SzFnSjkrNjZtblBncFZ2MnNEK0pJSDZwYzNlZW5VZ05KS1MxdWhnczhGN0Ev?=
- =?utf-8?B?Y210Y3NpVm1paVJCUkFocmttenVUcnhCOUpraTFjNklxcE9qSGxodEZ2RjdX?=
- =?utf-8?B?TWhzK2hCeVQ4ODhGQ1NFeS8yckIzTFRmR1A1ZmJhbjNmZ3RTSmhEajBlRW5h?=
- =?utf-8?B?MFZ1bUZza2ZqcFl2VFczbmhyeU9rWFJhUFlQdHFjdkg2RXBFVnNBejgwcmp4?=
- =?utf-8?B?T3M0QWlkS3N3UGluWGhNV3h4YS9POWtuS09lVFhIcWxyNG5pWG9JMUdWRUE2?=
- =?utf-8?B?MkxHWkg2QTlTQ3ozZkJyRGpORFRzQUxpdk96NmJGdzJFeVZTU3pDeDd3aDR0?=
- =?utf-8?B?Y04zOWIycTBKMUs1Nm5RR0pobU1oUWhXRVFkU1J2dlgwQWJvSnJKTmxERElk?=
- =?utf-8?B?RmxvUVQyM3pnZm9RaEpHNDg0VUZpUW50NFdLeEw4MUlVeEV2dmRlb1M3MzFU?=
- =?utf-8?B?Wk8yZXVJbEU0ZkR1OWRtc2ZlNTZveXYwUHU4MjNFR0lKSHA3MnMzcHpaK0pr?=
- =?utf-8?B?OFRib2dpRG10cFM5NlVHenlQQm9ab0V1K2ozVW1CTGtLRkZDN0dVdGlLWHFo?=
- =?utf-8?B?KzBITlpIQUtSaUlqaVJTb0NKYU12Sm5zSGlwSWt3aDkzdWxsalJNME1vUkpO?=
- =?utf-8?B?a1RwUU81TTZ2NFlWS0NQclVXNXEzZjJZUTNiY0NndXQ3c1ZNRmVkR3lIK3hy?=
- =?utf-8?B?WHI0TVFOZGRYbkhkcWRCM1JBZklndEUyOW1IUHEvNHlpemNRb2QyQ25scGFa?=
- =?utf-8?B?SkxtWms0U01mZXIxVi9KRHBTSHhteG1reEJxRitHaW0xKy9LMTNhZnUzR0RN?=
- =?utf-8?B?ODUyMGNCemZCcjVmR2JMTjlnNVpVU1c3TTdJOHZxQ21LazdyRnl3SU9aRVQx?=
- =?utf-8?B?MWJ1SUJ3bTB4YzRxQW45MHIvKy9qV2lEOVpHV3RFUkRNY0M3Y2l0UkNBRDVC?=
- =?utf-8?B?THlpN2k3NS9PN3psdFNMMVhaNUg1WDI4bWZIYXZGOVErcldrRTNibnNDRWJN?=
- =?utf-8?B?R3JPREdIeXEwb093NFJyZ2RIcUlRVk5WanJrZ0taRnhMVitGcStUSEtBYkd3?=
- =?utf-8?B?bjc5VXRaM2lWT1B1UlVxL1pjOGZqcEQwbEdGNjA0WTVFcjBHRTdTY2xWd1dK?=
- =?utf-8?B?RGxwcDNwaTg5MlllNlllV290RWUrMGhyeXlIYXZzZFJiczNSU2owd2R4TzZO?=
- =?utf-8?B?RzhGRFZyZVEyb24wVXQ5ZUFOcXhXK241bk45U2l4VDg5VlpCMWhHQ0I2bWxl?=
- =?utf-8?B?dStXTTk3QUVkMkRMYlFQNGF0NHVHQ3BnODMzNndHekk0QkVnZCt6M1Y3L2dn?=
- =?utf-8?B?ZndRMjlvSzZpeURBemdMUUVyam1IMUZPekZqOEdFK3Q2ZGJVNkVHWlo5SHJs?=
- =?utf-8?B?TW5wdGExRHlqbjF5Z0xDN2hkR01Zb1liSkltYjI5TzlEVTF4eURUaEg4a3o0?=
- =?utf-8?B?RlBad1p0TmRrdFVUQVp0Zml3MUxZUGZGUjAvaDdEOXZHekxYTzR3WTRrVnV2?=
- =?utf-8?B?aU53MXVHSXd2ZlNvMTVjVWdKUDhnbHpXRVRrVitNNWJpWUFVRTROV3pOeXln?=
- =?utf-8?B?Wmc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5BB143CE66FC6E41A15B92F478FCCE9B@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1tO5vJ-0004gn-W1
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 21:06:00 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734573956;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/1xWOmCGJacQNa/Cve7OPO82LTIq5npKAVPchjmhQsQ=;
+ b=CIxb4KDeM+3SWLUU0Jq6GuYWt3pEQsev17U7LGVE+48+ATwZC3giFjUqYqks8A3Xwgq/k9
+ +Wyj3iULmCc/zz7qy2sjVbM6NECKVsIn0k8kssVjnYBN2wM4Exq2lUK5+4H/pxNZc2wkjP
+ 5AAimHP8o/D4mtZgt7ijGtAKZcY5wBk=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-680--1eqaHLMOBiI_ZuVLtZVvA-1; Wed, 18 Dec 2024 21:05:52 -0500
+X-MC-Unique: -1eqaHLMOBiI_ZuVLtZVvA-1
+X-Mimecast-MFC-AGG-ID: -1eqaHLMOBiI_ZuVLtZVvA
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-5d3d2cccbe4so168012a12.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 18:05:52 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734573950; x=1735178750;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=/1xWOmCGJacQNa/Cve7OPO82LTIq5npKAVPchjmhQsQ=;
+ b=Hod9a2/wJWqR3JlYiItv6tVw7NIb4M3izMKFdJM2Wr/RcWTYbDn81gOJQTZPviMWXY
+ mLwwSk39ILkoqT3CDswkC1SjPu/o+4mvRwlFBNGXAvWPvO2ILg0GgJlaRnEvBXM8NKhf
+ jZ7clzYfuoWP8HW3fT4sXbA4FgJN0pOjGY8Cw5HRbwXMtQ1SzfA2PAoHUmmX6VQ18T6w
+ wFLbrUo3WQNxr9ibp5Pc39VSdVzG6hU0+pEG+DSJj+OYkjYv/8XegzATyq6nKmqz90mg
+ H+uGPGgmiyXIVGMEXg+AjSRgaauF9efVHFgKHAYMT8QMWt0eMSjmGYKhcSP8NtUqalSc
+ ehVw==
+X-Gm-Message-State: AOJu0Yy329iEzCDuanMtkkqsgy5jYQ9PDAi+I7u8dTznI4OzeAjRgEyA
+ AzHDtBz1ccHNrevA8WpeKofKw6D/E5kWUp0lWy6LFXIRohuJV2rspnFwnKyL0W6k/gS9jYGY4HU
+ pVwnI+VmzZlHqejbV4pDRejukUCYMUCQ0xuYU2PJ79mJa6xVG5g9LJkyM5ZYCkTfQ7DnXexuDjR
+ moIKJ5SJ//qUItJPtOcUCS9Q8lhmaTT1TiTob/qQ==
+X-Gm-Gg: ASbGncsJI7hmOjcsOw2dmQPvnVAs3VX6S4O4O5kZAyj05EoPHbYt1Kwrn49Lw7lnGgB
+ ObOwFsakzNnbK78gkxtqI4tC+gfdm3L5INQBH530=
+X-Received: by 2002:a05:6402:414f:b0:5d0:e877:764e with SMTP id
+ 4fb4d7f45d1cf-5d7ee40604cmr4779760a12.24.1734573949696; 
+ Wed, 18 Dec 2024 18:05:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGc8y9e08RKd0g2K/NVgZDrTbAYsiRcAS9JupEcanjxCZpzp5reBuFwmMhYehs4FG39uJebnIhKGj9QnangImA=
+X-Received: by 2002:a05:6402:414f:b0:5d0:e877:764e with SMTP id
+ 4fb4d7f45d1cf-5d7ee40604cmr4779745a12.24.1734573949192; Wed, 18 Dec 2024
+ 18:05:49 -0800 (PST)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MN0PR11MB5963.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 555df771-a142-4f32-595b-08dd1fd05734
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Dec 2024 01:56:23.2929 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: L/QXwRNm4JoporOqZDMrfhPeNnRkFA9cdC16fO1Tnm9AXJMEB1VxZkNLYoRYOfNbqDQmy2i2w1yUXdE6Kx71BAAW0RCl4HjsQrysw1D+sdA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN6PR11MB8145
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=rick.p.edgecombe@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20241218134251.4724-1-richard.henderson@linaro.org>
+In-Reply-To: <20241218134251.4724-1-richard.henderson@linaro.org>
+From: Lei Yang <leiyang@redhat.com>
+Date: Thu, 19 Dec 2024 10:05:12 +0800
+Message-ID: <CAPpAL=zkYAx21hqMXY=6rutUx3JTfowun-cjuyM9hshhdna9Sg@mail.gmail.com>
+Subject: Re: [PATCH v2 00/24] More Property cleanups
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -231,137 +100,637 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gVHVlLCAyMDI0LTEyLTE3IGF0IDE2OjA4IC0wODAwLCBTZWFuIENocmlzdG9waGVyc29uIHdy
-b3RlOg0KPiBPbiBUdWUsIERlYyAxNywgMjAyNCwgUmljayBQIEVkZ2Vjb21iZSB3cm90ZToNCj4g
-PiBJdCBzZWVtcyBsaWtlIGFuIGFudGktcGF0dGVybiB0byBoYXZlIEtWTSBtYWludGFpbmluZyBh
-bnkgY29kZSB0byBkZWZlbmQgYWdhaW5zdA0KPiA+IFREWCBtb2R1bGUgY2hhbmdlcyB0aGF0IGNv
-dWxkIGluc3RlYWQgYmUgaGFuZGxlZCB3aXRoIGEgcHJvbWlzZS4gDQo+IA0KPiBJIGRpc2FncmVl
-LCBzYW5pdHkgY2hlY2tpbmcgaGFyZHdhcmUgYW5kIGZpcm13YXJlIGlzIGEgZ29vZCB0aGluZy4g
-IEUuZy4gc2VlIEtWTSdzDQo+IFZNQ1MgY2hlY2tzLCB0aGUgc2FuaXR5IGNoZWNrcyBmb3IgZmVh
-dHVyZXMgU0VWIGRlcGVuZHMgb24sIGV0Yy4NCg0KT2suIE1vcmUgc29mdGx5LCBLVk0gc2hvdWxk
-IG5vdCBkbyBzb21ldGhpbmcgb3Zlcmx5IGNvbXBsaWNhdGVkIGlmIGl0IGNvdWxkDQppbnN0ZWFk
-IGJlIGhhbmRsZWQgYnkgVERYIG1vZHVsZSBhZG9wdGluZyByZWFzb25hYmxlIHBvbGljaWVzLiBT
-YW5pdHkgY2hlY2tzIGFyZQ0Kc3VwcG9zZWQgdG8gYmUgZWFzeS4gVGhlIHJlYXNvbiBJJ20gcHJv
-YmluZyBmdXJ0aGVyIGlzIGl0IGZlZWRzIGludG8gaG93IHdlDQpwb3NpdGlvbiB0aGluZ3Mgd2l0
-aCB0aGUgVERYIG1vZHVsZSB0ZWFtLg0KDQo+IA0KPiBUaGF0IHNhaWQsIEknbSBub3QgdGVycmli
-bHkgY29uY2VybmVkIGFib3V0IG1vcmUgZmVhdHVyZXMgdGhhdCBhcmUgdW5jb25kaXRpb25hbGx5
-DQo+IGV4cG9zZWQgdG8gdGhlIGd1ZXN0LCBiZWNhdXNlIHRoYXQgd2lsbCBjYXVzZSBwcm9ibGVt
-cyBmb3Igb3RoZXIgcmVhc29ucywgaS5lLg0KPiBJbnRlbCBzaG91bGQgYWxyZWFkeSBiZSBoZWF2
-aWx5IGluY2VudGl2aXplZCB0byBub3QgZG8gc2lsbHkgdGhpbmdzLg0KDQpBZ3JlZS4gVGhhdCB3
-YXMgc29ydCBvZiB0aGUgZXhwZWN0YXRpb24gdW50aWwgdGhlc2UgdHdvIGJpdHMgY2FtZSB1cCBp
-biB0aGUgVEQNCmVudGVyL2V4aXQgZGlzY3Vzc2lvbi4NCg0KPiANCj4gPiBIb3dldmVyLCBLVk0g
-aGF2aW5nIGNvZGUgdG8gZGVmZW5kIGFnYWluc3QgdXNlcnNwYWNlIHByb2RkaW5nIHRoZSBURFgg
-bW9kdWxlDQo+ID4gdG8gZG8gc29tZXRoaW5nIGJhZCB0byB0aGUgaG9zdCBzZWVtcyB2YWxpZC4g
-U28gZml4ZWQgYml0IGlzc3VlcyBzaG91bGQgYmUNCj4gPiBoYW5kbGVkIHdpdGggYSBwcm9taXNl
-LCBidXQgaXNzdWVzIHJlbGF0ZWQgdG8gbmV3IGNvbmZpZ3VyYWJsZSBiaXRzIHNlZW1zDQo+ID4g
-b3Blbi4NCj4gPiANCj4gPiBTb21lIG9wdGlvbnMgZGlzY3Vzc2VkIG9uIHRoZSBjYWxsOg0KPiA+
-IA0KPiA+IDEuIElmIHdlIGdvdCBhIHByb21pc2UgdG8gcmVxdWlyZSBhbnkgbmV3IENQVUlEIGJp
-dHMgdGhhdCBjbG9iYmVyIGhvc3Qgc3RhdGUgdG8NCj4gPiByZXF1aXJlIGFuIG9wdC1pbiAoYXR0
-cmlidXRlcyBiaXQsIGV0YykgdGhlbiB3ZSBjb3VsZCBnZXQgYnkgd2l0aCBhIHByb21pc2UgZm9y
-DQo+ID4gdGhhdCB0b28uIFRoZSBjdXJyZW50IHNpdHVhdGlvbiB3YXMgYmFzaWNhbGx5IHRvIGFz
-c3VtZSBURFggbW9kdWxlIHdvdWxkbid0IG9wZW4NCj4gPiB1cCB0aGUgaXNzdWUgd2l0aCBuZXcg
-Q1BVSUQgYml0cyAob25seSBhdHRyaWJ1dGVzL3hmYW0pLg0KPiA+IDIuIElmIHdlIHJlcXVpcmVk
-IGFueSBuZXcgY29uZmlndXJhYmxlIENQVUlEIGJpdHMgdG8gc2F2ZS9yZXN0b3JlIGhvc3Qgc3Rh
-dGUNCj4gPiBhdXRvbWF0aWNhbGx5IHRoZW4gd2UgY291bGQgYWxzbyBnZXQgYnksIGJ1dCB0aGVu
-IEtWTSdzIGNvZGUgdGhhdCBkb2VzIGhvc3QNCj4gPiBzYXZlL3Jlc3RvcmUgd291bGQgZWl0aGVy
-IGJlIHJlZHVuZGFudCBvciBuZWVkIGEgVERYIGJyYW5jaC4NCj4gPiAzLiBJZiB3ZSBwcmV2ZW50
-IHNldHRpbmcgYW55IENQVUlEIGJpdHMgbm90IHN1cHBvcnRlZCBieSBLVk0sIHdlIHdvdWxkIG5l
-ZWQgdG8NCj4gPiB0cmFjayB0aGVzZSBiaXRzIGluIEtWTS4gVGhlIGRhdGEgYmFja2luZyBHRVRf
-U1VQUE9SVEVEX0NQVUlEIGlzIG5vdCBzdWZmaWNpZW50DQo+ID4gZm9yIHRoaXMgcHVycG9zZSBz
-aW5jZSBpdCBpcyBhY3R1YWxseSBtb3JlIGxpa2UgImRlZmF1bHQgdmFsdWVzIiB0aGVuIGEgbWFz
-ayBvZg0KPiA+IHN1cHBvcnRlZCBiaXRzLiBBIHBhdGNoIHRvIHRyeSB0byBkbyB0aGlzIGZpbHRl
-cmluZyB3YXMgZHJvcHBlZCBhZnRlciB1cHN0cmVhbQ0KPiA+IGRpc2N1c3Npb24uWzBdDQo+IA0K
-PiBUaGUgb25seSBDUFVJRCBiaXRzIHRoYXQgdHJ1bHkgbWF0dGVyIGFyZSB0aG9zZSB0aGF0IGFy
-ZSBhc3NvY2lhdGVkIHdpdGggaGFyZHdhcmUNCj4gZmVhdHVyZXMgdGhlIFREWCBtb2R1bGUgYWxs
-b3dzIHRoZSBndWVzdCB0byB1c2UgZGlyZWN0bHkuICBBbmQgZm9yIHRob3NlLCBLVk0NCj4gKm11
-c3QqIGtub3cgaWYgdGhleSBhcmUgZml4ZWQwIChpbnZlcnRlZCBwb2xhcml0eSBvbmx5PyksIGZp
-eGVkMSwgb3IgY29uZmlndXJhYmxlLg0KPiBBcyBBZHJpYW4gYXNzZXJ0ZWQsIHRoZXJlIHByb2Jh
-Ymx5IGFyZW4ndCBtYW55IG9mIHRoZW0uDQoNCkkgZG9uJ3QgZm9sbG93IHdoeSB0aGUgZml4ZWQg
-Yml0cyBhcmUgc3BlY2lhbCBoZXJlLiBJZiBhbnkgY29uZmlndXJhdGlvbiBjYW4NCmFmZmVjdCB0
-aGUgaG9zdCwgS1ZNIG5lZWRzIHRvIGtub3cgYWJvdXQgaXQuIFdoZXRoZXIgaXQgaXMgZml4ZWQg
-b3INCmNvbmZpZ3VyYWJsZS4NCg0KSSB3b25kZXIgaWYgdGhlcmUgY291bGQgYmUgc29tZSBjb25m
-dXNpb24gYWJvdXQgaG93IG11Y2ggS1ZNIGNhbiB0cnVzdCB0aGF0IGl0cw0KdmlldyBvZiB0aGUg
-Q1BVSUQgYml0cyBpcyB0aGUgc2FtZSBhcyB0aGUgVERYIE1vZHVsZXM/IEluIHRoZSBjdXJyZW50
-IHBhdGNoZXMNCnVzZXJzcGFjZSBpcyByZXNwb25zaWJsZSBmb3IgYXNzZW1ibGluZyBLVk0ncyBD
-UFVJRCBkYXRhIHdoaWNoIGl0IHNldHMgd2l0aA0KS1ZNX1NFVF9DUFVJRDIgbGlrZSBub3JtYWwu
-IEl0IGZldGNoZXMgYWxsIHRoZSBzZXQgYml0cyBmcm9tIHRoZSBURFggbW9kdWxlLA0KbWFzc2Fn
-ZXMgdGhlbSwgYW5kIHBhc3MgdGhlbSB0byBLVk0uIFNvIGlmIGEgaG9zdCBhZmZlY3RpbmcgY29u
-ZmlndXJhYmxlIGJpdCBpcw0Kc2V0IGluIHRoZSBURFggbW9kdWxlLCBidXQgbm90IGluIEtWTSB0
-aGVuIGl0IGNvdWxkIGJlIGEgcHJvYmxlbS4gSSB0aGluayB3ZQ0KbmVlZCB0byByZWFzc2VzcyB3
-aGljaCBiaXRzIGNvdWxkIGFmZmVjdCBob3N0IHN0YXRlLCBhbmQgbWFrZSBzdXJlIHdlIHJlLWNo
-ZWNrDQp0aGVtIGJlZm9yZSBlbnRlcmluZyB0aGUgVEQuIEJ1dCB3ZSBjYW4ndCBzaW1wbHkgY2hl
-Y2sgdGhhdCBhbGwgYml0cyBtYXRjaA0KYmVjYXVzZSB0aGVyZSBhcmUgc29tZSBiaXRzIHRoYXQg
-YXJlIHNldCBpbiBLVk0sIGJ1dCBub3QgVERYIG1vZHVsZSAocmVhbCBQVg0KbGVhZnMsIGd1ZXN0
-bWF4cGEsIGV0YykuDQoNClNvIHRoYXQgaXMgaG93IEkgYXJyaXZlZCBhdCB0aGF0IHdlIG5lZWQg
-c29tZSBsaXN0IG9mIGhvc3QgYWZmZWN0aW5nIGJpdHMgdG8NCnZlcmlmeSBtYXRjaCBpbiB0aGUg
-VEQuDQoNCj4gDQo+IEZvciBhbGwgb3RoZXIgQ1BVSUQgYml0cywgd2hhdCB0aGUgVERYIE1vZHVs
-ZSB0aGlua3MgYW5kL29yIHByZXNlbnRzIHRvIHRoZSBndWVzdA0KPiBpcyBjb21wbGV0ZWx5IGly
-cmVsZXZhbnQsIGF0IGxlYXN0IGFzIGZhciBhcyBLVk0gY2FyZXMsIGFuZCB0byBzb21lIGV4dGVu
-dCBhcyBmYXINCj4gYXMgUUVNVSBjYXJlcy4gIFRoaXMgaW5jbHVkZXMgdGhlIFREWCBNb2R1bGUn
-cyBGRUFUVVJFX1BBUkFWSVJUX0NUUkwsIHdoaWNoIGZyYW5rbHkNCj4gaXMgYXNpbmluZSBhbmQg
-c2hvdWxkIGJlIGlnbm9yZWQuICBJTU8sIHRoZSBURFggTW9kdWxlIHNwZWMgaXMgZW50aXJlbHkg
-b2ZmIHRoZQ0KPiBtYXJrIGluIGl0cyBhc3Nlc3NtZW50IG9mIHBhcmF2aXJ0dWFsaXphdGlvbi4g
-IEluamVjdGluZyBhICNWRSBpbnN0ZWFkIG9mIGEgI0dQDQo+IGlzbid0ICJwYXJhdmlydHVhbGl6
-YXRpb24iLg0KPiAgDQo+IFRha2UgVFNDX0RFQURMSU5FIGFzIGFuIGV4YW1wbGUuICAiRGlzYWJs
-aW5nIiB0aGUgZmVhdHVyZSBmcm9tIHRoZSBndWVzdCdzIHNpZGUNCj4gc2ltcGx5IG1lYW5zIHRo
-YXQgV1JNU1IgI0dQcyBpbnN0ZWFkIG9mICNWRXMuICAqTm90aGluZyogaGFzIGNoYW5nZWQgZnJv
-bSBLVk0ncw0KPiBwZXJzcGVjdGl2ZS4gIElmIHRoZSBndWVzdCBtYWtlcyBhIFREVk1DQUxMIHRv
-IHdyaXRlIElBMzJfVFNDX0RFQURMSU5FLCBLVk0gaGFzDQo+IG5vIGlkZWEgaWYgdGhlIGd1ZXN0
-IGhhcyBvcHRlZCBpbi9vdXQgb2YgI1ZFIHZzICNHUC4gIEFuZCBJTU8sIGEgc2FuZSBndWVzdCB3
-aWxsDQo+IG5ldmVyIHRha2UgYSAjVkUgb3IgI0dQIGlmIGl0IHdhbnRzIHRvIHVzZSBUU0NfREVB
-RExJTkU7IHRoZSBrZXJuZWwgc2hvdWxkIGluc3RlYWQNCj4gbWFrZSBhIGRpcmVjdCBURFZNQ0FM
-TCBhbmQgc2F2ZSBpdHNlbGYgYSBwb2ludGxlc3MgZXhjZXB0aW9uLg0KPiANCj4gICBFbmFibGlu
-ZyBHdWVzdCBURHMgYXJlIG5vdCBhbGxvd2VkIHRvIGFjY2VzcyB0aGUgSUEzMl9UU0NfREVBRExJ
-TkUgTVNSIGRpcmVjdGx5Lg0KPiAgIFZpcnR1YWxpemF0aW9uIG9mIElBMzJfVFNDX0RFQURMSU5F
-IGRlcGVuZHMgb24gdGhlIHZpcnR1YWwgdmFsdWUgb2YNCj4gICBDUFVJRCgxKS5FQ1hbMjRdIGJp
-dCAoVFNDIERlYWRsaW5lKS4gVGhlIGhvc3QgVk1NIG1heSBjb25maWd1cmUgKGFzIGFuIGlucHV0
-IHRvDQo+ICAgVERILk1ORy5JTklUKSB2aXJ0dWFsIENQVUlEKDEpLkVDWFsyNF0gdG8gYmUgYSBj
-b25zdGFudCAwIG9yIGFsbG93IGl0IHRvIGJlIDENCj4gICBpZiB0aGUgQ1BV4oCZcyBuYXRpdmUg
-dmFsdWUgaXMgMS4NCj4gDQo+ICAgSWYgdGhlIFREWCBtb2R1bGUgc3VwcG9ydHMgI1ZFIHJlZHVj
-dGlvbiwgYXMgZW51bWVyYXRlZCBieSBURFhfRkVBVFVSRVMwLlZFX1JFRFVDVElPTg0KPiAgIChi
-aXQgMzApLCBhbmQgdGhlIGd1ZXN0IFREIGhhcyBzZXQgVERfQ1RMUy5SRURVQ0VfVkUgdG8gMSwg
-aXQgbWF5IGNvbnRyb2wgdGhlDQo+ICAgdmFsdWUgb2YgdmlydHVhbCBDUFVJRCgxKS5FQ1hbMjRd
-IGJ5IHdyaXRpbmcgVERDUy5GRUFUVVJFX1BBUkFWSVJUX0NUUkwuVFNDX0RFQURMSU5FLiANCj4g
-DQo+ICAg4oCiIElmIHRoZSB2aXJ0dWFsIHZhbHVlIG9mIENQVUlEKDEpLkVDWFsyNF0gaXMgMCwg
-SUEzMl9UU0NfREVBRExJTkUgaXMgdmlydHVhbGl6ZWQNCj4gICAgIGFzIG5vbi1leGlzdGVudC4g
-V1JNU1Igb3IgUkRNU1IgYXR0ZW1wdHMgcmVzdWx0IGluIGEgI0dQKDApLg0KPiANCj4gICDigKIg
-SWYgdGhlIHZpcnR1YWwgdmFsdWUgb2YgQ1BVSUQoMSkuRUNYWzI0XSBpcyAxLCBXUk1TUiBvciBS
-RE1TUiBhdHRlbXB0cyByZXN1bHQNCj4gICAgIGluIGEgI1ZFKENPTkZJR19QQVJBVklSVCkuIFRo
-aXMgZW5hYmxlcyB0aGUgVETigJlzICNWRSBoYW5kbGVyLg0KPiANCj4gRGl0dG8gZm9yIFRNRSwg
-TUtUTUUuDQo+IA0KPiBGRUFUVVJFX1BBUkFWSVJUX0NUUkwuTUNBIGlzIGV2ZW4gd2VpcmRlciwg
-YnV0IEkgc3RpbGwgZG9uJ3Qgc2VlIGFueSByZWFzb24gZm9yDQo+IEtWTSBvciBRRU1VIHRvIGNh
-cmUgaWYgaXQncyBmaXhlZCBvciBjb25maWd1cmFibGUuICBUaGVyZSdzIHNvbWUgY3JhenkgbG9n
-aWMgZm9yDQo+IHdoZXRoZXIgb3Igbm90IENSNC5NQ0UgY2FuIGJlIGNsZWFyZWQsIGJ1dCB0aGUg
-aG9zdCBjYW4ndCBzZWUgZ3Vlc3QgQ1I0LCBhbmQgc28NCj4gb25jZSBhZ2FpbiwgdGhlIFREWCBN
-b2R1bGUncyB2aWV3IG9mIE1DQSBpcyBpcnJlbGV2YW50IHdoZW4gaXQgY29tZXMgdG8gaGFuZGxp
-bmcNCj4gVERWTUNBTEwgZm9yIHRoZSBtYWNoaW5lIGNoZWNrIE1TUnMuDQo+IA0KPiBTbyBJIHRo
-aW5rIHRoaXMgYWdhaW4gcHVyZWx5IGNvbWVzIHRvIGJhY2sgdG8gS1ZNIGNvcnJlY3RuZXNzIGFu
-ZCBzYWZldHkuICBNb3JlDQo+IHNwZWNpZmljYWxseSwgdGhlIFREWCBNb2R1bGUgbmVlZHMgdG8g
-cmVwb3J0IGZlYXR1cmVzIHRoYXQgYXJlIHVuY29uZGl0aW9uYWxseQ0KPiBlbmFibGVkIG9yIGRp
-c2FibGVkIGFuZCBjYW4ndCBiZSBlbXVsYXRlZCBieSBLVk0uICBGb3IgZXZlcnl0aGluZyBlbHNl
-LCBJIGRvbid0DQo+IHNlZSBhbnkgcmVhc29uIHRvIGNhcmUgd2hhdCB0aGUgVERYIG1vZHVsZSBk
-b2VzLg0KPiANCj4gSSdtIHByZXR0eSBzdXJlIHRoYXQgZ2l2ZXMgdXMgYSB3YXkgZm9yd2FyZC4g
-IElmIHRoZXJlIG9ubHkgYSBoYW5kZnVsIG9mIGZlYXR1cmVzDQo+IHRoYXQgYXJlIHVuY29uZGl0
-aW9uYWxseSBleHBvc2VkIHRvIHRoZSBndWVzdCwgdGhlbiBLVk0gZm9yY2VzIHRob3NlIGZlYXR1
-cmVzIGluDQo+IGNwdV9jYXBzWypdLg0KDQpJIHNlZS4gSG1tLiBXZSBjb3VsZCB1c2UgdGhpcyBu
-ZXcgaW50ZXJmYWNlIHRvIGRvdWJsZSBjaGVjayB0aGUgZml4ZWQgYml0cy4gSXQNCnNlZW1zIGxp
-a2UgYSByZWxhdGl2ZWx5IGNoZWFwIHNhbml0eSBjaGVjay4NCg0KVGhlcmUgYWxyZWFkeSBpcyBh
-biBpbnRlcmZhY2UgdG8gZ2V0IENQVUlEIGJpdHMgKGZpeGVkIGFuZCBkeW5hbWljKS4gQnV0IGl0
-IG9ubHkNCndvcmtzIGFmdGVyIGEgVEQgaXMgY29uZmlndXJlZC4gU28gaWYgd2Ugd2FudCB0byBk
-byBleHRyYSB2ZXJpZmljYXRpb24gb3INCmFkanVzdG1lbnRzLCB3ZSBjb3VsZCB1c2UgaXQgYmVm
-b3JlIGVudGVyaW5nIHRoZSBURC4gQmFzaWNhbGx5LCBpZiB3ZSBkZWxheSB0aGlzDQpsb2dpYyB3
-ZSBkb24ndCBuZWVkIHRvIHdhaXQgZm9yIHRoZSBmaXhlZCBiaXQgaW50ZXJmYWNlLg0KDQpXaGF0
-IGlzIHNwZWNpYWwgYWJvdXQgdGhlIG5ldyBwcm9wb3NlZCBmaXhlZCBiaXQgaW50ZXJmYWNlIGlz
-IHRoYXQgaXQgY2FuIHJ1bg0KYmVmb3JlIGEgVEQgcnVucyAod2hlbiBRRU1VIHdhbnRzIHRvIGRv
-IGl0J3MgY2hlY2tpbmcgb2YgdGhlIHVzZXJzIGFyZ3MpLg0KDQo+IA0KPiAgIEkuZS4gdHJlYXQg
-dGhlbSBraW5kYSBsaWtlIFhTQVZFUyBvbiBBTUQsIHdoZXJlIEtWTSBhc3N1bWVzIHRoZQ0KPiBn
-dWVzdCBjYW4gdXNlIFhTQVZFUyBpZiBpdCdzIHN1cHBvcnRlZCBpbiBoYXJkd2FyZSBhbmQgWFNB
-VkUgaXMgZXhwb3NlZCB0byB0aGUNCj4gZ3Vlc3QsIGJlY2F1c2UgQU1EIGRpZG4ndCBwcm92aWRl
-IGFuIGludGVyY2VwdGlvbiBrbm9iIGZvciBYU0FWRVMuDQo+IA0KPiBJZiB0aGUgbGlzdCBpcyAi
-dG9vIiBsb25nIChzdWpiZWN0aXZlKSBmb3IgS1ZNIHRvIGhhcmRjb2RlLCB0aGVuIHdlIHJldmlz
-aXQgYW5kDQo+IGdldCB0aGUgVERYIG1vZHVsZSB0byBwcm92aWRlIGEgbGlzdC4NCj4gDQo+IFRo
-aXMgcHJvYmFibHkgZG9lc24ndCBzb2x2ZSBYaWFveWFvJ3MgVVggcHJvYmxlbSBpbiBRRU1VLCBi
-dXQgSSB0aGluayBpdCBnaXZlcw0KPiB1cyBhIHNhbmUgYXBwcm9hY2ggZm9yIEtWTS4NCj4gDQo+
-IFsqXSBodHRwczovL2xvcmUua2VybmVsLm9yZy9hbGwvMjAyNDExMjgwMTM0MjQuNDA5NjY2OC0x
-LXNlYW5qY0Bnb29nbGUuY29tDQoNCg0KDQo=
+I tested this series v2 with regression tests, due to this series
+changing some files about virtio-net, everything works fine.
+
+Tested-by: Lei Yang <leiyang@redhat.com>
+
+On Wed, Dec 18, 2024 at 9:44=E2=80=AFPM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+>
+> - Missed constifying two arrays.
+> - Eliminate all empty Property lists.
+> - Detect both of these cases during the build.
+> - Count the elements in the property list and eliminate
+>   DEFINE_PROP_END_OF_LIST.
+>
+> Changes for v2:
+>   - Fix two bisection errors (BALATON)
+>
+> r~
+>
+> Richard Henderson (24):
+>   migration: Constify migration_properties
+>   hw/ide: Constify sysbus_ahci_properties
+>   target/ppc: Remove empty property list
+>   target/s390x: Use s390x_cpu_properties for system mode only
+>   hw/pci-host/astro: Remove empty Property list
+>   hw/ppc: Only register spapr_nvdimm_properties if CONFIG_LIBPMEM
+>   hw/tricore: Remove empty Property lists
+>   hw/s390x: Remove empty Property lists
+>   hw/xen: Remove empty Property lists
+>   hw/sparc: Remove empty Property lists
+>   hw/virtio: Remove empty Property lists
+>   include/hw/qdev-core: Detect most empty Property lists at compile time
+>   hw/core: Introduce device_class_set_props_n
+>   migration: Use device_class_set_props_n
+>   hw/scsi/megasas: Use device_class_set_props_n
+>   hw/arm/armsse: Use device_class_set_props_n
+>   rust/qemu-api: Use device_class_set_props_n
+>   hw/core: Remove device_class_set_props function
+>   target/riscv: Do not abuse DEFINE_PROP_END_OF_LIST
+>   include/hw/qdev-properties: Remove DEFINE_PROP_END_OF_LIST
+>   include/hw/qdev-properties: Shrink struct Property
+>   hw/core/qdev-properties: Constify Property argument to
+>     object_field_prop_ptr
+>   hw/core/qdev-properties: Constify Property argument to
+>     PropertyInfo.print
+>   Constify all opaque Property pointers
+>
+>  include/hw/qdev-core.h                 |  35 +++++++-
+>  include/hw/qdev-properties.h           |  15 ++--
+>  migration/options.h                    |   3 +-
+>  backends/tpm/tpm_util.c                |   4 +-
+>  cpu-target.c                           |   1 -
+>  hw/9pfs/virtio-9p-device.c             |   1 -
+>  hw/acpi/erst.c                         |   1 -
+>  hw/acpi/generic_event_device.c         |   1 -
+>  hw/acpi/piix4.c                        |   1 -
+>  hw/acpi/vmgenid.c                      |   1 -
+>  hw/adc/aspeed_adc.c                    |   1 -
+>  hw/adc/npcm7xx_adc.c                   |   1 -
+>  hw/arm/armsse.c                        |   9 ++-
+>  hw/arm/armv7m.c                        |   2 -
+>  hw/arm/aspeed_soc_common.c             |   1 -
+>  hw/arm/fsl-imx25.c                     |   1 -
+>  hw/arm/fsl-imx6.c                      |   1 -
+>  hw/arm/fsl-imx6ul.c                    |   1 -
+>  hw/arm/fsl-imx7.c                      |   1 -
+>  hw/arm/integratorcp.c                  |   1 -
+>  hw/arm/msf2-soc.c                      |   1 -
+>  hw/arm/npcm7xx.c                       |   1 -
+>  hw/arm/nrf51_soc.c                     |   1 -
+>  hw/arm/smmu-common.c                   |   1 -
+>  hw/arm/smmuv3.c                        |   1 -
+>  hw/arm/stellaris.c                     |   1 -
+>  hw/arm/strongarm.c                     |   1 -
+>  hw/arm/xlnx-versal.c                   |   1 -
+>  hw/arm/xlnx-zynqmp.c                   |   1 -
+>  hw/audio/ac97.c                        |   1 -
+>  hw/audio/adlib.c                       |   1 -
+>  hw/audio/asc.c                         |   1 -
+>  hw/audio/cs4231a.c                     |   1 -
+>  hw/audio/es1370.c                      |   1 -
+>  hw/audio/gus.c                         |   1 -
+>  hw/audio/hda-codec.c                   |   1 -
+>  hw/audio/intel-hda.c                   |   2 -
+>  hw/audio/pcspk.c                       |   1 -
+>  hw/audio/pl041.c                       |   1 -
+>  hw/audio/sb16.c                        |   1 -
+>  hw/audio/via-ac97.c                    |   1 -
+>  hw/audio/virtio-snd-pci.c              |   1 -
+>  hw/audio/virtio-snd.c                  |   1 -
+>  hw/audio/wm8750.c                      |   1 -
+>  hw/avr/atmega.c                        |   1 -
+>  hw/block/fdc-isa.c                     |   1 -
+>  hw/block/fdc-sysbus.c                  |   2 -
+>  hw/block/fdc.c                         |   1 -
+>  hw/block/m25p80.c                      |   1 -
+>  hw/block/nand.c                        |   1 -
+>  hw/block/pflash_cfi01.c                |   1 -
+>  hw/block/pflash_cfi02.c                |   1 -
+>  hw/block/swim.c                        |   1 -
+>  hw/block/vhost-user-blk.c              |   1 -
+>  hw/block/virtio-blk.c                  |   1 -
+>  hw/block/xen-block.c                   |   5 +-
+>  hw/char/avr_usart.c                    |   1 -
+>  hw/char/bcm2835_aux.c                  |   1 -
+>  hw/char/cadence_uart.c                 |   1 -
+>  hw/char/cmsdk-apb-uart.c               |   1 -
+>  hw/char/debugcon.c                     |   1 -
+>  hw/char/digic-uart.c                   |   1 -
+>  hw/char/escc.c                         |   1 -
+>  hw/char/exynos4210_uart.c              |   1 -
+>  hw/char/goldfish_tty.c                 |   1 -
+>  hw/char/grlib_apbuart.c                |   1 -
+>  hw/char/ibex_uart.c                    |   1 -
+>  hw/char/imx_serial.c                   |   1 -
+>  hw/char/ipoctal232.c                   |   1 -
+>  hw/char/mcf_uart.c                     |   1 -
+>  hw/char/nrf51_uart.c                   |   1 -
+>  hw/char/parallel.c                     |   1 -
+>  hw/char/pl011.c                        |   1 -
+>  hw/char/renesas_sci.c                  |   1 -
+>  hw/char/sclpconsole-lm.c               |   1 -
+>  hw/char/sclpconsole.c                  |   1 -
+>  hw/char/serial-isa.c                   |   1 -
+>  hw/char/serial-mm.c                    |   1 -
+>  hw/char/serial-pci-multi.c             |   2 -
+>  hw/char/serial-pci.c                   |   1 -
+>  hw/char/serial.c                       |   1 -
+>  hw/char/sh_serial.c                    |   1 -
+>  hw/char/shakti_uart.c                  |   1 -
+>  hw/char/sifive_uart.c                  |   1 -
+>  hw/char/spapr_vty.c                    |   1 -
+>  hw/char/stm32f2xx_usart.c              |   1 -
+>  hw/char/stm32l4x5_usart.c              |   1 -
+>  hw/char/terminal3270.c                 |   1 -
+>  hw/char/virtio-console.c               |   1 -
+>  hw/char/virtio-serial-bus.c            |   2 -
+>  hw/char/xen_console.c                  |   1 -
+>  hw/char/xilinx_uartlite.c              |   1 -
+>  hw/core/generic-loader.c               |   1 -
+>  hw/core/guest-loader.c                 |   1 -
+>  hw/core/or-irq.c                       |   1 -
+>  hw/core/platform-bus.c                 |   1 -
+>  hw/core/qdev-properties-system.c       |  50 ++++++------
+>  hw/core/qdev-properties.c              | 107 +++++++++++++------------
+>  hw/core/qdev.c                         |   1 +
+>  hw/core/split-irq.c                    |   1 -
+>  hw/cpu/a15mpcore.c                     |   1 -
+>  hw/cpu/a9mpcore.c                      |   1 -
+>  hw/cpu/arm11mpcore.c                   |   1 -
+>  hw/cpu/cluster.c                       |   1 -
+>  hw/cpu/realview_mpcore.c               |   1 -
+>  hw/cxl/switch-mailbox-cci.c            |   1 -
+>  hw/display/artist.c                    |   1 -
+>  hw/display/ati.c                       |   1 -
+>  hw/display/bcm2835_fb.c                |   1 -
+>  hw/display/bochs-display.c             |   1 -
+>  hw/display/cg3.c                       |   1 -
+>  hw/display/cirrus_vga.c                |   1 -
+>  hw/display/cirrus_vga_isa.c            |   1 -
+>  hw/display/exynos4210_fimd.c           |   1 -
+>  hw/display/g364fb.c                    |   1 -
+>  hw/display/i2c-ddc.c                   |   1 -
+>  hw/display/macfb.c                     |   2 -
+>  hw/display/pl110.c                     |   1 -
+>  hw/display/qxl.c                       |   1 -
+>  hw/display/ramfb-standalone.c          |   1 -
+>  hw/display/sm501.c                     |   2 -
+>  hw/display/tcx.c                       |   1 -
+>  hw/display/vga-isa.c                   |   1 -
+>  hw/display/vga-mmio.c                  |   1 -
+>  hw/display/vga-pci.c                   |   2 -
+>  hw/display/vhost-user-gpu.c            |   1 -
+>  hw/display/virtio-gpu-gl.c             |   1 -
+>  hw/display/virtio-gpu-pci.c            |   1 -
+>  hw/display/virtio-gpu-rutabaga.c       |   1 -
+>  hw/display/virtio-gpu.c                |   1 -
+>  hw/display/virtio-vga.c                |   1 -
+>  hw/display/vmware_vga.c                |   1 -
+>  hw/display/xlnx_dp.c                   |   1 -
+>  hw/dma/i82374.c                        |   1 -
+>  hw/dma/i8257.c                         |   1 -
+>  hw/dma/pl080.c                         |   1 -
+>  hw/dma/pl330.c                         |   2 -
+>  hw/dma/xilinx_axidma.c                 |   1 -
+>  hw/dma/xlnx-zdma.c                     |   1 -
+>  hw/dma/xlnx_csu_dma.c                  |   1 -
+>  hw/gpio/imx_gpio.c                     |   1 -
+>  hw/gpio/npcm7xx_gpio.c                 |   1 -
+>  hw/gpio/omap_gpio.c                    |   1 -
+>  hw/gpio/pca9552.c                      |   1 -
+>  hw/gpio/pca9554.c                      |   1 -
+>  hw/gpio/pl061.c                        |   1 -
+>  hw/gpio/sifive_gpio.c                  |   1 -
+>  hw/gpio/stm32l4x5_gpio.c               |   1 -
+>  hw/hyperv/hv-balloon.c                 |   2 -
+>  hw/hyperv/syndbg.c                     |   1 -
+>  hw/hyperv/vmbus.c                      |   2 -
+>  hw/i2c/aspeed_i2c.c                    |   2 -
+>  hw/i2c/core.c                          |   1 -
+>  hw/i2c/i2c_mux_pca954x.c               |   1 -
+>  hw/i2c/omap_i2c.c                      |   1 -
+>  hw/i386/amd_iommu.c                    |   1 -
+>  hw/i386/intel_iommu.c                  |   1 -
+>  hw/i386/kvm/clock.c                    |   1 -
+>  hw/i386/kvm/i8254.c                    |   1 -
+>  hw/i386/kvm/ioapic.c                   |   1 -
+>  hw/i386/sgx-epc.c                      |   1 -
+>  hw/i386/vmmouse.c                      |   1 -
+>  hw/i386/vmport.c                       |   2 -
+>  hw/i386/x86-iommu.c                    |   1 -
+>  hw/i386/xen/xen_pvdevice.c             |   1 -
+>  hw/ide/ahci-sysbus.c                   |   3 +-
+>  hw/ide/cf.c                            |   1 -
+>  hw/ide/cmd646.c                        |   1 -
+>  hw/ide/ide-dev.c                       |   3 -
+>  hw/ide/isa.c                           |   1 -
+>  hw/ide/macio.c                         |   1 -
+>  hw/ide/mmio.c                          |   1 -
+>  hw/input/pckbd.c                       |   2 -
+>  hw/input/stellaris_gamepad.c           |   1 -
+>  hw/input/virtio-input-hid.c            |   3 -
+>  hw/input/virtio-input-host.c           |   1 -
+>  hw/input/virtio-input.c                |   1 -
+>  hw/intc/apic_common.c                  |   1 -
+>  hw/intc/arm_gic_common.c               |   1 -
+>  hw/intc/arm_gicv2m.c                   |   1 -
+>  hw/intc/arm_gicv3_common.c             |   1 -
+>  hw/intc/arm_gicv3_its.c                |   1 -
+>  hw/intc/arm_gicv3_its_kvm.c            |   1 -
+>  hw/intc/armv7m_nvic.c                  |   1 -
+>  hw/intc/exynos4210_combiner.c          |   1 -
+>  hw/intc/exynos4210_gic.c               |   1 -
+>  hw/intc/goldfish_pic.c                 |   1 -
+>  hw/intc/grlib_irqmp.c                  |   1 -
+>  hw/intc/i8259_common.c                 |   1 -
+>  hw/intc/ioapic.c                       |   1 -
+>  hw/intc/loongarch_extioi.c             |   1 -
+>  hw/intc/loongarch_pch_msi.c            |   1 -
+>  hw/intc/loongarch_pch_pic.c            |   1 -
+>  hw/intc/loongson_ipi_common.c          |   1 -
+>  hw/intc/m68k_irqc.c                    |   1 -
+>  hw/intc/mips_gic.c                     |   1 -
+>  hw/intc/omap_intc.c                    |   1 -
+>  hw/intc/ompic.c                        |   1 -
+>  hw/intc/openpic.c                      |   1 -
+>  hw/intc/openpic_kvm.c                  |   1 -
+>  hw/intc/pnv_xive.c                     |   1 -
+>  hw/intc/pnv_xive2.c                    |   1 -
+>  hw/intc/ppc-uic.c                      |   1 -
+>  hw/intc/riscv_aclint.c                 |   2 -
+>  hw/intc/riscv_aplic.c                  |   1 -
+>  hw/intc/riscv_imsic.c                  |   1 -
+>  hw/intc/rx_icu.c                       |   1 -
+>  hw/intc/s390_flic.c                    |   2 -
+>  hw/intc/sifive_plic.c                  |   1 -
+>  hw/intc/spapr_xive.c                   |   1 -
+>  hw/intc/xics.c                         |   2 -
+>  hw/intc/xilinx_intc.c                  |   1 -
+>  hw/intc/xive.c                         |   4 -
+>  hw/intc/xive2.c                        |   2 -
+>  hw/intc/xlnx-pmu-iomod-intc.c          |   1 -
+>  hw/ipack/ipack.c                       |   1 -
+>  hw/ipmi/ipmi.c                         |   1 -
+>  hw/ipmi/ipmi_bmc_extern.c              |   1 -
+>  hw/ipmi/ipmi_bmc_sim.c                 |   1 -
+>  hw/ipmi/isa_ipmi_bt.c                  |   1 -
+>  hw/ipmi/isa_ipmi_kcs.c                 |   1 -
+>  hw/isa/lpc_ich9.c                      |   1 -
+>  hw/isa/pc87312.c                       |   1 -
+>  hw/isa/piix.c                          |   1 -
+>  hw/m68k/mcf5206.c                      |   1 -
+>  hw/m68k/mcf_intc.c                     |   1 -
+>  hw/m68k/next-cube.c                    |   1 -
+>  hw/m68k/q800-glue.c                    |   1 -
+>  hw/mem/cxl_type3.c                     |   1 -
+>  hw/mem/nvdimm.c                        |   1 -
+>  hw/mem/pc-dimm.c                       |   1 -
+>  hw/mem/sparse-mem.c                    |   1 -
+>  hw/mips/cps.c                          |   1 -
+>  hw/misc/a9scu.c                        |   1 -
+>  hw/misc/allwinner-h3-dramc.c           |   1 -
+>  hw/misc/allwinner-r40-dramc.c          |   1 -
+>  hw/misc/allwinner-sid.c                |   1 -
+>  hw/misc/applesmc.c                     |   1 -
+>  hw/misc/arm11scu.c                     |   1 -
+>  hw/misc/arm_l2x0.c                     |   1 -
+>  hw/misc/arm_sysctl.c                   |   1 -
+>  hw/misc/armsse-cpuid.c                 |   1 -
+>  hw/misc/aspeed_hace.c                  |   1 -
+>  hw/misc/aspeed_i3c.c                   |   1 -
+>  hw/misc/aspeed_lpc.c                   |   1 -
+>  hw/misc/aspeed_sbc.c                   |   1 -
+>  hw/misc/aspeed_scu.c                   |   1 -
+>  hw/misc/aspeed_sdmc.c                  |   1 -
+>  hw/misc/bcm2835_cprman.c               |   1 -
+>  hw/misc/bcm2835_property.c             |   1 -
+>  hw/misc/debugexit.c                    |   1 -
+>  hw/misc/eccmemctl.c                    |   1 -
+>  hw/misc/empty_slot.c                   |   1 -
+>  hw/misc/iotkit-secctl.c                |   1 -
+>  hw/misc/iotkit-sysctl.c                |   1 -
+>  hw/misc/iotkit-sysinfo.c               |   1 -
+>  hw/misc/ivshmem.c                      |   2 -
+>  hw/misc/led.c                          |   1 -
+>  hw/misc/mac_via.c                      |   1 -
+>  hw/misc/macio/cuda.c                   |   1 -
+>  hw/misc/macio/macio.c                  |   2 -
+>  hw/misc/macio/pmu.c                    |   1 -
+>  hw/misc/mips_cmgcr.c                   |   1 -
+>  hw/misc/mips_cpc.c                     |   1 -
+>  hw/misc/mips_itu.c                     |   1 -
+>  hw/misc/mos6522.c                      |   1 -
+>  hw/misc/mps2-fpgaio.c                  |   1 -
+>  hw/misc/mps2-scc.c                     |   1 -
+>  hw/misc/msf2-sysreg.c                  |   1 -
+>  hw/misc/npcm7xx_gcr.c                  |   1 -
+>  hw/misc/nrf51_rng.c                    |   1 -
+>  hw/misc/pci-testdev.c                  |   1 -
+>  hw/misc/pvpanic-isa.c                  |   1 -
+>  hw/misc/pvpanic-pci.c                  |   1 -
+>  hw/misc/sifive_e_aon.c                 |   1 -
+>  hw/misc/sifive_u_otp.c                 |   1 -
+>  hw/misc/stm32l4x5_rcc.c                |   1 -
+>  hw/misc/tz-mpc.c                       |   1 -
+>  hw/misc/tz-msc.c                       |   1 -
+>  hw/misc/tz-ppc.c                       |   1 -
+>  hw/misc/unimp.c                        |   1 -
+>  hw/misc/xlnx-versal-cframe-reg.c       |   2 -
+>  hw/misc/xlnx-versal-cfu.c              |   2 -
+>  hw/misc/xlnx-versal-trng.c             |   4 +-
+>  hw/misc/xlnx-versal-xramc.c            |   1 -
+>  hw/misc/zynq_slcr.c                    |   1 -
+>  hw/net/allwinner-sun8i-emac.c          |   1 -
+>  hw/net/allwinner_emac.c                |   1 -
+>  hw/net/cadence_gem.c                   |   1 -
+>  hw/net/can/xlnx-versal-canfd.c         |   1 -
+>  hw/net/can/xlnx-zynqmp-can.c           |   1 -
+>  hw/net/dp8393x.c                       |   1 -
+>  hw/net/e1000.c                         |   1 -
+>  hw/net/e1000e.c                        |   1 -
+>  hw/net/eepro100.c                      |   1 -
+>  hw/net/fsl_etsec/etsec.c               |   1 -
+>  hw/net/ftgmac100.c                     |   2 -
+>  hw/net/igb.c                           |   1 -
+>  hw/net/imx_fec.c                       |   1 -
+>  hw/net/lan9118.c                       |   1 -
+>  hw/net/lance.c                         |   1 -
+>  hw/net/lasi_i82596.c                   |   1 -
+>  hw/net/mcf_fec.c                       |   1 -
+>  hw/net/mipsnet.c                       |   1 -
+>  hw/net/msf2-emac.c                     |   1 -
+>  hw/net/mv88w8618_eth.c                 |   1 -
+>  hw/net/ne2000-isa.c                    |   1 -
+>  hw/net/ne2000-pci.c                    |   1 -
+>  hw/net/npcm7xx_emc.c                   |   1 -
+>  hw/net/npcm_gmac.c                     |   1 -
+>  hw/net/opencores_eth.c                 |   1 -
+>  hw/net/pcnet-pci.c                     |   1 -
+>  hw/net/rocker/rocker.c                 |   1 -
+>  hw/net/rtl8139.c                       |   1 -
+>  hw/net/smc91c111.c                     |   1 -
+>  hw/net/spapr_llan.c                    |   1 -
+>  hw/net/stellaris_enet.c                |   1 -
+>  hw/net/sungem.c                        |   1 -
+>  hw/net/sunhme.c                        |   1 -
+>  hw/net/tulip.c                         |   1 -
+>  hw/net/virtio-net.c                    |   1 -
+>  hw/net/vmxnet3.c                       |   1 -
+>  hw/net/xen_nic.c                       |   1 -
+>  hw/net/xgmac.c                         |   1 -
+>  hw/net/xilinx_axienet.c                |   1 -
+>  hw/net/xilinx_ethlite.c                |   1 -
+>  hw/nubus/nubus-bridge.c                |   1 -
+>  hw/nubus/nubus-device.c                |   1 -
+>  hw/nvme/ctrl.c                         |   1 -
+>  hw/nvme/nguid.c                        |   4 +-
+>  hw/nvme/ns.c                           |   1 -
+>  hw/nvme/subsys.c                       |   1 -
+>  hw/nvram/ds1225y.c                     |   1 -
+>  hw/nvram/eeprom_at24c.c                |   1 -
+>  hw/nvram/fw_cfg.c                      |   3 -
+>  hw/nvram/mac_nvram.c                   |   1 -
+>  hw/nvram/nrf51_nvm.c                   |   1 -
+>  hw/nvram/spapr_nvram.c                 |   1 -
+>  hw/nvram/xlnx-bbram.c                  |   1 -
+>  hw/nvram/xlnx-efuse.c                  |   1 -
+>  hw/nvram/xlnx-versal-efuse-cache.c     |   2 -
+>  hw/nvram/xlnx-versal-efuse-ctrl.c      |   2 -
+>  hw/nvram/xlnx-zynqmp-efuse.c           |   2 -
+>  hw/pci-bridge/cxl_downstream.c         |   1 -
+>  hw/pci-bridge/cxl_root_port.c          |   1 -
+>  hw/pci-bridge/cxl_upstream.c           |   1 -
+>  hw/pci-bridge/gen_pcie_root_port.c     |   1 -
+>  hw/pci-bridge/pci_bridge_dev.c         |   1 -
+>  hw/pci-bridge/pci_expander_bridge.c    |   2 -
+>  hw/pci-bridge/pcie_pci_bridge.c        |   1 -
+>  hw/pci-bridge/pcie_root_port.c         |   1 -
+>  hw/pci-bridge/xio3130_downstream.c     |   1 -
+>  hw/pci-host/astro.c                    |   5 --
+>  hw/pci-host/dino.c                     |   1 -
+>  hw/pci-host/gpex.c                     |   1 -
+>  hw/pci-host/grackle.c                  |   1 -
+>  hw/pci-host/gt64120.c                  |   1 -
+>  hw/pci-host/i440fx.c                   |   1 -
+>  hw/pci-host/mv64361.c                  |   1 -
+>  hw/pci-host/pnv_phb.c                  |   4 -
+>  hw/pci-host/pnv_phb3.c                 |   1 -
+>  hw/pci-host/pnv_phb4.c                 |   1 -
+>  hw/pci-host/pnv_phb4_pec.c             |   1 -
+>  hw/pci-host/ppce500.c                  |   1 -
+>  hw/pci-host/q35.c                      |   2 -
+>  hw/pci-host/raven.c                    |   1 -
+>  hw/pci-host/sabre.c                    |   1 -
+>  hw/pci-host/uninorth.c                 |   1 -
+>  hw/pci-host/versatile.c                |   1 -
+>  hw/pci-host/xilinx-pcie.c              |   1 -
+>  hw/pci/pci.c                           |   1 -
+>  hw/pci/pci_bridge.c                    |   1 -
+>  hw/pci/pci_host.c                      |   1 -
+>  hw/pci/pcie_port.c                     |   2 -
+>  hw/ppc/pnv.c                           |   1 -
+>  hw/ppc/pnv_adu.c                       |   1 -
+>  hw/ppc/pnv_chiptod.c                   |   1 -
+>  hw/ppc/pnv_core.c                      |   2 -
+>  hw/ppc/pnv_homer.c                     |   1 -
+>  hw/ppc/pnv_i2c.c                       |   1 -
+>  hw/ppc/pnv_lpc.c                       |   1 -
+>  hw/ppc/pnv_pnor.c                      |   1 -
+>  hw/ppc/pnv_psi.c                       |   1 -
+>  hw/ppc/ppc405_uc.c                     |   1 -
+>  hw/ppc/ppc440_uc.c                     |   1 -
+>  hw/ppc/ppc4xx_devs.c                   |   2 -
+>  hw/ppc/ppc4xx_sdram.c                  |   2 -
+>  hw/ppc/prep_systemio.c                 |   1 -
+>  hw/ppc/rs6000_mc.c                     |   1 -
+>  hw/ppc/spapr_cpu_core.c                |   1 -
+>  hw/ppc/spapr_nvdimm.c                  |  10 +--
+>  hw/ppc/spapr_pci.c                     |   1 -
+>  hw/ppc/spapr_rng.c                     |   1 -
+>  hw/ppc/spapr_tpm_proxy.c               |   1 -
+>  hw/remote/proxy.c                      |   1 -
+>  hw/riscv/opentitan.c                   |   1 -
+>  hw/riscv/riscv-iommu-pci.c             |   1 -
+>  hw/riscv/riscv-iommu.c                 |   1 -
+>  hw/riscv/riscv_hart.c                  |   1 -
+>  hw/riscv/sifive_u.c                    |   1 -
+>  hw/rtc/allwinner-rtc.c                 |   1 -
+>  hw/rtc/goldfish_rtc.c                  |   1 -
+>  hw/rtc/m48t59-isa.c                    |   1 -
+>  hw/rtc/m48t59.c                        |   1 -
+>  hw/rtc/mc146818rtc.c                   |   1 -
+>  hw/rtc/pl031.c                         |   1 -
+>  hw/rx/rx62n.c                          |   1 -
+>  hw/s390x/3270-ccw.c                    |   5 --
+>  hw/s390x/ccw-device.c                  |   1 -
+>  hw/s390x/css-bridge.c                  |   1 -
+>  hw/s390x/css.c                         |   4 +-
+>  hw/s390x/ipl.c                         |   1 -
+>  hw/s390x/s390-pci-bus.c                |   5 +-
+>  hw/s390x/s390-skeys.c                  |   1 -
+>  hw/s390x/s390-stattrib.c               |   1 -
+>  hw/s390x/vhost-scsi-ccw.c              |   1 -
+>  hw/s390x/vhost-user-fs-ccw.c           |   1 -
+>  hw/s390x/vhost-vsock-ccw.c             |   1 -
+>  hw/s390x/virtio-ccw-9p.c               |   1 -
+>  hw/s390x/virtio-ccw-balloon.c          |   1 -
+>  hw/s390x/virtio-ccw-blk.c              |   1 -
+>  hw/s390x/virtio-ccw-crypto.c           |   1 -
+>  hw/s390x/virtio-ccw-gpu.c              |   1 -
+>  hw/s390x/virtio-ccw-input.c            |   1 -
+>  hw/s390x/virtio-ccw-net.c              |   1 -
+>  hw/s390x/virtio-ccw-rng.c              |   1 -
+>  hw/s390x/virtio-ccw-scsi.c             |   1 -
+>  hw/s390x/virtio-ccw-serial.c           |   1 -
+>  hw/scsi/megasas.c                      |   7 +-
+>  hw/scsi/mptsas.c                       |   1 -
+>  hw/scsi/scsi-bus.c                     |   1 -
+>  hw/scsi/scsi-disk.c                    |   3 -
+>  hw/scsi/scsi-generic.c                 |   1 -
+>  hw/scsi/spapr_vscsi.c                  |   1 -
+>  hw/scsi/vhost-scsi.c                   |   1 -
+>  hw/scsi/vhost-user-scsi.c              |   1 -
+>  hw/scsi/virtio-scsi.c                  |   1 -
+>  hw/scsi/vmw_pvscsi.c                   |   1 -
+>  hw/sd/allwinner-sdhost.c               |   1 -
+>  hw/sd/aspeed_sdhci.c                   |   1 -
+>  hw/sd/sd.c                             |   3 -
+>  hw/sd/sdhci-pci.c                      |   1 -
+>  hw/sd/sdhci.c                          |   1 -
+>  hw/sparc/sun4m.c                       |   5 --
+>  hw/sparc/sun4m_iommu.c                 |   1 -
+>  hw/sparc64/sun4u.c                     |   7 --
+>  hw/ssi/aspeed_smc.c                    |   2 -
+>  hw/ssi/ibex_spi_host.c                 |   1 -
+>  hw/ssi/npcm7xx_fiu.c                   |   1 -
+>  hw/ssi/pnv_spi.c                       |   1 -
+>  hw/ssi/sifive_spi.c                    |   1 -
+>  hw/ssi/ssi.c                           |   1 -
+>  hw/ssi/xilinx_spi.c                    |   1 -
+>  hw/ssi/xilinx_spips.c                  |   2 -
+>  hw/ssi/xlnx-versal-ospi.c              |   1 -
+>  hw/timer/a9gtimer.c                    |   1 -
+>  hw/timer/allwinner-a10-pit.c           |   1 -
+>  hw/timer/arm_mptimer.c                 |   1 -
+>  hw/timer/arm_timer.c                   |   1 -
+>  hw/timer/aspeed_timer.c                |   1 -
+>  hw/timer/avr_timer16.c                 |   1 -
+>  hw/timer/grlib_gptimer.c               |   1 -
+>  hw/timer/hpet.c                        |   1 -
+>  hw/timer/i8254_common.c                |   1 -
+>  hw/timer/ibex_timer.c                  |   1 -
+>  hw/timer/mss-timer.c                   |   1 -
+>  hw/timer/nrf51_timer.c                 |   1 -
+>  hw/timer/pxa2xx_timer.c                |   1 -
+>  hw/timer/renesas_cmt.c                 |   1 -
+>  hw/timer/renesas_tmr.c                 |   1 -
+>  hw/timer/sifive_pwm.c                  |   1 -
+>  hw/timer/slavio_timer.c                |   1 -
+>  hw/timer/sse-timer.c                   |   1 -
+>  hw/timer/stm32f2xx_timer.c             |   1 -
+>  hw/timer/xilinx_timer.c                |   1 -
+>  hw/tpm/tpm_crb.c                       |   1 -
+>  hw/tpm/tpm_spapr.c                     |   1 -
+>  hw/tpm/tpm_tis_i2c.c                   |   1 -
+>  hw/tpm/tpm_tis_isa.c                   |   1 -
+>  hw/tpm/tpm_tis_sysbus.c                |   1 -
+>  hw/tricore/tc27x_soc.c                 |   5 --
+>  hw/tricore/tricore_testdevice.c        |   5 --
+>  hw/ufs/lu.c                            |   1 -
+>  hw/ufs/ufs.c                           |   1 -
+>  hw/usb/bus.c                           |   1 -
+>  hw/usb/canokey.c                       |   1 -
+>  hw/usb/ccid-card-emulated.c            |   1 -
+>  hw/usb/ccid-card-passthru.c            |   1 -
+>  hw/usb/dev-audio.c                     |   1 -
+>  hw/usb/dev-hid.c                       |   3 -
+>  hw/usb/dev-hub.c                       |   1 -
+>  hw/usb/dev-mtp.c                       |   1 -
+>  hw/usb/dev-network.c                   |   1 -
+>  hw/usb/dev-serial.c                    |   2 -
+>  hw/usb/dev-smartcard-reader.c          |   2 -
+>  hw/usb/dev-storage-classic.c           |   1 -
+>  hw/usb/dev-uas.c                       |   1 -
+>  hw/usb/hcd-dwc2.c                      |   1 -
+>  hw/usb/hcd-dwc3.c                      |   1 -
+>  hw/usb/hcd-ehci-pci.c                  |   1 -
+>  hw/usb/hcd-ehci-sysbus.c               |   1 -
+>  hw/usb/hcd-ohci-pci.c                  |   1 -
+>  hw/usb/hcd-ohci-sysbus.c               |   1 -
+>  hw/usb/hcd-uhci.c                      |   2 -
+>  hw/usb/hcd-xhci-nec.c                  |   1 -
+>  hw/usb/hcd-xhci-sysbus.c               |   1 -
+>  hw/usb/hcd-xhci.c                      |   1 -
+>  hw/usb/host-libusb.c                   |   1 -
+>  hw/usb/redirect.c                      |   1 -
+>  hw/usb/u2f-emulated.c                  |   1 -
+>  hw/usb/u2f-passthru.c                  |   1 -
+>  hw/vfio/ap.c                           |   1 -
+>  hw/vfio/ccw.c                          |   1 -
+>  hw/vfio/pci-quirks.c                   |   4 +-
+>  hw/vfio/pci.c                          |   2 -
+>  hw/vfio/platform.c                     |   1 -
+>  hw/virtio/vdpa-dev-pci.c               |   5 --
+>  hw/virtio/vdpa-dev.c                   |   1 -
+>  hw/virtio/vhost-scsi-pci.c             |   1 -
+>  hw/virtio/vhost-user-blk-pci.c         |   1 -
+>  hw/virtio/vhost-user-device.c          |   1 -
+>  hw/virtio/vhost-user-fs-pci.c          |   1 -
+>  hw/virtio/vhost-user-fs.c              |   1 -
+>  hw/virtio/vhost-user-gpio.c            |   1 -
+>  hw/virtio/vhost-user-i2c.c             |   1 -
+>  hw/virtio/vhost-user-input.c           |   1 -
+>  hw/virtio/vhost-user-rng-pci.c         |   1 -
+>  hw/virtio/vhost-user-rng.c             |   1 -
+>  hw/virtio/vhost-user-scmi.c            |   1 -
+>  hw/virtio/vhost-user-scsi-pci.c        |   1 -
+>  hw/virtio/vhost-user-snd-pci.c         |   5 --
+>  hw/virtio/vhost-user-snd.c             |   1 -
+>  hw/virtio/vhost-user-vsock-pci.c       |   1 -
+>  hw/virtio/vhost-user-vsock.c           |   1 -
+>  hw/virtio/vhost-vsock-common.c         |   1 -
+>  hw/virtio/vhost-vsock-pci.c            |   1 -
+>  hw/virtio/vhost-vsock.c                |   1 -
+>  hw/virtio/virtio-9p-pci.c              |   1 -
+>  hw/virtio/virtio-balloon.c             |   1 -
+>  hw/virtio/virtio-blk-pci.c             |   1 -
+>  hw/virtio/virtio-crypto-pci.c          |   1 -
+>  hw/virtio/virtio-crypto.c              |   1 -
+>  hw/virtio/virtio-input-pci.c           |   1 -
+>  hw/virtio/virtio-iommu-pci.c           |   1 -
+>  hw/virtio/virtio-iommu.c               |   1 -
+>  hw/virtio/virtio-mem.c                 |   1 -
+>  hw/virtio/virtio-mmio.c                |   1 -
+>  hw/virtio/virtio-net-pci.c             |   1 -
+>  hw/virtio/virtio-nsm.c                 |   1 -
+>  hw/virtio/virtio-pci.c                 |   2 -
+>  hw/virtio/virtio-pmem.c                |   1 -
+>  hw/virtio/virtio-rng-pci.c             |   1 -
+>  hw/virtio/virtio-rng.c                 |   1 -
+>  hw/virtio/virtio-scsi-pci.c            |   1 -
+>  hw/virtio/virtio-serial-pci.c          |   1 -
+>  hw/virtio/virtio.c                     |   1 -
+>  hw/watchdog/sbsa_gwdt.c                |   1 -
+>  hw/watchdog/wdt_aspeed.c               |   1 -
+>  hw/watchdog/wdt_imx2.c                 |   1 -
+>  hw/xen/xen-bus.c                       |   1 -
+>  hw/xen/xen-legacy-backend.c            |  17 ----
+>  hw/xen/xen_pt.c                        |   1 -
+>  migration/migration.c                  |   3 +-
+>  migration/options.c                    |   4 +-
+>  system/qdev-monitor.c                  |  15 ++--
+>  target/arm/cpu.c                       |   1 -
+>  target/avr/cpu.c                       |   1 -
+>  target/hexagon/cpu.c                   |   1 -
+>  target/i386/cpu.c                      |   2 -
+>  target/microblaze/cpu.c                |   1 -
+>  target/mips/cpu.c                      |   1 -
+>  target/ppc/cpu_init.c                  |   6 --
+>  target/riscv/cpu.c                     |  13 ++-
+>  target/s390x/cpu.c                     |   7 +-
+>  target/sparc/cpu.c                     |   1 -
+>  tests/unit/test-qdev-global-props.c    |   1 -
+>  docs/devel/migration/compatibility.rst |   1 -
+>  docs/devel/virtio-backends.rst         |   1 -
+>  rust/qemu-api/src/device_class.rs      |  11 +--
+>  579 files changed, 176 insertions(+), 816 deletions(-)
+>
+> --
+> 2.43.0
+>
+>
+
 
