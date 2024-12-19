@@ -4,95 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FE44E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:30:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6751E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFX-0001nu-EL; Thu, 19 Dec 2024 11:19:43 -0500
+	id 1tOJFg-0001re-Af; Thu, 19 Dec 2024 11:19:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFPW-0006Hr-3S
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:13:46 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFPU-0008LE-En
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:13:45 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734610423;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MBnoMQiocVwxb195C5dPLUMqfWHTI2r8yktVChDs01k=;
- b=FTEpGmb4Is5jezR053KsUydt2hDTuPl8SNY4HR7rslIVX30g1lLnnU5V1p1GAu4w5bdUmC
- O8PWdhYx7Aa4VoC9izFW9yty5sGDFA1katkq6TRvvPy2WvNkg1fOcPytG4Ehc+RODQhtdX
- UxvUw4tGTld48v6aqlhVezMOeNakuko=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-101-3NbD55LEPbaRRZu_03e4rw-1; Thu, 19 Dec 2024 07:12:35 -0500
-X-MC-Unique: 3NbD55LEPbaRRZu_03e4rw-1
-X-Mimecast-MFC-AGG-ID: 3NbD55LEPbaRRZu_03e4rw
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385d52591d6so397470f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:12:35 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcz-0004qW-Uq
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:53 -0500
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIcy-0004Yr-Kl
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:53 -0500
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-4361815b96cso6828635e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:39:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734622791; x=1735227591; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=upFpBaO8cptavFRp1HZ7mKtcy+0BbSMhQQtCEJtj5Yg=;
+ b=W4S47rPQjwyXvMsCuO1l1H7SSANpv3E3UMfbtLNCKIp5XtnmbeENAQuFLbh+wTZjw3
+ /Biuh/CzGZ/BtRdmodlsVsI4rE5qliBsj3/lbo+BapZn6U8bMQ8yt+gZK3TABYVCfIVu
+ BQHDJwAwc1rb5kS0xzl+4wFdZj6pC1YN95eHDJE2Ax8xHHU9z3BDEKvUTwMIQNO3Jsnw
+ aQ+fLRw2LcAxCqPl9RP2nzQnv+tpASOp1E7q/cvxWqskGIER7avMZW/QDtNCO1SFQz56
+ G1rpPrQc0uTvd/l0EnmdPFniCYu/UZa5nFXRGE7ZYyB0rWCBHKE6ZiXksVOFdbhhWF/d
+ qhRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734610353; x=1735215153;
+ d=1e100.net; s=20230601; t=1734622791; x=1735227591;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MBnoMQiocVwxb195C5dPLUMqfWHTI2r8yktVChDs01k=;
- b=Gwb6VoNve8i05fhclpsg60Rts1yFbXWG8qCId4gOyy6cEgr+J1/NIDwlvTo3VaPgjL
- p/vYxcGaWL/wxazzKE1HoPLYl95hO7qu+1Mh2jBJcQJaw9boq5QUf/l93YtZyTsSYrn7
- qx+mLB9x+8tasJ22iPOANXUFtaOVmkSTIobujByRRP6js830Yp/i1/UWq/YAteMh68T1
- 39QrgDZy4J1ibVvd2RrCd+eRDNgelmWG4p/cwZyPIJSD/YZ4W5YoLB6rQK5hbjRHPUGY
- cbfgweALbQay3E2TdKWaFC9Ws7KrkdUliFSa1xhQcuxOCtAEelMK/j3W4N1ftaJsWMEB
- ulUw==
-X-Gm-Message-State: AOJu0YxnJ4pS8MaCGCiEMHtHQPvDxIoYidTI8HzdFTc43bRUUPIlp24g
- 57jnTMFIGIulxGvVfjYjQitCsgrDbZZTAcnhTDrrxjsbGpEEFycUHnPugDtDJs3y9dPqFDoYL37
- QrItKXSrqoOOp3LwW8RGYdjHI+shpe+7TQMgFNFXwDTSAP6CAFXuqZw6eHLOii6AV7QdKAYyh3z
- ElcwM20fuXInNuWmzMG8+cwpniFGPLxgaE0MKe
-X-Gm-Gg: ASbGncvvKMkaT2auovBv6U0MO+tFZUAWzBdASKt6DWXeKl4BSQ2/wG99aL6majXT5j9
- tuUGava3d19MVCvBSEaATPuJNKAee21bDLZWa5dW6OjMjz43v2FXnJ4a3okDstVcOQlQmingqxE
- Wyn35KWMoTwbWTaE1JJmw+DNzu5dpp7qYySM1mU5uGEDid40/sUkb+EUZA/bMBqtT+PJZ1c3Kr0
- H1q+WpcbvkqrbhL7vM4ISCZVaZo+zoYPD6mDqY9fL//262eZhN72kbvAafQ
-X-Received: by 2002:a5d:6485:0:b0:386:3711:ffa9 with SMTP id
- ffacd0b85a97d-38a1a233376mr2455803f8f.16.1734610352716; 
- Thu, 19 Dec 2024 04:12:32 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFn/X+VXeH/+Y5BjvHR60r7gdL4D1WUB5BT0zlWbiCN6CfHyBEuRhAAwI+7HuyMC6fkQ/mttg==
-X-Received: by 2002:a5d:6485:0:b0:386:3711:ffa9 with SMTP id
- ffacd0b85a97d-38a1a233376mr2455779f8f.16.1734610352291; 
- Thu, 19 Dec 2024 04:12:32 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
+ bh=upFpBaO8cptavFRp1HZ7mKtcy+0BbSMhQQtCEJtj5Yg=;
+ b=BvlVp4ydOaT4xsToEpbV7Hhk2H/YysuZ3Glc+0wvUWzy8UzGws8BF4/yawUdo0/dj/
+ 1PPk0KnooShoFEMXVm4t4Vob1XbUEB6l+OktAKzLs+3T8FdegiVAIFqFrqUHo1bBR2pr
+ X/ZDBflwER7CmKCArP56oJ4YRy5iqQOZQ8pF6WwQfzE1EI3gkaZYDvlnol837BVnJeGj
+ +WU4AuVCFma8XgGH2FFWt1l8xL2dddPqrsNOfuqG4v6MGXCZgtXdjmPvEvgeuflaC2mV
+ 6rh7fBfSQogC/gSUw3woJV+8t6ooqKVJx0Ft7e6LW/Qx4DEtQjF/hznPzVABv7p9tmQ1
+ BSyQ==
+X-Gm-Message-State: AOJu0YzA5adQRrwuafJQiAXPhaQw8SbkVSiSkomJpdlPZc9q08eJKECQ
+ bFBlDGX4J7lc91x24QiUMi0TIuJ/pg8cFyPXRP5CWcnpPIcBP+AI1xfEZQXty11Cbv2LqkkWz6q
+ Z
+X-Gm-Gg: ASbGnct5ev6AEBf0Sq+G2bAhzEP9vUtSugOGPs33iyQ/kK8sW0QsTniVJ3BrWAXFZ+F
+ tfww1L8TtygB7puTjyxOFbyBU+pWtkge26d0axl51+MrXJTq11PsmXvnFESll2Wh2rdZkZnhnue
+ mWRbnZU8q3cIXbAzRRz9KYIixdkscwAMItCXrIvQ84Na8k0umLq2Wt5pSPIjpULZkP0j2yv6eRY
+ aj3GeqFiMF/BMg2Z/LGkXnvBb3rGXKjp3lY+bX0E8JxnD0YX439yReA5E5viOCM/2ooZixjMQ79
+ HnHi
+X-Google-Smtp-Source: AGHT+IErehxBq4obOaVRcaYCREXohUvSxM4e0g+hUo+WwFbrfvi4FJvxnGJYLGiEEC/HTEknmJKr/Q==
+X-Received: by 2002:a05:600c:4fd3:b0:434:a468:4a57 with SMTP id
+ 5b1f17b1804b1-4365c7c83d7mr28882795e9.26.1734622790613; 
+ Thu, 19 Dec 2024 07:39:50 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436604e9c2csm18193875e9.43.2024.12.19.04.12.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 04:12:31 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
+ 5b1f17b1804b1-4366127c515sm21268325e9.30.2024.12.19.07.39.49
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Dec 2024 07:39:49 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: zhao1.liu@intel.com
-Subject: [PATCH 07/10] rust: pl011: only leave embedded object initialization
- in instance_init
-Date: Thu, 19 Dec 2024 13:12:13 +0100
-Message-ID: <20241219121216.416905-8-pbonzini@redhat.com>
+Cc: Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH 09/10] hw/misc/vmcoreinfo: Deprecate '-device vmcoreinfo'
+Date: Thu, 19 Dec 2024 16:38:56 +0100
+Message-ID: <20241219153857.57450-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219121216.416905-1-pbonzini@redhat.com>
-References: <20241219121216.416905-1-pbonzini@redhat.com>
+In-Reply-To: <20241219153857.57450-1-philmd@linaro.org>
+References: <20241219153857.57450-1-philmd@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,85 +101,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Leave IRQ and MMIO initialization to instance_post_init.  In Rust the
-two callbacks are more distinct, because only instance_post_init has a
-fully initialized object available.
+'-device vmcoreinfo' is replaced by '-object vmcore-info'.
 
-While at it, add a wrapper for sysbus_init_mmio so that accesses to
-the SysBusDevice correctly use shared references.
-
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- rust/hw/char/pl011/src/device.rs | 18 ++++++++++--------
- rust/qemu-api/src/sysbus.rs      | 12 ++++++++++++
- 2 files changed, 22 insertions(+), 8 deletions(-)
+ docs/about/deprecated.rst | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 215f94a6e4a..72a4cea042c 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -145,6 +145,7 @@ impl ObjectImpl for PL011State {
-     type ParentType = SysBusDevice;
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index d6809f94ea1..57a3d734081 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -79,6 +79,11 @@ described with -smp are supported by the target machine.
  
-     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
-+    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
- }
+ Use ``-run-with user=..`` instead.
  
- impl DeviceImpl for PL011State {
-@@ -183,14 +184,6 @@ unsafe fn init(&mut self) {
-                 Self::TYPE_NAME.as_ptr(),
-                 0x1000,
-             );
--
--            let sbd: &mut SysBusDevice = self.upcast_mut();
--            sysbus_init_mmio(sbd, addr_of_mut!(self.iomem));
--        }
--
--        for irq in self.interrupts.iter() {
--            let sbd: &SysBusDevice = self.upcast();
--            sbd.init_irq(irq);
-         }
- 
-         // SAFETY:
-@@ -213,6 +206,15 @@ unsafe fn init(&mut self) {
-         }
-     }
- 
-+    fn post_init(&mut self) {
-+        let sbd: &SysBusDevice = self.upcast();
++``-device vmcoreinfo`` (since 10.0)
++'''''''''''''''''''''''''''''''''''
 +
-+        sbd.init_mmio(&self.iomem);
-+        for irq in self.interrupts.iter() {
-+            sbd.init_irq(irq);
-+        }
-+    }
++Use ``-object vmcore-info`` instead.
 +
-     pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u64, u64> {
-         use RegisterOffset::*;
  
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index 8193734bde4..b96eaaf25f2 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -38,6 +38,18 @@ const fn as_mut_ptr(&self) -> *mut SysBusDevice {
-         addr_of!(*self) as *mut _
-     }
- 
-+    /// Expose a memory region to the board so that it can give it an address
-+    /// in guest memory.  Note that the ordering of calls to `init_mmio` is
-+    /// important, since whoever creates the sysbus device will refer to the
-+    /// region with a number that corresponds to the order of calls to
-+    /// `init_mmio`.
-+    pub fn init_mmio(&self, iomem: &bindings::MemoryRegion) {
-+        assert!(bql_locked());
-+        unsafe {
-+            bindings::sysbus_init_mmio(self.as_mut_ptr(), addr_of!(*iomem) as *mut _);
-+        }
-+    }
-+
-     /// Expose an interrupt source outside the device as a qdev GPIO output.
-     /// Note that the ordering of calls to `init_irq` is important, since
-     /// whoever creates the sysbus device will refer to the interrupts with
+ User-mode emulator command line arguments
+ -----------------------------------------
 -- 
 2.47.1
 
