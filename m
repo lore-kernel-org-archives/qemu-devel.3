@@ -4,98 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2CFE7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:29:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0A0E7718C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:29:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJHd-00061N-Dp; Thu, 19 Dec 2024 11:21:53 -0500
+	id 1tOJI4-00072h-QQ; Thu, 19 Dec 2024 11:22:21 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHih-0003AI-BE
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:43 -0500
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tOEq0-0008W9-OT
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:37:04 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHif-0002O0-8o
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:42 -0500
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tOEpy-0001gB-N6
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:37:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734619300;
+ s=mimecast20190719; t=1734608221;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=l0gBfmC/71g11Jbf0onG2UBI9DIVGHNXDaOgDh8tn80=;
- b=g8QzR9caDIwZh28IkI4gZxV7O54NEpB7h3VLaqcMYfJSsxvG6tNlM+UQYGrHPsmgD1qsFs
- pV1a51WI4By3CCOswMIG8emEIQVSkIK49EJE0oB6sI2mPZJGp12S6m/wuIerOaDSQf9piz
- GRwZJ/gyBm6l8k7WvtQYrkj5PQ5ZXDo=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-567-fdMWavGkP12vxcYMK8NpqA-1; Thu, 19 Dec 2024 09:41:38 -0500
-X-MC-Unique: fdMWavGkP12vxcYMK8NpqA-1
-X-Mimecast-MFC-AGG-ID: fdMWavGkP12vxcYMK8NpqA
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361efc9d23so7272785e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:38 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734619297; x=1735224097;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=l0gBfmC/71g11Jbf0onG2UBI9DIVGHNXDaOgDh8tn80=;
- b=PMWVqkz0ZyKY4Cc+AVJSEu+sTIaqtwEkTo2kgqxOi/mQ/3gsSIYqKH5lEhFD2JEC1V
- DjTDkSmBwkSzNRuAqW/qGJsRXjwFuy8IOCxxId+zOLTRt9WE+T47/5oTtmfUnXFrZvNm
- nJem7k1o7dRO1n4X67vOLOO3Z2u9dyNunlYI+zQWY4rAe9zeAz9l6Unw5iWw3xwoCpw2
- zFz/wbXEteOwZWdB6maymbbgumJXBkB93ungLvIBqOQVZg1IN8LPgkWPiQ/4oZYvyhTz
- AeDiDHN0Ye9Ch30h5iH0Fsp3ZvneJyFavHJWeXnGKPcp6Fle6iwG6XKEthRcI34Tm3/r
- A89g==
-X-Gm-Message-State: AOJu0Yxfjov3bpfe98dUTSxYSnYEJbg6vaP1xRLn3kh/9UEnI91c7bH7
- mWvRdTC1GIVc5p1NXuYIXtpjkEYLYLIAqqkDYQZzJthoNsHhe459kwHAuOV32ShDrbqfiiVFbZU
- y01xUdeWm4l6HLHdTiQ9sOTBHqokQaQxMf/BERsA0ha0T1RmVqHBdSg8Usrnm+EhETiAe5AnvI7
- 2sKUEVRwLeCvP0LAUN2C/g8InU8RNy4tMzEAQ=
-X-Gm-Gg: ASbGncs576cYB/gX0c4kBhZF5//FHk+QeIKZoAXThKCoM9VKd4W29EiUOQaHaQHzKi0
- +goet3T6qf2FAze88Zl1XOKrbSlqoM0dEsnI7JLH3dve2EQdKploEIIhDYOmFiDTHIVWZ1z4ZiE
- yBY6s+iWpZYtlr9UdcwU2Vaowh0UYkZWuUoxbjZ/KT2FzFrr1JLAoYhNLBLV/7qDQUwE2u8zbKn
- oOkJEP/NulfEWiPfydWkpi8KnmdJCM6wYVy/RVldqfCa6nH0gY8zA292UfoeCj9uPbUcTLHPqFE
- X8ogfgzXcdyUyL7OF6psNZjDVksWEnX1Mji+WSOw
-X-Received: by 2002:a05:600c:3511:b0:431:557e:b40c with SMTP id
- 5b1f17b1804b1-4365c9ca659mr31322265e9.27.1734619297665; 
- Thu, 19 Dec 2024 06:41:37 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHBHv0x2cGBRQlvqikuvgr/lcZ8/J/1BVJtjA5CBTOcv8QNv58HWKjkf4nZTQ93E/63qb90bQ==
-X-Received: by 2002:a05:600c:3511:b0:431:557e:b40c with SMTP id
- 5b1f17b1804b1-4365c9ca659mr31321905e9.27.1734619297250; 
- Thu, 19 Dec 2024 06:41:37 -0800 (PST)
-Received: from localhost
- (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
- [2003:cb:c749:6600:b73a:466c:e610:686])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-43656b442dasm53476785e9.42.2024.12.19.06.41.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:41:35 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 08/14] s390x/s390-stattrib-kvm: prepare for memory devices
- and sparse memory layouts
-Date: Thu, 19 Dec 2024 15:41:09 +0100
-Message-ID: <20241219144115.2820241-9-david@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
-References: <20241219144115.2820241-1-david@redhat.com>
+ bh=Yq+VKCJRuzaPj/tEAEpk5ad2XnMB+1nVIjSVaI1/maE=;
+ b=ZJKOR//8PFW4bfLBT2dnWko9uXGHmg82T4jNu51KlwN8r4ZtmrWT2N0Ve//c51mzWJ9W1i
+ 1dYHlZAgCBGr+PJlrduwOgXZxb9CDMEn09mtXV4z23++PogLjxi7bsoSwU9zPmpl4oFAWm
+ Z6UtRbmnLmYcAh9Gblop3Z0P95rhx/w=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-6TGaY4NcOJSmusE8GbInrg-1; Thu,
+ 19 Dec 2024 06:35:32 -0500
+X-MC-Unique: 6TGaY4NcOJSmusE8GbInrg-1
+X-Mimecast-MFC-AGG-ID: 6TGaY4NcOJSmusE8GbInrg
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3678719560B3; Thu, 19 Dec 2024 11:35:29 +0000 (UTC)
+Received: from gezellig (unknown [10.39.193.32])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ED11630044C1; Thu, 19 Dec 2024 11:35:20 +0000 (UTC)
+Date: Thu, 19 Dec 2024 12:35:16 +0100
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev,
+ sebott@redhat.com, shameerali.kolothum.thodi@huawei.com,
+ armbru@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+Message-ID: <Z2QE9AqZnpGM5sWD@gezellig>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
+In-Reply-To: <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -120,144 +98,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With memory devices, we will have storage attributes for memory that
-exceeds the initial ram size. Further, we can easily have memory holes,
-for which there (currently) are no storage attributes.
+On Thu, Dec 12, 2024 at 11:04:30AM +0100, Eric Auger wrote:
 
-In particular, with memory holes, KVM_S390_SET_CMMA_BITS will fail to set
-some storage attributes.
+Hi Eric,
 
-So let's do it like we handle storage keys migration, relying on
-guest_phys_blocks_append(). However, in contrast to storage key
-migration, we will handle it on the migration destination.
+> On 12/12/24 10:36, Cornelia Huck wrote:
+> > On Thu, Dec 12 2024, Daniel P. Berrangé <berrange@redhat.com> wrote:
 
-This is a preparation for virtio-mem support. Note that ever since the
-"early migration" feature was added (x-early-migration), the state
-of device blocks (plugged/unplugged) is migrated early such that
-guest_phys_blocks_append() will properly consider all currently plugged
-memory blocks and skip any unplugged ones.
+[...]
 
-In the future, we should try getting rid of the large temporary buffer
-and also not send any attributes for any memory holes, just so they
-get ignored on the destination.
+> >> Consider you mgmt app wants to set a CPU model that's common across
+> >> heterogeneous hardware. They don't neccessarily want/need to be
+> >> able to live migrate between heterogeneous CPUs, but for simplicity
+> >> of configuration desire to set a single named CPU across all guests,
+> >> irrespective of what host hey are launched on. The ARM spec baseline
+> >> named models would give you that config simplicity.
+> > If we use architecture extensions (i.e. Armv8.x/9.x) as baseline, I'm
+> > seeing some drawbacks:
+> > - a lot of work before we can address some specific use cases
+> > - old models can get new optional features
+> > - a specific cpu might have a huge set of optional features on top of
+> >   the baseline model
+> >
+> > Using a reference core such as Neoverse-V2 probably makes more sense
+> > (easier to get started, less feature diff?) It would still make a good
+> > starting point for a simple config.
+> >
+> Actually from a dev point of view I am not sure it changes much to have
+> either ARM spec rev baseline or CPU ref core named model.
+> 
+> One remark is that if you look at
+> https://developer.arm.com/documentation/109697/2024_09?lang=en
+> you will see there are quite a lot of spec revisions and quite a few of
+> them are actually meaningful in the light of currently avaiable and
+> relevant HW we want to address. What I would like to avoid is to be
+> obliged to look at all of them in a generic manner while we just want to
+> address few cpu ref models.
+> 
+> Also starting from the ARM spec rev baseline the end-user may need to
+> add more feature opt-ins to be close to a specific cpu model. So I
+> foresee extra complexity for the end-user.
 
-Message-ID: <20241008105455.2302628-9-david@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- hw/s390x/s390-stattrib-kvm.c | 67 +++++++++++++++++++++++-------------
- 1 file changed, 43 insertions(+), 24 deletions(-)
+(Assuming I'm parsing your last para right; correct me if not.)
 
-diff --git a/hw/s390x/s390-stattrib-kvm.c b/hw/s390x/s390-stattrib-kvm.c
-index eeaa811098..33ec91422a 100644
---- a/hw/s390x/s390-stattrib-kvm.c
-+++ b/hw/s390x/s390-stattrib-kvm.c
-@@ -10,11 +10,12 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "hw/boards.h"
-+#include "hw/s390x/s390-virtio-ccw.h"
- #include "migration/qemu-file.h"
- #include "hw/s390x/storage-attributes.h"
- #include "qemu/error-report.h"
- #include "sysemu/kvm.h"
-+#include "sysemu/memory_mapping.h"
- #include "exec/ram_addr.h"
- #include "kvm/kvm_s390x.h"
- #include "qapi/error.h"
-@@ -84,8 +85,8 @@ static int kvm_s390_stattrib_set_stattr(S390StAttribState *sa,
-                                         uint8_t *values)
- {
-     KVMS390StAttribState *sas = KVM_S390_STATTRIB(sa);
--    MachineState *machine = MACHINE(qdev_get_machine());
--    unsigned long max = machine->ram_size / TARGET_PAGE_SIZE;
-+    S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
-+    unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
- 
-     if (start_gfn + count > max) {
-         error_report("Out of memory bounds when setting storage attributes");
-@@ -103,39 +104,57 @@ static int kvm_s390_stattrib_set_stattr(S390StAttribState *sa,
- static void kvm_s390_stattrib_synchronize(S390StAttribState *sa)
- {
-     KVMS390StAttribState *sas = KVM_S390_STATTRIB(sa);
--    MachineState *machine = MACHINE(qdev_get_machine());
--    unsigned long max = machine->ram_size / TARGET_PAGE_SIZE;
--    /* We do not need to reach the maximum buffer size allowed */
--    unsigned long cx, len = KVM_S390_SKEYS_MAX / 2;
-+    S390CcwMachineState *s390ms = S390_CCW_MACHINE(qdev_get_machine());
-+    unsigned long max = s390_get_memory_limit(s390ms) / TARGET_PAGE_SIZE;
-+    unsigned long start_gfn, end_gfn, pages;
-+    GuestPhysBlockList guest_phys_blocks;
-+    GuestPhysBlock *block;
-     int r;
-     struct kvm_s390_cmma_log clog = {
-         .flags = 0,
-         .mask = ~0ULL,
-     };
- 
--    if (sas->incoming_buffer) {
--        for (cx = 0; cx + len <= max; cx += len) {
--            clog.start_gfn = cx;
--            clog.count = len;
--            clog.values = (uint64_t)(sas->incoming_buffer + cx);
--            r = kvm_vm_ioctl(kvm_state, KVM_S390_SET_CMMA_BITS, &clog);
--            if (r) {
--                error_report("KVM_S390_SET_CMMA_BITS failed: %s", strerror(-r));
--                return;
--            }
--        }
--        if (cx < max) {
--            clog.start_gfn = cx;
--            clog.count = max - cx;
--            clog.values = (uint64_t)(sas->incoming_buffer + cx);
-+    if (!sas->incoming_buffer) {
-+        return;
-+    }
-+    guest_phys_blocks_init(&guest_phys_blocks);
-+    guest_phys_blocks_append(&guest_phys_blocks);
-+
-+    QTAILQ_FOREACH(block, &guest_phys_blocks.head, next) {
-+        assert(QEMU_IS_ALIGNED(block->target_start, TARGET_PAGE_SIZE));
-+        assert(QEMU_IS_ALIGNED(block->target_end, TARGET_PAGE_SIZE));
-+
-+        start_gfn = block->target_start / TARGET_PAGE_SIZE;
-+        end_gfn = block->target_end / TARGET_PAGE_SIZE;
-+
-+        while (start_gfn < end_gfn) {
-+            /* Don't exceed the maximum buffer size. */
-+            pages = MIN(end_gfn - start_gfn, KVM_S390_SKEYS_MAX / 2);
-+
-+            /*
-+             * If we ever get guest physical memory beyond the configured
-+             * memory limit, something went very wrong.
-+             */
-+            assert(start_gfn + pages <= max);
-+
-+            clog.start_gfn = start_gfn;
-+            clog.count = pages;
-+            clog.values = (uint64_t)(sas->incoming_buffer + start_gfn);
-             r = kvm_vm_ioctl(kvm_state, KVM_S390_SET_CMMA_BITS, &clog);
-             if (r) {
-                 error_report("KVM_S390_SET_CMMA_BITS failed: %s", strerror(-r));
-+                goto out;
-             }
-+
-+            start_gfn += pages;
-         }
--        g_free(sas->incoming_buffer);
--        sas->incoming_buffer = NULL;
-     }
-+
-+out:
-+    guest_phys_blocks_free(&guest_phys_blocks);
-+    g_free(sas->incoming_buffer);
-+    sas->incoming_buffer = NULL;
- }
- 
- static int kvm_s390_stattrib_set_migrationmode(S390StAttribState *sa, bool val,
+Isn't a user wanting to add extra CPU flags (on top of a baseline) a
+"normal behaviour" and not "extra complexity"?  Besides coming close to
+a specific CPU model, there's the additional important use-case of CPU
+flags that provide security mitigation.
+
+Consider this:
+
+Say, there's a serious security issue in a released ARM CPU.  As part of
+the fix, two new CPU flags need to be exposed to the guest OS, call them
+"secflag1" and "secflag2".  Here, the user is configuring a baseline
+model + two extra CPU flags, not to get close to some other CPU model
+but to mitigate itself against a serious security flaw.
+
+An example that comes to mind is the infamous "speculative store bypass"
+(SSB) vulnerability and how QEMU addressed it[1][2] in x86.  I'm sure,
+as you know, it also affects ARM[3].
+
+
+[1] https://lists.gnu.org/archive/html/qemu-devel/2018-05/msg04796.html
+    — i386: define the 'ssbd' CPUID feature bit (CVE-2018-3639)
+
+[2] https://lists.gnu.org/archive/html/qemu-devel/2018-05/msg04797.html
+    — i386: Define the Virt SSBD MSR and handling of it (CVE-2018-3639)
+
+[3] https://developer.arm.com/documentation/ddi0601/2024-06/AArch64-Registers/SSBS--Speculative-Store-Bypass-Safe
+
 -- 
-2.47.1
+/kashyap
 
 
