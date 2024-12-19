@@ -4,89 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916A2E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9671CE7718B
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGq-0003y6-DB; Thu, 19 Dec 2024 11:21:04 -0500
+	id 1tOJFr-0001tG-RD; Thu, 19 Dec 2024 11:20:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOHBd-0000E0-SG
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:07:33 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
+ id 1tOG9P-0007bB-S4
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:01:16 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOHBc-00041U-8T
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:07:33 -0500
+ (Exim 4.90_1) (envelope-from <yanghliu@redhat.com>)
+ id 1tOG9K-0000Wl-US
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:01:11 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734617250;
+ s=mimecast20190719; t=1734613265;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0VOZOqTYjuBQWSRbaodVkgoqbpVNKqGHG8LBQQLmWQQ=;
- b=H+W/C/3LfClGEzekN3MLI8o4RPg1z2kxeF3og1CGNX9aamPYErVKK2rtS8lzGhO2IoXM8Z
- ygCO+kgSKOl9CBtuon+6pYGxBNRz7HGBqFzD+atR7XwF0gZhk5A05C3mtgxAVIlpG83+kW
- 103QDXnelL11xkwXwmzg4s+bGMp1AX4=
-Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
- [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KGkKVaPODV83lxyFfjK9Te+LbPVqMXmKuxMKzLBF2TE=;
+ b=YmOhs+Hh7xDOzZ4DuuAgxQzf+5DPyhdkAYMPy25TGPwhBWzfdquCGszcJPkRknTsI/tsn0
+ 9jcuJ18XxvOfiTqhNBU3BL3aCZC8BXvOzkfTA0Tf0WAmWfI/+urWgSpwwVWTFq8RFewnsn
+ lBtxBaPO9CkRCfGxl6OwaGQb8JIwda8=
+Received: from mail-oi1-f197.google.com (mail-oi1-f197.google.com
+ [209.85.167.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-168-rWnqeOEhNZKsnDv-0ZdfOw-1; Thu, 19 Dec 2024 09:07:27 -0500
-X-MC-Unique: rWnqeOEhNZKsnDv-0ZdfOw-1
-X-Mimecast-MFC-AGG-ID: rWnqeOEhNZKsnDv-0ZdfOw
-Received: by mail-lf1-f71.google.com with SMTP id
- 2adb3069b0e04-5412ceadaa3so397373e87.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:07:26 -0800 (PST)
+ us-mta-593-uErNmljdNi2RmRZ84R9jWA-1; Thu, 19 Dec 2024 08:01:03 -0500
+X-MC-Unique: uErNmljdNi2RmRZ84R9jWA-1
+X-Mimecast-MFC-AGG-ID: uErNmljdNi2RmRZ84R9jWA
+Received: by mail-oi1-f197.google.com with SMTP id
+ 5614622812f47-3eb9c1ce675so586647b6e.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 05:01:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734617245; x=1735222045;
+ d=1e100.net; s=20230601; t=1734613262; x=1735218062;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0VOZOqTYjuBQWSRbaodVkgoqbpVNKqGHG8LBQQLmWQQ=;
- b=c/2Sg8AxXXf9ymY0LjfVYL/IlAd7Rc0iPDKa3aJKGeuDjZor9bT8TOpTncPG6AvXNM
- WfvNeXS4SecfAOFTahTYzYtzA7QNmdryTi1l+sQeStj4qBMYio5PEyxrjvh8sKIp1xGl
- fUsaJLPV5sJkK29urylsZDTda+S34u5r8YVMdOsTGaSPPNEJ79sl91X5zELoRVj0m2gX
- 04h3GC/iledECZILnHZC7TOpv07ouVR0e4CHMJDyNCdqBFG3UVrFsZGQkXC0Voq1rJjo
- lA3l/n2zTQa51lEx5Q1wJqcCOaGsIQH0s/SqjxUtb+mU8T0wbDLRPwFalil8fWDJly/y
- tAYg==
+ bh=KGkKVaPODV83lxyFfjK9Te+LbPVqMXmKuxMKzLBF2TE=;
+ b=rYVqKUJ/K62vMpazdTwbhq8L2axT5qYu72egb0O68S/2heCimgXro2jwkR/dpf7QB7
+ CTgETSAv0O8F2H25Pyl7VtCXFkfAj59/0800h0Xv+pwPYlSIA95Nu3VSpAQ3hveRcOqv
+ DCAPJZvMP6GyGig/Ear37jNEeUUNOozQvOIpaBpFIwweMCFavK00sCBsTin+vzpGVnTZ
+ ZW9O5f7LllD4iawVP+DmKhVr2Z8FJd9Of2BPVswVqUYv5JgXSLWvBZ4Z7KLeR43gLAyk
+ 43uSScsVvi1oZmaYqEtOEt5EvcvcvxuggXmVjSL9g0z1yb59XH+WDSteFtWWaaYeVax2
+ BidQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWhhUgFK9aOmu1SFWruY8AJ5ZlVCwMz3B9oVSOeHCUlbNCUPbrrzLvzW6KL/eLFtC/UXSm4OwnjwWm1@nongnu.org
-X-Gm-Message-State: AOJu0YxFSjP4cBhKWQmsyRAxqMC4iZPsfuNXhjFr3IqJb7+EFKh5rTZ9
- kLq05xDIuqFS0aRqaYlq2oR+6UZv3+BFzq+4wL38Q7/UKffSC+if7Y+u2uhVk4fOaRnDxgsUg0G
- 9ZKJjVuVo9i7AL1p4wC57UIaGxyh+0McSYO3fkaAo++AdZ/I01HRnzMiqdKw2EvhXbvrQg0JsgW
- dB+7/pDeB8o88NN+dOhBJv9h/G/L8=
-X-Gm-Gg: ASbGnctR+P9YJMHv1cajmm3DjGpCbz47fNCNm89Z4FmpFbglEpBgcMN48iYRaVs7grK
- Ipr+w75HRHNRaaTyHbVQYRkRbk7fJfR08InxSX6w=
-X-Received: by 2002:a05:6512:39ce:b0:542:2486:6977 with SMTP id
- 2adb3069b0e04-542248669c2mr692379e87.19.1734617245234; 
- Thu, 19 Dec 2024 06:07:25 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFcAMvTLxSY1+GLJkuonTmESrsvV+wwEEdyE1vUIFzVSrS318AwzLkS3ie1nPQXh6E3MSAkYugxZTQ+zdKfPTs=
-X-Received: by 2002:a05:6512:39ce:b0:542:2486:6977 with SMTP id
- 2adb3069b0e04-542248669c2mr692349e87.19.1734617244860; Thu, 19 Dec 2024
- 06:07:24 -0800 (PST)
+ AJvYcCWwDUKHZxS5R8BmbhBvcLcCrhCd5bg1+lrCJVOJSwNjuqCcihL1JcyoMhwfq1wNfRSdhkPIgcgxjIc0@nongnu.org
+X-Gm-Message-State: AOJu0Yx0xSEsmL4VtO1MgD2UYN/EOkVV01DGkqF6ze2/IT9gMom4zgAn
+ UzdH5j2vy9rZ1O0E1I8+43ooAeguBncJm0TNBYB6jDZb7bDTZSnqQcbtyksBLLMO3q3K51KhaNM
+ w6Okh+fiibvBLE898DVJkEQd8uCPQm8Hk8jsnjShZyBxbQRvW8DVhf8mEYO7fh2Fn7mokTIn3vH
+ 1TRZYfa8Av4etOEerS5Clssi8Yfks=
+X-Gm-Gg: ASbGnctiRhxC7dG960g3PWGvuCfTFbYCu531iqNMxfkCVj8z++fK+bqZRkRMSPRLOVM
+ ypbm8C6vpgVaaW8WTDqarQsOC11CJ3ekAZ9hGjBs=
+X-Received: by 2002:a05:6808:218a:b0:3e6:5a7f:e102 with SMTP id
+ 5614622812f47-3eccbf2fddemr4609160b6e.9.1734613262482; 
+ Thu, 19 Dec 2024 05:01:02 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGem+u4pXMY2/fxMERtjxOD/e4n9ZDzvIrCCP3AGa2QsHt8m2uZ/JX6QkxHHtxhC488RElcTIfAldR7RJ1gblE=
+X-Received: by 2002:a05:6808:218a:b0:3e6:5a7f:e102 with SMTP id
+ 5614622812f47-3eccbf2fddemr4609138b6e.9.1734613262197; Thu, 19 Dec 2024
+ 05:01:02 -0800 (PST)
 MIME-Version: 1.0
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
- <2933CCF9-F9D6-46D1-9658-07B85104011D@redhat.com>
- <6eed1b13-f41a-4590-8254-dbfb1f9c7a5b@linaro.org>
- <CAMxuvawa3G_G4DvSNdF_y2anTtte0ayVaANsvo9Gh_TKP3bEbA@mail.gmail.com>
-In-Reply-To: <CAMxuvawa3G_G4DvSNdF_y2anTtte0ayVaANsvo9Gh_TKP3bEbA@mail.gmail.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Thu, 19 Dec 2024 19:37:12 +0530
-Message-ID: <CAK3XEhPu1mg3KWWDViw0bSQHq=+wxmB0ZDu=Yf7-Z2889sW=yg@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Daniel Berrange <berrange@redhat.com>
+References: <cover.1731773021.git.maciej.szmigiero@oracle.com>
+ <Z1CpIA7_o7s-NzJ_@x1n>
+ <23398782-6d92-48ae-99f3-855b405f366f@maciej.szmigiero.name>
+ <Z1N4qYOsEcfsC-H5@x1n>
+ <5c6a0bc3-ab9a-4514-8feb-f3c17978d3af@maciej.szmigiero.name>
+ <Z1se0X6eq1DRYLa0@x1n>
+ <CAGYh1E89i-AeHMOt5ddmB_-oGVYqBHr1Oj55OUDyhpzor9bDuQ@mail.gmail.com>
+ <44e311d9-3af1-4a84-a2cd-da3a64cb8a94@redhat.com>
+In-Reply-To: <44e311d9-3af1-4a84-a2cd-da3a64cb8a94@redhat.com>
+From: Yanghang Liu <yanghliu@redhat.com>
+Date: Thu, 19 Dec 2024 21:00:51 +0800
+Message-ID: <CAGYh1E81ZgmaB0CK3bdovSU8FtTOzvMBwpYUgwc2X5Y9PF-_ww@mail.gmail.com>
+Subject: =?UTF-8?Q?Re=3A_=5BPATCH_v3_00=2F24=5D_Multifd_=F0=9F=94=80_device_state_trans?=
+ =?UTF-8?Q?fer_support_with_VFIO_consumer?=
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>, 
+ Fabiano Rosas <farosas@suse.de>, Alex Williamson <alex.williamson@redhat.com>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Avihai Horon <avihaih@nvidia.com>, Joao Martins <joao.m.martins@oracle.com>,
+ qemu-devel@nongnu.org, Chao Yang <chayang@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=yanghliu@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -111,61 +116,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 6:25=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
+Sorry for the inconvenience.  Let me try to re-send my data via my Gmail cl=
+ient.
+
+Test environment:
+Host : Dell 7625
+CPU : EPYC-Genoa
+VM config : 4 vCPU, 8G memory
+Network Device: MT2910
+
+Test report:
++------------------+---------------+----------------+
+| multifd=3D0        |     outgoing migration         |
++------------------+---------------+----------------+
+| VF(s) number     | 1             | 4              |
+| Time elapsed     | 10194 ms      | 10650 ms       |
+| Memory processed | 903.911 MiB   | 783.698 MiB    |
+| Memory bandwidth | 108.722 MiB/s | 101.978 MiB/s  |
+| Iteration        | 4             | 6              |
+| Normal data      | 881.297 MiB   | 747.613 MiB    |
+| Total downtime   | 358ms         | 518ms          |
+| Setup time       | 52ms          | 450ms          |
++------------------+---------------+----------------+
+
++------------------+---------------+----------------+
+| multifd=3D0        |     incoming migration         |
++------------------+---------------+----------------+
+| VF(s) number     | 1             | 4              |
+| Time elapsed     | 10161 ms      | 10569 ms       |
+| Memory processed | 903.881 MiB   | 785.400 MiB    |
+| Memory bandwidth | 107.952 MiB/s | 100.512 MiB/s  |
+| Iteration        | 4             | 7              |
+| Normal data      | 881.262 MiB   | 749.297 MiB    |
+| Total downtime   | 315ms         | 513ms          |
+| Setup time       | 47ms          | 414ms          |
++------------------+---------------+----------------+
+
+
+
++------------------+---------------+---------------+
+| multifd=3D1        |     outgoing migration        |
++------------------+---------------+---------------+
+| VF(s) number     | 1             | 1             |
+| Channel          | 4             | 5             |
+| Time elapsed     | 10962 ms      | 10071 ms      |
+| Memory processed | 908.968 MiB   | 908.424 MiB   |
+| Memory bandwidth | 108.378 MiB/s | 110.109 MiB/s |
+| Iteration        | 4             | 4             |
+| Normal data      | 882.852 MiB   | 882.566 MiB   |
+| Total downtime   | 318ms         | 255ms         |
+| Setup time       | 54ms          | 43ms          |
++------------------+---------------+---------------+
+
+
++------------------+---------------+----------------+
+| multifd=3D1        |     incoming migration         |
++------------------+---------------+----------------+
+| VF(s) number     | 1             | 1              |
+| Channel          | 4             | 5              |
+| Time elapsed     | 10064ms       | 10072 ms       |
+| Memory processed | 909.786 MiB   | 923.746 MiB    |
+| Memory bandwidth | 109.997 MiB/s | 111.308 MiB/s  |
+| Iteration        | 4             | 4              |
+| Normal data      | 883.664 MiB   | 897.848 MiB    |
+| Total downtime   | 313ms         | 328ms          |
+| Setup time       | 46ms          | 47ms           |
++------------------+---------------+----------------+
+
+
++------------------+---------------+----------------+
+| multifd=3D1        |     outgoing migration         |
++------------------+---------------+----------------+
+| VF(s) number     | 4             | 4              |
+| Channel          | 8             | 16             |
+| Time elapsed     | 10805 ms      | 10943 ms       |
+| Memory processed | 786.334 MiB   | 784.926 MiB    |
+| Memory bandwidth | 109.062 MiB/s | 108.610 MiB/s  |
+| Iteration        | 5             | 7              |
+| Normal data      | 746.758 MiB   | 744.938 MiB    |
+| Total downtime   | 344 ms        | 335ms          |
+| Setup time       | 445 ms        | 463ms          |
++------------------+---------------+----------------+
+
+
++------------------+---------------+------------------+
+| multifd=3D1        |     incoming migration           |
++------------------+---------------+------------------+
+| VF(s) number     | 4             | 4                |
+| Channel          | 8             | 16               |
+| Time elapsed     | 10126 ms      | 9941 ms          |
+| Memory processed | 791.308 MiB   | 779.560 MiB      |
+| Memory bandwidth | 108.876 MiB/s | 110.170 MiB/s    |
+| Iteration        | 7             | 5                |
+| Normal data      | 751.672 MiB   | 739.680 MiB      |
+| Total downtime   | 304 ms        | 309ms            |
+| Setup time       | 442 ms        | 446ms            |
++------------------+---------------+------------------+
+
+Best Regards,
+Yanghang Liu
+
+
+On Thu, Dec 19, 2024 at 4:53=E2=80=AFPM C=C3=A9dric Le Goater <clg@redhat.c=
+om> wrote:
 >
-> Hi
+> Hello Yanghang
 >
-> On Thu, Dec 19, 2024 at 2:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-> <philmd@linaro.org> wrote:
-> > >>> +static const TypeInfo vmfwupdate_device_info =3D {
-> > >>> +    .name          =3D TYPE_VMFWUPDATE,
-> > >>> +    .parent        =3D TYPE_DEVICE,
-> > >>
-> > >> What is the qdev API used here? Why not use a plain object?
-> > >
-> > > I wrote this taking vmcoreinfo device as starting point. I will leave=
- this as is for now unless anyone has strong opinions.
+> On 12/19/24 08:55, Yanghang Liu wrote:
+> > FYI.  The following data comes from the first ping-pong mlx VF
+> > migration after rebooting the host.
 > >
-> > We shouldn't blindly copy/paste & spread possible design mistakes.
 > >
-> > Marc-Andr=C3=A9, any particular reason to implement vmcoreinfo using qd=
-ev
-> > and not plain object?
+> > 1. Test for multifd=3D0:
+> >
+> > 1.1 Outgoing migration:
+> > VF number:                     1 VF                           4 VF
+> > Time elapsed:             10194 ms                   10650 ms
+> > Memory processed:    903.911 MiB             783.698 MiB
+> > Memory bandwidth:    108.722 MiB/s          101.978 MiB/s
+> > Iteration:                               4                             =
+ 6
+> > Normal data:                881.297 MiB             747.613 MiB
+> > Total downtime                358ms                       518ms
+> > Setup time                        52ms                        450ms
+> >
+> > 1.2 In coming migration:
+> > VF number:                       1 VF                            4 VF
+> > Time elapsed:                10161 ms                    10569 ms
+> > Memory processed:     903.881 MiB                785.400 MiB
+> > Memory bandwidth:     107.952 MiB/s             100.512 MiB/s
+> > Iteration:                               4                             =
+   7
+> > Normal data:                 881.262 MiB               749.297 MiB
+> > Total downtime                315ms                        513ms
+> > Setup time                        47ms                         414ms
+> >
+> >
+> > 2. Test for multifd=3D1:
+> >
+> > 2.1 Outgoing migration:
+> > VF number                     1 VF                           1 VF
+> > Channel number               4                                  5
+> > Time elapsed:              10962 ms                  10071 ms
+> > Memory processed:     908.968 MiB             908.424 MiB
+> > Memory bandwidth:     108.378 MiB/s         110.109 MiB/s
+> > Iteration:                               4
+> >    4
+> > Normal data:               882.852 MiB              882.566 MiB
+> > Total downtime                318ms                       255ms
+> > Setup time                         54ms                        43ms
+> >
+> >
+> > VF number                    4 VFs                        4 VFs
+> > Channel number             8                               16
+> > Time elapsed:            10805 ms                  10943 ms
+> > Setup time                   445 ms                       463ms
+> > Memory processed:  786.334 MiB            784.926 MiB
+> > Memory bandwidth   109.062 MiB/s         108.610 MiB/s
+> > Iteration:                              5                           7
+> > Normal data:            746.758 MiB             744.938 MiB
+> > Total downtime            344 ms                     335ms
+> >
+> >
+> > 2.2 Incoming migration:
+> > VF number                       1 VF                      1 VF
+> > Channel number                4                            5
+> > Time elapsed:                10064ms               10072 ms
+> > Memory processed:     909.786 MiB           923.746 MiB
+> > Memory bandwidth:      109.997 MiB/s       111.308 MiB/s
+> > Iteration:                               4                          4
+> > Normal data:               883.664 MiB            897.848 MiB
+> > Total downtime                 313ms                   328ms
+> > Setup time                        46ms                      47ms
+> >
+> > VF number                   4 VFs                        4 VFs
+> > Channel number             8                              16
+> > Time elapsed:             10126 ms                 9941 ms
+> > Memory processed:   791.308 MiB           779.560 MiB
+> > Memory bandwidth:  108.876 MiB/s         110.170 MiB/s
+> > Iteration:                          7                               5
+> >   Normal data:             751.672 MiB           739.680 MiB
+> > Total downtime             304 ms                    309ms
+> > Setup time                    442 ms                    446ms
 > >
 >
-> I don't remember (damn 8y ago..). It seems the design changed over
-> time during review, qdev might have been necessary and stayed this
-> way.
-
-I changed it to TYPE_OBJECT and we get a crash here:
-
-#3  0x0000aaaaab207a48 [PAC] in object_class_dynamic_cast_assert
-    (class=3D0xaaaaac608880, typename=3Dtypename@entry=3D0xaaaaab4b9630
-"device", file=3Dfile@entry=3D0xaaaaab4300d0
-"/workspace/qemu-ani/include/hw/qdev-core.h", line=3Dline@entry=3D77,
-func=3Dfunc@entry=3D0xaaaaab595a90 <__func__.0> "DEVICE_CLASS") at
-../qom/object.c:1021
-#4  0x0000aaaaaaec2d74 in DEVICE_CLASS (klass=3D<optimized out>) at
-/workspace/qemu-ani/include/hw/qdev-core.h:77
-#5  vmcoreinfo_device_class_init (klass=3D<optimized out>,
-data=3D<optimized out>) at ../hw/misc/vmcoreinfo.c:88
-
-Basically doing this would be illegal for vmcoreinfo and we need to
-adjust the code :
-
-   DeviceClass *dc =3D DEVICE_CLASS(klass);
-
-    dc->vmsd =3D &vmstate_vmcoreinfo;
-    dc->realize =3D vmcoreinfo_realize;
-    dc->hotpluggable =3D false;
-    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-
-Anyway, for vmfwupdate, it is actually like a device with device properties=
-:
-
-+    device_class_set_props(dc, vmfwupdate_properties);
-
-So I prefer to make it qdev type for now.
+> This is difficult to read. Could you please resend with a fixed
+> indentation ?
+>
+> We would need more information on the host and vm config too.
+>
+> Thanks,
+>
+> C.
+>
 
 
