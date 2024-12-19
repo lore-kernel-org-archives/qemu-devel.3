@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 387DAE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:55:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5209AE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:56:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJnh-0005yH-VW; Thu, 19 Dec 2024 11:55:01 -0500
+	id 1tOJoT-0006RX-PI; Thu, 19 Dec 2024 11:55:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOJnf-0005vu-EM
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:54:59 -0500
+ id 1tOJoM-0006P9-Cq
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:55:42 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOJne-00021P-1e
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:54:59 -0500
+ id 1tOJoK-0002Is-PA
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:55:42 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734627296;
+ s=mimecast20190719; t=1734627340;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0TRrY4v3c39hcukyUAFYfTeIvcYYFxiz+eGr5SSgL6E=;
- b=YfWLIj0GBaSVbR8khlRa0XSJWKhbh4UjnVRgWk+gVHZ0PY3X3nx69A+3Sfy3oF4QgEmuvP
- sb2xWq9Mta8DwFQromQX1vSZkOnzhU3IJQ5xWIiNstKlponV44rpjZPNSBd7/uOpy+2e3H
- OJYrRjR9j1NJo39nIlFAQZMpCO/Wev8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=aZpOaxtQhHzm71rk2Ugq2PiBYsIzi5cVwQEojrjCN0I=;
+ b=JCaKOW0+QEjU3BviWeJoPqGrrgNoh0+0D1RK5LlJ4pISQTRVeMqmIuOTCFGCKSXtoLSoX9
+ CoiSmWOX0aQsJ9pZ23jBaKIeTMjtmZbSRrK+NhjrhUJzAC8aVpjdBU8eG1wJ5s7aArwfTC
+ 0ohrERsKIWLKZnwP0IfMExwnBZzZRiM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-443-qvG3wrVbNwi_ZpqU0ajRuw-1; Thu,
- 19 Dec 2024 11:54:54 -0500
-X-MC-Unique: qvG3wrVbNwi_ZpqU0ajRuw-1
-X-Mimecast-MFC-AGG-ID: qvG3wrVbNwi_ZpqU0ajRuw
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-WtolTG9EPaeMbRTQm-xTzw-1; Thu,
+ 19 Dec 2024 11:55:36 -0500
+X-MC-Unique: WtolTG9EPaeMbRTQm-xTzw-1
+X-Mimecast-MFC-AGG-ID: WtolTG9EPaeMbRTQm-xTzw
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 61D121955D62; Thu, 19 Dec 2024 16:54:53 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8BC019560A6; Thu, 19 Dec 2024 16:55:35 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.54])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6919119560AD; Thu, 19 Dec 2024 16:54:51 +0000 (UTC)
-Date: Thu, 19 Dec 2024 16:54:47 +0000
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E143D1956053; Thu, 19 Dec 2024 16:55:33 +0000 (UTC)
+Date: Thu, 19 Dec 2024 16:55:30 +0000
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
  devel@lists.libvirt.org
-Subject: Re: [RFC PATCH 01/10] hw/misc/vmcoreinfo: Declare QOM type using
- DEFINE_TYPES macro
-Message-ID: <Z2RP1-uhaBHVgL0o@redhat.com>
+Subject: Re: [RFC PATCH 02/10] hw/misc/vmcoreinfo: Rename opaque pointer as
+ 'opaque'
+Message-ID: <Z2RQAuPAPzLIVBVd@redhat.com>
 References: <20241219153857.57450-1-philmd@linaro.org>
- <20241219153857.57450-2-philmd@linaro.org>
+ <20241219153857.57450-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20241219153857.57450-2-philmd@linaro.org>
+In-Reply-To: <20241219153857.57450-3-philmd@linaro.org>
 User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -92,11 +92,14 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 04:38:48PM +0100, Philippe Mathieu-Daudé wrote:
+On Thu, Dec 19, 2024 at 04:38:49PM +0100, Philippe Mathieu-Daudé wrote:
+> Both QEMUResetHandler and FWCfgWriteCallback take an opaque
+> pointer argument, no need to cast.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/misc/vmcoreinfo.c | 19 ++++++++-----------
->  1 file changed, 8 insertions(+), 11 deletions(-)
+>  hw/misc/vmcoreinfo.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
 
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
