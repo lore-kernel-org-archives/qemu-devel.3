@@ -4,85 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 793B9E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:20:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83229E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:20:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFQ-0001mI-0M; Thu, 19 Dec 2024 11:19:36 -0500
+	id 1tOJGG-0002Cs-Ix; Thu, 19 Dec 2024 11:20:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFOP-00066M-MW
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:38 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tOFaK-00077y-1X
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:24:56 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOFON-00089d-Vg
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:37 -0500
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1tOFaI-0002eG-7y
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:24:55 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734610355;
+ s=mimecast20190719; t=1734611092;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=s6nygS97dluqx/BeGp3uSmNclmtr8ycVi93iMqAtirw=;
- b=ZY/IY5mHC74yyMzxsyHsm2szV1iMhebsxpz2DjHLMtDBdkDPjWGTmRLHa6i8Vj/X1a5n0W
- CJYssrnHfyvhWhNGfnLiaPLcaiC8RF/nZxrkJLchnJ3EQ3Jm5lSQrU7BGDzRF4TB7rFFtw
- ZEN76AUDE3NyKfBEhWPgcsVHFJ0Lpa4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=MLsExxvW2uxQy9Fkm0fQiOUG+nFA2eJZT63Xk4MA0/U=;
+ b=YpS5vTv5p6S1jUuuJ4perVXX6/p9k4ooDE50e5oVb5h/j8S0dpu0lZN/oLlG5eEU3OBdk8
+ dFWFMBxOpGYxp5JZTjW04rx9gLPkCfMrawm7NO5nE+q05FXkZxRXM/ZhxquNx2+0eL+1ZM
+ DdeYZSOp05dnfnKH1+xHMT+t9iiNnrE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-688-LX4o54gSPBaM84RnFei4Qw-1; Thu, 19 Dec 2024 07:12:34 -0500
-X-MC-Unique: LX4o54gSPBaM84RnFei4Qw-1
-X-Mimecast-MFC-AGG-ID: LX4o54gSPBaM84RnFei4Qw
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43625ceae52so4351855e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:12:33 -0800 (PST)
+ us-mta-144-c1jbjqK2PL-0DPkpq9k21g-1; Thu, 19 Dec 2024 07:24:50 -0500
+X-MC-Unique: c1jbjqK2PL-0DPkpq9k21g-1
+X-Mimecast-MFC-AGG-ID: c1jbjqK2PL-0DPkpq9k21g
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385e1339790so430530f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:24:50 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734610352; x=1735215152;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=s6nygS97dluqx/BeGp3uSmNclmtr8ycVi93iMqAtirw=;
- b=e8LXmcg6aYsM2M54fszjkVOSlTWgrrDBwkWhT+gPf6ltHicPxLg49n1MxYnIaO8dm+
- /IV63oouP4Fd7OKtVm8yA/idkhalpJNa4tX1rQNnDdDxdlQALcsHusNFEWe7YTDQWHWv
- v1dXi/tSC++IxSx63krLX5UjtP6UixnSPkxW/GKE+GiP3R9n/6fEsi9EbLgWSxtwoZdY
- TE0Zb9mmbaTv+LIFG6q1jq9p2CHapQWh/vf61xKk5y69Lu4YmQ3hD+McsUxt+DbEfAtW
- GP3QrGfiCzYu6PTONghurJ/TyTISPjqSy/iCjLECQt7XAEqmVFak0Od+SBzON67+l6T/
- lBJg==
-X-Gm-Message-State: AOJu0Yyu+MvvHZEjI7E8hT5Gc6GBbmIprgSJ8PgLwcZT03RGUH0IICiO
- l7lEMI5Nj1XeWYCvtfcaPZFu9BdqMRkz3fxXSBNJWseDz0zcJF+UHLmX2BiCjNbQjLMFsWYkpXz
- ShHTLpVKg+bEwE3TTuKLYrLOW5XGcH6QYN16Xi2b4QiHMxNioOo0X5nLFAgX7LSyJsXS7fgc4zw
- lxgz2FI5WY2qCWflCsklCBuIrjfo5YGyJmREv+
-X-Gm-Gg: ASbGncs8S7jbHZz7SFSbVxlb4QEezOn1Po5nD9JCOosrq5X3isnCRbJeQN+8vlnxyhw
- f8D0jf/YGJ+6aNq64JI1RLFRMtuT40prfkgAVsYxacXwWtjH7EZx4ipC4XXZrqA++tIgQEbXiF7
- 4lwj5kAtzlhT01zqNePBHlnigV9ihDRmNCydRmXTJdSMLwAZghB/ByQPZjVXz9gm6TVQ7MztFHK
- tLyBXgoozA7lyrVYl8p1GeoCvWcQFe4xmPEhtXEXE3R+p5LSB+QeCBFKkZL
-X-Received: by 2002:a05:6000:156c:b0:385:f220:f788 with SMTP id
- ffacd0b85a97d-388e4dad7b7mr6318064f8f.48.1734610351694; 
- Thu, 19 Dec 2024 04:12:31 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGXLEWpbID6WJom2RkjUcAVDjCHTbt5/SVlufliM1MucKhzTOpUxdcYhp/FoZZdM13qfJFoaw==
-X-Received: by 2002:a05:6000:156c:b0:385:f220:f788 with SMTP id
- ffacd0b85a97d-388e4dad7b7mr6318033f8f.48.1734610351240; 
- Thu, 19 Dec 2024 04:12:31 -0800 (PST)
-Received: from [192.168.10.47] ([151.81.118.45])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c832e1bsm1427795f8f.31.2024.12.19.04.12.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 04:12:29 -0800 (PST)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: zhao1.liu@intel.com
-Subject: [PATCH 06/10] rust: qom: move device_id to PL011 class side
-Date: Thu, 19 Dec 2024 13:12:12 +0100
-Message-ID: <20241219121216.416905-7-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219121216.416905-1-pbonzini@redhat.com>
-References: <20241219121216.416905-1-pbonzini@redhat.com>
+ d=1e100.net; s=20230601; t=1734611089; x=1735215889;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MLsExxvW2uxQy9Fkm0fQiOUG+nFA2eJZT63Xk4MA0/U=;
+ b=R9oma1nCyAMkjax6TR/YOFpTi0W+DyH64lXC/L/UNCxcjvYC8W/dPkstHgFfHu/Qb9
+ lszB9gaiEz32CEt8jexoD9ZjG7KodcQiBBfCRxrWaHyZvNlIFD0so4Q3uEt0hCfz6vcQ
+ h9xzANeLnndUgqOhGSSmwj+wiooq6GXTDCIL/yefhN7xM8qZMVbuGUqFK9dsaKrJIEqy
+ 7Q2+h9j1rktzUtPUI0olqHF+aeJTkfUel7iw3eWU//cmVyK0l2gyt39yhxuIFZUPXry0
+ sZI44jwfpx/EGlMWJGRYyvVcCpuzy+CsqdfIDNrVHaeX4nBppsRJTUx/fFG5J1GsiKUe
+ jNpw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUiVbrKy5opyrN6Wxic0hFnCV8P/nVEV96QV57VKhUrDNTc+TWUFtclnDussCIHxo3xuVDtkQk3NXY0@nongnu.org
+X-Gm-Message-State: AOJu0YxWfQbQXHbUJJjR7d2WDDrW7uB4MCgClsb1rbNJmEjfuGzh0hQe
+ P9Oe8iGYP626zcVvO3691YI6m8d1NBO1HhzPH4LObZeiaR7FHVA/V4rggWlK+OwRP8jPxQ1vrNw
+ hTntU5s+Fraa759lcN1LeIda+bCi1IzkypCdZ3cI99RyPA3M86ZYgatZqNdd0
+X-Gm-Gg: ASbGncttszE3iIPHpPr+6d0u5hWPQ3qagG7Eg8/EYt3Nl02EzUcwn+jO2oAKqOHjv2D
+ c82ylb9gwCs0oVpJYBBwpob8ahrUo/XqoPGGcRwwE0WuEkLfYnUPXuIRlpLW3Snjm2q0D3vmYNj
+ cBxulcTvlO8wEZmzpHtZjt9xHABk6EKByPsmvF2mWsTL+f0bOW/xH686xC7QmcxcFuf1mk0vOAg
+ Qc5HSpAr6mpsIdrPmqGIH13Pl1WGx3fr1afS9nghlhUH1F7bzKFqQj/uYE7iHr0DT2cnKg2QNwV
+ 0JUy/nMDxYNl
+X-Received: by 2002:a5d:588a:0:b0:385:ef8e:a652 with SMTP id
+ ffacd0b85a97d-38a19b3ccd0mr2946099f8f.56.1734611089550; 
+ Thu, 19 Dec 2024 04:24:49 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEmU5KXnPM+uCwmg4aTTEwyfDMLWqneT0wght1DQrVwhxetApkLSutpM023WS4NN9feNIIqdQ==
+X-Received: by 2002:a5d:588a:0:b0:385:ef8e:a652 with SMTP id
+ ffacd0b85a97d-38a19b3ccd0mr2946066f8f.56.1734611089147; 
+ Thu, 19 Dec 2024 04:24:49 -0800 (PST)
+Received: from [192.168.0.6] (ip-109-42-49-186.web.vodafone.de.
+ [109.42.49.186]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8a6dd3sm1442353f8f.96.2024.12.19.04.24.48
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Dec 2024 04:24:48 -0800 (PST)
+Message-ID: <6b1e4f73-b53f-4929-8be4-4c07115af626@redhat.com>
+Date: Thu, 19 Dec 2024 13:24:47 +0100
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
+To: David Woodhouse <dwmw2@infradead.org>, qemu-devel@nongnu.org
+Cc: Paul Durrant <paul@xen.org>
+References: <20241218113255.232356-1-thuth@redhat.com>
+ <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
+ <1d4faf8e-b2cd-42b8-a6a7-9034b9512b86@redhat.com>
+ <8cef1bf9ffde6779ad322534c4469e6687b9c9d7.camel@infradead.org>
+ <7e6fd4ed-ee93-48eb-ab12-fd9aa30e6898@redhat.com>
+ <72B07F94-036B-4789-B5DF-103CA913278C@infradead.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <72B07F94-036B-4789-B5DF-103CA913278C@infradead.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -107,148 +157,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There is no need to monkeypatch DeviceId::Luminary into the already-initialized
-PL011State.  Instead, now that we can define a class hierarchy, we can define
-PL011Class and make device_id a field in there.
+On 19/12/2024 09.49, David Woodhouse wrote:
+> On 19 December 2024 09:35:13 CET, Thomas Huth <thuth@redhat.com> wrote:
+>> On 18/12/2024 23.14, David Woodhouse wrote:
+>>> On Wed, 2024-12-18 at 16:54 +0100, Thomas Huth wrote:
+>>>> On 18/12/2024 12.48, David Woodhouse wrote:
+>>>>> On 18 December 2024 12:32:49 CET, Thomas Huth <thuth@redhat.com> wrote:
+>>>>>> Use the serial console to execute the commands in the guest instead
+>>>>>> of using ssh since we don't have ssh support in the functional
+>>>>>> framework yet.
+>>>>>>
+>>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>>>>
+>>>>> Hm, but serial is lossy and experience shows that it leads to flaky tests if the guest (or host) misses bytes. While SSH would just go slower.
+>>>>
+>>>> I now noticed some issue with the serial console in this test, too.
+>>>> Looks like the "Starting dropbear sshd: OK" is not print in an atomic way by
+>>>> the guest, sometimes there are other kernel messages between the ":" and the
+>>>> "OK". It works reliable when removing the "OK" from the string.
+>>>
+>>> Nah, that still isn't atomic; you just got lucky because the race
+>>> window is smaller. It's not like serial ports are at a premium; can't
+>>> you have a separate port for kernel vs. userspace messages?
+>>
+>> Maybe easiest solution: Simply add "quiet" to the kernel command line, then it does not write the kernel messages to the serial console anymore.
+> 
+> Want to resend the bug report about that test failing again? But without the kernel messages this time... :)
 
-There is also no need anymore to have "Arm" as zero, so change DeviceId into a
-wrapper for the array; all it does is provide an Index<hwaddr> implementation
-because arrays can only be indexed by usize.
+With "quiet", the output just looks like this when it hangs:
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/hw/char/pl011/src/device.rs | 59 +++++++++++++++-----------------
- 1 file changed, 28 insertions(+), 31 deletions(-)
+  Cannot get hvm parameter CONSOLE_EVTCHN (18): -22!
+  Spectre V2 : Kernel not compiled with retpoline; no mitigation available!
+  kvm_intel: VMX not supported by CPU 0
+  Cannot get hvm parameter CONSOLE_EVTCHN (18): -22!
+  fail to initialize ptp_kvm
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 689202f4550..215f94a6e4a 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -5,7 +5,7 @@
- use core::ptr::{addr_of_mut, NonNull};
- use std::{
-     ffi::CStr,
--    os::raw::{c_int, c_uchar, c_uint, c_void},
-+    os::raw::{c_int, c_uint, c_void},
- };
- 
- use qemu_api::{
-@@ -14,7 +14,7 @@
-     irq::InterruptSource,
-     prelude::*,
-     qdev::DeviceImpl,
--    qom::{ObjectImpl, ParentField},
-+    qom::{ClassInitImpl, ObjectImpl, ParentField},
- };
- 
- use crate::{
-@@ -33,27 +33,20 @@
- /// QEMU sourced constant.
- pub const PL011_FIFO_DEPTH: u32 = 16;
- 
--#[derive(Clone, Copy, Debug)]
--enum DeviceId {
--    #[allow(dead_code)]
--    Arm = 0,
--    Luminary,
--}
-+#[derive(Clone, Copy)]
-+struct DeviceId(&'static [u8; 8]);
- 
- impl std::ops::Index<hwaddr> for DeviceId {
--    type Output = c_uchar;
-+    type Output = u8;
- 
-     fn index(&self, idx: hwaddr) -> &Self::Output {
--        match self {
--            Self::Arm => &Self::PL011_ID_ARM[idx as usize],
--            Self::Luminary => &Self::PL011_ID_LUMINARY[idx as usize],
--        }
-+        &self.0[idx as usize]
-     }
- }
- 
- impl DeviceId {
--    const PL011_ID_ARM: [c_uchar; 8] = [0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1];
--    const PL011_ID_LUMINARY: [c_uchar; 8] = [0x11, 0x00, 0x18, 0x01, 0x0d, 0xf0, 0x05, 0xb1];
-+    const ARM: Self = Self(&[0x11, 0x10, 0x14, 0x00, 0x0d, 0xf0, 0x05, 0xb1]);
-+    const LUMINARY: Self = Self(&[0x11, 0x00, 0x18, 0x01, 0x0d, 0xf0, 0x05, 0xb1]);
- }
- 
- // FIFOs use 32-bit indices instead of usize, for compatibility with
-@@ -126,17 +119,28 @@ pub struct PL011State {
-     pub clock: NonNull<Clock>,
-     #[doc(alias = "migrate_clk")]
-     pub migrate_clock: bool,
--    /// The byte string that identifies the device.
--    device_id: DeviceId,
- }
- 
- qom_isa!(PL011State : SysBusDevice, DeviceState, Object);
- 
-+pub struct PL011Class {
-+    parent_class: <SysBusDevice as ObjectType>::Class,
-+    /// The byte string that identifies the device.
-+    device_id: DeviceId,
-+}
-+
- unsafe impl ObjectType for PL011State {
--    type Class = <SysBusDevice as ObjectType>::Class;
-+    type Class = PL011Class;
-     const TYPE_NAME: &'static CStr = crate::TYPE_PL011;
- }
- 
-+impl ClassInitImpl<PL011Class> for PL011State {
-+    fn class_init(klass: &mut PL011Class) {
-+        klass.device_id = DeviceId::ARM;
-+        <Self as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut klass.parent_class);
-+    }
-+}
-+
- impl ObjectImpl for PL011State {
-     type ParentType = SysBusDevice;
- 
-@@ -214,7 +218,8 @@ pub fn read(&mut self, offset: hwaddr, _size: c_uint) -> std::ops::ControlFlow<u
- 
-         let value = match RegisterOffset::try_from(offset) {
-             Err(v) if (0x3f8..0x400).contains(&(v >> 2)) => {
--                u32::from(self.device_id[(offset - 0xfe0) >> 2])
-+                let device_id = self.get_class().device_id;
-+                u32::from(device_id[(offset - 0xfe0) >> 2])
-             }
-             Err(_) => {
-                 // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-@@ -648,16 +653,10 @@ pub struct PL011Luminary {
-     parent_obj: ParentField<PL011State>,
- }
- 
--impl PL011Luminary {
--    /// Initializes a pre-allocated, unitialized instance of `PL011Luminary`.
--    ///
--    /// # Safety
--    ///
--    /// We expect the FFI user of this function to pass a valid pointer, that
--    /// has the same size as [`PL011Luminary`]. We also expect the device is
--    /// readable/writeable from one thread at any time.
--    unsafe fn init(&mut self) {
--        self.parent_obj.device_id = DeviceId::Luminary;
-+impl ClassInitImpl<PL011Class> for PL011Luminary {
-+    fn class_init(klass: &mut PL011Class) {
-+        klass.device_id = DeviceId::LUMINARY;
-+        <Self as ClassInitImpl<SysBusDeviceClass>>::class_init(&mut klass.parent_class);
-     }
- }
- 
-@@ -670,8 +669,6 @@ unsafe impl ObjectType for PL011Luminary {
- 
- impl ObjectImpl for PL011Luminary {
-     type ParentType = PL011State;
--
--    const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
- }
- 
- impl DeviceImpl for PL011Luminary {}
--- 
-2.47.1
+Anyway, to properly track this, I've now created a ticket with the full log:
+
+  https://gitlab.com/qemu-project/qemu/-/issues/2731
+
+  Thomas
 
 
