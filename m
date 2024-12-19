@@ -4,89 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00471E7718D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 916A2E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:22:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJHB-00058a-O3; Thu, 19 Dec 2024 11:21:31 -0500
+	id 1tOJGq-0003y6-DB; Thu, 19 Dec 2024 11:21:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOI2d-0005t4-AJ
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:02:19 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOI2b-0005kO-LT
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:02:19 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-38634c35129so678859f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:02:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734620535; x=1735225335; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VPqPkmRu06PLtD07PG3Rk588BhAhOdUz1634l2fW0GY=;
- b=HWVeSetfFUiiaGFShKJ7nQq6n/5+r9gwKz1nTF0+8ZRbKq4iTn1/37l0YXtpDgRwI8
- 0NzoPGkfWwoCQYpHBajN3PPEcBO83Ywzg5H8YePBp6zQdbmvyiLlv6CVfX2442vKWiXA
- eB9HqJWI773z5ROP/rZPT2TTJv/l66IP/zLbetJUjMnAQDFjAwJSZ7Z1uJpMaq1NCMPF
- Za4WXmOI79P3T4UIikMAi/x3+s4a2iQ2YaMytzQtdDyEpxfZzweFHkWb/yQfosIvrbLu
- UG293jcxESo5CYOV+L5XmproxvgQ9W78OLItmeM1jV8qU6GSjhigM35Qdy96MKdAjjYk
- kmPQ==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOHBd-0000E0-SG
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:07:33 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOHBc-00041U-8T
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:07:33 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734617250;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0VOZOqTYjuBQWSRbaodVkgoqbpVNKqGHG8LBQQLmWQQ=;
+ b=H+W/C/3LfClGEzekN3MLI8o4RPg1z2kxeF3og1CGNX9aamPYErVKK2rtS8lzGhO2IoXM8Z
+ ygCO+kgSKOl9CBtuon+6pYGxBNRz7HGBqFzD+atR7XwF0gZhk5A05C3mtgxAVIlpG83+kW
+ 103QDXnelL11xkwXwmzg4s+bGMp1AX4=
+Received: from mail-lf1-f71.google.com (mail-lf1-f71.google.com
+ [209.85.167.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-168-rWnqeOEhNZKsnDv-0ZdfOw-1; Thu, 19 Dec 2024 09:07:27 -0500
+X-MC-Unique: rWnqeOEhNZKsnDv-0ZdfOw-1
+X-Mimecast-MFC-AGG-ID: rWnqeOEhNZKsnDv-0ZdfOw
+Received: by mail-lf1-f71.google.com with SMTP id
+ 2adb3069b0e04-5412ceadaa3so397373e87.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:07:26 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734620535; x=1735225335;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734617245; x=1735222045;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=VPqPkmRu06PLtD07PG3Rk588BhAhOdUz1634l2fW0GY=;
- b=owvHU67I2JZa8mavBWD7KC6IYgmsjDLMBDjHfds3CmWTODCTCgZu0MX5qe2xjngpwR
- VA37qnm9+VgpP9VZswmQtZDK0Nel6sLIICBBIyPffoEYS0mjlNVVSVWjog60KrfelprZ
- jGvLzZRZ7EtwqYFKBZ328h9HkQsB8zmGgutwdLOiTxB4mjsM/Awh76R4QzGpKyhM3AxH
- xSwJUat3DBcSSKcQTr8SmZJJ3qjj5GwqCy4+0HrUHAHEGRAPBdoU9idOzWq3iEwH7vsy
- 3I9C+pUM02IjZt6PTOkW9M2Zfx+IIrjEoizyiAO79OSdLqE0wTrYn8WaaOHUoYyBVrdv
- aeVA==
-X-Gm-Message-State: AOJu0YyZDG3Sl9dVVwvmDSPVl4OO//oSlFF6Dt+grrIg3p2dKIrRuKB7
- vdpaKSv+yuCr8BHCMHzFbwWOcfOLIBYYec112/n+bnBD8j69jlbAEP7/2XItixq2D0xFe6p5cLT
- Y
-X-Gm-Gg: ASbGncubeuxBzvS8UK+15PVIbFtKrZpDmz3QWUrLfQMFiKnj2Z/+WU7/CzJX87hzF7a
- bxKXokL6jMINDCdQq4hoUTd1OOSwNvw9jE+iYHm6mlgeJz7cAoTo0DX2XnH5A85CZPqnAg6E0vY
- F4eQTvZOZ90oUqkQJsPSqea+1ppgGYHGMohMo5YCuig/qOsgFRIr2C5KOV1dE+1Dn3OQvvFgyCr
- JBt2NltG/spK0Zb/j7Ebvrrn+fVNamuFhsU8HkXGM++YKrObcoxibUjF2fwoiYD66NlbEyvdCW5
- 1N7u
-X-Google-Smtp-Source: AGHT+IGLoCDAI7+7/qRP8XJ1Hp27f6ADvI/B9bhtUf3E7A2xeNPLoE1KMGzGhPOyBtMhXVXNSi2cew==
-X-Received: by 2002:a5d:64a7:0:b0:385:f560:7924 with SMTP id
- ffacd0b85a97d-388e4d30f16mr5741383f8f.4.1734620535409; 
- Thu, 19 Dec 2024 07:02:15 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c493sm19969735e9.28.2024.12.19.07.02.14
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Dec 2024 07:02:14 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>, devel@lists.libvirt.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/3] docs: Correct release of TCG trace-events removal
-Date: Thu, 19 Dec 2024 16:02:02 +0100
-Message-ID: <20241219150203.55212-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219150203.55212-1-philmd@linaro.org>
-References: <20241219150203.55212-1-philmd@linaro.org>
+ bh=0VOZOqTYjuBQWSRbaodVkgoqbpVNKqGHG8LBQQLmWQQ=;
+ b=c/2Sg8AxXXf9ymY0LjfVYL/IlAd7Rc0iPDKa3aJKGeuDjZor9bT8TOpTncPG6AvXNM
+ WfvNeXS4SecfAOFTahTYzYtzA7QNmdryTi1l+sQeStj4qBMYio5PEyxrjvh8sKIp1xGl
+ fUsaJLPV5sJkK29urylsZDTda+S34u5r8YVMdOsTGaSPPNEJ79sl91X5zELoRVj0m2gX
+ 04h3GC/iledECZILnHZC7TOpv07ouVR0e4CHMJDyNCdqBFG3UVrFsZGQkXC0Voq1rJjo
+ lA3l/n2zTQa51lEx5Q1wJqcCOaGsIQH0s/SqjxUtb+mU8T0wbDLRPwFalil8fWDJly/y
+ tAYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhhUgFK9aOmu1SFWruY8AJ5ZlVCwMz3B9oVSOeHCUlbNCUPbrrzLvzW6KL/eLFtC/UXSm4OwnjwWm1@nongnu.org
+X-Gm-Message-State: AOJu0YxFSjP4cBhKWQmsyRAxqMC4iZPsfuNXhjFr3IqJb7+EFKh5rTZ9
+ kLq05xDIuqFS0aRqaYlq2oR+6UZv3+BFzq+4wL38Q7/UKffSC+if7Y+u2uhVk4fOaRnDxgsUg0G
+ 9ZKJjVuVo9i7AL1p4wC57UIaGxyh+0McSYO3fkaAo++AdZ/I01HRnzMiqdKw2EvhXbvrQg0JsgW
+ dB+7/pDeB8o88NN+dOhBJv9h/G/L8=
+X-Gm-Gg: ASbGnctR+P9YJMHv1cajmm3DjGpCbz47fNCNm89Z4FmpFbglEpBgcMN48iYRaVs7grK
+ Ipr+w75HRHNRaaTyHbVQYRkRbk7fJfR08InxSX6w=
+X-Received: by 2002:a05:6512:39ce:b0:542:2486:6977 with SMTP id
+ 2adb3069b0e04-542248669c2mr692379e87.19.1734617245234; 
+ Thu, 19 Dec 2024 06:07:25 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFcAMvTLxSY1+GLJkuonTmESrsvV+wwEEdyE1vUIFzVSrS318AwzLkS3ie1nPQXh6E3MSAkYugxZTQ+zdKfPTs=
+X-Received: by 2002:a05:6512:39ce:b0:542:2486:6977 with SMTP id
+ 2adb3069b0e04-542248669c2mr692349e87.19.1734617244860; Thu, 19 Dec 2024
+ 06:07:24 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+ <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
+ <2933CCF9-F9D6-46D1-9658-07B85104011D@redhat.com>
+ <6eed1b13-f41a-4590-8254-dbfb1f9c7a5b@linaro.org>
+ <CAMxuvawa3G_G4DvSNdF_y2anTtte0ayVaANsvo9Gh_TKP3bEbA@mail.gmail.com>
+In-Reply-To: <CAMxuvawa3G_G4DvSNdF_y2anTtte0ayVaANsvo9Gh_TKP3bEbA@mail.gmail.com>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Thu, 19 Dec 2024 19:37:12 +0530
+Message-ID: <CAK3XEhPu1mg3KWWDViw0bSQHq=+wxmB0ZDu=Yf7-Z2889sW=yg@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
+ qemu-devel <qemu-devel@nongnu.org>, Daniel Berrange <berrange@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,30 +111,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-TCG trace-events were deprecated before the v6.2 release,
-and removed for v7.0.
+On Thu, Dec 19, 2024 at 6:25=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+>
+> Hi
+>
+> On Thu, Dec 19, 2024 at 2:03=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+> <philmd@linaro.org> wrote:
+> > >>> +static const TypeInfo vmfwupdate_device_info =3D {
+> > >>> +    .name          =3D TYPE_VMFWUPDATE,
+> > >>> +    .parent        =3D TYPE_DEVICE,
+> > >>
+> > >> What is the qdev API used here? Why not use a plain object?
+> > >
+> > > I wrote this taking vmcoreinfo device as starting point. I will leave=
+ this as is for now unless anyone has strong opinions.
+> >
+> > We shouldn't blindly copy/paste & spread possible design mistakes.
+> >
+> > Marc-Andr=C3=A9, any particular reason to implement vmcoreinfo using qd=
+ev
+> > and not plain object?
+> >
+>
+> I don't remember (damn 8y ago..). It seems the design changed over
+> time during review, qdev might have been necessary and stayed this
+> way.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- docs/about/removed-features.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+I changed it to TYPE_OBJECT and we get a crash here:
 
-diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
-index 68fe0b47f9f..e3a87f3f555 100644
---- a/docs/about/removed-features.rst
-+++ b/docs/about/removed-features.rst
-@@ -1087,8 +1087,8 @@ processor IP (see `Intel discontinuance notification`_).
- TCG introspection features
- --------------------------
- 
--TCG trace-events (since 6.2)
--''''''''''''''''''''''''''''
-+TCG trace-events (removed in 7.0)
-+'''''''''''''''''''''''''''''''''
- 
- The ability to add new TCG trace points had bit rotted and as the
- feature can be replicated with TCG plugins it was removed. If
--- 
-2.47.1
+#3  0x0000aaaaab207a48 [PAC] in object_class_dynamic_cast_assert
+    (class=3D0xaaaaac608880, typename=3Dtypename@entry=3D0xaaaaab4b9630
+"device", file=3Dfile@entry=3D0xaaaaab4300d0
+"/workspace/qemu-ani/include/hw/qdev-core.h", line=3Dline@entry=3D77,
+func=3Dfunc@entry=3D0xaaaaab595a90 <__func__.0> "DEVICE_CLASS") at
+../qom/object.c:1021
+#4  0x0000aaaaaaec2d74 in DEVICE_CLASS (klass=3D<optimized out>) at
+/workspace/qemu-ani/include/hw/qdev-core.h:77
+#5  vmcoreinfo_device_class_init (klass=3D<optimized out>,
+data=3D<optimized out>) at ../hw/misc/vmcoreinfo.c:88
+
+Basically doing this would be illegal for vmcoreinfo and we need to
+adjust the code :
+
+   DeviceClass *dc =3D DEVICE_CLASS(klass);
+
+    dc->vmsd =3D &vmstate_vmcoreinfo;
+    dc->realize =3D vmcoreinfo_realize;
+    dc->hotpluggable =3D false;
+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+
+Anyway, for vmfwupdate, it is actually like a device with device properties=
+:
+
++    device_class_set_props(dc, vmfwupdate_properties);
+
+So I prefer to make it qdev type for now.
 
 
