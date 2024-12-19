@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C344E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:08:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEDCAE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:15:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKwz-0001qs-9q; Thu, 19 Dec 2024 13:08:41 -0500
+	id 1tOL2X-0004YG-Ir; Thu, 19 Dec 2024 13:14:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOKwv-0001qa-TM
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:08:39 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1tOL2T-0004Xx-Fd
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:14:22 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOKwu-0007Da-1L
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:08:37 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-725f2f79ed9so954129b3a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:08:35 -0800 (PST)
+ id 1tOL2S-0007u1-38
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:14:21 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2161eb95317so10816245ad.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:14:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734631714; x=1735236514; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734632058; x=1735236858; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TBWC6kkqugTb4YC+iaVmJCat4XD/WcCRqeGs1OdWKu8=;
- b=QNQWimGLGp2CWpOkAX8Zf0s/MM4PCtf6nF9NY2bITSUycq4r6b9RixqDlD2KUI95Cn
- fsslrcIF2RufBQieZH8ZXbBh99IHpih8T2EtFFhK7ADoVpZQ3l7o6/htqSOnREVG/COc
- dHWJlPZBq30VJnbd0MpRS8kkDAWJb1e3oMcdGH1pDRY6mUzILN/4x/R6woJ4ucwKW092
- 8IZG4cZG4p38AnUENYx0Yk1zRQ+si6LTkLNgEllwNAZiQnacgrjmsFoPfIvD/NyURbr1
- QYTpw7fLdTy7vVEZeSL+PUeTnp3rhYZEN9JoO+d37UpK3Zkev8r1V2Cf6I4o/96BVPph
- CKKQ==
+ bh=of7XpVT/u+BLQidS/sIzJ1C1gBA65Ws8iko5Ava5nf0=;
+ b=E1aUKz0jqi/fCFZMrnRd0IgDvxAtXLVJYn/VPg3UYFJiURL90sKewe/faI35nQQV3H
+ UuNFruvKbYYRCQ16SpszkD9iYxYuBtmvy8abUp5cvV5rAciCRAWWh1WadpNc/AQq+A7E
+ kkENH0SETDD0V0DIpYk3+jppKO+DFQlSIL0lEZTa2QJW+eLP2ENa8pAVRO7pEaVFe6GB
+ BTerL1xPMdDRoAgcRbXhAeME5FETSQQB8xD5yj6T+1l0TgBNcFIufFUJt9Cv9Rkvnd+d
+ KPH1+crG9sENbuc3LzNeOcMvYyfv49CfwY4cc6dnFsoghClEB/a57wr7FVNUChY4HW5b
+ 7sCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734631714; x=1735236514;
+ d=1e100.net; s=20230601; t=1734632058; x=1735236858;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TBWC6kkqugTb4YC+iaVmJCat4XD/WcCRqeGs1OdWKu8=;
- b=pZOIiz/TompI9JFvvSky0vAw5jq47Rmb5biK02PsnAGDO2I21acGiKtdCp3sr2Gk99
- VRYh84mNNQL3zJujw5kvTkTVgYSCehqOx8zsjFEFqpOx8IKqYhAr3ryRG8RPlpyH8INR
- JmHJssA5xU5dQdX8cvKQjU5r2nxRvUiptB1ivEOZtlk8rJKT7uQZ6JCwYmxANg72zDIN
- vzBFiK5GAOVZM2swB3D9RX/2wvsD4agb6Erm1GIpv0kyB/X8XdTzyHUxsSrR6QWqA0cL
- wG2KSqi+q92W15KizIUe5u37kzAvMG/e3PHjJdzSRsUvF63Eoi2+qJfWwMqQWdUxTc8+
- zQXQ==
-X-Gm-Message-State: AOJu0YxeeYGJHwmmtkksFdGSDABi1sg+rRb6kxT50/coc4KqqzAULGgh
- ZKGTvssqWX2xImwmdHUuiV7VFg6AUnbBLJefwAr3+Egk7sVIYx/WT2rqlC5D1hies8hkGdYv7cu
- /XKzcjA==
-X-Gm-Gg: ASbGncsBXAQjcwFRmdpzVHkBtUkd2GMdDJp2jL304ZeanJmcJKg7iyo89UbixKYaK6+
- EISE+n+WsUiyn6MIWmd2RiszV0Te2mepGoP2/gLAIHM2wgTU+SVPN9ay1w77Ngofls3qtHCDuNr
- tdC0R5WoE+mGksK2H4b3+Dj86aINnDfa3c1277H/FeA9cSpPI0GrTFHLjGJT2dnT0mq2oy64+HP
- +XXtrPok86t2GmPFk9BXbxede0euEWe6MCsC46udWa1AnBEUBqIZm5slhSJiZMNwiCk2HLG9ttQ
- SD+yfGsDEpebaNJMc3/JjI9yyLGIUKHLsWZze5tdjA==
-X-Google-Smtp-Source: AGHT+IEFDNWflYDaXLazdcY5/k7fkVBhW0mIUPymrOZdR4WBUMw46PW3GM7f3JFBEsL2QzKuuhIm7A==
-X-Received: by 2002:a05:6a00:cd6:b0:725:9f02:489f with SMTP id
- d2e1a72fcca58-72aa8f0ceffmr7691483b3a.26.1734631714629; 
- Thu, 19 Dec 2024 10:08:34 -0800 (PST)
+ bh=of7XpVT/u+BLQidS/sIzJ1C1gBA65Ws8iko5Ava5nf0=;
+ b=k8pFgo574dgSQV/h5KQCAJ+wkJJgQ1vshA+7vqslV8TC5+/iEiaKXCkk6LDKWthXXJ
+ /jlKEPXQKtFY3Uy+E0rqJy/0bekgxxUAdDGM/Mvp5xkp0V1oOlXrcd7OTD73tfPct+n9
+ QDKGoASpd9LSai6daIgxhj/iJfaINV07d7lfMX0yzl6931MyBJft5PNvFryjSJt5hXKG
+ Er/S458V2W6BUGmysMzeR22jFe8dVIIpWbcYXwvqYVxsMuPdpYK4R36YIMDDGnbrjE/i
+ KZqfHA6IzAykb4Q+6GURygcyJxm4FMdf1LH88NyonyQJoYwpsrGTCwHwoUA/vxYgIpzm
+ L7AA==
+X-Gm-Message-State: AOJu0Yw9u/WmAxFEwB+vReXIszScz560G0xV7Za9iYLlIya0SA/+4b56
+ diIPgtiK2kfONhkjGbIrIbVWWEEggl3D4U93dD9d7ygJec2R3afr7YGJ1pdT6zAxvfXdv8APdiv
+ G3ra6kw==
+X-Gm-Gg: ASbGncvTvmV9llSXAKvhXpe5Rq5yOAn/U7GcS5YNTDsd8uVWhml+rSJau0BDsbXn2vw
+ QW+/O4buJz/2LXg/OKssTpAAStSPPqKNO7wIXeGBDLK49JlMamvv4ONHbBzJmk6iYPJsrOkJcux
+ LLB7JaKB0X1Zipl36OLXEnL58fcSHu++gPxSVqzgP356B3i02F6b/9JjawQjJTZgLsHNcNOcI2u
+ j26AFC/+DRTwg+rICg4C2kRs3wHGru/mUQrKawpB08n0L3IqkzMxTGNjDzlFoIVo12G3JBQ7Ge0
+ 1Hil2BgCCriY1v9PPLjYsSSxf8j9V2iW9DK4ceNdPw==
+X-Google-Smtp-Source: AGHT+IF5IwWz7w/J6yH2Q/YszOkk7x2C+fCC5w7vU8f2Zzf2s1Q/Yq1MNAzIIqlcYxhZ2wp7wUALlg==
+X-Received: by 2002:a17:902:e542:b0:216:30f9:93d4 with SMTP id
+ d9443c01a7336-219d966c0c3mr59303925ad.8.1734632058319; 
+ Thu, 19 Dec 2024 10:14:18 -0800 (PST)
 Received: from ?IPV6:2607:fb91:1ec0:c32f:435b:9081:64c9:3330?
  ([2607:fb91:1ec0:c32f:435b:9081:64c9:3330])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad6cc885sm1626058b3a.0.2024.12.19.10.08.33
+ d9443c01a7336-219dca006fasm15338715ad.227.2024.12.19.10.14.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 10:08:34 -0800 (PST)
-Message-ID: <6fb3ac43-aa1e-47ae-96a7-e1a175a65bb4@linaro.org>
-Date: Thu, 19 Dec 2024 10:08:30 -0800
+ Thu, 19 Dec 2024 10:14:17 -0800 (PST)
+Message-ID: <bcbac22f-dbce-499d-8328-333b8760d77c@linaro.org>
+Date: Thu, 19 Dec 2024 10:14:15 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] docs: Trivial cleanups
+Subject: Re: [PATCH v3 1/7] meson: Run some compiler checks using
+ -Wno-unused-value
 To: qemu-devel@nongnu.org
-References: <20241219150203.55212-1-philmd@linaro.org>
+References: <20241218182106.78800-1-philmd@linaro.org>
+ <20241218182106.78800-2-philmd@linaro.org>
+ <D6F99DW9FQ1Y.268COFM41BN5X@gmail.com>
+ <f2cd3c5d-cacb-49f7-afec-1e48e5a9a92d@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241219150203.55212-1-philmd@linaro.org>
+In-Reply-To: <f2cd3c5d-cacb-49f7-afec-1e48e5a9a92d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,20 +106,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/24 07:02, Philippe Mathieu-Daudé wrote:
-> 
-> 
-> Philippe Mathieu-Daudé (3):
->    docs: Correct '-runas' and '-fsdev/-virtfs proxy' indentation
->    docs: Correct release of TCG trace-events removal
->    docs: Replace 'since' -> 'removed in' in removed-features.rst
-> 
->   docs/about/deprecated.rst       |  2 +-
->   docs/about/removed-features.rst | 24 ++++++++++++------------
->   2 files changed, 13 insertions(+), 13 deletions(-)
-> 
+On 12/19/24 09:39, Philippe Mathieu-Daudé wrote:
+> @@ -885,7 +885,8 @@ class CLikeCompiler(Compiler):
+>                    dependencies: T.Optional[T.List['Dependency']] = None) -> T.Tuple[bool, 
+> bool]:
+>           t = f'''{prefix}
+>           void bar(void) {{
+> -            (void) sizeof({typename});
+> +            size_t foo = sizeof({typename});
+> +            (void) foo;
+>           }}'''
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+As I mentioned elsewhere, sizeof is a compile-time constant.
+The function wrapper is getting in the way.  This can be just
+
+unsigned long foo = sizeof({typename});
+
+I.e. initialization of a global variable, with no need for <stddef.h> or any other system 
+header for size_t.
+
 
 r~
 
