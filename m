@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94098E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8B7E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:26:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFx-0001uE-PV; Thu, 19 Dec 2024 11:20:15 -0500
+	id 1tOJHd-00061Q-Dp; Thu, 19 Dec 2024 11:21:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIjD-0006A1-JN
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:46:21 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOI2l-0005tf-MC
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:02:27 -0500
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOIjA-0005jX-TG
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:46:18 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4361f796586so10318315e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:46:14 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOI2j-0005ld-Tp
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:02:27 -0500
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-385dece873cso397933f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:02:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734623173; x=1735227973; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=PFwqffTv02ZYUG0MVvVJxxrWJp2AA0cvxQbEUnc37oo=;
- b=v5JWlHAQEpGoI3nohzXfZzoRxO+m4FG5BMU3gMHkIGCnQCaO3ZS/sstm6j4FDegcRL
- ndEdavdrNKdtmj2GTuA9loGIImLCWnGpx8QU1B0KsxyoITBSOT4b/8oUNqqrQ4CoGo0e
- wYHqvsjsTpOz26NF7nNnMNikK2oPVRFyBqtwX6GZlxTFlxU/O1/Sah32D8PDwG2NWjbd
- Ry/ulnx1vbxBBh+uI+IpXT1Sw/pKtvLHX1pV4Fp0gyrvGQnh4VUIEAjImnRvnBB09t0n
- wsl046s31rCKI/tRUa6G0Yr8bOUpC6sosCVi/Tss03Xe9qkzOBdzaNc/7leqLW3dqB/n
- qmXQ==
+ d=linaro.org; s=google; t=1734620544; x=1735225344; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=a5X1+M6+3UyvBYMYaayfcaUwM70oCSQurIK4F7x4Fws=;
+ b=UmHm2BcEjyvAR9svCPTdB0X4L7Bl8MeLu2TfCAcoC40xcYf0nIhyBr2AN25k9/9g7R
+ jWZbt/rcUj0hRt3uCCiGAazNWKgdXIcaam1bWAeCcylu1n3cK9KQSSeox2rtV3BpKH1n
+ HIvbvd2XSVjTXGuDdXKrCgvkefJa/z8CBKluMqrOPi/nh2CMcRmMmBhoFSGo4JViiiKW
+ LBzfOcGpoH0WmAIdrnuabikzeLyB/0yv7l4Y2/U3z9XixNpGKZksH3ZcxfEYTTBmOy6F
+ +LaLrbS90Y/n39vtIFZfFY3DEY8CAwREzHINng3WVga+vt8rHHZRy137Ji79I88656Ti
+ U3gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734623173; x=1735227973;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=PFwqffTv02ZYUG0MVvVJxxrWJp2AA0cvxQbEUnc37oo=;
- b=PJofdSxvb6hRMVT6emnJS5+uzmaUmTgMR5OjiQBBO8U7UrT/G0XhUTdgOvg40Ps6Sm
- brTag614CTvlCoPPqNQZ+H+ipxAbvAEkzpXlnqfce8URdNoLnP1Hwn0/4/7IA/4f/+zw
- or87jnzyAu1DvdKa3DkaMfRKTjjWs1DSrzRKDXHU+D7a5BhOUG6bj5wLZ66ESa0UIQWE
- 0yi1wR0gwJmO5I61XqF1keAZNfSlcROIir1igHWz0DzXy3z+m+avdxkuDWjD6TVUfnML
- TsbDAvfBEScwwuEOMMYv91WpJkSdHd2brkiZ/wfd+m8oEP6IPfbPOA7wrzB/AunahzZy
- UYUQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtwwEKx7Q1+bWgpbFBS1jDkqKuYHyFnzeMJ93rOlhrb1Kjj7un6fgdp6KoYlaau8Kxs/BJMhE+5wRO@nongnu.org
-X-Gm-Message-State: AOJu0YzfwuCRf1CCv2dBMfs3y+EXs7Ja475d22O4esa16PYTvjbt67eu
- yclW7l9OkhZI3GSAyyrJJJVJAhaK8QGs2C1p+nux5c5O+LO1G/C4rbrxg+WYz52gDfeTPHhk4hD
- y
-X-Gm-Gg: ASbGncu770sVHRefTsUKS/Nqt89Wok8EK3ncgV9RuS53xC9SHtDKWhKqDGFnjrndqm1
- vpMx5eBZZtBPCS35kQ65xDnvGV+OkI0W45+M69PYOB/kYvf/1wYrlV1Cfq45uyy4ivfUMkzAEW0
- +xv7h3cTfiYuNtu0PEIaXkAtNFPHlVVBJtX9NOxT7Z0pAkzXm5aAAvcdrYiVGj5UCFHubyGTeT/
- Yk3FvIfRYj8UDc1THIuqaPGyQgRC9IjbeLkUyN9Oyt1baE6tgUV1M+W0cWIs6m4yOQ7yVA=
-X-Google-Smtp-Source: AGHT+IEntmYhCb3kfKaK+4ll/QAOcBgvnf4uUl98DAicai1tnL+Q5bddv0KHi6to9K4Ks4O2Qs4ofg==
-X-Received: by 2002:a05:600c:2151:b0:434:ff45:cbbe with SMTP id
- 5b1f17b1804b1-4365c793a5fmr38147495e9.18.1734623173420; 
- Thu, 19 Dec 2024 07:46:13 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
+ d=1e100.net; s=20230601; t=1734620544; x=1735225344;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=a5X1+M6+3UyvBYMYaayfcaUwM70oCSQurIK4F7x4Fws=;
+ b=w2sohEnJh1XkIMKdycDpYXNP5UtFZ3eTN+3Gtj2DYQIjstx5P8pDpZGzm2nj53/Xpy
+ quz/f16AXlxX0G7isOcFD74WhmygKwhrmGwenbQ0FZEEdDyeSMALGfyoBoYTOxOKjzWB
+ 2lzusehhcxt31UObuvR3PC7OVz7zW/diucD8fg8umq+ZCYBzqhBWduIZ2ds13R1aVm8q
+ 9wIhxGoJ5ZIZUuOQnMmrgsChpjaQO4pAWoRVj64bNqGnW+m10vozMu2JsE5Yw968yVch
+ skhbb7j2SVYzp7sUQ6d2JXSV8MmI60UsCXAClSW6jMpfF5krAZ/Btgk+ADszvCHJhYH7
+ JAjA==
+X-Gm-Message-State: AOJu0YyxlKuy8b3FPTUC29JtiaRZCNSkplpPZpprSvsEVBiRGsFlFlj5
+ QeaFlxBuiEeU9uMuUrcAGAcWVw2tpvjd0mOtiIa7jNIMtTvlPvKbJBE2BEA6c0/iEtnX3hx2Osh
+ 6
+X-Gm-Gg: ASbGncsNVvU/0EXhmayWMzyqrODYCmlHmRWIb20EWy9U5mijRu28jHxZO1vxLTZuczK
+ /jTReW7Re4m6pumHWTHjBClsRkZMqTt96VcHSIoz5fTXNs15nVK9DZSMtnLvs+rZRvOLBQdqi7A
+ ObBhu7YroCNbU9rjFmTh45H7KBdSgkcbxuST+wcuH1zQ0bmJQRi8TVheO4Dx9pmxixhZve8/F6Q
+ lSAX5qodarWZ91tEVf8dhhpsOhlO23I1GdOkeQnHMGxC/A/8WERsKGxycIVIXXplOz7N431VMKV
+ qa9W
+X-Google-Smtp-Source: AGHT+IEXIlOmW9o9lr+s2h5UeeagPMa271FjIw/v9/nqmuTLQ26hTPtgYOmqI0JTqbYE7cTGLtpzIA==
+X-Received: by 2002:a5d:5984:0:b0:386:4277:6cf1 with SMTP id
+ ffacd0b85a97d-388e4d8e7edmr6587031f8f.39.1734620540285; 
+ Thu, 19 Dec 2024 07:02:20 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661289995sm21046845e9.36.2024.12.19.07.46.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 07:46:12 -0800 (PST)
-Message-ID: <3cdc20da-2b66-4488-a073-7225b6e5d83b@linaro.org>
-Date: Thu, 19 Dec 2024 16:46:11 +0100
+ 5b1f17b1804b1-4366127c493sm19971545e9.28.2024.12.19.07.02.19
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Dec 2024 07:02:19 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>, devel@lists.libvirt.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <laurent@vivier.eu>, qemu-trivial@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 3/3] docs: Replace 'since' -> 'removed in' in
+ removed-features.rst
+Date: Thu, 19 Dec 2024 16:02:03 +0100
+Message-ID: <20241219150203.55212-4-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241219150203.55212-1-philmd@linaro.org>
+References: <20241219150203.55212-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Daniel Berrange <berrange@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
- <2933CCF9-F9D6-46D1-9658-07B85104011D@redhat.com>
- <6eed1b13-f41a-4590-8254-dbfb1f9c7a5b@linaro.org>
- <CAMxuvawa3G_G4DvSNdF_y2anTtte0ayVaANsvo9Gh_TKP3bEbA@mail.gmail.com>
- <CAK3XEhPu1mg3KWWDViw0bSQHq=+wxmB0ZDu=Yf7-Z2889sW=yg@mail.gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAK3XEhPu1mg3KWWDViw0bSQHq=+wxmB0ZDu=Yf7-Z2889sW=yg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,71 +103,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 15:07, Ani Sinha wrote:
-> On Thu, Dec 19, 2024 at 6:25 PM Marc-André Lureau
-> <marcandre.lureau@redhat.com> wrote:
->>
->> Hi
->>
->> On Thu, Dec 19, 2024 at 2:03 PM Philippe Mathieu-Daudé
->> <philmd@linaro.org> wrote:
->>>>>> +static const TypeInfo vmfwupdate_device_info = {
->>>>>> +    .name          = TYPE_VMFWUPDATE,
->>>>>> +    .parent        = TYPE_DEVICE,
->>>>>
->>>>> What is the qdev API used here? Why not use a plain object?
->>>>
->>>> I wrote this taking vmcoreinfo device as starting point. I will leave this as is for now unless anyone has strong opinions.
->>>
->>> We shouldn't blindly copy/paste & spread possible design mistakes.
->>>
->>> Marc-André, any particular reason to implement vmcoreinfo using qdev
->>> and not plain object?
->>>
->>
->> I don't remember (damn 8y ago..). It seems the design changed over
->> time during review, qdev might have been necessary and stayed this
->> way.
-> 
-> I changed it to TYPE_OBJECT and we get a crash here:
-> 
-> #3  0x0000aaaaab207a48 [PAC] in object_class_dynamic_cast_assert
->      (class=0xaaaaac608880, typename=typename@entry=0xaaaaab4b9630
-> "device", file=file@entry=0xaaaaab4300d0
-> "/workspace/qemu-ani/include/hw/qdev-core.h", line=line@entry=77,
-> func=func@entry=0xaaaaab595a90 <__func__.0> "DEVICE_CLASS") at
-> ../qom/object.c:1021
-> #4  0x0000aaaaaaec2d74 in DEVICE_CLASS (klass=<optimized out>) at
-> /workspace/qemu-ani/include/hw/qdev-core.h:77
-> #5  vmcoreinfo_device_class_init (klass=<optimized out>,
-> data=<optimized out>) at ../hw/misc/vmcoreinfo.c:88
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/removed-features.rst | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-I believe you have enough knowledge to understand the concepts you
-are mixing here. You can not change a type signature without
-implementing its interface (which as you noticed, for QEMU is checked
-at runtime).
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index e3a87f3f555..cb1388049a8 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -403,13 +403,13 @@ Sound card devices should be created using ``-device`` or ``-audio``.
+ The exception is ``pcspk`` which can be activated using ``-machine
+ pcspk-audiodev=<name>``.
+ 
+-``-watchdog`` (since 7.2)
+-'''''''''''''''''''''''''
++``-watchdog`` (removed in 7.2)
++''''''''''''''''''''''''''''''
+ 
+ Use ``-device`` instead.
+ 
+-Hexadecimal sizes with scaling multipliers (since 8.0)
+-''''''''''''''''''''''''''''''''''''''''''''''''''''''
++Hexadecimal sizes with scaling multipliers (removed in 8.0)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ Input parameters that take a size value should only use a size suffix
+ (such as 'k' or 'M') when the base is written in decimal, and not when
+@@ -510,15 +510,15 @@ than zero.
+ 
+ Removed along with the ``compression`` migration capability.
+ 
+-``-device virtio-blk,scsi=on|off`` (since 9.1)
+-''''''''''''''''''''''''''''''''''''''''''''''
++``-device virtio-blk,scsi=on|off`` (removed in 9.1)
++'''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ The virtio-blk SCSI passthrough feature is a legacy VIRTIO feature.  VIRTIO 1.0
+ and later do not support it because the virtio-scsi device was introduced for
+ full SCSI support.  Use virtio-scsi instead when SCSI passthrough is required.
+ 
+-``-fsdev proxy`` and ``-virtfs proxy`` (since 9.2)
+-''''''''''''''''''''''''''''''''''''''''''''''''''
++``-fsdev proxy`` and ``-virtfs proxy`` (removed in 9.2)
++'''''''''''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ The 9p ``proxy`` filesystem backend driver was originally developed to
+ enhance security by dispatching low level filesystem operations from 9p
+@@ -532,8 +532,8 @@ security model option, or switch to ``virtiofs``.   The virtiofs daemon
+ ``virtiofsd`` uses vhost to eliminate the high latency costs of the 9p
+ ``proxy`` backend.
+ 
+-``-portrait`` and ``-rotate`` (since 9.2)
+-'''''''''''''''''''''''''''''''''''''''''
++``-portrait`` and ``-rotate`` (removed in 9.2)
++''''''''''''''''''''''''''''''''''''''''''''''
+ 
+ The ``-portrait`` and ``-rotate`` options were documented as only
+ working with the PXA LCD device, and all the machine types using
+-- 
+2.47.1
 
-> Basically doing this would be illegal for vmcoreinfo and we need to
-> adjust the code :
-> 
->     DeviceClass *dc = DEVICE_CLASS(klass);
-> 
->      dc->vmsd = &vmstate_vmcoreinfo;
->      dc->realize = vmcoreinfo_realize;
->      dc->hotpluggable = false;
->      set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-
-See the conversion:
-https://lore.kernel.org/qemu-devel/20241219153857.57450-1-philmd@linaro.org/
-
-> Anyway, for vmfwupdate, it is actually like a device with device properties:
-> 
-> +    device_class_set_props(dc, vmfwupdate_properties);
-> 
-> So I prefer to make it qdev type for now.
-
-We have the opportunity to start with the correct model.
-Consider simplifying our future (see what is required in
-the suggested vmcoreinfo conversion). Except if you insist
-and commit to do the vmfwupdate later.
 
