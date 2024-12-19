@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C155CE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:35:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2ACE7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:35:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOBy0-0004YW-3K; Thu, 19 Dec 2024 03:33:08 -0500
+	id 1tOBxa-0004RO-Ra; Thu, 19 Dec 2024 03:32:42 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOBxx-0004Y5-RW
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tOBxW-0004Qi-8v
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:38 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOBxw-000585-A1
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:05 -0500
+ id 1tOBxU-00053M-HG
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:32:38 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734597183;
+ s=mimecast20190719; t=1734597155;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lszIW+6n3q7LxjSiG56S8Pvl926aYIlcMEY05VSrnOQ=;
- b=Eq/YHqKfjdVC7kBB5+ivQHdVXIoYOiJ0hhUs1ePrbs2fJx42kW8rtc9JalAmzxK2/hfhLU
- 4vKeOSnmZoDxWKaNh/YCIAnyWuhuLaG0qvLZcoGj2qAQsg19imU4Y63+64Knx2MyRhIlbR
- TmtWfW8vjkUKAcRiVIbhzhLffYq8/Vk=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=sjB2VJ8djP/uFaRO5FuiFnPqLl7LJ/cFgV1DnxC9eUY=;
+ b=Nvw2UHmj5UHtR/Xh9h6+m2PqivEl7xqqGkqnPTHWyquwWMaFCwYlIMSc5u/TqXvCe6itgF
+ n5K05N0wQdS2fA23P5nQU1nueuJIx0F+Qsiq8U1X2pQztA7OvwmyBikS52NOi4r6o0JnZr
+ Wrw3fKGvOzY9GML8xQ6uVgj/vkDTY1g=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-tc8wQJvvNe6K0nXTpI19YQ-1; Thu, 19 Dec 2024 03:33:01 -0500
-X-MC-Unique: tc8wQJvvNe6K0nXTpI19YQ-1
-X-Mimecast-MFC-AGG-ID: tc8wQJvvNe6K0nXTpI19YQ
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43610eba55bso4157925e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:33:01 -0800 (PST)
+ us-mta-661-e8rJJAk8MI-2bHMw6O634w-1; Thu, 19 Dec 2024 03:32:33 -0500
+X-MC-Unique: e8rJJAk8MI-2bHMw6O634w-1
+X-Mimecast-MFC-AGG-ID: e8rJJAk8MI-2bHMw6O634w
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4361c040ba8so3020875e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:32:33 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734597180; x=1735201980;
+ d=1e100.net; s=20230601; t=1734597151; x=1735201951;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=lszIW+6n3q7LxjSiG56S8Pvl926aYIlcMEY05VSrnOQ=;
- b=Aj6w1tisUt0eL4Za8s2qBlAlHSaLkSwRs0vBhBf1ptdzHaujhJM6SbswpEUmqYI70B
- T71sOx/LOvjZiaeRD8TDmMakbRKmEQt9W0nNhHLspODbDLiSOF77sgxjxBtn+VwoE0bP
- x4i1Hb+Dijt/qUliDl1LiUcsj20SiuVoyxYbRIfw7BpvF+WmlAR3wxe5oOXrlKl4MQaz
- vh8zDc+tonrVPyCvJE82xGGzCNxn5Cdofb7qEiMeJ+bAXFOGg0KYK1UmoWMeT2p/TrsW
- EMs8u1eS4NUEOc35LkAKUYjziw31sYu9S0Ng2lZ68OBHdEv8IDWl/MWguLK64fAuLk43
- tyuA==
-X-Gm-Message-State: AOJu0YwIy+J/pXa2EjPcRzNVsZoElP2Ir0A53MTW21EST3PPrymRzyNl
- u83aPiyMkJyglSw79re9ckPivBsS9Zqd0lu7m8pBhHurry1JvwyhbozKDE4gk9L3OW3kWWPqviL
- 6mx9iAIzuEw0tdGEgz0XV4+c7fHt87fk5Jn7nLS5KOckyT5znmEdcgFSGkgY6q8ZyC3fuejhT/D
- Da/M72CJzK1VIThwZiGbGzlcBWYbleJYHBIXQq
-X-Gm-Gg: ASbGnct36GuLhAPa2lBRnTOLAsva6w482uxgYh+huyIGLmDtrspJk25hR8ehVnH5nUs
- UjQH2e284rSoFAw+8iFS8AeRD+y1nSOyWV/47ka9sBDmIlVdZq6P3LsgU6wBTy1UmbycnGlrtc/
- fU2ALFScsXVzABHLn9bek3w7wNmOu1d0a2D8ov9nLX9e3RMh48LtoRf1FWmPbZ6EPy6puy4LuB3
- Ytugt92uuILDMKtTO8/hPL8EFiQumbNlcMzrntKcflwl63I0p6O4XJfM7hI
-X-Received: by 2002:a05:600c:35cb:b0:436:18e5:6917 with SMTP id
- 5b1f17b1804b1-436550ae455mr63097015e9.0.1734597180116; 
- Thu, 19 Dec 2024 00:33:00 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEsRG1DbeOh9+AUSz+1fbD9kFpxeX2SDBruG+NR7c1YUJIvmIwJzvu2T9LyjwhiUeF83SXlrw==
-X-Received: by 2002:a05:600c:35cb:b0:436:18e5:6917 with SMTP id
- 5b1f17b1804b1-436550ae455mr63096555e9.0.1734597179574; 
- Thu, 19 Dec 2024 00:32:59 -0800 (PST)
+ bh=sjB2VJ8djP/uFaRO5FuiFnPqLl7LJ/cFgV1DnxC9eUY=;
+ b=VqiquPmTogf9kU9Xigt9UfCVIZNoetp5Na6bOnEHizqpKIdTBYRzpUPP3hrjHJO4qK
+ A/8c4WO9JtHqor+k13qu3nQqSXkw+lfGlb4kiSXq8a9AbVVUkvrdSaW/r+oRI+zPPi56
+ hKGo7jVB4hT0DkeXYB0clLaOOFnUB13zdxkM3U/XE0zz7u6SJGmxix+6YctU/5fhfw2Q
+ pWh3AKpQCXb6VYosH7D52DIHn0XAPLlT3bpM42vXvtwCryhEFLcQB4iWTEB4i2nPpQR1
+ nFDBgKVxSrGBahi5toeYhONSski/c2ec3bZqHTgelZWUjoGhnOwRoSZJVF06Kxt1wAvE
+ geNw==
+X-Gm-Message-State: AOJu0YyNAAt2t+ZyJ2aSnzg6MJrHtviITSVXsdbnnKnDdtPDu+Di1HJk
+ c28SMNhIdCGx6m7kDZ3/2C+veh80ciX6XGcnudQdj30J8c+cTKz1q64DJD3B0biNU895Xyr+jjT
+ do6EALFKHcRXBRLwGFmH3/T+D7+RO2CTyeSfGnRxXjrWaAeKcW0D7L8vDn5VzCgLeBo8B/2fS+J
+ /MZxyvOy6XiCoVM9B3+7dF1Qp6B1HltN/fFIkU
+X-Gm-Gg: ASbGncuJ0fz56IghTstfEHEkNuDHxL1AuUeHdSb/OzkGThjsOJdnb1bwMb/R7ESPh39
+ xj5PbAofgDyQCRyQNmrKXsndmnfK9zwmAhD1ehDndUlZUq2VlkloV0pkqPcOIIjuYHDNy6FyR5r
+ 5ESq5+F1HF0mlXze14RKz2qrkqsOqYFvfjWnk02LV+JMXOwO4SGLTE7dnLKBmiOypE1vUllyHEv
+ 8/crbUD8LrACpu0s3FDC6atBy7GdTsEcxi/A+gMINvkvce0mbJJWNyMRSmd
+X-Received: by 2002:a5d:6c65:0:b0:385:fb2c:6021 with SMTP id
+ ffacd0b85a97d-38a19b37343mr2227542f8f.39.1734597151605; 
+ Thu, 19 Dec 2024 00:32:31 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEKIo5mU6U86hdFDV7SM7Z/zTRYu1hfJUrxxaNDsPhniKvo5ox08Jqd5wHtGCZ28GbnZYxUuA==
+X-Received: by 2002:a5d:6c65:0:b0:385:fb2c:6021 with SMTP id
+ ffacd0b85a97d-38a19b37343mr2227513f8f.39.1734597151192; 
+ Thu, 19 Dec 2024 00:32:31 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661289a18sm11005085e9.37.2024.12.19.00.32.56
+ 5b1f17b1804b1-4365c08afcbsm21964005e9.21.2024.12.19.00.32.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 00:32:57 -0800 (PST)
+ Thu, 19 Dec 2024 00:32:30 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 15/41] hw/scsi/megasas: Use device_class_set_props_n
-Date: Thu, 19 Dec 2024 09:32:02 +0100
-Message-ID: <20241219083228.363430-16-pbonzini@redhat.com>
+Subject: [PULL 01/41] migration: Constify migration_properties
+Date: Thu, 19 Dec 2024 09:31:48 +0100
+Message-ID: <20241219083228.363430-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
 References: <20241219083228.363430-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -109,68 +109,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Richard Henderson <richard.henderson@linaro.org>
 
-We must remove DEFINE_PROP_END_OF_LIST so the count is correct.
-
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20241216035109.3486070-16-richard.henderson@linaro.org
+Link: https://lore.kernel.org/r/20241216035109.3486070-2-richard.henderson@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/scsi/megasas.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ migration/options.h | 2 +-
+ migration/options.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index 8323cd18e3a..7f012c218b4 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -2459,7 +2459,6 @@ static const Property megasas_properties_gen1[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
-                     MEGASAS_FLAG_USE_JBOD, false),
--    DEFINE_PROP_END_OF_LIST(),
- };
+diff --git a/migration/options.h b/migration/options.h
+index 79084eed0dd..a360f93a44f 100644
+--- a/migration/options.h
++++ b/migration/options.h
+@@ -20,7 +20,7 @@
  
- static const Property megasas_properties_gen2[] = {
-@@ -2473,7 +2472,6 @@ static const Property megasas_properties_gen2[] = {
-     DEFINE_PROP_ON_OFF_AUTO("msix", MegasasState, msix, ON_OFF_AUTO_AUTO),
-     DEFINE_PROP_BIT("use_jbod", MegasasState, flags,
-                     MEGASAS_FLAG_USE_JBOD, false),
--    DEFINE_PROP_END_OF_LIST(),
- };
+ /* migration properties */
  
- typedef struct MegasasInfo {
-@@ -2488,6 +2486,7 @@ typedef struct MegasasInfo {
-     int osts;
-     const VMStateDescription *vmsd;
-     const Property *props;
-+    size_t props_count;
-     InterfaceInfo *interfaces;
- } MegasasInfo;
+-extern Property migration_properties[];
++extern const Property migration_properties[];
  
-@@ -2504,6 +2503,7 @@ static struct MegasasInfo megasas_devices[] = {
-         .osts = MFI_1078_RM | 1,
-         .vmsd = &vmstate_megasas_gen1,
-         .props = megasas_properties_gen1,
-+        .props_count = ARRAY_SIZE(megasas_properties_gen1),
-         .interfaces = (InterfaceInfo[]) {
-             { INTERFACE_CONVENTIONAL_PCI_DEVICE },
-             { },
-@@ -2520,6 +2520,7 @@ static struct MegasasInfo megasas_devices[] = {
-         .osts = MFI_GEN2_RM,
-         .vmsd = &vmstate_megasas_gen2,
-         .props = megasas_properties_gen2,
-+        .props_count = ARRAY_SIZE(megasas_properties_gen2),
-         .interfaces = (InterfaceInfo[]) {
-             { INTERFACE_PCIE_DEVICE },
-             { }
-@@ -2546,7 +2547,7 @@ static void megasas_class_init(ObjectClass *oc, void *data)
-     e->osts = info->osts;
-     e->product_name = info->product_name;
-     e->product_version = info->product_version;
--    device_class_set_props(dc, info->props);
-+    device_class_set_props_n(dc, info->props, info->props_count);
-     device_class_set_legacy_reset(dc, megasas_scsi_reset);
-     dc->vmsd = info->vmsd;
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+ /* capabilities */
+ 
+diff --git a/migration/options.c b/migration/options.c
+index ad8d6989a80..24cc8471aa0 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -85,7 +85,7 @@
+ #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
+ #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
+ 
+-Property migration_properties[] = {
++const Property migration_properties[] = {
+     DEFINE_PROP_BOOL("store-global-state", MigrationState,
+                      store_global_state, true),
+     DEFINE_PROP_BOOL("send-configuration", MigrationState,
 -- 
 2.47.1
 
