@@ -4,88 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B78E7E7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08421E7718B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:49:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJhn-0001go-EJ; Thu, 19 Dec 2024 11:48:55 -0500
+	id 1tOJh4-0000TQ-1G; Thu, 19 Dec 2024 11:48:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOJhk-0001cl-V2
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:48:53 -0500
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOJhj-0000tt-4V
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:48:52 -0500
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-43624b2d453so11181745e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 08:48:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734626929; x=1735231729; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ocx7qdl0qz6hEaNGfL041PjZf18c8GiFLa5c3758680=;
- b=olc1AREWkkuKpZ5pMdTfKB7lk2ZsqTe2UTsFxS4H5pLscd/EnPf6NeVImyUXiYQ44I
- gs6mv1Bwx97QKiu6S3hCujNSQYnf9Ccwq2OlLvU8xKA1n0smcLqXiTxhF5W6pPAUajyT
- W+bEXuuVZiS04YO1vDD1OATKGZuPPN0z5qFJbi0TVMor4Yh69cPxH+XOYHGeRLqcZdCT
- i1Ha8Pb95tutc6vCRPZJyTXQ78sG/G6MZW6avT9xtWH43FeiLN/ZBXop8PhthgbtS2rY
- rwAfkrXiWWga5kfxMqWvYke1LyZ9LJz4Fsb9negLK6FVCmp3jjQiXnxYe4TtHWilwhD9
- cWOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734626929; x=1735231729;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ocx7qdl0qz6hEaNGfL041PjZf18c8GiFLa5c3758680=;
- b=clKk7ki1i0HiG0I1CTvCwJNGNmtQeSBImZy6X2Prz51iKGfxkLuuDJQ8WlLcDGhDIv
- b19f+3Dh0xLG6BXufq62Tpo4Jro/Oml/7P+k2icA6lSp0S0hAeHq0EhOlICoMmBPqWw4
- a4SYmDCI/De43/QcLDGB08crVLNmkMVhNNIJCHAGRgfE6vyJmiLoAFMbgQPWH4hM0rPx
- QZfK0ZKeN/ubYdvqE/1OqR/D4dOE2DPa2L3WWogvEjc7Fu11lOIJqdmDhVnYTC95+aJj
- X1RlOWK3l6RsaZWhg1pCLQRf3uCXDptVqAJpmxS0PoW1kma0l5e6UgJrJR3oXzxdvjON
- 6PXQ==
-X-Gm-Message-State: AOJu0YyQeUXN+iVDZp1vfwPR6d5ZS+EsKzjQsVY8Gy864PSFA7OHIqPO
- Cb3KJiSEpmcfV0RmSX5ZH4kb++2Zz7i7zs/7a0g6bU1APM/fb1ThpievIIa7D9c=
-X-Gm-Gg: ASbGncuHaKoI0awJD963M911qrQ9/959abw6FpSjrnxpWGFoTn6zLWoMNLo53Dqy4nZ
- Ja55CyE3Gbw8x+qhc7dR+YjkyfTKjf0otstABIWfvspYEwJA8KLR8//QGLegOWGEDNs5dy5yYHj
- xv4tZswjcA1Q/9IOTRtlt2bbpxnZLp/kn9MmRXJUQQpyWfyOXGvLPWwZ2VJfmPmuZV3I2Je9Po0
- j09oC+HKI9edHDmmNsjvHmOkFi/LjmMtrOOS8htv7QmYg7W3q7gkHSvSAEMyMAr4/WGMSM=
-X-Google-Smtp-Source: AGHT+IGj0+dl3hpqP/svNHShxAMf+modiwUI8vp+t5LRoEvZyg9OmFiQCFC6LF6uIdhQNwOEmiKTcg==
-X-Received: by 2002:a05:6000:18a5:b0:388:c61d:43e4 with SMTP id
- ffacd0b85a97d-38a19b34c3cmr3579538f8f.45.1734626929306; 
- Thu, 19 Dec 2024 08:48:49 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-436612008casm22684365e9.14.2024.12.19.08.48.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 08:48:48 -0800 (PST)
-Message-ID: <2ae4799b-f78d-4fde-becb-9ee7f767e8f1@linaro.org>
-Date: Thu, 19 Dec 2024 17:48:47 +0100
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tOJh0-0000SR-RQ
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:48:06 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1tOJgy-0000nt-Sn
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:48:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734626883;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=eabO01UW08rFMBlHDmAMxl+2ZXPGC4qMiU+4L9hNQlk=;
+ b=WDWDd3JREs6IktqJA4+ccB2T+NMcmQlqrwhXDFhbQDP0/T9MgM4QFh7f6XdqSKW3sRWOrb
+ qiGm2EADYa2/6/lsihmUkRKvgHaLwAQ436XkgKuWI5pwKOLG+jK12SKciJJ43TXlmlpBO/
+ mFcc9J0aZg0Qs8ZNO983ITUO0OfbdMI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-kCN0DJCEPZq5Wmn9pu9lsg-1; Thu,
+ 19 Dec 2024 11:48:02 -0500
+X-MC-Unique: kCN0DJCEPZq5Wmn9pu9lsg-1
+X-Mimecast-MFC-AGG-ID: kCN0DJCEPZq5Wmn9pu9lsg
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E10C1955F44; Thu, 19 Dec 2024 16:48:01 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.70])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 566E11955F40; Thu, 19 Dec 2024 16:48:00 +0000 (UTC)
+Date: Thu, 19 Dec 2024 07:30:04 -0500
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Konstantin Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PULL 0/3] Misc QGA patches for 2024-12-18
+Message-ID: <20241219123004.GA692715@fedora>
+References: <20241218120321.34998-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 00/10] hw/misc/vmcoreinfo: Convert from QDev to plain
- Object
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@lists.libvirt.org
-References: <20241219153857.57450-1-philmd@linaro.org>
- <Z2RCaZrwjYSM3NpV@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z2RCaZrwjYSM3NpV@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="ON+S3rve3QEMP4bF"
+Content-Disposition: inline
+In-Reply-To: <20241218120321.34998-1-kkostiuk@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -15
+X-Spam_score: -1.6
+X-Spam_bar: -
+X-Spam_report: (-1.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_03_06=1.592,
+ DKIMWL_WL_HIGH=-0.001, DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,39 +85,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 16:57, Daniel P. Berrangé wrote:
-> On Thu, Dec 19, 2024 at 04:38:47PM +0100, Philippe Mathieu-Daudé wrote:
->> No reason for vmcoreinfo to be based on QDev, since it
->> doesn't use any QDev API. Demote to plain Object.
-> 
-> I'm not especially convinced by that rationale, at least in the short
-> term[1].
-> 
-> As a user of QEMU, I would tend to view -device  as being the way to
-> create devices that are visible to the guest, and -object as being
-> for dealing with host backends.
 
-Hmm.
+--ON+S3rve3QEMP4bF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> vmcoreinfo is quite an unusal device, in that if only exists as a
-> fwcfg field, but that's an internal impl detail from a user's POV,
-> and it is still a guest visible device type.
-> 
-> So while it may not leverage QDev API, I still feel it is more of
-> a fit for -device, than -object.  Is there any functional benefit
-> to moving it to -object, that outweighs the disruption ?
+Applied, thanks.
 
-No.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
 
-Patches 1-5 are still useful cleanups although.
+--ON+S3rve3QEMP4bF
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> [1] I say "short term", because overall I'm of the opinion that
-> -device, -machine, -cpu, -chardev, etc should not exist, and
-> -object ought to be made capable of instantiating any type of
-> object whatever subclass it might be. I doubt that will change
-> any time in the forseeable future though, so it is more of a
-> hypothetical point.
+-----BEGIN PGP SIGNATURE-----
 
-Agreed.
+iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdkEcwACgkQnKSrs4Gr
+c8idlAf9E9ch4CQjLXtFHoo4H3x0yNORJic5VjqXGbeV3pSrjqSNBKoIycq9wnbX
+ROfnU/7BgKlKwovX9lMWIe+3rr0guViDsIyHeEOrt8qoih33Yb608S0p9Hci66iK
+F12BsbBH0SzE9KP5tc2sPX2TG5arGOA4IenyQnwB4RPsH23KpBHQrzPjGHgSDINw
+lNB31r9w35TLbkXy/HJzYGhiiZa4ixawmY7w+Ryqycpbr8e9O+/9AWjZd0njQ3DV
+riDPio4MxzcSBJn6UA6Cd5CFWWPcxjrXSJwBsOzKByrXsN389g3YNvUrY0sV16s5
+qJsZLZqCzHcyBOJGUxu59QfWlt3rVw==
+=p9FH
+-----END PGP SIGNATURE-----
+
+--ON+S3rve3QEMP4bF--
 
 
