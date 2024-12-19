@@ -4,76 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0AAD6E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 23:12:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CF61E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 23:22:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOPgk-00016P-AX; Thu, 19 Dec 2024 18:12:14 -0500
+	id 1tOPpE-0002rR-5W; Thu, 19 Dec 2024 18:21:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thesamprice@gmail.com>)
- id 1tOPgi-00011b-Ei
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 18:12:12 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <thesamprice@gmail.com>)
- id 1tOPgf-0000QF-4V
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 18:12:11 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7feb6871730so864942a12.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 15:12:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734649925; x=1735254725; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=xTkSiDPKsWhsfKxgDtr84JLNjegWspTyWm1YQ671aOI=;
- b=moxP3nc4UHIDEYuOO4iluju1W6QF8lvJ8Y9ztFlUZl1fH2TNTxja3FXrL+FexttK7y
- aJ1+UtoiyqEiiPCcBM18OhsepXVte93vzz+1wdn7zeb+VSv4wnjvGfpfSMbl1SWkyRFI
- UF3WiNdd67D+IcLdAUz4c/4L6KcJ9Lcmle2meOpUcDdNl0BFU5IwMufp1R2AlGSrnYK7
- 2ftfhSDVqDYuuXborkTRhaz3B8Qv5i4d7SCHuzkwMasj0126qL4Du52rw6tlkjS2/wOj
- tcjs61oXJEWNuSqXW0JJZoUkpTMoIB5NYkE5T+LIj5mwEUXh72wWKtDQ9roB3Q4wKVrq
- rxdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734649925; x=1735254725;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xTkSiDPKsWhsfKxgDtr84JLNjegWspTyWm1YQ671aOI=;
- b=skfCQL8bt0oJBLwDwGihBSdc0PueNTAh5ZvUAeeR2McfB/P2TIspOJPC2FQaXUfvyS
- mepDqJ8y8OWAVqVx5v2pIWvyMvhsK1cNhanh6MpT9TZDyjtaRF1u2uOtecnJafQW8b3c
- SSV9AHRH1LPjb9SlL1bS4oxGZyx9yMIOybEI51XTyXWK5/rUT3Ee1poPdV/nVFqsPp6u
- oVrOBVKCIIIXpaGjDPEhTc6LWleKSWEafuHp+J+LwPjkPmhUfBwkNBxvFGwd4hX+eDo2
- 3AYyCGsC3l/ui6ZsCiSjSjAjlTUgbDMqXiibCBAsM8YQnDPNYN3k2cRtd/ixigVzGKoC
- b+tQ==
-X-Gm-Message-State: AOJu0Yz+8M2tpCwzujoiyELGV3Ng+XvgeCvdeYzoAtdUaJYJglB7s6Sz
- Jp/AvjuEqZhdTKyDYBlCUnGcHXAOLA16aQ6yUZ8MNcuehr678DSdtA11PfUPudvpwG2oERYUnI9
- NBV/RiHGLtyMNCgWfr3VkUS/z6OhieQ==
-X-Gm-Gg: ASbGncsfnJ+piN2PdclgubEAFkSxg6nYNQiJ8BMT4XoJJV9IiUDOFCkvIgpr/mbfNgQ
- MSWE2aiXhpnyr4OlYsJHhcdHa7D5yf/a8i/IiDQI=
-X-Google-Smtp-Source: AGHT+IHf1wFjAwH4lNBRbQRf4Y26f26bxdBOj3yFns5b/uMz1+nzo4IUPFKuzlwwrQNlA2docq5GKuYHGcuAvvhvfSk=
-X-Received: by 2002:a17:90a:e18f:b0:2ee:aa28:79aa with SMTP id
- 98e67ed59e1d1-2f452dfcd7fmr1166839a91.6.1734649925251; Thu, 19 Dec 2024
- 15:12:05 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <quwenruo.btrfs@gmx.com>)
+ id 1tOPpC-0002r1-6G
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 18:20:58 -0500
+Received: from mout.gmx.net ([212.227.17.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <quwenruo.btrfs@gmx.com>)
+ id 1tOPpA-0001pl-AP
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 18:20:57 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
+ s=s31663417; t=1734650451; x=1735255251; i=quwenruo.btrfs@gmx.com;
+ bh=95G7uHNvHD21KqOF0kX1P8YJBPPFiYC4Iu84WTTA8BE=;
+ h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+ References:From:In-Reply-To:Content-Type:
+ Content-Transfer-Encoding:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=XyYgYs0Sod0ALWgJONQKyIX9ae/EJY03zrjzz56buwm8kynBX1RRUq4tUiKFdrXQ
+ GGv4cErxUWd3af/KXCe4XGCRdqs3OgIix3PUF1OQsulJ8zgz7FUpU0MVEt+olrCpM
+ ormmJY+/EgOmOSakMe2hXIcrQelZ4iY46GKFoLmGRFWRazEZnnTQ1/jCaw3A3xWYb
+ ElZ69EYlATbF4yQ0OILVD4o0JRv4dLP+UyrWv2Z2VCH+9TTiYF2kHvb1qHiXDc3im
+ 6W/g+CSF2lQXGsTqAuBz/jQPjLsWI8fO6ZdH7MM+J1YxWv44myQGkxuQDHWz46JDh
+ dd4cYWBGRWWuhM307w==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.16.0.191] ([159.196.52.54]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1N2V4J-1tZ22015Bv-00zmna; Fri, 20
+ Dec 2024 00:20:51 +0100
+Message-ID: <4ae3fd71-c22e-48b6-bc86-fa494a1841a6@gmx.com>
+Date: Fri, 20 Dec 2024 09:50:44 +1030
 MIME-Version: 1.0
-References: <CAEekfLYJqvMDf5A_Yj=N6jMGQ4oj3rC+fv3xcCCfSBy8TDaY-Q@mail.gmail.com>
-In-Reply-To: <CAEekfLYJqvMDf5A_Yj=N6jMGQ4oj3rC+fv3xcCCfSBy8TDaY-Q@mail.gmail.com>
-From: Sam Price <thesamprice@gmail.com>
-Date: Thu, 19 Dec 2024 18:11:54 -0500
-Message-ID: <CAEekfLaeMQ-5pZw9+edU8E6jdvz6nCHE0WVZe7-Myg1NBKVLng@mail.gmail.com>
-Subject: Re: Subject: [PATCH] loader: Add register setting support via cli
-To: qemu-devel@nongnu.org
-Cc: alistair@alistair23.me
-Content-Type: multipart/alternative; boundary="0000000000009ab7040629a7a89f"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=thesamprice@gmail.com; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: qemu-arm64: CONFIG_ARM64_64K_PAGES=y kernel crash on qemu-arm64
+ with Linux next-20241210 and above
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, qemu-devel@nongnu.org,
+ open list <linux-kernel@vger.kernel.org>,
+ Linux Regressions <regressions@lists.linux.dev>,
+ linux-ext4 <linux-ext4@vger.kernel.org>, lkft-triage@lists.linaro.org,
+ linux-mm <linux-mm@kvack.org>, Linux btrfs <linux-btrfs@vger.kernel.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Anders Roxell <anders.roxell@linaro.org>, Arnd Bergmann <arnd@arndb.de>,
+ Qu Wenruo <wqu@suse.com>, David Sterba <dsterba@suse.com>
+References: <CA+G9fYvf0YQw4EY4gsHdQ1gCtSgQLPYo8RGnkbo=_XnAe7ORhw@mail.gmail.com>
+ <CA+G9fYv7_fMKOxA8DB8aUnsDjQ9TX8OQtHVRcRQkFGqdD0vjNQ@mail.gmail.com>
+ <ac1e1168-d3af-43c5-9df7-4ef5a1dbd698@gmx.com>
+ <feecfdc2-4df6-47cf-8f96-5044858dc881@gmx.com>
+ <a3406049-7ab5-45b9-80bf-46f73ef73a4f@stanley.mountain>
+Content-Language: en-US
+From: Qu Wenruo <quwenruo.btrfs@gmx.com>
+Autocrypt: addr=quwenruo.btrfs@gmx.com; keydata=
+ xsBNBFnVga8BCACyhFP3ExcTIuB73jDIBA/vSoYcTyysFQzPvez64TUSCv1SgXEByR7fju3o
+ 8RfaWuHCnkkea5luuTZMqfgTXrun2dqNVYDNOV6RIVrc4YuG20yhC1epnV55fJCThqij0MRL
+ 1NxPKXIlEdHvN0Kov3CtWA+R1iNN0RCeVun7rmOrrjBK573aWC5sgP7YsBOLK79H3tmUtz6b
+ 9Imuj0ZyEsa76Xg9PX9Hn2myKj1hfWGS+5og9Va4hrwQC8ipjXik6NKR5GDV+hOZkktU81G5
+ gkQtGB9jOAYRs86QG/b7PtIlbd3+pppT0gaS+wvwMs8cuNG+Pu6KO1oC4jgdseFLu7NpABEB
+ AAHNIlF1IFdlbnJ1byA8cXV3ZW5ydW8uYnRyZnNAZ214LmNvbT7CwJQEEwEIAD4CGwMFCwkI
+ BwIGFQgJCgsCBBYCAwECHgECF4AWIQQt33LlpaVbqJ2qQuHCPZHzoSX+qAUCZxF1YAUJEP5a
+ sQAKCRDCPZHzoSX+qF+mB/9gXu9C3BV0omDZBDWevJHxpWpOwQ8DxZEbk9b9LcrQlWdhFhyn
+ xi+l5lRziV9ZGyYXp7N35a9t7GQJndMCFUWYoEa+1NCuxDs6bslfrCaGEGG/+wd6oIPb85xo
+ naxnQ+SQtYLUFbU77WkUPaaIU8hH2BAfn9ZSDX9lIxheQE8ZYGGmo4wYpnN7/hSXALD7+oun
+ tZljjGNT1o+/B8WVZtw/YZuCuHgZeaFdhcV2jsz7+iGb+LsqzHuznrXqbyUQgQT9kn8ZYFNW
+ 7tf+LNxXuwedzRag4fxtR+5GVvJ41Oh/eygp8VqiMAtnFYaSlb9sjia1Mh+m+OBFeuXjgGlG
+ VvQFzsBNBFnVga8BCACqU+th4Esy/c8BnvliFAjAfpzhI1wH76FD1MJPmAhA3DnX5JDORcga
+ CbPEwhLj1xlwTgpeT+QfDmGJ5B5BlrrQFZVE1fChEjiJvyiSAO4yQPkrPVYTI7Xj34FnscPj
+ /IrRUUka68MlHxPtFnAHr25VIuOS41lmYKYNwPNLRz9Ik6DmeTG3WJO2BQRNvXA0pXrJH1fN
+ GSsRb+pKEKHKtL1803x71zQxCwLh+zLP1iXHVM5j8gX9zqupigQR/Cel2XPS44zWcDW8r7B0
+ q1eW4Jrv0x19p4P923voqn+joIAostyNTUjCeSrUdKth9jcdlam9X2DziA/DHDFfS5eq4fEv
+ ABEBAAHCwHwEGAEIACYCGwwWIQQt33LlpaVbqJ2qQuHCPZHzoSX+qAUCZxF1gQUJEP5a0gAK
+ CRDCPZHzoSX+qHGpB/kB8A7M7KGL5qzat+jBRoLwB0Y3Zax0QWuANVdZM3eJDlKJKJ4HKzjo
+ B2Pcn4JXL2apSan2uJftaMbNQbwotvabLXkE7cPpnppnBq7iovmBw++/d8zQjLQLWInQ5kNq
+ Vmi36kmq8o5c0f97QVjMryHlmSlEZ2Wwc1kURAe4lsRG2dNeAd4CAqmTw0cMIrR6R/Dpt3ma
+ +8oGXJOmwWuDFKNV4G2XLKcghqrtcRf2zAGNogg3KulCykHHripG3kPKsb7fYVcSQtlt5R6v
+ HZStaZBzw4PcDiaAF3pPDBd+0fIKS6BlpeNRSFG94RYrt84Qw77JWDOAZsyNfEIEE0J6LSR/
+In-Reply-To: <a3406049-7ab5-45b9-80bf-46f73ef73a4f@stanley.mountain>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:cQlIl5GOqLf2ibS/Z9iRkgOa1VDWVcAAmT2oQVEDXrLgjBCPye1
+ d52w58oCwr9zeR0OlUb7bAVTYTHIhPKfJb32puDmEGks00WcH1OlMBxbKTemL+LFSLu/gj9
+ iTIIwYtvdK28FX6W+4KeWWh+AdyFmJVxOL9lGn5bs5ldU3+aLYqtYn4JNJYfP2vbTALfHBB
+ Qg9Ky93Bf0UwHOVkv5nVg==
+UI-OutboundReport: notjunk:1;M01:P0:d2UuVHxTIvw=;6T3uBityxrfuSydR5DdpsJvSDtA
+ Wx2cRDU5H08Uop6xJUCFZzh71BAMjBwYViboFs2kBG7/HJd8A/hiYOis+Sf7v1SroOJsL5X2N
+ ONVpqq7RQ/WA+nyiKFLj/N90akIyiqXU/6ypDaDCz7qOgFup+kvVZuMpbB+P+PN15/LJwHQxJ
+ W5I2Gux2mHARJlEeO54jV2ZWsljgnvxYnyb6Com+u3y6JEqimPSSmOtDWQDyNHPPxZDo4TmJl
+ dlhnvsqwxHG93Xxm4YojHVRUXOEP30wpNLC3N+7efTAzNMZdQBWFiI23P1AH/JETgHqN9SyD4
+ WVho/HaHp98rRsXLkdbxgYI3yF7Zh5j3U2I+1xVzhiJCcRSk3a/6nOaelqhWp2Nt/RPuxyosb
+ iEGZrocLNBpvUwI5BGx1h0HBs0Y0zooKKXFKIqCMrnmUFV1GeJaZ1CUWHM6zWNsv3CEtaK92U
+ bNPcL1fPsH5ubUOA+t40zwuRTh2Ek9WxhfXosX2C8zQHiu2I+zPAIq7NxbzcG4Lg0gFXlFrAn
+ aelhsj5fJN/j+xjgtLA+w2Qi2IUu/dnpKiy9wAz1nmN32v/chJ+AbW6W7qDJwFOJue8JGGulc
+ /2MgPYIsKaiHRjLpifm8b0MovjToys7JaMS2ehtS82eHRRrofrLNIJFLZPOkKuAsq8dAES45I
+ //q+O++AvGlc5qq9b83zjWNCaCSn6f+NU4oVhT5qz3ptG6zDD5QVQXGYfd6OL1qwlQJuTvQsz
+ xE4vtz2HWGme3ss/TZMRvRxxL0JXRgeCIExdNF3h4WjYENVekuh9sjNK/zPcMQmrBS9PEdA4q
+ Y3q5UnKDo3LXKVTkhULy66d2KqKixe3SBVZOGnFPbeblkzOaloqHvoA4wcnpafBUdSe5m4Uol
+ 7o8nJ3nVwG1j7GhO0E46dZfEdKrAs9qdpOij00g+o0P5zw15lmO7pvMrNqD1fP3ux3at4WIHz
+ j+o6hynt5gVMIdMPFqhU881m0JsbsgyIEzcr3gptP1fjDwUuSXItLLilWg41XXUShlZ0tbD0o
+ 6KCHELDMkY5jNzpkSUUuhsjg0Fl0ELZpNQRBfBJuneeVw5Ran8ObcVSat4MsSGU6Vkpsp6nBe
+ zndolC/tmhcdOWerT9qHc6AgLKRR43
+Received-SPF: pass client-ip=212.227.17.20;
+ envelope-from=quwenruo.btrfs@gmx.com; helo=mout.gmx.net
+X-Spam_score_int: -38
+X-Spam_score: -3.9
+X-Spam_bar: ---
+X-Spam_report: (-3.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,384 +133,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009ab7040629a7a89f
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Bump / ping
-
-Sincerely,
-
-Sam Price
 
 
+=E5=9C=A8 2024/12/20 01:40, Dan Carpenter =E5=86=99=E9=81=93:
+> On Thu, Dec 19, 2024 at 10:44:12AM +1030, Qu Wenruo wrote:
+>>
+>>
+>> =E5=9C=A8 2024/12/19 06:37, Qu Wenruo =E5=86=99=E9=81=93:
+>>>
+>>>
+>>> =E5=9C=A8 2024/12/19 02:22, Naresh Kamboju =E5=86=99=E9=81=93:
+>>>> On Wed, 18 Dec 2024 at 17:33, Naresh Kamboju
+>>>> <naresh.kamboju@linaro.org> wrote:
+>>>>>
+>>>>> The following kernel crash noticed on qemu-arm64 while running the
+>>>>> Linux next-20241210 tag (to next-20241218) kernel built with
+>>>>>  =C2=A0 - CONFIG_ARM64_64K_PAGES=3Dy
+>>>>>  =C2=A0 - CONFIG_ARM64_16K_PAGES=3Dy
+>>>>> and running LTP smoke tests.
+>>>>>
+>>>>> First seen on Linux next-20241210.
+>>>>>  =C2=A0=C2=A0 Good: next-20241209
+>>>>>  =C2=A0=C2=A0 Bad:=C2=A0 next-20241210 and next-20241218
+>>>>>
+>>>>> qemu-arm64: 9.1.2
+>>>>>
+>>>>> Anyone noticed this ?
+>>>>>
+>>>>
+>>>> Anders bisected this reported regression and found,
+>>>> # first bad commit:
+>>>>  =C2=A0=C2=A0 [9c1d66793b6faa00106ae4c866359578bfc012d2]
+>>>>  =C2=A0=C2=A0 btrfs: validate system chunk array at btrfs_validate_su=
+per()
+>>>
+>>> Weird, I run daily fstests with 64K page sized aarch64 VM.
+>>>
+>>> But never hit a crash on this.
+>>>
+>>> And the original crash call trace only points back to ext4, not btrfs.
+>>>
+>
+> Yeah.  But it's in the memory allocator so it looks like memory
+> corruption.  After the ext4 crash then random other stuff starts
+> crashing as well when it allocates memory.
+>
+>>> Mind to test it with KASAN enabled?
+>>
+>
+> Anders is going to try that later and report back.
+>
+>> Another thing is, how do you enable both 16K and 64K page size at the
+>> same time?
+>>
+>> The Kconfig should only select one page size IIRC.
+>
+> Right.  We tested 4k, 16k and 64k.  4k pages worked.
+>
+>>
+>> And for the bisection, does it focus on the test failure or the crash?
+>>
+>
+> The crash.
 
-On Thu, Dec 5, 2024 at 10:29=E2=80=AFPM Sam Price <thesamprice@gmail.com> w=
-rote:
+For the failure part, I got the reason, it's indeed the patch, where we
+call btrfs_check_chunk_valid() but fs_info->sectorsize is still in the
+default value (4096), not the real one from the superblock.
 
-> I needed to set the registers prior to boot up to mimic what uboot
-> would do prior to loading a binary.  This adds a generic option of reg
-> to the loader command, it uses the existing gcc commands for setting
-> register values.
+Thus it will always report false alerts if the on-disk super block is
+not using 4K sectorsize.
+
+I'll fix it soon.
+
+But sorry I didn't see why the false alert is related to the crash, the
+only new memory allocation done in that patch is for a dummy extent
+buffer, which should always be freed.
+
+Anyway in the next version I'll get rid of the memory allocation completel=
+y.
+
+Thanks,
+Qu
 >
-> I'm sorry I couldn't figure out how to work the git send-email
-> properly.  Configuring it with my gmail became too cumbersome, and my
-> work email was also challenging to configure.
+> regards,
+> dan carpenter
 >
-> I have the file staged here.
-> https://gitlab.com/thesamprice/qemu/-/tree/loader?ref_type=3Dheads
-> I am unsure of how to add tests for this.
-> I could continue working too polish this off with instructions from
-> others if it is desired for the main line.
->
-> Signed-off-by: Sam Price <thesamprice@gmail.com>
-> ---
->
-> ---
->  hw/core/generic-loader.c         | 28 ++++++++++++++++++++++++++++
->  include/hw/core/generic-loader.h |  6 +++++-
->  roms/SLOF                        |  2 +-
->  roms/edk2                        |  2 +-
->  roms/openbios                    |  2 +-
->  roms/opensbi                     |  2 +-
->  roms/seabios                     |  2 +-
->  roms/seabios-hppa                |  2 +-
->  tests/lcitool/libvirt-ci         |  2 +-
->  9 files changed, 40 insertions(+), 8 deletions(-)
->
-> diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c
-> index ea8628b892..ebda8ac43f 100644
-> --- a/hw/core/generic-loader.c
-> +++ b/hw/core/generic-loader.c
-> @@ -55,6 +55,19 @@ static void generic_loader_reset(void *opaque)
->          }
->      }
->
-> +    for (int i =3D 0; i < 31; i++) {
-> +        if (s->has_register_defaults[i]) {
-> +            CPUClass *cc =3D CPU_GET_CLASS(s->cpu);
-> +            uint8_t buf[sizeof(uint64_t)];
-> +            memcpy(buf, &s->register_defaults[i], sizeof(uint64_t));
-> +            if (cc && cc->gdb_write_register) {
-> +                cc->gdb_write_register(s->cpu, buf, i);
-> +            }
-> +        }
-> +    }
-> +
-> +
-> +
->      if (s->data_len) {
->          assert(s->data_len <=3D sizeof(s->data));
->          dma_memory_write(s->cpu->as, s->addr, &s->data, s->data_len,
-> @@ -172,6 +185,20 @@ static void generic_loader_realize(DeviceState
-> *dev, Error **errp)
->      } else {
->          s->data =3D cpu_to_le64(s->data);
->      }
-> +
-> +    /* Store the CPU register default if specified */
-> +    if (s->reg) {
-> +        int reg_num;
-> +        if (sscanf(s->reg, "r%d", &reg_num) =3D=3D 1 &&
-> +                    reg_num >=3D 0 && reg_num < 31) {
-> +            s->register_defaults[reg_num] =3D s->data;
-> +            s->has_register_defaults[reg_num] =3D true;
-> +        } else {
-> +            error_setg(errp, "Unsupported register: %s", s->reg);
-> +            return;
-> +        }
-> +    }
-> +
->  }
->
->  static void generic_loader_unrealize(DeviceState *dev)
-> @@ -186,6 +213,7 @@ static Property generic_loader_props[] =3D {
->      DEFINE_PROP_BOOL("data-be", GenericLoaderState, data_be, false),
->      DEFINE_PROP_UINT32("cpu-num", GenericLoaderState, cpu_num, CPU_NONE)=
-,
->      DEFINE_PROP_BOOL("force-raw", GenericLoaderState, force_raw, false),
-> +    DEFINE_PROP_STRING("reg", GenericLoaderState, reg),
->      DEFINE_PROP_STRING("file", GenericLoaderState, file),
->      DEFINE_PROP_END_OF_LIST(),
->  };
-> diff --git a/include/hw/core/generic-loader.h
-> b/include/hw/core/generic-loader.h
-> index 19d87b39c8..d81e1632fd 100644
-> --- a/include/hw/core/generic-loader.h
-> +++ b/include/hw/core/generic-loader.h
-> @@ -35,10 +35,14 @@ struct GenericLoaderState {
->      uint32_t cpu_num;
->
->      char *file;
-> -
-> +    char *reg;
->      bool force_raw;
->      bool data_be;
->      bool set_pc;
-> +
-> +    /* Add an array for storing default register values */
-> +    bool has_register_defaults[31];  /* Track if a default value is
-> provided */
-> +    uint64_t register_defaults[31];  /* Default values for registers
-> r0-r30 */
->  };
->
->  #define TYPE_GENERIC_LOADER "loader"
-> diff --git a/roms/SLOF b/roms/SLOF
-> index 3a259df244..6b6c16b4b4 160000
-> --- a/roms/SLOF
-> +++ b/roms/SLOF
-> @@ -1 +1 @@
-> -Subproject commit 3a259df2449fc4a4e43ab5f33f0b2c66484b4bc3
-> +Subproject commit 6b6c16b4b40763507cf1f518096f3c3883c5cf2d
-> diff --git a/roms/edk2 b/roms/edk2
-> index 4dfdca63a9..f80f052277 160000
-> --- a/roms/edk2
-> +++ b/roms/edk2
-> @@ -1 +1 @@
-> -Subproject commit 4dfdca63a93497203f197ec98ba20e2327e4afe4
-> +Subproject commit f80f052277c88a67c55e107b550f504eeea947d3
-> diff --git a/roms/openbios b/roms/openbios
-> index c3a19c1e54..af97fd7af5 160000
-> --- a/roms/openbios
-> +++ b/roms/openbios
-> @@ -1 +1 @@
-> -Subproject commit c3a19c1e54977a53027d6232050e1e3e39a98a1b
-> +Subproject commit af97fd7af5e7c18f591a7b987291d3db4ffb28b5
-> diff --git a/roms/opensbi b/roms/opensbi
-> index 43cace6c36..057eb10b6d 160000
-> --- a/roms/opensbi
-> +++ b/roms/opensbi
-> @@ -1 +1 @@
-> -Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20
-> +Subproject commit 057eb10b6d523540012e6947d5c9f63e95244e94
-> diff --git a/roms/seabios b/roms/seabios
-> index a6ed6b701f..ea1b7a0733 160000
-> --- a/roms/seabios
-> +++ b/roms/seabios
-> @@ -1 +1 @@
-> -Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
-> +Subproject commit ea1b7a0733906b8425d948ae94fba63c32b1d425
-> diff --git a/roms/seabios-hppa b/roms/seabios-hppa
-> index a528f01d7a..673d2595d4 160000
-> --- a/roms/seabios-hppa
-> +++ b/roms/seabios-hppa
-> @@ -1 +1 @@
-> -Subproject commit a528f01d7abd511d3cc71b7acaab6e036ee524bd
-> +Subproject commit 673d2595d4f773cc266cbf8dbaf2f475a6adb949
-> diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci
-> index 9ad3f70bde..9bff3b763b 160000
-> --- a/tests/lcitool/libvirt-ci
-> +++ b/tests/lcitool/libvirt-ci
-> @@ -1 +1 @@
-> -Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3
-> +Subproject commit 9bff3b763b5531a1490e238bfbf77306dc3a6dbb
-> --
-> 2.45.2
 >
 
---0000000000009ab7040629a7a89f
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Bump / ping<br clear=3D"all"><br clear=3D"all"><div><div =
-dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><d=
-iv dir=3D"ltr">Sincerely,<br><br>Sam Price<br><br></div></div></div></div><=
-div><br></div><div><br><div class=3D"gmail_quote gmail_quote_container"><di=
-v dir=3D"ltr" class=3D"gmail_attr">On Thu, Dec 5, 2024 at 10:29=E2=80=AFPM =
-Sam Price &lt;<a href=3D"mailto:thesamprice@gmail.com">thesamprice@gmail.co=
-m</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin=
-:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">I needed to set th=
-e registers prior to boot up to mimic what uboot<br>
-would do prior to loading a binary.=C2=A0 This adds a generic option of reg=
-<br>
-to the loader command, it uses the existing gcc commands for setting<br>
-register values.<br>
-<br>
-I&#39;m sorry I couldn&#39;t figure out how to work the git send-email<br>
-properly.=C2=A0 Configuring it with my gmail became too cumbersome, and my<=
-br>
-work email was also challenging to configure.<br>
-<br>
-I have the file staged here.<br>
-<a href=3D"https://gitlab.com/thesamprice/qemu/-/tree/loader?ref_type=3Dhea=
-ds" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/thesamprice/qem=
-u/-/tree/loader?ref_type=3Dheads</a><br>
-I am unsure of how to add tests for this.<br>
-I could continue working too polish this off with instructions from<br>
-others if it is desired for the main line.<br>
-<br>
-Signed-off-by: Sam Price &lt;<a href=3D"mailto:thesamprice@gmail.com" targe=
-t=3D"_blank">thesamprice@gmail.com</a>&gt;<br>
----<br>
-<br>
----<br>
-=C2=A0hw/core/generic-loader.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 28 ++++++=
-++++++++++++++++++++++<br>
-=C2=A0include/hw/core/generic-loader.h |=C2=A0 6 +++++-<br>
-=C2=A0roms/SLOF=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0roms/edk2=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0roms/openbios=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 |=C2=A0 2 +-<br>
-=C2=A0roms/opensbi=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0roms/seabios=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +-<br>
-=C2=A0roms/seabios-hppa=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 |=C2=A0 2 +-<br>
-=C2=A0tests/lcitool/libvirt-ci=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 2 +=
--<br>
-=C2=A09 files changed, 40 insertions(+), 8 deletions(-)<br>
-<br>
-diff --git a/hw/core/generic-loader.c b/hw/core/generic-loader.c<br>
-index ea8628b892..ebda8ac43f 100644<br>
---- a/hw/core/generic-loader.c<br>
-+++ b/hw/core/generic-loader.c<br>
-@@ -55,6 +55,19 @@ static void generic_loader_reset(void *opaque)<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-+=C2=A0 =C2=A0 for (int i =3D 0; i &lt; 31; i++) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (s-&gt;has_register_defaults[i]) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUClass *cc =3D CPU_GET_CLASS(s=
--&gt;cpu);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint8_t buf[sizeof(uint64_t)];<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 memcpy(buf, &amp;s-&gt;register_=
-defaults[i], sizeof(uint64_t));<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cc &amp;&amp; cc-&gt;gdb_wri=
-te_register) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cc-&gt;gdb_write_r=
-egister(s-&gt;cpu, buf, i);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+<br>
-+<br>
-=C2=A0 =C2=A0 =C2=A0if (s-&gt;data_len) {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0assert(s-&gt;data_len &lt;=3D sizeof(s-&g=
-t;data));<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dma_memory_write(s-&gt;cpu-&gt;as, s-&gt;=
-addr, &amp;s-&gt;data, s-&gt;data_len,<br>
-@@ -172,6 +185,20 @@ static void generic_loader_realize(DeviceState<br>
-*dev, Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0} else {<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0s-&gt;data =3D cpu_to_le64(s-&gt;data);<b=
-r>
-=C2=A0 =C2=A0 =C2=A0}<br>
-+<br>
-+=C2=A0 =C2=A0 /* Store the CPU register default if specified */<br>
-+=C2=A0 =C2=A0 if (s-&gt;reg) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 int reg_num;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (sscanf(s-&gt;reg, &quot;r%d&quot;, &amp;re=
-g_num) =3D=3D 1 &amp;&amp;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 reg_=
-num &gt;=3D 0 &amp;&amp; reg_num &lt; 31) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;register_defaults[reg_num]=
- =3D s-&gt;data;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 s-&gt;has_register_defaults[reg_=
-num] =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;Unsupport=
-ed register: %s&quot;, s-&gt;reg);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-=C2=A0}<br>
-<br>
-=C2=A0static void generic_loader_unrealize(DeviceState *dev)<br>
-@@ -186,6 +213,7 @@ static Property generic_loader_props[] =3D {<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_BOOL(&quot;data-be&quot;, GenericLoaderStat=
-e, data_be, false),<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_UINT32(&quot;cpu-num&quot;, GenericLoaderSt=
-ate, cpu_num, CPU_NONE),<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_BOOL(&quot;force-raw&quot;, GenericLoaderSt=
-ate, force_raw, false),<br>
-+=C2=A0 =C2=A0 DEFINE_PROP_STRING(&quot;reg&quot;, GenericLoaderState, reg)=
-,<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_STRING(&quot;file&quot;, GenericLoaderState=
-, file),<br>
-=C2=A0 =C2=A0 =C2=A0DEFINE_PROP_END_OF_LIST(),<br>
-=C2=A0};<br>
-diff --git a/include/hw/core/generic-loader.h b/include/hw/core/generic-loa=
-der.h<br>
-index 19d87b39c8..d81e1632fd 100644<br>
---- a/include/hw/core/generic-loader.h<br>
-+++ b/include/hw/core/generic-loader.h<br>
-@@ -35,10 +35,14 @@ struct GenericLoaderState {<br>
-=C2=A0 =C2=A0 =C2=A0uint32_t cpu_num;<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0char *file;<br>
--<br>
-+=C2=A0 =C2=A0 char *reg;<br>
-=C2=A0 =C2=A0 =C2=A0bool force_raw;<br>
-=C2=A0 =C2=A0 =C2=A0bool data_be;<br>
-=C2=A0 =C2=A0 =C2=A0bool set_pc;<br>
-+<br>
-+=C2=A0 =C2=A0 /* Add an array for storing default register values */<br>
-+=C2=A0 =C2=A0 bool has_register_defaults[31];=C2=A0 /* Track if a default =
-value is provided */<br>
-+=C2=A0 =C2=A0 uint64_t register_defaults[31];=C2=A0 /* Default values for =
-registers r0-r30 */<br>
-=C2=A0};<br>
-<br>
-=C2=A0#define TYPE_GENERIC_LOADER &quot;loader&quot;<br>
-diff --git a/roms/SLOF b/roms/SLOF<br>
-index 3a259df244..6b6c16b4b4 160000<br>
---- a/roms/SLOF<br>
-+++ b/roms/SLOF<br>
-@@ -1 +1 @@<br>
--Subproject commit 3a259df2449fc4a4e43ab5f33f0b2c66484b4bc3<br>
-+Subproject commit 6b6c16b4b40763507cf1f518096f3c3883c5cf2d<br>
-diff --git a/roms/edk2 b/roms/edk2<br>
-index 4dfdca63a9..f80f052277 160000<br>
---- a/roms/edk2<br>
-+++ b/roms/edk2<br>
-@@ -1 +1 @@<br>
--Subproject commit 4dfdca63a93497203f197ec98ba20e2327e4afe4<br>
-+Subproject commit f80f052277c88a67c55e107b550f504eeea947d3<br>
-diff --git a/roms/openbios b/roms/openbios<br>
-index c3a19c1e54..af97fd7af5 160000<br>
---- a/roms/openbios<br>
-+++ b/roms/openbios<br>
-@@ -1 +1 @@<br>
--Subproject commit c3a19c1e54977a53027d6232050e1e3e39a98a1b<br>
-+Subproject commit af97fd7af5e7c18f591a7b987291d3db4ffb28b5<br>
-diff --git a/roms/opensbi b/roms/opensbi<br>
-index 43cace6c36..057eb10b6d 160000<br>
---- a/roms/opensbi<br>
-+++ b/roms/opensbi<br>
-@@ -1 +1 @@<br>
--Subproject commit 43cace6c3671e5172d0df0a8963e552bb04b7b20<br>
-+Subproject commit 057eb10b6d523540012e6947d5c9f63e95244e94<br>
-diff --git a/roms/seabios b/roms/seabios<br>
-index a6ed6b701f..ea1b7a0733 160000<br>
---- a/roms/seabios<br>
-+++ b/roms/seabios<br>
-@@ -1 +1 @@<br>
--Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8<br>
-+Subproject commit ea1b7a0733906b8425d948ae94fba63c32b1d425<br>
-diff --git a/roms/seabios-hppa b/roms/seabios-hppa<br>
-index a528f01d7a..673d2595d4 160000<br>
---- a/roms/seabios-hppa<br>
-+++ b/roms/seabios-hppa<br>
-@@ -1 +1 @@<br>
--Subproject commit a528f01d7abd511d3cc71b7acaab6e036ee524bd<br>
-+Subproject commit 673d2595d4f773cc266cbf8dbaf2f475a6adb949<br>
-diff --git a/tests/lcitool/libvirt-ci b/tests/lcitool/libvirt-ci<br>
-index 9ad3f70bde..9bff3b763b 160000<br>
---- a/tests/lcitool/libvirt-ci<br>
-+++ b/tests/lcitool/libvirt-ci<br>
-@@ -1 +1 @@<br>
--Subproject commit 9ad3f70bde9865d5ad18f36d256d472e72b5cbf3<br>
-+Subproject commit 9bff3b763b5531a1490e238bfbf77306dc3a6dbb<br>
--- <br>
-2.45.2<br>
-</blockquote></div></div>
-
---0000000000009ab7040629a7a89f--
 
