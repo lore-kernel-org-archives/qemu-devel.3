@@ -4,76 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F165E7718A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 818A6E7718C
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:33:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGK-0002Xr-Ey; Thu, 19 Dec 2024 11:20:32 -0500
+	id 1tOJFZ-0001o2-Kq; Thu, 19 Dec 2024 11:19:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOHCh-0000Ii-25
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:08:40 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOFc0-0008Cx-QO; Thu, 19 Dec 2024 07:26:40 -0500
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOHCe-0004Hv-NW
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:08:38 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734617315;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=7u8FOwPCDk3qvRQVrnHYOqkRK2ICyRqa+iw16x3hrD8=;
- b=EdoTo5bY0IPDduDTwe4UEMIk0K3Atod4hnYXXXOEDJW35GtBD3DDw/U20XpM4Hj4Sh15Sl
- oR/C+dFvGfkN7ttruImltNPod/9x+igJLWf8gG2+XisB18IPznN2qmei3MxXJ49HgN0mVI
- 68LzPVqHjssJf/7r49UKI5bLeMS3e9Q=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-472-shu5hLkQMTKfCkpoFx6VHg-1; Thu,
- 19 Dec 2024 09:08:34 -0500
-X-MC-Unique: shu5hLkQMTKfCkpoFx6VHg-1
-X-Mimecast-MFC-AGG-ID: shu5hLkQMTKfCkpoFx6VHg
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A54101955F28
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 14:08:32 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0CF631953953; Thu, 19 Dec 2024 14:08:30 +0000 (UTC)
-Date: Thu, 19 Dec 2024 14:08:27 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] hw/virtio: reset virtio balloon stats on machine reset
-Message-ID: <Z2Qo27nyv0uZkUGT@redhat.com>
-References: <20241218172912.4170899-1-berrange@redhat.com>
- <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from <maz@kernel.org>)
+ id 1tOFby-0002ye-7U; Thu, 19 Dec 2024 07:26:40 -0500
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id 625B0A41FF7;
+ Thu, 19 Dec 2024 12:24:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 876BBC4CECE;
+ Thu, 19 Dec 2024 12:26:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1734611192;
+ bh=04mrj61m5M0eK5uxb9qdhTTuprN8gSJHsEGg321+jug=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=Tu9FO8H01Fn5WM+XuIr+y7JwK+/oOLnvU7jJj6ovl99TvBJD/McqbMYuu/kRbpU5a
+ K2prrYhSmM+4J7InIx/NZQxGvujabU4YHkeem9PDUqPerCX8sIyvrd9wDt2WiAmoQ2
+ fb5WjxJtfKZ26gD6kte0oWo81onM79tkmTEJnMjRZ5XRkB1iJkqM4YuzFw2ql5mCGP
+ qB2yBT57i+/oPAmpWl66JkjZil1tK+3QyEr5m6PFs+YGnu9cz8G49sXcQnLrM00iTb
+ nEpRbn/Iy3XEYXXM5mWr73rY8PXQLZzX3th8PBIFiPC2alQZOdiEVpTWkyI12f8nO5
+ SBIo6VxjVFSWw==
+Received: from sofa.misterjones.org ([185.219.108.64]
+ helo=goblin-girl.misterjones.org)
+ by disco-boy.misterjones.org with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.95)
+ (envelope-from <maz@kernel.org>) id 1tOFbq-005GKK-DH;
+ Thu, 19 Dec 2024 12:26:30 +0000
+Date: Thu, 19 Dec 2024 12:26:29 +0000
+Message-ID: <8634ijrh8q.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Kashyap Chamarthy <kchamart@redhat.com>
+Cc: Eric Auger <eric.auger@redhat.com>,	Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?UTF-8?B?IlAuIEJlcnJhbmfDqSI=?= <berrange@redhat.com>,
+ eric.auger.pro@gmail.com,	qemu-devel@nongnu.org,	qemu-arm@nongnu.org,
+ kvmarm@lists.linux.dev,	peter.maydell@linaro.org,
+ richard.henderson@linaro.org,	alex.bennee@linaro.org,
+ oliver.upton@linux.dev,	sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com,	armbru@redhat.com,
+ abologna@redhat.com,	jdenemar@redhat.com,	shahuang@redhat.com,
+ mark.rutland@arm.com,	philmd@linaro.org,	pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+In-Reply-To: <Z2QE9AqZnpGM5sWD@gezellig>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/29.4
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: kchamart@redhat.com, eric.auger@redhat.com,
+ cohuck@redhat.com, berrange@redhat.com, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, abologna@redhat.com,
+ jdenemar@redhat.com, shahuang@redhat.com, mark.rutland@arm.com,
+ philmd@linaro.org, pbonzini@redhat.com
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org);
+ SAEximRunCond expanded to false
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=maz@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,126 +99,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 02:51:21PM +0100, David Hildenbrand wrote:
-> On 18.12.24 18:29, Daniel P. Berrangé wrote:
-> > When a machine is first booted, all virtio balloon stats are initialized
-> > to their default value -1 (18446744073709551615 when represented as
-> > unsigned).
-> > 
-> > They remain that way while the firmware is loading, and early phase of
-> > guest OS boot, until the virtio-balloon driver is activated. Thereafter
-> > the reported stats reflect the guest OS activity.
-> > 
-> > When a machine reset is performed, however, the virtio-balloon stats are
-> > left unchanged by QEMU, despite the guest OS no longer updating them,
-> > nor indeed even still existing.
-> > 
-> > IOW, the mgmt app keeps getting stale stats until the guest OS starts
-> > once more and loads the virtio-balloon driver (if ever). At that point
-> > the app will see a discontinuity in the reported values as they sudden
-> > jump from the stale value to the new value. This jump is indigituishable
-> > from a valid data update.
-> > 
-> > While there is an "last-updated" field to report on the freshness of
-> > the stats, that does not unambiguously tell the mgmt app whether the
-> > stats are still conceptually relevant to the current running workload.
-> > 
-> > It is more conceptually useful to reset the stats to their default
-> > values on machine reset, given that the previous guest workload the
-> > stats reflect no longer exists. The mgmt app can now clearly identify
-> > that there are is no stats information available from the current
-> > executing workload.
-> > 
-> > The 'last-updated' time is also reset back to 0.
-> > 
-> > IOW, on every machine reset, the virtio stats are in the same clean
-> > state they were when the macine first powered on.
-> > 
-> > A functional test is added to validate this behaviour with a real
-> > world guest OS.
-> > > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> > ---
-> > 
-> > One side-thought I have, is whether it makes sense to add a
-> > 'reset-count' field in the virtio stats, alongside the
-> > 'last-updated' field. While apps can infer a reset from seeing
-> > the stats all go back to their defaults, an explicit flag is
-> > simpler...
-> > 
-> >   MAINTAINERS                             |   1 +
-> >   hw/virtio/virtio-balloon.c              |  30 ++++-
-> >   include/hw/virtio/virtio-balloon.h      |   4 +
-> >   tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
-> >   4 files changed, 195 insertions(+), 1 deletion(-)
-> >   create mode 100755 tests/functional/test_virtio_balloon.py
-> > 
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 822f34344b..1380d53d03 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2234,6 +2234,7 @@ F: include/hw/virtio/virtio-balloon.h
-> >   F: system/balloon.c
-> >   F: include/sysemu/balloon.h
-> >   F: tests/qtest/virtio-balloon-test.c
-> > +F: tests/functional/test_virtio_balloon.py
-> >   virtio-9p
-> >   M: Greg Kurz <groug@kaod.org>
-> > diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-> > index ab2ee30475..fe0854e198 100644
-> > --- a/hw/virtio/virtio-balloon.c
-> > +++ b/hw/virtio/virtio-balloon.c
-> > @@ -31,7 +31,7 @@
-> >   #include "trace.h"
-> >   #include "qemu/error-report.h"
-> >   #include "migration/misc.h"
-> > -
-> > +#include "sysemu/reset.h"
-> >   #include "hw/virtio/virtio-bus.h"
-> >   #include "hw/virtio/virtio-access.h"
-> > @@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
-> >       }
-> >       reset_stats(s);
-> > +    s->stats_last_update = 0;
-> > +    qemu_register_resettable(OBJECT(dev));
-> >   }
-> >   static void virtio_balloon_device_unrealize(DeviceState *dev)
-> > @@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
-> >       VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-> >       VirtIOBalloon *s = VIRTIO_BALLOON(dev);
-> > +    qemu_unregister_resettable(OBJECT(dev));
-> >       if (s->free_page_bh) {
-> >           qemu_bh_delete(s->free_page_bh);
-> >           object_unref(OBJECT(s->iothread));
-> > @@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
-> >       }
-> >   }
-> 
-> Using qemu_register_resettable() can have unfortunate side effects that this
-> code is triggered when the device is reset, not necessarily when the
-> complete machine.
-> 
-> For virtio-mem at least that's an issue, and here is how I'll fix it:
-> 
-> https://lore.kernel.org/qemu-devel/20241218105303.1966303-2-david@redhat.com/
+On Thu, 19 Dec 2024 11:35:16 +0000,
+Kashyap Chamarthy <kchamart@redhat.com> wrote:
+>=20
+> On Thu, Dec 12, 2024 at 11:04:30AM +0100, Eric Auger wrote:
+>=20
+> Hi Eric,
+>=20
+> > On 12/12/24 10:36, Cornelia Huck wrote:
+> > > On Thu, Dec 12 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wr=
+ote:
+>=20
+> [...]
+>=20
+> > >> Consider you mgmt app wants to set a CPU model that's common across
+> > >> heterogeneous hardware. They don't neccessarily want/need to be
+> > >> able to live migrate between heterogeneous CPUs, but for simplicity
+> > >> of configuration desire to set a single named CPU across all guests,
+> > >> irrespective of what host hey are launched on. The ARM spec baseline
+> > >> named models would give you that config simplicity.
+> > > If we use architecture extensions (i.e. Armv8.x/9.x) as baseline, I'm
+> > > seeing some drawbacks:
+> > > - a lot of work before we can address some specific use cases
+> > > - old models can get new optional features
+> > > - a specific cpu might have a huge set of optional features on top of
+> > >   the baseline model
+> > >
+> > > Using a reference core such as Neoverse-V2 probably makes more sense
+> > > (easier to get started, less feature diff?) It would still make a good
+> > > starting point for a simple config.
+> > >
+> > Actually from a dev point of view I am not sure it changes much to have
+> > either ARM spec rev baseline or CPU ref core named model.
+> >=20
+> > One remark is that if you look at
+> > https://developer.arm.com/documentation/109697/2024_09?lang=3Den
+> > you will see there are quite a lot of spec revisions and quite a few of
+> > them are actually meaningful in the light of currently avaiable and
+> > relevant HW we want to address. What I would like to avoid is to be
+> > obliged to look at all of them in a generic manner while we just want to
+> > address few cpu ref models.
+> >=20
+> > Also starting from the ARM spec rev baseline the end-user may need to
+> > add more feature opt-ins to be close to a specific cpu model. So I
+> > foresee extra complexity for the end-user.
+>=20
+> (Assuming I'm parsing your last para right; correct me if not.)
+>=20
+> Isn't a user wanting to add extra CPU flags (on top of a baseline) a
+> "normal behaviour" and not "extra complexity"?  Besides coming close to
+> a specific CPU model, there's the additional important use-case of CPU
+> flags that provide security mitigation.
+>=20
+> Consider this:
+>=20
+> Say, there's a serious security issue in a released ARM CPU.  As part of
+> the fix, two new CPU flags need to be exposed to the guest OS, call them
+> "secflag1" and "secflag2".  Here, the user is configuring a baseline
+> model + two extra CPU flags, not to get close to some other CPU model
+> but to mitigate itself against a serious security flaw.
 
-Urgh, that's a rather horrible situation. While your patch works around
-it quite effectively, it is pretty heavy weight, and of course relies on
-maintainers knowing this scenario exists - they won't learn this easily
-from the Resettable API design, nor its docs :-(
+If there's such a security issue, that the hypervisor's job to do so,
+not userspace. See what KVM does for CSV3, for example (and all the
+rest of the side-channel stuff).
 
-Shouldn't we put to extend the Resettable design to make this scenario
-more explicity distinguishable in the Resettable callback implementations.
+You can't rely on userspace for security, that'd be completely
+ludicrous.
 
+	M.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Without deviation from the norm, progress is not possible.
 
