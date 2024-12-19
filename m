@@ -4,87 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CB31E7718D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:35:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEA00E7718B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFV-0001nb-L8; Thu, 19 Dec 2024 11:19:41 -0500
+	id 1tOJGw-0004Zy-0R; Thu, 19 Dec 2024 11:21:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOICB-0007Oa-1P
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:12:12 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOIC9-0007zv-Ae
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:12:10 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-725dbdf380aso736071b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:12:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734621128; x=1735225928; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GWG7hzdDhJuUD9skphyQzgnUhGgyN9QVvereQw940Jk=;
- b=BZo0lxjd0PCH4AiquIGsTDq/rpsX8EFoEI7d+VrrqCFYe/UxX5mro7Lrma2+pFCRJy
- /T7R+TkNkQavADZ9oTiV6iIOA7O4w2l4DSv2UCjJP1J6jnrVr7hvUHYE/O14DtcWvygk
- dyg99tnJicRp2fgo8x1xAMtJOiTF7d5o3Y/y7lTaAPAQZQbcGu7ZNXKYvOEaSWTRLkUs
- 6DcfWYp5mfoVMwgtbsi85M8Ntf/SSY5NlIVVp2XDI6wV4AGJowjh2iJ9155pVwkEk0Aj
- KLMq6E2d/8JHZGWPQE6vyoVZ17qifkwwt/I9XlwQU3PYzJFDgDR0r52rdMRs2WBb057V
- io4A==
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHiU-00038w-TC
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:30 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1tOHiR-0002Lf-8B
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:28 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734619286;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CfUMyzBxkenPRXVObBB8fXXXKSaqPam0WqFh0G56Vy0=;
+ b=RhPn7rXK6496eeGX5s9GBzjMNfnQpXyQ6RFHh1/dTwTkpRlqzCE7/WpUyfuEX+i6CMoVjg
+ POxVhKx7UrsK/ijiqvM4wTlHG8V11BCSoo1/gy4yeYlYHWdh9U0vZrpsRSnx6NuFmD5xiL
+ N8raYasI91MudL5bX95qFMC71R1IMwY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-264-E3e2hNHrPZeNPBrzQritSA-1; Thu, 19 Dec 2024 09:41:25 -0500
+X-MC-Unique: E3e2hNHrPZeNPBrzQritSA-1
+X-Mimecast-MFC-AGG-ID: E3e2hNHrPZeNPBrzQritSA
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43624b08181so5260835e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:25 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734621128; x=1735225928;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=GWG7hzdDhJuUD9skphyQzgnUhGgyN9QVvereQw940Jk=;
- b=n3E9wnW5srJANFgfqHLW33TGbdW7C09xXU82EWYJLIYOfH65bbVEvUx1WJwpgWJ1qZ
- MuXs3cYnPDOz1rM7NHmsNwn+saR4wlEBgZ+uFpLVq882gW82+rSEYqLS/AFR5UTVw87G
- xEeHfRYuoVeDEkEaVPQZtU5q4DNNNeLpcr8O9w8QjXKfK29INxHGy7+2Om5y+KpepX9/
- NWTvLGVJuiMQCxuLBVIa0NzfYkSC2zi3L7LEuAZ8S754oEkJwDRGzf/8/WlRUX9yNmPl
- LUgmUbg1TTYJItPNNPMJLEgotSm0fWrwrEqhXzYZ+gqRX72rJQT1rDwaMw1EwJBW4Q9D
- W+rg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX2x/V7Cwuu4NdhBAiDn8oBhhBqGKKhYwJGKwUXUvR1zAd9Ogtpw3UknAXkTUZuk0qVTOJ7ZIqBZoLl@nongnu.org
-X-Gm-Message-State: AOJu0Yxd+l/n83hsgqTg/YY8x7ez6JcdzBD2owIFp9u7i5j1/AWk+3b3
- Q3BSZhOYQDmdgDegp3/293ooXdaAuGNPsGq6THWb8ZIbnaKKT9P0YR2FRXTrQ1M=
-X-Gm-Gg: ASbGncuMsn52QyflnzfJg+iZrqwxV6W+KbIzTSXai11dMVyoged9Nx3ThF30R2eQ6QM
- /TBJpQPyJQvzvt9s/ReqWFBx5Abs6Hx8ZytpPSUjK6yXUvN2lYrQkataaZoZGtMi8nSftw2kYkf
- NVzkUtuI6RWum3xL3PWNYYlEaVBmFQzHWoIqRP2NKO0XIF+VnSpQPgDmOqFlllZC2MG2fjq6D8y
- h4iGQkrRoLCNjmPz04jHyuXeTrvwx8ErOoRrvVjEmvM4Pqg+GYQcHFm6wHQEuzrI86WfQ==
-X-Google-Smtp-Source: AGHT+IFMRlt2+D2V1plH3J9XioUYtfYIMqAMXzcVTcDaccFXIAbWR7MrqmMwc8YP7x9PIi06AiiwMA==
-X-Received: by 2002:a05:6a20:1593:b0:1e0:da90:5f1f with SMTP id
- adf61e73a8af0-1e5c762fabamr5796664637.16.1734621127710; 
- Thu, 19 Dec 2024 07:12:07 -0800 (PST)
-Received: from [192.168.0.4] ([71.212.151.20])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad816305sm1403954b3a.31.2024.12.19.07.12.06
+ d=1e100.net; s=20230601; t=1734619284; x=1735224084;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=CfUMyzBxkenPRXVObBB8fXXXKSaqPam0WqFh0G56Vy0=;
+ b=szNLgN61yO/MW/jmMBiDebKw6+yPRfyYapgr8Y3g8wLHTWPl3eCDHgaBKMf9v9qxVY
+ oHbjJcGyhWbM+6QR37bL5j2L3X6mOlimrNaCo9wuEr5HLMA21kbPvX3ZXGtAU2Aa70mA
+ bcvq+CsIoYVHWvyHbKS9DNLxDJQTJLHZCMJ8t5NXWCp5yYV1yIA7OZs1lO7KL9sRvqAs
+ O9lD87Jf665ehplfmY8/NwauiXLn1IRQMwP8sv1WRobHkUfljEMeG8E/jtGh8iqvMNmO
+ sPuMKzy8JNumogbrl3zaoHuoO9L+LHIDjzpwQ1qzUVUBgNOQAGsfbQnFTMkZL9BMSyA1
+ CRIQ==
+X-Gm-Message-State: AOJu0YyfCevDnHXYn9aBrL8/1R4gpTpc7WK5Wu6b175ZcR+gVwyDamA+
+ l8Itdrs9HhCp4HPrLLkISZdKuxA8SxWp4ULGWc9zltWZXNBiyIk3QhUPvTgLHk99zZFUOgO+fz4
+ cnqVrcPEJLjOUAtxZRhBlZGV5Us658llT6pu7cz9gTfBGeJmhkCDa8vceF6pZ/1qpKHqPju2h7Y
+ YmqNC5wmpFPcpYIOggjwaCZkdB0v8UTFPzYoE=
+X-Gm-Gg: ASbGncv7qrNd5obd2REtZHUrac0Zk3JFCWLHLK5TssNJ3Cv9GYw6tRhMNrjONQHYBrm
+ JWJ2GoQYXMnb/BfM0MjHz6FfjxlCxDW3tPpoL9uMR9YhcJMpgSMw0BGqo/jqt/6nA2Y90OSfnFe
+ Muhz5yK+gMRGv6I3PTHvUXNdxSBZ7tmKS7ssBKL98b/7NNh0BQaSidDSK4xCvC3Moks9lIYT4dW
+ wUEm0KHwyg0VPsYxgV3dwXLF8sab2QsaHfmkaA2fWBc/IZ1EZC047uisslafFAQjYAcqIJHbUUB
+ h1+gllDn/Lfjm/zyYCRp1Mho5lGAlBJy/TG4JlV1
+X-Received: by 2002:a05:600c:3b98:b0:434:e69c:d338 with SMTP id
+ 5b1f17b1804b1-4365c775994mr29757395e9.5.1734619283909; 
+ Thu, 19 Dec 2024 06:41:23 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFwW+mEvolI/hBMEH/VMiivF08wHGLY3GmEDRdNEgw3Gd3twnsX+9fAxYHplsxuAe36Lw4IIw==
+X-Received: by 2002:a05:600c:3b98:b0:434:e69c:d338 with SMTP id
+ 5b1f17b1804b1-4365c775994mr29756945e9.5.1734619283231; 
+ Thu, 19 Dec 2024 06:41:23 -0800 (PST)
+Received: from localhost
+ (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
+ [2003:cb:c749:6600:b73a:466c:e610:686])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-436611ea3e0sm20239125e9.7.2024.12.19.06.41.22
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 07:12:07 -0800 (PST)
-Message-ID: <ec22c2bf-15d0-4006-9647-a63d71655042@linaro.org>
-Date: Thu, 19 Dec 2024 07:12:04 -0800
+ Thu, 19 Dec 2024 06:41:22 -0800 (PST)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Janosch Frank <frankja@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v3 02/14] s390x/s390-virtio-hcall: remove hypercall
+ registration mechanism
+Date: Thu, 19 Dec 2024 15:41:03 +0100
+Message-ID: <20241219144115.2820241-3-david@redhat.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
+References: <20241219144115.2820241-1-david@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/41] Rust, qdev, target/i386 changes for 2024-12-19
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20241219083228.363430-1-pbonzini@redhat.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x433.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=dhildenb@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,76 +120,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/24 00:31, Paolo Bonzini wrote:
-> The following changes since commit 8032c78e556cd0baec111740a6c636863f9bd7c8:
-> 
->    Merge tag 'firmware-20241216-pull-request' of https://gitlab.com/kraxel/qemu into staging (2024-12-16 14:20:33 -0500)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/bonzini/qemu.git tags/for-upstream
-> 
-> for you to fetch changes up to 9f832641fa069a88eb41008694cfa5b62d29bc3a:
-> 
->    rust: pl011: simplify handling of the FIFO enabled bit in LCR (2024-12-18 17:52:36 +0100)
-> 
-> ----------------------------------------------------------------
-> * qdev: second part of Property cleanups
-> * rust: second part of QOM rework
-> * rust: callbacks wrapper
-> * rust: pl011 bugfixes
-> * kvm: cleanup errors in kvm_convert_memory()
-> 
-> ----------------------------------------------------------------
-> Maciej S. Szmigiero (1):
->        target/i386: Reset TSCs of parked vCPUs too on VM reset
-> 
-> Paolo Bonzini (16):
->        rust: qom: put class_init together from multiple ClassInitImpl<>
->        rust: qom: add possibility of overriding unparent
->        rust: rename qemu-api modules to follow C code a bit more
->        rust: re-export C types from qemu-api submodules
->        rust: tests: allow writing more than one test
->        rust: qom: add casting functionality
->        rust: qom: add initial subset of methods on Object
->        rust: qemu-api: add a module to wrap functions and zero-sized closures
->        kvm: consistently return 0/-errno from kvm_convert_memory
->        rust: pl011: fix declaration of LineControl bits
->        rust: pl011: match break logic of C version
->        rust: pl011: always use reset() method on registers
->        rust: pl011: fix break errors and definition of Data struct
->        rust: pl011: extend registers to 32 bits
->        rust: pl011: fix migration stream
->        rust: pl011: simplify handling of the FIFO enabled bit in LCR
-> 
-> Richard Henderson (24):
->        migration: Constify migration_properties
->        hw/ide: Constify sysbus_ahci_properties
->        target/ppc: Remove empty property list
->        target/s390x: Use s390x_cpu_properties for system mode only
->        hw/pci-host/astro: Remove empty Property list
->        hw/ppc: Only register spapr_nvdimm_properties if CONFIG_LIBPMEM
->        hw/tricore: Remove empty Property lists
->        hw/s390x: Remove empty Property lists
->        hw/xen: Remove empty Property lists
->        hw/sparc: Remove empty Property lists
->        hw/virtio: Remove empty Property lists
->        include/hw/qdev-core: Detect most empty Property lists at compile time
->        hw/core: Introduce device_class_set_props_n
->        migration: Use device_class_set_props_n
->        hw/scsi/megasas: Use device_class_set_props_n
->        hw/arm/armsse: Use device_class_set_props_n
->        rust/qemu-api: Use device_class_set_props_n
->        hw/core: Replace device_class_set_props with a macro
->        target/riscv: Do not abuse DEFINE_PROP_END_OF_LIST
->        include/hw/qdev-properties: Remove DEFINE_PROP_END_OF_LIST
->        include/hw/qdev-properties: Shrink struct Property
->        hw/core/qdev-properties: Constify Property argument to object_field_prop_ptr
->        hw/core/qdev-properties: Constify Property argument to PropertyInfo.print
->        Constify all opaque Property pointers
+Nowadays, we only have a single machine type in QEMU, everything is based
+on virtio-ccw and the traditional virtio machine does no longer exist. No
+need to dynamically register diag500 handlers. Move the two existing
+handlers into s390-virtio-hcall.c.
 
-I posted a v2 of this, and cc'd you.  There are, at minimum, two bisection errors in v1.
+Message-ID: <20241008105455.2302628-3-david@redhat.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+ hw/s390x/meson.build           |  6 ++--
+ hw/s390x/s390-virtio-ccw.c     | 58 ------------------------------
+ hw/s390x/s390-virtio-hcall.c   | 65 +++++++++++++++++++++++++---------
+ hw/s390x/s390-virtio-hcall.h   |  2 --
+ target/s390x/kvm/kvm.c         |  5 ++-
+ target/s390x/tcg/misc_helper.c |  3 ++
+ 6 files changed, 60 insertions(+), 79 deletions(-)
 
+diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
+index 482fd13420..d6c8c33915 100644
+--- a/hw/s390x/meson.build
++++ b/hw/s390x/meson.build
+@@ -12,7 +12,6 @@ s390x_ss.add(files(
+   's390-pci-inst.c',
+   's390-skeys.c',
+   's390-stattrib.c',
+-  's390-virtio-hcall.c',
+   'sclp.c',
+   'sclpcpu.c',
+   'sclpquiesce.c',
+@@ -28,7 +27,10 @@ s390x_ss.add(when: 'CONFIG_KVM', if_true: files(
+ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
+   'tod-tcg.c',
+ ))
+-s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files('s390-virtio-ccw.c'))
++s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
++  's390-virtio-ccw.c',
++  's390-virtio-hcall.c',
++))
+ s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
+ s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
+ 
+diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
+index f2a17ecace..b0edaa0872 100644
+--- a/hw/s390x/s390-virtio-ccw.c
++++ b/hw/s390x/s390-virtio-ccw.c
+@@ -16,11 +16,8 @@
+ #include "exec/ram_addr.h"
+ #include "exec/confidential-guest-support.h"
+ #include "hw/boards.h"
+-#include "hw/s390x/s390-virtio-hcall.h"
+ #include "hw/s390x/sclp.h"
+ #include "hw/s390x/s390_flic.h"
+-#include "hw/s390x/ioinst.h"
+-#include "hw/s390x/css.h"
+ #include "virtio-ccw.h"
+ #include "qemu/config-file.h"
+ #include "qemu/ctype.h"
+@@ -124,58 +121,6 @@ static void subsystem_reset(void)
+     }
+ }
+ 
+-static int virtio_ccw_hcall_notify(const uint64_t *args)
+-{
+-    uint64_t subch_id = args[0];
+-    uint64_t data = args[1];
+-    SubchDev *sch;
+-    VirtIODevice *vdev;
+-    int cssid, ssid, schid, m;
+-    uint16_t vq_idx = data;
+-
+-    if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
+-        return -EINVAL;
+-    }
+-    sch = css_find_subch(m, cssid, ssid, schid);
+-    if (!sch || !css_subch_visible(sch)) {
+-        return -EINVAL;
+-    }
+-
+-    vdev = virtio_ccw_get_vdev(sch);
+-    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
+-        return -EINVAL;
+-    }
+-
+-    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
+-        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
+-                                          (data >> 16) & 0xFFFF);
+-    }
+-
+-    virtio_queue_notify(vdev, vq_idx);
+-    return 0;
+-}
+-
+-static int virtio_ccw_hcall_early_printk(const uint64_t *args)
+-{
+-    uint64_t mem = args[0];
+-    MachineState *ms = MACHINE(qdev_get_machine());
+-
+-    if (mem < ms->ram_size) {
+-        /* Early printk */
+-        return 0;
+-    }
+-    return -EINVAL;
+-}
+-
+-static void virtio_ccw_register_hcalls(void)
+-{
+-    s390_register_virtio_hypercall(KVM_S390_VIRTIO_CCW_NOTIFY,
+-                                   virtio_ccw_hcall_notify);
+-    /* Tolerate early printk. */
+-    s390_register_virtio_hypercall(KVM_S390_VIRTIO_NOTIFY,
+-                                   virtio_ccw_hcall_early_printk);
+-}
+-
+ static void s390_memory_init(MemoryRegion *ram)
+ {
+     MemoryRegion *sysmem = get_system_memory();
+@@ -296,9 +241,6 @@ static void ccw_init(MachineState *machine)
+                               OBJECT(dev));
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+ 
+-    /* register hypercalls */
+-    virtio_ccw_register_hcalls();
+-
+     s390_enable_css_support(s390_cpu_addr2state(0));
+ 
+     ret = css_create_css_image(VIRTUAL_CSSID, true);
+diff --git a/hw/s390x/s390-virtio-hcall.c b/hw/s390x/s390-virtio-hcall.c
+index ec7cf8beb3..ca49e3cd22 100644
+--- a/hw/s390x/s390-virtio-hcall.c
++++ b/hw/s390x/s390-virtio-hcall.c
+@@ -11,31 +11,64 @@
+ 
+ #include "qemu/osdep.h"
+ #include "cpu.h"
++#include "hw/boards.h"
+ #include "hw/s390x/s390-virtio-hcall.h"
++#include "hw/s390x/ioinst.h"
++#include "hw/s390x/css.h"
++#include "virtio-ccw.h"
+ 
+-#define MAX_DIAG_SUBCODES 255
++static int handle_virtio_notify(uint64_t mem)
++{
++    MachineState *ms = MACHINE(qdev_get_machine());
+ 
+-static s390_virtio_fn s390_diag500_table[MAX_DIAG_SUBCODES];
++    if (mem < ms->ram_size) {
++        /* Early printk */
++        return 0;
++    }
++    return -EINVAL;
++}
+ 
+-void s390_register_virtio_hypercall(uint64_t code, s390_virtio_fn fn)
++static int handle_virtio_ccw_notify(uint64_t subch_id, uint64_t data)
+ {
+-    assert(code < MAX_DIAG_SUBCODES);
+-    assert(!s390_diag500_table[code]);
++    SubchDev *sch;
++    VirtIODevice *vdev;
++    int cssid, ssid, schid, m;
++    uint16_t vq_idx = data;
++
++    if (ioinst_disassemble_sch_ident(subch_id, &m, &cssid, &ssid, &schid)) {
++        return -EINVAL;
++    }
++    sch = css_find_subch(m, cssid, ssid, schid);
++    if (!sch || !css_subch_visible(sch)) {
++        return -EINVAL;
++    }
+ 
+-    s390_diag500_table[code] = fn;
++    vdev = virtio_ccw_get_vdev(sch);
++    if (vq_idx >= VIRTIO_QUEUE_MAX || !virtio_queue_get_num(vdev, vq_idx)) {
++        return -EINVAL;
++    }
++
++    if (virtio_vdev_has_feature(vdev, VIRTIO_F_NOTIFICATION_DATA)) {
++        virtio_queue_set_shadow_avail_idx(virtio_get_queue(vdev, vq_idx),
++                                          (data >> 16) & 0xFFFF);
++    }
++
++    virtio_queue_notify(vdev, vq_idx);
++    return 0;
+ }
+ 
+ int s390_virtio_hypercall(CPUS390XState *env)
+ {
+-    s390_virtio_fn fn;
+-
+-    if (env->regs[1] < MAX_DIAG_SUBCODES) {
+-        fn = s390_diag500_table[env->regs[1]];
+-        if (fn) {
+-            env->regs[2] = fn(&env->regs[2]);
+-            return 0;
+-        }
+-    }
++    const uint64_t subcode = env->regs[1];
+ 
+-    return -EINVAL;
++    switch (subcode) {
++    case KVM_S390_VIRTIO_NOTIFY:
++        env->regs[2] = handle_virtio_notify(env->regs[2]);
++        return 0;
++    case KVM_S390_VIRTIO_CCW_NOTIFY:
++        env->regs[2] = handle_virtio_ccw_notify(env->regs[2], env->regs[3]);
++        return 0;
++    default:
++        return -EINVAL;
++    }
+ }
+diff --git a/hw/s390x/s390-virtio-hcall.h b/hw/s390x/s390-virtio-hcall.h
+index 3ae6d6ae3a..3d9fe147d2 100644
+--- a/hw/s390x/s390-virtio-hcall.h
++++ b/hw/s390x/s390-virtio-hcall.h
+@@ -18,8 +18,6 @@
+ /* The only thing that we need from the old kvm_virtio.h file */
+ #define KVM_S390_VIRTIO_NOTIFY 0
+ 
+-typedef int (*s390_virtio_fn)(const uint64_t *args);
+-void s390_register_virtio_hypercall(uint64_t code, s390_virtio_fn fn);
+ int s390_virtio_hypercall(CPUS390XState *env);
+ 
+ #endif /* HW_S390_VIRTIO_HCALL_H */
+diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
+index dd0322c43a..32cf70bb19 100644
+--- a/target/s390x/kvm/kvm.c
++++ b/target/s390x/kvm/kvm.c
+@@ -51,6 +51,7 @@
+ #include "hw/s390x/s390-virtio-ccw.h"
+ #include "hw/s390x/s390-virtio-hcall.h"
+ #include "target/s390x/kvm/pv.h"
++#include CONFIG_DEVICES
+ 
+ #define kvm_vm_check_mem_attr(s, attr) \
+     kvm_vm_check_attr(s, KVM_S390_VM_MEM_CTRL, attr)
+@@ -1494,9 +1495,11 @@ static int handle_e3(S390CPU *cpu, struct kvm_run *run, uint8_t ipbl)
+ static int handle_hypercall(S390CPU *cpu, struct kvm_run *run)
+ {
+     CPUS390XState *env = &cpu->env;
+-    int ret;
++    int ret = -EINVAL;
+ 
++#ifdef CONFIG_S390_CCW_VIRTIO
+     ret = s390_virtio_hypercall(env);
++#endif /* CONFIG_S390_CCW_VIRTIO */
+     if (ret == -EINVAL) {
+         kvm_s390_program_interrupt(cpu, PGM_SPECIFICATION);
+         return 0;
+diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
+index 303f86d363..f44136a568 100644
+--- a/target/s390x/tcg/misc_helper.c
++++ b/target/s390x/tcg/misc_helper.c
+@@ -43,6 +43,7 @@
+ #include "hw/s390x/s390-pci-inst.h"
+ #include "hw/boards.h"
+ #include "hw/s390x/tod.h"
++#include CONFIG_DEVICES
+ #endif
+ 
+ /* #define DEBUG_HELPER */
+@@ -116,12 +117,14 @@ void HELPER(diag)(CPUS390XState *env, uint32_t r1, uint32_t r3, uint32_t num)
+     uint64_t r;
+ 
+     switch (num) {
++#ifdef CONFIG_S390_CCW_VIRTIO
+     case 0x500:
+         /* KVM hypercall */
+         bql_lock();
+         r = s390_virtio_hypercall(env);
+         bql_unlock();
+         break;
++#endif /* CONFIG_S390_CCW_VIRTIO */
+     case 0x44:
+         /* yield */
+         r = 0;
+-- 
+2.47.1
 
-r~
 
