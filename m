@@ -4,80 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04F2AE7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:30:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE4FE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:31:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKLl-0001Ut-S6; Thu, 19 Dec 2024 12:30:13 -0500
+	id 1tOKMT-0002WX-QS; Thu, 19 Dec 2024 12:30:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKLj-0001UK-2Q
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:30:11 -0500
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKMB-0002GD-4p
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:30:52 -0500
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKLh-0000kI-Jq
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:30:10 -0500
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-43625c4a50dso7796845e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:30:09 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKM9-0000mk-6P
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:30:38 -0500
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so8154785e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:30:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734629407; x=1735234207; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734629436; x=1735234236; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=5QoOjPd106xBHV/Zl3SoCdTqCfymH/ZpxMQCrkbKscg=;
- b=pttz9b/AD++hjV8PSDOKHU169zSYQF/vwpUlyRBiDly1jczvhoiiZ3LxKj47f/xa4r
- 0xU/82VkKXBSA4JQRCixPuh6Rgqe3PvAbFa0KfeQuQrKzINfxjWvIg5mNDmC2hRkRLky
- wHH5zAP4tP+gyYcYuXiG69D+CwKw0g43vaUxNJRbUngK+4wJUQV4ezaWqIpPFajGxHKa
- o30HY59F6MQNM2nf2X+BSzew8Hn8e+lZMlTnMr8rlhKdYrnaeWB3Dkk0O7+FiiD+jZts
- TYbBCDemVfGRPz6SuKSK8WskCpV8YCudmuERlrcOmP0ywXId8LsBxt9/nUq9aoucokeX
- S6sQ==
+ bh=FHozw9de/NvfPGX8IMwamoRKsGIkL6+8Xqk2d+A6kH8=;
+ b=CcCtx19mwkiZsmrFiDazZqemFPagJHRZF1rKKne0zeP9n3Z8tOoYuor8lQDRL+4hAj
+ P8tvS1w6Pkuxkw+12muuj3pX43Aj/b7BmvedFXiOQbBOMRoPNbKbrc8FsMEQ3cdZ1eJh
+ De0QezrPSJiOcN1oD0XP5PsQmRt/kenFMirFP6UE8v3vkRiGmPFH/h3IkFHiPbemn4XX
+ eU4PDNh1096WqepEsZ9qHtXC1l/zZregPLunbDdoGTZzHwsygOPQ76C4DYoguFYlv47R
+ qqBOP6qYdKzDjZ7NVEa2cgc0y4TesUXn7ygKQ7Wd0okIn7wb+ofbdRrMyVkTotwDrVB/
+ KtNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734629407; x=1735234207;
+ d=1e100.net; s=20230601; t=1734629436; x=1735234236;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5QoOjPd106xBHV/Zl3SoCdTqCfymH/ZpxMQCrkbKscg=;
- b=ATaCCAt35PRPCBOkXGIuod88mByLKYGy5uWVm+4/3LPkNDwnpyrHJNVWnqhcT5cgM/
- 6vCsIzOexWjEgX91OAMB5BocRGTNcvR3OxU3HPBMjW4JCY0VUcudi0vW5Ql7BSMHvYcF
- 0NLDPpJMJTDvvHhiqqgIm9rpfU3+6P4TZNy3/f2aApLL5Gfj4RAIUUd+vgn45PW4VwXT
- b7Y4IaImzhbLb90DjVfBJQgZ4IYf5hJZLxeXUmzDxeT7U7pVnleQaGopUnK9X+OZ7b+2
- PfPuIcR4uNWhT1C/dawHjJ+nBgyYGGeQl5MluRS6FRZauKLsvQRq84ASUR/zKkgJp3cd
- KkzA==
-X-Gm-Message-State: AOJu0YwvHNr2+CAK5oPP1OkBj1ChimFQ/4NgvCCIngAYfNKkNInzc5IB
- U/YXpDwMxd0gFrODr+XyC1UJIZnQd93/Ahvo5kYz1Qy8Yqqwj8f1oPBQecbkpkYvMC5LhDFXTI1
- m
-X-Gm-Gg: ASbGncvFLV+AaAFjqmhmVYxIx7y2wqyX8hdpiAEPqPo+2TW9+sZXYY4lhXr6EVjzXRO
- 9cLDb5KiYkTZ7jxLp+tdyXUmTFA+tQ2jec+jzMtR29cGHp3bt4W6N/aZPdLWlvpiJ+Lq2mSzSyZ
- MmRw5ZFZto2KunP69GER8IQtFeOxxFumexsTNoBhLt6sfn9kLojYucemBampsbmmzacCKq5DLdB
- EMdg3A4hi6LPuwXVbML17L9aBgKLBd90GmCXd7ccQwpiOd1Ji7WIKigNnU4xuXy+sD0/ZI=
-X-Google-Smtp-Source: AGHT+IG1/hpbiqPIMOWD1gfF8qL4Wgv1qc0QMKtcW3CJ//scx9SLxXAVranmpirqgTf3zIybdSqe1g==
-X-Received: by 2002:a05:600c:46ca:b0:434:f270:a4f0 with SMTP id
- 5b1f17b1804b1-43655426983mr68025035e9.21.1734629407635; 
- Thu, 19 Dec 2024 09:30:07 -0800 (PST)
+ bh=FHozw9de/NvfPGX8IMwamoRKsGIkL6+8Xqk2d+A6kH8=;
+ b=fwI2KJUvTM9Zy5yk9VK4NKPtoWrFKdJHy+YiFEVPw2pd2Gz7LB/V/YPOqhFhmMFPV8
+ huwBhP0I1C/xo4PofD2bmRYT4aeMYRDeym1Cyv1CNbhNeJHK+ZuEwsjpb8FKxvtF6pi9
+ Cb1CV25AzDeaxTSE+IJ64W9RbH9G8jCsdgccsNFT5SRCGK4Jysb9p7mR5e6M0PkKmVU9
+ Iyb4UoMbgVPPsnI6A2GZcD6uPwFyb57kULHGYIiZoMh8dxSnTJFwJ+IzJ4tGTShbq2VU
+ h03h40Ev8Vmpi/1FAig4RYb0vGAkiFi1wxzWPiJ39v3s43NTCoRssLK3wmobMlNvTFlX
+ WjWQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXR3fhhAeuHUemKildzUT2XIMyXUMkOZC+JrdH3f4gT8LYUSSbjaaklTgCcNrK8WgvJ98cGeg0usZjH@nongnu.org
+X-Gm-Message-State: AOJu0YyjSzElgHnUAnCHrh72kHFGevhm8cTmL13yFJ/P1t6k5EHb6Hq+
+ xmiCAAtiUfbYVCpIfQvvORtjb2LxBWiAj0QCIk8+C2KTeukYId27Ye8cR9lZi+M=
+X-Gm-Gg: ASbGncs4/iwXg1hSeB/qWhTgWPhN8fnCZaSjYfrOxluOnUo70h/1pUOsKYUTrvTyHZg
+ NCdR63mJplGNoNevrSqeEsODUHXzBdL+V7FFYjG4idtCL7ADIVoa+fx8qx0Ramr5Qmo8Lzxwu7e
+ RP8doPm4DDLc3W1vIHP739RMpLmG1LDjnXoAF1KQsMfluYOECBxAyfkgf2ojRqYzZn4umRZBXh7
+ 9NiOfQRdfJLLuj0wfzCPtFt/7prwhvXLnpzBN4pTadmItHFeN56fCxZjRMZgM9EpVfZ5xU=
+X-Google-Smtp-Source: AGHT+IGMc+NJHehstVIw9mDm4wDLjS2kb5W2EfaT3IzYxpHnuZGrK3pbLa5r2CQOFSJkffQaSuW2Sw==
+X-Received: by 2002:a05:600c:468a:b0:434:9499:9e87 with SMTP id
+ 5b1f17b1804b1-436553fe17dmr60200645e9.25.1734629435607; 
+ Thu, 19 Dec 2024 09:30:35 -0800 (PST)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219611sm23794385e9.23.2024.12.19.09.30.05
+ 5b1f17b1804b1-436611ea3d5sm24177795e9.5.2024.12.19.09.30.32
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 09:30:06 -0800 (PST)
-Message-ID: <132ef614-39d2-4e53-bd52-bd0fdd6ff903@linaro.org>
-Date: Thu, 19 Dec 2024 18:30:05 +0100
+ Thu, 19 Dec 2024 09:30:35 -0800 (PST)
+Message-ID: <e19caf9c-f8d9-49dc-8ac6-26925400d9cd@linaro.org>
+Date: Thu, 19 Dec 2024 18:30:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: Do not define CONFIG_DEVICES on user emulation
-To: qemu-devel@nongnu.org
+Subject: Re: [PATCH v2 16/27] util/qemu-timer: fix indentation
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
+ Radoslaw Biernacki <rad@semihalf.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241218151256.68625-1-philmd@linaro.org>
+ qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
+ <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
+ Leif Lindholm <quic_llindhol@quicinc.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+References: <20241218162104.3493551-1-alex.bennee@linaro.org>
+ <20241218162104.3493551-17-alex.bennee@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218151256.68625-1-philmd@linaro.org>
+In-Reply-To: <20241218162104.3493551-17-alex.bennee@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,14 +130,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 16:12, Philippe Mathieu-Daudé wrote:
-> CONFIG_DEVICES is not generated on user emulation, so
-> do not define it.
+On 18/12/24 17:20, Alex Bennée wrote:
+> Purely cosmetic.
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 > ---
->   meson.build | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   util/qemu-timer.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Patch queued, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
