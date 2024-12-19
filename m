@@ -4,93 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52E53E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 10:04:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3281AE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 10:28:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tODNs-0002yk-Ub; Thu, 19 Dec 2024 05:03:56 -0500
+	id 1tODlA-0007vp-Oy; Thu, 19 Dec 2024 05:28:00 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tODNr-0002yD-IV
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 05:03:55 -0500
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tODNm-0007IQ-UM
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 05:03:55 -0500
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-432d86a3085so3864015e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 02:03:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734602620; x=1735207420; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mXCIk6dfNVEh9UR4aHsi/3+L8qM9W3TR4OmGtyFazeE=;
- b=Tn9SkJPz+rrUbOTzuus/eiSJ66pFX33YKLT7mY0tyruDqwLrxYk77U8KqRqgbPCXgi
- nL26ZFUlGessEd7D3R9aeeAjHRGSwNDnhFbbrOV3QhTT435gFmTxDK5WuSaJpANG2P1d
- DCx3g7FmKS2n/XVdLFBQXBHYd7kf+6WsMEMT6qUfj3oGbpbapCqGWgsnL80uR97BamZV
- JqNRsd64vNFL1RLmNeKkWsNyBcb6CWNXdi8b4uNyDeCci9DvL9znBMiGqq63mPcGqZ6f
- 5INoX+2Ab9YIXJzBRWF5cw2GxzrXHjQdDA4FM+K2wptHA1BfTLFTWIRVpk8Pnvj9x9Qd
- WjrQ==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tODl8-0007vW-7i
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 05:27:58 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tODl6-0004Ae-M5
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 05:27:58 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734604075;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+6XkrDw8kJ0urdDIGPNF7dyGN4vEh7W7PLxyHD9bMc0=;
+ b=SGJbLvAz/n5+ukUDMnh1YYcUzGmJoGgfOIVH1ihxzltGizVRi0AWXWDF0/+gGgcVSVuEWQ
+ lE2O1vMLQHFs2K/LdwXdPl/Alkvkjl7SIpAtjtWAD/z2boTevwoaKfzy2fo3OXspPk+saD
+ IF7s1Ex+JkW7qbucly4Vkw96SJ5rMeE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-VPWAn8cEOZ2AyvuOFgLeoQ-1; Thu, 19 Dec 2024 05:27:54 -0500
+X-MC-Unique: VPWAn8cEOZ2AyvuOFgLeoQ-1
+X-Mimecast-MFC-AGG-ID: VPWAn8cEOZ2AyvuOFgLeoQ
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3862be3bfc9so431587f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 02:27:54 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734602620; x=1735207420;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=mXCIk6dfNVEh9UR4aHsi/3+L8qM9W3TR4OmGtyFazeE=;
- b=v9aWyjeneEy9q5YvikAbwfWUIXK9QL5ZFcrJyujl90lHeUpHUD3qcxyPVUcm/IbEPY
- MOPBweECv8UNmdXXPmz/NjasN0KE7K3jv3Eh+534qPOWWvCr+Uwyhl/EZXiDbmGfugt9
- 780Ls1HrgdKlVhTU65+yT97Jw8PJmA/8Bva8u3CH2pfmqH+PkzjRH5bg6oxyqO4AjQ4e
- CHk98eKeDFlwsaQ42egit6KgxWQMNdZL4nPfckyEvrOpfgwagn7wLJZTizf53xqkgDfG
- gl221WBFY4DKuwJnyWtuEfftHrPLJIeL0lbMZ5Li1NKwTio2VGkdQMzz6i0EbJ4DxSdf
- jtLQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUWAnqgCedcboHLrOzKPNvKIWNJMzAnFZyEv84Rw9XJgYFojn1zylxaeW/vDT8sopaOWh7qE7vUqa9g@nongnu.org
-X-Gm-Message-State: AOJu0YydoyvbIMv7RU5+Ax1LSlKaKZWPbafauGhGSuBajL86MCWpRxdG
- E1EKOSmMURXqjq3RkrLaV3ohVV8m+f5p+ivO2/B/s44NTFvH+shXyxpXnbKkJE0=
-X-Gm-Gg: ASbGncskQQ7joYqpcT23HJ/rOm+iu/L8BkktCw5x6QkLq2j2JWidcvltdXzaTJHtrP/
- npEQ602IwIPNbZF6UgDZWlE+8so50Rt+g00vvac96XVkLBun73QkBgsqToWGIIsKDcMXX7SaPYH
- oDJl+uFGm5l89cVodOD6VaURKEB68mvSIhUMMbNWTzSnA0ii++JEeQsPJTLcAx/zeI4D/zifvRm
- Koi8qLcN6M5YxlFP/Xko/ykqWH9OMBcSR9HuZjAe+9nI5z6Mrp1MjgKl2vocmRUq+k=
-X-Google-Smtp-Source: AGHT+IGB6GQuYEYhB8N41I+20yLF7oTleDHl5+vLe7kyV5H69eLiTwBtVSvLpfvM2GUsL2Sx7QFbjQ==
-X-Received: by 2002:a05:600c:3b88:b0:434:a315:19c with SMTP id
- 5b1f17b1804b1-4365c77e436mr24721105e9.3.1734602620028; 
- Thu, 19 Dec 2024 02:03:40 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
+ d=1e100.net; s=20230601; t=1734604072; x=1735208872;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+6XkrDw8kJ0urdDIGPNF7dyGN4vEh7W7PLxyHD9bMc0=;
+ b=O2ASRcK3DKvPhRqgDQTnhG6j0mA2iB1J5e/tbqDDskcuV9jrjSnhBE6IPQmfjJH4U1
+ ixGBN7HuXYLxQ6QJkB1KOt4YsdmNeYOeVg6QNzdKofZnxqc0KvLD/h7zk9DafIzFydiE
+ czfU3oqolo0VwJtkkDsWe2fvaou2eYVEVlQUubXa/Y7Sn+f0wZemFjs1dg8HgvqqJQb9
+ NCl9AfZ0isTgfb+UUwqMk6ePPE3xilFHxx7fxx0GVT6YS5cc5u6FCDE3Me9iRcCcsPrS
+ dI+nhVulasKqpOsvjQbO6cz78t+TeqKNymKGn7Zk1rIoeg4kGYhgLD+DjqnUXtkYHnBs
+ 8gmg==
+X-Gm-Message-State: AOJu0Yxuan2pdmvdQMCcDkrTF3Bvsm1CCdGMQk6Mp8s0gpIoT0ZhMbqO
+ qp+nHxH1XMmLfoyD+nOTSvk+FsF+en8OXEXC0SOJXZ6ij+y4m2qPTGvyh3LSt1Cl729Ek6nwA0Z
+ oCJiUCSSSKNPMeTsM8H6YloFB0hQ9CxhMKM2vMpPtcBD384bUAnVHn/pownJsJsYm/lVlLINPQJ
+ YSazwjohsfWq3d27ypGrEj3FvlbZ9wk4Qq/gqZ
+X-Gm-Gg: ASbGnctLAAjjLmWK4/mshn1TgryKMGt4OBjy6QFal2+9NY7WI0fl4BvWcbH2oAHOqzX
+ N8k6Mto0u1YS+wKpqEmqeBUGbGdMbE6lktTOgS9ueo4kz5TGMQpO6Hz5NIBpY7ple0HxQeTsEoS
+ FKhC3IxUIWDQ2xMH4xXZFhS+RxxeZ+B50ptBifLiq5rTVvubi3sSRGCj1kp51F+jxB19i3ll/zS
+ UK+qyjlqpJiuUchvaJ5dsuujfJPNnV4avwYGMDvlQ6j4ip/R8Xi7yJtGVcj
+X-Received: by 2002:a05:6000:2ca:b0:385:fc70:7f6 with SMTP id
+ ffacd0b85a97d-388e4d2f5c6mr5695039f8f.7.1734604072635; 
+ Thu, 19 Dec 2024 02:27:52 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IHb+tP3gcT7am95giwc/k2L+XC1VBzsuloIZMAYJm0lpmRtIuepP9bbI5OAPDXBTOCFEtbJ/A==
+X-Received: by 2002:a05:6000:2ca:b0:385:fc70:7f6 with SMTP id
+ ffacd0b85a97d-388e4d2f5c6mr5695014f8f.7.1734604072142; 
+ Thu, 19 Dec 2024 02:27:52 -0800 (PST)
+Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b11495sm47429465e9.19.2024.12.19.02.03.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 02:03:39 -0800 (PST)
-Message-ID: <6eed1b13-f41a-4590-8254-dbfb1f9c7a5b@linaro.org>
-Date: Thu, 19 Dec 2024 11:03:38 +0100
+ ffacd0b85a97d-38a1c828ba0sm1215686f8f.14.2024.12.19.02.27.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Dec 2024 02:27:51 -0800 (PST)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PATCH] make-release: only leave tarball of wrap-file subprojects
+Date: Thu, 19 Dec 2024 11:27:50 +0100
+Message-ID: <20241219102750.389885-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.47.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Ani Sinha <anisinha@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Cc: Alexander Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Daniel Berrange <berrange@redhat.com>
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <61096f4d-7b5f-48fd-9840-caf058db2201@linaro.org>
- <2933CCF9-F9D6-46D1-9658-07B85104011D@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <2933CCF9-F9D6-46D1-9658-07B85104011D@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,151 +104,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 10:35, Ani Sinha wrote:
->> On 18 Dec 2024, at 11:13 PM, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->> On 16/12/24 12:48, Ani Sinha wrote:
->>> VM firmware update is a mechanism where the virtual machines can use their
->>> preferred and trusted firmware image in their execution environment without
->>> having to depend on a untrusted party to provide the firmware bundle. This is
->>> particularly useful for confidential virtual machines that are deployed in the
->>> cloud where the tenant and the cloud provider are two different entities. In
->>> this scenario, virtual machines can bring their own trusted firmware image
->>> bundled as a part of their filesystem (using UKIs for example[1]) and then use
->>> this hypervisor interface to update to their trusted firmware image. This also
->>> allows the guests to have a consistent measurements on the firmware image.
->>> This change introduces basic support for the fw-cfg based hypervisor interface
->>> and the corresponding device. The change also includes the
->>> specification document for this interface. The interface is made generic
->>> enough so that guests are free to use their own ABI to pass required
->>> information between initial and trusted execution contexts (where they are
->>> running their own trusted firmware image) without the hypervisor getting
->>> involved in between. In subsequent patches, we will introduce other minimal
->>> changes on the hypervisor that are required to make the mechanism work.
->>> [1] See systemd pull requests https://github.com/systemd/systemd/pull/35091
->>> and https://github.com/systemd/systemd/pull/35281 for some discussions on
->>> how we can bundle firmware image within an UKI.
->>> CC: Alex Graf <graf@amazon.com>
->>> CC: Paolo Bonzini <pbonzini@redhat.com>
->>> CC: Gerd Hoffman <kraxel@redhat.com>
->>> CC: Igor Mammedov <imammedo@redhat.com>
->>> CC: Vitaly Kuznetsov <vkuznets@redhat.com>
->>> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->>> ---
->>>   MAINTAINERS                  |   9 ++
->>>   docs/specs/index.rst         |   1 +
->>>   docs/specs/vmfwupdate.rst    | 109 ++++++++++++++++++++++++
->>>   hw/misc/meson.build          |   2 +
->>>   hw/misc/vmfwupdate.c         | 157 +++++++++++++++++++++++++++++++++++
->>>   include/hw/misc/vmfwupdate.h | 103 +++++++++++++++++++++++
->>>   6 files changed, 381 insertions(+)
->>>   create mode 100644 docs/specs/vmfwupdate.rst
->>>   create mode 100644 hw/misc/vmfwupdate.c
->>>   create mode 100644 include/hw/misc/vmfwupdate.h
->>
->>
->>> +static void vmfwupdate_realize(DeviceState *dev, Error **errp)
->>> +{
->>> +    VMFwUpdateState *s = VMFWUPDATE(dev);
->>> +    FWCfgState *fw_cfg = fw_cfg_find();
->>> +
->>> +    /* multiple devices are not supported */
->>> +    if (!vmfwupdate_find()) {
->>> +        error_setg(errp, "at most one %s device is permitted",
->>> +                   TYPE_VMFWUPDATE);
->>> +        return;
->>> +    }
->>> +
->>> +    /* fw_cfg with DMA support is necessary to support this device */
->>> +    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
->>> +        error_setg(errp, "%s device requires fw_cfg",
->>> +                   TYPE_VMFWUPDATE);
->>> +        return;
->>> +    }
->>> +
->>> +    memset(&s->fw_blob, 0, sizeof(s->fw_blob));
->>> +    memset(&s->opaque_blobs, 0, sizeof(s->opaque_blobs));
->>> +
->>> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_OBLOB,
->>> +                             NULL, NULL, s,
->>> +                             &s->opaque_blobs,
->>> +                             sizeof(s->opaque_blobs),
->>> +                             false);
->>> +
->>> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_FWBLOB,
->>> +                             NULL, fw_blob_write, s,
->>> +                             &s->fw_blob,
->>> +                             sizeof(s->fw_blob),
->>> +                             false);
->>> +
->>> +    /*
->>> +     * Add global capability fw_cfg file. This will be used by the guest to
->>> +     * check capability of the hypervisor.
->>> +     */
->>> +    s->capability = cpu_to_le16(CAP_VMFWUPD_MASK | VMFWUPDATE_CAP_EDKROM);
->>> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_CAP,
->>> +                    &s->capability, sizeof(s->capability));
->>> +
->>> +    s->plat_bios_size = get_max_fw_size(); /* for non-pc, this is 0 */
->>> +    /* size of bios region for the platform - read only by the guest */
->>> +    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_BIOS_SIZE,
->>> +                    &s->plat_bios_size, sizeof(s->plat_bios_size));
->>> +    /*
->>> +     * add fw cfg control file to disable the hypervisor interface.
->>> +     */
->>> +    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_CONTROL,
->>> +                             NULL, NULL, s,
->>> +                             &s->disable,
->>> +                             sizeof(s->disable),
->>> +                             false);
->>> +    /*
->>> +     * This device requires to register a global reset because it is
->>> +     * not plugged to a bus (which, as its QOM parent, would reset it).
->>> +     */
->>> +    qemu_register_reset(fw_update_reset, dev);
->>
->> Shouldn't we use qemu_register_resettable() instead?
-> 
-> OK will do in v3.
-> 
->>
->>> +}
->>> +
->>> +static Property vmfwupdate_properties[] = {
->>> +    DEFINE_PROP_UINT8("disable", VMFwUpdateState, disable, 0),
->>> +    DEFINE_PROP_END_OF_LIST(),
->>> +};
->>> +
->>> +static void vmfwupdate_device_class_init(ObjectClass *klass, void *data)
->>> +{
->>> +    DeviceClass *dc = DEVICE_CLASS(klass);
->>> +
->>> +    /* we are not interested in migration - so no need to populate dc->vmsd */
->>> +    dc->desc = "VM firmware blob update device";
->>> +    dc->realize = vmfwupdate_realize;
->>> +    dc->hotpluggable = false;
->>> +    device_class_set_props(dc, vmfwupdate_properties);
->>> +    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
->>> +}
->>> +
->>> +static const TypeInfo vmfwupdate_device_info = {
->>> +    .name          = TYPE_VMFWUPDATE,
->>> +    .parent        = TYPE_DEVICE,
->>
->> What is the qdev API used here? Why not use a plain object?
-> 
-> I wrote this taking vmcoreinfo device as starting point. I will leave this as is for now unless anyone has strong opinions.
+The QEMU source archive is including the sources downloaded from crates.io
+in both tarball form (in subprojects/packagecache) and expanded/patched
+form (in the subprojects directory).  The former is the more authoritative
+form, as it has a hash that can be verified in the wrap file and checked
+against the download URL, so keep that one only.  This works also with
+--disable-download; when building QEMU for the first time from the
+tarball, Meson will print something like
 
-We shouldn't blindly copy/paste & spread possible design mistakes.
+    Using proc-macro2-1-rs source from cache.
 
-Marc-André, any particular reason to implement vmcoreinfo using qdev
-and not plain object?
+for each subproject, and then go on to extract the tarball and apply the
+overlay or the patches in subprojects/packagefiles.
 
-> 
->>
->>> +    .instance_size = sizeof(VMFwUpdateState),
->>> +    .class_init    = vmfwupdate_device_class_init,
->>> +};
-> 
-> 
+Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2719
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ scripts/make-release | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/scripts/make-release b/scripts/make-release
+index 8dc939124c4..2885e872109 100755
+--- a/scripts/make-release
++++ b/scripts/make-release
+@@ -10,6 +10,27 @@
+ # This work is licensed under the terms of the GNU GPLv2 or later.
+ # See the COPYING file in the top-level directory.
+ 
++function subproject_dir() {
++    if test ! -f "subprojects/$1.wrap"; then
++      error "scripts/archive-source.sh should only process wrap subprojects"
++    fi
++
++    # Print the directory key of the wrap file, defaulting to the
++    # subproject name.  The wrap file is in ini format and should
++    # have a single section only.  There should be only one section
++    # named "[wrap-*]", which helps keeping the script simple.
++    local dir
++    dir=$(sed -n \
++      -e '/^\[wrap-[a-z][a-z]*\]$/,/^\[/{' \
++      -e    '/^directory *= */!b' \
++      -e    's///p' \
++      -e    'q' \
++      -e '}' \
++      "subprojects/$1.wrap")
++
++    echo "${dir:-$1}"
++}
++
+ if [ $# -ne 2 ]; then
+     echo "Usage:"
+     echo " $0 gitrepo version"
+@@ -51,5 +72,13 @@ meson subprojects download $SUBPROJECTS
+         CryptoPkg/Library/OpensslLib/openssl \
+         MdeModulePkg/Library/BrotliCustomDecompressLib/brotli)
+ popd
+-tar --exclude=.git -cJf ${destination}.tar.xz ${destination}
++
++exclude=(--exclude=.git)
++# include the tarballs in subprojects/packagecache but not their expansion
++for sp in $SUBPROJECTS; do
++    if grep -xqF "[wrap-file]" subprojects/$sp.wrap; then
++      exclude+=(--exclude=subprojects/"$(subproject_dir $sp)")
++    fi
++done
++tar "${exclude[@]}" -cJf ${destination}.tar.xz ${destination}
+ rm -rf ${destination}
+-- 
+2.47.1
 
 
