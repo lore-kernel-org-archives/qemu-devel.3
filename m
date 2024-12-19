@@ -4,104 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA2EE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06551E7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJIy-00039z-Nr; Thu, 19 Dec 2024 11:23:17 -0500
+	id 1tOJGR-0002iD-GM; Thu, 19 Dec 2024 11:20:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHiX-00039N-FB
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOJCK-0001ZV-Eh
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:16:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
- id 1tOHiV-0002MU-Oj
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:41:33 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOJCI-0002y4-4e
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 11:16:24 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734619291;
+ s=mimecast20190719; t=1734624981;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=tqf6k3q8q/B0Mm1igt69ERgmFOVdeWHaULQ4Xn6JpyI=;
- b=NEs4p9zxMMltA1QLhVYk3OtDj+mQZwYED6e60QtucBFyjY54QJ47Ngzx4tSsBxmcjTJbiA
- U7gYsXCekDxJPdNkXJO6Xr7EqUuIp8EQ+WOVwxbej9D3qopFDv3Y2D/1snCZGpGdxAnMb9
- qv7hkwGx31YH1W8EOx3mDa7tCL4B0j0=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YKev/gR3vimWwOJ3HYhnfvaWkDaBzX6jXWS5q1E1pmo=;
+ b=giD0QUUUAr8jZdMJ8CBaortva83xCIGtC/ldoiH7RWG7I1nmNeQAkmnMirC8Y5tzXsrSyZ
+ qR+lgnlsWKFhqPyKIxpbC7CfG4nO+tAIVaY1LeWA+DMlIRKnlbL300OEn836MvPoCE4K2q
+ lh4JQ0BhTyewu4ZoctcytbkIfS0hRKI=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-yNVKgkm1ORSzGcXJr0k1pQ-1; Thu, 19 Dec 2024 09:41:29 -0500
-X-MC-Unique: yNVKgkm1ORSzGcXJr0k1pQ-1
-X-Mimecast-MFC-AGG-ID: yNVKgkm1ORSzGcXJr0k1pQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso527216f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:41:29 -0800 (PST)
+ us-mta-538-4bRlzzQlPVuZzfjZ5Azcag-1; Thu, 19 Dec 2024 11:16:18 -0500
+X-MC-Unique: 4bRlzzQlPVuZzfjZ5Azcag-1
+X-Mimecast-MFC-AGG-ID: 4bRlzzQlPVuZzfjZ5Azcag
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-aa6a1bf7a82so100764266b.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 08:16:17 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734619288; x=1735224088;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tqf6k3q8q/B0Mm1igt69ERgmFOVdeWHaULQ4Xn6JpyI=;
- b=FQnWZwgbr5oWo41c5BMkGyNUiSWHMFlxE1BCtXVsgLH935KjknBVTlUWIv2mD0+qYE
- Y2xx1nY+eGZBcoX1ucOsASgfs3hWZ9I9lltt66hdTjQeiafEgWF6aWQH0JpVw8bse+EJ
- X+hftZISTCiH1LRaCpAitf/JeZjqe1s6AWK70fPcxXd8IdeEdCfjaLqt/Mdfyc7YslOU
- 6PDQTCXzjGaQjuUA9TcRtQ5K5IlQ5Dvxta6ESGc+2IddjKMD3zkQyADZwqTo2H6ofXjv
- d+VAJ6V9yzGhRsJO3AftHfyCRVedYdPo96AZ3u/JxSYi507ePREfhjHAy0B8pxAcIG09
- wtYA==
-X-Gm-Message-State: AOJu0YyaMsbJmcf3mhM9yzfldkBx+JYHOJXy60KbUBDR1emkkWdtrByK
- kiefLbnGq5XkVndfNpaRVuruea1bazRnYX8rViTmhq8Rz39cxLiZvmgRfLpxGzlCoae1gZu+gR9
- Ze8yRi1TKSgyKWVacs80EovY5vhAcVASekZR1yKBvXDuYQY4EcFYoWJo5Y4QvdT/PCpTyM0em8i
- Qni4ioziL2bjDpb8aJsiZb1IV6pSqywvSUtaw=
-X-Gm-Gg: ASbGncssUvppoyevct1Qm36ukPqQs3xWuTeK9O+s0g8DKwQQyA09S58/JHMFlErVpfJ
- yw1Mw8cwFeZ+mI6sgOBz36Uo9BPFd6i0G3kA2acQCkBolViih3xvJrCdNUdb6E8W66tw5Vu9CiV
- VQmAQ7pXR6D1dWgbCzrDvsRg1cShjac+aMElQ1u4rY8fFYXpA+FX2g3kG4H/weyD6fTprTd1f4p
- foVjp+V9Y9FmpYpTyqv30GhWgUB2QGGgyuW8iEWG2x5gSJbyPqANGKqyO6UcyDZLUlv/mAgm10r
- HmAaI1cBcu8xCXJVNcR8WzCRGBPyeYM14wffAIyu
-X-Received: by 2002:a05:6000:1562:b0:385:f840:e630 with SMTP id
- ffacd0b85a97d-388e4d8fd68mr6787335f8f.37.1734619288626; 
- Thu, 19 Dec 2024 06:41:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE1pFzKjK+Z3mlcpD9cWIgAME8vSq/yi4VXzTxd+oWhVs8nWtj31upZLqkHDQHyZm4jIP/5sg==
-X-Received: by 2002:a05:6000:1562:b0:385:f840:e630 with SMTP id
- ffacd0b85a97d-388e4d8fd68mr6787297f8f.37.1734619288219; 
- Thu, 19 Dec 2024 06:41:28 -0800 (PST)
-Received: from localhost
- (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
- [2003:cb:c749:6600:b73a:466c:e610:686])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-4366128a44fsm19546165e9.43.2024.12.19.06.41.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:41:27 -0800 (PST)
-From: David Hildenbrand <david@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: David Hildenbrand <david@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Heiko Carstens <hca@linux.ibm.com>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Janosch Frank <frankja@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v3 04/14] s390x: rename s390-virtio-hcall* to s390-hypercall*
-Date: Thu, 19 Dec 2024 15:41:05 +0100
-Message-ID: <20241219144115.2820241-5-david@redhat.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219144115.2820241-1-david@redhat.com>
-References: <20241219144115.2820241-1-david@redhat.com>
+ d=1e100.net; s=20230601; t=1734624977; x=1735229777;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=YKev/gR3vimWwOJ3HYhnfvaWkDaBzX6jXWS5q1E1pmo=;
+ b=OnsS/1zQGW7OWBdNKkjKErdFmLZ1PBJZcRwqcZJmBGBUqsyvJ57AC9mKRlEItBKIuB
+ OjtiAivMLF0vcjN0aLTmMAotxpIkr8DnNOXxcxz1Qotce2vKf2smtD/12lDurWLCg2rD
+ 24EV6rokj8c3j5/47dbSdCSAG0DoyOQrWK3Jpe/LpqljfQzL+msNcEXQDJ7ZVTUAEag5
+ UYSQ/3U1v9GniA1yo3PCfETaLmSMNrWqNmr99ts9FyDWwSxuRhcxX8ENJlfwmM3Rqz7X
+ 0eruaxaSN/qgJwV6ia+vSStaZsDtTX8rsybxTU9T9l5td1ZLAvGQ2dtMGnaSuCkarEEW
+ xzmw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTQZO9l5QtlF/PcPcmtLohVmVEk6/XRypcmfTGjXZbI22G6WEo5k96XcjtUfLXo/wPv2AYG/XxkJ+A@nongnu.org
+X-Gm-Message-State: AOJu0YzA589gdpQ3vPk2YLO+zwghXec/h2nSoa5krGg/B4o4xhc4Qhs7
+ XfQM+Ab23uIgMzhiEPlQ+3eI/XdalF+WBb1fvWUiINrRFqiqfUXZRhOF81kjxco3oTGUbrSKQqj
+ huOF4t/eHTSQaAOs25FXleEQOvAviyzSvfrrYv+FDM58xCUrsdoeGbtdzmXuxZJh0c/H68WUSWI
+ uy16/RuEU87VwicoDNSkEfy89Bn5I=
+X-Gm-Gg: ASbGncs3sUQ284gWSMnYuphsYUNfnSRsP4pXE5pgqgDbtrAvf4uv7KFLF+zV5iZoXew
+ yReRekdb3nZm29ud7bDZ9AJFXvc0Sm2cs7iFdUeM=
+X-Received: by 2002:a17:907:7f89:b0:aa6:87e8:1d0e with SMTP id
+ a640c23a62f3a-aabf478a57cmr623777666b.34.1734624976794; 
+ Thu, 19 Dec 2024 08:16:16 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEZMglEsU7MTy0bUjgF4gGawngFvIS8xLzr1gPwdUS07HILykdHIYmIw5Jfjlmp9o+6CNG2i+9+wC4p7KlR7g0=
+X-Received: by 2002:a17:907:7f89:b0:aa6:87e8:1d0e with SMTP id
+ a640c23a62f3a-aabf478a57cmr623774566b.34.1734624976445; Thu, 19 Dec 2024
+ 08:16:16 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+ <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
+In-Reply-To: <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Thu, 19 Dec 2024 21:46:03 +0530
+Message-ID: <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="0000000000008a39880629a1d93e"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,103 +104,208 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Let's make it clearer that we are talking about general
-QEMU/KVM-specific hypercalls.
+--0000000000008a39880629a1d93e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Message-ID: <20241008105455.2302628-5-david@redhat.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: David Hildenbrand <david@redhat.com>
----
- hw/s390x/meson.build                               | 2 +-
- hw/s390x/{s390-virtio-hcall.c => s390-hypercall.c} | 2 +-
- hw/s390x/{s390-virtio-hcall.h => s390-hypercall.h} | 6 +++---
- target/s390x/kvm/kvm.c                             | 2 +-
- target/s390x/tcg/misc_helper.c                     | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
- rename hw/s390x/{s390-virtio-hcall.c => s390-hypercall.c} (97%)
- rename hw/s390x/{s390-virtio-hcall.h => s390-hypercall.h} (86%)
+On Thu, 19 Dec, 2024, 9:22 pm Philippe Mathieu-Daud=C3=A9, <philmd@linaro.o=
+rg>
+wrote:
 
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index d6c8c33915..e344a3bd8c 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -29,7 +29,7 @@ s390x_ss.add(when: 'CONFIG_TCG', if_true: files(
- ))
- s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
-   's390-virtio-ccw.c',
--  's390-virtio-hcall.c',
-+  's390-hypercall.c',
- ))
- s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
- s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
-diff --git a/hw/s390x/s390-virtio-hcall.c b/hw/s390x/s390-hypercall.c
-similarity index 97%
-rename from hw/s390x/s390-virtio-hcall.c
-rename to hw/s390x/s390-hypercall.c
-index 5fb78a719e..f816c2b1ef 100644
---- a/hw/s390x/s390-virtio-hcall.c
-+++ b/hw/s390x/s390-hypercall.c
-@@ -12,7 +12,7 @@
- #include "qemu/osdep.h"
- #include "cpu.h"
- #include "hw/boards.h"
--#include "hw/s390x/s390-virtio-hcall.h"
-+#include "hw/s390x/s390-hypercall.h"
- #include "hw/s390x/ioinst.h"
- #include "hw/s390x/css.h"
- #include "virtio-ccw.h"
-diff --git a/hw/s390x/s390-virtio-hcall.h b/hw/s390x/s390-hypercall.h
-similarity index 86%
-rename from hw/s390x/s390-virtio-hcall.h
-rename to hw/s390x/s390-hypercall.h
-index dca456b926..2fa81dbfdd 100644
---- a/hw/s390x/s390-virtio-hcall.h
-+++ b/hw/s390x/s390-hypercall.h
-@@ -9,8 +9,8 @@
-  * directory.
-  */
- 
--#ifndef HW_S390_VIRTIO_HCALL_H
--#define HW_S390_VIRTIO_HCALL_H
-+#ifndef HW_S390_HYPERCALL_H
-+#define HW_S390_HYPERCALL_H
- 
- #include "cpu.h"
- 
-@@ -21,4 +21,4 @@
- 
- void handle_diag_500(S390CPU *cpu, uintptr_t ra);
- 
--#endif /* HW_S390_VIRTIO_HCALL_H */
-+#endif /* HW_S390_HYPERCALL_H */
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 508403609f..7a3e1a8e1e 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -49,7 +49,7 @@
- #include "hw/s390x/ebcdic.h"
- #include "exec/memattrs.h"
- #include "hw/s390x/s390-virtio-ccw.h"
--#include "hw/s390x/s390-virtio-hcall.h"
-+#include "hw/s390x/s390-hypercall.h"
- #include "target/s390x/kvm/pv.h"
- #include CONFIG_DEVICES
- 
-diff --git a/target/s390x/tcg/misc_helper.c b/target/s390x/tcg/misc_helper.c
-index 2b4310003b..b726a95352 100644
---- a/target/s390x/tcg/misc_helper.c
-+++ b/target/s390x/tcg/misc_helper.c
-@@ -36,7 +36,7 @@
- #include "sysemu/cpus.h"
- #include "sysemu/sysemu.h"
- #include "hw/s390x/ebcdic.h"
--#include "hw/s390x/s390-virtio-hcall.h"
-+#include "hw/s390x/s390-hypercall.h"
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/s390_flic.h"
- #include "hw/s390x/ioinst.h"
--- 
-2.47.1
+> On 16/12/24 12:48, Ani Sinha wrote:
+>
+> > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> > index d02d96e403..4c5bdb0de2 100644
+> > --- a/hw/misc/meson.build
+> > +++ b/hw/misc/meson.build
+> > @@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA', if_true:
+> files('mac_via.c'))
+> >   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true:
+> files('mips_cmgcr.c', 'mips_cpc.c'))
+> >   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c')=
+)
+> >
+> > +specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true:
+> files('vmfwupdate.c'))
+>
+> FW_CFG_DMA is offered by multiple targets ...:
+>
+> $ git grep -w FW_CFG_DMA
+> hw/arm/Kconfig:19:    select FW_CFG_DMA
+> hw/i386/Kconfig:82:    select FW_CFG_DMA
+> hw/i386/Kconfig:113:    select FW_CFG_DMA
+> hw/loongarch/Kconfig:22:    select FW_CFG_DMA
+> hw/riscv/Kconfig:59:    select FW_CFG_DMA
+>
+> > diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
+> > new file mode 100644
+> > index 0000000000..1e29a610c0
+> > --- /dev/null
+> > +++ b/hw/misc/vmfwupdate.c
+> > @@ -0,0 +1,157 @@
+> > +/*
+> > + * Guest driven VM boot component update device
+> > + * For details and specification, please look at
+> docs/specs/vmfwupdate.rst.
+> > + *
+> > + * Copyright (C) 2024 Red Hat, Inc.
+> > + *
+> > + * Authors: Ani Sinha <anisinha@redhat.com>
+> > + *
+> > + * This work is licensed under the terms of the GNU GPL, version 2 or
+> later.
+> > + * See the COPYING file in the top-level directory.
+> > + *
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qapi/error.h"
+> > +#include "qemu/module.h"
+> > +#include "sysemu/reset.h"
+> > +#include "hw/nvram/fw_cfg.h"
+> > +#include "hw/i386/pc.h"
+>
+> ... however ...
+>
+> > +#include "hw/qdev-properties.h"
+> > +#include "hw/misc/vmfwupdate.h"
+> > +#include "qemu/error-report.h"
+> > +
+> > +static void fw_update_reset(void *dev)
+> > +{
+> > +    /* a NOOP at present */
+> > +    return;
+> > +}
+> > +
+> > +
+> > +static uint64_t get_max_fw_size(void)
+> > +{
+> > +    Object *m_obj =3D qdev_get_machine();
+> > +    PCMachineState *pcms =3D PC_MACHINE(m_obj);
+> > +
+> > +    if (pcms) {
+> > +        return pcms->max_fw_size;
+>
+> ... this code depends on x86/PC.
+>
+> Could it be wiser to add a new VM_FWUPDATE Kconfig
+> symbol, having it depending on FW_CFG_DMA && I386?
+>
+
+There is no reason why vmfwupdate would be limited to x86 only. There is
+minimal support needed from hypervisor side for this mechanism. That
+mechanism has little dependency on specific platform.
+
+
+> +    } else {
+> > +        return 0;
+> > +    }
+> > +}
+>
+>
+
+--0000000000008a39880629a1d93e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, 19 Dec, 2024, 9:22 pm Ph=
+ilippe Mathieu-Daud=C3=A9, &lt;<a href=3D"mailto:philmd@linaro.org">philmd@=
+linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On 16/12=
+/24 12:48, Ani Sinha wrote:<br>
+<br>
+&gt; diff --git a/hw/misc/meson.build b/hw/misc/meson.build<br>
+&gt; index d02d96e403..4c5bdb0de2 100644<br>
+&gt; --- a/hw/misc/meson.build<br>
+&gt; +++ b/hw/misc/meson.build<br>
+&gt; @@ -148,6 +148,8 @@ specific_ss.add(when: &#39;CONFIG_MAC_VIA&#39;, if=
+_true: files(&#39;mac_via.c&#39;))<br>
+&gt;=C2=A0 =C2=A0specific_ss.add(when: &#39;CONFIG_MIPS_CPS&#39;, if_true: =
+files(&#39;mips_cmgcr.c&#39;, &#39;mips_cpc.c&#39;))<br>
+&gt;=C2=A0 =C2=A0specific_ss.add(when: &#39;CONFIG_MIPS_ITU&#39;, if_true: =
+files(&#39;mips_itu.c&#39;))<br>
+&gt;=C2=A0 =C2=A0<br>
+&gt; +specific_ss.add(when: &#39;CONFIG_FW_CFG_DMA&#39;, if_true: files(&#3=
+9;vmfwupdate.c&#39;))<br>
+<br>
+FW_CFG_DMA is offered by multiple targets ...:<br>
+<br>
+$ git grep -w FW_CFG_DMA<br>
+hw/arm/Kconfig:19:=C2=A0 =C2=A0 select FW_CFG_DMA<br>
+hw/i386/Kconfig:82:=C2=A0 =C2=A0 select FW_CFG_DMA<br>
+hw/i386/Kconfig:113:=C2=A0 =C2=A0 select FW_CFG_DMA<br>
+hw/loongarch/Kconfig:22:=C2=A0 =C2=A0 select FW_CFG_DMA<br>
+hw/riscv/Kconfig:59:=C2=A0 =C2=A0 select FW_CFG_DMA<br>
+<br>
+&gt; diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c<br>
+&gt; new file mode 100644<br>
+&gt; index 0000000000..1e29a610c0<br>
+&gt; --- /dev/null<br>
+&gt; +++ b/hw/misc/vmfwupdate.c<br>
+&gt; @@ -0,0 +1,157 @@<br>
+&gt; +/*<br>
+&gt; + * Guest driven VM boot component update device<br>
+&gt; + * For details and specification, please look at docs/specs/vmfwupdat=
+e.rst.<br>
+&gt; + *<br>
+&gt; + * Copyright (C) 2024 Red Hat, Inc.<br>
+&gt; + *<br>
+&gt; + * Authors: Ani Sinha &lt;<a href=3D"mailto:anisinha@redhat.com" targ=
+et=3D"_blank" rel=3D"noreferrer">anisinha@redhat.com</a>&gt;<br>
+&gt; + *<br>
+&gt; + * This work is licensed under the terms of the GNU GPL, version 2 or=
+ later.<br>
+&gt; + * See the COPYING file in the top-level directory.<br>
+&gt; + *<br>
+&gt; + */<br>
+&gt; +<br>
+&gt; +#include &quot;qemu/osdep.h&quot;<br>
+&gt; +#include &quot;qapi/error.h&quot;<br>
+&gt; +#include &quot;qemu/module.h&quot;<br>
+&gt; +#include &quot;sysemu/reset.h&quot;<br>
+&gt; +#include &quot;hw/nvram/fw_cfg.h&quot;<br>
+&gt; +#include &quot;hw/i386/pc.h&quot;<br>
+<br>
+... however ...<br>
+<br>
+&gt; +#include &quot;hw/qdev-properties.h&quot;<br>
+&gt; +#include &quot;hw/misc/vmfwupdate.h&quot;<br>
+&gt; +#include &quot;qemu/error-report.h&quot;<br>
+&gt; +<br>
+&gt; +static void fw_update_reset(void *dev)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 /* a NOOP at present */<br>
+&gt; +=C2=A0 =C2=A0 return;<br>
+&gt; +}<br>
+&gt; +<br>
+&gt; +<br>
+&gt; +static uint64_t get_max_fw_size(void)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 Object *m_obj =3D qdev_get_machine();<br>
+&gt; +=C2=A0 =C2=A0 PCMachineState *pcms =3D PC_MACHINE(m_obj);<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 if (pcms) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return pcms-&gt;max_fw_size;<br>
+<br>
+... this code depends on x86/PC.<br>
+<br>
+Could it be wiser to add a new VM_FWUPDATE Kconfig<br>
+symbol, having it depending on FW_CFG_DMA &amp;&amp; I386?<br></blockquote>=
+</div></div><div dir=3D"auto"><br></div><div dir=3D"auto">There is no reaso=
+n why vmfwupdate would be limited to x86 only. There is minimal support nee=
+ded from hypervisor side for this mechanism. That mechanism has little depe=
+ndency on specific platform.=C2=A0</div><div dir=3D"auto"><br></div><div di=
+r=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quot=
+e_container"><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
+order-left:1px #ccc solid;padding-left:1ex">
+&gt; +=C2=A0 =C2=A0 } else {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +}<br>
+<br>
+</blockquote></div></div></div>
+
+--0000000000008a39880629a1d93e--
 
 
