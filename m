@@ -4,97 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AEBE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:03:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BAAE77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:09:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJvU-0003WL-SJ; Thu, 19 Dec 2024 12:03:04 -0500
+	id 1tOK15-0005gL-Ql; Thu, 19 Dec 2024 12:08:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOJvT-0003Ve-SB
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:03:03 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOK13-0005g8-7L
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:08:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOJvR-0003WG-SX
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:03:03 -0500
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1tOK10-00052u-QZ
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:08:48 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734627779;
+ s=mimecast20190719; t=1734628125;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=/aVhxzNeYhn+VYtubSsYO3EM+sTUc89Fg/MIhk4FCKM=;
- b=e7dtyA65/byQdC5o1RyBCc8ptZ2c99JjJAKa6eT1LzZ9Aq7vKZhFLMREDeWdIV/gMRxVbJ
- HUj31WmfZoL7feRoGy9padj4zzpZUi4g7cacaM/hcG6HvVCSciIQ5pnYXeR3GknXT0y148
- apJxx7JGDvgjlJn6kCXDsPYPU19BKgQ=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5Eg2wUNdtaL4kmVQAk0GWvYcQ9MBYiq3VF2WXBhPOtA=;
+ b=XQfHAZP8wEWsJnkw8rJTDfZ92HO7PyXZ0xNSNJrB5Fr7B390aWso8Jz62nogXPuHyeutjX
+ AKYyRMYTrvxLtJBkO3kHvhT2CVAh6+rDubZr7+jG9zVGS6joyOIqF+k6arvqi1eMjTT68e
+ uHxx+OKAPRbUA0VPNKFjEybVI0Pz6BI=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-zQ1VcKpdOT-FCYKMUeJoPQ-1; Thu, 19 Dec 2024 12:02:58 -0500
-X-MC-Unique: zQ1VcKpdOT-FCYKMUeJoPQ-1
-X-Mimecast-MFC-AGG-ID: zQ1VcKpdOT-FCYKMUeJoPQ
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6d8f94518c9so19909866d6.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:02:58 -0800 (PST)
+ us-mta-581-zT82nKIOMTqTMbpE4tzJ-g-1; Thu, 19 Dec 2024 12:08:43 -0500
+X-MC-Unique: zT82nKIOMTqTMbpE4tzJ-g-1
+X-Mimecast-MFC-AGG-ID: zT82nKIOMTqTMbpE4tzJ-g
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-aa698b61931so100269166b.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:08:42 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734627778; x=1735232578;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/aVhxzNeYhn+VYtubSsYO3EM+sTUc89Fg/MIhk4FCKM=;
- b=HGFZ3VGrlR/RZT5UbqnqauG7KRJWCzTKYecs37QdSp5BQu4/BWsgHU0FI7L1twiNWn
- XE4h3cHLdzrKGHyz+4b7P4C/kle6inJfU1cSPsJk0QZrT1hJTq9dIrE12pop+mf+DuG7
- 8+sJoAB8DD6qeux5mHx1SP4ci+q3PvPsujzlZGTd/FkaN17ONWUl68M4611yeqzoC2pu
- P2VNsmsOh0enlFWlwJKtoYf9pmIxP5K8EsGmfcgs9QT3UD6NHJ3FdDbScbL9zHYBaEoV
- L+rSHEG348/JPipf6dd1lrxET8TBsdPW5cjia6M/Fk8NDB9azanTeyoj1IqzkJQ0alVT
- Nljw==
-X-Gm-Message-State: AOJu0YygC4suQIu0D7LxkHtpBd2Ns9+9B1nEx57PhnorIIVAwP9u45i/
- FcsOl7OOQoHSrTdc5esO8u9gezoGfPM3uwBlmkzLCZ7aVv80ISIMLLl4Yt/jStXkFAn2F2q9rms
- OoJWLJjRo1WeX4oofEAcueP8AwlVCwZv3siryGDvKxSO5ulqRbDiU
-X-Gm-Gg: ASbGncte8KcK2HSJLTNRNVhO2kQPf0AvteE5LtyVB+V1RABZUcCDx4HkIOu63NizhqA
- L7ZtOzAiyDPj+ZPsvCazb9AsumU3dL2eRUchRp5w902qQIeSDILIYCpD/lr6RIOC0It+MEmMZyf
- XGsICJcB8izX+GZ0l/IvZtbBMPkezy+sbBQqlHL+5SxzZozsDskslVKCmkFulpWGzS4PZDSPHEJ
- Qv5c9OZuAsLMNMwBDIMzSiloauKDzHpayZU9niarHZvvWxprIXGnTYnBYuS1eTgekn3zEDp15eX
- SQo0hZfXNOBODfEYjQ==
-X-Received: by 2002:a05:6214:e4c:b0:6d8:8496:6b00 with SMTP id
- 6a1803df08f44-6dd14c56e34mr71368946d6.35.1734627777786; 
- Thu, 19 Dec 2024 09:02:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHnMogb2fxy6wnHaCUFKXIF4AP9ByqzAfzXIvChJJ4Wa97kbjji3SYXcyaz/pQgMpgg9tRJVw==
-X-Received: by 2002:a05:6214:e4c:b0:6d8:8496:6b00 with SMTP id
- 6a1803df08f44-6dd14c56e34mr71368356d6.35.1734627777370; 
- Thu, 19 Dec 2024 09:02:57 -0800 (PST)
-Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
- [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6dd18137367sm8249666d6.65.2024.12.19.09.02.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 09:02:56 -0800 (PST)
-Date: Thu, 19 Dec 2024 12:02:54 -0500
-From: Peter Xu <peterx@redhat.com>
-To: Steve Sistare <steven.sistare@oracle.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- David Hildenbrand <david@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Philippe Mathieu-Daude <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P. Berrange" <berrange@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH V4 19/19] migration: cpr-transfer documentation
-Message-ID: <Z2RRvnsYZ7t3f8-b@x1n>
-References: <1733145611-62315-1-git-send-email-steven.sistare@oracle.com>
- <1733145611-62315-20-git-send-email-steven.sistare@oracle.com>
+ d=1e100.net; s=20230601; t=1734628122; x=1735232922;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=5Eg2wUNdtaL4kmVQAk0GWvYcQ9MBYiq3VF2WXBhPOtA=;
+ b=Lz/BS/oJJxgiy8s80rxE5UYFYAD/9w5OsNfGvL3ggFOAKBs4HUj/+4ptjlcbClfiig
+ AP8SoDZoSQUReB2Csvp8zlK9TJMWTZS0hL90WWVrpM+5PAVRmZHyLMxPxJPu/DlyePVy
+ /7mNqLBWy4P6UpfwginPOMy7bnKzqnIKGDgudPG1UEg9Vrh2LiUPDKP//xlCflTU1Os7
+ VPleDH1wPGUii3+yGv2IvVTpxJnoLkfETN4C36TNxpbdeFawIJ31F7ElfTc+nXTaB5+t
+ MB0N5hI1m6z+I7GcRiiYHCYygcp/vDgAF1leNwYI16v7KcQK16X1RSy77dFENqY0//Tm
+ tMWw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWqsS7WD3iAxHErJVsd6B/6xzunLs2Lq7QE/1ZPccpIDYk5xj0PfJcyK+wnxMyxWuXWdEFbeQkq4tqb@nongnu.org
+X-Gm-Message-State: AOJu0YxgfBxZowL3ttBeYCSGUO8k7AOVrmWMHGikW2Vhdc1hYP1qru34
+ wdg+w/L0BFWCS+4ysmdY8uASufMSaGE/VLTD37tdsdt8JDXNYRp1mTHBIMZz9IiZ8lMxelWzKgT
+ XT/IrTCIXfMZ9HIxzf/2GlPUuCyPjwiZNZnVm4v88eLyXlFNVE5lKWAD/b+sR/f3Gi8wjhpaB1t
+ WVd1IV8+494YhhopMsnWXEMjTL1L4=
+X-Gm-Gg: ASbGnctxSZgRSC5zJog8b5qp5uIhXtsL8EXz2M5xDp5EvswNRS8w1kz2VnSCvghYjau
+ dOd2RH1NFPNaXSf/4OCzdODyNDKTDh4JfuHL5rtg=
+X-Received: by 2002:a17:907:97d2:b0:aa5:27d4:980a with SMTP id
+ a640c23a62f3a-aac2369962emr12543766b.49.1734628121701; 
+ Thu, 19 Dec 2024 09:08:41 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGuLtlaq1Opv5+aFUWJubqIZo7Kw06lA6KEBs0UAd9DT+RER0Bs6VhrEQFE/m6dYLrA5/bx6aAMWP3ZIz60LYs=
+X-Received: by 2002:a17:907:97d2:b0:aa5:27d4:980a with SMTP id
+ a640c23a62f3a-aac2369962emr12537766b.49.1734628121205; Thu, 19 Dec 2024
+ 09:08:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1733145611-62315-20-git-send-email-steven.sistare@oracle.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+References: <20241216114841.1025070-1-anisinha@redhat.com>
+ <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
+ <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
+ <55f6dfe7-cadf-4942-81e8-18b15938c349@linaro.org>
+In-Reply-To: <55f6dfe7-cadf-4942-81e8-18b15938c349@linaro.org>
+From: Ani Sinha <anisinha@redhat.com>
+Date: Thu, 19 Dec 2024 22:38:28 +0530
+Message-ID: <CAK3XEhNN9EO75vgsdRboMZ7nwZbaL0eenSwSy-7Hze-ukyTZsQ@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
+ Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000fb709a0629a29491"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
 X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -112,235 +106,267 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Dec 02, 2024 at 05:20:11AM -0800, Steve Sistare wrote:
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+--000000000000fb709a0629a29491
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I think this one is already good enough, so:
+On Thu, 19 Dec, 2024, 10:21 pm Philippe Mathieu-Daud=C3=A9, <philmd@linaro.=
+org>
+wrote:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> On 19/12/24 17:16, Ani Sinha wrote:
+> >
+> >
+> > On Thu, 19 Dec, 2024, 9:22 pm Philippe Mathieu-Daud=C3=A9, <philmd@lina=
+ro.org
+> > <mailto:philmd@linaro.org>> wrote:
+> >
+> >     On 16/12/24 12:48, Ani Sinha wrote:
+> >
+> >      > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> >      > index d02d96e403..4c5bdb0de2 100644
+> >      > --- a/hw/misc/meson.build
+> >      > +++ b/hw/misc/meson.build
+> >      > @@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA',
+> >     if_true: files('mac_via.c'))
+> >      >   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true:
+> >     files('mips_cmgcr.c', 'mips_cpc.c'))
+> >      >   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true:
+> >     files('mips_itu.c'))
+> >      >
+> >      > +specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true:
+> >     files('vmfwupdate.c'))
+> >
+> >     FW_CFG_DMA is offered by multiple targets ...:
+> >
+> >     $ git grep -w FW_CFG_DMA
+> >     hw/arm/Kconfig:19:    select FW_CFG_DMA
+> >     hw/i386/Kconfig:82:    select FW_CFG_DMA
+> >     hw/i386/Kconfig:113:    select FW_CFG_DMA
+> >     hw/loongarch/Kconfig:22:    select FW_CFG_DMA
+> >     hw/riscv/Kconfig:59:    select FW_CFG_DMA
+> >
+> >      > diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
+> >      > new file mode 100644
+> >      > index 0000000000..1e29a610c0
+> >      > --- /dev/null
+> >      > +++ b/hw/misc/vmfwupdate.c
+> >      > @@ -0,0 +1,157 @@
+> >      > +/*
+> >      > + * Guest driven VM boot component update device
+> >      > + * For details and specification, please look at docs/specs/
+> >     vmfwupdate.rst.
+> >      > + *
+> >      > + * Copyright (C) 2024 Red Hat, Inc.
+> >      > + *
+> >      > + * Authors: Ani Sinha <anisinha@redhat.com
+> >     <mailto:anisinha@redhat.com>>
+> >      > + *
+> >      > + * This work is licensed under the terms of the GNU GPL, versio=
+n
+> >     2 or later.
+> >      > + * See the COPYING file in the top-level directory.
+> >      > + *
+> >      > + */
+> >      > +
+> >      > +#include "qemu/osdep.h"
+> >      > +#include "qapi/error.h"
+> >      > +#include "qemu/module.h"
+> >      > +#include "sysemu/reset.h"
+> >      > +#include "hw/nvram/fw_cfg.h"
+> >      > +#include "hw/i386/pc.h"
+> >
+> >     ... however ...
+> >
+> >      > +#include "hw/qdev-properties.h"
+> >      > +#include "hw/misc/vmfwupdate.h"
+> >      > +#include "qemu/error-report.h"
+> >      > +
+> >      > +static void fw_update_reset(void *dev)
+> >      > +{
+> >      > +    /* a NOOP at present */
+> >      > +    return;
+> >      > +}
+> >      > +
+> >      > +
+> >      > +static uint64_t get_max_fw_size(void)
+> >      > +{
+> >      > +    Object *m_obj =3D qdev_get_machine();
+> >      > +    PCMachineState *pcms =3D PC_MACHINE(m_obj);
+> >      > +
+> >      > +    if (pcms) {
+> >      > +        return pcms->max_fw_size;
+> >
+> >     ... this code depends on x86/PC.
+> >
+> >     Could it be wiser to add a new VM_FWUPDATE Kconfig
+> >     symbol, having it depending on FW_CFG_DMA && I386?
+> >
+> >
+> > There is no reason why vmfwupdate would be limited to x86 only. There i=
+s
+> > minimal support needed from hypervisor side for this mechanism. That
+> > mechanism has little dependency on specific platform.
+>
+> OK, then please remove that PCMachineState use
 
-But still, a few comments inline.
 
-> ---
->  docs/devel/migration/CPR.rst | 176 ++++++++++++++++++++++++++++++++++++++++++-
->  1 file changed, 174 insertions(+), 2 deletions(-)
-> 
-> diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
-> index 63c3647..a8a57c0 100644
-> --- a/docs/devel/migration/CPR.rst
-> +++ b/docs/devel/migration/CPR.rst
-> @@ -5,7 +5,7 @@ CPR is the umbrella name for a set of migration modes in which the
->  VM is migrated to a new QEMU instance on the same host.  It is
->  intended for use when the goal is to update host software components
->  that run the VM, such as QEMU or even the host kernel.  At this time,
-> -cpr-reboot is the only available mode.
-> +the cpr-reboot and cpr-transfer modes are available.
->  
->  Because QEMU is restarted on the same host, with access to the same
->  local devices, CPR is allowed in certain cases where normal migration
-> @@ -53,7 +53,7 @@ RAM is copied to the migration URI.
->  Outgoing:
->    * Set the migration mode parameter to ``cpr-reboot``.
->    * Set the ``x-ignore-shared`` capability if desired.
-> -  * Issue the ``migrate`` command.  It is recommended the the URI be a
-> +  * Issue the ``migrate`` command.  It is recommended the URI be a
->      ``file`` type, but one can use other types such as ``exec``,
->      provided the command captures all the data from the outgoing side,
->      and provides all the data to the incoming side.
-> @@ -145,3 +145,175 @@ Caveats
->  
->  cpr-reboot mode may not be used with postcopy, background-snapshot,
->  or COLO.
-> +
-> +cpr-transfer mode
-> +-----------------
-> +
-> +This mode allows the user to transfer a guest to a new QEMU instance
-> +on the same host with minimal guest pause time, by preserving guest
-> +RAM in place, albeit with new virtual addresses in new QEMU.
+That is used because the max_fw_size property only exists for pc machines.
+Do you have a better idea to get this value in a platform agnostic way?
+Like I said in the previous reply I do not know how to get this value
+reliably for all machines. If anyone has better ideas, I'm all ears.
 
-IMHO it's important to have some words discussing the diff
-v.s. ignore-shared, because from above it's undistinguishable from it.
+.
+>
+> What about the FW_CFG_DMA dependency?
+>
+>
 
-The important bit could be that cpr-transfer allows pinning.  If that's too
-internal a concept, we could mention "unlike an ignore-shared migration,
-cpr-transfer will start to enable local migrations to work seamlessly with
-all kinds of device assignments like VFIO, vDPA and so on".
+--000000000000fb709a0629a29491
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> +
-> +The user starts new QEMU on the same host as old QEMU, with the
-> +same arguments as old QEMU, plus the ``-incoming option``.  The user
-> +issues the migrate command to old QEMU, which stops the VM, saves
-> +state to the migration channels, and enters the postmigrate state.
-> +Execution resumes in new QEMU.
-> +
-> +This mode requires a second migration channel type "cpr" in the
-> +channel arguments on the outgoing side.  The channel must be a type,
-> +such as unix socket, that supports SCM_RIGHTS.  However, the cpr
-> +channel cannot be added to the list of channels for a migrate-incoming
-> +command, because it must be read before new QEMU opens a monitor.
-> +Instead, the user passes the channel as a second -incoming
-> +command-line argument to new QEMU using JSON syntax.
-> +
-> +Usage
-> +^^^^^
-> +
-> +Memory backend objects must have the ``share=on`` attribute.
-> +
-> +The VM must be started with the ``-machine aux-ram-share=on``
-> +option.  This causes implicit RAM blocks (those not described by
-> +a memory-backend object) to be allocated by mmap'ing a memfd.
-> +Examples include VGA and ROM.
-> +
-> +Outgoing:
-> +  * Set the migration mode parameter to ``cpr-transfer``.
-> +  * Issue the ``migrate`` command, containing a main channel and
-> +    a cpr channel.
-> +
-> +Incoming:
-> +  * Start new QEMU with two ``-incoming`` options.
-> +  * If the VM was running when the outgoing ``migrate`` command was
-> +    issued, then QEMU automatically resumes VM execution.
-> +
-> +Caveats
-> +^^^^^^^
-> +
-> +cpr-transfer mode may not be used with postcopy, background-snapshot,
-> +or COLO.
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" =
+class=3D"gmail_attr">On Thu, 19 Dec, 2024, 10:21 pm Philippe Mathieu-Daud=
+=C3=A9, &lt;<a href=3D"mailto:philmd@linaro.org" target=3D"_blank" rel=3D"n=
+oreferrer">philmd@linaro.org</a>&gt; wrote:<br></div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
+eft:1ex">On 19/12/24 17:16, Ani Sinha wrote:<br>
+&gt; <br>
+&gt; <br>
+&gt; On Thu, 19 Dec, 2024, 9:22 pm Philippe Mathieu-Daud=C3=A9, &lt;<a href=
+=3D"mailto:philmd@linaro.org" rel=3D"noreferrer noreferrer" target=3D"_blan=
+k">philmd@linaro.org</a> <br>
+&gt; &lt;mailto:<a href=3D"mailto:philmd@linaro.org" rel=3D"noreferrer nore=
+ferrer" target=3D"_blank">philmd@linaro.org</a>&gt;&gt; wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0On 16/12/24 12:48, Ani Sinha wrote:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; diff --git a/hw/misc/meson.build b/hw/misc/me=
+son.build<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; index d02d96e403..4c5bdb0de2 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; --- a/hw/misc/meson.build<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +++ b/hw/misc/meson.build<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; @@ -148,6 +148,8 @@ specific_ss.add(when: &#3=
+9;CONFIG_MAC_VIA&#39;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0if_true: files(&#39;mac_via.c&#39;))<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0specific_ss.add(when: &#39;CONFIG=
+_MIPS_CPS&#39;, if_true:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0files(&#39;mips_cmgcr.c&#39;, &#39;mips_cpc.c&#39;)=
+)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0specific_ss.add(when: &#39;CONFIG=
+_MIPS_ITU&#39;, if_true:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0files(&#39;mips_itu.c&#39;))<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +specific_ss.add(when: &#39;CONFIG_FW_CFG_DMA=
+&#39;, if_true:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0files(&#39;vmfwupdate.c&#39;))<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0FW_CFG_DMA is offered by multiple targets ...:<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0$ git grep -w FW_CFG_DMA<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/arm/Kconfig:19:=C2=A0 =C2=A0 select FW_CFG_DMA<b=
+r>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/i386/Kconfig:82:=C2=A0 =C2=A0 select FW_CFG_DMA<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/i386/Kconfig:113:=C2=A0 =C2=A0 select FW_CFG_DMA=
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/loongarch/Kconfig:22:=C2=A0 =C2=A0 select FW_CFG=
+_DMA<br>
+&gt;=C2=A0 =C2=A0 =C2=A0hw/riscv/Kconfig:59:=C2=A0 =C2=A0 select FW_CFG_DMA=
+<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; diff --git a/hw/misc/vmfwupdate.c b/hw/misc/v=
+mfwupdate.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; new file mode 100644<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; index 0000000000..1e29a610c0<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; --- /dev/null<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +++ b/hw/misc/vmfwupdate.c<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; @@ -0,0 +1,157 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +/*<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * Guest driven VM boot component update dev=
+ice<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * For details and specification, please loo=
+k at docs/specs/<br>
+&gt;=C2=A0 =C2=A0 =C2=A0vmfwupdate.rst.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * Copyright (C) 2024 Red Hat, Inc.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * Authors: Ani Sinha &lt;<a href=3D"mailto:=
+anisinha@redhat.com" rel=3D"noreferrer noreferrer" target=3D"_blank">anisin=
+ha@redhat.com</a><br>
+&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:anisinha@redhat.com" r=
+el=3D"noreferrer noreferrer" target=3D"_blank">anisinha@redhat.com</a>&gt;&=
+gt;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * This work is licensed under the terms of =
+the GNU GPL, version<br>
+&gt;=C2=A0 =C2=A0 =C2=A02 or later.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + * See the COPYING file in the top-level dir=
+ectory.<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + *<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; + */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;qemu/osdep.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;qapi/error.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;qemu/module.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;sysemu/reset.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;hw/nvram/fw_cfg.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;hw/i386/pc.h&quot;<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0... however ...<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;hw/qdev-properties.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;hw/misc/vmfwupdate.h&quot;<br=
+>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +#include &quot;qemu/error-report.h&quot;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +static void fw_update_reset(void *dev)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 /* a NOOP at present */<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 return;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +}<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +static uint64_t get_max_fw_size(void)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +{<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 Object *m_obj =3D qdev_get_mac=
+hine();<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 PCMachineState *pcms =3D PC_MA=
+CHINE(m_obj);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 if (pcms) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 return pcms-&gt;=
+max_fw_size;<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0... this code depends on x86/PC.<br>
+&gt; <br>
+&gt;=C2=A0 =C2=A0 =C2=A0Could it be wiser to add a new VM_FWUPDATE Kconfig<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0symbol, having it depending on FW_CFG_DMA &amp;&amp=
+; I386?<br>
+&gt; <br>
+&gt; <br>
+&gt; There is no reason why vmfwupdate would be limited to x86 only. There =
+is <br>
+&gt; minimal support needed from hypervisor side for this mechanism. That <=
+br>
+&gt; mechanism has little dependency on specific platform.<br>
+<br>
+OK, then please remove that PCMachineState use</blockquote></div></div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">That is used because the max_fw_s=
+ize property only exists for pc machines. Do you have a better idea to get =
+this value in a platform agnostic way? Like I said in the previous reply I =
+do not know how to get this value reliably for all machines. If anyone has =
+better ideas, I&#39;m all ears.</div><div dir=3D"auto"><br></div><div dir=
+=3D"auto"><div class=3D"gmail_quote"><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">.<br>
+<br>
+What about the FW_CFG_DMA dependency?<br>
+<br>
+</blockquote></div></div></div>
 
-Maybe we can even remove this line.  It's not like someone could think
-about supporting any of above; they just don't apply in cpr context.
-
-> +
-> +memory-backend-epc is not supported.
-> +
-> +The main incoming migration channel cannot be a file type.
-> +
-> +If the main incoming migration channel is a tcp type, then the port
-> +cannot be 0 (meaning dynamically choose a port).
-> +
-> +When using ``-incoming defer``, you must issue the migrate command to
-> +old QEMU before issuing any monitor commands to new QEMU, because new
-> +QEMU blocks waiting to read from the cpr channel before starting its
-> +monitor, and old QEMU does not write to the channel until the migrate
-> +command is issued.  However, new QEMU does not open and read the
-> +main migration channel until you issue the migrate incoming command.
-> +
-> +Example 1: incoming channel
-> +^^^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +In these examples, we simply restart the same version of QEMU, but
-> +in a real scenario one would start new QEMU on the incoming side.
-> +Note that new QEMU does not print the monitor prompt until old QEMU
-> +has issued the migrate command.  The outgoing side uses QMP because
-> +HMP cannot specify a CPR channel.  Some QMP responses are omitted for
-> +brevity.
-> +
-> +::
-> +
-> +  Outgoing:                             Incoming:
-> +
-> +  # qemu-kvm -qmp stdio
-> +  -object memory-backend-file,id=ram0,size=4G,
-> +  mem-path=/dev/shm/ram0,share=on -m 4G
-> +  -machine aux-ram-share=on
-> +  ...
-> +                                        # qemu-kvm -monitor stdio
-> +                                        -incoming tcp:0:44444
-> +                                        -incoming '{"channel-type": "cpr",
-> +                                          "addr": { "transport": "socket",
-> +                                          "type": "unix", "path": "cpr.sock"}}'
-> +                                        ...
-> +  {"execute":"qmp_capabilities"}
-> +
-> +  {"execute": "query-status"}
-> +  {"return": {"status": "running",
-> +              "running": true}}
-> +
-> +  {"execute":"migrate-set-parameters",
-> +   "arguments":{"mode":"cpr-transfer"}}
-> +
-> +  {"execute": "migrate", "arguments": { "channels": [
-> +    {"channel-type": "main",
-> +     "addr": { "transport": "socket", "type": "inet",
-> +               "host": "0", "port": "44444" }},
-> +    {"channel-type": "cpr",
-> +     "addr": { "transport": "socket", "type": "unix",
-> +               "path": "cpr.sock" }}]}}
-> +
-> +                                        QEMU 10.0.50 monitor
-> +                                        (qemu) info status
-> +                                        VM status: running
-> +
-> +  {"execute": "query-status"}
-> +  {"return": {"status": "postmigrate",
-> +              "running": false}}
-> +
-> +Example 2: incoming defer
-> +^^^^^^^^^^^^^^^^^^^^^^^^^
-> +
-> +This example uses ``-incoming defer`` to hot plug a device before
-> +accepting the main migration channel.  Again note you must issue the
-> +migrate command to old QEMU before you can issue any monitor
-> +commands to new QEMU.
-> +
-> +
-> +::
-> +
-> +  Outgoing:                             Incoming:
-> +
-> +  # qemu-kvm -monitor stdio
-> +  -object memory-backend-file,id=ram0,size=4G,
-> +  mem-path=/dev/shm/ram0,share=on -m 4G
-> +  -machine aux-ram-share=on
-> +  ...
-> +                                        # qemu-kvm -monitor stdio
-> +                                        -incoming defer
-> +                                        -incoming '{"channel-type": "cpr",
-> +                                          "addr": { "transport": "socket",
-> +                                          "type": "unix", "path": "cpr.sock"}}'
-> +                                        ...
-> +  {"execute":"qmp_capabilities"}
-> +
-> +  {"execute": "device_add",
-> +   "arguments": {"driver": "pcie-root-port"}}
-> +
-> +  {"execute":"migrate-set-parameters",
-> +   "arguments":{"mode":"cpr-transfer"}}
-> +
-> +  {"execute": "migrate", "arguments": { "channels": [
-> +    {"channel-type": "main",
-> +     "addr": { "transport": "socket", "type": "inet",
-> +               "host": "0", "port": "44444" }},
-> +    {"channel-type": "cpr",
-> +     "addr": { "transport": "socket", "type": "unix",
-> +               "path": "cpr.sock" }}]}}
-> +
-> +                                        QEMU 10.0.50 monitor
-> +                                        (qemu) info status
-> +                                        VM status: paused (inmigrate)
-> +                                        (qemu) device_add pcie-root-port
-> +                                        (qemu) migrate_incoming tcp:0:44444
-> +                                        (qemu) info status
-> +                                        VM status: running
-> +
-> +  {"execute": "query-status"}
-> +  {"return": {"status": "postmigrate",
-> +              "running": false}}
-> +
-> +Futures
-> +^^^^^^^
-> +
-> +cpr-transfer mode is based on a capability to transfer open file
-> +descriptors from old to new QEMU.  In the future, descriptors for
-> +vfio, iommufd, vhost, and char devices could be transferred,
-> +preserving those devices and their kernel state without interruption,
-> +even if they do not explicitly support live migration.
-> -- 
-> 1.8.3.1
-> 
-
--- 
-Peter Xu
+--000000000000fb709a0629a29491--
 
 
