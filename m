@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B5DAE7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:29:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D797E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGx-0004jo-TM; Thu, 19 Dec 2024 11:21:11 -0500
+	id 1tOJIc-0000zZ-3e; Thu, 19 Dec 2024 11:22:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOGta-000732-Om
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:48:55 -0500
+ id 1tOFOX-0006DT-KM
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:45 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOGtZ-0000yU-7k
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:48:54 -0500
+ id 1tOFOW-0008AI-03
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 07:12:45 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734616132;
+ s=mimecast20190719; t=1734610360;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b8X5LSjSBtqJTtR/RvJgszEpGhBtRYXHObYm/N1R5ek=;
- b=aG+MX7sJGjy2PLwk63VYxTUf839apJ6Bj4pKkp6ROW4U5fHSD7mQzSvfsP3L0uE9jny+hb
- d8VDKCFE8ML4Vndc2qIQs7PmCPN0iaIz9EdAm6iHT+s7dR0VaFFkXaknBI1Bq1lNrIVbWh
- 2fzJtKbnSb2C49IekDXczqC8Bov7sa8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=u9nMTxyosvlBNmWHbdS3uU97thxBhf1W17a5325xukk=;
+ b=I0X8XtTksjAg5r9WDZkXE95XIzqLSXCESAbmPct8zwhYc8oxqJLCyIPiG+BFFTpbYP457i
+ DcN+E7yc/DX5ZYS+mAbv1mGdZHH+ZBdefAsAFYWsE/vukYs/hBvbYpCyjHXT7VkoiXEwbK
+ X7oSnBF7T/rbK71V4eWdyV3Cge1TAjI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-kVW0cuoENuSubvPDxTJf_Q-1; Thu, 19 Dec 2024 08:48:51 -0500
-X-MC-Unique: kVW0cuoENuSubvPDxTJf_Q-1
-X-Mimecast-MFC-AGG-ID: kVW0cuoENuSubvPDxTJf_Q
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4361eb83f46so6741255e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 05:48:50 -0800 (PST)
+ us-mta-392-80rFSyrUNfylHPk1a0ExHw-1; Thu, 19 Dec 2024 07:12:38 -0500
+X-MC-Unique: 80rFSyrUNfylHPk1a0ExHw-1
+X-Mimecast-MFC-AGG-ID: 80rFSyrUNfylHPk1a0ExHw
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-386321c8f4bso437059f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 04:12:38 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734616129; x=1735220929;
+ d=1e100.net; s=20230601; t=1734610356; x=1735215156;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=b8X5LSjSBtqJTtR/RvJgszEpGhBtRYXHObYm/N1R5ek=;
- b=MRw/oPAImdR7WgFAa3/cChUMxKHVPwWnbJe0QKo5JljEo06QhUGGhgJoukThasB+AG
- HB+egiesCj92wVxXS9feLdQFPOHmzNWpNEyBiPDkarW784OPJ2ARWamor7pqKk1moT0X
- DkGdlKw1tQlVJtwPFtVp+JXeJLiMBnhojAQYIzOAcG33fqMtvL/Up8+Oi5VVhOuYsLjb
- I18AK+HGidufJKLThYK3mIKweUyVulfcsswYUuT32kIgcPzT9I1Uh2+uRw1xS6BjY0DH
- 58NK+nYTZ9KAOaPeEM4D+5f/ruxZTZraezplhJoFpMowOxbQD++/a7gYDlTzNhcOrkAv
- 3czA==
-X-Gm-Message-State: AOJu0YzgdscVyG6Br6djQrGN7fHJFvc0l+qyTYW2wP1gjafV9XnZAgnP
- 3lhyo7RwSlNR/D05/SXHvX+/ghYc/tAMjfZDuPJeDZMwEZgmGLFCqz8kn91DV576VTFHQM7Kpv8
- mb4/rgM2bXsfTPX/EPYejYuYPui/JOBvdw25V1ZjTvEs9OfFqXt+7pzfRa0lzJevzcfRVjkNmmR
- SMt6po7wiAeiFuPtnAWWkAf7QiPb5eykvYrn8n
-X-Gm-Gg: ASbGncuNzAyl/r36UU98v24LmoWsbvYKFfD8+ZxBOB3yugehRE4Oe/4NiPYxO6yd8RT
- CkJIpwQ4PUrgKrkWfuJe7hOLYvxyBFlrEK+mPcDj+CDHg9B8/cDTS9jpu4vMo0NwP7OJzGwrjdC
- i0BjUaxdoGoQ2tSJ5+O5LOVQM7IPT1dxpYZx44CMZ9wCp6QvP38UKQXuTz9hy8Wiukv2SZObcXH
- Tq3piS9OFVxwjYUXckB074UVT7ksfqU64hHuL6ptHqvze75Xlu84CXkGVye
-X-Received: by 2002:a05:6000:4a0e:b0:385:fc70:7eb with SMTP id
- ffacd0b85a97d-388e4d311e8mr6489673f8f.12.1734616129523; 
- Thu, 19 Dec 2024 05:48:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEcZhSRX3qITHRvqYShHelgbBLPEdillmFV8HI1U4MBSWtynLsmMq7SRbYkADJ+k+52Rsv/ug==
-X-Received: by 2002:a05:6000:4a0e:b0:385:fc70:7eb with SMTP id
- ffacd0b85a97d-388e4d311e8mr6489654f8f.12.1734616129109; 
- Thu, 19 Dec 2024 05:48:49 -0800 (PST)
+ bh=u9nMTxyosvlBNmWHbdS3uU97thxBhf1W17a5325xukk=;
+ b=gbl973onmp5OGaCLU7wkcnd40uZCHJN1QGUHKYvXsq+h4llISD9QX58AkmJT3ldZZI
+ 0idAF7XRkW27snWTjkcgxGjrKtFs1T2ql1XOGC48uRI5uI4pCMbDCfOl4+CDBJaac9Mv
+ OgL3n+rJiSQrNaImCVAaOpOy5A2k+7uR561fRygTUKJtHV5haLp9Y+zgaV8QucJFW1aP
+ 70H4NvRKZwQgqRxoGeUWDiWnJ22oedO/UFX4JLC9vGuEpkiExeqJ0pXnj/oQnPWn3bPy
+ KYAMP6retaoT4NPWopnEI6w2aWEG1xJc0p/hFdOK1iqcA19M6tYyiZFjjKmKHyYmydkH
+ GSvA==
+X-Gm-Message-State: AOJu0Yx0JNORx/1Mop6glHWt0E58dX3ymw46XgcRnZy8O91ONOTRHjxF
+ +BX9XGY1d04/HpAjNQ2S93iFp3LqmJAnk8PLITlHZS329rkcyWa+o8OOqxvJIECrjNZrIpZOv1l
+ bder6RECgxbtwA5e5TCjFORhUCkEQ0ZKJm5q5P61eRyed3XsSy9b41btljC0/QBwjnUx6/iS2V7
+ oSf6rM82RSJd/i+CHGjL9UKKCR9pUL4CCNNJby
+X-Gm-Gg: ASbGncvnn/YazxB/ylKseL/A1VhuGAf99cCIMpFJKauBJg/PQcJuNS30ITZvVrgTKW0
+ 4gtnGBZjbMpJSlObXqW3DDyeQyA6zexplEYpvQ4GquuDzTHWf4qmkkU3NniZa6FBruyRMgf1p1x
+ bnr8KAqlfLIUwGfI+oE5Q5Wc1UF7z+iPHuikltBZdNwu7+BBs5nmGlnPNXX2W2ET/MBAJorczWl
+ 2MC6rZgD0uAhwgQEZM+7nahLqEpxyIZ7JBKIWUq2UYisnPHi1DAaY3V9UmF
+X-Received: by 2002:a05:6000:184b:b0:385:df4e:3645 with SMTP id
+ ffacd0b85a97d-388e4d9c528mr5233242f8f.50.1734610356160; 
+ Thu, 19 Dec 2024 04:12:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IEUh2M9/mnSogeQ773STUYnJzJNd5S5eWvf3oRcRQezB6U0AwDcAXGbiOpHZ9UUI+vGCXK0XQ==
+X-Received: by 2002:a05:6000:184b:b0:385:df4e:3645 with SMTP id
+ ffacd0b85a97d-388e4d9c528mr5233203f8f.50.1734610355678; 
+ Thu, 19 Dec 2024 04:12:35 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c493sm18338905e9.28.2024.12.19.05.48.46
- for <qemu-devel@nongnu.org>
+ 5b1f17b1804b1-4366127c4fcsm16696415e9.29.2024.12.19.04.12.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 05:48:46 -0800 (PST)
+ Thu, 19 Dec 2024 04:12:32 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 30/42] rust: tests: allow writing more than one test
-Date: Thu, 19 Dec 2024 14:48:43 +0100
-Message-ID: <20241219134843.443085-3-pbonzini@redhat.com>
+Cc: zhao1.liu@intel.com
+Subject: [PATCH 08/10] rust: qom: make INSTANCE_POST_INIT take a shared
+ reference
+Date: Thu, 19 Dec 2024 13:12:14 +0100
+Message-ID: <20241219121216.416905-9-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219134843.443085-1-pbonzini@redhat.com>
-References: <20241219134843.443085-1-pbonzini@redhat.com>
+In-Reply-To: <20241219121216.416905-1-pbonzini@redhat.com>
+References: <20241219121216.416905-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
@@ -109,140 +110,58 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/tests/tests.rs | 111 ++++++++++++++++++++---------------
- 1 file changed, 63 insertions(+), 48 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 4 ++--
+ rust/qemu-api/src/qom.rs         | 8 ++------
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 68557fb85c7..dc0ed190192 100644
---- a/rust/qemu-api/tests/tests.rs
-+++ b/rust/qemu-api/tests/tests.rs
-@@ -6,7 +6,9 @@
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 72a4cea042c..6792d13fb77 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -145,7 +145,7 @@ impl ObjectImpl for PL011State {
+     type ParentType = SysBusDevice;
  
- use qemu_api::{
-     bindings::*,
--    c_str, declare_properties, define_property,
-+    c_str,
-+    cell::{self, BqlCell},
-+    declare_properties, define_property,
-     prelude::*,
-     qdev::{DeviceImpl, DeviceState, Property},
-     qom::ObjectImpl,
-@@ -14,55 +16,68 @@
-     zeroable::Zeroable,
- };
- 
-+// Test that macros can compile.
-+pub static VMSTATE: VMStateDescription = VMStateDescription {
-+    name: c_str!("name").as_ptr(),
-+    unmigratable: true,
-+    ..Zeroable::ZERO
-+};
-+
-+#[derive(qemu_api_macros::offsets)]
-+#[repr(C)]
-+#[derive(qemu_api_macros::Object)]
-+pub struct DummyState {
-+    parent: DeviceState,
-+    migrate_clock: bool,
-+}
-+
-+declare_properties! {
-+    DUMMY_PROPERTIES,
-+        define_property!(
-+            c_str!("migrate-clk"),
-+            DummyState,
-+            migrate_clock,
-+            unsafe { &qdev_prop_bool },
-+            bool
-+        ),
-+}
-+
-+unsafe impl ObjectType for DummyState {
-+    type Class = <DeviceState as ObjectType>::Class;
-+    const TYPE_NAME: &'static CStr = c_str!("dummy");
-+}
-+
-+impl ObjectImpl for DummyState {
-+    type ParentType = DeviceState;
-+    const ABSTRACT: bool = false;
-+}
-+
-+impl DeviceImpl for DummyState {
-+    fn properties() -> &'static [Property] {
-+        &DUMMY_PROPERTIES
-+    }
-+    fn vmsd() -> Option<&'static VMStateDescription> {
-+        Some(&VMSTATE)
-+    }
-+}
-+
-+fn init_qom() {
-+    static ONCE: BqlCell<bool> = BqlCell::new(false);
-+
-+    cell::bql_start_test();
-+    if !ONCE.get() {
-+        unsafe {
-+            module_call_init(module_init_type::MODULE_INIT_QOM);
-+        }
-+        ONCE.set(true);
-+    }
-+}
-+
- #[test]
--fn test_device_decl_macros() {
--    // Test that macros can compile.
--    pub static VMSTATE: VMStateDescription = VMStateDescription {
--        name: c_str!("name").as_ptr(),
--        unmigratable: true,
--        ..Zeroable::ZERO
--    };
--
--    #[derive(qemu_api_macros::offsets)]
--    #[repr(C)]
--    #[derive(qemu_api_macros::Object)]
--    pub struct DummyState {
--        pub _parent: DeviceState,
--        pub migrate_clock: bool,
--    }
--
--    declare_properties! {
--        DUMMY_PROPERTIES,
--            define_property!(
--                c_str!("migrate-clk"),
--                DummyState,
--                migrate_clock,
--                unsafe { &qdev_prop_bool },
--                bool
--            ),
--    }
--
--    unsafe impl ObjectType for DummyState {
--        type Class = <DeviceState as ObjectType>::Class;
--        const TYPE_NAME: &'static CStr = c_str!("dummy");
--    }
--
--    impl ObjectImpl for DummyState {
--        type ParentType = DeviceState;
--        const ABSTRACT: bool = false;
--    }
--
--    impl DeviceImpl for DummyState {
--        fn properties() -> &'static [Property] {
--            &DUMMY_PROPERTIES
--        }
--        fn vmsd() -> Option<&'static VMStateDescription> {
--            Some(&VMSTATE)
--        }
--    }
--
-+/// Create and immediately drop an instance.
-+fn test_object_new() {
-+    init_qom();
-     unsafe {
--        module_call_init(module_init_type::MODULE_INIT_QOM);
-         object_unref(object_new(DummyState::TYPE_NAME.as_ptr()).cast());
-     }
+     const INSTANCE_INIT: Option<unsafe fn(&mut Self)> = Some(Self::init);
+-    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = Some(Self::post_init);
++    const INSTANCE_POST_INIT: Option<fn(&Self)> = Some(Self::post_init);
  }
+ 
+ impl DeviceImpl for PL011State {
+@@ -206,7 +206,7 @@ unsafe fn init(&mut self) {
+         }
+     }
+ 
+-    fn post_init(&mut self) {
++    fn post_init(&self) {
+         let sbd: &SysBusDevice = self.upcast();
+ 
+         sbd.init_mmio(&self.iomem);
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 861f1e50ac4..5934eb0cc50 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -163,11 +163,7 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+     // SAFETY: obj is an instance of T, since rust_instance_post_init<T>
+     // is called from QOM core as the instance_post_init function
+     // for class T
+-    //
+-    // FIXME: it's not really guaranteed that there are no backpointers to
+-    // obj; it's quite possible that they have been created by instance_init().
+-    // The receiver should be &self, not &mut self.
+-    T::INSTANCE_POST_INIT.unwrap()(unsafe { &mut *obj.cast::<T>() })
++    T::INSTANCE_POST_INIT.unwrap()(unsafe { &*obj.cast::<T>() })
+ }
+ 
+ unsafe extern "C" fn rust_class_init<T: ObjectType + ClassInitImpl<T::Class>>(
+@@ -459,7 +455,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+ 
+     /// Function that is called to finish initialization of an object, once
+     /// `INSTANCE_INIT` functions have been called.
+-    const INSTANCE_POST_INIT: Option<fn(&mut Self)> = None;
++    const INSTANCE_POST_INIT: Option<fn(&Self)> = None;
+ 
+     /// Called on descendent classes after all parent class initialization
+     /// has occurred, but before the class itself is initialized.  This
 -- 
 2.47.1
 
