@@ -4,96 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB8FE7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:38:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B24F5E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:50:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOCz2-0002gz-37; Thu, 19 Dec 2024 04:38:16 -0500
+	id 1tOD9p-0005xH-Js; Thu, 19 Dec 2024 04:49:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOCz0-0002gg-V0
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:38:14 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tOD9n-0005we-C6; Thu, 19 Dec 2024 04:49:23 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOCyx-0002Z0-Rc
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:38:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734601091;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=SYe3uuRXk8M0Kf8yDrTg25rYrFmfSGIQdTQEV58WCBU=;
- b=F0c+6N+KzudOdn4tBHPENtRPqRUyZhtlHfC5Raaz3AfSgytHjL/ffeMI28rGWHm45LIgKl
- 9Twa7Tf5B/AhOJzaWG1S+lh/OoJUfoUYiZvfFFdW9BZv3P+kBY1wDVZvcF2ROBIn6Flfl2
- 6pCSXjFrkvyFq1kEaKYeQCyHfWx54Rk=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-434-jfPbKfsJMuSr-InRfqTAuw-1; Thu, 19 Dec 2024 04:38:08 -0500
-X-MC-Unique: jfPbKfsJMuSr-InRfqTAuw-1
-X-Mimecast-MFC-AGG-ID: jfPbKfsJMuSr-InRfqTAuw
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2166a1a5cc4so6336195ad.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 01:38:07 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734601086; x=1735205886;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SYe3uuRXk8M0Kf8yDrTg25rYrFmfSGIQdTQEV58WCBU=;
- b=fWt3sYU29ZJPZ5E4sPSXQeRpNq2iTeK01aNjWdcs/vSctc5SFiuNufZ+H+iZvjb+z5
- g8hAG2T3RoGY3dgMesNVSrzvuJkZlriqpwqZVS84iF+w5EpZxs1me5LX1ZReLefE6dZP
- iGRgmDxmnzFz23wtObjeWt+ea7sz4h48XbLp3fPzI0GRotbapgwUkRiQQBRmBLFgzPDR
- 3Bal5XzgvpQFCmkMXv+B4dzeSU5JhH5r4FpK3Z1Poe/rI/JpYqcrHC91xWnILWE1a9rV
- 7avJ4KOVBOIe16R4XVVouRQXJB3BJ3wspLwjZ0jFM5oP0onOeL5ipif1hFx6Q/nUFETN
- VMMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXw7VOqBcGz536gPWRD39b23S3XgKqerkms7BahNYl7EjQiZYUs4fM8bvbLskfkJWLN1CorBakFdww6@nongnu.org
-X-Gm-Message-State: AOJu0YxUvIQmek7DdXQQAXJ4tX6/XB8NeLj7QHoqMSu9bERJJix/V6M4
- rGZ5QM4Qdyo93+f6co467xh86zoqghxB0R0M2A2/GiZBDv8kedKm2uIGE5j8M+mv0hAkSHGFg/r
- mNOwrXo+vBAdXq8SCi0Rdjhvwm6gfYPjDcwFp1jo/Ivh4TcIesJaa
-X-Gm-Gg: ASbGncuNnfDYRb/1jCeT8ZcWfBwM7K+a6xyk+Ls9+n9erOBSmjZUuIBq9aPLnS/Ad/B
- NusN+Hnkxvbx9YP6s9iklTAXBPAG+CggUxIAJTZtC2BYQ6+v6zfXjnkPIrqqSwrjDRdzKzFHxrl
- gupEy02lXobxueOehHpljYW0l8UoCHyA7k1lh5tjuGWs/1rSBlllfw4V8AJ2bDvpUxTaUQSx0/D
- Pcz4aqirtB/sKLcl8EPOTT1x3/JJJP4bgJZNeE8jiqlrkjlbJ6d8EHOhCCtv1XIZgwBDQ==
-X-Received: by 2002:a17:902:b487:b0:216:4499:b836 with SMTP id
- d9443c01a7336-218d70fe05fmr72689695ad.26.1734601086042; 
- Thu, 19 Dec 2024 01:38:06 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGJzaXcCF5ATY+3JVy3KDA9XTBHpPxmuD7nTWHZqTcvY/1IxQKEUavb14klcOof1zqLE4SZkQ==
-X-Received: by 2002:a17:902:b487:b0:216:4499:b836 with SMTP id
- d9443c01a7336-218d70fe05fmr72689455ad.26.1734601085642; 
- Thu, 19 Dec 2024 01:38:05 -0800 (PST)
-Received: from localhost.localdomain ([116.73.135.226])
- by smtp.googlemail.com with ESMTPSA id
- 98e67ed59e1d1-2f447882a3fsm924764a91.38.2024.12.19.01.38.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 01:38:05 -0800 (PST)
-From: Ani Sinha <anisinha@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>, Alex Graf <graf@amazon.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH v3] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg interface
- support
-Date: Thu, 19 Dec 2024 15:07:44 +0530
-Message-ID: <20241219093749.15794-1-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tOD9l-0004gb-4N; Thu, 19 Dec 2024 04:49:23 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJ3rgvU026770;
+ Thu, 19 Dec 2024 09:49:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4tyOnx
+ 94HGx5TJJq3M3uxXCJy5Tm/sUw5m9l/T+1bSE=; b=h4TL9T+3VQGnVELsdlLhye
+ 9eFVwMMPW1JNMZGB5gHzuLwpNfwU15kiq3B1YLGLeygh6991zi3ZL6RsJJA/mcgn
+ wRe7LT8E2T6wLrX5YgkKLYNIrYm78feuqbG12M13nIslPH8fxB68yM9xSA/LDWBa
+ pDN/v1Wkkkj38lkh72/vrGD4U39AlMh1dyyBCmeBkI6oOCyE/gYHCS2iBg3R48S4
+ hQgcEHC88+CeGUU+pFpOSIbySjUVAHfAwr3cKcF0/xK0SmKKcVbGIOxFZ/oZqlbF
+ dHk3ArC/fLxzqBF91gTOz6C5TWPUeOJ8p61xaSOQG5owqyBtm1avGTrB9EJZjggQ
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43mbyhsc13-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Dec 2024 09:49:04 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4BJ9kv7A010558;
+ Thu, 19 Dec 2024 09:49:04 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43mbyhsc10-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Dec 2024 09:49:04 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BJ8Du49005544;
+ Thu, 19 Dec 2024 09:49:03 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 43hnbncj21-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Dec 2024 09:49:02 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BJ9n2iH32375324
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Dec 2024 09:49:02 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E981558054;
+ Thu, 19 Dec 2024 09:49:01 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25A9358056;
+ Thu, 19 Dec 2024 09:48:58 +0000 (GMT)
+Received: from [9.39.21.210] (unknown [9.39.21.210])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Dec 2024 09:48:57 +0000 (GMT)
+Message-ID: <1b5cd598-050d-4da9-902f-d8e50722b4cd@linux.ibm.com>
+Date: Thu, 19 Dec 2024 15:18:56 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 1/2] ppc: Enable 2nd DAWR support on Power10 PowerNV
+ machine
+To: Shivaprasad G Bhat <sbhat@linux.ibm.com>, danielhb413@gmail.com,
+ qemu-ppc@nongnu.org, david@gibson.dropbear.id.au, clg@kaod.org,
+ npiggin@gmail.com, groug@kaod.org
+Cc: pbonzini@redhat.com, kvm@vger.kernel.org, qemu-devel@nongnu.org
+References: <170679876639.188422.11634974895844092362.stgit@ltc-boston1.aus.stglabs.ibm.com>
+ <170679877410.188422.2597832350300436754.stgit@ltc-boston1.aus.stglabs.ibm.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <170679877410.188422.2597832350300436754.stgit@ltc-boston1.aus.stglabs.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: LhOhtGNKoKBMW9RfugVLYg1-qnQ5Nfef
+X-Proofpoint-GUID: 66rHflP4S7pO9qHDY1DoHQ5ZlrTQR-2v
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ impostorscore=0 adultscore=0 bulkscore=0 clxscore=1011 phishscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=999 malwarescore=0 spamscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412190076
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.116, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,546 +119,367 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VM firmware update is a mechanism where the virtual machines can use their
-preferred and trusted firmware image in their execution environment without
-having to depend on a untrusted party to provide the firmware bundle. This is
-particularly useful for confidential virtual machines that are deployed in the
-cloud where the tenant and the cloud provider are two different entities. In
-this scenario, virtual machines can bring their own trusted firmware image
-bundled as a part of their filesystem (using UKIs for example[1]) and then use
-this hypervisor interface to update to their trusted firmware image. This also
-allows the guests to have a consistent measurements on the firmware image.
+Hi Shiva,
 
-This change introduces basic support for the fw-cfg based hypervisor interface
-and the corresponding device. The change also includes the
-specification document for this interface. The interface is made generic
-enough so that guests are free to use their own ABI to pass required
-information between initial and trusted execution contexts (where they are
-running their own trusted firmware image) without the hypervisor getting
-involved in between. In subsequent patches, we will introduce other minimal
-changes on the hypervisor that are required to make the mechanism work.
+On 2/1/24 20:16, Shivaprasad G Bhat wrote:
+> Extend the existing watchpoint facility from TCG DAWR0 emulation
+> to DAWR1 on POWER10.
+> 
+> Signed-off-by: Shivaprasad G Bhat <sbhat@linux.ibm.com>
+> ---
+>   target/ppc/cpu.c         |   45 ++++++++++++++++++++++++----------
+>   target/ppc/cpu.h         |    8 +++++-
+>   target/ppc/cpu_init.c    |   15 +++++++++++
+>   target/ppc/excp_helper.c |   61 ++++++++++++++++++++++++++--------------------
+>   target/ppc/helper.h      |    2 ++
+>   target/ppc/machine.c     |    3 ++
+>   target/ppc/misc_helper.c |   10 ++++++++
+>   target/ppc/spr_common.h  |    2 ++
+>   target/ppc/translate.c   |   12 +++++++++
+>   9 files changed, 115 insertions(+), 43 deletions(-)
+> 
+> diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
+> index e3ad8e0c27..d5ac9bb888 100644
+> --- a/target/ppc/cpu.c
+> +++ b/target/ppc/cpu.c
+> @@ -130,11 +130,13 @@ void ppc_store_ciabr(CPUPPCState *env, target_ulong val)
+>       ppc_update_ciabr(env);
+>   }
+>   
+> -void ppc_update_daw0(CPUPPCState *env)
+> +void ppc_update_daw(CPUPPCState *env, int rid)
 
-A functional test has been added to test basic device creation and failure mode
-in cases where the user tries to create more than one device.
+Ok, so daw refers to watchpoint ...
 
-[1] See systemd pull requests https://github.com/systemd/systemd/pull/35091
-and https://github.com/systemd/systemd/pull/35281 for some discussions on
-how we can bundle firmware image within an UKI.
+>   {
+>       CPUState *cs = env_cpu(env);
+> -    target_ulong deaw = env->spr[SPR_DAWR0] & PPC_BITMASK(0, 60);
+> -    uint32_t dawrx = env->spr[SPR_DAWRX0];
+> +    int spr_dawr = !rid ? SPR_DAWR0 : SPR_DAWR1;
+> +    int spr_dawrx = !rid ? SPR_DAWRX0 : SPR_DAWRX1;
 
-CC: Alex Graf <graf@amazon.com>
-CC: Paolo Bonzini <pbonzini@redhat.com>
-CC: Gerd Hoffman <kraxel@redhat.com>
-CC: Igor Mammedov <imammedo@redhat.com>
-CC: Vitaly Kuznetsov <vkuznets@redhat.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- MAINTAINERS                         |   9 ++
- docs/specs/index.rst                |   1 +
- docs/specs/vmfwupdate.rst           | 119 +++++++++++++++++++++
- hw/misc/meson.build                 |   2 +
- hw/misc/vmfwupdate.c                | 155 ++++++++++++++++++++++++++++
- include/hw/misc/vmfwupdate.h        |  95 +++++++++++++++++
- tests/functional/meson.build        |   1 +
- tests/functional/test_vmfwupdate.py |  36 +++++++
- 8 files changed, 418 insertions(+)
- create mode 100644 docs/specs/vmfwupdate.rst
- create mode 100644 hw/misc/vmfwupdate.c
- create mode 100644 include/hw/misc/vmfwupdate.h
- create mode 100644 tests/functional/test_vmfwupdate.py
+We can avoid un-necessary negation here by exchanging the order of 
+registers.
 
-changelogs:
-v3: inputs from Gerd and Phil taken into account. One basic functional
-test added. Spec doc updated as per Gerd's suggestions.
-v2: do not allow changing bios region if advertized size is 0 (non-pc
-platforms).
+> +    target_ulong deaw = env->spr[spr_dawr] & PPC_BITMASK(0, 60);
+> +    uint32_t dawrx = env->spr[spr_dawrx];
+>       int mrd = extract32(dawrx, PPC_BIT_NR(48), 54 - 48);
+>       bool dw = extract32(dawrx, PPC_BIT_NR(57), 1);
+>       bool dr = extract32(dawrx, PPC_BIT_NR(58), 1);
+> @@ -144,9 +146,9 @@ void ppc_update_daw0(CPUPPCState *env)
+>       vaddr len;
+>       int flags;
+>   
+> -    if (env->dawr0_watchpoint) {
+> -        cpu_watchpoint_remove_by_ref(cs, env->dawr0_watchpoint);
+> -        env->dawr0_watchpoint = NULL;
+> +    if (env->dawr_watchpoint[rid]) {
+> +        cpu_watchpoint_remove_by_ref(cs, env->dawr_watchpoint[rid]);
+> +        env->dawr_watchpoint[rid] = NULL;
+>       }
+>   
+>       if (!dr && !dw) {
+> @@ -166,28 +168,45 @@ void ppc_update_daw0(CPUPPCState *env)
+>           flags |= BP_MEM_WRITE;
+>       }
+>   
+> -    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr0_watchpoint);
+> +    cpu_watchpoint_insert(cs, deaw, len, flags, &env->dawr_watchpoint[rid]);
+>   }
+>   
+>   void ppc_store_dawr0(CPUPPCState *env, target_ulong val)
+>   {
+>       env->spr[SPR_DAWR0] = val;
+> -    ppc_update_daw0(env);
+> +    ppc_update_daw(env, 0);
+>   }
+>   
+> -void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
+> +static void ppc_store_dawrx(CPUPPCState *env, uint32_t val, int rid)
+>   {
+>       int hrammc = extract32(val, PPC_BIT_NR(56), 1);
+>   
+>       if (hrammc) {
+>           /* This might be done with a second watchpoint at the xor of DEAW[0] */
+> -        qemu_log_mask(LOG_UNIMP, "%s: DAWRX0[HRAMMC] is unimplemented\n",
+> -                      __func__);
+> +        qemu_log_mask(LOG_UNIMP, "%s: DAWRX%d[HRAMMC] is unimplemented\n",
+> +                      __func__, rid);
+>       }
+>   
+> -    env->spr[SPR_DAWRX0] = val;
+> -    ppc_update_daw0(env);
+> +    env->spr[!rid ? SPR_DAWRX0 : SPR_DAWRX1] = val;
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 095420f8b0..cd4135fb5b 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2531,6 +2531,15 @@ F: include/hw/acpi/vmgenid.h
- F: docs/specs/vmgenid.rst
- F: tests/qtest/vmgenid-test.c
- 
-+VM Firmware Update
-+M: Ani Sinha <anisinha@redhat.com>
-+M: Alex Graf <graf@amazon.com>
-+M: Paolo Bonzini <pbonzini@redhat.com>
-+S: Maintained
-+F: hw/misc/vmfwupdate.c
-+F: include/hw/misc/vmfwupdate.h
-+F: docs/specs/vmfwupdate.rst
-+
- LED
- M: Philippe Mathieu-Daudé <philmd@linaro.org>
- S: Maintained
-diff --git a/docs/specs/index.rst b/docs/specs/index.rst
-index ff5a1f03da..cbda7e0398 100644
---- a/docs/specs/index.rst
-+++ b/docs/specs/index.rst
-@@ -34,6 +34,7 @@ guest hardware that is specific to QEMU.
-    virt-ctlr
-    vmcoreinfo
-    vmgenid
-+   vmfwupdate
-    rapl-msr
-    rocker
-    riscv-iommu
-diff --git a/docs/specs/vmfwupdate.rst b/docs/specs/vmfwupdate.rst
-new file mode 100644
-index 0000000000..fbe8f188c7
---- /dev/null
-+++ b/docs/specs/vmfwupdate.rst
-@@ -0,0 +1,119 @@
-+VMFWUPDATE INTERFACE SPECIFICATION
-+##################################
-+
-+Introduction
-+************
-+
-+``Vmfwupdate`` is an extension to ``fw-cfg`` that allows guests to replace early boot
-+code in their virtual machine. Through a combination of vmfwupdate and
-+hypervisor stack knowledge, guests can deterministically replace the launch
-+payload for guests. This is useful for environments like SEV-SNP where the
-+launch payload becomes the launch digest. Guests can use vmfwupdate to provide
-+a measured, full guest payload (BIOS image, kernel, initramfs, kernel
-+command line) to the virtual machine which enables them to easily reason about
-+integrity of the resulting system.
-+For more information, please see the `KVM Forum 2024 presentation <KVMFORUM_>`__
-+about this work from the authors [1]_.
-+
-+
-+.. _KVMFORUM: https://www.youtube.com/watch?v=VCMBxU6tAto
-+
-+Base Requirements
-+*****************
-+
-+#. **fw-cfg**:
-+     The target system must provide a ``fw-cfg`` interface. For x86 based
-+     environments, this ``fw-cfg`` interface must be accessible through PIO ports
-+     0x510 and 0x511. The ``fw-cfg`` interface does not need to be announced as part
-+     of system device tables such as DSDT. The ``fw-cfg`` interface must support the
-+     DMA interface. It may only support the DMA interface for write operations.
-+
-+#. **BIOS region**:
-+     The hypervisor must provide a BIOS region which may be
-+     statically sized. Through vmfwupdate, the guest is able to atomically replace
-+     its contents. The BIOS region must be mapped as read-write memory. In a
-+     SEV-SNP environment, the BIOS region must be mapped as private memory at
-+     launch time.
-+
-+Fw-cfg Files
-+************
-+
-+Guests drive vmfwupdate through special ``fw-cfg`` files that control its flow
-+followed by a standard system reset operation. When vmfwupdate is available,
-+it provides the following ``fw-cfg`` files:
-+
-+* ``vmfwupdate/cap`` (``u64``) - Read-only Little Endian encoded bitmap of additional
-+  capabilities the interface supports. List of available capabilities:
-+
-+     ``VMFWUPDATE_CAP_BIOS_RESIZE        0x0000000000000001``
-+
-+* ``vmfwupdate/bios-size`` (``u64``) - Little Endian encoded size of the BIOS region.
-+  Read-only by default. Optionally Read-write if ``vmfwupdate/cap`` contains
-+  ``VMFWUPDATE_CAP_BIOS_RESIZE``. On write, the BIOS region may resize. Guests are
-+  required to read the value after writing and compare it with the requested size
-+  to determine whether the resize was successful. Note, x86 BIOS regions always
-+  start at 4GiB - bios-size.
-+
-+* ``vmfwupdate/opaque`` (``4096 bytes``) - A 4 KiB buffer that survives the BIOS replacement
-+  flow. Can be used by the guest to propagate guest physical addresses of payloads
-+  to its BIOS stage. It’s recommended to make the new BIOS clear this file on boot
-+  if it exists. Contents of this file are under control by the hypervisor. In an
-+  environment that considers the hypervisor outside of its trust boundary, guests
-+  are advised to validate its contents before consumption.
-+
-+* ``vmfwupdate/disable`` (``u8``) - Indicates whether the interface is disabled.
-+  Returns 0 for enabled, 1 for disabled. Writing any value disables it. Writing is
-+  only allowed if the value is 0. When the interface is disabled, the replace file
-+  is ignored on reset. This value resets to 0 on system reset.
-+
-+* ``vmfwupdate/bios-addr`` (``u64``) - A 64bit Little Endian encoded guest physical address
-+  at the beginning of the replacement BIOS region. The provided payload must reside
-+  in shared memory. 0 on system reset.
-+
-+
-+Triggering the Firmware Update
-+******************************
-+
-+To initiate the firmware update process, the guest issues a standard system reset
-+operation through any of the means implemented by the machine model.
-+
-+On reset, the hypervisor evaluates whether ``vmfwupdate/disable`` is ``1``. If it is, it ignores
-+any other vmfwupdate values and performs a standard system reset.
-+
-+If ``vmfwupdate/disable`` is ``0``, the hypervisor checks if bios-addr is ``0``. If it is, it
-+performs a standard system reset.
-+
-+If ``vmfwupdate/bios-addr`` is ``non-0``, the hypervisor replaces the contents of the system’s
-+BIOS region with the guest physically contiguous ``vmfwupdate/bios-size`` sized payload at the
-+guest physical address address vmfwupdate/bios-addr.
-+
-+The firmware update mechanism works both for confidential and non-confidential
-+guests. In confidential guests, as a part of the reset operation, all existing
-+guest shared memory (shared with the hypervisor) as well as the ``vmfwupdate/opaque`` file
-+are preserved. The reset causes recreation of the VM context which triggers a fresh
-+measurement of the replaced BIOS region and reset CPU state [2]_ .
-+For non-confidential guests, there is no concept of guest private memory and all the existing
-+guest memory is preserved (this is the default behavior today - QEMU does not reset/clear
-+guest memory upon reset).
-+
-+In both confidential and non-confidential cases, CPU and device state are reset to
-+the default hypervisor specific reset states. In confidential environments, the guest
-+always resumes operation in the highest privileged mode available to it (VMPL0 in SEV-SNP).
-+
-+Closing Remarks
-+***************
-+The handover protocol (format of the ``vmwupdate/opaque`` file etc.) will be implemented by
-+the firmware loader and firmware image, both provided by the guest.  The hypervisor does
-+not need to know these details, so it is not included in this specification.
-+
-+
-+
-+Footnotes:
-+^^^^^^^^^^
-+.. [1] Original author of the specification: *Alex Graf <graf@amazon.com>*,
-+       converted to re-structured-text (rst format) and slightly edited
-+       by *Ani Sinha <anisinha@redhat.com>*.
-+.. [2] Currently SEV-SNP guests do not support reset. Upon reset, the instance is
-+       terminated and a new instance must be created with new VM confidential context.
-+       Work is being done currently to support resetting SEV-SNP guests with a new
-+       confidential/SEV context after reset.
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index d02d96e403..4c5bdb0de2 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
- specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cpc.c'))
- specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
- 
-+specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('vmfwupdate.c'))
-+
- system_ss.add(when: 'CONFIG_SBSA_REF', if_true: files('sbsa_ec.c'))
- 
- # HPPA devices
-diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
-new file mode 100644
-index 0000000000..0e90bd10e1
---- /dev/null
-+++ b/hw/misc/vmfwupdate.c
-@@ -0,0 +1,155 @@
-+/*
-+ * Guest driven VM boot component update device
-+ * For details and specification, please look at docs/specs/vmfwupdate.rst.
-+ *
-+ * Copyright (C) 2024 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qapi/error.h"
-+#include "qemu/module.h"
-+#include "sysemu/reset.h"
-+#include "hw/nvram/fw_cfg.h"
-+#include "hw/i386/pc.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/misc/vmfwupdate.h"
-+#include "qemu/error-report.h"
-+
-+/* returns NULL unless there is exactly one device */
-+static inline VMFwUpdateState *vmfwupdate_find(void)
-+{
-+    Object *o = object_resolve_path_type("", TYPE_VMFWUPDATE, NULL);
-+
-+    return o ? VMFWUPDATE(o) : NULL;
-+}
-+
-+static uint64_t get_max_fw_size(void)
-+{
-+    Object *m_obj = qdev_get_machine();
-+    PCMachineState *pcms = PC_MACHINE(m_obj);
-+
-+    if (pcms) {
-+        return pcms->max_fw_size;
-+    } else {
-+        return 0;
-+    }
-+}
-+
-+static void fw_blob_write(void *dev, off_t offset, size_t len)
-+{
-+    VMFwUpdateState *s = VMFWUPDATE(dev);
-+
-+    /* for non-pc platform, we do not allow changing bios_size yet */
-+    if (!s->plat_bios_size) {
-+        return;
-+    }
-+
-+    /*
-+     * in order to change the bios size, appropriate capability
-+     * must be enabled
-+     */
-+    if (s->fw_blob.bios_size &&
-+        !(s->capability & VMFWUPDATE_CAP_BIOS_RESIZE)) {
-+        warn_report("vmfwupdate: VMFWUPDATE_CAP_BIOS_RESIZE not enabled");
-+        return;
-+    }
-+
-+    s->plat_bios_size = s->fw_blob.bios_size;
-+
-+    return;
-+}
-+
-+static void vmfwupdate_realize(DeviceState *dev, Error **errp)
-+{
-+    VMFwUpdateState *s = VMFWUPDATE(dev);
-+    FWCfgState *fw_cfg = fw_cfg_find();
-+
-+    /* multiple devices are not supported */
-+    if (!vmfwupdate_find()) {
-+        error_setg(errp, "at most one %s device is permitted",
-+                   TYPE_VMFWUPDATE);
-+        return;
-+    }
-+
-+    /* fw_cfg with DMA support is necessary to support this device */
-+    if (!fw_cfg || !fw_cfg_dma_enabled(fw_cfg)) {
-+        error_setg(errp, "%s device requires fw_cfg",
-+                   TYPE_VMFWUPDATE);
-+        return;
-+    }
-+
-+    memset(&s->fw_blob, 0, sizeof(s->fw_blob));
-+    memset(&s->opaque_blobs, 0, sizeof(s->opaque_blobs));
-+
-+    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_OBLOB,
-+                             NULL, NULL, s,
-+                             &s->opaque_blobs,
-+                             sizeof(s->opaque_blobs),
-+                             false);
-+
-+    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_FWBLOB,
-+                             NULL, fw_blob_write, s,
-+                             &s->fw_blob,
-+                             sizeof(s->fw_blob),
-+                             false);
-+
-+    /*
-+     * Add global capability fw_cfg file. This will be used by the guest to
-+     * check capability of the hypervisor.
-+     */
-+    s->capability = cpu_to_le16(CAP_VMFWUPD_MASK | VMFWUPDATE_CAP_EDKROM);
-+    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_CAP,
-+                    &s->capability, sizeof(s->capability));
-+
-+    s->plat_bios_size = get_max_fw_size(); /* for non-pc, this is 0 */
-+    /* size of bios region for the platform - read only by the guest */
-+    fw_cfg_add_file(fw_cfg, FILE_VMFWUPDATE_BIOS_SIZE,
-+                    &s->plat_bios_size, sizeof(s->plat_bios_size));
-+    /*
-+     * add fw cfg control file to disable the hypervisor interface.
-+     */
-+    fw_cfg_add_file_callback(fw_cfg, FILE_VMFWUPDATE_CONTROL,
-+                             NULL, NULL, s,
-+                             &s->disable,
-+                             sizeof(s->disable),
-+                             false);
-+    /*
-+     * This device requires to register a global reset because it is
-+     * not plugged to a bus (which, as its QOM parent, would reset it).
-+     */
-+    qemu_register_resettable(OBJECT(s));
-+}
-+
-+static Property vmfwupdate_properties[] = {
-+    DEFINE_PROP_UINT8("disable", VMFwUpdateState, disable, 0),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void vmfwupdate_device_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+
-+    /* we are not interested in migration - so no need to populate dc->vmsd */
-+    dc->desc = "VM firmware blob update device";
-+    dc->realize = vmfwupdate_realize;
-+    dc->hotpluggable = false;
-+    device_class_set_props(dc, vmfwupdate_properties);
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+}
-+
-+static const TypeInfo vmfwupdate_device_types[] = {
-+    {
-+        .name          = TYPE_VMFWUPDATE,
-+        .parent        = TYPE_DEVICE,
-+        .instance_size = sizeof(VMFwUpdateState),
-+        .class_init    = vmfwupdate_device_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(vmfwupdate_device_types)
-diff --git a/include/hw/misc/vmfwupdate.h b/include/hw/misc/vmfwupdate.h
-new file mode 100644
-index 0000000000..02bb61a6ba
---- /dev/null
-+++ b/include/hw/misc/vmfwupdate.h
-@@ -0,0 +1,95 @@
-+/*
-+ * Guest driven VM boot component update device
-+ * For details and specification, please look at docs/specs/vmfwupdate.rst.
-+ *
-+ * Copyright (C) 2024 Red Hat, Inc.
-+ *
-+ * Authors: Ani Sinha <anisinha@redhat.com>
-+ *
-+ * This work is licensed under the terms of the GNU GPL, version 2 or later.
-+ * See the COPYING file in the top-level directory.
-+ *
-+ */
-+#ifndef VMFWUPDATE_H
-+#define VMFWUPDATE_H
-+
-+#include "hw/qdev-core.h"
-+#include "qom/object.h"
-+#include "qemu/units.h"
-+
-+#define TYPE_VMFWUPDATE "vmfwupdate"
-+
-+#define VMFWUPDCAPMSK  0xffff /* least significant 16 capability bits */
-+
-+#define VMFWUPDATE_CAP_EDKROM 0x08 /* bit 4 represents support for EDKROM */
-+#define VMFWUPDATE_CAP_BIOS_RESIZE 0x04 /* guests may resize bios region */
-+#define CAP_VMFWUPD_MASK 0x80
-+
-+#define VMFWUPDATE_OPAQUE_SIZE (4 * KiB) /* PAGE_SIZE */
-+
-+/* fw_cfg file definitions */
-+#define FILE_VMFWUPDATE_OBLOB "etc/vmfwupdate/opaque-blob"
-+#define FILE_VMFWUPDATE_FWBLOB "etc/vmfwupdate/fw-blob"
-+#define FILE_VMFWUPDATE_CAP "etc/vmfwupdate/cap"
-+#define FILE_VMFWUPDATE_BIOS_SIZE "etc/vmfwupdate/bios-size"
-+#define FILE_VMFWUPDATE_CONTROL "etc/vmfwupdate/disable"
-+
-+/*
-+ * Address and length of the guest provided firmware blob.
-+ * The blob itself is passed using the guest shared memory to QEMU.
-+ * This is then copied to the guest private memeory in the secure vm
-+ * by the hypervisor.
-+ */
-+typedef struct {
-+    uint64_t bios_size; /*
-+                         * this is used by the guest to update plat_bios_size
-+                         * when VMFWUPDATE_CAP_BIOS_RESIZE is set.
-+                         */
-+    uint64_t bios_paddr; /*
-+                          * starting gpa where the blob is in shared guest
-+                          * memory. Cleared upon system reset.
-+                          */
-+} VMFwUpdateFwBlob;
-+
-+typedef struct VMFwUpdateState {
-+    DeviceState parent_obj;
-+
-+    /*
-+     * capabilities - 64 bits.
-+     * Little endian format.
-+     */
-+    uint64_t capability;
-+
-+    /*
-+     * size of the bios region - architecture dependent.
-+     * Read-only by the guest unless VMFWUPDATE_CAP_BIOS_RESIZE
-+     * capability is set.
-+     */
-+    uint64_t plat_bios_size;
-+
-+    /*
-+     * disable - disables the interface when non-zero value is written to it.
-+     * Writing 0 to this file enables the interface.
-+     */
-+    uint8_t disable;
-+
-+    /*
-+     * The first stage boot uses this opaque blob to convey to the next stage
-+     * where the next stage components are loaded. The exact structure and
-+     * number of entries are unknown to the hypervisor and the hypervisor
-+     * does not touch this memory or do any validations.
-+     * The contents of this memory needs to be validated by the guest and
-+     * must be ABI compatible between the first and second stages.
-+     */
-+    unsigned char opaque_blobs[VMFWUPDATE_OPAQUE_SIZE];
-+
-+    /*
-+     * firmware blob addresses and sizes. These are moved to guest
-+     * private memory.
-+     */
-+    VMFwUpdateFwBlob fw_blob;
-+} VMFwUpdateState;
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(VMFwUpdateState, VMFWUPDATE);
-+
-+#endif
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 758145d1e5..ac495fd026 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -201,6 +201,7 @@ tests_x86_64_system_quick = [
-   'pc_cpu_hotplug_props',
-   'virtio_version',
-   'x86_cpu_model_versions',
-+  'vmfwupdate',
- ]
- 
- tests_x86_64_system_thorough = [
-diff --git a/tests/functional/test_vmfwupdate.py b/tests/functional/test_vmfwupdate.py
-new file mode 100644
-index 0000000000..4ca203d53f
---- /dev/null
-+++ b/tests/functional/test_vmfwupdate.py
-@@ -0,0 +1,36 @@
-+#!/usr/bin/env python3
-+#
-+# Check for vmfwupdate device.
-+#
-+# Copyright (c) 2024 Red Hat, Inc.
-+#
-+# Author:
-+#  Ani Sinha <anisinha@redhat.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import QemuSystemTest
-+
-+class VmFwUpdateDeviceCheck(QemuSystemTest):
-+    # after launch, in order to generate the logs from QEMU we need to
-+    # wait for some time. Launching and then immediately shutting down
-+    # the VM generates empty logs. A delay of 1 second is added for
-+    # this reason.
-+    DELAY_Q35_BOOT_SEQUENCE = 1
-+
-+    def test_multiple_device_fail(self):
-+        """
-+        Only one vmfwdevice can be instantiated. Ensure failure if
-+        user tries to create more than one device.
-+        """
-+        self.vm.add_args('-device', 'vmfwupdate,id=fwupd1',
-+                         '-device', 'vmfwupdate,id=fwupd2')
-+        self.vm.set_qmp_monitor(enabled=False)
-+        self.vm.launch()
-+        self.vm.wait()
-+        self.assertEqual(self.vm.exitcode(), 1, "QEMU exit code should be 1")
-+        self.assertRegex(self.vm.get_log(),
-+                         r'at most one vmfwupdate device is permitted')
-+
-+if __name__ == '__main__':
-+    QemuSystemTest.main()
--- 
-2.42.0
+        env->spr[rid ? SPR_DAWRX1 : SPR_DAWRX0] = val;
 
+> +    ppc_update_daw(env, rid);
+> +}
+> +
+> +void ppc_store_dawrx0(CPUPPCState *env, uint32_t val)
+> +{
+> +    ppc_store_dawrx(env, val, 0);
+> +}
+> +
+> +void ppc_store_dawr1(CPUPPCState *env, target_ulong val)
+> +{
+> +    env->spr[SPR_DAWR1] = val;
+> +    ppc_update_daw(env, 1);
+> +}
+> +
+> +void ppc_store_dawrx1(CPUPPCState *env, uint32_t val)
+> +{
+> +    ppc_store_dawrx(env, val, 1);
+>   }
+> +
+>   #endif
+>   #endif
+>   
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index f8101ffa29..18dcc438ea 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1236,7 +1236,7 @@ struct CPUArchState {
+>   #if defined(TARGET_PPC64)
+>       ppc_slb_t slb[MAX_SLB_ENTRIES]; /* PowerPC 64 SLB area */
+>       struct CPUBreakpoint *ciabr_breakpoint;
+> -    struct CPUWatchpoint *dawr0_watchpoint;
+> +    struct CPUWatchpoint *dawr_watchpoint[2];
+>   #endif
+>       target_ulong sr[32];   /* segment registers */
+>       uint32_t nb_BATs;      /* number of BATs */
+> @@ -1549,9 +1549,11 @@ void ppc_store_sdr1(CPUPPCState *env, target_ulong value);
+>   void ppc_store_lpcr(PowerPCCPU *cpu, target_ulong val);
+>   void ppc_update_ciabr(CPUPPCState *env);
+>   void ppc_store_ciabr(CPUPPCState *env, target_ulong value);
+> -void ppc_update_daw0(CPUPPCState *env);
+> +void ppc_update_daw(CPUPPCState *env, int rid);
+>   void ppc_store_dawr0(CPUPPCState *env, target_ulong value);
+>   void ppc_store_dawrx0(CPUPPCState *env, uint32_t value);
+> +void ppc_store_dawr1(CPUPPCState *env, target_ulong value);
+> +void ppc_store_dawrx1(CPUPPCState *env, uint32_t value);
+>   #endif /* !defined(CONFIG_USER_ONLY) */
+>   void ppc_store_msr(CPUPPCState *env, target_ulong value);
+>   
+> @@ -1737,9 +1739,11 @@ void ppc_compat_add_property(Object *obj, const char *name,
+>   #define SPR_PSPB              (0x09F)
+>   #define SPR_DPDES             (0x0B0)
+>   #define SPR_DAWR0             (0x0B4)
+> +#define SPR_DAWR1             (0x0B5)
+>   #define SPR_RPR               (0x0BA)
+>   #define SPR_CIABR             (0x0BB)
+>   #define SPR_DAWRX0            (0x0BC)
+> +#define SPR_DAWRX1            (0x0BD)
+>   #define SPR_HFSCR             (0x0BE)
+>   #define SPR_VRSAVE            (0x100)
+>   #define SPR_USPRG0            (0x100)
+> diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
+> index 23eb5522b6..c901559859 100644
+> --- a/target/ppc/cpu_init.c
+> +++ b/target/ppc/cpu_init.c
+> @@ -5131,6 +5131,20 @@ static void register_book3s_207_dbg_sprs(CPUPPCState *env)
+>                           KVM_REG_PPC_CIABR, 0x00000000);
+>   }
+>   
+> +static void register_book3s_310_dbg_sprs(CPUPPCState *env)
+> +{
+> +    spr_register_kvm_hv(env, SPR_DAWR1, "DAWR1",
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        &spr_read_generic, &spr_write_dawr1,
+> +                        KVM_REG_PPC_DAWR1, 0x00000000);
+> +    spr_register_kvm_hv(env, SPR_DAWRX1, "DAWRX1",
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        SPR_NOACCESS, SPR_NOACCESS,
+> +                        &spr_read_generic, &spr_write_dawrx1,
+> +                        KVM_REG_PPC_DAWRX1, 0x00000000);
+> +}
+> +
+>   static void register_970_dbg_sprs(CPUPPCState *env)
+>   {
+>       /* Breakpoints */
+> @@ -6473,6 +6487,7 @@ static void init_proc_POWER10(CPUPPCState *env)
+>       /* Common Registers */
+>       init_proc_book3s_common(env);
+>       register_book3s_207_dbg_sprs(env);
+> +    register_book3s_310_dbg_sprs(env);
+>   
+>       /* Common TCG PMU */
+>       init_tcg_pmu_power8(env);
+> diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
+> index 2ec6429e36..32eba7f725 100644
+> --- a/target/ppc/excp_helper.c
+> +++ b/target/ppc/excp_helper.c
+> @@ -3314,39 +3314,46 @@ bool ppc_cpu_debug_check_watchpoint(CPUState *cs, CPUWatchpoint *wp)
+>   {
+>   #if defined(TARGET_PPC64)
+>       CPUPPCState *env = cpu_env(cs);
+> +    bool wt, wti, hv, sv, pr;
+> +    uint32_t dawrx;
+> +
+> +    if ((env->insns_flags2 & PPC2_ISA207S) &&
+> +        (wp == env->dawr_watchpoint[0])) {
+> +        dawrx = env->spr[SPR_DAWRX0];
+> +    } else if ((env->insns_flags2 & PPC2_ISA310) &&
+> +               (wp == env->dawr_watchpoint[1])) {
+> +        dawrx = env->spr[SPR_DAWRX1];
+> +    } else {
+> +        return false;
+> +    }
+>   
+> -    if (env->insns_flags2 & PPC2_ISA207S) {
+> -        if (wp == env->dawr0_watchpoint) {
+> -            uint32_t dawrx = env->spr[SPR_DAWRX0];
+> -            bool wt = extract32(dawrx, PPC_BIT_NR(59), 1);
+> -            bool wti = extract32(dawrx, PPC_BIT_NR(60), 1);
+> -            bool hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+> -            bool sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+> -            bool pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+> -
+> -            if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
+> -                return false;
+> -            } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
+> -                return false;
+> -            } else if (!sv) {
+> +    wt = extract32(dawrx, PPC_BIT_NR(59), 1);
+> +    wti = extract32(dawrx, PPC_BIT_NR(60), 1);
+> +    hv = extract32(dawrx, PPC_BIT_NR(61), 1);
+> +    sv = extract32(dawrx, PPC_BIT_NR(62), 1);
+> +    pr = extract32(dawrx, PPC_BIT_NR(62), 1);
+> +
+> +    if ((env->msr & ((target_ulong)1 << MSR_PR)) && !pr) {
+> +        return false;
+> +    } else if ((env->msr & ((target_ulong)1 << MSR_HV)) && !hv) {
+> +        return false;
+> +    } else if (!sv) {
+> +        return false;
+> +    }
+> +
+> +    if (!wti) {
+> +        if (env->msr & ((target_ulong)1 << MSR_DR)) {
+> +            if (!wt) {
+>                   return false;
+
+This if check could be avoided by just doing a return wt ?
+
+>               }
+> -
+> -            if (!wti) {
+> -                if (env->msr & ((target_ulong)1 << MSR_DR)) {
+> -                    if (!wt) {
+> -                        return false;
+> -                    }
+> -                } else {
+> -                    if (wt) {
+> -                        return false;
+> -                    }
+> -                }
+> +        } else {
+> +            if (wt) {
+> +                return false;
+>               }
+
+Similarly, here if-check can be avoided by just doing a return !wt ?
+
+Rest looks good to me. With suggested changes,
+
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+
+> -
+> -            return true;
+>           }
+>       }
+> +
+> +    return true;
+
+
+>   #endif
+>   
+>       return false;
+> diff --git a/target/ppc/helper.h b/target/ppc/helper.h
+> index 86f97ee1e7..0c008bb725 100644
+> --- a/target/ppc/helper.h
+> +++ b/target/ppc/helper.h
+> @@ -28,6 +28,8 @@ DEF_HELPER_2(store_pcr, void, env, tl)
+>   DEF_HELPER_2(store_ciabr, void, env, tl)
+>   DEF_HELPER_2(store_dawr0, void, env, tl)
+>   DEF_HELPER_2(store_dawrx0, void, env, tl)
+> +DEF_HELPER_2(store_dawr1, void, env, tl)
+> +DEF_HELPER_2(store_dawrx1, void, env, tl)
+>   DEF_HELPER_2(store_mmcr0, void, env, tl)
+>   DEF_HELPER_2(store_mmcr1, void, env, tl)
+>   DEF_HELPER_3(store_pmc, void, env, i32, i64)
+> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
+> index 203fe28e01..082712ff16 100644
+> --- a/target/ppc/machine.c
+> +++ b/target/ppc/machine.c
+> @@ -325,7 +325,8 @@ static int cpu_post_load(void *opaque, int version_id)
+>           /* Re-set breaks based on regs */
+>   #if defined(TARGET_PPC64)
+>           ppc_update_ciabr(env);
+> -        ppc_update_daw0(env);
+> +        ppc_update_daw(env, 0);
+> +        ppc_update_daw(env, 1);
+>   #endif
+>           /*
+>            * TCG needs to re-start the decrementer timer and/or raise the
+> diff --git a/target/ppc/misc_helper.c b/target/ppc/misc_helper.c
+> index a9d41d2802..54e402b139 100644
+> --- a/target/ppc/misc_helper.c
+> +++ b/target/ppc/misc_helper.c
+> @@ -214,6 +214,16 @@ void helper_store_dawrx0(CPUPPCState *env, target_ulong value)
+>       ppc_store_dawrx0(env, value);
+>   }
+>   
+> +void helper_store_dawr1(CPUPPCState *env, target_ulong value)
+> +{
+> +    ppc_store_dawr1(env, value);
+> +}
+> +
+> +void helper_store_dawrx1(CPUPPCState *env, target_ulong value)
+> +{
+> +    ppc_store_dawrx1(env, value);
+> +}
+> +
+>   /*
+>    * DPDES register is shared. Each bit reflects the state of the
+>    * doorbell interrupt of a thread of the same core.
+> diff --git a/target/ppc/spr_common.h b/target/ppc/spr_common.h
+> index 8a9d6cd994..c987a50809 100644
+> --- a/target/ppc/spr_common.h
+> +++ b/target/ppc/spr_common.h
+> @@ -162,6 +162,8 @@ void spr_write_cfar(DisasContext *ctx, int sprn, int gprn);
+>   void spr_write_ciabr(DisasContext *ctx, int sprn, int gprn);
+>   void spr_write_dawr0(DisasContext *ctx, int sprn, int gprn);
+>   void spr_write_dawrx0(DisasContext *ctx, int sprn, int gprn);
+> +void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn);
+> +void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn);
+>   void spr_write_ureg(DisasContext *ctx, int sprn, int gprn);
+>   void spr_read_purr(DisasContext *ctx, int gprn, int sprn);
+>   void spr_write_purr(DisasContext *ctx, int sprn, int gprn);
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index 049f636927..ac2a53f3b8 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -593,6 +593,18 @@ void spr_write_dawrx0(DisasContext *ctx, int sprn, int gprn)
+>       translator_io_start(&ctx->base);
+>       gen_helper_store_dawrx0(tcg_env, cpu_gpr[gprn]);
+>   }
+> +
+> +void spr_write_dawr1(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    translator_io_start(&ctx->base);
+> +    gen_helper_store_dawr1(tcg_env, cpu_gpr[gprn]);
+> +}
+> +
+> +void spr_write_dawrx1(DisasContext *ctx, int sprn, int gprn)
+> +{
+> +    translator_io_start(&ctx->base);
+> +    gen_helper_store_dawrx1(tcg_env, cpu_gpr[gprn]);
+> +}
+>   #endif /* defined(TARGET_PPC64) && !defined(CONFIG_USER_ONLY) */
+>   
+>   /* CTR */
+> 
+> 
 
