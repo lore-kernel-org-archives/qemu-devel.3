@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FB8EE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:41:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DF6E7718B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 03:41:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO7PU-00077i-9A; Wed, 18 Dec 2024 22:41:12 -0500
+	id 1tO7P8-00071e-HA; Wed, 18 Dec 2024 22:40:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tO7PM-00076i-El; Wed, 18 Dec 2024 22:41:04 -0500
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
+ id 1tO7P7-00071K-0O; Wed, 18 Dec 2024 22:40:49 -0500
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tO7PH-0004JD-81; Wed, 18 Dec 2024 22:41:04 -0500
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-7fd49d85f82so184919a12.3; 
- Wed, 18 Dec 2024 19:40:58 -0800 (PST)
+ id 1tO7P5-0004I2-Fe; Wed, 18 Dec 2024 22:40:48 -0500
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-21661be2c2dso2811105ad.1; 
+ Wed, 18 Dec 2024 19:40:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734579657; x=1735184457; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734579645; x=1735184445; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dH0e3/pZqO5cSRapQt3yCMopH0TKWEFkSF3QFzJFiLE=;
- b=ibY8tRH0x64xikGaqRFhewe1HfIR8LRyNyG8dx2Prh14oygF8Oj8Um+uf7XS65clV8
- NIJHYVKWnGz+lg6FCatnZC6kCcmlXNtX9/zyG3/QoNNs+inR5Fwcjk3Y+o3ftsIh/Tms
- b5wn6b2QsISi4LKqGIcgcdLMGqy4RuZQ1Yfgbq2y6AjSrCk/hx7PePO/tqu4kT274gjL
- BjXyAOWnWI3Ts9s6SYgh7mi3II2h4og2qnBU9PM8vwVAZM/rmlH+TE++0aF8XTRR2tU7
- FBZ9Y6MC16xj2SH5rB4gHkSMqiSGZQ2/pXb6oEUOn3Tm9qmxyXeDDhXp8gz+RTQebJSb
- biZQ==
+ bh=bMMfLBkMrY+DVueinUNWjTYlxFYKuSCnv3bBp02CQwM=;
+ b=U2Y92zaV5fGD5GM0qatzVdDrcZoaW1Pm4jkrcrQyr3IDzP62aOuWO1mSIZonBChThp
+ b/20kPfuW7FbLTW4m3k67JlZys7lNIBI6BIBVFUPfakJNskX2qtQtwifN1GbxMnTOGGT
+ zp65Kv1BnDcA4KpDzCx0zjYpS43/Rr8kzKGKZT2i0USzDASPVfvOIacbvLeMSg4+uexi
+ L1K8GdtTxNS3XYuQRNRn3x7RmIb6pIXt5XoI4/7TTsyvphXAkRWTfSeuknrda9nO8ktl
+ IY2UXmg9M3UnHCW0YH8E+1o6bC5ZI0uCl0MKRq6VMwZmEpZ9qJT/uzobow4XBa2zB9Fn
+ AycA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734579657; x=1735184457;
+ d=1e100.net; s=20230601; t=1734579645; x=1735184445;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dH0e3/pZqO5cSRapQt3yCMopH0TKWEFkSF3QFzJFiLE=;
- b=bB1uOACURmwt8NfveagC4s0p0bw8aLtkBurnkk9plyrwsEbdQ0VqTvFTEhDFnDt1Fm
- WrYGESlHb5HepBZFcTz9Ol6UAGNzMhZgrPIarJD/pZoAU075Xm9ZtXQQNy6j+rFs57tz
- O+EAaPnEbIfrEekKF1k7MLG5NnRAKuXn8jM+H/3xgJW4lMpypk46Rx3VrDUsgYowccei
- gSg2+dYUx3uUm4XFx+Vfwradd10TuSJSXYjj5RFkZijGiOpsLVlan95L97fh87GHlB9K
- s1BBROCtrFT2GjsmcNDm0KhbO9vnubbOmmSFX2p+BEEG8ocP3Cqk5PJt6rAh0Pql9U1z
- GAYw==
+ bh=bMMfLBkMrY+DVueinUNWjTYlxFYKuSCnv3bBp02CQwM=;
+ b=t5if93kib7S4HeFTw4ley4KzhaD83cIKHpkwg/EmsUzdjs1WzsSF5NLrVGkxtJd+M4
+ nK2ruWswlE25JLW/R5hcD+SOvcspkJcuk2qmbAosQMYqG/wYj/EuNP+tBDtYucm5YrvR
+ 6e7+ciXR0NLXzrwjr0SrWN7Hq8i/DtU9xH5KPWJvgtRPxG6oyQCw6BzLacLx8YE7/L/D
+ 7jsp+hN315hEcmLdZ6FCsWNNuU3SZmXw3A/qd/tEbVCeuLI1WvDxSm1xyYO9KqJBOmIY
+ ffi6Ml2hVndmsNKMUx2X0v9poef0D4QgLaG6KPq0KEwjhMkkNjlIql8gjihwaa3LRRBI
+ nRVA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUOZs8GJ27DNti2wAddh32LIrPLH2dN53oeSBTMm0AUTIVc0dUVyQ8mWUQ+JCrf+mBVomgsUUtHivY4@nongnu.org
-X-Gm-Message-State: AOJu0YyR15PkcOL0FNl2VxQ1kEMaBD3T7vDUjevUCIw7aLK7I31HILm3
- BqWbAmjmg1lBiLCYPtrxk3XCBd7bjAj7GWKHaGzKIMMF65YaW3efwphwfA==
-X-Gm-Gg: ASbGnctkKKKVm9+wWQRgvhHiwKbwKWxCM1JAvOczOcexCwdd0StQNJl0NYAJ1Cm5u7v
- icDqgIYKUdq7+hbqql6afH3nfjdR/4A1LgToJg453dvS9FnC/ifgt1nCmyBEFQdU4L3xG1oWSny
- sKj5OSzX2KreXKjWxFfJ9An4AVAzaqaCVmykHzPh2AmXBCrcGj0QcqZfzU8sqi1tjSU0PQm+I3o
- W4LE6yGhHr4VQnrJXKHMRtPV/9nv5azfugaRN3NGNr+KM6lUASdlf1wosUPbz0qLx/7j/AiTKSs
- Wa5noendUw==
-X-Google-Smtp-Source: AGHT+IF4F7xuIiB3HLAG4AJh4EeOoDe/9AIZQJAWe7c9SZj3c95DgHtuhbX1LEERG3D+53XZRg9AWA==
-X-Received: by 2002:a17:902:ea08:b0:215:2f00:67b1 with SMTP id
- d9443c01a7336-218d6fd4be7mr65976105ad.6.1734579657231; 
- Wed, 18 Dec 2024 19:40:57 -0800 (PST)
+ AJvYcCUMPZay9dzk2w/0BSdBn7NQP3z1JZh3bsYsTccQ9YAQEA78noNudo9crZPAm/zQ+jIicgnILJI4luO2@nongnu.org
+X-Gm-Message-State: AOJu0YyZxYeHFi9+cqBEJN3u+h7TvV++DBsQ3AA8baRZKhaG18uha58f
+ bwZrmlVKvd5oGrtAmA4ylDg7tiTFqBrtr784I94HFSjUm5ROEq1oFdGBbg==
+X-Gm-Gg: ASbGncuGYTd4Uk5J78xmYV5P/HriNWq/ejuRH89hqJPISnes6u0xWjwKaSjF+UYXzXn
+ H45pDdMWXf8KcIvcMfdX894drUtqZ1+HtNqDVpNavEb/iMTk73xRQMgMX7HMsYytkmlkToyr9LT
+ HmiLzgqeY3nFr0IScf8Gu+rx/sh8R0LK7n9+OCpWLjdfd4TIUWnwQgZc/YPLD7X4z/Lufxj/om/
+ EIfGZbfkU561ioUH2mLcR/EJFjRAmRwU7nBWP1nwohRbfFOAuGTiAtrt1DzAzMPadt//wVT8/hF
+ 90g/npN9Vw==
+X-Google-Smtp-Source: AGHT+IHENSiFOOdEy02BNmlcsQw58GCu7Pl88csHFEWpDIAD2ABmzkov+HZv4gu3uEiRhUnzK8aClA==
+X-Received: by 2002:a17:902:f541:b0:216:6769:9ed7 with SMTP id
+ d9443c01a7336-219d96928bbmr33144815ad.40.1734579645535; 
+ Wed, 18 Dec 2024 19:40:45 -0800 (PST)
 Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc970520sm2881595ad.75.2024.12.18.19.40.54
+ d9443c01a7336-219dc970520sm2881595ad.75.2024.12.18.19.40.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Dec 2024 19:40:56 -0800 (PST)
+ Wed, 18 Dec 2024 19:40:45 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-ppc@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: [PATCH 5/5] target/ppc: Wire up BookE ATB registers for e500 family
-Date: Thu, 19 Dec 2024 13:40:35 +1000
-Message-ID: <20241219034035.1826173-6-npiggin@gmail.com>
+Subject: [PATCH 1/5] target/ppc: fix timebase register reset state
+Date: Thu, 19 Dec 2024 13:40:31 +1000
+Message-ID: <20241219034035.1826173-2-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241219034035.1826173-1-npiggin@gmail.com>
 References: <20241219034035.1826173-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x535.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,60 +100,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From the Freescale PowerPC Architecture Primer:
+(H)DEC and PURR get reset before icount does, which causes them to be
+skewed and not match the init state. This can cause replay to not
+match the recorded trace exactly. For DEC and HDEC this is usually not
+noticable since they tend to get programmed before affecting the
+target machine. PURR has been observed to cause replay bugs when
+running Linux.
 
-  Alternate time base APU. This APU, implemented on the e500v2, defines
-  a 64-bit time base counter that differs from the PowerPC defined time
-  base in that it is not writable and counts at a different, and
-  typically much higher, frequency. The alternate time base always
-  counts up, wrapping when the 64-bit count overflows.
-
-This implementation of ATB uses the same frequency as the TB. The
-existing spr_read_atbu/l functions are unused without this patch
-to wire them into the SPR.
-
-RTEMS uses this SPR on the e6500, though this hasn't been tested.
+Fix this by resetting using a time of 0.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- target/ppc/cpu_init.c | 17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ hw/ppc/ppc.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/target/ppc/cpu_init.c b/target/ppc/cpu_init.c
-index 1253dbf622c..4f0a64e7f99 100644
---- a/target/ppc/cpu_init.c
-+++ b/target/ppc/cpu_init.c
-@@ -922,6 +922,18 @@ static void register_BookE206_sprs(CPUPPCState *env, uint32_t mas_mask,
- #endif
+diff --git a/hw/ppc/ppc.c b/hw/ppc/ppc.c
+index b86b5847de6..51ae3358d12 100644
+--- a/hw/ppc/ppc.c
++++ b/hw/ppc/ppc.c
+@@ -1123,16 +1123,21 @@ void cpu_ppc_tb_reset(CPUPPCState *env)
+         timer_del(tb_env->hdecr_timer);
+         ppc_set_irq(cpu, PPC_INTERRUPT_HDECR, 0);
+         tb_env->hdecr_next = 0;
++        _cpu_ppc_store_hdecr(cpu, 0, 0, 0, 64);
+     }
+ 
+     /*
+      * There is a bug in Linux 2.4 kernels:
+      * if a decrementer exception is pending when it enables msr_ee at startup,
+      * it's not ready to handle it...
++     *
++     * On machine reset, this is called before icount is reset, so for
++     * icount-mode, setting TB registers using now == qemu_clock_get_ns()
++     * results in them being garbage after icount is reset. Use an
++     * explicit now == 0 to get a consistent reset state.
+      */
+-    cpu_ppc_store_decr(env, -1);
+-    cpu_ppc_store_hdecr(env, -1);
+-    cpu_ppc_store_purr(env, 0x0000000000000000ULL);
++    _cpu_ppc_store_decr(cpu, 0, 0, -1, 64);
++    _cpu_ppc_store_purr(env, 0, 0);
  }
  
-+static void register_atb_sprs(CPUPPCState *env)
-+{
-+    spr_register(env, SPR_ATBL, "ATBL",
-+                 &spr_read_atbl, SPR_NOACCESS,
-+                 &spr_read_atbl, SPR_NOACCESS,
-+                 0x00000000);
-+    spr_register(env, SPR_ATBU, "ATBU",
-+                 &spr_read_atbu, SPR_NOACCESS,
-+                 &spr_read_atbu, SPR_NOACCESS,
-+                 0x00000000);
-+}
-+
- /* SPR specific to PowerPC 440 implementation */
- static void register_440_sprs(CPUPPCState *env)
- {
-@@ -2911,6 +2923,11 @@ static void init_proc_e500(CPUPPCState *env, int version)
-     register_BookE206_sprs(env, 0x000000DF, tlbncfg, mmucfg);
-     register_usprgh_sprs(env);
- 
-+    if (version != fsl_e500v1) {
-+        /* e500v1 has no support for alternate timebase */
-+        register_atb_sprs(env);
-+    }
-+
-     spr_register(env, SPR_HID0, "HID0",
-                  SPR_NOACCESS, SPR_NOACCESS,
-                  &spr_read_generic, &spr_write_generic,
+ void cpu_ppc_tb_free(CPUPPCState *env)
 -- 
 2.45.2
 
