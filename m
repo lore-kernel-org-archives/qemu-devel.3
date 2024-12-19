@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E23E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:34:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 055D3E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 08:34:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOByU-0005jz-W4; Thu, 19 Dec 2024 03:33:39 -0500
+	id 1tOByj-0006ev-53; Thu, 19 Dec 2024 03:33:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByT-0005fO-1N
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:37 -0500
+ id 1tOByf-0006WM-CM
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOByQ-0005Du-Or
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:36 -0500
+ id 1tOBya-0005FF-Hm
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 03:33:47 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734597213;
+ s=mimecast20190719; t=1734597223;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4JuCYauHZuFnfd9+PJ8lQTIeKVe3Bn39qjIyqWPL2KU=;
- b=P/WaJtQn21dp25QQZIBlQDX0tl99P5GxL+NO5GZrLYNJF5qfbNq9DFcpbjTHstiRBKGtg0
- dxqGwZyZbkj0rA3fjY5W68pzxGQtg3K4gL25/JS3p9KH53Diwy/mlabbNKfMeFRBpoBt06
- 53d77LQr/WOvB4tSJRRE/ULh+X+iGzQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=3f/tK+ZTxZZI3fMVdifM4kT9MvIwtAUXIGT42T0zO+Y=;
+ b=PHbdgEYbJlWuv3ydBst52CSTyK/2ug3fwQ23OikBuq0Fg3R63ZFbBzOpKJJ4aTLSogknUr
+ cij8zTyWrQHOKSSMc6CjDy1wTBQrzWsCX8MmcmfBZzqLVRTfuuHBYmO8rcSPtpvV0W5GcF
+ UP5KcXxnGBrQSRkeFrws9NTSbREg5+8=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-CcSkPH6mN1CCV8fSMWx3CQ-1; Thu, 19 Dec 2024 03:33:32 -0500
-X-MC-Unique: CcSkPH6mN1CCV8fSMWx3CQ-1
-X-Mimecast-MFC-AGG-ID: CcSkPH6mN1CCV8fSMWx3CQ
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso302867f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:33:31 -0800 (PST)
+ us-mta-694-BqYw3DFOP1Sf0gDMppJZ4Q-1; Thu, 19 Dec 2024 03:33:40 -0500
+X-MC-Unique: BqYw3DFOP1Sf0gDMppJZ4Q-1
+X-Mimecast-MFC-AGG-ID: BqYw3DFOP1Sf0gDMppJZ4Q
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4359206e1e4so4083805e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 00:33:40 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734597210; x=1735202010;
+ d=1e100.net; s=20230601; t=1734597217; x=1735202017;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4JuCYauHZuFnfd9+PJ8lQTIeKVe3Bn39qjIyqWPL2KU=;
- b=jUDK5tptBBn2p/FzWO6XTRPAKtFNaMdA1gdjBY3WbleHwGrOD+PeQsLDpCLFUA4wIn
- iyAz/559MBndIBKhoAb9aa6VRbRFTYr8FSLle8U12c8gSpTrVQOyXNesDLIZqxpUqg6p
- ooPjjQ7HVJ3YAwJzm1bkhGztwAaPeU32iAywayeLWpUWO7bSJdZ6sVwzQC2ZyOgudTrC
- 6dqNkxBYhYyEiM1k+L2/nj8NL2MphFEZj/IePJsUo3C38JjlkDIF2yAcNJEm6Doc+tjD
- GTs/QZstTrCqQTx/Z89Pnh+m6jf38Rvl2IXXdn1kMiLVn9QMOCMdsZAOa+nP+j7U2V8/
- w/gw==
-X-Gm-Message-State: AOJu0Yxa4G1Z8SZq+ThAwzz/Y905nN1dfoQaanJFaEy+tCwYMdKP5rZX
- BezWEf+Xjc3pH4LvUQ7xU+HZICo99JN2DZWeM/NRG7XTeb3QdwetszYc2l/Ss11sUz3nFUjjnvA
- eHGbX0sgTDcOzPa6DxH7L1hKUa3tyu94HUVyw6IoGinppIcYBfUBfM7nXt34uANBQxBn7ALw90j
- u0ArndOc+dh0Tb5E/I2QvYZhx4BaQi43D7EacF
-X-Gm-Gg: ASbGncuiX0WxRVRhRfK7d/Gtb6P7uiGWjKFUrlSCPo/jawCcxcrWVlXVnrP2kOPV3fx
- Mj0skgPrKB6kleiXZ62VKtkIjZeofAd59awRvF+hZTGiG6WbbDV77U6u92dUmVNBVpTwXk5z4My
- 1Wgna4XtHac32xPXQP/ot5HDEn5oGEQUkN/YLUmHjJ77WPBGMgAsoJWBug7hHutBj0xgUIuAk2s
- NIhyAsbdbPos6kCnIxZnlCltnE+jXIQga6IDv+3tiMq6AvBR+/hXyUyZ4a2
-X-Received: by 2002:a5d:47af:0:b0:385:de8d:c0f5 with SMTP id
- ffacd0b85a97d-388e4d4b5e8mr4911222f8f.16.1734597210486; 
- Thu, 19 Dec 2024 00:33:30 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IFCH2Sctnuu7aGZPs2XpMPyb9Nn96mjbdMPHxCk+jTiB/GWlKVrw6q6pgPd9/vjLKx3a16BlQ==
-X-Received: by 2002:a5d:47af:0:b0:385:de8d:c0f5 with SMTP id
- ffacd0b85a97d-388e4d4b5e8mr4911193f8f.16.1734597209981; 
- Thu, 19 Dec 2024 00:33:29 -0800 (PST)
+ bh=3f/tK+ZTxZZI3fMVdifM4kT9MvIwtAUXIGT42T0zO+Y=;
+ b=rBbulK5aIVoFcBDLs+Lx3k5RILpOQquBXJcli9Hn1uJLHOokjTZKobkRwJJnufEgaC
+ FvPnYb+Oo4yRKr4r896WG/f+43j5wFOhv2h0QWxE4hmiS6TaJUU6K9/UwlEdphMEVpaK
+ 5ARdjX8vSOznU+9hUVRIqFJ4gVqhCMPzfBdsYi4XSifegosHCA+fIqm0dD9W6uNlkt/3
+ vetyW5bis6tPChCY6FZbkZZ/g/lOpQtGtCWXfnUx8WdCbwXCe9gk/SdsHlGpYTSnCagY
+ ouhFExzOyZPO0eZ93BpJpZezQiYtkgSnFSdUY22AJbWk1NM1agQ/49akoYWSvWljYooJ
+ H8kA==
+X-Gm-Message-State: AOJu0YzAcxhTAnSlJNvA4lnl3c75HlQb3otl7tR1F7uLZxvMxGpCotN7
+ FrtNwSLG/w8LeU8TJt8GbbX8RYD0T8irZ0oBwQss+kJ6eOTpYuEXi4TI2h/Oyt5mNuVXVYurhP3
+ Fvfpy/O12X+trswbW2nhL4l6NUfgzc9/kKBjlk+K9EF2R+Arh3kj5jnnZYkKv47qCP2bK5KGteK
+ vFLXJLbQOeTDQeo7c3SQ7lv0xS/TDTyYl7jra5
+X-Gm-Gg: ASbGncs+L8pDlrCH/irUtxK0ijooqu1wfPXK4pBZhdbZ0pmK1kC/6JsUBVRRy6bo5+A
+ GUP1cBsZP5qkjMCVwyoeszL08EFpY4DEmWbVrqOKBxU8he1uNmoYnCCE0wdhI9Y7df83lahE3Tl
+ c6cvtFps5CDMUIpEIwAAG3gDHY/CDxyFcT6bRP8BHQywbOeqcYp1VRUQbaJPpse8MJnc3oBIGHt
+ BsGugPKIv6ZRGkZRrnKjSotKwLQ7V017Nf3f7mhqDJ0rFE4X+MoepkW9ARE
+X-Received: by 2002:a05:6000:186f:b0:386:1ab5:f0e1 with SMTP id
+ ffacd0b85a97d-38a19b050a5mr2431249f8f.14.1734597216864; 
+ Thu, 19 Dec 2024 00:33:36 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IH1D9nY5fIZLSfIgL12fieezyJCMj6kNP4Ops0+CGUpQBrGy4e6Z3JqkaZa5J/0ZrRybXZUYQ==
+X-Received: by 2002:a05:6000:186f:b0:386:1ab5:f0e1 with SMTP id
+ ffacd0b85a97d-38a19b050a5mr2431215f8f.14.1734597216446; 
+ Thu, 19 Dec 2024 00:33:36 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8acafesm970774f8f.98.2024.12.19.00.33.26
+ 5b1f17b1804b1-436604e9c2csm12851605e9.43.2024.12.19.00.33.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 00:33:26 -0800 (PST)
+ Thu, 19 Dec 2024 00:33:34 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 28/41] rust: re-export C types from qemu-api submodules
-Date: Thu, 19 Dec 2024 09:32:15 +0100
-Message-ID: <20241219083228.363430-29-pbonzini@redhat.com>
+Subject: [PULL 31/41] rust: qom: add initial subset of methods on Object
+Date: Thu, 19 Dec 2024 09:32:18 +0100
+Message-ID: <20241219083228.363430-32-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241219083228.363430-1-pbonzini@redhat.com>
 References: <20241219083228.363430-1-pbonzini@redhat.com>
@@ -107,146 +107,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Long term we do not want device code to use "bindings" at all, so make it
-possible to get the relevant types from the other modules of qemu-api.
+Add an example of implementing instance methods and converting the
+result back to a Rust type.  In this case the returned types are a
+string (actually a Cow<str>; but that's transparent as long as it derefs
+to &str) and a QOM class.
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api/src/qdev.rs    |  7 +++++--
- rust/qemu-api/src/qom.rs     | 12 +++++++-----
- rust/qemu-api/src/sysbus.rs  |  5 +----
- rust/qemu-api/src/vmstate.rs |  9 +++++----
- rust/qemu-api/tests/tests.rs |  9 +++++++--
- 5 files changed, 25 insertions(+), 17 deletions(-)
+ rust/qemu-api/src/prelude.rs |  1 +
+ rust/qemu-api/src/qom.rs     | 56 ++++++++++++++++++++++++++++++++++--
+ rust/qemu-api/tests/tests.rs | 12 ++++++++
+ 3 files changed, 66 insertions(+), 3 deletions(-)
 
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index ad4c12d097e..07a502a8371 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -6,10 +6,13 @@
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index a0a71fcd6bc..6f32deeb2ed 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -12,6 +12,7 @@
+ pub use crate::qom::ObjectCast;
+ pub use crate::qom::ObjectCastMut;
+ pub use crate::qom::ObjectDeref;
++pub use crate::qom::ObjectMethods;
+ pub use crate::qom::ObjectType;
  
- use std::ffi::CStr;
- 
-+pub use bindings::{DeviceClass, DeviceState, Property};
-+
- use crate::{
--    bindings::{self, DeviceClass, DeviceState, Error, ObjectClass, Property, VMStateDescription},
-+    bindings::{self, Error},
-     prelude::*,
--    qom::ClassInitImpl,
-+    qom::{ClassInitImpl, ObjectClass},
-+    vmstate::VMStateDescription,
- };
- 
- /// Trait providing the contents of [`DeviceClass`].
+ pub use crate::qom_isa;
 diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 2222d1a5ab9..a663647ffe5 100644
+index 74ea5721f77..7d5fbef1e17 100644
 --- a/rust/qemu-api/src/qom.rs
 +++ b/rust/qemu-api/src/qom.rs
-@@ -33,7 +33,9 @@
+@@ -5,8 +5,8 @@
+ //! Bindings to access QOM functionality from Rust.
+ //!
+ //! The QEMU Object Model (QOM) provides inheritance and dynamic typing for QEMU
+-//! devices. This module makes QOM's features available in Rust through two main
+-//! mechanisms:
++//! devices. This module makes QOM's features available in Rust through three
++//! main mechanisms:
+ //!
+ //! * Automatic creation and registration of `TypeInfo` for classes that are
+ //!   written in Rust, as well as mapping between Rust traits and QOM vtables.
+@@ -15,6 +15,11 @@
+ //!   trait and methods such as [`upcast`](ObjectCast::upcast) and
+ //!   [`downcast`](ObjectCast::downcast).
+ //!
++//! * Automatic delegation of parent class methods to child classes. When a
++//!   trait uses [`IsA`] as a bound, its contents become available to all child
++//!   classes through blanket implementations. This works both for class methods
++//!   and for instance methods accessed through references or smart pointers.
++//!
+ //! # Structure of a class
+ //!
+ //! A leaf class only needs a struct holding instance state. The struct must
+@@ -37,6 +42,16 @@
+ //!   `ClassInitImpl<DeviceClass>`. This fills the vtable in the class struct;
+ //!   the source for this is the `*Impl` trait; the associated consts and
+ //!   functions if needed are wrapped to map C types into Rust types.
++//!
++//! * a trait for instance methods, for example `DeviceMethods`. This trait is
++//!   automatically implemented for any reference or smart pointer to a device
++//!   instance.  It calls into the vtable provides access across all subclasses
++//!   to methods defined for the class.
++//!
++//! * optionally, a trait for class methods, for example `DeviceClassMethods`.
++//!   This provides access to class-wide functionality that doesn't depend on
++//!   instance data. Like instance methods, these are automatically inherited by
++//!   child classes.
  
- use std::{ffi::CStr, os::raw::c_void};
+ use std::{
+     ffi::CStr,
+@@ -46,7 +61,7 @@
  
--use crate::bindings::{self, Object, ObjectClass, TypeInfo};
-+pub use bindings::{Object, ObjectClass};
-+
-+use crate::bindings::{self, TypeInfo};
+ pub use bindings::{Object, ObjectClass};
  
- unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut Object) {
-     // SAFETY: obj is an instance of T, since rust_instance_init<T>
-@@ -164,9 +166,9 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
- ///
- /// Each struct will implement this trait with `T` equal to each
- /// superclass.  For example, a device should implement at least
--/// `ClassInitImpl<`[`DeviceClass`](crate::bindings::DeviceClass)`>` and
--/// `ClassInitImpl<`[`ObjectClass`](crate::bindings::ObjectClass)`>`.
--/// Such implementations are made in one of two ways.
-+/// `ClassInitImpl<`[`DeviceClass`](crate::qdev::DeviceClass)`>` and
-+/// `ClassInitImpl<`[`ObjectClass`]`>`.  Such implementations are made
-+/// in one of two ways.
- ///
- /// For most superclasses, `ClassInitImpl` is provided by the `qemu-api`
- /// crate itself.  The Rust implementation of methods will come from a
-@@ -221,7 +223,7 @@ pub trait ClassInitImpl<T> {
-     ///
-     /// The virtual method implementations usually come from another
-     /// trait, for example [`DeviceImpl`](crate::qdev::DeviceImpl)
--    /// when `T` is [`DeviceClass`](crate::bindings::DeviceClass).
-+    /// when `T` is [`DeviceClass`](crate::qdev::DeviceClass).
-     ///
-     /// On entry, `klass`'s parent class is initialized, while the other fields
-     /// are all zero; it is therefore assumed that all fields in `T` can be
-diff --git a/rust/qemu-api/src/sysbus.rs b/rust/qemu-api/src/sysbus.rs
-index fa69cadd7c1..9abc687a261 100644
---- a/rust/qemu-api/src/sysbus.rs
-+++ b/rust/qemu-api/src/sysbus.rs
-@@ -7,10 +7,7 @@
- pub use bindings::{SysBusDevice, SysBusDeviceClass};
+-use crate::bindings::{self, object_dynamic_cast, TypeInfo};
++use crate::bindings::{self, object_dynamic_cast, object_get_class, object_get_typename, TypeInfo};
  
- use crate::{
--    bindings::{self, DeviceClass},
--    cell::bql_locked,
--    irq::InterruptSource,
--    prelude::*,
-+    bindings, cell::bql_locked, irq::InterruptSource, prelude::*, qdev::DeviceClass,
-     qom::ClassInitImpl,
- };
- 
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index bedcf1e8f39..25c68b703ea 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -10,6 +10,8 @@
- //! [`vmstate_fields`](crate::vmstate_fields) are meant to be used when
- //! declaring a device model state struct.
- 
-+pub use crate::bindings::VMStateDescription;
-+
- #[doc(alias = "VMSTATE_UNUSED_BUFFER")]
- #[macro_export]
- macro_rules! vmstate_unused_buffer {
-@@ -328,7 +330,7 @@ macro_rules! vmstate_fields {
+ /// Marker trait: `Self` can be statically upcasted to `P` (i.e. `P` is a direct
+ /// or indirect parent of `Self`).
+@@ -532,3 +547,38 @@ unsafe impl ObjectType for Object {
+     const TYPE_NAME: &'static CStr =
+         unsafe { CStr::from_bytes_with_nul_unchecked(bindings::TYPE_OBJECT) };
  }
- 
- /// A transparent wrapper type for the `subsections` field of
--/// [`VMStateDescription`](crate::bindings::VMStateDescription).
-+/// [`VMStateDescription`].
- ///
- /// This is necessary to be able to declare subsection descriptions as statics,
- /// because the only way to implement `Sync` for a foreign type (and `*const`
-@@ -342,9 +344,8 @@ macro_rules! vmstate_fields {
- 
- unsafe impl Sync for VMStateSubsectionsWrapper {}
- 
--/// Helper macro to declare a list of subsections
--/// ([`VMStateDescription`](`crate::bindings::VMStateDescription`)) into a
--/// static and return a pointer to the array of pointers it created.
-+/// Helper macro to declare a list of subsections ([`VMStateDescription`])
-+/// into a static and return a pointer to the array of pointers it created.
- #[macro_export]
- macro_rules! vmstate_subsections {
-     ($($subsection:expr),*$(,)*) => {{
++
++/// Trait for methods exposed by the Object class.  The methods can be
++/// called on all objects that have the trait `IsA<Object>`.
++///
++/// The trait should only be used through the blanket implementation,
++/// which guarantees safety via `IsA`
++pub trait ObjectMethods: ObjectDeref
++where
++    Self::Target: IsA<Object>,
++{
++    /// Return the name of the type of `self`
++    fn typename(&self) -> std::borrow::Cow<'_, str> {
++        let obj = self.upcast::<Object>();
++        // SAFETY: safety of this is the requirement for implementing IsA
++        // The result of the C API has static lifetime
++        unsafe {
++            let p = object_get_typename(obj.as_mut_ptr());
++            CStr::from_ptr(p).to_string_lossy()
++        }
++    }
++
++    fn get_class(&self) -> &'static <Self::Target as ObjectType>::Class {
++        let obj = self.upcast::<Object>();
++
++        // SAFETY: all objects can call object_get_class; the actual class
++        // type is guaranteed by the implementation of `ObjectType` and
++        // `ObjectImpl`.
++        let klass: &'static <Self::Target as ObjectType>::Class =
++            unsafe { &*object_get_class(obj.as_mut_ptr()).cast() };
++
++        klass
++    }
++}
++
++impl<R: ObjectDeref> ObjectMethods for R where R::Target: IsA<Object> {}
 diff --git a/rust/qemu-api/tests/tests.rs b/rust/qemu-api/tests/tests.rs
-index 78f7da474b2..68557fb85c7 100644
+index 5d9f13b15d4..41ea4026b83 100644
 --- a/rust/qemu-api/tests/tests.rs
 +++ b/rust/qemu-api/tests/tests.rs
-@@ -5,8 +5,13 @@
- use std::ffi::CStr;
+@@ -94,6 +94,18 @@ fn test_object_new() {
+     }
+ }
  
- use qemu_api::{
--    bindings::*, c_str, declare_properties, define_property, prelude::*, qdev::DeviceImpl,
--    qom::ObjectImpl, zeroable::Zeroable,
-+    bindings::*,
-+    c_str, declare_properties, define_property,
-+    prelude::*,
-+    qdev::{DeviceImpl, DeviceState, Property},
-+    qom::ObjectImpl,
-+    vmstate::VMStateDescription,
-+    zeroable::Zeroable,
- };
- 
- #[test]
++#[test]
++/// Try invoking a method on an object.
++fn test_typename() {
++    init_qom();
++    let p: *mut DummyState = unsafe { object_new(DummyState::TYPE_NAME.as_ptr()).cast() };
++    let p_ref: &DummyState = unsafe { &*p };
++    assert_eq!(p_ref.typename(), "dummy");
++    unsafe {
++        object_unref(p_ref.as_object_mut_ptr().cast::<c_void>());
++    }
++}
++
+ // a note on all "cast" tests: usually, especially for downcasts the desired
+ // class would be placed on the right, for example:
+ //
 -- 
 2.47.1
 
