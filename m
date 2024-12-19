@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F50E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:47:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6543E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKcG-0007lm-Nu; Thu, 19 Dec 2024 12:47:16 -0500
+	id 1tOKh3-0002xU-2r; Thu, 19 Dec 2024 12:52:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tOKcD-0007YM-71
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:47:13 -0500
-Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1tOKcB-0003KY-Me
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:47:12 -0500
-Received: by mail-pg1-x52d.google.com with SMTP id
- 41be03b00d2f7-7fc99fc2b16so610848a12.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:47:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1734630429; x=1735235229; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1vVc6sg+aURFgwjT+TCaK0xxPICHe1+5pUYbWqCjbhA=;
- b=a+WUQ/hv+t3vaswTkZYIutJXde/ym6R4FOsHheKL2aXHrVmsRI4F5oHKSJx4/KtB7R
- vjv8s8Qe+SXWPPJmXQuyhVvrF6mHJW3cElvoCBTt52O8dDLEv6SMTL2QEdHSZ/CgyM9X
- ukd53+UIviBb6MeXIW48ZzEGRtXe4pUPH1+/LEcr8wneOW8MuzvFdasN3ebYATxAVDk/
- gE78f4+1cRZlYSZkhHwi/BQtL8DIuIMDcfKZWDtnFWSiaax7ryqiKHL8wBBPQsUCRuRz
- PQR7wMgLitputr/iC+0zrhOXghc+yffYr8DbryNdO1pFG4xZOfKTrOIyEnr0Jx3LCjjJ
- rP8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734630429; x=1735235229;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1vVc6sg+aURFgwjT+TCaK0xxPICHe1+5pUYbWqCjbhA=;
- b=xJjxzXaDNvVxbf7q665+Ly8sAGbuT0pyLSYjf2rGQCkFk6rfn7O4+EfXD4Gz7WYta4
- ZLeldZzSYSlOnEj6YEE63yxVqBIVrrbFYjvXQjxhp/dYehYRq5FzlJQBBIt5Lvo1H7Xy
- NQgshPh6mdtVjyv9M9pM2htdyfdqfUelqoKddMZDGjGIMBoWfojdmdQcEWH6zZaIM4wo
- sP88GtZK1d8eUA4c2dEgwp0hofyZ2eOyKzMZiZFTAQWFTj6Zv0tbgN8poxFirl3HGrEh
- oJBeHdJjKNcGSoKoDOmXt+cR8FAmsKyeq/1D/TySTeYQhpeFguSqRJ4rTBB4ZRKX7jWT
- PReQ==
-X-Gm-Message-State: AOJu0YxXANVx+udImhEW4oWhGn3FBOVf+oZXUD2kutBGmZyz8j5dL6Mb
- /l+cZfht2+2mtTV+fYmNVyJMuU9yqKa0uT2oaCfIO4FOtKeyPtIYWAGzak8fLZrXd0wn/fVH5Wu
- LMoCG3w==
-X-Gm-Gg: ASbGncsWPDXmZyDi8S4ieHCrEN452zRHk7+vjmEqLdvhvFEuOvd4XTcq16pdzrkgS0W
- HyVnnbKSuZhrVsCCx6rmuNS1JVTcQx0O5/GFUZIdvmfTheoPMz5CNnPDbhPPK0aLw9RjFR+Eqll
- 6AVxTGdSYAdtuXZW1jqLOUAuAl4ItFFrS1U/SDh0PUMuKzMLhnX3Gue0YSX/4jZtHGxC8aMAN6J
- o/T1Ld+Kkgb+frzFmLgBHCEMejgSbkS6fBVVO8IrDsJpCX6SSna8SW4T+D+8udMQrUhR1v81p2Z
- nem9J5Y=
-X-Google-Smtp-Source: AGHT+IHtJ9gWYSFmmYXzEbUC3A9++8qSgZaKTP71UpRY0Ie9n6k/FUfjcJZUGiNZb0MQCLo7AlEBzw==
-X-Received: by 2002:a17:90b:1d43:b0:2ea:4c8d:c7a2 with SMTP id
- 98e67ed59e1d1-2f452163d34mr348110a91.24.1734630429686; 
- Thu, 19 Dec 2024 09:47:09 -0800 (PST)
-Received: from grind.dc1.ventanamicro.com ([187.101.65.72])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9f7307sm15099505ad.195.2024.12.19.09.47.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 09:47:09 -0800 (PST)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH 2/2] target/riscv: add trace in riscv_raise_exception()
-Date: Thu, 19 Dec 2024 14:46:57 -0300
-Message-ID: <20241219174657.1988767-3-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
-References: <20241219174657.1988767-1-dbarboza@ventanamicro.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOKgx-0002v0-8e
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:52:08 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOKgu-0004Ag-7Y
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:52:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734630722;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/65f699+zP0hxZzXVK7O5ivtKVynSZ4cs9bwdZ4NyD0=;
+ b=PeiU41tEoC/UEQ95sHNB4wzZh2qpxXZHBVgkPbLQHcscbk13r8Spyv8O53+BrpaSRwYyNV
+ bpzwhqGYx8Ey0iSpJ65sMj2pEBpfpDyI8h/o94VnTUdXZBhxZRU0obssk23DlzMQLrymm0
+ hEKUayFP+tuja3clFjh95xRYpoIIXHs=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-e4tCeR3XMtKyv4rSvegFPA-1; Thu,
+ 19 Dec 2024 12:51:59 -0500
+X-MC-Unique: e4tCeR3XMtKyv4rSvegFPA-1
+X-Mimecast-MFC-AGG-ID: e4tCeR3XMtKyv4rSvegFPA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 51B0419560B7; Thu, 19 Dec 2024 17:51:56 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.54])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C4A9019560A2; Thu, 19 Dec 2024 17:51:47 +0000 (UTC)
+Date: Thu, 19 Dec 2024 17:51:44 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Kashyap Chamarthy <kchamart@redhat.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+Message-ID: <Z2RdMJHydsvPpmdH@redhat.com>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
+ <Z2Q2rWj9cV0W_XVq@gezellig> <86zfkrptmj.wl-maz@kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x52d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+In-Reply-To: <86zfkrptmj.wl-maz@kernel.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,76 +98,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When using system mode we can get the CPU traps being taken via the
-'riscv_trap' trace or the "-d int" qemu log. User mode does not a way of
-logging/showing exceptions to users.
+On Thu, Dec 19, 2024 at 03:41:56PM +0000, Marc Zyngier wrote:
+> On Thu, 19 Dec 2024 15:07:25 +0000,
+> Kashyap Chamarthy <kchamart@redhat.com> wrote:
+> > 
+> > On Thu, Dec 19, 2024 at 12:26:29PM +0000, Marc Zyngier wrote:
+> > > On Thu, 19 Dec 2024 11:35:16 +0000,
+> > > Kashyap Chamarthy <kchamart@redhat.com> wrote:
+> > 
+> > [...]
+> > 
+> > > > Consider this:
+> > > > 
+> > > > Say, there's a serious security issue in a released ARM CPU.  As part of
+> > > > the fix, two new CPU flags need to be exposed to the guest OS, call them
+> > > > "secflag1" and "secflag2".  Here, the user is configuring a baseline
+> > > > model + two extra CPU flags, not to get close to some other CPU model
+> > > > but to mitigate itself against a serious security flaw.
+> > > 
+> > > If there's such a security issue, that the hypervisor's job to do so,
+> > > not userspace. 
+> > 
+> > I don't disagree.  Probably that has always been the case on ARM.  I
+> > asked the above based on how QEMU on x86 handles it today.
+> > 
+> > > See what KVM does for CSV3, for example (and all the
+> > > rest of the side-channel stuff).
+> > 
+> > Noted.  From a quick look in the kernel tree, I assume you're referring
+> > to these commits[1].
+> > 
+> > > You can't rely on userspace for security, that'd be completely
+> > > ludicrous.
+> > 
+> > As Dan Berrangé points out, it's the bog-standard way QEMU deals with
+> > some of the CPU-related issues on x86 today.  See this "important CPU
+> > flags"[2] section in the QEMU docs.
+> 
+> I had a look, and we do things quite differently. For example, the
+> spec-ctrl equivalent in implemented in FW and in KVM, and is exposed
+> by default if the HW is vulnerable. Userspace could hide that the
+> mitigation is there, but that's the extent of the configurability.
 
-Add a trace in riscv_raise_exception() to allow qemu-riscv(32/64) users
-to check all exceptions being thrown. This is particularly useful to
-help identifying insns that are throwing SIGILLs.
+Whether it is enabled by default or disabled by default isn't a
+totally fatal problem. If QEMU can toggle it to the opposite value,
+we have the same level of configurability in both cases.
 
-As it is today we need to debug their binaries to identify where the
-illegal insns are:
+It does, however, have implications for QEMU as if KVM gained support
+for exposing the new feature by default and QEMU didn't know about
+it, then the guest ABI would have changed without QEMU realizing it.
 
-$ ~/work/qemu/build/qemu-riscv64 -cpu rv64 ./foo.out
-Illegal instruction (core dumped)
+IOW, it would imply a requirement for timely QEMU updates to match
+the kernel, which is something we wouldn't need in x86 world where
+the feature is disabled by default. Disable by default is a more
+stable approach from QEMU's POV.
 
-After this change users can capture the trace and use EPC to pinpoint
-the insn:
+> > Mind you, I'm _not_ saying this is how ARM should do it.  I don't know
+> > enough about ARM to make such remarks.
+> > 
+> >     * * *
+> > 
+> > To reply to your other question on this thread[3] about "which ABI?"  I
+> > think Dan is talking about the *guest* ABI: the virtual "chipset" that
+> > is exposed to a guest (e.g. PCI(e) topology, ACPI tables, CPU model,
+> > etc).  As I understand it, this "guest ABI" should remain predictable,
+> > regardless of:
+> > 
+> >   - whether you're updating KVM, QEMU, or the underlying physical
+> >     hardware itself; or
+> >   - if the guest is migrated, live or offline
+> > 
+> > (As you might know, QEMU's "machine types" concept allows to create a
+> > stable guest ABI.)
+> 
+> All of this is under control of QEMU, *except* for the "maximum" of
+> the architectural features exposed to the guest. All you can do is
+> *downgrade* from there, and only to a limited extent.
+> 
+> That, in turn has a direct impact on what you call the "CPU model",
+> which for the ARM architecture really doesn't exist. All we have is a
+> bag of discrete features, with intricate dependencies between them.
+> 
+> Even ignoring virtualisation: you can readily find two machines using
+> the same CPUs (let's say Neoverse-N1), integrated by the same vendor
+> (let's say, Ampere), in SoCs that bear the same name (Altra), and
+> realise that they have a different feature set. Fun, isn't it?
 
-$ ~/work/qemu/build/qemu-riscv64 -cpu rv64 -trace riscv_exception ./foo.out
-riscv_exception 8 (user_ecall) on epc 0x17cd2
-riscv_exception 8 (user_ecall) on epc 0x17cda
-riscv_exception 8 (user_ecall) on epc 0x17622
-(...)
-riscv_exception 2 (illegal_instruction) on epc 0x1053a
-Illegal instruction (core dumped)
+"Fun" is probably not the word I'd pick :-)
 
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/op_helper.c  | 6 ++++++
- target/riscv/trace-events | 3 +++
- 2 files changed, 9 insertions(+)
+> That's why I don't see CPU models as a viable thing in terms of ABI.
+> They are an approximation of what you could have, but the ABI is
+> elsewhere.
 
-diff --git a/target/riscv/op_helper.c b/target/riscv/op_helper.c
-index 29c104bc23..29de8eb43d 100644
---- a/target/riscv/op_helper.c
-+++ b/target/riscv/op_helper.c
-@@ -24,6 +24,7 @@
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
- #include "exec/helper-proto.h"
-+#include "trace.h"
- 
- /* Exceptions processing helpers */
- G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-@@ -31,6 +32,11 @@ G_NORETURN void riscv_raise_exception(CPURISCVState *env,
-                                       uintptr_t pc)
- {
-     CPUState *cs = env_cpu(env);
-+
-+    trace_riscv_exception(exception,
-+                          riscv_cpu_get_trap_name(exception, false),
-+                          env->pc);
-+
-     cs->exception_index = exception;
-     cpu_loop_exit_restore(cs, pc);
- }
-diff --git a/target/riscv/trace-events b/target/riscv/trace-events
-index 49ec4d3b7d..93837f82a1 100644
---- a/target/riscv/trace-events
-+++ b/target/riscv/trace-events
-@@ -9,3 +9,6 @@ pmpaddr_csr_write(uint64_t mhartid, uint32_t addr_index, uint64_t val) "hart %"
- 
- mseccfg_csr_read(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": read mseccfg, val: 0x%" PRIx64
- mseccfg_csr_write(uint64_t mhartid, uint64_t val) "hart %" PRIu64 ": write mseccfg, val: 0x%" PRIx64
-+
-+# op_helper.c
-+riscv_exception(uint32_t exception, const char *desc, uint64_t epc) "%u (%s) on epc 0x%"PRIx64""
+Right, this makes life quite challenging for QEMU. The premise of named
+CPU models (as opposed to -host), is to facilitate the migration of VMs
+between heterogenous hardware platforms. That assumes it is possible to
+downgrade the CPU on both src + dst, to the common baseline you desire.
+
+If we were to define a named CPU model, for that to be usable, QEMU
+would have to be able to query the "maxmimum" architectural features,
+and validate that the delta between the host maximum, and the named
+CPU model is possible to downgrade. Is arm providing sufficient info
+to let QEMU do that ?
+
+With regards,
+Daniel
 -- 
-2.47.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
