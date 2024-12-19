@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08DE5E7718A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:19:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E8EE7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 17:20:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKAc-0003nb-RZ; Thu, 19 Dec 2024 12:18:42 -0500
+	id 1tOKBw-0004mz-9W; Thu, 19 Dec 2024 12:20:04 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKAb-0003nD-6d
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:18:41 -0500
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKBu-0004jB-F9
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:20:02 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKAZ-00078N-LA
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:18:40 -0500
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-385e1fcb0e1so621592f8f.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:18:39 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOKBs-0007F8-Ow
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 12:20:02 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4361d5dcf5bso11796955e9.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 09:20:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734628718; x=1735233518; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734628798; x=1735233598; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=KfPiPUjFsumJS64yYOjiSxWoR/mhyFpiejP9o5sILiY=;
- b=u0PwwKgBJhnuzJRZXbKur4f8OdhL3mKWA6eu6QwVu7FW5OOfvD/vAEeqbipZ8oEmmN
- esCFDSKQdS7YCapimm4+f5skmjeIHKTfhxHrM60KtkAvN0pdRsyyMj8a3KI8Eb7s3DaU
- Stjj1gyRHRmBsqH5aBDuoEjstGamSAPvxYIvD2e/IAEY+ohCDBE48c5bnuvcPQWCqePm
- YJdEAzHwK89vqgk4Tjr7qoUJ2sDBhps8h1FtGwM8NAOnGToHLznEvYZaUt9+vm3G8gyY
- 8hLGVCvpYJ0gqVkj1m6lWQMVZ0SHmdo+p7Sq5RQM/LHRD+S+7lnuzZBLLP4pV/qxMOCB
- G3+g==
+ bh=yDK9vfiG8Km+OJ6ct7UgwTsWMDBnASNJPKjCnXxZJYc=;
+ b=ESHgRhSTQPEKKlInubHvdMr9J2dwge7Dyb3p2OZ7cARUnKXEl2oO2Ops7eNImEHwZb
+ Oz4QKVv0yBIme0kMvujc2syONfjV8O8DZM+wLo3CYje4xlYZ3XYkxtWOT3+wxbhyaiua
+ QnpwR/3hUQLTZANt4GM4EXMu3ItsokVymagkv8RHT0v/xCapBHraqLnzThG9pxoGUoG/
+ AAH+xHkDMV8ELBdPu2OqAbkf9COgE/+bBXfzgJJ1LuY5dhA3JeGzPrHT/RibnTsRLVbx
+ nQcG/AYB8VqGr8DDuI+VrITCXCXBSlwvEiy0PnQAaLMl8WgOYc+v6FwwbZ/peIFMZQgu
+ 0cTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734628718; x=1735233518;
+ d=1e100.net; s=20230601; t=1734628798; x=1735233598;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KfPiPUjFsumJS64yYOjiSxWoR/mhyFpiejP9o5sILiY=;
- b=a/P+0q3LjF38z7d0a91pYeLfRxMoo8fDClTZ/EOEnFbnnqbMIy51Jp1FxEm9873P5L
- 70W8ve9xlCbSRP9L7vD9+L5edwdByz41yfZahdGjDve/JUCGLkRtxMfCESaYDYPh0uvB
- JZ2WfoAjSHkuuJoe9ulCMHWpChXekcLFIUfE+OxCUjXTzSPaLv53LRWDMpwgsQ01vDLe
- n7IDgO+FjsgHkJDyxBv7dJ1CmJAdxLooXyA6pMOFOswZ8pk2AF2dqqb+Jkt+NIUkZ0e5
- rflspDl/KiMJy9y4pwUTftF7igcATnhLy+gWdewvhuG8T9MSL9BApjPfshcsrtYyPuKx
- Ijwg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU4kT2dicLXvyMEg6wnOHxixV//fvBqF6mKgSSjp2M/z4LWE7lh4TVKzuk+d/mbvRP2AHi1512TDQKo@nongnu.org
-X-Gm-Message-State: AOJu0YytiYCuZbYQ/LbOKSqdVANy78N6YK0c0hxw34Lo4PamKqagTJs+
- HjaVG6AsYC+yLBA2faNJWNcAoA0fvhNckpTkwjmTVW2Xd7Ah4rgHrzbNFkySwDnUB8hw1DRNQsR
- l
-X-Gm-Gg: ASbGncspiXyKtfwooCvHhift1Gw+E4l9REBH2gJesRw8VIjU+kZTp5lkmm4lxd1deTW
- ag/qj0JTitlDoNaWi1SdGiOq2i0+SlQuJ1yzZ9VI+qGF1OYq45ouFMynLr2a2Qhrx9GBH5PE5lA
- R5IqPI0ihSgmeil2u7cwfg4zbG2B3FV6IgzdgB1NgKiZw3pzQwHDE0o4JLqAXhbJtnhaNBoXe8I
- 0IPoBmz4FnksEZHrMfYOdBJ+kci7hWveFvhPaL9+ibYB15NRPCOqeW4HfvCaXb+0F+1Jh8=
-X-Google-Smtp-Source: AGHT+IGnspWY8onnkoERMGhexwEqNpeVF/hycDgqWhUuKyhLkiYS6OVGt7XkStdP+EuCWbhyDXbq8w==
-X-Received: by 2002:a5d:64cf:0:b0:385:f349:ffe7 with SMTP id
- ffacd0b85a97d-388e4d2f488mr8592777f8f.2.1734628718035; 
- Thu, 19 Dec 2024 09:18:38 -0800 (PST)
+ bh=yDK9vfiG8Km+OJ6ct7UgwTsWMDBnASNJPKjCnXxZJYc=;
+ b=p+LA4pknUobjjFWI/Qprq0vWuPYMVzzU4dTVdqS7SPSBgAqbfKx+CEnaI8UzcTNmGY
+ Uf9ikbze9q5Er8emZIUMAPbvto9nt0+JGLFYH4VMTxBVPiCYFrm1RLh34FjR1zWYpV8D
+ CQvVeNafVu7spQ17a9JtqZg0/j3bvNsdI7K+YzZZaezoFrHHceRuz+koM9+xdkDc/7Gw
+ qtbPoz+8ld56vtRnnHbluqetl6rXFbb7sO09QM/rMHMPtFbvaUwJRdTpCX+6b+yqxG1J
+ B4zwbhq/d0wbSrpysibEFXZ5ZcWgIxSH0Rohi6ZyJT1CR+s2uYJLZcF9HQD2Ur1r9Scd
+ wCZg==
+X-Gm-Message-State: AOJu0YzO2u2aRvQKV0E2gzS8d/DLWOvkJ+ZZKliqa4DTZgdmdxIj6TSI
+ TmFUJgoE5r4gnYL3KhPVAfa8Rzr+OAP7NC28iqkl2V7KIfKoKUIM5kXwWosNoSviKSl3hO1xtLu
+ v
+X-Gm-Gg: ASbGnct1KWXlxGEZ7SFJKgoSLd0jKrp38W/P1SHcxk6pHwwxrQwIvt3XhKFJgRWUC1E
+ 5mtCOg98oPEI3QiHTdnjEhpq5/XBtYb6J280emYXjAg/YyTXrEFm0Aih2V7fcB5HNCBn+Wq9BA+
+ C3o1piP4fGxp6I0crMBUnVk64UpE1tXzpJQQqEbuVhv8vJB5qrQWrzouMca9apFbPw6tWjkVgns
+ vZ4c8fWtjB67ZwGxZvnq8HTk1D4VheZT6L133N2vCmM+/SrAj02GL0QUoIF5H63xdr8W40=
+X-Google-Smtp-Source: AGHT+IE4tXweFegvug2jnPyDJ/MoEGONQNYh3x+um9urrO3Ih+3/ta9zXO0jgqWl8AjMJxeffDem4g==
+X-Received: by 2002:a05:600c:350b:b0:435:306:e5e0 with SMTP id
+ 5b1f17b1804b1-436664aba1bmr184035e9.23.1734628798417; 
+ Thu, 19 Dec 2024 09:19:58 -0800 (PST)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b11495sm57270105e9.19.2024.12.19.09.18.37
+ 5b1f17b1804b1-436611fc762sm23354185e9.11.2024.12.19.09.19.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 09:18:37 -0800 (PST)
-Message-ID: <06465848-f7a3-4d36-add8-ae0230d34495@linaro.org>
-Date: Thu, 19 Dec 2024 18:18:36 +0100
+ Thu, 19 Dec 2024 09:19:57 -0800 (PST)
+Message-ID: <528b49be-2378-4220-9db8-c0aa5c3101e8@linaro.org>
+Date: Thu, 19 Dec 2024 18:19:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] include: Header cleanups around "cpu.h"
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org
-References: <20241218155202.71931-1-philmd@linaro.org>
- <68eba002-1dc8-40f3-b1c7-72a6ad930a63@linaro.org>
+Subject: Re: [PATCH] accel/tcg: Really restrict cpu_io_recompile() to system
+ emulation
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+References: <20241216160514.56630-1-philmd@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <68eba002-1dc8-40f3-b1c7-72a6ad930a63@linaro.org>
+In-Reply-To: <20241216160514.56630-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,21 +100,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 17:42, Richard Henderson wrote:
-> On 12/18/24 09:51, Philippe Mathieu-Daudé wrote:
->> Philippe Mathieu-Daudé (4):
->>    target/ppc: Include missing headers in mmu-hash[32,64].h
->>    tcg/tci: Include missing 'disas/dis-asm.h' header
->>    exec/ram_addr: Include missing 'exec/hwaddr.h' and 'exec/cpu-common.h'
->>    exec/cpu-all: Include 'cpu.h' earlier so MMU_USER_IDX is always
->>      defined
+On 16/12/24 17:05, Philippe Mathieu-Daudé wrote:
+> Commit 38fc4b11e03 ("accel/tcg: Restrict cpu_io_recompile() to
+> system emulation") inadvertently restricted cpu_io_recompile()
+> to SoftMMU. Correct to restrict to system emulation.
 > 
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> 
-> Though, frankly these are hard to review in isolation.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+> Based-on: <20241212185341.2857-11-philmd@linaro.org>
+> ---
+>   accel/tcg/internal-target.h | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-Sorry for that. I'll send a PR with what I've already queued.
-Next patches should be closer to the main tree.
-
-Queuing patches 2-4.
+Patch queued.
 
