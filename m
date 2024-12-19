@@ -4,136 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5746E7718B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:26:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75690E7718C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:26:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJGM-0002am-Sb; Thu, 19 Dec 2024 11:20:35 -0500
+	id 1tOJFa-0001oo-QY; Thu, 19 Dec 2024 11:19:46 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOHFs-0000d3-SD
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:11:56 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOEcT-00057k-3p
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:23:06 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOHFr-0004ri-0L
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 09:11:56 -0500
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1tOEcR-0006lK-Hy
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:23:04 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734617513;
+ s=mimecast20190719; t=1734607380;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=fJO0rroSqzFiaXw/DNWQ74QMy2uzjYI/dlxWA3m3oW8=;
- b=Hwm/chbSX1pLZJiGq2Jo7JvMKuPGubrnkIAn1juAbq+sAGXmYcnY564UPXRAzQB7cVE3EO
- m/J6UaRLN4Rm6FPdWK/m/7bL5UzMKDjj7pgploLNkQ0QrCqlkW/KzU08IUKJK93+CEjhWy
- CK/xlJgQeR05qNfoezidMReEm61PgHA=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=jQ6/8NMtlqWWCNBKARXRvWwGokJfek4UCgnIm8vVzHY=;
+ b=Z0tReYJZnD3nf6e/gtYa1Ne5/bl+hRSZv1/fCcvxwhXJKr8WQ3wY0A7zGw2DodbKcfdxIk
+ Z8gbcBf0TrWU41t5JofXZacopFxWULeZn41/lxEyzBkJxaYevMqyKSdp7WG5FKeiw1MMWL
+ hmbOHfOOdvjXWq5WJ97aLX+AgZoit0E=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-267-kwlcLUgwOfuV3yf89JZnzA-1; Thu, 19 Dec 2024 09:11:51 -0500
-X-MC-Unique: kwlcLUgwOfuV3yf89JZnzA-1
-X-Mimecast-MFC-AGG-ID: kwlcLUgwOfuV3yf89JZnzA
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3862f3ccf4fso362238f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 06:11:51 -0800 (PST)
+ us-mta-339-9Gy5g6UzMuyoQDLvuf2ccQ-1; Thu, 19 Dec 2024 06:22:58 -0500
+X-MC-Unique: 9Gy5g6UzMuyoQDLvuf2ccQ-1
+X-Mimecast-MFC-AGG-ID: 9Gy5g6UzMuyoQDLvuf2ccQ
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-385d80576abso413149f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 03:22:58 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734617510; x=1735222310;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=fJO0rroSqzFiaXw/DNWQ74QMy2uzjYI/dlxWA3m3oW8=;
- b=fkk0OaaICG+r+0bxQt4KZFhAin6AUSoB4FsdP7ReBuBCZ0vWRQ/R9NT7qGiyJU90hn
- YtNlVQRVLHyJ9f76tATrawq5jw23oE3gFqCZsFMUB/j4d9UiwdPMahBGt+WRf7nmol5m
- DJbzhYeHXi9tDP5+2/2qVoZ0RDWuw7NhTJ8C4CYkzSrz4Zh2yOzoQ/R2qyhaBvBEB68C
- zEYyWkBdOK0umT4VtnnO/7jnwQUkW/Nd/agmbiqNUrfFS4/toY7Ptord8cBC1i4PZqvZ
- yKv9TCXD5/bEbjG1vmuNqzmsQeROmzCpif9ORnkjj4l1QlainaIBSRW2kmImyHPtaT7A
- jLkA==
-X-Gm-Message-State: AOJu0YxZr8pBN44evtEdl7WWBGMZa8uClejpWVNp4E69qKYyWEUQy4V6
- Q/T1G/h9kG9iUYj+tCyynQrpwWebWZ2pAnQtyEEbap3pnnLMxxImd0TaKdWGiqtH5UMcvCKwENh
- 35h3wmw7KfOOuEYqT/Q7lTm6AUZ3hWoljPMGeRZmjS7Psh9+HVfZe6WCi8kC4duY=
-X-Gm-Gg: ASbGncuQTTYVXRWq8EeDOU0iziuGP5zFrEbsVKEOl6VIPc9vehkPuDjt/yEwHjSSh9Q
- uaUBsxaVYoGQ/x8ZLcFsX8LLu4B8L0KwPUD6OcKPHDm0fQLeCSjkZbuZ1TMCkUjvrwUmKhmhMLJ
- BkFesymmT8DkOz01PYoCOukwTftC5NZoRknxbERDltHgyDAIO/z+kDDoXLhGXT/hKCwNFSBIum/
- DYjdIpEIvlRgs7+CVRBx7PAiSIzjeqqQ5UiN5VnTcvBFu3LiL1qRXeb327u/JToxPV0b/3yJRUn
- fRUwS6Crvp1E7apdCracwK2CXzgpNF1SyMtU+VYuRMRAJkKKIaKiLio0YO4V97NtIxBrSjf6l4b
- o3THs0g==
-X-Received: by 2002:a05:6000:400b:b0:385:fc32:1ec6 with SMTP id
- ffacd0b85a97d-388e4dada54mr5974154f8f.50.1734617510211; 
- Thu, 19 Dec 2024 06:11:50 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH2pQvV7ADymR1Aq2PuwZzLotBD/HjHGWP43mL/Em1Frcz+5CSkyYmCQvaMInwmAMXTDVg8rA==
-X-Received: by 2002:a05:6000:400b:b0:385:fc32:1ec6 with SMTP id
- ffacd0b85a97d-388e4dada54mr5974129f8f.50.1734617509793; 
- Thu, 19 Dec 2024 06:11:49 -0800 (PST)
-Received: from ?IPV6:2003:cb:c749:6600:b73a:466c:e610:686?
- (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
- [2003:cb:c749:6600:b73a:466c:e610:686])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b0153asm53314395e9.14.2024.12.19.06.11.48
+ d=1e100.net; s=20230601; t=1734607377; x=1735212177;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jQ6/8NMtlqWWCNBKARXRvWwGokJfek4UCgnIm8vVzHY=;
+ b=UhOiNtai80wGRJh4abUpKw4SQNIvp0Rw3TVRrtvSB1WMIExyCS4zYWgGO6KvwO/+hO
+ 4ZA/n6oSrZqu9xX/mhkaqem5YlEYzCLehuNGZF5xX4JrbtJFdkKwibzxkWfAX72Hrx0/
+ pIel3LcY1o90VmeBFRhAt88Etv53KbGMIu9/JSvaUCAkQfPDndAlP+SchLYuRs20bh0N
+ ThIrXaPqqlr4DhyrWCb0cd5zNV6JTliuN3O+JfxemrMHaZTVOwxOq9qxkfqKAXdgTJI3
+ i5X8IKzQ5S62Cp2ceBV7aFtA2oGkeuIf1p4V5yPZmnVwYPhsULdPThJxUxzktSvEz5Mt
+ XdJw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVMD29cwI0w5CH4lcwtfOXCKUSn0OGj1zSnmzNj8thZh+wlHDDcXRH54Y0tIZo9X/bgOnEW8rcpBcoj@nongnu.org
+X-Gm-Message-State: AOJu0Yzbw8jDMeUaM4kAhXvnLewh8zvLFEvxj26jXuKFpsOWSLDb2zZ0
+ d0vkUdrBXtlMY8Tt6f0YkyflsFsiirC2+QcSxVZ6fZ1AzHkFhduU7Ezw+0GuLLUbDQrDmtl/XbW
+ KupClX1DDNUzKgyg3PP+qRt5FcMoY2J5F49wW5bW4mplqKrCOu4ME
+X-Gm-Gg: ASbGncv0cVGF1P9HSLdY7onZlmfw8HlBqgXIWWm+tD47Tk5FmRYf+hgtLSStOxFN3x7
+ DqiRbXxmaxt69plKdnUP6jo99R3oKt9+4jVxPW8Rw1VzeuToNRSUKvegc/P8g1++RJsJFKzvr6R
+ Lq1NGrsWACEnwZfrHvaBo/7Oo+MqelzBn5DRJgfxJOenalV7rRHvK1uluKgCh9vKq0GnCrqg03l
+ 4XxNIDbBRB1KWLiAMkr69MXK4XwyXtg19GkAuluziNPPiNesNborfp5rYqI
+X-Received: by 2002:a5d:648e:0:b0:386:3213:5ba1 with SMTP id
+ ffacd0b85a97d-38a19b05284mr3132794f8f.24.1734607377334; 
+ Thu, 19 Dec 2024 03:22:57 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IF7NKjiQ6q6ALCW46rzPheq/kNgn7btUlqyb3U7x1ybj6jMY48NtUUQ78NOOBeub7tc/6YNyw==
+X-Received: by 2002:a5d:648e:0:b0:386:3213:5ba1 with SMTP id
+ ffacd0b85a97d-38a19b05284mr3132766f8f.24.1734607376974; 
+ Thu, 19 Dec 2024 03:22:56 -0800 (PST)
+Received: from [192.168.10.27] ([151.81.118.45])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c8ac93csm1316091f8f.95.2024.12.19.03.22.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 06:11:48 -0800 (PST)
-Message-ID: <10d02197-88a7-4aad-afc3-fe9584a5a458@redhat.com>
-Date: Thu, 19 Dec 2024 15:11:47 +0100
+ Thu, 19 Dec 2024 03:22:56 -0800 (PST)
+Message-ID: <05747238-adac-4be1-b516-358a04aca803@redhat.com>
+Date: Thu, 19 Dec 2024 12:22:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/virtio: reset virtio balloon stats on machine reset
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20241218172912.4170899-1-berrange@redhat.com>
- <d2730488-8468-4639-876c-18a860c6469e@redhat.com>
- <Z2Qo27nyv0uZkUGT@redhat.com>
-From: David Hildenbrand <david@redhat.com>
+Subject: Re: [PULL 12/40] rust: build integration test for the qemu_api crate
+To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20241104172721.180255-1-pbonzini@redhat.com>
+ <20241104172721.180255-13-pbonzini@redhat.com>
+ <A90FCF2F-C8D9-49B7-A881-B0F849AC11A0@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <Z2Qo27nyv0uZkUGT@redhat.com>
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <A90FCF2F-C8D9-49B7-A881-B0F849AC11A0@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -158,127 +152,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.12.24 15:08, Daniel P. Berrangé wrote:
-> On Thu, Dec 19, 2024 at 02:51:21PM +0100, David Hildenbrand wrote:
->> On 18.12.24 18:29, Daniel P. Berrangé wrote:
->>> When a machine is first booted, all virtio balloon stats are initialized
->>> to their default value -1 (18446744073709551615 when represented as
->>> unsigned).
->>>
->>> They remain that way while the firmware is loading, and early phase of
->>> guest OS boot, until the virtio-balloon driver is activated. Thereafter
->>> the reported stats reflect the guest OS activity.
->>>
->>> When a machine reset is performed, however, the virtio-balloon stats are
->>> left unchanged by QEMU, despite the guest OS no longer updating them,
->>> nor indeed even still existing.
->>>
->>> IOW, the mgmt app keeps getting stale stats until the guest OS starts
->>> once more and loads the virtio-balloon driver (if ever). At that point
->>> the app will see a discontinuity in the reported values as they sudden
->>> jump from the stale value to the new value. This jump is indigituishable
->>> from a valid data update.
->>>
->>> While there is an "last-updated" field to report on the freshness of
->>> the stats, that does not unambiguously tell the mgmt app whether the
->>> stats are still conceptually relevant to the current running workload.
->>>
->>> It is more conceptually useful to reset the stats to their default
->>> values on machine reset, given that the previous guest workload the
->>> stats reflect no longer exists. The mgmt app can now clearly identify
->>> that there are is no stats information available from the current
->>> executing workload.
->>>
->>> The 'last-updated' time is also reset back to 0.
->>>
->>> IOW, on every machine reset, the virtio stats are in the same clean
->>> state they were when the macine first powered on.
->>>
->>> A functional test is added to validate this behaviour with a real
->>> world guest OS.
->>>> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
->>> ---
->>>
->>> One side-thought I have, is whether it makes sense to add a
->>> 'reset-count' field in the virtio stats, alongside the
->>> 'last-updated' field. While apps can infer a reset from seeing
->>> the stats all go back to their defaults, an explicit flag is
->>> simpler...
->>>
->>>    MAINTAINERS                             |   1 +
->>>    hw/virtio/virtio-balloon.c              |  30 ++++-
->>>    include/hw/virtio/virtio-balloon.h      |   4 +
->>>    tests/functional/test_virtio_balloon.py | 161 ++++++++++++++++++++++++
->>>    4 files changed, 195 insertions(+), 1 deletion(-)
->>>    create mode 100755 tests/functional/test_virtio_balloon.py
->>>
->>> diff --git a/MAINTAINERS b/MAINTAINERS
->>> index 822f34344b..1380d53d03 100644
->>> --- a/MAINTAINERS
->>> +++ b/MAINTAINERS
->>> @@ -2234,6 +2234,7 @@ F: include/hw/virtio/virtio-balloon.h
->>>    F: system/balloon.c
->>>    F: include/sysemu/balloon.h
->>>    F: tests/qtest/virtio-balloon-test.c
->>> +F: tests/functional/test_virtio_balloon.py
->>>    virtio-9p
->>>    M: Greg Kurz <groug@kaod.org>
->>> diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
->>> index ab2ee30475..fe0854e198 100644
->>> --- a/hw/virtio/virtio-balloon.c
->>> +++ b/hw/virtio/virtio-balloon.c
->>> @@ -31,7 +31,7 @@
->>>    #include "trace.h"
->>>    #include "qemu/error-report.h"
->>>    #include "migration/misc.h"
->>> -
->>> +#include "sysemu/reset.h"
->>>    #include "hw/virtio/virtio-bus.h"
->>>    #include "hw/virtio/virtio-access.h"
->>> @@ -910,6 +910,8 @@ static void virtio_balloon_device_realize(DeviceState *dev, Error **errp)
->>>        }
->>>        reset_stats(s);
->>> +    s->stats_last_update = 0;
->>> +    qemu_register_resettable(OBJECT(dev));
->>>    }
->>>    static void virtio_balloon_device_unrealize(DeviceState *dev)
->>> @@ -917,6 +919,7 @@ static void virtio_balloon_device_unrealize(DeviceState *dev)
->>>        VirtIODevice *vdev = VIRTIO_DEVICE(dev);
->>>        VirtIOBalloon *s = VIRTIO_BALLOON(dev);
->>> +    qemu_unregister_resettable(OBJECT(dev));
->>>        if (s->free_page_bh) {
->>>            qemu_bh_delete(s->free_page_bh);
->>>            object_unref(OBJECT(s->iothread));
->>> @@ -987,6 +990,27 @@ static void virtio_balloon_set_status(VirtIODevice *vdev, uint8_t status)
->>>        }
->>>    }
->>
->> Using qemu_register_resettable() can have unfortunate side effects that this
->> code is triggered when the device is reset, not necessarily when the
->> complete machine.
->>
->> For virtio-mem at least that's an issue, and here is how I'll fix it:
->>
->> https://lore.kernel.org/qemu-devel/20241218105303.1966303-2-david@redhat.com/
+On 12/19/24 10:53, Bernhard Beschow wrote:
 > 
-> Urgh, that's a rather horrible situation. While your patch works around
-> it quite effectively, it is pretty heavy weight, and of course relies on
-> maintainers knowing this scenario exists - they won't learn this easily
-> from the Resettable API design, nor its docs :-(
-
-Yes.
-
 > 
-> Shouldn't we put to extend the Resettable design to make this scenario
-> more explicity distinguishable in the Resettable callback implementations.
+> Am 4. November 2024 17:26:51 UTC schrieb Paolo Bonzini <pbonzini@redhat.com>:
+>> Adjust the integration test to compile with a subset of QEMU object
+>> files, and make it actually create an object of the class it defines.
+>>
+>> Follow the Rust filesystem conventions, where tests go in tests/ if
+>> they use the library in the same way any other code would.
+>>
+>> Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
+>> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>> meson.build                  | 10 ++++-
+>> rust/qemu-api/meson.build    | 26 ++++++++++--
+>> rust/qemu-api/src/lib.rs     |  3 --
+>> rust/qemu-api/src/tests.rs   | 49 ----------------------
+>> rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
+>> 5 files changed, 110 insertions(+), 56 deletions(-)
+>> delete mode 100644 rust/qemu-api/src/tests.rs
+>> create mode 100644 rust/qemu-api/tests/tests.rs
+> 
+> When `--enable-modules` is passed to configure, this patch results in numerous undefined symbols.
 
-I'd be happy if I wouldn't need that heavy-weight stuff in virtio-mem 
-code as well, so if you have ideas on how to avoid that in the future, 
-that'd be great.
+Thanks for the report... This doesn't seem easy to fix without adding 
+more hacks on top, but I'll try to do it right.
 
--- 
-Cheers,
-
-David / dhildenb
+Paolo
 
 
