@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE800E77188
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 01:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C616E77188
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 01:51:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tO5a6-0006Bs-03; Wed, 18 Dec 2024 20:44:02 -0500
+	id 1tO5gn-0000ts-62; Wed, 18 Dec 2024 20:50:57 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tO5a0-00067x-Tq
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:43:57 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
- id 1tO5Zy-0000Dl-ON
- for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:43:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734572632;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yCPsyW7U/qPE+9sG+uE7o1u7wh6ztxq158s7gZguTcw=;
- b=ZT8i8IVgJQ7tZ4KyW99eQlFB71QkRrh95d7R/qJPi/uOyZ7Jfso67FP1PuVWPa7PkC2TUv
- PeZIZzISiAO26s7ckEy5SOuGWy8ghV8YFXDbIRvDSrKvfibv2HctlPpKyzLNNe64zp4Lpt
- JYaSVcRFx8bkn06g8136H77FLGu0eSc=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-0bXwHx2OObCCdrE30OG-4w-1; Wed, 18 Dec 2024 20:43:50 -0500
-X-MC-Unique: 0bXwHx2OObCCdrE30OG-4w-1
-X-Mimecast-MFC-AGG-ID: 0bXwHx2OObCCdrE30OG-4w
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-aa691c09772so21865266b.1
- for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 17:43:50 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tO5gi-0000tS-SU
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:50:52 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>) id 1tO5gf-0001IF-Bf
+ for qemu-devel@nongnu.org; Wed, 18 Dec 2024 20:50:51 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-21649a7bcdcso2329025ad.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Dec 2024 17:50:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734573047; x=1735177847; darn=nongnu.org;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=hyqB/yemDdd+bXN+c/VxhblpGJJ9RAhVBo1KCY2BifU=;
+ b=Knvo6v//30YkfBLGbPU964TprAIPYj9P7c7+pWUaLiqBFcAC4X/2qyEpEdV0oaZLGk
+ fUSrOewxR4EUD5P9/MOJiQqpyuUW6lCkJu2gRY/VehZ1CVgkWyuisAPFHTe7xJXWLGFz
+ 8yYTQSLqXG0EPKEV8U/brL3H/ZV0PqBwaqwTtG2iEr48ZUz0eH0aWtC+9ySLnJRftjwy
+ 67/3nMd2rmjROJFsnbZg05VLNnN8cMJgoM/QngbpbNG0UZI8U/vu4HHN2VRHzDZGkOZL
+ CrpwNw7XUk+Q2zTpAcXuhDMkO23u2chtq5CIM+HrYWiDZlfLo/nYDvtEYWMpMP1/2iCR
+ 2S4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734572629; x=1735177429;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=yCPsyW7U/qPE+9sG+uE7o1u7wh6ztxq158s7gZguTcw=;
- b=MgJF4tc5dXhrEv2Jq3n7lkqtT2jlL97rahLR5zfCgF3+CASrd9vntHGeM9Su5ezI0t
- mAe1Ui6tbr8mnnbxaTN5ClDSgJmO6g42pygPuelO6TEDbhrMyuMuLVvYoEYoMMFJZCqH
- 0fWZE8awbRiKwjKBh68FnIj+KJ0WtHjhtKSTW6wPIIYP4NY/AMLFhy4/CW5Y1gYdYep1
- 5dGjIqB0P5mUGJkuiexewOQwCFk3fC/qKyrzBKAA9kncjZDOHyZSc2Ea2sR/2YEg3T6H
- mNlG0WPDeb2U1qdnGMY/rn5E47VeAGh7VEynTJ7JV1EQLmrIWQ8VMj609jT0KBMEOTfv
- OWww==
-X-Gm-Message-State: AOJu0YyEBQXI91KQ4UtyRZurRK9xhf+HDDTKm7a5tSX1N6U2RGjBdFys
- i1uJltGE9VTzs01xRIl0VOH7hmlZXVKgcq0p/zP8HlgNRbEJ8ZT/lQvrkk3+Q36POtgzoGy5BcB
- yxGpWCQ8hzC8uzQduf8d0Fxkfak+GzDtztfCRibPFhs7ipH35A8BIEllEwPW1gYnmt6GRv801lh
- NKfiKgQstGdL5e8tilEXDtlLwhIuA=
-X-Gm-Gg: ASbGncuciQ7eqelhJ5NUoeLnhtgKvcnLlqKdAdxD8g4dv47XwU1XnoabJy1iX49J/Fp
- IhL7lXe0utPvJVs5dpOJgNS2x8x0BRPTpxKS4+mQ=
-X-Received: by 2002:a17:907:3e8f:b0:aab:9258:483 with SMTP id
- a640c23a62f3a-aac079513e0mr146695666b.27.1734572629387; 
- Wed, 18 Dec 2024 17:43:49 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEug7JfoIeb6xf3z8zHxnQc+ct6nrwm+juLEs4YI0Z18UTH3b0ejBSnz3+ueCQHwZb57j5jjDnjkjyNhO3WeI8=
-X-Received: by 2002:a17:907:3e8f:b0:aab:9258:483 with SMTP id
- a640c23a62f3a-aac079513e0mr146694166b.27.1734572628986; Wed, 18 Dec 2024
- 17:43:48 -0800 (PST)
-MIME-Version: 1.0
-References: <20241218143453.1573185-1-lvivier@redhat.com>
-In-Reply-To: <20241218143453.1573185-1-lvivier@redhat.com>
-From: Lei Yang <leiyang@redhat.com>
-Date: Thu, 19 Dec 2024 09:43:12 +0800
-Message-ID: <CAPpAL=ybRdn=3n=EOM-ZM-7LareSDzKkVSJkDFbV8nbQqxKzCg@mail.gmail.com>
-Subject: Re: [PATCH] virtio-net: vhost-user: Implement internal migration
-To: Laurent Vivier <lvivier@redhat.com>
-Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>, 
- Jason Wang <jasowang@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
+ d=1e100.net; s=20230601; t=1734573047; x=1735177847;
+ h=in-reply-to:references:to:from:subject:cc:message-id:date
+ :content-transfer-encoding:mime-version:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=hyqB/yemDdd+bXN+c/VxhblpGJJ9RAhVBo1KCY2BifU=;
+ b=VRTeYOggNxlJHhVEXj+FPvU/tCigsX4nzz7TcPFdYLjkjDacLxgJQykon0XK3Br+HA
+ 2TZe+DCYgc6p2TrGXbZU8M8d6wXB6ouPs1sERAjcxxaNWzLtpJjdkFssI0sqi9fDSmHB
+ dVS9iIF0RNQ9C80DlL03+fPc5n+9R1SK6IuojkWwEQqCOtZsMYSLHJ+V/3JMbym8j7Q7
+ FTOVM4KVm09AToAQqtS9YLLuqxRMCfR6WVbQS7E48VKvWXTq6saBKvYH5SKvrh5A9plU
+ 05fdOtlkCnYxghybGMIIPl74WUVcEIZ7r3WoRO27IDzps0UKG+4ZopKpz+TRQ1D2cuvH
+ f+fQ==
+X-Gm-Message-State: AOJu0YzOvZ2UNW1q/6bqk9uiGHtL4WkC/oROIBYu4NBDCCIkgxaV8djo
+ Hb1AhWSFOEXFF0zEuK47RuOR/gYCu+0RBcWYGqg48RYId931pM67MbuhNg==
+X-Gm-Gg: ASbGncu1EIdFeurHYh1adLMYjRtnvFjytsgeWXp43OdTE5yyqbkziD5nouLGMwY1d9P
+ +aUksSa7pL/RkTYhUsKj8xkKIj+04RnlywHOIrm4QPVNa+h4Sfyr602e29MwhLpZVZ56t0dv4r5
+ pvoKYPqCp+V7Ce0YBSZdjA9tY0LAq+C/sGhmxXe+PnBx3RFfXlTt/F5giGfmNgJvkUqyS2PmBNf
+ X1vhJZaR+mBdIQ8e1QPiYQNuJmIGfkqy+FAHhEMYG2j38gEDbppdDM0TRAl7I1c4TxDE7DQAJI=
+X-Google-Smtp-Source: AGHT+IFoIZQRrsV0TxdRJRp4/MgSXrngRh/5XLCzhY/il8hD3zTtyx03ZEpiZO9oW+NjJ+XMfEk4Ow==
+X-Received: by 2002:a17:902:e883:b0:215:8dd3:536a with SMTP id
+ d9443c01a7336-218d6fd5e99mr65525215ad.4.1734573046886; 
+ Wed, 18 Dec 2024 17:50:46 -0800 (PST)
+Received: from localhost (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc96291bsm1909155ad.14.2024.12.18.17.50.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Dec 2024 17:50:46 -0800 (PST)
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leiyang@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Date: Thu, 19 Dec 2024 11:50:40 +1000
+Message-Id: <D6FATQ1ETHB0.2WZ09SFCLAH5B@gmail.com>
+Cc: <qemu-devel@nongnu.org>, "Michael S. Tsirkin" <mst@redhat.com>, "Marcel
+ Apfelbaum" <marcel.apfelbaum@gmail.com>, "Fabiano Rosas" <farosas@suse.de>,
+ "Laurent Vivier" <lvivier@redhat.com>, "Paolo Bonzini"
+ <pbonzini@redhat.com>, "Dmitry Fleytman" <dmitry.fleytman@gmail.com>,
+ "Akihiko Odaki" <akihiko.odaki@daynix.com>, "Sriram Yagnaraman"
+ <sriram.yagnaraman@ericsson.com>
+Subject: Re: [PATCH 5/8] hw/usb/xhci: Move HCD constants to a header and add
+ register constants
+From: "Nicholas Piggin" <npiggin@gmail.com>
+To: "Phil Dennis-Jordan" <lists@philjordan.eu>
+X-Mailer: aerc 0.18.2
+References: <20241212083502.1439033-1-npiggin@gmail.com>
+ <20241212083502.1439033-6-npiggin@gmail.com>
+ <CAGCz3vuUoRPk1UN2+_SqLtn_q5qu-RM7kmwTgNeRM2Mf75hoeg@mail.gmail.com>
+In-Reply-To: <CAGCz3vuUoRPk1UN2+_SqLtn_q5qu-RM7kmwTgNeRM2Mf75hoeg@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,192 +104,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I tested this patch with virtio-net regression tests,everything works fine.
+On Thu Dec 19, 2024 at 1:08 AM AEST, Phil Dennis-Jordan wrote:
+> This looks sensible to me overall.
+>
+> For the new symbolic constants for MMIO register offsets such as
+> XHCI_OPER_*, XHCI_INTR_* and so on, I'm wondering if it would be clearer =
+to
+> give them all an _OFFSET suffix. It's not perfectly consistent to do so
+> across the code base, but quite a few device types do follow that
+> convention. In my opinion it improves readability, especially in the head=
+er
+> file, where these offset constants are frequently mixed in with constant
+> values that can be written to or read from these registers.
 
-Tested-by: Lei Yang <leiyang@redhat.com>
+I'm not strongly attached. I slightly prefer suffix, like
+XHCI_HCCAP_REG_CAPLENGTH) for MMIO regs, so all the common
+part of the name lines up.
 
+Should the entire codebase have a guideline for memory offset
+naming conventions? Or does it not matter that much.
 
-On Wed, Dec 18, 2024 at 10:36=E2=80=AFPM Laurent Vivier <lvivier@redhat.com=
-> wrote:
->
-> Add support of VHOST_USER_PROTOCOL_F_DEVICE_STATE in virtio-net
-> with vhost-user backend.
->
-> Cc: Hanna Czenczek <hreitz@redhat.com>
-> Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-> ---
->  hw/net/virtio-net.c | 135 ++++++++++++++++++++++++++++++++++++--------
->  1 file changed, 112 insertions(+), 23 deletions(-)
->
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 6e8c51a2dbce..b4d9e96dc0d7 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -3337,6 +3337,117 @@ static const VMStateDescription vmstate_virtio_ne=
-t_rss =3D {
->      },
->  };
->
-> +static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
-> +{
-> +    VirtIONet *n =3D VIRTIO_NET(vdev);
-> +    NetClientState *nc;
-> +    struct vhost_net *net;
-> +
-> +    if (!n->nic) {
-> +        return NULL;
-> +    }
-> +
-> +    nc =3D qemu_get_queue(n->nic);
-> +    if (!nc) {
-> +        return NULL;
-> +    }
-> +
-> +    net =3D get_vhost_net(nc->peer);
-> +    if (!net) {
-> +        return NULL;
-> +    }
-> +
-> +    return &net->dev;
-> +}
-> +
-> +static int vhost_user_net_save_state(QEMUFile *f, void *pv, size_t size,
-> +                                     const VMStateField *field,
-> +                                     JSONWriter *vmdesc)
-> +{
-> +    VirtIONet *n =3D pv;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +    struct vhost_dev *vhdev;
-> +    Error *local_error =3D NULL;
-> +    int ret;
-> +
-> +    vhdev =3D virtio_net_get_vhost(vdev);
-> +    if (vhdev =3D=3D NULL) {
-> +        error_reportf_err(local_error,
-> +                          "Error getting vhost back-end of %s device %s:=
- ",
-> +                          vdev->name, vdev->parent_obj.canonical_path);
-> +        return -1;
-> +    }
-> +
-> +    ret =3D vhost_save_backend_state(vhdev, f, &local_error);
-> +    if (ret < 0) {
-> +        error_reportf_err(local_error,
-> +                          "Error saving back-end state of %s device %s: =
-",
-> +                          vdev->name, vdev->parent_obj.canonical_path);
-> +        return ret;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static int vhost_user_net_load_state(QEMUFile *f, void *pv, size_t size,
-> +                                     const VMStateField *field)
-> +{
-> +    VirtIONet *n =3D pv;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +    struct vhost_dev *vhdev;
-> +    Error *local_error =3D NULL;
-> +    int ret;
-> +
-> +    vhdev =3D virtio_net_get_vhost(vdev);
-> +    if (vhdev =3D=3D NULL) {
-> +        error_reportf_err(local_error,
-> +                          "Error getting vhost back-end of %s device %s:=
- ",
-> +                          vdev->name, vdev->parent_obj.canonical_path);
-> +        return -1;
-> +    }
-> +
-> +    ret =3D vhost_load_backend_state(vhdev, f, &local_error);
-> +    if (ret < 0) {
-> +        error_reportf_err(local_error,
-> +                          "Error loading  back-end state of %s device %s=
-: ",
-> +                          vdev->name, vdev->parent_obj.canonical_path);
-> +        return ret;
-> +    }
-> +
-> +    return 0;
-> +}
-> +
-> +static bool vhost_user_net_is_internal_migration(void *opaque)
-> +{
-> +    VirtIONet *n =3D opaque;
-> +    VirtIODevice *vdev =3D VIRTIO_DEVICE(n);
-> +    struct vhost_dev *vhdev;
-> +
-> +    vhdev =3D virtio_net_get_vhost(vdev);
-> +    if (vhdev =3D=3D NULL) {
-> +        return false;
-> +    }
-> +
-> +    return vhost_supports_device_state(vhdev);
-> +}
-> +
-> +static const VMStateDescription vhost_user_net_backend_state =3D {
-> +    .name =3D "virtio-net-device/backend",
-> +    .version_id =3D 0,
-> +    .needed =3D vhost_user_net_is_internal_migration,
-> +    .fields =3D (const VMStateField[]) {
-> +        {
-> +            .name =3D "backend",
-> +            .info =3D &(const VMStateInfo) {
-> +                .name =3D "virtio-net vhost-user backend state",
-> +                .get =3D vhost_user_net_load_state,
-> +                .put =3D vhost_user_net_save_state,
-> +            },
-> +         },
-> +         VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> +
->  static const VMStateDescription vmstate_virtio_net_device =3D {
->      .name =3D "virtio-net-device",
->      .version_id =3D VIRTIO_NET_VM_VERSION,
-> @@ -3389,6 +3500,7 @@ static const VMStateDescription vmstate_virtio_net_=
-device =3D {
->      },
->      .subsections =3D (const VMStateDescription * const []) {
->          &vmstate_virtio_net_rss,
-> +        &vhost_user_net_backend_state,
->          NULL
->      }
->  };
-> @@ -3950,29 +4062,6 @@ static bool dev_unplug_pending(void *opaque)
->      return vdc->primary_unplug_pending(dev);
->  }
->
-> -static struct vhost_dev *virtio_net_get_vhost(VirtIODevice *vdev)
-> -{
-> -    VirtIONet *n =3D VIRTIO_NET(vdev);
-> -    NetClientState *nc;
-> -    struct vhost_net *net;
-> -
-> -    if (!n->nic) {
-> -        return NULL;
-> -    }
-> -
-> -    nc =3D qemu_get_queue(n->nic);
-> -    if (!nc) {
-> -        return NULL;
-> -    }
-> -
-> -    net =3D get_vhost_net(nc->peer);
-> -    if (!net) {
-> -        return NULL;
-> -    }
-> -
-> -    return &net->dev;
-> -}
-> -
->  static const VMStateDescription vmstate_virtio_net =3D {
->      .name =3D "virtio-net",
->      .minimum_version_id =3D VIRTIO_NET_VM_VERSION,
-> --
-> 2.47.1
->
->
+[snip]
 
+> > -    case 0x0c: /* HCSPARAMS 3 */
+> > +    case XHCI_HCCAP_HCSPARAMS3:
+> >          ret =3D 0x00000000;
+> >          break;
+> > -    case 0x10: /* HCCPARAMS */
+> > -        if (sizeof(dma_addr_t) =3D=3D 4) {
+> > -            ret =3D 0x00080000 | (xhci->max_pstreams_mask << 12);
+> > -        } else {
+> > -            ret =3D 0x00080001 | (xhci->max_pstreams_mask << 12);
+> > +    case XHCI_HCCAP_HCCPARAMS1:
+> > +        ret =3D (XHCI_HCCAP_EXTCAP_START >> 2) | (xhci->max_pstreams_m=
+ask
+> > << 12);
+> >
+>
+> This doesn't look like it's equivalent to the original code. I think you
+> want
+> ((XHCI_HCCAP_EXTCAP_START >> 2) << 16) | (xhci->max_pstreams_mask << 12);
+
+Good catch.
+
+>
+> That's=E2=80=A6 not particularly readable either though, so if we're goin=
+g to break
+> up the magic numbers here, how about something like:
+>
+> ret =3D (XHCI_HCCAP_EXTCAP_START / 4) << XHCI_HCCPARAM_EXTPTR_SHIFT;
+> ret |=3D xhci->max_pstreams_mask << XHCI_HCCPARAM_MAXPSASIZE_SHIFT;
+>
+>
+> > +        if (sizeof(dma_addr_t) =3D=3D 8) {
+> > +            ret |=3D 0x00000001; /* AC64 */
+> >
+>
+> and then this can become
+> ret |=3D XHCI_HCCPARAM_AC64;
+>
+> or something like that.
+
+Sure.
+
+[snip]
+
+> >      switch (reg) {
+> > -    case 0x00: /* PORTSC */
+> > +    case XHCI_PORT_PORTSC:
+> >          ret =3D port->portsc;
+> >          break;
+> > -    case 0x04: /* PORTPMSC */
+> > -    case 0x08: /* PORTLI */
+> > +    case XHCI_PORT_PORTPMSC:
+> > +    case XHCI_PORT_PORTLI:
+> >          ret =3D 0;
+> >          break;
+> > -    case 0x0c: /* reserved */
+> >
+>
+> I think it's worth keeping explicitly unhandled case labels documented li=
+ke
+> this. (This one appears to be XHCI_PORT_PORTHLPMC nowadays, I assume it w=
+as
+> reserved in an earlier spec version.)
+
+Okay.
+
+>      default:
+> >          trace_usb_xhci_unimplemented("port read", reg);
+> >          ret =3D 0;
+> > @@ -2829,7 +2668,7 @@ static void xhci_port_write(void *ptr, hwaddr reg=
+,
+> >      trace_usb_xhci_port_write(port->portnr, reg, val);
+> >
+> >      switch (reg) {
+> > -    case 0x00: /* PORTSC */
+> > +    case XHCI_PORT_PORTSC:
+> >          /* write-1-to-start bits */
+> >          if (val & PORTSC_WPR) {
+> >              xhci_port_reset(port, true);
+> > @@ -2880,8 +2719,6 @@ static void xhci_port_write(void *ptr, hwaddr reg=
+,
+> >              xhci_port_notify(port, notify);
+> >          }
+> >          break;
+> > -    case 0x04: /* PORTPMSC */
+> > -    case 0x08: /* PORTLI */
+> >
+>
+> Hmm. Looks like PORTLI is actually a read-only register, so writing this
+> ought to trigger a LOG_GUEST_ERROR. And I don't think it's a bad thing to
+> explicitly document PORTPMSC as unimplemented. (And I guess that ought to
+> be a LOG_UNIMP, not a trace, sigh.) The improved logging can be a separat=
+e
+> commit - in fact I don't mind tagging that fix onto my own pending XHCI
+> patch set, but I think for this commit we ought to keep the case labels
+> (with the new symbolic constants).
+
+Okay I'll add back the reserved cases.
+
+Yeah, memory access handling in drivers is really inconsistent all over
+the tree. It would be nice if there was some helpers or something that
+added common template for access tracing, unimp and guest error logs,
+etc.
+
+Thanks,
+Nick
 
