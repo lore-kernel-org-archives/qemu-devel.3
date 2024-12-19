@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00236E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:57:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5B3E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 09:58:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tODHe-0000j9-HP; Thu, 19 Dec 2024 04:57:30 -0500
+	id 1tODIV-0001I2-UV; Thu, 19 Dec 2024 04:58:23 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tODHc-0000ib-Dt
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:57:28 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tODHb-0006SW-0Q
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:57:28 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-436249df846so3914795e9.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 01:57:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734602245; x=1735207045; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VbdaFBXvdjDmxYhJJQN5vo9M1eUyMNfCbvJoibJ7eeA=;
- b=Svo/MDdv3Abs+roqXtneJyzJ4pqmlk+BbQ5NcWZObwvxcxfUBCYE0zp9mEMGOu2neA
- H/j9F0gZWn/v5QhMqCuwMGd/jkzK6XEeuAY0t67atTcqH3q7OwrNhK8M8WX+B9LmuaFU
- AtNp7ABWcypTrdsH/tXHu4cx/k3UqwC9oWhWY4udrKT3psR1aD4VoFDvO74k89tSeqlZ
- oHiqrCfm89QDn1Sh6k2/55xfOgHIvkF4WSB7QM5tQMwKGfWeT1dZlihK0fpzWWoIsrCN
- +2xt95I1AdGEphnxtmdEH8oiYJvYtRZJtXSW/WsXLSLkyu3nGFSMSmPNdrU7h46y1OzT
- QPLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734602245; x=1735207045;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VbdaFBXvdjDmxYhJJQN5vo9M1eUyMNfCbvJoibJ7eeA=;
- b=MZIeFYgNpAHC/pV+6+xxHe8p/2l7hzhqnzZY64NSTTu/LZe6MUf+Ka+PIjUe5/IuqA
- NQrbGs0NTCF+YtRgUBoGMFRQ47gqBBh0NwnYDbbsuJwjgMVzjNgwN9zJPkY4kNnOFM1u
- ac0MQ9UnayFu6VCSNve9D3JXbUvogYf4WjZ0NE2mnBZGU2s9ge0R1s34jOeViM8GSl9w
- Hh4+Q0EjB0F5Kz5DTqIqJlHGjI44eSr/WNIVaIXqur2/kIydbQweZq3GY72njQvfocb8
- udEKTi84KoJMPy9NoMaHm18PYDaS9OLsUHshQlO203DrOw2QRLaTWhCBnaibxIb8Rkk9
- YbnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXakbRJ/YsZR342Tw7KAvbBHmahVsa3FKtvQuesNtIXJ0p0SRIHs9P7AF39Sd6uWr/9SjD4N095ZCZn@nongnu.org
-X-Gm-Message-State: AOJu0YwN/UEitIgmHVirXNU8zvJlXUgcsdfmty4vYD224+zhMYXIkHij
- iLZLeuS2+pF4hJB7h89cPoxSd+omLvbJatudaCdrV8pPyBIODn5dEnke6eqzGUQ=
-X-Gm-Gg: ASbGncubysbl9DGKrQygKwsfOpWV+frfbQMWY2emvbQhcbNxqOUO/A8Z6dQsboK9FL6
- ZPG5JWUdua2dt/hVp1gqp+FIYMyxboCajDDKsNKNYGrOxnURy5n2UYKgPRt4MoEcgRrcajlxADh
- /Tm5looPFUGALJtk5AbV7sWnicnUcO/6sydcHFxy8CaisSv4NhN5UK82yOMJy0v3QVvXtnHjD7U
- 2L9jJhpKEDyhUBZ/yTel10jNRenrBl4MHKKNZ4SwoiLG7xxaBPdsFRI4fv8OhwJ31Q=
-X-Google-Smtp-Source: AGHT+IG0l+iDz45TK6wd1p8m+hjjPUaMT3zkfP46Uy/4RUXipPUjUAz05Tp15U23lOTp+XoRCTgT6w==
-X-Received: by 2002:a05:600c:6a95:b0:436:5fc9:30ba with SMTP id
- 5b1f17b1804b1-4365fc93206mr11971955e9.29.1734602244706; 
- Thu, 19 Dec 2024 01:57:24 -0800 (PST)
-Received: from [192.168.1.117] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661219a08sm13312875e9.25.2024.12.19.01.57.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 01:57:24 -0800 (PST)
-Message-ID: <3170a353-fcc2-474f-bc54-84d440d5f3fb@linaro.org>
-Date: Thu, 19 Dec 2024 10:57:23 +0100
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1tODIT-0001Ho-8C
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:58:21 -0500
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1tODIP-0006V2-Da
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 04:58:20 -0500
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8BxuuAw7mNnbYJYAA--.43779S3;
+ Thu, 19 Dec 2024 17:58:09 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMCx3sUt7mNncUQCAA--.5110S3;
+ Thu, 19 Dec 2024 17:58:06 +0800 (CST)
+Subject: Re: [PATCH] feat: add loongarch page table walker support for
+ debugger memory access
+To: Miao Hao <haomiao23s@ict.ac.cn>, gaosong@loongson.cn
+Cc: qemu-devel@nongnu.org, "lixianglai@loongson.cn" <lixianglai@loongson.cn>
+References: <20241219032455.28608-1-haomiao23s@ict.ac.cn>
+From: bibo mao <maobibo@loongson.cn>
+Message-ID: <b041dacf-df2f-f25f-33c5-a53ad9cc2059@loongson.cn>
+Date: Thu, 19 Dec 2024 17:57:23 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 2/6] linux-user: Use unique error messages for cmsg parsing
-To: deller@kernel.org, Richard Henderson <richard.henderson@linaro.org>,
- qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
- Peter Maydell <peter.maydell@linaro.org>
-Cc: deller@gmx.de
-References: <20241218195247.5459-1-deller@kernel.org>
- <20241218195247.5459-3-deller@kernel.org>
+In-Reply-To: <20241219032455.28608-1-haomiao23s@ict.ac.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241218195247.5459-3-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMCx3sUt7mNncUQCAA--.5110S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3GrWxXr15Zw17WFW7tFW7ZFc_yoWxKry5pF
+ WxCFWayF48KrZrAas3X34YvFn8Zr43Kw4aga1fKF9YkwsxXryfZFWvg3sxJF48Jw4kWw4I
+ gan8AF45Ca4UXFgCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Jr0_Gr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL
+ 05UUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.107,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,17 +82,221 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/12/24 20:52, deller@kernel.org wrote:
-> From: Helge Deller <deller@gmx.de>
-> 
-> Avoid using the same error message for two different code paths
-> as it complicates determining the one which actually triggered.
-> 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   linux-user/syscall.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
+Hi Miao,
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks for doing this. It is useful to debug VM.
+
+On 2024/12/19 上午11:24, Miao Hao wrote:
+> Signed-off-by: Miao Hao <haomiao23s@ict.ac.cn>
+> ---
+>   target/loongarch/cpu_helper.c     | 104 ++++++++++++++++++++++++++++--
+>   target/loongarch/internals.h      |   4 +-
+>   target/loongarch/tcg/tlb_helper.c |   4 +-
+>   3 files changed, 104 insertions(+), 8 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu_helper.c b/target/loongarch/cpu_helper.c
+> index 580362ac3e..c0828a813d 100644
+> --- a/target/loongarch/cpu_helper.c
+> +++ b/target/loongarch/cpu_helper.c
+> @@ -141,9 +141,95 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>       return false;
+>   }
+>   
+> +static int loongarch_page_table_walker(CPULoongArchState *env, hwaddr *physical,
+> +                                 int *prot, target_ulong address)
+> +{
+> +    CPUState *cs = env_cpu(env);
+> +    target_ulong index, phys;
+> +    int shift;
+> +    uint64_t dir_base, dir_width;
+> +    uint64_t base;
+> +    int level;
+> +
+> +    /* 0:64bit, 1:128bit, 2:192bit, 3:256bit */
+> +    shift = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTEWIDTH);
+> +    shift = (shift + 1) * 3;
+> +
+> +    if ((address >> 63) & 0x1) {
+> +        base = env->CSR_PGDH;
+> +    } else {
+> +        base = env->CSR_PGDL;
+> +    }
+> +    base &= TARGET_PHYS_MASK;
+> +
+> +    for (level = 4; level > 0; level--) {
+> +        get_dir_base_width(env, &dir_base, &dir_width, level);
+> +
+> +        if (dir_width != 0) {
+how about check whether it equeal to 0 firstly like this?
+            if (dir_width == 0)
+                continue;
+
+> +            /* get next level page directory */
+> +            index = (address >> dir_base) & ((1 << dir_width) - 1);
+> +            phys = base | index << shift;
+Here will only load first 64bit if shift is not 0, such as 1:128bit, 
+2:192bit, 3:256bit
+
+> +            base = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
+> +            if (!FIELD_EX64(base, TLBENTRY, HUGE)) {
+> +                /* mask off page dir permission bits */
+> +                base &= TARGET_PAGE_MASK;
+> +            } else {
+> +                /* base is a huge pte */
+> +                break;
+> +            }
+> +
+> +            if (base == 0) {
+physical adddress 0 is valid and Valid bit will be checked in later. 
+Can we remove this?
+> +                return TLBRET_NOMATCH;
+> +            }
+
+> +        }
+> +    }
+> +
+> +    /* pte */
+> +    if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+> +        /* Huge Page. base is pte */
+> +        base = FIELD_DP64(base, TLBENTRY, LEVEL, 0);
+> +        base = FIELD_DP64(base, TLBENTRY, HUGE, 0);
+> +        if (FIELD_EX64(base, TLBENTRY, HGLOBAL)) {
+> +            base = FIELD_DP64(base, TLBENTRY, HGLOBAL, 0);
+> +            base = FIELD_DP64(base, TLBENTRY, G, 1);
+> +        }
+> +    } else {
+> +        /* Normal Page. base points to pte */
+> +        get_dir_base_width(env, &dir_base, &dir_width, 0);
+> +        index = (address >> dir_base) & ((1 << dir_width) - 1);
+> +        phys = base | index << shift;
+Ditto, shift may be wider than 64-bit.
+
+Regards
+Bibo Mao
+> +        base = ldq_phys(cs->as, phys);
+> +    }
+> +
+> +    /* TODO: check plv and other bits? */
+> +
+> +    /* base is pte, in normal pte format */
+> +    if (!FIELD_EX64(base, TLBENTRY, V)) {
+> +        return TLBRET_NOMATCH;
+> +    }
+> +
+> +    if (!FIELD_EX64(base, TLBENTRY, D)) {
+> +        *prot = PAGE_READ;
+> +    } else {
+> +        *prot = PAGE_READ | PAGE_WRITE;
+> +    }
+> +
+> +    /* get TARGET_PAGE_SIZE aligned physical address */
+> +    base += (address & TARGET_PHYS_MASK) & ((1 << dir_base) - 1);
+> +    /* mask RPLV, NX, NR bits */
+> +    base = FIELD_DP64(base, TLBENTRY_64, RPLV, 0);
+> +    base = FIELD_DP64(base, TLBENTRY_64, NX, 0);
+> +    base = FIELD_DP64(base, TLBENTRY_64, NR, 0);
+> +    /* mask other attribute bits */
+> +    *physical = base & TARGET_PAGE_MASK;
+> +
+> +    return 0;
+> +}
+> +
+>   static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>                                    int *prot, target_ulong address,
+> -                                 MMUAccessType access_type, int mmu_idx)
+> +                                 MMUAccessType access_type, int mmu_idx,
+> +                                 int is_debug)
+>   {
+>       int index, match;
+>   
+> @@ -151,6 +237,13 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>       if (match) {
+>           return loongarch_map_tlb_entry(env, physical, prot,
+>                                          address, access_type, index, mmu_idx);
+> +    } else if (is_debug) {
+> +        /*
+> +         * For debugger memory access, we want to do the map when there is a
+> +         * legal mapping, even if the mapping is not yet in TLB. return 0 if
+> +         * there is a valid map, else none zero.
+> +         */
+> +        return loongarch_page_table_walker(env, physical, prot, address);
+>       }
+>   
+>       return TLBRET_NOMATCH;
+> @@ -158,7 +251,8 @@ static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>   #else
+>   static int loongarch_map_address(CPULoongArchState *env, hwaddr *physical,
+>                                    int *prot, target_ulong address,
+> -                                 MMUAccessType access_type, int mmu_idx)
+> +                                 MMUAccessType access_type, int mmu_idx,
+> +                                 int is_debug)
+>   {
+>       return TLBRET_NOMATCH;
+>   }
+> @@ -178,7 +272,7 @@ static hwaddr dmw_va2pa(CPULoongArchState *env, target_ulong va,
+>   
+>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>                            int *prot, target_ulong address,
+> -                         MMUAccessType access_type, int mmu_idx)
+> +                         MMUAccessType access_type, int mmu_idx, int is_debug)
+>   {
+>       int user_mode = mmu_idx == MMU_USER_IDX;
+>       int kernel_mode = mmu_idx == MMU_KERNEL_IDX;
+> @@ -222,7 +316,7 @@ int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>   
+>       /* Mapped address */
+>       return loongarch_map_address(env, physical, prot, address,
+> -                                 access_type, mmu_idx);
+> +                                 access_type, mmu_idx, is_debug);
+>   }
+>   
+>   hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+> @@ -232,7 +326,7 @@ hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cs, vaddr addr)
+>       int prot;
+>   
+>       if (get_physical_address(env, &phys_addr, &prot, addr, MMU_DATA_LOAD,
+> -                             cpu_mmu_index(cs, false)) != 0) {
+> +                             cpu_mmu_index(cs, false), 1) != 0) {
+>           return -1;
+>       }
+>       return phys_addr;
+> diff --git a/target/loongarch/internals.h b/target/loongarch/internals.h
+> index 1a02427627..bc2ca30746 100644
+> --- a/target/loongarch/internals.h
+> +++ b/target/loongarch/internals.h
+> @@ -56,7 +56,9 @@ bool loongarch_tlb_search(CPULoongArchState *env, target_ulong vaddr,
+>                             int *index);
+>   int get_physical_address(CPULoongArchState *env, hwaddr *physical,
+>                            int *prot, target_ulong address,
+> -                         MMUAccessType access_type, int mmu_idx);
+> +                         MMUAccessType access_type, int mmu_idx, int is_debug);
+> +void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> +                               uint64_t *dir_width, target_ulong level);
+>   hwaddr loongarch_cpu_get_phys_page_debug(CPUState *cpu, vaddr addr);
+>   
+>   #ifdef CONFIG_TCG
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index 97f38fc391..564f336df9 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -18,7 +18,7 @@
+>   #include "exec/log.h"
+>   #include "cpu-csr.h"
+>   
+> -static void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+> +void get_dir_base_width(CPULoongArchState *env, uint64_t *dir_base,
+>                                  uint64_t *dir_width, target_ulong level)
+>   {
+>       switch (level) {
+> @@ -485,7 +485,7 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>   
+>       /* Data access */
+>       ret = get_physical_address(env, &physical, &prot, address,
+> -                               access_type, mmu_idx);
+> +                               access_type, mmu_idx, 0);
+>   
+>       if (ret == TLBRET_MATCH) {
+>           tlb_set_page(cs, address & TARGET_PAGE_MASK,
+> 
 
 
