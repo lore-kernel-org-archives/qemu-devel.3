@@ -4,144 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48210E77184
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E44A0E7718B
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:21:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJFS-0001n6-AH; Thu, 19 Dec 2024 11:19:38 -0500
+	id 1tOJFP-0001mE-2i; Thu, 19 Dec 2024 11:19:35 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFAe-00035H-NE
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:58:24 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOGid-0005ox-K5
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:37:36 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1tOFAd-0004oc-Ds
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 06:58:24 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOGib-0007UA-7r
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 08:37:35 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734609502;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1734615451;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=oRuEe6ucAO0eYhzom7FI+s0akhObBTVh0rVi/x+C/Cw=;
- b=gh2AgRYIMJ+iH3UE2+6MaEHqxEIX3wJO7xuikKaPKtolBlWWXDuCvup1ORWGLdhNwAntg1
- tT4Wgbt8+2xEHuD17ZkUnvi8au64/q4xbKd2L6UEkasMVZESNvPSrLozvb51MsQqP4f829
- stqIryhS25/noCnx4xkmuAUYSU4BvXg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-574-HieUukpvP8aZ24XU4KG4qg-1; Thu, 19 Dec 2024 06:58:21 -0500
-X-MC-Unique: HieUukpvP8aZ24XU4KG4qg-1
-X-Mimecast-MFC-AGG-ID: HieUukpvP8aZ24XU4KG4qg
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-385e1fd40acso416560f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 03:58:21 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734609500; x=1735214300;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:references:cc:to:from:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=oRuEe6ucAO0eYhzom7FI+s0akhObBTVh0rVi/x+C/Cw=;
- b=E26Ft82J0z0KI9ZMvoOWMw8KAML6teQV8EXLZDl4xN/8sH8YM/uS2B6I8khM2TKDIi
- 3z8G+p15FX37QrozokZsXv0wYqOeNFBfsh5vxiv8tdZjF0hCFg6NaKMBiLzxDoYsprSL
- jQ0biSrKd+YPIg7Ozm4hZvAuLrV4wdGAywP1Lsir+Sswj1rwnsaZwKlFpKOyDWEoy7nH
- +RTkGi7Dl7FZJe5Zhz6ASoJMrebbkCICs11UrnBUyHJ7nTe2wKPPI91v0pHIusCD9epS
- 0iaCsPd8dhaoylOe2ySwkMuw2wXRbp1oSGm23oRJ3ZYZfMLnwldyrDvvCYH0586m1r4C
- nY3g==
-X-Gm-Message-State: AOJu0YyDrhU3aqwg3Kuit4yyag1jieisFFUIowxLCKMUOjen8ZxljKcP
- m/EYZTlMqX1hpHtYooEyxuripuIwadnCNvf6oI0Jft40VHbT2QGvIqsezJvhSuLsxxNzi7YctZN
- sEXhhWgu2T27ipOOA1K9mXL74BqRzOGDakocUDc6QtbVQHxokEh0E
-X-Gm-Gg: ASbGnctEBqKNswSMUbIcylYZaYnmkyXKbf/sNKol39sL962HIVmKK+Jb9P4e/uvjJcG
- N6jqasSolZvIZx9tk8/p4zqCof7Ki0DLczbg/13tn4HPENu8HAmN6scXS4HTUugB0MpkSO6RAsE
- yEHYD/9r+VdFLVLiqN4TnvvuJ5THC4FoiGAeOtbt9w17gE+8kJOBs42VDevVzzZeAY6y7CtKDC7
- zYnDhVroER/m/oVKEnZvxZRwH8RGSgKMzTrhC0Hfizaetp8Yc2TG659liAvXerizug622uh1fOD
- GfgrVDHFAC49GsheaeoxJYN3kFq5BPRv6Nnmps+JfegtyDU8DWNGYThLDHb2nPkwurhIs+9MKo8
- vralgwg==
-X-Received: by 2002:a5d:6c6a:0:b0:385:f44a:a3b with SMTP id
- ffacd0b85a97d-388e4d8fd51mr4948291f8f.41.1734609500307; 
- Thu, 19 Dec 2024 03:58:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IE417aVIp18tTrZtgvfHcpUp94db1bbN32d6gPOMshVN8S1Go+rPtYMpfVGARYhp77wJxarWQ==
-X-Received: by 2002:a5d:6c6a:0:b0:385:f44a:a3b with SMTP id
- ffacd0b85a97d-388e4d8fd51mr4948262f8f.41.1734609499890; 
- Thu, 19 Dec 2024 03:58:19 -0800 (PST)
-Received: from ?IPV6:2003:cb:c749:6600:b73a:466c:e610:686?
- (p200300cbc7496600b73a466ce6100686.dip0.t-ipconnect.de.
- [2003:cb:c749:6600:b73a:466c:e610:686])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c832b3dsm1391612f8f.25.2024.12.19.03.58.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 03:58:18 -0800 (PST)
-Message-ID: <d4873e14-7b05-4f70-9abf-2f9d9ed0ea95@redhat.com>
-Date: Thu, 19 Dec 2024 12:58:17 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=myZFG4swjpJk6SpV8qwg/0+a4lSE0/KYAqhoR+Mop18=;
+ b=CdRNnc38ZD/B6mKjMJ5xfYLMrw2FSDr26oC2sZiG/N8aZXq2OdqWmfU3eErALTVmYrXcF4
+ Vsuja89iZzLU1vp95ufiLW811d+dF5BEQGpSPhjdIY66XyXxQpuM5QWafvHzoifY1vPKoT
+ Jg5+IILO5ogTHyk53RURkfmQbeHtdZU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-500-Vc4tnAguM6-EGf2tzL-GPw-1; Thu,
+ 19 Dec 2024 08:37:28 -0500
+X-MC-Unique: Vc4tnAguM6-EGf2tzL-GPw-1
+X-Mimecast-MFC-AGG-ID: Vc4tnAguM6-EGf2tzL-GPw
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9D8131955D44; Thu, 19 Dec 2024 13:37:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.54])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 66AE619560AD; Thu, 19 Dec 2024 13:37:22 +0000 (UTC)
+Date: Thu, 19 Dec 2024 13:37:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, eduardo@habkost.net,
+ armbru@redhat.com, pankaj.gupta@amd.com, huibo.wang@amd.com,
+ jroedel@suse.com, dionnaglaze@google.com
+Subject: Re: [PATCH v1 3/3] i386/sev: Add KVM_EXIT_SNP_REQ_CERTS support for
+ certificate-fetching
+Message-ID: <Z2QhjkgMQ0JDJYkb@redhat.com>
+References: <20241218154939.1114831-1-michael.roth@amd.com>
+ <20241218154939.1114831-4-michael.roth@amd.com>
+ <Z2MLfIFzzyEWEy5T@redhat.com>
+ <20241218222951.v6yjhcd7j6uojcs4@amd.com>
+ <Z2PVprpxdfa9MQR5@redhat.com>
+ <20241219131601.ckebfuxy5ukpdcml@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/15] Host Memory Backends and Memory devices queue
- 2024-12-18
-From: David Hildenbrand <david@redhat.com>
-To: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Halil Pasic <pasic@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>
-References: <20241218105303.1966303-1-david@redhat.com>
- <CAJSP0QUoerckBWX=0PD_82jFwVbmtvftWf5QqSWxpK0Ttc+uvQ@mail.gmail.com>
- <2e6400d9-6fee-41ed-a317-329f275912c6@redhat.com>
- <d19ab3d3-737d-4faa-a7d7-639b4ea3b172@redhat.com>
- <ed949070-bb79-4357-b379-9374c40433bc@linux.ibm.com>
- <728b07ae-17aa-49ca-967f-a35d62f8cc32@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <728b07ae-17aa-49ca-967f-a35d62f8cc32@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20241219131601.ckebfuxy5ukpdcml@amd.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -163,43 +92,213 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19.12.24 12:57, David Hildenbrand wrote:
-> On 19.12.24 12:43, Christian Borntraeger wrote:
->> Am 19.12.24 um 12:18 schrieb David Hildenbrand:
->>> The following on top seems to make everything happy. I wish the
->>> CONFIG_S390_CCW_VIRTIO stuff would't have to be so complicated, just to
->>> handle odd configs that don't really make sense.
->>
->> WOuld it be possible to rid of this config?
+On Thu, Dec 19, 2024 at 07:16:01AM -0600, Michael Roth wrote:
+> On Thu, Dec 19, 2024 at 08:13:44AM +0000, Daniel P. Berrangé wrote:
+> > On Wed, Dec 18, 2024 at 04:29:51PM -0600, Michael Roth wrote:
+> > > On Wed, Dec 18, 2024 at 05:50:52PM +0000, Daniel P. Berrangé wrote:
+> > > > On Wed, Dec 18, 2024 at 09:49:39AM -0600, Michael Roth wrote:
+> > > > > The GHCB specification[1] defines a VMGEXIT-based Guest Request
+> > > > > hypercall to allow an SNP guest to issue encrypted requests directly to
+> > > > > SNP firmware to do things like query the attestation report for the
+> > > > > guest. These are generally handled purely in the kernel.
+> > > > > 
+> > > > > In some some cases, it's useful for the host to be able to additionally
+> > > > > supply the certificate chain for the signing key that SNP firmware uses
+> > > > > to sign these attestation reports. To allow for this, the GHCB
+> > > > > specification defines an Extended Guest Request where this certificate
+> > > > > data can be provided in a special format described in the GHCB spec.
+> > > > > This certificate data may be global or guest-specific depending on how
+> > > > > the guest was configured. Rather than providing interfaces to manage
+> > > > > these within the kernel, KVM provides a new KVM_EXIT_SNP_REQ_CERTS exit
+> > > > > to request the certificate contents from userspace. Implement support
+> > > > > for that here.
+> > > > > 
+> > > > > To synchronize delivery of the certificates to the guest in a way where
+> > > > > they will not be rendered invalid by updates to SNP firmware or
+> > > > > attestation singing/endorsement keys by management tools outside the
+> > > > > purview of QEMU, it is expected by users of KVM_EXIT_SNP_REQ_CERTS to
+> > > > > obtain a shared/read lock on the certificate file prior to delivering
+> > > > > them back to KVM. Only after this will the attestation report be
+> > > > > retrieved from firmware and bundled with the certificate data, so QEMU
+> > > > > must continue to hold the file lock until KVM confirms that the
+> > > > > attestation report has been retrieved/bundled. This confirmation is done
+> > > > > by way of the kvm_immediate_exit callback infrastructure that was
+> > > > > introduced in a previous patch.
+> > > > > 
+> > > > > [1] "Guest Hypervisor Communication Block (GHCB) Standardization",
+> > > > >     https://www.amd.com/en/developer/sev.html
+> > > > > 
+> > > > > Signed-off-by: Michael Roth <michael.roth@amd.com>
+> > > > > ---
+> > > > >  qapi/qom.json                 |  23 +++-
+> > > > >  target/i386/kvm/kvm.c         |  10 ++
+> > > > >  target/i386/sev-sysemu-stub.c |   5 +
+> > > > >  target/i386/sev.c             | 249 ++++++++++++++++++++++++++++++++++
+> > > > >  target/i386/sev.h             |   2 +
+> > > > >  5 files changed, 288 insertions(+), 1 deletion(-)
+> > > > > 
+> > > > > diff --git a/qapi/qom.json b/qapi/qom.json
+> > > > > index 28ce24cd8d..6eaf0e7721 100644
+> > > > > --- a/qapi/qom.json
+> > > > > +++ b/qapi/qom.json
+> > > > > @@ -1034,6 +1034,25 @@
+> > > > >  #     firmware.  Set this to true to disable the use of VCEK.
+> > > > >  #     (default: false) (since: 9.1)
+> > > > >  #
+> > > > > +# @certs-path: Path to certificate data that can be passed to guests via
+> > > > > +#              SNP Extended Guest Requests. File should be in the format
+> > > > > +#              described in the GHCB specification. (default: none)
+> > > > > +#              (since: 10.0)
+> > > > 
+> > > > Can we document the required format here explicitly, rather than expecting
+> > > > users to go searching for specs which are often practically impossible
+> > > > to find, and even harder to read & interpret ?
+> > > 
+> > > It'll be difficult to summarize in a way that will be self-reliant,
+> > > since knowing the certificate format is not sufficient to make sure
+> > > it coincides with the endorsement key being used by firmware. So I can't
+> > > promise to completely reduce reliance on external specs, but at least
+> > > give a better of the format and where those external specs will come
+> > > into play in filling out the data.
+> > > 
+> > > If it needs to be at least somewhat self-sufficient then that might
+> > > warrant a separate document in docs/system/i386/amd-memory-encryption.rst
+> > > or somewhere thereabouts that summarizes the whole attestation flow and
+> > > how certificates tie into that.
+> > > 
+> > > Any preferences?
+> > > 
+> > > > 
+> > > > > diff --git a/target/i386/sev.c b/target/i386/sev.c
+> > > > > index 1a4eb1ada6..2c41bdbccf 100644
+> > > > > --- a/target/i386/sev.c
+> > > > > +++ b/target/i386/sev.c
+> > > > > @@ -157,6 +157,9 @@ struct SevSnpGuestState {
+> > > > >      char *id_auth_base64;
+> > > > >      uint8_t *id_auth;
+> > > > >      char *host_data;
+> > > > > +    char *certs_path;
+> > > > > +    int certs_fd;
+> > > > > +    uint32_t certs_timeout;
+> > > > >  
+> > > > >      struct kvm_sev_snp_launch_start kvm_start_conf;
+> > > > >      struct kvm_sev_snp_launch_finish kvm_finish_conf;
+> > > > > @@ -1355,6 +1358,215 @@ sev_snp_launch_finish(SevCommonState *sev_common)
+> > > > >      }
+> > > > >  }
+> > > > >  
+> > > > > +static int open_certs_locked(SevSnpGuestState *sev_snp_guest)
+> > > > > +{
+> > > > > +    int fd, ret;
+> > > > > +
+> > > > > +    if (sev_snp_guest->certs_fd != -1) {
+> > > > > +        return 0;
+> > > > > +    }
+> > > > > +
+> > > > > +    fd = qemu_open(sev_snp_guest->certs_path, O_RDONLY, NULL);
+> > > > > +    if (fd == -1) {
+> > > > > +        error_report("Unable to open certificate blob at path %s, ret %d",
+> > > > > +                     sev_snp_guest->certs_path, fd);
+> > > > > +        return fd;
+> > > > > +    }
+> > > > > +
+> > > > > +    ret = qemu_lock_fd(fd, 0, 0, false);
+> > > > > +    if (ret == -EAGAIN || ret == -EACCES) {
+> > > > > +        ret = -EAGAIN;
+> > > > > +        goto out_close;
+> > > > > +    } else if (ret) {
+> > > > > +        goto out_close;
+> > > > > +    }
+> > > > 
+> > > > This locking scheme is likely unsafe. Consider this sequence
+> > > > 
+> > > >   * QEMU runs qemu_open(path)
+> > > >   * External mgmt app runs unlink(path)
+> > > >   * External mgmt app runs open(path)
+> > > >   * External mgmt app runs lock(fd)
+> > > >   * QEMU runs qemu_lock_fd(fd)
+> > > > 
+> > > > QEMU has successfully acquired a lock on an FD that corresponds to a
+> > > > deleted file, not the current existing file.
+> > > > 
+> > > > Avoiding this problem requires either that the external mgmt app agrees
+> > > > to *NEVER* unlink() the files under any circumstance, or for QEMU to
+> > > > run its open + lock logic in a loop, checking 'stat' and 'fstat' before
+> > > > opening and after locking, in order to detect a replaced file from its
+> > > > changed inode.
+> > > > 
+> > > > I'm not inclined to rely on mgmt apps never unlink()ing as that's to
+> > > > easy to mess up IMHO.
+> > > 
+> > > Yah I went into more detail in my response to Markus, but long story
+> > > short is that we are assuming mgmt is cooperative in this case, and
+> > > so as you mentioned, it would never unlink files while SNP guests are
+> > > running, but instead take an exclusive lock on them and update them in
+> > > place with the understanding that doing anything otherwise would open
+> > > a race window where guests might get stale certificates.
+> > 
+> > If there's an expectation & requirement that no SNP guests are running,
+> > then IMHO this whole thing is just over-engineered. Just remove all this
+> > locking code entirely, and document that none of this must be changed
+> > while QEMU is running - which is a common requirement for a great many
+> > things on the host.
 > 
-> I was asking myself the same: when does it make sense to build for s390x
-> system without CONFIG_S390_CCW_VIRTIO. But other archs that also have a
-> single machine seem to be doing the same thing.
+> VCEK endorsement keys can change as a result of SNP firmware updates,
+> which can be done while SNP guests are running and are often done in such
+> a way to patch bugs/security holes. VLEK endorsement keys can similarly be
+> updated on a live host. Both these sorts of interactions cannot be made
+> compatible with bundling certificates with attestation reports without some
+> orchestration in place to keep them atomic relative to the endorsement
+> key being used by firmware to sign attestation reports. Every CSP
+> implementing this will need to solve it in some way, and I'm sure some
+> will handle all this completely differently. But it will make
+> interoperative management/tooling a mess, and having a reference
+> implementation based around something common will make it easier to
+> steer CSPs to that common solution and give management tools authors
+> *some* reference approach to target rather than expecting to retrofit
+> some custom solution on top.
 > 
-> We wouldn't want to have the option to disable it, but "bool" gives you
-> the option to do that.
+> With these patches, you can update firmware and endorsement keys while
+> SNP guests are running, but it requires write locks on any active
+> certificates as defined here and in the kernel, and doing certificate
+> file updates in place while that write lock is still held. I don't really
+> think that's over-engineered. I think it's surprisingly simple given the
+> potential complexity of the above-mentioned requirements.
 > 
-> I suspect something that could work is:
-> 
-> diff --git a/target/s390x/Kconfig b/target/s390x/Kconfig
-> index 8a95f2bc3f..4c99b9cedd 100644
-> --- a/target/s390x/Kconfig
-> +++ b/target/s390x/Kconfig
-> @@ -1,5 +1,6 @@
->    config S390X
->        bool
-> +    select CONFIG_S390_CCW_VIRTIO
->        select PCI
->        select S390_FLIC
+> But yes if management tries to unlink certificates while SNP guests are
+> running, all bets are off. But at that point they are not cooperating
+> with kernel/QEMU, and we don't need to care about that. And if they
+> really do need to blow away certificates for a complete re-install
+> or data-wipe or whatever, at that point they'd just need to ensure
+> they stop all their SNP guests first.
 
-(- CONFIG_ of course)
+IMHO we msut consider unlink() to be a valid thing, because the right
+way for apps to perform crash safe atomic updates of existing files,
+is to use rename() from a temporary file, and the rename() in has an
+implicit unlink as part of its operation. ie apps would be doing:
 
+   fd = open("foo.tmp")
+   write(fd, ...)
+   fsync(fd)
+   close(fd)
+   rename("foo.tmp", "foo")
+
+That final rename operation will have the same effect on the locks
+as unlink(). To cope with this anything doing locking has to run
+in a loop comparing the inode either side of acquiring the lock
+
+TLDR: if we're going to do locking in QEMU, it needs to be done
+robustly.
+
+With regards,
+Daniel
 -- 
-Cheers,
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
