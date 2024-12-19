@@ -4,92 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E001E77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C344E77184
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 18:08:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOKu2-0000cX-En; Thu, 19 Dec 2024 13:05:40 -0500
+	id 1tOKwz-0001qs-9q; Thu, 19 Dec 2024 13:08:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOKtl-0000YM-FG
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:05:22 -0500
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1tOKwv-0001qa-TM
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:08:39 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOKth-0006R1-MW
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:05:19 -0500
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-216401de828so10718835ad.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:05:16 -0800 (PST)
+ id 1tOKwu-0007Da-1L
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 13:08:37 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-725f2f79ed9so954129b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 10:08:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734631515; x=1735236315; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734631714; x=1735236514; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5oxoJg6stzH73yFVleOT/i5mY4d4J+O66bVDqRJ6Feg=;
- b=EYNSRvpeeUrnP4zRgHjmQL5UokLqORTizBLSMSFQHsD9MPP/lbRJ2GsAiwUTx18XI+
- dgBg0JGAuh+k03c6N3IVpSpg++N/rdoKySFj2k2k/5ZWmxt9jofPXz7cePG200DWvfXd
- 9ik9gxmgTBIlZp/gGiZHI++cQb+OTA9lnGD7CCe9DXbGk665xzIYg1vVadsLDsUwNzEP
- PvpJbCzS330ZmjBe9AeiwBLTUzRLGWE0ft05FVc8GlH2zA0vfWIZIw1GvIftNPat3HK0
- 5qKT2DUb5FLwKHBzAB0qaMqBzn1kbIai754hiiLAidC5cxmkmvY/CkArdfZx3G8hx9MO
- KQDw==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TBWC6kkqugTb4YC+iaVmJCat4XD/WcCRqeGs1OdWKu8=;
+ b=QNQWimGLGp2CWpOkAX8Zf0s/MM4PCtf6nF9NY2bITSUycq4r6b9RixqDlD2KUI95Cn
+ fsslrcIF2RufBQieZH8ZXbBh99IHpih8T2EtFFhK7ADoVpZQ3l7o6/htqSOnREVG/COc
+ dHWJlPZBq30VJnbd0MpRS8kkDAWJb1e3oMcdGH1pDRY6mUzILN/4x/R6woJ4ucwKW092
+ 8IZG4cZG4p38AnUENYx0Yk1zRQ+si6LTkLNgEllwNAZiQnacgrjmsFoPfIvD/NyURbr1
+ QYTpw7fLdTy7vVEZeSL+PUeTnp3rhYZEN9JoO+d37UpK3Zkev8r1V2Cf6I4o/96BVPph
+ CKKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734631515; x=1735236315;
+ d=1e100.net; s=20230601; t=1734631714; x=1735236514;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5oxoJg6stzH73yFVleOT/i5mY4d4J+O66bVDqRJ6Feg=;
- b=WLihF5qPqSsPvNFIkPTaw2U1XzsaM4N6OxbBKbymNsUQDnjsVGxZTdVJpxzDk8lnDG
- qTnCSWmn12uDU4r/mthWk69h8WIBUea8OWp1pyg4cIf+JNMPc01fzoDa5KviuQptrrvb
- n4kzsuHkjk+0lzP8hEV//MRsHc+PH6DJpCDsPiypYk8W1o78GGQisWN06gmOC7AxjYW0
- zPJo3LdYYE7DkIRRB/GI94qWI3JSMkaZJ3Ogowiu/NGHld+2CftqpueaIbbZxz61URbE
- PN5MoWQXX/4+Y+w627n1i4FsMk/9eQrNyM1t7cMb/yZnQqPhESaam6Q3tm2DiTL9jlX0
- /ilg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLMbl2maD+Dn9iGaLMvAPsE/hiqikyhF5VxyFYPMtcSW6NAKR+c/3jvguuYZd66dicSayUNJiWhIn0@nongnu.org
-X-Gm-Message-State: AOJu0YzIfC8L11LpPF97+5JaCEwv2aNzqMl0qmFa3VJ/sTSPn3JLhmKb
- onTBteVlgxWDQukZZpogaj7XfscAr/Ucmuey/4uCAlW/5JuS21c2Wf2zjXKThDUcNm4YvDLETlz
- Y7oLaew==
-X-Gm-Gg: ASbGncvPw28H+t7uCPbFzF/PUDO6+X6imlut46hpNEywztm+6oT4NxS2JP7yeg5aQQY
- 5xG6woy/a4zSif8UqQ4ovfdemNlo0Tqq1av4uMM+dyhB3km59AKB3CrbiVF622YKl63J8pxHror
- RT41HTOemeqGxaMcAzmxJf5QG97ZbfQ5xN7BWctEzZ5uJHUGwb54kBeWVE/0W8bm1ZoTs5EZUxK
- sPmiUeE/97h7HEb21qFQl1XcEDAajPZkAjikedI9jsVaAZnfNXSLdnxoaZth+hb4yH4brI69QBR
- nQxjI5c1cvFVeNLSgLq+029d7EJJIeSO/gO/ldWMpw==
-X-Google-Smtp-Source: AGHT+IEb1NyYuJtxuacy2VKM9i8Tab9gHszxmB5nhICewsjItWOxqMnuO0wj85Vgj+P1/X28QSIo9g==
-X-Received: by 2002:a17:903:2304:b0:216:3436:b87e with SMTP id
- d9443c01a7336-219d96fcc13mr58922445ad.44.1734631515552; 
- Thu, 19 Dec 2024 10:05:15 -0800 (PST)
+ bh=TBWC6kkqugTb4YC+iaVmJCat4XD/WcCRqeGs1OdWKu8=;
+ b=pZOIiz/TompI9JFvvSky0vAw5jq47Rmb5biK02PsnAGDO2I21acGiKtdCp3sr2Gk99
+ VRYh84mNNQL3zJujw5kvTkTVgYSCehqOx8zsjFEFqpOx8IKqYhAr3ryRG8RPlpyH8INR
+ JmHJssA5xU5dQdX8cvKQjU5r2nxRvUiptB1ivEOZtlk8rJKT7uQZ6JCwYmxANg72zDIN
+ vzBFiK5GAOVZM2swB3D9RX/2wvsD4agb6Erm1GIpv0kyB/X8XdTzyHUxsSrR6QWqA0cL
+ wG2KSqi+q92W15KizIUe5u37kzAvMG/e3PHjJdzSRsUvF63Eoi2+qJfWwMqQWdUxTc8+
+ zQXQ==
+X-Gm-Message-State: AOJu0YxeeYGJHwmmtkksFdGSDABi1sg+rRb6kxT50/coc4KqqzAULGgh
+ ZKGTvssqWX2xImwmdHUuiV7VFg6AUnbBLJefwAr3+Egk7sVIYx/WT2rqlC5D1hies8hkGdYv7cu
+ /XKzcjA==
+X-Gm-Gg: ASbGncsBXAQjcwFRmdpzVHkBtUkd2GMdDJp2jL304ZeanJmcJKg7iyo89UbixKYaK6+
+ EISE+n+WsUiyn6MIWmd2RiszV0Te2mepGoP2/gLAIHM2wgTU+SVPN9ay1w77Ngofls3qtHCDuNr
+ tdC0R5WoE+mGksK2H4b3+Dj86aINnDfa3c1277H/FeA9cSpPI0GrTFHLjGJT2dnT0mq2oy64+HP
+ +XXtrPok86t2GmPFk9BXbxede0euEWe6MCsC46udWa1AnBEUBqIZm5slhSJiZMNwiCk2HLG9ttQ
+ SD+yfGsDEpebaNJMc3/JjI9yyLGIUKHLsWZze5tdjA==
+X-Google-Smtp-Source: AGHT+IEFDNWflYDaXLazdcY5/k7fkVBhW0mIUPymrOZdR4WBUMw46PW3GM7f3JFBEsL2QzKuuhIm7A==
+X-Received: by 2002:a05:6a00:cd6:b0:725:9f02:489f with SMTP id
+ d2e1a72fcca58-72aa8f0ceffmr7691483b3a.26.1734631714629; 
+ Thu, 19 Dec 2024 10:08:34 -0800 (PST)
 Received: from ?IPV6:2607:fb91:1ec0:c32f:435b:9081:64c9:3330?
  ([2607:fb91:1ec0:c32f:435b:9081:64c9:3330])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9706c3sm15386525ad.83.2024.12.19.10.05.14
+ d2e1a72fcca58-72aad6cc885sm1626058b3a.0.2024.12.19.10.08.33
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Dec 2024 10:05:15 -0800 (PST)
-Message-ID: <16580023-4b6c-4011-8088-547e591c9ea6@linaro.org>
-Date: Thu, 19 Dec 2024 10:05:11 -0800
+ Thu, 19 Dec 2024 10:08:34 -0800 (PST)
+Message-ID: <6fb3ac43-aa1e-47ae-96a7-e1a175a65bb4@linaro.org>
+Date: Thu, 19 Dec 2024 10:08:30 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Convert the kvm_xen_guest avocado test
-To: David Woodhouse <dwmw2@infradead.org>, Thomas Huth <thuth@redhat.com>,
- qemu-devel@nongnu.org
-Cc: Paul Durrant <paul@xen.org>
-References: <20241218113255.232356-1-thuth@redhat.com>
- <9B5DDDDB-769B-4654-BEF1-D3F853EA05E5@infradead.org>
- <1d4faf8e-b2cd-42b8-a6a7-9034b9512b86@redhat.com>
- <8cef1bf9ffde6779ad322534c4469e6687b9c9d7.camel@infradead.org>
- <7e6fd4ed-ee93-48eb-ab12-fd9aa30e6898@redhat.com>
- <72B07F94-036B-4789-B5DF-103CA913278C@infradead.org>
- <6b1e4f73-b53f-4929-8be4-4c07115af626@redhat.com>
- <a10f5e97da4d5d15f9d13a1a1341132419c01510.camel@infradead.org>
+Subject: Re: [PATCH 0/3] docs: Trivial cleanups
+To: qemu-devel@nongnu.org
+References: <20241219150203.55212-1-philmd@linaro.org>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <a10f5e97da4d5d15f9d13a1a1341132419c01510.camel@infradead.org>
+In-Reply-To: <20241219150203.55212-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,62 +102,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/19/24 04:56, David Woodhouse wrote:
-> On Thu, 2024-12-19 at 13:24 +0100, Thomas Huth wrote:
->> On 19/12/2024 09.49, David Woodhouse wrote:
->>> On 19 December 2024 09:35:13 CET, Thomas Huth <thuth@redhat.com> wrote:
->>>> On 18/12/2024 23.14, David Woodhouse wrote:
->>>>> On Wed, 2024-12-18 at 16:54 +0100, Thomas Huth wrote:
->>>>>> On 18/12/2024 12.48, David Woodhouse wrote:
->>>>>>> On 18 December 2024 12:32:49 CET, Thomas Huth <thuth@redhat.com> wrote:
->>>>>>>> Use the serial console to execute the commands in the guest instead
->>>>>>>> of using ssh since we don't have ssh support in the functional
->>>>>>>> framework yet.
->>>>>>>>
->>>>>>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
->>>>>>>
->>>>>>> Hm, but serial is lossy and experience shows that it leads to flaky tests if the guest (or host) misses bytes. While SSH would just go slower.
->>>>>>
->>>>>> I now noticed some issue with the serial console in this test, too.
->>>>>> Looks like the "Starting dropbear sshd: OK" is not print in an atomic way by
->>>>>> the guest, sometimes there are other kernel messages between the ":" and the
->>>>>> "OK". It works reliable when removing the "OK" from the string.
->>>>>
->>>>> Nah, that still isn't atomic; you just got lucky because the race
->>>>> window is smaller. It's not like serial ports are at a premium; can't
->>>>> you have a separate port for kernel vs. userspace messages?
->>>>
->>>> Maybe easiest solution: Simply add "quiet" to the kernel command line, then it does not write the kernel messages to the serial console anymore.
->>>
->>> Want to resend the bug report about that test failing again? But without the kernel messages this time... :)
->>
->> With "quiet", the output just looks like this when it hangs:
->>
->>    Cannot get hvm parameter CONSOLE_EVTCHN (18): -22!
->>    Spectre V2 : Kernel not compiled with retpoline; no mitigation available!
->>    kvm_intel: VMX not supported by CPU 0
->>    Cannot get hvm parameter CONSOLE_EVTCHN (18): -22!
->>    fail to initialize ptp_kvm
+On 12/19/24 07:02, Philippe Mathieu-Daudé wrote:
 > 
-> Yeah, that request was rhetorical. That output is useless for
-> understanding anything about what happened.
 > 
->> Anyway, to properly track this, I've now created a ticket with the full log:
->>
->>    https://gitlab.com/qemu-project/qemu/-/issues/2731
+> Philippe Mathieu-Daudé (3):
+>    docs: Correct '-runas' and '-fsdev/-virtfs proxy' indentation
+>    docs: Correct release of TCG trace-events removal
+>    docs: Replace 'since' -> 'removed in' in removed-features.rst
 > 
-> The patch below should fix it. I don't like it very much; it's very
-> much papering over a much bigger generic problem with QEMU's handling
-> of shared interrupts.
+>   docs/about/deprecated.rst       |  2 +-
+>   docs/about/removed-features.rst | 24 ++++++++++++------------
+>   2 files changed, 13 insertions(+), 13 deletions(-)
 > 
-> Basically, *nothing* should just directly set the system GSIs to
-> "their" desired level with qemu_set_irq(). Each device should feed into
-> a multiplexer which is essentially an OR gate, and the *output* of that
-> mux goes into the actual GSI.
 
-We have such a device: include/hw/or-irq.h.
-How simple it is to wire that into this machine model is left unexplored.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
