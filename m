@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E68DE77184
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4B1EE7718A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Dec 2024 16:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOJK1-00050i-Kn; Thu, 19 Dec 2024 11:24:24 -0500
+	id 1tOJIp-0002Be-BE; Thu, 19 Dec 2024 11:23:07 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tOIbR-000433-3z
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:38:17 -0500
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOId5-0004vb-5X
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:59 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1tOIbO-0004JB-A8
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:38:16 -0500
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 7647321108;
- Thu, 19 Dec 2024 15:38:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734622689; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3FptKihuQWbLDNku13oJrADqvpBQ8JPu/cLh+53hVZc=;
- b=ob20YaDUErkG0RsMMgCxELsLKgBI6vkV/pDspUuwvAMgQzSYkwx/AZ4yhXmAce0ZnLa4AR
- eboteYW0H3u876JOae9nEnr/mAq8Q38/muaEj/ElQJGxdvcKXKXeJUG78g4/TZ6xA1RhuU
- TTr0JGP8yGr5p6DAQtBtkKgUAMFy7PA=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734622689;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3FptKihuQWbLDNku13oJrADqvpBQ8JPu/cLh+53hVZc=;
- b=OElxSrkBKXHAhRlWeLkiqy/XXec+I295UXrORiDcHL7+rh98Si2G/BinUZ56+E5jMvCJpr
- /VKKWQP43BlsdhCg==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734622688; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3FptKihuQWbLDNku13oJrADqvpBQ8JPu/cLh+53hVZc=;
- b=GCJiqnkfL8/oXVFTA81xRdjSF53GxI6+2pJ6nOXIiqlroyhiWAHRDrAtwtb0tZRf7alyXv
- 4Hcb400HRlXvpcO22i+x2ol2bmA4VlVPHG1jVBq5Kq6PgOeapxpUO1JAfYrPvidK7feuUx
- l59allmv4yLZQQGXmaFY8pFQ1rzg2SU=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734622688;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=3FptKihuQWbLDNku13oJrADqvpBQ8JPu/cLh+53hVZc=;
- b=yf+K4PRbGpjmh2wrEXPpvM5YkXoYhtsJ9K6f1LaJy/vqBJyogeaijx6fPk/i2o3JhuEZZG
- VVf2clYc268iHgBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F169C13A77;
- Thu, 19 Dec 2024 15:38:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id tTgdLd89ZGcJPgAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 19 Dec 2024 15:38:07 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, Alex
- =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
-In-Reply-To: <Z2NHBQc9ixuvJ3k_@x1n>
-References: <20241113194630.3385-1-farosas@suse.de>
- <20241113194630.3385-20-farosas@suse.de> <Z2MKesakYn3fn2ue@x1n>
- <87h670vozv.fsf@suse.de> <Z2MvCRYKLmYCj55i@x1n> <875xngvgwe.fsf@suse.de>
- <Z2NHBQc9ixuvJ3k_@x1n>
-Date: Thu, 19 Dec 2024 12:38:05 -0300
-Message-ID: <8734ijvg2q.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOId3-0004ZZ-Cj
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 10:39:58 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-38632b8ae71so741999f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 07:39:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734622795; x=1735227595; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8jM7iK7CzjLBlq0GL2o2lmBr4BfhFWF4uDH24qr2bSs=;
+ b=iqajmz2Tx9hR5muu1ccV6gqGBpBLH6QT5nNHZiqcYXc28xWOQq9toGzfqrOjACuTd0
+ T4bZGS0RQ7ClcCMJIlh/IxNrdiGI7WicqHLj0tnvvRKyYunz2P65J6ZZV8nv4CBd3beB
+ HRx7gQ4/fSQV/5ZXXtKadvEiAjbhM+ZPsekUaN14LY9YtdvTSGQ94RnbEq9dAmavgoeN
+ bt3YsYtFBt3vDOy0zUagKiUhX+Nn2BqKSXW5MTxETBhQl7FSF14tVaYfuJoeTGcZaDQ2
+ DrlzlUrZha1+Roj9p2ukXTM30nts2wJSCithlp+lmkQbOxVliVszkXOLpVTzvprXNtpu
+ KZ8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734622795; x=1735227595;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8jM7iK7CzjLBlq0GL2o2lmBr4BfhFWF4uDH24qr2bSs=;
+ b=hVFtiE/5ionemynn5AgUyUL+8X4Ez+2OTHu1Y5kj3UKWBR9g4YqccD1qfDG3G7eASN
+ HknC2HgscIKCQFTdTeV4rYTxDkj/KOfsg2XggA9KWVFlzrdlcUrQgYYYVZSutnDY8hF2
+ E57IZ/JUgpb2kD8sSw/lAnMXe8GyCMKvXvNDoo1rki5OkppizSMmqpGB/a5Y79ID1hgw
+ Kpa4MCVDu+VLWjsbZixFGXg7dDUJzJk1SBwZ+vGiH8zqSsZRp8dyxlGVhPW2ckCtx8oj
+ y2Nu1S+oeejPAJqEs97si2Ct27+XPqcfJVhpb4xamUCRt2rD6YcxvpDBCC8U3HYJQbso
+ eWeA==
+X-Gm-Message-State: AOJu0Yx10wCowDmu0D4H7kwKqkL4phT2mYlOVgD5K+1Io4SOcfBrutOg
+ T6156hyCUODe7elcTbU7yuxs18i/AIp7UGUp4/7qE7MEe+uJ30hqyFnX7xqjRe/6RXHl4AmV1hG
+ q
+X-Gm-Gg: ASbGnctqKeMN/yAVg5aSelYk89fHdkgZanivYKCdCaeCwxy5cU6Rg2xFDtLg3rU3tix
+ +GEexLDyciPCBANR1gJc4AYxL/jrOmPhahmm306ynaJHtsLSh9j/7zs2KapVtvwfHNdU2u4Vty1
+ 0P8YdfoH7hBITsQbUndTcavUsPNhPmflTjJ5ICOuQjglG/PfEb45xJJUY9HPLus7Lb7VggQXJgn
+ +EbxvPZVSw/RLZke0k52ITdrCWTnhqBno6NN7ZKAZaK/msfv8ow74r2SWav0/WDGpG1Bln8bjsk
+ McoP
+X-Google-Smtp-Source: AGHT+IFDP3fNJA6xBv/hfaKPgC0bZEnVC+6UMLDZJxil0bxoO2WYS57R0WmK+DgL2vSBssckSHhikA==
+X-Received: by 2002:a05:6000:178b:b0:386:3835:9fec with SMTP id
+ ffacd0b85a97d-388e4d8fbc0mr7568848f8f.44.1734622795613; 
+ Thu, 19 Dec 2024 07:39:55 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4364a376846sm79508525e9.0.2024.12.19.07.39.54
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Dec 2024 07:39:55 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Ani Sinha <anisinha@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ devel@lists.libvirt.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH-for-10.2 10/10] hw/misc/vmcoreinfo: Remove legacy '-device
+ vmcoreinfo'
+Date: Thu, 19 Dec 2024 16:38:57 +0100
+Message-ID: <20241219153857.57450-11-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241219153857.57450-1-philmd@linaro.org>
+References: <20241219153857.57450-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MISSING_XM_UA(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,270 +102,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ docs/about/deprecated.rst       |  5 ----
+ docs/about/removed-features.rst |  5 ++++
+ include/hw/misc/vmcoreinfo.h    |  3 +--
+ hw/misc/vmcoreinfo.c            | 44 ++++++---------------------------
+ 4 files changed, 13 insertions(+), 44 deletions(-)
 
-> On Wed, Dec 18, 2024 at 06:08:01PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Wed, Dec 18, 2024 at 03:13:08PM -0300, Fabiano Rosas wrote:
->> >> Peter Xu <peterx@redhat.com> writes:
->> >> 
->> >> > On Wed, Nov 13, 2024 at 04:46:27PM -0300, Fabiano Rosas wrote:
->> >> >> diff --git a/tests/qtest/migration-test-smoke.c b/tests/qtest/migration-test-smoke.c
->> >> >> new file mode 100644
->> >> >> index 0000000000..ff2d72881f
->> >> >> --- /dev/null
->> >> >> +++ b/tests/qtest/migration-test-smoke.c
->> >> >> @@ -0,0 +1,39 @@
->> >> >> +/* SPDX-License-Identifier: GPL-2.0-or-later */
->> >> >> +
->> >> >> +#include "qemu/osdep.h"
->> >> >> +#include "libqtest.h"
->> >> >> +#include "migration/test-framework.h"
->> >> >> +#include "qemu/module.h"
->> >> >> +
->> >> >> +int main(int argc, char **argv)
->> >> >> +{
->> >> >> +    MigrationTestEnv *env;
->> >> >> +    int ret;
->> >> >> +
->> >> >> +    g_test_init(&argc, &argv, NULL);
->> >> >> +    env = migration_get_env();
->> >> >> +    module_call_init(MODULE_INIT_QOM);
->> >> >> +
->> >> >> +    if (env->has_kvm) {
->> >> >> +        g_test_message(
->> >> >> +            "Smoke tests already run as part of the full suite on KVM hosts");
->> >> >> +        goto out;
->> >> >> +    }
->> >> >
->> >> > So the "smoke" here is almost "tcg".. and if i want to run a smoke test on
->> >> > a kvm-enabled host, it's noop.. which isn't easy to understand why.
->> >> >
->> >> > If to rethink our goal, we have two requirements:
->> >> >
->> >> >   (1) We want to categorize migration tests, so some are quick, some are
->> >> >       slow, some might be flacky.  Maybe more, but it's about putting one
->> >> >       test into only one bucket, and there're >1 buckets.
->> >> 
->> >> It's true that the smoke test should never have slow or flaky tests, but
->> >> we can't use this categorization for anything else. IOW, what you
->> >> describe here is not a goal. If a test is found to be slow we put it
->> >> under slow and it will only run with -m slow/thorough, that's it. We can
->> >> just ignore this.
->> >
->> > I could have missed something, but I still think it's the same issue.  In
->> > general, I think we want to provide different levels of tests, like:
->> >
->> >   - Level 1: the minimum set of tests (aka, the "smoke" idea here)
->> >   - Level 2: normal set of tests (aka, whatever we used to run by default)
->> >   - Level 3: slow tests (aka, only ran with '-m slow' before)
->> 
->> How are you going to make this one work? 'migration-test --level 3'
->> vs. 'migration-test --level 3 -m slow' vs. 'migration-test -m slow'
->> 
->> The only way I can see is to not have a level 3 at all and just use -m
->> slow.
->
-> I meant remove "-m" and remove QEMU_TEST_FLAKY_TESTS, instead replacing all
-> of them using --level.  Then migration-test ignores '-m' in the future
-> because it's simply not enough for us.
->
+diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
+index 57a3d734081..d6809f94ea1 100644
+--- a/docs/about/deprecated.rst
++++ b/docs/about/deprecated.rst
+@@ -79,11 +79,6 @@ described with -smp are supported by the target machine.
+ 
+ Use ``-run-with user=..`` instead.
+ 
+-``-device vmcoreinfo`` (since 10.0)
+-'''''''''''''''''''''''''''''''''''
+-
+-Use ``-object vmcore-info`` instead.
+-
+ 
+ User-mode emulator command line arguments
+ -----------------------------------------
+diff --git a/docs/about/removed-features.rst b/docs/about/removed-features.rst
+index cb1388049a8..6fedf13c133 100644
+--- a/docs/about/removed-features.rst
++++ b/docs/about/removed-features.rst
+@@ -555,6 +555,11 @@ to produce an odd effect (rotating input but not display output). But
+ this was never intended or documented behaviour, so we have dropped
+ the options along with the machine models they were intended for.
+ 
++``-device vmcoreinfo`` (removed in 10.2)
++''''''''''''''''''''''''''''''''''''''''
++
++``-device vmcoreinfo`` has been replaced by ``-object vmcore-info``.
++
+ User-mode emulator command line arguments
+ -----------------------------------------
+ 
+diff --git a/include/hw/misc/vmcoreinfo.h b/include/hw/misc/vmcoreinfo.h
+index d4cce42cee6..56af12d33a4 100644
+--- a/include/hw/misc/vmcoreinfo.h
++++ b/include/hw/misc/vmcoreinfo.h
+@@ -12,7 +12,6 @@
+ #ifndef VMCOREINFO_H
+ #define VMCOREINFO_H
+ 
+-#include "hw/qdev-core.h"
+ #include "standard-headers/linux/qemu_fw_cfg.h"
+ #include "qom/object.h"
+ 
+@@ -26,7 +25,7 @@ DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO_DEVICE,
+ typedef struct fw_cfg_vmcoreinfo FWCfgVMCoreInfo;
+ 
+ struct VMCoreInfoState {
+-    DeviceState parent_obj;
++    Object parent_obj;
+ 
+     bool has_vmcoreinfo;
+     FWCfgVMCoreInfo vmcoreinfo;
+diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
+index e2258e08fb1..36d1143722e 100644
+--- a/hw/misc/vmcoreinfo.c
++++ b/hw/misc/vmcoreinfo.c
+@@ -54,8 +54,9 @@ static void vmcoreinfo_reset_hold(Object *obj, ResetType type)
+     s->vmcoreinfo.host_format = cpu_to_le16(FW_CFG_VMCOREINFO_FORMAT_ELF);
+ }
+ 
+-static void vmcoreinfo_realize(VMCoreInfoState *s, Error **errp)
++static void vmcoreinfo_complete(UserCreatable *uc, Error **errp)
+ {
++    VMCoreInfoState *s = VMCOREINFO(uc);
+     FWCfgState *fw_cfg = fw_cfg_find();
+     /* for gdb script dump-guest-memory.py */
+     static VMCoreInfoState * volatile vmcoreinfo_state G_GNUC_UNUSED;
+@@ -76,6 +77,10 @@ static void vmcoreinfo_realize(VMCoreInfoState *s, Error **errp)
+         return;
+     }
+ 
++    if (vmstate_register_any(VMSTATE_IF(s), &vmstate_vmcoreinfo, s) < 0) {
++        error_setg(errp, "%s: Failed to register vmstate", TYPE_VMCOREINFO);
++    }
++
+     fw_cfg_add_file_callback(fw_cfg, FW_CFG_VMCOREINFO_FILENAME,
+                              NULL, fw_cfg_vmci_write, s,
+                              &s->vmcoreinfo, sizeof(s->vmcoreinfo), false);
+@@ -88,25 +93,11 @@ static void vmcoreinfo_realize(VMCoreInfoState *s, Error **errp)
+     vmcoreinfo_state = s;
+ }
+ 
+-static void vmcoreinfo_device_realize(DeviceState *dev, Error **errp)
+-{
+-    vmcoreinfo_realize(VMCOREINFO_DEVICE(dev), errp);
+-}
+-
+ static bool vmcoreinfo_can_be_deleted(UserCreatable *uc)
+ {
+     return false;
+ }
+ 
+-static void vmcoreinfo_complete(UserCreatable *uc, Error **errp)
+-{
+-    if (vmstate_register_any(VMSTATE_IF(uc), &vmstate_vmcoreinfo, uc) < 0) {
+-        error_setg(errp, "%s: Failed to register vmstate", TYPE_VMCOREINFO);
+-    }
+-
+-    vmcoreinfo_realize(VMCOREINFO(uc), errp);
+-}
+-
+ static void vmcoreinfo_class_init(ObjectClass *oc, void *data)
+ {
+     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
+@@ -119,25 +110,7 @@ static void vmcoreinfo_class_init(ObjectClass *oc, void *data)
+     rc->phases.hold = vmcoreinfo_reset_hold;
+ }
+ 
+-static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+-{
+-    DeviceClass *dc = DEVICE_CLASS(klass);
+-    ResettableClass *rc = RESETTABLE_CLASS(klass);
+-
+-    dc->vmsd = &vmstate_vmcoreinfo;
+-    dc->realize = vmcoreinfo_device_realize;
+-    dc->hotpluggable = false;
+-    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
+-    rc->phases.hold = vmcoreinfo_reset_hold;
+-}
+-
+ static const TypeInfo vmcoreinfo_types[] = {
+-    {
+-        .name           = TYPE_VMCOREINFO_DEVICE,
+-        .parent         = TYPE_DEVICE,
+-        .instance_size  = sizeof(VMCoreInfoState),
+-        .class_init     = vmcoreinfo_device_class_init,
+-    },
+     {
+         .name           = TYPE_VMCOREINFO,
+         .parent         = TYPE_OBJECT,
+@@ -158,10 +131,7 @@ VMCoreInfoState *vmcoreinfo_find(void)
+ {
+     Object *obj;
+ 
+-    obj = object_resolve_path_type("", TYPE_VMCOREINFO_DEVICE, NULL);
+-    if (!obj) {
+-        obj = object_resolve_path_type("", TYPE_VMCOREINFO, NULL);
+-    }
++    obj = object_resolve_path_type("", TYPE_VMCOREINFO, NULL);
+ 
+     return obj ? (VMCoreInfoState *)obj : NULL;
+ }
+-- 
+2.47.1
 
-Even if we remove -m, it will still be passed in when people run make
-SPEED=slow check and people who know about glib/qtests will continue to
-try to use it.
-
-Ignoring -m and FLAKY will create a diversion from the rest of qtest and
-QEMU tests in general. I think the best approach is to drop levels 3 and
-4 from this proposal and just ignore those options altogether.
-
-If we're going to have a single binary as you suggest, then there's no
-harm still using -m slow and FLAKY as usual. We call level 1: "smoke
-tests", level 2: "full set" and we put in some code to prevent
-registering a smoke test as slow or flaky and that's it.
-
-... and of course, if there's only two levels, then we only need a
-boolean flag: --full
-
-IOW, I still don't think slow and flaky have anything to do with what
-we're trying to do here. I do appreciate that a single binary is better
-than two.
-
->> 
->> >   - Level 4: flaky tests (aka, only ran when QEMU_TEST_FLAKY_TESTS set)
->> >
->> > Then we want to run level1 test only in tcg, and level1+2 in kvm.  We can
->> > only trigger level 1-3 or level 1-4 in manual tests.
->> >
->> > We used to have different way to provide the level idea, now I think we can
->> > consider provide that level in migration-test in one shot.  Obviously it's
->> > more than quick/slow so I don't think we can reuse "-m", but we can add our
->> >
->> > own test level "--level" parameter, so --level N means run all tests lower
->> > than level N, for example.
->> >
->> 
->> I'm not sure that works semantically for level 4. Because the reason one
->> runs flaky tests is different from the reason one runs the other
->> tests. So we probably don't want to run a bunch of tests just to get to
->> the broken ones.
->> 
->> But we don't need to spend too much time on this. I hate the idea of
->> flaky tests anyway. Whatever we choose they'll just sit there doing
->> nothing.
->
-> Yes how to treat flaky tests isn't important yet.  If we don't care about
-> QEMU_TEST_FLAKY_TESTS then we make it three levels.  The idea is the same.
->
->> 
->> >> 
->> >> >
->> >> >   (2) We want to run only a small portion of tests on tcg, more tests on
->> >> >       kvm.
->> >> 
->> >> Yes. Guests are fast with KVM and slow with TCG (generally) and the KVM
->> >> hosts are the ones where it's actually important to ensure all migration
->> >> features work OK. Non-KVM will only care about save/restore of
->> >> snapshots. Therefore we don't need to have all tests running with TCG,
->> >> only the smoke set.
->> >> 
->> >> And "smoke set" is arbitrary, not tied to speed, but of course no slow
->> >> tests please (which already happens because we don't pass -m slow to
->> >> migration-test-smoke).
->> >> 
->> >> >
->> >> > Ideally, we don't need two separate main test files, do we?
->> >> >
->> >> > I mean, we can do (1) with the existing migration-test.c, with the help of
->> >> > either gtest's "-m" or something we invent.  The only unfortunate part is
->> >> > qtest only have quick/slow, afaiu the "thorough" mode is the same as
->> >> > "slow".. while we don't yet have real "perf" tests.  It means we only have
->> >> > two buckets if we want to reuse gtest's "-m".
->> >> >
->> >> > Maybe it's enough?  If not, we can implement >2 categories in whatever
->> >> > form, either custom argv/argc cmdline, or env variable.
->> >> >
->> >> > Then, if we always categorize one test (let me try to not reuse glib's
->> >> > terms to be clear) into any of: FAST|NORMAL|SLOW|..., then we have a single
->> >> 
->> >> It's either normal or slow. Because we only know a test is only after it
->> >> bothers us.
->> >
->> > So I wonder if we can provide four levels, as above.. and define it for
->> > each test in migration-test.
->> >
->> >> 
->> >> > migration-test that have different level of tests.  We can invoke
->> >> > "migration-test --mode FAST" if kvm is not supported, and invoke the same
->> >> > "migration-test --mode SLOW" if kvm is supported.
->> >> 
->> >> This is messy due to how qtest/meson.build works. Having two tests is
->> >> the clean change. Otherwise we'll have to add "if migration-test" or
->> >> create artificial test names to be able to restrict the arguments that
->> >> are passed to the test per arch.
->> >
->> > Indeed it'll need a few extra lines in meson, but it doesn't look too bad,
->> > but yeah if anyone is not happy with it we can rethink.  I just want to
->> > know whether it's still acceptable.
->> >
->> > I tried to code it up, it looks like this:
->> >
->> > ====8<====
->> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> > index c5a70021c5..5bec33b627 100644
->> > --- a/tests/qtest/meson.build
->> > +++ b/tests/qtest/meson.build
->> > @@ -392,6 +392,12 @@ if dbus_display
->> >    qtests += {'dbus-display-test': [dbus_display1, gio]}
->> >  endif
->> >  
->> > +if run_command('test', '-e', '/dev/kvm', check: false).returncode() == 0
->> > +  has_kvm = true
->> > +else
->> > +  has_kvm =false
->> > +endif
->> 
->> This is not right. Checking /dev/kvm at configure time doesn't ensure it
->> will be present at test runtime. It also doesn't account for builds with
->
-> Why the test runtime would be a different host versus whoever setup the
-> meson build?
->
-
-User permissions, containers, configuration changes in between build
-time and runtime, etc.
-
-Also, it's quite convenient to be able to pass any QEMU binary to any
-version of the tests, I do that with downstream builds sometimes.
-
->> CONFIG_KVM=n or builds without both KVM and TCG. This needs to be done
->> inside the test.
->
-> This is true, but IIUC that's not a blocker, as we can use (btw, I found
-> fs.exists() a better alternative than my previous hack):
->
-> if fs.exists('/dev/kvm') and 'CONFIG_KVM' in config_all_accel
->   has_kvm = true
-> else
->   has_kvm = false
-> endif
->
-
-I dislike this, however I'm thinking what's the worse that could happen
-if there's a mismatch between configure and runtime? We'd just run a
-different set of tests.
-
-Can we make it:
-
-meson.build:
-  # If there's KVM support, run the full set of migration tests as KVM
-  # hosts tend to use more migration features than just save/restore.
-  if fs.exists('/dev/kvm')
-    migration_test_args = "--full"
-  endif
-
-cmdline invocations:
-  ./migration-test                 # runs smoke, i.e. level 1
-  ./migration-test -m slow         # runs smoke only, no slow tests in the smoke set
-  FLAKY=1 ./migration-test         # runs smoke only, no flaky tests in the smoke set
-
-  ./migration-test --full          # runs full set, i.e. level 2
-  ./migration-test --full -m slow  # runs full set + slow tests
-  FLAKY=1 ./migration-test --full  # runs full set + flaky tests
-
-I made the first one like that so the compat tests in CI now run less
-tests. We don't need full set during compat because that job is about
-catching changes in device code. It would also make the argument easier
-to enable the compat job for all migration-test-supported archs.
-
->> 
->> I think the best we can do is have a qtest_migration_level_<ARCH> and
->> set it for every arch.
->> 
->> Also note that we must keep plain 'migration-test' invocation working
->> because of the compat test.
->
-> We won't break it if we only switch to levels, right?
->
-> Btw, I also don't know why we need to.  IIRC the compat test runs the test
-> in previous release (but only feeds the new QEMU binary to the old
-> migration-test)?  I think that's one reason why we decided to use the old
-> migration-test (so we won't have new tests ran on compat tests, which is a
-> loss), just to avoid any change in migration-test will break the compat
-> test.. so I assume that should be fine regardless..
-
-I meant we shouldn't break the command line invocation:
-
-./tests/qtest/migration-test -p <test_name>
-
-As in, we cannot change the test name or add mandatory flags. Otherwise
-we have a discrepancy betweem what the CI job is calling vs. what the
-build actually provides. We run the tests from the previous build, but
-the CI job is current.
-
-Another point that is more of an annoyance is that the migration-test
-invocation not being stable affectes debug, bisect, etc. When debugging
-the recent multifd regression I already had to keep changing from
-/multifd/tcp/... to /multifd/tcp/uri/... when changing QEMU versions.
 
