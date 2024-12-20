@@ -4,83 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D527E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BF39E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaRl-0000BC-Lr; Fri, 20 Dec 2024 05:41:29 -0500
+	id 1tOaRz-0000C9-5m; Fri, 20 Dec 2024 05:41:43 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaRi-0000Aw-KI
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:41:26 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaRw-0000Bk-0h
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:41:41 -0500
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaRe-0004Qy-5s
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:41:26 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so19149435e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:41:21 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaRu-0004SH-KD
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:41:39 -0500
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-385de59c1a0so1121369f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:41:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734691280; x=1735296080; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734691297; x=1735296097; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=oxbLS2E6qrPReRP/tM4Wi4sv2ulQ8+yAeeeJ9OW464E=;
- b=yRG4PAoKYdVFtHKz7oWkAWbre7fbZoM6i9VMRZ0gnjsTrRTpG/nGg1umv/xuU29otU
- /exbwKQ7KoxyKP0M/bWrGSB2rV/qtiZ5rJuWxmuBcMoeNzSCc89syoQJC29uRLAGa17O
- qAj9cv8bj9CaRW50o2ifzeEsQKkXERG8A25iNvCAps01Dw3R71KknMI2UtVeS/HPDt6b
- ND/wA19jzFGDKEt6GdnBGW/vDKuCr3o46v1TDSpPm4vyE6M+FeuGdvMAuc4WotWt6VFG
- FmEsGzGTUIGrZh0cM1Gexxhd7T/bShBc2q4P9tNtN+Ap7k8FWlnqeVkYPiNmiuydoISD
- 3G1Q==
+ bh=RfyElAWcq+Baw3j3YI7gZKswU6v3RXlA3HsC1BbSqHg=;
+ b=wKqtj5WNrmabOPK8UkK+P5CGsYHuBAz//rALnzFcr7Uaer57uD35TDWQaRy05o7+jB
+ cJ4f7TaEpmsbd5t3agWk6zaZUiTuw1MOEgWnpcyjytLq0DA5cgjUXsBGkE7Jpk0dhOyM
+ sAZBSb8ry82KCbn8k6Ypp4QRONBEZ0FblwNRZT24LT7CB+V1spr7cfQ5aCkvo0Sg4E8y
+ EPuq66X15XFYS0OOnBbxMbPdINtQjWp8HrFN1m9Y1ZggLdgpSqdD7QdI/kEsPKBS5uu/
+ Azs+2Lh5zhgF4qWTOm+XTExFL4NF5uHljT0AHdp3zF2BeK9pFUBR6kzYXfxK/+o3F83v
+ eP6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691280; x=1735296080;
+ d=1e100.net; s=20230601; t=1734691297; x=1735296097;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=oxbLS2E6qrPReRP/tM4Wi4sv2ulQ8+yAeeeJ9OW464E=;
- b=h7FhhVaZEXCLsxkbOojzmCelEu6yO8tiptLk+l6aqWRuXzL5TWZgj9T8Fp0ExaVT7D
- 2jfCK2nNZXB0EP1xrtqdE1Gx1vbcCN2Js8UJc+eqUQQbCm3mzocFzC1z0OY604LwPna6
- 8gH11LCvWshWwJ4iQYeeBmET6pnPKo4Hx/Hau4RaKRdlcehc9oFd5ZGJ5AfZB6Z+W16S
- RLwE6LSJcJ2fpGlzdp2QNAPeBDb76Uk4YQFMC6wKAF2AiYo/dZ40lRQbOX5aBungNaOz
- B6+YVyBNUGFc/Wp/TERZTD2soqCAPYr96hk9ps4T1aEu6AFOHhioWADeQ3egVWl9L9AN
- 4S0w==
+ bh=RfyElAWcq+Baw3j3YI7gZKswU6v3RXlA3HsC1BbSqHg=;
+ b=kvRupxnq3AwHDlKXPbMO97c38IPXkODM3BL4Cq+HLxISPoQq84vySnw3L+wgxItyJm
+ e8+0S81vdT8KfAtkxskLmmXkWZlVZ1RbcQ4eEGR7Ql2C6caFNY3686Gs6YQxJ0mxCSY8
+ tOmulmbAIBZ2qwQMIzAHjc/ld3/IxxRwfV354nupigGp03RU4RBpP8O78YLZ7OviK/N0
+ Ky/jaN5+cV35FLjsvZCPT/jQ5BbnQuQZ2QzPNKFD7xFiJSEHOnfP4NJ5BStNpz3E6GiP
+ aspL6wesvRkHAjJPtfVa4Se0D45hXNh3aUjDK57zT/e1UcM/3MlIwgiAl7HI1C3M4F1l
+ bZTg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVHJKqITReLMjKOaJTknEumWx0vXfKtWVfnpyeixaq2nwhu8dV73HqOhmS1+hGdWa+GRQpoWVipQE4R@nongnu.org
-X-Gm-Message-State: AOJu0YyaZaQddkYlPWTnOE678+jq5aALCDHQ23VFZptxveHlsEhOkq+g
- trQtuJOW2AVgxTWsvYR8eOzkqCFvMtn2xQSS5xBdhG5h6cBn2Jwc4SQ0FmW5qdk=
-X-Gm-Gg: ASbGncuVAShmAuSEyJxG+Ef9mSpyzD7mJ3/AgJ/w1MUgDOF5Mr27yScXjvtPp6iNbQo
- lz4Sb/F57nlvkhwVQkfMntQDezy+VI0VG4aQFMTjkmZwem/g/P7I47w5+tal0OpK3vTTrtVS9Ze
- KctxocgG4BFqwIpi76FvQ+NQEOZKTB9FpwYTVS8PAmnaaCLnKd2/c7GnYswxRJMEPO4uxHxyYzY
- mb7Kq35s0vo1yccUutPWFGSZzfZXdxT4QXux6dy8B1vwmq7NUt9ztnbIFBUcUtEV2M4cP0=
-X-Google-Smtp-Source: AGHT+IHdytWlAN9stTz/6Bcl4/8fNy5akhgQNKCfuT3OHq+Gw5Pvna4yMmTzb2LZbTihclc/KzfOdg==
-X-Received: by 2002:a05:6000:18a3:b0:385:f60b:f5c4 with SMTP id
- ffacd0b85a97d-38a221f9f90mr2108409f8f.29.1734691280449; 
- Fri, 20 Dec 2024 02:41:20 -0800 (PST)
+ AJvYcCVj31DsewySzFScDlGcmH6jTwjzvy21fgucKxjEl8kYlK8My65tZNuHfEbAiD9wOrnRj7m2oSpVZ+TA@nongnu.org
+X-Gm-Message-State: AOJu0YwZZHg5HTPCNejEvveh94MQtupnQR5vMe3aNtAAiJ+jtL4oK3rD
+ MKal+kn5g21nFKnVqmdu5Ile6VeOiKkbHmQnzrrJc9KFST0VSiWI14/LDfRftPc=
+X-Gm-Gg: ASbGncuU5yJ3HVOe/UlSl/6KdJJnB24q4CVYv4hpcDWIhmxRICYOWPZYnif+CYph04y
+ nrydv1OYBSrmzrbt4R7zNUlV9Km1NrwrEzxfRI2Pmqf2wytsIRjTJD4jgeZqoX3hhZWHtTu5ZK2
+ fbZ3zvkoqSXCsuJSIOZOqOC7uDQHglh7pCeLl+x0/IA/sKLEIcZCYsDUnxiiVigaAehDvM5j+OZ
+ 3e+2Lw7zrHngiL3Hjc9OgzCg39KMCzXPTgx8GULFopbN4/hcFYz19dnEyCCCInu8xTxNok=
+X-Google-Smtp-Source: AGHT+IF5+nnSWggpoRwnFE5zB6imaV0635y+T09UZmBXyn1pbyC6aoPkgo2PE+Sc2+j2DJj1V99nPQ==
+X-Received: by 2002:a05:6000:1a86:b0:386:3702:d2d8 with SMTP id
+ ffacd0b85a97d-38a22400b0emr1996244f8f.58.1734691296698; 
+ Fri, 20 Dec 2024 02:41:36 -0800 (PST)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c833149sm3688681f8f.39.2024.12.20.02.41.19
+ ffacd0b85a97d-38a1c8a8d32sm3747206f8f.99.2024.12.20.02.41.35
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 02:41:20 -0800 (PST)
-Message-ID: <d295fb40-0af3-430e-ba66-ba72e9d6e614@linaro.org>
-Date: Fri, 20 Dec 2024 11:41:19 +0100
+ Fri, 20 Dec 2024 02:41:36 -0800 (PST)
+Message-ID: <2964bbb9-8b13-476b-97b3-45f860b4d1d2@linaro.org>
+Date: Fri, 20 Dec 2024 11:41:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] qxl: Fix race on accessing cursor in struct
- SimpleSpiceDisplay
+Subject: Re: [PATCH 1/2] qxl: Do not use C99 // comments
 To: Hyman Huang <yong.huang@smartx.com>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@redhat.com>
 References: <7d287eaf00e0b52b600431efd350b15a0b5b3544.1734633496.git.yong.huang@smartx.com>
- <6119a51b8626575d1f5e6ac31630f88afa32eba9.1734633496.git.yong.huang@smartx.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6119a51b8626575d1f5e6ac31630f88afa32eba9.1734633496.git.yong.huang@smartx.com>
+In-Reply-To: <7d287eaf00e0b52b600431efd350b15a0b5b3544.1734633496.git.yong.huang@smartx.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,40 +101,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Hyman,
-
 On 19/12/24 19:46, Hyman Huang wrote:
-> Both the spice server and the qemu (iothread/main loop) context
-> can access the cursor field in struct SimpleSpiceDisplay.
-> 
-> Add the mutex lock before accessing cursor in
-> qxl_spice_reset_cursor().
+> Do not use C99 // comments to fix the checkpatch.pl error
 > 
 > Signed-off-by: Hyman Huang <yong.huang@smartx.com>
 > ---
->   hw/display/qxl.c | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/hw/display/qxl.c b/hw/display/qxl.c
-> index ae2d983299..d1fbeb65cf 100644
-> --- a/hw/display/qxl.c
-> +++ b/hw/display/qxl.c
-> @@ -298,10 +298,12 @@ void qxl_spice_reset_cursor(PCIQXLDevice *qxl)
->       qemu_mutex_lock(&qxl->track_lock);
->       qxl->guest_cursor = 0;
->       qemu_mutex_unlock(&qxl->track_lock);
-> +    qemu_mutex_lock(&qxl->ssd.lock);
->       if (qxl->ssd.cursor) {
->           cursor_unref(qxl->ssd.cursor);
->       }
->       qxl->ssd.cursor = cursor_builtin_hidden();
-> +    qemu_mutex_unlock(&qxl->ssd.lock);
->   }
+>   hw/display/qxl.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Alternatively convert to use WITH_QEMU_LOCK_GUARD() from
-"qemu/lockable.h".
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Regards,
-
-Phil.
 
