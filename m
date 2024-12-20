@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04967E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7945DE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfjt-0008EC-TZ; Fri, 20 Dec 2024 11:20:34 -0500
+	id 1tOfir-0004Tp-Gg; Fri, 20 Dec 2024 11:19:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjn-0007g8-EH
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:20:27 -0500
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfik-0003jk-7L
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:22 -0500
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjk-00009T-DO
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:20:27 -0500
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-3863703258fso2032840f8f.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:20:23 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfii-0008Ff-B3
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:21 -0500
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-385ef8b64b3so1633606f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711623; x=1735316423; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711558; x=1735316358; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mvOlQMApDBDzAhIP13yF4ecCm+qCv+xsSCDO/Ma+hPI=;
- b=Kb1itnsytYW2zYrmUd4If4A/ktwPffgenKgGa6iuXVpZ0F+G3C3njnJgWEHlYKF2rf
- FIsWH/oKi1HX0GioNYUT2a9FtmKABomKwlgcZZSVRH2/W3vMq+Xbbm49XZiovfiOVlPt
- vRhdTfigAZjQTThPYVGbI5SV6yKUm7I2zZJlUiCm3dKZbYf4QgAOMU2Xixhvw/vFssfj
- PL89wGuvhzbFnvM3X1MGcFJrIybFi/9nu+tq3yt9DdRAXpL6ydrLpkF9wokKCWB2XTgO
- dE484TmxSQS8muV+bwjT1Oy+U0EZ5Y5RIfGJ6YMMDtuixtKyo79bgyWDatBjRMl01Qt6
- Vl/A==
+ bh=v56JompxPLKPsYxp/BZ65nIAlGi/uwwkXsl2uLdTi1s=;
+ b=yTEaRjLaOLC/nH036+q/0v3Z3levp+A90WgNvkyRYwtOtTALFQ8AzsGnDNgkPZzNVM
+ QddUuiCL0L5Hs4xh9LBySH0eRHIeLAiZ2WU3Qlh3truG3GGEsK/cgki7iTouysUAQBGD
+ tcl6IeRozJF+nvKQCz89qK1Oq6zPvEcMGZ8Ffib7oKi8wVJoHFa++giGCJ1QxrDb/KWw
+ ehuUgbOgfD/cETBTP/tXFLiyjx0BmSLrCZ4Dh8lwN4VssyR8pwF/uAN3NsDp8cTGrsOt
+ meN71GnqwsniZauCtv2iwBlslpldN4lAKnJ6XwIgoBdgLD7+Pp4H4jS1OOdomWsig3ZA
+ JOpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711623; x=1735316423;
+ d=1e100.net; s=20230601; t=1734711558; x=1735316358;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mvOlQMApDBDzAhIP13yF4ecCm+qCv+xsSCDO/Ma+hPI=;
- b=LcotOi22HUKAfOyetN1mIw5pdAiBHMUSA1hHJTH5UOhCLvksWi9htT/dB3w5YW6cmM
- cZOtdSNrh/Z47uMeEZdnZ7Qnxf0B7c7T4i+DfFPhcLsZXg1Oa/sBcUt+OW6GqtiqVSzd
- Zhrqc8GcH57zZNrlwPwl/usUn63Dok6O70tAtEAZ+85VNvug/kDEQkUY0065bcZAUUwJ
- Fe8aA2Y1HeGyXaFQOyn2TevEUdeyKYENDvZCuofcPLvMHlJwC3uWCQtnxJK3pdo6Lcgv
- EktvHzBLcAh9G/lhnMkb0nhUSypJKqOH57weSYN3PnuFF0+p2rZrEtA4x/wn4/nooJvn
- evUw==
-X-Gm-Message-State: AOJu0Yw0XOUzQ3oGpD/0pCGy6tkryuioAZlfOrym8sJixmv9XfNE/ka9
- K/FxRaOX1hbCdQkWOyZz4TCr92aAGMA0iW6XzEHNL0ShphL6kSnQfs5bEahdd9UWdkjiJ+wgPXy
- d
-X-Gm-Gg: ASbGncvqzi88BeJJmNZedJb4yfcAAHIgriG96DjenIR5gYKCPNWUv7tBhXbBaHKGl3k
- Rk6EU2CmNVrx3ATMstStuXvwA6KIY7/ODv5fRIowlv3eLAYqIvc7BzZSwotC+K78jIxi5CqEN8K
- ppNY4X8dm7f9H4cmsOyYG+mfIe9PZB7Q0EzCKU/os/WO67YmK354baiFq/s5PBFGdWL/+zipy8m
- DQjSIXxpvn3gOhMRxen8UIQIfz3yXa/v0Q7bhyN9Zv9Qa1qQtPZAgFQ7qvDV3UoNwVY3DbPxUI=
-X-Google-Smtp-Source: AGHT+IGf4ptPck+zkjlU0RwXwXavGCMpmbIWgvaT7oVUlXPi84+AJ5u6BPRlHYQRP6GQzy6fJfMt1Q==
-X-Received: by 2002:a5d:59a4:0:b0:385:df17:2148 with SMTP id
- ffacd0b85a97d-38a1a2641b7mr6521380f8f.20.1734711622602; 
- Fri, 20 Dec 2024 08:20:22 -0800 (PST)
+ bh=v56JompxPLKPsYxp/BZ65nIAlGi/uwwkXsl2uLdTi1s=;
+ b=YXgO8llKhbrBcvrCGJH4Z6usHPi8yWb6aLctkwg9a7P57hksiMdQ27kRKpEbD635Ma
+ 6/bAiz7hd5yapUfdyXpWwH0iNkvhFuwrxoLY6UF6YAHP0yDl75jCXi0YwLU5AHYgaFPj
+ 2tMDiWH0/nfEwlAgHdh9sx5t6LN7o6XLn0dT2IJN3li/5RcQdkWmncvnPV7Z6r2gjnYE
+ zKM9G6EN8FjNXkwlqNq6QbYGjP79BWZLd3ed9YhoPbvP2MbDHu/3zqyqAy6Sd9dpijPO
+ 62B+t5HVHPGF7QQJhcaGEA/X9rSatG836lCmn5J776/UcjFF2sEkGU8uzw8vVrjV+b6I
+ 88sw==
+X-Gm-Message-State: AOJu0Yz42k+9AfjCQgXvdjbm7YMgiOwk/PoEq6ezecxm3rPSK7q4uzSW
+ Qs8+75FhS9gG06+o+ZVR1DZt1gST2GuSEhxBGc1PiXgrZR6TXMVo4xmbv4+GlBK2BZPR4OkyeQK
+ W
+X-Gm-Gg: ASbGncv8PK6x2RqBud4WxX2StKLlZYL4jrIn5PT7oWVft8R1CbNFWLozlU20gJObt4D
+ RpU/LcTTv4VYhkg4Hi2AEPd/u6XKKEDgmV9HPCylctXrTSgqD4/jn1oTSZULnwE92srjAXTcqH/
+ ZnNpX3E555YAgYBvVgqoo8vLxOZJ2hoS1vWNp6o4ZLnlxvuc22ejmXj/qX+NNM+8y4vFpLvxg/b
+ dXKoyeRsBjsEQEThScCOk4M+n4z2OmRXO6Kt+SraIsFwjW63nvAZ6r8VEyqgmfePjaQmt8K4Wg=
+X-Google-Smtp-Source: AGHT+IGGaJDhR8It2vMqnB1USyrtS2iDy8u7Xt9NOWceyZOEfSDC9F4CTVzFaEGOYPfl0wOc+emj5A==
+X-Received: by 2002:a5d:5847:0:b0:385:f6de:6266 with SMTP id
+ ffacd0b85a97d-38a221fd10cmr3641047f8f.24.1734711558322; 
+ Fri, 20 Dec 2024 08:19:18 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8acabbsm4363424f8f.93.2024.12.20.08.20.21
+ ffacd0b85a97d-38a1c847214sm4380946f8f.46.2024.12.20.08.19.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:20:22 -0800 (PST)
+ Fri, 20 Dec 2024 08:19:17 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 59/59] util/qemu-timer: fix indentation
-Date: Fri, 20 Dec 2024 17:15:50 +0100
-Message-ID: <20241220161551.89317-60-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL 45/59] accel/tcg: Declare cpu_loop_exit_requested() in
+ 'exec/cpu-common.h'
+Date: Fri, 20 Dec 2024 17:15:36 +0100
+Message-ID: <20241220161551.89317-46-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,31 +100,123 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Move cpu_loop_exit_requested() declaration to "exec/cpu-common.h",
+along with the related cpu_loop_exit_noexc(), cpu_loop_exit(),
+cpu_loop_exit_atomic() and cpu_loop_exit_restore() methods.
 
-Purely cosmetic.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20241218162104.3493551-17-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Message-Id: <20241217140648.98538-1-philmd@linaro.org>
 ---
- util/qemu-timer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/exec/cpu-common.h     | 18 ++++++++++++++++++
+ include/exec/exec-all.h       | 17 -----------------
+ accel/tcg/cpu-exec.c          |  2 +-
+ target/arm/tcg/helper-a64.c   |  1 +
+ target/s390x/tcg/mem_helper.c |  1 +
+ 5 files changed, 21 insertions(+), 18 deletions(-)
 
-diff --git a/util/qemu-timer.c b/util/qemu-timer.c
-index 16f847ff983..0e8a453eaa1 100644
---- a/util/qemu-timer.c
-+++ b/util/qemu-timer.c
-@@ -680,7 +680,7 @@ int64_t qemu_clock_advance_virtual_time(int64_t dest)
-     aio_context = qemu_get_aio_context();
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 638dc806a5f..0cf9a3d369c 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -186,6 +186,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+ void list_cpus(void);
  
-     deadline = qemu_clock_deadline_ns_all(QEMU_CLOCK_VIRTUAL,
--                                                      QEMU_TIMER_ATTR_ALL);
-+                                          QEMU_TIMER_ATTR_ALL);
-     /*
-      * A deadline of < 0 indicates this timer is not enabled, so we
-      * won't get far trying to run it forward.
+ #ifdef CONFIG_TCG
++#include "qemu/atomic.h"
+ 
+ bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
+ void tcg_cflags_set(CPUState *cpu, uint32_t flags);
+@@ -218,6 +219,23 @@ bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
+  */
+ bool cpu_restore_state(CPUState *cpu, uintptr_t host_pc);
+ 
++/**
++ * cpu_loop_exit_requested:
++ * @cpu: The CPU state to be tested
++ *
++ * Indicate if somebody asked for a return of the CPU to the main loop
++ * (e.g., via cpu_exit() or cpu_interrupt()).
++ *
++ * This is helpful for architectures that support interruptible
++ * instructions. After writing back all state to registers/memory, this
++ * call can be used to check if it makes sense to return to the main loop
++ * or to continue executing the interruptible instruction.
++ */
++static inline bool cpu_loop_exit_requested(CPUState *cpu)
++{
++    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
++}
++
+ G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
+ G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc);
+ #endif /* CONFIG_TCG */
+diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
+index c4a6ad3af2d..d9045c9ac4c 100644
+--- a/include/exec/exec-all.h
++++ b/include/exec/exec-all.h
+@@ -27,23 +27,6 @@
+ #include "exec/mmu-access-type.h"
+ #include "exec/translation-block.h"
+ 
+-/**
+- * cpu_loop_exit_requested:
+- * @cpu: The CPU state to be tested
+- *
+- * Indicate if somebody asked for a return of the CPU to the main loop
+- * (e.g., via cpu_exit() or cpu_interrupt()).
+- *
+- * This is helpful for architectures that support interruptible
+- * instructions. After writing back all state to registers/memory, this
+- * call can be used to check if it makes sense to return to the main loop
+- * or to continue executing the interruptible instruction.
+- */
+-static inline bool cpu_loop_exit_requested(CPUState *cpu)
+-{
+-    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
+-}
+-
+ #if !defined(CONFIG_USER_ONLY) && defined(CONFIG_TCG)
+ /* cputlb.c */
+ /**
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index e9eaab223f9..c07e59cd0b1 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -25,7 +25,7 @@
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "trace.h"
+ #include "disas/disas.h"
+-#include "exec/exec-all.h"
++#include "exec/cpu-common.h"
+ #include "exec/page-protection.h"
+ #include "tcg/tcg.h"
+ #include "qemu/atomic.h"
+diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
+index b6af2a59d63..0e130501fd6 100644
+--- a/target/arm/tcg/helper-a64.c
++++ b/target/arm/tcg/helper-a64.c
+@@ -28,6 +28,7 @@
+ #include "qemu/bitops.h"
+ #include "internals.h"
+ #include "qemu/crc32c.h"
++#include "exec/cpu-common.h"
+ #include "exec/exec-all.h"
+ #include "exec/cpu_ldst.h"
+ #include "qemu/int128.h"
+diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
+index 307388e5bd1..32717acb7d1 100644
+--- a/target/s390x/tcg/mem_helper.c
++++ b/target/s390x/tcg/mem_helper.c
+@@ -24,6 +24,7 @@
+ #include "s390x-internal.h"
+ #include "tcg_s390x.h"
+ #include "exec/helper-proto.h"
++#include "exec/cpu-common.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
+ #include "exec/cpu_ldst.h"
 -- 
 2.47.1
 
