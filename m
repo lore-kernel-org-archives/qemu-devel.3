@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CC1CE77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A971E7718A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSEO-00064m-DH; Thu, 19 Dec 2024 20:55:08 -0500
+	id 1tOSFz-0001Id-VH; Thu, 19 Dec 2024 20:56:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEM-00063X-RI
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:06 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1tOSFn-0000FN-BD
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:35 -0500
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEL-0004Ca-2U
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:06 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-725dbdf380aso1182271b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:04 -0800 (PST)
+ id 1tOSFl-0004bO-D6
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:35 -0500
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-725ce7b82cbso1711020b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659703; x=1735264503; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659792; x=1735264592; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wqX4t4W+sF7YgqE2uzUJNl59paoesC5M/4gUQM7L+H8=;
- b=ICzk282cQB67Rq83nz2n0Oo7h26R3bO6DmLrXUfZnBksf7KlLk679I9u21HK/E1D4i
- 3zhjhnsMMpCgIndmA9ikSWMZepHNT9ax9kXJ8etqoxAbz5zfxbfD3mUFqKtGol+gbLBt
- zRhQkRNBlLeTYxQyqhZMwgt9eqac+zTtCoQQjYzhgdW8iqdlRLSBLD4HVIkfIYG5aSjx
- ZmPOHm3QY4rlJ50oTwtxUe9D00HgzVnWNN7dTlHbL7ltT6+Tvh99yxWDBsRer33vdIEE
- vAT3H55wr084WWtSlLMVwQ5IA7VIKJ2Xm4EaKA3TH3RrAi2gLnoRxS25U1tGSB2NmOM5
- r43Q==
+ bh=QQS//T0GoR55hAf+FcAjZTbaJGtVUJI7ZxjrQ9eUp70=;
+ b=guAuf3zt9xT7EQ5xYXd6igJA0YR3r2WGDN749Jhm6KwBt/D9TJiwLHfcYndvxVe0Y2
+ qnX+mly1E85Lx61K4WUIpRjqsFTORcC2O94tiGst1w77fEVP5EXruIUdIb/bataDR50q
+ 19Wr5GtjP712BrXUriH15Icz500NtlDS4J8vCHAXRj/zRhtZR0RxaKe9tlgq8f2ryvRe
+ ShW79U9KVofQ/cAGSdSexe1WEW10Y9xQqCWhoU55n+9iDdKb6lBelikRbCbwdZKO5g2v
+ KLL5PL+nxz47Ofx4VnYhq+QSz00/2YIysNB74EOZJDt+m5mHXHRcJHExQ7pDnUE9EaeV
+ UJOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659703; x=1735264503;
+ d=1e100.net; s=20230601; t=1734659792; x=1735264592;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wqX4t4W+sF7YgqE2uzUJNl59paoesC5M/4gUQM7L+H8=;
- b=oqEx2oGnhdhZFSBP6do7P1RETceAZ+afnPT44PiM4Dopt/xdmEfKeWtKwd8xJLtWp/
- t/i9WamnQ/PXx89pYoLLjfH7BkKhAbdoI+cvw9So6qmF+r+IT0Gm1yILCSbtspHfPeB5
- sBDr+KU2IKN+4QFHNtswNR+KpJelBDL4W8g3/B1M58t7hYfBKrqMBKU/VUCfw2wvRies
- Vfm6td1A4tEbJRc1Bfb3HM4TRBBBKNeHDnh/xm/ouOLOe9mk+qVtzjqdMCjqov0N5dFy
- RR9nEXivj+yx6UU0eAgJwAD4DS135agEIeK9XIsTRfL2lgkHd9XKbKnyRV/fNBCCyfJM
- hopw==
-X-Gm-Message-State: AOJu0YxEjjR9yXbVhdvKnSEjmj7p0OPa9hawaZX4EBpMX0nXHCn9bEtU
- aRjjUAgSeNxwdakuqKfzwDdkS4PVELy9KHfhWyDeN4TWzZKSiN83eoxvNvhl
-X-Gm-Gg: ASbGncvwtJFIw8I0P2z4qlXJ4aEWkgr2eNAwj4C89/piSO+VLlyj4QdTVF4UO6ZQVwf
- VN4WgLkLMUdDs5t0+gv1zwgZl0cG+5jeHS7U3Sod9Kqkc5fGG0JGVePlFCGQPfrv/UPoDpg7U01
- USHTDSauAUvW6g77rW4IKS9+5mELLZWipWXkqCiC66PSjG1WG2x09cPI8ESxyolAj7idUb73F3D
- +DMw/49oiKwCH+v8UJu6CfZzWy10mhxILPHTNJxU+x5N+aEwnpL5DcPxBF3mGzB425QXFw/Ngz7
- yeBNf2e83WJx96ZKLk/ZKwF9axnfUGM2afii31jY1mhleYIwL3CcD5qZMBS65pU=
-X-Google-Smtp-Source: AGHT+IFEodT7LG+6ktjcVqVPWBoZlYvUpRohHV4gRdy4rW+htWYXi9ZAnDwCHtNaVQp9TBpq7aKOnQ==
-X-Received: by 2002:a05:6a21:101a:b0:1e1:94a2:275c with SMTP id
- adf61e73a8af0-1e5e046565bmr2241973637.18.1734659703352; 
- Thu, 19 Dec 2024 17:55:03 -0800 (PST)
+ bh=QQS//T0GoR55hAf+FcAjZTbaJGtVUJI7ZxjrQ9eUp70=;
+ b=cpPYurYc7+RUV10GfYmLPmI6tcZAe8qntLYbCfBmNgP3qO1uEYqctBWuSKoWFRLV40
+ N7/dOBIiHwfyD+h+SNQMwysZS4VRlRJwm/tHvD2xZpRJBDX4gcBF4NQbiwwW3w35ntPW
+ feDHGQZEfU9WxVMnlZZOIZncaHN4NSZ5ifQ1LrIa7bEjdiBZIktKKTSZFe6L6OTAaoQl
+ 2Ed7YWTs7ACpU1PiaCIM+tGUiteE1rR7+PC2216sGBeM4wHs+rxhjuzH17OWo/YWAy8Z
+ /fZ1k7Owmzpp0zxUqbfa+iQFh3zm+T4gtSXLgeuLLKAR5HPw5mZrHbDVJhbcKcLB6naj
+ 2oNw==
+X-Gm-Message-State: AOJu0Yx371Ncr2azx4HwGTctVNIUCXd0A/W2v11GLYr3HUqd6UX0ZPhq
+ re9WouoyTX5CaCqg5VO6K+80x/U7T5qkSDhyLSVl2eGIcf6x9DJmq83annC6
+X-Gm-Gg: ASbGncs3dm66ZrXka3HkEodgUS6tv57tHzV3FMgtEjW0yDLs6knjOrF/6SQSziF0rTJ
+ 7q6RFe6sVvGvNYJ5j6hFcjoObZn5hHOAYYF5PmS8YKHtcQefxAF0loN1nD5h62mQ2gjs4dlZMIs
+ XMKTkW+C1s2mkGlrXbpDnu+ZLdXRwBiZLmz1g65Onqz/5h6EBXUD2DP/e714by8HZpQMVy5+fBN
+ nOl469GcVK80Qku0LSgoVOjp/eZu9W2d1pjy/++XtCZKUvacj6d9IaiGuyHJnCshRRYCWT1sPC5
+ 4OtEfSMCcjcuWnAfbTO1ZgAj3vT4BAsgqYsEE+gEAG2JTMpAumZy5cjL7oWRHLU=
+X-Google-Smtp-Source: AGHT+IE55mt7DO3RWxj3kXcbY5uEPu3BwY+mCh9aihNZaseidsXdt90HyvJ/HK8AS7RvXaUDh9Tghw==
+X-Received: by 2002:a05:6a20:6a24:b0:1db:ff9d:1560 with SMTP id
+ adf61e73a8af0-1e5e0484baemr2196547637.18.1734659791640; 
+ Thu, 19 Dec 2024 17:56:31 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.00
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.56.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:55:02 -0800 (PST)
+ Thu, 19 Dec 2024 17:56:31 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 03/39] hw/riscv/riscv-iommu.c: add
- riscv_iommu_instance_init()
-Date: Fri, 20 Dec 2024 11:54:03 +1000
-Message-ID: <20241220015441.317236-4-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Jim Shu <jim.shu@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 32/39] target/riscv: Check memory access to meet svukte rule
+Date: Fri, 20 Dec 2024 11:54:32 +1000
+Message-ID: <20241220015441.317236-33-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,137 +105,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: "Fea.Wang" <fea.wang@sifive.com>
 
-Move all the static initializion of the device to an init() function,
-leaving only the dynamic initialization to be done during realize.
+Follow the Svukte spec, do the memory access address checking
 
-With this change s->cap is initialized with RISCV_IOMMU_CAP_DBG during
-init(), and realize() will increment s->cap with the extra caps.
+1. Include instruction fetches or explicit memory accesses
+2. System run in effective privilege U or VU
+3. Check senvcfg[UKTE] being set, or hstatus[HUKTE] being set if
+instruction is HLV, HLVX, HSV and execute from U mode to VU mode
+4. Depend on Sv39 and check virtual addresses bit[SXLEN-1]
+5. Raises a page-fault exception corresponding to the original access
+type.
 
-This will allow callers to add IOMMU capabilities before the
-realization.
+Ref: https://github.com/riscv/riscv-isa-manual/pull/1564/files
 
+Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Fea.Wang <fea.wang@sifive.com>
 Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241106133407.604587-2-dbarboza@ventanamicro.com>
+Message-ID: <20241203034932.25185-5-fea.wang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/riscv-iommu.c | 71 +++++++++++++++++++++++-------------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ target/riscv/cpu_helper.c | 55 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 55 insertions(+)
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index b6b9477129..c461ebbd87 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2130,11 +2130,48 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
-     }
- };
- 
-+static void riscv_iommu_instance_init(Object *obj)
-+{
-+    RISCVIOMMUState *s = RISCV_IOMMU(obj);
-+
-+    /* Enable translation debug interface */
-+    s->cap = RISCV_IOMMU_CAP_DBG;
-+
-+    /* Report QEMU target physical address space limits */
-+    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
-+                       TARGET_PHYS_ADDR_SPACE_BITS);
-+
-+    /* TODO: method to report supported PID bits */
-+    s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
-+    s->cap |= RISCV_IOMMU_CAP_PD8;
-+
-+    /* register storage */
-+    s->regs_rw = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-+    s->regs_ro = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-+    s->regs_wc = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
-+
-+     /* Mark all registers read-only */
-+    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
-+
-+    /* Device translation context cache */
-+    s->ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
-+                                         riscv_iommu_ctx_equal,
-+                                         g_free, NULL);
-+
-+    s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
-+                                         riscv_iommu_iot_equal,
-+                                         g_free, NULL);
-+
-+    s->iommus.le_next = NULL;
-+    s->iommus.le_prev = NULL;
-+    QLIST_INIT(&s->spaces);
-+}
-+
- static void riscv_iommu_realize(DeviceState *dev, Error **errp)
- {
-     RISCVIOMMUState *s = RISCV_IOMMU(dev);
- 
--    s->cap = s->version & RISCV_IOMMU_CAP_VERSION;
-+    s->cap |= s->version & RISCV_IOMMU_CAP_VERSION;
-     if (s->enable_msi) {
-         s->cap |= RISCV_IOMMU_CAP_MSI_FLAT | RISCV_IOMMU_CAP_MSI_MRIF;
-     }
-@@ -2149,29 +2186,11 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-         s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
-                   RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
-     }
--    /* Enable translation debug interface */
--    s->cap |= RISCV_IOMMU_CAP_DBG;
--
--    /* Report QEMU target physical address space limits */
--    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_PAS,
--                       TARGET_PHYS_ADDR_SPACE_BITS);
--
--    /* TODO: method to report supported PID bits */
--    s->pid_bits = 8; /* restricted to size of MemTxAttrs.pid */
--    s->cap |= RISCV_IOMMU_CAP_PD8;
- 
-     /* Out-of-reset translation mode: OFF (DMA disabled) BARE (passthrough) */
-     s->ddtp = set_field(0, RISCV_IOMMU_DDTP_MODE, s->enable_off ?
-                         RISCV_IOMMU_DDTP_MODE_OFF : RISCV_IOMMU_DDTP_MODE_BARE);
- 
--    /* register storage */
--    s->regs_rw = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
--    s->regs_ro = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
--    s->regs_wc = g_new0(uint8_t, RISCV_IOMMU_REG_SIZE);
--
--     /* Mark all registers read-only */
--    memset(s->regs_ro, 0xff, RISCV_IOMMU_REG_SIZE);
--
-     /*
-      * Register complete MMIO space, including MSI/PBA registers.
-      * Note, PCIDevice implementation will add overlapping MR for MSI/PBA,
-@@ -2229,19 +2248,6 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
-     memory_region_init_io(&s->trap_mr, OBJECT(dev), &riscv_iommu_trap_ops, s,
-             "riscv-iommu-trap", ~0ULL);
-     address_space_init(&s->trap_as, &s->trap_mr, "riscv-iommu-trap-as");
--
--    /* Device translation context cache */
--    s->ctx_cache = g_hash_table_new_full(riscv_iommu_ctx_hash,
--                                         riscv_iommu_ctx_equal,
--                                         g_free, NULL);
--
--    s->iot_cache = g_hash_table_new_full(riscv_iommu_iot_hash,
--                                         riscv_iommu_iot_equal,
--                                         g_free, NULL);
--
--    s->iommus.le_next = NULL;
--    s->iommus.le_prev = NULL;
--    QLIST_INIT(&s->spaces);
+diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+index 45806f5ab0..750c0537ca 100644
+--- a/target/riscv/cpu_helper.c
++++ b/target/riscv/cpu_helper.c
+@@ -857,6 +857,55 @@ static int get_physical_address_pmp(CPURISCVState *env, int *prot, hwaddr addr,
+     return TRANSLATE_SUCCESS;
  }
  
- static void riscv_iommu_unrealize(DeviceState *dev)
-@@ -2283,6 +2289,7 @@ static const TypeInfo riscv_iommu_info = {
-     .name = TYPE_RISCV_IOMMU,
-     .parent = TYPE_DEVICE,
-     .instance_size = sizeof(RISCVIOMMUState),
-+    .instance_init = riscv_iommu_instance_init,
-     .class_init = riscv_iommu_class_init,
- };
++/* Returns 'true' if a svukte address check is needed */
++static bool do_svukte_check(CPURISCVState *env, bool first_stage,
++                             int mode, bool virt)
++{
++    /* Svukte extension depends on Sv39. */
++    if (!(env_archcpu(env)->cfg.ext_svukte ||
++        !first_stage ||
++        VM_1_10_SV39 != get_field(env->satp, SATP64_MODE))) {
++        return false;
++    }
++
++    /*
++     * Check hstatus.HUKTE if the effective mode is switched to VU-mode by
++     * executing HLV/HLVX/HSV in U-mode.
++     * For other cases, check senvcfg.UKTE.
++     */
++    if (env->priv == PRV_U && !env->virt_enabled && virt) {
++        if (!get_field(env->hstatus, HSTATUS_HUKTE)) {
++            return false;
++        }
++    } else if (!get_field(env->senvcfg, SENVCFG_UKTE)) {
++        return false;
++    }
++
++    /*
++     * Svukte extension is qualified only in U or VU-mode.
++     *
++     * Effective mode can be switched to U or VU-mode by:
++     *   - M-mode + mstatus.MPRV=1 + mstatus.MPP=U-mode.
++     *   - Execute HLV/HLVX/HSV from HS-mode + hstatus.SPVP=0.
++     *   - U-mode.
++     *   - VU-mode.
++     *   - Execute HLV/HLVX/HSV from U-mode + hstatus.HU=1.
++     */
++    if (mode != PRV_U) {
++        return false;
++    }
++
++    return true;
++}
++
++static bool check_svukte_addr(CPURISCVState *env, vaddr addr)
++{
++    /* svukte extension excludes RV32 */
++    uint32_t sxlen = 32 * riscv_cpu_sxl(env);
++    uint64_t high_bit = addr & (1UL << (sxlen - 1));
++    return !high_bit;
++}
++
+ /*
+  * get_physical_address - get the physical address for this virtual address
+  *
+@@ -894,6 +943,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     MemTxResult res;
+     MemTxAttrs attrs = MEMTXATTRS_UNSPECIFIED;
+     int mode = mmuidx_priv(mmu_idx);
++    bool virt = mmuidx_2stage(mmu_idx);
+     bool use_background = false;
+     hwaddr ppn;
+     int napot_bits = 0;
+@@ -901,6 +951,11 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
+     bool is_sstack_idx = ((mmu_idx & MMU_IDX_SS_WRITE) == MMU_IDX_SS_WRITE);
+     bool sstack_page = false;
  
++    if (do_svukte_check(env, first_stage, mode, virt) &&
++        !check_svukte_addr(env, addr)) {
++        return TRANSLATE_FAIL;
++    }
++
+     /*
+      * Check if we should use the background registers for the two
+      * stage translation. We don't need to check if we actually need
 -- 
 2.47.1
 
