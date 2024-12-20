@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18533E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:51:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F2F9E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:54:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaae-00062W-Eh; Fri, 20 Dec 2024 05:50:40 -0500
+	id 1tOadn-0006yh-A6; Fri, 20 Dec 2024 05:53:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaac-00062K-NC
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:50:38 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOadl-0006y9-Ej
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:53:53 -0500
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaab-0000G0-1f
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:50:38 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso12019985e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:50:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOadj-0002qP-Pm
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:53:53 -0500
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4361fe642ddso17790755e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:53:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734691835; x=1735296635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734692030; x=1735296830; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4A6CNkM0JZP75dVobsqU+WcjQDgjCU182F092ynRV1g=;
- b=kA3LHFNVbRQIVV/huCaA64D/9O5DRYR7Z/ShsghQpRB+SorYukwtnrgfGI9xcp6N3j
- fGU2G8Opt71UCpQqAyIpfeHPSeYnc6hmwncyCtFWE7sn6ruGEOSgNxGrwql+4ZVS3En7
- r0GkP/nai19yYL60beIGNhYnmsg5okcZD8amD3BFPlU1GuG29kI34+rqDrETR/Pyu0OX
- 151Nd0FCPucNEuJYlopqFCZ7fkU5nnHPbfuFqiX+sFC8ZsrizKPowep7d/Xiu206UewB
- ljGssJt9DIynNQF1o2LsxouZj6K1BRIaLamtoOTTHRjYzeQ7rVItRuWhwdIpqViqztVC
- hqow==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Hg+YJQn0624TSszQmG8fkRhmQOLHzpqyuh9XL94aFTo=;
+ b=TF+cA0EOT5j5USPnXlgmN4mLiMsDDSGAsFvO9ceSQ7I5LIez+rbjZkxn4kpGE/HPRx
+ DqgI3Sjwo5N5+aSg4CJJqt4h0vSQR2fiz/PGAqLSXSiVUPaq1JbCxcf/Q8cvpASbxRT+
+ vXP3EsKOK8pYLz6nU0N23PNaOIQGp1XLDFyhwCfLrjw/1XfIQuQzqnroYW+00eRkA19l
+ 9LjFcqzcvxq+dISYSjrvPgT9Orubwm7MDtkT4CLk+KUc+XH6V2bM2u4v8mSgePQPWWa6
+ EoCaEdu6hu8fFA9JycoC8fnpbUYzo8kquSYKj4GlisMXtUu1X693nklBvSw6Ss1gWCsu
+ gTbA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691835; x=1735296635;
+ d=1e100.net; s=20230601; t=1734692030; x=1735296830;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=4A6CNkM0JZP75dVobsqU+WcjQDgjCU182F092ynRV1g=;
- b=DR25kfCdIAKG4Tk6u10TnF2N6bm1R7ZOLNTHbyBQ3rXcg73Lcgdfmg+mchDHz+BKWd
- N1kPj4VIr+34qoWjKR5XWeGIPPXkAC3iTjcWD9sSuO+kMCVGjouzoxEsoXa4uxbkdTOt
- hNTavNhvYDu0FufTSNTZcohmdvakhCF8bXywh3btZcCb3PHJ6f4Bgw/qT0+Onsa1QzwJ
- 3/eIbEo+g2xqjzqvtLUyHqyUt7C6NJs/WR1J0lZG3xnYDh+iSFQ6r6RRaYaTGlbM+P6l
- 2phSa3duiVIU7GKddFPo9WdvoO1nfJJlKdZc4D4qF07+1RIMc2fO4BAgE5iali5e3ATi
- 7FGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4HwuyUkqwp7gcFE3gYA9GuYA0zzBaQZdUM6LeYo9YDp7Esf4PqQ09pbDzSVQz2MMmMP81GnpOsGNT@nongnu.org
-X-Gm-Message-State: AOJu0YxueXNkfOr9mwgpJJvWotv1XHlHVgqlU7MS4bb7gm0lFSiKmxCs
- +mKFzLgjqHBvkEpjX8MHagcPt3I041ssRdN+8I14SV4GD8VHuxl1L9FkXo3KfNc=
-X-Gm-Gg: ASbGncuuUGZfZVG6JNTw6G+eDgW7GzvY5Fiv2983R85wxKO7f8uCOgx8JHRnWeB3tto
- uVK0oefY22zX6M4Rk2f9jfa+MeYIK4p27aLCcVYAHeahQ8jxhLaFrTjmrKbov+N0awJVsW03BBp
- rLBLjPicgKsaNzVlkTLFGAuWAReKR889mC1avItPbmnb2HS5Ux+R4DHNn4DmuEEoESLz7wwPaDC
- b5YsXzh49eaDF5WKqMTal0Qq8FMmZQqrCMykWlk3I2pNDs49yAOl1Eu3INdF1CcIbqpDIg=
-X-Google-Smtp-Source: AGHT+IGeyQcHac3HyW/mnpSv5DhHfvayzrpYJgn2HwexDMCrc+Zrgl74lAodnIuqXNVGyhJwWzGfZA==
-X-Received: by 2002:a05:600c:3505:b0:434:fafe:edb with SMTP id
- 5b1f17b1804b1-43668b5f326mr17131445e9.24.1734691834883; 
- Fri, 20 Dec 2024 02:50:34 -0800 (PST)
+ bh=Hg+YJQn0624TSszQmG8fkRhmQOLHzpqyuh9XL94aFTo=;
+ b=LbwaiVdf+V/P8EyI1qaTwNl+9skgmktiFktU8/9LD15zm+szdMNBwVlnonHZ8eHVq8
+ 4kcQ+6i5bEPLFgHXUeITt/M5jLMibg0NqwanG7bacAxze3u3pnCqSub+tibl8S66du1c
+ wvOg4SZEkaLOb1yaioO2R6hhAXuNg+1F8UdSY2/Uv0l+l5iWyidC6sa7uimSWjzLHwe9
+ F1+D/zL7tkQpIqenUvsSCLokd3l+yMGSVEz03OIvmVyMS+6HR46VlcZFEqnk8nB5jUP3
+ rUGoVRRZlWvQ73anH8GHNQSw65dLBbNcRpOPUbroVAEjk4TKbJTG/FAKAhm35UMQDKXJ
+ nLiA==
+X-Gm-Message-State: AOJu0YxnuNQbia+cbraBH/sTDRos2p3uYgUC2T4RP7K0sNQidf3UHvRi
+ Ef+7G/Rf/7fEknlfRYaNPwtr73HGo6ytWiNteXaJbpSQd02Bxl03SQa2gEzHctE=
+X-Gm-Gg: ASbGncuzUniiXRkGwFhrFfiOe1PnVuRKf/Uo7mLDVtdNv8vnODvV7QkZaGdxOBZHs+o
+ 3hF2pFyyuVwBKm7kKNl3BIrjxkT44zV58biccX1jbNwEUI5QteuPrtIyRC2XbI4TTrnS84Qh26d
+ 8VMwBdzIY6gwhr7pcSCNUC6+IEn2NIZZO8nUs5k4V/HSdXcsZnZaMXZskNrQfLqRucmY32SC+9X
+ uKSPOyiwy6QKCx/VBSgjxYa817P14LABy+KN5FtezmVxQKIlhDeLK2CfDK2GIGCxDGhrc0=
+X-Google-Smtp-Source: AGHT+IHsdV+oZOZIS6Qys1YExqB40lTSpL8a6Yg9i+TuSc3JqOjmphJP7MvExs3FpDHfVWjlGznRkw==
+X-Received: by 2002:a05:600c:3c9b:b0:434:ff30:a159 with SMTP id
+ 5b1f17b1804b1-4366790f1a3mr23791095e9.0.1734692030242; 
+ Fri, 20 Dec 2024 02:53:50 -0800 (PST)
 Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c829348sm3754834f8f.22.2024.12.20.02.50.34
+ 5b1f17b1804b1-4366127c515sm42666095e9.30.2024.12.20.02.53.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 02:50:34 -0800 (PST)
-Message-ID: <b853ab30-fc7a-4e03-82da-0ed97fd4aa0b@linaro.org>
-Date: Fri, 20 Dec 2024 11:50:33 +0100
+ Fri, 20 Dec 2024 02:53:49 -0800 (PST)
+Message-ID: <ee023925-c34a-437d-b2d9-657be8e14f51@linaro.org>
+Date: Fri, 20 Dec 2024 11:53:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Test assets not available anymore for
- tests/functional/test_rx_gdbsim.py
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-References: <5f571195-39b9-45e5-ba03-fd835afb5012@linaro.org>
+Subject: Re: [RFC PATCH 08/10] hw/misc/vmcoreinfo: Implement 'vmcore-info'
+ object
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
+ devel@lists.libvirt.org
+References: <20241219153857.57450-1-philmd@linaro.org>
+ <20241219153857.57450-9-philmd@linaro.org>
+ <CAMxuvayAVM4UvDjnSKEMD59YZpCgYVQHMVXkBrbTf3S79zRQ7g@mail.gmail.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <5f571195-39b9-45e5-ba03-fd835afb5012@linaro.org>
+In-Reply-To: <CAMxuvayAVM4UvDjnSKEMD59YZpCgYVQHMVXkBrbTf3S79zRQ7g@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,18 +101,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 20:47, Pierrick Bouvier wrote:
-> Hi all,
+On 20/12/24 09:50, Marc-André Lureau wrote:
+> Hi
 > 
-> assets for tests/functional/test_rx_gdbsim.py are not available anymore.
+> On Thu, Dec 19, 2024 at 7:39 PM Philippe Mathieu-Daudé
+> <philmd@linaro.org> wrote:
+>>
+>> 'vmcore-info' object allow to transition from '-device'
+>> to 'object', following the deprecation process.
+>>
 > 
-> It seems that the directory "https://acc.dl.osdn.jp/users" vanished from 
-> the web, and it's not a temporary issue.
-> If someone still has those assets on their local cache, maybe it's a 
-> good time to upload them somewhere else, and update the test.
+> Is there a strong motivation behind this? just replacing -device with
+> -object doesn't really give anything, does it?
 
-I posted a patch for that 4 years ago but it got lost:
-https://lore.kernel.org/qemu-devel/20200630202631.7345-1-f4bug@amsat.org/
+No. (Daniel mentioned the same on the cover letter:
+https://lore.kernel.org/qemu-devel/2ae4799b-f78d-4fde-becb-9ee7f767e8f1@linaro.org/)
 
-I'll respin, thanks for noticing.
+Sorry for wasting review cycles.
+
+> Also I'd rather keep the name "vmcoreinfo" since that's how it used to
+> be, and also the name used by the kernel ELF etc.
+> 
+>> No need to modify VMCoreInfoState since DeviceState
+>> already inherits from Object state.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   include/hw/misc/vmcoreinfo.h |  4 ++-
+>>   hw/misc/vmcoreinfo.c         | 48 +++++++++++++++++++++++++++++++++++-
+>>   2 files changed, 50 insertions(+), 2 deletions(-)
+
 
