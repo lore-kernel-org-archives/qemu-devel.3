@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCFBEE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 14:32:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12590E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 14:32:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOe1W-0004UK-4z; Fri, 20 Dec 2024 09:30:38 -0500
+	id 1tOe1Z-0004Un-Hb; Fri, 20 Dec 2024 09:30:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOe1P-0004Sn-BC
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:30:31 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1tOe1A-0004Pl-Ux
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:30:20 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOe1L-0006bP-8M
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:30:30 -0500
+ id 1tOe19-0006W7-EB
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:30:16 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734705026;
+ s=mimecast20190719; t=1734705014;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Szoag27KIkqUli3n0xSrTUcaxn0aravcRGL/6Nt+Rm8=;
- b=QmQ4b/Umxa9zicyRjKfaTsnh4kVNaGfrwSsbsh3nVxotzH+Bvd7jOks0xCs059iT5xE1kJ
- aSw+zjTI0Aa7J80hf+zGxVsOes6MZ5U6xvuPSmIdB2OLvGyAudXksQ0qiYO226Hg2XeeOm
- AhsXdBht8j7vCXq/xs8qXKE9or+hn7o=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MFM1GOCm15L/cPIdOg468IxeTeTqWnTkcNuwrJVlvEk=;
+ b=UQ3+CzInOQLoxl8M2HvigDBDG345iE4E4Hq4JGU1f+PKDVcxuJst26ljDMZXfpItGtMa0g
+ mjm4Gg5sW5VIBlqYp+WLHd5ssqG9W6u3ScjZXkX7I5S8UNvrakoUO55xXSrdVKNLeF2+vl
+ oI4BcjSm/RkNX5HkVR5w/T7yRs6SlKY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-AEFODpjZPZ6tQICh2AhyoA-1; Fri, 20 Dec 2024 09:30:24 -0500
-X-MC-Unique: AEFODpjZPZ6tQICh2AhyoA-1
-X-Mimecast-MFC-AGG-ID: AEFODpjZPZ6tQICh2AhyoA
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-385d735965bso1178949f8f.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 06:30:24 -0800 (PST)
+ us-mta-219-9CXvubYPO06Rwm7NMJyO7A-1; Fri, 20 Dec 2024 09:30:12 -0500
+X-MC-Unique: 9CXvubYPO06Rwm7NMJyO7A-1
+X-Mimecast-MFC-AGG-ID: 9CXvubYPO06Rwm7NMJyO7A
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4361b090d23so11560415e9.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 06:30:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734705022; x=1735309822;
+ d=1e100.net; s=20230601; t=1734705011; x=1735309811;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Szoag27KIkqUli3n0xSrTUcaxn0aravcRGL/6Nt+Rm8=;
- b=UykYY19OeyGPgESLmpBY6UJ7613RBHMSEKCCgq6zs+7aLrJbwsteFkOudmPxRZXoyY
- N/w22FPIS560BdCEsXBrTbCaEAQU+1M1G8rhDykUNCAr8BaagqMNiduiXwmR6KFO+vl2
- Wto3Ua6WkK8W1/U+LEigXUqjDoXEfas1pen35be2j2ZspPaZMmNupTr7cnF6l+QcvT3H
- iXy/nO2It6On4d6xRoHrYZ04qOBBv8VHr6Z1HAnCT1FqEADowivVsz4a3MY+dq0IqiRn
- b06fzFCQUJHKrNDixQmwBt1UhBam9ON1s+h4tJjr+LbbPBZIDXCriG0AL4XVQedx45fa
- HL9w==
-X-Gm-Message-State: AOJu0YzMnyHeekvrGa72gMxMhSL5XVkHLo9TJ/SBATb73FzRrkeV/59D
- mroejnxHcCu+Uxllrfen0xMdgaBJZHTEpLtWknR5jcMg6tl5uIFNIci7TxqxPkFXuwHax4aY6ut
- cutQdl9i2pQTtoRf8/Q+Yf741s5gpYve5XaiHct2oq3U4f6L/Ce8JkD9JPS5yR5NbHt89nG9kM+
- LYmR/crmhfz/4Lv6KxxGByXNWWE1py5pElZdL3
-X-Gm-Gg: ASbGncu0FLGAA6GRqDuX0tO3ekVNceEL5LrrQ9NlRh92m94e6INPhwbbINm0x9AScTX
- PK/afkip1NgzONE0WE4SMhEmsf+wJT/BiQLGSV8c/UtRt6TxWQOR/YtuNiXmeMb4uMv+/2md1ag
- mQ7VCvx+wCG9spyAVGv5pWR+50AvzKeqKY46CiqrIaV5mk/raSNhZo5CNBsiYEoq62ro2cKKAS6
- I43+qdixfIsAMWBkZuesHh9uVWE2Byhiph9KRAPTEiiubjjWvhWcBzRyI9r
-X-Received: by 2002:a5d:6d07:0:b0:385:f2a5:ef6a with SMTP id
- ffacd0b85a97d-38a221eaa5fmr3293928f8f.15.1734705022197; 
- Fri, 20 Dec 2024 06:30:22 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHcGREriZdYrwfdKOQVlcM1YTgvD2rFEL6BRQMB0vo4IR5CccD8ADRPKD3WlS4diVwqozNl3Q==
-X-Received: by 2002:a5d:6d07:0:b0:385:f2a5:ef6a with SMTP id
- ffacd0b85a97d-38a221eaa5fmr3293884f8f.15.1734705021699; 
- Fri, 20 Dec 2024 06:30:21 -0800 (PST)
+ bh=MFM1GOCm15L/cPIdOg468IxeTeTqWnTkcNuwrJVlvEk=;
+ b=QSLLRPC/kQHvv8jZU3ZxJH/53zdgg42C6qVAjtC6Ugxkms2FM4ZM/gNjjfvC924ABz
+ WYcThML2cBT5Gk92yjYwAkFK4UjyH7w8I7WFphA6PvXF1kONH62/tXh95De9/hWEknCZ
+ pHClaQeitfNSQADBR8ngNVta8UxoE7cHF9BQJxUo56q1GgaBXr2sF909VYGip4GWtHsB
+ LC7cnN11YxY3zzwCtMfxRudmkzB4idPEq4LsOjzHjZ5iOOef92zNwy4paKoQvHSx9Ho/
+ DGcdL2UBOVYPg3nCwmSEIGC86rcRtozK0oB/kJYIUFiOaNgGvl6UDc69i9W9GWaBtfqa
+ 6zbA==
+X-Gm-Message-State: AOJu0YyqQ/q21iodLQtSmsas791zz4Ne7Opz0mOx3ek+vdmbmYrGFHCx
+ rSiAYh+C9M6DcQ2mFFIxDyBzbwG3441qbc+lbPojuqu67qiahLaQ+Nt93Rky3obr9IPl4WJvVKw
+ qtK1r9E2tcaYK1p6Vo47eVIrTFijKzr4dMu0yV6rl4Jrti9QF+bNlaG55VhWXEc/olKgUmuWNYI
+ Wa9QK9nuEAqmpn6iR6MfaUsmwekfamXMHjbRVv
+X-Gm-Gg: ASbGncumuYXBKsYm8j3a7i3Uo19zCTsk2ZyLcbMopUNAczvDEvpdJWTzIK13gNATMrI
+ kqWzXMhJllpyflWTvr3bYaXpJHqK5hL0WaY8BW8iLh9VWtQIJSKRErRuPmXApo0ttYdfbCjF0iY
+ C0Jm1mZMVzuYta+JwXQ6smnw6rTVScojH/yP0a1kdG6qwu1aga0fVWsOqWwckviOgcVPsppd1jj
+ 1TiIlRD4MLGY3NdL/cTZg5TwZHkX6tTs/ZXW4CqWcAhgwUfZxLcF930fyZY
+X-Received: by 2002:a5d:47a8:0:b0:385:eb17:cd3d with SMTP id
+ ffacd0b85a97d-38a221f2ff4mr2920449f8f.8.1734705010845; 
+ Fri, 20 Dec 2024 06:30:10 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFsBlOLZUrNwaMzIzkMoAZdbg7ZYA+lJtaTNcbzaEE8SW0FAHEdFEOqVd9ww/3VkaZ2sjX6fA==
+X-Received: by 2002:a5d:47a8:0:b0:385:eb17:cd3d with SMTP id
+ ffacd0b85a97d-38a221f2ff4mr2920422f8f.8.1734705010492; 
+ Fri, 20 Dec 2024 06:30:10 -0800 (PST)
 Received: from [192.168.10.47] ([151.81.118.45])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8330d4sm4154986f8f.29.2024.12.20.06.30.19
+ ffacd0b85a97d-38a1c847214sm4169434f8f.46.2024.12.20.06.30.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Dec 2024 06:30:20 -0800 (PST)
+ Fri, 20 Dec 2024 06:30:08 -0800 (PST)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: zhao1.liu@intel.com,
 	junjie.mao@hotmail.com
-Subject: [PATCH 10/12] rust: qemu-api-macros: extend error reporting facility
- to parse errors
-Date: Fri, 20 Dec 2024 15:29:52 +0100
-Message-ID: <20241220142955.652636-11-pbonzini@redhat.com>
+Subject: [PATCH 05/12] rust: qom: automatically use Drop trait to implement
+ instance_finalize
+Date: Fri, 20 Dec 2024 15:29:47 +0100
+Message-ID: <20241220142955.652636-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220142955.652636-1-pbonzini@redhat.com>
 References: <20241220142955.652636-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -109,128 +109,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Generalize the CompileError tuple to an enum, that can be either an error
-message or a parse error from syn.
+Replace the customizable INSTANCE_FINALIZE with a generic function
+that drops the Rust object.
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/qemu-api-macros/src/lib.rs   | 27 ++++++++++-----------------
- rust/qemu-api-macros/src/utils.rs | 26 ++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+), 17 deletions(-)
- create mode 100644 rust/qemu-api-macros/src/utils.rs
+ rust/qemu-api/src/qom.rs | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
-index 0f04cca3841..539c48df298 100644
---- a/rust/qemu-api-macros/src/lib.rs
-+++ b/rust/qemu-api-macros/src/lib.rs
-@@ -3,57 +3,50 @@
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use proc_macro::TokenStream;
--use proc_macro2::Span;
--use quote::{quote, quote_spanned};
-+use quote::quote;
- use syn::{
-     parse_macro_input, parse_quote, punctuated::Punctuated, token::Comma, Data, DeriveInput, Field,
-     Fields, Ident, Type, Visibility,
- };
- 
--struct CompileError(String, Span);
--
--impl From<CompileError> for proc_macro2::TokenStream {
--    fn from(err: CompileError) -> Self {
--        let CompileError(msg, span) = err;
--        quote_spanned! { span => compile_error!(#msg); }
--    }
--}
-+mod utils;
-+use utils::MacroError;
- 
- fn get_fields<'a>(
-     input: &'a DeriveInput,
-     msg: &str,
--) -> Result<&'a Punctuated<Field, Comma>, CompileError> {
-+) -> Result<&'a Punctuated<Field, Comma>, MacroError> {
-     if let Data::Struct(s) = &input.data {
-         if let Fields::Named(fs) = &s.fields {
-             Ok(&fs.named)
-         } else {
--            Err(CompileError(
-+            Err(MacroError::Message(
-                 format!("Named fields required for {}", msg),
-                 input.ident.span(),
-             ))
-         }
-     } else {
--        Err(CompileError(
-+        Err(MacroError::Message(
-             format!("Struct required for {}", msg),
-             input.ident.span(),
-         ))
-     }
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 1341a173893..861f1e50ac4 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -180,6 +180,16 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+     T::class_init(unsafe { &mut *klass.cast::<T::Class>() })
  }
  
--fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), CompileError> {
-+fn is_c_repr(input: &DeriveInput, msg: &str) -> Result<(), MacroError> {
-     let expected = parse_quote! { #[repr(C)] };
- 
-     if input.attrs.iter().any(|attr| attr == &expected) {
-         Ok(())
-     } else {
--        Err(CompileError(
-+        Err(MacroError::Message(
-             format!("#[repr(C)] required for {}", msg),
-             input.ident.span(),
-         ))
-     }
- }
- 
--fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, CompileError> {
-+fn derive_object_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-     is_c_repr(&input, "#[derive(Object)]")?;
- 
-     let name = &input.ident;
-@@ -80,7 +73,7 @@ pub fn derive_object(input: TokenStream) -> TokenStream {
- }
- 
- #[rustfmt::skip::macros(quote)]
--fn derive_offsets_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, CompileError> {
-+fn derive_offsets_or_error(input: DeriveInput) -> Result<proc_macro2::TokenStream, MacroError> {
-     is_c_repr(&input, "#[derive(offsets)]")?;
- 
-     let name = &input.ident;
-diff --git a/rust/qemu-api-macros/src/utils.rs b/rust/qemu-api-macros/src/utils.rs
-new file mode 100644
-index 00000000000..02c91aed7f6
---- /dev/null
-+++ b/rust/qemu-api-macros/src/utils.rs
-@@ -0,0 +1,26 @@
-+// Procedural macro utilities.
-+// Author(s): Paolo Bonzini <pbonzini@redhat.com>
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+
-+use proc_macro2::Span;
-+use quote::quote_spanned;
-+
-+pub enum MacroError {
-+    Message(String, Span),
-+    ParseError(syn::Error),
++unsafe extern "C" fn drop_object<T: ObjectImpl>(obj: *mut Object) {
++    // SAFETY: obj is an instance of T, since drop_object<T> is called
++    // from the QOM core function object_deinit() as the instance_finalize
++    // function for class T.  Note that while object_deinit() will drop the
++    // superclass field separately after this function returns, `T` must
++    // implement the unsafe trait ObjectType; the safety rules for the
++    // trait mandate that the parent field is manually dropped.
++    unsafe { std::ptr::drop_in_place(obj.cast::<T>()) }
 +}
 +
-+impl From<syn::Error> for MacroError {
-+    fn from(err: syn::Error) -> Self {
-+        MacroError::ParseError(err)
-+    }
-+}
-+
-+impl From<MacroError> for proc_macro2::TokenStream {
-+    fn from(err: MacroError) -> Self {
-+        match err {
-+            MacroError::Message(msg, span) => quote_spanned! { span => compile_error!(#msg); },
-+            MacroError::ParseError(err) => err.into_compile_error(),
-+        }
-+    }
-+}
+ /// Trait exposed by all structs corresponding to QOM objects.
+ ///
+ /// # Safety
+@@ -438,7 +448,6 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+ 
+     /// Whether the object can be instantiated
+     const ABSTRACT: bool = false;
+-    const INSTANCE_FINALIZE: Option<unsafe extern "C" fn(obj: *mut Object)> = None;
+ 
+     /// Function that is called to initialize an object.  The parent class will
+     /// have already been initialized so the type is only responsible for
+@@ -474,7 +483,7 @@ pub trait ObjectImpl: ObjectType + ClassInitImpl<Self::Class> {
+             None => None,
+             Some(_) => Some(rust_instance_post_init::<Self>),
+         },
+-        instance_finalize: Self::INSTANCE_FINALIZE,
++        instance_finalize: Some(drop_object::<Self>),
+         abstract_: Self::ABSTRACT,
+         class_size: core::mem::size_of::<Self::Class>(),
+         class_init: Some(rust_class_init::<Self>),
 -- 
 2.47.1
 
