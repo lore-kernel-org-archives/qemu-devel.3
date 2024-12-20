@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63927E7718C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE2EAE7718B
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:25:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfhX-000882-My; Fri, 20 Dec 2024 11:18:09 -0500
+	id 1tOfjH-0005Je-58; Fri, 20 Dec 2024 11:19:55 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgi-0007SE-GT
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:24 -0500
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfix-00053M-2o
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:37 -0500
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgg-0007zJ-3j
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:15 -0500
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-385de9f789cso1631081f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:13 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfiv-0008IF-JT
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:34 -0500
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-385e1fcb0e1so1234168f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711432; x=1735316232; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711572; x=1735316372; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mpB4OZyWBhd1PT/tVcpqHdcUkkCs6TvRmlAnArs5Gjg=;
- b=G5ur1wturxKblRXCSbfI9Ekrrs0rl/bZo6i7+nZv0bVhb9Xwc07gLerMEr9Y4NKOKI
- DGRuEtiA3d5ADcLfxitnFPIMb/0963Ud5L3kFedB8vTDa+WcEsV7YbOF5tF/XXrmPFmP
- zHx/R7b/xyHpHrPzzqfjae50Jn417DOz8jEkaSE2DP928QFHWDI82/AMqW3c9KHXJEll
- 8oJGoTvKwCe9n1fqB/43uw/nu+f9xP+sk3+YrZjytkaa2DCXtZ8K/35LYqJsiNRwDMbq
- oyiC8ORCdVTA6CW+5S5j/uTbkM8zI+nCHIu7sFo5lZDGhpbe49OaYIAfd02sZzIfEJR9
- kheQ==
+ bh=Q99/bsif6wpzwYmznsUtKMEpC3SzjXOMyKElTz2bhrs=;
+ b=pSCi1Ukvyg5/Aqp97TpmTF5CuQ8CbvmSBKPaT0K6zDqph75v8e5AghhF8k50XaIdRi
+ J8X7+VYrYwqdGde5vT8wJTPiXnn5TV1U4DC1Eh5n3EUBitGNCOjeMUimxwPe/Mg0Yg9j
+ u1/h7W+uo2mF0ODqMj+tgFfnX37HfpOvIOAHjuWfgknRVU9VFztaVcALY1y/hepMkaLc
+ 7sTUwJkiEeGyJM8CkXFJT1LWDnve9GSch5l59F94Q3WhGi7J+xdxyfW5HGI19b6A+DGx
+ kc7LEOCaZ11AcXED2P9bjbB4O8rh4sxtNDQnQGjI5twOk6YD2f8idBsa9q0X5gbgGvX4
+ 7G4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711432; x=1735316232;
+ d=1e100.net; s=20230601; t=1734711572; x=1735316372;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=mpB4OZyWBhd1PT/tVcpqHdcUkkCs6TvRmlAnArs5Gjg=;
- b=KURqG9Rzk3VcOoxhvDBQ8WukfxeCl21o73SJLsF5671DbMCQMUanis0SX6uLxJWOQ3
- JYIIJpxZAW1jdvq/PtoeAzo1600t2exummIuiUQkfrLVmVWf1JnxVWQ406QETMsJEPTV
- q9SA3pzsR99re6rm9703JLFQH79dXmmx2EN3mOh8X/r3aSiqqgOcqUKUOZV8kmSuMJew
- BrmzSV1ZU54zXqY7XyVj8QPNMhqXZF1zXEmAdlxcUseHkzaseUF/zaenAZW5kjDfhqia
- 9YFu1gtBiivASUbVCAqLR5Jr6oreDbgEy9IJXDLC8hsMHfFlShcOQrp7ODxTPYA4sXtq
- 8zaA==
-X-Gm-Message-State: AOJu0YxhbZL43t4/fS5pXFinMbXxlRDqzCUN2ktFGI8n56deAwpuKdyx
- utnBQ3ONExoF3CKO77cHQuFkoAnZfTpBPGNie5lsEeOtna0YM5N3zE0gySjfUlf+6ozxeZ0W6Jc
- U
-X-Gm-Gg: ASbGnctUTXOxFUT22yIq4Jtvz2d0q4hxsUvslBmWQxSnKoHQlppzQjdewIdsRzMH7n4
- TO9chEYf7JjyPZ5pqM9LY9U8m+CeW2foeBnl6jB+uzON48HnS/1sNMikRDi3Ppgn66GDZpd40R/
- 8hRB6mPBRxiNcamDLJWjgGSvsG5MJHnXa1seTPXBYoWo+qaCp38kZdoyDsVqMv8M/V5MCKN352r
- vlPb0ZXbSPBP9jxHekZkrEKUp25UABXw8//bYGc3P85v17oxCjkrLdKbXvJJVRAl+FCK+6jQQg=
-X-Google-Smtp-Source: AGHT+IGbLCT37XmiSDwmpS4kh5LRfMRrZGHsYgWa2JJmXkmkLupQKcfhEXxdrag0nASXhymdnViFzg==
-X-Received: by 2002:a5d:6c61:0:b0:385:fc70:80e with SMTP id
- ffacd0b85a97d-38a221ed282mr3874138f8f.3.1734711432102; 
- Fri, 20 Dec 2024 08:17:12 -0800 (PST)
+ bh=Q99/bsif6wpzwYmznsUtKMEpC3SzjXOMyKElTz2bhrs=;
+ b=AeT1W35mRQnyq0vN4HAXvZk0eq29GVJ3jhZ73XXz6Cpl7Kyp9FO1HvLISrhB9wRbY9
+ jBwYMppFqWVN6dUpkDqXK+8fmtQWzXfgPGnZNMXfCsPGpc33Tt8QIZFW+SfMIzPjtC65
+ X3B9SC7xbnkuiHcbwG2VT5bbqkiYXJyzuNtjZ7UtsSV4Vvaczz8o6H3PKvilGSLMgpaX
+ OKMy5MFRNHx0UIGhuKbPcmbZLLpY7Pq5US1SafGyFTOhhGdAxSkZxT1bq6owUMhjLlps
+ t0Tr4vSQH+ehjXffAw2updr7bSDSrQq9l+i45AhEJhVDyA6J/y5xMQEjyoDuRdiXpEFO
+ iM/w==
+X-Gm-Message-State: AOJu0YzDv1EEpcwY8Xy94TkaJVQOtqX6GSQQTLvocFaWBVpoqskG8dfp
+ XTdmvT+yeCru3A7yctESLUj06HO8lTJRtwTr157RyBpvdRHImx03sARy/6iaBg4esNRxE1oJeEO
+ 2
+X-Gm-Gg: ASbGncsN+ZM1C+KWUtlnmnuqJ9muFWqVvqFQs7Wg0ayUlkarBdkaqf/PcwlPYGt3Fdw
+ WNYoD0tpuBXzFQV21EnttlcgSJZyZ33srBDJKbPC5gdaZBEuzZIh36E4HVqQ3iptoPTNyu0Ym6P
+ phLH+hfZqR5XYq9MI3RDDwZqutIZJIlBRZwxCiJfor1JVO6HDV7+evzCSBKDtmHZW4qM4jBsv4l
+ Y/gA01aGVDbrgWPGHub0pbtiVh/pLAeEitSiA48ryAktj1x0VgjI3Ds/mQeESb7pmi4rQlXX7I=
+X-Google-Smtp-Source: AGHT+IFFwhdIaAH/DQZMGTnZ02SK+K67gNXy2JVKRBcsXg375tAFuExCc+RX0XTdK9nNPfi+lTkyTQ==
+X-Received: by 2002:a05:6000:4012:b0:385:f892:c8fe with SMTP id
+ ffacd0b85a97d-38a221fa22cmr3767527f8f.21.1734711571860; 
+ Fri, 20 Dec 2024 08:19:31 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661200abesm49520575e9.18.2024.12.20.08.17.11
+ 5b1f17b1804b1-43656af6d02sm85487275e9.1.2024.12.20.08.19.31
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:17:11 -0800 (PST)
+ Fri, 20 Dec 2024 08:19:31 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 17/59] exec/cpu-defs: Remove unnecessary headers
-Date: Fri, 20 Dec 2024 17:15:08 +0100
-Message-ID: <20241220161551.89317-18-philmd@linaro.org>
+Subject: [PULL 48/59] accel/tcg: Restrict curr_cflags() declaration to
+ 'internal-common.h'
+Date: Fri, 20 Dec 2024 17:15:39 +0100
+Message-ID: <20241220161551.89317-49-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,37 +99,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"exec/cpu-defs.h" should be kept as minimal as possible;
-besides these includes don't seem necessary. Remove them.
+curr_cflags() is only used within accel/tcg/,
+move its declaration to accel/tcg/internal-common.h.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241114011310.3615-3-philmd@linaro.org>
+Message-Id: <20241216214030.59393-1-philmd@linaro.org>
 ---
- include/exec/cpu-defs.h | 8 --------
- 1 file changed, 8 deletions(-)
+ accel/tcg/internal-common.h | 3 +++
+ include/exec/cpu-common.h   | 3 ---
+ accel/tcg/watchpoint.c      | 1 +
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/cpu-defs.h b/include/exec/cpu-defs.h
-index 0dbef3010cb..ae18398fa99 100644
---- a/include/exec/cpu-defs.h
-+++ b/include/exec/cpu-defs.h
-@@ -23,14 +23,6 @@
- #error cpu.h included from common code
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index a8fc3db7742..c8d714256cb 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -56,4 +56,7 @@ void cpu_restore_state_from_tb(CPUState *cpu, TranslationBlock *tb,
+ bool tcg_exec_realizefn(CPUState *cpu, Error **errp);
+ void tcg_exec_unrealizefn(CPUState *cpu);
+ 
++/* current cflags for hashing/comparison */
++uint32_t curr_cflags(CPUState *cpu);
++
  #endif
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 0cf9a3d369c..74e947f3adc 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -191,9 +191,6 @@ void list_cpus(void);
+ bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
+ void tcg_cflags_set(CPUState *cpu, uint32_t flags);
  
--#include "qemu/host-utils.h"
--#include "qemu/thread.h"
--#ifndef CONFIG_USER_ONLY
--#include "exec/hwaddr.h"
--#endif
--#include "exec/memattrs.h"
--#include "hw/core/cpu.h"
+-/* current cflags for hashing/comparison */
+-uint32_t curr_cflags(CPUState *cpu);
 -
- #include "cpu-param.h"
+ /**
+  * cpu_unwind_state_data:
+  * @cpu: the cpu context
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index e24baead562..fbaf45d10f2 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -27,6 +27,7 @@
+ #include "system/replay.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #include "hw/core/cpu.h"
++#include "internal-common.h"
  
- #ifndef TARGET_LONG_BITS
+ /*
+  * Return true if this watchpoint address matches the specified
 -- 
 2.47.1
 
