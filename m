@@ -4,88 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 944C7E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:30:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B791DE7718A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:34:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaGv-0005F0-US; Fri, 20 Dec 2024 05:30:17 -0500
+	id 1tOaKU-000633-S7; Fri, 20 Dec 2024 05:33:58 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaGu-0005D8-LM
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:30:16 -0500
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOaGt-0002AT-6f
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:30:16 -0500
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso1000529f8f.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:30:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734690612; x=1735295412; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HE9RICSg/G0qang2Ph2nixOO8jUJ5u4RPl1sDo5OuqY=;
- b=Enk/vQoD38ASMFCk8098XaYalrPbu8obGiosTxmPrz06TJ5zst2GL9dbAsWNvqpn7z
- sa2Q3o2HdDcmxruOKW9gXItCg7SyWDzuMjmYUOMr3/QZ1R+E4HxMaHaQR8gCdcGIyR2F
- GjGu4WwNy8ykGrOH8SGdyFUwnfa/BBnQB++78H3LFNVDWtKlzazlgsD+vpvpCpBzGnF/
- kA52ZUM1Vp1d27x1XteAgsFq0jVBO8t7s0rd/wmo8SxT1vWDgMhLeJxWKn1IU73JeLS/
- 7RdHhkC9clJJyp5ArSIFDZ/j7uZG73W3xeOW85K4LqIco9FVnLrfGBXptXU6z0MlS7Dp
- LeAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734690612; x=1735295412;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HE9RICSg/G0qang2Ph2nixOO8jUJ5u4RPl1sDo5OuqY=;
- b=KNluSAipA6lqGci1fVyUCfeOaQyxpphlai5JhaNKgj59BBjSOt9TcqVQgBXHHX7ryg
- OZLylZ4b65gPIn37ipY0T1XhI7bjPoqckGe8XnBOYOrsJxU9T9bsmYZihveYDX4ck1KO
- T+DCadD/VY+oOv36/F9ONoF7fqylyjvA+Z+ZYRAVW/OhHz58ZJ80TmSXuMEjIEqtv/Dw
- WnoMvKc4YJU5xLCHiYZBIbpg9Eo/SF92lABq1KK7kwxZ+Ui68Sp2IDyBceUPo8Jh82YL
- XeJ9nQfXD8btcPcNH8b70/Ui1sYAmgV7n5NI8wp5EqkRXhWlCpyoOEFnkMrVOPraGT7+
- /wqw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVuHq6aEUMgwtPVSf/R4AgAZ9NlFkbJ2y1x+OfkeaHWVB0KIY8sCK0l2hqS3+QaPXC1g2hBaPSzDmpR@nongnu.org
-X-Gm-Message-State: AOJu0YxnDVICVt+SWnXo334DFPL8Tt2yX9LOk8X0DYWsXpRAO7M58S4D
- D7m+7r37DEI/qb5VazwcxmaOivwIbIveLtNI9UOUVgNu4UqPCJYbiI5NCnU+EJg=
-X-Gm-Gg: ASbGncuhsjZhbWJ/iqfVSA4lUVTpmtYD3MaJJr5hHP4B1zbo7qYQmwo8stH9HOskdca
- tex0u6N+881PIhJbSf3sPFvXMtuexrA0hhn/xpdcaw5g1pv5i9RlQs4QlZRdPmJ9YO+Mey4w3of
- ZNmZ1zzZ3u9OnKusSb1nsuL8X1gexAgSErWNVUUrujQiPZdj8sFbEJ49AeTVpLtIals7EZmqwSf
- 3+MQFLrZbS8Fn/HtmHqOkzLaj1XWYMqKBHMqj6Z13oYi8He6Do6/+Jz2AikWHyZgDjFOCs=
-X-Google-Smtp-Source: AGHT+IFvUWO/UrML/hvKJS8pYiq5gIfxV+wvsc1nXj80x9wEbmLxReGjnKl/rxjx7IdZX+IoupLSCA==
-X-Received: by 2002:a05:6000:1446:b0:385:fae4:424e with SMTP id
- ffacd0b85a97d-38a22408624mr1880937f8f.52.1734690611702; 
- Fri, 20 Dec 2024 02:30:11 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e2f9sm3786282f8f.81.2024.12.20.02.30.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 02:30:11 -0800 (PST)
-Message-ID: <a7deb1d3-4189-4039-b388-381b3e2dc23c@linaro.org>
-Date: Fri, 20 Dec 2024 11:30:10 +0100
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1tOaKQ-00062G-Kc; Fri, 20 Dec 2024 05:33:54 -0500
+Received: from mail-gw02.astralinux.ru ([195.16.41.108])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <abelova@astralinux.ru>)
+ id 1tOaKO-0003Lc-Qu; Fri, 20 Dec 2024 05:33:54 -0500
+Received: from gca-msk-a-srv-ksmg01.astralinux.ru (localhost [127.0.0.1])
+ by mail-gw02.astralinux.ru (Postfix) with ESMTP id 3270C1F9E1;
+ Fri, 20 Dec 2024 13:33:45 +0300 (MSK)
+Received: from new-mail.astralinux.ru (gca-yc-ruca-srv-mail03.astralinux.ru
+ [10.177.185.108])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mail-gw02.astralinux.ru (Postfix) with ESMTPS;
+ Fri, 20 Dec 2024 13:33:42 +0300 (MSK)
+Received: from localhost.localdomain (unknown [10.198.51.228])
+ by new-mail.astralinux.ru (Postfix) with ESMTPA id 4YF3fr1rJcz1h04s;
+ Fri, 20 Dec 2024 13:33:39 +0300 (MSK)
+From: Anastasia Belova <abelova@astralinux.ru>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Anastasia Belova <abelova@astralinux.ru>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Subject: [PATCH] hw/arm_sysctl: fix extraxting 31th bit of val
+Date: Fri, 20 Dec 2024 13:33:17 +0300
+Message-ID: <20241220103320.83385-1-abelova@astralinux.ru>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] spapr: Generate random HASHPKEYR for spapr machines
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
-Cc: Daniel Henrique Barboza <danielhb413@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20241219034035.1826173-1-npiggin@gmail.com>
- <20241219034035.1826173-4-npiggin@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20241219034035.1826173-4-npiggin@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-KSMG-AntiPhishing: NotDetected
+X-KSMG-AntiSpam-Auth: dkim=none
+X-KSMG-AntiSpam-Envelope-From: abelova@astralinux.ru
+X-KSMG-AntiSpam-Info: LuaCore: 49 0.3.49
+ 28b3b64a43732373258a371bd1554adb2caa23cb,
+ {Tracking_from_domain_doesnt_match_to}, astralinux.ru:7.1.1;
+ new-mail.astralinux.ru:7.1.1; 127.0.0.199:7.1.2;
+ d41d8cd98f00b204e9800998ecf8427e.com:7.1.1, FromAlignment: s
+X-KSMG-AntiSpam-Interceptor-Info: scan successful
+X-KSMG-AntiSpam-Lua-Profiles: 189970 [Dec 20 2024]
+X-KSMG-AntiSpam-Method: none
+X-KSMG-AntiSpam-Rate: 0
+X-KSMG-AntiSpam-Status: not_detected
+X-KSMG-AntiSpam-Version: 6.1.1.7
+X-KSMG-AntiVirus: Kaspersky Secure Mail Gateway, version 2.1.0.7854,
+ bases: 2024/12/20 08:31:00 #26907965
+X-KSMG-AntiVirus-Status: NotDetected, skipped
+X-KSMG-LinksScanning: NotDetected
+X-KSMG-Message-Action: skipped
+X-KSMG-Rule-ID: 1
+Received-SPF: pass client-ip=195.16.41.108; envelope-from=abelova@astralinux.ru;
+ helo=mail-gw02.astralinux.ru
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,19 +84,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/12/24 04:40, Nicholas Piggin wrote:
-> The hypervisor is expected to create a value for the HASHPKEY SPR for
-> each partition. Currently it uses zero for all partitions, use a
-> random number instead, which in theory might make kernel ROP protection
-> more secure.
-> 
-> Signed-of-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->   include/hw/ppc/spapr.h  | 1 +
->   hw/ppc/spapr.c          | 3 +++
->   hw/ppc/spapr_cpu_core.c | 2 ++
->   3 files changed, 6 insertions(+)
+1 << 31 is casted to uint64_t while bitwise and with val.
+So this value may become 0xffffffff80000000 but only
+31th "start" bit is required.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+---
+ hw/misc/arm_sysctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/misc/arm_sysctl.c b/hw/misc/arm_sysctl.c
+index 69e379fa10..ce8be44b6e 100644
+--- a/hw/misc/arm_sysctl.c
++++ b/hw/misc/arm_sysctl.c
+@@ -520,7 +520,7 @@ static void arm_sysctl_write(void *opaque, hwaddr offset,
+          * as zero.
+          */
+         s->sys_cfgctrl = val & ~((3 << 18) | (1 << 31));
+-        if (val & (1 << 31)) {
++        if (val & (1ULL << 31)) {
+             /* Start bit set -- actually do something */
+             unsigned int dcc = extract32(s->sys_cfgctrl, 26, 4);
+             unsigned int function = extract32(s->sys_cfgctrl, 20, 6);
+-- 
+2.47.0
 
 
