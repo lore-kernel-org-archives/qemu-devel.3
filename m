@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B28BE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:17:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4833CE7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:17:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOffe-0005oU-UI; Fri, 20 Dec 2024 11:16:10 -0500
+	id 1tOfgc-0007AW-6p; Fri, 20 Dec 2024 11:17:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffV-0005mt-6P
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:01 -0500
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgZ-0006r7-6R
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:07 -0500
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffT-0006KG-J3
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:00 -0500
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-385e3621518so1145823f8f.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:15:59 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgW-0007ld-Tp
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:06 -0500
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so15598605e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711358; x=1735316158; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711423; x=1735316223; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=seqdfG2PRiYYURL9Ss7VXuVcjxxxymFItOGOa4qRTio=;
- b=Wp0HY9J+vSUe+LDfFTbNLMusngbaqxNJr8ynSbPHDVZ4zD50VvlwUV8ypxjrJfGtI6
- GUdVtS1jPmHt4j0QS17wJnqqLRxQXyV35iPy7cYMJRMWYhn9uY03U9d1Gpg7RqG53Jb6
- mMHv16wNE+E+I17E2cs218Z8INveZK66ACBoVB5of/MDCgcSMiFtoGeyLTK4uf90pNik
- mfWG1LkCWaFE8zjOuwk92ZN9z27FfQrgJTPdn1uE0+3hrpsmQXwNUW3gIXe3gafy0znd
- +CT93H8ao+8SH7RcapSk8LCyDYjGvgCuju9z4pj2nMibOKCrDDN5O4HbQCoPNSRRTBjL
- uMXA==
+ bh=5bc8CBnaM1oPkkMtIF7NNuH0SHv+cE5U0NdgeR9oFnE=;
+ b=bXFm1qG8k1Yg3fpS24cjbKQYiCiK0Fof/47EqDryQ+1LqomirQX+MY5oBXuJQBo1CK
+ GXU9E6ubsX0z6u9zL6X5zvH83Gg8LryjD9CJNKAGthKOTcbXBTuX/c/BHC41MhAa1WZC
+ OFH2EZHv7qnZkc/hn3f0VDJxR+nRGoJENP9Y0T4NsGn1m8Aqf0iv4y3OZGj9ttW1Aqgn
+ XLWwlXTvScQQDLtwrsMrLqcQz1zU7oPHRmG7eO9JO62LX8+dOeJZy5D/fDOclp0cB538
+ XcnGpLXh2jhwTTKCSv/UwqzHPT5G8bLvExMTHq6OeWUADaN1gDdfUypVtW+D0lz1oeKj
+ p60g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711358; x=1735316158;
+ d=1e100.net; s=20230601; t=1734711423; x=1735316223;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=seqdfG2PRiYYURL9Ss7VXuVcjxxxymFItOGOa4qRTio=;
- b=F8Szrfnn8e6Hqi+EcnpKdnzBlgSzMVYm+2C0D1Byoon1W4MG0rinRhI6zAZebRUS4o
- EY9LjDKZgDBsMH2xH84PlPJoonnRF0j93Z/33h8FfpmDWycnW6N38PHyg8PbhTXFulmx
- v8ZIC/J7dDZyibdvpggG4SKMqcjPVRHqVdVLFCT2Kkfyyy6bxd939HpW0A+zRUpJ3xtu
- 8aqsZH0Nm6APcNw+DKGtx5hwftidcwT05qFedk9/Wq8MWDyu+OAMvauJwKulZH1imX8D
- gEl6U14Y1JZsh4Kf9+1Wf3pkKHZbnK0bBrkU0PK04aCZr0CFeFfluGJkJcaHfQj+fzz/
- wXkw==
-X-Gm-Message-State: AOJu0YwJb3//PsIPTjzkIbZgPSI2DnKCLFHdeJnpmhEhwYtUabhkcBMr
- kXAjiTjj9XQnobeMu2RgM8cJhUKxo0G84m2THGW8pqllkSLPi/zJigZ/JFxy+NhPGba5qcu/z0S
- l
-X-Gm-Gg: ASbGncuNLJ/qVfOCXhPEc6YxBomN3Mfv7mqjfLfeXQa2r7AfdQ+D+BGcUNaXZMhr19g
- dP9oDw9tsUWgmk4xfx06GOYzyUEDnsfA8VuhBIN9LhE8UL7XjgLLhCj/ypShGv/CruwR/9kkiXC
- EfzN3lSUOnZZctc0Ax33tYKPGM4eMuzmfzHHjvztJi/H2oUVPzIP7voduLpiVxkPiNLv3ymnj47
- M6wG1SdPyAgeFU17fj1qHEsh9UMER+gjjkJRHKdKaVuEn4mS85/WKtBN4FgJkB92a8tyvxU05w=
-X-Google-Smtp-Source: AGHT+IFxNfgU8oPaYRzJj1u4rvYk68TNUJmEtwws96JJ2Kle3hRuTZ3+rlI6K997wz4j6/FpkNicSw==
-X-Received: by 2002:a5d:6da1:0:b0:385:f631:612 with SMTP id
- ffacd0b85a97d-38a221ea944mr3331975f8f.17.1734711357773; 
- Fri, 20 Dec 2024 08:15:57 -0800 (PST)
+ bh=5bc8CBnaM1oPkkMtIF7NNuH0SHv+cE5U0NdgeR9oFnE=;
+ b=g4saONcJHD3N05Llfutz5rs3maMMvgx0ySfDPmgZdoQJEcAV1H0ycP9z3LoKPrvJMq
+ vgxcWbQlda+O96++a/Szc9Vt6AxOsNBUCpXrDxyoJSKWRVKzeE6TxLWqMkfSSbOXPQ1M
+ myOtuTHtEkxMxhZoIOUsgPNxlAQaugJ4pule1HDmx81c8EgUmkZ4Z36J4hAfxj1MHyJJ
+ wmIf/+tABquWQKoAfDC849erWnn3AXlpTRdfp3hBOh6qztnePFQwopxPDXa2VW0xVsZT
+ Ymu3kd6MT+/QnAFzOKcdzYrqALC/Dw5FmXbXePX9QWd2MS8ROwZ9ATORC0YnrhkodUco
+ Q6wA==
+X-Gm-Message-State: AOJu0YxTPMgd0jqNlE+P+1vu+wj+MbkHDnC/fSgNP3WH41B450doGA2b
+ Oae4Bw97p19Onq0RB2yf+DuuIJ8b+h+g4BPQyC+nnQ0qeddpfG8PbSzAtdpDy25Xe1Mgkv1Ub70
+ V
+X-Gm-Gg: ASbGncsNtYTMS8s9gVXjOqcAbZfm790npCkl0n/JImxkKOtBCwXX7IOX2QoWxLrLTS0
+ Ze/73ZJZdz1qqAtY5O2y5H+ENKBHL0cevysuHtpBecZ+CIATygxHtC0Ioi8mcPKHSzsCuP8BbaT
+ m6LTCLaLqFSYmlg/qqtqaV7KXkbuGwmAiLOGu6UhGeJsP8XBsuGJTRkerUHEQgabmuNWs55ex2o
+ ig+cRRtpjCk8Xxai7pIblT+eiPo6d+FeQH/4PMdfOJ+Jd5a53oH3ymOd2KdH2NO6/gE1ZGAB3Q=
+X-Google-Smtp-Source: AGHT+IGGeO11V59UQGAcc+MlzF94h+HnyTGJ4FZfC+O6f47XqYOtth6uRX0QbyWR8vz9kInm/MCRzQ==
+X-Received: by 2002:a05:600c:46ce:b0:431:55c1:f440 with SMTP id
+ 5b1f17b1804b1-43668b7a2cfmr33935025e9.30.1734711423249; 
+ Fri, 20 Dec 2024 08:17:03 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8a8d3dsm4329112f8f.94.2024.12.20.08.15.57
+ 5b1f17b1804b1-43656b4471bsm83510675e9.44.2024.12.20.08.17.02
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:15:57 -0800 (PST)
+ Fri, 20 Dec 2024 08:17:02 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alexander Graf <graf@amazon.com>, Phil Dennis-Jordan <phil@philjordan.eu>,
- Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/59] hvf: arm: Ignore writes to CNTP_CTL_EL0
-Date: Fri, 20 Dec 2024 17:14:52 +0100
-Message-ID: <20241220161551.89317-2-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 15/59] accel/tcg: Have tlb_vaddr_to_host() use vaddr type
+Date: Fri, 20 Dec 2024 17:15:06 +0100
+Message-ID: <20241220161551.89317-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,55 +99,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Graf <graf@amazon.com>
+abi_ptr is expected to be used in user emulation.
+tlb_vaddr_to_host() uses it, but can be used in
+system emulation. Replace the type by 'vaddr' which
+is equivalent on user emulation but also works on
+system.
 
-MacOS unconditionally disables interrupts of the physical timer on boot
-and then continues to use the virtual one. We don't really want to support
-a full physical timer emulation, so let's just ignore those writes.
-
-Signed-off-by: Alexander Graf <graf@amazon.com>
-Signed-off-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Message-ID: <20230830161425.91946-5-graf@amazon.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241114011310.3615-13-philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ include/exec/cpu_ldst.h | 3 ++-
+ accel/tcg/cputlb.c      | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index ca7ea92774a..d75e504dcda 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -11,6 +11,7 @@
+diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
+index dac12bd8eb3..c1dd424dc1b 100644
+--- a/include/exec/cpu_ldst.h
++++ b/include/exec/cpu_ldst.h
+@@ -67,6 +67,7 @@
+ #endif
  
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/log.h"
+ #include "exec/memopidx.h"
++#include "exec/vaddr.h"
+ #include "exec/abi_ptr.h"
+ #include "exec/mmu-access-type.h"
+ #include "qemu/int128.h"
+@@ -375,7 +376,7 @@ static inline void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
+     return g2h(env_cpu(env), addr);
+ }
+ #else
+-void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
++void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
+                         MMUAccessType access_type, int mmu_idx);
+ #endif
  
- #include "sysemu/runstate.h"
- #include "sysemu/hvf.h"
-@@ -184,6 +185,7 @@ void hvf_arm_init_debug(void)
- #define SYSREG_OSLSR_EL1      SYSREG(2, 0, 1, 1, 4)
- #define SYSREG_OSDLR_EL1      SYSREG(2, 0, 1, 3, 4)
- #define SYSREG_CNTPCT_EL0     SYSREG(3, 3, 14, 0, 1)
-+#define SYSREG_CNTP_CTL_EL0   SYSREG(3, 3, 14, 2, 1)
- #define SYSREG_PMCR_EL0       SYSREG(3, 3, 9, 12, 0)
- #define SYSREG_PMUSERENR_EL0  SYSREG(3, 3, 9, 14, 0)
- #define SYSREG_PMCNTENSET_EL0 SYSREG(3, 3, 9, 12, 1)
-@@ -1620,6 +1622,13 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-     case SYSREG_OSLAR_EL1:
-         env->cp15.oslsr_el1 = val & 1;
-         return 0;
-+    case SYSREG_CNTP_CTL_EL0:
-+        /*
-+         * Guests should not rely on the physical counter, but macOS emits
-+         * disable writes to it. Let it do so, but ignore the requests.
-+         */
-+        qemu_log_mask(LOG_UNIMP, "Unsupported write to CNTP_CTL_EL0\n");
-+        return 0;
-     case SYSREG_OSDLR_EL1:
-         /* Dummy register */
-         return 0;
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index b76a4eac4e0..080cbcb34d0 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -1504,7 +1504,7 @@ void *probe_access(CPUArchState *env, vaddr addr, int size,
+     return host;
+ }
+ 
+-void *tlb_vaddr_to_host(CPUArchState *env, abi_ptr addr,
++void *tlb_vaddr_to_host(CPUArchState *env, vaddr addr,
+                         MMUAccessType access_type, int mmu_idx)
+ {
+     CPUTLBEntryFull *full;
 -- 
 2.47.1
 
