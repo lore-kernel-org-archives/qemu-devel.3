@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839E4E7718D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:32:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA5BE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkbT-0005t5-3V; Fri, 20 Dec 2024 16:32:11 -0500
+	id 1tOkbP-0005dv-KN; Fri, 20 Dec 2024 16:32:08 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkax-00052K-Gp
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:46 -0500
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkat-00051j-Rz
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:45 -0500
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkav-00076r-Hl
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:38 -0500
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-43626213fffso21636925e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:31:36 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkas-00075i-4S
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:35 -0500
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-434b3e32e9dso25419455e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:31:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734730295; x=1735335095; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734730290; x=1735335090; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XZhntQKj+2np0onfD6fTX3Bv/LcXZGFrE8GH8VrgUt8=;
- b=HXhuzy9po3Ob7mpGjGnypMbqH1ej1FR33bDcjlHH2qpQJeyEnAfuKpP/zc14QQC3Bf
- pAXgg+lh3oM2XAW/dOiQL7Hkt3cVyDEt2N6y1nX+PiPFSqG7FFJVlLRiHXSPdBlE/FRL
- DQpXkQATEWyXLMFhzZLjHki6slV7h+Ank3mLwtBmbeD4W+DY7CJxBo7oy+qwFzpRXFX9
- yaWSFPT5dKdAOQngh+VxPeDHWQZhV+gwtBxzoe7IY8uxURot70qVeNF8AUX1KSGT6gS/
- mdSz4CRXZS+YX8iVILQ+xh5IRyQBVQxgH/Etdr9mzymJ/3LgTGSYoFosRcrwTuJs6E5V
- 3Sew==
+ bh=L5uOCTnfptaobXEglt5cStPbt9vyDRGLhNNrWNvGhsU=;
+ b=U2/Br1r2hfUYi7lsGqJ1X9F2qPFqbG2+oATygC1AJTnOy124azbuHFRCSxjc7KPRtl
+ Adiqj9K+5+0KmR0bc0cLLKymBa7agjy/2yF2B/x7ts/U9NpwpxbgloMm07tFSJ80UGii
+ fThjcFTxNGu1JHZRTLWLNlm7NxnhoV/7NTN8tdEiz1iVM42BqFPx3lkenVR5Lo2IVZyY
+ F4x9ObbQ3veUsdNGvnmNSk1OUhyAt6w6zF4IrXXwYxPJcD4N12wG/Uif1IkEBMAol/Yo
+ eWxOSLjhNRLRP7buBa2kj7eHZOXP5nP0fFBggZHAsDJiCuTZNGuwOijw3Rzb1BiDPI+3
+ DSMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734730295; x=1735335095;
+ d=1e100.net; s=20230601; t=1734730290; x=1735335090;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XZhntQKj+2np0onfD6fTX3Bv/LcXZGFrE8GH8VrgUt8=;
- b=NlJQ3pyIAZOvAcfEPieKv0/Ii301l5AFO5KxkfBiaDzSPGqzrPs+NJVnkF830xHEy9
- ArDEWhiweZ1JVPDjn4zQ38CHoeFz/PcDUo3NzShpK3YShfioafHb4iNpdZgcn9xbdihZ
- EHifSC8rzsbVit5Qz8VZW30lQkl4yOOgWDMBBLGPbdmiVM7jQv00KUhq0Qr41nPkHK0r
- FXIIxqibJMH3IJjPkQaPxdJT/B5aNJvKEbX3HU/RuqCgZDv+ihv586qELS+hvbJ17fRH
- 8R/B2H+EwztsozVVJm91eRFi5c0pJz7pRSY1URwmXdraB6y8Eiu8zGwPT3QCwbbt5A0r
- 8U8w==
-X-Gm-Message-State: AOJu0YwwzqvrkzZWj7SpPv1yvGA6CVdo9AjpU4QjxOzA2T9FfPUYYG9m
- tWX+envS/hEs6rz8UmqFnVTqPy5p8GQCGe0K0U7nXtLSPxAlkAw/l8ybJDx/vHfySl8SvSyxKXk
- D
-X-Gm-Gg: ASbGncs2ezJSPIkDUWM9rzlj1/vOy5oA83uxZYz/GQG6SvuSf6jsn0LXFuNVXtl40/N
- v6PhXcW2/L+I+/j+otBlQIMaRXvU2LzpA1EeggQNrVOt0kSD5/4pxZh+riWHw0mI9E6FZKAlOd4
- IyTcZTLyxNm8fXgrWyl6d5nDJgpE6O2KULewBi4JpzZ28+DQnZleQKChERcxHnI3dMH8ImjWfu5
- L+Y5zSTdDXjW3EwOak9yRFJnn65ZXl4KVQ69HgVN85zJTk0TGbyfGHAL2mThExRirT9u4bz1qU=
-X-Google-Smtp-Source: AGHT+IEawfv1eDKEtcfbktjs2UsUWawD1Ka1LOi05Oo6TrO5ZY4shNl1aExzD8czo2IbsqtVfIVMHg==
-X-Received: by 2002:a05:600c:5850:b0:436:1b0b:2633 with SMTP id
- 5b1f17b1804b1-436699ffa24mr36251915e9.9.1734730294794; 
- Fri, 20 Dec 2024 13:31:34 -0800 (PST)
+ bh=L5uOCTnfptaobXEglt5cStPbt9vyDRGLhNNrWNvGhsU=;
+ b=Hjz99EAU+womYyMc4pE3axMVUQKhh+/J8onkxjX+0H4uTzbcHIZj3k2MFhgfgRYVSg
+ i7xDFgyk/Zy6CUxg5Cmn+VheJJeu6LoDwiXqMf07WHDEq3CFPf3PSLhfqnkdm/eoLVXO
+ ImDufbYQuAWK17uMBeeIJoQht39+Bqlfkq+cwzxtiA9KxRSTPyNBced4J6qTGFMRDm9s
+ K/gOiRcmm+GM9Xllqn/dualcohR4WxxC9nKuV1ic3TG9wJI/z1XLpXrXLyKoQeT7sCgF
+ bb5KC3R4UAerXlQDK4dIk/g1gtlgR2MeMaxX7hljzV47y5UpZLGmYLVi0klz+aArZaU7
+ H35g==
+X-Gm-Message-State: AOJu0Yz9h2EWFJyCX1nkB/WtyrVkZZaVzWCj7z++He2diguzihKem7F4
+ yzU8dcb3IlkeSaKebYDx81jj6628phAUTtvabJcVPEOphUkERKp/56iWqDoz32JpOw7xRYNLZKP
+ 1
+X-Gm-Gg: ASbGncuWE06cKMUGA8y9w2fDe5OL75g6S6rj6JSNHoWxF5kgNgE5YcJhUyhRXvozoYU
+ aC569sRsFlgmhaYj4Ebl3eTeaZQGUKO8B3gfr11pVSYEgCG6JL/QaB8xl88UvwLBM3s2SUW4BWh
+ yMpi4hfg2QCfWIPqNuUZQfR3tpUKGXySWGhaHWWmItgBsPdBEfkzXFkhInYNnw4uwoAtvj2uRkC
+ OKNU4rYoOr/jtHCavkizlie4eQdsGnPmauDCULYHlgBYgfosgqnajgzq6oerLO05sMCmh9N7wQ=
+X-Google-Smtp-Source: AGHT+IGnmY2UiuFVMNv3LgvgikWxiAkTFg3eCUgPM74DjA4Iv1VX7TaEdoezu2I885pay3fjAzfcYw==
+X-Received: by 2002:a05:600c:1c1a:b0:436:1b81:b65c with SMTP id
+ 5b1f17b1804b1-43668646aebmr44268215e9.15.1734730290287; 
+ Fri, 20 Dec 2024 13:31:30 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c89e2f9sm5048149f8f.81.2024.12.20.13.31.34
+ 5b1f17b1804b1-43661218f43sm56226125e9.19.2024.12.20.13.31.29
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 13:31:34 -0800 (PST)
+ Fri, 20 Dec 2024 13:31:29 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
@@ -69,17 +69,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 6/6] hw/ppc/epapr: Do not swap ePAPR magic value
-Date: Fri, 20 Dec 2024 22:31:03 +0100
-Message-ID: <20241220213103.6314-7-philmd@linaro.org>
+Subject: [PATCH v4 5/6] hw/ppc/spapr: Convert DIRTY_HPTE() macro as
+ hpte_set_dirty() method
+Date: Fri, 20 Dec 2024 22:31:02 +0100
+Message-ID: <20241220213103.6314-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220213103.6314-1-philmd@linaro.org>
 References: <20241220213103.6314-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,46 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The ePAPR magic value in $r6 doesn't need to be byte swapped.
+Convert DIRTY_HPTE() macro as hpte_set_dirty() method.
 
-See ePAPR-v1.1.pdf chapter 5.4.1 "Boot CPU Initial Register State"
-and the following mailing-list threads:
-https://lore.kernel.org/qemu-devel/CAFEAcA_NR4XW5DNL4nq7vnH4XRH5UWbhQCxuLyKqYk6_FCBrAA@mail.gmail.com/
-https://lore.kernel.org/qemu-devel/D6F93NM6OW2L.2FDO88L38PABR@gmail.com/
+sPAPR data structures including the hash page table are big-endian
+regardless of current CPU endian mode, so use the big-endian LD/ST
+API to access the hash PTEs.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/sam460ex.c     | 2 +-
- hw/ppc/virtex_ml507.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ hw/ppc/spapr.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index 78e2a46e753..db9c8f3fa6e 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -234,7 +234,7 @@ static void main_cpu_reset(void *opaque)
- 
-         /* Create a mapping for the kernel.  */
-         booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1 << 31);
--        env->gpr[6] = tswap32(EPAPR_MAGIC);
-+        env->gpr[6] = EPAPR_MAGIC;
-         env->gpr[7] = (16 * MiB) - 8; /* bi->ima_size; */
- 
-     } else {
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index f378e5c4a90..6197d31d88f 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -119,7 +119,7 @@ static void main_cpu_reset(void *opaque)
-     /* Create a mapping spanning the 32bit addr space. */
-     booke_set_tlb(&env->tlb.tlbe[0], 0, 0, 1U << 31);
-     booke_set_tlb(&env->tlb.tlbe[1], 0x80000000, 0x80000000, 1U << 31);
--    env->gpr[6] = tswap32(EPAPR_MAGIC);
-+    env->gpr[6] = EPAPR_MAGIC;
-     env->gpr[7] = bi->ima_size;
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index e68e8c320f4..d318ce2a350 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1422,7 +1422,11 @@ static void hpte_set_clean(SpaprMachineState *s, unsigned index)
+              ldq_be_p(hpte_get_ptr(s, index)) & ~HPTE64_V_HPTE_DIRTY);
  }
  
+-#define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
++static void hpte_set_dirty(SpaprMachineState *s, unsigned index)
++{
++    stq_be_p(hpte_get_ptr(s, index),
++             ldq_be_p(hpte_get_ptr(s, index)) | HPTE64_V_HPTE_DIRTY);
++}
+ 
+ /*
+  * Get the fd to access the kernel htab, re-opening it if necessary
+@@ -1633,7 +1637,7 @@ int spapr_reallocate_hpt(SpaprMachineState *spapr, int shift, Error **errp)
+         spapr->htab_shift = shift;
+ 
+         for (i = 0; i < size / HASH_PTE_SIZE_64; i++) {
+-            DIRTY_HPTE(hpte_get_ptr(spapr, i));
++            hpte_set_dirty(spapr, i);
+         }
+     }
+     /* We're setting up a hash table, so that means we're not radix */
 -- 
 2.47.1
 
