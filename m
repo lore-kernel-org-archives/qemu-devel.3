@@ -4,95 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4885E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 18:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E67E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 20:01:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOhoU-0007LJ-JX; Fri, 20 Dec 2024 13:33:26 -0500
+	id 1tOjAl-00030D-8x; Fri, 20 Dec 2024 15:00:31 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOhoS-0007L3-Rm
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 13:33:25 -0500
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOhoR-0000sg-46
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 13:33:24 -0500
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-7fd35b301bdso1951963a12.2
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 10:33:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734719601; x=1735324401; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/edbafS/HOfN8WEKRZvjqd3U/kpCLZf9r2iQpCZ+LMg=;
- b=qt5hUIWv3l0pXtkb8Z/nNnUbt9yesldvnz0JogzqYwngLXetX89r7aR5NY1anELTPt
- EPWyiUrPY9NEc+By31HLzEQmKIHBpOHJPLnvp+GI6OuXSEqu8Iks/1VDagGWs3PXYHrZ
- +En0UvNzMP4GG8XSGK2N45WKdqBI89WZLx1gOxSKJIfVbyq7qdamrjlTia/wp/diWsh5
- eFtl3/OiJqBy2DqiyJa49f+FBJyjXctoti+DbDPsR2HMK7l/5q7Gxsbhx6maySayJiJ6
- yau416jS8cvcWde+FLIdHX3ssvugOw6Iaf3lA+EJAdeyi0gk/+nNVWYuKchZImN40vbK
- yMcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734719601; x=1735324401;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=/edbafS/HOfN8WEKRZvjqd3U/kpCLZf9r2iQpCZ+LMg=;
- b=wh8PlquEor0dRDUlwQtmzUQcH7knvK/m9rfDxm4a9gC/jFtjzxSqB3DrTDv3nIBKcu
- /H1jGjA6/NUTGq+veTayfqtbWRNW1dc5U4qrknjhqBwEUuPZLr7jQoh1yH3C1CxgD409
- rJmmth81lDnpMBtIypeXXtP+KfweH7UwwBH3LxI4PrJ/6JiRFcWbFuqDdJ2z2q2TJ33d
- MC/kHf02q3I7VR/qOlMWqpmsVp9ZjajOCUBggSGHIEnHEdxa2r25I/8ZOco2HBdVa+dZ
- S+17f6gwYrsKIeQMJkXMJg8dsFGUVABp8OXfjyX+Z+0tIR+ntLjtD+FFlSv83TENEMmT
- Ee7A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWEhUIq3TQVVO04Q7ZT3Ec+TmR3kWM3cvHAgJilUkjElRT9YTfLt0KDU7jVy4bmC6o9GURX5ByhfwP4@nongnu.org
-X-Gm-Message-State: AOJu0Yw3Z3wjHqzq7XJCO2qoXn5uA0jZjD8W4TKikfZj4GvE812YObqB
- jH+q4rDgneAjv/7fVTpiJYZxtRm/rOGfhcE+9Guy6MXoXZIQzM+Gh2KOK/wsCBCtTCaHCPLJVt4
- l
-X-Gm-Gg: ASbGncvWoj35OLCqkGvZYYvqzCug4VFl/UYRvcj26d2WSaldWdW/qH+u6mQsq2parYQ
- Sqpjedw1f3klyhCKpfr5XJyjZSjiyv+/WDjJhu9xBQ7lgLYFG0WQX2PXyfKbJ7aRfaUa/lTfEws
- LsLRzCj1u0ZyXytPCZ7ebaomH/MpnFzcDpDQR5KaqTZou8ZFiNssSIYHCR+C7qqzJfiIJ2OAoRK
- gwHQgLHLK60lQWmv3Nb67aIXnNUsvCYcP14d40w8TLFaNr7qoX/iWg6aKQ/2iIRTsJb8A==
-X-Google-Smtp-Source: AGHT+IGgeV8Ceuf/Xvan+/Z55iABJGEC/HmQyLN+O5+TSZTg7Fq8xIdEjVeEty4oVVA9IYot1+ajMA==
-X-Received: by 2002:a17:90b:51c2:b0:2ee:9e06:7db0 with SMTP id
- 98e67ed59e1d1-2f452e1d3f9mr5992263a91.11.1734719600968; 
- Fri, 20 Dec 2024 10:33:20 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc96e933sm32209805ad.59.2024.12.20.10.33.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 10:33:20 -0800 (PST)
-Message-ID: <2cbb0e17-4799-4bcf-a39e-e9d50ea1e2df@linaro.org>
-Date: Fri, 20 Dec 2024 10:33:19 -0800
+ (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tOjAc-0002zl-Ae
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 15:00:29 -0500
+Received: from out-181.mta1.migadu.com ([95.215.58.181])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <git@zabka.it>) id 1tOjAY-0007YV-6h
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 15:00:21 -0500
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zabka.it; s=key1;
+ t=1734724814;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OjaYxAUwgyfdD+Xfgs2+sV3Nc5IIljcSjw6TPoGngUk=;
+ b=ppd+cplc+rST5LwoZ4zM1y9EZYuEef/b9LM9rEszolmeGuUzD9Iqu1K5dbDBVZwjGTriul
+ 81oPIdCMF/x27DCYylQovHAy9fHO6hjHLdtlYO0zaOv7qHTJRwZWFU5pdyFuw8j5xuPe/p
+ MsM8xwIqfcGC6IbBqzfg9kq8mLJB+Tc=
+From: Stefan Zabka <git@zabka.it>
+To: qemu-devel@nongnu.org
+Cc: Stefan Zabka <git@zabka.it>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH v2] physmem: allow cpu_memory_rw_debug to write to MMIO devices
+Date: Fri, 20 Dec 2024 20:49:41 +0100
+Message-ID: <20241220195923.314208-1-git@zabka.it>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Test assets not available anymore for
- tests/functional/test_rx_gdbsim.py
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
- Cleber Rosa <crosa@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-References: <5f571195-39b9-45e5-ba03-fd835afb5012@linaro.org>
- <b853ab30-fc7a-4e03-82da-0ed97fd4aa0b@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <b853ab30-fc7a-4e03-82da-0ed97fd4aa0b@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.181; envelope-from=git@zabka.it;
+ helo=out-181.mta1.migadu.com
+X-Spam_score_int: -22
+X-Spam_score: -2.3
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ URIBL_SBL_A=0.1 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,17 +64,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMjAvMjQgMDI6NTAsIFBoaWxpcHBlIE1hdGhpZXUtRGF1ZMOpIHdyb3RlOg0KPiBP
-biAxOS8xMi8yNCAyMDo0NywgUGllcnJpY2sgQm91dmllciB3cm90ZToNCj4+IEhpIGFsbCwN
-Cj4+DQo+PiBhc3NldHMgZm9yIHRlc3RzL2Z1bmN0aW9uYWwvdGVzdF9yeF9nZGJzaW0ucHkg
-YXJlIG5vdCBhdmFpbGFibGUgYW55bW9yZS4NCj4+DQo+PiBJdCBzZWVtcyB0aGF0IHRoZSBk
-aXJlY3RvcnkgImh0dHBzOi8vYWNjLmRsLm9zZG4uanAvdXNlcnMiIHZhbmlzaGVkIGZyb20N
-Cj4+IHRoZSB3ZWIsIGFuZCBpdCdzIG5vdCBhIHRlbXBvcmFyeSBpc3N1ZS4NCj4+IElmIHNv
-bWVvbmUgc3RpbGwgaGFzIHRob3NlIGFzc2V0cyBvbiB0aGVpciBsb2NhbCBjYWNoZSwgbWF5
-YmUgaXQncyBhDQo+PiBnb29kIHRpbWUgdG8gdXBsb2FkIHRoZW0gc29tZXdoZXJlIGVsc2Us
-IGFuZCB1cGRhdGUgdGhlIHRlc3QuDQo+IA0KPiBJIHBvc3RlZCBhIHBhdGNoIGZvciB0aGF0
-IDQgeWVhcnMgYWdvIGJ1dCBpdCBnb3QgbG9zdDoNCj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5v
-cmcvcWVtdS1kZXZlbC8yMDIwMDYzMDIwMjYzMS43MzQ1LTEtZjRidWdAYW1zYXQub3JnLw0K
-PiANCj4gSSdsbCByZXNwaW4sIHRoYW5rcyBmb3Igbm90aWNpbmcuDQoNClRoYW5rcyBQaGls
-aXBwZS4NCg==
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/213
+Signed-off-by: Stefan Zabka <git@zabka.it>
+---
+Addressed initial review by David Hildenbrand
+The other change made more sense to me, so I'd like to write a test
+to verify that an AddressSpace like
+0x00..0x0F MMIO Device A
+0x10..0x1F ROM
+0x20..0x2F MMIO Device B
+
+and a debug write from 0x00-0x2F still writes to MMIO Device B
+and that there isn't an early exit in address_space_rw
+when it encounters a ROM region.
+
+How would I go about doing that?
+---
+ system/physmem.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/system/physmem.c b/system/physmem.c
+index dc1db3a384..623f41ae06 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3573,12 +3573,13 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
+         if (l > len)
+             l = len;
+         phys_addr += (addr & ~TARGET_PAGE_MASK);
+-        if (is_write) {
+-            res = address_space_write_rom(cpu->cpu_ases[asidx].as, phys_addr,
+-                                          attrs, buf, l);
+-        } else {
+-            res = address_space_read(cpu->cpu_ases[asidx].as, phys_addr,
+-                                     attrs, buf, l);
++        res = address_space_rw(cpu->cpu_ases[asidx].as, phys_addr,
++                                   attrs, buf, l, is_write);
++        if (res != MEMTX_OK && is_write) {
++            /* Fallback since it might be a ROM region*/
++            /* TODO verify that this works as expected*/
++            res = address_space_write_rom(cpu->cpu_ases[asidx].as,
++                                          phys_addr, attrs, buf, l);
+         }
+         if (res != MEMTX_OK) {
+             return -1;
+-- 
+2.47.1
+
 
