@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45801E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB91EE7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaUD-00060p-FJ; Fri, 20 Dec 2024 05:44:01 -0500
+	id 1tOaU2-0005fh-85; Fri, 20 Dec 2024 05:43:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaU7-0005uR-Lu; Fri, 20 Dec 2024 05:43:57 -0500
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
+ id 1tOaTz-0005S0-CG; Fri, 20 Dec 2024 05:43:47 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaU5-0005O3-LS; Fri, 20 Dec 2024 05:43:54 -0500
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-7fd2ff40782so1534633a12.2; 
- Fri, 20 Dec 2024 02:43:52 -0800 (PST)
+ id 1tOaTx-0005NN-P3; Fri, 20 Dec 2024 05:43:47 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-218c80a97caso15009905ad.0; 
+ Fri, 20 Dec 2024 02:43:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734691431; x=1735296231; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734691424; x=1735296224; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3jvfp4tXxGdJYBXXPUHySvHV3oIx1k2wq60uhteeuWk=;
- b=ilzwcpYvP7PHwFaUEV+2hOuQJcL0mC5pKg1tSvxmt9ANkwUC8qhFuFT5Jh1+S8w/wU
- E3PC1+Kv/sCck1wKbbURk71AYlzn5PwhhpJHyPzFZNda2SPykj4PiUxfc0JTxv+ujFkI
- dgfxzVuTxHYMFtEQNGtobuSlXRdYmDaCBpPnHjBXCGCujt/d7e7/+dE3hVbOuGM4DaIi
- gC0nj32viyxI5+cN2MTYXK71z8EvgRzRlxthuZGLBSfi2TEZwEFhePVN25cs+2uMLrSh
- lK05ElngcrF/A5p39bHkdApIAZRWfsHQr888xRX3BT1iG6ZN7UrLvaehYZTMTt9uI3oP
- XKEg==
+ bh=NtU2WBbloNvmM8bd+xiOwv1bzHXwrM/Uep66/BPP7j4=;
+ b=Hq9XZFYIUC4FA33TgDU3u1itPYVFhmq+O84K1QmLo4infpJrmdOXv5TRl0ZkERFc+R
+ bPAXRg94Y+CY5onocxXzUGeglmjSdoqHDfm01DTDwDGeI/2GnPY8Alq4D3ef9xDk1nyx
+ nm0yFl3UOHiAKGJ0jFLkH5AUHVyDuZa3xzl5SGjHHEAXYIZsNI5fp9OYKtwvqRUQ2tRY
+ 8qj4rORZur3WCMnZRTEsCZN6f266MxD6doz38ld1aXsYW4I6C1ZV4BHTmqRYCPcXuXk6
+ mCCS1AytPWdMXo2O+SYW/ftdPGRSXLUHRDdZupCRGwhzujMXa+VedA0ErMfYX2LJiCAt
+ B4Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691431; x=1735296231;
+ d=1e100.net; s=20230601; t=1734691424; x=1735296224;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3jvfp4tXxGdJYBXXPUHySvHV3oIx1k2wq60uhteeuWk=;
- b=GjxA5yaEBU86nKULlObVoWWTGNBzWWdclGks6FusRQRVWuGXCOaIoJaKNOgyTZcIfs
- tmJRdNKhDiknAjoLgVxcY9VS51YR5aTRcCY6/HGoPId8vxa7xecBgWJgVZJOu1TyJbQF
- xzXlaD8cYFPyOl/uIIzFEL7Piy8+VbbySIv6GWzIFE3VMMNr2M23+6HBhYoCcMJDk37Q
- 5N5mEtKH56Ib1kC2WqCEzGLq+0atW3SQuk0YJn8EXMcGhvrey9cpgFZmpogDpxnZxQ4o
- kSDVSYEtUwhK3ovLSWuuSIx4SjEsASIDt/5LwvYWyradnvjK+LuFA3rBJyiTMRyYap/I
- 87+g==
+ bh=NtU2WBbloNvmM8bd+xiOwv1bzHXwrM/Uep66/BPP7j4=;
+ b=J9lWTnI9ZmN8/k/w7SwKKlMwlApMdiaOTe2C1x9zpNptBNb6me10X96PSw8B2Snr8o
+ +S+aX8E8EIAGgdqAW8rmBkMtqxQx6x3LNCIW/bNPy/pKX63hqtsqF5QoORQgKhw3z505
+ bM9FVCyp2ZlpHccRdUKeO5Z30zfJBdsxExc0KZQjLdWHxY/ahkkpSdHS7DlRVKuIUBtE
+ YbPTumFufw1fal2dqqqfd1Cx89ELF9z7PbKRERw/ciB5iMCkM/CPt49bdlt7u116vxsU
+ SHJSlobzaTzZJjTendmKvROse6jQ0Mh1evEO/zvBCqx1Ur3jjC6BEkZ54nEkgtx3niAJ
+ tpoA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX5FdI5SNQoh8IYCHJS11lL3Z6LnA102tEAC5jIRJwJLtCYyjCDBzUfkYneLzlXQtJwW4UOu+pheUEn@nongnu.org
-X-Gm-Message-State: AOJu0Yyp2dnloc24F13PcT1WWWepcVCvBs0fHEwhwa629IDYTYl2slsE
- kzIh1b74O9qY07yGmL+hgf77k5V4d9SkQ+xXjRw96G1ylVRqPIwFEnQQ/A==
-X-Gm-Gg: ASbGncsghU5DStpgyGGZGgjPIDkVGxg+dM0qckZACRvVNUPpJJkAhmFu7PilOM3GyB3
- jj0Y37YbutMPSATqb0k6xNKBoHzh7vMewDXCZSNiAAbQBZXQSEjHjZTljnFUAKpvfd2vUdeOmjl
- DYkUScoCiwCy+yjMpfGNiIojIb8doPrc4GLw57WD/tIk0ylUd28Sac9Ed2MJTi7eIS5aH4/q+Lr
- jonoxzSRR7bGE5wEtqI6q9RBbYVasikmsI6bWKc4kMjm2GJsag12A3BUEf2gmok5Ap4eYpwfqXY
- 3Gx83c0WRw==
-X-Google-Smtp-Source: AGHT+IEBXh3mgydDemWGOsIGc+458hM4rBbHR3qnIMTvhJO7NHHHPbbS2Zxl60i2wmMi7Nekxhe8EQ==
-X-Received: by 2002:a17:90b:2f07:b0:2ea:9ccb:d1f4 with SMTP id
- 98e67ed59e1d1-2f452d32b5fmr4561997a91.0.1734691431583; 
- Fri, 20 Dec 2024 02:43:51 -0800 (PST)
+ AJvYcCUIPOrcfl6SSDNavs/947rO5OqTz8boCFabZfnyNOw84gcDsMeNMwCTegSWXy4CQ+GH3tUolASaKDw1@nongnu.org
+X-Gm-Message-State: AOJu0Yz5AZqXvKIDix1XkAiaTsWuQhZZJDoWIGWO28aXWndDP4MVZDQ9
+ 7p1aH2R/NPBKA7LMN8mATvuVNbeX5ae2/mWoGEPkPehcKLr/KuawKX3fBA==
+X-Gm-Gg: ASbGncuqOjV+/1NXz7dikhuwbyHjDTP1NpdKt0gvRwADJ8zUXO/ndbi1tTLi+KcJnCb
+ G+1IEZG0r0LCjU8aq89us0Xb4Fz98D7CRXbrFCfBpZPf20ITCUBBnotLEUt2dqD1G8aHmd9SWON
+ 4UFOb4v9Umi4fWUsRl48zWf+yFMB+/JG27DGVVTFTtsi7U2XJ6qlmfq8SAhJtBMzDgfGDMUQC30
+ YUC1HZM5gaNLHkP8ILmeTlotZDVssGBJF/FuF76zPnLS4+6nzCeEe74UO6JkA8zRN+OGIaPXKef
+ Kjn79C0p+A==
+X-Google-Smtp-Source: AGHT+IGIxTht2CABRku1kWFFweNlzAyHnUbbd/4JeiRH49/oGaO48MkU6bHK00GL5ZI2SpNsSCz/MA==
+X-Received: by 2002:a17:902:d587:b0:216:5af7:eb2a with SMTP id
+ d9443c01a7336-219e6ebb70bmr37150545ad.33.1734691423848; 
+ Fri, 20 Dec 2024 02:43:43 -0800 (PST)
 Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.43.44
+ 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.43.36
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Dec 2024 02:43:51 -0800 (PST)
+ Fri, 20 Dec 2024 02:43:43 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -78,16 +78,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 10/17] qmp: Convert to new bh API
-Date: Fri, 20 Dec 2024 20:42:12 +1000
-Message-ID: <20241220104220.2007786-11-npiggin@gmail.com>
+Subject: [PATCH 09/17] monitor: Convert to new bh API
+Date: Fri, 20 Dec 2024 20:42:11 +1000
+Message-ID: <20241220104220.2007786-10-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241220104220.2007786-1-npiggin@gmail.com>
 References: <20241220104220.2007786-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=npiggin@gmail.com; helo=mail-pg1-x533.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,30 +114,45 @@ Convert aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(),
 which can specify the clock type, making it compatible with
 record-replay.
 
-qmp dispatching does not affect target machine state, so it should use
-QEMU_CLOCK_REALTIME so it is not recorded and replayed.
+Monitor creation and input does not affect target machine state, so it
+should use QEMU_CLOCK_REALTIME so it is not recorded and replayed.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- qapi/qmp-dispatch.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ monitor/monitor.c | 3 ++-
+ monitor/qmp.c     | 5 +++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/qapi/qmp-dispatch.c b/qapi/qmp-dispatch.c
-index 176b549473c..4a07d75a856 100644
---- a/qapi/qmp-dispatch.c
-+++ b/qapi/qmp-dispatch.c
-@@ -254,8 +254,9 @@ QDict *coroutine_mixed_fn qmp_dispatch(const QmpCommandList *cmds, QObject *requ
-             .errp       = &err,
-             .co         = qemu_coroutine_self(),
-         };
--        aio_bh_schedule_oneshot(iohandler_get_aio_context(), do_qmp_dispatch_bh,
--                                &data);
-+        aio_bh_schedule_oneshot_event(iohandler_get_aio_context(),
-+                                      do_qmp_dispatch_bh, &data,
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index 56786c0ccc7..accdee88b51 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -583,7 +583,8 @@ void monitor_resume(Monitor *mon)
+             ctx = qemu_get_aio_context();
+         }
+ 
+-        aio_bh_schedule_oneshot(ctx, monitor_accept_input, mon);
++        aio_bh_schedule_oneshot_event(ctx, monitor_accept_input, mon,
 +                                      QEMU_CLOCK_REALTIME);
-         qemu_coroutine_yield();
      }
-     qobject_unref(args);
+ 
+     trace_monitor_suspend(mon, -1);
+diff --git a/monitor/qmp.c b/monitor/qmp.c
+index 5e538f34c0d..c6fec04860f 100644
+--- a/monitor/qmp.c
++++ b/monitor/qmp.c
+@@ -541,8 +541,9 @@ void monitor_init_qmp(Chardev *chr, bool pretty, Error **errp)
+          * since chardev might be running in the monitor I/O
+          * thread.  Schedule a bottom half.
+          */
+-        aio_bh_schedule_oneshot(iothread_get_aio_context(mon_iothread),
+-                                monitor_qmp_setup_handlers_bh, mon);
++        aio_bh_schedule_oneshot_event(iothread_get_aio_context(mon_iothread),
++                                      monitor_qmp_setup_handlers_bh, mon,
++                                      QEMU_CLOCK_REALTIME);
+         /* The bottom half will add @mon to @mon_list */
+     } else {
+         qemu_chr_fe_set_handlers(&mon->common.chr, monitor_can_read,
 -- 
 2.45.2
 
