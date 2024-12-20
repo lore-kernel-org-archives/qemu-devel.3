@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB897E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:26:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ACB6E7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfiP-0001eL-4q; Fri, 20 Dec 2024 11:19:01 -0500
+	id 1tOfiP-0001fK-J6; Fri, 20 Dec 2024 11:19:02 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhE-0007s5-1e
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:50 -0500
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhr-0000d5-SX
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:29 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhC-00084S-EB
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:47 -0500
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4361dc6322fso14652195e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhq-0008A8-4P
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:27 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3862a921123so1493935f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:18:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711463; x=1735316263; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711504; x=1735316304; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=D6KbqFY6LsYqJaU3hcXj+0TFYmabAztkE0zO0OF00So=;
- b=WhIJX2Vt7EKAZSjKapc3o1ynqsKk4ivJH9F62vf6SGzx/od2/o4rZl5aQLUaLHUjVD
- uh9O12WUCVKpe8I/4uiWJWunxAZvaYE7Urgc35KtrCZuzwpGTeYMRz6t3EuBAsf5w4vN
- twEwRou1CwiQyHsZCX7QUbJK2iAjobff7K3ncUARo4T9EQWSe/LNxH3FAcJpfA4+ljem
- 5A0ZHydk/lj4+rfB97oP8gTNEGRMduG4yns2nYyzbDm6PoSf01FBfGmiH1UiYujMht+a
- HjE7qilsUqM2nDbAzzneFoQdHcHKEJHU4f4XrwVfsMvfreJwMz5VXhiEAke8HMmifOWH
- +1+Q==
+ bh=tifxFPID9bghi7hq01IeGacsDjpsOnZMZbgcEaKOJwE=;
+ b=osKZFulOeuNpwsLcCrB7SLydz7WacRnuV/zpSlAhzHnC5PyWiC38sbKMN5RPI2K7uf
+ DbAoP7QawN69grfcWM7DhcSvpKqCL1XbF1JvRrr1ojLbqB5WCyGlhn/GY3sARTLSGsOL
+ IFRcLdzm3uQTCwawpbxLw951Hm7PDafK6+7aoGuqNUxto0Z6EH60eWAVF1fZPzDuqPey
+ Lzxhig/Dm7ZCBflEYxq/M4GJDUUI34UBO5zHGAorPygNLvdFUDT1iwJAnOh1AMuUycXP
+ syKfhgW41jzN6RhS3uZg2obl1yOUluQ0EKAlGScnguU0UH66So43CdmLfQt37hANBP2b
+ UWCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711463; x=1735316263;
+ d=1e100.net; s=20230601; t=1734711504; x=1735316304;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D6KbqFY6LsYqJaU3hcXj+0TFYmabAztkE0zO0OF00So=;
- b=kRfKq9MUm9VmETfVkDUn+UC/9Z8d4Ko//usTUrfyqPc3P/YQOW57y7OpaWE9PhZfI1
- yKfGtvbO9OBr0ngpmlmJKX6dqfMfuwC3rQU92WDZwuQ5STTdlzhPEkzZC982th4vnqS0
- dnTpNfRRO31FOvfgUZCL+rRVl5dBOMjqd6O8TyG8nDXhbKvbDmCZ9E/w5G+yOxfCZSID
- mYwPKYY3zGz1G0PlqmKtoRguDs0yIB4ZzbPkf+KqHtAfxZp5fV0gal+kQIHM4M0VVJDd
- 1X5oKtPZ8Be8vWM9t8tiVyZijLBXqECNDLxz9Jvrlp3eI1Tr7par27OTQfGmWs6gpp9q
- GmhQ==
-X-Gm-Message-State: AOJu0YzOwtZVvLezP7wj9nwMEfpUzK2a9A1jOTUBsV/SeDFo0ss1h/1y
- /1JLP0j4DqXlttCEDCOEeKHnDb10IItByPMh+5gsUShpoaXrz4AAT3rqpmGPgPytm2gqdUoUUAs
- o
-X-Gm-Gg: ASbGncvclKMAXjlssBtkDSB7bJxDPUOtKCZ9dyvXLCMIeIu2sUP6H0tVJzJV5aVdEn1
- LaYXLOWhLr1Ry9pZj5UBlZrp/7Z1aLkMhYGsFezmlUQxNWoNt3jR6bxs6gb1USzkr/iVyn70VAA
- jOz2QZQVHeGglSNxuwD3E/cOaSU+6mQ5yTvv8yjmVk5TIsVkkQZiQkLtcrZJMEDSfgwhb8TETAw
- gfvzVdIbgsrTlLLgc59Kssb485PK5g1pajHs8nwM/3meJGN6l8er7AByKDSj4TtsTlldwGPFrA=
-X-Google-Smtp-Source: AGHT+IHgAAv1LqUcAHKoGTELOSTBMuK/dno/ZZduJWw2vxvnM9dIj20slO5UR2XAoyqP3UeSR/M50w==
-X-Received: by 2002:a05:6000:1785:b0:385:fd07:85f8 with SMTP id
- ffacd0b85a97d-38a222003abmr3310040f8f.29.1734711463337; 
- Fri, 20 Dec 2024 08:17:43 -0800 (PST)
+ bh=tifxFPID9bghi7hq01IeGacsDjpsOnZMZbgcEaKOJwE=;
+ b=djwxndJOk45j64WgI1a2Yu2Uni+aTEQqxuLeXgPbomxeWgpuOKL+Uo1qTw1RNI0dYO
+ wC1/2Cw5IVzNyWs4VzIGIKydKM7In1vYnUyynH/Eus8tXV+4VqvX2swNg1TxM1O2yTcM
+ 8NeAJN3wLbMr5TnHpGTYyCQL8MiS1FRRqJfn58E+ALQpOaVDRrYaKUsQiYXO+HI08DZV
+ odviombrGa53FfbIDCVbhgZ8UBSSnQSmuN1a6QjxIcW5b4pPvFZ6SoOezC98UDwG02zO
+ Sf/Djca7f3imcSLR1utZb//sMZOC7wI+cmlGTtiUOC9+JUkwNltLi4zlNKQ2aB2+bd3Y
+ M73A==
+X-Gm-Message-State: AOJu0YzZysahc4+TZyEqwvlKm8z2eacXY0Agq6TwlRUJ3ERznriP5/5s
+ gUeU9zUbNncYta9lntNjDzYa8Fpd/qFjip3fa4eXnSe45DUL2F4hzsed4fh81AFe3MTKYlZKqaG
+ l
+X-Gm-Gg: ASbGncvSjTb60ql8qylTO5LrSi0vcC8SOA1rEjE3hwoXd8bgMCq5vPB8KUKVQEFFOlr
+ CbrjzKKd3gB6oLWCfCL4Jw5DuJ6O+PLwV28vSZPGubuoTNisAk6BQFgXFEGkc25+bG90RiM8B/R
+ CehlM+63RnXwBQn98Q3r8YAz540BGs0pdSnCXkWD2tMzE10xzvY/X6Jam2Op6w7AcWjZoTgEk+n
+ 5zu+jIbezyU7lHXXWj88tOd4uL6Sbd5dEQQMt0XJTsVaBG4mJTmMi8y1Y0D+zsSlUH3OILDyN0=
+X-Google-Smtp-Source: AGHT+IEhNsiUTNOMqkuYqQsbDql0+svXU9BGupJUsxZRmHyUuPSV2y0GVvhV01a5sl6WBwZsQ9Yo7g==
+X-Received: by 2002:a5d:59af:0:b0:385:deca:f7cf with SMTP id
+ ffacd0b85a97d-38a221e1ff0mr3295515f8f.8.1734711504479; 
+ Fri, 20 Dec 2024 08:18:24 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656b119d7sm83239195e9.20.2024.12.20.08.17.42
+ ffacd0b85a97d-38a1c847513sm4416421f8f.49.2024.12.20.08.18.23
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:17:42 -0800 (PST)
+ Fri, 20 Dec 2024 08:18:24 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 24/59] include: Include missing 'qemu/clang-tsa.h' header
-Date: Fri, 20 Dec 2024 17:15:15 +0100
-Message-ID: <20241220161551.89317-25-philmd@linaro.org>
+Subject: [PULL 33/59] accel/tcg: Move user-related declarations out of
+ 'exec/cpu-all.h' (1/4)
+Date: Fri, 20 Dec 2024 17:15:24 +0100
+Message-ID: <20241220161551.89317-34-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,91 +100,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The next commit will remove "qemu/clang-tsa.h" of "exec/exec-all.h",
-however the following files indirectly include it:
-
-  $ git grep -L qemu/clang-tsa.h $(git grep -wl TSA_NO_TSA)
-  block/create.c
-  include/block/block_int-common.h
-  tests/unit/test-bdrv-drain.c
-  tests/unit/test-block-iothread.c
-  util/qemu-thread-posix.c
-
-Explicitly include it so we can process with the removal in the
-next commit.
+Move declarations related to page protection under user
+emulation from "exec/cpu-all.h" to "user/page-protection.h".
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212185341.2857-4-philmd@linaro.org>
+Message-Id: <20241212185341.2857-12-philmd@linaro.org>
 ---
- include/block/block_int-common.h | 1 +
- block/create.c                   | 1 +
- tests/unit/test-bdrv-drain.c     | 1 +
- tests/unit/test-block-iothread.c | 1 +
- util/qemu-thread-posix.c         | 1 +
- 5 files changed, 5 insertions(+)
+ include/exec/cpu-all.h         | 5 -----
+ include/user/page-protection.h | 8 ++++++++
+ bsd-user/main.c                | 1 +
+ bsd-user/mmap.c                | 1 +
+ linux-user/main.c              | 1 +
+ linux-user/mmap.c              | 1 +
+ linux-user/syscall.c           | 1 +
+ 7 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
-index ebb4e56a503..bb91a0f62fa 100644
---- a/include/block/block_int-common.h
-+++ b/include/block/block_int-common.h
-@@ -28,6 +28,7 @@
- #include "block/block-common.h"
- #include "block/block-global-state.h"
- #include "block/snapshot.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/iov.h"
- #include "qemu/rcu.h"
- #include "qemu/stats64.h"
-diff --git a/block/create.c b/block/create.c
-index 6b23a216753..72abafb4c12 100644
---- a/block/create.c
-+++ b/block/create.c
-@@ -24,6 +24,7 @@
+diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
+index 1c8e0446d06..3d97323893b 100644
+--- a/include/exec/cpu-all.h
++++ b/include/exec/cpu-all.h
+@@ -127,11 +127,6 @@ extern const TargetPageBits target_page;
+ #define TARGET_PAGE_ALIGN(addr) ROUND_UP((addr), TARGET_PAGE_SIZE)
  
+ #if defined(CONFIG_USER_ONLY)
+-void page_dump(FILE *f);
+-
+-typedef int (*walk_memory_regions_fn)(void *, target_ulong,
+-                                      target_ulong, unsigned long);
+-int walk_memory_regions(void *, walk_memory_regions_fn);
+ 
+ int page_get_flags(target_ulong address);
+ 
+diff --git a/include/user/page-protection.h b/include/user/page-protection.h
+index 448c7a03449..ea11cf9e328 100644
+--- a/include/user/page-protection.h
++++ b/include/user/page-protection.h
+@@ -12,9 +12,17 @@
+ #error Cannot include this header from system emulation
+ #endif
+ 
++#include "cpu-param.h"
++#include "exec/target_long.h"
+ #include "exec/translation-block.h"
+ 
+ void page_protect(tb_page_addr_t page_addr);
+ int page_unprotect(tb_page_addr_t address, uintptr_t pc);
++typedef int (*walk_memory_regions_fn)(void *, target_ulong,
++                                      target_ulong, unsigned long);
++
++int walk_memory_regions(void *, walk_memory_regions_fn);
++
++void page_dump(FILE *f);
+ 
+ #endif
+diff --git a/bsd-user/main.c b/bsd-user/main.c
+index 61ca73c4781..0a5bc578365 100644
+--- a/bsd-user/main.c
++++ b/bsd-user/main.c
+@@ -38,6 +38,7 @@
+ #include "qemu/plugin.h"
+ #include "exec/exec-all.h"
+ #include "user/guest-base.h"
++#include "user/page-protection.h"
+ #include "tcg/startup.h"
+ #include "qemu/timer.h"
+ #include "qemu/envlist.h"
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 775e905960b..346f2cefd32 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -18,6 +18,7 @@
+  */
  #include "qemu/osdep.h"
- #include "block/block_int.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/job.h"
- #include "qemu/main-loop.h"
- #include "qapi/qapi-commands-block-core.h"
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 7410e6f3528..98ad89b390c 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -28,6 +28,7 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qemu/main-loop.h"
-+#include "qemu/clang-tsa.h"
- #include "iothread.h"
+ #include "exec/page-protection.h"
++#include "user/page-protection.h"
  
- static QemuEvent done_event;
-diff --git a/tests/unit/test-block-iothread.c b/tests/unit/test-block-iothread.c
-index 26a6c051758..1de04a8a13d 100644
---- a/tests/unit/test-block-iothread.c
-+++ b/tests/unit/test-block-iothread.c
-@@ -29,6 +29,7 @@
- #include "system/block-backend.h"
- #include "qapi/error.h"
- #include "qapi/qmp/qdict.h"
-+#include "qemu/clang-tsa.h"
- #include "qemu/main-loop.h"
- #include "iothread.h"
+ #include "qemu.h"
  
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index b2e26e21205..6fff4162ac6 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -17,6 +17,7 @@
- #include "qemu-thread-common.h"
- #include "qemu/tsan.h"
- #include "qemu/bitmap.h"
-+#include "qemu/clang-tsa.h"
- 
- #ifdef CONFIG_PTHREAD_SET_NAME_NP
- #include <pthread_np.h>
+diff --git a/linux-user/main.c b/linux-user/main.c
+index b09af8d4365..06037304cb1 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -39,6 +39,7 @@
+ #include "qemu/module.h"
+ #include "qemu/plugin.h"
+ #include "user/guest-base.h"
++#include "user/page-protection.h"
+ #include "exec/exec-all.h"
+ #include "exec/gdbstub.h"
+ #include "gdbstub/user.h"
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index e4bf5d5f39c..4e0444b4cbc 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -22,6 +22,7 @@
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
+ #include "qemu.h"
++#include "user/page-protection.h"
+ #include "user-internals.h"
+ #include "user-mmap.h"
+ #include "target_mman.h"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 1ce4c79784f..c54b199b6d3 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -135,6 +135,7 @@
+ #include "signal-common.h"
+ #include "loader.h"
+ #include "user-mmap.h"
++#include "user/page-protection.h"
+ #include "user/safe-syscall.h"
+ #include "qemu/guest-random.h"
+ #include "qemu/selfmap.h"
 -- 
 2.47.1
 
