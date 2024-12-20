@@ -4,90 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA5BE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:32:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10F72E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:33:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkbP-0005dv-KN; Fri, 20 Dec 2024 16:32:08 -0500
+	id 1tOkcV-0000qT-Gz; Fri, 20 Dec 2024 16:33:15 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkat-00051j-Rz
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:45 -0500
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkcU-0000qC-2J
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:33:14 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkas-00075i-4S
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:35 -0500
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-434b3e32e9dso25419455e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:31:31 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkcS-0007Eo-JQ
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:33:13 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-72764c995e5so1537913b3a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:33:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734730290; x=1735335090; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=L5uOCTnfptaobXEglt5cStPbt9vyDRGLhNNrWNvGhsU=;
- b=U2/Br1r2hfUYi7lsGqJ1X9F2qPFqbG2+oATygC1AJTnOy124azbuHFRCSxjc7KPRtl
- Adiqj9K+5+0KmR0bc0cLLKymBa7agjy/2yF2B/x7ts/U9NpwpxbgloMm07tFSJ80UGii
- fThjcFTxNGu1JHZRTLWLNlm7NxnhoV/7NTN8tdEiz1iVM42BqFPx3lkenVR5Lo2IVZyY
- F4x9ObbQ3veUsdNGvnmNSk1OUhyAt6w6zF4IrXXwYxPJcD4N12wG/Uif1IkEBMAol/Yo
- eWxOSLjhNRLRP7buBa2kj7eHZOXP5nP0fFBggZHAsDJiCuTZNGuwOijw3Rzb1BiDPI+3
- DSMQ==
+ d=linaro.org; s=google; t=1734730391; x=1735335191; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=uVwFGQczTa/nXRixvpdyQjZRERK8yXEOSFYzy3+em/E=;
+ b=ROHKsWhwpDBqgz2WAiTJnMuxgHSVzBLWcXI/HSdYGWhaJxrD3fTulcKDJngBjUQQ/M
+ RXwWR7qCRq1pl4Atv8fyfqz9TLp75MgpNWkq4xMOJhAXUS4PmgqbU8QfzF0nR7sPwMPT
+ cOz19Bb1xsiporLoP0T1WHeKa8j+AG29obM7xOTOvUiKZrERuVxFCXnX2g14Jt3bp6cS
+ j+L1TEAPtK/ynwaAh7bI8jZfviPn/8M5f3OLjoHd3R439UZHnY2b113kqlRuZcG6aBC6
+ 7yQ0EeDvrKZRLIpJQD9KWXYnyNa4MNn4DjTttAp5GuT1WgCL2ErGQL3ikXadc7UU7wi5
+ d8OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734730290; x=1735335090;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=L5uOCTnfptaobXEglt5cStPbt9vyDRGLhNNrWNvGhsU=;
- b=Hjz99EAU+womYyMc4pE3axMVUQKhh+/J8onkxjX+0H4uTzbcHIZj3k2MFhgfgRYVSg
- i7xDFgyk/Zy6CUxg5Cmn+VheJJeu6LoDwiXqMf07WHDEq3CFPf3PSLhfqnkdm/eoLVXO
- ImDufbYQuAWK17uMBeeIJoQht39+Bqlfkq+cwzxtiA9KxRSTPyNBced4J6qTGFMRDm9s
- K/gOiRcmm+GM9Xllqn/dualcohR4WxxC9nKuV1ic3TG9wJI/z1XLpXrXLyKoQeT7sCgF
- bb5KC3R4UAerXlQDK4dIk/g1gtlgR2MeMaxX7hljzV47y5UpZLGmYLVi0klz+aArZaU7
- H35g==
-X-Gm-Message-State: AOJu0Yz9h2EWFJyCX1nkB/WtyrVkZZaVzWCj7z++He2diguzihKem7F4
- yzU8dcb3IlkeSaKebYDx81jj6628phAUTtvabJcVPEOphUkERKp/56iWqDoz32JpOw7xRYNLZKP
- 1
-X-Gm-Gg: ASbGncuWE06cKMUGA8y9w2fDe5OL75g6S6rj6JSNHoWxF5kgNgE5YcJhUyhRXvozoYU
- aC569sRsFlgmhaYj4Ebl3eTeaZQGUKO8B3gfr11pVSYEgCG6JL/QaB8xl88UvwLBM3s2SUW4BWh
- yMpi4hfg2QCfWIPqNuUZQfR3tpUKGXySWGhaHWWmItgBsPdBEfkzXFkhInYNnw4uwoAtvj2uRkC
- OKNU4rYoOr/jtHCavkizlie4eQdsGnPmauDCULYHlgBYgfosgqnajgzq6oerLO05sMCmh9N7wQ=
-X-Google-Smtp-Source: AGHT+IGnmY2UiuFVMNv3LgvgikWxiAkTFg3eCUgPM74DjA4Iv1VX7TaEdoezu2I885pay3fjAzfcYw==
-X-Received: by 2002:a05:600c:1c1a:b0:436:1b81:b65c with SMTP id
- 5b1f17b1804b1-43668646aebmr44268215e9.15.1734730290287; 
- Fri, 20 Dec 2024 13:31:30 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
+ d=1e100.net; s=20230601; t=1734730391; x=1735335191;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uVwFGQczTa/nXRixvpdyQjZRERK8yXEOSFYzy3+em/E=;
+ b=mknffkWMx1rSVlA7yukG2k0Oh/CdicjwV/SDoggqig50tKv1OI8tabOCE1G14coZoF
+ x1uFVtbkTNAI6cJ0vd+LC1tgLqHHJed2FeY8QV5jfgxOqtLAQXgMyYIcoaJseulrzYOb
+ Yt2gdcKl7T7h8Hd4JXcz2MC8C5vcyubJRxfZr/psqpU5yo/QjixSAIe+rnEItoRpk4lR
+ 04nkOHsEBC7QuKHJTUESRFFocmCxaeqwm+KBNGSIj+J2fRgAcJbup2CYyGvgbDEKr5/U
+ N/w4ZkHNfK9dvXYiVfF8mkZoijAVRREb2liSxi4xiqtxohodnMN/ZDnQ0JR2v+MU0cnA
+ wC7w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWw74yw3ZlWYog1w/JpLTuBzB01aSxRRyLZWN3to0yE/GYDk/jUJQNGSJUVkjk54wANt/nPUJYzPGBU@nongnu.org
+X-Gm-Message-State: AOJu0Yx0kcHM7N4NFfN72jZFhEcQ0nSgpXStGT2UcMsn7RIMxnYzpWG3
+ w30DY4sAgIUKcF0sV5CVrOkum63yEiiqKyVExbctg7sXJp7j2p3o77UDxc+5DWE=
+X-Gm-Gg: ASbGnctoXGvyYuspbd81MuBaP+VhSy70/OLjA/NavamFpVNHAGXYCqxoaPe+g4Vh9cM
+ NpO1XXNY/RlYyVXoyuj1wqYz0BD0sbOsd4lrC0hzk2crZG71NNQUW3lLTizV4Os5xn6a/el6OlQ
+ neHUwxEBkB+pPSuNV0Zux34iI2FKoUvGJTzwSI6lSjl8/WaKmqEtgCxkVBrNDvgi0h20IAI6VmE
+ hxr7os8FVEsdfmEwanr14oAhnTjLXdPfu7bUDmKRdu4xv24+Tkp0N9VOYVg9LQu8A==
+X-Google-Smtp-Source: AGHT+IG7blaVlhXqPepx/HYzBY1lsVW0jrxQC/2reVVkbbzdTQqUQ5MqXAphC+eeZmr8NmXOIyCq6A==
+X-Received: by 2002:a05:6a20:c907:b0:1e0:cbd1:8046 with SMTP id
+ adf61e73a8af0-1e5df94b400mr7077533637.0.1734730391031; 
+ Fri, 20 Dec 2024 13:33:11 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661218f43sm56226125e9.19.2024.12.20.13.31.29
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 13:31:29 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 5/6] hw/ppc/spapr: Convert DIRTY_HPTE() macro as
- hpte_set_dirty() method
-Date: Fri, 20 Dec 2024 22:31:02 +0100
-Message-ID: <20241220213103.6314-6-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220213103.6314-1-philmd@linaro.org>
-References: <20241220213103.6314-1-philmd@linaro.org>
+ d2e1a72fcca58-72aad8dba6asm3551737b3a.130.2024.12.20.13.33.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Dec 2024 13:33:10 -0800 (PST)
+Message-ID: <fd382732-16f4-4b26-89ae-0252e62332e7@linaro.org>
+Date: Fri, 20 Dec 2024 22:33:02 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 5/5] accel/tcg: Always call tcg_flush_jmp_cache() on
+ reset
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
+References: <20240503123456.28866-1-philmd@linaro.org>
+ <20240503123456.28866-6-philmd@linaro.org>
+ <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
+ <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
+ <464fd4fd-a6ff-45ea-942e-ac4b3a86d4cb@tls.msk.ru>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <464fd4fd-a6ff-45ea-942e-ac4b3a86d4cb@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,45 +109,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert DIRTY_HPTE() macro as hpte_set_dirty() method.
+On 20/12/24 22:08, Michael Tokarev wrote:
+> 13.08.2024 18:10, Philippe Mathieu-Daudé wrote:
+> 
+>>> Has this change been forgotten, or is it not appropriate anymore?
+>>
+>> Not forgotten and still need to be fixed, however unfortunately
+>> this exposed a bug in user-mode SYS_exit_group when using plugins
+>> (see qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit).
+>>
+>> Pierrick is working on it, and I'll rebase this series once his
+>> work gets merged. Next release :/
+> 
+> Hm.. Do we have an idea *which* next release it will be? ;))
 
-sPAPR data structures including the hash page table are big-endian
-regardless of current CPU endian mode, so use the big-endian LD/ST
-API to access the hash PTEs.
-
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/ppc/spapr.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index e68e8c320f4..d318ce2a350 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -1422,7 +1422,11 @@ static void hpte_set_clean(SpaprMachineState *s, unsigned index)
-              ldq_be_p(hpte_get_ptr(s, index)) & ~HPTE64_V_HPTE_DIRTY);
- }
- 
--#define DIRTY_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) |= tswap64(HPTE64_V_HPTE_DIRTY))
-+static void hpte_set_dirty(SpaprMachineState *s, unsigned index)
-+{
-+    stq_be_p(hpte_get_ptr(s, index),
-+             ldq_be_p(hpte_get_ptr(s, index)) | HPTE64_V_HPTE_DIRTY);
-+}
- 
- /*
-  * Get the fd to access the kernel htab, re-opening it if necessary
-@@ -1633,7 +1637,7 @@ int spapr_reallocate_hpt(SpaprMachineState *spapr, int shift, Error **errp)
-         spapr->htab_shift = shift;
- 
-         for (i = 0; i < size / HASH_PTE_SIZE_64; i++) {
--            DIRTY_HPTE(hpte_get_ptr(spapr, i));
-+            hpte_set_dirty(spapr, i);
-         }
-     }
-     /* We're setting up a hash table, so that means we're not radix */
--- 
-2.47.1
+Hopefully 10.0, otherwise 10.1.
 
 
