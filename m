@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45C86E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 04:19:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A27FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 04:19:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOUM5-0008LM-Hj; Thu, 19 Dec 2024 23:11:13 -0500
+	id 1tOUQ7-0001z5-0O; Thu, 19 Dec 2024 23:15:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOUM2-0008Ji-Uf
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 23:11:11 -0500
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1tOUPP-000115-OO
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 23:14:39 -0500
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1tOUM0-0006Fw-4Z
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 23:11:10 -0500
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-2ee397a82f6so1397958a91.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 20:11:07 -0800 (PST)
+ id 1tOUPO-0006pg-Be
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 23:14:39 -0500
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-725f2f79ed9so1245380b3a.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 20:14:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734667867; x=1735272667; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=7T6q101ST/GzSlfq3xqwhdERPg88KHcGu7l3IJfyC/4=;
- b=BE8DKlTh/5DdxDY18c35MigqPr2PTnFXIAtpNDje17mtRaHaO2RBrbdHb8/pP7OgDk
- IFTUnpLEo8qdggB0v+R7u/5kZTb88aVCIOUiebzkUz3EtScMcHYVBeqeh+XSi7DZK8kT
- 8YACBAF871HnRP+Uko4qAuv+TYNE4w1sH0D3LOQ0du436lS+HLpC9Iu33DLXnkfDftKX
- Ll8ujOLroxO9Jz7OwE13D/+/6DH3oTMXTnMVfJ0mUFJahh6PAyBll23UdZPfRYkIoKhv
- rf3YGIe2rb3gMYFqtCgOEph1LZ12U9KrRPxGVKiS/fAqpalyynTvfC9YeC6uxmpHafVN
- dBwA==
+ d=linaro.org; s=google; t=1734668077; x=1735272877; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=atQvaPE2FE0PiFVNmcXbnVbK/0bdfapYYtNsmIEQxj0=;
+ b=gxIE6seK8VkIVMydtdQxUewAPF+3uItJm3rRtUUTT0fhOKok2Um0OorOEJ6tlHWvvK
+ OmiqHfL+kxaySoEoSigZ0urSfzb30yGu7qfYAO1WCDyVPsxJEOylE7Yu1wX0ABe66Jxq
+ vqCprHqqbXlSeNcSP8ZoBsZdR4zoAo91CERFYd+djJHBlkz5Vifcqz9VKL7Fyvgz55nC
+ Bqwb4TJVrPfPpmH9yOhGri5T/jOzVZ467lGTJ1XzdiuOEusLG33PF5v0x52TmkwBrbf5
+ xJNR+TqEkjKUKWzLGfi8pBJp6GJAE/IKWPki9luSJzWf6no71ON7hsD8xDyyEVoofKGz
+ SHpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734667867; x=1735272667;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7T6q101ST/GzSlfq3xqwhdERPg88KHcGu7l3IJfyC/4=;
- b=F9uE6wy0aUVFcq9Lxfs2I7UUzJpvk0SrHU9Qtu8fK0FZ9+e3S5JTBxuxT5IonXyU7L
- IwsmbN8OVCWqh/H273JggjLMUpIVLDN1lv1jnXZY+MnNH1GD++UHnRpzDVWmZYCEpbFQ
- 80WkM+2VqFA3Sg3kOe70/7JXXW6Vhpa2ngTXJxxxLaRKeUsz7dCbrKUdJDgRJ07WXE8/
- L/I1uPPtoNIB2NGzEi94IXAEKAhFB/vVTJ6/poL/fxqAVyrpX7n4a4XHr/nIUisVYtb1
- PH2EXmGthNJmpgQ7i6ka24zfA/AF3oZf2uLYAheyalffrhXivI0S0EtuUPSy+Hs6YQJM
- UfoQ==
-X-Gm-Message-State: AOJu0YyskM8mB4BZqe2pTrTpbesNplywkzrzNtwdtPW7/x7EJoHZM9cg
- jW9vBD7GvwgRzGkkVt4TdfanZHZo9BHAgesWzxl1arBlhKrVjC5mAP6RbnDAp5qGW2V6ZDKaVqu
- g
-X-Gm-Gg: ASbGncsv6JkIESSqJjlQ3M6gycMUrMXmmDkE96vLZk+o4hIVotLQrIvLmZvt8+NAiza
- TbjjNNljeYbJsOC6qaobgfLOUxMqbLUemFz1H3qrjytgaQCq1kXlq5wJdewis7DKNgsPdccsjRr
- EYx2XMJFyFDO9WU9R+FPY+tltkj07JKBEWJJ0VsKfNMEM7v2vSiWopzFKGg3TAtPaaNBULsKU09
- e0fmv7KZNVnWg43ojZwFp/wl8cOvkZorSl4TbXrfAGSRTEHZX6aOYLmPRDkksc=
-X-Google-Smtp-Source: AGHT+IHjHAC2umfW6p5+dcr1ck0yzm30TlqaznBGrJG83bxcsdgwPgfFSG2kTTIP+N28gRIOjHKc5A==
-X-Received: by 2002:a17:90b:1f8a:b0:2ee:ad18:b309 with SMTP id
- 98e67ed59e1d1-2f452def24cmr2107091a91.3.1734667865486; 
- Thu, 19 Dec 2024 20:11:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734668077; x=1735272877;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=atQvaPE2FE0PiFVNmcXbnVbK/0bdfapYYtNsmIEQxj0=;
+ b=aMdFu8cyBuLOORDebXC4/I/5sILw6lkrxGgQkSpARfrp8iitAfKRAEcK6JgxfMyJ3g
+ czoxSu4IWZgSftfCUZjP4HoQuCUhlOkjQiyFhPYW+iHUrwaoxCiAD0SdSlF4CyYnPBEb
+ UT6Nw8+tFzxzBo/C9+OR5o38W9NPra/Kh3Kft0DNN67xPe/DPNvIzf2SN780rUEB9NB3
+ o8qCYu69dze0kw965Yu+8p07zom5tUSdTwA4EHHlhEeruwfRqTmkeJqjuVrZzYYYCqMC
+ HHQDkiGqHzx+WHL1M9umxJOjDq2DgEXDQBXw3UOB1aEOMe/Ez78N2K0aukE7kjG+jUKM
+ nnNg==
+X-Gm-Message-State: AOJu0Yz36sX+I4F7X8/LEeEXK5rrE+Tz1xwZa2qIZcbBKo5+7tk+/Q6h
+ fbAaKuyoa9N0NO3EUUvezyAj+UxXTB2eNcsVxP9aCB52nGQNSxtld562IvvOGsQwUJTWrJb6kT/
+ 1
+X-Gm-Gg: ASbGncvfV3zY1UZ6cy8339B44JJ6x5zyp/F9aXfC1ZkW/SlR8tEcIx5ZI9kqEawMjss
+ WvPXpG4BqeZR5bD8/V+eQYnFLatSct6CqT0Oftvwq6PuyFDSyUFekfwefl9ZIThlFIbi8jmEeAy
+ 5082ASAQbwBpgan4CXBKH5a/wNrMu5C44zxG73km4c7OwkF95bU++BDp/N1+paPrUZJrjnO2oGi
+ bXqlMtDTSWnYSdtoODWYqzfum3YXiK9M+FGs/qv2mQ4+zBHWg2AO8aL6rEVztE=
+X-Google-Smtp-Source: AGHT+IE8dPTk93IhqzS/ajh76BoRXEs/W0Df7bG2QH3W6L/g+HDw2AHsmpyGo1J8j6WTHly5W0vTeg==
+X-Received: by 2002:a05:6a21:3987:b0:1e1:dbfd:582b with SMTP id
+ adf61e73a8af0-1e5e0461e18mr2930372637.15.1734668077050; 
+ Thu, 19 Dec 2024 20:14:37 -0800 (PST)
 Received: from stoup.. ([71.212.144.252]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ee26fc22sm4165260a91.51.2024.12.19.20.11.04
+ 41be03b00d2f7-8529e78a55dsm506952a12.80.2024.12.19.20.14.35
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 20:11:05 -0800 (PST)
+ Thu, 19 Dec 2024 20:14:36 -0800 (PST)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 00/51] tcg: Remove in-flight mask data from OptContext
-Date: Thu, 19 Dec 2024 20:10:12 -0800
-Message-ID: <20241220041104.53105-1-richard.henderson@linaro.org>
+Subject: [PATCH v2 42/51] tcg/optimize: Simplify sign bit test in fold_shift
+Date: Thu, 19 Dec 2024 20:10:54 -0800
+Message-ID: <20241220041104.53105-43-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241220041104.53105-1-richard.henderson@linaro.org>
+References: <20241220041104.53105-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,106 +96,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The desire is to start re-using some of the fold_* functions
-while lowering or simplifying operations during tcg_optmize.
+Merge the two conditions, sign != 0 && !(z_mask & sign),
+by testing ~z_mask & sign.   If sign == 0, the logical and
+will produce false.
 
-Many of these fold_* functions set z_mask, s_mask, and a_mask,
-which hang around until the end of the tcg_optmize loop and
-are applied by finish_folding.  This disconnect between set
-and apply is a problem -- we would no longer be applying the
-masks to the correct opcode.
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+---
+ tcg/optimize.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Fix this by making the masks local variables, passed down to
-be applied immediately to the opcode being processed.
-
-Changes for v2:
-  - Introduce fold_affected_mask, to handle a_mask separately from both
-    z_mask and s_mask.  There are only a couple of places where we can
-    compute a_mask, and handling that separately simplifies some things.
-    This means that fold_masks_zsa is gone, and fold_masks_za need not
-    be created.
-
-  - Introduce fold_masks_s, as suggested in review.
-
-  - In many places, fetch the TempOptInfo pointers once.  This doesn't
-    affect the resulting optimized code, but it's easier to read.
-
-  - There are a couple of logic fixes, separated out to new patches.
-  - There are a couple of logic improvements for fold_count_zero
-    and fold_deposit.
-
-Patches lacking review:
-  02-tcg-optimize-Split-out-fold_affected_mask.patch
-  04-tcg-optimize-Split-out-fold_masks_zs.patch
-  05-tcg-optimize-Augment-s_mask-from-z_mask-in-fold_m.patch
-  10-tcg-optimize-Use-fold_masks_zs-in-fold_count_zero.patch
-  13-tcg-optimize-Compute-sign-mask-in-fold_deposit.patch
-  29-tcg-optimize-Use-fold_masks_zs-in-fold_qemu_ld.patch
-  35-tcg-optimize-Fix-sign-mask-in-fold_negsetcond.patch
-  40-tcg-optimize-Canonicalize-s_mask-in-fold_exts-fol.patch
-  42-tcg-optimize-Simplify-sign-bit-test-in-fold_shift.patch
-
-
-r~
-
-
-Richard Henderson (51):
-  tcg/optimize: Split out finish_bb, finish_ebb
-  tcg/optimize: Split out fold_affected_mask
-  tcg/optimize: Copy mask writeback to fold_masks
-  tcg/optimize: Split out fold_masks_zs
-  tcg/optimize: Augment s_mask from z_mask in fold_masks_zs
-  tcg/optimize: Use finish_folding in fold_add, fold_add_vec,
-    fold_addsub2
-  tcg/optimize: Use fold_masks_zs in fold_and
-  tcg/optimize: Use fold_masks_zs in fold_andc
-  tcg/optimize: Use fold_masks_zs in fold_bswap
-  tcg/optimize: Use fold_masks_zs in fold_count_zeros
-  tcg/optimize: Use fold_masks_z in fold_ctpop
-  tcg/optimize: Use fold_and and fold_masks_z in fold_deposit
-  tcg/optimize: Compute sign mask in fold_deposit
-  tcg/optimize: Use finish_folding in fold_divide
-  tcg/optimize: Use finish_folding in fold_dup, fold_dup2
-  tcg/optimize: Use fold_masks_s in fold_eqv
-  tcg/optimize: Use fold_masks_z in fold_extract
-  tcg/optimize: Use finish_folding in fold_extract2
-  tcg/optimize: Use fold_masks_zs in fold_exts
-  tcg/optimize: Use fold_masks_z in fold_extu
-  tcg/optimize: Use fold_masks_zs in fold_movcond
-  tcg/optimize: Use finish_folding in fold_mul*
-  tcg/optimize: Use fold_masks_s in fold_nand
-  tcg/optimize: Use fold_masks_z in fold_neg_no_const
-  tcg/optimize: Use fold_masks_s in fold_nor
-  tcg/optimize: Use fold_masks_s in fold_not
-  tcg/optimize: Use fold_masks_zs in fold_or
-  tcg/optimize: Use fold_masks_zs in fold_orc
-  tcg/optimize: Use fold_masks_zs in fold_qemu_ld
-  tcg/optimize: Return true from fold_qemu_st, fold_tcg_st
-  tcg/optimize: Use finish_folding in fold_remainder
-  tcg/optimize: Distinguish simplification in fold_setcond_zmask
-  tcg/optimize: Use fold_masks_z in fold_setcond
-  tcg/optimize: Use fold_masks_s in fold_negsetcond
-  tcg/optimize: Fix sign mask in fold_negsetcond
-  tcg/optimize: Use fold_masks_z in fold_setcond2
-  tcg/optimize: Use finish_folding in fold_cmp_vec
-  tcg/optimize: Use finish_folding in fold_cmpsel_vec
-  tcg/optimize: Use fold_masks_zs in fold_sextract
-  tcg/optimize: Canonicalize s_mask in fold_exts, fold_sextract
-  tcg/optimize: Use fold_masks_zs, fold_masks_s in fold_shift
-  tcg/optimize: Simplify sign bit test in fold_shift
-  tcg/optimize: Use finish_folding in fold_sub, fold_sub_vec
-  tcg/optimize: Use fold_masks_zs in fold_tcg_ld
-  tcg/optimize: Use finish_folding in fold_tcg_ld_memcopy
-  tcg/optimize: Use fold_masks_zs in fold_xor
-  tcg/optimize: Use finish_folding in fold_bitsel_vec
-  tcg/optimize: Use finish_folding as default in tcg_optimize
-  tcg/optimize: Remove z_mask, s_mask from OptContext
-  tcg/optimize: Move fold_bitsel_vec into alphabetic sort
-  tcg/optimize: Move fold_cmp_vec, fold_cmpsel_vec into alphabetic sort
-
- tcg/optimize.c | 776 +++++++++++++++++++++++++++----------------------
- 1 file changed, 425 insertions(+), 351 deletions(-)
-
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index da48aadd12..7219415fe2 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -2590,7 +2590,7 @@ static bool fold_shift(OptContext *ctx, TCGOp *op)
+          * will not reduce the number of input sign repetitions.
+          */
+         sign = (s_mask & -s_mask) >> 1;
+-        if (sign && !(z_mask & sign)) {
++        if (~z_mask & sign) {
+             return fold_masks_s(ctx, op, s_mask);
+         }
+         break;
 -- 
 2.43.0
 
