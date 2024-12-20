@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54320E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:11:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25946E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:18:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkHU-0000Vv-3E; Fri, 20 Dec 2024 16:11:36 -0500
+	id 1tOkNR-00023n-5d; Fri, 20 Dec 2024 16:17:41 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkHI-0000Rq-3I; Fri, 20 Dec 2024 16:11:20 -0500
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkHF-0003lX-1n; Fri, 20 Dec 2024 16:11:18 -0500
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 160E9C8237;
- Sat, 21 Dec 2024 00:10:46 +0300 (MSK)
-Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 707B318C9EA;
- Sat, 21 Dec 2024 00:11:14 +0300 (MSK)
-Message-ID: <0103774f-f010-4cef-b8d1-fee11b2f4a21@tls.msk.ru>
-Date: Sat, 21 Dec 2024 00:11:14 +0300
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tOkNM-00023Q-HN
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:17:37 -0500
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tOkNK-0004QE-H2
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:17:36 -0500
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2167141dfa1so22379585ad.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:17:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734729452; x=1735334252; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=MA0x3yePLab9QX7eKJiMmBbyUbNpcqd6QQh5Sv8kG+I=;
+ b=XwJUe66httpaMPKPk/CVn1NEJS0RfiOAZ6D2e7pzZHwdOwNeCSr9CU2gpmy81//DNi
+ PLOBjb15uG36gtT9Ycux9iZBpozN+m+WYVF1uZLrMeS0M2PllviUM2DHQQT8/qXaQWGS
+ zc9GY2pfDnc1TTMSn4gx77QxVm0vWbQ3Q8TA9sprIZY9nTj6LB79VjPWvIT+8mSgunlm
+ A2MLYUlgsXs6dHN23o8Z4P/N/hhuAhk3sFis0gUeVWfUuEMeh7uqLs+66nGEC/hdXQgM
+ C95Ptu+FvRpjF9VKTcJVtWAxSKFEuQ1yzKGyFOefYUK5/Jb5BiATnw5Casb8pKjhPtV4
+ +gyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734729452; x=1735334252;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MA0x3yePLab9QX7eKJiMmBbyUbNpcqd6QQh5Sv8kG+I=;
+ b=BgMYVVX5b/QoxOF7/BN8ggW1Crwoa1/oYsnNVokFkPIidktEs++BjmG+zPyyEAMeeo
+ ngJKkiqyn1zoiPSp+lF+RvPec25ZlvbX614ju0YFNPj+886Eer4uUHlX7S8ULU1nTZ8J
+ SdV5U81KarQV+T5IfgGYJocDdY4E2OW1cKrpyy70EFv20udBOWk1VZuHL8r7vaWGvkHp
+ +QX3hdNKKgn8i9D0Xz9Y4/LPBoKh4/EaVelIjcPdhtJ8gMeXCNx7sw83PT2QRrrFKTeE
+ /XUpP2f1fUIeMRr9FpJKjxUgGfiqMNeEKaR9f3oBCyWrNBIK8Oy+EI9tGSkjYX1/rzsR
+ cxtg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUlbNHN+LTnim9GlJttLMSRdttVdBncRoKTOdwy6cJXViicIOf+nsnFij8HsLHp5o2qDRHUmCOr5bQY@nongnu.org
+X-Gm-Message-State: AOJu0YwLdqIGFfaV9zdpIbF+OJrbZWVzFC0pWM45v5VSSdk2CeOfgySF
+ b+EXc5PPbreAC25/Tlw7yiYW4N9DSAtIu8VtYl09Pt2q5Pp0h/bT8OSNjkmt9J0=
+X-Gm-Gg: ASbGncsjYVqnPvwwGoHi6EDmOyEsmbx6G2nNKlPxCwCFxI7ygZH2yfgnIQVhMxjgGdk
+ icpYyvd2mMjUMfrF07knMVRqkz+ibmtm/JsHpZEC2v/xjK+dWm0r/lip/83le1b43OZZWJJHa+Y
+ m4OypXSmLSyM121wdc0DDnKHEZtNexyvgY4RbZFjCqJvOwAsMSqy0og/TnOYMwBTeADJubvDCPJ
+ CRPgnZmKBKuD+fKaWnuhKT/PnVJps8Uv8duamtokGHH+GyAouHCtVv5Z6SNjDEIgSczyw==
+X-Google-Smtp-Source: AGHT+IFZOVGzqap9rt/p9d2by5U+Pw3K1ytmI1INBaznYN/yRQkKnPRZDI/QTLgl/ua/EG+I1Pky5Q==
+X-Received: by 2002:a17:902:ecc2:b0:216:5448:22c3 with SMTP id
+ d9443c01a7336-219da5b9c2cmr109994125ad.6.1734729452237; 
+ Fri, 20 Dec 2024 13:17:32 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-842dc7edbdbsm3302628a12.59.2024.12.20.13.17.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Dec 2024 13:17:31 -0800 (PST)
+Message-ID: <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org>
+Date: Fri, 20 Dec 2024 13:17:31 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH-for-9.1? v2 4/4] hw/sd/sdhci: Check ADMA descriptors can
- be accessed
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
- Bin Meng <bmeng.cn@gmail.com>, qemu-stable@nongnu.org
-References: <20240731212501.44385-1-philmd@linaro.org>
- <20240731212501.44385-5-philmd@linaro.org>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20240731212501.44385-5-philmd@linaro.org>
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
+Content-Language: en-US
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <590990025f1f43704ca8831254754661c176c42f@nut.email>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <590990025f1f43704ca8831254754661c176c42f@nut.email>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,83 +106,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-01.08.2024 00:25, Philippe Mathieu-Daudé wrote:
-> Since malicious guest can write invalid addresses to
-> the ADMASYSADDR register, we need to check whether the
-> descriptor could be correctly filled or not.
+Hi Julian,
 
-Ping?  This has been about the 9.1 release, now 9.2 is out already
-and we're working on 10.0...
-
-Thanks,
-
-/mjt
-
-> Cc: qemu-stable@nongnu.org
-> Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/sd/sdhci.c | 23 +++++++++++++++++------
->   1 file changed, 17 insertions(+), 6 deletions(-)
+On 12/20/24 03:47, Julian Ganz wrote:
+> Hi Pierrick,
 > 
-> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
-> index 2d8fa3151a..6794ee2267 100644
-> --- a/hw/sd/sdhci.c
-> +++ b/hw/sd/sdhci.c
-> @@ -701,13 +701,18 @@ static void trace_adma_description(const char *type, const ADMADescr *dscr)
->   static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
->   {
->       hwaddr entry_addr = (hwaddr)s->admasysaddr;
-> +    MemTxResult res;
-> +
->       switch (SDHC_DMA_TYPE(s->hostctl1)) {
->       case SDHC_CTRL_ADMA2_32:
->           {
->               uint64_t adma2 = 0;
->   
-> -            dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
-> -                            MEMTXATTRS_UNSPECIFIED);
-> +            res = dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
-> +                                  MEMTXATTRS_UNSPECIFIED);
-> +            if (res != MEMTX_OK) {
-> +                break;
-> +            }
->               adma2 = le64_to_cpu(adma2);
->               /*
->                * The spec does not specify endianness of descriptor table.
-> @@ -724,8 +729,11 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
->           {
->               uint32_t adma1 = 0;
->   
-> -            dma_memory_read(s->dma_as, entry_addr, &adma1, sizeof(adma1),
-> -                            MEMTXATTRS_UNSPECIFIED);
-> +            res = dma_memory_read(s->dma_as, entry_addr, &adma1, sizeof(adma1),
-> +                                  MEMTXATTRS_UNSPECIFIED);
-> +            if (res != MEMTX_OK) {
-> +                break;
-> +            }
->               adma1 = le32_to_cpu(adma1);
->               dscr->addr = (hwaddr)(adma1 & ~0xfff);
->               dscr->attr = (uint8_t)extract32(adma1, 0, 7);
-> @@ -748,8 +756,11 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
->               } QEMU_PACKED adma2;
->               QEMU_BUILD_BUG_ON(sizeof(adma2) != 12);
->   
-> -            dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
-> -                            MEMTXATTRS_UNSPECIFIED);
-> +            res = dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
-> +                                  MEMTXATTRS_UNSPECIFIED);
-> +            if (res != MEMTX_OK) {
-> +                break;
-> +            }
->               dscr->length = le16_to_cpu(adma2.length);
->               dscr->addr = le64_to_cpu(adma2.addr);
->               dscr->attr = adma2.attr & (uint8_t) ~0xc0;
+> December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
+>> On 12/2/24 11:41, Julian Ganz wrote:
+>>>   +static void insn_exec(unsigned int vcpu_index, void *userdata)
+>>>   +{
+>>>   + struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+>>>   + uint64_t pc = (uint64_t) userdata;
+>>>   + GString* report;
+>>>   +
+>>>   + if (state->has_next) {
+>>>   + if (state->next_pc != pc) {
+>>>   + report = g_string_new("Trap target PC mismatch\n");
+>>>   + g_string_append_printf(report,
+>>>   + "Expected: %"PRIx64"\nEncountered: %"
+>>>   + PRIx64"\n",
+>>>   + state->next_pc, pc);
+>>>   + qemu_plugin_outs(report->str);
+>>>   + if (abort_on_mismatch) {
+>>>   + g_abort();
+>>>   + }
+>>>   + g_string_free(report, true);
+>>>   + }
+>>>   + state->has_next = false;
+>>>   + }
+>>>   +}
+>>>
+>> When booting an arm64 vm, I get this message:
+>> Trap target PC mismatch
+>> Expected: 23faf3a80
+>> Encountered: 23faf3a84
+> 
+> A colleague of mine went to great lengths trying to track and reliably
+> reproduce this. We think that it's something amiss with the existing
+> instruction exec callback infrastructure. So... it's not something I'll
+> be addressing with the next iteration as it's out of scope. We'll
+> probably continue looking into it, though.
+> 
+> The mismatch is reported perfectly normal and boring exceptions and
+> interrupts with no indication of any differences to other (not reported)
+> events that fire on a regular basis. Apparently, once in a blue moon
+> (relatively speaking), for the first instruction of a handler (even
+> though it is definitely executed and qemu does print a trace-line for
+> that instruction):
+> 
+> | Trace 0: 0x7fffa0b03900 [00104004/000000023fde73b4/00000021/ff020200]
+> | Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff020200]
+> | Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff020200]
+> | Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff020200]
+> | Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff020200]
+> | Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff020200]
+> | Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff020200]
+> | Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff020200]
+> | cpu_io_recompile: rewound execution of TB to 000000023fde7b90
+> | Taking exception 5 [IRQ] on CPU 0
+> | ...from EL1 to EL1
+> | ...with ESR 0x0/0x3800000
+> | ...with SPSR 0x20000305
+> | ...with ELR 0x23fde7b90
+> | ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
+> | Trace 0: 0x7fffa13a8340 [00104004/000000023fd77a80/00000021/ff021201]
+> | Trace 0: 0x7fffa13a8480 [00104004/000000023fd77a84/00000021/ff020200]
+> | Trap target PC mismatch CPU 0
+> | Expected:    23fd77a80
+> | Encountered: 23fd77a84
+> | warning: 44	./nptl/pthread_kill.c: No such file or directory
+> | Couldn't get registers: No such process.
+> 
+> It does show up with both single-core and multi-core VMs, so that at
+> least eliminates some possibilities. Maybe :/
+> 
+> The issue is nasty to reproduce in a way that allows any meaningful
+> investigation. It usually involves sifting through many GBs of Qemu logs
+> for maybe one occurance. We could add another testing/dummy plugin that
+> just prints the PC for _any_ instruction executed and have a skript
+> check for non-alternating Trace-lines from Qemu and that Plugin. But
+> then we're talking nearly double the amount of Lines to look through
+> with probably little additional information.
+> 
 
+Thanks for the investigation.
+I could reproduce this with this command line:
+./build/qemu-system-aarch64 -M virt -plugin 
+./build/tests/tcg/plugins/libdiscons.so,abort=on -m 8G -device 
+virtio-blk-pci,drive=root -drive 
+if=none,id=root,file=/home/user/.work/images/debianaarch64.img -M virt 
+-cpu max,pauth=off  -drive 
+if=pflash,readonly=on,file=/usr/share/AAVMF/AAVMF_CODE.fd -drive 
+if=pflash,file=/home/user/.work/images/AAVMF_VARS.fd -d plugin,in_asm,op 
+-D crash.log
 
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
+# -d plugin,in_asm,op allows to dump asm of every translated block, 
+plugin output (for discon plugin), and tcg op generated.
+
+It reliably crashes with a single address.
+Looking at the debug output (crash.log):
+----------------
+IN:
+0x23faf3a80:  d108c3ff  sub      sp, sp, #0x230
+# => This bb has a single instruction as input
+
+OP:
+# this is the TB instrumentation
+  ld_i32 loc0,env,$0xfffffffffffffff8
+  brcond_i32 loc0,$0x0,lt,$L0
+  st8_i32 $0x1,env,$0xfffffffffffffffc
+
+  ---- 0000000000000a80 0000000000000000 0000000000000000
+# => we can see that there is no call_plugin, looks like instrumentation 
+# is not applied
+  sub_i64 sp,sp,$0x230
+  add_i64 pc,pc,$0x4
+  goto_tb $0x1
+  exit_tb $0x7f7eedd355c1
+  set_label $L0
+  exit_tb $0x7f7eedd355c3
+
+----------------
+IN:
+0x23faf3a84:  a9b007e0  stp      x0, x1, [sp, #-0x100]!
+0x23faf3a88:  a9010fe2  stp      x2, x3, [sp, #0x10]
+...
+
+OP:
+  ld_i32 loc0,env,$0xfffffffffffffff8
+  brcond_i32 loc0,$0x0,lt,$L0
+  st8_i32 $0x0,env,$0xfffffffffffffffc
+
+  ---- 0000000000000a84 0000000000000000 0000000000000000
+# instruction is correctly applied
+call plugin(0x7f7eec96d530),$0x1,$0,$0x0,$0x23faf3a84
+  mov_i64 loc2,sp
+  ...
+
+Trap target PC mismatch
+Expected:    23faf3a80
+Encountered: 23faf3a84
+
+The thing interesting here is that we can notice that 23faf3a80 is a 
+translation block with a single instruction, and we can see that 
+instrumentation is not applied for this instruction (call_plugin is not 
+present).
+
+Overall, it really looks like a bug on QEMU side, where we miss 
+instrumenting something. I'll take a look. You can ignore this for now.
+
+> Regards,
+> Julian
+
 
