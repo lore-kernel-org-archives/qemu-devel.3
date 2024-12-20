@@ -4,71 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40D2FE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21429E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:25:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfhg-0008Tn-P9; Fri, 20 Dec 2024 11:18:17 -0500
+	id 1tOfjO-0005fb-Ik; Fri, 20 Dec 2024 11:20:06 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgv-0007da-NI
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:30 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfj4-00056w-Lr
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:48 -0500
 Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgt-00081J-NZ
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:29 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfj1-0008IS-Jk
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:41 -0500
 Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-436281c8a38so15396685e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:27 -0800 (PST)
+ 5b1f17b1804b1-434b3e32e9dso22678445e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711446; x=1735316246; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711576; x=1735316376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K5FRDH0gT4B7UQ0jomsp7+xsvPjqSK3/SJlM1JYZrYg=;
- b=IjCp+Z0f62OWHVo8YCljdf9nR5dawDbVBa2f8bwKag4PSBIqBRpr0Y1/ba+tpfjU8k
- c11vkXkK3JEvC8Sm9LrCILMQ6FmIhiLfH9yNmnctSJfHWyfDePJIDbxsg2LnkRS33oD6
- zZ0cTMuORWwbEgrinXRKDA9/3X9D9ci2YhXIykIKx0RzDV6r2lT2hSnJ3C4LD17WJMb9
- 5sTeAmyA6BpMlhJejRcncct9GV6+Mg96BW9CN3VW4jls0RnwcRcD/36V04j1SB2lJQoy
- WPOxpeDKl9YLsdN/qjO5oyhY6N7YVIJdnTxDUFeJqdRsQZB+xIbw/4CkGtKfiJSBFC6s
- B3TQ==
+ bh=r+kDnYpOTd4dfWxW+/X15hMdJAWhfeFKf9XOLyUeeLw=;
+ b=mrt/oi1/rIQV1SShi9H/P9LsX16WL0j1MpFlIMVctT3GWJz4b1bQHtd1MWWmmJHdG7
+ MWUN/FqRPjKEEVH/xDwcxXYcGtTaW38Kr06nHX3lD95W2suzcNiP6WdcdjIEKArsxo13
+ jPr0grolr6paf3rLrkZGi7NASX8NNTMQ35HaekOzwf5Plka7MZqDwloUX2vVnn8Rn9xt
+ g+vOeBvU3o37b/U8mrA8nhGbCjWkEQa7NcXJGOYGLiXCzvODm9tv3iwa44KYAdApG5P1
+ 8+OqEKTNbbzCt+UZOcB5Ly2f4glw3T2fb0eYbge+5VbZ4rHWflzJ4g4KIY6fm0rGOxAi
+ WTJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711446; x=1735316246;
+ d=1e100.net; s=20230601; t=1734711576; x=1735316376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=K5FRDH0gT4B7UQ0jomsp7+xsvPjqSK3/SJlM1JYZrYg=;
- b=m808QthZYuH+J224p0iRD60b2VHSBlAU/QBlJ3TSe4Ebyk1PRbh6hz2Qdp9cVXcq1W
- swkxK9KYpH4s0WKpoHo7kwBDbDBPZMBhxmlU8U6ZUvV6cZO87PJE25SaBTxRDoSuzYWp
- IbUnWekNGnjAyWMB7dkM9LUOLBJggoSwSF+npia3fSuygq9ROJbMIN8h7V1F/1YioInd
- S/rnVdq6m1s9C2rUdrj5qScjYY7iWSwAk3gobeUuKSJFQRFrFWJVy1ISkRSSahGNh45i
- vIm9MI72kG6QspH/PvdT8UL48/5bnJ2K7mkfMy0+Z4QsIHjZlZjxobZ9axqiCYfwVX3n
- STzQ==
-X-Gm-Message-State: AOJu0YyBHpr62gJsPozUJmUpo13xPkaewjZQyJpqDa8iIbUx/Wbfg48h
- vKIbptpYy1SQuHmji14IfhIz5OFgtfmi3/T7bwF7Nh+dR/mXLaYdUsbcjmWDQ5qjkem6Ai/yUAV
- E
-X-Gm-Gg: ASbGncvhOdBBktsjssjg5eGD9/Vwfp93dOHjtqvitx3yyu3Vcl8gzeqWXuilSghi5ML
- 5utGoEm1n7vFkQSrRlm8lcFXI0xD4DZft9Hm3pnPLtbf00hsEs5VX0H5ZWTlAvDs4FtaQOvJ+gl
- z3PDyBBbQjV6/fxdD1jEalq1vWPdBOIF6mpnvfwVh2Mt01+zcJ4E9SWRKYU8H5ltL1FklXl0+Zj
- xQ9aNikopF/8CA74BsgenPpNfn5uziIiZ8ndJZCRQ33jV/VwhmOAXPE83p4hOM1+hc2okFEhuk=
-X-Google-Smtp-Source: AGHT+IFN+pfVtQNNjro8TRNErF9sQnPI0AGKja/cV6yC4j9L9tktRdo75ntHu7BETsPrCipIwE5sEg==
-X-Received: by 2002:a05:600c:3150:b0:434:9fac:b158 with SMTP id
- 5b1f17b1804b1-4366854718emr24861435e9.1.1734711445518; 
- Fri, 20 Dec 2024 08:17:25 -0800 (PST)
+ bh=r+kDnYpOTd4dfWxW+/X15hMdJAWhfeFKf9XOLyUeeLw=;
+ b=WBzGyVz024FsRxMZwYjzbVOYKZRxH2myGDMK504j455s0HvZ7XdrL3bPhT71mrGD3R
+ UtBcCmO9tzCfDFKEGrhJtqtnEOLxiSSJCWOUq2Q/ujcL51ZhI5siMRo93rSF/NOHZrwQ
+ 68WgWpgpRjlfvFCFBdK6mCONTK22Hwx4Y9Yr2RIlzGqLDfeYZ/0ADZKDm4f5wUViJ3SZ
+ /DHPtb+KIqH/GNDpesm7U7QsT7HIgGbilh4QI2biEI06gnH6k+5C5znPmsaVH7w01g6n
+ mHcbS/xl5ZLKkwt+W4Dvo8hWBiW5Y1aaGEIfeAQRwyJp0Jp0LlYWzDNWgxgwO7ld2h/l
+ hHjg==
+X-Gm-Message-State: AOJu0Yxh1irrBcJor62c96Sqicbk2CG6Ub02mTZr5MExqvXI+iw3POnk
+ u17ezNhd8mi2RX/yqa+PwEEHS2XfUrEmgGx2m5WaeLo9fgrdQC2OgdokSk0s9JPKOqExBOmpnjp
+ A
+X-Gm-Gg: ASbGncud5D9PTyhJsb23kofQ6v/5Bh3i384ybA9yrMUF6/rGddwp7UkiK3hYCkjdWMt
+ gVp8ZNENiegq+mCePZRTpSwl78jCL0Wt9M9XXw2+MCstxlkI+A3wbjdq3Qcrk+ayUeQ72D5fEZA
+ yrK5Aa+btvhbCm9A4oG4okVLVfy6A0tRfN/5BpOIASwmvYUavEftaqLDc2eZHXEODJOTJKEbOHv
+ qZLKESd7SE2fPpcIdtSlBxfL+qNNyz1o80gwNVBvkIm3me2WsKpxyiFy6p5i+ZD08aVn83A6EQ=
+X-Google-Smtp-Source: AGHT+IF+EN38ljLEqtMGr95kxQ4xgkdcFrz8TjSt11pYF7/vvzSPqudgR1wNa09ewmQhci2Pw4dLSg==
+X-Received: by 2002:a5d:59ab:0:b0:385:fd31:ca31 with SMTP id
+ ffacd0b85a97d-38a223fd39fmr4243403f8f.53.1734711576333; 
+ Fri, 20 Dec 2024 08:19:36 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4366127c515sm49852675e9.30.2024.12.20.08.17.24
+ ffacd0b85a97d-38a1c828bd3sm4349740f8f.10.2024.12.20.08.19.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:17:25 -0800 (PST)
+ Fri, 20 Dec 2024 08:19:35 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 20/59] user: Introduce 'user/guest-host.h' header
-Date: Fri, 20 Dec 2024 17:15:11 +0100
-Message-ID: <20241220161551.89317-21-philmd@linaro.org>
+Subject: [PULL 49/59] accel/tcg: Move tcg_cflags_has/set() to
+ 'exec/translation-block.h'
+Date: Fri, 20 Dec 2024 17:15:40 +0100
+Message-ID: <20241220161551.89317-50-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
@@ -99,216 +99,318 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Extract all declarations related to 'guest from/to host'
-address translation to a new "user/guest-host.h" header.
+The TranslationBlock flags are defined in 'exec/translation-block.h'.
+tcg_cflags_has/set() use them, it is more logical to declare them in
+the same place. Move them there too.
 
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212185341.2857-2-philmd@linaro.org>
+Message-Id: <20241212144430.66224-2-philmd@linaro.org>
 ---
- include/exec/cpu-all.h    | 34 +--------------
- include/exec/cpu_ldst.h   | 47 +--------------------
- include/user/guest-host.h | 87 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 89 insertions(+), 79 deletions(-)
- create mode 100644 include/user/guest-host.h
+ include/exec/cpu-common.h               | 3 ---
+ include/exec/translation-block.h        | 3 +++
+ accel/tcg/cpu-exec.c                    | 1 +
+ accel/tcg/tcg-accel-ops.c               | 1 +
+ accel/tcg/watchpoint.c                  | 1 +
+ linux-user/mmap.c                       | 1 +
+ linux-user/syscall.c                    | 1 +
+ target/arm/cpu.c                        | 1 +
+ target/avr/cpu.c                        | 1 +
+ target/hexagon/cpu.c                    | 1 +
+ target/hppa/cpu.c                       | 1 +
+ target/i386/cpu.c                       | 1 +
+ target/i386/helper.c                    | 1 +
+ target/loongarch/cpu.c                  | 1 +
+ target/microblaze/cpu.c                 | 1 +
+ target/mips/tcg/exception.c             | 1 +
+ target/mips/tcg/system/special_helper.c | 1 +
+ target/openrisc/cpu.c                   | 1 +
+ target/riscv/tcg/tcg-cpu.c              | 1 +
+ target/rx/cpu.c                         | 1 +
+ target/sh4/cpu.c                        | 1 +
+ target/sparc/cpu.c                      | 1 +
+ target/tricore/cpu.c                    | 1 +
+ 23 files changed, 24 insertions(+), 3 deletions(-)
 
-diff --git a/include/exec/cpu-all.h b/include/exec/cpu-all.h
-index 1c40e276728..1c8e0446d06 100644
---- a/include/exec/cpu-all.h
-+++ b/include/exec/cpu-all.h
-@@ -64,39 +64,7 @@
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index 74e947f3adc..b1d76d69850 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -188,9 +188,6 @@ void list_cpus(void);
+ #ifdef CONFIG_TCG
+ #include "qemu/atomic.h"
  
- /* MMU memory access macros */
+-bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
+-void tcg_cflags_set(CPUState *cpu, uint32_t flags);
+-
+ /**
+  * cpu_unwind_state_data:
+  * @cpu: the cpu context
+diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+index 81299b7bdb5..3c69bc71a9f 100644
+--- a/include/exec/translation-block.h
++++ b/include/exec/translation-block.h
+@@ -154,4 +154,7 @@ static inline uint32_t tb_cflags(const TranslationBlock *tb)
+     return qatomic_read(&tb->cflags);
+ }
  
--#if defined(CONFIG_USER_ONLY)
--#include "user/abitypes.h"
--
--/*
-- * If non-zero, the guest virtual address space is a contiguous subset
-- * of the host virtual address space, i.e. '-R reserved_va' is in effect
-- * either from the command-line or by default.  The value is the last
-- * byte of the guest address space e.g. UINT32_MAX.
-- *
-- * If zero, the host and guest virtual address spaces are intermingled.
-- */
--extern unsigned long reserved_va;
--
--/*
-- * Limit the guest addresses as best we can.
-- *
-- * When not using -R reserved_va, we cannot really limit the guest
-- * to less address space than the host.  For 32-bit guests, this
-- * acts as a sanity check that we're not giving the guest an address
-- * that it cannot even represent.  For 64-bit guests... the address
-- * might not be what the real kernel would give, but it is at least
-- * representable in the guest.
-- *
-- * TODO: Improve address allocation to avoid this problem, and to
-- * avoid setting bits at the top of guest addresses that might need
-- * to be used for tags.
-- */
--#define GUEST_ADDR_MAX_                                                 \
--    ((MIN_CONST(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) ?  \
--     UINT32_MAX : ~0ul)
--#define GUEST_ADDR_MAX    (reserved_va ? : GUEST_ADDR_MAX_)
--
--#else
-+#if !defined(CONFIG_USER_ONLY)
- 
++bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
++void tcg_cflags_set(CPUState *cpu, uint32_t flags);
++
+ #endif /* EXEC_TRANSLATION_BLOCK_H */
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index c07e59cd0b1..b507049ddbe 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -27,6 +27,7 @@
+ #include "disas/disas.h"
+ #include "exec/cpu-common.h"
+ #include "exec/page-protection.h"
++#include "exec/translation-block.h"
+ #include "tcg/tcg.h"
+ #include "qemu/atomic.h"
+ #include "qemu/rcu.h"
+diff --git a/accel/tcg/tcg-accel-ops.c b/accel/tcg/tcg-accel-ops.c
+index d9a35b7667c..6e3f1fa92b2 100644
+--- a/accel/tcg/tcg-accel-ops.c
++++ b/accel/tcg/tcg-accel-ops.c
+@@ -35,6 +35,7 @@
+ #include "exec/exec-all.h"
  #include "exec/hwaddr.h"
+ #include "exec/tb-flush.h"
++#include "exec/translation-block.h"
+ #include "gdbstub/enums.h"
  
-diff --git a/include/exec/cpu_ldst.h b/include/exec/cpu_ldst.h
-index c1dd424dc1b..769e9fc4404 100644
---- a/include/exec/cpu_ldst.h
-+++ b/include/exec/cpu_ldst.h
-@@ -73,52 +73,7 @@
- #include "qemu/int128.h"
+ #include "hw/core/cpu.h"
+diff --git a/accel/tcg/watchpoint.c b/accel/tcg/watchpoint.c
+index fbaf45d10f2..af57d182d5b 100644
+--- a/accel/tcg/watchpoint.c
++++ b/accel/tcg/watchpoint.c
+@@ -22,6 +22,7 @@
+ #include "qemu/error-report.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
++#include "exec/translation-block.h"
+ #include "tb-internal.h"
+ #include "system/tcg.h"
+ #include "system/replay.h"
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 4e0444b4cbc..6828b17a63f 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -21,6 +21,7 @@
+ #include "trace.h"
+ #include "exec/log.h"
+ #include "exec/page-protection.h"
++#include "exec/translation-block.h"
+ #include "qemu.h"
+ #include "user/page-protection.h"
+ #include "user-internals.h"
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 1b335688f12..78c7c0b34ef 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -26,6 +26,7 @@
+ #include "tcg/startup.h"
+ #include "target_mman.h"
+ #include "exec/page-protection.h"
++#include "exec/translation-block.h"
+ #include <elf.h>
+ #include <endian.h>
+ #include <grp.h>
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index b085c068ad1..f45cd18ff7e 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -28,6 +28,7 @@
+ #include "qapi/error.h"
+ #include "cpu.h"
+ #ifdef CONFIG_TCG
++#include "exec/translation-block.h"
+ #include "hw/core/tcg-cpu-ops.h"
+ #endif /* CONFIG_TCG */
+ #include "internals.h"
+diff --git a/target/avr/cpu.c b/target/avr/cpu.c
+index a7529a1b3d9..698e0c5161f 100644
+--- a/target/avr/cpu.c
++++ b/target/avr/cpu.c
+@@ -22,6 +22,7 @@
+ #include "qapi/error.h"
+ #include "qemu/qemu-print.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "cpu.h"
+ #include "disas/dis-asm.h"
+ #include "tcg/debug-assert.h"
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index a70007245e4..c213ce8d889 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -20,6 +20,7 @@
+ #include "cpu.h"
+ #include "internal.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "qapi/error.h"
+ #include "hw/qdev-properties.h"
+ #include "fpu/softfloat-helpers.h"
+diff --git a/target/hppa/cpu.c b/target/hppa/cpu.c
+index c38439c1800..c9062e60b67 100644
+--- a/target/hppa/cpu.c
++++ b/target/hppa/cpu.c
+@@ -25,6 +25,7 @@
+ #include "cpu.h"
+ #include "qemu/module.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "fpu/softfloat.h"
+ #include "tcg/tcg.h"
  
- #if defined(CONFIG_USER_ONLY)
--
--#include "user/guest-base.h"
--
--#ifndef TARGET_TAGGED_ADDRESSES
--static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
--{
--    return x;
--}
--#endif
--
--/* All direct uses of g2h and h2g need to go away for usermode softmmu.  */
--static inline void *g2h_untagged(abi_ptr x)
--{
--    return (void *)((uintptr_t)(x) + guest_base);
--}
--
--static inline void *g2h(CPUState *cs, abi_ptr x)
--{
--    return g2h_untagged(cpu_untagged_addr(cs, x));
--}
--
--static inline bool guest_addr_valid_untagged(abi_ulong x)
--{
--    return x <= GUEST_ADDR_MAX;
--}
--
--static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
--{
--    return len - 1 <= GUEST_ADDR_MAX && start <= GUEST_ADDR_MAX - len + 1;
--}
--
--#define h2g_valid(x) \
--    (HOST_LONG_BITS <= TARGET_VIRT_ADDR_SPACE_BITS || \
--     (uintptr_t)(x) - guest_base <= GUEST_ADDR_MAX)
--
--#define h2g_nocheck(x) ({ \
--    uintptr_t __ret = (uintptr_t)(x) - guest_base; \
--    (abi_ptr)__ret; \
--})
--
--#define h2g(x) ({ \
--    /* Check if given address fits target address space */ \
--    assert(h2g_valid(x)); \
--    h2g_nocheck(x); \
--})
--
-+#include "user/guest-host.h"
- #endif /* CONFIG_USER_ONLY */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 96a2608e995..f3a97dc61b1 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -24,6 +24,7 @@
+ #include "qemu/hw-version.h"
+ #include "cpu.h"
+ #include "tcg/helper-tcg.h"
++#include "exec/translation-block.h"
+ #include "system/hvf.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
+diff --git a/target/i386/helper.c b/target/i386/helper.c
+index a78d06c95ba..3bc15fba6ee 100644
+--- a/target/i386/helper.c
++++ b/target/i386/helper.c
+@@ -21,6 +21,7 @@
+ #include "qapi/qapi-events-run-state.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "system/runstate.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "system/hw_accel.h"
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index fa838dce2e4..f5bc8720d1f 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -15,6 +15,7 @@
+ #include "system/kvm.h"
+ #include "kvm/kvm_loongarch.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "cpu.h"
+ #include "internals.h"
+ #include "fpu/softfloat-helpers.h"
+diff --git a/target/microblaze/cpu.c b/target/microblaze/cpu.c
+index 0e41e39c0e2..9db5c4d2a35 100644
+--- a/target/microblaze/cpu.c
++++ b/target/microblaze/cpu.c
+@@ -30,6 +30,7 @@
+ #include "exec/exec-all.h"
+ #include "exec/cpu_ldst.h"
+ #include "exec/gdbstub.h"
++#include "exec/translation-block.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "tcg/tcg.h"
  
- uint32_t cpu_ldub_data(CPUArchState *env, abi_ptr ptr);
-diff --git a/include/user/guest-host.h b/include/user/guest-host.h
-new file mode 100644
-index 00000000000..8d2079bbbba
---- /dev/null
-+++ b/include/user/guest-host.h
-@@ -0,0 +1,87 @@
-+/* SPDX-License-Identifier: LGPL-2.1-or-later */
-+/*
-+ * guest <-> host helpers.
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ */
-+
-+#ifndef USER_GUEST_HOST_H
-+#define USER_GUEST_HOST_H
-+
-+#include "user/abitypes.h"
-+#include "user/guest-base.h"
-+#include "cpu.h"
-+
-+/*
-+ * If non-zero, the guest virtual address space is a contiguous subset
-+ * of the host virtual address space, i.e. '-R reserved_va' is in effect
-+ * either from the command-line or by default.  The value is the last
-+ * byte of the guest address space e.g. UINT32_MAX.
-+ *
-+ * If zero, the host and guest virtual address spaces are intermingled.
-+ */
-+extern unsigned long reserved_va;
-+
-+/*
-+ * Limit the guest addresses as best we can.
-+ *
-+ * When not using -R reserved_va, we cannot really limit the guest
-+ * to less address space than the host.  For 32-bit guests, this
-+ * acts as a sanity check that we're not giving the guest an address
-+ * that it cannot even represent.  For 64-bit guests... the address
-+ * might not be what the real kernel would give, but it is at least
-+ * representable in the guest.
-+ *
-+ * TODO: Improve address allocation to avoid this problem, and to
-+ * avoid setting bits at the top of guest addresses that might need
-+ * to be used for tags.
-+ */
-+#define GUEST_ADDR_MAX_                                                 \
-+    ((MIN_CONST(TARGET_VIRT_ADDR_SPACE_BITS, TARGET_ABI_BITS) <= 32) ?  \
-+     UINT32_MAX : ~0ul)
-+#define GUEST_ADDR_MAX    (reserved_va ? : GUEST_ADDR_MAX_)
-+
-+#ifndef TARGET_TAGGED_ADDRESSES
-+static inline abi_ptr cpu_untagged_addr(CPUState *cs, abi_ptr x)
-+{
-+    return x;
-+}
-+#endif
-+
-+/* All direct uses of g2h and h2g need to go away for usermode softmmu.  */
-+static inline void *g2h_untagged(abi_ptr x)
-+{
-+    return (void *)((uintptr_t)(x) + guest_base);
-+}
-+
-+static inline void *g2h(CPUState *cs, abi_ptr x)
-+{
-+    return g2h_untagged(cpu_untagged_addr(cs, x));
-+}
-+
-+static inline bool guest_addr_valid_untagged(abi_ulong x)
-+{
-+    return x <= GUEST_ADDR_MAX;
-+}
-+
-+static inline bool guest_range_valid_untagged(abi_ulong start, abi_ulong len)
-+{
-+    return len - 1 <= GUEST_ADDR_MAX && start <= GUEST_ADDR_MAX - len + 1;
-+}
-+
-+#define h2g_valid(x) \
-+    (HOST_LONG_BITS <= TARGET_VIRT_ADDR_SPACE_BITS || \
-+     (uintptr_t)(x) - guest_base <= GUEST_ADDR_MAX)
-+
-+#define h2g_nocheck(x) ({ \
-+    uintptr_t __ret = (uintptr_t)(x) - guest_base; \
-+    (abi_ptr)__ret; \
-+})
-+
-+#define h2g(x) ({ \
-+    /* Check if given address fits target address space */ \
-+    assert(h2g_valid(x)); \
-+    h2g_nocheck(x); \
-+})
-+
-+#endif
+diff --git a/target/mips/tcg/exception.c b/target/mips/tcg/exception.c
+index 4886d087b2e..1a8902ea1bc 100644
+--- a/target/mips/tcg/exception.c
++++ b/target/mips/tcg/exception.c
+@@ -24,6 +24,7 @@
+ #include "internal.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ 
+ target_ulong exception_resume_pc(CPUMIPSState *env)
+ {
+diff --git a/target/mips/tcg/system/special_helper.c b/target/mips/tcg/system/special_helper.c
+index 9ce5e2ceac5..3ce3ae1e124 100644
+--- a/target/mips/tcg/system/special_helper.c
++++ b/target/mips/tcg/system/special_helper.c
+@@ -23,6 +23,7 @@
+ #include "cpu.h"
+ #include "exec/helper-proto.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "internal.h"
+ 
+ /* Specials */
+diff --git a/target/openrisc/cpu.c b/target/openrisc/cpu.c
+index 3ccf85e95f0..7913a0c3e11 100644
+--- a/target/openrisc/cpu.c
++++ b/target/openrisc/cpu.c
+@@ -22,6 +22,7 @@
+ #include "qemu/qemu-print.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "tcg/tcg.h"
+ 
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index c62c2216961..958b8c89cbf 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -19,6 +19,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "tcg-cpu.h"
+ #include "cpu.h"
+ #include "internals.h"
+diff --git a/target/rx/cpu.c b/target/rx/cpu.c
+index 69ec0bc7b3d..558280c7945 100644
+--- a/target/rx/cpu.c
++++ b/target/rx/cpu.c
+@@ -23,6 +23,7 @@
+ #include "migration/vmstate.h"
+ #include "exec/exec-all.h"
+ #include "exec/page-protection.h"
++#include "exec/translation-block.h"
+ #include "hw/loader.h"
+ #include "fpu/softfloat.h"
+ #include "tcg/debug-assert.h"
+diff --git a/target/sh4/cpu.c b/target/sh4/cpu.c
+index d5008859b8e..e9d3e12a62c 100644
+--- a/target/sh4/cpu.c
++++ b/target/sh4/cpu.c
+@@ -25,6 +25,7 @@
+ #include "cpu.h"
+ #include "migration/vmstate.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "fpu/softfloat-helpers.h"
+ #include "tcg/tcg.h"
+ 
+diff --git a/target/sparc/cpu.c b/target/sparc/cpu.c
+index fc0c66afecf..960ed903513 100644
+--- a/target/sparc/cpu.c
++++ b/target/sparc/cpu.c
+@@ -23,6 +23,7 @@
+ #include "qemu/module.h"
+ #include "qemu/qemu-print.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "hw/qdev-properties.h"
+ #include "qapi/visitor.h"
+ #include "tcg/tcg.h"
+diff --git a/target/tricore/cpu.c b/target/tricore/cpu.c
+index 1a261715907..95fb546666f 100644
+--- a/target/tricore/cpu.c
++++ b/target/tricore/cpu.c
+@@ -21,6 +21,7 @@
+ #include "qapi/error.h"
+ #include "cpu.h"
+ #include "exec/exec-all.h"
++#include "exec/translation-block.h"
+ #include "qemu/error-report.h"
+ #include "tcg/debug-assert.h"
+ 
 -- 
 2.47.1
 
