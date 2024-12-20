@@ -4,41 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440AAE7718C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:07:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88795E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:09:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkDK-0006iv-GH; Fri, 20 Dec 2024 16:07:14 -0500
+	id 1tOkEt-0007S2-IJ; Fri, 20 Dec 2024 16:08:51 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkDG-0006if-Im; Fri, 20 Dec 2024 16:07:10 -0500
+ id 1tOkEr-0007Pe-M8; Fri, 20 Dec 2024 16:08:49 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkDC-0003Ey-RX; Fri, 20 Dec 2024 16:07:10 -0500
+ id 1tOkEq-0003NT-0o; Fri, 20 Dec 2024 16:08:49 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C1383C8230;
- Sat, 21 Dec 2024 00:06:36 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 02A25C8234;
+ Sat, 21 Dec 2024 00:08:18 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 24EDC18C9E1;
- Sat, 21 Dec 2024 00:07:05 +0300 (MSK)
-Message-ID: <3fd9f735-6243-4081-878d-bb5b61f7dda7@tls.msk.ru>
-Date: Sat, 21 Dec 2024 00:07:05 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 44A8718C9E3;
+ Sat, 21 Dec 2024 00:08:46 +0300 (MSK)
+Message-ID: <464fd4fd-a6ff-45ea-942e-ac4b3a86d4cb@tls.msk.ru>
+Date: Sat, 21 Dec 2024 00:08:46 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] dma-helpers: Fix iovec alignment
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: Eric Blake <eblake@redhat.com>, Stefan Fritsch <sf@sfritsch.de>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
-References: <20240412080617.1299883-1-sf@sfritsch.de>
- <dnqsifhslb7mtidrzadsz6254ykmb4bjz2cenzryonz7wbjz4g@vj56wcuwgx25>
- <952a7275-7164-403c-beed-fb13386e65d8@tls.msk.ru>
+Subject: Re: [PATCH v3 5/5] accel/tcg: Always call tcg_flush_jmp_cache() on
+ reset
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
+ Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
+References: <20240503123456.28866-1-philmd@linaro.org>
+ <20240503123456.28866-6-philmd@linaro.org>
+ <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
+ <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
 Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -82,7 +86,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <952a7275-7164-403c-beed-fb13386e65d8@tls.msk.ru>
+In-Reply-To: <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -108,70 +112,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-11.08.2024 20:47, Michael Tokarev пишет:
-> 12.04.2024 18:25, Eric Blake wrote:
->> On Fri, Apr 12, 2024 at 10:06:17AM +0200, Stefan Fritsch wrote:
->>> Commit 99868af3d0 changed the hardcoded constant BDRV_SECTOR_SIZE to a
->>> dynamic field 'align' but introduced a bug. qemu_iovec_discard_back()
->>> is now passed the wanted iov length instead of the actually required
->>> amount that should be removed from the end of the iov.
->>>
->>> The bug can likely only be hit in uncommon configurations, e.g. with
->>> icount enabled or when reading from disk directly to device memory.
-> 
-> Hi!
-> 
-> Has this change (proposed for 9.0) been forgotten or is it not needed
-> anymore?
+13.08.2024 18:10, Philippe Mathieu-Daudé wrote:
 
-Ping #2?
+>> Has this change been forgotten, or is it not appropriate anymore?
+> 
+> Not forgotten and still need to be fixed, however unfortunately
+> this exposed a bug in user-mode SYS_exit_group when using plugins
+> (see qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit).
+> 
+> Pierrick is working on it, and I'll rebase this series once his
+> work gets merged. Next release :/
+
+Hm.. Do we have an idea *which* next release it will be? ;))
 
 Thanks,
 
 /mjt
-
->>> Fixes: 99868af3d0a75cf6 ("dma-helpers: explicitly pass alignment into DMA helpers")
->>> Signed-off-by: Stefan Fritsch <sf@sfritsch.de>
->>> ---
->>>   system/dma-helpers.c | 3 +--
->>>   1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> Wow, that bug has been latent for a while (2016, v2.8.0).  As such, I
->> don't think it's worth holding up 9.0 for, but it is definitely worth
->> cc'ing qemu-stable (done now).
->>
->>>
->>> diff --git a/system/dma-helpers.c b/system/dma-helpers.c
->>> index 9b221cf94e..c9677fd39b 100644
->>> --- a/system/dma-helpers.c
->>> +++ b/system/dma-helpers.c
->>> @@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
->>>       }
->>>       if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
->>> -        qemu_iovec_discard_back(&dbs->iov,
->>> -                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
->>> +        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
->>
->> Before the regression, it was:
->>
->> -    if (dbs->iov.size & ~BDRV_SECTOR_MASK) {
->> -        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size & ~BDRV_SECTOR_MASK);
->> +    if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
->> +        qemu_iovec_discard_back(&dbs->iov,
->>
->> If dbs->align is always a power of two, we can use '& (dbs->align -
->> 1)' to avoid a hardware division, to match the original code; bug
->> QEMU_IS_ALIGNED does not require a power of two, so your choice of '%
->> dbs->align' seems reasonable.
->>
->> Reviewed-by: Eric Blake <eblake@redhat.com>
->>
-> 
-
-
--- 
-GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
-New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
-Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
-Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
