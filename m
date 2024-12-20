@@ -4,80 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7945DE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC270E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:28:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfir-0004Tp-Gg; Fri, 20 Dec 2024 11:19:30 -0500
+	id 1tOfro-00008o-AL; Fri, 20 Dec 2024 11:28:44 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfik-0003jk-7L
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:22 -0500
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tOfrm-00008P-Lm
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:28:42 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfii-0008Ff-B3
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:21 -0500
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-385ef8b64b3so1633606f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:19 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1tOfrk-0001qP-N8
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:28:42 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2163dc5155fso20416355ad.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:28:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711558; x=1735316358; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=v56JompxPLKPsYxp/BZ65nIAlGi/uwwkXsl2uLdTi1s=;
- b=yTEaRjLaOLC/nH036+q/0v3Z3levp+A90WgNvkyRYwtOtTALFQ8AzsGnDNgkPZzNVM
- QddUuiCL0L5Hs4xh9LBySH0eRHIeLAiZ2WU3Qlh3truG3GGEsK/cgki7iTouysUAQBGD
- tcl6IeRozJF+nvKQCz89qK1Oq6zPvEcMGZ8Ffib7oKi8wVJoHFa++giGCJ1QxrDb/KWw
- ehuUgbOgfD/cETBTP/tXFLiyjx0BmSLrCZ4Dh8lwN4VssyR8pwF/uAN3NsDp8cTGrsOt
- meN71GnqwsniZauCtv2iwBlslpldN4lAKnJ6XwIgoBdgLD7+Pp4H4jS1OOdomWsig3ZA
- JOpw==
+ d=linaro.org; s=google; t=1734712119; x=1735316919; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=udENEynPBHDOzD5HmEf366V/0YdRrDGVZxSULZeESUo=;
+ b=L8ODg2MaDWt5A/FXw7DZu+UntQrARHeA9IhFhKy+uop78FbKFKFBRjEIRrWCyJms1O
+ ekYZDQtx5+8qr6rTpjujO4ZaOEQgW3Cv2PoojkME4g9Q4f8q7zBVkBJQTnrVzKQR2Z+/
+ qsrSuNhyArXBlRgdSYYaGi0xGBGpSzjIpwMr02Tg8xdmyL+E/GYMoGPE0V8it9PgkTL8
+ hh8GjBMCsbnP5t9TmklTn/CE66xA1E8vMR/ZFpEEghL8XN1YexlCfNzokRk2l0LO/VYG
+ FCvylJOR0CvhO9mZEk5S7jm+23Ei2NxON0xPy0jOh7bare1VPcn6LTUiTLdhbp9VyqTn
+ E+QA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711558; x=1735316358;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=v56JompxPLKPsYxp/BZ65nIAlGi/uwwkXsl2uLdTi1s=;
- b=YXgO8llKhbrBcvrCGJH4Z6usHPi8yWb6aLctkwg9a7P57hksiMdQ27kRKpEbD635Ma
- 6/bAiz7hd5yapUfdyXpWwH0iNkvhFuwrxoLY6UF6YAHP0yDl75jCXi0YwLU5AHYgaFPj
- 2tMDiWH0/nfEwlAgHdh9sx5t6LN7o6XLn0dT2IJN3li/5RcQdkWmncvnPV7Z6r2gjnYE
- zKM9G6EN8FjNXkwlqNq6QbYGjP79BWZLd3ed9YhoPbvP2MbDHu/3zqyqAy6Sd9dpijPO
- 62B+t5HVHPGF7QQJhcaGEA/X9rSatG836lCmn5J776/UcjFF2sEkGU8uzw8vVrjV+b6I
- 88sw==
-X-Gm-Message-State: AOJu0Yz42k+9AfjCQgXvdjbm7YMgiOwk/PoEq6ezecxm3rPSK7q4uzSW
- Qs8+75FhS9gG06+o+ZVR1DZt1gST2GuSEhxBGc1PiXgrZR6TXMVo4xmbv4+GlBK2BZPR4OkyeQK
- W
-X-Gm-Gg: ASbGncv8PK6x2RqBud4WxX2StKLlZYL4jrIn5PT7oWVft8R1CbNFWLozlU20gJObt4D
- RpU/LcTTv4VYhkg4Hi2AEPd/u6XKKEDgmV9HPCylctXrTSgqD4/jn1oTSZULnwE92srjAXTcqH/
- ZnNpX3E555YAgYBvVgqoo8vLxOZJ2hoS1vWNp6o4ZLnlxvuc22ejmXj/qX+NNM+8y4vFpLvxg/b
- dXKoyeRsBjsEQEThScCOk4M+n4z2OmRXO6Kt+SraIsFwjW63nvAZ6r8VEyqgmfePjaQmt8K4Wg=
-X-Google-Smtp-Source: AGHT+IGGaJDhR8It2vMqnB1USyrtS2iDy8u7Xt9NOWceyZOEfSDC9F4CTVzFaEGOYPfl0wOc+emj5A==
-X-Received: by 2002:a5d:5847:0:b0:385:f6de:6266 with SMTP id
- ffacd0b85a97d-38a221fd10cmr3641047f8f.24.1734711558322; 
- Fri, 20 Dec 2024 08:19:18 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
+ d=1e100.net; s=20230601; t=1734712119; x=1735316919;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=udENEynPBHDOzD5HmEf366V/0YdRrDGVZxSULZeESUo=;
+ b=SwF668ZteWSmO9/RaMz2WPqj78wMiiurpuSuTzOhHELbs0ep2hEQAmOHmfkW+VPF9q
+ RFu43+qUrDKFZmnRmZfF2yZpwcO0kHujZauuPHQS0qUPlPPwRQrY/N85NrR8Gi9611tU
+ WFmrRHSQkgjX514BYkVK7Nejip8GvpCwzvfGErXcdnunPARcWS2QxLNnhpvpTw5fIQui
+ czt1jGQx+7Pr6oqB/S5N8miTorhrK9ma1O6I2gYf05S4o4rY4niq8VE5yY40CFBFQelZ
+ IVXHzzR0C91iKz9qVjtFVxJK6k29q9XvEV9JhHaajU1YiqMZpku5y6qLLGeZVD7bp2tG
+ 5+4g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVcSc9kHcevEzcRsS0TsYWIHCJcq3aVVMTWD6Kusen1F0zqTmFYyzyAbTCiqTmuykjoJrdSCv13aPmo@nongnu.org
+X-Gm-Message-State: AOJu0YzmGmVBFKR0vecA1CwJNumKctWIAEIYpQINUeerI4O286dsCBKh
+ sdMMNJWqVlvhHv9edItaoiYg8P/6+aSswpwWQsm+J7lJiO+zUOX/S7Wr633HthrM5yfrXAwgeGL
+ 9
+X-Gm-Gg: ASbGncsjTIWm/fZbQ+a1UvXdZ4hTWLd/yHKGFzsdsp0Aohag30UVoaxfXPpBnB4Qlgc
+ M0QVVdiQKQzQzQs9zvlqXmTcictaxUc/gOLcHlNtz++FlM+/OLHjFmK5VO+cWCasN0LsMlwTiHT
+ 1cbZCd50equRNneCUU9ZBI4Q0ZbOnFIFbP++KP8RxsLYP/hTUifN533f0mob8KIFCykD054f/9a
+ zPKXkiVbuEB0TeOg/kxe6Xbuq0++4L0zqPwPCHSF3xnjgE0SZd1B5NhKJfarRicIeKogs0=
+X-Google-Smtp-Source: AGHT+IEmp/dHGHkXFCFWTK2lK8BGASIiUFVOS46Fs7OJC17y7DmEhJhKBpCxqt3Tkr39JyAZN9c81Q==
+X-Received: by 2002:a17:902:c941:b0:215:4d90:4caf with SMTP id
+ d9443c01a7336-219e6ea1bb5mr38796725ad.14.1734712119139; 
+ Fri, 20 Dec 2024 08:28:39 -0800 (PST)
+Received: from [192.168.0.4] ([71.212.144.252])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c847214sm4380946f8f.46.2024.12.20.08.19.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:19:17 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [PULL 45/59] accel/tcg: Declare cpu_loop_exit_requested() in
- 'exec/cpu-common.h'
-Date: Fri, 20 Dec 2024 17:15:36 +0100
-Message-ID: <20241220161551.89317-46-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
-References: <20241220161551.89317-1-philmd@linaro.org>
+ d9443c01a7336-219dc9cdeccsm31051235ad.144.2024.12.20.08.28.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Dec 2024 08:28:38 -0800 (PST)
+Message-ID: <ac1efe23-1920-45d1-97f1-3fd80d11039e@linaro.org>
+Date: Fri, 20 Dec 2024 08:28:37 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 1/1] target/riscv: rvv: Use wider accesses for unit
+ stride load/store
+To: Craig Blackmore <craig.blackmore@embecosm.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+References: <20241220122109.2083215-1-craig.blackmore@embecosm.com>
+ <20241220122109.2083215-2-craig.blackmore@embecosm.com>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20241220122109.2083215-2-craig.blackmore@embecosm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,124 +104,189 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move cpu_loop_exit_requested() declaration to "exec/cpu-common.h",
-along with the related cpu_loop_exit_noexc(), cpu_loop_exit(),
-cpu_loop_exit_atomic() and cpu_loop_exit_restore() methods.
+On 12/20/24 04:21, Craig Blackmore wrote:
+> Use atomic load/store functions to access multiple elements from host.
+> 
+> Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
+> 
+> Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+> Signed-off-by: Craig Blackmore <craig.blackmore@embecosm.com>
+> ---
+>   target/riscv/vector_helper.c | 107 +++++++++++++++++++++++++++++++++--
+>   1 file changed, 101 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index a85dd1d200..c0179165ce 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -206,10 +206,102 @@ vext_continus_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+>       }
+>   }
+>   
+> +#if !HOST_BIG_ENDIAN
+> +/* Atomic operations for load/store */
+> +
+> +/*
+> + * Return true if there are enough elements for this size access and the
+> + * pointer is aligned to the required atomicity.
+> + */
+> +
+> +static inline QEMU_ALWAYS_INLINE bool
+> +ok_for_atomic(uint32_t size, void *host, uint32_t reg_start, uint32_t evl,
+> +              uint32_t log2_esz)
+> +{
+> +    return (reg_start + (size >> log2_esz)) <= evl
+> +            && ((uintptr_t) host % size) == 0;
+> +}
+> +
+> +#define GEN_VEXT_LDST_ATOMIC_HOST(SIZE, TYPE)                             \
+> +static inline QEMU_ALWAYS_INLINE void                                     \
+> +vext_ldst_atom_##SIZE##_host(void *vd, uint32_t byte_offset, TYPE *host,  \
+> +                             bool is_load)                                \
+> +{                                                                         \
+> +    TYPE *vd_ptr = (TYPE *) (vd + byte_offset);                           \
+> +    if (is_load) {                                                        \
+> +        *vd_ptr = qatomic_read__nocheck(host);                            \
+> +    } else {                                                              \
+> +        qatomic_set__nocheck(host, *vd_ptr);                              \
+> +    }                                                                     \
+> +}                                                                         \
+> +
+> +GEN_VEXT_LDST_ATOMIC_HOST(2, uint16_t)
+> +GEN_VEXT_LDST_ATOMIC_HOST(4, uint32_t)
+> +#ifdef CONFIG_ATOMIC64
+> +GEN_VEXT_LDST_ATOMIC_HOST(8, uint64_t)
+> +#endif
+> +
+> +#ifdef CONFIG_INT128_TYPE
+> +static inline QEMU_ALWAYS_INLINE void
+> +vext_ldst_atom_16_host(void *vd, uint32_t byte_offset, Int128 *host,
+> +                       bool is_load)
+> +{
+> +    Int128 *vd_ptr = (Int128 *) (vd + byte_offset);
+> +    if (is_load) {
+> +        *vd_ptr = atomic16_read_ro(host);
+> +    } else {
+> +        atomic16_set(host, *vd_ptr);
+> +    }
+> +}
+> +#endif
+> +#endif
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-Id: <20241217140648.98538-1-philmd@linaro.org>
----
- include/exec/cpu-common.h     | 18 ++++++++++++++++++
- include/exec/exec-all.h       | 17 -----------------
- accel/tcg/cpu-exec.c          |  2 +-
- target/arm/tcg/helper-a64.c   |  1 +
- target/s390x/tcg/mem_helper.c |  1 +
- 5 files changed, 21 insertions(+), 18 deletions(-)
+Using CONFIG_INT128_TYPE is peeking under the hood a bit too far.
+As it happens, the ifdef should not be required, because the atomic16_{read,set} symbols 
+are always present.
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index 638dc806a5f..0cf9a3d369c 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -186,6 +186,7 @@ int cpu_memory_rw_debug(CPUState *cpu, vaddr addr,
- void list_cpus(void);
- 
- #ifdef CONFIG_TCG
-+#include "qemu/atomic.h"
- 
- bool tcg_cflags_has(CPUState *cpu, uint32_t flags);
- void tcg_cflags_set(CPUState *cpu, uint32_t flags);
-@@ -218,6 +219,23 @@ bool cpu_unwind_state_data(CPUState *cpu, uintptr_t host_pc, uint64_t *data);
-  */
- bool cpu_restore_state(CPUState *cpu, uintptr_t host_pc);
- 
-+/**
-+ * cpu_loop_exit_requested:
-+ * @cpu: The CPU state to be tested
-+ *
-+ * Indicate if somebody asked for a return of the CPU to the main loop
-+ * (e.g., via cpu_exit() or cpu_interrupt()).
-+ *
-+ * This is helpful for architectures that support interruptible
-+ * instructions. After writing back all state to registers/memory, this
-+ * call can be used to check if it makes sense to return to the main loop
-+ * or to continue executing the interruptible instruction.
-+ */
-+static inline bool cpu_loop_exit_requested(CPUState *cpu)
-+{
-+    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
-+}
-+
- G_NORETURN void cpu_loop_exit_noexc(CPUState *cpu);
- G_NORETURN void cpu_loop_exit_atomic(CPUState *cpu, uintptr_t pc);
- #endif /* CONFIG_TCG */
-diff --git a/include/exec/exec-all.h b/include/exec/exec-all.h
-index c4a6ad3af2d..d9045c9ac4c 100644
---- a/include/exec/exec-all.h
-+++ b/include/exec/exec-all.h
-@@ -27,23 +27,6 @@
- #include "exec/mmu-access-type.h"
- #include "exec/translation-block.h"
- 
--/**
-- * cpu_loop_exit_requested:
-- * @cpu: The CPU state to be tested
-- *
-- * Indicate if somebody asked for a return of the CPU to the main loop
-- * (e.g., via cpu_exit() or cpu_interrupt()).
-- *
-- * This is helpful for architectures that support interruptible
-- * instructions. After writing back all state to registers/memory, this
-- * call can be used to check if it makes sense to return to the main loop
-- * or to continue executing the interruptible instruction.
-- */
--static inline bool cpu_loop_exit_requested(CPUState *cpu)
--{
--    return (int32_t)qatomic_read(&cpu->neg.icount_decr.u32) < 0;
--}
--
- #if !defined(CONFIG_USER_ONLY) && defined(CONFIG_TCG)
- /* cputlb.c */
- /**
-diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
-index e9eaab223f9..c07e59cd0b1 100644
---- a/accel/tcg/cpu-exec.c
-+++ b/accel/tcg/cpu-exec.c
-@@ -25,7 +25,7 @@
- #include "hw/core/tcg-cpu-ops.h"
- #include "trace.h"
- #include "disas/disas.h"
--#include "exec/exec-all.h"
-+#include "exec/cpu-common.h"
- #include "exec/page-protection.h"
- #include "tcg/tcg.h"
- #include "qemu/atomic.h"
-diff --git a/target/arm/tcg/helper-a64.c b/target/arm/tcg/helper-a64.c
-index b6af2a59d63..0e130501fd6 100644
---- a/target/arm/tcg/helper-a64.c
-+++ b/target/arm/tcg/helper-a64.c
-@@ -28,6 +28,7 @@
- #include "qemu/bitops.h"
- #include "internals.h"
- #include "qemu/crc32c.h"
-+#include "exec/cpu-common.h"
- #include "exec/exec-all.h"
- #include "exec/cpu_ldst.h"
- #include "qemu/int128.h"
-diff --git a/target/s390x/tcg/mem_helper.c b/target/s390x/tcg/mem_helper.c
-index 307388e5bd1..32717acb7d1 100644
---- a/target/s390x/tcg/mem_helper.c
-+++ b/target/s390x/tcg/mem_helper.c
-@@ -24,6 +24,7 @@
- #include "s390x-internal.h"
- #include "tcg_s390x.h"
- #include "exec/helper-proto.h"
-+#include "exec/cpu-common.h"
- #include "exec/exec-all.h"
- #include "exec/page-protection.h"
- #include "exec/cpu_ldst.h"
--- 
-2.47.1
+> +#ifdef CONFIG_INT128_TYPE
+> +    if (((is_load && HAVE_ATOMIC128_RO) || (!is_load && HAVE_ATOMIC128_RW))
+> +        && ok_for_atomic(16, host, reg_start, evl, log2_esz)) {
+> +        vext_ldst_atom_16_host(vd, byte_offset, host, is_load);
+> +        return 16;
+> +    }
+> +#endif
 
+The tricky part is that if !HAVE_ATOMIC128_RO, then atomic16_set may be implemented with a 
+16-byte compare and store loop.  This is expensive, and you certainly don't want to use 
+that.  You'd prefer two 8-byte stores.
+
+So I think the condition should be
+
+     if (HAVE_ATOMIC128_RO && (is_load || HAVE_ATOMIC128_RW))
+
+with the above paragraph added as a comment.
+
+That said, RVV does not have 128-bit elements, so at no point do you actually require 
+128-bit atomicity.
+
+> +
+> +#ifdef CONFIG_ATOMIC64
+> +    if (ok_for_atomic(8, host, reg_start, evl, log2_esz)) {
+> +        vext_ldst_atom_8_host(vd, byte_offset, host, is_load);
+> +        return 8;
+> +    }
+> +#endif
+> +
+> +    if (ok_for_atomic(4, host, reg_start, evl, log2_esz)) {
+> +        vext_ldst_atom_4_host(vd, byte_offset, host, is_load);
+> +        return 4;
+> +    }
+> +
+> +    if (ok_for_atomic(2, host, reg_start, evl, log2_esz)) {
+> +        vext_ldst_atom_2_host(vd, byte_offset, host, is_load);
+> +        return 2;
+> +    }
+> +#endif
+> +
+> +    ldst_host(vd, reg_start, host);
+> +    return 1;
+> +}
+> +
+>   static inline QEMU_ALWAYS_INLINE void
+>   vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
+>                           void *vd, uint32_t evl, uint32_t reg_start, void *host,
+> -                        uint32_t esz, bool is_load)
+> +                        uint32_t esz, bool is_load, uint32_t log2_esz)
+>   {
+>   #if HOST_BIG_ENDIAN
+>       for (; reg_start < evl; reg_start++, host += esz) {
+> @@ -225,10 +317,13 @@ vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
+>           } else {
+>               memcpy(host, vd + byte_offset, size);
+>           }
+> -    } else {
+> -        for (; reg_start < evl; reg_start++, host += esz) {
+> -            ldst_host(vd, reg_start, host);
+> -        }
+> +        return;
+> +    }
+> +    uint32_t chunk = 0;
+> +    for (; reg_start < evl; reg_start += (chunk >> log2_esz),
+> +                            host += chunk) {
+> +        chunk = vext_ldst_atomic_chunk_host(env, ldst_host, vd, evl, reg_start,
+> +                                            host, esz, is_load, log2_esz);
+>       }
+
+My guess is the arrangement of the loop is not great, in that ok_for_atomic is buried at 
+the bottom of the call stack within this loop.
+
+It would be better to test for alignment once, here at the outside.  If the alignment is 
+below esz, then the individual elements are misaligned, at which point the architecture 
+does not require *any* atomicity.  At which point, I believe you could use the memcpy path 
+just above.
+
+Perhaps something like
+
+     uint32_t byte_offset = reg_start * esz;
+     uint32_t size = (evl - reg_start) * esz;
+     uint32_t test = (uintptr_t)host;
+
+     if (esz == 1 || unlikely(test % esz != 0)) {
+         if (is_load) {
+             memcpy(vd + byte_offset, host, size);
+         } else {
+             memcpy(host, vd + byte_offset, size);
+         }
+         return;
+     }
+
+     /* Test that both alignment and size are multiples. */
+     test |= size;
+     if (HAVE_ATOMIC128_RO && (is_load || HAVE_ATOMIC128_RW) && (test % 16 == 0) {
+         do {
+             vext_ldst_atom_16_host(vd, reg_offset, host, is_load);
+             reg_offset += 16 >> log2_esz;
+             host += 16;
+         } while (reg_offset < evl);
+         return;
+     }
+     if (esz < 8 && test % 8 == 0) {
+         ...
+     }
+     ...
+     for (; reg_start < evl; reg_start++, host += esz) {
+         ldst_host(vd, reg_start, host);
+     }
+
+
+r~
 
