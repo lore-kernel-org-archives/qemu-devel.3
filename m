@@ -4,100 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16659E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 17:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 548C3E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 17:25:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOgiJ-0007kL-Up; Fri, 20 Dec 2024 12:22:59 -0500
+	id 1tOgkA-0000Lb-Ly; Fri, 20 Dec 2024 12:24:54 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1tOgiI-0007jp-Em
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:22:58 -0500
-Received: from mail-pf1-x441.google.com ([2607:f8b0:4864:20::441])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1tOgiG-0002GW-AT
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:22:58 -0500
-Received: by mail-pf1-x441.google.com with SMTP id
- d2e1a72fcca58-728f28744c5so2237531b3a.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 09:22:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1734715374; x=1735320174; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=HDBfv625c7R2aSi7f/KnPch+VhE+r1TPXNdzdRWwyYw=;
- b=md6w93rURIqXHi5YPniFRXiggs3HD2odDv8+2Fi1/PrNkWCj6mQSArlALDnD7B663+
- AykH4Jb6y6fM2ubXf1LcD5cdL+Cg/NFhuk2lNjKiTB+JzOH2RHdveCYb4Orl0Y0kIq9H
- LjXcTqA+jYif/nkt0PN+rpuakMZ4+TbI6ilijuDBwutLZYcSuj8N7T2qo1P9ICqSvJ2J
- tYY1Jcwf8yFCagz+lefutgtwni/SV2XgfWMTx9xQBH5V+kt8EzbLW0gb3GyQHSxsKaxr
- TJfxb7ElKnsHJuXsHchE905bsN8sXrCqVseXeuT8sxZyRc+H1xEei7JvX50tQezDCbbT
- mkVw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOgk4-0000Kn-DH
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:24:49 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOgk2-0002Wh-L8
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:24:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734715484;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nlYJaGZvxhT+59D9zsDgpov38HXed8A0vZ1hKlymbyY=;
+ b=DCzf3mJMp3B1aWcMF67WeHBfeELFWWEQ//1UZecmMGuU4BbgUsuwvix8yCCtg0RB0+3Bpu
+ xJvp7eki5Bbf/7DgRcMzdFyRd9/aNIm39E4C/9THvS/lovIeO+Gyyhg/Ezo/VFJfbEzQ71
+ XiaSgJZpuEUThtrbxabODOF9b6TDILY=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-166-zthq06-vNpWPi3XLcims3Q-1; Fri, 20 Dec 2024 12:24:43 -0500
+X-MC-Unique: zthq06-vNpWPi3XLcims3Q-1
+X-Mimecast-MFC-AGG-ID: zthq06-vNpWPi3XLcims3Q
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-467b19b55d6so25940981cf.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 09:24:43 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734715374; x=1735320174;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734715483; x=1735320283;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=HDBfv625c7R2aSi7f/KnPch+VhE+r1TPXNdzdRWwyYw=;
- b=qq0t7HGPImYbpmv/7xYSJrcgxypC+sX7Z7neA3kvjctYf5LS3tkvQhxdgESwwVDhVd
- C521hj4LWXFgsgP5gQ7o9q6HTb5Ow8XcQdE2pL4f5JTBrYKQ3H9vdgaW5IvwVJfiNbv2
- BZRvUt5d7W53oeuzI4E1gzkaeIfT3SW0tsDXhwvj0xeQjkZfNsfxJ85iRVFCkgCJUlt+
- AJZC6PnAHvHWNSwlAXj1OL9zFDMvS1fFCMkakGra8Pz1rAZekssPCtlThsHPm6fXyAfQ
- 8HT36AttB809eC4UvMSHrXv4zWGMpW+E7REVSWUtH62lGFkggu0gc5jxkfZWYEzvpnx2
- jDOQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPqcL3giuahTRuBNrL0T5aLuEGrchub9KiLe+yys7nZv1BKqjom4lw7l9j+C9RuGXgpo2nbAVkIZYL@nongnu.org
-X-Gm-Message-State: AOJu0YzMdFJaM1jfGabC0wq4STeACvoMZErHdfxXKXMQMaMYKNiF4aIE
- qH/cQvhKeFP3IvFOPOiTViWdMgCv1hFiQEbE+Eig1jZe3pXGncJK8bI0Ap1kzwc=
-X-Gm-Gg: ASbGnctFdXbaYxWMg+j4l/MclN85pBmdP4wpQJZeesHhHA++ov7JXjuCAfzQGzv1Pgx
- K9txfc69QjSXhGwBVamDU4VeWE5r13r1qCbpx0YFQ9U4wiTH/pkr9mTMDvIBzD0Mr1zwJu7fStw
- Jj5chRcBB1sC6BAJZGJAA+I9ZEk8Yrq9NIMdLoZ/PE2i5uB+hoZaeBWdQWSUxdusRLV+ulq+aoo
- Zhtt/XYs43Z/oilIu6ws3PUvL58Yu+jw1ard09aNg8ja6wnB3LWp8vqQRKfmjFvkvELM6P7Jx/6
- 7O7vMDF/ljlrkJQnEgDJ+Od45T7m
-X-Google-Smtp-Source: AGHT+IFfTLJ/ChrBnfLx/VA16C3Uhv3fqXXNqOYH+jlcNcfCt30pfTLCpmu7C5+LJ3Zgdp5R820YYg==
-X-Received: by 2002:a05:6a00:6c88:b0:71e:4930:162c with SMTP id
- d2e1a72fcca58-72abde65a6bmr5559407b3a.6.1734715374581; 
- Fri, 20 Dec 2024 09:22:54 -0800 (PST)
-Received: from [100.64.0.1] (114-35-142-126.hinet-ip.hinet.net.
- [114.35.142.126]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8dd180sm3462262b3a.109.2024.12.20.09.22.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 09:22:54 -0800 (PST)
-Message-ID: <258795e9-4e97-4cd7-949f-24e88d24f25e@sifive.com>
-Date: Sat, 21 Dec 2024 01:22:49 +0800
+ bh=nlYJaGZvxhT+59D9zsDgpov38HXed8A0vZ1hKlymbyY=;
+ b=gSzYsMqWI96YwCpHsHLUTwN+daSF1sJmmd3Ov+76fkAvEtElpgqCv4nfFurJDM/7D+
+ w5CaHXtTiDXF/hCeiKypXYbAoairD89nYO9l4npdGJUJHcmIroDtfI/i7Xf67cUBDkOo
+ jPs2oAXo6UkjbXQdTsAb1dEwFQH8qEphcQVoha1qUga+IfyUimvFHLlOe4/S7YEzKnO9
+ W6jJ0HQPln9XaoNZDVHL2E4de/8naOgTmtfLaRkRrjKBhHJTfwikDZRnq7OJjOpuwprY
+ BCmO7eq1IauEpCL/qcNw9H5VFfZNiwC9/eeoeKzf0XJwH7svG/ZUjhZXtRck7IiX7sXg
+ WzqQ==
+X-Gm-Message-State: AOJu0YxoeHyngb9YJJFzxTMltqJTFNeRxlwo2adCM3O1DQ+NQ4PjtTk2
+ U/xlKnGByaJsbhTioQ/s5wsAFMS1TuJ//aUf8PKmAxu9bTRJhNcL94QAaltzVxOVuByjo1fRsbb
+ Nr7zWyCce8RRGx6E1gB/wKuwwLv95LdZsgAI2fbo8sZIDy481q5es
+X-Gm-Gg: ASbGncu+bIILANmmrOcthCxWQIWBv4UeFNTafj2g6da3ORwHoCxqJTHeOsz4e94mdOP
+ Zsc3v1kGfRpSEhJqWXkZUUFmlfTGWfDvAs2l2N9SGur/mraJhj0wr+S/5EaSjRJvJe5pt/INden
+ 0sPNGoWRMkA6OVAEPtMMzIUrwN8LyW8pO7REwtWW8LlZ5oJSS2FEp8wGfsbLTy6glw1Zl3HN00Q
+ ryX2C+752clPM9r1KCO5yFIw/e74dFQzlOwdSOrsjYIv7xYyoMKWvxV6LcdRhxDpyGCpU15jlOp
+ HJqhvK1vwYX9VMyocw==
+X-Received: by 2002:a05:622a:1a9f:b0:467:4f0a:1b5d with SMTP id
+ d75a77b69052e-46a4a989b51mr58416811cf.42.1734715482778; 
+ Fri, 20 Dec 2024 09:24:42 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGLeHeK9I+EyM4jZijhZwJRbpVMNqNTMySYBMt5WHcWTDFBha5MMXcHKzot0A9A1seIZgWk8g==
+X-Received: by 2002:a05:622a:1a9f:b0:467:4f0a:1b5d with SMTP id
+ d75a77b69052e-46a4a989b51mr58416401cf.42.1734715482338; 
+ Fri, 20 Dec 2024 09:24:42 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-46a3e64cb04sm18656721cf.8.2024.12.20.09.24.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Dec 2024 09:24:41 -0800 (PST)
+Date: Fri, 20 Dec 2024 12:24:39 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Juraj Marcin <jmarcin@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2 08/13] qdev: Make qdev_get_machine() not use
+ container_get()
+Message-ID: <Z2WoVxB8GfdJj6KM@x1n>
+References: <20241121192202.4155849-1-peterx@redhat.com>
+ <20241121192202.4155849-9-peterx@redhat.com>
+ <dbe21846-ea9e-47b6-83c4-6ee350e891e5@linaro.org>
+ <a0e5950d-2de8-4500-8376-88c231818aed@linaro.org>
+ <fe9d34bf-5a68-42e3-ad00-c8f22551865c@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 1/1 v2] target/riscv: use tcg ops generation to emulate
- whole reg rvv loads/stores.
-To: Paolo Savini <paolo.savini@embecosm.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: Richard Handerson <richard.henderson@linaro.org>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bin Meng <bmeng.cn@gmail.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Jeremy Bennett <jeremy.bennett@embecosm.com>,
- Craig Blackmore <craig.blackmore@embecosm.com>
-References: <20241220153834.16302-1-paolo.savini@embecosm.com>
- <20241220153834.16302-2-paolo.savini@embecosm.com>
-Content-Language: en-US
-From: Max Chou <max.chou@sifive.com>
-In-Reply-To: <20241220153834.16302-2-paolo.savini@embecosm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::441;
- envelope-from=max.chou@sifive.com; helo=mail-pf1-x441.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fe9d34bf-5a68-42e3-ad00-c8f22551865c@linaro.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,19 +118,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> +        for (int i = 0; i < size; i += 16) {
-> +            addr = get_address(s, rs1, i);
-> +            if (is_load) {
-> +                tcg_gen_qemu_ld_i128(t16, addr, s->mem_idx,
-> +                        MO_LE | MO_128 | atomicity);
-> +                tcg_gen_st_i128(t16, tcg_env, vreg_ofs(s, vd) + i);
-According to the v spec, the vstart CSR contains the element index on
-which the trap was taken.
-The vstart CSR will get wrong index if the failed element is not the 
-first one
-of the element group(ld/st_i128) here.
-I create a test case in the following repository for this vstart issue.
-https://github.com/rnax/rvv_ldst_test
+On Fri, Dec 20, 2024 at 12:25:44PM +0100, Philippe Mathieu-Daudé wrote:
+> On 19/12/24 19:27, Philippe Mathieu-Daudé wrote:
+> > On 19/12/24 19:20, Philippe Mathieu-Daudé wrote:
+> > > On 21/11/24 20:21, Peter Xu wrote:
+> > > > Currently, qdev_get_machine() has a slight misuse on container_get(), as
+> > > > the helper says "get a container" but in reality the goal is to get the
+> > > > machine object.  It is still a "container" but not strictly.
+> > > > 
+> > > > Note that it _may_ get a container (at "/machine") in our
+> > > > current unit test
+> > > > of test-qdev-global-props.c before all these changes, but it's probably
+> > > > unexpected and worked by accident.
+> > > > 
+> > > > Switch to an explicit object_resolve_path_component(), with a
+> > > > side benefit
+> > > > that qdev_get_machine() can happen a lot, and we don't need to split the
+> > > > string ("/machine") every time.  This also paves way for making
+> > > > the helper
+> > > > container_get() never try to return a non-container at all.
+> > > > 
+> > > > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > > > ---
+> > > >   hw/core/qdev.c | 7 ++++++-
+> > > >   1 file changed, 6 insertions(+), 1 deletion(-)
+> > > > 
+> > > > diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> > > > index 5f13111b77..b622be15ee 100644
+> > > > --- a/hw/core/qdev.c
+> > > > +++ b/hw/core/qdev.c
+> > > > @@ -817,7 +817,12 @@ Object *qdev_get_machine(void)
+> > > >       static Object *dev;
+> > > >       if (dev == NULL) {
+> > > > -        dev = container_get(object_get_root(), "/machine");
+> > > > +        dev = object_resolve_path_component(object_get_root(),
+> > > > "machine");
+> > > > +        /*
+> > > > +         * Any call to this function before machine is created
+> > > > is treated
+> > > > +         * as a programming error as of now.
+> > > > +         */
+> > > > +        assert(dev);
+> > > 
+> > > This fails for user-emulation:
+> > > 
+> > > ./qemu-x86_64 /bin/echo foo
+> > > qemu-x86_64: ../../hw/core/qdev.c:825: qdev_get_machine: Assertion
+> > > `dev' failed.
+> 
+> OK so I guess I might have found a "fix" which is to simply not
+> call qdev_get_machine() for user emulation, but this involves some
+> invasive refactoring -- so will take time --.
 
-max
+Thanks for taking a look, Phil.  Yes this sounds clean.
+
+> 
+> I'm dropping this series for now, planning to merge it again on top
+> of my refactor once it is ready. Any clever / simpler fix is
+> obviously welcomed first.
+
+I initially thought about this, which could also be clean but I then
+noticed LINUX_USER is poisoned..
+
+===8<===
+diff --git a/qom/object.c b/qom/object.c
+index 58897a79a7..da26e8d69b 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1729,7 +1729,19 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
+     return prop->type;
+ }
+
++/*
++ * Create all QEMU default containers.
++ *
++ * For system emulations, "machine" and its sub-containers are only created
++ * when machine initializes (qemu_create_machine()).
++ *
++ * For user emulations, create "machine" before hand to make qdev realize()
++ * work by default.
++ */
+ static const char *const root_containers[] = {
++#ifdef CONFIG_LINUX_USER
++    "machine",
++#endif
+     "chardevs",
+     "objects",
+     "backend"
+@@ -1740,10 +1752,6 @@ static Object *object_root_initialize(void)
+     Object *root = object_new(TYPE_CONTAINER);
+     int i;
+
+-    /*
+-     * Create all QEMU system containers.  "machine" and its sub-containers
+-     * are only created when machine initializes (qemu_create_machine()).
+-     */
+     for (i = 0; i < ARRAY_SIZE(root_containers); i++) {
+         object_property_add_new_container(root, root_containers[i]);
+     }
+===8<===
+
+Maybe we could still move it somewhere that LINUX_USER is not poisoned
+(plus "unattached" be created too, more below)?
+
+OTOH, this works for me:
+
+===8<===
+diff --git a/linux-user/main.c b/linux-user/main.c
+index b09af8d436..009b7695f2 100644
+--- a/linux-user/main.c
++++ b/linux-user/main.c
+@@ -819,6 +819,11 @@ int main(int argc, char **argv, char **envp)
+     set_preferred_target_page_bits(ctz32(host_page_size));
+     finalize_target_page_bits();
+ 
++    Object *fake_obj = object_property_add_new_container(object_get_root(),
++                                                         "machine");
++    object_property_add_new_container(fake_obj, "unattached");
++
+     cpu = cpu_create(cpu_type);
+     env = cpu_env(cpu);
+     cpu_reset(cpu);
+===8<===
+
+So we need both "/machine" and "/machine/unattached" so far to make
+linux-user work.  Not sure if bsd-user/main.c needs similar care, but none
+of these look as clean.
+
+Thanks,
+
+-- 
+Peter Xu
+
 
