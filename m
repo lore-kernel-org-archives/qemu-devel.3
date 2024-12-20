@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BE50E77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 651D8E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tORt6-0001ZY-3r; Thu, 19 Dec 2024 20:33:08 -0500
+	id 1tOSEa-0006B4-NQ; Thu, 19 Dec 2024 20:55:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tORt3-0001ZF-MQ
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:33:05 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tORt1-0007qj-9Y
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:33:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734658380;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=WmEliLdIe0QSgVv7hFYjszT4WehYmbWktJrUWaA5FYM=;
- b=PXzkBDtUeO7JpUekECjEvMOI5MQRT0ylUAlezgJ9BnxSId7eBXuVBH1pW6qRI66wKjuaDR
- CKAe8fmx9fxC6rrv7mZIowTw0IOYVxAgIuaxH/ZWzkZb7q3XTf089LQzTzEB+IFWKPu4Vy
- dcNLVlgG56ZT5rN9SG1L109z76D2d5U=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-9wXIibnlPkihOp5FDyBHYQ-1; Thu, 19 Dec 2024 20:32:58 -0500
-X-MC-Unique: 9wXIibnlPkihOp5FDyBHYQ-1
-X-Mimecast-MFC-AGG-ID: 9wXIibnlPkihOp5FDyBHYQ
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-aa69e84128aso108746766b.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:32:58 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tOSEY-0006AY-Gs
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:18 -0500
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1tOSEW-0004Ph-Mn
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:18 -0500
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-725ed193c9eso1283409b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734659715; x=1735264515; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=enBDjegY8V+VdOlXQaQjxZZeMo94AMYKDHgxhL4QJc0=;
+ b=CuZc3fns2zu+FzNKna9UR+sDRfP99oyeoZPbS1wnOfKE3+60bXQEnAsTIZOlc6SgKQ
+ q+oiqxhA0pRfa24YkQyyR3WGf9QRsLjEg8e1jyZKxzJ+764HFidBBuIGE13IfZuKDIyD
+ i/gIq3lWspCE5+cCghUoBnWAHz3yP67Qj3KU2LLf47YJKcH7wXlQ0CCpWJmUEnnBZN/x
+ MzXnprSJjVgZnVpWuaQIcd5qm5o5mEtDNcIAR7qAdTBMcyccUdziXmZJQgpBikJZG0Tk
+ DLMzjFAP7MJH8woNrbkCaq1lNYv9r52sFL0RwWNnLdwR8brTopX+okCd0FFE4s56WzjI
+ I0UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734658378; x=1735263178;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1734659715; x=1735264515;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WmEliLdIe0QSgVv7hFYjszT4WehYmbWktJrUWaA5FYM=;
- b=AIEjNtmbYAIClvuwc6nI/Ino/nwPVt/XHonshICi7eW2I+NimMSGuxcgaGQVduwZny
- AhXgXY1hFTeHAbPCD7lnQZ0Vw3H5/lVD44/hIYxDk6gNn0hjzxDkb405WIaQ/BZtF9h5
- pymLZN4TA460xWQyqRBMCMWK9ZxyMWgKZGV1geu2DigXtP0mwPbNtuUjLHudIrUBHn6s
- zFUe7qhIBhm085umemV2CJe58uAYuY7JL6nTX5+qV8UJaHSnCb8Uj93huoKWyBf21TQs
- dLo/ssHg+fYg29fL4r7sMY0XnC+RFTR3tIyPSICBAdutNrqNJBhtYAXJJZ0ViPF7QD3a
- lLkw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVTufneSW2KucHADkFLeAfLJf/mnpBhJxdXUW9QOhNLUqWlPCx3+visixZ/G+Y7UCtfVloTcizNa4Ew@nongnu.org
-X-Gm-Message-State: AOJu0YyROKakcOxGSShV8onwbnvP5HQ9A8vKyeHj8aZBbkQXV7F/mNGR
- 3jSm4Mp4WWkGZ5R+Mp2wkaLQXo7VySk7QLBHn1YpfDdUGMKlU/Dx3v8CAfCdJSYuvI3jBha3unn
- JZcUdLUAEjN9dX2uKdfia5VlKgq6BIe3XVuXrv3HuRxyL3+xj/uFMitOSAGLIx9eKAmRjXnhXo8
- lS/MSBJYWMW1NgxouxJ4cMGRWJudk=
-X-Gm-Gg: ASbGnctY/MHY2i8NCwUxFlR33awnOMDwUnpDrvo69GTySmcMIJjXudwe3WbeuIOEXvZ
- Ouq8pirEUi+Qypf1w5/RYWUyPGQ8N6UtM1eU=
-X-Received: by 2002:a17:907:c2a:b0:aa6:79fa:b480 with SMTP id
- a640c23a62f3a-aac2713135bmr76204266b.10.1734658377621; 
- Thu, 19 Dec 2024 17:32:57 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IH9JKIvbxOsSPu14R4V6YRlj8tgDbh0vmCcRUc+86AzP0ucqBe+K6Y42PYsCGBOiUZTivS8Ip6yt+oWSOyyw4k=
-X-Received: by 2002:a17:907:c2a:b0:aa6:79fa:b480 with SMTP id
- a640c23a62f3a-aac2713135bmr76202766b.10.1734658377259; Thu, 19 Dec 2024
- 17:32:57 -0800 (PST)
+ bh=enBDjegY8V+VdOlXQaQjxZZeMo94AMYKDHgxhL4QJc0=;
+ b=UZObrOz0MgpyzW85UE3qcv20v/9IzdFsrEgGgYcw6ROirJECHPYe1ZzP7+0HE02CqW
+ kNjBJ5kbceK8tvuP8VdIIgYkNnCe7gFMy8N7ftznUkS7l/wJjDUxt2ZYOohSaAAcRhOb
+ zl74vSQTj0EoLflXqFctQwj3Qr2cU4Fa8BikSxBH4uIMzI74/CoA+yVGIHaDfCuwlbJB
+ sfVy5W8h6kJUFYsbkPv1kDOmmKoLzv+JSnQKG780E1vJ8SyuDt0Dd59yDr2IlEgb0hc9
+ Rll56azPv8HkTbJGjUy3ddGou3ZIef6kzBxPgq6ogIxhfbhHRfOnGfHCS1Jl2wvdXmBc
+ Wd+A==
+X-Gm-Message-State: AOJu0YwzcFWk709thjHTO1Ni562ErtQ6EXyyOGazK5czIsqLuQXIeGL3
+ pFCruKEEPPhFj5gAlJ64RZiqI4Oz7CwqojdTDNPxYF6+O/Dtvz+8e00om/TI
+X-Gm-Gg: ASbGncuYiuBu98lYNMmDCWB7b/fv9mCV7qaKCtvYhdsA3+OuIUDpCQTHdUwD24VF1ee
+ Csqo8faz72Sif975u4gXojAnrBnuUUxRFdduFrQVVOBtShdCU+DwbFuqlqeOsVmIzWNetR7+JMx
+ qO/7rZUsRj0cqb+wQ6WZi8QhyzSXt2ogC7csJMxuXnnIiRMeBJHGieMG7Z2pFav7ytS3KaPza9k
+ JmHXpRXmEY8hO+45CkWFByJMZHLhb386UHSI3A//tj9WDRM4mUWYKojOHORqmASyiBImLIqFnuB
+ tFzjAnFFbCZs8UmjKzsPkmCVp/fHJt5HOFhHeQ8CTxgJBQRaZiDlgJRsAdeDjzg=
+X-Google-Smtp-Source: AGHT+IFhTYgKy+PLF6Z06wEs3/et3ZwsJVQlrx+KVvMs/yBdktRWlRkIBbar4NMGjIaTQno09HTnIA==
+X-Received: by 2002:a05:6a00:35c3:b0:725:a78c:6c31 with SMTP id
+ d2e1a72fcca58-72abdd3c168mr1424501b3a.3.1734659714909; 
+ Thu, 19 Dec 2024 17:55:14 -0800 (PST)
+Received: from toolbox.alistair23.me
+ (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
+ [2403:580b:97e8:0:82ce:f179:8a79:69f4])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Dec 2024 17:55:14 -0800 (PST)
+From: Alistair Francis <alistair23@gmail.com>
+X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
+To: qemu-devel@nongnu.org
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 07/39] hw/riscv/virt.c, riscv-iommu-sys.c: add MSIx support
+Date: Fri, 20 Dec 2024 11:54:07 +1000
+Message-ID: <20241220015441.317236-8-alistair.francis@wdc.com>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
+References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
- <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
- <55f6dfe7-cadf-4942-81e8-18b15938c349@linaro.org>
- <CAK3XEhNN9EO75vgsdRboMZ7nwZbaL0eenSwSy-7Hze-ukyTZsQ@mail.gmail.com>
- <7c1a7e86-8996-43ab-aa07-6763387b2bc5@linaro.org>
-In-Reply-To: <7c1a7e86-8996-43ab-aa07-6763387b2bc5@linaro.org>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 20 Dec 2024 07:02:44 +0530
-Message-ID: <CAK3XEhOZ50Co0hAS31KYyQA+mgwXSoGCxMu_vhZXmpP0RwT6Mw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Alex Graf <graf@amazon.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov <imammedo@redhat.com>, 
- Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel <qemu-devel@nongnu.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,176 +103,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19, 2024 at 10:46=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> On 19/12/24 18:08, Ani Sinha wrote:
-> >
-> >
-> > On Thu, 19 Dec, 2024, 10:21 pm Philippe Mathieu-Daud=C3=A9,
-> > <philmd@linaro.org <mailto:philmd@linaro.org>> wrote:
-> >
-> >     On 19/12/24 17:16, Ani Sinha wrote:
-> >      >
-> >      >
-> >      > On Thu, 19 Dec, 2024, 9:22 pm Philippe Mathieu-Daud=C3=A9,
-> >     <philmd@linaro.org <mailto:philmd@linaro.org>
-> >      > <mailto:philmd@linaro.org <mailto:philmd@linaro.org>>> wrote:
-> >      >
-> >      >     On 16/12/24 12:48, Ani Sinha wrote:
-> >      >
-> >      >      > diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-> >      >      > index d02d96e403..4c5bdb0de2 100644
-> >      >      > --- a/hw/misc/meson.build
-> >      >      > +++ b/hw/misc/meson.build
-> >      >      > @@ -148,6 +148,8 @@ specific_ss.add(when: 'CONFIG_MAC_VIA=
-',
-> >      >     if_true: files('mac_via.c'))
-> >      >      >   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true:
-> >      >     files('mips_cmgcr.c', 'mips_cpc.c'))
-> >      >      >   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true:
-> >      >     files('mips_itu.c'))
-> >      >      >
-> >      >      > +specific_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true:
-> >      >     files('vmfwupdate.c'))
-> >      >
-> >      >     FW_CFG_DMA is offered by multiple targets ...:
-> >      >
-> >      >     $ git grep -w FW_CFG_DMA
-> >      >     hw/arm/Kconfig:19:    select FW_CFG_DMA
-> >      >     hw/i386/Kconfig:82:    select FW_CFG_DMA
-> >      >     hw/i386/Kconfig:113:    select FW_CFG_DMA
-> >      >     hw/loongarch/Kconfig:22:    select FW_CFG_DMA
-> >      >     hw/riscv/Kconfig:59:    select FW_CFG_DMA
-> >      >
-> >      >      > diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
-> >      >      > new file mode 100644
-> >      >      > index 0000000000..1e29a610c0
-> >      >      > --- /dev/null
-> >      >      > +++ b/hw/misc/vmfwupdate.c
-> >      >      > @@ -0,0 +1,157 @@
-> >      >      > +/*
-> >      >      > + * Guest driven VM boot component update device
-> >      >      > + * For details and specification, please look at docs/sp=
-ecs/
-> >      >     vmfwupdate.rst.
-> >      >      > + *
-> >      >      > + * Copyright (C) 2024 Red Hat, Inc.
-> >      >      > + *
-> >      >      > + * Authors: Ani Sinha <anisinha@redhat.com
-> >     <mailto:anisinha@redhat.com>
-> >      >     <mailto:anisinha@redhat.com <mailto:anisinha@redhat.com>>>
-> >      >      > + *
-> >      >      > + * This work is licensed under the terms of the GNU GPL,
-> >     version
-> >      >     2 or later.
-> >      >      > + * See the COPYING file in the top-level directory.
-> >      >      > + *
-> >      >      > + */
-> >      >      > +
-> >      >      > +#include "qemu/osdep.h"
-> >      >      > +#include "qapi/error.h"
-> >      >      > +#include "qemu/module.h"
-> >      >      > +#include "sysemu/reset.h"
-> >      >      > +#include "hw/nvram/fw_cfg.h"
-> >      >      > +#include "hw/i386/pc.h"
-> >      >
-> >      >     ... however ...
-> >      >
-> >      >      > +#include "hw/qdev-properties.h"
-> >      >      > +#include "hw/misc/vmfwupdate.h"
-> >      >      > +#include "qemu/error-report.h"
-> >      >      > +
-> >      >      > +static void fw_update_reset(void *dev)
-> >      >      > +{
-> >      >      > +    /* a NOOP at present */
-> >      >      > +    return;
-> >      >      > +}
-> >      >      > +
-> >      >      > +
-> >      >      > +static uint64_t get_max_fw_size(void)
-> >      >      > +{
-> >      >      > +    Object *m_obj =3D qdev_get_machine();
-> >      >      > +    PCMachineState *pcms =3D PC_MACHINE(m_obj);
-> >      >      > +
-> >      >      > +    if (pcms) {
-> >      >      > +        return pcms->max_fw_size;
-> >      >
-> >      >     ... this code depends on x86/PC.
-> >      >
-> >      >     Could it be wiser to add a new VM_FWUPDATE Kconfig
-> >      >     symbol, having it depending on FW_CFG_DMA && I386?
-> >      >
-> >      >
-> >      > There is no reason why vmfwupdate would be limited to x86 only.
-> >     There is
-> >      > minimal support needed from hypervisor side for this mechanism. =
-That
-> >      > mechanism has little dependency on specific platform.
-> >
-> >     OK, then please remove that PCMachineState use
-> >
-> >
-> > That is used because the max_fw_size property only exists for pc
-> > machines. Do you have a better idea to get this value in a platform
-> > agnostic way? Like I said in the previous reply I do not know how to ge=
-t
-> > this value reliably for all machines. If anyone has better ideas, I'm
-> > all ears.
->
-> Either add the I386 dependency or don't use PC_MACHINE, because on
-> non-x86 targets PC_MACHINE(qdev_get_machine()) will crash.
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Ah this is where we have a disconnect. I assumed that
-> pcms =3D PC_MACHINE(m_obj)
+MSIx support is added in the RISC-V IOMMU platform device by including
+the required MSIx facilities to alow software to properly setup the MSIx
+subsystem.
 
-would return NULL on non-x86.
+We took inspiration of what is being done in the riscv-iommu-pci device,
+mainly msix_init() and msix_notify(), while keeping in mind that
+riscv-iommu-sys isn't a true PCI device and we don't need to copy/paste
+all the contents of these MSIx functions.
 
-Seems a better way to do this (as is done in vga.c) is to use
-object_dynamic_cast()
-How about
+Two extra MSI MemoryRegions were added: 'msix-table' and 'msix-pba'.
+They are used to manage r/w of the MSI table and Pending Bit Array (PBA)
+respectively. Both are subregions of the main IOMMU memory region,
+iommu->regs_mr, initialized during riscv_iommu_realize(), and each one
+has their own handlers for MSIx reads and writes.
 
-diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
-index 0e90bd10e1..19d042b929 100644
---- a/hw/misc/vmfwupdate.c
-+++ b/hw/misc/vmfwupdate.c
-@@ -32,9 +32,11 @@ static inline VMFwUpdateState *vmfwupdate_find(void)
- static uint64_t get_max_fw_size(void)
+This is the expected memory map when using this device in the 'virt'
+machine:
+
+    0000000003010000-0000000003010fff (prio 0, i/o): riscv-iommu-regs
+      0000000003010300-000000000301034f (prio 0, i/o): msix-table
+      0000000003010400-0000000003010407 (prio 0, i/o): msix-pba
+
+We're now able to set IGS to RISCV_IOMMU_CAP_IGS_BOTH, and userspace is
+free to decide which interrupt model to use.
+
+Enabling MSIx support for this device in the 'virt' machine requires
+adding 'msi-parent' in the iommu-sys DT.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241106133407.604587-6-dbarboza@ventanamicro.com>
+[ Changes by AF:
+ - Used PRIx64 in trace
+]
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ hw/riscv/riscv-iommu-sys.c | 116 +++++++++++++++++++++++++++++++++++--
+ hw/riscv/virt.c            |   6 +-
+ hw/riscv/trace-events      |   2 +
+ 3 files changed, 119 insertions(+), 5 deletions(-)
+
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index 4b82046ce9..a0ef67a20b 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -26,11 +26,15 @@
+ #include "qemu/host-utils.h"
+ #include "qemu/module.h"
+ #include "qom/object.h"
++#include "exec/exec-all.h"
++#include "trace.h"
+ 
+ #include "riscv-iommu.h"
+ 
+ #define RISCV_IOMMU_SYSDEV_ICVEC_VECTORS 0x3333
+ 
++#define RISCV_IOMMU_PCI_MSIX_VECTORS 5
++
+ /* RISC-V IOMMU System Platform Device Emulation */
+ 
+ struct RISCVIOMMUStateSys {
+@@ -39,21 +43,123 @@ struct RISCVIOMMUStateSys {
+     uint32_t         base_irq;
+     DeviceState      *irqchip;
+     RISCVIOMMUState  iommu;
++
++    /* Wired int support */
+     qemu_irq         irqs[RISCV_IOMMU_INTR_COUNT];
++
++    /* Memory Regions for MSIX table and pending bit entries. */
++    MemoryRegion msix_table_mmio;
++    MemoryRegion msix_pba_mmio;
++    uint8_t *msix_table;
++    uint8_t *msix_pba;
++};
++
++static uint64_t msix_table_mmio_read(void *opaque, hwaddr addr,
++                                     unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    g_assert(addr + size <= RISCV_IOMMU_PCI_MSIX_VECTORS * PCI_MSIX_ENTRY_SIZE);
++    return pci_get_long(s->msix_table + addr);
++}
++
++static void msix_table_mmio_write(void *opaque, hwaddr addr,
++                                  uint64_t val, unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    g_assert(addr + size <= RISCV_IOMMU_PCI_MSIX_VECTORS * PCI_MSIX_ENTRY_SIZE);
++    pci_set_long(s->msix_table + addr, val);
++}
++
++static const MemoryRegionOps msix_table_mmio_ops = {
++    .read = msix_table_mmio_read,
++    .write = msix_table_mmio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .max_access_size = 4,
++    },
++};
++
++static uint64_t msix_pba_mmio_read(void *opaque, hwaddr addr,
++                                   unsigned size)
++{
++    RISCVIOMMUStateSys *s = opaque;
++
++    return pci_get_long(s->msix_pba + addr);
++}
++
++static void msix_pba_mmio_write(void *opaque, hwaddr addr,
++                                uint64_t val, unsigned size)
++{
++}
++
++static const MemoryRegionOps msix_pba_mmio_ops = {
++    .read = msix_pba_mmio_read,
++    .write = msix_pba_mmio_write,
++    .endianness = DEVICE_LITTLE_ENDIAN,
++    .valid = {
++        .min_access_size = 4,
++        .max_access_size = 8,
++    },
++    .impl = {
++        .max_access_size = 4,
++    },
+ };
+ 
++static void riscv_iommu_sysdev_init_msi(RISCVIOMMUStateSys *s,
++                                        uint32_t n_vectors)
++{
++    RISCVIOMMUState *iommu = &s->iommu;
++    uint32_t table_size = table_size = n_vectors * PCI_MSIX_ENTRY_SIZE;
++    uint32_t table_offset = RISCV_IOMMU_REG_MSI_CONFIG;
++    uint32_t pba_size = QEMU_ALIGN_UP(n_vectors, 64) / 8;
++    uint32_t pba_offset = RISCV_IOMMU_REG_MSI_CONFIG + 256;
++
++    s->msix_table = g_malloc0(table_size);
++    s->msix_pba = g_malloc0(pba_size);
++
++    memory_region_init_io(&s->msix_table_mmio, OBJECT(s), &msix_table_mmio_ops,
++                          s, "msix-table", table_size);
++    memory_region_add_subregion(&iommu->regs_mr, table_offset,
++                                &s->msix_table_mmio);
++
++    memory_region_init_io(&s->msix_pba_mmio, OBJECT(s), &msix_pba_mmio_ops, s,
++                          "msix-pba", pba_size);
++    memory_region_add_subregion(&iommu->regs_mr, pba_offset,
++                                &s->msix_pba_mmio);
++}
++
++static void riscv_iommu_sysdev_send_MSI(RISCVIOMMUStateSys *s,
++                                        uint32_t vector)
++{
++    uint8_t *table_entry = s->msix_table + vector * PCI_MSIX_ENTRY_SIZE;
++    uint64_t msi_addr = pci_get_quad(table_entry + PCI_MSIX_ENTRY_LOWER_ADDR);
++    uint32_t msi_data = pci_get_long(table_entry + PCI_MSIX_ENTRY_DATA);
++    MemTxResult result;
++
++    address_space_stl_le(&address_space_memory, msi_addr,
++                         msi_data, MEMTXATTRS_UNSPECIFIED, &result);
++    trace_riscv_iommu_sys_msi_sent(vector, msi_addr, msi_data, result);
++}
++
+ static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
+                                       unsigned vector)
  {
-     Object *m_obj =3D qdev_get_machine();
--    PCMachineState *pcms =3D PC_MACHINE(m_obj);
-+    MachineState *ms =3D MACHINE(m_obj);
-+    PCMachineState *pcms;
--    if (pcms) {
-+    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-+        pcms =3D PC_MACHINE(m_obj);
-         return pcms->max_fw_size;
-     } else {
-         return 0;
-
-As I said before, if this is not the best way, please suggest an
-alternative to get max_fw_size for any platform.
-
->
-> >     What about the FW_CFG_DMA dependency?
-
-If you read the spec,
-
-+ The ``fw-cfg`` interface must support the
-+     DMA interface. It may only support the DMA interface for write operat=
-ions.
-
-So we need that.
-
-> >
->
-> I wasted enough time on this so I'll stop reviewing this work.
-
-Well up to you but I have tried to incorporate most of your
-suggestions here (as it has been with other patches that you review).
-I am off for the year-end break so won't be sending any more versions
-of this patch in the next few days. So if you change your mind, feel
-free to comment.
-Have a good year-end break.
+     RISCVIOMMUStateSys *s = container_of(iommu, RISCVIOMMUStateSys, iommu);
+     uint32_t fctl =  riscv_iommu_reg_get32(iommu, RISCV_IOMMU_REG_FCTL);
+ 
+-    /* We do not support MSIs yet */
+-    if (!(fctl & RISCV_IOMMU_FCTL_WSI)) {
++    if (fctl & RISCV_IOMMU_FCTL_WSI) {
++        qemu_irq_pulse(s->irqs[vector]);
++        trace_riscv_iommu_sys_irq_sent(vector);
+         return;
+     }
+ 
+-    qemu_irq_pulse(s->irqs[vector]);
++    riscv_iommu_sysdev_send_MSI(s, vector);
+ }
+ 
+ static void riscv_iommu_sys_realize(DeviceState *dev, Error **errp)
+@@ -82,6 +188,8 @@ static void riscv_iommu_sys_realize(DeviceState *dev, Error **errp)
+         irq = qdev_get_gpio_in(s->irqchip, s->base_irq + i);
+         sysbus_connect_irq(sysdev, i, irq);
+     }
++
++    riscv_iommu_sysdev_init_msi(s, RISCV_IOMMU_PCI_MSIX_VECTORS);
+ }
+ 
+ static void riscv_iommu_sys_init(Object *obj)
+@@ -93,7 +201,7 @@ static void riscv_iommu_sys_init(Object *obj)
+     qdev_alias_all_properties(DEVICE(iommu), obj);
+ 
+     iommu->icvec_avail_vectors = RISCV_IOMMU_SYSDEV_ICVEC_VECTORS;
+-    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_WSI);
++    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_BOTH);
+ }
+ 
+ static Property riscv_iommu_sys_properties[] = {
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index c5ada635f1..5d058511be 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -1043,6 +1043,7 @@ static void create_fdt_virtio_iommu(RISCVVirtState *s, uint16_t bdf)
+ }
+ 
+ static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
++                                 uint32_t msi_phandle,
+                                  uint32_t *iommu_sys_phandle)
+ {
+     const char comp[] = "riscv,iommu";
+@@ -1077,6 +1078,8 @@ static void create_fdt_iommu_sys(RISCVVirtState *s, uint32_t irq_chip,
+         iommu_irq_map[2], FDT_IRQ_TYPE_EDGE_LOW,
+         iommu_irq_map[3], FDT_IRQ_TYPE_EDGE_LOW);
+ 
++    qemu_fdt_setprop_cell(fdt, iommu_node, "msi-parent", msi_phandle);
++
+     *iommu_sys_phandle = iommu_phandle;
+ }
+ 
+@@ -1117,7 +1120,8 @@ static void finalize_fdt(RISCVVirtState *s)
+     create_fdt_virtio(s, virt_memmap, irq_virtio_phandle);
+ 
+     if (virt_is_iommu_sys_enabled(s)) {
+-        create_fdt_iommu_sys(s, irq_mmio_phandle, &iommu_sys_phandle);
++        create_fdt_iommu_sys(s, irq_mmio_phandle, msi_pcie_phandle,
++                             &iommu_sys_phandle);
+     }
+     create_fdt_pcie(s, virt_memmap, irq_pcie_phandle, msi_pcie_phandle,
+                     iommu_sys_phandle);
+diff --git a/hw/riscv/trace-events b/hw/riscv/trace-events
+index 0527c56c91..525fd5b730 100644
+--- a/hw/riscv/trace-events
++++ b/hw/riscv/trace-events
+@@ -15,3 +15,5 @@ riscv_iommu_icvec_write(uint32_t orig, uint32_t actual) "ICVEC write: incoming 0
+ riscv_iommu_ats(const char *id, unsigned b, unsigned d, unsigned f, uint64_t iova) "%s: translate request %04x:%02x.%u iova: 0x%"PRIx64
+ riscv_iommu_ats_inval(const char *id) "%s: dev-iotlb invalidate"
+ riscv_iommu_ats_prgr(const char *id) "%s: dev-iotlb page request group response"
++riscv_iommu_sys_irq_sent(uint32_t vector) "IRQ sent to vector %u"
++riscv_iommu_sys_msi_sent(uint32_t vector, uint64_t msi_addr, uint32_t msi_data, uint32_t result) "MSI sent to vector %u msi_addr 0x%"PRIx64" msi_data 0x%x result %u"
+-- 
+2.47.1
 
 
