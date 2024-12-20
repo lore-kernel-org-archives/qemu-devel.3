@@ -4,121 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1C16E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:54:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1530FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 17:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOgGW-0007Gt-W6; Fri, 20 Dec 2024 11:54:17 -0500
+	id 1tOgM0-0000UG-Cd; Fri, 20 Dec 2024 11:59:56 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOgGU-0007G5-NF
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:54:14 -0500
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
+ (Exim 4.90_1) (envelope-from
+ <3hKJlZwYKCqETFBOKDHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--seanjc.bounces.google.com>)
+ id 1tOgLy-0000Ti-SX
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:59:54 -0500
+Received: from mail-pj1-x104a.google.com ([2607:f8b0:4864:20::104a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOgGS-0001OS-EB
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:54:14 -0500
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-728ea1573c0so1941622b3a.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:54:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from
+ <3hKJlZwYKCqETFBOKDHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--seanjc.bounces.google.com>)
+ id 1tOgLv-0002ya-7n
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:59:53 -0500
+Received: by mail-pj1-x104a.google.com with SMTP id
+ 98e67ed59e1d1-2ee6dccd3c9so1945774a91.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:59:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734713651; x=1735318451; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sW4TRa3efTCPYQOtrOg+F3CxpZ9XNiC5ySA8QirrmJE=;
- b=xKltQ+WL+3Is8GgTOpVlPdZ0GUISizC16wLTdXpaMy0GHIraShgGTNjFh3s4Mww5m2
- /diQKjPmyVD5MfL5TuNYEHI0xH8vCa2pimigBcOSmRIVO7UVTwwJVcAspwaZQsZUL9X8
- WmfB+/OBsADQ82KwpWIMsUPwMJ2zmiXiPgOnvJ/uLYAyt2vEYNLoCsX7jorPmfB7yFWq
- AZB582U8uY1HensQDXFCc42Gu9dMXgnQxcpZ8MF+qzWaaB1Etnq7AVXUeXO69ETLOP4u
- cAm8mYADcudwxXrPVG3xssJctpwYgEQhLL9HWAsFLKmgSSn113kET69kWRHngSrIco/5
- /y3Q==
+ d=google.com; s=20230601; t=1734713988; x=1735318788; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=n61l0zrRSrZD3ftUtvSs02eIlCxovtOVrwB65P210Fg=;
+ b=lP47JayOxKOlql+TlHDwlEyc2qyyK18J6m7Pmk+V/ZocG7EGUEpmJGudBa2AUFEXfv
+ aGWTXazQDlsziGzSbaQfE/FUqUhxgcHJdblyQQbqwfhhkmxy34HTK+je5aUFskBg++Aa
+ RNfy3u15GbBm6E26uqjE4Aqlta+LeH24dNGcBruQrG7xna3XWAbCx4d+JC6YRAfokgcl
+ Yd5msUNbO9pZge2ikF80UU+oA697hMQkWn1eOhhu3zHEjYGqfRub3euB6iE6jE+f7s9A
+ uYEvPjDknc6C0CW1kSmHvJIMYq4YlxjTgWivp1bS9swpzwUA4H0s9Sqjg8HgbJSA7SY8
+ iMpw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734713651; x=1735318451;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sW4TRa3efTCPYQOtrOg+F3CxpZ9XNiC5ySA8QirrmJE=;
- b=UA9doFjRhg+NtRHUTmLY34G4gRrU25EMDDxykfyu96FiPVmm1aaYMMAhHLPTi3nqWL
- tYHAoPWHE38bnqKQHCLw5Z4ccYNeUCot0kQIbvRhq1Hmq3bvBPO6rilYwMHcsNJ7uiH2
- RZ4OaeLa649nwNg9iI9yGILwwrMBUpVBAqfcv3zRMWajW9DkNYZkG6ufIYfKaSmrAVvp
- ZNp+Wv7bXvH2qn7qm7WrRrPM61mFzg5uBrc4w6bfCary0hEhMN1lY/wQtl36lSKmFsq7
- n/FCVpovxeJvS9EBvoLKyA1nAd9cT5UAJvSxfjlcZxxdPKHpaNrd6SRkrpLX58bqzjU+
- Y7lg==
+ d=1e100.net; s=20230601; t=1734713988; x=1735318788;
+ h=content-transfer-encoding:cc:to:from:subject:message-id:references
+ :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=n61l0zrRSrZD3ftUtvSs02eIlCxovtOVrwB65P210Fg=;
+ b=WwxC4KmyXQWVDCOP1JagX/IBXFCdjm+fX7y88RuM/5JBU6gxksAz0Ku5ZIeGTDGCr6
+ 8dBiXh2icBkb2wpoeQa9ggK+Wx0LxVgEPuuLGFLfa215JzrJDtGkUB4wIqcI8fiG/cVE
+ 4pYWJEhTlRo+MIgNjKYScCw3rp0rsxh6ANDbKGljaJzrvlwVQ5Ej53Tnyr4Lc27f5GRF
+ 1Drkcz9URrZvlnVHaqJeDTC0CAg3ssUgIGrdUBeOoFN5Z83LY910xVaLkhAJ5KC02xYq
+ zO4zeDsr3+XbS0APPxHIsycINUUpX43+XUadDiwD8hlG3z6tQwvi/GvCkxbIryo6zIZT
+ r+IQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUr2FfG5KE2XFRhBjerPW5F2HdpXpsDjrJ62iLQzPhg3yVG8oT8YOLIZKzP+9GSc3F0KDvIiAWZ4t3@nongnu.org
-X-Gm-Message-State: AOJu0YxpozMfQf8X+4yB++Y6rklxqhNWIErhdB+2lRDdntASgVF3DHmB
- 4lroZxIkTKjEY/O25ukX/zbdhXSCMXgo38iTROT9rABygImekXxlmI3UBYen2c7+c0/UIRdymkF
- h
-X-Gm-Gg: ASbGncvDntXyH8gOTrv/+/KTtauc1G5GEsK1gani2hB2JBNSk6Ef8vYvi3mi8bw0qVW
- AyJKaCDLZmgON+VlOyH/u1j/aFTbWZwSTKAbFveCEQHNF3yVuEgw117VW+KpEoamJbyM2cKRlUr
- j9ZJljTfjtN0wixPggNivfitTdRD0MEzCcz94fWyvE4mo9+3+1TyBUiHYICTHpFLtIrkNMCmx1Q
- iXmQk5z3FPVCHCVyJweXqAYFW5zHqFJiqgR1di1wXTBzlNzfet5hwZ6DH1OLvtLJvyK2w==
-X-Google-Smtp-Source: AGHT+IEnOrA8Jh5hRuIMUHw73H8JO4LaYQ6K+srZZ073xzYAlMAZ5rQBaLTjorCuS+UoU8hthaRRyQ==
-X-Received: by 2002:a05:6a00:808f:b0:727:64c8:2c44 with SMTP id
- d2e1a72fcca58-72abdeaab15mr5296158b3a.19.1734713650743; 
- Fri, 20 Dec 2024 08:54:10 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad84cf91sm3314295b3a.83.2024.12.20.08.54.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 08:54:10 -0800 (PST)
-Message-ID: <7a0b2c52-4c53-41de-985c-ba8aab45f190@linaro.org>
-Date: Fri, 20 Dec 2024 08:54:08 -0800
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 15/27] tests/functional/aarch64: add tests for FEAT_RME
-Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Ed Maste <emaste@freebsd.org>, Eric Farman <farman@linux.ibm.com>,
- Thomas Huth <thuth@redhat.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Fabiano Rosas <farosas@suse.de>,
- Radoslaw Biernacki <rad@semihalf.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-riscv@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
- Joel Stanley <joel@jms.id.au>, Beraldo Leal <bleal@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, Jiaxun Yang
- <jiaxun.yang@flygoat.com>, Weiwei Li <liwei1518@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Leif Lindholm <quic_llindhol@quicinc.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- John Snow <jsnow@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, Bin Meng <bmeng.cn@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Wainer dos Santos Moschetta <wainersm@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>,
- Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcin Juszkiewicz <marcin.juszkiewicz@linaro.org>,
- Halil Pasic <pasic@linux.ibm.com>, qemu-arm@nongnu.org,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- qemu-s390x@nongnu.org, Laurent Vivier <lvivier@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>
-References: <20241218162104.3493551-1-alex.bennee@linaro.org>
- <20241218162104.3493551-16-alex.bennee@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20241218162104.3493551-16-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ AJvYcCUi3g9kI7b7k1IQJYQ4hHtu+kXFDvtu6Y7waPniSrpcyiZR+nxYBLECReivjI9SqUVZJoid41QdKlaV@nongnu.org
+X-Gm-Message-State: AOJu0Yz45NTMLC0KVcipC+AC4aHU2z43/oDZ7pIs8l0hNxFRBUFqAB/N
+ UGyWNBi+GsTdiH1Xp4rH9vO+y+EnCH77VFLmo9/H+uXF8SXB//BcerTvDAecPoDHSHzKDJJYTFx
+ mWA==
+X-Google-Smtp-Source: AGHT+IGdgk5HiSUnypJSBS1nKyIa0BWmsZTWLmrxxURD+4sMnll4s3ySbEPev1+VFPU7ihrePN1uazKe0nI=
+X-Received: from pjbqn3.prod.google.com ([2002:a17:90b:3d43:b0:2e2:44f2:9175])
+ (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a17:90b:3ccc:b0:2ef:3192:d280
+ with SMTP id 98e67ed59e1d1-2f452dfaed8mr5764829a91.5.1734713988589; Fri, 20
+ Dec 2024 08:59:48 -0800 (PST)
+Date: Fri, 20 Dec 2024 08:59:47 -0800
+In-Reply-To: <88c87ff8-bae0-4522-bb65-109b959a7e52@intel.com>
+Mime-Version: 1.0
+References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
+ <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
+ <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
+ <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
+ <Z2DZpJz5K9W92NAE@google.com>
+ <3ef942fa615dae07822e8ffce75991947f62f933.camel@intel.com>
+ <Z2INi480K96q2m5S@google.com>
+ <f58c24757f8fd810e5d167c8b6da41870dace6b1.camel@intel.com>
+ <Z2OEQdxgLX0GM70n@google.com> <88c87ff8-bae0-4522-bb65-109b959a7e52@intel.com>
+Message-ID: <Z2Wig9CiowRkeeOl@google.com>
+Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
+ CPUID Bits
+From: Sean Christopherson <seanjc@google.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Rick P Edgecombe <rick.p.edgecombe@intel.com>,
+ Kai Huang <kai.huang@intel.com>, 
+ "binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>, 
+ Yan Y Zhao <yan.y.zhao@intel.com>, 
+ "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>, 
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Isaku Yamahata <isaku.yamahata@intel.com>, 
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::104a;
+ envelope-from=3hKJlZwYKCqETFBOKDHPPHMF.DPNRFNV-EFWFMOPOHOV.PSH@flex--seanjc.bounces.google.com;
+ helo=mail-pj1-x104a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,193 +114,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gMTIvMTgvMjQgMDg6MjAsIEFsZXggQmVubsOpZSB3cm90ZToNCj4gRnJvbTogUGllcnJp
-Y2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiANCj4gVGhpcyBi
-b290IGFuIE9QLVRFRSBlbnZpcm9ubWVudCwgYW5kIGxhdW5jaCBhIG5lc3RlZCBndWVzdCBW
-TSBpbnNpZGUgaXQNCj4gdXNpbmcgdGhlIFJlYWxtcyBmZWF0dXJlLiBXZSBkbyBpdCBmb3Ig
-dmlydCBhbmQgc2JzYS1yZWYgcGxhdGZvcm1zLg0KPiANCj4gU2lnbmVkLW9mZi1ieTogUGll
-cnJpY2sgQm91dmllciA8cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPiBNZXNzYWdl
-LUlkOiA8MjAyNDEyMDMyMTM2MjkuMjQ4MjgwNi0xLXBpZXJyaWNrLmJvdXZpZXJAbGluYXJv
-Lm9yZz4NCj4gU2lnbmVkLW9mZi1ieTogQWxleCBCZW5uw6llIDxhbGV4LmJlbm5lZUBsaW5h
-cm8ub3JnPg0KPiANCj4gLS0tDQo+IHYyDQo+ICAgIC0gcmVtb3ZlIHZlcnNpb24gbG9nIGZy
-b20gbWFpbiBjb21taXQNCj4gLS0tDQo+ICAgdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
-ZCAgICAgICAgICAgICAgICAgfCAgIDQgKw0KPiAgIHRlc3RzL2Z1bmN0aW9uYWwvdGVzdF9h
-YXJjaDY0X3JtZV9zYnNhcmVmLnB5IHwgIDcwICsrKysrKysrKysrKysNCj4gICB0ZXN0cy9m
-dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSAgICB8IDEwMCArKysrKysrKysr
-KysrKysrKysrDQo+ICAgMyBmaWxlcyBjaGFuZ2VkLCAxNzQgaW5zZXJ0aW9ucygrKQ0KPiAg
-IGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVf
-c2JzYXJlZi5weQ0KPiAgIGNyZWF0ZSBtb2RlIDEwMDc1NSB0ZXN0cy9mdW5jdGlvbmFsL3Rl
-c3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiANCj4gZGlmZiAtLWdpdCBhL3Rlc3RzL2Z1bmN0
-aW9uYWwvbWVzb24uYnVpbGQgYi90ZXN0cy9mdW5jdGlvbmFsL21lc29uLmJ1aWxkDQo+IGlu
-ZGV4IDBlMWJmYjhjNDQuLmI0OWM0ODYxMTUgMTAwNjQ0DQo+IC0tLSBhL3Rlc3RzL2Z1bmN0
-aW9uYWwvbWVzb24uYnVpbGQNCj4gKysrIGIvdGVzdHMvZnVuY3Rpb25hbC9tZXNvbi5idWls
-ZA0KPiBAQCAtMTMsNiArMTMsOCBAQCBlbmRpZg0KPiAgIHRlc3RfdGltZW91dHMgPSB7DQo+
-ICAgICAnYWFyY2g2NF9hc3BlZWQnIDogNjAwLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JyA6
-IDQ4MCwNCj4gKyAgJ2FhcmNoNjRfcm1lX3ZpcnQnIDogMTIwMCwNCj4gKyAgJ2FhcmNoNjRf
-cm1lX3Nic2FyZWYnIDogMTIwMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJyA6
-IDcyMCwNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcgOiA3MjAsDQo+ICAgICAn
-YWFyY2g2NF90dXhydW4nIDogMjQwLA0KPiBAQCAtNTgsNiArNjAsOCBAQCB0ZXN0c19hYXJj
-aDY0X3N5c3RlbV90aG9yb3VnaCA9IFsNCj4gICAgICdhYXJjaDY0X2FzcGVlZCcsDQo+ICAg
-ICAnYWFyY2g2NF9yYXNwaTMnLA0KPiAgICAgJ2FhcmNoNjRfcmFzcGk0JywNCj4gKyAgJ2Fh
-cmNoNjRfcm1lX3ZpcnQnLA0KPiArICAnYWFyY2g2NF9ybWVfc2JzYXJlZicsDQo+ICAgICAn
-YWFyY2g2NF9zYnNhcmVmJywNCj4gICAgICdhYXJjaDY0X3Nic2FyZWZfYWxwaW5lJywNCj4g
-ICAgICdhYXJjaDY0X3Nic2FyZWZfZnJlZWJzZCcsDQo+IGRpZmYgLS1naXQgYS90ZXN0cy9m
-dW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weSBiL3Rlc3RzL2Z1bmN0aW9u
-YWwvdGVzdF9hYXJjaDY0X3JtZV9zYnNhcmVmLnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1
-DQo+IGluZGV4IDAwMDAwMDAwMDAuLmMxMzZiNWNlMTcNCj4gLS0tIC9kZXYvbnVsbA0KPiAr
-KysgYi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfc2JzYXJlZi5weQ0KPiBA
-QCAtMCwwICsxLDcwIEBADQo+ICsjIS91c3IvYmluL2VudiBweXRob24zDQo+ICsjDQo+ICsj
-IEZ1bmN0aW9uYWwgdGVzdCB0aGF0IGJvb3RzIGEgUmVhbG1zIGVudmlyb25tZW50IG9uIHNi
-c2EtcmVmIG1hY2hpbmUgYW5kIGENCj4gKyMgbmVzdGVkIGd1ZXN0IFZNIHVzaW5nIGl0Lg0K
-PiArIw0KPiArIyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMg
-QXV0aG9yOiBQaWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+
-DQo+ICsjDQo+ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVy
-DQo+ICsNCj4gK2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5n
-DQo+ICsNCj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQN
-Cj4gK2Zyb20gcWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNv
-bGVfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRf
-d2FpdF9mb3JfcGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hp
-dmVfZXh0cmFjdA0KPiArZnJvbSB0ZXN0X2FhcmNoNjRfcm1lX3ZpcnQgaW1wb3J0IHRlc3Rf
-cmVhbG1zX2d1ZXN0DQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVTYnNhUmVmTWFjaGluZShR
-ZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1aWx0IHdpdGggT1At
-VEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rpb25zOg0KPiArICAg
-ICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNlcy9RRU1VL3BhZ2Vz
-LzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29tL3Biby1saW5hcm8v
-cWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfU0JTQSA9IEFzc2V0KA0K
-PiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3JnL3MvS0p5ZUJ4TDgy
-bXoycjdGLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2stb3AtdGVlLTQuMi4w
-LWNjYS12NC1zYnNhLnRhci5neicpLA0KPiArICAgICAgICAgJ2RkOWFiMjhlYzg2OWJkZjNi
-NTM3NjExNmNiMzY4OTEwM2I0MzQzM2ZkNWM0YmNhMGY0YThkOGIzYzEwNDk5OWUnKQ0KPiAr
-DQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUgaW1wbGVtZW50YXRpb24s
-IGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAgICMgYW5kIGxhdW5jaGlu
-ZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVzdF9hYXJjaDY0X3JtZV9z
-YnNhcmVmKHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9neiA9IHNlbGYuQVNT
-RVRfUk1FX1NUQUNLX1NCU0EuZmV0Y2goKQ0KPiArICAgICAgICBhcmNoaXZlX2V4dHJhY3Qo
-c3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiArICAgICAgICBzZWxm
-LnNldF9tYWNoaW5lKCdzYnNhLXJlZicpDQo+ICsgICAgICAgIHNlbGYudm0uc2V0X2NvbnNv
-bGUoKQ0KPiArICAgICAgICBzZWxmLnJlcXVpcmVfYWNjZWxlcmF0b3IoJ3RjZycpDQo+ICsN
-Cj4gKyAgICAgICAgcm1lX3N0YWNrID0gb3MucGF0aC5qb2luKHNlbGYud29ya2RpciwNCj4g
-KyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICdybWUtc3RhY2stb3AtdGVlLTQu
-Mi4wLWNjYS12NC1zYnNhJykNCj4gKyAgICAgICAgcGZsYXNoMCA9IG9zLnBhdGguam9pbihy
-bWVfc3RhY2ssICdpbWFnZXMnLCAnU0JTQV9GTEFTSDAuZmQnKQ0KPiArICAgICAgICBwZmxh
-c2gxID0gb3MucGF0aC5qb2luKHJtZV9zdGFjaywgJ2ltYWdlcycsICdTQlNBX0ZMQVNIMS5m
-ZCcpDQo+ICsgICAgICAgIHZpcnR1YWwgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnaW1h
-Z2VzJywgJ2Rpc2tzJywgJ3ZpcnR1YWwnKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGgu
-am9pbihybWVfc3RhY2ssICdvdXQtYnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4g
-Kw0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixw
-YXV0aC1pbXBkZWY9b24nKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcy
-RycpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1NJywgJ3Nic2EtcmVmJykNCj4g
-KyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywgZidmaWxlPXtwZmxhc2gwfSxm
-b3JtYXQ9cmF3LGlmPXBmbGFzaCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1k
-cml2ZScsIGYnZmlsZT17cGZsYXNoMX0sZm9ybWF0PXJhdyxpZj1wZmxhc2gnKQ0KPiArICAg
-ICAgICBzZWxmLnZtLmFkZF9hcmdzKCctZHJpdmUnLCBmJ2ZpbGU9ZmF0OnJ3Ont2aXJ0dWFs
-fSxmb3JtYXQ9cmF3JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRyaXZlJywg
-Zidmb3JtYXQ9cmF3LGlmPW5vbmUsZmlsZT17ZHJpdmV9LGlkPWhkMCcpDQo+ICsgICAgICAg
-IHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLWJsay1wY2ksZHJpdmU9aGQw
-JykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmljZScsICd2aXJ0aW8tOXAt
-cGNpLGZzZGV2PXNocjAsbW91bnRfdGFnPXNocjAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFk
-ZF9hcmdzKCctZnNkZXYnLCBmJ2xvY2FsLHNlY3VyaXR5X21vZGVsPW5vbmUscGF0aD17cm1l
-X3N0YWNrfSxpZD1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWRldmlj
-ZScsICd2aXJ0aW8tbmV0LXBjaSxuZXRkZXY9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0u
-YWRkX2FyZ3MoJy1uZXRkZXYnLCAndXNlcixpZD1uZXQwJykNCj4gKw0KPiArICAgICAgICBz
-ZWxmLnZtLmxhdW5jaCgpDQo+ICsgICAgICAgICMgV2FpdCBmb3IgaG9zdCBWTSBib290IHRv
-IGNvbXBsZXRlLg0KPiArICAgICAgICB3YWl0X2Zvcl9jb25zb2xlX3BhdHRlcm4oc2VsZiwg
-J1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICAgICAgZXhlY19jb21tYW5kX2FuZF93
-YWl0X2Zvcl9wYXR0ZXJuKHNlbGYsICdyb290JywgJyMnKQ0KPiArDQo+ICsgICAgICAgIHRl
-c3RfcmVhbG1zX2d1ZXN0KHNlbGYpDQo+ICsNCj4gK2lmIF9fbmFtZV9fID09ICdfX21haW5f
-Xyc6DQo+ICsgICAgUWVtdVN5c3RlbVRlc3QubWFpbigpDQo+IGRpZmYgLS1naXQgYS90ZXN0
-cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weSBiL3Rlc3RzL2Z1bmN0aW9u
-YWwvdGVzdF9hYXJjaDY0X3JtZV92aXJ0LnB5DQo+IG5ldyBmaWxlIG1vZGUgMTAwNzU1DQo+
-IGluZGV4IDAwMDAwMDAwMDAuLjM5ZTRlNGFkYjUNCj4gLS0tIC9kZXYvbnVsbA0KPiArKysg
-Yi90ZXN0cy9mdW5jdGlvbmFsL3Rlc3RfYWFyY2g2NF9ybWVfdmlydC5weQ0KPiBAQCAtMCww
-ICsxLDEwMCBAQA0KPiArIyEvdXNyL2Jpbi9lbnYgcHl0aG9uMw0KPiArIw0KPiArIyBGdW5j
-dGlvbmFsIHRlc3QgdGhhdCBib290cyBhIFJlYWxtcyBlbnZpcm9ubWVudCBvbiB2aXJ0IG1h
-Y2hpbmUgYW5kIGEgbmVzdGVkDQo+ICsjIGd1ZXN0IFZNIHVzaW5nIGl0Lg0KPiArIw0KPiAr
-IyBDb3B5cmlnaHQgKGMpIDIwMjQgTGluYXJvIEx0ZC4NCj4gKyMNCj4gKyMgQXV0aG9yOiBQ
-aWVycmljayBCb3V2aWVyIDxwaWVycmljay5ib3V2aWVyQGxpbmFyby5vcmc+DQo+ICsjDQo+
-ICsjIFNQRFgtTGljZW5zZS1JZGVudGlmaWVyOiBHUEwtMi4wLW9yLWxhdGVyDQo+ICsNCj4g
-K2ltcG9ydCB0aW1lDQo+ICtpbXBvcnQgb3MNCj4gK2ltcG9ydCBsb2dnaW5nDQo+ICsNCj4g
-K2Zyb20gcWVtdV90ZXN0IGltcG9ydCBRZW11U3lzdGVtVGVzdCwgQXNzZXQNCj4gK2Zyb20g
-cWVtdV90ZXN0IGltcG9ydCBleGVjX2NvbW1hbmQsIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVy
-bg0KPiArZnJvbSBxZW11X3Rlc3QgaW1wb3J0IGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3Jf
-cGF0dGVybg0KPiArZnJvbSBxZW11X3Rlc3QudXRpbHMgaW1wb3J0IGFyY2hpdmVfZXh0cmFj
-dA0KPiArDQo+ICtkZWYgdGVzdF9yZWFsbXNfZ3Vlc3QodGVzdF9ybWVfaW5zdGFuY2UpOg0K
-PiArDQo+ICsgICAgIyBCb290IHRoZSAobmVzdGVkKSBndWVzdCBWTQ0KPiArICAgIGV4ZWNf
-Y29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgJ3FlbXUt
-c3lzdGVtLWFhcmNoNjQgLU0gdmlydCxnaWMtdmVyc2lvbj0zICcNCj4gKyAgICAgICAgICAg
-ICAgICAgJy1jcHUgaG9zdCAtZW5hYmxlLWt2bSAtbSA1MTJNICcNCj4gKyAgICAgICAgICAg
-ICAgICAgJy1NIGNvbmZpZGVudGlhbC1ndWVzdC1zdXBwb3J0PXJtZTAgJw0KPiArICAgICAg
-ICAgICAgICAgICAnLW9iamVjdCBybWUtZ3Vlc3QsaWQ9cm1lMCAnDQo+ICsgICAgICAgICAg
-ICAgICAgICctZGV2aWNlIHZpcnRpby1uZXQtcGNpLG5ldGRldj1uZXQwLHJvbWZpbGU9ICcN
-Cj4gKyAgICAgICAgICAgICAgICAgJy1uZXRkZXYgdXNlcixpZD1uZXQwICcNCj4gKyAgICAg
-ICAgICAgICAgICAgJy1rZXJuZWwgL21udC9vdXQvYmluL0ltYWdlICcNCj4gKyAgICAgICAg
-ICAgICAgICAgJy1pbml0cmQgL21udC9vdXQtYnIvaW1hZ2VzL3Jvb3Rmcy5jcGlvICcNCj4g
-KyAgICAgICAgICAgICAgICAgJy1zZXJpYWwgc3RkaW8nKQ0KPiArICAgICMgRGV0ZWN0IFJl
-YWxtIGFjdGl2YXRpb24gZHVyaW5nIChuZXN0ZWQpIGd1ZXN0IGJvb3QuDQo+ICsgICAgd2Fp
-dF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0KPiArICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAnU01DX1JNSV9SRUFMTV9BQ1RJVkFURScpDQo+ICsgICAg
-IyBXYWl0IGZvciAobmVzdGVkKSBndWVzdCBib290IHRvIGNvbXBsZXRlLg0KPiArICAgIHdh
-aXRfZm9yX2NvbnNvbGVfcGF0dGVybih0ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgJ1dlbGNvbWUgdG8gQnVpbGRyb290JykNCj4gKyAgICBl
-eGVjX2NvbW1hbmRfYW5kX3dhaXRfZm9yX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsICdy
-b290JywgJyMnKQ0KPiArICAgICMgcXVlcnkgKG5lc3RlZCkgZ3Vlc3QgY2NhIHJlcG9ydA0K
-PiArICAgIGV4ZWNfY29tbWFuZCh0ZXN0X3JtZV9pbnN0YW5jZSwgJ2NjYS13b3JrbG9hZC1h
-dHRlc3RhdGlvbiByZXBvcnQnKQ0KPiArICAgIHdhaXRfZm9yX2NvbnNvbGVfcGF0dGVybih0
-ZXN0X3JtZV9pbnN0YW5jZSwNCj4gKyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJyJj
-Y2EtcGxhdGZvcm0taGFzaC1hbGdvLWlkIjogInNoYS0yNTYiJykNCj4gKyAgICB3YWl0X2Zv
-cl9jb25zb2xlX3BhdHRlcm4odGVzdF9ybWVfaW5zdGFuY2UsDQo+ICsgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICciY2NhLXJlYWxtLWhhc2gtYWxnby1pZCI6ICJzaGEtNTEyIicp
-DQo+ICsgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHRlc3Rfcm1lX2luc3RhbmNlLA0K
-PiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAnImNjYS1yZWFsbS1wdWJsaWMta2V5
-LWhhc2gtYWxnby1pZCI6ICJzaGEtMjU2IicpDQo+ICsNCj4gK2NsYXNzIEFhcmNoNjRSTUVW
-aXJ0TWFjaGluZShRZW11U3lzdGVtVGVzdCk6DQo+ICsNCj4gKyAgICAjIFN0YWNrIGlzIGJ1
-aWx0IHdpdGggT1AtVEVFIGJ1aWxkIGVudmlyb25tZW50IGZyb20gdGhvc2UgaW5zdHJ1Y3Rp
-b25zOg0KPiArICAgICMgaHR0cHM6Ly9saW5hcm8uYXRsYXNzaWFuLm5ldC93aWtpL3NwYWNl
-cy9RRU1VL3BhZ2VzLzI5MDUxMDI3NDU5Lw0KPiArICAgICMgaHR0cHM6Ly9naXRodWIuY29t
-L3Biby1saW5hcm8vcWVtdS1ybWUtc3RhY2sNCj4gKyAgICBBU1NFVF9STUVfU1RBQ0tfVklS
-VCA9IEFzc2V0KA0KPiArICAgICAgICAoJ2h0dHBzOi8vZmlsZXNlcnZlci5saW5hcm8ub3Jn
-L3MvaWFSc05ESnAyQ1hITVNKLycNCj4gKyAgICAgICAgICdkb3dubG9hZC9ybWUtc3RhY2st
-b3AtdGVlLTQuMi4wLWNjYS12NC1xZW11X3Y4LnRhci5neicpLA0KPiArICAgICAgICAgJzE4
-NTFhZGMyMzJiMDk0Mzg0ZDhiODc5YjlhMmNmZmYwN2VmM2Q2MjA1MDMyYjg1ZTliM2E0YTlh
-ZTZiMGI3YWQnKQ0KPiArDQo+ICsgICAgIyBUaGlzIHRlc3RzIHRoZSBGRUFUX1JNRSBjcHUg
-aW1wbGVtZW50YXRpb24sIGJ5IGJvb3RpbmcgYSBWTSBzdXBwb3J0aW5nIGl0LA0KPiArICAg
-ICMgYW5kIGxhdW5jaGluZyBhIG5lc3RlZCBWTSB1c2luZyBpdC4NCj4gKyAgICBkZWYgdGVz
-dF9hYXJjaDY0X3JtZV92aXJ0KHNlbGYpOg0KPiArICAgICAgICBzdGFja19wYXRoX3Rhcl9n
-eiA9IHNlbGYuQVNTRVRfUk1FX1NUQUNLX1ZJUlQuZmV0Y2goKQ0KPiArICAgICAgICBhcmNo
-aXZlX2V4dHJhY3Qoc3RhY2tfcGF0aF90YXJfZ3osIHNlbGYud29ya2RpcikNCj4gKw0KPiAr
-ICAgICAgICBzZWxmLnNldF9tYWNoaW5lKCd2aXJ0JykNCj4gKyAgICAgICAgc2VsZi52bS5z
-ZXRfY29uc29sZSgpDQo+ICsgICAgICAgIHNlbGYucmVxdWlyZV9hY2NlbGVyYXRvcigndGNn
-JykNCj4gKw0KPiArICAgICAgICBybWVfc3RhY2sgPSBvcy5wYXRoLmpvaW4oc2VsZi53b3Jr
-ZGlyLA0KPiArICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgJ3JtZS1zdGFjay1v
-cC10ZWUtNC4yLjAtY2NhLXY0LXFlbXVfdjgnKQ0KPiArICAgICAgICBrZXJuZWwgPSBvcy5w
-YXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdJbWFnZScpDQo+ICsgICAgICAg
-IGJpb3MgPSBvcy5wYXRoLmpvaW4ocm1lX3N0YWNrLCAnb3V0JywgJ2JpbicsICdmbGFzaC5i
-aW4nKQ0KPiArICAgICAgICBkcml2ZSA9IG9zLnBhdGguam9pbihybWVfc3RhY2ssICdvdXQt
-YnInLCAnaW1hZ2VzJywgJ3Jvb3Rmcy5leHQ0JykNCj4gKw0KPiArICAgICAgICBzZWxmLnZt
-LmFkZF9hcmdzKCctY3B1JywgJ21heCx4LXJtZT1vbixwYXV0aC1pbXBkZWY9b24nKQ0KPiAr
-ICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbScsICcyRycpDQo+ICsgICAgICAgIHNlbGYu
-dm0uYWRkX2FyZ3MoJy1NJywgJ3ZpcnQsYWNwaT1vZmYsJw0KPiArICAgICAgICAgICAgICAg
-ICAgICAgICAgICd2aXJ0dWFsaXphdGlvbj1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAg
-ICAgICAgJ3NlY3VyZT1vbiwnDQo+ICsgICAgICAgICAgICAgICAgICAgICAgICAgJ2dpYy12
-ZXJzaW9uPTMnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctYmlvcycsIGJpb3Mp
-DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1rZXJuZWwnLCBrZXJuZWwpDQo+ICsg
-ICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kcml2ZScsIGYnZm9ybWF0PXJhdyxpZj1ub25l
-LGZpbGU9e2RyaXZlfSxpZD1oZDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCct
-ZGV2aWNlJywgJ3ZpcnRpby1ibGstcGNpLGRyaXZlPWhkMCcpDQo+ICsgICAgICAgIHNlbGYu
-dm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLTlwLWRldmljZSxmc2Rldj1zaHIwLG1v
-dW50X3RhZz1zaHIwJykNCj4gKyAgICAgICAgc2VsZi52bS5hZGRfYXJncygnLWZzZGV2Jywg
-Zidsb2NhbCxzZWN1cml0eV9tb2RlbD1ub25lLHBhdGg9e3JtZV9zdGFja30saWQ9c2hyMCcp
-DQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1kZXZpY2UnLCAndmlydGlvLW5ldC1w
-Y2ksbmV0ZGV2PW5ldDAnKQ0KPiArICAgICAgICBzZWxmLnZtLmFkZF9hcmdzKCctbmV0ZGV2
-JywgJ3VzZXIsaWQ9bmV0MCcpDQo+ICsgICAgICAgIHNlbGYudm0uYWRkX2FyZ3MoJy1hcHBl
-bmQnLCAncm9vdD0vZGV2L3ZkYScpDQo+ICsNCj4gKyAgICAgICAgc2VsZi52bS5sYXVuY2go
-KQ0KPiArICAgICAgICAjIFdhaXQgZm9yIGhvc3QgVk0gYm9vdCB0byBjb21wbGV0ZS4NCj4g
-KyAgICAgICAgd2FpdF9mb3JfY29uc29sZV9wYXR0ZXJuKHNlbGYsICdXZWxjb21lIHRvIEJ1
-aWxkcm9vdCcpDQo+ICsgICAgICAgIGV4ZWNfY29tbWFuZF9hbmRfd2FpdF9mb3JfcGF0dGVy
-bihzZWxmLCAncm9vdCcsICcjJykNCj4gKw0KPiArICAgICAgICB0ZXN0X3JlYWxtc19ndWVz
-dChzZWxmKQ0KPiArDQo+ICtpZiBfX25hbWVfXyA9PSAnX19tYWluX18nOg0KPiArICAgIFFl
-bXVTeXN0ZW1UZXN0Lm1haW4oKQ0KDQpJdCBuZWVkZWQgYW5vdGhlciBmaXggd2l0aCB0aGUg
-cWVtdV90ZXN0IGNoYW5nZXMsIHNvIHRoZXJlIGlzIGEgdjY6DQpodHRwczovL2xvcmUua2Vy
-bmVsLm9yZy9xZW11LWRldmVsLzIwMjQxMjIwMTY1MjEyLjM2NTM0OTUtMS1waWVycmljay5i
-b3V2aWVyQGxpbmFyby5vcmcvVC8jdQ0K
+On Fri, Dec 20, 2024, Xiaoyao Li wrote:
+> On 12/19/2024 10:33 AM, Sean Christopherson wrote:
+> > > > For all other CPUID bits, what the TDX Module thinks and/or present=
+s to the guest
+> > > > is completely irrelevant, at least as far as KVM cares, and to some=
+ extent as far
+> > > > as QEMU cares.  This includes the TDX Module's FEATURE_PARAVIRT_CTR=
+L, which frankly
+> > > > is asinine and should be ignored.  IMO, the TDX Module spec is enti=
+rely off the
+> > > > mark in its assessment of paravirtualization.  Injecting a #VE inst=
+ead of a #GP
+> > > > isn't "paravirtualization".
+> > > > Take TSC_DEADLINE as an example.  "Disabling" the feature from the =
+guest's side
+> > > > simply means that WRMSR #GPs instead of #VEs.*Nothing* has changed =
+from KVM's
+> > > > perspective.  If the guest makes a TDVMCALL to write IA32_TSC_DEADL=
+INE, KVM has
+> > > > no idea if the guest has opted in/out of #VE vs #GP.  And IMO, a sa=
+ne guest will
+> > > > never take a #VE or #GP if it wants to use TSC_DEADLINE; the kernel=
+ should instead
+> > > > make a direct TDVMCALL and save itself a pointless exception.
+> > > >=20
+> > > >    Enabling Guest TDs are not allowed to access the IA32_TSC_DEADLI=
+NE MSR directly.
+> > > >    Virtualization of IA32_TSC_DEADLINE depends on the virtual value=
+ of
+> > > >    CPUID(1).ECX[24] bit (TSC Deadline). The host VMM may configure =
+(as an input to
+> > > >    TDH.MNG.INIT) virtual CPUID(1).ECX[24] to be a constant 0 or all=
+ow it to be 1
+> > > >    if the CPU=E2=80=99s native value is 1.
+> > > >=20
+> > > >    If the TDX module supports #VE reduction, as enumerated by TDX_F=
+EATURES0.VE_REDUCTION
+> > > >    (bit 30), and the guest TD has set TD_CTLS.REDUCE_VE to 1, it ma=
+y control the
+> > > >    value of virtual CPUID(1).ECX[24] by writing TDCS.FEATURE_PARAVI=
+RT_CTRL.TSC_DEADLINE.
+> > > >=20
+> > > >    =E2=80=A2 If the virtual value of CPUID(1).ECX[24] is 0, IA32_TS=
+C_DEADLINE is virtualized
+> > > >      as non-existent. WRMSR or RDMSR attempts result in a #GP(0).
+> > > >=20
+> > > >    =E2=80=A2 If the virtual value of CPUID(1).ECX[24] is 1, WRMSR o=
+r RDMSR attempts result
+> > > >      in a #VE(CONFIG_PARAVIRT). This enables the TD=E2=80=99s #VE h=
+andler.
+> > > >=20
+> > > > Ditto for TME, MKTME.
+> > > >=20
+> > > > FEATURE_PARAVIRT_CTRL.MCA is even weirder, but I still don't see an=
+y reason for
+> > > > KVM or QEMU to care if it's fixed or configurable.  There's some cr=
+azy logic for
+> > > > whether or not CR4.MCE can be cleared, but the host can't see guest=
+ CR4, and so
+> > > > once again, the TDX Module's view of MCA is irrelevant when it come=
+s to handling
+> > > > TDVMCALL for the machine check MSRs.
+> > > >=20
+> > > > So I think this again purely comes to back to KVM correctness and s=
+afety.  More
+> > > > specifically, the TDX Module needs to report features that are unco=
+nditionally
+> > > > enabled or disabled and can't be emulated by KVM.  For everything e=
+lse, I don't
+> > > > see any reason to care what the TDX module does.
+> > > >=20
+> > > > I'm pretty sure that gives us a way forward.  If there only a handf=
+ul of features
+> > > > that are unconditionally exposed to the guest, then KVM forces thos=
+e features in
+> > > > cpu_caps[*].
+> > > I see. Hmm. We could use this new interface to double check the fixed=
+ bits. It
+> > > seems like a relatively cheap sanity check.
+> > >=20
+> > > There already is an interface to get CPUID bits (fixed and dynamic). =
+But it only
+> > > works after a TD is configured. So if we want to do extra verificatio=
+n or
+> > > adjustments, we could use it before entering the TD. Basically, if we=
+ delay this
+> > > logic we don't need to wait for the fixed bit interface.
+> > Oh, yeah, that'd work.  Grab the guest CPUID and then verify that bits =
+KVM needs
+> > to be 0 (or 1) are set according, and WARN+kill if there's a mismatch.
+> >=20
+> > Honestly, I'd probably prefer that over using the fixed bit interface, =
+as my gut
+> > says it's less likely for the TDX Module to misreport what CPUID it has=
+ created
+> > for the guest, than it is for the TDX module to generate a "fixed bits"=
+ list that
+> > doesn't match the code.  E.g. KVM has (had?) more than a few CPUID feat=
+ures that
+> > KVM emulates without actually reporting support to userspace.
+>=20
+> The original motivation of the proposed fxied0 and fixed1 data is to
+> complement the CPUID configurability report, which is important for
+> userspace. E.g., Currently, what QEMU is doing is hardcoding the fixed0 a=
+nd
+> fixed1 information of a specific TDX release to adjust the
+> KVM_GET_SUPPORTED_CPUID result and gets a final "supported" CPUID set for
+> TDX. Hardcoding is not a good idea and it's better that KVM can get the d=
+ata
+> from TDX module, then pass to userspace (of course KVM can tweak the data
+> based on its own requirement). So, do you think it's useful to have TDX
+> module report the fixed0/fixed1 data for this purpose?
+
+I'm definitely supportive of KVM passing on accurate information, so long a=
+s KVM's
+ABI isn't too crazy.
+
+That said, I'm starting to agree with Rick's assessment that trying to enum=
+erate
+fixed CPUID feature bits is becoming a fool's errand as the TDX architectur=
+e gets
+more and more complex.
+
+But _that_ said, if userspace ever needs to pivot on the TDX Module *versio=
+n*,
+then IMO that's a non-starter.  E.g. QEMU shouldn't have to hardcode fixed0=
+/fixed1
+bits based on TDX 1.5.whatever vs. TDX 2.0.whatever.
+
+One alternative idea to trying to enumerate every fixed bit would be to mim=
+ic what
+the VMX architecture does for fixed CR0 bits.  Use TDX Module spec 1.5.06 (=
+or whatever
+version makes the most sense) as the base, and then adjust fixed/configurab=
+le
+information based on *features*.  E.g. when unrestricted guest is enabled, =
+CR0.PG
+and CR0.PE switch from fixed0 to configurable.  At a glance, I think the wh=
+ole #VE
+reduction madness could follow a similar path.
+
+And then if the TDX tries to add fixed bits in the future that aren't expli=
+citly
+and clearly tied to some feature enablement, we collectively reject that TD=
+X spec.
 
