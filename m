@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A96E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89644E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaTv-00050S-9t; Fri, 20 Dec 2024 05:43:43 -0500
+	id 1tOaUy-0001O4-O3; Fri, 20 Dec 2024 05:44:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaTt-0004rR-Dl; Fri, 20 Dec 2024 05:43:41 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1tOaUr-0001Cv-8g; Fri, 20 Dec 2024 05:44:41 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaTr-0005JZ-DD; Fri, 20 Dec 2024 05:43:40 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21631789fcdso19257085ad.1; 
- Fri, 20 Dec 2024 02:43:37 -0800 (PST)
+ id 1tOaUp-0005ia-SG; Fri, 20 Dec 2024 05:44:41 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2161eb95317so16527515ad.1; 
+ Fri, 20 Dec 2024 02:44:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734691416; x=1735296216; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734691478; x=1735296278; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=V0IjIoEMmcVCUPTQhUBxK0EywoWT0wIO+ygbxxKxmGc=;
- b=hRR6U6IU0OWyro6znan63w+vdzBXCXf+KL1UjZH5eVBcgfXzki326vjdcXb0cSgiXz
- pqgttHzIlbm551FYT/pAJr3TN8NY+ZlkIpCrPi2izh3gX/Tiv+OU7bIQZcvH87eGVgoI
- MXIBvMs5Q1qo1m2OwpwMwOpv/odj9NTU+gdmi/d/RYXyRHKMKtxnBQzhb2OPXyXB+T3G
- PfnGyNzpEVS1kbXyiPBOQPtzvfFapUG6MuTtLCmaoH53msuWtznoNIwVwcTftHRT16CU
- t6fUgb008Vly9+nz3VjZ2cFpKVUtMfj+UWGVk0XWzq+Q7ySe+wYdW/ho4iCtTQdYtdWm
- ZMrw==
+ bh=ptTgrJ3AAjPAgcSpVyralWA7dIyvJHWNmDfWV22XPFk=;
+ b=C2QJKjQIti8ootOiKpJws+u3bioig3hLdvI7G1J43AID3xcYg8OfkEsXiarXUhNlKQ
+ Thbrg38oanvRpzXQ0f06UsuVVDLZuF/4ASpa5V1TBl0tqPdPbTYRb0FR9fMjIzi8FOYj
+ RMBOOu/9EJD8pcYu/WDB79OLeipiJp1RJKAXcW+rDbgBswmKXEXpwYYwI/8V14aPFaUb
+ ZYNiIZ+6E3awXNX1g2CxBVZVnhP+x6OfEQNeLr4QBApwFaAzya/U45A+b6QjEPXD7YZ9
+ aoYWWzI2AFzg2tg3icqLIQ2BhEJB246gP4EtvKI1gPviHPr50oOEFyyj5s0W/d4Fa8Kz
+ d4TQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691416; x=1735296216;
+ d=1e100.net; s=20230601; t=1734691478; x=1735296278;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=V0IjIoEMmcVCUPTQhUBxK0EywoWT0wIO+ygbxxKxmGc=;
- b=E+OsD/22ezu5sV57EZPqrlF0WKzym62Vv7hyVpFIl2mwtLYBJIzYK2/dVnAzKbCv7k
- cKRfGJGigUv4a9OcENAP9rqsuCAv0UhcwU2dRvKocFCwi8HZCbycepWOLPbOJIyBJJQ+
- QkKtOOlD9HjpG9F3KFk4VCqnIws2NrcCvb6mFgCgDX/QpLMzATYGgZZaw6XesPdxp4KB
- vTS1xr8Igq61wmtaqABf9CBaM/lhgYK0y+CtNNXIT9Y1j0JElsjzbszVXGgOZObLbj6D
- WMhfU3wN0a/ZlzfAr5ix4wNaHGUo6T9+QU4YZi0nLL1gbhr79kQSW2OD9iig8ar8o/Ad
- WL6w==
+ bh=ptTgrJ3AAjPAgcSpVyralWA7dIyvJHWNmDfWV22XPFk=;
+ b=RD5Nip/w5D6s3rkZs8em2pxmzh9ufoxStdKU20Q69ayfR3abX3ykNrJaf6JDlWMX+6
+ SK+ShpHpPafY3gFN3gW7Xm3xmhKjKQ4JfebKUVRQSeSpJNyfmouvRkB1qXydqzmSAzFJ
+ FKJP0kt7X5jBT2M0PvT17ibooyAqMvDO6UvOV8Hd6yeLdQUpfLjv/j20aVcjZTTjnAMV
+ SBdc/BTR0PDaO2z09PJSm6lRsI9JWS68rdGWp7zQAQOiVxb+XqnclqgPGhbcDRUMpMMk
+ 9hYilpehC1YltgeIe3WsspeOrV32fYLMFOSpQEjKWQUhziSnJvKU/0kOfpfxaZtXezui
+ He0Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXd+5mxN+FPOFQe9e352rrvKgZ+MD7VmV8Ht42+sYrDd5QQaotLhvciWq+ySc1yNP/r94F0EzC5gw+1@nongnu.org
-X-Gm-Message-State: AOJu0Yyii3OGM46dAZN0QQMAAG/NxJvKL40SdH/Ix0LsCC7CYawETwcd
- cUEaLt59IfEDFnJNKnokEWhmQmhBpxLONlUucbXZrvu597rkVSD6cOzRBA==
-X-Gm-Gg: ASbGnctWpsL+uT6jT3pyttHd9OCfEgeLsSHd4lX6kNNIkhNM2+Hlbus3vtXna0rcfU0
- 7WD1wWikIhYKgg2RcARrq24e4BO+fmclxha6m+F2nC8Vy93OrDvepwfxDFgW4faDuy9l/W/w6R8
- aqzhL5YpDpBVAmsbBYMBa2pqDinrYyKkytlWq4dVUaj6phw8ktOFfL5CW5f8oMVkG5Hw1BTovgD
- eDt5QeVIcv3KC2Bp8xOT2nLZ777XjJA2BMJmyVrCSrSnt6jnwFlx+eoB7/CONAG95fmJh9oT+XY
- 17db/nZVhQ==
-X-Google-Smtp-Source: AGHT+IGZOnLDRB9f6nVuNkvmDrIyRKLfWegwsQxJ6Eg03DBqPaPtAt2ggEKMnmkHLsY0oLSOoOVptw==
-X-Received: by 2002:a17:90b:524d:b0:2ee:9229:e4bd with SMTP id
- 98e67ed59e1d1-2f4536030d8mr3458864a91.2.1734691415974; 
- Fri, 20 Dec 2024 02:43:35 -0800 (PST)
+ AJvYcCUtuuB163RrxYMBZGm9+RRsxgdDWIbypWPSfpdfqMy8g58g7MiHUyq28292btO4E50nlltD73lp68P/@nongnu.org
+X-Gm-Message-State: AOJu0YyJsFILEetojO2ctJMSF4IzfiaKXNZzTYEVq2yypzYptfS9iPrf
+ ixszL+sTgGprfN1HSRL3wADxqccdx1iRnE2XkVSd4LJxz3CInTVthXmhvg==
+X-Gm-Gg: ASbGncvLqxeUY2IpcjTLOiAeRmPG/jwh+GVcRJXD0Uo1jHJkok9bfM6YF/uM/tCJ1NB
+ J4fvw73U2+8rkfOfKpMWbctZfJLxvmR52P5OgknsLv88cr73bZT2wT5sl3sQP1CP+VDn4fz/Joh
+ SeoplLZQReQMOeZJ2uLte6dZskxQxVZNJWrcKOnXOanih4pJN1JXkNT83o8XInc7gQ2urIaM6nz
+ KPA+W9ECZ6gEKINy4mLt7M8QEaxOV1OC6bKkbngCX+O3vV231UG4sqMnyYAcXJzDrue5rNEMRYH
+ R/RTNHZ1bw==
+X-Google-Smtp-Source: AGHT+IHHFjbJJDnydvH/EeyeQ+EbHqUtfiWYhPxLLlnL+4fEaaPAKUcotO2zlojz6R7w3hCvT3m/Dg==
+X-Received: by 2002:a17:90b:2e10:b0:2ee:fd53:2b03 with SMTP id
+ 98e67ed59e1d1-2f452ec6ec7mr3462445a91.25.1734691478132; 
+ Fri, 20 Dec 2024 02:44:38 -0800 (PST)
 Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.43.28
+ 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.44.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Dec 2024 02:43:35 -0800 (PST)
+ Fri, 20 Dec 2024 02:44:37 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -78,16 +78,16 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 08/17] migration: Convert to new bh API
-Date: Fri, 20 Dec 2024 20:42:10 +1000
-Message-ID: <20241220104220.2007786-9-npiggin@gmail.com>
+Subject: [PATCH 16/17] tests/avocado/replay_linux: Fix cdrom device setup
+Date: Fri, 20 Dec 2024 20:42:18 +1000
+Message-ID: <20241220104220.2007786-17-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241220104220.2007786-1-npiggin@gmail.com>
 References: <20241220104220.2007786-1-npiggin@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,58 +110,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(),
-which can specify the clock type, making it compatible with
-record-replay.
-
-Snapsohtting does not affect target machine state, so it should use
-QEMU_CLOCK_REALTIME so it is not recorded and replayed.
+The cdrom device was not being added to the command line.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- migration/savevm.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ tests/avocado/replay_linux.py | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 98821c81207..8477f116c79 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -3441,8 +3441,9 @@ static int coroutine_fn snapshot_save_job_run(Job *job, Error **errp)
-     SnapshotJob *s = container_of(job, SnapshotJob, common);
-     s->errp = errp;
-     s->co = qemu_coroutine_self();
--    aio_bh_schedule_oneshot(qemu_get_aio_context(),
--                            snapshot_save_job_bh, job);
-+    aio_bh_schedule_oneshot_event(qemu_get_aio_context(),
-+                                  snapshot_save_job_bh, job,
-+                                  QEMU_CLOCK_REALTIME);
-     qemu_coroutine_yield();
-     return s->ret ? 0 : -1;
- }
-@@ -3452,8 +3453,9 @@ static int coroutine_fn snapshot_load_job_run(Job *job, Error **errp)
-     SnapshotJob *s = container_of(job, SnapshotJob, common);
-     s->errp = errp;
-     s->co = qemu_coroutine_self();
--    aio_bh_schedule_oneshot(qemu_get_aio_context(),
--                            snapshot_load_job_bh, job);
-+    aio_bh_schedule_oneshot_event(qemu_get_aio_context(),
-+                                  snapshot_load_job_bh, job,
-+                                  QEMU_CLOCK_REALTIME);
-     qemu_coroutine_yield();
-     return s->ret ? 0 : -1;
- }
-@@ -3463,8 +3465,9 @@ static int coroutine_fn snapshot_delete_job_run(Job *job, Error **errp)
-     SnapshotJob *s = container_of(job, SnapshotJob, common);
-     s->errp = errp;
-     s->co = qemu_coroutine_self();
--    aio_bh_schedule_oneshot(qemu_get_aio_context(),
--                            snapshot_delete_job_bh, job);
-+    aio_bh_schedule_oneshot_event(qemu_get_aio_context(),
-+                                  snapshot_delete_job_bh, job,
-+                                  QEMU_CLOCK_REALTIME);
-     qemu_coroutine_yield();
-     return s->ret ? 0 : -1;
- }
+diff --git a/tests/avocado/replay_linux.py b/tests/avocado/replay_linux.py
+index 38b6f8e6652..6c08ddaaff1 100644
+--- a/tests/avocado/replay_linux.py
++++ b/tests/avocado/replay_linux.py
+@@ -57,6 +57,8 @@ def vm_add_disk(self, vm, path, id, device):
+ 
+     def vm_add_cdrom(self, vm, path, id, device):
+         vm.add_args('-drive', 'file=%s,id=disk%s,if=none,media=cdrom' % (path, id))
++        vm.add_args('-device',
++            '%s,drive=disk%s' % (device, id))
+ 
+     def launch_and_wait(self, record, args, shift):
+         self.require_netdev('user')
 -- 
 2.45.2
 
