@@ -4,87 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC87E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:26:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53C48E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfiZ-0002Jm-RK; Fri, 20 Dec 2024 11:19:11 -0500
+	id 1tOfi1-0000lW-Ef; Fri, 20 Dec 2024 11:18:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhU-00087o-DV
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:05 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhR-00086R-Nq
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:03 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3863c36a731so1694420f8f.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711477; x=1735316277; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VsSwq4xHHCQtvJtv5T9NcsaTQceZkYJfKQ5PctlxJTo=;
- b=U0hhFJnGzOsO7Nkux6Rd+2HWf/nBgSmYx14MdGDriYM1Lwzp3UgPLy5HdKQbmtv72y
- mR3/1A0ZrGjSi8UUNwUtKNUF7dYorOoIYUF5h2Q/IUQ5nmPMObLTdvbN2qW/r6hxCT11
- lX7Zr9zsMtgYi79BzLII5XGioAbswUwzxZl1jxZQI9i9J+jOfik0RsXkzLHpPsmZxZ5G
- s5WCzeH0iJ5o1fHP3FL+ZHfSI6ixDIxUEvAAQsybMExgLXxqUxMKtl0N8wHRKUdMdali
- iDaC4JWsFqTzifXlKPZFmSVq2rS81XmqZXUeL63RPnGL+OP9Qfg3HJpXF3eRes8WYpBP
- wQZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711477; x=1735316277;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=VsSwq4xHHCQtvJtv5T9NcsaTQceZkYJfKQ5PctlxJTo=;
- b=U/rQwNU0B9kTrCvrDFlYbo3khz22PCzhAYTxJSAHFRItV6oLIMcdcD9rEBV08+QsnL
- 0ZnWQCzXJYFxn0Pj4qD7LIYx1Y2HoOLHRUahZsHgd66tZ7pDtgQgKfgB8GDrsLFjIYJv
- e80ZsNVCiHHj4DDP6moNPLrpRHgD3t3DGSSvgicLpsXV8ek+BL5kg29ewu/voMvndNav
- IdQ/+WkcJJuWfmQ3fV8skg9zE1cix8Z05ZdWHDfpt36OlJdUEcxDIVbgb9EOw2VUYT5r
- npq7DpUSyWQAmOuaqq1UrDB78dooDBkxlZ36LrBhB7Kwbrfee1tiw4DSUcI1NLee329Z
- M7iQ==
-X-Gm-Message-State: AOJu0YwstWSXZKPRheza8wVb0Sqy2tznQ+6EnScbHLqV3z/0l+mYjrU/
- Rdh37dfJ9h3bx5VQE12Ymtpz8ckbyowFaD/S4dLUzJqicnpFYQalaMKPNhYnqEw8Q50sWvR3sPF
- 6
-X-Gm-Gg: ASbGnctLndPX+fBad5kklsi18euWKWgW83PZ0tqSDNXSwBATc/9sqgu5Dn32R6PJRdZ
- uEHQ+fF6RjQtk+EXZskDJx/5F6HcyG3vcW3LUbdcAcD704pmMifyDhTA5kcamx+LKIHxxdIbE0l
- Mm85bmGDJ5R35NgswgAsspenfA/Ob+8oaRIt9dnmXV22pGczAd2gOpqO+MhZ6EZPnwMpQvd5uLy
- 2FJoe+nI1BwNheKMMQBw5CznQ3pE35LiB+RgvhDh8+SWBuFzfHediFoQF4o3GB/w2bzABR+PoM=
-X-Google-Smtp-Source: AGHT+IH2mqa6VeTz47aA7x2rBrUTUxrgH+2cLEzQih7HY5faTqkAYJ+3yqUDQQNE6q/BZDA6de8Gmw==
-X-Received: by 2002:a05:6000:178c:b0:381:b68f:d14b with SMTP id
- ffacd0b85a97d-38a223f75c8mr3729758f8f.45.1734711476897; 
- Fri, 20 Dec 2024 08:17:56 -0800 (PST)
-Received: from localhost.localdomain ([78.196.4.158])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8471dcsm4418155f8f.48.2024.12.20.08.17.56
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:17:56 -0800 (PST)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 27/59] accel/tcg: Move page_[un]protect() to
- 'user/page-protection.h'
-Date: Fri, 20 Dec 2024 17:15:18 +0100
-Message-ID: <20241220161551.89317-28-philmd@linaro.org>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
-References: <20241220161551.89317-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tOfgp-0007Zj-De
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:27 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tOfgm-0007zR-Lj
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:22 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734711434;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RwN5A8m4ojC8zocdAFvRxWYXijSSWi5WNEXx5l/wHI4=;
+ b=C3MuYbfyWN/Aczv/m+uPrxUy+5qjtxfIVdMQU6Y78exzmpsPqS1n/livPPMpZcSRSIvtXs
+ g2NEolaigrXkEUwz3qeSGa4wtPl4utnArwYwqlHJO9rr3wfc7sZ+6L/gtqEIIrRh6VkOg8
+ mnwq7oeKjRXEFzA2KMycgGjlx3bTZEA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-208-inbgGH3gNGycdQ_GQQdWKQ-1; Fri,
+ 20 Dec 2024 11:17:11 -0500
+X-MC-Unique: inbgGH3gNGycdQ_GQQdWKQ-1
+X-Mimecast-MFC-AGG-ID: inbgGH3gNGycdQ_GQQdWKQ
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E32571944D32; Fri, 20 Dec 2024 16:17:07 +0000 (UTC)
+Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 661581956053; Fri, 20 Dec 2024 16:17:05 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: Kashyap Chamarthy <kchamart@redhat.com>, Marc Zyngier <maz@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>, Daniel =?utf-8?Q?P=2E_Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+In-Reply-To: <Z2Vak-hbCMaxm-JJ@gezellig>
+Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
+ Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
+ 153243,
+ =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
+ Michael O'Neill, Amy Ross"
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
+ <Z2Q2rWj9cV0W_XVq@gezellig> <86zfkrptmj.wl-maz@kernel.org>
+ <Z2Vak-hbCMaxm-JJ@gezellig>
+User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
+Date: Fri, 20 Dec 2024 17:17:02 +0100
+Message-ID: <87cyhmba81.fsf@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,105 +101,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212185341.2857-7-philmd@linaro.org>
----
- accel/tcg/internal-target.h    |  1 +
- include/exec/translate-all.h   |  5 -----
- include/user/page-protection.h | 20 ++++++++++++++++++++
- accel/tcg/user-exec.c          |  2 +-
- linux-user/elfload.c           |  2 +-
- 5 files changed, 23 insertions(+), 7 deletions(-)
- create mode 100644 include/user/page-protection.h
+On Fri, Dec 20 2024, Kashyap Chamarthy <kchamart@redhat.com> wrote:
 
-diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
-index fe109724c68..a03c05315a4 100644
---- a/accel/tcg/internal-target.h
-+++ b/accel/tcg/internal-target.h
-@@ -37,6 +37,7 @@ void page_table_config_init(void);
- #endif
- 
- #ifdef CONFIG_USER_ONLY
-+#include "user/page-protection.h"
- /*
-  * For user-only, page_protect sets the page read-only.
-  * Since most execution is already on read-only pages, and we'd need to
-diff --git a/include/exec/translate-all.h b/include/exec/translate-all.h
-index c50661a05d5..039668ff8ac 100644
---- a/include/exec/translate-all.h
-+++ b/include/exec/translate-all.h
-@@ -25,9 +25,4 @@
- /* translate-all.c */
- void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
- 
--#ifdef CONFIG_USER_ONLY
--void page_protect(tb_page_addr_t page_addr);
--int page_unprotect(tb_page_addr_t address, uintptr_t pc);
--#endif
--
- #endif /* TRANSLATE_ALL_H */
-diff --git a/include/user/page-protection.h b/include/user/page-protection.h
-new file mode 100644
-index 00000000000..448c7a03449
---- /dev/null
-+++ b/include/user/page-protection.h
-@@ -0,0 +1,20 @@
-+/*
-+ * QEMU page protection declarations.
-+ *
-+ *  Copyright (c) 2003 Fabrice Bellard
-+ *
-+ * SPDX-License-Identifier: LGPL-2.1+
-+ */
-+#ifndef USER_PAGE_PROTECTION_H
-+#define USER_PAGE_PROTECTION_H
-+
-+#ifndef CONFIG_USER_ONLY
-+#error Cannot include this header from system emulation
-+#endif
-+
-+#include "exec/translation-block.h"
-+
-+void page_protect(tb_page_addr_t page_addr);
-+int page_unprotect(tb_page_addr_t address, uintptr_t pc);
-+
-+#endif
-diff --git a/accel/tcg/user-exec.c b/accel/tcg/user-exec.c
-index 4ed6dd19f30..636932303bb 100644
---- a/accel/tcg/user-exec.c
-+++ b/accel/tcg/user-exec.c
-@@ -25,7 +25,7 @@
- #include "qemu/rcu.h"
- #include "exec/cpu_ldst.h"
- #include "qemu/main-loop.h"
--#include "exec/translate-all.h"
-+#include "user/page-protection.h"
- #include "exec/page-protection.h"
- #include "exec/helper-proto.h"
- #include "qemu/atomic128.h"
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 471a384b222..effd3ab47ef 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -8,6 +8,7 @@
- 
- #include "qemu.h"
- #include "user/tswap-target.h"
-+#include "user/page-protection.h"
- #include "exec/page-protection.h"
- #include "user/guest-base.h"
- #include "user-internals.h"
-@@ -3918,7 +3919,6 @@ int load_elf_binary(struct linux_binprm *bprm, struct image_info *info)
- }
- 
- #ifdef USE_ELF_CORE_DUMP
--#include "exec/translate-all.h"
- 
- /*
-  * Definitions to generate Intel SVR4-like core files.
--- 
-2.47.1
+> Related tangent on CPU feature discoverability on ARM:
+>
+> Speaking of "Neoverse-N1", looking at a system that I have access to,
+> the `lscpu` output does not say anything about who the integrator is; it
+> only says:
+>
+>     ...
+>     Vendor ID:                ARM
+>     Model name:             Neoverse-N1
+>     ...
+>
+> I realize, `lscpu` displays only whatever the kernel knows.  Nothing in
+> `dmidecode` either.
+>
+> Also, it looks like there's no equivalent of a "CPUID" instruction (I
+> realize it is x86-specific) on ARM.  Although, I came across a Google
+> Git repo that seems to implement a bespoke, "aarch64_cpuid".  From a
+> what I see, it seems to fetch the "Main ID Register" (MIDR_EL1) - I
+> don't know enough about it to understand its implications:
+>
+>     https://github.com/google/cpu_features/blob/main/src/impl_aarch64_cpuid.c
+
+My guess is that this is mostly for "we have code that looks for a cpuid
+like on x86, let's provide some code on arm that gives something that is
+at least somewhat useful."
+
+For "CPU feature discoverability", I don't think that there's any way
+other than looking at the actual id registers. It would be nice if you
+could at least know that "there are some <unspecified> differences in
+features" by comparing MIDR/REVIDR/AIDR, but that's not the case IIRC?
+
+[Anyway, I'm off for the year :)]
 
 
