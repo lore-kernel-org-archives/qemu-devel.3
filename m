@@ -4,81 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19916E7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 08:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB762E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 09:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOYiL-0005oD-Gr; Fri, 20 Dec 2024 03:50:29 -0500
+	id 1tOZ2e-0003bJ-GK; Fri, 20 Dec 2024 04:11:28 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1tOYiJ-0005nj-Dz
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 03:50:27 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOZ2b-0003b5-Hu
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 04:11:25 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1tOYiG-0001NL-EF
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 03:50:26 -0500
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1tOZ2Z-0008BR-Re
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 04:11:25 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734684623;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Bfsy+DprmXywkw+uDyl5a1KBJUfg5bpr3NHlBEfQ5LU=;
- b=U4lU5M/WM2iMMMmrN6BZFHA1kxQkjX/71XX2kOxJIywrm2O2u2ibMyUG/+d9f9o0ngQHDg
- nr/iSKE9K2bnnJTi5Ro67CMM0h3lhOQCi3RjN02r5G2COkHzDTLNvLmsOGqLhaL3q8H9Id
- VAK39TKSIzYPzaCIvn7jm0Rj77R2UAo=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-294-hdiwCPOYPh6BdC1m2KQIEQ-1; Fri, 20 Dec 2024 03:50:21 -0500
-X-MC-Unique: hdiwCPOYPh6BdC1m2KQIEQ-1
-X-Mimecast-MFC-AGG-ID: hdiwCPOYPh6BdC1m2KQIEQ
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7b6eeef7c38so316525285a.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 00:50:20 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734684620; x=1735289420;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Bfsy+DprmXywkw+uDyl5a1KBJUfg5bpr3NHlBEfQ5LU=;
- b=w/13rwldlcCfopykbwv8CGKxzeHrGG+GaHznq/ERjuj0oO5ceSEFeKxDh2PD3D/PtZ
- seqON3lGWd9ESzH0AM49CNGUb976QvG0S1LxJreoIl9ArF6/6xXuBuKtL63L9EAiBQtE
- YiMhtSrhdGPi9EHgNtq50+VcFh8o8x66DpdSdVlpdGfcy5MzTqifg6Il74t1p6ML7Gkh
- kCS32ja9EVuAPcJ7OT4hiq7BjP3EjkL6M+ytVjq27LFU7fvifKlMsQRVmEshLevX54YC
- a1nWqrM4sPnKjc3vkLH+O7SwYsFVAU4Xa3GVyJAdwgMcCdEz7x1qeuHxENTnqW1MSsRz
- UM5g==
-X-Gm-Message-State: AOJu0YzwmnRAj8CzzgN2kKyGaSBShYp62k7eiddAQrQNPumiPwLEHFy4
- Ao73RR/aQLFqa+fjqAl3chZ6dfmAD3lgdSJ6fJfR8e/QJivhtAeVyzY1qWBtgdL06EpSoMITGMX
- Au4z/ndnyDfQpELCb+IswaM8VoFizOC3Ov7xhjMpUh8cqfE7JQ/tVMBwOEpjsoXRYpc17QmJKy0
- PVtBKe76h3exzePGOV4zkhzUwjtQO6+ns20rD2jg==
-X-Gm-Gg: ASbGncvPPw6DzXKSKSTIvzkSxUcyPvEm5FBabAujWuoL4q9Mt06IusgJkDjkVOSEWiy
- H3fsFfAse9ClIAgs+H/WdHp74P/zV7KcWQGaa2EiJpMnHFss38VRDpmG0NV4Y7g9HzGIl4ms=
-X-Received: by 2002:a05:620a:31a2:b0:7b7:142d:53d2 with SMTP id
- af79cd13be357-7b9ba83640cmr284331185a.41.1734684620118; 
- Fri, 20 Dec 2024 00:50:20 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IGCpeJbvbbCgWwQSbbtUNmLU+UvY/Kjb4FkrtWVjAwhlXA3WoDZ9ysHf8mtIM5F39DU4m2qbDQWM7AVgOcOks0=
-X-Received: by 2002:a05:620a:31a2:b0:7b7:142d:53d2 with SMTP id
- af79cd13be357-7b9ba83640cmr284329885a.41.1734684619760; Fri, 20 Dec 2024
- 00:50:19 -0800 (PST)
+ s=mimecast20190719; t=1734685882;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=r3Qj87n+qCu8bZrwVnSAKMWuo8okMmKbcU2qR+F4yFg=;
+ b=TWckIn81y9IBBZ3AKzWg2N5y3YbDkPcwXjCuRb1UiWeOoFs8bQNrJp0Vau8z7tyY1kTrZt
+ zdVi+hrm5oV9nHn2/VXK6XeKGtN7G35MQjgHYvUw3eWIZBb/GmlyNpmF9CUYKCf3h3E9xO
+ EkF8uu0+GJ/kcuo/1dLHirdxqBkcNrY=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-5choLKdTPPaOAll7VFtwfQ-1; Fri,
+ 20 Dec 2024 04:11:20 -0500
+X-MC-Unique: 5choLKdTPPaOAll7VFtwfQ-1
+X-Mimecast-MFC-AGG-ID: 5choLKdTPPaOAll7VFtwfQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 947841956096; Fri, 20 Dec 2024 09:11:19 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.4])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 116C019560AD; Fri, 20 Dec 2024 09:11:17 +0000 (UTC)
+Date: Fri, 20 Dec 2024 09:11:14 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Subject: Re: [PATCH v2 2/2] tests/qtest/migration: Stop checking
+ __NR_userfaultfd
+Message-ID: <Z2U0sno0hsoAxos6@redhat.com>
+References: <20241218192223.10551-1-farosas@suse.de>
+ <20241218192223.10551-3-farosas@suse.de>
 MIME-Version: 1.0
-References: <20241219153857.57450-1-philmd@linaro.org>
- <20241219153857.57450-9-philmd@linaro.org>
-In-Reply-To: <20241219153857.57450-9-philmd@linaro.org>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Fri, 20 Dec 2024 12:50:08 +0400
-Message-ID: <CAMxuvayAVM4UvDjnSKEMD59YZpCgYVQHMVXkBrbTf3S79zRQ7g@mail.gmail.com>
-Subject: Re: [RFC PATCH 08/10] hw/misc/vmcoreinfo: Implement 'vmcore-info'
- object
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>,
- devel@lists.libvirt.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20241218192223.10551-3-farosas@suse.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -100,146 +83,61 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On Wed, Dec 18, 2024 at 04:22:23PM -0300, Fabiano Rosas wrote:
+> We don't need to check for __NR_userfaultfd in the tests anymore, the
+> syscall has been present in Linux for a long time now.
 
-On Thu, Dec 19, 2024 at 7:39=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
-<philmd@linaro.org> wrote:
->
-> 'vmcore-info' object allow to transition from '-device'
-> to 'object', following the deprecation process.
->
+The same is true of the migration/postcopy-ram.c  code too which I
+think should be changed at the same time as its tests.
 
-Is there a strong motivation behind this? just replacing -device with
--object doesn't really give anything, does it?
+There are a few other places in QEMU also checking __NR_userfaultfd
+but not directly under migration subsystem, so change those ones at
+your discretion.
 
-Also I'd rather keep the name "vmcoreinfo" since that's how it used to
-be, and also the name used by the kernel ELF etc.
-
-> No need to modify VMCoreInfoState since DeviceState
-> already inherits from Object state.
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> 
+> Suggested-by: Peter Xu <peterx@redhat.com>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  include/hw/misc/vmcoreinfo.h |  4 ++-
->  hw/misc/vmcoreinfo.c         | 48 +++++++++++++++++++++++++++++++++++-
->  2 files changed, 50 insertions(+), 2 deletions(-)
->
-> diff --git a/include/hw/misc/vmcoreinfo.h b/include/hw/misc/vmcoreinfo.h
-> index 122c69686b0..d4cce42cee6 100644
-> --- a/include/hw/misc/vmcoreinfo.h
-> +++ b/include/hw/misc/vmcoreinfo.h
-> @@ -16,8 +16,10 @@
->  #include "standard-headers/linux/qemu_fw_cfg.h"
->  #include "qom/object.h"
->
-> +#define TYPE_VMCOREINFO "vmcore-info"
-> +OBJECT_DECLARE_SIMPLE_TYPE(VMCoreInfoState, VMCOREINFO)
-> +
->  #define TYPE_VMCOREINFO_DEVICE "vmcoreinfo"
-> -typedef struct VMCoreInfoState VMCoreInfoState;
->  DECLARE_INSTANCE_CHECKER(VMCoreInfoState, VMCOREINFO_DEVICE,
->                           TYPE_VMCOREINFO_DEVICE)
->
-> diff --git a/hw/misc/vmcoreinfo.c b/hw/misc/vmcoreinfo.c
-> index a0511ea0da4..e2258e08fb1 100644
-> --- a/hw/misc/vmcoreinfo.c
-> +++ b/hw/misc/vmcoreinfo.c
-> @@ -12,11 +12,11 @@
->
->  #include "qemu/osdep.h"
->  #include "qapi/error.h"
-> -#include "qemu/module.h"
->  #include "sysemu/reset.h"
->  #include "hw/nvram/fw_cfg.h"
->  #include "migration/vmstate.h"
->  #include "hw/misc/vmcoreinfo.h"
-> +#include "qom/object_interfaces.h"
->
->  static const VMStateDescription vmstate_vmcoreinfo =3D {
->      .name =3D "vmcoreinfo",
-> @@ -32,6 +32,11 @@ static const VMStateDescription vmstate_vmcoreinfo =3D=
- {
->      },
->  };
->
-> +static char *vmcoreinfo_get_vmstate_id(VMStateIf *vmif)
-> +{
-> +    return g_strdup(TYPE_VMCOREINFO);
-> +}
-> +
->  static void fw_cfg_vmci_write(void *opaque, off_t offset, size_t len)
->  {
->      VMCoreInfoState *s =3D opaque;
-> @@ -88,6 +93,32 @@ static void vmcoreinfo_device_realize(DeviceState *dev=
-, Error **errp)
->      vmcoreinfo_realize(VMCOREINFO_DEVICE(dev), errp);
+>  tests/qtest/migration/migration-util.c | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+> index eb3640e27e..23e0163945 100644
+> --- a/tests/qtest/migration/migration-util.c
+> +++ b/tests/qtest/migration/migration-util.c
+> @@ -27,8 +27,8 @@
+>  #include <sys/syscall.h>
+>  #endif
+>  
+> -/* for uffd_version_check() */
+> -#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
+> +/* for ufd_version_check() */
+> +#if defined(__linux__) && defined(CONFIG_EVENTFD)
+>  #include <sys/eventfd.h>
+>  #include "qemu/userfaultfd.h"
+>  #endif
+> @@ -301,7 +301,7 @@ bool probe_o_direct_support(const char *tmpfs)
 >  }
->
-> +static bool vmcoreinfo_can_be_deleted(UserCreatable *uc)
-> +{
-> +    return false;
-> +}
-> +
-> +static void vmcoreinfo_complete(UserCreatable *uc, Error **errp)
-> +{
-> +    if (vmstate_register_any(VMSTATE_IF(uc), &vmstate_vmcoreinfo, uc) < =
-0) {
-> +        error_setg(errp, "%s: Failed to register vmstate", TYPE_VMCOREIN=
-FO);
-> +    }
-> +
-> +    vmcoreinfo_realize(VMCOREINFO(uc), errp);
-> +}
-> +
-> +static void vmcoreinfo_class_init(ObjectClass *oc, void *data)
-> +{
-> +    UserCreatableClass *ucc =3D USER_CREATABLE_CLASS(oc);
-> +    VMStateIfClass *vc =3D VMSTATE_IF_CLASS(oc);
-> +    ResettableClass *rc =3D RESETTABLE_CLASS(oc);
-> +
-> +    ucc->complete =3D vmcoreinfo_complete;
-> +    ucc->can_be_deleted =3D vmcoreinfo_can_be_deleted;
-> +    vc->get_id =3D vmcoreinfo_get_vmstate_id;
-> +    rc->phases.hold =3D vmcoreinfo_reset_hold;
-> +}
-> +
->  static void vmcoreinfo_device_class_init(ObjectClass *klass, void *data)
+>  #endif
+>  
+> -#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
+> +#if defined(__linux__) && defined(CONFIG_EVENTFD)
+>  bool ufd_version_check(bool *uffd_feature_thread_id)
 >  {
->      DeviceClass *dc =3D DEVICE_CLASS(klass);
-> @@ -106,6 +137,18 @@ static const TypeInfo vmcoreinfo_types[] =3D {
->          .parent         =3D TYPE_DEVICE,
->          .instance_size  =3D sizeof(VMCoreInfoState),
->          .class_init     =3D vmcoreinfo_device_class_init,
-> +    },
-> +    {
-> +        .name           =3D TYPE_VMCOREINFO,
-> +        .parent         =3D TYPE_OBJECT,
-> +        .instance_size  =3D sizeof(VMCoreInfoState),
-> +        .class_init     =3D vmcoreinfo_class_init,
-> +        .interfaces =3D (InterfaceInfo[]) {
-> +            { TYPE_RESETTABLE_INTERFACE },
-> +            { TYPE_USER_CREATABLE },
-> +            { TYPE_VMSTATE_IF },
-> +            { }
-> +        }
->      }
->  };
->
-> @@ -116,6 +159,9 @@ VMCoreInfoState *vmcoreinfo_find(void)
->      Object *obj;
->
->      obj =3D object_resolve_path_type("", TYPE_VMCOREINFO_DEVICE, NULL);
-> +    if (!obj) {
-> +        obj =3D object_resolve_path_type("", TYPE_VMCOREINFO, NULL);
-> +    }
->
->      return obj ? (VMCoreInfoState *)obj : NULL;
->  }
-> --
-> 2.47.1
->
+>      struct uffdio_api api_struct;
+> -- 
+> 2.35.3
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
