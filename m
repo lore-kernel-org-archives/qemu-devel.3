@@ -4,86 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25946E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2A18E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:30:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkNR-00023n-5d; Fri, 20 Dec 2024 16:17:41 -0500
+	id 1tOkZL-0003jf-F6; Fri, 20 Dec 2024 16:29:59 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOkNM-00023Q-HN
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:17:37 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkZJ-0003jP-Vd
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:29:57 -0500
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1tOkNK-0004QE-H2
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:17:36 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2167141dfa1so22379585ad.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:17:33 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkZI-0006lZ-8K
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:29:57 -0500
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-434e3953b65so16357985e9.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:29:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734729452; x=1735334252; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1734730194; x=1735334994; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=MA0x3yePLab9QX7eKJiMmBbyUbNpcqd6QQh5Sv8kG+I=;
- b=XwJUe66httpaMPKPk/CVn1NEJS0RfiOAZ6D2e7pzZHwdOwNeCSr9CU2gpmy81//DNi
- PLOBjb15uG36gtT9Ycux9iZBpozN+m+WYVF1uZLrMeS0M2PllviUM2DHQQT8/qXaQWGS
- zc9GY2pfDnc1TTMSn4gx77QxVm0vWbQ3Q8TA9sprIZY9nTj6LB79VjPWvIT+8mSgunlm
- A2MLYUlgsXs6dHN23o8Z4P/N/hhuAhk3sFis0gUeVWfUuEMeh7uqLs+66nGEC/hdXQgM
- C95Ptu+FvRpjF9VKTcJVtWAxSKFEuQ1yzKGyFOefYUK5/Jb5BiATnw5Casb8pKjhPtV4
- +gyA==
+ bh=a816XY1aQnnjdwclZoRGm4db833zAcoCR2MTrlmwlmo=;
+ b=KoqSDlB/lsQULqnxtvNYztHMA3G/kFTcvYgo7+2XwQ9tZPLEhiAu3sOv/r2diVjMPx
+ 8GGRZycWzs6+qAMca/j+IY29s07iH63jWzGSWILkVSaJ64X/lEvehJc6y4kvsRg7F7X/
+ M2FFB8Jo8ZDGfg1w/LnaLxE7ANuvQNqQ7okmDlJdHqA+HfVCAS8D7zfhmDWEFgIeBhOg
+ 7zsg95yxSLxsV8tRjfuwYYbbe2afFzzjhQlqFT2GMRhthkpWcs4FU9hWryhkrK1l7kz3
+ eJvPfVrIsWhs9FGN5tTyZile8f36C9W6IuPjCfJce2DNFhi8fCn0mQ/oIQ1NnFEM26jg
+ kC6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734729452; x=1735334252;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734730194; x=1735334994;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=MA0x3yePLab9QX7eKJiMmBbyUbNpcqd6QQh5Sv8kG+I=;
- b=BgMYVVX5b/QoxOF7/BN8ggW1Crwoa1/oYsnNVokFkPIidktEs++BjmG+zPyyEAMeeo
- ngJKkiqyn1zoiPSp+lF+RvPec25ZlvbX614ju0YFNPj+886Eer4uUHlX7S8ULU1nTZ8J
- SdV5U81KarQV+T5IfgGYJocDdY4E2OW1cKrpyy70EFv20udBOWk1VZuHL8r7vaWGvkHp
- +QX3hdNKKgn8i9D0Xz9Y4/LPBoKh4/EaVelIjcPdhtJ8gMeXCNx7sw83PT2QRrrFKTeE
- /XUpP2f1fUIeMRr9FpJKjxUgGfiqMNeEKaR9f3oBCyWrNBIK8Oy+EI9tGSkjYX1/rzsR
- cxtg==
+ bh=a816XY1aQnnjdwclZoRGm4db833zAcoCR2MTrlmwlmo=;
+ b=n+mMZZskr26Xgqvws6zUAffGQAp7tn5M/lHiWNCUvC5HsQEzMQls5e1oahNt77+McU
+ QIZ5EiKdARzHr4vW8352zJnqoqznRToCgPDbjBnGqOLclxy/sTVJ3UPS5wdfqRZZFIxf
+ rC2UYoEP0sie2vTDX5GTfFT9juWnDnN6RGCJ9itmKOVMd9FyGk1klVuYRo1yXmxAaS8T
+ 9uJzIel0ylg9/juX0JIhWoQS5BkKxVSP2bqDNsXVHCS6a0N0o9FyjVdJ5VZqnrNR9K4l
+ hEJ72TsNnsULhefaWwpf21+yQ0cMH8y2jhEsLG5Ws3laVGesTd2/nlbT1dBd0A0CQDEb
+ X+kQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUlbNHN+LTnim9GlJttLMSRdttVdBncRoKTOdwy6cJXViicIOf+nsnFij8HsLHp5o2qDRHUmCOr5bQY@nongnu.org
-X-Gm-Message-State: AOJu0YwLdqIGFfaV9zdpIbF+OJrbZWVzFC0pWM45v5VSSdk2CeOfgySF
- b+EXc5PPbreAC25/Tlw7yiYW4N9DSAtIu8VtYl09Pt2q5Pp0h/bT8OSNjkmt9J0=
-X-Gm-Gg: ASbGncsjYVqnPvwwGoHi6EDmOyEsmbx6G2nNKlPxCwCFxI7ygZH2yfgnIQVhMxjgGdk
- icpYyvd2mMjUMfrF07knMVRqkz+ibmtm/JsHpZEC2v/xjK+dWm0r/lip/83le1b43OZZWJJHa+Y
- m4OypXSmLSyM121wdc0DDnKHEZtNexyvgY4RbZFjCqJvOwAsMSqy0og/TnOYMwBTeADJubvDCPJ
- CRPgnZmKBKuD+fKaWnuhKT/PnVJps8Uv8duamtokGHH+GyAouHCtVv5Z6SNjDEIgSczyw==
-X-Google-Smtp-Source: AGHT+IFZOVGzqap9rt/p9d2by5U+Pw3K1ytmI1INBaznYN/yRQkKnPRZDI/QTLgl/ua/EG+I1Pky5Q==
-X-Received: by 2002:a17:902:ecc2:b0:216:5448:22c3 with SMTP id
- d9443c01a7336-219da5b9c2cmr109994125ad.6.1734729452237; 
- Fri, 20 Dec 2024 13:17:32 -0800 (PST)
-Received: from [192.168.1.67] ([38.39.164.180])
+ AJvYcCXRn5zKj7pRaC5aWpPb404qJ9Wn2NcE9H0crL06P8GeSILD9HzLbLkx98PMG0tZKb7CeLV3ZBOmKk7w@nongnu.org
+X-Gm-Message-State: AOJu0YxLVaffhA9LtEF7YyMqdqsPGZaub5V2OheDEme6lWas29TDRoqP
+ mxf4Ex6E9NKqQWxhjwrIa6rAm0m+Qq71d3OjLVCirhBgriLY2HYpPsPp3j6e1xQ=
+X-Gm-Gg: ASbGncs27IqBJQXc7rJUTNGAbgItX5rIORTznzR7u7KJe5GZIXtZipNoVjLzO7ui8Bh
+ 5jPNvjn+jxJ4nrNnuC7xUixIn7P98J3hYorZK3Pr1E9JpofEQuDu+EiJjRm7xCkRKrtpZR2ba4k
+ eNoR4tAasoXdnq+enWGkP82xIANEQXLsHpzU3m/JDgZJ0Nqvqu/beOJhdGxSl3OE/iNQyU3bzvM
+ BNyi4DQGMEmCxcphHr+FERLEoGHAKy/RQB2dfAvPfC90vP2OztuIGlamd+/y9YCcA==
+X-Google-Smtp-Source: AGHT+IELbH1rpIrpfIZXcYWMAT1Z4Xyh1HNmtNBGo3N3VuT+NX+mWB5f+k44E56WnAqIdLtCYFPrcw==
+X-Received: by 2002:a5d:47cf:0:b0:385:ee59:44eb with SMTP id
+ ffacd0b85a97d-38a221fa9ffmr4683026f8f.33.1734730194555; 
+ Fri, 20 Dec 2024 13:29:54 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-842dc7edbdbsm3302628a12.59.2024.12.20.13.17.31
+ 5b1f17b1804b1-4366e210cecsm20081175e9.2.2024.12.20.13.29.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 13:17:31 -0800 (PST)
-Message-ID: <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org>
-Date: Fri, 20 Dec 2024 13:17:31 -0800
+ Fri, 20 Dec 2024 13:29:54 -0800 (PST)
+Message-ID: <dcb0e8da-5a97-4929-a80c-49341c05fe42@linaro.org>
+Date: Fri, 20 Dec 2024 22:29:53 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
+Subject: Re: [PATCH v3 2/7] hw/ppc/spapr: Convert HPTE() macro as hpte_get()
+ method
+To: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+References: <20241218182106.78800-1-philmd@linaro.org>
+ <20241218182106.78800-3-philmd@linaro.org>
+ <0c036e5c-beed-429b-aea1-628fa9d52b65@linux.ibm.com>
 Content-Language: en-US
-To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
- <590990025f1f43704ca8831254754661c176c42f@nut.email>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <590990025f1f43704ca8831254754661c176c42f@nut.email>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0c036e5c-beed-429b-aea1-628fa9d52b65@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,156 +108,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Julian,
-
-On 12/20/24 03:47, Julian Ganz wrote:
-> Hi Pierrick,
+On 19/12/24 07:31, Harsh Prateek Bora wrote:
+> Hi Philippe,
 > 
-> December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
->> On 12/2/24 11:41, Julian Ganz wrote:
->>>   +static void insn_exec(unsigned int vcpu_index, void *userdata)
->>>   +{
->>>   + struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
->>>   + uint64_t pc = (uint64_t) userdata;
->>>   + GString* report;
->>>   +
->>>   + if (state->has_next) {
->>>   + if (state->next_pc != pc) {
->>>   + report = g_string_new("Trap target PC mismatch\n");
->>>   + g_string_append_printf(report,
->>>   + "Expected: %"PRIx64"\nEncountered: %"
->>>   + PRIx64"\n",
->>>   + state->next_pc, pc);
->>>   + qemu_plugin_outs(report->str);
->>>   + if (abort_on_mismatch) {
->>>   + g_abort();
->>>   + }
->>>   + g_string_free(report, true);
->>>   + }
->>>   + state->has_next = false;
->>>   + }
->>>   +}
->>>
->> When booting an arm64 vm, I get this message:
->> Trap target PC mismatch
->> Expected: 23faf3a80
->> Encountered: 23faf3a84
+> On 12/18/24 23:51, Philippe Mathieu-Daudé wrote:
+>> Convert HPTE() macro as hpte_get() method.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/ppc/spapr.c | 38 ++++++++++++++++++++++----------------
+>>   1 file changed, 22 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+>> index 3b022e8da9e..4845bf3244b 100644
+>> --- a/hw/ppc/spapr.c
+>> +++ b/hw/ppc/spapr.c
+>> @@ -1399,7 +1399,13 @@ static bool spapr_get_pate(PPCVirtualHypervisor 
+>> *vhyp, PowerPCCPU *cpu,
+>>       }
+>>   }
+>> -#define HPTE(_table, _i)   (void *)(((uint64_t *)(_table)) + ((_i) * 2))
+>> +static uint64_t *hpte_get(SpaprMachineState *s, unsigned index)
+>> +{
+>> +    uint64_t *table = s->htab;
+>> +
+>> +    return &table[2 * index];
+>> +}
+>> +
+>>   #define HPTE_VALID(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & 
+>> HPTE64_V_VALID)
+>>   #define HPTE_DIRTY(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & 
+>> HPTE64_V_HPTE_DIRTY)
+>>   #define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= 
+>> tswap64(~HPTE64_V_HPTE_DIRTY))
+>> @@ -1614,7 +1620,7 @@ int spapr_reallocate_hpt(SpaprMachineState 
+>> *spapr, int shift, Error **errp)
+>>           spapr->htab_shift = shift;
+>>           for (i = 0; i < size / HASH_PTE_SIZE_64; i++) {
+>> -            DIRTY_HPTE(HPTE(spapr->htab, i));
+>> +            DIRTY_HPTE(hpte_get(spapr->htab, i));
 > 
-> A colleague of mine went to great lengths trying to track and reliably
-> reproduce this. We think that it's something amiss with the existing
-> instruction exec callback infrastructure. So... it's not something I'll
-> be addressing with the next iteration as it's out of scope. We'll
-> probably continue looking into it, though.
+> Prev HPTE expected _table i.e. spapr->htab as arg, but this new hpte_get
+> expects SpaprMachineState* i.e. spapr as arg. Shouldn't the arg be
+> updated accordingly?
+
+Good catch!
+
+> Wondering it didnt complain during build.
+
+Because the macros blindly cast, dropping the type checks.
+
 > 
-> The mismatch is reported perfectly normal and boring exceptions and
-> interrupts with no indication of any differences to other (not reported)
-> events that fire on a regular basis. Apparently, once in a blue moon
-> (relatively speaking), for the first instruction of a handler (even
-> though it is definitely executed and qemu does print a trace-line for
-> that instruction):
+> As Nick suggested, hpte_get_ptr or get_hpte_ptr may be better renaming.
+
+Sure. Thanks!
+
 > 
-> | Trace 0: 0x7fffa0b03900 [00104004/000000023fde73b4/00000021/ff020200]
-> | Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff020200]
-> | Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff020200]
-> | Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff020200]
-> | Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff020200]
-> | Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff020200]
-> | Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff020200]
-> | Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff020200]
-> | cpu_io_recompile: rewound execution of TB to 000000023fde7b90
-> | Taking exception 5 [IRQ] on CPU 0
-> | ...from EL1 to EL1
-> | ...with ESR 0x0/0x3800000
-> | ...with SPSR 0x20000305
-> | ...with ELR 0x23fde7b90
-> | ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
-> | Trace 0: 0x7fffa13a8340 [00104004/000000023fd77a80/00000021/ff021201]
-> | Trace 0: 0x7fffa13a8480 [00104004/000000023fd77a84/00000021/ff020200]
-> | Trap target PC mismatch CPU 0
-> | Expected:    23fd77a80
-> | Encountered: 23fd77a84
-> | warning: 44	./nptl/pthread_kill.c: No such file or directory
-> | Couldn't get registers: No such process.
-> 
-> It does show up with both single-core and multi-core VMs, so that at
-> least eliminates some possibilities. Maybe :/
-> 
-> The issue is nasty to reproduce in a way that allows any meaningful
-> investigation. It usually involves sifting through many GBs of Qemu logs
-> for maybe one occurance. We could add another testing/dummy plugin that
-> just prints the PC for _any_ instruction executed and have a skript
-> check for non-alternating Trace-lines from Qemu and that Plugin. But
-> then we're talking nearly double the amount of Lines to look through
-> with probably little additional information.
-> 
-
-Thanks for the investigation.
-I could reproduce this with this command line:
-./build/qemu-system-aarch64 -M virt -plugin 
-./build/tests/tcg/plugins/libdiscons.so,abort=on -m 8G -device 
-virtio-blk-pci,drive=root -drive 
-if=none,id=root,file=/home/user/.work/images/debianaarch64.img -M virt 
--cpu max,pauth=off  -drive 
-if=pflash,readonly=on,file=/usr/share/AAVMF/AAVMF_CODE.fd -drive 
-if=pflash,file=/home/user/.work/images/AAVMF_VARS.fd -d plugin,in_asm,op 
--D crash.log
-
-# -d plugin,in_asm,op allows to dump asm of every translated block, 
-plugin output (for discon plugin), and tcg op generated.
-
-It reliably crashes with a single address.
-Looking at the debug output (crash.log):
-----------------
-IN:
-0x23faf3a80:  d108c3ff  sub      sp, sp, #0x230
-# => This bb has a single instruction as input
-
-OP:
-# this is the TB instrumentation
-  ld_i32 loc0,env,$0xfffffffffffffff8
-  brcond_i32 loc0,$0x0,lt,$L0
-  st8_i32 $0x1,env,$0xfffffffffffffffc
-
-  ---- 0000000000000a80 0000000000000000 0000000000000000
-# => we can see that there is no call_plugin, looks like instrumentation 
-# is not applied
-  sub_i64 sp,sp,$0x230
-  add_i64 pc,pc,$0x4
-  goto_tb $0x1
-  exit_tb $0x7f7eedd355c1
-  set_label $L0
-  exit_tb $0x7f7eedd355c3
-
-----------------
-IN:
-0x23faf3a84:  a9b007e0  stp      x0, x1, [sp, #-0x100]!
-0x23faf3a88:  a9010fe2  stp      x2, x3, [sp, #0x10]
-...
-
-OP:
-  ld_i32 loc0,env,$0xfffffffffffffff8
-  brcond_i32 loc0,$0x0,lt,$L0
-  st8_i32 $0x0,env,$0xfffffffffffffffc
-
-  ---- 0000000000000a84 0000000000000000 0000000000000000
-# instruction is correctly applied
-call plugin(0x7f7eec96d530),$0x1,$0,$0x0,$0x23faf3a84
-  mov_i64 loc2,sp
-  ...
-
-Trap target PC mismatch
-Expected:    23faf3a80
-Encountered: 23faf3a84
-
-The thing interesting here is that we can notice that 23faf3a80 is a 
-translation block with a single instruction, and we can see that 
-instrumentation is not applied for this instruction (call_plugin is not 
-present).
-
-Overall, it really looks like a bug on QEMU side, where we miss 
-instrumenting something. I'll take a look. You can ignore this for now.
-
-> Regards,
-> Julian
+> regards,
+> Harsh
 
 
