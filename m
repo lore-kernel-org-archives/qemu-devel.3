@@ -4,62 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A0D5E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:31:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 768B4E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:31:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkaV-0004PX-Dd; Fri, 20 Dec 2024 16:31:11 -0500
+	id 1tOkaa-0004aI-0v; Fri, 20 Dec 2024 16:31:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkaT-0004P0-0f
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:09 -0500
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkaX-0004V1-SO
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:14 -0500
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkaR-00072q-5t
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:08 -0500
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-4364a37a1d7so23512865e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:31:06 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkaW-00073X-8l
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:31:13 -0500
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-436202dd730so17238375e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:31:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734730265; x=1735335065; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=QbAYhbljOfTe/v2IHyy0lhx9IvpThPW6vzP8nvtQH3E=;
- b=lZw6M2DsnyAaONAdo3lCCPl+yNThQGH6mT83gCDjY1PRorwhjKJCJ4+cwb57KoLEII
- XbBGb2lVryPWI/Ixn09oGiKSwaxwoLXKkqgGaNd4pYRGz5KLED3aRbC+89XtgnWwgotb
- Lk2vypl1ez9VAfQu1bJsdMo0gWt2M4YzO1K7HgozfodOeYBDd0lYhOw952pFK37W1ETY
- kGE4kBIMycPTFvkXd5iI8KjrVO2vJM5/KJLN54fClV66L2mPjGd4nOXRXNKhHKFuneuR
- ULzyAqdFIAvmYxU1t0w9vqvk5aCHKIn8ppjDCyxGhIF3Fwot+Pk7lvGSQh+eXhJAMz7S
- 3zHA==
+ d=linaro.org; s=google; t=1734730270; x=1735335070; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GkSthXKkX+HHwTs+cSajLM5Uw0R3OgK0kOG1f54cJh4=;
+ b=ivXAGaDk5D3Q3oX97BIDhDRAJKlxXj/VRF6XXQG/sKMowY0bckx/xDkT+uFf0ia7le
+ 8NOMRwpS5fPL5wXHD72QtGoXjtOZTeMAYtxLzdG+Fqgj2XYQKcpNuS4euZvoaX5PQUWD
+ Xc7wpXIUZPwAt54/6brht4xWU+LhRzOr5POaZutBJtf4IEPbs+nGaF4fNTYvq8bv7r9t
+ belTpmaat1rU4oywY21IlEMckzVDwNob+zDnhuWkRvEbWHprp+Cet+4xlpFcK4dboCdw
+ efE6eDs9g/685Dd/olWTK0rpzHdUHieVvIaduRhn90LQDSScsEp/OABMffhRq/sAV03q
+ ADQQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734730265; x=1735335065;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QbAYhbljOfTe/v2IHyy0lhx9IvpThPW6vzP8nvtQH3E=;
- b=wstBlrzZbdIHCV6IffSzPQ0o1bDpwAzwVSNKmi/4fSoaY0l9yftajpzelHFaRZexZM
- KLkgw/Mgy/7fbkxx1ZO8hU6QLNFPq2cZWHAWgNO/+ri/uE93UBppvo5kQopFkw3PQwP7
- Zd1h39mG/F07MCKaJ3ygU5a/m0brxXhBbeZWf6AlKE62uHtmK4M7QMsdVed0Na+0Y8PC
- vhpt3S5PQ4BIQbF61bLJctpR0CAuQ6pYihLlHuyyIKCeChs1ZkKq/N9xh2y1F0XeR98Q
- OkZTj3Pglk6lGH8D2srn6dWS1uN/ROD958w8qS1h2dhZm/tgwGbXLw3Cx3z2fE2Xrvji
- 0TZw==
-X-Gm-Message-State: AOJu0Yziqg9GDt84jAQu9V2kWXKkY5VFpCyOZJVWSwnw9sxgUOEPZGKD
- fxorcfeD6j0VIQ+e6z7PIJaJ9AwhrlJOBmrAjxQJU+meUPs2TqYelnHKojPzBvozGf53TlQIvlW
- D
-X-Gm-Gg: ASbGncvBxkTYgtLU7gKxcRi/vug67fL6wy0ddIEy7nsMA5SaZHKypkvEwaAQqPRqY9K
- 7uz0Afi4SFVDOREcs8lmLTyzYGYiAkQklQfj1bCASv7aPVNvZjmVy0o/myyECEkCqiepMDdqG9w
- 6hWYTmNPnadTZHacFDuczWDJ+d+qMvsj+bHSTvWs/rqwaUM3hWaWrlL1tPuZxyjEyBugF0OhRiX
- 3VXbH1P0zRyW79kQWJWYr2f+pD4g4twK2QQI9uTxBis4j3FY6DHZ5S2Nz8xL2XRn0mP2Sf5AGg=
-X-Google-Smtp-Source: AGHT+IFX8DjGyewg3m5e5Hgt1xO4VX6wPf8ylvUvPTX/iposHQYX3iXqB3d9D+pP787Di8cIqtCBuA==
-X-Received: by 2002:a05:600c:4f0f:b0:434:a8ef:442f with SMTP id
- 5b1f17b1804b1-43668b78d5fmr33951625e9.32.1734730265306; 
- Fri, 20 Dec 2024 13:31:05 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734730270; x=1735335070;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GkSthXKkX+HHwTs+cSajLM5Uw0R3OgK0kOG1f54cJh4=;
+ b=nJE9BpuS8VF60k5tjaU8MRRDPkzf5Njngb56sHFCV0pSxuCyP4rJ8SrGQhqCPkHXN7
+ CTS28mtdFD4mezdc+6Y+N8sj3qDaaJCcfwrsU5XRsYDwqLB5vo2nGpb4q61PGzqLjLtM
+ EdA+yaolhK4PEdcR8te1kC7nqOqrsakap5L1P9/8Qjzhw82GQTB9DaIiSvB8FTe5IIMx
+ A2ebr1YmaPpGXrt/0hmN/rhaI4XoaNtPK3mhHVO6lGJtXtVV8Aov4eFUYNlriIMKoVav
+ 78ZT+Ic1MYBDK+kSYFOabNKV5V8erVOosIdP20CsATnjQ1UB2yqtn8Y7uqOcMIfyvNXD
+ yGtw==
+X-Gm-Message-State: AOJu0YwXT1n2RPog7priGfsZQUFqAGmbtd4BHFX1e1yB1mnRksPjKVgG
+ slFd3+cCcMR9+5qquNeNS0LHg0delC0JJYdil8G0yRrVN2AHNYERCBIO5uhfxk1WMu8L13QXF+z
+ 2
+X-Gm-Gg: ASbGnct7D/J+cJnS+IiMn97NW4BXwqGm+kKIqx7/mjMgeLchKY+kJnVimFbZ55gsJni
+ F7mMNITZYUX2DuA2rT2hIhERWL3ZuXgs4buwlclnrVvivcyRNjgzVLUQKqCqNu/gnRZBGHzqEtu
+ T68bba2gj9YdSeeKrENGYL1BLFEC4Zk2GtC/VSKqXb7lZ9SrIHcs5A80nXK23Jd5mLb+sYlSAWT
+ cWjx9Tr+6mwOn9ITPaY7V6GTq5xZTzTIOc7V8Y8R95ix4mFN58AavpAUPqDj49GfJMcgadJHg0=
+X-Google-Smtp-Source: AGHT+IF46ZQ5LvDcAz5bMC3DiTZhBzoWk5EBQOgWKBMOnzB33OYLDCCr8vojqn4mA3VHjg5qR6oJ/Q==
+X-Received: by 2002:a05:600c:45cf:b0:434:fbd5:2f0a with SMTP id
+ 5b1f17b1804b1-43668642e7bmr43838545e9.9.1734730270562; 
+ Fri, 20 Dec 2024 13:31:10 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8287adsm4873668f8f.16.2024.12.20.13.31.04
+ 5b1f17b1804b1-43656b4432dsm88922455e9.41.2024.12.20.13.31.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 13:31:04 -0800 (PST)
+ Fri, 20 Dec 2024 13:31:09 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
@@ -68,15 +69,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org,
  Daniel Henrique Barboza <danielhb413@gmail.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v4 0/6] hw/ppc: Remove tswap() calls
-Date: Fri, 20 Dec 2024 22:30:57 +0100
-Message-ID: <20241220213103.6314-1-philmd@linaro.org>
+Subject: [PATCH v4 1/6] hw/ppc/spapr: Convert HPTE() macro as hpte_get_ptr()
+ method
+Date: Fri, 20 Dec 2024 22:30:58 +0100
+Message-ID: <20241220213103.6314-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241220213103.6314-1-philmd@linaro.org>
+References: <20241220213103.6314-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,27 +103,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v3:
-- Addressed Nick & Harsh  review comments
+Convert HPTE() macro as hpte_get_ptr() method.
 
-Remove the tswap() calls on ePAPR, and convert
-them to big-endian LD/ST API on sPAPR.
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ppc/spapr.c | 38 ++++++++++++++++++++++----------------
+ 1 file changed, 22 insertions(+), 16 deletions(-)
 
-Build-tested only.
-
-Philippe Mathieu-Daudé (6):
-  hw/ppc/spapr: Convert HPTE() macro as hpte_get_ptr() method
-  hw/ppc/spapr: Convert HPTE_VALID() macro as hpte_is_valid() method
-  hw/ppc/spapr: Convert HPTE_DIRTY() macro as hpte_is_dirty() method
-  hw/ppc/spapr: Convert CLEAN_HPTE() macro as hpte_set_clean() method
-  hw/ppc/spapr: Convert DIRTY_HPTE() macro as hpte_set_dirty() method
-  hw/ppc/epapr: Do not swap ePAPR magic value
-
- hw/ppc/sam460ex.c     |  2 +-
- hw/ppc/spapr.c        | 63 +++++++++++++++++++++++++++++--------------
- hw/ppc/virtex_ml507.c |  2 +-
- 3 files changed, 45 insertions(+), 22 deletions(-)
-
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 3b022e8da9e..bed60afbe22 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -1399,7 +1399,13 @@ static bool spapr_get_pate(PPCVirtualHypervisor *vhyp, PowerPCCPU *cpu,
+     }
+ }
+ 
+-#define HPTE(_table, _i)   (void *)(((uint64_t *)(_table)) + ((_i) * 2))
++static uint64_t *hpte_get_ptr(SpaprMachineState *s, unsigned index)
++{
++    uint64_t *table = s->htab;
++
++    return &table[2 * index];
++}
++
+ #define HPTE_VALID(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & HPTE64_V_VALID)
+ #define HPTE_DIRTY(_hpte)  (tswap64(*((uint64_t *)(_hpte))) & HPTE64_V_HPTE_DIRTY)
+ #define CLEAN_HPTE(_hpte)  ((*(uint64_t *)(_hpte)) &= tswap64(~HPTE64_V_HPTE_DIRTY))
+@@ -1614,7 +1620,7 @@ int spapr_reallocate_hpt(SpaprMachineState *spapr, int shift, Error **errp)
+         spapr->htab_shift = shift;
+ 
+         for (i = 0; i < size / HASH_PTE_SIZE_64; i++) {
+-            DIRTY_HPTE(HPTE(spapr->htab, i));
++            DIRTY_HPTE(hpte_get_ptr(spapr, i));
+         }
+     }
+     /* We're setting up a hash table, so that means we're not radix */
+@@ -2172,7 +2178,7 @@ static void htab_save_chunk(QEMUFile *f, SpaprMachineState *spapr,
+     qemu_put_be32(f, chunkstart);
+     qemu_put_be16(f, n_valid);
+     qemu_put_be16(f, n_invalid);
+-    qemu_put_buffer(f, HPTE(spapr->htab, chunkstart),
++    qemu_put_buffer(f, (void *)hpte_get_ptr(spapr, chunkstart),
+                     HASH_PTE_SIZE_64 * n_valid);
+ }
+ 
+@@ -2198,16 +2204,16 @@ static void htab_save_first_pass(QEMUFile *f, SpaprMachineState *spapr,
+ 
+         /* Consume invalid HPTEs */
+         while ((index < htabslots)
+-               && !HPTE_VALID(HPTE(spapr->htab, index))) {
+-            CLEAN_HPTE(HPTE(spapr->htab, index));
++               && !HPTE_VALID(hpte_get_ptr(spapr, index))) {
++            CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
+         }
+ 
+         /* Consume valid HPTEs */
+         chunkstart = index;
+         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
+-               && HPTE_VALID(HPTE(spapr->htab, index))) {
+-            CLEAN_HPTE(HPTE(spapr->htab, index));
++               && HPTE_VALID(hpte_get_ptr(spapr, index))) {
++            CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
+         }
+ 
+@@ -2247,7 +2253,7 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+ 
+         /* Consume non-dirty HPTEs */
+         while ((index < htabslots)
+-               && !HPTE_DIRTY(HPTE(spapr->htab, index))) {
++               && !HPTE_DIRTY(hpte_get_ptr(spapr, index))) {
+             index++;
+             examined++;
+         }
+@@ -2255,9 +2261,9 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         chunkstart = index;
+         /* Consume valid dirty HPTEs */
+         while ((index < htabslots) && (index - chunkstart < USHRT_MAX)
+-               && HPTE_DIRTY(HPTE(spapr->htab, index))
+-               && HPTE_VALID(HPTE(spapr->htab, index))) {
+-            CLEAN_HPTE(HPTE(spapr->htab, index));
++               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
++               && HPTE_VALID(hpte_get_ptr(spapr, index))) {
++            CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
+             examined++;
+         }
+@@ -2265,9 +2271,9 @@ static int htab_save_later_pass(QEMUFile *f, SpaprMachineState *spapr,
+         invalidstart = index;
+         /* Consume invalid dirty HPTEs */
+         while ((index < htabslots) && (index - invalidstart < USHRT_MAX)
+-               && HPTE_DIRTY(HPTE(spapr->htab, index))
+-               && !HPTE_VALID(HPTE(spapr->htab, index))) {
+-            CLEAN_HPTE(HPTE(spapr->htab, index));
++               && HPTE_DIRTY(hpte_get_ptr(spapr, index))
++               && !HPTE_VALID(hpte_get_ptr(spapr, index))) {
++            CLEAN_HPTE(hpte_get_ptr(spapr, index));
+             index++;
+             examined++;
+         }
+@@ -2449,11 +2455,11 @@ static int htab_load(QEMUFile *f, void *opaque, int version_id)
+ 
+         if (spapr->htab) {
+             if (n_valid) {
+-                qemu_get_buffer(f, HPTE(spapr->htab, index),
++                qemu_get_buffer(f, (void *)hpte_get_ptr(spapr, index),
+                                 HASH_PTE_SIZE_64 * n_valid);
+             }
+             if (n_invalid) {
+-                memset(HPTE(spapr->htab, index + n_valid), 0,
++                memset(hpte_get_ptr(spapr, index + n_valid), 0,
+                        HASH_PTE_SIZE_64 * n_invalid);
+             }
+         } else {
 -- 
 2.47.1
 
