@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB001E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:59:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06AF0E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:59:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSG8-00021s-UK; Thu, 19 Dec 2024 20:56:57 -0500
+	id 1tOSFd-0007WV-VH; Thu, 19 Dec 2024 20:56:26 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFv-0000xh-IW
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:43 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ id 1tOSFH-0006zw-FU
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:03 -0500
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFu-0004e0-0I
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:43 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-725ed193c9eso1283904b3a.1
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:41 -0800 (PST)
+ id 1tOSFF-0004XY-89
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:02 -0500
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-725ea1e19f0so1278803b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659800; x=1735264600; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659759; x=1735264559; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Hja11IV5nNA1bZBHCKOlY+QF4apsmUpXaGb/2G3nPWw=;
- b=ilZZK2XfjsEoYjAsCMnc3o+BeXVDFeKjO7xi45xxDuEZtRXGafMrLNR9oVXx1eeMf3
- 4/GRLQ6EQ/AActpFeqUUay0+pVFH7P37zv32sfxXOqWCtGC1de1qXlcrc/uKV6EmZ+bn
- bDIMDvia1bwr+KrtZi8q/WHe1urQCM5iZmXIbvMC6qvIRixA6GBej2PQlBiWClEkMuyN
- UY4gYBsTJm872iSKGN890/8Skn6yHjP2A5KoLLTy8tlWiTxj63/oLIJGfPwHQcoteZSg
- xTxw0sSQx9/kR7aBUVe7MhvLtKCstXUvVIMuAaJebCyYB5iYUTEQVYNNopJxQ/ujrF+L
- jtnw==
+ bh=k+u/esspkIM84/pIeM30BE8iVEgZ0neo/04y/t2IyJ4=;
+ b=jAdztPi2d5p+V1pdHkmkJGjIpAR65P9EhWwzB2IhslWsw6I/BLEEkyOeVWAfFJXtFF
+ VR1/9pQq4h+IxsxfqxxmxJ+NyL4qqHw6z9nRnhpBBxon0uAXIJaxqTQGxyZRGPFh71KV
+ z3TdGe4S4qRyx2TqTKbGpMUDj0SHLBuH96h6fkVR2B7pG0gGhQDfe39pJYWuPyWAJjVy
+ v3EYB9UfPP+5ptd+qISTvXJ5oqa/5UoS6g+cgqqt9EA+e1rROazyxgivCyMStazY+SwH
+ ntLWWdtvmaxlAsSLC4BhGAhMtpvdLj3tExFnwVd8mV1A37EycNGt3csgRN0y7Uxzo+Cn
+ fEXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659800; x=1735264600;
+ d=1e100.net; s=20230601; t=1734659759; x=1735264559;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Hja11IV5nNA1bZBHCKOlY+QF4apsmUpXaGb/2G3nPWw=;
- b=LsyJrbzcFgFF8/XzpwC7ARjJODUCs37iF9X+wEIRKOcsNlS7bkEevibJjK6JeVJPhE
- Cxrp/d6grTrDjjlEjJc4dN4yjkHLOMI6Rtet2Lfj0M81QPWkyEKzHqYgaQCVSMBFJH8j
- hIhqtevdNA6HS31Gdhmp8PAX/c8o5t24B1aAjQ7nUSR/L5wURaww9qkFXhlVrZxwGNhw
- E+5NM0+yvv+tYzQMp79xnLN4vUxlX/p98LoKkbiZJooNuLK91QRAgtVzy7O3H0C4tvQO
- ZjkUoKGBc7iobjqMBysmP4aooiusG5dhqe40HlUzpv/J7QYighLk6LB7eIwrALE57UG4
- vHCQ==
-X-Gm-Message-State: AOJu0YyAUiO6rnLqQ7KSmhkg/NhTNiJHoT7PKYH3Muj8qLCKt4VxB5dx
- tkDnt67FtMg5aIQr3P8NAvkPBo4kUctHagIkf/hNHV7ahjBH8JCllK+TA81K
-X-Gm-Gg: ASbGnctD5pmWN/T9Rg/bpeapJvNgyFD6F6HB2mWvkvr/a/OPD3evZY9gZtL1KEB8f0i
- K0secWlX97JtF8a7rq9ZI7MacfNw8mlFLfkqzSUxRbrLL4YIJAYRpgcoCWixniaMSSmWb7JX4pv
- edKEblILKsM3jOafw++ZxwA99/iytjkCfIp1+4vMT1edAKOtOjgbz2/hXHvhxyHtiBWeXxzQvxN
- fQR+ULRCVdUyjRZmFRABoZmpGasICFZXSCnALZV2RCFYJpPL3Ok3ZZ7mWi7XR4qs/tlOtLoavYS
- ZZ4OrSn7dg7x33ayWxk4rAU0d9wlSmA46GBYcFhrxM1Ux2wmo1uFpWXJULQ5Gu4=
-X-Google-Smtp-Source: AGHT+IHsn+jw4yQGh9Q3zguckdd3dIUaevudysAAdzt6GjEm8Ve/k2ZuFBDq6Iqj/5le8xd7tkH79w==
-X-Received: by 2002:a05:6a21:394a:b0:1e0:df27:10d6 with SMTP id
- adf61e73a8af0-1e5e0497c5fmr2020057637.23.1734659800481; 
- Thu, 19 Dec 2024 17:56:40 -0800 (PST)
+ bh=k+u/esspkIM84/pIeM30BE8iVEgZ0neo/04y/t2IyJ4=;
+ b=ZMaqeKW7jc2Ezm/iTt3Vu3G8CbNLVfY7PEP3g6ygxjgXgWBI8LA8aMVs5ka64MVtPB
+ Gef5yN3ns5AB7jfKjMui/oyEGjicZSlL+b2W02W2uGd1f1tEktrbq1sknna+Jp/u1ju8
+ 3BJY4koctq9+y00EbsNgELff1NoQWJc11wnl+T/tn2PI5CFgefQ0PNTRdZTg39XXXJ6A
+ gLVyiRLLXHcB+ZTwr6eT1D1vZXfRK9baBfi8/3IBaRlc6j5laP7nh7kSkzbj1u5g4zPP
+ 7U5xwd3DBFFsYkMK1Enkw/9VCIGsrEt9CP9j0J3E7lkb25gwRNuXKPFMGH1gIqBTfcOB
+ ku7A==
+X-Gm-Message-State: AOJu0YzoAhchjhgqhPP3UV8Ejlh9w0tLqZUX1f/Ix0oFTMzJs5PlGpkd
+ +gih2ZsHWc3k3ze58hA2EhT0x5tMnRHNvJPIYihmmaQlKMrMrgA/bo9s5vnm
+X-Gm-Gg: ASbGncuQDl7X48fNSsLTZ4VsNwHRGv4tk50+MlAwZ5LBcM/x1iNn12dhuyGfo49D9oA
+ nq1+95uckLo3qgoKWu/4qcG7yL8u7+qDii4/o1QNNi7mF/2dXkgk3ra10sTXSKrKvlznOkxlEFp
+ E6mLt3fKwzVVlsVszbTIMv/L1xlBmwWe0imSt5Jrp/Mqese/78sh2+zwzVwtKDMi/QYnw4yyQmZ
+ qSqRDtAe3e+YzBuXt/AiniTC+t3t8B0lJOn8JvZVhiF/h4EXiUdYRvlSJ1AogzQYbJID5JcpCrd
+ 8FLDXsNCPv3jwSqjMPuqUJzD4OXMeBQOU2W692KPesMCFTJA/5BPoQvLiWAog9A=
+X-Google-Smtp-Source: AGHT+IGsXbYo0VFEllg66DBB/FurrtlbZp4NAVlo35dQX5vc9RRIPsi4nKjeomFy2XrF31IZfO7/ew==
+X-Received: by 2002:a05:6a00:4391:b0:728:927b:7de2 with SMTP id
+ d2e1a72fcca58-72abdd7cbaemr1694132b3a.8.1734659759536; 
+ Thu, 19 Dec 2024 17:55:59 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.56.37
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:56:40 -0800 (PST)
+ Thu, 19 Dec 2024 17:55:59 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PULL v2 35/39] target/riscv: Include missing headers in
- 'vector_internals.h'
-Date: Fri, 20 Dec 2024 11:54:35 +1000
-Message-ID: <20241220015441.317236-36-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
+ Sunil V L <sunilvl@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 22/39] tests/qtest/bios-tables-test: Update virt SPCR golden
+ reference for RISC-V
+Date: Fri, 20 Dec 2024 11:54:22 +1000
+Message-ID: <20241220015441.317236-23-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -107,36 +105,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
 
-Rather than relying on implicit includes, explicit them,
-in order to avoid when refactoring unrelated headers:
+Update the virt SPCR golden reference file for RISC-V to accommodate the
+SPCR Table revision 4 [1], utilizing the iasl binary compiled from the
+latest ACPICA repository. The SPCR table has been modified to
+adhere to the revision 4 format [2].
 
-  target/riscv/vector_internals.h:36:12: error: call to undeclared function 'FIELD_EX32'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-     36 |     return FIELD_EX32(simd_data(desc), VDATA, NF);
-        |            ^
+[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
+[2]: https://github.com/acpica/acpica/pull/931
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Message-ID: <20241203200828.47311-2-philmd@linaro.org>
+Diffs from iasl:
+/*
+  * Intel ACPI Component Architecture
+  * AML/ASL+ Disassembler version 20200925 (64-bit version)
+  * Copyright (c) 2000 - 2020 Intel Corporation
+  *
+- * Disassembly of tests/data/acpi/riscv64/virt/SPCR, Wed Aug 28 18:28:19 2024
++ * Disassembly of /tmp/aml-MN0NS2, Wed Aug 28 18:28:19 2024
+  *
+  * ACPI Data Table [SPCR]
+  *
+  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
+  */
+
+ [000h 0000   4]                    Signature : "SPCR"    [Serial Port Console Redirection table]
+-[004h 0004   4]                 Table Length : 00000050
+-[008h 0008   1]                     Revision : 02
+-[009h 0009   1]                     Checksum : B9
++[004h 0004   4]                 Table Length : 0000005A
++[008h 0008   1]                     Revision : 04
++[009h 0009   1]                     Checksum : 13
+ [00Ah 0010   6]                       Oem ID : "BOCHS "
+ [010h 0016   8]                 Oem Table ID : "BXPC    "
+ [018h 0024   4]                 Oem Revision : 00000001
+ [01Ch 0028   4]              Asl Compiler ID : "BXPC"
+ [020h 0032   4]        Asl Compiler Revision : 00000001
+
+-[024h 0036   1]               Interface Type : 00
++[024h 0036   1]               Interface Type : 12
+ [025h 0037   3]                     Reserved : 000000
+
+ [028h 0040  12]         Serial Port Register : [Generic Address Structure]
+ [028h 0040   1]                     Space ID : 00 [SystemMemory]
+ [029h 0041   1]                    Bit Width : 20
+ [02Ah 0042   1]                   Bit Offset : 00
+ [02Bh 0043   1]         Encoded Access Width : 01 [Byte Access:8]
+ [02Ch 0044   8]                      Address : 0000000010000000
+
+ [034h 0052   1]               Interrupt Type : 10
+ [035h 0053   1]          PCAT-compatible IRQ : 00
+ [036h 0054   4]                    Interrupt : 0000000A
+ [03Ah 0058   1]                    Baud Rate : 07
+ [03Bh 0059   1]                       Parity : 00
+ [03Ch 0060   1]                    Stop Bits : 01
+ [03Dh 0061   1]                 Flow Control : 00
+ [03Eh 0062   1]                Terminal Type : 00
+ [04Ch 0076   1]                     Reserved : 00
+ [040h 0064   2]                PCI Device ID : FFFF
+ [042h 0066   2]                PCI Vendor ID : FFFF
+ [044h 0068   1]                      PCI Bus : 00
+ [045h 0069   1]                   PCI Device : 00
+ [046h 0070   1]                 PCI Function : 00
+ [047h 0071   4]                    PCI Flags : 00000000
+ [04Bh 0075   1]                  PCI Segment : 00
+-[04Ch 0076   4]                     Reserved : 00000000
++[04Ch 0076 004h]             Uart Clock Freq : 00000000
++[050h 0080 004h]           Precise Baud rate : 00000000
++[054h 0084 002h]       NameSpaceStringLength : 0002
++[056h 0086 002h]       NameSpaceStringOffset : 0058
++[058h 0088 002h]             NamespaceString : "."
+
+-Raw Table Data: Length 80 (0x50)
++Raw Table Data: Length 90 (0x5A)
+
+-    0000: 53 50 43 52 50 00 00 00 02 B9 42 4F 43 48 53 20  // SPCRP.....BOCHS
++    0000: 53 50 43 52 5A 00 00 00 04 13 42 4F 43 48 53 20  // SPCRZ.....BOCHS
+     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
+-    0020: 01 00 00 00 00 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
++    0020: 01 00 00 00 12 00 00 00 00 20 00 01 00 00 00 10  // ......... ......
+     0030: 00 00 00 00 10 00 0A 00 00 00 07 00 01 00 00 03  // ................
+     0040: FF FF FF FF 00 00 00 00 00 00 00 00 00 00 00 00  // ................
++    0050: 00 00 00 00 02 00 58 00 2E 00                    // ......X...
+
+Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
+Message-ID: <20241028015744.624943-4-jeeheng.sia@starfivetech.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_internals.h | 1 +
- 1 file changed, 1 insertion(+)
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ tests/data/acpi/riscv64/virt/SPCR           | Bin 80 -> 90 bytes
+ 2 files changed, 1 deletion(-)
 
-diff --git a/target/riscv/vector_internals.h b/target/riscv/vector_internals.h
-index 9e1e15b575..a11cc8366d 100644
---- a/target/riscv/vector_internals.h
-+++ b/target/riscv/vector_internals.h
-@@ -20,6 +20,7 @@
- #define TARGET_RISCV_VECTOR_INTERNALS_H
- 
- #include "qemu/bitops.h"
-+#include "hw/registerfields.h"
- #include "cpu.h"
- #include "tcg/tcg-gvec-desc.h"
- #include "internals.h"
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index aae973048a..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/riscv64/virt/SPCR",
+diff --git a/tests/data/acpi/riscv64/virt/SPCR b/tests/data/acpi/riscv64/virt/SPCR
+index 4da9daf65f..09617f8793 100644
+Binary files a/tests/data/acpi/riscv64/virt/SPCR and b/tests/data/acpi/riscv64/virt/SPCR differ
 -- 
 2.47.1
 
