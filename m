@@ -4,61 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B371BE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:18:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AA5E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:27:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOb1N-0003RF-IJ; Fri, 20 Dec 2024 06:18:18 -0500
+	id 1tOb8v-00056l-CY; Fri, 20 Dec 2024 06:26:05 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1tOb1I-0003Qt-4H; Fri, 20 Dec 2024 06:18:12 -0500
-Received: from forward101b.mail.yandex.net ([2a02:6b8:c02:900:1:45:d181:d101])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
- id 1tOb1D-0000pf-5l; Fri, 20 Dec 2024 06:18:10 -0500
-Received: from mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c11:992:0:640:7835:0])
- by forward101b.mail.yandex.net (Yandex) with ESMTPS id 879DA60E44;
- Fri, 20 Dec 2024 14:17:56 +0300 (MSK)
-Received: by mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
- (smtp/Yandex) with ESMTPSA id sHREuqiOqOs0-FTBIQprw; 
- Fri, 20 Dec 2024 14:17:55 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
- t=1734693475; bh=ALmI+oJ6uNu2vl1LVyLbkIbPEkBXHTaxJHn3NepUKT4=;
- h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=mqBo9d1OiLezq5gcMQdzSJInopinoJ8QXFtKc68cgfamdFxfQdyl3EvDB0Z1SfcGT
- ehCx9/MxCNtyr2kH0+3fUeIaZwqYG+P9WwDIpvtSQrqalK+nq/2JTOulcZwE1qA4RK
- Wd+lhFlp3qx5bLPXywwXVxkvyFxtp11SGh78YKDM=
-Authentication-Results: mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net;
- dkim=pass header.i=@maquefel.me
-From: Nikita Shubin <nikita.shubin@maquefel.me>
-To: Alistair Francis <alistair@alistair23.me>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Cc: Nikita Shubin <nikita.shubin@maquefel.me>,
- Nikita Shubin <n.shubin@yadro.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Subject: [PATCH v2] hw/char: stm32f2xx_usart: replace print with trace
-Date: Fri, 20 Dec 2024 14:17:56 +0300
-Message-ID: <20241220111756.16511-1-nikita.shubin@maquefel.me>
-X-Mailer: git-send-email 2.45.2
-In-Reply-To: <20241220084623.1889-1-nikita.shubin@maquefel.me>
-References: <20241220084623.1889-1-nikita.shubin@maquefel.me>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOb8n-000568-Kz
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:25:57 -0500
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOb8l-0002Xx-HC
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:25:57 -0500
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2161eb95317so16828535ad.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 03:25:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734693952; x=1735298752; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=WMbmZxKiks9BsDS7rjSZkFd+weOW1sksuqaURUEJMU8=;
+ b=P/2sjmyfTChAfESTJR+F8f5c1zag31Mm4FTtoG8q7/cHw/STXCce9EqGXecBnkj7zy
+ /F/7dp8zrBgQh57LMXuX50Kw/PmSqxE2RHSSWaDMqWJDmJd7M8WI2gIsgG2+GBunqdMX
+ OlbMvppEPu26b9dCuosz2pI5jHBin+el/CMWVw7Q3ZC2faw1KO2fN2mXLGGBcS8xVP1x
+ wTIfItVoIRa7h6Y8rKQ2a3zA7gBmvb1g02Qe/MWWT47UwsUhgglFDHMd4biSvCWjkuQ3
+ ki9SD0G2sq8q6QKnMv2gqgrF0X8sCJLhqAsHhx/Yw0T/QZhHfAwJdgWMngfmtl3fBucL
+ wyAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734693952; x=1735298752;
+ h=content-transfer-encoding:in-reply-to:content-language:references
+ :cc:to:from:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=WMbmZxKiks9BsDS7rjSZkFd+weOW1sksuqaURUEJMU8=;
+ b=kaAvHmY6XhqwqFRda/OaH8PwastXLVbIvw4b5TO41Y5zzHlU6ypw4xi0Zf5GZnvyH6
+ 9dDBgPN/YGEWKdlJxkjqHP0e/JbQ7ntOFMY8MKKy29vj6ZNQnwIChHvcr2bDVYGJKQHh
+ 0cavNAGSFVp0Zd3sLq0k+mG4hSGGfaz9kRJyG3occz9+xlsS7f6utjY+YoTMRMMiUBrr
+ OGPG4s3MnTSaRQFx+NjyNOvp9RWoZfBaPwK54QLw8bwywu2H4E41Mg00hLjkSy3z/Gev
+ frrBYZ37Qd+ViRVMfG5OLwJLnUsrtCBnU1TMWv/7UrJsW4khKW2hV6mP91lJ/Pzzt4w8
+ qh4Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXuD1ESnuXhSofF6vfB97tPFU0PEqlgGyt1iu9oifZvEuNYAjptfkvI/UoX4EqBuDpwubHEThayaJqR@nongnu.org
+X-Gm-Message-State: AOJu0Yz68BfGABOIk1tNlAraTryA64UlywiQujP/VzkPqhrn74VGwFOB
+ ig+x3P/lhETONuJd/bJPLEkYfqUlGGNECmZfCSibYm6QQomBbQpWRA9FjT0sns0=
+X-Gm-Gg: ASbGnctT4wyNNCvQ/EjaU/jef91jOuXHfKa71/PsRTTfdVB8pq1SVN20M69aho/Pkaj
+ wBc7SsQnxC7lS0Dm8T8qZcPUs++DbKarPnub0DB6ZBy51iOU679aLJ9CSmdvlCDZIMzKADiy8Jx
+ TkmkRJSXW4SL5FwR4KftJE8bdkhjO+5SxHmL0v9TQO0OtA+dVPkemj03pO+Mq0Uli4j6puNTbxD
+ tJjn7Rb3gjT3fy0RcaZxNL671r2f9Ao8pJNiDq7gbLULJADrCsJ8nWLt2zYseLlzWS8+wk=
+X-Google-Smtp-Source: AGHT+IFHS8qAfn6mOS/9yujU3XY+E7rYv7xqvDGkcD5WfbwLe0brWGEWMO/ztyuJq/awVO9on9AGAw==
+X-Received: by 2002:a17:902:d592:b0:215:97a3:5ec5 with SMTP id
+ d9443c01a7336-219e6e9fdf2mr36443165ad.22.1734693952287; 
+ Fri, 20 Dec 2024 03:25:52 -0800 (PST)
+Received: from [192.168.1.67] ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9f6922sm27032645ad.223.2024.12.20.03.25.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Dec 2024 03:25:51 -0800 (PST)
+Message-ID: <fe9d34bf-5a68-42e3-ad00-c8f22551865c@linaro.org>
+Date: Fri, 20 Dec 2024 12:25:44 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/13] qdev: Make qdev_get_machine() not use
+ container_get()
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Juraj Marcin <jmarcin@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20241121192202.4155849-1-peterx@redhat.com>
+ <20241121192202.4155849-9-peterx@redhat.com>
+ <dbe21846-ea9e-47b6-83c4-6ee350e891e5@linaro.org>
+ <a0e5950d-2de8-4500-8376-88c231818aed@linaro.org>
+Content-Language: en-US
+In-Reply-To: <a0e5950d-2de8-4500-8376-88c231818aed@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:d101;
- envelope-from=nikita.shubin@maquefel.me; helo=forward101b.mail.yandex.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=philmd@linaro.org; helo=mail-pl1-x636.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,152 +109,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nikita Shubin <nshubin@yadro.com>
+On 19/12/24 19:27, Philippe Mathieu-Daudé wrote:
+> On 19/12/24 19:20, Philippe Mathieu-Daudé wrote:
+>> On 21/11/24 20:21, Peter Xu wrote:
+>>> Currently, qdev_get_machine() has a slight misuse on container_get(), as
+>>> the helper says "get a container" but in reality the goal is to get the
+>>> machine object.  It is still a "container" but not strictly.
+>>>
+>>> Note that it _may_ get a container (at "/machine") in our current 
+>>> unit test
+>>> of test-qdev-global-props.c before all these changes, but it's probably
+>>> unexpected and worked by accident.
+>>>
+>>> Switch to an explicit object_resolve_path_component(), with a side 
+>>> benefit
+>>> that qdev_get_machine() can happen a lot, and we don't need to split the
+>>> string ("/machine") every time.  This also paves way for making the 
+>>> helper
+>>> container_get() never try to return a non-container at all.
+>>>
+>>> Signed-off-by: Peter Xu <peterx@redhat.com>
+>>> ---
+>>>   hw/core/qdev.c | 7 ++++++-
+>>>   1 file changed, 6 insertions(+), 1 deletion(-)
+>>>
+>>> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+>>> index 5f13111b77..b622be15ee 100644
+>>> --- a/hw/core/qdev.c
+>>> +++ b/hw/core/qdev.c
+>>> @@ -817,7 +817,12 @@ Object *qdev_get_machine(void)
+>>>       static Object *dev;
+>>>       if (dev == NULL) {
+>>> -        dev = container_get(object_get_root(), "/machine");
+>>> +        dev = object_resolve_path_component(object_get_root(), 
+>>> "machine");
+>>> +        /*
+>>> +         * Any call to this function before machine is created is 
+>>> treated
+>>> +         * as a programming error as of now.
+>>> +         */
+>>> +        assert(dev);
+>>
+>> This fails for user-emulation:
+>>
+>> ./qemu-x86_64 /bin/echo foo
+>> qemu-x86_64: ../../hw/core/qdev.c:825: qdev_get_machine: Assertion 
+>> `dev' failed.
 
-Drop debug printing macros and replace them with according trace
-functions.
+OK so I guess I might have found a "fix" which is to simply not
+call qdev_get_machine() for user emulation, but this involves some
+invasive refactoring -- so will take time --.
 
-Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
----
-v1->v2:
-Phil:
-- fix typo s/recieve/receive/
-- initialize 'retvalue' with zero
+I'm dropping this series for now, planning to merge it again on top
+of my refactor once it is ready. Any clever / simpler fix is
+obviously welcomed first.
 
----
- hw/char/stm32f2xx_usart.c | 49 ++++++++++++++++++---------------------
- hw/char/trace-events      |  6 +++++
- 2 files changed, 29 insertions(+), 26 deletions(-)
+Regards,
 
-diff --git a/hw/char/stm32f2xx_usart.c b/hw/char/stm32f2xx_usart.c
-index 17b5b1f15f..cd97f7d7e4 100644
---- a/hw/char/stm32f2xx_usart.c
-+++ b/hw/char/stm32f2xx_usart.c
-@@ -30,17 +30,7 @@
- #include "qemu/log.h"
- #include "qemu/module.h"
- 
--#ifndef STM_USART_ERR_DEBUG
--#define STM_USART_ERR_DEBUG 0
--#endif
--
--#define DB_PRINT_L(lvl, fmt, args...) do { \
--    if (STM_USART_ERR_DEBUG >= lvl) { \
--        qemu_log("%s: " fmt, __func__, ## args); \
--    } \
--} while (0)
--
--#define DB_PRINT(fmt, args...) DB_PRINT_L(1, fmt, ## args)
-+#include "trace.h"
- 
- static int stm32f2xx_usart_can_receive(void *opaque)
- {
-@@ -67,10 +57,11 @@ static void stm32f2xx_update_irq(STM32F2XXUsartState *s)
- static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
- {
-     STM32F2XXUsartState *s = opaque;
-+    DeviceState *d = DEVICE(s);
- 
-     if (!(s->usart_cr1 & USART_CR1_UE && s->usart_cr1 & USART_CR1_RE)) {
-         /* USART not enabled - drop the chars */
--        DB_PRINT("Dropping the chars\n");
-+        trace_stm32f2xx_usart_drop(d->id);
-         return;
-     }
- 
-@@ -79,7 +70,7 @@ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
- 
-     stm32f2xx_update_irq(s);
- 
--    DB_PRINT("Receiving: %c\n", s->usart_dr);
-+    trace_stm32f2xx_usart_receive(d->id, *buf);
- }
- 
- static void stm32f2xx_usart_reset(DeviceState *dev)
-@@ -101,49 +92,55 @@ static uint64_t stm32f2xx_usart_read(void *opaque, hwaddr addr,
-                                        unsigned int size)
- {
-     STM32F2XXUsartState *s = opaque;
--    uint64_t retvalue;
--
--    DB_PRINT("Read 0x%"HWADDR_PRIx"\n", addr);
-+    DeviceState *d = DEVICE(s);
-+    uint64_t retvalue = 0;
- 
-     switch (addr) {
-     case USART_SR:
-         retvalue = s->usart_sr;
-         qemu_chr_fe_accept_input(&s->chr);
--        return retvalue;
-+        break;
-     case USART_DR:
--        DB_PRINT("Value: 0x%" PRIx32 ", %c\n", s->usart_dr, (char) s->usart_dr);
-         retvalue = s->usart_dr & 0x3FF;
-         s->usart_sr &= ~USART_SR_RXNE;
-         qemu_chr_fe_accept_input(&s->chr);
-         stm32f2xx_update_irq(s);
--        return retvalue;
-+        break;
-     case USART_BRR:
--        return s->usart_brr;
-+        retvalue = s->usart_brr;
-+        break;
-     case USART_CR1:
--        return s->usart_cr1;
-+        retvalue = s->usart_cr1;
-+        break;
-     case USART_CR2:
--        return s->usart_cr2;
-+        retvalue = s->usart_cr2;
-+        break;
-     case USART_CR3:
--        return s->usart_cr3;
-+        retvalue = s->usart_cr3;
-+        break;
-     case USART_GTPR:
--        return s->usart_gtpr;
-+        retvalue = s->usart_gtpr;
-+        break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
-         return 0;
-     }
- 
--    return 0;
-+    trace_stm32f2xx_usart_read(d->id, size, addr, retvalue);
-+
-+    return retvalue;
- }
- 
- static void stm32f2xx_usart_write(void *opaque, hwaddr addr,
-                                   uint64_t val64, unsigned int size)
- {
-     STM32F2XXUsartState *s = opaque;
-+    DeviceState *d = DEVICE(s);
-     uint32_t value = val64;
-     unsigned char ch;
- 
--    DB_PRINT("Write 0x%" PRIx32 ", 0x%"HWADDR_PRIx"\n", value, addr);
-+    trace_stm32f2xx_usart_write(d->id, size, addr, val64);
- 
-     switch (addr) {
-     case USART_SR:
-diff --git a/hw/char/trace-events b/hw/char/trace-events
-index 59e1f734a7..8b847006a0 100644
---- a/hw/char/trace-events
-+++ b/hw/char/trace-events
-@@ -125,3 +125,9 @@ xen_console_unrealize(unsigned int idx) "idx %u"
- xen_console_realize(unsigned int idx, const char *chrdev) "idx %u chrdev %s"
- xen_console_device_create(unsigned int idx) "idx %u"
- xen_console_device_destroy(unsigned int idx) "idx %u"
-+
-+# stm32f2xx_usart.c
-+stm32f2xx_usart_read(char *id, unsigned size, uint64_t offs, uint64_t val) " %s size %d offs 0x%02" PRIx64 " -> 0x%02" PRIx64
-+stm32f2xx_usart_write(char *id, unsigned size, uint64_t offs, uint64_t val) "%s size %d offs 0x%02" PRIx64 " <- 0x%02" PRIx64
-+stm32f2xx_usart_drop(char *id) " %s dropping the chars"
-+stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving %c"
--- 
-2.45.2
+Phil.
+
+>> Aborted (core dumped)
+> 
+> (gdb) bt
+> #5  0x00007ffff747171b in __assert_fail_base (fmt=0x7ffff7626130 
+> "%s%s%s:%u: %s%sAssertion `%s' failed.\n%n", assertion=0x555555725150 
+> "dev",
+>      file=0x55555571aff9 "../../hw/core/qdev.c", line=824, 
+> function=<optimized out>) at ./assert/assert.c:92
+> #8  0x000055555565e400 in qdev_get_machine () at ../../hw/core/qdev.c:824
+> #9  machine_get_container (name=0x55555571b052 "unattached") at ../../ 
+> hw/core/qdev.c:834
+> #10 0x000055555565ea2d in device_set_realized (obj=0x5555558b6760, 
+> value=<optimized out>, errp=0x7fffffffdb50) at ../../hw/core/qdev.c:479
+> #11 0x000055555566181a in property_set_bool (obj=0x5555558b6760, 
+> v=<optimized out>, name=<optimized out>, opaque=0x555555813350, 
+> errp=0x7fffffffdb50)
+>      at ../../qom/object.c:2375
+> #12 0x00005555556649f8 in object_property_set 
+> (obj=obj@entry=0x5555558b6760, name=name@entry=0x55555571b03e 
+> "realized", v=v@entry=0x5555558c0680,
+>      errp=errp@entry=0x7fffffffdb50) at ../../qom/object.c:1450
+> #13 0x0000555555668754 in object_property_set_qobject 
+> (obj=obj@entry=0x5555558b6760, name=name@entry=0x55555571b03e 
+> "realized", value=value@entry=0x5555558be490,
+>      errp=errp@entry=0x7fffffffdb50) at ../../qom/qom-qobject.c:28
+> #14 0x00005555556650c9 in object_property_set_bool (obj=0x5555558b6760, 
+> name=name@entry=0x55555571b03e "realized", value=value@entry=true,
+>      errp=errp@entry=0x7fffffffdb50) at ../../qom/object.c:1520
+> #15 0x000055555565dd52 in qdev_realize (dev=<optimized out>, 
+> bus=bus@entry=0x0, errp=errp@entry=0x7fffffffdb50) at ../../hw/core/ 
+> qdev.c:276
+> #16 0x0000555555593dc9 in cpu_create (typename=<optimized out>) 
+> at ../../hw/core/cpu-common.c:61
+> #17 0x00005555555925de in main (argc=3, argv=0x7fffffffe308, 
+> envp=<optimized out>) at ../../linux-user/main.c:823
+> 
+> 
+>>
+>> We need to skip this test for user emulation, but this file is in
+>> hwcore_ss[] so the CONFIG_USER_ONLY definitions is not available.
+>>
+>> Any simple enough idea to not block this?
+>>
+>>>       }
+>>>       return dev;
+>>
+> 
 
 
