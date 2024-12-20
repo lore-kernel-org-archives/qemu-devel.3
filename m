@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12265E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 440AAE7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:07:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkBF-0005h4-8J; Fri, 20 Dec 2024 16:05:13 -0500
+	id 1tOkDK-0006iv-GH; Fri, 20 Dec 2024 16:07:14 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkB5-0005gY-W7; Fri, 20 Dec 2024 16:04:57 -0500
+ id 1tOkDG-0006if-Im; Fri, 20 Dec 2024 16:07:10 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkB3-0002jb-5P; Fri, 20 Dec 2024 16:04:54 -0500
+ id 1tOkDC-0003Ey-RX; Fri, 20 Dec 2024 16:07:10 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 10935C822C;
- Sat, 21 Dec 2024 00:04:22 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C1383C8230;
+ Sat, 21 Dec 2024 00:06:36 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 574B618C9D9;
- Sat, 21 Dec 2024 00:04:50 +0300 (MSK)
-Message-ID: <c62b0d60-2815-41e1-9e56-7bec83640208@tls.msk.ru>
-Date: Sat, 21 Dec 2024 00:04:50 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 24EDC18C9E1;
+ Sat, 21 Dec 2024 00:07:05 +0300 (MSK)
+Message-ID: <3fd9f735-6243-4081-878d-bb5b61f7dda7@tls.msk.ru>
+Date: Sat, 21 Dec 2024 00:07:05 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 01/11 for v9.2?] i386/cpu: Mark avx10_version filtered
- when prefix is NULL
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, "Michael S . Tsirkin"
- <mst@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Tao Su <tao1.su@linux.intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Zide Chen <zide.chen@intel.com>, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- qemu-stable@nongnu.org
-References: <20241106030728.553238-1-zhao1.liu@intel.com>
- <20241106030728.553238-2-zhao1.liu@intel.com>
-Content-Language: en-US, ru-RU
+Subject: Re: [PATCH] dma-helpers: Fix iovec alignment
 From: Michael Tokarev <mjt@tls.msk.ru>
+To: Eric Blake <eblake@redhat.com>, Stefan Fritsch <sf@sfritsch.de>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>
+References: <20240412080617.1299883-1-sf@sfritsch.de>
+ <dnqsifhslb7mtidrzadsz6254ykmb4bjz2cenzryonz7wbjz4g@vj56wcuwgx25>
+ <952a7275-7164-403c-beed-fb13386e65d8@tls.msk.ru>
+Content-Language: en-US, ru-RU
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
  xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
  HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
@@ -85,9 +82,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20241106030728.553238-2-zhao1.liu@intel.com>
+In-Reply-To: <952a7275-7164-403c-beed-fb13386e65d8@tls.msk.ru>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -68
@@ -111,49 +108,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-06.11.2024 06:07, Zhao Liu wrote:
-> In x86_cpu_filter_features(), if host doesn't support AVX10, the
-> configured avx10_version should be marked as filtered regardless of
-> whether prefix is NULL or not.
+11.08.2024 20:47, Michael Tokarev пишет:
+> 12.04.2024 18:25, Eric Blake wrote:
+>> On Fri, Apr 12, 2024 at 10:06:17AM +0200, Stefan Fritsch wrote:
+>>> Commit 99868af3d0 changed the hardcoded constant BDRV_SECTOR_SIZE to a
+>>> dynamic field 'align' but introduced a bug. qemu_iovec_discard_back()
+>>> is now passed the wanted iov length instead of the actually required
+>>> amount that should be removed from the end of the iov.
+>>>
+>>> The bug can likely only be hit in uncommon configurations, e.g. with
+>>> icount enabled or when reading from disk directly to device memory.
 > 
-> Check prefix before warn_report() instead of checking for
-> have_filtered_features.
+> Hi!
 > 
-> Cc: qemu-stable@nongnu.org
-> Fixes: commit bccfb846fd52 ("target/i386: add AVX10 feature and AVX10 version property")
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> Has this change (proposed for 9.0) been forgotten or is it not needed
+> anymore?
 
-Hi!
-
-Has this patch been forgotten?  9.2 is out already and I'm collecting fixes for it...
+Ping #2?
 
 Thanks,
 
 /mjt
 
-> ---
-> v5: new commit.
-> ---
->   target/i386/cpu.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+>>> Fixes: 99868af3d0a75cf6 ("dma-helpers: explicitly pass alignment into DMA helpers")
+>>> Signed-off-by: Stefan Fritsch <sf@sfritsch.de>
+>>> ---
+>>>   system/dma-helpers.c | 3 +--
+>>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> Wow, that bug has been latent for a while (2016, v2.8.0).  As such, I
+>> don't think it's worth holding up 9.0 for, but it is definitely worth
+>> cc'ing qemu-stable (done now).
+>>
+>>>
+>>> diff --git a/system/dma-helpers.c b/system/dma-helpers.c
+>>> index 9b221cf94e..c9677fd39b 100644
+>>> --- a/system/dma-helpers.c
+>>> +++ b/system/dma-helpers.c
+>>> @@ -174,8 +174,7 @@ static void dma_blk_cb(void *opaque, int ret)
+>>>       }
+>>>       if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
+>>> -        qemu_iovec_discard_back(&dbs->iov,
+>>> -                                QEMU_ALIGN_DOWN(dbs->iov.size, dbs->align));
+>>> +        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size % dbs->align);
+>>
+>> Before the regression, it was:
+>>
+>> -    if (dbs->iov.size & ~BDRV_SECTOR_MASK) {
+>> -        qemu_iovec_discard_back(&dbs->iov, dbs->iov.size & ~BDRV_SECTOR_MASK);
+>> +    if (!QEMU_IS_ALIGNED(dbs->iov.size, dbs->align)) {
+>> +        qemu_iovec_discard_back(&dbs->iov,
+>>
+>> If dbs->align is always a power of two, we can use '& (dbs->align -
+>> 1)' to avoid a hardware division, to match the original code; bug
+>> QEMU_IS_ALIGNED does not require a power of two, so your choice of '%
+>> dbs->align' seems reasonable.
+>>
+>> Reviewed-by: Eric Blake <eblake@redhat.com>
+>>
 > 
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index 3baa95481fbc..77c1233daa13 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -7711,8 +7711,10 @@ static bool x86_cpu_filter_features(X86CPU *cpu, bool verbose)
->               env->avx10_version = version;
->               have_filtered_features = true;
->           }
-> -    } else if (env->avx10_version && prefix) {
-> -        warn_report("%s: avx10.%d.", prefix, env->avx10_version);
-> +    } else if (env->avx10_version) {
-> +        if (prefix) {
-> +            warn_report("%s: avx10.%d.", prefix, env->avx10_version);
-> +        }
->           have_filtered_features = true;
->       }
->   
 
 
 -- 
