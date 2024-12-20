@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47E46E77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:00:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1B5DE77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:00:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSF5-0006Xq-Np; Thu, 19 Dec 2024 20:55:51 -0500
+	id 1tOSFp-0000MJ-61; Thu, 19 Dec 2024 20:56:37 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEz-0006KP-UQ
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:46 -0500
-Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
+ id 1tOSFT-0007W9-DV
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:18 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEx-0004V1-Qz
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:45 -0500
-Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7fcf59a41ddso832288a12.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:42 -0800 (PST)
+ id 1tOSFR-0004ZJ-2f
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:15 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-728eccf836bso1274210b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659741; x=1735264541; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659771; x=1735264571; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4TYqdC2K3zGvnkeyV3z/811UC20D+6gf+j2aj8oIckc=;
- b=CqF4bys126noRyrKA9I6bltWZkVJ3XXg4TLDP181Y7S0k8brjtjm+Pbnrn2HoK+sNn
- rhi48QmA8CS14GTrSGBdWdUrO34DMXEiYCr/dMO5D1I6Dll2sZNs8ks/3H6R///nRJmA
- i8QynkRW1mSgqJ8fY+G2/ii6UbCD5K5OcmSBxBkd5N6CVIRae/JJZ3CeEhpfI708VxXc
- k1n3zvlN7OIiiFOp8nNQH5xDN2+dPBkIXCoV3hNMQpY69UUr+Kh76kmnDyUvSUwvQMzW
- LXxTqoQblVjUsIkFalrIXkS7pvUw8lacb6fGwaWD92iwWPSheK5yjSKFdMKIinohWwCf
- Jptw==
+ bh=z509UPTD57WEr7p8VYSXhGl+qC0HoPatf4mTzR73rZo=;
+ b=Rp1bPuBLUQY41/6U1jtRNk3qRPhABgk7ECyMpIjHhpmbCkVpbsbC+lNjhanXvX4cR1
+ 8opqz93mOj8As1dxvn56bIvoOWc0kBqg4GyxvPpby3rO6loY5jX2qHI7QCQsFMkKUULN
+ zIcH8pBFGnD+uV11LHAESdIGt1WX3OgtqqOafGDz/ZGGI96o3br6hjvy44Px2wc9qQL+
+ LbxiKrs9lBfZAcEYDW5i1PPjLNnXO7gf9hR+U8x9h8+xR3nbk6Fqtx+yB7d75OOS0fRf
+ xs/7N2yqEv+G/V94EILQ61tgXKE4fiwnyQ+eywWQTnm6YnmYsYCed/xbDc2i1Proxm0F
+ ExSQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659741; x=1735264541;
+ d=1e100.net; s=20230601; t=1734659771; x=1735264571;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4TYqdC2K3zGvnkeyV3z/811UC20D+6gf+j2aj8oIckc=;
- b=aGNrAErqSLLR2q8Kirz2HSPIUOGoVD3NJmJ83gUmJnKLisHAcvTFdU5VAaPSjWvdS6
- h20oZqnjHlG1wIFNPQBC8Z3fR672IcoOpLAcK+V2nHmMTQv71pXVuTQ3g2XfclOtNyDK
- gGUMJR3oxflkXhtIDLvvYxXsZlPP8MZetVCIhuxAPQ9Uup1lyqsk1xD6pYtBSd++/lmz
- 8/4Flqp57X1Cw6t+49niK73JvKCn3l0J4jYsAvGRFs023s2tSdyke2iVyDhzmVcDzZwp
- n0p2xCJL1WkXEr46J/EIpngAJcUfTXUjYcuj+usozxjUFIKEcMIV7vISZvKEmdKZv8an
- l7qw==
-X-Gm-Message-State: AOJu0Yy3J+jKgdzMIOi7Zi9PQoe/FnAHDEw5wigFQuQDuPt6j7xKp28u
- hCX3F6Re2XiWlRNJwPLXWPbHxeEnWEADTB0dxm1vtnBTujgrObIKpDsuSEXO
-X-Gm-Gg: ASbGncuPMtnS+k6TyzRaGyp9UPeItgK2vaw0ySOaaqXgyz8B69cFC8A1f5/uQ06pm1i
- kSH5QH8ed99BNQ/md4RedMaaffkKP2al2JMRd8z4EkUpNyF93T9dfYLbow7MgVEeKEkKcrfHa1L
- O0OfH8bLx/1gTLWl73FJLoELwjV+439gzPIeJkbQDI0gZTXObqL9Lr3HunAnp8divTE0ATAku1K
- 473HuzHNGG6q8BBRyqICrAjXC5gGynEryf0w2prXclIrwFwQH0cjdTV1sfoG5D2QKE/heVIvNZi
- haNiLogI8060/Q4FfargiLTpPs3MUoHSRwu6JbsAgA5n/dAlMoOwo8NcgTimb4c=
-X-Google-Smtp-Source: AGHT+IFDgxr7kPNH68yR1STWcSMDlClPeayQ40W2fQPIQ2rhRYXl+AIbVoW0lcMxKNj3SWuB6IYFhA==
-X-Received: by 2002:a05:6a21:7896:b0:1e0:d9a0:4ff7 with SMTP id
- adf61e73a8af0-1e5e08011d6mr2244669637.32.1734659741023; 
- Thu, 19 Dec 2024 17:55:41 -0800 (PST)
+ bh=z509UPTD57WEr7p8VYSXhGl+qC0HoPatf4mTzR73rZo=;
+ b=Pi0DiXsBy6YExNzGKTE1z6e/7ZLfgaAhIE9vg9p2o38RZZjhgnt7CZueW9EBnRCk9T
+ ec85lj22qy+qthNPdHB0102S9pYPkYT0B4Flft6RXtv/Mna7dbemiX9yV2E3lnpqNNcz
+ s5uBl85sI6Pgz+123ZNF89T5IjDYutAwEnHhVyfmR9JVYDoH7Z7M4fJaFKdvkDBYYCEf
+ r7/NLCTgYYTA3GTNydko4x5ov8p3JseFZ243rfrcVdaio7jaLuxq/UOoU49rFddM0CgA
+ YPRFn5wXBJjr4MFItXVTG7RDgQ++H8/ij77j8BLeB73Z7kY9d1p7bymYz4uaTTRQyxIO
+ t2Sw==
+X-Gm-Message-State: AOJu0YzzUaFWzt1zK+JF/PjrRKtpmwfy9T6emwK4A0znGZK/MawIL5+K
+ mSyARCoFclJom7a3HH2+NN3nIAFUgtgnSapRsnix24ogr41y6WBQofZDFgrx
+X-Gm-Gg: ASbGncvKsQUqa0ONyTib769nAiemFfzZe/XvxWsPNTTzo25y9l3BUmfzfhOqoeZ2Sxw
+ 1jLByWgFWZoHI11L+wgRH3SsklAH+5VHXQWIdwvDmV1MvHw0mMy2AGaQvSWrBo67QcvouBjwYyN
+ AnALjPTJM8h9nL0nqqJELW1TaEer/qJazZ8ypnBf4YSkQ0i+tUOgnP5owTiLa8JyY3734qjEkY6
+ ZaMG+l6ihRW+I12S8VLRoQTdvrfjPvsKSwGbfzJdslhXnmFlUv+dbpZailKWs6SxOa1NsYz9y0u
+ EFMtmQOHcUafE837cjBQILmtjZnCTmnam2v6eZu0vlSyMfkZlt/Xki95Y8O23C8=
+X-Google-Smtp-Source: AGHT+IFLiKR5GTU4LMfnQfJfOKYQYQ4IY8E/IskJwTCfGxaxXaGHjpcXpx+vhY9+iZ6FE6dN6hOcpg==
+X-Received: by 2002:a05:6a21:6f87:b0:1db:c20f:2c4d with SMTP id
+ adf61e73a8af0-1e5e044b1c1mr2180434637.2.1734659771556; 
+ Thu, 19 Dec 2024 17:56:11 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.38
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.56.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:55:40 -0800 (PST)
+ Thu, 19 Dec 2024 17:56:11 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 16/39] hw/intc/riscv_aplic: add kvm_msicfgaddr for split
- mode aplic-imsic
-Date: Fri, 20 Dec 2024 11:54:16 +1000
-Message-ID: <20241220015441.317236-17-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PULL v2 26/39] hw/riscv: Support to load DTB after 3GB memory on
+ 64-bit system.
+Date: Fri, 20 Dec 2024 11:54:26 +1000
+Message-ID: <20241220015441.317236-27-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x530.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,168 +105,170 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-The last step to enable KVM AIA aplic-imsic with irqchip in split mode
-is to deal with how MSIs are going to be sent. In our current design we
-don't allow an APLIC controller to send MSIs unless it's on m-mode. And
-we also do not allow Supervisor MSI address configuration via the
-'smsiaddrcfg' and 'smsiaddrcfgh' registers unless it's also a m-mode
-APLIC controller.
+Larger initrd image will overlap the DTB at 3GB address. Since 64-bit
+system doesn't have 32-bit addressable issue, we just load DTB to the end
+of dram in 64-bit system.
 
-Add a new RISCVACPLICState attribute called 'kvm_msicfgaddr'. This
-attribute represents the base configuration address for MSIs, in our
-case the base addr of the IMSIC controller. This attribute is being set
-only when running irqchip_split() mode with aia=aplic-imsic.
-
-During riscv_aplic_msi_send() we'll check if the attribute was set to
-skip the check for a m-mode APLIC controller and to change the resulting
-MSI addr by adding kvm_msicfgaddr right before address_space_stl_le().
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241119191706.718860-7-dbarboza@ventanamicro.com>
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20241120153935.24706-2-jim.shu@sifive.com>
+[ Changes by AF
+ -  Store fdt_load_addr_hi32 in the reset vector
+]
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/intc/riscv_aplic.h |  6 +++++
- hw/intc/riscv_aplic.c         | 42 +++++++++++++++++++++++++++--------
- hw/riscv/virt.c               |  6 ++++-
- 3 files changed, 44 insertions(+), 10 deletions(-)
+ include/hw/riscv/boot.h    |  2 +-
+ hw/riscv/boot.c            | 14 +++++++++-----
+ hw/riscv/microchip_pfsoc.c |  4 ++--
+ hw/riscv/sifive_u.c        |  8 +++++---
+ hw/riscv/spike.c           |  4 ++--
+ hw/riscv/virt.c            |  2 +-
+ 6 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/include/hw/intc/riscv_aplic.h b/include/hw/intc/riscv_aplic.h
-index 74ae5d87b5..489b9133c2 100644
---- a/include/hw/intc/riscv_aplic.h
-+++ b/include/hw/intc/riscv_aplic.h
-@@ -68,11 +68,17 @@ struct RISCVAPLICState {
-     uint32_t num_irqs;
-     bool msimode;
-     bool mmode;
-+
-+    /* To support KVM aia=aplic-imsic with irqchip split mode */
-+    bool kvm_splitmode;
-+    uint32_t kvm_msicfgaddr;
-+    uint32_t kvm_msicfgaddrH;
- };
- 
- void riscv_aplic_add_child(DeviceState *parent, DeviceState *child);
- bool riscv_is_kvm_aia_aplic_imsic(bool msimode);
- bool riscv_use_emulated_aplic(bool msimode);
-+void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr);
- 
- DeviceState *riscv_aplic_create(hwaddr addr, hwaddr size,
-     uint32_t hartid_base, uint32_t num_harts, uint32_t num_sources,
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index ba4e802888..1e4cdb500c 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -177,6 +177,16 @@ bool riscv_use_emulated_aplic(bool msimode)
- #endif
- }
- 
-+void riscv_aplic_set_kvm_msicfgaddr(RISCVAPLICState *aplic, hwaddr addr)
-+{
-+#ifdef CONFIG_KVM
-+    if (riscv_use_emulated_aplic(aplic->msimode)) {
-+        aplic->kvm_msicfgaddr = extract64(addr, 0, 32);
-+        aplic->kvm_msicfgaddrH = extract64(addr, 32, 32);
-+    }
-+#endif
-+}
-+
- static bool riscv_aplic_irq_rectified_val(RISCVAPLICState *aplic,
-                                           uint32_t irq)
+diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+index f778b560de..34a80c5ff4 100644
+--- a/include/hw/riscv/boot.h
++++ b/include/hw/riscv/boot.h
+@@ -49,7 +49,7 @@ target_ulong riscv_load_kernel(MachineState *machine,
+                                bool load_initrd,
+                                symbol_fn_t sym_cb);
+ uint64_t riscv_compute_fdt_addr(hwaddr dram_start, uint64_t dram_size,
+-                                MachineState *ms);
++                                MachineState *ms, RISCVHartArrayState *harts);
+ void riscv_load_fdt(hwaddr fdt_addr, void *fdt);
+ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts,
+                                hwaddr saddr,
+diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+index 2e319168db..d36d3a7104 100644
+--- a/hw/riscv/boot.c
++++ b/hw/riscv/boot.c
+@@ -293,7 +293,7 @@ out:
+  * The FDT is fdt_packed() during the calculation.
+  */
+ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
+-                                MachineState *ms)
++                                MachineState *ms, RISCVHartArrayState *harts)
  {
-@@ -381,13 +391,16 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-     uint32_t lhxs, lhxw, hhxs, hhxw, group_idx, msicfgaddr, msicfgaddrH;
- 
-     aplic_m = aplic;
--    while (aplic_m && !aplic_m->mmode) {
--        aplic_m = aplic_m->parent;
--    }
--    if (!aplic_m) {
--        qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
--                      __func__);
--        return;
-+
-+    if (!aplic->kvm_splitmode) {
-+        while (aplic_m && !aplic_m->mmode) {
-+            aplic_m = aplic_m->parent;
-+        }
-+        if (!aplic_m) {
-+            qemu_log_mask(LOG_GUEST_ERROR, "%s: m-level APLIC not found\n",
-+                          __func__);
-+            return;
-+        }
-     }
- 
-     if (aplic->mmode) {
-@@ -419,6 +432,11 @@ static void riscv_aplic_msi_send(RISCVAPLICState *aplic,
-     addr |= (uint64_t)(guest_idx & APLIC_xMSICFGADDR_PPN_HART(lhxs));
-     addr <<= APLIC_xMSICFGADDR_PPN_SHIFT;
- 
-+    if (aplic->kvm_splitmode) {
-+        addr |= aplic->kvm_msicfgaddr;
-+        addr |= ((uint64_t)aplic->kvm_msicfgaddrH << 32);
-+    }
-+
-     address_space_stl_le(&address_space_memory, addr,
-                          eiid, MEMTXATTRS_UNSPECIFIED, &result);
-     if (result != MEMTX_OK) {
-@@ -892,6 +910,10 @@ static void riscv_aplic_realize(DeviceState *dev, Error **errp)
-         memory_region_init_io(&aplic->mmio, OBJECT(dev), &riscv_aplic_ops,
-                               aplic, TYPE_RISCV_APLIC, aplic->aperture_size);
-         sysbus_init_mmio(SYS_BUS_DEVICE(dev), &aplic->mmio);
-+
-+        if (kvm_enabled()) {
-+            aplic->kvm_splitmode = true;
-+        }
-     }
+     int ret = fdt_pack(ms->fdt);
+     hwaddr dram_end, temp;
+@@ -317,11 +317,15 @@ uint64_t riscv_compute_fdt_addr(hwaddr dram_base, hwaddr dram_size,
  
      /*
-@@ -939,8 +961,8 @@ static const Property riscv_aplic_properties[] = {
+      * We should put fdt as far as possible to avoid kernel/initrd overwriting
+-     * its content. But it should be addressable by 32 bit system as well.
+-     * Thus, put it at an 2MB aligned address that less than fdt size from the
+-     * end of dram or 3GB whichever is lesser.
++     * its content. But it should be addressable by 32 bit system as well in RV32.
++     * Thus, put it near to the end of dram in RV64, and put it near to the end
++     * of dram or 3GB whichever is lesser in RV32.
+      */
+-    temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
++    if (!riscv_is_32bit(harts)) {
++        temp = dram_end;
++    } else {
++        temp = (dram_base < 3072 * MiB) ? MIN(dram_end, 3072 * MiB) : dram_end;
++    }
  
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
-             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-@@ -948,6 +970,8 @@ static const VMStateDescription vmstate_riscv_aplic = {
-             VMSTATE_UINT32(smsicfgaddr, RISCVAPLICState),
-             VMSTATE_UINT32(smsicfgaddrH, RISCVAPLICState),
-             VMSTATE_UINT32(genmsi, RISCVAPLICState),
-+            VMSTATE_UINT32(kvm_msicfgaddr, RISCVAPLICState),
-+            VMSTATE_UINT32(kvm_msicfgaddrH, RISCVAPLICState),
-             VMSTATE_VARRAY_UINT32(sourcecfg, RISCVAPLICState,
-                                   num_irqs, 0,
-                                   vmstate_info_uint32, uint32_t),
+     return QEMU_ALIGN_DOWN(temp - fdtsize, 2 * MiB);
+ }
+diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+index f9a3b43d2e..ba8b0a2c26 100644
+--- a/hw/riscv/microchip_pfsoc.c
++++ b/hw/riscv/microchip_pfsoc.c
+@@ -519,7 +519,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+     bool kernel_as_payload = false;
+     target_ulong firmware_end_addr, kernel_start_addr;
+     uint64_t kernel_entry;
+-    uint32_t fdt_load_addr;
++    uint64_t fdt_load_addr;
+     DriveInfo *dinfo = drive_get(IF_SD, 0, 0);
+ 
+     /* Sanity check on RAM size */
+@@ -625,7 +625,7 @@ static void microchip_icicle_kit_machine_init(MachineState *machine)
+         /* Compute the fdt load address in dram */
+         fdt_load_addr = riscv_compute_fdt_addr(memmap[MICROCHIP_PFSOC_DRAM_LO].base,
+                                                memmap[MICROCHIP_PFSOC_DRAM_LO].size,
+-                                               machine);
++                                               machine, &s->soc.u_cpus);
+         riscv_load_fdt(fdt_load_addr, machine->fdt);
+ 
+         /* Load the reset vector */
+diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+index 124ffd4842..fd59124500 100644
+--- a/hw/riscv/sifive_u.c
++++ b/hw/riscv/sifive_u.c
+@@ -518,8 +518,9 @@ static void sifive_u_machine_init(MachineState *machine)
+     target_ulong firmware_end_addr, kernel_start_addr;
+     const char *firmware_name;
+     uint32_t start_addr_hi32 = 0x00000000;
++    uint32_t fdt_load_addr_hi32 = 0x00000000;
+     int i;
+-    uint32_t fdt_load_addr;
++    uint64_t fdt_load_addr;
+     uint64_t kernel_entry;
+     DriveInfo *dinfo;
+     BlockBackend *blk;
+@@ -606,11 +607,12 @@ static void sifive_u_machine_init(MachineState *machine)
+ 
+     fdt_load_addr = riscv_compute_fdt_addr(memmap[SIFIVE_U_DEV_DRAM].base,
+                                            memmap[SIFIVE_U_DEV_DRAM].size,
+-                                           machine);
++                                           machine, &s->soc.u_cpus);
+     riscv_load_fdt(fdt_load_addr, machine->fdt);
+ 
+     if (!riscv_is_32bit(&s->soc.u_cpus)) {
+         start_addr_hi32 = (uint64_t)start_addr >> 32;
++        fdt_load_addr_hi32 = fdt_load_addr >> 32;
+     }
+ 
+     /* reset vector */
+@@ -625,7 +627,7 @@ static void sifive_u_machine_init(MachineState *machine)
+         start_addr,                    /* start: .dword */
+         start_addr_hi32,
+         fdt_load_addr,                 /* fdt_laddr: .dword */
+-        0x00000000,
++        fdt_load_addr_hi32,
+         0x00000000,
+                                        /* fw_dyn: */
+     };
+diff --git a/hw/riscv/spike.c b/hw/riscv/spike.c
+index fceb91d946..acd7ab1ae1 100644
+--- a/hw/riscv/spike.c
++++ b/hw/riscv/spike.c
+@@ -201,7 +201,7 @@ static void spike_board_init(MachineState *machine)
+     hwaddr firmware_load_addr = memmap[SPIKE_DRAM].base;
+     target_ulong kernel_start_addr;
+     char *firmware_name;
+-    uint32_t fdt_load_addr;
++    uint64_t fdt_load_addr;
+     uint64_t kernel_entry;
+     char *soc_name;
+     int i, base_hartid, hart_count;
+@@ -317,7 +317,7 @@ static void spike_board_init(MachineState *machine)
+ 
+     fdt_load_addr = riscv_compute_fdt_addr(memmap[SPIKE_DRAM].base,
+                                            memmap[SPIKE_DRAM].size,
+-                                           machine);
++                                           machine, &s->soc[0]);
+     riscv_load_fdt(fdt_load_addr, machine->fdt);
+ 
+     /* load the reset vector */
 diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 937dfd1ef2..43a1c86c33 100644
+index 43a1c86c33..98da79a5be 100644
 --- a/hw/riscv/virt.c
 +++ b/hw/riscv/virt.c
-@@ -1300,7 +1300,7 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
-                                     int base_hartid, int hart_count)
- {
-     int i;
--    hwaddr addr;
-+    hwaddr addr = 0;
-     uint32_t guest_bits;
-     DeviceState *aplic_s = NULL;
-     DeviceState *aplic_m = NULL;
-@@ -1350,6 +1350,10 @@ static DeviceState *virt_create_aia(RISCVVirtAIAType aia_type, int aia_guests,
-                                  VIRT_IRQCHIP_NUM_PRIO_BITS,
-                                  msimode, false, aplic_m);
+@@ -1492,7 +1492,7 @@ static void virt_machine_done(Notifier *notifier, void *data)
  
-+    if (kvm_enabled() && msimode) {
-+        riscv_aplic_set_kvm_msicfgaddr(RISCV_APLIC(aplic_s), addr);
-+    }
-+
-     return kvm_enabled() ? aplic_s : aplic_m;
- }
+     fdt_load_addr = riscv_compute_fdt_addr(memmap[VIRT_DRAM].base,
+                                            memmap[VIRT_DRAM].size,
+-                                           machine);
++                                           machine, &s->soc[0]);
+     riscv_load_fdt(fdt_load_addr, machine->fdt);
  
+     /* load the reset vector */
 -- 
 2.47.1
 
