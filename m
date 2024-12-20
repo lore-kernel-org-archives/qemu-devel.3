@@ -4,140 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F4219E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:42:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A68DFE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:42:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaSc-0001Hj-NZ; Fri, 20 Dec 2024 05:42:22 -0500
+	id 1tOaSt-0001l3-UN; Fri, 20 Dec 2024 05:42:39 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOaSa-0001Gi-NE
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:42:20 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOaSZ-00059s-21
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 05:42:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734691338;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=RiLj6mUbJeVinFgfTdj/iy+kkIwEHS+i4QSO4k6Shek=;
- b=dsMdMZBcdE216Jv4ugETMGC4WP6eu+UfONT0pOz8YIEtGrOzqak9FG9S/QD46qM06n9cV1
- /ijG3jFMw+CxP4Ewce2tpn6W3JuYDURj5FNL/lifAn5nufqU23FPv8liUc3Pv7w8Ml18di
- aDvargQqMSpK8v4yG+KY6qtVwdMxntw=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-647-E-Wr8RswNguaNhhBevnz1A-1; Fri, 20 Dec 2024 05:42:12 -0500
-X-MC-Unique: E-Wr8RswNguaNhhBevnz1A-1
-X-Mimecast-MFC-AGG-ID: E-Wr8RswNguaNhhBevnz1A
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4361fc2b2d6so10244125e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 02:42:12 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tOaSq-0001fu-Br; Fri, 20 Dec 2024 05:42:36 -0500
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
+ id 1tOaSo-0005BT-G0; Fri, 20 Dec 2024 05:42:36 -0500
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-2ef70c7efa5so1259227a91.2; 
+ Fri, 20 Dec 2024 02:42:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1734691352; x=1735296152; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=2KqqE2uzzrs0eOYeMQH8kfx4YKMlbk/LGQt0OEUmnbQ=;
+ b=TWZGeH6WwZL2ZDmh56pJM62UMTocIQ/l7VcJ4A3nWkT9woyNsjfgUai0GMZkUgonSX
+ KqC2c+xRPDclNzMXk/lmoIcuZ80XehBmbY7lnt1C/o0pmlmEv8qAGA42PWrUuL3gmLi1
+ kVf5KaDv535QmW4O7E5UUdiPLIsrOUwOU4fl9MsO5arhZOIwbmJ7MvnURY38T4DfJxEq
+ ZDrV4Q43Ls4BepYX5JazXRLFZYK8SVwvUq8Dgo6w5HXF+67hF4KRqaS4Fz7Kz1LNxk5T
+ oU/fDOI8B+dwQP0/p3NEMMe/ZpHk1XNEQmPfObvWAUC7VpthEbQ0LZeZ9oaJdp0NHWqx
+ qp2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691331; x=1735296131;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:subject:from:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1734691352; x=1735296152;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=RiLj6mUbJeVinFgfTdj/iy+kkIwEHS+i4QSO4k6Shek=;
- b=v+4Vx9vsIcWFxRD6Sc6YTYymLJaaoVJ3JERAwYmR2NaRmFvNlDfd/9gOMDKZhHG+tG
- +8Gd3efh8I3psKFOQOwyTHZFuFgsvH4ojgrFbqmrfAViKha9vQGRHUqzfnQuhnwYYWlA
- WqDu/O0md8CV+leubHYeR4grvvtoY1f1ltb4vsrOjjIie1SV8hbyXthU/avVBejLSt3Y
- TpOopiVA4rlRW7Oid7wUL96Ev+X4euzf1cFDM/Xs4HIZnUgTIfiPdSkpg7H8EXjm0LX2
- nscc00P/Br0UMt//9rWSu2mNcrDguCW5d43N3+5bACxpODZlgCItWbJqPEomvkTNwc86
- GgSg==
+ bh=2KqqE2uzzrs0eOYeMQH8kfx4YKMlbk/LGQt0OEUmnbQ=;
+ b=GSm13Dn0NsU3acDxg8H9u6Ue/RGE6nWsk5aEDQzGDuMD+0qqkInp7EPpITa15LEI9o
+ ZHr8NJTk7V/EYTMO+4uFKeScu+xBg1ZSm58Y1UzMmeOW+UA/UvX9jSIY+hnmLaledXZB
+ 0nXajICKLOiZKmwMdnLp2HIEAU6xGKRGIKZcJYjTbjJGmmnUiYZ440fCTZPUe3rhqvS2
+ vG+uFgIpFz8qbHUG4AHaYI09tRf3JVn8hV//SEcFYfQnJhm01ZcxlaDRnpZxuCAXs+oI
+ 1Lx2an4PUhApk1Ts2vQV2eIpRoT0TkzVyGvfkhHQxsVbttkG5DR4qzLmi4Q4MRiJ+g7J
+ 5AtQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVNvfy+FhxEPYnedCqp12mV1WVzCxLHYcCB1PsuFjBCHnSTAWh2zLU46ejBdCAy2YiamT0zE8wf4pwf@nongnu.org
-X-Gm-Message-State: AOJu0YwyIry5gtTS15CRtKLKbPwipFX3sp+oSqYQtaI4fklQj3awQkaC
- 6n4MUwU/63GXj+FyCN3+JsiodRKAvwmuS7+URduCXjEq81hVsnpoouv8arMWEMod6efVM9lPRLw
- R1+VGIsfCPVj3p+oyURF5c7UVwVXLkRBzJDcRE1kTPCtmVmTta50v
-X-Gm-Gg: ASbGncunhUBdkzCrhydZ9NSl1MZi4kAy/hmWkfszcPpSxSz6QVig/r4LPRPmaoUsA8E
- 4YbXL4hSZfsCkq0fLbdDTRi4Q9iSKfFm+YTRsY7qiGuPHA3qs54F6WpKlTNysus3E9HHp6IWCaH
- fZg69cJ6IaRjOGHygJ70EUXZ9H1gSOBKat6krp2/0wco6oe9Ef9G+lnG+XVKOWUOLnPoZKa4Lj1
- A+qzryeNPVFK4eFP7+KvytiHzJRa+YMoWNy1CGEszhTYAzcjF4UnSecQjj8
-X-Received: by 2002:a05:600c:3554:b0:434:a923:9310 with SMTP id
- 5b1f17b1804b1-43668646103mr21720875e9.15.1734691331160; 
- Fri, 20 Dec 2024 02:42:11 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IELSWh+Yjo7RWjg5pk73j1dat1cBQy0Q+vAayVsFGvGSSFWzwowK0WiFBpb5/HL6ELa5gR5dw==
-X-Received: by 2002:a05:600c:3554:b0:434:a923:9310 with SMTP id
- 5b1f17b1804b1-43668646103mr21720555e9.15.1734691330751; 
- Fri, 20 Dec 2024 02:42:10 -0800 (PST)
-Received: from [192.168.10.27] ([151.81.118.45])
- by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-43656b3b2a4sm75847335e9.27.2024.12.20.02.42.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 02:42:10 -0800 (PST)
-Message-ID: <1132197a-17ab-4b70-ad70-c6a033e18647@redhat.com>
-Date: Fri, 20 Dec 2024 11:42:09 +0100
+ AJvYcCUNOuWhBtCnKPbQsrcrU/jfvk2Dxw9ESK6/797Rmc7jhCBRq+TeVqQ6krj2hDxSh7NfrKrwrN9gSAyZ@nongnu.org
+X-Gm-Message-State: AOJu0Yzyg1lA48fNejQ3pFY2+IqkrsXmwtJHMQfvV1Gi/O7p1TZRS9B0
+ H23IQksq+HH/G7l+LyZG5BE4sytaH9mKkTtLI8kGgEiE+r5b4/XsCl6cmA==
+X-Gm-Gg: ASbGnctW6+TskUIcp/I9oMRhyhrHc2cfSOFXUgyiZ+ksc/DlOdC1U5C8Y2tgg33G7HC
+ IJg5SKmG0VhLatorDI0LHYQsvGolfXN/Rd8TbVpKME/ky30pR11hqcO5g6F2Z4+A1yQ48+aNn9y
+ X9+2amGLhpGmP3dp3IAWbzD6Vi1yrzw7ocG8FkzKSItVzrFRkAgmJCuWgNf/MtBQr/Znnlcuk4t
+ M3WvN+s/rgaWnPA/dIo56uFS9I3WqsvgbgT6A4EhRzuUax9e1XgoFY8//xfAavF22Setbz9icLu
+ ox3x8ffWgw==
+X-Google-Smtp-Source: AGHT+IE3VSyKQwocqx+4l5AtLiHz+wChHhO66obu0i6U53ZqKKN2czTdJvg8OIneUaOQfdtx5g5LPg==
+X-Received: by 2002:a17:90b:50c4:b0:2ee:c9b6:c26a with SMTP id
+ 98e67ed59e1d1-2f452e227e8mr3730640a91.11.1734691352164; 
+ Fri, 20 Dec 2024 02:42:32 -0800 (PST)
+Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.42.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Dec 2024 02:42:31 -0800 (PST)
+From: Nicholas Piggin <npiggin@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Hanna Reitz <hreitz@redhat.com>,
+ Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+Subject: [PATCH 00/17] replay: Fixes and avocado test updates
+Date: Fri, 20 Dec 2024 20:42:02 +1000
+Message-ID: <20241220104220.2007786-1-npiggin@gmail.com>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PULL 12/40] rust: build integration test for the qemu_api crate
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Junjie Mao <junjie.mao@hotmail.com>, Kevin Wolf <kwolf@redhat.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-References: <20241104172721.180255-1-pbonzini@redhat.com>
- <20241104172721.180255-13-pbonzini@redhat.com>
- <A90FCF2F-C8D9-49B7-A881-B0F849AC11A0@gmail.com>
- <05747238-adac-4be1-b516-358a04aca803@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <05747238-adac-4be1-b516-358a04aca803@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,63 +108,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi,
+
+This is another round of replay fixes posted here
+
+https://lore.kernel.org/qemu-devel/20240813050638.446172-1-npiggin@gmail.com/
+
+A bunch of those fixes have been merged, but there are still some
+outstanding here.
+
+Dropped from the series is the net announce change, which seemed to
+be the main issue Pavel had so far:
+
+https://lore.kernel.org/qemu-devel/6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru/
+
+New in this series is a reworking of the replay BH APIs because people
+didn't like the replay_xxx APIs throughout the tree. These new APIs
+also have some assertions added to catch un-converted users when replay
+is enabled, because it is far harder to debug it when it surfaces as a
+replay failure.
+
+These new API assertions caught a hw/ide replay bug which solves some
+replay_linux test hangs. Couple of fixes in the replay_linux test case,
+and now all tests are passing including aarch64 tests, see here
+
+  https://gitlab.com/npiggin/qemu/-/jobs/8695386122
+
+(In that run a couple of the x86_64 tests were disabled to fit the
+aarch64 tests in because gitlab seems to kill the job after 1 hour
+so we can't fit them all in)
+
+ppc64 also passes replay_linux after a couple of ppc64 fixes I'll post
+a patch to add the ppc64 test later after everything works through.
+
+Thanks,
+Nick
 
 
-On Thu, Dec 19, 2024 at 12:22 PM Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 12/19/24 10:53, Bernhard Beschow wrote:
-> >
-> >
-> > Am 4. November 2024 17:26:51 UTC schrieb Paolo Bonzini <pbonzini@redhat.com>:
-> >> Adjust the integration test to compile with a subset of QEMU object
-> >> files, and make it actually create an object of the class it defines.
-> >>
-> >> Follow the Rust filesystem conventions, where tests go in tests/ if
-> >> they use the library in the same way any other code would.
-> >>
-> >> Reviewed-by: Junjie Mao <junjie.mao@hotmail.com>
-> >> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-> >> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> >> ---
-> >> meson.build                  | 10 ++++-
-> >> rust/qemu-api/meson.build    | 26 ++++++++++--
-> >> rust/qemu-api/src/lib.rs     |  3 --
-> >> rust/qemu-api/src/tests.rs   | 49 ----------------------
-> >> rust/qemu-api/tests/tests.rs | 78 ++++++++++++++++++++++++++++++++++++
-> >> 5 files changed, 110 insertions(+), 56 deletions(-)
-> >> delete mode 100644 rust/qemu-api/src/tests.rs
-> >> create mode 100644 rust/qemu-api/tests/tests.rs
-> >
-> > When `--enable-modules` is passed to configure, this patch results in numerous undefined symbols.
->
-> Thanks for the report... This doesn't seem easy to fix without adding
-> more hacks on top, but I'll try to do it right.
+Nicholas Piggin (17):
+  replay: Fix migration use of clock for statistics
+  replay: Fix migration replay_mutex locking
+  async: rework async event API for replay
+  util/main-loop: Convert to new bh API
+  util/thread-pool: Convert to new bh API
+  util/aio-wait: Convert to new bh API
+  async/coroutine: Convert to new bh API
+  migration: Convert to new bh API
+  monitor: Convert to new bh API
+  qmp: Convert to new bh API
+  block: Convert to new bh API
+  hw/ide: Fix record-replay and convert to new bh API
+  hw/scsi: Convert to new bh API
+  async: add debugging assertions for record/replay in bh APIs
+  tests/avocado/replay_linux: Fix compile error
+  tests/avocado/replay_linux: Fix cdrom device setup
+  tests/avocado/replay_linux: remove the timeout expected guards
 
-Which might very well be doing it in Meson.  One needs to teach Meson
-to add --start-group/--end-group options for rustc just like Meson does
-for the C compiler; or alternatively to support "objects: ..." for
-Rust executables.
+ docs/devel/replay.rst              |  7 +--
+ include/block/aio.h                | 44 ++++++++++++++++--
+ include/sysemu/replay.h            |  2 +-
+ backends/rng-builtin.c             |  2 +-
+ block.c                            |  4 +-
+ block/blkreplay.c                  | 10 +++-
+ block/block-backend.c              | 24 ++++++----
+ block/io.c                         |  5 +-
+ block/iscsi.c                      |  5 +-
+ block/nfs.c                        | 10 ++--
+ block/null.c                       |  4 +-
+ block/nvme.c                       |  8 ++--
+ hw/ide/core.c                      |  9 ++--
+ hw/net/virtio-net.c                | 14 +++---
+ hw/scsi/scsi-bus.c                 | 14 ++++--
+ job.c                              |  3 +-
+ migration/migration.c              | 17 +++++--
+ migration/savevm.c                 | 15 +++---
+ monitor/monitor.c                  |  3 +-
+ monitor/qmp.c                      |  5 +-
+ qapi/qmp-dispatch.c                |  5 +-
+ replay/replay-events.c             | 29 +++++-------
+ stubs/replay-tools.c               |  2 +-
+ util/aio-wait.c                    |  3 +-
+ util/async.c                       | 75 ++++++++++++++++++++++++++++--
+ util/main-loop.c                   |  2 +-
+ util/thread-pool.c                 |  8 ++--
+ scripts/block-coroutine-wrapper.py |  3 +-
+ tests/avocado/replay_linux.py      |  9 ++--
+ 29 files changed, 245 insertions(+), 96 deletions(-)
 
-For example, with https://github.com/mesonbuild/meson/pull/14026, the fix
-is simply this:
-
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 9425ba7100c..0c08d2e51f5 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -59,7 +59,8 @@ test('rust-qemu-api-integration',
-          rust_args: ['--test'],
-          install: false,
-          dependencies: [qemu_api, qemu_api_macros],
--        link_whole: [rust_qemu_api_objs, libqemuutil]),
-+        link_with: libqemuutil,
-+        link_whole: [rust_qemu_api_objs]),
-      args: [
-          '--test', '--test-threads', '1',
-          '--format', 'pretty',
-
-Until then, --enable-modules is broken together with Rust.
-
-Paolo
+-- 
+2.45.2
 
 
