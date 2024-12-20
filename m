@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03EEFE7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08028E7718C
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSEU-00068p-SZ; Thu, 19 Dec 2024 20:55:15 -0500
+	id 1tOSEJ-0005wR-H4; Thu, 19 Dec 2024 20:55:03 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSET-00067T-5I
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:13 -0500
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1tOSEH-0005vT-PK
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:01 -0500
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEQ-0004Db-N7
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:12 -0500
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-725dbdf380aso1182333b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:10 -0800 (PST)
+ id 1tOSEG-0004BV-7i
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:01 -0500
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-7fc88476a02so1109104a12.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:54:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659709; x=1735264509; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659697; x=1735264497; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pOV1WvFwGJKAvHvOnB4ZRyY8YK8JT6WQG/HP3IlXapc=;
- b=asSMwT6NvmuilsbpMyK3XBdqKyMf26ArHQJkX0fkONFDggVmqyfSTstgPjAobc5Z19
- DdIlrspDcrToMErNTP9ylxdXUkfqiZRa+gK6IzbHxSj+I/D1znVnShUWayNjooGVSofW
- rXRfFH+cpj3oPkU8oAZj6myHbujQ35XerSUkUlIht9GD/1HrmrnnZNiCY+Aex9KgG8Z3
- j5CUnkVjCw61Rgopz6KdSyW3Ij3wjq9SCXnOupHMfM2/AbAHPHiE7+TiosIFlIaZ6bS9
- UhSHpMU5bkRhRzuH1AzOkdUbfYHrOehzGTxgdeMUJVMvQgf+t4D8G5UEylpeB9h4nniu
- 3Jlw==
+ bh=gPuLbZvSp6+8tc9tl8q4PUHJAk1piLXuGGcNU0EdvfA=;
+ b=fUqZDbFSxK2TtHtpjVV/gluN/I1E1Jm5xhUeiZcsJNHYnkOl1lLRCuO2FZcOwP5J2u
+ wwI1L6NGH0tpmBYqLghdqti8dMZL6+Ncl/Km0yZJwl3j/HMOniuN4fatsndTdbz53wAK
+ WvSemcaffBIVCHIdHc/4TffhGJ5G0xb5gTMFuBETMWgIXh/R0lMKJsTiPnQoMKG9LLVH
+ MSOrNFzMq8831dxrZTecuGT9qE2wS10C7Xe+Tm/gzmomVN0507tLo6mWZi2cY65uirNb
+ o/JGT/dHPSUxQxZtHGP2HZoPaYtXw6z8C3/bc0GzqMZyu/qnq2hi9oYTqIQgxA0gVWPd
+ U7qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659709; x=1735264509;
+ d=1e100.net; s=20230601; t=1734659697; x=1735264497;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pOV1WvFwGJKAvHvOnB4ZRyY8YK8JT6WQG/HP3IlXapc=;
- b=koItDQVvYtGEB1DW8ZqmE4LHy9YCG1NnpIWTw3cH+44a/Agx3+Ctbbq1gbZU1pR6BF
- BhbWNUEaTjuZ9IpvfVaExIaxBLtRbD04phdTYO7428YimPyO+zR0QviJFEFDPfyGaDY9
- O+oo7UbAgbE7QUcN84KpxeAVdeiAQvl8LSXDxYRUWfvfXqGoAEf9k4moS2kV6NoL5bKa
- qWVEyEKJCPX/ZpmqhJWB5Wv1KgWRcDxIbN8F6PbT+e+RdJ4OfK9ZR7rBo3dA/1eAxszm
- c9P5G0n8q2ZMlCQ0AuLpRRN0PGZiD+F0fMrYf19BNKeqKmwxq7yfFyv/xtsxd+cx/bqZ
- 1uBA==
-X-Gm-Message-State: AOJu0YwfVMMCaK0FW0LkNXNN/3lPDlbFVeUdU+j0ozDZQzZwFsOgF8fg
- yCr2igxFpscoLY2/l76pRAsOHZ9tHSNQ4x9jzPaYH26Dmgoh4ZRT90vKsD+D
-X-Gm-Gg: ASbGncuDhd5GoFWPtus7O8IRuXLdT4RMuiefaGNDhLOHrBDbKn7UQ634JvChzr+ycfm
- B/tb6frdytDluhCk3E8+nCJC6jdZ/KXjdC5nZ1Sdg+AhCZRZSPEFegFepOke3kUBd6dTrGjc/Hk
- DESyyWFNioacOutqQ4evBxfpKfK7OWQB+Srmyz/cilbTmJ6DRVqaCPIzf7cddgVWCJkNQMeOdr0
- dCezpL0D7xMw8MxqmXYhUSkgUYL5xVpfIszkwCLsZajC3top6J982tmYx5h57cE/ixilAti4u5K
- ftouW1+lAvG40j0z4USRRuQnpojnieL8fDRg5X0sRB0L+vjjrNfXI+8JOMtGquY=
-X-Google-Smtp-Source: AGHT+IF2Wn1b1z3sweq7KsFywwHa6G1Kjd/R10OURaKJVCMak6E2O+DWXVE4nD9Sh/8/aoauSvXhFA==
-X-Received: by 2002:a05:6a20:430a:b0:1e1:a9dd:5a68 with SMTP id
- adf61e73a8af0-1e5e044bd9bmr2243558637.1.1734659709153; 
- Thu, 19 Dec 2024 17:55:09 -0800 (PST)
+ bh=gPuLbZvSp6+8tc9tl8q4PUHJAk1piLXuGGcNU0EdvfA=;
+ b=Lp3XmMt+bIqzjN4bvItR4YfCpKxjJuy/giYpl83BErJdLgYVI4OOs/voZf2MunAJwk
+ nO0MVUvEd/9Xaa/q33jJMgNdpbOgslgtAXWMNiOCGVjp3sJ+iMmAJ/4HxuzYnqjGWqTy
+ gkw7fnv0CwhDftSz2JKEFyRtyWEMx6BK17rYSbR0qsi+YMnjhSvWIndPassXd2Fu9BPb
+ q1j4QZUYPjhBBJKj7pADA1n0Tn6zmR+RKaTgJMDWMsihuq5o/RHXsOcz4vwaCDGDNSmZ
+ S2MKPXC6wANyoKCVq2IVDKoOH52vNnfqJFao0BlI54pN7wxR/eW4LItppzJZUPP1+pxv
+ GQ0w==
+X-Gm-Message-State: AOJu0YyhsfplS+Ep3qArN31xpOSNxC8f6UXnMZkEl+xMpHF2USD9p4yB
+ MPeHZheJjnAVhrGXRy5ZdHYhwxYQVzBU8YBByEG5AtntT2fbjp1RUlIpS9KV
+X-Gm-Gg: ASbGncug3cF12sGkjQQenI2ksGaZdmzUXg83x3b5XsyVgQeQRKR1GmQQCSYWoV7DuC3
+ BXc0bzbtiOHUmDCpLMNMb4XA23TN/ATM7xZeK0jldiHjR0tYpIYk9jYHhxWiDxr9QC3UyJIL+iG
+ fE8QAJaGjeaoaQ4Fy6C3xTUxuxve1xxxGyhQhyDpLai56vuFdwsknd9Sv7DWDltJEpPW38rg44q
+ 1VA93GiNdXjdKXkOsTa9MPUhDtn5T3TXZGqCA1K58QZZ8H136ZKlOEYIJ8TPCkF6yLELGRky6kw
+ AtCIvxeLB5v4uLRBJEkl9PfJP7UWZV1fgr5wQQ+X5paq1q3bVcW4CH7TlmnYmY0=
+X-Google-Smtp-Source: AGHT+IGJ4m6qftyu9+sZIxmE0dWWZPlgSNn93hOfNyjgrMw9KGcq17kLjqEp/in2EQNYorp2DQvdYw==
+X-Received: by 2002:a05:6a20:2d07:b0:1e1:b44f:cff1 with SMTP id
+ adf61e73a8af0-1e5e07f9c06mr2050865637.33.1734659697423; 
+ Thu, 19 Dec 2024 17:54:57 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.06
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.54.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:55:08 -0800 (PST)
+ Thu, 19 Dec 2024 17:54:56 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Tomasz Jeznach <tjeznach@rivosinc.com>,
+Cc: alistair23@gmail.com, Jason Chien <jason.chien@sifive.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 05/39] hw/riscv: add riscv-iommu-sys platform device
-Date: Fri, 20 Dec 2024 11:54:05 +1000
-Message-ID: <20241220015441.317236-6-alistair.francis@wdc.com>
+Subject: [PULL v2 01/39] hw/riscv/riscv-iommu.c: Correct the validness check
+ of iova
+Date: Fri, 20 Dec 2024 11:54:01 +1000
+Message-ID: <20241220015441.317236-2-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,205 +105,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tomasz Jeznach <tjeznach@rivosinc.com>
+From: Jason Chien <jason.chien@sifive.com>
 
-This device models the RISC-V IOMMU as a sysbus device. The same design
-decisions taken in the riscv-iommu-pci device were kept, namely the
-existence of 4 vectors are available for each interrupt cause.
+From RISCV IOMMU spec section 2.1.3:
+When SXL is 1, the following rules apply:
+- If the first-stage is not Bare, then a page fault corresponding to the
+original access type occurs if the IOVA has bits beyond bit 31 set to 1.
+- If the second-stage is not Bare, then a guest page fault corresponding
+to the original access type occurs if the incoming GPA has bits beyond bit
+33 set to 1.
 
-The WSIs are emitted using the input of the s->notify() callback as a
-index to an IRQ list. The IRQ list starts at 'base_irq' and goes until
-base_irq + 3. This means that boards must have 4 contiguous IRQ lines
-available, starting from 'base_irq'.
+From RISCV IOMMU spec section 2.3 step 17:
+Use the process specified in Section "Two-Stage Address Translation" of
+the RISC-V Privileged specification to determine the GPA accessed by the
+transaction.
 
-Signed-off-by: Tomasz Jeznach <tjeznach@rivosinc.com>
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241106133407.604587-4-dbarboza@ventanamicro.com>
+From RISCV IOMMU spec section 2.3 step 19:
+Use the second-stage address translation process specified in Section
+"Two-Stage Address Translation" of the RISC-V Privileged specification
+to translate the GPA A to determine the SPA accessed by the transaction.
+
+This commit adds the iova check with the following rules:
+- For Sv32, Sv32x4, Sv39x4, Sv48x4 and Sv57x4, the iova must be zero
+extended.
+- For Sv39, Sv48 and Sv57, the iova must be signed extended with most
+significant bit.
+
+Signed-off-by: Jason Chien <jason.chien@sifive.com>
+Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Message-ID: <20241114065617.25133-1-jason.chien@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/riscv/iommu.h   |   4 ++
- hw/riscv/riscv-iommu-sys.c | 128 +++++++++++++++++++++++++++++++++++++
- hw/riscv/riscv-iommu.c     |   3 +-
- hw/riscv/meson.build       |   2 +-
- 4 files changed, 134 insertions(+), 3 deletions(-)
- create mode 100644 hw/riscv/riscv-iommu-sys.c
+ hw/riscv/riscv-iommu.c | 23 ++++++++++++++++++++---
+ 1 file changed, 20 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
-index 80769a1400..fc20808553 100644
---- a/include/hw/riscv/iommu.h
-+++ b/include/hw/riscv/iommu.h
-@@ -33,4 +33,8 @@ typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
- OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
- typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
- 
-+#define TYPE_RISCV_IOMMU_SYS "riscv-iommu-device"
-+OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStateSys, RISCV_IOMMU_SYS)
-+typedef struct RISCVIOMMUStateSys RISCVIOMMUStateSys;
-+
- #endif
-diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
-new file mode 100644
-index 0000000000..4b82046ce9
---- /dev/null
-+++ b/hw/riscv/riscv-iommu-sys.c
-@@ -0,0 +1,128 @@
-+/*
-+ * QEMU emulation of an RISC-V IOMMU Platform Device
-+ *
-+ * Copyright (C) 2022-2023 Rivos Inc.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope that it will be useful,
-+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
-+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+ * GNU General Public License for more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along
-+ * with this program; if not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/irq.h"
-+#include "hw/pci/pci_bus.h"
-+#include "hw/qdev-properties.h"
-+#include "hw/sysbus.h"
-+#include "qapi/error.h"
-+#include "qemu/error-report.h"
-+#include "qemu/host-utils.h"
-+#include "qemu/module.h"
-+#include "qom/object.h"
-+
-+#include "riscv-iommu.h"
-+
-+#define RISCV_IOMMU_SYSDEV_ICVEC_VECTORS 0x3333
-+
-+/* RISC-V IOMMU System Platform Device Emulation */
-+
-+struct RISCVIOMMUStateSys {
-+    SysBusDevice     parent;
-+    uint64_t         addr;
-+    uint32_t         base_irq;
-+    DeviceState      *irqchip;
-+    RISCVIOMMUState  iommu;
-+    qemu_irq         irqs[RISCV_IOMMU_INTR_COUNT];
-+};
-+
-+static void riscv_iommu_sysdev_notify(RISCVIOMMUState *iommu,
-+                                      unsigned vector)
-+{
-+    RISCVIOMMUStateSys *s = container_of(iommu, RISCVIOMMUStateSys, iommu);
-+    uint32_t fctl =  riscv_iommu_reg_get32(iommu, RISCV_IOMMU_REG_FCTL);
-+
-+    /* We do not support MSIs yet */
-+    if (!(fctl & RISCV_IOMMU_FCTL_WSI)) {
-+        return;
-+    }
-+
-+    qemu_irq_pulse(s->irqs[vector]);
-+}
-+
-+static void riscv_iommu_sys_realize(DeviceState *dev, Error **errp)
-+{
-+    RISCVIOMMUStateSys *s = RISCV_IOMMU_SYS(dev);
-+    SysBusDevice *sysdev = SYS_BUS_DEVICE(s);
-+    PCIBus *pci_bus;
-+    qemu_irq irq;
-+
-+    qdev_realize(DEVICE(&s->iommu), NULL, errp);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->iommu.regs_mr);
-+    if (s->addr) {
-+        sysbus_mmio_map(SYS_BUS_DEVICE(s), 0, s->addr);
-+    }
-+
-+    pci_bus = (PCIBus *) object_resolve_path_type("", TYPE_PCI_BUS, NULL);
-+    if (pci_bus) {
-+        riscv_iommu_pci_setup_iommu(&s->iommu, pci_bus, errp);
-+    }
-+
-+    s->iommu.notify = riscv_iommu_sysdev_notify;
-+
-+    /* 4 IRQs are defined starting from s->base_irq */
-+    for (int i = 0; i < RISCV_IOMMU_INTR_COUNT; i++) {
-+        sysbus_init_irq(sysdev, &s->irqs[i]);
-+        irq = qdev_get_gpio_in(s->irqchip, s->base_irq + i);
-+        sysbus_connect_irq(sysdev, i, irq);
-+    }
-+}
-+
-+static void riscv_iommu_sys_init(Object *obj)
-+{
-+    RISCVIOMMUStateSys *s = RISCV_IOMMU_SYS(obj);
-+    RISCVIOMMUState *iommu = &s->iommu;
-+
-+    object_initialize_child(obj, "iommu", iommu, TYPE_RISCV_IOMMU);
-+    qdev_alias_all_properties(DEVICE(iommu), obj);
-+
-+    iommu->icvec_avail_vectors = RISCV_IOMMU_SYSDEV_ICVEC_VECTORS;
-+    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_WSI);
-+}
-+
-+static Property riscv_iommu_sys_properties[] = {
-+    DEFINE_PROP_UINT64("addr", RISCVIOMMUStateSys, addr, 0),
-+    DEFINE_PROP_UINT32("base-irq", RISCVIOMMUStateSys, base_irq, 0),
-+    DEFINE_PROP_LINK("irqchip", RISCVIOMMUStateSys, irqchip,
-+                     TYPE_DEVICE, DeviceState *),
-+    DEFINE_PROP_END_OF_LIST(),
-+};
-+
-+static void riscv_iommu_sys_class_init(ObjectClass *klass, void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    dc->realize = riscv_iommu_sys_realize;
-+    set_bit(DEVICE_CATEGORY_MISC, dc->categories);
-+    device_class_set_props(dc, riscv_iommu_sys_properties);
-+}
-+
-+static const TypeInfo riscv_iommu_sys = {
-+    .name          = TYPE_RISCV_IOMMU_SYS,
-+    .parent        = TYPE_SYS_BUS_DEVICE,
-+    .class_init    = riscv_iommu_sys_class_init,
-+    .instance_init = riscv_iommu_sys_init,
-+    .instance_size = sizeof(RISCVIOMMUStateSys),
-+};
-+
-+static void riscv_iommu_register_sys(void)
-+{
-+    type_register_static(&riscv_iommu_sys);
-+}
-+
-+type_init(riscv_iommu_register_sys)
 diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index 24b879822b..9137217cb7 100644
+index 07fed36986..b6b9477129 100644
 --- a/hw/riscv/riscv-iommu.c
 +++ b/hw/riscv/riscv-iommu.c
-@@ -94,10 +94,9 @@ static uint8_t riscv_iommu_get_icvec_vector(uint32_t icvec, uint32_t vec_type)
+@@ -392,9 +392,26 @@ static int riscv_iommu_spa_fetch(RISCVIOMMUState *s, RISCVIOMMUContext *ctx,
  
- static void riscv_iommu_notify(RISCVIOMMUState *s, int vec_type)
- {
--    const uint32_t fctl = riscv_iommu_reg_get32(s, RISCV_IOMMU_REG_FCTL);
-     uint32_t ipsr, icvec, vector;
+         /* Address range check before first level lookup */
+         if (!sc[pass].step) {
+-            const uint64_t va_mask = (1ULL << (va_skip + va_bits)) - 1;
+-            if ((addr & va_mask) != addr) {
+-                return RISCV_IOMMU_FQ_CAUSE_DMA_DISABLED;
++            const uint64_t va_len = va_skip + va_bits;
++            const uint64_t va_mask = (1ULL << va_len) - 1;
++
++            if (pass == S_STAGE && va_len > 32) {
++                target_ulong mask, masked_msbs;
++
++                mask = (1L << (TARGET_LONG_BITS - (va_len - 1))) - 1;
++                masked_msbs = (addr >> (va_len - 1)) & mask;
++
++                if (masked_msbs != 0 && masked_msbs != mask) {
++                    return (iotlb->perm & IOMMU_WO) ?
++                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_S :
++                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_S;
++                }
++            } else {
++                if ((addr & va_mask) != addr) {
++                    return (iotlb->perm & IOMMU_WO) ?
++                                RISCV_IOMMU_FQ_CAUSE_WR_FAULT_VS :
++                                RISCV_IOMMU_FQ_CAUSE_RD_FAULT_VS;
++                }
+             }
+         }
  
--    if (fctl & RISCV_IOMMU_FCTL_WSI || !s->notify) {
-+    if (!s->notify) {
-         return;
-     }
- 
-diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
-index adbef8a9b2..3be13d7774 100644
---- a/hw/riscv/meson.build
-+++ b/hw/riscv/meson.build
-@@ -10,6 +10,6 @@ riscv_ss.add(when: 'CONFIG_SIFIVE_U', if_true: files('sifive_u.c'))
- riscv_ss.add(when: 'CONFIG_SPIKE', if_true: files('spike.c'))
- riscv_ss.add(when: 'CONFIG_MICROCHIP_PFSOC', if_true: files('microchip_pfsoc.c'))
- riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
--riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c', 'riscv-iommu-pci.c'))
-+riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files('riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c'))
- 
- hw_arch += {'riscv': riscv_ss}
 -- 
 2.47.1
 
