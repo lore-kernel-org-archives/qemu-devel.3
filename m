@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD57BE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:21:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66EA3E7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:21:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfia-0002NQ-1m; Fri, 20 Dec 2024 11:19:12 -0500
+	id 1tOfjX-00065G-NZ; Fri, 20 Dec 2024 11:20:12 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfiB-0001WA-6R
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:50 -0500
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjG-0005MC-4E
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:55 -0500
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfi8-0008C6-Aq
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:46 -0500
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-436202dd7f6so22851595e9.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:18:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjD-0008Jq-Nj
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:53 -0500
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3862d16b4f5so1473407f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711522; x=1735316322; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711590; x=1735316390; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9N5R4jVOn9EmqTq+klLXLHYEgnhRoHrMyBiXguPuoE4=;
- b=rPIOrGxgdt46y/Vz1We+dO0Hw4oisP9Brr1/oR2d3/HVNF+GPViMzQcimS8BCVW0JC
- LPrfEvJzDTYw+yrwpTkHuTIlR3FAnmqkEI4DGKI6ujTLDRGCBLqjN+ImeTC81aLPWbdB
- 5lVqXU5iZ51z2mlCnt/cRvk9QzeFpA4L3cw5LEzx38VlPIWCeYDmGb3NyGbV2mrHtgY8
- JSZTyBicl13Tf1EQ8GXyBhGof6AeH7Hk/tTOxoPJ1Ex92mA7vNZ1gkdfzryi9KW4Xyn/
- G2/e12AbRt0uTYroNpBS5FUgbPyiZF8stijdXBTrFbUwidH2xI2t2zh+91H/r3yVwKYX
- RG8g==
+ bh=Yq4GFNy0GqV3TnhfGRyyK+hCfXYhz7stFIIfE9+GECI=;
+ b=zxUGSm/xxAVjxXrAZ9JVi63zis6v4LCUl+u0u2w7r5PpRmEZSivvmw0uGobd0Jssqw
+ jcthRXfd6iNzqi7LlcX2Zyut8RGmnOhYgJDRuorNJ4BmVMvynflinbaofuLsTLv/Kzhm
+ 1D7e0VROPGch0UVOywXp15vMNrpqJhS187Ifm+UxaAUb21fniyqMutz4DNjwONqOvAbk
+ YPyOP+bE732b+wSsGDCUKaZcw5LhdC4HN0Z5TERY2jie5mX2cHQwV8/wIinxZLgNInBw
+ ENlT9qZW7r0mGaF2N//I5WBIJs3Hn+DLIMgzgWEkk60hBJoeQFDtD751JBlWkuTjKzm7
+ Nlxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711522; x=1735316322;
+ d=1e100.net; s=20230601; t=1734711590; x=1735316390;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9N5R4jVOn9EmqTq+klLXLHYEgnhRoHrMyBiXguPuoE4=;
- b=mD15MKXceGMm+L2GKK7dmmAWJK8kujGYYb6yr7Kd5Hz8gbjnSz08c6OytztEzzrnoS
- +Ro3MSLIL6rpLpTx43ny8wSyQ9IQY+kuGdQAziodFOEusreKh7utH+fEFaHRm7InKddb
- 5XTJmEdmN+lf94fzJbi8UAAO9GC2Fx5n7lNboPz5O2K3ZDk8tfR7U92dHFAXR4vPV2xI
- EQobEnganOWkvp5GDf65BR9cU7xBXcHm/e5j3Q9j3TZXrhymHw2JRSxCrWW9oQOOAZdU
- 3spqRWjphxWzbM1hcS440qemfZiij3aJdOe191n3oa6K9XxPP2/Np323RqO/awl1rzN0
- vpFw==
-X-Gm-Message-State: AOJu0YyehcKB0IHbvBJectLL5dLttkKBhn5Ekrr8t4BrbCG+hqG7Q3K0
- NJGQeZ0OO5BifGBlpCYnAw1aH7NQ/j8R3Fet+inacYkaS8bE+zgaTz43HoyZW41bUcP6hgLogIz
- m
-X-Gm-Gg: ASbGnctyFkCFygxOnRoTB3nVcqZ54I9l9WBh1XoNUbd68XT4KAyFG2ipDfgbOiTjwQH
- 8sYj8MRcdfDdJcESljj22V4iMzxVhnY0prtvf4PDtjWJgK1Gz5jB20CK/X2eYoysSkz33v7yEJA
- m4UPrlPq9kodPkzINAE+aPEJHWF8JgCSlBXLfttBuHOaJX3xX3+yfHz82F/ft1LOj+4wJAGwCoZ
- ofsmx/JxIL+zKJ0+2+Kfwu5aJ5Plr/LoqdVZf+VtqgCQHVgJ0pRoM5XBDRcuoNIAzM8t2ozxRM=
-X-Google-Smtp-Source: AGHT+IHNEcCcUfN577eqIyswEmNP4qTBovaBjplPO6C3q+ZxuKF3Ku+dm5Z8nP56DDXd6ZWMfcfzUg==
-X-Received: by 2002:a05:600c:1913:b0:434:f396:525e with SMTP id
- 5b1f17b1804b1-4366b2fa0a6mr28443355e9.9.1734711522542; 
- Fri, 20 Dec 2024 08:18:42 -0800 (PST)
+ bh=Yq4GFNy0GqV3TnhfGRyyK+hCfXYhz7stFIIfE9+GECI=;
+ b=mFuVcOyzwc4FE113nwhgcLTsNbf3mQsllntz3dOUPljE8MK8qQMc1DZe/B77tly3OK
+ 9WS1erAb1NePdU/RBXvh+iLKGMudsyyPpFwMHr8Vfk5ow/h3jYT0nmL+GPQXlcdYFv+I
+ osh5MOaWqOe3XrqTJmfxtqfbMgNvhG7oGvDGzjDQ9x+n68m52nH92xt3Q0Si7pjmPKDA
+ 5EPjTJh+3vEcO1lxqG1Xs96ZBkdOQGAae7IPeBU+UXQrb86Tx7xzALIGKR8Zw1Eo5VmZ
+ e5Vi4Aj5IaM2LiFUC9VoZEUhqA4UcXPk5HvaLSRFf3uPZ9TJ5om2vuBMXYVwMW0jvq3f
+ vY5w==
+X-Gm-Message-State: AOJu0YzMravulAVMiReOGPiXe3mnpE0IWViqY3oBTVVzO64ejEarLcmX
+ BHqUiA52hYa+8cQCAkyAFVgQKFmaS8UOecxZlJYQxpaNMgtcqOPr73Ri8g9qVz3bglyyvw70uov
+ A
+X-Gm-Gg: ASbGncvDW8ITvWDWp8jzIn4uQeKKyYs3O80pJmOqq1u2uM1wIil/zWf6zsCVJ1aAdih
+ pGLwLHQfZykbiyvwgjYpL6zHaOCrIr1MQRaInLiRBW8B+5Jdd6QVTls1pFy5Fqqf/5xlNACpi9M
+ mK1ABeG8lb4EzhTXz1RQ7KOV9v1Ds99T3Dk3NcXqvyxDzNc6sGgyn2TMZSWrsnvkzPLbtI2opdN
+ TOyDvm+xk0H8WQS58ofUrPELO+SAuAuZTVEfZgozdmOEx8YqRNxRvG4k7l0ypJSb04GLC0U5YI=
+X-Google-Smtp-Source: AGHT+IFV1AmvNc6MpF8zbwtRZDHDePOK2hthbTiF2u39xaukzZqsGQZdDVv0vIWcUO08qXKnxRcZdg==
+X-Received: by 2002:a5d:6da1:0:b0:386:3afc:14a7 with SMTP id
+ ffacd0b85a97d-38a1a1fdae4mr7189797f8f.7.1734711589972; 
+ Fri, 20 Dec 2024 08:19:49 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a2432e587sm1480525f8f.95.2024.12.20.08.18.41
+ 5b1f17b1804b1-43656b0145csm83868365e9.15.2024.12.20.08.19.49
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:18:42 -0800 (PST)
+ Fri, 20 Dec 2024 08:19:49 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 37/59] user: Forward declare target_cpu_copy_regs structure
-Date: Fri, 20 Dec 2024 17:15:28 +0100
-Message-ID: <20241220161551.89317-38-philmd@linaro.org>
+Subject: [PULL 52/59] target/xtensa: Remove tswap() calls in semihosting
+ simcall() helper
+Date: Fri, 20 Dec 2024 17:15:43 +0100
+Message-ID: <20241220161551.89317-53-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,266 +100,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212185341.2857-16-philmd@linaro.org>
----
- linux-user/cpu_loop-common.h      | 5 ++++-
- linux-user/aarch64/cpu_loop.c     | 2 +-
- linux-user/alpha/cpu_loop.c       | 2 +-
- linux-user/arm/cpu_loop.c         | 2 +-
- linux-user/hexagon/cpu_loop.c     | 2 +-
- linux-user/hppa/cpu_loop.c        | 2 +-
- linux-user/i386/cpu_loop.c        | 2 +-
- linux-user/loongarch64/cpu_loop.c | 2 +-
- linux-user/m68k/cpu_loop.c        | 2 +-
- linux-user/microblaze/cpu_loop.c  | 2 +-
- linux-user/mips/cpu_loop.c        | 2 +-
- linux-user/openrisc/cpu_loop.c    | 2 +-
- linux-user/ppc/cpu_loop.c         | 2 +-
- linux-user/riscv/cpu_loop.c       | 2 +-
- linux-user/s390x/cpu_loop.c       | 2 +-
- linux-user/sh4/cpu_loop.c         | 2 +-
- linux-user/sparc/cpu_loop.c       | 2 +-
- linux-user/xtensa/cpu_loop.c      | 2 +-
- 18 files changed, 21 insertions(+), 18 deletions(-)
+In preparation of heterogeneous emulation where cores with
+different endianness can run concurrently, replace the pair
+of cpu_memory_rw_debug() + tswap() calls by put/get_user_u32()
+ones, which still do the same under the hood, but simplify the
+code maintenance (having less sites to do endianness code
+conversion).
 
-diff --git a/linux-user/cpu_loop-common.h b/linux-user/cpu_loop-common.h
-index e644d2ef909..aca51f53238 100644
---- a/linux-user/cpu_loop-common.h
-+++ b/linux-user/cpu_loop-common.h
-@@ -27,5 +27,8 @@ void target_exception_dump(CPUArchState *env, const char *fmt, int code);
- #define EXCP_DUMP(env, fmt, code) \
-     target_exception_dump(env, fmt, code)
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <6e1e69d8-a9f3-4a30-83c8-84c5647578d5@linaro.org>
+---
+ target/xtensa/xtensa-semi.c | 15 +++++----------
+ 1 file changed, 5 insertions(+), 10 deletions(-)
+
+diff --git a/target/xtensa/xtensa-semi.c b/target/xtensa/xtensa-semi.c
+index fa21b7e11fc..2ded8e5634e 100644
+--- a/target/xtensa/xtensa-semi.c
++++ b/target/xtensa/xtensa-semi.c
+@@ -30,6 +30,7 @@
+ #include "chardev/char-fe.h"
+ #include "exec/helper-proto.h"
+ #include "semihosting/semihost.h"
++#include "semihosting/uaccess.h"
+ #include "qapi/error.h"
+ #include "qemu/log.h"
  
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs);
-+typedef struct target_pt_regs target_pt_regs;
-+
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs);
-+
- #endif
-diff --git a/linux-user/aarch64/cpu_loop.c b/linux-user/aarch64/cpu_loop.c
-index 71cdc8be50c..77f857a8216 100644
---- a/linux-user/aarch64/cpu_loop.c
-+++ b/linux-user/aarch64/cpu_loop.c
-@@ -185,7 +185,7 @@ void cpu_loop(CPUARMState *env)
-     }
- }
+@@ -323,15 +324,12 @@ void HELPER(simcall)(CPUXtensaState *env)
+             uint32_t fd = regs[3];
+             uint32_t rq = regs[4];
+             uint32_t target_tv = regs[5];
+-            uint32_t target_tvv[2];
  
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     ARMCPU *cpu = env_archcpu(env);
-     CPUState *cs = env_cpu(env);
-diff --git a/linux-user/alpha/cpu_loop.c b/linux-user/alpha/cpu_loop.c
-index 2ea039aa71f..b5403ed0e46 100644
---- a/linux-user/alpha/cpu_loop.c
-+++ b/linux-user/alpha/cpu_loop.c
-@@ -173,7 +173,7 @@ void cpu_loop(CPUAlphaState *env)
-     }
- }
+             struct timeval tv = {0};
  
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
+             if (target_tv) {
+-                cpu_memory_rw_debug(cs, target_tv,
+-                        (uint8_t *)target_tvv, sizeof(target_tvv), 0);
+-                tv.tv_sec = (int32_t)tswap32(target_tvv[0]);
+-                tv.tv_usec = (int32_t)tswap32(target_tvv[1]);
++                get_user_u32(tv.tv_sec, target_tv);
++                get_user_u32(tv.tv_sec, target_tv + 4);
+             }
+             if (fd < 3 && sim_console) {
+                 if ((fd == 1 || fd == 2) && rq == SELECT_ONE_WRITE) {
+@@ -387,11 +385,8 @@ void HELPER(simcall)(CPUXtensaState *env)
+                 const char *str = semihosting_get_arg(i);
+                 int str_size = strlen(str) + 1;
  
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index 709f718a99d..be1f11022a7 100644
---- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -513,7 +513,7 @@ void cpu_loop(CPUARMState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-     TaskState *ts = get_task_state(cpu);
-diff --git a/linux-user/hexagon/cpu_loop.c b/linux-user/hexagon/cpu_loop.c
-index 40db596301a..750150a78db 100644
---- a/linux-user/hexagon/cpu_loop.c
-+++ b/linux-user/hexagon/cpu_loop.c
-@@ -79,7 +79,7 @@ void cpu_loop(CPUHexagonState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     env->gpr[HEX_REG_PC] = regs->sepc;
-     env->gpr[HEX_REG_SP] = regs->sp;
-diff --git a/linux-user/hppa/cpu_loop.c b/linux-user/hppa/cpu_loop.c
-index 23b38ff9b28..503a204460e 100644
---- a/linux-user/hppa/cpu_loop.c
-+++ b/linux-user/hppa/cpu_loop.c
-@@ -188,7 +188,7 @@ void cpu_loop(CPUHPPAState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
-     for (i = 1; i < 32; i++) {
-diff --git a/linux-user/i386/cpu_loop.c b/linux-user/i386/cpu_loop.c
-index 7a35215278a..e06aa23de4c 100644
---- a/linux-user/i386/cpu_loop.c
-+++ b/linux-user/i386/cpu_loop.c
-@@ -331,7 +331,7 @@ static void target_cpu_free(void *obj)
-     g_free(obj);
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-     bool is64 = (env->features[FEAT_8000_0001_EDX] & CPUID_EXT2_LM) != 0;
-diff --git a/linux-user/loongarch64/cpu_loop.c b/linux-user/loongarch64/cpu_loop.c
-index 73d7b6796a4..935d5bcf2c8 100644
---- a/linux-user/loongarch64/cpu_loop.c
-+++ b/linux-user/loongarch64/cpu_loop.c
-@@ -97,7 +97,7 @@ void cpu_loop(CPULoongArchState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
- 
-diff --git a/linux-user/m68k/cpu_loop.c b/linux-user/m68k/cpu_loop.c
-index f79b8e4ab05..69cdce95518 100644
---- a/linux-user/m68k/cpu_loop.c
-+++ b/linux-user/m68k/cpu_loop.c
-@@ -92,7 +92,7 @@ void cpu_loop(CPUM68KState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-     TaskState *ts = get_task_state(cpu);
-diff --git a/linux-user/microblaze/cpu_loop.c b/linux-user/microblaze/cpu_loop.c
-index 212e62d0a62..ee4ba768691 100644
---- a/linux-user/microblaze/cpu_loop.c
-+++ b/linux-user/microblaze/cpu_loop.c
-@@ -127,7 +127,7 @@ void cpu_loop(CPUMBState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     env->regs[0] = regs->r0;
-     env->regs[1] = regs->r1;
-diff --git a/linux-user/mips/cpu_loop.c b/linux-user/mips/cpu_loop.c
-index 462387a0737..1331a9a2b8d 100644
---- a/linux-user/mips/cpu_loop.c
-+++ b/linux-user/mips/cpu_loop.c
-@@ -211,7 +211,7 @@ done_syscall:
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-     TaskState *ts = get_task_state(cpu);
-diff --git a/linux-user/openrisc/cpu_loop.c b/linux-user/openrisc/cpu_loop.c
-index a7aa586c8f9..1bf9542d16a 100644
---- a/linux-user/openrisc/cpu_loop.c
-+++ b/linux-user/openrisc/cpu_loop.c
-@@ -83,7 +83,7 @@ void cpu_loop(CPUOpenRISCState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
- 
-diff --git a/linux-user/ppc/cpu_loop.c b/linux-user/ppc/cpu_loop.c
-index 02204ad8beb..e168f1ce947 100644
---- a/linux-user/ppc/cpu_loop.c
-+++ b/linux-user/ppc/cpu_loop.c
-@@ -378,7 +378,7 @@ void cpu_loop(CPUPPCState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
- 
-diff --git a/linux-user/riscv/cpu_loop.c b/linux-user/riscv/cpu_loop.c
-index 0af533e186f..a72bc76da3d 100644
---- a/linux-user/riscv/cpu_loop.c
-+++ b/linux-user/riscv/cpu_loop.c
-@@ -94,7 +94,7 @@ void cpu_loop(CPURISCVState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     CPUState *cpu = env_cpu(env);
-     TaskState *ts = get_task_state(cpu);
-diff --git a/linux-user/s390x/cpu_loop.c b/linux-user/s390x/cpu_loop.c
-index 8b7ac2879ef..42e4d24102e 100644
---- a/linux-user/s390x/cpu_loop.c
-+++ b/linux-user/s390x/cpu_loop.c
-@@ -180,7 +180,7 @@ void cpu_loop(CPUS390XState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
-     for (i = 0; i < 16; i++) {
-diff --git a/linux-user/sh4/cpu_loop.c b/linux-user/sh4/cpu_loop.c
-index c805f9db110..937d9fa265d 100644
---- a/linux-user/sh4/cpu_loop.c
-+++ b/linux-user/sh4/cpu_loop.c
-@@ -81,7 +81,7 @@ void cpu_loop(CPUSH4State *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
- 
-diff --git a/linux-user/sparc/cpu_loop.c b/linux-user/sparc/cpu_loop.c
-index 50424a54df5..58a2464da9f 100644
---- a/linux-user/sparc/cpu_loop.c
-+++ b/linux-user/sparc/cpu_loop.c
-@@ -357,7 +357,7 @@ void cpu_loop (CPUSPARCState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
-     env->pc = regs->pc;
-diff --git a/linux-user/xtensa/cpu_loop.c b/linux-user/xtensa/cpu_loop.c
-index d51ce053926..7564e25a966 100644
---- a/linux-user/xtensa/cpu_loop.c
-+++ b/linux-user/xtensa/cpu_loop.c
-@@ -238,7 +238,7 @@ void cpu_loop(CPUXtensaState *env)
-     }
- }
- 
--void target_cpu_copy_regs(CPUArchState *env, struct target_pt_regs *regs)
-+void target_cpu_copy_regs(CPUArchState *env, target_pt_regs *regs)
- {
-     int i;
-     for (i = 0; i < 16; ++i) {
+-                argptr = tswap32(regs[3] + str_offset);
+-
+-                cpu_memory_rw_debug(cs,
+-                                    regs[3] + i * sizeof(uint32_t),
+-                                    (uint8_t *)&argptr, sizeof(argptr), 1);
++                put_user_u32(regs[3] + str_offset,
++                             regs[3] + i * sizeof(uint32_t));
+                 cpu_memory_rw_debug(cs,
+                                     regs[3] + str_offset,
+                                     (uint8_t *)str, str_size, 1);
 -- 
 2.47.1
 
