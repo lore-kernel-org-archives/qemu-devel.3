@@ -4,68 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CC7DE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 17:25:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B76FAE7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 18:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOgkA-0000LK-2R; Fri, 20 Dec 2024 12:24:54 -0500
+	id 1tOhaw-0005Id-V1; Fri, 20 Dec 2024 13:19:27 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOgk2-0000KY-NG
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:24:48 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <prvs=077b2128c=graf@amazon.de>)
+ id 1tOhau-0005IT-Ni
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 13:19:24 -0500
+Received: from smtp-fw-6002.amazon.com ([52.95.49.90])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1tOgk0-0002WN-3n
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 12:24:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734715481;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7SZFYHWcUyoXZ/k7B4bx81Jb41WkHRjbR551pXy+h6g=;
- b=c/cHqjT8gIAJ5Z7InJFsXMi0vcb1DbH2GNkOPxVduTTxhUT43g8eFGGXBbyLJ+RLozSS/X
- zjCx5w+uHZWgrfZKn3Y0UIF5RE1BBA+nek4CIKpQdU7Y2m8wbaVEi2L2UGXWRHs9Q5mplt
- m62gg34C1lFy5aKG/cda2nlIeJk3AcU=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-607-dvtvV0aGPP2nvhBsUCxMdw-1; Fri, 20 Dec 2024 12:24:40 -0500
-X-MC-Unique: dvtvV0aGPP2nvhBsUCxMdw-1
-X-Mimecast-MFC-AGG-ID: dvtvV0aGPP2nvhBsUCxMdw
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-aa67f18cb95so259190266b.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 09:24:40 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734715479; x=1735320279;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7SZFYHWcUyoXZ/k7B4bx81Jb41WkHRjbR551pXy+h6g=;
- b=wrXcyWmpNwpyh7YoPadq0mzxueXydcmb3OyUbBGST2c0kQHL+AXIxDv0PRaK8z9MUV
- 5u/HaBxr4HsR72RRyowQdbY9lipPzjavnUTRX4THR8+Sf4g9s7CnDdg0xlQ4b/BvXzjg
- PVNpcmnVJc9jMfb7impesPVt/LMatjmco8EgOYgLjytssJUvzmbBu83vic90Na3c42Bz
- xO4RQhdx4M+W4ShlOOsDxFrM2r60Rla6bkOW0yc5K86peYkz/Gw+F0ugI2oGYnbpG7W2
- +Ipisl6NLR1E2RLaedOHcu57KaMIoLVGpAJJmzafCX0r0z/kAzdr+pgNde8UqrOiVFZG
- iU0A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWD0BSNcxo7HJ2EiREaRC0HUng4CHI5LGFdEVKbrZY7lJBBpeEqp5/lk7uktt52NqGE+XfZIZ0VVYXK@nongnu.org
-X-Gm-Message-State: AOJu0YzXA/1MGYv7YgzOsSvAcHIL5vWLnMLbn77YiE4TXvtZ2XweT6/l
- oNC2mXLLDE5t/Kzyz/f3Hm5Qog0FY4NQboSL/AWa1/AiJWJL4Nj/LO3Egp23PO060oo68TTeYEY
- 6iOM7r6QdNj+K/bAQg3vn2/IGE6adfTapuj6ATrghLKWhXeyVK000Zfplz1ItZqpZKYdMz6uZaZ
- dwF1gZ8Y72hu6mjI6jtU67MWxi/gI=
-X-Gm-Gg: ASbGnctbmjpxRcFMHHuOHE49X5OULmDLqsfiQ9pJKyOhmC2Rija7bXfvBJwl3EUecNU
- hN2ap64NqmB3G1Hq4OrXXM6GDdmUXSK4arKU=
-X-Received: by 2002:a17:906:7311:b0:aab:75f1:e51f with SMTP id
- a640c23a62f3a-aac2ad84e3dmr342190366b.18.1734715478978; 
- Fri, 20 Dec 2024 09:24:38 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IEYc8z4SZ+gr7jsBPIlFhs3+4g6J0d2i4KNoT37tcUegiSGahiUG7UIrHptymkCw+KW0H7+5fj7+CDQhOPDvUo=
-X-Received: by 2002:a17:906:7311:b0:aab:75f1:e51f with SMTP id
- a640c23a62f3a-aac2ad84e3dmr342188166b.18.1734715478670; Fri, 20 Dec 2024
- 09:24:38 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <prvs=077b2128c=graf@amazon.de>)
+ id 1tOhat-0004a4-0o
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 13:19:24 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+ t=1734718764; x=1766254764;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=lT9bvBBGgdXF8bBXGniOmeasBAxn3YwgBtU1NSrp3Qg=;
+ b=F01WW4K/EN+8/CL2oFRZnEhWu9Oclgn+ekh+Onucd+ssuL4F4352ipyi
+ NZG9IS0YQ5SDGrk3mMvB+Uq9EVqAqP6Q6wGdiJtRelVfW9HDprkd1ipVW
+ Kjh6uZCW/oqL6Ived0jAoDA2cYrUUzxlo0QFtCaiA16pKx0t54nz+Dpiv Q=;
+X-IronPort-AV: E=Sophos;i="6.12,251,1728950400"; d="scan'208";a="457708970"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
+ smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
+ by smtp-border-fw-6002.iad6.amazon.com with
+ ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2024 18:19:20 +0000
+Received: from EX19MTAUWA002.ant.amazon.com [10.0.38.20:46391]
+ by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.2.75:2525] with
+ esmtp (Farcaster)
+ id 61690754-8cb3-495f-af7f-7eb265e151fb; Fri, 20 Dec 2024 18:19:18 +0000 (UTC)
+X-Farcaster-Flow-ID: 61690754-8cb3-495f-af7f-7eb265e151fb
+Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
+ EX19MTAUWA002.ant.amazon.com (10.250.64.202) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
+ Fri, 20 Dec 2024 18:19:06 +0000
+Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
+ (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Fri, 20 Dec 2024
+ 18:19:05 +0000
+Message-ID: <8d616de4-3083-45e9-81b9-f9e9a00dbe71@amazon.com>
+Date: Fri, 20 Dec 2024 19:19:02 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
+ interface support
+To: Ani Sinha <anisinha@redhat.com>
+CC: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Paolo Bonzini
+ <pbonzini@redhat.com>, Gerd Hoffman <kraxel@redhat.com>, Igor Mammedov
+ <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, qemu-devel
+ <qemu-devel@nongnu.org>
 References: <20241216114841.1025070-1-anisinha@redhat.com>
  <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
  <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
@@ -76,28 +68,25 @@ References: <20241216114841.1025070-1-anisinha@redhat.com>
  <CAK3XEhOAD1cueixs6w2ojvudOwz5YrTxzN4x_kgZTkg_EfFXsA@mail.gmail.com>
  <1bbf92cf-d9d0-421e-b674-fb216cb7216a@amazon.com>
  <CAK3XEhOmpQULP6xCetkrwHC_FzSMRs7LSsCyzeUpvqRkw-zkOA@mail.gmail.com>
+Content-Language: en-US
+From: Alexander Graf <graf@amazon.com>
 In-Reply-To: <CAK3XEhOmpQULP6xCetkrwHC_FzSMRs7LSsCyzeUpvqRkw-zkOA@mail.gmail.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 20 Dec 2024 22:54:25 +0530
-Message-ID: <CAK3XEhPFbj0NHi2-6ojjX6XYMW_h3zsbOX92r3VHNnO7dZHiEw@mail.gmail.com>
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Alexander Graf <graf@amazon.com>
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffman <kraxel@redhat.com>, 
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>, 
- qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000e49d690629b6eb36"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
+X-Originating-IP: [10.253.83.51]
+X-ClientProxiedBy: EX19D044UWB002.ant.amazon.com (10.13.139.188) To
+ EX19D020UWC004.ant.amazon.com (10.13.138.149)
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: base64
+Received-SPF: pass client-ip=52.95.49.90;
+ envelope-from=prvs=077b2128c=graf@amazon.de; helo=smtp-fw-6002.amazon.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,231 +102,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000e49d690629b6eb36
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, 20 Dec, 2024, 7:01 pm Ani Sinha, <anisinha@redhat.com> wrote:
-
-> On Fri, Dec 20, 2024 at 5:03=E2=80=AFPM Alexander Graf <graf@amazon.com> =
-wrote:
-> >
-> >
-> > On 20.12.24 11:00, Ani Sinha wrote:
-> > >>> Either add the I386 dependency or don't use PC_MACHINE, because on
-> > >>> non-x86 targets PC_MACHINE(qdev_get_machine()) will crash.
-> > >> Ah this is where we have a disconnect. I assumed that
-> > >>> pcms =3D PC_MACHINE(m_obj)
-> > >> would return NULL on non-x86.
-> > >>
-> > >> Seems a better way to do this (as is done in vga.c) is to use
-> > >> object_dynamic_cast()
-> > >> How about
-> > >>
-> > >> diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c
-> > >> index 0e90bd10e1..19d042b929 100644
-> > >> --- a/hw/misc/vmfwupdate.c
-> > >> +++ b/hw/misc/vmfwupdate.c
-> > >> @@ -32,9 +32,11 @@ static inline VMFwUpdateState
-> *vmfwupdate_find(void)
-> > >>   static uint64_t get_max_fw_size(void)
-> > >>   {
-> > >>       Object *m_obj =3D qdev_get_machine();
-> > >> -    PCMachineState *pcms =3D PC_MACHINE(m_obj);
-> > >> +    MachineState *ms =3D MACHINE(m_obj);
-> > >> +    PCMachineState *pcms;
-> > >> -    if (pcms) {
-> > >> +    if (object_dynamic_cast(OBJECT(ms), TYPE_X86_MACHINE)) {
-> > >> +        pcms =3D PC_MACHINE(m_obj);
-> > >>           return pcms->max_fw_size;
-> > >>       } else {
-> > >>           return 0;
-> > >>
-> > > For the records, I tested this with arm and the following command lin=
-e
-> > > does not crash QEMU;
-> > >
-> > > ./qemu-system-arm -machine virt-9.2 -device vmfwupdate
-> > >
-> > > I have also added a separate functional test to exercise basic device
-> > > creation which will be part of v5 when I send it out.
-> >
-> >
-> > You are currently not implementing the reset logic required to actually
-> > make vmfwupdate work.
->
-> Yes that is correct and that is by design. The reset logic on CoCo
-> depends on the larger piece of work on how to enable reset and
-> re-instantiation of the VM without simply terminating. I did not want
-> to wait until all those complicated bits were sorted out first. I
-> wanted to make sure that the hypervisor/guest interface is put in
-> place.
->
-> That means technically, the device should not be
-> > instantiable on *any* platform at the moment. For example with the
-> > command line above you would advertise the capability to update firmwar=
-e
-> > in fw-cfg, but then not back it by functionality.
->
-> OK so if we wanted to put this work peace meal in smaller chunks, can
-> we have an additional capability bit that actually advertizes this
-> functionality on certain machine types/platforms?
->
-
-Note that having a capability bit also helps us to test each machine /
-platforms separately as we roll this out. The capability will be disabled
-for all platforms and machines initially and incrementally enabled for
-those machines and platforms for which we have tested the feature to work.
-
-
-> If QEMU were to merge
-> > this patch, it would just create a broken device.
->
-> Are you talking about CoCo or non-CoCo?
->
-
-Maybe for non coco case which is a lot simpler, we can add the reset bits
-as a part of this patchset.
-
-
->
-> > Please make sure that the vmfwupdate device can only be instantiated on
-> > machine types that it has full support for.
-> >
-> >
-> > Alex
-> >
-> >
-> >
-> >
-> > Amazon Web Services Development Center Germany GmbH
-> > Krausenstr. 38
-> > 10117 Berlin
-> > Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss
-> > Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B
-> > Sitz: Berlin
-> > Ust-ID: DE 365 538 597
->
-
---000000000000e49d690629b6eb36
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, 20 Dec, 2024, 7:01 pm An=
-i Sinha, &lt;<a href=3D"mailto:anisinha@redhat.com">anisinha@redhat.com</a>=
-&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 =
-0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Fri, Dec 20, 2024 at=
- 5:03=E2=80=AFPM Alexander Graf &lt;<a href=3D"mailto:graf@amazon.com" targ=
-et=3D"_blank" rel=3D"noreferrer">graf@amazon.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt;<br>
-&gt; On 20.12.24 11:00, Ani Sinha wrote:<br>
-&gt; &gt;&gt;&gt; Either add the I386 dependency or don&#39;t use PC_MACHIN=
-E, because on<br>
-&gt; &gt;&gt;&gt; non-x86 targets PC_MACHINE(qdev_get_machine()) will crash=
-.<br>
-&gt; &gt;&gt; Ah this is where we have a disconnect. I assumed that<br>
-&gt; &gt;&gt;&gt; pcms =3D PC_MACHINE(m_obj)<br>
-&gt; &gt;&gt; would return NULL on non-x86.<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; Seems a better way to do this (as is done in vga.c) is to use=
-<br>
-&gt; &gt;&gt; object_dynamic_cast()<br>
-&gt; &gt;&gt; How about<br>
-&gt; &gt;&gt;<br>
-&gt; &gt;&gt; diff --git a/hw/misc/vmfwupdate.c b/hw/misc/vmfwupdate.c<br>
-&gt; &gt;&gt; index 0e90bd10e1..19d042b929 100644<br>
-&gt; &gt;&gt; --- a/hw/misc/vmfwupdate.c<br>
-&gt; &gt;&gt; +++ b/hw/misc/vmfwupdate.c<br>
-&gt; &gt;&gt; @@ -32,9 +32,11 @@ static inline VMFwUpdateState *vmfwupdate_=
-find(void)<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0static uint64_t get_max_fw_size(void)<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0{<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Object *m_obj =3D qdev_get_machine(=
-);<br>
-&gt; &gt;&gt; -=C2=A0 =C2=A0 PCMachineState *pcms =3D PC_MACHINE(m_obj);<br=
->
-&gt; &gt;&gt; +=C2=A0 =C2=A0 MachineState *ms =3D MACHINE(m_obj);<br>
-&gt; &gt;&gt; +=C2=A0 =C2=A0 PCMachineState *pcms;<br>
-&gt; &gt;&gt; -=C2=A0 =C2=A0 if (pcms) {<br>
-&gt; &gt;&gt; +=C2=A0 =C2=A0 if (object_dynamic_cast(OBJECT(ms), TYPE_X86_M=
-ACHINE)) {<br>
-&gt; &gt;&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 pcms =3D PC_MACHINE(m_obj);<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return pcms-&gt;max_f=
-w_size;<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0} else {<br>
-&gt; &gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
-&gt; &gt;&gt;<br>
-&gt; &gt; For the records, I tested this with arm and the following command=
- line<br>
-&gt; &gt; does not crash QEMU;<br>
-&gt; &gt;<br>
-&gt; &gt; ./qemu-system-arm -machine virt-9.2 -device vmfwupdate<br>
-&gt; &gt;<br>
-&gt; &gt; I have also added a separate functional test to exercise basic de=
-vice<br>
-&gt; &gt; creation which will be part of v5 when I send it out.<br>
-&gt;<br>
-&gt;<br>
-&gt; You are currently not implementing the reset logic required to actuall=
-y<br>
-&gt; make vmfwupdate work.<br>
-<br>
-Yes that is correct and that is by design. The reset logic on CoCo<br>
-depends on the larger piece of work on how to enable reset and<br>
-re-instantiation of the VM without simply terminating. I did not want<br>
-to wait until all those complicated bits were sorted out first. I<br>
-wanted to make sure that the hypervisor/guest interface is put in<br>
-place.<br>
-<br>
-That means technically, the device should not be<br>
-&gt; instantiable on *any* platform at the moment. For example with the<br>
-&gt; command line above you would advertise the capability to update firmwa=
-re<br>
-&gt; in fw-cfg, but then not back it by functionality.<br>
-<br>
-OK so if we wanted to put this work peace meal in smaller chunks, can<br>
-we have an additional capability bit that actually advertizes this<br>
-functionality on certain machine types/platforms?<br></blockquote></div></d=
-iv><div dir=3D"auto"><br></div><div dir=3D"auto">Note that having a capabil=
-ity bit also helps us to test each machine / platforms separately as we rol=
-l this out. The capability will be disabled for all platforms and machines =
-initially and incrementally enabled for those machines and platforms for wh=
-ich we have tested the feature to work.</div><div dir=3D"auto"><br></div><d=
-iv dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc sol=
-id;padding-left:1ex">
-<br>
-If QEMU were to merge<br>
-&gt; this patch, it would just create a broken device.<br>
-<br>
-Are you talking about CoCo or non-CoCo?<br></blockquote></div></div><div di=
-r=3D"auto"><br></div><div dir=3D"auto">Maybe for non coco case which is a l=
-ot simpler, we can add the reset bits as a part of this patchset.</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto"><div =
-class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">
-&gt;<br>
-&gt; Please make sure that the vmfwupdate device can only be instantiated o=
-n<br>
-&gt; machine types that it has full support for.<br>
-&gt;<br>
-&gt;<br>
-&gt; Alex<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; Amazon Web Services Development Center Germany GmbH<br>
-&gt; Krausenstr. 38<br>
-&gt; 10117 Berlin<br>
-&gt; Geschaeftsfuehrung: Christian Schlaeger, Jonathan Weiss<br>
-&gt; Eingetragen am Amtsgericht Charlottenburg unter HRB 257764 B<br>
-&gt; Sitz: Berlin<br>
-&gt; Ust-ID: DE 365 538 597<br>
-</blockquote></div></div></div>
-
---000000000000e49d690629b6eb36--
+Ck9uIDIwLjEyLjI0IDE0OjMxLCBBbmkgU2luaGEgd3JvdGU6Cj4gT24gRnJpLCBEZWMgMjAsIDIw
+MjQgYXQgNTowM+KAr1BNIEFsZXhhbmRlciBHcmFmIDxncmFmQGFtYXpvbi5jb20+IHdyb3RlOgo+
+Pgo+PiBPbiAyMC4xMi4yNCAxMTowMCwgQW5pIFNpbmhhIHdyb3RlOgo+Pj4+PiBFaXRoZXIgYWRk
+IHRoZSBJMzg2IGRlcGVuZGVuY3kgb3IgZG9uJ3QgdXNlIFBDX01BQ0hJTkUsIGJlY2F1c2Ugb24K
+Pj4+Pj4gbm9uLXg4NiB0YXJnZXRzIFBDX01BQ0hJTkUocWRldl9nZXRfbWFjaGluZSgpKSB3aWxs
+IGNyYXNoLgo+Pj4+IEFoIHRoaXMgaXMgd2hlcmUgd2UgaGF2ZSBhIGRpc2Nvbm5lY3QuIEkgYXNz
+dW1lZCB0aGF0Cj4+Pj4+IHBjbXMgPSBQQ19NQUNISU5FKG1fb2JqKQo+Pj4+IHdvdWxkIHJldHVy
+biBOVUxMIG9uIG5vbi14ODYuCj4+Pj4KPj4+PiBTZWVtcyBhIGJldHRlciB3YXkgdG8gZG8gdGhp
+cyAoYXMgaXMgZG9uZSBpbiB2Z2EuYykgaXMgdG8gdXNlCj4+Pj4gb2JqZWN0X2R5bmFtaWNfY2Fz
+dCgpCj4+Pj4gSG93IGFib3V0Cj4+Pj4KPj4+PiBkaWZmIC0tZ2l0IGEvaHcvbWlzYy92bWZ3dXBk
+YXRlLmMgYi9ody9taXNjL3ZtZnd1cGRhdGUuYwo+Pj4+IGluZGV4IDBlOTBiZDEwZTEuLjE5ZDA0
+MmI5MjkgMTAwNjQ0Cj4+Pj4gLS0tIGEvaHcvbWlzYy92bWZ3dXBkYXRlLmMKPj4+PiArKysgYi9o
+dy9taXNjL3ZtZnd1cGRhdGUuYwo+Pj4+IEBAIC0zMiw5ICszMiwxMSBAQCBzdGF0aWMgaW5saW5l
+IFZNRndVcGRhdGVTdGF0ZSAqdm1md3VwZGF0ZV9maW5kKHZvaWQpCj4+Pj4gICAgc3RhdGljIHVp
+bnQ2NF90IGdldF9tYXhfZndfc2l6ZSh2b2lkKQo+Pj4+ICAgIHsKPj4+PiAgICAgICAgT2JqZWN0
+ICptX29iaiA9IHFkZXZfZ2V0X21hY2hpbmUoKTsKPj4+PiAtICAgIFBDTWFjaGluZVN0YXRlICpw
+Y21zID0gUENfTUFDSElORShtX29iaik7Cj4+Pj4gKyAgICBNYWNoaW5lU3RhdGUgKm1zID0gTUFD
+SElORShtX29iaik7Cj4+Pj4gKyAgICBQQ01hY2hpbmVTdGF0ZSAqcGNtczsKPj4+PiAtICAgIGlm
+IChwY21zKSB7Cj4+Pj4gKyAgICBpZiAob2JqZWN0X2R5bmFtaWNfY2FzdChPQkpFQ1QobXMpLCBU
+WVBFX1g4Nl9NQUNISU5FKSkgewo+Pj4+ICsgICAgICAgIHBjbXMgPSBQQ19NQUNISU5FKG1fb2Jq
+KTsKPj4+PiAgICAgICAgICAgIHJldHVybiBwY21zLT5tYXhfZndfc2l6ZTsKPj4+PiAgICAgICAg
+fSBlbHNlIHsKPj4+PiAgICAgICAgICAgIHJldHVybiAwOwo+Pj4+Cj4+PiBGb3IgdGhlIHJlY29y
+ZHMsIEkgdGVzdGVkIHRoaXMgd2l0aCBhcm0gYW5kIHRoZSBmb2xsb3dpbmcgY29tbWFuZCBsaW5l
+Cj4+PiBkb2VzIG5vdCBjcmFzaCBRRU1VOwo+Pj4KPj4+IC4vcWVtdS1zeXN0ZW0tYXJtIC1tYWNo
+aW5lIHZpcnQtOS4yIC1kZXZpY2Ugdm1md3VwZGF0ZQo+Pj4KPj4+IEkgaGF2ZSBhbHNvIGFkZGVk
+IGEgc2VwYXJhdGUgZnVuY3Rpb25hbCB0ZXN0IHRvIGV4ZXJjaXNlIGJhc2ljIGRldmljZQo+Pj4g
+Y3JlYXRpb24gd2hpY2ggd2lsbCBiZSBwYXJ0IG9mIHY1IHdoZW4gSSBzZW5kIGl0IG91dC4KPj4K
+Pj4gWW91IGFyZSBjdXJyZW50bHkgbm90IGltcGxlbWVudGluZyB0aGUgcmVzZXQgbG9naWMgcmVx
+dWlyZWQgdG8gYWN0dWFsbHkKPj4gbWFrZSB2bWZ3dXBkYXRlIHdvcmsuCj4gWWVzIHRoYXQgaXMg
+Y29ycmVjdCBhbmQgdGhhdCBpcyBieSBkZXNpZ24uIFRoZSByZXNldCBsb2dpYyBvbiBDb0NvCj4g
+ZGVwZW5kcyBvbiB0aGUgbGFyZ2VyIHBpZWNlIG9mIHdvcmsgb24gaG93IHRvIGVuYWJsZSByZXNl
+dCBhbmQKPiByZS1pbnN0YW50aWF0aW9uIG9mIHRoZSBWTSB3aXRob3V0IHNpbXBseSB0ZXJtaW5h
+dGluZy4gSSBkaWQgbm90IHdhbnQKPiB0byB3YWl0IHVudGlsIGFsbCB0aG9zZSBjb21wbGljYXRl
+ZCBiaXRzIHdlcmUgc29ydGVkIG91dCBmaXJzdC4gSQo+IHdhbnRlZCB0byBtYWtlIHN1cmUgdGhh
+dCB0aGUgaHlwZXJ2aXNvci9ndWVzdCBpbnRlcmZhY2UgaXMgcHV0IGluCj4gcGxhY2UuCgoKVGhp
+cyBsb2dpYyBoYXMgbm8gZGVwZW5kZW5jeSBvbiBDb0NvLgoKCj4KPiBUaGF0IG1lYW5zIHRlY2hu
+aWNhbGx5LCB0aGUgZGV2aWNlIHNob3VsZCBub3QgYmUKPj4gaW5zdGFudGlhYmxlIG9uICphbnkq
+IHBsYXRmb3JtIGF0IHRoZSBtb21lbnQuIEZvciBleGFtcGxlIHdpdGggdGhlCj4+IGNvbW1hbmQg
+bGluZSBhYm92ZSB5b3Ugd291bGQgYWR2ZXJ0aXNlIHRoZSBjYXBhYmlsaXR5IHRvIHVwZGF0ZSBm
+aXJtd2FyZQo+PiBpbiBmdy1jZmcsIGJ1dCB0aGVuIG5vdCBiYWNrIGl0IGJ5IGZ1bmN0aW9uYWxp
+dHkuCj4gT0sgc28gaWYgd2Ugd2FudGVkIHRvIHB1dCB0aGlzIHdvcmsgcGVhY2UgbWVhbCBpbiBz
+bWFsbGVyIGNodW5rcywgY2FuCj4gd2UgaGF2ZSBhbiBhZGRpdGlvbmFsIGNhcGFiaWxpdHkgYml0
+IHRoYXQgYWN0dWFsbHkgYWR2ZXJ0aXplcyB0aGlzCj4gZnVuY3Rpb25hbGl0eSBvbiBjZXJ0YWlu
+IG1hY2hpbmUgdHlwZXMvcGxhdGZvcm1zPwoKCk1heWJlLiBUaGUgcHJvcGVydHkgd2UgbmVlZCBp
+cyB0aGF0IHNwYXduaW5nIHRoaXMgZGV2aWNlIG9uIGEgbWFjaGluZSAKdHlwZSB0aGF0IGRvZXMg
+bm90IHN1cHBvcnQgcmVzZXQgZW5saWdodGVubWVudCBmb3IgaXQgc2hvdWxkIGZhaWwgCmxhdW5j
+aGluZy4gSSBkb24ndCByZWFsbHkgY2FyZSBob3cgeW91IGJ1aWxkIHRoYXQuIEJ1dCB0b2RheSwg
+YWRkaW5nIAotZGV2aWNlIHZtZnd1cGRhdGUgc2hvdWxkIGZhaWwgb24gYW55IHRhcmdldCBzeXN0
+ZW0uCgoKPgo+IElmIFFFTVUgd2VyZSB0byBtZXJnZQo+PiB0aGlzIHBhdGNoLCBpdCB3b3VsZCBq
+dXN0IGNyZWF0ZSBhIGJyb2tlbiBkZXZpY2UuCj4gQXJlIHlvdSB0YWxraW5nIGFib3V0IENvQ28g
+b3Igbm9uLUNvQ28/CgoKQWx3YXlzLiBUaGUgZ3Vlc3Qgd291bGQgc2VlIHRoZSBpbnRlcmZhY2Us
+IHRyeSB0byBkcml2ZSBpdCBhbmQgdGhlbiB3ZSAKaWdub3JlIGl0cyBpbnB1dHMuIFdlIGhhdmUg
+dG8gcHJldmVudCB0aGF0IGZyb20gaGFwcGVuaW5nIGlmIHdlIHdhbnQgdG8gCm1lcmdlIHRoZSBi
+YXNlIGxvZ2ljIHdpdGhvdXQgYm9hcmQgYmFja2VuZCBjb2RlLgoKSSBwZXJzb25hbGx5IHRoaW5r
+IHRoZSBib2FyZCBiYWNrZW5kIGNvZGUgZm9yIHBjIGlzIHNpbXBsZSBlbm91Z2ggdGhhdCAKaXQg
+bWFrZXMgc2Vuc2UgdG8gZm9sZCBpbnRvIHRoaXMgcGF0Y2ggdGhvdWdoIHNvIHRoYXQgeW91IGhh
+dmUgYXQgbGVhc3QgCm9uZSB3b3JraW5nIGJvYXJkLgoKCkFsZXgKCgoKCgpBbWF6b24gV2ViIFNl
+cnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJtYW55IEdtYkgKS3JhdXNlbnN0ci4gMzgKMTAx
+MTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzogQ2hyaXN0aWFuIFNjaGxhZWdlciwgSm9uYXRo
+YW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dlcmljaHQgQ2hhcmxvdHRlbmJ1cmcgdW50ZXIg
+SFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3QtSUQ6IERFIDM2NSA1MzggNTk3Cg==
 
 
