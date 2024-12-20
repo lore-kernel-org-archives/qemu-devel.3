@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C879E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 825E6E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfff-0005ok-KB; Fri, 20 Dec 2024 11:16:11 -0500
+	id 1tOfie-0002su-AN; Fri, 20 Dec 2024 11:19:16 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffe-0005oE-AC
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:10 -0500
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhj-0000Em-3a
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:19 -0500
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffc-0006cJ-Ky
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:09 -0500
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-38632b8ae71so1618388f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:16:08 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhg-00088q-Ie
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:18 -0500
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4362bae4d7dso15460225e9.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:18:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711367; x=1735316167; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711495; x=1735316295; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PQRaAxonstRNg+zJNWvBOScLNgnEhfzST5TP3my+hhE=;
- b=i9BU1xqm4WPFYftFAkMABmV0FxJuCa/pd+88XY7Xy1JrmY88Qq1ZKWa3XWUwAIuRvP
- 4Q18njdwG+HMNQSq8gaZ8rfehpDIA5z2qbSWBiJIqKHutNl9ftYBuGIhznMzotbu4nnT
- FEEx9jXr71mywDnQVSTMQAWkZ9yfVLNZgYvhPlEmI5iK/qR6s6rcoflnuGfBAiM8+96H
- WNcGxeic1MN4RuJutX9LCI3bgSLr02UVE1mgowXGwL1oXCLEZjI6XpS46ZbImendXjez
- Hwe3mb0L1Xru0MI8zQCEW8U3C901qhEgJhd7Ng98co9jHIz523yBwMtuYxF2cUkpXsfO
- Tgdw==
+ bh=hHn0+dNGjU/yg9Pqd/gB3HrxWjuGd4TsS8QR//rhXIU=;
+ b=eT54a3TuP96jDoSAcynwwdUmYadDG0ewliBSDXsdcIS6AiVW21cDOxbT4GiPlbSho+
+ Xg4yKLRUEPyc3P8WTw5n74Val/lqgHEJHjXVVeenhwvIbsKDLqtXYgYWa69n2iUK3aOS
+ i1rso0RdCGISB7WERxJr2bWNDX70A4wVtRvjWq1FpDHWmaAhi7RewAhFyoe1J7pL2Bw+
+ sGAjWLlVkstxwKybWEoyZWfjpkMq+keeDMCzZE8gnfz3iLUMFK9M27K3Pg3NA/vQNF+B
+ L1QE/BQNku291Y4N98lLEvO7SmYIQpxK2j6X70Rq/Yux4S/R1CpLWryniIqp+wARvAC9
+ KIPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711367; x=1735316167;
+ d=1e100.net; s=20230601; t=1734711495; x=1735316295;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=PQRaAxonstRNg+zJNWvBOScLNgnEhfzST5TP3my+hhE=;
- b=HZmBX2pLMACjandpxx40HeTnjynVu/j/qb+/lPvF6n/6KxlM6d2Ngh0y/GgPhfhD5u
- PDeso04XA0EZLezVOp+NkdigJhSeWX/eSVtpt8h/SOuSoPIHy0iPI7RdEq4bf0XNK0SQ
- BDaJazGCSLjiq9ScDWqYrGPHeyWY6KmTB29rOL0r4PlNzgY0RzaF6VtYupyEiNkDHKQ5
- 8mcDl5VWJdJv5i3Kuae0NZmJtAe4WqjOiPDo1VEgY/kfShuAwP+jLSj7ybGExfMgpGzp
- 3+DK6PLHyQh3AhrSSuGnJrG2RuwYWi1uoPCV9DArGFf5WHt+2ibVp2aWzKMKZPwFNvhP
- /7qw==
-X-Gm-Message-State: AOJu0YwahqYYM4o60aWcoZAgZTWym1NiRowlOLcOgYQvPyzYPMjvDRSQ
- 1swYp6klbfMncFDXhdXAsCcX/BOtJm3GXxJlcT3SK7bSU7mJHbcHaulyjHeE54TuZn2eVa8gaKC
- K
-X-Gm-Gg: ASbGncufSPNHurBs+XC8dSwM0y0FAH/8ffzj5v8iGX6fQDGvdKCv/gXQITwcylJ2TlX
- 9BD59taBisT/RuTpfWRyKyWcJB2PgQ/lHC+j9S4GHCutKt+cddi2B3x+T7iyBHCYX1H6elGRKio
- pjUQ6NPxw2L26GbLjDM8Re4SldxATu1fJiRShSoAQtgFbHuIXTde1/CRbd1h3SVbgJjPp6C/a0p
- ukor6AeSAsOabCKjq2Jjaql+MajKs3wTSC1oj+gcZyvcKLprm36VQNXealrPipeeefO86AGynk=
-X-Google-Smtp-Source: AGHT+IFIL8mrL3rA9rOVwpl7/tAwN8DtbL0XKtxkhL7KkWwFEEEkjg1vTXyr/HIHdXvvXQeGbs0n0Q==
-X-Received: by 2002:a5d:5e09:0:b0:385:f16d:48b4 with SMTP id
- ffacd0b85a97d-38a223f7510mr4128347f8f.40.1734711366904; 
- Fri, 20 Dec 2024 08:16:06 -0800 (PST)
+ bh=hHn0+dNGjU/yg9Pqd/gB3HrxWjuGd4TsS8QR//rhXIU=;
+ b=wM3R19ahVFhyi5FRl6NPrHo5OuNS93NSnvjxq6/lSah9Vits3cQmdPypryn9ivojHN
+ jqg6EdWLv+LMZIB3cIPjxCLaY5BIsvYoYBybmzUUXYqees9PQb5mkqGuMI1zQwSOCdkd
+ qpeqNi3BPww0/UBYRo3rUYGSQF5Dg057/mEvrSPR22BEqWJy36Xi37nXCt2GvXBdBzdx
+ QuREAr8RphNx/BCH9MRmYfRwClPCQGhMPg5AMn12V6Fq9mCBBMvjGnhFCo8B78Z8MpPQ
+ F0QLbXatnSvvoUm/t19l69Cn2Q6E+iEDAfVqmtNkky5vN4kwSKOAr9Ai83nFQ3aFPsvV
+ EkHg==
+X-Gm-Message-State: AOJu0YzIsDszT1hG9+S5pI0DUKncBu9/O1QukvtJwRDgxbHzClIp5FIP
+ wgkN7OnNZcZHzueHP59gLw6idZSRbZp6k6Lj0DMUYwBordl/ctmX73J3g3PNGmyXaac2sM8cy+V
+ p
+X-Gm-Gg: ASbGncviyYkFPX7Sb0ILEHSOPEwHNfU7H4TReB6x5iBBxr+NJC660sY2Is/JkyeHiX/
+ F1bp5CkvOBql1yLSo43I0zJ9mvxtjXHUCaQ/ukRy3D+6Ry/ApdjqE+SVd6gWG4AhR1A5fK58Rqe
+ FG4H12S6dIgJerzEirIPejKjQihwohxWYo3MyrE34DFIRg3+ZSbF7BbnxwnPnt+tX4ThL08wHB5
+ hq1uGmDCMVFiN7m5TcXkmOo6+9x7lbPBPfkVok0Rjx8A/EuM63xcGLkQ6r8++xr0WvPuXOTeqM=
+X-Google-Smtp-Source: AGHT+IHBL0Vu3tA/gPIZpr3AHfOU/eBzaeJLITgmoFsVK3q8kPRm+ItX9nugj98VZzhYxE4H8dNVWA==
+X-Received: by 2002:a05:6000:481e:b0:385:f417:ee3d with SMTP id
+ ffacd0b85a97d-38a221fa5bbmr3576099f8f.35.1734711494860; 
+ Fri, 20 Dec 2024 08:18:14 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43656af6d02sm85408715e9.1.2024.12.20.08.16.06
+ ffacd0b85a97d-38a1c8acafesm4375189f8f.98.2024.12.20.08.18.14
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:16:06 -0800 (PST)
+ Fri, 20 Dec 2024 08:18:14 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 03/59] qom: Add TYPE_CONTAINER macro
-Date: Fri, 20 Dec 2024 17:14:54 +0100
-Message-ID: <20241220161551.89317-4-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 31/59] accel/tcg: Move TranslationBlock declarations to
+ 'tb-internal.h'
+Date: Fri, 20 Dec 2024 17:15:22 +0100
+Message-ID: <20241220161551.89317-32-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,92 +100,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Xu <peterx@redhat.com>
+Move declarations related to TranslationBlock out of the
+generic "internal-target.h" to "tb-internal.h".
 
-Provide a macro for the container type across QEMU source tree, rather than
-hard code it every time.
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Peter Xu <peterx@redhat.com>
-Message-ID: <20241121192202.4155849-2-peterx@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241212185341.2857-11-philmd@linaro.org>
 ---
- include/qom/object.h | 1 +
- hw/arm/stellaris.c   | 2 +-
- qom/container.c      | 4 ++--
- qom/object.c         | 4 ++--
- 4 files changed, 6 insertions(+), 5 deletions(-)
+ accel/tcg/internal-target.h | 32 ------------------------------
+ accel/tcg/tb-internal.h     | 39 +++++++++++++++++++++++++++++++++++++
+ accel/tcg/cpu-exec.c        |  1 +
+ accel/tcg/cputlb.c          |  1 +
+ accel/tcg/tb-maint.c        |  1 +
+ accel/tcg/translate-all.c   |  1 +
+ accel/tcg/translator.c      |  1 +
+ 7 files changed, 44 insertions(+), 32 deletions(-)
 
-diff --git a/include/qom/object.h b/include/qom/object.h
-index a201c9712a1..de02e16817c 100644
---- a/include/qom/object.h
-+++ b/include/qom/object.h
-@@ -26,6 +26,7 @@ typedef struct InterfaceClass InterfaceClass;
- typedef struct InterfaceInfo InterfaceInfo;
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 0437d798295..1cfa318dc6c 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -36,42 +36,10 @@ static inline void page_table_config_init(void) { }
+ void page_table_config_init(void);
+ #endif
  
- #define TYPE_OBJECT "object"
-+#define TYPE_CONTAINER "container"
+-#ifdef CONFIG_USER_ONLY
+-#include "user/page-protection.h"
+-/*
+- * For user-only, page_protect sets the page read-only.
+- * Since most execution is already on read-only pages, and we'd need to
+- * account for other TBs on the same page, defer undoing any page protection
+- * until we receive the write fault.
+- */
+-static inline void tb_lock_page0(tb_page_addr_t p0)
+-{
+-    page_protect(p0);
+-}
+-
+-static inline void tb_lock_page1(tb_page_addr_t p0, tb_page_addr_t p1)
+-{
+-    page_protect(p1);
+-}
+-
+-static inline void tb_unlock_page1(tb_page_addr_t p0, tb_page_addr_t p1) { }
+-static inline void tb_unlock_pages(TranslationBlock *tb) { }
+-#else
+-void tb_lock_page0(tb_page_addr_t);
+-void tb_lock_page1(tb_page_addr_t, tb_page_addr_t);
+-void tb_unlock_page1(tb_page_addr_t, tb_page_addr_t);
+-void tb_unlock_pages(TranslationBlock *);
+-#endif
+-
+ #ifdef CONFIG_SOFTMMU
+-void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
+-                                   unsigned size,
+-                                   uintptr_t retaddr);
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ #endif /* CONFIG_SOFTMMU */
  
- typedef struct ObjectProperty ObjectProperty;
+-bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
+-
+ /**
+  * tcg_req_mo:
+  * @type: TCGBar
+diff --git a/accel/tcg/tb-internal.h b/accel/tcg/tb-internal.h
+index 8313f90fd71..90be61f296a 100644
+--- a/accel/tcg/tb-internal.h
++++ b/accel/tcg/tb-internal.h
+@@ -9,6 +9,45 @@
+ #ifndef ACCEL_TCG_TB_INTERNAL_TARGET_H
+ #define ACCEL_TCG_TB_INTERNAL_TARGET_H
  
-diff --git a/hw/arm/stellaris.c b/hw/arm/stellaris.c
-index 7fc13d96c9b..e31884b23e9 100644
---- a/hw/arm/stellaris.c
-+++ b/hw/arm/stellaris.c
-@@ -1053,7 +1053,7 @@ static void stellaris_init(MachineState *ms, stellaris_board_info *board)
-     flash_size = (((board->dc0 & 0xffff) + 1) << 1) * 1024;
-     sram_size = ((board->dc0 >> 18) + 1) * 1024;
++#include "exec/cpu-all.h"
++#include "exec/exec-all.h"
++#include "exec/translation-block.h"
++
++#ifdef CONFIG_USER_ONLY
++#include "user/page-protection.h"
++/*
++ * For user-only, page_protect sets the page read-only.
++ * Since most execution is already on read-only pages, and we'd need to
++ * account for other TBs on the same page, defer undoing any page protection
++ * until we receive the write fault.
++ */
++static inline void tb_lock_page0(tb_page_addr_t p0)
++{
++    page_protect(p0);
++}
++
++static inline void tb_lock_page1(tb_page_addr_t p0, tb_page_addr_t p1)
++{
++    page_protect(p1);
++}
++
++static inline void tb_unlock_page1(tb_page_addr_t p0, tb_page_addr_t p1) { }
++static inline void tb_unlock_pages(TranslationBlock *tb) { }
++#else
++void tb_lock_page0(tb_page_addr_t);
++void tb_lock_page1(tb_page_addr_t, tb_page_addr_t);
++void tb_unlock_page1(tb_page_addr_t, tb_page_addr_t);
++void tb_unlock_pages(TranslationBlock *);
++#endif
++
++#ifdef CONFIG_SOFTMMU
++void tb_invalidate_phys_range_fast(ram_addr_t ram_addr,
++                                   unsigned size,
++                                   uintptr_t retaddr);
++#endif /* CONFIG_SOFTMMU */
++
++bool tb_invalidate_phys_page_unwind(tb_page_addr_t addr, uintptr_t pc);
++
+ void tb_check_watchpoint(CPUState *cpu, uintptr_t retaddr);
  
--    soc_container = object_new("container");
-+    soc_container = object_new(TYPE_CONTAINER);
-     object_property_add_child(OBJECT(ms), "soc", soc_container);
+ #endif
+diff --git a/accel/tcg/cpu-exec.c b/accel/tcg/cpu-exec.c
+index 396fa6f4a6b..e9eaab223f9 100644
+--- a/accel/tcg/cpu-exec.c
++++ b/accel/tcg/cpu-exec.c
+@@ -41,6 +41,7 @@
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
++#include "tb-internal.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
  
-     /* Flash programming is done via the SCU, so pretend it is ROM.  */
-diff --git a/qom/container.c b/qom/container.c
-index 455e8410c66..cfec92a9447 100644
---- a/qom/container.c
-+++ b/qom/container.c
-@@ -15,7 +15,7 @@
- #include "qemu/module.h"
+diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+index 337801feede..b4ccf0cdcb7 100644
+--- a/accel/tcg/cputlb.c
++++ b/accel/tcg/cputlb.c
+@@ -40,6 +40,7 @@
+ #include "tb-internal.h"
+ #include "trace.h"
+ #include "tb-hash.h"
++#include "tb-internal.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
+ #ifdef CONFIG_PLUGIN
+diff --git a/accel/tcg/tb-maint.c b/accel/tcg/tb-maint.c
+index bdf5a0b7d58..8e272cf790f 100644
+--- a/accel/tcg/tb-maint.c
++++ b/accel/tcg/tb-maint.c
+@@ -30,6 +30,7 @@
+ #include "tcg/tcg.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
++#include "tb-internal.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
  
- static const TypeInfo container_info = {
--    .name          = "container",
-+    .name          = TYPE_CONTAINER,
-     .parent        = TYPE_OBJECT,
- };
+diff --git a/accel/tcg/translate-all.c b/accel/tcg/translate-all.c
+index bad3fce0ffb..572a8a87972 100644
+--- a/accel/tcg/translate-all.c
++++ b/accel/tcg/translate-all.c
+@@ -62,6 +62,7 @@
+ #include "tb-jmp-cache.h"
+ #include "tb-hash.h"
+ #include "tb-context.h"
++#include "tb-internal.h"
+ #include "internal-common.h"
+ #include "internal-target.h"
+ #include "tcg/perf.h"
+diff --git a/accel/tcg/translator.c b/accel/tcg/translator.c
+index ff5dabc9014..ce5eae4349e 100644
+--- a/accel/tcg/translator.c
++++ b/accel/tcg/translator.c
+@@ -19,6 +19,7 @@
+ #include "tcg/tcg-op-common.h"
+ #include "internal-target.h"
+ #include "disas/disas.h"
++#include "tb-internal.h"
  
-@@ -37,7 +37,7 @@ Object *container_get(Object *root, const char *path)
-     for (i = 1; parts[i] != NULL; i++, obj = child) {
-         child = object_resolve_path_component(obj, parts[i]);
-         if (!child) {
--            child = object_new("container");
-+            child = object_new(TYPE_CONTAINER);
-             object_property_add_child(obj, parts[i], child);
-             object_unref(child);
-         }
-diff --git a/qom/object.c b/qom/object.c
-index c7660f9a097..c9f8442b136 100644
---- a/qom/object.c
-+++ b/qom/object.c
-@@ -1734,7 +1734,7 @@ Object *object_get_root(void)
-     static Object *root;
- 
-     if (!root) {
--        root = object_new("container");
-+        root = object_new(TYPE_CONTAINER);
-     }
- 
-     return root;
-@@ -1750,7 +1750,7 @@ Object *object_get_internal_root(void)
-     static Object *internal_root;
- 
-     if (!internal_root) {
--        internal_root = object_new("container");
-+        internal_root = object_new(TYPE_CONTAINER);
-     }
- 
-     return internal_root;
+ static void set_can_do_io(DisasContextBase *db, bool val)
+ {
 -- 
 2.47.1
 
