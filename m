@@ -4,88 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 680FCE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:34:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A634CE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tObFx-0006FX-L7; Fri, 20 Dec 2024 06:33:21 -0500
+	id 1tObPA-0007wH-SH; Fri, 20 Dec 2024 06:42:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=077b2128c=graf@amazon.de>)
- id 1tObFx-0006FL-22
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:33:21 -0500
-Received: from smtp-fw-52002.amazon.com ([52.119.213.150])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prvs=077b2128c=graf@amazon.de>)
- id 1tObFv-0005yF-72
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:33:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
- t=1734694399; x=1766230399;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=a1GSq2T5aMtDv4LJ+YxtVs3Y3Sb21s7MRf7viPDcJVw=;
- b=dHm7ZzicMNAu4UG6h83XLeWcH8wkpmftkSrUMg7n28zOQP5o3mjcheDT
- UbD64rxUDYklA8myl0ewqGErB6qWUCP3LqXSPxhRYIU7oD2CViHwi5Bh1
- TF9syt74iHRA5ihCDv53AH3IT1kmw4XyZMLpmSspjQHJuoQa7gildBZDJ c=;
-X-IronPort-AV: E=Sophos;i="6.12,250,1728950400"; d="scan'208";a="682917104"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO
- smtpout.prod.us-west-2.prod.farcaster.email.amazon.dev) ([10.43.8.6])
- by smtp-border-fw-52002.iad7.amazon.com with
- ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Dec 2024 11:33:10 +0000
-Received: from EX19MTAUWC002.ant.amazon.com [10.0.21.151:62951]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.3.85:2525] with
- esmtp (Farcaster)
- id 65606565-87a7-4cc9-9bce-62b8afa2db07; Fri, 20 Dec 2024 11:33:10 +0000 (UTC)
-X-Farcaster-Flow-ID: 65606565-87a7-4cc9-9bce-62b8afa2db07
-Received: from EX19D020UWC004.ant.amazon.com (10.13.138.149) by
- EX19MTAUWC002.ant.amazon.com (10.250.64.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39;
- Fri, 20 Dec 2024 11:33:03 +0000
-Received: from [0.0.0.0] (10.253.83.51) by EX19D020UWC004.ant.amazon.com
- (10.13.138.149) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.1258.39; Fri, 20 Dec 2024
- 11:33:01 +0000
-Message-ID: <1bbf92cf-d9d0-421e-b674-fb216cb7216a@amazon.com>
-Date: Fri, 20 Dec 2024 12:32:56 +0100
+ (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
+ id 1tObP3-0007vk-W2; Fri, 20 Dec 2024 06:42:46 -0500
+Received: from mail.ispras.ru ([83.149.199.84])
+ by eggs.gnu.org with esmtps (TLS1.2:DHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pavel.dovgalyuk@ispras.ru>)
+ id 1tObP1-0008ON-Iw; Fri, 20 Dec 2024 06:42:45 -0500
+Received: from [10.35.8.9] (unknown [80.250.189.26])
+ by mail.ispras.ru (Postfix) with ESMTPSA id 797AA518E788;
+ Fri, 20 Dec 2024 11:42:35 +0000 (UTC)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mail.ispras.ru 797AA518E788
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ispras.ru;
+ s=default; t=1734694956;
+ bh=dSRqGQtO13PL2fUIjbQNUoHQ+E9epfdVau3MGnTx+oI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=cjiliVPNHP17dSLt2dieOvwR3AWYV1RgLf6P0EqC+VTHuAwhnN+BHeSJ4UH5mkJkA
+ JQMXW2fio7LwigT5DOtWRmgUq9/Ty/fCcXsFFhRV7cXQ0JhXuZNVWJdX8dNY6747fY
+ QoPlg3kWAk969EAHFWHlpNMu/b8q0+B9DdDKOgGs=
+Message-ID: <71250e4e-ac3e-4df6-ac7a-5ed53fc8cd35@ispras.ru>
+Date: Fri, 20 Dec 2024 14:42:34 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/vmfwupdate: Introduce hypervisor fw-cfg
- interface support
-To: Ani Sinha <anisinha@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, Gerd Hoffman <kraxel@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>, Vitaly Kuznetsov <vkuznets@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>
-References: <20241216114841.1025070-1-anisinha@redhat.com>
- <3b2e9941-e5a3-4981-adda-f5121bc98e9a@linaro.org>
- <CAK3XEhNVXZDD0i3pxpSgnogheyJO7dfQ4p0UdvhqU3DrFXJ_ZA@mail.gmail.com>
- <55f6dfe7-cadf-4942-81e8-18b15938c349@linaro.org>
- <CAK3XEhNN9EO75vgsdRboMZ7nwZbaL0eenSwSy-7Hze-ukyTZsQ@mail.gmail.com>
- <7c1a7e86-8996-43ab-aa07-6763387b2bc5@linaro.org>
- <CAK3XEhOZ50Co0hAS31KYyQA+mgwXSoGCxMu_vhZXmpP0RwT6Mw@mail.gmail.com>
- <CAK3XEhOAD1cueixs6w2ojvudOwz5YrTxzN4x_kgZTkg_EfFXsA@mail.gmail.com>
+Subject: Re: [PATCH 00/17] replay: Fixes and avocado test updates
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Fam Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>,
+ John Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
+ Wainer dos Santos Moschetta <wainersm@redhat.com>
+References: <20241220104220.2007786-1-npiggin@gmail.com>
 Content-Language: en-US
-From: Alexander Graf <graf@amazon.com>
-In-Reply-To: <CAK3XEhOAD1cueixs6w2ojvudOwz5YrTxzN4x_kgZTkg_EfFXsA@mail.gmail.com>
-X-Originating-IP: [10.253.83.51]
-X-ClientProxiedBy: EX19D032UWA001.ant.amazon.com (10.13.139.62) To
- EX19D020UWC004.ant.amazon.com (10.13.138.149)
-Content-Type: text/plain; charset="utf-8"; format="flowed"
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=52.119.213.150;
- envelope-from=prvs=077b2128c=graf@amazon.de; helo=smtp-fw-52002.amazon.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1,
- HEADER_FROM_DIFFERENT_DOMAINS=0.248, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+From: Pavel Dovgalyuk <pavel.dovgalyuk@ispras.ru>
+In-Reply-To: <20241220104220.2007786-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=83.149.199.84;
+ envelope-from=pavel.dovgalyuk@ispras.ru; helo=mail.ispras.ru
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,43 +77,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ck9uIDIwLjEyLjI0IDExOjAwLCBBbmkgU2luaGEgd3JvdGU6Cj4+PiBFaXRoZXIgYWRkIHRoZSBJ
-Mzg2IGRlcGVuZGVuY3kgb3IgZG9uJ3QgdXNlIFBDX01BQ0hJTkUsIGJlY2F1c2Ugb24KPj4+IG5v
-bi14ODYgdGFyZ2V0cyBQQ19NQUNISU5FKHFkZXZfZ2V0X21hY2hpbmUoKSkgd2lsbCBjcmFzaC4K
-Pj4gQWggdGhpcyBpcyB3aGVyZSB3ZSBoYXZlIGEgZGlzY29ubmVjdC4gSSBhc3N1bWVkIHRoYXQK
-Pj4+IHBjbXMgPSBQQ19NQUNISU5FKG1fb2JqKQo+PiB3b3VsZCByZXR1cm4gTlVMTCBvbiBub24t
-eDg2Lgo+Pgo+PiBTZWVtcyBhIGJldHRlciB3YXkgdG8gZG8gdGhpcyAoYXMgaXMgZG9uZSBpbiB2
-Z2EuYykgaXMgdG8gdXNlCj4+IG9iamVjdF9keW5hbWljX2Nhc3QoKQo+PiBIb3cgYWJvdXQKPj4K
-Pj4gZGlmZiAtLWdpdCBhL2h3L21pc2Mvdm1md3VwZGF0ZS5jIGIvaHcvbWlzYy92bWZ3dXBkYXRl
-LmMKPj4gaW5kZXggMGU5MGJkMTBlMS4uMTlkMDQyYjkyOSAxMDA2NDQKPj4gLS0tIGEvaHcvbWlz
-Yy92bWZ3dXBkYXRlLmMKPj4gKysrIGIvaHcvbWlzYy92bWZ3dXBkYXRlLmMKPj4gQEAgLTMyLDkg
-KzMyLDExIEBAIHN0YXRpYyBpbmxpbmUgVk1Gd1VwZGF0ZVN0YXRlICp2bWZ3dXBkYXRlX2ZpbmQo
-dm9pZCkKPj4gICBzdGF0aWMgdWludDY0X3QgZ2V0X21heF9md19zaXplKHZvaWQpCj4+ICAgewo+
-PiAgICAgICBPYmplY3QgKm1fb2JqID0gcWRldl9nZXRfbWFjaGluZSgpOwo+PiAtICAgIFBDTWFj
-aGluZVN0YXRlICpwY21zID0gUENfTUFDSElORShtX29iaik7Cj4+ICsgICAgTWFjaGluZVN0YXRl
-ICptcyA9IE1BQ0hJTkUobV9vYmopOwo+PiArICAgIFBDTWFjaGluZVN0YXRlICpwY21zOwo+PiAt
-ICAgIGlmIChwY21zKSB7Cj4+ICsgICAgaWYgKG9iamVjdF9keW5hbWljX2Nhc3QoT0JKRUNUKG1z
-KSwgVFlQRV9YODZfTUFDSElORSkpIHsKPj4gKyAgICAgICAgcGNtcyA9IFBDX01BQ0hJTkUobV9v
-YmopOwo+PiAgICAgICAgICAgcmV0dXJuIHBjbXMtPm1heF9md19zaXplOwo+PiAgICAgICB9IGVs
-c2Ugewo+PiAgICAgICAgICAgcmV0dXJuIDA7Cj4+Cj4gRm9yIHRoZSByZWNvcmRzLCBJIHRlc3Rl
-ZCB0aGlzIHdpdGggYXJtIGFuZCB0aGUgZm9sbG93aW5nIGNvbW1hbmQgbGluZQo+IGRvZXMgbm90
-IGNyYXNoIFFFTVU7Cj4KPiAuL3FlbXUtc3lzdGVtLWFybSAtbWFjaGluZSB2aXJ0LTkuMiAtZGV2
-aWNlIHZtZnd1cGRhdGUKPgo+IEkgaGF2ZSBhbHNvIGFkZGVkIGEgc2VwYXJhdGUgZnVuY3Rpb25h
-bCB0ZXN0IHRvIGV4ZXJjaXNlIGJhc2ljIGRldmljZQo+IGNyZWF0aW9uIHdoaWNoIHdpbGwgYmUg
-cGFydCBvZiB2NSB3aGVuIEkgc2VuZCBpdCBvdXQuCgoKWW91IGFyZSBjdXJyZW50bHkgbm90IGlt
-cGxlbWVudGluZyB0aGUgcmVzZXQgbG9naWMgcmVxdWlyZWQgdG8gYWN0dWFsbHkgCm1ha2Ugdm1m
-d3VwZGF0ZSB3b3JrLiBUaGF0IG1lYW5zIHRlY2huaWNhbGx5LCB0aGUgZGV2aWNlIHNob3VsZCBu
-b3QgYmUgCmluc3RhbnRpYWJsZSBvbiAqYW55KiBwbGF0Zm9ybSBhdCB0aGUgbW9tZW50LiBGb3Ig
-ZXhhbXBsZSB3aXRoIHRoZSAKY29tbWFuZCBsaW5lIGFib3ZlIHlvdSB3b3VsZCBhZHZlcnRpc2Ug
-dGhlIGNhcGFiaWxpdHkgdG8gdXBkYXRlIGZpcm13YXJlIAppbiBmdy1jZmcsIGJ1dCB0aGVuIG5v
-dCBiYWNrIGl0IGJ5IGZ1bmN0aW9uYWxpdHkuIElmIFFFTVUgd2VyZSB0byBtZXJnZSAKdGhpcyBw
-YXRjaCwgaXQgd291bGQganVzdCBjcmVhdGUgYSBicm9rZW4gZGV2aWNlLgoKUGxlYXNlIG1ha2Ug
-c3VyZSB0aGF0IHRoZSB2bWZ3dXBkYXRlIGRldmljZSBjYW4gb25seSBiZSBpbnN0YW50aWF0ZWQg
-b24gCm1hY2hpbmUgdHlwZXMgdGhhdCBpdCBoYXMgZnVsbCBzdXBwb3J0IGZvci4KCgpBbGV4CgoK
-CgpBbWF6b24gV2ViIFNlcnZpY2VzIERldmVsb3BtZW50IENlbnRlciBHZXJtYW55IEdtYkgKS3Jh
-dXNlbnN0ci4gMzgKMTAxMTcgQmVybGluCkdlc2NoYWVmdHNmdWVocnVuZzogQ2hyaXN0aWFuIFNj
-aGxhZWdlciwgSm9uYXRoYW4gV2Vpc3MKRWluZ2V0cmFnZW4gYW0gQW10c2dlcmljaHQgQ2hhcmxv
-dHRlbmJ1cmcgdW50ZXIgSFJCIDI1Nzc2NCBCClNpdHo6IEJlcmxpbgpVc3QtSUQ6IERFIDM2NSA1
-MzggNTk3Cg==
+Reviewed-by: Pavel Dovgalyuk <Pavel.Dovgalyuk@ispras.ru>
+
+On 20.12.2024 13:42, Nicholas Piggin wrote:
+> Hi,
+> 
+> This is another round of replay fixes posted here
+> 
+> https://lore.kernel.org/qemu-devel/20240813050638.446172-1-npiggin@gmail.com/
+> 
+> A bunch of those fixes have been merged, but there are still some
+> outstanding here.
+> 
+> Dropped from the series is the net announce change, which seemed to
+> be the main issue Pavel had so far:
+> 
+> https://lore.kernel.org/qemu-devel/6e9b8e49-f00f-46fc-bbf8-4af27e0c3906@ispras.ru/
+> 
+> New in this series is a reworking of the replay BH APIs because people
+> didn't like the replay_xxx APIs throughout the tree. These new APIs
+> also have some assertions added to catch un-converted users when replay
+> is enabled, because it is far harder to debug it when it surfaces as a
+> replay failure.
+> 
+> These new API assertions caught a hw/ide replay bug which solves some
+> replay_linux test hangs. Couple of fixes in the replay_linux test case,
+> and now all tests are passing including aarch64 tests, see here
+> 
+>    https://gitlab.com/npiggin/qemu/-/jobs/8695386122
+> 
+> (In that run a couple of the x86_64 tests were disabled to fit the
+> aarch64 tests in because gitlab seems to kill the job after 1 hour
+> so we can't fit them all in)
+> 
+> ppc64 also passes replay_linux after a couple of ppc64 fixes I'll post
+> a patch to add the ppc64 test later after everything works through.
+> 
+> Thanks,
+> Nick
+> 
+> 
+> Nicholas Piggin (17):
+>    replay: Fix migration use of clock for statistics
+>    replay: Fix migration replay_mutex locking
+>    async: rework async event API for replay
+>    util/main-loop: Convert to new bh API
+>    util/thread-pool: Convert to new bh API
+>    util/aio-wait: Convert to new bh API
+>    async/coroutine: Convert to new bh API
+>    migration: Convert to new bh API
+>    monitor: Convert to new bh API
+>    qmp: Convert to new bh API
+>    block: Convert to new bh API
+>    hw/ide: Fix record-replay and convert to new bh API
+>    hw/scsi: Convert to new bh API
+>    async: add debugging assertions for record/replay in bh APIs
+>    tests/avocado/replay_linux: Fix compile error
+>    tests/avocado/replay_linux: Fix cdrom device setup
+>    tests/avocado/replay_linux: remove the timeout expected guards
+> 
+>   docs/devel/replay.rst              |  7 +--
+>   include/block/aio.h                | 44 ++++++++++++++++--
+>   include/sysemu/replay.h            |  2 +-
+>   backends/rng-builtin.c             |  2 +-
+>   block.c                            |  4 +-
+>   block/blkreplay.c                  | 10 +++-
+>   block/block-backend.c              | 24 ++++++----
+>   block/io.c                         |  5 +-
+>   block/iscsi.c                      |  5 +-
+>   block/nfs.c                        | 10 ++--
+>   block/null.c                       |  4 +-
+>   block/nvme.c                       |  8 ++--
+>   hw/ide/core.c                      |  9 ++--
+>   hw/net/virtio-net.c                | 14 +++---
+>   hw/scsi/scsi-bus.c                 | 14 ++++--
+>   job.c                              |  3 +-
+>   migration/migration.c              | 17 +++++--
+>   migration/savevm.c                 | 15 +++---
+>   monitor/monitor.c                  |  3 +-
+>   monitor/qmp.c                      |  5 +-
+>   qapi/qmp-dispatch.c                |  5 +-
+>   replay/replay-events.c             | 29 +++++-------
+>   stubs/replay-tools.c               |  2 +-
+>   util/aio-wait.c                    |  3 +-
+>   util/async.c                       | 75 ++++++++++++++++++++++++++++--
+>   util/main-loop.c                   |  2 +-
+>   util/thread-pool.c                 |  8 ++--
+>   scripts/block-coroutine-wrapper.py |  3 +-
+>   tests/avocado/replay_linux.py      |  9 ++--
+>   29 files changed, 245 insertions(+), 96 deletions(-)
+> 
 
 
