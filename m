@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F42AE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40991E7718A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 10:44:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOaUO-0006YP-Sj; Fri, 20 Dec 2024 05:44:12 -0500
+	id 1tOaUV-0007LA-SE; Fri, 20 Dec 2024 05:44:20 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaUG-0006LZ-4T; Fri, 20 Dec 2024 05:44:05 -0500
+ id 1tOaUU-0007CF-Hw; Fri, 20 Dec 2024 05:44:18 -0500
 Received: from mail-pg1-x530.google.com ([2607:f8b0:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOaUD-0005Ps-OO; Fri, 20 Dec 2024 05:44:03 -0500
+ id 1tOaUS-0005Rd-Tj; Fri, 20 Dec 2024 05:44:18 -0500
 Received: by mail-pg1-x530.google.com with SMTP id
- 41be03b00d2f7-7fd17f2312bso1311894a12.0; 
- Fri, 20 Dec 2024 02:44:00 -0800 (PST)
+ 41be03b00d2f7-7fd17f2312bso1312076a12.0; 
+ Fri, 20 Dec 2024 02:44:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734691439; x=1735296239; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734691455; x=1735296255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Ov1yKiOsdPvfFrptmu7MR0EFv3xHuopr7cPf6vnnWy4=;
- b=XYPrpGPUyyYURBoU8tDhf/cCaVy4vDaEV50QJnhYCW3QuBt4zqpYkaYBlXE8ELsbX6
- 2SlLWFFhpwOB/tc/eZ9ZPFFTIZB20d7mC0LeggmNqZR/ZTR+/l5mhiXf7L3U2RmK6ir7
- YRn3mjhTbnabjbBf9sg0SUwwHrsTJqlF171WHwBwANi/4S7/LHtQt+WHYEXQU2V8GqKw
- TMUnRyPcTYvK52EVaea9rp07OIFHmfbTXJSECzT2wn/hFoKFA7GnA14hrSPpBerVuSV1
- Wr3HE5simThAC5EadVw+/n8O0meAR3GBGnRDVOupRANeDlniPCOEJiBk3xnHgtyE9dyd
- Zsow==
+ bh=gK96j8dWCREGXgJwMGuVlSSEE1tC1GR6d2jBmPlZZVA=;
+ b=Td4f1Tv/JfnZL4Elus48aX0gwrTK+3D9BAR1rhG+S9ZDf5r+MbPpEej2OHWGQ9SE5q
+ NX5tXU+yPVS14BSZv2j3Zzjtz80qT7PIsfs6YueG0QE57p0wgBENEKQRHOsJ1s1vYVjg
+ kli6C0VgsCrdwdUGX5OonMoMPmx65TVMVCYnUDyOmVX3/06Ke6JUPxxUyoxiVy9oVzw7
+ S+rcgBa9KtXNHVoc/FXXNeiT2tkotVB3CnCKfD5Z5GgUMua6+GIKNKEPdYcZ+usKfkRF
+ svcnv2yzPyqA1H94YfG0ct4ySqFQrCeM/DDB89dTcbMTq9Si1eHoal9NXOW5tWkGRikU
+ 8SKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734691439; x=1735296239;
+ d=1e100.net; s=20230601; t=1734691455; x=1735296255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Ov1yKiOsdPvfFrptmu7MR0EFv3xHuopr7cPf6vnnWy4=;
- b=R8Yv/Uw9VYMPH5/Ct8xW3lY+Mz9Omnc7QQfYP8FLteTS/41Mv4tCF7HmtjIyN6jSqh
- Cr9mYXWtjufqlgRb6duTgFbrdu4SNETgPKPT1qUNsxooOah68SgEm0eHAdoNs3I3+W5K
- 9Tkl/r5BDwumKLqe/8KSTjBQHIrfHyQexbSoV4VxQr3uEwLcmgYDNcz+/MA8htAV3V/G
- 0iFxRwoWpT1cNvD2pKpSzHW0sKzbLmTLbNpG7FZsQf8cEYEl7lH7HmZYTw9JLtF+ofWq
- uro2q2L1Q9dJTzQwvyz0U1G2sQ5At1gXqZxdO2blboG16Xv38CZYoo2Bw07cxJPCd0Re
- qNKA==
+ bh=gK96j8dWCREGXgJwMGuVlSSEE1tC1GR6d2jBmPlZZVA=;
+ b=Ahsmf0b4d2pVjYjf+e2Sh1VuV0AdmxQySgDFkh+iMuvp5/BhF0jR5r/OU8G88nwEaf
+ AdU/XgE45NkfHpqDUUXY/aj2lHtYrwIIV3B77fCS/xKNQwjrIuzJViu9hPO9cBFvyLxq
+ r/L+II3JqParF4+uC9TiRAC1oPrFEcNiCN82jdWKfH1+OtfAF6QAY9k9PfgrL2KWslcz
+ 2bLJfwHFq8Go5G/wReOXJQlDicXu2Y6+WnOtu+N1Mqv/+ibzzC73FdDA0pNXE/CDmVVq
+ Uu5YhBqBd4IqiwyVotsDtrCqu+EMf1x3F+wcnvNaYMVLRUwmdZeLhXN/IZSAx84esNuJ
+ 4LKQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUVli86TQNnkMOZfd6ZC53C2E8k0zcchQKBfTH0sP/XEI9p+I6LYhtGA1LQy9fFZxYrQfNyZjzkzqSl@nongnu.org
-X-Gm-Message-State: AOJu0Yz4Y4kgjUWakMs/mROjUAyTRj2lI5fG/uh+rjrKLiCDn9E5gBQe
- N7YtRGkOJTmOVPHeHPQGNfP6zRGTILRcA5P/rOjfB+DPruSD/C9BcocHVw==
-X-Gm-Gg: ASbGncvmPiqD5vUCbdsXVnV0IWsHK4gZeudsaQDA5cio+3UP+3A6U0tYmKibiS5j2dm
- 4C3F3r1xz5pV/QsGMVWF38qkibwBleENbz98wRQtM87nzCa7FmnmuJHN9eSvKrAeUGa97DG31Bt
- DAewRHRcsLNJtMaMlWnd7W4dsim5OvynC//anfOYt+l3qfo9vjgTR2bGkze4EeLV0KvrdFelEaM
- Iwyn/nntPRf/90UOBwW1tUnREyREcvLvdz5X2N7aX4LfpoVmAS+0w93TbrJFvrXcd55CiAIs8Vf
- B0cyhJcl0Q==
-X-Google-Smtp-Source: AGHT+IFvRyMq8CdIVQg0yGz2vSHPh1Q6JBHCFzvh0AcDChmEcYMn2r5HtpVkz+aKO0r/TzoPfaqpOw==
-X-Received: by 2002:a17:90b:3cc6:b0:2ee:aa95:6de9 with SMTP id
- 98e67ed59e1d1-2f452eed7e1mr3872323a91.33.1734691439408; 
- Fri, 20 Dec 2024 02:43:59 -0800 (PST)
+ AJvYcCWpuaqZyI4QlOFVqeC4+iIctq/SkI79apOe8eSZRS/pUeA23moMPCj6c8FbudjlpiEJ5Mw+pE8L6L5K@nongnu.org
+X-Gm-Message-State: AOJu0YyG5HUbnjwd68ewoFiT2WsWipkRa75IcOMuIGgHXDM0N20Hrw5C
+ MhlzvJQTlb8ntTswDgtBwMnJ7que1YNBG9WGBjo/2xlxqaW23/BHi6KEzQ==
+X-Gm-Gg: ASbGnctQUD3J9C6quxt+dsm0jA+2MQNqntBnpBNWuj2Exg6Z2PlfBRYn1OC0DuTEY51
+ qTHygBFoL7S13cpuc/SiqxhgLUcPinKBFBOMQyzNC1hvJ9u3O/EwaUdVIq8ft3r/9bYSpyLZIDu
+ GK9skYJ785Yrr8UamCHAr5QVtC48MecGSMN3+K7DxbcQ+nZJykfqw5QI6Isn4l/NsqO+NQ1zjXP
+ uSzeiqdOb4oRBEeNxaReHGi6mtEY5YZNw/HzRHtvHQQVfKIdDDgRTBTIdJq66HhjiF/VHRc2r1c
+ PQc8gTsNpw==
+X-Google-Smtp-Source: AGHT+IHZFHLin5x6wJnLdKPCeP9ORVvAm7tn/Fzr3fGVEOIA6Fdk4Fw0nxh1zvmUre6+GFtkqiZjSg==
+X-Received: by 2002:a17:90b:134d:b0:2ea:4c4f:bd20 with SMTP id
+ 98e67ed59e1d1-2f452eed773mr3451099a91.32.1734691454890; 
+ Fri, 20 Dec 2024 02:44:14 -0800 (PST)
 Received: from wheely.local0.net (14-200-18-130.tpgi.com.au. [14.200.18.130])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.43.51
+ 98e67ed59e1d1-2f2ee06dfd3sm5376942a91.32.2024.12.20.02.44.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Dec 2024 02:43:58 -0800 (PST)
+ Fri, 20 Dec 2024 02:44:14 -0800 (PST)
 From: Nicholas Piggin <npiggin@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
@@ -78,9 +78,9 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Markus Armbruster <armbru@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Wainer dos Santos Moschetta <wainersm@redhat.com>
-Subject: [PATCH 11/17] block: Convert to new bh API
-Date: Fri, 20 Dec 2024 20:42:13 +1000
-Message-ID: <20241220104220.2007786-12-npiggin@gmail.com>
+Subject: [PATCH 13/17] hw/scsi: Convert to new bh API
+Date: Fri, 20 Dec 2024 20:42:15 +1000
+Message-ID: <20241220104220.2007786-14-npiggin@gmail.com>
 X-Mailer: git-send-email 2.45.2
 In-Reply-To: <20241220104220.2007786-1-npiggin@gmail.com>
 References: <20241220104220.2007786-1-npiggin@gmail.com>
@@ -110,114 +110,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Convert qemu_bh_schedule() to qemu_bh_schedule_event() and
-aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(), which can
-specify the clock type, making it compatible with record-replay.
+Convert aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(),
+which can specify the clock type, making it compatible with
+record-replay.
 
-unreferencing a bdrv does not affect target machine state, so it should
-use QEMU_CLOCK_REALTIME so it is not recorded and replayed. blkreplay
-has cases at startup where the device is used before the event code is
-set up, so it needs special handling to avoid creating bh replay events.
+Operations on SCSI reqs do affect target machine state, so it should
+use QEMU_CLOCK_VIRTUAL to recorded and replay the bh.
+
+This fixes hangs in record/replay when using SCSI devices.
 
 Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 ---
- include/block/aio.h    |  9 +++++++++
- block.c                |  4 +++-
- block/blkreplay.c      | 10 +++++++++-
- replay/replay-events.c |  7 ++-----
- util/async.c           |  5 +++++
- 5 files changed, 28 insertions(+), 7 deletions(-)
+ hw/scsi/scsi-bus.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
-diff --git a/include/block/aio.h b/include/block/aio.h
-index bc323b0d936..26859bd0b93 100644
---- a/include/block/aio.h
-+++ b/include/block/aio.h
-@@ -405,6 +405,15 @@ int aio_bh_poll(AioContext *ctx);
-  */
- void qemu_bh_schedule_event(QEMUBH *bh, QEMUClockType clock_type);
+diff --git a/hw/scsi/scsi-bus.c b/hw/scsi/scsi-bus.c
+index 2f1678d51e7..16f294ce6b7 100644
+--- a/hw/scsi/scsi-bus.c
++++ b/hw/scsi/scsi-bus.c
+@@ -166,9 +166,17 @@ static void scsi_device_for_each_req_async(SCSIDevice *s,
  
-+/**
-+ * qemu_bh_schedule_event_noreplay: Schedule a bottom half avoiding replay.
-+ *
-+ * This function is not to be used outside record-replay code.
-+ *
-+ * @bh: The bottom half to be scheduled.
-+ */
-+void qemu_bh_schedule_event_noreplay(QEMUBH *bh);
+     /* Paired with blk_dec_in_flight() in scsi_device_for_each_req_async_bh() */
+     blk_inc_in_flight(s->conf.blk);
+-    aio_bh_schedule_oneshot(blk_get_aio_context(s->conf.blk),
+-                            scsi_device_for_each_req_async_bh,
+-                            data);
 +
- /**
-  * qemu_bh_schedule: Schedule a bottom half.
-  *
-diff --git a/block.c b/block.c
-index 7d90007cae8..77e6c6b3c7e 100644
---- a/block.c
-+++ b/block.c
-@@ -7144,7 +7144,9 @@ void bdrv_schedule_unref(BlockDriverState *bs)
-     if (!bs) {
-         return;
-     }
--    aio_bh_schedule_oneshot(qemu_get_aio_context(), bdrv_schedule_unref_bh, bs);
-+    aio_bh_schedule_oneshot_event(qemu_get_aio_context(),
-+                                  bdrv_schedule_unref_bh, bs,
-+                                  QEMU_CLOCK_REALTIME);
++    /*
++     * This is called by device reset and does not affect the observable state
++     * of the target (because it is being reset), and by scsi_dma_restart_cb
++     * to restart DMA on vmstate change which also should not affect the state
++     * of the target (XXX is this really true?), so QEMU_CLOCK_REALTIME should
++     * be used to avoid record-replay of the bh event.
++     */
++    aio_bh_schedule_oneshot_event(blk_get_aio_context(s->conf.blk),
++                                  scsi_device_for_each_req_async_bh,
++                                  data, QEMU_CLOCK_REALTIME);
  }
  
- struct BdrvOpBlocker {
-diff --git a/block/blkreplay.c b/block/blkreplay.c
-index 792d980aa9d..c6b9d91062e 100644
---- a/block/blkreplay.c
-+++ b/block/blkreplay.c
-@@ -67,7 +67,15 @@ static void block_request_create(uint64_t reqid, BlockDriverState *bs,
-         .co = co,
-         .bh = aio_bh_new(bdrv_get_aio_context(bs), blkreplay_bh_cb, req),
-     };
--    replay_block_event(req->bh, reqid);
-+    if (replay_events_enabled()) {
-+        replay_block_event(req->bh, reqid);
-+    } else {
-+        /*
-+         * block can be used before replay is initialized. Work around
-+         * that here.
-+         */
-+        qemu_bh_schedule_event_noreplay(req->bh);
-+    }
- }
- 
- static int coroutine_fn GRAPH_RDLOCK
-diff --git a/replay/replay-events.c b/replay/replay-events.c
-index d4b095b2097..6a7c27cac1e 100644
---- a/replay/replay-events.c
-+++ b/replay/replay-events.c
-@@ -154,11 +154,8 @@ void replay_add_input_sync_event(void)
- 
- void replay_block_event(QEMUBH *bh, uint64_t id)
- {
--    if (events_enabled) {
--        replay_add_event(REPLAY_ASYNC_EVENT_BLOCK, bh, NULL, id);
--    } else {
--        qemu_bh_schedule(bh);
--    }
-+    g_assert(events_enabled);
-+    replay_add_event(REPLAY_ASYNC_EVENT_BLOCK, bh, NULL, id);
- }
- 
- static void replay_save_event(Event *event)
-diff --git a/util/async.c b/util/async.c
-index 6ac994effec..5d2c76dec08 100644
---- a/util/async.c
-+++ b/util/async.c
-@@ -261,6 +261,11 @@ void qemu_bh_schedule_event(QEMUBH *bh, QEMUClockType clock_type)
-     }
- }
- 
-+void qemu_bh_schedule_event_noreplay(QEMUBH *bh)
-+{
-+    aio_bh_enqueue(bh, BH_SCHEDULED);
-+}
-+
- void qemu_bh_schedule_idle(QEMUBH *bh)
- {
-     aio_bh_enqueue(bh, BH_SCHEDULED | BH_IDLE);
+ static void scsi_device_realize(SCSIDevice *s, Error **errp)
 -- 
 2.45.2
 
