@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4DCCDE77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:03:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6A49E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:41:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSER-00066m-68; Thu, 19 Dec 2024 20:55:11 -0500
+	id 1tOSwd-0000eP-R4; Thu, 19 Dec 2024 21:40:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEP-00066D-V1
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:10 -0500
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSEO-0004D8-8u
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:09 -0500
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-725ef0397aeso1168154b3a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659706; x=1735264506; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HqifVR41qT8QBk7MxQ2h7FqesyXFqyjsxZmtL55tQyQ=;
- b=Q1s1EqYGTPn4vAj0i7M3SfU+J8Cpt3/TSVWm+An60cEDVk/T0OWk4YNIvipamAtbko
- dUoPMu0NvFeX+2W0WiD2kRtpOLNlCB27x8wcf0stBDVoi/Tdo0LGI0ph0TWRcZtma3kI
- Nfi9yWP1ye3cduSwB+s1Hl3q+Feh2o7bM3r94FcE1k8UXfle3pBw7elshawLFfA3jbzO
- PBpkRQWHuWIEZOfSrjZuccjktalCe5BeGAJDo+uOVQ2/ncKUN/6xa3qgh1ygUGWGoZGK
- H7Vs4UKPp47cPskYAqoVN1IxIy3gePGeb4xix+3aGfwbQ1FB4zIFcv2wQZ9Mf0xP4qNj
- JiGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659706; x=1735264506;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=HqifVR41qT8QBk7MxQ2h7FqesyXFqyjsxZmtL55tQyQ=;
- b=neRjKvqBcnSd9GK4kTyTUikayC58+q2viK+JlokIyFovHRemw9gmoOLSneqzzWFGUX
- HnMU1/fw4703hQxfFswsy5fhx25OLKCImKtreDq5KYp3H0rdX7cBHRcn/G2LXlhgfd5p
- Bj4iCMOc/RIG9Py1SO0AxhTynwOaKdHTVY/2Zn3lHjKP8V/xipFvdjfuMpAXR97E1Ayk
- pBP+pkoPTfSipOEOIAPLsa2rnC/e90vRQKEMXSLbcEV3oyBYrhk4ul9H9/b+Ij3s3VJ7
- 380IFeh3zoyR95OSSgTezffd2pjqvsQ1VRD91+1RVq1j+z7qr0JKJUiGZ1tGyI+pHmBf
- wL5w==
-X-Gm-Message-State: AOJu0YzVr02/wpzD/89EDY3P/dTyW3fbxyyp2I9F82luwcuaSilTN+xW
- 2zNeeppqUpSC/6M1h7tnq4fBD9H5VWIDZz5Img1XLySXoh6WNzLG/kKZfpN+
-X-Gm-Gg: ASbGncs+bi0PH66qFN61x9bBAvpimOg7rRNhF3vC2T7goC1EBfbLHP/yvCAwDbx9+4X
- j3SVOX049PQjQ44Al3Sysr59LlKAFHW1dlCw6GArfFbGQQytx1f1Cj1+tid9nj0srdyep9ujzUy
- 7HbuRcqYhMcrzSDUfCqtLIITxkbSDY7D3q/VKJSmaj/vWgvrtnqVf3mQ07p3VTsvac/HefXHQOb
- H03YopDrhiSMa70sjN8D7jYdDsM2t3RFkqMdFPvUDieTfKwkLQdZcb/5Mlf/kR+dDHGUQPWeQfe
- LHTvXvNs6QCXuOtIGQdK3f0Na4aVJ8SmgF1LxB4RjfSywcEQKevC8eE6DicwoeA=
-X-Google-Smtp-Source: AGHT+IHrPnZjKPU63x80jxPBnba/5PMHgtiJThgkynD0bFWegHPWsa+JtXfffsG+fwsGhwQgoe3PDQ==
-X-Received: by 2002:a05:6a00:1309:b0:725:e015:9082 with SMTP id
- d2e1a72fcca58-72abdd502d5mr1357044b3a.5.1734659706135; 
- Thu, 19 Dec 2024 17:55:06 -0800 (PST)
-Received: from toolbox.alistair23.me
- (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
- [2403:580b:97e8:0:82ce:f179:8a79:69f4])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:55:05 -0800 (PST)
-From: Alistair Francis <alistair23@gmail.com>
-X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 04/39] hw/riscv/riscv-iommu: parametrize CAP.IGS
-Date: Fri, 20 Dec 2024 11:54:04 +1000
-Message-ID: <20241220015441.317236-5-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.47.1
-In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
-References: <20241220015441.317236-1-alistair.francis@wdc.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tOSwa-0000e7-1m
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 21:40:48 -0500
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1tOSwW-0007WB-RV
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 21:40:47 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1734662445; x=1766198445;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=/pqf9h2qJXBBN2f+fR9Wh3ziCzf/Pma6YvbUywRpP9M=;
+ b=N8flS3RnKKbhWyPjC+DFC1GQqb3GAB3LJVwsqTehhJCUf4ZfEp20l8X1
+ oxD0A/0qnLaHRk0ND0/8ClbBQn8KK9+KvWnLM7ZhiZjuj7pGeZdYMe8vw
+ iS6ls8pyXo4PHwzHp6iYJj+R4WOP4moPVHL6pMgOg2GzirB6KxgJfPMjw
+ E+4lS8eWcFVfZiZV7ibrZridOBZYnYtB04FAHVRywvp2YBzhsiFCz6HAt
+ SuOrRnsek+oGN4Is6L2WOBNkhACnXhqfvnRzyh1zYTHAII5FM3YUScLVk
+ YuOcdwXZX1mcnbelczZSmpq/iEH3wCHoYnW3ajTVhbwzu0kcxiYJSXBbD Q==;
+X-CSE-ConnectionGUID: NLHXSmxtR1ykN6gQ/tl8Sg==
+X-CSE-MsgGUID: 0d7bM6pLT5WtNfDmqzuYeA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11291"; a="35098343"
+X-IronPort-AV: E=Sophos;i="6.12,249,1728975600"; d="scan'208";a="35098343"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Dec 2024 18:40:41 -0800
+X-CSE-ConnectionGUID: 8L2xDTDdSsyhhJAYJya+Xg==
+X-CSE-MsgGUID: zxpLWte8Q6uoBYmWUJjs6Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.12,224,1728975600"; d="scan'208";a="121660659"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Dec 2024 18:40:38 -0800
+Message-ID: <88c87ff8-bae0-4522-bb65-109b959a7e52@intel.com>
+Date: Fri, 20 Dec 2024 10:40:35 +0800
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: (Proposal) New TDX Global Metadata To Report FIXED0 and FIXED1
+ CPUID Bits
+To: Sean Christopherson <seanjc@google.com>,
+ Rick P Edgecombe <rick.p.edgecombe@intel.com>
+Cc: Kai Huang <kai.huang@intel.com>,
+ "binbin.wu@linux.intel.com" <binbin.wu@linux.intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Yan Y Zhao <yan.y.zhao@intel.com>,
+ "tony.lindgren@linux.intel.com" <tony.lindgren@linux.intel.com>,
+ "kvm@vger.kernel.org" <kvm@vger.kernel.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ Isaku Yamahata <isaku.yamahata@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Adrian Hunter <adrian.hunter@intel.com>
+References: <43b26df1-4c27-41ff-a482-e258f872cc31@intel.com>
+ <d63e1f3f0ad8ead9d221cff5b1746dc7a7fa065c.camel@intel.com>
+ <e7ca010e-fe97-46d0-aaae-316eef0cc2fd@intel.com>
+ <269199260a42ff716f588fbac9c5c2c2038339c4.camel@intel.com>
+ <Z2DZpJz5K9W92NAE@google.com>
+ <3ef942fa615dae07822e8ffce75991947f62f933.camel@intel.com>
+ <Z2INi480K96q2m5S@google.com>
+ <f58c24757f8fd810e5d167c8b6da41870dace6b1.camel@intel.com>
+ <Z2OEQdxgLX0GM70n@google.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <Z2OEQdxgLX0GM70n@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,95 +104,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+On 12/19/2024 10:33 AM, Sean Christopherson wrote:
+>>> For all other CPUID bits, what the TDX Module thinks and/or presents to the guest
+>>> is completely irrelevant, at least as far as KVM cares, and to some extent as far
+>>> as QEMU cares.  This includes the TDX Module's FEATURE_PARAVIRT_CTRL, which frankly
+>>> is asinine and should be ignored.  IMO, the TDX Module spec is entirely off the
+>>> mark in its assessment of paravirtualization.  Injecting a #VE instead of a #GP
+>>> isn't "paravirtualization".
+>>>   
+>>> Take TSC_DEADLINE as an example.  "Disabling" the feature from the guest's side
+>>> simply means that WRMSR #GPs instead of #VEs.*Nothing* has changed from KVM's
+>>> perspective.  If the guest makes a TDVMCALL to write IA32_TSC_DEADLINE, KVM has
+>>> no idea if the guest has opted in/out of #VE vs #GP.  And IMO, a sane guest will
+>>> never take a #VE or #GP if it wants to use TSC_DEADLINE; the kernel should instead
+>>> make a direct TDVMCALL and save itself a pointless exception.
+>>>
+>>>    Enabling Guest TDs are not allowed to access the IA32_TSC_DEADLINE MSR directly.
+>>>    Virtualization of IA32_TSC_DEADLINE depends on the virtual value of
+>>>    CPUID(1).ECX[24] bit (TSC Deadline). The host VMM may configure (as an input to
+>>>    TDH.MNG.INIT) virtual CPUID(1).ECX[24] to be a constant 0 or allow it to be 1
+>>>    if the CPU’s native value is 1.
+>>>
+>>>    If the TDX module supports #VE reduction, as enumerated by TDX_FEATURES0.VE_REDUCTION
+>>>    (bit 30), and the guest TD has set TD_CTLS.REDUCE_VE to 1, it may control the
+>>>    value of virtual CPUID(1).ECX[24] by writing TDCS.FEATURE_PARAVIRT_CTRL.TSC_DEADLINE.
+>>>
+>>>    • If the virtual value of CPUID(1).ECX[24] is 0, IA32_TSC_DEADLINE is virtualized
+>>>      as non-existent. WRMSR or RDMSR attempts result in a #GP(0).
+>>>
+>>>    • If the virtual value of CPUID(1).ECX[24] is 1, WRMSR or RDMSR attempts result
+>>>      in a #VE(CONFIG_PARAVIRT). This enables the TD’s #VE handler.
+>>>
+>>> Ditto for TME, MKTME.
+>>>
+>>> FEATURE_PARAVIRT_CTRL.MCA is even weirder, but I still don't see any reason for
+>>> KVM or QEMU to care if it's fixed or configurable.  There's some crazy logic for
+>>> whether or not CR4.MCE can be cleared, but the host can't see guest CR4, and so
+>>> once again, the TDX Module's view of MCA is irrelevant when it comes to handling
+>>> TDVMCALL for the machine check MSRs.
+>>>
+>>> So I think this again purely comes to back to KVM correctness and safety.  More
+>>> specifically, the TDX Module needs to report features that are unconditionally
+>>> enabled or disabled and can't be emulated by KVM.  For everything else, I don't
+>>> see any reason to care what the TDX module does.
+>>>
+>>> I'm pretty sure that gives us a way forward.  If there only a handful of features
+>>> that are unconditionally exposed to the guest, then KVM forces those features in
+>>> cpu_caps[*].
+>> I see. Hmm. We could use this new interface to double check the fixed bits. It
+>> seems like a relatively cheap sanity check.
+>>
+>> There already is an interface to get CPUID bits (fixed and dynamic). But it only
+>> works after a TD is configured. So if we want to do extra verification or
+>> adjustments, we could use it before entering the TD. Basically, if we delay this
+>> logic we don't need to wait for the fixed bit interface.
+> Oh, yeah, that'd work.  Grab the guest CPUID and then verify that bits KVM needs
+> to be 0 (or 1) are set according, and WARN+kill if there's a mismatch.
+> 
+> Honestly, I'd probably prefer that over using the fixed bit interface, as my gut
+> says it's less likely for the TDX Module to misreport what CPUID it has created
+> for the guest, than it is for the TDX module to generate a "fixed bits" list that
+> doesn't match the code.  E.g. KVM has (had?) more than a few CPUID features that
+> KVM emulates without actually reporting support to userspace.
 
-Interrupt Generation Support (IGS) is a capability that is tied to the
-interrupt deliver mechanism, not with the core IOMMU emulation. We
-should allow device implementations to set IGS as they wish.
-
-A new helper is added to make it easier for device impls to set IGS. Use
-it in our existing IOMMU device (riscv-iommu-pci) to set
-RISCV_IOMMU_CAPS_IGS_MSI.
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241106133407.604587-3-dbarboza@ventanamicro.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/riscv/riscv-iommu-bits.h | 6 ++++++
- hw/riscv/riscv-iommu.h      | 4 ++++
- hw/riscv/riscv-iommu-pci.c  | 1 +
- hw/riscv/riscv-iommu.c      | 5 +++++
- 4 files changed, 16 insertions(+)
-
-diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-index 6359ae0353..485f36b9c9 100644
---- a/hw/riscv/riscv-iommu-bits.h
-+++ b/hw/riscv/riscv-iommu-bits.h
-@@ -88,6 +88,12 @@ struct riscv_iommu_pq_record {
- #define RISCV_IOMMU_CAP_PD17            BIT_ULL(39)
- #define RISCV_IOMMU_CAP_PD20            BIT_ULL(40)
- 
-+enum riscv_iommu_igs_modes {
-+    RISCV_IOMMU_CAP_IGS_MSI = 0,
-+    RISCV_IOMMU_CAP_IGS_WSI,
-+    RISCV_IOMMU_CAP_IGS_BOTH
-+};
-+
- /* 5.4 Features control register (32bits) */
- #define RISCV_IOMMU_REG_FCTL            0x0008
- #define RISCV_IOMMU_FCTL_BE             BIT(0)
-diff --git a/hw/riscv/riscv-iommu.h b/hw/riscv/riscv-iommu.h
-index da3f03440c..f9f2827808 100644
---- a/hw/riscv/riscv-iommu.h
-+++ b/hw/riscv/riscv-iommu.h
-@@ -21,6 +21,9 @@
- 
- #include "qom/object.h"
- #include "hw/riscv/iommu.h"
-+#include "hw/riscv/riscv-iommu-bits.h"
-+
-+typedef enum riscv_iommu_igs_modes riscv_iommu_igs_mode;
- 
- struct RISCVIOMMUState {
-     /*< private >*/
-@@ -85,6 +88,7 @@ struct RISCVIOMMUState {
- 
- void riscv_iommu_pci_setup_iommu(RISCVIOMMUState *iommu, PCIBus *bus,
-          Error **errp);
-+void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode);
- 
- /* private helpers */
- 
-diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
-index a695314bbe..a95d0f74c8 100644
---- a/hw/riscv/riscv-iommu-pci.c
-+++ b/hw/riscv/riscv-iommu-pci.c
-@@ -155,6 +155,7 @@ static void riscv_iommu_pci_init(Object *obj)
-     qdev_alias_all_properties(DEVICE(iommu), obj);
- 
-     iommu->icvec_avail_vectors = RISCV_IOMMU_PCI_ICVEC_VECTORS;
-+    riscv_iommu_set_cap_igs(iommu, RISCV_IOMMU_CAP_IGS_MSI);
- }
- 
- static const Property riscv_iommu_pci_properties[] = {
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index c461ebbd87..24b879822b 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -2130,6 +2130,11 @@ static const MemoryRegionOps riscv_iommu_trap_ops = {
-     }
- };
- 
-+void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode)
-+{
-+    s->cap = set_field(s->cap, RISCV_IOMMU_CAP_IGS, mode);
-+}
-+
- static void riscv_iommu_instance_init(Object *obj)
- {
-     RISCVIOMMUState *s = RISCV_IOMMU(obj);
--- 
-2.47.1
-
+The original motivation of the proposed fxied0 and fixed1 data is to 
+complement the CPUID configurability report, which is important for 
+userspace. E.g., Currently, what QEMU is doing is hardcoding the fixed0 
+and fixed1 information of a specific TDX release to adjust the 
+KVM_GET_SUPPORTED_CPUID result and gets a final "supported" CPUID set 
+for TDX. Hardcoding is not a good idea and it's better that KVM can get 
+the data from TDX module, then pass to userspace (of course KVM can 
+tweak the data based on its own requirement). So, do you think it's 
+useful to have TDX module report the fixed0/fixed1 data for this purpose?
 
