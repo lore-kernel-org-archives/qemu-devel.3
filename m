@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C46CE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13EDAE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:48:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkhq-0001tp-MO; Fri, 20 Dec 2024 16:38:46 -0500
+	id 1tOkpy-0005ja-CA; Fri, 20 Dec 2024 16:47:10 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkhp-0001tZ-5a
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:38:45 -0500
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tOkpm-0005iO-4E
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:46:58 -0500
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOkhn-0008U8-Df
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:38:44 -0500
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-388cae9eb9fso1419960f8f.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:38:43 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1tOkpj-0003rC-7i
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 16:46:56 -0500
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-21649a7bcdcso22431915ad.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 13:46:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734730722; x=1735335522; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1734731213; x=1735336013; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OQ+Qgg2lQm9HweMWxEy4+d9KGSU7ybkIam/uoWuw7I4=;
- b=t49mVrEpQCu5WfTt0wtCeOa+OOE7mLa+bURBsoT0/VdUvwImfgSyUxLnrwMPNmmVUn
- XcIf5Qe4024/ZyquMXNy9dKfPIR6k5OPftnf/0p+SjjSoPUNeiLcA2mTZxYRtSrLBBr+
- OZeU+JAQ1iezW8rAXZb//Cbf5rWif9ePRkChGG9FFrNVvc/ZL4CrJTuF3SYN/8YdqP7b
- hPMk6mn0MPUx/3VEwAepzsMEsICNkco/UWlyAss8u7BIp/D0rYL1+AJcl1Nsu/YfCwXs
- vn4Rnd+4VuFTjlTWisnxdebKWw9b5EHkMvhVNA+QdsaS5B9MxwcPlFmIC+1tpqsrUsmt
- E+0g==
+ bh=OUSzdSgAwpL5uG0+bNxD0uobLS6BqjlaULjJ6Jrjhk8=;
+ b=anopo/I24oDsZlPKPZ5GQEwdWrHh65IoEYeq+cc+JeXUcR+uDY/6Os8SFyBNORz3g/
+ s3v9IIiT0mlx24SwtlHrEnGspQEY1qsp+mbIDEvolMO8VwfICDjrAx9Mt0h1+EreaR62
+ M+7erAKIdRyRTRUQbW2t2GI9/syXJf99MaYfFzQ4B1jpnHANVTNNuMOgHXI0SzmdDPZL
+ gPdrzkeBg/684z3LUk33H4Xs0FOWZcIQS6+cBnS8YFQQpnZc60j/p+JuuxxDbxDd6fOf
+ +BllUaVIm0LsFy1MSYQQ91aAy0O4j9C+k4BqKWRmbEErpjBuw2cQo9wW8ylK3HraZ+dQ
+ ZhWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734730722; x=1735335522;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1734731213; x=1735336013;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OQ+Qgg2lQm9HweMWxEy4+d9KGSU7ybkIam/uoWuw7I4=;
- b=M0f/uXh7sTwOclXizO8QbyMOsnimTapNgIH1bmDbRQuqR2+FoyUvKcsG+d50+qT1Xf
- 8GfJ7bVJXhF1mT7qVVL5SNT6jPG/8azmqeDD9uMuegmTwKL9IRTjrMM85jX9tZ/fvPqK
- Ln//F9CxwpiYGhVzyKvFVyRyo+yz1hNNDsI2Dbe/Wq4GYIyxfGuPRH9OzyrySDJTDF1U
- X/60tOFJfXuCHJxb6lbOVCt5YIEa4k13pEKrwxoux4ohGVTLJwNjZiS24feUqFRbWnAK
- WJZ2UUr3vayuSXwpsz0kBVRTvGrW5aBlujK4c8XAEQywkYyt3LfGzdysyW5+ppvxox5F
- f9lg==
-X-Gm-Message-State: AOJu0YxwWxTGycsdBZ7qDkUVV6+K/6tw5Jb6jmaL5sYMN60uoDak0v7F
- UWywc7U0za4rsdPivYMSGJCeA0L4q/PzPjFdAdB/IAOiMzUn3j14wSpf4bYss1Er6OmYD3IfeKI
- 1
-X-Gm-Gg: ASbGncvA+kVKnlYlaIfHdjJHXH2T9yEw5VrSLeAbLKWu/ctAxEnty1PR1lvm7+POE7t
- YDs0i5mLTBTrmjMa7nBFlhUpDMFs5Mdp4dWeyGN+ygzrmpuUkfGSd6tzcHjj0VDS8EmBxNRnFQs
- E+VSMKnei02irjKwe9YkZXd2HRdQOg2uW0n13hDjq3F31luTQXtinGcdBhS2sbtwV+1OySoyjjJ
- G+tIEOEruWsqanB/T1FkXadrv0rMDXP16/4CH/j6aUOUiKd9uoQAGyiRsCzRVbLfg==
-X-Google-Smtp-Source: AGHT+IGcbaBsEQfjpZL557Lb3Sr/6irWvIIwSEX0OliJjDwIeiwv5QzziDG2se+e2BUA8ZRgeKAqpA==
-X-Received: by 2002:a5d:47a7:0:b0:385:f398:3e2 with SMTP id
- ffacd0b85a97d-38a223ff39cmr3862501f8f.37.1734730721734; 
- Fri, 20 Dec 2024 13:38:41 -0800 (PST)
-Received: from [192.168.1.67] ([78.196.4.158])
+ bh=OUSzdSgAwpL5uG0+bNxD0uobLS6BqjlaULjJ6Jrjhk8=;
+ b=NwhxoYUwqwJy5T70xImDmSie6f6CzJIB3xlrmUQ8IXPrMRr1jPP0z2A3yDBFn/wRT3
+ hyry0HMR5a0ssKB2BYQHXgO9H1dCINoFIbaWpD1dwjWMnK64LDuXSx3+1elpo1j5taL0
+ rUiJl2Wey7PPQgGycsFg/6SnjbZPwhMoWiVdy2PsGrish7VYm3RjgYw1tsV208ojNAHx
+ 6AXKBS+m+X5JTQIAv+TnPucFH+UBwzmyYb+b2uZ9QdhOQ6riCVdckLDY7fzn3zxtsCh7
+ M8bIaypThOz2LQKyceUs4t9AQT+HOoBiFB5nMt9MW9lFOpJnh359guEUam+2EOKP6xI1
+ 7bzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW2a0bP8gNq8xr1/W40jf7MCEfXM2IRXT0jibd33ftockLJjarfpJi9ND8oPigiA7383hzdhQRgXOg5@nongnu.org
+X-Gm-Message-State: AOJu0YwMvd2O1CLFAtHVOk569GDJWQmzKWytlyfug1RaB8l2PFPK46XQ
+ RPlAxEvWlJOU5XPqc+qKUYj0EPJXw51cftuoyZSXfSQW3PhGHQ0PdtfCIm7UGpw=
+X-Gm-Gg: ASbGnctdkpucC/3ZmnbR1x7MsvsoudnvY9tgvfJ+oo+E/MjgjEBOhloY4MLybG4uOzb
+ Bn+fNVSoAp7PONMzX29Uxuo/pY6HQQKEI8CC/aIUlUJzHtP83zd8UasU92IsLnlR7B+4yhmpfAA
+ T+eCortL6hHU9cNxlVWFlluM9k/4gxsfL6AWl3QWgb40HZfd2r+Zv3dFU1MMHjI6U+2/H9YBKe4
+ UEZm3asm0VfUEHfUzkjGW5cBB8PlMbTXX2rdEuN/cJkljR7F/76DIZnxqtB5egF9o2MLg==
+X-Google-Smtp-Source: AGHT+IFuyZJIOZ8htUmUEjuZT6PgNMMR1oygggoS/4GyJeBTHChSnVbwc7sR7g3PbubKUkASQjDbWQ==
+X-Received: by 2002:a17:902:e5cc:b0:215:577b:ab77 with SMTP id
+ d9443c01a7336-219e70bf185mr61529695ad.39.1734731213413; 
+ Fri, 20 Dec 2024 13:46:53 -0800 (PST)
+Received: from [192.168.1.67] ([38.39.164.180])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8472d5sm5016091f8f.47.2024.12.20.13.38.40
+ d9443c01a7336-219dc9f502asm33449575ad.183.2024.12.20.13.46.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 13:38:41 -0800 (PST)
-Message-ID: <1c425eb2-6f67-49a9-8e4e-f7477d54ed55@linaro.org>
-Date: Fri, 20 Dec 2024 22:38:40 +0100
+ Fri, 20 Dec 2024 13:46:53 -0800 (PST)
+Message-ID: <86f28c7e-eaac-4350-a3cd-000108d8943e@linaro.org>
+Date: Fri, 20 Dec 2024 13:46:52 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/13] qdev: Make qdev_get_machine() not use
- container_get()
-To: Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Juraj Marcin <jmarcin@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20241121192202.4155849-1-peterx@redhat.com>
- <20241121192202.4155849-9-peterx@redhat.com>
- <dbe21846-ea9e-47b6-83c4-6ee350e891e5@linaro.org>
- <a0e5950d-2de8-4500-8376-88c231818aed@linaro.org>
- <fe9d34bf-5a68-42e3-ad00-c8f22551865c@linaro.org> <Z2WoVxB8GfdJj6KM@x1n>
+Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
+ discon event's to_pc
 Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <Z2WoVxB8GfdJj6KM@x1n>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Julian Ganz <neither@nut.email>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <cover.1733063076.git.neither@nut.email>
+ <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
+ <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
+ <590990025f1f43704ca8831254754661c176c42f@nut.email>
+ <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org>
+In-Reply-To: <11ae3330-71bb-4da9-9dcb-b7378f1682bc@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,137 +107,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 20/12/24 18:24, Peter Xu wrote:
-> On Fri, Dec 20, 2024 at 12:25:44PM +0100, Philippe Mathieu-Daudé wrote:
->> On 19/12/24 19:27, Philippe Mathieu-Daudé wrote:
->>> On 19/12/24 19:20, Philippe Mathieu-Daudé wrote:
->>>> On 21/11/24 20:21, Peter Xu wrote:
->>>>> Currently, qdev_get_machine() has a slight misuse on container_get(), as
->>>>> the helper says "get a container" but in reality the goal is to get the
->>>>> machine object.  It is still a "container" but not strictly.
->>>>>
->>>>> Note that it _may_ get a container (at "/machine") in our
->>>>> current unit test
->>>>> of test-qdev-global-props.c before all these changes, but it's probably
->>>>> unexpected and worked by accident.
->>>>>
->>>>> Switch to an explicit object_resolve_path_component(), with a
->>>>> side benefit
->>>>> that qdev_get_machine() can happen a lot, and we don't need to split the
->>>>> string ("/machine") every time.  This also paves way for making
->>>>> the helper
->>>>> container_get() never try to return a non-container at all.
->>>>>
->>>>> Signed-off-by: Peter Xu <peterx@redhat.com>
->>>>> ---
->>>>>    hw/core/qdev.c | 7 ++++++-
->>>>>    1 file changed, 6 insertions(+), 1 deletion(-)
->>>>>
->>>>> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
->>>>> index 5f13111b77..b622be15ee 100644
->>>>> --- a/hw/core/qdev.c
->>>>> +++ b/hw/core/qdev.c
->>>>> @@ -817,7 +817,12 @@ Object *qdev_get_machine(void)
->>>>>        static Object *dev;
->>>>>        if (dev == NULL) {
->>>>> -        dev = container_get(object_get_root(), "/machine");
->>>>> +        dev = object_resolve_path_component(object_get_root(),
->>>>> "machine");
->>>>> +        /*
->>>>> +         * Any call to this function before machine is created
->>>>> is treated
->>>>> +         * as a programming error as of now.
->>>>> +         */
->>>>> +        assert(dev);
->>>>
->>>> This fails for user-emulation:
->>>>
->>>> ./qemu-x86_64 /bin/echo foo
->>>> qemu-x86_64: ../../hw/core/qdev.c:825: qdev_get_machine: Assertion
->>>> `dev' failed.
+On 12/20/24 13:17, Pierrick Bouvier wrote:
+> Hi Julian,
+> 
+> On 12/20/24 03:47, Julian Ganz wrote:
+>> Hi Pierrick,
 >>
->> OK so I guess I might have found a "fix" which is to simply not
->> call qdev_get_machine() for user emulation, but this involves some
->> invasive refactoring -- so will take time --.
-> 
-> Thanks for taking a look, Phil.  Yes this sounds clean.
-> 
+>> December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
+>>> On 12/2/24 11:41, Julian Ganz wrote:
+>>>>    +static void insn_exec(unsigned int vcpu_index, void *userdata)
+>>>>    +{
+>>>>    + struct cpu_state *state = qemu_plugin_scoreboard_find(states, vcpu_index);
+>>>>    + uint64_t pc = (uint64_t) userdata;
+>>>>    + GString* report;
+>>>>    +
+>>>>    + if (state->has_next) {
+>>>>    + if (state->next_pc != pc) {
+>>>>    + report = g_string_new("Trap target PC mismatch\n");
+>>>>    + g_string_append_printf(report,
+>>>>    + "Expected: %"PRIx64"\nEncountered: %"
+>>>>    + PRIx64"\n",
+>>>>    + state->next_pc, pc);
+>>>>    + qemu_plugin_outs(report->str);
+>>>>    + if (abort_on_mismatch) {
+>>>>    + g_abort();
+>>>>    + }
+>>>>    + g_string_free(report, true);
+>>>>    + }
+>>>>    + state->has_next = false;
+>>>>    + }
+>>>>    +}
+>>>>
+>>> When booting an arm64 vm, I get this message:
+>>> Trap target PC mismatch
+>>> Expected: 23faf3a80
+>>> Encountered: 23faf3a84
 >>
->> I'm dropping this series for now, planning to merge it again on top
->> of my refactor once it is ready. Any clever / simpler fix is
->> obviously welcomed first.
+>> A colleague of mine went to great lengths trying to track and reliably
+>> reproduce this. We think that it's something amiss with the existing
+>> instruction exec callback infrastructure. So... it's not something I'll
+>> be addressing with the next iteration as it's out of scope. We'll
+>> probably continue looking into it, though.
+>>
+>> The mismatch is reported perfectly normal and boring exceptions and
+>> interrupts with no indication of any differences to other (not reported)
+>> events that fire on a regular basis. Apparently, once in a blue moon
+>> (relatively speaking), for the first instruction of a handler (even
+>> though it is definitely executed and qemu does print a trace-line for
+>> that instruction):
+>>
+>> | Trace 0: 0x7fffa0b03900 [00104004/000000023fde73b4/00000021/ff020200]
+>> | Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff020200]
+>> | Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff020200]
+>> | Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff020200]
+>> | Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff020200]
+>> | Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff020200]
+>> | Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff020200]
+>> | Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff020200]
+>> | cpu_io_recompile: rewound execution of TB to 000000023fde7b90
+>> | Taking exception 5 [IRQ] on CPU 0
+>> | ...from EL1 to EL1
+>> | ...with ESR 0x0/0x3800000
+>> | ...with SPSR 0x20000305
+>> | ...with ELR 0x23fde7b90
+>> | ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
+>> | Trace 0: 0x7fffa13a8340 [00104004/000000023fd77a80/00000021/ff021201]
+>> | Trace 0: 0x7fffa13a8480 [00104004/000000023fd77a84/00000021/ff020200]
+>> | Trap target PC mismatch CPU 0
+>> | Expected:    23fd77a80
+>> | Encountered: 23fd77a84
+>> | warning: 44	./nptl/pthread_kill.c: No such file or directory
+>> | Couldn't get registers: No such process.
+>>
+>> It does show up with both single-core and multi-core VMs, so that at
+>> least eliminates some possibilities. Maybe :/
+>>
+>> The issue is nasty to reproduce in a way that allows any meaningful
+>> investigation. It usually involves sifting through many GBs of Qemu logs
+>> for maybe one occurance. We could add another testing/dummy plugin that
+>> just prints the PC for _any_ instruction executed and have a skript
+>> check for non-alternating Trace-lines from Qemu and that Plugin. But
+>> then we're talking nearly double the amount of Lines to look through
+>> with probably little additional information.
+>>
 > 
-> I initially thought about this, which could also be clean but I then
-> noticed LINUX_USER is poisoned..
+> Thanks for the investigation.
+> I could reproduce this with this command line:
+> ./build/qemu-system-aarch64 -M virt -plugin
+> ./build/tests/tcg/plugins/libdiscons.so,abort=on -m 8G -device
+> virtio-blk-pci,drive=root -drive
+> if=none,id=root,file=/home/user/.work/images/debianaarch64.img -M virt
+> -cpu max,pauth=off  -drive
+> if=pflash,readonly=on,file=/usr/share/AAVMF/AAVMF_CODE.fd -drive
+> if=pflash,file=/home/user/.work/images/AAVMF_VARS.fd -d plugin,in_asm,op
+> -D crash.log
 > 
-> ===8<===
-> diff --git a/qom/object.c b/qom/object.c
-> index 58897a79a7..da26e8d69b 100644
-> --- a/qom/object.c
-> +++ b/qom/object.c
-> @@ -1729,7 +1729,19 @@ const char *object_property_get_type(Object *obj, const char *name, Error **errp
->       return prop->type;
->   }
+> # -d plugin,in_asm,op allows to dump asm of every translated block,
+> plugin output (for discon plugin), and tcg op generated.
 > 
-> +/*
-> + * Create all QEMU default containers.
-> + *
-> + * For system emulations, "machine" and its sub-containers are only created
-> + * when machine initializes (qemu_create_machine()).
-> + *
-> + * For user emulations, create "machine" before hand to make qdev realize()
-> + * work by default.
-> + */
->   static const char *const root_containers[] = {
-> +#ifdef CONFIG_LINUX_USER
-> +    "machine",
-> +#endif
->       "chardevs",
->       "objects",
->       "backend"
-> @@ -1740,10 +1752,6 @@ static Object *object_root_initialize(void)
->       Object *root = object_new(TYPE_CONTAINER);
->       int i;
+> It reliably crashes with a single address.
+> Looking at the debug output (crash.log):
+> ----------------
+> IN:
+> 0x23faf3a80:  d108c3ff  sub      sp, sp, #0x230
+> # => This bb has a single instruction as input
 > 
-> -    /*
-> -     * Create all QEMU system containers.  "machine" and its sub-containers
-> -     * are only created when machine initializes (qemu_create_machine()).
-> -     */
->       for (i = 0; i < ARRAY_SIZE(root_containers); i++) {
->           object_property_add_new_container(root, root_containers[i]);
->       }
-> ===8<===
+> OP:
+> # this is the TB instrumentation
+>    ld_i32 loc0,env,$0xfffffffffffffff8
+>    brcond_i32 loc0,$0x0,lt,$L0
+>    st8_i32 $0x1,env,$0xfffffffffffffffc
 > 
-> Maybe we could still move it somewhere that LINUX_USER is not poisoned
-> (plus "unattached" be created too, more below)?
+>    ---- 0000000000000a80 0000000000000000 0000000000000000
+> # => we can see that there is no call_plugin, looks like instrumentation
+> # is not applied
+>    sub_i64 sp,sp,$0x230
+>    add_i64 pc,pc,$0x4
+>    goto_tb $0x1
+>    exit_tb $0x7f7eedd355c1
+>    set_label $L0
+>    exit_tb $0x7f7eedd355c3
 > 
-> OTOH, this works for me:
+> ----------------
+> IN:
+> 0x23faf3a84:  a9b007e0  stp      x0, x1, [sp, #-0x100]!
+> 0x23faf3a88:  a9010fe2  stp      x2, x3, [sp, #0x10]
+> ...
 > 
-> ===8<===
-> diff --git a/linux-user/main.c b/linux-user/main.c
-> index b09af8d436..009b7695f2 100644
-> --- a/linux-user/main.c
-> +++ b/linux-user/main.c
-> @@ -819,6 +819,11 @@ int main(int argc, char **argv, char **envp)
->       set_preferred_target_page_bits(ctz32(host_page_size));
->       finalize_target_page_bits();
->   
-> +    Object *fake_obj = object_property_add_new_container(object_get_root(),
-> +                                                         "machine");
-> +    object_property_add_new_container(fake_obj, "unattached");
-> +
->       cpu = cpu_create(cpu_type);
->       env = cpu_env(cpu);
->       cpu_reset(cpu);
-> ===8<===
+> OP:
+>    ld_i32 loc0,env,$0xfffffffffffffff8
+>    brcond_i32 loc0,$0x0,lt,$L0
+>    st8_i32 $0x0,env,$0xfffffffffffffffc
+> 
+>    ---- 0000000000000a84 0000000000000000 0000000000000000
+> # instruction is correctly applied
+> call plugin(0x7f7eec96d530),$0x1,$0,$0x0,$0x23faf3a84
+>    mov_i64 loc2,sp
+>    ...
+> 
+> Trap target PC mismatch
+> Expected:    23faf3a80
+> Encountered: 23faf3a84
+> 
+> The thing interesting here is that we can notice that 23faf3a80 is a
+> translation block with a single instruction, and we can see that
+> instrumentation is not applied for this instruction (call_plugin is not
+> present).
+> 
+> Overall, it really looks like a bug on QEMU side, where we miss
+> instrumenting something. I'll take a look. You can ignore this for now.
+> 
 
-I like it, simple enough, allowing to remove container_get() now.
+It seems like we have a problem to identify tb as mem_only. This was 
+introduced to prevent double instrumentation of some memory access 
+(touching MMIO), but it seems that as a result, we skip some 
+instructions sometimes.
 
+I need to dig into this further, but for now, you should be able to 
+workaround this on your side with this patch:
+
+diff --git a/plugins/api.c b/plugins/api.c
+index 24ea64e2de5..6cb9d81a0a2 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -92,6 +92,7 @@ void 
+qemu_plugin_register_vcpu_exit_cb(qemu_plugin_id_t id,
+
+  static bool tb_is_mem_only(void)
+  {
++    return false;
+      return tb_cflags(tcg_ctx->gen_tb) & CF_MEMI_ONLY;
+  }
+
+>> Regards,
+>> Julian
 > 
-> So we need both "/machine" and "/machine/unattached" so far to make
-> linux-user work.  Not sure if bsd-user/main.c needs similar care, but none
-> of these look as clean.
 
-Maybe add a common method in hw/core/qdev-user.c?
-qemu_create_machine() or qdev_create_fake_machine()?
+Regards,
+Pierrick
 
