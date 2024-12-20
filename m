@@ -4,72 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ADC2E7718D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77512E7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfkM-0001Yv-P5; Fri, 20 Dec 2024 11:21:02 -0500
+	id 1tOffy-00064B-0d; Fri, 20 Dec 2024 11:16:30 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tOfkI-0001F8-Og
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:21:00 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1tOfkH-0000Dd-89
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:20:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734711655;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=UrRHC/6G/EOar4rFTLATSV4Px7fRM4Xig0ejfkJGGS8=;
- b=bSITYr58uBizI6xgQewSdY0q3sQecusEtPTB+RAqyaBE6+MdjeBxIguvbGUaTm2QHhgfuG
- FkhXWDYxvy2WF2Irz0+Unc7QMHGZnv6HO6lgbJZX40E3GXAmu0gbIZVLcV71UnqRsE/CdD
- YxfHeuHDHJYDkadjnM5UGUGQZqOVC4o=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-1-jZy5iSuwOo2V0LfOhzM0wQ-1; Fri,
- 20 Dec 2024 11:20:49 -0500
-X-MC-Unique: jZy5iSuwOo2V0LfOhzM0wQ-1
-X-Mimecast-MFC-AGG-ID: jZy5iSuwOo2V0LfOhzM0wQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EEAB01944B0B; Fri, 20 Dec 2024 16:20:47 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.126])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E7FE719560AD; Fri, 20 Dec 2024 16:20:46 +0000 (UTC)
-Date: Fri, 20 Dec 2024 11:20:44 -0500
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- Song Gao <gaosong@loongson.cn>
-Subject: Re: [PULL 00/18] loongarch-to-apply queue
-Message-ID: <20241220162044.GA731185@fedora>
-References: <20241219075502.3164644-1-maobibo@loongson.cn>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffw-00063M-3R
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:28 -0500
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffu-0006zp-IP
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:27 -0500
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-385d7f19f20so1106871f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:16:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1734711385; x=1735316185; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MpUTAuW1kXEuNRtJRYL3FXGH/kmNDhNOdnBKMvX74f4=;
+ b=r6T9QqeInxiheU1b+nJczlGqbFm201FFl4mYpY4aNFHe6uerNlpc0SpZUJTI1pz66z
+ EwL07NVPN4JVq23gtnodLWWjHL8A3gEajiduJRPpIrEPRJLjcWtpiX/uVbcvRYIjSMb8
+ iY2QxdemXqgsJRPgMiwJXf7n8U/iPDeN/aONa2CTtLeU67ttEDtX+JxiH8ofRnIzcloJ
+ fK+8Smh9c0BvGS2EzF8DlM9Rp8Kx3fc+PaIfu7DQE/93nglg18ELpx9tClWgQ9uqArir
+ cdeTfr+q/LrjBnRVxVjxEoLH9qc6aUnT5aPjWNiURDIl4/T//dJOdEjZvtKZh+AVGUsq
+ LyNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734711385; x=1735316185;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=MpUTAuW1kXEuNRtJRYL3FXGH/kmNDhNOdnBKMvX74f4=;
+ b=ECp5Ic4IrVmltDw43IXbIwjqqob5bPzGzmPM3GxnC6hsMtk3DhKR6WplK5nBE1ICNG
+ x9VXnEVNRupbcOs3/4DMBBca2HmNiRTUsri005xfCnFOENDBuqW8oPs0uuonQ83dxFzq
+ koLSo8RR0OHLduIW5MnUhockqISsKDf3lGxRmwGU1ThzpwvLhVR+YkP1ciig21jkAPm+
+ okaLeb7XV6ieuTonhxyutdIzxX1EBfuEszTWi9mmxqnLI0JB1ljbEmwqmOo4ljOC8wfk
+ Y58AeXIfGo1Rpy9GL/PcYeiwZ+Rezyrgjq1UoiG1eKXnjDDFPB6S97SzGBMOacaQihXF
+ PzZw==
+X-Gm-Message-State: AOJu0YwCGhgrVGJqEayVOCY0c+NIKq2B6XISBJY4583+f9T1xGNjtzcj
+ Fqmregiwih9xMwYjl48PYV2LrVk0+Xbu6QPhCTdbBas8UhZBsrfiZdBBRY4PTDSiTpZHALIZkUq
+ B
+X-Gm-Gg: ASbGnctwIF+2Ekh2z8EDEvuGMsdzDtmxAynueaA4+g0qjphNaSFqlJoEl09VnveAuW+
+ JwTeY0tsVt8vWTmp0CEaB/CxmWtL8uRu5ZUuX/ndrq2ztc8DzVUqH+HhoFTME9I2DTjFc3TIvNn
+ yyECpbjCdlAo0bThBEOHjTZnSUp0EGKJlDFFLyb45EJ8scZU5B+T8Fsd+LMA0HWcrBI0WQMwYti
+ VuiDJg5O1U9j+4SpjC9MfrM7Yug2i7Yitq48uNCyPbP656Mz67VSAFqrN4uFzCWHXft+k6vrSk=
+X-Google-Smtp-Source: AGHT+IEVN3dsqae3OutgvLvncpOu4Z8dxQ2IFhmn6E/JjqS13Yv1/fwQnw/LjuVJFsQOkw2IsqUxzA==
+X-Received: by 2002:a05:6000:184e:b0:385:dd10:215d with SMTP id
+ ffacd0b85a97d-38a223fd770mr3095502f8f.44.1734711384809; 
+ Fri, 20 Dec 2024 08:16:24 -0800 (PST)
+Received: from localhost.localdomain ([78.196.4.158])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-38a1c828989sm4425707f8f.18.2024.12.20.08.16.23
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 20 Dec 2024 08:16:24 -0800 (PST)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Bharat Bhushan <r65777@freescale.com>,
+ qemu-ppc@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 07/59] ppc/e500: Avoid abuse of container_get()
+Date: Fri, 20 Dec 2024 17:14:58 +0100
+Message-ID: <20241220161551.89317-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.47.1
+In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
+References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="uFelMDjAQIjmk2oK"
-Content-Disposition: inline
-In-Reply-To: <20241219075502.3164644-1-maobibo@loongson.cn>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,30 +101,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Peter Xu <peterx@redhat.com>
 
---uFelMDjAQIjmk2oK
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+container_get() is going to become strict on not allowing to return a
+non-container.
 
-Applied, thanks.
+Switch the e500 user to use object_resolve_path_component() explicitly.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/10.0 for any user-visible changes.
+Cc: Bharat Bhushan <r65777@freescale.com>
+Cc: qemu-ppc@nongnu.org
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Peter Xu <peterx@redhat.com>
+Message-ID: <20241121192202.4155849-6-peterx@redhat.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/pci-host/ppce500.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---uFelMDjAQIjmk2oK
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCAAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmdlmVwACgkQnKSrs4Gr
-c8i9JggAthJl6cUUSBVOn287hTD+La6yHP06QpvgQls1e/5yDQ1UqRojifsmleth
-fhz9pKtndHaQn+J2D/G9PERu4RlgQCj0ZdTdwMzHmbhnMMYGO9I5XX95Is+mnoqv
-47t8wqVtfaREhgRO3ZEWA9AppRvY+BRoU1Sbwxz/pltGtrTdqCA55GlGUN2VKIi2
-fUu5yhiAeEHoB8eJ5D32BTQ5X5C01FJUxU6Z9WK6JCZYA5nOkydUkG9Y5wXv9HnY
-iziZo8mxb9RvOzGEE8Se7Rd+xhLQjQDIMFAaAvsAh7PUZQCXj4AmILfb9gLKr02W
-OARcZDX1LjDjpmGmFymKwQNKDP9TQA==
-=i/SI
------END PGP SIGNATURE-----
-
---uFelMDjAQIjmk2oK--
+diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+index 54071fc125a..67b22537c59 100644
+--- a/hw/pci-host/ppce500.c
++++ b/hw/pci-host/ppce500.c
+@@ -418,8 +418,8 @@ static const VMStateDescription vmstate_ppce500_pci = {
+ static void e500_pcihost_bridge_realize(PCIDevice *d, Error **errp)
+ {
+     PPCE500PCIBridgeState *b = PPC_E500_PCI_BRIDGE(d);
+-    PPCE500CCSRState *ccsr = CCSR(container_get(qdev_get_machine(),
+-                                  "/e500-ccsr"));
++    PPCE500CCSRState *ccsr = CCSR(
++        object_resolve_path_component(qdev_get_machine(), "e500-ccsr"));
+ 
+     memory_region_init_alias(&b->bar0, OBJECT(ccsr), "e500-pci-bar0", &ccsr->ccsr_space,
+                              0, int128_get64(ccsr->ccsr_space.size));
+-- 
+2.47.1
 
 
