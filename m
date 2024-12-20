@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBC65E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:18:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D1DE7718C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:19:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOffd-0005o3-8U; Fri, 20 Dec 2024 11:16:09 -0500
+	id 1tOfi2-0000uu-Ka; Fri, 20 Dec 2024 11:18:38 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffa-0005nN-K2
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:06 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhn-0000RK-Hs
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:23 -0500
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOffY-0006RN-EQ
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:16:06 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-435f8f29f8aso15599925e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:16:03 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfhl-00089b-Up
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:18:23 -0500
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4361c705434so15608745e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:18:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711362; x=1735316162; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711500; x=1735316300; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4I2sgc4zyVzNmVJJfP05uF241HGHYdnQL3Ka9kt1v/E=;
- b=uW+fNup3Akd8tquDah1QOw8oRzbIiDSKMV8OLMeNjY9EqrtiY82bxcyTtJiJijWV1V
- S7P29WUktypFHZBmpbRl2NBlvYLGfMYZjrIdHU2fLMBgFggFIXNFOiGwUMeRBaQcJFFv
- tO3HRVOFRbL7GyeXfzJJR3o1ns8gMijxxeVwWA41vziTBh5WL5Rh8rqR4PJ3gFV6gs4t
- MxXnm7vKNz4KpId5h6/LCoYt83IgUR4KLVFFGzWAnBMiBQrV2aacK/kCkt+eDxWYBPoU
- OlqXfyqaIRuymV7LpwXXV1vnImX0ueGeOAbfaOrSNYdVOzkgpK1H1E72wPlfoRG17rR+
- njCg==
+ bh=1hV0gRaFv2VBQtuTxUa/ulndjRXYAGisn/eeSilawuU=;
+ b=HlZBhiFGne6p1UDwjGk7atGL37dombwgDZ431ib1jla7Q9xQXCAjpAS02nnxlj2WVE
+ q7AMmZpWxg6XP7zLvAKHt1+uoaVHOaeWnjkFk3vNOtprCnexZjQOWhTyj8TJfsL4UFTb
+ sYLACsMv0WrmLuJCNMxFlaTL2qbQNo8YQETMfj+/wi+ElVArE7W5N9JuDQOYKbK8vYiD
+ Fgau+or5b0glghr+SspqYzIJXWM7ZKvdrE/kep4heR9moxZM+SWO43NjsCbNMEaPM0Yt
+ eFl2dV8ElCniDWbyhWiM5T0hR7vaGbO0Zi1zL1KwKZcNWk7bt4Yp8MyknxrwJSncLAL9
+ WSvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711362; x=1735316162;
+ d=1e100.net; s=20230601; t=1734711500; x=1735316300;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=4I2sgc4zyVzNmVJJfP05uF241HGHYdnQL3Ka9kt1v/E=;
- b=xFsuulLE+TAO4R3ZadIIxLTmXLvW+jybi5yqlFNzMkIBPLmoX2GvFyf1Q72sgz9mPu
- fXDrKIaqEEhsh4X5xUEJIjF7krcozzq5wvo+PMHJ3GQJiTtF9wfhA/RYnKSR4WdAXEas
- elEM//pU7aNxvmxHG/q6HIgl2Wd0DNG8G7MRYxjaijbIrxmHUeJrZycEFpi8qzseLwTQ
- VLE3FI2KmBImsPuDQpBE/VO7r0sP3Ko1QhKn0zwVcMhFZmc5Hpt6t1coL6cg6R+zvCMv
- VSSTxmZqJ9eZnpcdROkTAP8ugUzxISFqa+O+gtpo644lx3AXVlj+AimiTyUtGUkghlsy
- qy5w==
-X-Gm-Message-State: AOJu0YzLxu2KdNvT0qfR/wbfZVI28FnioDbNf6cMyILnTs3KMKYoLJMu
- MraigvAFwLRYn2dYO4x9AMO1VgGWL20C3erLdNE/LuptMpvl8CHatpc4dCVNHUYpH0DHG06tNUD
- V
-X-Gm-Gg: ASbGnctrmCHq4EDO0j41clJLYOgkU4S6rftcR90WM7bZ1zEhaEFBRh2KZluPcTysQ8J
- P2AfbNYQnMCOdJIJ/Da03SWDDP+6l5xRQo201eXF94q0gW8cuuh7XGFCxbT/fcTNepXWu4MW3xw
- IZD3GLNlikzNLlcEKrWDj5ooPKK05twTUxMFvZTSCZAqTL9axcos8ifRbvxw/CO0Md/hQNn3d3j
- OQrV9f4vxy8sAry3J0a0SKPXYzqsBEg14q28e7wj4EJkOPecr7ks/tgmNVp1mH2AjJl1QNAzcs=
-X-Google-Smtp-Source: AGHT+IFQSoZp/8oJRS+VDOVhyo8LI6gm1KaHtaXfOq3/U73OCzNCEhgI39el8YdFPVolR/cN/D5mRw==
-X-Received: by 2002:a05:6000:1848:b0:386:459e:655d with SMTP id
- ffacd0b85a97d-38a221fa039mr3845269f8f.20.1734711362402; 
- Fri, 20 Dec 2024 08:16:02 -0800 (PST)
+ bh=1hV0gRaFv2VBQtuTxUa/ulndjRXYAGisn/eeSilawuU=;
+ b=Te4e8iay1/JueiHF/2ygmHGjNr4PEXu4oih70uUXvK3S40eRLhT7BcgPm9qBS1n4EG
+ qM4ijMy7gSdIn5pexVFUsbgszW1i70/hMRY6LVbvzoF38vKQv3Z8IxQgF4zlFEyR7j3N
+ 1n7JvjPNH7YUZ3pdHF0kZTBLHTjrqx3PD7H0l1McEw5+whdrQc7IH0Dy+qWQ+5tFHAzZ
+ UdmeGPDmKDgx3Ux5mzSJWZ2vFdtAJH0i2o1kf5GKfhK5i7C5LHcxm6Nn9Q0uWGQTqJXu
+ ePjUTwDWerMA2eGhZWcrprdJ1o1jYaYd/p306t2o4G5zo+wLRARG1wWLid8mEjWTyp1l
+ CPCA==
+X-Gm-Message-State: AOJu0YwOV6S7RuYkznZ6QU3NdT96BIag0HxE4/u5RI07rlnn4Fdgc4ai
+ KVSQQpAEBf5gii8NTaoTGWBy7GDNG3cTesxX1HnyNvE8+LFOSHbk9un+xx7LQwI04GkwmDYQQ79
+ 7
+X-Gm-Gg: ASbGncuCoOxoec+5Ln0HUb6Mudpq3cN18QQ8+yEFngg3DY0rhdiLN84u1ra5yhRrraG
+ 32hBn9H9JQ5Dulp/qEekjRyAxXEZ+1/Oto/frEnWjs+kzvHTkmShRyzWeCiZrvvg0D9VlCCpUXc
+ t7xYOH8TibphLjsIEVc/0XEMhvc0EhdipabKtzPFhWMHlqTMYODl2lkRlGpYYv4vLri+D/cZ4mU
+ gffEUx3FU6HUhCEvAZ/LVnoNlFxef5ZVYKkh8/AXmIC9r1amA8Qzr9VnhkHyt4uxFVhJf6mvxk=
+X-Google-Smtp-Source: AGHT+IF8yttbmiTXC1SGiVb+1Ak7qgni2UmrV8zy3v+uJNU37pFjzn+19ZAVgTjJ4hFKBeaRfZlZ1g==
+X-Received: by 2002:a05:6000:471e:b0:382:31a1:8dc3 with SMTP id
+ ffacd0b85a97d-38a222007dcmr3447843f8f.35.1734711500087; 
+ Fri, 20 Dec 2024 08:18:20 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4364a379d69sm102095765e9.0.2024.12.20.08.16.01
+ 5b1f17b1804b1-43664b15365sm33602635e9.7.2024.12.20.08.18.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:16:01 -0800 (PST)
+ Fri, 20 Dec 2024 08:18:18 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 02/59] log: Add separate debug option for logging invalid
- memory accesses
-Date: Fri, 20 Dec 2024 17:14:53 +0100
-Message-ID: <20241220161551.89317-3-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 32/59] accel/tcg: Really restrict cpu_io_recompile() to system
+ emulation
+Date: Fri, 20 Dec 2024 17:15:23 +0100
+Message-ID: <20241220161551.89317-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,95 +99,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+Commit 38fc4b11e03 ("accel/tcg: Restrict cpu_io_recompile() to
+system emulation") inadvertently restricted cpu_io_recompile()
+to SoftMMU. Correct to restrict to system emulation.
 
-Currently -d guest_errors enables logging of different invalid actions
-by the guest such as misusing hardware, accessing missing features or
-invalid memory areas. The memory access logging can be quite verbose
-which obscures the other messages enabled by this debug switch so
-separate it by adding a new -d invalid_mem option to make it possible
-to control it independently of other guest error logs.
-
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <1bb0d0e91ba14aca13056df3b0a774f89cbf966c.1730549443.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20241216160514.56630-1-philmd@linaro.org>
 ---
- include/qemu/log.h | 1 +
- system/memory.c    | 6 +++---
- system/physmem.c   | 2 +-
- util/log.c         | 2 ++
- 4 files changed, 7 insertions(+), 4 deletions(-)
+ accel/tcg/internal-target.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/qemu/log.h b/include/qemu/log.h
-index e10e24cd4fc..60da703e670 100644
---- a/include/qemu/log.h
-+++ b/include/qemu/log.h
-@@ -37,6 +37,7 @@ bool qemu_log_separate(void);
- #define LOG_PER_THREAD     (1 << 20)
- #define CPU_LOG_TB_VPU     (1 << 21)
- #define LOG_TB_OP_PLUGIN   (1 << 22)
-+#define LOG_INVALID_MEM    (1 << 23)
+diff --git a/accel/tcg/internal-target.h b/accel/tcg/internal-target.h
+index 1cfa318dc6c..3ed81e740d3 100644
+--- a/accel/tcg/internal-target.h
++++ b/accel/tcg/internal-target.h
+@@ -36,9 +36,9 @@ static inline void page_table_config_init(void) { }
+ void page_table_config_init(void);
+ #endif
  
- /* Lock/unlock output. */
+-#ifdef CONFIG_SOFTMMU
++#ifndef CONFIG_USER_ONLY
+ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+-#endif /* CONFIG_SOFTMMU */
++#endif /* CONFIG_USER_ONLY */
  
-diff --git a/system/memory.c b/system/memory.c
-index 85f6834cb3c..a789064fbfa 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1412,7 +1412,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
- {
-     if (mr->ops->valid.accepts
-         && !mr->ops->valid.accepts(mr->opaque, addr, size, is_write, attrs)) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: rejected\n",
-                       is_write ? "write" : "read",
-                       addr, size, memory_region_name(mr));
-@@ -1420,7 +1420,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
-     }
- 
-     if (!mr->ops->valid.unaligned && (addr & (size - 1))) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: unaligned\n",
-                       is_write ? "write" : "read",
-                       addr, size, memory_region_name(mr));
-@@ -1434,7 +1434,7 @@ bool memory_region_access_valid(MemoryRegion *mr,
- 
-     if (size > mr->ops->valid.max_access_size
-         || size < mr->ops->valid.min_access_size) {
--        qemu_log_mask(LOG_GUEST_ERROR, "Invalid %s at addr 0x%" HWADDR_PRIX
-+        qemu_log_mask(LOG_INVALID_MEM, "Invalid %s at addr 0x%" HWADDR_PRIX
-                       ", size %u, region '%s', reason: invalid size "
-                       "(min:%u max:%u)\n",
-                       is_write ? "write" : "read",
-diff --git a/system/physmem.c b/system/physmem.c
-index dc1db3a3846..4bc0228a504 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2745,7 +2745,7 @@ static bool flatview_access_allowed(MemoryRegion *mr, MemTxAttrs attrs,
-     if (memory_region_is_ram(mr)) {
-         return true;
-     }
--    qemu_log_mask(LOG_GUEST_ERROR,
-+    qemu_log_mask(LOG_INVALID_MEM,
-                   "Invalid access to non-RAM device at "
-                   "addr 0x%" HWADDR_PRIX ", size %" HWADDR_PRIu ", "
-                   "region '%s'\n", addr, len, memory_region_name(mr));
-diff --git a/util/log.c b/util/log.c
-index 6219819855c..b87d399e4cb 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -503,6 +503,8 @@ const QEMULogItem qemu_log_items[] = {
-       "open a separate log file per thread; filename must contain '%d'" },
-     { CPU_LOG_TB_VPU, "vpu",
-       "include VPU registers in the 'cpu' logging" },
-+    { LOG_INVALID_MEM, "invalid_mem",
-+      "log invalid memory accesses" },
-     { 0, NULL, NULL },
- };
- 
+ /**
+  * tcg_req_mo:
 -- 
 2.47.1
 
