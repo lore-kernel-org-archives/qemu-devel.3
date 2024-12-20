@@ -4,86 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74E37E7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:15:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B371BE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:18:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOay9-0002RW-B0; Fri, 20 Dec 2024 06:14:57 -0500
+	id 1tOb1N-0003RF-IJ; Fri, 20 Dec 2024 06:18:18 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tOay5-0002RB-FX
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:14:53 -0500
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1tOay2-0007qn-CY
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:14:52 -0500
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-5d0d32cd31aso2476551a12.0
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 03:14:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734693288; x=1735298088; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TRttimciKNWbOBQbDSLGgef5Dm3DNalqU4XVfSoEJWo=;
- b=aTlAQ1N8rms57TfRYKoPGvE1gi9xkqM9XlZP3lfNq29v0xRvbLNX9kBQ1Q8MQRa9pU
- bWmbNbjUM7DCG0DPP41QiOd/R4Y5/V+KNfzFuMg3L3y+7C/L4tQY/MX+4iHTPo9incqN
- 9vYKvIls8z7+gHr3RgaPC2KORhyakXYxuxciYqZTHMKBnkA3jEYyFL1RYx9ZvFMRe1Xd
- 2KJFaCeSY1vDq7aP75DjLgy0ajPoH0T039EQeqq/RRvapVtI8XwIRScXiCzsiMEkuMaK
- aw7eKeDvxJz0DJeUHVnMkXeZ2VnWGa1r9FKckeVjsXA2EmQwyVt1oaWWO13tenRQvfwP
- yE7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734693288; x=1735298088;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TRttimciKNWbOBQbDSLGgef5Dm3DNalqU4XVfSoEJWo=;
- b=L+N6UiaxspfFwjOuJsR65e0WrRjcba14ocG3AtCBt2qZDZqRnF9kI0pCTrx79+kQ4R
- G1BF6l1HG8fexjNfBMAkFT2z8zhhQ4plPCusOHFyf4wdJw5L+3mMZFZ5AvQBpQKH2aVE
- ckoyykdjFziorvxtzITPgvjbDZ3LSx1Wq47G1qf8tCn33OD60axngxwYVEzqa1dFPmol
- hpVpCNglpDgx5S7CCUCCHAXdKa/n2swkMaEmrcd/rVI7t822j5BAlSCo9F8gYXPcHgmB
- X72JSCdkUdZ1Cz8L5DGoe7MAip3nFPj79NMr1yDfDmF4ZOa/OpHNzIeiXRmTimaiaDZk
- /cgw==
-X-Gm-Message-State: AOJu0Yyvt8g48bzmXyQHgXoYynU1wsMbjv6No3NXCq4ILwWed1OMp2mh
- t/0MZQQR7Ypz/rl0hdMZ6dUa/b7j4Sozege39qEsbF6GQZnfRnitccNUGQ==
-X-Gm-Gg: ASbGnct66faKyNfV3nDWJtILfRPMnPqHaQ0Kz2d+5Job7zZLpN7CGRDgJeAZbq3P4QF
- ieOmFQqTvuzMUDpqDgqsUdTw//gaqpO1Q/l6ODVGgnxFEBGHikyNVlh7XmceG1YRdNK2qFKDBMI
- N8COTGai7iJyqU3KtDwt9I+BaGh9bRh37LQS2z8d+Yq9dHJa3ZVY7Fnq+vXCGuZF7O5NL5sobrI
- 6n3VRYW/ULMLLSBGJR5D5UChgPNzPLO5EaMhQepgcj64a+LFuuD6ziEksGmW/zhslvjoFBMbgcS
- 3kKsH7d3aZsbFwf5m0Wey3K+hKpOJg==
-X-Google-Smtp-Source: AGHT+IGZ5ifh67+bU122AvUEAlyDVGZg8fV5tRM/CbsPg/15IqbQeUbaeC6X5ofJHt+NAj+1wW9CXQ==
-X-Received: by 2002:a05:6402:350b:b0:5d0:c7a7:ac13 with SMTP id
- 4fb4d7f45d1cf-5d81de33ee2mr4709444a12.34.1734693287892; 
- Fri, 20 Dec 2024 03:14:47 -0800 (PST)
-Received: from [127.0.0.1] (dynamic-002-242-092-209.2.242.pool.telefonica.de.
- [2.242.92.209]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-aac0efe4e5csm165596666b.115.2024.12.20.03.14.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 03:14:47 -0800 (PST)
-Date: Fri, 20 Dec 2024 11:14:46 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Davidson Francis <davidsondfgl@gmail.com>,
- Warner Losh <imp@bsdimp.com>
-CC: QEMU Development <qemu-devel@nongnu.org>
-Subject: Re: Ideas to Improve GDB Stub in Qemu for i8086
-In-Reply-To: <20241220003426.GA2475@darkstar>
-References: <20241219013535.GB4298@darkstar>
- <CANCZdfodkH0Mf8jkxs3Gybh8-nOAm79X+QXrbAvo0RHR9tBfXg@mail.gmail.com>
- <20241220003426.GA2475@darkstar>
-Message-ID: <0F6191A1-9CBA-4415-B7F6-608B3ADBF870@gmail.com>
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1tOb1I-0003Qt-4H; Fri, 20 Dec 2024 06:18:12 -0500
+Received: from forward101b.mail.yandex.net ([2a02:6b8:c02:900:1:45:d181:d101])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1tOb1D-0000pf-5l; Fri, 20 Dec 2024 06:18:10 -0500
+Received: from mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c11:992:0:640:7835:0])
+ by forward101b.mail.yandex.net (Yandex) with ESMTPS id 879DA60E44;
+ Fri, 20 Dec 2024 14:17:56 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net
+ (smtp/Yandex) with ESMTPSA id sHREuqiOqOs0-FTBIQprw; 
+ Fri, 20 Dec 2024 14:17:55 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
+ t=1734693475; bh=ALmI+oJ6uNu2vl1LVyLbkIbPEkBXHTaxJHn3NepUKT4=;
+ h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=mqBo9d1OiLezq5gcMQdzSJInopinoJ8QXFtKc68cgfamdFxfQdyl3EvDB0Z1SfcGT
+ ehCx9/MxCNtyr2kH0+3fUeIaZwqYG+P9WwDIpvtSQrqalK+nq/2JTOulcZwE1qA4RK
+ Wd+lhFlp3qx5bLPXywwXVxkvyFxtp11SGh78YKDM=
+Authentication-Results: mail-nwsmtp-smtp-production-main-25.sas.yp-c.yandex.net;
+ dkim=pass header.i=@maquefel.me
+From: Nikita Shubin <nikita.shubin@maquefel.me>
+To: Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Nikita Shubin <nikita.shubin@maquefel.me>,
+ Nikita Shubin <n.shubin@yadro.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH v2] hw/char: stm32f2xx_usart: replace print with trace
+Date: Fri, 20 Dec 2024 14:17:56 +0300
+Message-ID: <20241220111756.16511-1-nikita.shubin@maquefel.me>
+X-Mailer: git-send-email 2.45.2
+In-Reply-To: <20241220084623.1889-1-nikita.shubin@maquefel.me>
+References: <20241220084623.1889-1-nikita.shubin@maquefel.me>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:d101;
+ envelope-from=nikita.shubin@maquefel.me; helo=forward101b.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,62 +75,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Nikita Shubin <nshubin@yadro.com>
 
+Drop debug printing macros and replace them with according trace
+functions.
 
-Am 20=2E Dezember 2024 00:34:26 UTC schrieb Davidson Francis <davidsondfgl=
-@gmail=2Ecom>:
->On Thu, Dec 19, 2024 at 09:51:13AM -0700, Warner Losh wrote:
->> I might be interested in debugging some i8086 stuff for my Venix/86
->> emulation
->> project=2E
->>=20
->> I'm curious, though=2E I see special cases just for EIP being returned =
-as (CS
->> << 4):EIP
->> and similar for ESP being just (SS << 4):SP=2E What does the debugger d=
-o,
->> though,
->> for other cases where you need segment:offset addresses? Does it transl=
-ate
->> properly
->> behind the scenes in ways it doesn't do for ESP/EIP or do you have to
->> examine those
->> addresses by hand as well? If I'm chasing a linked list with 16-bit
->> addresses that assume
->> a particular DS, how does that work?
->>
->
->You've brought up a very interesting point=2E Indeed, in the case of=20
->linked lists and similar structures, there=E2=80=99s no way for GDB or QE=
-MU to=20
->reliably determine which segment an address might belong to=E2=80=94perha=
-ps=20
->only guesses, which are far from ideal=2E =20
->
->That said, the approach I'm proposing doesn=E2=80=99t solve all problems =
-and=20
->still requires users to handle these conversions manually or through GDB=
-=20
->scripts=2E =20
->
->The main goal of my idea is simply to reduce the initial effort required=
-=20
->to debug i8086 code, avoiding workarounds with architecture XML files,=20
->and proper instruction disassembly and stack dumps out-of-the-box=2E
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+---
+v1->v2:
+Phil:
+- fix typo s/recieve/receive/
+- initialize 'retvalue' with zero
 
-I suggest to submit a patch with a descriptive commit message to see where=
- it is going=2E To me, your changes seem reasonable and I could have benefi=
-ted from them already in my VIA Apollo Pro 133T project [1] where I made so=
-me real-world bioses run in QEMU=2E
+---
+ hw/char/stm32f2xx_usart.c | 49 ++++++++++++++++++---------------------
+ hw/char/trace-events      |  6 +++++
+ 2 files changed, 29 insertions(+), 26 deletions(-)
 
-Best regards,
-Bernhard
+diff --git a/hw/char/stm32f2xx_usart.c b/hw/char/stm32f2xx_usart.c
+index 17b5b1f15f..cd97f7d7e4 100644
+--- a/hw/char/stm32f2xx_usart.c
++++ b/hw/char/stm32f2xx_usart.c
+@@ -30,17 +30,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ 
+-#ifndef STM_USART_ERR_DEBUG
+-#define STM_USART_ERR_DEBUG 0
+-#endif
+-
+-#define DB_PRINT_L(lvl, fmt, args...) do { \
+-    if (STM_USART_ERR_DEBUG >= lvl) { \
+-        qemu_log("%s: " fmt, __func__, ## args); \
+-    } \
+-} while (0)
+-
+-#define DB_PRINT(fmt, args...) DB_PRINT_L(1, fmt, ## args)
++#include "trace.h"
+ 
+ static int stm32f2xx_usart_can_receive(void *opaque)
+ {
+@@ -67,10 +57,11 @@ static void stm32f2xx_update_irq(STM32F2XXUsartState *s)
+ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+ 
+     if (!(s->usart_cr1 & USART_CR1_UE && s->usart_cr1 & USART_CR1_RE)) {
+         /* USART not enabled - drop the chars */
+-        DB_PRINT("Dropping the chars\n");
++        trace_stm32f2xx_usart_drop(d->id);
+         return;
+     }
+ 
+@@ -79,7 +70,7 @@ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ 
+     stm32f2xx_update_irq(s);
+ 
+-    DB_PRINT("Receiving: %c\n", s->usart_dr);
++    trace_stm32f2xx_usart_receive(d->id, *buf);
+ }
+ 
+ static void stm32f2xx_usart_reset(DeviceState *dev)
+@@ -101,49 +92,55 @@ static uint64_t stm32f2xx_usart_read(void *opaque, hwaddr addr,
+                                        unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
+-    uint64_t retvalue;
+-
+-    DB_PRINT("Read 0x%"HWADDR_PRIx"\n", addr);
++    DeviceState *d = DEVICE(s);
++    uint64_t retvalue = 0;
+ 
+     switch (addr) {
+     case USART_SR:
+         retvalue = s->usart_sr;
+         qemu_chr_fe_accept_input(&s->chr);
+-        return retvalue;
++        break;
+     case USART_DR:
+-        DB_PRINT("Value: 0x%" PRIx32 ", %c\n", s->usart_dr, (char) s->usart_dr);
+         retvalue = s->usart_dr & 0x3FF;
+         s->usart_sr &= ~USART_SR_RXNE;
+         qemu_chr_fe_accept_input(&s->chr);
+         stm32f2xx_update_irq(s);
+-        return retvalue;
++        break;
+     case USART_BRR:
+-        return s->usart_brr;
++        retvalue = s->usart_brr;
++        break;
+     case USART_CR1:
+-        return s->usart_cr1;
++        retvalue = s->usart_cr1;
++        break;
+     case USART_CR2:
+-        return s->usart_cr2;
++        retvalue = s->usart_cr2;
++        break;
+     case USART_CR3:
+-        return s->usart_cr3;
++        retvalue = s->usart_cr3;
++        break;
+     case USART_GTPR:
+-        return s->usart_gtpr;
++        retvalue = s->usart_gtpr;
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+         return 0;
+     }
+ 
+-    return 0;
++    trace_stm32f2xx_usart_read(d->id, size, addr, retvalue);
++
++    return retvalue;
+ }
+ 
+ static void stm32f2xx_usart_write(void *opaque, hwaddr addr,
+                                   uint64_t val64, unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+     uint32_t value = val64;
+     unsigned char ch;
+ 
+-    DB_PRINT("Write 0x%" PRIx32 ", 0x%"HWADDR_PRIx"\n", value, addr);
++    trace_stm32f2xx_usart_write(d->id, size, addr, val64);
+ 
+     switch (addr) {
+     case USART_SR:
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 59e1f734a7..8b847006a0 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -125,3 +125,9 @@ xen_console_unrealize(unsigned int idx) "idx %u"
+ xen_console_realize(unsigned int idx, const char *chrdev) "idx %u chrdev %s"
+ xen_console_device_create(unsigned int idx) "idx %u"
+ xen_console_device_destroy(unsigned int idx) "idx %u"
++
++# stm32f2xx_usart.c
++stm32f2xx_usart_read(char *id, unsigned size, uint64_t offs, uint64_t val) " %s size %d offs 0x%02" PRIx64 " -> 0x%02" PRIx64
++stm32f2xx_usart_write(char *id, unsigned size, uint64_t offs, uint64_t val) "%s size %d offs 0x%02" PRIx64 " <- 0x%02" PRIx64
++stm32f2xx_usart_drop(char *id) " %s dropping the chars"
++stm32f2xx_usart_receive(char *id, uint8_t chr) " %s receiving %c"
+-- 
+2.45.2
 
-[1] https://github=2Ecom/shentok/qemu/tree/via-apollo-pro-133t
-
->
->Kind regards,
->Davidson Francis=2E
->
->
 
