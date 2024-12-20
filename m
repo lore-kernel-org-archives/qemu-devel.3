@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8903E77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:57:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3908E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:57:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSFK-00070T-IB; Thu, 19 Dec 2024 20:56:07 -0500
+	id 1tOSF2-0006Pv-Gi; Thu, 19 Dec 2024 20:55:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFE-0006t4-Dl
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:00 -0500
+ id 1tOSEp-0006ER-NO
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:36 -0500
 Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFC-0004X8-96
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:59 -0500
+ id 1tOSEn-0004TJ-Vr
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:35 -0500
 Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-7292a83264eso1286161b3a.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:57 -0800 (PST)
+ d2e1a72fcca58-72909c459c4so1143153b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659756; x=1735264556; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659732; x=1735264532; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tXiMs7faKyZmCOi20Vpzvry683l81D2FYIjjSmSNVsA=;
- b=fFxQDNGa8n0t1z4/SuqX1POSyZHlBPSMnS7MvhVB8tsvXKl2i3ZRN5zfsq3o00XKag
- rr55OPPiFT0rE71ySacOycmRiHxA7SxN8SbQajP5ZUs6nx+I2EmRarTaxsf8hYxb0s4z
- Xm0qInoa+VKii/6Sw6LHcCHN5cq+nRrR7Sp1IktofY7PzMU5zquVR8fEDxstaLyluwUL
- 1y6LLx2u3icW1sk5IWhOmWsqNa9b7mzJnS1IzBK/YvLG1vlX9BiXXwT5evtWlRWc1VDL
- kjmebhT/SWPMg+veFJnf3LqSUlU0DDA4TLIr4CpiZCx/49k2N0S9pmNzoxEeevCJ5ENm
- yYcg==
+ bh=w9kGRz8yBDn3xNhaRpjl5eLNif1NBmGaYms609zt52g=;
+ b=Gc9AVkuvO0Nvwbnj7VmkPJH3WBMhnivl1FWS3MkBVv2J7180Ugn9tiDPel0KwmpZ4d
+ M4oTt+rHAMFzRFytEAxmr9XhWGM7H6aiUUhHgya4BLxaysY6nuK5xeADirsirtI5nn04
+ PfvzQld5hBCA9RfLqwKksaPyC4tbUBZXPv4zlqU7iB/Psp+dMfNX8KRNRfv+eIpibmfL
+ VjtaR8nxYSYnd/Ri3LOKLth22N65bpJ7MdIkLjDVpymg7YAsV6gnXDXEG1Et74CJ/aMU
+ k/smU7ymWOT5vsJnIJYyOmaoQQW/S0mY1jLTSJlgcl5CYAWb4qJGhm8i0bLWe51mWgXl
+ bmBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659756; x=1735264556;
+ d=1e100.net; s=20230601; t=1734659732; x=1735264532;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tXiMs7faKyZmCOi20Vpzvry683l81D2FYIjjSmSNVsA=;
- b=atbOqJpH/cGIkceJGZ/c4G/D2SN8fVQ6e04icoVTvGS7CH0Meqj6s2idfDoodaGAty
- C0VNOn3FCVfOvK/xVBPM8nRCt2SWyuroWmz1CcEJzfRRS3/Agw1rMfOTzZ4WBPvKgtih
- 6+MfqwCL9qOwthxNU8KozNHMYOgy5hNfQPQSLQL7p8LYwiydDAxIwA+l6fTp1B7gu9SD
- Vq3BljvblZeBiFxTmBOnvsrGzKlvcNx0wbd5CnX8Xl71eFOae4BhW+fXzvjBaqZBoKix
- mz8oygmodXEAbzDfVWFiAXLHGIvaa20fbSadpFkZ6zzB21Je99rFnEovrDrt32dRnfT7
- fNgA==
-X-Gm-Message-State: AOJu0YweilywKoDblkfwHmCro+6rOSdhStWfoufd55shlDHxwr/5gmIg
- UoeiqWd8QgnAZzjyfp2v5X5u8IgwU45Yckq/jv8CYGafMGw897+HbzZuxHmZ
-X-Gm-Gg: ASbGncsLbBh34YhCFOvkPgRvYhcAzdE3yKws4GxPVAqqMKW4iSif/MJ3w9naC+x4Jkl
- W/smzB6asmPc6AUoxTzIPRPeXY2X2s7+QggCAFJzUE09Mek1F3PuvHOd6uWpk9DiCF/dLnpNVYn
- BKxDuKOpzV07MtZodCkrE0EkgHXdttW0wuV1m53ewNgXqVnU5K0vTD0uh7vdvM0Um0eLptaQ3bD
- BjgvdqdvJQquAMgclCF+WZIycU0UrWDnbKPwZn/niG/uosKPq4C+hpnQ1byikE7uceMAv+wiXuI
- /9GEGmGh/+qv+20zwvCFd93z3kQjlus5eQ/W5O8Che1kGFMxAPFdPulKgh6KUdo=
-X-Google-Smtp-Source: AGHT+IFG0sALG0TeOvgtU/+54c2HD+0APaKoWN6SmTH99y6hVjOBEe23Sk7+GXpqgCK5FNeUo0Ouxg==
-X-Received: by 2002:a05:6a20:728f:b0:1e1:aef4:9cdd with SMTP id
- adf61e73a8af0-1e5e0450013mr2267177637.1.1734659756518; 
- Thu, 19 Dec 2024 17:55:56 -0800 (PST)
+ bh=w9kGRz8yBDn3xNhaRpjl5eLNif1NBmGaYms609zt52g=;
+ b=vEtMCeK5eDR+1211icUB01wVwIgzM0C75NTfEeqhtRQ0ftOqTMcuLQEnVrl1jO2u2R
+ +p7GOtdqoVtwj6GucgLcUHoSgc20DUfFgk6BYfLkTytaVPcukKSwCiTDMFG3AO8JjZSn
+ qel6uiUScZ7FKZfS9FIRZSIJF2UUlkdxtZ+n6FOYkoxEWnkWJtu5Zc+cDFWBgLs/B/pE
+ 5R+CWyDIpTN3icSnWCuZDmsjgzOssfrwff0NuOSkQP2CwyhbKHQOIL7GDQlrjtwCGwxC
+ 6OYeAC45BX1BNxs1al//+RmZX9zkDfe3shg4EpwRJal6PhjbtyOmCChA99PY6DJ3HfOA
+ XO+Q==
+X-Gm-Message-State: AOJu0YyTgPbW8T3No7zIO7yy7OL/Tx0g4e6/v2dagg87QF/x76bF5Bm6
+ IOgIQdQVvb5un3nPMU6L5TA89A31OHTcDSkbHopf4sySEXRlNYUuZNQNQCI5
+X-Gm-Gg: ASbGncvNyXsMRYKTJH+KykF5oCLjuR+qkjK2RE1IbXROs2m3Hlv/qf/VkeuH+xRlweb
+ Je7fSHbnDlx1UDamM0BgocrI/XUttEEQ32nctIlirLBrL4vHkvBE+DT74pitBbWCUMRQWrkC6vi
+ oCTuGQVnzpd7oTsHI/iJi57Ges/+ULSJTR8yon7faDpzCS82AVt8FSHmkAIpvJKuN3J6BiRWzzR
+ pZvizGCRgRRTMHxvMaBzPhlWr4y4Oj5Rvej8W9FqqacrPblaEdQGEpyJLildunP7/QclU0eLbJD
+ ZhhK9KLGSovEi1kRzKl8HThwkls+xMeNYSkJQRQR/iQ1uuD+zXflPk3BmnlafT8=
+X-Google-Smtp-Source: AGHT+IHj4EHL8uaRue+oZwGrmAUyqYPzjtLwRYsfpGCWDK36aFwib77I5FT8OiuGCv+8XNyaKwnOAw==
+X-Received: by 2002:a05:6a00:430d:b0:728:e906:e466 with SMTP id
+ d2e1a72fcca58-72abdeb4793mr1289742b3a.21.1734659732244; 
+ Thu, 19 Dec 2024 17:55:32 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.53
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:55:56 -0800 (PST)
+ Thu, 19 Dec 2024 17:55:31 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Sia Jee Heng <jeeheng.sia@starfivetech.com>,
- Sunil V L <sunilvl@ventanamicro.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>, Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL v2 21/39] hw/acpi: Upgrade ACPI SPCR table to support SPCR
- table revision 4 format
-Date: Fri, 20 Dec 2024 11:54:21 +1000
-Message-ID: <20241220015441.317236-22-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL v2 13/39] hw/riscv/virt.c: rename helper to
+ virt_use_kvm_aia_aplic_imsic()
+Date: Fri, 20 Dec 2024 11:54:13 +1000
+Message-ID: <20241220015441.317236-14-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
@@ -106,179 +104,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Sia Jee Heng <jeeheng.sia@starfivetech.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Update the SPCR table to accommodate the SPCR Table revision 4 [1].
-The SPCR table has been modified to adhere to the revision 4 format [2].
+Similar to the riscv_is_kvm_aia_aplic_imsic() helper from riscv_aplic.c,
+the existing virt_use_kvm_aia() is testing for KVM aia=aplic-imsic with
+in-kernel irqchip enabled. It is not checking for a generic AIA support.
 
-[1]: https://learn.microsoft.com/en-us/windows-hardware/drivers/serports/serial-port-console-redirection-table
-[2]: https://github.com/acpica/acpica/pull/931
+Rename the helper to virt_use_kvm_aia_aplic_imsic() to reflect what the
+helper is doing, and use the existing riscv_is_kvm_aia_aplic_imsic() to
+obscure details such as the presence of the in-kernel irqchip.
 
-Signed-off-by: Sia Jee Heng <jeeheng.sia@starfivetech.com>
-Reviewed-by: Sunil V L <sunilvl@ventanamicro.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20241028015744.624943-3-jeeheng.sia@starfivetech.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20241119191706.718860-4-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/acpi/acpi-defs.h |  7 +++++--
- include/hw/acpi/aml-build.h |  2 +-
- hw/acpi/aml-build.c         | 20 ++++++++++++++++----
- hw/arm/virt-acpi-build.c    |  8 ++++++--
- hw/loongarch/acpi-build.c   |  6 +++++-
- hw/riscv/virt-acpi-build.c  | 12 +++++++++---
- 6 files changed, 42 insertions(+), 13 deletions(-)
+ hw/riscv/virt.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/include/hw/acpi/acpi-defs.h b/include/hw/acpi/acpi-defs.h
-index 0e6e82b339..2e6e341998 100644
---- a/include/hw/acpi/acpi-defs.h
-+++ b/include/hw/acpi/acpi-defs.h
-@@ -112,7 +112,6 @@ typedef struct AcpiSpcrData {
-     uint8_t flow_control;
-     uint8_t terminal_type;
-     uint8_t language;
--    uint8_t reserved1;
-     uint16_t pci_device_id;    /* Must be 0xffff if not PCI device */
-     uint16_t pci_vendor_id;    /* Must be 0xffff if not PCI device */
-     uint8_t pci_bus;
-@@ -120,7 +119,11 @@ typedef struct AcpiSpcrData {
-     uint8_t pci_function;
-     uint32_t pci_flags;
-     uint8_t pci_segment;
--    uint32_t reserved2;
-+    uint32_t uart_clk_freq;
-+    uint32_t precise_baudrate;
-+    uint32_t namespace_string_length;
-+    uint32_t namespace_string_offset;
-+    char namespace_string[];
- } AcpiSpcrData;
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index e54e1257c0..a67ab80b16 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -59,9 +59,11 @@
+ #include "hw/virtio/virtio-iommu.h"
  
- #define ACPI_FADT_ARM_PSCI_COMPLIANT  (1 << 0)
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index 4fd5da49e7..c18f681342 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -507,5 +507,5 @@ void build_tpm2(GArray *table_data, BIOSLinker *linker, GArray *tcpalog,
- 
- void build_spcr(GArray *table_data, BIOSLinker *linker,
-                 const AcpiSpcrData *f, const uint8_t rev,
--                const char *oem_id, const char *oem_table_id);
-+                const char *oem_id, const char *oem_table_id, const char *name);
- #endif
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 72282b173e..e4d58d7051 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2078,7 +2078,7 @@ static void build_processor_hierarchy_node(GArray *tbl, uint32_t flags,
- 
- void build_spcr(GArray *table_data, BIOSLinker *linker,
-                 const AcpiSpcrData *f, const uint8_t rev,
--                const char *oem_id, const char *oem_table_id)
-+                const char *oem_id, const char *oem_table_id, const char *name)
+ /* KVM AIA only supports APLIC MSI. APLIC Wired is always emulated by QEMU. */
+-static bool virt_use_kvm_aia(RISCVVirtState *s)
++static bool virt_use_kvm_aia_aplic_imsic(RISCVVirtAIAType aia_type)
  {
-     AcpiTable table = { .sig = "SPCR", .rev = rev, .oem_id = oem_id,
-                         .oem_table_id = oem_table_id };
-@@ -2124,9 +2124,21 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-     build_append_int_noprefix(table_data, f->pci_flags, 4);
-     /* PCI Segment */
-     build_append_int_noprefix(table_data, f->pci_segment, 1);
--    /* Reserved */
--    build_append_int_noprefix(table_data, 0, 4);
--
-+    if (rev < 4) {
-+        /* Reserved */
-+        build_append_int_noprefix(table_data, 0, 4);
-+    } else {
-+        /* UartClkFreq */
-+        build_append_int_noprefix(table_data, f->uart_clk_freq, 4);
-+        /* PreciseBaudrate */
-+        build_append_int_noprefix(table_data, f->precise_baudrate, 4);
-+        /* NameSpaceStringLength */
-+        build_append_int_noprefix(table_data, f->namespace_string_length, 2);
-+        /* NameSpaceStringOffset */
-+        build_append_int_noprefix(table_data, f->namespace_string_offset, 2);
-+        /* NamespaceString[] */
-+        g_array_append_vals(table_data, name, f->namespace_string_length);
-+    }
-     acpi_table_end(linker, &table);
- }
- /*
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 620992c92c..e92d3bddc8 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -463,8 +463,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-         .pci_flags = 0,
-         .pci_segment = 0,
-     };
--
--    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id);
-+    /*
-+     * Passing NULL as the SPCR Table for Revision 2 doesn't support
-+     * NameSpaceString.
-+     */
-+    build_spcr(table_data, linker, &serial, 2, vms->oem_id, vms->oem_table_id,
-+               NULL);
+-    return kvm_irqchip_in_kernel() && s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
++    bool msimode = aia_type == VIRT_AIA_TYPE_APLIC_IMSIC;
++
++    return riscv_is_kvm_aia_aplic_imsic(msimode);
  }
  
- /*
-diff --git a/hw/loongarch/acpi-build.c b/hw/loongarch/acpi-build.c
-index 50709bda0f..4e04f7b6c1 100644
---- a/hw/loongarch/acpi-build.c
-+++ b/hw/loongarch/acpi-build.c
-@@ -276,8 +276,12 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-     };
+ static bool virt_aclint_allowed(void)
+@@ -777,8 +779,8 @@ static void create_fdt_sockets(RISCVVirtState *s, const MemMapEntry *memmap,
+         *msi_pcie_phandle = msi_s_phandle;
+     }
  
-     lvms = LOONGARCH_VIRT_MACHINE(machine);
-+    /*
-+     * Passing NULL as the SPCR Table for Revision 2 doesn't support
-+     * NameSpaceString.
-+     */
-     build_spcr(table_data, linker, &serial, 2, lvms->oem_id,
--               lvms->oem_table_id);
-+               lvms->oem_table_id, NULL);
- }
+-    /* KVM AIA only has one APLIC instance */
+-    if (kvm_enabled() && virt_use_kvm_aia(s)) {
++    /* KVM AIA aplic-imsic only has one APLIC instance */
++    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+         create_fdt_socket_aplic(s, memmap, 0,
+                                 msi_m_phandle, msi_s_phandle, phandle,
+                                 &intc_phandles[0], xplic_phandles,
+@@ -1619,7 +1621,7 @@ static void virt_machine_init(MachineState *machine)
+         }
+     }
  
- typedef
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 36d6a3a412..68ef15acac 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -200,14 +200,15 @@ acpi_dsdt_add_uart(Aml *scope, const MemMapEntry *uart_memmap,
- 
- /*
-  * Serial Port Console Redirection Table (SPCR)
-- * Rev: 1.07
-+ * Rev: 1.10
-  */
- 
- static void
- spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
- {
-+    const char name[] = ".";
-     AcpiSpcrData serial = {
--        .interface_type = 0,       /* 16550 compatible */
-+        .interface_type = 0x12,       /* 16550 compatible */
-         .base_addr.id = AML_AS_SYSTEM_MEMORY,
-         .base_addr.width = 32,
-         .base_addr.offset = 0,
-@@ -229,9 +230,14 @@ spcr_setup(GArray *table_data, BIOSLinker *linker, RISCVVirtState *s)
-         .pci_function = 0,
-         .pci_flags = 0,
-         .pci_segment = 0,
-+        .uart_clk_freq = 0,
-+        .precise_baudrate = 0,
-+        .namespace_string_length = sizeof(name),
-+        .namespace_string_offset = 88,
-     };
- 
--    build_spcr(table_data, linker, &serial, 2, s->oem_id, s->oem_table_id);
-+    build_spcr(table_data, linker, &serial, 4, s->oem_id, s->oem_table_id,
-+               name);
- }
- 
- /* RHCT Node[N] starts at offset 56 */
+-    if (kvm_enabled() && virt_use_kvm_aia(s)) {
++    if (kvm_enabled() && virt_use_kvm_aia_aplic_imsic(s->aia_type)) {
+         kvm_riscv_aia_create(machine, IMSIC_MMIO_GROUP_MIN_SHIFT,
+                              VIRT_IRQCHIP_NUM_SOURCES, VIRT_IRQCHIP_NUM_MSIS,
+                              memmap[VIRT_APLIC_S].base,
 -- 
 2.47.1
 
