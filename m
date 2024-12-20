@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B386FE77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F10D1E77184
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 01:58:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSFy-00016h-WB; Thu, 19 Dec 2024 20:56:47 -0500
+	id 1tOSEz-0006GQ-8B; Thu, 19 Dec 2024 20:55:45 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFt-0000nJ-Uz
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:41 -0500
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1tOSEs-0006F6-Jp
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:42 -0500
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFs-0004du-Bz
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:41 -0500
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-725c86bbae7so1287661b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:39 -0800 (PST)
+ id 1tOSEq-0004Ty-WA
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:38 -0500
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-801c7e6518eso926367a12.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659799; x=1735264599; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659735; x=1735264535; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TduC2J/yNmTTE2R5ICRn5/t9vkcz5PWA+UR8MkeO9Bs=;
- b=GYw0aKsUjHxL+d2cOshj4/39QuYKKvfaLlVDowRzM7ZS3u6ct/TEE7GqLp+uJtRX3D
- omH90dqLoStMCgR/eVwSAVdh5L+HalPY9SHacInImjzrCsAL2V7sHjdK21FYDTW0ghjy
- NcQvex/2Rsm5u0RUebb+JRVsopiNZ1T+bvDGwyU4u7ib8zLcE1uHxM4OdmFpbu4e7iRK
- XM+RLhYgfk71Elyc7XLtrz5/Lqv0xLw08poR9efMErgj8FHYbtYYmSqvkeNrsRBSkehF
- HMm+kriNFwQg+fiQJa98aee/kHGkgeARg6sTr4wU4JJIrsamL2GaS458Ow8I4NInhjJq
- ZVAA==
+ bh=glX1WNaZVg1PdlZhn4XDQ7Ut5WPNd/6zc0BskqcuADM=;
+ b=Wtg6Clsp50MsX3c7rk/xcy4HvqsQpX/R5D7E5gX1gxmb9anX1en5IXYC/saGbw3t3U
+ dBT4oR6abfq7U3gKiUR32+K3abrR2sXPDzdCeoxFChlSqzj1Kltxz8Kh3qZprVSbCQMU
+ u5pnVrUv7Ar9tUdBXHJG31SGOHEwkIF6GPJ5DqhKhNJLhb8+f7ZehnJLZje9fH+WcPrC
+ DAwsxdjM8kM8rHTxPm22fJYkKlSxPVc0QG8nHoMwAQTGuUkhzqrDFRR9iHkVlVpsCY29
+ IgYugNL3OC4aFqNPB7NllhveO82xmbJx/m5SYh9j0r5tpvmLHEObOx6NSkvLAMCRoLNy
+ O7zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659799; x=1735264599;
+ d=1e100.net; s=20230601; t=1734659735; x=1735264535;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TduC2J/yNmTTE2R5ICRn5/t9vkcz5PWA+UR8MkeO9Bs=;
- b=xNL+R5hYVmJiX4kpcyx2TiRTXvVvsRxA9f/YPYQwIy7DqBOVbK5eEWxk0p6HXFJ2xc
- 3e0jzwPrDP/G0HI4clPNUBGro/1c9TT+YpwJC/DzRFOfpeLgvX/d7FDr9Uo/2kLaiNC0
- k9/hs8AMyOu+945+0t4r5mcz4lvi2r3ZvYICni1CvdpyAxKg0lWYuI2pZwUpRVKR2sPv
- cqaZErnAKgiNUIyY7RnKqyt84Bvje9z/jLhXSDk1n66VT8BRamapaKD1M1gAIPfXesMp
- gpcFmW6xduw1LQ1RH214DL8+GRjR8AcE1O6BHyjSHTkgVVXOSHLDB04MBNJIQnExDDIR
- SwwQ==
-X-Gm-Message-State: AOJu0YwClaJlSDwjqP2qef2MOLYNbloAryzzg8azqpsZZ3guQ8Itw8TG
- AnveJ6WIXH3rIi6zKXUD74qO9jOstSDvsCKWkXto1YZ5Z/vXLMhA95r1AYKS
-X-Gm-Gg: ASbGncsw0s+cYRmgFuS3SSTf9dber6cDg1bw+MgSpZ2HKr33zu5bQ/WtxPUk8ITfHWb
- DRkEDA8jdMyuOEi78WUvI3HZhTLZkq0ZBCZCF9mW1wItMPHQPvYbk0UTrJCDXsqFV0wjrSx/aa6
- Xb/EuBL8hllLwaWCC1B07EaIwq3kvmWQ8JW3HTOIQwipiQf3GBjFY2LwKh5+DjnFw+gRkkgq4zE
- cLXtMVldlqnh7h8ZkUy/a5fmRqEuj9lTpUMsLrAx5Kf31r2eRfvEUM4+kJpJ9qQ9h8jokIOtbuE
- ViUMi03pQbcQHKHAiHBsNs2KRIifqFsyzXpEe8J+Mlt7wB082OQPOY5WQ3rFYWw=
-X-Google-Smtp-Source: AGHT+IEYwgriLNeRWG1b3q15zTPw+p33sAFUVZbfrC8zsQjAhxXPw3EwYQS3+kOnsF0LVNEOcF/WdQ==
-X-Received: by 2002:a05:6a00:44cb:b0:725:1d37:ebff with SMTP id
- d2e1a72fcca58-72abe0960c6mr1322463b3a.22.1734659797604; 
- Thu, 19 Dec 2024 17:56:37 -0800 (PST)
+ bh=glX1WNaZVg1PdlZhn4XDQ7Ut5WPNd/6zc0BskqcuADM=;
+ b=M+Uig1ra3ryEi5K7PV+SVELgpOYEuycn0rh3QGDgEzJTrbJeN/zRfTkifU0ao30mbZ
+ T2dtAvgXgHZ6ke0fjSMJzyV/eTsl0wyTiNgLuBZYQuuEUb4WHqDxS0LnJwQii1HNK1jI
+ v9IB0h1CYgwB3fBGqrbzHFI7PRqnXTglioVC0WDV+Z8kN2CALXCT39sYzrsAar6kAtp1
+ dseLizGJ4cFVMJE96DbMRYLr5KZuHeqIldoctztMOqReTVp0d5La8IgOuka7PAYywgsv
+ fVBu3tNAlIGUrgSPcScFJjxHx2FJ5ybtinFqOb+wSCwWqkYa1Lwf19VdH/u2ZrDrq4yf
+ e54Q==
+X-Gm-Message-State: AOJu0YytKI7r8Dsacr7L+35mzeucos41hDo07ZJk8FLRL/YEwNSnQdzU
+ OAOwlzJoLzC4Iub+Z8ZWOoA0NxBby+2A5HeDJrTKnxwmq4qeSzwCEw1UT4zW
+X-Gm-Gg: ASbGncvU0dbaPI+pxyKaxEZj6f1QYbuDvQOyTkM7bzQoUW7RDRGfgoCRZeFhbmMjySd
+ 0dDtp09MAMo/9rFKvdmibwPqtgDOWVF4/zBTNO+LGfuJhEKSyWfJwfB8rXEOYdrvkPAOlHQQplH
+ OZImSqqh389QFatYzTLaooJADJCu6kbFUd7pFVY2O7crfzlzQuFBKX1q2PV7XUoPXzmuV0fODFH
+ cz6ERTcK+pkMAhkzNaWJC1XRflIcf9VCrIJod9katFF9DQvLEB7Qy0PkmMLJTGV3DqUlyAKtYxU
+ Y4ntecewRWR1GiEi0WR3k6qttEr38biHlL9kVRhLLbl/ChKGdVtzLGWnCrPwJlY=
+X-Google-Smtp-Source: AGHT+IGe75LhePSRYCPbKaMIY4mZEjyfTAbm3yhN6/uLCEMOiqdkvkGIufb8OXqMwe+R9jnD3MBlgQ==
+X-Received: by 2002:a05:6a21:2d8c:b0:1e1:c943:4e8e with SMTP id
+ adf61e73a8af0-1e5e081ee88mr2201442637.41.1734659735502; 
+ Thu, 19 Dec 2024 17:55:35 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.56.35
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:56:37 -0800 (PST)
+ Thu, 19 Dec 2024 17:55:34 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 34/39] target/riscv: Check svukte is not enabled in RV32
-Date: Fri, 20 Dec 2024 11:54:34 +1000
-Message-ID: <20241220015441.317236-35-alistair.francis@wdc.com>
+Subject: [PULL v2 14/39] target/riscv/kvm: consider irqchip_split() in
+ aia_create()
+Date: Fri, 20 Dec 2024 11:54:14 +1000
+Message-ID: <20241220015441.317236-15-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=alistair23@gmail.com; helo=mail-pg1-x52a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,35 +104,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Fea.Wang" <fea.wang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-The spec explicitly says svukte doesn't support RV32. So check that it
-is not enabled in RV32.
+Before adding support to kernel-irqchip=split when using KVM AIA we need
+to change how we create the in-kernel AIA device.
 
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
+In the use case we have so far, i.e. in-kernel irqchip without split
+mode, both the s-mode APLIC and IMSIC controllers are provided by the
+irqchip. In irqchip_split() mode we'll emulate the s-mode APLIC
+controller, which will send MSIs to the in-kernel IMSIC controller. To
+do that we need to change kvm_riscv_aia_create() to not create the
+in-kernel s-mode APLIC controller.
+
+In the kernel source arch/riscv/kvm/aia_aplic.c, function
+kvm_riscv_aia_aplic_init(), we verify that the APLIC controller won't be
+instantiated by KVM if we do not set 'nr_sources', which is set via
+KVM_DEV_RISCV_AIA_CONFIG_SRCS. For QEMU this means that we should not
+set 'aia_irq_num' during kvm_riscv_aia_create() in irqchip_split() mode.
+
+In this same condition, skip KVM_DEV_RISCV_AIA_ADDR_APLIC as well since
+it is used to set the base address for the in-kernel APLIC controller.
+
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241203034932.25185-7-fea.wang@sifive.com>
+Message-ID: <20241119191706.718860-5-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/tcg/tcg-cpu.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/riscv/kvm/kvm-cpu.c | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index c62c221696..3b99c8c9e3 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -652,6 +652,11 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
-         return;
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index c53ca1f76b..a9680f2447 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1734,13 +1734,29 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         }
      }
  
-+    if (mcc->misa_mxl_max == MXL_RV32 && cpu->cfg.ext_svukte) {
-+        error_setg(errp, "svukte is not supported for RV32");
-+        return;
-+    }
+-    ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+-                            KVM_DEV_RISCV_AIA_CONFIG_SRCS,
+-                            &aia_irq_num, true, NULL);
+-    if (ret < 0) {
+-        error_report("KVM AIA: failed to set number of input irq lines");
+-        exit(1);
+-    }
++    /*
++     * Skip APLIC creation in KVM if we're running split mode.
++     * This is done by leaving KVM_DEV_RISCV_AIA_CONFIG_SRCS
++     * unset. We can also skip KVM_DEV_RISCV_AIA_ADDR_APLIC
++     * since KVM won't be using it.
++     */
++    if (!kvm_kernel_irqchip_split()) {
++        ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
++                                KVM_DEV_RISCV_AIA_CONFIG_SRCS,
++                                &aia_irq_num, true, NULL);
++        if (ret < 0) {
++            error_report("KVM AIA: failed to set number of input irq lines");
++            exit(1);
++        }
 +
-     /*
-      * Disable isa extensions based on priv spec after we
-      * validated and set everything we need.
++        ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_ADDR,
++                                KVM_DEV_RISCV_AIA_ADDR_APLIC,
++                                &aplic_base, true, NULL);
++        if (ret < 0) {
++            error_report("KVM AIA: failed to set the base address of APLIC");
++            exit(1);
++        }
++     }
+ 
+     ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_CONFIG,
+                             KVM_DEV_RISCV_AIA_CONFIG_IDS,
+@@ -1781,14 +1797,6 @@ void kvm_riscv_aia_create(MachineState *machine, uint64_t group_shift,
+         exit(1);
+     }
+ 
+-    ret = kvm_device_access(aia_fd, KVM_DEV_RISCV_AIA_GRP_ADDR,
+-                            KVM_DEV_RISCV_AIA_ADDR_APLIC,
+-                            &aplic_base, true, NULL);
+-    if (ret < 0) {
+-        error_report("KVM AIA: failed to set the base address of APLIC");
+-        exit(1);
+-    }
+-
+     for (socket = 0; socket < socket_count; socket++) {
+         socket_imsic_base = imsic_base + socket * (1U << group_shift);
+         hart_count = riscv_socket_hart_count(machine, socket);
 -- 
 2.47.1
 
