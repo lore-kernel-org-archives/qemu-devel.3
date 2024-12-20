@@ -4,128 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF398E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 13:09:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC96E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 13:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOcjt-0004WZ-LI; Fri, 20 Dec 2024 08:08:21 -0500
+	id 1tOcof-0005o7-IO; Fri, 20 Dec 2024 08:13:17 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tOcjr-0004WM-P1; Fri, 20 Dec 2024 08:08:19 -0500
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>)
- id 1tOcjq-0004n9-0P; Fri, 20 Dec 2024 08:08:19 -0500
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOcod-0005nw-C8
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 08:13:15 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOcoa-0005p9-0H
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 08:13:15 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734700389;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=EcyCliaO7n1Cixt+YIZ7buhmcZX/UbOBxD5Z4rCk7aw=;
+ b=RozFXU1KeAqQdCA3NSjRqFt2BwpCnv336QC51P4PRpAegoscheo7fGPcGun0WYiyK3CIz0
+ 8xIST1ExZe4S7iEEqDW8CSShq570GvCQ78Xc4deMVe0lxdPr/k68defrYBBEkdw+RA4RBd
+ nVbyemVccOxe/bQIbA8rGK1kp6P7bxI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-OUK_tKFZOk6b4XPfj3PJdw-1; Fri,
+ 20 Dec 2024 08:13:05 -0500
+X-MC-Unique: OUK_tKFZOk6b4XPfj3PJdw-1
+X-Mimecast-MFC-AGG-ID: OUK_tKFZOk6b4XPfj3PJdw
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id AFD7C1F456;
- Fri, 20 Dec 2024 13:08:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734700093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=75FRap8mgsecJQbUHcEtp4Kt+k+cGrFCtu0z/TAZ4GU=;
- b=LkqK+foyGOt/vTHoo3CEpn5pmLNzeRtCjNRJVXNY2SYCGOu7ta6OQ8D62MosbOseA5NrHk
- SpoUDDooyzJVHDEBLY9F6PQHfi9EEzgPX2AFgJnZ/ulnW5sk+MPoffq9eSRx0XS5LfBtKg
- RoTGod/4ZNIpPAHxENUBagmFad0EXe4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734700093;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=75FRap8mgsecJQbUHcEtp4Kt+k+cGrFCtu0z/TAZ4GU=;
- b=2OUDEmbej+pDy8s9Libr9ElR9YPU8JRDrzrwRQAKOVCDCoFs33f6KmIRWpIVS6tUZzqU6a
- Q8LK1KtW9SqSa5Dw==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=LkqK+foy;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=2OUDEmbe
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1734700093; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=75FRap8mgsecJQbUHcEtp4Kt+k+cGrFCtu0z/TAZ4GU=;
- b=LkqK+foyGOt/vTHoo3CEpn5pmLNzeRtCjNRJVXNY2SYCGOu7ta6OQ8D62MosbOseA5NrHk
- SpoUDDooyzJVHDEBLY9F6PQHfi9EEzgPX2AFgJnZ/ulnW5sk+MPoffq9eSRx0XS5LfBtKg
- RoTGod/4ZNIpPAHxENUBagmFad0EXe4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1734700093;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=75FRap8mgsecJQbUHcEtp4Kt+k+cGrFCtu0z/TAZ4GU=;
- b=2OUDEmbej+pDy8s9Libr9ElR9YPU8JRDrzrwRQAKOVCDCoFs33f6KmIRWpIVS6tUZzqU6a
- Q8LK1KtW9SqSa5Dw==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 34ED113A63;
- Fri, 20 Dec 2024 13:08:12 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 3Ii/OTxsZWfgMwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 20 Dec 2024 13:08:12 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: Nicholas Piggin <npiggin@gmail.com>, qemu-block@nongnu.org, Alex
- =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Kevin Wolf <kwolf@redhat.com>, Hanna Reitz
- <hreitz@redhat.com>, Pavel Dovgalyuk <pavel.dovgaluk@ispras.ru>, Paolo
- Bonzini <pbonzini@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, Fam
- Zheng <fam@euphon.net>, Ronnie Sahlberg <ronniesahlberg@gmail.com>, John
- Snow <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang
- <jasowang@redhat.com>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, Peter Xu <peterx@redhat.com>, "Dr. David Alan
- Gilbert" <dave@treblig.org>, Markus Armbruster <armbru@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Wainer dos Santos Moschetta
- <wainersm@redhat.com>
-Subject: Re: [PATCH 02/17] replay: Fix migration replay_mutex locking
-In-Reply-To: <20241220104220.2007786-3-npiggin@gmail.com>
-References: <20241220104220.2007786-1-npiggin@gmail.com>
- <20241220104220.2007786-3-npiggin@gmail.com>
-Date: Fri, 20 Dec 2024 10:08:10 -0300
-Message-ID: <87r062tscl.fsf@suse.de>
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E062C19560B5; Fri, 20 Dec 2024 13:13:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1F69019560A2; Fri, 20 Dec 2024 13:13:03 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id DD5AE21E66E2; Fri, 20 Dec 2024 14:13:00 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Subject: Re: [PATCH 04/23] qapi: expand tags to all doc sections
+In-Reply-To: <20241213021827.2956769-5-jsnow@redhat.com> (John Snow's message
+ of "Thu, 12 Dec 2024 21:18:07 -0500")
+References: <20241213021827.2956769-1-jsnow@redhat.com>
+ <20241213021827.2956769-5-jsnow@redhat.com>
+Date: Fri, 20 Dec 2024 14:13:00 +0100
+Message-ID: <87ldwa4hwj.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Rspamd-Queue-Id: AFD7C1F456
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- SUSPICIOUS_RECIPS(1.50)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- TO_MATCH_ENVRCPT_ALL(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FREEMAIL_TO(0.00)[gmail.com,nongnu.org]; ARC_NA(0.00)[];
- RCPT_COUNT_TWELVE(0.00)[21];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FREEMAIL_ENVRCPT(0.00)[gmail.com];
- FREEMAIL_CC(0.00)[gmail.com,nongnu.org,linaro.org,redhat.com,ispras.ru,euphon.net,yandex-team.ru,treblig.org,amd.com];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- ASN(0.00)[asn:25478, ipnet:::/0, country:RU];
- RCVD_VIA_SMTP_AUTH(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- MISSING_XM_UA(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
- imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim]
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,114 +86,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nicholas Piggin <npiggin@gmail.com> writes:
+John Snow <jsnow@redhat.com> writes:
 
-Hi Nick,
-
-I'm ignorant about replay, but we try to know why were taking the BQL in
-the migration code, we move it around sometimes, etc. Can we be a bit
-more strict with documentation here so we don't get stuck with a lock
-that can't be changed?
-
-> Migration causes a number of events that need to go in the replay
-> trace, such as vm state transitions. The replay_mutex lock needs to
-> be held for these.
+> This patch adds an explicit section tag to all QAPIDoc
+> sections. Members/Features are now explicitly tagged as such, with the
+> name now being stored in a dedicated "name" field (which qapidoc.py was
+> not actually using anyway.)
 >
-
-Is it practical to explicitly list which events are those?
-
-Are there any tests that exercise this that we could use to validate
-changes around this area?
-
-> The simplest approach seems to be just take it up-front when taking
-> the bql.
-
-But also the thing asserts if taken inside the BQL, so is the actual
-matter here that we _cannot_ take the lock around the proper places?
-
-I also see the replay lock around the main loop, so is it basically bql2
-from the perspective of most of QEMU?
-
+> WIP: Yeah, the difference between "tagged" and "untagged" sections is
+> now pretty poorly named, and explicitly giving "untagged" sections an
+> "UNTAGGED" tag is ... well, worse. but mechanically, this accomplishes
+> what I need for the series.
 >
-> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> ---
->  migration/migration.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
+> Please suggest better naming conventions, keeping in mind that I
+> currently have plans for a future patch that splits the "UNTAGGED" tag
+> into "INTRO" and "DETAILS" tags. But, we still need a meta-name for the
+> category of sections that are "formerly known as untagged" but cannot be
+> called "freeform" because that name is used for the category of
+> docblocks that are not attached to an entity (but happens to be
+> comprised entirely of "formerly known as untagged" sections.)
 >
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 2eb9e50a263..277fca954c1 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -24,6 +24,7 @@
->  #include "socket.h"
->  #include "sysemu/runstate.h"
->  #include "sysemu/sysemu.h"
-> +#include "sysemu/replay.h"
->  #include "sysemu/cpu-throttle.h"
->  #include "rdma.h"
->  #include "ram.h"
-> @@ -2518,6 +2519,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->      }
->  
->      trace_postcopy_start();
-> +    replay_mutex_lock();
->      bql_lock();
->      trace_postcopy_start_set_run();
->  
-> @@ -2629,6 +2631,7 @@ static int postcopy_start(MigrationState *ms, Error **errp)
->      migration_downtime_end(ms);
->  
->      bql_unlock();
-> +    replay_mutex_unlock();
->  
->      if (migrate_postcopy_ram()) {
->          /*
-> @@ -2670,6 +2673,7 @@ fail:
->      }
->      migration_call_notifiers(ms, MIG_EVENT_PRECOPY_FAILED, NULL);
->      bql_unlock();
-> +    replay_mutex_unlock();
->      return -1;
->  }
->  
-> @@ -2721,6 +2725,7 @@ static int migration_completion_precopy(MigrationState *s,
->  {
->      int ret;
->  
-> +    replay_mutex_lock();
->      bql_lock();
->  
->      if (!migrate_mode_is_cpr(s)) {
-> @@ -2746,6 +2751,7 @@ static int migration_completion_precopy(MigrationState *s,
->                                               s->block_inactive);
->  out_unlock:
->      bql_unlock();
-> +    replay_mutex_unlock();
->      return ret;
->  }
->  
-> @@ -3633,6 +3639,7 @@ static void *bg_migration_thread(void *opaque)
->  
->      trace_migration_thread_setup_complete();
->  
-> +    replay_mutex_lock();
->      bql_lock();
->  
->      if (migration_stop_vm(s, RUN_STATE_PAUSED)) {
-> @@ -3666,6 +3673,7 @@ static void *bg_migration_thread(void *opaque)
->       */
->      migration_bh_schedule(bg_migration_vm_start_bh, s);
->      bql_unlock();
-> +    replay_mutex_unlock();
->  
->      while (migration_is_active()) {
->          MigIterateState iter_state = bg_migration_iteration_run(s);
-> @@ -3695,6 +3703,7 @@ fail:
->          migrate_set_state(&s->state, MIGRATION_STATUS_ACTIVE,
->                  MIGRATION_STATUS_FAILED);
->          bql_unlock();
-> +        replay_mutex_unlock();
->      }
->  
->  fail_setup:
+> Signed-off-by: John Snow <jsnow@redhat.com>
+
+A free-form doc comment consists of just one untagged section, actually.
+I don't remember whether anything relies on "just one".
+
+The term "tagged" is rooted in doc comment syntax.
+docs/devel/qapi-code-gen.rst section "Definition documentation":
+
+    Definition documentation starts with a line naming the definition,
+    followed by an optional overview, a description of each argument (for
+    commands and events), member (for structs and unions), branch (for
+    alternates), or value (for enums), a description of each feature (if
+    any), and finally optional tagged sections.
+
+Sadly, this isn't fully accurate anymore.
+
+    Descriptions start with '\@name:'.  The description text must be
+    indented [...]
+
+    A tagged section begins with a paragraph that starts with one of the
+    following words: "Since:", "Returns:", "Errors:", "TODO:".  It ends with
+    the start of a new section.
+
+    The second and subsequent lines of tagged sections must be indented
+    [...]
+
+Nothing about untagged sections.  These are sections that aren't
+descriptions or tagged.  Example:
+
+    # @Returns: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+    #     sed do eiusmod tempor incididunt ut labore et dolore magna
+    #     aliqua.
+    #
+    # Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+    # nisi ut aliquip ex ea commodo consequat.
+    #
+    # Duis aute irure dolor in reprehenderit in voluptate velit esse
+    # cillum dolore eu fugiat nulla pariatur.
+    ##
+
+Here, the tagged "Returns" section ends after "aliqua."  Why?  Because
+"Ut enim" isn't indented.  The untagged section ends after "pariatur."
+
+We parse a definition doc comment as a sequence of sections.
+
+The first one is the overview.
+
+Member / argument descriptions, if any, are next.
+
+Then we may have any number of tagged or untagged sections.  If I
+remember correctly, you'd like to banish them.  Let's pretend they can't
+exist here.
+
+Then we may have a "Features:" line followed by feature descriptions.
+
+Finally, we may have any number of tagged or untagged sections.
+
+Each of these sections is represented as an instance of type Section,
+and the entire definition doc as an instance of type QAPIDoc.
+
+Section has a member @tag of type str.
+
+For tagged sections, it's the tag, i.e "Since", "Returns", ...  Obvious
+enough.
+
+For overview and other untagged sections, it's None.  Still obvious.
+
+For descriptions, it's the name of the thing being described.  Less than
+obvious.  Note that descriptions are actually instances of ArgSection, a
+subtype of Section, which prevents confusion with tagged sections.
+
+QAPIDoc has the overview in member @body, member / argument descriptions
+in @args, feature descriptions in @features, and the remaining sections
+in @sections.
+
+I'm in favor of cleaning this up some.
+
+I think we can keep the Section name.
+
+Moving the name of the thing being described from @tag to @name is good.
+What value to put into @tag then?  Whatever suits you.
+
+Perhaps we should rename @tag to avoid undue ties to tagged sections.
+@kind would work for me.
+
+Value None for untagged sections is fine with me.  If a string suits you
+better, that's fine, too.  "untagged", "plain", I don't know, propose
+something.
+
+@body, @args, and so forth aren't exactly great names.  If they truly
+annoy or confuse you, feel free to propose better ones.
+
 
