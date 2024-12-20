@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84EEFE77184
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:01:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DE8E7718B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 02:01:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOSFh-0007tW-3E; Thu, 19 Dec 2024 20:56:29 -0500
+	id 1tOSF6-0006aD-RS; Thu, 19 Dec 2024 20:55:52 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFd-0007bs-NP
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:26 -0500
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1tOSF4-0006Wg-LM
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:51 -0500
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1tOSFa-0004aV-NF
- for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:56:25 -0500
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-728f1e66418so1269306b3a.2
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:56:22 -0800 (PST)
+ id 1tOSF2-0004Vy-80
+ for qemu-devel@nongnu.org; Thu, 19 Dec 2024 20:55:50 -0500
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-728e78c4d7bso1114962b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 17:55:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734659781; x=1735264581; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734659746; x=1735264546; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/2jazWrbuU7Wql6HgnR4OcxPEdzrMN59Mrc21VP922M=;
- b=WLWH0UnrkyA8kx/AcVXGQigZqPC2Hr1Kc9V0KnL2I/zhJDJoBS2kgrI0GtZwUdSvYY
- OFitw9ubBx0NZrkHuRK03FPJHujti4sEqbbAdES7isuUPTomDGvWz2EvQu8QERC+tnBk
- Lke/U4URdx7zPCyvaGShKPbyh1JUVr/yuEf2bxn9CEnQizRMypVpneiNlAAftv7/e6r6
- cq1M7khFcrr81aTHauxL5m7VAt5NroZViWklNvpvDrvT89kJrNkTg9JchiqB2FzOX923
- 3/yO+2/Mq70cRBSOfXHj020uwF3DhU+Ua2xxWdREogazu0xsTdKyI4g3JWXd0FJ5Hs1F
- 3Ahw==
+ bh=NZnQvDJEi7HXlOXLCKLwDPej2YMr4PBU00RujiRp/TU=;
+ b=jHfse1ZNXwx4kx53k9HNz4TSPKZ/tPTZ71v0VM1UPez8MobyT5NeE8kN67U5xYGZJI
+ hVw2d9hjF4wqdIoYf2TxoI3FfT2a3tLyQrx0oclErd/kqrO4rHfBXBt92KAn+6l3k0es
+ jKj09PPxQZxb1flRIJXI9ml66SiPSXB8E1NWl7brwnYGwMY6wc1w+nBz+ySIF5WQ1ZfJ
+ SBN2rtAHV9hp+6xzX1Mwe75Hhzpo28oY40Hq33L68HtFz0hKXqOj83Kr33UJ3w+rEVdM
+ ZcZztyLoJ8/en3fFl2I+xBv7+VbeynnPdGI1LpL+8uPfptVVo18TatHWVCgig75TE/yo
+ bdKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734659781; x=1735264581;
+ d=1e100.net; s=20230601; t=1734659746; x=1735264546;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/2jazWrbuU7Wql6HgnR4OcxPEdzrMN59Mrc21VP922M=;
- b=HbVg7V20pG/a0Npi47SfZapagBFFeckH1cNh6eqx+cOlPrq0ABXtwvUROY4Ug/R44S
- xj3eauz4lbXpcGtdq3DtXbQYoqb9elUdwZLBbDMrwkMCXdNtOM1SPVZ0PQvgcNemMVZT
- 6KTFxXwm+cgLTM5L7gtIe9yA433ev0JsTex5mSbqKgXqJj4Ie4bnqupVbW9fkR5ns3pY
- A+qvN7CDjd4doVbmdTsbiJFr4ReIClo4wcsUNkHW0jZSS6xEVqUNOGfWUXmV7gQDEbVz
- kvnpOIN844w0kJcNsBkQwFzY5EOSvDabk9Yz4F9vyACFBAK2ATpbDzaWJ/328RBdDDDr
- F7Dw==
-X-Gm-Message-State: AOJu0YwCrIVYs3IpvjwsEo1YFnQ2zfN8QBagi/h/DajC3ljDuSwYPzp5
- ASPCCvtRizvZ1nX61u+64bKJF6mUTlCj4b4ajkahKzONKCTr9/0AMNgEpmri
-X-Gm-Gg: ASbGnct5NKZ3xD4EXjNJllKL85VP9fGMcsRMleoaosdDFCk9e5H34cXiDh7InjJfA3z
- FH1zICSnsl/bHH0MuS86P1QsHLxxJO+9OTVYedmkozZnuQv0nRRqYkh058MQcPPtSpb0fwz1arv
- tcxRnMJidxZ2RVOBRJEexXboCoOTinzBCkl2QVZJX8qlW085kkgT0q6FtGa0gX7UbcIWNiIl+u1
- Jvk+5LGshkvxF3ywmdeTZyR0/iVl4DfUuswMJxYGKLaaQ3cTnR4XRtOLQCHe4pO3e8XERTGaSWG
- jn/alSG2w1rSJyf2rCBHSVj4fgFC2m6Hwt/ibUS5q2bcUU7NYFMqEj+L6cTyd1k=
-X-Google-Smtp-Source: AGHT+IFuexxSoYXOBxUsvnsvho1gCeX50YC4icbf900gECK6W08VKiLhpWYjZoXwqb/k2lqFBIoFRA==
-X-Received: by 2002:a05:6a21:33a0:b0:1d2:eb91:c0c1 with SMTP id
- adf61e73a8af0-1e5e081d161mr1641748637.42.1734659781039; 
- Thu, 19 Dec 2024 17:56:21 -0800 (PST)
+ bh=NZnQvDJEi7HXlOXLCKLwDPej2YMr4PBU00RujiRp/TU=;
+ b=ayjXCnt+nooMM1UdEEpKC8u4p1WTbl68B78+m9HoJLciLD4k96e2Gsl0moQ+yZr2zh
+ OuLPOrzjYFwDKsBHTFCHLnrP5XoaAloYE+7tUN4LrKpIohJsCORqGWPkbrkh0yDJiTXh
+ 30jlQxr1w2VxeK1qWEmV/zWy2USexOh5r0zCAYDKSA8Vn40wkehSmm2s309f8pmdbnIp
+ KQox3kpfle9KjvHeNGFekb5t/yDnq6eavd1T7IeMyI4bYPbPQRGeEyAvvYBqKBZorEpT
+ W/S+Q05iibVDxS9sxCvsyUAsr+fMOW1RwiHs8Qwa8tpmMVz4YS6rT9k/Am2WPfwnySnp
+ RS2g==
+X-Gm-Message-State: AOJu0YyWnQmGAUJZFr0cFbUAcS3X2cJlvWJ9aSSVTd02npMTZl3hzoJU
+ rjw/Re4Yz/PhzaID9dOHbBYpCSAFsHAZ6b6wpUkVZtO5NIUFN6ffKPrl5YJO
+X-Gm-Gg: ASbGncshg77DbSv0gHlLwEZfO785ohDspcPtcc+21KOhxBmW28ht/JzTQ/1kVpf4M50
+ HOteg71qG9Oh3OxBWdlD4wV3dSoFkSvFaaU/IAiASid+KlibkmQVUFgNdIlf2VWmAlXS4q7fD7d
+ 4tG+8MbGBWX0BIFkEhnRU/FDAMUC0LZijd6JsFMqTuw6FOEbnbXIub1pQVLWP/hX71OThphYeFJ
+ sVUlrY/lRT+SvIWmU8fX3ty0xZ4D7ThNQDQNLXDEzAUzWWarJEo4Nl7xmi8Qcuu/JNJd/Rj1s26
+ x8qM7ltDcUH0KeK6QW8F3leRvRhUg3RPKGVeCDatPMBO5Olu+xjjKzQOMsVEpkY=
+X-Google-Smtp-Source: AGHT+IGaHjTq81upYeE7JJJGXwYqFasBVSRbOjiYfGS75PLHdIX79Ur0yh9/uI89L7Do0NFxDqJKhg==
+X-Received: by 2002:a05:6a00:21c6:b0:725:4915:c0f with SMTP id
+ d2e1a72fcca58-72abdbd7f45mr1241071b3a.11.1734659746536; 
+ Thu, 19 Dec 2024 17:55:46 -0800 (PST)
 Received: from toolbox.alistair23.me
  (2403-580b-97e8-0-82ce-f179-8a79-69f4.ip6.aussiebb.net.
  [2403:580b:97e8:0:82ce:f179:8a79:69f4])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.56.17
+ d2e1a72fcca58-72aad8164d3sm2002539b3a.15.2024.12.19.17.55.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Dec 2024 17:56:20 -0800 (PST)
+ Thu, 19 Dec 2024 17:55:46 -0800 (PST)
 From: Alistair Francis <alistair23@gmail.com>
 X-Google-Original-From: Alistair Francis <alistair.francis@wdc.com>
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, "Fea.Wang" <fea.wang@sifive.com>,
- Frank Chang <frank.chang@sifive.com>, Jim Shu <jim.shu@sifive.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+Cc: alistair23@gmail.com, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL v2 29/39] target/riscv: Add svukte extension capability variable
-Date: Fri, 20 Dec 2024 11:54:29 +1000
-Message-ID: <20241220015441.317236-30-alistair.francis@wdc.com>
+Subject: [PULL v2 18/39] docs: update riscv/virt.rst with kernel-irqchip=split
+ support
+Date: Fri, 20 Dec 2024 11:54:18 +1000
+Message-ID: <20241220015441.317236-19-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220015441.317236-1-alistair.francis@wdc.com>
 References: <20241220015441.317236-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=alistair23@gmail.com; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=alistair23@gmail.com; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,38 +104,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Fea.Wang" <fea.wang@sifive.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Refer to the draft of svukte extension from:
-https://github.com/riscv/riscv-isa-manual/pull/1564
+Also add a new page, docs/specs/riscv-aia.rst, where we're documenting
+the state of AIA support in QEMU w.r.t the controllers being emulated or
+not depending on the AIA and accelerator settings.
 
-Svukte provides a means to make user-mode accesses to supervisor memory
-raise page faults in constant time, mitigating attacks that attempt to
-discover the supervisor software's address-space layout.
-
-Signed-off-by: Fea.Wang <fea.wang@sifive.com>
-Reviewed-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Jim Shu <jim.shu@sifive.com>
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20241203034932.25185-2-fea.wang@sifive.com>
+Message-ID: <20241119191706.718860-9-dbarboza@ventanamicro.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/cpu_cfg.h | 1 +
- 1 file changed, 1 insertion(+)
+ docs/specs/index.rst       |  1 +
+ docs/specs/riscv-aia.rst   | 83 ++++++++++++++++++++++++++++++++++++++
+ docs/system/riscv/virt.rst |  7 ++++
+ 3 files changed, 91 insertions(+)
+ create mode 100644 docs/specs/riscv-aia.rst
 
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index 59d6fc445d..d8771ca641 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -84,6 +84,7 @@ struct RISCVCPUConfig {
-     bool ext_svnapot;
-     bool ext_svpbmt;
-     bool ext_svvptc;
-+    bool ext_svukte;
-     bool ext_zdinx;
-     bool ext_zaamo;
-     bool ext_zacas;
+diff --git a/docs/specs/index.rst b/docs/specs/index.rst
+index ff5a1f03da..d7675cebc2 100644
+--- a/docs/specs/index.rst
++++ b/docs/specs/index.rst
+@@ -37,3 +37,4 @@ guest hardware that is specific to QEMU.
+    rapl-msr
+    rocker
+    riscv-iommu
++   riscv-aia
+diff --git a/docs/specs/riscv-aia.rst b/docs/specs/riscv-aia.rst
+new file mode 100644
+index 0000000000..8097e2f897
+--- /dev/null
++++ b/docs/specs/riscv-aia.rst
+@@ -0,0 +1,83 @@
++.. _riscv-aia:
++
++RISC-V AIA support for RISC-V machines
++======================================
++
++AIA (Advanced Interrupt Architecture) support is implemented in the ``virt``
++RISC-V machine for TCG and KVM accelerators.
++
++The support consists of two main modes:
++
++- "aia=aplic": adds one or more APLIC (Advanced Platform Level Interrupt Controller)
++  devices
++- "aia=aplic-imsic": adds one or more APLIC device and an IMSIC (Incoming MSI
++   Controller) device for each CPU
++
++From an user standpoint, these modes will behave the same regardless of the accelerator
++used.  From a developer standpoint the accelerator settings will change what it being
++emulated in userspace versus what is being emulated by an in-kernel irqchip.
++
++When running TCG, all controllers are emulated in userspace, including machine mode
++(m-mode) APLIC and IMSIC (when applicable).
++
++When running KVM:
++
++- no m-mode is provided, so there is no m-mode APLIC or IMSIC emulation regardless of
++  the AIA mode chosen
++- with "aia=aplic", s-mode APLIC will be emulated by userspace
++- with "aia=aplic-imsic" there are two possibilities.  If no additional KVM option
++  is provided there will be no APLIC or IMSIC emulation in userspace, and the virtual
++  machine will use the provided in-kernel APLIC and IMSIC controllers.  If the user
++  chooses to use the irqchip in split mode via "-accel kvm,kernel-irqchip=split",
++  s-mode APLIC will be emulated while using the s-mode IMSIC from the irqchip
++
++The following table summarizes how the AIA and accelerator options defines what
++we will emulate in userspace:
++
++
++.. list-table:: How AIA and accel options changes controller emulation
++   :widths: 25 25 25 25 25 25 25
++   :header-rows: 1
++
++   * - Accel
++     - Accel props
++     - AIA type
++     - APLIC m-mode
++     - IMSIC m-mode
++     - APLIC s-mode
++     - IMSIC s-mode
++   * - tcg
++     - ---
++     - aplic
++     - emul
++     - n/a
++     - emul
++     - n/a
++   * - tcg
++     - ---
++     - aplic-imsic
++     - emul
++     - emul
++     - emul
++     - emul
++   * - kvm
++     - ---
++     - aplic
++     - n/a
++     - n/a
++     - emul
++     - n/a
++   * - kvm
++     - none
++     - aplic-imsic
++     - n/a
++     - n/a
++     - in-kernel
++     - in-kernel
++   * - kvm
++     - irqchip=split
++     - aplic-imsic
++     - n/a
++     - n/a
++     - emul
++     - in-kernel
+diff --git a/docs/system/riscv/virt.rst b/docs/system/riscv/virt.rst
+index 537aac0340..60850970ce 100644
+--- a/docs/system/riscv/virt.rst
++++ b/docs/system/riscv/virt.rst
+@@ -129,6 +129,13 @@ The following machine-specific options are supported:
+   MSIs. When not specified, this option is assumed to be "none" which selects
+   SiFive PLIC to handle wired interrupts.
+ 
++  This option also interacts with '-accel kvm'.  When using "aia=aplic-imsic"
++  with KVM, it is possible to set the use of the kernel irqchip in split mode
++  by using "-accel kvm,kernel-irqchip=split".  In this case the ``virt`` machine
++  will emulate the APLIC controller instead of using the APLIC controller from
++  the irqchip.  See :ref:`riscv-aia` for more details on all available AIA
++  modes.
++
+ - aia-guests=nnn
+ 
+   The number of per-HART VS-level AIA IMSIC pages to be emulated for a guest
 -- 
 2.47.1
 
