@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B755FE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:26:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDE9E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:27:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfhH-0007nW-Bs; Fri, 20 Dec 2024 11:17:57 -0500
+	id 1tOfjZ-00069f-8w; Fri, 20 Dec 2024 11:20:13 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgr-0007Zw-PP
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:29 -0500
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjL-0005f2-5G
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:59 -0500
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfgo-000809-Tj
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:17:24 -0500
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-436202dd730so15406195e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:17:22 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1tOfjJ-0008KT-GX
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:19:58 -0500
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-38789e5b6a7so1204198f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:19:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1734711441; x=1735316241; darn=nongnu.org;
+ d=linaro.org; s=google; t=1734711596; x=1735316396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eN/chgeK5TLllxsnxAEr9sTVcOcj0cFLmrLq0ykzav8=;
- b=iEhMIMfQEPzeEASF8EYJZHFADVjp8zskYZuEifn0Q1o8fLoXw8mxQXoHs0iGZKPMXy
- wF8JH9rPH6YVH7TvLkQ4H5lHFOt6nxsBKjlD3i3L4JdvgrqtnriDEDxWJJNFgeEWGF6s
- eDdY82Ra0Fz/wQq5AsObNFh031ULoybFEwN58maNsAy2hjKARMM1C4OIuO6DFggm76Pf
- lxKIRWlhyI8LmxkTzydVGZ4dWxjs8RPFQMfDiW92Aq6bCfb0Xul26cyKWMedTAiO7Pxx
- je9nR4dXI/7RuU8updmcRJniQRE2he8n2Z849CP/kinzsDTeWP0rxbOUsfxTVZ6Wl6gH
- wlTg==
+ bh=1In5cayO/LMZjpWETtQH5XaVeJd9OQ0Fn1IjalaEyKs=;
+ b=hJxe8724WGwv/0mQKH75KE4KZqD+wo29A7LtRLbnNtyiN/QRmFg68tNCXPw9QuNbWE
+ CTq7DuUrbig9Apxudxk6HVwbfiS3RgYXnjVvwJKXCV2+DomDlzvJtymS8neHIOrfins1
+ 0q3HHQpjZT26SlUW0sl6UxtxPPE98X8ZzzlHHiF5DWMk7jOVtHj8D7mxXmyyc0tLSkSz
+ X5kk7omP4aLBYSaENISpuBW0Ij/+V7CRBEePCtWlAOJDnbkJpXRI/PfR7FVIhyyB1l5Y
+ Ykmro5iYCRojwWGd1F86EWTOwVJz6iGSYr9J4xS5HDYPpkYMUZV8Kl+dXDQwMnWKqgTP
+ y/OA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734711441; x=1735316241;
+ d=1e100.net; s=20230601; t=1734711596; x=1735316396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=eN/chgeK5TLllxsnxAEr9sTVcOcj0cFLmrLq0ykzav8=;
- b=IaW9k5fUAhrQmVuANNj6+iDJwlbjJxwHBSC8MFUj4uZrY3snrqCyODZ266OBo/o6xV
- Coy1YO2K77xE4mPNqZvG3xp0kvZHxqu0p8DnIU9PXS6oq5TuDL+y9lCUs2CxB2aYdvDa
- 2j/wRCL1MFuMtB0p4qh/dDERswOWZfvnaB4a50jnAvv+5uebKCrWJ+vYmqtq/BFobBXx
- yiAP19n19zbzjX2kZbk2qRwCeCfRFtZ0SPeydFflnCBhu99FzR/UuPv6ecU3X6VpUtdV
- Fm71damNvo0Zs9EpTrGYIyEmgjGhGUxcGm1YIhR4R6vcJ2I5/1MohQpWsSuzAYmQErMj
- Tbpg==
-X-Gm-Message-State: AOJu0YzkwXWv22u9YFbGycYFsXQDSNve/GAh4XUXAX1c6cfdbrOi8eay
- 0OB7oQpGRXF+MeW8juBArqeJJZaSH6L/wLoCgExmnDYOVEWiPFOhUhyM7lEOlXDYBkj4Sx1q45V
- s
-X-Gm-Gg: ASbGnct0JTspqQvmXwbIyMrFwr9CI5wFRjexL0mINOcbyKCGNi6+aNKuNafy4biVutT
- ADT3DoU+Ea+Ux9BPdh+kJxUbIQeZHlcVVjV+maex8XkLpe4cLQuXldOTtEziNmjQzqbFALafWkN
- P8xKxtJD56b0RE1Dr5wSWoYxTGicbR1KQ1r8MYq/L00acSuB8Yq0KwJckX2LDpWAOnMnOE3NOhl
- nrOIaRX7klYw121MLk2QF5vKqnk53X/H6pWokmz98+1rafmBs4v7fsZ/D4XvFaLyKrFUAFwvzM=
-X-Google-Smtp-Source: AGHT+IFrPX+V/UrYTi0VRYsuFFzH/nKQs5oKW/Gtyco9kwenqHcvb8lzy0GVcJvPSdxgpqbxtBlzpA==
-X-Received: by 2002:a5d:5e09:0:b0:385:e328:890a with SMTP id
- ffacd0b85a97d-38a223fd7e1mr3271942f8f.49.1734711441035; 
- Fri, 20 Dec 2024 08:17:21 -0800 (PST)
+ bh=1In5cayO/LMZjpWETtQH5XaVeJd9OQ0Fn1IjalaEyKs=;
+ b=GGveghuEuwWdEH/YyO5QoUgnR7UVk7kQ14Z7aEyYOitHvoLtGWRqP2n/hEzQ/CkTRN
+ YATp3y1xQMJt3Y9lsCunzSxHjBucNoTET/qAo5wkogqUuCP8FooxcfHmpuPBqvq/ngEM
+ wZSr7LBWLGMUc+ID6XtxWxaHxh/6VXW8EEyWKge3m/qEakIzOiPPk2PetM6koafaaDyl
+ 8tpewKnSxVlt/USv0teXxwUkkuN56pF0XpNOL7QCUNgAjV3XxNj5xazwD++1zLAZdsOm
+ I6212ZUjvDhFmd8jY0L0Shqqrzi7XPaUdVP4MI2afRzB5BiDC2Ru+r43OCCrk7ktrtO5
+ Ll1w==
+X-Gm-Message-State: AOJu0YxJ85iE7YedqjszRnAu9bZSBoUMrMSsRQfwIynKCwxVMI2ErHYD
+ GGmfGMo092m+WZGq1M9GPWgFBczuivrDVhKh4XpU9qsa+GfvcotfcQrZWIA9PJfeCgnFJvlgPr3
+ R
+X-Gm-Gg: ASbGncsvS9RR+OyHyyGRvWAinN6jkiBmt7W2ZQE0fb2/9Et0QsuWVLI+Tj1d4fn1Hs3
+ 3VVJIGBaRfdLFcPFf+WTautxLffCbhXqWV+i/FTGPsK4xYg/l+C5AKWzBnqMqrG6mN0dMY3BG6j
+ W7jLaF7E9eRgRKV24Pbkgz37DMlRY22FboDkfajMNkz+t6idRRuqVNJ3qO5ELOWYE8PodBF+bSA
+ Sbyf37RVaykylbOtshAWkLSmdXp/LBNW8Q+gIJDSdAB4nEd6/ZCODvrsUhv3lWKTIju0jtoG2E=
+X-Google-Smtp-Source: AGHT+IGMUNKYM2H0pLwF+nDzEwdT7aItAN6JHqeTk1UwMix6R7mr+k2gghYFzF1b967VkshHJre3iQ==
+X-Received: by 2002:a5d:59a7:0:b0:385:ec6e:e899 with SMTP id
+ ffacd0b85a97d-38a22404cbbmr3353099f8f.59.1734711595784; 
+ Fri, 20 Dec 2024 08:19:55 -0800 (PST)
 Received: from localhost.localdomain ([78.196.4.158])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-38a1c8292f4sm4473730f8f.3.2024.12.20.08.17.20
+ 5b1f17b1804b1-4366127c4fcsm50358315e9.29.2024.12.20.08.19.55
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Dec 2024 08:17:20 -0800 (PST)
+ Fri, 20 Dec 2024 08:19:55 -0800 (PST)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 19/59] linux-user/aarch64: Include missing 'user/abitypes.h'
- header
-Date: Fri, 20 Dec 2024 17:15:10 +0100
-Message-ID: <20241220161551.89317-20-philmd@linaro.org>
+Subject: [PULL 53/59] target/mips: Remove tswap() calls in semihosting
+ uhi_fstat_cb()
+Date: Fri, 20 Dec 2024 17:15:44 +0100
+Message-ID: <20241220161551.89317-54-philmd@linaro.org>
 X-Mailer: git-send-email 2.47.1
 In-Reply-To: <20241220161551.89317-1-philmd@linaro.org>
 References: <20241220161551.89317-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,36 +99,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-arm_set_mte_tcf0() uses the abi_long type which is defined
-in "user/abitypes.h". Include it in order to avoid when
-refactoring:
+In preparation of heterogeneous emulation where cores with
+different endianness can run concurrently, we need to remove
+the tswap() calls -- which use a fixed per-binary endianness.
 
-  In file included from ../../target/arm/gdbstub64.c:28:
-  ../linux-user/aarch64/mte_user_helper.h:30:42: error: unknown type name ‘abi_long’; did you mean ‘u_long’?
-     30 | void arm_set_mte_tcf0(CPUArchState *env, abi_long value);
-        |                                          ^~~~~~~~
+Get the endianness of the UHI CPU accessed using
+mips_env_is_bigendian() and replace the tswap() calls
+by bswap() ones when necessary.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20241212185341.2857-3-philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-Id: <20241211230357.97036-3-philmd@linaro.org>
 ---
- linux-user/aarch64/mte_user_helper.h | 2 ++
- 1 file changed, 2 insertions(+)
+ target/mips/tcg/system/mips-semi.c | 43 +++++++++++++++++++++---------
+ 1 file changed, 30 insertions(+), 13 deletions(-)
 
-diff --git a/linux-user/aarch64/mte_user_helper.h b/linux-user/aarch64/mte_user_helper.h
-index 8685e5175a2..0c53abda222 100644
---- a/linux-user/aarch64/mte_user_helper.h
-+++ b/linux-user/aarch64/mte_user_helper.h
-@@ -9,6 +9,8 @@
- #ifndef AARCH64_MTE_USER_HELPER_H
- #define AARCH64_MTE USER_HELPER_H
+diff --git a/target/mips/tcg/system/mips-semi.c b/target/mips/tcg/system/mips-semi.c
+index 5ba06e95734..df0c3256d9e 100644
+--- a/target/mips/tcg/system/mips-semi.c
++++ b/target/mips/tcg/system/mips-semi.c
+@@ -168,6 +168,7 @@ static void uhi_fstat_cb(CPUState *cs, uint64_t ret, int err)
  
-+#include "user/abitypes.h"
+     if (!err) {
+         CPUMIPSState *env = cpu_env(cs);
++        bool swap_needed = HOST_BIG_ENDIAN != mips_env_is_bigendian(env);
+         target_ulong addr = env->active_tc.gpr[5];
+         UHIStat *dst = lock_user(VERIFY_WRITE, addr, sizeof(UHIStat), 1);
+         struct gdb_stat s;
+@@ -179,19 +180,35 @@ static void uhi_fstat_cb(CPUState *cs, uint64_t ret, int err)
+         memcpy(&s, dst, sizeof(struct gdb_stat));
+         memset(dst, 0, sizeof(UHIStat));
+ 
+-        dst->uhi_st_dev = tswap16(be32_to_cpu(s.gdb_st_dev));
+-        dst->uhi_st_ino = tswap16(be32_to_cpu(s.gdb_st_ino));
+-        dst->uhi_st_mode = tswap32(be32_to_cpu(s.gdb_st_mode));
+-        dst->uhi_st_nlink = tswap16(be32_to_cpu(s.gdb_st_nlink));
+-        dst->uhi_st_uid = tswap16(be32_to_cpu(s.gdb_st_uid));
+-        dst->uhi_st_gid = tswap16(be32_to_cpu(s.gdb_st_gid));
+-        dst->uhi_st_rdev = tswap16(be32_to_cpu(s.gdb_st_rdev));
+-        dst->uhi_st_size = tswap64(be64_to_cpu(s.gdb_st_size));
+-        dst->uhi_st_atime = tswap64(be32_to_cpu(s.gdb_st_atime));
+-        dst->uhi_st_mtime = tswap64(be32_to_cpu(s.gdb_st_mtime));
+-        dst->uhi_st_ctime = tswap64(be32_to_cpu(s.gdb_st_ctime));
+-        dst->uhi_st_blksize = tswap64(be64_to_cpu(s.gdb_st_blksize));
+-        dst->uhi_st_blocks = tswap64(be64_to_cpu(s.gdb_st_blocks));
++        dst->uhi_st_dev = be32_to_cpu(s.gdb_st_dev);
++        dst->uhi_st_ino = be32_to_cpu(s.gdb_st_ino);
++        dst->uhi_st_mode = be32_to_cpu(s.gdb_st_mode);
++        dst->uhi_st_nlink = be32_to_cpu(s.gdb_st_nlink);
++        dst->uhi_st_uid = be32_to_cpu(s.gdb_st_uid);
++        dst->uhi_st_gid = be32_to_cpu(s.gdb_st_gid);
++        dst->uhi_st_rdev = be32_to_cpu(s.gdb_st_rdev);
++        dst->uhi_st_size = be64_to_cpu(s.gdb_st_size);
++        dst->uhi_st_atime = be32_to_cpu(s.gdb_st_atime);
++        dst->uhi_st_mtime = be32_to_cpu(s.gdb_st_mtime);
++        dst->uhi_st_ctime = be32_to_cpu(s.gdb_st_ctime);
++        dst->uhi_st_blksize = be64_to_cpu(s.gdb_st_blksize);
++        dst->uhi_st_blocks = be64_to_cpu(s.gdb_st_blocks);
 +
- #ifndef PR_MTE_TCF_SHIFT
- # define PR_MTE_TCF_SHIFT       1
- # define PR_MTE_TCF_NONE        (0UL << PR_MTE_TCF_SHIFT)
++        if (swap_needed) {
++            dst->uhi_st_dev = bswap16(dst->uhi_st_dev);
++            dst->uhi_st_ino = bswap16(dst->uhi_st_ino);
++            dst->uhi_st_mode = bswap32(dst->uhi_st_mode);
++            dst->uhi_st_nlink = bswap16(dst->uhi_st_nlink);
++            dst->uhi_st_uid = bswap16(dst->uhi_st_uid);
++            dst->uhi_st_gid = bswap16(dst->uhi_st_gid);
++            dst->uhi_st_rdev = bswap16(dst->uhi_st_rdev);
++            dst->uhi_st_size = bswap64(dst->uhi_st_size);
++            dst->uhi_st_atime = bswap64(dst->uhi_st_atime);
++            dst->uhi_st_mtime = bswap64(dst->uhi_st_mtime);
++            dst->uhi_st_ctime = bswap64(dst->uhi_st_ctime);
++            dst->uhi_st_blksize = bswap64(dst->uhi_st_blksize);
++            dst->uhi_st_blocks = bswap64(dst->uhi_st_blocks);
++        }
+ 
+         unlock_user(dst, addr, sizeof(UHIStat));
+     }
 -- 
 2.47.1
 
