@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD31BE7718B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4F1EE7718A
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 12:22:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOc0X-0002lL-3A; Fri, 20 Dec 2024 07:21:29 -0500
+	id 1tOc0a-0002mE-A0; Fri, 20 Dec 2024 07:21:32 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tOc0T-0002km-Rf
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 07:21:26 -0500
+ id 1tOc0Y-0002ls-3H
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 07:21:30 -0500
 Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <craig.blackmore@embecosm.com>)
- id 1tOc0Q-0006Lx-Q0
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 07:21:24 -0500
+ id 1tOc0W-0006Nn-97
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 07:21:29 -0500
 Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4361f65ca01so17797675e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 04:21:20 -0800 (PST)
+ 5b1f17b1804b1-4361c705434so13439105e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 04:21:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=embecosm.com; s=google; t=1734697279; x=1735302079; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=K4RZjW1ZzfWtFNM7Fo6PWNkQd9tSs+Wm+SAia6AdYns=;
- b=Z7+tiaPA2oTbmMJtzJL5s6u/a6XXNsf/cGYL0OglAnuOQO0kl7vEmsxf1zbtgJfPkD
- D4gOWDYWAbImnqXchEo+u+GeV4dbPtJ6uB6+Ay16O4W6zsle3blHZPnFj7CkNYtE6hVJ
- ly9WMSYB9CG0DZ1o64GTeL9Acz49aS+ctMhHXcSc9HDq11RsT84uba9wgkLR6X5MaFAO
- MepbWqqsNKCtXNQ0KKoWlsf1jG/8knoJBE5KIM7XJxo6XNhGmwnDEoxxt29f7fWU3Ggd
- x7YmtpOf6opdCB8s87Ty2+OwxOln5pgh7tw7TID6wkPqU6zs0rC8GKIZ5MqGoLV/zi/N
- gZ3w==
+ d=embecosm.com; s=google; t=1734697287; x=1735302087; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=w72ka0LDvMp+IR5mfDOsJFBeSApvq+7moVWb2aRwtAo=;
+ b=TNMiWYyWQcMkaSIJ6HxZzd9qVuVtFsMIZgrfb8WFYc7tATZVb9DK0wCBrpS+GYx2e5
+ vYHx148O0NPVXyFkzDuzIvHTaRkKLnazHomOJLydaUDQRbock0gQb6sPsJLg4XbuTQyy
+ LSSHpkEcRjuf569xMhB/7qUTQE5Y7c70CsIyUWxHsSEM1mvTDTqQDBS9wTDgpHwhjJlW
+ gOGVXsckfTRvk8nq7g8iSMSQUzAsfL9eja+0i0x/bCDZBLdspuJieEHVyI4VtomLijd7
+ rahQ9lZnDWczkMhKvTroaVACjicBQ0v9O6xbuCctqOSCaJAiJpSR78vnXtOzaRT+DhKI
+ f9gA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734697279; x=1735302079;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K4RZjW1ZzfWtFNM7Fo6PWNkQd9tSs+Wm+SAia6AdYns=;
- b=KxDlXtQvFPgl7XzSXnivM1oRvaUXqoZrn//T0zJ6Hl6PRz2e9MRCkJdYCwkZYucLu1
- EIOi6nLkeVRX2X4ROk+KpCos3qg1yau4HwbWIqtCKRAHOh3REHxIOv4NYlWWEWwLoifP
- d92lN+orBXuapA8W3WHQpxczbwel/Iwpw0wB8961vm/7KWq3Cy6G+mQik6xpcqqVeqPA
- Wie3Xwshcb1NveZsWwD9a1iLaM9+FDK728uZ2InGyM2kmtfNndzZ4us5odD6zXhjX5Pi
- 5n87lnIpVUmrxDkQKvQ6EGmqWkifX9mwAz4Hc7dmeflKqqf94qa+JPgAPbBxnu/eCDe7
- GGJw==
-X-Gm-Message-State: AOJu0YzibQO8uFpRFTAXzDLjvVhFMP6Kvzmv7NNSxmIJjeC3WrnE/nQc
- YsiIoRfLbODdxIyyUFTUiIi+DHg8aB6iwJtjiDvTQRGO9UhmlHgJYdKbI7z6QQ1igKiUEq59ZpI
- Yhqs=
-X-Gm-Gg: ASbGncuNZt80HtWhtbldIcd33Dig4XmJEs7UfyK0xXDEDOzg5+d06MzcQ1kssxGew5r
- Zy2CL7KToWHVDw/V89/D56J40PRMndlyNpTa3pgZ5B9flJL96ln7jfrjARLiMvKvQF3qJrDHpDW
- zklzamU7iECe5/TuVYzxKoyHburY848hWiioK3JWWEvVPuquZsZ0z2EJEOxdrMmhzaUI8Gwo0KL
- 8RktyYFhQQWG9pmikp54/aOLfZ/cjh9TS6zfOhaeF31Ho9IxHvhhXH0jeBtFqqTJ1WZbV7rPPF5
- DsaHqSmAdJqZBuchxK+t1MUYcfk9qB9kpt/OjIbGQS6U8qwW
-X-Google-Smtp-Source: AGHT+IGSev90TnkO1fSId4WqiStBjGUL2AHt1UTekhfEmhw3l3Y40BjNCpX3M0q1WgnjHjjeBenMtA==
-X-Received: by 2002:a05:600c:4fd3:b0:436:5165:f1ec with SMTP id
- 5b1f17b1804b1-43668b769f8mr24366605e9.30.1734697279136; 
- Fri, 20 Dec 2024 04:21:19 -0800 (PST)
+ d=1e100.net; s=20230601; t=1734697287; x=1735302087;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=w72ka0LDvMp+IR5mfDOsJFBeSApvq+7moVWb2aRwtAo=;
+ b=B8g2rP34ddlAxXau1wBKkdvRlYEhsptKt5Lgge2+jVjmArbm4L2BINX7NT3CejH+dg
+ 6HoEgnGKbF3td3J2A1VumyirDeq58bwPWarQoF5LVlJ84aklwch/w0jo6wwCUS9AIp61
+ H2Df1944pL6+daneA6vaeD7LUVyJFZzRS8gTWclmGacUBNSQa2l4rnwgCkOFiF5xrcKn
+ WcuD96QsJG7gJY7/wmcOZt9dfmsXM6NOOY+GqATZTt+ghJmeF1tGvNz9nhyU7qwJKEWY
+ fcs0s/W6nf8/0Vi563b9WtSINxOgvXpIAQcCb6xnEnMlFSb8G0gPEmwA9B58AuVeKJWD
+ 6qqg==
+X-Gm-Message-State: AOJu0YyYVJCINW+FWvLcvEoeHiAykTRF2lM6zMHFraAdSJkM84rp4XUD
+ yQvikhQ7GGe7v+OqH3NM4YlYMfmu4vkzW3Q3KogC/epUwW4wRgy7CbsvE/LR1l/ttYBHo72IvZh
+ 8g5E=
+X-Gm-Gg: ASbGncsyOI8tXx+kG1Hpu16HzVVMU/lSUmnSDBAVE5BoVeV+LATS/0OsolALYJiWAUi
+ dFicEejo4DaET9S3U5ygpFMlrRYW6yz3IRdQnzrpJPKdTQKAg/nLJZNNNelEeNjaEtCJbJKwnoz
+ kybF4b/kDcrbfpOYyFoQvaUv5t2Bp89gIjg4Xab1ao3LZxaupLaRBYXKWYTArecZRYtjnIhSGJc
+ t/R+AleCLS1lAeiQydC7XD1DWIQZfvjIKYLWvmwNqWZmNXBOqaB9hWxKt67DYaKqcztHS1zPhJm
+ K/mc5eMPE9zEdPukNkgzKqNSQeIv/9cGzd2zgbR9kRZzp0hh
+X-Google-Smtp-Source: AGHT+IElR/OwE68usWhDk+HWZV0Lct7k1tHkhSaV7EBx6KJMwBa2SQy2N2zFZ9JGF18R1i0eU/CajA==
+X-Received: by 2002:a5d:584b:0:b0:386:373f:47c4 with SMTP id
+ ffacd0b85a97d-38a224053d8mr2550675f8f.49.1734697285189; 
+ Fri, 20 Dec 2024 04:21:25 -0800 (PST)
 Received: from dorian..
  (sals-04-b2-v4wan-167965-cust660.vm36.cable.virginm.net. [80.3.10.149])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-43661289e0fsm44903785e9.39.2024.12.20.04.21.18
+ 5b1f17b1804b1-43661289e0fsm44903785e9.39.2024.12.20.04.21.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Dec 2024 04:21:18 -0800 (PST)
+ Fri, 20 Dec 2024 04:21:24 -0800 (PST)
 From: Craig Blackmore <craig.blackmore@embecosm.com>
 To: qemu-devel@nongnu.org,
 	qemu-riscv@nongnu.org
@@ -75,12 +76,14 @@ Cc: Craig Blackmore <craig.blackmore@embecosm.com>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Helene Chelin <helene.chelin@embecosm.com>, Nathan Egge <negge@google.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH v7 0/1] target/riscv: rvv: Use wider accesses for unit stride
+ Max Chou <max.chou@sifive.com>, Paolo Savini <paolo.savini@embecosm.com>
+Subject: [PATCH v7 1/1] target/riscv: rvv: Use wider accesses for unit stride
  load/store
-Date: Fri, 20 Dec 2024 12:21:08 +0000
-Message-ID: <20241220122109.2083215-1-craig.blackmore@embecosm.com>
+Date: Fri, 20 Dec 2024 12:21:09 +0000
+Message-ID: <20241220122109.2083215-2-craig.blackmore@embecosm.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20241220122109.2083215-1-craig.blackmore@embecosm.com>
+References: <20241220122109.2083215-1-craig.blackmore@embecosm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::332;
@@ -107,37 +110,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Richard Henderson for the review on v6.
+Use atomic load/store functions to access multiple elements from host.
 
-Changes since v6:
-- Use atomic.h and atomic128.h functions
-- Fix incorrect indentation in ok_for_atomic
+Co-authored-by: Paolo Savini <paolo.savini@embecosm.com>
 
-Previous versions:
-- v1: https://lore.kernel.org/all/20240717153040.11073-1-paolo.savini@embecosm.com/
-- v2: https://lore.kernel.org/all/20241002135708.99146-1-paolo.savini@embecosm.com/
-- v3: https://lore.kernel.org/all/20241014220153.196183-1-paolo.savini@embecosm.com/
-- v4: https://lore.kernel.org/all/20241029194348.59574-1-paolo.savini@embecosm.com/
-- v5: https://lore.kernel.org/all/20241211143118.661268-1-craig.blackmore@embecosm.com/
-- v6: https://lore.kernel.org/all/20241218142937.1028602-1-craig.blackmore@embecosm.com/
-
-Cc: Richard Henderson <richard.henderson@linaro.org>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>
-Cc: Alistair Francis <alistair.francis@wdc.com>
-Cc: Bin Meng <bmeng.cn@gmail.com>
-Cc: Weiwei Li <liwei1518@gmail.com>
-Cc: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Cc: Helene Chelin <helene.chelin@embecosm.com>
-Cc: Nathan Egge <negge@google.com>
-Cc: Max Chou <max.chou@sifive.com>
-
-Craig Blackmore (1):
-  target/riscv: rvv: Use wider accesses for unit stride load/store
-
+Signed-off-by: Paolo Savini <paolo.savini@embecosm.com>
+Signed-off-by: Craig Blackmore <craig.blackmore@embecosm.com>
+---
  target/riscv/vector_helper.c | 107 +++++++++++++++++++++++++++++++++--
  1 file changed, 101 insertions(+), 6 deletions(-)
 
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index a85dd1d200..c0179165ce 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -206,10 +206,102 @@ vext_continus_ldst_tlb(CPURISCVState *env, vext_ldst_elem_fn_tlb *ldst_tlb,
+     }
+ }
+ 
++#if !HOST_BIG_ENDIAN
++/* Atomic operations for load/store */
++
++/*
++ * Return true if there are enough elements for this size access and the
++ * pointer is aligned to the required atomicity.
++ */
++
++static inline QEMU_ALWAYS_INLINE bool
++ok_for_atomic(uint32_t size, void *host, uint32_t reg_start, uint32_t evl,
++              uint32_t log2_esz)
++{
++    return (reg_start + (size >> log2_esz)) <= evl
++            && ((uintptr_t) host % size) == 0;
++}
++
++#define GEN_VEXT_LDST_ATOMIC_HOST(SIZE, TYPE)                             \
++static inline QEMU_ALWAYS_INLINE void                                     \
++vext_ldst_atom_##SIZE##_host(void *vd, uint32_t byte_offset, TYPE *host,  \
++                             bool is_load)                                \
++{                                                                         \
++    TYPE *vd_ptr = (TYPE *) (vd + byte_offset);                           \
++    if (is_load) {                                                        \
++        *vd_ptr = qatomic_read__nocheck(host);                            \
++    } else {                                                              \
++        qatomic_set__nocheck(host, *vd_ptr);                              \
++    }                                                                     \
++}                                                                         \
++
++GEN_VEXT_LDST_ATOMIC_HOST(2, uint16_t)
++GEN_VEXT_LDST_ATOMIC_HOST(4, uint32_t)
++#ifdef CONFIG_ATOMIC64
++GEN_VEXT_LDST_ATOMIC_HOST(8, uint64_t)
++#endif
++
++#ifdef CONFIG_INT128_TYPE
++static inline QEMU_ALWAYS_INLINE void
++vext_ldst_atom_16_host(void *vd, uint32_t byte_offset, Int128 *host,
++                       bool is_load)
++{
++    Int128 *vd_ptr = (Int128 *) (vd + byte_offset);
++    if (is_load) {
++        *vd_ptr = atomic16_read_ro(host);
++    } else {
++        atomic16_set(host, *vd_ptr);
++    }
++}
++#endif
++#endif
++
++/* Perform the largest atomic load/store possible for the evl and alignment.  */
++
++static inline QEMU_ALWAYS_INLINE uint32_t
++vext_ldst_atomic_chunk_host(CPURISCVState *env,
++                            vext_ldst_elem_fn_host *ldst_host,
++                            void *vd, uint32_t evl, uint32_t reg_start,
++                            void *host, uint32_t esz, bool is_load,
++                            uint32_t log2_esz)
++{
++#if !HOST_BIG_ENDIAN
++    uint32_t byte_offset = reg_start * esz;
++
++#ifdef CONFIG_INT128_TYPE
++    if (((is_load && HAVE_ATOMIC128_RO) || (!is_load && HAVE_ATOMIC128_RW))
++        && ok_for_atomic(16, host, reg_start, evl, log2_esz)) {
++        vext_ldst_atom_16_host(vd, byte_offset, host, is_load);
++        return 16;
++    }
++#endif
++
++#ifdef CONFIG_ATOMIC64
++    if (ok_for_atomic(8, host, reg_start, evl, log2_esz)) {
++        vext_ldst_atom_8_host(vd, byte_offset, host, is_load);
++        return 8;
++    }
++#endif
++
++    if (ok_for_atomic(4, host, reg_start, evl, log2_esz)) {
++        vext_ldst_atom_4_host(vd, byte_offset, host, is_load);
++        return 4;
++    }
++
++    if (ok_for_atomic(2, host, reg_start, evl, log2_esz)) {
++        vext_ldst_atom_2_host(vd, byte_offset, host, is_load);
++        return 2;
++    }
++#endif
++
++    ldst_host(vd, reg_start, host);
++    return 1;
++}
++
+ static inline QEMU_ALWAYS_INLINE void
+ vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
+                         void *vd, uint32_t evl, uint32_t reg_start, void *host,
+-                        uint32_t esz, bool is_load)
++                        uint32_t esz, bool is_load, uint32_t log2_esz)
+ {
+ #if HOST_BIG_ENDIAN
+     for (; reg_start < evl; reg_start++, host += esz) {
+@@ -225,10 +317,13 @@ vext_continus_ldst_host(CPURISCVState *env, vext_ldst_elem_fn_host *ldst_host,
+         } else {
+             memcpy(host, vd + byte_offset, size);
+         }
+-    } else {
+-        for (; reg_start < evl; reg_start++, host += esz) {
+-            ldst_host(vd, reg_start, host);
+-        }
++        return;
++    }
++    uint32_t chunk = 0;
++    for (; reg_start < evl; reg_start += (chunk >> log2_esz),
++                            host += chunk) {
++        chunk = vext_ldst_atomic_chunk_host(env, ldst_host, vd, evl, reg_start,
++                                            host, esz, is_load, log2_esz);
+     }
+ #endif
+ }
+@@ -343,7 +438,7 @@ vext_page_ldst_us(CPURISCVState *env, void *vd, target_ulong addr,
+     if (flags == 0) {
+         if (nf == 1) {
+             vext_continus_ldst_host(env, ldst_host, vd, evl, env->vstart, host,
+-                                    esz, is_load);
++                                    esz, is_load, log2_esz);
+         } else {
+             for (i = env->vstart; i < evl; ++i) {
+                 k = 0;
 -- 
 2.43.0
 
