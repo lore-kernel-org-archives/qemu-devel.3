@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FB1EE77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:47:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09F3FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 11:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tObTg-0001XE-27; Fri, 20 Dec 2024 06:47:32 -0500
+	id 1tObZM-0003Xc-9m; Fri, 20 Dec 2024 06:53:24 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tObTe-0001T3-IX
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:47:30 -0500
-Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1tObTc-0002Im-Ac
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:47:30 -0500
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id DDBC9181174
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 12:47:16 +0100 (CET)
-Received: (qmail 17377 invoked by uid 990); 20 Dec 2024 11:47:16 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Fri, 20 Dec 2024 12:47:16 +0100
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tObZD-0003X0-Gw
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:53:17 -0500
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kchamart@redhat.com>)
+ id 1tObZ9-0003jM-Il
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 06:53:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1734695588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=clN8kK20t9Q1ruCWzq9rltbPgJklSBXSxOLMJ45bOAQ=;
+ b=G+BA4OWnbu1pTVfHk7Us6NWqiW+CLTZng9QBE1QSCutfjbt3lAf1W3bPX92E8OsuLoYVkF
+ OuyA/G+VeleeValAXNGvKlWPbTUYl1Y98gMm5rXSYqGxJoFHAbFdSUi0fnhNmWlcF+ao89
+ xontv6ztY2HENrnOkqMimsMQXdpStOI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-CuI-lu2IMO2s2CBXok8YyA-1; Fri,
+ 20 Dec 2024 06:53:04 -0500
+X-MC-Unique: CuI-lu2IMO2s2CBXok8YyA-1
+X-Mimecast-MFC-AGG-ID: CuI-lu2IMO2s2CBXok8YyA
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 756281955F42; Fri, 20 Dec 2024 11:53:02 +0000 (UTC)
+Received: from gezellig (unknown [10.39.194.19])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E096619560A2; Fri, 20 Dec 2024 11:52:54 +0000 (UTC)
+Date: Fri, 20 Dec 2024 12:52:51 +0100
+From: Kashyap Chamarthy <kchamart@redhat.com>
+To: Marc Zyngier <maz@kernel.org>
+Cc: Eric Auger <eric.auger@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Daniel =?iso-8859-1?B?IlAuIEJlcnJhbmfpIg==?= <berrange@redhat.com>,
+ eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev,
+ peter.maydell@linaro.org, richard.henderson@linaro.org,
+ alex.bennee@linaro.org, oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
+ mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
+Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
+ KVM host model
+Message-ID: <Z2Vak-hbCMaxm-JJ@gezellig>
+References: <20241206112213.88394-1-cohuck@redhat.com>
+ <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
+ <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
+ <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
+ <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
+ <Z2Q2rWj9cV0W_XVq@gezellig> <86zfkrptmj.wl-maz@kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Dec 2024 11:47:16 +0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-From: "Julian Ganz" <neither@nut.email>
-Message-ID: <590990025f1f43704ca8831254754661c176c42f@nut.email>
-TLS-Required: No
-Subject: Re: [RFC PATCH v3 11/11] tests: add plugin asserting correctness of
- discon event's to_pc
-To: "Pierrick Bouvier" <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: "=?utf-8?B?QWxleCBCZW5uw6ll?=" <alex.bennee@linaro.org>, "Alexandre
- Iooss" <erdnaxe@crans.org>, "Mahmoud Mandour" <ma.mandourr@gmail.com>
-In-Reply-To: <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
-References: <cover.1733063076.git.neither@nut.email>
- <36d316bf3e8b0aca778c5e8d1acde39a7f361946.1733063076.git.neither@nut.email>
- <d4b17c7d-c1d2-4e43-8eee-d1667e3ee5a2@linaro.org>
-X-Rspamd-Bar: +
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) MIME_GOOD(-0.1)
-X-Rspamd-Score: 1.399999
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=TPws9O7oWat8V8+qKpa+pi8rJtKfWj5dn/3GbdSjnzY=;
- b=b5RPa9tz7ikt6jA9H8BkwruyMR8I2Zgnh5X+SVzdwj5Qh59c6Wlc65o2H+Vc/V+G+okqbLQ/q1
- yxOMnKeQTOIsJQXBWvGhGtA52CBC3YP7lB56UzUJD1RR00zjXaloJSJ8VLC3ksVbh/TA+FG3h5jL
- RKPd2Yjt92xkBkk61NzjqpN+E2jOW9p25FjpE14JJqcaPeZ5U9L4X6AIx8rDLkPgnXamBSfjB2Ke
- x52ajqeYmroNJqsLrmPmmvZ6KiepXLuYB6uzrBjir1zqZXWhERSJ1WNZuypdZt1p0dLqo42WQh7T
- xEDF6QuDOhqrAomOfLByELGFJ1wrHujzK6Khpn+AuENYOvGGqyhu2LZPM8oybBmmMDVdvphU/Gbk
- Lmaod2R4kuN80WiRU9Vav2487xzCcoz7f9F8HnAWLHbKMbGcGqlPVoyU209borctRLVhSiZYmONE
- 6AseF4LnouxzfpjuK7yK99JWlIHI+tZ5QiuUk+0C1Q+zGUU2ijN1UeO/kn3m4CyiTkhi9N+Ptx27
- DK3Jk0H+9PQNWEX11F1L9iw741MONGjFj/BUwL9gjh5mnQL6zgcyKpuR0bpDBHJqHOyzkcZgFg/I
- QuIvaI7LP6LM3aJsnckFhHV8eylWWvJ/UmhV5qllJ1RQHe9o3tUpfQB/UPFCLaSO4cT9ss/Fu6zK
- 0=
-Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
- envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <86zfkrptmj.wl-maz@kernel.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kchamart@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,86 +99,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Pierrick,
+On Thu, Dec 19, 2024 at 03:41:56PM +0000, Marc Zyngier wrote:
+> On Thu, 19 Dec 2024 15:07:25 +0000,
+> Kashyap Chamarthy <kchamart@redhat.com> wrote:
+> > 
+> > On Thu, Dec 19, 2024 at 12:26:29PM +0000, Marc Zyngier wrote:
+> > > On Thu, 19 Dec 2024 11:35:16 +0000,
+> > > Kashyap Chamarthy <kchamart@redhat.com> wrote:
 
-December 5, 2024 at 12:33 AM, "Pierrick Bouvier" wrote:
-> On 12/2/24 11:41, Julian Ganz wrote:
-> >  +static void insn_exec(unsigned int vcpu_index, void *userdata)
-> >  +{
-> >  + struct cpu_state *state =3D qemu_plugin_scoreboard_find(states, vc=
-pu_index);
-> >  + uint64_t pc =3D (uint64_t) userdata;
-> >  + GString* report;
-> >  +
-> >  + if (state->has_next) {
-> >  + if (state->next_pc !=3D pc) {
-> >  + report =3D g_string_new("Trap target PC mismatch\n");
-> >  + g_string_append_printf(report,
-> >  + "Expected: %"PRIx64"\nEncountered: %"
-> >  + PRIx64"\n",
-> >  + state->next_pc, pc);
-> >  + qemu_plugin_outs(report->str);
-> >  + if (abort_on_mismatch) {
-> >  + g_abort();
-> >  + }
-> >  + g_string_free(report, true);
-> >  + }
-> >  + state->has_next =3D false;
-> >  + }
-> >  +}
-> >=20
->=20When booting an arm64 vm, I get this message:
-> Trap target PC mismatch
-> Expected: 23faf3a80
-> Encountered: 23faf3a84
+[...]
 
-A colleague of mine went to great lengths trying to track and reliably
-reproduce this. We think that it's something amiss with the existing
-instruction exec callback infrastructure. So... it's not something I'll
-be addressing with the next iteration as it's out of scope. We'll
-probably continue looking into it, though.
+> > > You can't rely on userspace for security, that'd be completely
+> > > ludicrous.
+> > 
+> > As Dan Berrangé points out, it's the bog-standard way QEMU deals with
+> > some of the CPU-related issues on x86 today.  See this "important CPU
+> > flags"[2] section in the QEMU docs.
+> 
+> I had a look, and we do things quite differently. For example, the
+> spec-ctrl equivalent in implemented in FW and in KVM, and is exposed
+> by default if the HW is vulnerable. Userspace could hide that the
+> mitigation is there, but that's the extent of the configurability.
 
-The mismatch is reported perfectly normal and boring exceptions and
-interrupts with no indication of any differences to other (not reported)
-events that fire on a regular basis. Apparently, once in a blue moon
-(relatively speaking), for the first instruction of a handler (even
-though it is definitely executed and qemu does print a trace-line for
-that instruction):
+Noted.  As Dan says, as long as QEMU can toggle the feature on/off, then
+that might be sufficient in the context of migratability.
 
-| Trace 0: 0x7fffa0b03900 [00104004/000000023fde73b4/00000021/ff020200]
-| Trace 0: 0x7fffa02d9580 [00104004/000000023fde72b8/00000021/ff020200]
-| Trace 0: 0x7fffa02dfc40 [00104004/000000023fde7338/00000021/ff020200]
-| Trace 0: 0x7fffa0b03d00 [00104004/000000023fde73d4/00000021/ff020200]
-| Trace 0: 0x7fffa0b03e80 [00104004/000000023fde73d8/00000021/ff020200]
-| Trace 0: 0x7fffa0b04140 [00104004/000000023fde7408/00000021/ff020200]
-| Trace 0: 0x7fffa02dd6c0 [00104004/000000023fde70b8/00000021/ff020200]
-| Trace 0: 0x7fffa02dd800 [00104004/000000023fde7b90/00000021/ff020200]
-| cpu_io_recompile: rewound execution of TB to 000000023fde7b90
-| Taking exception 5 [IRQ] on CPU 0
-| ...from EL1 to EL1
-| ...with ESR 0x0/0x3800000
-| ...with SPSR 0x20000305
-| ...with ELR 0x23fde7b90
-| ...to EL1 PC 0x23fd77a80 PSTATE 0x23c5
-| Trace 0: 0x7fffa13a8340 [00104004/000000023fd77a80/00000021/ff021201]
-| Trace 0: 0x7fffa13a8480 [00104004/000000023fd77a84/00000021/ff020200]
-| Trap target PC mismatch CPU 0
-| Expected:    23fd77a80
-| Encountered: 23fd77a84
-| warning: 44	./nptl/pthread_kill.c: No such file or directory
-| Couldn't get registers: No such process.
+[...]
 
-It does show up with both single-core and multi-core VMs, so that at
-least eliminates some possibilities. Maybe :/
+> > To reply to your other question on this thread[3] about "which ABI?"  I
+> > think Dan is talking about the *guest* ABI: the virtual "chipset" that
+> > is exposed to a guest (e.g. PCI(e) topology, ACPI tables, CPU model,
+> > etc).  As I understand it, this "guest ABI" should remain predictable,
+> > regardless of:
+> > 
+> >   - whether you're updating KVM, QEMU, or the underlying physical
+> >     hardware itself; or
+> >   - if the guest is migrated, live or offline
+> > 
+> > (As you might know, QEMU's "machine types" concept allows to create a
+> > stable guest ABI.)
+> 
+> All of this is under control of QEMU, *except* for the "maximum" of
+> the architectural features exposed to the guest. All you can do is
+> *downgrade* from there, and only to a limited extent.
+> 
+> That, in turn has a direct impact on what you call the "CPU model",
+> which for the ARM architecture really doesn't exist. All we have is a
+> bag of discrete features, with intricate dependencies between them.
 
-The issue is nasty to reproduce in a way that allows any meaningful
-investigation. It usually involves sifting through many GBs of Qemu logs
-for maybe one occurance. We could add another testing/dummy plugin that
-just prints the PC for _any_ instruction executed and have a skript
-check for non-alternating Trace-lines from Qemu and that Plugin. But
-then we're talking nearly double the amount of Lines to look through
-with probably little additional information.
+I see; thanks for this explanation.  Your last sentence above is the
+shortest summary of the CPU features situation on ARM I've ever read so
+far. 
 
-Regards,
-Julian
+So, I infer this from what you're saying (do correct if it's wrong):
+
+  • Currently it is impractical (not feasible?) to pull together a
+    minimal-and-usable set of CPU features + their dependencies on ARM
+    to come up with a "CPU model" that can work across a reasonable set
+    of hardware.
+
+  • If the above is true, then the ability to toggle CPU features on and
+    off might become even more important for QEMU — if it wants to be
+    able to support live migration across mixed set of hardware on ARM.  
+
+    NB: by "mixed set of hardware", I mean hardware that is *close
+    enough* (e.g. among the "Ampere Altra Family" - BTW, this "family"
+    seems to be only 2 systems far).  Not arbitrarily mixed.  I did read
+    your response in this thread about "who in their right mind" would
+    want to migrate from Nvidia "Grace" to "AmpereOne".
+
+      https://lore.kernel.org/linux-arm-kernel/86y10ytpo6.wl-maz@kernel.org/
+      — KVM: arm64: Make the exposed feature bits in AA64DFR0_EL1
+      writable from userspace
+
+> Even ignoring virtualisation: you can readily find two machines using
+> the same CPUs (let's say Neoverse-N1), integrated by the same vendor
+> (let's say, Ampere), in SoCs that bear the same name (Altra), and
+> realise that they have a different feature set. Fun, isn't it?
+
+Yikes!  I would use a different word, that starts with "m" and ends with
+"s" (the resulting word rhymes with the latter) ;-)
+
+    * * *
+
+Related tangent on CPU feature discoverability on ARM:
+
+Speaking of "Neoverse-N1", looking at a system that I have access to,
+the `lscpu` output does not say anything about who the integrator is; it
+only says:
+
+    ...
+    Vendor ID:                ARM
+    Model name:             Neoverse-N1
+    ...
+
+I realize, `lscpu` displays only whatever the kernel knows.  Nothing in
+`dmidecode` either.
+
+Also, it looks like there's no equivalent of a "CPUID" instruction (I
+realize it is x86-specific) on ARM.  Although, I came across a Google
+Git repo that seems to implement a bespoke, "aarch64_cpuid".  From a
+what I see, it seems to fetch the "Main ID Register" (MIDR_EL1) - I
+don't know enough about it to understand its implications:
+
+    https://github.com/google/cpu_features/blob/main/src/impl_aarch64_cpuid.c
+
+> That's why I don't see CPU models as a viable thing in terms of ABI.
+> They are an approximation of what you could have, but the ABI is
+> elsewhere.
+
+Hmm, this is "significant new information" for me.  If CPU models can't
+be part of the guest ABI on ARM, then the whole "migratability across
+heterogenous hardware" on QEMU requires deeper thinking.
+
+Thanks for this discussion.
+
+-- 
+/kashyap
+
 
