@@ -4,81 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 909FBE7718B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D37DE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 16:06:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOfUd-0002kA-Mi; Fri, 20 Dec 2024 11:04:47 -0500
+	id 1tOfWD-0003hs-F0; Fri, 20 Dec 2024 11:06:25 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tOfUY-0002jV-8V
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:04:42 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOfWA-0003hV-9C
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:06:22 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1tOfUV-0002aZ-Fs
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:04:42 -0500
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1tOfW8-00034Z-My
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 11:06:22 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734710676;
+ s=mimecast20190719; t=1734710780;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zg7ccD/W/XlqMMpPf1cKO8U1jMkrmDqjiLXSn0kHDWA=;
- b=dZ2ie3eNuzpxF9rmHMUGx7QeaYelUIowgcWEyHIu+DTrKTwOmd51eYqVpG/rw2cy83QbPj
- 1fD6yxMGw7YpxYodkhMAmu7IIUpRU6fg+T7w904RaY0DWtk+xyT36RzMksUZpIlebQ4CKP
- 8xlHMl3khQT0MxfGR8i5PC7jk1nH+yc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-224-oIlcAF56MTS_mgkSjF_NPg-1; Fri,
- 20 Dec 2024 11:04:33 -0500
-X-MC-Unique: oIlcAF56MTS_mgkSjF_NPg-1
-X-Mimecast-MFC-AGG-ID: oIlcAF56MTS_mgkSjF_NPg
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD3FB1956088; Fri, 20 Dec 2024 16:04:30 +0000 (UTC)
-Received: from localhost (dhcp-192-244.str.redhat.com [10.33.192.244])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 17819195608A; Fri, 20 Dec 2024 16:04:27 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, Marc
- Zyngier <maz@kernel.org>
-Cc: Kashyap Chamarthy <kchamart@redhat.com>, Eric Auger
- <eric.auger@redhat.com>, eric.auger.pro@gmail.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- abologna@redhat.com, jdenemar@redhat.com, shahuang@redhat.com,
- mark.rutland@arm.com, philmd@linaro.org, pbonzini@redhat.com
-Subject: Re: [PATCH RFCv2 00/20] kvm/arm: Introduce a customizable aarch64
- KVM host model
-In-Reply-To: <Z2RdMJHydsvPpmdH@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20241206112213.88394-1-cohuck@redhat.com>
- <edc12140-6345-4868-938d-c80c4d2c2004@redhat.com>
- <Z1qoa8yXscTSAJ9e@redhat.com> <8734it1bv6.fsf@redhat.com>
- <1fea79e4-7a31-4592-8495-7b18cd82d02b@redhat.com>
- <Z2QE9AqZnpGM5sWD@gezellig> <8634ijrh8q.wl-maz@kernel.org>
- <Z2Q2rWj9cV0W_XVq@gezellig> <86zfkrptmj.wl-maz@kernel.org>
- <Z2RdMJHydsvPpmdH@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 20 Dec 2024 17:04:25 +0100
-Message-ID: <87frmibat2.fsf@redhat.com>
+ bh=cuOHL+BI+KPUkCrVcsU96mx+0GMeZIAYSCNLXtxwp1U=;
+ b=h41BZ063vdT7inPzccdYBTehltFn2K7mHhjR565w7n/eRXYEiAKP4tnntiWaL4OD4SueDQ
+ Y7c7dMvaLHOoN7cBwPQWkeuKdGO4XWbgFXsVAXoZXrOIbvh/9qbMy9srLbYTyUFfuUTksH
+ 07wWBzkAM0pg6b7PnLSEmDUuh9RXEqs=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-gceceiiROFqIxHdIGHFM0Q-1; Fri, 20 Dec 2024 11:06:18 -0500
+X-MC-Unique: gceceiiROFqIxHdIGHFM0Q-1
+X-Mimecast-MFC-AGG-ID: gceceiiROFqIxHdIGHFM0Q
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7b6eeef7cb8so300448685a.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 08:06:18 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1734710778; x=1735315578;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=cuOHL+BI+KPUkCrVcsU96mx+0GMeZIAYSCNLXtxwp1U=;
+ b=q7GcQPhqK3Xejrxi1/tqo4aCjEdy7WPJo9vtQR57XiWbXdZ5T2cLRsmqMcChESDF7T
+ NPcxkV9NLVIg33JYZ/P09RfnRFaP4oax9iiy+PCmiNFns+x2eBwmKojRQyR1pLbsAqMs
+ MrIB4Oq8/M/yWNnUQyg8KflKarEVGyu+TW3oKFvbhOymEVvXNN78Jc/lMtsdH77rruLa
+ /GrGx12cM43qlDomhaCDbuQVFQUGx/JApaSc0yb/npwwr8tjngjS7t3aUBE9pHmx/AiW
+ ZTOlBAAoeGrENbP0a7N3HVWVZkPnqgFlacIt6OYJ1VRmI5a/QWBVd+rt8eL5AGufpecD
+ hczA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVtZnu5BdPvQyuCapEHSFZlOEdxs4ZR8wRzdVbLjcV8Z1Oqvz3yChQQ+RSjygUW0qeisT5GtR3XsJFY@nongnu.org
+X-Gm-Message-State: AOJu0Yymk5sgxhiOGtnykUjK4GLuIOikCyM/OtwyLSJiMtmdkkEqP6vJ
+ cMGXivZrFQiNI+YOI+7dINCBl7RWmrJfvVhgf9KIH16MvlPuMGBLI6q8dgQzrVtpkaRQRrFrR0/
+ h51QzLZdwdld/57F26zrbJYtmzvNJ88mfyiQOSjmOoWWdAeTR7gqT
+X-Gm-Gg: ASbGnctPHreL7G32/O747qklJ+I7bPnIKU7BkzrhpcAG9ds9r5bY52XjLAjpKZAGvZi
+ On9Vj6DvAPN07Zt4w9giDZUMk4TNmqrhR84gzc/HubIq36cANh7oxzF/Rnikg0Fw86ffJd6d3HB
+ U7xHUbkGzq6jp2pDL95Pah/uSDVXjg6sfdvRPVKIp78T237k7kvccLQr0BdGJ6BnK9D6q3h3GXA
+ bpvXOXve87pKbFhOaRzTEve4KiHguQbN6biU0egz5ZGrhpONLFC9B2+rGSdI6pWA4dW5Dtid2uK
+ itfvrZ2QGSdt8insyg==
+X-Received: by 2002:a05:620a:4096:b0:7b6:c4c7:ece5 with SMTP id
+ af79cd13be357-7b9ba7ead53mr573031185a.43.1734710778077; 
+ Fri, 20 Dec 2024 08:06:18 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IFYrUClMTrKEr1iHI2oHNiXNXmrubSEyDyLJ72x40vReR2MEaFeqBXzpsC3ucnw93GukTdvbg==
+X-Received: by 2002:a05:620a:4096:b0:7b6:c4c7:ece5 with SMTP id
+ af79cd13be357-7b9ba7ead53mr573024785a.43.1734710777596; 
+ Fri, 20 Dec 2024 08:06:17 -0800 (PST)
+Received: from x1n (pool-99-254-114-190.cpe.net.cable.rogers.com.
+ [99.254.114.190]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7b9ac2df864sm148387485a.44.2024.12.20.08.06.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Dec 2024 08:06:16 -0800 (PST)
+Date: Fri, 20 Dec 2024 11:06:13 -0500
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 19/22] tests/qtest/migration: Add migration-test-smoke
+Message-ID: <Z2WV9TfVwvbQz0bv@x1n>
+References: <Z2MKesakYn3fn2ue@x1n> <87h670vozv.fsf@suse.de>
+ <Z2MvCRYKLmYCj55i@x1n> <875xngvgwe.fsf@suse.de>
+ <Z2NHBQc9ixuvJ3k_@x1n> <8734ijvg2q.fsf@suse.de>
+ <Z2Ra7c7svRVbYw1k@x1n> <87wmfvtqpz.fsf@suse.de>
+ <Z2WKzdDIyiSCHI9f@x1n> <Z2WOiKDOOIwEkg15@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <Z2WOiKDOOIwEkg15@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -103,99 +115,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Dec 19 2024, Daniel P. Berrang=C3=A9 <berrange@redhat.com> wrote:
+On Fri, Dec 20, 2024 at 03:34:32PM +0000, Daniel P. Berrangé wrote:
+> On Fri, Dec 20, 2024 at 10:18:37AM -0500, Peter Xu wrote:
+> > On Thu, Dec 19, 2024 at 04:31:04PM -0300, Fabiano Rosas wrote:
+> > > We shouldn't change stuff that's also used by the rest of the
+> > > community. People know about QEMU_TEST_FLAKY_TESTS and -m slow. These
+> > > must continue to work the same.
+> > 
+> > I see what I overlook; it's used much more than I thought in qtest and we
+> > also have a CI for it.. So ok, let's keep at least QEMU_TEST_FLAKY_TESTS.
+> > 
+> > But again, I don't think it matters much even if we rename it, it means the
+> > flaky CI test won't run these two migration tests, but that's not the end
+> > of the world either, if you see what I meant.  CI relies on the normal
+> > tests rather than flaky tests to present.
+> > 
+> > We should be able to move in / take out FLAKY tests at will, as that's not
+> > what CI is really relying on.  Here renaming the macro in migration test
+> > almost means we take both ou.t
+> 
+> Side-note - QEMU_TEST_FLAKY_TESTS is something we should apply
+> consistently across all types of tests - unit, qtest, functional,
+> and across all environments - CI and local developer execution.
+> 
+> In recent changes to functional testing, I've set the expectation[1]
+> that any use of QEMU_TEST_FLAKY_TESTS *must* be accompanied by a
+> link to the gitlab.com/qemu/qemu-project  issue that describes
+> the flaky behaviour seen. We've got too many places with flaky
+> tests where we don't quiet remember what was flaky, so don't
+> know if we can remove it or not
 
-> On Thu, Dec 19, 2024 at 03:41:56PM +0000, Marc Zyngier wrote:
->> On Thu, 19 Dec 2024 15:07:25 +0000,
->> Kashyap Chamarthy <kchamart@redhat.com> wrote:
->> >=20
->> > On Thu, Dec 19, 2024 at 12:26:29PM +0000, Marc Zyngier wrote:
->> > > On Thu, 19 Dec 2024 11:35:16 +0000,
->> > > Kashyap Chamarthy <kchamart@redhat.com> wrote:
->> >=20
->> > [...]
->> >=20
->> > > > Consider this:
->> > > >=20
->> > > > Say, there's a serious security issue in a released ARM CPU.  As p=
-art of
->> > > > the fix, two new CPU flags need to be exposed to the guest OS, cal=
-l them
->> > > > "secflag1" and "secflag2".  Here, the user is configuring a baseli=
-ne
->> > > > model + two extra CPU flags, not to get close to some other CPU mo=
-del
->> > > > but to mitigate itself against a serious security flaw.
->> > >=20
->> > > If there's such a security issue, that the hypervisor's job to do so,
->> > > not userspace.=20
->> >=20
->> > I don't disagree.  Probably that has always been the case on ARM.  I
->> > asked the above based on how QEMU on x86 handles it today.
->> >=20
->> > > See what KVM does for CSV3, for example (and all the
->> > > rest of the side-channel stuff).
->> >=20
->> > Noted.  From a quick look in the kernel tree, I assume you're referring
->> > to these commits[1].
->> >=20
->> > > You can't rely on userspace for security, that'd be completely
->> > > ludicrous.
->> >=20
->> > As Dan Berrang=C3=A9 points out, it's the bog-standard way QEMU deals =
-with
->> > some of the CPU-related issues on x86 today.  See this "important CPU
->> > flags"[2] section in the QEMU docs.
->>=20
->> I had a look, and we do things quite differently. For example, the
->> spec-ctrl equivalent in implemented in FW and in KVM, and is exposed
->> by default if the HW is vulnerable. Userspace could hide that the
->> mitigation is there, but that's the extent of the configurability.
->
-> Whether it is enabled by default or disabled by default isn't a
-> totally fatal problem. If QEMU can toggle it to the opposite value,
-> we have the same level of configurability in both cases.
+Thanks for the heads up.  Yes it makes sense to document it explicitly in
+the code.  For now we can still dig into git log, but not as easy as
+inline.
 
-I don't think "hiding" is the same thing as "disabling"? The underlying
-behaviour will still have changed, the main question is whether that is
-a problem.
+Aside that, IIUC the major challenge will still be there though on the
+justification itself.  It could depend on how easily reproduceable the
+issue is on the developers' hosts.. If there can be some link that not only
+report where does it came from, but also to verify a fix that'll be even
+nicer.
 
->
-> It does, however, have implications for QEMU as if KVM gained support
-> for exposing the new feature by default and QEMU didn't know about
-> it, then the guest ABI would have changed without QEMU realizing it.
->
-> IOW, it would imply a requirement for timely QEMU updates to match
-> the kernel, which is something we wouldn't need in x86 world where
-> the feature is disabled by default. Disable by default is a more
-> stable approach from QEMU's POV.
-
-It implies that QEMU (or generally the VMM) needs to actively disable
-everything it does not know about (i.e. setting everything in any
-writable id reg to zero if it has no idea what it is about) to provide a
-stable guest interface across different kernels. Just tweaking some
-known values is only sufficient for a stable interface across two
-systems with the same kernel.
-
-(...)
-
->> That's why I don't see CPU models as a viable thing in terms of ABI.
->> They are an approximation of what you could have, but the ABI is
->> elsewhere.
->
-> Right, this makes life quite challenging for QEMU. The premise of named
-> CPU models (as opposed to -host), is to facilitate the migration of VMs
-> between heterogenous hardware platforms. That assumes it is possible to
-> downgrade the CPU on both src + dst, to the common baseline you desire.
->
-> If we were to define a named CPU model, for that to be usable, QEMU
-> would have to be able to query the "maxmimum" architectural features,
-> and validate that the delta between the host maximum, and the named
-> CPU model is possible to downgrade. Is arm providing sufficient info
-> to let QEMU do that ?
-
-Not sure if I understand what you mean, but "give me the contents of all
-id registers, and which registers are writable" should probably do the
-trick?
+-- 
+Peter Xu
 
 
