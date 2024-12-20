@@ -4,70 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0FC9E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 14:22:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A90BE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 14:24:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOdsd-0002Vd-C3; Fri, 20 Dec 2024 09:21:28 -0500
+	id 1tOduw-0003E0-P7; Fri, 20 Dec 2024 09:23:50 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOdsT-0002VM-Kw
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:21:19 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOduv-0003Ds-V4
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:23:49 -0500
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOdsO-0002gc-8v
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:21:16 -0500
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1tOduu-000367-DW
+ for qemu-devel@nongnu.org; Fri, 20 Dec 2024 09:23:49 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734704470;
+ s=mimecast20190719; t=1734704627;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mBpimWTzkpOiqWwBS1U2mm0DB7QhU68XAWS0jWITI7I=;
- b=AXRK3tzSlLqUY8ZoSGjTTiDqPtgAnRbDUw95O8gfs6radiZSMQBWrvkqDho9WoDn0rZ3+x
- EEPUYnh8IozJniOnkM3yXZPQHhvkZC4EbM9Nu3HLhd4XqUsW7rUNNS2O3mttobYC6P258y
- 5SPJPCuC7BBmp2F4OAOuQSyNLQFyAdQ=
+ bh=ZGud1x59X421iY6SwgvWDJdvyCyeJyN2HumcKOAdsBg=;
+ b=InMJWwhPVXWO5mO2ntM+npDNAEyZYRY4ZdjrgUm+fBd4XFVBj2si3b3YviG00E9Vswe5X9
+ cSdN5Jy33rGWBvV4RlHLFGDGupljYGfycA+rpyyySryCqHnInakJQgxrbaWImy4FUUOJuv
+ aK9q7sTrMjvC4boWHWuhbF/tTlnEctw=
 Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-sh86uJhxOnqF2y9Oo9JvvQ-1; Fri,
- 20 Dec 2024 09:21:07 -0500
-X-MC-Unique: sh86uJhxOnqF2y9Oo9JvvQ-1
-X-Mimecast-MFC-AGG-ID: sh86uJhxOnqF2y9Oo9JvvQ
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-661-u31RN_eyMfivjEeAEBRzCQ-1; Fri,
+ 20 Dec 2024 09:23:43 -0500
+X-MC-Unique: u31RN_eyMfivjEeAEBRzCQ-1
+X-Mimecast-MFC-AGG-ID: u31RN_eyMfivjEeAEBRzCQ
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C05961956059; Fri, 20 Dec 2024 14:21:05 +0000 (UTC)
+ id A33B91956052; Fri, 20 Dec 2024 14:23:42 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.39.192.27])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C0C21956053; Fri, 20 Dec 2024 14:21:04 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 635E0195605F; Fri, 20 Dec 2024 14:23:42 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 282AC21E6740; Fri, 20 Dec 2024 15:21:02 +0100 (CET)
+ id 0C3CC21E6740; Fri, 20 Dec 2024 15:23:40 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: John Snow <jsnow@redhat.com>
 Cc: qemu-devel@nongnu.org,  Peter Maydell <peter.maydell@linaro.org>,
  Michael Roth <michael.roth@amd.com>
-Subject: Re: [PATCH 16/23] docs/qapidoc: add visit_feature() method
-In-Reply-To: <20241213021827.2956769-17-jsnow@redhat.com> (John Snow's message
- of "Thu, 12 Dec 2024 21:18:19 -0500")
+Subject: Re: [PATCH 17/23] docs/qapidoc: record current documented entity in
+ transmogrifier
+In-Reply-To: <20241213021827.2956769-18-jsnow@redhat.com> (John Snow's message
+ of "Thu, 12 Dec 2024 21:18:20 -0500")
 References: <20241213021827.2956769-1-jsnow@redhat.com>
- <20241213021827.2956769-17-jsnow@redhat.com>
-Date: Fri, 20 Dec 2024 15:21:02 +0100
-Message-ID: <87cyhm306p.fsf@pond.sub.org>
+ <20241213021827.2956769-18-jsnow@redhat.com>
+Date: Fri, 20 Dec 2024 15:23:40 +0100
+Message-ID: <878qsa302b.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.129,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -88,37 +89,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 John Snow <jsnow@redhat.com> writes:
 
-> The format_type() method is adjusted here to return None for features,
-> because Features don't have documented types. This makes
-> generate_field() safe to use for features.
-
-I'm confused: the patch doesn't touch format_type().
-
+> Keep a record of which entity we're working on documenting for the
+> purposes of being able to change certain generative features
+> conditionally and create stronger assertions.
 >
+> If you find yourself asking: "Wait, but where does the current entity
+> actually get recorded?!", you're right! That part comes with the
+> visit_entity() implementation, which gets added later.
+
+That's fine, except your title promises "record current documented
+entity".  Perhaps "Prepare to record entity being transmogrified".
+
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  docs/sphinx/qapidoc.py | 9 +++++++++
->  1 file changed, 9 insertions(+)
+>  docs/sphinx/qapidoc.py | 6 ++++++
+>  1 file changed, 6 insertions(+)
 >
 > diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-> index 7efe2d656c0..02f434c09ab 100644
+> index 02f434c09ab..c731c597daf 100644
 > --- a/docs/sphinx/qapidoc.py
 > +++ b/docs/sphinx/qapidoc.py
-> @@ -187,6 +187,15 @@ def visit_paragraph(self, section: QAPIDoc.Section) -> None:
->          self.add_lines(section.text, section.info)
->          self.ensure_blank_line()
+> @@ -74,9 +74,15 @@ def dedent(text: str) -> str:
 >  
-> +    def visit_feature(self, section: QAPIDoc.ArgSection) -> None:
-> +        # FIXME - ifcond for features is not handled at all yet!
-> +        # Proposal: decorate the right-hand column with some graphical
-> +        # element to indicate conditional availability?
-> +        assert section.text  # Guaranteed by parser.py
-> +        assert section.member
+>  class Transmogrifier:
+>      def __init__(self, schema):
+> +        self._curr_ent = None
+>          self._result = StringList()
+>          self.indent = 0
+>  
+> +    @property
+> +    def entity(self) -> QAPISchemaEntity:
+> +        assert self._curr_ent is not None
+> +        return self._curr_ent
 > +
-> +        self.generate_field("feat", section.member, section.text, section.info)
-> +
->      def visit_errors(self, section: QAPIDoc.Section) -> None:
->          # FIXME: the formatting for errors may be inconsistent and may
->          # or may not require different newline placement to ensure
+>      # General-purpose rST generation functions
+>  
+>      def get_indent(self) -> str:
 
 
