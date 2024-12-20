@@ -4,43 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88795E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:09:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54320E77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 21:11:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOkEt-0007S2-IJ; Fri, 20 Dec 2024 16:08:51 -0500
+	id 1tOkHU-0000Vv-3E; Fri, 20 Dec 2024 16:11:36 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkEr-0007Pe-M8; Fri, 20 Dec 2024 16:08:49 -0500
+ id 1tOkHI-0000Rq-3I; Fri, 20 Dec 2024 16:11:20 -0500
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1tOkEq-0003NT-0o; Fri, 20 Dec 2024 16:08:49 -0500
+ id 1tOkHF-0003lX-1n; Fri, 20 Dec 2024 16:11:18 -0500
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 02A25C8234;
- Sat, 21 Dec 2024 00:08:18 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 160E9C8237;
+ Sat, 21 Dec 2024 00:10:46 +0300 (MSK)
 Received: from [192.168.177.130] (mjt.wg.tls.msk.ru [192.168.177.130])
- by tsrv.corpit.ru (Postfix) with ESMTP id 44A8718C9E3;
- Sat, 21 Dec 2024 00:08:46 +0300 (MSK)
-Message-ID: <464fd4fd-a6ff-45ea-942e-ac4b3a86d4cb@tls.msk.ru>
-Date: Sat, 21 Dec 2024 00:08:46 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id 707B318C9EA;
+ Sat, 21 Dec 2024 00:11:14 +0300 (MSK)
+Message-ID: <0103774f-f010-4cef-b8d1-fee11b2f4a21@tls.msk.ru>
+Date: Sat, 21 Dec 2024 00:11:14 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 5/5] accel/tcg: Always call tcg_flush_jmp_cache() on
- reset
+Subject: Re: [PATCH-for-9.1? v2 4/4] hw/sd/sdhci: Check ADMA descriptors can
+ be accessed
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Warner Losh <imp@bsdimp.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Kyle Evans <kevans@freebsd.org>, Ilya Leoshkevich <iii@linux.ibm.com>,
- Riku Voipio <riku.voipio@iki.fi>, Laurent Vivier <laurent@vivier.eu>,
- qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>
-References: <20240503123456.28866-1-philmd@linaro.org>
- <20240503123456.28866-6-philmd@linaro.org>
- <bd395931-0883-45b0-89fc-8766ffcda9cf@tls.msk.ru>
- <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
+ qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, qemu-block@nongnu.org,
+ Bin Meng <bmeng.cn@gmail.com>, qemu-stable@nongnu.org
+References: <20240731212501.44385-1-philmd@linaro.org>
+ <20240731212501.44385-5-philmd@linaro.org>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -86,7 +81,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <1bdbdcbc-29be-424d-9215-fc711b11a1bc@linaro.org>
+In-Reply-To: <20240731212501.44385-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -112,20 +107,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-13.08.2024 18:10, Philippe Mathieu-Daudé wrote:
+01.08.2024 00:25, Philippe Mathieu-Daudé wrote:
+> Since malicious guest can write invalid addresses to
+> the ADMASYSADDR register, we need to check whether the
+> descriptor could be correctly filled or not.
 
->> Has this change been forgotten, or is it not appropriate anymore?
-> 
-> Not forgotten and still need to be fixed, however unfortunately
-> this exposed a bug in user-mode SYS_exit_group when using plugins
-> (see qemu_plugin_disable_mem_helpers call in qemu_plugin_user_exit).
-> 
-> Pierrick is working on it, and I'll rebase this series once his
-> work gets merged. Next release :/
-
-Hm.. Do we have an idea *which* next release it will be? ;))
+Ping?  This has been about the 9.1 release, now 9.2 is out already
+and we're working on 10.0...
 
 Thanks,
 
 /mjt
+
+> Cc: qemu-stable@nongnu.org
+> Fixes: d7dfca0807 ("hw/sdhci: introduce standard SD host controller")
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/sd/sdhci.c | 23 +++++++++++++++++------
+>   1 file changed, 17 insertions(+), 6 deletions(-)
+> 
+> diff --git a/hw/sd/sdhci.c b/hw/sd/sdhci.c
+> index 2d8fa3151a..6794ee2267 100644
+> --- a/hw/sd/sdhci.c
+> +++ b/hw/sd/sdhci.c
+> @@ -701,13 +701,18 @@ static void trace_adma_description(const char *type, const ADMADescr *dscr)
+>   static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+>   {
+>       hwaddr entry_addr = (hwaddr)s->admasysaddr;
+> +    MemTxResult res;
+> +
+>       switch (SDHC_DMA_TYPE(s->hostctl1)) {
+>       case SDHC_CTRL_ADMA2_32:
+>           {
+>               uint64_t adma2 = 0;
+>   
+> -            dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+> -                            MEMTXATTRS_UNSPECIFIED);
+> +            res = dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+> +                                  MEMTXATTRS_UNSPECIFIED);
+> +            if (res != MEMTX_OK) {
+> +                break;
+> +            }
+>               adma2 = le64_to_cpu(adma2);
+>               /*
+>                * The spec does not specify endianness of descriptor table.
+> @@ -724,8 +729,11 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+>           {
+>               uint32_t adma1 = 0;
+>   
+> -            dma_memory_read(s->dma_as, entry_addr, &adma1, sizeof(adma1),
+> -                            MEMTXATTRS_UNSPECIFIED);
+> +            res = dma_memory_read(s->dma_as, entry_addr, &adma1, sizeof(adma1),
+> +                                  MEMTXATTRS_UNSPECIFIED);
+> +            if (res != MEMTX_OK) {
+> +                break;
+> +            }
+>               adma1 = le32_to_cpu(adma1);
+>               dscr->addr = (hwaddr)(adma1 & ~0xfff);
+>               dscr->attr = (uint8_t)extract32(adma1, 0, 7);
+> @@ -748,8 +756,11 @@ static void get_adma_description(SDHCIState *s, ADMADescr *dscr)
+>               } QEMU_PACKED adma2;
+>               QEMU_BUILD_BUG_ON(sizeof(adma2) != 12);
+>   
+> -            dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+> -                            MEMTXATTRS_UNSPECIFIED);
+> +            res = dma_memory_read(s->dma_as, entry_addr, &adma2, sizeof(adma2),
+> +                                  MEMTXATTRS_UNSPECIFIED);
+> +            if (res != MEMTX_OK) {
+> +                break;
+> +            }
+>               dscr->length = le16_to_cpu(adma2.length);
+>               dscr->addr = le64_to_cpu(adma2.addr);
+>               dscr->attr = adma2.attr & (uint8_t) ~0xc0;
+
+
+-- 
+GPG Key transition (from rsa2048 to rsa4096) since 2024-04-24.
+New key: rsa4096/61AD3D98ECDF2C8E  9D8B E14E 3F2A 9DD7 9199  28F1 61AD 3D98 ECDF 2C8E
+Old key: rsa2048/457CE0A0804465C5  6EE1 95D1 886E 8FFB 810D  4324 457C E0A0 8044 65C5
+Transition statement: http://www.corpit.ru/mjt/gpg-transition-2024.txt
 
