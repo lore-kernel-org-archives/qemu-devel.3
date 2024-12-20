@@ -4,73 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB762E77188
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 09:12:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 824EDE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 09:15:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOZ2e-0003bJ-GK; Fri, 20 Dec 2024 04:11:28 -0500
+	id 1tOZ5x-0004lH-T5; Fri, 20 Dec 2024 04:14:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOZ2b-0003b5-Hu
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 04:11:25 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tOZ5v-0004kk-N9; Fri, 20 Dec 2024 04:14:51 -0500
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1tOZ2Z-0008BR-Re
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 04:11:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734685882;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=r3Qj87n+qCu8bZrwVnSAKMWuo8okMmKbcU2qR+F4yFg=;
- b=TWckIn81y9IBBZ3AKzWg2N5y3YbDkPcwXjCuRb1UiWeOoFs8bQNrJp0Vau8z7tyY1kTrZt
- zdVi+hrm5oV9nHn2/VXK6XeKGtN7G35MQjgHYvUw3eWIZBb/GmlyNpmF9CUYKCf3h3E9xO
- EkF8uu0+GJ/kcuo/1dLHirdxqBkcNrY=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-189-5choLKdTPPaOAll7VFtwfQ-1; Fri,
- 20 Dec 2024 04:11:20 -0500
-X-MC-Unique: 5choLKdTPPaOAll7VFtwfQ-1
-X-Mimecast-MFC-AGG-ID: 5choLKdTPPaOAll7VFtwfQ
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 947841956096; Fri, 20 Dec 2024 09:11:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.4])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 116C019560AD; Fri, 20 Dec 2024 09:11:17 +0000 (UTC)
-Date: Fri, 20 Dec 2024 09:11:14 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
-Subject: Re: [PATCH v2 2/2] tests/qtest/migration: Stop checking
- __NR_userfaultfd
-Message-ID: <Z2U0sno0hsoAxos6@redhat.com>
-References: <20241218192223.10551-1-farosas@suse.de>
- <20241218192223.10551-3-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1tOZ5t-0000Ts-Va; Fri, 20 Dec 2024 04:14:51 -0500
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK3r4BJ023355;
+ Fri, 20 Dec 2024 09:14:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=SASqpJ
+ T7jisuBikFJBytQQkYKhjzEKcN68Y0zU2Z7gQ=; b=XKMU2WtUvlgbav07BtbZHu
+ TGHOLP7Rrk6AJ1YHp09UvkmG4hpoZFz2oopoMzSahj6mGCoKllA1pN4EQXDIh9Io
+ Hssjz7eH1pu/c3ICH79NYzKKRlfgDQqZRFnkeR70SEbEsfUQ6cW9mtaCUODcVw5/
+ RVfEiWD24Vk6SXaAkTKgSGWXrKjWK+zoqsbwLJtX7tJXKnGkv1TOH34nO01ovh2N
+ 7xtj42/PIANhLWHIQdA3I583NSlwHmZzfqn0WtjDGWC1QcIGUlUHhgbCNpuodAqC
+ F2QhKtEdPFHIIY60WASb9rQo+GUr/aFiL0zZqxILCHbifLuokAQ9UZF+clmji03A
+ ==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43n12h984g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Dec 2024 09:14:45 +0000 (GMT)
+Received: from m0356517.ppops.net (m0356517.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 4BK92SYF017589;
+ Fri, 20 Dec 2024 09:14:45 GMT
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 43n12h984d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Dec 2024 09:14:45 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 4BK6YBRT011249;
+ Fri, 20 Dec 2024 09:14:44 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 43hpjkh6ud-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 20 Dec 2024 09:14:44 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 4BK9EhTE65143286
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 20 Dec 2024 09:14:43 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7DF4058055;
+ Fri, 20 Dec 2024 09:14:43 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F381958043;
+ Fri, 20 Dec 2024 09:14:41 +0000 (GMT)
+Received: from [9.124.215.200] (unknown [9.124.215.200])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 20 Dec 2024 09:14:41 +0000 (GMT)
+Message-ID: <4b3897e1-c9dd-45aa-bb6f-d8679fc78d25@linux.ibm.com>
+Date: Fri, 20 Dec 2024 14:44:40 +0530
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20241218192223.10551-3-farosas@suse.de>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/5] spapr: Fix vpa dispatch count for record-replay
+To: Nicholas Piggin <npiggin@gmail.com>, qemu-ppc@nongnu.org
+Cc: Daniel Henrique Barboza <danielhb413@gmail.com>, qemu-devel@nongnu.org
+References: <20241219034035.1826173-1-npiggin@gmail.com>
+ <20241219034035.1826173-3-npiggin@gmail.com>
+Content-Language: en-US
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+In-Reply-To: <20241219034035.1826173-3-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: rMtWBZn1G0BWswRwNGyi5MAy_yx_QLDL
+X-Proofpoint-GUID: oetLEx1oUNOsOTfTg0nyK8YfWkiqdeI1
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1051,Hydra:6.0.680,FMLib:17.12.62.30
+ definitions=2024-10-15_01,2024-10-11_01,2024-09-30_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0
+ bulkscore=0 phishscore=0 adultscore=0 impostorscore=0 mlxlogscore=952
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 priorityscore=1501
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2411120000 definitions=main-2412200074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -37
+X-Spam_score: -3.8
 X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H2=-1.116, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,61 +113,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Dec 18, 2024 at 04:22:23PM -0300, Fabiano Rosas wrote:
-> We don't need to check for __NR_userfaultfd in the tests anymore, the
-> syscall has been present in Linux for a long time now.
+Hi Nick,
 
-The same is true of the migration/postcopy-ram.c  code too which I
-think should be changed at the same time as its tests.
-
-There are a few other places in QEMU also checking __NR_userfaultfd
-but not directly under migration subsystem, so change those ones at
-your discretion.
-
+On 12/19/24 09:10, Nicholas Piggin wrote:
+> The dispatch count is a field in guest memory that the hypervisor
+> increments when preempting and dispatching the guest. This was not
+> being done deterministically with respect to icount, because tcg
+> exec exit is not deterministic (e.g., an async event could cause it).
 > 
-> Suggested-by: Peter Xu <peterx@redhat.com>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> Change vpa dispatch count increment to keep track of whether the
+> vCPU is considered dispatched or not, and only consider it preempted
+> when calling cede / confer / join / stop-self / etc.
+> 
+> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
 > ---
->  tests/qtest/migration/migration-util.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
-> index eb3640e27e..23e0163945 100644
-> --- a/tests/qtest/migration/migration-util.c
-> +++ b/tests/qtest/migration/migration-util.c
-> @@ -27,8 +27,8 @@
->  #include <sys/syscall.h>
->  #endif
->  
-> -/* for uffd_version_check() */
-> -#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-> +/* for ufd_version_check() */
-> +#if defined(__linux__) && defined(CONFIG_EVENTFD)
->  #include <sys/eventfd.h>
->  #include "qemu/userfaultfd.h"
->  #endif
-> @@ -301,7 +301,7 @@ bool probe_o_direct_support(const char *tmpfs)
->  }
->  #endif
->  
-> -#if defined(__linux__) && defined(__NR_userfaultfd) && defined(CONFIG_EVENTFD)
-> +#if defined(__linux__) && defined(CONFIG_EVENTFD)
->  bool ufd_version_check(bool *uffd_feature_thread_id)
->  {
->      struct uffdio_api api_struct;
-> -- 
-> 2.35.3
+>   include/hw/ppc/spapr_cpu_core.h |  3 +++
+>   hw/ppc/spapr.c                  | 36 ++-------------------------------
+>   hw/ppc/spapr_hcall.c            | 33 ++++++++++++++++++++++++++++++
+>   hw/ppc/spapr_rtas.c             |  1 +
+>   4 files changed, 39 insertions(+), 34 deletions(-)
 > 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+<snipped>
 
+> diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> index 5e1d020e3df..907e09c2c36 100644
+> --- a/hw/ppc/spapr_hcall.c
+> +++ b/hw/ppc/spapr_hcall.c
+> @@ -487,6 +487,36 @@ static target_ulong h_register_vpa(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>       return ret;
+>   }
+>   
+> +void vpa_dispatch(CPUState *cs, SpaprCpuState *spapr_cpu, bool dispatch)
+> +{
+> +    uint32_t counter;
+> +
+> +    if (!dispatch) {
+> +        assert(spapr_cpu->dispatched);
+> +    } else {
+> +        assert(!spapr_cpu->dispatched);
+> +    }
+
+Would it look better as:
+        assert(!(dispatch == spapr_cpu->dispatched));
+
+> +    spapr_cpu->dispatched = dispatch;
+> +
+> +    return;
+
+Returning here unconditionally makes below code unreachable.
+
+> +
+> +    if (!spapr_cpu->vpa_addr) {
+> +        return;
+> +    }
+
+This could be moved to beginning or just after assert.
+
+regards,
+Harsh
+
+> +
+> +    /* These are only called by TCG, KVM maintains dispatch state */
+> +    counter = ldl_be_phys(cs->as, spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER);
+> +    counter++;
+> +    if ((counter & 1) != dispatch) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +                      "VPA: incorrect dispatch counter value for "
+> +                      "%s partition %u, correcting.\n",
+> +                      dispatch ? "preempted" : "running", counter);
+> +        counter++;
+> +    }
+> +    stl_be_phys(cs->as, spapr_cpu->vpa_addr + VPA_DISPATCH_COUNTER, counter);
+> +}
+> +
+>   static target_ulong h_cede(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>                              target_ulong opcode, target_ulong *args)
+>   {
+> @@ -505,6 +535,7 @@ static target_ulong h_cede(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>   
+>       if (!cpu_has_work(cs)) {
+>           cs->halted = 1;
+> +        vpa_dispatch(cs, spapr_cpu, false);
+>           cs->exception_index = EXCP_HLT;
+>           cs->exit_request = 1;
+>           ppc_maybe_interrupt(env);
+> @@ -531,6 +562,8 @@ static target_ulong h_confer_self(PowerPCCPU *cpu)
+>       cs->exit_request = 1;
+>       ppc_maybe_interrupt(&cpu->env);
+>   
+> +    vpa_dispatch(cs, spapr_cpu, false);
+> +
+>       return H_SUCCESS;
+>   }
+>   
+> diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+> index f329693c554..8ce42302234 100644
+> --- a/hw/ppc/spapr_rtas.c
+> +++ b/hw/ppc/spapr_rtas.c
+> @@ -216,6 +216,7 @@ static void rtas_stop_self(PowerPCCPU *cpu, SpaprMachineState *spapr,
+>        */
+>       env->spr[SPR_PSSCR] |= PSSCR_EC;
+>       cs->halted = 1;
+> +    vpa_dispatch(cs, spapr_cpu_state(cpu), false);
+>       ppc_store_lpcr(cpu, env->spr[SPR_LPCR] & ~pcc->lpcr_pm);
+>       kvmppc_set_reg_ppc_online(cpu, 0);
+>       qemu_cpu_kick(cs);
 
