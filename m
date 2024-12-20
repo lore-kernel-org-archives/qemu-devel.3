@@ -4,86 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8437CE7718A
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 07:35:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35E8FE77188
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Dec 2024 08:47:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOXWu-0001GL-QC; Fri, 20 Dec 2024 02:34:36 -0500
+	id 1tOYel-0004pY-Vw; Fri, 20 Dec 2024 03:46:48 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOXWs-0001G8-KE
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 02:34:34 -0500
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1tOYeh-0004om-Nz; Fri, 20 Dec 2024 03:46:44 -0500
+Received: from forward103d.mail.yandex.net ([2a02:6b8:c41:1300:1:45:d181:d103])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1tOXWr-0004UH-2x
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 02:34:34 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1734680071;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=16CLwrYbyzNKczsAULBy78LiIuQvUr95Pa9VjPtABhA=;
- b=dlxFu7eUpwJuZsGBBgnhdQwAkOI30SCTfpbIlKCiIl/RycU+XDV2h14aDKnoLDI1aSUouH
- mffT2E00fuXd+iUN3x2lO4lKaPmL32OypUaLgWfRhLaeq1kUItXhiSF2d0n1SIhKS0T1cy
- RDITH7ca9wADUASrK8rgcjTdKlllj3s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-7M_0-42iM0KBeC8J3AgnZg-1; Fri, 20 Dec 2024 02:34:29 -0500
-X-MC-Unique: 7M_0-42iM0KBeC8J3AgnZg-1
-X-Mimecast-MFC-AGG-ID: 7M_0-42iM0KBeC8J3AgnZg
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-386321c8f4bso931402f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Dec 2024 23:34:29 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734680068; x=1735284868;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=16CLwrYbyzNKczsAULBy78LiIuQvUr95Pa9VjPtABhA=;
- b=gCuxWdPHQcAtVQ0YOl2G+80TG+gbPEfYaXHLmUWzLFQwQC1NuO08qYVxocZdj+lvQi
- 2nffIZlW81e3B5YKaK2XQ0VWYIzYeR1W1Kxd7eBX8roOyteNsdFJx8jHy/vpXDEBFzym
- nyNnI9MrjxYSdWqWAbVKFc0DmEjPa6HIQpkgrKWRtkXwdmTL+ib84VvHOkir6wutzI90
- YeCzvSX+crXMFXaLEeXyZ9a5MnsV9Wv6/cdhHCgyk8lNaB5znpHydUpMLDDavxUlZuhK
- BXENX0E20rlOfknqoYzGGNcDhmpp8Js1jdm+gawjoHQaBC8WcoRBHTf0ZvW7LAUa1+AJ
- Ysdw==
-X-Gm-Message-State: AOJu0YyHy8kW2WpIxsJ4wvrFKncMy0bbcyLjYh0N8EbDZiwHIe/4F4xJ
- kdH3AGMSUv6rIREzvjgRsOoRA6EMazTyldUirfs1DYjrUuhK8ts86MRbc74YESkWIMjJPEgn/Gs
- n2CYizfOykdWNQsjjUIn9nL5qeTz1l1D0m/q/gA0h2r+9eZJxyoNKCYgc004GNKniADPYg8qyIC
- Je3/kKSmNH36hCcidA4OaFa0/dLkM=
-X-Gm-Gg: ASbGnct9nrs1CVCWUMyvAnWUk6xGsOkaLnIrxBwiCZxwb0SZY46Od9+1en90fBz3CJD
- IM9/rCTmOQQeurh57zOaNvgOnoCscJfQViOOvzA==
-X-Received: by 2002:a5d:6d07:0:b0:385:f2a5:ef6a with SMTP id
- ffacd0b85a97d-38a221eaa5fmr1609203f8f.15.1734680068086; 
- Thu, 19 Dec 2024 23:34:28 -0800 (PST)
-X-Google-Smtp-Source: AGHT+IHK5Uhg7uOg/qvJmFOLfkQ3FiJ3VQfNzvzvbT50XtW9wbx7PYH4rtFECF5oi/U28ZWREkrulUUl+xC6LXNAOnc=
-X-Received: by 2002:a5d:6d07:0:b0:385:f2a5:ef6a with SMTP id
- ffacd0b85a97d-38a221eaa5fmr1609184f8f.15.1734680067798; Thu, 19 Dec 2024
- 23:34:27 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <nikita.shubin@maquefel.me>)
+ id 1tOYef-0000nS-1O; Fri, 20 Dec 2024 03:46:43 -0500
+Received: from mail-nwsmtp-smtp-production-main-24.klg.yp-c.yandex.net
+ (mail-nwsmtp-smtp-production-main-24.klg.yp-c.yandex.net
+ [IPv6:2a02:6b8:c42:4f43:0:640:673c:0])
+ by forward103d.mail.yandex.net (Yandex) with ESMTPS id 839216001C;
+ Fri, 20 Dec 2024 11:46:23 +0300 (MSK)
+Received: by mail-nwsmtp-smtp-production-main-24.klg.yp-c.yandex.net
+ (smtp/Yandex) with ESMTPSA id LkOX0FeOoKo0-GTl7G6FW; 
+ Fri, 20 Dec 2024 11:46:22 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=maquefel.me; s=mail;
+ t=1734684382; bh=DEWLsEBJEXh8+7vMojttx0v1UhjFc3wSl+wOs7T9sjg=;
+ h=Message-ID:Date:Cc:Subject:To:From;
+ b=RITAACjjkJPFzXzzQeWZGsFOlXZCtLrbBI3AgH/NDuPcmUq1wHIB658Bejm+dh8R8
+ 42hCEpMo3nGDCyMSPr2FcHpQvRbJsTTizmdBY8aGZL32yYNeKx8Q314hKyTzX8WWvb
+ WEcbHkeDxDiRNAqIL6t5jCr2iaOzCE3oevAfflOU=
+Authentication-Results: mail-nwsmtp-smtp-production-main-24.klg.yp-c.yandex.net;
+ dkim=pass header.i=@maquefel.me
+From: Nikita Shubin <nikita.shubin@maquefel.me>
+To: Alistair Francis <alistair@alistair23.me>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Cc: Nikita Shubin <nikita.shubin@maquefel.me>,
+ Nikita Shubin <n.shubin@yadro.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: [PATCH] hw/char: stm32f2xx_usart: replace print with trace
+Date: Fri, 20 Dec 2024 11:46:23 +0300
+Message-ID: <20241220084623.1889-1-nikita.shubin@maquefel.me>
+X-Mailer: git-send-email 2.45.2
 MIME-Version: 1.0
-References: <c22ccbb1-9fdc-410c-85c0-ffa91de16b09@redhat.com>
- <20241219200606.GA723061@fedora>
-In-Reply-To: <20241219200606.GA723061@fedora>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 20 Dec 2024 08:34:16 +0100
-Message-ID: <CABgObfZ_TJe0j2__c+qZJm-A6ck1m95_kMMqOeUbGKnZCS6U2g@mail.gmail.com>
-Subject: Re: [PULL v2 00/42] Rust, qdev, target/i386 changes for 2024-12-19
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="0000000000003d93b70629aead69"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=-1.116,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c41:1300:1:45:d181:d103;
+ envelope-from=nikita.shubin@maquefel.me; helo=forward103d.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,48 +73,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000003d93b70629aead69
-Content-Type: text/plain; charset="UTF-8"
+From: Nikita Shubin <nshubin@yadro.com>
 
-Il gio 19 dic 2024, 21:06 Stefan Hajnoczi <stefanha@redhat.com> ha scritto:
+Drop debug printing macros and replace them with according trace
+functions.
 
-> Hi Paolo,
-> Will there be a v3? It wasn't clear to me from Richard and your replies
-> to v2 whether another revision is needed.
->
+Signed-off-by: Nikita Shubin <n.shubin@yadro.com>
+---
+ hw/char/stm32f2xx_usart.c | 47 ++++++++++++++++++---------------------
+ hw/char/trace-events      |  6 +++++
+ 2 files changed, 28 insertions(+), 25 deletions(-)
 
-Yes, I will send it now.
-
-Paolo
-
-
-> Thanks,
-> Stefan
->
-
---0000000000003d93b70629aead69
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 19 dic 2024, 21:06 Stefan=
- Hajnoczi &lt;<a href=3D"mailto:stefanha@redhat.com">stefanha@redhat.com</a=
->&gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margi=
-n:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex=
-">Hi Paolo,<br>
-Will there be a v3? It wasn&#39;t clear to me from Richard and your replies=
-<br>
-to v2 whether another revision is needed.<br></blockquote></div></div><div =
-dir=3D"auto"><br></div><div dir=3D"auto">Yes, I will send it now.</div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><div dir=3D"auto"><br>=
-</div><div dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Thanks,<br>
-Stefan<br>
-</blockquote></div></div></div>
-
---0000000000003d93b70629aead69--
+diff --git a/hw/char/stm32f2xx_usart.c b/hw/char/stm32f2xx_usart.c
+index 17b5b1f15f..ca878d0cd6 100644
+--- a/hw/char/stm32f2xx_usart.c
++++ b/hw/char/stm32f2xx_usart.c
+@@ -30,17 +30,7 @@
+ #include "qemu/log.h"
+ #include "qemu/module.h"
+ 
+-#ifndef STM_USART_ERR_DEBUG
+-#define STM_USART_ERR_DEBUG 0
+-#endif
+-
+-#define DB_PRINT_L(lvl, fmt, args...) do { \
+-    if (STM_USART_ERR_DEBUG >= lvl) { \
+-        qemu_log("%s: " fmt, __func__, ## args); \
+-    } \
+-} while (0)
+-
+-#define DB_PRINT(fmt, args...) DB_PRINT_L(1, fmt, ## args)
++#include "trace.h"
+ 
+ static int stm32f2xx_usart_can_receive(void *opaque)
+ {
+@@ -67,10 +57,11 @@ static void stm32f2xx_update_irq(STM32F2XXUsartState *s)
+ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+ 
+     if (!(s->usart_cr1 & USART_CR1_UE && s->usart_cr1 & USART_CR1_RE)) {
+         /* USART not enabled - drop the chars */
+-        DB_PRINT("Dropping the chars\n");
++        trace_stm32f2xx_usart_drop(d->id);
+         return;
+     }
+ 
+@@ -79,7 +70,7 @@ static void stm32f2xx_usart_receive(void *opaque, const uint8_t *buf, int size)
+ 
+     stm32f2xx_update_irq(s);
+ 
+-    DB_PRINT("Receiving: %c\n", s->usart_dr);
++    trace_stm32f2xx_usart_recieve(d->id, *buf);
+ }
+ 
+ static void stm32f2xx_usart_reset(DeviceState *dev)
+@@ -101,49 +92,55 @@ static uint64_t stm32f2xx_usart_read(void *opaque, hwaddr addr,
+                                        unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+     uint64_t retvalue;
+ 
+-    DB_PRINT("Read 0x%"HWADDR_PRIx"\n", addr);
+-
+     switch (addr) {
+     case USART_SR:
+         retvalue = s->usart_sr;
+         qemu_chr_fe_accept_input(&s->chr);
+-        return retvalue;
++        break;
+     case USART_DR:
+-        DB_PRINT("Value: 0x%" PRIx32 ", %c\n", s->usart_dr, (char) s->usart_dr);
+         retvalue = s->usart_dr & 0x3FF;
+         s->usart_sr &= ~USART_SR_RXNE;
+         qemu_chr_fe_accept_input(&s->chr);
+         stm32f2xx_update_irq(s);
+-        return retvalue;
++        break;
+     case USART_BRR:
+-        return s->usart_brr;
++        retvalue = s->usart_brr;
++        break;
+     case USART_CR1:
+-        return s->usart_cr1;
++        retvalue = s->usart_cr1;
++        break;
+     case USART_CR2:
+-        return s->usart_cr2;
++        retvalue = s->usart_cr2;
++        break;
+     case USART_CR3:
+-        return s->usart_cr3;
++        retvalue = s->usart_cr3;
++        break;
+     case USART_GTPR:
+-        return s->usart_gtpr;
++        retvalue = s->usart_gtpr;
++        break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%"HWADDR_PRIx"\n", __func__, addr);
+         return 0;
+     }
+ 
+-    return 0;
++    trace_stm32f2xx_usart_read(d->id, size, addr, retvalue);
++
++    return retvalue;
+ }
+ 
+ static void stm32f2xx_usart_write(void *opaque, hwaddr addr,
+                                   uint64_t val64, unsigned int size)
+ {
+     STM32F2XXUsartState *s = opaque;
++    DeviceState *d = DEVICE(s);
+     uint32_t value = val64;
+     unsigned char ch;
+ 
+-    DB_PRINT("Write 0x%" PRIx32 ", 0x%"HWADDR_PRIx"\n", value, addr);
++    trace_stm32f2xx_usart_write(d->id, size, addr, val64);
+ 
+     switch (addr) {
+     case USART_SR:
+diff --git a/hw/char/trace-events b/hw/char/trace-events
+index 59e1f734a7..e0a567194c 100644
+--- a/hw/char/trace-events
++++ b/hw/char/trace-events
+@@ -125,3 +125,9 @@ xen_console_unrealize(unsigned int idx) "idx %u"
+ xen_console_realize(unsigned int idx, const char *chrdev) "idx %u chrdev %s"
+ xen_console_device_create(unsigned int idx) "idx %u"
+ xen_console_device_destroy(unsigned int idx) "idx %u"
++
++# stm32f2xx_usart.c
++stm32f2xx_usart_read(char *id, unsigned size, uint64_t offs, uint64_t val) " %s size %d offs 0x%02" PRIx64 " -> 0x%02" PRIx64
++stm32f2xx_usart_write(char *id, unsigned size, uint64_t offs, uint64_t val) "%s size %d offs 0x%02" PRIx64 " <- 0x%02" PRIx64
++stm32f2xx_usart_drop(char *id) " %s dropping the chars"
++stm32f2xx_usart_recieve(char *id, uint8_t chr) " %s receiving %c"
+-- 
+2.45.2
 
 
