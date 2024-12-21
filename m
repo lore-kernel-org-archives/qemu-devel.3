@@ -4,96 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BFAE7E77184
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 04:27:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 153A0E77184
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 05:47:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOr4k-0003QA-FW; Fri, 20 Dec 2024 23:26:50 -0500
+	id 1tOsJt-00032X-DU; Sat, 21 Dec 2024 00:46:33 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tOr4j-0003Pz-4k
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 23:26:49 -0500
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ (Exim 4.90_1) (envelope-from <davidsondfgl@gmail.com>)
+ id 1tOsJr-00032O-6n
+ for qemu-devel@nongnu.org; Sat, 21 Dec 2024 00:46:31 -0500
+Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1tOr4g-0003pn-QD
- for qemu-devel@nongnu.org; Fri, 20 Dec 2024 23:26:48 -0500
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-21619108a6bso22179185ad.3
- for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 20:26:44 -0800 (PST)
+ (Exim 4.90_1) (envelope-from <davidsondfgl@gmail.com>)
+ id 1tOsJp-0007s6-Nz
+ for qemu-devel@nongnu.org; Sat, 21 Dec 2024 00:46:30 -0500
+Received: by mail-pl1-x62c.google.com with SMTP id
+ d9443c01a7336-21644e6140cso25387595ad.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Dec 2024 21:46:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1734755204; x=1735360004;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3Xmp3eo6KcM7GBgSZe+eneQ5dUGMyAKZK5zwfjvxUxU=;
- b=UkTjeAR/35CYuyrEWq1tqUEJ/6I+DfSQ88kbq5laUwgCkmUXGzCihhA/9aeQ85jcgr
- wC/INDoYC0iQvQ6lYTXBC3XmLfKdXjsmyzVbe0gFg3dDemmKqWGJbHV9z13ILnkhP/sF
- AXfU6LvjQTxGGKrort/UihRvB+A01oAMeC8Sc9MZhV54bAGj5KZ5/wTRn5AJX7vB47hT
- Wm04YPsgOu5Q8ZNkBfbBJrXHX4T2ZpVS3OrE1saAmhTkPdkzHeBAB3fggfkQTGB7de+z
- rW/qxzfPx2ayfoj5Q0xz4w2DemWa8j6uL8pZsn9kp1P9l44V/n+C31Y62SPnbcDsixtx
- a7yg==
+ d=gmail.com; s=20230601; t=1734759988; x=1735364788; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=REbKrQEg1WAfMUxdXCsYduhWwMfqG/uN1u1AmzwOqik=;
+ b=JSmKXs/TJvBkNmkPWor5+QFlkfXYgB04uKmMynSkZms++qpOGIkga80o4Nv50PgZtg
+ ZFApOMwKd+NXHqhNc8RA7ey+jlU7xvsadMX3mpg6rIy6EoXBW4ooDZCmBtCR8pAgW4kH
+ v051AOQqIENSh7YsxDyu9+sQhQywZYlr0Eq8Cp75oP2wXDCsja7maObr1wkOrC5VSCZz
+ 2Nw2+A0TntpX10KSKCSDHsTRBnJoFmixVTUJWJnYJI1yWOKjxc03+hnv8+2J3aGMN9Nk
+ 5c9EhdaAczbepEtu0gE3jIaRKdVax5Eq1krlDAygBgOV2P4prR8IG/CR0Frttj3Eaj7H
+ f0QQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734755204; x=1735360004;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3Xmp3eo6KcM7GBgSZe+eneQ5dUGMyAKZK5zwfjvxUxU=;
- b=LbAF9xFPONW8H5DMJwJxoahMpnaQNsZGSEei8yPvwDNYeQFM1OTJr64D1uVBuZd9WU
- mgGe0lhtOh0kLOr6FMfRG52EU2muWA8pLMZF64l9AUn3htXGEYhzK62+9awiRySoo18n
- 3janQYYAFmHdwDjk25/pYgBSRZK1C+8e07o0IG230oyaaaF0cqpnltJENLq99D1yc44g
- J3M0b6yO1xP99v/iJw96xz7ChH7jo1INaBdX0D4LuItdWriDbITHP48UguKjuUuZ0ofS
- cHQsNBF4txr0M7VJtufIQyhCtkKJlohTWIT/6EYdR+eDo3+2yeNkG4qPiD7/cGnAf+ua
- cRJw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWlrSnDZFwod3nLnEt0IxTa9/vjTmZK4mkeZrnelBifnySoTHqlqa2qhYZECu+jUl9+fxWc0ZYGEu1H@nongnu.org
-X-Gm-Message-State: AOJu0YzWIFn982o8/Cjjb6M4O1OQK3mCqqX1y/zxJffbm2DtlaEeLATW
- DTHX/0FtGKQMjljfuFLV6hFyWln3FWCFDOSFwnydTEQ3vS/ddBQMZMR9JdBrtr8=
-X-Gm-Gg: ASbGnct5Jx96QfET6PiAeaoY3LV0HV8dM9K48akqJ78Sze6AFBouvMQSRY+VrtslujY
- Q9Kn9AOThzYCycCqhDPfeTD4FbADNJvxO5oDAkAMcfj/yUItjeFb4UxcsT87Pb6lIO+s007RbbA
- LxIcEgE1mI2QoF5nQ5zGLwV6lhF76rcdWXizsVRFNJTsTWbMNSnb6djm22L697TrpVI7je7V9xe
- kXRFEctvH4BnHJo/qoqUiOeyfL3W6YC2N55/Hmm34PDVhBHVOVLJ/9bH6OIirXI/bLP+A==
-X-Google-Smtp-Source: AGHT+IGz4CMGQNS5QqeGW8NPbhjXgnAACSHE3mns3sATZSeUvstB99p8aiuHOSVyYeaSA1tzCje4gw==
-X-Received: by 2002:a17:902:c943:b0:216:6901:d588 with SMTP id
- d9443c01a7336-219e6e9d949mr81510715ad.15.1734755203866; 
- Fri, 20 Dec 2024 20:26:43 -0800 (PST)
-Received: from [157.82.207.107] ([157.82.207.107])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc9716b3sm36761265ad.90.2024.12.20.20.26.41
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 20:26:43 -0800 (PST)
-Message-ID: <c88dd8a9-bf21-4950-a91d-37fe18516ba5@daynix.com>
-Date: Sat, 21 Dec 2024 13:26:40 +0900
+ d=1e100.net; s=20230601; t=1734759988; x=1735364788;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=REbKrQEg1WAfMUxdXCsYduhWwMfqG/uN1u1AmzwOqik=;
+ b=a4kQ13vyVcnG3qYTMcE0Tu9e0PQYtH4IOoCLDTbd53vJbBFSvWZEzyJ7Y6/urOSxX7
+ BqjNGWJaAFNtSXKEnDiHK6xHY6JtluOX6M9KDf24SZV8tgAPO0LSWRcLjn4ATBBJXAFF
+ hTsmBOIGk9kGfisHsNvCpVq9pMgSsZ5Oqd6tcp8rP+4kmUgrdbK5xeUdFU+as9DPPXsB
+ V8KGkdVpIpTMcodmBGHt5HdxcwWJqKhNZb616Fk+bMOM7qLu8njU8+hON6Plj/T9NlAE
+ c+e7njIA/My0Qhv3qwfky6Nayg2bCQ6ZsVVD5tYPnmeSdnRWD0HZuVOhDRCS/HIDJqUE
+ isqw==
+X-Gm-Message-State: AOJu0YyyiC+LXYtlaOA3SZzf4kHAkq/MvwjLhwxotmnB2PW9vsuNu+W4
+ lunmmsgb20o39k40xyqP1QIvNl9m36G07f00eHpSVHmoBM8gaovnsOnkkqno1Vw=
+X-Gm-Gg: ASbGncsfsVsL5kZ5fOjNIc4HI0H04DEc8vaVDNSbE6KDI6REH/Jlwn6rhM//jGH9g6A
+ 8wnd/5J1iXRcHSOXHIb343a8GvfNYHBy+TRAsf2AQRnawNi3+5MJWZFWgNWUuhi0dzwAlA+7ocI
+ gpEuo9QtRaqgJlwsNEWYYeIJL3KzaB9BXgOm7nRnccvznV5PXtWv2jIZ0ZsjToVF3XY6oKGIolW
+ Gjt/WDtk4tTv5kSuhm/0pTbxkaYC0p5WUy5WSSf1zJoscGarKKcmcnJ2oeXlzyMxxDZVlKgkFPQ
+ rJSQ8extGsjMijtGG4TTYCzpPXwCYg==
+X-Google-Smtp-Source: AGHT+IGPck+Lh+ZjDCt1OZW6v+xDaX4Hq+6rSwr+3oJm1mbxy8BcqGnd76D20urAT+15YmdS/ES9xw==
+X-Received: by 2002:a17:902:ebc9:b0:216:7cde:523 with SMTP id
+ d9443c01a7336-219e6ed39d6mr87217915ad.32.1734759987772; 
+ Fri, 20 Dec 2024 21:46:27 -0800 (PST)
+Received: from darkstar.example.net (189-71-161-74.user3p.vtal.net.br.
+ [189.71.161.74]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-219dc9d4474sm37916405ad.142.2024.12.20.21.46.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Dec 2024 21:46:27 -0800 (PST)
+From: Davidson Francis <davidsondfgl@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: davidsondfgl@gmail.com, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH] target/i386: Improve 16-bit/real mode debug support in GDB
+Date: Sat, 21 Dec 2024 02:45:49 -0300
+Message-Id: <20241221054549.21883-1-davidsondfgl@gmail.com>
+X-Mailer: git-send-email 2.37.3
+In-Reply-To: <20241219013535.GB4298@darkstar>
+References: <20241219013535.GB4298@darkstar>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] qtest/e1000e|igb: Fix msix to re-trigger interrupts
-To: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org
-Cc: "Michael S . Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20241218074232.1784427-1-npiggin@gmail.com>
- <20241218074232.1784427-6-npiggin@gmail.com>
- <ceadd6b1-c9d8-4531-a901-ef7a57e3d304@daynix.com>
- <D6H34WA2W76T.2ADM8CT9LAZEH@gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <D6H34WA2W76T.2ADM8CT9LAZEH@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62c;
+ envelope-from=davidsondfgl@gmail.com; helo=mail-pl1-x62c.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.998, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,170 +99,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2024/12/21 13:14, Nicholas Piggin wrote:
-> On Thu Dec 19, 2024 at 6:53 PM AEST, Akihiko Odaki wrote:
->> On 2024/12/18 16:42, Nicholas Piggin wrote:
->>> The e1000e and igb tests don't clear the msix pending bit after waiting
->>> for it, as it is masked so the irq doesn't get sent. Failing to clear
->>> the pending interrupt means all subsequent waits for that interrupt
->>> after the first do not actually wait for an interrupt genreated by the
->>> device.
->>>
->>> This affects the multiple_transfers tests, they never actually verify
->>> more than one interrupt is generated. So for those tests, enable the
->>> msix vectors for the queue interrupts so they are delivered and the
->>> pending bit is cleared.
->>>
->>> Add assertions to ensure the masked pending tests are not used to test
->>> an interrupt multiple times.
->>>
->>> Cc: Michael S. Tsirkin <mst@redhat.com>
->>> Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
->>> Cc: Dmitry Fleytman <dmitry.fleytman@gmail.com>
->>> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
->>> Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
->>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
->>> ---
->>>    tests/qtest/libqos/e1000e.h |   8 +++
->>>    tests/qtest/e1000e-test.c   |   2 +
->>>    tests/qtest/igb-test.c      |   2 +
->>>    tests/qtest/libqos/e1000e.c | 113 +++++++++++++++++++++++++++++++++++-
->>>    4 files changed, 122 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/tests/qtest/libqos/e1000e.h b/tests/qtest/libqos/e1000e.h
->>> index 30643c80949..6cc1a9732b1 100644
->>> --- a/tests/qtest/libqos/e1000e.h
->>> +++ b/tests/qtest/libqos/e1000e.h
->>> @@ -25,6 +25,9 @@
->>>    #define E1000E_RX0_MSG_ID           (0)
->>>    #define E1000E_TX0_MSG_ID           (1)
->>>    
->>> +#define E1000E_RX0_MSIX_DATA        (0x12345678)
->>> +#define E1000E_TX0_MSIX_DATA        (0xabcdef00)
->>> +
->>>    #define E1000E_ADDRESS { 0x52, 0x54, 0x00, 0x12, 0x34, 0x56 }
->>>    
->>>    typedef struct QE1000E QE1000E;
->>> @@ -40,6 +43,10 @@ struct QE1000E_PCI {
->>>        QPCIDevice pci_dev;
->>>        QPCIBar mac_regs;
->>>        QE1000E e1000e;
->>> +    uint64_t msix_rx0_addr;
->>> +    uint64_t msix_tx0_addr;
->>   > +    bool msix_found_rx0_pending;> +    bool msix_found_tx0_pending;
->>
->> I prefer having an enum that contains E1000E_RX0_MSG_ID,
->> E1000E_TX0_MSG_ID, and "E1000E_RX0_MSG_MAX" or something similar. These
->> values can be used to create and index an array containing both rx and
->> tx, which will save redundant comparisons with E1000E_RX0_MSG_ID and
->> E1000E_RX0_MSG_ID.
-> 
-> Okay I'll see how that looks.
-> 
->>
->>>    };
->>>    
->>>    static inline void e1000e_macreg_write(QE1000E *d, uint32_t reg, uint32_t val)
->>> @@ -57,5 +64,6 @@ static inline uint32_t e1000e_macreg_read(QE1000E *d, uint32_t reg)
->>>    void e1000e_wait_isr(QE1000E *d, uint16_t msg_id);
->>>    void e1000e_tx_ring_push(QE1000E *d, void *descr);
->>>    void e1000e_rx_ring_push(QE1000E *d, void *descr);
->>> +void e1000e_pci_msix_enable_rxtxq_vectors(QE1000E *d, QGuestAllocator *alloc);
->>>    
->>>    #endif
->>> diff --git a/tests/qtest/e1000e-test.c b/tests/qtest/e1000e-test.c
->>> index a69759da70e..4921a141ffe 100644
->>> --- a/tests/qtest/e1000e-test.c
->>> +++ b/tests/qtest/e1000e-test.c
->>> @@ -185,6 +185,8 @@ static void test_e1000e_multiple_transfers(void *obj, void *data,
->>>            return;
->>>        }
->>>    
->>> +    /* Triggering msix interrupts multiple times so must enable vectors */
->>> +    e1000e_pci_msix_enable_rxtxq_vectors(d, alloc);
->>>        for (i = 0; i < iterations; i++) {
->>>            e1000e_send_verify(d, data, alloc);
->>>            e1000e_receive_verify(d, data, alloc);
->>> diff --git a/tests/qtest/igb-test.c b/tests/qtest/igb-test.c
->>> index 2f22c4fb208..06082cbe7ff 100644
->>> --- a/tests/qtest/igb-test.c
->>> +++ b/tests/qtest/igb-test.c
->>> @@ -188,6 +188,8 @@ static void test_igb_multiple_transfers(void *obj, void *data,
->>>            return;
->>>        }
->>>    
->>> +    /* Triggering msix interrupts multiple times so must enable vectors */
->>> +    e1000e_pci_msix_enable_rxtxq_vectors(d, alloc);
->>>        for (i = 0; i < iterations; i++) {
->>>            igb_send_verify(d, data, alloc);
->>>            igb_receive_verify(d, data, alloc);
->>> diff --git a/tests/qtest/libqos/e1000e.c b/tests/qtest/libqos/e1000e.c
->>> index 925654c7fd4..7b7e811bce7 100644
->>> --- a/tests/qtest/libqos/e1000e.c
->>> +++ b/tests/qtest/libqos/e1000e.c
->>> @@ -19,6 +19,7 @@
->>>    #include "qemu/osdep.h"
->>>    #include "hw/net/e1000_regs.h"
->>>    #include "hw/pci/pci_ids.h"
->>> +#include "hw/pci/pci_regs.h"
->>>    #include "../libqtest.h"
->>>    #include "pci-pc.h"
->>>    #include "qemu/sockets.h"
->>> @@ -77,16 +78,77 @@ static void e1000e_foreach_callback(QPCIDevice *dev, int devfn, void *data)
->>>        g_free(dev);
->>>    }
->>>    
->>> +static bool e1000e_test_msix_irq(QE1000E *d, uint16_t msg_id,
->>> +                                 uint64_t guest_msix_addr,
->>> +                                 uint32_t msix_data)
->>> +{
->>> +    QE1000E_PCI *d_pci = container_of(d, QE1000E_PCI, e1000e);
->>> +    QPCIDevice *pci_dev = &d_pci->pci_dev;
->>> +
->>> +    if (msg_id == E1000E_RX0_MSG_ID) {
->>> +        g_assert(!d_pci->msix_found_rx0_pending);
->>> +    } else if (msg_id == E1000E_TX0_MSG_ID) {
->>> +        g_assert(!d_pci->msix_found_tx0_pending);
->>> +    } else {
->>> +        /* Must enable MSI-X vector to test multiple messages */
->>> +        g_assert_not_reached();
->>> +    }
->>
->> This assertions are somewhat tricky. If there is something that sets the
->> Pending Bit and we are not aware of it, d_pci->msix_found_rx0_pending
->> and d_pci->msix_found_tx0_pending will be left cleared and assertions
->> will not fire.
->>
->> I think asserting that the message is not masked is easier and less
->> error-prone.
-> 
-> I don't understand what you mean. I allow the masked case
-> to be used, but only for 1 irq. It is only the multiple case
-> where we unmask.
-> 
-> If you do not expect the irq to be raised, then you should
-> add an assert for !e1000e_test_msix_irq().
+Debugging 16-bit/real mode code in QEMU+GDB is challenging due to
+incorrect architecture detection and segmented memory addressing issues.
 
-For example, think of the case where E1000E_RX0_MSG_ID is accidentally 
-fired due to a bug in the emulation or test code. This interrupt is 
-unintentional, so there is no corresponding call of 
-e1000e_test_msix_irq(). This interrupt is followed by an operation that 
-is intended to fire E1000E_RX0_MSG_ID and this is expected to be 
-confirmed with e1000e_test_msix_irq().
+This patch improves the debugging experience by reporting i8086
+architecture to GDB when in real mode and converting segmented addresses
+(CS:EIP, SS:ESP) to their physical equivalents when reporting to GDB.
+This enables proper instruction disassembly and stack inspection without
+complex workarounds.
 
-In this case, e1000e_test_msix_irq() will not properly ensure the 
-presence of the latter interrupt because the Pending Bit is set by the 
-earlier one. g_assert(!d_pci->msix_found_rx0_pending) is intended to 
-detect the Pending Bit set earlier, but it is ineffective in this case 
-because e1000e_test_msix_irq() is not called for the earlier interrupt 
-and d_pci->msix_found_rx0_pending is not set. In this sense, this 
-assertion is incomplete.
+Note: Mode switches after GDB attachment still require manual
+architecture change, as GDB RSP does not support runtime architecture
+switches.
 
-Instead of having such assertions, we can unmask MSI-X vectors when 
-testing interrupts. I also expect there will be less amount of code in 
-this way because it will save the msix_found_rx0_pending and 
-msix_found_tx0_pending flags and corresponding assertions.
+Signed-off-by: Davidson Francis <davidsondfgl@gmail.com>
+---
+ target/i386/cpu.c     |  8 +++++++-
+ target/i386/gdbstub.c | 15 +++++++++++++--
+ 2 files changed, 20 insertions(+), 3 deletions(-)
 
-Regards,
-Akihiko Odaki
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5253399459..65bdc48cc0 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -6404,7 +6404,13 @@ static const gchar *x86_gdb_arch_name(CPUState *cs)
+ #ifdef TARGET_X86_64
+     return "i386:x86-64";
+ #else
+-    return "i386";
++    X86CPU *cpu = X86_CPU(cs);
++    CPUX86State *env = &cpu->env;
++    if (env->cr[0] & 1) {
++        return "i386";
++    } else {
++        return "i8086";
++    }
+ #endif
+ }
+ 
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index 04c49e802d..d600aee953 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -136,7 +136,13 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+                 return gdb_get_regl(mem_buf, 0);
+             }
+         } else {
+-            return gdb_get_reg32(mem_buf, env->regs[gpr_map32[n]]);
++            if (n != R_ESP || (env->cr[0] & 1)) {
++                return gdb_get_reg32(mem_buf, env->regs[gpr_map32[n]]);
++            } else {
++                return gdb_get_reg32(mem_buf,
++                                     (env->segs[R_SS].selector << 4) +
++                                      env->regs[gpr_map32[n]]);
++            }
+         }
+     } else if (n >= IDX_FP_REGS && n < IDX_FP_REGS + 8) {
+         int st_index = n - IDX_FP_REGS;
+@@ -155,7 +161,12 @@ int x86_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
+     } else {
+         switch (n) {
+         case IDX_IP_REG:
+-            return gdb_get_reg(env, mem_buf, env->eip);
++            if (TARGET_LONG_BITS != 32 || (env->cr[0] & 1)) {
++                return gdb_get_reg(env, mem_buf, env->eip);
++            } else {
++                return gdb_get_reg(env, mem_buf,
++                                   (env->segs[R_CS].selector << 4) + env->eip);
++            }
+         case IDX_FLAGS_REG:
+             return gdb_get_reg32(mem_buf, env->eflags);
+ 
+-- 
+2.37.3
+
 
