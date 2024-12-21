@@ -4,90 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31A8E77184
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 03:18:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CCAE77184
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 04:11:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOq01-0002Rf-Os; Fri, 20 Dec 2024 22:17:53 -0500
+	id 1tOqob-0000eC-3L; Fri, 20 Dec 2024 23:10:09 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOq00-0002R9-98; Fri, 20 Dec 2024 22:17:52 -0500
-Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
+ id 1tOqoZ-0000bw-3h; Fri, 20 Dec 2024 23:10:07 -0500
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOpzy-0005Ep-RR; Fri, 20 Dec 2024 22:17:52 -0500
-Received: by mail-pj1-x102f.google.com with SMTP id
- 98e67ed59e1d1-2efd81c7ca4so1913163a91.2; 
- Fri, 20 Dec 2024 19:17:49 -0800 (PST)
+ id 1tOqoX-0000gD-4Z; Fri, 20 Dec 2024 23:10:06 -0500
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-820b825cbfcso3067161a12.1; 
+ Fri, 20 Dec 2024 20:10:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734751068; x=1735355868; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1734754203; x=1735359003; darn=nongnu.org;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ENLA9cVcPZw+PZva67xZP9D4/SCzS4OP2IvO6WzAedw=;
- b=SdqbHjDTsgg0OaWNd2xYAXfSSbiG8T+3xTZVFaDSVIILSOVjLaIueCvaNcIFiY2hju
- Bb07EpwMpB9vEPPspPA/rRq3NwlGjQYI3cov9M3YMEFCu/0KAuVNGQ8e2KmX9wZ9Z/bA
- 9FbWwPSda//hm2kWm6H9ZPU5Om3O5YT+CNpraWqwCBmnXld84Ih2tBtGSQp1FPAGZtH+
- +WwsUAuW9V1ipHJt9UmVjqHLin1gotu+/GyYZQwTlpXHc+toSZJH69B2XWrWvj9FpooT
- QYTvZTs5uiBsRe2F7xVirBrJ3oGVraIc/v/t1icaT46Sv/d6+PFUxhscbZNFbExz4Mv1
- gBHw==
+ bh=5AanmZRoCnbCYQR/lC9/aDm6bkUIbgKQiYO9b/9O2xU=;
+ b=BtZTCZJka+oEp5BxTo2FFBjWcsQIemi6/nGQFh2T3VS74um+Fbn58uwzSW1jxGc48e
+ 1VLPpJ6+ijKVdQmISstAY7U+YwYrhKn50sNNb0u2JNdgNOFCqHPVhCPdxUhysGv6q48Q
+ YiAclsSpBd5QylmKZzi6ypv4yIGKFsJPQN5awlM4Cp0iqNm8BnuFDuf9nH+dJ1IYDn1Q
+ /MMh4qc8uhVUaiGuJPmkxqDpR/y6s2rJZwTcGK/tOUGpHx635hG+rhU+VKVRKSc3vX+i
+ eYAZ8LIBrhnTYfqmsT4NOgt1VESbZTthi0RA8PVS2AkLUU+XS9vYk31fgTgYhm6RuEsu
+ 1rAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734751068; x=1735355868;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1734754203; x=1735359003;
+ h=in-reply-to:references:from:subject:cc:to:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ENLA9cVcPZw+PZva67xZP9D4/SCzS4OP2IvO6WzAedw=;
- b=oUejJjVJJGNi2CgmJkczYjukxLc2PnuKAL8t5+zMMCuAsWGZlQ0CgAh7uSz7to5WA/
- VjCCqaVsSxLcrDK2Ur2p8/OLJzi+M86TMG+l8QGXt102rKOk8RFybKNQfvvbshTH0qT/
- 1qa7fqt8eFWScsH0ve8QKBZXX06G8gSOY7KfXpueaAdyC0zUuvAvwO2d8QIJxSqAMSmg
- jjtPnuNYLa4iDZ66L8d2UcfiBP18gcr/nN0FtRRl84iJKwQYLiqbMhPU1lY+4E0e+hb0
- JyMIR4Tk+QvbEYeZpGhCw+F0RU1zDsKfT9Eu2uEeOq9FcFnB98BFz8W4thrRgoz0wDSr
- 1VYg==
+ bh=5AanmZRoCnbCYQR/lC9/aDm6bkUIbgKQiYO9b/9O2xU=;
+ b=ISO8xh60TaWDGyFggz43ykEJluE3875MxWOOE1BB7bbIl/65LCaHmJk/X80p+cHpb+
+ xcS01UOtMiXeRwGtRVW66FvaZP6ebYhG3ZxAwNJVPiQM38j3t6TCwDuV4Z4gcxN57uEG
+ PkuXrsan4XNPu3kvObVZxBneUQNv5d7rh6+sjuavWtjOdGneXvcfSgB+7QnSnjZ04EvJ
+ XLDiLnuFeUUf1pgWqp11Ic3oRP7ITJZq+Ddgb1Ngzg2I/3uwBYKnOo+tWWVgcYdd71XQ
+ I+1LcU3IvtU5qAf0FhUJMlysbL4CBWtlPwqKVGZZg75/qXfjp6QLQUZv90zaIsegGLxt
+ GREA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVQzkQe6UiCz9dKLTTlWhglvZ7Cnbz9AnUSupk2l0S/gPC4aX1Nn9/RfIGGeeSoyHvaivKwNXVDLPTT@nongnu.org
-X-Gm-Message-State: AOJu0Yz0T+F6QnO0rVRBRejsehYv/ulAhfSvISnqqsc3GWuubWgFRoU3
- 9B+OZ7wUF0U5m3K/wEffsG1kaqgHHvSXVXyGFE18bIAA7/2g/JLL
-X-Gm-Gg: ASbGncuj9N9kr8EitdjPd3KHysq3lfb9BpV6iTkjPdfEjX1Ji7UFu8CvGGp83mIfBHZ
- uy9tu+YMU50YVP2cMb0bSFmwjC5giw0hhHzIJHAje3Vqt+e1QFkL5zuTEARh8Z3etpazEPNkraU
- NxYby4b9bJW6zN0nBxBH7h7Kmp3t07sUBAQ00EGJNjm7en8TWRILwEfTYrYH6Qnj7H1Js3BDK/a
- PIFVFsPV77/dAs4UB58bmzn3tDubP8fJ7OZgSa6hRfQYshtVgY9
-X-Google-Smtp-Source: AGHT+IEHcd6BpkqvRiFbFLyzK2i+yyjgJb8oKrSQkg8tHk9tKVcHUFoJKumISt20KtIay8Kf1nqj8w==
-X-Received: by 2002:a17:90a:d88d:b0:2ea:5e0c:2847 with SMTP id
- 98e67ed59e1d1-2f452e4e81emr6725040a91.22.1734751068385; 
- Fri, 20 Dec 2024 19:17:48 -0800 (PST)
-Received: from localhost ([203.221.215.169]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-2f4477c8518sm4455366a91.19.2024.12.20.19.17.41
+ AJvYcCUHySAatbyA//zjSmZvTEqbbWwxkWEvUSmC/26lvZ29DkCL+HCPqIZTz2QiCj2AQ0U0RxgdNz9HHKI=@nongnu.org,
+ AJvYcCWzdbRjF/5GxK9C8kEOog1aMGRIgNQ4OTJ4E9GHF56PoxOyluYbGr9LBWEVMUf1tc0XcTRE74pR3xj8@nongnu.org
+X-Gm-Message-State: AOJu0Yx0j1Jb9aeWzf2wMR9GZjo22H6Louym1hFWFAYwy9fZimmX3/Hd
+ 7S8mX0FEL25ptBDYuf1VNqbXoWE0GgwJG51I/bbrA2f7cr1pOGTp
+X-Gm-Gg: ASbGncvkL1Ou5sdS1NMiGYlaPJxicMzUNc6exgzH7jgJNooVCgCz/V7GDWkd/9VU3dT
+ 8vsA2Ycvgowf3OciYKfsMpZEoQJiaNEvHtCcyDYVTSSA+gCTYrjaatSAt+kO2V9ZNecbWtcXYra
+ 79XPhxOiFi17rwp0cGAXQAHjACi0gbidt55TWRmoyyJ1TUY2TGWiUhnbmz4xJFwPR2sG1ifbRnd
+ o5rnZLkgEuhmlqin5In9SGldVMpQZO2iIIIPMPL97OXsDV2fNf/
+X-Google-Smtp-Source: AGHT+IEPaHW29MzMtzYmu6mugQl+74r55PAwH8CwxGT8eIE4eSguxynml9Vxv9yqqZV9HnBX97LFcA==
+X-Received: by 2002:a17:90b:524d:b0:2ee:9229:e4bd with SMTP id
+ 98e67ed59e1d1-2f4536030d8mr7859813a91.2.1734754203150; 
+ Fri, 20 Dec 2024 20:10:03 -0800 (PST)
+Received: from localhost ([118.210.105.205]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-2f447882a20sm4548883a91.37.2024.12.20.20.10.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 19:17:47 -0800 (PST)
+ Fri, 20 Dec 2024 20:10:02 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 21 Dec 2024 13:17:39 +1000
-Message-Id: <D6H1XERTFTU7.J2FG4GD2TP8W@gmail.com>
-Cc: "qemu-devel" <qemu-devel@nongnu.org>, "open list:Block layer core"
- <qemu-block@nongnu.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, "Kevin Wolf" <kwolf@redhat.com>, "Hanna Reitz"
- <hreitz@redhat.com>, "Pavel Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Stefan
- Hajnoczi" <stefanha@redhat.com>, "Fam Zheng" <fam@euphon.net>, "Ronnie
- Sahlberg" <ronniesahlberg@gmail.com>, "John Snow" <jsnow@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, "Jason Wang" <jasowang@redhat.com>,
- "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, "Peter Xu"
- <peterx@redhat.com>, "Fabiano Rosas" <farosas@suse.de>, "Dr. David Alan
- Gilbert" <dave@treblig.org>, "Markus Armbruster" <armbru@redhat.com>,
- "Michael Roth" <michael.roth@amd.com>, "Wainer dos Santos Moschetta"
- <wainersm@redhat.com>
-Subject: Re: [PATCH 13/17] hw/scsi: Convert to new bh API
+Date: Sat, 21 Dec 2024 14:09:58 +1000
+Message-Id: <D6H31GYG88HW.35EZWFEYEE8ZO@gmail.com>
+To: "Harsh Prateek Bora" <harshpb@linux.ibm.com>, <qemu-ppc@nongnu.org>
+Cc: "Daniel Henrique Barboza" <danielhb413@gmail.com>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 2/5] spapr: Fix vpa dispatch count for record-replay
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Paolo Bonzini" <pbonzini@redhat.com>
 X-Mailer: aerc 0.18.2
-References: <20241220104220.2007786-1-npiggin@gmail.com>
- <20241220104220.2007786-14-npiggin@gmail.com>
- <CABgObfbZsfCCQotUXpRAM_-T5nM_w3tW_DOc6E5bc6XDz7niXA@mail.gmail.com>
-In-Reply-To: <CABgObfbZsfCCQotUXpRAM_-T5nM_w3tW_DOc6E5bc6XDz7niXA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
- envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
+References: <20241219034035.1826173-1-npiggin@gmail.com>
+ <20241219034035.1826173-3-npiggin@gmail.com>
+ <4b3897e1-c9dd-45aa-bb6f-d8679fc78d25@linux.ibm.com>
+In-Reply-To: <4b3897e1-c9dd-45aa-bb6f-d8679fc78d25@linux.ibm.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=npiggin@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,59 +100,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Dec 21, 2024 at 9:54 AM AEST, Paolo Bonzini wrote:
-> Il ven 20 dic 2024, 11:44 Nicholas Piggin <npiggin@gmail.com> ha scritto:
+On Fri Dec 20, 2024 at 7:14 PM AEST, Harsh Prateek Bora wrote:
+> Hi Nick,
 >
-> > Convert aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(),
-> > which can specify the clock type, making it compatible with
-> > record-replay.
-> >
-> > Operations on SCSI reqs do affect target machine state, so it should
-> > use QEMU_CLOCK_VIRTUAL to recorded and replay the bh.
-> >
+> On 12/19/24 09:10, Nicholas Piggin wrote:
+> > The dispatch count is a field in guest memory that the hypervisor
+> > increments when preempting and dispatching the guest. This was not
+> > being done deterministically with respect to icount, because tcg
+> > exec exit is not deterministic (e.g., an async event could cause it).
+> >=20
+> > Change vpa dispatch count increment to keep track of whether the
+> > vCPU is considered dispatched or not, and only consider it preempted
+> > when calling cede / confer / join / stop-self / etc.
+> >=20
+> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+> > ---
+> >   include/hw/ppc/spapr_cpu_core.h |  3 +++
+> >   hw/ppc/spapr.c                  | 36 ++------------------------------=
+-
+> >   hw/ppc/spapr_hcall.c            | 33 ++++++++++++++++++++++++++++++
+> >   hw/ppc/spapr_rtas.c             |  1 +
+> >   4 files changed, 39 insertions(+), 34 deletions(-)
+> >=20
 >
-> This does not seem to match the patch below?
+> <snipped>
+>
+> > diff --git a/hw/ppc/spapr_hcall.c b/hw/ppc/spapr_hcall.c
+> > index 5e1d020e3df..907e09c2c36 100644
+> > --- a/hw/ppc/spapr_hcall.c
+> > +++ b/hw/ppc/spapr_hcall.c
+> > @@ -487,6 +487,36 @@ static target_ulong h_register_vpa(PowerPCCPU *cpu=
+, SpaprMachineState *spapr,
+> >       return ret;
+> >   }
+> >  =20
+> > +void vpa_dispatch(CPUState *cs, SpaprCpuState *spapr_cpu, bool dispatc=
+h)
+> > +{
+> > +    uint32_t counter;
+> > +
+> > +    if (!dispatch) {
+> > +        assert(spapr_cpu->dispatched);
+> > +    } else {
+> > +        assert(!spapr_cpu->dispatched);
+> > +    }
+>
+> Would it look better as:
+>         assert(!(dispatch =3D=3D spapr_cpu->dispatched));
 
-Ah, good catch, I missed fixing the changelog.
+I think I wanted to know which way it was failing, but I guess
+assert_cmpint() will tell us? I'll change.
 
-I think scsi_device_purge_requests() does not affect target because
-it is called on machine reset so the state is all going away anyway.
+>
+> > +    spapr_cpu->dispatched =3D dispatch;
+> > +
+> > +    return;
+>
+> Returning here unconditionally makes below code unreachable.
 
-But initially I thought scsi_dma_restart_cb did, like the ide
-restart (which was a real bug). But that caused record-replay hangs
-because it is a vm_change_state handler, so I took another looks and
-it seems like it perhaps just kicks the host DMA running again and
-perhaps it is okay to be outside record-replay. I'm completely
-confident of this though.
-
-And now you make me look again, the IDE restart is also a vm change
-state handler. So my patch for that does not solve all problems
-either (it's better than nothing, but still has this bug).
-
-AFAIK, vm state change (stop, continue) should ideally not affect
-machine or emulated devices right? Is it possible to split out
-the architectural SCSI/IDE restart from the DMA restart that is
-reqiured by vm state change?
-
-At least I will redo the patches and leave a comment and a qemu log
-message if we hit the case of IDE vmstate change with record
-replay active...
+Good catch. That was a testing hack. Will respin and retest.
 
 Thanks,
 Nick
-
->
-> Paolo
->
-> +    aio_bh_schedule_oneshot_event(blk_get_aio_context(s->conf.blk),
-> > +                                  scsi_device_for_each_req_async_bh,
-> > +                                  data, QEMU_CLOCK_REALTIME);
-> >  }
-> >
-> >  static void scsi_device_realize(SCSIDevice *s, Error **errp)
-> > --
-> > 2.45.2
-> >
-> >
-
 
