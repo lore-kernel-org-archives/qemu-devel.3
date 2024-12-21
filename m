@@ -4,88 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71E38E77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 03:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C31A8E77184
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 03:18:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOpku-0000CQ-5a; Fri, 20 Dec 2024 22:02:16 -0500
+	id 1tOq01-0002Rf-Os; Fri, 20 Dec 2024 22:17:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOpks-0000Ba-8B; Fri, 20 Dec 2024 22:02:14 -0500
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1tOq00-0002R9-98; Fri, 20 Dec 2024 22:17:52 -0500
+Received: from mail-pj1-x102f.google.com ([2607:f8b0:4864:20::102f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOpkq-0000YW-OU; Fri, 20 Dec 2024 22:02:14 -0500
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-21619108a6bso21983785ad.3; 
- Fri, 20 Dec 2024 19:02:11 -0800 (PST)
+ id 1tOpzy-0005Ep-RR; Fri, 20 Dec 2024 22:17:52 -0500
+Received: by mail-pj1-x102f.google.com with SMTP id
+ 98e67ed59e1d1-2efd81c7ca4so1913163a91.2; 
+ Fri, 20 Dec 2024 19:17:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734750131; x=1735354931; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1734751068; x=1735355868; darn=nongnu.org;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/3aRjoQkknR7uTr8TbkjIQYe4OCWmfZ+1E+mdlllKdA=;
- b=JB1MxycUPV65Z+crXmtb27dVycRTgQElyeBtQ3wsay1UN0MgLCRaFDyqOJ9LexeL8E
- LNpbXYhD+qW7KVEu41QPrqiWvLhcaigB8z7XD+j9+aMTqOPqV5t76k2ExJaJN5cUXsqs
- IEc5dfuMjKc5xuQnnnI63mIz+BOzAVQpVPOJnfR+jMqlIKABP9IsKtfn0v5clmNp7uZC
- RvpFIuTjFFrvhtGF4of2M6e42OXTpOI/79aghNzZXq1XLntCruF7uAB8aFLad7jIlzgr
- Q3g4wefGHaKtNeGBt1+fm+1XVXn1YnkFKzrc8OtqsNnULgg3naXl3sRByQQfssK2uF9f
- lngA==
+ bh=ENLA9cVcPZw+PZva67xZP9D4/SCzS4OP2IvO6WzAedw=;
+ b=SdqbHjDTsgg0OaWNd2xYAXfSSbiG8T+3xTZVFaDSVIILSOVjLaIueCvaNcIFiY2hju
+ Bb07EpwMpB9vEPPspPA/rRq3NwlGjQYI3cov9M3YMEFCu/0KAuVNGQ8e2KmX9wZ9Z/bA
+ 9FbWwPSda//hm2kWm6H9ZPU5Om3O5YT+CNpraWqwCBmnXld84Ih2tBtGSQp1FPAGZtH+
+ +WwsUAuW9V1ipHJt9UmVjqHLin1gotu+/GyYZQwTlpXHc+toSZJH69B2XWrWvj9FpooT
+ QYTvZTs5uiBsRe2F7xVirBrJ3oGVraIc/v/t1icaT46Sv/d6+PFUxhscbZNFbExz4Mv1
+ gBHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734750131; x=1735354931;
+ d=1e100.net; s=20230601; t=1734751068; x=1735355868;
  h=in-reply-to:references:to:from:subject:cc:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=/3aRjoQkknR7uTr8TbkjIQYe4OCWmfZ+1E+mdlllKdA=;
- b=qZMgHHIPC/wWTZdd3N5AzslCJJDHDWhm2OZmcszU1pYyDGz6cLM+urgmVTPpuxfvKR
- p6yr41ywuD4jET4vemt8TrFIha2r6TABqUlOEDdqD/2L3oiUkl3geMQwG/quc1QDWrnb
- RIXvkFRtMDVIsIyQner5Gydf6Y24uPBJtyPkK66kCdRr6TJCmFPY2OCqC3vzDu5KD+Ps
- qi6ArEguzdsgXOxg0NwtoI3saPC1l5P1AQ369qIuU23govFvOoiBcaPh1Ox23WAJCP8y
- 6nzO0pzQNaLoWJV0Fwn7+nUYl8rXGxRKPmOO2apW1eYUSGGoU/9hcLMPFyxzNaSO1OeB
- Cntg==
+ bh=ENLA9cVcPZw+PZva67xZP9D4/SCzS4OP2IvO6WzAedw=;
+ b=oUejJjVJJGNi2CgmJkczYjukxLc2PnuKAL8t5+zMMCuAsWGZlQ0CgAh7uSz7to5WA/
+ VjCCqaVsSxLcrDK2Ur2p8/OLJzi+M86TMG+l8QGXt102rKOk8RFybKNQfvvbshTH0qT/
+ 1qa7fqt8eFWScsH0ve8QKBZXX06G8gSOY7KfXpueaAdyC0zUuvAvwO2d8QIJxSqAMSmg
+ jjtPnuNYLa4iDZ66L8d2UcfiBP18gcr/nN0FtRRl84iJKwQYLiqbMhPU1lY+4E0e+hb0
+ JyMIR4Tk+QvbEYeZpGhCw+F0RU1zDsKfT9Eu2uEeOq9FcFnB98BFz8W4thrRgoz0wDSr
+ 1VYg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVb3Ku5z7f6/1mjLNe9PaNUevjM19Tul7o8XvK7pq+WgmdsrG7M6J5T1ybWVGNZAIa8OmyFmau5hLWe@nongnu.org
-X-Gm-Message-State: AOJu0Yyy9YnY2EkRcXxnkmXGX+X9LCufOcDrwmJUY3cIjCzdek2Nu8LA
- u/35PKIog1vz7vMGsSgKysDcA944TiPk8YsVYO342BE5zkMRzEaU
-X-Gm-Gg: ASbGncsauL0I4ik3fpeKD9lAt3jxzrhWMekhm6+MXGRtsbAb03+kwVH52gLc2+DP6/9
- n7LTxhLjkoOHUu48KGws+PJZa+/a9ekX+8Mio5ZHTEwmWYCGET9Zs0aA/n/DVI5k2rYSXTllgw7
- +DnI05p4aIb490MUQwZHbNxuRLT+7t7FeddwembnXxLueyaO5G0SRYGczryrXwymZ1JWWWrUQzm
- rYILTaIdckavU0V2XGU+M5V8JVBQPCBq8wXZdeeBfd90C4yHuL/
-X-Google-Smtp-Source: AGHT+IFMX4Xhk4VXDa7GcEZdAcDJ8ayqe5G40rmCRI1lz5wdLLjN99S25nFgan5ln8PvFsGmGIBQfA==
-X-Received: by 2002:a17:903:2cc:b0:216:2dc5:2330 with SMTP id
- d9443c01a7336-219e6f0e6d3mr80296095ad.36.1734750130613; 
- Fri, 20 Dec 2024 19:02:10 -0800 (PST)
+ AJvYcCVQzkQe6UiCz9dKLTTlWhglvZ7Cnbz9AnUSupk2l0S/gPC4aX1Nn9/RfIGGeeSoyHvaivKwNXVDLPTT@nongnu.org
+X-Gm-Message-State: AOJu0Yz0T+F6QnO0rVRBRejsehYv/ulAhfSvISnqqsc3GWuubWgFRoU3
+ 9B+OZ7wUF0U5m3K/wEffsG1kaqgHHvSXVXyGFE18bIAA7/2g/JLL
+X-Gm-Gg: ASbGncuj9N9kr8EitdjPd3KHysq3lfb9BpV6iTkjPdfEjX1Ji7UFu8CvGGp83mIfBHZ
+ uy9tu+YMU50YVP2cMb0bSFmwjC5giw0hhHzIJHAje3Vqt+e1QFkL5zuTEARh8Z3etpazEPNkraU
+ NxYby4b9bJW6zN0nBxBH7h7Kmp3t07sUBAQ00EGJNjm7en8TWRILwEfTYrYH6Qnj7H1Js3BDK/a
+ PIFVFsPV77/dAs4UB58bmzn3tDubP8fJ7OZgSa6hRfQYshtVgY9
+X-Google-Smtp-Source: AGHT+IEHcd6BpkqvRiFbFLyzK2i+yyjgJb8oKrSQkg8tHk9tKVcHUFoJKumISt20KtIay8Kf1nqj8w==
+X-Received: by 2002:a17:90a:d88d:b0:2ea:5e0c:2847 with SMTP id
+ 98e67ed59e1d1-2f452e4e81emr6725040a91.22.1734751068385; 
+ Fri, 20 Dec 2024 19:17:48 -0800 (PST)
 Received: from localhost ([203.221.215.169]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-219dc962dd6sm35783675ad.23.2024.12.20.19.02.03
+ 98e67ed59e1d1-2f4477c8518sm4455366a91.19.2024.12.20.19.17.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 19:02:10 -0800 (PST)
+ Fri, 20 Dec 2024 19:17:47 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 21 Dec 2024 13:02:01 +1000
-Message-Id: <D6H1LG4QEYL3.3B6MWT5ZTMAQG@gmail.com>
-Cc: <qemu-devel@nongnu.org>, <qemu-block@nongnu.org>,
- =?utf-8?q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, "Kevin Wolf"
- <kwolf@redhat.com>, "Hanna Reitz" <hreitz@redhat.com>, "Pavel Dovgalyuk"
- <pavel.dovgaluk@ispras.ru>, "Paolo Bonzini" <pbonzini@redhat.com>, "Stefan
+Date: Sat, 21 Dec 2024 13:17:39 +1000
+Message-Id: <D6H1XERTFTU7.J2FG4GD2TP8W@gmail.com>
+Cc: "qemu-devel" <qemu-devel@nongnu.org>, "open list:Block layer core"
+ <qemu-block@nongnu.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Kevin Wolf" <kwolf@redhat.com>, "Hanna Reitz"
+ <hreitz@redhat.com>, "Pavel Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Stefan
  Hajnoczi" <stefanha@redhat.com>, "Fam Zheng" <fam@euphon.net>, "Ronnie
  Sahlberg" <ronniesahlberg@gmail.com>, "John Snow" <jsnow@redhat.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, "Jason Wang" <jasowang@redhat.com>,
- "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, "Fabiano Rosas"
- <farosas@suse.de>, "Dr. David Alan Gilbert" <dave@treblig.org>, "Markus
- Armbruster" <armbru@redhat.com>, "Michael Roth" <michael.roth@amd.com>,
- "Wainer dos Santos Moschetta" <wainersm@redhat.com>
-Subject: Re: [PATCH 01/17] replay: Fix migration use of clock for statistics
+ "Vladimir Sementsov-Ogievskiy" <vsementsov@yandex-team.ru>, "Peter Xu"
+ <peterx@redhat.com>, "Fabiano Rosas" <farosas@suse.de>, "Dr. David Alan
+ Gilbert" <dave@treblig.org>, "Markus Armbruster" <armbru@redhat.com>,
+ "Michael Roth" <michael.roth@amd.com>, "Wainer dos Santos Moschetta"
+ <wainersm@redhat.com>
+Subject: Re: [PATCH 13/17] hw/scsi: Convert to new bh API
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: "Peter Xu" <peterx@redhat.com>
+To: "Paolo Bonzini" <pbonzini@redhat.com>
 X-Mailer: aerc 0.18.2
 References: <20241220104220.2007786-1-npiggin@gmail.com>
- <20241220104220.2007786-2-npiggin@gmail.com> <Z2Wb7T8oH0xbk576@x1n>
-In-Reply-To: <Z2Wb7T8oH0xbk576@x1n>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=npiggin@gmail.com; helo=mail-pl1-x633.google.com
+ <20241220104220.2007786-14-npiggin@gmail.com>
+ <CABgObfbZsfCCQotUXpRAM_-T5nM_w3tW_DOc6E5bc6XDz7niXA@mail.gmail.com>
+In-Reply-To: <CABgObfbZsfCCQotUXpRAM_-T5nM_w3tW_DOc6E5bc6XDz7niXA@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102f;
+ envelope-from=npiggin@gmail.com; helo=mail-pj1-x102f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,87 +110,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat Dec 21, 2024 at 2:31 AM AEST, Peter Xu wrote:
-> On Fri, Dec 20, 2024 at 08:42:03PM +1000, Nicholas Piggin wrote:
-> > Migration reads CLOCK_HOST when not holding the replay_mutex, which
-> > asserts when recording a trace. These are not guest visible so should
-> > be CLOCK_REALTIME like other statistics in MigrationState, which do
-> > not require the replay_mutex.
+On Sat Dec 21, 2024 at 9:54 AM AEST, Paolo Bonzini wrote:
+> Il ven 20 dic 2024, 11:44 Nicholas Piggin <npiggin@gmail.com> ha scritto:
 >
-> Irrelevant of the change, should we document such lock implications in
-> timer.h?
+> > Convert aio_bh_schedule_oneshot() to aio_bh_schedule_oneshot_event(),
+> > which can specify the clock type, making it compatible with
+> > record-replay.
+> >
+> > Operations on SCSI reqs do affect target machine state, so it should
+> > use QEMU_CLOCK_VIRTUAL to recorded and replay the bh.
+> >
+>
+> This does not seem to match the patch below?
 
-I guess the intention was to try to avoid caller caring too much
-about replay internals, so I'm not sure if that will help or
-hinder understanding :(
+Ah, good catch, I missed fixing the changelog.
 
-I think the big rule is something like "if it affects guest state,
-then you must use HOST or VIRTUAL*, if it does not affect guest state
-then you must use REALTIME". record-replay code then takes care of
-replay mutex locking.
+I think scsi_device_purge_requests() does not affect target because
+it is called on machine reset so the state is all going away anyway.
 
-Does get a little fuzzy around edges in code that is somewhat
-aware of record-replay though, like migration/snapshots.
+But initially I thought scsi_dma_restart_cb did, like the ide
+restart (which was a real bug). But that caused record-replay hangs
+because it is a vm_change_state handler, so I took another looks and
+it seems like it perhaps just kicks the host DMA running again and
+perhaps it is okay to be outside record-replay. I'm completely
+confident of this though.
 
-(Pavel please correct me if I've been saying the wrong things)
+And now you make me look again, the IDE restart is also a vm change
+state handler. So my patch for that does not solve all problems
+either (it's better than nothing, but still has this bug).
+
+AFAIK, vm state change (stop, continue) should ideally not affect
+machine or emulated devices right? Is it possible to split out
+the architectural SCSI/IDE restart from the DMA restart that is
+reqiured by vm state change?
+
+At least I will redo the patches and leave a comment and a qemu log
+message if we hit the case of IDE vmstate change with record
+replay active...
 
 Thanks,
 Nick
 
 >
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >  migration/migration.c | 8 ++++----
-> >  1 file changed, 4 insertions(+), 4 deletions(-)
-> >=20
-> > diff --git a/migration/migration.c b/migration/migration.c
-> > index 8c5bd0a75c8..2eb9e50a263 100644
-> > --- a/migration/migration.c
-> > +++ b/migration/migration.c
-> > @@ -3433,7 +3433,7 @@ static void *migration_thread(void *opaque)
-> >  {
-> >      MigrationState *s =3D opaque;
-> >      MigrationThread *thread =3D NULL;
-> > -    int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
-> > +    int64_t setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-> >      MigThrError thr_error;
-> >      bool urgent =3D false;
-> >      Error *local_err =3D NULL;
-> > @@ -3504,7 +3504,7 @@ static void *migration_thread(void *opaque)
-> >          goto out;
-> >      }
-> > =20
-> > -    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start=
-;
-> > +    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_s=
-tart;
-> > =20
-> >      trace_migration_thread_setup_complete();
-> > =20
-> > @@ -3584,7 +3584,7 @@ static void *bg_migration_thread(void *opaque)
-> > =20
-> >      migration_rate_set(RATE_LIMIT_DISABLED);
-> > =20
-> > -    setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_HOST);
-> > +    setup_start =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-> >      /*
-> >       * We want to save vmstate for the moment when migration has been
-> >       * initiated but also we want to save RAM content while VM is runn=
-ing.
-> > @@ -3629,7 +3629,7 @@ static void *bg_migration_thread(void *opaque)
-> >          goto fail_setup;
-> >      }
-> > =20
-> > -    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_HOST) - setup_start=
-;
-> > +    s->setup_time =3D qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - setup_s=
-tart;
-> > =20
-> >      trace_migration_thread_setup_complete();
-> > =20
-> > --=20
+> Paolo
+>
+> +    aio_bh_schedule_oneshot_event(blk_get_aio_context(s->conf.blk),
+> > +                                  scsi_device_for_each_req_async_bh,
+> > +                                  data, QEMU_CLOCK_REALTIME);
+> >  }
+> >
+> >  static void scsi_device_realize(SCSIDevice *s, Error **errp)
+> > --
 > > 2.45.2
-> >=20
+> >
+> >
 
 
