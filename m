@@ -4,83 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5703FE77188
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 02:28:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BFB6E77188
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Dec 2024 02:55:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1tOpDR-0003CJ-Gz; Fri, 20 Dec 2024 21:27:41 -0500
+	id 1tOpdl-0007XM-41; Fri, 20 Dec 2024 21:54:53 -0500
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOpDP-0003C5-9Q; Fri, 20 Dec 2024 21:27:39 -0500
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1tOpdj-0007Wc-2R; Fri, 20 Dec 2024 21:54:51 -0500
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <npiggin@gmail.com>)
- id 1tOpDL-000059-J7; Fri, 20 Dec 2024 21:27:38 -0500
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-725ce7b82cbso3003371b3a.0; 
- Fri, 20 Dec 2024 18:27:32 -0800 (PST)
+ id 1tOpdh-0008AS-H5; Fri, 20 Dec 2024 21:54:50 -0500
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-21669fd5c7cso24850845ad.3; 
+ Fri, 20 Dec 2024 18:54:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1734748051; x=1735352851; darn=nongnu.org;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=gmail.com; s=20230601; t=1734749687; x=1735354487; darn=nongnu.org;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UiDLvv4AbuKzZhFpV2nkOBZYGUZgUTlsluTNZoDe1TI=;
- b=MOFx0VUNOJfjVyjp/BtPXZJWWy6dTkMejNb9fPOXaqSJhOlNItBlCfyexaqywFYDAG
- SvSU6I/X+5N+FPwMnlaBzqVjC8D0pzuhhXYjcuBXdMIOFn8Lk98Rf+j21HTWADsHGNWx
- HZUv3UN4rHrt0VVwl/YCOs7xBDMhc+aOO6xwyUUqcTzfqUPLeynikFluPkRdpW6zDKU/
- +VVYCXbCU5+4ADPlEEi37F4fj5+DjAjBbdFsz34bUcSxtz1MBDs8QAtxWwx04z7+uSso
- 20Yt/nBBgYT5bzcRQCfKcqxpBArWrMOH11zQTqqsMgWJLJwUweBx7HJSbBcw3+dE4Eo2
- OaOg==
+ bh=IR1ONrbG+4Eu5GMmRAwxZJqrILWRUFwZXkXfN2DLQvs=;
+ b=Q/v0Qsld93zLop3aezYUwOYt5FG/OYx4Dp23SdXFSi0rfVYDZqJg/Q52vt1nRO6S+i
+ +YVWvJAzAr6hAiGlGUBkL/PEG67L1oLY6hYTuNuVhJVzzv2J2yYllXYnqk8PuK0WFGCr
+ KcNnjYRRzXPAMLWyV9Qy8oMCI7EbCfk/3JAr4aFedouQPUtVYFRPbHKYz6HApdNQeRDY
+ Phq8IxS0fImxrK6qWtiLRFssEav3Uhzclt8XxcNtVaL8ueqtGio11DMsxGj0r238Ob6a
+ 03okjjfbyqBho4Ei7OlnLgxw/7UgsgvuviydFYFf/8pl9rUWJjJwcwMYIQUrlOWjnU1Y
+ i2Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1734748051; x=1735352851;
- h=in-reply-to:references:to:from:subject:cc:message-id:date
+ d=1e100.net; s=20230601; t=1734749687; x=1735354487;
+ h=in-reply-to:references:cc:to:from:subject:message-id:date
  :content-transfer-encoding:mime-version:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=UiDLvv4AbuKzZhFpV2nkOBZYGUZgUTlsluTNZoDe1TI=;
- b=roxY2wKX6PjjmfRS2eEp1p/1DxFZ1TmlsFYXtvj7BWqJkjOqeGUKYf1nQf0iAM5M7R
- tku3EVa4X0eHLfjdrtHHNb36nE3Tqsh+8rN3Fc9NcgvxcTuJJShuzaZdmi1WvZun0XX1
- hZiZ20SonPNbXrqFV4CXBPScdafrKUoA3tBwhIhfrfViybS+OX4UL3yaXg1AlGPBnQot
- OxBitkhPDE9h47PodgFhkkeh9lrOoEIMCD2JTn+fXTLWyNVQTRxtqoNLUls/LcfL3/d8
- JjK6b803k5PDOElWkVzaYUEMzBtWHzeqCHhB/VUHllmf5ISiXNx/3o1OcUS+q03LDYBI
- pqVg==
+ bh=IR1ONrbG+4Eu5GMmRAwxZJqrILWRUFwZXkXfN2DLQvs=;
+ b=Z/qJHOjN0ahbLl/nXoJvR8+AQgIF+nhkvdeFuk+sWRfFv22drwFVYGSr9pNMYN0f+V
+ HzGeQnayMbDsevBcRANcqER89hehG6vC3A3J/jK73dJXAZ0AICpfv28fHwx1+IY3OqoA
+ dvi1QFyUmmBOOLpfS9IW4Qfw3CxIFoHvVljcsrz4Af9bK7f49Mij9jKf2XhRl6i3+Oyq
+ as0omGIG125vxNqyJq+Tlf4NsZPNoTFEsurNf+AKzvVE84SqxucURyiv+NDX0kN44dKE
+ 19aNp5IEfDae7qisK5wEPDSh0p2Xxwe4KhIUUlsQlk5Iuh3YPK6nIWV2yHLixNQBRaaf
+ 05YA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvL0g+iLkV8QnpLftQQc40GSgYifG0g9/gK1hfJLoMjtS1BMDEZ7hYW8PPWE6ngFLrIV1HsFxcIQ==@nongnu.org
-X-Gm-Message-State: AOJu0YzN8XuqAMkTpOFVpnmH6adW8mk9+dBLvybngh+XeSzp2cM8UF7K
- S1oZe/zzMUDyAtKL4jAFulyTQrHjoOo0vDCto5ZeWkEth6iV5/uG
-X-Gm-Gg: ASbGncvdfB1zfvwQKJFaTLxhlTHLUXclXccpgilwuYpufEYkS+zfxRKcw6acobfPmiZ
- 80ELEPWsPVdk7R8LeLIZ9mkYtghLyCAQgjN0zIqtHGfkW/Xm4vYtbTUUCFxuHZB3pEewPJjmoqg
- g7R/nsEmBbCNGpAim9rXip5U3gPFyS3oXMpDfuLd2ow6pj8UKfL8uODA5buVbNs9cO9G6X+ztzI
- vvL0yYd8xcQh48nPVHH+p7NUPFyNfxXbkGbkHC64e+TAYlT6VWX
-X-Google-Smtp-Source: AGHT+IHrfrXS7PIciRnoSPyLV9PhxISfThdWXBSyAalkXFFUT1cBvZ4DBUJGJU/osIuIAwIvBxEHJw==
-X-Received: by 2002:a05:6a21:e8d:b0:1e1:adcd:eae5 with SMTP id
- adf61e73a8af0-1e5e0846948mr8431540637.42.1734748050952; 
- Fri, 20 Dec 2024 18:27:30 -0800 (PST)
+ AJvYcCUXLg6TIOzXIgQVvpHwbTNtFCUmh2NBuldWaNbZc1xyI1mh1u/3PglTaiC5zatokphsNF4OdPGdjdcx@nongnu.org
+X-Gm-Message-State: AOJu0YyTH/BawH3ooqSK9JtPalFqNGIAucNuC5aBmjSiUwcvUBmBJeRY
+ aXy5LscdblU4qceMgiQ55aJE2o5C61zH2lMU2PLDUsWYGbOF0oqWsVD00g==
+X-Gm-Gg: ASbGncsma+xbeiJ/eCIx4grpniSTxiz58t/FPsVB4770eVlLLBbG1MvdPcE2ECoFBxE
+ ruMixPtnwQTYPeGjYYI0IBDAVLZg+Nvl1264kaJ2w4J5V4JCsOGZ/p7+7nDBaycmnzKVXGuoSI5
+ yUNF7kWAfOj7G1I0+3poUt5swJmFPRmYV6mza4XsOiLdOvU9rqfC+Xwq2X3PD3/RnRcJbp9q0mQ
+ On1c2J9uXyLbVxWgaOSl4baDQpu6E1eIURwAZAJmJDNF878EJVx
+X-Google-Smtp-Source: AGHT+IHIjI+N0bxfYcGEQVavbDZFIczqkticzIh90WhpqtYsmal40ATnsD1FUJoA3t6pHomk6hwzIw==
+X-Received: by 2002:a17:903:41c1:b0:215:b45a:6a63 with SMTP id
+ d9443c01a7336-219e6ec0883mr75028145ad.32.1734749687038; 
+ Fri, 20 Dec 2024 18:54:47 -0800 (PST)
 Received: from localhost ([203.221.215.169]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-72aad8fccd5sm3806282b3a.168.2024.12.20.18.27.27
+ d9443c01a7336-219dca02888sm35857975ad.261.2024.12.20.18.54.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Dec 2024 18:27:30 -0800 (PST)
+ Fri, 20 Dec 2024 18:54:46 -0800 (PST)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sat, 21 Dec 2024 12:27:25 +1000
-Message-Id: <D6H0UY56F3H4.3UNWHAFASX6WO@gmail.com>
-Cc: <qemu-devel@nongnu.org>, "Thomas Huth" <thuth@redhat.com>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, "Daniel
- Henrique Barboza" <danielhb413@gmail.com>, "Harsh Prateek Bora"
- <harshpb@linux.ibm.com>, =?utf-8?q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, <qemu-ppc@nongnu.org>
-Subject: Re: [PATCH 1/4] tests/functional: Don't fail the whole test if a
- pre-cache fetch fails
+Date: Sat, 21 Dec 2024 12:54:37 +1000
+Message-Id: <D6H1FS7JDKTL.306GHC0OE910D@gmail.com>
+Subject: Re: [PATCH 02/17] replay: Fix migration replay_mutex locking
 From: "Nicholas Piggin" <npiggin@gmail.com>
-To: =?utf-8?b?RGFuaWVsIFAuIEJlcnJhbmfDqQ==?= <berrange@redhat.com>
+To: "Fabiano Rosas" <farosas@suse.de>, <qemu-devel@nongnu.org>
+Cc: <qemu-block@nongnu.org>, =?utf-8?q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Kevin Wolf" <kwolf@redhat.com>, "Hanna Reitz"
+ <hreitz@redhat.com>, "Pavel Dovgalyuk" <pavel.dovgaluk@ispras.ru>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, "Stefan Hajnoczi" <stefanha@redhat.com>,
+ "Fam Zheng" <fam@euphon.net>, "Ronnie Sahlberg" <ronniesahlberg@gmail.com>,
+ "John Snow" <jsnow@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ "Jason Wang" <jasowang@redhat.com>, "Vladimir Sementsov-Ogievskiy"
+ <vsementsov@yandex-team.ru>, "Peter Xu" <peterx@redhat.com>, "Dr. David
+ Alan Gilbert" <dave@treblig.org>, "Markus Armbruster" <armbru@redhat.com>,
+ "Michael Roth" <michael.roth@amd.com>, "Wainer dos Santos Moschetta"
+ <wainersm@redhat.com>
 X-Mailer: aerc 0.18.2
-References: <20241220024617.1968556-1-npiggin@gmail.com>
- <20241220024617.1968556-2-npiggin@gmail.com> <Z2VJQJTjmzlgT2uU@redhat.com>
-In-Reply-To: <Z2VJQJTjmzlgT2uU@redhat.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=npiggin@gmail.com; helo=mail-pf1-x42f.google.com
+References: <20241220104220.2007786-1-npiggin@gmail.com>
+ <20241220104220.2007786-3-npiggin@gmail.com> <87r062tscl.fsf@suse.de>
+In-Reply-To: <87r062tscl.fsf@suse.de>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=npiggin@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,60 +108,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri Dec 20, 2024 at 8:38 PM AEST, Daniel P. Berrang=C3=A9 wrote:
-> On Fri, Dec 20, 2024 at 12:46:14PM +1000, Nicholas Piggin wrote:
-> > If any pre-cache downloads fail, the entire functional test run
-> > is failed.
-> >=20
-> > Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-> > ---
-> >  tests/functional/qemu_test/asset.py | 11 +++++++++--
-> >  1 file changed, 9 insertions(+), 2 deletions(-)
-> >=20
-> > diff --git a/tests/functional/qemu_test/asset.py b/tests/functional/qem=
-u_test/asset.py
-> > index f126cd5863a..f82b07e7027 100644
-> > --- a/tests/functional/qemu_test/asset.py
-> > +++ b/tests/functional/qemu_test/asset.py
-> > @@ -102,7 +102,8 @@ def fetch(self):
-> >              return str(self.cache_file)
-> > =20
-> >          if os.environ.get("QEMU_TEST_NO_DOWNLOAD", False):
-> > -            raise Exception("Asset cache is invalid and downloads disa=
-bled")
-> > +            raise Exception("Failed to fetch asset %s, not found in ca=
-che "
-> > +                            "and downloads are disabled", self.url)
-> > =20
-> >          self.log.info("Downloading %s to %s...", self.url, self.cache_=
-file)
-> >          tmp_cache_file =3D self.cache_file.with_suffix(".download")
-> > @@ -162,7 +163,13 @@ def precache_test(test):
-> >          for name, asset in vars(test.__class__).items():
-> >              if name.startswith("ASSET_") and type(asset) =3D=3D Asset:
-> >                  log.info("Attempting to cache '%s'" % asset)
-> > -                asset.fetch()
-> > +                try:
-> > +                    asset.fetch()
-> > +                except:
-> > +                    # Asset pre-cache should not be fatal. An error is=
- printed
-> > +                    # and the test itself will fail if it is unable to=
- get the
-> > +                    # assert.
-> > +                    pass
-> >          log.removeHandler(handler)
-> > =20
-> >      def precache_suite(suite):
+On Fri Dec 20, 2024 at 11:08 PM AEST, Fabiano Rosas wrote:
+> Nicholas Piggin <npiggin@gmail.com> writes:
 >
-> Asset fetching errors & skipping tests is being handled by a pending
-> pull request:
+> Hi Nick,
 >
->   https://lists.nongnu.org/archive/html/qemu-devel/2024-12/msg04334.html
->   https://lists.nongnu.org/archive/html/qemu-devel/2024-12/msg04333.html
+> I'm ignorant about replay, but we try to know why were taking the BQL in
+> the migration code, we move it around sometimes, etc. Can we be a bit
+> more strict with documentation here so we don't get stuck with a lock
+> that can't be changed?
+>
+> > Migration causes a number of events that need to go in the replay
+> > trace, such as vm state transitions. The replay_mutex lock needs to
+> > be held for these.
+> >
+>
+> Is it practical to explicitly list which events are those?
 
-Oh thanks, it's merged now I should have looked more carefully. That
-looks good thank you.
+As a general rule it is something like "while the target can be
+producing or consuming rr events".
+
+There is some record-replay handling in snapshot code (flush
+events, get icount, etc) as well as SHUTDOWN_CAUSE_SNAPSHOT_LOAD
+event generated and possibly a few other things. So for migration
+it's not just a side effect of calling other APIs, but it is
+explicitly "replay-aware", at least in some part.
+
+I actually don't know full details about how snapshot/migrate
+and record-replay work together. I know reverse debugging can
+use snapshots to load the most recent possible state to
+minimize replay, but that is "external" to the machine itself.
+But I don't know why you would want to record and replay snapshot
+loading as part of the trace. But facility exists. Pavel
+understands all the big picture much better.
+
+> Are there any tests that exercise this that we could use to validate
+> changes around this area?
+
+Yes I added some more avocado testing which includes snapshotting
+while recording, and that's where I hit these bugs. I do plan to
+submit that up as soon as this series gets in, just trying to keep
+things managable. In that case we could defer this patch from this
+series (the replay_linux test does not do any snapshotting as yet).
+
+I think once you have some regression tests, you probably won't
+have to worry _too_ much about record/replay details in migraiton.
+
+>
+> > The simplest approach seems to be just take it up-front when taking
+> > the bql.
+>
+> But also the thing asserts if taken inside the BQL, so is the actual
+> matter here that we _cannot_ take the lock around the proper places?
+
+Yes, that is part of it in this case. Some other code drops the
+bql then retakes both... but that is more complex and requires
+knowledge of calling bql context to be sure it is safe to drop.
+
+> I also see the replay lock around the main loop, so is it basically bql2
+> from the perspective of most of QEMU?
+
+Unfortunately it is a big scope yes. Basically it needs to
+maintain atomicity between the event log entry that we record or
+replay (run N instructions; raise an interrupt; get a character
+from keyboard; etc.,) and the actual running of that operation
+in the machine.
 
 Thanks,
 Nick
